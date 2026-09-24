@@ -411,21 +411,21 @@ test('production refuses silent slot contract mutation and can explicitly return
   );
 });
 
-test('Journey feedback dependencies bind only the reviewed integrated effects inputs', async () => {
+test('Journey feedback dependencies bind only the reviewed player-craft effects inputs', async () => {
   const production = await createFieldKitProduction();
   const resolved = resolvePresentation(production.document);
-  const reviewPath = 'docs/verification/trail-effects-continuation-2026-09-24/review.json';
+  const reviewPath = 'docs/verification/player-craft-locator-removal-2026-09-24/review.json';
   const reviewBytes = await fs.readFile(new URL(`../../${reviewPath}`, import.meta.url));
   const reviewHash = createHash('sha256').update(reviewBytes).digest('hex');
   const review = JSON.parse(reviewBytes);
-  assert.equal(reviewHash, 'f99de242bac7ac5b49c06047e156eb5a6decdf73b4d0ac3f47649ec010571917');
+  assert.equal(reviewHash, 'b6c8b661457ddd191477af403f2a392e476c0af7beceaba4f3b7f3ced1bf547e');
   assert.equal(
-    review.priorReview.sha256,
-    '5b13693d6d19b5b0e5e845b9e69a5971a0e36b40ffa8ff457f3418da5a0a6c8c',
+    review.effects.priorFingerprintSHA256,
+    '475fea962731c07024adacf4e8df7692db23bff218d13768dff50971752a0ed5',
   );
   assert.equal(
-    review.fingerprint.sha256,
-    '832e6fbcb3da51dff0ef5a07f60221e4dbba25256af1d32d1800ed1b21500f9f',
+    review.effects.currentFingerprintSHA256,
+    'abd3aeef12041b55e76be3b026b52180f11df0f5b7a7f2a25ea560dacab0fdf1',
   );
   for (const slotId of [
     'trail.active',
@@ -443,14 +443,14 @@ test('Journey feedback dependencies bind only the reviewed integrated effects in
     assert.equal(asset.quality.stage, 'reviewed', slotId);
     assert.ok(
       asset.provenance.source.endsWith(
-        'sha256:832e6fbcb3da51dff0ef5a07f60221e4dbba25256af1d32d1800ed1b21500f9f',
+        'sha256:abd3aeef12041b55e76be3b026b52180f11df0f5b7a7f2a25ea560dacab0fdf1',
       ),
     );
     assert.match(asset.provenance.source, /game\/ui\/lane-presentation\.mjs/);
     assert.match(asset.provenance.source, /game\/content-design\/actor-marker\.mjs/);
     assert.equal(
       asset.quality.evidence.some((entry) =>
-        entry.includes(`Scoped trail/effects functional continuation: ${reviewPath}`),
+        entry.includes(`Scoped player-craft locator removal: ${reviewPath}`),
       ),
       true,
     );
@@ -518,8 +518,8 @@ test('soundtrack screen and Journey motion reviews bind only the inspected curre
   const production = await createFieldKitProduction();
   const resolved = resolvePresentation(production.document);
   const fingerprints = {
-    screens: '1800d7c4754f88e2ec36b104ab9e502cd5ba55ed2e12653609bd52e246548845',
-    motion: 'ef5ede43180597ba413e26f2042d9f99a06c2f70a224b0d8d5543d384688ea76',
+    screens: 'ceefa6797f3d66c628c5710008a20d68fd1e4afd4baba69b7655cdcdcb8d8996',
+    motion: 'c35fcf823a0923f27f1193afa247e2d0c93b6fc4161976a5d6a2b67a5bc143a9',
   };
   const reviewed = production.document.slots.filter(
     (slot) => slot.group in fingerprints && resolved.assets[slot.id].kind === 'recipe',
@@ -533,8 +533,8 @@ test('soundtrack screen and Journey motion reviews bind only the inspected curre
       asset.quality.evidence.some((entry) =>
         entry.includes(
           slot.group === 'motion'
-            ? 'Scoped Journey motion/material source review'
-            : 'Scoped soundtrack screen source review',
+            ? 'Scoped visible-actor motion continuation'
+            : 'Scoped integrated screen continuation',
         ),
       ),
       slot.id,
