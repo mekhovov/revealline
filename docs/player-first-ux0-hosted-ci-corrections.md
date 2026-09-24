@@ -39,3 +39,26 @@ The candidate remains blocked until a new hosted full suite passes on the exact
 final PR head. After that: merge, exact-source qualification, immutable freeze,
 release publication, archive admission, Pages deployment and public input/play
 verification. UX1-A starts only after v0.98.0 is publicly accepted.
+
+## Exact-head run 35976493810
+
+The first full run on `324af83a05cdbc6797a0f99e9e17bed7e2773e19`
+passed preflight, the ordinary build and shards 1, 3 and 4. Shard 2 executed
+2,976 tests with 2,975 passes and one failure; the full matrix therefore
+executed 12,803 tests with 12,802 passes, one failure and no skips or
+cancellations.
+
+The remaining failure was the unchanged missing-storage Versus catalogue host
+waiting ten seconds for a cold gallery open. The run took 10.66 seconds at that
+boundary, while every behavior assertion after opening was still unexecuted.
+An 11.5-second delay in the actual mission-library index request reproduces the
+same expiry and late teardown rejection locally; the unchanged case passes under
+normal timing.
+
+The narrow correction observes the real All missions handler, asserts its
+immediate Preparing missions status and joins the owned opening promise under a
+finite bound. It retains the real focus/click, degraded-capability messages,
+Base launch, installed-content unavailability, zero pack writes and exact
+incoming-Journey cases. The complete file passes 6/6 and the corrected delayed
+case passes; no runtime source changes. A fresh full hosted run on the corrected
+head remains mandatory.
