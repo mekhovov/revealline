@@ -20,7 +20,7 @@ export function attachJourneyBackup({
   const title = element('h2', 'Keep your Journey', 'journey-backup-title');
   const copy = element(
     'p',
-    'Export a local backup or inspect one before restoring. Restore adds missing progress; current clears and Continue positions win. It never replaces this attempt, awards scores or unlocks content.',
+    'Export a local backup or inspect one before restoring. Restore adds missing progress; current clears and Continue positions win. It includes earned-picture references, not image bytes. Keep the matching game edition to view those originals. It never replaces this attempt, awards scores or unlocks content.',
   );
   const exportButton = element('button', 'Export progress', 'journey-backup-export');
   const label = element('label', 'Inspect Journey backup');
@@ -73,9 +73,12 @@ export function attachJourneyBackup({
       return;
     }
     try {
-      if (file.size > 8 * 1024 * 1024) throw new Error('Backup exceeds the 8 MiB file limit.');
+      if (file.size > 16 * 1024 * 1024) throw new Error('Backup exceeds the 16 MiB file limit.');
       status.textContent = 'Inspecting the local backup…';
-      const { backup, merged } = profile.inspectBackup(await file.text());
+      const { backup, merged, pictures } = profile.inspectBackup(await file.text());
+      const addedPictures = pictures
+        ? pictures.records.length - (profile.pictures?.().records.length ?? 0)
+        : 0;
       if (ticket !== revision) return;
       const current = profile.snapshot();
       const counts = JOURNEY_MODES.map((mode) => {
@@ -93,7 +96,7 @@ export function attachJourneyBackup({
       });
       inspected = backup;
       apply.disabled = false;
-      status.textContent = `${counts.join('. ')}. Existing Continue positions are kept; an empty position may be restored. Unknown mission IDs are retained for other editions. Restore is still required.`;
+      status.textContent = `${counts.join('. ')}. ${addedPictures} earned-picture references added; image bytes are not included. Existing Continue positions are kept; an empty position may be restored. Unknown mission IDs are retained for other editions. Restore is still required.`;
     } catch (error) {
       if (ticket === revision)
         status.textContent = `Cannot inspect: ${error.message} Progress is unchanged.`;
