@@ -22,6 +22,10 @@ import { validateMediaLibrary } from '../media-library.mjs';
 import { resolveGameplayTuning, applyGameplayTuning } from '../gameplay-tuning.mjs';
 import { resolveActorStyleForBoundary } from '../presentation/actor-style-policy.mjs';
 import { mediaFixture, libraryRecord } from './helpers/media-fixtures.mjs';
+import { emptyLibrary } from '../library.mjs';
+import { emptyPackLibrary } from '../packs.mjs';
+import { prepareBackup, exportBackup } from '../backup.mjs';
+import { prepareAttemptExport } from '../attempt-export.mjs';
 
 function fixture(mode = 'standard', turnPolicy = 'immediate') {
   const f = mediaFixture(true),
@@ -100,6 +104,34 @@ const visual = (f) => ({
   content: f.actor.content,
   selection: { id: 'field-kit', revision: 1 },
   presentation: f.actor.presentation,
+});
+
+test('actor saves survive backup and rescue export without granting asset readiness', async () => {
+  const f = fixture(),
+    session = save(f),
+    source = { library: emptyLibrary(), packs: emptyPackLibrary(), session },
+    before = structuredClone(source),
+    config = {
+      campaigns: [f.entry.campaign],
+      resolveMediaIdentityCatalog: () => f.identityCatalog,
+    };
+  const bytes = await exportBackup(source, config),
+    restored = await prepareBackup(bytes, config);
+  assert.deepEqual(restored.session, session);
+  assert.deepEqual(source, before);
+  await assert.rejects(
+    prepareBackup(bytes, { campaigns: [f.entry.campaign] }),
+    /original picture library and exact historical owners/,
+  );
+  for (const context of [
+    {},
+    { campaign: f.entry.campaign, mediaIdentityCatalog: f.identityCatalog },
+  ]) {
+    const exported = await prepareAttemptExport(session, context);
+    assert.deepEqual(exported.session, session);
+    assert.equal(Object.isFrozen(exported.session.actorAppearancePin), true);
+    assert.equal(exported.context, context.campaign ? 'installed-campaign' : 'replay-only');
+  }
 });
 
 for (const mode of ['standard', 'gentle'])
@@ -263,7 +295,7 @@ test('v6 requires strict flat pictures, actor pin, nullable whole-theme pin and 
     { ...saved, visualThemePin: {} },
   ])
     assert.throws(() => snapshotSession(changed));
-  assert.throws(() => save(f, { presentationPins: undefined }), /require pictures/);
+  assert.throws(() => save(f, { presentationPins: undefined }), /authored Journey context/);
   assert.throws(() => save(f, { continuation: undefined }), /explicit continuation/);
 });
 

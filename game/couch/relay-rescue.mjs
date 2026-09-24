@@ -9,6 +9,9 @@ import {
 } from '../gameplay-tuning.mjs';
 import { mountGameplayTuning } from '../ui/gameplay-tuning.mjs';
 import { createJourneyPreferences } from '../journey/preferences.mjs';
+import { createActorStylePreferences } from '../actor-style-preferences.mjs';
+import { prepareActorAppearanceLease } from '../presentation/actor-appearance-lease.mjs';
+import { prepareTeamVisualThemeContext } from '../presentation/visual-theme-identities.mjs';
 import { dataIdentity } from '../data-json.mjs';
 import { attachCouchMusicHost } from './couch-music-host.mjs';
 import { prepareTeamMusicContext } from './couch-music-context.mjs';
@@ -352,6 +355,11 @@ export function bootCoop({
   const foreground = () => !document.hidden && document.hasFocus?.() !== false;
   const gameplayTuning = createGameplayTuningController({ eventTarget: window });
   const gameplayPreferences = candidatePreferences ?? createJourneyPreferences({ window });
+  const actorPreferences = createActorStylePreferences({
+    window,
+    getStorage: () => localStorage,
+    onWarning: () => renderActorStyle(),
+  });
   const attemptTuning = new WeakMap();
   const normalGameplayIdentities = new WeakMap();
   if (!candidatePreferences) $('coop-difficulty').value = gameplayPreferences.snapshot().difficulty;
@@ -1150,6 +1158,7 @@ export function bootCoop({
       reduced: displayPreferences.snapshot().effectiveReducedEffects,
       textFace: displayPreferences.snapshot().textFace,
       picture: acceptedPicture?.binding ?? null,
+      actorAppearance: acceptedPicture?.actorAppearance ?? null,
       pictureLevel: attemptTuning.get(run)?.pictureLevel ?? run.level,
     });
     const coverage = run.coverage * 100;
@@ -1485,8 +1494,107 @@ export function bootCoop({
               decodeImage: decodeCoopPicture,
             }),
       binding: null,
+      actorAppearance: null,
       state: 'new',
     };
+    // Ownership, not matching IDs/bytes, authorizes this cosmetic overlay.
+    // Imported packs and artwork bundles retain their original presentation.
+    const eligible =
+      !artworkSource &&
+      (sourcePack === COOP_STARTER_PACK || (journeyRow && candidateJourney.owns(journeyRow)));
+    if (eligible) {
+      const pictures = selection.lease,
+        style = actorPreferences.snapshot().actorStyle;
+      let actors = null,
+        pending = null,
+        visit = 0,
+        closed = false;
+      selection.lease = Object.freeze({
+        async select(request) {
+          if (closed) throw new Error('Team appearance selection is disposed.');
+          pending?.abort();
+          const controller = new AbortController(),
+            ticket = ++visit,
+            cancel = () => controller.abort();
+          pending = controller;
+          request.signal?.addEventListener('abort', cancel, { once: true });
+          if (request.signal?.aborted) cancel();
+          const check = () => {
+            if (closed || ticket !== visit || controller.signal.aborted)
+              throw new DOMException('Team appearance preparation cancelled.', 'AbortError');
+          };
+          let staged = null;
+          try {
+            check();
+            const binding = await pictures.select({
+              ...request,
+              signal: controller.signal,
+              onStatus: (status) => {
+                if (
+                  !closed &&
+                  ticket === visit &&
+                  !controller.signal.aborted &&
+                  status.status !== 'ready'
+                )
+                  request.onStatus?.(status);
+              },
+            });
+            check();
+            if (!actors) {
+              const content = await prepareTeamVisualThemeContext(
+                {
+                  pack: selection.pack,
+                  level: selection.pack.levels.find((level) => level.id === selection.levelId),
+                  association: {
+                    editionId: 'actor-style-v1',
+                    contentThemeId: selection.request.themeId,
+                    mode: 'team',
+                  },
+                },
+                { signal: controller.signal },
+              );
+              check();
+              staged = await prepareActorAppearanceLease(
+                { style, content, scope: 'team-pack' },
+                {
+                  baseURL: new URL('../presentation/compiled/', location.href),
+                  signal: controller.signal,
+                  currentManifestSha256: presentationPage.current()?.manifestSha256 ?? null,
+                },
+              );
+              check();
+              actors = staged;
+              staged = null;
+              selection.actorAppearance = Object.freeze({ style, snapshot: actors.snapshot });
+            }
+            request.onStatus?.({ stage: 'ready', status: 'ready' });
+            check();
+            return binding;
+          } finally {
+            staged?.release();
+            request.signal?.removeEventListener('abort', cancel);
+            if (pending === controller) pending = null;
+          }
+        },
+        confirm(request) {
+          if (closed || pending || !actors)
+            throw new Error('The exact Team actors are not ready. Retry preparation.');
+          actors.pin();
+          return pictures.confirm(request);
+        },
+        dispose() {
+          if (closed) return;
+          closed = true;
+          visit++;
+          pending?.abort();
+          pending = null;
+          actors?.release();
+          actors = null;
+          selection.actorAppearance = null;
+          pictures.dispose();
+        },
+      });
+    }
     if (music) {
       const level = structuredClone(recipe.level);
       selection.musicReady = Promise.resolve()
@@ -1834,6 +1942,7 @@ export function bootCoop({
         reduced: displayPreferences.snapshot().effectiveReducedEffects,
         textFace: displayPreferences.snapshot().textFace,
         picture: selection.binding,
+        actorAppearance: selection.actorAppearance,
         pictureLevel: attemptTuning.get(candidate).pictureLevel,
       });
       if (!current()) {
@@ -2466,6 +2575,7 @@ export function bootCoop({
         reduced: displayPreferences.snapshot().effectiveReducedEffects,
         textFace: displayPreferences.snapshot().textFace,
         picture: selection.binding,
+        actorAppearance: selection.actorAppearance,
         pictureLevel: attemptTuning.get(candidate).pictureLevel,
       });
       check();
@@ -4347,6 +4457,24 @@ export function bootCoop({
   } else if ($('coop-level').value !== lastBuiltInArena) $('coop-level').value = lastBuiltInArena;
   showPackStatus();
   setupNote();
+  function renderActorStyle() {
+    $('coop-actor-style').value = actorPreferences.snapshot().actorStyle;
+    $('coop-actor-style-note').textContent =
+      'New missions use this actor style. Retry keeps the current actors. Custom packs and artwork stay original.' +
+      (actorPreferences.getWarning() ? ` ${actorPreferences.getWarning()}` : '');
+  }
+  let actorRevision = actorPreferences.snapshot().revision;
+  const stopActorView = actorPreferences.subscribe((snapshot) => {
+    renderActorStyle();
+    if (snapshot.revision === actorRevision) return;
+    actorRevision = snapshot.revision;
+    cancelNext({ announce: false });
+    cancelDiscoveryPreparation();
+    if (!disposed && !run && !departure && !importOperation && !importAdopting && !importDisplay)
+      void preparePicture();
+  });
+  $('coop-actor-style').onchange = () =>
+    actorPreferences.set({ actorStyle: $('coop-actor-style').value });
   gameplayTuning.subscribe(() => refreshGameplayTuningNote());
   if (!candidatePreferences)
     gameplayPreferences.subscribe((snapshot) => {
@@ -4377,6 +4505,9 @@ export function bootCoop({
     .catch((error) => console.error('Native lifecycle unavailable:', error));
   const dispose = () => {
     if (disposed) return;
+    stopActorView();
+    actorPreferences.dispose();
+    $('coop-actor-style').onchange = null;
     discoveryStarted = null;
     discovery?.dispose();
     cancelDiscoveryPreparation();

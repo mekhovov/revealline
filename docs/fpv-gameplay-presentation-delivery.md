@@ -26,10 +26,11 @@ geometry or claim their pending PRs are delivered.
 
 ## In progress
 
-1. Actor-only asset preparation and rendering, then menu and host integration.
-   Keep original pictures, palettes, music and custom overrides.
-2. Versioned saved appearance and exact retained asset preparation. Leaf-module
-   tests alone are not menu, renderer or complete saved-attempt integration.
+1. Actor-only asset preparation, rendering and all three menu/host integrations
+   are implemented in draft PR338. Independent review and frozen-build/public
+   qualification remain; original pictures, palettes and music stay unchanged.
+2. Versioned Solo saved appearance and exact retained asset preparation are
+   integrated. Standalone styled replay export/playback remains incomplete.
 3. The user's capture-restart report remains open. Do not change the core
    without reproducing its defect; native held-input/device evidence is pending.
 
@@ -40,7 +41,7 @@ The combined 28-test cohort passed with zero failures/skips on Node 20.19.5;
 scoped ESLint, Prettier and diff whitespace checks passed. The first actor test
 run exposed explicit `undefined` being accepted as a default; strict record-field
 validation corrected it before the successful rerun. These leaf APIs are not
-connected to gameplay yet. Menu copy must say "next new launch or Next mission":
+now connected to gameplay in the candidate, not the public release. Menu copy says "new missions and Next":
 Retry deliberately retains the existing choice.
 
 The differential actual-host cohort now passes 16/16 cases (159.19 seconds,
@@ -61,8 +62,8 @@ the implementation-owner's focused cohort passed 63/63, including oversized
 replay rejection. An initial test assertion's wording was corrected. Host
 activation and retained source/hash/decoded-role checks remain necessary.
 
-Actor-only rendering is prepared for both board and Team painters, but not yet
-selected by gameplay hosts. The combined 80-case renderer/Team-state cohort
+Actor-only rendering is selected by the candidate board and Team hosts.
+The combined 80-case renderer/Team-state cohort
 passes with no skips. It covers all seven player roles in compact/detailed art,
 authored-world preservation, custom-body precedence, unchanged simulation,
 Team downed/rescue states and rejection before paint. Four board cases began as
@@ -93,7 +94,25 @@ whole-theme pin. It does not manufacture picture receipts. The core restore
 still checks the accepted runtime; the host must independently re-resolve the
 complete project/content identity before actor adoption. Seven real compiled
 Journey save tests cover all presets and both styles; 45 focused Classic,
-managed-v6 and historical-v5 checks also pass. Menu/host integration is ongoing.
+managed-v6 and historical-v5 checks also pass. The actual Solo host re-resolves
+the authored Journey context and rejects a forged same-ID project hash before
+replacing the running attempt or saved bytes.
+
+Team's focused host/picture cohort passes 24/24, including readiness, disposal,
+preference cancellation, Retry pin retention and same-ID Custom exclusion.
+The root's combined Team/Classic/Journey session cohort passes 46/46 with zero
+skips (7.76 seconds). A pre-existing Team earned-Next route fixture fails in both
+the changed host and the exact HEAD host; earned-Next is not counted as passed.
+Versus's initial 12-case cohort passes, but independent review subsequently found
+a setup observer leak and an optional authority-index outage blocking Custom
+launches. Both require correction and rerun before acceptance.
+
+The current-source browser preview decoded FPV actors, cleared First return and
+opened the next Journey mission with FPV actors. This is not frozen/public or
+held-input proof. Local storage/profile-lock failures prevent persistence
+qualification; no user storage or locks were removed. CI on `44bdea06a` passed
+validation, lint, formatting and source identity, but failed the production
+revision-ledger check. Its build and long suite were skipped, not passed.
 
 Standalone simulation replay files currently do not contain appearance pins.
 Portable styled playback needs its own versioned presentation envelope and
