@@ -11,6 +11,7 @@ import { validateCreatorProvenance, verifyCreatorRoutes } from './templates.mjs'
 
 export const CREATOR_BUNDLE_FORMAT = 'revealline-content-bundle.v1';
 export const CREATOR_BUNDLE_LIMITS = Object.freeze({
+  imageBytes: 24 * 1024 * 1024,
   bytes: 256 * 1024 * 1024,
   manifestBytes: 2 * 1024 * 1024,
 });
@@ -345,8 +346,11 @@ export async function prepareCreatorBundle(
   const manifest = freezeDesign({ ...document, editionId });
   const manifestBytes = new TextEncoder().encode(canonicalJSON(manifest)).length;
   const bytes = 12 + manifestBytes + assets.reduce((n, a) => n + a.blob.size, 0);
+  const packageLimit = content.media
+    ? CREATOR_BUNDLE_LIMITS.bytes
+    : CREATOR_BUNDLE_LIMITS.imageBytes;
   required(
-    manifestBytes <= CREATOR_BUNDLE_LIMITS.manifestBytes && bytes <= CREATOR_BUNDLE_LIMITS.bytes,
+    manifestBytes <= CREATOR_BUNDLE_LIMITS.manifestBytes && bytes <= packageLimit,
     content.project.missions.length === 1
       ? 'The pack is too large. Reduce its picture size.'
       : 'The pack is too large. Review an explicit split plan or remove selected pictures.',
