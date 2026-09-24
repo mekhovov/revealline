@@ -82,7 +82,7 @@ test('Restart is limited to Pause and does not leak into briefings or result men
   assert.deepEqual(page.errors, []);
 });
 
-test('Pause owns Missions, Help and Settings and each child restores its exact opener', async (t) => {
+test('Pause owns Sound, Missions, Help and Settings and each child restores its exact opener', async (t) => {
   const page = await soloPage(t);
   page.$('start-button').click();
   await settle(() => page.doc.body.dataset.flightState === 'running');
@@ -92,6 +92,11 @@ test('Pause owns Missions, Help and Settings and each child restores its exact o
 
   const run = page.rendered.run,
     checkpoint = authoritativeCheckpoint(run);
+  const initialSoundState = page.$('overlay-sound').getAttribute('aria-pressed');
+  page.$('overlay-sound').click();
+  assert.notEqual(page.$('overlay-sound').getAttribute('aria-pressed'), initialSoundState);
+  assert.equal(page.rendered.paused, true);
+  assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
   for (const [opener, dialog] of [
     ['overlay-help', 'help-dialog'],
     ['overlay-settings', 'settings-dialog'],

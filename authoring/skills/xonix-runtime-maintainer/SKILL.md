@@ -1148,7 +1148,7 @@ Example: “Verify Replace & play with a bounded local download delay. Keep Stay
 Keep Pause as the sole in-flight menu authority. While a run is active or paused,
 the compact shell may retain Game menu, fullscreen and Pause, but it must not repeat
 Missions, Skip, Collection or Settings above the Pause panel. Order the visible
-Pause actions around Resume, Restart, Missions, Help, Settings and Home; put Field
+Pause actions around Resume, Restart, Missions, Help, Settings, quick Sound and Home; put Field
 details and Mission brief in one collapsed Mission info group. Child screens must
 return to their exact Pause opener without resuming or replacing the attempt.
 Verify controller access to the disclosure as well as its child actions, and keep
