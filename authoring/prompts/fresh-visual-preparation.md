@@ -2,6 +2,15 @@
 
 > Extend Reveal Line's fresh-attempt presentation policy to another reviewed complete collection. Use exact authored owner and level hashes, compatible edition/mode, catalogue revision and compiled manifest bytes. Keep gameplay and earned-original identity separate. Stage assets and the accepted picture together before replacing a result or starting simulation. Pin both on a new save; retain them on Retry, Restart and Continue. Cancel obsolete work and release only its unadopted resources. Never silently use the decorative page theme when a declared collection is broken. Preserve historical readers and the prior release's hash-named manifests/payloads. Test one-action Start/Next, actual win/Retry, failure/cancellation/focus loss, Standard/Gentle originals and source-byte restoration before expanding the policy. Keep uncovered content explicit. Update generation and authoring guidance, then run composed-source, native, offline and immutable-public release gates.
 
+> With a decoded released picture and pinned visual collection, enter a legal
+> cut, Pause, change the next-attempt difficulty and confirm Restart. Require a
+> fresh run/recorder under the selected recipe while the complete accepted
+> picture/story choices and visual pin remain identical. Rebind the retained
+> media's execution context through the existing validated Retry helper. Repeat
+> during recovery, after saved Continue and through terminal Retry. Resume alone
+> must preserve the old attempt and difficulty; changing a preference must not
+> rewrite its saved checkpoint or silently select new artwork.
+
 For regression work, use the actual published picture bindings and preserve separately authenticated installed originals. Wait for real running state before movement; wait for visible refusal in intentionally blocked recovery cases. Keep no-write, exact-checkpoint and immutable-history assertions. A corrected fixture must not disable presentation loading or accept any arbitrary picture merely to pass.
 
 For large installed campaigns, keep the existing library and heap limits. Avoid re-encoding serialized pack pointers for snapshot equality; compare strings byte-exactly and legacy objects canonically. Prove stale writes still refuse, existing chapters survive, and Download & play reaches the selected mission. Record real browser play separately from modeled PNG decoding and source tests.

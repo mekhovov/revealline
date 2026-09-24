@@ -7084,9 +7084,23 @@ try {
       cancelPictureStart();
       storyDialog.close();
     }
+    const retainedPins = retainAttemptAppearance && flightPictures?.pins();
     const retainedPictures =
       retainAttemptAppearance && flightPictures
-        ? { pins: flightPictures.pins(), legacy: flightPictures.legacy }
+        ? {
+            // Restart can adopt a new difficulty context while keeping every
+            // accepted picture/story choice, just like Retry from results.
+            pins:
+              retainedPins && !flightPictures.legacy
+                ? retryFlightPresentationPins(retainedPins, {
+                    identityCatalog: pictureIdentity(),
+                    campaignKey: campaignKey(campaign),
+                    level: campaign.levels[levelIndex],
+                    themeId: theme.id,
+                  })
+                : retainedPins || undefined,
+            legacy: flightPictures.legacy,
+          }
         : null;
     const keepVisuals =
       restoreAdoption || retainAttemptAppearance || preparedAttempt?.ticket.kind === 'retry';

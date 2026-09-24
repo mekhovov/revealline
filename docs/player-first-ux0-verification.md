@@ -392,3 +392,22 @@ More chapters parent is explicitly mounted as a retained component boundary;
 today's public catalogue entry is qualified separately. The current public
 Missions/setup route is used where that is the scenario's purpose. No hidden old
 control is described as a current player entry point.
+
+## Confirmed Restart defect
+
+Clean baseline fde3e1ca reproduces a genuine Pause Restart failure after changing
+next-attempt difficulty: the old picture pins still carry the prior execution
+context. The host now applies the existing validated Retry pin rebinder after
+choosing the fresh difficulty. It changes only the execution key and derived
+level revision; picture/story choices and the complete visual collection remain
+retained. Legacy and candidate paths without managed pins keep their existing
+behavior. No gameplay or persistence reader changes are introduced.
+
+All eleven difficulty-host checks pass, including a new decoded released-original
+and full visual-pin case; historical saved-attempt readers, legal self-contact in
+both steering policies, exact fresh checkpoints and preference-only invariance
+remain required. Complete fresh-visual and Solo result-continuation files pass
+24 checks after the runtime correction. The retained-media practice suite also
+passes all five checks after isolating its seeded authored campaign from the
+separate, legitimate fresh release-art import. Its zero-write/byte/history guards
+are unchanged. These are automated host observations, not native or public proof.

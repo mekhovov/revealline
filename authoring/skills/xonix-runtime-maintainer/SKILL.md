@@ -37,6 +37,12 @@ are not public catalogue evidence. Current host selection joins the visible acti
 and matches the exact source/edition/campaign/runtime identity. Independently resolve
 fresh tuning, retain historical routes and use legal host inputs without neutral
 braking or state injection. Verify decoded background identity, not actor draw order.
+Pause Restart and terminal Retry share the retained-media contract. If the player
+changes difficulty, rebind only the validated execution key/derived level revision
+through `retryFlightPresentationPins`; preserve every accepted picture/story
+choice and complete visual collection. Do not feed old execution pins unchanged
+to a new difficulty context. Prove live-cut, recovery and restored-attempt paths
+with real inputs, exact fresh checkpoints and decoded released originals.
 
 For compact Solo landscape, distinguish manual equipment from authored warning
 capability. `hasFieldWarningBand` uses the validated original level, including
