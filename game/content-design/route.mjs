@@ -9,6 +9,7 @@ import {
   createWholeImpactCandidates,
   createWholePressureCandidates,
   createWholeCulturalPressureCandidates,
+  createWholeErosionReviewCandidates,
 } from './whole-spatial-candidates.mjs';
 import { createWholeJourneyCandidates } from './whole-journey-candidates.mjs';
 
@@ -30,5 +31,6 @@ export function createAuthoredJourneyRoute(id) {
     createWholeImpactCandidates,
     createWholePressureCandidates,
     createWholeCulturalPressureCandidates,
+    createWholeErosionReviewCandidates,
   });
 }

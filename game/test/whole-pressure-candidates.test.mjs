@@ -103,8 +103,8 @@ test('v6 remains historical while v7 keeps isolated progress after the normal en
     authoredJourneyModeHref(route.id, 'versus'),
     'couch/?journey=whole-spatial-v7&return=solo',
   );
-  assert.equal(DEFAULT_JOURNEY_ROUTES.solo, 'whole-spatial-v8');
-  assert.equal(DEFAULT_JOURNEY_ROUTES.versus, 'whole-spatial-v8');
+  assert.equal(DEFAULT_JOURNEY_ROUTES.solo, 'whole-spatial-v9');
+  assert.equal(DEFAULT_JOURNEY_ROUTES.versus, 'whole-spatial-v9');
 });
 
 test('pressure successor leaves the first three Prologue missions byte-equivalent', () => {

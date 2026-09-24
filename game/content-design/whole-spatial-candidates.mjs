@@ -409,3 +409,41 @@ export function createWholeCulturalPressureCandidates({ artwork = false } = {}) 
   for (const item of [...source.campaigns, ...source.packs]) item.revision = source.revision;
   return source;
 }
+
+const lateErosionCounterplay = Object.freeze({
+  'cooling-loop':
+    'Follow the separate lane and erosion warnings. Repair a cooled bank only when it preserves the shorter route; otherwise use the permanent landing loop so isolated loss never becomes mandatory cleanup.',
+  'crosswind-remix':
+    'Use the protected connector as a fallback and follow both warnings. Repair a side current only when it serves the planned next closure; continue through the connector instead of chasing an isolated reopened cell.',
+  'final-broadcast':
+    'Keep the live trail short and bank an anchor connector before repairing earned ground. If a remote cell reopens, use the protected return for the next closure instead of abandoning the route to chase it.',
+  'apex-remix':
+    'Enclose the lethal patches and complete the permanent corner circuit first. Repair an inner spoke only when it shortens the next closure; the durable outer route prevents reopened cells from becoming compulsory cleanup.',
+});
+
+/** Documentation/authoring successor for the four late combinations whose
+ * erosion role was mechanically present but missing from their practice ledger.
+ * No coverage, objective, geometry, actor or runtime rule changes are made. */
+export function createWholeErosionReviewCandidates({ artwork = false } = {}) {
+  const source = createWholeCulturalPressureCandidates({ artwork });
+  source.id = artwork
+    ? 'whole-erosion-review-original-review'
+    : 'whole-erosion-review-greybox-review';
+  source.revision = 'erosion-counterplay-review-1';
+  source.name = 'Whole Journey · erosion repair and escape review';
+  source.missions = source.missions.map((mission) => {
+    const counterplay = lateErosionCounterplay[mission.id];
+    if (!counterplay) return mission;
+    return {
+      ...mission,
+      revision: 'erosion-counterplay-1',
+      design: {
+        ...mission.design,
+        counterplay,
+        practices: [...new Set([...mission.design.practices, 'territory-erosion'])],
+      },
+    };
+  });
+  for (const item of [...source.campaigns, ...source.packs]) item.revision = source.revision;
+  return source;
+}

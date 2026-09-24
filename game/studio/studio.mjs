@@ -35,6 +35,7 @@ import {
   createWholeImpactCandidates,
   createWholePressureCandidates,
   createWholeCulturalPressureCandidates,
+  createWholeErosionReviewCandidates,
 } from '../content-design/whole-spatial-candidates.mjs';
 import { withCampaignPresentation } from '../content-design/campaign-presentation.mjs';
 import { createTeamSignalCandidates } from '../content-design/team-signal-candidates.mjs';
@@ -977,6 +978,7 @@ $('whole-variety').onclick = guarded(() => {
       'global-impact-1': createWholeImpactCandidates,
       'pressure-arcs-1': createWholePressureCandidates,
       'cultural-pressure-1': createWholeCulturalPressureCandidates,
+      'erosion-counterplay-1': createWholeErosionReviewCandidates,
     }[$('whole-variety-edition').value] ?? createWholeVarietyCandidates;
   $('source').value = JSON.stringify(create({ artwork: true }), null, 2);
   sourceChanged = true;
