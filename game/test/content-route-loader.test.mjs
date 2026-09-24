@@ -35,6 +35,7 @@ const golden = {
   'whole-spatial-v5': [252377, '74162393aa803207f7e933f4ded83a64a6b223c926aecc5be7bffd113fd959fe'],
   'whole-spatial-v6': [254863, '8e718fffeed559c5075a4e94d6967d02c266661347ea67392bbb6fe35878769f'],
   'whole-ornament-v1': [256801, 'ff830aa5ebf20320522bbe00cda9bf738b36e0525724181be977f6d6018ba52c'],
+  'whole-ornament-v2': [263310, '92ba7c422c3549bceb255ea2b622ac3f1d4d66a861da54124deee2bebf91d053'],
 };
 
 test('all supported routes are covered by pinned edition snapshots', () => {
@@ -175,6 +176,7 @@ test('all literal lazy imports and shared modules are in the actual game build i
   const source = await readFile(new URL(loaderURL), 'utf8');
   const imports = [...source.matchAll(/import\('(.+?)'\)/g)].map((m) => m[1]);
   assert.deepEqual(imports, [
+    './ukrainian-ornament-atlas.mjs',
     './ukrainian-ornament-candidates.mjs',
     './spatial-challenge-journey.mjs',
     './whole-spatial-candidates.mjs',

@@ -9,6 +9,7 @@ import { journeyActorThemeCandidates } from '../presentation/journey-actor-mater
 import { journeyLibrarySource } from './journey-source.mjs';
 import { combineJourneyLibrarySources } from './cross-mode-journey.mjs';
 import { journeyMissionDetails, authoredJourneyMissionTags } from './journey-presentation.mjs';
+import { UKRAINIAN_ORNAMENT_ATLAS_IDS } from '../content-design/ukrainian-ornament-atlas-registry.mjs';
 
 const REVISED_MISSIONS = new Set([
   'two-bays',
@@ -19,6 +20,12 @@ const REVISED_MISSIONS = new Set([
   'crossing-complete',
 ]);
 const ALTERNATE = Object.freeze({
+  'whole-ornament-v2': {
+    routeId: 'whole-ornament-v1',
+    label: 'Previous atlas missions · ornament v1',
+    missionIds: UKRAINIAN_ORNAMENT_ATLAS_IDS,
+    earlierActiveRouteId: 'whole-ornament-v1',
+  },
   'whole-spatial-v6': { routeId: 'whole-spatial-v5', label: 'Previous Journey · v5' },
   'whole-spatial-v5': {
     routeId: 'whole-spatial-v6',
@@ -28,6 +35,7 @@ const ALTERNATE = Object.freeze({
     routeId: 'whole-spatial-v6',
     label: 'Previous ornament studies · v6',
     missionIds: ['cross-stitch-crossings', 'rushnyk-bands', 'pysanka-sections'],
+    earlierActiveRouteId: 'whole-spatial-v6',
   },
 });
 
@@ -132,12 +140,12 @@ export async function createSpatialEditionSources({
       },
     };
   });
-  // The opt-in ornament successor also retains the six prior v5 alternatives.
-  // Their profile is independent: never lend the v6 profile to v5 records.
+  // Walk only this fixed acyclic predecessor registry, retaining changed maps
+  // rather than duplicating entire catalogues. Every edition owns its progress.
   const earlier =
-    activeRouteId === 'whole-ornament-v1'
+    alternate.earlierActiveRouteId
       ? await createSpatialEditionSources({
-          activeRouteId: 'whole-spatial-v6',
+          activeRouteId: alternate.earlierActiveRouteId,
           originalThemes,
           difficulty,
           launch,
