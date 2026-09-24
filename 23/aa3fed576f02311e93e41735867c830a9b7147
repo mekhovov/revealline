@@ -1,0 +1,35 @@
+game/test/couch-shared-touch.test.mjs
+  s_7ff9749a779ebe::t_dc815040ae01c6 109-168,170-171
+  s_7ff9749a779ebe::t_4db1cbb2e5f76e 169
+game/test/actor-style-preferences.test.mjs
+  s_7ff9749a779ebe::t_3984f77037551d 1-241
+  s_7ff9749a779ebe::t_39814db0d2f2fc 242-243
+docs/fpv-gameplay-presentation-delivery.md
+  s_7ff9749a779ebe::t_bbea2122fee9d2 1-36,47-52,61-143
+  s_7ff9749a779ebe::t_053abac1c45e2e 37-46,53-60
+game/test/actor-style-policy.test.mjs
+  s_7ff9749a779ebe::t_3984f77037551d 1-74
+  s_7ff9749a779ebe::t_085c96328bd51a 75-78
+game/actor-style-preferences.mjs
+  s_7ff9749a779ebe::t_7aa79b1ff0e761 18-19
+  s_7ff9749a779ebe::t_3984f77037551d 1-17,20-172
+game/presentation/actor-style-policy.mjs
+  s_7ff9749a779ebe::t_3984f77037551d 1-38
+  s_7ff9749a779ebe::t_464aca34cd5196 39
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "23aa3fed576f02311e93e41735867c830a9b7147",
+  "prompts": {},
+  "sessions": {
+    "s_7ff9749a779ebe": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0b9ef-0646-7b22-8fb4-006e734dce4a",
+        "model": "gpt-6-astra"
+      },
+      "human_author": "Oleksandr Mekhovov <oleksandr.mekhovov@coupa.com>"
+    }
+  }
+}
