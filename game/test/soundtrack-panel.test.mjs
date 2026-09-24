@@ -371,6 +371,8 @@ function onlineCatalogueFixture() {
     status: 'published-audition',
     listeningApproval: 'pending',
     gameCatalogueAdmission: false,
+    contentId: index === 2 ? true : 'unknown',
+    recordingModeEligible: false,
     audio: { path: `objects/${sha256}.mp3`, bytes: 1000 + index, sha256 },
     aliases: [],
   }));
