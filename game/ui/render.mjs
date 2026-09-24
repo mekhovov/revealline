@@ -766,7 +766,11 @@ export class BoardPainter {
         reduced,
         screenScale: canvasCSSWidth / W,
       });
-      drawLineImpacts(ctx, classic, { screenScale: canvasCSSWidth / W });
+      drawLineImpacts(ctx, classic, {
+        screenScale: canvasCSSWidth / W,
+        time: this.time,
+        reduced,
+      });
       for (const e of state.enemies) {
         if (
           drawClassicEnemy(
