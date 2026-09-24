@@ -11,6 +11,13 @@ Use one menu-key owner and rendered grid geometry; expose chooser `primary()` to
 hosts. Preserve retained selection, current mission identity, remote focus leases
 and explicit return/Resume. Record full test results separately from any temporary
 CI waiver; skipped gates do not establish acceptance.
+Current host-route tests use the exact gameplay-tuning recipe and exposed input
+capabilities; historical proofs remain immutable. Team host fixtures cannot use
+Shift/Boost. Restore a genuine historical attempt to test untuned mastery recovery.
+Do not advertise unprepared image slots in partial painter fixtures or relax the
+production decoder's validation. Final Journey results retain their accepted run
+and picture while Browse missions opens; an optional Remix is not an automatic
+core-campaign successor.
 
 For compact Solo landscape, distinguish manual equipment from authored warning
 capability. `hasFieldWarningBand` uses the validated original level, including

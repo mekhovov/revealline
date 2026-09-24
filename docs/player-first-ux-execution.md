@@ -87,7 +87,7 @@ successful actions retire hints and Retry does not repeat long introductions.
 
 | Phase | State | Independent releases and blocking acceptance |
 | --- | --- | --- |
-| UX0 | PR320 qualifying, not public | Baseline/input: spatial Journey grid, omitted Couch controls, primary boot/mission focus, one menu-key owner; resolve reproduced targeted test failures with contract evidence. A final reachability audit adds Legacy Versus continuation and Team paused header controls before acceptance. |
+| UX0 | PR320 qualifying, not public | Baseline/input: spatial Journey grid, omitted Couch controls, primary boot/mission focus, one menu-key owner; resolve reproduced targeted and mandatory full-suite failures with contract evidence. The reachability audit adds Legacy Versus continuation and Team paused header controls. Qualification also corrects requested Workshop return and prevents automatic optional-Remix entry at a core Journey ending. |
 | UX1 | Remaining | Compact complete gallery, map/artwork previews, one-action play, selection restoration and Journey Collection rewards; all content sources and separate mode completion pass. |
 | UX2 | Remaining | Shared Home/lobbies/Pause, remove duplicate entry points and tuning prose, consistent Back/Help/Settings/Sound; direct Start and exact return focus pass. |
 | UX3 | Remaining | Objective-led HUD, responsive boards/touch controls, contextual hints; complete playable boards and controls coexist on short landscape and portrait. |
@@ -97,6 +97,34 @@ successful actions retire hints and Retry does not repeat long introductions.
 
 UX0 findings and evidence are maintained in the
 [feature verification record](player-first-ux0-verification.md).
+
+### Current delivery constraints
+
+PR320 is the v0.98.0 candidate, following the separately owned PR314/v0.97.0.
+The publisher alone owns release tags and Pages promotion. Restoring mandatory
+tests exposed more baseline failures than the original nine targeted failures:
+old host routes use earlier movement tuning, some Team fixtures send a removed
+Boost control, and terrain-only snapshots advertise image slots they do not
+prepare. These require corrected legal-input fixtures, not relaxed gameplay,
+skipped checks or new historical awards. Genuine behavior defects are fixed and
+regressed separately from fixture corrections. The original nine are therefore
+not a complete qualification estimate.
+
+Do not accept UX0 or begin the next public feature until the corrected complete
+suite, exact-source build, immutable artifact and public input checks pass. UX1-A
+remains the next feature. Its design preparation below is ready; it is not shipped.
+
+Implemented and verified in scoped UX0 checks: one Solo arrow owner, rendered-row
+Journey navigation, retained/current-card focus after reflow, previously omitted
+Couch settings/header actions, exact departure cancellation focus, Workshop boot
+return, deliberate Browse at Journey endings, and early Team difficulty intent.
+These implementation checks do not mark the feature publicly accepted.
+
+Remaining UX0 delivery steps: finish the complete mandatory suite and review any
+new failures; integrate the preceding reviewed release if main advances; qualify
+the exact final source and ordinary build; freeze and publish through the single
+publisher; then verify matching public bytes/version and real input/play. Only
+after that moves UX0 to Completed does implementation advance to UX1-A.
 
 ### UX1 implementation boundaries
 
