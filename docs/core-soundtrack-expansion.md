@@ -25,7 +25,7 @@ reviewer names, listening approval or device results.
 | Existing catalogue | 70 hosted recordings / 15 albums; earlier 24-track collection is included | Selective listening and trusted metadata curation |
 | Player framework | Simplified chooser, mixed playlists, uploads, creator tools, optional offline albums, recovery and rights enforcement | Targeted released-source verification and demonstrated fixes |
 | New archive previews | Previous 16 previews retained; six synth and four David KBD metal auditions published and technically/publicly verified through archive PRs #7/#8; twelve new auditions in this round including the Nakarada pair | Full listening, taste approval and game admission remain; zero new game admissions |
-| Retro previews | Seven earlier rejections retained; six DOS-88/escp previews also rejected for the requested direction | First comparison rejected; Above All the Chaos tentatively closest; three stronger user references guide the next search |
+| Retro previews | Seven earlier rejections retained; six DOS-88/escp previews also rejected for the requested direction | First comparison rejected; Electric Dreams now closest; continue source comparisons using the supplied night-drive references |
 | Metal previews | Existing six preserved as backups | Substantially heavier replacements |
 | Nakarada Shchedryk | User explicitly approved musical direction; exact MP3 technically checked | Game admission, opening theme and gameplay/device/cultural evidence |
 | UA-FPV | Four private import packs preserve 80 filenames / 77 unique recordings | Recording-specific public permission and game admission |
@@ -151,7 +151,7 @@ version is allocated without the release owner's confirmation.
 | M2 | Source infrastructure reviewed; admission remains | M1; remaining recording acceptance; full qualification | Qualify inactive bundled-source adapter, then admit/bundle exact opening theme and prove menu, offline and preference behavior | 1–2 days after gates | [Archive PR #3](https://github.com/mekhovov/revealline-soundtracks-01/pull/3); [public preview](https://mekhovov.github.io/revealline-soundtracks-01/batches/ukrainian-shchedryk-20260924/); [source-only draft PR #331](https://github.com/mekhovov/revealline/pull/331), 4fd7eb0b, 11 focused tests | Unreleased |
 | M3 | Source implemented and reviewed; qualification remains | Accepted main; complete source/browser/controller/device checks | Pass full required gates, verify actual controls and publish through the release pipeline | About 1 day remaining, excluding CI and device-access waits | [Draft PR #333](https://github.com/mekhovov/revealline/pull/333), da750277; reviewed runtime 99ae9a93 | Unreleased |
 | M4 | Active research; parallel | Exact published rights and musical/cultural review | Target six additional distinct Ukrainian compositions; publish cleared subsets | 1–2 days per research round; rights/review date unknown | Candidate/hold register below | Unreleased |
-| M5 | First comparison rejected; Above All the Chaos tentatively closest; stronger user references recorded | User musical fit; exact-file rights and full listening before admission | Compare Electric Dreams, Glimmer and original-edition Memory Bank against the three supplied night-drive/cyberpunk videos; prepare 6–10 full auditions only after accepted examples | Several hours per comparison round; 1–2 days batch preparation, then 1–2 days integration/verification after approval; CI/review waits excluded | M5.a decision history and source register below; historical archive PRs #7/#8 preserved | Unreleased in game |
+| M5 | Electric Dreams is the latest closest reference; further search requested; earlier feedback preserved | User musical fit; exact-file rights and full listening before admission | Compare Twilight Echo and Neon; Neon Noir stays a musical reference with a public-archive rights hold; prepare 6–10 full auditions only after accepted examples | Several hours per comparison round; 1–2 days batch preparation, then 1–2 days integration/verification after approval; CI/review waits excluded | M5.a decision history and source register below; historical archive PRs #7/#8 preserved | Unreleased in game |
 | M6 | Six replacement auditions public and technically verified | User taste and complete listening checks | Compare all six heavier candidates, admit accepted tracks and preserve six older backups | Listening/review date unknown; 1–2 days integration after approval | [Archive PR #6](https://github.com/mekhovov/revealline-soundtracks-01/pull/6), [#7](https://github.com/mekhovov/revealline-soundtracks-01/pull/7), [#8](https://github.com/mekhovov/revealline-soundtracks-01/pull/8) | Unreleased in game |
 | M7 | Blocked public rights; scope retained | Recording-specific public redistribution and applicable artwork evidence | Include all 77 recordings / 80 filenames; publish cleared entries; maintain private pack route | About 1 day integration after clearance; clearance date unknown | UA-FPV manifests/private packs/guide | Public collection unreleased |
 | M8 | Remaining verification | Released source and device access | Audit existing playback/storage/creator contracts; release demonstrated fixes separately | 1–2 days initial audit; fixes separately estimated | Existing regression suites | Per-feature evidence required |
@@ -384,8 +384,8 @@ Retain rhythmic energy and arrangement development; do not reduce the brief to
 ambient music, BPM, genre tags or chiptune. This interpretation still needs
 musical comparison, not another large speculative batch.
 
-**M5.a.4 — next small comparison, feedback pending.** These are source-page
-research leads, not accepted musical matches or cleared acquired masters.
+**M5.a.4 — third comparison, feedback received below.** Preserve these source-page
+research leads; none is an accepted game recording or a cleared acquired master.
 
 | Recording | Source basis for comparison | Licence / acquisition boundary |
 | --- | --- | --- |
@@ -406,6 +406,28 @@ offering a free download. EVA's Realizations remains held pending primary licenc
 evidence. No source audio was acquired, normalized, uploaded or admitted in this
 research round. Content ID, gameplay-video permission, musical acceptance and
 the existing release checks remain recording-specific.
+
+**M5.a.5 — Electric Dreams is the closest reference; keep searching.** The user
+answered the third comparison: "Electric Dreams — Scott Buckley is the closest,
+keep searcing". Use it as the leading musical reference, not final recording
+acceptance. Glimmer and Memory Bank remain unapproved, not explicitly rejected.
+Above All the Chaos retains its earlier tentative preference; the three supplied
+videos remain stronger user references.
+
+The next focused source comparisons follow this feedback:
+
+| Recording | Concrete comparison basis | Current boundary |
+| --- | --- | --- |
+| Scott Buckley — [Twilight Echo](https://www.scottbuckley.com.au/library/twilight-echo/) | Approximately 4:47 (286.903 seconds on the creator's [SoundCloud full track](https://soundcloud.com/scottbuckley/twilight-echo-cc-by)); warm nostalgic synthwave with a synth solo in the final chorus. | Exact track page CC BY 4.0; full MP3 offered. The alternate no-lead mix is not another composition. Source acquisition, listening and game review remain pending. |
+| Scott Buckley — [Neon](https://www.scottbuckley.com.au/library/neon/) | Creator describes moody 1980s electronica with arpeggios, pads and a synth lead solo. | Exact track page CC BY 4.0; compare the full original mix. No acceptance or acquired master. |
+| Shane Ivers — [Neon Noir](https://www.silvermansound.com/free-music/neon-noir) | 5:12; creator describes warm analogue bass, strings, electronic drums and DX7 character. | Musical reference / delivery hold. The track page says CC BY 4.0, but the current [licensing page](https://www.silvermansound.com/licenses) also prohibits standalone audio redistribution. Resolve that conflict before public MP3 admission; do not silently treat it as a cleared archive asset. |
+
+Scott Buckley's [Content ID guidance](https://www.scottbuckley.com.au/library/copyright-claims-release/)
+describes a library claim system. If admitted, these recordings must be excluded
+from the existing Recording mode while classified as registered; a CC licence
+does not establish claim-free gameplay videos. This is compatible with normal
+in-game playback after the existing admission checks. No creator was contacted,
+no purchase made and no audio acquired in this comparison round.
 
 #### M5.b — replacement pool after direction feedback
 
