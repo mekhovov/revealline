@@ -3,8 +3,11 @@ import { createHash } from 'node:crypto';
 const hash = (bytes) => createHash('sha256').update(bytes).digest('hex');
 const reviewedRecord = '7ecaeb6dc9c2fcf1804ed364ef1b818e3323f4a390629fd4575c0772cf4df45b';
 const successorRecord = '45e41eee3cacac251ede3f0304834a1fda311f8bd70f4d0b66aaceb493b8fc05';
+const continuationRecord = 'ff4b6344e7be9659c7e6b5bea12a9b6456b9f76e0d3587bf712c7b156d672a81';
 const priorReviewPath = 'docs/verification/team37/review.json';
 const successorReviewPath = 'docs/verification/team-specialist-cues-2026-09-24/review.json';
+const continuationReviewPath =
+  'docs/verification/team-integrated-presentation-continuation-2026-09-24/review.json';
 const canonical = (value) => JSON.stringify(sort(value));
 function sort(value) {
   if (Array.isArray(value)) return value.map(sort);
@@ -30,6 +33,7 @@ export function fieldKitTeamRecipeQuality({
   inheritedAssets,
   reviewBytes,
   successorReviewBytes,
+  continuationReviewBytes,
 }) {
   if (!reviewBytes || hash(reviewBytes) !== reviewedRecord) return unreviewed();
   const review = JSON.parse(reviewBytes);
@@ -48,11 +52,27 @@ export function fieldKitTeamRecipeQuality({
       successor.priorReview?.fingerprintSHA256 !== review.fingerprint.sha256 ||
       successor.fingerprint?.group !== 'team' ||
       successor.fingerprint?.paths !==
-        review.fingerprint.inputs.map((entry) => entry.path).join('; ') ||
-      source !== `${successor.fingerprint.paths} sha256:${successor.fingerprint.sha256}`
+        review.fingerprint.inputs.map((entry) => entry.path).join('; ')
     )
       return unreviewed();
-    evidence = `Team specialist functional successor: ${successorReviewPath} sha256:${successorRecord}; prior ${priorReviewPath} sha256:${reviewedRecord}`;
+    if (source === `${successor.fingerprint.paths} sha256:${successor.fingerprint.sha256}`)
+      evidence = `Team specialist functional successor: ${successorReviewPath} sha256:${successorRecord}; prior ${priorReviewPath} sha256:${reviewedRecord}`;
+    else {
+      if (!continuationReviewBytes || hash(continuationReviewBytes) !== continuationRecord)
+        return unreviewed();
+      const continuation = JSON.parse(continuationReviewBytes);
+      if (
+        continuation.format !== 'revealline-scoped-team-recipe-review-continuation.v1' ||
+        continuation.priorReview?.path !== successorReviewPath ||
+        continuation.priorReview?.sha256 !== successorRecord ||
+        continuation.priorReview?.fingerprintSHA256 !== successor.fingerprint.sha256 ||
+        continuation.fingerprint?.group !== 'team' ||
+        continuation.fingerprint?.paths !== successor.fingerprint.paths ||
+        source !== `${continuation.fingerprint.paths} sha256:${continuation.fingerprint.sha256}`
+      )
+        return unreviewed();
+      evidence = `Team integrated-presentation continuation: ${continuationReviewPath} sha256:${continuationRecord}; prior ${successorReviewPath} sha256:${successorRecord}`;
+    }
   }
   const role = review.recipes.find((entry) => entry.slot === slotId);
   if (
