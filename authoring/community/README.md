@@ -1,5 +1,7 @@
 # Create and recover a community game candidate
 
+Start with the [beginner creator guide](index.html) for today's image → map expansion → install/share workflow and downloadable examples. The [framework reference](framework-reference.md), [maintainer guide](maintainer-guide.md), and [phased delivery register](delivery-plan.md) distinguish existing behavior from the automatic media campaign workflow under development. The historical trials below retain their original scope and identities.
+
 This is a tested local authoring guide for Reveal Line. It covers a small mission project and a separate editable presentation collection. It does not claim that a finished DroneAid/community edition, catalogue installer, or public release has already been produced.
 
 Use [Content Studio](../../game/studio/index.html), [Asset Studio](../asset-studio/index.html), and the [copyable community prompts](../prompts/community-creation.md). Start from the [example project](example-project.json) when reproducing this guide. It is a small greybox with Solo/Versus support, not a finished campaign.
