@@ -74,7 +74,7 @@ version is allocated without the release owner's confirmation.
 | --- | --- | --- | --- | --- | --- | --- |
 | M0 | In review; first | None | Commit this complete master plan through a scoped docs PR; retain all histories and update every later item here | 0.5 day | This docs PR; prior source PR #321 | None needed for docs |
 | M1 | Diagnosed in part; awaiting accepted shared fixes | Accepted PR #320 corrections; remaining failure audit | Reuse reviewed baseline corrections, classify residual failures, then independently review and pass fresh exact-source qualification | 0.5 day triage; repair re-estimated after diagnosis | PR #321; run35945946346 | Unreleased |
-| M2 | Active preparation; first content release | M1; remaining recording acceptance | Admit Nakarada; bundle exact opening theme; publicly prove menu, offline and preference behavior | 1–2 days after gates | Archive PR #3; public Shchedryk preview | Unreleased |
+| M2 | Active preparation; first content release | M1; remaining recording acceptance | Admit Nakarada; bundle exact opening theme; publicly prove menu, offline and preference behavior | 1–2 days after gates | [Archive PR #3](https://github.com/mekhovov/revealline-soundtracks-01/pull/3); [public preview](https://mekhovov.github.io/revealline-soundtracks-01/batches/ukrainian-shchedryk-20260924/); [source-only draft PR #331](https://github.com/mekhovov/revealline/pull/331) | Unreleased |
 | M3 | Active preparation; independent | Accepted main; source/device tests | B/N and compact main/pause-menu controls across Solo/Versus/Team; separate feature PR | About 1 day plus checks | Feature PR pending | Unreleased |
 | M4 | Active research; parallel | Exact published rights and musical/cultural review | Target six additional distinct Ukrainian compositions; publish cleared subsets | 1–2 days per research round; rights/review date unknown | Candidate/hold register below | Unreleased |
 | M5 | Active sourcing; parallel | Six complete auditions and exact-file licences | Replace rejected retro with accepted Xposed-style synth batch | 1–2 days preparation + 1–2 days integration after approval | Candidate slate below | Unreleased |
@@ -371,7 +371,8 @@ metal, Ukrainian and fusion pilots before expanded production.
 
 ## Historical source and qualification register
 
-The following earlier evidence and research register is retained verbatim. Its
+The following earlier evidence and research register is retained, with clarified
+immutable evidence locations. Its
 candidate classifications are historical; the explicit current decisions above
 (rejected retro, backup metal, approved Nakarada taste) take precedence. No held
 licence or technical receipt becomes listening approval.
