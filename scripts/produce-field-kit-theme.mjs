@@ -141,11 +141,11 @@ const REVIEWED_RECIPE_INPUTS = {
     ],
   },
   effects: {
-    sha256: '475fea962731c07024adacf4e8df7692db23bff218d13768dff50971752a0ed5',
+    sha256: 'abd3aeef12041b55e76be3b026b52180f11df0f5b7a7f2a25ea560dacab0fdf1',
     evidence: [
-      'Scoped visible-actor effects continuation: docs/verification/integrated-fpv-presentation-2026-09-24/review.json sha256:5743669fa1b230c486bf92435e2922a8a775b86a3de10fd42f84c2e51a85ca51; eight ordered effects inputs sha256:475fea962731c07024adacf4e8df7692db23bff218d13768dff50971752a0ed5. Only render.mjs changes to pass authenticated actor geometry into the cosmetic player paint-size calculation.',
-      'The active-trail, secured-contour, travelling-impact, capture, failure, victory, pickup, shield, respawn and pressure painters remain unchanged. Focused renderer checks preserve trail core/head, reduced effects, capture layering, collision footprints and authoritative state.',
-      'Functional source continuation only. Historical reviews and original payloads remain immutable. Complete art, final-byte visual/device, human pacing, frozen/public and release acceptance remain separate. Any effects input or review-byte change reopens this group.',
+      'Scoped accepted-source effects continuation: docs/verification/player-locator-removal-effects-2026-09-24/review.json sha256:86af2305c0c275c29f3d58bc004777eecd82b773d30f06832e613c312f384afe; eight ordered effects inputs sha256:abd3aeef12041b55e76be3b026b52180f11df0f5b7a7f2a25ea560dacab0fdf1. Only render.mjs changes after the prior review, removing the v0.102.0 player-locator call.',
+      'The active-trail, secured-contour, travelling-impact, capture, failure, victory, pickup, shield, respawn and pressure painters remain unchanged. The accepted actor regression preserves the simulation-radius contact cue and authoritative checkpoint while proving the detached brackets are absent.',
+      'Functional source continuation only. Historical reviews and original payloads remain immutable. Complete art, accessibility, physical-device, human pacing, frozen/public and soundtrack release acceptance remain separate. Any effects input or review-byte change reopens this group.',
     ],
   },
 };
