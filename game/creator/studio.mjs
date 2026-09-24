@@ -27,6 +27,8 @@ import { downloadCreatorFile } from './download.mjs';
 import { canonicalJSON } from '../data-json.mjs';
 import { createBatchCreatorController } from './batch-ui.mjs';
 import { prepareReviewedCreatorBundle } from './batch-bundle.mjs';
+import { createCreatorMediaReviewController } from './media-review.mjs';
+import { prepareCreatorMediaCampaign } from './media-campaign.mjs';
 
 const $ = (id) => document.getElementById(id),
   store = createCreatorStore(),
@@ -57,6 +59,8 @@ let sourceFile = null,
   pictureURL = null,
   batchMode = false,
   batchSource = null,
+  mediaMode = false,
+  mediaSource = null,
   sourceVersion = 0,
   saveTimer = null;
 const batchSeed = crypto.getRandomValues(new Uint32Array(1))[0];
@@ -80,14 +84,14 @@ const batchApprovalAdapter = { approve: approveReviewedBatch };
 const batchEnabled = !!batchApprovalAdapter;
 
 function controls() {
-  $('edits').hidden = !content || batchMode;
-  $('generate').disabled = busy || (!sourceFile && !content);
+  $('edits').hidden = !content || batchMode || mediaMode;
+  $('generate').disabled = busy || mediaMode || (!sourceFile && !content);
   $('approve').disabled = busy || !prepared;
   $('approve').hidden = batchMode && !!approval;
   $('install').disabled = busy || !installReview?.enoughManagedSpace;
   $('download').disabled = busy || !approval;
-  $('backup').disabled = busy || !content;
-  $('save').disabled = busy || !content;
+  $('backup').disabled = busy || !content || mediaMode;
+  $('save').disabled = busy || !content || mediaMode;
   $('cancel').hidden = !busy;
   for (const key of ['image', 'import']) $(key).disabled = busy;
   for (const key of ['advanced', 'load-advanced', 'regenerate']) $(key).disabled = busy || !content;
@@ -99,8 +103,8 @@ function controls() {
     'picture-credit',
     'license',
   ])
-    $(key).disabled = busy;
-  $('fit').disabled = busy || (!!content && !sourceFile);
+    $(key).disabled = busy || mediaMode;
+  $('fit').disabled = busy || mediaMode || (!!content && !sourceFile);
 }
 
 const batch = createBatchCreatorController({
@@ -216,6 +220,54 @@ const batch = createBatchCreatorController({
     results.hidden = false;
   },
 });
+const mediaReview = createCreatorMediaReviewController({
+  document,
+  nodes: {
+    surface: $('media-review'),
+    list: $('media-list'),
+    status: $('media-status'),
+    apply: $('media-apply'),
+    cancel: $('media-cancel'),
+  },
+  onPrepared: (reviewed) => {
+    if (reviewed.items.some((item) => item.errors.length)) {
+      status('Resolve the media choices shown below before generating the campaign.', true);
+      return;
+    }
+    void operation(async (signal) => {
+      invalidate();
+      status('Generating enemies, obstacles and verified routes for the reviewed media…');
+      const result = await prepareCreatorMediaCampaign(
+        reviewed,
+        {
+          draftId: id,
+          collectionName: $('name').value,
+          seed: batchSeed,
+          themes,
+          credits: {
+            creator: $('creator-credit').value,
+            picture: $('picture-credit').value,
+            license: $('license').value,
+          },
+        },
+        { signal },
+      );
+      prepared = result.prepared;
+      mediaSource = result;
+      const { compatibility: _compatibility, ...selected } = prepared.manifest.content;
+      content = structuredClone(selected);
+      batchMode = false;
+      mediaMode = true;
+      sourceFile = image = null;
+      $('save-status').textContent =
+        'Video source files remain in this session. Download the approved .rlpack before leaving.';
+      showReview(prepared);
+      status(
+        `${content.project.missions.length} media level${content.project.missions.length === 1 ? '' : 's'} generated with enemies, obstacles and verified completion routes. Review before approving.`,
+      );
+    });
+  },
+});
 function invalidate() {
   prepared = approval = installReview = null;
   $('review').hidden = true;
@@ -245,6 +297,7 @@ function fillLabels() {
   $('license').value = content.credits.license;
 }
 function currentAssets() {
+  if (mediaSource) return mediaSource.sourceAssets;
   if (batchSource) return batchSource.sourceAssets;
   const all = [
     ...(image
@@ -367,8 +420,9 @@ function showReview(pack) {
   $('map-caption').textContent =
     `${template?.name ?? 'Verified crossing'} · 72 × 36 cells · Solo · ${enemies} ${enemies === 1 ? 'enemy' : 'enemies'} · ${walls} wall${walls === 1 ? '' : 's'} · ${foundations} safe island${foundations === 1 ? '' : 's'} · ${terrain} terrain zone${terrain === 1 ? '' : 's'} · verified completion route${provenances.length === 1 ? '.' : `; ${provenances.length} mission configurations verified.`}`;
   $('validation').textContent = pack.review.validation;
+  const storyCount = pack.manifest.content.media?.stories.length ?? 0;
   $('package-size').textContent =
-    `${mib(pack.bytes)} portable pack. Includes ${project.assets.length} PNG derivative${project.assets.length === 1 ? '' : 's'}. Source originals and player progress are excluded.`;
+    `${mib(pack.bytes)} portable pack. Includes ${project.assets.length} PNG derivative${project.assets.length === 1 ? '' : 's'}${storyCount ? ` and ${storyCount} complete victory video${storyCount === 1 ? '' : 's'}` : ''}. Source image originals and player progress are excluded.`;
   $('review').hidden = false;
 }
 async function generate(signal) {
@@ -409,6 +463,8 @@ function choose(file) {
   if (!file) return;
   batchMode = false;
   batchSource = null;
+  mediaMode = false;
+  mediaSource = null;
   sourceFile = file;
   invalidate();
   $('mission-title').value = file.name.replace(/\.[^.]+$/, '').slice(0, 160) || 'First picture';
@@ -419,6 +475,34 @@ function choose(file) {
 function chooseFiles(files) {
   const selected = [...files];
   if (!selected.length) return;
+  const includesVideo = selected.some(
+    (file) =>
+      ['video/mp4', 'video/webm'].includes(file.type) ||
+      (!file.type && /\.(?:mp4|webm)$/i.test(file.name)),
+  );
+  if (includesVideo) {
+    controller?.abort();
+    batch.setFiles([]);
+    $('batch-options').hidden = true;
+    batchMode = false;
+    batchSource = null;
+    mediaMode = true;
+    mediaSource = null;
+    sourceFile = image = content = prepared = approval = installReview = null;
+    $('review').hidden = true;
+    $('approved').hidden = true;
+    $('edits').hidden = true;
+    $('play').hidden = true;
+    const review = mediaReview.setFiles(selected);
+    status(
+      `${review.sources.length} media file${review.sources.length === 1 ? '' : 's'} selected. Inspect them, resolve poster choices, then review the generated playable campaign.`,
+    );
+    controls();
+    return;
+  }
+  mediaReview.setFiles([]);
+  mediaMode = false;
+  mediaSource = null;
   if (selected.length > 1 && !batchEnabled)
     return status(
       'This build supports one picture at a time. Batch review will appear when campaign assembly is available.',
@@ -462,9 +546,11 @@ async function approveReviewedBatch(items, settings) {
     );
     prepared = result.prepared;
     batchSource = result;
+    mediaSource = null;
     const { compatibility: _compatibility, ...selected } = prepared.manifest.content;
     content = structuredClone(selected);
     batchMode = true;
+    mediaMode = false;
     sourceFile = image = null;
     fillLabels();
     await saveDraft();
@@ -489,7 +575,22 @@ async function openPrepared(pack) {
   content = structuredClone(selected);
   batchMode = content.project.missions.length > 1;
   batchSource = null;
+  mediaMode = !!content.media;
+  mediaSource = null;
   sourceFile = image = null;
+  if (mediaMode) {
+    draft.source = null;
+    $('fit').value = 'contain';
+    $('fit').disabled = true;
+    fillLabels();
+    invalidate();
+    prepared = pack;
+    showReview(pack);
+    $('save-status').textContent =
+      'This portable video campaign is verified for this session and can be installed.';
+    status('Pack verified. Review this exact media campaign before installing.');
+    return;
+  }
   draft.source = await prepareCreatorSource(
     { draftId: id, content, editing: { fit: 'contain' }, originalSha256: null },
     pack.assets,
@@ -509,6 +610,8 @@ async function openSource(source) {
   content = structuredClone(source.document.content);
   batchMode = content.project.missions.length > 1;
   batchSource = null;
+  mediaMode = !!content.media;
+  mediaSource = null;
   draft.source = source;
   image = null;
   sourceFile = Array.isArray(source.document.originalSha256)
@@ -695,6 +798,7 @@ window.addEventListener('beforeunload', (event) => {
 window.addEventListener('pagehide', () => {
   controller?.abort();
   batch.destroy();
+  mediaReview.destroy();
   if (pictureURL) URL.revokeObjectURL(pictureURL);
   store.close();
 });
@@ -715,9 +819,9 @@ await listInstalled();
 busy = false;
 $('image').multiple = batchEnabled;
 if (batchEnabled) {
-  $('choose-title').textContent = '1. Choose your pictures';
+  $('choose-title').textContent = '1. Choose pictures or videos';
   $('intake-help').textContent =
-    'Or drop pictures here. Each can be up to 4 MiB and 16 megapixels. Files start in natural filename order; you can rearrange them before approval.';
-  status('Choose one or more PNG, JPEG or WebP pictures to begin.');
+    'Or drop media here. Pictures can be up to 4 MiB and 16 megapixels. MP4/WebM videos are inspected locally; matching image/video names are suggested and exact hashes remain authoritative.';
+  status('Choose PNG, JPEG or WebP pictures, MP4/WebM videos, or a mixture to begin.');
 }
 controls();

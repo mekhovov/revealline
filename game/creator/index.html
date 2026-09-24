@@ -14,11 +14,10 @@
     </header>
     <main>
       <p class="eyebrow">CREATE / REVIEW / PLAY</p>
-      <h1>Turn a picture into a playable level.</h1>
+      <h1>Turn pictures and videos into playable levels.</h1>
       <p>
-        Choose an image, review its level, then play or share a portable campaign. Creation stays on
-        your device. Multi-picture campaign review appears in builds that include the Phase 2 batch
-        assembler.
+        Choose pictures or videos, review their generated levels, then play or share a portable
+        campaign. Creation and video inspection stay on your device.
       </p>
       <p id="status" role="status" aria-live="polite">
         Choose one PNG, JPEG or WebP picture to begin.
@@ -28,7 +27,11 @@
         <h2 id="choose-title">1. Choose your picture</h2>
         <div id="drop" class="drop">
           <label
-            >Picture file <input id="image" type="file" accept="image/png,image/jpeg,image/webp"
+            >Media files
+            <input
+              id="image"
+              type="file"
+              accept="image/png,image/jpeg,image/webp,video/mp4,video/webm"
           /></label>
           <p id="intake-help" class="muted">
             Or drop one image here. Up to 4 MiB and 16 megapixels.
@@ -84,6 +87,15 @@
           ><a href="./">Start a new draft</a>
         </div>
       </section>
+      <section id="media-review" class="panel" hidden aria-labelledby="media-review-title">
+        <h2 id="media-review-title">2. Review video posters and celebrations</h2>
+        <p id="media-status" role="status" aria-live="polite"></p>
+        <div id="media-list"></div>
+        <div class="actions">
+          <button id="media-apply">Inspect media</button>
+          <button id="media-cancel" class="secondary" hidden>Cancel media inspection</button>
+        </div>
+      </section>
       <section id="batch-review" class="panel" hidden aria-labelledby="batch-review-title">
         <div class="batch-heading">
           <div>
@@ -134,8 +146,8 @@
       <section id="approved" class="panel" hidden aria-labelledby="approved-title">
         <h2 id="approved-title">3. Install or share</h2>
         <p>
-          This approved edition contains editable gameplay, the reviewed PNG picture, credits and
-          verified route evidence.
+          This approved edition contains generated gameplay, reviewed poster pictures, optional
+          complete victory videos, credits and verified route evidence.
         </p>
         <p id="storage-review"></p>
         <div class="actions">
@@ -151,9 +163,9 @@
           <input id="import" type="file" accept=".rlpack,.rlsource"
         /></label>
         <p>
-          A .rlpack includes the reviewed runtime picture. A private .rlsource backup also includes
-          a retained original, if available, and editing information. Neither includes player
-          progress or unrelated library items.
+          A .rlpack includes reviewed runtime posters and its selected complete victory videos. An
+          image-only private .rlsource backup also includes retained originals, if available, and
+          editing information. Neither includes player progress or unrelated library items.
         </p>
         <button id="backup" disabled>Back up source project</button
         ><button id="save" class="secondary" disabled>Retry saving checkpoint</button>
