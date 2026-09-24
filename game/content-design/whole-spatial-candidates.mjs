@@ -287,3 +287,125 @@ export function createWholePressureCandidates({ artwork = false } = {}) {
   for (const item of [...source.campaigns, ...source.packs]) item.revision = source.revision;
   return source;
 }
+
+const culturalPressureArcs = Object.freeze({
+  'cross-stitch-crossings': {
+    actorId: 'west',
+    role: 'trail-pursuer',
+    introduce: true,
+    routeDecision:
+      'Close at the nearby diamond landing after a pursuit warning, or continue through the stepped opening toward the farther return?',
+    lesson:
+      'The pursuer locks one visible point on the live stitch-like trail; the wall motif blocks sensing but never closes the cut.',
+    counterplay:
+      'Inspect both open sides before leaving, keep a contrasting landing in reach, and close while the committed approach still follows its locked route.',
+    memorableMoment:
+      'A short stitch closure cancels pursuit and turns the next diamond opening into a different route decision.',
+    mastery: 'Cancel a committed pursuit at each far landing without losing a life.',
+  },
+  'pysanka-sections': {
+    actorId: 'inside',
+    role: 'trail-pursuer',
+    routeDecision:
+      'Leave the spindle through the near oval opening, or use the segmented wall as a sight screen before reaching the far return?',
+    lesson:
+      'The open pysanka-inspired sections provide sight screens, not secret capture chambers; only real landings close the cut.',
+    counterplay:
+      'Depart away from the frontier patrol, break the pursuer’s sight with a wall segment, and commit only after choosing a reachable return.',
+    memorableMoment:
+      'The decorative oval becomes useful cover while the frontier continues around the changing boundary.',
+    mastery: 'Use both a wall-screened departure and a short pursued closure.',
+  },
+  'rushnyk-bands': {
+    actorId: 'west',
+    role: 'trail-pursuer',
+    routeDecision:
+      'Cross through the nearer alternating band before pursuit commits, or circle the end while preserving an inner strip as the fallback return?',
+    lesson:
+      'Alternating rushnyk-inspired openings change which side offers cover; pursuit and the outer patrol pressure different parts of the route.',
+    counterplay:
+      'Depart behind the outer patrol, use an inner return strip to cancel pursuit, and keep the next alternating passage open.',
+    memorableMoment:
+      'A left-to-right escape cancels pursuit, then the mirrored band demands the opposite approach.',
+    mastery: 'Cancel pursuit through both inner passages without losing a life.',
+  },
+  'four-motor-landings': {
+    actorId: 'west',
+    role: 'heading-interceptor',
+    introduce: true,
+    routeDecision:
+      'Keep the direct motor-pad heading after the target locks, or turn toward an adjacent pad and leave the committed intercept behind?',
+    lesson:
+      'Interception predicts only the observed heading. The four motor-like pads provide deliberate alternatives after the visible lock.',
+    counterplay:
+      'Choose two reachable pads, wait for the aim point, then turn around the central component wall toward the pad the interceptor did not target.',
+    memorableMoment:
+      'A propeller-like four-pad layout turns one warned attack into a satisfying mid-route feint.',
+    mastery: 'Feint after a lock and connect all four pads without losing a life.',
+  },
+  'circuit-lanes': {
+    actorId: 'west',
+    role: 'heading-interceptor',
+    routeDecision:
+      'Take the obvious straight trace, or provoke a lock and switch to the offset aisle through a broad work pad?',
+    lesson:
+      'Component-like walls make the alternate heading useful counterplay; the committed target never follows a later turn.',
+    counterplay:
+      'Prepare a work-pad return before entering the trace, turn only after the visible lock, and avoid following the outer patrol into the narrow approach.',
+    memorableMoment:
+      'The longer circuit aisle becomes the safe route once the interceptor commits to the obvious line.',
+    mastery: 'Close on both interior work pads after separate warning locks.',
+  },
+  'twin-lens-chambers': {
+    actorId: 'left',
+    role: 'heading-interceptor',
+    routeDecision:
+      'Shape the bridge frontier before provoking interception, or feint into one open lens and turn toward the opposite landing after lock?',
+    lesson:
+      'The frontier patrol follows the changing boundary while the interceptor follows only a previously locked heading target.',
+    counterplay:
+      'Keep both lens landings available, draw the lock away from the chosen return, and use closure to cancel interception before reshaping the frontier.',
+    memorableMoment:
+      'One capture defeats a committed intercept and redirects a separate frontier threat around the other lens.',
+    mastery: 'Cancel interception and make a return from both lens landings.',
+  },
+});
+
+/** In-place successor of the six prepared cultural pressure studies. Mission
+ * identities, maps, pictures and counts stay in their existing optional packs;
+ * no duplicate study campaign is appended to the player library. */
+export function createWholeCulturalPressureCandidates({ artwork = false } = {}) {
+  const source = createWholePressureCandidates({ artwork });
+  source.id = artwork
+    ? 'whole-cultural-pressure-original-review'
+    : 'whole-cultural-pressure-greybox-review';
+  source.revision = 'cultural-pressure-review-1';
+  source.name = 'Whole Journey · Ukrainian and FPV readable pressure review';
+  source.missions = source.missions.map((mission) => {
+    const arc = culturalPressureArcs[mission.id];
+    if (!arc) return mission;
+    const practices = [...mission.design.practices, ...(arc.introduce ? [] : [arc.role])];
+    return {
+      ...mission,
+      revision: 'cultural-pressure-1',
+      actors: mission.actors.map((actor) =>
+        actor.id === arc.actorId ? { ...actor, role: arc.role } : actor,
+      ),
+      design: {
+        ...mission.design,
+        routeDecision: arc.routeDecision,
+        lesson: arc.lesson,
+        counterplay: arc.counterplay,
+        captureConsequence:
+          'Closure cancels the committed attack. The adapted actor still retains its occupied field region, while the existing wall, foundation and patrol rules remain unchanged.',
+        memorableMoment: arc.memorableMoment,
+        mastery: arc.mastery,
+        introduces: arc.introduce ? [arc.role] : [],
+        practices: [...new Set(practices)],
+        combines: [...new Set([...mission.design.combines, arc.role])],
+      },
+    };
+  });
+  for (const item of [...source.campaigns, ...source.packs]) item.revision = source.revision;
+  return source;
+}

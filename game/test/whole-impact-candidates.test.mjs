@@ -104,8 +104,8 @@ test('v5 remains historical while v6 keeps isolated persistence after the normal
     'couch/?journey=whole-spatial-v6&return=solo',
   );
   assert.deepEqual(DEFAULT_JOURNEY_ROUTES, {
-    solo: 'whole-spatial-v7',
-    versus: 'whole-spatial-v7',
+    solo: 'whole-spatial-v8',
+    versus: 'whole-spatial-v8',
     team: 'team-spatial-originals-1',
   });
 });
