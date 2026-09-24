@@ -52,8 +52,9 @@ reviewer names, listening approval or device results.
   player, panel and production-history cohort passes 174/174 tests. Review found and the
   successor fixes close Recording-mode bypass, wrong-repository URL acceptance,
   unbounded response consumption, invalid-selection mutation and two follow-on
-  policy-transition cases. Field Kit revision 77 preserves every earlier revision
-  and binds the final reviewed audio fingerprint. Local native-browser playback
+  policy-transition cases. After rebasing onto accepted v0.103 ledger repair PR
+  #379, Field Kit revision 71 preserves every earlier revision and binds the final
+  reviewed audio fingerprint. Local native-browser playback
   loaded all 104 recordings and played Revenge's Waiting inside the game. Neither
   PR admits previews into trusted Automatic/built-in playlists or establishes
   musical approval. Next: pass all exact-head hosted game gates, qualify the actual
