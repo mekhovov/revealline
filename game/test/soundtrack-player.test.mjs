@@ -113,6 +113,39 @@ test('online archive playback streams its exact HTTPS object through the shared 
   h.player.dispose();
   assert.deepEqual(h.revoked, []);
 });
+test('online archive honors shuffle, repeat and an explicitly chosen first song', async () => {
+  const h = setup({ library: emptySoundtrackLibrary(), random: () => 0.25 }),
+    tracks = ['4', '5', '6'].map((digit, index) => {
+      const sha256 = digit.repeat(64);
+      return {
+        id: `online.${sha256}`,
+        kind: 'remote',
+        title: `Remote ${index + 1}`,
+        artist: 'Creator',
+        url: `https://mekhovov.github.io/revealline-soundtracks-01/objects/${sha256}.mp3`,
+        sha256,
+        contentId: false,
+        recordingModeEligible: true,
+      };
+    });
+  assert.equal(
+    await h.player.playRemotePlaylist(tracks, {
+      order: 'shuffle',
+      repeat: 'off',
+      startTrackId: tracks[1].id,
+    }),
+    true,
+  );
+  assert.equal(h.player.snapshot().track.id, tracks[1].id);
+  assert.equal(h.player.snapshot().queue[0], tracks[1].id);
+  assert.equal(h.player.snapshot().order, 'shuffle');
+  assert.equal(h.player.snapshot().repeat, 'off');
+  assert.equal(await h.player.next(), true);
+  assert.equal(await h.player.next(), true);
+  assert.equal(await h.player.next(), false);
+  assert.equal(h.player.snapshot().status, 'ended');
+  h.player.dispose();
+});
 test('online archive playback rejects forged hosts, hashes and duplicate recordings', async () => {
   const h = setup({ library: emptySoundtrackLibrary() }),
     sha256 = 'b'.repeat(64),
