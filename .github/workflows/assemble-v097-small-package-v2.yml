@@ -1,0 +1,128 @@
+name: Assemble reviewed v0.97 small release package
+
+on:
+  workflow_dispatch:
+    inputs:
+      source_commit:
+        required: true
+        type: string
+      source_tree:
+        required: true
+        type: string
+      pr_commit:
+        required: true
+        type: string
+      pr_tree:
+        required: true
+        type: string
+      source_pr:
+        required: true
+        type: string
+      manual_run:
+        required: true
+        type: string
+      pr_run:
+        required: true
+        type: string
+      inspection_run:
+        required: true
+        type: string
+      inspection_artifact:
+        required: true
+        type: string
+      artifact_id:
+        required: true
+        type: string
+      artifact_bytes:
+        required: true
+        type: string
+      artifact_sha256:
+        required: true
+        type: string
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  assemble:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Check out exact qualified source
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.source_commit }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Download retained inspect evidence
+        env:
+          GH_TOKEN: ${{ github.token }}
+          INSPECTION_RUN: ${{ inputs.inspection_run }}
+        run: gh run download "$INSPECTION_RUN" --repo "$GITHUB_REPOSITORY" --name inspect-artifact-evidence --dir inspect-evidence
+
+      - name: Record exact run and job authorities
+        env:
+          GH_TOKEN: ${{ github.token }}
+          MANUAL_RUN: ${{ inputs.manual_run }}
+          PR_RUN: ${{ inputs.pr_run }}
+          INSPECTION_RUN: ${{ inputs.inspection_run }}
+        run: |
+          mkdir -p run-evidence
+          gh api "repos/$GITHUB_REPOSITORY/actions/runs/$MANUAL_RUN" > run-evidence/manual-run.json
+          gh api "repos/$GITHUB_REPOSITORY/actions/runs/$MANUAL_RUN/jobs?per_page=100" > run-evidence/manual-jobs.json
+          gh api "repos/$GITHUB_REPOSITORY/actions/runs/$PR_RUN" > run-evidence/pr-run.json
+          gh api "repos/$GITHUB_REPOSITORY/actions/runs/$PR_RUN/jobs?per_page=100" > run-evidence/pr-jobs.json
+          gh api "repos/$GITHUB_REPOSITORY/actions/runs/$INSPECTION_RUN" > run-evidence/inspection-run.json
+          gh api "repos/$GITHUB_REPOSITORY/actions/runs/$INSPECTION_RUN/jobs?per_page=100" > run-evidence/inspection-jobs.json
+
+      - name: Assemble exact seven-member package
+        env:
+          SOURCE_COMMIT: ${{ inputs.source_commit }}
+          SOURCE_TREE: ${{ inputs.source_tree }}
+          PR_COMMIT: ${{ inputs.pr_commit }}
+          PR_TREE: ${{ inputs.pr_tree }}
+          SOURCE_PR: ${{ inputs.source_pr }}
+          MANUAL_RUN: ${{ inputs.manual_run }}
+          PR_RUN: ${{ inputs.pr_run }}
+          INSPECTION_RUN: ${{ inputs.inspection_run }}
+          ARTIFACT_ID: ${{ inputs.artifact_id }}
+          ARTIFACT_BYTES: ${{ inputs.artifact_bytes }}
+          ARTIFACT_SHA256: ${{ inputs.artifact_sha256 }}
+        run: |
+          cat > assemble-inputs.json <<JSON
+          {
+            "format":"revealline-waived-qualification-inputs.v1",
+            "reviewed":true,
+            "repository":"${GITHUB_REPOSITORY}",
+            "repositoryPath":"${GITHUB_WORKSPACE}",
+            "sourcePR":${SOURCE_PR},
+            "source":{"commit":"${SOURCE_COMMIT}","tree":"${SOURCE_TREE}","version":"v0.97.0"},
+            "prSource":{"commit":"${PR_COMMIT}","tree":"${PR_TREE}","version":"v0.97.0"},
+            "inspectionDirectory":"${GITHUB_WORKSPACE}/inspect-evidence",
+            "pr":{"run":"${GITHUB_WORKSPACE}/run-evidence/pr-run.json","jobs":"${GITHUB_WORKSPACE}/run-evidence/pr-jobs.json"},
+            "manual":{"run":"${GITHUB_WORKSPACE}/run-evidence/manual-run.json","jobs":"${GITHUB_WORKSPACE}/run-evidence/manual-jobs.json"},
+            "inspection":{"run":"${GITHUB_WORKSPACE}/run-evidence/inspection-run.json","jobs":"${GITHUB_WORKSPACE}/run-evidence/inspection-jobs.json"},
+            "approvedNonSourceChanges":["docs/v097-assembly-reconciliation.md"]
+          }
+          JSON
+          python3 publishing/utility/assemble_waived_qualification.py assemble-inputs.json --output small-package
+
+      - name: Verify package closure and preserve review receipt
+        run: |
+          test "$(find small-package -maxdepth 1 -type f | wc -l | tr -d ' ')" = 8
+          sha256sum small-package/* > small-package.sha256
+
+      - name: Retain assembled package for independent review
+        uses: actions/upload-artifact@v4
+        with:
+          name: v097-small-package
+          path: |
+            small-package/*
+            small-package-review.json
+            assemble-inputs.json
+            small-package.sha256
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 14
