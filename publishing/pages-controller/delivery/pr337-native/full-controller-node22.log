@@ -1,0 +1,388 @@
+TAP version 13
+# Subtest: archive append checks all source-lock cohorts, preserving the prior cohort
+ok 1 - archive append checks all source-lock cohorts, preserving the prior cohort
+  ---
+  duration_ms: 1.830917
+  type: 'test'
+  ...
+# Subtest: tag mentions, comments, another checkout and conditional fetches do not prove coverage
+ok 2 - tag mentions, comments, another checkout and conditional fetches do not prove coverage
+  ---
+  duration_ms: 0.211959
+  type: 'test'
+  ...
+# Subtest: exact source and destination refs are mandatory; dynamic and ambiguous shell is refused
+ok 3 - exact source and destination refs are mandatory; dynamic and ambiguous shell is refused
+  ---
+  duration_ms: 0.213834
+  type: 'test'
+  ...
+# Subtest: fetch examples inside heredocs and other jobs are not direct build steps
+ok 4 - fetch examples inside heredocs and other jobs are not direct build steps
+  ---
+  duration_ms: 0.114167
+  type: 'test'
+  ...
+# Subtest: source-lock cohort identity and bounded inputs are required
+ok 5 - source-lock cohort identity and bounded inputs are required
+  ---
+  duration_ms: 0.252833
+  type: 'test'
+  ...
+# Subtest: CLI reads bounded ordinary inputs and refuses symlinks and oversized files
+ok 6 - CLI reads bounded ordinary inputs and refuses symlinks and oversized files
+  ---
+  duration_ms: 89.484625
+  type: 'test'
+  ...
+# Subtest: complete artifact retains original graph and creates only authenticated historical bridges
+ok 7 - complete artifact retains original graph and creates only authenticated historical bridges
+  ---
+  duration_ms: 96.720125
+  type: 'test'
+  ...
+# Subtest: root compatibility projection never admits runtime bodies and retains finite byte bounds
+ok 8 - root compatibility projection never admits runtime bodies and retains finite byte bounds
+  ---
+  duration_ms: 0.306333
+  type: 'test'
+  ...
+# Subtest: single-copy projection does not relax the actual Pages artifact budget
+ok 9 - single-copy projection does not relax the actual Pages artifact budget
+  ---
+  duration_ms: 0.091292
+  type: 'test'
+  ...
+# Subtest: retention keeps only the latest releases in each semantic major line
+ok 10 - retention keeps only the latest releases in each semantic major line
+  ---
+  duration_ms: 29.909375
+  type: 'test'
+  ...
+# Subtest: a comparison-only tag is listed with its dedicated playable archive route
+ok 11 - a comparison-only tag is listed with its dedicated playable archive route
+  ---
+  duration_ms: 29.484584
+  type: 'test'
+  ...
+# Subtest: wrong and extra current bodies fail before any artifact is created
+ok 12 - wrong and extra current bodies fail before any artifact is created
+  ---
+  duration_ms: 13.577709
+  type: 'test'
+  ...
+# Subtest: archive admission requires every original file, pinned HTTP evidence and native approval
+ok 13 - archive admission requires every original file, pinned HTTP evidence and native approval
+  ---
+  duration_ms: 10.024667
+  type: 'test'
+  ...
+# Subtest: an admitted current archive is verified without replacing the current game route
+ok 14 - an admitted current archive is verified without replacing the current game route
+  ---
+  duration_ms: 28.7315
+  type: 'test'
+  ...
+# Subtest: accepted HTTP status cannot substitute a different original while retaining matched counts
+ok 15 - accepted HTTP status cannot substitute a different original while retaining matched counts
+  ---
+  duration_ms: 9.153666
+  type: 'test'
+  ...
+# Subtest: current source admission refuses a failed gate or borrowed source even with a fresh evidence pin
+ok 16 - current source admission refuses a failed gate or borrowed source even with a fresh evidence pin
+  ---
+  duration_ms: 7.409833
+  type: 'test'
+  ...
+# Subtest: v2 admits an explicit waiver with empty and 5 MiB generic evidence without claiming tests passed
+ok 17 - v2 admits an explicit waiver with empty and 5 MiB generic evidence without claiming tests passed
+  ---
+  duration_ms: 8.130084
+  type: 'test'
+  ...
+# Subtest: v2 refuses forged pass claims, failed mandatory gates, and missing or invalid policy
+ok 18 - v2 refuses forged pass claims, failed mandatory gates, and missing or invalid policy
+  ---
+  duration_ms: 12.568459
+  type: 'test'
+  ...
+# Subtest: all retains more than 100 major-zero editions, their order and every original archive route
+ok 19 - all retains more than 100 major-zero editions, their order and every original archive route
+  ---
+  duration_ms: 360.768042
+  type: 'test'
+  ...
+# Subtest: numeric retention remains semantic and all does not admit invalid policies
+ok 20 - numeric retention remains semantic and all does not admit invalid policies
+  ---
+  duration_ms: 6.6725
+  type: 'test'
+  ...
+# Subtest: all leaves the 1024-catalog entry bound intact
+ok 21 - all leaves the 1024-catalog entry bound intact
+  ---
+  duration_ms: 6.672834
+  type: 'test'
+  ...
+# Subtest: 96 independently pinned archives retain admission bounds and original-byte guards
+ok 22 - 96 independently pinned archives retain admission bounds and original-byte guards
+  ---
+  duration_ms: 576.482083
+  type: 'test'
+  ...
+# Subtest: controller catalog supplies the stylesheet requested by its copied page host
+ok 23 - controller catalog supplies the stylesheet requested by its copied page host
+  ---
+  duration_ms: 44.6965
+  type: 'test'
+  ...
+# Subtest: metadata bridges exactly equal existing writer; worker=true
+ok 24 - metadata bridges exactly equal existing writer; worker=true
+  ---
+  duration_ms: 32.741625
+  type: 'test'
+  ...
+# Subtest: metadata bridges exactly equal existing writer; worker=false
+ok 25 - metadata bridges exactly equal existing writer; worker=false
+  ---
+  duration_ms: 12.84725
+  type: 'test'
+  ...
+# Subtest: changed pinned metadata and release identity are rejected
+ok 26 - changed pinned metadata and release identity are rejected
+  ---
+  duration_ms: 0.505916
+  type: 'test'
+  ...
+# Subtest: self-consistent malformed manifests fail before bridge creation
+ok 27 - self-consistent malformed manifests fail before bridge creation
+  ---
+  duration_ms: 1.575291
+  type: 'test'
+  ...
+# Subtest: bridge targets cannot escape the admitted canonical edition
+ok 28 - bridge targets cannot escape the admitted canonical edition
+  ---
+  duration_ms: 0.227292
+  type: 'test'
+  ...
+# Subtest: downloads the exact private release asset through authenticated API endpoints
+ok 29 - downloads the exact private release asset through authenticated API endpoints
+  ---
+  duration_ms: 14.818125
+  type: 'test'
+  ...
+# Subtest: refuses absent credentials, missing assets and changed asset sizes
+ok 30 - refuses absent credentials, missing assets and changed asset sizes
+  ---
+  duration_ms: 1.237541
+  type: 'test'
+  ...
+# Subtest: latest stable policy preserves numeric ordering, pagination and publication status
+ok 31 - latest stable policy preserves numeric ordering, pagination and publication status
+  ---
+  duration_ms: 0.611625
+  type: 'test'
+  ...
+# Subtest: older release events cannot roll back or implicitly change the reviewed selector
+ok 32 - older release events cannot roll back or implicitly change the reviewed selector
+  ---
+  duration_ms: 0.113334
+  type: 'test'
+  ...
+# Subtest: a latest release requires an enabled selector before routing or publishing
+ok 33 - a latest release requires an enabled selector before routing or publishing
+  ---
+  duration_ms: 0.160958
+  type: 'test'
+  ...
+# Subtest: a newly published release waits successfully for its reviewed frozen selector
+ok 34 - a newly published release waits successfully for its reviewed frozen selector
+  ---
+  duration_ms: 0.310958
+  type: 'test'
+  ...
+# Subtest: trailing-slash controller directory is normalized
+ok 35 - trailing-slash controller directory is normalized
+  ---
+  duration_ms: 24.114833
+  type: 'test'
+  ...
+# Subtest: an ancestor symlink introduced by the final tag check cannot redirect writes
+ok 36 - an ancestor symlink introduced by the final tag check cannot redirect writes
+  ---
+  duration_ms: 7.43375
+  type: 'test'
+  ...
+# Subtest: sync adds verified metadata and qualification; repeat preserves every byte and timestamp
+ok 37 - sync adds verified metadata and qualification; repeat preserves every byte and timestamp
+  ---
+  duration_ms: 25.752959
+  type: 'test'
+  ...
+# Subtest: sync accepts v2 only with the exact policy from the tagged source
+ok 38 - sync accepts v2 only with the exact policy from the tagged source
+  ---
+  duration_ms: 8.16
+  type: 'test'
+  ...
+# Subtest: sync rejects a v2 policy substitution before writing any metadata
+ok 39 - sync rejects a v2 policy substitution before writing any metadata
+  ---
+  duration_ms: 4.886667
+  type: 'test'
+  ...
+# Subtest: existing-only sync preserves original catalog whitespace
+ok 40 - existing-only sync preserves original catalog whitespace
+  ---
+  duration_ms: 5.109875
+  type: 'test'
+  ...
+# Subtest: whole batch rejects manifest-link without adding an earlier valid release
+ok 41 - whole batch rejects manifest-link without adding an earlier valid release
+  ---
+  duration_ms: 3.934209
+  type: 'test'
+  ...
+# Subtest: whole batch rejects zip-checksum without adding an earlier valid release
+ok 42 - whole batch rejects zip-checksum without adding an earlier valid release
+  ---
+  duration_ms: 3.78775
+  type: 'test'
+  ...
+# Subtest: whole batch rejects record-shape without adding an earlier valid release
+ok 43 - whole batch rejects record-shape without adding an earlier valid release
+  ---
+  duration_ms: 3.781958
+  type: 'test'
+  ...
+# Subtest: whole batch rejects missing-entry without adding an earlier valid release
+ok 44 - whole batch rejects missing-entry without adding an earlier valid release
+  ---
+  duration_ms: 3.867291
+  type: 'test'
+  ...
+# Subtest: whole batch rejects late-qualification without adding an earlier valid release
+ok 45 - whole batch rejects late-qualification without adding an earlier valid release
+  ---
+  duration_ms: 5.579375
+  type: 'test'
+  ...
+# Subtest: existing frozen downloaded-pin cannot be replaced
+ok 46 - existing frozen downloaded-pin cannot be replaced
+  ---
+  duration_ms: 4.3005
+  type: 'test'
+  ...
+# Subtest: existing frozen tag cannot be replaced
+ok 47 - existing frozen tag cannot be replaced
+  ---
+  duration_ms: 4.291166
+  type: 'test'
+  ...
+# Subtest: existing frozen local-file cannot be replaced
+ok 48 - existing frozen local-file cannot be replaced
+  ---
+  duration_ms: 4.40425
+  type: 'test'
+  ...
+# Subtest: existing frozen missing-file cannot be replaced
+ok 49 - existing frozen missing-file cannot be replaced
+  ---
+  duration_ms: 3.675166
+  type: 'test'
+  ...
+# Subtest: existing frozen qualification cannot be replaced
+ok 50 - existing frozen qualification cannot be replaced
+  ---
+  duration_ms: 3.7825
+  type: 'test'
+  ...
+# Subtest: catalog edit during download is preserved and prevents every addition
+ok 51 - catalog edit during download is preserved and prevents every addition
+  ---
+  duration_ms: 2.5665
+  type: 'test'
+  ...
+# Subtest: tag movement after downloads leaves the whole batch unchanged
+ok 52 - tag movement after downloads leaves the whole batch unchanged
+  ---
+  duration_ms: 3.155083
+  type: 'test'
+  ...
+# Subtest: a concurrent destination is preserved before any additions are written
+ok 53 - a concurrent destination is preserved before any additions are written
+  ---
+  duration_ms: 4.45675
+  type: 'test'
+  ...
+# Subtest: a later write failure rolls back new release files and preserves the catalog
+ok 54 - a later write failure rolls back new release files and preserves the catalog
+  ---
+  duration_ms: 7.941958
+  type: 'test'
+  ...
+# Subtest: source qualification retains mandatory guards and restorable suites while controller owns publication
+ok 55 - source qualification retains mandatory guards and restorable suites while controller owns publication
+  ---
+  duration_ms: 4.064917
+  type: 'test'
+  ...
+# Subtest: explicit policy controls only suites; all build, identity and publication guards stay mandatory
+ok 56 - explicit policy controls only suites; all build, identity and publication guards stay mandatory
+  ---
+  duration_ms: 2.488125
+  type: 'test'
+  ...
+# Subtest: freeze admits required-success or explicit-waiver-skipped only, never failure or cancellation
+ok 57 - freeze admits required-success or explicit-waiver-skipped only, never failure or cancellation
+  ---
+  duration_ms: 1.748708
+  type: 'test'
+  ...
+# Subtest: delivery-only push is excluded after the controller glob while PR review and mixed publication remain enabled
+ok 58 - delivery-only push is excluded after the controller glob while PR review and mixed publication remain enabled
+  ---
+  duration_ms: 0.843042
+  type: 'test'
+  ...
+# Subtest: the explicit temporary policy skips only automated suites and never reports tests passed
+ok 59 - the explicit temporary policy skips only automated suites and never reports tests passed
+  ---
+  duration_ms: 3.040417
+  type: 'test'
+  ...
+# Subtest: restored policy or explicit full-test override requires suites without claiming a passing verdict
+ok 60 - restored policy or explicit full-test override requires suites without claiming a passing verdict
+  ---
+  duration_ms: 1.814875
+  type: 'test'
+  ...
+# Subtest: missing, malformed and broadened authorization fail closed
+ok 61 - missing, malformed and broadened authorization fail closed
+  ---
+  duration_ms: 1.48425
+  type: 'test'
+  ...
+# Subtest: CLI records visible skipped policy and force-tests changes only the effective decision
+ok 62 - CLI records visible skipped policy and force-tests changes only the effective decision
+  ---
+  duration_ms: 63.69
+  type: 'test'
+  ...
+# Subtest: CLI missing policy or malformed override cannot emit a waiver output
+ok 63 - CLI missing policy or malformed override cannot emit a waiver output
+  ---
+  duration_ms: 84.702708
+  type: 'test'
+  ...
+1..63
+# tests 63
+# suites 0
+# pass 63
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1250.336916

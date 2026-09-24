@@ -1,0 +1,152 @@
+TAP version 13
+# Subtest: complete artifact retains original graph and creates only authenticated historical bridges
+ok 1 - complete artifact retains original graph and creates only authenticated historical bridges
+  ---
+  duration_ms: 69.781459
+  ...
+# Subtest: root compatibility projection never admits runtime bodies and retains finite byte bounds
+ok 2 - root compatibility projection never admits runtime bodies and retains finite byte bounds
+  ---
+  duration_ms: 0.352709
+  ...
+# Subtest: single-copy projection does not relax the actual Pages artifact budget
+ok 3 - single-copy projection does not relax the actual Pages artifact budget
+  ---
+  duration_ms: 0.093084
+  ...
+# Subtest: retention keeps only the latest releases in each semantic major line
+ok 4 - retention keeps only the latest releases in each semantic major line
+  ---
+  duration_ms: 33.613458
+  ...
+# Subtest: a comparison-only tag is listed with its dedicated playable archive route
+ok 5 - a comparison-only tag is listed with its dedicated playable archive route
+  ---
+  duration_ms: 34.982209
+  ...
+# Subtest: wrong and extra current bodies fail before any artifact is created
+ok 6 - wrong and extra current bodies fail before any artifact is created
+  ---
+  duration_ms: 16.683
+  ...
+# Subtest: archive admission requires every original file, pinned HTTP evidence and native approval
+ok 7 - archive admission requires every original file, pinned HTTP evidence and native approval
+  ---
+  duration_ms: 13.339166
+  ...
+# Subtest: an admitted current archive is verified without replacing the current game route
+ok 8 - an admitted current archive is verified without replacing the current game route
+  ---
+  duration_ms: 29.451292
+  ...
+# Subtest: accepted HTTP status cannot substitute a different original while retaining matched counts
+ok 9 - accepted HTTP status cannot substitute a different original while retaining matched counts
+  ---
+  duration_ms: 6.875083
+  ...
+# Subtest: current source admission refuses a failed gate or borrowed source even with a fresh evidence pin
+ok 10 - current source admission refuses a failed gate or borrowed source even with a fresh evidence pin
+  ---
+  duration_ms: 6.854709
+  ...
+# Subtest: v2 admits an explicit waiver with empty and 5 MiB generic evidence without claiming tests passed
+ok 11 - v2 admits an explicit waiver with empty and 5 MiB generic evidence without claiming tests passed
+  ---
+  duration_ms: 6.831625
+  ...
+# Subtest: v2 refuses forged pass claims, failed mandatory gates, and missing or invalid policy
+ok 12 - v2 refuses forged pass claims, failed mandatory gates, and missing or invalid policy
+  ---
+  duration_ms: 10.826125
+  ...
+# Subtest: all retains more than 100 major-zero editions, their order and every original archive route
+ok 13 - all retains more than 100 major-zero editions, their order and every original archive route
+  ---
+  duration_ms: 500.023792
+  ...
+# Subtest: numeric retention remains semantic and all does not admit invalid policies
+ok 14 - numeric retention remains semantic and all does not admit invalid policies
+  ---
+  duration_ms: 8.68925
+  ...
+# Subtest: all leaves the 1024-catalog entry bound intact
+ok 15 - all leaves the 1024-catalog entry bound intact
+  ---
+  duration_ms: 9.377917
+  ...
+# Subtest: 96 independently pinned archives retain admission bounds and original-byte guards
+ok 16 - 96 independently pinned archives retain admission bounds and original-byte guards
+  ---
+  duration_ms: 860.263625
+  ...
+# {"version":"v0.2.0","sourceRevision":"b5394d0b6a73fe4e1b0d336693cbbe595b17496d","totalBytes":21051,"playableVersions":2,"currentEntryMetadata":"current-entry-routing.json","currentCanonicalSite":"https://owner.github.io/game/releases/v0.2.0/site/","currentHTMLAliases":6}
+# Subtest: read-only capacity matches the immutable-entry default build and cannot certify a hypothetical fit
+ok 17 - read-only capacity matches the immutable-entry default build and cannot certify a hypothetical fit
+  ---
+  duration_ms: 465.002125
+  ...
+# {"version":"v0.2.0","sourceRevision":"95d971d33a80096dd3209a3f1e4334e799b16b4b","totalBytes":26948,"playableVersions":2,"currentEntryMetadata":"current-entry-routing.json","currentCanonicalSite":"https://owner.github.io/game/releases/v0.2.0/site/","currentHTMLAliases":6,"target":"main","catalogVersions":2,"latestHostedVersion":"v0.2.0","budgetBytes":950000000,"copiedVersions":1,"archivedVersions":1,"redirectedHTMLFiles":6}
+# Subtest: main routing declares every current override and preserves latest versioned bytes, old bridges and Release downloads
+ok 18 - main routing declares every current override and preserves latest versioned bytes, old bridges and Release downloads
+  ---
+  duration_ms: 288.872917
+  ...
+# {"version":"v0.2.0","sourceRevision":"95d971d33a80096dd3209a3f1e4334e799b16b4b","totalBytes":4636,"playableVersions":1,"target":"archive-01","catalogVersions":2,"latestHostedVersion":"v0.1.0","budgetBytes":800000000,"copiedVersions":1,"archivedVersions":1,"redirectedHTMLFiles":0}
+# Subtest: archive mode copies every canonical payload exactly, including original workers and checksums
+ok 19 - archive mode copies every canonical payload exactly, including original workers and checksums
+  ---
+  duration_ms: 195.181291
+  ...
+# {"version":"v0.2.0","sourceRevision":"95d971d33a80096dd3209a3f1e4334e799b16b4b","totalBytes":21051,"playableVersions":2,"currentEntryMetadata":"current-entry-routing.json","currentCanonicalSite":"https://owner.github.io/game/releases/v0.2.0/site/","currentHTMLAliases":6}
+# Subtest: archive ownership rejects unknown/current/duplicate/cross-origin plans without changing published output
+ok 20 - archive ownership rejects unknown/current/duplicate/cross-origin plans without changing published output
+  ---
+  duration_ms: 716.2895
+  ...
+# Subtest: redirects preserve encoded query and fragment and offer a native fallback link
+ok 21 - redirects preserve encoded query and fragment and offer a native fallback link
+  ---
+  duration_ms: 0.65825
+  ...
+# Subtest: retirement worker confines navigation and only unregisters after normal activation
+ok 22 - retirement worker confines navigation and only unregisters after normal activation
+  ---
+  duration_ms: 6.550459
+  ...
+# {"version":"v0.2.0","sourceRevision":"c604297298af7d51704a2743873c9d77738a1790","totalBytes":21051,"playableVersions":2,"currentEntryMetadata":"current-entry-routing.json","currentCanonicalSite":"https://owner.github.io/game/releases/v0.2.0/site/","currentHTMLAliases":6}
+# Subtest: stale tags and a late symlink failure retain the prior dist and frozen source
+ok 23 - stale tags and a late symlink failure retain the prior dist and frozen source
+  ---
+  duration_ms: 356.481083
+  ...
+# Subtest: main and archive byte budgets fail closed at their distinct fixed limits
+ok 24 - main and archive byte budgets fail closed at their distinct fixed limits
+  ---
+  duration_ms: 0.204333
+  ...
+# {"version":"v0.2.0","sourceRevision":"c604297298af7d51704a2743873c9d77738a1790","totalBytes":26948,"playableVersions":2,"currentEntryMetadata":"current-entry-routing.json","currentCanonicalSite":"https://owner.github.io/game/releases/v0.2.0/site/","currentHTMLAliases":6,"target":"main","catalogVersions":2,"latestHostedVersion":"v0.2.0","budgetBytes":950000000,"copiedVersions":1,"archivedVersions":1,"redirectedHTMLFiles":6}
+# Subtest: a corrupted canonical payload fails its frozen manifest before replacing the last published tree
+ok 25 - a corrupted canonical payload fails its frozen manifest before replacing the last published tree
+  ---
+  duration_ms: 262.645584
+  ...
+# {"version":"v0.2.0","sourceRevision":"c604297298af7d51704a2743873c9d77738a1790","totalBytes":21051,"playableVersions":2,"currentEntryMetadata":"current-entry-routing.json","currentCanonicalSite":"https://owner.github.io/game/releases/v0.2.0/site/","currentHTMLAliases":6}
+# Subtest: a reserved current-entry source path fails atomically without altering prior output or release tags
+ok 26 - a reserved current-entry source path fails atomically without altering prior output or release tags
+  ---
+  duration_ms: 288.134417
+  ...
+# Subtest: archive routing accepts 64, 65 and 96 distinct shards but refuses a 97th
+ok 27 - archive routing accepts 64, 65 and 96 distinct shards but refuses a 97th
+  ---
+  duration_ms: 2.581875
+  ...
+1..27
+# tests 27
+# suites 0
+# pass 27
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2621.857
