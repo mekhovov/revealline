@@ -55,6 +55,65 @@ existing publisher retains tags, archives and Pages ownership. Skipped tests und
 the historical repository waiver are not passes: UX0 restores the source policy
 to `required` and qualification also explicitly requests `run_tests=true`.
 
+## UX0 qualification checkpoint — 24 September, source preserved remotely
+
+This checkpoint supersedes the earlier route-renewal estimates above. UX0 is still
+**qualifying**, not released. PR320 targets v0.98.0. Public acceptance and UX1
+implementation remain blocked on the final exact-source and release gates.
+
+**Implemented and independently checked:** initial Home focus falls back to an
+available action; touched mission selection survives cancellation even when keyboard
+focus remains on another card; victory Story uses the authored picture owner;
+difficulty Restart retains accepted artwork. Historical Journey restoration
+distinguishes owned and imported attempts. Controller Missions tests join the real
+operation instead of racing an arbitrary five-second delay.
+
+**Route evidence completed:** all 71 current missions have fresh Standard/scout
+witnesses under both existing v3/v4 editions: 142 fixed-outcome wins and same-runtime
+replays. Four full Solo/Versus host wrappers are still running. The separate 30-route
+Team renewal passes 245 full-file host checks; discovery and static-picture cohorts
+pass another 4 and 36 respectively. These are modeled host checks, not human balance
+or physical-controller certification.
+
+**Presentation closure:** production63 retains the exact production62 runtime and
+all 132 existing binary originals. Its 42 metadata successors close the reviewed
+Team/equipment contracts. Full production reproduction/readiness passes, as do 153
+checks across 13 complete files. Five recipe checks pass; the last recipe check
+cannot create its temporary directory because the local disk is full and must run
+again on a writable host. The immutable review continuation admits only the exact
+reviewed test assertion change and preserves its predecessor.
+
+**Still required before release:**
+
+- Finish the four full 71-mission host wrappers and the four installed-chapter
+  cohorts with independently checked current routes and saved-cut prefixes.
+- Correct and qualify manual Versus Journey-to-Classic handoff: keep match settings,
+  preflight the chosen original, retain both previous boards on failure/cancel and
+  preserve Stay/Replace ownership.
+- Run all six source gates and ordinary build/production/artifact/browser checks
+  on the final committed source; the current hosted run covers an earlier commit.
+- Merge through PR320, qualify the exact source, freeze and deploy through the
+  existing release owner, then verify ordinary public entry, version/source,
+  affected asset bytes and actual play. Only then advance to UX1.
+
+Local source and test output are encountering repeated ENOSPC failures. Approved
+duplicate-cache cleanup restored only temporary headroom; unrelated files, source,
+history and unique release evidence were preserved. A safety branch
+`codex/ux0-disk-checkpoint` protects reviewed local commits and pending source
+candidates through GitHub objects without requiring local Git writes. This branch
+is **not** a public release or a substitute for PR320 verification. Some candidates
+are protected remotely while their tests are still running.
+
+The new whole-route portability comparison uses macOS arm64 Node20.19.5 and Linux
+x64 Node20.19.6. All 142 fixed outcomes/replays pass in each environment; 100 raw
+checkpoints match exactly and 42 differ only in 292 last-decimal movement/timing
+scalars (maximum 7.11e-13). Discrete simulation state agrees. This is bounded
+cross-runtime evidence, not proof of browser-engine replay portability.
+
+UX1 through UX6 and the later programme remain unfinished in the order below.
+Do not promise a publication deadline while source gates and sustained build
+capacity remain unresolved.
+
 ## Accepted behavior
 
 - Home has Solo, Couch Versus and Couch Team; Start/Continue/Resume is primary.
