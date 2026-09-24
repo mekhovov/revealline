@@ -36,20 +36,23 @@ reviewer names, listening approval or device results.
 ### Current execution snapshot
 
 - Unified archive delivery is split into two reviewable changes. Archive
-  [PR #13](https://github.com/mekhovov/revealline-soundtracks-01/pull/13) merged as
-  `878cfa6c1cccf310fbbed0698fcad3eb0f881532` and publicly serves
-  a deterministic 104-recording `catalogue.json`, a single searchable/playable
-  root page and the bounded `intake/add-upload.mjs` workflow documented in
-  `UPLOAD_GUIDE.md`. Exact-head archive verification passed 28/28 checks; direct
-  public verification covered search, all eight collections, Media Session,
-  CORS and an exact byte-range MP3 response. Game draft
+  [PR #14](https://github.com/mekhovov/revealline-soundtracks-01/pull/14) merged as
+  `03a31a8b0f6e478b097b4468aaca92dfa275158c` and publicly serves
+  a deterministic 104-recording `catalogue.json`, one searchable/playable root
+  player and the bounded `intake/add-music.mjs` workflow documented in
+  `UPLOAD_GUIDE.md`. Exact-head archive verification passed 32/32 checks. Direct
+  public verification covered text search, all eight collections, single and
+  combined style filters, shuffle/sequential order, repeat all/one/off, same-page
+  playback, Media Session, CORS and an exact byte-range MP3 response. Game
   [PR #370](https://github.com/mekhovov/revealline/pull/370) adds the matching
   trust boundary and native Music Player browser, so a result streams through
-  the existing transport without opening another page. Its focused catalogue,
-  player and panel suite passes 161 tests. Independent review found and the
+  the existing transport without opening another page. Players can select one
+  or several styles, start any result, choose shuffle or sequential order and
+  choose repeat all, repeat one or a finite queue. Its combined catalogue,
+  player, panel and production-history cohort passes 174/174 tests. Review found and the
   successor fixes close Recording-mode bypass, wrong-repository URL acceptance,
   unbounded response consumption, invalid-selection mutation and two follow-on
-  policy-transition cases. Field Kit revision 73 preserves every earlier revision
+  policy-transition cases. Field Kit revision 77 preserves every earlier revision
   and binds the final reviewed audio fingerprint. Local native-browser playback
   loaded all 104 recordings and played Revenge's Waiting inside the game. Neither
   PR admits previews into trusted Automatic/built-in playlists or establishes
@@ -914,7 +917,7 @@ records. These establish musical properties, not redistribution permission.
 
 ## M8–M10 — existing contracts to preserve and verify
 
-### M8.discovery — make new archive collections easy to find
+### M8.discovery — make every published recording easy to find and play
 
 Status: **complete for the public archive.** Archive
 [PR #14](https://github.com/mekhovov/revealline-soundtracks-01/pull/14) merged at
@@ -923,15 +926,20 @@ Status: **complete for the public archive.** Archive
 published a root inventory of all 104 unique recordings. The root player now
 searches, filters seven style groups across eight collections, supports
 multi-style mixing and sequential/shuffle/repeat playback without leaving the
-page. `intake/add-music.mjs` accepts a
-single MP3 or recursive directory only after explicit source, licence, style and
-rights confirmation; it creates immutable hash paths, regenerates catalogue/player
-files, verifies them and can open the archive PR.
+page. Historical inventories and batch pages remain addressable.
 
-The game-native streaming adapter remains a separate M8/M3 delivery: PR #370 must
-be rebased after v0.107 and publicly qualified before this archive capability is
-called an in-game feature. Preserve every historic root-inventory assertion and
-the user-visible distinction between published auditions and admitted defaults.
+The upload fast path is also public: `intake/add-music.mjs` accepts one MP3 or a
+folder, reads common ID3 title/artist fields, creates stable identities and immutable
+hash paths, updates generated catalogue/player files, runs verification and can open
+a scoped PR. The operator must still provide source, licence, style tags and the
+explicit `--confirm-rights` assertion; automation cannot infer redistribution rights.
+
+The game-native streaming adapter remains a separate M8/M3 delivery: rebase and
+release PR #370 so the same complete catalogue and style controls work inside the
+game. Preserve the archive as the canonical source; the game streams exact immutable
+objects through its existing two-deck transport. Preserve every historic root-inventory
+assertion and the user-visible distinction between published auditions and admitted
+defaults.
 
 ### Playback and user interface
 
