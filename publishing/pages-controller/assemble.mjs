@@ -4,6 +4,7 @@ import { spawnSync } from 'node:child_process';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
+  MAX_ARCHIVE_SHARDS,
   validateArchivePlan,
   canonicalArchiveSite,
   assertPagesBudget,
@@ -104,7 +105,7 @@ export async function validateAdmissions({
     !SHA.test(configuration.catalogSha256) ||
     !SHA.test(configuration.allocationSha256) ||
     !Array.isArray(configuration.admissions) ||
-    configuration.admissions.length > 64 ||
+    configuration.admissions.length > MAX_ARCHIVE_SHARDS ||
     !validReleaseRetention(configuration.retainedReleasesPerMajor) ||
     !configuration.testingRoutes ||
     typeof configuration.testingRoutes !== 'object' ||

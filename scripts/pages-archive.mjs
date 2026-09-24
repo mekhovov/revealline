@@ -3,6 +3,8 @@ import * as fs from 'node:fs/promises';
 import path from 'node:path';
 import { createHash } from 'node:crypto';
 
+// Finite admission headroom for immutable releases; per-archive bytes remain unchanged.
+export const MAX_ARCHIVE_SHARDS = 96;
 export const ARCHIVE_BUDGET_BYTES = 800_000_000;
 export const MAIN_PAGES_BUDGET_BYTES = 950_000_000;
 export function assertPagesBudget(bytes, archive = false) {
@@ -74,7 +76,7 @@ export function validateArchivePlan(plan, records, repository, latest) {
     !exact(plan, ['formatVersion', 'shards']) ||
     plan.formatVersion !== 1 ||
     !Array.isArray(plan.shards) ||
-    plan.shards.length > 64
+    plan.shards.length > MAX_ARCHIVE_SHARDS
   )
     throw new Error('Invalid Pages archive plan.');
   const available = new Set(records.map((record) => record.version)),
