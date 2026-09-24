@@ -6504,7 +6504,12 @@ try {
         run.medal === 'gold' ? 3 : run.medal === 'silver' ? 2 : 1,
       );
       if (recoverGameplayTuning(run.level)?.adminOverride) $('result-medals').textContent = '';
-      $('next-button').textContent = practice ? 'Try it yourself →' : 'Next mission →';
+      const completedJourneyMission = journeyEnabled && !practice && !scenario && journeyMission();
+      $('next-button').textContent = practice
+        ? 'Try it yourself →'
+        : completedJourneyMission && !nextJourneyMission(completedJourneyMission.id)
+          ? 'Browse missions →'
+          : 'Next mission →';
       $('overlay-footnote').textContent = practice
         ? 'Demonstrations and imported maps do not grant unlocks.'
         : run.medal === 'gold'
@@ -8504,7 +8509,7 @@ try {
     if (journeyEnabled && !practice && !scenario && run?.status === 'won' && journeyMission()) {
       const next = nextJourneyMission(journeyMission().id);
       if (next) void launchJourneyMission(next, { kind: 'next' });
-      else void nextLibraryMission();
+      else journeyChooser.open($('next-button'));
       return;
     }
     if (campaignOverview && !practice) {
@@ -9825,7 +9830,11 @@ try {
     workshopReturn &&
     !document.hidden &&
     document.hasFocus?.() !== false &&
-    (document.activeElement === document.body || !availableFocusTarget(document.activeElement)) &&
+    (document.activeElement === document.body ||
+      !availableFocusTarget(document.activeElement) ||
+      (bootHome &&
+        controllerDialog() === $('shell-home') &&
+        document.activeElement === bootFocus)) &&
     gameShell?.openWorkshop({ tool: workshopReturn.id })
   )
     clearWorkshopReturn(window);
