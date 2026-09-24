@@ -96,86 +96,137 @@ function finish(p) {
   assert.equal(p.$('race-journey-next').hidden, false);
 }
 
-test('Classic Next starts the exact next mission once, retaining setup and leaving series Rematch independent', async (t) => {
-  const p = await fixture(t);
-  p.$('race-format').value = 'first-to-two';
-  p.$('race-format').emit('change');
-  await settle(() => !p.$('race-start').disabled);
-  await start(p);
-  finish(p);
-  assert.match(p.$('race-start').textContent, /Next round/);
-  p.$('race-journey-next').click();
-  p.$('race-journey-next').click();
-  await settle(() => {
-    p.frame(0);
-    return p.state() === 'running' && p.renders[0].levelId === 'signal-02';
-  });
-  assert.equal(p.renders[1].levelId, 'signal-02');
-  assert.equal(p.$('series-score').textContent, '0 : 0');
-  assert.equal(p.$('race-format').value, 'first-to-two');
-  assert.equal(p.$('journey-chooser').open, false);
-  finish(p);
-  p.$('race-start').click();
-  await settle(() => {
-    p.frame(0);
-    return p.state() === 'running';
-  });
-  assert.equal(p.renders[0].levelId, 'signal-02');
-  assert.equal(p.$('series-score').textContent, '1 : 0');
-});
-
-test('Classic campaign boundary continues into exact Custom owner and ends without wrapping', async (t) => {
-  const source = JSON.parse(
-    await readFile(new URL('../content/packs/night-shift.json', import.meta.url)),
+function beginNext(p, { clicks = 1 } = {}) {
+  const button = p.$('race-journey-next'),
+    handler = button.onclick,
+    before = p.checkpoint(),
+    pictures = p.drawOptions.map((options) => options.backdrop);
+  let operation,
+    calls = 0;
+  button.onclick = function (...args) {
+    calls++;
+    operation = handler.apply(this, args);
+    return operation;
+  };
+  try {
+    for (let click = 0; click < clicks; click++) button.click();
+  } finally {
+    button.onclick = handler;
+  }
+  assert.equal(
+    calls,
+    1,
+    'The admitted click starts one operation; a disabled repeat cannot start another.',
   );
-  source.name = 'Player night shift';
-  source.campaigns[0].levels = source.campaigns[0].levels.slice(0, 2);
-  const p = await fixture(t, {
-    initialLevel: 'signal-12',
-    installedSource: source,
-    fetchResponse: (path) =>
-      path === '../content/mission-library-index.json'
-        ? new Response(
-            JSON.stringify({
-              ...index,
-              missions: index.missions.filter((row) => row.source === 'base'),
-            }),
-          )
-        : undefined,
-  });
-  await start(p);
-  finish(p);
-  p.$('race-journey-next').click();
-  await settle(() => {
-    p.frame(0);
-    return p.state() === 'running' && p.renders[0].levelId === 'night-shift-01';
-  });
-  assert.equal(p.renders[1].levelId, 'night-shift-01');
-  assert.equal(p.$('journey-chooser').open, false);
-  finish(p);
-  p.$('race-journey-next').click();
-  await settle(() => {
-    p.frame(0);
-    return p.state() === 'running' && p.renders[0].levelId === 'night-shift-02';
-  });
-  finish(p);
-  const before = p.checkpoint(),
-    picture = p.drawOptions[0].backdrop;
-  p.$('race-journey-next').click();
-  await settle(() => p.$('race-message').textContent.includes('Versus library complete'));
+  assert.equal(
+    typeof operation?.then,
+    'function',
+    'The real Next action exposes its owned preparation.',
+  );
+  assert.equal(
+    p.$('race-preparation').querySelector('[role="status"]').getAttribute('aria-live'),
+    'polite',
+  );
+  assert.match(
+    p.$('race-preparation').textContent,
+    /Preparing next mission.*result and picture are kept/,
+  );
+  assert.equal(button.disabled, true);
+  assert.equal(p.$('race-picture-cancel').hidden, false);
+  assert.equal(p.doc.activeElement, p.$('race-picture-cancel'));
   p.frame(0);
-  assert.deepEqual(p.checkpoint(), before);
-  assert.equal(p.drawOptions[0].backdrop, picture);
-  assert.equal(p.$('race-journey-next').hidden, true);
-  assert.equal(p.doc.activeElement, p.$('race-start'));
-  assert.equal(p.$('journey-chooser').open, false);
-  p.$('race-start').click();
-  await settle(() => {
+  assert.deepEqual(p.checkpoint(), before, 'Preparation retains both completed boards.');
+  assert.deepEqual(
+    p.drawOptions.map((options) => options.backdrop),
+    pictures,
+  );
+  return operation;
+}
+
+test(
+  'Classic Next starts the exact next mission once, retaining setup and leaving series Rematch independent',
+  { timeout: 120000 },
+  async (t) => {
+    const p = await fixture(t);
+    p.$('race-format').value = 'first-to-two';
+    p.$('race-format').emit('change');
+    await settle(() => !p.$('race-start').disabled);
+    await start(p);
+    finish(p);
+    assert.match(p.$('race-start').textContent, /Next round/);
+    await beginNext(p, { clicks: 2 });
     p.frame(0);
-    return p.state() === 'running';
-  });
-  assert.equal(p.renders[0].levelId, 'night-shift-02');
-});
+    assert.equal(p.state(), 'running');
+    assert.equal(p.renders[0].levelId, 'signal-02');
+    assert.equal(p.renders[1].levelId, 'signal-02');
+    assert.equal(p.$('series-score').textContent, '0 : 0');
+    assert.equal(p.$('race-format').value, 'first-to-two');
+    assert.equal(p.$('journey-chooser').open, false);
+    finish(p);
+    p.$('race-start').click();
+    await settle(() => {
+      p.frame(0);
+      return p.state() === 'running';
+    });
+    assert.equal(p.renders[0].levelId, 'signal-02');
+    assert.equal(p.$('series-score').textContent, '1 : 0');
+  },
+);
+
+test(
+  'Classic campaign boundary continues into exact Custom owner and ends without wrapping',
+  { timeout: 120000 },
+  async (t) => {
+    const source = JSON.parse(
+      await readFile(new URL('../content/packs/night-shift.json', import.meta.url)),
+    );
+    source.name = 'Player night shift';
+    source.campaigns[0].levels = source.campaigns[0].levels.slice(0, 2);
+    const p = await fixture(t, {
+      initialLevel: 'signal-12',
+      installedSource: source,
+      fetchResponse: (path) =>
+        path === '../content/mission-library-index.json'
+          ? new Response(
+              JSON.stringify({
+                ...index,
+                missions: index.missions.filter((row) => row.source === 'base'),
+              }),
+            )
+          : undefined,
+    });
+    await start(p);
+    finish(p);
+    await beginNext(p);
+    p.frame(0);
+    assert.equal(p.state(), 'running');
+    assert.equal(p.renders[0].levelId, 'night-shift-01');
+    assert.equal(p.renders[1].levelId, 'night-shift-01');
+    assert.equal(p.$('journey-chooser').open, false);
+    finish(p);
+    await beginNext(p);
+    p.frame(0);
+    assert.equal(p.state(), 'running');
+    assert.equal(p.renders[0].levelId, 'night-shift-02');
+    finish(p);
+    const before = p.checkpoint(),
+      picture = p.drawOptions[0].backdrop;
+    await beginNext(p);
+    assert.match(p.$('race-message').textContent, /Versus library complete/);
+    p.frame(0);
+    assert.deepEqual(p.checkpoint(), before);
+    assert.equal(p.drawOptions[0].backdrop, picture);
+    assert.equal(p.$('race-journey-next').hidden, true);
+    assert.equal(p.doc.activeElement, p.$('race-start'));
+    assert.equal(p.$('journey-chooser').open, false);
+    p.$('race-start').click();
+    await settle(() => {
+      p.frame(0);
+      return p.state() === 'running';
+    });
+    assert.equal(p.renders[0].levelId, 'night-shift-02');
+  },
+);
 
 test('same-ID modified Custom edition keeps its exact owner through Rematch and final Next', async (t) => {
   const source = JSON.parse(
@@ -528,21 +579,27 @@ test('Journey boundary preflights an exact installed Classic pack without adopti
   assert.equal(p.$('journey-chooser').open, false);
 });
 
-test('boundary download failure keeps both result boards and picture with retry on Next', async (t) => {
-  const p = await fixture(t, { initialLevel: 'signal-12' });
-  await start(p);
-  finish(p);
-  const before = p.checkpoint(),
-    picture = p.drawOptions[0].backdrop;
-  p.$('race-journey-next').click();
-  await settle(() => p.$('race-message').textContent.includes('Next mission could not open'));
-  p.frame(0);
-  assert.deepEqual(p.checkpoint(), before);
-  assert.equal(p.drawOptions[0].backdrop, picture);
-  assert.equal(p.$('journey-chooser').open, false);
-  assert.equal(p.$('race-journey-next').disabled, false);
-  assert.equal(p.state(), 'finished');
-});
+test(
+  'boundary download failure keeps both result boards and picture with retry on Next',
+  { timeout: 120000 },
+  async (t) => {
+    const p = await fixture(t, { initialLevel: 'signal-12' });
+    await start(p);
+    finish(p);
+    const before = p.checkpoint(),
+      picture = p.drawOptions[0].backdrop;
+    for (let attempt = 0; attempt < 2; attempt++) {
+      await beginNext(p);
+      assert.match(p.$('race-message').textContent, /Next mission could not open/);
+      p.frame(0);
+      assert.deepEqual(p.checkpoint(), before);
+      assert.equal(p.drawOptions[0].backdrop, picture);
+      assert.equal(p.$('journey-chooser').open, false);
+      assert.equal(p.$('race-journey-next').disabled, false);
+      assert.equal(p.state(), 'finished');
+    }
+  },
+);
 
 test('cancelled boundary metadata does not adopt or clear the result and Next can retry', async (t) => {
   let release,

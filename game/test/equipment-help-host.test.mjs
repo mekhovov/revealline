@@ -5,6 +5,56 @@ import { soloPage, settle, SoloElement } from './helpers/solo-dom.mjs';
 import { PNGImage } from './helpers/png-image.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
 
+function observePictureReady(page, packId) {
+  const state = page.doc.body.dataset,
+    previous = Object.getOwnPropertyDescriptor(state, 'pictureState');
+  assert.ok(previous?.configurable && Object.hasOwn(previous, 'value'));
+  let value = previous.value,
+    pending = false,
+    observing = true,
+    restore = () => {};
+  const ready = new Promise((resolve, reject) => {
+    const timer = setTimeout(() => {
+      restore();
+      reject(
+        new Error(
+          `Installed picture did not publish readiness: ${JSON.stringify({
+            expectedPack: packId,
+            pack: page.$('pack-select').value,
+            pictureState: value,
+            preparation: page.$('flight-preparation-status').textContent,
+            errors: page.errors.map(String),
+          })}`,
+        ),
+      );
+    }, 60000);
+    restore = () => {
+      if (!observing) return;
+      observing = false;
+      clearTimeout(timer);
+      Object.defineProperty(state, 'pictureState', { ...previous, value });
+    };
+    // Model a DOM mutation observer without changing the published value.
+    // Completion belongs to this selected pack after its own pending state.
+    Object.defineProperty(state, 'pictureState', {
+      configurable: true,
+      enumerable: previous.enumerable,
+      get: () => value,
+      set(next) {
+        value = next;
+        if (page.$('pack-select').value !== packId) return;
+        if (next === 'pending') pending = true;
+        if (pending && next === 'ready') {
+          restore();
+          resolve();
+        }
+      },
+    });
+  });
+  void ready.catch(() => {});
+  return { ready, restore: () => restore() };
+}
+
 const campaign = JSON.parse(readFileSync(new URL('../content/campaign.json', import.meta.url)));
 
 // Actual authored capacity/supply data and app prompts; no gameplay rule replacement.
@@ -38,169 +88,183 @@ const classic = JSON.parse(
 const classes = JSON.parse(readFileSync(new URL('../content/classes.json', import.meta.url)));
 
 for (const mode of ['tactical', 'tactical-no-hangar', 'r5', 'one-craft-hangar', 'arcade-hangar']) {
-  test(`craft switching follows actual roster and hangars through button, G and controller: ${mode}`, async (t) => {
-    const available = ['tactical', 'arcade-hangar'].includes(mode);
-    const pad = {
-      index: 0,
-      id: 'Craft controls',
-      connected: true,
-      mapping: 'standard',
-      axes: [0, 0, 0, 0],
-      buttons: Array.from({ length: 17 }, () => ({ pressed: false, value: 0 })),
-    };
-    const source = structuredClone(campaign);
-    if (mode === 'tactical-no-hangar') source.levels[0].hangars = [];
-    const imageSizes = new Map(
-      r5.levelVisuals.map(({ visualOverrides }) => {
-        const data = visualOverrides.background.dataUrl;
-        const bytes = Buffer.from(data.split(',')[1], 'base64');
-        return [data, [bytes.readUInt32BE(16), bytes.readUInt32BE(20)]];
-      }),
-    );
-    let decoded = 0;
-    class PackImage extends PNGImage {
-      async decode() {
-        await super.decode();
-        if (imageSizes.has(this.src)) decoded++;
-      }
-      set src(data) {
-        if (!data.startsWith('blob:'))
-          assert.ok(
-            imageSizes.has(data),
-            'The browser boundary accepts only the exact R5 original headers',
-          );
-        super.src = data;
-      }
-      get src() {
-        return super.src;
-      }
-    }
-    t.mock.method(SoloElement.prototype, 'getContext', () => null);
-    const page = await soloPage(t, {
-      campaign: source,
-      readPads: () => [pad],
-      pictures: { Image: PackImage },
-    });
-    if (!mode.startsWith('tactical')) {
-      const pack = structuredClone(mode === 'r5' ? r5 : classic);
-      if (mode !== 'r5') {
-        const level = pack.campaigns[0].levels[0];
-        level.hangars = [{ id: 'test-hangar', ...level.spawn, radius: 2 }];
-        level.classic.arcadeActions = { version: 'arcade-actions.v1' };
-        if (mode === 'arcade-hangar') {
-          pack.classRecipes.push(structuredClone(classes.find((c) => c.id === 'bomber')));
-          pack.campaigns[0].classIds.push('bomber');
-        }
-      }
-      page.$('library-button').click();
-      page.doc.querySelector('[data-library-panel="packs"]').click();
-      assert.equal(page.$('library-packs').hidden, false);
-      page.$('pack-json').value = JSON.stringify(pack);
-      await page.$('install-pack').onclick();
-      assert.match(page.$('pack-status').textContent, /Validated and installed/);
-      const play = page
-        .$('installed-packs')
-        .querySelectorAll('button')
-        .find((b) => b.textContent === `Play ${pack.campaigns[0].title}`);
-      assert.ok(play);
-      await play.onclick();
-      await settle(
-        () =>
-          page.$('pack-select').value === pack.id && page.doc.body.dataset.pictureState === 'ready',
+  test(
+    `craft switching follows actual roster and hangars through button, G and controller: ${mode}`,
+    { timeout: 120000 },
+    async (t) => {
+      const available = ['tactical', 'arcade-hangar'].includes(mode);
+      const pad = {
+        index: 0,
+        id: 'Craft controls',
+        connected: true,
+        mapping: 'standard',
+        axes: [0, 0, 0, 0],
+        buttons: Array.from({ length: 17 }, () => ({ pressed: false, value: 0 })),
+      };
+      const source = structuredClone(campaign);
+      if (mode === 'tactical-no-hangar') source.levels[0].hangars = [];
+      const imageSizes = new Map(
+        r5.levelVisuals.map(({ visualOverrides }) => {
+          const data = visualOverrides.background.dataUrl;
+          const bytes = Buffer.from(data.split(',')[1], 'base64');
+          return [data, [bytes.readUInt32BE(16), bytes.readUInt32BE(20)]];
+        }),
       );
-      if (mode === 'r5')
-        assert.ok(decoded > 0, 'The installed authored original completed decoding.');
-      page.frame(0);
-    }
-    assert.equal(page.$('hangar-button').hidden, !available);
-    assert.equal(page.$('hangar-button').disabled, !available);
-    assert.equal(/hangar/i.test(page.$('loadout-note').textContent), available);
-    assert.equal(/hangar/i.test(page.$('hangar-state').textContent), available);
-    assert.equal(/change craft/i.test(page.$('keyboard-help').textContent), available);
-    assert.equal(/: hangar/i.test(page.$('controller-help').textContent), available);
-    assert.equal(
-      page.$('class-select').disabled,
-      false,
-      'Fresh starting-class setup remains available',
-    );
-    if (mode.startsWith('tactical')) {
-      page.change('class-select', 'bomber');
-      page.frame(0);
-      assert.equal(page.rendered.run.activeClassId, 'bomber');
-    } else if (mode === 'r5') {
-      assert.equal(page.rendered.run.classRecipes.length, 1);
-      assert.equal(page.rendered.run.activeClassId, 'scout');
-      assert.equal(page.rendered.run.hangars.length, 0);
-    }
-    for (const entry of ['button', 'key', 'controller']) {
-      page.$('start-button').click();
-      await settle(() => page.doc.body.dataset.flightState === 'running');
-      page.frame();
-      page.frame();
-      const before = authoritativeCheckpoint(page.rendered.run);
-      if (entry === 'button') {
-        // Also call the actual handler when hidden/disabled to verify its guard.
-        page.$('hangar-button').onclick();
-      } else if (entry === 'key') {
-        page.key('KeyG');
-        page.key('KeyG', false);
-      } else {
-        const missions = page.$('shell-packs'),
-          activate = missions.onclick;
-        let opening;
-        if (!available) missions.onclick = (...args) => (opening = activate.apply(missions, args));
-        try {
-          pad.buttons[3] = { pressed: true, value: 1 };
-          page.frame();
-          pad.buttons[3] = { pressed: false, value: 0 };
-        } finally {
-          missions.onclick = activate;
+      let decoded = 0;
+      class PackImage extends PNGImage {
+        async decode() {
+          await super.decode();
+          if (imageSizes.has(this.src)) decoded++;
         }
-        if (!available) {
-          assert(opening instanceof Promise, 'The controller joins the real Missions operation.');
-          await opening;
+        set src(data) {
+          if (!data.startsWith('blob:'))
+            assert.ok(
+              imageSizes.has(data),
+              'The browser boundary accepts only the exact R5 original headers',
+            );
+          super.src = data;
         }
-        // Do not advance a running field just to release the modeled button.
+        get src() {
+          return super.src;
+        }
       }
-      page.frame(0); // Paint the synchronous pause result without advancing the simulation.
-      assert.equal(page.$('hangar-dialog').open, available);
-      assert.deepEqual(authoritativeCheckpoint(page.rendered.run), before);
-      if (available) {
-        assert.equal(page.rendered.paused, true);
-        page.doc.querySelector('button[data-close="hangar-dialog"]').click();
-      } else if (entry === 'controller') {
+      t.mock.method(SoloElement.prototype, 'getContext', () => null);
+      const page = await soloPage(t, {
+        campaign: source,
+        readPads: () => [pad],
+        pictures: { Image: PackImage },
+      });
+      if (!mode.startsWith('tactical')) {
+        const pack = structuredClone(mode === 'r5' ? r5 : classic);
+        if (mode !== 'r5') {
+          const level = pack.campaigns[0].levels[0];
+          level.hangars = [{ id: 'test-hangar', ...level.spawn, radius: 2 }];
+          level.classic.arcadeActions = { version: 'arcade-actions.v1' };
+          if (mode === 'arcade-hangar') {
+            pack.classRecipes.push(structuredClone(classes.find((c) => c.id === 'bomber')));
+            pack.campaigns[0].classIds.push('bomber');
+          }
+        }
+        page.$('library-button').click();
+        page.doc.querySelector('[data-library-panel="packs"]').click();
+        assert.equal(page.$('library-packs').hidden, false);
+        page.$('pack-json').value = JSON.stringify(pack);
+        await page.$('install-pack').onclick();
+        assert.match(page.$('pack-status').textContent, /Validated and installed/);
+        const play = page
+          .$('installed-packs')
+          .querySelectorAll('button')
+          .find((b) => b.textContent === `Play ${pack.campaigns[0].title}`);
+        assert.ok(play);
+        const picture = mode === 'r5' ? observePictureReady(page, pack.id) : null;
+        try {
+          await play.onclick();
+          // Play adopts selection; its independent prewarm publishes readiness
+          // only after the accepted original has been verified and decoded.
+          if (picture) await picture.ready;
+        } finally {
+          picture?.restore();
+        }
         await settle(
-          () => page.$('journey-chooser')?.open,
-          'Unavailable hangar button keeps its visible Missions fallback',
+          () =>
+            page.$('pack-select').value === pack.id &&
+            page.doc.body.dataset.pictureState === 'ready',
+        );
+        if (mode === 'r5')
+          assert.ok(decoded > 0, 'The installed authored original completed decoding.');
+        page.frame(0);
+      }
+      assert.equal(page.$('hangar-button').hidden, !available);
+      assert.equal(page.$('hangar-button').disabled, !available);
+      assert.equal(/hangar/i.test(page.$('loadout-note').textContent), available);
+      assert.equal(/hangar/i.test(page.$('hangar-state').textContent), available);
+      assert.equal(/change craft/i.test(page.$('keyboard-help').textContent), available);
+      assert.equal(/: hangar/i.test(page.$('controller-help').textContent), available);
+      assert.equal(
+        page.$('class-select').disabled,
+        false,
+        'Fresh starting-class setup remains available',
+      );
+      if (mode.startsWith('tactical')) {
+        page.change('class-select', 'bomber');
+        page.frame(0);
+        assert.equal(page.rendered.run.activeClassId, 'bomber');
+      } else if (mode === 'r5') {
+        assert.equal(page.rendered.run.classRecipes.length, 1);
+        assert.equal(page.rendered.run.activeClassId, 'scout');
+        assert.equal(page.rendered.run.hangars.length, 0);
+      }
+      for (const entry of ['button', 'key', 'controller']) {
+        page.$('start-button').click();
+        await settle(() => page.doc.body.dataset.flightState === 'running');
+        page.frame();
+        page.frame();
+        const before = authoritativeCheckpoint(page.rendered.run);
+        if (entry === 'button') {
+          // Also call the actual handler when hidden/disabled to verify its guard.
+          page.$('hangar-button').onclick();
+        } else if (entry === 'key') {
+          page.key('KeyG');
+          page.key('KeyG', false);
+        } else {
+          const missions = page.$('shell-packs'),
+            activate = missions.onclick;
+          let opening;
+          if (!available)
+            missions.onclick = (...args) => (opening = activate.apply(missions, args));
+          try {
+            pad.buttons[3] = { pressed: true, value: 1 };
+            page.frame();
+            pad.buttons[3] = { pressed: false, value: 0 };
+          } finally {
+            missions.onclick = activate;
+          }
+          if (!available) {
+            assert(opening instanceof Promise, 'The controller joins the real Missions operation.');
+            await opening;
+          }
+          // Do not advance a running field just to release the modeled button.
+        }
+        page.frame(0); // Paint the synchronous pause result without advancing the simulation.
+        assert.equal(page.$('hangar-dialog').open, available);
+        assert.deepEqual(authoritativeCheckpoint(page.rendered.run), before);
+        if (available) {
+          assert.equal(page.rendered.paused, true);
+          page.doc.querySelector('button[data-close="hangar-dialog"]').click();
+        } else if (entry === 'controller') {
+          await settle(
+            () => page.$('journey-chooser')?.open,
+            'Unavailable hangar button keeps its visible Missions fallback',
+          );
+          assert.deepEqual(authoritativeCheckpoint(page.rendered.run), before);
+          page.$('journey-back').click();
+        } else page.$('pause-button').click();
+        page.$('save-attempt-button').click();
+        assert.equal(page.$('save-attempt-button').disabled, false);
+        assert.ok(
+          page.storage.getItem('revealline.suspended.dev.v1'),
+          'Save & pause remains available',
         );
         assert.deepEqual(authoritativeCheckpoint(page.rendered.run), before);
-        page.$('journey-back').click();
-      } else page.$('pause-button').click();
-      page.$('save-attempt-button').click();
-      assert.equal(page.$('save-attempt-button').disabled, false);
-      assert.ok(
-        page.storage.getItem('revealline.suspended.dev.v1'),
-        'Save & pause remains available',
-      );
-      assert.deepEqual(authoritativeCheckpoint(page.rendered.run), before);
-    }
-    if (available) {
-      const run = page.rendered.run;
-      const next = run.classRecipes.find((c) => c.id !== run.activeClassId).id;
-      const historyLength = run.classHistory.length;
-      page.$('hangar-button').onclick();
-      page.change('switch-class-select', next);
-      page.$('switch-class-button').click();
-      await settle(() => page.doc.body.dataset.flightState === 'running');
-      page.frame(); // Preserve the existing neutral Resume tick.
-      page.frame(); // The deliberate switch is applied on the next simulation tick.
-      assert.equal(
-        page.rendered.run.activeClassId,
-        next,
-        'The authored safe hangar still switches through the core',
-      );
-      assert.equal(page.rendered.run.classHistory.length, historyLength + 1);
-    }
-    assert.deepEqual(page.errors, []);
-  });
+      }
+      if (available) {
+        const run = page.rendered.run;
+        const next = run.classRecipes.find((c) => c.id !== run.activeClassId).id;
+        const historyLength = run.classHistory.length;
+        page.$('hangar-button').onclick();
+        page.change('switch-class-select', next);
+        page.$('switch-class-button').click();
+        await settle(() => page.doc.body.dataset.flightState === 'running');
+        page.frame(); // Preserve the existing neutral Resume tick.
+        page.frame(); // The deliberate switch is applied on the next simulation tick.
+        assert.equal(
+          page.rendered.run.activeClassId,
+          next,
+          'The authored safe hangar still switches through the core',
+        );
+        assert.equal(page.rendered.run.classHistory.length, historyLength + 1);
+      }
+      assert.deepEqual(page.errors, []);
+    },
+  );
 }

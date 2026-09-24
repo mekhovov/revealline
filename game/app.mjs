@@ -8543,8 +8543,7 @@ try {
         return prepareResultAttempt('next', selection.levelIndex);
       }
       if (selection.atEnd && !scenario) {
-        void nextLibraryMission();
-        return;
+        return nextLibraryMission();
       }
       cancelResultAttempt();
       campaignOverview = selection.atEnd;

@@ -10,6 +10,54 @@ import { campaignKey } from '../library.mjs';
 import { loadAuthoredJourneyRoute } from '../content-design/route-loader.mjs';
 import { createCandidateSoloHost } from '../content-design/solo-host.mjs';
 import { libraryMissionId } from '../mission-library/library.mjs';
+import { authoritativeCheckpoint } from '../replay.mjs';
+import { activateMissionCard } from './helpers/library-selection.mjs';
+
+function observeAction(button, activate = () => button.click()) {
+  const handler = button.onclick;
+  let operation,
+    calls = 0;
+  button.onclick = function (...args) {
+    calls++;
+    operation = handler.apply(this, args);
+    return operation;
+  };
+  try {
+    activate();
+  } finally {
+    button.onclick = handler;
+  }
+  assert.equal(calls, 1, 'The visible action invokes its actual handler once.');
+  assert.equal(
+    typeof operation?.then,
+    'function',
+    'The actual action exposes its owned operation.',
+  );
+  return operation;
+}
+
+function beginBoundaryNext(p) {
+  const result = p.rendered.run,
+    checkpoint = authoritativeCheckpoint(result),
+    picture = p.rendered.backdrop;
+  const operation = observeAction(p.$('next-button'));
+  assert.equal(
+    p.$('flight-preparation-status').querySelector('[role="status"]').getAttribute('aria-live'),
+    'polite',
+  );
+  assert.match(
+    p.$('flight-preparation-status').textContent,
+    /Finding the next mission.*Your result is kept/,
+  );
+  assert.equal(p.$('next-button').disabled, true);
+  assert.equal(p.$('flight-preparation-cancel').hidden, false);
+  assert.equal(p.doc.activeElement, p.$('flight-preparation-cancel'));
+  p.frame(0);
+  assert.equal(p.rendered.run, result);
+  assert.deepEqual(authoritativeCheckpoint(p.rendered.run), checkpoint);
+  assert.equal(p.rendered.backdrop, picture);
+  return operation;
+}
 
 async function setup(t, { holdIndex = null } = {}) {
   const recipe = JSON.parse(
@@ -60,13 +108,23 @@ async function setup(t, { holdIndex = null } = {}) {
     assetIndexedDB: assets.indexedDB,
     fetchResponse: holdIndex,
   });
-  p.$('shell-play').click();
-  await settle(() => p.$('journey-chooser')?.open && p.$('journey-collection'));
+  const initial = p.rendered.run,
+    picture = p.rendered.backdrop;
+  const opening = observeAction(p.$('shell-play'));
+  assert.equal(p.$('mission-library-opening-status').getAttribute('role'), 'status');
+  assert.equal(p.$('mission-library-opening-status').textContent, 'Preparing missions…');
+  assert.equal(p.rendered.run, initial);
+  assert.equal(p.rendered.backdrop, picture);
+  await opening;
+  assert.equal(p.$('journey-chooser').open, true);
+  assert.ok(p.$('journey-collection'));
   p.$('journey-collection').value = 'Custom';
   p.$('journey-collection').emit('change');
-  [...p.$('journey-cards').children]
-    .find((row) => JSON.parse(row.dataset.missionId)[3] === 'level-0-0')
-    .click();
+  const card = [...p.$('journey-cards').children].find(
+    (row) => JSON.parse(row.dataset.missionId)[3] === 'level-0-0',
+  );
+  assert.ok(card);
+  await activateMissionCard(card);
   await running(p, 'level-0-0');
   return { p, packs };
 }
@@ -85,114 +143,119 @@ async function win(p) {
   if (p.$('game-overlay').hidden) p.$('show-result').click();
   await settle(() => !p.$('next-button').disabled);
 }
-test('Solo Next crosses Custom campaign and pack boundaries without a summary or picker', async (t) => {
-  const { p, packs } = await setup(t);
-  for (const next of ['level-0-1', 'level-1-0']) {
+test(
+  'Solo Next crosses Custom campaign and pack boundaries without a summary or picker',
+  { timeout: 120000 },
+  async (t) => {
+    const { p, packs } = await setup(t);
+    for (const next of ['level-0-1', 'level-1-0']) {
+      await win(p);
+      const previous = p.rendered.run;
+      p.$('next-button').focus();
+      await beginBoundaryNext(p);
+      await running(p, next);
+      assert.notEqual(p.rendered.run, previous);
+      assert.equal(p.$('journey-chooser').open, false);
+      assert.equal(p.$('game-overlay').hidden, true);
+      assert.equal(p.doc.activeElement.id, 'game-canvas');
+    }
     await win(p);
-    const previous = p.rendered.run;
-    p.$('next-button').focus();
-    p.$('next-button').click();
-    await running(p, next);
-    assert.notEqual(p.rendered.run, previous);
+    const final = p.rendered.run;
+    await beginBoundaryNext(p);
+    assert.match(p.$('flight-preparation-status').textContent, /End of the Solo mission library/);
+    p.frame(0);
+    assert.equal(p.rendered.run, final);
     assert.equal(p.$('journey-chooser').open, false);
-    assert.equal(p.$('game-overlay').hidden, true);
-    assert.equal(p.doc.activeElement.id, 'game-canvas');
-  }
-  await win(p);
-  const final = p.rendered.run;
-  p.$('next-button').click();
-  await settle(() =>
-    /End of the Solo mission library/.test(p.$('flight-preparation-status').textContent),
-  );
-  p.frame(0);
-  assert.equal(p.rendered.run, final);
-  assert.equal(p.$('journey-chooser').open, false);
-  const profile = loadLibrary(p.storage, 'revealline.library.dev.v1', {
-    campaigns: packs.flatMap((pack) => pack.campaigns),
-  }).library;
-  assert.equal(
-    Object.values(profile.campaigns).flatMap((campaign) => Object.keys(campaign.clears)).length,
-    3,
-  );
-  assert.deepEqual(p.errors, []);
-});
+    const profile = loadLibrary(p.storage, 'revealline.library.dev.v1', {
+      campaigns: packs.flatMap((pack) => pack.campaigns),
+    }).library;
+    assert.equal(
+      Object.values(profile.campaigns).flatMap((campaign) => Object.keys(campaign.clears)).length,
+      3,
+    );
+    assert.deepEqual(p.errors, []);
+  },
+);
 
 for (const action of ['failure', 'cancel'])
-  test(`Solo boundary metadata ${action} preserves the earned result and allows retry`, async (t) => {
-    const base = JSON.parse(
-      await readFile(new URL('../content/campaign.json', import.meta.url), 'utf8'),
-    );
-    base.levels = [
-      {
-        ...retryFixture('self-contact').level,
-        id: 'boundary-clear',
-        name: 'Boundary clear',
-        goal: { coverage: 0.1 },
-        rules: { lives: 3 },
-      },
-    ];
-    base.briefs = [];
-    const index = JSON.parse(
-      await readFile(new URL('../content/mission-library-index.json', import.meta.url), 'utf8'),
-    );
-    index.missions = [
-      {
-        ...index.missions[0],
-        campaignKey: campaignKey(base),
-        levelId: base.levels[0].id,
-        levelRevision: base.levels[0].revision,
-        levelIndex: 0,
-      },
-    ];
-    let release,
-      entered = false,
-      failed = action === 'failure';
-    const gate = new Promise((resolve) => {
-      release = resolve;
-    });
-    t.after(release);
-    const p = await soloPage(t, {
-      campaign: base,
-      fetchResponse: async (path) => {
-        if (path !== 'content/mission-library-index.json') return;
-        entered = true;
-        if (action === 'cancel') await gate;
-        if (failed) return new Response('Network unavailable', { status: 503 });
-        return new Response(JSON.stringify(index));
-      },
-    });
-    p.$('start-button').click();
-    await running(p, 'boundary-clear');
-    await win(p);
-    const result = p.rendered.run,
-      picture = p.rendered.backdrop;
-    p.$('next-button').focus();
-    p.$('next-button').click();
-    await settle(() => entered);
-    if (action === 'cancel') {
-      p.$('flight-preparation-cancel').click();
-      release();
-      await settle(() =>
-        /cancelled.*result is kept/.test(p.$('flight-preparation-status').textContent),
+  test(
+    `Solo boundary metadata ${action} preserves the earned result and allows retry`,
+    { timeout: 120000 },
+    async (t) => {
+      const base = JSON.parse(
+        await readFile(new URL('../content/campaign.json', import.meta.url), 'utf8'),
       );
-    } else {
-      await settle(() =>
-        /Could not prepare.*result is kept/.test(p.$('flight-preparation-status').textContent),
+      base.levels = [
+        {
+          ...retryFixture('self-contact').level,
+          id: 'boundary-clear',
+          name: 'Boundary clear',
+          goal: { coverage: 0.1 },
+          rules: { lives: 3 },
+        },
+      ];
+      base.briefs = [];
+      const index = JSON.parse(
+        await readFile(new URL('../content/mission-library-index.json', import.meta.url), 'utf8'),
       );
-      failed = false;
-    }
-    p.frame(0);
-    assert.equal(p.rendered.run, result);
-    assert.equal(p.rendered.backdrop, picture);
-    assert.equal(p.$('next-button').disabled, false);
-    assert.equal(p.$('game-overlay').dataset.kind, 'won');
-    p.$('next-button').click();
-    await settle(() =>
-      /End of the Solo mission library/.test(p.$('flight-preparation-status').textContent),
-    );
-    assert.equal(p.$('journey-chooser').open, false);
-    assert.deepEqual(p.errors, []);
-  });
+      index.missions = [
+        {
+          ...index.missions[0],
+          campaignKey: campaignKey(base),
+          levelId: base.levels[0].id,
+          levelRevision: base.levels[0].revision,
+          levelIndex: 0,
+        },
+      ];
+      let release,
+        entered = false,
+        failed = action === 'failure';
+      const gate = new Promise((resolve) => {
+        release = resolve;
+      });
+      t.after(release);
+      const p = await soloPage(t, {
+        campaign: base,
+        fetchResponse: async (path) => {
+          if (path !== 'content/mission-library-index.json') return;
+          entered = true;
+          if (action === 'cancel') await gate;
+          if (failed) return new Response('Network unavailable', { status: 503 });
+          return new Response(JSON.stringify(index));
+        },
+      });
+      p.$('start-button').click();
+      await running(p, 'boundary-clear');
+      await win(p);
+      const result = p.rendered.run,
+        picture = p.rendered.backdrop;
+      p.$('next-button').focus();
+      const preparation = beginBoundaryNext(p);
+      await settle(() => entered);
+      if (action === 'cancel') {
+        p.$('flight-preparation-cancel').click();
+        release();
+        await preparation;
+        assert.match(p.$('flight-preparation-status').textContent, /cancelled.*result is kept/);
+      } else {
+        await preparation;
+        assert.match(
+          p.$('flight-preparation-status').textContent,
+          /Could not prepare.*result is kept/,
+        );
+        failed = false;
+      }
+      p.frame(0);
+      assert.equal(p.rendered.run, result);
+      assert.equal(p.rendered.backdrop, picture);
+      assert.equal(p.$('next-button').disabled, false);
+      assert.equal(p.$('game-overlay').dataset.kind, 'won');
+      await beginBoundaryNext(p);
+      assert.match(p.$('flight-preparation-status').textContent, /End of the Solo mission library/);
+      assert.equal(p.$('journey-chooser').open, false);
+      assert.deepEqual(p.errors, []);
+    },
+  );
 
 test('Solo final Journey result retains the picture while Browse permits a deliberate exact Classic handoff', async (t) => {
   const route = await loadAuthoredJourneyRoute('opening');

@@ -3,6 +3,7 @@ import {
   proveHistoricalExternalRoute,
 } from './helpers/external-current-host-route.mjs';
 import { acceptGameDataReplacement } from './helpers/backup-preflight.mjs';
+import { beginBackupReplacement } from './helpers/backup-review-readiness.mjs';
 // Actual app/core/store source. DOM, IndexedDB and image dimensions are finite
 // modeled boundaries; original compiler bytes/hashes are real, not native browser proof.
 import test from 'node:test';
@@ -459,9 +460,12 @@ test('four Fracture owners download with explicit Stay, then Play without a seco
         assets = p.fixture.assets.contents(),
         writes = p.fixture.assets.allPuts.length;
       p.$('save-json').value = JSON.stringify(backup);
-      const missingOriginalImport = p.$('import-save').onclick();
+      const missingReplacement = beginBackupReplacement(p, () => clickOperation(p, 'import-save'), {
+        timeoutMs: INVENTORY_TIMEOUT_MS,
+      });
+      await missingReplacement.ready;
       await acceptGameDataReplacement(p);
-      await missingOriginalImport;
+      await missingReplacement.operation;
       assert.match(p.$('save-status').textContent, /original|presentation|missing/i);
       assert.doesNotMatch(p.$('save-status').textContent, /Game data restored/);
       assert.deepEqual(p.storage.map, local);
@@ -480,9 +484,12 @@ test('four Fracture owners download with explicit Stay, then Play without a seco
       p.$('optional-worlds-dialog').close();
       p.$('library-button').click();
       p.$('save-json').value = JSON.stringify(backup);
-      const pendingImport = p.$('import-save').onclick();
+      const pendingReplacement = beginBackupReplacement(p, () => clickOperation(p, 'import-save'), {
+        timeoutMs: INVENTORY_TIMEOUT_MS,
+      });
+      await pendingReplacement.ready;
       await acceptGameDataReplacement(p);
-      await pendingImport;
+      await pendingReplacement.operation;
       assert.match(p.$('save-status').textContent, /Game data restored/);
       assert.match(
         p.$('save-status').textContent,
