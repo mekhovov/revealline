@@ -282,6 +282,17 @@ test('source checkpoints retain private originals separately, roundtrip actual f
   );
   await backend.save(changed, 1); // Uncompilable gameplay can still be recovered as a draft.
   assert.equal((await backend.read('source-draft')).revision, 2);
+  for (const key of ['packs', 'campaigns', 'missions', 'assets']) {
+    const malformed = structuredClone(f.content);
+    malformed.project[key] = [];
+    await assert.rejects(
+      prepareCreatorSource(
+        { draftId: 'source-draft', content: malformed, editing: { fit: 'contain' } },
+        f.assets,
+      ),
+      /one pack, campaign, mission and picture/,
+    );
+  }
   store.close();
 });
 

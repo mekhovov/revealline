@@ -18,6 +18,7 @@ import {
   exportCreatorSource,
   importCreatorSource,
   createCreatorDraftBackend,
+  requireCreatorEditableProject,
 } from './drafts.mjs';
 import { prepareContentPreview } from '../content-design/preview.mjs';
 import { paintContentMap } from '../content-design/map-view.mjs';
@@ -430,7 +431,19 @@ $('load-advanced').onclick = () =>
   operation(async () => {
     const checkpoint = await createContentDraftBackend().read(advancedId);
     if (!checkpoint) throw new Error('Save a checkpoint in Advanced Studio first.');
-    content.project = checkpoint.project;
+    requireCreatorEditableProject(checkpoint.project);
+    const next = { ...content, project: checkpoint.project };
+    // Validate source dependencies before replacing the current editable draft.
+    await prepareCreatorSource(
+      {
+        draftId: id,
+        content: next,
+        editing: { fit: $('fit').value },
+        originalSha256: image?.original?.sha256 ?? draft.source?.document.originalSha256 ?? null,
+      },
+      currentAssets(),
+    );
+    content = next;
     invalidate();
     fillLabels();
     await saveDraft();
