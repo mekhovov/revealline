@@ -24,7 +24,7 @@ reviewer names, listening approval or device results.
 | --- | --- | --- |
 | Existing catalogue | 70 hosted recordings / 15 albums; earlier 24-track collection is included | Selective listening and trusted metadata curation |
 | Player framework | Simplified chooser, mixed playlists, uploads, creator tools, optional offline albums, recovery and rights enforcement | Targeted released-source verification and demonstrated fixes |
-| New archive previews | Seven retro, six metal and one Nakarada recording previously published; two more Nakarada metal previews publicly verified after archive PR #6 | Listening approval and game admission remain; zero new game admissions from these batches |
+| New archive previews | Previous 16 previews retained; six synth and four David KBD metal auditions published and technically/publicly verified through archive PRs #7/#8; twelve new auditions in this round including the Nakarada pair | Full listening, taste approval and game admission remain; zero new game admissions |
 | Retro previews | User rejected all seven listed below | Better replacement auditions |
 | Metal previews | Existing six preserved as backups | Substantially heavier replacements |
 | Nakarada Shchedryk | User explicitly approved musical direction; exact MP3 technically checked | Game admission, opening theme and gameplay/device/cultural evidence |
@@ -48,6 +48,9 @@ reviewer names, listening approval or device results.
   passed after the retry-race correction; the earlier focused run passed 105 tests.
   These are overlapping scoped runs, not full source qualification. The unchanged
   declared Field Kit fingerprints do not approve the new UI/audio behavior.
+  Exact-head [run 35953405357](https://github.com/mekhovov/revealline/actions/runs/35953405357)
+  at da750277 passed preflight and build; test shards and release_gate were skipped.
+  Full source qualification and browser/controller/device acceptance remain.
 - Archive [PR #4](https://github.com/mekhovov/revealline-soundtracks-01/pull/4)
   merged at 62dfd72d561621218c63443b6ab621f6f67d46cc and acquired two Nakarada
   auditions through the existing hosted intake. Separate
@@ -65,6 +68,32 @@ reviewer names, listening approval or device results.
   control file returned HTTP 404 and remains an explicit partial-check exception.
   Full-track listening, game admission and physical device acceptance remain; neither
   recording is classified as Ukrainian.
+- Archive [PR #7](https://github.com/mekhovov/revealline-soundtracks-01/pull/7)
+  integrated bounded hosted acquisition and merged at ada6a708222de9e399a36751e9aecef4238c746a.
+  [Run 35953731494](https://github.com/mekhovov/revealline-soundtracks-01/actions/runs/35953731494)
+  passed all 49 intake tests and acquired all ten recordings: six DOS-88/escp synth
+  and four David KBD metal. Full decoding, exact source/native bindings and
+  permitted-derivative loudness/true-peak checks passed. All remain listening-pending.
+- Archive [PR #8](https://github.com/mekhovov/revealline-soundtracks-01/pull/8)
+  merged at 3bf8e97c9f6d6303582a09fbe67fd93cc4d1fce5 with two separately sized
+  audition collections. [Production evidence](https://github.com/mekhovov/revealline-soundtracks-01/tree/3bf8e97c9f6d6303582a09fbe67fd93cc4d1fce5/intake/archive/itch-core-audition-20260924)
+  preserves ten native originals, normalized MP3s, source/licence receipts and
+  pending reviews. Independent metadata/publication and artifact/byte reviews
+  passed; unchanged player/style bytes and every older archive file are preserved.
+  Archive totals are **96 recordings / 519,645,620 audio bytes / 520,152,260 public
+  bytes**, across the original catalogue and five added batches. These are archive
+  counts, not new game admissions.
+  Pages [run 35954930019](https://github.com/mekhovov/revealline-soundtracks-01/actions/runs/35954930019)
+  passed verification and deployment. [Direct public evidence](https://github.com/mekhovov/revealline-soundtracks-01/pull/8#issuecomment-5807596591)
+  matches both deployment manifests and all 24 servable members, including ten
+  complete MP3s, by exact bytes/hash. The two .nojekyll control files are explicit
+  exclusions, not HTTP passes. In-app browser checks advanced Crash Landing →
+  Race to Mars and The Desolation of a Civilization → Agony Space-deep with
+  readyState 4 and no media error; Next changed title/source and Pause set paused
+  with the Resume label in both collections. [Independent publication review](https://github.com/mekhovov/revealline-soundtracks-01/pull/8#issuecomment-5807551144)
+  is retained. Full listening, physical-device checks and game admission remain.
+  This round now provides **twelve public auditions: six synth, four David KBD
+  metal and two Nakarada metal**, with **zero new game admissions**.
 - PR [#321](https://github.com/mekhovov/revealline/pull/321) remains draft at
   `e6a766abce745e1993c53a2652d8e03e50e7a5e5`.
 - Qualification [35945946346](https://github.com/mekhovov/revealline/actions/runs/35945946346)
@@ -84,15 +113,24 @@ reviewer names, listening approval or device results.
   571 failures and one cancellation; 215 failure/cancellation records occur in files
   touched by that PR. This does not prove it fixes every failure. Preserve runtime
   guards, do not mass-change assertions, and rerun the resulting exact soundtrack head.
+  Shared [PR #320](https://github.com/mekhovov/revealline/pull/320) remains open at
+  c8ba85b with four full test shards in progress at the latest owner checkpoint;
+  known Team/default-Solo residuals are not accepted. The UX owner has additional
+  story/PNG/default-focus fixes at local 3aed6344c and gallery fixtures at e9d604a71;
+  Team review c51554ffc still needs coherent production-63 successor/retained-62
+  wiring. Those corrections are owned and in progress, not pushed/accepted source
+  qualification. Do not repeat their investigation or count them as released.
 - v0.97.0 was published as a GitHub release at 03:30:28 UTC on 24 September.
   This supersedes the plan's earlier “draft” snapshot. Public Pages selector and
   feature acceptance remain separate verification owned by **🔥 Releases**.
   Preserve v0.96.0 and all earlier immutable releases.
 - Archive51 PR #270 closed without merging. Preserve staging evidence and resolve
   its disposition in reconciliation; do not count that PR as delivered.
-- The filesystem now refuses tiny Git writes with ENOSPC. No local media intake,
-  builds, full checkouts or guard bypasses. Use hosted work and memory-only remote
-  commits for small source/document changes; preserve user files and evidence.
+- Earlier tiny Git writes failed with ENOSPC; preserve that blocked-check evidence.
+  Cleanup briefly restored the reserve, but the latest reported free space is
+  **669,736 KiB (about 654 MiB)**, again below the 1 GiB production floor.
+  Continue hosted/RAM-only work: no local media intake, builds, full checkouts or
+  guard bypasses. Preserve user files, originals and evidence.
 
 ## Remaining delivery ledger
 
@@ -107,8 +145,8 @@ version is allocated without the release owner's confirmation.
 | M2 | Source infrastructure reviewed; admission remains | M1; remaining recording acceptance; full qualification | Qualify inactive bundled-source adapter, then admit/bundle exact opening theme and prove menu, offline and preference behavior | 1–2 days after gates | [Archive PR #3](https://github.com/mekhovov/revealline-soundtracks-01/pull/3); [public preview](https://mekhovov.github.io/revealline-soundtracks-01/batches/ukrainian-shchedryk-20260924/); [source-only draft PR #331](https://github.com/mekhovov/revealline/pull/331), 4fd7eb0b, 11 focused tests | Unreleased |
 | M3 | Source implemented and reviewed; qualification remains | Accepted main; complete source/browser/controller/device checks | Pass full required gates, verify actual controls and publish through the release pipeline | About 1 day remaining, excluding CI and device-access waits | [Draft PR #333](https://github.com/mekhovov/revealline/pull/333), da750277; reviewed runtime 99ae9a93 | Unreleased |
 | M4 | Active research; parallel | Exact published rights and musical/cultural review | Target six additional distinct Ukrainian compositions; publish cleared subsets | 1–2 days per research round; rights/review date unknown | Candidate/hold register below | Unreleased |
-| M5 | Source bindings prepared; audio/review remains | Hosted intake integration; six complete auditions and exact-file licences | Acquire small authorized files, verify and audition six replacements; integrate only accepted tracks | 1–2 days preparation + 1–2 days integration after approval | [Archive PR #5](https://github.com/mekhovov/revealline-soundtracks-01/pull/5); candidate slate below | Unreleased |
-| M6 | Two previews publicly verified; listening and other candidates remain | Listening approval; remaining four source files | Audition Nakarada pair, acquire David KBD candidates, and admit only accepted heavier metal; preserve backups | 1–2 days preparation + 1–2 days integration after approval | [Archive PRs #4](https://github.com/mekhovov/revealline-soundtracks-01/pull/4), [#5](https://github.com/mekhovov/revealline-soundtracks-01/pull/5), [#6](https://github.com/mekhovov/revealline-soundtracks-01/pull/6) | Unreleased in game |
+| M5 | Six auditions public and technically verified; listening/admission remain | User taste and complete listening checks | Review the six replacement previews, then integrate only accepted tracks | Listening/review date unknown; 1–2 days integration after approval | [Archive PR #7](https://github.com/mekhovov/revealline-soundtracks-01/pull/7), [#8](https://github.com/mekhovov/revealline-soundtracks-01/pull/8); run 35953731494 | Unreleased in game |
+| M6 | Six replacement auditions public and technically verified | User taste and complete listening checks | Compare all six heavier candidates, admit accepted tracks and preserve six older backups | Listening/review date unknown; 1–2 days integration after approval | [Archive PR #6](https://github.com/mekhovov/revealline-soundtracks-01/pull/6), [#7](https://github.com/mekhovov/revealline-soundtracks-01/pull/7), [#8](https://github.com/mekhovov/revealline-soundtracks-01/pull/8) | Unreleased in game |
 | M7 | Blocked public rights; scope retained | Recording-specific public redistribution and applicable artwork evidence | Include all 77 recordings / 80 filenames; publish cleared entries; maintain private pack route | About 1 day integration after clearance; clearance date unknown | UA-FPV manifests/private packs/guide | Public collection unreleased |
 | M8 | Remaining verification | Released source and device access | Audit existing playback/storage/creator contracts; release demonstrated fixes separately | 1–2 days initial audit; fixes separately estimated | Existing regression suites | Per-feature evidence required |
 | M9 | Later | Core style releases | Review existing 70 selectively; add trusted ID/hash curation overlay preserving saved pins | 1–2 days per selected batch plus listening | Curation PR pending | Unreleased |
@@ -155,10 +193,10 @@ core/offline packaging and budget accounting remain to implement and qualify.
 Implementation checkpoint: PR #333 implements these controls and fixes the Solo
 lifecycle retry capture race found in review. The latest change records declared
 Field Kit fingerprints unchanged; it does not claim new UI/audio acceptance.
-Exact-runtime preflight passed validation, lint, both formatting checks and
-production reproducibility, while test/release-gate jobs were skipped. Require
-fresh latest-head checks, all four shards and browser/controller/device evidence
-before release.
+Exact-head run 35953405357 at da750277 passed preflight and build, including
+validation, lint, both formatting checks and production reproducibility; test
+shards/release_gate were skipped. Require all four shards and browser/controller/
+device evidence on the eventual accepted source before release.
 
 - **B** plays/pauses music; **N** selects the next song in gameplay and ordinary menus.
 - Compact Now Playing, Play/Pause and Next appear in main and pause menus across
@@ -211,6 +249,8 @@ messages or social-account actions are implied by this work. Preserve these hold
   SoundCloud CC-BY claim for LIRA conflicts with the
   [label's all-rights-reserved album page](https://zefra.bandcamp.com/album/the-doox-lira-2018).
   Do not extend either page's terms to other recordings or admit from conflicting metadata.
+  A read-only scan of all 80 supplied filenames and their ID3 tags found no Doox
+  match. No supplied file was changed or publicly cleared by that scan.
 - Sascha Ende — **Світло повернеться**:
   [the exact source page](https://ende.app/en/song/13316-svitlo-povernetsia-the-light-will-return-ukraine)
   lists CC BY 4.0. This is an AI-assisted contemporary cinematic Ukrainian vocal
@@ -231,15 +271,15 @@ punchy full drums, early hooks and developed arrangements. Keep `90s Synth` /
 chiptune/fakebit or energy with BPM. Xposed credit leads do not establish Reloaded
 credits; commercial OSTs remain references, never assumed reusable files.
 
-Next six complete auditions (unapproved): DOS-88 **Race to Mars, City Stomper,
-Automata v2, Crash Landing**; escp **Synthasia, Twilight City**. Verify exact
-creator downloads, composition uniqueness, licences and full-track suitability.
-
-Source preparation is now merged in archive PR #5. The separate resolver verifies
-the creator/game/upload bindings for all six files without retaining signed URL
-tokens. Thirteen unit tests and ten live metadata resolutions (including the four
-metal candidates) passed; media hashes, decoding, loudness and listening remain
-pending. Integrate the helper into bounded hosted intake before acquiring audio.
+Six acquired auditions (musically unapproved): DOS-88 **Race to Mars, City Stomper,
+Automata v2, Crash Landing**; escp **Synthasia, Twilight City**.
+[The synth collection](https://mekhovov.github.io/revealline-soundtracks-01/batches/synth-audition-20260924/)
+was prepared by archive PR #7 and published through PR #8; direct-public acceptance
+is recorded in the current execution snapshot. Exact creator/game/upload bindings,
+native and delivery hashes, complete decoding and permitted-derivative loudness
+checks passed. Native filenames/sources are retained; temporary URL authorization
+is not stored. Full-track and repeated listening, 90s/Xposed suitability, transitions
+and warning audibility remain. No recording from this batch is admitted to the game.
 
 ### Metal
 
@@ -265,8 +305,13 @@ exact hashes and pending-review receipts remain in the immutable
 
 Both recordings are CC BY 4.0 with registered Content ID; intake policy marks
 both ineligible for Recording mode. These are candidate previews, not listening-approved tracks, Ukrainian
-additions or game admissions. The other four David KBD recordings have verified
-metadata bindings from PR #5 but no acquired/qualified audio in this intake yet.
+additions or game admissions. The four David KBD recordings are now acquired and
+technically verified through PR #7 / run 35953731494, with a separate
+[Eternity audition collection](https://mekhovov.github.io/revealline-soundtracks-01/batches/metal-eternity-audition-20260924/)
+from PR #8. Exact originals and normalized MP3s are retained. Content ID remains
+unknown for these four, Recording mode eligibility is false, and full listening/
+heaviness, transition and gameplay review remain. This does not approve the six
+replacement candidates or change the older six-track backup decision.
 
 Retain the expansion target of **12–20 distinct retro/metal recordings**, normally
 6–10 per family, delivered as independently accepted batches.
@@ -322,7 +367,8 @@ records. These establish musical properties, not redistribution permission.
 ### M8.discovery — make new archive collections easy to find
 
 Status: demonstrated gap, not implemented. The root archive player has no links
-to the new batches, although batches.json registers all three collections. The
+to the new batches, although batches.json registers all five collections after
+archive PR #8. The
 [existing root-inventory regression](https://github.com/mekhovov/revealline-soundtracks-01/blob/40a283d9a2ed2f5a00837ae60273f3884a52e706/test-verify.mjs)
 pins the original root HTML/manifest contract; preserve those historical hashes.
 
@@ -330,7 +376,7 @@ Next action: add a separately pinned public collection index and link it from
 the game/docs, preserving the original archive entry point. Estimate: about
 0.5 day plus review and deployment. Dependency: review the new index contract
 and verify links to each immutable preview collection. No feature PR or released
-version exists yet. The direct new preview URL above is usable in the meantime.
+version exists yet. The direct preview collection links above are usable in the meantime.
 
 ### Playback and user interface
 
