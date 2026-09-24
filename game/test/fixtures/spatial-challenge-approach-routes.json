@@ -1,21 +1,78 @@
 {
-  "format": "SpatialChallengeApproachFixtureV1",
-  "scope": "East-first public-input prefix: the initial cut connects the eastern bay and secures only42trailcells while both resulting occupied regions remain field. Completion remains pending.",
+  "format": "SpatialApproachRoutesV1",
+  "scope": "One explicit alternative: Two bays east-first occupied-region line-only connection, followed by a current-gp4 legal clear. Not evidence of two human-qualified approaches on every map.",
   "rows": [
     {
       "missionId": "two-bays",
       "difficulty": "standard",
-      "turnPolicy": "immediate",
       "seed": 1,
-      "simulationIdentity": "fb24d649ea330bea",
-      "checkpoint": "87cf7c48e131b0b5",
-      "status": "route-exhausted",
+      "turnPolicy": "immediate",
+      "sourceProjectIdentity": "23c1fea4f5fea27a",
+      "authoredSimulationIdentity": "7120fad1ee76e508",
+      "simulationIdentity": "3c9d5a827c05829e",
+      "levelIdentity": "0144d4e54ec56781",
+      "gameplayTuning": {
+        "version": "gameplay-pressure.v4",
+        "difficulty": "standard",
+        "enemySpeed": 1,
+        "playerSpeed": 1,
+        "enemyDensity": 0,
+        "adminOverride": false,
+        "overrides": { "enemySpeed": 1, "playerSpeed": 1, "enemyDensity": 1 }
+      },
+      "ruleset": "xonix-core.v6",
+      "status": "no-loss-clear",
+      "coverage": 0.7867975022301517,
+      "coverageGoal": 0.68,
+      "ticks": 3405,
+      "cuts": 4,
+      "losses": 0,
+      "checkpoint": "740515afa146e8d9",
+      "replayVerified": true,
+      "sourceIdentity": {
+        "gitRevision": "d0c73b4723798f6490f2680a59fd8d8a59983ac1",
+        "dirty": true,
+        "sourceFiles": 536,
+        "sourceSha256": "a3d006c583c61c910abd091b04e5461a2527cc89ac3a1c2863791afbd9444c59",
+        "digestScope": "All non-test game .mjs files, route CLI, spatial assessment, and bent-route proposal helper; includes untracked candidate code.",
+        "stableDuringProbe": true
+      },
       "segments": [
-        {
-          "direction": "right",
-          "ticks": 591
-        }
-      ]
+        ["right", 591],
+        [null, 60],
+        ["right", 7],
+        ["left", 41],
+        ["up", 224],
+        [null, 60],
+        ["down", 224],
+        ["left", 543],
+        ["down", 108],
+        ["left", 374],
+        [null, 60],
+        ["right", 7],
+        ["up", 108],
+        ["right", 760],
+        ["down", 238]
+      ],
+      "closureCoverage": [
+        [591, 0.01873327386262266],
+        [923, 0.30419268510258696],
+        [2232, 0.576271186440678],
+        [3405, 0.7867975022301517]
+      ],
+      "objectiveCaptures": [],
+      "searchSummary": {
+        "policy": "efficient",
+        "budget": 180000,
+        "used": 112655,
+        "candidateLimit": 20,
+        "maxCuts": 30,
+        "failedAttempts": 48,
+        "attemptCount": 177,
+        "failuresByCause": { "enemy-trail": 46, "enemy-player": 1, "self-contact": 1 }
+      },
+      "approach": "east-first",
+      "firstClosure": { "tick": 591, "claimedCells": 42, "retainedRegions": 3 }
     }
   ]
 }

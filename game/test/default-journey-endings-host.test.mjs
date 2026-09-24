@@ -7,7 +7,7 @@ import { managedIndexedDB } from './helpers/managed-idb.mjs';
 import { playKeyboardRoute } from './helpers/keyboard-route.mjs';
 import { VARIETY_ROUTES } from './helpers/variety-routes.mjs';
 import { createJourneyBackend, JOURNEY_PROFILE_DATABASE } from '../journey/profile.mjs';
-import { createWholeSortingCandidates } from '../content-design/whole-spatial-candidates.mjs';
+import { createSpatialChallengeJourney } from '../content-design/spatial-challenge-journey.mjs';
 import { createSpatialBalanceCandidates } from '../content-design/spatial-balance-candidates.mjs';
 import { compileContentProject, resolveMission } from '../content-design/project.mjs';
 import { createRun, stepRun, FIXED_DT } from '../core/index.mjs';
@@ -33,7 +33,7 @@ const arrows = { up: 'ArrowUp', down: 'ArrowDown', left: 'ArrowLeft', right: 'Ar
 const wasd = { up: 'KeyW', down: 'KeyS', left: 'KeyA', right: 'KeyD' };
 const assets = async (path) =>
   String(path).includes('/content-design/assets/') ? new Response(await readFile(path)) : undefined;
-const current = compileContentProject(createWholeSortingCandidates({ artwork: true }));
+const current = compileContentProject(createSpatialChallengeJourney({ artwork: true }));
 const greybox = compileContentProject(createSpatialBalanceCandidates());
 const finale = JSON.parse(
   await readFile(new URL('./fixtures/apex-field-clear-routes.json', import.meta.url)),
@@ -64,10 +64,10 @@ function optionalRecording(id) {
 
 for (const mode of ['solo', 'versus'])
   for (const ending of ['optional', 'core'])
-    test(`default v5 ${mode} ${ending} ending retains its earned run and offers a deliberate next destination`, async (t) => {
+    test(`default v6 ${mode} ${ending} ending retains its earned run and offers a deliberate next destination`, async (t) => {
       const memory = managedIndexedDB();
       const databases = new Map([[JOURNEY_PROFILE_DATABASE, memory]]);
-      const backend = createJourneyBackend({ ...memory, profileKey: 'journey-whole-spatial-v5' });
+      const backend = createJourneyBackend({ ...memory, profileKey: 'journey-whole-spatial-v6' });
       const oldBackend = createJourneyBackend({
         ...memory,
         profileKey: 'journey-whole-spatial-v4',
@@ -104,7 +104,7 @@ for (const mode of ['solo', 'versus'])
       const runs = () => (mode === 'solo' ? [p.rendered.run] : p.renders);
       p.$(mode === 'solo' ? 'shell-packs' : 'race-journey-find').click();
       await settle(() => p.$('journey-chooser')?.open && p.$('journey-collection'));
-      assert.equal(p.$('journey-cards').children.length, 201);
+      assert.equal(p.$('journey-cards').children.length, 207);
       const card = p
         .$('journey-cards')
         .children.find((node) => JSON.parse(node.dataset.missionId)[3].endsWith('/' + id));

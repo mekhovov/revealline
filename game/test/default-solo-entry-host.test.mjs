@@ -76,7 +76,7 @@ function collection(p, value) {
   return [...p.$('journey-cards').children];
 }
 
-test('ordinary Solo entry offers 91 Journey and 110 Classic missions and direct Start, Retry and Next', async (t) => {
+test('ordinary Solo entry offers 91 current Journey, six previous editions and 110 Classic missions with direct Start, Retry and Next', async (t) => {
   const p = await page(t);
   assert.equal(p.$('shell-featured').hidden, false);
   assert.equal(p.$('shell-continue').hidden, true);
@@ -219,7 +219,7 @@ test('switching from a running default Journey to Legacy has an explicit Stay or
   assert.equal(target.origin + target.pathname, 'http://localhost/game/');
   assert.equal(target.searchParams.get('journey'), 'legacy');
   assert.equal(target.searchParams.get('library-mission'), card.dataset.missionId);
-  assert(storage.getItem('revealline.suspended.journey-whole-spatial.v5'));
+  assert(storage.getItem('revealline.suspended.journey-whole-spatial.v6'));
   assert.deepEqual(p.errors, []);
 });
 

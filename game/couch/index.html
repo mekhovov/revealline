@@ -2,7 +2,10 @@
 <html lang="en" data-tool-state="loading">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
     <title>Couch race · Reveal Line</title>
     <link rel="stylesheet" href="../style.css" />
     <link rel="stylesheet" href="../ui/game-shell.css" />
@@ -24,19 +27,52 @@
     <link rel="stylesheet" href="../ui/journey-save-cue.css" />
   </head>
   <body class="field-kit field-kit-support" data-field-kit-page="couch">
-    <p id="boot-status" class="operation-status" data-state="busy" role="status">
-      <span aria-hidden="true" style="display: inline-flex; gap: 3px; color: #78dce8"
-        ><i style="display: inline-block; width: 4px; height: 8px; background: currentColor"></i
-        ><i style="display: inline-block; width: 4px; height: 8px; background: currentColor"></i
+    <p
+      id="boot-status"
+      class="operation-status"
+      data-state="busy"
+      role="status"
+    >
+      <span
+        aria-hidden="true"
+        style="display: inline-flex; gap: 3px; color: #78dce8"
         ><i
-          style="display: inline-block; width: 4px; height: 8px; background: currentColor"
+          style="
+            display: inline-block;
+            width: 4px;
+            height: 8px;
+            background: currentColor;
+          "
+        ></i
+        ><i
+          style="
+            display: inline-block;
+            width: 4px;
+            height: 8px;
+            background: currentColor;
+          "
+        ></i
+        ><i
+          style="
+            display: inline-block;
+            width: 4px;
+            height: 8px;
+            background: currentColor;
+          "
         ></i></span
       ><span>Preparing both boards…</span>
     </p>
     <a id="boot-return" href="../">Back to the game</a>
     <main id="couch-app" data-boot-inert inert aria-busy="true">
-      <nav id="race-journey-controls" class="race-actions" aria-label="Mission continuation" hidden>
-        <button id="race-journey-next" type="button" hidden>Next mission</button>
+      <nav
+        id="race-journey-controls"
+        class="race-actions"
+        aria-label="Mission continuation"
+        hidden
+      >
+        <button id="race-journey-next" type="button" hidden>
+          Next mission
+        </button>
         <button id="race-journey-skip" type="button">Skip mission</button>
         <button id="race-journey-find" type="button">Find missions</button>
       </nav>
@@ -49,7 +85,8 @@
       <div id="race-hud" class="race-hud" hidden>
         <button id="race-pause" type="button" disabled>Pause</button>
         <span class="race-score"
-          ><span class="sun">SUNFLOWER</span> <strong id="series-score">0 : 0</strong>
+          ><span class="sun">SUNFLOWER</span>
+          <strong id="series-score">0 : 0</strong>
           <span class="sky">SKYLINE</span></span
         >
         <strong id="race-clock">1:30</strong>
@@ -60,7 +97,12 @@
           hidden
         ></div>
       </div>
-      <div id="race-boards" class="race-boards" aria-label="Two separate race boards" hidden>
+      <div
+        id="race-boards"
+        class="race-boards"
+        aria-label="Two separate race boards"
+        hidden
+      >
         <section class="racer" data-player="0" aria-label="Player 1: Sunflower">
           <div class="racer-heading">
             <h2>Sunflower</h2>
@@ -76,7 +118,9 @@
               aria-label="Player 1 race board"
             ></canvas>
           </div>
-          <p id="racer-stats-0" class="racer-stats">0.0% · 3 lives · 0 points</p>
+          <p id="racer-stats-0" class="racer-stats">
+            0.0% · 3 lives · 0 points
+          </p>
           <p
             id="racer-capture-0"
             class="racer-capture"
@@ -94,18 +138,57 @@
             <strong id="racer-encounter-title-0"></strong
             ><span id="racer-encounter-instruction-0"></span>
           </div>
-          <div class="race-pad" data-player="0" aria-label="Player 1 touch controls" hidden>
-            <div class="race-cross" role="group" aria-label="Player 1 directions">
-              <button type="button" data-direction="up" aria-label="Player 1 up">↑</button>
-              <button type="button" data-direction="left" aria-label="Player 1 left">←</button>
+          <div
+            class="race-pad"
+            data-player="0"
+            aria-label="Player 1 touch controls"
+            hidden
+          >
+            <div
+              class="race-cross"
+              role="group"
+              aria-label="Player 1 directions"
+            >
+              <button
+                type="button"
+                data-direction="up"
+                aria-label="Player 1 up"
+              >
+                ↑
+              </button>
+              <button
+                type="button"
+                data-direction="left"
+                aria-label="Player 1 left"
+              >
+                ←
+              </button>
               <span class="cross-center" aria-hidden="true">1</span>
-              <button type="button" data-direction="right" aria-label="Player 1 right">→</button>
-              <button type="button" data-direction="down" aria-label="Player 1 down">↓</button>
+              <button
+                type="button"
+                data-direction="right"
+                aria-label="Player 1 right"
+              >
+                →
+              </button>
+              <button
+                type="button"
+                data-direction="down"
+                aria-label="Player 1 down"
+              >
+                ↓
+              </button>
             </div>
-            <div class="race-equipment" role="group" aria-label="Player 1 equipment">
+            <div
+              class="race-equipment"
+              role="group"
+              aria-label="Player 1 equipment"
+            >
               <button type="button" data-action="action">Ability</button>
               <button type="button" data-action="pickup">Supply</button>
-              <button type="button" data-action="boost" aria-pressed="false">Boost</button>
+              <button type="button" data-action="boost" aria-pressed="false">
+                Boost
+              </button>
             </div>
           </div>
           <p id="racer-input-0" class="racer-input"></p>
@@ -125,7 +208,9 @@
               aria-label="Player 2 race board"
             ></canvas>
           </div>
-          <p id="racer-stats-1" class="racer-stats">0.0% · 3 lives · 0 points</p>
+          <p id="racer-stats-1" class="racer-stats">
+            0.0% · 3 lives · 0 points
+          </p>
           <p
             id="racer-capture-1"
             class="racer-capture"
@@ -143,18 +228,57 @@
             <strong id="racer-encounter-title-1"></strong
             ><span id="racer-encounter-instruction-1"></span>
           </div>
-          <div class="race-pad" data-player="1" aria-label="Player 2 touch controls" hidden>
-            <div class="race-cross" role="group" aria-label="Player 2 directions">
-              <button type="button" data-direction="up" aria-label="Player 2 up">↑</button>
-              <button type="button" data-direction="left" aria-label="Player 2 left">←</button>
+          <div
+            class="race-pad"
+            data-player="1"
+            aria-label="Player 2 touch controls"
+            hidden
+          >
+            <div
+              class="race-cross"
+              role="group"
+              aria-label="Player 2 directions"
+            >
+              <button
+                type="button"
+                data-direction="up"
+                aria-label="Player 2 up"
+              >
+                ↑
+              </button>
+              <button
+                type="button"
+                data-direction="left"
+                aria-label="Player 2 left"
+              >
+                ←
+              </button>
               <span class="cross-center" aria-hidden="true">2</span>
-              <button type="button" data-direction="right" aria-label="Player 2 right">→</button>
-              <button type="button" data-direction="down" aria-label="Player 2 down">↓</button>
+              <button
+                type="button"
+                data-direction="right"
+                aria-label="Player 2 right"
+              >
+                →
+              </button>
+              <button
+                type="button"
+                data-direction="down"
+                aria-label="Player 2 down"
+              >
+                ↓
+              </button>
             </div>
-            <div class="race-equipment" role="group" aria-label="Player 2 equipment">
+            <div
+              class="race-equipment"
+              role="group"
+              aria-label="Player 2 equipment"
+            >
               <button type="button" data-action="action">Ability</button>
               <button type="button" data-action="pickup">Supply</button>
-              <button type="button" data-action="boost" aria-pressed="false">Boost</button>
+              <button type="button" data-action="boost" aria-pressed="false">
+                Boost
+              </button>
             </div>
           </div>
           <p id="racer-input-1" class="racer-input"></p>
@@ -163,15 +287,24 @@
       <div id="race-shell" class="race-shell">
         <p id="race-preparation" hidden></p>
         <p id="race-presentation-status" hidden></p>
-        <section id="race-main" class="race-screen" aria-labelledby="race-title">
+        <section
+          id="race-main"
+          class="race-screen"
+          aria-labelledby="race-title"
+        >
           <nav id="race-mode-choices" aria-label="Game mode"></nav>
           <p class="race-kicker">REVEAL LINE / LOCAL TWO PLAYER</p>
-          <h1 class="field-kit-display" id="race-title">Two boards.<br />One race.</h1>
+          <h1 class="field-kit-display" id="race-title">
+            Two boards.<br />One race.
+          </h1>
           <p id="race-journey-note" hidden>
-            OPENING JOURNEY / UNVALIDATED VERSUS TEST BUILD. Web previews need a connection for
-            original pictures; core offline preparation does not save them.
+            OPENING JOURNEY / UNVALIDATED VERSUS TEST BUILD. Web previews need a
+            connection for original pictures; core offline preparation does not
+            save them.
           </p>
-          <p id="race-message" role="status">Both boards use the same map, class and seed.</p>
+          <p id="race-message" role="status">
+            Both boards use the same map, class and seed.
+          </p>
           <p id="race-summary" class="race-summary"></p>
           <div class="race-fields">
             <label id="race-journey-difficulty-field" hidden
@@ -184,7 +317,9 @@
               <button id="race-journey-preferences-retry" type="button">
                 Retry saving difficulty
               </button>
-              <button id="race-journey-preferences-export" type="button">Export difficulty</button>
+              <button id="race-journey-preferences-export" type="button">
+                Export difficulty
+              </button>
             </div>
           </div>
           <div class="race-seats">
@@ -202,29 +337,49 @@
             </article>
           </div>
           <div class="race-menu-actions">
-            <a id="race-coop" class="race-primary" href="relay-rescue.html?return=versus"
+            <a
+              id="race-coop"
+              class="race-primary"
+              href="relay-rescue.html?return=versus"
               >Relay Rescue · team up</a
             >
-            <button id="race-start" class="race-primary" type="button">Start race</button>
+            <button id="race-start" class="race-primary" type="button">
+              Start race
+            </button>
             <button id="race-journey-save-options" type="button" hidden>
               Progress not saved · Save options
             </button>
-            <button id="race-chapter-retry" type="button" hidden>Retry picture</button>
-            <button id="race-picture-cancel" type="button" hidden>Cancel picture loading</button>
+            <button id="race-chapter-retry" type="button" hidden>
+              Retry picture
+            </button>
+            <button id="race-picture-cancel" type="button" hidden>
+              Cancel picture loading
+            </button>
             <button id="race-chapters" type="button">All missions</button>
             <button id="race-focus" type="button">Race setup</button>
             <button id="race-options" type="button">Settings</button>
-            <button id="race-quick-sound" type="button" class="quick-sound" aria-pressed="false">
+            <button
+              id="race-quick-sound"
+              type="button"
+              class="quick-sound"
+              aria-pressed="false"
+            >
               Sound: off
             </button>
             <button id="race-help" type="button">How to play</button>
-            <button id="race-review" type="button" hidden>View both boards</button>
-            <a id="race-solo-return" href="../?journey=legacy">Return to solo</a>
-            <a id="race-library-switch" href="?journey=whole-spatial-v6">New Journey</a>
+            <button id="race-review" type="button" hidden>
+              View both boards
+            </button>
+            <a id="race-solo-return" href="../?journey=legacy"
+              >Return to solo</a
+            >
+            <a id="race-library-switch" href="?journey=whole-spatial-v6"
+              >New Journey</a
+            >
           </div>
           <p id="race-format-note" class="race-footnote">
-            One race. Choose First to two in Race setup for a longer match. Couch races do not
-            change your solo progress.
+            One race. Choose First to two in Race setup for a longer match.
+            Couch races do not change your solo progress.
           </p>
           <aside
             id="race-journey-save"
@@ -233,8 +388,12 @@
             hidden
           >
             <p id="race-journey-save-message" role="status"></p>
-            <button id="race-journey-save-retry" type="button">Retry progress save</button>
-            <button id="race-journey-save-export" type="button">Export Journey progress</button>
+            <button id="race-journey-save-retry" type="button">
+              Retry progress save
+            </button>
+            <button id="race-journey-save-export" type="button">
+              Export Journey progress
+            </button>
           </aside>
           <div
             id="race-music-menu-now-playing"
@@ -253,7 +412,10 @@
         >
           <p class="race-kicker">SAME CONDITIONS / TWO ROUTES</p>
           <h1 id="race-setup-title">Race setup</h1>
-          <p>Choose together. Each player starts with the same map, craft and time.</p>
+          <p>
+            Choose together. Each player starts with the same map, craft and
+            time.
+          </p>
           <div class="race-fields">
             <label>Map<select id="race-level"></select></label>
             <label
@@ -263,7 +425,9 @@
               </select></label
             >
             <label>World<select id="race-theme"></select></label>
-            <label id="race-class-field">Craft<select id="race-class"></select></label>
+            <label id="race-class-field"
+              >Craft<select id="race-class"></select
+            ></label>
             <label
               >Steering<select id="race-turn">
                 <option value="immediate">Immediate turns</option>
@@ -280,8 +444,12 @@
           </div>
           <p id="race-loadout" class="race-summary"></p>
           <p id="race-installed-status" role="status"></p>
-          <button id="race-installed-refresh" type="button">Refresh installed chapters</button>
-          <button id="race-setup-back" type="button">Done · back to lobby</button>
+          <button id="race-installed-refresh" type="button">
+            Refresh installed chapters
+          </button>
+          <button id="race-setup-back" type="button">
+            Done · back to lobby
+          </button>
         </section>
         <section
           id="race-options-panel"
@@ -291,10 +459,19 @@
           inert
         >
           <div class="shared-settings-heading">
-            <h1 id="race-options-title" data-field-kit-copy="settings.couchTitle">Settings</h1>
+            <h1
+              id="race-options-title"
+              data-field-kit-copy="settings.couchTitle"
+            >
+              Settings
+            </h1>
             <button id="race-options-back" type="button">Back</button>
           </div>
-          <div class="field-kit-settings-tabs" role="tablist" aria-label="Settings categories">
+          <div
+            class="field-kit-settings-tabs"
+            role="tablist"
+            aria-label="Settings categories"
+          >
             <button
               id="race-settings-tab-controls"
               type="button"
@@ -345,7 +522,10 @@
             inert
           >
             <h2>Controls</h2>
-            <section id="race-gameplay-tuning" aria-label="Shared gameplay tuning"></section>
+            <section
+              id="race-gameplay-tuning"
+              aria-label="Shared gameplay tuning"
+            ></section>
             <div class="race-fields">
               <label
                 >Player 1 touch controls<select id="race-touch-0">
@@ -363,11 +543,13 @@
               >
             </div>
             <p>
-              Auto shows a player's controls after a touch on their board. Keyboard or controller
-              use hides them at the next pause. Choose Always to play with a mouse.
+              Auto shows a player's controls after a touch on their board.
+              Keyboard or controller use hides them at the next pause. Choose
+              Always to play with a mouse.
             </p>
             <label id="race-tap-field" class="race-check"
-              ><input id="race-tap" type="checkbox" /> Toggle on-screen Boost</label
+              ><input id="race-tap" type="checkbox" /> Toggle on-screen
+              Boost</label
             >
             <button id="race-menu-release" type="button" hidden disabled>
               Release menu controller
@@ -385,11 +567,19 @@
             <h2>Audio</h2>
             <button id="race-audio" type="button">Unmute sound</button>
             <label for="race-master-volume">Master sound volume</label>
-            <input id="race-master-volume" type="range" min="0" max="1" step="0.01" value="0.65" />
+            <input
+              id="race-master-volume"
+              type="range"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.65"
+            />
             <p id="race-audio-status" role="status"></p>
             <p>
-              Master sound applies across game modes. Music follows your shared library selection;
-              race effects follow the selected game presentation.
+              Master sound applies across game modes. Music follows your shared
+              library selection; race effects follow the selected game
+              presentation.
             </p>
           </section>
           <section
@@ -408,8 +598,12 @@
             <label class="field-kit-page-text"
               ><span data-field-kit-copy="display.textSize">Text size</span
               ><select id="race-text-size">
-                <option value="standard" data-field-kit-copy="display.standard">Standard</option>
-                <option value="large" data-field-kit-copy="display.large">Large</option>
+                <option value="standard" data-field-kit-copy="display.standard">
+                  Standard
+                </option>
+                <option value="large" data-field-kit-copy="display.large">
+                  Large
+                </option>
               </select></label
             >
             <label class="field-kit-page-text"
@@ -427,7 +621,8 @@
             >
             <p id="race-menu-style-status" class="micro-note" role="status"></p>
             <label class="race-check"
-              ><input id="race-reduced" type="checkbox" /> Reduced effects</label
+              ><input id="race-reduced" type="checkbox" /> Reduced
+              effects</label
             >
             <p id="race-system-reduction" class="setting-note"></p>
             <p id="race-display-status" class="setting-note" role="status"></p>
@@ -440,9 +635,15 @@
               Character reactions</label
             >
             <p id="race-journey-reactions-help" class="race-footnote">
-              Optional captions after completed Journey missions. No voice or animation.
+              Optional captions after completed Journey missions. No voice or
+              animation.
             </p>
-            <p id="race-journey-reactions-status" class="race-footnote" role="status" hidden></p>
+            <p
+              id="race-journey-reactions-status"
+              class="race-footnote"
+              role="status"
+              hidden
+            ></p>
             <button id="race-journey-reactions-retry" type="button" hidden>
               Retry saving reactions
             </button>
@@ -458,8 +659,12 @@
             <h2>Game data</h2>
             <div id="race-data-unit" class="settings-reading-unit">
               <div class="reading-toolbar">
-                <button id="race-data-read" type="button">Read game data</button>
-                <button id="race-data-reading-done" type="button" disabled>Done reading</button>
+                <button id="race-data-read" type="button">
+                  Read game data
+                </button>
+                <button id="race-data-reading-done" type="button" disabled>
+                  Done reading
+                </button>
               </div>
               <p id="race-data-reading-hint" class="reading-hint" role="status">
                 Read without starting or resuming.
@@ -474,12 +679,12 @@
                 data-game-reading
               >
                 <p>
-                  This Couch match stays in this page. It does not replace your Solo flight,
-                  pictures or records.
+                  This Couch match stays in this page. It does not replace your
+                  Solo flight, pictures or records.
                 </p>
                 <p>
-                  Finish this match before leaving. Installed campaigns and Solo backups are managed
-                  from Solo Settings → Game data.
+                  Finish this match before leaving. Installed campaigns and Solo
+                  backups are managed from Solo Settings → Game data.
                 </p>
               </div>
             </div>
@@ -497,7 +702,9 @@
           <div id="race-help-unit">
             <div class="reading-toolbar">
               <button id="race-help-read" type="button">Read controls</button>
-              <button id="race-help-reading-done" type="button" disabled>Done reading</button>
+              <button id="race-help-reading-done" type="button" disabled>
+                Done reading
+              </button>
             </div>
             <p id="race-help-reading-hint" class="reading-hint" role="status">
               Read without starting or resuming.
@@ -511,12 +718,14 @@
               data-game-reading
             >
               <p>
-                Leave the safe edge, draw a line, and return to safety to capture territory. Avoid
-                enemies touching you or your unfinished line.
+                Leave the safe edge, draw a line, and return to safety to
+                capture territory. Avoid enemies touching you or your unfinished
+                line.
               </p>
               <p>
-                A direction keeps moving after release. Turn with a fresh direction. Capture and
-                recovery stop that player's movement; choose a fresh direction to leave again.
+                A direction keeps moving after release. Turn with a fresh
+                direction. Capture and recovery stop that player's movement;
+                choose a fresh direction to leave again.
               </p>
               <div class="race-seats">
                 <article class="seat sun">
@@ -530,12 +739,14 @@
               </div>
               <p id="race-controller-help"></p>
               <p>
-                Esc / P or either controller's Menu pauses both boards. Resume is always explicit.
-                Each controller needs neutral controls before it can join or resume.
+                Esc / P or either controller's Menu pauses both boards. Resume
+                is always explicit. Each controller needs neutral controls
+                before it can join or resume.
               </p>
               <p id="race-format-help">
-                First clear wins the race. At the time limit: coverage, then lives, then score
-                decide. One race ends after this result. Rematch plays the same mission again.
+                First clear wins the race. At the time limit: coverage, then
+                lives, then score decide. One race ends after this result.
+                Rematch plays the same mission again.
               </p>
             </div>
           </div>
@@ -551,11 +762,15 @@
           <p class="race-kicker">BOTH PLAYERS ARE PAUSED</p>
           <h1 id="race-confirm-title">Start a new match?</h1>
           <p>
-            The current couch round and series score will be replaced. Your solo progress stays
-            saved.
+            The current couch round and series score will be replaced. Your solo
+            progress stays saved.
           </p>
-          <button id="race-confirm-back" class="race-primary" type="button">Keep this match</button>
-          <button id="race-confirm-reset" type="button">New match · edit setup</button>
+          <button id="race-confirm-back" class="race-primary" type="button">
+            Keep this match
+          </button>
+          <button id="race-confirm-reset" type="button">
+            New match · edit setup
+          </button>
         </section>
         <section
           id="race-leave-panel"
@@ -565,8 +780,11 @@
           inert
         >
           <h1 id="race-leave-title">Leave this Versus attempt?</h1>
-          <p id="race-leave-copy">This attempt is only kept on this page and is not saved.</p>
-          <button id="race-leave-back" class="race-primary" type="button">Stay here</button
+          <p id="race-leave-copy">
+            This attempt is only kept on this page and is not saved.
+          </p>
+          <button id="race-leave-back" class="race-primary" type="button">
+            Stay here</button
           ><a id="race-leave" href="../">Leave couch · return to solo</a>
         </section>
         <p id="race-menu-status" class="race-menu-status" role="status"></p>

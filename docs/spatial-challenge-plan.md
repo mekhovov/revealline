@@ -49,8 +49,9 @@ deleted.
   safe-placement warnings. Authored canvas preview is explicitly labelled.
 - The reference ledger adds the wall-semantics correction, scoped redesign
   decisions and evidence links without rewriting the original 64-file audit.
-- All six missions have current-gp4 Standard/immediate/seed-1 no-life-loss legal
-  input clear and replay proofs. See the checked-in route fixture and assessment
+- All six missions have current-gp4 no-life-loss legal-input clear/replay proofs
+  for all three presets and both control styles at seed 1, plus Standard/immediate
+  seed 2. A separate Two bays east-first route also clears. See the checked-in route fixture and assessment
   command below. These are machine-selected feasibility samples, not human play.
 - Independent source review found and fixed an automatic alternate-edition loop;
   focused checks cover both v5/v6 endings, manual same-name mission selection and
@@ -76,8 +77,8 @@ rewrite of that mission.
 
 ## Remaining gates before Phase A promotion
 
-1. Broaden actual-current-runtime evidence to other presets, both control styles,
-   multiple deterministic seeds and two distinguishable approaches per mission.
+1. Extend the bounded two-seed evidence and qualify two distinguishable approaches
+   per mission across presets and controls.
    Verify signature threats, useful shortcuts, no unavoidable opening damage,
    ordinary/efficient routes and low-risk cleanup. A route-search budget expiry
    is not proof that a map is impossible.
@@ -95,9 +96,9 @@ rewrite of that mission.
    failures, distinct missions and voluntary retry, plus physical devices and
    whole-Journey pacing, remains open after technical release.
 
-The recorded Standard clear durations are 28.02s (Two bays), 54.90s (circuits),
-58.88s (yard), 85.01s (arrows), 42.43s (receivers), and 79.38s (crossing). Arrows'
-39-cut machine route needs cleanup/discoverability review; the shorter Two bays
+The recorded Standard clear durations are 27.56s (Two bays), 54.90s (circuits),
+58.88s (yard), 75.33s (arrows), 42.43s (receivers), and 79.38s (crossing). Arrows'
+21-cut machine route needs cleanup/discoverability review; the shorter Two bays
 sample needs ordinary-player observation. Neither is evidence of enjoyment.
 Historical PR314 authored-runtime routes fail when replayed under current gp4;
 those failures are retained as scope evidence, not hidden or called regressions
