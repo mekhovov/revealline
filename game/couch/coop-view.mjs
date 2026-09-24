@@ -23,7 +23,13 @@ import { prepareTeamAnchors, drawTeamAnchor } from './coop-anchor-presentation.m
 import { canvasTextFonts } from '../text-face.mjs';
 import { createCoopActorPresentation } from './coop-actor-presentation.mjs';
 import { coopCueScale, placeCoopCue } from './coop-actor-layout.mjs';
-import { drawCoopActiveTrail, drawCoopWall, prepareCoopWall } from './coop-terrain-trail.mjs';
+import {
+  createCoopCaptureFeedback,
+  drawCoopActiveTrail,
+  drawCoopCaptureFeedback,
+  drawCoopWall,
+  prepareCoopWall,
+} from './coop-terrain-trail.mjs';
 import { paintMaterialMarker } from '../content-design/material-markers.mjs';
 import { candidateTeamPictureFrame } from './candidate-team-pictures.mjs';
 import { coopBonusView, drawCoopBonuses } from './coop-bonus-view.mjs';
@@ -109,7 +115,8 @@ export function createCoopPainter(canvas) {
   let actors = createCoopActorPresentation(),
     actorPresentation = null,
     actorAppearanceStyle = null;
-  const outcomes = createTeamOutcomeFeedback();
+  const outcomes = createTeamOutcomeFeedback(),
+    captures = createCoopCaptureFeedback();
   let presentation = null,
     look = null,
     wall = null,
@@ -247,7 +254,8 @@ export function createCoopPainter(canvas) {
     actors = nextActors;
     actorPresentation = selectedActors;
     actorAppearanceStyle = actorAppearance?.style ?? null;
-    const recentOutcomes = feedback ?? outcomes.observe(run);
+    const recentOutcomes = feedback ?? outcomes.observe(run),
+      recentCaptures = captures.observe(run);
     const fonts = canvasTextFonts(textFace, look?.fonts ?? THEME_FONTS);
     const bonuses = coopBonusView(run);
     const palette = look?.palette;
@@ -355,6 +363,9 @@ export function createCoopPainter(canvas) {
           }
         }
       }
+      // Newly revealed cells illuminate below every current hazard, actor and
+      // active cut, matching Solo/Versus without obscuring live danger.
+      drawCoopCaptureFeedback(ctx, recentCaptures, run, palette ?? ACTOR_FALLBACK_PALETTE, reduced);
       drawCoopBonuses(ctx, bonuses, { screenScale: canvas.clientWidth / 1152 });
       // Launch markers are anchored landmarks, not compulsory meeting pads.
       for (const effect of run.supportEffects || [])
@@ -794,7 +805,10 @@ export function createCoopPainter(canvas) {
   }
   return {
     paint,
-    observe: outcomes.observe,
+    observe(run) {
+      outcomes.observe(run);
+      captures.observe(run);
+    },
     setPresentation,
     actorFrame: (kind, id) => actors.frame(kind, id),
     get presentation() {

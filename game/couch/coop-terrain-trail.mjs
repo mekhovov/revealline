@@ -1,7 +1,87 @@
-import { drawActiveTrail } from '../ui/actor-presentation.mjs';
+import { drawActiveTrail, drawCapturePulse } from '../ui/actor-presentation.mjs';
 import { drawPresentationImage } from '../ui/presentation-draw-image.mjs';
 
 const CELL = 16;
+const CAPTURE_LIFE = 0.65;
+const CAPTURE_LIMIT = 2;
+
+/** Team events are replaced every fixed step, so retain a small visual-only
+ * history. Repeated host observation and paint in the same tick cannot create
+ * another pulse or affect the simulation. */
+export function createCoopCaptureFeedback() {
+  let owner = null,
+    tick = -1,
+    time = -1,
+    records = [];
+  function read(run) {
+    if (owner !== run || !['running', 'paused'].includes(run.status)) return Object.freeze([]);
+    return Object.freeze(
+      records
+        .filter((record) => run.time >= record.time && run.time - record.time < CAPTURE_LIFE)
+        .map((record) => Object.freeze({ ...record, age: run.time - record.time })),
+    );
+  }
+  function observe(run) {
+    if (owner !== run || run.tick < tick || run.time < time) {
+      owner = run;
+      tick = -1;
+      time = -1;
+      records = [];
+    }
+    if (tick !== run.tick) {
+      for (const event of run.events ?? []) {
+        if (
+          event.type !== 'cells.claimed' ||
+          !Number.isInteger(event.tick) ||
+          event.tick !== run.tick ||
+          !Number.isFinite(event.time) ||
+          event.time > run.time ||
+          !Array.isArray(event.indices)
+        )
+          continue;
+        const indices = [...new Set(event.indices)]
+          .filter(
+            (index) =>
+              Number.isInteger(index) &&
+              index >= 0 &&
+              index < run.cells.length &&
+              run.cells[index] === 1,
+          )
+          .slice(0, run.cells.length);
+        if (!indices.length) continue;
+        records.push(
+          Object.freeze({
+            tick: event.tick,
+            time: event.time,
+            indices: Object.freeze(indices),
+          }),
+        );
+      }
+      records = records.slice(-CAPTURE_LIMIT);
+    }
+    tick = run.tick;
+    time = run.time;
+    records = records.filter(
+      (record) => run.time >= record.time && run.time - record.time < CAPTURE_LIFE,
+    );
+    return read(run);
+  }
+  return Object.freeze({ observe, read });
+}
+
+/** Team paints in cells while the shared reveal primitive paints in 16-unit
+ * cells. The pulse remains inside cells that are still authoritatively safe. */
+export function drawCoopCaptureFeedback(ctx, effects, run, palette, reduced = false) {
+  if (reduced || !effects.length) return;
+  ctx.save();
+  try {
+    ctx.scale(1 / CELL, 1 / CELL);
+    for (const effect of effects)
+      drawCapturePulse(ctx, effect, run.width, run.cells, palette, reduced);
+  } finally {
+    ctx.restore();
+  }
+}
 
 /** Borrow one already prepared frame. A missing legacy binding remains optional;
  * an advertised but malformed frame must not replace the accepted presentation. */
