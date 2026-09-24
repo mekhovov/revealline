@@ -184,12 +184,14 @@ export function attachQuickMusicControls({
     }
     return true;
   }
-  const keydown = (event) => {
-    const action = musicShortcutAction(event, {
+  const shortcut = (event) =>
+    musicShortcutAction(event, {
       enabled,
       active: foreground(),
       conflicts: conflicts(event),
     });
+  const keydown = (event) => {
+    const action = shortcut(event);
     if (action && run(action)) event.preventDefault();
   };
   const storage = (event) => {
@@ -210,6 +212,7 @@ export function attachQuickMusicControls({
   render();
   return Object.freeze({
     render,
+    handlesKey: (event) => event.type === 'keydown' && Boolean(shortcut(event)),
     contains: (node) => rows.some((row) => row.root.contains(node)) || !!details?.contains(node),
     dispose() {
       if (disposed) return;
