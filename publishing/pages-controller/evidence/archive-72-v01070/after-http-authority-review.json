@@ -1,0 +1,53 @@
+{
+  "status": "PASS",
+  "scope": "Fresh post-HTTP archive main/tree/run/deployment/status and v107 release/tag/nine original asset descriptors remain unchanged. No public body or native requests repeated.",
+  "archiveCommit": "12f9b350f9461d7721ba389af9c7590d6b5f621f",
+  "archiveTree": "4449eead1322886eea88718941ace998f4b74e8d",
+  "runId": 36070705920,
+  "deploymentId": 6649956472,
+  "deploymentStatusId": 18809597530,
+  "releaseId": 396120437,
+  "originalAssets": 9,
+  "pins": [
+    {
+      "path": "public-audit/final-authorities/commit.json",
+      "bytes": 2741,
+      "sha256": "17455e8f602f2c82c5f32f9beb68c05b4bb3d9c2fff9e4ca60ecaa3a7829060e"
+    },
+    {
+      "path": "public-audit/final-authorities/deployment.json",
+      "bytes": 3856,
+      "sha256": "e40777e8266c9ba86202f09b41a7043754c1e7163eedd906f8b96053b790b989"
+    },
+    {
+      "path": "public-audit/final-authorities/main.json",
+      "bytes": 358,
+      "sha256": "a4a5db924b9a5d22bbab1a4c0e00e7d168c4a1086d5f53a775993e2191dd120a"
+    },
+    {
+      "path": "public-audit/final-authorities/release.json",
+      "bytes": 16058,
+      "sha256": "5fed4fd7f6edb634c86cd20416905df10580dca7e4e0d51995ec2d5f95864321"
+    },
+    {
+      "path": "public-audit/final-authorities/run.json",
+      "bytes": 13126,
+      "sha256": "13b87d81d7d817e4a80bcea64dd5703e58b9144c870cdcfa6b209488a6604f35"
+    },
+    {
+      "path": "public-audit/final-authorities/statuses.json",
+      "bytes": 6817,
+      "sha256": "4f550220c70b9b980233eb25753ffe7593eb0362e168de0f5d57ec5c7430b8e3"
+    },
+    {
+      "path": "public-audit/final-authorities/tag-ref.json",
+      "bytes": 340,
+      "sha256": "dd72740e7381f374d3960f6ca46326c51c5df79c67d9f899eacfd5a9798b3a34"
+    },
+    {
+      "path": "public-audit/final-authorities/tag.json",
+      "bytes": 717,
+      "sha256": "6cc2f65c4035e790e1e5f0d6ec5df9ad0d1127bf98da22525a7e31f4c7a7ec85"
+    }
+  ]
+}
