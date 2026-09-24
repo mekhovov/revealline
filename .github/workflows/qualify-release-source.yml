@@ -32,7 +32,7 @@ jobs:
            for(const [direction,ticks] of segments)for(let i=0;i<ticks;i++){recordInput(recorder,{direction});stepRun(run,{direction},FIXED_DT);}
            const checkpoint=authoritativeCheckpoint(run), replay=verifyReplay(exportReplay(recorder,run));
            results.push({id,expected,checkpoint,status:run.status,tick:run.tick,replayMatch:replay.match});
-           if(id==='two-bays')console.log('TWO_BAYS_STATE='+JSON.stringify(run));
+           if(checkpoint.hash!==expected)console.log('ROUTE_STATE='+JSON.stringify({id,run}));
           }
           console.log(JSON.stringify({node:process.version,v8:process.versions.v8,arch:process.arch,results},null,2));
           JS
