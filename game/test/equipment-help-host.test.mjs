@@ -145,9 +145,21 @@ for (const mode of ['tactical', 'tactical-no-hangar', 'r5', 'one-craft-hangar', 
         page.key('KeyG');
         page.key('KeyG', false);
       } else {
-        pad.buttons[3] = { pressed: true, value: 1 };
-        page.frame();
-        pad.buttons[3] = { pressed: false, value: 0 };
+        const missions = page.$('shell-packs'),
+          activate = missions.onclick;
+        let opening;
+        if (!available) missions.onclick = (...args) => (opening = activate.apply(missions, args));
+        try {
+          pad.buttons[3] = { pressed: true, value: 1 };
+          page.frame();
+          pad.buttons[3] = { pressed: false, value: 0 };
+        } finally {
+          missions.onclick = activate;
+        }
+        if (!available) {
+          assert(opening instanceof Promise, 'The controller joins the real Missions operation.');
+          await opening;
+        }
         // Do not advance a running field just to release the modeled button.
       }
       page.frame(0); // Paint the synchronous pause result without advancing the simulation.

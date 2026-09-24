@@ -481,11 +481,15 @@ test('initial required-picture loading leaves the actual lobby Cancel keyboard r
   assert.equal(document.getElementById('race-start').disabled, true);
   const first = document.getElementById('race-coop');
   first.focus();
-  first.emit('keydown', { key: 'Tab' });
+  for (let steps = 0; document.activeElement !== cancel && steps < 30; steps++) {
+    document.activeElement.emit('keydown', { key: 'Tab' });
+    assert.notEqual(document.activeElement.disabled, true, 'Tab skips disabled controls.');
+    assert.equal(document.activeElement.closest('[hidden],[inert]'), null);
+  }
   assert.equal(
     document.activeElement === cancel,
     true,
-    'The actual navigation skips disabled Start.',
+    'The actual navigation reaches Cancel through the expanded visible lobby controls.',
   );
   cancel.click();
   assert.equal(signal.aborted, true);
@@ -799,11 +803,21 @@ async function chooseFormat(p, value) {
 
 function completeRound(p, outcome) {
   assert.equal(p.state(), 'running');
-  // Same shipped map and legal directional/timeout route as the retained
-  // threshold test. No duel status, winner or player coordinates are injected.
-  if (outcome === 'win') p.key('KeyS');
+  // Current Standard pressure requires waiting until the bouncer passes the
+  // opening line, then seat 0 closes the authored board without losing a life.
+  // Seat 1 stays idle; no game state or result is injected.
+  if (outcome === 'win') {
+    p.frames(13, 100);
+    p.key('KeyS');
+  }
   p.frames(151, 200);
-  if (outcome === 'win') p.key('KeyS', false);
+  if (outcome === 'win') {
+    p.key('KeyS', false);
+    assert.equal(p.renders[0].status, 'won');
+    assert.equal(p.renders[0].lives, 3);
+    assert.equal(p.renders[0].coverage, 0.5);
+    assert.equal(p.renders[1].coverage, 0);
+  }
   assert.equal(p.state(), 'finished');
 }
 
