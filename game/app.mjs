@@ -160,7 +160,12 @@ import { prepareSavedVisualTheme } from './presentation/saved-visual-theme.mjs';
 import { createSoundtrackStore } from './soundtrack-store.mjs';
 import { upgradeSoundtrackLibrary, setCatalogueTracks } from './soundtrack.mjs';
 import { createSoundtrackSource } from './soundtrack-source.mjs';
-import { SOUNDTRACK_CATALOGUE, SOUNDTRACK_ARCHIVES } from './content/soundtrack-catalogue.mjs';
+import { prepareOpeningTheme, usesOpeningThemeDefault } from './opening-soundtrack.mjs';
+import {
+  SOUNDTRACK_CATALOGUE,
+  SOUNDTRACK_ARCHIVES,
+  SOUNDTRACK_BUNDLED_ASSETS,
+} from './content/soundtrack-catalogue.mjs';
 import { createManagedMediaStore } from './managed-media-store.mjs';
 import { createStillMediaStore } from './media-store.mjs';
 import { createStoryMediaStore } from './story-media-store.mjs';
@@ -1556,6 +1561,7 @@ try {
       const source = createSoundtrackSource({
         catalogue,
         archives: SOUNDTRACK_ARCHIVES,
+        bundled: SOUNDTRACK_BUNDLED_ASSETS,
         readLocal: (hash) => soundtrackAssets.get(hash),
         installedOnly: () => soundtrackLibrary?.listening?.installedOnly ?? false,
       });
@@ -1627,6 +1633,7 @@ try {
         store: soundtrackStore,
         player: soundtrackPlayer,
         catalogue,
+        bundled: SOUNDTRACK_BUNDLED_ASSETS,
         readAsset: source.readAsset,
         getContext: soundtrackContext,
         onLibrary: (_library, snapshot) => {
@@ -1678,9 +1685,19 @@ try {
             catalogue.tracks,
           );
           soundtrackPlayer.setLibrary(soundtrackLibrary);
-          // This does not play audio. It only makes a selected local MP3 ready
-          // before the player taps Start or Play, which iOS requires.
-          void soundtrackPlayer.prepare({ allowNetwork: false });
+          if (
+            usesOpeningThemeDefault(soundtrackLibrary, {
+              fresh: snapshot.generation === 0,
+            })
+          ) {
+            // The exact core recording is allowed to load without blocking the
+            // menu. Playback still waits for the first eligible browser gesture.
+            void prepareOpeningTheme(soundtrackPlayer, soundtrackLibrary, { fresh: true });
+          } else {
+            // This does not play audio. It only makes a selected local MP3 ready
+            // before the player taps Start or Play, which iOS requires.
+            void soundtrackPlayer.prepare({ allowNetwork: false });
+          }
         } else if (!soundtrackDisposed) {
           const state = soundtrackPlayer.snapshot();
           soundtrackStatus(
@@ -5871,6 +5888,7 @@ try {
             createSoundtrackSource({
               catalogue: SOUNDTRACK_CATALOGUE,
               archives: SOUNDTRACK_ARCHIVES,
+              bundled: SOUNDTRACK_BUNDLED_ASSETS,
             }).readAsset(hash, { ...options, purpose: 'export' }),
           readAudio: (options) => pictureManager.readDomain('audio', options),
         },
