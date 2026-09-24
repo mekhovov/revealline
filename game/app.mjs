@@ -6687,9 +6687,9 @@ try {
   function overlay(kind, { preserveFocus = false } = {}) {
     // Repeated suspension may repaint Pause, but does not own a new focus
     // choice. An inactive child must not pull focus back from its parent.
-    const preservePauseFocus =
-      preserveFocus ||
-      (kind === 'pause' && !$('game-overlay').hidden && $('game-overlay').dataset.kind === 'pause');
+    const repeatedPause =
+      kind === 'pause' && !$('game-overlay').hidden && $('game-overlay').dataset.kind === 'pause';
+    const preservePauseFocus = preserveFocus || repeatedPause;
     drawResultPicture($('result-picture'), { kind, run, theme, seed, painter, flightPictures });
     $('game-overlay').dataset.kind = kind;
     show('pause-label', kind === 'pause');
@@ -6720,7 +6720,9 @@ try {
     show('overlay-help', kind === 'pause');
     show('overlay-settings', kind === 'pause');
     show('overlay-sound', kind === 'pause');
-    show('pause-mission-info', kind === 'pause');
+    show('pause-mission-info', kind === 'pause' || (!courseSession && kind === 'ready'));
+    if (kind === 'ready') $('pause-mission-info').open = true;
+    else if (kind === 'pause' && !repeatedPause) $('pause-mission-info').open = false;
     show('overlay-field-details', kind === 'pause');
     show('overlay-brief', !courseSession && (kind === 'ready' || kind === 'pause'));
     show('result-medals', kind === 'won');

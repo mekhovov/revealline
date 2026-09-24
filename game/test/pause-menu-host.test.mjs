@@ -65,12 +65,16 @@ test('Restart is limited to Pause and does not leak into briefings or result men
   const page = await soloPage(t);
   assert.equal(page.$('game-overlay').dataset.kind, 'ready');
   assert.equal(page.$('overlay-restart').hidden, true);
+  assert.equal(page.$('pause-mission-info').hidden, false);
+  assert.equal(page.$('pause-mission-info').open, true, 'ready brief remains directly available');
   page.$('start-button').click();
   await settle(() => page.doc.body.dataset.flightState === 'running');
   page.key('Escape');
   page.key('Escape', false);
   page.frame(0);
   assert.equal(page.$('overlay-restart').hidden, false);
+  assert.equal(page.$('pause-mission-info').hidden, false);
+  assert.equal(page.$('pause-mission-info').open, false, 'Pause details start collapsed');
   page.$('start-button').click();
   await settle(() => page.doc.body.dataset.flightState === 'running');
   assert.equal(page.$('game-overlay').hidden, true);
