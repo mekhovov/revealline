@@ -263,17 +263,27 @@ export class PostgresCommunityRepository {
     });
   }
 
-  async listPublished({ limit, cursor }) {
+  async listPublished({ limit, cursor, search = '' }) {
     const values = [limit + 1];
+    let searchClause = '';
+    if (search) {
+      values.push(
+        `%${search.replaceAll('\\', '\\\\').replaceAll('%', '\\%').replaceAll('_', '\\_')}%`,
+      );
+      searchClause = `AND (slug ILIKE $${values.length} ESCAPE '\\'
+        OR title ILIKE $${values.length} ESCAPE '\\'
+        OR description ILIKE $${values.length} ESCAPE '\\')`;
+    }
     let cursorClause = '';
     if (cursor) {
       const separator = cursor.lastIndexOf('|');
       values.push(cursor.slice(0, separator), cursor.slice(separator + 1));
-      cursorClause = 'AND (published_at, edition_id) < ($2::timestamptz, $3::text)';
+      const first = values.length - 1;
+      cursorClause = `AND (published_at, edition_id) < ($${first}::timestamptz, $${first + 1}::text)`;
     }
     const result = await this.pool.query(
       `SELECT * FROM community_submissions
-       WHERE status='published' ${cursorClause}
+       WHERE status='published' ${searchClause} ${cursorClause}
        ORDER BY published_at DESC, edition_id DESC LIMIT $1`,
       values,
     );
@@ -292,5 +302,48 @@ export class PostgresCommunityRepository {
       [editionId],
     );
     return mapSubmission(result.rows[0]);
+  }
+
+  async createReport({ editionId, reporterSubject, reason, details }) {
+    return this.#transaction(async (client) => {
+      const edition = await client.query(
+        `SELECT edition_id FROM community_submissions
+         WHERE edition_id=$1 AND status='published'`,
+        [editionId],
+      );
+      if (!edition.rows[0]) return null;
+      const existing = await client.query(
+        `SELECT * FROM community_reports WHERE edition_id=$1 AND reporter_subject=$2`,
+        [editionId, reporterSubject],
+      );
+      if (existing.rows[0]) return { report: existing.rows[0], reused: true };
+      const inserted = await client.query(
+        `INSERT INTO community_reports (
+           id, edition_id, reporter_subject, reason, details, status, created_at
+         ) VALUES ($1,$2,$3,$4,$5,'open',$6) RETURNING *`,
+        [randomUUID(), editionId, reporterSubject, reason, details, this.clock()],
+      );
+      return { report: inserted.rows[0], reused: false };
+    });
+  }
+
+  async unlistPublishedEdition({ editionId, actorSubject, administrator = false, reason }) {
+    return this.#transaction(async (client) => {
+      const now = this.clock();
+      const updated = await client.query(
+        `UPDATE community_submissions SET status='unlisted', updated_at=$2
+         WHERE edition_id=$1 AND status='published'
+           AND ($3::boolean OR owner_subject=$4) RETURNING *`,
+        [editionId, now, administrator, actorSubject],
+      );
+      if (!updated.rows[0]) return null;
+      await client.query(
+        `INSERT INTO community_audit_log (
+           id, actor_subject, action, edition_id, reason, created_at
+         ) VALUES ($1,$2,'edition.unlisted',$3,$4,$5)`,
+        [randomUUID(), actorSubject, editionId, reason, now],
+      );
+      return mapSubmission(updated.rows[0]);
+    });
   }
 }

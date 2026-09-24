@@ -1,4 +1,5 @@
 import Fastify from 'fastify';
+import { createHash } from 'node:crypto';
 import {
   CommunityError,
   PACKAGE_MEDIA_TYPE,
@@ -7,8 +8,11 @@ import {
   toOwnerSubmission,
   toPublicEdition,
   validateCreateSubmission,
+  validateReport,
 } from './domain.mjs';
 import { DirectUploadTransport } from './upload-transport.mjs';
+import { mountCommunityTus } from './tus-server.mjs';
+import { readCreatorPreview } from './validator.mjs';
 
 const notFound = () =>
   new CommunityError(404, 'not_found', 'The requested resource was not found.');
@@ -20,6 +24,7 @@ export function buildCommunityApp({
   maxPackageBytes = 256 * 1024 * 1024,
   validatorVersion = 'creator-bundle-v1',
   uploadTransport = new DirectUploadTransport(),
+  tus = null,
   logger = false,
 }) {
   if (!repository || !blobStore || !authenticator)
@@ -29,12 +34,14 @@ export function buildCommunityApp({
   const parserOptions = { parseAs: 'buffer', bodyLimit: maxPackageBytes };
   app.addContentTypeParser(PACKAGE_MEDIA_TYPE, parserOptions, parsePackage);
   app.addContentTypeParser('application/octet-stream', parserOptions, parsePackage);
+  if (tus) mountCommunityTus(app, tus);
 
-  const owner = async (request) => {
+  const identity = async (request) => {
     const identity = await authenticator.authenticate(request);
     if (!identity?.subject) throw new Error('Authentication adapter returned no subject.');
-    return identity.subject;
+    return identity;
   };
+  const owner = async (request) => (await identity(request)).subject;
 
   app.setErrorHandler((error, request, reply) => {
     if (error instanceof CommunityError)
@@ -89,6 +96,76 @@ export function buildCommunityApp({
         `attachment; filename="${row.slug}-${row.editionVersion}.rlpack"`,
       )
       .send(blob.body);
+  });
+
+  app.get('/v1/catalog/:editionId/preview', async (request, reply) => {
+    const row = await repository.getPublishedEdition(request.params.editionId);
+    if (!row) throw notFound();
+    const preview = await readCreatorPreview(blobStore, row);
+    if (!preview)
+      throw new CommunityError(503, 'preview_unavailable', 'The verified preview is unavailable.');
+    return reply
+      .header('content-type', preview.mime)
+      .header('content-length', preview.size)
+      .header('etag', `"sha256-${preview.sha256}"`)
+      .header('cache-control', 'public, max-age=31536000, immutable')
+      .send(preview.body);
+  });
+
+  app.post('/v1/catalog/:editionId/reports', async (request, reply) => {
+    const report = validateReport(request.body);
+    const reporterSubject = `anonymous/${createHash('sha256')
+      .update(request.ip)
+      .update('\0')
+      .update(request.headers['user-agent'] ?? '')
+      .digest('hex')}`;
+    const created = await repository.createReport({
+      editionId: request.params.editionId,
+      reporterSubject,
+      ...report,
+    });
+    if (!created) throw notFound();
+    return reply
+      .code(created.reused ? 200 : 201)
+      .header('cache-control', 'no-store')
+      .send({
+        report: { id: created.report.id, status: created.report.status },
+        reused: created.reused,
+      });
+  });
+
+  app.post('/v1/admin/catalog/:editionId/unlist', async (request, reply) => {
+    const administrator = await identity(request);
+    if (!administrator.roles?.includes('admin'))
+      throw new CommunityError(403, 'admin_required', 'Administrator access is required.');
+    const reason = validateReport({ reason: 'other', details: request.body?.reason ?? '' }).details;
+    if (!reason)
+      throw new CommunityError(400, 'invalid_request', 'An unlisting reason is required.');
+    const result = await repository.unlistPublishedEdition({
+      editionId: request.params.editionId,
+      actorSubject: administrator.subject,
+      administrator: true,
+      reason,
+    });
+    if (!result) throw notFound();
+    return reply.header('cache-control', 'no-store').send({
+      editionId: request.params.editionId,
+      status: result.status,
+    });
+  });
+
+  app.post('/v1/publications/:editionId/unlist', async (request, reply) => {
+    const actor = await identity(request);
+    const row = await repository.unlistPublishedEdition({
+      editionId: request.params.editionId,
+      actorSubject: actor.subject,
+      administrator: actor.roles?.includes('admin') ?? false,
+      reason: actor.roles?.includes('admin')
+        ? 'Administrator removed publication.'
+        : 'Creator removed publication.',
+    });
+    if (!row) throw notFound();
+    return reply.header('cache-control', 'no-store').send({ submission: toOwnerSubmission(row) });
   });
 
   app.post('/v1/submissions', async (request, reply) => {

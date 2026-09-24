@@ -6,6 +6,8 @@ const copy = (value) => (value ? structuredClone(value) : value);
 export class MemoryCommunityRepository {
   #submissions = new Map();
   #jobs = new Map();
+  #reports = new Map();
+  #audit = [];
 
   constructor({ clock = () => new Date() } = {}) {
     this.clock = clock;
@@ -174,9 +176,17 @@ export class MemoryCommunityRepository {
     row.updatedAt = now;
   }
 
-  async listPublished({ limit, cursor }) {
+  async listPublished({ limit, cursor, search = '' }) {
+    const query = search.toLocaleLowerCase('en-US');
     const ordered = [...this.#submissions.values()]
-      .filter((row) => row.status === 'published')
+      .filter(
+        (row) =>
+          row.status === 'published' &&
+          (!query ||
+            [row.slug, row.title, row.description].some((value) =>
+              value.toLocaleLowerCase('en-US').includes(query),
+            )),
+      )
       .sort(
         (a, b) =>
           b.publishedAt.localeCompare(a.publishedAt) || b.editionId.localeCompare(a.editionId),
@@ -198,5 +208,46 @@ export class MemoryCommunityRepository {
       (candidate) => candidate.editionId === editionId && candidate.status === 'published',
     );
     return copy(row ?? null);
+  }
+
+  async createReport({ editionId, reporterSubject, reason, details }) {
+    const edition = await this.getPublishedEdition(editionId);
+    if (!edition) return null;
+    const key = `${editionId}\0${reporterSubject}`;
+    const existing = this.#reports.get(key);
+    if (existing) return { report: copy(existing), reused: true };
+    const now = this.#now();
+    const report = {
+      id: randomUUID(),
+      editionId,
+      reporterSubject,
+      reason,
+      details,
+      status: 'open',
+      createdAt: now,
+    };
+    this.#reports.set(key, report);
+    return { report: copy(report), reused: false };
+  }
+
+  async unlistPublishedEdition({ editionId, actorSubject, administrator = false, reason }) {
+    const row = [...this.#submissions.values()].find(
+      (candidate) =>
+        candidate.editionId === editionId &&
+        candidate.status === 'published' &&
+        (administrator || candidate.ownerSubject === actorSubject),
+    );
+    if (!row) return null;
+    row.status = 'unlisted';
+    row.updatedAt = this.#now();
+    this.#audit.push({
+      id: randomUUID(),
+      action: 'edition.unlisted',
+      editionId,
+      actorSubject,
+      reason,
+      createdAt: row.updatedAt,
+    });
+    return copy(row);
   }
 }

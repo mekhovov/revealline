@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS community_submissions (
   actual_size bigint,
   blob_key text,
   status text NOT NULL CHECK (
-    status IN ('draft', 'uploaded', 'queued', 'validating', 'published', 'rejected')
+    status IN ('draft', 'uploaded', 'queued', 'validating', 'published', 'rejected', 'unlisted')
   ),
   rejection_code text,
   validation_report jsonb,
@@ -57,6 +57,26 @@ CREATE TABLE IF NOT EXISTS community_validation_jobs (
     OR (worker_id IS NOT NULL AND claimed_at IS NOT NULL AND lease_expires_at IS NOT NULL)
   ),
   CHECK (status NOT IN ('accepted', 'rejected') OR completed_at IS NOT NULL)
+);
+
+CREATE TABLE IF NOT EXISTS community_reports (
+  id uuid PRIMARY KEY,
+  edition_id text NOT NULL REFERENCES community_submissions(edition_id) ON DELETE RESTRICT,
+  reporter_subject text NOT NULL,
+  reason text NOT NULL CHECK (reason IN ('broken', 'copyright', 'unsafe', 'misleading', 'other')),
+  details text NOT NULL DEFAULT '' CHECK (char_length(details) <= 2000),
+  status text NOT NULL CHECK (status IN ('open', 'resolved')),
+  created_at timestamptz NOT NULL,
+  UNIQUE (edition_id, reporter_subject)
+);
+
+CREATE TABLE IF NOT EXISTS community_audit_log (
+  id uuid PRIMARY KEY,
+  actor_subject text NOT NULL,
+  action text NOT NULL CHECK (action IN ('edition.unlisted')),
+  edition_id text NOT NULL REFERENCES community_submissions(edition_id) ON DELETE RESTRICT,
+  reason text NOT NULL CHECK (char_length(reason) BETWEEN 1 AND 1000),
+  created_at timestamptz NOT NULL
 );
 
 CREATE INDEX IF NOT EXISTS community_catalog_published_idx
