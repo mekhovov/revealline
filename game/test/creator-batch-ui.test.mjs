@@ -191,7 +191,7 @@ test('cancel stops the active preparation without discarding the draft', async (
   assert.equal(h.nodes.intake.disabled, false);
 });
 
-test('capacity overflow exposes explicit split and removal choices', () => {
+test('capacity overflow exposes explicit split and removal choices', async () => {
   const h = harness({
     capacityFor: (items) => ({
       estimatedBytes: items.length * 100,
@@ -203,12 +203,15 @@ test('capacity overflow exposes explicit split and removal choices', () => {
   });
   h.controller.setFiles([file('1.png'), file('2.png'), file('3.png')]);
   assert.equal(h.nodes.split.hidden, false);
+  assert.equal(h.nodes.split.disabled, true);
   assert.equal(h.nodes.approve.disabled, true);
   assert.match(h.nodes.approve.title, /explicit package split/);
   assert.match(h.nodes.capacity.textContent, /Split the campaign or remove pictures/);
   const excluded = h.controller.snapshot().items[1];
   h.controller.setIncluded(excluded.id, false);
   assert.equal(h.nodes.removeExcluded.hidden, false);
+  await h.controller.generate();
+  assert.equal(h.nodes.split.disabled, false);
   const chunks = h.controller.split();
   assert.deepEqual(
     chunks.map((chunk) => chunk.length),
