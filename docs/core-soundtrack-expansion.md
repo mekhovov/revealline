@@ -74,17 +74,18 @@ reviewer names, listening approval or device results.
   accepted v0.105 exposed two skipped-test gaps in that baseline: the compact Home
   stylesheet had reopened the screen fingerprint, and already accepted visible-actor
   and Team capture-feedback work had reopened the Team recipe and equipment closures.
-  Exact bounded successor records now bind those accepted inputs while retaining every
-  historical record. A terrain-reader regression found by the broad local run now
-  fails closed when a snapshot advertises terrain artwork without a reader. Field Kit
-  revision 72 reproduces byte-for-byte on top of accepted main revision 71. The
-  combined production-history, Team review, terrain, binding, historical-import and
-  actual-host cohort passes 130/130. The finite picture authority admits current72 and
-  retained58–71. The formerly stale candidate Skip case also passes. Before the final
-  main-ledger rebase, the complete affected catalogue, player, panel, candidate-host,
-  renderer, production and Team cohort passed 374/374. The final rebased source passes
-  the corresponding 370/370 cohort; fresh hosted exact-head gates remain required
-  before merge.
+  Accepted PR #389 supplies the exact compact-Home continuation and immutable Field
+  Kit revision 72. This branch adds only the separate bounded Team and soundtrack
+  continuations on top, retaining every historical record. A terrain-reader regression
+  found by the broad local run now fails closed when a snapshot advertises terrain
+  artwork without a reader. Combined Field Kit revision 73 reproduces byte-for-byte on
+  accepted main revision 72. The focused production-history, Team review, terrain,
+  binding and historical-import cohort passes 126/126. The finite picture authority
+  admits current73 and retained58–72. The formerly stale candidate Skip case also
+  passes. Before the final main-ledger rebase, the complete affected catalogue, player,
+  panel, candidate-host, renderer, production and Team cohort passed 370/370. The final
+  rebased source passes its corresponding expanded 372/372 cohort; fresh hosted
+  exact-head gates remain required before merge.
   Next: push and pass fresh exact-head hosted gates, qualify the actual merge,
   publish an immutable coordinated game release and repeat the playback proof on
   public game Pages.
