@@ -63,10 +63,12 @@ core lesson. No silent core insertion.
   impassable walls and capture-dependent threat removal support route ordering;
   do not import its per-terrain speeds or homing into ordinary keepers.
 
-Future candidates, not implemented here: star chambers, Reshetylivka-style open
-cutwork lattice, and Poltava broken-tree branching yards. Petrykivka is a separate
-painting tradition, not a synonym for vyshyvanka. Fine decorative details belong
-in artwork, not unreadable collision geometry; functional colours stay consistent.
+The separate [nine-map atlas successor](ukrainian-ornament-atlas.md) now prepares
+star clusters, Reshetylivka-style open cutwork, Poltavian branches and six more
+original adaptations in `whole-ornament-v2`. Its evidence is separate from this
+v1 study and does not promote either route by default. Petrykivka is a painting
+tradition, not a synonym for vyshyvanka. Fine decorative details belong in
+artwork, not unreadable collision geometry; functional colours stay consistent.
 
 ## Implementation and acceptance checklist
 

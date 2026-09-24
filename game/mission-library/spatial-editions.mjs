@@ -142,15 +142,14 @@ export async function createSpatialEditionSources({
   });
   // Walk only this fixed acyclic predecessor registry, retaining changed maps
   // rather than duplicating entire catalogues. Every edition owns its progress.
-  const earlier =
-    alternate.earlierActiveRouteId
-      ? await createSpatialEditionSources({
-          activeRouteId: alternate.earlierActiveRouteId,
-          originalThemes,
-          difficulty,
-          launch,
-        })
-      : null;
+  const earlier = alternate.earlierActiveRouteId
+    ? await createSpatialEditionSources({
+        activeRouteId: alternate.earlierActiveRouteId,
+        originalThemes,
+        difficulty,
+        launch,
+      })
+    : null;
   return Object.freeze({
     sources: Object.freeze([
       Object.freeze({

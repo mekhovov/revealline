@@ -164,7 +164,10 @@ test('ornament atlas is separately inspectable and searchable without changing t
   assert([...$('whole-variety-edition').options].some((o) => o.value === 'ukrainian-ornament-v2'));
   assert.equal($('whole-variety-edition').value, 'variety-1');
   const source = await readFile(new URL('../studio/studio.mjs', import.meta.url), 'utf8');
-  const handler = source.slice(source.indexOf("$('whole-variety').onclick"), source.indexOf("$('import').onchange"));
+  const handler = source.slice(
+    source.indexOf("$('whole-variety').onclick"),
+    source.indexOf("$('import').onchange"),
+  );
   assert.match(handler, /'ukrainian-ornament-v2'\s*\? createUkrainianOrnamentAtlasJourney/);
   assert.match(handler, /discardSource\(\)/);
   assert.doesNotMatch(handler, /session\.replace|queueSave|launchPreview/);
