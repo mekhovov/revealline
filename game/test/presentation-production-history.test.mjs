@@ -411,21 +411,21 @@ test('production refuses silent slot contract mutation and can explicitly return
   );
 });
 
-test('Journey feedback dependencies bind only the reviewed integrated effects inputs', async () => {
+test('Journey feedback dependencies bind only the accepted locator-removal effects successor', async () => {
   const production = await createFieldKitProduction();
   const resolved = resolvePresentation(production.document);
-  const reviewPath = 'docs/verification/integrated-fpv-presentation-2026-09-24/review.json';
+  const reviewPath = 'docs/verification/player-locator-removal-effects-2026-09-24/review.json';
   const reviewBytes = await fs.readFile(new URL(`../../${reviewPath}`, import.meta.url));
   const reviewHash = createHash('sha256').update(reviewBytes).digest('hex');
   const review = JSON.parse(reviewBytes);
-  assert.equal(reviewHash, '5743669fa1b230c486bf92435e2922a8a775b86a3de10fd42f84c2e51a85ca51');
+  assert.equal(reviewHash, '86af2305c0c275c29f3d58bc004777eecd82b773d30f06832e613c312f384afe');
   assert.equal(
-    review.groups.effects.priorFingerprintSHA256,
-    '832e6fbcb3da51dff0ef5a07f60221e4dbba25256af1d32d1800ed1b21500f9f',
+    review.priorReview.fingerprintSHA256,
+    '475fea962731c07024adacf4e8df7692db23bff218d13768dff50971752a0ed5',
   );
   assert.equal(
-    review.groups.effects.currentFingerprintSHA256,
-    '475fea962731c07024adacf4e8df7692db23bff218d13768dff50971752a0ed5',
+    review.fingerprint.sha256,
+    'abd3aeef12041b55e76be3b026b52180f11df0f5b7a7f2a25ea560dacab0fdf1',
   );
   for (const slotId of [
     'trail.active',
@@ -443,7 +443,7 @@ test('Journey feedback dependencies bind only the reviewed integrated effects in
     assert.equal(asset.quality.stage, 'reviewed', slotId);
     assert.ok(
       asset.provenance.source.endsWith(
-        'sha256:475fea962731c07024adacf4e8df7692db23bff218d13768dff50971752a0ed5',
+        'sha256:abd3aeef12041b55e76be3b026b52180f11df0f5b7a7f2a25ea560dacab0fdf1',
       ),
     );
     assert.match(asset.provenance.source, /game\/ui\/lane-presentation\.mjs/);
@@ -451,7 +451,7 @@ test('Journey feedback dependencies bind only the reviewed integrated effects in
     assert.equal(
       asset.quality.evidence.some(
         (entry) =>
-          entry.includes('Scoped visible-actor effects continuation') &&
+          entry.includes('Scoped accepted-source effects continuation') &&
           entry.includes(`${reviewPath} sha256:${reviewHash}`),
       ),
       true,
