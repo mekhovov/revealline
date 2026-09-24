@@ -206,6 +206,9 @@ jobs:
            (needs.qualify.outputs.testMode == 'waived' && needs.test.result == 'skipped')) }}
     needs: [qualify, test]
     runs-on: ubuntu-latest
+    # A frozen source archive is intentionally large, but it must fail visibly
+    # instead of holding the single release lane forever.
+    timeout-minutes: 90
     steps:
       - name: Check out the qualified source
         uses: actions/checkout@v4
