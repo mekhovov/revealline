@@ -69,7 +69,7 @@ test('source qualification retains mandatory guards and restorable suites while 
   assert.doesNotMatch(workflow, /pull_request_target|environment:.*preview|npm test/);
 });
 
-test('fast mode defers extended checks while identity, build and publication guards stay mandatory', async () => {
+test('fast mode waives long suites while release source and publication guards stay mandatory', async () => {
   const read = (name) =>
     fs.readFile(new URL('../../.github/workflows/' + name, import.meta.url), 'utf8');
   const pr = await read('deploy-pages.yml');
