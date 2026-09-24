@@ -1,0 +1,60 @@
+{
+  "format": "revealline-source-check.v1",
+  "feature": "M3 quick music controls",
+  "revision": 3,
+  "checkedAt": "2026-09-24T03:47:41.682166+00:00",
+  "sourceBase": "a4b4de89065b519bca13bb991319f2daee0fa73d",
+  "previousHead": "28f5564ee5992693a1ebceb6f5bb137c5d498032",
+  "runtimeSourceChanged": false,
+  "reviewCorrection": "Unmuted fixtures exercise lifecycle capture. Earlier muted regression fixtures bypassed that path.",
+  "reviewer": "/root/opening_theme_implementation",
+  "independentFinalReview": "pending",
+  "node": "20.19.5",
+  "method": "In-memory Git source loader; exact original app and helper from d34659 for red; corrected runtime identical28f5564 for green",
+  "red": {
+    "source": "d34659f95a5a89a9227c17fbd35649e8a4c23521",
+    "pass": 0,
+    "fail": 2,
+    "skip": 19,
+    "observed": [
+      "Keyboard requests2plays instead of1",
+      "Pointer capture requests1play beforebutton instead of0"
+    ]
+  },
+  "green": {
+    "runtimeSource": "28f5564ee5992693a1ebceb6f5bb137c5d498032",
+    "pass": 2,
+    "fail": 0,
+    "skip": 19
+  },
+  "sourceFiles": [
+    {
+      "path": "game/ui/quick-music-controls.mjs",
+      "bytes": 7835,
+      "sha256": "91e41346b0956a7ae20174dbf7b9bfe327c69f9f9347f5fb5e0f816fc1e71074"
+    },
+    {
+      "path": "game/app.mjs",
+      "bytes": 397022,
+      "sha256": "325f1e3ad0890551875985d1100ed5e4e58a6766d1f184f883091a05fc76195a"
+    },
+    {
+      "path": "game/test/soundtrack-host.test.mjs",
+      "bytes": 29148,
+      "sha256": "79993fa21a3181d9932b5445717f3a5966d2d7be402064bac9b513caf5d53d9d"
+    }
+  ],
+  "outputs": [
+    {
+      "path": "docs/verification/quick-music-controls-2026-09-24/unmuted-retry-red-r3.txt",
+      "sha256": "757f88816a13df5cac1aef2ff4252083733627de7b179ca42612a1ee5276a601"
+    },
+    {
+      "path": "docs/verification/quick-music-controls-2026-09-24/unmuted-retry-green-r3.txt",
+      "sha256": "97f869eda12d01b5decbca05c8b6ea51a8705e5675af9337c94ae188f913aeb0"
+    }
+  ],
+  "hostedGates": "pending",
+  "browserDeviceAcceptance": "pending",
+  "released": false
+}
