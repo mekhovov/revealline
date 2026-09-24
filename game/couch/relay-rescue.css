@@ -46,6 +46,14 @@
   min-height: 1.7em;
   line-height: 1.5;
 }
+.control-card .support-status[data-support-role='interceptor']::before {
+  content: 'I · ';
+  color: var(--sky);
+}
+.control-card .support-status[data-support-role='disruptor']::before {
+  content: 'D · ';
+  color: var(--sun);
+}
 .controller-focus {
   outline: 3px solid var(--sky);
   outline-offset: 3px;
