@@ -60,8 +60,8 @@ jobs:
           # any repository checkout; utility operations retain their own lanes.
           earlier_run="$(gh api --paginate \
             "repos/$GITHUB_REPOSITORY/actions/workflows/qualify-release-source.yml/runs?event=workflow_dispatch&status=in_progress&per_page=100" \
-            --jq '.workflow_runs[] | select(.head_sha == env.GITHUB_SHA and (.id | tostring) != env.GITHUB_RUN_ID and .id < (env.GITHUB_RUN_ID | tonumber)) | .id' \
-            | head -n 1 || true)"
+            | jq -rs \
+              '[.[] | .workflow_runs[] | select(.head_sha == env.GITHUB_SHA and (.id | tostring) != env.GITHUB_RUN_ID and .id < (env.GITHUB_RUN_ID | tonumber)) | .id] | min // empty')"
           if [ -n "$earlier_run" ]; then
             echo "A qualification for $GITHUB_SHA is already active in run $earlier_run; skipping this duplicate."
             echo 'should_qualify=false' >> "$GITHUB_OUTPUT"
@@ -124,17 +124,27 @@ jobs:
       - name: Validate source
         run: npm run validate
 
-      - name: Run extended static and provenance checks
-        if: vars.REVEALLINE_FULL_CI == 'true'
-        run: |
-          npm run lint
-          npm run format:check
-          npm run format:native:check
-          node --check authoring/motion-lab/app.js
-          if [ -f scripts/produce-field-kit-theme.mjs ]; then
-            node scripts/produce-field-kit-theme.mjs --check
-          fi
-          node scripts/check-field-kit-readiness.mjs
+      # Fast-release mode waives the long automated suites only. These bounded
+      # source and production-provenance gates remain required release evidence
+      # and retain their stable step names for the evidence assembler.
+      - name: Lint source
+        run: npm run lint
+
+      - name: Check formatting
+        run: npm run format:check
+
+      - name: Check native formatting
+        run: npm run format:native:check
+
+      - name: Check motion lab syntax
+        run: node --check authoring/motion-lab/app.js
+
+      - name: Reproduce production collection when available
+        if: ${{ hashFiles('scripts/produce-field-kit-theme.mjs') != '' }}
+        run: node scripts/produce-field-kit-theme.mjs --check
+
+      - name: Require reviewed production slots in the committed ledger
+        run: node scripts/check-field-kit-readiness.mjs
 
       - name: Verify qualified tracked source is unchanged
         run: |

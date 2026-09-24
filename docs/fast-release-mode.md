@@ -27,7 +27,7 @@ the controller, workflow contracts, test policy, and two archive helpers while r
 and on-demand Git objects needed to verify frozen source identities. Production publications remain
 serialized and are never cancelled by a newer run.
 
-These checks are deferred in fast mode and cannot block merge or release:
+These checks are deferred from the pull-request workflow in fast mode and cannot block merge:
 
 - all four full test shards;
 - immutable-production test suites;
@@ -35,6 +35,11 @@ These checks are deferred in fast mode and cannot block merge or release:
 - source and native Prettier checks;
 - motion-lab syntax and extended Field Kit provenance checks; and
 - focused Pages-controller unit tests.
+
+Before an immutable release is frozen, manual source qualification still requires validation,
+ESLint, source and native formatting, motion-lab syntax, Field Kit reproduction/readiness, and exact
+tracked-source identity. Those bounded gates are release evidence, not long automated suites. The
+full test shards and utility suites remain waived and must not be reported as passing.
 
 The release workflow deliberately ignores `run_tests=true` while fast mode is active. This prevents
 an accidental manual dispatch from starting four large test checkouts and delaying a release. Do not
@@ -70,8 +75,8 @@ during an active release:
    ```
 
 3. Run **Qualify release source** once on current `main` with `run_tests=true`. Confirm all four
-   shards, static checks, production checks, source identity, and build pass. The request is honored
-   only after the repository variable is `true`.
+   shards, the already-mandatory static and production checks, source identity, and build pass. The
+   request is honored only after the repository variable is `true`.
 4. If branch protection is introduced, require only `release-ready`, not the individual shard
    contexts. `release-ready` requires tests whenever `REVEALLINE_FULL_CI=true`.
 5. Update this document and `docs/deployment.md` in the same reviewed PR to state that full CI is
