@@ -1,0 +1,199 @@
+name: Assemble waived release evidence
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Exact stable version, including the v prefix
+        required: true
+        type: string
+      source_commit:
+        description: Exact qualified source commit
+        required: true
+        type: string
+      source_tree:
+        description: Exact qualified source tree
+        required: true
+        type: string
+      pr_commit:
+        description: Exact corroborating PR source commit
+        required: true
+        type: string
+      pr_tree:
+        description: Exact corroborating PR source tree
+        required: true
+        type: string
+      source_pr:
+        description: Corroborating pull request number
+        required: true
+        type: string
+      manual_run:
+        description: Exact qualification and freeze run
+        required: true
+        type: string
+      pr_run:
+        description: Exact successful preflight and build run
+        required: true
+        type: string
+      inspection_run:
+        description: Exact successful frozen-artifact inspection run
+        required: true
+        type: string
+      approved_non_source_changes:
+        description: Exact JSON array of reviewed docs/controller-only differences
+        required: true
+        type: string
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: waived-release-evidence-${{ inputs.version }}
+  cancel-in-progress: false
+
+jobs:
+  assemble:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Check out the exact assembly utility
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.workflow_sha }}
+          path: automation
+          persist-credentials: false
+          sparse-checkout: |
+            publishing/utility
+            .github/workflows/assemble-waived-release-evidence.yml
+
+      - name: Check out the exact frozen source
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.source_commit }}
+          path: qualified
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Retain the corroborating PR source object
+        env:
+          PR_COMMIT: ${{ inputs.pr_commit }}
+        run: git -C qualified fetch --no-tags origin "$PR_COMMIT"
+
+      - name: Download retained frozen-artifact inspection
+        env:
+          GH_TOKEN: ${{ github.token }}
+          INSPECTION_RUN: ${{ inputs.inspection_run }}
+        run: >-
+          gh run download "$INSPECTION_RUN" --repo "$GITHUB_REPOSITORY"
+          --name inspect-artifact-evidence --dir inspect-evidence
+
+      - name: Record exact run and job authorities
+        env:
+          GH_TOKEN: ${{ github.token }}
+          MANUAL_RUN: ${{ inputs.manual_run }}
+          PR_RUN: ${{ inputs.pr_run }}
+          INSPECTION_RUN: ${{ inputs.inspection_run }}
+        run: |
+          mkdir -p run-evidence
+          gh api "repos/$GITHUB_REPOSITORY/actions/runs/$MANUAL_RUN" > run-evidence/manual-run.json
+          gh api "repos/$GITHUB_REPOSITORY/actions/runs/$MANUAL_RUN/jobs?per_page=100" > run-evidence/manual-jobs.json
+          gh api "repos/$GITHUB_REPOSITORY/actions/runs/$PR_RUN" > run-evidence/pr-run.json
+          gh api "repos/$GITHUB_REPOSITORY/actions/runs/$PR_RUN/jobs?per_page=100" > run-evidence/pr-jobs.json
+          gh api "repos/$GITHUB_REPOSITORY/actions/runs/$INSPECTION_RUN" > run-evidence/inspection-run.json
+          gh api "repos/$GITHUB_REPOSITORY/actions/runs/$INSPECTION_RUN/jobs?per_page=100" > run-evidence/inspection-jobs.json
+
+      - name: Assemble and verify the seven small attachments
+        env:
+          VERSION: ${{ inputs.version }}
+          SOURCE_COMMIT: ${{ inputs.source_commit }}
+          SOURCE_TREE: ${{ inputs.source_tree }}
+          PR_COMMIT: ${{ inputs.pr_commit }}
+          PR_TREE: ${{ inputs.pr_tree }}
+          SOURCE_PR: ${{ inputs.source_pr }}
+          APPROVED_NON_SOURCE_CHANGES: ${{ inputs.approved_non_source_changes }}
+        run: |
+          python3 -B - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          approved = json.loads(os.environ['APPROVED_NON_SOURCE_CHANGES'])
+          if not isinstance(approved, list) or not all(isinstance(row, str) for row in approved):
+              raise SystemExit('approved_non_source_changes must be a JSON string array')
+          root = Path(os.environ['GITHUB_WORKSPACE'])
+          value = {
+              'format': 'revealline-waived-qualification-inputs.v1',
+              'reviewed': True,
+              'repository': os.environ['GITHUB_REPOSITORY'],
+              'repositoryPath': str(root / 'qualified'),
+              'sourcePR': int(os.environ['SOURCE_PR']),
+              'source': {
+                  'commit': os.environ['SOURCE_COMMIT'],
+                  'tree': os.environ['SOURCE_TREE'],
+                  'version': os.environ['VERSION'],
+              },
+              'prSource': {
+                  'commit': os.environ['PR_COMMIT'],
+                  'tree': os.environ['PR_TREE'],
+              },
+              'inspectionDirectory': str(root / 'inspect-evidence'),
+              'pr': {
+                  'run': str(root / 'run-evidence/pr-run.json'),
+                  'jobs': str(root / 'run-evidence/pr-jobs.json'),
+              },
+              'manual': {
+                  'run': str(root / 'run-evidence/manual-run.json'),
+                  'jobs': str(root / 'run-evidence/manual-jobs.json'),
+              },
+              'inspection': {
+                  'run': str(root / 'run-evidence/inspection-run.json'),
+                  'jobs': str(root / 'run-evidence/inspection-jobs.json'),
+              },
+              'approvedNonSourceChanges': approved,
+          }
+          Path('assemble-inputs.json').write_text(json.dumps(value, indent=2) + '\n')
+          PY
+          python3 -B automation/publishing/utility/assemble_waived_qualification.py \
+            assemble-inputs.json --output small-package
+          test "$(find small-package -maxdepth 1 -type f | wc -l | tr -d ' ')" = 7
+          sha256sum small-package/* > small-package.sha256
+
+      - name: Retain exact utility provenance
+        env:
+          UTILITY_COMMIT: ${{ github.workflow_sha }}
+        run: |
+          python3 -B - <<'PY'
+          import hashlib
+          import json
+          import os
+          from pathlib import Path
+
+          root = Path('automation')
+          names = [
+              'publishing/utility/assemble_waived_qualification.py',
+              'publishing/utility/release_artifact.py',
+          ]
+          value = {
+              'workflowCommit': os.environ['UTILITY_COMMIT'],
+              'helpers': [
+                  {'path': name, 'sha256': hashlib.sha256((root / name).read_bytes()).hexdigest()}
+                  for name in names
+              ],
+          }
+          Path('assembly-utility.json').write_text(json.dumps(value, indent=2) + '\n')
+          PY
+
+      - name: Retain bounded package for independent review
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: waived-release-small-package
+          path: |
+            small-package/*
+            small-package-review.json
+            assemble-inputs.json
+            assembly-utility.json
+            small-package.sha256
+          compression-level: 0
+          retention-days: 14
+          if-no-files-found: error
