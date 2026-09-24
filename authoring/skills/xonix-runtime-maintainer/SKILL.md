@@ -1565,3 +1565,17 @@ before navigating. A failed choice returns to the selected gallery card; Cancel
 keeps the existing race with a reachable control. Retain stale-input, foreground
 and exact-edition guards. Run complete continuation, inventory and capability
 host files; a modeled successful handoff is separate from public browser proof.
+
+## UX1 Journey original receipts
+
+Solo Journey rewards use the separate `revealline-journey-pictures.v1` companion
+ledger, atomically written with the strict historical progress profile. Preserve
+exact mode/edition/mission/run/gameplay and accepted asset descriptors. Do not infer
+an original from a shared profile scope, mission title, current art or Cleared text.
+Unknown historical originals stay explicitly unavailable. Viewing never awards;
+Retry retains accepted art; an asset update must preserve the earlier original.
+Use the shared verified artwork display lease for cards and Collection, releasing
+it on cancellation, filtering, close and offscreen movement. Test second-write
+rollback, session export/retry, conflict rejection and strict older backup readers.
+Backup v3 contains references, not image bytes. Solo admission does not establish
+Versus/Team completion; those hosts remain UX1-A2 qualification work.

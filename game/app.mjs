@@ -165,6 +165,7 @@ import { createStillMediaStore } from './media-store.mjs';
 import { createStoryMediaStore } from './story-media-store.mjs';
 import { storyPinForTheme, validateFlightPresentationPinsForRun } from './flight-media-pins.mjs';
 import { createStoryDialog } from './ui/story-dialog.mjs';
+import { attachJourneyCollection } from './ui/journey-collection.mjs';
 import { createFlightPictures } from './ui/flight-pictures.mjs';
 import { acquireAuthoredPicture, acquirePresentationImage } from './ui/presentation-image.mjs';
 import { createSessionReleasePictures } from './presentation/session-release-pictures.mjs';
@@ -458,6 +459,10 @@ try {
       })
     : null;
   if (journeyProfile) await journeyProfile.load();
+  let collectionJourneyState =
+    journeyProfile && candidateHost
+      ? { profile: journeyProfile, catalog: journeyCatalog, editionId: authoredRoute.id }
+      : null;
   let journeyChooser = null,
     libraryNextOperation = null,
     retainedLibraryOwner = null,
@@ -2130,7 +2135,11 @@ try {
       if (dialog.id === 'journey-chooser') return journeyChooser?.primary?.();
       if (dialog.id === 'hangar-dialog') return $('switch-class-select');
       if (dialog.id === 'collection-dialog')
-        return $('gallery-grid').querySelector('button') || $('gallery-search');
+        return (
+          $('journey-picture-grid')?.querySelector('button') ||
+          $('gallery-grid').querySelector('button') ||
+          $('gallery-search')
+        );
       return [...dialog.querySelectorAll('button,select,summary')].find(availableFocusTarget);
     }
     const scope = controllerScope();
@@ -8411,14 +8420,16 @@ try {
         eventFeedback(run.events);
       }
       if (!handled && ['won', 'lost'].includes(run.status)) {
+        let journeyRewardFailure = null;
         handled = true;
         paused = true;
         clearInput();
         refreshCourse();
         if (run.status === 'won' && !practice && !recoverGameplayTuning(run.level)?.adminOverride) {
           const mission = journeyEnabled && !scenario && journeyMission();
-          if (mission)
-            journeyProfile.record({
+          if (mission) {
+            const acceptedPicture = flightPictures?.current();
+            const completion = {
               type: 'complete',
               mode: 'solo',
               missionId: mission.id,
@@ -8429,7 +8440,48 @@ try {
                 classes: run.classRecipes,
               }),
               difficulty: activeEntry.difficulty || 'standard',
-            });
+              ...(candidateHost?.owns(activeEntry) &&
+              flightPictures?.context.runId === runId &&
+              flightPictures.context.levelId === run.levelId &&
+              flightPictures.ready(theme.id) &&
+              acceptedPicture
+                ? {
+                    picture: {
+                      mode: 'solo',
+                      editionId: authoredRoute.id,
+                      missionId: mission.id,
+                      campaignKey: campaignKey(activeEntry.campaign),
+                      levelId: run.levelId,
+                      levelRevision: String(flightPictures.context.levelRevision),
+                      runId,
+                      gameplayId: dataIdentity({
+                        ruleset: run.ruleset,
+                        level: run.level,
+                        classes: run.classRecipes,
+                      }),
+                      difficulty: activeEntry.difficulty || 'standard',
+                      name: mission.name,
+                      campaignTitle: mission.campaignTitle,
+                      themeId: flightPictures.context.themeId,
+                      asset: acceptedPicture.assetRevision,
+                    },
+                  }
+                : {}),
+            };
+            try {
+              journeyProfile.record(completion);
+            } catch (error) {
+              // Presentation capacity/conflicts must not interrupt the legal
+              // result or Next. Preserve the clear, never substitute its art.
+              const { picture: _picture, ...receipt } = completion;
+              try {
+                journeyProfile.record(receipt);
+              } catch {
+                /* Existing stored data stays intact. */
+              }
+              journeyRewardFailure = `Mission complete. Its picture could not be retained: ${error.message} Export your Journey backup before recovery.`;
+            }
+          }
           if (!candidateHost?.owns(activeEntry)) {
             const previousBodies = availableBodies();
             try {
@@ -8527,7 +8579,11 @@ try {
           show('game-overlay', false);
           show('skip-celebration', true);
           show('show-result', false);
-          warning('Picture unlocked. A whole world, from one brave line.', null, 'host.won');
+          warning(
+            journeyRewardFailure || 'Picture unlocked. A whole world, from one brave line.',
+            null,
+            'host.won',
+          );
           if (journeyEnabled && journeyMission() && !practice) {
             celebrationActive = false;
             show('skip-celebration', false);
@@ -8962,6 +9018,13 @@ try {
     collectionContextKey = $('collection-context').value;
     paintCollectionProgress(entry);
   };
+  const journeyCollection = attachJourneyCollection({
+    document,
+    getState: async () => {
+      if (!collectionJourneyState) await getUnifiedMissionLibrary();
+      return collectionJourneyState;
+    },
+  });
   $('collection-button').onclick = () => {
     if (courseSession || courseEntry) return;
     const opener = document.activeElement;
@@ -8981,6 +9044,7 @@ try {
     )
       opener.focus({ preventScroll: true });
     $('collection-dialog').showModal();
+    return journeyCollection.open();
   };
   $('choose-appearance').onclick = focusAppearance;
   $('collection-choose-appearance').onclick = focusAppearance;
@@ -9410,6 +9474,7 @@ try {
         ? journeyProfile
         : createJourneyProfileStore({ profileKey: route.profileKey });
       if (!candidateHost) await profile.load();
+      collectionJourneyState = { profile, catalog: host.catalog, editionId: route.id };
       const manifestFor = (
         mission,
         difficulty = browsingJourneyPreferences.snapshot().difficulty,
