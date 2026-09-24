@@ -80,6 +80,7 @@ import { prepareCampaignVisualThemeContext } from '../presentation/visual-theme-
 import { createExecutionCatalog } from '../campaign-contexts.mjs';
 import { verifyIndexedInstalledPack } from '../mission-library/pack-identity.mjs';
 import { prepareMissionLibraryIndex } from '../mission-library/classic-source.mjs';
+import { projectClassicCurrentRulesLevel } from '../mission-library/classic-current-rules.mjs';
 import { attachMenuStyleControls } from '../ui/menu-style-controls.mjs';
 import { attachPreferenceRestoration } from '../ui/preference-restoration.mjs';
 import { settingsTabOwnsKey } from '../ui/settings-panels.mjs';
@@ -1023,7 +1024,12 @@ try {
     recipe.tuning ??= gameplayTuning.snapshot(
       recipe.entry.difficulty ?? browsingJourneyPreferences.snapshot().difficulty,
     );
-    recipe.runtimeLevel = applyGameplayTuning(recipe.entry.level, recipe.tuning);
+    const rulesLevel = projectClassicCurrentRulesLevel(
+      recipe.entry.level,
+      recipe.rulesEdition,
+      recipe.entry.musicCampaignKey,
+    );
+    recipe.runtimeLevel = applyGameplayTuning(rulesLevel, recipe.tuning);
     return createDuel(
       recipe.runtimeLevel,
       {
@@ -1162,7 +1168,7 @@ try {
   async function prepareNext(
     destination = null,
     focusOrigin = $('race-start'),
-    { configured = null, fresh = false } = {},
+    { configured = null, fresh = false, rulesEdition } = {},
   ) {
     const target = destination ?? roundRecipe.entry;
     const sameMission =
@@ -1190,6 +1196,7 @@ try {
           });
     const recipe = {
       ...baseRecipe,
+      ...(rulesEdition === undefined ? {} : { rulesEdition }),
       actorStyle: fresh ? preference.actorStyle : roundRecipe.actorStyle,
       actorPreferenceRevision: fresh ? preference.revision : roundRecipe.actorPreferenceRevision,
       actorPresentation: fresh ? null : (actorLease?.pin().presentation ?? null),
@@ -1407,7 +1414,7 @@ try {
     }
     updateMenu();
   }
-  async function startRace(destination = null) {
+  async function startRace(destination = null, { rulesEdition } = {}) {
     if (
       disposed ||
       contentBusy ||
@@ -1481,7 +1488,7 @@ try {
         shell.scope() !== 'main'
       )
         return;
-      const prepared = await prepareNext(destination, start);
+      const prepared = await prepareNext(destination, start, { rulesEdition });
       // Preparation may finish after blur, but only this uninterrupted foreground
       // action may start it. Installed pictures pass the same confirmation boundary.
       if (
@@ -2175,7 +2182,7 @@ try {
       if (!entry) throw new Error('This exact Base mission is unavailable.');
       if (!(await confirmLibraryReplacement(context, `Play ${entry.level.name}?`))) return false;
       if (!context.isCurrent()) return false;
-      await startRace(entry);
+      await startRace(entry, { rulesEdition: selection.rulesEdition });
       const started = roundRecipe.entry === entry && match.status === 'running';
       if (started) currentLibrarySelection = { match, id: context.libraryMissionId };
       return started;
@@ -2880,6 +2887,7 @@ try {
         tuning,
         actorStyle: actorPreference.actorStyle,
         actorPreferenceRevision: actorPreference.revision,
+        rulesEdition: selection?.rulesEdition,
       };
       const nextMatch = createRound(recipe),
         raceId = ++raceSequence;
