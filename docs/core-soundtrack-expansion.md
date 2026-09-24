@@ -26,7 +26,7 @@ reviewer names, listening approval or device results.
 | Player framework | Simplified chooser, mixed playlists, uploads, creator tools, optional offline albums, recovery and rights enforcement | Targeted released-source verification and demonstrated fixes |
 | New archive previews | 100 archive recordings: 70 foundation recordings plus 30 retained previews; four more Nakarada industrial/thrash auditions published through archive PRs #9/#10 | Full listening, taste approval and game admission remain; zero new game admissions |
 | Retro previews | Seven earlier rejections retained; six DOS-88/escp previews also rejected for the requested direction | First comparison rejected; Electric Dreams now closest; continue source comparisons using the supplied night-drive references |
-| Metal previews | Six older backups preserved; four Eternity recordings retained after positive direction feedback; four new industrial/thrash previews published alongside the earlier Nakarada pair | Evaluate rhythm, sustained energy and complete arrangements before game admission |
+| Metal previews | Six older backups preserved; four Eternity recordings retained after positive direction feedback; four new industrial/thrash previews published alongside the earlier Nakarada pair; the YannZ groove/djent direction is now the closest reference | Prepare a rights-verified groove-first comparison, then evaluate sustained energy and complete arrangements before game admission |
 | Nakarada Shchedryk | User explicitly approved musical direction; exact MP3 technically checked | Game admission, opening theme and gameplay/device/cultural evidence |
 | UA-FPV | Four private import packs preserve 80 filenames / 77 unique recordings | Recording-specific public permission and game admission |
 | Quick controls | B/N and main/pause-menu source implementation independently reviewed in draft PR #333 | Close the nine-file fingerprint dependency gap, then complete qualification, browser/controller/device checks and release |
@@ -237,7 +237,7 @@ version is allocated without the release owner's confirmation.
 | M3 | Source reviewed; fingerprint closure and qualification remain | Accepted PR #320 production lineage; complete source/browser/controller/device checks | Bind nine omitted runtime inputs, prove review invalidation/history preservation, then pass full gates and verify actual controls | About 1 day remaining; closure repair may change estimate, excluding CI/device waits | [Draft PR #333](https://github.com/mekhovov/revealline/pull/333), da750277; [dependency audit](https://github.com/mekhovov/revealline/pull/333#issuecomment-5808657043) | Unreleased |
 | M4 | Active research; parallel | Exact published rights and musical/cultural review | Target six additional distinct Ukrainian compositions; publish cleared subsets | 1–2 days per research round; rights/review date unknown | Candidate/hold register below | Unreleased |
 | M5 | Electric Dreams is the latest closest reference; further search requested; earlier feedback preserved | User musical fit; exact-file rights and full listening before admission | Compare Twilight Echo and Neon; Neon Noir stays a musical reference with a public-archive rights hold; prepare 6–10 full auditions only after accepted examples | Several hours per comparison round; 1–2 days batch preparation, then 1–2 days integration/verification after approval; CI/review waits excluded | M5.a decision history and source register below; historical archive PRs #7/#8 preserved | Unreleased in game |
-| M6 | Four Eternity tracks retained; four more industrial/thrash previews published; ten newer metal auditions available | Exact-file rights for further additions; musical fit, full listening and gameplay acceptance | Review the new four against rhythm/energy feedback, then admit an accepted subset; continue other-artist leads and retain older backups | Several hours per listening/research round; 1–2 days integration after approval, excluding review/CI waits | Archive [PR #9](https://github.com/mekhovov/revealline-soundtracks-01/pull/9) / [#10](https://github.com/mekhovov/revealline-soundtracks-01/pull/10); prior #6/#7/#8 evidence retained above | Unreleased in game |
+| M6 | Four Eternity tracks retained; four more industrial/thrash previews published; ten newer metal auditions available; YannZ's groove/djent combat direction is closest so far | Exact-file acquisition; musical fit, full listening and gameplay acceptance | Prepare Pixel Damnation and Revenge's Waiting with a small rights-verified groove-first comparison; keep boss loops separate from full gameplay-track counts | Several hours per listening/research round; 1–2 days integration after approval, excluding review/CI waits | Archive [PR #9](https://github.com/mekhovov/revealline-soundtracks-01/pull/9) / [#10](https://github.com/mekhovov/revealline-soundtracks-01/pull/10); [YannZ source](https://opengameart.org/content/they%E2%80%99re-going-down-%E2%80%93-game-ost-pack-by-yannz); prior #6/#7/#8 evidence retained above | Unreleased in game |
 | M7 | Blocked public rights; scope retained | Recording-specific public redistribution and applicable artwork evidence | Include all 77 recordings / 80 filenames; publish cleared entries; maintain private pack route | About 1 day integration after clearance; clearance date unknown | UA-FPV manifests/private packs/guide | Public collection unreleased |
 | M8 | Remaining verification | Released source and device access | Audit existing playback/storage/creator contracts; release demonstrated fixes separately | 1–2 days initial audit; fixes separately estimated | Existing regression suites | Per-feature evidence required |
 | M9 | Later | Core style releases | Review existing 70 selectively; add trusted ID/hash curation overlay preserving saved pins | 1–2 days per selected batch plus listening | Curation PR pending | Unreleased |
@@ -636,6 +636,14 @@ and moving in the right direction, but still not rhythmic or energetic enough.
 Preserve this positive direction decision and all immutable preview/source bytes.
 Full listening, transition, warning-audibility and gameplay acceptance remain.
 
+**Later user direction, 24 September:** YannZ's **They're Going Down** pack and
+**Revenge's Waiting** are closer to the required feel. Treat this as a direction
+decision rather than game admission. The pack's sustained combat track **Pixel
+Damnation** uses six-string distorted bass, guitar and punchy drums; **Revenge's
+Waiting** is a 48-second 12/8 boss loop. Keep the latter available as a boss/climax
+cue, but do not count it as a complete 3–5-minute gameplay composition or let
+short loops inflate the 12–20-recording expansion target.
+
 Prioritize a recognizable recurring riff, coordinated bass/kick accents, rhythmic
 rests, clear drum attacks, contrasting riffs and developed returns. Distortion,
 genre labels or higher tempo alone do not prove suitability. Verify these
@@ -693,6 +701,37 @@ No audio was acquired for these four leads. Content ID remains unknown, Recordin
 mode eligibility remains false, and none is classified as Ukrainian. Preserve
 exact source/licence evidence with later acquisition. D.E.M.O.N retains its
 conflicting-conditions hold.
+
+#### M6.b — groove-first replacement slate
+
+Use the YannZ pair as the next comparison anchor: syncopated low riffs, deliberate
+rests, bass/kick accents, forceful drum transients and a recurring hook that stays
+clear during play. A candidate still needs full listening; descriptive tags and
+tempo are only screening evidence.
+
+| Candidate | Published source evidence | Intended comparison role | Remaining |
+| --- | --- | --- | --- |
+| [Pixel Damnation — YannZ](https://opengameart.org/content/they%E2%80%99re-going-down-%E2%80%93-game-ost-pack-by-yannz) | Creator-uploaded MP3/OGG under CC BY 4.0; 2:19 loop plus separate intro tag; creator documents six-string bass, guitar and punchy drums | Sustained combat reference | Acquire exact source bytes and licence snapshot; full listening, derivative and Content ID checks |
+| [Revenge's Waiting — YannZ](https://opengameart.org/content/they%E2%80%99re-going-down-%E2%80%93-game-ost-pack-by-yannz) | Creator-uploaded MP3/OGG under CC BY 4.0; 0:48, 12/8 loop | Boss/climax cue and groove reference; excluded from full-track target | Same checks; verify repeated-loop fatigue and transition behavior |
+| [Soul Ripper — Alexandr Zhelanov](https://opengameart.org/content/soul-ripper) | Creator-uploaded OGG under CC BY 4.0; described as brutal industrial metal | Doom/Prodeus-style industrial comparison | Exact-byte acquisition, duration, Content ID and complete listening |
+| [German Industrial Metal — Bogart VGM](https://opengameart.org/content/german-industrial-metal) | Creator-uploaded MP3 under CC BY 4.0 with required creator link; tagged riff, drums, synth and aggressive | Riff/synth coordination comparison | Exact-byte acquisition, Content ID and complete listening |
+| [Achilles — Zane Little Music](https://opengameart.org/content/achilles) | Creator-uploaded WAV/MP3 under CC0; full and loopable versions; metal/chiptune fusion | Heavier electronic-metal comparison; chiptune remains an accent | Exact-byte acquisition, duration and complete listening |
+| [Heavy Boss Battle 1 — MintoDog](https://opengameart.org/content/heavy-boss-battle-1) | Creator-uploaded loopable MP3/OGG under CC0; 200 BPM | Faster boss-loop comparison | Verify duration, arrangement depth, loop fatigue and complete listening |
+
+Keep [Eternity vol. 2](https://davidkbd.itch.io/eternity-vol2-djentmetal-scfi-horror-music-pack)
+as a reserve pool rather than assuming it corrects the first volume's rhythm
+feedback. Hold the large Forgotten Dawn rock archive until a hosted, bounded
+acquisition can inspect its two complete djent songs without consuming the local
+disk reserve. D.E.M.O.N remains excluded from acquisition while its separate
+mandatory-rating condition conflicts with the otherwise stated CC BY 4.0 terms.
+
+Next delivery is a small audition archive, not a game admission: acquire the two
+YannZ recordings plus the strongest two or three comparison candidates, preserve
+exact source/licence evidence, decode and measure them, publish immutable previews,
+then request musical feedback. Only a user-accepted full-track subset advances to
+the catalogue admission PR. Short boss loops may ship in a clearly labelled cue
+collection after loop-fatigue review, but do not satisfy the full gameplay-track
+quota.
 
 The four Nakarada previews now use a new immutable collection after independent
 intake, original-artifact and publication review. Accepted subsets still require
