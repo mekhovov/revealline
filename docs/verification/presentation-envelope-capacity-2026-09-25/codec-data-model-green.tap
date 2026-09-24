@@ -1,0 +1,140 @@
+TAP version 13
+# Subtest: exact JSON byte boundary accepts null and booleans and rejects one byte less
+ok 1 - exact JSON byte boundary accepts null and booleans and rejects one byte less
+  ---
+  duration_ms: 1.015625
+  ...
+# Subtest: exact JSON byte boundary accepts numbers including zero and exponents and rejects one byte less
+ok 2 - exact JSON byte boundary accepts numbers including zero and exponents and rejects one byte less
+  ---
+  duration_ms: 0.149875
+  ...
+# Subtest: exact JSON byte boundary accepts empty and nested containers and rejects one byte less
+ok 3 - exact JSON byte boundary accepts empty and nested containers and rejects one byte less
+  ---
+  duration_ms: 0.565792
+  ...
+# Subtest: exact JSON byte boundary accepts Unicode text and keys and rejects one byte less
+ok 4 - exact JSON byte boundary accepts Unicode text and keys and rejects one byte less
+  ---
+  duration_ms: 0.079334
+  ...
+# Subtest: exact JSON byte boundary accepts escaped text and keys and rejects one byte less
+ok 5 - exact JSON byte boundary accepts escaped text and keys and rejects one byte less
+  ---
+  duration_ms: 0.245875
+  ...
+# Subtest: exact JSON byte boundary accepts lone surrogate text and keys and rejects one byte less
+ok 6 - exact JSON byte boundary accepts lone surrogate text and keys and rejects one byte less
+  ---
+  duration_ms: 0.194458
+  ...
+# Subtest: many short array values use their serialized bytes without charging index keys
+ok 7 - many short array values use their serialized bytes without charging index keys
+  ---
+  duration_ms: 5.674667
+  ...
+# Subtest: the default 4 MiB ceiling still accepts exactly the limit and rejects one byte over
+ok 8 - the default 4 MiB ceiling still accepts exactly the limit and rejects one byte over
+  ---
+  duration_ms: 98.099917
+  ...
+# Subtest: untrusted getters and toJSON hooks are rejected without invocation
+ok 9 - untrusted getters and toJSON hooks are rejected without invocation
+  ---
+  duration_ms: 0.249834
+  ...
+# Subtest: exact byte accounting retains structural and shape protections
+ok 10 - exact byte accounting retains structural and shape protections
+  ---
+  duration_ms: 0.311917
+  ...
+# Subtest: a maximum logical document admits only the bounded dictionary and wrapper overhead
+ok 11 - a maximum logical document admits only the bounded dictionary and wrapper overhead
+  ---
+  duration_ms: 439.975958
+  ...
+# Subtest: envelope overhead cannot authorize another logical node or another dictionary entry
+ok 12 - envelope overhead cannot authorize another logical node or another dictionary entry
+  ---
+  duration_ms: 359.405083
+  ...
+# Subtest: raw legacy metadata cannot borrow the compact-envelope node allowance
+ok 13 - raw legacy metadata cannot borrow the compact-envelope node allowance
+  ---
+  duration_ms: 80.633083
+  ...
+# Subtest: fitting legacy canonical bytes and independently owned records stay exact
+ok 14 - fitting legacy canonical bytes and independently owned records stay exact
+  ---
+  duration_ms: 0.433167
+  ...
+# Subtest: large repeated provenance uses deterministic lossless metadata without editing input
+ok 15 - large repeated provenance uses deterministic lossless metadata without editing input
+  ---
+  duration_ms: 145.892167
+  ...
+# Subtest: raw legacy arrays remain bounded while the explicit envelope admits up to4096
+ok 16 - raw legacy arrays remain bounded while the explicit envelope admits up to4096
+  ---
+  duration_ms: 58.11575
+  ...
+# Subtest: only exact sorted used string dictionaries and integer indexes are accepted
+ok 17 - only exact sorted used string dictionaries and integer indexes are accepted
+  ---
+  duration_ms: 2.252
+  ...
+# Subtest: small wire dictionaries cannot bypass expanded bytes, strings, nodes or depth
+ok 18 - small wire dictionaries cannot bypass expanded bytes, strings, nodes or depth
+  ---
+  duration_ms: 78.0495
+  ...
+# Subtest: logical8MiB and encoded5MiB ceilings are exact and independent
+ok 19 - logical8MiB and encoded5MiB ceilings are exact and independent
+  ---
+  duration_ms: 285.719833
+  ...
+# Subtest: serialized raw and compact metadata accept exactly5MiB and reject the next byte
+ok 20 - serialized raw and compact metadata accept exactly5MiB and reject the next byte
+  ---
+  duration_ms: 412.95975
+  ...
+# Subtest: codec never invokes toJSON or accepts custom prototypes and bounds dictionary cardinality
+ok 21 - codec never invokes toJSON or accepts custom prototypes and bounds dictionary cardinality
+  ---
+  duration_ms: 28.830833
+  ...
+# Subtest: valid logical history above 2048 records and 5MiB round-trips through compact model input
+ok 22 - valid logical history above 2048 records and 5MiB round-trips through compact model input
+  ---
+  duration_ms: 1400.284541
+  ...
+# Subtest: decoded transport still rejects semantic references, executable recipes and unknown fields
+ok 23 - decoded transport still rejects semantic references, executable recipes and unknown fields
+  ---
+  duration_ms: 1066.173833
+  ...
+# Subtest: compact successor keeps every historical record immutable and checks stale revisions
+ok 24 - compact successor keeps every historical record immutable and checks stale revisions
+  ---
+  duration_ms: 1722.97475
+  ...
+# Subtest: a staged revision that cannot encode is rejected without changing source or incoming assets
+ok 25 - a staged revision that cannot encode is rejected without changing source or incoming assets
+  ---
+  duration_ms: 567.635
+  ...
+# Subtest: nonbundle draft and resolve option ownership retain their existing 2048-item boundary
+ok 26 - nonbundle draft and resolve option ownership retain their existing 2048-item boundary
+  ---
+  duration_ms: 139.709417
+  ...
+1..26
+# tests 26
+# suites 0
+# pass 26
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 4958.507041
