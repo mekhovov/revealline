@@ -20,11 +20,16 @@ import { createRelayCandidates } from '../content-design/relay-candidates.mjs';
 import { createCrosswindCandidates } from '../content-design/crosswind-candidates.mjs';
 import { createSentinelCandidates } from '../content-design/sentinel-candidates.mjs';
 import { createSentinelSpatialCandidates } from '../content-design/sentinel-spatial-candidates.mjs';
-import { withPressureDifficulty } from '../content-design/pressure-candidates.mjs';
+import {
+  withPressureDifficulty,
+  inspectEffectiveGameplay,
+} from '../content-design/pressure-candidates.mjs';
+import { createGameplayTuningController } from '../gameplay-tuning.mjs';
 import { createApexCandidates } from '../content-design/apex-candidates.mjs';
 import { createApexSpatialCandidates } from '../content-design/apex-spatial-candidates.mjs';
 import { createApexFieldCandidates } from '../content-design/apex-field-candidates.mjs';
 import { createWholeJourneyCandidates } from '../content-design/whole-journey-candidates.mjs';
+import { createSpatialChallengeJourney } from '../content-design/spatial-challenge-journey.mjs';
 import {
   createWholeSpatialCandidates,
   createWholeFieldCandidates,
@@ -80,6 +85,10 @@ import { createCandidateLibrary } from './candidate-library.mjs';
 const $ = (id) => document.getElementById(id);
 const candidateLibrary = createCandidateLibrary({ document });
 const backend = createContentDraftBackend();
+const gameplayTuning = createGameplayTuningController();
+const stopGameplayTuning = gameplayTuning.subscribe(() => {
+  if (session) guarded(() => inspectBoard(inspectedTrail))();
+});
 const pacingInspector = createPacingInspector({ document, getSource: () => session.current() });
 const acceptanceInspector = createAcceptanceInspector({
   document,
@@ -335,7 +344,8 @@ function inspectBoard(trailCells = []) {
     tuningRevision = null;
     return;
   }
-  const preview = prepareContentPreview(session.current(), mission.id, {
+  const project = compileContentProject(session.current());
+  const preview = prepareContentPreview(project, mission.id, {
     mode: mission.modes.includes('solo') ? 'solo' : mission.modes[0],
     difficulty: $('difficulty').value,
     trailCells,
@@ -355,8 +365,21 @@ function inspectBoard(trailCells = []) {
   $('map-name').textContent = mission.name;
   $('lesson').textContent = mission.design.routeDecision;
   const preset = journeyPreset(manifest.difficulty, session.current().difficultyCatalogId);
+  const tuningStatus = gameplayTuning.status();
+  const effectiveGameplay = inspectEffectiveGameplay(project, mission.id, {
+    mode: manifest.mode,
+    difficulty: manifest.difficulty,
+    overrides: tuningStatus.overrides,
+  });
   $('rules').textContent =
-    `${manifest.level.rules.lives ?? preset.lives} ${manifest.mode === 'team' ? 'shared team lives' : 'lives'} · ${manifest.level.rules.moveSpeed} cells/s · ${Math.round(mission.coverage * 100)}% earned coverage · ${mission.timeLimitSeconds ? 'Authored countdown (non-failing on Gentle)' : 'No countdown'} · ${session.current().difficultyCatalogId}: ${preset.description} Player handling and attack warning lengths are unchanged between presets.`;
+    `Authored preview: ${manifest.level.rules.lives ?? preset.lives} ${manifest.mode === 'team' ? 'shared team lives' : 'lives'} · ${manifest.level.rules.moveSpeed} cells/s · ${Math.round(mission.coverage * 100)}% earned coverage · ${mission.timeLimitSeconds ? 'Authored countdown (non-failing on Gentle)' : 'No countdown'} · ${session.current().difficultyCatalogId}: ${preset.description} Player handling and attack warning lengths are unchanged between presets.`;
+  $('current-gameplay').textContent =
+    `${effectiveGameplay.label}: craft ${Number(effectiveGameplay.playerSpeed.toFixed(3))} cells/s; ${effectiveGameplay.population.actualEnemies} enemies (${effectiveGameplay.population.addedKeepers} added keepers). ${effectiveGameplay.actors
+      .filter((actor) => actor.enabled)
+      .map((actor) => `${actor.id}: ${Number(actor.speed.toFixed(3))} cells/s, ${actor.domain}`)
+      .join(
+        '; ',
+      )}. ${effectiveGameplay.recipe.adminOverride ? 'Current browser admin overrides apply.' : 'Normal global settings.'} ${effectiveGameplay.warnings.map((warning) => warning.message).join(' ')}${tuningStatus.error ? ` ${tuningStatus.error}` : ''}`;
   $('geometry').textContent =
     `${geometry.foundationCount} interior foundation cells excluded from score and coverage. ${geometry.eligibleCount} earnable cells; ${geometry.safeComponents.length} reclaimed components. ${(preview.markers.spawns ?? [manifest.level.spawn]).map((spawn, index) => `Spawn ${index + 1} (${spawn.x}, ${spawn.y})`).join('; ')}. ${preview.markers.actors.map((actor) => `${actor.id}: ${contentActorDescription(manifest.level, actor)} at (${actor.x}, ${actor.y})`).join('; ')}. Contact bonuses: ${mission.bonuses.map((bonus) => `${bonus.id}: ${bonus.kind} at (${bonus.x}, ${bonus.y})`).join('; ') || 'none'}.`;
   $('geometry').textContent +=
@@ -377,6 +400,7 @@ function inspectBoard(trailCells = []) {
       simulationIdentity: manifest.simulationIdentity,
       rules: manifest.level.rules,
       actors: manifest.level.enemies,
+      effectiveGameplay,
       ...(manifest.level.classic?.combatPatrols
         ? { combatPatrols: manifest.level.classic.combatPatrols }
         : {}),
@@ -961,9 +985,11 @@ $('whole-timed').onclick = guarded(() => {
 $('whole-variety').onclick = guarded(() => {
   if (!discardSource()) return;
   const create =
-    $('whole-variety-edition').value === 'sorting-lanes-1'
-      ? createWholeSortingCandidates
-      : createWholeVarietyCandidates;
+    $('whole-variety-edition').value === 'spatial-challenge-v1'
+      ? createSpatialChallengeJourney
+      : $('whole-variety-edition').value === 'sorting-lanes-1'
+        ? createWholeSortingCandidates
+        : createWholeVarietyCandidates;
   $('source').value = JSON.stringify(create({ artwork: true }), null, 2);
   sourceChanged = true;
   inspectSource();
@@ -1169,6 +1195,8 @@ window.addEventListener('beforeunload', (event) => {
   }
 });
 window.addEventListener('pagehide', () => {
+  stopGameplayTuning();
+  gameplayTuning.dispose();
   imageWorkbench.dispose();
   previewController?.abort();
   clearTimeout(saveTimer);

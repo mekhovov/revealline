@@ -1,7 +1,9 @@
 import { LIBRARY_MODES } from './library.mjs';
 
-/** Boundary continuation uses the complete registry, never the chooser's search
- * results. Original adapters still own preparation, launch and progress. */
+/** Boundary continuation uses eligible rows in the complete registry, never the
+ * chooser's search results. Browse-only editions remain valid manual selections
+ * but cannot create automatic loops between historical and current journeys.
+ * Original adapters still own preparation, launch and progress. */
 export function librarySuccessor(library, currentRow, mode) {
   if (!LIBRARY_MODES.includes(mode)) throw new TypeError('Unknown continuation mode.');
   if (!currentRow || library.find(currentRow.id) !== currentRow)
@@ -9,7 +11,7 @@ export function librarySuccessor(library, currentRow, mode) {
   const rows = library.forMode(mode);
   const index = rows.indexOf(currentRow);
   if (index < 0) throw new Error('The current mission does not belong to this mode.');
-  return rows[index + 1] ?? null;
+  return rows.slice(index + 1).find((row) => row.automaticContinuation !== false) ?? null;
 }
 
 /** Runtime hosts supply their original campaign/pack identity, not a display

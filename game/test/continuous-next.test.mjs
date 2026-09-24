@@ -64,6 +64,46 @@ test('Next stays in the current mode and retains an unavailable successor for ex
   assert.throws(() => librarySuccessor(library, library.missions[0], 'team'), /mode/);
   assert.equal(librarySuccessor(library, library.missions[1], 'team'), null);
 });
+test('Next skips browse-only editions without removing manual selection or changing Classic continuation', () => {
+  const library = createMissionLibrary([
+    source('journey:current', 'Journey', [{ id: 'a', campaignKey: 'current' }]),
+    {
+      ...source('journey:previous', 'Journey', [
+        { id: 'a', campaignKey: 'previous' },
+        { id: 'b', campaignKey: 'previous' },
+      ]),
+      automaticContinuation: false,
+    },
+    source('["classic","base",null]', 'Classic', [
+      { id: 'a', campaignKey: 'base@1' },
+      { id: 'b', campaignKey: 'base@1' },
+    ]),
+    source('["custom","mine"]', 'Custom', [{ id: 'a', campaignKey: 'custom@1' }]),
+  ]);
+  const [current, previous, previousLast, classic, classicLast, custom] = library.missions;
+  for (const mode of ['solo', 'versus']) {
+    assert.equal(librarySuccessor(library, current, mode), classic);
+    assert.equal(librarySuccessor(library, previous, mode), classic);
+    assert.equal(librarySuccessor(library, previousLast, mode), classic);
+    assert.equal(librarySuccessor(library, classic, mode), classicLast);
+    assert.equal(librarySuccessor(library, classicLast, mode), custom);
+    assert.equal(librarySuccessor(library, custom, mode), null);
+    assert.equal(library.launch(previous, { mode }).campaignKey, 'previous');
+  }
+  assert.equal(library.search('Same name').length, 6, 'Browse-only missions stay discoverable');
+});
+
+test('a trailing browse-only edition does not create a successor at Journey completion', () => {
+  const library = createMissionLibrary([
+    source('journey:current', 'Journey', [{ id: 'a', campaignKey: 'current' }]),
+    {
+      ...source('journey:previous', 'Journey', [{ id: 'a', campaignKey: 'previous' }]),
+      automaticContinuation: false,
+    },
+  ]);
+  assert.equal(librarySuccessor(library, library.missions[0], 'solo'), null);
+  assert.equal(librarySuccessor(library, library.missions[1], 'solo'), null);
+});
 test('stale, absent and ambiguous owners never silently launch a same-name replacement', () => {
   const owner = source('["classic","base",null]', 'Classic', [{ id: 'a', campaignKey: 'base@1' }]);
   const library = createMissionLibrary([owner]);

@@ -109,6 +109,9 @@ export function missionBriefing(
     rules.stopOnCapture === true
       ? 'Closing a cut stops your craft. Tap a fresh direction to fly again.'
       : '';
+  const wallHint = foundations && level.walls?.length
+    ? 'Walls block craft and enemies; they never close a cut. Return to reclaimed ground.'
+    : '';
   const impactHint = level.classic?.lineImpact
     ? level.classic.lineImpact.version === 'line-impact.v2'
       ? 'Only bolts send sparks. Close before one reaches you; other trail hits are instant.'
@@ -122,7 +125,7 @@ export function missionBriefing(
     facts,
     copy: intro
       ? `Leave safe ground, draw a line and return.\nReveal ${coverage}% by enclosing regions without a field enemy.`
-      : [facts, captureHint, impactHint, classicHint].filter(Boolean).join('\n'),
+      : [facts, captureHint, wallHint, impactHint, classicHint].filter(Boolean).join('\n'),
     fullBrief:
       authored ||
       'Return to safe ground to secure each line. Regions without a field enemy are revealed.',
@@ -132,6 +135,6 @@ export function missionBriefing(
         ? 'Your first route: fly down from the marked start to the opposite border.'
         : level.classic?.enemyPressure?.actors?.length
           ? 'AIM → CHASE → REST. Close to cancel pursuit; turn away from a heading lock.'
-          : 'Choose your route. Open Missions → Mission brief for guidance.',
+          : wallHint || 'Choose your route. Open Missions → Mission brief for guidance.',
   });
 }

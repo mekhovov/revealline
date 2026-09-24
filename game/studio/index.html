@@ -157,6 +157,7 @@
                 <select id="whole-variety-edition">
                   <option value="variety-1">Ornament and workshop · v4</option>
                   <option value="sorting-lanes-1">Contested sorting lanes · v5</option>
+                  <option value="spatial-challenge-v1">Six spatial challenges · v6</option>
                 </select>
               </label>
               <button id="whole-variety">
@@ -202,6 +203,26 @@
                 >. Revises Sorting Yard's baffles, occupied pockets and roamer return lanes only.
                 Other missions and pictures unchanged. Separate review progress; human balance
                 pending.
+              </p>
+              <p class="note">
+                Six spatial challenges:
+                <a
+                  href="../?journey=whole-spatial-v6"
+                  target="_blank"
+                  rel="noopener"
+                  aria-label="Solo · whole-spatial-v6 (new tab)"
+                  >Solo ↗</a
+                >
+                ·
+                <a
+                  href="../couch/?journey=whole-spatial-v6"
+                  target="_blank"
+                  rel="noopener"
+                  aria-label="Versus · whole-spatial-v6 (new tab)"
+                  >Versus ↗</a
+                >. Two bays, Three open circuits, Broken yard, Read the arrows, Twin receivers and
+                Crossing complete use revised spatial challenges. Shared movement and capture rules
+                stay consistent. Human balance and device review pending.
               </p>
             </div>
             <div class="candidate-entry" data-library-entry>
@@ -597,10 +618,12 @@
           <p id="difficulty-help" class="note">
             Enemy speed is relative to each moving actor's authored tier. The selected rules below
             describe attack rests and countdowns. Player handling and warning lengths stay
-            unchanged.
+            unchanged. These are the authored Studio preview values. The separate current gameplay
+            projection below includes fresh-attempt tuning and this browser's admin settings.
           </p>
           <p id="lesson"></p>
           <p id="rules" class="note"></p>
+          <p id="current-gameplay" class="note" aria-live="polite"></p>
           <details>
             <summary>Tune mission challenge</summary>
             <p class="note">
@@ -697,7 +720,7 @@
             </form>
           </details>
           <details>
-            <summary>Effective rules and identity</summary>
+            <summary>Authored preview and current gameplay rules</summary>
             <pre id="effective"></pre>
           </details>
         </aside>

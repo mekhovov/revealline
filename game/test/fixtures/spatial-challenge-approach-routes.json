@@ -1,0 +1,21 @@
+{
+  "format": "SpatialChallengeApproachFixtureV1",
+  "scope": "East-first public-input prefix: the initial cut connects the eastern bay and secures only42trailcells while both resulting occupied regions remain field. Completion remains pending.",
+  "rows": [
+    {
+      "missionId": "two-bays",
+      "difficulty": "standard",
+      "turnPolicy": "immediate",
+      "seed": 1,
+      "simulationIdentity": "fb24d649ea330bea",
+      "checkpoint": "87cf7c48e131b0b5",
+      "status": "route-exhausted",
+      "segments": [
+        {
+          "direction": "right",
+          "ticks": 591
+        }
+      ]
+    }
+  ]
+}
