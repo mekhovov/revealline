@@ -879,6 +879,31 @@ export function createSoundtrackPlayer({
       previousStored = library.selection.playlistId;
     cancelPreload();
     library = next;
+    if (remoteSelection && next.listening?.recordingMode) {
+      const allowed = remoteTracks.filter(onlineSoundtrackRecordingAllowed),
+        currentAllowed =
+          current?.kind !== 'remote' || allowed.some((track) => track.id === current.id);
+      if (!allowed.length || !currentAllowed) {
+        remoteSelection = null;
+        remoteTracks = [];
+        if (current?.kind === 'remote') {
+          cancel();
+          clearMedia();
+          soundscape.pauseMusic();
+          current = null;
+          status = 'paused';
+        }
+      } else if (allowed.length !== remoteTracks.length) {
+        remoteTracks = allowed;
+        remoteSelection = {
+          ...remoteSelection,
+          playlist: {
+            ...remoteSelection.playlist,
+            trackIds: allowed.map((track) => track.id),
+          },
+        };
+      }
+    }
     if (override !== null && !soundtrackPlaylists(next).some((p) => p.id === override))
       override = null;
     if (!current || next.selection.playlistId !== previousStored)
@@ -957,13 +982,14 @@ export function createSoundtrackPlayer({
       ids.add(track.id);
       return Object.freeze({ ...track, websites: Object.freeze(track.websites ?? []) });
     });
-    remoteTracks = library.listening?.recordingMode
+    const eligibleTracks = library.listening?.recordingMode
       ? validated.filter(onlineSoundtrackRecordingAllowed)
       : validated;
     required(
-      remoteTracks.length > 0,
+      eligibleTracks.length > 0,
       'Recording mode excludes these online soundtracks until gameplay-video and Content ID permissions are verified.',
     );
+    remoteTracks = eligibleTracks;
     remoteSelection = {
       source: 'remote',
       playlist: {
