@@ -3,6 +3,7 @@ BEGIN;
 CREATE TABLE IF NOT EXISTS community_submissions (
   id uuid PRIMARY KEY,
   edition_id text NOT NULL UNIQUE,
+  collection_id text NOT NULL,
   owner_subject text NOT NULL,
   slug text NOT NULL,
   title text NOT NULL,
@@ -22,6 +23,7 @@ CREATE TABLE IF NOT EXISTS community_submissions (
   published_at timestamptz,
   UNIQUE (owner_subject, slug, edition_version),
   CHECK (slug ~ '^[a-z0-9]+(-[a-z0-9]+)*$'),
+  CHECK (collection_id ~ '^co_[0-9a-f]{64}$'),
   CHECK (char_length(title) BETWEEN 1 AND 120),
   CHECK (char_length(description) <= 2000),
   CHECK (char_length(edition_version) BETWEEN 1 AND 64),
@@ -81,6 +83,10 @@ CREATE TABLE IF NOT EXISTS community_audit_log (
 
 CREATE INDEX IF NOT EXISTS community_catalog_published_idx
   ON community_submissions (published_at DESC, edition_id DESC)
+  WHERE status = 'published';
+
+CREATE INDEX IF NOT EXISTS community_catalog_collection_idx
+  ON community_submissions (collection_id, published_at DESC, edition_id DESC)
   WHERE status = 'published';
 
 CREATE INDEX IF NOT EXISTS community_validation_claim_idx

@@ -66,6 +66,10 @@ Creator routes require `Authorization: Bearer <token>`:
 - `POST /v1/publications/:editionId/unlist` lets its owner or an administrator remove a published
   edition from discovery and downloads without deleting its immutable record.
 
+Published catalog records include a deterministic `collectionId` plus the latest published edition
+identity and version for that owner-and-slug collection. Clients use those immutable identifiers for
+update discovery; display titles and shared slugs across different owners never merge collections.
+
 `POST /v1/submissions` returns a tus creation endpoint and immutable upload metadata. The mounted
 official `@tus/server` and `@tus/file-store` implementation checks the authenticated owner on create,
 HEAD, PATCH, and completion. Completion rechecks size, SHA-256, edition, and submission identity

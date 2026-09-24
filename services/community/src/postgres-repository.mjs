@@ -5,6 +5,7 @@ const mapSubmission = (row) =>
   row && {
     id: row.id,
     editionId: row.edition_id,
+    collectionId: row.collection_id,
     ownerSubject: row.owner_subject,
     slug: row.slug,
     title: row.title,
@@ -20,6 +21,8 @@ const mapSubmission = (row) =>
     createdAt: new Date(row.created_at).toISOString(),
     updatedAt: new Date(row.updated_at).toISOString(),
     publishedAt: row.published_at ? new Date(row.published_at).toISOString() : null,
+    latestEditionId: row.latest_edition_id ?? undefined,
+    latestVersion: row.latest_version ?? undefined,
   };
 
 const mapJob = (row) =>
@@ -70,12 +73,13 @@ export class PostgresCommunityRepository {
     try {
       const result = await this.pool.query(
         `INSERT INTO community_submissions (
-          id, edition_id, owner_subject, slug, title, description, edition_version,
+          id, edition_id, collection_id, owner_subject, slug, title, description, edition_version,
           package_sha256, declared_size, status, created_at, updated_at
-        ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,'draft',$10,$10) RETURNING *`,
+        ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,'draft',$11,$11) RETURNING *`,
         [
           candidate.id,
           candidate.editionId,
+          candidate.collectionId,
           candidate.ownerSubject,
           candidate.slug,
           candidate.title,
@@ -270,21 +274,29 @@ export class PostgresCommunityRepository {
       values.push(
         `%${search.replaceAll('\\', '\\\\').replaceAll('%', '\\%').replaceAll('_', '\\_')}%`,
       );
-      searchClause = `AND (slug ILIKE $${values.length} ESCAPE '\\'
-        OR title ILIKE $${values.length} ESCAPE '\\'
-        OR description ILIKE $${values.length} ESCAPE '\\')`;
+      searchClause = `AND (s.slug ILIKE $${values.length} ESCAPE '\\'
+        OR s.title ILIKE $${values.length} ESCAPE '\\'
+        OR s.description ILIKE $${values.length} ESCAPE '\\')`;
     }
     let cursorClause = '';
     if (cursor) {
       const separator = cursor.lastIndexOf('|');
       values.push(cursor.slice(0, separator), cursor.slice(separator + 1));
       const first = values.length - 1;
-      cursorClause = `AND (published_at, edition_id) < ($${first}::timestamptz, $${first + 1}::text)`;
+      cursorClause = `AND (s.published_at, s.edition_id) < ($${first}::timestamptz, $${first + 1}::text)`;
     }
     const result = await this.pool.query(
-      `SELECT * FROM community_submissions
-       WHERE status='published' ${searchClause} ${cursorClause}
-       ORDER BY published_at DESC, edition_id DESC LIMIT $1`,
+      `SELECT s.*, latest.edition_id AS latest_edition_id,
+              latest.edition_version AS latest_version
+       FROM community_submissions s
+       JOIN LATERAL (
+         SELECT edition_id, edition_version
+         FROM community_submissions candidate
+         WHERE candidate.collection_id=s.collection_id AND candidate.status='published'
+         ORDER BY candidate.published_at DESC, candidate.edition_id DESC LIMIT 1
+       ) latest ON true
+       WHERE s.status='published' ${searchClause} ${cursorClause}
+       ORDER BY s.published_at DESC, s.edition_id DESC LIMIT $1`,
       values,
     );
     const hasMore = result.rows.length > limit;
@@ -298,7 +310,18 @@ export class PostgresCommunityRepository {
 
   async getPublishedEdition(editionId) {
     const result = await this.pool.query(
-      `SELECT * FROM community_submissions WHERE edition_id=$1 AND status='published'`,
+      `SELECT s.*,
+              (SELECT candidate.edition_id
+               FROM community_submissions candidate
+               WHERE candidate.collection_id=s.collection_id AND candidate.status='published'
+               ORDER BY candidate.published_at DESC, candidate.edition_id DESC LIMIT 1)
+                AS latest_edition_id,
+              (SELECT candidate.edition_version
+               FROM community_submissions candidate
+               WHERE candidate.collection_id=s.collection_id AND candidate.status='published'
+               ORDER BY candidate.published_at DESC, candidate.edition_id DESC LIMIT 1)
+                AS latest_version
+       FROM community_submissions s WHERE s.edition_id=$1 AND s.status='published'`,
       [editionId],
     );
     return mapSubmission(result.rows[0]);
