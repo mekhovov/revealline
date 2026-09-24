@@ -247,6 +247,7 @@ test('delivery-only push is excluded after the controller glob while PR review a
     assert.ok(!push.includes(previewOnlyPath));
     assert.ok(pullRequest.includes(previewOnlyPath));
   }
+  assert.ok(push.includes('!publishing/pages-controller/evidence/**'));
   assert.ok(push.includes('!publishing/pages-controller/*.test.mjs'));
   assert.ok(push.includes('!publishing/pages-controller/test_*.py'));
   assert.match(workflow, /publish\.mjs verify-artifact/);
