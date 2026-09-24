@@ -57,9 +57,25 @@ reviewer names, listening approval or device results.
   reviewed audio fingerprint. Local native-browser playback
   loaded all 104 recordings and played Revenge's Waiting inside the game. Neither
   PR admits previews into trusted Automatic/built-in playlists or establishes
-  musical approval. Next: pass all exact-head hosted game gates, qualify the actual
-  merge, publish an immutable coordinated game release and repeat the playback
-  proof on public game Pages.
+  musical approval. Standard run
+  [36033458969](https://github.com/mekhovov/revealline/actions/runs/36033458969)
+  passed preflight, build and release-ready at the former exact head `6d3bed8d`,
+  with tests skipped by policy. Dedicated qualification
+  [36033472629](https://github.com/mekhovov/revealline/actions/runs/36033472629)
+  preserved the failed evidence: shards 1–4 reported 409, 412, 577 and 427
+  failures. The dominant cause was an inherited admission gap: the compiled Field
+  Kit had advanced through revisions 70 and 71 while Team picture bindings stopped
+  at 69, so valid pictures were rejected and dependent host tests timed out. A
+  second ten-test failure came from a pinned historical renderer importing the
+  intentionally removed player-locator module. The replacement branch now admits
+  the same exact picture bytes through retained revisions 58–70 and current 71,
+  pins the historical locator fixture, restores the explicit null session assertion
+  and gives hosted asset work a bounded 15-second settle window. The repaired
+  catalogue/player/presentation cohort passes 270/270 locally; the formerly stale
+  candidate Skip case also passes. The branch is rebased onto accepted v0.105 source.
+  Next: push and pass fresh exact-head hosted gates, qualify the actual merge,
+  publish an immutable coordinated game release and repeat the playback proof on
+  public game Pages.
 - M0 was merged through docs-only PR [#330](https://github.com/mekhovov/revealline/pull/330)
   at commit [efacbf087](https://github.com/mekhovov/revealline/commit/efacbf087eb9e1d15019f0d6aecd5ae32ac313fa).
   Plan consolidation is complete; implementation and evidence updates continue here.
