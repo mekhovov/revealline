@@ -37,6 +37,18 @@ preflight and ordinary build pass. All four mandatory test shards must finish on
 the final committed source before merge/publication; those pending gates remain
 the immediate priority, ahead of UX1 rewards/gallery work.
 
+The next completed correction cohort passes 231 checks in separate complete-file
+runs, followed by the Library/Journey mode (41), text/input (24) and optional
+installer (30) groups. These are still scoped qualifications. The complete hosted
+run has exposed additional historical routes that do not complete with current
+movement tuning, plus the exact Team artwork-review dependency gate. Fifty-four
+of the 71 historical Solo routes need newly verified current-input proofs; 33
+specialized Team cases require cooperation/pickup/inner-return behavior, not just
+generic wins. The Team renewal estimate is 3–6 hours with low confidence, before
+another full source/release run. A public deadline cannot be promised until that
+inventory is closed. One confirmed Pause Restart/difficulty picture-context defect
+is fixed and separately tested; it is not classified as a fixture-only issue.
+
 The root working directory contains unrelated historical and unfinished work.
 Implementation uses an isolated source worktree and explicit staged paths. The
 existing publisher retains tags, archives and Pages ownership. Skipped tests under
@@ -176,6 +188,29 @@ separation. UX1 has two independently useful releases:
 
 This is read-only preparation while UX0 qualifies, not a claim of implementation
 or authority to mix Solo, Versus and Team completion.
+
+Further source review tightens historical recovery: several old Journey editions
+share the same profile scope, and simulation identity intentionally excludes art.
+A scope/mission/gameplay receipt therefore does not always identify its original.
+Use an explicit historical mapping only when it yields one binding; otherwise keep
+the clear and show “Earlier edition / original unavailable.” Today's picture must
+never be presented as proof of an earlier earned original.
+
+Keep the existing strict Journey receipt reader unchanged. The proposed companion
+presentation ledger can live under a separate key in the existing profiles store,
+committed in the same transaction as progress. It captures the accepted attempt's
+validated original before the terminal write; viewing cannot create a reward.
+Exact mode, content, edition, run and asset identities admit idempotent duplicates
+and reject conflicting records. Failure must leave session rewards retryable and
+exportable without preventing Next. Backup wording must distinguish original
+references from included image bytes. These transaction and backup choices require
+implementation qualification in UX1-A, not just schema or inventory checks.
+
+An additional browser check at actual 1280×800 confirms rendered row/column movement
+and exact Home Missions return focus. It also confirms the current verbose cards
+exceed the visible gallery height (about459–479px per card). UX1-B must replace that
+layout with compact cards; the keyboard check does not accept its present geometry
+as the finished handheld design.
 
 Previously delivered foundations remain: default Journey, unified library,
 continuous Next, shared assets/settings, backup safeguards and scoped Team/recovery

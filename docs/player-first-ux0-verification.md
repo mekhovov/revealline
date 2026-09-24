@@ -296,13 +296,13 @@ The complete mandatory run is being allowed to finish before the next source pus
 superseding it early hides later-file failures. The following corrections are to
 baseline-reproduced fixtures, not changes to gameplay or a waiver of release gates.
 
-| Complete local files | Passing checks | Preserved contracts |
-| --- | ---: | --- |
-| Team campaign Next, Journey Next, originals and timed optional | 85 | Exact authored/current-tuned identities; real two-player input, artwork retention, reserves, progression, cancellation and timed no-pickup paths. |
-| Starting setup, selection bookmark and terminal navigation | 40 | Queued turn and saved checkpoint, explicit Resume, native editing, exact opener, legal victory and installed-library ending. |
-| Historical Journey and title operation status | 15 | Historical receipts and backup authority, failed/stale preparation, decoded PNG dimensions, real Title Start/Continue and keyboard outcomes. |
-| Journey reactions | 4 | Real lossless Solo/Team outcomes, reaction preferences, captions, accepted artwork and Next. |
-| Whole-spatial and whole-field | 18 | Exact edition/runtime identity, actual asynchronous library selection, approved speed and retained campaign-ending results. |
+| Complete local files                                           | Passing checks | Preserved contracts                                                                                                                               |
+| -------------------------------------------------------------- | -------------: | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Team campaign Next, Journey Next, originals and timed optional |             85 | Exact authored/current-tuned identities; real two-player input, artwork retention, reserves, progression, cancellation and timed no-pickup paths. |
+| Starting setup, selection bookmark and terminal navigation     |             40 | Queued turn and saved checkpoint, explicit Resume, native editing, exact opener, legal victory and installed-library ending.                      |
+| Historical Journey and title operation status                  |             15 | Historical receipts and backup authority, failed/stale preparation, decoded PNG dimensions, real Title Start/Continue and keyboard outcomes.      |
+| Journey reactions                                              |              4 | Real lossless Solo/Team outcomes, reaction preferences, captions, accepted artwork and Next.                                                      |
+| Whole-spatial and whole-field                                  |             18 | Exact edition/runtime identity, actual asynchronous library selection, approved speed and retained campaign-ending results.                       |
 
 These counts describe separate complete-file runs, not one complete repository
 test run. Three affected Team recovery cases were also rerun after adding an
@@ -343,3 +343,52 @@ two four-mission optional tours per mode, safe Skip/reselection, retained ending
 failed artwork preparation, exact saved restoration and independently owned timed
 bonuses. Together with the table above, this correction batch covers 180 distinct
 host checks in separate full-file runs; it is still not full-source qualification.
+
+## Current-host input, picture and edition follow-up
+
+The next completed correction cohort passes 231 distinct checks in separate
+complete-file runs. It does not replace the mandatory final-source run.
+
+| Files                                                                  | Passing checks | Evidence retained                                                                                                                                                                                                                    |
+| ---------------------------------------------------------------------- | -------------: | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Team default entry, pressure originals, timed host and timed originals |             83 | Thirty-three exact source/revision/preset routes; both pilots return, reserves and original image identity remain exact. All nine timed pickup routes collect once while the partner cuts, with at least two real returns per pilot. |
+| Mode return and nonmodal header navigation                             |             90 | Actual Enter/controller activation, immediate loading feedback, opener focus, saved state, cancellation and foreground ownership. Tests join the real Missions operation instead of assuming it finishes inside five seconds.        |
+| Fresh visual host                                                      |              8 | Real lossless opening clear, independent raw checkpoint/replay, retained artwork through Retry and failed Next.                                                                                                                      |
+| Compact mission library                                                |             10 | Current-card initial focus and real Filters disclosure/control focus; no synthetic change to an unfocused control.                                                                                                                   |
+| Host presentation size and mission selection focus                     |             11 | Actual PNG bytes and decoded approved revisions, native setup disclosure, retained selection/focus and unchanged gameplay geometry.                                                                                                  |
+| Mission replacement                                                    |             25 | Legal current-speed pending turn, exact independent checkpoint, all Stay/Replace/save/cancellation guarantees.                                                                                                                       |
+| Shared Versus Settings                                                 |              4 | Forward/reverse traversal includes the newly reachable reaction controls, exact opener and unchanged match state.                                                                                                                    |
+
+Compact Filters and the Versus focus loop are expectation changes required by
+UX0's corrected initial focus and newly reachable controls. Other reproduced
+host failures came from older menu boundaries, image ordering or movement tuning;
+they are not evidence of new gameplay defects. Team Depot's live pickup assertion
+now checks the exact effect component alongside the separate incoming-pickup cue.
+Its negative route remains running one tick before a real final return, then wins
+on that deliberate public frame; historical pure-route proofs remain unchanged.
+
+Mandatory run35948932471 targets pushed source a0369c021, before these corrections.
+Its first completed shard reports 2,986 tests / 2,916 pass / 70 fail; the second
+reports 3,018 / 2,934 / 84. These include failures already corrected in local
+commits and further inherited fixtures still being reconciled. The other shards
+are allowed to finish so later failures remain visible. No skipped or superseded
+job, focused pass or unchanged-art inventory is counted as release acceptance.
+
+Three more bounded groups now pass their complete files: Library launch and
+Journey mode navigation (41), text size and touchscreen/controller hosts (24),
+and the retained optional-chapter scenarios (30, across separate reruns). Library
+queued-turn and earned-Gentle playback assertions now compare the actual current
+recipe with independent exact checkpoints. PNG fixtures decode actual dimensions.
+Backup text-size import explicitly accepts the real replacement preflight; it
+does not bypass that safeguard. Modeled controller Missions opens the current
+gallery, focuses its playable card and starts with one Confirm. The controller
+suite still checks paused state, replay, neutral gates, disconnect and touch
+handoff/rotation. Cold Classic picture readiness has a bounded 30-second CI
+allowance before input assertions; it is not a performance acceptance claim.
+
+The optional installer keeps download failure, checksum conflict, stale response,
+storage failure, Stay, replacement and exact run/record assertions. Its historical
+More chapters parent is explicitly mounted as a retained component boundary;
+today's public catalogue entry is qualified separately. The current public
+Missions/setup route is used where that is the scenario's purpose. No hidden old
+control is described as a current player entry point.

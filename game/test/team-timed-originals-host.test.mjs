@@ -12,13 +12,14 @@ import {
   TEAM_DEPOT_SPATIAL_PROFILE_KEY,
 } from '../content-design/team-timed-entry.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
+import { playTeamEditionRoute } from './helpers/team-edition-host-route.mjs';
+import { createTeamWindowSpatialCandidates } from '../content-design/team-window-spatial-candidates.mjs';
+import { createTeamDepotSpatialCandidates } from '../content-design/team-depot-spatial-candidates.mjs';
 
 const source = createTeamTimedOriginalCandidates();
 const href = 'http://localhost/game/couch/relay-rescue.html?journey=team-timed-originals';
-const read = async (name) =>
-  JSON.parse(await readFile(new URL(`./fixtures/${name}.json`, import.meta.url)));
-const qualification = await read('team-timed-qualification');
-const routes = await read('team-timed-host-routes');
+const decodedOriginals = new WeakSet();
+const currentImage = (f) => f.drawImages.findLast((image) => decodedOriginals.has(image));
 const originals = new Map(
   await Promise.all(
     source.assets.map(async (a) => [
@@ -27,10 +28,6 @@ const originals = new Map(
     ]),
   ),
 );
-const keys = [
-  { up: 'KeyW', down: 'KeyS', left: 'KeyA', right: 'KeyD' },
-  { up: 'ArrowUp', down: 'ArrowDown', left: 'ArrowLeft', right: 'ArrowRight' },
-];
 const enter = (f, node) => {
   node.focus();
   f.tap('Enter');
@@ -46,6 +43,7 @@ function environment(install, { failures = new Set(), gates = new Map() } = {}) 
       this.width = this.naturalWidth = b.readUInt32BE(16);
       this.height = this.naturalHeight = b.readUInt32BE(20);
       this.sha256 = createHash('sha256').update(b).digest('hex');
+      decodedOriginals.add(this);
     }
     removeAttribute(name) {
       if (name === 'src') this.releases++;
@@ -79,34 +77,9 @@ async function timedPage(t, options = {}) {
   });
 }
 function clear(f, id) {
-  const row = routes.rows.find((r) => r.missionId === id && r.difficulty === 'standard');
-  const log = structuredClone(
-    qualification.rows.find(
-      (r) => r.missionId === id && r.difficulty === 'standard' && r.kind === 'alternate-taking',
-    ).log,
-  );
-  for (const change of row.keyboard.adjustments) {
-    assert.equal(log[change.segment].ticks, change.fromTicks);
-    log[change.segment].ticks = change.toTicks;
-  }
-  f.tick(31);
-  let previous = [null, null],
-    frames = 30;
-  for (const segment of log) {
-    for (const [seat, direction] of [segment.a, segment.b].entries())
-      if (direction && direction !== previous[seat]) f.tap(keys[seat][direction]);
-    previous = [segment.a, segment.b];
-    for (let n = 0; n < segment.ticks && f.$('coop-overlay').hidden; n++) {
-      f.tick();
-      frames++;
-      assert.equal(f.$('coop-reserves').textContent, '2 reserves');
-    }
-    if (!f.$('coop-overlay').hidden) break;
-  }
-  assert.equal(f.$('coop-overlay').hidden, false);
-  assert.equal(f.$('coop-overlay-kicker').textContent, 'A WORLD YOU REVEALED TOGETHER');
-  assert.equal(f.$('coop-coverage').textContent, row.keyboard.coverageText);
-  assert.equal(frames, row.keyboard.tick);
+  return playTeamEditionRoute(f, source, id, 'standard', () => {
+    assert.equal(f.$('coop-reserves').textContent, '2 reserves');
+  });
 }
 
 test('Shared windows clears all three originals across two Next boundaries and one failed picture load', async (t) => {
@@ -128,7 +101,7 @@ test('Shared windows clears all three originals across two Next boundaries and o
     assert.equal(f.$('coop-difficulty').value, 'standard');
     clear(f, mission.id);
     const asset = source.assets.find((a) => a.id === mission.presentation.backgroundAssetId);
-    const image = f.drawImages.at(-1);
+    const image = currentImage(f);
     assert.equal(image.sha256, asset.sha256);
     assert.equal(image.releases, 0);
     assert.deepEqual(f.visits, []);
@@ -206,7 +179,7 @@ test('cancelling a Shared windows picture preparation keeps the finished source 
     f = await timedPage(t, { gates });
   enter(f, f.$('coop-start'));
   clear(f, 'window-exchange');
-  const old = f.drawImages.at(-1),
+  const old = currentImage(f),
     gate = deferred();
   gates.set(source.missions[1].presentation.backgroundAssetId, gate);
   enter(f, f.$('coop-next'));
@@ -256,26 +229,12 @@ for (const depot of [false, true])
       /original-art test · 3 missions · human validation pending/,
     );
     enter(f, f.$('coop-start'));
-    f.tick(2);
-    const row = (await read('team-window-spatial-routes')).rows.find(
-      (r) => r.difficulty === 'standard' && r.kind === 'cooperation',
-    );
-    let previous = [null, null],
-      frames = 1;
-    for (const segment of row.log) {
-      for (const [seat, direction] of [segment.a, segment.b].entries())
-        if (direction && direction !== previous[seat]) f.tap(keys[seat][direction]);
-      previous = [segment.a, segment.b];
-      for (let n = 0; n < segment.ticks && f.$('coop-overlay').hidden; n++) {
-        f.tick();
-        frames++;
-      }
-      if (!f.$('coop-overlay').hidden) break;
-    }
-    assert.equal(f.$('coop-overlay-kicker').textContent, 'A WORLD YOU REVEALED TOGETHER');
-    assert.equal(frames, row.checks[1].result.tick);
+    const spatial = depot
+      ? createTeamDepotSpatialCandidates({ artwork: true })
+      : createTeamWindowSpatialCandidates({ artwork: true });
+    playTeamEditionRoute(f, spatial, 'window-exchange');
     assert.equal(
-      f.drawImages.at(-1).sha256,
+      currentImage(f).sha256,
       source.assets.find((a) => a.id === 'team-windows-window-exchange').sha256,
     );
     enter(f, f.$('coop-next'));
@@ -303,28 +262,10 @@ for (const depot of [false, true])
     assert.deepEqual(await oldBackend.read(), before);
     assert.deepEqual(f.visits, []);
     if (depot) {
-      const row = (await read('team-depot-spatial-routes')).rows.find(
-        (r) => r.difficulty === 'standard',
-      );
-      f.tick(2);
-      let previous = [null, null],
-        frames = 1;
-      for (const s of row.log) {
-        for (const [seat, direction] of [s.a, s.b].entries())
-          if (direction && direction !== previous[seat]) f.tap(keys[seat][direction]);
-        previous = [s.a, s.b];
-        for (let n = 0; n < s.ticks && f.$('coop-overlay').hidden; n++) {
-          f.tick();
-          frames++;
-        }
-        if (!f.$('coop-overlay').hidden) break;
-      }
-      assert.equal(f.$('coop-overlay-kicker').textContent, 'A WORLD YOU REVEALED TOGETHER');
-      assert.equal(frames, 3217);
-      assert.equal(f.$('coop-coverage').textContent, '78.7%');
+      playTeamEditionRoute(f, spatial, 'depot-dash');
       assert.equal(f.$('coop-next').hidden, true);
       assert.equal(
-        f.drawImages.at(-1).sha256,
+        currentImage(f).sha256,
         source.assets.find((a) => a.id === 'team-windows-depot-dash').sha256,
       );
       assert.deepEqual(await oldBackend.read(), before);

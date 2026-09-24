@@ -135,15 +135,23 @@ test('compact Filters close when checkbox focus moves to a card or footer, retai
   const p = setup();
   const filters = p.$('journey-filter-details'),
     detail = p.$('journey-detailed-cards');
+  assert.equal(p.doc.activeElement, p.$('journey-cards').children[0]);
+  p.$('journey-filter-summary').focus();
   filters.open = true;
+  p.$('journey-collection').focus();
   p.$('journey-collection').value = 'Classic';
   p.$('journey-collection').emit('change');
+  assert.equal(filters.open, true);
+  assert.equal(p.doc.activeElement, p.$('journey-collection'));
+  p.$('journey-mode').focus();
   p.$('journey-mode').value = 'versus';
   p.$('journey-mode').emit('change');
-  detail.checked = true;
-  detail.emit('change');
-  detail.focus();
   assert.equal(filters.open, true);
+  assert.equal(p.doc.activeElement, p.$('journey-mode'));
+  detail.focus();
+  detail.click();
+  assert.equal(filters.open, true);
+  assert.equal(p.doc.activeElement, detail);
   const card = p.$('journey-cards').children[0];
   card.focus();
   assert.equal(filters.open, false);
