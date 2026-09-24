@@ -1,9 +1,0 @@
-/** Resolve the shared Pages release catalog from a source checkout or frozen release site. */
-export function releaseExplorerHref(locationHref) {
-  const location = new URL(locationHref);
-  const frozenGame = /^(.*\/)releases\/v\d+\.\d+\.\d+\/site\/game(?:\/index\.html)?\/?$/.exec(
-    location.pathname,
-  );
-  if (frozenGame) return new URL(`${frozenGame[1]}releases/`, location.origin).href;
-  return new URL('../releases/', location).href;
-}

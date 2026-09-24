@@ -1,7 +1,0 @@
-# Preserve the purpose of a natively invalid field
-
-When a browser focuses a required field, inspect its complete associated label and painted focus outline against the actual scrollport. A visible input or accessible name alone does not prove its on-screen purpose remains visible. Retain native validation, the error bubble and the browser’s chosen field; do not replace them with scripted focus or a synthetic submit.
-
-For the timed-bonus form, queue one bounded animation-frame reveal after native invalid/focus events. Reveal the associated label with outline clearance when it fits, and fall back to the control for an oversized wrapper. Keep the current field, connected form, foreground state and visible enabled control authoritative through layout reads. Cancel pending intent on background/teardown and avoid polling or continuous reading-scroll correction. Do not broaden modal focus helper contracts to service a normal document form.
-
-Keep a mounted-editor regression that fails with the original integration. Test invalid events without cancellation, multiple invalid fields, ordinary forward/reverse focus, newer focus, hidden/disabled/detached state, background, disposal and reentrant layout. Run the complete existing form editing tests so draft validation and real valid applies remain covered. Then verify native required messages and complete labels at narrow portrait and short landscape sizes; preserve the project JSON and distinguish those local observations from physical-device, zoom, all-form and release acceptance.

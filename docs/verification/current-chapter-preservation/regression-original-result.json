@@ -1,7 +1,0 @@
-{
-  "source": "276cbba302b4638b60bcc9aec7ac7f7eb5b61ca1",
-  "originalAppSha256": "03943e02a73c921de9bed109c672e98e6dee501469f05ed6cb9ec0cecf753af3",
-  "restoredCandidateAppSha256": "95af12e1beef9067b7a7e5be7a82d2de7a46d5a0e85732c5b8e5457cbf156ef5",
-  "exitCode": 1,
-  "scope": "Newactualhostregression on originalapp; skipped unrelatedtests are not a fullsuite"
-}

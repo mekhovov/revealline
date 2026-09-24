@@ -1,9 +1,0 @@
-{
-  "source": "540968774b9aed8bafe4446ee22378b9021b3df9",
-  "event": "Keyboard Tab from Stay to Replace&play thenEnter in realpublicchaptertransition",
-  "visible": "Preparing the selected mission. Your current flight stays paused until it is ready. Stay cancels waiting.",
-  "enabledAction": "mission-replace-stay",
-  "disabledOpener": "mission-replace-confirm",
-  "AXfocused": "AXWebArea body",
-  "status": "Observed transient loss of focus during pending transition; investigate logical Stay focus while preserving user-moved focus. Not yet a confirmed inability to cancel by keyboard."
-}

@@ -1,9 +1,0 @@
-game/vendor/
-
-# Exact retained runtime bytes are hash/schema verified, never reformatted.
-game/presentation/compiled/runtime.*.json
-authoring/library/fpv-field-kit/retained/runtime.*.json
-
-# Generated metadata uses exact formatting plus a bounded canonical fallback.
-# npm run validate authenticates its format, schema and inventory bytes.
-game/presentation/compiled/studio.json

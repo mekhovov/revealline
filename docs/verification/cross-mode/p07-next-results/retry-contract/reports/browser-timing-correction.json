@@ -1,5 +1,0 @@
-{
-  "at": "2026-09-17T22:40:25.061026+00:00",
-  "frozenReceiptSha256": "4ca0f94d8a05ecd103212cc26b90a571ef35754fc461abb8e43844638e082484",
-  "correction": "Story ready bounds in frozen summary were imprecise. First snapshot acquisition window after open command start is0.477380\u20130.759422s (no Play); next snapshot13.865160\u201314.093638s (Play). Safe statement: noPlayfirstsnapshot, Play observedby14.094s; exactreadytimeunknown. Retry/Next observed-by timings remain supported. Frozenoriginals unchanged."
-}

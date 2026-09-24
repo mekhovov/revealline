@@ -1,9 +1,0 @@
-# Evidence curation
-
-The finite files in `retained-files.json` were copied byte-for-byte from the completed v0.60.7 audit cache. Root acceptance is copied as `acceptance.json`; its seven referenced pins were rehashed first. The preparation README is preserved as `preparation-README.original.md`, so its historical pending wording remains intact rather than replacing this delivery explanation.
-
-The packet includes all full HTTP result and attempt rows, all nine binding authorities, the small two-member hosted receipt ZIP, the original and terminal before observations, the post-audit observation, both final-authority refresh attempts, the exact Latest-pointer correction, public browser transcription, published descriptors, source qualification, reviewed helper bodies and bounded mock outputs. The two HTTP503 attempts and first refresh refusal are not discarded. Requests and results remain distinct; no pending record is rewritten as an original acceptance.
-
-No public game response body, source TAR, distribution ZIP, player profile/database, browser cache or fabricated screenshot/raw browser export is copied. Python bytecode caches are excluded. Earlier source-upload evidence remains in its own qualification/release packet. README, progress and curation text are authored summaries, not raw observations.
-
-Only the current paragraph in the existing delivery README changes; all historical paragraphs remain byte-identical. The historical `delivery.json` and `evidence-index.json` are unchanged. All new paths stay under `publishing/pages-controller/delivery/`; no `.cursor` skill, source documentation, runtime, version, selector, catalog, allocation or workflow is changed. The Latest-pointer maintainer guidance belongs in the later selector PR owned by the qualifier task. The overlay is pinned to actual main `00a043d08c235422e9dbebef82dc5e0837da6667`; root must preserve any later source changes when composing it.

@@ -1,1 +1,0 @@
-Stopped only owned CLI wait PID91363 after more than90 seconds waiting for the guessed text First Signal complete. This wait text was not an observed UI label and is not treated as a game failure. Browser session kept open; current snapshot requested separately.

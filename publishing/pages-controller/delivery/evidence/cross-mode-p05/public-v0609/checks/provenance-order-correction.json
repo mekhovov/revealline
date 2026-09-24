@@ -1,5 +1,0 @@
-{
-  "reason": "First Node selfcheck reached provenance verification before preparation-provenance.json had been written and refused ENOENT. Created actual hashes/origins record from retained accepted608 helpers; no helper or test changed.",
-  "firstResultPreserved": true,
-  "networkRequests": 0
-}

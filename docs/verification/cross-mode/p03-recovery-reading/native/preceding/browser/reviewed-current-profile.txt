@@ -1,9 +1,0 @@
-Browser tab: 30, Title: "Earlier profiles · RevealLine", URL: "http://127.0.0.1:60342/game/profile-recovery.html".
-The following is a diff from the previous accessibility tree with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
-~		12 button Prepare stored-data export, ID: profile-recovery-export
-~		27 text Stored values reviewed. Profile structure is checked separately from media and historical execution.
-~		28 text Exact channel: release-v0.60.3
-0 completed levels · 0 pictures · 0 scores
-Saved flight: absent. Flight inspection is unavailable here.
-Media and original availability have not been inspected.
-The focused UI element is 1 AXWebArea Earlier profiles · RevealLine, URL: 127.0.0.1:60342/game/profile-recovery.html

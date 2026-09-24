@@ -1,7 +1,0 @@
-{
-  "classification": "Host-test clock assumption; unchanged simulation uses accumulated 1/120-second steps",
-  "result": "159 passed, 1 failed",
-  "failure": "Elapsed 0.125 was assumed to produce exact authoritative time 0.125; accumulated binary floats were just below note expiry.",
-  "correction": "Advance to elapsed0.134 to cross expiry while only34ms since general readout; pure descriptor test retains exact equality case. No simulation/presentation runtime change.",
-  "beforeSha256": "1d161733475e4df72bf56d4cfddd573e3b6640089d61cf376f86eadf0b57be6c"
-}

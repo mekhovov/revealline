@@ -1,4 +1,0 @@
-interface:
-  display_name: "Xonix Theme Designer"
-  short_description: "Design swappable worlds, rewards, and art direction"
-  default_prompt: "Use $xonix-theme-designer to create a new Ukrainian history theme pack."

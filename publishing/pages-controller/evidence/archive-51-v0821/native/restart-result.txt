@@ -1,8 +1,0 @@
-- alertdialog "Restart this mission?"
-  - paragraph
-    - StaticText "CURRENT ATTEMPT"
-  - heading "Restart this mission?" [level=2, ref=e1]
-  - paragraph
-    - StaticText "Your current line, score and elapsed time will be reset. Campaign progress you already earned stays safe."
-  - button "Stay paused" [ref=e2]
-  - button "Restart mission" [ref=e3]

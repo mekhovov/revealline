@@ -1,8 +1,0 @@
-{
-  "button": "Check progress",
-  "focus": "offline-button",
-  "state": {},
-  "stopHidden": true,
-  "text": "Stopped waiting. Offline preparation may still be running. Check progress to confirm its result.",
-  "time": "2026-09-15T12:03:52.379Z"
-}

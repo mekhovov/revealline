@@ -1,3 +1,0 @@
-Browser tab: 431, Title: "Reveal / Line", URL: "http://127.0.0.1:60366/game/".
-There has been no change in the accessibility tree.
-The focused UI element is 21 button How to play, ID: shell-help

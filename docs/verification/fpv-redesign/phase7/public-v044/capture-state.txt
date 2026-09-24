@@ -1,1 +1,0 @@
-"{\"body\":{\"touchMode\":\"stick\",\"touchSide\":\"right\",\"touchSize\":\"regular\",\"textSize\":\"large\",\"inputMode\":\"keyboard\",\"pictureState\":\"ready\",\"flightState\":\"result\",\"screenControls\":\"hidden\"},\"coverage\":\"52.2%\",\"score\":\"08160\",\"message\":\"Picture unlocked. A whole world, from one brave line.\"}"
