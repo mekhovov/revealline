@@ -35,19 +35,27 @@ reviewer names, listening approval or device results.
 
 ### Current execution snapshot
 
-- Unified archive delivery is split into two reviewable changes. Archive draft
-  [PR #13](https://github.com/mekhovov/revealline-soundtracks-01/pull/13) publishes
+- Unified archive delivery is split into two reviewable changes. Archive
+  [PR #13](https://github.com/mekhovov/revealline-soundtracks-01/pull/13) merged as
+  `878cfa6c1cccf310fbbed0698fcad3eb0f881532` and publicly serves
   a deterministic 104-recording `catalogue.json`, a single searchable/playable
   root page and the bounded `intake/add-upload.mjs` workflow documented in
-  `UPLOAD_GUIDE.md`; its exact-head archive verification passes. Game draft
+  `UPLOAD_GUIDE.md`. Exact-head archive verification passed 28/28 checks; direct
+  public verification covered search, all eight collections, Media Session,
+  CORS and an exact byte-range MP3 response. Game draft
   [PR #370](https://github.com/mekhovov/revealline/pull/370) adds the matching
   trust boundary and native Music Player browser, so a result streams through
   the existing transport without opening another page. Its focused catalogue,
-  player and panel suite passes 157 tests; Field Kit revision 71 and scoped
-  source/browser evidence are committed. Neither PR admits previews into trusted
-  Automatic/built-in playlists or establishes musical approval. Next: publish
-  and directly verify archive PR #13, then require all exact-head game gates and
-  real public playback before release coordination.
+  player and panel suite passes 161 tests. Independent review found and the
+  successor fixes close Recording-mode bypass, wrong-repository URL acceptance,
+  unbounded response consumption, invalid-selection mutation and two follow-on
+  policy-transition cases. Field Kit revision 73 preserves every earlier revision
+  and binds the final reviewed audio fingerprint. Local native-browser playback
+  loaded all 104 recordings and played Revenge's Waiting inside the game. Neither
+  PR admits previews into trusted Automatic/built-in playlists or establishes
+  musical approval. Next: pass all exact-head hosted game gates, qualify the actual
+  merge, publish an immutable coordinated game release and repeat the playback
+  proof on public game Pages.
 - M0 was merged through docs-only PR [#330](https://github.com/mekhovov/revealline/pull/330)
   at commit [efacbf087](https://github.com/mekhovov/revealline/commit/efacbf087eb9e1d15019f0d6aecd5ae32ac313fa).
   Plan consolidation is complete; implementation and evidence updates continue here.
