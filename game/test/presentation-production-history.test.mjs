@@ -462,7 +462,7 @@ test('Journey feedback dependencies bind only the reviewed integrated effects in
 test('shared-host UI and audio bind only their reviewed current inputs', async () => {
   const production = await createFieldKitProduction();
   const resolved = resolvePresentation(production.document);
-  const audioReviewPath = 'docs/verification/online-soundtrack-archive-2026-09-24/review.json';
+  const audioReviewPath = 'docs/verification/online-soundtrack-style-player-2026-09-24/review.json';
   const audioReviewHash = createHash('sha256')
     .update(await fs.readFile(new URL(`../../${audioReviewPath}`, import.meta.url)))
     .digest('hex');
@@ -504,7 +504,7 @@ test('shared-host UI and audio bind only their reviewed current inputs', async (
       );
       assert.ok(
         asset.provenance.source.endsWith(
-          'sha256:82f403fca97ec49fd0dd1fd7698324bdf120d21918ecd39fa7f44dc475269123',
+          'sha256:6884da9db87f9c495ede7e866f3bf460518f7f38a9c6035c9907bea1448f69c2',
         ),
         slot.id,
       );
