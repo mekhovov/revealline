@@ -2,7 +2,7 @@
   "format": "revealline-scoped-audio-recipe-review-successor.v1",
   "status": "bounded source, transport and local-browser review; public archive and physical-device acceptance pending",
   "candidateBase": "1168c02f5fb62056936878fe7d3c4e2e0afb0732",
-  "scope": "Continue the existing eight procedural audio recipes while adding a bounded, rights-aware public soundtrack catalogue reader, native searchable Music Player UI and direct immutable HTTPS MP3 streaming through the existing soundtrack transport.",
+  "scope": "Continue the existing eight procedural audio recipes while adding a bounded, rights-aware public soundtrack catalogue reader, native searchable Music Player UI, direct immutable HTTPS MP3 streaming and explicit Content ID policy preservation through the archive boundary.",
   "priorReview": {
     "path": "docs/verification/fresh-presentation-retention/review.json",
     "sha256": "120fbc1081856a6961f99bd479212695a09a4ce4b8debf3e3069a05620e75675",
@@ -11,7 +11,7 @@
   "fingerprint": {
     "group": "audio",
     "paths": "game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/ui/soundtrack-panel.mjs; game/ui/soundtrack-panel.css; game/soundtrack-albums.mjs; game/soundtrack-portable.mjs; game/content/soundtrack-catalogue.mjs; game/online-soundtrack-catalogue.mjs",
-    "sha256": "76ae855540ba7cd84eaa943b9a3156bcf10a4b5af21587a6105432f72d1f0502",
+    "sha256": "26fe9a785a6b21a92f2ce2c42d63917e16c30a4edc8df76bee26240863c0bcea",
     "algorithm": "SHA256 of ordered raw source bytes concatenated, matching fieldKitRecipeSources"
   },
   "changedInputs": [
@@ -36,14 +36,14 @@
     {
       "path": "game/online-soundtrack-catalogue.mjs",
       "priorSHA256": null,
-      "currentSHA256": "8eacdb33147a37169aa5ed928e2df85286fbbb98e9969f72a47f2b8dd2637843",
-      "assessment": "Introduces the missing trust boundary for the public JSON catalogue: exact schema and count checks, bounded decode, direct nonredirecting credential-free fetch, project-owned base URL, supported public licences, pending game-admission status and SHA-named MP3 paths."
+      "currentSHA256": "268ed025b3fc357f6a4b39dddcee94541fd63d9ada8aabe4e1a3fb088b7838d3",
+      "assessment": "Introduces the missing trust boundary for the public JSON catalogue: exact schema and count checks, bounded decode, direct nonredirecting credential-free fetch, project-owned base URL, supported public licences, pending game-admission status, SHA-named MP3 paths and explicit Content ID/Recording-mode policy fields. A remote entry cannot make itself Recording-mode eligible unless its source declares no Content ID."
     }
   ],
   "qualification": {
     "focusedAutomated": [
       "157 soundtrack catalogue, player and panel tests passed on Node 20.19.5.",
-      "Tests cover direct streaming without local blob reads, pause/resume, exit to built-in music, forged host/hash/duplicate rejection, atomic invalid-input refusal, search/style filters, one-click selection, shuffle-all, fetch failure and abort-on-close."
+      "Tests cover direct streaming without local blob reads, pause/resume, exit to built-in music, forged host/hash/duplicate rejection, Content ID policy preservation, atomic invalid-input refusal, search/style filters, one-click selection, shuffle-all, fetch failure and abort-on-close."
     ],
     "localBrowser": {
       "origin": "http://127.0.0.1:18998/game/",
@@ -55,7 +55,7 @@
       "screenshots": "Inspected through the accessibility tree; no image is claimed as release evidence."
     }
   },
-  "unchangedBindings": "The eight selected audio roles retain their procedural recipe IDs and generate no new cue or music bytes. Master/effects gain authority, saved library formats, IndexedDB, rights enforcement, offline albums and user-uploaded originals are unchanged.",
+  "unchangedBindings": "The eight selected audio roles retain their procedural recipe IDs and generate no new cue or music bytes. Master/effects gain authority, saved library formats, IndexedDB, rights enforcement, offline albums and user-uploaded originals are unchanged. The catalogue policy addition preserves source restrictions and grants no new permission.",
   "excluded": [
     "No musical-fit, full-track listening, loudness, Ukrainian cultural or Content ID approval for any archive recording.",
     "No public Pages catalogue success until the independently reviewed archive PR is merged and deployed.",
