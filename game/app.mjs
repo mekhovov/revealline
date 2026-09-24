@@ -246,6 +246,7 @@ import {
 } from './content.mjs';
 import { prepareScenario } from './imports.mjs';
 import { createRecorder, recordInput, exportReplay, MAX_REPLAY_TICKS } from './replay.mjs';
+import { exportReplayPresentation } from './replay-presentation.mjs';
 
 const $ = (id) => document.getElementById(id),
   show = (id, on) => ($(id).hidden = !on);
@@ -802,6 +803,7 @@ try {
     runMessageCue = null,
     bodyWarning = '',
     lastReplay = null,
+    lastReplayPresentation = null,
     replayFeedback = null,
     replayFocusClearance = null,
     missionReplacementFocusClearance = null,
@@ -8919,11 +8921,15 @@ try {
       }),
     };
     replayDownload = operation;
-    $('export-replay').disabled = $('download-replay').disabled = true;
+    $('export-replay').disabled =
+      $('download-replay').disabled =
+      $('download-raw-replay').disabled =
+        true;
     try {
+      const raw = replay.replay ?? replay;
       const exported = await downloadJSON(
         replay,
-        `revealline-${replay.summary.levelId}-replay.json`,
+        `revealline-${raw.summary.levelId}-${replay.replay ? 'recorded-actors-' : ''}replay.json`,
       );
       if (operation.observed && $('replay-dialog').open) {
         operation.status.finish({ message: exported.message });
@@ -8941,6 +8947,7 @@ try {
         if (!soundtrackDisposed) {
           $('export-replay').disabled = !recorder;
           $('download-replay').disabled = !lastReplay;
+          $('download-raw-replay').disabled = !lastReplay;
         }
       }
     }
@@ -8956,16 +8963,43 @@ try {
     try {
       if (!recorder) throw new Error('Start a new attempt to record a replay.');
       pause(true);
-      lastReplay = exportReplay(recorder, run);
-      $('replay-json').value = JSON.stringify(lastReplay, null, 2);
+      const raw = exportReplay(recorder, run);
+      const actorPin = flightActorLease?.pin();
+      // The accepted attempt owns this pin. A newly selected preference must
+      // never rewrite the appearance of an already recorded route.
+      const recorded =
+        actorPin?.style === 'fpv'
+          ? exportReplayPresentation({
+              execution: {
+                campaignKey: campaignKey(campaign),
+                sourcePackId: activeEntry.sourcePackId ?? null,
+              },
+              actorAppearancePin: actorPin,
+              replay: raw,
+            })
+          : null;
+      lastReplay = raw;
+      lastReplayPresentation = recorded;
+      // Keep copied wrappers within the same aggregate budget as the compact
+      // download; presentation indentation must not make a valid replay unloadable.
+      $('replay-json').value = recorded ? JSON.stringify(recorded) : JSON.stringify(raw, null, 2);
+      $('download-replay').textContent = recorded
+        ? 'Download recorded actors'
+        : 'Download raw JSON';
+      $('download-raw-replay').hidden = !recorded;
+      $('replay-appearance-note').textContent = recorded
+        ? 'Recorded FPV actors are pinned for Replay Theater. This does not record the reveal picture, music or interface. Raw JSON keeps the original simulation-only format.'
+        : 'This recording uses the original simulation-only format. Replay Theater uses preview artwork; no actor appearance is recorded.';
       $('replay-dialog').showModal();
       replayFocusClearance.refresh();
-      await downloadCurrentReplay(lastReplay);
+      await downloadCurrentReplay(recorded ?? raw);
     } catch (error) {
       notify(`Replay could not export: ${error.message}`);
     }
   };
-  $('download-replay').onclick = () => lastReplay && downloadCurrentReplay(lastReplay);
+  $('download-replay').onclick = () =>
+    lastReplay && downloadCurrentReplay(lastReplayPresentation ?? lastReplay);
+  $('download-raw-replay').onclick = () => lastReplay && downloadCurrentReplay(lastReplay);
   function suspendInteraction() {
     cancelUnifiedOpening?.();
     // Returning to focus must not revive a picker or launch requested before
