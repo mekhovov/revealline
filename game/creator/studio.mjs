@@ -1,4 +1,4 @@
-import { generateCreatorProject } from './templates.mjs';
+import { CREATOR_TEMPLATES, generateCreatorProject } from './templates.mjs';
 import { prepareCreatorImage } from './image.mjs';
 import {
   prepareCreatorBundle,
@@ -282,8 +282,11 @@ function showReview(pack) {
     pack.manifest.content.provenance.missionId,
   );
   paintContentMap($('map').getContext('2d'), preview, { width: 720, showCapture: false });
+  const template = CREATOR_TEMPLATES.find(
+    ({ id }) => id === pack.manifest.content.provenance.templateId,
+  );
   $('map-caption').textContent =
-    'First crossing · 72 × 36 cells · Solo · no enemies · close one crossing to reveal the picture.';
+    `${template?.name ?? 'Verified crossing'} · 72 × 36 cells · Solo · no enemies · verified completion route.`;
   $('validation').textContent = pack.review.validation;
   $('package-size').textContent =
     `${mib(pack.bytes)} portable pack. Includes one PNG derivative. Source originals and player progress are excluded.`;
