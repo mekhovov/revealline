@@ -16,6 +16,10 @@ Candidate v0.98.0; not a published-release acceptance record. See the
   focus lease until resolved; focus restoration cannot steal later player input.
 - Rotation scrolls the same focused mission into view without refocusing it.
 - Versus menu navigation includes Character reactions and its storage-retry action.
+- Legacy and installed Versus menus include their visible Find/Next controls in
+  the same restricted navigation root as the main panel.
+- Team Pause/results include the visible header links, excluding live-board and
+  hidden lobby controls. Cancelling departure restores the exact visible opener.
 
 This does not deliver the compact UX1 gallery, completion pictures, terminal Retry,
 new countdown or full player-screen qualification. Existing gameplay is unchanged.
@@ -46,6 +50,15 @@ passes eight. The completed chooser suite passes 62 tests, including unknown
 current identities and resize ownership. Counts describe their separate runs;
 they are not a complete repository suite or an aggregate release qualification.
 
+The final visible-action audit found the Legacy Versus continuation row and Team
+paused/result header links outside their menu roots. After correcting those roots
+and Team departure return focus, the six-file Couch regression run passes 166
+tests with no failures, skips or cancellations. Six new keyboard/controller cases
+exercise both omissions, legal terminal results and cancelled Next; live controls
+remain excluded. Its standalone shell fixture now includes the already-visible
+difficulty/recovery actions in exact Tab order, after reproducing its old failure
+on the baseline.
+
 ## Browser interaction evidence
 
 Local source served through the ordinary queryless Solo and Couch routes:
@@ -56,6 +69,8 @@ Local source served through the ordinary queryless Solo and Couch routes:
 | Solo keyboard, actual 390×844 | Retained mission focused and visible; Right stops at the single-column edge; Down moves to the next mission. |
 | Rotation to actual 844×390 | Same Two bays card remains focused at y=148.9–300.6, inside the gallery y=108.8–316.4. The pre-fix card was below the viewport. |
 | Versus keyboard Settings | Tab reaches Character reactions; Space toggles it while retaining checkbox focus. |
+| Legacy Versus keyboard | Tab reaches Find missions; Confirm announces preparation and opens Orchard Crossing; Back restores Find missions. |
+| Team keyboard Pause | Tab reaches both header links. Confirm on Race mode opens the discard dialog; Stay restores that exact header link, keeps PAUSED and clock 0:00, and does not resume. |
 
 Browser viewport overrides were reset and temporary tabs closed after inspection.
 These are browser keyboard/reflow checks, not touch-device or physical-controller

@@ -87,7 +87,7 @@ successful actions retire hints and Retry does not repeat long introductions.
 
 | Phase | State | Independent releases and blocking acceptance |
 | --- | --- | --- |
-| UX0 | Implementing, not public | Baseline/input: spatial Journey grid, omitted Couch controls, primary boot/mission focus, one menu-key owner; resolve nine reproduced targeted test failures with contract evidence. |
+| UX0 | PR320 qualifying, not public | Baseline/input: spatial Journey grid, omitted Couch controls, primary boot/mission focus, one menu-key owner; resolve reproduced targeted test failures with contract evidence. A final reachability audit adds Legacy Versus continuation and Team paused header controls before acceptance. |
 | UX1 | Remaining | Compact complete gallery, map/artwork previews, one-action play, selection restoration and Journey Collection rewards; all content sources and separate mode completion pass. |
 | UX2 | Remaining | Shared Home/lobbies/Pause, remove duplicate entry points and tuning prose, consistent Back/Help/Settings/Sound; direct Start and exact return focus pass. |
 | UX3 | Remaining | Objective-led HUD, responsive boards/touch controls, contextual hints; complete playable boards and controls coexist on short landscape and portrait. |
@@ -97,6 +97,31 @@ successful actions retire hints and Retry does not repeat long introductions.
 
 UX0 findings and evidence are maintained in the
 [feature verification record](player-first-ux0-verification.md).
+
+### UX1 implementation boundaries
+
+Source preparation identifies why Journey wins announce a picture while Collection
+remains empty: the win writes a Journey receipt, deliberately bypasses Legacy
+awards, and Collection reads only the Legacy gallery. Preserve that ownership
+separation. UX1 has two independently useful releases:
+
+1. **UX1-A: rewards and completed-card artwork together.** Introduce a separate
+   versioned presentation-completion record and one exact-art resolver shared by
+   Journey Pictures and completed cards. Keep strict historical Journey readers,
+   Legacy awards, and mode-specific win admission unchanged. Retain accepted asset
+   hashes/revisions and earlier originals. Resolve old receipts only against their
+   exact edition/gameplay identity; otherwise show unavailable/earlier edition.
+   Actual mode wins, reload, Retry, Next, duplicate outcomes, storage failure,
+   missing art and backup/recovery scope must pass before release.
+2. **UX1-B: compact complete gallery.** Deliver the agreed campaign grouping and
+   responsive cards across Journey, Legacy, installed, downloadable and imported
+   sources. Add trusted lightweight preview metadata where missing. Bound thumbnail
+   leases near the viewport, release offscreen resources, cancel stale work, and
+   provide a no-observer fallback. Complete selection/input/layout checks before
+   marking UX1 accepted.
+
+This is read-only preparation while UX0 qualifies, not a claim of implementation
+or authority to mix Solo, Versus and Team completion.
 
 Previously delivered foundations remain: default Journey, unified library,
 continuous Next, shared assets/settings, backup safeguards and scoped Team/recovery
