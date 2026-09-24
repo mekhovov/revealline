@@ -86,7 +86,11 @@ export function drawCoopCaptureFeedback(ctx, effects, run, palette, reduced = fa
 /** Borrow one already prepared frame. A missing legacy binding remains optional;
  * an advertised but malformed frame must not replace the accepted presentation. */
 export function prepareCoopWall(snapshot) {
-  if (typeof snapshot?.image !== 'function') return null;
+  const advertised =
+    snapshot?.resolved?.assets?.['terrain.wall'] ?? snapshot?.canvas?.assets?.['terrain.wall'];
+  if (!advertised) return null;
+  if (typeof snapshot.image !== 'function')
+    throw new TypeError('Team terrain needs its prepared image reader.');
   const tile = snapshot.image('terrain.wall');
   if (tile == null) return null;
   const width = tile.image?.naturalWidth ?? tile.image?.width;

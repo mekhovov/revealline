@@ -52,8 +52,12 @@ const equipmentSources = [
 const reviewedEquipmentSource = 'b9cbf2db6fe094564a15743c72c45049bf9ee776a22b2599469e0ee1bdc03037';
 const reviewedEquipmentSuccessorSource =
   '162d4c737c11d34f8e7e3ed6e76ca5a34fcf06d5fb97303d53eba857feaaf530';
+const reviewedEquipmentContinuationSource =
+  '300ca8b33e64c0fb39c0036ee434526272b73f47955dc68b2144a0274b3f2cd8';
 const reviewedTeamSuccessorRecord =
   '45e41eee3cacac251ede3f0304834a1fda311f8bd70f4d0b66aaceb493b8fc05';
+const reviewedTeamContinuationRecord =
+  'ff4b6344e7be9659c7e6b5bea12a9b6456b9f76e0d3587bf712c7b156d672a81';
 const reviewedEquipmentOriginals = Object.freeze({
   'team.anchor.available': '88e541375c56d4627b80cf6921ca64ed12d5b77d43dcae256177b8577250d9b3',
   'team.anchor.captured': 'a66511c77322beea458be918f6eb35f1ca6acc9f980afa44bc4756162896f466',
@@ -66,7 +70,13 @@ export async function fieldKitEquipmentSource(read) {
   return hash(Buffer.concat(await Promise.all(equipmentSources.map((name) => read(name)))));
 }
 
-export function fieldKitEquipmentQuality(slotId, source, originalHash, successorReviewBytes) {
+export function fieldKitEquipmentQuality(
+  slotId,
+  source,
+  originalHash,
+  successorReviewBytes,
+  continuationReviewBytes,
+) {
   const successor =
     successorReviewBytes && hash(successorReviewBytes) === reviewedTeamSuccessorRecord
       ? JSON.parse(successorReviewBytes)
@@ -79,9 +89,21 @@ export function fieldKitEquipmentQuality(slotId, source, originalHash, successor
       'a5aa095805b39c8a716d5427c54ad594f9261b53adeaf9752b3260ae752024b3' &&
     successor.priorEquipmentReview.priorFingerprintSHA256 === reviewedEquipmentSource &&
     successor.priorEquipmentReview.currentFingerprintSHA256 === reviewedEquipmentSuccessorSource;
+  const continuation =
+    continuationReviewBytes && hash(continuationReviewBytes) === reviewedTeamContinuationRecord
+      ? JSON.parse(continuationReviewBytes)
+      : null;
+  const integrated =
+    source === reviewedEquipmentContinuationSource &&
+    continuation?.priorEquipmentReview?.path ===
+      'docs/verification/team-specialist-cues-2026-09-24/review.json' &&
+    continuation.priorEquipmentReview.sha256 === reviewedTeamSuccessorRecord &&
+    continuation.priorEquipmentReview.priorFingerprintSHA256 === reviewedEquipmentSuccessorSource &&
+    continuation.priorEquipmentReview.currentFingerprintSHA256 ===
+      reviewedEquipmentContinuationSource;
   if (
     Object.hasOwn(reviewedEquipmentOriginals, slotId) &&
-    (source === reviewedEquipmentSource || continued) &&
+    (source === reviewedEquipmentSource || continued || integrated) &&
     reviewedEquipmentOriginals[slotId] === originalHash
   )
     return {
@@ -91,6 +113,12 @@ export function fieldKitEquipmentQuality(slotId, source, originalHash, successor
         ...(continued
           ? [
               `Unchanged five-image consumer continuation: docs/verification/team-specialist-cues-2026-09-24/review.json sha256:${reviewedTeamSuccessorRecord}`,
+            ]
+          : []),
+        ...(integrated
+          ? [
+              `Prior unchanged five-image consumer continuation: docs/verification/team-specialist-cues-2026-09-24/review.json sha256:${reviewedTeamSuccessorRecord}`,
+              `Unchanged five-image integrated-presentation continuation: docs/verification/team-integrated-presentation-continuation-2026-09-24/review.json sha256:${reviewedTeamContinuationRecord}`,
             ]
           : []),
       ],
@@ -251,6 +279,9 @@ export async function createFieldKitProduction({ projectRoot = root } = {}) {
   const teamSuccessorReviewBytes = await read(
     'docs/verification/team-specialist-cues-2026-09-24/review.json',
   );
+  const teamContinuationReviewBytes = await read(
+    'docs/verification/team-integrated-presentation-continuation-2026-09-24/review.json',
+  );
   const inheritedAssets = Object.fromEntries(
     assets.filter((asset) => asset.kind === 'image').map((asset) => [asset.id, asset]),
   );
@@ -268,6 +299,7 @@ export async function createFieldKitProduction({ projectRoot = root } = {}) {
       inheritedAssets,
       reviewBytes: teamReviewBytes,
       successorReviewBytes: teamSuccessorReviewBytes,
+      continuationReviewBytes: teamContinuationReviewBytes,
     });
   }
   const equipmentSource = 'game/presentation/team-equipment-art.mjs';
@@ -303,6 +335,7 @@ export async function createFieldKitProduction({ projectRoot = root } = {}) {
           equipmentReviewSource,
           hash(body),
           teamSuccessorReviewBytes,
+          teamContinuationReviewBytes,
         ),
       },
       body,
