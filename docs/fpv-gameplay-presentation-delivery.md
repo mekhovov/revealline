@@ -26,13 +26,12 @@ geometry or claim their pending PRs are delivered.
 
 ## In progress
 
-1. Differential actual-host capture-stop regressions: Journey versus Pressure
-   Lines, held/repeated input, multiple simulation substeps, neutral continuation
-   and fresh direction. Do not change the core without reproducing its defect.
-2. Held-touch per-seat reset regressions for stick, swipe and D-pad, including
-   stale capture-loss events and uninterrupted partner input.
-3. Separate validated FPV/campaign actor preference and boundary resolver.
-   Leaf-module tests alone are not menu, renderer or saved-attempt integration.
+1. Actor-only asset preparation and rendering, then menu and host integration.
+   Keep original pictures, palettes, music and custom overrides.
+2. Versioned saved appearance and exact retained asset preparation. Leaf-module
+   tests alone are not menu, renderer or complete saved-attempt integration.
+3. The user's capture-restart report remains open. Do not change the core
+   without reproducing its defect; native held-input/device evidence is pending.
 
 Prepared source checkpoint: the actor-preference service and boundary resolver
 are implemented, independently reviewed, and have 16 passing focused tests.
@@ -43,6 +42,24 @@ run exposed explicit `undefined` being accepted as a default; strict record-fiel
 validation corrected it before the successful rerun. These leaf APIs are not
 connected to gameplay yet. Menu copy must say "next new launch or Next mission":
 Retry deliberately retains the existing choice.
+
+The differential actual-host cohort now passes 16/16 cases (159.19 seconds,
+zero failures/skips): Journey versus Pressure Lines; Immediate and Grid steering;
+modeled held keyboard, touch and controller; multiple frame substeps; stopped
+continuation, pause/resume and fresh-input recovery. Two bays adds interior-ground
+returns, and Nearby shore adds a 14-cell line-only island connection. Initial
+fixture failures were corrected save-slot and obsolete menu-path assumptions,
+not reproduced gameplay defects. This is modeled-host evidence, not physical
+device proof. Its worker imported baseline sessions before the new v6 module was
+edited; it does not qualify the new saved-appearance format.
+
+The strict actor pin and optional `xonix-session.v6` save foundation preserve
+v1–v5 shapes and byte limits. v6 requires an exact actor pin, allows a null
+whole-theme pin, and keeps the embedded replay at 32 MiB. Owner binding is not
+source approval or asset readiness. Independent source review found no blocker;
+the implementation-owner's focused cohort passed 63/63, including oversized
+replay rejection. An initial test assertion's wording was corrected. Host
+activation and retained source/hash/decoded-role checks remain necessary.
 
 No new feature from this plan is publicly delivered yet. A draft source
 checkpoint, successful test, merged PR and accepted public release are separate
