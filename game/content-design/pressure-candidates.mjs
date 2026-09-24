@@ -115,3 +115,67 @@ export function inspectPressureDifficulty(source) {
     ],
   });
 }
+
+/** Authored erosion evidence only. This intentionally does not simulate a live
+ * route or label a mission balanced: Studio/CI can reject missing foundations,
+ * decisions or mechanic records while human play still owns usefulness. */
+export function inspectErosionCounterplay(source) {
+  const project = compileContentProject(source);
+  const rows = project.missions
+    .filter((mission) => mission.actors.some((actor) => actor.role === 'territory-eroder'))
+    .map((mission) => {
+      const map = project.maps.find(
+        (candidate) =>
+          candidate.source.id === mission.map.id &&
+          candidate.source.revision === mission.map.revision,
+      );
+      const permanentReturnCount =
+        (map.source.foundations?.length ?? 0) + (map.source.gates?.length ?? 0);
+      const explicitRouteChoice = /\bor\b/i.test(mission.design.routeDecision);
+      const escapeEvidence = /return|reserve|foundation|connector|circuit|landing|route/i.test(
+        [
+          mission.design.routeDecision,
+          mission.design.counterplay,
+          mission.design.captureConsequence,
+        ].join(' '),
+      );
+      const recordsErosion = [...mission.design.introduces, ...mission.design.practices].includes(
+        'territory-erosion',
+      );
+      return {
+        missionId: mission.id,
+        missionRevision: mission.revision,
+        name: mission.name,
+        coverage: mission.coverage,
+        eroderIds: mission.actors
+          .filter((actor) => actor.role === 'territory-eroder')
+          .map((actor) => actor.id),
+        permanentReturnCount,
+        requiredCaptureObjectiveIds: mission.objectives
+          .filter((objective) => objective.required)
+          .map((objective) => objective.id),
+        explicitRouteChoice,
+        escapeEvidence,
+        recordsErosion,
+        authoredSignalsPresent:
+          permanentReturnCount > 0 &&
+          explicitRouteChoice &&
+          escapeEvidence &&
+          recordsErosion &&
+          mission.coverage <= 0.85,
+        validation: 'authored-signals-only-human-route-review-pending',
+      };
+    });
+  return freezeDesign({
+    format: 'JourneyErosionCounterplayAuditV1',
+    projectId: project.source.id,
+    projectRevision: project.source.revision,
+    missionCount: rows.length,
+    rows,
+    pending: [
+      'repair-versus-escape-route-usefulness',
+      'ordinary-clear-without-prolonged-cleanup',
+      'warning-readability-and-voluntary-retry',
+    ],
+  });
+}

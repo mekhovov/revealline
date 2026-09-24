@@ -31,7 +31,7 @@ test('Journey details use actual band and preset without constructing geometry',
 });
 
 test('current authored route has precisely12 Remix,4 Ukrainian and4 FPV tags by curated identities', async () => {
-  const route = await loadAuthoredJourneyRoute('whole-spatial-v6');
+  const route = await loadAuthoredJourneyRoute('whole-spatial-v9');
   const counts = { Remix: 0, Ukrainian: 0, FPV: 0, Arcade: 0 };
   for (const pack of route.source.packs)
     for (const campaignId of pack.campaignIds) {

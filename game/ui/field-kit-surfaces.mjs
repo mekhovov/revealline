@@ -1,8 +1,14 @@
 import { applyFieldKitCopy } from './field-kit-copy.mjs';
 import { attachSettingsPanels } from './settings-panels.mjs';
+import { createMenuStylePreferences } from '../menu-style-preferences.mjs';
+import { createMenuAppearance } from './menu-appearance.mjs';
 
 /** Presentation navigation only. Original host controls own preferences and saves. */
-export function attachFieldKitSurfaces({ document: doc = globalThis.document } = {}) {
+export function attachFieldKitSurfaces({
+  document: doc = globalThis.document,
+  window: win = globalThis.window,
+  getStorage = () => globalThis.localStorage,
+} = {}) {
   applyFieldKitCopy(doc);
   const removers = [];
   const listen = (node, type, handler) => {
@@ -22,6 +28,19 @@ export function attachFieldKitSurfaces({ document: doc = globalThis.document } =
     },
   });
   removers.push(() => settings.destroy());
+  const hasNativeSkinOwner = ['menu-palette', 'race-menu-palette', 'coop-menu-palette'].some((id) =>
+    doc.getElementById(id),
+  );
+  if (doc.body?.dataset.fieldKitPage && !hasNativeSkinOwner) {
+    const appearance = createMenuAppearance({ document: doc }),
+      preferences = createMenuStylePreferences({ window: win, getStorage }),
+      stopAppearance = preferences.subscribe((state) => appearance.set(state));
+    removers.push(() => {
+      stopAppearance();
+      preferences.dispose();
+      appearance.dispose();
+    });
+  }
   const openLibrary = (panel) => {
     // Use the real library entry and section handlers, including its pause and
     // modal return-focus bookkeeping. No library state is recreated here.

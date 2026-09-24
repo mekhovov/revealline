@@ -1,16 +1,44 @@
-/* Derived menu colours never replace a release's root tokens or canvas palette. */
-body[data-menu-palette='ukrainian']
+/* UI-skin colours never replace a release's root tokens or canvas palette. */
+body[data-menu-palette='neon'] {
+  --rl-menu-skin-bg: var(--rl-menu-neon-bg);
+  --rl-menu-skin-panel: var(--rl-menu-neon-panel);
+  --rl-menu-skin-panel-raised: var(--rl-menu-neon-panel-raised);
+  --rl-menu-skin-text: var(--rl-menu-neon-text);
+  --rl-menu-skin-muted: var(--rl-menu-neon-muted);
+  --rl-menu-skin-line: var(--rl-menu-neon-line);
+  --rl-menu-skin-control-line: var(--rl-menu-neon-control-line);
+  --rl-menu-skin-cyan: var(--rl-menu-neon-cyan);
+  --rl-menu-skin-amber: var(--rl-menu-neon-amber);
+  --rl-menu-skin-hazard: var(--rl-menu-neon-hazard);
+  --rl-menu-skin-decorative: var(--rl-menu-neon-decorative);
+}
+
+body[data-menu-palette='field-kit'] {
+  --rl-menu-skin-bg: var(--rl-menu-field-kit-bg);
+  --rl-menu-skin-panel: var(--rl-menu-field-kit-panel);
+  --rl-menu-skin-panel-raised: var(--rl-menu-field-kit-panel-raised);
+  --rl-menu-skin-text: var(--rl-menu-field-kit-text);
+  --rl-menu-skin-muted: var(--rl-menu-field-kit-muted);
+  --rl-menu-skin-line: var(--rl-menu-field-kit-line);
+  --rl-menu-skin-control-line: var(--rl-menu-field-kit-control-line);
+  --rl-menu-skin-cyan: var(--rl-menu-field-kit-cyan);
+  --rl-menu-skin-amber: var(--rl-menu-field-kit-amber);
+  --rl-menu-skin-hazard: var(--rl-menu-field-kit-hazard);
+  --rl-menu-skin-decorative: var(--rl-menu-field-kit-decorative);
+}
+
+body:is([data-menu-palette='neon'], [data-menu-palette='field-kit'])
   :is(dialog, .race-screen, #coop-menu, #coop-overlay, #game-overlay .overlay-card) {
-  --fk-bg: var(--rl-menu-bg);
-  --fk-panel: var(--rl-menu-panel);
-  --fk-panel-raised: var(--rl-menu-panel-raised);
-  --fk-text: var(--rl-menu-text);
-  --fk-muted: var(--rl-menu-muted);
-  --fk-line: var(--rl-menu-line);
-  --fk-control-line: var(--rl-menu-control-line);
-  --fk-cyan: var(--rl-menu-cyan);
-  --fk-amber: var(--rl-menu-amber);
-  --fk-hazard: var(--rl-menu-hazard);
+  --fk-bg: var(--rl-menu-skin-bg);
+  --fk-panel: var(--rl-menu-skin-panel);
+  --fk-panel-raised: var(--rl-menu-skin-panel-raised);
+  --fk-text: var(--rl-menu-skin-text);
+  --fk-muted: var(--rl-menu-skin-muted);
+  --fk-line: var(--rl-menu-skin-line);
+  --fk-control-line: var(--rl-menu-skin-control-line);
+  --fk-cyan: var(--rl-menu-skin-cyan);
+  --fk-amber: var(--rl-menu-skin-amber);
+  --fk-hazard: var(--rl-menu-skin-hazard);
   --fk-accent: var(--fk-amber);
   --fk-focus: var(--fk-cyan);
   --fk-on-accent: var(--fk-bg);
@@ -32,20 +60,20 @@ body[data-menu-palette='ukrainian']
 /* Keep the exact authored frame borders, while opaque menu tokens own the
    interior under functional labels. Filled raster centres must not override the
    selected palette or disabled/primary/danger state colours. */
-body[data-menu-palette='ukrainian'] dialog {
+body:is([data-menu-palette='neon'], [data-menu-palette='field-kit']) dialog {
   border-image-slice: var(--fk-border-slice-ui-dialog, 8);
 }
-body[data-menu-palette='ukrainian']
+body:is([data-menu-palette='neon'], [data-menu-palette='field-kit'])
   :is(dialog, .race-screen, #coop-menu, #coop-overlay, #game-overlay .overlay-card)
   :is(button, .button) {
   --fk-button-paint-slice: var(--fk-button-border-slice);
 }
-body[data-menu-palette='ukrainian']
+body:is([data-menu-palette='neon'], [data-menu-palette='field-kit'])
   :is(dialog, .race-screen, #coop-menu, #coop-overlay, #game-overlay .overlay-card)
   :is(.field-kit-panel, .inspection-card, .mission-detail, .settings-group) {
   border-image-slice: var(--fk-border-slice-ui-panel, 8);
 }
-body[data-menu-palette='ukrainian']
+body:is([data-menu-palette='neon'], [data-menu-palette='field-kit'])
   :is(dialog, .race-screen, #coop-menu, #coop-overlay, #game-overlay .overlay-card)
   :is(select, input[type='text'], textarea) {
   border-image-slice: var(--fk-border-slice-ui-input-text, 8);
@@ -104,8 +132,8 @@ body:is([data-menu-ornaments='subtle'], [data-menu-ornaments='rich'])
       var(--menu-stripe) 100% no-repeat;
 }
 
-body[data-menu-palette='ukrainian'] .menu-ornament {
-  --menu-ornament-blue: var(--rl-menu-decorative);
+body:is([data-menu-palette='neon'], [data-menu-palette='field-kit']) .menu-ornament {
+  --menu-ornament-blue: var(--rl-menu-skin-decorative);
 }
 
 body[data-menu-ornaments='subtle'] .menu-ornament,

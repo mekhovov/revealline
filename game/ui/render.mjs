@@ -24,6 +24,7 @@ import { createEnemyBodyAssets } from './enemy-body-assets.mjs';
 import {
   createActorPresentation,
   actorDiameter,
+  actorImagePaintMetrics,
   actorScreenScale,
   actorLogicalLimit,
   drawPresentedActor,
@@ -50,7 +51,11 @@ const paintSize = ({ width, height }) => ({
 });
 export const boardPaintSizeForLevel = (level) => paintSize(geometryForLevel(level));
 export const boardPaintSizeForRun = (run) => paintSize(geometryForRun(run));
-export function playerPaintSize(body, image, { screenScale, canvasCSSWidth, style, scale }) {
+export function playerPaintSize(
+  body,
+  image,
+  { screenScale, canvasCSSWidth, style, scale, geometry = null },
+) {
   const s = actorScreenScale(screenScale),
     fitted = fittedBodySize(body, image),
     // Keep the contained source rectangle and all attachment anchors intact.
@@ -63,11 +68,13 @@ export function playerPaintSize(body, image, { screenScale, canvasCSSWidth, styl
     minimum = canvasCSSWidth >= 480 ? 24 : compactMinimum,
     desired = actorDiameter({ screenScale: s, canvasCSSWidth, style, scale }) * 1.15,
     logicalCap = actorLogicalLimit({ screenScale: s, minimumCSSSize: minimum }),
-    diameter = Math.max(
+    visibleDiameter = Math.max(
       Math.min(18, 32 / s),
       Math.min(logicalCap, 32 / s, Math.max(minimum / s, desired)),
-    );
-  return { diameter, scale: diameter / (extent * CELL) };
+    ),
+    paint = image && geometry ? actorImagePaintMetrics(visibleDiameter, geometry) : null,
+    frameDiameter = paint ? Math.max(paint.width, paint.height) : visibleDiameter;
+  return { diameter: visibleDiameter, scale: frameDiameter / (extent * CELL) };
 }
 const makeCanvas = (w, h) => {
   const c = document.createElement('canvas');
@@ -391,7 +398,8 @@ export class BoardPainter {
     }
     let playerBody = this.body,
       playerImage = this.image,
-      playerRecipe = this.recipe;
+      playerRecipe = this.recipe,
+      playerGeometry = null;
     if (actorPresentation && !this.overrides.player) {
       const set = this.presets.characterPresentations?.sets.find(
         (entry) =>
@@ -408,6 +416,7 @@ export class BoardPainter {
         throw new TypeError('Actor appearance is missing the prepared player role.');
       if (sprite) {
         playerImage = sprite.image;
+        playerGeometry = sprite.geometry;
         playerBody = {
           ...body,
           sampling: 'nearest',
@@ -841,6 +850,7 @@ export class BoardPainter {
         canvasCSSWidth,
         style: this.style,
         scale: playerScale,
+        geometry: playerGeometry,
       });
       const playerPose = {
         body: playerBody,

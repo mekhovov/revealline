@@ -7,7 +7,7 @@ import { FIRST_CONNECTION } from '../coop/first-connection.mjs';
 import { RELAY_YARD } from '../coop/relay-yard.mjs';
 import { imagePresentation } from '../presentation/runtime.mjs';
 import { validateCompiledPresentation } from '../presentation/host.mjs';
-import { actorDiameter } from '../ui/actor-presentation.mjs';
+import { actorDiameter, actorImagePaintMetrics } from '../ui/actor-presentation.mjs';
 import {
   COOP_ACTOR_ROLES,
   createCoopActorPresentation,
@@ -24,6 +24,16 @@ import { applyGameplayTuning, resolveGameplayTuning } from '../gameplay-tuning.m
 
 const compiled = validateCompiledPresentation(
   JSON.parse(await readFile(new URL('../presentation/compiled/runtime.json', import.meta.url))),
+);
+const approvedActors = validateCompiledPresentation(
+  JSON.parse(
+    await readFile(
+      new URL(
+        "../presentation/compiled/runtime.af2d1d398ca56ec365899940d27f790c2b406d385461e89a1dc8fcbbcede6972.json",
+        import.meta.url,
+      ),
+    ),
+  ),
 );
 const SLOTS = [
   [
@@ -180,16 +190,16 @@ test('tuned Team revisions keep both prepared pilot bodies and every extra keepe
 
 // The source slots are existing artwork, not newly produced Team character sets.
 test('six approved source frames retain exact IDs, revisions, PNG hashes and dimensions', async () => {
-  assert.deepEqual(compiled.resolved.theme, {
+  assert.deepEqual(approvedActors.resolved.theme, {
     id: 'fpv',
     revision: 62,
-    name: compiled.resolved.theme.name,
+    name: approvedActors.resolved.theme.name,
   });
-  assert.equal(compiled.resolved.collection, null);
+  assert.equal(approvedActors.resolved.collection, null);
   for (const [slot, sha, size, width] of SLOTS) {
-    const asset = compiled.resolved.assets[slot],
+    const asset = approvedActors.resolved.assets[slot],
       bytes = await readFile(
-        new URL(`../presentation/compiled/${compiled.urls[sha]}`, import.meta.url),
+        new URL(`../presentation/compiled/${approvedActors.urls[sha]}`, import.meta.url),
       );
     assert.equal(asset.id, `${slot}.field-kit`);
     assert.equal(asset.revision, 2);
@@ -426,7 +436,11 @@ test('prepared image and pivot geometry are borrowed once; reset and replacement
       const draw = view.calls.find((call) => call.name === 'drawImage');
       assert.equal(draw.args[0], p.images.get(frame.sourceSlot).image);
       assert.equal(draw.state.imageSmoothingEnabled, false);
-      assert.equal(draw.args.at(-1), frame.diameter);
+      const geometry = p.images.get(frame.sourceSlot).geometry;
+      assert.equal(
+        draw.args.at(-1),
+        kind === 'core' ? frame.diameter : actorImagePaintMetrics(frame.diameter, geometry).height,
+      );
       assert.equal(view.stack.length, 0);
       if (kind === 'core')
         assert.equal(

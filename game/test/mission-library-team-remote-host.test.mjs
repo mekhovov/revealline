@@ -109,7 +109,7 @@ test('Team exact nonfirst Versus handoff keeps its attempt on Stay and only depa
   await waitFor(() => f.visits.length === 1);
   const destination = new URL(f.visits[0]);
   assert.equal(destination.pathname, '/game/couch/');
-  assert.equal(destination.searchParams.get('journey'), 'whole-spatial-v6');
+  assert.equal(destination.searchParams.get('journey'), 'whole-spatial-v9');
   assert.equal(destination.searchParams.get('library-mission'), exactId);
   assert.equal(destination.searchParams.get('return'), 'team');
   assert.equal(destination.searchParams.get('journey-return'), 'legacy');
@@ -309,7 +309,7 @@ test('saved other-mode browsing restores Team’s own filter and lazily loads ma
   await open(f);
   assert.equal(f.$('journey-mode').value, 'solo');
   assert.equal(f.$('journey-search').value, 'Two keepers');
-  await waitFor(() => cards(f).length === 3);
+  await waitFor(() => cards(f).length === 2);
   assert(cards(f).some((card) => card.querySelector('strong').textContent === 'Two keepers'));
   assert.equal(f.$('coop-library-preview').hidden, true);
   assert.equal(f.reads.length, 4);
@@ -332,7 +332,7 @@ test('a Team page return restores the actual departing Solo search and campaign 
     await loaded(f);
     f.$('journey-search').value = 'Two keepers';
     f.$('journey-search').emit('input');
-    assert.equal(cards(f).length, 3);
+    assert.equal(cards(f).length, 2);
     const button = cards(f).find(
       (card) => card.querySelector('strong').textContent === 'Two keepers',
     );
