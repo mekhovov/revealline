@@ -388,8 +388,13 @@ reviewer names, listening approval or device results.
   prepared all twelve recordings within the retained 180–720-second envelope and
   passed. Artifact `10838416797` is 140,918,961 bytes with SHA-256
   `a2d437395bcf681a42a7632492c72a94a383d2594fedcee47a304b734e4ded0b`.
-  PR #17 remains draft and unpublished pending independent exact-head source and
-  artifact review; technical preparation is not musical approval.
+  That successful evidence is from the pre-rebase source. PR #17 is now rebased
+  onto archive main `5c3f3d798c64ddaa3677bd0ecafec4ee7a4a7221` at exact head
+  `90c1f0b9d10a78d3b5340e1fe2ced88f518994ad`; its intended exact-head
+  [run 36071496158](https://github.com/mekhovov/revealline-soundtracks-01/actions/runs/36071496158)
+  is pending at this checkpoint. The PR remains draft and unpublished pending
+  that run and independent exact-head source/artifact review. Technical
+  preparation is not musical approval.
 - Draft in-game archive [PR #370](https://github.com/mekhovov/revealline/pull/370)
   is rebased at exact head `53007108b6286782857c54d1cd4316213389ffb3` on
   accepted main `4755a331bf06be1490d2e41bc4d1a59515a5cd0c`. Fresh focused
@@ -398,9 +403,10 @@ reviewer names, listening approval or device results.
   passed preflight, build and release-ready; test and release_gate were skipped
   under the authorized policy and are not passes. Preserve the earlier 203/203,
   Team, production-history and browser evidence as scoped historical evidence.
-  Release sequencing now keeps PR #370 draft through PR #403; it must rebase onto
-  the then-current accepted main and is expected to target **v0.111.0** only if the
-  sole publisher confirms that version remains next. Do not change
+  Release sequencing now keeps PR #370 draft through PR #403, which owns
+  v0.111.0. PR #370's version is unallocated: it must rebase onto the then-current
+  accepted main and use the then-next unused immutable version assigned by
+  **🔥 Releases**. Do not change
   `REVEALLINE_FULL_CI`, add a new qualification workflow or imply four-shard
   qualification. Its eventual public acceptance target is the current 116-track
   archive, with built-in and uploaded music surviving archive failure.
