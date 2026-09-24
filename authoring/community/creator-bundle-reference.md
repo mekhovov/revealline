@@ -17,6 +17,12 @@ For one mission, provenance remains one object and evidence remains the original
 
 Generation stores a versioned template, bounded variant, seed, runtime seed, mission ID and gameplay policy. `creator-crossing.v1` has center/west variants of First crossing. Image bytes and filenames do not affect geometry. Automated Solo evidence is regenerated on import; it identifies actual simulation identities, presets, steering and runtime seeds. The current v3 Versus qualification separately proves equal independent boards and paired outcomes for every bounded variant and configuration. See [Phase 6 generated Versus qualification](phase6-versus-qualification.md). These checks establish configuration feasibility only.
 
+Generated Team qualification uses a separate cooperative registry and portable
+JSON boundary. It does not change runtime.v1 or runtime.v2 `.rlpack` semantics,
+and the current installed Custom player does not yet adopt the Team artifact.
+See [Phase 7 generated Team qualification](phase7-team-qualification.md) for
+its two-seat contribution, Retry, continuation and transfer contracts.
+
 The full inventory, immutable manifest reference and payloads are committed in one transaction of the existing managed-media database, using retained generic-byte references. This adds no storage authority or database upgrade beyond the current DB5 capability. Existing still, story and audio history remains intact. The installer makes no cross-store atomicity claim; draft/player operations are separate actions. Future multi-domain operations must add a recovery journal.
 
 Imported project sources always register in the Custom collection. Deliberate launch rechecks the complete bundle, then opens the project-backed Custom player. Progress is scoped to the full edition SHA; gameplay tuning from another host cannot silently change the verified configuration.
