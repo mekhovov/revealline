@@ -114,7 +114,29 @@ export function createControllerRouter({
     repeatAt = 0,
     lastTime = 0,
     pendingDisconnect = false,
+    menuConfirmActive = false,
     destroyed = false;
+
+  const confirms = (buttons) =>
+    buttons.has(compiled.menu.buttons.confirm) ||
+    (navigationAliases && defaultLayout && buttons.has(2));
+  function menuConfirmPressed() {
+    if (destroyed || !assigned || (lastScope === 'flight' && !menuConfirmActive)) return false;
+    // Native events may arrive before the next animation frame. This read-only
+    // probe must not adopt a pad, consume an edge, or clear the release gate.
+    try {
+      const pads = readPads();
+      const count = Math.min(32, pads?.length || 0);
+      for (let index = 0; index < count; index++) {
+        if ((pads[index]?.index ?? index) !== assigned.index) continue;
+        const pad = snapshot(pads[index], index);
+        return pad?.signature === assigned.signature && confirms(pad.buttons);
+      }
+    } catch {
+      // Native controls remain usable when gamepad access is unavailable.
+    }
+    return false;
+  }
 
   function clear() {
     boostLatched = false;
@@ -153,6 +175,7 @@ export function createControllerRouter({
   }
   const boostState = () => ({ mode, latched: boostLatched });
   function invalidate() {
+    menuConfirmActive = false;
     pendingDisconnect = pendingDisconnect || assigned !== null;
     assigned = null;
     clear();
@@ -162,6 +185,7 @@ export function createControllerRouter({
     if (!Number.isInteger(index) || index < 0) return;
     seen.delete(index);
     if (assigned?.index === index) {
+      menuConfirmActive = false;
       pendingDisconnect = true;
       assigned = null;
       clear();
@@ -294,6 +318,7 @@ export function createControllerRouter({
       if (pads.get(index)?.signature === old.signature) continue;
       seen.delete(index);
       if (assigned?.index === index) {
+        menuConfirmActive = false;
         assigned = null;
         pendingDisconnect = true;
         clear();
@@ -328,6 +353,7 @@ export function createControllerRouter({
             JOIN_BUTTONS.some((i) => pad.buttons.has(i) && !candidate.previousJoin.has(i));
         candidate.previousJoin = new Set(pad.buttons);
         if (join) {
+          menuConfirmActive = false;
           assigned = candidate;
           clear();
           if (autoJoin) blocked = false;
@@ -357,6 +383,7 @@ export function createControllerRouter({
       invalidate();
       return sampleLoss();
     }
+    menuConfirmActive = confirms(pad.buttons) && (scope !== 'flight' || menuConfirmActive);
     // The same physical-neutral sample may lift both gates. A latched command
     // is not physical input and must not prevent a later ordinary release.
     if (mode === 'toggle' && scope === 'flight' && toggleBoostEligible && pad.neutral)
@@ -432,6 +459,7 @@ export function createControllerRouter({
   }
   return {
     sample,
+    menuConfirmPressed,
     setBindings,
     setBoostMode,
     cancelToggleBoost,

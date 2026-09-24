@@ -118,6 +118,7 @@ import { fetchBundledChapter } from './chapter-download.mjs';
 import { attachModalNavigation } from './ui/modal-navigation.mjs';
 import { attachProfileRecoveryDialog } from './ui/profile-recovery-dialog.mjs';
 import { createControllerRouter } from './ui/controller-router.mjs';
+import { attachControllerConfirmGuard } from './ui/controller-confirm-guard.mjs';
 import {
   cancelControllerToggleBoost,
   controllerBoostAfterRecovery,
@@ -2018,6 +2019,9 @@ try {
     boostMode: library.preferences.controllerBoostMode,
     ...(controllerPreview ? { readPads: controllerPreview.readPads } : {}),
   });
+  const controllerConfirmGuard = attachControllerConfirmGuard({
+    confirmPressed: () => controller.menuConfirmPressed(),
+  });
   let controllerLabels = controllerBindingLabels(library.preferences.controllerBindings),
     controllerDeviceId = '';
   let controllerFrame = null,
@@ -2074,6 +2078,8 @@ try {
     const directions = `Up ${b.up}, down ${b.down}, left ${b.left}, right ${b.right}; ${controllerStickLabel(library.preferences.controllerBindings, 'flight')}.`;
     $('controller-help').textContent =
       `Connect a controller and release its controls once. Both sticks work with the default layout. ${directions} ${controllerFlightHint()} ${controllerMenuHint()} Confirm a select or slider to edit; confirm again to apply or go back to cancel. Change your layout in Settings → Controller controls. Steam Deck: use a Gamepad layout for your browser in Steam Input. The system/Home button belongs to your device.`;
+    $('controller-navigation-help').textContent =
+      `${controllerMenuHint()} Confirm a select or slider to edit; confirm again to apply or go back to cancel.`;
     $('controller-ui-hint').textContent =
       controllerScope() === 'flight' ? controllerFlightHint() : controllerMenuHint();
     controllerReading?.refresh();
@@ -2525,6 +2531,7 @@ try {
       pictureManager?.close();
       controllerReading.destroy();
       controllerNavigation.destroy();
+      controllerConfirmGuard.destroy();
       gameShell?.destroy();
       missionPicker?.destroy();
       modalNavigation.destroy();
@@ -8230,19 +8237,8 @@ try {
     }
     if (status.code === 'joined') refreshControllerPrompts();
     const connectionHint = $('controller-connection-hint');
-    const hintParent = controllerDialog() || document.body;
-    if (connectionHint.parentElement !== hintParent) hintParent.append(connectionHint);
-    connectionHint.hidden = !(
-      assigned || ['waiting-neutral', 'unsupported', 'disconnected'].includes(status.code)
-    );
-    const connectionText =
-      assigned && status.code !== 'waiting-neutral'
-        ? scope === 'flight'
-          ? controllerFlightHint()
-          : controllerMenuHint()
-        : status.message;
-    if (connectionHint.textContent !== connectionText) connectionHint.textContent = connectionText;
-    show('controller-ui-hint', !!assigned);
+    if (connectionHint.textContent !== status.message) connectionHint.textContent = status.message;
+    show('controller-ui-hint', !!assigned && scope !== 'flight');
     if (scope !== controllerPreviousScope) {
       controllerPreviousScope = scope;
       $('controller-ui-hint').textContent =
