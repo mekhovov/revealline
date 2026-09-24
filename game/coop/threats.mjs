@@ -412,9 +412,13 @@ export function advanceImpacts(plans, seconds) {
 export function useSupport(run, player, emit) {
   if (player.support.readyAt > run.time + EPS) return;
   player.support.readyAt = run.time + 8;
+  const role = player.supportRole ?? 'hybrid';
+  const canSlow = role === 'hybrid' || role === 'disruptor';
+  const canIntercept = role === 'hybrid' || role === 'interceptor';
   const slowedEnemies = [];
   for (const enemy of run.enemies)
     if (
+      canSlow &&
       enemy.active !== false &&
       Math.hypot(enemy.x - player.x, enemy.y - player.y) <= 6 + EPS &&
       enemy.slowUntil <= run.time + EPS
@@ -428,6 +432,7 @@ export function useSupport(run, player, emit) {
     }
   const interceptedImpacts = [];
   run.impacts = run.impacts.filter((impact) => {
+    if (!canIntercept) return true;
     if (Math.hypot(impact.x - player.x, impact.y - player.y) > 6 + EPS) return true;
     interceptedImpacts.push(impact.id);
     emit(run, 'impact.intercepted', {
@@ -443,7 +448,12 @@ export function useSupport(run, player, emit) {
   player.support.slows += slowedEnemies.length;
   run.team.interceptions += interceptedImpacts.length;
   run.supportEffects.push({ player: player.id, x: player.x, y: player.y, until: run.time + 0.3 });
-  emit(run, 'support.pulse', { player: player.id, slowedEnemies, interceptedImpacts });
+  emit(run, 'support.pulse', {
+    player: player.id,
+    role,
+    slowedEnemies,
+    interceptedImpacts,
+  });
 }
 
 export function strongholdIndex(run, point) {

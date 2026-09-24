@@ -1210,6 +1210,12 @@ export function bootCoop({
                 ? 'Reclaimed'
                 : 'Safe';
       const recharge = Math.max(0, (player.support?.readyAt || 0) - run.time);
+      const supportRole =
+        player.supportRole === 'interceptor'
+          ? 'Interceptor'
+          : player.supportRole === 'disruptor'
+            ? 'Disruptor'
+            : 'Support';
       $('coop-charge-' + player.id).textContent = finished
         ? 'Results ready'
         : player.status === 'downed'
@@ -1217,8 +1223,8 @@ export function bootCoop({
           : player.rescue
             ? 'Hold Support · rescuing'
             : recharge > 0
-              ? `Support · ${recharge.toFixed(1)}s`
-              : 'Support ready';
+              ? `${supportRole} · ${recharge.toFixed(1)}s`
+              : `${supportRole} ready`;
       $('coop-charge-' + player.id).dataset.compact = finished
         ? 'Results'
         : player.status === 'downed'
@@ -1226,8 +1232,8 @@ export function bootCoop({
           : player.rescue
             ? 'Hold rescue'
             : recharge > 0
-              ? `Support ${recharge.toFixed(1)}s`
-              : 'Support ready';
+              ? `${supportRole} ${recharge.toFixed(1)}s`
+              : `${supportRole} ready`;
       $('coop-support-' + player.id).textContent = finished
         ? `${names[player.id]}: ${run.status === 'won' ? 'Objective complete. Choose another arena or Retry.' : 'Attempt ended. Choose Retry or Change setup.'}`
         : player.rescue
@@ -1235,8 +1241,12 @@ export function bootCoop({
           : player.status === 'downed'
             ? `Crawl along ${groundName} toward your partner`
             : recharge > 0
-              ? `Support recharging · ${recharge.toFixed(1)}s`
-              : 'Support ready · tap to cover, hold nearby to rescue';
+              ? `${supportRole} recharging · ${recharge.toFixed(1)}s`
+              : player.supportRole === 'interceptor'
+                ? 'Interceptor ready · tap near a travelling impact; hold nearby to rescue'
+                : player.supportRole === 'disruptor'
+                  ? 'Disruptor ready · tap near moving enemies; hold nearby to rescue'
+                  : 'Support ready · tap to cover, hold nearby to rescue';
     }
   }
   // This focus lifetime is local to one picture action. Native disabling may
@@ -4742,6 +4752,7 @@ try {
       'team-pressure-originals-1',
       'team-spatial-originals-1',
       'team-trail-impact-originals-1',
+      'team-specialist-originals-1',
     ].includes(journeyRequest)
   ) {
     const { createTeamGreyboxEntry } = await import('../content-design/team-entry.mjs');
@@ -4750,6 +4761,7 @@ try {
       pressure: journeyRequest === 'team-pressure-originals-1',
       spatial: journeyRequest === 'team-spatial-originals-1',
       impact: journeyRequest === 'team-trail-impact-originals-1',
+      specialist: journeyRequest === 'team-specialist-originals-1',
       reviewCopy: new URL(location.href).searchParams.has('journey'),
     });
   } else if (

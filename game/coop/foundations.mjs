@@ -15,8 +15,15 @@ export const COOP_BONUS_PACK_VERSION = 'revealline-coop-pack.v5';
 export const COOP_IMPACT_LEVEL_VERSION = 'revealline-coop-level.v6';
 export const COOP_IMPACT_RULESET = 'revealline-coop.v8';
 export const COOP_IMPACT_PACK_VERSION = 'revealline-coop-pack.v6';
+export const COOP_SPECIALIST_LEVEL_VERSION = 'revealline-coop-level.v7';
+export const COOP_SPECIALIST_RULESET = 'revealline-coop.v9';
+export const COOP_SPECIALIST_PACK_VERSION = 'revealline-coop-pack.v7';
 
 const editions = Object.freeze({
+  [COOP_SPECIALIST_LEVEL_VERSION]: Object.freeze({
+    version: COOP_SPECIALIST_PACK_VERSION,
+    ruleset: COOP_SPECIALIST_RULESET,
+  }),
   [COOP_IMPACT_LEVEL_VERSION]: Object.freeze({
     version: COOP_IMPACT_PACK_VERSION,
     ruleset: COOP_IMPACT_RULESET,
@@ -51,14 +58,20 @@ export const hasTeamTerrain = (level) =>
     COOP_ROVER_LEVEL_VERSION,
     COOP_BONUS_LEVEL_VERSION,
     COOP_IMPACT_LEVEL_VERSION,
+    COOP_SPECIALIST_LEVEL_VERSION,
   ].includes(level.version);
 
 export const hasTeamRoamers = (level) =>
-  [COOP_ROVER_LEVEL_VERSION, COOP_BONUS_LEVEL_VERSION, COOP_IMPACT_LEVEL_VERSION].includes(
-    level.version,
-  );
+  [
+    COOP_ROVER_LEVEL_VERSION,
+    COOP_BONUS_LEVEL_VERSION,
+    COOP_IMPACT_LEVEL_VERSION,
+    COOP_SPECIALIST_LEVEL_VERSION,
+  ].includes(level.version);
 
-export const hasTeamLineImpacts = (level) => level.version === COOP_IMPACT_LEVEL_VERSION;
+export const hasTeamLineImpacts = (level) =>
+  [COOP_IMPACT_LEVEL_VERSION, COOP_SPECIALIST_LEVEL_VERSION].includes(level.version);
+export const hasTeamSpecialists = (level) => level.version === COOP_SPECIALIST_LEVEL_VERSION;
 
 export const isJourneyTeamLevel = (level) => Object.hasOwn(editions, level.version);
 export const isJourneyTeamRuleset = (ruleset) =>

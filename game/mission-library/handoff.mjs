@@ -36,6 +36,7 @@ const TEAM_SOURCE_ROUTES = Object.freeze([
   'team-pressure-originals-1',
   'team-spatial-originals-1',
   'team-trail-impact-originals-1',
+  'team-specialist-originals-1',
   'team-timed-originals',
   'team-window-spatial-1',
   'team-depot-spatial-1',
