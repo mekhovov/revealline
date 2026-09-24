@@ -17,9 +17,21 @@ export function createAuthoredJourneyRouteDefinition(
     createWholeVarietyCandidates,
     createWholeSortingCandidates,
     createWholeImpactCandidates,
+    createWholePressureCandidates,
   },
 ) {
   if (!isAuthoredJourneyRouteId(id)) return null;
+  if (id === 'whole-spatial-v7')
+    return freezeDesign({
+      id,
+      label: 'Whole Journey readable pursuit and interception review · balance pending',
+      sessionKey: 'revealline.suspended.journey-whole-spatial.v7',
+      profileKey: 'journey-whole-spatial-v7',
+      source: createWholePressureCandidates({ artwork: true }),
+      corePackIds: [...WHOLE_JOURNEY_CORE_PACK_IDS],
+      optionalCampaignIds: ['ornament-crossings', 'workshop-routing'],
+      preserveOriginalThemes: true,
+    });
   if (id === 'whole-spatial-v6')
     return freezeDesign({
       id,
