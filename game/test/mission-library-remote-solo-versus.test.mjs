@@ -53,7 +53,7 @@ test('remote Solo/Versus inventory preserves91 exact Journey and110 Classic iden
   assert.equal(library.forMode('solo').length, 201);
   assert.equal(library.forMode('versus').length, 201);
   assert.equal(library.forMode('team').length, 0);
-  const route = await loadAuthoredJourneyRoute('whole-spatial-v8');
+  const route = await loadAuthoredJourneyRoute('whole-spatial-v9');
   const versus = createCandidateVersusHost(route.source, {
     themes: journeyActorThemeCandidates(JSON.parse(files.get(paths[1])).themes, {
       includeOriginals: route.preserveOriginalThemes === true,

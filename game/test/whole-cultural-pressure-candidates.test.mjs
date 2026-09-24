@@ -96,7 +96,7 @@ test('each optional sequence teaches once, then practices without changing its r
     );
 });
 
-test('v7 remains historical while v8 owns isolated progress and the normal Solo/Versus entry', async () => {
+test('v7 remains historical while v8 keeps isolated progress after the normal entry advances', async () => {
   const old = createAuthoredJourneyRoute('whole-spatial-v7');
   const route = createAuthoredJourneyRoute('whole-spatial-v8');
   assert.deepEqual(await loadAuthoredJourneyRoute(route.id), route);
@@ -118,6 +118,6 @@ test('v7 remains historical while v8 owns isolated progress and the normal Solo/
     authoredJourneyModeHref(route.id, 'versus'),
     'couch/?journey=whole-spatial-v8&return=solo',
   );
-  assert.equal(DEFAULT_JOURNEY_ROUTES.solo, 'whole-spatial-v8');
-  assert.equal(DEFAULT_JOURNEY_ROUTES.versus, 'whole-spatial-v8');
+  assert.equal(DEFAULT_JOURNEY_ROUTES.solo, 'whole-spatial-v9');
+  assert.equal(DEFAULT_JOURNEY_ROUTES.versus, 'whole-spatial-v9');
 });
