@@ -53,7 +53,8 @@ Public routes return JSON metadata or exact immutable package bytes:
 - `GET /v1/catalog/:editionId/preview`
 - `POST /v1/catalog/:editionId/reports` accepts a bounded public report.
 
-Creator routes require `Authorization: Bearer <token>`:
+Creator routes require the production Better Auth session cookie. The bearer form is available only
+when the explicitly enabled development-token adapter is running:
 
 - `POST /v1/submissions` declares `slug`, `title`, optional `description`, semantic `version`, exact
   `packageSha256`, and `packageSize`.
@@ -134,3 +135,8 @@ tus locker for multiple API replicas, incomplete-upload cleanup, stronger proces
 isolation for media validation, malware policy, metrics, backups, restore rehearsal, and an explicit
 infrastructure decision. The S3 adapter is tested at its byte boundary but is not wired into the
 executable deployment. No AWS, mail, domain, or production restore claim is made here.
+
+Email/password registration currently confirms an address syntactically and creates the session;
+mail delivery, email verification, password reset, account recovery, abuse throttles, and account
+administration need production policy and infrastructure before public launch. The browser account
+form intentionally does not promise those capabilities.

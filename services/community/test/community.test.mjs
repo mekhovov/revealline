@@ -31,6 +31,9 @@ import {
   readCreatorPreview,
 } from '../src/validator.mjs';
 import { createCommunityTusServer } from '../src/tus-server.mjs';
+import { createCommunityAccountClient } from '../../../game/community/account.mjs';
+import { createCommunityClient } from '../../../game/community/client.mjs';
+import { createTusBrowserUpload } from '../../../game/community/tus-upload.mjs';
 import {
   createCommunityBetterAuth,
   mountCommunityBetterAuth,
@@ -201,7 +204,7 @@ test('session authentication accepts Better Auth-shaped sessions without trustin
   await assert.rejects(authenticator.authenticate({ headers: {} }), /signed-in account/u);
 });
 
-test('Better Auth creates an account session that owns a community submission', async (t) => {
+test('browser account session owns, publishes, observes and unlists its community submission', async (t) => {
   const auth = createCommunityBetterAuth({
     database: memoryAdapter({ user: [], session: [], account: [], verification: [] }),
     baseURL: 'http://community.test',
@@ -209,38 +212,80 @@ test('Better Auth creates an account session that owns a community submission', 
   });
   const authenticator = createSessionAuthenticator({ getSession: auth.api.getSession });
   const repository = new MemoryCommunityRepository();
+  const blobStore = new MemoryBlobStore();
   const app = buildCommunityApp({
     repository,
-    blobStore: new MemoryBlobStore(),
+    blobStore,
     authenticator,
     maxPackageBytes: 1024,
   });
   mountCommunityBetterAuth(app, auth);
   await app.ready();
   t.after(() => app.close());
-  const signedUp = await app.inject({
-    method: 'POST',
-    url: '/api/auth/sign-up/email',
-    payload: {
-      name: 'Creator One',
-      email: 'creator@example.test',
-      password: 'correct horse battery staple',
-    },
+  let cookie = '';
+  const browserFetch = async (input, init = {}) => {
+    const url = new URL(input);
+    const headers = new Headers(init.headers);
+    if (cookie) headers.set('cookie', cookie);
+    if (init.method === 'POST') headers.set('origin', url.origin);
+    const injected = await app.inject({
+      method: init.method ?? 'GET',
+      url: `${url.pathname}${url.search}`,
+      headers: Object.fromEntries(headers),
+      payload:
+        init.body instanceof Blob
+          ? Buffer.from(await init.body.arrayBuffer())
+          : (init.body ?? undefined),
+    });
+    const responseHeaders = new Headers();
+    for (const [name, value] of Object.entries(injected.headers))
+      if (value !== undefined)
+        responseHeaders.set(name, Array.isArray(value) ? value.join(', ') : String(value));
+    const setCookie = injected.headers['set-cookie'];
+    if (setCookie)
+      cookie = (Array.isArray(setCookie) ? setCookie : [setCookie])
+        .map((value) => value.split(';')[0])
+        .join('; ');
+    return new Response(injected.rawPayload, {
+      status: injected.statusCode,
+      headers: responseHeaders,
+    });
+  };
+  const account = createCommunityAccountClient({
+    baseURL: 'http://community.test/',
+    origin: 'http://community.test',
+    fetchImpl: browserFetch,
   });
-  assert.equal(signedUp.statusCode, 200, signedUp.body);
-  const cookie = signedUp.headers['set-cookie'];
-  assert.ok(cookie);
-  const created = await app.inject({
-    method: 'POST',
-    url: '/v1/submissions',
-    headers: { cookie },
-    payload: submissionBody(),
+  const signedUp = await account.signUp({
+    name: 'Creator One',
+    email: 'creator@example.test',
+    password: 'correct horse battery staple',
   });
-  assert.equal(created.statusCode, 201, created.body);
-  const session = await auth.api.getSession({ headers: new Headers({ cookie }) });
-  assert.ok(session?.user?.id);
-  const owned = await repository.getOwnerSubmission(created.json().submission.id, session.user.id);
-  assert.equal(owned.ownerSubject, session.user.id);
+  assert.ok(signedUp?.user.id);
+  assert.match(cookie, /better-auth/u);
+  const client = createCommunityClient({
+    baseURL: 'http://community.test/',
+    fetchImpl: browserFetch,
+    authHeaders: account.headers,
+  });
+  const created = await client.createSubmission(submissionBody());
+  await client.uploadSubmission(created, new Blob([bytes], { type: PACKAGE_MEDIA_TYPE }));
+  const queued = await client.submit(created.submission.id);
+  assert.equal(queued.submission.status, 'queued');
+  await processNextValidationJob({
+    repository,
+    blobStore,
+    workerId: 'session-worker',
+    validatePackage: async () => ({ accepted: true, report: { session: 'passed' } }),
+  });
+  const owned = await repository.getOwnerSubmission(created.submission.id, signedUp.user.id);
+  assert.equal(owned.ownerSubject, signedUp.user.id);
+  const published = (await client.submission(created.submission.id)).submission;
+  assert.equal(published.status, 'published');
+  assert.equal((await client.unlistEdition(published.editionId)).status, 'unlisted');
+  await account.signOut();
+  assert.equal(await account.session(), null);
+  await assert.rejects(client.submission(created.submission.id), /signed-in account/u);
 });
 
 test('mismatched package bytes are rejected without advancing submission state', async (t) => {
@@ -768,6 +813,38 @@ test('mounted tus server preserves interrupted offsets, owner isolation, and com
   const admitted = await repository.getOwnerSubmission(submission.id, 'creator/alice');
   assert.equal(admitted.status, 'uploaded');
   assert.equal(admitted.actualSize, bytes.length);
+
+  const browserCreated = await create(
+    app,
+    submissionBody({ slug: 'browser-tus-pack', version: '1.0.1' }),
+  );
+  assert.equal(browserCreated.statusCode, 201, browserCreated.body);
+  const browserDescriptor = browserCreated.json();
+  const retained = new Map();
+  const browserUpload = createTusBrowserUpload({
+    baseURL: origin,
+    fetchImpl: fetch,
+    chunkBytes: 5,
+    storage: {
+      getItem: (key) => retained.get(key) ?? null,
+      setItem: (key, value) => retained.set(key, value),
+      removeItem: (key) => retained.delete(key),
+    },
+  });
+  const progress = [];
+  await browserUpload({
+    descriptor: browserDescriptor.upload,
+    blob: new Blob([bytes], { type: PACKAGE_MEDIA_TYPE }),
+    authHeaders: async () => bearer(),
+    onProgress: ({ uploaded }) => progress.push(uploaded),
+  });
+  assert.equal(progress.at(-1), bytes.length);
+  assert.equal(retained.size, 0);
+  const browserAdmitted = await repository.getOwnerSubmission(
+    browserDescriptor.submission.id,
+    'creator/alice',
+  );
+  assert.equal(browserAdmitted.status, 'uploaded');
 });
 
 test('S3 boundary requires verified bytes and delegates exact immutable metadata', async () => {

@@ -17,7 +17,8 @@ const slug = (value) =>
 export function createCommunityPublisher({ client, decodeImage } = {}) {
   required(client, 'Community publication client is required.');
   let selection = null,
-    publication = null;
+    publication = null,
+    pending = null;
   return Object.freeze({
     async select(blob) {
       const pack = await importCreatorBundle(blob, { decodeImage });
@@ -30,6 +31,8 @@ export function createCommunityPublisher({ client, decodeImage } = {}) {
         suggestedTitle: pack.review.name,
         suggestedSlug: slug(pack.review.name) || `campaign-${pack.editionId.slice(0, 10)}`,
       });
+      pending = null;
+      publication = null;
       return selection;
     },
     current: () => selection,
@@ -41,16 +44,23 @@ export function createCommunityPublisher({ client, decodeImage } = {}) {
       onProgress,
     } = {}) {
       required(selection, 'Choose an approved .rlpack file first.');
-      const created = await client.createSubmission({
+      const metadata = {
         slug: requestedSlug || selection.suggestedSlug,
         title: title || selection.suggestedTitle,
         description,
         version,
         packageSha256: selection.packageSha256,
         packageSize: selection.packageSize,
-      });
+      };
+      const signature = JSON.stringify(metadata);
+      const created =
+        pending?.signature === signature
+          ? pending.created
+          : await client.createSubmission(metadata);
+      pending = Object.freeze({ signature, created });
       await client.uploadSubmission(created, selection.blob, { onProgress });
       const queued = await client.submit(created.submission.id);
+      pending = null;
       const submitted = validateCommunitySubmission({
         ...queued.submission,
         id: queued.submission?.id ?? created.submission.id,

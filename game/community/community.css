@@ -52,11 +52,18 @@ h1 {
   margin: 1.2rem 0;
 }
 .controls,
-.actions {
+.actions,
+.account-fields {
   display: flex;
   flex-wrap: wrap;
   align-items: end;
   gap: 0.8rem;
+}
+.account-fields {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+  align-items: end;
+  margin-bottom: 0.8rem;
 }
 .catalog {
   display: grid;

@@ -111,7 +111,11 @@ export function createCommunityClient({
 } = {}) {
   required(typeof fetchImpl === 'function', 'Community network adapter is required.');
   const base = new URL(baseURL ?? '/community-api/', globalThis.location?.href ?? 'https://local/');
-  const request = (path, init = {}) => fetchImpl(new URL(path.replace(/^\//u, ''), base), init);
+  const request = (path, init = {}) =>
+    fetchImpl(new URL(path.replace(/^\//u, ''), base), {
+      credentials: 'same-origin',
+      ...init,
+    });
   return Object.freeze({
     async catalog({ cursor = null, limit = 20, query = '' } = {}) {
       required(
@@ -123,7 +127,7 @@ export function createCommunityClient({
       url.searchParams.set('limit', String(limit));
       if (cursor) url.searchParams.set('cursor', cursor);
       if (query.trim()) url.searchParams.set('q', query.trim());
-      const body = await json(await fetchImpl(url));
+      const body = await json(await fetchImpl(url, { credentials: 'same-origin' }));
       required(Array.isArray(body.editions), 'Catalog response is invalid.');
       return Object.freeze({
         editions: Object.freeze(body.editions.map(validateCommunityEdition)),
@@ -209,6 +213,7 @@ export function createCommunityClient({
       required(descriptor.method === 'PUT', 'Unsupported upload instructions.');
       const response = await fetchImpl(new URL(descriptor.href, base), {
         method: 'PUT',
+        credentials: 'same-origin',
         headers: {
           'content-type': descriptor.mediaType || 'application/octet-stream',
           ...(await headers(authHeaders, true)),
