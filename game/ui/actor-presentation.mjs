@@ -787,7 +787,10 @@ export function drawActiveTrail(
     accent = clamp(3 / s, 3, 12),
     outline = accent + clamp(2 / s, 2, 8),
     core = clamp(1 / s, 1, 4),
-    head = clamp(5 / s, 8, 24);
+    head = clamp(5 / s, 8, 24),
+    headPlate = head + clamp(4 / s, 4, 10),
+    packet = clamp(3 / s, 3, 10),
+    packetPlate = packet + clamp(2 / s, 2, 6);
   ctx.save();
   ctx.lineCap = 'square';
   ctx.lineJoin = 'miter';
@@ -811,6 +814,17 @@ export function drawActiveTrail(
   for (const p of points) ctx.fillRect(Math.floor(p.x) * CELL, Math.floor(p.y) * CELL, CELL, CELL);
   if (segments.length) {
     ctx.globalAlpha = 1;
+    // This plate and nose mark the authoritative cutting head. They are
+    // cosmetic only: the player coordinate and contact footprint stay owned by
+    // the simulation, even when compact screens need a larger visible marker.
+    rect(
+      ctx,
+      PRESENTATION_PLATE,
+      player.x * CELL - headPlate / 2,
+      player.y * CELL - headPlate / 2,
+      headPlate,
+      headPlate,
+    );
     rect(ctx, palette.accent, player.x * CELL - head / 2, player.y * CELL - head / 2, head, head);
     rect(
       ctx,
@@ -820,6 +834,30 @@ export function drawActiveTrail(
       head / 2,
       head / 2,
     );
+    const direction = [...segments]
+      .reverse()
+      .map((segment) => ({ x: segment.x2 - segment.x1, y: segment.y2 - segment.y1 }))
+      .find((vector) => Math.hypot(vector.x, vector.y) > 0.00001);
+    if (direction) {
+      const length = Math.hypot(direction.x, direction.y),
+        x = direction.x / length,
+        y = direction.y / length,
+        nose = clamp(4 / s, 4, 10),
+        cross = clamp(2 / s, 2, 6),
+        centerX = player.x * CELL + x * (head / 2 + nose / 2),
+        centerY = player.y * CELL + y * (head / 2 + nose / 2),
+        width = Math.abs(x) > Math.abs(y) ? nose : cross,
+        height = Math.abs(y) > Math.abs(x) ? nose : cross;
+      rect(
+        ctx,
+        PRESENTATION_PLATE,
+        centerX - width / 2 - 1,
+        centerY - height / 2 - 1,
+        width + 2,
+        height + 2,
+      );
+      rect(ctx, PRESENTATION_INK, centerX - width / 2, centerY - height / 2, width, height);
+    }
     if (!reduced) {
       let remaining = 0.3 + ((time * 3) % 1) * 0.65;
       for (let i = segments.length - 1; i >= 0; i--) {
@@ -829,17 +867,77 @@ export function drawActiveTrail(
           const a = remaining / Math.max(length, 0.00001);
           rect(
             ctx,
+            PRESENTATION_PLATE,
+            (s.x2 + (s.x1 - s.x2) * a) * CELL - packetPlate / 2,
+            (s.y2 + (s.y1 - s.y2) * a) * CELL - packetPlate / 2,
+            packetPlate,
+            packetPlate,
+          );
+          rect(
+            ctx,
             PRESENTATION_INK,
-            (s.x2 + (s.x1 - s.x2) * a) * CELL - 1,
-            (s.y2 + (s.y1 - s.y2) * a) * CELL - 1,
-            3,
-            3,
+            (s.x2 + (s.x1 - s.x2) * a) * CELL - packet / 2,
+            (s.y2 + (s.y1 - s.y2) * a) * CELL - packet / 2,
+            packet,
+            packet,
           );
           break;
         }
         remaining -= length;
       }
     }
+  }
+  ctx.restore();
+}
+
+/** Paint one authoritative travelling-front coordinate. Shape and colour both
+ * distinguish the front moving toward the exposed craft from the harmlessly
+ * expiring departure-bound front. Reduced effects removes only the pulse; the
+ * essential marker stays present. */
+export function drawTrailImpactFront(
+  ctx,
+  front,
+  { time = 0, reduced = false, screenScale = 1, cellSize = CELL } = {},
+) {
+  if (!Number.isFinite(front?.x) || !Number.isFinite(front?.y)) return;
+  const s = clamp(finite(screenScale, 1), 0.1, 4),
+    unit = clamp(1 / s, 1, 4),
+    playerBound = front.direction !== -1,
+    color = playerBound ? '#ff815c' : '#ffc56d';
+  ctx.save();
+  ctx.translate(front.x * cellSize, front.y * cellSize);
+  ctx.scale(unit, unit);
+  if (!reduced) {
+    const pulse = 7 + Math.floor((((finite(time) * 8) % 2) + 2) % 2);
+    ctx.globalAlpha = 0.5;
+    ctx.strokeStyle = PRESENTATION_PLATE;
+    ctx.lineWidth = 2;
+    ctx.strokeRect(-pulse, -pulse, pulse * 2, pulse * 2);
+    ctx.globalAlpha = 1;
+  }
+  if (playerBound) {
+    ctx.fillStyle = PRESENTATION_PLATE;
+    ctx.beginPath();
+    ctx.moveTo(0, -7);
+    ctx.lineTo(7, 0);
+    ctx.lineTo(0, 7);
+    ctx.lineTo(-7, 0);
+    ctx.closePath();
+    ctx.fill();
+    ctx.fillStyle = color;
+    ctx.beginPath();
+    ctx.moveTo(0, -5);
+    ctx.lineTo(5, 0);
+    ctx.lineTo(0, 5);
+    ctx.lineTo(-5, 0);
+    ctx.closePath();
+    ctx.fill();
+    rect(ctx, PRESENTATION_INK, -2, -2, 4, 4);
+  } else {
+    rect(ctx, PRESENTATION_PLATE, -6, -6, 12, 12);
+    rect(ctx, color, -4, -4, 8, 8);
+    rect(ctx, PRESENTATION_INK, -4, -1, 8, 2);
+    rect(ctx, PRESENTATION_INK, -1, -4, 2, 8);
   }
   ctx.restore();
 }
