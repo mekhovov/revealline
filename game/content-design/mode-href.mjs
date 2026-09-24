@@ -13,6 +13,7 @@ export const AUTHORED_JOURNEY_ROUTE_IDS = Object.freeze([
   'whole-spatial-v5',
   'whole-spatial-v6',
   'whole-spatial-v7',
+  'whole-spatial-v8',
 ]);
 export const isAuthoredJourneyRouteId = (id) => AUTHORED_JOURNEY_ROUTE_IDS.includes(id);
 export const authoredJourneyUsesActorMaterials = (id) =>
@@ -25,6 +26,7 @@ export const authoredJourneyUsesActorMaterials = (id) =>
     'whole-spatial-v5',
     'whole-spatial-v6',
     'whole-spatial-v7',
+    'whole-spatial-v8',
   ].includes(id);
 
 /** Fixed same-game destinations. Team has different authored missions and is

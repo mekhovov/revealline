@@ -18,9 +18,21 @@ export function createAuthoredJourneyRouteDefinition(
     createWholeSortingCandidates,
     createWholeImpactCandidates,
     createWholePressureCandidates,
+    createWholeCulturalPressureCandidates,
   },
 ) {
   if (!isAuthoredJourneyRouteId(id)) return null;
+  if (id === 'whole-spatial-v8')
+    return freezeDesign({
+      id,
+      label: 'Whole Journey Ukrainian and FPV readable pressure review · balance pending',
+      sessionKey: 'revealline.suspended.journey-whole-spatial.v8',
+      profileKey: 'journey-whole-spatial-v8',
+      source: createWholeCulturalPressureCandidates({ artwork: true }),
+      corePackIds: [...WHOLE_JOURNEY_CORE_PACK_IDS],
+      optionalCampaignIds: ['ornament-crossings', 'workshop-routing'],
+      preserveOriginalThemes: true,
+    });
   if (id === 'whole-spatial-v7')
     return freezeDesign({
       id,
