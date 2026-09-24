@@ -266,6 +266,59 @@ test('unified Solo Download becomes Play inline and launches the selected late i
   assert.deepEqual(p.errors, []);
 });
 
+test('unified Solo failed Download retries inline and Back restores Missions without replacing the prepared flight', async (t) => {
+  let available = false,
+    requests = 0;
+  const p = await soloPage(t, {
+    titleScreen: true,
+    fetchResponse: async (path) => {
+      if (path === 'content/packs/night-shift.json') {
+        requests++;
+        if (!available) throw new TypeError('Download temporarily unavailable');
+      }
+    },
+  });
+  const initial = p.rendered.run,
+    checkpoint = authoritativeCheckpoint(initial);
+  await open(p);
+  p.$('journey-collection').value = 'Classic';
+  p.$('journey-collection').emit('change');
+  p.$('journey-search').value = 'night';
+  p.$('journey-search').emit('input');
+  const row = model.missions.filter((mission) => mission.ownerId.includes('night-shift')).at(-1),
+    selected = () =>
+      [...p.$('journey-cards').children].find((card) => card.dataset.missionId === row.id);
+  const card = selected();
+  assert.match(card.textContent, /Download/);
+  card.focus();
+  card.click();
+  await settle(() => /Could not prepare/.test(p.$('journey-chooser-status').textContent));
+  assert.equal(requests, 1);
+  assert.match(card.querySelector('.journey-card-action').textContent, /Unavailable.*Retry$/);
+  assert.equal(card.disabled, false, 'The same visible card permits an explicit retry.');
+  assert.equal(p.$('journey-chooser').open, true);
+  assert.equal(p.doc.activeElement, card);
+  assert.equal(p.rendered.run, initial);
+  assert.deepEqual(authoritativeCheckpoint(initial), checkpoint);
+  available = true;
+  card.click();
+  await settle(() => card.textContent.endsWith('Play'));
+  assert.equal(requests, 2);
+  assert.equal(p.doc.activeElement, card);
+  assert.notEqual(p.doc.body.dataset.flightState, 'running');
+  p.$('journey-back').click();
+  assert.equal(p.$('journey-chooser').open, false);
+  assert.equal(p.$('shell-home').open, true);
+  assert.equal(p.doc.activeElement.id, 'shell-play');
+  assert.equal(p.rendered.run, initial);
+  assert.deepEqual(authoritativeCheckpoint(initial), checkpoint);
+  await open(p);
+  assert.equal(p.$('journey-search').value, 'night');
+  assert.equal(p.doc.activeElement, selected());
+  assert.match(selected().textContent, /Play/);
+  assert.deepEqual(p.errors, []);
+});
+
 test('empty-profile Classic selection starts the exact late Base mission, without awarding a clear', async (t) => {
   const p = await soloPage(t, { titleScreen: true });
   await open(p);

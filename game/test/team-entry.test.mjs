@@ -75,6 +75,9 @@ test('the early classic entry starts before controls exist and reports untouched
   assert.equal(intent.claimed, false);
   assert.equal(intent.changed, false);
   assert.equal(intent.value, undefined);
+  assert.equal(intent.difficulty.changed, false);
+  assert.equal(intent.difficulty.value, undefined);
+  assert.ok(Object.isFrozen(intent.difficulty));
   assert.ok(Object.isFrozen(intent));
   assert.deepEqual(p.listenerCounts(), retired);
   assert.equal(p.take(), null);
@@ -371,4 +374,66 @@ test('terminal departure retires claim-only intent and all five document listene
   ])
     arena.emit(type, details);
   assert.equal(p.take(), null);
+});
+
+for (const type of ['input', 'change'])
+  test(`early difficulty ${type} owns only the reported preset and stays immutable after take`, (t) => {
+    const p = page(t),
+      difficulty = p.field('coop-difficulty', 'expert');
+    difficulty.addEventListener(type, (event) => event.stopPropagation());
+    assert.equal(difficulty.emit(type).defaultPrevented, false);
+    difficulty.value = 'standard';
+    const intent = p.take();
+    assert.equal(intent.claimed, false);
+    assert.equal(intent.changed, false);
+    assert.equal(intent.value, undefined);
+    assert.equal(intent.difficulty.changed, true);
+    assert.equal(intent.difficulty.value, 'expert');
+    assert.ok(Object.isFrozen(intent.difficulty));
+    difficulty.emit('change');
+    assert.equal(intent.difficulty.value, 'expert');
+    assert.deepEqual(p.listenerCounts(), retired);
+    assert.equal(p.take(), null);
+  });
+
+test('an explicit Standard edit survives persisted restoration independently of Arena ownership', (t) => {
+  const p = page(t),
+    difficulty = p.field('coop-difficulty', 'expert'),
+    arena = p.field('coop-level', 'relay-yard');
+  difficulty.emit('input');
+  arena.emit('change');
+  p.host.emit('pagehide', { persisted: true });
+  p.host.emit('pageshow', { persisted: true });
+  difficulty.value = 'standard';
+  difficulty.emit('change');
+  const intent = p.take();
+  assert.equal(intent.value, 'relay-yard');
+  assert.equal(intent.difficulty.changed, true);
+  assert.equal(intent.difficulty.value, 'standard');
+});
+
+test('opening or cancelling Difficulty never manufactures a saved edit', (t) => {
+  const p = page(t),
+    difficulty = p.field('coop-difficulty', 'standard');
+  difficulty.emit('focusin');
+  difficulty.emit('pointerdown', { button: 0, isPrimary: true });
+  difficulty.emit('click', { button: 0 });
+  difficulty.emit('keydown', { key: 'ArrowDown' });
+  difficulty.emit('keydown', { key: 'Escape' });
+  const intent = p.take();
+  assert.equal(intent.claimed, false);
+  assert.equal(intent.difficulty.changed, false);
+  assert.equal(intent.difficulty.value, undefined);
+});
+
+test('terminal departure also retires pending difficulty intent', (t) => {
+  const p = page(t),
+    difficulty = p.field('coop-difficulty', 'expert');
+  difficulty.emit('input');
+  p.host.emit('pagehide', { persisted: false });
+  p.host.emit('pageshow', { persisted: false });
+  difficulty.value = 'gentle';
+  difficulty.emit('change');
+  assert.equal(p.take(), null);
+  assert.deepEqual(p.listenerCounts(), retired);
 });

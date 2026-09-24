@@ -1094,6 +1094,7 @@ test('Journey music library keeps keyboard Back, paused boards and chooser owner
   enter('race-options-back');
   assert.equal(p.doc.activeElement.id, 'race-options');
   enter('race-journey-find');
+  await settleUntil(() => p.$('journey-chooser')?.open);
   assert.equal(p.$('journey-chooser').open, true);
   p.key('Escape', true, p.doc.activeElement);
   p.key('Escape', false, p.doc.activeElement);

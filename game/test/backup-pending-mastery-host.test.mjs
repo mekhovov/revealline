@@ -3,12 +3,21 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { soloPage, SoloElement, settle, memoryStorage } from './helpers/solo-dom.mjs';
 import { memoryIndexedDB } from './helpers/soundtrack-fixtures.mjs';
-import { emptyPackLibrary, installPack, preparePack, exportPackLibrary } from '../packs.mjs';
-import { authoritativeCheckpoint } from '../replay.mjs';
-import { emptyLibrary, exportLibrary, importLibrary } from '../library.mjs';
+import {
+  emptyPackLibrary,
+  installPack,
+  preparePack,
+  exportPackLibrary,
+  resolvePackCampaign,
+} from '../packs.mjs';
+import { createRun, stepRun, FIXED_DT } from '../core/index.mjs';
+import { createRecorder, recordInput, authoritativeCheckpoint } from '../replay.mjs';
+import { suspendSession, saveSession, SESSION_FORMAT } from '../sessions.mjs';
+import { campaignKey, emptyLibrary, exportLibrary, importLibrary } from '../library.mjs';
 
 const PACKS = 'revealline.packs.dev.v1',
-  PROFILE = 'revealline.library.dev.v1';
+  PROFILE = 'revealline.library.dev.v1',
+  SESSION = 'revealline.suspended.dev.v1';
 const read = async (path) => JSON.parse(await readFile(new URL(path, import.meta.url)));
 const source = await read('../content/packs/homeward-skies.json');
 // Presentation is outside this regression. Gameplay, roster and the real shipped
@@ -20,6 +29,38 @@ const route = (await read('../replays/homeward-routes.json')).routes.find(
   (value) => value.id === 'homeward-01/immediate/specialty/fiber',
 );
 const packBytes = exportPackLibrary(installPack(emptyPackLibrary(), pack));
+function historicalFlight() {
+  // Fresh flights now use gameplay tuning, which intentionally has no historical
+  // mastery. Restore a real untuned live-cut prefix through the public reader;
+  // it rebuilds the observer rather than injecting an eligible award or run.
+  const { campaign } = resolvePackCampaign(pack, pack.campaigns[0].id);
+  const level = campaign.levels.find((value) => value.id === route.levelId);
+  const options = {
+    seed: route.seed,
+    classId: route.classId,
+    turnPolicy: route.turnPolicy,
+    classRecipes: campaign.classRecipes,
+  };
+  const run = createRun(level, options),
+    recorder = createRecorder(level, options);
+  for (let tick = 0; tick < 180; tick++) {
+    stepRun(run, route.segments[0].input, FIXED_DT);
+    recordInput(recorder, route.segments[0].input);
+  }
+  const saved = suspendSession({
+    run,
+    recorder,
+    campaignKey: campaignKey(campaign),
+    themeId: 'fpv',
+    bodyId: 'fpv-body',
+    runId: 'backup-historical-homeward-flight',
+    savedAt: '2026-09-12T12:00:00.000Z',
+  });
+  assert.equal(saved.format, SESSION_FORMAT);
+  assert.equal(run.status, 'running');
+  assert.ok(run.trail.length > 0, 'The historical session contains a genuine unfinished cut.');
+  return saved;
+}
 async function seed(memory) {
   const db = await new Promise((resolve, reject) => {
     const r = memory.indexedDB.open('revealline-assets-v1', 1);
@@ -35,19 +76,6 @@ async function seed(memory) {
   });
   db.close();
 }
-function action(element) {
-  const handler = element.onclick;
-  let pending;
-  element.onclick = function (...args) {
-    return (pending = handler.apply(this, args));
-  };
-  try {
-    element.click();
-  } finally {
-    element.onclick = handler;
-  }
-  return Promise.resolve(pending);
-}
 async function winningFlight(t) {
   const show = SoloElement.prototype.showModal;
   t.mock.method(SoloElement.prototype, 'showModal', function () {
@@ -57,13 +85,16 @@ async function winningFlight(t) {
   });
   const memory = memoryIndexedDB();
   await seed(memory);
+  const saved = historicalFlight(),
+    storage = memoryStorage({ [PROFILE]: exportLibrary(emptyLibrary()) });
+  assert.equal(saveSession(storage, SESSION, saved).ok, true);
   let refuse = false,
     uncertainLock = false,
     importGate = null;
   const h = await soloPage(t, {
     titleScreen: true,
     assetIndexedDB: memory.indexedDB,
-    storage: memoryStorage({ [PROFILE]: exportLibrary(emptyLibrary()) }),
+    storage,
     lockManager: {
       request(name, options, callback) {
         const invoke = () => {
@@ -86,27 +117,16 @@ async function winningFlight(t) {
   });
   Object.assign(h.win, h.doc.defaultView);
   h.doc.defaultView = h.win;
-  h.$('shell-workshop').click();
-  h.$('shell-library').click();
-  h.doc.querySelector('[data-library-panel="packs"]').click();
-  const row = [...h.$('installed-packs').children].find(
-    (value) => value.dataset.packId === pack.id,
-  );
-  await action(row.children.find((value) => value.dataset.packAction === 'play'));
-  await settle(() => {
-    h.frame(0);
-    return h.rendered.run.levelId === route.levelId && !h.$('library-dialog').open;
-  });
-  h.change('class-select', 'fiber');
-  await settle(() => {
-    h.frame(0);
-    return h.rendered.run.classId === 'fiber' && !h.$('start-button').disabled;
-  });
-  h.$('start-button').click();
+  assert.equal(h.$('shell-home').open, true);
+  assert.equal(h.$('shell-continue').hidden, false);
+  h.$('shell-continue').click();
   await settle(() => {
     h.frame(0);
     return h.doc.body.dataset.flightState === 'running';
   });
+  assert.equal(h.$('shell-home').open, false);
+  assert.deepEqual(authoritativeCheckpoint(h.rendered.run), saved.replay.checkpoint);
+  assert.equal(h.rendered.run.classId, route.classId);
   const nativeTimer = globalThis.setTimeout,
     held = [];
   let hold = true;
@@ -142,12 +162,16 @@ async function winningFlight(t) {
     if (h.rendered.run.events.some((event) => event.type === 'capture.stopped'))
       freshGesture = true;
   };
+  let prefix = saved.replay.ticks;
   for (const segment of route.segments) {
+    const consumed = Math.min(prefix, segment.ticks);
+    prefix -= consumed;
+    if (consumed === segment.ticks) continue;
     if (direction) h.key(direction, false);
     direction =
       'Arrow' + segment.input.direction[0].toUpperCase() + segment.input.direction.slice(1);
     freshGesture = true;
-    for (let n = 0; n < segment.ticks && h.rendered.run.status !== 'won'; n++) tick();
+    for (let n = consumed; n < segment.ticks && h.rendered.run.status !== 'won'; n++) tick();
   }
   // The host deliberately suppresses boost on its first resumed tick.
   for (let n = 0; n < 120 && h.rendered.run.status !== 'won'; n++) tick();
