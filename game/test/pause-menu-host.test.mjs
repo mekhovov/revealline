@@ -3,6 +3,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { settle, soloPage } from './helpers/solo-dom.mjs';
+import { openMissionLibrary } from './helpers/library-selection.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
 
 function frames(page, count) {
@@ -78,5 +79,41 @@ test('Restart is limited to Pause and does not leak into briefings or result men
     false,
     'the hidden overlay retains its menu state',
   );
+  assert.deepEqual(page.errors, []);
+});
+
+test('Pause owns Missions, Help and Settings and each child restores its exact opener', async (t) => {
+  const page = await soloPage(t);
+  page.$('start-button').click();
+  await settle(() => page.doc.body.dataset.flightState === 'running');
+  page.key('Escape');
+  page.key('Escape', false);
+  page.frame(0);
+
+  const run = page.rendered.run,
+    checkpoint = authoritativeCheckpoint(run);
+  for (const [opener, dialog] of [
+    ['overlay-help', 'help-dialog'],
+    ['overlay-settings', 'settings-dialog'],
+  ]) {
+    page.$(opener).focus();
+    page.$(opener).click();
+    assert.equal(page.$(dialog).open, true);
+    page.$(dialog).querySelector('[data-close]').click();
+    await Promise.resolve();
+    assert.equal(page.$(dialog).open, false);
+    assert.equal(page.doc.activeElement, page.$(opener));
+    assert.equal(page.rendered.paused, true);
+    assert.equal(page.rendered.run, run);
+    assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
+  }
+
+  await openMissionLibrary(page, 'overlay-missions');
+  page.$('journey-back').click();
+  await Promise.resolve();
+  assert.equal(page.doc.activeElement, page.$('overlay-missions'));
+  assert.equal(page.rendered.paused, true);
+  assert.equal(page.rendered.run, run);
+  assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
   assert.deepEqual(page.errors, []);
 });

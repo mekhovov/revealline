@@ -6714,6 +6714,10 @@ try {
     show('retry-button', kind === 'won' || kind === 'lost');
     show('start-button', kind === 'ready' || kind === 'pause');
     show('overlay-restart', kind === 'pause');
+    show('overlay-missions', kind === 'pause');
+    show('overlay-help', kind === 'pause');
+    show('overlay-settings', kind === 'pause');
+    show('pause-mission-info', kind === 'pause');
     show('overlay-field-details', kind === 'pause');
     show('overlay-brief', !courseSession && (kind === 'ready' || kind === 'pause'));
     show('result-medals', kind === 'won');
