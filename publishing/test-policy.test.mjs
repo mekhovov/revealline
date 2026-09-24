@@ -9,11 +9,18 @@ import { readTestPolicy, parseTestPolicy, policyDecision } from './test-policy.m
 
 const cli = fileURLToPath(new URL('./test-policy.mjs', import.meta.url));
 
-test('the explicit temporary policy skips only automated suites and never reports tests passed', async () => {
+test('the checked-in policy requires suites while a synthetic waiver never reports tests passed', async () => {
   const policy = await readTestPolicy();
-  assert.ok(['waived', 'required'].includes(policy.mode));
-  assert.equal(policy.authorization, 'explicit-user-request-20260922');
+  assert.equal(policy.mode, 'required');
+  assert.equal(policy.authorization, 'explicit-user-request-20260924-soundtrack-master-plan');
   assert.equal(policy.scope, 'automated-test-suites');
+  assert.deepEqual(policyDecision(policy), {
+    policyMode: 'required',
+    mode: 'required',
+    runTests: 'true',
+    qualification: 'tests-required',
+    forced: false,
+  });
   assert.deepEqual(policyDecision({ ...policy, mode: 'waived' }), {
     policyMode: 'waived',
     mode: 'waived',
@@ -70,7 +77,11 @@ test('CLI records visible skipped policy and force-tests changes only the effect
       [cli, '--policy', filename, '--force-tests', forced],
       {
         encoding: 'utf8',
-        env: { ...process.env, GITHUB_OUTPUT: output, GITHUB_STEP_SUMMARY: summary },
+        env: {
+          ...process.env,
+          GITHUB_OUTPUT: output,
+          GITHUB_STEP_SUMMARY: summary,
+        },
       },
     );
     assert.equal(result.status, 0, result.stderr);
