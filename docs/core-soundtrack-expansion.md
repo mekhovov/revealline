@@ -25,7 +25,7 @@ reviewer names, listening approval or device results.
 | Existing catalogue | 70 hosted recordings / 15 albums; earlier 24-track collection is included | Selective listening and trusted metadata curation |
 | Player framework | Simplified chooser, mixed playlists, uploads, creator tools, optional offline albums, recovery and rights enforcement | Targeted released-source verification and demonstrated fixes |
 | New archive previews | Previous 16 previews retained; six synth and four David KBD metal auditions published and technically/publicly verified through archive PRs #7/#8; twelve new auditions in this round including the Nakarada pair | Full listening, taste approval and game admission remain; zero new game admissions |
-| Retro previews | User rejected all seven listed below | Better replacement auditions |
+| Retro previews | Seven earlier rejections retained; six DOS-88/escp previews also rejected for the requested direction | First comparison rejected; Electric Dreams now closest; continue source comparisons using the supplied night-drive references |
 | Metal previews | Existing six preserved as backups | Substantially heavier replacements |
 | Nakarada Shchedryk | User explicitly approved musical direction; exact MP3 technically checked | Game admission, opening theme and gameplay/device/cultural evidence |
 | UA-FPV | Four private import packs preserve 80 filenames / 77 unique recordings | Recording-specific public permission and game admission |
@@ -73,7 +73,8 @@ reviewer names, listening approval or device results.
   [Run 35953731494](https://github.com/mekhovov/revealline-soundtracks-01/actions/runs/35953731494)
   passed all 49 intake tests and acquired all ten recordings: six DOS-88/escp synth
   and four David KBD metal. Full decoding, exact source/native bindings and
-  permitted-derivative loudness/true-peak checks passed. All remain listening-pending.
+  permitted-derivative loudness/true-peak checks passed. At acquisition all ten were listening-pending; the six synth
+  recordings are now rejected as recorded under M5.
 - Archive [PR #8](https://github.com/mekhovov/revealline-soundtracks-01/pull/8)
   merged at 3bf8e97c9f6d6303582a09fbe67fd93cc4d1fce5 with two separately sized
   audition collections. [Production evidence](https://github.com/mekhovov/revealline-soundtracks-01/tree/3bf8e97c9f6d6303582a09fbe67fd93cc4d1fce5/intake/archive/itch-core-audition-20260924)
@@ -91,7 +92,9 @@ reviewer names, listening approval or device results.
   Race to Mars and The Desolation of a Civilization → Agony Space-deep with
   readyState 4 and no media error; Next changed title/source and Pause set paused
   with the Resume label in both collections. [Independent publication review](https://github.com/mekhovov/revealline-soundtracks-01/pull/8#issuecomment-5807551144)
-  is retained. Full listening, physical-device checks and game admission remain.
+  is retained. Full listening and physical-device checks remain for candidates
+  still being considered; only musically accepted recordings may proceed to game
+  admission. M5 records the subsequent rejection of the six synth auditions.
   This round now provides **twelve public auditions: six synth, four David KBD
   metal and two Nakarada metal**, with **zero new game admissions**.
 - PR [#321](https://github.com/mekhovov/revealline/pull/321) remains draft at
@@ -131,6 +134,9 @@ reviewer names, listening approval or device results.
   **669,736 KiB (about 654 MiB)**, again below the 1 GiB production floor.
   Continue hosted/RAM-only work: no local media intake, builds, full checkouts or
   guard bypasses. Preserve user files, originals and evidence.
+  A subsequent M5 source-comparison checkpoint reported **116 MiB free**.
+  This docs-only update uses hosted Git operations; no local audio/build/checkout
+  is created and the 1 GiB production guard remains in force.
 
 ## Remaining delivery ledger
 
@@ -145,7 +151,7 @@ version is allocated without the release owner's confirmation.
 | M2 | Source infrastructure reviewed; admission remains | M1; remaining recording acceptance; full qualification | Qualify inactive bundled-source adapter, then admit/bundle exact opening theme and prove menu, offline and preference behavior | 1–2 days after gates | [Archive PR #3](https://github.com/mekhovov/revealline-soundtracks-01/pull/3); [public preview](https://mekhovov.github.io/revealline-soundtracks-01/batches/ukrainian-shchedryk-20260924/); [source-only draft PR #331](https://github.com/mekhovov/revealline/pull/331), 4fd7eb0b, 11 focused tests | Unreleased |
 | M3 | Source implemented and reviewed; qualification remains | Accepted main; complete source/browser/controller/device checks | Pass full required gates, verify actual controls and publish through the release pipeline | About 1 day remaining, excluding CI and device-access waits | [Draft PR #333](https://github.com/mekhovov/revealline/pull/333), da750277; reviewed runtime 99ae9a93 | Unreleased |
 | M4 | Active research; parallel | Exact published rights and musical/cultural review | Target six additional distinct Ukrainian compositions; publish cleared subsets | 1–2 days per research round; rights/review date unknown | Candidate/hold register below | Unreleased |
-| M5 | Six auditions public and technically verified; listening/admission remain | User taste and complete listening checks | Review the six replacement previews, then integrate only accepted tracks | Listening/review date unknown; 1–2 days integration after approval | [Archive PR #7](https://github.com/mekhovov/revealline-soundtracks-01/pull/7), [#8](https://github.com/mekhovov/revealline-soundtracks-01/pull/8); run 35953731494 | Unreleased in game |
+| M5 | Electric Dreams is the latest closest reference; further search requested; earlier feedback preserved | User musical fit; exact-file rights and full listening before admission | Compare Twilight Echo and Neon; Neon Noir stays a musical reference with a public-archive rights hold; prepare 6–10 full auditions only after accepted examples | Several hours per comparison round; 1–2 days batch preparation, then 1–2 days integration/verification after approval; CI/review waits excluded | M5.a decision history and source register below; historical archive PRs #7/#8 preserved | Unreleased in game |
 | M6 | Six replacement auditions public and technically verified | User taste and complete listening checks | Compare all six heavier candidates, admit accepted tracks and preserve six older backups | Listening/review date unknown; 1–2 days integration after approval | [Archive PR #6](https://github.com/mekhovov/revealline-soundtracks-01/pull/6), [#7](https://github.com/mekhovov/revealline-soundtracks-01/pull/7), [#8](https://github.com/mekhovov/revealline-soundtracks-01/pull/8) | Unreleased in game |
 | M7 | Blocked public rights; scope retained | Recording-specific public redistribution and applicable artwork evidence | Include all 77 recordings / 80 filenames; publish cleared entries; maintain private pack route | About 1 day integration after clearance; clearance date unknown | UA-FPV manifests/private packs/guide | Public collection unreleased |
 | M8 | Remaining verification | Released source and device access | Audit existing playback/storage/creator contracts; release demonstrated fixes separately | 1–2 days initial audit; fixes separately estimated | Existing regression suites | Per-feature evidence required |
@@ -263,23 +269,233 @@ messages or social-account actions are implied by this work. Preserve these hold
 
 No additional Ukrainian recording in this update is admitted or musically approved.
 
-### 90s Synth
+### 90s Synth — balanced synthwave / outrun and electro
 
-Prioritize Xposed / Xposed Reloaded fullness: moving bass, layered synths and arps,
-punchy full drums, early hooks and developed arrangements. Keep `90s Synth` /
-`synth90s` stable, with accurate substyle metadata. Do not equate nostalgia with
-chiptune/fakebit or energy with BPM. Xposed credit leads do not establish Reloaded
-credits; commercial OSTs remain references, never assumed reusable files.
+**24 September user decision:** replace the previous synth audition direction
+with a balanced mix of outrun/synthwave and rhythmic electro. Prioritize full
+arrangements, moving/funky bass, punchy electronic drums, layered synth leads,
+memorable early hooks and coordinated rhythms. The later user references below
+add a clearer night-drive/dreamwave and cyberpunk focus. Chiptune is an occasional
+accent; higher BPM alone does not establish fit. Licensed recordings come first; original
+production remains paused at 0/36 approved.
 
-Six acquired auditions (musically unapproved): DOS-88 **Race to Mars, City Stomper,
-Automata v2, Crash Landing**; escp **Synthasia, Twilight City**.
-[The synth collection](https://mekhovov.github.io/revealline-soundtracks-01/batches/synth-audition-20260924/)
-was prepared by archive PR #7 and published through PR #8; direct-public acceptance
-is recorded in the current execution snapshot. Exact creator/game/upload bindings,
-native and delivery hashes, complete decoding and permitted-derivative loudness
-checks passed. Native filenames/sources are retained; temporary URL authorization
-is not stored. Full-track and repeated listening, 90s/Xposed suitability, transitions
-and warning audibility remain. No recording from this batch is admitted to the game.
+Keep **90s Synth / synth90s** stable. The eventual accepted album is displayed as
+**Synthwave & Electro**, with accurate substyle, menu/gameplay, energy and theme
+metadata through existing catalogue/album interfaces. No schema migration or
+saved-preference reset is planned. M2's Shchedryk opening-theme decision remains.
+
+The official [XPOSED Reloaded listing](https://store.playstation.com/en-gb/product/EP2402-CUSA28098_00-XPOSEDRELOADED01)
+does not identify its soundtrack genre or composer. The user's description is
+the musical brief; commercial references are not reusable assets.
+
+#### Historical synth decisions — preserved, not admitted
+
+DOS-88 **Race to Mars, City Stomper, Automata v2, Crash Landing** and escp
+**Synthasia, Twilight City** are now rejected for the requested musical direction
+and excluded from game admission, defaults and the accepted standard shuffle.
+Their [immutable preview collection](https://mekhovov.github.io/revealline-soundtracks-01/batches/synth-audition-20260924/)
+and archive PR #7/#8 native sources, hashes, licence evidence, decoding and loudness
+checks remain preserved. This feedback supersedes their earlier taste-pending
+state; technical publication evidence is still valid. The seven earlier retro
+rejections and six older metal backups below remain unchanged.
+
+#### M5.a — source-page comparisons and user decisions
+
+**M5.a.1 — rejected on 24 September:** the user listened to the first comparison
+and replied, "none of these are exactly what we need, keep searching".
+**Just Release Me, DJ Synth Wave / Funk and Neon Night are not accepted for this
+direction and must not enter the game/defaults on the strength of their licences.**
+Preserve the research and source-player evidence below as historical evidence.
+No source audio was acquired, normalized or admitted.
+
+| Recording | Listen on the source page | Published licence / evidence boundary |
+| --- | --- | --- |
+| Punch Deck — [Just Release Me](https://punchdeck.bandcamp.com/track/just-release-me) | Bandcamp Play/pause; approximately 3:55. Browser preview advanced to 00:04 and was paused. | Exact page links CC BY 4.0; name-your-price original. The browser stream is a preview, not an acquired master. |
+| Alex McCulloch — [DJ Synth Wave / Funk](https://opengameart.org/content/dj-synth-wave-funk) | Click the large Play triangle under Preview; it changed to Stop in the browser and was stopped. Source page does not expose duration. | CC0 1.0; uploader Pro Sensory requests Alex McCulloch credit. Preview dj_synth_wave.mp3 and attachment dj_synth_wave_0.mp3 have different paths; exact equality/completeness still needs verification. |
+| Fatal Exit — [Neon Night](https://fatalexit.itch.io/neon-night-free-cca-synthwave-music-for-games) | Under Listen Here, activate the embed and press Play, or follow its SoundCloud link. Play/Pause control changes checked. | CC BY 4.0 on itch; SoundCloud reports about 1:20 full duration. This is a complete short cue/style reference, not a 3–5-minute gameplay recording. |
+
+The source checks above verify access/UI behavior, not full listening or musical
+quality. All comparison players were stopped after checks. No login, payment or
+download is needed for these source-page previews. No external player will be
+embedded into the game transport.
+
+The first comparison did not establish an accepted direction. An accepted short
+cue may guide style but cannot be padded, looped or counted as a distinct
+full-length gameplay composition.
+
+**M5.a.2 — second comparison feedback received.** The user said
+**Above All the Chaos "might be the closest"**, but the three videos below are
+better and asked to keep searching. This is a tentative preference, not recording
+approval. Time Trials 87 and Motion Blur remain unapproved; the user did not
+explicitly reject them. Preserve the second-round source evidence.
+
+The search focused on modulated
+sub-bass, layered arpeggios, prominent electronic drums and developed arrangements.
+A [creator description of Secret Arcade](https://forums.envato.com/t/best-music-for-science-fiction-tv-shows-film-movies/124940?page=10)
+gives those concrete production references. Its association with XPOSED is only
+an unofficial Switch-release lead, not verified PS4 soundtrack credits.
+[Boomopera's Synthpop Supercar](https://boomopera.bandcamp.com/album/synthpop-supercar)
+is an all-rights-reserved reference; it is not a free game asset.
+
+| Second comparison | Concrete source basis | Duration / acquisition boundary |
+| --- | --- | --- |
+| botnit — [Time Trials 87](https://botnit.bandcamp.com/track/time-trials-87) | Full retro-electronic recording on the artist's early-singles collection; exact current artist licence is CC BY 4.0. Musical fit remains unverified. | 3:58 (238.290 seconds in artist metadata). The individual track costs $1; the artist's [Wild Days album](https://botnit.bandcamp.com/album/wild-days-the-early-singles) offers Free Download. Use that legitimate free route if selected; acquisition has not been tested. |
+| Nihilore — [Motion Blur](https://nihilore.bandcamp.com/track/motion-blur) | Creator classifies it as upbeat nu-disco and includes it in Synthwave/Frantic collections. Exact current artist licence is CC BY 4.0. | 3:57 (236.769 seconds). The [creator track page](https://www.nihilore.com/latest-tracks/2018/3/24/motion-blur) offers the MP3; no file acquired. |
+| TeknoAXE — [Above All the Chaos](https://www.youtube.com/watch?v=4svHIJ3WQ3g) | Creator labels it Rock/Synthwave and describes an intended metal piece developed around sequenced synths. Exact [creator track page](https://teknoaxe.com/Link_Code_3.php?q=1388) links CC BY 4.0. | Official listening video 3:45; creator MP3 offered, not acquired or decoded. |
+
+These source descriptions and durations narrow the next comparison; they do not
+prove better musical fit or full-track listening. No new large batch is acquired
+until an example is accepted. The second comparison question is answered; the
+next search follows the stronger user references below.
+
+Reserves, also unapproved: TeknoAXE's [Edge of Tomorrow](https://teknoaxe.com/Link_Code_3.php?q=1242),
+4:48, with a creator-described lower-pitched compressed/gated snare; Nihilore's
+[Terminant](https://nihilore.bandcamp.com/track/terminant), 6:31, creator-classified
+future/dark synth and aggressive. Both current exact-source licence links are
+CC BY 4.0; neither has recording acceptance.
+
+Three Chain Links is a separate research hold: the artist's
+[itch album](https://jhmakesgames.itch.io/happiest-days) offers CC BY/game use,
+while the [current Bandcamp album](https://threechainlinks.bandcamp.com/album/the-happiest-days-of-our-lives)
+links CC BY-SA 4.0. Bind any selected source/file to its actual licence and resolve
+the route difference before admission. Do not silently call every version CC BY.
+Alex-Productions' current [Hawkins Lab terms](https://soundcloud.com/alexproductionsmusic/80s-synthwave-by-alex-productions-no-copyright-music-background-music-for-video-hawkins-lab)
+require a paid game licence despite free-video wording; it is not a cleared free
+public-MP3 candidate.
+
+**M5.a.3 — stronger user references, 24 September.** The user said the following
+three videos are better references and asked to keep searching:
+
+| User reference | Identified source | What is established |
+| --- | --- | --- |
+| [City Glow](https://youtu.be/IKPxMQaezpw) | NightframeFM; 23:04; Synthwave Night Drive / Dreamwave / Chillwave | Creator describes warm analogue textures, dreamy melodies, nostalgic pads, smooth grooves and polished transitions. No published tracklist or reuse grant found. |
+| [1994 Hacked successfully](https://youtu.be/tyXeh8-U780) | VHS FM Memory; 60:40; Synthwave / Retrowave / Outrun / Cyberpunk / Chillwave | Fourteen chapter entries contain twelve distinct titles; two repeat. Creator expressly reserves rights and describes AI-assisted production under its own commercial licence, which does not grant us reuse rights. |
+| [1983 Heavenly Glitch](https://youtu.be/1OdQcWnzkpQ) | Synth Odyssey FM; 104:10; Synthwave / Chillwave / Cyberpunk / Retrowave | Ten named chapters correspond to a roughly 34-minute artist album. Later sequence is unverified; long playback time is not evidence of additional compositions. No reuse grant found. |
+
+These exact video/channel descriptions were inspected as public metadata; no
+audio was acquired and no full listening is claimed. Keep these as style
+references unless recording-specific permissions are established. The creator's
+use of AI does not restart M11 or approve our rejected original candidates.
+
+Working interpretation, grounded in the user's preference and creator
+descriptions: layered night-drive/dreamwave melodies and pads, a steady moving
+bass/drum groove, memorable synth leads and darker sequenced cyberpunk options.
+Retain rhythmic energy and arrangement development; do not reduce the brief to
+ambient music, BPM, genre tags or chiptune. This interpretation still needs
+musical comparison, not another large speculative batch.
+
+**M5.a.4 — third comparison, feedback received below.** Preserve these source-page
+research leads; none is an accepted game recording or a cleared acquired master.
+
+| Recording | Source basis for comparison | Licence / acquisition boundary |
+| --- | --- | --- |
+| Scott Buckley — [Electric Dreams](https://www.scottbuckley.com.au/library/electric-dreams/) | Creator describes smooth cruising synthwave with warm pads, arpeggios, leads and an electric-piano breakdown at 2:47. | Exact track page links CC BY 4.0 and offers a full-mix MP3. Preserve [creator licensing conditions](https://www.scottbuckley.com.au/library/licensing/) and Content ID guidance; final delivery/Recording-mode review and exact-file checks remain pending. |
+| Nihilore — [Glimmer](https://nihilore.bandcamp.com/track/glimmer) | 4:05 (245.368 seconds); creator identifies chillwave, newretrowave and futuresynth. Full source streaming is enabled. | Exact current track links CC BY 4.0; creator's [terms](https://www.nihilore.com/license) allow credited redistribution/adaptation. Preserve authored title. No file acquired. |
+| AIRGLOW — [Memory Bank](https://freemusicarchive.org/music/Airglow/Memory_Bank/AIRGLOW_-_Memory_Bank_-_01_Memory_Bank/) | 4:58; original FMA edition, a new artist comparison for the warmer retro-electronic direction. Actual arrangement and fit remain unreviewed. | Exact original FMA page links CC BY 4.0. This is not the [2018 Remixed & Remastered release](https://airglow-stratford.bandcamp.com/album/airglow-memory-bank-remixed-remastered), which currently reserves all rights and has a different duration. Never substitute masters or transfer permission between editions. |
+
+Next reserves if the direction fits: Nihilore's
+[The Bright Lights of Summer](https://nihilore.bandcamp.com/track/the-bright-lights-of-summer)
+(5:20, retrowave/trap-wave, exact CC BY 4.0);
+AIRGLOW's [New Touch, original FMA edition](https://freemusicarchive.org/music/Airglow/Memory_Bank/AIRGLOW_-_Memory_Bank_-_07_New_Touch/)
+(4:50, exact CC BY 4.0; FMA marks it non-instrumental, so vocals remain a listening
+check); and Scott Buckley's [Neon](https://www.scottbuckley.com.au/library/neon/)
+(creator-described moody arpeggios, pads and a lead solo, exact CC BY 4.0).
+HOME's [Before The Night](https://midwestcollective.bandcamp.com/album/before-the-night)
+remains reference-only: the current official release reserves all rights despite
+offering a free download. EVA's Realizations remains held pending primary licence
+evidence. No source audio was acquired, normalized, uploaded or admitted in this
+research round. Content ID, gameplay-video permission, musical acceptance and
+the existing release checks remain recording-specific.
+
+**M5.a.5 — Electric Dreams is the closest reference; keep searching.** The user
+answered the third comparison: "Electric Dreams — Scott Buckley is the closest,
+keep searcing". Use it as the leading musical reference, not final recording
+acceptance. Glimmer and Memory Bank remain unapproved, not explicitly rejected.
+Above All the Chaos retains its earlier tentative preference; the three supplied
+videos remain stronger user references.
+
+The next focused source comparisons follow this feedback:
+
+| Recording | Concrete comparison basis | Current boundary |
+| --- | --- | --- |
+| Scott Buckley — [Twilight Echo](https://www.scottbuckley.com.au/library/twilight-echo/) | Approximately 4:47 (286.903 seconds on the creator's [SoundCloud full track](https://soundcloud.com/scottbuckley/twilight-echo-cc-by)); warm nostalgic synthwave with a synth solo in the final chorus. | Exact track page CC BY 4.0; full MP3 offered. The alternate no-lead mix is not another composition. Source acquisition, listening and game review remain pending. |
+| Scott Buckley — [Neon](https://www.scottbuckley.com.au/library/neon/) | Creator describes moody 1980s electronica with arpeggios, pads and a synth lead solo. | Exact track page CC BY 4.0; compare the full original mix. No acceptance or acquired master. |
+| Shane Ivers — [Neon Noir](https://www.silvermansound.com/free-music/neon-noir) | 5:12; creator describes warm analogue bass, strings, electronic drums and DX7 character. | Musical reference / delivery hold. The track page says CC BY 4.0, but the current [licensing page](https://www.silvermansound.com/licenses) also prohibits standalone audio redistribution. Resolve that conflict before public MP3 admission; do not silently treat it as a cleared archive asset. |
+
+Scott Buckley's [Using This Music terms](https://www.scottbuckley.com.au/library/using-this-music/)
+also require synchronisation with other media alongside restrictions on isolated
+resale and music-platform uploads. Keep the separate standalone MP3 archive route
+on hold until this wording is resolved against the exact CC BY grant. This does
+not erase the published credited game-use route: assess game delivery and archive
+redistribution separately, without substituting hidden download URLs for rights.
+
+Scott Buckley's [Content ID guidance](https://www.scottbuckley.com.au/library/copyright-claims-release/)
+describes a library claim system. If admitted, these recordings must be excluded
+from the existing Recording mode while classified as registered; a CC licence
+does not establish claim-free gameplay videos. This is compatible with normal
+in-game playback after the existing admission checks. No creator was contacted,
+no purchase made and no audio acquired in this comparison round.
+
+#### M5.b — replacement pool after direction feedback
+
+Status: **research leads only**, pending an accepted reference, acquisition,
+exact-file verification and complete listening. Prepare 6–10 full auditions
+following the accepted comparison. The earlier pool below is retained as research
+history; its three rejected entries are excluded. Do not promote the remaining
+unheard entries merely because they shared genre tags with a rejected comparison.
+
+| Recording | Published licence / acquisition checkpoint |
+| --- | --- |
+| Punch Deck — [Just Release Me](https://punchdeck.bandcamp.com/track/just-release-me) | **Rejected for musical fit**; retained as research history. CC BY 4.0; name your price |
+| Alex McCulloch — [DJ Synth Wave / Funk](https://opengameart.org/content/dj-synth-wave-funk) | **Rejected for musical fit**; retained as research history. CC0; creator-uploaded file; preview/attachment identity unresolved |
+| Fatal Exit — [Neon Night](https://fatalexit.itch.io/neon-night-free-cca-synthwave-music-for-games) | **Rejected for musical fit**; retained as research history. CC BY 4.0; free/name your price; short-cue reference, outside the full-length gameplay count |
+| Punch Deck — [Fluorescent Color](https://punchdeck.bandcamp.com/track/fluorescent-color) | Current Bandcamp CC BY 4.0; official SoundCloud download advertised, acquisition/account requirements untested |
+| Punch Deck — [VHS Heroes](https://punchdeck.bandcamp.com/track/vhs-heroes) | Current Bandcamp CC BY 4.0; official SoundCloud download advertised, acquisition/account requirements untested |
+| Punch Deck — [Chrome Funk](https://punchdeck.bandcamp.com/track/chrome-funk) | CC BY 4.0; name your price; actual style needs listening |
+| Punch Deck — [Neon Underworld](https://punchdeck.bandcamp.com/track/neon-underworld) | Current Bandcamp CC BY 4.0; darker electronic lead; official SoundCloud acquisition untested |
+| Alex McCulloch — [80's Synth Wave](https://opengameart.org/content/80s-synth-wave) | CC0; creator-uploaded file |
+
+Reserve pool: [Nihilore's synthwave/chillwave/outrun catalogue](https://www.nihilore.com/synthwave)
+under the creator's [CC BY 4.0 terms](https://www.nihilore.com/license). Preserve
+authored titles. The category includes quieter music, so tags are not an energy
+or suitability review.
+
+Some older Punch Deck announcements state CC BY 3.0 while the current exact
+Bandcamp links resolve to CC BY 4.0. Preserve evidence from the actual acquisition
+route and bind it to the recording/hash; do not mix versions silently. Bandcamp
+prices on Fluorescent Color, VHS Heroes and Neon Underworld are not free acquisition
+routes merely because their licences allow sharing. Creator whitelisting guidance
+does not establish claim-free or Recording-mode eligibility.
+
+Karl Casey / White Bat remains outside the public MP3 pool: the
+[official FAQ](https://whitebataudio.com/pages/faq) forbids soundtrack distribution
+separately from the game. In-game-only use needs a separate delivery review.
+
+#### M5.c — accepted subset admission and release
+
+Status: pending M5.a feedback, M5.b recording acceptance and shared game gates.
+Evaluate early hooks, bass/kick coordination, clear percussion, contrasting
+sections and sustained gameplay energy. Reject sparse bleeps, excessive
+introductions and repetitive arrangements that fail the requested feel. Give menu
+recordings a rhythmic but less dense mix; classify every recording individually.
+
+Preserve native sources, exact bytes and trusted rights. Fully decode each file;
+measure permitted MP3 derivatives against -16 LUFS integrated +/-1 LU and no more
+than -1 dBTP. Complete listening, repeat-session, transition, warning-audibility,
+mono/small-speaker and actual-game checks remain required.
+
+Each accepted subset follows archive PR -> verified public MP3 hashes -> separate
+game admission PR -> independent review and all six required source gates ->
+release-owner version coordination and actual merged-source qualification ->
+immutable release and reviewed Pages deployment -> direct playback and cold
+offline verification. Record physical-device evidence separately from simulation.
+Preserve endless mixed playback, uploads, offline contracts and explicit choices.
+
+Hands-on estimate: several hours for the source comparison; 1–2 working days for
+an accepted-direction audition batch; 1–2 working days for integration and
+verification. Listening feedback, rights, shared qualification failures, CI and
+release waits are excluded. Update this section with decisions, PRs, evidence and
+released versions after each milestone; M4/M6 and all other master items continue.
 
 ### Metal
 
