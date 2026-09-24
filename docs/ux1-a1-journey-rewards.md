@@ -79,9 +79,11 @@ full offline readiness, every mission playthrough or a public release acceptance
 2. Versioned source release, exact-source qualification, immutable freeze, Pages
    deployment and public win → Collection → mission-card verification, coordinated
    after the currently publishing feature. No release is performed by this draft.
-3. **UX1-A2:** actual Versus and Team completion admission and presentation records,
-   their Collection access and win/reload/Retry/Next qualification. The schema is
-   mode-aware, but this PR adds only Solo host admission.
+3. **UX1-A2:** actual Versus and Team completion admission and presentation records
+   are prepared in [the stacked A2 draft](ux1-a2-cross-mode-rewards.md). Its focused
+   host evidence and mode-local picture access do not qualify reload/Retry/Next,
+   physical devices, full PR gates or a public release. This A1 PR still adds only
+   Solo host admission.
 4. **UX1-B:** the complete campaign-grouped compact gallery, all content-source map
    previews and input/layout qualification. Continue UX2–UX6 in the accepted plan;
    do not begin bulk artwork or mission production while player flows are unreliable.

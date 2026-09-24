@@ -1,11 +1,18 @@
 import { createJourneyBackend, createJourneyProfileStore } from '../journey/profile.mjs';
+import { validateJourneyPicture } from '../journey/pictures.mjs';
 
 function availableBackend(profileKey) {
   // Resolve inside the store's bounded operation: a denied global getter is
   // session-only, not a boot error. A successful retry reuses one connection.
   let backend;
   const current = () => (backend ??= createJourneyBackend({ profileKey }));
-  return { profileKey, read: () => current().read(), commit: (events) => current().commit(events) };
+  return {
+    profileKey,
+    read: () => current().read(),
+    commit: (events) => current().commit(events),
+    readState: () => current().readState(),
+    commitState: (events) => current().commitState(events),
+  };
 }
 
 /** Shared, release-independent Team bookmarks/receipts. Only runs admitted by
@@ -40,8 +47,10 @@ export function createTeamJourneyProgress(
     },
   });
   return Object.freeze({
+    editionId: profileKey,
     load: () => store.load(),
     snapshot: () => store.snapshot(),
+    pictures: () => store.pictures(),
     status: () => store.status(),
     retry: () => store.flush(),
     export: () => store.export(),
@@ -57,7 +66,11 @@ export function createTeamJourneyProgress(
           : journey.catalog.missions.find((item) => journey.isCore(item.id));
       return journey.row(mission, difficulty);
     },
-    started(row, run, { skipped = null, gameplayId = null, adminOverride = false } = {}) {
+    started(
+      row,
+      run,
+      { skipped = null, gameplayId = null, adminOverride = false, picture = null } = {},
+    ) {
       if (
         disposed ||
         adminOverride ||
@@ -75,10 +88,32 @@ export function createTeamJourneyProgress(
         (skipped && (!journey.owns(skipped) || journey.destination(skipped).next !== row))
       )
         return false;
+      const runId = `${sessionId}/${++sequence}`,
+        exactGameplayId = gameplayId ?? row.simulationIdentity;
+      let exactPicture = null;
+      if (picture)
+        try {
+          exactPicture = validateJourneyPicture({
+            ...picture,
+            mode: 'team',
+            missionId: row.mission.id,
+            levelId: row.level.id,
+            levelRevision: String(row.level.revision),
+            runId,
+            gameplayId: exactGameplayId,
+            difficulty: row.difficulty,
+            name: row.mission.name,
+            campaignTitle: row.mission.campaignTitle,
+          });
+        } catch {
+          // A presentation mismatch cannot invalidate an otherwise legal Team
+          // attempt or invent a weaker picture receipt. The clear remains valid.
+        }
       attempts.set(run, {
         row,
-        runId: `${sessionId}/${++sequence}`,
-        gameplayId: gameplayId ?? row.simulationIdentity,
+        runId,
+        gameplayId: exactGameplayId,
+        picture: exactPicture,
         completed: false,
       });
       store.recordMany([
@@ -91,14 +126,23 @@ export function createTeamJourneyProgress(
       const attempt = attempts.get(run);
       if (disposed || !attempt || attempt.completed || run.status !== 'won') return false;
       attempt.completed = true;
-      store.record({
+      const event = {
         type: 'complete',
         mode: 'team',
         missionId: attempt.row.mission.id,
         runId: attempt.runId,
         gameplayId: attempt.gameplayId,
         difficulty: attempt.row.difficulty,
-      });
+        ...(attempt.picture ? { picture: attempt.picture } : {}),
+      };
+      try {
+        store.record(event);
+      } catch {
+        // Capacity or conflicting presentation history must not erase the legal
+        // gameplay clear. Do not claim or substitute a different original.
+        const { picture: _picture, ...receipt } = event;
+        store.record(receipt);
+      }
       return true;
     },
     skipped(from, to) {
