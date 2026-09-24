@@ -109,11 +109,11 @@ export function fieldKitEquipmentQuality(slotId, source, originalHash, successor
 // release readiness gate rather than silently inheriting this review.
 const REVIEWED_RECIPE_INPUTS = {
   screens: {
-    sha256: '1800d7c4754f88e2ec36b104ab9e502cd5ba55ed2e12653609bd52e246548845',
+    sha256: 'ceefa6797f3d66c628c5710008a20d68fd1e4afd4baba69b7655cdcdcb8d8996',
     evidence: [
-      'Scoped soundtrack screen source review: docs/verification/soundtrack-v3-framework-2026-09-21/ui-screen-review/review.json sha256:29b58017d3a3e1bf33347606695e522830cb170fb595c907310f9fd5c244fae0; screen recipe inputs sha256:1800d7c4754f88e2ec36b104ab9e502cd5ba55ed2e12653609bd52e246548845. The changed compiled CSS reserves 44px only for visible running-landscape music credits in both board placement and height-derived width. Existing effective 8px bottom reserve and narrow Standard/Large header precedence remain intact.',
-      'Independent source arithmetic covers 12 compact cases; 12 focused credit/navigation/board tests pass. Earlier evolving-source native Solo and Team 844x390 observations are attributed in the review, not certified as final-byte screenshots. Unchanged screen inputs retain their historical source reviews in the immutable ledger.',
-      'Bounded functional layout approval only. Native smaller landscape/safe-area/First Flight checks, full screen coverage, physical devices, forced colours, offline, art and release acceptance remain separate. No recording is approved. Source-stage fpv39/fpv40 revisions and all original payloads remain preserved before the scoped reviewed successor.',
+      'Scoped integrated screen continuation: docs/verification/integrated-fpv-presentation-2026-09-24/review.json sha256:5743669fa1b230c486bf92435e2922a8a775b86a3de10fd42f84c2e51a85ca51; four ordered screen inputs sha256:ceefa6797f3d66c628c5710008a20d68fd1e4afd4baba69b7655cdcdcb8d8996. Only field-kit-surfaces.css changes to map the two registered menu palettes onto existing supporting-page semantic tokens.',
+      'Focused surface and menu-host checks cover the shared tokens, persisted palette choice, keyboard/controller focus and paused Solo, Team and Versus state. Board geometry, input hit targets, runtime state, payloads and content ownership remain unchanged.',
+      'Bounded functional source continuation only. Complete navigation, forced-colour, screen-reader, every viewport, physical device, frozen/public and human acceptance remain separate. Historical reviews and payloads remain immutable.',
     ],
   },
   ui: {
@@ -133,19 +133,19 @@ const REVIEWED_RECIPE_INPUTS = {
     ],
   },
   motion: {
-    sha256: 'ef5ede43180597ba413e26f2042d9f99a06c2f70a224b0d8d5543d384688ea76',
+    sha256: 'c35fcf823a0923f27f1193afa247e2d0c93b6fc4161976a5d6a2b67a5bc143a9',
     evidence: [
-      'Scoped Journey motion/material source review: docs/verification/journey-delivery-effects-review.md; three ordered motion inputs sha256:ef5ede43180597ba413e26f2042d9f99a06c2f70a224b0d8d5543d384688ea76. Original Motion painter remains unchanged; explicit actor-material successor frames select a fixed 84-recipe body-only table. Old theme IDs and unknown roles fall back; explicit skins and uploaded images retain priority.',
-      'Independent six-suite cohort passes 54/54 on each Node20.19.5 and Node22.22.2. Checks cover seven connected bounded role masks across twelve materials, 498 unchanged Solo/Versus identities, 36 Team identities, exact contact/checkpoints, skin/upload override, pause/reduced behavior and fitted-edge envelopes. No source review finding changes authoritative clocks, positions, radii or role badges.',
-      'Functional source/material geometry approval only, not subjective art, all-state native/device, human balance, audio/offline or public approval. The unpublished Journey fpv55–58 lineage is preserved as an authenticated inert archive; canonical history starts from accepted main fpv56. See docs/verification/journey-main-reconciliation/README.md. All 127 original payloads remain unchanged. Complete integrated host and hosted qualification remain required; changed motion inputs reopen this group.',
+      'Scoped visible-actor motion continuation: docs/verification/integrated-fpv-presentation-2026-09-24/review.json sha256:5743669fa1b230c486bf92435e2922a8a775b86a3de10fd42f84c2e51a85ca51; three ordered motion inputs sha256:c35fcf823a0923f27f1193afa247e2d0c93b6fc4161976a5d6a2b67a5bc143a9. Only actor-presentation.mjs changes to fit prepared visible bounds and rotor sweep to the requested display size.',
+      'Focused actor and renderer checks cover rectangular and transparent frames, compact/desktop minima, rotor sweep, reduced motion, fallback and unchanged simulation footprints. Positions, collision radii, authoritative clocks and role identities are unchanged.',
+      'Functional source/geometry continuation only, not subjective art, every-state native/device, human balance, frozen/public or release approval. Historical reviews and original payloads remain immutable; changed motion inputs reopen this group.',
     ],
   },
   effects: {
-    sha256: '832e6fbcb3da51dff0ef5a07f60221e4dbba25256af1d32d1800ed1b21500f9f',
+    sha256: '475fea962731c07024adacf4e8df7692db23bff218d13768dff50971752a0ed5',
     evidence: [
-      'Scoped trail/effects functional continuation: docs/verification/trail-effects-continuation-2026-09-24/review.json sha256:f99de242bac7ac5b49c06047e156eb5a6decdf73b4d0ac3f47649ec010571917; eight ordered effects inputs sha256:832e6fbcb3da51dff0ef5a07f60221e4dbba25256af1d32d1800ed1b21500f9f. Seven inputs are byte-identical to the prior exact review; only render.mjs changes for the independently prepared actor appearance.',
-      'The renderer diff selects actor image, body, animation recipe and actor theme from a validated lease. It does not change active-trail, secured-contour, travelling-impact, event-effect, pressure, relay or directional painters, simulation clocks or authoritative state. Focused actor-presentation and renderer-readability checks retain trail core/head, reduced effects, capture layering and pressure phase behavior.',
-      'Functional source continuation only. All historical reviews and original payloads remain immutable. Complete art, final-byte visual/device, human pacing, audio/offline, frozen/public and release acceptance remain separate. Any effects input or review-byte change reopens this group.',
+      'Scoped visible-actor effects continuation: docs/verification/integrated-fpv-presentation-2026-09-24/review.json sha256:5743669fa1b230c486bf92435e2922a8a775b86a3de10fd42f84c2e51a85ca51; eight ordered effects inputs sha256:475fea962731c07024adacf4e8df7692db23bff218d13768dff50971752a0ed5. Only render.mjs changes to pass authenticated actor geometry into the cosmetic player paint-size calculation.',
+      'The active-trail, secured-contour, travelling-impact, capture, failure, victory, pickup, shield, respawn and pressure painters remain unchanged. Focused renderer checks preserve trail core/head, reduced effects, capture layering, collision footprints and authoritative state.',
+      'Functional source continuation only. Historical reviews and original payloads remain immutable. Complete art, final-byte visual/device, human pacing, frozen/public and release acceptance remain separate. Any effects input or review-byte change reopens this group.',
     ],
   },
 };
