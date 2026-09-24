@@ -55,9 +55,10 @@ their own next-unused version, PR, exact-source qualification, immutable release
 Pages deployment and public-play check. The earlier UX1 rewards/gallery work then
 resumes, followed by UX3–UX6. New bulk content stays outside this critical path.
 
-M3 implementation is isolated on `codex/couch-quickstart-parity` without a release
-version reservation. Versus keeps Start and Browse missions visible while actor,
-difficulty and advanced match setup live under Optional setup. Team keeps Arena,
+M3 is reconciled onto the v0.108 publication line as the isolated v0.111.0
+release candidate on `codex/couch-quickstart-parity`. Versus keeps Start and
+Browse missions visible while actor, difficulty and advanced match setup live
+under Optional setup. Team keeps Arena,
 Start and Browse Team arenas visible while teamwork, difficulty, actors and created
 pack import live under Optional setup. Initial Team picture preparation exposes an
 explicit secondary Cancel without taking first focus, and current FPV revision 73
