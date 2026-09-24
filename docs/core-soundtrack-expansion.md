@@ -37,6 +37,35 @@ reserve, so no local audio acquisition, rendering or release build is attempted.
 - Holizna's title **Ukraine** does not establish Ukrainian musical motifs. Do not fill this collection with generically tagged music.
 - UA-FPV possession and YouTube availability do not establish public redistribution permission. Reuse the existing private packs and guide; no creator has been contacted by this work.
 
+The Oleg Mazur Hypeddit download currently asks the visitor to connect SoundCloud
+and comment, like, repost and follow before downloading. No such social actions
+are authorized or performed by this work. A freely accessible creator download
+or an independently supplied authorized original is still needed. FMA's Mark
+Wilson X page returned HTTP 403 through the research reader; the recording has
+not been acquired.
+
+### Documented Ukrainian classical fallback — held
+
+These six Mykola Lysenko piano recordings have recording-specific CC BY-SA 3.0
+permission from the Lviv Conservatory / Wikimedia Ukraine collaboration. Yuriy
+Bulka made the recordings. They are not CC0/CC BY and must not be relabelled to
+pass the current admission compiler. Share-alike audiovisual adaptation terms
+need a separate delivery decision. No media has been downloaded or auditioned.
+
+| Recording                                                                                                                                                                               | Pianist               | Published duration |
+| --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------- | ------------------ |
+| [Couranta, Ukrainian Suite](https://commons.wikimedia.org/wiki/File:Lysenko-Suite-02-Couranta.ogg)                                                                                      | Lesia Lemekh          | 3:34               |
+| [Valse of Farewell](https://commons.wikimedia.org/wiki/File:Lysenko-Valse_of_farewell.ogg)                                                                                              | Zenovija-Anna Danchak | 3:55               |
+| [Barcarole](https://commons.wikimedia.org/wiki/File:Lysenko-Barcarole.ogg)                                                                                                              | Olha Bilas            | 3:09               |
+| [Dream, op. 12](https://commons.wikimedia.org/wiki/File:Lysenko-Dream_op._12.ogg)                                                                                                       | Iryna Posviatovs'ka   | 4:22               |
+| [Song of Love](https://commons.wikimedia.org/wiki/File:Lysenko-Song_of_love.ogg)                                                                                                        | Olena Havjuk-Sheremet | 3:12               |
+| [By a Cradle](<https://commons.wikimedia.org/wiki/File:Lysenko-Lullaby_(%C2%AB%D0%9F%D1%96%D1%81%D0%BD%D1%8F_%D0%BF%D1%80%D0%B8_%D0%BA%D0%BE%D0%BB%D0%B8%D1%81%D1%86%D1%96%C2%BB).ogg>) | Zenovija-Anna Danchak | 5:01               |
+
+Dream's source identifies its folk-song basis, «На солодкім меду». The collection
+is documented Ukrainian classical piano music, not an energetic folk-electronic
+album. Its composition/edition clearance and gameplay context remain separate
+from recording permission.
+
 ## Remaining release gates
 
 1. Complete technical preparation and independently check exact source/derivative evidence.
