@@ -1,0 +1,42 @@
+{
+  "format": "revealline-scoped-screen-recipe-review-successor.v1",
+  "status": "bounded functional screen-source review; exact merged-source qualification and public acceptance pending",
+  "candidateBase": "5c2abaa3c4e516f6625fe707eb3e21a9925566ef",
+  "scope": "Continue the seven non-title screen recipes after the accepted v0.105 compact Home layout changed only the Field Kit flow stylesheet. This record does not approve soundtrack recordings, subjective visual quality or a new release.",
+  "priorReview": {
+    "path": "docs/verification/integrated-fpv-presentation-2026-09-24/review.json",
+    "sha256": "5743669fa1b230c486bf92435e2922a8a775b86a3de10fd42f84c2e51a85ca51",
+    "fingerprintSHA256": "ceefa6797f3d66c628c5710008a20d68fd1e4afd4baba69b7655cdcdcb8d8996"
+  },
+  "fingerprint": {
+    "group": "screens",
+    "paths": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css",
+    "sha256": "acf6426f5cd47f21a85ec5ae9da9549ed58fbe330b097c979dc85b87afe2d68a",
+    "algorithm": "SHA256 of ordered raw source bytes concatenated, matching fieldKitRecipeSources"
+  },
+  "changedInput": {
+    "path": "game/ui/field-kit-flow.css",
+    "priorSHA256": "02c73cb46d9f76da039cade2e6691002b9298539e817bbf40d216c06f7a09708",
+    "currentSHA256": "afd79d33a7be7622d5f6f17f496af9e5ddeeff5fed7859db078ab3bf0b95862b",
+    "assessment": "Compacts the Home heading and actions, uses a two-column secondary-action row, preserves full-width primary actions, and adds collapsed Play options and More/Workshop spacing. It changes layout styling only; presentation asset payloads, soundtrack transport, gameplay state, collision and content ownership remain unchanged."
+  },
+  "qualification": {
+    "acceptedSource": "PR #381 merged as 5c2abaa3c4e516f6625fe707eb3e21a9925566ef after exact-head preflight and build. Its PR evidence records responsive browser review at 1280 by 720.",
+    "focusedAutomated": [
+      "The accepted source recorded 18 of 18 Field Kit flow tests passing and three focused Legacy tool-return checks passing.",
+      "The current soundtrack integration reruns presentation history and the full required hosted shards against the combined source; this record alone does not qualify that successor."
+    ],
+    "deferred": "PR #381 explicitly deferred its full long suite and physical-device checks; this continuation does not represent them as passing."
+  },
+  "preservation": [
+    "All original image, audio and font payload bytes remain unchanged.",
+    "Historical production revisions remain retained and selectable.",
+    "The compact Home source does not alter saved music choices, uploaded media, soundtrack rights or custom content."
+  ],
+  "excluded": [
+    "No subjective visual-quality, soundtrack-quality or musical-suitability claim.",
+    "No complete controller, touch, screen-reader, forced-colour, every-viewport or physical-device qualification.",
+    "No frozen-build, offline, public Pages or release acceptance for the combined soundtrack source."
+  ],
+  "decision": "Continue only the seven non-title screen recipes while the exact prior review, compact-Home input fingerprint and this review remain byte-identical. Any input or review-byte change reopens the group."
+}
