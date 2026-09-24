@@ -66,6 +66,7 @@ export async function createMetadataInstalledMissionLibrary({
       levelId: row.levelId,
       levelRevision: row.levelRevision,
       levelIndex: row.levelIndex,
+      rulesEdition: row.rulesEdition,
     });
   const exactBase = (row) => {
     const level = baseEntry?.campaign?.levels?.[row.levelIndex];
@@ -153,7 +154,9 @@ export async function createMetadataInstalledMissionLibrary({
       const pending = metadataCustomLibrarySources(inventory, {
         isCurrent: (value) => getInventory() === value,
         isOfficial: (pack) => {
-          const peers = rows.filter((row) => row.packId === pack.id);
+          const peers = rows.filter(
+            (row) => row.packId === pack.id && row.rulesEdition === 'original',
+          );
           return (
             peers.length > 0 &&
             peers.every((row) => matches(pack, row)) &&

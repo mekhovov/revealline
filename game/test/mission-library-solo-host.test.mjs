@@ -200,10 +200,10 @@ async function running(p, id) {
   }
 }
 
-test('Classic Solo mounts the same flat library with all91 Journey and110 retained Classic missions', async (t) => {
+test('Classic Solo mounts all91 Journey, 110 Original and 78 compatible Current Classic missions', async (t) => {
   const p = await soloPage(t, { titleScreen: true });
   await open(p);
-  assert.equal(p.$('journey-cards').children.length, 201);
+  assert.equal(p.$('journey-cards').children.length, 279);
   assert.equal(p.$('journey-collection').value, '');
   const cards = [...p.$('journey-cards').children];
   assert.match(cards[0].textContent, /Journey/);
@@ -211,7 +211,7 @@ test('Classic Solo mounts the same flat library with all91 Journey and110 retain
   assert.equal(
     cards.filter((card) => card.querySelector('.journey-card-tags').textContent.includes('Classic'))
       .length,
-    110,
+    188,
   );
   assert.match(cards.find((card) => card.dataset.missionId === lateBase.id).textContent, /Play/);
   assert.deepEqual(p.errors, []);

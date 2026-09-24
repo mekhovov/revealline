@@ -147,12 +147,12 @@ test('Versus All missions lists exact Journey and retained Classic rows without 
   await open(p);
   assert.equal(p.$('journey-mode').value, 'versus');
   assert.equal(p.$('journey-collection').value, '');
-  assert.equal(p.$('journey-cards').children.length, 201);
+  assert.equal(p.$('journey-cards').children.length, 279);
   assert.match(p.$('journey-cards').children[0].textContent, /Journey/);
   const classic = [...p.$('journey-cards').children].filter((card) =>
     card.querySelector('.journey-card-tags').textContent.includes('Classic'),
   );
-  assert.equal(classic.length, 110);
+  assert.equal(classic.length, 188);
   assert.match(classic.find((card) => card.dataset.missionId === late.id).textContent, /Play/);
   assert(!requests.some((path) => path.includes('/content-design/assets/')));
   p.$('journey-back').click();

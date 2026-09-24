@@ -1,4 +1,10 @@
 import { boundedJSON } from '../data-json.mjs';
+import {
+  CLASSIC_RULES_CURRENT,
+  CLASSIC_RULES_ORIGINAL,
+  classicRulesCampaignIdentity,
+  supportsClassicCurrentRules,
+} from './classic-current-rules.mjs';
 
 const SOURCES = ['base', 'bundled', 'archived', 'optional', 'external'];
 const digest = (value) => typeof value === 'string' && /^[a-f0-9]{64}$/u.test(value);
@@ -78,20 +84,34 @@ export function classicLibrarySources(index, { availability, prepare, launch, pr
   if (typeof availability !== 'function' || typeof launch !== 'function')
     throw new TypeError('Classic browsing needs host-owned availability and launch adapters.');
   const owners = new Map();
-  for (const entry of checked.missions) {
-    const id = JSON.stringify(['classic', entry.source, entry.packId]);
+  const entries = checked.missions.flatMap((entry) => [
+    ...(supportsClassicCurrentRules(entry)
+      ? [Object.freeze({ ...entry, rulesEdition: CLASSIC_RULES_CURRENT })]
+      : []),
+    Object.freeze({ ...entry, rulesEdition: CLASSIC_RULES_ORIGINAL }),
+  ]);
+  for (const entry of entries) {
+    const current = entry.rulesEdition === CLASSIC_RULES_CURRENT;
+    const id = JSON.stringify([
+      'classic',
+      entry.source,
+      entry.packId,
+      ...(current ? [CLASSIC_RULES_CURRENT] : []),
+    ]);
     let owner = owners.get(id);
     if (!owner) {
       owner = {
         id,
         collection: 'Classic',
-        editionId: entry.sourceFile.sha256,
-        edition: entry.edition,
+        editionId: current
+          ? `${entry.sourceFile.sha256}:${CLASSIC_RULES_CURRENT}`
+          : entry.sourceFile.sha256,
+        edition: `${entry.edition} · ${current ? 'Current rules' : 'Original rules'}`,
         entries: [],
         describe: (row) => ({
           id: row.levelId,
           revision: row.levelRevision,
-          campaignKey: row.campaignKey,
+          campaignKey: classicRulesCampaignIdentity(row),
           campaignTitle: row.campaignTitle,
           name: row.name,
           levelIndex: row.levelIndex,
@@ -105,7 +125,7 @@ export function classicLibrarySources(index, { availability, prepare, launch, pr
         progress,
         card,
         details: (row, mode) => ({
-          challenge: `Authored Standard rules · ${row.rules}${mode === 'versus' ? ' · Separate Versus race timer also applies' : ''}`,
+          challenge: `${row.rulesEdition === CLASSIC_RULES_CURRENT ? 'Current rules · travelling trail impacts · authored Standard values' : 'Original authored Standard rules'} · ${row.rules}${mode === 'versus' ? ' · Separate Versus race timer also applies' : ''}`,
           route: `Difficulty settings: ${row.difficultiesByMode[mode]
             .map((preset) => `${preset[0].toUpperCase()}${preset.slice(1)}`)
             .join(', ')}`,
@@ -114,8 +134,11 @@ export function classicLibrarySources(index, { availability, prepare, launch, pr
       owners.set(id, owner);
     }
     if (
-      owner.editionId !== entry.sourceFile.sha256 ||
-      owner.edition !== entry.edition ||
+      owner.editionId !==
+        (current
+          ? `${entry.sourceFile.sha256}:${CLASSIC_RULES_CURRENT}`
+          : entry.sourceFile.sha256) ||
+      owner.edition !== `${entry.edition} · ${current ? 'Current rules' : 'Original rules'}` ||
       (owner.entries.length > 0 &&
         (owner.entries[0].packIdentity?.sha256 !== entry.packIdentity?.sha256 ||
           owner.entries[0].packIdentity?.bytes !== entry.packIdentity?.bytes))
