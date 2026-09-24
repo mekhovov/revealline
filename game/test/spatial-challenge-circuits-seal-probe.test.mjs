@@ -74,7 +74,10 @@ test('sampled failures and the frozen hypothesis remain separate from clear or e
     [1, 2],
   );
   assert.deepEqual(
-    fixture.rows.filter((row) => row.losses).map((row) => row.failureCause).sort(),
+    fixture.rows
+      .filter((row) => row.losses)
+      .map((row) => row.failureCause)
+      .sort(),
     ['enemy-player', 'enemy-trail'],
   );
   assert(fixture.rows.every((row) => row.status !== 'no-loss-clear'));
