@@ -380,8 +380,9 @@ after that moves UX0 to Completed does implementation advance to UX1-A.
 
 Current preparation is split into **UX1-A1: exact Solo Journey pictures** and
 **UX1-A2: Versus/Team admission**, followed by UX1-B. See
-[the UX1-A1 draft contract and evidence](ux1-a1-journey-rewards.md). The reconciled A1
-candidate adds no release allocation or public-release acceptance; the Couch
+[the UX1-A1 draft contract and evidence](ux1-a1-journey-rewards.md) and the
+[stacked A2 cross-mode contract](ux1-a2-cross-mode-rewards.md). The reconciled A1 and
+A2 candidates add no release allocation or public-release acceptance; the Couch
 quick-start and trail/readability release layers remain independent.
 The historical preparation findings below remain applicable.
 
@@ -407,6 +408,15 @@ separation. UX1 has two independently useful releases:
 
 This is read-only preparation while UX0 qualifies, not a claim of implementation
 or authority to mix Solo, Versus and Team completion.
+
+The stacked UX1-A2 draft now adds real Versus and Team host admission without
+mixing those rewards: each actual win must authenticate the live accepted original
+against its exact owned recipe before writing a mode-specific companion record.
+Team retains no persistent co-op session. Invalid presentation can leave a valid
+gameplay clear but cannot claim a picture. Both modes receive a bounded mode-local
+Journey Pictures dialog with exact-edition filtering and opener restoration; the
+full shared Collection/gallery redesign remains UX1-B/UX5. This is draft source
+evidence only and remains dependent on A1 acceptance, full gates and public release.
 
 Further source review tightens historical recovery: several old Journey editions
 share the same profile scope, and simulation identity intentionally excludes art.

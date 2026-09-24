@@ -267,6 +267,63 @@
     width: 100%;
   }
 }
+.journey-mode-pictures {
+  box-sizing: border-box;
+  width: min(58rem, calc(100vw - 2rem));
+  max-width: calc(100vw - 2rem);
+  max-height: calc(100dvh - 2rem);
+  padding: clamp(1rem, 3vw, 2rem);
+  overflow: auto;
+  color: var(--ink, #e5eddd);
+  background: var(--panel, #15251f);
+}
+.journey-mode-pictures::backdrop {
+  background: #09140de6;
+}
+.journey-mode-pictures > header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.journey-mode-pictures > header h2,
+.journey-mode-picture-card h3 {
+  margin: 0;
+}
+.journey-mode-pictures button {
+  min-height: 44px;
+}
+.journey-mode-picture-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 14rem), 1fr));
+  gap: 0.75rem;
+}
+.journey-mode-picture-card {
+  display: grid;
+  gap: 0.5rem;
+  align-content: start;
+  padding: 1rem;
+  border: 1px solid #799786;
+  background: #182d23;
+}
+.journey-mode-picture-card p {
+  margin: 0;
+}
+.journey-mode-picture-viewer {
+  display: grid;
+  gap: 0.75rem;
+}
+.journey-mode-picture-viewer[hidden] {
+  display: none;
+}
+.journey-mode-picture-viewer canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 60dvh;
+  object-fit: contain;
+  image-rendering: pixelated;
+}
 .journey-footer {
   display: flex;
   flex-wrap: wrap;
