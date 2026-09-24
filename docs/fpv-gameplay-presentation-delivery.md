@@ -34,6 +34,29 @@ geometry or claim their pending PRs are delivered.
 3. The user's capture-restart report remains open. Do not change the core
    without reproducing its defect; native held-input/device evidence is pending.
 
+### Implemented and focused-verified; not publicly released
+
+| Boundary                       | Candidate status                                                                                                  |
+| ------------------------------ | ----------------------------------------------------------------------------------------------------------------- |
+| Shared FPV/Campaign preference | Implemented; FPV default, session-only warnings and stale preference cancellation                                 |
+| Solo                           | Menu, atomic actor preparation, exact v6 Continue/import, Retry/Next and First Flight handoff integrated          |
+| Versus                         | Menu, shared paired-board actor lease, Resume/Rematch retention and failure rollback integrated                   |
+| Team                           | Menu, picture/actor readiness, Retry retention, independent craft-state rendering and Custom exclusion integrated |
+| Preservation                   | Historical save formats, exact retained revision 62, authored pictures/music and Custom owners preserved          |
+| Public delivery                | Not released; no game-version/tag/Pages change in PR338                                                           |
+
+### Open before claiming increment 1 complete
+
+- Reproduce and fix the reported live capture restart; the investigation has not
+  established a defective command path.
+- Standalone recorded-actor replay export and Theater preparation (separate
+  proposed successor in `fpv-replay-presentation-follow-up.md`).
+- Final exact-source production/build checks, coordinated version allocation,
+  frozen release and public qualification. Publisher coordination places this
+  feature after accepted UX0 source; do not merge it ahead of that owner.
+- Held-device/input qualification, reliable native persistence and Team
+  earned-Next coverage. The local disk remains exhausted.
+
 Prepared source checkpoint: the actor-preference service and boundary resolver
 are implemented, independently reviewed, and have 16 passing focused tests.
 Three new held-touch reset regressions extend the complete 12-case touch cohort.
@@ -103,9 +126,21 @@ preference cancellation, Retry pin retention and same-ID Custom exclusion.
 The root's combined Team/Classic/Journey session cohort passes 46/46 with zero
 skips (7.76 seconds). A pre-existing Team earned-Next route fixture fails in both
 the changed host and the exact HEAD host; earned-Next is not counted as passed.
-Versus's initial 12-case cohort passes, but independent review subsequently found
-a setup observer leak and an optional authority-index outage blocking Custom
-launches. Both require correction and rerun before acceptance.
+Versus's initial 12-case cohort passed, but independent review then found a
+setup observer leak and an optional authority-index outage blocking Custom
+launches. Both are corrected: the final 14-case cohort passes with zero skips;
+10 actor-host cases also pass against regenerated production revision 63.
+
+Solo's final actual-host appearance cohort passes 16/16 with zero skips
+(114.95 seconds); First Flight compatibility passes 14/14 separately. It covers
+Base and real Journey saves, historical v5 Continue, exact v6 import, forged
+project/actor rejection, legal clear → failed Next → Retry → successful Next,
+stale preference cancellation and same-ID Custom authority outages. Two earlier
+cohorts each passed 15/16 but missed their expected injected actor failure:
+production revision 63 correctly requested the retained hash-named revision-62
+manifest while the fixture intercepted only `runtime.json`. Correcting the
+injection to the actual pinned URL restored the original five-second bound.
+No product or latency fix is inferred from that fixture correction.
 
 The current-source browser preview decoded FPV actors, cleared First return and
 opened the next Journey mission with FPV actors. This is not frozen/public or
@@ -113,6 +148,12 @@ held-input proof. Local storage/profile-lock failures prevent persistence
 qualification; no user storage or locks were removed. CI on `44bdea06a` passed
 validation, lint, formatting and source identity, but failed the production
 revision-ledger check. Its build and long suite were skipped, not passed.
+The ledger was repaired additively as revision 63, with 71 new source-stage
+recipe revisions and zero changed prior records or original media payloads.
+This is not new artistic/functional approval. Actor rendering stays pinned to
+exact revision 62. Hosted preflight passed on `9eccd5e61`; the final host commit
+still needs its own exact-head checks. See the scoped native preview receipt;
+its post-reload Solo/Versus/Team decoding is not public acceptance.
 
 Standalone simulation replay files currently do not contain appearance pins.
 Portable styled playback needs its own versioned presentation envelope and
