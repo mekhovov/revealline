@@ -26,6 +26,7 @@ import { createContentDraftBackend } from '../content-design/drafts.mjs';
 import { downloadCreatorFile } from './download.mjs';
 import { canonicalJSON } from '../data-json.mjs';
 import { createBatchCreatorController } from './batch-ui.mjs';
+import { prepareReviewedCreatorBundle } from './batch-bundle.mjs';
 
 const $ = (id) => document.getElementById(id),
   store = createCreatorStore(),
@@ -55,6 +56,7 @@ let sourceFile = null,
   busy = true,
   pictureURL = null,
   batchMode = false,
+  batchSource = null,
   sourceVersion = 0,
   saveTimer = null;
 const batchSeed = crypto.getRandomValues(new Uint32Array(1))[0];
@@ -72,16 +74,16 @@ if (!params.has('draft')) {
   params.set('draft', id);
   history.replaceState(null, '', `?${params}`);
 }
-// Phase 2 integration replaces this null with the batch core's exact-byte
-// assembly/approval adapter. Until then, production intake remains single-file
-// so the page cannot lead a creator into a flow that cannot finish.
-const batchApprovalAdapter = null;
+// Multi-file intake is enabled only because this adapter revalidates the exact
+// one-mission preparations displayed on every review card.
+const batchApprovalAdapter = { approve: approveReviewedBatch };
 const batchEnabled = !!batchApprovalAdapter;
 
 function controls() {
   $('edits').hidden = !content || batchMode;
   $('generate').disabled = busy || (!sourceFile && !content);
   $('approve').disabled = busy || !prepared;
+  $('approve').hidden = batchMode && !!approval;
   $('install').disabled = busy || !installReview?.enoughManagedSpace;
   $('download').disabled = busy || !approval;
   $('backup').disabled = busy || !content;
@@ -130,27 +132,47 @@ const batch = createBatchCreatorController({
       { signal: context.signal },
     );
     const seed = (batchSeed + context.index + context.generation * 65537) >>> 0;
+    const families = CREATOR_TEMPLATES.map(({ id: templateId }) => templateId);
+    const templateId =
+      context.settings.pacing === 'gentle-first' && context.index < Math.ceil(context.total / 3)
+        ? families[0]
+        : context.settings.pacing === 'steady'
+          ? families[2]
+          : context.settings.pacing === 'balanced'
+            ? families[(seed + context.index) % families.length]
+            : undefined;
     const generated = generateCreatorProject({
-      id: `${id}-picture-${context.index + 1}`,
+      id: `${id}-${item.id}`,
       name: context.settings.collectionName,
       seed,
+      ...(templateId ? { templateId } : {}),
     });
+    const itemProject = structuredClone(generated.project);
+    const missionId = item.id;
+    const mapId = `${item.id}-map`;
+    const assetId = `${item.id}-asset`;
+    itemProject.maps[0].id = mapId;
+    itemProject.missions[0].id = missionId;
+    itemProject.missions[0].map.id = mapId;
+    itemProject.campaigns[0].missionIds = [missionId];
     const itemContent = {
-      project: structuredClone(generated.project),
+      project: itemProject,
       packId: 'collection',
       themes: themes.filter(
         (theme) => theme.id === generated.project.missions[0].presentation.themeId,
       ),
-      provenance: generated.provenance,
+      provenance: { ...generated.provenance, missionId },
       credits: {
         creator: context.settings.creatorCredit,
         picture: context.settings.pictureCredit,
         license: context.settings.license,
       },
     };
-    itemContent.project.assets = [structuredClone(preparedImage.asset)];
+    const asset = structuredClone(preparedImage.asset);
+    asset.id = assetId;
+    itemContent.project.assets = [asset];
     itemContent.project.missions[0].name = item.title;
-    itemContent.project.missions[0].presentation.backgroundAssetId = preparedImage.asset.id;
+    itemContent.project.missions[0].presentation.backgroundAssetId = assetId;
     const itemPack = await prepareCreatorBundle(
       itemContent,
       [{ sha256: preparedImage.runtime.sha256, blob: preparedImage.runtime.blob }],
@@ -200,6 +222,7 @@ function fillLabels() {
   $('license').value = content.credits.license;
 }
 function currentAssets() {
+  if (batchSource) return batchSource.sourceAssets;
   const all = [
     ...(image
       ? [image.runtime]
@@ -208,9 +231,20 @@ function currentAssets() {
         ) ?? [])),
   ];
   if (image?.original) all.push(image.original);
-  else if (draft.source?.document.originalSha256)
-    all.push(draft.source.assets.find((a) => a.sha256 === draft.source.document.originalSha256));
-  return [...new Map(all.map((a) => [a.sha256, { sha256: a.sha256, blob: a.blob }])).values()];
+  else {
+    const originals = draft.source?.document.originalSha256;
+    for (const sha256 of originals === null || originals === undefined
+      ? []
+      : Array.isArray(originals)
+        ? originals
+        : [originals])
+      all.push(draft.source.assets.find((a) => a.sha256 === sha256));
+  }
+  return [
+    ...new Map(
+      all.filter(Boolean).map((a) => [a.sha256, { sha256: a.sha256, blob: a.blob }]),
+    ).values(),
+  ];
 }
 async function sourceSnapshot() {
   return prepareCreatorSource(
@@ -218,7 +252,11 @@ async function sourceSnapshot() {
       draftId: id,
       content: structuredClone(content),
       editing: { fit: $('fit').value },
-      originalSha256: image?.original?.sha256 ?? draft.source?.document.originalSha256 ?? null,
+      originalSha256:
+        batchSource?.originalSha256 ??
+        image?.original?.sha256 ??
+        draft.source?.document.originalSha256 ??
+        null,
     },
     currentAssets(),
   );
@@ -347,6 +385,7 @@ async function generate(signal) {
 function choose(file) {
   if (!file) return;
   batchMode = false;
+  batchSource = null;
   sourceFile = file;
   invalidate();
   $('mission-title').value = file.name.replace(/\.[^.]+$/, '').slice(0, 160) || 'First picture';
@@ -382,10 +421,50 @@ function chooseFiles(files) {
   );
   controls();
 }
+async function approveReviewedBatch(items, settings) {
+  return operation(async (signal) => {
+    invalidate();
+    status('Assembling the exact reviewed levels and verifying the complete campaign…');
+    const result = await prepareReviewedCreatorBundle(
+      items,
+      {
+        draftId: id,
+        collectionName: settings.collectionName,
+        creatorCredit: settings.creatorCredit,
+        pictureCredit: settings.pictureCredit,
+        license: settings.license,
+      },
+      { signal },
+    );
+    prepared = result.prepared;
+    batchSource = result;
+    const { compatibility: _compatibility, ...selected } = prepared.manifest.content;
+    content = structuredClone(selected);
+    batchMode = true;
+    sourceFile = image = null;
+    fillLabels();
+    await saveDraft();
+    showReview(prepared);
+    approval = approveCreatorBundle(prepared);
+    $('approved').hidden = false;
+    try {
+      installReview = await reviewCreatorInstallation(store, prepared, approval, { signal });
+      $('storage-review').textContent =
+        `Pack: ${mib(installReview.packageBytes)}. Required staging space: ${mib(installReview.stagingBytes)}. Managed storage: ${mib(installReview.usedBytes)} of ${mib(installReview.limitBytes)}. ${installReview.enoughManagedSpace ? 'Ready to install.' : 'Download the pack to keep your work; storage is full.'}`;
+    } catch (error) {
+      $('storage-review').textContent =
+        `Installation storage is unavailable: ${error.message} You can still download your pack.`;
+    }
+    status(
+      `${content.project.missions.length} reviewed levels approved as one immutable campaign. Install it or download the portable pack.`,
+    );
+  });
+}
 async function openPrepared(pack) {
   const { compatibility: _compatibility, ...selected } = pack.manifest.content;
   content = structuredClone(selected);
   batchMode = content.project.missions.length > 1;
+  batchSource = null;
   sourceFile = image = null;
   draft.source = await prepareCreatorSource(
     { draftId: id, content, editing: { fit: 'contain' }, originalSha256: null },
@@ -405,9 +484,12 @@ async function openPrepared(pack) {
 async function openSource(source) {
   content = structuredClone(source.document.content);
   batchMode = content.project.missions.length > 1;
+  batchSource = null;
   draft.source = source;
   image = null;
-  sourceFile = source.assets.find((a) => a.sha256 === source.document.originalSha256)?.blob ?? null;
+  sourceFile = Array.isArray(source.document.originalSha256)
+    ? null
+    : (source.assets.find((a) => a.sha256 === source.document.originalSha256)?.blob ?? null);
   $('fit').value = source.document.editing.fit;
   $('fit').disabled = !sourceFile;
   fillLabels();

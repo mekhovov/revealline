@@ -16,6 +16,7 @@ import {
   importCreatorBundle,
   prepareCreatorBundle,
 } from '../creator/bundle.mjs';
+import { prepareReviewedCreatorBundle } from '../creator/batch-bundle.mjs';
 import { creatorSHA256 } from '../creator/bytes.mjs';
 import {
   createCreatorStore,
@@ -335,4 +336,57 @@ test('reviewed split parts contain exact mission, campaign, provenance and media
     [...batch.items].reverse().map((item) => item.id),
   );
   assert.throws(() => assembleCreatorBatchPackage(staleBatch, plan, 1), /Recalculate/);
+});
+
+test('review-card preparations combine without unrelated media and retain private source originals', async () => {
+  const reviewed = [];
+  for (let index = 0; index < 3; index++) {
+    const itemBatch = await prepareCreatorBatch(
+      [source(index)],
+      {
+        ...settings,
+        draftId: `review-item-${index + 1}`,
+        seed: settings.seed + index,
+      },
+      { prepareImage },
+    );
+    const item = itemBatch.items[0];
+    const assembled = assembleCreatorBatchProject(itemBatch);
+    const prepared = await prepareCreatorBundle(
+      {
+        project: assembled.project,
+        packId: assembled.packId,
+        themes,
+        provenance: assembled.provenance[0],
+        credits,
+      },
+      [{ sha256: item.image.runtime.sha256, blob: item.image.runtime.blob }],
+      { decodeImage },
+    );
+    reviewed.push({ result: { prepared, image: item.image } });
+  }
+  const result = await prepareReviewedCreatorBundle(
+    reviewed.reverse(),
+    {
+      draftId: 'reviewed-batch',
+      collectionName: 'Reviewed cards',
+      creatorCredit: credits.creator,
+      pictureCredit: credits.picture,
+      license: credits.license,
+    },
+    { decodeImage },
+  );
+  assert.equal(result.prepared.review.missions, 3);
+  assert.deepEqual(
+    result.prepared.manifest.content.project.campaigns[0].missionIds,
+    reviewed.map(({ result: { prepared } }) => prepared.manifest.content.provenance.missionId),
+  );
+  assert.equal(result.prepared.assets.length, 1, 'identical runtime bytes are stored once');
+  assert.equal(result.originalSha256.length, 3);
+  assert.equal(result.sourceAssets.length, 4, 'source closure is one runtime plus three originals');
+  assert.equal(
+    result.sourceAssets.some((asset) => asset.sha256 === 'a'.repeat(64)),
+    false,
+    'unrelated browser media is not included',
+  );
 });
