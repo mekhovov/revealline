@@ -1,0 +1,156 @@
+:root {
+  color-scheme: dark;
+  font-family: system-ui, sans-serif;
+  background: #101923;
+  color: #edf5f2;
+  line-height: 1.55;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+}
+header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.4rem;
+  align-items: center;
+  padding: 1.1rem 5vw;
+  border-bottom: 1px solid #34454d;
+}
+header span {
+  margin-left: auto;
+  color: #b3c6c7;
+}
+a {
+  color: #8aefcd;
+  text-underline-offset: 0.2em;
+}
+main {
+  width: min(1100px, 92vw);
+  margin: 2.6rem auto 5rem;
+}
+h1 {
+  font-size: clamp(2rem, 5vw, 3.7rem);
+  line-height: 1.1;
+  letter-spacing: -0.045em;
+  margin: 0.6rem 0 1.1rem;
+}
+.eyebrow {
+  font-size: 0.78rem;
+  font-weight: 750;
+  letter-spacing: 0.16em;
+  color: #8aefcd;
+}
+.panel,
+.edition {
+  border: 1px solid #34454d;
+  background: #17252e;
+  border-radius: 16px;
+  padding: 1.25rem;
+  margin: 1.2rem 0;
+}
+.controls,
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: 0.8rem;
+}
+.catalog {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 290px), 1fr));
+  gap: 1rem;
+}
+.edition {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+.edition h2 {
+  margin: 0 0 0.35rem;
+}
+.preview {
+  margin: 0.7rem 0;
+  min-height: 2.8rem;
+}
+.preview img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: 10px;
+  background: #101923;
+}
+.pager {
+  text-align: center;
+}
+.edition .actions {
+  margin-top: auto;
+  padding-top: 1rem;
+}
+.meta,
+.muted {
+  color: #b3c6c7;
+  font-size: 0.92rem;
+}
+label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-weight: 600;
+}
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  border-radius: 8px;
+  border: 1px solid #66817f;
+  padding: 0.65rem 0.9rem;
+  background: #101923;
+  color: inherit;
+  max-width: 100%;
+}
+button {
+  cursor: pointer;
+  background: #83e5c6;
+  color: #102622;
+  font-weight: 700;
+}
+button.secondary {
+  background: #243b42;
+  color: #edf5f2;
+}
+button:disabled {
+  cursor: default;
+  opacity: 0.45;
+}
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+summary:focus-visible {
+  outline: 3px solid #ffdc84;
+  outline-offset: 4px;
+}
+.error {
+  color: #ffbbac;
+}
+.badge {
+  display: inline-block;
+  border: 1px solid #638780;
+  border-radius: 999px;
+  padding: 0.15rem 0.5rem;
+  margin-right: 0.35rem;
+  font-size: 0.8rem;
+}
+textarea {
+  min-height: 6rem;
+}
+summary {
+  cursor: pointer;
+  font-weight: 700;
+}
