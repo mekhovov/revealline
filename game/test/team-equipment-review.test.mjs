@@ -43,6 +43,9 @@ test('five-image continuation authenticates exact originals, dependency closure 
   const continuationChanges = new Map(
     continuation.changedInputs.map((entry) => [entry.path, entry]),
   );
+  const addedDependency = continuationChanges.get('game/ui/enemy-body-assets.mjs');
+  assert.equal(addedDependency.priorSHA256, null);
+  assert.equal(addedDependency.currentSHA256, sha(await read(addedDependency.path)));
   for (const entry of inputs.inputs) {
     const current = sha(await read(entry.path));
     const predecessor = successorChanges.get(entry.path)?.currentSHA256 ?? entry.sha256;
@@ -96,6 +99,25 @@ test('every reviewed art or renderer input change reopens only the equipment ima
         entry.path,
       );
   }
+  const changedAddedDependency = await fieldKitEquipmentSource(async (name) => {
+    const bytes = await read(name);
+    return name === 'game/ui/enemy-body-assets.mjs'
+      ? Buffer.concat([bytes, Buffer.from('\n/* Unreviewed change. */\n')])
+      : bytes;
+  });
+  assert.notEqual(changedAddedDependency, original);
+  for (const image of originals)
+    assert.equal(
+      fieldKitEquipmentQuality(
+        image.slot,
+        changedAddedDependency,
+        image.sha256,
+        successorBytes,
+        continuationBytes,
+      ).stage,
+      'produced',
+      'game/ui/enemy-body-assets.mjs',
+    );
   for (const image of originals) {
     assert.equal(
       fieldKitEquipmentQuality(

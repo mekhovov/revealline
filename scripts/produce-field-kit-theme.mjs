@@ -53,11 +53,11 @@ const reviewedEquipmentSource = 'b9cbf2db6fe094564a15743c72c45049bf9ee776a22b259
 const reviewedEquipmentSuccessorSource =
   '162d4c737c11d34f8e7e3ed6e76ca5a34fcf06d5fb97303d53eba857feaaf530';
 const reviewedEquipmentContinuationSource =
-  '300ca8b33e64c0fb39c0036ee434526272b73f47955dc68b2144a0274b3f2cd8';
+  '4d9043f0d6c9fb557fce1b230b8c5f07998cc4ba69165a2607b21052b52d620b';
 const reviewedTeamSuccessorRecord =
   '45e41eee3cacac251ede3f0304834a1fda311f8bd70f4d0b66aaceb493b8fc05';
 const reviewedTeamContinuationRecord =
-  'ff4b6344e7be9659c7e6b5bea12a9b6456b9f76e0d3587bf712c7b156d672a81';
+  'edfc40e9576b231f786003e190d223918ce5330f8bf3002e210d7559348306d0';
 const reviewedEquipmentOriginals = Object.freeze({
   'team.anchor.available': '88e541375c56d4627b80cf6921ca64ed12d5b77d43dcae256177b8577250d9b3',
   'team.anchor.captured': 'a66511c77322beea458be918f6eb35f1ca6acc9f980afa44bc4756162896f466',
