@@ -292,3 +292,27 @@ test('bundled assets retain full-byte validation and cancellation', async () => 
   });
   assert.equal(requests, 0);
 });
+
+test('same-recording catalogue aliases cannot widen bundled playback, storage or redistribution permission', () => {
+  for (const permission of ['webPlayback', 'offlineCache', 'redistribute']) {
+    for (const value of ['denied', 'unknown']) {
+      const alias = {
+        ...coreTrack,
+        id: 'builtin.catalog.restricted-alias',
+        policy: {
+          ...coreTrack.policy,
+          id: 'builtin.catalog.restricted-alias',
+          [permission]: value,
+        },
+      };
+      assert.throws(
+        () =>
+          createSoundtrackSource({
+            catalogue: { ...coreCatalogue, tracks: [coreTrack, alias] },
+            bundled: [coreRegistration],
+          }),
+        /offline and redistribution permission/,
+      );
+    }
+  }
+});
