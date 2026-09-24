@@ -61,6 +61,27 @@ the implementation-owner's focused cohort passed 63/63, including oversized
 replay rejection. An initial test assertion's wording was corrected. Host
 activation and retained source/hash/decoded-role checks remain necessary.
 
+Actor-only rendering is prepared for both board and Team painters, but not yet
+selected by gameplay hosts. The combined 80-case renderer/Team-state cohort
+passes with no skips. It covers all seven player roles in compact/detailed art,
+authored-world preservation, custom-body precedence, unchanged simulation,
+Team downed/rescue states and rejection before paint. Four board cases began as
+red tests before implementation; one Team baseline run lacked six sparse-checkout
+PNG fixtures (2,307 bytes); restoring exact tracked bytes resolved that setup
+failure. These command/state tests do not establish native visual quality.
+
+The shipped whole-theme catalogue covers only First Signal FPV, not the whole
+Journey. Actor-only source approval must therefore remain a separate code-owned
+registry; changing an owner or picture theme to pass full-theme compatibility is
+not permitted. The shared loader needs a fixed actor-only acquisition profile.
+Exact compiled revision 62 and its transitive assets must remain available when
+a later presentation compile replaces the current manifest.
+
+Standalone simulation replay files currently do not contain appearance pins.
+Portable styled playback needs its own versioned presentation envelope and
+Theater preparation path. Existing raw replays must remain supported and must
+not acquire today's actor preference implicitly.
+
 No new feature from this plan is publicly delivered yet. A draft source
 checkpoint, successful test, merged PR and accepted public release are separate
 states.
