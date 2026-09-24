@@ -2,8 +2,10 @@
 
 ## Current manual content handoff
 
+The new single-image workflow is documented in [Create and share a picture campaign](image-campaign-guide.md), with [format/API contracts](creator-bundle-reference.md) and [pending release acceptance](phase1-acceptance.md). Its strict `.rlpack` path does not turn arbitrary Studio JSON into an approved installed campaign.
+
 1. Collect the exact editable source, runtime expansion if available, required media and their provenance. Keep private originals and player backups out of a shareable content artifact.
-2. For a Playground expansion, run the production `preparePack` reader and test the actual exported file through **Library & saves → Expansion packs → Install a pack file**. For a Studio project, use `compile-content-project.mjs` and the exact preview. Studio source does not currently have a general ordinary-Custom installer.
+2. For a Playground expansion, run the production `preparePack` reader and test the actual exported file through the compatibility player's **Settings → Game data → Installed chapters → Install a pack file**. For a Studio project, use `compile-content-project.mjs` and the exact preview. Arbitrary Studio source does not have a general ordinary-Custom installer; the new creator supports its explicitly verified template scope.
 3. Review content rights, pictures, objective clarity and advertised modes/presets. Record legal completions, Retry/Next, save recovery and exact earned artwork. A decoder pass, uploaded flag or compiler success is not creator playtesting.
 4. To include content in a maintained distribution, integrate its source and required runtime dependencies using the corresponding existing catalog/compiler. Keep immutable old editions. Do not merely rename a project into `xonix-pack`, change its version label, or give community content official Journey eligibility.
 5. Prepare a scoped PR, update examples and compatibility declarations, then follow the framework release procedure below. Public availability follows deployed acceptance, not a local import.
