@@ -4,6 +4,7 @@ import { throwIfSoundtrackAborted } from './mp3.mjs';
 export const ONLINE_SOUNDTRACK_CATALOGUE_URL =
   'https://mekhovov.github.io/revealline-soundtracks-01/catalogue.json';
 const BASE_URL = 'https://mekhovov.github.io/revealline-soundtracks-01/';
+const BASE = new URL(BASE_URL);
 const FORMAT = 'revealline-public-soundtrack-catalogue.v1';
 const MAX_BYTES = 512 * 1024;
 const HASH = /^[a-f0-9]{64}$/;
@@ -13,6 +14,31 @@ const LICENSES = new Set([
   'https://creativecommons.org/licenses/by/4.0/',
 ]);
 const AUDIO_PATH = /^(?:objects|batches\/[a-z0-9][a-z0-9-]{0,63}\/objects)\/[a-f0-9]{64}\.mp3$/;
+
+export function onlineSoundtrackRecordingAllowed(value) {
+  return value?.recordingModeEligible === true && value?.contentId === false;
+}
+
+export function onlineSoundtrackRecordingURL(value, sha256) {
+  try {
+    const url = new URL(value),
+      prefix = BASE.pathname,
+      path = url.pathname.startsWith(prefix) ? url.pathname.slice(prefix.length) : '';
+    return (
+      HASH.test(sha256) &&
+      url.origin === BASE.origin &&
+      !url.username &&
+      !url.password &&
+      !url.search &&
+      !url.hash &&
+      path.length > 0 &&
+      AUDIO_PATH.test(path) &&
+      path.endsWith(`/${sha256}.mp3`)
+    );
+  } catch {
+    return false;
+  }
+}
 
 function secureURL(value) {
   try {
@@ -213,8 +239,36 @@ export async function fetchOnlineSoundtrackCatalogue({
     length === null || (/^[0-9]+$/.test(length) && Number(length) <= MAX_BYTES),
     'Online soundtrack catalogue exceeds its byte limit.',
   );
-  const bytes = new Uint8Array(await response.arrayBuffer());
+  const reader = response.body?.getReader?.();
+  required(reader, 'Online soundtrack catalogue response cannot be read safely.');
+  const chunks = [];
+  let size = 0;
+  try {
+    while (true) {
+      throwIfSoundtrackAborted(signal);
+      const { done, value } = await reader.read();
+      if (done) break;
+      required(value instanceof Uint8Array, 'Online soundtrack catalogue response is invalid.');
+      size += value.byteLength;
+      if (size > MAX_BYTES) {
+        try {
+          await reader.cancel('Online soundtrack catalogue exceeds its byte limit.');
+        } catch {
+          // The byte limit remains authoritative even if the network cannot be cancelled cleanly.
+        }
+        throw new Error('Online soundtrack catalogue exceeds its byte limit.');
+      }
+      chunks.push(value);
+    }
+  } finally {
+    reader.releaseLock?.();
+  }
   throwIfSoundtrackAborted(signal);
-  required(bytes.byteLength <= MAX_BYTES, 'Online soundtrack catalogue exceeds its byte limit.');
+  const bytes = new Uint8Array(size);
+  let offset = 0;
+  for (const chunk of chunks) {
+    bytes.set(chunk, offset);
+    offset += chunk.byteLength;
+  }
   return resolveOnlineSoundtrackCatalogue(new TextDecoder('utf-8', { fatal: true }).decode(bytes));
 }
