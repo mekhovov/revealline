@@ -4,8 +4,8 @@ Approved 24 September 2026. Browser-first, local and account-free creation; imag
 
 | Phase | Deliverable                                                                                   | Acceptance gate                                                                                                 | Status       |
 | ----- | --------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- | ------------ |
-| 0     | Beginner guide, framework reference, maintainer handoff, owned examples                       | Reproduce current preview/install/share distinction                                                             | Implementing |
-| 1     | Single image, one proven template, review/approval, `.rlpack`, installed modern Custom source | Actual download installs in clean profile; ordinary legal win, earned picture after reload, unfinished recovery | Pending      |
+| 0     | Beginner guide, framework reference, maintainer handoff, owned examples                       | Reproduce current preview/install/share distinction                                                             | PR #384 merged; release pending |
+| 1     | Single image, one proven template, review/approval, `.rlpack`, installed modern Custom source | Actual download installs in clean profile; ordinary legal win, earned picture after reload, unfinished recovery | Implemented candidate; built-in browser verified; hosted/release gates pending |
 | 2     | Batch images, six template families, ordering/pacing, groups, checkpoints and bulk approval   | 1/12/50 items, duplicates, portraits, per-item failure, cancellation, bounded memory and capacity splitting     | Pending      |
 | 3     | Mixed media, pairing, three posters, frame capture, playback range and victory story          | Paired and video-only wins, audio, Skip/Replay, unsupported codecs, exact poster and portable recovery          | Pending      |
 | 4     | Self-hosted accounts, resumable uploads, validation jobs, automatic publication and catalog   | Ownership, corrupt upload rejection, restarts, listing and database/blob restore                                | Pending      |
@@ -15,6 +15,8 @@ Approved 24 September 2026. Browser-first, local and account-free creation; imag
 | 8     | Optional physical trimming, resizing, compression and conversion                              | Inspect actual exported/decoded bytes, timing, orientation, sound sync and playback                             | Pending      |
 
 Each numbered phase gets a separate scoped PR, release, documentation and acceptance record. Dependent phases remain unaccepted until prerequisites pass. Independent preparation may continue during publication waits. Phase 8 may follow Phase 3 if real imports demonstrate a conversion obstacle.
+
+See the [Phase 1 walkthrough](image-campaign-guide.md), [portable/source format reference](creator-bundle-reference.md), and [exact acceptance observations and open gates](phase1-acceptance.md). Phase 1 currently supports one verified template family and one mission; batches, video, hosted publication and multiplayer are not advertised by the candidate.
 
 ## Contracts to preserve
 
@@ -41,3 +43,7 @@ These decisions reuse the existing framework and the approved review:
 - [OWASP upload guidance](https://cheatsheetseries.owasp.org/cheatsheets/File_Upload_Cheat_Sheet.html): bounded supported content, isolated processing and public-upload controls.
 
 Cross-phase verification includes stale approvals, simultaneous tabs, interrupted commits, quota failure, malformed packages, missing dependencies, old formats, immutable updates, autoplay refusal, background pause and service outages. Browser and physical-device limitations must remain explicit.
+
+## Browser scope update
+
+On 24 September the user directed “use builtin browser instead” when Safari computer control was unavailable. Use the built-in browser for this delivery and explicitly record Firefox/Safari as untested. Independent-origin storage is not a claim of a separate clean browser profile; physical mobile qualification remains separate.
