@@ -9,6 +9,7 @@ import {
   createActorPresentation,
   drawPresentedActor,
   drawActiveTrail,
+  drawTrailImpactFront,
   PRESENTATION_INK,
   PRESENTATION_PLATE,
 } from '../ui/actor-presentation.mjs';
@@ -95,6 +96,103 @@ for (const width of [294, 390, 600, 1152])
     );
     assert.ok(strokes.every((c) => c.globalAlpha === 1));
   });
+
+for (const [surfaceName, accent] of [
+  ['dark picture', '#61d5ff'],
+  ['light picture', '#b12869'],
+])
+  for (const width of [240, 390, 1152])
+    test(`${surfaceName}: ${width}px cutting head has a plate, bright core and directional nose`, () => {
+      const s = surface(width),
+        scale = width / 1152;
+      drawActiveTrail(
+        s.ctx,
+        [{ x1: 4.5, y1: 4.5, x2: 7.5, y2: 4.5 }],
+        [{ x: 5, y: 4 }],
+        { x: 7.5, y: 4.5 },
+        { accent },
+        { screenScale: scale, reduced: true },
+      );
+      const fills = s.calls.filter((call) => call.op === 'fillRect');
+      const plate = fills.find(
+        (call) =>
+          call.fillStyle === PRESENTATION_PLATE &&
+          call.args[0] < 7.5 * 16 &&
+          call.args[0] + call.args[2] > 7.5 * 16 &&
+          call.args[1] < 4.5 * 16 &&
+          call.args[1] + call.args[3] > 4.5 * 16,
+      );
+      assert.ok(plate, 'dark plate crosses the authoritative head coordinate');
+      assert.ok(
+        fills.some(
+          (call) =>
+            call.fillStyle === PRESENTATION_INK &&
+            call.args[0] > 7.5 * 16 &&
+            call.args[1] <= 4.5 * 16 &&
+            call.args[1] + call.args[3] >= 4.5 * 16,
+        ),
+        'the bright nose points along the final cut segment',
+      );
+      assert.ok(plate.args[2] * scale >= 6, 'compact head plate remains visible');
+    });
+
+for (const width of [240, 390, 1152])
+  test(`${width}px travelling fronts remain distinct and readable with reduced effects`, () => {
+    const scale = width / 1152,
+      craft = surface(width),
+      departure = surface(width);
+    drawTrailImpactFront(
+      craft.ctx,
+      { x: 8.5, y: 5.5, direction: 1 },
+      { time: 0.25, reduced: true, screenScale: scale },
+    );
+    drawTrailImpactFront(
+      departure.ctx,
+      { x: 8.5, y: 5.5, direction: -1 },
+      { time: 0.25, reduced: true, screenScale: scale },
+    );
+    assert.ok(
+      craft.calls.some((call) => call.op === 'closePath'),
+      'craft-bound danger is a diamond',
+    );
+    assert.equal(
+      departure.calls.some((call) => call.op === 'closePath'),
+      false,
+      'departure-bound front is a square cross, not colour alone',
+    );
+    for (const calls of [craft.calls, departure.calls]) {
+      assert.ok(
+        calls.some((call) => call.op === 'translate' && call.args.join() === '136,88'),
+        'marker stays on the core-owned coordinate',
+      );
+      assert.ok(calls.some((call) => call.fillStyle === PRESENTATION_PLATE));
+      assert.ok(calls.some((call) => call.fillStyle === PRESENTATION_INK));
+      assert.equal(
+        calls.some((call) => call.op === 'strokeRect'),
+        false,
+      );
+      const unit = calls.find((call) => call.op === 'scale').args[0];
+      assert.ok(12 * unit * scale >= 9.9, 'marker is at least ten CSS pixels');
+    }
+  });
+
+test('travelling-front motion adds only a bounded pulse and never shifts the authoritative point', () => {
+  const first = surface(),
+    second = surface();
+  drawTrailImpactFront(first.ctx, { x: 8.5, y: 5.5, direction: 1 }, { time: 0 });
+  drawTrailImpactFront(second.ctx, { x: 8.5, y: 5.5, direction: 1 }, { time: 0.2 });
+  for (const calls of [first.calls, second.calls]) {
+    assert.deepEqual(
+      calls.filter((call) => call.op === 'translate').map((call) => call.args),
+      [[136, 88]],
+    );
+    assert.equal(calls.filter((call) => call.op === 'strokeRect').length, 1);
+  }
+  assert.notDeepEqual(
+    first.calls.find((call) => call.op === 'strokeRect').args,
+    second.calls.find((call) => call.op === 'strokeRect').args,
+  );
+});
 
 test('240px larger actor body leaves real contact and active-cut world coordinates unchanged', () => {
   const s = surface(240),
