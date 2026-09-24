@@ -559,6 +559,8 @@ try {
     document,
     root: $('race-settings-panel-audio'),
     prefix: 'race',
+    quickAfter: ['race-start'],
+    canControl: () => !disposed && !inactive,
     getScene: ({ scene }) =>
       !match || shell?.scope() === 'setup' ? 'menu' : match.status === 'ready' ? scene : 'gameplay',
     audioMaster,
