@@ -1,0 +1,37 @@
+{
+  "format": "revealline-scoped-screen-continuation-review.v1",
+  "status": "bounded player-menu source and visual review; frozen, public and physical-device acceptance pending",
+  "candidate": "5c2abaa3c4e516f6625fe707eb3e21a9925566ef",
+  "scope": "Continue the reviewed Field Kit screen recipes after the compact Home redesign. The change removes technical setup prose from the primary menu, moves optional play settings and supporting routes into explicit disclosures, and adds the Releases route without changing palette tokens, raster assets, simulation, map geometry or content ownership.",
+  "screens": {
+    "priorFingerprintSHA256": "ceefa6797f3d66c628c5710008a20d68fd1e4afd4baba69b7655cdcdcb8d8996",
+    "currentFingerprintSHA256": "acf6426f5cd47f21a85ec5ae9da9549ed58fbe330b097c979dc85b87afe2d68a",
+    "changedInput": {
+      "path": "game/ui/field-kit-flow.css",
+      "priorSHA256": "02c73cb46d9f76da039cade2e6691002b9298539e817bbf40d216c06f7a09708",
+      "currentSHA256": "afd79d33a7be7622d5f6f17f496af9e5ddeeff5fed7859db078ab3bf0b95862b",
+      "assessment": "Reflows the existing title-side menu, optional settings and More disclosures using the approved Field Kit tokens. It does not change any bitmap, font, sound, gameplay painter, board geometry or authoritative state."
+    },
+    "continuedSlots": 7
+  },
+  "qualification": {
+    "focusedAutomated": [
+      "The complete Field Kit flow file passed 18 of 18 checks.",
+      "The focused legacy tool-return selection passed three selected cases with ten deliberately unselected.",
+      "Scoped ESLint, Prettier, git diff validation and the production source validator passed before merge."
+    ],
+    "hosted": "PR381 exact head 40c56628ace42533ad49bfcbc8ac7d6a231c3353 passed preflight, deterministic build and release-ready in run 36042109389. The full hosted test job was skipped under the temporary repository waiver and is not claimed as passed.",
+    "visual": "A local 1280 by 720 browser review confirmed Start as initial focus, compact Home grouping, More route visibility and at least 44 CSS pixel player targets. This is not physical-device certification."
+  },
+  "preservation": [
+    "All original image, audio and font payload bytes remain unchanged.",
+    "Historical production revisions remain retained and selectable.",
+    "Solo, Versus and Team content identities, progress, saved attempts and simulation checkpoints remain unchanged."
+  ],
+  "excluded": [
+    "No complete whole-game navigation, screen-reader, forced-colour, zoom or physical-device qualification.",
+    "No complete Couch quick-start, Pause consolidation, reward/gallery or mission-balance acceptance.",
+    "No frozen-build, offline or public Pages acceptance until the corrected production ledger passes release qualification."
+  ],
+  "decision": "Continue only the seven Field Kit screen recipes when the exact screen fingerprint and this review record match. Any input or review-byte change reopens the group."
+}
