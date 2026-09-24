@@ -3,6 +3,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { attachSoundtrackPanel } from '../ui/soundtrack-panel.mjs';
+import { ONLINE_SOUNDTRACK_CATALOGUE_URL } from '../online-soundtrack-catalogue.mjs';
 import { createAudioMaster } from '../ui/audio-master.mjs';
 import { SOUNDTRACK_CATALOGUE, SOUNDTRACK_COLLECTIONS } from '../content/soundtrack-catalogue.mjs';
 import { createSoundtrackStore } from '../soundtrack-store.mjs';
@@ -259,6 +260,15 @@ async function setup(
     },
     previous: async () => calls.push(['previous']),
     next: async () => calls.push(['next']),
+    playRemotePlaylist: async (tracks, options) => {
+      calls.push(['remote', tracks, options]);
+      Object.assign(state, {
+        playing: true,
+        desired: true,
+        status: 'playing',
+        track: tracks[0],
+      });
+    },
     seek: (time) => {
       calls.push(['seek', time]);
       state.positionSeconds = time;
@@ -291,6 +301,11 @@ async function setup(
       revokeObjectURL: (id) => revoked.push(id),
     },
     download: (blob, filename) => downloads.push({ blob, filename }),
+    onlineCatalogueDownload: {
+      fetch: async () => {
+        throw new Error('Online catalogue is unavailable in this isolated test.');
+      },
+    },
     ...callbacks,
   });
   const node = (id) => {
@@ -327,6 +342,69 @@ async function setup(
 }
 const file = (name = 'Neon sky.mp3', value = silenceBytes) =>
   new File([value], name, { type: 'audio/mpeg' });
+
+function onlineCatalogueFixture() {
+  const definitions = [
+    ['1'.repeat(64), 'Night Circuit', 'Signal Artist', 'Synth collection', ['synth', 'electronic']],
+    ['2'.repeat(64), 'Iron Pulse', 'Riff Artist', 'Metal collection', ['metal', 'djent']],
+    [
+      '3'.repeat(64),
+      'Dnipro Bells',
+      'Ukrainian Artist',
+      'Ukrainian collection',
+      ['ukrainian', 'metal', 'Shchedryk adaptation'],
+    ],
+  ];
+  const tracks = definitions.map(([sha256, title, artist, collection, tags], index) => ({
+    id: `fixture-${index + 1}`,
+    title,
+    artist,
+    durationSeconds: 180 + index,
+    tags,
+    source: `https://artists.example/${index + 1}`,
+    license: 'CC BY 4.0',
+    licenseURL: 'https://creativecommons.org/licenses/by/4.0/',
+    credit: `${title} by ${artist}`,
+    fileName: `${title}.mp3`,
+    archiveId: `fixture-${index + 1}`,
+    collection,
+    status: 'published-audition',
+    listeningApproval: 'pending',
+    gameCatalogueAdmission: false,
+    audio: { path: `objects/${sha256}.mp3`, bytes: 1000 + index, sha256 },
+    aliases: [],
+  }));
+  return {
+    format: 'revealline-public-soundtrack-catalogue.v1',
+    archive: {
+      id: 'revealline-soundtracks-01',
+      baseURL: 'https://mekhovov.github.io/revealline-soundtracks-01/',
+    },
+    sources: [],
+    counts: {
+      declaredTracks: tracks.length,
+      uniqueRecordings: tracks.length,
+      duplicateAliases: 0,
+      audioBytes: tracks.reduce((sum, track) => sum + track.audio.bytes, 0),
+    },
+    tracks,
+  };
+}
+
+function onlineCatalogueResponse(catalogue) {
+  const body = new TextEncoder().encode(JSON.stringify(catalogue));
+  return {
+    status: 200,
+    redirected: false,
+    url: ONLINE_SOUNDTRACK_CATALOGUE_URL,
+    headers: { get: () => String(body.byteLength) },
+    arrayBuffer: async () => body.buffer,
+  };
+}
+
+async function settleOnlineCatalogue() {
+  await new Promise((resolve) => setImmediate(resolve));
+}
 
 test('shared master immediately governs audition output while retaining local volume and transport', async (t) => {
   const audioMaster = createAudioMaster({ muted: false, volume: 0.5 }),
@@ -1820,7 +1898,7 @@ for (const ending of ['saved', 'reload', 'newer focus', 'hidden']) {
   });
 }
 
-test('licensed preview discovery opens separately without fetching or admitting catalogue tracks', async (t) => {
+test('archive website remains a secondary credits and download link', async (t) => {
   const requests = [];
   const app = await setup(t, {
     callbacks: {
@@ -1842,9 +1920,9 @@ test('licensed preview discovery opens separately without fetching or admitting 
   assert.equal(link.getAttribute('href'), 'https://mekhovov.github.io/revealline-soundtracks-01/');
   assert.equal(link.getAttribute('target'), '_blank');
   assert.equal(link.getAttribute('rel'), 'noopener noreferrer');
-  assert.match(link.textContent, /opens a new tab/);
-  assert.match(app.node('licensed-previews-info').textContent, /70 creator-licensed previews/);
-  assert.match(app.node('licensed-previews-info').textContent, /not installed automatically/);
+  assert.match(link.textContent, /Open the public archive website/);
+  assert.match(app.node('licensed-previews-info').textContent, /searchable public archive above/);
+  assert.match(app.node('licensed-previews-info').textContent, /directly inside the game/);
   const before = await app.store.read();
   const calls = [...app.calls],
     state = { ...app.state };
@@ -1860,6 +1938,81 @@ test('licensed preview discovery opens separately without fetching or admitting 
   assert.match(app.node('original-status').textContent, /No online recordings/);
   assert.equal(app.doc.nativeDownloads.at(-1).href, link.getAttribute('href'));
   assert.equal(app.doc.nativeDownloads.at(-1).filename, null);
+});
+
+test('public archive searches and plays any published recording through the shared transport', async (t) => {
+  const catalogue = onlineCatalogueFixture(),
+    requests = [];
+  const app = await setup(t, {
+    callbacks: {
+      onlineCatalogueDownload: {
+        fetch: async (url, options) => {
+          requests.push([url, options]);
+          return onlineCatalogueResponse(catalogue);
+        },
+      },
+    },
+  });
+  await settleOnlineCatalogue();
+  assert.equal(requests.length, 1);
+  assert.equal(requests[0][0], ONLINE_SOUNDTRACK_CATALOGUE_URL);
+  assert.equal(requests[0][1].credentials, 'omit');
+  assert.equal(app.node('online-results').children.length, 3);
+  assert.match(app.node('online-status').textContent, /3 of 3 published recordings/);
+
+  app.node('online-search').value = 'dnipro';
+  app.node('online-search').oninput();
+  assert.equal(app.node('online-results').children.length, 1);
+  assert.match(app.node('online-results').textContent, /Dnipro Bells/);
+  await app.click(`online-play-${'3'.repeat(64)}`);
+  const selected = app.calls.findLast(([name]) => name === 'remote');
+  assert.equal(selected[1].length, 1);
+  assert.equal(selected[1][0].title, 'Dnipro Bells');
+  assert.deepEqual(selected[2], { order: 'ordered' });
+  assert(!app.doc.nativeDownloads.length, 'Playing in the game must not navigate to the archive.');
+
+  app.node('online-search').value = '';
+  app.node('online-search').oninput();
+  app.choose('online-style', 'metal');
+  assert.equal(app.node('online-results').children.length, 2);
+  await app.click('online-play-all');
+  const shuffled = app.calls.findLast(([name]) => name === 'remote');
+  assert.equal(shuffled[1].length, 2);
+  assert.deepEqual(shuffled[2], { order: 'shuffle' });
+});
+
+test('public archive failure and cancellation preserve built-in music controls', async (t) => {
+  const failed = await setup(t, {
+    callbacks: {
+      onlineCatalogueDownload: { fetch: async () => new Response('no', { status: 503 }) },
+    },
+  });
+  await settleOnlineCatalogue();
+  assert.match(
+    failed.node('online-status').textContent,
+    /Built-in, installed and uploaded music still works/,
+  );
+  await failed.click('play');
+  assert(failed.calls.some(([name]) => name === 'play'));
+
+  let aborted = false;
+  const pending = await setup(t, {
+    callbacks: {
+      onlineCatalogueDownload: {
+        fetch: (_url, { signal }) =>
+          new Promise((_resolve, reject) => {
+            signal.addEventListener('abort', () => {
+              aborted = true;
+              reject(new DOMException('Cancelled', 'AbortError'));
+            });
+          }),
+      },
+    },
+  });
+  assert.equal(pending.panel.close(), true);
+  await settleOnlineCatalogue();
+  assert.equal(aborted, true);
+  assert.equal(pending.node('dialog').open, false);
 });
 
 test('optional album additions preserve applied and unapplied drafts, playlist choice and playing transport', async (t) => {
@@ -2884,7 +3037,7 @@ test('published catalogue albums are visible and selectable without downloads or
   );
   assert(!app.calls.some(([name]) => name === 'play'));
   assert.match(app.node('original-status').textContent, /downloaded and checked individually/);
-  assert.match(app.node('licensed-previews-info').textContent, /Choose a built-in album/);
+  assert.match(app.node('licensed-previews-info').textContent, /plays every published recording/);
   await app.click('play');
   assert(
     app.calls.some(([name]) => name === 'play'),
