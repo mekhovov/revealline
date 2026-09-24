@@ -516,6 +516,13 @@
       "versions": [
         "v0.94.0"
       ]
+    },
+    {
+      "id": "archive-64",
+      "repository": "mekhovov/revealline-archive-64",
+      "versions": [
+        "v0.95.0"
+      ]
     }
   ]
 }
