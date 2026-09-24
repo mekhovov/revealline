@@ -73,7 +73,8 @@ reviewer names, listening approval or device results.
   [Run 35953731494](https://github.com/mekhovov/revealline-soundtracks-01/actions/runs/35953731494)
   passed all 49 intake tests and acquired all ten recordings: six DOS-88/escp synth
   and four David KBD metal. Full decoding, exact source/native bindings and
-  permitted-derivative loudness/true-peak checks passed. All remain listening-pending.
+  permitted-derivative loudness/true-peak checks passed. At acquisition all ten were listening-pending; the six synth
+  recordings are now rejected as recorded under M5.
 - Archive [PR #8](https://github.com/mekhovov/revealline-soundtracks-01/pull/8)
   merged at 3bf8e97c9f6d6303582a09fbe67fd93cc4d1fce5 with two separately sized
   audition collections. [Production evidence](https://github.com/mekhovov/revealline-soundtracks-01/tree/3bf8e97c9f6d6303582a09fbe67fd93cc4d1fce5/intake/archive/itch-core-audition-20260924)
@@ -91,7 +92,9 @@ reviewer names, listening approval or device results.
   Race to Mars and The Desolation of a Civilization → Agony Space-deep with
   readyState 4 and no media error; Next changed title/source and Pause set paused
   with the Resume label in both collections. [Independent publication review](https://github.com/mekhovov/revealline-soundtracks-01/pull/8#issuecomment-5807551144)
-  is retained. Full listening, physical-device checks and game admission remain.
+  is retained. Full listening and physical-device checks remain for candidates
+  still being considered; only musically accepted recordings may proceed to game
+  admission. M5 records the subsequent rejection of the six synth auditions.
   This round now provides **twelve public auditions: six synth, four David KBD
   metal and two Nakarada metal**, with **zero new game admissions**.
 - PR [#321](https://github.com/mekhovov/revealline/pull/321) remains draft at
