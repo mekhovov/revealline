@@ -1,5 +1,21 @@
 # Xposed-led Journey — implementation contract
 
+## Current priority: restore spatial challenge
+
+The user-approved [spatial challenge delivery plan](spatial-challenge-plan.md)
+supersedes the remaining level-redesign ordering below. Phase A prepares a new
+immutable `whole-spatial-v6` edition with six contrasting revisions and an
+effective-runtime inspector. It does not overwrite the historical v5 edition or
+claim whole-Journey balance acceptance. Cyan tiled structures in the Reloaded
+manual are walls, not reclaimed return ground. Preserve this distinction in all
+remaining adaptations.
+
+The historical 498-route cohort below exercised its recorded authored editions;
+it is **not** proof of balance under the later gp4 gameplay tuning. The new plan
+separates current-runtime evidence, publication and pending human qualification.
+
+## Historical implementation checkpoints
+
 The [current-edition adaptation audit](verification/p00-current-adaptation-audit.md)
 now resolves the 48 numbered reference crosswalks against explicit
 `whole-spatial-v5` execution identities. Historical declarations and their pins

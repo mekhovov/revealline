@@ -58,6 +58,24 @@ test('same names and runtime IDs in different editions/owners remain distinct', 
   );
 });
 
+test('automatic continuation defaults on and only accepts explicit booleans', () => {
+  const library = createMissionLibrary([source()]);
+  const original = library.missions[0];
+  assert.equal(original.automaticContinuation, true);
+  for (const value of [null, 0, 1, '', 'false', {}]) {
+    assert.throws(
+      () => library.register(source({ automaticContinuation: value })),
+      /automatic continuation must be a boolean/,
+    );
+    assert.equal(library.missions[0], original, 'Reject atomically without replacing its owner');
+  }
+  library.register(source({ automaticContinuation: false }));
+  assert.equal(library.missions[0].automaticContinuation, false);
+  assert.equal(library.launch(library.missions[0]), true, 'Browse-only remains playable');
+  library.register(source({ automaticContinuation: true }));
+  assert.equal(library.missions[0].automaticContinuation, true);
+});
+
 test('search covers edition, campaign, tags and rules; filters are mode-aware', () => {
   const library = createMissionLibrary([
     source(),
