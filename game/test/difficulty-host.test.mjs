@@ -6,6 +6,7 @@ import { createRecorder, recordInput, authoritativeCheckpoint, verifyReplay } fr
 import { suspendSession, saveSession } from '../sessions.mjs';
 import { emptyLibrary, updatePreferences, saveLibrary, loadLibrary } from '../library.mjs';
 import { createDifficultyContext } from '../campaign-difficulty.mjs';
+import { applyGameplayTuning, resolveGameplayTuning } from '../gameplay-tuning.mjs';
 import { retryFixture } from './fixtures/retry-scenarios.mjs';
 import { soloPage, memoryStorage, settle } from './helpers/solo-dom.mjs';
 
@@ -26,6 +27,8 @@ const campaign = {
 const standard = createDifficultyContext(campaign, 'standard');
 const gentle = createDifficultyContext(campaign, 'gentle');
 const campaigns = [standard.campaign, gentle.campaign];
+const freshLevel = (context) =>
+  applyGameplayTuning(context.campaign.levels[0], resolveGameplayTuning(context.mode));
 const stamp = '2026-09-12T12:00:00.000Z';
 function fixture(context, turnPolicy, count = 12) {
   const options = { seed: 1, classId: 'scout', classRecipes: campaign.classRecipes, turnPolicy };
@@ -97,6 +100,7 @@ function pauseAndRead(page, expectedContext) {
   return session;
 }
 async function retryInto(page, context, previous, control = 'overlay-restart') {
+  const picture = page.rendered.backdrop?.pin;
   assert.equal(page.$(control).hidden, false);
   page.$(control).focus();
   page.$(control).click(); // Actual visible restart or terminal Retry handler.
@@ -113,15 +117,15 @@ async function retryInto(page, context, previous, control = 'overlay-restart') {
   assert.notStrictEqual(page.rendered.run, previous);
   assert.equal(page.rendered.paused, false);
   assert.equal(page.rendered.run.tick, 0);
-  assert.deepEqual(
-    page.rendered.run.level,
-    createRun(context.campaign.levels[0], {
-      classId: 'scout',
-      classRecipes: campaign.classRecipes,
-      turnPolicy: previous.turnPolicy,
-      seed: 1,
-    }).level,
-  );
+  const reference = createRun(freshLevel(context), {
+    classId: 'scout',
+    classRecipes: campaign.classRecipes,
+    turnPolicy: previous.turnPolicy,
+    seed: 1,
+  });
+  assert.deepEqual(page.rendered.run.level, reference.level);
+  assert.deepEqual(authoritativeCheckpoint(page.rendered.run), authoritativeCheckpoint(reference));
+  assert.deepEqual(page.rendered.backdrop?.pin, picture, 'Retry retains the accepted picture.');
   assert.equal(page.rendered.run.lives, context.mode === 'gentle' ? 5 : 3);
 }
 
@@ -180,10 +184,14 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
     const fresh = pauseAndRead(page, gentle);
     assert.notEqual(fresh.runId, first.runId);
     assert.equal(fresh.replay.ticks, 12, 'Retry creates a fresh recorder');
+    assert.deepEqual(fresh.presentationPins.choices, second.presentationPins.choices);
     assert.deepEqual(page.errors, []);
   });
 
   test(`${turnPolicy}: recovery preference changes cannot replace the run or save, and Resume retains its recovery`, async (t) => {
+    // Grid-center steering queues the reversal until the next actual cell
+    // center under v4 movement; both routes still lose by legal self-contact.
+    const reverseTicks = turnPolicy === 'grid-center' ? 11 : 1;
     const page = await soloPage(t, { campaign, storage: initialStorage(turnPolicy) });
     page.$('start-button').click();
     await settle(
@@ -194,15 +202,16 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
     ticks(page, 30);
     page.key('ArrowDown', false);
     page.key('ArrowUp');
-    ticks(page, 1);
+    ticks(page, reverseTicks);
     const run = page.rendered.run;
-    assert.equal(run.tick, 31);
+    assert.equal(run.tick, 30 + reverseTicks);
     assert.equal(run.status, 'respawning');
     assert.equal(run.lives, 2);
     changeOnly(page, 'gentle', false);
     const session = pauseAndRead(page, standard);
-    assert.equal(session.replay.ticks, 31);
+    assert.equal(session.replay.ticks, 30 + reverseTicks);
     assert.equal(session.replay.segments[1].input.direction, 'up');
+    assert.equal(session.replay.segments[1].ticks, reverseTicks);
     assert.equal(session.replay.summary.failureCause, 'self-contact');
     changeOnly(page, 'standard', true);
     changeOnly(page, 'gentle', true);
@@ -221,7 +230,7 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
     assert.equal(run.lives, 2);
     const continued = pauseAndRead(page, standard);
     assert.equal(continued.runId, session.runId);
-    assert.equal(continued.replay.ticks, 271);
+    assert.equal(continued.replay.ticks, 270 + reverseTicks);
     await retryInto(page, gentle, run);
     assert.deepEqual(page.errors, []);
   });
@@ -341,6 +350,36 @@ test('a legally lost Standard attempt retries through the result button into fre
   assert.equal(retried.replay.ticks, 12);
   assert.equal(retried.replay.summary.failureCause, null);
   assert.equal(retried.replay.summary.lives, 5);
+  assert.deepEqual(retried.presentationPins.choices, first.presentationPins.choices);
+  assert.deepEqual(page.errors, []);
+});
+
+test('Pause Restart changes difficulty while retaining the released original and complete visual collection', async (t) => {
+  const released = { ...read('../content/campaign.json'), classRecipes: campaign.classRecipes };
+  const previousContext = createDifficultyContext(released, 'standard');
+  const nextContext = createDifficultyContext(released, 'gentle');
+  const page = await soloPage(t, { titleScreen: true });
+  page.$('shell-featured').click();
+  await settle(() => page.doc.body.dataset.flightState === 'running');
+  page.key('ArrowDown');
+  ticks(page, 12);
+  page.key('ArrowDown', false);
+  const original = pauseAndRead(page, previousContext);
+  const run = page.rendered.run;
+  assert.equal(original.format, 'xonix-session.v5');
+  assert.ok(original.visualThemePin);
+  assert.ok(original.presentationPins.choices.some((choice) => choice.picture.kind === 'still'));
+  assert.ok(page.rendered.backdrop?.image, 'The original has an accepted decoded image.');
+  changeOnly(page, 'gentle', true);
+  await retryInto(page, nextContext, run);
+  page.key('ArrowDown');
+  ticks(page, 12);
+  page.key('ArrowDown', false);
+  const restarted = pauseAndRead(page, nextContext);
+  assert.notEqual(restarted.runId, original.runId);
+  assert.equal(restarted.replay.ticks, 12);
+  assert.deepEqual(restarted.presentationPins.choices, original.presentationPins.choices);
+  assert.deepEqual(restarted.visualThemePin, original.visualThemePin);
   assert.deepEqual(page.errors, []);
 });
 
@@ -370,6 +409,8 @@ test('replacing a two-chapter pack retains the active Gentle chapter and applies
   const second = { ...pack.campaigns[1], classRecipes: pack.classRecipes };
   const expectedStandard = createDifficultyContext(second, 'standard');
   const expectedGentle = createDifficultyContext(second, 'gentle');
+  const freshStandard = freshLevel(expectedStandard);
+  const freshGentle = freshLevel(expectedGentle);
   const page = await soloPage(t, { campaign, storage: initialStorage('immediate') });
   async function install(candidate) {
     page.$('library-button').click();
@@ -395,7 +436,7 @@ test('replacing a two-chapter pack retains the active Gentle chapter and applies
   page.change('difficulty-select', 'gentle');
   page.frame(0);
   assert.equal(page.rendered.run.levelId, 'host-map-second');
-  assert.equal(page.rendered.run.revision, expectedGentle.campaign.levels[0].revision);
+  assert.deepEqual(page.rendered.run.level, freshGentle);
   assert.equal(page.rendered.run.lives, 5);
 
   page.$('start-button').click();
@@ -407,13 +448,14 @@ test('replacing a two-chapter pack retains the active Gentle chapter and applies
   ticks(page, 12);
   const current = page.rendered.run;
   changeOnly(page, 'standard', false);
-  assert.equal(current.revision, expectedGentle.campaign.levels[0].revision);
+  assert.deepEqual(current.level, freshGentle);
   assert.equal(preference(page), 'standard');
   // Opening Library may legitimately pause/save; this replacement must resolve
   // the authored second chapter from the active derived Gentle context.
   await install({ ...pack, version: '1.0.1' });
   assert.notStrictEqual(page.rendered.run, current);
   assert.equal(page.rendered.run.levelId, 'host-map-second');
+  assert.deepEqual(page.rendered.run.level, freshStandard);
   assert.equal(page.$('campaign-select').value, expectedStandard.campaignKey);
   assert.equal(page.$('level-select').value, 'host-map-second');
   assert.equal(page.$('difficulty-select').value, 'standard');

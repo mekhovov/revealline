@@ -1,118 +1,26 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { page } from './helpers/coop-host.mjs';
-import { coverageClear, yardOpening } from './helpers/coop-route-search.mjs';
-import { COOP_PICTURE_BINDINGS } from '../couch/coop-picture-bindings.mjs';
+import {
+  winTeam,
+  teamHud as hud,
+  teamImage as image,
+  teamTabTo as tabTo,
+} from './helpers/coop-win.mjs';
 import { createModeReturn } from '../mode-return.mjs';
 import { waitFor } from './helpers/coop-presentation-fixture.mjs';
 
 // Actual entry/core/input/navigation/artwork with the existing finite DOM and
 // inert Canvas boundary. Rehearsed keyboard commands earn the terminal state;
 // no run/status writes, profile records, native-browser or human-win claims.
-const keys = [
-  { up: 'KeyW', down: 'KeyS', left: 'KeyA', right: 'KeyD', boost: 'ShiftLeft', support: 'KeyQ' },
-  {
-    up: 'ArrowUp',
-    down: 'ArrowDown',
-    left: 'ArrowLeft',
-    right: 'ArrowRight',
-    boost: 'ShiftRight',
-    support: 'Enter',
-  },
-];
-const hud = (f) =>
-  [
-    'coop-stage',
-    'coop-clock',
-    'coop-coverage',
-    'coop-reserves',
-    'coop-objective',
-    'coop-state-0',
-    'coop-state-1',
-  ].map((id) => f.$(id).textContent);
-const image = (f) => f.drawImages.at(-1);
-function tabTo(f, id) {
-  for (let n = 0; n < 30 && f.doc.activeElement.id !== id; n++) f.tap('Tab');
-  assert.equal(f.doc.activeElement.id, id, `Keyboard traversal reaches ${id}`);
-  assert.equal(f.doc.activeElement.closest('[hidden],[inert]'), null);
-}
-async function win(t, { level = 'first-connection', ...options } = {}) {
-  const f = await page(t, {
-    nativeFocus: true,
-    nativeVisibility: true,
-    capturePaint: true,
-    ...options,
-  });
-  if (level !== 'first-connection') await f.choose('coop-level', level);
-  assert.equal(f.$('coop-level').value, level);
-  f.$('coop-difficulty').value = 'standard';
-  f.$('coop-start').focus();
-  f.tap('Enter');
-  const first = {
-    hud: hud(f),
-    paint: f.lastPaint,
-    image: image(f),
-    reads: f.artwork.calls.reads.length,
-    urls: [...f.artwork.calls.urls],
-  };
-  const route = (level === 'relay-yard' ? yardOpening : coverageClear)('standard', {
-    boost: true,
-    cover: true,
-  });
-  assert.equal(route.run.status, 'won', 'The unchanged authored core route is legal');
-  // Start clears both seats. Let the real host establish its clock and consume
-  // that neutral release before sending fresh route commands.
-  f.tick(2);
-  let hostCommandTicks = 0;
-  for (const commands of route.log) {
-    hostCommandTicks++;
-    commands.forEach((command, seat) => {
-      if (command.direction) f.tap(keys[seat][command.direction]);
-      if (command.boost) f.press(keys[seat].boost);
-      if (command.support) f.press(keys[seat].support);
-    });
-    f.tick();
-    commands.forEach((command, seat) => {
-      if (command.boost)
-        f.doc.activeElement.emit('keyup', { key: keys[seat].boost, code: keys[seat].boost });
-      if (command.support)
-        f.doc.activeElement.emit('keyup', { key: keys[seat].support, code: keys[seat].support });
-    });
-    if (!f.$('coop-overlay').hidden) break;
-  }
+async function win(t, options = {}) {
+  const result = await winTeam(t, options);
   assert.equal(
-    f.$('coop-overlay-kicker').textContent,
-    'A WORLD YOU REVEALED TOGETHER',
-    JSON.stringify({ hud: hud(f), message: f.$('coop-message').textContent, stages: route.stages }),
-  );
-  assert.equal(f.$('coop-overlay').hidden, false);
-  assert.equal(f.$('coop-resume').hidden, true);
-  assert.equal(
-    f.doc.activeElement.id,
-    level === 'first-connection' ? 'coop-next' : 'coop-discovery-paused',
+    result.f.doc.activeElement.id,
+    options.level === 'relay-yard' ? 'coop-discovery-paused' : 'coop-next',
     'Victory recommends the next arena, or choosing an arena at the end of the pack',
   );
-  assert.equal(f.$('coop-discard-dialog').open, false);
-  const binding =
-    COOP_PICTURE_BINDINGS.find((row) => row.levelId === level) ??
-    COOP_PICTURE_BINDINGS[level === 'relay-yard' ? 1 : 0];
-  assert.equal(image(f).sha256, binding.picture.sha256);
-  const terminal = { hud: hud(f), paint: f.lastPaint };
-  f.tick(30);
-  assert.deepEqual(
-    { hud: hud(f), paint: f.lastPaint },
-    terminal,
-    'Terminal flight remains stopped',
-  );
-  t.diagnostic(
-    JSON.stringify({
-      boundary: 'rehearsed keyboard host, finite DOM/inert Canvas; not native or human performance',
-      coreReferenceCommands: route.log.length,
-      hostCommandTicks,
-      terminalHUD: terminal.hud,
-    }),
-  );
-  return { f, first, terminal };
+  return result;
 }
 
 for (const [level, name] of [

@@ -510,6 +510,44 @@ export function attachControllerNavigation({
     const items = controls(),
       current = ensureFocus();
     if (!current || items.length < 2) return;
+    const journeyGrid = current.closest('#journey-cards');
+    if (journeyGrid) {
+      // Read the rendered rows on every edge: filtering, zoom and rotation may
+      // change columns without replacing the focused mission. Card heights are
+      // not reliable row markers because their authored text can differ.
+      const entries = items
+        .filter((element) => journeyGrid.contains(element))
+        .map((element) => ({ element, rect: element.getBoundingClientRect() }))
+        .sort((a, b) => a.rect.y - b.rect.y || a.rect.x - b.rect.x);
+      const rows = [];
+      for (const entry of entries) {
+        const row = rows.at(-1);
+        if (row && Math.abs(row[0].rect.y - entry.rect.y) <= 1) row.push(entry);
+        else rows.push([entry]);
+      }
+      const rowIndex = rows.findIndex((row) => row.some(({ element }) => element === current)),
+        row = rows[rowIndex],
+        from = row.find(({ element }) => element === current).rect,
+        cx = from.x + from.width / 2;
+      const horizontal = direction === 'left' || direction === 'right',
+        step = direction === 'down' || direction === 'right' ? 1 : -1,
+        candidates = horizontal ? row : rows[rowIndex + step];
+      if (candidates) {
+        const next = candidates
+          .map(({ element, rect }) => ({ element, dx: rect.x + rect.width / 2 - cx }))
+          .filter(({ element, dx }) => element !== current && (!horizontal || dx * step > 1))
+          .sort((a, b) => Math.abs(a.dx) - Math.abs(b.dx))[0];
+        if (next) focus(next.element);
+      } else if (!horizontal) {
+        // Top/bottom exits reach adjacent menu controls without wrapping to a
+        // different mission. Left/right row edges always retain the selection.
+        const gridItems = items.filter((element) => journeyGrid.contains(element)),
+          edge = step < 0 ? gridItems[0] : gridItems.at(-1),
+          next = items[items.indexOf(edge) + step];
+        if (next && !journeyGrid.contains(next)) focus(next);
+      }
+      return;
+    }
     const grid = current.closest('#gallery-grid,#missions');
     if (grid) {
       const from = current.getBoundingClientRect();

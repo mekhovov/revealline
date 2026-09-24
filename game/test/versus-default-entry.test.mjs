@@ -25,117 +25,148 @@ const page = (t, search = '', options = {}) =>
     ...options,
   });
 
+async function openMissions(page, activate) {
+  const missions = page.$('race-library-switch'),
+    listeners = missions.listeners.get('click');
+  assert.equal(listeners.size, 1);
+  const [open] = listeners;
+  let opening;
+  // Observe the real shell listener's operation without changing the input
+  // gesture or its focus. Cold catalogue preparation is not a five-second poll.
+  missions.listeners.set('click', new Set([(event) => (opening = open(event))]));
+  try {
+    activate();
+    assert.ok(opening instanceof Promise, 'The public action must own Missions preparation.');
+    assert.equal(page.$('race-message').getAttribute('role'), 'status');
+    assert.equal(
+      page.$('race-message').textContent,
+      'Preparing missions… Your current race is kept.',
+    );
+  } finally {
+    missions.listeners.set('click', listeners);
+  }
+  await opening;
+  assert.equal(page.$('journey-chooser')?.open, true);
+}
+
 // Actual host, catalogue, profile and authored picture preparation; the finite
 // DOM/Image boundary models input and decoding, not physical-device or browser layout.
-test('queryless Versus exposes all 91 current missions and starts from its focused primary action', async (t) => {
-  const p = await page(t, '', { nativeKeyboard: true, pads: [pad()] });
-  assert.equal(p.doc.body.classList.contains('candidate-journey'), true);
-  assert.equal(p.$('race-level').children.length, 91);
-  assert.equal(
-    p.$('race-journey-note').textContent,
-    'New Journey / 91 missions. Original pictures need a connection; core offline preparation does not save them.',
-  );
-  assert.doesNotMatch(p.$('race-journey-note').textContent, /unvalidated|test build/i);
-  assert.match(p.$('race-summary').textContent, /Horizon School/);
-  assert.doesNotMatch(p.$('race-summary').textContent, /material review/);
-  assert.equal(
-    p.$('race-installed-status').textContent,
-    'Open All missions for Journey, earlier missions and installed chapters.',
-  );
-  assert.equal(
-    p.$('race-coop').querySelector('.game-mode-description').textContent,
-    '12 Team missions',
-  );
-  assert.equal(p.$('race-solo-return').getAttribute('href'), '../?journey=whole-spatial-v9');
-  assert.equal(
-    p.$('race-coop').getAttribute('href'),
-    'relay-rescue.html?return=versus&journey-return=whole-spatial-v9',
-  );
-  assert.equal(p.$('race-library-switch').getAttribute('href'), '?journey=legacy');
-  assert.equal(p.$('race-library-switch').textContent, 'All missions');
-  assert.equal(p.doc.activeElement.id, 'race-start');
-  assert.equal(p.$('race-setup').hidden, true);
-  p.key('Enter', true, p.doc.activeElement);
-  p.key('Enter', false, p.$('race-start'));
-  await settle(() => {
+test(
+  'queryless Versus exposes all 91 current missions and starts from its focused primary action',
+  { timeout: 60000 },
+  async (t) => {
+    const p = await page(t, '', { nativeKeyboard: true, pads: [pad()] });
+    assert.equal(p.doc.body.classList.contains('candidate-journey'), true);
+    assert.equal(p.$('race-level').children.length, 91);
+    assert.equal(
+      p.$('race-journey-note').textContent,
+      'New Journey / 91 missions. Original pictures need a connection; core offline preparation does not save them.',
+    );
+    assert.doesNotMatch(p.$('race-journey-note').textContent, /unvalidated|test build/i);
+    assert.match(p.$('race-summary').textContent, /Horizon School/);
+    assert.doesNotMatch(p.$('race-summary').textContent, /material review/);
+    assert.equal(
+      p.$('race-installed-status').textContent,
+      'Open All missions for Journey, earlier missions and installed chapters.',
+    );
+    assert.equal(
+      p.$('race-coop').querySelector('.game-mode-description').textContent,
+      '12 Team missions',
+    );
+    assert.equal(p.$('race-solo-return').getAttribute('href'), '../?journey=whole-spatial-v9');
+    assert.equal(
+      p.$('race-coop').getAttribute('href'),
+      'relay-rescue.html?return=versus&journey-return=whole-spatial-v9',
+    );
+    assert.equal(p.$('race-library-switch').getAttribute('href'), '?journey=legacy');
+    assert.equal(p.$('race-library-switch').textContent, 'All missions');
+    assert.equal(p.doc.activeElement.id, 'race-start');
+    assert.equal(p.$('race-setup').hidden, true);
+    p.key('Enter', true, p.doc.activeElement);
+    p.key('Enter', false, p.$('race-start'));
+    await settle(() => {
+      p.frame(0);
+      return !p.$('race-pause').disabled;
+    });
+    assert.equal(p.state(), 'running');
+    assert.equal(p.renders[0].levelId, 'first-return');
+    assert.equal(p.renders[1].levelId, 'first-return');
+    p.$('race-pause').click();
     p.frame(0);
-    return !p.$('race-pause').disabled;
-  });
-  assert.equal(p.state(), 'running');
-  assert.equal(p.renders[0].levelId, 'first-return');
-  assert.equal(p.renders[1].levelId, 'first-return');
-  p.$('race-pause').click();
-  p.frame(0);
-  const checkpoint = p.checkpoint();
-  const runs = [...p.renders];
-  p.join(0);
-  p.focus('race-library-switch');
-  p.pulse(0, 0);
-  await settle(() => p.$('journey-chooser')?.open);
-  assert.equal(p.$('race-leave-panel').hidden, true);
-  assert.equal(p.$('journey-mode').value, 'versus');
-  assert.equal(p.$('journey-collection').value, '');
-  assert.equal(p.$('journey-cards').children.length, 201);
-  p.frame(0); // The newly opened dialog observes neutral before accepting Back.
-  p.pulse(0, 1);
-  assert.equal(p.$('journey-chooser').open, false);
-  assert.equal(p.doc.activeElement.id, 'race-library-switch');
-  assert.deepEqual(p.checkpoint(), checkpoint);
-  assert.equal(
-    p.renders.every((run, i) => run === runs[i]),
-    true,
-  );
-  assert.equal(p.state(), 'paused');
-  // Mode departure still uses the retained guarded link. Browsing does not.
-  p.$('race-solo-return').click();
-  assert.equal(p.$('race-leave-panel').hidden, false);
-  p.$('race-leave').setAttribute('href', 'https://untrusted.invalid/');
-  assert.equal(p.$('race-leave').emit('click').defaultPrevented, false);
-  assert.equal(p.$('race-leave').getAttribute('href'), '../?journey=whole-spatial-v9');
-  assert.deepEqual(p.checkpoint(), checkpoint);
-});
+    const checkpoint = p.checkpoint();
+    const runs = [...p.renders];
+    p.join(0);
+    p.focus('race-library-switch');
+    await openMissions(p, () => p.pulse(0, 0));
+    assert.equal(p.$('race-leave-panel').hidden, true);
+    assert.equal(p.$('journey-mode').value, 'versus');
+    assert.equal(p.$('journey-collection').value, '');
+    assert.equal(p.$('journey-cards').children.length, 201);
+    p.frame(0); // The newly opened dialog observes neutral before accepting Back.
+    p.pulse(0, 1);
+    assert.equal(p.$('journey-chooser').open, false);
+    assert.equal(p.doc.activeElement.id, 'race-library-switch');
+    assert.deepEqual(p.checkpoint(), checkpoint);
+    assert.equal(
+      p.renders.every((run, i) => run === runs[i]),
+      true,
+    );
+    assert.equal(p.state(), 'paused');
+    // Mode departure still uses the retained guarded link. Browsing does not.
+    p.$('race-solo-return').click();
+    assert.equal(p.$('race-leave-panel').hidden, false);
+    p.$('race-leave').setAttribute('href', 'https://untrusted.invalid/');
+    assert.equal(p.$('race-leave').emit('click').defaultPrevented, false);
+    assert.equal(p.$('race-leave').getAttribute('href'), '../?journey=whole-spatial-v9');
+    assert.deepEqual(p.checkpoint(), checkpoint);
+  },
+);
 
-test('explicit Legacy Versus keeps its mode links and guards an exact New Journey library selection', async (t) => {
-  const p = await page(t, '?journey=legacy');
-  assert.equal(p.doc.body.classList.contains('candidate-journey'), false);
-  assert.equal(p.$('race-level').children.length, 15);
-  assert.equal(p.$('race-solo-return').getAttribute('href'), '../?journey=legacy');
-  assert.equal(
-    p.$('race-coop').getAttribute('href'),
-    'relay-rescue.html?journey=legacy&return=versus',
-  );
-  assert.equal(p.$('race-library-switch').textContent, 'All missions');
-  assert.equal(p.$('race-library-switch').getAttribute('href'), '?journey=whole-spatial-v9');
-  assert.equal(p.$('race-library-switch').emit('click').defaultPrevented, true);
-  await settle(() => p.$('journey-chooser')?.open);
-  p.$('journey-back').click();
-  p.$('race-start').click();
-  await settle(() => {
+test(
+  'explicit Legacy Versus keeps its mode links and guards an exact New Journey library selection',
+  { timeout: 60000 },
+  async (t) => {
+    const p = await page(t, '?journey=legacy');
+    assert.equal(p.doc.body.classList.contains('candidate-journey'), false);
+    assert.equal(p.$('race-level').children.length, 15);
+    assert.equal(p.$('race-solo-return').getAttribute('href'), '../?journey=legacy');
+    assert.equal(
+      p.$('race-coop').getAttribute('href'),
+      'relay-rescue.html?journey=legacy&return=versus',
+    );
+    assert.equal(p.$('race-library-switch').textContent, 'All missions');
+    assert.equal(p.$('race-library-switch').getAttribute('href'), '?journey=whole-spatial-v9');
+    await openMissions(p, () =>
+      assert.equal(p.$('race-library-switch').emit('click').defaultPrevented, true),
+    );
+    p.$('journey-back').click();
+    p.$('race-start').click();
+    await settle(() => {
+      p.frame(0);
+      return !p.$('race-pause').disabled;
+    });
+    assert.equal(p.state(), 'running');
+    p.$('race-pause').click();
     p.frame(0);
-    return !p.$('race-pause').disabled;
-  });
-  assert.equal(p.state(), 'running');
-  p.$('race-pause').click();
-  p.frame(0);
-  const checkpoint = p.checkpoint();
-  p.$('race-library-switch').click();
-  await settle(() => p.$('journey-chooser')?.open);
-  const target = [...p.$('journey-cards').children].find((card) =>
-    JSON.parse(card.dataset.missionId)[3].endsWith('/choose-your-share'),
-  );
-  assert(target, 'An exact New Journey mission is available alongside Classic.');
-  target.click();
-  await settle(() => p.$('race-library-replace')?.open);
-  assert.match(p.$('race-library-replace-title').textContent, /Choose your share/i);
-  assert.deepEqual(p.checkpoint(), checkpoint);
-  p.$('race-library-stay').click();
-  await settle(() => p.$('journey-chooser')?.open);
-  assert.equal(p.doc.activeElement, target);
-  p.$('journey-back').click();
-  assert.equal(p.doc.activeElement.id, 'race-library-switch');
-  assert.deepEqual(p.checkpoint(), checkpoint);
-  assert.equal(p.state(), 'paused');
-});
+    const checkpoint = p.checkpoint();
+    await openMissions(p, () => p.$('race-library-switch').click());
+    const target = [...p.$('journey-cards').children].find((card) =>
+      JSON.parse(card.dataset.missionId)[3].endsWith('/choose-your-share'),
+    );
+    assert(target, 'An exact New Journey mission is available alongside Classic.');
+    target.click();
+    await settle(() => p.$('race-library-replace')?.open);
+    assert.match(p.$('race-library-replace-title').textContent, /Choose your share/i);
+    assert.deepEqual(p.checkpoint(), checkpoint);
+    p.$('race-library-stay').click();
+    await settle(() => p.$('journey-chooser')?.open);
+    assert.equal(p.doc.activeElement, target);
+    p.$('journey-back').click();
+    assert.equal(p.doc.activeElement.id, 'race-library-switch');
+    assert.deepEqual(p.checkpoint(), checkpoint);
+    assert.equal(p.state(), 'paused');
+  },
+);
 
 for (const query of [
   '?journey=',

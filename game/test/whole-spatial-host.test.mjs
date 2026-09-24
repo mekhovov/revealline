@@ -6,6 +6,7 @@ import { couchPage } from './helpers/couch-host.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
 import { createJourneyBackend, emptyJourneyProfile } from '../journey/profile.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
+import { chooseJourneyMission } from './helpers/library-selection.mjs';
 
 const first = 'candidate/journey-opening/prologue/first-return';
 class Picture {
@@ -69,8 +70,12 @@ for (const revision of ['v1', 'v2', 'v3', 'v4']) {
       p.$('shell-featured').click();
       await running(p, 'first-return');
       assert.equal(p.$('theme-select').value, 'horizon-actors-v1');
-      assert.match(p.$('overlay-difficulty').textContent, /40% faster.*15% shorter attack rests/);
-      assert.match(p.$('difficulty-note').textContent, /40% faster/);
+      assert.match(
+        p.$('overlay-difficulty').textContent,
+        /Journey standard.*3 starting lives.*no failing countdown/,
+      );
+      assert.equal(p.rendered.run.rules.moveSpeed, 8.84);
+      assert.match(p.$('difficulty-note').textContent, /Reference-paced targets/);
       assert.deepEqual(await backend.read(), {
         ...emptyJourneyProfile(),
         generation: 1,
@@ -122,12 +127,7 @@ for (const revision of ['v1', 'v2', 'v3', 'v4']) {
       assert.equal(profile.skipped.solo.length, 1);
       assert.match(profile.skipped.solo[0], /choose-your-share$/);
       assert.deepEqual(await historical.read(), prior);
-      p.$('shell-packs').click();
-      const card = p
-        .$('journey-cards')
-        .children.find((node) => node.dataset.missionId.endsWith('/long-way-home'));
-      assert(card);
-      card.click();
+      await chooseJourneyMission(p, 'shell-packs', routeId, 'long-way-home');
       await running(p, 'long-way-home');
       const previousRun = p.rendered.run,
         previousPicture = p.rendered.backdrop;
@@ -176,7 +176,11 @@ for (const revision of ['v1', 'v2', 'v3', 'v4']) {
       return !p.$('race-pause').disabled;
     });
     assert.equal(p.$('race-theme').value, 'horizon-actors-v1');
-    assert.match(p.$('race-journey-difficulty-note').textContent, /40% faster/);
+    assert.match(
+      p.$('race-journey-difficulty-note').textContent,
+      /standard.*Reference-paced targets/,
+    );
+    assert(p.renders.every((run) => run.rules.moveSpeed === 8.84));
     assert.notEqual(p.renders[0], p.renders[1]);
     assert.notEqual(p.renders[0].player, p.renders[1].player);
     p.key('KeyS');

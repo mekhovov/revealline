@@ -1170,7 +1170,7 @@ try {
       const pins = validateFlightPresentationPinsForRun(flightPictures.pins(), {
         identityCatalog: flightPictures.identityCatalog,
         campaignKey: campaignKey(campaign),
-        level: run.level,
+        level: pictureLevelForRun(run, activeEntry),
         themeId: theme.id,
       });
       const pin = storyPinForTheme(pins, theme.id),
@@ -1229,6 +1229,12 @@ try {
   function pictureIdentity(metadata) {
     return createPictureIdentityCatalog({ entries: installedEntries, metadata });
   }
+  function pictureLevelForRun(nextRun, entry) {
+    // Difficulty changes simulation, not the ownership of an original picture.
+    return recoverGameplayTuning(nextRun.level)
+      ? entry.campaign.levels.find((level) => level.id === nextRun.levelId)
+      : nextRun.level;
+  }
   function newFlightPictures({
     nextRun = run,
     nextRunId = runId,
@@ -1239,10 +1245,7 @@ try {
     explicitLegacy = false,
     candidatePicture = null,
   } = {}) {
-    // Difficulty changes simulation, not the ownership of an original picture.
-    const pictureLevel = recoverGameplayTuning(nextRun.level)
-      ? entry.campaign.levels.find((level) => level.id === nextRun.levelId)
-      : nextRun.level;
+    const pictureLevel = pictureLevelForRun(nextRun, entry);
     if (candidateHost?.owns(entry)) {
       const manifest = entry.manifests.find((item) => item.level.id === nextRun.levelId);
       return createCandidateFlightPictures({
@@ -2097,6 +2100,8 @@ try {
   function controllerFocus() {
     const dialog = controllerDialog();
     if (dialog) {
+      if (dialog.id === 'shell-home') return gameShell?.primary();
+      if (dialog.id === 'journey-chooser') return journeyChooser?.primary?.();
       if (dialog.id === 'hangar-dialog') return $('switch-class-select');
       if (dialog.id === 'collection-dialog')
         return $('gallery-grid').querySelector('button') || $('gallery-search');
@@ -6464,8 +6469,7 @@ try {
   function focusAppearance() {
     if ($('collection-dialog').open) $('collection-dialog').close();
     if (!practiceSession) {
-      void openUnifiedMissions(document.activeElement, { focusSetup: 'body-select' });
-      return;
+      return openUnifiedMissions(document.activeElement, { focusSetup: 'body-select' });
     }
     gameShell?.openMissions();
     missionPicker?.revealSetup();
@@ -6730,7 +6734,12 @@ try {
         run.medal === 'gold' ? 3 : run.medal === 'silver' ? 2 : 1,
       );
       if (recoverGameplayTuning(run.level)?.adminOverride) $('result-medals').textContent = '';
-      $('next-button').textContent = practice ? 'Try it yourself →' : 'Next mission →';
+      const completedJourneyMission = journeyEnabled && !practice && !scenario && journeyMission();
+      $('next-button').textContent = practice
+        ? 'Try it yourself →'
+        : completedJourneyMission && !nextJourneyMission(completedJourneyMission.id)
+          ? 'Browse missions →'
+          : 'Next mission →';
       $('overlay-footnote').textContent = practice
         ? 'Demonstrations and imported maps do not grant unlocks.'
         : run.medal === 'gold'
@@ -7323,9 +7332,23 @@ try {
       cancelPictureStart();
       storyDialog.close();
     }
+    const retainedPins = retainAttemptAppearance && flightPictures?.pins();
     const retainedPictures =
       retainAttemptAppearance && flightPictures
-        ? { pins: flightPictures.pins(), legacy: flightPictures.legacy }
+        ? {
+            // Restart can adopt a new difficulty context while keeping every
+            // accepted picture/story choice, just like Retry from results.
+            pins:
+              retainedPins && !flightPictures.legacy
+                ? retryFlightPresentationPins(retainedPins, {
+                    identityCatalog: pictureIdentity(),
+                    campaignKey: campaignKey(campaign),
+                    level: campaign.levels[levelIndex],
+                    themeId: theme.id,
+                  })
+                : retainedPins || undefined,
+            legacy: flightPictures.legacy,
+          }
         : null;
     const keepVisuals =
       restoreAdoption || retainAttemptAppearance || preparedAttempt?.ticket.kind === 'retry';
@@ -8620,8 +8643,7 @@ try {
   };
   $('choose-mission').onclick = () => {
     if (!practiceSession) {
-      void openUnifiedMissions($('choose-mission'));
-      return;
+      return openUnifiedMissions($('choose-mission'));
     }
     gameShell?.openMissions();
     const mission = $('missions').querySelector('button:not(:disabled)');
@@ -8766,7 +8788,7 @@ try {
     if (journeyEnabled && !practice && !scenario && run?.status === 'won' && journeyMission()) {
       const next = nextJourneyMission(journeyMission().id);
       if (next) void launchJourneyMission(next, { kind: 'next' });
-      else void nextLibraryMission();
+      else journeyChooser.open($('next-button'));
       return;
     }
     if (campaignOverview && !practice) {
@@ -8782,12 +8804,10 @@ try {
       if (run?.status !== 'won') return;
       const selection = authoredMissionSuccessor(activeEntry, levelIndex);
       if (!selection.atEnd && !scenario && run?.status === 'won') {
-        void prepareResultAttempt('next', selection.levelIndex);
-        return;
+        return prepareResultAttempt('next', selection.levelIndex);
       }
       if (selection.atEnd && !scenario) {
-        void nextLibraryMission();
-        return;
+        return nextLibraryMission();
       }
       cancelResultAttempt();
       campaignOverview = selection.atEnd;
@@ -9490,6 +9510,29 @@ try {
       unifiedChooser = attachJourneyChooser({
         library: result.library,
         profile,
+        getCurrentId: () => {
+          const mission = candidateHost && journeyMission();
+          if (mission)
+            return result.library.missions.find(
+              (row) =>
+                row.ownerId === `journey:${authoredRoute.id}` &&
+                row.editionId === authoredRoute.id &&
+                row.runtimeId === mission.id &&
+                row.modes.includes('solo'),
+            )?.id;
+          try {
+            return retainedLibraryMission(result.library, {
+              mode: 'solo',
+              levelId: campaign.levels[levelIndex].id,
+              campaignKey: activeEntry.baseCampaignKey || campaignKey(campaign),
+              sourcePackId: activeEntry.sourcePackId ?? null,
+              ...(retainedLibraryOwner?.entry === activeEntry ? retainedLibraryOwner : {}),
+            })?.id;
+          } catch {
+            // Focus is a browsing hint, never authority to replace an unavailable edition.
+            return null;
+          }
+        },
         readState: () =>
           state.read() ??
           (returnedRow
@@ -9899,11 +9942,13 @@ try {
     retiredJourneyChooser = journeyChooser;
     journeyChooser = {
       open: openUnifiedMissions,
+      primary: () => unifiedChooser?.primary(),
       refresh: () => unifiedChooser?.refresh(),
       close: () => unifiedChooser?.close(),
     };
   }
   gameShell = attachGameShell({
+    keyboardNavigation: false, // The shared controller adapter also owns menu keys.
     training: courseSession,
     practiceReturn: $('enemy-workshop-return'),
     focusBriefing: () => {
@@ -9975,10 +10020,9 @@ try {
         !event.shiftKey
       ) {
         event.preventDefault();
-        void openUnifiedMissions(link, {
+        return openUnifiedMissions(link, {
           returnLabel: $('shell-home').open ? 'Back to menu' : 'Back to brief',
         });
-        return;
       }
       const parent = link.closest('dialog');
       void requestModeDeparture('catalogue', event, link, {
@@ -10017,6 +10061,8 @@ try {
       )
         resume({ contentSwitchTicket: autoplayPackLaunch.ticket });
     });
+  const bootHome = controllerDialog() === $('shell-home');
+  const bootFocus = document.activeElement;
   if (globalThis.RevealLineBoot) globalThis.RevealLineBoot.ready();
   else {
     document.querySelectorAll('[data-boot-inert]').forEach((element) => {
@@ -10028,7 +10074,8 @@ try {
   if (libraryHandoff && !practiceSession) {
     const revision = ++unifiedOpenRevision;
     const incomingRun = run,
-      incomingStarted = started;
+      incomingStarted = started,
+      incomingPrewarm = picturePrewarm?.promise;
     const opening = trackMissionLibraryOpening({
       onRetire: () => {
         if (revision === unifiedOpenRevision) ++unifiedOpenRevision;
@@ -10039,6 +10086,10 @@ try {
     await (async () => {
       try {
         const host = await getUnifiedMissionLibrary();
+        // The boot picture may still own a media-generation write. Finish it
+        // before the requested mission prepares its distinct exact original.
+        // Its failure is not authority to replace or reject the requested art.
+        await incomingPrewarm?.catch(() => {});
         opening.dispose();
         if (
           revision !== unifiedOpenRevision ||
@@ -10118,7 +10169,9 @@ try {
   if (
     !document.hidden &&
     document.hasFocus?.() !== false &&
-    (document.activeElement === document.body || !availableFocusTarget(document.activeElement))
+    (document.activeElement === document.body ||
+      !availableFocusTarget(document.activeElement) ||
+      (bootHome && controllerDialog() === $('shell-home') && document.activeElement === bootFocus))
   ) {
     const target = controllerFocus();
     if (availableFocusTarget(target)) target.focus({ preventScroll: true });

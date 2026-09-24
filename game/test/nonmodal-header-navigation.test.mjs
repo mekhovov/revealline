@@ -2,16 +2,24 @@
 // hardware are modeled. No run state, navigation callbacks or saves are replaced.
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 import { soloPage, SoloElement, memoryStorage, settle } from './helpers/solo-dom.mjs';
 import { emptyLibrary, updatePreferences, saveLibrary } from '../library.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
 
 const headers = [
-  ['shell-packs', 'shell-missions'],
+  ['shell-packs', 'journey-chooser'],
   ['shell-collection', 'collection-dialog'],
   ['shell-settings', 'settings-dialog'],
 ];
 const sessionKey = 'revealline.suspended.dev.v1';
+// Navigation qualification needs a reproducible legal victory, independently
+// of later enemy tuning in the production First Signal mission.
+const navigationCampaign = JSON.parse(
+  readFileSync(new URL('../content/campaign.json', import.meta.url)),
+);
+navigationCampaign.id = 'header-navigation';
+navigationCampaign.levels[0].enemies = [];
 function nativeDialogs(t) {
   const show = SoloElement.prototype.showModal,
     close = SoloElement.prototype.close;
@@ -40,6 +48,20 @@ function key(page, value, extra = {}) {
   if (!event.defaultPrevented && ['Enter', ' '].includes(value) && target.tagName === 'BUTTON')
     target.click();
   const dialog = target.closest('dialog[open]');
+  if (!event.defaultPrevented && value === 'Tab' && dialog) {
+    const stops = [
+      ...dialog.querySelectorAll('button,a[href],input,select,textarea,summary'),
+    ].filter(
+      (node) =>
+        !node.disabled &&
+        node.tabIndex >= 0 &&
+        !node.closest('[hidden],[inert],[aria-hidden="true"]') &&
+        (!node.closest('details:not([open])') || node.tagName === 'SUMMARY') &&
+        node.getClientRects().length,
+    );
+    const index = stops.indexOf(target);
+    stops[index + (extra.shiftKey ? -1 : 1)]?.focus();
+  }
   if (
     !event.defaultPrevented &&
     value === 'Escape' &&
@@ -49,6 +71,31 @@ function key(page, value, extra = {}) {
     dialog.close();
   target.emit('keyup', { key: value, code: value });
   return event;
+}
+// Capture the original handler's operation without moving focus or replacing
+// the native keyboard/controller gesture being qualified. Cold catalogue work
+// may exceed a readiness poll while still acknowledging the action immediately.
+async function activateHeader(page, header, activate) {
+  if (header !== 'shell-packs') {
+    activate();
+    return;
+  }
+  const control = page.$(header),
+    handler = control.onclick;
+  let pending;
+  control.onclick = (...args) => (pending = handler.apply(control, args));
+  try {
+    activate();
+  } finally {
+    control.onclick = handler;
+  }
+  assert(pending instanceof Promise, 'The actual Missions gesture owns preparation.');
+  const feedback = page.$('mission-library-opening-status');
+  assert.equal(feedback?.textContent, 'Preparing missions…');
+  assert.equal(feedback.getAttribute('role'), 'status');
+  assert.equal(page.doc.activeElement, control, 'Loading does not take header focus.');
+  await pending;
+  assert.equal(page.$('journey-chooser').open, true);
 }
 function frames(page, count) {
   for (let i = 0; i < count; i++) page.frame();
@@ -85,7 +132,7 @@ async function fixture(t, policy, options = {}) {
     ).ok,
     true,
   );
-  const page = await soloPage(t, { storage, ...options });
+  const page = await soloPage(t, { storage, campaign: navigationCampaign, ...options });
   assert.equal(page.rendered.run.turnPolicy, policy);
   return page;
 }
@@ -170,7 +217,8 @@ for (const policy of ['immediate', 'grid-center']) {
       const before = snapshot(page);
       for (const [header, dialog] of headers) {
         page.$(header).focus();
-        key(page, 'Enter');
+        await activateHeader(page, header, () => key(page, 'Enter'));
+        await settle(() => page.$(dialog)?.open);
         assert.equal(page.$(dialog).open, true, `${header} activates from ${state}`);
         page.$(dialog).close();
         frames(page, 3);
@@ -179,8 +227,10 @@ for (const policy of ['immediate', 'grid-center']) {
       const controls = pad(page, t);
       for (const [header, dialog] of headers) {
         controls.reach(header);
-        controls.pulse(0);
+        await activateHeader(page, header, () => controls.pulse(0));
+        await settle(() => page.$(dialog)?.open);
         assert.equal(page.$(dialog).open, true);
+        controls.frame(); // The asynchronously opened modal receives a neutral sample.
         controls.pulse(1);
         assert.equal(page.$(dialog).open, false);
         unchanged(page, before);
@@ -222,8 +272,10 @@ for (const policy of ['immediate', 'grid-center']) {
     const controls = pad(page, t);
     for (const [header, dialog] of headers) {
       controls.reach(header);
-      controls.pulse(0);
+      await activateHeader(page, header, () => controls.pulse(0));
+      await settle(() => page.$(dialog)?.open);
       assert.equal(page.$(dialog).open, true);
+      controls.frame();
       controls.pulse(1);
       assert.equal(page.$(dialog).open, false);
       unchanged(page, before);
@@ -336,7 +388,7 @@ for (const policy of ['immediate', 'grid-center']) {
         assert.equal(element.hidden, true);
       const menuVisits = new Set();
       for (let i = 0; i < 25; i++) {
-        key(page, 'ArrowDown');
+        key(page, 'Tab');
         menuVisits.add(page.doc.activeElement.id);
       }
       assert.ok(menuVisits.has('shell-course-return'));
@@ -373,7 +425,7 @@ for (const policy of ['immediate', 'grid-center']) {
       controls.pulse(13);
       assert.equal(!!page.doc.activeElement.closest('.shell-bar'), false);
     }
-    for (const [, dialog] of headers) assert.equal(page.$(dialog).open, false);
+    for (const [, dialog] of headers) assert.notEqual(page.$(dialog)?.open, true);
     frames(page, 20);
     unchanged(page, before);
     assert.deepEqual(page.errors, []);

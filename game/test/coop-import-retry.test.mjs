@@ -60,7 +60,10 @@ function assertFresh(f, accepted, resources) {
 function assertCoverageSuccess(f) {
   assert.ok(Number.parseFloat(f.$('coop-coverage').textContent) >= 72.4);
   assert.equal(f.$('coop-next').hidden, true);
-  assert.match(f.$('coop-overlay-copy').textContent, /Pack complete.*Browse Team arenas/);
+  assert.match(
+    f.$('coop-overlay-copy').textContent,
+    /End of the Team mission library\. Browse Team arenas/,
+  );
   assert.equal(f.doc.activeElement.id, 'coop-discovery-paused');
 }
 

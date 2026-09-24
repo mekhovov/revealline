@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { createHash, webcrypto } from 'node:crypto';
 import { page } from './helpers/coop-host.mjs';
+import { playCurrentTeamRoute } from './helpers/current-team-route.mjs';
 import { waitFor } from './helpers/coop-presentation-fixture.mjs';
 import { createTeamJourneyCandidates } from '../content-design/team-journey-candidates.mjs';
 
@@ -15,18 +16,8 @@ const originals = new Map(
     ]),
   ),
 );
-const read = async (name) =>
-  JSON.parse(await readFile(new URL('./fixtures/' + name + '.json', import.meta.url)));
-const routes = [
-  ...(await read('team-opening-routes')).routes,
-  ...(await read('team-foundation-routes')).clear,
-  ...(await read('team-material-routes')).routes,
-  ...(await read('team-roamer-routes')).routes,
-];
-const keys = [
-  { up: 'KeyW', down: 'KeyS', left: 'KeyA', right: 'KeyD' },
-  { up: 'ArrowUp', down: 'ArrowDown', left: 'ArrowLeft', right: 'ArrowRight' },
-];
+const decodedOriginals = new WeakSet();
+const currentImage = (f) => f.drawImages.findLast((image) => decodedOriginals.has(image));
 
 function environment(install, failures) {
   const BaseImage = globalThis.Image;
@@ -38,6 +29,7 @@ function environment(install, failures) {
       this.width = this.naturalWidth = bytes.readUInt32BE(16);
       this.height = this.naturalHeight = bytes.readUInt32BE(20);
       this.sha256 = createHash('sha256').update(bytes).digest('hex');
+      decodedOriginals.add(this);
     }
     removeAttribute(name) {
       if (name === 'src') this.releases++;
@@ -57,16 +49,7 @@ function environment(install, failures) {
 }
 
 function clear(f, missionId) {
-  const row = routes.find((r) => r.missionId === missionId && r.difficulty === 'standard');
-  assert(row);
-  f.tick(2);
-  for (const segment of row.log) {
-    for (const [seat, direction] of [segment.a, segment.b].entries())
-      if (direction) f.tap(keys[seat][direction]);
-    for (let n = 0; n < segment.ticks && f.$('coop-overlay').hidden; n++) f.tick();
-    if (!f.$('coop-overlay').hidden) break;
-  }
-  assert.equal(f.$('coop-overlay-kicker').textContent, 'A WORLD YOU REVEALED TOGETHER');
+  return playCurrentTeamRoute(f, source, missionId);
 }
 
 test('twelve real-host Team clears reveal exact originals through eleven Next handovers and one failed preload', async (t) => {
@@ -87,12 +70,12 @@ test('twelve real-host Team clears reveal exact originals through eleven Next ha
     assert.equal(f.$('coop-level').value, mission.id);
     assert.equal(f.$('coop-menu').hidden, true);
     f.tick();
-    const image = f.drawImages.at(-1);
+    const image = currentImage(f);
     assert.equal(image.sha256, asset.sha256);
     assert.equal(image.width, asset.width);
     assert.equal(image.releases, 0);
     clear(f, mission.id);
-    assert.equal(f.drawImages.at(-1), image, 'Victory retains its exact picture');
+    assert.equal(currentImage(f), image, 'Victory retains its exact picture');
     assert.equal(f.$('coop-reserves').textContent, '2 reserves');
     assert.deepEqual(f.visits, []);
     if (index === 0) {
@@ -166,7 +149,7 @@ test('initial candidate picture failure retries deliberately and chooser starts 
   assert.equal(first.releases, 1);
   const mission = source.missions.find((m) => m.id === 'shared-lookout');
   assert.equal(
-    f.drawImages.at(-1).sha256,
+    currentImage(f).sha256,
     source.assets.find((a) => a.id === mission.presentation.backgroundAssetId).sha256,
   );
   assert.equal(f.$('coop-clock').textContent, '0:00');

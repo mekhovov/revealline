@@ -44,7 +44,13 @@ function pause(f) {
   assert.equal(f.$('coop-overlay').hidden, false);
   assert.match(f.$('coop-overlay-title').textContent, /paused/i);
 }
-const currentImage = (f) => f.drawImages.at(-1);
+const currentImage = (f) => {
+  // Actors are painted after terrain. Match an actual decoded original rather
+  // than assuming the final image command is the arena picture.
+  const image = f.drawImages.findLast((drawn) => f.artwork.calls.decodes.includes(drawn));
+  assert.ok(image, 'The painter draws a decoded arena original.');
+  return image;
+};
 
 test('Team discovery opens through keyboard and Back restores the exact lobby opener', async (t) => {
   const f = await page(t, {
@@ -64,7 +70,7 @@ test('Team discovery opens through keyboard and Back restores the exact lobby op
       .map((button) => button.querySelector('strong').textContent),
     ['First Connection', 'Relay Yard'],
   );
-  assert.equal(f.doc.activeElement.id, 'journey-search');
+  assert.equal(f.doc.activeElement, card(f, 'First Connection'));
   assert.equal(f.$('coop-menu').hidden, false);
   enter(f, f.$('journey-back'));
   assert.equal(dialog(f).open, false);

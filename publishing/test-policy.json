@@ -1,8 +1,8 @@
 {
   "format": "revealline-release-test-policy.v1",
-  "mode": "waived",
+  "mode": "required",
   "authorization": "explicit-user-request-20260922",
   "scope": "automated-test-suites",
-  "reason": "Temporarily prioritize release publication at explicit user request; automated test suites are not run.",
-  "restoration": "Restore mode to required in a reviewed PR. Build, source identity, validation, lint, formatting, production provenance, immutable asset and publication verification guards remain mandatory."
+  "reason": "The approved 2026-09-24 player-first UX plan restores all six release gates, including automated test suites. The earlier temporary waiver remains historical authorization only.",
+  "restoration": "Automated suites are required for this source and its successors. Build, source identity, validation, lint, formatting, production provenance, immutable asset and publication verification guards remain mandatory."
 }

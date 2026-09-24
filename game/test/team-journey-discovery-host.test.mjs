@@ -43,7 +43,10 @@ test('actual Team chooser displays all12 exact candidates with cheap route/prese
       'No eager diagram without an intersection observer',
     );
   }
-  assert.equal(f.doc.activeElement.id, 'journey-search');
+  assert.equal(
+    f.doc.activeElement,
+    candidates.find((card) => card.querySelector('strong').textContent === 'Twin landings'),
+  );
   const target = candidates.find(
     (card) => card.querySelector('strong').textContent === 'Shared lookout',
   );
