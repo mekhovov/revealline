@@ -54,8 +54,12 @@ geometry or claim their pending PRs are delivered.
 - Final exact-source production/build checks, coordinated version allocation,
   frozen release and public qualification. Publisher coordination places this
   feature after accepted UX0 source; do not merge it ahead of that owner.
-- Held-device/input qualification, reliable native persistence and Team
-  earned-Next coverage. The local disk remains exhausted.
+- Held-device/input qualification, reliable native persistence and public
+  Team earned-Next coverage. The local disk remains exhausted.
+- Reconcile the branch-local draft production 63 with UX0's separately owned
+  production 63 after UX0 acceptance. Regenerate from the accepted ledger into
+  the next unused revision; never replace that owner's revision 63 or treat
+  this branch's draft as cross-branch release authority.
 
 Prepared source checkpoint: the actor-preference service and boundary resolver
 are implemented, independently reviewed, and have 16 passing focused tests.
@@ -124,8 +128,20 @@ replacing the running attempt or saved bytes.
 Team's focused host/picture cohort passes 24/24, including readiness, disposal,
 preference cancellation, Retry pin retention and same-ID Custom exclusion.
 The root's combined Team/Classic/Journey session cohort passes 46/46 with zero
-skips (7.76 seconds). A pre-existing Team earned-Next route fixture fails in both
-the changed host and the exact HEAD host; earned-Next is not counted as passed.
+skips (7.76 seconds). A pre-existing untuned Team earned-Next route fixture fails
+in both the changed host and the exact HEAD host; that old helper is unchanged.
+A new focused test uses the actual Standard gp4 preparation and 1,240 legal
+commands: 68.319% earned coverage, no downings, then First Connection → Relay
+Yard with fresh FPV or changed Campaign actors and preserved difficulty. The
+2/2 Legacy Team host cases pass; they do not qualify all Journey Team missions.
+
+That post-metadata test found two genuine Legacy Team startup regressions:
+missing exact draft-63 picture associations and a five-policy parser bound that
+could not admit the sixth preserved policy. Both are fixed with all 58–62
+associations and image hashes unchanged. Binding/presentation checks pass 52/52;
+the root's combined actor/earned-Next/binding/presentation cohort passes 59/59
+with zero skips (8.02 seconds). Native Legacy Team readiness and Start also
+succeed after the fix. Earlier failed startup/untuned-route runs remain failures.
 Versus's initial 12-case cohort passed, but independent review then found a
 setup observer leak and an optional authority-index outage blocking Custom
 launches. Both are corrected: the final 14-case cohort passes with zero skips;

@@ -6,7 +6,11 @@ import { COOP_STARTER_PACK } from '../coop/library.mjs';
 import { validateCoopPack } from '../coop/recipes.mjs';
 import { canonicalJSON } from '../data-json.mjs';
 import { validateCompiledPresentation } from '../presentation/host.mjs';
-import { COOP_PICTURE_BINDINGS } from '../couch/coop-picture-bindings.mjs';
+import {
+  COOP_PICTURE_BINDINGS,
+  COOP_SUPPORTED_PICTURE_BINDINGS,
+  COOP_HISTORICAL_IMPORT_PICTURE_POLICIES,
+} from '../couch/coop-picture-bindings.mjs';
 import { createCoopPresentation } from '../couch/coop-presentation.mjs';
 
 const sha = (bytes) => createHash('sha256').update(bytes).digest('hex');
@@ -23,9 +27,11 @@ for (const row of COOP_PICTURE_BINDINGS) {
   );
 }
 
-function fixture(index = 0) {
-  const row = COOP_PICTURE_BINDINGS[index],
-    snapshot = { resolved: structuredClone(compiled.resolved) },
+function fixture(index = 0, source = compiled, bindings = COOP_PICTURE_BINDINGS, policies) {
+  const row = bindings.filter((item) => item.themeRevision === source.resolved.theme.revision)[
+      index
+    ],
+    snapshot = { resolved: structuredClone(source.resolved) },
     request = {
       pack: structuredClone(COOP_STARTER_PACK),
       levelId: row.levelId,
@@ -35,7 +41,8 @@ function fixture(index = 0) {
     calls = { reads: 0, decodes: 0, releases: 0 };
   let corrupt = false;
   const presentation = createCoopPresentation({
-    bindings: COOP_PICTURE_BINDINGS,
+    bindings,
+    historicalImportPolicy: policies,
     getSnapshot: () => snapshot,
     async readPicture(slot, options) {
       calls.reads++;
@@ -67,7 +74,11 @@ function fixture(index = 0) {
 test('the closed two-row authority is immutable and matches the complete authored starter pack', () => {
   assert.equal(validateCoopPack(COOP_STARTER_PACK).valid, true);
   assert.equal(COOP_PICTURE_BINDINGS.length, 2);
-  assert.equal(compiled.resolved.theme.revision, 62, 'Exact canonical metadata, never latest');
+  assert.equal(
+    compiled.resolved.theme.revision,
+    63,
+    'Exact branch-local draft metadata, never latest',
+  );
   assert.deepEqual(
     COOP_PICTURE_BINDINGS.map((row) => row.levelId),
     ['first-connection', 'relay-yard'],
@@ -110,6 +121,107 @@ test('the closed two-row authority is immutable and matches the complete authore
     assert.throws(() => (row.packRevision = 3), TypeError);
   }
   assert.throws(() => COOP_PICTURE_BINDINGS.push(COOP_PICTURE_BINDINGS[0]), TypeError);
+});
+
+test('draft63 picture association preserves the exact58–62 closed bindings and historical policies', () => {
+  assert.deepEqual(
+    [...new Set(COOP_SUPPORTED_PICTURE_BINDINGS.map((row) => row.themeRevision))].sort(),
+    [58, 59, 60, 61, 62, 63],
+  );
+  assert.equal(COOP_SUPPORTED_PICTURE_BINDINGS.length, 12);
+  for (const revision of [58, 59, 60, 61, 62]) {
+    const previous = COOP_SUPPORTED_PICTURE_BINDINGS.filter(
+      (row) => row.themeRevision === revision,
+    );
+    assert.deepEqual(
+      previous,
+      COOP_PICTURE_BINDINGS.map((row) => ({ ...row, themeRevision: revision })),
+    );
+    assert(previous.every((row) => Object.isFrozen(row) && Object.isFrozen(row.picture)));
+  }
+  assert.deepEqual(
+    COOP_HISTORICAL_IMPORT_PICTURE_POLICIES.map((row) => row.themeRevision).sort(),
+    [58, 59, 60, 61, 62, 63],
+  );
+  const current = COOP_HISTORICAL_IMPORT_PICTURE_POLICIES.find((row) => row.themeRevision === 63);
+  for (const previous of COOP_HISTORICAL_IMPORT_PICTURE_POLICIES)
+    assert.deepEqual(previous, { ...current, themeRevision: previous.themeRevision });
+});
+
+test('the original retained62 manifest still selects and verifies both unchanged pictures', async (t) => {
+  const historical = validateCompiledPresentation(
+    JSON.parse(
+      await readFile(
+        new URL(
+          '../presentation/compiled/runtime.b4a7285520550e4cd04c7b9e80b4c6468c0a914faac77c05fa7f86a72c8a3c8f.json',
+          import.meta.url,
+        ),
+      ),
+    ),
+  );
+  assert.equal(historical.resolved.theme.revision, 62);
+  for (const index of [0, 1]) {
+    const f = fixture(
+      index,
+      historical,
+      COOP_SUPPORTED_PICTURE_BINDINGS,
+      COOP_HISTORICAL_IMPORT_PICTURE_POLICIES,
+    );
+    t.after(() => f.presentation.dispose());
+    const binding = await f.presentation.select(f.request);
+    assert.equal(binding.choice.themeRevision, 62);
+    assert.equal(binding.choice.picture.sha256, COOP_PICTURE_BINDINGS[index].picture.sha256);
+    assert.equal(f.presentation.confirm(f.request), binding);
+    assert.deepEqual(f.calls, { reads: 1, decodes: 1, releases: 0 });
+  }
+});
+
+test('the complete real six-policy host configuration prepares both current starter pictures', async (t) => {
+  for (const index of [0, 1]) {
+    const f = fixture(
+      index,
+      compiled,
+      COOP_SUPPORTED_PICTURE_BINDINGS,
+      COOP_HISTORICAL_IMPORT_PICTURE_POLICIES,
+    );
+    t.after(() => f.presentation.dispose());
+    const binding = await f.presentation.select(f.request);
+    assert.equal(binding.choice.themeRevision, 63);
+    assert.equal(binding.choice.picture.sha256, COOP_PICTURE_BINDINGS[index].picture.sha256);
+    assert.equal(f.presentation.confirm(f.request), binding);
+    assert.deepEqual(f.calls, { reads: 1, decodes: 1, releases: 0 });
+  }
+});
+
+test('historical policy capacity remains exactly six and duplicate identities still fail', () => {
+  const create = (historicalImportPolicy) =>
+    createCoopPresentation({
+      bindings: COOP_SUPPORTED_PICTURE_BINDINGS,
+      historicalImportPolicy,
+      getSnapshot: () => ({ resolved: compiled.resolved }),
+      readPicture: () => {
+        throw new Error('Invalid policy must not read assets.');
+      },
+      decodeImage: () => {
+        throw new Error('Invalid policy must not decode assets.');
+      },
+    });
+  assert.throws(
+    () =>
+      create([
+        ...COOP_HISTORICAL_IMPORT_PICTURE_POLICIES,
+        { ...COOP_HISTORICAL_IMPORT_PICTURE_POLICIES[0], themeRevision: 64 },
+      ]),
+    /array exceeds/,
+  );
+  assert.throws(
+    () =>
+      create([
+        ...COOP_HISTORICAL_IMPORT_PICTURE_POLICIES.slice(0, 5),
+        COOP_HISTORICAL_IMPORT_PICTURE_POLICIES[0],
+      ]),
+    /Duplicate Team historical picture identity/,
+  );
 });
 
 for (const [index, name] of ['First Connection', 'Relay Yard'].entries()) {

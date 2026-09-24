@@ -61,3 +61,16 @@ candidate at this point.
 - The tab reported no warning/error console records through the Team pause.
   Visible persistence warnings remained. The confirmations discarded only the
   disposable attempts created by this verification, not a user's prior session.
+
+## Legacy Team compatibility follow-up
+
+After the draft-63 picture-association and bounded-policy fixes, the normal
+Legacy arenas link and explicit switch confirmation loaded First Connection.
+The original picture reached Ready; Start together displayed both FPV craft,
+two labelled Hunters and the existing field actors with three reserves and the
+65% target. The attempt was paused after six seconds. No native earned clear,
+Next or rescue is claimed. No warning/error console records were reported.
+
+This observes fresh source after navigation, not a released immutable build.
+The separate 1,240-command automated Legacy Team clear/Next receipt uses modeled
+DOM/Canvas/decoding and must not be presented as this native observation.
