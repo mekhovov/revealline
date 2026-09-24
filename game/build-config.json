@@ -4,6 +4,9 @@
   "include": [
     "game",
     "site",
+    "authoring/community",
+    "docs/story-workshop-authoring.md",
+    "docs/feature-delivery-workflow.md",
     "authoring/motion-lab/animation.mjs",
     "authoring/motion-lab/render-character.mjs",
     "authoring/motion-lab/presets.json",
