@@ -327,7 +327,7 @@ export function createCouchShell({
       return;
     if (kind === 'library' && onMissions) {
       event.preventDefault();
-      if (!destroyed && screen === 'main' && foreground()) onMissions(element);
+      if (!destroyed && screen === 'main' && foreground()) return onMissions(element);
       return;
     }
     // Fixed routes are owned here; no target is accepted from a URL or control.

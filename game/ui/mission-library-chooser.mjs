@@ -142,9 +142,9 @@ export function attachMissionLibraryChooser({
       scroll: dialog.open ? list.scrollTop || 0 : savedScroll,
     };
   }
-  function remember() {
+  function remember({ captureFocus = true } = {}) {
     const focusedId = doc.activeElement?.closest('.journey-card')?.dataset.missionId;
-    if (focusedId && list.contains(doc.activeElement)) selectedId = focusedId;
+    if (captureFocus && focusedId && list.contains(doc.activeElement)) selectedId = focusedId;
     if (dialog.open) savedScroll = list.scrollTop || 0;
     try {
       writeState(state());
@@ -252,7 +252,8 @@ export function attachMissionLibraryChooser({
       return;
     retirePendingSelection();
     selectedId = row.id;
-    remember();
+    // Touch activation need not move keyboard focus off a different card.
+    remember({ captureFocus: false });
     const activeMode = modeFilter.value;
     let availability;
     try {
@@ -292,7 +293,7 @@ export function attachMissionLibraryChooser({
     // Existing hosts must leave the picker before taking their atomic attempt
     // ticket. Keep filters/focus for an unsuccessful or cancelled handoff.
     const ticket = ++visit;
-    remember();
+    remember({ captureFocus: false });
     let context = null,
       closeRetired = false;
     // close() restores native focus and may run reentrant host listeners before
@@ -392,7 +393,7 @@ export function attachMissionLibraryChooser({
       mastery,
       action,
     );
-    button.onclick = () => void activate(row, button);
+    button.onclick = () => activate(row, button);
     button.addEventListener('focusin', () => {
       selectedId = row.id;
     });

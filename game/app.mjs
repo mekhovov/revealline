@@ -1111,7 +1111,7 @@ try {
       const pins = validateFlightPresentationPinsForRun(flightPictures.pins(), {
         identityCatalog: flightPictures.identityCatalog,
         campaignKey: campaignKey(campaign),
-        level: run.level,
+        level: pictureLevelForRun(run, activeEntry),
         themeId: theme.id,
       });
       const pin = storyPinForTheme(pins, theme.id),
@@ -1170,6 +1170,12 @@ try {
   function pictureIdentity(metadata) {
     return createPictureIdentityCatalog({ entries: installedEntries, metadata });
   }
+  function pictureLevelForRun(nextRun, entry) {
+    // Difficulty changes simulation, not the ownership of an original picture.
+    return recoverGameplayTuning(nextRun.level)
+      ? entry.campaign.levels.find((level) => level.id === nextRun.levelId)
+      : nextRun.level;
+  }
   function newFlightPictures({
     nextRun = run,
     nextRunId = runId,
@@ -1180,10 +1186,7 @@ try {
     explicitLegacy = false,
     candidatePicture = null,
   } = {}) {
-    // Difficulty changes simulation, not the ownership of an original picture.
-    const pictureLevel = recoverGameplayTuning(nextRun.level)
-      ? entry.campaign.levels.find((level) => level.id === nextRun.levelId)
-      : nextRun.level;
+    const pictureLevel = pictureLevelForRun(nextRun, entry);
     if (candidateHost?.owns(entry)) {
       const manifest = entry.manifests.find((item) => item.level.id === nextRun.levelId);
       return createCandidateFlightPictures({
@@ -8377,8 +8380,7 @@ try {
   };
   $('choose-mission').onclick = () => {
     if (!practiceSession) {
-      void openUnifiedMissions($('choose-mission'));
-      return;
+      return openUnifiedMissions($('choose-mission'));
     }
     gameShell?.openMissions();
     const mission = $('missions').querySelector('button:not(:disabled)');
@@ -9716,10 +9718,9 @@ try {
         !event.shiftKey
       ) {
         event.preventDefault();
-        void openUnifiedMissions(link, {
+        return openUnifiedMissions(link, {
           returnLabel: $('shell-home').open ? 'Back to menu' : 'Back to brief',
         });
-        return;
       }
       const parent = link.closest('dialog');
       void requestModeDeparture('catalogue', event, link, {
