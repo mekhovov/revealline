@@ -146,6 +146,9 @@
           Playback starts only when you choose Play.
         </p>
         <p id="asset-status" class="quiet" role="status" aria-live="polite" aria-atomic="true"></p>
+        <p id="recorded-appearance" class="quiet" role="status" aria-live="polite">
+          Raw replay previews do not claim recorded artwork.
+        </p>
         <p id="navigation-status" class="quiet" role="status" aria-live="polite">
           Arrow keys move focus · Enter activates · Escape pauses and focuses Return to Workshop.
           Controller: release controls, then press a face button to join.
@@ -176,8 +179,12 @@
               Choose a <code>xonix-replay.v3</code>, <code>xonix-replay.v4</code> or
               <code>xonix-replay.v5</code> or <code>xonix-replay.v6</code> JSON file, or paste one
               below. Version 4 supports staged encounters; version 5 supports 72 × 36 boards with
-              optional encounters; version 6 supports Classic rules. Maximum 32 MiB / 30 recorded
-              minutes.
+              optional encounters; version 6 supports Classic rules. Versions 7–10 retain
+              foundations, relays, directional fields and Sentinel encounters. A
+              <code>revealline-replay-presentation.v1</code> file also preserves recorded Solo FPV
+              actors. The replay remains limited to 32 MiB / 30 recorded minutes, plus at most 12
+              KiB of appearance metadata. Verified inputs demonstrate reproducibility, not player
+              identity or an authentic performance.
             </p>
             <label for="replay-file">Replay file</label>
             <input id="replay-file" type="file" accept=".json,application/json" />
@@ -185,7 +192,7 @@
             <textarea
               id="replay-text"
               rows="6"
-              maxlength="33554432"
+              maxlength="33566720"
               spellcheck="false"
               placeholder='{"version":"xonix-replay.v3", …}'
             ></textarea>
@@ -194,12 +201,13 @@
         </section>
         <section class="panel" aria-labelledby="look-heading">
           <h2 id="look-heading">A different atmosphere.</h2>
-          <label for="theme">Presentation theme</label>
+          <label for="theme">Preview theme</label>
           <select id="theme"></select>
           <label class="check"><input id="grid" type="checkbox" /> Show grid</label>
           <p class="quiet">
-            Themes change the art. The imported route, class abilities and result stay exactly as
-            recorded. This theater is silent.
+            Themes change the preview scene and raw replay actors. Recorded FPV actors stay pinned.
+            The imported route, class abilities and result stay exactly as recorded. Original
+            pictures, music and interface are not restored. This theater is silent.
           </p>
         </section>
         <p class="smallprint">
