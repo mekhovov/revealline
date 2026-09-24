@@ -147,6 +147,9 @@ export function bootCoop({
   candidateNotice = '',
   candidateEditionLabel = '',
 } = {}) {
+  // Consume native setup intent before applying saved defaults. Only an actual
+  // difficulty edit changes the global preference; opening its selector does not.
+  const earlySelection = globalThis.RevealLineTeamEntry?.take();
   // Entry links select a code-owned destination, never a supplied URL or referrer.
   // Older/direct links and ambiguous contexts retain the existing Versus return.
   const entryParams = new URL(location.href).searchParams;
@@ -352,6 +355,10 @@ export function bootCoop({
   const foreground = () => !document.hidden && document.hasFocus?.() !== false;
   const gameplayTuning = createGameplayTuningController({ eventTarget: window });
   const gameplayPreferences = candidatePreferences ?? createJourneyPreferences({ window });
+  const earlyDifficulty = earlySelection?.difficulty;
+  if (earlyDifficulty?.changed && ['gentle', 'standard', 'expert'].includes(earlyDifficulty.value))
+    gameplayPreferences.choose(earlyDifficulty.value);
+  if (candidatePreferences) candidateDifficulty = gameplayPreferences.snapshot().difficulty;
   const attemptTuning = new WeakMap();
   const normalGameplayIdentities = new WeakMap();
   if (!candidatePreferences) $('coop-difficulty').value = gameplayPreferences.snapshot().difficulty;
@@ -4334,7 +4341,6 @@ export function bootCoop({
   };
   // The classic entry owns intent before the select becomes interactive.
   // Without that evidence, retain native setup rather than override a choice.
-  const earlySelection = globalThis.RevealLineTeamEntry?.take();
   const validArena = (id) => COOP_STARTER_PACK.levels.some((level) => level.id === id);
   if (!earlySelection || earlySelection.claimed) {
     const selected = earlySelection?.changed ? earlySelection.value : $('coop-level').value;
