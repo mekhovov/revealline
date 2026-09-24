@@ -13,6 +13,11 @@ enabled card; unresolved remote selection must retain its cancellable focus leas
 Expose `primary()` to hosts rather than hardcoding Search. Boot targets the visible
 Start/Continue action only while its initial focus owner remains current.
 
+Audit the rendered screen, not just a panel's descendants. Visible continuation
+controls and mode/header links beside a menu must belong to its restricted input
+root in Legacy, installed and Journey content. Keep live-board controls excluded.
+Cancelling a departure restores the exact visible opener without resuming play.
+
 Test actual host keyboard/controller paths, departure cancellation and image/run
 retention. Exercise every newly reachable setting through its real change handler.
 When historical assertions fail, derive expected values from the accepted runtime
