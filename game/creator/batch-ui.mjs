@@ -238,14 +238,17 @@ export function createBatchCreatorController({
         : 'No pictures selected.';
     const failed = included().filter((item) => item.status === 'error').length;
     const waiting = included().filter((item) => item.status !== 'ready').length;
+    capacity = capacityFor(included());
     nodes.readiness.textContent = ready()
       ? `${included().length} levels passed preparation and are ready for one approval.`
       : failed
         ? `${failed} included item${failed === 1 ? '' : 's'} need attention. Regenerate or exclude them before approval.`
         : `${waiting} included item${waiting === 1 ? '' : 's'} still need generation.`;
-    nodes.approve.disabled = !!running || !ready() || !approveBatch;
+    nodes.approve.disabled = !!running || !ready() || !capacity.fits || !approveBatch;
     nodes.approve.title = approveBatch
-      ? ''
+      ? capacity.fits
+        ? ''
+        : 'Review and accept an explicit package split before approval.'
       : 'The batch compiler will enable approval after it assembles the reviewed items.';
     nodes.cancel.hidden = !running;
     nodes.generate.disabled =
@@ -263,7 +266,6 @@ export function createBatchCreatorController({
       ])
         if (control) control.disabled = !!running;
 
-    capacity = capacityFor(included());
     nodes.capacity.textContent = capacity.fits
       ? `Estimated pack ${mib(capacity.estimatedBytes)}; staging needs about ${mib(capacity.stagingBytes)} of ${mib(capacity.limitBytes)} available managed storage.`
       : `This selection needs about ${mib(capacity.stagingBytes)} of ${mib(capacity.limitBytes)} managed storage. Split the campaign or remove pictures before approval.`;

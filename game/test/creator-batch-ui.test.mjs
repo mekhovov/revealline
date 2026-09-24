@@ -203,6 +203,8 @@ test('capacity overflow exposes explicit split and removal choices', () => {
   });
   h.controller.setFiles([file('1.png'), file('2.png'), file('3.png')]);
   assert.equal(h.nodes.split.hidden, false);
+  assert.equal(h.nodes.approve.disabled, true);
+  assert.match(h.nodes.approve.title, /explicit package split/);
   assert.match(h.nodes.capacity.textContent, /Split the campaign or remove pictures/);
   const excluded = h.controller.snapshot().items[1];
   h.controller.setIncluded(excluded.id, false);
