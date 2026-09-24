@@ -537,6 +537,13 @@
       "versions": [
         "v0.97.0"
       ]
+    },
+    {
+      "id": "archive-67",
+      "repository": "mekhovov/revealline-archive-67",
+      "versions": [
+        "v0.98.0"
+      ]
     }
   ]
 }
