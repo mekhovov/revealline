@@ -26,7 +26,7 @@ reviewer names, listening approval or device results.
 | Player framework | Simplified chooser, mixed playlists, uploads, creator tools, optional offline albums, recovery and rights enforcement | Targeted released-source verification and demonstrated fixes |
 | New archive previews | Previous 16 previews retained; six synth and four David KBD metal auditions published and technically/publicly verified through archive PRs #7/#8; twelve new auditions in this round including the Nakarada pair | Full listening, taste approval and game admission remain; zero new game admissions |
 | Retro previews | Seven earlier rejections retained; six DOS-88/escp previews also rejected for the requested direction | First comparison rejected; Electric Dreams now closest; continue source comparisons using the supplied night-drive references |
-| Metal previews | Existing six preserved as backups | Substantially heavier replacements |
+| Metal previews | Six older backups preserved; four Eternity recordings retained after positive direction feedback | Stronger rhythm and sustained energy; expand industrial/thrash auditions before admission |
 | Nakarada Shchedryk | User explicitly approved musical direction; exact MP3 technically checked | Game admission, opening theme and gameplay/device/cultural evidence |
 | UA-FPV | Four private import packs preserve 80 filenames / 77 unique recordings | Recording-specific public permission and game admission |
 | Quick controls | B/N and main/pause-menu source implementation independently reviewed in draft PR #333 | Required full qualification, browser/controller/device checks and release |
@@ -138,6 +138,37 @@ reviewer names, listening approval or device results.
   This docs-only update uses hosted Git operations; no local audio/build/checkout
   is created and the 1 GiB production guard remains in force.
 
+### 24 September checkpoint — retained metal direction and exact source gates
+
+- Docs-only [PR #336](https://github.com/mekhovov/revealline/pull/336) merged at
+  a24354fc9bfa75d2aea0d9c3660e160bacd02a87. Exact head 67b1d8e9 had independent
+  review, preflight and build passes. Runtime tests were skipped by the inherited
+  global waiver; this is not full runtime qualification.
+- PR #331 is independently reviewed at 80d6e2f2621e85e92ab5e77d00b3069e131f392f,
+  isolated onto accepted main b639b253 with the same six reviewed file blobs.
+  The original stacked source remains on
+  codex/shchedryk-bundled-source-pre-rebase-4fd7eb0b; PR #321 was not merged.
+  Fresh [run 35959304115](https://github.com/mekhovov/revealline/actions/runs/35959304115)
+  failed **preflight / Verify Field Kit production ledger and compiled output**:
+  “Stale production revision ledger. Run --write to append compatible revisions.”
+  Validation, lint and both formatting checks passed; build/tests/release gate
+  were skipped. [Failure evidence](https://github.com/mekhovov/revealline/pull/331#issuecomment-5808266278)
+  is retained. Track the new bundled helper in the audio dependency list, append
+  scoped functional continuation for eight procedural roles and regenerate
+  through the producer after the accepted shared lineage is available.
+  This repair cannot approve recordings, listening or devices.
+- Shared PR #320 is at 26fe20f8c00aa2d09238595c8856fa5572ea0561.
+  [Run 35956795771](https://github.com/mekhovov/revealline/actions/runs/35956795771)
+  passed preflight/build; all four mandatory shards were still running at this
+  checkpoint. Production 63 belongs to that source. Coordinate the next unused
+  successor after its actual merge; never overwrite its ledger or assume a
+  revision is reserved. PRs #321/#333 still need accepted-base qualification.
+- Local free space is approximately **100 MiB**, below the unchanged 1 GiB floor.
+  Source preparation uses memory and hosted Git operations; no local audio
+  downloads, checkouts, builds or user-file cleanup occurred.
+- The latest metal decision below preserves the Shchedryk decision, Ukrainian
+  research, synth reference history, older metal backups and paused originals.
+
 ## Remaining delivery ledger
 
 Estimates are hands-on effort, not promised dates. CI queues, listening reviewers,
@@ -148,11 +179,11 @@ version is allocated without the release owner's confirmation.
 | --- | --- | --- | --- | --- | --- | --- |
 | M0 | Complete; maintenance continues | None | Preserve all histories and update this ledger after each meaningful milestone | Complete | [PR #330](https://github.com/mekhovov/revealline/pull/330), merged efacbf087; prior source PR #321 | Docs merged; no runtime release required |
 | M1 | Diagnosed in part; awaiting accepted shared fixes | Accepted PR #320 corrections; remaining failure audit | Reuse reviewed baseline corrections, classify residual failures, then independently review and pass fresh exact-source qualification | 0.5 day triage; repair re-estimated after diagnosis | PR #321; run35945946346 | Unreleased |
-| M2 | Source infrastructure reviewed; admission remains | M1; remaining recording acceptance; full qualification | Qualify inactive bundled-source adapter, then admit/bundle exact opening theme and prove menu, offline and preference behavior | 1–2 days after gates | [Archive PR #3](https://github.com/mekhovov/revealline-soundtracks-01/pull/3); [public preview](https://mekhovov.github.io/revealline-soundtracks-01/batches/ukrainian-shchedryk-20260924/); [source-only draft PR #331](https://github.com/mekhovov/revealline/pull/331), 4fd7eb0b, 11 focused tests | Unreleased |
+| M2 | Source infrastructure reviewed; admission remains | M1; remaining recording acceptance; full qualification | Qualify inactive bundled-source adapter, then admit/bundle exact opening theme and prove menu, offline and preference behavior | 1–2 days after gates | [Archive PR #3](https://github.com/mekhovov/revealline-soundtracks-01/pull/3); [public preview](https://mekhovov.github.io/revealline-soundtracks-01/batches/ukrainian-shchedryk-20260924/); [source-only draft PR #331](https://github.com/mekhovov/revealline/pull/331), 80d6e2f2; historical 11 focused tests; new preflight ledger failure | Unreleased |
 | M3 | Source implemented and reviewed; qualification remains | Accepted main; complete source/browser/controller/device checks | Pass full required gates, verify actual controls and publish through the release pipeline | About 1 day remaining, excluding CI and device-access waits | [Draft PR #333](https://github.com/mekhovov/revealline/pull/333), da750277; reviewed runtime 99ae9a93 | Unreleased |
 | M4 | Active research; parallel | Exact published rights and musical/cultural review | Target six additional distinct Ukrainian compositions; publish cleared subsets | 1–2 days per research round; rights/review date unknown | Candidate/hold register below | Unreleased |
 | M5 | Electric Dreams is the latest closest reference; further search requested; earlier feedback preserved | User musical fit; exact-file rights and full listening before admission | Compare Twilight Echo and Neon; Neon Noir stays a musical reference with a public-archive rights hold; prepare 6–10 full auditions only after accepted examples | Several hours per comparison round; 1–2 days batch preparation, then 1–2 days integration/verification after approval; CI/review waits excluded | M5.a decision history and source register below; historical archive PRs #7/#8 preserved | Unreleased in game |
-| M6 | Six replacement auditions public and technically verified | User taste and complete listening checks | Compare all six heavier candidates, admit accepted tracks and preserve six older backups | Listening/review date unknown; 1–2 days integration after approval | [Archive PR #6](https://github.com/mekhovov/revealline-soundtracks-01/pull/6), [#7](https://github.com/mekhovov/revealline-soundtracks-01/pull/7), [#8](https://github.com/mekhovov/revealline-soundtracks-01/pull/8) | Unreleased in game |
+| M6 | Four Eternity tracks retained; user wants more rhythm and energy; six newer previews public | Exact-file rights, full listening and gameplay acceptance | Prepare four industrial/thrash auditions and research other artists; preserve all existing tracks and older backups | Several hours intake preparation; 1–2 days integration after approval, excluding review/CI waits | [Archive PR #6](https://github.com/mekhovov/revealline-soundtracks-01/pull/6), [#7](https://github.com/mekhovov/revealline-soundtracks-01/pull/7), [#8](https://github.com/mekhovov/revealline-soundtracks-01/pull/8) | Unreleased in game |
 | M7 | Blocked public rights; scope retained | Recording-specific public redistribution and applicable artwork evidence | Include all 77 recordings / 80 filenames; publish cleared entries; maintain private pack route | About 1 day integration after clearance; clearance date unknown | UA-FPV manifests/private packs/guide | Public collection unreleased |
 | M8 | Remaining verification | Released source and device access | Audit existing playback/storage/creator contracts; release demonstrated fixes separately | 1–2 days initial audit; fixes separately estimated | Existing regression suites | Per-feature evidence required |
 | M9 | Later | Core style releases | Review existing 70 selectively; add trusted ID/hash curation overlay preserving saved pins | 1–2 days per selected batch plus listening | Curation PR pending | Unreleased |
@@ -503,7 +534,7 @@ Prioritize articulated low/palm-muted riffs, rhythmic rests, bass/kick coordinat
 double kick, contrasting riffs and controlled distortion. Reference Valfaris,
 Slain, Prodeus and DOOM for articulation and arrangement, not copied melodies.
 
-Next six complete auditions (unapproved): David KBD **The Desolation of a
+Six complete auditions are public; full acceptance remains: David KBD **The Desolation of a
 Civilization, Agony Space-deep, God of Darkness, Suffocation**; Alexander Nakarada
 **The Dobermann, Folklore**. Generic folk-metal is not automatically Ukrainian.
 
@@ -528,6 +559,57 @@ from PR #8. Exact originals and normalized MP3s are retained. Content ID remains
 unknown for these four, Recording mode eligibility is false, and full listening/
 heaviness, transition and gameplay review remain. This does not approve the six
 replacement candidates or change the older six-track backup decision.
+
+#### M6.a — groove and energy follow-up
+
+**User decision, 24 September:** keep all four Eternity recordings. They are better
+and moving in the right direction, but still not rhythmic or energetic enough.
+Preserve this positive direction decision and all immutable preview/source bytes.
+Full listening, transition, warning-audibility and gameplay acceptance remain.
+
+Prioritize a recognizable recurring riff, coordinated bass/kick accents, rhythmic
+rests, clear drum attacks, contrasting riffs and developed returns. Distortion,
+genre labels or higher tempo alone do not prove suitability. Verify these
+properties by complete listening and repeated gameplay sessions.
+
+| Reference | Documented direction | RevealLine selection target (our interpretation) |
+| --- | --- | --- |
+| [Valfaris](https://www.valfarisgame.com/) and [Slain](https://store.steampowered.com/app/369070/Slain_Back_from_Hell/) | Heavy metal; Curt Victor Bryant soundtrack | Guitar-led thrash/groove with articulated riffs and coordinated drums |
+| [Prodeus — Andrew Hulshult](https://andrewhulshult.bandcamp.com/album/prodeus-original-game-soundtrack) | Creator tags industrial metal, instrumental and synth | Low rhythmic guitars, electronic pulses and contrasting sections |
+| [DOOM — Mick Gordon](https://www.gdcvault.com/play/1024068/-DOOM-Behind-the) | Aggressive composition, synthesis, mixing and interactive music supporting gameplay | Memorable pulse and controlled density that leave warnings audible |
+| [Broforce — Deon van Heerden](https://www.deonvanheerden.com/broforce.html) | Live percussion, power-metal stings and hybrid boss scoring | Percussion impact and guitar hooks; separate short stings from sustained pieces |
+
+Commercial soundtracks remain references, not reusable assets. These selection
+targets are interpretations of documented production directions, not claims
+that unheard candidate files already meet them. This content batch does not
+require a new adaptive-music system.
+
+Prepare four additional Alexander Nakarada compositions through bounded hosted
+intake. Exact creator downloads, licence snapshots and complete-file hashes must
+be bound before publication. Published creator metadata provides this shortlist:
+
+| Candidate | Source-page direction | State |
+| --- | --- | --- |
+| [Anemo](https://creatorchords.com/music/anemo/) | Industrial / Metal / Rock; 4:38, 131 BPM | Intake preparation; listening pending |
+| [Trial of Thorns](https://creatorchords.com/music/trial-of-thorns/) | Death Metal / Industrial; 3:57, 133 BPM | Intake preparation; listening pending |
+| [Riffs Two](https://creatorchords.com/music/riffs-two/) | Thrash / Progressive; 3:18, 159 BPM | Intake preparation; listening pending |
+| [Apocalypse](https://creatorchords.com/music/apocalypse/) | Thrash; 3:37, 145 BPM | Intake preparation; listening pending |
+
+All four source pages publish CC BY 4.0. Preserve attribution and exact-file
+evidence. Creator Content ID registration makes them ineligible for Recording
+mode. Technical processing and public previews are separate from musical
+acceptance and game admission. These are not Ukrainian additions.
+
+Diversify beyond one artist: investigate **DEgITx — Frog and Burn Out** through
+exact creator pages and official original-download routes. Preserve additional
+performer credits and verify source bytes, terms and Content ID. They are leads,
+not acquired or approved additions. D.E.M.O.N retains its conflicting-conditions
+hold.
+
+Use a new immutable preview collection after independent intake and artifact
+review. Accepted subsets then follow a separate game PR, exact-source gates,
+immutable release and public playback/offline acceptance. Until those pass, the
+count of new game admissions remains zero.
 
 Retain the expansion target of **12–20 distinct retro/metal recordings**, normally
 6–10 per family, delivered as independently accepted batches.
