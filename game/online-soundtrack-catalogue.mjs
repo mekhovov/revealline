@@ -53,6 +53,8 @@ function track(value, ids, hashes) {
       'status',
       'listeningApproval',
       'gameCatalogueAdmission',
+      'contentId',
+      'recordingModeEligible',
       'audio',
       'aliases',
     ],
@@ -86,6 +88,12 @@ function track(value, ids, hashes) {
       typeof value.listeningApproval === 'string',
     `Online soundtrack review status is invalid: ${id}.`,
   );
+  required(
+    [true, false, null, 'unknown'].includes(value.contentId) &&
+      typeof value.recordingModeEligible === 'boolean' &&
+      (!value.recordingModeEligible || value.contentId === false),
+    `Online soundtrack recording policy is invalid: ${id}.`,
+  );
   exactKeys(value.audio, ['path', 'bytes', 'sha256'], 'online soundtrack audio');
   required(
     HASH.test(value.audio.sha256) &&
@@ -115,6 +123,8 @@ function track(value, ids, hashes) {
     url: new URL(value.audio.path, BASE_URL).href,
     bytes: value.audio.bytes,
     sha256: value.audio.sha256,
+    contentId: value.contentId,
+    recordingModeEligible: value.recordingModeEligible,
     websites: Object.freeze([
       Object.freeze({ label: 'Creator source', url: value.source }),
       Object.freeze({ label: value.license ?? 'Recording licence', url: value.licenseURL }),
