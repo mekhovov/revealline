@@ -34,3 +34,7 @@ These checks use simulated DOM/audio boundaries. Independent UI/audio fingerprin
 Independent review found that Solo's lifecycle capture listener could retry blocked music before the explicit B shortcut or Play button handled the same gesture. The capture listener now yields to the quick-control row and eligible B/N shortcuts, preserving disabled-shortcut and custom-binding precedence.
 
 After this correction, the affected quick-controls, Solo soundtrack-host and Couch music-host suites passed **40/40** tests, including trusted keyboard and pointer retries that request playback exactly once. This follow-up does not replace the initial transport/session results or claim hosted release qualification. Raw output and source bindings are retained alongside the review evidence.
+
+### Stronger unmuted regression evidence
+
+The initial revision-2 retry tests inherited a muted fixture, which bypassed automatic lifecycle retry. The final tests explicitly enable sound and assert an unmuted output. Against the original `d34659f95a5a89a9227c17fbd35649e8a4c23521` runtime, keyboard retry requested Play twice and pointer capture started Play before the button. Both tests fail on that source and pass on the corrected runtime. These targeted runs select two tests and intentionally skip the other 19 host tests; they are not a full-suite qualification. Original revision-2 evidence remains retained.
