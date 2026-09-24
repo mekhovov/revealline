@@ -117,11 +117,11 @@ const REVIEWED_RECIPE_INPUTS = {
     ],
   },
   ui: {
-    sha256: '6a18141c9ebae43c58feee7dd1c8ea6529a333bd80a43935624f45c482fcf865',
+    sha256: '4b7db79dd3f6931dd72c0ae702f15a5a5d8ff2b7044aca5a2e02886e8e61636a',
     evidence: [
-      'Scoped Team-host UI functional continuation: docs/verification/team-host-ui-continuation/review.json sha256:9bedba528191f2948259714d0f39fbcc369b6cccfa53ea1a5ee7ae397b1fc6db. Seven ordered UI inputs sha256:6a18141c9ebae43c58feee7dd1c8ea6529a333bd80a43935624f45c482fcf865 include the dependency-free shared Team slot leaf. All24 existing UI recipe payloads and resolved tokens are unchanged; only explicit image admission and its dependency closure change.',
-      'Thirteen complete host, manifest-pin, Team admission/atomic ownership, affected-owner and fingerprint suites pass125 checks on each Node20/22, with264 identical exact source bindings and zero mismatches. Exact pre-approval r3 native panels/focus/Settings/Plain/Large/effects/slider/dialog/help/search/preview observations have285 HTTP200 requests and an empty console.',
-      'UI functional continuation only. Native Large catalogue initial Play focus is clipped and remains a required navigation correction; no whole-navigation acceptance. Team37 source recipes and five produced equipment images retain separate unapproved status. No physical-device, listening, offline, public or release approval. Prior UI approvals and all immutable originals remain preserved; any UI input change reopens this group.',
+      'Scoped actor-only UI functional continuation: docs/verification/actor-only-ui-continuation-2026-09-24/review.json sha256:dbde124fb9d24cb26dd901b51f58cf59fc7bfb4df212e47419cdb15581155b73; seven ordered UI inputs sha256:4b7db79dd3f6931dd72c0ae702f15a5a5d8ff2b7044aca5a2e02886e8e61636a. Only presentation host changes after the prior exact review; all24 UI recipe payloads, tokens and DOM ownership contracts remain unchanged.',
+      'The actor-only profile uses a fixed registered image-slot set, creates no CSS URLs and refuses page apply, audio and picture operations. Full remains the default profile. Lease, cancellation, retained-runtime and exact source-binding tests cover the functional separation; fresh-origin Team screens retain the full-profile UI while FPV actors use the independent lease.',
+      'UI functional continuation only. Complete navigation, forced-colour, screen-reader, every-viewport, physical-device, audio, offline, public and release acceptance remain separate. Prior UI reviews and immutable originals remain preserved; any UI input change reopens this group.',
     ],
   },
   audio: {

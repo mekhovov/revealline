@@ -14,10 +14,13 @@ import {
 
 const directory = new URL('../presentation/compiled/', import.meta.url);
 const baseURL = 'https://game.test/releases/exact/game/presentation/compiled/';
-const bytes = new Uint8Array(await readFile(new URL('runtime.json', directory)));
+const presentation = ACTOR_APPEARANCE_RELEASES[0].presentation;
+const currentBytes = new Uint8Array(await readFile(new URL('runtime.json', directory)));
+const bytes = new Uint8Array(
+  await readFile(new URL(`runtime.${presentation.sha256}.json`, directory)),
+);
 const manifest = JSON.parse(new TextDecoder().decode(bytes));
 const hash = await hashPresentationBytes(bytes);
-const presentation = ACTOR_APPEARANCE_RELEASES[0].presentation;
 function content(mode = 'solo', journey = false) {
   return {
     editionId: journey ? 'journey-pressure' : 'field-kit',
@@ -45,7 +48,12 @@ function content(mode = 'solo', journey = false) {
     },
   };
 }
-function environment({ currentBytes = bytes, historical = false, hostOptions = {}, decode } = {}) {
+function environment({
+  currentBytes: current = currentBytes,
+  historical = true,
+  hostOptions = {},
+  decode,
+} = {}) {
   const requests = [],
     decoded = [],
     hosts = [],
@@ -53,7 +61,7 @@ function environment({ currentBytes = bytes, historical = false, hostOptions = {
   const fetch = async (url) => {
     const relative = url.slice(baseURL.length);
     requests.push(relative);
-    if (relative === 'runtime.json') return new Response(currentBytes);
+    if (relative === 'runtime.json') return new Response(current);
     if (relative === `runtime.${hash}.json`)
       return historical ? new Response(bytes) : new Response(null, { status: 404 });
     if (!relative.startsWith('assets/')) return new Response(null, { status: 404 });
@@ -137,7 +145,7 @@ test('approved actor registry binds exact accepted compiled62 bytes, not a curre
 });
 
 test('fixed actors loader uses the existing verified image path and has no other presentation authority', async () => {
-  const env = environment(),
+  const env = environment({ currentBytes: bytes, historical: false }),
     host = env.createHost({ profile: 'actors', baseURL }),
     snapshot = await host.load({ expectedManifestSha256: hash });
   const expected = new Set(
@@ -240,7 +248,11 @@ test('retained appearance is exact-content bound and ignores future preference c
     ),
     /different accepted content/,
   );
-  assert.equal(env.hosts.length, 1);
+  assert.equal(
+    env.hosts.length,
+    2,
+    'current lookup and exact retained lookup use separate staged hosts after compiler drift',
+  );
 });
 
 test('retained history checks same exact bytes after current manifest drift, never latest assets', async () => {
@@ -256,6 +268,7 @@ test('retained history checks same exact bytes after current manifest drift, nev
   lease.release();
   const missing = environment({
     currentBytes: new TextEncoder().encode(' ' + new TextDecoder().decode(bytes)),
+    historical: false,
   });
   await assert.rejects(prepare(missing), /unavailable/);
   assert.deepEqual(missing.requests, ['runtime.json', `runtime.${hash}.json`]);
@@ -314,7 +327,7 @@ test('an accidentally supplied live owner is rejected without closing or reloadi
   await assert.rejects(
     prepareActorAppearanceLease(
       { content: content(), scope: 'builtin' },
-      { baseURL, createHost: () => env.hosts[0] },
+      { baseURL, createHost: () => env.hosts.at(-1) },
     ),
     /fresh presentation host/,
   );
