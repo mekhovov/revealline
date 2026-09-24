@@ -1,0 +1,158 @@
+--- donor/auditor.py
++++ archive65/http_audit.py
+@@ -1,4 +1,4 @@
+-"""Read every hash-pinned Archive59 HTTP body without persisting payloads.
++"""Read every hash-pinned Archive65 HTTP body without persisting payloads.
+ 
+ Adapted from the Archive03 auditor. Public execution requires an explicit --run;
+ there is no URL, inventory, or output-path override. Tests use an injected local
+@@ -23,17 +23,25 @@
+ from audit_binding import validate_execution_binding, candidate_inventory
+ 
+ BASE_DIR = Path(__file__).resolve().parents[1]
+-BASE = 'https://mekhovov.github.io/revealline-archive-59/'
++BASE = 'https://mekhovov.github.io/revealline-archive-65/'
+ COMMIT = None
+ BINDING = None
+-INVENTORY_SHA = '787197923251ee6049d5103bbd48e41f094f5cc34ff57dad3cff0c7849a7edf1'
+-EXPECTED_FILES = 1091
+-EXPECTED_BYTES = 590954684
++INVENTORY_SHA = '16522f243b4eadbea8085ff5cecb6d796b2ca572fbe6247c467091c2162cdb92'
++EXPECTED_FILES = 1120
++EXPECTED_BYTES = 594895002
+ SOCKET_TIMEOUT = 25
+ ATTEMPT_SECONDS = 90
+ AUDIT_SECONDS = 1800
+ MAX_ATTEMPTS = 3
+ CHUNK_BYTES = 65536
++# Archive65 only: logs/authority snapshots, never payloads, use a bounded RAM volume.
++MIN_FREE_METADATA_BYTES = 32 * 1024**2
++MAX_PERSISTED_METADATA_BYTES = 28 * 1024**2
++MAX_LOG_LINE_BYTES = 4096
++MAX_REPORT_BYTES = 5 * 1024**2
++MAX_SETUP_BYTES = 3 * 1024**2
++MAX_WORST_CASE_METADATA_BYTES = EXPECTED_FILES * (MAX_ATTEMPTS + 1) * MAX_LOG_LINE_BYTES + MAX_REPORT_BYTES + MAX_SETUP_BYTES
++assert MAX_WORST_CASE_METADATA_BYTES < MAX_PERSISTED_METADATA_BYTES < MIN_FREE_METADATA_BYTES
+ MIMES = {
+     '.html': {'text/html'},
+     '.mjs': {'text/javascript', 'application/javascript'},
+@@ -56,6 +64,35 @@
+ }
+ 
+ 
++class MetadataBudget:
++    """Fail closed on capacity, overlong records, short writes or storage errors."""
++    def __init__(self):
++        self.used = 0
++        self.lock = threading.Lock()
++
++    def reserve(self, raw, maximum):
++        if len(raw) > maximum:
++            raise ValueError('Audit metadata item exceeds its reviewed bound')
++        with self.lock:
++            if self.used + len(raw) > MAX_PERSISTED_METADATA_BYTES:
++                raise ValueError('Audit metadata exceeds its total persisted budget')
++            self.used += len(raw)
++
++    def file(self, target, raw, maximum):
++        self.reserve(raw, maximum)
++        with target.open('xb') as stream:
++            if stream.write(raw) != len(raw):
++                raise OSError('Incomplete audit metadata write')
++            stream.flush()
++
++    def line(self, stream, value):
++        text = json.dumps(value) + '\n'
++        self.reserve(text.encode('utf-8'), MAX_LOG_LINE_BYTES)
++        if stream.write(text) != len(text):
++            raise OSError('Incomplete audit log write')
++        stream.flush()
++
++
+ def now():
+     return datetime.datetime.now(datetime.timezone.utc).isoformat()
+ 
+@@ -114,7 +151,7 @@
+             raise TimeoutError('Audit deadline reached before request')
+         request = urllib.request.Request(url, headers={
+             'Accept-Encoding': 'identity', 'Cache-Control': 'no-cache',
+-            'User-Agent': 'RevealLine-archive59-byte-audit/2.0',
++            'User-Agent': 'RevealLine-archive65-byte-audit/2.0',
+         })
+         result['requestStarted'] = True
+         with opener.open(request, timeout=min(SOCKET_TIMEOUT, max(0.1, attempt_deadline - started))) as response:
+@@ -189,7 +226,7 @@
+ 
+ def main():
+     parser = argparse.ArgumentParser(description=__doc__)
+-    parser.add_argument('--run', action='store_true', help='Audit the fixed public Archive59 inventory')
++    parser.add_argument('--run', action='store_true', help='Audit the fixed public Archive65 inventory')
+     parser.add_argument('--workers', type=int, choices=[4], default=4)
+     parser.add_argument('--prepare', action='store_true', help='Check local candidate only; no authority or public requests')
+     args = parser.parse_args()
+@@ -206,19 +243,26 @@
+         print(json.dumps({'status': 'READY', 'base': BASE, 'files': len(rows), 'bytes': EXPECTED_BYTES,
+                           'inventorySha256': INVENTORY_SHA, 'networkRequests': 0}))
+         return 0
+-    if shutil.disk_usage(BASE_DIR).free < 1024**3:
+-        raise ValueError('At least 1 GiB local free space required')
++    if shutil.disk_usage(BASE_DIR).free < MIN_FREE_METADATA_BYTES:
++        raise ValueError('At least 32 MiB free metadata space required; no payloads are persisted')
+     out = BASE_DIR / 'http' / ('http-' + datetime.datetime.now(datetime.timezone.utc).strftime('%Y%m%dT%H%M%SZ') + '-' + uuid.uuid4().hex[:8])
+     out.parent.mkdir(exist_ok=True)
+     out.mkdir(exist_ok=False)
+-    (out / 'expected-inventory.json').write_bytes(raw)
+-    (out / 'auditor.py').write_bytes(Path(__file__).read_bytes())
+-    (out / 'audit_binding.py').write_bytes(Path(__file__).with_name('audit_binding.py').read_bytes())
+-    (out / 'execution-request.json').write_bytes(BINDING['requestRaw'])
+-    (out / 'authority-originals').mkdir()
++    setup = {
++        'expected-inventory.json': raw,
++        'auditor.py': Path(__file__).read_bytes(),
++        'audit_binding.py': Path(__file__).with_name('audit_binding.py').read_bytes(),
++        'execution-request.json': BINDING['requestRaw'],
++    }
+     for role, body in BINDING['evidenceBodies'].items():
+         extension = '.zip' if role == 'receiptZIP' else '.json'
+-        (out / 'authority-originals' / (role + extension)).write_bytes(body)
++        setup['authority-originals/' + role + extension] = body
++    if sum(map(len, setup.values())) > MAX_SETUP_BYTES:
++        raise ValueError('Audit authority snapshot exceeds its metadata budget')
++    budget = MetadataBudget()
++    (out / 'authority-originals').mkdir()
++    for name, body in setup.items():
++        budget.file(out / name, body, MAX_SETUP_BYTES)
+     admitted_binding = BINDING
+     deadline = time.monotonic() + AUDIT_SECONDS
+     started = now()
+@@ -230,8 +274,7 @@
+         def record_attempt(result):
+             nonlocal trial_count, attempt_failures
+             with write_lock:
+-                attempts.write(json.dumps(result) + '\n')
+-                attempts.flush()
++                budget.line(attempts, result)
+                 trial_count += 1
+                 attempt_failures += result['status'] != 'PASS'
+ 
+@@ -245,8 +288,7 @@
+             for future in concurrent.futures.as_completed(futures):
+                 result = future.result()
+                 finished.append(result)
+-                results.write(json.dumps(result) + '\n')
+-                results.flush()
++                budget.line(results, result)
+                 if len(finished) % 25 == 0:
+                     print(json.dumps({'checked': len(finished), 'total': len(rows),
+                                       'failed': sum(row['status'] != 'PASS' for row in finished)}), flush=True)
+@@ -289,9 +331,7 @@
+         'preservedOldCanonicalRows': 0,
+         'scope': 'Every pinned canonical HTTP body and explicit MIME, including hidden metadata. Independent of browser/offline or physical-device acceptance.',
+     }
+-    with (out / 'http-report.json').open('x') as stream:
+-        json.dump(report, stream, indent=2)
+-        stream.write('\n')
++    budget.file(out / 'http-report.json', (json.dumps(report, indent=2) + '\n').encode(), MAX_REPORT_BYTES)
+     print(json.dumps({'directory': str(out), 'report': report}), flush=True)
+     return 1 if report['status'] != 'PASS' else 0
+ 
