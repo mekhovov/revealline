@@ -1,8 +1,8 @@
 {
   "format": "revealline-pages-controller.v1",
-  "currentVersion": "v0.106.0",
-  "catalogSha256": "99b8e76c22504712eb0a06bd584815d5e879b40ceab6db885344b3570aead1bd",
-  "allocationSha256": "4f96e7479bccdcfa07531464a63b0e37863cb11145fc7ebe27678a09ba303ad4",
+  "currentVersion": "v0.107.0",
+  "catalogSha256": "d5f133442da474b691dcffa53330f19aae4f4385d8791da4c2cfdd8c4bf6412c",
+  "allocationSha256": "4410e50410cb98c716c23755c7570e339fe7a75968f292ce46fe8a0b50efb926",
   "admissions": [
     {
       "id": "archive-01",
@@ -9138,12 +9138,44 @@
           "kind": "reference"
         }
       ]
+    },
+    {
+      "id": "archive-71",
+      "infrastructureCommit": "296261f87b413bcfffdb044dc465aba75d650f82",
+      "deploymentId": 6649019916,
+      "evidence": [
+        {
+          "path": "evidence/archive-71-v01060/expected-inventory.json",
+          "sha256": "a4f9940ececd29470265100ef00bbeaacfb2879b0601e26eff487f42e13ae18e",
+          "kind": "inventory"
+        },
+        {
+          "path": "evidence/archive-71-v01060/http-report.json",
+          "sha256": "396255618c8819df904c9483d65552f260fc2e71df08dc86665f4fc5819459ed",
+          "kind": "http"
+        },
+        {
+          "path": "evidence/archive-71-v01060/http-report-initial-failure.json",
+          "sha256": "810b57fcbbab0cde847aa04f35b089b5f3cc46431c5e804b89a903933fb331da",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-71-v01060/browser-admission.json",
+          "sha256": "6388ee3f3c12a13fd3be8f8d39f3613f553f9e3e156e2fec54edbe779a76f8a7",
+          "kind": "browser"
+        },
+        {
+          "path": "evidence/archive-71-v01060/public-observation.json",
+          "sha256": "7e89aaa8ff2de1b828677f45f8531339e4a7a88cda18756b517477cdeea077bf",
+          "kind": "reference"
+        }
+      ]
     }
   ],
   "deploymentEnabled": true,
   "currentSourceQualification": {
-    "path": "evidence/current-v01060/source-qualification.json",
-    "sha256": "68d33a4d5b305b99eabe9f61e47bbdd2abe34035c903a9a9ed6ed79a72205f0b"
+    "path": "evidence/current-v01070/source-qualification.json",
+    "sha256": "899730dfec1fe4a123502f59762be5da0039076fc27bee98592d4223b69871e6"
   },
   "retainedReleasesPerMajor": "all",
   "testingRoutes": {}
