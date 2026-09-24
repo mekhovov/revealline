@@ -24,9 +24,9 @@ reviewer names, listening approval or device results.
 | --- | --- | --- |
 | Existing catalogue | 70 hosted recordings / 15 albums; earlier 24-track collection is included | Selective listening and trusted metadata curation |
 | Player framework | Simplified chooser, mixed playlists, uploads, creator tools, optional offline albums, recovery and rights enforcement | Targeted released-source verification and demonstrated fixes |
-| New archive previews | 100 archive recordings: 70 foundation recordings plus 30 retained previews; four more Nakarada industrial/thrash auditions published through archive PRs #9/#10 | Full listening, taste approval and game admission remain; zero new game admissions |
+| New archive previews | 104 archive recordings: 70 foundation recordings plus 34 retained previews; four nonduplicate groove-first auditions published through archive PRs #11/#12 | Full listening, taste approval and game admission remain; zero new game admissions |
 | Retro previews | Seven earlier rejections retained; six DOS-88/escp previews also rejected for the requested direction | First comparison rejected; Electric Dreams now closest; continue source comparisons using the supplied night-drive references |
-| Metal previews | Six older backups preserved; four Eternity recordings retained after positive direction feedback; four new industrial/thrash previews published alongside the earlier Nakarada pair; the YannZ groove/djent direction is now the closest reference | Prepare a rights-verified groove-first comparison, then evaluate sustained energy and complete arrangements before game admission |
+| Metal previews | Six older backups preserved; four Eternity recordings retained after positive direction feedback; four industrial/thrash previews and four nonduplicate YannZ-centered groove auditions are public alongside the earlier Nakarada pair; the YannZ groove/djent direction is now the closest reference | Complete musical, transition and gameplay review of the latest four; continue searching for sustained groove-first tracks before game admission |
 | Nakarada Shchedryk | User explicitly approved musical direction; exact MP3 technically checked | Game admission, opening theme and gameplay/device/cultural evidence |
 | UA-FPV | Four private import packs preserve 80 filenames / 77 unique recordings | Recording-specific public permission and game admission |
 | Quick controls | B/N and main/pause-menu source implementation independently reviewed in draft PR #333 | Close the nine-file fingerprint dependency gap, then complete qualification, browser/controller/device checks and release |
@@ -223,6 +223,63 @@ reviewer names, listening approval or device results.
   publication does not establish public game acceptance or allocate a music
   release version.
 
+### 24 September checkpoint — YannZ groove intake and public comparison
+
+- Archive [PR #11](https://github.com/mekhovov/revealline-soundtracks-01/pull/11)
+  merged at 71c9b62aaaf0f485fe8c4fb3274f43b939effe3b. Its final hosted
+  [run 36004806070](https://github.com/mekhovov/revealline-soundtracks-01/actions/runs/36004806070)
+  passed all 62 intake tests and prepared Pixel Damnation, Revenge's Waiting,
+  Soul Ripper, German Industrial Metal and Achilles. The first failed run retained
+  a stale four-track manifest assertion; the second retained the ordinary one-minute
+  duration rejection for the 48-second boss cue. The final change preserves the
+  ordinary 1–12 minute policy and adds a narrow 30-second minimum only for explicit
+  `boss-cue` recordings. Technical decoding, source/licence snapshots and permitted
+  derivative measurements passed. Listening and game admission did not.
+- The exact hosted artifact `10810521176` is 57,879,598 bytes with SHA-256
+  `4c3c0556359efc76c52322a4c6cde3b09116f572f9da929d58d9a827a382636e`.
+  Its 16 original members and the exact source manifest are retained. Source head,
+  runner revision and accepted merge share tree
+  `2d0a398452979711e95d0df1d129b6a81aefeb3e`; independent artifact review is
+  preserved on PR #11.
+- Catalogue-wide comparison found German Industrial Metal already present in the
+  immutable core batch with the same recording ID, title, native hash and delivery
+  hash. Archive [PR #12](https://github.com/mekhovov/revealline-soundtracks-01/pull/12)
+  therefore retained all five intake recordings as evidence while publishing only
+  the four nonduplicates. Exact-head
+  [run 36006489875](https://github.com/mekhovov/revealline-soundtracks-01/actions/runs/36006489875)
+  passed hosted verification and staging at 104 recordings. Independent review
+  confirmed the exact head; merge commit is
+  `a8dfc0c818c785b2da7c3ec2bbd5692a4959e746`.
+- Exact-merge Pages
+  [run 36006830854](https://github.com/mekhovov/revealline-soundtracks-01/actions/runs/36006830854)
+  passed verification and deployment. The live
+  [groove-first comparison](https://mekhovov.github.io/revealline-soundtracks-01/batches/metal-groove-yannz-audition-20260924/)
+  exposes four MP3s totaling 19,101,744 bytes. Direct public checks matched every
+  committed length and SHA-256. Browser playback started Pixel Damnation, Next
+  selected Revenge's Waiting, and Pause changed to Resume. These short transport
+  checks are not complete-track, transition, warning-audibility, Content ID,
+  Recording mode, offline, physical-device or game-admission approval.
+- Archive totals are now **104 recordings: 70 foundation plus 34 previews**,
+  **568,542,177 audio bytes / 569,127,879 public bytes**. Revenge's Waiting remains
+  an explicit 48-second boss cue and does not count toward the full gameplay-track
+  target. **Zero newly admitted game recordings.**
+- Game PR #320 advanced to 16d1e8f722891f775e05cf799dbca3299c2b91a4.
+  Exact [run 35991665122](https://github.com/mekhovov/revealline/actions/runs/35991665122)
+  passed preflight, build and shards 1/2, then failed shard 3 at
+  `touchscreen-controller-host.test.mjs:250` with an asynchronous host-action
+  timeout. Shard 4 passed 3,516/3,518 and failed two
+  `versus-continuous-next-host.test.mjs` cases with unsettled asynchronous actions;
+  post-test activity reached `document` after teardown. PRs #331/#333 remain blocked
+  until the shared owner fixes and fully qualifies that baseline. The owner then
+  published a test-only synchronization correction at
+  `b79a979cb0a1653499e8c4432c3e755374015230`. Fresh exact-head
+  [run 36007570919](https://github.com/mekhovov/revealline/actions/runs/36007570919)
+  has passing preflight while build and all four shards are in progress at this
+  checkpoint. The new head remains unaccepted until every required gate passes.
+- Accepted game main at this checkpoint is
+  `bc9bd27fd7c62d9329c7fd38f1546de7ba91e49c`. Local free space is approximately
+  1.4 GiB. Continue sparse/hosted work and preserve the 1 GiB floor.
+
 ## Remaining delivery ledger
 
 Estimates are hands-on effort, not promised dates. CI queues, listening reviewers,
@@ -237,7 +294,7 @@ version is allocated without the release owner's confirmation.
 | M3 | Source reviewed; fingerprint closure and qualification remain | Accepted PR #320 production lineage; complete source/browser/controller/device checks | Bind nine omitted runtime inputs, prove review invalidation/history preservation, then pass full gates and verify actual controls | About 1 day remaining; closure repair may change estimate, excluding CI/device waits | [Draft PR #333](https://github.com/mekhovov/revealline/pull/333), da750277; [dependency audit](https://github.com/mekhovov/revealline/pull/333#issuecomment-5808657043) | Unreleased |
 | M4 | Active research; parallel | Exact published rights and musical/cultural review | Target six additional distinct Ukrainian compositions; publish cleared subsets | 1–2 days per research round; rights/review date unknown | Candidate/hold register below | Unreleased |
 | M5 | Electric Dreams is the latest closest reference; further search requested; earlier feedback preserved | User musical fit; exact-file rights and full listening before admission | Compare Twilight Echo and Neon; Neon Noir stays a musical reference with a public-archive rights hold; prepare 6–10 full auditions only after accepted examples | Several hours per comparison round; 1–2 days batch preparation, then 1–2 days integration/verification after approval; CI/review waits excluded | M5.a decision history and source register below; historical archive PRs #7/#8 preserved | Unreleased in game |
-| M6 | Four Eternity tracks retained; four more industrial/thrash previews published; ten newer metal auditions available; YannZ's groove/djent combat direction is closest so far | Exact-file acquisition; musical fit, full listening and gameplay acceptance | Prepare Pixel Damnation and Revenge's Waiting with a small rights-verified groove-first comparison; keep boss loops separate from full gameplay-track counts | Several hours per listening/research round; 1–2 days integration after approval, excluding review/CI waits | Archive [PR #9](https://github.com/mekhovov/revealline-soundtracks-01/pull/9) / [#10](https://github.com/mekhovov/revealline-soundtracks-01/pull/10); [YannZ source](https://opengameart.org/content/they%E2%80%99re-going-down-%E2%80%93-game-ost-pack-by-yannz); prior #6/#7/#8 evidence retained above | Unreleased in game |
+| M6 | Groove-first intake complete; four nonduplicate recordings published for listening; YannZ's pair remains the closest direction | Musical fit, full listening, transitions, warning audibility, Content ID and gameplay acceptance | Review the four-track public comparison; retain Revenge's Waiting as a boss cue; continue rights-screened search for longer rhythmic/energetic arrangements, then admit only an approved subset | Several hours per listening/research round; 1–2 days integration after approval, excluding review/CI waits | Archive [PR #11](https://github.com/mekhovov/revealline-soundtracks-01/pull/11) / [#12](https://github.com/mekhovov/revealline-soundtracks-01/pull/12); [public comparison](https://mekhovov.github.io/revealline-soundtracks-01/batches/metal-groove-yannz-audition-20260924/); prior #6–#10 evidence retained above | Unreleased in game |
 | M7 | Blocked public rights; scope retained | Recording-specific public redistribution and applicable artwork evidence | Include all 77 recordings / 80 filenames; publish cleared entries; maintain private pack route | About 1 day integration after clearance; clearance date unknown | UA-FPV manifests/private packs/guide | Public collection unreleased |
 | M8 | Remaining verification | Released source and device access | Audit existing playback/storage/creator contracts; release demonstrated fixes separately | 1–2 days initial audit; fixes separately estimated | Existing regression suites | Per-feature evidence required |
 | M9 | Later | Core style releases | Review existing 70 selectively; add trusted ID/hash curation overlay preserving saved pins | 1–2 days per selected batch plus listening | Curation PR pending | Unreleased |
