@@ -27,6 +27,7 @@
     "format:native:check": "prettier --check \"platforms/desktop/*.mjs\" \"platforms/desktop/test/*.mjs\" \"platforms/ios/{bridge,scripts,test,diagnostics}/*.{mjs,js,html,css}\""
   },
   "dependencies": {
+    "mediabunny": "1.59.1",
     "phaser": "4.2.1"
   },
   "devDependencies": {

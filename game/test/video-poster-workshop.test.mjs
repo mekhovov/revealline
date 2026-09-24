@@ -267,7 +267,15 @@ test('presented-frame evidence enables bounded directional seek and publishes on
 });
 
 test('playback range stays separate from explicitly unavailable physical trim', async (t) => {
-  const h = await setup(t);
+  const h = await setup(t, {
+    physicalTrim: {
+      support: async () => ({
+        supported: false,
+        formats: [],
+        reason: 'No verified physical video converter is installed in this test build.',
+      }),
+    },
+  });
   await h.inspect();
   h.$('playback-start').value = '1';
   h.$('playback-end').value = '4';

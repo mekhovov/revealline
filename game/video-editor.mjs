@@ -105,6 +105,16 @@ function unsupported(reason = 'No verified physical video converter is installed
   return Object.freeze({ supported: false, formats: Object.freeze([]), reason });
 }
 
+async function authenticateSource(original, info) {
+  required(original instanceof Blob, 'Physical trimming requires owned source bytes.');
+  required(original.size === info.bytes, 'Physical trim source size differs from inspected facts.');
+  const sourceSha256 = await sha(original);
+  required(
+    sourceSha256 === info.sha256,
+    'Physical trim source bytes differ from the inspected source hash.',
+  );
+}
+
 /**
  * Lazy boundary for an optional maintained converter. The boundary owns output
  * verification; adapter claims alone never make bytes downloadable.
@@ -122,11 +132,14 @@ export function createOptionalPhysicalTrimBoundary({ loadAdapter, inspectVideo }
     return loaded;
   };
 
-  async function support(info) {
+  async function support(info, { original, range, signal } = {}) {
     videoFacts(info);
     const loaded = await adapter();
     if (!loaded) return unsupported();
-    const result = await loaded.support(info);
+    if (original !== undefined) await authenticateSource(original, info);
+    if (signal?.aborted) throw new DOMException('Physical trim cancelled.', 'AbortError');
+    const playback = range ? preparePlaybackRange(info, range) : null;
+    const result = await loaded.support(original, info, playback, { signal });
     if (!result?.supported)
       return unsupported(result?.reason || 'The optional converter does not support this source.');
     required(
@@ -139,27 +152,18 @@ export function createOptionalPhysicalTrimBoundary({ loadAdapter, inspectVideo }
       supported: true,
       formats: Object.freeze([...new Set(result.formats)]),
       reason: '',
+      detail: typeof result.detail === 'string' ? result.detail : '',
     });
   }
 
   async function trim(original, info, range, { signal } = {}) {
     videoFacts(info);
-    required(original instanceof Blob, 'Physical trimming requires owned source bytes.');
-    required(
-      original.size === info.bytes,
-      'Physical trim source size differs from inspected facts.',
-    );
-    const sourceSha256 = await sha(original);
-    required(
-      sourceSha256 === info.sha256,
-      'Physical trim source bytes differ from the inspected source hash.',
-    );
     const playback = preparePlaybackRange(info, range);
     required(
       !isCompletePlaybackRange(info, range),
       'Choose a shorter range before physically trimming the video.',
     );
-    const capability = await support(info);
+    const capability = await support(info, { original, range, signal });
     required(capability.supported, capability.reason);
     if (signal?.aborted) throw new DOMException('Physical trim cancelled.', 'AbortError');
     const loaded = await adapter();
@@ -209,14 +213,21 @@ export function createOptionalPhysicalTrimBoundary({ loadAdapter, inspectVideo }
           decodedWidth: output.info.width,
           decodedHeight: output.info.height,
           audioSync: Object.freeze({
-            status:
-              transformed.audioSync?.status === 'verified' ? 'adapter-verified' : 'unverified',
+            status: ['verified', 'not-present'].includes(transformed.audioSync?.status)
+              ? transformed.audioSync.status === 'verified'
+                ? 'adapter-verified'
+                : 'not-present'
+              : 'unverified',
             note:
               transformed.audioSync?.status === 'verified'
                 ? String(
                     transformed.audioSync.note || 'Verified by the optional converter adapter.',
                   )
-                : 'This browser boundary did not independently decode and compare audio timestamps.',
+                : transformed.audioSync?.status === 'not-present'
+                  ? String(
+                      transformed.audioSync.note || 'The verified source contains no audio track.',
+                    )
+                  : 'This browser boundary did not independently decode and compare audio timestamps.',
           }),
         }),
       });
