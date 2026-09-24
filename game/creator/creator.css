@@ -142,6 +142,36 @@ img {
   height: auto;
   border-radius: 8px;
 }
+.creator-story-stage {
+  display: grid;
+  gap: 0.9rem;
+}
+.creator-story-stage > img,
+.creator-story-stage video {
+  display: block;
+  width: 100%;
+  max-height: min(62dvh, 680px);
+  object-fit: contain;
+  background: #101923;
+}
+.creator-story-stage .victory-story {
+  display: grid;
+  gap: 0.75rem;
+}
+.creator-story-stage .victory-story > div {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.65rem;
+}
+.creator-story-stage .victory-story label {
+  flex-direction: row;
+  align-items: center;
+  gap: 0.55rem;
+}
+#creator-story-status:empty {
+  display: none;
+}
 .review-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;

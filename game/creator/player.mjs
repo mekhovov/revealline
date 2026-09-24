@@ -7,6 +7,8 @@ import { createJourneyProfileStore } from '../journey/profile.mjs';
 import { claimProfileWriter } from '../profile-writer.mjs';
 import { SESSION_STORAGE_BYTES } from '../sessions.mjs';
 import { downloadCreatorFile } from './download.mjs';
+import { createCreatorVictoryStoryHost } from './victory-story-host.mjs';
+import { createCreatorPlayerVictoryStory } from './player-victory-story.mjs';
 
 const $ = (id) => document.getElementById(id);
 const status = (message, error = false) => {
@@ -32,6 +34,7 @@ let runtime,
   lastSaveTick = 0,
   pictureURL,
   pictureSha256,
+  storyPlayer,
   nextMissionId = null;
 const saveKey = creatorAttemptKey(edition);
 function persistAttempt() {
@@ -114,7 +117,7 @@ async function showEarned(preferredMissionId = null) {
   );
   if (!mission) {
     $('earned').hidden = true;
-    return;
+    return null;
   }
   const receipt = clears[mission.id];
   const picture = project.assets.find(({ id }) => id === mission.presentation.backgroundAssetId);
@@ -128,11 +131,19 @@ async function showEarned(preferredMissionId = null) {
   }
   $('earned-picture').src = pictureURL;
   $('earned-picture').alt = picture.alt;
+  if ($('earned-picture').parentElement !== $('creator-story-stage'))
+    $('creator-story-stage').replaceChildren($('earned-picture'));
   $('earned-caption').textContent =
     `${mission.name} · completed on ${receipt.difficulty}. ${pack.manifest.content.credits.picture}`;
   $('earned').hidden = false;
+  return Object.freeze({
+    mission,
+    posterAsset: picture,
+    posterElement: $('earned-picture'),
+  });
 }
 async function adoptDisplay(attempt, running) {
+  storyPlayer?.reset();
   painter.setLevel(attempt.run.level, { seed: attempt.run.seed });
   await painter.setLook(attempt.theme, 'neutral-marker');
   const size = boardPaintSizeForRun(attempt.run);
@@ -163,10 +174,11 @@ async function finish() {
   if (runtime.current().run.status === 'won') {
     status('Picture revealed. Verifying your completion…');
     try {
-      profile.record(await runtime.completion());
+      const receipt = await runtime.completion();
+      profile.record(receipt);
       await profile.flush();
-      const missionId = runtime.current().manifest.missionId;
-      await showEarned(missionId);
+      const missionId = receipt.missionId,
+        earned = await showEarned(missionId);
       nextMissionId = runtime.nextMissionId(missionId);
       status(
         nextMissionId
@@ -175,6 +187,12 @@ async function finish() {
       );
       $('next').hidden = false;
       $('next').textContent = nextMissionId ? 'Next level' : 'Back to my creations';
+      if (earned)
+        void storyPlayer.show({
+          receipt,
+          posterElement: earned.posterElement,
+          posterAsset: earned.posterAsset,
+        });
     } catch (error) {
       fail(error);
     }
@@ -252,7 +270,6 @@ $('next').onclick = () => {
   const missionId = nextMissionId;
   void operation(async () => {
     const current = runtime.current().selection;
-    $('earned').hidden = true;
     await adoptDisplay(
       await runtime.start({
         missionId,
@@ -299,6 +316,7 @@ $('import-progress').onchange = () =>
       throw new Error('Choose a bounded campaign progress backup.');
     profile.restore(await file.text());
     await profile.flush();
+    storyPlayer.reset();
     await showEarned();
   });
 document.addEventListener('visibilitychange', () => {
@@ -308,6 +326,7 @@ window.addEventListener('blur', pause);
 window.addEventListener('pagehide', () => {
   pause();
   lease?.release();
+  storyPlayer?.dispose();
   runtime?.dispose();
   input?.destroy();
   store.close();
@@ -341,6 +360,24 @@ try {
   });
   await profile.load();
   runtime = createCreatorRuntime(pack);
+  storyPlayer = createCreatorPlayerVictoryStory({
+    runtime,
+    host: createCreatorVictoryStoryHost({
+      document,
+      nodes: {
+        surface: $('earned'),
+        stage: $('creator-story-stage'),
+        status: $('creator-story-status'),
+        retry: $('creator-story-retry'),
+      },
+    }),
+    nodes: {
+      surface: $('earned'),
+      stage: $('creator-story-stage'),
+      status: $('creator-story-status'),
+      retry: $('creator-story-retry'),
+    },
+  });
   input = attachInput({
     arena: $('arena'),
     continuousSteering: () => true,
