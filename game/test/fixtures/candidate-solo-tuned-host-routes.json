@@ -1,0 +1,285 @@
+{
+  "format": "CandidateSoloHostRoutesV1",
+  "scope": "Actual-input legal clear routes for gameplay-pressure.v4, Standard, immediate turns, Scout, seed1; exact authored and tuned gameplay identities. No state edits or abilities. Historical untuned fixtures remain unchanged. Technical host/progression evidence only, not human balance or device qualification.",
+  "rows": [
+    [
+      "first-return",
+      "0822484529141ac9",
+      "144c4af6d98e33ac",
+      "907d17be7edce709",
+      [
+        ["right", 163],
+        ["down", 469]
+      ]
+    ],
+    [
+      "choose-your-share",
+      "4b0224f30679eff6",
+      "3ce2d89d1390daea",
+      "c70e2893c3b33a5c",
+      [
+        [null, 600],
+        ["left", 13],
+        ["down", 469]
+      ]
+    ],
+    [
+      "two-keepers",
+      "618489f3ba42c64a",
+      "6606f4a61076db9b",
+      "ca7a080e3956e040",
+      [
+        [null, 60],
+        ["left", 190],
+        ["down", 476],
+        ["up", 326],
+        ["right", 672]
+      ]
+    ],
+    [
+      "nearby-shore",
+      "2deef5afc9bfca49",
+      "9943b2ae7a69fec9",
+      "6952821c49af04f2",
+      [
+        [null, 600],
+        ["right", 529],
+        ["down", 475],
+        ["left", 230],
+        ["up", 469]
+      ]
+    ],
+    [
+      "island-outpost",
+      "8d34d10388fd2f21",
+      "1f73833320aa1f5c",
+      "92900b6078bd7e05",
+      [
+        ["left", 252],
+        [null, 600],
+        ["right", 7],
+        ["left", 14],
+        ["up", 231],
+        ["right", 719],
+        ["down", 469]
+      ]
+    ],
+    [
+      "stepping-stones",
+      "a1ad76873abfbc40",
+      "457ba5e3129b0d1a",
+      "de3df6524358ad69",
+      [
+        [null, 60],
+        ["right", 394],
+        ["down", 476],
+        ["up", 475],
+        ["left", 272],
+        ["down", 469]
+      ]
+    ],
+    [
+      "two-bays",
+      "902bc114c996e2ff",
+      "904b9cc0c9d03cd6",
+      "e99ed6e7d4fdd3a2",
+      [
+        ["up", 13],
+        ["right", 489],
+        ["left", 81],
+        ["up", 211],
+        [null, 240],
+        ["down", 360],
+        ["left", 877]
+      ]
+    ],
+    [
+      "courtyard-return",
+      "859345af89d9c84c",
+      "91163863aede296b",
+      "1933c23f5aa71876",
+      [
+        [null, 60],
+        ["right", 265],
+        [null, 120],
+        ["right", 7],
+        ["up", 81],
+        ["left", 41],
+        ["down", 82],
+        ["right", 54],
+        ["down", 81],
+        ["right", 340],
+        ["down", 163],
+        ["left", 774],
+        ["up", 469]
+      ]
+    ],
+    [
+      "long-way-home",
+      "89fa32aa3f74ad08",
+      "6234a668a96ffb1e",
+      "dbb52a93a98dee0a",
+      [
+        ["right", 584],
+        ["left", 557],
+        ["down", 27],
+        ["right", 557],
+        ["up", 54],
+        ["left", 550],
+        [null, 120],
+        ["right", 7],
+        ["left", 14],
+        ["up", 14],
+        ["right", 557],
+        ["left", 27],
+        ["up", 183],
+        ["down", 7],
+        ["up", 14],
+        ["left", 720],
+        ["down", 231],
+        ["right", 584],
+        ["down", 238]
+      ]
+    ],
+    [
+      "behind-the-patrol",
+      "df228a1e01634472",
+      "0b8bf0e91ce93875",
+      "f45d24abb3f27807",
+      [
+        [null, 960],
+        ["right", 461],
+        ["down", 469]
+      ]
+    ],
+    [
+      "second-landing",
+      "685e473a9ea5c5c6",
+      "1bc52ddc3588ea2a",
+      "0f47209284ba3707",
+      [
+        [null, 600],
+        ["right", 760],
+        ["down", 299],
+        ["left", 957],
+        ["right", 305],
+        ["down", 170]
+      ]
+    ],
+    [
+      "long-rail",
+      "a4a5a700853cbe55",
+      "bce83e5dac2cb776",
+      "73fa0635e3ccd836",
+      [
+        [null, 960],
+        ["right", 176],
+        ["down", 469],
+        [null, 600],
+        ["down", 7],
+        ["left", 488],
+        ["up", 469],
+        [null, 120],
+        ["down", 7],
+        ["up", 14],
+        ["right", 230],
+        ["down", 469]
+      ]
+    ],
+    [
+      "new-frontier",
+      "d79092696aab345f",
+      "5828b390a7c49ade",
+      "b6760b7581f84db5",
+      [
+        [null, 600],
+        ["right", 108],
+        ["down", 469],
+        [null, 60],
+        ["down", 7],
+        ["left", 393],
+        ["up", 469]
+      ]
+    ],
+    [
+      "turn-the-corner",
+      "44cd78dd6d6f9110",
+      "a988782403f3c199",
+      "06f216a2ee4baaec",
+      [
+        ["down", 292],
+        [null, 120],
+        ["down", 7],
+        ["up", 312],
+        ["right", 13],
+        ["up", 157],
+        [null, 60],
+        ["down", 468],
+        ["left", 339],
+        ["up", 468]
+      ]
+    ],
+    [
+      "return-pocket",
+      "16e8b821e61e8932",
+      "c1a98144c1179b3d",
+      "b6bfb955ed6a2239",
+      [
+        [null, 240],
+        ["up", 68],
+        ["right", 271],
+        ["down", 177],
+        ["left", 618],
+        ["right", 332],
+        ["up", 203],
+        ["right", 177],
+        ["up", 130],
+        ["down", 129],
+        ["right", 109],
+        ["down", 122],
+        ["right", 333]
+      ]
+    ]
+  ],
+  "optional": [
+    [
+      "horizon-remix",
+      "ab7d565c0970943a",
+      "d624536ca85ec5b0",
+      "2965c1d6075b96ce",
+      [
+        ["down", 41],
+        ["left", 469],
+        [null, 120],
+        ["right", 7],
+        ["left", 14],
+        ["down", 203],
+        ["right", 692],
+        ["up", 468],
+        ["down", 170],
+        ["right", 266]
+      ]
+    ],
+    [
+      "border-remix",
+      "f28be065ed5ed59a",
+      "6e05c1b05bc266b9",
+      "839840e8a39898f8",
+      [
+        ["down", 313],
+        ["up", 339],
+        ["left", 13],
+        ["up", 130],
+        [null, 600],
+        ["down", 7],
+        ["up", 14],
+        ["right", 339],
+        ["down", 469],
+        [null, 120],
+        ["down", 7],
+        ["up", 231],
+        ["right", 374]
+      ]
+    ]
+  ]
+}

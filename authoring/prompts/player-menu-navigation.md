@@ -18,6 +18,11 @@ controls and mode/header links beside a menu must belong to its restricted input
 root in Legacy, installed and Journey content. Keep live-board controls excluded.
 Cancelling a departure restores the exact visible opener without resuming play.
 
+Keep progression destinations explicit: a terminal Journey result opens Browse
+missions instead of silently advancing into an optional Remix. Retain its accepted
+run, picture and result until the player chooses a replacement. Test the final
+core mission and optional-arc endings independently, including Back focus.
+
 Test actual host keyboard/controller paths, departure cancellation and image/run
 retention. Exercise every newly reachable setting through its real change handler.
 When historical assertions fail, derive expected values from the accepted runtime
@@ -25,3 +30,9 @@ contract and verify picture identity from the bound background draw; do not rela
 outcome, ownership or stale-operation assertions. Record source, browser and physical
 device evidence separately. Run required gates, publish one feature through its PR
 and immutable Pages pipeline, then verify normal public entry before accepting it.
+
+For host replay fixtures, use the host's exact approved tuning and exposed controls;
+Team has no Boost input. Preserve archived untuned proofs. Historical mastery must
+be exercised through a genuine restored historical attempt, not awarded to a new
+tuned run. A partial presentation fixture advertises only assets it prepares;
+full production bindings still require real decoded frames and strict validation.

@@ -6,22 +6,17 @@ import { managedIndexedDB } from './helpers/managed-idb.mjs';
 import { createJourneyBackend } from '../journey/profile.mjs';
 import { JOURNEY_PREFERENCES_KEY } from '../journey/preferences.mjs';
 import { authoritativeCheckpoint, verifyReplay } from '../replay.mjs';
-import { createRun, stepRun, FIXED_DT } from '../core/index.mjs';
+import { createRun, stepRun, FIXED_DT, CLASSES } from '../core/index.mjs';
+import { PNGImage } from './helpers/png-image.mjs';
+import { applyGameplayTuning, resolveGameplayTuning } from '../gameplay-tuning.mjs';
+import { createAuthoredJourneyRoute } from '../content-design/route.mjs';
+import { compileContentProject, resolveMission } from '../content-design/project.mjs';
+import { dataIdentity } from '../data-json.mjs';
 
-class CandidateImage {
-  width = 1774;
-  height = 887;
-  naturalWidth = 1774;
-  naturalHeight = 887;
-  set src(value) {
-    this.source = value;
-    queueMicrotask(() => this.onload?.());
-  }
-  async decode() {}
-  removeAttribute() {
-    this.source = '';
-  }
-}
+const authoredProject = compileContentProject(createAuthoredJourneyRoute('authored').source);
+const { rows: tunedRoutes, optional: optionalRoutes } = JSON.parse(
+  await readFile(new URL('./fixtures/candidate-solo-tuned-host-routes.json', import.meta.url)),
+);
 async function setup(t, { difficulty = 'standard', storage = memoryStorage(), ...options } = {}) {
   storage.setItem(
     JOURNEY_PREFERENCES_KEY,
@@ -33,7 +28,7 @@ async function setup(t, { difficulty = 'standard', storage = memoryStorage(), ..
     titleScreen: true,
     storage,
     journeyIndexedDB: memory.indexedDB,
-    pictures: { Image: CandidateImage },
+    pictures: { Image: PNGImage },
     fetchResponse: async (path) => {
       if (String(path).includes('/content-design/assets/'))
         return new Response(await readFile(path));
@@ -47,18 +42,76 @@ const running = (p, levelId) =>
     p.frame(0);
     return p.doc.body.dataset.flightState === 'running' && p.rendered.run.levelId === levelId;
   });
+async function openMissions(p, opener = 'shell-play') {
+  p.$(opener).click();
+  await settle(() => p.$('journey-chooser')?.open && p.$('journey-collection'));
+  p.change('journey-collection', 'Journey');
+}
+function missionCard(p, route, levelId) {
+  return [...p.$('journey-cards').children].find((card) => {
+    const [owner, edition, , mission] = JSON.parse(card.dataset.missionId);
+    return owner === `journey:${route}` && edition === route && mission.endsWith(`/${levelId}`);
+  });
+}
+function tunedLevel(levelId, difficulty = 'standard') {
+  return applyGameplayTuning(
+    resolveMission(authoredProject, levelId, { difficulty }).level,
+    resolveGameplayTuning(difficulty),
+  );
+}
+function playRoute(p, [id, authoredIdentity, gameplayIdentity, checkpoint, segments]) {
+  assert.equal(p.rendered.run.levelId, id);
+  const manifest = resolveMission(authoredProject, id);
+  assert.equal(manifest.simulationIdentity, authoredIdentity);
+  assert.equal(p.rendered.backdrop.kind, 'candidate-picture');
+  assert.deepEqual(p.rendered.backdrop.assetRevision, manifest.background);
+  const level = tunedLevel(id);
+  assert.deepEqual(p.rendered.run.level, level);
+  assert.equal(
+    dataIdentity({ ruleset: p.rendered.run.ruleset, level, classes: CLASSES }),
+    gameplayIdentity,
+  );
+  const reference = createRun(level, { seed: 1, classId: 'scout', turnPolicy: 'immediate' });
+  const keys = { up: 'ArrowUp', right: 'ArrowRight', down: 'ArrowDown', left: 'ArrowLeft' };
+  for (const [direction, ticks] of segments) {
+    if (direction !== null) {
+      p.key(keys[direction]);
+      p.key(keys[direction], false);
+    }
+    let frameTicks = 0;
+    for (let tick = 0; tick < ticks; tick++) {
+      assert.equal(reference.status, 'running', `${id}: route outlived the reference`);
+      stepRun(reference, { direction }, FIXED_DT);
+      assert.equal(reference.lives, 3, `${id}: renewed route must remain lossless`);
+      frameTicks++;
+      const closure = reference.events.some((event) => event.type === 'capture.stopped');
+      if (closure || frameTicks === 12 || tick === ticks - 1) {
+        p.frame(frameTicks * FIXED_DT * 1000);
+        frameTicks = 0;
+        if (closure && tick < ticks - 1 && p.rendered.run.status !== 'won') {
+          assert.equal(p.rendered.run.player.speed, 0);
+          p.key(keys[direction]);
+          p.key(keys[direction], false);
+        }
+      }
+    }
+  }
+  assert.equal(reference.status, 'won', id);
+  assert.equal(authoritativeCheckpoint(reference).hash, checkpoint, id);
+  assert.equal(p.rendered.run.status, 'won', id);
+  assert.equal(authoritativeCheckpoint(p.rendered.run).hash, checkpoint, id);
+}
 
 test('the final authored core mission offers Find missions without recording a fictitious skip', async (t) => {
   const { p, backend } = await setup(t);
-  p.$('shell-play').click();
-  p.$('journey-cards')
-    .children.find((card) => card.dataset.missionId.endsWith('/long-way-home'))
-    .click();
+  await openMissions(p);
+  missionCard(p, 'opening', 'long-way-home').click();
   await running(p, 'long-way-home');
   const original = p.rendered.run;
   assert.equal(p.$('journey-skip').hidden, false);
   assert.equal(p.$('journey-skip').textContent, 'Find missions');
   p.$('journey-skip').click();
+  await settle(() => p.$('journey-chooser').open);
   p.frame(0);
   assert.equal(p.$('journey-chooser').open, true);
   assert.equal(p.rendered.run, original);
@@ -81,11 +134,9 @@ test('cross-pack Skip failure keeps Horizon intact, then retries into Border wit
       }
     },
   });
-  p.$('shell-play').click();
+  await openMissions(p);
   assert.equal(p.$('journey-cards').children.length, 17);
-  [...p.$('journey-cards').children]
-    .find((card) => card.dataset.missionId.endsWith('/long-way-home'))
-    .click();
+  missionCard(p, 'authored', 'long-way-home').click();
   await running(p, 'long-way-home');
   const previous = p.rendered.run,
     picture = p.rendered.backdrop;
@@ -111,10 +162,8 @@ test('cross-pack Skip failure keeps Horizon intact, then retries into Border wit
   const profile = await backend.read();
   assert.equal(Object.keys(profile.clears.solo).length, 0);
   assert(profile.skipped.solo.some((id) => id.endsWith('/long-way-home')));
-  p.$('shell-packs').click();
-  const skipped = [...p.$('journey-cards').children].find((card) =>
-    card.dataset.missionId.endsWith('/long-way-home'),
-  );
+  await openMissions(p, 'shell-packs');
+  const skipped = missionCard(p, 'authored', 'long-way-home');
   assert.match(skipped.textContent, /Skipped/);
   assert.doesNotMatch(skipped.textContent, /Cleared/);
   skipped.click();
@@ -158,8 +207,9 @@ test('difficulty intent during candidate decode cancels adoption and releases la
     release,
     entered = false,
     released = 0;
-  class HeldImage extends CandidateImage {
+  class HeldImage extends PNGImage {
     async decode() {
+      await super.decode();
       if (held) {
         entered = true;
         await new Promise((resolve) => {
@@ -167,8 +217,8 @@ test('difficulty intent during candidate decode cancels adoption and releases la
         });
       }
     }
-    removeAttribute() {
-      super.removeAttribute();
+    removeAttribute(name) {
+      super.removeAttribute(name);
       released++;
     }
   }
@@ -203,7 +253,8 @@ for (const difficulty of ['gentle', 'standard', 'expert'])
   test(`authored Solo boot and one-action title start preserve ${difficulty} rules and original picture`, async (t) => {
     const { p } = await setup(t, { difficulty });
     assert.equal(p.rendered.run.levelId, 'first-return');
-    assert.equal(p.rendered.run.rules.moveSpeed, 10);
+    assert.deepEqual(p.rendered.run.level, tunedLevel('first-return', difficulty));
+    assert.equal(p.rendered.run.rules.moveSpeed, 8.84);
     assert.equal(p.rendered.run.lives, { gentle: 5, standard: 3, expert: 2 }[difficulty]);
     assert.match(p.$('shell-title-edition').textContent, /UNVALIDATED/);
     assert.equal(p.$('journey-artwork-availability').hidden, false);
@@ -275,8 +326,8 @@ test('cross-tab difficulty intent refreshes controls but preserves the current a
   await running(p, 'first-return');
   const run = p.rendered.run,
     picture = p.rendered.backdrop;
-  p.$('shell-packs').click();
-  const card = p.$('journey-cards').children[0];
+  await openMissions(p, 'shell-packs');
+  const card = missionCard(p, 'opening', 'first-return');
   assert.match(card.textContent, /Band 1\/12.*Standard.*Optional challenge/);
   card.focus();
   const raw = JSON.stringify({ format: 'JourneyPreferencesV1', difficulty: 'gentle' });
@@ -301,61 +352,38 @@ for (const route of ['opening', 'authored'])
     const { p, storage, backend } = await setup(t, { search: `?journey=${route}` });
     p.$('shell-featured').click();
     await running(p, 'first-return');
-    const rows = JSON.parse(
-      await readFile(new URL('./fixtures/horizon-greybox-routes.json', import.meta.url)),
-    ).rows.slice(0, 9);
-    if (route === 'authored')
-      rows.push(
-        ...JSON.parse(
-          await readFile(new URL('./fixtures/border-clear-routes.json', import.meta.url)),
-        )
-          .sets.find(
-            (set) => set.bonuses && set.difficulty === 'standard' && set.turnPolicy === 'immediate',
-          )
-          .rows.slice(0, 6),
-      );
-    const keys = { up: 'ArrowUp', right: 'ArrowRight', down: 'ArrowDown', left: 'ArrowLeft' };
-    for (const [id, , checkpoint, segments] of rows) {
-      assert.equal(p.rendered.run.levelId, id);
-      const reference = createRun(p.rendered.run.level, { seed: 1, classId: 'scout' });
-      for (const [direction, ticks] of segments) {
-        if (direction !== null) {
-          p.key(keys[direction]);
-          p.key(keys[direction], false);
-        }
-        let frameTicks = 0;
-        for (let tick = 0; tick < ticks; tick++) {
-          // Batch display frames, never simulation ticks. Stop exactly at each
-          // reference closure so the next command is a deliberate fresh gesture.
-          // The independently frozen checkpoint still verifies the actual host.
-          stepRun(reference, { direction }, FIXED_DT);
-          frameTicks++;
-          const closure = reference.events.some((event) => event.type === 'capture.stopped');
-          if (closure || frameTicks === 12 || tick === ticks - 1) {
-            p.frame(frameTicks * FIXED_DT * 1000);
-            frameTicks = 0;
-            if (closure && tick < ticks - 1 && p.rendered.run.status !== 'won') {
-              assert.equal(p.rendered.run.player.speed, 0);
-              p.key(keys[direction]);
-              p.key(keys[direction], false);
-            }
-          }
-        }
-      }
-      assert.equal(p.rendered.run.status, 'won', id);
-      assert.equal(authoritativeCheckpoint(p.rendered.run).hash, checkpoint, id);
+    const rows = route === 'authored' ? tunedRoutes : tunedRoutes.slice(0, 9);
+    assert.equal(rows.length, route === 'authored' ? 15 : 9);
+    for (const row of rows) {
+      const [id] = row;
+      playRoute(p, row);
       assert.equal(p.$('game-overlay').dataset.kind, 'won');
       assert.equal(p.$('journey-chooser').open, false);
+      if (!p.$('skip-celebration').hidden) p.$('skip-celebration').click();
+      await settle(() => !p.$('next-button').disabled);
       if (id !== rows.at(-1)[0]) {
         p.$('next-button').click();
         await running(p, rows[rows.findIndex((row) => row[0] === id) + 1][0]);
       }
     }
-    assert.match(p.$('next-button').textContent, /Journey complete/);
+    assert.equal(p.$('next-button').textContent, 'Browse missions →');
+    const completed = p.rendered.run,
+      picture = p.rendered.backdrop,
+      checkpoint = authoritativeCheckpoint(completed);
     p.$('next-button').click();
+    await settle(() => p.$('journey-chooser').open && p.$('journey-collection'));
     assert.equal(p.$('journey-chooser').open, true);
+    p.change('journey-collection', 'Journey');
     assert.equal(p.rendered.run.levelId, rows.at(-1)[0]);
     assert.equal(p.$('journey-cards').children.length, route === 'authored' ? 17 : 10);
+    assert.equal(p.rendered.run, completed);
+    assert.equal(p.rendered.backdrop, picture);
+    assert.deepEqual(authoritativeCheckpoint(p.rendered.run), checkpoint);
+    p.$('journey-back').click();
+    assert.equal(p.$('journey-chooser').open, false);
+    assert.equal(p.doc.activeElement, p.$('next-button'));
+    assert.equal(p.$('game-overlay').dataset.kind, 'won');
+    assert.equal(p.rendered.run, completed);
     // Completion intentionally does not block Next on its IndexedDB transaction.
     // Bound the asynchronous persistence check instead of treating a Promise as
     // a synchronous waitFor predicate or asserting before the final commit.
@@ -366,6 +394,18 @@ for (const route of ['opening', 'authored'])
       await new Promise((resolve) => setTimeout(resolve, 5));
     }
     assert.equal(Object.keys(persisted.clears.solo).length, rows.length);
+    for (const [id, , gameplayIdentity] of rows) {
+      const receipt = Object.entries(persisted.clears.solo).find(([missionId]) =>
+        missionId.endsWith(`/${id}`),
+      )?.[1];
+      assert(receipt, `${id}: exact completed mission has a durable receipt`);
+      assert.equal(receipt.gameplayId, gameplayIdentity, id);
+      assert.equal(receipt.difficulty, 'standard', id);
+    }
+    assert.equal(
+      new Set(Object.values(persisted.clears.solo).map((r) => r.runId)).size,
+      rows.length,
+    );
     if (route === 'authored')
       assert.equal(storage.getItem('revealline.suspended.journey-opening.v1'), null);
     assert(
@@ -376,6 +416,36 @@ for (const route of ['opening', 'authored'])
     const library = JSON.parse(storage.getItem('revealline.library.dev.v1') || '{}');
     assert.equal(library.gallery?.length ?? 0, 0);
     assert.equal(Object.keys(library.campaigns ?? {}).length, 0);
+    assert.deepEqual(p.errors, []);
+  });
+
+for (const row of optionalRoutes)
+  test(`${row[0]} optional ending offers Browse missions and preserves its exact result`, async (t) => {
+    const { p, backend } = await setup(t, { search: '?journey=authored' });
+    await openMissions(p);
+    missionCard(p, 'authored', row[0]).click();
+    await running(p, row[0]);
+    playRoute(p, row);
+    assert.equal(p.$('next-button').textContent, 'Browse missions →');
+    const completed = p.rendered.run,
+      picture = p.rendered.backdrop,
+      checkpoint = authoritativeCheckpoint(completed);
+    p.$('next-button').click();
+    await settle(() => p.$('journey-chooser').open);
+    assert.equal(p.rendered.run, completed);
+    assert.equal(p.rendered.backdrop, picture);
+    assert.deepEqual(authoritativeCheckpoint(p.rendered.run), checkpoint);
+    p.$('journey-back').click();
+    assert.equal(p.doc.activeElement, p.$('next-button'));
+    assert.equal(p.$('game-overlay').dataset.kind, 'won');
+    assert.equal(p.rendered.run, completed);
+    const profile = await backend.read();
+    assert.equal(Object.keys(profile.clears.solo).length, 1);
+    assert.deepEqual(profile.skipped.solo, []);
+    const [missionId, receipt] = Object.entries(profile.clears.solo)[0];
+    assert(missionId.endsWith(`/${row[0]}`));
+    assert.equal(receipt.gameplayId, row[2]);
+    assert.equal(receipt.difficulty, 'standard');
     assert.deepEqual(p.errors, []);
   });
 
@@ -431,9 +501,7 @@ test('authored result Retry applies Expert without managed-media pins or changin
   const { p, backend } = await setup(t);
   p.$('shell-featured').click();
   await running(p, 'first-return');
-  p.key('ArrowDown');
-  p.key('ArrowDown', false);
-  for (let tick = 0; tick < 414; tick++) p.frame();
+  playRoute(p, tunedRoutes[0]);
   assert.equal(p.rendered.run.status, 'won');
   const picture = p.rendered.backdrop;
   p.change('difficulty-select', 'expert');

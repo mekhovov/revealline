@@ -194,7 +194,7 @@ for (const action of ['failure', 'cancel'])
     assert.deepEqual(p.errors, []);
   });
 
-test('Solo final Journey result hands directly to the exact first Classic after picture preflight', async (t) => {
+test('Solo final Journey result retains the picture while Browse permits a deliberate exact Classic handoff', async (t) => {
   const route = await loadAuthoredJourneyRoute('opening');
   const host = createCandidateSoloHost(route.source, {
     themes: JSON.parse(await readFile(new URL('../content-design/themes.json', import.meta.url)))
@@ -239,8 +239,25 @@ test('Solo final Journey result hands directly to the exact first Classic after 
   p.$('show-result').click();
   const result = p.rendered.run,
     picture = p.rendered.backdrop;
+  assert.equal(p.$('next-button').textContent, 'Browse missions →');
   p.$('next-button').focus();
   p.$('next-button').click();
+  await settle(() => p.$('journey-chooser')?.open && p.$('journey-collection'));
+  assert.equal(new URL(globalThis.location.href).searchParams.get('journey'), 'opening');
+  assert.equal(p.rendered.run, result);
+  assert.equal(p.rendered.backdrop, picture);
+  p.$('journey-back').click();
+  assert.equal(p.doc.activeElement, p.$('next-button'));
+  assert.equal(p.$('game-overlay').dataset.kind, 'won');
+  p.$('next-button').click();
+  await settle(() => p.$('journey-chooser')?.open);
+  p.change('journey-collection', 'Classic');
+  const firstClassic = [...p.$('journey-cards').children].find((card) => {
+    const [owner, , , missionId] = JSON.parse(card.dataset.missionId);
+    return owner === '["classic","base",null]' && missionId === 'signal-01';
+  });
+  assert.ok(firstClassic, 'The compatible Classic mission remains available in the same browser.');
+  firstClassic.click();
   await settle(
     () => new URL(globalThis.location.href).searchParams.get('journey') === 'legacy',
     'The exact Legacy host receives this continuation.',

@@ -71,6 +71,7 @@ Local source served through the ordinary queryless Solo and Couch routes:
 | Versus keyboard Settings | Tab reaches Character reactions; Space toggles it while retaining checkbox focus. |
 | Legacy Versus keyboard | Tab reaches Find missions; Confirm announces preparation and opens Orchard Crossing; Back restores Find missions. |
 | Team keyboard Pause | Tab reaches both header links. Confirm on Race mode opens the discard dialog; Stay restores that exact header link, keeps PAUSED and clock 0:00, and does not resume. |
+| Solo requested Workshop return, local browser | `?workshop=asset-studio` opens Workshop with Asset Studio focused; Escape returns to Home with Workshop focused. No flight starts. |
 
 Browser viewport overrides were reset and temporary tabs closed after inspection.
 These are browser keyboard/reflow checks, not touch-device or physical-controller
@@ -95,3 +96,82 @@ Before acceptance, record the final PR/source SHA, all six exact-source gates,
 ordinary build and immutable artifact results, publishing revision, public URL,
 deployed source/byte checks and real public input/play evidence here. A merged PR,
 successful subset, or historical test waiver does not satisfy this gate.
+
+### Mandatory-suite reconciliation
+
+PR320's first hosted ordinary build passed on `00bc61063`; that source run was
+superseded by `fa641e496`, so its cancelled test shards are not passes. The latter
+source passed preflight and its Pages-controller checks; its ordinary build and
+four complete shards were initially running. Its ordinary build subsequently
+passed; the complete shards remain pending at this checkpoint. Later working-tree
+corrections require their own exact-head checks before acceptance.
+
+Baseline reproduction separates these corrections from gameplay changes:
+
+- The complete Solo continuous-input suite passes 12 tests after its queued-turn
+  positions are adjusted to the actual approved v4 speed and its menu fixture
+  awaits the current library. Pause, hidden/unfocused Resume and replay assertions
+  remain intact.
+- All 28 Team terrain/trail tests pass after their terrain-only snapshot declares
+  only its prepared wall asset. Required production-image validation is unchanged;
+  the fixture no longer falsely advertises decoded Team objective frames.
+- The chapter-download, Studio-return and Couch-audio cohort passes 42 tests.
+  Retained selector tests explicitly identify their compatibility boundary and
+  keep the real selection/download/replacement machinery. A new current Solo
+  catalogue regression proves visible failure, same-card Retry, selection and
+  Back without replacing the previous prepared run. Its three-case targeted run
+  passes; this is not a claim that all catalogue cases were rerun together.
+- A genuine boot return defect prevented a requested Workshop return after native
+  Home autofocus. The guard now permits only that unchanged initial focus, while
+  preserving newer-focus and background-page rejection tests.
+- A genuine terminal Journey defect used the generic library successor after the
+  final core/optional mission, automatically selecting an optional Remix. The
+  result now offers Browse missions and opens the guarded catalogue deliberately.
+  The complete 15-case Journey host suite passes, including exact core tours,
+  both optional endings, accepted artwork/checkpoints/receipts and Back focus.
+  The continuous-library fixture that previously expected an automatic final
+  Journey-to-Classic handoff is intentionally updated to the approved Browse
+  contract: retain the result, allow Back, then require an explicit Classic card
+  before asserting the same exact Legacy destination. Ordinary within-library
+  continuation and preparation safeguards remain separately exercised.
+
+The complete Versus encounter-cue file passes five cases after extending the
+unchanged legal route by four/eight ticks for the v4 immediate/grid-centre pacing.
+Both match formats still prove independent cues, paused-state retention, a real
+lossless release cut, and frozen end-of-round state. The picture-only Team painter
+suite passes five cases after the same truthful partial-snapshot correction as
+terrain. The complete Team picture-host suite passes 19 tests after its exact
+read-only preference inventory includes the already-shared difficulty/tuning keys;
+the unchanged write assertion still forbids Solo/profile mutation.
+
+Team victory/import helpers and additional host route fixtures are being renewed
+against the approved current tuning using actual public direction/Support inputs.
+Historical proof files remain unchanged. These are technical progression/recovery
+checks, not fresh human balance reviews or physical-device certification.
+
+The complete pending-mastery/backup file passes nine tests. Its setup now restores
+a genuinely played historical untuned Homeward live cut, checks the exact saved
+checkpoint, and completes it using keyboard input before holding the real replay
+verifier. Fresh tuned missions intentionally do not grant historical mastery; the
+fixture no longer assumes otherwise. Keep/replace, failed writes, uncertain owner,
+Undo invalidation and deferred award/original assertions remain unchanged.
+
+The Team host repair cohort has passing full-file evidence for terminal/lobby
+(31), terminal HUD (8), imported Retry (3), and Next reentry/recovery (12). The
+combined imported-artwork/custom-artwork/imported-Next/built-in-Next run passed its
+67 unaffected checks; its two stale Retry-copy failures were corrected and that
+entire three-case file rerun. This is 121 distinct checks across ten files after
+correction, not a single uninterrupted aggregate run or full-suite acceptance.
+
+Early Team difficulty was a real input-loss defect: bootstrap overwrote an actual
+native choice with the stored default. The early-entry snapshot now records
+input/change separately from Arena ownership and adopts a valid choice through
+the shared preference authority before preparation. Opening/cancelling, untouched
+markup and invalid values do not manufacture writes. A 71-case complete cohort
+(entry capture, startup, arena memory and Journey difficulty) passes, including
+queryless exact-art/preset selection, rejected storage and same-preset Retry.
+
+Independent read-only review of the runtime diff against `71a0ffea` found no
+actionable regression in input ownership, rendered grid/reflow, identity, focus
+leases, departure cancellation, terminal browsing or early difficulty adoption.
+This review complements the tests; it is not full-suite or hardware evidence.
