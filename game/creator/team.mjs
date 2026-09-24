@@ -14,6 +14,7 @@ export const CREATOR_TEAM_TEMPLATE_VERSION = 'creator-team-layouts.v1';
 export const CREATOR_TEAM_PROVENANCE_FORMAT = 'revealline-creator-team-provenance.v1';
 export const CREATOR_TEAM_EVIDENCE_FORMAT = 'revealline-creator-team-evidence.v1';
 export const CREATOR_TEAM_PORTABLE_FORMAT = 'revealline-creator-team-portable.v1';
+export const CREATOR_TEAM_PORTABLE_MIME = 'application/vnd.revealline.team+json';
 export const CREATOR_TEAM_INPUT_POLICY = 'direction-boost-support-v1';
 
 export const CREATOR_TEAM_TEMPLATES = freezeDesign([
@@ -408,7 +409,7 @@ export function exportCreatorTeamCampaign(prepared) {
     new TextEncoder().encode(text).length <= COOP_PACK_MAX_BYTES,
     'Team export is too large.',
   );
-  return new Blob([text], { type: 'application/vnd.revealline.team+json' });
+  return new Blob([text], { type: CREATOR_TEAM_PORTABLE_MIME });
 }
 
 export async function importCreatorTeamCampaign(source, options = {}) {
