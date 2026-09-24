@@ -134,6 +134,11 @@ test(
     refuse = false;
     await activate(p.$('journey-picture-retry'));
     assert.equal(p.$('journey-picture-status').textContent, 'Earned original');
+    assert.equal(
+      p.doc.activeElement,
+      p.$('journey-picture-back'),
+      'successful Retry returns focus before its transient control is hidden',
+    );
     assert.equal(drawn.at(-1)[0].width, accepted.width);
     assert.equal(drawn.at(-1)[0].height, accepted.height);
     p.$('journey-picture-back').click();
