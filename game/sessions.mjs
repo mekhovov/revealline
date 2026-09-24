@@ -15,6 +15,7 @@ import { applyGameplayTuning, recoverGameplayTuning } from './gameplay-tuning.mj
 import { snapshotSessionVisualPin } from './session-visual-pin.mjs';
 import { snapshotSessionActorPin } from './session-actor-pin.mjs';
 import { ACTOR_APPEARANCE_PIN_BYTES } from './presentation/actor-appearance-pin.mjs';
+import { matchReplayInstalledRules } from './replay-installed-rules.mjs';
 import { PRESENTATION_PINS_FORMAT } from './presentation-pins.mjs';
 import {
   FLIGHT_MEDIA_PINS_FORMAT,
@@ -325,19 +326,11 @@ export async function restoreSession(
     throw new Error('Saved attempt verification failed. The current game is unchanged.');
   if (!['running', 'respawning'].includes(checked.state.status))
     throw new Error('This attempt has already ended.');
-  const level = installed.levels.find((l) => l.id === checked.state.levelId);
-  if (!level) throw new Error('Install the matching campaign pack before loading this attempt.');
-  const tuning = recoverGameplayTuning(checked.state.level);
-  const expected = createRun(tuning ? applyGameplayTuning(level, tuning) : level, {
-    ...session.replay.options,
-    classRecipes: installed.classRecipes,
+  const level = matchReplayInstalledRules({
+    campaign: installed,
+    replay: session.replay,
+    state: checked.state,
   });
-  if (
-    canonical(expected.level) !== canonical(checked.state.level) ||
-    canonical(expected.classRecipes ?? installed.classRecipes) !==
-      canonical(session.replay.options.classRecipes)
-  )
-    throw new Error('Saved rules differ from the installed campaign.');
   if (pictureFormats.includes(session.format) && session.presentationPins !== null)
     validateFlightPresentationPinsForRun(session.presentationPins, {
       identityCatalog: mediaIdentityCatalog,
