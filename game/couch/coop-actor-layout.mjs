@@ -1,3 +1,5 @@
+import { actorImagePaintMetrics } from '../ui/actor-presentation.mjs';
+
 // Cosmetic geometry only. All positions passed to the core remain untouched.
 const clamp = (value, low, high) => Math.max(low, Math.min(high, value));
 export function coopCueScale(width, columns = 72) {
@@ -13,10 +15,8 @@ export function coopCueScale(width, columns = 72) {
 /** Relative full-frame/rotor/nose bounds after the shared heading and banking transforms. */
 export function coopBodyBounds(frame, geometry) {
   const diameter = frame.diameter,
-    source = geometry.frame,
-    extent = Math.max(source.width, source.height),
-    width = (diameter * source.width) / extent,
-    height = (diameter * source.height) / extent,
+    paint = actorImagePaintMetrics(diameter, geometry),
+    { width, height } = paint,
     sx = 1 - frame.bank * 0.35,
     sy = 1 + frame.bank * 0.2,
     cosine = Math.cos(frame.heading),
@@ -37,16 +37,6 @@ export function coopBodyBounds(frame, geometry) {
     (1 - geometry.pivot.x) * width,
     (1 - geometry.pivot.y) * height,
   );
-  for (const rotor of geometry.rotors) {
-    // Include the square motor housing as well as every rotating blade angle.
-    const radius = (Math.sqrt(32) * 0.16 * rotor.radiusScale * width) / 5;
-    rectangle(
-      rotor.x * width - radius,
-      rotor.y * height - radius,
-      rotor.x * width + radius,
-      rotor.y * height + radius,
-    );
-  }
   rectangle((-4 * diameter) / 28, (-13 * diameter) / 28, (4 * diameter) / 28, (-9 * diameter) / 28);
   return Object.freeze({
     left: Math.min(...points.map((point) => point.x)),

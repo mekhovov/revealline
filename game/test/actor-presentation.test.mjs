@@ -10,6 +10,7 @@ import { compileContentProject, resolveMission } from '../content-design/project
 import {
   createActorPresentation,
   actorDiameter,
+  actorImagePaintMetrics,
   actorRole,
   drawPresentedActor,
   drawActiveTrail,
@@ -152,7 +153,7 @@ test('cosmetic size targets desktop/phone readability without altering contact r
   for (const css of [240, 280, 288, 320, 390, 600, 1152]) {
     const scale = css / 1152,
       diameter = actorDiameter({ screenScale: scale, canvasCSSWidth: css });
-    assert.ok(diameter * scale >= (css >= 480 ? 24 : 16) - 1e-9);
+    assert.ok(diameter * scale >= (css >= 480 ? 24 : 20) - 1e-9);
     assert.ok(diameter * scale <= 32 + 1e-9);
   }
   const small = createActorPresentation()
@@ -162,14 +163,50 @@ test('cosmetic size targets desktop/phone readability without altering contact r
   assert.ok(small.diameter > 30);
   assert.equal(actorDiameter({ screenScale: 0.01, scale: 100 }), 240);
 });
+test('prepared sprite sizing uses occupied pixels plus rotor sweep, not transparent frame padding', () => {
+  const geometry = {
+    frame: { width: 64, height: 64 },
+    pivot: { x: 0.5, y: 0.5 },
+    occupiedBounds: { x: 0.25, y: 0.25, width: 0.5, height: 0.5 },
+    rotors: [
+      { x: -0.25, y: -0.25, radiusScale: 0.75 },
+      { x: 0.25, y: 0.25, radiusScale: 0.75 },
+    ],
+  };
+  const paint = actorImagePaintMetrics(30, geometry),
+    visibleWidth = paint.width * (paint.visible.right - paint.visible.left),
+    visibleHeight = paint.height * (paint.visible.bottom - paint.visible.top);
+  assert.ok(paint.scale > 1);
+  assert.ok(Math.abs(Math.max(visibleWidth, visibleHeight) - 30) < 1e-9);
+  assert.ok(paint.visible.left < geometry.occupiedBounds.x);
+  assert.ok(paint.visible.bottom > geometry.occupiedBounds.y + geometry.occupiedBounds.height);
+  assert.deepEqual(actorImagePaintMetrics(30, { ...geometry, occupiedBounds: null }), {
+    scale: 1,
+    width: 30,
+    height: 30,
+    visible: { left: 0, top: 0, right: 1, bottom: 1 },
+  });
+  const rectangular = actorImagePaintMetrics(30, {
+    frame: { width: 64, height: 32 },
+    pivot: { x: 0.5, y: 0.5 },
+    occupiedBounds: { x: 0.48, y: 0.48, width: 0.04, height: 0.04 },
+    rotors: [{ x: 0, y: 0, radiusScale: 1 }],
+  });
+  assert.ok(
+    Math.abs(
+      rectangular.width * (rectangular.visible.right - rectangular.visible.left) -
+        rectangular.height * (rectangular.visible.bottom - rectangular.visible.top),
+    ) < 1e-9,
+  );
+});
 test('minimum-aware normal, boss and compact player frames remain finite and bounded', () => {
   for (const [width, role, expected] of [
-    [240, 'enemy', 76.8],
-    [200, 'boss', 92.16],
+    [240, 'enemy', 96],
+    [200, 'boss', 115.2],
   ]) {
     const diameter = actorDiameter({ screenScale: width / 1152, canvasCSSWidth: width, role });
     assert.ok(Math.abs(diameter - expected) < 1e-9);
-    assert.ok(Math.abs((diameter * width) / 1152 - 16) < 1e-9);
+    assert.ok(Math.abs((diameter * width) / 1152 - 20) < 1e-9);
   }
   const body = presets.characters['fpv-body'];
   const image = { naturalWidth: 40, naturalHeight: 80 };
