@@ -349,6 +349,12 @@ after that moves UX0 to Completed does implementation advance to UX1-A.
 
 ### UX1 implementation boundaries
 
+Current preparation is split into **UX1-A1: exact Solo Journey pictures** and
+**UX1-A2: Versus/Team admission**, followed by UX1-B. See
+[the UX1-A1 draft contract and evidence](ux1-a1-journey-rewards.md). A1 adds no version
+bump or public-release acceptance; v0.108 publication and PR404 stay independent.
+The historical preparation findings below remain applicable.
+
 Source preparation identifies why Journey wins announce a picture while Collection
 remains empty: the win writes a Journey receipt, deliberately bypasses Legacy
 awards, and Collection reads only the Legacy gallery. Preserve that ownership

@@ -1,7 +1,16 @@
 import { boundedJSON, canonicalJSON, exactKeys, required } from '../data-json.mjs';
 import { LIBRARY_MODES, LIBRARY_TAGS, libraryMissionId } from './library.mjs';
 
-const METHODS = ['describe', 'availability', 'prepare', 'progress', 'card', 'details', 'launch'];
+const METHODS = [
+  'describe',
+  'availability',
+  'prepare',
+  'progress',
+  'completion',
+  'card',
+  'details',
+  'launch',
+];
 const label = (value, maximum = 160) =>
   typeof value === 'string' && value.trim().length > 0 && value.length <= maximum;
 
@@ -187,6 +196,7 @@ export function combineJourneyLibrarySources(qualifiedSources) {
     describe: (entry) => owned(entry).description,
     availability: (entry, mode) => delegate(entry, mode, 'availability'),
     progress: (entry, mode) => delegate(entry, mode, 'progress') ?? '',
+    completion: (entry, mode) => delegate(entry, mode, 'completion') ?? null,
     card: (entry, mode) => delegate(entry, mode, 'card') ?? null,
     details: (entry, mode) => delegate(entry, mode, 'details') ?? null,
     prepare: (entry, context) => delegate(entry, context?.mode, 'prepare', context),
