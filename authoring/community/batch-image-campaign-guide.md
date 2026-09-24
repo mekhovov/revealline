@@ -14,6 +14,7 @@ Phase 2 extends the picture creator with a batch review workflow. It keeps the o
 
 1. Choose **Generate included levels**. Each card moves through waiting, preparation, and its own validation result. The progress indicator reports the current item and total. **Cancel preparation** stops after the active operation releases its resources; completed cards remain reviewable.
 2. Review the prepared picture, editable title, selected template variant, and validation result on every card. A successful result means the generated configuration has matching automated route evidence. It is still not a human quality rating.
+   Current generation uses a bounded `creator-layouts.v3` recipe selected from the seed. Every recipe contains collision walls and a moving field keeper, plus any family-specific safe islands, slow material or lethal material. The seed chooses among reviewed layouts; it does not perturb arbitrary gameplay fields.
 3. If one item fails, use **Regenerate** after correcting the source or changing the generation choice. You can also clear **Include in campaign**. Failed included items block bulk approval; excluded failures do not.
 4. Changing fitting, pacing, or the collection name invalidates prepared results because those settings affect reviewed bytes or generation choices. Generate the included items again.
 5. Check the readiness and capacity messages. The estimate shows the likely portable pack size and staging space. The final storage check still occurs against actual prepared bytes.

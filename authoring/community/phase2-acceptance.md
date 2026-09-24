@@ -4,13 +4,16 @@ Status: implementation is isolated on `codex/creator-phase2-integration`. It has
 
 ## Automated evidence completed
 
-- The `creator-layouts.v2` registry contains six authored layout families with two bounded variants each. Deterministic selection, legacy Phase 1 compatibility and all six difficulty/steering route configurations pass focused tests.
+- The current `creator-layouts.v3` registry contains six authored layout families with two bounded variants each. Every generated variant has at least one interior collision wall, one supported moving field keeper and its family-specific safe-island or terrain features. Deterministic selection, immutable Phase 1 / `creator-layouts.v2` compatibility and all six difficulty/steering route configurations pass focused tests.
+- All 12 current variants replay their exact compiled enemies, walls, foundations and terrain through three difficulties and two steering policies: 72/72 configurations win without losing a starting life. Moving any generated actor or obstacle invalidates the simulation identity and its approval evidence.
 - Batch-core tests cover 1-, 12- and 50-picture preparation, natural order, duplicate names and bytes, deterministic regeneration, explicit failed-item exclusion, reorder, campaign grouping, checkpoints, cancellation and explicit capacity splits. Full-size hashing and image preparation report at most one active item.
 - Batch-review tests cover multi-file selection, editable titles, reorder, exclusion, regeneration, removal, cancellation, 24 MiB package-capacity choices, focus retention and object-URL cleanup. Production intake uses an exact-byte adapter that revalidates the displayed one-mission preparations as one ordered campaign.
 - Bundle integration tests cover 1-, 12- and 50-mission round trips, authored continuation order, exact media closure, forged per-mission evidence, stale approval, immutable installed editions, complete source-backup recovery and split-package closure.
 - The 14 batch UI and full bundle-integration cases pass together after the adapter landed. A final combined run with every neighboring Phase 1 creator test remains required before review; counts in a pull request or release record must describe that exact final revision rather than adding results from different commits.
 
 ## Built-in browser evidence completed
+
+- A fresh `creator-layouts.v3` image generation visibly produced **Open terraces** with one moving field keeper and six collision walls. The review caption reported the separate enemy, wall, safe-island and terrain counts instead of the obsolete “no enemies” claim. Ordinary installed Custom play rendered the moving enemy and walls, completed legally at 50% with all three Standard lives and 10,080 points, saved completion and awarded the exact picture.
 
 - Native multi-file selection on local origin `8786` chose two existing PNG sources. The page exposed natural order, per-card thumbnails, distinct verified template variants, a 24 MiB package estimate and one bulk approval.
 - Exact batch approval saved creator checkpoint 1, prepared a 3.89 MiB two-mission campaign and installed immutable edition `3402e044d78e9e6462033c3fc95f5783fb131bfb5700e35e02cca20990a615a3`.
@@ -23,6 +26,8 @@ Status: implementation is isolated on `codex/creator-phase2-integration`. It has
 - Native selection of 50 naturally named PNG files displayed `picture1` through `picture50` in natural order and refused approval at the initial 147.85 MiB package / 295.71 MiB staging estimate. Cancellation after four successful items preserved those results and returned the other 46 cards to an editable waiting state. Resuming prepared every card with one active card visible at a time.
 - The completed 50-item review reported a conservative 96.47 MiB package / 192.93 MiB staging estimate and required an explicit capacity choice. **Split into smaller packs** accepted five ordered parts of 12, 12, 12, 12 and 2 missions. Revalidating part 5 produced a 1.96 MiB reviewed package and installed immutable two-mission edition `68fe0662b7ce7ec2f54c0af530edaed69e7cae2e80d8576b1ae31cb180028e2a` without discarding the other prepared cards.
 
+The 2-, 12- and 50-item transfer/capacity artifacts above were generated before the `creator-layouts.v3` gameplay correction. They remain evidence for packaging, transfer, progression and recovery. Their enemy-free `creator-layouts.v2` projects are retained only for immutable compatibility and are not current-generation gameplay acceptance.
+
 ## Browser and release gates still required
 
 - Complete the remaining manual edge cases with a portrait image and a deliberately unsupported item. Confirm manual reorder, every pacing choice, per-item regeneration, failure exclusion and reload recovery after a partly prepared batch.
@@ -30,6 +35,7 @@ Status: implementation is isolated on `codex/creator-phase2-integration`. It has
 - Reload an unfinished middle mission and verify every earned picture remains bound after another reload. Install a changed edition alongside it and confirm attempts and rewards do not migrate.
 - Inspect a duplicate-byte split export to confirm payload deduplication in the actual file. The existing two- and 12-picture inspections confirm exact derivative closure, source-original separation and zero trailing bytes; automated tests cover unrelated-media and player-progress exclusion.
 - Exercise failed installation recovery and concurrent-tab stale-state refusal. Browser quota estimates remain advisory.
+- Repeat the 12- and 50-item browser volume gates with current `creator-layouts.v3` output before release. The previous volume artifacts prove the transport path but cannot substitute for current enemy/obstacle gameplay evidence.
 - Run the repository's current hosted gates, review and merge the Phase 2 PR, freeze the next unused version, inspect and upload the frozen artifact, publish its release and selector, then verify the public version and artifact hashes.
 
 The user directed this delivery to use the Codex built-in browser. Firefox, Safari and physical mobile remain untested until separately qualified and must not be inferred from this record.
