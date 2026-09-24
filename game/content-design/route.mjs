@@ -8,6 +8,7 @@ import {
   createWholeSortingCandidates,
 } from './whole-spatial-candidates.mjs';
 import { createWholeJourneyCandidates } from './whole-journey-candidates.mjs';
+import { createSpatialChallengeJourney } from './spatial-challenge-journey.mjs';
 
 import { createAuthoredJourneyRouteDefinition } from './route-definition.mjs';
 export { createCandidateSequence } from './sequence.mjs';
@@ -24,5 +25,6 @@ export function createAuthoredJourneyRoute(id) {
     createWholeTimedCandidates,
     createWholeVarietyCandidates,
     createWholeSortingCandidates,
+    createSpatialChallengeJourney,
   });
 }

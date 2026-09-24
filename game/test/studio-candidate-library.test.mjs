@@ -93,6 +93,26 @@ test('Sorting successor search preserves the paired Rover edition selector and I
   assert(visible()[0].querySelector('#rover-edition'));
 });
 
+test('six-map spatial successor stays in the existing combined edition selector', async () => {
+  const { search, visible, $ } = setup();
+  search('whole-spatial-v6');
+  assert.equal(visible().length, 1);
+  assert.equal(visible()[0], $('whole-variety').closest('[data-library-entry]'));
+  assert(
+    [...$('whole-variety-edition').options].some(
+      (option) => option.value === 'spatial-challenge-v1',
+    ),
+  );
+  const host = await readFile(new URL('../studio/studio.mjs', import.meta.url), 'utf8');
+  const handler = host.slice(
+    host.indexOf("$('whole-variety').onclick"),
+    host.indexOf("$('import').onchange"),
+  );
+  assert.match(handler, /'spatial-challenge-v1'\s*\? createSpatialChallengeJourney/);
+  assert.match(handler, /inspectSource\(\)/);
+  assert.doesNotMatch(handler, /session\.replace|queueSave|launchPreview/);
+});
+
 test('outer-pocket search preserves the Shared windows edition selector beside its Inspect action', () => {
   const { search, visible, $ } = setup();
   search('contested outer pockets');
@@ -117,6 +137,7 @@ test('all review routes keep explicit external-tab safety and distinct accessibl
   const journeys = [
     'whole-spatial-v4',
     'whole-spatial-v5',
+    'whole-spatial-v6',
     'whole-spatial-v3',
     'whole-spatial-v2',
     'whole-spatial-v1',

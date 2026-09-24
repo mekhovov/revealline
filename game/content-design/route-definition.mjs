@@ -16,9 +16,21 @@ export function createAuthoredJourneyRouteDefinition(
     createWholeTimedCandidates,
     createWholeVarietyCandidates,
     createWholeSortingCandidates,
+    createSpatialChallengeJourney,
   },
 ) {
   if (!isAuthoredJourneyRouteId(id)) return null;
+  if (id === 'whole-spatial-v6')
+    return freezeDesign({
+      id,
+      label: 'Whole Journey spatial challenge review · balance pending',
+      sessionKey: 'revealline.suspended.journey-whole-spatial.v6',
+      profileKey: 'journey-whole-spatial-v6',
+      source: createSpatialChallengeJourney({ artwork: true }),
+      corePackIds: [...WHOLE_JOURNEY_CORE_PACK_IDS],
+      optionalCampaignIds: ['ornament-crossings', 'workshop-routing'],
+      preserveOriginalThemes: true,
+    });
   if (id === 'whole-spatial-v5')
     return freezeDesign({
       id,
