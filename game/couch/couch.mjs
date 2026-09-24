@@ -184,7 +184,10 @@ $('race-reduced').onchange = () =>
 globalThis.RevealLineToolLaunch?.attached();
 document.documentElement.dataset.toolState = 'loading';
 const bootStatus = createOperationStatus($('boot-status'));
-const bootDisplay = bootStatus.begin({ message: 'Preparing both boards…', stage: 'reading' });
+const bootDisplay = bootStatus.begin({
+  message: 'Preparing both boards…',
+  stage: 'reading',
+});
 let bootFailed = false;
 let bootFinished = false;
 function finishBoot() {
@@ -293,7 +296,9 @@ try {
     sourcePackId: null,
   };
   const authoredRoute = await loadAuthoredJourneyRoute(
-    resolveJourneyRequest(new URL(location.href).searchParams, { mode: 'versus' }),
+    resolveJourneyRequest(new URL(location.href).searchParams, {
+      mode: 'versus',
+    }),
   );
   const authoredJourney = !!authoredRoute;
   const libraryHandoff = readMissionLibraryHandoff(new URL(location.href).searchParams);
@@ -302,7 +307,11 @@ try {
     const values = new URL(location.href).searchParams.getAll('versus-next');
     if (values.length) {
       if (values.length !== 1) throw new TypeError('Duplicate Versus continuation settings.');
-      const value = boundedJSON(values[0], { maxBytes: 4096, maxNodes: 24, maxDepth: 2 });
+      const value = boundedJSON(values[0], {
+        maxBytes: 4096,
+        maxNodes: 24,
+        maxDepth: 2,
+      });
       exactKeys(
         value,
         ['mission', 'format', 'turnPolicy', 'seconds', 'difficulty', 'tap', 'slots'],
@@ -424,7 +433,10 @@ try {
     featuredStatus = '';
   if (!candidateJourney)
     try {
-      bootDisplay.update({ message: 'Loading the featured chapter…', stage: 'downloading' });
+      bootDisplay.update({
+        message: 'Loading the featured chapter…',
+        stage: 'downloading',
+      });
       featuredSource = await json('../content/packs/fpv-arcade-r5.json');
     } catch (error) {
       if (artworkLifetime.signal.aborted || error.name === 'AbortError') throw error;
@@ -436,7 +448,9 @@ try {
       message: 'Checking featured maps and original pictures…',
       stage: 'verifying',
     });
-    featured = await prepareCouchChapter(featuredSource, { signal: artworkLifetime.signal });
+    featured = await prepareCouchChapter(featuredSource, {
+      signal: artworkLifetime.signal,
+    });
     const featuredCampaign = featured.resolved.campaign;
     maps.unshift(
       ...featuredCampaign.levels.map((level) => ({
@@ -535,7 +549,10 @@ try {
   const painters = [new BoardPainter(presets), new BoardPainter(presets)];
   const foundationCaptions = new WeakMap();
   for (const painter of painters) presentationPage.bindPainter(painter);
-  const sound = (pageSound = new Soundscape({ persistentMusic: true, audioMaster }));
+  const sound = (pageSound = new Soundscape({
+    persistentMusic: true,
+    audioMaster,
+  }));
   sound.configure({ master: 1 });
   music = attachCouchMusicHost({
     document,
@@ -851,6 +868,7 @@ try {
   }
   function cancelContent() {
     if (libraryContinuation) {
+      const selected = libraryContinuation.kind === 'selection';
       libraryContinuation.controller.abort();
       libraryContinuation = null;
       cancelLibraryDecision();
@@ -858,8 +876,9 @@ try {
         contentBusy = false;
         preparationDisplay?.finish({ state: 'cancelled', message: '' });
         preparationDisplay = null;
-        $('race-message').textContent =
-          'Next mission cancelled. Results are kept. Choose Next mission to retry.';
+        $('race-message').textContent = selected
+          ? 'Mission selection cancelled. Your current race and picture are kept.'
+          : 'Next mission cancelled. Results are kept. Choose Next mission to retry.';
         updateMenu();
         return;
       }
@@ -889,11 +908,16 @@ try {
     updateMenu();
   }
   $('race-picture-cancel').onclick = () => {
-    const restoreFocus = actionFocus($('race-picture-cancel'));
+    const restoreFocus = actionFocus($('race-picture-cancel')),
+      selected = libraryContinuation?.kind === 'selection';
     cancelContent();
     restoreFocus(
-      match.status === 'finished' ? $('race-start') : $('race-chapter-retry'),
-      !!contentError,
+      selected
+        ? $('race-journey-find')
+        : match.status === 'finished'
+          ? $('race-start')
+          : $('race-chapter-retry'),
+      selected || !!contentError,
     );
   };
   function setupRecipe() {
@@ -984,7 +1008,11 @@ try {
     match = createRound(roundRecipe);
     generation = ++raceSequence;
     if (candidateJourney)
-      journeyProfile.record({ type: 'select', mode: 'versus', missionId: entry.mission.id });
+      journeyProfile.record({
+        type: 'select',
+        mode: 'versus',
+        missionId: entry.mission.id,
+      });
     paintRound(roundRecipe);
     finished = false;
     $('race-start').textContent =
@@ -1031,7 +1059,11 @@ try {
           (entry.pictureEntry.baseCampaignKey || campaignKey(entry.pictureEntry.campaign)));
       if (key)
         music.setContext(
-          soloCompatibleMusicContext({ campaignKey: key, level, themeId: theme.id }),
+          soloCompatibleMusicContext({
+            campaignKey: key,
+            level,
+            themeId: theme.id,
+          }),
         );
       else {
         music.contextPending(theme.id);
@@ -1764,7 +1796,11 @@ try {
       const previous = match;
       await startRace(entry);
       if (skipped && match !== previous && roundRecipe.entry === entry)
-        journeyProfile.record({ type: 'skip', mode: 'versus', missionId: skipped.id });
+        journeyProfile.record({
+          type: 'skip',
+          mode: 'versus',
+          missionId: skipped.id,
+        });
     };
     $('race-journey-find').onclick = () => openMissionLibrary($('race-journey-find'));
     $('race-journey-skip').onclick = () => {
@@ -1861,7 +1897,10 @@ try {
     getSoloReturnToken: () =>
       !libraryHandoff ||
       (librarySourceReturn?.mode === 'solo' && librarySourceReturn.journey === 'legacy')
-        ? readVersusSoloReturnToken({ href: location.href, storage: soloReturnStorage })
+        ? readVersusSoloReturnToken({
+            href: location.href,
+            storage: soloReturnStorage,
+          })
         : null,
     getSoloJourneyRoute: () =>
       librarySourceReturn?.mode === 'solo'
@@ -1939,6 +1978,7 @@ try {
       return;
     }
     const origin = $('race-journey-next');
+    if (candidateJourney) return openMissionLibrary(origin);
     origin.focus({ preventScroll: true });
     const restore = actionFocus(origin),
       context = libraryContext(),
@@ -2096,7 +2136,7 @@ try {
       missionId: row.id,
       sourceJourney: authoredRoute?.id ?? 'legacy',
     });
-    if (context.continuousNext && context.mode === 'versus') {
+    if (context.mode === 'versus') {
       const destination = new URL(href, location.href);
       destination.searchParams.set(
         'versus-next',
@@ -2122,8 +2162,7 @@ try {
   async function launchLibrarySelection(pack, selection, context) {
     if (!context.isCurrent()) return false;
     if (candidateJourney || context.mode !== 'versus') {
-      if (context.continuousNext && context.mode === 'versus')
-        return preflightLibraryDeparture(pack, selection, context);
+      if (context.mode === 'versus') return preflightLibraryDeparture(pack, selection, context);
       return departLibraryMission(context);
     }
     if (!pack) {
@@ -2192,19 +2231,24 @@ try {
   async function preflightLibraryDeparture(pack, selection, context) {
     const controller = new AbortController();
     libraryLaunchController = controller;
-    const focus = trackMissionLibraryOpening({
-      onRetire: () => {
-        context.retire();
-        controller.abort();
-      },
-    });
+    const captureFocus = () =>
+      trackMissionLibraryOpening({
+        onRetire: () => {
+          context.retire();
+          controller.abort();
+        },
+      });
+    let focus = captureFocus();
     const current = () =>
       context.isCurrent() &&
       focus.current() &&
       !controller.signal.aborted &&
       libraryLaunchController === controller;
     const onStatus = (status) => {
-      if (current()) $('race-message').textContent = status.message;
+      if (current()) {
+        context.preparationFeedback?.update(status);
+        $('race-message').textContent = status.message;
+      }
     };
     let owner = null,
       staged = null;
@@ -2215,7 +2259,10 @@ try {
           selection,
           attempt: {
             ...context.attempt,
-            recipe: { ...context.attempt.recipe, seconds: Number($('race-time').value) },
+            recipe: {
+              ...context.attempt.recipe,
+              seconds: Number($('race-time').value),
+            },
           },
           isCurrent: current,
           onStatus,
@@ -2234,7 +2281,10 @@ try {
           ) || baseEntry.themes[0];
         // A separate owner verifies the destination without replacing either
         // source board or committing the target into the Journey picture owner.
-        owner = createCouchStaticPictures({ entries: [baseEntry], presentationPage });
+        owner = createCouchStaticPictures({
+          entries: [baseEntry],
+          presentationPage,
+        });
         staged = await owner.stage(
           { level, pictureEntry: baseEntry },
           {
@@ -2248,9 +2298,15 @@ try {
       if (!current()) return false;
       await staged.confirm({ onStatus });
       if (!current()) return false;
+      // Stay/Replace owns focus while deciding; authenticate again under the
+      // accepted decision before navigating to the exact retained edition.
+      focus.dispose();
       return await departLibraryMission(context, async () => {
+        focus = captureFocus();
         if (context.inventory)
-          await libraryInventory.confirm(context.inventory, { signal: controller.signal });
+          await libraryInventory.confirm(context.inventory, {
+            signal: controller.signal,
+          });
         return current();
       });
     } finally {
@@ -2259,6 +2315,54 @@ try {
       staged?.dispose?.();
       owner?.dispose();
       if (libraryLaunchController === controller) libraryLaunchController = null;
+    }
+  }
+  async function launchPreparedLibrarySelection(
+    metadataPack,
+    selection,
+    context,
+    externalRow = null,
+  ) {
+    if (!candidateJourney || context.mode !== 'versus' || context.continuousNext)
+      return launchMetadataSelection(metadataPack, selection, context, externalRow);
+    if (!context.isCurrent() || contentBusy || libraryContinuation) return false;
+    const operation = {
+      controller: new AbortController(),
+      previous: match,
+      kind: 'selection',
+    };
+    libraryContinuation = operation;
+    contentBusy = true;
+    const current = () =>
+      libraryContinuation === operation &&
+      !operation.controller.signal.aborted &&
+      context.isCurrent();
+    const name = missionLibrary.library.find(context.libraryMissionId)?.name || 'selected mission';
+    const display = preparationStatus.begin({
+      message: `Preparing ${name}. Your current race and picture are kept…`,
+      stage: 'verifying',
+      isCurrent: current,
+    });
+    preparationDisplay = display;
+    updateMenu();
+    // The activated card has closed. Keep one reachable action while its exact
+    // destination is verified; the input lease starts at this Cancel control.
+    $('race-picture-cancel').focus({ preventScroll: true });
+    try {
+      return await launchMetadataSelection(
+        metadataPack,
+        selection,
+        { ...context, preparationFeedback: display },
+        externalRow,
+      );
+    } finally {
+      display.finish({ message: '' });
+      if (preparationDisplay === display) preparationDisplay = null;
+      if (!disposed && libraryContinuation === operation) {
+        libraryContinuation = null;
+        contentBusy = false;
+        updateMenu();
+      }
     }
   }
   async function launchMetadataSelection(metadataPack, selection, context, externalRow = null) {
@@ -2278,11 +2382,10 @@ try {
       libraryLaunchController === controller &&
       !controller.signal.aborted;
     try {
-      if (
-        (candidateJourney || context.mode !== 'versus') &&
-        !(context.continuousNext && context.mode === 'versus')
-      ) {
-        await libraryInventory.confirm(context.inventory, { signal: controller.signal });
+      if (context.mode !== 'versus') {
+        await libraryInventory.confirm(context.inventory, {
+          signal: controller.signal,
+        });
         if (!current()) return false;
         focus.dispose();
         return await departLibraryMission(context, async () => {
@@ -2293,7 +2396,9 @@ try {
             },
           });
           try {
-            await libraryInventory.confirm(context.inventory, { signal: controller.signal });
+            await libraryInventory.confirm(context.inventory, {
+              signal: controller.signal,
+            });
             return (
               context.isCurrent() &&
               acceptedInput.current() &&
@@ -2440,7 +2545,11 @@ try {
                   if (!context.isCurrent()) return false;
                   await startRace(entry);
                   const started = roundRecipe.entry === entry && match.status === 'running';
-                  if (started) currentLibrarySelection = { match, id: context.libraryMissionId };
+                  if (started)
+                    currentLibrarySelection = {
+                      match,
+                      id: context.libraryMissionId,
+                    };
                   return started;
                 },
               }),
@@ -2505,7 +2614,10 @@ try {
         },
         availabilityClassic: (row, pack) => {
           if (!libraryInventory.state().ready)
-            return { state: 'unavailable', reason: libraryInventory.state().reason };
+            return {
+              state: 'unavailable',
+              reason: libraryInventory.state().reason,
+            };
           if (row.source === 'external' && pack) {
             const proof = libraryExternalProofs.get(row.packId);
             return proof?.inventory === libraryInventory.getInventory() &&
@@ -2520,7 +2632,10 @@ try {
           }
           return pack
             ? { state: 'ready' }
-            : { state: 'download', bytes: row.download?.bytes ?? row.sourceFile.bytes };
+            : {
+                state: 'download',
+                bytes: row.download?.bytes ?? row.sourceFile.bytes,
+              };
         },
         availabilityCustom: () =>
           libraryInventory.state().ready
@@ -2535,7 +2650,9 @@ try {
               ? await missionInstaller().inspectExternal(row, { signal })
               : await missionInstaller().installExternal(row, { signal });
           } else if (['bundled', 'archived'].includes(row.source))
-            installed = await missionInstaller().installIndexed(row, { signal });
+            installed = await missionInstaller().installIndexed(row, {
+              signal,
+            });
           else {
             if (row.source !== 'optional') throw new Error('This chapter has no trusted download.');
             const catalog = await loadOptionalCatalog({
@@ -2568,14 +2685,14 @@ try {
           }
         },
         launchClassic: (row, context) =>
-          launchMetadataSelection(
+          launchPreparedLibrarySelection(
             context.metadataPack,
             context.selection,
             context,
             row.source === 'external' ? row : null,
           ),
         launchCustom: (binding, context) =>
-          launchMetadataSelection(binding.pack, binding.selection, context),
+          launchPreparedLibrarySelection(binding.pack, binding.selection, context),
       });
       if (disposed || artworkLifetime.signal.aborted) {
         result.library.dispose();
@@ -2586,6 +2703,29 @@ try {
         library: result.library,
         profile,
         mode: 'versus',
+        getCurrentId: () => {
+          if (currentLibrarySelection?.match === match) return currentLibrarySelection.id;
+          const entry = roundRecipe.entry;
+          if (candidateJourney?.owns(entry))
+            return result.library.missions.find(
+              (item) =>
+                item.ownerId === `journey:${authoredRoute.id}` &&
+                item.editionId === authoredRoute.id &&
+                item.runtimeId === entry.mission.id &&
+                item.modes.includes('versus'),
+            )?.id;
+          try {
+            return retainedLibraryMission(result.library, {
+              mode: 'versus',
+              levelId: entry.level.id,
+              campaignKey: entry.musicCampaignKey,
+              sourcePackId: entry.sourcePackId ?? entry.pictureEntry?.sourcePackId ?? null,
+            })?.id;
+          } catch {
+            // An unavailable retained edition cannot block browsing other missions.
+            return null;
+          }
+        },
         readState: state.read,
         writeState: state.write,
         launchContext: libraryContext,
@@ -2709,7 +2849,11 @@ try {
     };
     try {
       check();
-      const rows = await candidateReader.refresh({ signal, onStatus, expectedPack: pack });
+      const rows = await candidateReader.refresh({
+        signal,
+        onStatus,
+        expectedPack: pack,
+      });
       check();
       const entry = rows.find(
         (row) =>
@@ -2972,6 +3116,10 @@ try {
     $('race-journey-controls').hidden = !!shell && shell.scope() !== 'main' && !running;
     $('race-journey-next').hidden = match.status !== 'finished' || libraryCompleteMatch === match;
     $('race-journey-next').disabled = contentBusy || !!libraryContinuation;
+    $('race-journey-next').textContent =
+      candidateJourney && !candidateJourney.next(roundRecipe.entry.mission.id)
+        ? 'Browse missions'
+        : 'Next mission';
     $('race-journey-skip').hidden = !candidateJourney || match.status === 'finished';
     $('race-journey-find').disabled = contentBusy || !!libraryContinuation;
     if (candidateJourney) {
@@ -3064,6 +3212,8 @@ try {
     'race-touch-1',
     'race-tap',
     'race-reduced',
+    'race-journey-reactions-enabled',
+    'race-journey-reactions-retry',
     'race-text-face',
     'race-text-size',
     'race-menu-palette',
@@ -3091,7 +3241,9 @@ try {
     getRoot: () =>
       music?.root() ||
       [...document.querySelectorAll('dialog[open]')].at(-1) ||
-      (candidateJourney && shell.scope() === 'main' ? $('couch-app') : shell.root()),
+      // Find/Next sit beside the main panel for Legacy and installed missions
+      // too. The existing allowlist excludes all live-board controls.
+      (shell.scope() === 'main' ? $('couch-app') : shell.root()),
     getDefaultFocus: () =>
       libraryDecision
         ? $('race-library-stay')
@@ -3100,7 +3252,7 @@ try {
           : $('journey-backup')?.open
             ? $('journey-backup-export')
             : $('journey-chooser')?.open
-              ? $('journey-search')
+              ? journeyChooser?.primary() || $('journey-search')
               : shell.primary(),
     keyboard: true,
     nativeReadingScroll: true,
@@ -3112,7 +3264,11 @@ try {
         !!element.closest('#race-music-now-playing, #race-music-menu-now-playing')) ||
       menuIds.has(element.id) ||
       !!element.closest('#journey-chooser, #journey-backup, #race-gameplay-tuning'),
-    getControlLabels: () => ({ directions: 'D-pad / left stick', confirm: 'South', back: 'East' }),
+    getControlLabels: () => ({
+      directions: 'D-pad / left stick',
+      confirm: 'South',
+      back: 'East',
+    }),
     getReadingPrompt: readingPrompt,
     onNativeInput: (event) => setReadingModality(nextInputModality(readingModality, event)),
     onBack: () =>
@@ -3310,15 +3466,18 @@ try {
         while (accumulator + 1e-9 >= FIXED_DT && match.status === 'running') {
           const before = match.runs.map((r) => r.tick);
           const beforeStatus = match.runs.map((r) => r.status);
-          const commands = input
-            .consume()
-            .map((command, i) =>
-              beforeStatus[i] === 'respawning'
-                ? { direction: null, boost: false, action: false, pickup: false }
-                : neutralResumeTick
-                  ? { ...command, boost: false, action: false, pickup: false }
-                  : command,
-            );
+          const commands = input.consume().map((command, i) =>
+            beforeStatus[i] === 'respawning'
+              ? {
+                  direction: null,
+                  boost: false,
+                  action: false,
+                  pickup: false,
+                }
+              : neutralResumeTick
+                ? { ...command, boost: false, action: false, pickup: false }
+                : command,
+          );
           stepDuel(match, commands);
           neutralResumeTick = false;
           for (let i = 0; i < 2; i++)
@@ -3369,7 +3528,11 @@ try {
       $('race-message').textContent =
         `${match.winner === null ? 'Draw' : `${name} wins the ${series ? 'round' : 'race'}`}. ${match.reason}.${series && won.some((n) => n >= 2) ? ` ${name} wins the match!` : ''}`;
       $('race-message').textContent +=
-        ' Choose Next mission to continue, or keep playing this mission.';
+        candidateJourney && !candidateJourney.next(roundRecipe.entry.mission.id)
+          ? series && !won.some((n) => n >= 2)
+            ? ' Continue with Next round, or Browse missions.'
+            : ` ${candidateJourney.isCore(roundRecipe.entry.mission.id) ? 'End of the main Journey.' : 'End of this optional sequence.'} Browse missions or Rematch whenever you like.`
+          : ' Choose Next mission to continue, or keep playing this mission.';
       $('race-start').textContent = `${continuationAction()}: ${roundRecipe.entry.level.name}`;
       painters.forEach((p, i) => {
         if (match.runs[i].status === 'won')
@@ -3496,7 +3659,10 @@ try {
         ) {
           // Incoming Play is deliberate. Check installed paired originals under
           // its original opening lease, never download or choose a substitute.
-          await owner.library.prepare(row, { mode: 'versus', signal: incomingController.signal });
+          await owner.library.prepare(row, {
+            mode: 'versus',
+            signal: incomingController.signal,
+          });
           if (epoch !== libraryOpenEpoch || !opening.current() || !context.isCurrent())
             throw new DOMException('Requested mission cancelled.', 'AbortError');
         }
@@ -3507,7 +3673,10 @@ try {
           journeyChooser.open($('race-library-switch'));
           journeyChooser.reveal(row.id);
         } else {
-          const started = await owner.library.launch(row, { mode: 'versus', ...context });
+          const started = await owner.library.launch(row, {
+            mode: 'versus',
+            ...context,
+          });
           if (started === false && epoch === libraryOpenEpoch && context.isCurrent()) {
             journeyChooser.open($('race-library-switch'));
             journeyChooser.reveal(row.id);
@@ -3548,7 +3717,10 @@ try {
 } catch (error) {
   document.documentElement.dataset.toolState = 'error';
   bootFailed = true;
-  bootDisplay.finish({ state: 'error', message: `The race could not load: ${error.message}` });
+  bootDisplay.finish({
+    state: 'error',
+    message: `The race could not load: ${error.message}`,
+  });
   releaseArtwork({ persisted: false });
   $('race-start').disabled = true;
   $('race-message').textContent = `The race could not load: ${error.message}`;

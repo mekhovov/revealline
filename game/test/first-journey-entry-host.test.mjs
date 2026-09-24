@@ -66,6 +66,7 @@ for (const route of ['opening', 'authored'])
     const { p, backend, before } = await setup(t, { route });
     assert.equal(p.$('shell-featured').hidden, false);
     assert.equal(p.$('shell-continue').hidden, true);
+    assert.equal(p.doc.activeElement, p.$('shell-featured'), 'Boot focuses Start, not Difficulty.');
     assert.match(p.$('shell-destination').textContent, /Start · First return/);
     assert.deepEqual(await backend.read(), before, 'Rendering a fresh title grants no progress.');
     await activate(p, 'shell-featured', 'first-return');
@@ -85,6 +86,7 @@ for (const completed of [false, true])
     const { p, backend, before } = await setup(t, { events });
     assert.equal(p.$('shell-featured').hidden, true);
     assert.equal(p.$('shell-continue').hidden, false);
+    assert.equal(p.doc.activeElement, p.$('shell-continue'), 'Boot focuses the retained Continue.');
     assert.deepEqual(await backend.read(), before);
     await activate(p, 'shell-continue', completed ? 'choose-your-share' : 'first-return');
     if (completed) assert.equal((await backend.read()).clears.solo[known].runId, 'retained-run');

@@ -114,10 +114,18 @@ test('lobby, setup and children use reachable native controls and Back restores 
   assert.equal(currentMode.getAttribute('tabindex'), null);
   assert.equal(currentMode.getAttribute('href'), null);
   assert.equal(f.doc.activeElement.id, 'race-start');
-  press(f, 'Tab', f.doc.activeElement, { shiftKey: true });
-  assert.equal(f.doc.activeElement.id, 'race-coop');
-  press(f, 'Tab', f.doc.activeElement, { shiftKey: true });
-  assert.equal(f.doc.activeElement.id, 'race-solo-return');
+  // This storage-less host exposes difficulty recovery between the mode
+  // choices and Start. Its visible actions participate in native Tab order.
+  for (const id of [
+    'race-journey-preferences-export',
+    'race-journey-preferences-retry',
+    'race-journey-difficulty',
+    'race-coop',
+    'race-solo-return',
+  ]) {
+    press(f, 'Tab', f.doc.activeElement, { shiftKey: true });
+    assert.equal(f.doc.activeElement.id, id);
+  }
   assert.equal(f.doc.activeElement.getAttribute('href'), '../?journey=legacy');
   press(f, 'Tab');
   assert.equal(f.doc.activeElement.id, 'race-coop');
@@ -125,8 +133,15 @@ test('lobby, setup and children use reachable native controls and Back restores 
     f.doc.activeElement.getAttribute('href'),
     'relay-rescue.html?journey=legacy&return=versus',
   );
-  press(f, 'Tab');
-  assert.equal(f.doc.activeElement.id, 'race-start');
+  for (const id of [
+    'race-journey-difficulty',
+    'race-journey-preferences-retry',
+    'race-journey-preferences-export',
+    'race-start',
+  ]) {
+    press(f, 'Tab');
+    assert.equal(f.doc.activeElement.id, id);
+  }
   press(f, 'Tab');
   assert.equal(f.doc.activeElement.id, 'race-chapters');
   press(f, 'Tab');

@@ -1,0 +1,376 @@
+{
+  "format": "DefaultJourneyTunedEndingsV2",
+  "description": "Fixed input routes for exact host/reference and same-runtime public replay qualification. Existing raw checkpoints are macOS ARM64 witnesses, not cross-device replay promises. Only listed routes have explicit finite scalar exceptions bounded by 1e-12; every other authoritative field and the remaining routes stay exact. Events remain excluded by the unchanged public checkpoint contract. Historical authored fixtures and runtime hashes remain unchanged. This is not human balance evidence.",
+  "rows": [
+    {
+      "id": "dnipro-crossings",
+      "authoredIdentity": "2866e46a5b079254",
+      "gameplayIdentity": "1c78327a46f774dd",
+      "seed": 1,
+      "turnPolicy": "immediate",
+      "checkpoint": "be9768a4db4ff768",
+      "segments": [
+        {
+          "direction": "up",
+          "ticks": 129
+        },
+        {
+          "direction": "down",
+          "ticks": 115
+        },
+        {
+          "direction": "left",
+          "ticks": 170
+        },
+        {
+          "direction": "right",
+          "ticks": 7
+        },
+        {
+          "direction": "left",
+          "ticks": 14
+        },
+        {
+          "direction": "down",
+          "ticks": 41
+        },
+        {
+          "direction": "right",
+          "ticks": 109
+        },
+        {
+          "direction": "up",
+          "ticks": 163
+        },
+        {
+          "direction": "right",
+          "ticks": 855
+        },
+        {
+          "direction": "down",
+          "ticks": 68
+        },
+        {
+          "direction": "left",
+          "ticks": 781
+        },
+        {
+          "direction": "right",
+          "ticks": 360
+        },
+        {
+          "direction": "down",
+          "ticks": 408
+        },
+        {
+          "direction": "up",
+          "ticks": 407
+        },
+        {
+          "direction": "left",
+          "ticks": 122
+        },
+        {
+          "direction": "down",
+          "ticks": 408
+        },
+        {
+          "direction": "left",
+          "ticks": 421
+        },
+        {
+          "direction": "up",
+          "ticks": 81
+        },
+        {
+          "direction": "right",
+          "ticks": 414
+        }
+      ]
+    },
+    {
+      "id": "toolbench-weave",
+      "authoredIdentity": "66e4e66b8f4286e4",
+      "gameplayIdentity": "e9065cdcd9079b5b",
+      "seed": 1,
+      "turnPolicy": "immediate",
+      "checkpoint": "8bc51da014e7a740",
+      "segments": [
+        {
+          "direction": "right",
+          "ticks": 706
+        },
+        {
+          "direction": "down",
+          "ticks": 476
+        },
+        {
+          "direction": "left",
+          "ticks": 136
+        },
+        {
+          "direction": "up",
+          "ticks": 469
+        },
+        {
+          "direction": "down",
+          "ticks": 7
+        },
+        {
+          "direction": "up",
+          "ticks": 14
+        },
+        {
+          "direction": "left",
+          "ticks": 326
+        },
+        {
+          "direction": "down",
+          "ticks": 476
+        },
+        {
+          "direction": "up",
+          "ticks": 434
+        },
+        {
+          "direction": "left",
+          "ticks": 401
+        },
+        {
+          "direction": "right",
+          "ticks": 400
+        },
+        {
+          "direction": "down",
+          "ticks": 298
+        },
+        {
+          "direction": "left",
+          "ticks": 400
+        }
+      ]
+    },
+    {
+      "id": "home-signal",
+      "authoredIdentity": "963b1bc3405e14e7",
+      "gameplayIdentity": "6bdf9193c73dd524",
+      "seed": 1,
+      "turnPolicy": "immediate",
+      "checkpoint": "91cd5533f5bd337b",
+      "segments": [
+        {
+          "direction": "left",
+          "ticks": 197
+        },
+        {
+          "direction": "right",
+          "ticks": 7
+        },
+        {
+          "direction": "left",
+          "ticks": 14
+        },
+        {
+          "direction": "up",
+          "ticks": 231
+        },
+        {
+          "direction": "right",
+          "ticks": 461
+        },
+        {
+          "direction": "down",
+          "ticks": 259
+        },
+        {
+          "direction": "up",
+          "ticks": 258
+        },
+        {
+          "direction": "right",
+          "ticks": 313
+        },
+        {
+          "direction": "down",
+          "ticks": 476
+        },
+        {
+          "direction": "up",
+          "ticks": 149
+        },
+        {
+          "direction": "right",
+          "ticks": 191
+        },
+        {
+          "direction": "up",
+          "ticks": 190
+        },
+        {
+          "direction": "left",
+          "ticks": 184
+        }
+      ]
+    }
+  ],
+  "rawCheckpointWitness": {
+    "platform": "darwin",
+    "architecture": "arm64",
+    "node": "20.19.5",
+    "v8": "11.3.244.8-node.30"
+  },
+  "evidence": {
+    "format": "RouteEvidenceCheckpointV1",
+    "maxAbsoluteError": 1e-12,
+    "paths": [
+      "player.x",
+      "player.y",
+      "enemies[].x",
+      "enemies[].y",
+      "enemies[].vx",
+      "enemies[].vy",
+      "enemies[].perimeter",
+      "classic.actorTime",
+      "time",
+      "result.time"
+    ],
+    "checkpoints": {
+      "dnipro-crossings": {
+        "checkpoint": {
+          "algorithm": "fnv1a64-state-v6",
+          "hash": "b1520fab97bcb10f",
+          "sections": {
+            "identity": "09b76aa076a5804c",
+            "configuration": "9c9f61f313c23e5e",
+            "board": "7042638868ced6b6",
+            "player": "0feb223e37a24003",
+            "trail": "f0ca473df9efdcc8",
+            "enemies": "d8d63adf348515e2",
+            "objectives": "09612b07b5ecb5a5",
+            "supplies": "09612b07b5ecb5a5",
+            "ability": "f6b5aef539d929bb",
+            "clock": "dfd135c6f1949734",
+            "continuation": "a9d828ced6380d30",
+            "result": "05fa5d70509dfdb8",
+            "encounter": "5b9bc4ba528108e4",
+            "classic": "e2f9efe37cc553aa",
+            "foundations": "c8495b961a622a58"
+          }
+        },
+        "scalars": [
+          {
+            "path": "classic.actorTime",
+            "value": 42.273076923075166
+          },
+          {
+            "path": "enemies[0].y",
+            "value": 11.619179830615547
+          },
+          {
+            "path": "enemies[1].vx",
+            "value": 5.16236569074041
+          },
+          {
+            "path": "enemies[1].vy",
+            "value": 9.76997852991838
+          },
+          {
+            "path": "enemies[1].x",
+            "value": 3.708035003305656
+          },
+          {
+            "path": "enemies[1].y",
+            "value": 21.931475571643578
+          },
+          {
+            "path": "enemies[2].perimeter",
+            "value": 17.948307692245375
+          },
+          {
+            "path": "enemies[2].x",
+            "value": 18.448307692245375
+          },
+          {
+            "path": "enemies[3].vx",
+            "value": -10.311963564061356
+          },
+          {
+            "path": "enemies[3].vy",
+            "value": -3.970630611561693
+          },
+          {
+            "path": "enemies[3].x",
+            "value": 17.40010187897369
+          },
+          {
+            "path": "enemies[3].y",
+            "value": 9.555266391885544
+          },
+          {
+            "path": "result.time",
+            "value": 42.27307692307514
+          },
+          {
+            "path": "time",
+            "value": 42.27307692307514
+          }
+        ]
+      },
+      "toolbench-weave": {
+        "checkpoint": {
+          "algorithm": "fnv1a64-state-v6",
+          "hash": "60da41d2fa8a19be",
+          "sections": {
+            "identity": "b44467d1deaa0f92",
+            "configuration": "626d8050ad9ae1d8",
+            "board": "595148d110fed6d7",
+            "player": "47b6dde37a3d81fb",
+            "trail": "f0ca473df9efdcc8",
+            "enemies": "c5c280455e1dc51c",
+            "objectives": "09612b07b5ecb5a5",
+            "supplies": "09612b07b5ecb5a5",
+            "ability": "f6b5aef539d929bb",
+            "clock": "086c4b892119cf4b",
+            "continuation": "a9d828ced6380d30",
+            "result": "43c24b67097eecac",
+            "encounter": "5b9bc4ba528108e4",
+            "classic": "a32885f53015218a",
+            "foundations": "59d3c03e3a43ad46"
+          }
+        },
+        "scalars": [
+          {
+            "path": "enemies[0].vx",
+            "value": 6.679379404068574
+          }
+        ]
+      },
+      "home-signal": {
+        "checkpoint": {
+          "algorithm": "fnv1a64-state-v9",
+          "hash": "91cd5533f5bd337b",
+          "sections": {
+            "identity": "b638bdfc46e6515d",
+            "configuration": "0827deb837940707",
+            "board": "24110c8711167331",
+            "player": "08fb7c8006a7ef45",
+            "trail": "f0ca473df9efdcc8",
+            "enemies": "aeb5df54cc91e5d7",
+            "objectives": "4472bb99073f78b6",
+            "supplies": "09612b07b5ecb5a5",
+            "ability": "f6b5aef539d929bb",
+            "clock": "6350200671b66649",
+            "continuation": "a9d828ced6380d30",
+            "result": "968b751c80fad6e5",
+            "encounter": "5b9bc4ba528108e4",
+            "classic": "77c267b38f504c45",
+            "foundations": "a987a31988860911",
+            "relays": "333d75f6748965a4",
+            "directionalFields": "fd90177a6d9ee047"
+          }
+        },
+        "scalars": []
+      }
+    }
+  }
+}

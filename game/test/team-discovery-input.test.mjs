@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { page } from './helpers/coop-host.mjs';
+import { teamImage } from './helpers/coop-win.mjs';
 import { deferred, waitFor } from './helpers/coop-presentation-fixture.mjs';
 import { COOP_PICTURE_BINDINGS } from '../couch/coop-picture-bindings.mjs';
 
@@ -9,13 +10,53 @@ import { COOP_PICTURE_BINDINGS } from '../couch/coop-picture-bindings.mjs';
 // browser geometry, physical devices and decoded pixels remain separate evidence.
 const yard = COOP_PICTURE_BINDINGS.find((row) => row.levelId === 'relay-yard');
 assert.ok(yard);
-const dialog = (f) => f.$('coop-discovery-dialog');
+const dialog = (f) => f.$('journey-chooser');
 const status = (f) => f.$('coop-discovery-status');
-const cards = (f) => [...f.$('coop-discovery-list').querySelectorAll('.team-discovery-play')];
-function relayCard(f) {
-  const button = cards(f).find((entry) => entry.textContent === 'Play Relay Yard');
-  assert.ok(button);
-  return button;
+const cards = (f) => [...f.$('journey-cards').querySelectorAll('.journey-card')];
+function arenaCard(f, levelId) {
+  const matches = cards(f).filter((entry) => {
+    const [owner, edition, campaign, mission, revision] = JSON.parse(entry.dataset.missionId);
+    return (
+      owner === 'team-classic:relay-rescue-starter' &&
+      edition === 'relay-rescue-starter@2' &&
+      campaign === 'relay-rescue-starter' &&
+      mission === levelId &&
+      revision === '2'
+    );
+  });
+  assert.equal(matches.length, 1, `The exact Classic ${levelId} is available.`);
+  return matches[0];
+}
+const relayCard = (f) => arenaCard(f, 'relay-yard');
+
+function operation(button, activate) {
+  const handler = button.onclick;
+  let pending;
+  button.onclick = (...args) => (pending = handler.apply(button, args));
+  try {
+    activate();
+  } finally {
+    button.onclick = handler;
+  }
+  assert.ok(pending instanceof Promise, 'The visible action owns its real preparation operation.');
+  return pending;
+}
+
+async function openLibrary(f, openerId, activate) {
+  const opener = f.$(openerId);
+  await operation(opener, activate ?? (() => pointerClick(opener)));
+  assert.equal(dialog(f).open, true);
+  // Four-column geometry is modeled explicitly for D-pad traversal. Real
+  // responsive browser geometry is covered separately.
+  cards(f).forEach((card, index) => {
+    card._rect = {
+      x: (index % 4) * 160,
+      y: 180 + Math.floor(index / 4) * 100,
+      width: 150,
+      height: 90,
+    };
+  });
+  f.tick(2); // Adopt the newly opened menu with released controller input.
 }
 
 function nativeModalFocus() {
@@ -24,28 +65,38 @@ function nativeModalFocus() {
   return {
     restorations,
     beforeImport({ $, doc }) {
-      for (const id of ['coop-discovery-dialog', 'coop-discard-dialog']) {
-        const modal = $(id),
-          show = modal.showModal;
+      const instrument = (modal) => {
+        const show = modal.showModal;
         modal.showModal = () => {
           if (!modal.open) previous.set(modal, doc.activeElement);
-          show();
+          show.call(modal);
         };
         modal.close = () => {
           if (!modal.open) return;
           const origin = previous.get(modal);
           modal.open = false;
-          modal.hidden = true;
+          // Native dynamic dialogs hide through their closed state, not a
+          // persistent hidden attribute that would also hide the next opening.
+          if (modal.id !== 'journey-chooser') modal.hidden = true;
           modal.removeAttribute('open');
+          doc.modalDialogs = doc.modalDialogs.filter((entry) => entry !== modal);
           if (modal.contains(doc.activeElement)) doc.body.focus();
           // The native previously-focused-element step precedes the host's
           // close listener. Existing nativeFocus modeling rejects hidden or
           // disabled origins; this local model does not bypass those guards.
           if (!doc.hidden && doc.hasFocus() && origin?.isConnected) origin.focus();
-          restorations.push({ dialog: id, previous: origin, restored: doc.activeElement });
+          restorations.push({ dialog: modal.id, previous: origin, restored: doc.activeElement });
           modal.emit('close', { bubbles: false });
         };
-      }
+      };
+      instrument($('coop-discard-dialog'));
+      // The unified chooser is mounted lazily by the real Missions operation.
+      const create = doc.createElement;
+      doc.createElement = function (...args) {
+        const element = create.apply(this, args);
+        if (element.tagName === 'DIALOG') instrument(element);
+        return element;
+      };
     },
   };
 }
@@ -85,6 +136,8 @@ function startAndPause(f) {
 }
 
 function heldAttempt(f) {
+  const picture = teamImage(f);
+  assert.ok(picture, 'The retained attempt has a decoded, authenticated original.');
   return {
     hud: [
       'coop-stage',
@@ -100,7 +153,7 @@ function heldAttempt(f) {
       'coop-support-1',
     ].map((id) => [id, f.$(id).textContent]),
     progress: f.$('coop-progress').value,
-    picture: f.drawImages.at(-1),
+    picture,
     paint: f.lastPaint,
   };
 }
@@ -142,18 +195,17 @@ const runningYard = (f) =>
 
 test('pointer Play survives native discovery opener restoration and finishes focused on the new Team board', async (t) => {
   const f = await fixture(t);
-  pointerClick(f.$('coop-discovery-open'));
-  assert.equal(dialog(f).open, true);
-  pointerClick(relayCard(f), 'touch');
+  await openLibrary(f, 'coop-discovery-open');
+  await operation(relayCard(f), () => pointerClick(relayCard(f), 'touch'));
   await runningYard(f);
-  const closed = f.restorations.find((entry) => entry.dialog === 'coop-discovery-dialog');
+  const closed = f.restorations.find((entry) => entry.dialog === 'journey-chooser');
   assert.ok(closed);
   assert.equal(closed.previous, f.$('coop-discovery-open'));
   assert.equal(f.doc.activeElement.id, 'coop-canvas');
   assert.equal(f.$('coop-menu').hidden, true);
   assert.equal(f.$('coop-overlay').hidden, true);
   assert.equal(f.$('coop-clock').textContent, '0:00');
-  assert.equal(f.drawImages.at(-1).sha256, yard.picture.sha256);
+  assert.equal(teamImage(f).sha256, yard.picture.sha256);
   assert.deepEqual(f.visits, []);
 });
 
@@ -161,10 +213,11 @@ test('pointer Stay returns through outer Cancel; a separate Replace starts once 
   const f = await fixture(t);
   startAndPause(f);
   const before = heldAttempt(f);
-  pointerClick(f.$('coop-discovery-paused'));
-  pointerClick(relayCard(f), 'touch');
+  await openLibrary(f, 'coop-discovery-paused');
+  const firstPlay = operation(relayCard(f), () => pointerClick(relayCard(f), 'touch'));
   await waitFor(() => f.$('coop-discard-dialog').open);
   pointerClick(f.$('coop-discard-stay'));
+  await firstPlay;
   await ready(f);
   const stay = f.restorations.find((entry) => entry.dialog === 'coop-discard-dialog');
   assert.ok(stay);
@@ -176,20 +229,18 @@ test('pointer Stay returns through outer Cancel; a separate Replace starts once 
   assert.deepEqual(heldAttempt(f), before);
   assert.equal(f.$('coop-overlay').hidden, false);
 
-  pointerClick(relayCard(f), 'touch');
+  const secondPlay = operation(relayCard(f), () => pointerClick(relayCard(f), 'touch'));
   await waitFor(() => f.$('coop-discard-dialog').open);
   pointerClick(f.$('coop-discard-confirm'));
+  await secondPlay;
   await runningYard(f);
   assert.equal(f.restorations.filter((entry) => entry.dialog === 'coop-discard-dialog').length, 2);
-  assert.equal(
-    f.restorations.filter((entry) => entry.dialog === 'coop-discovery-dialog').length,
-    1,
-  );
+  assert.equal(f.restorations.filter((entry) => entry.dialog === 'journey-chooser').length, 2);
   assert.equal(f.doc.activeElement.id, 'coop-canvas');
   assert.equal(f.$('coop-overlay').hidden, true);
   assert.equal(f.$('coop-level').value, 'relay-yard');
   assert.equal(f.$('coop-clock').textContent, '0:00');
-  assert.equal(f.drawImages.at(-1).sha256, yard.picture.sha256);
+  assert.equal(teamImage(f).sha256, yard.picture.sha256);
   assert.deepEqual(f.visits, []);
 });
 
@@ -200,10 +251,9 @@ test('joined controller traverses Team arenas and Back while preserving the paus
     controls = joinedController(f);
   assert.equal(f.$('coop-overlay').hidden, false);
   controls.seek((element) => element.id === 'coop-discovery-paused', 'Browse Team arenas');
-  controls.press(0);
-  assert.equal(dialog(f).open, true);
-  assert.equal(f.doc.activeElement, cards(f)[0]);
-  controls.seek((element) => element === relayCard(f), 'Relay Yard Play');
+  await openLibrary(f, 'coop-discovery-paused', () => controls.press(0));
+  assert.equal(f.doc.activeElement, arenaCard(f, 'first-connection'));
+  controls.press(15);
   assert.equal(f.doc.activeElement, relayCard(f));
   controls.press(1);
   assert.equal(dialog(f).open, false);
@@ -232,9 +282,11 @@ test('controller disconnect cancels held destination decoding and reconnect stil
   const before = heldAttempt(f),
     controls = joinedController(f);
   controls.seek((element) => element.id === 'coop-discovery-paused', 'Browse Team arenas');
-  controls.press(0);
-  controls.seek((element) => element === relayCard(f), 'Relay Yard Play');
-  controls.press(0);
+  await openLibrary(f, 'coop-discovery-paused', () => controls.press(0));
+  assert.equal(f.doc.activeElement, arenaCard(f, 'first-connection'));
+  controls.press(15);
+  assert.equal(f.doc.activeElement, relayCard(f));
+  const launching = operation(relayCard(f), () => controls.press(0));
   await waitFor(() => decoding);
   assert.equal(status(f).dataset.state, 'busy');
   controls.pad.connected = false;
@@ -247,18 +299,16 @@ test('controller disconnect cancels held destination decoding and reconnect stil
   assert.equal(f.$('coop-overlay').hidden, false);
   assert.deepEqual(heldAttempt(f), before);
   gate.resolve();
-  await new Promise((resolve) => setImmediate(resolve));
-  assert.equal(dialog(f).open, true);
+  await launching;
+  assert.equal(dialog(f).open, false, 'Cancelled preparation cannot reopen a retired chooser.');
   assert.equal(f.$('coop-level').value, 'first-connection');
   assert.deepEqual(heldAttempt(f), before);
 
   controls.pad.connected = true;
   f.tick(2);
   controls.press(0);
-  assert.equal(dialog(f).open, true);
-  assert.equal(status(f).dataset.state, 'ready', 'Rejoining must not replay the prior Play input.');
-  controls.press(1);
   assert.equal(dialog(f).open, false);
+  assert.equal(status(f).dataset.state, 'ready', 'Rejoining must not replay the prior Play input.');
   assert.equal(f.$('coop-overlay').hidden, false);
   f.tick(30);
   assert.deepEqual(heldAttempt(f), before);
@@ -267,6 +317,6 @@ test('controller disconnect cancels held destination decoding and reconnect stil
   f.tick(65);
   assert.equal(f.$('coop-overlay').hidden, true);
   assert.notEqual(f.$('coop-clock').textContent, before.hud.find(([id]) => id === 'coop-clock')[1]);
-  assert.equal(f.drawImages.at(-1), before.picture);
+  assert.equal(teamImage(f), before.picture);
   assert.deepEqual(f.visits, []);
 });

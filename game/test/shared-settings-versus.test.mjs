@@ -36,10 +36,25 @@ test('Versus Settings uses native categories, consumes tab keys once and returns
   assert.equal(f.doc.activeElement.tabIndex, -1);
   press(f, 'Tab', { shiftKey: true });
   assert.equal(f.doc.activeElement.id, 'race-options-back');
-  press(f, 'Tab', { shiftKey: true });
-  assert.equal(f.doc.activeElement.id, 'race-reduced');
-  press(f, 'Tab');
-  assert.equal(f.doc.activeElement.id, 'race-options-back');
+  assert.equal(f.$('race-journey-reactions-retry').hidden, false);
+  // Storage recovery and the visible reaction preference belong to the same
+  // native Tab cycle as the other Display controls, in both directions.
+  for (const id of [
+    'race-journey-reactions-retry',
+    'race-journey-reactions-enabled',
+    'race-reduced',
+  ]) {
+    press(f, 'Tab', { shiftKey: true });
+    assert.equal(f.doc.activeElement.id, id);
+  }
+  for (const id of [
+    'race-journey-reactions-enabled',
+    'race-journey-reactions-retry',
+    'race-options-back',
+  ]) {
+    press(f, 'Tab');
+    assert.equal(f.doc.activeElement.id, id);
+  }
   press(f, 'Tab');
   assert.equal(f.doc.activeElement.id, 'race-settings-tab-display');
   press(f, 'ArrowLeft');
