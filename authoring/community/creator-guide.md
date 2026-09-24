@@ -18,9 +18,9 @@ Modern Studio projects keep these definitions separate. The older expansion form
 ## Quick start: install the supplied campaign
 
 1. Download [Two crossings](examples/two-crossings.expansion.json). Retain the actual file from your browser's downloads. It contains two small maps and procedural scenery, with no uploaded media or player saves.
-2. Open the [game](../../game/). Choose **Settings → Game data → Installed chapters** to open the expansion library. Older editions also offer **Library & saves → Expansion packs**.
+2. Open the [pack player](../../game/?journey=legacy). Choose **Settings → Game data → Installed chapters** to open the expansion library. Older editions also offer **Library & saves → Expansion packs**.
 3. Choose **Install a pack file** and select the downloaded JSON. Wait for validation and a successful installation message. A failed import should leave existing content intact.
-4. Choose **Play Creator guide · two crossings** in the installed card, then **Start mission**. You can also find it under **Missions → Collection → Custom**. Older editions use Pack/Level selectors.
+4. Choose **Play Creator guide · two crossings** in the installed card, then **Start mission**. The link above selects the existing expansion player. Keep this distinction from the modern Studio preview.
 5. Steer down from the starting boundary to the opposite boundary. This deliberately easy example has no enemies. After the legal win, check the earned picture and choose **Next** for **Second crossing**. Try **Retry** on that mission.
 6. Reload and find the installed campaign again. Keep the original pack for recovery. Your player backup and unfinished-attempt export are separate from the content file.
 

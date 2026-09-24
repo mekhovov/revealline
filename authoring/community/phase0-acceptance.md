@@ -22,7 +22,7 @@ Observer: Codex in-app browser on macOS, localhost port 8771, keyboard input and
 
 The Studio export's download-event observer timed out, while the UI reported download requested. Filesystem inspection found the actual new 1,773-byte backup; its SHA-256 is `4a5290829dff769cc22bb3d383625cf8812fd8127dab96f8ac5e1dab870198e1`. Its parsed project data equals the source example. The source file uses different whitespace and has SHA-256 `c1c51cd83ce3a20aa1d7030951442ac60de2aa33d523ea2586b7968531e10e5a`; whole-file equality is not claimed. The download was not repeated. A Collection locator initially matched two visible buttons; selecting the observed Home control resolved that observer ambiguity without changing the app.
 
-The current installed-card Play path was exercised. The guide's additional Custom filter route still needs its own check on the final candidate. The guide names the current Settings route because Library & saves is not a Home action at this baseline.
+The compatibility player's installed-card Play path was exercised. A separate check from the default Journey root reached Settings → Game data → Installed chapters, but clicking the sample's Play button produced no visible launch. This pre-existing default-host gap is retained for Phase 1 investigation. The guide now links directly to the verified `?journey=legacy` pack player and does not claim the untested Custom-filter route. Library & saves is not a Home action at this baseline. The first default-root observer also timed out during startup; the next inspection found the normal Home screen, after which the actual Settings actions succeeded.
 
 ## Source checks
 
