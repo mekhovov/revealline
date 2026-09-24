@@ -174,10 +174,30 @@ async function open(p) {
   }
 }
 async function running(p, id) {
-  await settle(() => {
-    p.frame(0);
-    return p.rendered.run.levelId === id && p.doc.body.dataset.flightState === 'running';
-  });
+  try {
+    await settle(() => {
+      p.frame(0);
+      return p.rendered.run.levelId === id && p.doc.body.dataset.flightState === 'running';
+    });
+  } catch (error) {
+    error.message += `\n${JSON.stringify({
+      expectedLevel: id,
+      url: globalThis.location.href,
+      level: p.rendered.run.levelId,
+      boot: p.doc.documentElement.dataset.bootState,
+      bootStatus: p.$('boot-status')?.textContent,
+      flight: p.doc.body.dataset.flightState,
+      picture: p.doc.body.dataset.pictureState,
+      paused: p.rendered.paused,
+      focus: p.doc.activeElement?.id,
+      loading: p.$('mission-library-opening-status')?.textContent,
+      message: p.$('run-message').textContent,
+      home: p.$('shell-home').open,
+      chooser: p.$('journey-chooser')?.open,
+      errors: p.errors.map(String),
+    })}`;
+    throw error;
+  }
 }
 
 test('Classic Solo mounts the same flat library with all91 Journey and110 retained Classic missions', async (t) => {
@@ -266,6 +286,59 @@ test('unified Solo Download becomes Play inline and launches the selected late i
   assert.deepEqual(p.errors, []);
 });
 
+test('unified Solo failed Download retries inline and Back restores Missions without replacing the prepared flight', async (t) => {
+  let available = false,
+    requests = 0;
+  const p = await soloPage(t, {
+    titleScreen: true,
+    fetchResponse: async (path) => {
+      if (path === 'content/packs/night-shift.json') {
+        requests++;
+        if (!available) throw new TypeError('Download temporarily unavailable');
+      }
+    },
+  });
+  const initial = p.rendered.run,
+    checkpoint = authoritativeCheckpoint(initial);
+  await open(p);
+  p.$('journey-collection').value = 'Classic';
+  p.$('journey-collection').emit('change');
+  p.$('journey-search').value = 'night';
+  p.$('journey-search').emit('input');
+  const row = model.missions.filter((mission) => mission.ownerId.includes('night-shift')).at(-1),
+    selected = () =>
+      [...p.$('journey-cards').children].find((card) => card.dataset.missionId === row.id);
+  const card = selected();
+  assert.match(card.textContent, /Download/);
+  card.focus();
+  card.click();
+  await settle(() => /Could not prepare/.test(p.$('journey-chooser-status').textContent));
+  assert.equal(requests, 1);
+  assert.match(card.querySelector('.journey-card-action').textContent, /Unavailable.*Retry$/);
+  assert.equal(card.disabled, false, 'The same visible card permits an explicit retry.');
+  assert.equal(p.$('journey-chooser').open, true);
+  assert.equal(p.doc.activeElement, card);
+  assert.equal(p.rendered.run, initial);
+  assert.deepEqual(authoritativeCheckpoint(initial), checkpoint);
+  available = true;
+  card.click();
+  await settle(() => card.textContent.endsWith('Play'));
+  assert.equal(requests, 2);
+  assert.equal(p.doc.activeElement, card);
+  assert.notEqual(p.doc.body.dataset.flightState, 'running');
+  p.$('journey-back').click();
+  assert.equal(p.$('journey-chooser').open, false);
+  assert.equal(p.$('shell-home').open, true);
+  assert.equal(p.doc.activeElement.id, 'shell-play');
+  assert.equal(p.rendered.run, initial);
+  assert.deepEqual(authoritativeCheckpoint(initial), checkpoint);
+  await open(p);
+  assert.equal(p.$('journey-search').value, 'night');
+  assert.equal(p.doc.activeElement, selected());
+  assert.match(selected().textContent, /Play/);
+  assert.deepEqual(p.errors, []);
+});
+
 test('empty-profile Classic selection starts the exact late Base mission, without awarding a clear', async (t) => {
   const p = await soloPage(t, { titleScreen: true });
   await open(p);
@@ -293,6 +366,78 @@ test('incoming opaque Classic handoff starts its exact late mission without show
   assert.equal(p.$('shell-home').open, false);
   assert.deepEqual(p.errors, []);
 });
+
+for (const transition of ['finish', 'newer input', 'failed initial picture'])
+  test(`incoming Classic handoff serializes initial picture preparation: ${transition}`, async (t) => {
+    const compiled = JSON.parse(
+      await readFile(new URL('../presentation/compiled/runtime.json', import.meta.url)),
+    );
+    const pictureHash = (level) =>
+      Object.values(compiled.resolved.assets).find(
+        (asset) => asset.kind === 'image' && asset.description === `scene-${level}`,
+      ).file.sha256;
+    const initialHash = pictureHash('signal-01'),
+      targetHash = pictureHash(lateBase.runtimeId);
+    let release,
+      initialRequested = false,
+      targetRequests = 0;
+    const gate = new Promise((resolve) => {
+      release = resolve;
+    });
+    t.after(() => release());
+    const search = new URLSearchParams({ journey: 'legacy', 'library-mission': lateBase.id });
+    const page = soloPage(t, {
+      titleScreen: true,
+      search: `?${search}`,
+      waitForPictures: false,
+      fetchResponse: async (path) => {
+        if (String(path).includes(targetHash)) targetRequests++;
+        if (!String(path).includes(initialHash)) return;
+        initialRequested = true;
+        await gate;
+        if (transition === 'failed initial picture')
+          return new Response('Deliberate initial picture outage', { status: 503 });
+      },
+    });
+    await settle(
+      () => initialRequested && globalThis.document.getElementById('journey-collection'),
+    );
+    const doc = globalThis.document;
+    assert.notEqual(doc.body.dataset.flightState, 'running');
+    assert.equal(
+      targetRequests,
+      0,
+      'The requested original waits for the captured initial writer.',
+    );
+    if (transition === 'newer input') {
+      doc.getElementById('start-button').emit('pointerdown');
+      doc.getElementById('start-button').focus();
+    }
+    const focused = doc.activeElement;
+    release();
+    const p = await page;
+    if (transition === 'newer input') {
+      await settle(() => p.doc.body.dataset.pictureState === 'ready');
+      await new Promise((resolve) => setImmediate(resolve));
+      p.frame(0);
+      assert.equal(
+        targetRequests,
+        0,
+        'A retired incoming action must never prepare its destination.',
+      );
+      assert.equal(p.rendered.run.levelId, 'signal-01');
+      assert.equal(p.rendered.run.tick, 0);
+      assert.equal(p.rendered.paused, true);
+      assert.equal(p.doc.activeElement, focused);
+      assert.notEqual(p.doc.body.dataset.flightState, 'running');
+    } else {
+      await running(p, lateBase.runtimeId);
+      assert.ok(targetRequests > 0);
+      assert.equal(p.$('shell-home').open, false);
+    }
+    assert.equal(p.$('journey-chooser').open, false);
+    assert.deepEqual(p.errors, []);
+  });
 
 test('unknown incoming identity reports failure and never starts a different mission', async (t) => {
   const p = await soloPage(t, {

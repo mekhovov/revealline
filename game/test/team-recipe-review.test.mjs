@@ -11,10 +11,13 @@ import {
   fieldKitRecipeSources,
 } from '../../scripts/produce-field-kit-theme.mjs';
 import { fieldKitTeamRecipeQuality } from '../../scripts/team-recipe-review.mjs';
+import { TEAM_PICTURE_REVIEW_EXTENSION_PATH } from '../../scripts/team-picture-review-extension.mjs';
 const root = new URL('../../', import.meta.url);
 const read = (name) => readFile(new URL(name, root));
 const bytes = await read('docs/verification/team37/review.json');
 const review = JSON.parse(bytes);
+const extensionBytes = await read(TEAM_PICTURE_REVIEW_EXTENSION_PATH);
+const extension = JSON.parse(extensionBytes);
 const fingerprint = (await fieldKitRecipeSources(read)).team;
 const defaults = createDefaultThemeBundle().assets;
 const production = await createFieldKitProduction();
@@ -33,6 +36,7 @@ const input = (role) => ({
   defaultAsset: defaults.find((asset) => asset.id === role.defaultAsset.id),
   inheritedAssets: images,
   reviewBytes: bytes,
+  reviewExtensionBytes: extensionBytes,
 });
 const stage = (args) => fieldKitTeamRecipeQuality(args).stage;
 
@@ -82,7 +86,7 @@ test('changed/unknown roles, payloads, default records and review bytes remain s
 });
 
 test('each of26 renderer inputs and a forged path declaration reopen the review', async () => {
-  for (const entry of review.fingerprint.inputs) {
+  for (const entry of extension.fingerprints.team.inputs) {
     assert.equal(
       createHash('sha256')
         .update(await read(entry.path))
@@ -107,6 +111,23 @@ test('each of26 renderer inputs and a forged path declaration reopen the review'
     }),
     'source',
   );
+});
+
+test('only exact extension bytes admit the new fingerprint; the original review remains valid', () => {
+  const historicalSource = `${review.fingerprint.inputs.map((entry) => entry.path).join('; ')} sha256:${review.fingerprint.sha256}`;
+  for (const role of review.recipes) {
+    for (const invalid of [null, Buffer.concat([extensionBytes, Buffer.from('\n')])])
+      assert.equal(stage({ ...input(role), reviewExtensionBytes: invalid }), 'source', role.slot);
+    assert.equal(
+      stage({ ...input(role), source: historicalSource, reviewExtensionBytes: null }),
+      'reviewed',
+      role.slot,
+    );
+    assert.equal(
+      stage({ ...input(role), source: extension.fingerprints.equipment.sha256 }),
+      'source',
+    );
+  }
 });
 
 test('every inherited image identity, bytes, geometry and record must remain exact', () => {

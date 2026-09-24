@@ -3,6 +3,8 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { authoritativeCheckpoint, verifyReplay } from '../replay.mjs';
+import { createRun, stepRun, FIXED_DT } from '../core/index.mjs';
+import { applyGameplayTuning, resolveGameplayTuning } from '../gameplay-tuning.mjs';
 import { soloPage, SoloElement, settle } from './helpers/solo-dom.mjs';
 import { retryFixture } from './fixtures/retry-scenarios.mjs';
 
@@ -171,11 +173,26 @@ for (const stopOnCapture of [false, true])
       page.frame(0);
       assert.equal(page.rendered.run.ruleset, 'xonix-core.v5');
       assert.equal(page.rendered.run.rules.stopOnCapture, stopOnCapture);
+      const approvedLevel = applyGameplayTuning(level, resolveGameplayTuning('standard'));
+      assert.deepEqual(page.rendered.run.level, approvedLevel);
+      const expected = createRun(approvedLevel, { seed: 1, classId: 'scout' });
       page.$('start-button').click();
       await settle(() => page.doc.body.dataset.flightState === 'running');
       page.key('ArrowDown');
-      until(page, () => page.rendered.run.claimedCount > 0, 450);
+      // The current Standard recipe crosses this 34-cell field at tick 469.
+      // Keep the host and pure simulation exact; the old 450-tick bound
+      // stopped before capture after the approved movement tuning changed.
+      for (let n = 0; n < 469; n++) {
+        tick(page);
+        stepRun(expected, { direction: 'down' }, FIXED_DT);
+      }
       page.key('ArrowDown', false);
+      assert.equal(expected.tick, 469);
+      assert.equal(expected.claimedCount, 816);
+      assert.deepEqual(
+        authoritativeCheckpoint(page.rendered.run),
+        authoritativeCheckpoint(expected),
+      );
       assert.equal(page.rendered.run.status, 'running');
       assert.equal(page.rendered.run.player.cutting, false);
       assert.equal(page.rendered.run.lives, 3);

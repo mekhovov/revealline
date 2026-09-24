@@ -441,37 +441,61 @@ test('a newer Missions difficulty choice cancels held Next and a subsequent Next
 });
 
 for (const departure of ['missions', 'another-mission'])
-  test(`post-adoption drawable release hands input to ${departure} without automatic Resume`, async (t) => {
-    const { p, onRelease } = await setup(t);
-    await win(p);
-    const before = snapshot(p);
-    let released = false;
-    onRelease(before.image, () => {
-      released = true;
-      if (departure === 'another-mission') {
-        openRetainedSetup(p);
-        p.$('missions').children[0].click();
-      } else p.$('shell-packs').click();
-    });
-    p.$('next-button').click();
-    await settle(() => released);
-    await settle(() => {
-      p.frame(0);
-      return (
-        p.doc.body.dataset.pictureState === 'ready' &&
-        p.rendered.run.levelId === (departure === 'missions' ? 'next-cut' : 'first-cut')
-      );
-    });
-    if (departure === 'missions')
-      await settle(() => p.$('journey-chooser')?.open && p.$('journey-collection'));
-    else assert.equal(p.$('shell-missions').open, true);
-    assert.notEqual(p.rendered.run, before.run);
-    assert.equal(p.rendered.paused, true);
-    assert.equal(p.rendered.run.tick, 0);
-    assert.equal(p.$('game-overlay').dataset.kind, 'ready');
-    assert.notEqual(p.doc.activeElement.id, 'game-canvas');
-    assert.equal(before.image.releases, 1);
-    ticks(p, 20);
-    assert.equal(p.rendered.run.tick, 0);
-    assert.deepEqual(p.errors, []);
-  });
+  test(
+    `post-adoption drawable release hands input to ${departure} without automatic Resume`,
+    { timeout: 120000 },
+    async (t) => {
+      const { p, onRelease } = await setup(t);
+      await win(p);
+      const before = snapshot(p);
+      let released = false,
+        missionsPreparation;
+      onRelease(before.image, () => {
+        released = true;
+        if (departure === 'another-mission') {
+          openRetainedSetup(p);
+          p.$('missions').children[0].click();
+        } else {
+          const opener = p.$('shell-packs'),
+            handler = opener.onclick;
+          // Preserve the release callback's real click and focus. Join its owned
+          // catalogue operation instead of racing cold metadata with a poll timer.
+          opener.onclick = (...args) => (missionsPreparation = handler.apply(opener, args));
+          try {
+            opener.click();
+          } finally {
+            opener.onclick = handler;
+          }
+          assert(
+            missionsPreparation instanceof Promise,
+            'Missions activation owns its preparation.',
+          );
+          assert.equal(p.$('mission-library-opening-status').getAttribute('role'), 'status');
+          assert.equal(p.$('mission-library-opening-status').textContent, 'Preparing missions…');
+        }
+      });
+      p.$('next-button').click();
+      await settle(() => released);
+      await settle(() => {
+        p.frame(0);
+        return (
+          p.doc.body.dataset.pictureState === 'ready' &&
+          p.rendered.run.levelId === (departure === 'missions' ? 'next-cut' : 'first-cut')
+        );
+      });
+      if (departure === 'missions') {
+        await missionsPreparation;
+        assert.equal(p.$('journey-chooser').open, true);
+        assert(p.$('journey-collection'));
+      } else assert.equal(p.$('shell-missions').open, true);
+      assert.notEqual(p.rendered.run, before.run);
+      assert.equal(p.rendered.paused, true);
+      assert.equal(p.rendered.run.tick, 0);
+      assert.equal(p.$('game-overlay').dataset.kind, 'ready');
+      assert.notEqual(p.doc.activeElement.id, 'game-canvas');
+      assert.equal(before.image.releases, 1);
+      ticks(p, 20);
+      assert.equal(p.rendered.run.tick, 0);
+      assert.deepEqual(p.errors, []);
+    },
+  );

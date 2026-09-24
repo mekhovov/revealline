@@ -194,7 +194,7 @@ const io = (f) => ({
   releases: [...f.artwork.calls.releases],
 });
 function start(f) {
-  f.$('coop-difficulty').value = 'gentle';
+  f.choose('coop-difficulty', 'gentle');
   f.$('coop-experiment').value = 'full';
   f.$('coop-start').focus();
   f.tap('Enter');
@@ -275,7 +275,10 @@ test('local multi-core victory → distinct coverage artwork → Retry retains t
     resources = io(f);
   playImportedRoute(f, importedCoverageRoute);
   assert.equal(f.$('coop-next').hidden, true);
-  assert.match(f.$('coop-overlay-copy').textContent, /Pack complete.*Browse Team arenas/);
+  assert.match(
+    f.$('coop-overlay-copy').textContent,
+    /End of the Team mission library\. Browse Team arenas/,
+  );
   const firstResult = hud(f);
   f.$('coop-level').value = fixture.pack.levels[0].id;
   f.$('coop-difficulty').value = 'expert';
@@ -795,7 +798,7 @@ test('discovery-started local artwork keeps its earned result, ordered Next and 
   const fixture = bundle();
   const f = await page(t, options);
   await selectNative(f, fixture.file);
-  f.$('coop-difficulty').value = 'gentle';
+  f.choose('coop-difficulty', 'gentle');
   f.$('coop-experiment').value = 'full';
   await browseTeam(f);
   await playTeamCard(f, fixture.pack.levels[0].name);

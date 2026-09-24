@@ -5,6 +5,7 @@ import { authoritativeCheckpoint } from '../replay.mjs';
 import { teamReturnHref } from '../mode-return.mjs';
 import { readVersusSoloReturnToken } from '../mode-return-v2.mjs';
 import { couchPage } from './helpers/couch-host.mjs';
+import { openMissionLibrary } from './helpers/library-selection.mjs';
 
 // Native boot CSS prevents focus before ready; exercise the actual app handoff.
 async function host(t, options) {
@@ -61,8 +62,8 @@ for (const [kind, version, label] of [
       h.$('overlay-menu').click();
       assert.equal(h.rendered.run.player.cutting, true);
     }
-    h.$('shell-packs').click();
-    await settle(() => h.$('journey-chooser')?.open && h.$('journey-collection'));
+    await openMissionLibrary(h, 'shell-packs');
+    assert.ok(h.$('journey-collection'));
     h.$('mission-picker-setup').open = true;
     h.$('shell-mode-choice').open = true;
     h.$(entryId).focus();

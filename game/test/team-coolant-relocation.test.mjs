@@ -7,6 +7,7 @@ import { createTeamTestPack } from '../content-design/team-export.mjs';
 import { FIELD } from '../coop/core.mjs';
 import { assessTeamTimedRoute } from './helpers/team-timed-route.mjs';
 import { page } from './helpers/coop-host.mjs';
+import { playSpecializedTeamBonusRoute } from './helpers/team-specialized-host-route.mjs';
 
 const evidence = JSON.parse(
   await readFile(new URL('./fixtures/team-coolant-relocation.json', import.meta.url)),
@@ -26,10 +27,6 @@ const summary = (r) => ({
   longestJointIdleTicks: r.longestJointIdleTicks,
   checkpoint: r.checkpoint,
 });
-const keys = [
-  { up: 'KeyW', down: 'KeyS', left: 'KeyA', right: 'KeyD' },
-  { up: 'ArrowUp', down: 'ArrowDown', left: 'ArrowLeft', right: 'ArrowRight' },
-];
 
 test('Coolant recovery inventory covers every preset and seat/joint configuration without changing its edition', () => {
   assert.equal(evidence.format, 'TeamCoolantRelocationEvidenceV1');
@@ -150,60 +147,12 @@ for (const row of evidence.rows) {
     assert.equal(f.$('coop-difficulty').value, row.difficulty);
     f.$('coop-start').focus();
     f.tap('Enter');
-    f.tick(2);
-    const expected = row.checks.find((c) => !c.options.swapped && c.options.jointCuts).result;
-    let frames = 1,
-      previous = [null, null],
-      firstEffect = null;
-    const transitions = [];
-    for (const segment of row.log) {
-      for (const [seat, direction] of [segment.a, segment.b].entries())
-        if (direction && direction !== previous[seat]) f.tap(keys[seat][direction]);
-      previous = [segment.a, segment.b];
-      for (let n = 0; n < segment.ticks && f.$('coop-overlay').hidden; n++) {
-        f.tick();
-        frames++;
-        const live = f.$('coop-bonus-live').textContent;
-        const phase = /^Enemies frozen \d+s$/.test(live) ? 'effect' : live;
-        if (transitions.at(-1)?.phase !== phase) transitions.push({ frame: frames, phase });
-        if (firstEffect === null && phase === 'effect') {
-          firstEffect = frames;
-          assert.match(
-            f.$('coop-message').textContent,
-            new RegExp(
-              `^${['Sunflower', 'Skyline'][expected.collected[0].players[0]]} collected enemies frozen\\.`,
-            ),
-          );
-        }
-        assert.equal(
-          f.$('coop-reserves').textContent,
-          `${expected.initialReserves} reserve${expected.initialReserves === 1 ? '' : 's'}`,
-        );
-      }
-      if (!f.$('coop-overlay').hidden) break;
-    }
-    t.diagnostic(
-      JSON.stringify({
-        frames,
-        coverage: f.$('coop-coverage').textContent,
-        firstEffect,
-        transitions,
-      }),
+    playSpecializedTeamBonusRoute(
+      f,
+      source,
+      evidence.missionId,
+      row.difficulty,
+      'coolant-relocation',
     );
-    assert.equal(f.$('coop-overlay-kicker').textContent, 'A WORLD YOU REVEALED TOGETHER');
-    assert.equal(frames, expected.tick);
-    assert.equal(f.$('coop-coverage').textContent, `${(expected.coverage * 100).toFixed(1)}%`);
-    assert.deepEqual(transitions, [
-      { frame: 2, phase: '' },
-      { frame: 360, phase: 'Pickup incoming' },
-      { frame: 480, phase: '1 timed pickup available' },
-      { frame: 1680, phase: '' },
-      { frame: 2640, phase: 'Pickup incoming' },
-      { frame: 2760, phase: '1 timed pickup available' },
-      { frame: expected.collected[0].activationTick, phase: 'effect' },
-      { frame: expected.collected[0].untilTick, phase: '' },
-    ]);
-    assert.equal(firstEffect, expected.collected[0].activationTick);
-    assert.deepEqual(f.visits, []);
   });
 }

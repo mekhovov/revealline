@@ -5,6 +5,49 @@ description: Maintain, test, build and archive this project's playable Xonix run
 
 # Xonix Runtime Maintainer
 
+For player-menu changes, follow the approved [player-first execution order](../../../docs/player-first-ux-execution.md)
+and [navigation maintenance prompt](../../prompts/player-menu-navigation.md).
+Use one menu-key owner and rendered grid geometry; expose chooser `primary()` to
+hosts. Preserve retained selection, current mission identity, remote focus leases
+and explicit return/Resume. Record full test results separately from any temporary
+CI waiver; skipped gates do not establish acceptance.
+Current host-route tests use the exact gameplay-tuning recipe and exposed input
+capabilities; historical proofs remain immutable. Team host fixtures cannot use
+Shift/Boost. Restore a genuine historical attempt to test untuned mastery recovery.
+Do not advertise unprepared image slots in partial painter fixtures or relax the
+production decoder's validation. Final Journey results retain their accepted run
+and picture while Browse missions opens; an optional Remix is not an automatic
+core-campaign successor. In first-to-two Versus, distinguish an unfinished round
+from the completed match before advertising Rematch or a Journey ending.
+Incoming mission links join the captured boot-picture writer before preparing
+their exact original, then recheck the opening lease. Exercise delayed success,
+failed initial artwork and newer input without weakening media-generation guards.
+Await the preparation returned by a real Missions activation in host tests. Assert
+immediate loading and retained state separately; cold catalogue duration is not a
+five-second gameplay contract. For controller or drawable-release paths, observe
+the existing DOM handler's promise while preserving the actual gesture and focus;
+restore observers in finally. Reproduce timing assumptions with controlled fetch
+delay, retain finite case deadlines and leave the global polling helper unchanged.
+Preserve exact checkpoint assertions when checking
+different runtimes and diagnose state differences before changing route fixtures.
+For witnessed cross-platform movement rounding, keep `routeEvidenceCheckpoint`
+strictly inside integration tests: only witnessed per-route scalar differences
+may use the declared 1e-12 bound; all other state remains exact. It must not change
+runtime checkpoints, replay readers or original ownership. Require
+exact same-runtime host/reference and public replay checks alongside the portable
+golden; reject changed identities, cells, lives, ticks, scores and meaningful motion.
+Label retained historical chooser tests as component boundaries; injected campaigns
+are not public catalogue evidence. Current host selection joins the visible action
+and matches the exact source/edition/campaign/runtime identity. Independently resolve
+fresh tuning, retain historical routes and use legal host inputs without neutral
+braking or state injection. Verify decoded background identity, not actor draw order.
+Pause Restart and terminal Retry share the retained-media contract. If the player
+changes difficulty, rebind only the validated execution key/derived level revision
+through `retryFlightPresentationPins`; preserve every accepted picture/story
+choice and complete visual collection. Do not feed old execution pins unchanged
+to a new difficulty context. Prove live-cut, recovery and restored-attempt paths
+with real inputs, exact fresh checkpoints and decoded released originals.
+
 For compact Solo landscape, distinguish manual equipment from authored warning
 capability. `hasFieldWarningBand` uses the validated original level, including
 legacy v1's absent encounter field, never the live enemy list or current warning
@@ -1478,3 +1521,38 @@ and Apply remain separate actions; the option must say when balance is pending.
 Record automated, native, human and public-release evidence independently. The
 Twin inner-receiver example and its limits are documented in
 `docs/verification/journey-sentinel-inner-study.md`.
+
+## UX0 original ownership and activation focus
+
+Use the same authored-level resolver for picture preparation and Victory Story pin validation when gameplay tuning derives an execution level. Retain campaign/theme/story identity checks and historical readers. Verify real wins, Story, difficulty Restart and unchanged accepted originals. Menu activation must retain the tapped mission even when touch does not move native focus from a different card. Keep ordinary keyboard selection capture on Back; test cancelled and failed launches as well as newer-focus ownership. Home primary focus must select an eligible enabled visible action after boot, with Missions as the disabled-Continue fallback. Join real asynchronous menu operations in host tests and re-query installed cards after source refresh; never bypass departure confirmation or activate stale controls.
+
+## Terminal result preparation promises
+
+Result Next and appearance-to-Missions actions must return the promise of their
+existing owned preparation when the action is asynchronous. Propagate that promise
+without starting another operation or adding an await that changes activation,
+focus leases, cancellation, foreground checks or simulation timing. Retain
+synchronous/unsupported branches and explicit Resume behavior. Host fixtures
+observe actual controller South or native Enter, require immediate named live
+status, and join the real operation under a finite case bound. Reproduce cold
+bitmap and catalogue waits independently; do not lengthen global polling or bypass
+real input to hide an expiry. Keep accepted picture/checkpoint, tick-zero adoption,
+held Confirm and native editing assertions. A settled promise may represent
+failure or cancellation, so final-state and ownership checks remain mandatory.
+Record controlled-delay and complete-file results separately from full CI,
+browser latency and release acceptance.
+
+## UX0 manual Versus content departure
+
+Treat an explicit mission selection and automatic Next as distinct entry actions
+with the same required picture and setup protections. Final Journey results open
+Browse missions. Selecting a same-mode Classic mission must preserve the exact
+match format, steering, timer, touch, controller assignments and difficulty in its
+validated handoff. Start preparation/status/cancellation before materializing the
+selected pack. Verify its original in a separate owner; leave both previous boards
+and picture intact until departure succeeds. Release the opening focus lease while
+Stay/Replace owns input, then acquire a fresh lease and reauthenticate inventory
+before navigating. A failed choice returns to the selected gallery card; Cancel
+keeps the existing race with a reachable control. Retain stale-input, foreground
+and exact-edition guards. Run complete continuation, inventory and capability
+host files; a modeled successful handoff is separate from public browser proof.

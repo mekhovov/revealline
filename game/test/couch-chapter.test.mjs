@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { prepareCouchChapter } from '../couch/couch-chapter.mjs';
-import { normalizedLevel } from '../core/level.mjs';
+import { applyGameplayTuning, resolveGameplayTuning } from '../gameplay-tuning.mjs';
 import { couchPage } from './helpers/couch-host.mjs';
 
 const pack = JSON.parse(
@@ -48,7 +48,16 @@ function images({ failAt = -1, wrongSizeAt = -1, holdAt = -1 } = {}) {
 test('fresh couch uses exact wide Pressure Lines originals, authored Arcade controls and independent continuations', async (t) => {
   const f = await couchPage(t, { initialLevel: null, coarse: true });
   assert.equal(f.renders[0].level.id, 'orchard-crossing');
-  assert.deepEqual(f.renders[0].level, normalizedLevel(pack.campaigns[0].levels[0]));
+  const approvedLevel = applyGameplayTuning(
+    pack.campaigns[0].levels[0],
+    resolveGameplayTuning('standard'),
+  );
+  for (const run of f.renders)
+    assert.deepEqual(
+      run.level,
+      approvedLevel,
+      'Both boards use the exact authored map with its approved current Standard adaptation.',
+    );
   assert.equal(f.renders[0].ruleset, 'xonix-core.v5');
   assert.equal(f.$('race-canvas-0').width, 1152);
   assert.equal(f.$('race-canvas-0').height, 576);

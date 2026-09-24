@@ -657,6 +657,120 @@ for (const id of ['gallery-grid', 'missions'])
     assert.ok(a.classList.contains('controller-focus'));
   });
 
+function journeyGrid(t, input, columns = 3) {
+  const h = setup(t, { keyboard: true, accept: (element) => element.id !== 'excluded-mission' }),
+    dialog = h.control('dialog', { open: true }),
+    search = h.control('input', { type: 'search' }, dialog),
+    filters = h.control('summary', {}, dialog),
+    grid = h.control('div', { id: 'journey-cards' }, dialog),
+    cards = Array.from({ length: 11 }, (_, index) =>
+      h.control('button', { id: `mission-${index}` }, grid),
+    ),
+    back = h.control('button', {}, dialog);
+  h.setScope('modal:journey', dialog);
+  h.setDefault(cards[0]);
+  function reflow(count) {
+    for (const [index, card] of cards.entries())
+      card._rect = {
+        x: (index % count) * 130 + 15,
+        y: Math.floor(index / count) * 200 + 120,
+        width: 110,
+        height: 90 + (index % 3) * 25,
+      };
+  }
+  reflow(columns);
+  const move = (direction) => {
+    if (input === 'controller') h.api.handle({ direction });
+    else {
+      const event = h.document.activeElement.emit('keydown', {
+        key: { up: 'ArrowUp', right: 'ArrowRight', down: 'ArrowDown', left: 'ArrowLeft' }[
+          direction
+        ],
+      });
+      assert.equal(event.defaultPrevented, true);
+    }
+    return h.document.activeElement;
+  };
+  return { ...h, dialog, search, filters, grid, cards, back, reflow, move };
+}
+
+for (const input of ['keyboard', 'controller'])
+  for (const columns of [1, 2, 3, 6])
+    test(`Journey ${input} follows ${columns} rendered columns without wrapping rows`, (t) => {
+      const f = journeyGrid(t, input, columns);
+      f.cards[0].focus();
+      assert.equal(f.move('down'), f.cards[columns], 'Down must not move right in the same row.');
+      assert.equal(f.move('up'), f.cards[0]);
+      assert.equal(f.move('left'), f.cards[0], 'The left edge cannot jump to another row.');
+      for (let index = 1; index < columns; index++) assert.equal(f.move('right'), f.cards[index]);
+      assert.equal(f.move('right'), f.cards[columns - 1], 'The right edge cannot wrap forward.');
+      assert.equal(f.move('down'), f.cards[Math.min(2 * columns - 1, f.cards.length - 1)]);
+      f.cards.at(-1).focus();
+      assert.equal(f.move('right'), f.cards.at(-1));
+      assert.equal(f.move('down'), f.back, 'The bottom edge reaches the footer without looping.');
+      f.cards[0].focus();
+      assert.equal(
+        f.move('up'),
+        f.filters,
+        'The top edge retains access to the preceding filters.',
+      );
+    });
+
+for (const input of ['keyboard', 'controller'])
+  test(`Journey ${input} recalculates geometry after reflow and skips unavailable controls`, (t) => {
+    const f = journeyGrid(t, input);
+    f.cards[1].focus();
+    assert.equal(f.move('down'), f.cards[4]);
+    f.reflow(2);
+    f.api.sync();
+    assert.equal(f.document.activeElement, f.cards[4], 'Reflow alone must preserve the mission.');
+    assert.equal(f.move('down'), f.cards[6]);
+    assert.equal(f.move('right'), f.cards[7]);
+    f.cards[5].hidden = true;
+    f.cards[4].disabled = true;
+    assert.equal(f.move('up'), f.cards[3], 'Skip a row with no available controls.');
+    f.cards[6].id = 'excluded-mission';
+    assert.equal(f.move('down'), f.cards[7]);
+    f.cards[8].inert = true;
+    assert.equal(f.move('down'), f.cards[9]);
+    assert.equal(
+      f.cards[9].emit('keydown', { key: 'Tab' }).defaultPrevented,
+      false,
+      'Interior Tab traversal remains owned by the native dialog.',
+    );
+    f.back.focus();
+    assert.equal(f.back.emit('keydown', { key: 'Tab' }).defaultPrevented, true);
+    assert.equal(f.document.activeElement, f.search, 'The modal Tab boundary remains contained.');
+    f.search.focus();
+    const event = f.search.emit('keydown', { key: 'ArrowRight' });
+    assert.equal(event.defaultPrevented, false, 'Search retains native caret movement.');
+    assert.equal(f.document.activeElement, f.search);
+  });
+
+for (const input of ['keyboard', 'controller'])
+  test(`Journey ${input} chooses the nearest column in the adjacent row, not a later exact column`, (t) => {
+    const f = journeyGrid(t, input);
+    f.cards[5].hidden = true;
+    f.cards[2]._rect.height = 150;
+    f.cards[4]._rect.y += 0.5;
+    f.cards[2].focus();
+    assert.equal(f.move('down'), f.cards[4]);
+    assert.equal(f.move('down'), f.cards[7]);
+    assert.equal(f.move('up'), f.cards[4]);
+    assert.equal(
+      f.move('left'),
+      f.cards[3],
+      'Fractional positioning still belongs to the same row.',
+    );
+    f.filters.remove();
+    f.search.remove();
+    f.back.remove();
+    f.cards[0].focus();
+    assert.equal(f.move('up'), f.cards[0], 'A grid-only menu cannot wrap from top to bottom.');
+    f.cards.at(-1).focus();
+    assert.equal(f.move('down'), f.cards.at(-1));
+  });
+
 test('slider draft clamps and commits one input/change pair; cancellation never writes the real value', (t) => {
   const h = setup(t),
     range = h.control('input', { type: 'range', min: '0', max: '1', step: '0.1', value: '0.5' });

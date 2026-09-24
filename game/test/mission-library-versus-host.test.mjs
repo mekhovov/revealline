@@ -92,16 +92,37 @@ async function fixture(t, { href, fetchResponse, installedSource, ...options } =
   });
   return p;
 }
-async function open(p) {
-  p.$('race-library-switch').focus();
-  p.$('race-library-switch').click();
+function beginOpen(p, { focus = true } = {}) {
+  // Preserve the real anchor click and Couch-shell departure guards while
+  // joining its operation, rather than timing catalogue compilation with polls.
+  const opener = p.$('race-library-switch'),
+    listeners = opener.listeners.get('click'),
+    pending = [];
+  opener.listeners.set(
+    'click',
+    new Set(
+      [...listeners].map((listener) => (event) => {
+        const result = listener.call(opener, event);
+        if (result instanceof Promise) pending.push(result);
+        return result;
+      }),
+    ),
+  );
   try {
-    await settle(() => p.$('journey-chooser')?.open);
-  } catch (error) {
-    error.message += ` ${p.$('race-message').textContent}`;
-    throw error;
+    if (focus) opener.focus();
+    opener.click();
+  } finally {
+    opener.listeners.set('click', listeners);
   }
+  assert.equal(pending.length, 1, 'The real Missions click owns one preparation.');
+  assert.match(p.$('race-message').textContent, /Preparing missions/);
+  return pending[0];
 }
+async function open(p) {
+  await beginOpen(p);
+  assert.equal(p.$('journey-chooser')?.open, true, p.$('race-message').textContent);
+}
+
 async function running(p, id) {
   try {
     await settle(() => {
@@ -568,35 +589,48 @@ for (const chapterSource of ['optional', 'bundled'])
   );
 
 for (const interruption of ['blur', 'focus', 'pointer'])
-  test(`a cancelled lazy Versus library opening cannot regain focus after ${interruption}`, async (t) => {
-    let release,
-      entered = false;
-    const gate = new Promise((resolve) => (release = resolve));
-    const p = await fixture(t, {
-      fetchResponse: async (path) => {
-        if (path === '../content/mission-library-index.json') {
-          entered = true;
-          await gate;
-          return new Response(JSON.stringify(index));
-        }
-      },
-    });
-    p.$('race-library-switch').click();
-    await settle(() => entered);
-    assert.match(p.$('race-message').textContent, /Preparing missions/);
-    if (interruption === 'blur') {
-      p.doc.focused = false;
-      p.win.emit('blur');
-      p.doc.focused = true;
-      p.win.emit('focus');
-    } else if (interruption === 'focus') p.$('race-options').focus();
-    else p.doc.emit('pointerdown');
-    const focused = p.doc.activeElement;
-    release();
-    await settle(() => p.$('journey-collection'));
-    await new Promise((resolve) => setImmediate(resolve));
-    assert.equal(p.$('journey-chooser').open, false);
-    assert.equal(p.doc.activeElement, focused);
-    await open(p);
-    assert.equal(p.$('journey-cards').children.length, 201);
-  });
+  test(
+    `a cancelled lazy Versus library opening cannot regain focus after ${interruption}`,
+    { timeout: 120000 },
+    async (t) => {
+      let release, enter;
+      const gate = new Promise((resolve) => (release = resolve));
+      const entered = new Promise((resolve) => (enter = resolve));
+      const p = await fixture(t, {
+        fetchResponse: async (path) => {
+          if (path === '../content/mission-library-index.json') {
+            enter();
+            await gate;
+            return new Response(JSON.stringify(index));
+          }
+        },
+      });
+      const opening = beginOpen(p, { focus: false });
+      try {
+        await entered;
+        assert.match(p.$('race-message').textContent, /Preparing missions/);
+        if (interruption === 'blur') {
+          p.doc.focused = false;
+          p.win.emit('blur');
+          p.doc.focused = true;
+          p.win.emit('focus');
+        } else if (interruption === 'focus') p.$('race-options').focus();
+        else p.doc.emit('pointerdown');
+        const focused = p.doc.activeElement;
+        release();
+        await opening;
+        assert.ok(
+          p.$('journey-collection'),
+          'The owned lazy opening finished mounting its controls.',
+        );
+        await new Promise((resolve) => setImmediate(resolve));
+        assert.equal(p.$('journey-chooser').open, false);
+        assert.equal(p.doc.activeElement, focused);
+        await open(p);
+        assert.equal(p.$('journey-cards').children.length, 201);
+      } finally {
+        release();
+        await opening;
+      }
+    },
+  );
