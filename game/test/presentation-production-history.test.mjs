@@ -451,7 +451,7 @@ test('shared-host UI and audio bind only their reviewed current inputs', async (
   const audioReviewHash = createHash('sha256')
     .update(await fs.readFile(new URL(`../../${audioReviewPath}`, import.meta.url)))
     .digest('hex');
-  const uiReviewPath = 'docs/verification/team-host-ui-continuation/review.json';
+  const uiReviewPath = 'docs/verification/actor-only-ui-continuation-2026-09-24/review.json';
   const uiReviewHash = createHash('sha256')
     .update(await fs.readFile(new URL(`../../${uiReviewPath}`, import.meta.url)))
     .digest('hex');
@@ -463,7 +463,7 @@ test('shared-host UI and audio bind only their reviewed current inputs', async (
       assert.equal(asset.quality.stage, 'reviewed', slot.id);
       assert.ok(
         asset.provenance.source.endsWith(
-          'sha256:6a18141c9ebae43c58feee7dd1c8ea6529a333bd80a43935624f45c482fcf865',
+          'sha256:4b7db79dd3f6931dd72c0ae702f15a5a5d8ff2b7044aca5a2e02886e8e61636a',
         ),
         slot.id,
       );
@@ -474,7 +474,7 @@ test('shared-host UI and audio bind only their reviewed current inputs', async (
       assert.equal(
         asset.quality.evidence.some(
           (entry) =>
-            entry.includes('Scoped Team-host UI functional continuation') &&
+            entry.includes('Scoped actor-only UI functional continuation') &&
             entry.includes(`${uiReviewPath} sha256:${uiReviewHash}`),
         ),
         true,
