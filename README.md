@@ -28,6 +28,8 @@ Use **Scores & saves → Saves & loads** for game-data backup and Undo. JSON ret
 
 ## Choose a workspace
 
+**Create your own content:** [beginner guide and examples](authoring/community/index.html) · [step-by-step walkthrough](authoring/community/creator-guide.md) · [framework reference](authoring/community/framework-reference.md). Start with today's Playground expansion workflow; the [delivery plan](authoring/community/delivery-plan.md) tracks automatic image/video campaigns and the community store separately.
+
 | Need                                                               | Start here                                                                                                                                                                                           |
 | ------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Play, controls, gallery and couch race                             | [Game guide](game/README.md) · [Controller navigation](docs/controller-navigation.md) · [Controller practice](docs/controller-practice.md)                                                           |

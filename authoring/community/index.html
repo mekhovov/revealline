@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Create levels and campaigns · Reveal Line</title>
+    <link rel="stylesheet" href="guide.css" />
+  </head>
+  <body>
+    <header>
+      <a href="../../game/">Reveal / Line</a>
+      <nav aria-label="Creator tools">
+        <a href="../../game/playground/">Playground</a>
+        <a href="../../game/studio/">Content Studio</a>
+      </nav>
+    </header>
+    <main>
+      <p class="eyebrow">CREATOR GUIDE</p>
+      <h1>Make a level. Share a campaign.</h1>
+      <p class="intro">
+        Use your own picture, edit a map and share a playable file. Creation stays on your device;
+        no account is needed. Start with a small example, then make it yours.
+      </p>
+      <nav class="contents" aria-label="On this page">
+        <a href="#try">Try the example</a>
+        <a href="#picture">Make an image level</a>
+        <a href="#campaign">Build a campaign</a>
+        <a href="#recover">Recover your work</a>
+      </nav>
+      <section aria-labelledby="meaning">
+        <h2 id="meaning">Four pieces of a collection</h2>
+        <dl class="concepts">
+          <div>
+            <dt>Map</dt>
+            <dd>The board: walls, terrain and starting places.</dd>
+          </div>
+          <div>
+            <dt>Mission</dt>
+            <dd>A map with actors, objectives, rules and a picture.</dd>
+          </div>
+          <div>
+            <dt>Campaign</dt>
+            <dd>Missions arranged in the order you want to play.</dd>
+          </div>
+          <div>
+            <dt>Pack</dt>
+            <dd>Campaigns and the files they need, ready to transfer.</dd>
+          </div>
+        </dl>
+      </section>
+      <section aria-labelledby="try">
+        <h2 id="try">1. Try a ready-to-install campaign</h2>
+        <p>
+          <a class="action" href="examples/two-crossings.expansion.json" download>
+            Download Two crossings
+          </a>
+        </p>
+        <p>Two deliberately easy maps, procedural scenery, no enemies or personal data.</p>
+        <ol>
+          <li>Check that the JSON file is in your browser's downloads.</li>
+          <li>
+            Open the <a href="../../game/">game</a>, then
+            <strong>Settings → Game data → Installed chapters → Install a pack file</strong>. Choose
+            that download and wait for validation.
+          </li>
+          <li>
+            Choose <strong>Play Creator guide · two crossings</strong> in the installed card, then
+            <strong>Start mission</strong>. You can also find it under
+            <strong>Missions → Collection → Custom</strong>.
+          </li>
+          <li>
+            Start and steer down to the opposite boundary. After the win, inspect the picture,
+            choose <strong>Next</strong>, and try <strong>Retry</strong> on Second crossing.
+          </li>
+          <li>Reload to check installation and progress. Keep the downloaded pack for recovery.</li>
+        </ol>
+      </section>
+      <section aria-labelledby="picture">
+        <h2 id="picture">2. Make a level with your picture</h2>
+        <ol>
+          <li>
+            Open <a href="../../game/playground/">Playground</a>. Start with an included map, or
+            enter a <strong>Generator seed</strong> and choose <strong>Generate map</strong>.
+          </li>
+          <li>
+            Set <strong>Role</strong> to <strong>Reveal background</strong>, choose the background
+            fit, then <strong>Choose PNG / JPEG / WebP</strong>. Select your image and review it.
+          </li>
+          <li>
+            Optionally paint the map or adjust its coverage target. <strong>Undo</strong> restores
+            the previous edit. The picture is a reveal reward; it does not determine the walls.
+          </li>
+          <li>
+            Choose <strong>Play configuration</strong>. Finish a legal win and test Pause, Resume
+            and Retry. This preview is practice, so it does not award campaign progress.
+          </li>
+          <li>
+            Expand <strong>Complete pack JSON</strong> and choose
+            <strong>Export map as expansion</strong>. Check the actual downloaded file, then install
+            it using the steps above.
+          </li>
+          <li>Send the expansion file to a friend. They install their own copy the same way.</li>
+        </ol>
+        <aside>
+          The current Playground embeds the image you supply. It does not promise metadata removal.
+          Use a picture you intend to share. Share the expansion, not a complete player backup
+          containing progress and other installed content.
+        </aside>
+      </section>
+      <section aria-labelledby="campaign">
+        <h2 id="campaign">3. Build an editable campaign</h2>
+        <p>
+          <a class="action" href="example-project.json" download>Download Studio example</a>
+          <a href="../../game/studio/">Open Content Studio</a>
+        </p>
+        <ol>
+          <li>
+            Choose <strong>Inspect import</strong>, select the example and review it before
+            <strong>Apply inspected source</strong>. Export existing work before reusing its ID.
+          </li>
+          <li>
+            For your own collection, use a unique <strong>Local project ID</strong> and
+            <strong>New project</strong>. Inspect and apply the starter.
+          </li>
+          <li>
+            Open <strong>Organize missions, campaigns &amp; packs</strong> to create, name and order
+            your collection. Use <strong>Validate &amp; apply structure</strong> after edits.
+          </li>
+          <li>
+            Edit one mission at a time. Use <strong>Play exact Solo preview → Start mission</strong>
+            and test every difficulty you plan to offer.
+          </li>
+          <li>
+            <strong>Save checkpoint / retry</strong>, <strong>Export backup</strong> and reload to
+            check recovery. Another creator can inspect and apply that source file.
+          </li>
+        </ol>
+        <aside>
+          <strong>Current boundary:</strong> Studio exports editable project source. It does not yet
+          install that project as an ordinary modern Custom campaign. Use Playground's map expansion
+          for today's manual install path. Automatic image/video campaigns and
+          <code>.rlpack</code> installation are the next development phases.
+        </aside>
+        <p>
+          A reference picture in the Studio map editor is an overlay, not an automatically bound
+          reward. Themes, retained pictures and video stories have their own workshops and exports.
+          A story playback range keeps the complete video; it does not trim the shared file.
+        </p>
+      </section>
+      <section aria-labelledby="recover">
+        <h2 id="recover">4. Keep a recovery copy</h2>
+        <ul>
+          <li>Keep exact content editions, private originals and personal saves separately.</li>
+          <li>
+            If saving fails or another tab has newer work, keep the page open and export your
+            unsaved snapshot before deliberately reconciling it with the saved version.
+          </li>
+          <li>
+            To restore a Studio checkpoint, inspect it first, apply it, then save a new checkpoint.
+            Earlier history remains intact.
+          </li>
+          <li>
+            “Download requested” means you must check the actual file. Test importing it in a
+            separate browser profile before relying on it.
+          </li>
+        </ul>
+        <p>
+          Installation is local. Sharing a file does not publish it on the game's website. Public
+          release integration currently uses the maintainer workflow; the community upload and
+          catalog service is planned.
+        </p>
+      </section>
+      <section aria-labelledby="more">
+        <h2 id="more">Detailed documentation</h2>
+        <ul>
+          <li><a href="creator-guide.md">Complete walkthrough and troubleshooting</a></li>
+          <li><a href="framework-reference.md">Framework, formats and limits</a></li>
+          <li><a href="maintainer-guide.md">Maintainer publishing guide</a></li>
+          <li><a href="README.md">Presentation, checkpoints and Team test export</a></li>
+          <li>
+            <a href="delivery-plan.md">Automatic creation and community store delivery plan</a>
+          </li>
+        </ul>
+      </section>
+    </main>
+    <footer>Reveal Line · Local creation · Keep your exported originals</footer>
+  </body>
+</html>
