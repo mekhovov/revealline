@@ -1,0 +1,23 @@
+{
+  "format": "revealline-archive-public-observation.v1",
+  "status": "PASS",
+  "archiveId": "archive-67",
+  "version": "v0.98.0",
+  "infrastructureCommit": "8b59eeee4d57e35629259ad29c40993c5780f8f4",
+  "infrastructureTree": "0c068d842e5a582df97a77997cf6ea39b93b49f9",
+  "runId": 36029195289,
+  "deploymentId": 6643093280,
+  "deploymentStatusId": 18794232711,
+  "receiptArtifactId": 10820663131,
+  "observed": [
+    "The archive root, release record and game index returned HTTP 200 from their exact canonical URLs.",
+    "A real in-app browser loaded the archived game and exposed the Reveal / Line main screen.",
+    "The visible menu reported Version v0.98.0 and offered Solo, Versus, Team, Missions, Collection, Settings and Workshop.",
+    "Mission 01 First return rendered with the territory board application and current v0.98 gameplay guidance."
+  ],
+  "limitations": [
+    "This is bounded historical preservation evidence, not renewed gameplay or balance acceptance for v0.98.0.",
+    "Another open game tab owned persistence, so this archived tab truthfully reported session-only saving.",
+    "No physical controller, physical touch, screen reader, offline, full-mission, exhaustive selector or device-matrix qualification is claimed."
+  ]
+}
