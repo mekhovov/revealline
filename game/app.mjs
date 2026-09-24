@@ -9757,7 +9757,8 @@ try {
   if (libraryHandoff && !practiceSession) {
     const revision = ++unifiedOpenRevision;
     const incomingRun = run,
-      incomingStarted = started;
+      incomingStarted = started,
+      incomingPrewarm = picturePrewarm?.promise;
     const opening = trackMissionLibraryOpening({
       onRetire: () => {
         if (revision === unifiedOpenRevision) ++unifiedOpenRevision;
@@ -9768,6 +9769,10 @@ try {
     await (async () => {
       try {
         const host = await getUnifiedMissionLibrary();
+        // The boot picture may still own a media-generation write. Finish it
+        // before the requested mission prepares its distinct exact original.
+        // Its failure is not authority to replace or reject the requested art.
+        await incomingPrewarm?.catch(() => {});
         opening.dispose();
         if (
           revision !== unifiedOpenRevision ||
