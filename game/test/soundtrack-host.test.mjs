@@ -693,3 +693,34 @@ test('Solo Audio exposes full current credits while compact Pause remains an ord
   assert.equal(page.rendered.paused, true);
   assert.deepEqual(page.errors, []);
 });
+
+test('quick Solo controls play from the menu, pause independently and skip without resuming music', async (t) => {
+  const { page } = await setup(t);
+  await waitFor(() => !!musicMedia(page).src, 'Original prepared for first menu gesture');
+  const menu = page.$('solo-quick-music-0-toggle'),
+    pause = page.$('solo-quick-music-1-toggle'),
+    master = page.storage.getItem(AUDIO_PREFERENCES_KEY);
+  assert(menu && pause, 'Main and pause surfaces share the transport');
+  menu.click();
+  assert.equal(musicMedia(page).paused, false, 'Play begins in the click task');
+  await waitFor(() => pause.textContent === 'Pause music', 'Both controls show playing');
+  page.$('start-button').click();
+  page.key('ArrowDown');
+  page.key('ArrowDown', false);
+  ticks(page, 2);
+  const tick = page.rendered.run.tick;
+  pause.click();
+  assert.equal(musicMedia(page).paused, true);
+  ticks(page, 2);
+  assert.equal(page.rendered.paused, false, 'Music Pause leaves gameplay running');
+  assert(page.rendered.run.tick > tick);
+  page.doc.body.emit('keydown', { code: 'KeyN', key: 'n' });
+  await waitFor(
+    () => page.$('solo-quick-music-0').textContent.includes(BUILTIN_SOUNDTRACK_TRACKS[0].title),
+    'Paused Next selects the next recording',
+  );
+  assert.equal(pause.textContent, 'Play music');
+  assert.equal(musicMedia(page).paused, true);
+  assert.equal(page.storage.getItem(AUDIO_PREFERENCES_KEY), master);
+  assert.deepEqual(page.errors, []);
+});
