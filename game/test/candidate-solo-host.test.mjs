@@ -480,7 +480,7 @@ test('candidate Skip takes two actions, uses next-attempt Expert intent, and res
   assert(savedRaw);
   const saved = JSON.parse(savedRaw);
   assert.equal(saved.themeId, 'horizon');
-  assert.equal(saved.presentationPins, undefined);
+  assert.equal(saved.presentationPins, null);
   assert.equal(verifyReplay(saved.replay).match, true);
   p.change('difficulty-select', 'expert');
   assert.equal(p.rendered.run, retained);
