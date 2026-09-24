@@ -1145,6 +1145,15 @@ Example: “Verify Replace & play with a bounded local download delay. Keep Stay
 
 ### Compact Pause acceptance
 
+Keep Pause as the sole in-flight menu authority. While a run is active or paused,
+the compact shell may retain Game menu, fullscreen and Pause, but it must not repeat
+Missions, Skip, Collection or Settings above the Pause panel. Order the visible
+Pause actions around Resume, Restart, Missions, Help, Settings and Home; put Field
+details and Mission brief in one collapsed Mission info group. Child screens must
+return to their exact Pause opener without resuming or replacing the attempt.
+Verify controller access to the disclosure as well as its child actions, and keep
+held Confirm/Back from leaking across the returned focus boundary.
+
 Verify focused Pause actions at568×320,844×390 and390×844 with Plain/Large text. Record actual viewport and document dimensions after resizing settles; an immediate scaled screenshot alone is not layout evidence. Tab through visible actions and verify the complete focus outline after internal scroll. Reset viewport overrides afterward. Keep keyboard, mouse inspection, screen-reader listening and physical device results distinct. A mounted empty polite status is not proof that a missing-picture announcement was heard. Preserve the original public receipt and scope when updating the execution register.
 
 For Asset Studio navigation, preserve the fixed same-edition Workshop return and
