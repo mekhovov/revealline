@@ -1,5 +1,6 @@
 const DEFAULT_MAX_ITEMS = 50;
 const DEFAULT_MANAGED_BYTES = 256 * 1024 * 1024;
+const DEFAULT_PACKAGE_BYTES = 24 * 1024 * 1024;
 
 const collator = new Intl.Collator('en', {
   numeric: true,
@@ -34,12 +35,20 @@ function defaultCapacity(items) {
   );
   const stagingBytes = estimatedBytes * 2;
   const average = Math.max(1, Math.ceil(stagingBytes / Math.max(1, items.length)));
+  const averagePackItem = Math.max(1, Math.ceil(estimatedBytes / Math.max(1, items.length)));
   return {
     estimatedBytes,
     stagingBytes,
     limitBytes: DEFAULT_MANAGED_BYTES,
-    fits: stagingBytes <= DEFAULT_MANAGED_BYTES,
-    maxItemsPerPack: Math.max(1, Math.floor(DEFAULT_MANAGED_BYTES / average)),
+    packageLimitBytes: DEFAULT_PACKAGE_BYTES,
+    fits: estimatedBytes <= DEFAULT_PACKAGE_BYTES && stagingBytes <= DEFAULT_MANAGED_BYTES,
+    maxItemsPerPack: Math.max(
+      1,
+      Math.min(
+        Math.floor(DEFAULT_PACKAGE_BYTES / averagePackItem),
+        Math.floor(DEFAULT_MANAGED_BYTES / average),
+      ),
+    ),
   };
 }
 
@@ -267,8 +276,8 @@ export function createBatchCreatorController({
         if (control) control.disabled = !!running;
 
     nodes.capacity.textContent = capacity.fits
-      ? `Estimated pack ${mib(capacity.estimatedBytes)}; staging needs about ${mib(capacity.stagingBytes)} of ${mib(capacity.limitBytes)} available managed storage.`
-      : `This selection needs about ${mib(capacity.stagingBytes)} of ${mib(capacity.limitBytes)} managed storage. Split the campaign or remove pictures before approval.`;
+      ? `Estimated pack ${mib(capacity.estimatedBytes)} of ${mib(capacity.packageLimitBytes ?? capacity.limitBytes)}; staging needs about ${mib(capacity.stagingBytes)} of ${mib(capacity.limitBytes)} available managed storage.`
+      : `This selection estimates ${mib(capacity.estimatedBytes)} for a ${mib(capacity.packageLimitBytes ?? capacity.limitBytes)} pack limit and ${mib(capacity.stagingBytes)} of ${mib(capacity.limitBytes)} managed staging space. Split the campaign or remove pictures before approval.`;
     nodes.capacity.classList.toggle('error', !capacity.fits);
     nodes.split.hidden = capacity.fits || included().length < 2;
     focusAfterRender(previous, controls);

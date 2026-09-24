@@ -231,3 +231,15 @@ test('the review surface retains a complete 50-picture batch', () => {
   assert.equal(h.controller.snapshot().items[0].file.name, 'picture1.png');
   assert.equal(h.controller.snapshot().items[49].file.name, 'picture50.png');
 });
+
+test('default capacity requires a split before the portable 24 MiB package limit', () => {
+  const h = harness();
+  h.controller.setFiles([
+    file('large1.png', 10 * 1024 * 1024),
+    file('large2.png', 10 * 1024 * 1024),
+    file('large3.png', 10 * 1024 * 1024),
+  ]);
+  assert.equal(h.controller.snapshot().capacity.fits, false);
+  assert.equal(h.nodes.split.hidden, false);
+  assert.match(h.nodes.capacity.textContent, /24\.00 MiB pack limit/);
+});
