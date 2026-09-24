@@ -8,7 +8,7 @@ Status: implementation is isolated on `codex/creator-phase2-integration`. It has
 - Batch-core tests cover 1-, 12- and 50-picture preparation, natural order, duplicate names and bytes, deterministic regeneration, explicit failed-item exclusion, reorder, campaign grouping, checkpoints, cancellation and explicit capacity splits. Full-size hashing and image preparation report at most one active item.
 - Batch-review tests cover multi-file selection, editable titles, reorder, exclusion, regeneration, removal, cancellation, 24 MiB package-capacity choices, focus retention and object-URL cleanup. Production intake uses an exact-byte adapter that revalidates the displayed one-mission preparations as one ordered campaign.
 - Bundle integration tests cover 1-, 12- and 50-mission round trips, authored continuation order, exact media closure, forged per-mission evidence, stale approval, immutable installed editions, complete source-backup recovery and split-package closure.
-- The 14 batch UI and full bundle-integration cases pass together after the adapter landed. A final combined run with every neighboring Phase 1 creator test remains required before review; counts in a pull request or release record must describe that exact final revision rather than adding results from different commits.
+- The final combined creator regression on the current `creator-layouts.v3` revision passed **36/36 tests in about 50 seconds**. The run covered batch bundle, batch UI, portable bundle, single-image generation, the template registry and scoped tools-host integration together, so this count describes one exact revision rather than adding results from different commits.
 
 ## Built-in browser evidence completed
 
