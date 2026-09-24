@@ -9477,6 +9477,20 @@ try {
         return entry ? campaignKey(entry.campaign) : null;
       };
       const result = await createInstalledMissionLibrary({
+        getProjectSources: async () => {
+          const { installedCreatorLibrarySources } = await import(
+            './mission-library/creator-source.mjs'
+          );
+          try {
+            return await installedCreatorLibrarySources();
+          } catch (error) {
+            contentStatus(
+              `Creator campaigns could not be read: ${error.message} Open My creations to recover or reinstall them.`,
+              true,
+            );
+            return [];
+          }
+        },
         index,
         journeySources: [
           combineJourneyLibrarySources([

@@ -25,6 +25,7 @@ export async function createInstalledMissionLibrary({
   progressCustom,
   availabilityExternal,
   unavailableClassic,
+  getProjectSources = async () => [],
 }) {
   if (
     !LIBRARY_MODES.includes(mode) ||
@@ -214,6 +215,11 @@ export async function createInstalledMissionLibrary({
       }
       nextCustom.push(...(await customCache.get(pack)));
     }
+    current(packs);
+    const projects = await getProjectSources();
+    if (!Array.isArray(projects) || projects.some((source) => source.collection !== 'Custom'))
+      throw new TypeError('Installed project sources must belong to Custom.');
+    nextCustom.push(...projects);
     current(packs);
     if (ticket !== generation)
       throw new Error('Installed content refresh was superseded. Try again.');
