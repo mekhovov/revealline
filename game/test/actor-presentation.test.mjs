@@ -67,6 +67,10 @@ test('BoardPainter keeps separate default boss bodies beneath the shared explici
   };
   assert.deepEqual(painter.enemyBody(lane, compiled), { ...compiled, record: null });
   assert.deepEqual(painter.enemyBody(relay, compiled), { ...compiled, record: null });
+  const motion = { type: 'lane-boss', motion: [] };
+  painter.enemyBodies.record = (frame) => (frame.type === 'lane-boss' ? motion : null);
+  assert.deepEqual(painter.enemyBody(lane, compiled), { ...compiled, record: motion });
+  assert.deepEqual(painter.enemyBody(relay, compiled), { ...compiled, record: null });
   const upload = { id: 'explicit-boss-upload' };
   painter.images.boss = upload;
   assert.deepEqual(painter.enemyBody(lane), { image: upload, geometry: null, record: null });

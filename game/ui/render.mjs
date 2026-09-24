@@ -212,7 +212,11 @@ export class BoardPainter {
     const image = this.images[frame.role];
     if (image) return { image, geometry: null, record: null };
     return compiled
-      ? { image: compiled.image, geometry: compiled.geometry, record: null }
+      ? {
+          image: compiled.image,
+          geometry: compiled.geometry,
+          record: this.enemyBodies.record?.(frame) ?? null,
+        }
       : this.enemyBodies.current(frame);
   }
   makeArt(theme, level = this.levelInfo, seed = this.artSeed) {
@@ -441,10 +445,11 @@ export class BoardPainter {
       actorSkins,
     });
     // A compiled default owns its bitmap; do not acquire the old full original too.
-    this.enemyBodies.update(
-      [...actorFrames.values()].filter((frame) => !enemySprites[frame.type]),
-      this.overrides,
-    );
+    // Keep every frame in the metadata request so the compiled bitmap can still
+    // use the catalog's bounded surface-motion accents.
+    this.enemyBodies.update([...actorFrames.values()], this.overrides, {
+      image: (frame) => !enemySprites[frame.type],
+    });
     this.time += paused ? 0 : motionDt;
     for (const effect of this.effects)
       if (
