@@ -6,6 +6,7 @@ import { createRun, stepRun, releaseInputs, FIXED_DT } from '../core/index.mjs';
 import { retryFixture } from './fixtures/retry-scenarios.mjs';
 import { applyGameplayTuning, resolveGameplayTuning } from '../gameplay-tuning.mjs';
 import { couchPage as page } from './helpers/couch-host.mjs';
+import { waitFor } from './helpers/wait-for.mjs';
 
 const read = async (path) => JSON.parse(await readFile(new URL(path, import.meta.url), 'utf8'));
 const base = await read('../content/campaign.json');
@@ -92,6 +93,13 @@ test('actual select previews cancel without replacing the duel and commit once t
   f.pulse(0, 13);
   f.pulse(0, 0);
   assert.notEqual(f.$('race-level').value, original);
+  await waitFor(
+    () => {
+      f.frame(0);
+      return f.renders[0] !== run;
+    },
+    { message: 'The committed native select change did not finish staging its replacement.' },
+  );
   assert.notEqual(f.renders[0], run);
   const newRun = f.renders[0];
   f.frames(30);
