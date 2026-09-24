@@ -39,8 +39,9 @@ test('current Team assembly uses separate exact recipe and equipment reviews', a
     assert.equal(asset.provenance.source, fingerprints.team, slot.id);
     assert.ok(!asset.quality.evidence.some((line) => line.includes('Scoped v0.76')), slot.id);
   }
-  // Existing Solo effect approval remains scoped to its unchanged source group.
-  assert.equal(resolved.assets['trail.active'].quality.stage, 'reviewed');
+  // Team review cannot approve the independently changed Solo effects group.
+  // Keep that separate release gate visible until its own exact review lands.
+  assert.equal(resolved.assets['trail.active'].quality.stage, 'source');
 });
 
 test('each declared Team recipe dependency changes its fingerprint independently', async () => {

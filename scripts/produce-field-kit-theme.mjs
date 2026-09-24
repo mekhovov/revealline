@@ -50,6 +50,10 @@ const equipmentSources = [
   ...sources.team.split('; '),
 ];
 const reviewedEquipmentSource = 'b9cbf2db6fe094564a15743c72c45049bf9ee776a22b2599469e0ee1bdc03037';
+const reviewedEquipmentSuccessorSource =
+  '162d4c737c11d34f8e7e3ed6e76ca5a34fcf06d5fb97303d53eba857feaaf530';
+const reviewedTeamSuccessorRecord =
+  '45e41eee3cacac251ede3f0304834a1fda311f8bd70f4d0b66aaceb493b8fc05';
 const reviewedEquipmentOriginals = Object.freeze({
   'team.anchor.available': '88e541375c56d4627b80cf6921ca64ed12d5b77d43dcae256177b8577250d9b3',
   'team.anchor.captured': 'a66511c77322beea458be918f6eb35f1ca6acc9f980afa44bc4756162896f466',
@@ -62,16 +66,33 @@ export async function fieldKitEquipmentSource(read) {
   return hash(Buffer.concat(await Promise.all(equipmentSources.map((name) => read(name)))));
 }
 
-export function fieldKitEquipmentQuality(slotId, source, originalHash) {
+export function fieldKitEquipmentQuality(slotId, source, originalHash, successorReviewBytes) {
+  const successor =
+    successorReviewBytes && hash(successorReviewBytes) === reviewedTeamSuccessorRecord
+      ? JSON.parse(successorReviewBytes)
+      : null;
+  const continued =
+    source === reviewedEquipmentSuccessorSource &&
+    successor?.priorEquipmentReview?.path ===
+      'docs/verification/team-equipment-five-review/review.json' &&
+    successor.priorEquipmentReview.sha256 ===
+      'a5aa095805b39c8a716d5427c54ad594f9261b53adeaf9752b3260ae752024b3' &&
+    successor.priorEquipmentReview.priorFingerprintSHA256 === reviewedEquipmentSource &&
+    successor.priorEquipmentReview.currentFingerprintSHA256 === reviewedEquipmentSuccessorSource;
   if (
     Object.hasOwn(reviewedEquipmentOriginals, slotId) &&
-    source === reviewedEquipmentSource &&
+    (source === reviewedEquipmentSource || continued) &&
     reviewedEquipmentOriginals[slotId] === originalHash
   )
     return {
       stage: 'reviewed',
       evidence: [
         'Five images only: docs/verification/team-equipment-five-review/review.json sha256:a5aa095805b39c8a716d5427c54ad594f9261b53adeaf9752b3260ae752024b3',
+        ...(continued
+          ? [
+              `Unchanged five-image consumer continuation: docs/verification/team-specialist-cues-2026-09-24/review.json sha256:${reviewedTeamSuccessorRecord}`,
+            ]
+          : []),
       ],
     };
   return {
@@ -227,6 +248,9 @@ export async function createFieldKitProduction({ projectRoot = root } = {}) {
     );
   }
   const teamReviewBytes = await read('docs/verification/team37/review.json');
+  const teamSuccessorReviewBytes = await read(
+    'docs/verification/team-specialist-cues-2026-09-24/review.json',
+  );
   const inheritedAssets = Object.fromEntries(
     assets.filter((asset) => asset.kind === 'image').map((asset) => [asset.id, asset]),
   );
@@ -243,6 +267,7 @@ export async function createFieldKitProduction({ projectRoot = root } = {}) {
       defaultAsset,
       inheritedAssets,
       reviewBytes: teamReviewBytes,
+      successorReviewBytes: teamSuccessorReviewBytes,
     });
   }
   const equipmentSource = 'game/presentation/team-equipment-art.mjs';
@@ -273,7 +298,12 @@ export async function createFieldKitProduction({ projectRoot = root } = {}) {
           prompt: slot.prompt,
           parent: { id: `${slotId}.default`, revision: 1 },
         },
-        quality: fieldKitEquipmentQuality(slotId, equipmentReviewSource, hash(body)),
+        quality: fieldKitEquipmentQuality(
+          slotId,
+          equipmentReviewSource,
+          hash(body),
+          teamSuccessorReviewBytes,
+        ),
       },
       body,
     );
