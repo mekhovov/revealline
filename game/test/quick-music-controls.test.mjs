@@ -238,3 +238,17 @@ test('dispose releases rows and handlers, including callbacks from previously mo
   assert.equal(f.doc.listeners.get('keydown')?.size, 0);
   assert.equal(f.win.listeners.get('storage')?.size, 0);
 });
+
+test('capture owners can yield exclusively to eligible quick shortcuts', () => {
+  let conflicts = false;
+  const f = setup({ conflicts: () => conflicts });
+  assert.equal(f.host.handlesKey({ type: 'keydown', code: 'KeyB' }), true);
+  assert.equal(f.host.handlesKey({ type: 'keydown', code: 'KeyN', ctrlKey: true }), false);
+  assert.equal(f.host.handlesKey({ type: 'pointerdown', code: 'KeyB' }), false);
+  conflicts = true;
+  assert.equal(f.host.handlesKey({ type: 'keydown', code: 'KeyB' }), false);
+  conflicts = false;
+  f.$('test-music-shortcuts').click();
+  assert.equal(f.host.handlesKey({ type: 'keydown', code: 'KeyN' }), false);
+  f.host.dispose();
+});
