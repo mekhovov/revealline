@@ -11,6 +11,7 @@ import {
   prepareCreatorBundle,
 } from './bundle.mjs';
 import { creatorAbort, creatorSHA256 } from './bytes.mjs';
+import { VIDEO_POSTER_LIMITS } from '../video-poster.mjs';
 
 const PREFIX = 'creator.manifest.';
 const reviews = new WeakMap();
@@ -132,7 +133,11 @@ export async function installedCreatorManifests(store, { signal } = {}) {
   for (const reference of references) manifests.push(await readManifest(store, reference, signal));
   return manifests;
 }
-export async function loadInstalledCreatorBundle(store, editionId, { signal, decodeImage } = {}) {
+export async function loadInstalledCreatorBundle(
+  store,
+  editionId,
+  { signal, decodeImage, inspectVideo } = {},
+) {
   required(
     typeof editionId === 'string' && /^[a-f0-9]{64}$/.test(editionId),
     'Choose an installed content edition.',
@@ -154,10 +159,20 @@ export async function loadInstalledCreatorBundle(store, editionId, { signal, dec
   for (const item of manifest.assets)
     assets.push({
       sha256: item.sha256,
-      blob: await store.readSelectedBlob(item.sha256, { signal, maxBytes: 4 * 1024 * 1024 }),
+      blob: await store.readSelectedBlob(item.sha256, {
+        signal,
+        maxBytes:
+          item.kind === 'victory-video-original'
+            ? VIDEO_POSTER_LIMITS.sourceBytes
+            : 4 * 1024 * 1024,
+      }),
     });
   const { compatibility: _compatibility, ...content } = manifest.content;
-  const prepared = await prepareCreatorBundle(content, assets, { signal, decodeImage });
+  const prepared = await prepareCreatorBundle(content, assets, {
+    signal,
+    decodeImage,
+    ...(inspectVideo ? { inspectVideo } : {}),
+  });
   required(
     canonicalJSON(prepared.manifest) === canonicalJSON(manifest),
     'Installed content no longer verifies. Restore its exact pack.',

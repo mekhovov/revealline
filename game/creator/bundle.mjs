@@ -4,18 +4,26 @@ import { compileContentProject } from '../content-design/project.mjs';
 import { loadPreviewArtwork } from '../content-design/assets.mjs';
 import { freezeDesign } from '../content-design/catalogs.mjs';
 import { prepareStillAsset } from '../media-still.mjs';
+import { openVideoPosterSource, VIDEO_POSTER_LIMITS } from '../video-poster.mjs';
 import { creatorAbort, creatorSHA256, ownCreatorBlob } from './bytes.mjs';
+import { creatorStoryAssetFacts, validateCreatorStoryBindings } from './media-bundle.mjs';
 import { validateCreatorProvenance, verifyCreatorRoutes } from './templates.mjs';
 
 export const CREATOR_BUNDLE_FORMAT = 'revealline-content-bundle.v1';
 export const CREATOR_BUNDLE_LIMITS = Object.freeze({
-  bytes: 24 * 1024 * 1024,
+  bytes: 256 * 1024 * 1024,
   manifestBytes: 2 * 1024 * 1024,
 });
 export const CREATOR_COMPATIBILITY = freezeDesign({
   format: 'revealline-creator-runtime.v1',
   modes: ['solo'],
   gameplayPolicy: 'compiled-preset-v1',
+});
+export const CREATOR_VIDEO_COMPATIBILITY = freezeDesign({
+  format: 'revealline-creator-runtime.v2',
+  modes: ['solo'],
+  gameplayPolicy: 'compiled-preset-v1',
+  victoryStories: 'revealline-creator-story-bindings.v1',
 });
 const MAGIC = new TextEncoder().encode('RLCNB1\r\n');
 const preparations = new WeakSet(),
@@ -61,7 +69,18 @@ function scopedProvenance(source, missionIds) {
  * media inventory. Campaign and mission order follow the authored pack graph. */
 function scopedContent(source) {
   const input = copy(source);
-  exactKeys(input, ['project', 'packId', 'themes', 'provenance', 'credits'], 'creator content');
+  exactKeys(
+    input,
+    [
+      'project',
+      'packId',
+      'themes',
+      'provenance',
+      'credits',
+      ...(Object.hasOwn(input, 'media') ? ['media'] : []),
+    ],
+    'creator content',
+  );
   const compiled = compileContentProject(input.project),
     project = structuredClone(compiled.source);
   const pack = project.packs.find((p) => p.id === input.packId);
@@ -114,13 +133,17 @@ function scopedContent(source) {
       ),
     'Review creator, picture credit and sharing permission.',
   );
+  const media = Object.hasOwn(input, 'media')
+    ? validateCreatorStoryBindings(input.media, { project })
+    : null;
   return freezeDesign({
     project: compileContentProject(project).source,
     packId: pack.id,
     themes,
     provenance,
     credits: input.credits,
-    compatibility: CREATOR_COMPATIBILITY,
+    ...(media ? { media } : {}),
+    compatibility: media ? CREATOR_VIDEO_COMPATIBILITY : CREATOR_COMPATIBILITY,
   });
 }
 
@@ -183,31 +206,79 @@ function scopedAssets(source, wanted) {
     const hash = fields.sha256.value;
     required(hashValid(hash) && !found.has(hash), 'Invalid or duplicate creator asset hash.');
     // Unselected library objects are deliberately not read into an export.
+    const facts = wanted.get(hash);
     found.set(
       hash,
-      wanted.has(hash)
-        ? ownCreatorBlob(fields.blob.value, 4 * 1024 * 1024, 'Reveal picture')
+      facts
+        ? ownCreatorBlob(
+            fields.blob.value,
+            facts.kind === 'victory-video-original'
+              ? VIDEO_POSTER_LIMITS.sourceBytes
+              : 4 * 1024 * 1024,
+            facts.kind === 'victory-video-original' ? 'Victory video original' : 'Reveal picture',
+          )
         : null,
     );
   }
   required(
-    [...wanted].every((hash) => found.get(hash)),
-    'The reveal picture is missing. Select it again.',
+    [...wanted.keys()].every((hash) => found.get(hash)),
+    'A required reveal picture or victory video is missing. Select it again.',
   );
   return Object.freeze(
-    [...wanted].sort().map((sha256) => Object.freeze({ sha256, blob: found.get(sha256) })),
+    [...wanted.keys()].sort().map((sha256) => Object.freeze({ sha256, blob: found.get(sha256) })),
   );
+}
+
+function requiredAssetFacts(content) {
+  const wanted = new Map(
+    content.project.assets.map((asset) => [
+      asset.sha256,
+      { sha256: asset.sha256, bytes: asset.bytes, mime: 'image/png', kind: 'poster' },
+    ]),
+  );
+  for (const [sha256, facts] of creatorStoryAssetFacts(content.media)) {
+    const previous = wanted.get(sha256);
+    required(
+      !previous || canonicalJSON(previous) === canonicalJSON(facts),
+      'A creator asset hash claims different poster or video facts.',
+    );
+    wanted.set(sha256, facts);
+  }
+  return wanted;
+}
+
+async function verifyCreatorVideo(blob, expected, { signal, inspectVideo }) {
+  creatorAbort(signal);
+  required(
+    blob.size === expected.bytes &&
+      (await creatorSHA256(await blob.arrayBuffer())) === expected.sha256,
+    'Victory video bytes differ from the complete original pin.',
+  );
+  creatorAbort(signal);
+  const inspected = await inspectVideo(blob, { signal });
+  try {
+    for (const key of ['sha256', 'bytes', 'mime', 'width', 'height', 'durationSeconds'])
+      required(
+        inspected.info?.[key] === expected[key],
+        `Victory video ${key} differs from the inspected original.`,
+      );
+  } finally {
+    inspected?.dispose?.();
+  }
 }
 
 /** Only returned, frozen preparations may be approved. Imported approval flags
  * are not part of this format and cannot bypass media or gameplay verification. */
-export async function prepareCreatorBundle(source, sourceAssets, { signal, decodeImage } = {}) {
+export async function prepareCreatorBundle(
+  source,
+  sourceAssets,
+  { signal, decodeImage, inspectVideo = openVideoPosterSource } = {},
+) {
   creatorAbort(signal);
   const content = scopedContent(source),
+    requiredFacts = requiredAssetFacts(content),
     assetByHash = new Map(
-      scopedAssets(sourceAssets, new Set(content.project.assets.map((asset) => asset.sha256))).map(
-        (asset) => [asset.sha256, asset],
-      ),
+      scopedAssets(sourceAssets, requiredFacts).map((asset) => [asset.sha256, asset]),
     ),
     verifiedAssets = new Map();
   for (const asset of content.project.assets) {
@@ -237,6 +308,11 @@ export async function prepareCreatorBundle(source, sourceAssets, { signal, decod
       'Reveal picture bytes differ from the project pin. Prepare and review the picture again.',
     );
   }
+  for (const story of content.media?.stories ?? [])
+    await verifyCreatorVideo(assetByHash.get(story.video.sha256).blob, story.video, {
+      signal,
+      inspectVideo,
+    });
   const verified = [];
   for (const provenance of provenanceEntries(content)) {
     const routes = await verifyCreatorRoutes(content.project, provenance, {
@@ -252,7 +328,12 @@ export async function prepareCreatorBundle(source, sourceAssets, { signal, decod
     format: CREATOR_BUNDLE_FORMAT,
     content,
     evidence,
-    assets: assets.map(({ sha256, blob }) => ({ sha256, bytes: blob.size, mime: 'image/png' })),
+    assets: assets.map(({ sha256, blob }) => {
+      const facts = requiredFacts.get(sha256);
+      return content.media
+        ? { sha256, bytes: blob.size, mime: facts.mime, kind: facts.kind }
+        : { sha256, bytes: blob.size, mime: 'image/png' };
+    }),
   });
   const encoded = new TextEncoder().encode(canonicalJSON(document));
   required(
@@ -283,6 +364,7 @@ export async function prepareCreatorBundle(source, sourceAssets, { signal, decod
         ? { pictures: content.project.assets, campaigns: content.project.campaigns }
         : {}),
       credits: content.credits,
+      ...(content.media ? { stories: content.media.stories.length } : {}),
       validation:
         'Automated route verified for all Solo presets and steering modes. Visual review is still required.',
     }),
@@ -303,24 +385,42 @@ export async function inspectCreatorManifest(source) {
   );
   exactKeys(
     manifest.content,
-    ['project', 'packId', 'themes', 'provenance', 'credits', 'compatibility'],
+    [
+      'project',
+      'packId',
+      'themes',
+      'provenance',
+      'credits',
+      ...(Object.hasOwn(manifest.content, 'media') ? ['media'] : []),
+      'compatibility',
+    ],
     'bundle content',
   );
   const { compatibility, ...content } = manifest.content;
   required(
-    canonicalJSON(compatibility) === canonicalJSON(CREATOR_COMPATIBILITY) &&
+    canonicalJSON(compatibility) ===
+      canonicalJSON(manifest.content.media ? CREATOR_VIDEO_COMPATIBILITY : CREATOR_COMPATIBILITY) &&
       canonicalJSON(scopedContent(content)) === canonicalJSON(manifest.content),
     'Content manifest requires unsupported or unrelated content.',
   );
-  const assets = [
-    ...new Map(manifest.content.project.assets.map((asset) => [asset.sha256, asset])).values(),
-  ].sort((a, b) => a.sha256.localeCompare(b.sha256));
+  const assets = [...requiredAssetFacts(manifest.content).values()].sort((a, b) =>
+    a.sha256.localeCompare(b.sha256),
+  );
   required(
     canonicalJSON(manifest.assets) ===
       canonicalJSON(
-        assets.map((asset) => ({ sha256: asset.sha256, bytes: asset.bytes, mime: 'image/png' })),
+        assets.map((asset) =>
+          manifest.content.media
+            ? {
+                sha256: asset.sha256,
+                bytes: asset.bytes,
+                mime: asset.mime,
+                kind: asset.kind,
+              }
+            : { sha256: asset.sha256, bytes: asset.bytes, mime: 'image/png' },
+        ),
       ),
-    'Manifest inventory differs from its required pictures.',
+    'Manifest inventory differs from its required pictures and victory videos.',
   );
   evidenceEntries(manifest.content, manifest.evidence);
   const { editionId, ...document } = manifest;
@@ -352,7 +452,10 @@ export function exportCreatorBundle(prepared, approval) {
     type: 'application/vnd.revealline.content',
   });
 }
-export async function importCreatorBundle(source, { signal, decodeImage } = {}) {
+export async function importCreatorBundle(
+  source,
+  { signal, decodeImage, inspectVideo = openVideoPosterSource } = {},
+) {
   creatorAbort(signal);
   const blob = ownCreatorBlob(source, CREATOR_BUNDLE_LIMITS.bytes, 'Content pack');
   required(blob.size >= 12, 'Truncated content pack header.');
@@ -379,11 +482,20 @@ export async function importCreatorBundle(source, { signal, decodeImage } = {}) 
   );
   exactKeys(
     manifest.content,
-    ['project', 'packId', 'themes', 'provenance', 'credits', 'compatibility'],
+    [
+      'project',
+      'packId',
+      'themes',
+      'provenance',
+      'credits',
+      ...(Object.hasOwn(manifest.content, 'media') ? ['media'] : []),
+      'compatibility',
+    ],
     'bundle content',
   );
   required(
-    canonicalJSON(manifest.content.compatibility) === canonicalJSON(CREATOR_COMPATIBILITY),
+    canonicalJSON(manifest.content.compatibility) ===
+      canonicalJSON(manifest.content.media ? CREATOR_VIDEO_COMPATIBILITY : CREATOR_COMPATIBILITY),
     'This pack requires an unsupported creator runtime.',
   );
   required(
@@ -393,14 +505,21 @@ export async function importCreatorBundle(source, { signal, decodeImage } = {}) 
   const assets = [];
   let offset = 12 + length;
   for (const row of manifest.assets) {
-    exactKeys(row, ['sha256', 'bytes', 'mime'], 'bundle asset');
+    exactKeys(
+      row,
+      ['sha256', 'bytes', 'mime', ...(manifest.content.media ? ['kind'] : [])],
+      'bundle asset',
+    );
+    const video = row.kind === 'victory-video-original';
     required(
       hashValid(row.sha256) &&
         Number.isSafeInteger(row.bytes) &&
         row.bytes > 0 &&
-        row.bytes <= 4 * 1024 * 1024 &&
+        row.bytes <= (video ? VIDEO_POSTER_LIMITS.sourceBytes : 4 * 1024 * 1024) &&
         offset + row.bytes <= blob.size &&
-        row.mime === 'image/png',
+        (video
+          ? ['video/mp4', 'video/webm'].includes(row.mime)
+          : row.mime === 'image/png' && (!manifest.content.media || row.kind === 'poster')),
       'Invalid or truncated content asset.',
     );
     assets.push({ sha256: row.sha256, blob: blob.slice(offset, offset + row.bytes, row.mime) });
@@ -408,7 +527,11 @@ export async function importCreatorBundle(source, { signal, decodeImage } = {}) 
   }
   required(offset === blob.size, 'Content pack contains trailing or unrelated bytes.');
   const { compatibility: _compatibility, ...content } = manifest.content;
-  const prepared = await prepareCreatorBundle(content, assets, { signal, decodeImage });
+  const prepared = await prepareCreatorBundle(content, assets, {
+    signal,
+    decodeImage,
+    inspectVideo,
+  });
   required(
     canonicalJSON(prepared.manifest) === canonicalJSON(manifest),
     'Content identity or completion evidence differs from current verification. Regenerate and review the pack.',
@@ -436,4 +559,27 @@ export function creatorArtworkLoader(prepared) {
         return new Response(bytes.blob, { headers: { 'Content-Type': 'image/png' } });
       },
     });
+}
+
+/** Runtime-only lookup from an already verified immutable edition. Serialized
+ * story metadata or today's filename pairing can never select another blob. */
+export function creatorVictoryStoryDependency(prepared, missionId) {
+  required(preparations.has(prepared), 'Verify the installed edition before opening its story.');
+  const story = prepared.manifest.content.media?.stories.find(
+      (entry) => entry.missionId === missionId,
+    ),
+    mission = prepared.manifest.content.project.missions.find((entry) => entry.id === missionId),
+    poster =
+      mission &&
+      prepared.manifest.content.project.assets.find(
+        (entry) => entry.id === mission.presentation.backgroundAssetId,
+      );
+  if (!story) return null;
+  required(
+    mission && poster && poster.sha256 === story.poster.sha256,
+    'Installed victory story differs from its exact mission poster.',
+  );
+  const original = prepared.assets.find((entry) => entry.sha256 === story.video.sha256);
+  required(original, 'This edition’s victory video is missing. Reinstall its exact pack.');
+  return Object.freeze({ story, mission, poster, original: original.blob });
 }
