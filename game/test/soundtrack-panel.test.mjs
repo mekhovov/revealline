@@ -354,6 +354,15 @@ function onlineCatalogueFixture() {
       'Ukrainian collection',
       ['ukrainian', 'metal', 'Shchedryk adaptation'],
     ],
+    ['4'.repeat(64), 'Pixel Sprint', 'Chip Artist', 'Arcade collection', ['chiptune', '8-bit']],
+    ['5'.repeat(64), 'Road Voltage', 'Rock Artist', 'Road collection', ['rock', 'punk']],
+    [
+      '6'.repeat(64),
+      'Quiet Orbit',
+      'Atmosphere Artist',
+      'Space collection',
+      ['ambient', 'atmospheric'],
+    ],
   ];
   const tracks = definitions.map(([sha256, title, artist, collection, tags], index) => ({
     id: `fixture-${index + 1}`,
@@ -1960,8 +1969,8 @@ test('public archive searches and plays any published recording through the shar
   assert.equal(requests.length, 1);
   assert.equal(requests[0][0], ONLINE_SOUNDTRACK_CATALOGUE_URL);
   assert.equal(requests[0][1].credentials, 'omit');
-  assert.equal(app.node('online-results').children.length, 3);
-  assert.match(app.node('online-status').textContent, /3 of 3 published recordings/);
+  assert.equal(app.node('online-results').children.length, 6);
+  assert.match(app.node('online-status').textContent, /6 of 6 published recordings/);
 
   app.node('online-search').value = 'dnipro';
   app.node('online-search').oninput();
@@ -1998,14 +2007,27 @@ test('public archive searches and plays any published recording through the shar
   assert.deepEqual(mixed[2], { order: 'ordered', repeat: 'off', startTrackId: null });
 
   await app.click('online-styles-all');
+  assert.equal(app.node('online-results').children.length, 6);
+
+  await app.click('online-styles-none');
+  app.node('online-style-chiptune').checked = true;
+  app.node('online-style-chiptune').onchange();
+  assert.equal(app.node('online-results').children.length, 1);
+  assert.match(app.node('online-results').textContent, /Pixel Sprint/);
+  app.node('online-style-rock').checked = true;
+  app.node('online-style-rock').onchange();
+  app.node('online-style-ambient').checked = true;
+  app.node('online-style-ambient').onchange();
   assert.equal(app.node('online-results').children.length, 3);
+  assert.match(app.node('online-results').textContent, /Road Voltage/);
+  assert.match(app.node('online-results').textContent, /Quiet Orbit/);
 
   app.node('recording-mode').checked = true;
   await app.click('apply-listening');
   assert.equal((await app.store.read()).library.listening.recordingMode, true);
   assert.equal(app.node('online-results').children.length, 0);
   assert.equal(app.node('online-play-all').disabled, true);
-  assert.match(app.node('online-status').textContent, /Recording mode excludes 3/);
+  assert.match(app.node('online-status').textContent, /Recording mode excludes 6/);
 });
 
 test('public archive failure and cancellation preserve built-in music controls', async (t) => {

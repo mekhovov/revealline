@@ -46,9 +46,12 @@ const seconds = (value = 0) =>
   `${Math.floor(value / 60)}:${String(Math.floor(value % 60)).padStart(2, '0')}`;
 const bytes = (value) => `${(value / 1024 / 1024).toFixed(1)} MiB`;
 const ONLINE_STYLE_CHOICES = Object.freeze([
-  ['synth', 'Synthwave, electro & retro'],
+  ['synth', 'Synth & electronic'],
   ['metal', 'Metal'],
   ['ukrainian', 'Ukrainian'],
+  ['chiptune', 'Chiptune & 8-bit'],
+  ['rock', 'Rock'],
+  ['ambient', 'Ambient'],
   ['fusion', 'Fusion'],
   ['other', 'Other styles'],
 ]);
@@ -1395,19 +1398,25 @@ export function attachSoundtrackPanel({
   function matchesOnlineStyle(track, style) {
     const tags = track.tags.map((tag) => tag.toLowerCase()),
       has = (...values) => values.some((value) => tags.some((tag) => tag.includes(value)));
-    if (style === 'ukrainian') return has('ukrainian', 'shchedryk');
-    if (style === 'metal') return has('metal', 'djent', 'thrash', 'brutal', 'rock');
-    if (style === 'synth') return has('synth', 'electronic', 'chiptune', 'retro');
+    if (style === 'ukrainian') return has('ukrain');
+    if (style === 'metal') return has('metal');
+    if (style === 'synth') return has('synth', 'electro', 'tracker', 'fm', 'dance', 'techno');
+    if (style === 'chiptune') return has('chiptune', '8-bit', 'fakebit');
+    if (style === 'rock') return has('rock', 'punk');
+    if (style === 'ambient') return has('ambient', 'atmospher');
     if (style === 'fusion') {
       const families = [
-        has('ukrainian', 'shchedryk'),
-        has('metal', 'djent', 'thrash', 'brutal', 'rock'),
-        has('synth', 'electronic', 'chiptune', 'retro'),
+        has('ukrain'),
+        has('metal'),
+        has('synth', 'electro', 'tracker', 'fm', 'dance', 'techno'),
+        has('chiptune', '8-bit', 'fakebit'),
+        has('rock', 'punk'),
+        has('ambient', 'atmospher'),
       ];
-      return families.filter(Boolean).length > 1;
+      return has('fusion') || families.filter(Boolean).length > 1;
     }
-    return !['ukrainian', 'metal', 'synth', 'fusion'].some((family) =>
-      matchesOnlineStyle(track, family),
+    return !['ukrainian', 'metal', 'synth', 'chiptune', 'rock', 'ambient', 'fusion'].some(
+      (family) => matchesOnlineStyle(track, family),
     );
   }
   function selectedOnlineStyles() {
