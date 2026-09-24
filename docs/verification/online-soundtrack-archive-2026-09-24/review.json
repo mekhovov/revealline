@@ -1,0 +1,67 @@
+{
+  "format": "revealline-scoped-audio-recipe-review-successor.v1",
+  "status": "bounded source, transport and local-browser review; public archive and physical-device acceptance pending",
+  "candidateBase": "1168c02f5fb62056936878fe7d3c4e2e0afb0732",
+  "scope": "Continue the existing eight procedural audio recipes while adding a bounded, rights-aware public soundtrack catalogue reader, native searchable Music Player UI and direct immutable HTTPS MP3 streaming through the existing soundtrack transport.",
+  "priorReview": {
+    "path": "docs/verification/fresh-presentation-retention/review.json",
+    "sha256": "120fbc1081856a6961f99bd479212695a09a4ce4b8debf3e3069a05620e75675",
+    "fingerprintSHA256": "f8952e5df3886a92e6cb1e7fa174a1ca8c99a83199ebd5ede342fa736962d601"
+  },
+  "fingerprint": {
+    "group": "audio",
+    "paths": "game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/ui/soundtrack-panel.mjs; game/ui/soundtrack-panel.css; game/soundtrack-albums.mjs; game/soundtrack-portable.mjs; game/content/soundtrack-catalogue.mjs; game/online-soundtrack-catalogue.mjs",
+    "sha256": "76ae855540ba7cd84eaa943b9a3156bcf10a4b5af21587a6105432f72d1f0502",
+    "algorithm": "SHA256 of ordered raw source bytes concatenated, matching fieldKitRecipeSources"
+  },
+  "changedInputs": [
+    {
+      "path": "game/ui/soundtrack-player.mjs",
+      "priorSHA256": "64b1bc7663ecc0a80eb73e68cb39e9760ba78631a673cc236da3ed7627c761ce",
+      "currentSHA256": "9a6e26a7f6ca2cca90b322581dd04b40122a5900009a02138fbbbd28f95f7d12",
+      "assessment": "Adds an explicit remote playlist source to the existing single transport. Exact archive host, SHA identity and immutable object path are revalidated before mutation. Remote HTTPS sources are cleared without object-URL revocation; selecting built-in or saved music retires the remote override."
+    },
+    {
+      "path": "game/ui/soundtrack-panel.mjs",
+      "priorSHA256": "7b0f58a67ae2f87d115668aacdedd00cc0c07b72cfba4363e96b4156b83ec8bb",
+      "currentSHA256": "ada2b0b0a16e29ee0a72a7ceeae2844298c2ed61c712c38c18ce5d303913e6dc",
+      "assessment": "Adds search, style and collection filters, one-click track playback and shuffle-all for the public archive. Loading is nonblocking, aborts on close/disposal and reports failure without disabling built-in, installed or uploaded music."
+    },
+    {
+      "path": "game/ui/soundtrack-panel.css",
+      "priorSHA256": "46743e27db636fa36c53472312a4ff6a29452094029d7945c9c7631b2330e1d7",
+      "currentSHA256": "967247830cb3cbd5359a50aa556cef121698a8d93669bb60aab71258d636d640",
+      "assessment": "Adds a bounded scroll region, responsive track rows and existing-focus-token treatment for the native catalogue browser without changing gameplay geometry or input ownership."
+    },
+    {
+      "path": "game/online-soundtrack-catalogue.mjs",
+      "priorSHA256": null,
+      "currentSHA256": "8eacdb33147a37169aa5ed928e2df85286fbbb98e9969f72a47f2b8dd2637843",
+      "assessment": "Introduces the missing trust boundary for the public JSON catalogue: exact schema and count checks, bounded decode, direct nonredirecting credential-free fetch, project-owned base URL, supported public licences, pending game-admission status and SHA-named MP3 paths."
+    }
+  ],
+  "qualification": {
+    "focusedAutomated": [
+      "157 soundtrack catalogue, player and panel tests passed on Node 20.19.5.",
+      "Tests cover direct streaming without local blob reads, pause/resume, exit to built-in music, forged host/hash/duplicate rejection, atomic invalid-input refusal, search/style filters, one-click selection, shuffle-all, fetch failure and abort-on-close."
+    ],
+    "localBrowser": {
+      "origin": "http://127.0.0.1:18998/game/",
+      "observed": [
+        "The Music Player presents the public archive inside the existing dialog after Now Playing and the simple style/playlist chooser.",
+        "Search, style, collection, Shuffle these songs and Refresh catalogue controls are keyboard-visible and the bounded result region does not replace advanced upload/offline/backup sections.",
+        "With the archive catalogue not yet public on the reviewed base, the live request failed visibly and built-in ADN playback, Now Playing, Play/Pause/Next and saved library controls remained operational."
+      ],
+      "screenshots": "Inspected through the accessibility tree; no image is claimed as release evidence."
+    }
+  },
+  "unchangedBindings": "The eight selected audio roles retain their procedural recipe IDs and generate no new cue or music bytes. Master/effects gain authority, saved library formats, IndexedDB, rights enforcement, offline albums and user-uploaded originals are unchanged.",
+  "excluded": [
+    "No musical-fit, full-track listening, loudness, Ukrainian cultural or Content ID approval for any archive recording.",
+    "No public Pages catalogue success until the independently reviewed archive PR is merged and deployed.",
+    "No cold-offline promise for the streaming catalogue; offline use remains owned by existing installed albums and uploads.",
+    "No physical iPhone, controller, screen-reader, every-viewport, frozen-build, public game release or human acceptance.",
+    "No admission of archive previews into trusted Automatic or built-in genre playlists."
+  ],
+  "decision": "Approve this bounded functional audio-source successor only when the exact prior review, current fingerprint and this review remain byte-identical. Public deployment and real playback remain separate acceptance gates."
+}
