@@ -6,12 +6,13 @@ requirements. Each independent feature is released before the next is accepted.
 
 ## Current delivery status
 
-Checkpoint on 24 September 2026: **v0.101.0 is published and its release-event
-Pages build passed. UX0 v0.100.0 remains a frozen historical candidate; its accepted
-source was superseded by the published v0.101.0 merge rather than republishing an
-older main snapshot. The bounded v0.102.0 player-craft correction is merged after
-exact-head PR gates passed, and its release qualification completed successfully.
-M0 v0.103.0 is the active candidate; UX1–UX6 remain unfinished.** The former
+Checkpoint on 24 September 2026: **v0.103.0 is published from source
+`6387792768e45a5c7096c45d45d42d39ac2c73be`; its immutable route and reviewed
+Pages selector are still being admitted, so the public root remains v0.101.0.
+v0.103.0 contains the bounded player-craft cleanup and M0 preparation/input
+correction. v0.104.0 is a separate qualified Classic-launch draft on top of that
+source. M1 v0.105.0 is the next isolated player-menu candidate; M2–M4 and
+UX1–UX6 remain unfinished.** The former
 PR320/v0.98 references below are retained as dated evidence. PR320 became conflicting
 after publication; its UX0-owned changes were reconciled onto the current main
 baseline without changing the immutable v0.98.0 tag.
@@ -44,7 +45,8 @@ make ordinary play feel like an administration page.
 | M3    | Couch quick-start parity           | Versus and Team use the same header, mode selector and action order as Solo. Valid defaults make Start immediately available. Put difficulty, actors, match format, teamwork and assignments in collapsed Play options; remove duplicate All missions links and authoring language.                                                                                               |
 | M4    | Global route and device closure    | Prove every player destination, including release history, is reachable from the game menu. Verify exact return focus and responsive order with keyboard, controller/D-pad and touch at desktop, 1280×800, portrait and short landscape layouts.                                                                                                                                  |
 
-M0 is the v0.103.0 candidate after v0.102.0 public acceptance. M1–M4 each receive
+M0 is published in v0.103.0; its final public selector acceptance remains open.
+M1–M4 each receive
 their own next-unused version, PR, exact-source qualification, immutable release,
 Pages deployment and public-play check. The earlier UX1 rewards/gallery work then
 resumes, followed by UX3–UX6. New bulk content stays outside this critical path.
@@ -104,9 +106,9 @@ are reviewed/preserved work, not canonical branch qualification or public releas
 
 | Order                   | Next action                                                                                                                | ETA dependency                                                                                                                             |
 | ----------------------- | -------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
-| Release-train closure   | Publicly verify v0.101.0, then publish and verify the already-qualified v0.102.0 character correction.                     | One publisher owns tags and Pages. Existing frozen bytes remain immutable; v0.100.0 remains historical rather than replacing later main.   |
-| M0 — preparation safety | Ship v0.103.0 with stable Start/Continue ownership, held-Confirm protection and accessible cancellation.                   | Focused host, modeled Steam Deck, exact-source PR/build/release checks must pass.                                                          |
-| M1 — compact Home       | Move optional tuning into Play options; group the player menu and add More with Help, tools, About and Releases.           | Starts after M0 is public; preserve every existing route and return focus.                                                                 |
+| Release-train closure   | Complete the reviewed selector/archive admission and publicly verify immutable v0.103.0.                                   | One publisher owns tags and Pages. v0.104.0 remains a separate draft until this admission finishes.                                        |
+| M0 — preparation safety | Published in v0.103.0: stable Start/Continue ownership, held-Confirm protection and accessible Stop loading/Back.          | Public-root version, exact bytes and ordinary controller launch still require selector verification.                                       |
+| M1 — compact Home       | v0.105.0 candidate: optional tuning under Play options; compact player menu; More exposes Help, tools, About and Releases. | Preserve every existing route and exact return focus. The current-main replay validation failure is recorded as a pre-existing baseline.   |
 | M2 — unified Pause      | Make Pause the only in-flight menu authority and remove duplicate top-bar actions and changing Skip confirmation.          | Requires active-flight, confirmation, settings/help return and held-input proof.                                                           |
 | M3 — Couch quick-start  | Apply the same compact hierarchy to Versus and Team, with valid defaults and collapsed advanced setup.                     | Requires both-player assignment and responsive/controller/touch checks.                                                                    |
 | M4 — navigation closure | Inventory all player destinations and qualify keyboard, D-pad/controller and touch across required layouts.                | Physical hardware remains distinct from modeled evidence.                                                                                  |
