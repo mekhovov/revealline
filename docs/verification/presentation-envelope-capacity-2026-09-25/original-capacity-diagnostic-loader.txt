@@ -1,0 +1,8 @@
+export async function load(url, context, nextLoad) {
+ const result = await nextLoad(url, context);
+ if (!url.endsWith('/game/presentation/document-codec.mjs')) return result;
+ const code = result.source.toString();
+ const marker = "return canonicalJSON(boundedJSON(envelope, envelopeOptions));";
+ if (code.split(marker).length !== 2) throw new Error('Diagnostic hook identity changed');
+ return { ...result, source: code.replace(marker, "const diagnosticCount = (value) => 1 + (value && typeof value === 'object' ? Object.values(value).reduce((sum, entry) => sum + diagnosticCount(entry), 0) : 0);\n  const diagnosticNodes = diagnosticCount(envelope);\n  if (diagnosticNodes > PRESENTATION_METADATA_LIMITS.nodes) process.stderr.write('CAPACITY_DIAGNOSTIC ' + JSON.stringify({\n    logicalNodes: diagnosticCount(document), encodedEnvelopeNodes: diagnosticNodes, nodeLimit: PRESENTATION_METADATA_LIMITS.nodes, dictionaryEntries: strings.length, logicalBytes: encoder.encode(raw).length, encodedBytes: encoder.encode(canonicalJSON(envelope)).length, assetRecords: document.assets.length, themeRecords: document.themes.length, collectionRecords: document.collections.length\n  }) + '\\n');\n  return canonicalJSON(boundedJSON(envelope, envelopeOptions));") };
+}
