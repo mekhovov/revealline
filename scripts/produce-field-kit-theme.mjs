@@ -141,11 +141,11 @@ const REVIEWED_RECIPE_INPUTS = {
     ],
   },
   effects: {
-    sha256: '13a140c0872eaa646b79f26c068b90527a1d0034131284bbbe9f5b5a5e3829d9',
+    sha256: '832e6fbcb3da51dff0ef5a07f60221e4dbba25256af1d32d1800ed1b21500f9f',
     evidence: [
-      'Scoped integrated Journey effects review: docs/verification/journey-delivery-effects-review.md; eight ordered effects inputs sha256:13a140c0872eaa646b79f26c068b90527a1d0034131284bbbe9f5b5a5e3829d9. Includes relay/directional painters and actor catalogue dependency fingerprints. Independent review found no gameplay, clock or input mutation; bounded projections and canvas lifetime remain cosmetic.',
-      'Independent presentation/transport/authoring and guidance cohorts pass 132 checks per Node20/Node22. Two Team host checks initially rejected stale exact theme bindings and were repaired in the archived fpv58 checkpoint; those historical results do not qualify the new canonical binding. Complete reconciled host/CI reruns remain mandatory. Separate 100-check effects and fingerprint cohort passes both Nodes. Timed cues, lane contact geometry, relay/directional symbols and checkpoint preservation are scoped functional evidence.',
-      'Functional source approval only. All 127 original payloads remain unchanged. Accepted main fpv55/fpv56 records remain canonical and immutable; the differing unpublished Journey fpv55–58 lineage is separately archived, not silently reinterpreted. See docs/verification/journey-main-reconciliation/README.md. Complete visual/art, final-byte native/device, human pacing, audio/offline and public acceptance remain separate. Any effects input change reopens this group.',
+      'Scoped trail/effects functional continuation: docs/verification/trail-effects-continuation-2026-09-24/review.json sha256:f99de242bac7ac5b49c06047e156eb5a6decdf73b4d0ac3f47649ec010571917; eight ordered effects inputs sha256:832e6fbcb3da51dff0ef5a07f60221e4dbba25256af1d32d1800ed1b21500f9f. Seven inputs are byte-identical to the prior exact review; only render.mjs changes for the independently prepared actor appearance.',
+      'The renderer diff selects actor image, body, animation recipe and actor theme from a validated lease. It does not change active-trail, secured-contour, travelling-impact, event-effect, pressure, relay or directional painters, simulation clocks or authoritative state. Focused actor-presentation and renderer-readability checks retain trail core/head, reduced effects, capture layering and pressure phase behavior.',
+      'Functional source continuation only. All historical reviews and original payloads remain immutable. Complete art, final-byte visual/device, human pacing, audio/offline, frozen/public and release acceptance remain separate. Any effects input or review-byte change reopens this group.',
     ],
   },
 };
