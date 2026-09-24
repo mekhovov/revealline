@@ -1,4 +1,5 @@
 import test from 'node:test';
+import { openMissionLibrary, activateMissionCard } from './helpers/library-selection.mjs';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { couchPage } from './helpers/couch-host.mjs';
@@ -250,7 +251,7 @@ test('exact cross-host continuation restores Versus setup and difficulty before 
   assert.equal(p.$('journey-chooser').open, false);
 });
 
-test('final Journey mission hands directly to exact first Classic without chooser and carries setup', async (t) => {
+test('final Journey opens Browse missions and explicit Classic handoff carries setup', async (t) => {
   const route = await loadAuthoredJourneyRoute('opening');
   const host = createCandidateVersusHost(route.source, {
     themes: JSON.parse(await readFile(new URL('../content-design/themes.json', import.meta.url)))
@@ -263,7 +264,10 @@ test('final Journey mission hands directly to exact first Classic without choose
     campaign: JSON.stringify([last.source, last.packId, last.campaignId]),
     mission: last.id,
   });
-  const params = new URLSearchParams({ journey: 'opening', 'library-mission': mission });
+  const params = new URLSearchParams({
+    journey: 'opening',
+    'library-mission': mission,
+  });
   const p = await fixture(t, {
     href: `http://localhost/game/couch/?${params}`,
     seconds: '180',
@@ -275,7 +279,83 @@ test('final Journey mission hands directly to exact first Classic without choose
   finish(p);
   const before = p.checkpoint(),
     picture = p.drawOptions[0].backdrop;
-  p.$('race-journey-next').click();
+  assert.equal(p.$('race-journey-next').textContent, 'Browse missions');
+  await openMissionLibrary(p, 'race-journey-next');
+  assert.deepEqual(p.checkpoint(), before);
+  const selected = [...p.$('journey-cards').children].find((card) => {
+    const [owner, , , id] = JSON.parse(card.dataset.missionId);
+    return owner === JSON.stringify(['classic', 'base', null]) && id === 'signal-01';
+  });
+  assert(selected);
+  await activateMissionCard(selected);
+  await settle(() => new URL(globalThis.location.href).searchParams.get('journey') === 'legacy');
+  const destination = new URL(globalThis.location.href);
+  const exact = JSON.parse(destination.searchParams.get('library-mission'));
+  assert.equal(exact[0], JSON.stringify(['classic', 'base', null]));
+  assert.equal(exact[3], 'signal-01');
+  const settings = JSON.parse(destination.searchParams.get('versus-next'));
+  assert.equal(settings.mission, destination.searchParams.get('library-mission'));
+  assert.equal(settings.turnPolicy, 'grid-center');
+  assert.equal(settings.seconds, 180);
+  p.frame(0);
+  assert.deepEqual(p.checkpoint(), before);
+  assert.equal(p.drawOptions[0].backdrop, picture);
+  assert.equal(p.$('journey-chooser').open, false);
+});
+
+test('paused Journey can Stay and then explicitly Replace with exact Classic setup', async (t) => {
+  const route = await loadAuthoredJourneyRoute('opening');
+  const host = createCandidateVersusHost(route.source, {
+    themes: JSON.parse(await readFile(new URL('../content-design/themes.json', import.meta.url)))
+      .themes,
+  });
+  const last = host.catalog.missions.at(-1);
+  const mission = libraryMissionId({
+    owner: 'journey:opening',
+    edition: 'opening',
+    campaign: JSON.stringify([last.source, last.packId, last.campaignId]),
+    mission: last.id,
+  });
+  const params = new URLSearchParams({
+    journey: 'opening',
+    'library-mission': mission,
+  });
+  const p = await fixture(t, {
+    href: `http://localhost/game/couch/?${params}`,
+    seconds: '180',
+    turnPolicy: 'grid-center',
+  });
+  p.frame(0);
+  assert.equal(p.state(), 'running', p.$('race-message').textContent);
+  assert.equal(p.renders[0].levelId, 'horizon-remix');
+  p.$('race-pause').click();
+  p.frame(0);
+  assert.equal(p.state(), 'paused');
+  const before = p.checkpoint(),
+    picture = p.drawOptions[0].backdrop;
+  await openMissionLibrary(p, 'race-journey-find');
+  assert.deepEqual(p.checkpoint(), before);
+  const selected = [...p.$('journey-cards').children].find((card) => {
+    const [owner, , , id] = JSON.parse(card.dataset.missionId);
+    return owner === JSON.stringify(['classic', 'base', null]) && id === 'signal-01';
+  });
+  assert(selected);
+  let pending = activateMissionCard(selected);
+  await settle(() => p.$('race-library-replace')?.open);
+  assert.deepEqual(p.checkpoint(), before);
+  assert.equal(p.drawOptions[0].backdrop, picture);
+  p.$('race-library-stay').click();
+  await pending;
+  assert.equal(p.$('journey-chooser').open, true);
+  assert.equal(p.doc.activeElement.dataset.missionId, selected.dataset.missionId);
+  assert.deepEqual(p.checkpoint(), before);
+  const retry = [...p.$('journey-cards').children].find(
+    (card) => card.dataset.missionId === selected.dataset.missionId,
+  );
+  pending = activateMissionCard(retry);
+  await settle(() => p.$('race-library-replace')?.open);
+  p.$('race-library-play').click();
+  await pending;
   await settle(() => new URL(globalThis.location.href).searchParams.get('journey') === 'legacy');
   const destination = new URL(globalThis.location.href);
   const exact = JSON.parse(destination.searchParams.get('library-mission'));
@@ -304,12 +384,19 @@ test('failed or cancelled cross-host target picture preflight keeps Journey resu
     campaign: JSON.stringify([last.source, last.packId, last.campaignId]),
     mission: last.id,
   });
-  const params = new URLSearchParams({ journey: 'opening', 'library-mission': mission });
+  const params = new URLSearchParams({
+    journey: 'opening',
+    'library-mission': mission,
+  });
   const href = `http://localhost/game/couch/?${params}`;
   const compiled = JSON.parse(
     await readFile(new URL('../presentation/compiled/runtime.json', import.meta.url)),
   );
-  const snapshot = { resolved: compiled.resolved, images: new Map(), canvas: {} };
+  const snapshot = {
+    resolved: compiled.resolved,
+    images: new Map(),
+    canvas: {},
+  };
   let reads = 0,
     hold = null,
     release;
@@ -339,22 +426,32 @@ test('failed or cancelled cross-host target picture preflight keeps Journey resu
   finish(p);
   const before = p.checkpoint(),
     picture = p.drawOptions[0].backdrop;
-  p.$('race-journey-next').click();
-  await settle(() => p.$('race-message').textContent.includes('Next mission could not open'));
+  await openMissionLibrary(p, 'race-journey-next');
+  const selected = [...p.$('journey-cards').children].find((card) => {
+    const [owner, , , id] = JSON.parse(card.dataset.missionId);
+    return owner === JSON.stringify(['classic', 'base', null]) && id === 'signal-01';
+  });
+  assert(selected);
+  await activateMissionCard(selected);
+  assert.match(
+    p.$('journey-chooser-status').textContent,
+    /Could not open.*Target original is unavailable/,
+  );
   assert.equal(reads, 1);
   p.frame(0);
   assert.equal(globalThis.location.href, href);
   assert.deepEqual(p.checkpoint(), before);
   assert.equal(p.drawOptions[0].backdrop, picture);
-  assert.equal(p.$('journey-chooser').open, false);
+  assert.equal(p.$('journey-chooser').open, true);
   hold = new Promise((resolve) => {
     release = resolve;
   });
   t.after(() => release());
-  const activate = p.$('race-journey-next').onclick;
-  let pending;
-  p.$('race-journey-next').onclick = () => (pending = activate());
-  p.$('race-journey-next').click();
+  const retry = [...p.$('journey-cards').children].find((card) => {
+    const [owner, , , id] = JSON.parse(card.dataset.missionId);
+    return owner === JSON.stringify(['classic', 'base', null]) && id === 'signal-01';
+  });
+  const pending = activateMissionCard(retry);
   await settle(() => reads === 2);
   p.$('race-picture-cancel').click();
   release();
@@ -365,7 +462,10 @@ test('failed or cancelled cross-host target picture preflight keeps Journey resu
   assert.deepEqual(p.checkpoint(), before);
   assert.equal(p.drawOptions[0].backdrop, picture);
   assert.equal(picture.image.released, undefined);
-  assert.match(p.$('race-message').textContent, /cancelled.*Results are kept/);
+  assert.match(
+    p.$('race-message').textContent,
+    /selection cancelled.*current race and picture are kept/,
+  );
   assert.equal(p.$('journey-chooser').open, false);
 });
 
@@ -382,7 +482,10 @@ test('Journey boundary preflights an exact installed Classic pack without adopti
     campaign: JSON.stringify([last.source, last.packId, last.campaignId]),
     mission: last.id,
   });
-  const params = new URLSearchParams({ journey: 'opening', 'library-mission': mission });
+  const params = new URLSearchParams({
+    journey: 'opening',
+    'library-mission': mission,
+  });
   const installedSource = JSON.parse(
     await readFile(new URL('../content/packs/night-shift.json', import.meta.url)),
   );
@@ -404,7 +507,17 @@ test('Journey boundary preflights an exact installed Classic pack without adopti
   finish(p);
   const before = p.checkpoint(),
     picture = p.drawOptions[0].backdrop;
-  p.$('race-journey-next').click();
+  assert.equal(p.$('race-journey-next').textContent, 'Browse missions');
+  await openMissionLibrary(p, 'race-journey-next');
+  assert.deepEqual(p.checkpoint(), before);
+  const selected = [...p.$('journey-cards').children].find((card) => {
+    const [owner, , , id] = JSON.parse(card.dataset.missionId);
+    return (
+      owner === JSON.stringify(['classic', 'bundled', 'night-shift']) && id === 'night-shift-01'
+    );
+  });
+  assert(selected);
+  await activateMissionCard(selected);
   await settle(() => new URL(globalThis.location.href).searchParams.get('journey') === 'legacy');
   const target = JSON.parse(new URL(globalThis.location.href).searchParams.get('library-mission'));
   assert.equal(target[0], JSON.stringify(['classic', 'bundled', 'night-shift']));
