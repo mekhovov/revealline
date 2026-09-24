@@ -1,0 +1,25 @@
+{
+  "format": "revealline-archive-public-observation.v1",
+  "status": "PASS",
+  "archiveId": "archive-72",
+  "version": "v0.107.0",
+  "infrastructureCommit": "12f9b350f9461d7721ba389af9c7590d6b5f621f",
+  "infrastructureTree": "4449eead1322886eea88718941ace998f4b74e8d",
+  "runId": 36070705920,
+  "deploymentId": 6649956472,
+  "deploymentStatusId": 18809597530,
+  "receiptArtifactId": 10837907888,
+  "observed": [
+    "The archive root, v0.107.0 release record and archived game index returned HTTP 200 from their exact canonical URLs.",
+    "A real in-app browser loaded the archived v0.107.0 game and exposed the Reveal / Line Home screen with Continue focused.",
+    "Continue verified and restored the existing Phaseworks session, then opened live territory-capture gameplay at the canonical archived URL.",
+    "The game Pause control opened the PAUSED overlay with Resume focused; Resume returned to the same live mission and reported Flight resumed.",
+    "The complete public-byte audit read and SHA-256 verified all 1,144 pinned files / 595,435,481 bytes with zero failures, skips or retries."
+  ],
+  "limitations": [
+    "This is bounded historical preservation evidence, not renewed full gameplay or balance acceptance for v0.107.0.",
+    "The continued mission was not completed during this archive-only observation.",
+    "No physical controller, physical touch, screen reader, offline, full-mission, exhaustive selector or device-matrix qualification is claimed.",
+    "The browser shared existing local saved data and preferences; they are not evidence of a fresh-profile default."
+  ]
+}
