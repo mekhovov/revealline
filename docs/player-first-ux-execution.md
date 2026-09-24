@@ -186,6 +186,16 @@ landscape. Require 44 px touch targets, readable EN/UA, Large/Plain text, meanin
 200% zoom, reduced motion and stable focus. Compare thumbnail memory and frame
 time to baseline. Browser clicks and modeled pads are not hardware certification.
 
+Cross-runtime replay portability is a separate open compatibility check. UX0's
+hosted Linux probe found last-decimal movement differences against macOS/arm64 in
+five existing routes; discrete board state and outcomes agree. Reviewed differences
+are bounded movement scalars and, for one route, terminal elapsed time.
+Exact historical replay checksums remain unchanged. A portable test expectation
+does not prove that recordings transfer between browser engines or architectures.
+UX5/UX6 must exercise that transfer and preserve recoverable originals on rejection;
+any simulation or replay-format remedy requires its own versioned compatibility
+work and release evidence.
+
 For every feature: implement → review → test/fix → explicit staging and synchronized
 version → PR checks/merge → exact-source qualification → immutable freeze → Pages →
 public version/source/byte and actual-play verification. Run `npm test`, lint,

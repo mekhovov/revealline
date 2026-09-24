@@ -9,6 +9,7 @@ import { managedIndexedDB } from './helpers/managed-idb.mjs';
 import { createJourneyBackend, JOURNEY_PROFILE_DATABASE } from '../journey/profile.mjs';
 import { CLASSES } from '../core/index.mjs';
 import { playKeyboardRoute } from './helpers/keyboard-route.mjs';
+import { expectedRouteEvidence } from './helpers/route-evidence.mjs';
 import { createAuthoredJourneyRoute } from '../content-design/route.mjs';
 import { compileContentProject, resolveMission } from '../content-design/project.mjs';
 import { applyGameplayTuning, resolveGameplayTuning } from '../gameplay-tuning.mjs';
@@ -465,11 +466,12 @@ for (const route of ['opening', 'authored'])
       p.frame(0);
       return !p.$('race-pause').disabled;
     });
-    const rows = JSON.parse(
+    const fixture = JSON.parse(
       await readFile(new URL('./fixtures/candidate-solo-tuned-host-routes.json', import.meta.url)),
-    ).rows.slice(0, route === 'opening' ? 9 : 15);
+    );
+    const rows = fixture.rows.slice(0, route === 'opening' ? 9 : 15);
     const project = compileContentProject(createAuthoredJourneyRoute(route).source);
-    for (const [id, authoredIdentity, gameplayIdentity, checkpoint, segments] of rows) {
+    for (const [id, authoredIdentity, gameplayIdentity, , segments] of rows) {
       assert.equal(p.renders[0].levelId, id);
       const manifest = resolveMission(project, id);
       assert.equal(manifest.simulationIdentity, authoredIdentity);
@@ -493,13 +495,12 @@ for (const route of ['opening', 'authored'])
         {
           seed: 1,
           turnPolicy: 'immediate',
-          checkpoint,
+          evidence: expectedRouteEvidence(fixture.evidence, id),
           segments: segments.map(([direction, ticks]) => ({ direction, ticks })),
         },
       );
       assert.equal(p.renders[0].status, 'won', id);
       assert.equal(p.renders[1].status, 'won', id);
-      assert.equal(authoritativeCheckpoint(p.renders[0]).hash, checkpoint, id);
       assert.equal(
         authoritativeCheckpoint(p.renders[0]).hash,
         authoritativeCheckpoint(p.renders[1]).hash,

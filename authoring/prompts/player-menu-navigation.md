@@ -45,3 +45,8 @@ Team has no Boost input. Preserve archived untuned proofs. Historical mastery mu
 be exercised through a genuine restored historical attempt, not awarded to a new
 tuned run. A partial presentation fixture advertises only assets it prepares;
 full production bindings still require real decoded frames and strict validation.
+Join the real Missions activation operation and assert immediate loading separately
+from readiness. Diagnose platform-specific fixture differences against full states.
+A test-only portable golden must bound only witnessed per-route scalar differences
+and retain exact remaining state, host/reference and public replay checks. Never
+apply its tolerance to runtime saves, recordings or earned originals.
