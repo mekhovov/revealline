@@ -35,13 +35,22 @@ test('current Team assembly uses separate exact recipe and equipment reviews', a
     }
     assert.equal(asset.kind, 'recipe', slot.id);
     assert.equal(asset.quality.stage, 'reviewed', slot.id);
-    assert.ok(asset.quality.evidence[0].includes('docs/verification/team37/review.json'), slot.id);
+    assert.ok(
+      asset.quality.evidence[0].includes(
+        'docs/verification/team-integrated-presentation-continuation-2026-09-24/review.json',
+      ),
+      slot.id,
+    );
     assert.equal(asset.provenance.source, fingerprints.team, slot.id);
     assert.ok(!asset.quality.evidence.some((line) => line.includes('Scoped v0.76')), slot.id);
   }
-  // Team review cannot approve the independently changed Solo effects group.
-  // Keep that separate release gate visible until its own exact review lands.
-  assert.equal(resolved.assets['trail.active'].quality.stage, 'source');
+  // Team review cannot approve the independently reviewed Solo effects group.
+  assert.equal(resolved.assets['trail.active'].quality.stage, 'reviewed');
+  assert.ok(
+    resolved.assets['trail.active'].quality.evidence.every(
+      (line) => !line.includes('team-integrated-presentation-continuation'),
+    ),
+  );
 });
 
 test('each declared Team recipe dependency changes its fingerprint independently', async () => {
