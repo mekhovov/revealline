@@ -13,6 +13,8 @@ import {
   authoredJourneyUsesActorMaterials,
 } from '../content-design/mode-href.mjs';
 import { DEFAULT_JOURNEY_ROUTES } from '../content-design/default-entry.mjs';
+import { createRun } from '../core/index.mjs';
+import { pressureWaypoint, updateEnemyPressure } from '../core/enemy-pressure.mjs';
 
 const pursuit = ['return-in-reserve', 'two-ways-home', 'dogleg-transfer'];
 const interception = ['crossed-bands', 'pressure-ladder', 'signal-channels'];
@@ -20,6 +22,34 @@ const changed = new Set([...pursuit, ...interception]);
 const baseline = createWholeImpactCandidates({ artwork: true });
 const source = createWholePressureCandidates({ artwork: true });
 const project = compileContentProject(source);
+const effectiveRoute = createAuthoredJourneyRoute(DEFAULT_JOURNEY_ROUTES.solo);
+const effectiveProject = compileContentProject(effectiveRoute.source);
+const effectiveRoster = Object.freeze({
+  'return-in-reserve': {
+    pressureId: 'carrier',
+    enemyIds: ['carrier', 'keeper', 'outer', 'lower-keeper'],
+  },
+  'two-ways-home': {
+    pressureId: 'carrier',
+    enemyIds: ['carrier', 'keeper', 'frontier'],
+  },
+  'dogleg-transfer': {
+    pressureId: 'upper-carrier',
+    enemyIds: ['upper-carrier', 'lower-carrier', 'keeper'],
+  },
+  'crossed-bands': {
+    pressureId: 'carrier',
+    enemyIds: ['carrier', 'keeper', 'frontier'],
+  },
+  'pressure-ladder': {
+    pressureId: 'east-carrier',
+    enemyIds: ['east-carrier', 'west-carrier', 'frontier'],
+  },
+  'signal-channels': {
+    pressureId: 'carrier',
+    enemyIds: ['keeper', 'carrier', 'roamer'],
+  },
+});
 
 test('v7 preserves the 91-mission v6 library and replaces exactly six ordinary keepers', () => {
   assert.equal(source.missions.length, 91);
@@ -117,5 +147,75 @@ test('pressure successor leaves the first three Prologue missions byte-equivalen
       ),
       id,
     );
+  }
+});
+
+test('the actual default route resolves one effective pressure role and its exact roster for every preset', () => {
+  assert.equal(effectiveRoute.id, 'whole-spatial-v9');
+  for (const [id, expected] of Object.entries(effectiveRoster))
+    for (const difficulty of ['gentle', 'standard', 'expert'])
+      for (const mode of ['solo', 'versus']) {
+        const manifest = resolveMission(effectiveProject, id, { difficulty, mode });
+        const pressure = manifest.level.classic.enemyPressure.actors;
+        assert.deepEqual(
+          manifest.level.enemies.map((enemy) => enemy.id),
+          expected.enemyIds,
+          `${id}/${mode}/${difficulty} effective enemy roster`,
+        );
+        assert.equal(pressure.length, 1, `${id}/${mode}/${difficulty} pressure count`);
+        assert.equal(pressure[0].id, expected.pressureId, `${id}/${mode}/${difficulty}`);
+        assert.equal(
+          pressure[0].mode,
+          pursuit.includes(id) ? 'trail-pursuit' : 'head-intercept',
+          `${id}/${mode}/${difficulty}`,
+        );
+        assert.deepEqual(
+          {
+            warningTicks: pressure[0].warningTicks,
+            commitTicks: pressure[0].commitTicks,
+            cooldownTicks: pressure[0].cooldownTicks,
+          },
+          {
+            warningTicks: 90,
+            commitTicks: 144,
+            cooldownTicks: { gentle: 441, standard: 300, expert: 229 }[difficulty],
+          },
+          `${id}/${mode}/${difficulty} resolved timing`,
+        );
+      }
+});
+
+test('default-route pressure actors lock once and keep the committed target after the player changes course', () => {
+  for (const [id, expected] of Object.entries(effectiveRoster)) {
+    const manifest = resolveMission(effectiveProject, id, {
+      difficulty: 'standard',
+      mode: 'solo',
+    });
+    const run = createRun(manifest.level, { seed: 1 });
+    const enemy = run.enemies.find((candidate) => candidate.id === expected.pressureId);
+    const pressure = enemy.classic.pressure;
+
+    run.player.cutting = true;
+    run.player.direction = 'right';
+    run.player.speed = 0;
+    run.player.x = enemy.x + 0.4;
+    run.player.y = enemy.y;
+    run.trail = [1];
+    run.trailSegments = [{ x1: enemy.x + 0.35, y1: enemy.y, x2: enemy.x + 0.45, y2: enemy.y }];
+    updateEnemyPressure(run);
+    assert.equal(pressure.phase, 'warning', `${id} acquires a warning target`);
+    const locked = structuredClone(pressure.target);
+
+    run.player.direction = 'left';
+    run.player.x = enemy.x - 0.4;
+    run.trailSegments = [{ x1: enemy.x - 0.45, y1: enemy.y, x2: enemy.x - 0.35, y2: enemy.y }];
+    run.classic.actorTick = pressure.warningUntil;
+    updateEnemyPressure(run);
+
+    assert.equal(pressure.phase, 'committed', `${id} enters one finite commitment`);
+    assert.deepEqual(pressure.target, locked, `${id} does not retarget after warning`);
+    const waypoint = pressureWaypoint(enemy, 1, 1);
+    assert(waypoint, `${id} exposes its committed waypoint`);
+    assert.deepEqual(waypoint.target, locked, `${id} steers only toward the locked target`);
   }
 });
