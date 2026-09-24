@@ -414,18 +414,18 @@ test('production refuses silent slot contract mutation and can explicitly return
 test('Journey feedback dependencies bind only the reviewed player-craft effects inputs', async () => {
   const production = await createFieldKitProduction();
   const resolved = resolvePresentation(production.document);
-  const reviewPath = 'docs/verification/player-craft-locator-removal-2026-09-24/review.json';
+  const reviewPath = 'docs/verification/enemy-surface-motion-continuation-2026-09-24/review.json';
   const reviewBytes = await fs.readFile(new URL(`../../${reviewPath}`, import.meta.url));
   const reviewHash = createHash('sha256').update(reviewBytes).digest('hex');
   const review = JSON.parse(reviewBytes);
-  assert.equal(reviewHash, 'b6c8b661457ddd191477af403f2a392e476c0af7beceaba4f3b7f3ced1bf547e');
+  assert.equal(reviewHash, 'f8dcdc60d973447bd6b482045c96f1a4059cfca899528dd7de7cacb95854684c');
   assert.equal(
     review.effects.priorFingerprintSHA256,
-    '475fea962731c07024adacf4e8df7692db23bff218d13768dff50971752a0ed5',
+    'abd3aeef12041b55e76be3b026b52180f11df0f5b7a7f2a25ea560dacab0fdf1',
   );
   assert.equal(
     review.effects.currentFingerprintSHA256,
-    'abd3aeef12041b55e76be3b026b52180f11df0f5b7a7f2a25ea560dacab0fdf1',
+    '654fed2ce5b5e9b5e0c6bb79a6d7095093a4ed8128877b1a7f0658d830c275e7',
   );
   for (const slotId of [
     'trail.active',
@@ -443,14 +443,16 @@ test('Journey feedback dependencies bind only the reviewed player-craft effects 
     assert.equal(asset.quality.stage, 'reviewed', slotId);
     assert.ok(
       asset.provenance.source.endsWith(
-        'sha256:abd3aeef12041b55e76be3b026b52180f11df0f5b7a7f2a25ea560dacab0fdf1',
+        'sha256:654fed2ce5b5e9b5e0c6bb79a6d7095093a4ed8128877b1a7f0658d830c275e7',
       ),
     );
     assert.match(asset.provenance.source, /game\/ui\/lane-presentation\.mjs/);
     assert.match(asset.provenance.source, /game\/content-design\/actor-marker\.mjs/);
+    assert.match(asset.provenance.source, /game\/ui\/enemy-body-assets\.mjs/);
+    assert.match(asset.provenance.source, /game\/ui\/enemy-body-motion\.mjs/);
     assert.equal(
       asset.quality.evidence.some((entry) =>
-        entry.includes(`Scoped player-craft locator removal: ${reviewPath}`),
+        entry.includes(`Scoped enemy surface-motion continuation: ${reviewPath}`),
       ),
       true,
     );

@@ -18,6 +18,7 @@ const review = JSON.parse(bytes);
 const successorBytes = await read('docs/verification/team-specialist-cues-2026-09-24/review.json');
 const successor = JSON.parse(successorBytes);
 const fingerprint = (await fieldKitRecipeSources(read)).team;
+const reviewedSuccessorFingerprint = `${successor.fingerprint.paths} sha256:${successor.fingerprint.sha256}`;
 const defaults = createDefaultThemeBundle().assets;
 const production = await createFieldKitProduction();
 const resolved = resolvePresentation(production.document);
@@ -28,9 +29,9 @@ const images = Object.fromEntries(
     return [image.id, image];
   }),
 );
-const input = (role) => ({
+const input = (role, source = fingerprint) => ({
   slotId: role.slot,
-  source: fingerprint,
+  source,
   recipe: structuredClone(role.defaultRecipePayload),
   defaultAsset: defaults.find((asset) => asset.id === role.defaultAsset.id),
   inheritedAssets: images,
@@ -39,19 +40,22 @@ const input = (role) => ({
 });
 const stage = (args) => fieldKitTeamRecipeQuality(args).stage;
 
-test('all37 exact defaults receive only the scoped Team declaration in current assembly', () => {
+test('current Team motion sources fail closed while the exact reviewed predecessor remains usable', () => {
   assert.equal(review.recipes.length, 37);
   assert.equal(new Set(review.recipes.map(({ slot }) => slot)).size, 37);
   assert.equal(review.inheritedImages.length, 4);
   for (const role of review.recipes) {
-    assert.equal(stage(input(role)), 'reviewed', role.slot);
+    assert.equal(stage(input(role)), 'source', role.slot);
+    assert.equal(stage(input(role, reviewedSuccessorFingerprint)), 'reviewed', role.slot);
     const asset = resolved.assets[role.slot];
     assert.equal(asset.kind, 'recipe');
     assert.deepEqual(asset.recipe, role.defaultRecipePayload);
     assert.deepEqual(asset.quality, fieldKitTeamRecipeQuality(input(role)));
-    assert.match(asset.quality.evidence[0], /Team specialist functional successor:/);
+    assert.equal(asset.quality.stage, 'source');
+    const reviewed = fieldKitTeamRecipeQuality(input(role, reviewedSuccessorFingerprint));
+    assert.match(reviewed.evidence[0], /Team specialist functional successor:/);
     assert.ok(
-      asset.quality.evidence[0].includes(createHash('sha256').update(successorBytes).digest('hex')),
+      reviewed.evidence[0].includes(createHash('sha256').update(successorBytes).digest('hex')),
     );
   }
   // Default ancestor records remain source and are not mutated by the gate.
@@ -94,21 +98,11 @@ test('changed/unknown roles, payloads, default records and review bytes remain s
     assert.equal(stage({ ...input(review.recipes[0]), slotId }), 'source');
 });
 
-test('the exact three-input successor and every renderer dependency fail closed', async () => {
+test('the exact predecessor remains reviewed and every current renderer dependency fails closed', async () => {
   assert.equal(successor.priorReview.sha256, createHash('sha256').update(bytes).digest('hex'));
-  assert.equal(
-    fingerprint,
-    `${successor.fingerprint.paths} sha256:${successor.fingerprint.sha256}`,
-  );
-  const changes = new Map(successor.changedInputs.map((entry) => [entry.path, entry]));
+  assert.notEqual(fingerprint, reviewedSuccessorFingerprint);
+  assert.match(fingerprint, /game\/ui\/enemy-body-assets\.mjs/);
   for (const entry of review.fingerprint.inputs) {
-    const current = createHash('sha256')
-      .update(await read(entry.path))
-      .digest('hex');
-    if (changes.has(entry.path)) {
-      assert.equal(changes.get(entry.path).priorSHA256, entry.sha256, entry.path);
-      assert.equal(changes.get(entry.path).currentSHA256, current, entry.path);
-    } else assert.equal(current, entry.sha256, entry.path);
     const changed = (
       await fieldKitRecipeSources(async (name) => {
         const value = await read(name);
@@ -129,10 +123,11 @@ test('the exact three-input successor and every renderer dependency fail closed'
   );
   const legacy = `${review.fingerprint.inputs.map((entry) => entry.path).join('; ')} sha256:${review.fingerprint.sha256}`;
   assert.equal(
-    stage({ ...input(review.recipes[0]), source: legacy, successorReviewBytes: null }),
+    stage({ ...input(review.recipes[0], legacy), successorReviewBytes: null }),
     'reviewed',
     'the immutable prior declaration remains independently usable for its exact source',
   );
+  assert.equal(stage(input(review.recipes[0], reviewedSuccessorFingerprint)), 'reviewed');
 });
 
 test('every inherited image identity, bytes, geometry and record must remain exact', () => {
