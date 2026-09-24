@@ -2842,7 +2842,9 @@ try {
     getRoot: () =>
       music?.root() ||
       [...document.querySelectorAll('dialog[open]')].at(-1) ||
-      (candidateJourney && shell.scope() === 'main' ? $('couch-app') : shell.root()),
+      // Find/Next sit beside the main panel for Legacy and installed missions
+      // too. The existing allowlist excludes all live-board controls.
+      (shell.scope() === 'main' ? $('couch-app') : shell.root()),
     getDefaultFocus: () =>
       libraryDecision
         ? $('race-library-stay')

@@ -703,23 +703,31 @@ export function bootCoop({
     },
   });
   const router = createControllerRouter({ readPads: () => framePads });
+  const menuMasthead = $('coop-home').closest('.masthead');
+  let compositeMenu = false;
   const navigation = attachControllerNavigation({
     onTabBoundary: () => playgroundTabBoundary({ window, suspend: () => suspend() }),
     getScope: scope,
-    getRoot: () =>
-      music?.root() ||
-      (settingsDialog.open
-        ? settingsDialog
-        : earnedDialog.open
-          ? earnedDialog
-          : departure
-            ? departureDialog
-            : discovery?.isOpen()
-              ? $('journey-chooser')
-              : run
-                ? $('coop-overlay')
-                : $('coop-app')),
-    accept: (element) => !element.closest('.race-pad'),
+    getRoot: () => {
+      const modal =
+        music?.root() ||
+        (settingsDialog.open
+          ? settingsDialog
+          : earnedDialog.open
+            ? earnedDialog
+            : departure
+              ? departureDialog
+              : discovery?.isOpen()
+                ? $('journey-chooser')
+                : null);
+      // Pause/results restore the visible masthead alongside the overlay.
+      // Keep their common root while excluding gameplay and hidden lobby UI.
+      compositeMenu = !modal && !!run;
+      return modal || $('coop-app');
+    },
+    accept: (element) =>
+      !element.closest('.race-pad') &&
+      (!compositeMenu || $('coop-overlay').contains(element) || !!menuMasthead?.contains(element)),
     getDefaultFocus: primary,
     keyboard: true,
     ownsKeyboardEvent: (event) => !music?.root() && settingsTabOwnsKey(event, settingsDialog),
@@ -3475,9 +3483,12 @@ export function bootCoop({
       return;
     }
     if (restore && !disposed && !document.hidden && document.hasFocus?.() !== false) {
-      // Header links are outside the paused navigation root. Return to its safe
-      // primary instead of leaving keyboard focus outside the active panel.
-      const origin = $('coop-overlay').contains(ticket.opener) ? ticket.opener : primary();
+      // Both the pause panel and its visible masthead are navigable owners.
+      // Stay returns to the exact opener without resuming either player.
+      const origin =
+        $('coop-overlay').contains(ticket.opener) || menuMasthead?.contains(ticket.opener)
+          ? ticket.opener
+          : primary();
       (visibleAction(origin) ? origin : primary()).focus({ preventScroll: true });
     }
   }
