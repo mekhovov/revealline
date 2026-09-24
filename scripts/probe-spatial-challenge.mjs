@@ -26,7 +26,7 @@ const missionIds = [
 const argv = process.argv.slice(2);
 if (argv.includes('--help')) {
   console.log(
-    'node scripts/probe-spatial-challenge.mjs [mission|all] [--presets=standard] [--controls=immediate] [--seeds=1] [--search=ordinary|efficient] [--budget=60000] [--candidates=16] [--max-cuts=12] [--delay-ticks=0] [--route=JSON-or-JSONL-file | --resume=JSON-or-JSONL-file]',
+    'node scripts/probe-spatial-challenge.mjs [mission|all] [--presets=standard] [--controls=immediate] [--seeds=1] [--search=ordinary|efficient] [--budget=60000] [--candidates=16] [--max-cuts=12] [--delay-ticks=0] [--route=JSON-or-JSONL-file | --resume=JSON-or-JSONL-file] [--approach=name]',
   );
   process.exit(0);
 }
@@ -41,6 +41,7 @@ const allowed = [
   'delay-ticks',
   'route',
   'resume',
+  'approach',
 ];
 const settings = new Map();
 let mission = 'two-bays';
@@ -122,6 +123,8 @@ const project = compileContentProject(createSpatialChallengeJourney());
 if (settings.has('route') && settings.has('resume'))
   throw new Error('Choose route assessment or resumed search.');
 const routePath = settings.get('route') ?? settings.get('resume');
+if (settings.has('approach') && !routePath)
+  throw new Error('Choose a route file before selecting an approach.');
 let input = null;
 if (routePath) {
   const raw = readFileSync(resolve(routePath), 'utf8');
@@ -149,13 +152,17 @@ for (const id of missionIds.filter((id) => mission === 'all' || id === mission))
         let evidence;
         let prefix = [];
         if (input) {
-          const route = rows.find(
+          const matching = rows.filter(
             (row) =>
               row.missionId === id &&
               row.difficulty === difficulty &&
               row.turnPolicy === turnPolicy &&
-              row.seed === seed,
+              row.seed === seed &&
+              (!settings.has('approach') || row.approach === settings.get('approach')),
           );
+          if (matching.length > 1)
+            throw new Error('Ambiguous route configuration: choose --approach=name.');
+          const route = matching[0];
           if (!route || route.simulationIdentity !== prepared.simulationIdentity)
             throw new Error(`Missing or stale route: ${id}/${difficulty}/${turnPolicy}/${seed}`);
           prefix = route.segments.map((segment) =>
@@ -185,6 +192,7 @@ for (const id of missionIds.filter((id) => mission === 'all' || id === mission))
         console.log(
           JSON.stringify({
             ...evidence,
+            ...(settings.has('approach') ? { approach: settings.get('approach') } : {}),
             sourceIdentity: {
               ...sourceIdentity,
               stableDuringProbe: sourceDigest() === sourceIdentity.sourceSha256,

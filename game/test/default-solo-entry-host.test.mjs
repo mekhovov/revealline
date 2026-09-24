@@ -95,7 +95,7 @@ test('ordinary Solo entry offers 91 current Journey, six previous editions and 1
   );
   assert.match(
     p.$('journey-artwork-availability').textContent,
-    /^Mission pictures need an internet connection/,
+    /^Balance review pending\. Mission pictures need an internet connection/,
   );
   await missions(p);
   assert.equal(p.$('journey-collection').value, '');
