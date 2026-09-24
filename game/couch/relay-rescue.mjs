@@ -847,6 +847,8 @@ export function bootCoop({
     document,
     root: $('coop-settings-panel-audio'),
     prefix: 'coop',
+    quickAfter: ['coop-start', 'coop-resume'],
+    canControl: () => !disposed && !inactive,
     getScene: () => (run ? 'gameplay' : 'menu'),
     audioMaster,
     audioPreferences,
