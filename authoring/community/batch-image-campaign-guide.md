@@ -20,7 +20,8 @@ Phase 2 extends the picture creator with a batch review workflow. It keeps the o
 
 ## Handle a large campaign
 
-- If the capacity message says the selection does not fit, use **Split into smaller packs** to review the suggested grouping. The grouping preserves the current order.
+- If the capacity message says the selection does not fit, use **Split into smaller packs** to accept the suggested grouping. The grouping preserves the current order. The creator then shows one **Review part _n_ of _total_** button per exact part.
+- Open one part at a time. Each button revalidates that part against the current immutable review, then exposes its own install and download actions. Finish installing or downloading it before reviewing the next part.
 - Exclude unneeded cards, then choose **Remove excluded items** to make that decision permanent in this draft.
 - The creator never silently drops a picture. A split or removal is an explicit creator action.
 - Keep a source backup before clearing browser storage. Capacity estimates are advisory; an interrupted or refused write must leave the reviewed work available for download.
