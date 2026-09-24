@@ -9228,6 +9228,8 @@ try {
   }
   const restoreAudioOnGesture = (event) => {
     if (
+      quickMusicControls?.contains(event.target) ||
+      quickMusicControls?.handlesKey(event) ||
       document.hidden ||
       soundtrackDisposed ||
       enemyGuide?.practiceActive ||
