@@ -1,0 +1,26 @@
+{
+  "format": "revealline-archive-public-observation.v1",
+  "status": "PASS",
+  "archiveId": "archive-71",
+  "version": "v0.106.0",
+  "infrastructureCommit": "296261f87b413bcfffdb044dc465aba75d650f82",
+  "infrastructureTree": "65669023e1e62f2cc8405f20e526b97bd216693c",
+  "runId": 36064650678,
+  "deploymentId": 6649019916,
+  "deploymentStatusId": 18807461238,
+  "receiptArtifactId": 10836245054,
+  "observed": [
+    "The complete public HTTP audit read and verified all 1,144 canonical files and 595,431,988 bytes against the committed inventory with zero final failures, retries or skips.",
+    "A real in-app browser loaded the exact archived v0.106.0 game URL and exposed the Reveal / Line Home screen with Solo, Versus, Team, Continue, Missions, Collection, Settings, More and Sound.",
+    "The More menu visibly reported Version v0.106.0 and exposed All missions, How to play, Field guide, Controller practice, Replay Theater, Scores & saves, About and Releases.",
+    "Continue opened Mission 01 and exposed its Journey HUD and game canvas from the archive origin.",
+    "The archived Releases link opened the main release explorer, which reported v0.106.0 as the current preserved version and displayed source commit 77c1b7888adba766fc6998774244bb42feb0db60."
+  ],
+  "limitations": [
+    "This is bounded historical preservation evidence, not renewed gameplay or balance acceptance for v0.106.0.",
+    "The mission was opened but not completed during this archive-only observation.",
+    "No physical controller, physical touch, screen reader, offline, full-mission, exhaustive selector or device-matrix qualification is claimed.",
+    "The browser shared existing local preferences; its selected difficulty is not evidence of a fresh-profile default.",
+    "The first complete HTTP audit retained a single transient HTTP 503 failure; the independent full retry is the final passing audit and the failed report remains preserved separately."
+  ]
+}

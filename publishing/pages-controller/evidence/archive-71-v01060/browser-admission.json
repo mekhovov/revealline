@@ -1,0 +1,21 @@
+{
+  "format": "revealline-archive-browser-admission.v1",
+  "status": "PASS",
+  "archiveId": "archive-71",
+  "infrastructureCommit": "296261f87b413bcfffdb044dc465aba75d650f82",
+  "deploymentId": 6649019916,
+  "versions": ["v0.106.0"],
+  "scope": "Historical online preservation only: exact archive routes, full-body hashes and bounded in-app-browser boot/version/menu/mission/release-bridge inspection. This is not renewed v0.106.0 gameplay acceptance.",
+  "evidence": [
+    {
+      "path": "evidence/archive-71-v01060/public-observation.json",
+      "sha256": "7e89aaa8ff2de1b828677f45f8531339e4a7a88cda18756b517477cdeea077bf"
+    }
+  ],
+  "limitations": [
+    "The mission was opened but not completed during this archive-only observation.",
+    "No physical controller, physical touch, screen reader, offline, full-mission, exhaustive selector or device-matrix qualification is claimed.",
+    "The browser shared existing local preferences; its selected difficulty is not evidence of a fresh-profile default.",
+    "The preserved initial HTTP failure documents a transient 503; only the subsequent complete audit is the final passing HTTP authority."
+  ]
+}
