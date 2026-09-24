@@ -437,14 +437,19 @@ export function attachGameShell({
     const { button, labelNode, label } = titleAction;
     titleAction = null;
     onTitleCancel?.();
-    button.disabled = false;
+    button.removeAttribute('aria-disabled');
+    button.removeAttribute('aria-busy');
+    delete button.dataset.busy;
     labelNode.textContent = label;
   };
   const titleCancel = $('shell-flight-cancel');
   const cancelTitleAndRestore = (operation) => {
     if (!operation || titleAction !== operation) return;
     const visit = homeVisit;
-    const ownedFocus = doc.activeElement === doc.body || doc.activeElement === titleCancel;
+    const ownedFocus =
+      doc.activeElement === doc.body ||
+      doc.activeElement === titleCancel ||
+      doc.activeElement === operation.button;
     cancelTitle();
     // Hiding Cancel can synchronously move focus or open another screen. Check
     // ownership again after that callback; keep an already-returned primary.
@@ -456,19 +461,25 @@ export function attachGameShell({
       topDialog() === home &&
       !doc.hidden &&
       doc.hasFocus?.() !== false &&
-      (doc.activeElement === doc.body || doc.activeElement === titleCancel)
+      (doc.activeElement === doc.body ||
+        doc.activeElement === titleCancel ||
+        doc.activeElement === operation.button)
     )
       operation.button.focus({ preventScroll: true });
   };
   if (titleCancel) titleCancel.onclick = () => cancelTitleAndRestore(titleAction);
   const launchTitle = async (button, callback) => {
-    if (button.disabled || destroyed || topDialog() !== home) return;
-    cancelTitle();
+    // The activating control remains the stable owner while preparation runs.
+    // Keeping it focusable prevents a held keyboard/controller Confirm from
+    // falling through to the newly-visible cancellation action.
+    if (button.disabled || titleAction || destroyed || topDialog() !== home) return;
     const visit = homeVisit;
     const labelNode = button.querySelector('[data-field-kit-copy]') ?? button;
     const operation = { button, labelNode, label: labelNode.textContent };
     titleAction = operation;
-    button.disabled = true;
+    button.setAttribute('aria-disabled', 'true');
+    button.setAttribute('aria-busy', 'true');
+    button.dataset.busy = 'true';
     labelNode.textContent = copy('title.preparing');
     try {
       const pending = callback({
@@ -481,16 +492,6 @@ export function attachGameShell({
           doc.hasFocus?.() !== false,
         leave: closeHome,
       });
-      if (
-        titleAction === operation &&
-        homeVisit === visit &&
-        topDialog() === home &&
-        !doc.hidden &&
-        doc.hasFocus?.() !== false &&
-        !titleCancel?.hidden &&
-        (doc.activeElement === doc.body || doc.activeElement === button)
-      )
-        titleCancel?.focus({ preventScroll: true });
       await pending;
     } finally {
       cancelTitleAndRestore(operation);

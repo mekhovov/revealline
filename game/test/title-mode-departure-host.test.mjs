@@ -550,11 +550,14 @@ for (const kind of ['versus', 'team'])
       const pending = press(h, 'Enter');
       await settle(() => decodes >= 2);
       assert.equal(h.$('shell-flight-cancel').hidden, false);
-      assert.equal(h.doc.activeElement.id, 'shell-flight-cancel');
-      await press(h, 'Enter');
+      assert.equal(h.doc.activeElement.id, 'shell-continue');
+      const cancel = new Event('cancel', { cancelable: true });
+      h.$('shell-home').dispatchEvent(cancel);
+      assert.equal(cancel.defaultPrevented, true);
       assert.equal(h.$('shell-flight-cancel').hidden, true);
       assert.equal(h.doc.activeElement.id, 'shell-continue');
       assert.equal(h.$('shell-continue').disabled, false);
+      assert.equal(h.$('shell-continue').hasAttribute('aria-busy'), false);
       assert.equal(h.$('continue-saved').disabled, true, 'The actual restore still owns cleanup');
       assert.equal(storage.getItem(slot), captured);
       await request(h, kind);
