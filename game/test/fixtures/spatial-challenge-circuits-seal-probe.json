@@ -4,10 +4,7 @@
   "diagnosticSweeps": {
     "qualification": "Historical bounded console diagnostics only. The focused test replays the representative rows, not these sweeps. Sweeps share route prefixes and overlapping configurations; never sum them as independent coverage.",
     "initialFullSequence": {
-      "seeds": [
-        1,
-        2
-      ],
+      "seeds": [1, 2],
       "initialWaitTicks": {
         "minimum": 0,
         "maximum": 1440,
@@ -20,10 +17,7 @@
       "clears": 0
     },
     "shortTransferSequence": {
-      "seeds": [
-        1,
-        2
-      ],
+      "seeds": [1, 2],
       "waitAfterWestSealTicks": {
         "minimum": 0,
         "maximum": 1200,
@@ -86,60 +80,29 @@
       "checkpoint": "0a8fc2949b8095a0",
       "replayVerified": true,
       "segments": [
-        [
-          null,
-          1
-        ],
-        [
-          "right",
-          96
-        ],
-        [
-          null,
-          1
-        ],
-        [
-          "down",
-          28
-        ],
-        [
-          null,
-          1
-        ],
-        [
-          "down",
-          88
-        ],
-        [
-          null,
-          1
-        ]
+        [null, 1],
+        ["right", 96],
+        [null, 1],
+        ["down", 28],
+        [null, 1],
+        ["down", 88],
+        [null, 1]
       ],
       "retainedComponents": [
         {
           "id": 73,
           "cells": 1950,
           "retained": true,
-          "enemyIds": [
-            "middle",
-            "east"
-          ]
+          "enemyIds": ["middle", "east"]
         },
         {
           "id": 731,
           "cells": 70,
           "retained": true,
-          "enemyIds": [
-            "west"
-          ]
+          "enemyIds": ["west"]
         }
       ],
-      "closureCoverage": [
-        [
-          215,
-          0.0029615004935834156
-        ]
-      ]
+      "closureCoverage": [[215, 0.0029615004935834156]]
     },
     {
       "id": "west-mouth-seed-2",
@@ -162,60 +125,29 @@
       "checkpoint": "a865b9017ca14e48",
       "replayVerified": true,
       "segments": [
-        [
-          null,
-          1
-        ],
-        [
-          "right",
-          96
-        ],
-        [
-          null,
-          1
-        ],
-        [
-          "down",
-          28
-        ],
-        [
-          null,
-          1
-        ],
-        [
-          "down",
-          88
-        ],
-        [
-          null,
-          1
-        ]
+        [null, 1],
+        ["right", 96],
+        [null, 1],
+        ["down", 28],
+        [null, 1],
+        ["down", 88],
+        [null, 1]
       ],
       "retainedComponents": [
         {
           "id": 73,
           "cells": 1950,
           "retained": true,
-          "enemyIds": [
-            "middle",
-            "east"
-          ]
+          "enemyIds": ["middle", "east"]
         },
         {
           "id": 731,
           "cells": 70,
           "retained": true,
-          "enemyIds": [
-            "west"
-          ]
+          "enemyIds": ["west"]
         }
       ],
-      "closureCoverage": [
-        [
-          215,
-          0.0029615004935834156
-        ]
-      ]
+      "closureCoverage": [[215, 0.0029615004935834156]]
     },
     {
       "id": "middle-seal-keeper-escaped",
@@ -238,107 +170,42 @@
       "checkpoint": "7b7414518a15994f",
       "replayVerified": true,
       "segments": [
-        [
-          null,
-          1
-        ],
-        [
-          "right",
-          96
-        ],
-        [
-          null,
-          1
-        ],
-        [
-          "down",
-          28
-        ],
-        [
-          null,
-          1
-        ],
-        [
-          "down",
-          88
-        ],
-        [
-          null,
-          112
-        ],
-        [
-          "down",
-          21
-        ],
-        [
-          null,
-          1
-        ],
-        [
-          "right",
-          115
-        ],
-        [
-          null,
-          1
-        ],
-        [
-          "right",
-          7
-        ],
-        [
-          null,
-          1
-        ],
-        [
-          "up",
-          42
-        ],
-        [
-          null,
-          1
-        ],
-        [
-          "right",
-          116
-        ],
-        [
-          null,
-          1
-        ]
+        [null, 1],
+        ["right", 96],
+        [null, 1],
+        ["down", 28],
+        [null, 1],
+        ["down", 88],
+        [null, 112],
+        ["down", 21],
+        [null, 1],
+        ["right", 115],
+        [null, 1],
+        ["right", 7],
+        [null, 1],
+        ["up", 42],
+        [null, 1],
+        ["right", 116],
+        [null, 1]
       ],
       "retainedComponents": [
         {
           "id": 73,
           "cells": 1851,
           "retained": true,
-          "enemyIds": [
-            "middle",
-            "east"
-          ]
+          "enemyIds": ["middle", "east"]
         },
         {
           "id": 731,
           "cells": 70,
           "retained": true,
-          "enemyIds": [
-            "west"
-          ]
+          "enemyIds": ["west"]
         }
       ],
       "closureCoverage": [
-        [
-          215,
-          0.0029615004935834156
-        ],
-        [
-          464,
-          0.006416584402764067
-        ],
-        [
-          632,
-          0.051826258637709774
-        ]
+        [215, 0.0029615004935834156],
+        [464, 0.006416584402764067],
+        [632, 0.051826258637709774]
       ]
     },
     {
@@ -362,72 +229,32 @@
       "checkpoint": "0796b42b147c5ca7",
       "replayVerified": true,
       "segments": [
-        [
-          null,
-          1
-        ],
-        [
-          "right",
-          96
-        ],
-        [
-          null,
-          1
-        ],
-        [
-          "down",
-          28
-        ],
-        [
-          null,
-          1
-        ],
-        [
-          "down",
-          88
-        ],
-        [
-          null,
-          2
-        ],
-        [
-          "down",
-          21
-        ],
-        [
-          null,
-          1
-        ],
-        [
-          "right",
-          103
-        ]
+        [null, 1],
+        ["right", 96],
+        [null, 1],
+        ["down", 28],
+        [null, 1],
+        ["down", 88],
+        [null, 2],
+        ["down", 21],
+        [null, 1],
+        ["right", 103]
       ],
       "retainedComponents": [
         {
           "id": 73,
           "cells": 1950,
           "retained": true,
-          "enemyIds": [
-            "middle",
-            "east"
-          ]
+          "enemyIds": ["middle", "east"]
         },
         {
           "id": 731,
           "cells": 70,
           "retained": true,
-          "enemyIds": [
-            "west"
-          ]
+          "enemyIds": ["west"]
         }
       ],
-      "closureCoverage": [
-        [
-          215,
-          0.0029615004935834156
-        ]
-      ]
+      "closureCoverage": [[215, 0.0029615004935834156]]
     },
     {
       "id": "waiting-body-impact",
@@ -450,60 +277,29 @@
       "checkpoint": "7edac90602e0db27",
       "replayVerified": true,
       "segments": [
-        [
-          null,
-          1
-        ],
-        [
-          "right",
-          96
-        ],
-        [
-          null,
-          1
-        ],
-        [
-          "down",
-          28
-        ],
-        [
-          null,
-          1
-        ],
-        [
-          "down",
-          88
-        ],
-        [
-          null,
-          175
-        ]
+        [null, 1],
+        ["right", 96],
+        [null, 1],
+        ["down", 28],
+        [null, 1],
+        ["down", 88],
+        [null, 175]
       ],
       "retainedComponents": [
         {
           "id": 73,
           "cells": 1950,
           "retained": true,
-          "enemyIds": [
-            "middle",
-            "east"
-          ]
+          "enemyIds": ["middle", "east"]
         },
         {
           "id": 731,
           "cells": 70,
           "retained": true,
-          "enemyIds": [
-            "west"
-          ]
+          "enemyIds": ["west"]
         }
       ],
-      "closureCoverage": [
-        [
-          215,
-          0.0029615004935834156
-        ]
-      ]
+      "closureCoverage": [[215, 0.0029615004935834156]]
     }
   ]
 }
