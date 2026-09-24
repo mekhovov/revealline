@@ -29,11 +29,16 @@ const pinned = readFileSync(
   new URL('./fixtures/combat-board-render-e9434d03.txt', import.meta.url),
   'utf8',
 );
+const pinnedLocator = readFileSync(
+  new URL('./fixtures/combat-board-player-locator-e9434d03.txt', import.meta.url),
+  'utf8',
+);
 const blobFor = (source) =>
   createHash('sha1')
     .update(`blob ${Buffer.byteLength(source)}\0`)
     .update(source)
     .digest('hex');
+const locatorBlob = '37b1bfcb14f2e3c20ad5f3fd588f78cdb51ee8d4';
 const current = readFileSync(moduleURL, 'utf8');
 const patch = readFileSync(patchPath, 'utf8');
 const presets = JSON.parse(
@@ -69,10 +74,16 @@ function applyTo(source) {
 }
 
 async function renderer(source, label) {
+  const resolvedLocator = pinnedLocator.replace(
+      /from (['"])(\.{1,2}\/[^'"]+)\1/g,
+      (_, quote, specifier) => `from ${quote}${new URL(specifier, moduleURL).href}${quote}`,
+    ),
+    locatorURL = `data:text/javascript;base64,${Buffer.from(resolvedLocator).toString('base64')}`;
   const resolved = source
     .replace(
       /from (['"])(\.{1,2}\/[^'"]+)\1/g,
-      (_, quote, specifier) => `from ${quote}${new URL(specifier, moduleURL).href}${quote}`,
+      (_, quote, specifier) =>
+        `from ${quote}${specifier === './player-locator.mjs' ? locatorURL : new URL(specifier, moduleURL).href}${quote}`,
     )
     .replaceAll('import.meta.url', JSON.stringify(moduleURL.href));
   return (
@@ -200,6 +211,7 @@ function paintSnapshot(board) {
 
 test('held patch pins its exact base, applies to both renderers and preserves all unrelated newer bytes', (t) => {
   assert.match(patch, new RegExp(baseBlob));
+  assert.equal(blobFor(pinnedLocator), locatorBlob);
   assert.equal(patch.match(/^diff --git /gm).length, 1);
   assert.equal(
     patch.split('\n').filter((line) => line.startsWith('-') && !line.startsWith('---')).length,
@@ -212,7 +224,7 @@ test('held patch pins its exact base, applies to both renderers and preserves al
     'drawRelayGates(ctx, relays, p, CELL);',
     'drawRelayTriggers(ctx, relays, CELL);',
     'if (!fullReveal) drawDirectionalFields(ctx, directionalView(state), CELL);',
-    "['xonix-core.v6', 'xonix-core.v7', 'xonix-core.v8', 'xonix-core.v9'].includes(state.ruleset)",
+    'drawClassicTerrain(ctx, classic, p, images);',
   ]) {
     assert(current.includes(text));
     assert(patchedCurrent.includes(text));
