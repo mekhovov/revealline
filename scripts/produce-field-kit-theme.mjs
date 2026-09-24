@@ -18,6 +18,10 @@ import {
   teamEquipmentArt,
 } from '../game/presentation/team-equipment-art.mjs';
 import { fieldKitTeamRecipeQuality } from './team-recipe-review.mjs';
+import {
+  TEAM_PICTURE_REVIEW_EXTENSION_PATH,
+  teamPictureReviewExtension,
+} from './team-picture-review-extension.mjs';
 import { encodeSpritePNG, inspectSprite } from './produce-field-kit-sprites.mjs';
 import { compilePresentation } from './compile-presentation.mjs';
 import { writePresentation, retainedPresentationPath } from './write-presentation.mjs';
@@ -62,16 +66,18 @@ export async function fieldKitEquipmentSource(read) {
   return hash(Buffer.concat(await Promise.all(equipmentSources.map((name) => read(name)))));
 }
 
-export function fieldKitEquipmentQuality(slotId, source, originalHash) {
+export function fieldKitEquipmentQuality(slotId, source, originalHash, reviewExtensionBytes) {
+  const continuation = teamPictureReviewExtension('equipment', source, reviewExtensionBytes);
   if (
     Object.hasOwn(reviewedEquipmentOriginals, slotId) &&
-    source === reviewedEquipmentSource &&
+    (source === reviewedEquipmentSource || continuation) &&
     reviewedEquipmentOriginals[slotId] === originalHash
   )
     return {
       stage: 'reviewed',
       evidence: [
         'Five images only: docs/verification/team-equipment-five-review/review.json sha256:a5aa095805b39c8a716d5427c54ad594f9261b53adeaf9752b3260ae752024b3',
+        ...(continuation ? [continuation] : []),
       ],
     };
   return {
@@ -227,6 +233,10 @@ export async function createFieldKitProduction({ projectRoot = root } = {}) {
     );
   }
   const teamReviewBytes = await read('docs/verification/team37/review.json');
+  const teamReviewExtensionBytes = await read(TEAM_PICTURE_REVIEW_EXTENSION_PATH).catch((error) => {
+    if (error.code === 'ENOENT') return null;
+    throw error;
+  });
   const inheritedAssets = Object.fromEntries(
     assets.filter((asset) => asset.kind === 'image').map((asset) => [asset.id, asset]),
   );
@@ -243,6 +253,7 @@ export async function createFieldKitProduction({ projectRoot = root } = {}) {
       defaultAsset,
       inheritedAssets,
       reviewBytes: teamReviewBytes,
+      reviewExtensionBytes: teamReviewExtensionBytes,
     });
   }
   const equipmentSource = 'game/presentation/team-equipment-art.mjs';
@@ -273,7 +284,12 @@ export async function createFieldKitProduction({ projectRoot = root } = {}) {
           prompt: slot.prompt,
           parent: { id: `${slotId}.default`, revision: 1 },
         },
-        quality: fieldKitEquipmentQuality(slotId, equipmentReviewSource, hash(body)),
+        quality: fieldKitEquipmentQuality(
+          slotId,
+          equipmentReviewSource,
+          hash(body),
+          teamReviewExtensionBytes,
+        ),
       },
       body,
     );

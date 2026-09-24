@@ -8,6 +8,7 @@ import {
   fieldKitEquipmentSource,
   fieldKitEquipmentQuality,
 } from '../../scripts/produce-field-kit-theme.mjs';
+import { TEAM_PICTURE_REVIEW_EXTENSION_PATH } from '../../scripts/team-picture-review-extension.mjs';
 
 const sha = (bytes) => createHash('sha256').update(bytes).digest('hex');
 const root = new URL('../../', import.meta.url);
@@ -17,6 +18,11 @@ const review = JSON.parse(reviewBytes);
 const inputs = JSON.parse(await readFile(new URL('inputs.json', directory)));
 const originals = JSON.parse(await readFile(new URL('originals.json', directory)));
 const read = (name) => readFile(new URL(name, root));
+const extensionBytes = await read(TEAM_PICTURE_REVIEW_EXTENSION_PATH);
+const extension = JSON.parse(extensionBytes);
+const currentSource = await fieldKitEquipmentSource(read);
+const quality = (slot, source, originalHash, evidence = extensionBytes) =>
+  fieldKitEquipmentQuality(slot, source, originalHash, evidence);
 
 test('five-image review authenticates exact originals, dependency closure and attributed evidence', async () => {
   assert.deepEqual(
@@ -31,15 +37,20 @@ test('five-image review authenticates exact originals, dependency closure and at
   );
   for (const entry of review.evidence)
     assert.equal(sha(await readFile(new URL(entry.path, directory))), entry.sha256, entry.path);
-  for (const entry of inputs.inputs)
+  for (const entry of extension.fingerprints.equipment.inputs)
     assert.equal(sha(await read(entry.path)), entry.sha256, entry.path);
+  assert.deepEqual(
+    extension.fingerprints.equipment.inputs.map((entry) => entry.path),
+    inputs.inputs.map((entry) => entry.path),
+  );
   assert.equal(inputs.inputs.length, 29);
-  assert.equal(await fieldKitEquipmentSource(read), review.sourceFingerprint);
+  assert.equal(currentSource, extension.fingerprints.equipment.sha256);
   for (const image of originals) {
-    const quality = fieldKitEquipmentQuality(image.slot, review.sourceFingerprint, image.sha256);
-    assert.equal(quality.stage, 'reviewed');
+    const historical = quality(image.slot, review.sourceFingerprint, image.sha256, null);
+    assert.equal(historical.stage, 'reviewed');
+    assert.equal(quality(image.slot, currentSource, image.sha256).stage, 'reviewed');
     assert.ok(
-      quality.evidence.some((value) => value.includes(`review.json sha256:${sha(reviewBytes)}`)),
+      historical.evidence.some((value) => value.includes(`review.json sha256:${sha(reviewBytes)}`)),
     );
   }
 });
@@ -55,28 +66,24 @@ test('every reviewed art or renderer input change reopens only the equipment ima
     });
     assert.notEqual(changed, original, entry.path);
     for (const image of originals)
-      assert.equal(
-        fieldKitEquipmentQuality(image.slot, changed, image.sha256).stage,
-        'produced',
-        entry.path,
-      );
+      assert.equal(quality(image.slot, changed, image.sha256).stage, 'produced', entry.path);
   }
   for (const image of originals) {
-    assert.equal(fieldKitEquipmentQuality(image.slot, original, '0'.repeat(64)).stage, 'produced');
+    assert.equal(quality(image.slot, original, '0'.repeat(64)).stage, 'produced');
     assert.equal(
-      fieldKitEquipmentQuality(
-        image.slot,
-        original,
-        originals.find((other) => other.slot !== image.slot).sha256,
-      ).stage,
+      quality(image.slot, original, originals.find((other) => other.slot !== image.slot).sha256)
+        .stage,
       'produced',
     );
   }
   for (const unknown of ['team.support.pulse', 'team.core.unknown', '__proto__'])
-    assert.equal(
-      fieldKitEquipmentQuality(unknown, original, originals[0].sha256).stage,
-      'produced',
-    );
+    assert.equal(quality(unknown, original, originals[0].sha256).stage, 'produced');
+});
+
+test('missing or modified extension evidence cannot approve the changed equipment source', () => {
+  for (const image of originals)
+    for (const invalid of [null, Buffer.concat([extensionBytes, Buffer.from('\n')])])
+      assert.equal(quality(image.slot, currentSource, image.sha256, invalid).stage, 'produced');
 });
 
 test('actual production assembly reviews only exact five image originals with the separately reviewed37 Team recipes', async () => {
@@ -103,9 +110,6 @@ test('actual production assembly reviews only exact five image originals with th
     const raw = Buffer.from(await production.assets.get(asset.file.sha256).arrayBuffer());
     assert.equal(raw.length, expected.bytes);
     assert.equal(sha(raw), expected.sha256);
-    assert.deepEqual(
-      asset.quality,
-      fieldKitEquipmentQuality(slot, review.sourceFingerprint, expected.sha256),
-    );
+    assert.deepEqual(asset.quality, quality(slot, currentSource, expected.sha256));
   }
 });
