@@ -144,6 +144,7 @@ test('real archived CLI builds reviewed soundtrack metadata without installed fo
     'scripts/soundtrack-distribution.mjs',
     'scripts/soundtrack-archive-admissions.mjs',
     'scripts/hosted-soundtrack-publication.mjs',
+    'scripts/reviewed-soundtrack-batches.mjs',
     'game/content-launch.mjs',
     'game/soundtrack-archive.mjs',
     'game/soundtrack-album-download.mjs',
