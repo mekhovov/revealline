@@ -264,3 +264,28 @@ authoritative scalars), fifteen unchanged raw goldens and unchanged fixture inpu
 authored/gameplay identities and recorded timings. The final helper also compares
 raw host/reference checkpoints after releasing the last key. This remains scoped
 evidence, not a replacement for the final source's complete mandatory suites.
+
+The next partial mandatory run exposed 24 additional failures across five files.
+The recovery/chapter files reproduce all four failures on the unchanged baseline:
+actor sprites are now drawn after the original, and the approved Standard recipe
+is distinct from its authored map. Corrections verify the exact decoded original
+at the background layer and compare both complete Versus runtime maps with the
+approved adaptation. Both full files pass 26 checks.
+
+The four secured-cut HUD failures also reproduce on the baseline. The approved
+34-cell field crossing completes at tick 469, beyond the old 450-tick bound. All
+eight HUD tests now pass with an independent pure simulation and exact checkpoint;
+cue ownership, stop-on-capture, newer save notices and saved replay remain asserted.
+The Journey actor file similarly reproduces its stale untuned route timing. Its
+two tests now pass using the approved 469-tick lossless clear, exact host/reference
+state and the retained original's SHA/object identity.
+
+Four representative field-kit failures reproduce before UX0. The full revised
+file passes 18 cases: visible Start and the actual asynchronous Missions action
+exercise the current player flow, including nine saved-cut Back/input combinations.
+Retired picker, guarded Deploy and craft-mount contracts remain isolated component
+tests with one owner. Checkpoints, save contents, precise opener restoration and
+explicit Resume stay required. A separate direct Start/Continue case was added.
+One superseded CI initial-picture timeout did not reproduce locally; its existing
+loading assertion was retained. These full-file runs cover 54 distinct checks and
+do not claim an uninterrupted aggregate run or full mandatory-suite acceptance.
