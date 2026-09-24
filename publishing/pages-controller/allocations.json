@@ -523,6 +523,13 @@
       "versions": [
         "v0.95.0"
       ]
+    },
+    {
+      "id": "archive-65",
+      "repository": "mekhovov/revealline-archive-65",
+      "versions": [
+        "v0.96.0"
+      ]
     }
   ]
 }
