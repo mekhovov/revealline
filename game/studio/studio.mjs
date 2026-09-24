@@ -1138,7 +1138,14 @@ async function launchPreview(source, missionId, difficulty) {
     const pin = manifest.background;
     const [theme, artwork] = await Promise.all([
       loadPreviewTheme({ themeId: manifest.presentation.themeId, signal: controller.signal }),
-      pin ? loadPreviewArtwork(pin, { signal: controller.signal }) : null,
+      pin
+        ? (async () => {
+            const creatorDraft = new URLSearchParams(location.search).get('creator-draft');
+            if (!creatorDraft) return loadPreviewArtwork(pin, { signal: controller.signal });
+            const { loadCreatorDraftArtwork } = await import('../creator/draft-artwork.mjs');
+            return loadCreatorDraftArtwork(creatorDraft, pin, { signal: controller.signal });
+          })()
+        : null,
     ]);
     if (ticket !== previewRevision) return;
     result = prepareContentPreview(project, missionId, { difficulty, theme, artwork });
