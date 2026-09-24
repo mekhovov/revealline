@@ -1545,14 +1545,16 @@
           <p id="replay-operation-status" class="micro-note" hidden></p>
         </div>
         <div class="dialog-operation-controls">
-          <button id="download-replay" class="button primary">Download JSON</button
-          ><button class="button" data-close="replay-dialog">Close</button>
+          <button id="download-replay" class="button primary">Download raw JSON</button>
+          <button id="download-raw-replay" class="button" hidden>Download raw JSON</button>
+          <button class="button" data-close="replay-dialog">Close</button>
         </div>
       </div>
       <p>
-        The file contains the exact level, class recipe, inputs and final state. Paste its JSON into
-        the Playground to verify it.
+        The file contains the exact level, class recipe, inputs and final state. Load it in Replay
+        Theater to verify playback. Raw JSON also works in the Playground.
       </p>
+      <p id="replay-appearance-note" class="micro-note"></p>
       <textarea
         id="replay-json"
         aria-label="Exported replay JSON"
