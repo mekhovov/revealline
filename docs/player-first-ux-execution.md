@@ -6,12 +6,13 @@ requirements. Each independent feature is released before the next is accepted.
 
 ## Current delivery status
 
-Checkpoint on 24 September 2026: **v0.101.0 is published and its release-event
-Pages build passed. UX0 v0.100.0 remains a frozen historical candidate; its accepted
-source was superseded by the published v0.101.0 merge rather than republishing an
-older main snapshot. The bounded v0.102.0 player-craft correction is merged after
-exact-head PR gates passed, and its release qualification completed successfully.
-M0 v0.103.0 is the active candidate; UX1–UX6 remain unfinished.** The former
+Checkpoint on 24 September 2026: **the public root reports v0.104.0 from source
+`1deaae1a9a30c6146ecbb36c83cf43c9346a57c0`. It inherits v0.103.0's bounded
+player-craft cleanup and M0 preparation/input correction, and adds the qualified
+Classic current-rules launch repair. Archive68 preserves v0.101.0 with a complete
+1,133-file / 596,150,433-byte public audit. M1 v0.105.0 is the next isolated
+player-menu candidate; M2–M4 and
+UX1–UX6 remain unfinished.** The former
 PR320/v0.98 references below are retained as dated evidence. PR320 became conflicting
 after publication; its UX0-owned changes were reconciled onto the current main
 baseline without changing the immutable v0.98.0 tag.
@@ -25,9 +26,9 @@ Pages and public verification sequence.
 
 Player review of the published craft found that its detached white corner
 locator obscures the silhouette and has no clear gameplay meaning. The bounded
-v0.102.0 visual correction follows the already-reserved v0.101.0 release: remove that
-overlay from current Journey rendering while retaining the approved body assets,
-animated rotors, contact-radius ring, shield cue and simulation geometry.
+v0.103.0 correction removes that overlay from current Journey rendering while
+retaining the approved body assets, animated rotors, contact-radius ring, shield
+cue and simulation geometry. The public v0.104.0 source inherits that correction.
 
 ### Priority adjustment: compact native player menus
 
@@ -44,7 +45,10 @@ make ordinary play feel like an administration page.
 | M3    | Couch quick-start parity           | Versus and Team use the same header, mode selector and action order as Solo. Valid defaults make Start immediately available. Put difficulty, actors, match format, teamwork and assignments in collapsed Play options; remove duplicate All missions links and authoring language.                                                                                               |
 | M4    | Global route and device closure    | Prove every player destination, including release history, is reachable from the game menu. Verify exact return focus and responsive order with keyboard, controller/D-pad and touch at desktop, 1280×800, portrait and short landscape layouts.                                                                                                                                  |
 
-M0 is the v0.103.0 candidate after v0.102.0 public acceptance. M1–M4 each receive
+M0 is published in v0.103.0 and publicly inherited by v0.104.0. The v0.104.0
+selector and public-root version/source check are accepted; the separate v0.103.0
+GitHub release remains immutable without a dedicated Pages route.
+M1–M4 each receive
 their own next-unused version, PR, exact-source qualification, immutable release,
 Pages deployment and public-play check. The earlier UX1 rewards/gallery work then
 resumes, followed by UX3–UX6. New bulk content stays outside this critical path.
@@ -102,19 +106,19 @@ are reviewed/preserved work, not canonical branch qualification or public releas
 
 ### Next steps and ETA dependencies
 
-| Order                   | Next action                                                                                                                | ETA dependency                                                                                                                             |
-| ----------------------- | -------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
-| Release-train closure   | Publicly verify v0.101.0, then publish and verify the already-qualified v0.102.0 character correction.                     | One publisher owns tags and Pages. Existing frozen bytes remain immutable; v0.100.0 remains historical rather than replacing later main.   |
-| M0 — preparation safety | Ship v0.103.0 with stable Start/Continue ownership, held-Confirm protection and accessible cancellation.                   | Focused host, modeled Steam Deck, exact-source PR/build/release checks must pass.                                                          |
-| M1 — compact Home       | Move optional tuning into Play options; group the player menu and add More with Help, tools, About and Releases.           | Starts after M0 is public; preserve every existing route and return focus.                                                                 |
-| M2 — unified Pause      | Make Pause the only in-flight menu authority and remove duplicate top-bar actions and changing Skip confirmation.          | Requires active-flight, confirmation, settings/help return and held-input proof.                                                           |
-| M3 — Couch quick-start  | Apply the same compact hierarchy to Versus and Team, with valid defaults and collapsed advanced setup.                     | Requires both-player assignment and responsive/controller/touch checks.                                                                    |
-| M4 — navigation closure | Inventory all player destinations and qualify keyboard, D-pad/controller and touch across required layouts.                | Physical hardware remains distinct from modeled evidence.                                                                                  |
-| UX1-A, then UX1-B       | Exact-art Journey rewards/completed cards, then the compact complete mission gallery with previews and retained selection. | Resumes after M0–M4; each independently useful feature receives a verified release.                                                        |
-| UX3                     | Objective-led HUD, boards/touch controls and contextual teaching.                                                          | Depends on shared navigation and agreed viewport/input checks.                                                                             |
-| UX4                     | Countdown, short Retry, deliberate terminal Retry and named continuation releases.                                         | Depends on stable prepared-attempt/input ownership and outcome proofs.                                                                     |
-| UX5                     | Settings/difficulty, Collection/Records/replay, help and friendly content/storage recovery.                                | Preserve exact originals, ordinary player access and explicit recovery limitations.                                                        |
-| UX6                     | Complete cross-mode journeys, accessibility, performance and public regression.                                            | After feature closure; physical devices, human balance, replay portability and comprehensive offline evidence need separate qualification. |
+| Order                   | Next action                                                                                                                                          | ETA dependency                                                                                                                             |
+| ----------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| Release-train closure   | Completed: v0.104.0 is selected at the public root; Archive68 preserves v0.101.0 with exact public-byte evidence.                                    | v0.103.0 remains an immutable GitHub release without a separate Pages route; its source is inherited by v0.104.0.                          |
+| M0 — preparation safety | Published in v0.103.0 and publicly inherited by v0.104.0: stable Start/Continue ownership, held-Confirm protection and accessible Stop loading/Back. | Physical controller/touch checks remain separate from the modeled and browser evidence.                                                    |
+| M1 — compact Home       | PR381 / v0.105.0 candidate: optional tuning under Play options; compact player menu; More exposes Help, tools, About and Releases.                   | Preserve every existing route and exact return focus. The current-main replay validation failure is recorded as a pre-existing baseline.   |
+| M2 — unified Pause      | Make Pause the only in-flight menu authority and remove duplicate top-bar actions and changing Skip confirmation.                                    | Requires active-flight, confirmation, settings/help return and held-input proof.                                                           |
+| M3 — Couch quick-start  | Apply the same compact hierarchy to Versus and Team, with valid defaults and collapsed advanced setup.                                               | Requires both-player assignment and responsive/controller/touch checks.                                                                    |
+| M4 — navigation closure | Inventory all player destinations and qualify keyboard, D-pad/controller and touch across required layouts.                                          | Physical hardware remains distinct from modeled evidence.                                                                                  |
+| UX1-A, then UX1-B       | Exact-art Journey rewards/completed cards, then the compact complete mission gallery with previews and retained selection.                           | Resumes after M0–M4; each independently useful feature receives a verified release.                                                        |
+| UX3                     | Objective-led HUD, boards/touch controls and contextual teaching.                                                                                    | Depends on shared navigation and agreed viewport/input checks.                                                                             |
+| UX4                     | Countdown, short Retry, deliberate terminal Retry and named continuation releases.                                                                   | Depends on stable prepared-attempt/input ownership and outcome proofs.                                                                     |
+| UX5                     | Settings/difficulty, Collection/Records/replay, help and friendly content/storage recovery.                                                          | Preserve exact originals, ordinary player access and explicit recovery limitations.                                                        |
+| UX6                     | Complete cross-mode journeys, accessibility, performance and public regression.                                                                      | After feature closure; physical devices, human balance, replay portability and comprehensive offline evidence need separate qualification. |
 
 Later-phase delivery estimates begin after their predecessors are accepted.
 Do not promise calendar completion from the old targeted failure count or the
