@@ -71,6 +71,9 @@ for (const turnPolicy of ['immediate', 'grid-center'])
     p.$('pause-button').click();
     const before = authoritativeCheckpoint(p.rendered.run),
       owner = info(p).owner;
+    p.$('pause-mission-info-toggle').focus();
+    keyboard(p, 'Enter');
+    assert.equal(p.$('pause-mission-info').open, true);
     p.$('overlay-field-details').focus();
     keyboard(p, 'Enter');
     assert.equal(p.$('flight-details-dialog').open, true);
@@ -399,7 +402,11 @@ test('mounted controller navigates Pause to Details and reading; held Back canno
   ticks(p, 13);
   pulse(9);
   assert.equal(info(p).snapshot.paused, true);
-  for (let n = 0; n < 20 && p.doc.activeElement !== p.$('overlay-field-details'); n++) pulse(5);
+  for (let n = 0; n < 20 && p.doc.activeElement !== p.$('pause-mission-info-toggle'); n++) pulse(5);
+  assert.equal(p.doc.activeElement, p.$('pause-mission-info-toggle'));
+  pulse(0);
+  assert.equal(p.$('pause-mission-info').open, true);
+  pulse(5);
   assert.equal(p.doc.activeElement, p.$('overlay-field-details'));
   pulse(0);
   assert.equal(p.$('flight-details-dialog').open, true);
