@@ -45,15 +45,17 @@ returns no successor after the last level. The portable
 `revealline-creator-team-portable.v1` JSON carries the strict Team pack,
 generation provenance and all route evidence. Import passes through the public
 cooperative pack parser and replays every qualification; changed evidence is
-rejected.
+rejected. The production Team file picker accepts the portable MIME type and
+`.rlteamcampaign` files, completes that replay verification, prepares the
+existing Team picture boundary and still requires the player's separate Start
+action before launching the first arena.
 
 ## Compatibility and limits
 
-This addition does not change `revealline-creator-runtime.v1` Solo packages or
-`revealline-creator-runtime.v2` Solo/Versus packages. It also does not claim
-that the existing installed Custom player launches generated Team campaigns.
-The portable Team artifact currently has its own explicit API and MIME type;
-wiring it into the production Couch library, picture rewards, saved progress
-and creator media packaging remains integration work. Automated feasibility is
-not human balance, first-attempt success, physical-controller certification or
-mobile certification.
+This addition does not change image/video `.rlpack` runtime semantics, and the
+installed Custom player does not relabel Team campaigns as Solo content. The
+portable Team artifact has its own explicit API and MIME type and can launch
+through production Couch file intake. Persistent installed-library discovery,
+picture rewards, saved progress and creator media packaging remain integration
+work. Automated feasibility is not human balance, first-attempt success,
+physical-controller certification or mobile certification.

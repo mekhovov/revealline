@@ -435,6 +435,7 @@ test('legacy image-only .rlpack manifests retain their exact v1 shape', async ()
     'There are no enemies in this retained creator template.';
   project.missions[0].design.difficulty.threatDensity = 0;
   project.missions[0].presentation.backgroundAssetId = 'picture';
+  project.missions[0].modes = ['solo'];
   const pack = await prepareCreatorBundle(
     {
       project,
