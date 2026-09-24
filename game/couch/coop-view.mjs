@@ -21,6 +21,7 @@ import {
 import { prepareTeamCores, drawTeamCoreCue } from './coop-core-presentation.mjs';
 import { prepareTeamAnchors, drawTeamAnchor } from './coop-anchor-presentation.mjs';
 import { canvasTextFonts } from '../text-face.mjs';
+import { drawTrailImpactFront } from '../ui/actor-presentation.mjs';
 import { createCoopActorPresentation } from './coop-actor-presentation.mjs';
 import { coopCueScale, placeCoopCue } from './coop-actor-layout.mjs';
 import {
@@ -797,7 +798,20 @@ export function createCoopPainter(canvas) {
           ? impact.y
           : Math.floor(impact.cellIndex / run.width) + 0.5;
         if (!Number.isFinite(x) || !Number.isFinite(y)) continue;
-        drawTeamEmitterSpark(ctx, emitterFrames, { x, y }, palette);
+        if (impact.version === 'team-line-impact.v2') {
+          ctx.save();
+          ctx.scale(1 / 16, 1 / 16);
+          drawTrailImpactFront(
+            ctx,
+            { x, y, direction: impact.direction },
+            {
+              time: run.time * motionScale,
+              reduced,
+              screenScale: cssCell / 16,
+            },
+          );
+          ctx.restore();
+        } else drawTeamEmitterSpark(ctx, emitterFrames, { x, y }, palette);
       }
     } finally {
       ctx.restore();
