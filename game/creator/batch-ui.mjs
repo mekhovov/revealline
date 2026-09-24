@@ -280,6 +280,7 @@ export function createBatchCreatorController({
       : `This selection estimates ${mib(capacity.estimatedBytes)} for a ${mib(capacity.packageLimitBytes ?? capacity.limitBytes)} pack limit and ${mib(capacity.stagingBytes)} of ${mib(capacity.limitBytes)} managed staging space. Split the campaign or remove pictures before approval.`;
     nodes.capacity.classList.toggle('error', !capacity.fits);
     nodes.split.hidden = capacity.fits || included().length < 2;
+    nodes.split.disabled = !!running || !ready();
     focusAfterRender(previous, controls);
     notify();
   }
@@ -422,6 +423,7 @@ export function createBatchCreatorController({
   }
 
   function split() {
+    if (running || !ready()) return [];
     const selected = included();
     const size = Math.max(1, capacity.maxItemsPerPack);
     const chunks = [];
