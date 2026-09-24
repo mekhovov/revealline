@@ -22,6 +22,10 @@ from the completed match before advertising Rematch or a Journey ending.
 Incoming mission links join the captured boot-picture writer before preparing
 their exact original, then recheck the opening lease. Exercise delayed success,
 failed initial artwork and newer input without weakening media-generation guards.
+Await the preparation returned by a real Missions activation in host tests. Assert
+immediate loading and retained state separately; cold catalogue duration is not a
+five-second gameplay contract. Preserve exact checkpoint assertions when checking
+different runtimes and diagnose state differences before changing route fixtures.
 
 For compact Solo landscape, distinguish manual equipment from authored warning
 capability. `hasFieldWarningBand` uses the validated original level, including

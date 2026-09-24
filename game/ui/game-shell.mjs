@@ -173,8 +173,7 @@ export function attachGameShell({
       titleModeIntent = null;
       cancelTitle();
       if (destroyed) return;
-      onMissions(opener);
-      return;
+      return onMissions(opener);
     }
     beginMissionsVisit(opener);
     const visit = missionsVisit;
