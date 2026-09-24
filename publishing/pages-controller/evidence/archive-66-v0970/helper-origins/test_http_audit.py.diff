@@ -1,0 +1,31 @@
+--- archive65/test_http_audit.py
++++ archive66/test_http_audit.py
+@@ -11,7 +11,7 @@
+ from pathlib import Path
+ 
+ 
+-def row(path='releases/v0.96.0/site/game/example.json', body=b'{"ok":true}'):
++def row(path='releases/v0.97.0/site/game/example.json', body=b'{"ok":true}'):
+     return {'path': path, 'bytes': len(body), 'sha256': hashlib.sha256(body).hexdigest()}
+ 
+ 
+@@ -55,8 +55,8 @@
+         raw, rows, _ = binding.candidate_inventory()
+         for item in rows:
+             audit.validate_row(item)
+-        self.assertEqual(len(rows), 1120)
+-        self.assertEqual(sum(item['bytes'] for item in rows), 594895002)
++        self.assertEqual(len(rows), 1121)
++        self.assertEqual(sum(item['bytes'] for item in rows), 594897841)
+         self.assertEqual(audit.digest(raw), audit.INVENTORY_SHA)
+ 
+     def test_actual_held_checkout_matches_prepared_tree_and_inventory(self):
+@@ -257,7 +257,7 @@
+ 
+ class MetadataCapacityTests(unittest.TestCase):
+     def test_worst_case_three_attempts_all_rows_fits_below_free_guard(self):
+-        self.assertEqual(audit.MAX_WORST_CASE_METADATA_BYTES, 26738688)
++        self.assertEqual(audit.MAX_WORST_CASE_METADATA_BYTES, 26755072)
+         self.assertLess(audit.MAX_WORST_CASE_METADATA_BYTES, audit.MAX_PERSISTED_METADATA_BYTES)
+         self.assertLess(audit.MAX_PERSISTED_METADATA_BYTES, audit.MIN_FREE_METADATA_BYTES)
+ 

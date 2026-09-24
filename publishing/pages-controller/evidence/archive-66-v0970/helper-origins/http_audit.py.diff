@@ -1,0 +1,50 @@
+--- archive65/http_audit.py
++++ archive66/http_audit.py
+@@ -1,4 +1,4 @@
+-"""Read every hash-pinned Archive65 HTTP body without persisting payloads.
++"""Read every hash-pinned Archive66 HTTP body without persisting payloads.
+ 
+ Adapted from the Archive03 auditor. Public execution requires an explicit --run;
+ there is no URL, inventory, or output-path override. Tests use an injected local
+@@ -23,18 +23,18 @@
+ from audit_binding import validate_execution_binding, candidate_inventory
+ 
+ BASE_DIR = Path(__file__).resolve().parents[1]
+-BASE = 'https://mekhovov.github.io/revealline-archive-65/'
++BASE = 'https://mekhovov.github.io/revealline-archive-66/'
+ COMMIT = None
+ BINDING = None
+-INVENTORY_SHA = '16522f243b4eadbea8085ff5cecb6d796b2ca572fbe6247c467091c2162cdb92'
+-EXPECTED_FILES = 1120
+-EXPECTED_BYTES = 594895002
++INVENTORY_SHA = '1d1eb8d4dff55f46c8a3f322f1479ea96f2f89ee93f5e42b5cc759e8f62d5bc5'
++EXPECTED_FILES = 1121
++EXPECTED_BYTES = 594897841
+ SOCKET_TIMEOUT = 25
+ ATTEMPT_SECONDS = 90
+ AUDIT_SECONDS = 1800
+ MAX_ATTEMPTS = 3
+ CHUNK_BYTES = 65536
+-# Archive65 only: logs/authority snapshots, never payloads, use a bounded RAM volume.
++# Archive66 only: logs/authority snapshots, never payloads, use a bounded RAM volume.
+ MIN_FREE_METADATA_BYTES = 32 * 1024**2
+ MAX_PERSISTED_METADATA_BYTES = 28 * 1024**2
+ MAX_LOG_LINE_BYTES = 4096
+@@ -151,7 +151,7 @@
+             raise TimeoutError('Audit deadline reached before request')
+         request = urllib.request.Request(url, headers={
+             'Accept-Encoding': 'identity', 'Cache-Control': 'no-cache',
+-            'User-Agent': 'RevealLine-archive65-byte-audit/2.0',
++            'User-Agent': 'RevealLine-archive66-byte-audit/2.0',
+         })
+         result['requestStarted'] = True
+         with opener.open(request, timeout=min(SOCKET_TIMEOUT, max(0.1, attempt_deadline - started))) as response:
+@@ -226,7 +226,7 @@
+ 
+ def main():
+     parser = argparse.ArgumentParser(description=__doc__)
+-    parser.add_argument('--run', action='store_true', help='Audit the fixed public Archive65 inventory')
++    parser.add_argument('--run', action='store_true', help='Audit the fixed public Archive66 inventory')
+     parser.add_argument('--workers', type=int, choices=[4], default=4)
+     parser.add_argument('--prepare', action='store_true', help='Check local candidate only; no authority or public requests')
+     args = parser.parse_args()
