@@ -42,3 +42,22 @@ Limitations and preserved failures:
   an automation locator correction, not a product failure.
 - No performance timings, compact-device dimensions, physical controllers,
   human enjoyment or public-availability claims follow from this preview.
+
+## After the production metadata update
+
+With revision 63 metadata committed at `9eccd5e61`, the browser was reloaded
+before further checks. The Solo host source remained a frozen, uncommitted
+candidate at this point.
+
+- Fresh Solo Start decoded the retained revision-62 FPV craft/enemy again.
+- The normal Solo → Versus mode link and explicit leave confirmation opened
+  the race menu. Start race displayed FPV craft/enemies on both boards with
+  matching initial picture, actor positions, lives and score. No gameplay
+  parity or complete-match claim is inferred from this starting view.
+- The normal Versus → Team link and explicit leave confirmation opened Twin
+  landings. After readiness, Start together showed both numbered, independently
+  coloured Team craft and FPV enemies on the original shared picture. The
+  mission was paused; no Team clear, rescue or earned-Next was tested here.
+- The tab reported no warning/error console records through the Team pause.
+  Visible persistence warnings remained. The confirmations discarded only the
+  disposable attempts created by this verification, not a user's prior session.

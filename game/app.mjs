@@ -141,6 +141,14 @@ import { Soundscape, DEFAULT_TRACKS } from './ui/audio.mjs';
 import { createAudioMaster } from './ui/audio-master.mjs';
 import { createAudioPreferences } from './audio-preferences.mjs';
 import { createDisplayPreferences } from './display-preferences.mjs';
+import { createActorStylePreferences } from './actor-style-preferences.mjs';
+import {
+  prepareActorAppearanceLease,
+  prepareRetainedActorAppearanceLease,
+} from './presentation/actor-appearance-lease.mjs';
+import { createJourneyVisualThemeIdentityAdapter } from './presentation/journey-visual-theme-identities.mjs';
+import { prepareCampaignVisualThemeContext } from './presentation/visual-theme-identities.mjs';
+import { verifyIndexedInstalledPack } from './mission-library/pack-identity.mjs';
 import { attachMenuStyleControls } from './ui/menu-style-controls.mjs';
 import { attachPreferenceRestoration } from './ui/preference-restoration.mjs';
 import { settingsTabOwnsKey } from './ui/settings-panels.mjs';
@@ -913,6 +921,31 @@ try {
     },
   });
   const stopDisplayView = displayPreferences.subscribe(applyDisplayPreferences);
+  const actorPreferences = createActorStylePreferences({
+    window,
+    getStorage: () => localStorage,
+    writable: () =>
+      !practice && !courseSession && !courseEntry && persistenceReady && writer.writable,
+    onWarning: (message) => {
+      $('menu-actor-note').textContent =
+        message ||
+        'Applies to new missions and Next. Retry and Continue keep their original actors.';
+    },
+  });
+  let actorChangesReady = false;
+  const stopActorView = actorPreferences.subscribe(({ actorStyle, revision }) => {
+    $('menu-actor-style').value = actorStyle;
+    if (actorChangesReady && revision > 0) {
+      if (titleFlight?.actorsFresh) cancelTitleFlight();
+      cancelWorldAttempt();
+      if (resultAttempt?.kind !== 'retry') cancelResultAttempt();
+      if (!flightActorsReady && pictureResume !== null)
+        cancelPictureStart({ preserveResult: true, preserveWorld: true });
+    }
+  });
+  $('menu-actor-style').onchange = () => {
+    actorPreferences.set({ actorStyle: $('menu-actor-style').value });
+  };
   const displayRestoration = attachPreferenceRestoration({
     window,
     getSnapshot: () => displayPreferences.snapshot(),
@@ -1021,6 +1054,11 @@ try {
   let flightVisualLease = null,
     freshVisualAttempt = false,
     pictureVisualController = null;
+  let flightActorLease = null,
+    flightActorsReady = false,
+    actorJourneyIdentity = null,
+    actorMissionIndex = null;
+  const actorCustomPacks = new WeakSet();
   let flightPictures = null,
     picturePrewarm = null,
     pictureResume = null,
@@ -1719,6 +1757,108 @@ try {
       { baseURL: new URL('presentation/compiled/', location.href), ...options },
     );
   }
+  async function actorContent(entry, level, themeId, { signal, retained = false } = {}) {
+    if (practice || entry.activity === 'challenge') return null;
+    if (candidateHost?.owns(entry)) {
+      actorJourneyIdentity ??= createJourneyVisualThemeIdentityAdapter(authoredRoute.source, {
+        mode: 'solo',
+      });
+      const adapter = await actorJourneyIdentity;
+      return {
+        scope: 'journey',
+        content: await adapter.prepareHostSelection(
+          {
+            host: candidateHost,
+            selection: entry,
+            level,
+            association: { editionId: authoredRoute.id, contentThemeId: themeId, mode: 'solo' },
+          },
+          { signal },
+        ),
+      };
+    }
+    let scope = null;
+    if (!entry.sourcePackId && entry.baseCampaignKey === campaignKey(baseCampaign))
+      scope = 'builtin';
+    else if (entry.sourcePackId) {
+      const installed = packs;
+      const pack = installed.packs.find((item) => item.id === entry.sourcePackId);
+      if (!pack) return null;
+      if (actorCustomPacks.has(pack)) return null;
+      actorMissionIndex ??= getJSON('content/mission-library-index.json').catch((error) => {
+        actorMissionIndex = null;
+        throw error;
+      });
+      let index;
+      try {
+        index = await actorMissionIndex;
+      } catch (error) {
+        if (retained || signal?.aborted) throw error;
+        // This newly launched installed pack has not been accepted as an
+        // official actor owner. Lack of authority must never grant FPV; keep
+        // its already validated authored appearance available instead.
+        $('menu-actor-note').textContent =
+          'Actor compatibility is unavailable. This installed pack keeps its authored actors; retry a new mission when the catalogue is available.';
+        return null;
+      }
+      const row = index.missions.find(
+        (item) =>
+          item.packId === pack.id &&
+          item.campaignKey === entry.baseCampaignKey &&
+          item.levelId === level.id &&
+          item.modes.includes('solo'),
+      );
+      if (!row || !(await verifyIndexedInstalledPack(pack, row))) return null;
+      if (packs !== installed || signal?.aborted)
+        throw new DOMException('Actor content changed during preparation.', 'AbortError');
+      scope = 'trusted-pack';
+    }
+    // Uploaded/modified packs retain authored rendering. A preference, matching
+    // name or serialized pin cannot opt unknown content into this release.
+    if (!scope) return null;
+    return {
+      scope,
+      content: await prepareCampaignVisualThemeContext(
+        {
+          entry,
+          level,
+          association: { editionId: 'field-kit', contentThemeId: themeId, mode: 'solo' },
+        },
+        { signal },
+      ),
+    };
+  }
+  async function prepareAttemptActors(
+    entry,
+    level,
+    themeId,
+    { pin = undefined, style = actorPreferences.snapshot().actorStyle, ...options } = {},
+  ) {
+    if (pin === null) return null;
+    const identity = await actorContent(entry, level, themeId, {
+      ...options,
+      retained: pin !== undefined,
+    });
+    if (!identity) {
+      if (pin !== undefined)
+        throw new Error('This content has no accepted actor appearance owner.');
+      return null;
+    }
+    const dependencies = {
+      baseURL: new URL('presentation/compiled/', location.href),
+      currentManifestSha256: pagePresentationSnapshot?.manifestSha256 ?? null,
+      ...options,
+    };
+    return pin === undefined
+      ? prepareActorAppearanceLease({ ...identity, style }, dependencies)
+      : prepareRetainedActorAppearanceLease({ ...identity, pin }, dependencies);
+  }
+  function adoptFlightActors(next, ready = true) {
+    const prior = flightActorLease;
+    flightActorLease = next;
+    flightActorsReady = ready;
+    if (prior !== next) prior?.release();
+  }
   function adoptFlightVisualLease(next) {
     if (flightVisualLease === next) return true;
     const prior = flightVisualLease;
@@ -2305,6 +2445,8 @@ try {
       soundtrackPanel?.dispose();
       stopMasterView();
       stopDisplayView();
+      stopActorView();
+      actorPreferences.dispose();
       compactCredit.dispose();
       audioRestoration.dispose();
       displayRestoration.dispose();
@@ -2316,6 +2458,7 @@ try {
       flightPictures?.dispose();
       flightVisualLease?.release();
       flightVisualLease = null;
+      adoptFlightActors(null, false);
       candidateHost?.preparer.dispose();
       unifiedDisposed = true;
       unifiedChooser?.destroy();
@@ -2608,6 +2751,7 @@ try {
           presentationPins: flightPictures?.pins(),
           presentationLevel: campaign.levels.find((level) => level.id === run.levelId),
           ...(flightVisualLease ? { visualThemePin: flightVisualLease.pin() } : {}),
+          ...(flightActorLease ? { actorAppearancePin: flightActorLease.pin() } : {}),
           mediaIdentityCatalog: flightPictures?.identityCatalog,
           storage: localStorage,
           sessionKey,
@@ -2843,6 +2987,7 @@ try {
       presentationPins: flightPictures?.pins(),
       presentationLevel: campaign.levels.find((level) => level.id === run.levelId),
       ...(flightVisualLease ? { visualThemePin: flightVisualLease.pin() } : {}),
+      ...(flightActorLease ? { actorAppearancePin: flightActorLease.pin() } : {}),
       mediaIdentityCatalog: flightPictures?.identityCatalog,
       storage: localStorage,
       sessionKey,
@@ -3257,12 +3402,19 @@ try {
     ticket.controller.abort();
     ticket.visuals?.release();
     ticket.visuals = null;
+    ticket.actors?.release();
+    ticket.actors = null;
     const pictures = ticket.pictures;
     ticket.pictures = null;
     pictures?.dispose();
   }
   function worldAttemptCurrent(ticket) {
-    if (worldAttempt !== ticket || ticket.controller.signal.aborted) return false;
+    if (
+      worldAttempt !== ticket ||
+      ticket.controller.signal.aborted ||
+      actorPreferences.snapshot().revision !== ticket.actorChoice.revision
+    )
+      return false;
     try {
       if (assertWorldPlay(ticket.request.launch) !== ticket.intent) return false;
       if (ticket.replacement) missionReplacementCurrent(ticket.replacement);
@@ -3339,6 +3491,7 @@ try {
     const ticket = {
       request,
       intent,
+      actorChoice: actorPreferences.snapshot(),
       replacement,
       packs,
       controller: new AbortController(),
@@ -3404,6 +3557,12 @@ try {
         onStatus: request.onStatus,
       });
       assertCurrent();
+      ticket.actors = await prepareAttemptActors(entry, level, nextTheme.id, {
+        style: ticket.actorChoice.actorStyle,
+        signal: ticket.controller.signal,
+        onStatus: request.onStatus,
+      });
+      assertCurrent();
       const preparedAttempt = {
         kind: 'world-play',
         ticket,
@@ -3439,6 +3598,8 @@ try {
       if (worldAttempt === ticket) worldAttempt = null;
       ticket.visuals?.release();
       ticket.visuals = null;
+      ticket.actors?.release();
+      ticket.actors = null;
       const pictures = ticket.pictures;
       ticket.pictures = null;
       pictures?.dispose();
@@ -4976,6 +5137,7 @@ try {
       continuation: { direction: input.snapshotDirection() },
       presentationPins: flightPictures?.pins(),
       ...(flightVisualLease ? { visualThemePin: flightVisualLease.pin() } : {}),
+      ...(flightActorLease ? { actorAppearancePin: flightActorLease.pin() } : {}),
     });
   }
   function currentBackupSession(savedAt) {
@@ -5077,7 +5239,8 @@ try {
     restoreController = controller;
     let feedback,
       stagedPictures = null,
-      stagedVisuals = null;
+      stagedVisuals = null,
+      stagedActors = null;
     const abort = () => {
       controller.abort();
       // Title cancellation owns this field status too. Settle it immediately;
@@ -5123,6 +5286,19 @@ try {
           },
         );
       }
+      stagedActors = await prepareAttemptActors(
+        entry,
+        entry.campaign.levels.find((level) => level.id === restored.run.levelId),
+        restored.session.themeId,
+        {
+          pin: restored.session.actorAppearancePin ?? null,
+          signal: controller.signal,
+          onStatus(status) {
+            feedback.update(status);
+            onStatus?.(status);
+          },
+        },
+      );
       stagedPictures = newFlightPictures({
         nextRun: restored.run,
         nextRunId: restored.session.runId,
@@ -5173,6 +5349,8 @@ try {
       input.restoreDirection(restored.session.continuation?.direction ?? null);
       adoptFlightVisualLease(stagedVisuals);
       stagedVisuals = null;
+      adoptFlightActors(stagedActors);
+      stagedActors = null;
       setTheme();
       painter.setLevel?.(run.level, { seed });
       updateLoadout();
@@ -5208,12 +5386,14 @@ try {
       sessionBusy = false;
       stagedPictures?.dispose();
       stagedVisuals?.release();
+      stagedActors?.release();
       if (restoreController === controller) restoreController = null;
       refreshSavedFlight();
       await packCommits.reconcile();
     }
   }
   let titleFlight = null;
+  actorChangesReady = true;
   const titleFeedback = createOperationStatus($('shell-flight-status'));
   function cancelTitleFlight() {
     const ticket = titleFlight;
@@ -5222,6 +5402,8 @@ try {
     ticket.controller.abort();
     ticket.visuals?.release();
     ticket.visuals = null;
+    ticket.actors?.release();
+    ticket.actors = null;
     if (ticket.prewarm?.observe === ticket.observe) ticket.prewarm.observe = null;
     ticket.feedback.finish({
       state: 'cancelled',
@@ -5233,6 +5415,8 @@ try {
     return (
       titleFlight === ticket &&
       !ticket.controller.signal.aborted &&
+      (!ticket.actorsFresh ||
+        actorPreferences.snapshot().revision === ticket.actorChoice.revision) &&
       ticket.isCurrent() &&
       !document.hidden &&
       document.hasFocus() !== false &&
@@ -5278,6 +5462,8 @@ try {
     const feedback = titleFeedback.begin({ message: 'Preparing your flight…', stage: 'preparing' });
     const ticket = {
       controller: new AbortController(),
+      actorChoice: actorPreferences.snapshot(),
+      actorsFresh: kind !== 'continue' && !(started && !['won', 'lost'].includes(run.status)),
       feedback,
       isCurrent,
       run,
@@ -5394,12 +5580,31 @@ try {
             },
           );
         }
+        if (!flightActorsReady) {
+          ticket.actors = await prepareAttemptActors(
+            activeEntry,
+            campaign.levels[levelIndex],
+            theme.id,
+            {
+              style: ticket.actorChoice.actorStyle,
+              signal: ticket.controller.signal,
+              onStatus: ticket.observe,
+            },
+          );
+          ticket.actorsPrepared = true;
+        }
       }
       if (!titleFlightCurrent(ticket, expected) || !flightPictures?.ready(theme.id))
         throw new DOMException('Title launch changed. Your flight stays paused.', 'AbortError');
       if (ticket.visuals) {
         adoptFlightVisualLease(ticket.visuals);
         ticket.visuals = null;
+      }
+      if (!titleFlightCurrent(ticket, expected))
+        throw new DOMException('Title launch changed. Your flight stays paused.', 'AbortError');
+      if (ticket.actorsPrepared) {
+        adoptFlightActors(ticket.actors);
+        ticket.actors = null;
       }
       if (!titleFlightCurrent(ticket, expected))
         throw new DOMException('Title launch changed. Your flight stays paused.', 'AbortError');
@@ -5420,6 +5625,8 @@ try {
     } finally {
       ticket.visuals?.release();
       ticket.visuals = null;
+      ticket.actors?.release();
+      ticket.actors = null;
       if (ticket.prewarm?.observe === ticket.observe) ticket.prewarm.observe = null;
       if (titleFlight === ticket) {
         titleFlight = null;
@@ -6556,7 +6763,13 @@ try {
       controllerFocus()?.focus({ preventScroll: true });
   }
   function resultAttemptCurrent(ticket) {
-    if (resultAttempt !== ticket || ticket.controller.signal.aborted) return false;
+    if (
+      resultAttempt !== ticket ||
+      ticket.controller.signal.aborted ||
+      (ticket.kind !== 'retry' &&
+        actorPreferences.snapshot().revision !== ticket.actorChoice.revision)
+    )
+      return false;
     // Storage adapters can reenter the host. Inspect ownership after those reads.
     const backupLock = localStorage.getItem(`${libraryKey}.backup-lock`),
       savedRaw = localStorage.getItem(sessionKey);
@@ -6611,6 +6824,8 @@ try {
     ticket.pictures?.dispose();
     ticket.visuals?.release();
     ticket.visuals = null;
+    ticket.actors?.release();
+    ticket.actors = null;
     if (
       restoreFocus &&
       resultAttemptEpoch === epoch &&
@@ -6818,6 +7033,7 @@ try {
       return;
     const ticket = {
       kind,
+      actorChoice: actorPreferences.snapshot(),
       controller: new AbortController(),
       button: $(kind === 'next' ? 'next-button' : 'retry-button'),
       run,
@@ -6950,6 +7166,13 @@ try {
         });
         if (!resultAttemptCurrent(ticket))
           throw new DOMException('Preparation cancelled.', 'AbortError');
+        ticket.actors = await prepareAttemptActors(entry, level, nextTheme.id, {
+          style: ticket.actorChoice.actorStyle,
+          signal: ticket.controller.signal,
+          onStatus: ticket.feedback.update,
+        });
+        if (!resultAttemptCurrent(ticket))
+          throw new DOMException('Preparation cancelled.', 'AbortError');
       }
       const preparedPictures = ticket.pictures;
       const adopted = prepare({
@@ -7031,6 +7254,8 @@ try {
       ticket.pictures?.dispose();
       ticket.visuals?.release();
       ticket.visuals = null;
+      ticket.actors?.release();
+      ticket.actors = null;
       if (!ticket.adoptionEpoch) ticket.candidatePicture?.release();
     }
   }
@@ -7328,6 +7553,9 @@ try {
       const visualStillCurrent = adoptFlightVisualLease(pendingVisuals);
       if (preparedAttempt) preparedAttempt.ticket.visuals = null;
       if (!visualStillCurrent || !preparedOwnershipCurrent()) return false;
+      adoptFlightActors(preparedAttempt?.ticket.actors ?? null, !!preparedAttempt);
+      if (preparedAttempt) preparedAttempt.ticket.actors = null;
+      if (!preparedOwnershipCurrent()) return false;
     }
     refreshHUD();
     return true;
@@ -7356,7 +7584,8 @@ try {
       !practice &&
       !candidateHost?.owns(activeEntry) &&
       !!freshSoloVisualSelection(activeEntry, theme.id);
-    if (!flightPictures?.ready(theme.id) || needsFreshVisuals) {
+    const needsFreshActors = !practice && !flightActorsReady;
+    if (!flightPictures?.ready(theme.id) || needsFreshVisuals || needsFreshActors) {
       if (pictureResume) return;
       clearPictureRecovery();
       const owner = flightPictures,
@@ -7365,8 +7594,10 @@ try {
         selectedTheme = theme.id;
       const selectedEntry = activeEntry,
         selectedLevel = activeEntry.campaign.levels[levelIndex],
+        actorChoice = actorPreferences.snapshot(),
         controller = new AbortController();
-      let stagedVisuals = null;
+      let stagedVisuals = null,
+        stagedActors = null;
       pictureVisualController = controller;
       pictureResume = ticket;
       paused = true;
@@ -7397,6 +7628,12 @@ try {
                 onStatus: feedback.update,
               },
             );
+          if (needsFreshActors)
+            stagedActors = await prepareAttemptActors(selectedEntry, selectedLevel, selectedTheme, {
+              style: actorChoice.actorStyle,
+              signal: controller.signal,
+              onStatus: feedback.update,
+            });
         })
         .then(() => {
           if (
@@ -7413,6 +7650,7 @@ try {
             owner !== flightPictures ||
             run !== selectedRun ||
             theme.id !== selectedTheme ||
+            (needsFreshActors && actorPreferences.snapshot().revision !== actorChoice.revision) ||
             document.hidden ||
             !document.hasFocus() ||
             dialogOpen() ||
@@ -7422,6 +7660,10 @@ try {
           if (stagedVisuals) {
             adoptFlightVisualLease(stagedVisuals);
             stagedVisuals = null;
+          }
+          if (needsFreshActors) {
+            adoptFlightActors(stagedActors);
+            stagedActors = null;
           }
           if (
             pictureResume !== ticket ||
@@ -7447,6 +7689,7 @@ try {
         })
         .finally(() => {
           stagedVisuals?.release();
+          stagedActors?.release();
           if (pictureVisualController === controller) pictureVisualController = null;
           if (pictureResume === ticket) pictureResume = null;
         });
@@ -8257,7 +8500,7 @@ try {
     cancelRestore();
     cancelPictureStart();
     pause(true);
-    if (flightVisualLease && $('theme-select').value !== theme.id) {
+    if ((flightVisualLease || flightActorLease) && $('theme-select').value !== theme.id) {
       $('theme-select').value = theme.id;
       themeFeedback.begin({ message: '' }).finish({
         state: 'error',
@@ -8847,6 +9090,9 @@ try {
         document.documentElement.style.setProperty('--board-aspect', String(width / height));
       }
       painter.draw(this.boardTexture.context, run, Math.min(dt, 0.1), {
+        actorAppearance: flightActorLease
+          ? { style: flightActorLease.pin().style, snapshot: flightActorLease.snapshot }
+          : null,
         textFace: displayPreferences.snapshot().textFace,
         // The texture is detached; only the displayed Phaser canvas has a CSS size.
         displayCSSWidth: this.game.canvas.clientWidth,
@@ -9010,6 +9256,7 @@ try {
     if (unifiedLibraryLoading) return unifiedLibraryLoading;
     unifiedLibraryLoading = (async () => {
       const index = await getJSON('content/mission-library-index.json');
+      actorMissionIndex = Promise.resolve(index);
       const route = authoredRoute || (await loadAuthoredJourneyRoute('whole-spatial-v5'));
       const originalThemes = (await getJSON('content-design/themes.json')).themes;
       const libraryThemes = authoredJourneyUsesActorMaterials(route.id)
@@ -9142,8 +9389,13 @@ try {
           }
           return launchLibraryClassic(context.pack, context.selection, context);
         },
-        launchCustom: (binding, context) =>
-          launchLibraryClassic(binding.pack, binding.selection, context),
+        launchCustom: (binding, context) => {
+          // The verified library classified this exact immutable prepared pack,
+          // including same-ID modifications. Do not add an actor-download
+          // dependency to its existing authored gameplay path.
+          actorCustomPacks.add(binding.pack);
+          return launchLibraryClassic(binding.pack, binding.selection, context);
+        },
         progressClassic: (row) =>
           library.campaigns[row.campaignKey]?.clears?.[row.levelId] ? 'Cleared' : '',
         progressCustom: (binding) =>
