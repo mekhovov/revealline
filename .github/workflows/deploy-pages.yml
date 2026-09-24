@@ -66,17 +66,9 @@ jobs:
     outputs:
       runTests: ${{ steps.test_policy.outputs.runTests }}
       testMode: ${{ steps.test_policy.outputs.mode }}
-    env:
-      EXPECTED_SOURCE: ${{ github.event.pull_request.head.sha }}
     runs-on: ubuntu-latest
     steps:
-      - name: Check out source
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 1
-          ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.event_name == 'release' && github.event.release.tag_name || github.event_name == 'workflow_dispatch' && inputs.release_tag || github.ref }}
-
-      - name: Check out the workflow's source verifier
+      - name: Check out the workflow's test policy
         uses: actions/checkout@v4
         with:
           ref: ${{ github.workflow_sha }}
@@ -84,7 +76,6 @@ jobs:
           fetch-depth: 1
           persist-credentials: false
           sparse-checkout: |
-            scripts/check-source-identity.mjs
             publishing/test-policy.json
             publishing/test-policy.mjs
           sparse-checkout-cone-mode: false
@@ -97,11 +88,6 @@ jobs:
       - name: Read explicit automated-suite policy
         id: test_policy
         run: node .source-gate-automation/publishing/test-policy.mjs
-
-      - name: Verify exact tracked source before commands
-        run: |
-          test "$(git rev-parse HEAD)" = "$EXPECTED_SOURCE"
-          node .source-gate-automation/scripts/check-source-identity.mjs --root .
 
       - name: Record temporary fast-release policy
         env:
@@ -117,12 +103,6 @@ jobs:
               'Only exact-source identity, release-critical validation, and the production build block this PR.' \
               'No passing verdict is claimed for deferred checks. See `docs/fast-release-mode.md`.' >> "$GITHUB_STEP_SUMMARY"
           fi
-
-      - name: Verify tracked source after preflight
-        if: always()
-        run: |
-          test "$(git rev-parse HEAD)" = "$EXPECTED_SOURCE"
-          node .source-gate-automation/scripts/check-source-identity.mjs --root .
 
   test:
     if: >-
@@ -192,8 +172,8 @@ jobs:
     if: github.event_name == 'pull_request'
     env:
       EXPECTED_SOURCE: ${{ github.event.pull_request.head.sha }}
-    # Fast-release mode installs dependencies only once. The separate preflight
-    # remains a cheap, stable exact-source check for release evidence tooling.
+    # Preflight selects the test policy. This is the sole PR source checkout,
+    # and it verifies exact source identity before and after the build.
     needs: [preflight]
     runs-on: ubuntu-latest
     steps:

@@ -20,8 +20,9 @@ The `Build and deploy GitHub Pages` workflow keeps only the minimum release path
 6. the aggregate `release-ready` result.
 
 The preflight and build remain separate job names because frozen-release evidence binds those exact
-contexts, but dependency installation occurs only in the build job. Superseded runs for the same PR
-are cancelled by the workflow concurrency group. Pages previews use a partial sparse checkout of
+contexts. Preflight records only the test policy; the build job is the sole PR source checkout and
+performs the required identity check before and after the build. Superseded runs for the same PR are
+cancelled by the workflow concurrency group. Pages previews use a partial sparse checkout of
 the controller, workflow contracts, test policy, and two archive helpers while retaining all tags
 and on-demand Git objects needed to verify frozen source identities. Production publications remain
 serialized and are never cancelled by a newer run.
