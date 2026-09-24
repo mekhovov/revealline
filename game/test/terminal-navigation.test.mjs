@@ -43,6 +43,21 @@ function key(page, key, extra = {}) {
   target.emit('keyup', { key, code: key === ' ' ? 'Space' : key, ...extra });
   return event;
 }
+function observeAction(button, activate) {
+  const original = button.onclick;
+  let operation;
+  button.onclick = function (...args) {
+    operation = original.apply(this, args);
+    return operation;
+  };
+  try {
+    activate();
+    assert.equal(typeof operation?.then, 'function', 'The real activation exposes its operation.');
+    return operation;
+  } finally {
+    button.onclick = original;
+  }
+}
 function steps(page, count) {
   for (let i = 0; i < count; i++) page.frame();
 }
@@ -243,55 +258,64 @@ test('a legal terminal self-contact focuses Retry and keyboard retry starts only
   assert.deepEqual(page.errors, []);
 });
 
-test('held Confirm cannot cross Next adoption into another action; Pause requires fresh Resume', async (t) => {
-  const page = await win(t),
-    controls = controller(page, t);
-  const previous = page.rendered.run,
-    resultCheckpoint = authoritativeCheckpoint(previous);
-  page.$('next-button').focus();
-  controls.pad.buttons[0] = { pressed: true, value: 1 };
-  controls.frame();
-  for (let i = 0; i < 5; i++) controls.frame();
-  assert.equal(page.rendered.run, previous, 'Held Confirm does not replace a pending result.');
-  assert.deepEqual(authoritativeCheckpoint(previous), resultCheckpoint);
-  assert.equal(page.$('game-overlay').dataset.kind, 'won');
-  await settle(() => {
+test(
+  'held Confirm cannot cross Next adoption into another action; Pause requires fresh Resume',
+  { timeout: 120000 },
+  async (t) => {
+    const page = await win(t),
+      controls = controller(page, t);
+    const previous = page.rendered.run,
+      resultCheckpoint = authoritativeCheckpoint(previous);
+    page.$('next-button').focus();
+    const nextOperation = observeAction(page.$('next-button'), () => {
+      controls.pad.buttons[0] = { pressed: true, value: 1 };
+      controls.frame();
+    });
+    assert.equal(page.$('flight-preparation-status').hidden, false);
+    const status = page.$('flight-preparation-status').querySelector('[role="status"]');
+    assert.equal(status.getAttribute('aria-live'), 'polite');
+    assert.equal(status.textContent, 'Relay Orchard: Reading this flight’s picture choices…');
+    for (let i = 0; i < 5; i++) controls.frame();
+    assert.equal(page.rendered.run, previous, 'Held Confirm does not replace a pending result.');
+    assert.deepEqual(authoritativeCheckpoint(previous), resultCheckpoint);
+    assert.equal(page.$('game-overlay').dataset.kind, 'won');
+    await nextOperation;
     page.frame(0);
-    return page.doc.body.dataset.flightState === 'running';
-  });
-  const next = page.rendered.run;
-  assert.notEqual(next, previous);
-  assert.notEqual(next.levelId, previous.levelId);
-  assert.equal(next.tick, 0);
-  assert.equal(page.$('game-overlay').hidden, true, 'The accepted Next action starts directly.');
-  assert.equal(page.doc.activeElement.id, 'game-canvas');
-  const location = [next.player.x, next.player.y];
-  for (let i = 0; i < 6; i++) controls.frame();
-  assert.equal(page.rendered.run, next, 'Held Confirm cannot select another destination.');
-  assert.deepEqual([next.player.x, next.player.y], location, 'Menu Confirm adds no movement.');
-  page.key('Escape');
-  page.frame(0);
-  assert.equal(page.$('game-overlay').dataset.kind, 'pause');
-  assert.equal(page.doc.activeElement.id, 'start-button');
-  assert.equal(page.doc.body.dataset.flightState, 'paused');
-  const paused = authoritativeCheckpoint(next);
-  for (let i = 0; i < 6; i++) controls.frame();
-  assert.equal(page.doc.body.dataset.flightState, 'paused', 'Still-held Confirm cannot Resume.');
-  assert.deepEqual(authoritativeCheckpoint(next), paused);
-  controls.pad.buttons[0] = { pressed: false, value: 0 };
-  controls.frame();
-  assert.equal(key(page, 'Enter', { repeat: true }).defaultPrevented, true);
-  key(page, 'Escape', { repeat: true });
-  page.frame(0);
-  assert.equal(page.doc.body.dataset.flightState, 'paused');
-  assert.deepEqual(authoritativeCheckpoint(next), paused);
-  key(page, 'Enter');
-  steps(page, 6);
-  assert.equal(page.doc.body.dataset.flightState, 'running');
-  assert.equal(page.rendered.run, next);
-  assert.deepEqual([next.player.x, next.player.y], location);
-  assert.deepEqual(page.errors, []);
-});
+    assert.equal(page.doc.body.dataset.flightState, 'running');
+    const next = page.rendered.run;
+    assert.notEqual(next, previous);
+    assert.notEqual(next.levelId, previous.levelId);
+    assert.equal(next.tick, 0);
+    assert.equal(page.$('game-overlay').hidden, true, 'The accepted Next action starts directly.');
+    assert.equal(page.doc.activeElement.id, 'game-canvas');
+    const location = [next.player.x, next.player.y];
+    for (let i = 0; i < 6; i++) controls.frame();
+    assert.equal(page.rendered.run, next, 'Held Confirm cannot select another destination.');
+    assert.deepEqual([next.player.x, next.player.y], location, 'Menu Confirm adds no movement.');
+    page.key('Escape');
+    page.frame(0);
+    assert.equal(page.$('game-overlay').dataset.kind, 'pause');
+    assert.equal(page.doc.activeElement.id, 'start-button');
+    assert.equal(page.doc.body.dataset.flightState, 'paused');
+    const paused = authoritativeCheckpoint(next);
+    for (let i = 0; i < 6; i++) controls.frame();
+    assert.equal(page.doc.body.dataset.flightState, 'paused', 'Still-held Confirm cannot Resume.');
+    assert.deepEqual(authoritativeCheckpoint(next), paused);
+    controls.pad.buttons[0] = { pressed: false, value: 0 };
+    controls.frame();
+    assert.equal(key(page, 'Enter', { repeat: true }).defaultPrevented, true);
+    key(page, 'Escape', { repeat: true });
+    page.frame(0);
+    assert.equal(page.doc.body.dataset.flightState, 'paused');
+    assert.deepEqual(authoritativeCheckpoint(next), paused);
+    key(page, 'Enter');
+    steps(page, 6);
+    assert.equal(page.doc.body.dataset.flightState, 'running');
+    assert.equal(page.rendered.run, next);
+    assert.deepEqual([next.player.x, next.player.y], location);
+    assert.deepEqual(page.errors, []);
+  },
+);
 
 test('short results omit reading controls; overflow reading scrolls by keyboard and ends without launching', async (t) => {
   const previous = Object.getOwnPropertyDescriptor(globalThis, 'ResizeObserver'),
@@ -363,33 +387,43 @@ test('short results omit reading controls; overflow reading scrolls by keyboard 
   assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
 });
 
-test('result keyboard picture/Back and current appearance setup return keep the same earned attempt', async (t) => {
-  const page = await win(t),
-    checkpoint = authoritativeCheckpoint(page.rendered.run);
-  page.$('view-picture').focus();
-  key(page, 'Enter');
-  page.frame(0);
-  assert.equal(page.doc.body.dataset.flightState, 'picture');
-  key(page, 'Escape');
-  page.frame(0);
-  assert.equal(page.doc.body.dataset.flightState, 'result');
-  assert.equal(page.doc.activeElement.id, 'view-picture');
-  page.$('choose-appearance').focus();
-  key(page, 'Enter');
-  await settle(
-    () => page.$('journey-chooser')?.open && page.doc.activeElement.id === 'body-select',
-  );
-  assert.equal(page.$('journey-chooser').open, true);
-  assert.equal(page.doc.activeElement.id, 'body-select');
-  assert.equal(page.$('body-select').closest('details').open, true);
-  assert.equal(key(page, 'ArrowDown').defaultPrevented, false, 'Native select editing is retained');
-  page.$('journey-back').focus();
-  key(page, 'Enter');
-  assert.equal(page.$('journey-chooser').open, false);
-  assert.equal(page.doc.activeElement.id, 'choose-appearance');
-  assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
-  assert.deepEqual(page.errors, []);
-});
+test(
+  'result keyboard picture/Back and current appearance setup return keep the same earned attempt',
+  { timeout: 120000 },
+  async (t) => {
+    const page = await win(t),
+      checkpoint = authoritativeCheckpoint(page.rendered.run);
+    page.$('view-picture').focus();
+    key(page, 'Enter');
+    page.frame(0);
+    assert.equal(page.doc.body.dataset.flightState, 'picture');
+    key(page, 'Escape');
+    page.frame(0);
+    assert.equal(page.doc.body.dataset.flightState, 'result');
+    assert.equal(page.doc.activeElement.id, 'view-picture');
+    page.$('choose-appearance').focus();
+    const appearanceOperation = observeAction(page.$('choose-appearance'), () =>
+      key(page, 'Enter'),
+    );
+    assert.equal(page.$('mission-library-opening-status').getAttribute('role'), 'status');
+    assert.equal(page.$('mission-library-opening-status').textContent, 'Preparing missions…');
+    await appearanceOperation;
+    assert.equal(page.$('journey-chooser').open, true);
+    assert.equal(page.doc.activeElement.id, 'body-select');
+    assert.equal(page.$('body-select').closest('details').open, true);
+    assert.equal(
+      key(page, 'ArrowDown').defaultPrevented,
+      false,
+      'Native select editing is retained',
+    );
+    page.$('journey-back').focus();
+    key(page, 'Enter');
+    assert.equal(page.$('journey-chooser').open, false);
+    assert.equal(page.doc.activeElement.id, 'choose-appearance');
+    assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
+    assert.deepEqual(page.errors, []);
+  },
+);
 
 test('final installed campaign keeps its result while keyboard Missions opens the shared library and returns', async (t) => {
   const source = JSON.parse(

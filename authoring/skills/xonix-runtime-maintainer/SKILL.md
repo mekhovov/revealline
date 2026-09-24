@@ -1526,6 +1526,22 @@ Twin inner-receiver example and its limits are documented in
 
 Use the same authored-level resolver for picture preparation and Victory Story pin validation when gameplay tuning derives an execution level. Retain campaign/theme/story identity checks and historical readers. Verify real wins, Story, difficulty Restart and unchanged accepted originals. Menu activation must retain the tapped mission even when touch does not move native focus from a different card. Keep ordinary keyboard selection capture on Back; test cancelled and failed launches as well as newer-focus ownership. Home primary focus must select an eligible enabled visible action after boot, with Missions as the disabled-Continue fallback. Join real asynchronous menu operations in host tests and re-query installed cards after source refresh; never bypass departure confirmation or activate stale controls.
 
+## Terminal result preparation promises
+
+Result Next and appearance-to-Missions actions must return the promise of their
+existing owned preparation when the action is asynchronous. Propagate that promise
+without starting another operation or adding an await that changes activation,
+focus leases, cancellation, foreground checks or simulation timing. Retain
+synchronous/unsupported branches and explicit Resume behavior. Host fixtures
+observe actual controller South or native Enter, require immediate named live
+status, and join the real operation under a finite case bound. Reproduce cold
+bitmap and catalogue waits independently; do not lengthen global polling or bypass
+real input to hide an expiry. Keep accepted picture/checkpoint, tick-zero adoption,
+held Confirm and native editing assertions. A settled promise may represent
+failure or cancellation, so final-state and ownership checks remain mandatory.
+Record controlled-delay and complete-file results separately from full CI,
+browser latency and release acceptance.
+
 ## UX0 manual Versus content departure
 
 Treat an explicit mission selection and automatic Next as distinct entry actions

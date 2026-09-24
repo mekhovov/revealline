@@ -51,6 +51,16 @@ observe the existing DOM handler's returned operation without replacing the real
 input gesture or forcing focus. Restore fixture observers in finally, use a bounded
 case deadline, and reproduce suspected polling races with controlled catalogue
 delay before changing synchronization. Do not increase the global polling timeout.
+For result actions, propagate the promise of the existing owned preparation
+through Next and appearance-to-Missions handlers. Do not add a second operation,
+defer activation with a new await, alter cancellation/focus leases or change an
+otherwise synchronous branch. Tests should observe the actual South/Enter gesture,
+check immediate named status, and join that operation. Retain tick-zero adoption,
+held Confirm, explicit Resume, accepted originals and native editing assertions.
+Reproduce bitmap and catalogue delays independently before classifying a timeout.
+A fulfilled handler is not proof of successful adoption: assert the final state
+and preserve failure/cancellation checks.
+
 Diagnose platform-specific fixture differences against full states.
 A test-only portable golden must bound only witnessed per-route scalar differences
 and retain exact remaining state, host/reference and public replay checks. Never

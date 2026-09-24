@@ -3,6 +3,25 @@
 Candidate v0.98.0; not a published-release acceptance record. See the
 [execution board](player-first-ux-execution.md) for remaining UX1–UX6 work.
 
+## Latest release and qualification checkpoint
+
+v0.97.0 has scoped public acceptance in
+[the exact PR344 delivery record](https://github.com/mekhovov/revealline/blob/2f477c69af46cb5dfc817125b63670c90046357f/publishing/pages-controller/delivery/v0970-publication.md).
+The complete main HTTP audit passed 4,271 files / 625,227,678 bytes; native
+keyboard/session checks and their physical-disk limitations remain separate.
+This is source `1518e15e2`, not the UX0/v0.98 candidate.
+
+The original full PR run `35956795771` at `26fe20f8` has four observed failures:
+the two cold Missions cases recorded below and two terminal-navigation cases.
+Its final conclusion and any remaining failures are **pending**. The corrected
+cold-Missions checkpoint `b3963c54` and subsequent terminal overlay are not yet
+canonical PR qualification. Full-file and delayed checks do not qualify a newer
+head through the original run. Preserve every failed original; do not aggregate
+overlapping scoped results into a passing full-suite count.
+
+The two terminal cases, complete 11-case rerun and still-pending full CI are
+recorded at the end of this document. This dated update does not alter earlier evidence or its scope.
+
 ## Change and boundaries
 
 - Solo cold entry focuses Start or Continue after boot releases inert content.
@@ -515,3 +534,36 @@ UX1 retains a separate performance task: show stable gallery structure/loading
 immediately, cache exact catalogue metadata and prepare selected/visible entries
 lazily. That optimization must preserve foreground, generation and departure
 ownership; it is not included in this test synchronization change.
+
+### Terminal result operation ownership — correction pending full qualification
+
+The same original run exposes two `terminal-navigation.test.mjs` poll failures:
+
+- `held Confirm cannot cross Next adoption into another action; Pause requires fresh Resume`
+- `result keyboard picture/Back and current appearance setup return keep the same earned attempt`
+
+Both unchanged cases pass in a normal local baseline. Controlled delays reproduce
+the observed expiry without changing gameplay: 6.5 seconds in actual
+`createImageBitmap` preparation for Next, and 6.5 seconds in the real
+mission-library-index request for appearance/Missions. The existing fixture
+settles after five seconds. This is not evidence of an input or simulation failure.
+
+The narrow candidate returns the already-owned `prepareResultAttempt` promise
+from authored nonterminal Next and the existing `openUnifiedMissions` promise
+from `focusAppearance`. No new operation, await, timing change or input owner is
+introduced; other branches and existing stale/foreground/cancellation guards remain.
+
+Fixtures observe actual South/Enter activation, assert immediate named live status,
+then join the returned operation under their finite per-case bound. They retain
+all original run/checkpoint/picture checks, held-Confirm protection, tick-zero
+adoption, explicit Resume, exact focus and native ArrowDown behavior.
+The final controlled-delay run passes **two selected cases**, with nine other
+cases unselected. That is targeted evidence, not a full-file zero-skip pass.
+The separate complete terminal file passes **11 tests / 11 passed / zero failed,
+cancelled or skipped**, in 163.30 seconds. Together with the earlier complete
+Solo16 and Versus10 files, these are distinct scoped-file proofs, not a passing
+full-suite total. **The original hosted four-shard inventory and conclusion remain
+pending.** Final corrected-head PR and manual qualification are still required.
+
+Keep these source-host checks distinct from a public browser latency proof,
+physical-controller check, new countdown, terminal Retry redesign or UX0 acceptance.

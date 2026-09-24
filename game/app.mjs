@@ -6241,8 +6241,7 @@ try {
   function focusAppearance() {
     if ($('collection-dialog').open) $('collection-dialog').close();
     if (!practiceSession) {
-      void openUnifiedMissions(document.activeElement, { focusSetup: 'body-select' });
-      return;
+      return openUnifiedMissions(document.activeElement, { focusSetup: 'body-select' });
     }
     gameShell?.openMissions();
     missionPicker?.revealSetup();
@@ -8541,8 +8540,7 @@ try {
       if (run?.status !== 'won') return;
       const selection = authoredMissionSuccessor(activeEntry, levelIndex);
       if (!selection.atEnd && !scenario && run?.status === 'won') {
-        void prepareResultAttempt('next', selection.levelIndex);
-        return;
+        return prepareResultAttempt('next', selection.levelIndex);
       }
       if (selection.atEnd && !scenario) {
         void nextLibraryMission();
