@@ -1,0 +1,91 @@
+{
+  "format": "revealline-archive66-public-reconciliation.v1",
+  "status": "HTTP_PASS_NATIVE_PENDING",
+  "verifiedAt": "2026-09-24T05:42:35.426776+00:00",
+  "http": {
+    "status": "PASS",
+    "files": 1121,
+    "bytes": 594897841,
+    "attempts": 1121,
+    "failedFiles": 0,
+    "failedAttempts": 0,
+    "retriedFiles": 0,
+    "skipped": 0,
+    "uniqueExactPaths": true,
+    "allRowsMatchInventory": true,
+    "allRowsMatchAttempts": true,
+    "allFinalURLsExact": true,
+    "report": {
+      "path": "http/http-20260924T054015Z-ac1d3a74/http-report.json",
+      "bytes": 1638,
+      "sha256": "e3d593a7cd38605b63a967890b57085ad3a2494d9ab368a872986d96a94421fa"
+    },
+    "results": {
+      "path": "http/http-20260924T054015Z-ac1d3a74/http-results.jsonl",
+      "bytes": 913629,
+      "sha256": "74cb062fb0de18cd7f8375a6ccee774dc2f9d876f4110743240c0fc1aee22b7f"
+    },
+    "attemptsLog": {
+      "path": "http/http-20260924T054015Z-ac1d3a74/http-attempts.jsonl",
+      "bytes": 913629,
+      "sha256": "74cb062fb0de18cd7f8375a6ccee774dc2f9d876f4110743240c0fc1aee22b7f"
+    }
+  },
+  "finalAuthorities": [
+    {
+      "path": "final-authorities/artifacts.json",
+      "bytes": 1454,
+      "sha256": "14d69da4213091de6f270236483bd8ef687ce701ea16cf8665ddf228d2c8f5ff"
+    },
+    {
+      "path": "final-authorities/commit.json",
+      "bytes": 2763,
+      "sha256": "b4caffb5e95257b10e859789168e4fa7afed6592efee2a280b59c376f424277f"
+    },
+    {
+      "path": "final-authorities/deployment.json",
+      "bytes": 3856,
+      "sha256": "e8367ce68f891ec9372814d5aaafd555b52d6742aab0ddb5595b79b9cc10f950"
+    },
+    {
+      "path": "final-authorities/main.json",
+      "bytes": 358,
+      "sha256": "833d706ddd1dc3646be8e117ddc63afbe976f83d5c9b052bbdc558cf7f1a6982"
+    },
+    {
+      "path": "final-authorities/run.json",
+      "bytes": 13233,
+      "sha256": "06742b1cf20de122901912622c09941d94a6d2905716825c7be020dea6856889"
+    },
+    {
+      "path": "final-authorities/statuses.json",
+      "bytes": 6817,
+      "sha256": "5c52404d7dfeaf08ec9fa6b7cd6cd9c2a9e34bd0114e033fb0bceb1d5a6cbe55"
+    }
+  ],
+  "deployment": {
+    "repository": "mekhovov/revealline-archive-66",
+    "archiveCommit": "49b8f62624fef9d1bb80d72d5bba92d61dfb57ea",
+    "archiveTree": "346f208297297bf48838e86ceb01e6e5d7ac99ab",
+    "runId": 35960534164,
+    "deploymentId": 6630982630,
+    "deploymentStatusId": 18766514385,
+    "receiptArtifactId": 10791604998,
+    "unchangedAfterHTTP": true
+  },
+  "helperReview": {
+    "reviewer": "ux0_navigation",
+    "status": "APPROVED_READ_ONLY",
+    "scope": "Archive65\u219266 exact identities/counts only; same streaming transport/hash/MIME/deadline/retry and bounded metadata-write guards.",
+    "capacityWorstCaseBytes": 26755072,
+    "capacityPersistedLimitBytes": 29360128,
+    "freeSpaceGuardBytes": 33554432,
+    "testCount": 28,
+    "testFailures": 0
+  },
+  "limitations": [
+    "HTTP byte/MIME/exact-URL evidence only; native observation must be attached separately.",
+    "No payload bodies persisted by audit.",
+    "This preserves published v0.97.0; it is not public acceptance of UX0 v0.98.0."
+  ]
+}
