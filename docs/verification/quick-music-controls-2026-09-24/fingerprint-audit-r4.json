@@ -1,0 +1,174 @@
+{
+  "format": "revealline-quick-music-fingerprint-audit.v1",
+  "checkedAt": "2026-09-24T03:54:05.585847+00:00",
+  "baseCommit": "a4b4de89065b519bca13bb991319f2daee0fa73d",
+  "runtimeSourceCommit": "99ae9a939805e026820e27d8ead5eb7f1f09ac42",
+  "pullRequest": "https://github.com/mekhovov/revealline/pull/333",
+  "method": "Read the existing ordered source groups from scripts/produce-field-kit-theme.mjs at the exact base; compare every PR path against those groups; SHA-256 concatenate each ordered input. No PR file changes any group input or the generator.",
+  "groups": {
+    "ui": {
+      "orderedInputs": [
+        "game/ui/field-kit-components.css",
+        "game/ui/field-kit-compiled.css",
+        "game/presentation/host.mjs",
+        "game/presentation/team-runtime-slots.mjs",
+        "game/ui/operation-status.css",
+        "game/ui/operation-status.mjs",
+        "game/presentation/dom-ownership.mjs"
+      ],
+      "baseSha256": "6a18141c9ebae43c58feee7dd1c8ea6529a333bd80a43935624f45c482fcf865",
+      "candidateSha256": "6a18141c9ebae43c58feee7dd1c8ea6529a333bd80a43935624f45c482fcf865",
+      "changedInputs": []
+    },
+    "screens": {
+      "orderedInputs": [
+        "game/ui/field-kit-flow.css",
+        "game/ui/field-kit-surfaces.css",
+        "game/ui/field-kit-compiled.css",
+        "site/release-catalog.css"
+      ],
+      "baseSha256": "1800d7c4754f88e2ec36b104ab9e502cd5ba55ed2e12653609bd52e246548845",
+      "candidateSha256": "1800d7c4754f88e2ec36b104ab9e502cd5ba55ed2e12653609bd52e246548845",
+      "changedInputs": []
+    },
+    "motion": {
+      "orderedInputs": [
+        "authoring/motion-lab/render-character.mjs",
+        "game/ui/actor-presentation.mjs",
+        "game/presentation/journey-actor-materials.mjs"
+      ],
+      "baseSha256": "ef5ede43180597ba413e26f2042d9f99a06c2f70a224b0d8d5543d384688ea76",
+      "candidateSha256": "ef5ede43180597ba413e26f2042d9f99a06c2f70a224b0d8d5543d384688ea76",
+      "changedInputs": []
+    },
+    "effects": {
+      "orderedInputs": [
+        "game/ui/classic-view.mjs",
+        "game/ui/event-feedback.mjs",
+        "game/content-design/actor-marker.mjs",
+        "game/ui/lane-presentation.mjs",
+        "game/ui/render.mjs",
+        "game/ui/relay-view.mjs",
+        "game/ui/directional-view.mjs",
+        "game/enemy-catalog.mjs"
+      ],
+      "baseSha256": "13a140c0872eaa646b79f26c068b90527a1d0034131284bbbe9f5b5a5e3829d9",
+      "candidateSha256": "13a140c0872eaa646b79f26c068b90527a1d0034131284bbbe9f5b5a5e3829d9",
+      "changedInputs": []
+    },
+    "team": {
+      "orderedInputs": [
+        "game/couch/coop-view.mjs",
+        "game/couch/coop-actor-presentation.mjs",
+        "game/couch/coop-anchor-presentation.mjs",
+        "game/couch/coop-core-presentation.mjs",
+        "game/couch/coop-support-presentation.mjs",
+        "game/couch/coop-emitter-presentation.mjs",
+        "game/couch/coop-rescue-presentation.mjs",
+        "game/couch/coop-pilot-slots.mjs",
+        "game/couch/coop-enemy-slots.mjs",
+        "game/couch/coop-outcome-presentation.mjs",
+        "game/presentation/team-runtime-slots.mjs",
+        "game/ui/actor-presentation.mjs",
+        "game/presentation/catalog.mjs",
+        "game/couch/coop-actor-layout.mjs",
+        "game/couch/coop-terrain-trail.mjs",
+        "game/couch/coop-bonus-view.mjs",
+        "game/couch/candidate-team-pictures.mjs",
+        "game/content-design/material-markers.mjs",
+        "game/presentation/journey-actor-materials.mjs",
+        "authoring/motion-lab/render-character.mjs",
+        "game/ui/classic-view.mjs",
+        "game/ui/presentation-draw-image.mjs",
+        "game/ui/enemy-body-motion.mjs",
+        "authoring/motion-lab/animation.mjs",
+        "game/content-design/actor-marker.mjs",
+        "game/enemy-catalog.mjs"
+      ],
+      "baseSha256": "b3c93bdcafec051933cfccfa8daa8572ab21f678350544dcdd0f3de97c46606f",
+      "candidateSha256": "b3c93bdcafec051933cfccfa8daa8572ab21f678350544dcdd0f3de97c46606f",
+      "changedInputs": []
+    },
+    "audio": {
+      "orderedInputs": [
+        "game/ui/audio.mjs",
+        "game/ui/published-audio.mjs",
+        "game/ui/soundtrack-player.mjs",
+        "game/ui/audio-master.mjs",
+        "game/soundtrack.mjs",
+        "game/soundtrack-rights.mjs",
+        "game/soundtrack-bundle.mjs",
+        "game/soundtrack-share.mjs",
+        "game/soundtrack-source.mjs",
+        "game/ui/soundtrack-panel.mjs",
+        "game/ui/soundtrack-panel.css",
+        "game/soundtrack-albums.mjs",
+        "game/soundtrack-portable.mjs",
+        "game/content/soundtrack-catalogue.mjs"
+      ],
+      "baseSha256": "f8952e5df3886a92e6cb1e7fa174a1ca8c99a83199ebd5ede342fa736962d601",
+      "candidateSha256": "f8952e5df3886a92e6cb1e7fa174a1ca8c99a83199ebd5ede342fa736962d601",
+      "changedInputs": []
+    }
+  },
+  "changedRuntimePathsOutsideCurrentGroups": [
+    "game/app.mjs",
+    "game/couch/couch-music-host.mjs",
+    "game/couch/couch.mjs",
+    "game/couch/index.html",
+    "game/couch/relay-rescue.html",
+    "game/couch/relay-rescue.mjs",
+    "game/index.html",
+    "game/ui/quick-music-controls.css",
+    "game/ui/quick-music-controls.mjs"
+  ],
+  "productionFilesChanged": [],
+  "decision": "No --write or review-pin update is necessary under the current declared dependency graph. This does not extend historical Field Kit approval to the newly added quick controls. No provenance graph was expanded and no historical revision was rewritten.",
+  "independentSourceReview": {
+    "reviewer": "opening_theme_implementation",
+    "commit": "99ae9a939805e026820e27d8ead5eb7f1f09ac42",
+    "result": "No remaining source findings after the blocked-retry correction and unmuted red/green regression strengthening.",
+    "scope": "Bounded source review only. Shared control tests independently passed 10/10; exact final test/evidence-only delta was inspected. This is not visual, audio listening, physical-device, frozen-build or public release acceptance."
+  },
+  "hostedEvidence": {
+    "run": "https://github.com/mekhovov/revealline/actions/runs/35952936978",
+    "commit": "99ae9a939805e026820e27d8ead5eb7f1f09ac42",
+    "jobs": [
+      {
+        "name": "preflight",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "name": "release_gate",
+        "status": "completed",
+        "conclusion": "skipped"
+      },
+      {
+        "name": "build",
+        "status": "in_progress",
+        "conclusion": null
+      },
+      {
+        "name": "test",
+        "status": "completed",
+        "conclusion": "skipped"
+      }
+    ],
+    "interpretation": "Preflight passed validate/lint/both format checks and production reproducibility. The test job and release gate were skipped under repository policy, so this run does not establish complete qualification."
+  },
+  "remainingQualification": [
+    "Obtain explicit release-owner sequencing and qualify the exact eventual source; all four test shards and build must actually pass. Skipped jobs do not count.",
+    "Browser UI and interaction checks for Solo, Versus and Team main/pause rows: narrow and landscape layouts, standard/large text, visible focus, title truncation, loading/blocked/paused/playing labels, and Resume initially selected.",
+    "Actual keyboard B/N and opted-out shortcuts; custom gameplay conflicts, text fields, modifiers, repeat/composition, higher-priority handlers, background state, and nested practice ownership.",
+    "Actual touch and controller navigation/Confirm, including blocked playback retry without duplicate Play or accidental Pause; report physical devices separately from simulated tests.",
+    "Listen to pause/resume/next and transitions with effects and warnings audible, including next-while-paused and returning from overlays. Existing recordings gain no musical approval from these source tests.",
+    "Frozen artifact inspection, cold offline checks, public release markers and direct deployed playback acceptance remain required."
+  ],
+  "futureFingerprintChanges": "If later work changes a declared input, preserve historical ledger revisions, regenerate compatible source-stage records using the established hosted procedure, obtain exact-source scoped review, then append reviewed successor records only when justified. Re-run production-history, reproducibility and readiness checks; do not invent review evidence or inherit changed-input approval.",
+  "limitations": [
+    "Local disk is ENOSPC; audit used read-only Git bytes and GitHub metadata in memory.",
+    "No browser, screenshot, physical-device, controller, sound-quality or offline acceptance was performed during this audit.",
+    "The declared graph omits these host/quick-control files; unchanged fingerprints prove only unchanged declared dependencies, not complete coverage of all runtime UI/audio behavior."
+  ]
+}
