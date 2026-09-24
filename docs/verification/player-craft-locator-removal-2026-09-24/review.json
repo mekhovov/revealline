@@ -1,0 +1,37 @@
+{
+  "format": "revealline-scoped-renderer-continuation-review.v1",
+  "status": "bounded functional and visual correction review; frozen, public and physical-device acceptance pending",
+  "candidate": "5a2cedbc07725c27371b113ebed72c515e882579",
+  "scope": "Continue the reviewed effects and trail recipes after removing only the rejected detached white player-corner locator from the Solo renderer. The approved craft body, animated rotors, contact-radius cue, shield/grace cue, paint sizing and simulation geometry remain unchanged.",
+  "effects": {
+    "priorFingerprintSHA256": "475fea962731c07024adacf4e8df7692db23bff218d13768dff50971752a0ed5",
+    "currentFingerprintSHA256": "abd3aeef12041b55e76be3b026b52180f11df0f5b7a7f2a25ea560dacab0fdf1",
+    "changedInput": {
+      "path": "game/ui/render.mjs",
+      "priorSHA256": "b6a224bfa4700abe985a06512a52423b5124e26bc732181522127d7b1a204dfa",
+      "currentSHA256": "d2228d79b3ab344b0092f606db729e0559051e5055d58148cd0f6baea4c1bbd3",
+      "assessment": "Deletes the call that painted four detached corner brackets around the player. Active trail, secured contour, travelling impact, capture, failure, victory, pickup, shield, respawn and pressure painters remain byte-identical; collision and authoritative gameplay state remain unchanged."
+    },
+    "continuedSlots": 10
+  },
+  "qualification": {
+    "focusedAutomated": [
+      "The actor, FPV role and body-layout cohort passed 46 of 46 checks.",
+      "The integrated actor regression verifies no detached mitered corner strokes in normal, paused or reduced-effects states, retains the contact-radius arc, and preserves the authoritative checkpoint.",
+      "The preparation-focus successor passed 105 focused title, departure and modeled Steam Deck host checks without changing renderer behavior."
+    ],
+    "hosted": "PR376 exact head 921cc9f512bcafab0e93e882a555572d35ac976e passed preflight, deterministic build and release-ready in run 36026709326. The full hosted test job was skipped under the temporary repository waiver and is not claimed as passed.",
+    "visual": "A local built-game review confirmed the approved player body and contact cue render without the four corner brackets. This is not physical-device certification."
+  },
+  "preservation": [
+    "All original image, audio and font payload bytes remain unchanged.",
+    "Historical production revisions remain retained and selectable.",
+    "The correction does not alter collision footprints, mission runtime identities, progress, saved attempts, uploaded media or custom content."
+  ],
+  "excluded": [
+    "No complete whole-game visual-quality or enjoyment claim.",
+    "No complete keyboard, controller, touch, screen-reader, forced-colour or physical-device qualification.",
+    "No frozen-build, offline or public Pages acceptance until the corrected production ledger passes release qualification."
+  ],
+  "decision": "Continue only the ten effects and trail recipes when the exact effects fingerprint and this review record match. Any input or review-byte change reopens the group."
+}
