@@ -38,7 +38,7 @@ extended production checks are deferred and do not block merge or publication. T
 not claim that deferred checks passed. An already qualified immutable release is published from
 its original ZIP; publication does not rerun today's test sharder inside an older tag.
 
-`release-ready` is the stable aggregate PR result. In fast mode it requires exact-source preflight
+`release-ready` is the stable aggregate PR result. In fast mode it requires successful policy preflight
 and the build. In restored full mode it also requires every test shard. Avoid configuring individual
 matrix job names as required checks; the aggregate avoids stale required contexts when the matrix
 changes.
