@@ -34,9 +34,12 @@ Use HTTPS for a public site. Configure the host to serve `.mjs`/`.js` as JavaScr
 Source pull requests use `.github/workflows/deploy-pages.yml`. While the temporary
 [fast-release mode](fast-release-mode.md) is active, one exact-source path performs release-critical
 validation and the ordinary static build. Full tests, lint, formatting, native formatting, and
-extended production checks are deferred and do not block merge or publication. The workflow does
-not claim that deferred checks passed. An already qualified immutable release is published from
-its original ZIP; publication does not rerun today's test sharder inside an older tag.
+extended production checks are deferred from the pull-request workflow and do not block merge.
+Manual source qualification still requires the bounded lint, formatting, syntax, production
+reproduction/readiness, identity, validation, build and provenance gates before a release can be
+frozen. Full suites remain waived and are not represented as passing. An already qualified
+immutable release is published from its original ZIP; publication does not rerun today's test
+sharder inside an older tag.
 
 `release-ready` is the stable aggregate PR result. In fast mode it requires successful policy preflight
 and the build. In restored full mode it also requires every test shard. Avoid configuring individual
