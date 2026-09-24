@@ -58,7 +58,7 @@ jobs:
         run: node publishing/test-policy.mjs
 
       - name: Verify metadata bridges and bounded ZIP extraction
-        if: steps.test_policy.outputs.runTests == 'true'
+        if: github.event_name == 'pull_request' || steps.test_policy.outputs.runTests == 'true'
         run: |
           node --test publishing/test-policy.test.mjs publishing/pages-controller/*.test.mjs
           python3 -m unittest discover -s publishing/pages-controller -p 'test_*.py' -v

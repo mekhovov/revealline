@@ -1,0 +1,31 @@
+{
+  "format": "revealline-archive-browser-admission.v1",
+  "status": "PASS",
+  "archiveId": "archive-65",
+  "infrastructureCommit": "cca5acb23db5d0c7991255ddd08884d2a12634ca",
+  "deploymentId": 6630815744,
+  "versions": [
+    "v0.96.0"
+  ],
+  "scope": "Historical online preservation only: archive/title/mode routes, decoded artwork, bounded native keyboard Team capture and Versus movement/life loss, explicit Pause and guarded departure. This is not new UX0 acceptance.",
+  "evidence": [
+    {
+      "path": "evidence/archive-65-v0960/native-observation.json",
+      "sha256": "caf451ad0e0b6b48893abe79bbbe1180d57c3fbed30530a462451b58aea70e7d"
+    },
+    {
+      "path": "evidence/archive-65-v0960/final-reconciliation.json",
+      "sha256": "b0cf9e1aacaafdf26ee032566eec232ae82e1c6df6da6711e6b230a6bee45f58"
+    },
+    {
+      "path": "evidence/archive-65-v0960/evidence-manifest.json",
+      "sha256": "694fee61927f2cadb2fcda7e2cadc1aff1a4957a4e90dfd5b3fc6d39977c862e"
+    }
+  ],
+  "limitations": [
+    "The test computer's full physical disk caused existing origin IndexedDB writes to fail with FILE_ERROR_NO_SPACE. Both Couch hosts retained session play and visibly exposed Retry saving/Export. Persistence, backup, offline and successful recovery are not passed.",
+    "The historical storage failure message exposes a raw database error. Improve player-facing recovery copy under UX5; preserving this immutable release does not fix it.",
+    "This is bounded archive route/artwork/keyboard/play/pause acceptance, not UX0 v0.98 public acceptance, exhaustive progression, balance, hardware controller/touch, responsive/zoom/accessibility or audio certification.",
+    "No clean-console claim. No Solo progress replacement, earned award, export or data cleanup was performed. All temporary native tabs were closed."
+  ]
+}
