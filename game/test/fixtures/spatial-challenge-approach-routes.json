@@ -1,6 +1,6 @@
 {
   "format": "SpatialApproachRoutesV1",
-  "scope": "One explicit alternative: Two bays east-first occupied-region line-only connection, followed by a current-gp4 legal clear. Not evidence of two human-qualified approaches on every map.",
+  "scope": "Actual current-gp4 legal-input route alternatives, not human balance or mastery proof. Six comparison pairs include existing matrix witnesses and five new authored-prefix clears. Crossing’s three-cut belt route is timing-sensitive; failures and exact inputs are retained below.",
   "rows": [
     {
       "missionId": "two-bays",
@@ -18,7 +18,11 @@
         "playerSpeed": 1,
         "enemyDensity": 0,
         "adminOverride": false,
-        "overrides": { "enemySpeed": 1, "playerSpeed": 1, "enemyDensity": 1 }
+        "overrides": {
+          "enemySpeed": 1,
+          "playerSpeed": 1,
+          "enemyDensity": 1
+        }
       },
       "ruleset": "xonix-core.v6",
       "status": "no-loss-clear",
@@ -69,10 +73,1302 @@
         "maxCuts": 30,
         "failedAttempts": 48,
         "attemptCount": 177,
-        "failuresByCause": { "enemy-trail": 46, "enemy-player": 1, "self-contact": 1 }
+        "failuresByCause": {
+          "enemy-trail": 46,
+          "enemy-player": 1,
+          "self-contact": 1
+        }
       },
       "approach": "east-first",
-      "firstClosure": { "tick": 591, "claimedCells": 42, "retainedRegions": 3 }
+      "firstClosure": {
+        "tick": 591,
+        "claimedCells": 42,
+        "retainedRegions": 3
+      }
+    },
+    {
+      "missionId": "read-the-arrows",
+      "difficulty": "standard",
+      "seed": 1,
+      "turnPolicy": "immediate",
+      "sourceProjectIdentity": "23c1fea4f5fea27a",
+      "authoredSimulationIdentity": "c44931a1437b035e",
+      "simulationIdentity": "acd4f6ad82c84da8",
+      "levelIdentity": "9c1b2c3f505433ff",
+      "gameplayTuning": {
+        "version": "gameplay-pressure.v4",
+        "difficulty": "standard",
+        "enemySpeed": 1,
+        "playerSpeed": 1,
+        "enemyDensity": 0,
+        "adminOverride": false,
+        "overrides": {
+          "enemySpeed": 1,
+          "playerSpeed": 1,
+          "enemyDensity": 1
+        }
+      },
+      "ruleset": "xonix-core.v8",
+      "status": "no-loss-clear",
+      "coverage": 0.8235557545902373,
+      "coverageGoal": 0.82,
+      "ticks": 7816,
+      "cuts": 17,
+      "losses": 0,
+      "checkpoint": "521094a4e8f18567",
+      "replayVerified": true,
+      "sourceIdentity": {
+        "gitRevision": "ffb7b93c9570c35744a264e8ab6bab822a6546ea",
+        "dirty": true,
+        "sourceFiles": 536,
+        "sourceSha256": "3cebabeb0880f7f527f208cb3a69ed25c2a8f66cdff2057fc5f4d01dd80c4523",
+        "digestScope": "All non-test game .mjs files, route CLI, spatial assessment, and bent-route proposal helper.",
+        "stableDuringProbe": true
+      },
+      "segments": [
+        ["down", 193],
+        ["up", 231],
+        ["right", 407],
+        ["down", 476],
+        ["left", 40],
+        ["up", 469],
+        [null, 120],
+        ["down", 102],
+        ["left", 361],
+        ["right", 7],
+        ["up", 14],
+        ["left", 483],
+        ["right", 88],
+        ["down", 374],
+        [null, 60],
+        ["down", 7],
+        ["right", 41],
+        ["up", 374],
+        [null, 60],
+        ["down", 47],
+        ["right", 95],
+        ["down", 41],
+        ["right", 54],
+        ["down", 109],
+        ["left", 143],
+        ["right", 7],
+        ["up", 204],
+        ["right", 325],
+        ["down", 149],
+        ["left", 183],
+        ["right", 7],
+        ["left", 14],
+        ["down", 28],
+        ["right", 123],
+        ["left", 122],
+        ["down", 27],
+        ["left", 68],
+        ["down", 54],
+        ["right", 108],
+        ["up", 75],
+        ["down", 7],
+        ["up", 14],
+        ["right", 55],
+        ["down", 238],
+        ["right", 81],
+        ["up", 197],
+        ["down", 7],
+        ["up", 14],
+        ["right", 81],
+        ["down", 41],
+        ["right", 55],
+        ["up", 197],
+        ["down", 7],
+        ["up", 14],
+        ["right", 27],
+        ["down", 109],
+        ["right", 54],
+        ["up", 102],
+        ["down", 34],
+        ["right", 164],
+        ["down", 190],
+        ["left", 54],
+        ["up", 184]
+      ],
+      "closureCoverage": [
+        [186, 0.007165248544558889],
+        [1300, 0.09852216748768473],
+        [1816, 0.14420062695924765],
+        [2399, 0.23734885803851322],
+        [2903, 0.34393193013882667],
+        [3365, 0.42857142857142855],
+        [3847, 0.46484549932825797],
+        [4396, 0.5230631437527989],
+        [5264, 0.5754590237348858],
+        [5429, 0.5826242722794447],
+        [5890, 0.6014330497089118],
+        [6197, 0.6856247201074788],
+        [6482, 0.7232422749664129],
+        [6877, 0.767577250335871],
+        [7190, 0.7854903716972682],
+        [7381, 0.800268696820421],
+        [7816, 0.8235557545902373]
+      ],
+      "objectiveCaptures": [],
+      "searchSummary": {
+        "policy": "efficient",
+        "budget": 240000,
+        "used": 83923,
+        "candidateLimit": 24,
+        "maxCuts": 40,
+        "failedAttempts": 184,
+        "attemptCount": 286,
+        "failuresByCause": {
+          "enemy-trail": 78,
+          "boss-lane": 103,
+          "enemy-player": 3
+        },
+        "scope": "Final bounded search invocation only; authored prefix and earlier continuation searches are not included."
+      },
+      "approach": "fast-southbound",
+      "prefixEvidence": {
+        "ticks": 186,
+        "closures": 1,
+        "returnBounds": [30, 17, 42, 21],
+        "neutralizedLethalCells": 0
+      },
+      "firstClosure": {
+        "tick": 186,
+        "claimedCells": 16,
+        "retainedRegions": 1
+      }
+    },
+    {
+      "missionId": "read-the-arrows",
+      "difficulty": "standard",
+      "seed": 1,
+      "turnPolicy": "immediate",
+      "sourceProjectIdentity": "23c1fea4f5fea27a",
+      "authoredSimulationIdentity": "c44931a1437b035e",
+      "simulationIdentity": "acd4f6ad82c84da8",
+      "levelIdentity": "9c1b2c3f505433ff",
+      "gameplayTuning": {
+        "version": "gameplay-pressure.v4",
+        "difficulty": "standard",
+        "enemySpeed": 1,
+        "playerSpeed": 1,
+        "enemyDensity": 0,
+        "adminOverride": false,
+        "overrides": {
+          "enemySpeed": 1,
+          "playerSpeed": 1,
+          "enemyDensity": 1
+        }
+      },
+      "ruleset": "xonix-core.v8",
+      "status": "no-loss-clear",
+      "coverage": 0.8414688759516346,
+      "coverageGoal": 0.82,
+      "ticks": 8393,
+      "cuts": 20,
+      "losses": 0,
+      "checkpoint": "6020f9e82017888f",
+      "replayVerified": true,
+      "sourceIdentity": {
+        "gitRevision": "ffb7b93c9570c35744a264e8ab6bab822a6546ea",
+        "dirty": true,
+        "sourceFiles": 536,
+        "sourceSha256": "3cebabeb0880f7f527f208cb3a69ed25c2a8f66cdff2057fc5f4d01dd80c4523",
+        "digestScope": "All non-test game .mjs files, route CLI, spatial assessment, and bent-route proposal helper.",
+        "stableDuringProbe": true
+      },
+      "segments": [
+        ["left", 286],
+        ["down", 143],
+        ["right", 1],
+        ["down", 7],
+        ["up", 14],
+        ["left", 184],
+        [null, 120],
+        ["right", 88],
+        ["down", 333],
+        [null, 60],
+        ["down", 7],
+        ["up", 475],
+        ["right", 149],
+        ["down", 476],
+        ["right", 41],
+        ["up", 81],
+        ["right", 109],
+        ["down", 87],
+        ["right", 13],
+        ["up", 197],
+        ["down", 7],
+        ["up", 14],
+        ["right", 109],
+        ["down", 198],
+        [null, 60],
+        ["down", 7],
+        ["right", 68],
+        ["up", 217],
+        ["left", 21],
+        ["right", 7],
+        ["down", 81],
+        ["left", 320],
+        ["right", 142],
+        ["up", 322],
+        [null, 120],
+        ["down", 7],
+        ["up", 14],
+        ["right", 68],
+        ["down", 193],
+        ["right", 68],
+        ["up", 225],
+        ["down", 7],
+        ["up", 14],
+        ["right", 54],
+        ["down", 259],
+        ["up", 258],
+        ["right", 177],
+        ["down", 163],
+        ["left", 108],
+        ["up", 157],
+        ["down", 7],
+        ["up", 14],
+        ["left", 28],
+        ["down", 476],
+        ["up", 41],
+        ["right", 68],
+        ["down", 35],
+        [null, 120],
+        ["down", 7],
+        ["right", 27],
+        ["up", 306],
+        [null, 120],
+        ["down", 7],
+        ["up", 14],
+        ["right", 41],
+        ["down", 163],
+        ["left", 34],
+        ["right", 34],
+        ["down", 14],
+        ["right", 54],
+        ["down", 129],
+        [null, 60],
+        ["down", 7],
+        ["up", 108],
+        ["right", 143]
+      ],
+      "closureCoverage": [
+        [429, 0.0044782803403493054],
+        [635, 0.06269592476489028],
+        [1176, 0.13793103448275862],
+        [2336, 0.25839677563815494],
+        [2654, 0.2825794894760412],
+        [2871, 0.28884908195253023],
+        [3199, 0.33900582176444244],
+        [3572, 0.37214509628302733],
+        [3980, 0.3972234661889834],
+        [4444, 0.5082848186296463],
+        [4839, 0.5441110613524407],
+        [5139, 0.5799373040752351],
+        [5466, 0.6103896103896104],
+        [6336, 0.6587550380653829],
+        [6854, 0.7044334975369458],
+        [7005, 0.7111509180474698],
+        [7465, 0.7698163905060457],
+        [7844, 0.7859381997313032],
+        [8075, 0.80653828929691],
+        [8393, 0.8414688759516346]
+      ],
+      "objectiveCaptures": [],
+      "searchSummary": {
+        "policy": "efficient",
+        "budget": 240000,
+        "used": 167268,
+        "candidateLimit": 24,
+        "maxCuts": 40,
+        "failedAttempts": 347,
+        "attemptCount": 494,
+        "failuresByCause": {
+          "enemy-trail": 207,
+          "boss-lane": 139,
+          "enemy-player": 1
+        },
+        "scope": "Final bounded search invocation only; authored prefix and earlier continuation searches are not included."
+      },
+      "approach": "western-platform",
+      "prefixEvidence": {
+        "ticks": 429,
+        "closures": 1,
+        "returnBounds": [11, 11, 18, 16],
+        "neutralizedLethalCells": 0
+      },
+      "firstClosure": {
+        "tick": 429,
+        "claimedCells": 10,
+        "retainedRegions": 1
+      }
+    },
+    {
+      "missionId": "broken-yard",
+      "difficulty": "standard",
+      "seed": 1,
+      "turnPolicy": "immediate",
+      "sourceProjectIdentity": "23c1fea4f5fea27a",
+      "authoredSimulationIdentity": "0629ce094677b04d",
+      "simulationIdentity": "136a00a3131f5ae5",
+      "levelIdentity": "03dc614af4f4aad4",
+      "gameplayTuning": {
+        "version": "gameplay-pressure.v4",
+        "difficulty": "standard",
+        "enemySpeed": 1,
+        "playerSpeed": 1,
+        "enemyDensity": 0,
+        "adminOverride": false,
+        "overrides": {
+          "enemySpeed": 1,
+          "playerSpeed": 1,
+          "enemyDensity": 1
+        }
+      },
+      "ruleset": "xonix-core.v6",
+      "status": "no-loss-clear",
+      "coverage": 0.7605832549388523,
+      "coverageGoal": 0.76,
+      "ticks": 8139,
+      "cuts": 18,
+      "losses": 0,
+      "checkpoint": "81552b33e9115201",
+      "replayVerified": true,
+      "sourceIdentity": {
+        "gitRevision": "ffb7b93c9570c35744a264e8ab6bab822a6546ea",
+        "dirty": true,
+        "sourceFiles": 536,
+        "sourceSha256": "3cebabeb0880f7f527f208cb3a69ed25c2a8f66cdff2057fc5f4d01dd80c4523",
+        "digestScope": "All non-test game .mjs files, route CLI, spatial assessment, and bent-route proposal helper.",
+        "stableDuringProbe": true
+      },
+      "segments": [
+        ["down", 55],
+        ["right", 109],
+        ["down", 149],
+        ["left", 177],
+        ["up", 198],
+        [null, 60],
+        ["down", 34],
+        ["left", 326],
+        ["down", 54],
+        ["right", 327],
+        ["up", 122],
+        ["left", 14],
+        ["up", 163],
+        ["right", 54],
+        ["down", 150],
+        ["up", 68],
+        ["right", 109],
+        ["down", 54],
+        ["left", 102],
+        ["right", 7],
+        ["down", 95],
+        ["left", 190],
+        ["up", 217],
+        ["right", 108],
+        ["down", 150],
+        ["right", 217],
+        ["down", 108],
+        ["left", 7],
+        ["right", 7],
+        ["up", 40],
+        ["left", 434],
+        ["up", 109],
+        ["right", 102],
+        [null, 60],
+        ["right", 7],
+        ["down", 109],
+        ["left", 244],
+        ["down", 108],
+        ["right", 380],
+        ["down", 96],
+        ["up", 421],
+        ["left", 68],
+        ["up", 48],
+        ["down", 7],
+        ["up", 14],
+        ["right", 326],
+        ["down", 54],
+        ["right", 108],
+        ["up", 48],
+        ["down", 47],
+        ["right", 205],
+        ["down", 28],
+        ["left", 68],
+        ["up", 21],
+        [null, 60],
+        ["down", 20],
+        ["left", 68],
+        ["down", 109],
+        ["right", 137],
+        ["left", 95],
+        ["down", 68],
+        ["right", 96],
+        ["left", 68],
+        ["down", 54],
+        ["left", 54],
+        ["up", 116],
+        ["down", 7],
+        ["right", 27],
+        ["down", 272],
+        ["left", 41],
+        ["up", 81],
+        ["left", 108],
+        ["down", 75]
+      ],
+      "closureCoverage": [
+        [688, 0.07855126999059266],
+        [1482, 0.138758231420508],
+        [1985, 0.16603951081843837],
+        [2325, 0.18485418626528693],
+        [3085, 0.23424270931326435],
+        [3424, 0.25258701787394167],
+        [4116, 0.28269049858889933],
+        [5017, 0.33160865475070556],
+        [5113, 0.41157102539981183],
+        [5657, 0.5357478833490122],
+        [6214, 0.5898400752587017],
+        [6459, 0.6161806208842897],
+        [6583, 0.6208842897460018],
+        [6970, 0.660865475070555],
+        [7229, 0.6773283160865475],
+        [7528, 0.691439322671684],
+        [7827, 0.7351834430856068],
+        [8139, 0.7605832549388523]
+      ],
+      "objectiveCaptures": [],
+      "searchSummary": {
+        "policy": "efficient",
+        "budget": 240000,
+        "used": 133525,
+        "candidateLimit": 24,
+        "maxCuts": 40,
+        "failedAttempts": 214,
+        "attemptCount": 430,
+        "failuresByCause": {
+          "enemy-trail": 209,
+          "enemy-player": 5
+        },
+        "scope": "Final bounded search invocation only; authored prefix and earlier continuation searches are not included."
+      },
+      "approach": "southern-hazard",
+      "prefixEvidence": {
+        "ticks": 688,
+        "closures": 1,
+        "returnBounds": [25, 15, 31, 18],
+        "neutralizedLethalCells": 24
+      },
+      "firstClosure": {
+        "tick": 688,
+        "claimedCells": 167,
+        "retainedRegions": 1
+      }
+    },
+    {
+      "missionId": "crossing-complete",
+      "difficulty": "standard",
+      "seed": 1,
+      "turnPolicy": "immediate",
+      "sourceProjectIdentity": "23c1fea4f5fea27a",
+      "authoredSimulationIdentity": "825cff5aea05d9b2",
+      "simulationIdentity": "27d01618d9e78692",
+      "levelIdentity": "ada4b32a38a058a9",
+      "gameplayTuning": {
+        "version": "gameplay-pressure.v4",
+        "difficulty": "standard",
+        "enemySpeed": 1,
+        "playerSpeed": 1,
+        "enemyDensity": 0,
+        "adminOverride": false,
+        "overrides": {
+          "enemySpeed": 1,
+          "playerSpeed": 1,
+          "enemyDensity": 1
+        }
+      },
+      "ruleset": "xonix-core.v9",
+      "status": "no-loss-clear",
+      "coverage": 0.853156450137237,
+      "coverageGoal": 0.84,
+      "ticks": 8676,
+      "cuts": 18,
+      "losses": 0,
+      "checkpoint": "288cadae31bb527a",
+      "replayVerified": true,
+      "sourceIdentity": {
+        "gitRevision": "ffb7b93c9570c35744a264e8ab6bab822a6546ea",
+        "dirty": true,
+        "sourceFiles": 536,
+        "sourceSha256": "3cebabeb0880f7f527f208cb3a69ed25c2a8f66cdff2057fc5f4d01dd80c4523",
+        "digestScope": "All non-test game .mjs files, route CLI, spatial assessment, and bent-route proposal helper.",
+        "stableDuringProbe": true
+      },
+      "segments": [
+        [null, 180],
+        ["down", 89],
+        [null, 1],
+        ["down", 34],
+        [null, 1],
+        ["down", 278],
+        ["up", 272],
+        ["left", 54],
+        ["down", 340],
+        ["right", 108],
+        ["up", 35],
+        ["down", 47],
+        ["right", 27],
+        ["up", 346],
+        [null, 120],
+        ["down", 170],
+        ["right", 408],
+        ["up", 14],
+        ["left", 54],
+        ["up", 108],
+        ["right", 48],
+        [null, 60],
+        ["right", 7],
+        ["left", 108],
+        ["up", 150],
+        ["right", 109],
+        ["up", 68],
+        ["left", 489],
+        ["down", 190],
+        ["left", 469],
+        ["right", 75],
+        ["down", 320],
+        [null, 60],
+        ["down", 7],
+        ["right", 81],
+        ["up", 204],
+        ["left", 75],
+        ["right", 7],
+        ["left", 14],
+        ["up", 13],
+        ["right", 333],
+        [null, 120],
+        ["right", 7],
+        ["left", 122],
+        ["down", 218],
+        ["up", 421],
+        ["right", 658],
+        [null, 120],
+        ["right", 7],
+        ["down", 68],
+        ["left", 387],
+        [null, 120],
+        ["right", 7],
+        ["left", 14],
+        ["down", 54],
+        ["right", 54],
+        ["up", 88],
+        [null, 120],
+        ["down", 7],
+        ["up", 14],
+        ["right", 55],
+        ["down", 109],
+        ["left", 54],
+        ["up", 7],
+        ["down", 7],
+        ["right", 54],
+        ["down", 27],
+        ["right", 54],
+        ["up", 130]
+      ],
+      "closureCoverage": [
+        [269, 0.0027447392497712718],
+        [576, 0.011436413540713633],
+        [1174, 0.046203110704483075],
+        [1392, 0.0585544373284538],
+        [1812, 0.11482159194876487],
+        [2503, 0.26395242451967066],
+        [2734, 0.28042086001829825],
+        [3161, 0.31152790484903936],
+        [4384, 0.5118938700823422],
+        [4779, 0.5667886550777677],
+        [5206, 0.5997255260750228],
+        [5573, 0.6642268984446478],
+        [6033, 0.7081427264409881],
+        [7119, 0.7721866422689845],
+        [7701, 0.8206770356816102],
+        [8038, 0.8298261665141812],
+        [8404, 0.8394327538883806],
+        [8676, 0.853156450137237]
+      ],
+      "objectiveCaptures": [],
+      "searchSummary": {
+        "policy": "efficient",
+        "budget": 260000,
+        "used": 153339,
+        "candidateLimit": 24,
+        "maxCuts": 40,
+        "failedAttempts": 307,
+        "attemptCount": 407,
+        "failuresByCause": {
+          "enemy-trail": 292,
+          "enemy-player": 15
+        },
+        "scope": "Final bounded search invocation only; authored prefix and earlier continuation searches are not included."
+      },
+      "approach": "center-connection",
+      "prefixEvidence": {
+        "ticks": 576,
+        "closures": 2,
+        "returnBounds": [31, 29, 41, 32],
+        "neutralizedLethalCells": 0
+      },
+      "firstClosure": {
+        "tick": 269,
+        "claimedCells": 6,
+        "retainedRegions": 1
+      }
+    },
+    {
+      "missionId": "crossing-complete",
+      "difficulty": "standard",
+      "seed": 1,
+      "turnPolicy": "immediate",
+      "sourceProjectIdentity": "23c1fea4f5fea27a",
+      "authoredSimulationIdentity": "825cff5aea05d9b2",
+      "simulationIdentity": "27d01618d9e78692",
+      "levelIdentity": "ada4b32a38a058a9",
+      "gameplayTuning": {
+        "version": "gameplay-pressure.v4",
+        "difficulty": "standard",
+        "enemySpeed": 1,
+        "playerSpeed": 1,
+        "enemyDensity": 0,
+        "adminOverride": false,
+        "overrides": {
+          "enemySpeed": 1,
+          "playerSpeed": 1,
+          "enemyDensity": 1
+        }
+      },
+      "ruleset": "xonix-core.v9",
+      "status": "no-loss-clear",
+      "coverage": 0.859103385178408,
+      "coverageGoal": 0.84,
+      "ticks": 2623,
+      "cuts": 3,
+      "losses": 0,
+      "checkpoint": "5fd2ad31a0bc0bf9",
+      "replayVerified": true,
+      "sourceIdentity": {
+        "gitRevision": "ffb7b93c9570c35744a264e8ab6bab822a6546ea",
+        "dirty": true,
+        "sourceFiles": 536,
+        "sourceSha256": "3cebabeb0880f7f527f208cb3a69ed25c2a8f66cdff2057fc5f4d01dd80c4523",
+        "digestScope": "All non-test game .mjs files, route CLI, spatial assessment, and bent-route proposal helper.",
+        "stableDuringProbe": true
+      },
+      "segments": [
+        [null, 1440],
+        ["left", 177],
+        ["down", 272],
+        ["right", 110],
+        ["down", 68],
+        ["left", 341],
+        ["up", 69],
+        ["right", 42],
+        ["down", 1],
+        ["left", 103]
+      ],
+      "closureCoverage": [
+        [1855, 0.006404391582799634],
+        [2512, 0.06999085086916743],
+        [2623, 0.859103385178408]
+      ],
+      "objectiveCaptures": [],
+      "searchSummary": {
+        "policy": "efficient",
+        "budget": 260000,
+        "used": 56463,
+        "candidateLimit": 24,
+        "maxCuts": 40,
+        "failedAttempts": 35,
+        "attemptCount": 62,
+        "failuresByCause": {
+          "enemy-trail": 27,
+          "enemy-player": 8
+        },
+        "scope": "Final bounded search invocation only; authored prefix and earlier continuation searches are not included."
+      },
+      "approach": "west-belt",
+      "prefixEvidence": {
+        "ticks": 2512,
+        "closures": 2,
+        "returnBounds": [8, 15, 25, 18],
+        "neutralizedLethalCells": 42
+      },
+      "firstClosure": {
+        "tick": 1855,
+        "claimedCells": 14,
+        "retainedRegions": 1
+      }
     }
-  ]
+  ],
+  "pairs": [
+    {
+      "missionId": "two-bays",
+      "comparison": "West bay capture versus east occupied-region line-only connection.",
+      "routes": [
+        {
+          "difficulty": "standard",
+          "turnPolicy": "immediate",
+          "seed": 1
+        },
+        {
+          "difficulty": "standard",
+          "turnPolicy": "immediate",
+          "seed": 1,
+          "approach": "east-first"
+        }
+      ]
+    },
+    {
+      "missionId": "neon-remix",
+      "comparison": "Outside-west circuit connection versus a capture inside its open circuit.",
+      "routes": [
+        {
+          "difficulty": "standard",
+          "turnPolicy": "immediate",
+          "seed": 1
+        },
+        {
+          "difficulty": "standard",
+          "turnPolicy": "grid-center",
+          "seed": 1
+        }
+      ]
+    },
+    {
+      "missionId": "broken-yard",
+      "comparison": "Reach the detached northwestern landing versus neutralize the southern lethal cluster.",
+      "routes": [
+        {
+          "difficulty": "standard",
+          "turnPolicy": "immediate",
+          "seed": 1
+        },
+        {
+          "difficulty": "standard",
+          "turnPolicy": "immediate",
+          "seed": 1,
+          "approach": "southern-hazard"
+        }
+      ]
+    },
+    {
+      "missionId": "read-the-arrows",
+      "comparison": "Use the marked fast southbound crossing versus the western-platform bypass.",
+      "routes": [
+        {
+          "difficulty": "standard",
+          "turnPolicy": "immediate",
+          "seed": 1,
+          "approach": "fast-southbound"
+        },
+        {
+          "difficulty": "standard",
+          "turnPolicy": "immediate",
+          "seed": 1,
+          "approach": "western-platform"
+        }
+      ]
+    },
+    {
+      "missionId": "crossing-complete",
+      "comparison": "Connect central landings versus neutralize the western lethal belt.",
+      "routes": [
+        {
+          "difficulty": "standard",
+          "turnPolicy": "immediate",
+          "seed": 1,
+          "approach": "center-connection"
+        },
+        {
+          "difficulty": "standard",
+          "turnPolicy": "immediate",
+          "seed": 1,
+          "approach": "west-belt"
+        }
+      ]
+    },
+    {
+      "missionId": "twin-receivers",
+      "comparison": "Northern pocket/east shield first versus western boundary connection/west shield first.",
+      "routes": [
+        {
+          "difficulty": "standard",
+          "turnPolicy": "immediate",
+          "seed": 1
+        },
+        {
+          "difficulty": "standard",
+          "turnPolicy": "grid-center",
+          "seed": 1
+        }
+      ]
+    }
+  ],
+  "crossingPrefixTimingSearch": {
+    "scope": "Bounded authored-prefix observations; these are not full clears. Full replayable timing sensitivity inputs follow separately.",
+    "waypoints": [
+      ["left", 22.5],
+      ["down", "close"],
+      ["down", 17.5],
+      ["right", 30.5],
+      ["down", 22.5],
+      ["left", 5.5],
+      ["up", 17.5],
+      ["right", "close"]
+    ],
+    "attempts": [
+      {
+        "delay": 0,
+        "status": "life-lost",
+        "ticks": 930,
+        "cause": "enemy-trail",
+        "closures": 1,
+        "neutralized": 0
+      },
+      {
+        "delay": 60,
+        "status": "life-lost",
+        "ticks": 930,
+        "cause": "enemy-trail",
+        "closures": 1,
+        "neutralized": 0
+      },
+      {
+        "delay": 120,
+        "status": "life-lost",
+        "ticks": 930,
+        "cause": "enemy-trail",
+        "closures": 1,
+        "neutralized": 0
+      },
+      {
+        "delay": 180,
+        "status": "life-lost",
+        "ticks": 930,
+        "cause": "enemy-trail",
+        "closures": 1,
+        "neutralized": 0
+      },
+      {
+        "delay": 240,
+        "status": "life-lost",
+        "ticks": 930,
+        "cause": "enemy-trail",
+        "closures": 1,
+        "neutralized": 0
+      },
+      {
+        "delay": 300,
+        "status": "life-lost",
+        "ticks": 930,
+        "cause": "enemy-trail",
+        "closures": 1,
+        "neutralized": 0
+      },
+      {
+        "delay": 360,
+        "status": "life-lost",
+        "ticks": 1142,
+        "cause": "enemy-trail",
+        "closures": 1,
+        "neutralized": 0
+      },
+      {
+        "delay": 420,
+        "status": "life-lost",
+        "ticks": 1142,
+        "cause": "enemy-trail",
+        "closures": 1,
+        "neutralized": 0
+      },
+      {
+        "delay": 480,
+        "status": "life-lost",
+        "ticks": 1142,
+        "cause": "enemy-trail",
+        "closures": 1,
+        "neutralized": 0
+      },
+      {
+        "delay": 540,
+        "status": "life-lost",
+        "ticks": 1142,
+        "cause": "enemy-trail",
+        "closures": 1,
+        "neutralized": 0
+      },
+      {
+        "delay": 600,
+        "status": "life-lost",
+        "ticks": 1142,
+        "cause": "enemy-trail",
+        "closures": 1,
+        "neutralized": 0
+      },
+      {
+        "delay": 660,
+        "status": "life-lost",
+        "ticks": 1061,
+        "cause": "enemy-trail",
+        "closures": 0,
+        "neutralized": 0
+      },
+      {
+        "delay": 720,
+        "status": "life-lost",
+        "ticks": 1061,
+        "cause": "enemy-trail",
+        "closures": 0,
+        "neutralized": 0
+      },
+      {
+        "delay": 780,
+        "status": "life-lost",
+        "ticks": 1165,
+        "cause": "enemy-trail",
+        "closures": 0,
+        "neutralized": 0
+      },
+      {
+        "delay": 840,
+        "status": "life-lost",
+        "ticks": 1165,
+        "cause": "enemy-trail",
+        "closures": 0,
+        "neutralized": 0
+      },
+      {
+        "delay": 900,
+        "status": "life-lost",
+        "ticks": 1165,
+        "cause": "enemy-trail",
+        "closures": 0,
+        "neutralized": 0
+      },
+      {
+        "delay": 960,
+        "status": "life-lost",
+        "ticks": 1165,
+        "cause": "enemy-trail",
+        "closures": 0,
+        "neutralized": 0
+      },
+      {
+        "delay": 1020,
+        "status": "life-lost",
+        "ticks": 1945,
+        "cause": "enemy-trail",
+        "closures": 1,
+        "neutralized": 0
+      },
+      {
+        "delay": 1080,
+        "status": "life-lost",
+        "ticks": 1444,
+        "cause": "enemy-trail",
+        "closures": 0,
+        "neutralized": 0
+      },
+      {
+        "delay": 1140,
+        "status": "life-lost",
+        "ticks": 1446,
+        "cause": "enemy-trail",
+        "closures": 0,
+        "neutralized": 0
+      },
+      {
+        "delay": 1200,
+        "status": "life-lost",
+        "ticks": 1957,
+        "cause": "enemy-trail",
+        "closures": 1,
+        "neutralized": 0
+      },
+      {
+        "delay": 1260,
+        "status": "life-lost",
+        "ticks": 2066,
+        "cause": "enemy-trail",
+        "closures": 1,
+        "neutralized": 0
+      },
+      {
+        "delay": 1320,
+        "status": "life-lost",
+        "ticks": 2066,
+        "cause": "enemy-trail",
+        "closures": 1,
+        "neutralized": 0
+      },
+      {
+        "delay": 1380,
+        "status": "life-lost",
+        "ticks": 2066,
+        "cause": "enemy-trail",
+        "closures": 1,
+        "neutralized": 0
+      },
+      {
+        "delay": 1440,
+        "status": "route-exhausted",
+        "ticks": 2512,
+        "cause": null,
+        "closures": 2,
+        "neutralized": 42
+      }
+    ]
+  },
+  "crossingTimingSensitivity": {
+    "scope": "Replay identical three-cut inputs with only initial wait changed by ±0.5/±1 second at seed1, or change to seed2 at the original wait. One of six sampled cases clears; this is not an exhaustive timing-window estimate.",
+    "rows": [
+      {
+        "missionId": "crossing-complete",
+        "difficulty": "standard",
+        "seed": 1,
+        "turnPolicy": "immediate",
+        "delayTicks": 1320,
+        "simulationIdentity": "27d01618d9e78692",
+        "gameplayTuning": {
+          "version": "gameplay-pressure.v4",
+          "difficulty": "standard",
+          "enemySpeed": 1,
+          "playerSpeed": 1,
+          "enemyDensity": 0,
+          "adminOverride": false,
+          "overrides": {
+            "enemySpeed": 1,
+            "playerSpeed": 1,
+            "enemyDensity": 1
+          }
+        },
+        "status": "life-lost",
+        "ticks": 2066,
+        "cuts": 1,
+        "coverage": 0.006404391582799634,
+        "losses": 1,
+        "failureCause": "enemy-trail",
+        "checkpoint": "bcc88ddec689b0a2",
+        "replayVerified": true,
+        "segments": [
+          [null, 1320],
+          ["left", 177],
+          ["down", 272],
+          ["right", 110],
+          ["down", 68],
+          ["left", 119]
+        ],
+        "closureCoverage": [[1735, 0.006404391582799634]],
+        "neutralizedLethalCells": 0
+      },
+      {
+        "missionId": "crossing-complete",
+        "difficulty": "standard",
+        "seed": 1,
+        "turnPolicy": "immediate",
+        "delayTicks": 1380,
+        "simulationIdentity": "27d01618d9e78692",
+        "gameplayTuning": {
+          "version": "gameplay-pressure.v4",
+          "difficulty": "standard",
+          "enemySpeed": 1,
+          "playerSpeed": 1,
+          "enemyDensity": 0,
+          "adminOverride": false,
+          "overrides": {
+            "enemySpeed": 1,
+            "playerSpeed": 1,
+            "enemyDensity": 1
+          }
+        },
+        "status": "life-lost",
+        "ticks": 2066,
+        "cuts": 1,
+        "coverage": 0.006404391582799634,
+        "losses": 1,
+        "failureCause": "enemy-trail",
+        "checkpoint": "122ef0e840ce03ce",
+        "replayVerified": true,
+        "segments": [
+          [null, 1380],
+          ["left", 177],
+          ["down", 272],
+          ["right", 110],
+          ["down", 68],
+          ["left", 59]
+        ],
+        "closureCoverage": [[1795, 0.006404391582799634]],
+        "neutralizedLethalCells": 0
+      },
+      {
+        "missionId": "crossing-complete",
+        "difficulty": "standard",
+        "seed": 1,
+        "turnPolicy": "immediate",
+        "delayTicks": 1440,
+        "simulationIdentity": "27d01618d9e78692",
+        "gameplayTuning": {
+          "version": "gameplay-pressure.v4",
+          "difficulty": "standard",
+          "enemySpeed": 1,
+          "playerSpeed": 1,
+          "enemyDensity": 0,
+          "adminOverride": false,
+          "overrides": {
+            "enemySpeed": 1,
+            "playerSpeed": 1,
+            "enemyDensity": 1
+          }
+        },
+        "status": "no-loss-clear",
+        "ticks": 2623,
+        "cuts": 3,
+        "coverage": 0.859103385178408,
+        "losses": 0,
+        "failureCause": null,
+        "checkpoint": "5fd2ad31a0bc0bf9",
+        "replayVerified": true,
+        "segments": [
+          [null, 1440],
+          ["left", 177],
+          ["down", 272],
+          ["right", 110],
+          ["down", 68],
+          ["left", 341],
+          ["up", 69],
+          ["right", 42],
+          ["down", 1],
+          ["left", 103]
+        ],
+        "closureCoverage": [
+          [1855, 0.006404391582799634],
+          [2512, 0.06999085086916743],
+          [2623, 0.859103385178408]
+        ],
+        "neutralizedLethalCells": 84
+      },
+      {
+        "missionId": "crossing-complete",
+        "difficulty": "standard",
+        "seed": 1,
+        "turnPolicy": "immediate",
+        "delayTicks": 1500,
+        "simulationIdentity": "27d01618d9e78692",
+        "gameplayTuning": {
+          "version": "gameplay-pressure.v4",
+          "difficulty": "standard",
+          "enemySpeed": 1,
+          "playerSpeed": 1,
+          "enemyDensity": 0,
+          "adminOverride": false,
+          "overrides": {
+            "enemySpeed": 1,
+            "playerSpeed": 1,
+            "enemyDensity": 1
+          }
+        },
+        "status": "life-lost",
+        "ticks": 2525,
+        "cuts": 1,
+        "coverage": 0.006404391582799634,
+        "losses": 1,
+        "failureCause": "enemy-trail",
+        "checkpoint": "3c9b4625def4fd2f",
+        "replayVerified": true,
+        "segments": [
+          [null, 1500],
+          ["left", 177],
+          ["down", 272],
+          ["right", 110],
+          ["down", 68],
+          ["left", 341],
+          ["up", 57]
+        ],
+        "closureCoverage": [[1915, 0.006404391582799634]],
+        "neutralizedLethalCells": 0
+      },
+      {
+        "missionId": "crossing-complete",
+        "difficulty": "standard",
+        "seed": 1,
+        "turnPolicy": "immediate",
+        "delayTicks": 1560,
+        "simulationIdentity": "27d01618d9e78692",
+        "gameplayTuning": {
+          "version": "gameplay-pressure.v4",
+          "difficulty": "standard",
+          "enemySpeed": 1,
+          "playerSpeed": 1,
+          "enemyDensity": 0,
+          "adminOverride": false,
+          "overrides": {
+            "enemySpeed": 1,
+            "playerSpeed": 1,
+            "enemyDensity": 1
+          }
+        },
+        "status": "life-lost",
+        "ticks": 1925,
+        "cuts": 0,
+        "coverage": 0,
+        "losses": 1,
+        "failureCause": "enemy-trail",
+        "checkpoint": "6f7feceb8ff4b04d",
+        "replayVerified": true,
+        "segments": [
+          [null, 1560],
+          ["left", 177],
+          ["down", 188]
+        ],
+        "closureCoverage": [],
+        "neutralizedLethalCells": 0
+      },
+      {
+        "missionId": "crossing-complete",
+        "difficulty": "standard",
+        "seed": 2,
+        "turnPolicy": "immediate",
+        "delayTicks": 1440,
+        "simulationIdentity": "27d01618d9e78692",
+        "gameplayTuning": {
+          "version": "gameplay-pressure.v4",
+          "difficulty": "standard",
+          "enemySpeed": 1,
+          "playerSpeed": 1,
+          "enemyDensity": 0,
+          "adminOverride": false,
+          "overrides": {
+            "enemySpeed": 1,
+            "playerSpeed": 1,
+            "enemyDensity": 1
+          }
+        },
+        "status": "life-lost",
+        "ticks": 1781,
+        "cuts": 0,
+        "coverage": 0,
+        "losses": 1,
+        "failureCause": "enemy-trail",
+        "checkpoint": "603b0231be60b845",
+        "replayVerified": true,
+        "segments": [
+          [null, 1440],
+          ["left", 177],
+          ["down", 164]
+        ],
+        "closureCoverage": [],
+        "neutralizedLethalCells": 0
+      }
+    ]
+  }
 }

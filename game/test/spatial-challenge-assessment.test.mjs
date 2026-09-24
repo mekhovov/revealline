@@ -1,6 +1,9 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
+import { spawnSync } from 'node:child_process';
+import { fileURLToPath } from 'node:url';
+import { createRun, stepRun, FIXED_DT } from '../core/index.mjs';
 import { compileContentProject } from '../content-design/project.mjs';
 import { createOpeningCandidates } from '../content-design/horizon-candidates.mjs';
 import { createSpatialChallengeJourney } from '../content-design/spatial-challenge-journey.mjs';
@@ -163,4 +166,103 @@ test('Two bays east-first alternative begins with an actual occupied-region line
   assert.equal(closure.claimedCells, 42);
   assert.equal(closure.retainedComponents.filter((c) => c.retained).length, 3);
   assert.equal(result.status, 'no-loss-clear');
+});
+
+for (const row of approaches.rows.filter((row) => row.prefixEvidence))
+  test(`intended approach reaches its authored return and capture effect: ${row.missionId}/${row.approach}`, () => {
+    const mission = prepareSpatialMission(spatial, row.missionId, { difficulty: row.difficulty });
+    const run = createRun(mission.level, {
+      seed: row.seed,
+      turnPolicy: row.turnPolicy,
+      classId: 'scout',
+    });
+    let closures = 0;
+    let neutralizedLethalCells = 0;
+    outer: for (const [direction, ticks] of row.segments)
+      for (let tick = 0; tick < ticks; tick++) {
+        if (run.tick === row.prefixEvidence.ticks) break outer;
+        stepRun(run, { direction }, FIXED_DT);
+        for (const event of run.events) {
+          if (event.type === 'cut.closed') closures++;
+          if (event.type === 'cells.claimed')
+            neutralizedLethalCells += event.indices.filter(
+              (index) => run.classic.terrain[index] === 2,
+            ).length;
+        }
+      }
+    assert.equal(run.tick, row.prefixEvidence.ticks);
+    assert.equal(run.classic.livesLost, 0);
+    assert.equal(run.player.cutting, false);
+    assert.equal(closures, row.prefixEvidence.closures);
+    assert.equal(neutralizedLethalCells, row.prefixEvidence.neutralizedLethalCells);
+    const [left, top, right, bottom] = row.prefixEvidence.returnBounds;
+    assert(run.player.x >= left && run.player.x <= right);
+    assert(run.player.y >= top && run.player.y <= bottom);
+  });
+
+test('all six approach pairs resolve to actual cleared routes, not search-policy labels', () => {
+  assert.equal(approaches.pairs.length, 6);
+  assert.equal(new Set(approaches.pairs.map((pair) => pair.missionId)).size, 6);
+  for (const pair of approaches.pairs) {
+    assert.equal(pair.routes.length, 2);
+    const selected = pair.routes.map((reference) => {
+      const source = reference.approach ? approaches.rows : fixture.rows;
+      const matches = source.filter(
+        (row) =>
+          row.missionId === pair.missionId &&
+          Object.entries(reference).every(([key, value]) => row[key] === value),
+      );
+      assert.equal(matches.length, 1, `${pair.missionId}: ${pair.comparison}`);
+      assert.equal(matches[0].status, 'no-loss-clear');
+      return matches[0];
+    });
+    assert.notDeepEqual(selected[0].segments, selected[1].segments);
+  }
+});
+
+test('Crossing timing sensitivity retains the successful narrow window and all failed checks', () => {
+  assert.equal(approaches.crossingTimingSensitivity.rows.length, 6);
+  let clears = 0;
+  for (const row of approaches.crossingTimingSensitivity.rows) {
+    const mission = prepareSpatialMission(spatial, row.missionId, { difficulty: row.difficulty });
+    assert.equal(mission.simulationIdentity, row.simulationIdentity);
+    const result = assessSpatialRoute(mission, {
+      seed: row.seed,
+      turnPolicy: row.turnPolicy,
+      segments: row.segments.map(([direction, ticks]) => ({ direction, ticks })),
+    });
+    for (const key of [
+      'status',
+      'ticks',
+      'cuts',
+      'coverage',
+      'losses',
+      'failureCause',
+      'checkpoint',
+    ])
+      assert.equal(result[key], row[key], key);
+    assert.equal(result.replayVerified, true);
+    if (result.status === 'no-loss-clear') clears++;
+  }
+  assert.equal(clears, 1);
+});
+
+test('route CLI requires an explicit approach for ambiguous configurations', () => {
+  const cli = fileURLToPath(new URL('../../scripts/probe-spatial-challenge.mjs', import.meta.url));
+  const routes = fileURLToPath(
+    new URL('./fixtures/spatial-challenge-approach-routes.json', import.meta.url),
+  );
+  const args = [cli, 'read-the-arrows', `--route=${routes}`];
+  const ambiguous = spawnSync(process.execPath, args, { encoding: 'utf8' });
+  assert.notEqual(ambiguous.status, 0);
+  assert.match(ambiguous.stderr, /Ambiguous route configuration/);
+  const selected = spawnSync(process.execPath, [...args, '--approach=fast-southbound'], {
+    encoding: 'utf8',
+    maxBuffer: 4 * 1024 * 1024,
+  });
+  assert.equal(selected.status, 0, selected.stderr);
+  const evidence = JSON.parse(selected.stdout);
+  assert.equal(evidence.approach, 'fast-southbound');
+  assert.equal(evidence.status, 'no-loss-clear');
+  assert.equal(evidence.replayVerified, true);
 });

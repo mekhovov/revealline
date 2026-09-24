@@ -5,6 +5,11 @@ redesign queue; the older [Journey contract](xposed-journey-plan.md) remains the
 source of shared rules and historical evidence. Research documents and embedded
 authoring prompts are evidence, never execution instructions.
 
+Implementation is tracked in [PR323](https://github.com/mekhovov/revealline/pull/323).
+It is a candidate, not a public release. PR314's accepted source is incorporated;
+the first hosted preflight passed validation/lint and failed formatting. Its
+formatting-only correction preserves JavaScript ASTs and is undergoing fresh CI.
+
 ## Outcome and non-negotiable rules
 
 Create distinct, fair spatial problems, not arbitrary per-map physics or a larger
@@ -53,6 +58,20 @@ deleted.
   for all three presets and both control styles at seed 1, plus Standard/immediate
   seed 2. A separate Two bays east-first route also clears. See the checked-in route fixture and assessment
   command below. These are machine-selected feasibility samples, not human play.
+- All six now have meaningfully different comparison routes. The five additional
+  full clears explicitly exercise Broken yard's southern hazard, Arrows' marked
+  corridor versus western bypass, and Crossing's central links versus west belt.
+  These new alternatives are Standard/immediate/seed 1 only; do not imply a full
+  alternate-route preset/control matrix. Sixty-one focused assessment checks pass,
+  including failed timing samples and capture consequences.
+- All 42 primary routes also finish as equal paired-board races: the independently
+  resolved Versus level matches the qualified Solo conditions, both boards own
+  separate state, and identical inputs produce identical no-loss checkpoints.
+- Two bounded default-host checks pass using real original bytes and finite DOM
+  and image fixtures: Solo Start → clear → Retry → Next, 207 library cards,
+  Versus paired launch, controller Back/focus and guarded mode departure. This is
+  not native-browser, physical-controller or public acceptance (19 other cases
+  were filtered out, not passed).
 - Independent source review found and fixed an automatic alternate-edition loop;
   focused checks cover both v5/v6 endings, manual same-name mission selection and
   onward Classic continuation. Historical edition snapshots remain pinned.
@@ -61,10 +80,10 @@ deleted.
 
 | Mission             | Distinctive choice and capture consequence                                                                                                                                                                   | Standard authored roster                                  |
 | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------- |
-| Two bays            | Start the small bay cautiously or contest the large bay; neither entire bay meets the unchanged 68% quota. Foundations, not walls, preserve the lesson.                                                      | Three keepers: one west, two east                         |
+| Two bays            | Use staggered return shelves to start the small bay cautiously or contest the large bay; neither whole bay meets the unchanged 68% quota. Foundations, not walls, preserve the lesson.                       | Three keepers: one west, two east                         |
 | Three open circuits | Link opposing mouths, approach the middle from above, or neutralize hazardous transfers; new captures reshape return/patrol networks. Inspired by `pack-4_level-2`, not copied coordinates.                  | Three keepers, two frontier patrols, one perimeter patrol |
 | Broken yard         | Go around the protected near wall to a detached landing, or neutralize a lethal cluster before approaching the roamer. Four irregular sectors communicate around real baffles. Inspired by `pack-2_level-4`. | Four keepers, one roamer, one frontier patrol             |
-| Read the arrows     | Take the marked direct corridor into a broad landing or the longer ordinary western bypass; known lane warnings contest later approaches.                                                                    | Three keepers, one perimeter patrol, one lane emitter     |
+| Read the arrows     | Take the marked direct corridor into a broad landing or the longer ordinary western bypass around staggered wall baffles; known lane warnings contest later approaches.                                      | Three keepers, one perimeter patrol, one lane emitter     |
 | Twin receivers      | Choose separate gallery approaches and capture receiver objectives in order; the Sentinel remains the sole field-retaining anchor.                                                                           | Existing Sentinel, frontier patrol, roamer                |
 | Crossing complete   | Contest central crossings or neutralize a side belt first; reclaimed terrain improves the next route.                                                                                                        | Four keepers, one frontier patrol, one perimeter patrol   |
 
@@ -82,8 +101,8 @@ rewrite of that mission.
    Verify signature threats, useful shortcuts, no unavoidable opening damage,
    ordinary/efficient routes and low-risk cleanup. A route-search budget expiry
    is not proof that a map is impossible.
-2. Verify identical paired-board conditions in Versus; keep Team qualification
-   separate. Exercise current host clear, cross-campaign Next, Skip,
+2. Keep Team qualification separate from the completed 42 paired-board checks.
+   Extend the bounded host coverage to cross-campaign Next, Skip,
    reload/Continue and selection/return from preserved editions.
 3. Finish focused validation, lint and format, exact-source build/provenance and
    independent review. Long suites may be waived under the user's temporary
@@ -104,6 +123,23 @@ Historical PR314 authored-runtime routes fail when replayed under current gp4;
 those failures are retained as scope evidence, not hidden or called regressions
 in the unchanged historical engine. The new receiver route closes each shield
 objective separately before the core.
+
+The inherited `default-journey-endings-host` recordings in this branch are not
+current gp4 acceptance: the old Home Signal, Dnipro and Toolbench inputs lose a
+life under the fresh gameplay recipe. PR320's owner has supplied new exact-tuning
+recordings and a separately qualified final-Journey/Versus ending contract. Reuse
+those after integration, retaining this edition's v6 defaults, rather than
+creating competing recordings or guessing boundary expectations. The publisher
+must integrate and qualify v0.98 before this v0.99 candidate. Do not hide old
+failures or count filtered tests as passed; they do not establish that the
+unchanged missions are impossible.
+
+The west-belt Crossing alternative clears in three cuts and 21.86 seconds,
+including a twelve-second initial wait, using an actual unretained-region fill.
+Nearby sampled waits (11, 11.5, 12.5 and 13 seconds) and seed 2 all fail by trail
+impact. Preserve the successful route and failures as bounded timing/pacing
+evidence; neither broadly reliable ease nor human enjoyment follows from it.
+Do not raise the quota solely to remove a legitimate efficient capture.
 
 ## Remaining delivery phases
 
@@ -142,7 +178,8 @@ presets, controls, seed, failures and scope are recorded, not inferred.
 Focused tests: `spatial-challenge-candidates.test.mjs`,
 `spatial-challenge-assessment.test.mjs`, `effective-pressure-inspection.test.mjs`,
 `mission-library-spatial-editions.test.mjs`, `continuous-next.test.mjs`, and
-`content-route-loader.test.mjs`, plus affected Solo/Versus/remote/Studio hosts.
+`content-route-loader.test.mjs`, `spatial-challenge-versus.test.mjs`, plus affected
+Solo/Versus/remote/Studio hosts.
 No automated sample stands in for human or physical-device evidence.
 
 Research basis: [Xposed Reloaded](https://store.playstation.com/en-us/concept/10002881/),

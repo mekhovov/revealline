@@ -33,7 +33,7 @@ test('queryless Versus exposes all 91 current missions and starts from its focus
   assert.equal(p.$('race-level').children.length, 91);
   assert.equal(
     p.$('race-journey-note').textContent,
-    'New Journey / 91 missions. Original pictures need a connection; core offline preparation does not save them.',
+    'New Journey / 91 missions. Balance review pending. Original pictures need a connection; core offline preparation does not save them.',
   );
   assert.doesNotMatch(p.$('race-journey-note').textContent, /unvalidated|test build/i);
   assert.match(p.$('race-summary').textContent, /Horizon School/);
