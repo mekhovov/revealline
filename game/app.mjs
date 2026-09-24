@@ -144,6 +144,7 @@ import { createAudioMaster } from './ui/audio-master.mjs';
 import { createAudioPreferences } from './audio-preferences.mjs';
 import { createDisplayPreferences } from './display-preferences.mjs';
 import { createActorStylePreferences } from './actor-style-preferences.mjs';
+import { resolveAppearanceForBoundary } from './presentation/appearance-policy.mjs';
 import {
   prepareActorAppearanceLease,
   prepareRetainedActorAppearanceLease,
@@ -1877,9 +1878,15 @@ try {
     entry,
     level,
     themeId,
-    { pin = undefined, style = actorPreferences.snapshot().actorStyle, ...options } = {},
+    { pin = undefined, style = undefined, ...options } = {},
   ) {
     if (pin === null) return null;
+    if (pin === undefined && style === undefined)
+      style = resolveAppearanceForBoundary({
+        menuPreference: menuStyle.snapshot(),
+        actorPreference: actorPreferences.snapshot(),
+        boundary: 'launch',
+      }).actorStyle;
     const identity = await actorContent(entry, level, themeId, {
       ...options,
       retained: pin !== undefined,

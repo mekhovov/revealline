@@ -74,6 +74,7 @@ import { createAudioMaster } from '../ui/audio-master.mjs';
 import { createAudioPreferences } from '../audio-preferences.mjs';
 import { createDisplayPreferences } from '../display-preferences.mjs';
 import { createActorStylePreferences } from '../actor-style-preferences.mjs';
+import { resolveAppearanceForBoundary } from '../presentation/appearance-policy.mjs';
 import { prepareActorAppearanceLease } from '../presentation/actor-appearance-lease.mjs';
 import { createJourneyVisualThemeIdentityAdapter } from '../presentation/journey-visual-theme-identities.mjs';
 import { prepareCampaignVisualThemeContext } from '../presentation/visual-theme-identities.mjs';
@@ -932,7 +933,12 @@ try {
       selectedMapKey !== entry.key && entry.defaultThemeId
         ? entry.defaultThemeId
         : $('race-theme').value;
-    const preference = actorPreferences.snapshot();
+    const preference = actorPreferences.snapshot(),
+      appearance = resolveAppearanceForBoundary({
+        menuPreference: menuStyle.snapshot(),
+        actorPreference: preference,
+        boundary: 'launch',
+      });
     return {
       entry,
       classId,
@@ -941,7 +947,7 @@ try {
       turnPolicy: $('race-turn').value,
       seconds: candidateJourney ? 0 : Number($('race-time').value),
       format: $('race-format').value === 'first-to-two' ? 'first-to-two' : 'single',
-      actorStyle: preference.actorStyle,
+      actorStyle: appearance.actorStyle,
       actorPreferenceRevision: preference.revision,
     };
   }
@@ -1177,7 +1183,13 @@ try {
         candidateJourney.owns(roundRecipe.entry) &&
         target.mission.id === roundRecipe.entry.mission.id);
     fresh ||= !sameMission || match.status === 'ready';
-    const preference = actorPreferences.snapshot();
+    const preference = actorPreferences.snapshot(),
+      appearance = resolveAppearanceForBoundary({
+        menuPreference: menuStyle.snapshot(),
+        actorPreference: preference,
+        boundary: fresh ? 'next' : 'retry',
+        retainedActorStyle: roundRecipe?.actorStyle ?? null,
+      });
     const baseRecipe =
       configured ??
       (target === roundRecipe.entry
@@ -1197,7 +1209,7 @@ try {
     const recipe = {
       ...baseRecipe,
       ...(rulesEdition === undefined ? {} : { rulesEdition }),
-      actorStyle: fresh ? preference.actorStyle : roundRecipe.actorStyle,
+      actorStyle: appearance.actorStyle,
       actorPreferenceRevision: fresh ? preference.revision : roundRecipe.actorPreferenceRevision,
       actorPresentation: fresh ? null : (actorLease?.pin().presentation ?? null),
       tuning: gameplayTuning.snapshot(

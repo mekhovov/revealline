@@ -10,6 +10,7 @@ import {
 import { mountGameplayTuning } from '../ui/gameplay-tuning.mjs';
 import { createJourneyPreferences } from '../journey/preferences.mjs';
 import { createActorStylePreferences } from '../actor-style-preferences.mjs';
+import { resolveAppearanceForBoundary } from '../presentation/appearance-policy.mjs';
 import { prepareActorAppearanceLease } from '../presentation/actor-appearance-lease.mjs';
 import { prepareTeamVisualThemeContext } from '../presentation/visual-theme-identities.mjs';
 import { dataIdentity } from '../data-json.mjs';
@@ -1531,7 +1532,11 @@ export function bootCoop({
       (sourcePack === COOP_STARTER_PACK || (journeyRow && candidateJourney.owns(journeyRow)));
     if (eligible) {
       const pictures = selection.lease,
-        style = actorPreferences.snapshot().actorStyle;
+        style = resolveAppearanceForBoundary({
+          menuPreference: menuStyle.snapshot(),
+          actorPreference: actorPreferences.snapshot(),
+          boundary: 'launch',
+        }).actorStyle;
       let actors = null,
         pending = null,
         visit = 0,
