@@ -1971,17 +1971,34 @@ test('public archive searches and plays any published recording through the shar
   const selected = app.calls.findLast(([name]) => name === 'remote');
   assert.equal(selected[1].length, 1);
   assert.equal(selected[1][0].title, 'Dnipro Bells');
-  assert.deepEqual(selected[2], { order: 'ordered' });
+  assert.deepEqual(selected[2], {
+    order: 'shuffle',
+    repeat: 'all',
+    startTrackId: `online.${'3'.repeat(64)}`,
+  });
   assert(!app.doc.nativeDownloads.length, 'Playing in the game must not navigate to the archive.');
 
   app.node('online-search').value = '';
   app.node('online-search').oninput();
-  app.choose('online-style', 'metal');
+  await app.click('online-styles-none');
+  app.node('online-style-synth').checked = true;
+  app.node('online-style-synth').onchange();
+  app.node('online-style-ukrainian').checked = true;
+  app.node('online-style-ukrainian').onchange();
   assert.equal(app.node('online-results').children.length, 2);
+  app.choose('online-order', 'ordered');
+  app.choose('online-repeat', 'off');
   await app.click('online-play-all');
-  const shuffled = app.calls.findLast(([name]) => name === 'remote');
-  assert.equal(shuffled[1].length, 2);
-  assert.deepEqual(shuffled[2], { order: 'shuffle' });
+  const mixed = app.calls.findLast(([name]) => name === 'remote');
+  assert.equal(mixed[1].length, 2);
+  assert.deepEqual(
+    mixed[1].map((track) => track.title),
+    ['Night Circuit', 'Dnipro Bells'],
+  );
+  assert.deepEqual(mixed[2], { order: 'ordered', repeat: 'off', startTrackId: null });
+
+  await app.click('online-styles-all');
+  assert.equal(app.node('online-results').children.length, 3);
 
   app.node('recording-mode').checked = true;
   await app.click('apply-listening');
