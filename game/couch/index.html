@@ -174,6 +174,16 @@
           <p id="race-message" role="status">Both boards use the same map, class and seed.</p>
           <p id="race-summary" class="race-summary"></p>
           <div class="race-fields">
+            <label
+              >Actors<select id="race-actor-style" aria-describedby="race-actor-style-status">
+                <option value="fpv">FPV Field Kit</option>
+                <option value="campaign">Campaign actors</option>
+              </select></label
+            >
+            <p id="race-actor-style-status" class="race-footnote" role="status">
+              Applies to a new race or Next mission. Resume and Rematch keep their accepted actors.
+              Custom chapters keep authored actors.
+            </p>
             <label id="race-journey-difficulty-field" hidden
               >Next fresh race difficulty
               <select id="race-journey-difficulty"></select>
