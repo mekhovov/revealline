@@ -6,6 +6,7 @@ import { compileContentProject, resolveMission } from '../content-design/project
 import { createTeamTestPack } from '../content-design/team-export.mjs';
 import { assessTeamTimedRoute } from './helpers/team-timed-route.mjs';
 import { page } from './helpers/coop-host.mjs';
+import { playSpecializedTeamReserveRoute } from './helpers/team-specialized-host-route.mjs';
 
 const evidence = JSON.parse(
   await readFile(new URL('./fixtures/team-depot-reserve-relocation.json', import.meta.url)),
@@ -118,33 +119,7 @@ for (const row of evidence.rows) {
     assert.equal(f.$('coop-pack-status').dataset.state, 'ready');
     f.$('coop-start').focus();
     f.tap('Enter');
-    f.tick(2);
-    const expected = row.checks.find((c) => !c.options.swapped && c.options.jointCuts).result;
-    const keys = [
-      { up: 'KeyW', down: 'KeyS', left: 'KeyA', right: 'KeyD' },
-      { up: 'ArrowUp', down: 'ArrowDown', left: 'ArrowLeft', right: 'ArrowRight' },
-    ];
-    let previous = [null, null],
-      frames = 1;
-    for (const s of row.log) {
-      for (const [seat, direction] of [s.a, s.b].entries())
-        if (direction && direction !== previous[seat]) f.tap(keys[seat][direction]);
-      previous = [s.a, s.b];
-      for (let n = 0; n < s.ticks && f.$('coop-overlay').hidden; n++) {
-        f.tick();
-        frames++;
-        const reserves = expected.initialReserves + Number(frames >= 3397);
-        assert.equal(
-          f.$('coop-reserves').textContent,
-          `${reserves} reserve${reserves === 1 ? '' : 's'}`,
-        );
-      }
-      if (!f.$('coop-overlay').hidden) break;
-    }
-    assert.equal(f.$('coop-overlay-kicker').textContent, 'A WORLD YOU REVEALED TOGETHER');
-    assert.equal(frames, expected.tick);
-    assert.equal(f.$('coop-coverage').textContent, `${(expected.coverage * 100).toFixed(1)}%`);
-    assert.deepEqual(f.visits, []);
+    playSpecializedTeamReserveRoute(f, source, 'depot-dash', row.difficulty);
   });
 }
 
