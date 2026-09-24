@@ -600,11 +600,28 @@ evidence. Creator Content ID registration makes them ineligible for Recording
 mode. Technical processing and public previews are separate from musical
 acceptance and game admission. These are not Ukrainian additions.
 
-Diversify beyond one artist: investigate **DEgITx — Frog and Burn Out** through
-exact creator pages and official original-download routes. Preserve additional
-performer credits and verify source bytes, terms and Content ID. They are leads,
-not acquired or approved additions. D.E.M.O.N retains its conflicting-conditions
-hold.
+Diversify beyond one artist with four more source-verified leads:
+
+| Candidate | Exact source / acquisition evidence | Remaining |
+| --- | --- | --- |
+| [Frog — DEgITx](https://degitx.bandcamp.com/track/frog) | CC BY 4.0, 3:54; creator-linked Night archive has 10. Frog.mp3 | Exact-byte acquisition and listening |
+| [Burn Out — DEgITx](https://degitx.bandcamp.com/track/burn-out) | CC BY 4.0, 3:59; creator-linked Night archive has 09. Burn Out.mp3 | Exact-byte acquisition and listening; preserve collaborator credits |
+| [Rusted Shrapnel — TeknoAXE](https://teknoaxe.com/Link_Code_3.php?q=775) | CC BY 4.0; official direct download; creator describes shredding/chugging with a softer contrast | Exact-file duration, decoding and listening |
+| [Six String Shrapnel — TeknoAXE](https://teknoaxe.com/Link_Code_3.php?q=85) | CC BY 4.0; official Metal/Thrash video and direct download | Exact-file duration, decoding and listening |
+
+DEgITx's [official site](https://degitx.com/) links the
+[lossy archive](https://drive.google.com/drive/folders/1oxIqYp09HyLnbp-WyL2NJ-wE1HcOxxVD).
+Its [licence file](https://drive.google.com/file/d/1XDaSdWVPqagIEwx2-TRsVOrTOFP2yOTX/view)
+independently declares CC BY 4.0 with a Covers-folder exception. Preserve creator
+credit **Alexey Kasyanchuk (DEgITx)** and, for Burn Out, **Ilija Rogovoi (Belle Morte),
+guitars; Roman Yanko (Cardinal Line), bass**, as credited on the
+[Night album](https://degitx.bandcamp.com/album/night). Do not extend that permission
+to covers or other derivatives.
+
+No audio was acquired for these four leads. Content ID remains unknown, Recording
+mode eligibility remains false, and none is classified as Ukrainian. Preserve
+exact source/licence evidence with later acquisition. D.E.M.O.N retains its
+conflicting-conditions hold.
 
 Use a new immutable preview collection after independent intake and artifact
 review. Accepted subsets then follow a separate game PR, exact-source gates,
