@@ -11,7 +11,7 @@ import { createJourneyProfileStore } from './journey/profile.mjs';
 import { attachJourneySaveNotice } from './ui/journey-save-notice.mjs';
 import { createJourneyPreferences } from './journey/preferences.mjs';
 import { loadAuthoredJourneyRoute } from './content-design/route-loader.mjs';
-import { resolveJourneyRequest } from './content-design/default-entry.mjs';
+import { DEFAULT_JOURNEY_ROUTES, resolveJourneyRequest } from './content-design/default-entry.mjs';
 import {
   authoredJourneyModeHref,
   authoredJourneyUsesActorMaterials,
@@ -2820,7 +2820,7 @@ try {
       $(id)?.setAttribute('href', modeDestinations[kind]);
   if (authoredRoute) {
     $('shell-team').textContent =
-      authoredRoute.id === 'whole-spatial-v5'
+      authoredRoute.id === DEFAULT_JOURNEY_ROUTES.solo
         ? '12 Team missions · 2 players'
         : 'Separate Team arenas · 2 players';
   }
@@ -6701,7 +6701,7 @@ try {
     if (kind === 'won') {
       $('overlay-title').textContent = 'A little more light.';
       $('overlay-copy').textContent =
-        `${(run.coverage * 100).toFixed(1)}% captured · ${run.score.toLocaleString()} points · ${timeLabel(run.time)}. ${practice ? 'Practice complete.' : candidateHost?.owns(activeEntry) ? (authoredRoute.id === 'whole-spatial-v5' ? 'Journey mission complete.' : 'Authored test clear recorded in Journey progress. No Legacy collection awards.') : completionWarning || (saveSucceeded ? 'Full picture added to your collection.' : sessionPictures.status().originals ? 'Picture collected for this session. Export game data and session originals from Settings → Game data → Saves & recovery to keep it.' : 'Picture collected for this session. Export your library to keep it.')}`;
+        `${(run.coverage * 100).toFixed(1)}% captured · ${run.score.toLocaleString()} points · ${timeLabel(run.time)}. ${practice ? 'Practice complete.' : candidateHost?.owns(activeEntry) ? (authoredRoute.id === DEFAULT_JOURNEY_ROUTES.solo ? 'Journey mission complete.' : 'Authored test clear recorded in Journey progress. No Legacy collection awards.') : completionWarning || (saveSucceeded ? 'Full picture added to your collection.' : sessionPictures.status().originals ? 'Picture collected for this session. Export game data and session originals from Settings → Game data → Saves & recovery to keep it.' : 'Picture collected for this session. Export your library to keep it.')}`;
       if (recoverGameplayTuning(run.level)?.adminOverride)
         $('overlay-copy').textContent =
           `${(run.coverage * 100).toFixed(1)}% captured. Admin playtest complete; no clear, medal or mastery awarded. Reset tuning in Settings for normal progression.`;
@@ -9257,7 +9257,7 @@ try {
     unifiedLibraryLoading = (async () => {
       const index = await getJSON('content/mission-library-index.json');
       actorMissionIndex = Promise.resolve(index);
-      const route = authoredRoute || (await loadAuthoredJourneyRoute('whole-spatial-v5'));
+      const route = authoredRoute || (await loadAuthoredJourneyRoute(DEFAULT_JOURNEY_ROUTES.solo));
       const originalThemes = (await getJSON('content-design/themes.json')).themes;
       const libraryThemes = authoredJourneyUsesActorMaterials(route.id)
         ? journeyActorThemeCandidates(originalThemes, {
@@ -9293,7 +9293,7 @@ try {
           ?.manifests.find((manifest) => manifest.missionId === mission.levelId);
       const source = journeyLibrarySource({
         editionId: route.id,
-        edition: route.id === 'whole-spatial-v5' ? 'New Journey' : route.label,
+        edition: route.id === DEFAULT_JOURNEY_ROUTES.solo ? 'New Journey' : route.label,
         catalog: host.catalog,
         profile,
         details: (mission) => journeyMissionDetails(manifestFor(mission)),
@@ -9309,7 +9309,7 @@ try {
       });
       const versusSource = journeyLibrarySource({
         editionId: route.id,
-        edition: route.id === 'whole-spatial-v5' ? 'New Journey' : route.label,
+        edition: route.id === DEFAULT_JOURNEY_ROUTES.solo ? 'New Journey' : route.label,
         catalog: versusPreview.catalog,
         profile,
         details: (mission) =>
@@ -9605,11 +9605,11 @@ try {
   if (journeyEnabled) {
     document.body.classList.add('journey-preview');
     show('journey-artwork-availability', !!candidateHost);
-    if (authoredRoute?.id === 'whole-spatial-v5')
+    if (authoredRoute?.id === DEFAULT_JOURNEY_ROUTES.solo)
       $('journey-artwork-availability').textContent =
         'Mission pictures need an internet connection. Preparing offline play does not yet include them; full game downloads do.';
     $('shell-title-edition').textContent = candidateHost
-      ? authoredRoute.id === 'whole-spatial-v5'
+      ? authoredRoute.id === DEFAULT_JOURNEY_ROUTES.solo
         ? `NEW JOURNEY / ${journeyCatalog.missions.length} MISSIONS`
         : `${authoredRoute.label.toUpperCase()} / UNVALIDATED TEST BUILD`
       : 'JOURNEY / TECHNICAL TEST PREVIEW';
@@ -9906,7 +9906,7 @@ try {
           })
       : undefined,
   });
-  if (authoredRoute?.id === 'whole-spatial-v5')
+  if (authoredRoute?.id === DEFAULT_JOURNEY_ROUTES.solo)
     $('shell-title-team').querySelector('.game-mode-description').textContent = '12 Team missions';
   for (const id of ['shell-catalogue', 'missions-catalogue']) {
     const link = $(id);

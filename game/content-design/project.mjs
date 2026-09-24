@@ -427,15 +427,17 @@ export function resolveMission(project, id, { mode = 'solo', difficulty = 'stand
           }
         : {}),
       ...(policy.arcadeActions ? { arcadeActions: policy.arcadeActions } : {}),
-      ...(carriers.length
-        ? {
-            lineImpact: {
-              version: 'line-impact.v2',
-              speed: project.actors.roles['impact-carrier'].impactSpeed,
-              actorIds: carriers.map((actor) => actor.id).sort(),
-            },
-          }
-        : {}),
+      ...(policy.lineImpact
+        ? { lineImpact: policy.lineImpact }
+        : carriers.length
+          ? {
+              lineImpact: {
+                version: 'line-impact.v2',
+                speed: project.actors.roles['impact-carrier'].impactSpeed,
+                actorIds: carriers.map((actor) => actor.id).sort(),
+              },
+            }
+          : {}),
     },
     enemies: mission.actors
       .filter((actor) => !project.actors.roles[actor.role]?.combatRole)

@@ -35,9 +35,18 @@ export const JOURNEY_POLICY = freezeDesign({
   id: 'journey-arcade-v2',
   arcadeActions: { version: ARCADE_ACTIONS_VERSION },
 });
+// Explicit successor: every eligible enemy and active lane uses the proven
+// Pressure Lines travelling-impact contract. Historical projects retain their
+// selective carrier descriptors and exact replay identities.
+export const TRAIL_IMPACT_JOURNEY_POLICY = freezeDesign({
+  ...JOURNEY_POLICY,
+  id: 'journey-trail-impact-v3',
+  lineImpact: { version: 'line-impact.v1', speed: 24 },
+});
 export function journeyPolicy(id) {
   if (id === LEGACY_JOURNEY_POLICY.id) return LEGACY_JOURNEY_POLICY;
   if (id === JOURNEY_POLICY.id) return JOURNEY_POLICY;
+  if (id === TRAIL_IMPACT_JOURNEY_POLICY.id) return TRAIL_IMPACT_JOURNEY_POLICY;
   throw new Error('Project must pin a registered Journey policy.');
 }
 export const DIFFICULTY_CATALOG = freezeDesign({
