@@ -1,4 +1,5 @@
 import { attachMusicCredit } from '../ui/music-credit.mjs';
+import { attachQuickMusicControls } from '../ui/quick-music-controls.mjs';
 import { SOUNDTRACK_CATALOGUE, SOUNDTRACK_ARCHIVES } from '../content/soundtrack-catalogue.mjs';
 import { createSoundtrackSource } from '../soundtrack-source.mjs';
 import { Soundscape } from '../ui/audio.mjs';
@@ -20,6 +21,8 @@ export function attachCouchMusicHost({
   audioPreferences,
   soundscape,
   canOpen = () => true,
+  canControl = () => true,
+  quickAfter = [],
   getOwner = () => null,
   getScene = ({ active }) => (active ? 'gameplay' : 'menu'),
   onOpen = () => {},
@@ -36,6 +39,7 @@ export function attachCouchMusicHost({
   let library,
     session,
     panel,
+    quickControls = null,
     disposed = false,
     visit = null,
     context = { scene: 'menu' },
@@ -173,6 +177,22 @@ export function attachCouchMusicHost({
   library = createCouchMusicLibrary({ player, managedStore: manager, catalogue: source.catalogue });
   player.setContext(context);
   session = createCouchMusicSession({ player, library, soundscape: sound });
+  quickControls = attachQuickMusicControls({
+    document: doc,
+    prefix,
+    after: quickAfter.map((id) => doc.getElementById(id)),
+    settingsRoot: section,
+    snapshot: () => player.snapshot(),
+    getMaster: () => audioMaster?.snapshot(),
+    active: () => !disposed && canControl() && !panel?.isOpen(),
+    play: () => session.play(),
+    pause: () => session.pause(),
+    next: () => {
+      if (!player.snapshot().desired) session.pause();
+      return player.next();
+    },
+    onError: report,
+  });
   panel = attachSoundtrackPanel({
     document: doc,
     catalogue: source.catalogue,
@@ -237,6 +257,7 @@ export function attachCouchMusicHost({
     retry.disabled = preparing;
     play.disabled = !state.readyForStart && !track.playing;
     if (doc.activeElement !== volume) volume.value = String(track.volume);
+    quickControls?.render();
     renderCredits(track);
     compactCredit.render(track, audioMaster?.snapshot());
     panel?.update();
@@ -288,6 +309,7 @@ export function attachCouchMusicHost({
       return;
     if (
       section.contains(event.target) ||
+      quickControls?.contains(event.target) ||
       panel.element.contains(event.target) ||
       (event.type !== 'click' &&
         event.target?.closest?.(
@@ -320,7 +342,10 @@ export function attachCouchMusicHost({
     session,
     root: () => (panel.isOpen() ? panel.element : null),
     primary: () => doc.getElementById('soundtrack-close'),
-    contains: (element) => section.contains(element) || panel.element.contains(element),
+    contains: (element) =>
+      section.contains(element) ||
+      panel.element.contains(element) ||
+      quickControls.contains(element),
     back: () => panel.close(),
     open,
     start: () => run(() => session.start()),
@@ -359,6 +384,7 @@ export function attachCouchMusicHost({
       doc.removeEventListener('keydown', startRememberedMenuMusic, true);
       doc.removeEventListener('click', startRememberedMenuMusic);
       unsubscribeMaster?.();
+      quickControls.dispose();
       panel.dispose();
       session.dispose();
       player.dispose();
