@@ -10,10 +10,6 @@ import {
   TEAM_PREVIEW_SCENARIOS,
   isTeamPreviewScenarioAvailable,
 } from '../../authoring/asset-studio/team-preview-fixture.mjs';
-import {
-  TEAM_PICTURE_REVIEW_EXTENSION_PATH,
-  TEAM_PICTURE_REVIEW_EXTENSION_SHA256,
-} from '../../scripts/team-picture-review-extension.mjs';
 
 const root = new URL('../../', import.meta.url),
   read = (name) => readFile(new URL(name, root)),
@@ -183,48 +179,10 @@ test('picture identity extension preserves all42 Team roles and exact canvas com
   t.diagnostic(JSON.stringify({ scenes, comparisons, roles: covered.size }));
 });
 
-function assertActorTestContinuation(bytes, continuation) {
-  assert.equal(sha(bytes), continuation.afterSHA256, 'Exact successor actor test');
-  const source = bytes.toString();
-  assert.equal(source.split(continuation.after).length, 2, 'One exact version assertion');
-  assert.equal(
-    sha(source.replace(continuation.after, continuation.before)),
-    continuation.beforeSHA256,
-    'Only the current compiled theme assertion changes; all actor checks remain exact',
-  );
-}
-
 test('the immutable delta names only the changed picture-identity guard and exact evidence files', async () => {
-  const extensionBytes = await read(TEAM_PICTURE_REVIEW_EXTENSION_PATH);
-  assert.equal(sha(extensionBytes), TEAM_PICTURE_REVIEW_EXTENSION_SHA256);
-  const extension = JSON.parse(extensionBytes),
-    priorBytes = await read(extension.predecessor.path),
-    prior = JSON.parse(priorBytes);
-  assert.equal(sha(priorBytes), '4fe87617a723983afc3c5a1d3807cc90a35b3548955e4675147c82f1ea3fc935');
-  assert.equal(extension.predecessor.sha256, sha(priorBytes));
-  for (const key of Object.keys(prior).filter((key) => key !== 'evidence'))
-    assert.deepEqual(extension[key], prior[key], `Unchanged review scope: ${key}`);
-  const continuedPaths = extension.evidence
-    .filter((row, index) => row.sha256 !== prior.evidence[index].sha256)
-    .map((row) => row.path);
-  assert.deepEqual(continuedPaths, [
-    'game/test/team-picture-identity-extension.test.mjs',
-    'game/test/coop-actor-presentation.test.mjs',
-  ]);
-  assert.deepEqual(
-    extension.evidence.map((row) => row.path),
-    prior.evidence.map((row) => row.path),
+  const extension = JSON.parse(
+    await read('docs/verification/team-picture-identity-extension/review.json'),
   );
-  assert.equal(
-    sha(await read(extension.predecessor.harness)),
-    prior.evidence.find((row) => row.path === 'game/test/team-picture-identity-extension.test.mjs')
-      .sha256,
-    'The original command-equivalence harness remains byte-exact',
-  );
-  const actor = extension.testContinuation;
-  assert.equal(actor.path, 'game/test/coop-actor-presentation.test.mjs');
-  assert.equal(actor.beforeSHA256, prior.evidence.find((row) => row.path === actor.path).sha256);
-  assertActorTestContinuation(await read(actor.path), actor);
   assert.equal(extension.format, 'revealline-team-picture-identity-review.v1');
   assert.deepEqual(extension.comparison, { scenes: 31, comparisons: 496, roles: 42 });
   for (const ancestor of extension.ancestors)
@@ -254,25 +212,4 @@ test('the immutable delta names only the changed picture-identity guard and exac
   }
   for (const evidence of extension.evidence)
     assert.equal(sha(await read(evidence.path)), evidence.sha256, evidence.path);
-});
-
-test('the production63 actor-test continuation rejects every unreviewed delta', async () => {
-  const { testContinuation: actor } = JSON.parse(await read(TEAM_PICTURE_REVIEW_EXTENSION_PATH));
-  const bytes = await read(actor.path);
-  assertActorTestContinuation(bytes, actor);
-  for (const source of [
-    bytes.toString().replace(actor.after, actor.before),
-    bytes.toString().replace('revision: 63,', 'revision: 64,'),
-    bytes
-      .toString()
-      .replace('assert.equal(asset.revision, 2);', 'assert.equal(asset.revision, 3);'),
-    bytes.toString() + '\n// Another unreviewed change.\n',
-  ]) {
-    assert.notEqual(source, bytes.toString());
-    assert.throws(() => assertActorTestContinuation(Buffer.from(source), actor));
-    // Even a claimed replacement hash cannot authorize a second source change.
-    assert.throws(() =>
-      assertActorTestContinuation(Buffer.from(source), { ...actor, afterSHA256: sha(source) }),
-    );
-  }
 });

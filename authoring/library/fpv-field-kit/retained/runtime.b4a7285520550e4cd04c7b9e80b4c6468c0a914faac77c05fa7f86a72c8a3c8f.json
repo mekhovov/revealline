@@ -8367,19 +8367,18 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Original project integer-pixel equipment artwork",
-          "parent": { "id": "team.anchor.available.field-kit", "revision": 2 },
+          "parent": { "id": "team.anchor.available.field-kit", "revision": 1 },
           "prompt": "Create one original FPV Field Kit available team relay anchor for slot team.anchor.available. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
           "source": "game/presentation/team-equipment-art.mjs sha256:b5bce8f5b0f6992bec918022de0ebce110f8836c879bc86600fdcc6471668b21"
         },
         "quality": {
           "evidence": [
-            "Five images only: docs/verification/team-equipment-five-review/review.json sha256:a5aa095805b39c8a716d5427c54ad594f9261b53adeaf9752b3260ae752024b3",
-            "Authored-picture identity continuation only: docs/verification/team-picture-identity-extension/review-production63.json sha256:97b3c1eb195c0fe914692e5627f3b0cb372488c7bdcdd998b9484a50a376a082"
+            "Five images only: docs/verification/team-equipment-five-review/review.json sha256:a5aa095805b39c8a716d5427c54ad594f9261b53adeaf9752b3260ae752024b3"
           ],
           "stage": "reviewed"
         },
         "recipe": null,
-        "revision": 3
+        "revision": 2
       },
       "team.anchor.captured": {
         "description": "Connected relay beacon: retracted mast, paired cyan ports and side couplers.",
@@ -8408,19 +8407,18 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Original project integer-pixel equipment artwork",
-          "parent": { "id": "team.anchor.captured.field-kit", "revision": 2 },
+          "parent": { "id": "team.anchor.captured.field-kit", "revision": 1 },
           "prompt": "Create one original FPV Field Kit captured team relay anchor for slot team.anchor.captured. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
           "source": "game/presentation/team-equipment-art.mjs sha256:b5bce8f5b0f6992bec918022de0ebce110f8836c879bc86600fdcc6471668b21"
         },
         "quality": {
           "evidence": [
-            "Five images only: docs/verification/team-equipment-five-review/review.json sha256:a5aa095805b39c8a716d5427c54ad594f9261b53adeaf9752b3260ae752024b3",
-            "Authored-picture identity continuation only: docs/verification/team-picture-identity-extension/review-production63.json sha256:97b3c1eb195c0fe914692e5627f3b0cb372488c7bdcdd998b9484a50a376a082"
+            "Five images only: docs/verification/team-equipment-five-review/review.json sha256:a5aa095805b39c8a716d5427c54ad594f9261b53adeaf9752b3260ae752024b3"
           ],
           "stage": "reviewed"
         },
         "recipe": null,
-        "revision": 3
+        "revision": 2
       },
       "team.capture.joint": {
         "description": "Team joint capture: existing bounded component with Field Kit tokens and state styling.",
@@ -8432,19 +8430,18 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "team.capture.joint.field-kit", "revision": 3 },
+          "parent": { "id": "team.capture.joint.field-kit", "revision": 2 },
           "prompt": "Create one original FPV Field Kit team joint capture for slot team.capture.joint. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 32 by 32 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
           "source": "game/couch/coop-view.mjs; game/couch/coop-actor-presentation.mjs; game/couch/coop-anchor-presentation.mjs; game/couch/coop-core-presentation.mjs; game/couch/coop-support-presentation.mjs; game/couch/coop-emitter-presentation.mjs; game/couch/coop-rescue-presentation.mjs; game/couch/coop-pilot-slots.mjs; game/couch/coop-enemy-slots.mjs; game/couch/coop-outcome-presentation.mjs; game/presentation/team-runtime-slots.mjs; game/ui/actor-presentation.mjs; game/presentation/catalog.mjs; game/couch/coop-actor-layout.mjs; game/couch/coop-terrain-trail.mjs; game/couch/coop-bonus-view.mjs; game/couch/candidate-team-pictures.mjs; game/content-design/material-markers.mjs; game/presentation/journey-actor-materials.mjs; authoring/motion-lab/render-character.mjs; game/ui/classic-view.mjs; game/ui/presentation-draw-image.mjs; game/ui/enemy-body-motion.mjs; authoring/motion-lab/animation.mjs; game/content-design/actor-marker.mjs; game/enemy-catalog.mjs sha256:b3c93bdcafec051933cfccfa8daa8572ab21f678350544dcdd0f3de97c46606f"
         },
         "quality": {
           "evidence": [
-            "Team functional scope only: docs/verification/team37/review.json sha256:7ecaeb6dc9c2fcf1804ed364ef1b818e3323f4a390629fd4575c0772cf4df45b",
-            "Authored-picture identity continuation only: docs/verification/team-picture-identity-extension/review-production63.json sha256:97b3c1eb195c0fe914692e5627f3b0cb372488c7bdcdd998b9484a50a376a082"
+            "Connected Team recipe; exact scoped functional review inputs did not match."
           ],
-          "stage": "reviewed"
+          "stage": "source"
         },
         "recipe": { "id": "team.outcome.v1" },
-        "revision": 4
+        "revision": 3
       },
       "team.core.exposed": {
         "description": "Radio-yard relay cabinet: separated shutters reveal the amber signal stack.",
@@ -8468,19 +8465,18 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Original project integer-pixel equipment artwork",
-          "parent": { "id": "team.core.exposed.field-kit", "revision": 2 },
+          "parent": { "id": "team.core.exposed.field-kit", "revision": 1 },
           "prompt": "Create one original FPV Field Kit exposed team relay core for slot team.core.exposed. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 64 by 64 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
           "source": "game/presentation/team-equipment-art.mjs sha256:b5bce8f5b0f6992bec918022de0ebce110f8836c879bc86600fdcc6471668b21"
         },
         "quality": {
           "evidence": [
-            "Five images only: docs/verification/team-equipment-five-review/review.json sha256:a5aa095805b39c8a716d5427c54ad594f9261b53adeaf9752b3260ae752024b3",
-            "Authored-picture identity continuation only: docs/verification/team-picture-identity-extension/review-production63.json sha256:97b3c1eb195c0fe914692e5627f3b0cb372488c7bdcdd998b9484a50a376a082"
+            "Five images only: docs/verification/team-equipment-five-review/review.json sha256:a5aa095805b39c8a716d5427c54ad594f9261b53adeaf9752b3260ae752024b3"
           ],
           "stage": "reviewed"
         },
         "recipe": null,
-        "revision": 3
+        "revision": 2
       },
       "team.core.secured": {
         "description": "Secured radio-yard relay: folded antenna and closed cyan service panel.",
@@ -8504,19 +8500,18 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Original project integer-pixel equipment artwork",
-          "parent": { "id": "team.core.secured.field-kit", "revision": 2 },
+          "parent": { "id": "team.core.secured.field-kit", "revision": 1 },
           "prompt": "Create one original FPV Field Kit secured team relay core for slot team.core.secured. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 64 by 64 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
           "source": "game/presentation/team-equipment-art.mjs sha256:b5bce8f5b0f6992bec918022de0ebce110f8836c879bc86600fdcc6471668b21"
         },
         "quality": {
           "evidence": [
-            "Five images only: docs/verification/team-equipment-five-review/review.json sha256:a5aa095805b39c8a716d5427c54ad594f9261b53adeaf9752b3260ae752024b3",
-            "Authored-picture identity continuation only: docs/verification/team-picture-identity-extension/review-production63.json sha256:97b3c1eb195c0fe914692e5627f3b0cb372488c7bdcdd998b9484a50a376a082"
+            "Five images only: docs/verification/team-equipment-five-review/review.json sha256:a5aa095805b39c8a716d5427c54ad594f9261b53adeaf9752b3260ae752024b3"
           ],
           "stage": "reviewed"
         },
         "recipe": null,
-        "revision": 3
+        "revision": 2
       },
       "team.core.shielded": {
         "description": "Radio-yard relay cabinet: raised antenna and closed protective shutters.",
@@ -8540,19 +8535,18 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Original project integer-pixel equipment artwork",
-          "parent": { "id": "team.core.shielded.field-kit", "revision": 2 },
+          "parent": { "id": "team.core.shielded.field-kit", "revision": 1 },
           "prompt": "Create one original FPV Field Kit shielded team relay core for slot team.core.shielded. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 64 by 64 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
           "source": "game/presentation/team-equipment-art.mjs sha256:b5bce8f5b0f6992bec918022de0ebce110f8836c879bc86600fdcc6471668b21"
         },
         "quality": {
           "evidence": [
-            "Five images only: docs/verification/team-equipment-five-review/review.json sha256:a5aa095805b39c8a716d5427c54ad594f9261b53adeaf9752b3260ae752024b3",
-            "Authored-picture identity continuation only: docs/verification/team-picture-identity-extension/review-production63.json sha256:97b3c1eb195c0fe914692e5627f3b0cb372488c7bdcdd998b9484a50a376a082"
+            "Five images only: docs/verification/team-equipment-five-review/review.json sha256:a5aa095805b39c8a716d5427c54ad594f9261b53adeaf9752b3260ae752024b3"
           ],
           "stage": "reviewed"
         },
         "recipe": null,
-        "revision": 3
+        "revision": 2
       },
       "team.emitter.spark": {
         "description": "Team travelling spark: existing bounded component with Field Kit tokens and state styling.",
@@ -8564,19 +8558,18 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "team.emitter.spark.field-kit", "revision": 3 },
+          "parent": { "id": "team.emitter.spark.field-kit", "revision": 2 },
           "prompt": "Create one original FPV Field Kit team travelling spark for slot team.emitter.spark. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 16 by 16 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
           "source": "game/couch/coop-view.mjs; game/couch/coop-actor-presentation.mjs; game/couch/coop-anchor-presentation.mjs; game/couch/coop-core-presentation.mjs; game/couch/coop-support-presentation.mjs; game/couch/coop-emitter-presentation.mjs; game/couch/coop-rescue-presentation.mjs; game/couch/coop-pilot-slots.mjs; game/couch/coop-enemy-slots.mjs; game/couch/coop-outcome-presentation.mjs; game/presentation/team-runtime-slots.mjs; game/ui/actor-presentation.mjs; game/presentation/catalog.mjs; game/couch/coop-actor-layout.mjs; game/couch/coop-terrain-trail.mjs; game/couch/coop-bonus-view.mjs; game/couch/candidate-team-pictures.mjs; game/content-design/material-markers.mjs; game/presentation/journey-actor-materials.mjs; authoring/motion-lab/render-character.mjs; game/ui/classic-view.mjs; game/ui/presentation-draw-image.mjs; game/ui/enemy-body-motion.mjs; authoring/motion-lab/animation.mjs; game/content-design/actor-marker.mjs; game/enemy-catalog.mjs sha256:b3c93bdcafec051933cfccfa8daa8572ab21f678350544dcdd0f3de97c46606f"
         },
         "quality": {
           "evidence": [
-            "Team functional scope only: docs/verification/team37/review.json sha256:7ecaeb6dc9c2fcf1804ed364ef1b818e3323f4a390629fd4575c0772cf4df45b",
-            "Authored-picture identity continuation only: docs/verification/team-picture-identity-extension/review-production63.json sha256:97b3c1eb195c0fe914692e5627f3b0cb372488c7bdcdd998b9484a50a376a082"
+            "Connected Team recipe; exact scoped functional review inputs did not match."
           ],
-          "stage": "reviewed"
+          "stage": "source"
         },
         "recipe": { "id": "team.emitter.v1" },
-        "revision": 4
+        "revision": 3
       },
       "team.emitter.warning": {
         "description": "Team emitter warning target: existing bounded component with Field Kit tokens and state styling.",
@@ -8588,19 +8581,18 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "team.emitter.warning.field-kit", "revision": 3 },
+          "parent": { "id": "team.emitter.warning.field-kit", "revision": 2 },
           "prompt": "Create one original FPV Field Kit team emitter warning target for slot team.emitter.warning. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
           "source": "game/couch/coop-view.mjs; game/couch/coop-actor-presentation.mjs; game/couch/coop-anchor-presentation.mjs; game/couch/coop-core-presentation.mjs; game/couch/coop-support-presentation.mjs; game/couch/coop-emitter-presentation.mjs; game/couch/coop-rescue-presentation.mjs; game/couch/coop-pilot-slots.mjs; game/couch/coop-enemy-slots.mjs; game/couch/coop-outcome-presentation.mjs; game/presentation/team-runtime-slots.mjs; game/ui/actor-presentation.mjs; game/presentation/catalog.mjs; game/couch/coop-actor-layout.mjs; game/couch/coop-terrain-trail.mjs; game/couch/coop-bonus-view.mjs; game/couch/candidate-team-pictures.mjs; game/content-design/material-markers.mjs; game/presentation/journey-actor-materials.mjs; authoring/motion-lab/render-character.mjs; game/ui/classic-view.mjs; game/ui/presentation-draw-image.mjs; game/ui/enemy-body-motion.mjs; authoring/motion-lab/animation.mjs; game/content-design/actor-marker.mjs; game/enemy-catalog.mjs sha256:b3c93bdcafec051933cfccfa8daa8572ab21f678350544dcdd0f3de97c46606f"
         },
         "quality": {
           "evidence": [
-            "Team functional scope only: docs/verification/team37/review.json sha256:7ecaeb6dc9c2fcf1804ed364ef1b818e3323f4a390629fd4575c0772cf4df45b",
-            "Authored-picture identity continuation only: docs/verification/team-picture-identity-extension/review-production63.json sha256:97b3c1eb195c0fe914692e5627f3b0cb372488c7bdcdd998b9484a50a376a082"
+            "Connected Team recipe; exact scoped functional review inputs did not match."
           ],
-          "stage": "reviewed"
+          "stage": "source"
         },
         "recipe": { "id": "team.emitter.v1" },
-        "revision": 4
+        "revision": 3
       },
       "team.enemy.drifter": {
         "description": "Team drifter body: existing bounded component with Field Kit tokens and state styling.",
@@ -8612,19 +8604,18 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "team.enemy.drifter.field-kit", "revision": 3 },
+          "parent": { "id": "team.enemy.drifter.field-kit", "revision": 2 },
           "prompt": "Original FPV pixel art: team.enemy.drifter, 32×32 transparent PNG. Follow palette, geometry and all role requirements.",
           "source": "game/couch/coop-view.mjs; game/couch/coop-actor-presentation.mjs; game/couch/coop-anchor-presentation.mjs; game/couch/coop-core-presentation.mjs; game/couch/coop-support-presentation.mjs; game/couch/coop-emitter-presentation.mjs; game/couch/coop-rescue-presentation.mjs; game/couch/coop-pilot-slots.mjs; game/couch/coop-enemy-slots.mjs; game/couch/coop-outcome-presentation.mjs; game/presentation/team-runtime-slots.mjs; game/ui/actor-presentation.mjs; game/presentation/catalog.mjs; game/couch/coop-actor-layout.mjs; game/couch/coop-terrain-trail.mjs; game/couch/coop-bonus-view.mjs; game/couch/candidate-team-pictures.mjs; game/content-design/material-markers.mjs; game/presentation/journey-actor-materials.mjs; authoring/motion-lab/render-character.mjs; game/ui/classic-view.mjs; game/ui/presentation-draw-image.mjs; game/ui/enemy-body-motion.mjs; authoring/motion-lab/animation.mjs; game/content-design/actor-marker.mjs; game/enemy-catalog.mjs sha256:b3c93bdcafec051933cfccfa8daa8572ab21f678350544dcdd0f3de97c46606f"
         },
         "quality": {
           "evidence": [
-            "Team functional scope only: docs/verification/team37/review.json sha256:7ecaeb6dc9c2fcf1804ed364ef1b818e3323f4a390629fd4575c0772cf4df45b",
-            "Authored-picture identity continuation only: docs/verification/team-picture-identity-extension/review-production63.json sha256:97b3c1eb195c0fe914692e5627f3b0cb372488c7bdcdd998b9484a50a376a082"
+            "Connected Team recipe; exact scoped functional review inputs did not match."
           ],
-          "stage": "reviewed"
+          "stage": "source"
         },
         "recipe": { "id": "team.enemy.v1" },
-        "revision": 4
+        "revision": 3
       },
       "team.enemy.hunter.charge": {
         "description": "Team hunter charge body: existing bounded component with Field Kit tokens and state styling.",
@@ -8636,19 +8627,18 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "team.enemy.hunter.charge.field-kit", "revision": 3 },
+          "parent": { "id": "team.enemy.hunter.charge.field-kit", "revision": 2 },
           "prompt": "Original FPV pixel art: team.enemy.hunter.charge, 32×32 transparent PNG. Follow palette, geometry and all role requirements.",
           "source": "game/couch/coop-view.mjs; game/couch/coop-actor-presentation.mjs; game/couch/coop-anchor-presentation.mjs; game/couch/coop-core-presentation.mjs; game/couch/coop-support-presentation.mjs; game/couch/coop-emitter-presentation.mjs; game/couch/coop-rescue-presentation.mjs; game/couch/coop-pilot-slots.mjs; game/couch/coop-enemy-slots.mjs; game/couch/coop-outcome-presentation.mjs; game/presentation/team-runtime-slots.mjs; game/ui/actor-presentation.mjs; game/presentation/catalog.mjs; game/couch/coop-actor-layout.mjs; game/couch/coop-terrain-trail.mjs; game/couch/coop-bonus-view.mjs; game/couch/candidate-team-pictures.mjs; game/content-design/material-markers.mjs; game/presentation/journey-actor-materials.mjs; authoring/motion-lab/render-character.mjs; game/ui/classic-view.mjs; game/ui/presentation-draw-image.mjs; game/ui/enemy-body-motion.mjs; authoring/motion-lab/animation.mjs; game/content-design/actor-marker.mjs; game/enemy-catalog.mjs sha256:b3c93bdcafec051933cfccfa8daa8572ab21f678350544dcdd0f3de97c46606f"
         },
         "quality": {
           "evidence": [
-            "Team functional scope only: docs/verification/team37/review.json sha256:7ecaeb6dc9c2fcf1804ed364ef1b818e3323f4a390629fd4575c0772cf4df45b",
-            "Authored-picture identity continuation only: docs/verification/team-picture-identity-extension/review-production63.json sha256:97b3c1eb195c0fe914692e5627f3b0cb372488c7bdcdd998b9484a50a376a082"
+            "Connected Team recipe; exact scoped functional review inputs did not match."
           ],
-          "stage": "reviewed"
+          "stage": "source"
         },
         "recipe": { "id": "team.enemy.v1" },
-        "revision": 4
+        "revision": 3
       },
       "team.enemy.hunter.patrol": {
         "description": "Team hunter patrol body: existing bounded component with Field Kit tokens and state styling.",
@@ -8660,19 +8650,18 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "team.enemy.hunter.patrol.field-kit", "revision": 3 },
+          "parent": { "id": "team.enemy.hunter.patrol.field-kit", "revision": 2 },
           "prompt": "Original FPV pixel art: team.enemy.hunter.patrol, 32×32 transparent PNG. Follow palette, geometry and all role requirements.",
           "source": "game/couch/coop-view.mjs; game/couch/coop-actor-presentation.mjs; game/couch/coop-anchor-presentation.mjs; game/couch/coop-core-presentation.mjs; game/couch/coop-support-presentation.mjs; game/couch/coop-emitter-presentation.mjs; game/couch/coop-rescue-presentation.mjs; game/couch/coop-pilot-slots.mjs; game/couch/coop-enemy-slots.mjs; game/couch/coop-outcome-presentation.mjs; game/presentation/team-runtime-slots.mjs; game/ui/actor-presentation.mjs; game/presentation/catalog.mjs; game/couch/coop-actor-layout.mjs; game/couch/coop-terrain-trail.mjs; game/couch/coop-bonus-view.mjs; game/couch/candidate-team-pictures.mjs; game/content-design/material-markers.mjs; game/presentation/journey-actor-materials.mjs; authoring/motion-lab/render-character.mjs; game/ui/classic-view.mjs; game/ui/presentation-draw-image.mjs; game/ui/enemy-body-motion.mjs; authoring/motion-lab/animation.mjs; game/content-design/actor-marker.mjs; game/enemy-catalog.mjs sha256:b3c93bdcafec051933cfccfa8daa8572ab21f678350544dcdd0f3de97c46606f"
         },
         "quality": {
           "evidence": [
-            "Team functional scope only: docs/verification/team37/review.json sha256:7ecaeb6dc9c2fcf1804ed364ef1b818e3323f4a390629fd4575c0772cf4df45b",
-            "Authored-picture identity continuation only: docs/verification/team-picture-identity-extension/review-production63.json sha256:97b3c1eb195c0fe914692e5627f3b0cb372488c7bdcdd998b9484a50a376a082"
+            "Connected Team recipe; exact scoped functional review inputs did not match."
           ],
-          "stage": "reviewed"
+          "stage": "source"
         },
         "recipe": { "id": "team.enemy.v1" },
-        "revision": 4
+        "revision": 3
       },
       "team.enemy.hunter.recovery": {
         "description": "Team hunter recovery body: existing bounded component with Field Kit tokens and state styling.",
@@ -8684,19 +8673,18 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "team.enemy.hunter.recovery.field-kit", "revision": 3 },
+          "parent": { "id": "team.enemy.hunter.recovery.field-kit", "revision": 2 },
           "prompt": "Original FPV pixel art: team.enemy.hunter.recovery, 32×32 transparent PNG. Follow palette, geometry and all role requirements.",
           "source": "game/couch/coop-view.mjs; game/couch/coop-actor-presentation.mjs; game/couch/coop-anchor-presentation.mjs; game/couch/coop-core-presentation.mjs; game/couch/coop-support-presentation.mjs; game/couch/coop-emitter-presentation.mjs; game/couch/coop-rescue-presentation.mjs; game/couch/coop-pilot-slots.mjs; game/couch/coop-enemy-slots.mjs; game/couch/coop-outcome-presentation.mjs; game/presentation/team-runtime-slots.mjs; game/ui/actor-presentation.mjs; game/presentation/catalog.mjs; game/couch/coop-actor-layout.mjs; game/couch/coop-terrain-trail.mjs; game/couch/coop-bonus-view.mjs; game/couch/candidate-team-pictures.mjs; game/content-design/material-markers.mjs; game/presentation/journey-actor-materials.mjs; authoring/motion-lab/render-character.mjs; game/ui/classic-view.mjs; game/ui/presentation-draw-image.mjs; game/ui/enemy-body-motion.mjs; authoring/motion-lab/animation.mjs; game/content-design/actor-marker.mjs; game/enemy-catalog.mjs sha256:b3c93bdcafec051933cfccfa8daa8572ab21f678350544dcdd0f3de97c46606f"
         },
         "quality": {
           "evidence": [
-            "Team functional scope only: docs/verification/team37/review.json sha256:7ecaeb6dc9c2fcf1804ed364ef1b818e3323f4a390629fd4575c0772cf4df45b",
-            "Authored-picture identity continuation only: docs/verification/team-picture-identity-extension/review-production63.json sha256:97b3c1eb195c0fe914692e5627f3b0cb372488c7bdcdd998b9484a50a376a082"
+            "Connected Team recipe; exact scoped functional review inputs did not match."
           ],
-          "stage": "reviewed"
+          "stage": "source"
         },
         "recipe": { "id": "team.enemy.v1" },
-        "revision": 4
+        "revision": 3
       },
       "team.enemy.hunter.warning": {
         "description": "Team hunter warning body: existing bounded component with Field Kit tokens and state styling.",
@@ -8708,19 +8696,18 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "team.enemy.hunter.warning.field-kit", "revision": 3 },
+          "parent": { "id": "team.enemy.hunter.warning.field-kit", "revision": 2 },
           "prompt": "Original FPV pixel art: team.enemy.hunter.warning, 32×32 transparent PNG. Follow palette, geometry and all role requirements.",
           "source": "game/couch/coop-view.mjs; game/couch/coop-actor-presentation.mjs; game/couch/coop-anchor-presentation.mjs; game/couch/coop-core-presentation.mjs; game/couch/coop-support-presentation.mjs; game/couch/coop-emitter-presentation.mjs; game/couch/coop-rescue-presentation.mjs; game/couch/coop-pilot-slots.mjs; game/couch/coop-enemy-slots.mjs; game/couch/coop-outcome-presentation.mjs; game/presentation/team-runtime-slots.mjs; game/ui/actor-presentation.mjs; game/presentation/catalog.mjs; game/couch/coop-actor-layout.mjs; game/couch/coop-terrain-trail.mjs; game/couch/coop-bonus-view.mjs; game/couch/candidate-team-pictures.mjs; game/content-design/material-markers.mjs; game/presentation/journey-actor-materials.mjs; authoring/motion-lab/render-character.mjs; game/ui/classic-view.mjs; game/ui/presentation-draw-image.mjs; game/ui/enemy-body-motion.mjs; authoring/motion-lab/animation.mjs; game/content-design/actor-marker.mjs; game/enemy-catalog.mjs sha256:b3c93bdcafec051933cfccfa8daa8572ab21f678350544dcdd0f3de97c46606f"
         },
         "quality": {
           "evidence": [
-            "Team functional scope only: docs/verification/team37/review.json sha256:7ecaeb6dc9c2fcf1804ed364ef1b818e3323f4a390629fd4575c0772cf4df45b",
-            "Authored-picture identity continuation only: docs/verification/team-picture-identity-extension/review-production63.json sha256:97b3c1eb195c0fe914692e5627f3b0cb372488c7bdcdd998b9484a50a376a082"
+            "Connected Team recipe; exact scoped functional review inputs did not match."
           ],
-          "stage": "reviewed"
+          "stage": "source"
         },
         "recipe": { "id": "team.enemy.v1" },
-        "revision": 4
+        "revision": 3
       },
       "team.enemy.slowed": {
         "description": "Team slowed enemy decoration: existing bounded component with Field Kit tokens and state styling.",
@@ -8732,19 +8719,18 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "team.enemy.slowed.field-kit", "revision": 3 },
+          "parent": { "id": "team.enemy.slowed.field-kit", "revision": 2 },
           "prompt": "Create one original FPV Field Kit team slowed enemy decoration for slot team.enemy.slowed. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
           "source": "game/couch/coop-view.mjs; game/couch/coop-actor-presentation.mjs; game/couch/coop-anchor-presentation.mjs; game/couch/coop-core-presentation.mjs; game/couch/coop-support-presentation.mjs; game/couch/coop-emitter-presentation.mjs; game/couch/coop-rescue-presentation.mjs; game/couch/coop-pilot-slots.mjs; game/couch/coop-enemy-slots.mjs; game/couch/coop-outcome-presentation.mjs; game/presentation/team-runtime-slots.mjs; game/ui/actor-presentation.mjs; game/presentation/catalog.mjs; game/couch/coop-actor-layout.mjs; game/couch/coop-terrain-trail.mjs; game/couch/coop-bonus-view.mjs; game/couch/candidate-team-pictures.mjs; game/content-design/material-markers.mjs; game/presentation/journey-actor-materials.mjs; authoring/motion-lab/render-character.mjs; game/ui/classic-view.mjs; game/ui/presentation-draw-image.mjs; game/ui/enemy-body-motion.mjs; authoring/motion-lab/animation.mjs; game/content-design/actor-marker.mjs; game/enemy-catalog.mjs sha256:b3c93bdcafec051933cfccfa8daa8572ab21f678350544dcdd0f3de97c46606f"
         },
         "quality": {
           "evidence": [
-            "Team functional scope only: docs/verification/team37/review.json sha256:7ecaeb6dc9c2fcf1804ed364ef1b818e3323f4a390629fd4575c0772cf4df45b",
-            "Authored-picture identity continuation only: docs/verification/team-picture-identity-extension/review-production63.json sha256:97b3c1eb195c0fe914692e5627f3b0cb372488c7bdcdd998b9484a50a376a082"
+            "Connected Team recipe; exact scoped functional review inputs did not match."
           ],
-          "stage": "reviewed"
+          "stage": "source"
         },
         "recipe": { "id": "team.support.v1" },
-        "revision": 4
+        "revision": 3
       },
       "team.pilot.p1.crawling.compact": {
         "description": "Team player 1 crawling compact body: existing bounded component with Field Kit tokens and state styling.",
@@ -8756,19 +8742,18 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "team.pilot.p1.crawling.compact.field-kit", "revision": 3 },
+          "parent": { "id": "team.pilot.p1.crawling.compact.field-kit", "revision": 2 },
           "prompt": "Create one original FPV Field Kit team player 1 crawling compact body for slot team.pilot.p1.crawling.compact. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 32 by 32 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
           "source": "game/couch/coop-view.mjs; game/couch/coop-actor-presentation.mjs; game/couch/coop-anchor-presentation.mjs; game/couch/coop-core-presentation.mjs; game/couch/coop-support-presentation.mjs; game/couch/coop-emitter-presentation.mjs; game/couch/coop-rescue-presentation.mjs; game/couch/coop-pilot-slots.mjs; game/couch/coop-enemy-slots.mjs; game/couch/coop-outcome-presentation.mjs; game/presentation/team-runtime-slots.mjs; game/ui/actor-presentation.mjs; game/presentation/catalog.mjs; game/couch/coop-actor-layout.mjs; game/couch/coop-terrain-trail.mjs; game/couch/coop-bonus-view.mjs; game/couch/candidate-team-pictures.mjs; game/content-design/material-markers.mjs; game/presentation/journey-actor-materials.mjs; authoring/motion-lab/render-character.mjs; game/ui/classic-view.mjs; game/ui/presentation-draw-image.mjs; game/ui/enemy-body-motion.mjs; authoring/motion-lab/animation.mjs; game/content-design/actor-marker.mjs; game/enemy-catalog.mjs sha256:b3c93bdcafec051933cfccfa8daa8572ab21f678350544dcdd0f3de97c46606f"
         },
         "quality": {
           "evidence": [
-            "Team functional scope only: docs/verification/team37/review.json sha256:7ecaeb6dc9c2fcf1804ed364ef1b818e3323f4a390629fd4575c0772cf4df45b",
-            "Authored-picture identity continuation only: docs/verification/team-picture-identity-extension/review-production63.json sha256:97b3c1eb195c0fe914692e5627f3b0cb372488c7bdcdd998b9484a50a376a082"
+            "Connected Team recipe; exact scoped functional review inputs did not match."
           ],
-          "stage": "reviewed"
+          "stage": "source"
         },
         "recipe": { "id": "team.pilot.v1" },
-        "revision": 4
+        "revision": 3
       },
       "team.pilot.p1.crawling.detailed": {
         "description": "Team player 1 crawling detailed body: existing bounded component with Field Kit tokens and state styling.",
@@ -8780,19 +8765,18 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "team.pilot.p1.crawling.detailed.field-kit", "revision": 3 },
+          "parent": { "id": "team.pilot.p1.crawling.detailed.field-kit", "revision": 2 },
           "prompt": "Create one original FPV Field Kit team player 1 crawling detailed body for slot team.pilot.p1.crawling.detailed. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 64 by 64 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
           "source": "game/couch/coop-view.mjs; game/couch/coop-actor-presentation.mjs; game/couch/coop-anchor-presentation.mjs; game/couch/coop-core-presentation.mjs; game/couch/coop-support-presentation.mjs; game/couch/coop-emitter-presentation.mjs; game/couch/coop-rescue-presentation.mjs; game/couch/coop-pilot-slots.mjs; game/couch/coop-enemy-slots.mjs; game/couch/coop-outcome-presentation.mjs; game/presentation/team-runtime-slots.mjs; game/ui/actor-presentation.mjs; game/presentation/catalog.mjs; game/couch/coop-actor-layout.mjs; game/couch/coop-terrain-trail.mjs; game/couch/coop-bonus-view.mjs; game/couch/candidate-team-pictures.mjs; game/content-design/material-markers.mjs; game/presentation/journey-actor-materials.mjs; authoring/motion-lab/render-character.mjs; game/ui/classic-view.mjs; game/ui/presentation-draw-image.mjs; game/ui/enemy-body-motion.mjs; authoring/motion-lab/animation.mjs; game/content-design/actor-marker.mjs; game/enemy-catalog.mjs sha256:b3c93bdcafec051933cfccfa8daa8572ab21f678350544dcdd0f3de97c46606f"
         },
         "quality": {
           "evidence": [
-            "Team functional scope only: docs/verification/team37/review.json sha256:7ecaeb6dc9c2fcf1804ed364ef1b818e3323f4a390629fd4575c0772cf4df45b",
-            "Authored-picture identity continuation only: docs/verification/team-picture-identity-extension/review-production63.json sha256:97b3c1eb195c0fe914692e5627f3b0cb372488c7bdcdd998b9484a50a376a082"
+            "Connected Team recipe; exact scoped functional review inputs did not match."
           ],
-          "stage": "reviewed"
+          "stage": "source"
         },
         "recipe": { "id": "team.pilot.v1" },
-        "revision": 4
+        "revision": 3
       },
       "team.pilot.p1.cutting.compact": {
         "description": "Team player 1 cutting compact body: existing bounded component with Field Kit tokens and state styling.",
@@ -8804,19 +8788,18 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "team.pilot.p1.cutting.compact.field-kit", "revision": 3 },
+          "parent": { "id": "team.pilot.p1.cutting.compact.field-kit", "revision": 2 },
           "prompt": "Create one original FPV Field Kit team player 1 cutting compact body for slot team.pilot.p1.cutting.compact. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 32 by 32 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
           "source": "game/couch/coop-view.mjs; game/couch/coop-actor-presentation.mjs; game/couch/coop-anchor-presentation.mjs; game/couch/coop-core-presentation.mjs; game/couch/coop-support-presentation.mjs; game/couch/coop-emitter-presentation.mjs; game/couch/coop-rescue-presentation.mjs; game/couch/coop-pilot-slots.mjs; game/couch/coop-enemy-slots.mjs; game/couch/coop-outcome-presentation.mjs; game/presentation/team-runtime-slots.mjs; game/ui/actor-presentation.mjs; game/presentation/catalog.mjs; game/couch/coop-actor-layout.mjs; game/couch/coop-terrain-trail.mjs; game/couch/coop-bonus-view.mjs; game/couch/candidate-team-pictures.mjs; game/content-design/material-markers.mjs; game/presentation/journey-actor-materials.mjs; authoring/motion-lab/render-character.mjs; game/ui/classic-view.mjs; game/ui/presentation-draw-image.mjs; game/ui/enemy-body-motion.mjs; authoring/motion-lab/animation.mjs; game/content-design/actor-marker.mjs; game/enemy-catalog.mjs sha256:b3c93bdcafec051933cfccfa8daa8572ab21f678350544dcdd0f3de97c46606f"
         },
         "quality": {
           "evidence": [
-            "Team functional scope only: docs/verification/team37/review.json sha256:7ecaeb6dc9c2fcf1804ed364ef1b818e3323f4a390629fd4575c0772cf4df45b",
-            "Authored-picture identity continuation only: docs/verification/team-picture-identity-extension/review-production63.json sha256:97b3c1eb195c0fe914692e5627f3b0cb372488c7bdcdd998b9484a50a376a082"
+            "Connected Team recipe; exact scoped functional review inputs did not match."
           ],
-          "stage": "reviewed"
+          "stage": "source"
         },
         "recipe": { "id": "team.pilot.v1" },
-        "revision": 4
+        "revision": 3
       },
       "team.pilot.p1.cutting.detailed": {
         "description": "Team player 1 cutting detailed body: existing bounded component with Field Kit tokens and state styling.",
@@ -8828,19 +8811,18 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "team.pilot.p1.cutting.detailed.field-kit", "revision": 3 },
+          "parent": { "id": "team.pilot.p1.cutting.detailed.field-kit", "revision": 2 },
           "prompt": "Create one original FPV Field Kit team player 1 cutting detailed body for slot team.pilot.p1.cutting.detailed. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 64 by 64 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
           "source": "game/couch/coop-view.mjs; game/couch/coop-actor-presentation.mjs; game/couch/coop-anchor-presentation.mjs; game/couch/coop-core-presentation.mjs; game/couch/coop-support-presentation.mjs; game/couch/coop-emitter-presentation.mjs; game/couch/coop-rescue-presentation.mjs; game/couch/coop-pilot-slots.mjs; game/couch/coop-enemy-slots.mjs; game/couch/coop-outcome-presentation.mjs; game/presentation/team-runtime-slots.mjs; game/ui/actor-presentation.mjs; game/presentation/catalog.mjs; game/couch/coop-actor-layout.mjs; game/couch/coop-terrain-trail.mjs; game/couch/coop-bonus-view.mjs; game/couch/candidate-team-pictures.mjs; game/content-design/material-markers.mjs; game/presentation/journey-actor-materials.mjs; authoring/motion-lab/render-character.mjs; game/ui/classic-view.mjs; game/ui/presentation-draw-image.mjs; game/ui/enemy-body-motion.mjs; authoring/motion-lab/animation.mjs; game/content-design/actor-marker.mjs; game/enemy-catalog.mjs sha256:b3c93bdcafec051933cfccfa8daa8572ab21f678350544dcdd0f3de97c46606f"
         },
         "quality": {
           "evidence": [
-            "Team functional scope only: docs/verification/team37/review.json sha256:7ecaeb6dc9c2fcf1804ed364ef1b818e3323f4a390629fd4575c0772cf4df45b",
-            "Authored-picture identity continuation only: docs/verification/team-picture-identity-extension/review-production63.json sha256:97b3c1eb195c0fe914692e5627f3b0cb372488c7bdcdd998b9484a50a376a082"
+            "Connected Team recipe; exact scoped functional review inputs did not match."
           ],
-          "stage": "reviewed"
+          "stage": "source"
         },
         "recipe": { "id": "team.pilot.v1" },
-        "revision": 4
+        "revision": 3
       },
       "team.pilot.p1.downed.compact": {
         "description": "Team player 1 downed compact body: existing bounded component with Field Kit tokens and state styling.",
@@ -8852,19 +8834,18 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "team.pilot.p1.downed.compact.field-kit", "revision": 3 },
+          "parent": { "id": "team.pilot.p1.downed.compact.field-kit", "revision": 2 },
           "prompt": "Create one original FPV Field Kit team player 1 downed compact body for slot team.pilot.p1.downed.compact. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 32 by 32 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
           "source": "game/couch/coop-view.mjs; game/couch/coop-actor-presentation.mjs; game/couch/coop-anchor-presentation.mjs; game/couch/coop-core-presentation.mjs; game/couch/coop-support-presentation.mjs; game/couch/coop-emitter-presentation.mjs; game/couch/coop-rescue-presentation.mjs; game/couch/coop-pilot-slots.mjs; game/couch/coop-enemy-slots.mjs; game/couch/coop-outcome-presentation.mjs; game/presentation/team-runtime-slots.mjs; game/ui/actor-presentation.mjs; game/presentation/catalog.mjs; game/couch/coop-actor-layout.mjs; game/couch/coop-terrain-trail.mjs; game/couch/coop-bonus-view.mjs; game/couch/candidate-team-pictures.mjs; game/content-design/material-markers.mjs; game/presentation/journey-actor-materials.mjs; authoring/motion-lab/render-character.mjs; game/ui/classic-view.mjs; game/ui/presentation-draw-image.mjs; game/ui/enemy-body-motion.mjs; authoring/motion-lab/animation.mjs; game/content-design/actor-marker.mjs; game/enemy-catalog.mjs sha256:b3c93bdcafec051933cfccfa8daa8572ab21f678350544dcdd0f3de97c46606f"
         },
         "quality": {
           "evidence": [
-            "Team functional scope only: docs/verification/team37/review.json sha256:7ecaeb6dc9c2fcf1804ed364ef1b818e3323f4a390629fd4575c0772cf4df45b",
-            "Authored-picture identity continuation only: docs/verification/team-picture-identity-extension/review-production63.json sha256:97b3c1eb195c0fe914692e5627f3b0cb372488c7bdcdd998b9484a50a376a082"
+            "Connected Team recipe; exact scoped functional review inputs did not match."
           ],
-          "stage": "reviewed"
+          "stage": "source"
         },
         "recipe": { "id": "team.pilot.v1" },
-        "revision": 4
+        "revision": 3
       },
       "team.pilot.p1.downed.detailed": {
         "description": "Team player 1 downed detailed body: existing bounded component with Field Kit tokens and state styling.",
@@ -8876,19 +8857,18 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "team.pilot.p1.downed.detailed.field-kit", "revision": 3 },
+          "parent": { "id": "team.pilot.p1.downed.detailed.field-kit", "revision": 2 },
           "prompt": "Create one original FPV Field Kit team player 1 downed detailed body for slot team.pilot.p1.downed.detailed. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 64 by 64 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
           "source": "game/couch/coop-view.mjs; game/couch/coop-actor-presentation.mjs; game/couch/coop-anchor-presentation.mjs; game/couch/coop-core-presentation.mjs; game/couch/coop-support-presentation.mjs; game/couch/coop-emitter-presentation.mjs; game/couch/coop-rescue-presentation.mjs; game/couch/coop-pilot-slots.mjs; game/couch/coop-enemy-slots.mjs; game/couch/coop-outcome-presentation.mjs; game/presentation/team-runtime-slots.mjs; game/ui/actor-presentation.mjs; game/presentation/catalog.mjs; game/couch/coop-actor-layout.mjs; game/couch/coop-terrain-trail.mjs; game/couch/coop-bonus-view.mjs; game/couch/candidate-team-pictures.mjs; game/content-design/material-markers.mjs; game/presentation/journey-actor-materials.mjs; authoring/motion-lab/render-character.mjs; game/ui/classic-view.mjs; game/ui/presentation-draw-image.mjs; game/ui/enemy-body-motion.mjs; authoring/motion-lab/animation.mjs; game/content-design/actor-marker.mjs; game/enemy-catalog.mjs sha256:b3c93bdcafec051933cfccfa8daa8572ab21f678350544dcdd0f3de97c46606f"
         },
         "quality": {
           "evidence": [
-            "Team functional scope only: docs/verification/team37/review.json sha256:7ecaeb6dc9c2fcf1804ed364ef1b818e3323f4a390629fd4575c0772cf4df45b",
-            "Authored-picture identity continuation only: docs/verification/team-picture-identity-extension/review-production63.json sha256:97b3c1eb195c0fe914692e5627f3b0cb372488c7bdcdd998b9484a50a376a082"
+            "Connected Team recipe; exact scoped functional review inputs did not match."
           ],
-          "stage": "reviewed"
+          "stage": "source"
         },
         "recipe": { "id": "team.pilot.v1" },
-        "revision": 4
+        "revision": 3
       },
       "team.pilot.p1.normal.compact": {
         "description": "Team player 1 normal compact body: existing bounded component with Field Kit tokens and state styling.",
@@ -8900,19 +8880,18 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "team.pilot.p1.normal.compact.field-kit", "revision": 3 },
+          "parent": { "id": "team.pilot.p1.normal.compact.field-kit", "revision": 2 },
           "prompt": "Create one original FPV Field Kit team player 1 normal compact body for slot team.pilot.p1.normal.compact. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 32 by 32 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
           "source": "game/couch/coop-view.mjs; game/couch/coop-actor-presentation.mjs; game/couch/coop-anchor-presentation.mjs; game/couch/coop-core-presentation.mjs; game/couch/coop-support-presentation.mjs; game/couch/coop-emitter-presentation.mjs; game/couch/coop-rescue-presentation.mjs; game/couch/coop-pilot-slots.mjs; game/couch/coop-enemy-slots.mjs; game/couch/coop-outcome-presentation.mjs; game/presentation/team-runtime-slots.mjs; game/ui/actor-presentation.mjs; game/presentation/catalog.mjs; game/couch/coop-actor-layout.mjs; game/couch/coop-terrain-trail.mjs; game/couch/coop-bonus-view.mjs; game/couch/candidate-team-pictures.mjs; game/content-design/material-markers.mjs; game/presentation/journey-actor-materials.mjs; authoring/motion-lab/render-character.mjs; game/ui/classic-view.mjs; game/ui/presentation-draw-image.mjs; game/ui/enemy-body-motion.mjs; authoring/motion-lab/animation.mjs; game/content-design/actor-marker.mjs; game/enemy-catalog.mjs sha256:b3c93bdcafec051933cfccfa8daa8572ab21f678350544dcdd0f3de97c46606f"
         },
         "quality": {
           "evidence": [
-            "Team functional scope only: docs/verification/team37/review.json sha256:7ecaeb6dc9c2fcf1804ed364ef1b818e3323f4a390629fd4575c0772cf4df45b",
-            "Authored-picture identity continuation only: docs/verification/team-picture-identity-extension/review-production63.json sha256:97b3c1eb195c0fe914692e5627f3b0cb372488c7bdcdd998b9484a50a376a082"
+            "Connected Team recipe; exact scoped functional review inputs did not match."
           ],
-          "stage": "reviewed"
+          "stage": "source"
         },
         "recipe": { "id": "team.pilot.v1" },
-        "revision": 4
+        "revision": 3
       },
       "team.pilot.p1.normal.detailed": {
         "description": "Team player 1 normal detailed body: existing bounded component with Field Kit tokens and state styling.",
@@ -8924,19 +8903,18 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "team.pilot.p1.normal.detailed.field-kit", "revision": 3 },
+          "parent": { "id": "team.pilot.p1.normal.detailed.field-kit", "revision": 2 },
           "prompt": "Create one original FPV Field Kit team player 1 normal detailed body for slot team.pilot.p1.normal.detailed. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 64 by 64 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
           "source": "game/couch/coop-view.mjs; game/couch/coop-actor-presentation.mjs; game/couch/coop-anchor-presentation.mjs; game/couch/coop-core-presentation.mjs; game/couch/coop-support-presentation.mjs; game/couch/coop-emitter-presentation.mjs; game/couch/coop-rescue-presentation.mjs; game/couch/coop-pilot-slots.mjs; game/couch/coop-enemy-slots.mjs; game/couch/coop-outcome-presentation.mjs; game/presentation/team-runtime-slots.mjs; game/ui/actor-presentation.mjs; game/presentation/catalog.mjs; game/couch/coop-actor-layout.mjs; game/couch/coop-terrain-trail.mjs; game/couch/coop-bonus-view.mjs; game/couch/candidate-team-pictures.mjs; game/content-design/material-markers.mjs; game/presentation/journey-actor-materials.mjs; authoring/motion-lab/render-character.mjs; game/ui/classic-view.mjs; game/ui/presentation-draw-image.mjs; game/ui/enemy-body-motion.mjs; authoring/motion-lab/animation.mjs; game/content-design/actor-marker.mjs; game/enemy-catalog.mjs sha256:b3c93bdcafec051933cfccfa8daa8572ab21f678350544dcdd0f3de97c46606f"
         },
         "quality": {
           "evidence": [
-            "Team functional scope only: docs/verification/team37/review.json sha256:7ecaeb6dc9c2fcf1804ed364ef1b818e3323f4a390629fd4575c0772cf4df45b",
-            "Authored-picture identity continuation only: docs/verification/team-picture-identity-extension/review-production63.json sha256:97b3c1eb195c0fe914692e5627f3b0cb372488c7bdcdd998b9484a50a376a082"
+            "Connected Team recipe; exact scoped functional review inputs did not match."
           ],
-          "stage": "reviewed"
+          "stage": "source"
         },
         "recipe": { "id": "team.pilot.v1" },
-        "revision": 4
+        "revision": 3
       },
       "team.pilot.p1.recovery.compact": {
         "description": "Team player 1 recovery compact body: existing bounded component with Field Kit tokens and state styling.",
@@ -8948,19 +8926,18 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "team.pilot.p1.recovery.compact.field-kit", "revision": 3 },
+          "parent": { "id": "team.pilot.p1.recovery.compact.field-kit", "revision": 2 },
           "prompt": "Create one original FPV Field Kit team player 1 recovery compact body for slot team.pilot.p1.recovery.compact. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 32 by 32 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
           "source": "game/couch/coop-view.mjs; game/couch/coop-actor-presentation.mjs; game/couch/coop-anchor-presentation.mjs; game/couch/coop-core-presentation.mjs; game/couch/coop-support-presentation.mjs; game/couch/coop-emitter-presentation.mjs; game/couch/coop-rescue-presentation.mjs; game/couch/coop-pilot-slots.mjs; game/couch/coop-enemy-slots.mjs; game/couch/coop-outcome-presentation.mjs; game/presentation/team-runtime-slots.mjs; game/ui/actor-presentation.mjs; game/presentation/catalog.mjs; game/couch/coop-actor-layout.mjs; game/couch/coop-terrain-trail.mjs; game/couch/coop-bonus-view.mjs; game/couch/candidate-team-pictures.mjs; game/content-design/material-markers.mjs; game/presentation/journey-actor-materials.mjs; authoring/motion-lab/render-character.mjs; game/ui/classic-view.mjs; game/ui/presentation-draw-image.mjs; game/ui/enemy-body-motion.mjs; authoring/motion-lab/animation.mjs; game/content-design/actor-marker.mjs; game/enemy-catalog.mjs sha256:b3c93bdcafec051933cfccfa8daa8572ab21f678350544dcdd0f3de97c46606f"
         },
         "quality": {
           "evidence": [
-            "Team functional scope only: docs/verification/team37/review.json sha256:7ecaeb6dc9c2fcf1804ed364ef1b818e3323f4a390629fd4575c0772cf4df45b",
-            "Authored-picture identity continuation only: docs/verification/team-picture-identity-extension/review-production63.json sha256:97b3c1eb195c0fe914692e5627f3b0cb372488c7bdcdd998b9484a50a376a082"
+            "Connected Team recipe; exact scoped functional review inputs did not match."
           ],
-          "stage": "reviewed"
+          "stage": "source"
         },
         "recipe": { "id": "team.pilot.v1" },
-        "revision": 4
+        "revision": 3
       },
       "team.pilot.p1.recovery.detailed": {
         "description": "Team player 1 recovery detailed body: existing bounded component with Field Kit tokens and state styling.",
@@ -8972,19 +8949,18 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "team.pilot.p1.recovery.detailed.field-kit", "revision": 3 },
+          "parent": { "id": "team.pilot.p1.recovery.detailed.field-kit", "revision": 2 },
           "prompt": "Create one original FPV Field Kit team player 1 recovery detailed body for slot team.pilot.p1.recovery.detailed. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 64 by 64 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
           "source": "game/couch/coop-view.mjs; game/couch/coop-actor-presentation.mjs; game/couch/coop-anchor-presentation.mjs; game/couch/coop-core-presentation.mjs; game/couch/coop-support-presentation.mjs; game/couch/coop-emitter-presentation.mjs; game/couch/coop-rescue-presentation.mjs; game/couch/coop-pilot-slots.mjs; game/couch/coop-enemy-slots.mjs; game/couch/coop-outcome-presentation.mjs; game/presentation/team-runtime-slots.mjs; game/ui/actor-presentation.mjs; game/presentation/catalog.mjs; game/couch/coop-actor-layout.mjs; game/couch/coop-terrain-trail.mjs; game/couch/coop-bonus-view.mjs; game/couch/candidate-team-pictures.mjs; game/content-design/material-markers.mjs; game/presentation/journey-actor-materials.mjs; authoring/motion-lab/render-character.mjs; game/ui/classic-view.mjs; game/ui/presentation-draw-image.mjs; game/ui/enemy-body-motion.mjs; authoring/motion-lab/animation.mjs; game/content-design/actor-marker.mjs; game/enemy-catalog.mjs sha256:b3c93bdcafec051933cfccfa8daa8572ab21f678350544dcdd0f3de97c46606f"
         },
         "quality": {
           "evidence": [
-            "Team functional scope only: docs/verification/team37/review.json sha256:7ecaeb6dc9c2fcf1804ed364ef1b818e3323f4a390629fd4575c0772cf4df45b",
-            "Authored-picture identity continuation only: docs/verification/team-picture-identity-extension/review-production63.json sha256:97b3c1eb195c0fe914692e5627f3b0cb372488c7bdcdd998b9484a50a376a082"
+            "Connected Team recipe; exact scoped functional review inputs did not match."
           ],
-          "stage": "reviewed"
+          "stage": "source"
         },
         "recipe": { "id": "team.pilot.v1" },
-        "revision": 4
+        "revision": 3
       },
       "team.pilot.p1.rescuing.compact": {
         "description": "Team player 1 rescuing compact body: existing bounded component with Field Kit tokens and state styling.",
@@ -8996,19 +8972,18 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "team.pilot.p1.rescuing.compact.field-kit", "revision": 3 },
+          "parent": { "id": "team.pilot.p1.rescuing.compact.field-kit", "revision": 2 },
           "prompt": "Create one original FPV Field Kit team player 1 rescuing compact body for slot team.pilot.p1.rescuing.compact. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 32 by 32 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
           "source": "game/couch/coop-view.mjs; game/couch/coop-actor-presentation.mjs; game/couch/coop-anchor-presentation.mjs; game/couch/coop-core-presentation.mjs; game/couch/coop-support-presentation.mjs; game/couch/coop-emitter-presentation.mjs; game/couch/coop-rescue-presentation.mjs; game/couch/coop-pilot-slots.mjs; game/couch/coop-enemy-slots.mjs; game/couch/coop-outcome-presentation.mjs; game/presentation/team-runtime-slots.mjs; game/ui/actor-presentation.mjs; game/presentation/catalog.mjs; game/couch/coop-actor-layout.mjs; game/couch/coop-terrain-trail.mjs; game/couch/coop-bonus-view.mjs; game/couch/candidate-team-pictures.mjs; game/content-design/material-markers.mjs; game/presentation/journey-actor-materials.mjs; authoring/motion-lab/render-character.mjs; game/ui/classic-view.mjs; game/ui/presentation-draw-image.mjs; game/ui/enemy-body-motion.mjs; authoring/motion-lab/animation.mjs; game/content-design/actor-marker.mjs; game/enemy-catalog.mjs sha256:b3c93bdcafec051933cfccfa8daa8572ab21f678350544dcdd0f3de97c46606f"
         },
         "quality": {
           "evidence": [
-            "Team functional scope only: docs/verification/team37/review.json sha256:7ecaeb6dc9c2fcf1804ed364ef1b818e3323f4a390629fd4575c0772cf4df45b",
-            "Authored-picture identity continuation only: docs/verification/team-picture-identity-extension/review-production63.json sha256:97b3c1eb195c0fe914692e5627f3b0cb372488c7bdcdd998b9484a50a376a082"
+            "Connected Team recipe; exact scoped functional review inputs did not match."
           ],
-          "stage": "reviewed"
+          "stage": "source"
         },
         "recipe": { "id": "team.pilot.v1" },
-        "revision": 4
+        "revision": 3
       },
       "team.pilot.p1.rescuing.detailed": {
         "description": "Team player 1 rescuing detailed body: existing bounded component with Field Kit tokens and state styling.",
@@ -9020,19 +8995,18 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "team.pilot.p1.rescuing.detailed.field-kit", "revision": 3 },
+          "parent": { "id": "team.pilot.p1.rescuing.detailed.field-kit", "revision": 2 },
           "prompt": "Create one original FPV Field Kit team player 1 rescuing detailed body for slot team.pilot.p1.rescuing.detailed. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 64 by 64 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
           "source": "game/couch/coop-view.mjs; game/couch/coop-actor-presentation.mjs; game/couch/coop-anchor-presentation.mjs; game/couch/coop-core-presentation.mjs; game/couch/coop-support-presentation.mjs; game/couch/coop-emitter-presentation.mjs; game/couch/coop-rescue-presentation.mjs; game/couch/coop-pilot-slots.mjs; game/couch/coop-enemy-slots.mjs; game/couch/coop-outcome-presentation.mjs; game/presentation/team-runtime-slots.mjs; game/ui/actor-presentation.mjs; game/presentation/catalog.mjs; game/couch/coop-actor-layout.mjs; game/couch/coop-terrain-trail.mjs; game/couch/coop-bonus-view.mjs; game/couch/candidate-team-pictures.mjs; game/content-design/material-markers.mjs; game/presentation/journey-actor-materials.mjs; authoring/motion-lab/render-character.mjs; game/ui/classic-view.mjs; game/ui/presentation-draw-image.mjs; game/ui/enemy-body-motion.mjs; authoring/motion-lab/animation.mjs; game/content-design/actor-marker.mjs; game/enemy-catalog.mjs sha256:b3c93bdcafec051933cfccfa8daa8572ab21f678350544dcdd0f3de97c46606f"
         },
         "quality": {
           "evidence": [
-            "Team functional scope only: docs/verification/team37/review.json sha256:7ecaeb6dc9c2fcf1804ed364ef1b818e3323f4a390629fd4575c0772cf4df45b",
-            "Authored-picture identity continuation only: docs/verification/team-picture-identity-extension/review-production63.json sha256:97b3c1eb195c0fe914692e5627f3b0cb372488c7bdcdd998b9484a50a376a082"
+            "Connected Team recipe; exact scoped functional review inputs did not match."
           ],
-          "stage": "reviewed"
+          "stage": "source"
         },
         "recipe": { "id": "team.pilot.v1" },
-        "revision": 4
+        "revision": 3
       },
       "team.pilot.p2.crawling.compact": {
         "description": "Team player 2 crawling compact body: existing bounded component with Field Kit tokens and state styling.",
@@ -9044,19 +9018,18 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "team.pilot.p2.crawling.compact.field-kit", "revision": 3 },
+          "parent": { "id": "team.pilot.p2.crawling.compact.field-kit", "revision": 2 },
           "prompt": "Create one original FPV Field Kit team player 2 crawling compact body for slot team.pilot.p2.crawling.compact. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 32 by 32 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
           "source": "game/couch/coop-view.mjs; game/couch/coop-actor-presentation.mjs; game/couch/coop-anchor-presentation.mjs; game/couch/coop-core-presentation.mjs; game/couch/coop-support-presentation.mjs; game/couch/coop-emitter-presentation.mjs; game/couch/coop-rescue-presentation.mjs; game/couch/coop-pilot-slots.mjs; game/couch/coop-enemy-slots.mjs; game/couch/coop-outcome-presentation.mjs; game/presentation/team-runtime-slots.mjs; game/ui/actor-presentation.mjs; game/presentation/catalog.mjs; game/couch/coop-actor-layout.mjs; game/couch/coop-terrain-trail.mjs; game/couch/coop-bonus-view.mjs; game/couch/candidate-team-pictures.mjs; game/content-design/material-markers.mjs; game/presentation/journey-actor-materials.mjs; authoring/motion-lab/render-character.mjs; game/ui/classic-view.mjs; game/ui/presentation-draw-image.mjs; game/ui/enemy-body-motion.mjs; authoring/motion-lab/animation.mjs; game/content-design/actor-marker.mjs; game/enemy-catalog.mjs sha256:b3c93bdcafec051933cfccfa8daa8572ab21f678350544dcdd0f3de97c46606f"
         },
         "quality": {
           "evidence": [
-            "Team functional scope only: docs/verification/team37/review.json sha256:7ecaeb6dc9c2fcf1804ed364ef1b818e3323f4a390629fd4575c0772cf4df45b",
-            "Authored-picture identity continuation only: docs/verification/team-picture-identity-extension/review-production63.json sha256:97b3c1eb195c0fe914692e5627f3b0cb372488c7bdcdd998b9484a50a376a082"
+            "Connected Team recipe; exact scoped functional review inputs did not match."
           ],
-          "stage": "reviewed"
+          "stage": "source"
         },
         "recipe": { "id": "team.pilot.v1" },
-        "revision": 4
+        "revision": 3
       },
       "team.pilot.p2.crawling.detailed": {
         "description": "Team player 2 crawling detailed body: existing bounded component with Field Kit tokens and state styling.",
@@ -9068,19 +9041,18 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "team.pilot.p2.crawling.detailed.field-kit", "revision": 3 },
+          "parent": { "id": "team.pilot.p2.crawling.detailed.field-kit", "revision": 2 },
           "prompt": "Create one original FPV Field Kit team player 2 crawling detailed body for slot team.pilot.p2.crawling.detailed. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 64 by 64 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
           "source": "game/couch/coop-view.mjs; game/couch/coop-actor-presentation.mjs; game/couch/coop-anchor-presentation.mjs; game/couch/coop-core-presentation.mjs; game/couch/coop-support-presentation.mjs; game/couch/coop-emitter-presentation.mjs; game/couch/coop-rescue-presentation.mjs; game/couch/coop-pilot-slots.mjs; game/couch/coop-enemy-slots.mjs; game/couch/coop-outcome-presentation.mjs; game/presentation/team-runtime-slots.mjs; game/ui/actor-presentation.mjs; game/presentation/catalog.mjs; game/couch/coop-actor-layout.mjs; game/couch/coop-terrain-trail.mjs; game/couch/coop-bonus-view.mjs; game/couch/candidate-team-pictures.mjs; game/content-design/material-markers.mjs; game/presentation/journey-actor-materials.mjs; authoring/motion-lab/render-character.mjs; game/ui/classic-view.mjs; game/ui/presentation-draw-image.mjs; game/ui/enemy-body-motion.mjs; authoring/motion-lab/animation.mjs; game/content-design/actor-marker.mjs; game/enemy-catalog.mjs sha256:b3c93bdcafec051933cfccfa8daa8572ab21f678350544dcdd0f3de97c46606f"
         },
         "quality": {
           "evidence": [
-            "Team functional scope only: docs/verification/team37/review.json sha256:7ecaeb6dc9c2fcf1804ed364ef1b818e3323f4a390629fd4575c0772cf4df45b",
-            "Authored-picture identity continuation only: docs/verification/team-picture-identity-extension/review-production63.json sha256:97b3c1eb195c0fe914692e5627f3b0cb372488c7bdcdd998b9484a50a376a082"
+            "Connected Team recipe; exact scoped functional review inputs did not match."
           ],
-          "stage": "reviewed"
+          "stage": "source"
         },
         "recipe": { "id": "team.pilot.v1" },
-        "revision": 4
+        "revision": 3
       },
       "team.pilot.p2.cutting.compact": {
         "description": "Team player 2 cutting compact body: existing bounded component with Field Kit tokens and state styling.",
@@ -9092,19 +9064,18 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "team.pilot.p2.cutting.compact.field-kit", "revision": 3 },
+          "parent": { "id": "team.pilot.p2.cutting.compact.field-kit", "revision": 2 },
           "prompt": "Create one original FPV Field Kit team player 2 cutting compact body for slot team.pilot.p2.cutting.compact. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 32 by 32 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
           "source": "game/couch/coop-view.mjs; game/couch/coop-actor-presentation.mjs; game/couch/coop-anchor-presentation.mjs; game/couch/coop-core-presentation.mjs; game/couch/coop-support-presentation.mjs; game/couch/coop-emitter-presentation.mjs; game/couch/coop-rescue-presentation.mjs; game/couch/coop-pilot-slots.mjs; game/couch/coop-enemy-slots.mjs; game/couch/coop-outcome-presentation.mjs; game/presentation/team-runtime-slots.mjs; game/ui/actor-presentation.mjs; game/presentation/catalog.mjs; game/couch/coop-actor-layout.mjs; game/couch/coop-terrain-trail.mjs; game/couch/coop-bonus-view.mjs; game/couch/candidate-team-pictures.mjs; game/content-design/material-markers.mjs; game/presentation/journey-actor-materials.mjs; authoring/motion-lab/render-character.mjs; game/ui/classic-view.mjs; game/ui/presentation-draw-image.mjs; game/ui/enemy-body-motion.mjs; authoring/motion-lab/animation.mjs; game/content-design/actor-marker.mjs; game/enemy-catalog.mjs sha256:b3c93bdcafec051933cfccfa8daa8572ab21f678350544dcdd0f3de97c46606f"
         },
         "quality": {
           "evidence": [
-            "Team functional scope only: docs/verification/team37/review.json sha256:7ecaeb6dc9c2fcf1804ed364ef1b818e3323f4a390629fd4575c0772cf4df45b",
-            "Authored-picture identity continuation only: docs/verification/team-picture-identity-extension/review-production63.json sha256:97b3c1eb195c0fe914692e5627f3b0cb372488c7bdcdd998b9484a50a376a082"
+            "Connected Team recipe; exact scoped functional review inputs did not match."
           ],
-          "stage": "reviewed"
+          "stage": "source"
         },
         "recipe": { "id": "team.pilot.v1" },
-        "revision": 4
+        "revision": 3
       },
       "team.pilot.p2.cutting.detailed": {
         "description": "Team player 2 cutting detailed body: existing bounded component with Field Kit tokens and state styling.",
@@ -9116,19 +9087,18 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "team.pilot.p2.cutting.detailed.field-kit", "revision": 3 },
+          "parent": { "id": "team.pilot.p2.cutting.detailed.field-kit", "revision": 2 },
           "prompt": "Create one original FPV Field Kit team player 2 cutting detailed body for slot team.pilot.p2.cutting.detailed. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 64 by 64 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
           "source": "game/couch/coop-view.mjs; game/couch/coop-actor-presentation.mjs; game/couch/coop-anchor-presentation.mjs; game/couch/coop-core-presentation.mjs; game/couch/coop-support-presentation.mjs; game/couch/coop-emitter-presentation.mjs; game/couch/coop-rescue-presentation.mjs; game/couch/coop-pilot-slots.mjs; game/couch/coop-enemy-slots.mjs; game/couch/coop-outcome-presentation.mjs; game/presentation/team-runtime-slots.mjs; game/ui/actor-presentation.mjs; game/presentation/catalog.mjs; game/couch/coop-actor-layout.mjs; game/couch/coop-terrain-trail.mjs; game/couch/coop-bonus-view.mjs; game/couch/candidate-team-pictures.mjs; game/content-design/material-markers.mjs; game/presentation/journey-actor-materials.mjs; authoring/motion-lab/render-character.mjs; game/ui/classic-view.mjs; game/ui/presentation-draw-image.mjs; game/ui/enemy-body-motion.mjs; authoring/motion-lab/animation.mjs; game/content-design/actor-marker.mjs; game/enemy-catalog.mjs sha256:b3c93bdcafec051933cfccfa8daa8572ab21f678350544dcdd0f3de97c46606f"
         },
         "quality": {
           "evidence": [
-            "Team functional scope only: docs/verification/team37/review.json sha256:7ecaeb6dc9c2fcf1804ed364ef1b818e3323f4a390629fd4575c0772cf4df45b",
-            "Authored-picture identity continuation only: docs/verification/team-picture-identity-extension/review-production63.json sha256:97b3c1eb195c0fe914692e5627f3b0cb372488c7bdcdd998b9484a50a376a082"
+            "Connected Team recipe; exact scoped functional review inputs did not match."
           ],
-          "stage": "reviewed"
+          "stage": "source"
         },
         "recipe": { "id": "team.pilot.v1" },
-        "revision": 4
+        "revision": 3
       },
       "team.pilot.p2.downed.compact": {
         "description": "Team player 2 downed compact body: existing bounded component with Field Kit tokens and state styling.",
@@ -9140,19 +9110,18 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "team.pilot.p2.downed.compact.field-kit", "revision": 3 },
+          "parent": { "id": "team.pilot.p2.downed.compact.field-kit", "revision": 2 },
           "prompt": "Create one original FPV Field Kit team player 2 downed compact body for slot team.pilot.p2.downed.compact. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 32 by 32 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
           "source": "game/couch/coop-view.mjs; game/couch/coop-actor-presentation.mjs; game/couch/coop-anchor-presentation.mjs; game/couch/coop-core-presentation.mjs; game/couch/coop-support-presentation.mjs; game/couch/coop-emitter-presentation.mjs; game/couch/coop-rescue-presentation.mjs; game/couch/coop-pilot-slots.mjs; game/couch/coop-enemy-slots.mjs; game/couch/coop-outcome-presentation.mjs; game/presentation/team-runtime-slots.mjs; game/ui/actor-presentation.mjs; game/presentation/catalog.mjs; game/couch/coop-actor-layout.mjs; game/couch/coop-terrain-trail.mjs; game/couch/coop-bonus-view.mjs; game/couch/candidate-team-pictures.mjs; game/content-design/material-markers.mjs; game/presentation/journey-actor-materials.mjs; authoring/motion-lab/render-character.mjs; game/ui/classic-view.mjs; game/ui/presentation-draw-image.mjs; game/ui/enemy-body-motion.mjs; authoring/motion-lab/animation.mjs; game/content-design/actor-marker.mjs; game/enemy-catalog.mjs sha256:b3c93bdcafec051933cfccfa8daa8572ab21f678350544dcdd0f3de97c46606f"
         },
         "quality": {
           "evidence": [
-            "Team functional scope only: docs/verification/team37/review.json sha256:7ecaeb6dc9c2fcf1804ed364ef1b818e3323f4a390629fd4575c0772cf4df45b",
-            "Authored-picture identity continuation only: docs/verification/team-picture-identity-extension/review-production63.json sha256:97b3c1eb195c0fe914692e5627f3b0cb372488c7bdcdd998b9484a50a376a082"
+            "Connected Team recipe; exact scoped functional review inputs did not match."
           ],
-          "stage": "reviewed"
+          "stage": "source"
         },
         "recipe": { "id": "team.pilot.v1" },
-        "revision": 4
+        "revision": 3
       },
       "team.pilot.p2.downed.detailed": {
         "description": "Team player 2 downed detailed body: existing bounded component with Field Kit tokens and state styling.",
@@ -9164,19 +9133,18 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "team.pilot.p2.downed.detailed.field-kit", "revision": 3 },
+          "parent": { "id": "team.pilot.p2.downed.detailed.field-kit", "revision": 2 },
           "prompt": "Create one original FPV Field Kit team player 2 downed detailed body for slot team.pilot.p2.downed.detailed. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 64 by 64 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
           "source": "game/couch/coop-view.mjs; game/couch/coop-actor-presentation.mjs; game/couch/coop-anchor-presentation.mjs; game/couch/coop-core-presentation.mjs; game/couch/coop-support-presentation.mjs; game/couch/coop-emitter-presentation.mjs; game/couch/coop-rescue-presentation.mjs; game/couch/coop-pilot-slots.mjs; game/couch/coop-enemy-slots.mjs; game/couch/coop-outcome-presentation.mjs; game/presentation/team-runtime-slots.mjs; game/ui/actor-presentation.mjs; game/presentation/catalog.mjs; game/couch/coop-actor-layout.mjs; game/couch/coop-terrain-trail.mjs; game/couch/coop-bonus-view.mjs; game/couch/candidate-team-pictures.mjs; game/content-design/material-markers.mjs; game/presentation/journey-actor-materials.mjs; authoring/motion-lab/render-character.mjs; game/ui/classic-view.mjs; game/ui/presentation-draw-image.mjs; game/ui/enemy-body-motion.mjs; authoring/motion-lab/animation.mjs; game/content-design/actor-marker.mjs; game/enemy-catalog.mjs sha256:b3c93bdcafec051933cfccfa8daa8572ab21f678350544dcdd0f3de97c46606f"
         },
         "quality": {
           "evidence": [
-            "Team functional scope only: docs/verification/team37/review.json sha256:7ecaeb6dc9c2fcf1804ed364ef1b818e3323f4a390629fd4575c0772cf4df45b",
-            "Authored-picture identity continuation only: docs/verification/team-picture-identity-extension/review-production63.json sha256:97b3c1eb195c0fe914692e5627f3b0cb372488c7bdcdd998b9484a50a376a082"
+            "Connected Team recipe; exact scoped functional review inputs did not match."
           ],
-          "stage": "reviewed"
+          "stage": "source"
         },
         "recipe": { "id": "team.pilot.v1" },
-        "revision": 4
+        "revision": 3
       },
       "team.pilot.p2.normal.compact": {
         "description": "Team player 2 normal compact body: existing bounded component with Field Kit tokens and state styling.",
@@ -9188,19 +9156,18 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "team.pilot.p2.normal.compact.field-kit", "revision": 3 },
+          "parent": { "id": "team.pilot.p2.normal.compact.field-kit", "revision": 2 },
           "prompt": "Create one original FPV Field Kit team player 2 normal compact body for slot team.pilot.p2.normal.compact. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 32 by 32 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
           "source": "game/couch/coop-view.mjs; game/couch/coop-actor-presentation.mjs; game/couch/coop-anchor-presentation.mjs; game/couch/coop-core-presentation.mjs; game/couch/coop-support-presentation.mjs; game/couch/coop-emitter-presentation.mjs; game/couch/coop-rescue-presentation.mjs; game/couch/coop-pilot-slots.mjs; game/couch/coop-enemy-slots.mjs; game/couch/coop-outcome-presentation.mjs; game/presentation/team-runtime-slots.mjs; game/ui/actor-presentation.mjs; game/presentation/catalog.mjs; game/couch/coop-actor-layout.mjs; game/couch/coop-terrain-trail.mjs; game/couch/coop-bonus-view.mjs; game/couch/candidate-team-pictures.mjs; game/content-design/material-markers.mjs; game/presentation/journey-actor-materials.mjs; authoring/motion-lab/render-character.mjs; game/ui/classic-view.mjs; game/ui/presentation-draw-image.mjs; game/ui/enemy-body-motion.mjs; authoring/motion-lab/animation.mjs; game/content-design/actor-marker.mjs; game/enemy-catalog.mjs sha256:b3c93bdcafec051933cfccfa8daa8572ab21f678350544dcdd0f3de97c46606f"
         },
         "quality": {
           "evidence": [
-            "Team functional scope only: docs/verification/team37/review.json sha256:7ecaeb6dc9c2fcf1804ed364ef1b818e3323f4a390629fd4575c0772cf4df45b",
-            "Authored-picture identity continuation only: docs/verification/team-picture-identity-extension/review-production63.json sha256:97b3c1eb195c0fe914692e5627f3b0cb372488c7bdcdd998b9484a50a376a082"
+            "Connected Team recipe; exact scoped functional review inputs did not match."
           ],
-          "stage": "reviewed"
+          "stage": "source"
         },
         "recipe": { "id": "team.pilot.v1" },
-        "revision": 4
+        "revision": 3
       },
       "team.pilot.p2.normal.detailed": {
         "description": "Team player 2 normal detailed body: existing bounded component with Field Kit tokens and state styling.",
@@ -9212,19 +9179,18 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "team.pilot.p2.normal.detailed.field-kit", "revision": 3 },
+          "parent": { "id": "team.pilot.p2.normal.detailed.field-kit", "revision": 2 },
           "prompt": "Create one original FPV Field Kit team player 2 normal detailed body for slot team.pilot.p2.normal.detailed. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 64 by 64 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
           "source": "game/couch/coop-view.mjs; game/couch/coop-actor-presentation.mjs; game/couch/coop-anchor-presentation.mjs; game/couch/coop-core-presentation.mjs; game/couch/coop-support-presentation.mjs; game/couch/coop-emitter-presentation.mjs; game/couch/coop-rescue-presentation.mjs; game/couch/coop-pilot-slots.mjs; game/couch/coop-enemy-slots.mjs; game/couch/coop-outcome-presentation.mjs; game/presentation/team-runtime-slots.mjs; game/ui/actor-presentation.mjs; game/presentation/catalog.mjs; game/couch/coop-actor-layout.mjs; game/couch/coop-terrain-trail.mjs; game/couch/coop-bonus-view.mjs; game/couch/candidate-team-pictures.mjs; game/content-design/material-markers.mjs; game/presentation/journey-actor-materials.mjs; authoring/motion-lab/render-character.mjs; game/ui/classic-view.mjs; game/ui/presentation-draw-image.mjs; game/ui/enemy-body-motion.mjs; authoring/motion-lab/animation.mjs; game/content-design/actor-marker.mjs; game/enemy-catalog.mjs sha256:b3c93bdcafec051933cfccfa8daa8572ab21f678350544dcdd0f3de97c46606f"
         },
         "quality": {
           "evidence": [
-            "Team functional scope only: docs/verification/team37/review.json sha256:7ecaeb6dc9c2fcf1804ed364ef1b818e3323f4a390629fd4575c0772cf4df45b",
-            "Authored-picture identity continuation only: docs/verification/team-picture-identity-extension/review-production63.json sha256:97b3c1eb195c0fe914692e5627f3b0cb372488c7bdcdd998b9484a50a376a082"
+            "Connected Team recipe; exact scoped functional review inputs did not match."
           ],
-          "stage": "reviewed"
+          "stage": "source"
         },
         "recipe": { "id": "team.pilot.v1" },
-        "revision": 4
+        "revision": 3
       },
       "team.pilot.p2.recovery.compact": {
         "description": "Team player 2 recovery compact body: existing bounded component with Field Kit tokens and state styling.",
@@ -9236,19 +9202,18 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "team.pilot.p2.recovery.compact.field-kit", "revision": 3 },
+          "parent": { "id": "team.pilot.p2.recovery.compact.field-kit", "revision": 2 },
           "prompt": "Create one original FPV Field Kit team player 2 recovery compact body for slot team.pilot.p2.recovery.compact. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 32 by 32 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
           "source": "game/couch/coop-view.mjs; game/couch/coop-actor-presentation.mjs; game/couch/coop-anchor-presentation.mjs; game/couch/coop-core-presentation.mjs; game/couch/coop-support-presentation.mjs; game/couch/coop-emitter-presentation.mjs; game/couch/coop-rescue-presentation.mjs; game/couch/coop-pilot-slots.mjs; game/couch/coop-enemy-slots.mjs; game/couch/coop-outcome-presentation.mjs; game/presentation/team-runtime-slots.mjs; game/ui/actor-presentation.mjs; game/presentation/catalog.mjs; game/couch/coop-actor-layout.mjs; game/couch/coop-terrain-trail.mjs; game/couch/coop-bonus-view.mjs; game/couch/candidate-team-pictures.mjs; game/content-design/material-markers.mjs; game/presentation/journey-actor-materials.mjs; authoring/motion-lab/render-character.mjs; game/ui/classic-view.mjs; game/ui/presentation-draw-image.mjs; game/ui/enemy-body-motion.mjs; authoring/motion-lab/animation.mjs; game/content-design/actor-marker.mjs; game/enemy-catalog.mjs sha256:b3c93bdcafec051933cfccfa8daa8572ab21f678350544dcdd0f3de97c46606f"
         },
         "quality": {
           "evidence": [
-            "Team functional scope only: docs/verification/team37/review.json sha256:7ecaeb6dc9c2fcf1804ed364ef1b818e3323f4a390629fd4575c0772cf4df45b",
-            "Authored-picture identity continuation only: docs/verification/team-picture-identity-extension/review-production63.json sha256:97b3c1eb195c0fe914692e5627f3b0cb372488c7bdcdd998b9484a50a376a082"
+            "Connected Team recipe; exact scoped functional review inputs did not match."
           ],
-          "stage": "reviewed"
+          "stage": "source"
         },
         "recipe": { "id": "team.pilot.v1" },
-        "revision": 4
+        "revision": 3
       },
       "team.pilot.p2.recovery.detailed": {
         "description": "Team player 2 recovery detailed body: existing bounded component with Field Kit tokens and state styling.",
@@ -9260,19 +9225,18 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "team.pilot.p2.recovery.detailed.field-kit", "revision": 3 },
+          "parent": { "id": "team.pilot.p2.recovery.detailed.field-kit", "revision": 2 },
           "prompt": "Create one original FPV Field Kit team player 2 recovery detailed body for slot team.pilot.p2.recovery.detailed. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 64 by 64 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
           "source": "game/couch/coop-view.mjs; game/couch/coop-actor-presentation.mjs; game/couch/coop-anchor-presentation.mjs; game/couch/coop-core-presentation.mjs; game/couch/coop-support-presentation.mjs; game/couch/coop-emitter-presentation.mjs; game/couch/coop-rescue-presentation.mjs; game/couch/coop-pilot-slots.mjs; game/couch/coop-enemy-slots.mjs; game/couch/coop-outcome-presentation.mjs; game/presentation/team-runtime-slots.mjs; game/ui/actor-presentation.mjs; game/presentation/catalog.mjs; game/couch/coop-actor-layout.mjs; game/couch/coop-terrain-trail.mjs; game/couch/coop-bonus-view.mjs; game/couch/candidate-team-pictures.mjs; game/content-design/material-markers.mjs; game/presentation/journey-actor-materials.mjs; authoring/motion-lab/render-character.mjs; game/ui/classic-view.mjs; game/ui/presentation-draw-image.mjs; game/ui/enemy-body-motion.mjs; authoring/motion-lab/animation.mjs; game/content-design/actor-marker.mjs; game/enemy-catalog.mjs sha256:b3c93bdcafec051933cfccfa8daa8572ab21f678350544dcdd0f3de97c46606f"
         },
         "quality": {
           "evidence": [
-            "Team functional scope only: docs/verification/team37/review.json sha256:7ecaeb6dc9c2fcf1804ed364ef1b818e3323f4a390629fd4575c0772cf4df45b",
-            "Authored-picture identity continuation only: docs/verification/team-picture-identity-extension/review-production63.json sha256:97b3c1eb195c0fe914692e5627f3b0cb372488c7bdcdd998b9484a50a376a082"
+            "Connected Team recipe; exact scoped functional review inputs did not match."
           ],
-          "stage": "reviewed"
+          "stage": "source"
         },
         "recipe": { "id": "team.pilot.v1" },
-        "revision": 4
+        "revision": 3
       },
       "team.pilot.p2.rescuing.compact": {
         "description": "Team player 2 rescuing compact body: existing bounded component with Field Kit tokens and state styling.",
@@ -9284,19 +9248,18 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "team.pilot.p2.rescuing.compact.field-kit", "revision": 3 },
+          "parent": { "id": "team.pilot.p2.rescuing.compact.field-kit", "revision": 2 },
           "prompt": "Create one original FPV Field Kit team player 2 rescuing compact body for slot team.pilot.p2.rescuing.compact. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 32 by 32 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
           "source": "game/couch/coop-view.mjs; game/couch/coop-actor-presentation.mjs; game/couch/coop-anchor-presentation.mjs; game/couch/coop-core-presentation.mjs; game/couch/coop-support-presentation.mjs; game/couch/coop-emitter-presentation.mjs; game/couch/coop-rescue-presentation.mjs; game/couch/coop-pilot-slots.mjs; game/couch/coop-enemy-slots.mjs; game/couch/coop-outcome-presentation.mjs; game/presentation/team-runtime-slots.mjs; game/ui/actor-presentation.mjs; game/presentation/catalog.mjs; game/couch/coop-actor-layout.mjs; game/couch/coop-terrain-trail.mjs; game/couch/coop-bonus-view.mjs; game/couch/candidate-team-pictures.mjs; game/content-design/material-markers.mjs; game/presentation/journey-actor-materials.mjs; authoring/motion-lab/render-character.mjs; game/ui/classic-view.mjs; game/ui/presentation-draw-image.mjs; game/ui/enemy-body-motion.mjs; authoring/motion-lab/animation.mjs; game/content-design/actor-marker.mjs; game/enemy-catalog.mjs sha256:b3c93bdcafec051933cfccfa8daa8572ab21f678350544dcdd0f3de97c46606f"
         },
         "quality": {
           "evidence": [
-            "Team functional scope only: docs/verification/team37/review.json sha256:7ecaeb6dc9c2fcf1804ed364ef1b818e3323f4a390629fd4575c0772cf4df45b",
-            "Authored-picture identity continuation only: docs/verification/team-picture-identity-extension/review-production63.json sha256:97b3c1eb195c0fe914692e5627f3b0cb372488c7bdcdd998b9484a50a376a082"
+            "Connected Team recipe; exact scoped functional review inputs did not match."
           ],
-          "stage": "reviewed"
+          "stage": "source"
         },
         "recipe": { "id": "team.pilot.v1" },
-        "revision": 4
+        "revision": 3
       },
       "team.pilot.p2.rescuing.detailed": {
         "description": "Team player 2 rescuing detailed body: existing bounded component with Field Kit tokens and state styling.",
@@ -9308,19 +9271,18 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "team.pilot.p2.rescuing.detailed.field-kit", "revision": 3 },
+          "parent": { "id": "team.pilot.p2.rescuing.detailed.field-kit", "revision": 2 },
           "prompt": "Create one original FPV Field Kit team player 2 rescuing detailed body for slot team.pilot.p2.rescuing.detailed. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 64 by 64 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
           "source": "game/couch/coop-view.mjs; game/couch/coop-actor-presentation.mjs; game/couch/coop-anchor-presentation.mjs; game/couch/coop-core-presentation.mjs; game/couch/coop-support-presentation.mjs; game/couch/coop-emitter-presentation.mjs; game/couch/coop-rescue-presentation.mjs; game/couch/coop-pilot-slots.mjs; game/couch/coop-enemy-slots.mjs; game/couch/coop-outcome-presentation.mjs; game/presentation/team-runtime-slots.mjs; game/ui/actor-presentation.mjs; game/presentation/catalog.mjs; game/couch/coop-actor-layout.mjs; game/couch/coop-terrain-trail.mjs; game/couch/coop-bonus-view.mjs; game/couch/candidate-team-pictures.mjs; game/content-design/material-markers.mjs; game/presentation/journey-actor-materials.mjs; authoring/motion-lab/render-character.mjs; game/ui/classic-view.mjs; game/ui/presentation-draw-image.mjs; game/ui/enemy-body-motion.mjs; authoring/motion-lab/animation.mjs; game/content-design/actor-marker.mjs; game/enemy-catalog.mjs sha256:b3c93bdcafec051933cfccfa8daa8572ab21f678350544dcdd0f3de97c46606f"
         },
         "quality": {
           "evidence": [
-            "Team functional scope only: docs/verification/team37/review.json sha256:7ecaeb6dc9c2fcf1804ed364ef1b818e3323f4a390629fd4575c0772cf4df45b",
-            "Authored-picture identity continuation only: docs/verification/team-picture-identity-extension/review-production63.json sha256:97b3c1eb195c0fe914692e5627f3b0cb372488c7bdcdd998b9484a50a376a082"
+            "Connected Team recipe; exact scoped functional review inputs did not match."
           ],
-          "stage": "reviewed"
+          "stage": "source"
         },
         "recipe": { "id": "team.pilot.v1" },
-        "revision": 4
+        "revision": 3
       },
       "team.player.recovery": {
         "description": "Team player recovery: existing bounded component with Field Kit tokens and state styling.",
@@ -9332,19 +9294,18 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "team.player.recovery.field-kit", "revision": 3 },
+          "parent": { "id": "team.player.recovery.field-kit", "revision": 2 },
           "prompt": "Create one original FPV Field Kit team player recovery for slot team.player.recovery. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 32 by 32 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
           "source": "game/couch/coop-view.mjs; game/couch/coop-actor-presentation.mjs; game/couch/coop-anchor-presentation.mjs; game/couch/coop-core-presentation.mjs; game/couch/coop-support-presentation.mjs; game/couch/coop-emitter-presentation.mjs; game/couch/coop-rescue-presentation.mjs; game/couch/coop-pilot-slots.mjs; game/couch/coop-enemy-slots.mjs; game/couch/coop-outcome-presentation.mjs; game/presentation/team-runtime-slots.mjs; game/ui/actor-presentation.mjs; game/presentation/catalog.mjs; game/couch/coop-actor-layout.mjs; game/couch/coop-terrain-trail.mjs; game/couch/coop-bonus-view.mjs; game/couch/candidate-team-pictures.mjs; game/content-design/material-markers.mjs; game/presentation/journey-actor-materials.mjs; authoring/motion-lab/render-character.mjs; game/ui/classic-view.mjs; game/ui/presentation-draw-image.mjs; game/ui/enemy-body-motion.mjs; authoring/motion-lab/animation.mjs; game/content-design/actor-marker.mjs; game/enemy-catalog.mjs sha256:b3c93bdcafec051933cfccfa8daa8572ab21f678350544dcdd0f3de97c46606f"
         },
         "quality": {
           "evidence": [
-            "Team functional scope only: docs/verification/team37/review.json sha256:7ecaeb6dc9c2fcf1804ed364ef1b818e3323f4a390629fd4575c0772cf4df45b",
-            "Authored-picture identity continuation only: docs/verification/team-picture-identity-extension/review-production63.json sha256:97b3c1eb195c0fe914692e5627f3b0cb372488c7bdcdd998b9484a50a376a082"
+            "Connected Team recipe; exact scoped functional review inputs did not match."
           ],
-          "stage": "reviewed"
+          "stage": "source"
         },
         "recipe": { "id": "team.rescue.v1" },
-        "revision": 4
+        "revision": 3
       },
       "team.recovery": {
         "description": "Team reserve recovery: existing bounded component with Field Kit tokens and state styling.",
@@ -9356,19 +9317,18 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "team.recovery.field-kit", "revision": 3 },
+          "parent": { "id": "team.recovery.field-kit", "revision": 2 },
           "prompt": "Create one original FPV Field Kit team reserve recovery for slot team.recovery. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 32 by 32 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
           "source": "game/couch/coop-view.mjs; game/couch/coop-actor-presentation.mjs; game/couch/coop-anchor-presentation.mjs; game/couch/coop-core-presentation.mjs; game/couch/coop-support-presentation.mjs; game/couch/coop-emitter-presentation.mjs; game/couch/coop-rescue-presentation.mjs; game/couch/coop-pilot-slots.mjs; game/couch/coop-enemy-slots.mjs; game/couch/coop-outcome-presentation.mjs; game/presentation/team-runtime-slots.mjs; game/ui/actor-presentation.mjs; game/presentation/catalog.mjs; game/couch/coop-actor-layout.mjs; game/couch/coop-terrain-trail.mjs; game/couch/coop-bonus-view.mjs; game/couch/candidate-team-pictures.mjs; game/content-design/material-markers.mjs; game/presentation/journey-actor-materials.mjs; authoring/motion-lab/render-character.mjs; game/ui/classic-view.mjs; game/ui/presentation-draw-image.mjs; game/ui/enemy-body-motion.mjs; authoring/motion-lab/animation.mjs; game/content-design/actor-marker.mjs; game/enemy-catalog.mjs sha256:b3c93bdcafec051933cfccfa8daa8572ab21f678350544dcdd0f3de97c46606f"
         },
         "quality": {
           "evidence": [
-            "Team functional scope only: docs/verification/team37/review.json sha256:7ecaeb6dc9c2fcf1804ed364ef1b818e3323f4a390629fd4575c0772cf4df45b",
-            "Authored-picture identity continuation only: docs/verification/team-picture-identity-extension/review-production63.json sha256:97b3c1eb195c0fe914692e5627f3b0cb372488c7bdcdd998b9484a50a376a082"
+            "Connected Team recipe; exact scoped functional review inputs did not match."
           ],
-          "stage": "reviewed"
+          "stage": "source"
         },
         "recipe": { "id": "team.outcome.v1" },
-        "revision": 4
+        "revision": 3
       },
       "team.rescue.progress": {
         "description": "Team contact rescue: existing bounded component with Field Kit tokens and state styling.",
@@ -9380,19 +9340,18 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "team.rescue.progress.field-kit", "revision": 3 },
+          "parent": { "id": "team.rescue.progress.field-kit", "revision": 2 },
           "prompt": "Create one original FPV Field Kit team contact rescue for slot team.rescue.progress. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 32 by 32 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
           "source": "game/couch/coop-view.mjs; game/couch/coop-actor-presentation.mjs; game/couch/coop-anchor-presentation.mjs; game/couch/coop-core-presentation.mjs; game/couch/coop-support-presentation.mjs; game/couch/coop-emitter-presentation.mjs; game/couch/coop-rescue-presentation.mjs; game/couch/coop-pilot-slots.mjs; game/couch/coop-enemy-slots.mjs; game/couch/coop-outcome-presentation.mjs; game/presentation/team-runtime-slots.mjs; game/ui/actor-presentation.mjs; game/presentation/catalog.mjs; game/couch/coop-actor-layout.mjs; game/couch/coop-terrain-trail.mjs; game/couch/coop-bonus-view.mjs; game/couch/candidate-team-pictures.mjs; game/content-design/material-markers.mjs; game/presentation/journey-actor-materials.mjs; authoring/motion-lab/render-character.mjs; game/ui/classic-view.mjs; game/ui/presentation-draw-image.mjs; game/ui/enemy-body-motion.mjs; authoring/motion-lab/animation.mjs; game/content-design/actor-marker.mjs; game/enemy-catalog.mjs sha256:b3c93bdcafec051933cfccfa8daa8572ab21f678350544dcdd0f3de97c46606f"
         },
         "quality": {
           "evidence": [
-            "Team functional scope only: docs/verification/team37/review.json sha256:7ecaeb6dc9c2fcf1804ed364ef1b818e3323f4a390629fd4575c0772cf4df45b",
-            "Authored-picture identity continuation only: docs/verification/team-picture-identity-extension/review-production63.json sha256:97b3c1eb195c0fe914692e5627f3b0cb372488c7bdcdd998b9484a50a376a082"
+            "Connected Team recipe; exact scoped functional review inputs did not match."
           ],
-          "stage": "reviewed"
+          "stage": "source"
         },
         "recipe": { "id": "team.rescue.v1" },
-        "revision": 4
+        "revision": 3
       },
       "team.support.pulse": {
         "description": "Team Support pulse: existing bounded component with Field Kit tokens and state styling.",
@@ -9404,19 +9363,18 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "team.support.pulse.field-kit", "revision": 3 },
+          "parent": { "id": "team.support.pulse.field-kit", "revision": 2 },
           "prompt": "Create one original FPV Field Kit team support pulse for slot team.support.pulse. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 64 by 64 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
           "source": "game/couch/coop-view.mjs; game/couch/coop-actor-presentation.mjs; game/couch/coop-anchor-presentation.mjs; game/couch/coop-core-presentation.mjs; game/couch/coop-support-presentation.mjs; game/couch/coop-emitter-presentation.mjs; game/couch/coop-rescue-presentation.mjs; game/couch/coop-pilot-slots.mjs; game/couch/coop-enemy-slots.mjs; game/couch/coop-outcome-presentation.mjs; game/presentation/team-runtime-slots.mjs; game/ui/actor-presentation.mjs; game/presentation/catalog.mjs; game/couch/coop-actor-layout.mjs; game/couch/coop-terrain-trail.mjs; game/couch/coop-bonus-view.mjs; game/couch/candidate-team-pictures.mjs; game/content-design/material-markers.mjs; game/presentation/journey-actor-materials.mjs; authoring/motion-lab/render-character.mjs; game/ui/classic-view.mjs; game/ui/presentation-draw-image.mjs; game/ui/enemy-body-motion.mjs; authoring/motion-lab/animation.mjs; game/content-design/actor-marker.mjs; game/enemy-catalog.mjs sha256:b3c93bdcafec051933cfccfa8daa8572ab21f678350544dcdd0f3de97c46606f"
         },
         "quality": {
           "evidence": [
-            "Team functional scope only: docs/verification/team37/review.json sha256:7ecaeb6dc9c2fcf1804ed364ef1b818e3323f4a390629fd4575c0772cf4df45b",
-            "Authored-picture identity continuation only: docs/verification/team-picture-identity-extension/review-production63.json sha256:97b3c1eb195c0fe914692e5627f3b0cb372488c7bdcdd998b9484a50a376a082"
+            "Connected Team recipe; exact scoped functional review inputs did not match."
           ],
-          "stage": "reviewed"
+          "stage": "source"
         },
         "recipe": { "id": "team.support.v1" },
-        "revision": 4
+        "revision": 3
       },
       "terrain.lethal": {
         "description": "Coral diagonal hazard bands around a dark metal grate. Pattern and color distinguish the entire hazardous cell.",
@@ -10967,120 +10925,120 @@
       "screen.studio.background": { "id": "screen.studio.background.field-kit", "revision": 19 },
       "screen.title.background": { "id": "screen.title.background.field-kit-scene", "revision": 3 },
       "screen.title.portrait": { "id": "screen.title.portrait.field-kit-scene", "revision": 3 },
-      "team.anchor.available": { "id": "team.anchor.available.field-kit", "revision": 3 },
-      "team.anchor.captured": { "id": "team.anchor.captured.field-kit", "revision": 3 },
-      "team.capture.joint": { "id": "team.capture.joint.field-kit", "revision": 4 },
-      "team.core.exposed": { "id": "team.core.exposed.field-kit", "revision": 3 },
-      "team.core.secured": { "id": "team.core.secured.field-kit", "revision": 3 },
-      "team.core.shielded": { "id": "team.core.shielded.field-kit", "revision": 3 },
-      "team.emitter.spark": { "id": "team.emitter.spark.field-kit", "revision": 4 },
-      "team.emitter.warning": { "id": "team.emitter.warning.field-kit", "revision": 4 },
-      "team.enemy.drifter": { "id": "team.enemy.drifter.field-kit", "revision": 4 },
-      "team.enemy.hunter.charge": { "id": "team.enemy.hunter.charge.field-kit", "revision": 4 },
-      "team.enemy.hunter.patrol": { "id": "team.enemy.hunter.patrol.field-kit", "revision": 4 },
-      "team.enemy.hunter.recovery": { "id": "team.enemy.hunter.recovery.field-kit", "revision": 4 },
-      "team.enemy.hunter.warning": { "id": "team.enemy.hunter.warning.field-kit", "revision": 4 },
-      "team.enemy.slowed": { "id": "team.enemy.slowed.field-kit", "revision": 4 },
+      "team.anchor.available": { "id": "team.anchor.available.field-kit", "revision": 2 },
+      "team.anchor.captured": { "id": "team.anchor.captured.field-kit", "revision": 2 },
+      "team.capture.joint": { "id": "team.capture.joint.field-kit", "revision": 3 },
+      "team.core.exposed": { "id": "team.core.exposed.field-kit", "revision": 2 },
+      "team.core.secured": { "id": "team.core.secured.field-kit", "revision": 2 },
+      "team.core.shielded": { "id": "team.core.shielded.field-kit", "revision": 2 },
+      "team.emitter.spark": { "id": "team.emitter.spark.field-kit", "revision": 3 },
+      "team.emitter.warning": { "id": "team.emitter.warning.field-kit", "revision": 3 },
+      "team.enemy.drifter": { "id": "team.enemy.drifter.field-kit", "revision": 3 },
+      "team.enemy.hunter.charge": { "id": "team.enemy.hunter.charge.field-kit", "revision": 3 },
+      "team.enemy.hunter.patrol": { "id": "team.enemy.hunter.patrol.field-kit", "revision": 3 },
+      "team.enemy.hunter.recovery": { "id": "team.enemy.hunter.recovery.field-kit", "revision": 3 },
+      "team.enemy.hunter.warning": { "id": "team.enemy.hunter.warning.field-kit", "revision": 3 },
+      "team.enemy.slowed": { "id": "team.enemy.slowed.field-kit", "revision": 3 },
       "team.pilot.p1.crawling.compact": {
         "id": "team.pilot.p1.crawling.compact.field-kit",
-        "revision": 4
+        "revision": 3
       },
       "team.pilot.p1.crawling.detailed": {
         "id": "team.pilot.p1.crawling.detailed.field-kit",
-        "revision": 4
+        "revision": 3
       },
       "team.pilot.p1.cutting.compact": {
         "id": "team.pilot.p1.cutting.compact.field-kit",
-        "revision": 4
+        "revision": 3
       },
       "team.pilot.p1.cutting.detailed": {
         "id": "team.pilot.p1.cutting.detailed.field-kit",
-        "revision": 4
+        "revision": 3
       },
       "team.pilot.p1.downed.compact": {
         "id": "team.pilot.p1.downed.compact.field-kit",
-        "revision": 4
+        "revision": 3
       },
       "team.pilot.p1.downed.detailed": {
         "id": "team.pilot.p1.downed.detailed.field-kit",
-        "revision": 4
+        "revision": 3
       },
       "team.pilot.p1.normal.compact": {
         "id": "team.pilot.p1.normal.compact.field-kit",
-        "revision": 4
+        "revision": 3
       },
       "team.pilot.p1.normal.detailed": {
         "id": "team.pilot.p1.normal.detailed.field-kit",
-        "revision": 4
+        "revision": 3
       },
       "team.pilot.p1.recovery.compact": {
         "id": "team.pilot.p1.recovery.compact.field-kit",
-        "revision": 4
+        "revision": 3
       },
       "team.pilot.p1.recovery.detailed": {
         "id": "team.pilot.p1.recovery.detailed.field-kit",
-        "revision": 4
+        "revision": 3
       },
       "team.pilot.p1.rescuing.compact": {
         "id": "team.pilot.p1.rescuing.compact.field-kit",
-        "revision": 4
+        "revision": 3
       },
       "team.pilot.p1.rescuing.detailed": {
         "id": "team.pilot.p1.rescuing.detailed.field-kit",
-        "revision": 4
+        "revision": 3
       },
       "team.pilot.p2.crawling.compact": {
         "id": "team.pilot.p2.crawling.compact.field-kit",
-        "revision": 4
+        "revision": 3
       },
       "team.pilot.p2.crawling.detailed": {
         "id": "team.pilot.p2.crawling.detailed.field-kit",
-        "revision": 4
+        "revision": 3
       },
       "team.pilot.p2.cutting.compact": {
         "id": "team.pilot.p2.cutting.compact.field-kit",
-        "revision": 4
+        "revision": 3
       },
       "team.pilot.p2.cutting.detailed": {
         "id": "team.pilot.p2.cutting.detailed.field-kit",
-        "revision": 4
+        "revision": 3
       },
       "team.pilot.p2.downed.compact": {
         "id": "team.pilot.p2.downed.compact.field-kit",
-        "revision": 4
+        "revision": 3
       },
       "team.pilot.p2.downed.detailed": {
         "id": "team.pilot.p2.downed.detailed.field-kit",
-        "revision": 4
+        "revision": 3
       },
       "team.pilot.p2.normal.compact": {
         "id": "team.pilot.p2.normal.compact.field-kit",
-        "revision": 4
+        "revision": 3
       },
       "team.pilot.p2.normal.detailed": {
         "id": "team.pilot.p2.normal.detailed.field-kit",
-        "revision": 4
+        "revision": 3
       },
       "team.pilot.p2.recovery.compact": {
         "id": "team.pilot.p2.recovery.compact.field-kit",
-        "revision": 4
+        "revision": 3
       },
       "team.pilot.p2.recovery.detailed": {
         "id": "team.pilot.p2.recovery.detailed.field-kit",
-        "revision": 4
+        "revision": 3
       },
       "team.pilot.p2.rescuing.compact": {
         "id": "team.pilot.p2.rescuing.compact.field-kit",
-        "revision": 4
+        "revision": 3
       },
       "team.pilot.p2.rescuing.detailed": {
         "id": "team.pilot.p2.rescuing.detailed.field-kit",
-        "revision": 4
+        "revision": 3
       },
-      "team.player.recovery": { "id": "team.player.recovery.field-kit", "revision": 4 },
-      "team.recovery": { "id": "team.recovery.field-kit", "revision": 4 },
-      "team.rescue.progress": { "id": "team.rescue.progress.field-kit", "revision": 4 },
-      "team.support.pulse": { "id": "team.support.pulse.field-kit", "revision": 4 },
+      "team.player.recovery": { "id": "team.player.recovery.field-kit", "revision": 3 },
+      "team.recovery": { "id": "team.recovery.field-kit", "revision": 3 },
+      "team.rescue.progress": { "id": "team.rescue.progress.field-kit", "revision": 3 },
+      "team.support.pulse": { "id": "team.support.pulse.field-kit", "revision": 3 },
       "terrain.lethal": { "id": "terrain.lethal.field-kit", "revision": 2 },
       "terrain.slow": { "id": "terrain.slow.field-kit", "revision": 2 },
       "terrain.wall": { "id": "terrain.wall.field-kit", "revision": 2 },
@@ -11113,7 +11071,7 @@
       "ui.tooltip": { "id": "ui.tooltip.field-kit", "revision": 17 }
     },
     "collection": null,
-    "theme": { "id": "fpv", "name": "FPV Field Kit", "revision": 63 },
+    "theme": { "id": "fpv", "name": "FPV Field Kit", "revision": 62 },
     "tokens": {
       "amber": "#f4bf62",
       "borderWidth": 2,
@@ -11141,7 +11099,7 @@
       "textSize": 18
     }
   },
-  "source": { "id": "field-kit", "revision": 63 },
+  "source": { "id": "field-kit", "revision": 62 },
   "urls": {
     "009d14748f943002091255caebd32e4df1c886569575f512ab0d55d7a3ff637a": "./assets/009d14748f943002091255caebd32e4df1c886569575f512ab0d55d7a3ff637a.png",
     "00b0f847cd1f80495615e3ada13899df67c6df05bf1f6d846ffc46cb3cc3fc5f": "./assets/00b0f847cd1f80495615e3ada13899df67c6df05bf1f6d846ffc46cb3cc3fc5f.png",

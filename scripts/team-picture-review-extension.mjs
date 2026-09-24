@@ -1,9 +1,9 @@
 import { createHash } from 'node:crypto';
 
 export const TEAM_PICTURE_REVIEW_EXTENSION_PATH =
-  'docs/verification/team-picture-identity-extension/review.json';
+  'docs/verification/team-picture-identity-extension/review-production63.json';
 export const TEAM_PICTURE_REVIEW_EXTENSION_SHA256 =
-  '4fe87617a723983afc3c5a1d3807cc90a35b3548955e4675147c82f1ea3fc935';
+  '97b3c1eb195c0fe914692e5627f3b0cb372488c7bdcdd998b9484a50a376a082';
 
 /** A scoped continuation of the exact prior Team reviews, never a latest-source
  * approval. Missing/changed evidence or any other source fingerprint stays open. */
