@@ -565,6 +565,13 @@
       "versions": [
         "v0.105.0"
       ]
+    },
+    {
+      "id": "archive-71",
+      "repository": "mekhovov/revealline-archive-71",
+      "versions": [
+        "v0.106.0"
+      ]
     }
   ]
 }

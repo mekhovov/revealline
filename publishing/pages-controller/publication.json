@@ -1,8 +1,8 @@
 {
   "format": "revealline-pages-controller.v1",
-  "currentVersion": "v0.106.0",
-  "catalogSha256": "99b8e76c22504712eb0a06bd584815d5e879b40ceab6db885344b3570aead1bd",
-  "allocationSha256": "4f96e7479bccdcfa07531464a63b0e37863cb11145fc7ebe27678a09ba303ad4",
+  "currentVersion": "v0.107.0",
+  "catalogSha256": "d5f133442da474b691dcffa53330f19aae4f4385d8791da4c2cfdd8c4bf6412c",
+  "allocationSha256": "4410e50410cb98c716c23755c7570e339fe7a75968f292ce46fe8a0b50efb926",
   "admissions": [
     {
       "id": "archive-01",
@@ -9138,12 +9138,39 @@
           "kind": "reference"
         }
       ]
+    },
+    {
+      "id": "archive-71",
+      "infrastructureCommit": "296261f87b413bcfffdb044dc465aba75d650f82",
+      "deploymentId": 6649019916,
+      "evidence": [
+        {
+          "path": "evidence/archive-71-v01060/expected-inventory.json",
+          "sha256": "a4f9940ececd29470265100ef00bbeaacfb2879b0601e26eff487f42e13ae18e",
+          "kind": "inventory"
+        },
+        {
+          "path": "evidence/archive-71-v01060/http-report.json",
+          "sha256": "58dd3091273944b03618d060f85e183d504bfce6722aae60c41f9051b601882f",
+          "kind": "http"
+        },
+        {
+          "path": "evidence/archive-71-v01060/browser-admission.json",
+          "sha256": "1ceabd348684c4021148b6913a7fc2ffb67a5202635a164f193a8a804e8e7685",
+          "kind": "browser"
+        },
+        {
+          "path": "evidence/archive-71-v01060/public-observation.json",
+          "sha256": "27b08d4762453519c06b4884b9b0f820b97f6b00c65adf81c215a28b81797135",
+          "kind": "reference"
+        }
+      ]
     }
   ],
   "deploymentEnabled": true,
   "currentSourceQualification": {
-    "path": "evidence/current-v01060/source-qualification.json",
-    "sha256": "68d33a4d5b305b99eabe9f61e47bbdd2abe34035c903a9a9ed6ed79a72205f0b"
+    "path": "evidence/current-v01070/source-qualification.json",
+    "sha256": "899730dfec1fe4a123502f59762be5da0039076fc27bee98592d4223b69871e6"
   },
   "retainedReleasesPerMajor": "all",
   "testingRoutes": {}
