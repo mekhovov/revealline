@@ -14,7 +14,8 @@
   --fk-accent: var(--fk-amber);
   --fk-focus: var(--fk-cyan);
   --fk-on-accent: var(--fk-bg);
-  --fk-font-display: 'Field Kit Display', 'Field Kit UI', sans-serif;
+  --fk-font-pixel: 'Reveal Line Pixel', 'Field Kit UI', system-ui, sans-serif;
+  --fk-font-display: var(--fk-font-pixel);
   --fk-font-ui: 'Field Kit UI', 'Field Kit Mono', system-ui, sans-serif;
   --fk-font-mono: 'Field Kit Mono', ui-monospace, monospace;
   --fk-text-body: 18px;
@@ -60,7 +61,16 @@
   --accent: var(--fk-accent);
   --safe: var(--fk-cyan);
   --danger: var(--fk-hazard);
-  --pixel-font: var(--fk-font-ui);
+  --pixel-font: var(--fk-font-pixel);
+}
+
+/* Accepted presentation bundles may supply campaign type for authored content.
+   Pixel mode still owns the shared shell/display roles; Plain below remains the
+   explicit accessibility override. The more specific host selector is needed
+   because compiled presentation variables are applied through `.field-kit`. */
+body.field-kit:not([data-text-face='plain']) {
+  --fk-font-display: var(--fk-font-pixel);
+  --pixel-font: var(--fk-font-pixel);
 }
 
 /* An explicit accessibility choice takes precedence over a release's inline
@@ -68,6 +78,7 @@
    Numeric text stays aligned, using the platform's ordinary monospace face. */
 body.field-kit[data-text-face='plain'],
 body.game-shell[data-text-face='plain'] {
+  --fk-font-pixel: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
   --fk-font-display:
     system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
   --fk-font-ui: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;

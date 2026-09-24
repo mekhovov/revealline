@@ -86,7 +86,7 @@ test('runtime tuning applies the authored impact speed exactly once', () => {
   near(applyGameplayTuning(authored, resolveGameplayTuning('expert')).classic.lineImpact.speed, 48);
 });
 
-test('v5 remains historical while v6 owns isolated persistence and becomes the normal entry', async () => {
+test('v5 remains historical while v6 keeps isolated persistence after the normal entry advances', async () => {
   const historical = compileContentProject(createWholeSortingCandidates());
   assert.equal(resolveMission(historical, 'first-return').level.classic.lineImpact, undefined);
   assert.equal(
@@ -104,8 +104,8 @@ test('v5 remains historical while v6 owns isolated persistence and becomes the n
     'couch/?journey=whole-spatial-v6&return=solo',
   );
   assert.deepEqual(DEFAULT_JOURNEY_ROUTES, {
-    solo: 'whole-spatial-v6',
-    versus: 'whole-spatial-v6',
+    solo: 'whole-spatial-v9',
+    versus: 'whole-spatial-v9',
     team: 'team-trail-impact-originals-1',
   });
 });

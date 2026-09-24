@@ -257,6 +257,25 @@ const getJSON = async (path) => {
 const clamp = (n, a, b) => Math.min(b, Math.max(a, n));
 const timeLabel = (time) =>
   `${Math.floor(time / 60)}:${String(Math.floor(time % 60)).padStart(2, '0')}`;
+// A valid tool return owns the normal native autofocus produced while the
+// title is booting, but never a real key/pointer choice made during that wait.
+// Track only deliberate input: programmatic/native dialog focus is expected.
+const bootWorkshopInput = {
+  active: new URLSearchParams(location.search).has('workshop'),
+  interrupted: false,
+};
+const interruptBootWorkshop = () => {
+  bootWorkshopInput.interrupted = true;
+};
+if (bootWorkshopInput.active)
+  for (const type of ['keydown', 'pointerdown'])
+    document.addEventListener(type, interruptBootWorkshop, { capture: true, once: true });
+function retireBootWorkshopInput() {
+  if (!bootWorkshopInput.active) return;
+  bootWorkshopInput.active = false;
+  for (const type of ['keydown', 'pointerdown'])
+    document.removeEventListener(type, interruptBootWorkshop, { capture: true });
+}
 function preparationStatus(observer, message, stage, isCurrent = () => true) {
   if (!isCurrent()) return;
   try {
@@ -10039,6 +10058,10 @@ try {
     await openUnifiedMissions($('shell-play'), { returnLabel: 'Back to menu' });
   }
   const workshopReturn = readWorkshopReturn(location.search);
+  const ownedWorkshopBootFocus =
+    !bootWorkshopInput.interrupted &&
+    $('shell-home').open &&
+    $('shell-home').contains(document.activeElement);
   if (
     !practice &&
     !courseSession &&
@@ -10048,10 +10071,13 @@ try {
     workshopReturn &&
     !document.hidden &&
     document.hasFocus?.() !== false &&
-    (document.activeElement === document.body || !availableFocusTarget(document.activeElement)) &&
+    (document.activeElement === document.body ||
+      !availableFocusTarget(document.activeElement) ||
+      ownedWorkshopBootFocus) &&
     gameShell?.openWorkshop({ tool: workshopReturn.id })
   )
     clearWorkshopReturn(window);
+  retireBootWorkshopInput();
   controllerReading?.refresh();
   // Boot removes the visibility guard synchronously. Do not refocus a hidden
   // placeholder or replace a deliberate choice made during that handoff.
@@ -10064,6 +10090,7 @@ try {
     if (availableFocusTarget(target)) target.focus({ preventScroll: true });
   }
 } catch (error) {
+  retireBootWorkshopInput();
   globalThis.RevealLineBoot?.fail(error);
   $('overlay-title').textContent = 'The game could not load.';
   $('overlay-copy').textContent = error.message;

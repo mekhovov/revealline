@@ -2,10 +2,14 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
-import { createCoop, startCoop, pauseCoop, stepCoop, WALL } from '../coop/core.mjs';
+import { createCoop, startCoop, pauseCoop, stepCoop, SAFE, WALL } from '../coop/core.mjs';
 import { FIRST_CONNECTION } from '../coop/first-connection.mjs';
 import { RELAY_YARD } from '../coop/relay-yard.mjs';
 import { createCoopPainter } from '../couch/coop-view.mjs';
+import {
+  createCoopCaptureFeedback,
+  drawCoopCaptureFeedback,
+} from '../couch/coop-terrain-trail.mjs';
 import { imagePresentation } from '../presentation/runtime.mjs';
 import {
   drawActiveTrail,
@@ -136,6 +140,7 @@ function surface(clientWidth = 1152) {
 function prepared({ tag = 'approved-wall', wall = true, motionScale = 1, reader = true } = {}) {
   const reads = [];
   let closes = 0;
+  const supporting = new Map();
   const image = Object.freeze({
     tag,
     width: 16,
@@ -151,7 +156,21 @@ function prepared({ tag = 'approved-wall', wall = true, motionScale = 1, reader 
   if (reader) {
     snapshot.image = (slot) => {
       reads.push(slot);
-      return slot === 'terrain.wall' && wall ? tile : null;
+      if (slot === 'terrain.wall') return wall ? tile : null;
+      if (supporting.has(slot)) return supporting.get(slot);
+      const asset = compiled.resolved.assets[slot];
+      if (asset?.kind !== 'image') return null;
+      const prepared = Object.freeze({
+        image: Object.freeze({
+          tag: `prepared-${slot}`,
+          width: asset.file.width,
+          height: asset.file.height,
+        }),
+        asset,
+        geometry: imagePresentation(asset),
+      });
+      supporting.set(slot, prepared);
+      return prepared;
     };
   }
   return { snapshot: Object.freeze(snapshot), reads, image, tile, closes: () => closes };
@@ -325,9 +344,10 @@ test('Team wall replacement uses only the newly accepted image and clearing rest
   painter.setPresentation(second.snapshot);
   view.reset();
   painter.paint(run);
-  const draws = view.calls.filter((call) => call.name === 'drawImage');
+  const draws = view.calls.filter(
+    (call) => call.name === 'drawImage' && call.args[0] === second.image,
+  );
   assert.ok(draws.length > 0, 'The replacement still has authored wall artwork.');
-  assert.ok(draws.every((call) => call.args[0] === second.image));
   painter.setPresentation(null);
   view.reset();
   painter.paint(run);
@@ -340,18 +360,19 @@ test('Team wall replacement uses only the newly accepted image and clearing rest
   assert.equal(first.closes() + second.closes(), 0, 'The page lease owns image disposal.');
 });
 
-test('snapshots without a terrain reader or wall keep flat backing and never retain a previous wall image', () => {
+test('a complete snapshot without a wall keeps flat backing and a missing reader fails closed', () => {
   const view = surface(),
     painter = createCoopPainter(view.canvas),
     run = createCoop(RELAY_YARD),
-    present = prepared();
-  for (const p of [prepared({ wall: false }), prepared({ reader: false })]) {
+    present = prepared(),
+    absent = prepared({ wall: false });
+  for (const p of [absent]) {
     painter.setPresentation(present.snapshot);
     painter.setPresentation(p.snapshot);
     view.reset();
     painter.paint(run);
     assert.equal(
-      view.calls.some((call) => call.name === 'drawImage'),
+      view.calls.some((call) => call.name === 'drawImage' && call.args[0] === present.image),
       false,
     );
     assert.ok(
@@ -364,6 +385,11 @@ test('snapshots without a terrain reader or wall keep flat backing and never ret
       'The authored wall remains a full flat cell without a usable borrowed tile.',
     );
   }
+  assert.throws(
+    () => painter.setPresentation(prepared({ reader: false }).snapshot),
+    /prepared 24×24 centered frame/,
+  );
+  assert.equal(painter.presentation, absent.snapshot);
   assert.equal(present.closes(), 0);
 });
 
@@ -372,13 +398,14 @@ test('a failed terrain snapshot read leaves the previous complete Team presentat
     painter = createCoopPainter(view.canvas),
     run = createCoop(RELAY_YARD),
     previous = prepared(),
-    failure = new Error('terrain reader rejected');
+    failure = new Error('terrain reader rejected'),
+    replacement = prepared();
   painter.setPresentation(previous.snapshot);
   const broken = {
-    ...prepared().snapshot,
+    ...replacement.snapshot,
     image(slot) {
       if (slot === 'terrain.wall') throw failure;
-      return null;
+      return replacement.snapshot.image(slot);
     },
   };
   assert.throws(
@@ -498,7 +525,9 @@ test('First Connection never invents wall cells and clearing a prepared snapshot
   view.reset();
   painter.paint(run, { reduced: true });
   assert.equal(
-    view.calls.some((call) => call.name === 'drawImage'),
+    view.calls.some(
+      (call) => call.name === 'drawImage' && call.args[0]?.tag === 'approved-wall',
+    ),
     false,
   );
   painter.setPresentation(null);
@@ -555,7 +584,8 @@ for (const [name, malformed] of [
         ...replacement.snapshot.canvas,
         palette: { ...palette, muted: '#abcdef', accent: '#aa88ff' },
       },
-      image: (slot) => (slot === 'terrain.wall' ? badTile : null),
+      image: (slot) =>
+        slot === 'terrain.wall' ? badTile : replacement.snapshot.image(slot),
     };
     assert.throws(
       () => painter.setPresentation(rejected),
@@ -563,9 +593,10 @@ for (const [name, malformed] of [
     );
     assert.equal(painter.presentation, previous.snapshot);
     painter.paint(run);
-    const draws = view.calls.filter((call) => call.name === 'drawImage');
+    const draws = view.calls.filter(
+      (call) => call.name === 'drawImage' && call.args[0] === previous.image,
+    );
     assert.ok(draws.length > 0, 'The previous artwork remains paintable after rejection.');
-    assert.ok(draws.every((call) => call.args[0] === previous.image));
     const wallBacking = view.calls.find(
       (call) =>
         call.name === 'fillRect' &&
@@ -601,7 +632,7 @@ test('accepted noncentral and boundary wall pivots keep the declared pivot at ea
     const tile = { ...p.tile, geometry: { ...p.tile.geometry, pivot } };
     painter.setPresentation({
       ...p.snapshot,
-      image: (slot) => (slot === 'terrain.wall' ? tile : null),
+      image: (slot) => (slot === 'terrain.wall' ? tile : p.snapshot.image(slot)),
     });
     view.reset();
     painter.paint(run);
@@ -626,10 +657,13 @@ test('an undefined wall override is explicitly absent and clears a previously bo
     run = createCoop(RELAY_YARD),
     p = prepared();
   painter.setPresentation(p.snapshot);
-  painter.setPresentation({ ...p.snapshot, image: () => undefined });
+  painter.setPresentation({
+    ...p.snapshot,
+    image: (slot) => (slot === 'terrain.wall' ? undefined : p.snapshot.image(slot)),
+  });
   painter.paint(run);
   assert.equal(
-    view.calls.some((call) => call.name === 'drawImage'),
+    view.calls.some((call) => call.name === 'drawImage' && call.args[0] === p.image),
     false,
   );
   assert.ok(
@@ -641,4 +675,105 @@ test('an undefined wall override is explicitly absent and clears a previously bo
     ),
   );
   assert.equal(p.closes(), 0);
+});
+
+test('Team capture feedback retains one bounded immutable pulse per observed fixed step', () => {
+  const run = startCoop(createCoop(FIRST_CONNECTION)),
+    tracker = createCoopCaptureFeedback(),
+    claimed = 1 * run.width + 1;
+  run.cells[claimed] = SAFE;
+  run.tick = 12;
+  run.time = 1.1;
+  run.events = [
+    {
+      type: 'cells.claimed',
+      tick: run.tick,
+      time: 1,
+      indices: [claimed, claimed, -1, run.cells.length, 2.5],
+    },
+  ];
+  const before = copy(run),
+    first = tracker.observe(run);
+  assert.equal(first.length, 1);
+  assert.deepEqual(first[0].indices, [claimed]);
+  assert.ok(Math.abs(first[0].age - 0.1) < 1e-9);
+  assert.ok(
+    Object.isFrozen(first) && Object.isFrozen(first[0]) && Object.isFrozen(first[0].indices),
+  );
+  tracker.observe(run);
+  assert.equal(
+    tracker.read(run).length,
+    1,
+    'Repeated host/render observation cannot duplicate it.',
+  );
+  assert.deepEqual(run, before, 'Visual observation cannot mutate gameplay.');
+
+  const view = surface();
+  drawCoopCaptureFeedback(view.ctx, first, run, palette);
+  const painted = view.calls.filter(
+    (call) =>
+      call.name === 'fillRect' &&
+      call.state.fillStyle === palette.accent &&
+      call.state.globalAlpha > 0 &&
+      call.state.globalAlpha < 1,
+  );
+  assert.deepEqual(
+    painted.map((call) => call.box),
+    [[1, 1, 1, 1]],
+  );
+  view.reset();
+  drawCoopCaptureFeedback(view.ctx, first, run, palette, true);
+  assert.equal(view.calls.length, 0, 'Reduced effects omit the optional reveal pulse.');
+  assert.equal(view.stack.length, 0);
+
+  run.time = 1.66;
+  assert.equal(tracker.observe(run).length, 0, 'The pulse expires on authoritative run time.');
+  pauseCoop(run);
+  assert.equal(tracker.observe(run).length, 0);
+  const other = startCoop(createCoop(FIRST_CONNECTION));
+  assert.equal(
+    tracker.observe(other).length,
+    0,
+    'A different attempt cannot inherit old feedback.',
+  );
+});
+
+test('Team painter places capture illumination below live gameplay and keeps it optional', () => {
+  const run = startCoop(createCoop(FIRST_CONNECTION)),
+    claimed = 1 * run.width + 1,
+    view = surface(),
+    painter = createCoopPainter(view.canvas);
+  run.cells[claimed] = SAFE;
+  run.tick = 4;
+  run.time = 0.1;
+  run.events = [{ type: 'cells.claimed', tick: 4, time: 0, indices: [claimed] }];
+  const before = copy(run);
+  painter.observe(run);
+  painter.paint(run);
+  const pulse = view.calls.findIndex(
+      (call) =>
+        call.name === 'fillRect' &&
+        call.state.globalAlpha > 0 &&
+        call.state.globalAlpha < 1 &&
+        JSON.stringify(call.box) === JSON.stringify([16, 16, 16, 16]),
+    ),
+    firstActor = view.calls.findIndex(
+      (call) => call.name === 'arc' && call.args[2] === run.players[0].radius,
+    );
+  assert.ok(pulse >= 0, 'The newly reclaimed cell receives the shared capture illumination.');
+  assert.ok(firstActor > pulse, 'Actors and current danger remain above reveal decoration.');
+  assert.deepEqual(run, before);
+  view.reset();
+  painter.paint(run, { reduced: true });
+  assert.equal(
+    view.calls.some(
+      (call) =>
+        call.name === 'fillRect' &&
+        call.state.globalAlpha > 0 &&
+        call.state.globalAlpha < 1 &&
+        JSON.stringify(call.box) === JSON.stringify([16, 16, 16, 16]),
+    ),
+    false,
+  );
+  assert.deepEqual(run, before);
 });
