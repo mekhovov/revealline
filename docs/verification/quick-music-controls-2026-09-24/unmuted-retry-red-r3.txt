@@ -1,0 +1,149 @@
+TAP version 13
+# Subtest: muted fresh Solo menu and Studio do not acquire admitted hosted recordings before Play
+ok 1 - muted fresh Solo menu and Studio do not acquire admitted hosted recordings before Play # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.450667
+  ...
+# Subtest: Settings music text follows master immediately and remains coherent after transport notifications
+ok 2 - Settings music text follows master immediately and remains coherent after transport notifications # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.056916
+  ...
+# Subtest: late Settings Play cancellation cannot replace a newer Library Pause label
+ok 3 - late Settings Play cancellation cannot replace a newer Library Pause label # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.036834
+  ...
+# Subtest: blocked Settings Play feedback survives master edits until a real transport retry
+ok 4 - blocked Settings Play feedback survives master edits until a real transport retry # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.032
+  ...
+# Subtest: actual Settings → Studio uses stored MP3 selection, Next/Pause/Play and returns to a paused flight
+ok 5 - actual Settings → Studio uses stored MP3 selection, Next/Pause/Play and returns to a paused flight # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.096667
+  ...
+# Subtest: actual MP3 keeps its stream and position through menus, a real victory, results, next level and collection
+ok 6 - actual MP3 keeps its stream and position through menus, a real victory, results, next level and collection # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.0285
+  ...
+# Subtest: actual master, music and SFX controls remain independent and the studio fader persists to game settings
+ok 7 - actual master, music and SFX controls remain independent and the studio fader persists to game settings # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.029333
+  ...
+# Subtest: Studio master controls preserve a paused MP3 and persist the shared setting without advancing flight
+ok 8 - Studio master controls preserve a paused MP3 and persist the shared setting without advancing flight # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.075291
+  ...
+# Subtest: actual hide/focus restores listening on the same stream while flight stays paused until explicit Resume
+ok 9 - actual hide/focus restores listening on the same stream while flight stays paused until explicit Resume # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.0805
+  ...
+# Subtest: missing file-audio API disables Studio and leaves the original synth fallback usable
+ok 10 - missing file-audio API disables Studio and leaves the original synth fallback usable # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.075708
+  ...
+# Subtest: actual audition hide/focus releases the preview and restores prior MP3 listening without resuming flight
+ok 11 - actual audition hide/focus releases the preview and restores prior MP3 listening without resuming flight # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.033083
+  ...
+# Subtest: a visible back/forward-cache pageshow restores music without requiring an extra focus event or resuming flight
+ok 12 - a visible back/forward-cache pageshow restores music without requiring an extra focus event or resuming flight # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.030167
+  ...
+# Subtest: actual Studio prepares without downloading; controller, keyboard and touch request its retained link without resuming flight
+ok 13 - actual Studio prepares without downloading; controller, keyboard and touch request its retained link without resuming flight # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.028375
+  ...
+# Subtest: closing Studio during pending Play respects play with saved audio disabled when flight starts
+ok 14 - closing Studio during pending Play respects play with saved audio disabled when flight starts # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.071542
+  ...
+# Subtest: closing Studio during pending Play respects pause with saved audio disabled when flight starts
+ok 15 - closing Studio during pending Play respects pause with saved audio disabled when flight starts # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.034083
+  ...
+# Subtest: closing Studio during pending Play respects pause with saved audio enabled when flight starts
+ok 16 - closing Studio during pending Play respects pause with saved audio enabled when flight starts # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.027542
+  ...
+# Subtest: closing Studio during pending Play respects mute with saved audio enabled when flight starts
+ok 17 - closing Studio during pending Play respects mute with saved audio enabled when flight starts # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.027292
+  ...
+# Subtest: Solo Audio exposes full current credits while compact Pause remains an ordinary Pause owner
+ok 18 - Solo Audio exposes full current credits while compact Pause remains an ordinary Pause owner # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.1285
+  ...
+# Subtest: quick Solo controls play from the menu, pause independently and skip without resuming music
+ok 19 - quick Solo controls play from the menu, pause independently and skip without resuming music # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.036708
+  ...
+# Subtest: quick Solo keyboard retry owns its blocked playback gesture exactly once
+not ok 20 - quick Solo keyboard retry owns its blocked playback gesture exactly once
+  ---
+  duration_ms: 8102.28375
+  location: '/__revealline_memory/game/test/soundtrack-host.test.mjs:707:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    2 !== 1
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 1
+  actual: 2
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///__revealline_memory/game/test/soundtrack-host.test.mjs:732:12)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: quick Solo pointer retry owns its blocked playback gesture exactly once
+not ok 21 - quick Solo pointer retry owns its blocked playback gesture exactly once
+  ---
+  duration_ms: 1270.162167
+  location: '/__revealline_memory/game/test/soundtrack-host.test.mjs:707:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Capture must not start playback ahead of the button
+    
+    1 !== 0
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 0
+  actual: 1
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///__revealline_memory/game/test/soundtrack-host.test.mjs:728:14)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+1..21
+# tests 21
+# suites 0
+# pass 0
+# fail 2
+# cancelled 0
+# skipped 19
+# todo 0
+# duration_ms 9378.352708
+
+Exit code: 1
