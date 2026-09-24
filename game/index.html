@@ -1644,26 +1644,7 @@
       <div class="home-content">
         <p id="shell-title-edition" class="eyebrow">FPV FIELD KIT / FLIGHT READY</p>
         <h1 id="shell-title">REVEAL<span>/ LINE</span></h1>
-        <p class="home-copy">Find your line.<br />Bring the picture home.</p>
-        <label class="field" data-course-hide>
-          Difficulty
-          <select id="menu-difficulty" aria-describedby="menu-difficulty-note">
-            <option value="gentle">Gentle</option>
-            <option value="standard">Standard</option>
-            <option value="expert">Expert</option>
-          </select>
-        </label>
-        <p id="menu-difficulty-note" class="micro-note" role="status" data-course-hide></p>
-        <label class="field" data-course-hide>
-          Actors
-          <select id="menu-actor-style" aria-describedby="menu-actor-note">
-            <option value="fpv">FPV drones & equipment</option>
-            <option value="campaign">Campaign artwork</option>
-          </select>
-        </label>
-        <p id="menu-actor-note" class="micro-note" role="status" data-course-hide>
-          Applies to new missions and Next. Retry and Continue keep their original actors.
-        </p>
+        <p class="home-copy">Find your line.</p>
         <nav id="shell-title-modes" aria-label="Game mode">
           <a id="shell-title-versus" href="couch/?return=solo">Couch Versus</a>
           <a id="shell-title-team" href="couch/relay-rescue.html?return=solo">Couch Team</a>
@@ -1693,9 +1674,6 @@
           >
             Missions
           </button>
-          <a id="shell-catalogue" href="./?journey=legacy" class="button secondary"
-            >Legacy missions</a
-          >
           <button
             id="shell-gallery"
             type="button"
@@ -1718,7 +1696,7 @@
             class="button secondary"
             data-field-kit-copy="navigation.workshop"
           >
-            Workshop
+            More
           </button>
           <button
             id="shell-sound"
@@ -1730,6 +1708,33 @@
           </button>
         </nav>
         <p id="shell-destination" class="home-destination" aria-live="polite"></p>
+        <details id="shell-play-options" class="home-play-options" data-course-hide>
+          <summary>Play options</summary>
+          <div class="home-play-options-fields">
+            <label class="field">
+              Difficulty
+              <select id="menu-difficulty" aria-describedby="menu-difficulty-note">
+                <option value="gentle">Gentle</option>
+                <option value="standard">Standard</option>
+                <option value="expert">Expert</option>
+              </select>
+            </label>
+            <p id="menu-difficulty-note" class="micro-note" role="status"></p>
+            <label class="field">
+              Actors
+              <select id="menu-actor-style" aria-describedby="menu-actor-note">
+                <option value="fpv">FPV drones & equipment</option>
+                <option value="campaign">Campaign artwork</option>
+              </select>
+            </label>
+            <p id="menu-actor-note" class="micro-note" role="status">
+              New missions use this style. Continue and Retry keep the current style.
+            </p>
+            <p id="journey-artwork-availability" class="home-status" hidden>
+              Mission pictures need a connection. Full downloads include them.
+            </p>
+          </div>
+        </details>
         <aside
           id="journey-save-status"
           class="journey-status"
@@ -1740,20 +1745,11 @@
           <button id="journey-save-retry" type="button">Retry save</button>
           <button id="journey-save-export" type="button">Export Journey progress</button>
         </aside>
-        <p id="journey-artwork-availability" class="home-status" hidden>
-          Authored Journey web previews need an online connection for their original pictures. Core
-          offline preparation does not save these pictures. Full downloaded distributions include
-          them.
-        </p>
-        <p class="home-hint">Choose a flight. Trace a path. Close the line.</p>
         <p id="shell-now-playing" class="game-now-playing micro-note" hidden>
           <span id="shell-now-playing-title"></span>
           <a id="shell-now-playing-source" target="_blank" rel="noopener noreferrer" hidden
             >Artist website</a
           >
-        </p>
-        <p id="landing-version" class="landing-version" aria-label="Game version">
-          Version __REVEALLINE_VERSION__
         </p>
       </div>
       <p class="home-art-caption" aria-hidden="true">HANGAR 01 <span>FIRST LIGHT</span></p>
@@ -1765,69 +1761,84 @@
     >
       <div class="shell-dialog-heading">
         <div>
-          <p class="eyebrow">FIELD KIT / WORKSHOP</p>
-          <h2 id="shell-workshop-title">Make it yours</h2>
+          <p class="eyebrow">REVEAL LINE / MENU</p>
+          <h2 id="shell-workshop-title">More</h2>
         </div>
         <button type="button" class="button secondary" data-close="shell-workshop-dialog">
           Back
         </button>
       </div>
-      <p class="field-kit-copy">Build a world, tune your kit, or practice the next move.</p>
-      <nav class="workshop-destinations" aria-label="Workshop destinations">
-        <a id="shell-asset-studio" href="../authoring/asset-studio/" class="button primary"
-          >Asset Studio <span>Art, themes &amp; generation prompts</span></a
+      <nav class="workshop-destinations more-destinations" aria-label="More destinations">
+        <a id="shell-catalogue" href="./?journey=legacy" class="button secondary"
+          >Legacy missions <span>Play the original mission catalogue</span></a
         >
-        <a id="shell-playground" href="playground/" class="button secondary"
-          >Mission playground <span>Build and test a flight</span></a
-        >
-        <a id="shell-enemy-catalog" href="../authoring/enemy-catalog/" class="button secondary"
-          >Enemy workshop <span>Characters &amp; behaviors</span></a
-        >
-        <a
-          id="shell-motion-lab"
-          href="../authoring/motion-lab/"
-          class="button secondary"
-          data-field-kit-copy="workshop.motion"
-          >Motion lab</a
-        >
-        <a
-          id="shell-still-media"
-          href="../authoring/still-media/"
-          class="button secondary"
-          data-field-kit-copy="workshop.pictures"
-          >Pictures &amp; stories</a
-        >
-        <a
-          id="shell-video-poster"
-          href="../authoring/video-poster/"
-          class="button secondary"
-          data-field-kit-copy="workshop.poster"
-          >Video poster workshop</a
-        >
-        <a
-          id="shell-design-atlas"
-          href="../authoring/design-atlas/"
-          class="button secondary"
-          data-field-kit-copy="workshop.atlas"
-          >Design atlas</a
+        <button id="shell-help" type="button" class="button secondary">
+          How to play <span>Controls and game rules</span>
+        </button>
+        <button id="shell-guide" type="button" class="button secondary">
+          Field guide <span>Practice drawing and reconnecting</span>
+        </button>
+        <a id="shell-controller-lab" href="controller-lab/" class="button secondary"
+          >Controller practice <span>Check keyboard, touch and gamepad input</span></a
         >
         <a id="shell-replay-theater" href="replay-theater/" class="button secondary"
           >Replay Theater <span>Review a recorded flight</span></a
         >
-        <button id="export-replay" class="button secondary" type="button">Export replay</button>
-        <a id="shell-controller-lab" href="controller-lab/" class="button secondary"
-          >Controller practice <span>Check your controls</span></a
-        >
-        <button id="shell-guide" type="button" class="button secondary">
-          Field guide &amp; practice
-        </button>
         <button id="shell-library" type="button" class="button secondary">
-          Scores &amp; saves
+          Scores &amp; saves <span>Records, storage and recovery</span>
         </button>
-        <button id="shell-help" type="button" class="button secondary">How to play</button>
+        <a href="../site/about.html#versions" class="button secondary"
+          >About <span>Credits and current build</span></a
+        >
+        <a id="shell-release-explorer" class="button secondary" data-release-explorer
+          >Releases <span>Play or download preserved versions</span></a
+        >
       </nav>
+      <details class="shell-tools workshop-tools">
+        <summary>Workshop tools</summary>
+        <nav class="workshop-destinations" aria-label="Workshop tools">
+          <a id="shell-asset-studio" href="../authoring/asset-studio/" class="button primary"
+            >Asset Studio <span>Art, themes &amp; generation prompts</span></a
+          >
+          <a id="shell-playground" href="playground/" class="button secondary"
+            >Mission playground <span>Build and test a flight</span></a
+          >
+          <a id="shell-enemy-catalog" href="../authoring/enemy-catalog/" class="button secondary"
+            >Enemy workshop <span>Characters &amp; behaviors</span></a
+          >
+          <a
+            id="shell-motion-lab"
+            href="../authoring/motion-lab/"
+            class="button secondary"
+            data-field-kit-copy="workshop.motion"
+            >Motion lab</a
+          >
+          <a
+            id="shell-still-media"
+            href="../authoring/still-media/"
+            class="button secondary"
+            data-field-kit-copy="workshop.pictures"
+            >Pictures &amp; stories</a
+          >
+          <a
+            id="shell-video-poster"
+            href="../authoring/video-poster/"
+            class="button secondary"
+            data-field-kit-copy="workshop.poster"
+            >Video poster workshop</a
+          >
+          <a
+            id="shell-design-atlas"
+            href="../authoring/design-atlas/"
+            class="button secondary"
+            data-field-kit-copy="workshop.atlas"
+            >Design atlas</a
+          >
+          <button id="export-replay" class="button secondary" type="button">Export replay</button>
+        </nav>
+      </details>
       <details class="shell-tools">
-        <summary>Sound &amp; game extras</summary>
+        <summary>Game controls</summary>
         <nav>
           <button id="shell-music" type="button" class="button secondary">Sound on / off</button>
           <button
@@ -1838,9 +1849,11 @@
           >
             Restart mission
           </button>
-          <a href="../site/about.html#versions">About &amp; build information</a>
         </nav>
       </details>
+      <p id="landing-version" class="landing-version" aria-label="Game version">
+        Version __REVEALLINE_VERSION__
+      </p>
       <button id="sound-button" hidden class="icon-button" type="button" aria-label="Enable sound">
         Toggle sound
       </button>

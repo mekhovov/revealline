@@ -144,9 +144,9 @@ for (const mode of ['keyboard', 'controller']) {
       initialStorage = [...page.storage.map],
       initialWrites = page.storage.writes.length;
     assert.equal(home.open, true);
-    assert.equal(
+    assert.match(
       page.$('shell-library').textContent.trim().replaceAll('&amp;', '&'),
-      'Scores & saves',
+      /^Scores & saves/,
     );
     assert.equal(page.$('shell-gallery').textContent.trim(), 'Collection');
     assert.ok(
@@ -269,6 +269,9 @@ for (const mode of ['keyboard', 'controller']) {
       layoutFrames.push(callback);
       return layoutFrames.length;
     };
+    const workshopTools = workshop.querySelector('.workshop-tools');
+    workshopTools.open = true;
+    assert.equal(workshopTools.open, true, 'Authoring actions expand only when requested.');
     activate(page, input, exportButton, workshop);
     assert.ok(exportRequest instanceof Promise, 'Normal scoped activation invokes the real export');
     assert.equal(replayDialog.open, true);

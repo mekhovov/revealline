@@ -27,8 +27,8 @@
   margin: 0 0 16px;
 }
 .field-kit.game-shell #shell-title {
-  margin: 0 0 20px;
-  font-size: clamp(64px, 7vw, 104px);
+  margin: 0 0 14px;
+  font-size: clamp(58px, 6vw, 92px);
   line-height: 0.9;
 }
 .field-kit #shell-title span {
@@ -42,20 +42,33 @@
 }
 .field-kit.game-shell .home-actions {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 4px;
-  margin: 24px 0 16px;
-  max-width: 350px;
+  grid-template-columns: 1fr 1fr;
+  gap: 3px;
+  margin: 16px 0 10px;
+  max-width: 360px;
 }
 .field-kit.game-shell .home-actions :is(.button, #shell-play, #shell-featured) {
-  padding: 10px 16px;
-  min-height: 48px;
-  font-size: 20px;
+  padding: 8px 14px;
+  min-height: 44px;
+  font-size: 18px;
   border: 2px solid transparent;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  touch-action: manipulation;
   color: var(--fk-text);
+}
+.field-kit.game-shell
+  .home-actions
+  :is(
+    #shell-course-return,
+    #shell-featured,
+    #shell-continue,
+    #shell-play,
+    #shell-gallery,
+    #shell-options
+  ) {
+  grid-column: 1 / -1;
 }
 .field-kit.game-shell .home-actions :is(#shell-featured, #shell-continue) {
   color: var(--fk-on-accent);
@@ -77,8 +90,33 @@
   font-size: var(--fk-text-secondary);
   line-height: 1.5;
 }
-.field-kit .home-hint {
-  margin: 14px 0 8px;
+.field-kit .home-play-options {
+  max-width: 350px;
+  margin-top: 10px;
+  color: var(--fk-text-muted);
+  font-size: var(--fk-text-secondary);
+}
+.field-kit .home-play-options summary {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  color: var(--fk-text);
+}
+.field-kit .home-play-options-fields {
+  display: grid;
+  gap: 8px;
+  padding: 8px 0 4px;
+}
+.field-kit .home-play-options-fields .micro-note,
+.field-kit .home-play-options-fields .home-status {
+  margin: 0 0 4px;
+}
+.field-kit .more-destinations {
+  margin-top: 20px;
+}
+.field-kit .workshop-tools > .workshop-destinations {
+  margin-top: 12px;
 }
 .field-kit .landing-version {
   margin: 0;

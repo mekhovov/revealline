@@ -9778,7 +9778,7 @@ try {
     show('journey-artwork-availability', !!candidateHost);
     if (authoredRoute?.id === DEFAULT_JOURNEY_ROUTES.solo)
       $('journey-artwork-availability').textContent =
-        'Mission pictures need an internet connection. Preparing offline play does not yet include them; full game downloads do.';
+        'Mission pictures need a connection. Full downloads include them.';
     $('shell-title-edition').textContent = candidateHost
       ? authoredRoute.id === DEFAULT_JOURNEY_ROUTES.solo
         ? `NEW JOURNEY / ${journeyCatalog.missions.length} MISSIONS`
