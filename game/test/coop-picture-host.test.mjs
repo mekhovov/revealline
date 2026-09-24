@@ -46,7 +46,7 @@ function pause(f) {
   assert.equal(f.$('coop-overlay').hidden, false);
 }
 
-test('initial exact Relay Yard preparation exposes Cancel, then Ready and only explicit Start draws the accepted original', async (t) => {
+test('initial exact Relay Yard preparation stays passive, then Ready and only explicit Start draws the accepted original', async (t) => {
   const gate = deferred();
   const f = await page(t, {
     ...options,
@@ -59,9 +59,9 @@ test('initial exact Relay Yard preparation exposes Cancel, then Ready and only e
   });
   assert.equal(f.doc.documentElement.dataset.toolState, 'ready');
   assert.equal(state(f), 'preparing');
-  assert.equal(f.doc.activeElement.id, 'coop-picture-cancel');
+  assert.equal(f.doc.activeElement, f.doc.body);
+  assert.equal(f.$('coop-picture-cancel').hidden, false);
   assert.equal(f.$('coop-start').disabled, true);
-  assert.equal(f.$('coop-tools').contains(f.doc.activeElement), true);
   f.tick(60);
   assert.equal(f.drawImages.length, 0);
   gate.resolve();
@@ -219,7 +219,7 @@ for (const intent of ['pointer', 'keyboard']) {
       presentation: { read: () => gate.promise },
     });
     const focus = f.doc.activeElement;
-    assert.equal(focus.id, 'coop-picture-cancel');
+    assert.equal(focus, f.doc.body);
     if (intent === 'pointer')
       f.$('coop-intro').emit('pointerdown', { button: 0, pointerType: 'mouse' });
     else f.press('Shift');
