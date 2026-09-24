@@ -1,0 +1,73 @@
+# Temporary fast-release mode
+
+Fast-release mode is active by explicit owner direction from **24 September 2026**. It remains the
+repository default until the owner explicitly asks to restore the full pipeline. Deferred checks
+have not passed and must never be described as passing.
+
+The repository Actions variable `REVEALLINE_FULL_CI` is the operational switch. Its fast-mode value
+is `false`. A missing value is also treated as `false`, so deleting the variable cannot silently
+restore blocking tests.
+
+## What blocks a source pull request
+
+The `Build and deploy GitHub Pages` workflow keeps only the minimum release path blocking:
+
+1. exact pull-request head and tracked-source identity before commands;
+2. dependency installation;
+3. release-critical source and distribution-reference validation (`npm run validate`);
+4. the ordinary deterministic static build (`npm run build`);
+5. exact tracked-source identity after the build; and
+6. the aggregate `release-ready` result.
+
+The preflight and build remain separate job names because frozen-release evidence binds those exact
+contexts, but dependency installation occurs only in the build job. Superseded runs for the same PR
+are cancelled by the workflow concurrency group.
+
+These checks are deferred in fast mode and cannot block merge or release:
+
+- all four full test shards;
+- immutable-production test suites;
+- ESLint;
+- source and native Prettier checks;
+- motion-lab syntax and extended Field Kit provenance checks; and
+- focused Pages-controller unit tests.
+
+Maintainers can still run the full source suite on demand with **Actions → Qualify release source →
+Run workflow**, selecting the exact candidate ref, `operation=qualify`, and `run_tests=true`. That is
+an observation only while fast mode is active; a failure is recorded but does not retroactively
+block another PR.
+
+## What still blocks GitHub Pages
+
+Publication continues to require the reviewed main selector, the highest stable release match,
+bounded ZIP extraction, frozen archive and metadata validation, exact artifact assembly, an
+independent reread of every prepared artifact byte, a final latest-release recheck, and the
+main-only `github-pages` deployment environment. These checks prevent publishing the wrong or
+corrupt frozen release and are not performance-only validation.
+
+The release event only routes an eligible tag to the sole publisher. It does not rebuild historical
+source or rerun the full test suite.
+
+## Restore the full pipeline
+
+Restoration is a deliberate two-part change so one setting cannot unexpectedly make tests blocking
+during an active release:
+
+1. Open and merge a reviewed PR that changes `publishing/test-policy.json` from `waived` to
+   `required`, updates its reason/restoration text, and updates any authorization constant required
+   by that policy schema. Run the policy and Pages-controller tests in that PR.
+2. After that PR is on `main`, set the repository variable:
+
+   ```sh
+   gh variable set REVEALLINE_FULL_CI --repo mekhovov/revealline --body true
+   ```
+
+3. Run **Qualify release source** once on current `main` with `run_tests=true`. Confirm all four
+   shards, static checks, production checks, source identity, and build pass.
+4. If branch protection is introduced, require only `release-ready`, not the individual shard
+   contexts. `release-ready` requires tests whenever `REVEALLINE_FULL_CI=true`.
+5. Update this document and `docs/deployment.md` in the same reviewed PR to state that full CI is
+   restored.
+
+To return to fast mode after an unsuccessful restoration attempt, set the variable back to `false`
+first. Do not rewrite release tags or published assets.

@@ -11,6 +11,7 @@ on:
       - '.github/workflows/deploy-pages.yml'
       - '.cursor/skills/deploy-release-pages/**'
       - 'docs/deployment.md'
+      - 'docs/fast-release-mode.md'
   workflow_dispatch:
     inputs:
       release_tag:
@@ -92,7 +93,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20.19.x
-          cache: npm
 
       - name: Read explicit automated-suite policy
         id: test_policy
@@ -103,26 +103,20 @@ jobs:
           test "$(git rev-parse HEAD)" = "$EXPECTED_SOURCE"
           node .source-gate-automation/scripts/check-source-identity.mjs --root .
 
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Validate, lint, and format source
+      - name: Record temporary fast-release policy
+        env:
+          FULL_CI: ${{ vars.REVEALLINE_FULL_CI || 'false' }}
         run: |
-          npm run validate
-          npm run lint
-          npm run format:check
-          npm run format:native:check
-          node --check authoring/motion-lab/app.js
-
-      - name: Verify Field Kit production ledger and compiled output
-        run: node scripts/produce-field-kit-theme.mjs --check
-
-      - name: Verify immutable production sources first
-        if: steps.test_policy.outputs.runTests == 'true'
-        run: |
-          # Production tests use .cache for temporary fixtures.
-          mkdir -p .cache
-          node --test scripts/test-production-*.mjs
+          if [ "$FULL_CI" = true ]; then
+            echo "Full CI is enabled; the build job will run extended static and provenance checks."
+          else
+            echo "::warning::Fast-release mode is active. Full tests, lint, formatting, native formatting, and extended production checks are deferred."
+            printf '%s\n' \
+              '### Fast-release mode' \
+              '' \
+              'Only exact-source identity, release-critical validation, and the production build block this PR.' \
+              'No passing verdict is claimed for deferred checks. See `docs/fast-release-mode.md`.' >> "$GITHUB_STEP_SUMMARY"
+          fi
 
       - name: Verify tracked source after preflight
         if: always()
@@ -131,7 +125,10 @@ jobs:
           node .source-gate-automation/scripts/check-source-identity.mjs --root .
 
   test:
-    if: github.event_name == 'pull_request' && needs.preflight.outputs.runTests == 'true'
+    if: >-
+      github.event_name == 'pull_request' &&
+      vars.REVEALLINE_FULL_CI == 'true' &&
+      needs.preflight.outputs.runTests == 'true'
     env:
       EXPECTED_SOURCE: ${{ github.event.pull_request.head.sha }}
     needs: preflight
@@ -195,10 +192,8 @@ jobs:
     if: github.event_name == 'pull_request'
     env:
       EXPECTED_SOURCE: ${{ github.event.pull_request.head.sha }}
-    # Test shards remain visible on every source PR, but a regression in one of
-    # them must not suppress the independently useful package-build result.
-    # Preflight stays required: broken validation, lint, formatting or
-    # production provenance still prevents an artifact from being built.
+    # Fast-release mode installs dependencies only once. The separate preflight
+    # remains a cheap, stable exact-source check for release evidence tooling.
     needs: [preflight]
     runs-on: ubuntu-latest
     steps:
@@ -232,6 +227,20 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Validate release-critical source
+        run: npm run validate
+
+      - name: Run extended static and provenance checks
+        if: vars.REVEALLINE_FULL_CI == 'true'
+        run: |
+          npm run lint
+          npm run format:check
+          npm run format:native:check
+          node --check authoring/motion-lab/app.js
+          node scripts/produce-field-kit-theme.mjs --check
+          mkdir -p .cache
+          node --test scripts/test-production-*.mjs
+
       - name: Build pull-request artifact
         if: github.event_name == 'pull_request'
         run: npm run build
@@ -241,3 +250,23 @@ jobs:
         run: |
           test "$(git rev-parse HEAD)" = "$EXPECTED_SOURCE"
           node .source-gate-automation/scripts/check-source-identity.mjs --root .
+
+  release-ready:
+    if: always() && github.event_name == 'pull_request'
+    needs: [preflight, test, build]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Apply the selected PR gate policy
+        env:
+          BUILD_RESULT: ${{ needs.build.result }}
+          FULL_CI: ${{ vars.REVEALLINE_FULL_CI || 'false' }}
+          PREFLIGHT_RESULT: ${{ needs.preflight.result }}
+          TEST_RESULT: ${{ needs.test.result }}
+        run: |
+          test "$PREFLIGHT_RESULT" = success
+          test "$BUILD_RESULT" = success
+          if [ "$FULL_CI" = true ]; then
+            test "$TEST_RESULT" = success
+          else
+            echo "Full tests are deferred and do not block this PR."
+          fi

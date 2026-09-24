@@ -11,6 +11,7 @@ on:
       - '.github/workflows/deploy-pages.yml'
       - '.cursor/skills/deploy-release-pages/**'
       - 'docs/deployment.md'
+      - 'docs/fast-release-mode.md'
   pull_request:
     branches: [main]
     paths:
@@ -20,6 +21,7 @@ on:
       - '.github/workflows/deploy-pages.yml'
       - '.cursor/skills/deploy-release-pages/**'
       - 'docs/deployment.md'
+      - 'docs/fast-release-mode.md'
   workflow_dispatch:
     inputs:
       release_tag:
@@ -57,11 +59,20 @@ jobs:
         id: test_policy
         run: node publishing/test-policy.mjs
 
-      - name: Verify metadata bridges and bounded ZIP extraction
-        if: github.event_name == 'pull_request' || steps.test_policy.outputs.runTests == 'true'
+      - name: Verify metadata bridges and bounded ZIP extraction in full mode
+        if: vars.REVEALLINE_FULL_CI == 'true' && steps.test_policy.outputs.runTests == 'true'
         run: |
           node --test publishing/test-policy.test.mjs publishing/pages-controller/*.test.mjs
           python3 -m unittest discover -s publishing/pages-controller -p 'test_*.py' -v
+
+      - name: Record deferred publisher tests
+        if: vars.REVEALLINE_FULL_CI != 'true' || steps.test_policy.outputs.runTests != 'true'
+        run: |
+          echo "::warning::Focused publisher tests are deferred by fast-release policy; artifact and selector verification still run."
+          printf '%s\n' \
+            '### Fast-release mode' \
+            '' \
+            'Focused publisher tests are deferred. Selector, archive, artifact-byte, and latest-release verification remain mandatory.' >> "$GITHUB_STEP_SUMMARY"
 
       - name: Require publication workspace capacity
         run: |
