@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { Document } from './helpers/couch-dom.mjs';
+import { Document, Events } from './helpers/couch-dom.mjs';
 import { createMissionLibrary } from '../mission-library/library.mjs';
 import { journeyLibrarySource } from '../mission-library/journey-source.mjs';
 import { createJourneyCatalog } from '../journey/catalog.mjs';
@@ -99,6 +99,228 @@ function setup(sources, options = {}) {
   chooser.open(opener);
   return { doc, library, chooser, opener, $: (id) => doc.getElementById(id) };
 }
+
+test('opening and controller fallback focus the first enabled mission without a search step', () => {
+  const { doc, $, chooser } = setup([
+    owner({
+      entries: [row('blocked'), row('playable')],
+      availability: (entry) =>
+        entry.id === 'blocked'
+          ? { state: 'unavailable', reason: 'Content needs repair.' }
+          : { state: 'ready' },
+    }),
+  ]);
+  const cards = $('journey-cards').children;
+  assert.equal(cards[0].disabled, true);
+  assert.equal(doc.activeElement, cards[1]);
+  assert.equal(chooser.primary(), cards[1]);
+  $('journey-search').value = 'no matching mission';
+  $('journey-search').emit('input');
+  assert.equal(chooser.primary(), $('journey-search'));
+  chooser.destroy();
+});
+
+test('current mission is the initial target, then an explicit retained selection takes precedence', () => {
+  const source = owner({ entries: [row('first'), row('current'), row('selected')] });
+  const rows = createMissionLibrary([source]).missions;
+  const { doc, $, chooser, opener } = setup([source], { getCurrentId: () => rows[1].id });
+  assert.equal(doc.activeElement.dataset.missionId, rows[1].id);
+  assert.ok(doc.activeElement.scrolled > 0, 'A current mission below the fold is made visible.');
+  $('journey-cards').children[2].focus();
+  chooser.close();
+  chooser.open(opener);
+  assert.equal(doc.activeElement.dataset.missionId, rows[2].id);
+  assert.equal(chooser.primary(), doc.activeElement);
+  chooser.destroy();
+});
+
+for (const currentId of [null, 'unavailable-current-edition'])
+  test(`an ${currentId === null ? 'absent' : 'unknown'} current identity leaves ordinary browsing usable`, () => {
+    let launches = 0;
+    const { doc, $, chooser } = setup([owner({ launch: () => ++launches })], {
+      getCurrentId: () => currentId,
+    });
+    assert.equal($('journey-chooser').open, true);
+    assert.equal(doc.activeElement, $('journey-cards').children[0]);
+    assert.equal(chooser.primary(), doc.activeElement);
+    assert.equal(launches, 0, 'Focus fallback never adopts or launches another mission.');
+    chooser.destroy();
+  });
+
+test('a known filtered or disabled selection yields to an enabled visible mission', () => {
+  const source = owner({
+    entries: [row('blocked'), { ...row('available'), name: 'Another mission' }],
+    availability: (entry) =>
+      entry.id === 'blocked'
+        ? { state: 'unavailable', reason: 'Content needs repair.' }
+        : { state: 'ready' },
+  });
+  const rows = createMissionLibrary([source]).missions;
+  for (const search of ['', 'Another']) {
+    const { doc, chooser } = setup([source], {
+      readState: () => ({ mode: 'solo', selectedId: rows[0].id, search }),
+    });
+    assert.equal(doc.activeElement.dataset.missionId, rows[1].id);
+    assert.equal(chooser.primary(), doc.activeElement);
+    chooser.destroy();
+  }
+});
+
+test('an unresolved saved selection keeps Search until its remote mission arrives', async () => {
+  const delayed = owner({ id: 'delayed' });
+  const expected = createMissionLibrary([delayed]).missions[0];
+  const { doc, $, library, chooser } = setup([owner()], {
+    readState: () => ({ mode: 'solo', selectedId: expected.id }),
+    getCurrentId: () => createMissionLibrary([owner()]).missions[0].id,
+  });
+  assert.equal($('journey-cards').children.length, 1);
+  assert.equal(doc.activeElement, $('journey-search'));
+  assert.equal(chooser.primary(), $('journey-search'));
+  await tick();
+  library.register(delayed);
+  assert.equal(doc.activeElement.dataset.missionId, expected.id);
+  assert.equal(chooser.primary(), doc.activeElement);
+  chooser.destroy();
+});
+
+test('a current host mission cannot override retained other-mode browsing', () => {
+  const sources = [owner(), owner({ id: 'team', entries: [row('team', ['team'])] })];
+  const team = createMissionLibrary(sources).forMode('team')[0];
+  const { doc, $, chooser } = setup(sources, {
+    mode: 'team',
+    readState: () => ({ mode: 'solo' }),
+    getCurrentId: () => team.id,
+  });
+  assert.equal($('journey-mode').value, 'solo');
+  assert.equal(doc.activeElement, $('journey-cards').children[0]);
+  assert.notEqual(doc.activeElement.dataset.missionId, team.id);
+  chooser.destroy();
+});
+
+test('a retained remote mission that arrives unavailable yields to the first enabled card', async () => {
+  const delayed = owner({
+    id: 'delayed',
+    availability: () => ({ state: 'unavailable', reason: 'No compatible runtime.' }),
+  });
+  const expected = createMissionLibrary([delayed]).missions[0];
+  const { doc, $, library, chooser } = setup([owner()], {
+    readState: () => ({ mode: 'solo', selectedId: expected.id }),
+  });
+  assert.equal(doc.activeElement, $('journey-search'));
+  await tick();
+  library.register(delayed);
+  assert.equal(doc.activeElement, $('journey-cards').children[0]);
+  assert.equal(chooser.primary(), doc.activeElement);
+  assert.equal(doc.captureListeners.get('focusin')?.size, 0);
+  chooser.destroy();
+});
+
+function resizeFixture() {
+  const doc = new Document(),
+    frames = new Map(),
+    media = Object.assign(new Events(), { matches: false });
+  let nextFrame = 0;
+  const view = Object.assign(new Events(), doc.defaultView, {
+    matchMedia: () => media,
+    requestAnimationFrame(callback) {
+      frames.set(++nextFrame, callback);
+      return nextFrame;
+    },
+    cancelAnimationFrame(id) {
+      frames.delete(id);
+    },
+  });
+  doc.defaultView = view;
+  const library = createMissionLibrary([owner({ entries: [row('first'), row('second')] })]);
+  const chooser = attachJourneyChooser({ document: doc, library });
+  chooser.open();
+  return {
+    doc,
+    view,
+    media,
+    frames,
+    chooser,
+    $: (id) => doc.getElementById(id),
+    frame() {
+      const callbacks = [...frames.values()];
+      frames.clear();
+      for (const callback of callbacks) callback();
+    },
+  };
+}
+
+test('viewport reflow keeps the focused mission visible without moving focus or taking input ownership', () => {
+  const f = resizeFixture(),
+    card = f.$('journey-cards').children[1];
+  card.focus();
+  const before = card.scrolled ?? 0;
+  let focusEvents = 0;
+  f.doc.addEventListener('focusin', () => focusEvents++);
+  f.view.emit('resize');
+  f.media.emit('change', { matches: true });
+  f.view.emit('resize');
+  assert.equal(f.frames.size, 1, 'Repeated layout signals coalesce into one frame.');
+  f.frame();
+  assert.equal(card.scrolled, before + 1);
+  assert.equal(f.doc.activeElement, card);
+  assert.equal(f.chooser.state().selectedId, card.dataset.missionId);
+  assert.equal(focusEvents, 0, 'Reflow scrolls without another focus event.');
+  f.chooser.destroy();
+  assert.equal(f.view.listeners.get('resize')?.size, 0);
+  assert.equal(f.view.listeners.get('blur')?.size, 0);
+});
+
+for (const action of ['search', 'another card', 'hidden', 'blur', 'close', 'destroy'])
+  test(`a queued viewport scroll yields to ${action}`, () => {
+    const f = resizeFixture(),
+      card = f.doc.activeElement,
+      before = card.scrolled ?? 0;
+    f.view.emit('resize');
+    assert.equal(f.frames.size, 1);
+    if (action === 'search') f.$('journey-search').focus();
+    if (action === 'another card') f.$('journey-cards').children[1].focus();
+    if (action === 'hidden') {
+      f.doc.hidden = true;
+      f.doc.emit('visibilitychange');
+      f.doc.hidden = false;
+    }
+    if (action === 'blur') {
+      f.doc.focused = false;
+      f.view.emit('blur');
+      f.doc.focused = true;
+    }
+    if (action === 'close') f.chooser.close();
+    if (action === 'destroy') f.chooser.destroy();
+    const focused = f.doc.activeElement;
+    f.frame();
+    assert.equal(card.scrolled ?? 0, before);
+    assert.equal(f.doc.activeElement, focused);
+    assert.equal(f.frames.size, 0);
+    if (action !== 'destroy') f.chooser.destroy();
+  });
+
+test('viewport changes do not scroll missions while Search, a closed chooser or background owns the page', () => {
+  const f = resizeFixture(),
+    card = f.doc.activeElement,
+    before = card.scrolled ?? 0;
+  f.$('journey-search').focus();
+  f.view.emit('resize');
+  assert.equal(f.frames.size, 0);
+  card.focus();
+  f.doc.hidden = true;
+  f.view.emit('resize');
+  assert.equal(f.frames.size, 0);
+  f.doc.hidden = false;
+  f.doc.focused = false;
+  f.view.emit('resize');
+  assert.equal(f.frames.size, 0);
+  f.doc.focused = true;
+  f.chooser.close();
+  f.view.emit('resize');
+  assert.equal(f.frames.size, 0);
+  assert.equal(card.scrolled ?? 0, before);
+  f.chooser.destroy();
+});
 
 for (const intervention of ['new focus', 'focus away and back', 'new input', 'new filter'])
   test(`ready touch launch yields to ${intervention} during native chooser closure`, async () => {
@@ -792,10 +1014,10 @@ test('an invalid saved mode cannot override the current host default or restore 
     readState: () => ({ mode: 'online', selectedId: 'stale', campaign: 'stale', scroll: 25 }),
   });
   assert.equal($('journey-mode').value, 'solo');
-  assert.equal(chooser.state().selectedId, '');
+  assert.equal(chooser.state().selectedId, $('journey-cards').children[0].dataset.missionId);
   assert.equal(chooser.state().campaign, '');
   assert.equal($('journey-cards').scrollTop, 0);
-  assert.equal(doc.activeElement.id, 'journey-search');
+  assert.equal(doc.activeElement, $('journey-cards').children[0]);
   chooser.destroy();
 });
 

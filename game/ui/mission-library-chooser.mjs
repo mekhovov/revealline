@@ -19,6 +19,7 @@ export function attachMissionLibraryChooser({
   readState = () => null,
   writeState = () => {},
   launchContext = () => ({}),
+  getCurrentId = () => null,
 }) {
   if (!LIBRARY_MODES.includes(mode)) throw new TypeError('Unknown mission library mode.');
   const node = (tag, id, text) => {
@@ -111,6 +112,7 @@ export function attachMissionLibraryChooser({
     pendingSelection = null,
     visit = 0,
     destroyed = false,
+    resizeFrame = null,
     message = '';
   let saved = null;
   try {
@@ -179,12 +181,22 @@ export function attachMissionLibraryChooser({
       ? card.button
       : null;
   }
+  function primary() {
+    const selected = currentSelectionButton(selectedId);
+    if (selected) return selected;
+    // A saved remote selection may arrive after the first render. Keep its
+    // opening lease on Search instead of silently selecting another mission.
+    if (selectedId && !library.find(selectedId)) return search;
+    const current =
+      !selectedId && modeFilter.value === mode ? currentSelectionButton(getCurrentId()) : null;
+    return current ?? [...list.children].find((button) => !button.disabled) ?? search;
+  }
   function restoreSelection() {
-    const button = currentSelectionButton(selectedId);
-    if (button) button.focus({ preventScroll: true });
-    else search.focus({ preventScroll: true });
+    const target = primary();
+    target.focus({ preventScroll: true });
     list.scrollTop = savedScroll;
-    if (!button && selectedId && !doc.hidden && doc.hasFocus?.() !== false) {
+    if (target !== search) target.scrollIntoView?.({ block: 'nearest' });
+    if (selectedId && !library.find(selectedId) && !doc.hidden && doc.hasFocus?.() !== false) {
       const opening = trackMissionLibraryOpening({
         document: doc,
         onRetire() {
@@ -208,16 +220,22 @@ export function attachMissionLibraryChooser({
       return;
     }
     const button = currentSelectionButton(pending.id);
-    if (!button) return;
+    if (!button && !library.find(pending.id)) return;
     retirePendingSelection();
-    button.focus({ preventScroll: true });
+    const target = button ?? primary();
+    target.focus({ preventScroll: true });
     list.scrollTop = pending.scroll;
+    if (target !== search) target.scrollIntoView?.({ block: 'nearest' });
   }
   function selectionVisibilityChanged() {
-    if (doc.hidden) retirePendingSelection();
+    if (doc.hidden) {
+      retirePendingSelection();
+      cancelResizeScroll();
+    }
   }
   doc.addEventListener('visibilitychange', selectionVisibilityChanged);
   view.addEventListener?.('blur', retirePendingSelection);
+  view.addEventListener?.('blur', cancelResizeScroll);
   async function activate(row, button) {
     // Detached cards retain their event handlers. A past view (or a closed
     // chooser) must not launch or prepare content after its intent has ended.
@@ -375,7 +393,7 @@ export function attachMissionLibraryChooser({
       action,
     );
     button.onclick = () => void activate(row, button);
-    button.addEventListener('focus', () => {
+    button.addEventListener('focusin', () => {
       selectedId = row.id;
     });
     return { row, button, progress, rules, route, mastery, action, diagram: null };
@@ -432,7 +450,7 @@ export function attachMissionLibraryChooser({
       const replacement = cards.get(focusedId)?.button;
       if (replacement?.isConnected && list.contains(replacement) && !replacement.disabled)
         replacement.focus({ preventScroll: true });
-      else search.focus({ preventScroll: true });
+      else primary().focus({ preventScroll: true });
     }
     list.scrollTop = scroll;
     for (const [id, card] of cards)
@@ -493,6 +511,37 @@ export function attachMissionLibraryChooser({
       card.button.querySelector('.journey-card-map')?.remove();
     }
   }
+  function cancelResizeScroll() {
+    if (resizeFrame !== null) view.cancelAnimationFrame?.(resizeFrame);
+    resizeFrame = null;
+  }
+  function keepFocusedCardVisible() {
+    cancelResizeScroll();
+    if (destroyed || !dialog.open || doc.hidden || doc.hasFocus?.() === false) return;
+    const focused = doc.activeElement,
+      ticket = visit;
+    if (!focused || currentSelectionButton(focused.dataset.missionId) !== focused) return;
+    // Layout can move the selected card outside the scrollport after rotation.
+    // Scroll only the focus that owned this resize; never refocus or acquire a
+    // newer action after the player has moved to a filter or another screen.
+    const scroll = () => {
+      resizeFrame = null;
+      if (
+        destroyed ||
+        ticket !== visit ||
+        !dialog.open ||
+        doc.hidden ||
+        doc.hasFocus?.() === false ||
+        doc.activeElement !== focused ||
+        currentSelectionButton(focused.dataset.missionId) !== focused
+      )
+        return;
+      focused.scrollIntoView?.({ block: 'nearest', inline: 'nearest' });
+    };
+    if (view.requestAnimationFrame) resizeFrame = view.requestAnimationFrame(scroll);
+    else scroll();
+  }
+  view.addEventListener?.('resize', keepFocusedCardVisible);
   function resizeFilters(event) {
     compact = event.matches === true;
     // A viewport change must not hide the focused native select inside a
@@ -506,6 +555,7 @@ export function attachMissionLibraryChooser({
     }
     if (compact && !detailedCards.checked) observer?.disconnect();
     else if (dialog.open) observeDiagrams();
+    keepFocusedCardVisible();
   }
   media?.addEventListener?.('change', resizeFilters);
   detailedCards.addEventListener('change', () => {
@@ -526,6 +576,7 @@ export function attachMissionLibraryChooser({
   });
   function close() {
     retirePendingSelection();
+    cancelResizeScroll();
     ++visit;
     const wasOpen = dialog.open;
     // Play already saved the visible position before closing. Native hidden
@@ -541,6 +592,7 @@ export function attachMissionLibraryChooser({
   function open(origin = doc.activeElement, { returnLabel = 'Back to game' } = {}) {
     if (destroyed) return;
     retirePendingSelection();
+    cancelResizeScroll();
     ++visit;
     opener = origin;
     back.textContent = returnLabel;
@@ -617,6 +669,7 @@ export function attachMissionLibraryChooser({
   });
   return {
     open,
+    primary,
     restore() {
       open(opener, { returnLabel: back.textContent });
     },
@@ -660,6 +713,8 @@ export function attachMissionLibraryChooser({
       media?.removeEventListener?.('change', resizeFilters);
       doc.removeEventListener('visibilitychange', selectionVisibilityChanged);
       view.removeEventListener?.('blur', retirePendingSelection);
+      view.removeEventListener?.('blur', cancelResizeScroll);
+      view.removeEventListener?.('resize', keepFocusedCardVisible);
       dialog.remove();
     },
   };

@@ -4,7 +4,16 @@ This utility runs on a hosted runner when the original five-file qualification a
 
 The registered `qualify-release-source.yml` workflow can be dispatched at the reviewed feature-branch commit that contains this utility. Its default `qualify` operation retains the existing six source gates, four test shards and optional freeze. The utility modes skip those jobs and operate only on an already completed successful qualification/freeze run. The utility revision and frozen game source are separate authorities: a reviewed infrastructure correction may execute against the unchanged qualified source without a second freeze or version/tag change.
 
-## Temporary automated-suite exception (2026-09-22)
+## Current policy and historical exception
+
+The approved player-first UX plan of 2026-09-24 restores mandatory suites.
+`publishing/test-policy.json` now uses `required`; qualify new source with full
+PR tests and `run_tests=true`, using the six-gate/two-shard-family contract below.
+The historical authorization identifier remains for strict reader compatibility.
+The following exception describes earlier frozen releases, not permission to
+skip tests for UX0 or subsequent features.
+
+### Historical temporary automated-suite exception (2026-09-22)
 
 The user explicitly authorized skipping automated test suites temporarily to
 accelerate releases. `publishing/test-policy.json` records that authorization.

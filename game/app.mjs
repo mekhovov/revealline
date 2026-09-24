@@ -1936,6 +1936,8 @@ try {
   function controllerFocus() {
     const dialog = controllerDialog();
     if (dialog) {
+      if (dialog.id === 'shell-home') return gameShell?.primary();
+      if (dialog.id === 'journey-chooser') return journeyChooser?.primary?.();
       if (dialog.id === 'hangar-dialog') return $('switch-class-select');
       if (dialog.id === 'collection-dialog')
         return $('gallery-grid').querySelector('button') || $('gallery-search');
@@ -9185,6 +9187,29 @@ try {
       unifiedChooser = attachJourneyChooser({
         library: result.library,
         profile,
+        getCurrentId: () => {
+          const mission = candidateHost && journeyMission();
+          if (mission)
+            return result.library.missions.find(
+              (row) =>
+                row.ownerId === `journey:${authoredRoute.id}` &&
+                row.editionId === authoredRoute.id &&
+                row.runtimeId === mission.id &&
+                row.modes.includes('solo'),
+            )?.id;
+          try {
+            return retainedLibraryMission(result.library, {
+              mode: 'solo',
+              levelId: campaign.levels[levelIndex].id,
+              campaignKey: activeEntry.baseCampaignKey || campaignKey(campaign),
+              sourcePackId: activeEntry.sourcePackId ?? null,
+              ...(retainedLibraryOwner?.entry === activeEntry ? retainedLibraryOwner : {}),
+            })?.id;
+          } catch {
+            // Focus is a browsing hint, never authority to replace an unavailable edition.
+            return null;
+          }
+        },
         readState: () =>
           state.read() ??
           (returnedRow
@@ -9594,11 +9619,13 @@ try {
     retiredJourneyChooser = journeyChooser;
     journeyChooser = {
       open: openUnifiedMissions,
+      primary: () => unifiedChooser?.primary(),
       refresh: () => unifiedChooser?.refresh(),
       close: () => unifiedChooser?.close(),
     };
   }
   gameShell = attachGameShell({
+    keyboardNavigation: false, // The shared controller adapter also owns menu keys.
     training: courseSession,
     practiceReturn: $('enemy-workshop-return'),
     focusBriefing: () => {
@@ -9712,6 +9739,8 @@ try {
       )
         resume({ contentSwitchTicket: autoplayPackLaunch.ticket });
     });
+  const bootHome = controllerDialog() === $('shell-home');
+  const bootFocus = document.activeElement;
   if (globalThis.RevealLineBoot) globalThis.RevealLineBoot.ready();
   else {
     document.querySelectorAll('[data-boot-inert]').forEach((element) => {
@@ -9806,7 +9835,9 @@ try {
   if (
     !document.hidden &&
     document.hasFocus?.() !== false &&
-    (document.activeElement === document.body || !availableFocusTarget(document.activeElement))
+    (document.activeElement === document.body ||
+      !availableFocusTarget(document.activeElement) ||
+      (bootHome && controllerDialog() === $('shell-home') && document.activeElement === bootFocus))
   ) {
     const target = controllerFocus();
     if (availableFocusTarget(target)) target.focus({ preventScroll: true });

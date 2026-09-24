@@ -2833,6 +2833,11 @@ export function bootCoop({
       document,
       library: getTeamLibrary(),
       mode: 'team',
+      getCurrentId: () =>
+        missionLibrary.missions.find((row) => {
+          const bound = libraryRuntimeRows.get(row)?.();
+          return bound?.pack === pack && bound.level === selectedLevel();
+        })?.id,
       readState: librarySession.read,
       writeState: librarySession.write,
       launchContext: teamLibraryContext,
@@ -3074,7 +3079,7 @@ export function bootCoop({
   }
   discovery = {
     isOpen: () => Boolean($('journey-chooser')?.open),
-    primary: () => $('journey-search') ?? $('coop-discovery-open'),
+    primary: () => libraryChooser?.primary() ?? $('coop-discovery-open'),
     async open(opener) {
       if (!canOpenDiscovery()) return;
       libraryOpening?.dispose();

@@ -2326,6 +2326,29 @@ try {
         library: result.library,
         profile,
         mode: 'versus',
+        getCurrentId: () => {
+          if (currentLibrarySelection?.match === match) return currentLibrarySelection.id;
+          const entry = roundRecipe.entry;
+          if (candidateJourney?.owns(entry))
+            return result.library.missions.find(
+              (item) =>
+                item.ownerId === `journey:${authoredRoute.id}` &&
+                item.editionId === authoredRoute.id &&
+                item.runtimeId === entry.mission.id &&
+                item.modes.includes('versus'),
+            )?.id;
+          try {
+            return retainedLibraryMission(result.library, {
+              mode: 'versus',
+              levelId: entry.level.id,
+              campaignKey: entry.musicCampaignKey,
+              sourcePackId: entry.sourcePackId ?? entry.pictureEntry?.sourcePackId ?? null,
+            })?.id;
+          } catch {
+            // An unavailable retained edition cannot block browsing other missions.
+            return null;
+          }
+        },
         readState: state.read,
         writeState: state.write,
         launchContext: libraryContext,
@@ -2790,6 +2813,8 @@ try {
     'race-touch-1',
     'race-tap',
     'race-reduced',
+    'race-journey-reactions-enabled',
+    'race-journey-reactions-retry',
     'race-text-face',
     'race-text-size',
     'race-menu-palette',
@@ -2826,7 +2851,7 @@ try {
           : $('journey-backup')?.open
             ? $('journey-backup-export')
             : $('journey-chooser')?.open
-              ? $('journey-search')
+              ? journeyChooser?.primary() || $('journey-search')
               : shell.primary(),
     keyboard: true,
     nativeReadingScroll: true,

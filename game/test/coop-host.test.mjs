@@ -276,7 +276,7 @@ test('real keyboard self-crossings explain the shared recovery and cause-aware r
   // An authored empty arena isolates input, recovery and debrief behavior from enemy motion.
   pack.levels[0].enemies = [];
   await f.selectFile(JSON.stringify(pack));
-  f.$('coop-difficulty').value = 'expert';
+  await f.choose('coop-difficulty', 'expert');
   f.$('coop-start').click();
   f.tick(3);
   const loop = () => {
