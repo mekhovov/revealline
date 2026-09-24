@@ -3,7 +3,12 @@ import { createContentAttemptPreparer } from '../content-design/attempt.mjs';
 import { stepRun, releaseInputs } from '../core/index.mjs';
 import { recordInput, recordRelease, exportReplay, verifyReplayAsync } from '../replay.mjs';
 import { suspendSession, restoreSession, SESSION_STORAGE_BYTES } from '../sessions.mjs';
-import { creatorArtworkLoader, isPreparedCreatorBundle } from './bundle.mjs';
+import {
+  creatorArtworkLoader,
+  creatorVictoryStoryDependency,
+  isPreparedCreatorBundle,
+} from './bundle.mjs';
+import { preparePinnedVictoryStory, VICTORY_STORY_FORMAT } from '../victory-story.mjs';
 
 export const creatorProfileKey = (editionId) => `custom-${editionId}`;
 export const creatorAttemptKey = (editionId) => `revealline.creator.attempt.v1.${editionId}`;
@@ -31,6 +36,7 @@ export function createCreatorRuntime(prepared, { decodeImage, buildVersion = 'de
     runId = null,
     generation = 0,
     disposed = false;
+  const completions = new WeakSet();
   const key = (entry) => `creator:${prepared.editionId}:${entry.executionKey}`;
   async function prepare(missionId, difficulty, turnPolicy, { signal } = {}) {
     required(!disposed, 'Custom player is closed.');
@@ -170,13 +176,70 @@ export function createCreatorRuntime(prepared, { decodeImage, buildVersion = 'de
           checked.actual.summary.won,
         'This Custom completion changed or did not verify.',
       );
-      return Object.freeze({
+      const receipt = Object.freeze({
         type: 'complete',
         mode: 'solo',
         missionId: current.manifest.missionId,
         runId: identity,
         gameplayId: `${prepared.editionId}:${current.manifest.simulationIdentity}`,
         difficulty: current.selection.difficulty,
+      });
+      completions.add(receipt);
+      return receipt;
+    },
+    async prepareVictoryStory(receipt, options = {}) {
+      required(
+        completions.has(receipt) &&
+          attempt &&
+          !disposed &&
+          receipt.runId === runId &&
+          receipt.missionId === attempt.manifest.missionId,
+        'Victory story requires this runtime’s verified legal completion.',
+      );
+      const current = attempt,
+        dependency = creatorVictoryStoryDependency(prepared, receipt.missionId);
+      if (!dependency) return null;
+      const index = missionOrder.indexOf(receipt.missionId);
+      required(index >= 0, 'Victory story mission is outside this installed edition.');
+      const picturePin = Object.freeze({
+        kind: 'still',
+        identity: Object.freeze({
+          baseCampaignKey: current.entry.baseCampaignKey,
+          levelId: current.manifest.missionId,
+          levelRevision: current.run.level.revision,
+          themeId: current.theme.id,
+        }),
+        presentationId: `creator-${prepared.editionId.slice(0, 32)}`,
+        presentationRevision: index + 1,
+        assetId: dependency.poster.id,
+        sha256: dependency.poster.sha256,
+      });
+      const story = dependency.story,
+        descriptor = {
+          format: VICTORY_STORY_FORMAT,
+          id: `story-${prepared.editionId.slice(0, 32)}`,
+          revision: index + 1,
+          picturePin,
+          source: story.video,
+          segment: {
+            startSeconds: story.playbackRange.startSeconds,
+            endSeconds: story.playbackRange.endSeconds,
+          },
+          description: story.description,
+        };
+      const storyPrepared = await preparePinnedVictoryStory(
+        { descriptor, blob: dependency.original, picturePin },
+        options,
+      );
+      required(
+        completions.has(receipt) && attempt === current && !disposed && receipt.runId === runId,
+        'A newer Custom attempt replaced this victory story.',
+      );
+      return Object.freeze({
+        prepared: storyPrepared,
+        picturePin,
+        poster: dependency.poster,
+        playbackRange: story.playbackRange,
       });
     },
     dispose() {
