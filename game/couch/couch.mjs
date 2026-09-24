@@ -1679,6 +1679,7 @@ try {
       return;
     }
     const origin = $('race-journey-next');
+    if (candidateJourney) return openMissionLibrary(origin);
     origin.focus({ preventScroll: true });
     const restore = actionFocus(origin),
       context = libraryContext(),
@@ -2722,6 +2723,10 @@ try {
     $('race-journey-controls').hidden = !!shell && shell.scope() !== 'main' && !running;
     $('race-journey-next').hidden = match.status !== 'finished' || libraryCompleteMatch === match;
     $('race-journey-next').disabled = contentBusy || !!libraryContinuation;
+    $('race-journey-next').textContent =
+      candidateJourney && !candidateJourney.next(roundRecipe.entry.mission.id)
+        ? 'Browse missions'
+        : 'Next mission';
     $('race-journey-skip').hidden = !candidateJourney || match.status === 'finished';
     $('race-journey-find').disabled = contentBusy || !!libraryContinuation;
     if (candidateJourney) {
@@ -3119,7 +3124,11 @@ try {
       $('race-message').textContent =
         `${match.winner === null ? 'Draw' : `${name} wins the ${series ? 'round' : 'race'}`}. ${match.reason}.${series && won.some((n) => n >= 2) ? ` ${name} wins the match!` : ''}`;
       $('race-message').textContent +=
-        ' Choose Next mission to continue, or keep playing this mission.';
+        candidateJourney && !candidateJourney.next(roundRecipe.entry.mission.id)
+          ? series && !won.some((n) => n >= 2)
+            ? ' Continue with Next round, or Browse missions.'
+            : ` ${candidateJourney.isCore(roundRecipe.entry.mission.id) ? 'End of the main Journey.' : 'End of this optional sequence.'} Browse missions or Rematch whenever you like.`
+          : ' Choose Next mission to continue, or keep playing this mission.';
       $('race-start').textContent = `${continuationAction()}: ${roundRecipe.entry.level.name}`;
       painters.forEach((p, i) => {
         if (match.runs[i].status === 'won')

@@ -21,7 +21,16 @@ Cancelling a departure restores the exact visible opener without resuming play.
 Keep progression destinations explicit: a terminal Journey result opens Browse
 missions instead of silently advancing into an optional Remix. Retain its accepted
 run, picture and result until the player chooses a replacement. Test the final
-core mission and optional-arc endings independently, including Back focus.
+core mission and optional-arc endings independently, including Back focus. In
+Versus, an unfinished first-to-two match still offers Next round; do not label
+that round as a completed Journey or advertise Rematch before it is available.
+
+An incoming mission link can overlap initial picture materialization. Join the
+captured boot writer before preparing the requested original, then recheck the
+opening lease, foreground, run and newer-input ownership. An unrelated initial
+picture failure must not authorize a substitute or prevent the correct original
+from being prepared. Prove success, failure and cancellation with held real-asset
+requests, not only a warm-cache timing check.
 
 Test actual host keyboard/controller paths, departure cancellation and image/run
 retention. Exercise every newly reachable setting through its real change handler.

@@ -6,7 +6,6 @@ import { page as teamPage } from './helpers/coop-host.mjs';
 import { teamHud } from './helpers/coop-win.mjs';
 import { COOP_STARTER_PACK } from '../coop/library.mjs';
 import { retryFixture } from './fixtures/retry-scenarios.mjs';
-import { waitFor } from './helpers/coop-presentation-fixture.mjs';
 
 const base = JSON.parse(await readFile(new URL('../content/campaign.json', import.meta.url)));
 const pad = () => ({
@@ -102,8 +101,15 @@ for (const adapter of ['keyboard', 'controller']) {
     nav.adopt();
     const initial = f.checkpoint();
     nav.reach('race-journey-find');
+    const find = f.$('race-journey-find'),
+      open = find.onclick;
+    let opening;
+    find.onclick = (...args) => (opening = open.apply(find, args));
     nav.confirm();
-    await waitFor(() => f.$('journey-chooser')?.open);
+    find.onclick = open;
+    assert.ok(opening instanceof Promise, 'Menu input activated the real catalogue operation.');
+    await opening;
+    assert.equal(f.$('journey-chooser').open, true);
     f.frame();
     nav.back();
     assert.equal(f.$('journey-chooser').open, false);
