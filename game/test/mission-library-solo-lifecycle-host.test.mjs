@@ -128,7 +128,16 @@ for (const transition of [
     p.$('shell-play').click();
     await settle(() => p.$('journey-chooser')?.open && p.$('journey-collection'));
     assert.equal(p.$('journey-cards').children.length, 201);
-    assert.equal(p.doc.activeElement, p.$('journey-search'));
+    const current = createMissionLibrary(
+      classicLibrarySources(
+        JSON.parse(
+          await readFile(new URL('../content/mission-library-index.json', import.meta.url)),
+        ),
+        { availability: () => ({ state: 'ready' }), launch: () => true },
+      ),
+    ).missions.find((row) => row.runtimeId === run.levelId);
+    assert.equal(current.runtimeId, 'signal-01');
+    assert.equal(p.doc.activeElement.dataset.missionId, current.id);
     p.$('journey-back').click();
     assert.equal(p.$('journey-chooser').open, false);
     assert.equal(p.doc.activeElement, p.$('shell-play'));

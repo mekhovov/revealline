@@ -283,7 +283,7 @@ function nativeDialogs(t) {
   });
 }
 
-test('actual title → Missions → Collection controller Back closes only the front dialog and never starts flight', async (t) => {
+test('actual title → Missions → Progress backup controller Back closes only the front dialog and never starts flight', async (t) => {
   nativeDialogs(t);
   const h = await soloPage(t, { titleScreen: true });
   const pad = {
@@ -302,33 +302,33 @@ test('actual title → Missions → Collection controller Back closes only the f
     h.frame();
   };
   h.frame();
-  pulse(0);
   h.frame();
   h.$('shell-play').click();
+  await settle(() => h.$('journey-chooser')?.open);
   h.frame();
   h.frame();
-  h.$('collection-button').focus();
-  h.$('collection-button').click();
+  h.$('journey-backup-open').focus();
+  h.$('journey-backup-open').click();
   h.frame();
   h.frame();
-  assert.ok(h.$('collection-dialog').contains(h.doc.activeElement));
-  assert.equal(collectionBack(h).textContent, 'Back to Missions →');
-  const close = h.$('collection-dialog').querySelector('button');
+  assert.ok(h.$('journey-backup').contains(h.doc.activeElement));
+  const close = h.$('journey-backup').querySelector('button');
   close.focus();
   close.emit('keydown', { key: 'ArrowDown', code: 'ArrowDown' });
   assert.ok(
-    h.$('collection-dialog').contains(h.doc.activeElement),
+    h.$('journey-backup').contains(h.doc.activeElement),
     'Keyboard arrows also use the front modal',
   );
   h.frame(); // Native input requires a neutral controller sample before a fresh action.
   pulse(1);
-  assert.equal(h.$('collection-dialog').open, false);
-  assert.equal(h.$('shell-missions').open, true);
-  assert.equal(h.doc.activeElement, h.$('collection-button'));
+  assert.equal(h.$('journey-backup').open, false);
+  assert.equal(h.$('journey-chooser').open, true);
+  assert.equal(h.doc.activeElement, h.$('journey-backup-open'));
   assert.equal(h.$('flight-state').textContent, 'Ready for launch');
   assert.equal(h.rendered.run.tick, 0);
   pulse(1);
-  assert.equal(h.$('shell-missions').open, false);
+  assert.equal(h.$('journey-chooser').open, false);
+  assert.equal(h.$('shell-home').open, true);
   assert.equal(h.rendered.run.tick, 0);
   assert.deepEqual(h.errors, []);
 });
@@ -852,7 +852,7 @@ test('picture Replay deliberately leaves title and Collection for the selected r
   assert.deepEqual(h.errors, []);
 });
 
-test('Collection Choose appearance deliberately leaves title for Missions setup', async (t) => {
+test('Collection Choose appearance opens Missions setup over its retained title', async (t) => {
   nativeDialogs(t);
   const h = await soloPage(t, { titleScreen: true }),
     checkpoint = authoritativeCheckpoint(h.rendered.run);
@@ -860,11 +860,11 @@ test('Collection Choose appearance deliberately leaves title for Missions setup'
   h.$('collection-progress').querySelector('summary').click();
   assert.equal(h.$('collection-progress').open, true);
   h.$('collection-choose-appearance').click();
-  await Promise.resolve();
+  await settle(() => h.$('journey-chooser')?.open && h.doc.activeElement === h.$('body-select'));
   h.frame(0);
   assert.equal(h.$('collection-dialog').open, false);
-  assert.equal(h.$('shell-home').open, false);
-  assert.equal(h.$('shell-missions').open, true);
+  assert.equal(h.$('shell-home').open, true, 'The mission library retains its Home parent.');
+  assert.equal(h.$('journey-chooser').open, true);
   assert.equal(h.doc.activeElement, h.$('body-select'));
   assert.deepEqual(authoritativeCheckpoint(h.rendered.run), checkpoint);
   assert.deepEqual(h.errors, []);
@@ -877,9 +877,7 @@ test('Collection resets its return label from title to a direct paused-flight vi
   collectionBack(h).click();
   await Promise.resolve();
   assert.equal(h.$('shell-home').open, true);
-  h.$('shell-play').click();
-  h.$('shell-briefing').click();
-  h.$('start-button').click();
+  h.$('shell-featured').click();
   await settle(() => h.doc.body.dataset.flightState === 'running');
   h.key('ArrowDown');
   h.key('ArrowDown', false);
@@ -1110,6 +1108,8 @@ for (const exit of ['button', 'escape', 'controller'])
     h.key('ArrowDown', false);
     h.$('overlay-menu').click();
     h.$('shell-packs').click();
+    await settle(() => h.$('journey-chooser')?.open);
+    h.$('mission-picker-setup').open = true;
     h.$('shell-mode-choice').open = true;
     h.$('shell-team').focus();
     const checkpoint = authoritativeCheckpoint(h.rendered.run);
@@ -1123,7 +1123,7 @@ for (const exit of ['button', 'escape', 'controller'])
     else h.$('mode-leave-stay').click();
     await Promise.resolve();
     assert.equal(h.$('mode-leave-dialog').open, false);
-    assert.equal(h.$('shell-missions').open, true);
+    assert.equal(h.$('journey-chooser').open, true);
     assert.equal(h.doc.activeElement.id, 'shell-team');
     assert.equal(globalThis.location.href, 'http://localhost/game/?journey=legacy');
     for (let i = 0; i < 30; i++) h.frame();
@@ -1183,38 +1183,50 @@ test('actual nested Collection picture Tab wraps only its current modal and clos
 
 // Native autofocus and queued close events are modeled by the existing adapter.
 // This follows actual source handlers; no display or physical device claim.
-for (const nested of [false, true]) {
-  test(`Missions preserves its Home opener after ${nested ? 'nested' : 'direct'} Collection appearance setup`, async (t) => {
+for (const context of ['Home', 'field']) {
+  test(`Missions preserves its ${context} opener after Collection appearance setup`, async (t) => {
     nativeDialogs(t);
-    const h = await soloPage(t, { titleScreen: true });
+    const h = await soloPage(t, { titleScreen: context === 'Home' });
     const checkpoint = authoritativeCheckpoint(h.rendered.run);
-    if (nested) {
-      // Touch-like activation: the title primary still owns DOM focus.
-      h.$('shell-featured').focus();
-      h.$('shell-play').click();
-      h.$('collection-button').focus();
-      h.$('collection-button').click();
-    } else openTitleCollection(h);
+    const opener = h.$(context === 'Home' ? 'shell-gallery' : 'shell-collection');
+    opener.focus();
+    opener.click();
     h.$('collection-progress').querySelector('summary').click();
     h.$('collection-choose-appearance').click();
-    await Promise.resolve();
-    assert.equal(h.$('shell-missions').open, true);
+    await settle(() => h.$('journey-chooser')?.open && h.doc.activeElement === h.$('body-select'));
+    assert.equal(h.$('journey-chooser').open, true);
     assert.equal(h.doc.activeElement.id, 'body-select');
-    h.$('shell-missions-back').click();
+    h.$('journey-back').click();
     await Promise.resolve();
     h.frame(0);
-    assert.equal(h.$('shell-home').open, true);
-    assert.equal(h.doc.activeElement.id, 'shell-play');
+    assert.equal(h.$('shell-home').open, context === 'Home');
+    assert.equal(h.doc.activeElement, opener);
     assert.deepEqual(authoritativeCheckpoint(h.rendered.run), checkpoint);
     assert.deepEqual(h.errors, []);
   });
 }
 
+async function legacyMissionShell(t) {
+  nativeDialogs(t);
+  const h = await soloPage(t, { titleScreen: true });
+  // The normal host delegates Missions to the unified library. Preserve this
+  // older component's return-guard tests with one explicit legacy shell owner.
+  h.win.emit('pagehide', { persisted: false });
+  const shell = attachGameShell({
+    document: h.doc,
+    initial: false,
+    canContinue: () => false,
+    pause() {},
+  });
+  t.after(() => shell.destroy());
+  return h;
+}
+
 for (const unavailable of ['disabled', 'hidden', 'detached']) {
-  test(`Missions Back uses an available Home fallback when its opener is ${unavailable}`, async (t) => {
-    nativeDialogs(t);
-    const h = await soloPage(t, { titleScreen: true });
+  test(`legacy Missions Back uses an available Home fallback when its opener is ${unavailable}`, async (t) => {
+    const h = await legacyMissionShell(t);
     h.$('shell-play').click();
+    assert.equal(h.$('shell-missions').open, true);
     const opener = h.$('shell-play');
     if (unavailable === 'detached') opener.remove();
     else opener[unavailable] = true;
@@ -1227,10 +1239,10 @@ for (const unavailable of ['disabled', 'hidden', 'detached']) {
   });
 }
 for (const replacement of ['dialog', 'focus', 'background']) {
-  test(`Missions close callback retains newer ${replacement} ownership before reopening Home`, async (t) => {
-    nativeDialogs(t);
-    const h = await soloPage(t, { titleScreen: true });
+  test(`legacy Missions close callback retains newer ${replacement} ownership before reopening Home`, async (t) => {
+    const h = await legacyMissionShell(t);
     h.$('shell-play').click();
+    assert.equal(h.$('shell-missions').open, true);
     const close = h.$('shell-missions').close;
     h.$('shell-missions').close = function () {
       close.call(this);
