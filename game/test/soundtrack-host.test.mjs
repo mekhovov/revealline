@@ -704,7 +704,7 @@ test('quick Solo controls play from the menu, pause independently and skip witho
   menu.click();
   assert.equal(musicMedia(page).paused, false, 'Play begins in the click task');
   await waitFor(() => pause.textContent === 'Pause music', 'Both controls show playing');
-  page.$('start-button').click();
+  await startFlight(page);
   page.key('ArrowDown');
   page.key('ArrowDown', false);
   ticks(page, 2);
