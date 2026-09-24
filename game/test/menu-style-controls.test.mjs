@@ -119,14 +119,21 @@ for (const persisted of [false, true]) {
 
 test('restored menu form follows newly saved authority and retains later explicit intent', (t) => {
   const f = fixture(t);
+  assert.deepEqual(f.owner.snapshot(), { palette: 'auto', ornaments: 'subtle', revision: 0 });
   f.host.emit('pagehide', { persisted: true });
   f.external({ palette: 'ukrainian', ornaments: 'off' });
   f.host.emit('pageshow', { persisted: true });
   f.assertView('ukrainian', 'off');
+  assert.deepEqual(f.owner.snapshot(), { palette: 'ukrainian', ornaments: 'off', revision: 1 });
   f.choose('menu-ornaments', 'subtle');
   f.stale();
   f.flush();
   f.assertView('ukrainian', 'subtle');
+  assert.deepEqual(f.owner.snapshot(), {
+    palette: 'ukrainian',
+    ornaments: 'subtle',
+    revision: 2,
+  });
   assert.deepEqual(f.writes, [
     [MENU_STYLE_PREFERENCES_KEY, JSON.stringify({ palette: 'ukrainian', ornaments: 'subtle' })],
   ]);
