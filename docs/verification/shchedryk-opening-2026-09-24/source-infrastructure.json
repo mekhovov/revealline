@@ -1,0 +1,61 @@
+{
+  "format": "revealline-source-check.v1",
+  "feature": "M2 bundled soundtrack source infrastructure only",
+  "checkedAt": "2026-09-24T03:35:53.539Z",
+  "baseRevision": "e6a766abce745e1993c53a2652d8e03e50e7a5e5",
+  "sourceFiles": [
+    {
+      "path": "game/soundtrack-bundled.mjs",
+      "bytes": 1785,
+      "sha256": "6ed2a74c8106f15ffe8c51ff5a6398cd366fb3188b4576ecaa8821fb0e479304"
+    },
+    {
+      "path": "game/soundtrack-source.mjs",
+      "bytes": 4686,
+      "sha256": "ac0ec95d5e0a4ebfc6d40c4d091b747139ea1916fb79c8aae55b844510f01d16"
+    },
+    {
+      "path": "game/test/soundtrack-source.test.mjs",
+      "bytes": 9970,
+      "sha256": "e409a77110a23c7555ea06d7056b4497240b289f2df12bf7563479a0484b8fe6"
+    }
+  ],
+  "checks": {
+    "node": "20.19.5",
+    "sourceSuite": {
+      "tests": 10,
+      "pass": 10,
+      "fail": 0,
+      "skip": 0,
+      "method": "node:test through an in-memory vm.SourceTextModule graph; tracked modules and synthetic MP3 fixture read from git without a working-tree write",
+      "standardHostedRun": "pending"
+    },
+    "prettier": {
+      "version": "3.6.2",
+      "status": "formatted in memory with repository configuration"
+    },
+    "eslint": {
+      "status": "not run",
+      "reason": "ESLint is unavailable in the small dependency checkout; disk reserve prohibits installing dependencies"
+    },
+    "build": {
+      "status": "not run",
+      "reason": "Below required 1 GiB local reserve; hosted qualification required"
+    }
+  },
+  "admission": {
+    "recordingsAdded": 0,
+    "defaultChanged": false,
+    "bundledRegistrationsActivated": 0,
+    "mp3Downloaded": false,
+    "listeningApprovalClaimed": false
+  },
+  "remaining": [
+    "Independent code review and required hosted source checks",
+    "Exact Shchedryk admission evidence and named Ukrainian musical review",
+    "Hosted acquisition and full hash verification of approved MP3; core/offline build inclusion",
+    "Single-count shared quota accounting and album installation/removal semantics",
+    "Fresh-profile default and once-per-visit opening selection preserving explicit preferences",
+    "Menu, device, online and cold-offline acceptance"
+  ]
+}
