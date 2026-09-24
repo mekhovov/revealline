@@ -10,6 +10,7 @@ import { authoritativeCheckpoint } from '../replay.mjs';
 import { preparePack, emptyPackLibrary, installPack, exportPackLibrary } from '../packs.mjs';
 import { retryFixture } from './fixtures/retry-scenarios.mjs';
 import { loadLibrary } from '../library.mjs';
+import { inspectImageDataUrl } from '../content.mjs';
 
 class Picture {
   width = 1774;
@@ -48,6 +49,12 @@ const model = createMissionLibrary(
   }),
 );
 const lateBase = model.missions[11];
+const currentPressure = model.missions.find(
+  (mission) =>
+    mission.name === 'Orchard Crossing' &&
+    mission.ownerId.includes('fpv-arcade-r5') &&
+    mission.ownerId.includes('current-line-impact.v1'),
+);
 
 async function installedAssets(pack) {
   const assets = managedIndexedDB();
@@ -364,6 +371,35 @@ test('incoming opaque Classic handoff starts its exact late mission without show
   await running(p, lateBase.runtimeId);
   assert.equal(p.$('journey-chooser').open, false);
   assert.equal(p.$('shell-home').open, false);
+  assert.deepEqual(p.errors, []);
+});
+
+test('incoming Current-rules Classic handoff retains its original picture owner', async (t) => {
+  assert.ok(currentPressure);
+  const source = JSON.parse(
+    await readFile(new URL('../content/packs/fpv-arcade-r5.json', import.meta.url), 'utf8'),
+  );
+  const { pack } = await preparePack(source, {
+    decodeImage: async (dataUrl) => {
+      const image = inspectImageDataUrl(dataUrl);
+      return { naturalWidth: image.width, naturalHeight: image.height };
+    },
+  });
+  const assets = await installedAssets(pack);
+  const search = new URLSearchParams({
+    journey: 'legacy',
+    'library-mission': currentPressure.id,
+  });
+  const p = await soloPage(t, {
+    titleScreen: true,
+    search: `?${search}`,
+    assetIndexedDB: assets.indexedDB,
+  });
+  await running(p, currentPressure.runtimeId);
+  assert.equal(p.rendered.run.level.classic.lineImpact.version, 'line-impact.v1');
+  assert.ok(Math.abs(p.rendered.run.level.classic.lineImpact.speed - 38.4) < 1e-9);
+  assert.equal(p.$('journey-chooser').open, false);
+  assert.doesNotMatch(p.$('run-message').textContent, /Picture choice.*execution catalog/);
   assert.deepEqual(p.errors, []);
 });
 

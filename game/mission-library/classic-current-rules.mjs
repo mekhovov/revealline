@@ -71,6 +71,16 @@ export function projectClassicCurrentRulesEntry(entry, rulesEdition = CLASSIC_RU
     maxArray: 4096,
     maxString: 6 * 1024 * 1024,
   });
+  // Current rules change simulation identity, not the authenticated picture
+  // owner. Keep the exact original campaign so hosts can resolve its Standard
+  // or Gentle execution key and level revision when preparing artwork.
+  projected.classicRulesPresentationCampaign = boundedJSON(entry.campaign, {
+    maxBytes: 16 * 1024 * 1024,
+    maxNodes: 400000,
+    maxDepth: 24,
+    maxArray: 4096,
+    maxString: 65536,
+  });
   projected.campaign.revision = revision('campaign', sourceKey);
   projected.campaign.levels = projected.campaign.levels.map((level) =>
     projectClassicCurrentRulesLevel(level, rulesEdition, sourceKey),
