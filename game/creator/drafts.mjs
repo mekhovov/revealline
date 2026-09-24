@@ -6,36 +6,54 @@ import { creatorAbort, creatorSHA256, ownCreatorBlob } from './bytes.mjs';
 const FORMAT = 'revealline-creator-source.v1',
   MAGIC = new TextEncoder().encode('RLCSB1\r\n');
 const MAX_MANIFEST = 2 * 1024 * 1024,
-  MAX_BYTES = MAX_MANIFEST + 8 * 1024 * 1024 + 12;
+  MAX_ASSET_BYTES = 4 * 1024 * 1024,
+  MAX_ASSETS = 100,
+  MAX_BYTES = MAX_MANIFEST + MAX_ASSETS * MAX_ASSET_BYTES + 12;
 const prepared = new WeakSet();
 const draftId = (id) => typeof id === 'string' && /^[a-z][a-z0-9-]{0,59}$/.test(id);
 const hashValid = (hash) => typeof hash === 'string' && /^[a-f0-9]{64}$/.test(hash);
 const own = (value) =>
   boundedJSON(value, { maxBytes: MAX_MANIFEST, maxNodes: 100000, maxDepth: 26, maxArray: 4096 });
-/** Keep editable gameplay (including invalid geometry), but require the source
- * structure this single-picture UI can safely reopen without dropping items. */
+/** Keep editable gameplay (including invalid geometry), while requiring a
+ * bounded creator graph that can reopen without silently dropping batch items. */
 export function requireCreatorEditableProject(project) {
   required(
     project?.format === 'ContentProjectV1' &&
       stableId(project.id) &&
       typeof project.name === 'string' &&
       project.name.length <= 160 &&
-      ['packs', 'campaigns', 'missions', 'assets'].every(
-        (key) =>
-          Array.isArray(project[key]) &&
-          project[key].length === 1 &&
-          project[key][0] &&
-          typeof project[key][0] === 'object',
+      Array.isArray(project.packs) &&
+      project.packs.length === 1 &&
+      Array.isArray(project.campaigns) &&
+      project.campaigns.length >= 1 &&
+      project.campaigns.length <= 12 &&
+      Array.isArray(project.missions) &&
+      project.missions.length >= 1 &&
+      project.missions.length <= 50 &&
+      Array.isArray(project.assets) &&
+      project.assets.length >= 1 &&
+      project.assets.length <= 50 &&
+      project.missions.every(
+        (mission) =>
+          mission &&
+          typeof mission === 'object' &&
+          typeof mission.name === 'string' &&
+          mission.name.length <= 160 &&
+          mission.presentation &&
+          typeof mission.presentation === 'object',
       ) &&
-      typeof project.missions[0].name === 'string' &&
-      project.missions[0].name.length <= 160 &&
-      project.missions[0].presentation &&
-      typeof project.missions[0].presentation === 'object' &&
-      typeof project.assets[0].alt === 'string' &&
-      project.assets[0].alt.length <= 512,
-    'This creator draft needs one pack, campaign, mission and picture. Keep other structures in Advanced Studio.',
+      project.assets.every(
+        (asset) =>
+          asset &&
+          typeof asset === 'object' &&
+          typeof asset.alt === 'string' &&
+          asset.alt.length <= 512,
+      ),
+    'This creator draft needs one pack, campaign, mission and picture, or a bounded batch of them. Keep other structures in Advanced Studio.',
   );
 }
+const originalHashes = (source) =>
+  source === null ? [] : Array.isArray(source) ? source : [source];
 function document(source) {
   const value = own(source);
   exactKeys(
@@ -50,6 +68,12 @@ function document(source) {
     'creator draft content',
   );
   requireCreatorEditableProject(value.content.project);
+  const missionCount = value.content.project.missions.length;
+  required(
+    (missionCount === 1 && !Array.isArray(value.content.provenance)) ||
+      (Array.isArray(value.content.provenance) && value.content.provenance.length === missionCount),
+    'Source backup needs one generation record for every mission.',
+  );
   exactKeys(value.content.credits, ['creator', 'picture', 'license'], 'source credits');
   required(
     ['creator', 'picture', 'license'].every(
@@ -61,12 +85,13 @@ function document(source) {
   exactKeys(value.editing, ['fit'], 'creator editing information');
   required(
     ['contain', 'cover'].includes(value.editing.fit) &&
-      (value.originalSha256 === null || hashValid(value.originalSha256)),
+      originalHashes(value.originalSha256).length <= 50 &&
+      originalHashes(value.originalSha256).every(hashValid),
     'Invalid source picture or fitting information.',
   );
   required(
-    Array.isArray(value.assets) && value.assets.length >= 1 && value.assets.length <= 2,
-    'Source backup needs its runtime picture and optional original.',
+    Array.isArray(value.assets) && value.assets.length >= 1 && value.assets.length <= MAX_ASSETS,
+    'Source backup needs its runtime pictures and optional originals.',
   );
   let previous = '';
   for (const item of value.assets) {
@@ -76,14 +101,14 @@ function document(source) {
         item.sha256 > previous &&
         Number.isSafeInteger(item.bytes) &&
         item.bytes > 0 &&
-        item.bytes <= 4 * 1024 * 1024,
+        item.bytes <= MAX_ASSET_BYTES,
       'Invalid source asset inventory.',
     );
     previous = item.sha256;
   }
   const wanted = new Set([
     ...(value.content.project.assets ?? []).map((a) => a.sha256),
-    ...(value.originalSha256 ? [value.originalSha256] : []),
+    ...originalHashes(value.originalSha256),
   ]);
   required(
     wanted.size === value.assets.length && value.assets.every((a) => wanted.has(a.sha256)),
@@ -98,12 +123,12 @@ export async function prepareCreatorSource(
 ) {
   creatorAbort(signal);
   required(
-    Array.isArray(assets) && assets.length >= 1 && assets.length <= 2,
+    Array.isArray(assets) && assets.length >= 1 && assets.length <= MAX_ASSETS,
     'Provide only this source project’s pictures.',
   );
   const owned = assets
     .map(({ sha256, blob }) =>
-      Object.freeze({ sha256, blob: ownCreatorBlob(blob, 4 * 1024 * 1024, 'Source picture') }),
+      Object.freeze({ sha256, blob: ownCreatorBlob(blob, MAX_ASSET_BYTES, 'Source picture') }),
     )
     .sort((a, b) => a.sha256.localeCompare(b.sha256));
   const record = document({
@@ -200,7 +225,7 @@ export function createCreatorDraftBackend(store) {
       for (const asset of record.assets)
         assets.push({
           sha256: asset.sha256,
-          blob: await store.readSelectedBlob(asset.sha256, { signal, maxBytes: 4 * 1024 * 1024 }),
+          blob: await store.readSelectedBlob(asset.sha256, { signal, maxBytes: MAX_ASSET_BYTES }),
         });
       return {
         revision: current.revision,
