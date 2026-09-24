@@ -1,0 +1,125 @@
+{
+  "format": "revealline-v097-final-release-reconciliation.v1",
+  "status": "PASS",
+  "verifiedAt": "2026-09-24T06:19:56.485501+00:00",
+  "releaseId": 395252920,
+  "tagSha": "2a65f2917d2ed86a273d1fb2e45f25de232e3563",
+  "source": "1518e15e248b59c6470cc6931023eaf6f1ac363c",
+  "unchangedAssets": {
+    "distribution.zip": {
+      "id": 585067086,
+      "name": "distribution.zip",
+      "size": 595070842,
+      "digest": "sha256:1b87a11577263b909b8ce06024938c4b67c459ea645abe5d7cd0ace6d6ad1dda",
+      "state": "uploaded",
+      "content_type": "application/zip",
+      "created_at": "2026-09-24T03:26:59Z",
+      "updated_at": "2026-09-24T03:27:15Z"
+    },
+    "distribution.zip.sha256": {
+      "id": 585061506,
+      "name": "distribution.zip.sha256",
+      "size": 83,
+      "digest": "sha256:bc40d573a83049dba50f2794aec6a73ac52cc2244122a1031c7c93382ddbf62d",
+      "state": "uploaded",
+      "content_type": "application/octet-stream",
+      "created_at": "2026-09-24T03:23:03Z",
+      "updated_at": "2026-09-24T03:23:04Z"
+    },
+    "manifest.json": {
+      "id": 585061502,
+      "name": "manifest.json",
+      "size": 203316,
+      "digest": "sha256:c24422d298192f6de4d79d01188790c7d1d603a6737d6673e7efc4ba8685bad4",
+      "state": "uploaded",
+      "content_type": "application/json",
+      "created_at": "2026-09-24T03:23:03Z",
+      "updated_at": "2026-09-24T03:23:04Z"
+    },
+    "qualification-evidence-record.json": {
+      "id": 585061523,
+      "name": "qualification-evidence-record.json",
+      "size": 1986,
+      "digest": "sha256:f2e3bfa370292b988270b04606de757c0b2bd59f87c232c69f160630cff09b73",
+      "state": "uploaded",
+      "content_type": "application/json",
+      "created_at": "2026-09-24T03:23:04Z",
+      "updated_at": "2026-09-24T03:23:04Z"
+    },
+    "release.json": {
+      "id": 585061509,
+      "name": "release.json",
+      "size": 465,
+      "digest": "sha256:04496b2fb369194f4d34a9d089a458a61c3e5c85896b88354ea05c23c8be7c84",
+      "state": "uploaded",
+      "content_type": "application/json",
+      "created_at": "2026-09-24T03:23:03Z",
+      "updated_at": "2026-09-24T03:23:04Z"
+    },
+    "source-qualification-evidence.zip": {
+      "id": 585061505,
+      "name": "source-qualification-evidence.zip",
+      "size": 313648,
+      "digest": "sha256:a377d1d18953f07a587afad485ab9d5f0b5e667bc8caf69fe68a2d30a9a3e951",
+      "state": "uploaded",
+      "content_type": "application/zip",
+      "created_at": "2026-09-24T03:23:03Z",
+      "updated_at": "2026-09-24T03:23:04Z"
+    },
+    "source-qualification.json": {
+      "id": 585061499,
+      "name": "source-qualification.json",
+      "size": 14164,
+      "digest": "sha256:dcea76d94239d0aab2306979cd4f98346074a04c0ee7fec2a5d24dfc8a05ca7c",
+      "state": "uploaded",
+      "content_type": "application/json",
+      "created_at": "2026-09-24T03:23:03Z",
+      "updated_at": "2026-09-24T03:23:04Z"
+    },
+    "source.tar": {
+      "id": 585066138,
+      "name": "source.tar",
+      "size": 1660620800,
+      "digest": "sha256:d40cbf7563479aecfbc02491d8d377cace57a65591a9acee7462d05dc2c4ac61",
+      "state": "uploaded",
+      "content_type": "application/x-tar",
+      "created_at": "2026-09-24T03:26:20Z",
+      "updated_at": "2026-09-24T03:26:57Z"
+    },
+    "verification.json": {
+      "id": 585061520,
+      "name": "verification.json",
+      "size": 1915,
+      "digest": "sha256:f2832980c1dded3c755f778eb5d2aa443dadd2dcb8fc1f84d4b8c12077e8d224",
+      "state": "uploaded",
+      "content_type": "application/json",
+      "created_at": "2026-09-24T03:23:04Z",
+      "updated_at": "2026-09-24T03:23:04Z"
+    }
+  },
+  "rawPins": {
+    "release": {
+      "path": "release.json",
+      "bytes": 15687,
+      "sha256": "c0603a009a4f1740cbbd1acbb1831ca77f223c0b04c379f9a7bf08fb3b345909",
+      "endpoint": "repos/mekhovov/revealline/releases/tags/v0.97.0"
+    },
+    "tag-ref": {
+      "path": "tag-ref.json",
+      "bytes": 337,
+      "sha256": "ff8609f4925d0050d4ebd915da1e405cca42d4f926a2c48ffa748275bd24a454",
+      "endpoint": "repos/mekhovov/revealline/git/ref/tags/v0.97.0"
+    },
+    "tag-object": {
+      "path": "tag-object.json",
+      "bytes": 699,
+      "sha256": "e3a2b6bc21c6c96013041dd8ba68a7f3673e7c63a27a020fd4e4310970b1fe61",
+      "endpoint": "repos/mekhovov/revealline/git/tags/2a65f2917d2ed86a273d1fb2e45f25de232e3563"
+    }
+  },
+  "comparisonOriginal": {
+    "path": "archive66-scaffold/authority/preserved-release-original.json",
+    "sha256": "a70e5769c5b5b9de7262145c98bea46210d96e35285fb8f2bd35d277fec5bd30"
+  },
+  "scope": "Fresh release/tag and immutable asset descriptor comparison, no binary download or mutation; public game byte proof is separate"
+}
