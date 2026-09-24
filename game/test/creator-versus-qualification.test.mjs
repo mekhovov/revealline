@@ -34,6 +34,8 @@ test('all twelve creator-layouts.v3 variants pass every equal-board Versus confi
   for (let seed = 0; seed < 12; seed++) {
     const made = generateCreatorProject({ id: `versus-${seed}`, name: 'Versus pictures', seed });
     assert.deepEqual(made.project.missions[0].modes, ['solo', 'versus']);
+    assert.ok(made.project.maps[0].walls.length > 0, 'qualified board needs collision obstacles');
+    assert.equal(made.project.missions[0].actors.length, 1, 'qualified board needs its enemy');
     assert.deepEqual(creatorVersusCompatibility(made.provenance), ['versus']);
     const evidence = await verifyCreatorVersusRoutes(made.project, made.provenance);
     assert.equal(evidence.length, 6);
