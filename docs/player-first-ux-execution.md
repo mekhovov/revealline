@@ -29,6 +29,14 @@ the verification document. UX0 remains qualifying until full exact-source checks
 immutable publication and ordinary public-play verification pass. UX1 is next;
 neither a merged PR nor a partial test run advances this board to accepted.
 
+The later reconciliation batch passes 180 distinct host checks across separate
+full-file runs, plus 28 route-evidence checks. It preserves historical fixtures
+and independently qualifies fresh tuned routes; current public UI traversal is
+distinguished from retained historical component tests. The candidate's hosted
+preflight and ordinary build pass. All four mandatory test shards must finish on
+the final committed source before merge/publication; those pending gates remain
+the immediate priority, ahead of UX1 rewards/gallery work.
+
 The root working directory contains unrelated historical and unfinished work.
 Implementation uses an isolated source worktree and explicit staged paths. The
 existing publisher retains tags, archives and Pages ownership. Skipped tests under
