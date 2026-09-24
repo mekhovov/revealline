@@ -1,13 +1,14 @@
 # Phase 1 acceptance — candidate, not released
 
-Status: local candidate implemented; draft PR [#388](https://github.com/mekhovov/revealline/pull/388) is open for hosted checks and acceptance. Phase 0 PR [#384](https://github.com/mekhovov/revealline/pull/384) merged as `0222b6294e4062db56530e3c967cbaf598ebd71d`; its hosted preflight, build and release-ready passed. Phase 1 is isolated on `codex/creator-phase1-image`, rebased onto reviewed main `5c2abaa3` after the compact Home merge. A release version has not been allocated here.
+Status: local candidate implemented; draft PR [#388](https://github.com/mekhovov/revealline/pull/388) is open for hosted checks and acceptance. Phase 1 is isolated on `codex/creator-phase1-image` and rebased onto the current reviewed publication source before this change. A release version has not been allocated here.
 
 ## Completed local evidence
 
-- Fifteen focused creator tests pass: bounded variant feasibility across actual presets/steering/seeds; artwork versus gameplay changes; cancellation; oriented fitting and bitmap cleanup; exact package roundtrip; private asset exclusion; corrupt/trailing bytes and forged evidence; stale approvals; atomic installation and immutable editions; interrupted-install rollback followed by byte-identical export and successful retry; exact unfinished-session recovery and legal completion; source backup/checkpoint roundtrip and concurrent-head refusal; Custom classification independent of labels.
+- Current `creator-layouts.v3` generation covers six families and twelve deterministic variants. Each variant compiles at least one interior collision wall and exactly one supported `field-keeper` actor to a moving `bouncer`. Focused tests replayed all 12 variants across Gentle, Standard and Expert with immediate and grid-center steering: 72/72 exact compiled configurations won, retained matching simulation identities and replayed the actual enemy, walls, foundations and terrain. Actor, wall, island and terrain edits invalidate this evidence. The enemy-free `creator-crossing.v1` recipe remains accepted only for immutable legacy-package revalidation.
+- Nineteen focused creator tests pass: all twelve current variants and legacy provenance compatibility; artwork versus gameplay changes; cancellation; oriented fitting and bitmap cleanup; exact package roundtrip; private asset exclusion; corrupt/trailing bytes and forged evidence; stale approvals; atomic installation and immutable editions; interrupted-install rollback followed by byte-identical export and successful retry; exact unfinished-session recovery and legal completion; source backup/checkpoint roundtrip and concurrent-head refusal; Custom classification independent of labels.
 - Shared media-store and managed-media-store suites passed alongside the earlier twelve creator tests: 52 total. Their cases cover quotas, blocked upgrades, concurrent storage generations, interrupted writes, cancellation, original-byte retention and atomic rollback. The two later source/library creator tests also passed separately.
 - All 27 installed-library, Custom-source and current-guide regression tests pass.
-- Scoped ESLint and Prettier passed. The combined scoped run passed 82/82 tests on Node 20.19.5. Hosted PR/build gates are running.
+- Scoped ESLint and Prettier passed. The earlier candidate's combined scoped run passed 82/82 tests on Node 20.19.5; the current generator-focused run passes 19/19 and requires a new combined hosted run after this change.
 - Native in-app browser file chooser selected the original procedural portrait fixture (640 × 960, 6,482 bytes). Generation saved source checkpoint 1, displayed the fitted 1280 × 640 PNG and generated map, and presented validation/credits/size review.
 - Native approval and actual download created a 57,900-byte `.rlpack`, SHA-256 `e2eceea9c5071ca2d628ee5141e88d58438dc4841484ea578bc42b3757da12b4`. Full edition identity: `55f6a938a1cfa9d703f397aa11cd5630ace3a9435ed89a8d65167859e3add7ce`.
 - Installation on local origin port 8772 showed deduplicated staging space and an installed campaign. Ordinary Start, legal keyboard input, Pause, reload, Resume saved attempt and explicit Resume succeeded. A legal completion reached 100%, three lives and 23,800 points. Reload retained the exact earned-picture entry.
@@ -22,6 +23,8 @@ Status: local candidate implemented; draft PR [#388](https://github.com/mekhovov
 
 - An approved title revision installed as edition `888751f017b4a27ce9d4e4ec45a59135ea6469ce13db509b22e84a987482a0d8`, alongside the original. Opening the new player showed no earned picture; reloading the original player retained its earned portrait.
 
+The browser artifacts and edition identities above were produced by the earlier `creator-crossing.v1` candidate before gameplay pressure was added. They remain valid installation, recovery and immutable-edition evidence for that exact legacy package. They do not qualify the current `creator-layouts.v3` obstacle/enemy presentation or current package identity.
+
 ## Failure records and corrections
 
 - The first native play attempt used the input adapter's held-key default. A tap did not continue the expected crossing. The Custom player now explicitly uses the shared continuous-steering adapter; the subsequent legal win and transferred-pack win passed.
@@ -30,11 +33,11 @@ Status: local candidate implemented; draft PR [#388](https://github.com/mekhovov
 - A requested 390 × 844 browser viewport override did not change the observed 1280 × 720 DOM viewport. The override was reset. No phone-layout acceptance is inferred from the screenshot.
 - A duplicate draft save could synchronously settle before its running-promise assignment, leaving a completed promise marked active. This interfered with navigation and later saving. The lifecycle now clears after awaiting the assigned promise; native unchanged-save, Studio navigation, subsequent edit, and reload passed. Editing/recovery controls also remain available after restoring an unapproved draft.
 - The thin checkout initially lacked the existing test MP3 and renderer dependency files. Exact tracked fixtures and presentation modules were hydrated; no production validators or tests were bypassed.
-- GitHub API rate limiting temporarily blocked check retrieval. After quota recovered, Phase 0 preflight/build/release-ready success and merge were verified. Skipped broad tests under the repository's current release policy are not counted as passed.
+- GitHub API rate limiting temporarily blocked check retrieval. Skipped broad tests under the repository's current release policy are not counted as passed.
 
 ## Remaining acceptance gates
 
-Hosted full-checkout build/preflight/release-ready, genuine clean-profile verification, browser-wide storage-failure UI, and public deployed identity/hashes/released behavior remain pending. The isolated-origin check and shared atomic rollback/quota tests are recorded at their actual scope, not substituted for those observations.
+Fresh built-in-browser generation, review, download, clean-origin import, legal play and recovery for a current `creator-layouts.v3` package remain pending, along with hosted full-checkout build/preflight/release-ready, genuine clean-profile verification, browser-wide storage-failure UI, and public deployed identity/hashes/released behavior. The earlier isolated-origin check and shared atomic rollback/quota tests are recorded at their actual scope, not substituted for those observations.
 
 The user explicitly directed **“use builtin browser instead”** after Safari control was unavailable. Acceptance therefore uses the Codex in-app browser; Firefox and Safari are untested rather than requiring another permissions prompt. No separate Chromium installation, genuinely clean profile or physical mobile support is claimed. Inline native screenshots were observed in the task; exported screenshot files or screenshot hashes are not claimed.
 

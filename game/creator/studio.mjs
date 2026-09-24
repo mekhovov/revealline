@@ -1,4 +1,4 @@
-import { generateCreatorProject } from './templates.mjs';
+import { CREATOR_TEMPLATES, generateCreatorProject } from './templates.mjs';
 import { prepareCreatorImage } from './image.mjs';
 import {
   prepareCreatorBundle,
@@ -196,14 +196,22 @@ function showReview(pack) {
   pictureURL = URL.createObjectURL(pack.assets[0].blob);
   $('picture').src = pictureURL;
   $('picture').alt = pack.review.picture.alt;
-  $('picture-caption').textContent = pack.manifest.content.project.missions[0].name;
-  const preview = prepareContentPreview(
-    pack.manifest.content.project,
-    pack.manifest.content.provenance.missionId,
-  );
+  const project = pack.manifest.content.project;
+  const provenance = pack.manifest.content.provenance;
+  const mission = project.missions[0];
+  $('picture-caption').textContent = mission.name;
+  const preview = prepareContentPreview(project, provenance.missionId);
   paintContentMap($('map').getContext('2d'), preview, { width: 720, showCapture: false });
+  const template = CREATOR_TEMPLATES.find(({ id }) => id === provenance.templateId);
+  const map = project.maps.find(
+    ({ id: mapId, revision }) => mapId === mission.map.id && revision === mission.map.revision,
+  );
+  const enemies = mission.actors.length;
+  const walls = map?.walls.length ?? 0;
+  const foundations = map?.foundations.length ?? 0;
+  const terrain = map?.terrain.length ?? 0;
   $('map-caption').textContent =
-    'First crossing · 72 × 36 cells · Solo · no enemies · close one crossing to reveal the picture.';
+    `${template?.name ?? 'Verified crossing'} · 72 × 36 cells · Solo · ${enemies} ${enemies === 1 ? 'enemy' : 'enemies'} · ${walls} wall${walls === 1 ? '' : 's'} · ${foundations} safe island${foundations === 1 ? '' : 's'} · ${terrain} terrain zone${terrain === 1 ? '' : 's'} · verified completion route.`;
   $('validation').textContent = pack.review.validation;
   $('package-size').textContent =
     `${mib(pack.bytes)} portable pack. Includes one PNG derivative. Source originals and player progress are excluded.`;
