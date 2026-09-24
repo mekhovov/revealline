@@ -58,9 +58,10 @@ test('successor preserves v5 geometry, objectives, pictures and actor motion whi
 test('current Journey compiles one global authored impact speed in Solo and Versus at every preset', () => {
   let resolved = 0;
   for (const mission of source.missions)
-    for (const mode of ['solo', 'versus'])
-      for (const difficulty of ['gentle', 'standard', 'expert']) {
-        const manifest = resolveMission(project, mission.id, { mode, difficulty });
+    for (const difficulty of ['gentle', 'standard', 'expert']) {
+      const solo = resolveMission(project, mission.id, { mode: 'solo', difficulty });
+      const versus = resolveMission(project, mission.id, { mode: 'versus', difficulty });
+      for (const manifest of [solo, versus]) {
         assert.equal(manifest.policyId, 'journey-trail-impact-v3');
         assert.deepEqual(manifest.level.classic.lineImpact, {
           version: 'line-impact.v1',
@@ -68,6 +69,13 @@ test('current Journey compiles one global authored impact speed in Solo and Vers
         });
         resolved++;
       }
+      assert.deepEqual(
+        versus.level,
+        solo.level,
+        `${mission.id}/${difficulty} must use one paired-board simulation`,
+      );
+      assert.equal(versus.simulationIdentity, solo.simulationIdentity);
+    }
   assert.equal(resolved, 546);
 });
 

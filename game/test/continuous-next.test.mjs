@@ -64,6 +64,29 @@ test('Next stays in the current mode and retains an unavailable successor for ex
   assert.throws(() => librarySuccessor(library, library.missions[0], 'team'), /mode/);
   assert.equal(librarySuccessor(library, library.missions[1], 'team'), null);
 });
+test('Classic Next retains Current or Original rules across owners before leaving the collection', () => {
+  const current = 'current-line-impact.v1';
+  const library = createMissionLibrary([
+    source(`["classic","base",null,"${current}"]`, 'Classic', [
+      { id: 'current-a', campaignKey: 'base-current' },
+    ]),
+    source('["classic","base",null]', 'Classic', [
+      { id: 'original-a', campaignKey: 'base-original' },
+    ]),
+    source(`["classic","optional","pack","${current}"]`, 'Classic', [
+      { id: 'current-b', campaignKey: 'pack-current' },
+    ]),
+    source('["classic","optional","pack"]', 'Classic', [
+      { id: 'original-b', campaignKey: 'pack-original' },
+    ]),
+    source('["custom","mine"]', 'Custom', [{ id: 'custom-a', campaignKey: 'custom' }]),
+  ]);
+  const [currentA, originalA, currentB, originalB, custom] = library.forMode('solo');
+  assert.equal(librarySuccessor(library, currentA, 'solo'), currentB);
+  assert.equal(librarySuccessor(library, originalA, 'solo'), originalB);
+  assert.equal(librarySuccessor(library, currentB, 'solo'), custom);
+  assert.equal(librarySuccessor(library, originalB, 'solo'), custom);
+});
 test('stale, absent and ambiguous owners never silently launch a same-name replacement', () => {
   const owner = source('["classic","base",null]', 'Classic', [{ id: 'a', campaignKey: 'base@1' }]);
   const library = createMissionLibrary([owner]);
