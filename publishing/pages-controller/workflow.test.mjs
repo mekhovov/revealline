@@ -104,7 +104,7 @@ test('explicit policy controls only suites; all build, identity and publication 
   );
   assert.match(
     pages,
-    /Verify metadata bridges and bounded ZIP extraction\n\s+if: steps.test_policy.outputs.runTests == 'true'/,
+    /Verify metadata bridges and bounded ZIP extraction\n\s+if: github.event_name == 'pull_request' \|\| steps.test_policy.outputs.runTests == 'true'/,
   );
   for (const [workflow, names] of [
     [
@@ -145,6 +145,38 @@ test('explicit policy controls only suites; all build, identity and publication 
       assert.doesNotMatch(block, /if:.*test_policy|if:.*runTests/, name);
     }
   }
+});
+
+test('publisher pull requests always run infrastructure suites without changing historical main policy', async () => {
+  const workflow = await fs.readFile(
+    new URL('../../.github/workflows/publish-frozen-pages.yml', import.meta.url),
+    'utf8',
+  );
+  const block = workflow
+    .split('      - name: ')
+    .find((value) => value.startsWith('Verify metadata bridges and bounded ZIP extraction\n'));
+  assert.ok(block);
+  const expression = /^        if: (.+)$/m.exec(block)?.[1];
+  assert.ok(expression);
+  const evaluate = new Function('github', 'steps', 'return (' + expression + ')');
+  for (const event of ['pull_request', 'push', 'workflow_dispatch']) {
+    for (const runTests of ['true', 'false', '', undefined]) {
+      assert.equal(
+        evaluate({ event_name: event }, { test_policy: { outputs: { runTests } } }),
+        event === 'pull_request' || runTests === 'true',
+        event + ' / ' + String(runTests),
+      );
+    }
+  }
+  assert.match(
+    block,
+    /node --test publishing\/test-policy\.test\.mjs publishing\/pages-controller\/\*\.test\.mjs/,
+  );
+  assert.match(
+    block,
+    /python3 -m unittest discover -s publishing\/pages-controller -p 'test_\*\.py' -v/,
+  );
+  assert.doesNotMatch(block, /continue-on-error|\|\| true/);
 });
 
 test('freeze admits required-success or explicit-waiver-skipped only, never failure or cancellation', async () => {
