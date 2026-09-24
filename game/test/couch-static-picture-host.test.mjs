@@ -411,7 +411,7 @@ test('whole optional snapshot failure retains explicit authored fallback with a 
   assert.deepEqual(f.memory.allPuts, []);
 });
 
-test('Back cancels a pending required picture and late completion cannot resume or replace the accepted attempt', async (t) => {
+test('Back cancels a pending setup replacement and preserves the accepted attempt', async (t) => {
   const gate = deferred();
   let delay = false,
     started;
@@ -430,16 +430,17 @@ test('Back cancels a pending required picture and late completion cannot resume 
   for (let i = 0; i < 100 && !started; i++) await new Promise((resolve) => setTimeout(resolve, 1));
   assert.ok(started, 'The selected required picture read started.');
   p.frame();
-  const checkpoint = p.checkpoint();
+  const checkpoint = p.checkpoint(),
+    accepted = p.drawOptions[0].backdrop;
   p.$('race-setup-back').click();
   assert.equal(started.aborted, true);
   gate.resolve();
   await loading;
-  assert.equal(p.$('race-start').disabled, true);
+  assert.equal(p.$('race-start').disabled, false);
   assert.match(p.$('race-message').textContent, /cancelled/i);
   assert.deepEqual(p.checkpoint(), checkpoint);
-  assert.equal(p.drawOptions[0].backdrop, null);
-  assert.equal(p.drawOptions[1].backdrop, null);
+  assert.equal(p.drawOptions[0].backdrop, accepted);
+  assert.equal(p.drawOptions[1].backdrop, accepted);
   assert.deepEqual(f.memory.allPuts, []);
 });
 
@@ -605,7 +606,7 @@ test('failed Next original read keeps Results and keyboard View, then retry adop
   retainedResult(p, before);
   assert.equal(
     p.$('race-message').textContent,
-    'The rematch picture could not be prepared. Results are kept. Choose Rematch to retry.',
+    'The rematch picture or actors could not be prepared. Both boards are kept. Choose Rematch to retry.',
   );
   assert.doesNotMatch(p.$('race-message').textContent, /assets\/|[a-f0-9]{64}/);
   assert.deepEqual(diagnostics, [['Next picture preparation failed.', readError]]);
@@ -763,7 +764,7 @@ test('completed match wins reset only when an explicitly retried Next commits', 
         retainedResult(p, before);
         assert.equal(
           p.$('race-message').textContent,
-          'The next round picture could not be prepared. Results are kept. Choose Next round to retry.',
+          'The next round picture or actors could not be prepared. Both boards are kept. Choose Next round to retry.',
         );
       }
       p.frames(5, 200);
@@ -871,7 +872,7 @@ for (const outcome of ['win', 'draw'])
       retainedResult(p, before);
       assert.equal(
         p.$('race-message').textContent,
-        'The rematch picture could not be prepared. Results are kept. Choose Rematch to retry.',
+        'The rematch picture or actors could not be prepared. Both boards are kept. Choose Rematch to retry.',
       );
       const entered = deferred(),
         gate = deferred();
@@ -948,6 +949,9 @@ test('controller format draft can cancel or commit while preserving selector foc
   const f = await fixture(t, { pads: [controller] }),
     p = f.page;
   p.join(0);
+  p.focus('race-optional-setup-toggle');
+  p.pulse(0, 0);
+  assert.equal(p.$('race-optional-setup').open, true);
   p.focus('race-focus');
   p.pulse(0, 0);
   assert.equal(p.$('race-setup').hidden, false);
@@ -1226,7 +1230,7 @@ for (const outcome of ['cancel', 'decode refusal'])
     } else {
       gate.reject(failure);
       await next;
-      assert.match(p.$('race-message').textContent, /Results are kept/);
+      assert.match(p.$('race-message').textContent, /Both boards are kept/);
       assert.deepEqual(diagnostics, [['Next picture preparation failed.', failure]]);
     }
     retainedResult(p, result);

@@ -33,7 +33,7 @@ function snapshot(revision) {
   return { resolved: structuredClone(resolvePresentation(document)) };
 }
 function fixture(
-  revision = 69,
+  revision = 73,
   pack = COOP_STARTER_PACK,
   levelId = 'first-connection',
   policy = COOP_HISTORICAL_IMPORT_PICTURE_POLICIES,
@@ -64,7 +64,7 @@ function fixture(
 
 test('current73 authority retains complete58–72 picture records and the reviewed bundle bytes', async () => {
   const retained = [58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72];
-  assert.equal(bundle.document.selection.theme.revision, 69);
+  assert.equal(bundle.document.selection.theme.revision, 73);
   assert.deepEqual(
     COOP_SUPPORTED_PICTURE_BINDINGS.map((row) => row.themeRevision),
     [73, 73, ...retained.flatMap((revision) => [revision, revision])],
@@ -111,11 +111,11 @@ test('current73 authority retains complete58–72 picture records and the review
   ];
   assert.equal(slots.length, 8);
   const old = snapshot(58),
-    current = snapshot(69);
+    current = snapshot(73);
   for (const slot of slots) {
     const asset = current.resolved.assets[slot];
     assert.deepEqual(asset, old.resolved.assets[slot], slot);
-    for (const revision of retained.filter((value) => value <= 69))
+    for (const revision of retained)
       assert.deepEqual(
         asset,
         snapshot(revision).resolved.assets[slot],
@@ -135,7 +135,7 @@ test('current73 authority retains complete58–72 picture records and the review
   assert.ok(Object.isFrozen(COOP_HISTORICAL_IMPORT_PICTURE_POLICIES));
 });
 
-for (const revision of [58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69]) {
+for (const revision of [58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73]) {
   test(`exact${revision} built-in and historical-import attempts retain their own verified lease`, async () => {
     for (const [pack, levelId, picture] of [
       [COOP_STARTER_PACK, 'first-connection', COOP_PICTURE_BINDINGS[0].picture],
