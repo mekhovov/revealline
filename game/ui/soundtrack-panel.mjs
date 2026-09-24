@@ -35,7 +35,10 @@ import {
   fetchSoundtrackAlbum,
   fetchSoundtrackAlbumCatalog,
 } from '../soundtrack-album-download.mjs';
-import { fetchOnlineSoundtrackCatalogue } from '../online-soundtrack-catalogue.mjs';
+import {
+  fetchOnlineSoundtrackCatalogue,
+  onlineSoundtrackRecordingAllowed,
+} from '../online-soundtrack-catalogue.mjs';
 
 const copy = (value) => structuredClone(value);
 const message = (error) => error?.message || String(error);
@@ -339,6 +342,7 @@ export function attachSoundtrackPanel({
       wakeAudio();
       await player.selectListening(draft.listening);
       if (start) await (musicSession ? musicSession.play() : player.play());
+      if (onlineCatalogue) renderOnlineCatalogue();
       await notifyPlayback();
       setStatus(
         committed.warning ||
@@ -1381,6 +1385,7 @@ export function attachSoundtrackPanel({
         .join(' ')
         .toLowerCase();
       return (
+        (!draft.listening?.recordingMode || onlineSoundtrackRecordingAllowed(track)) &&
         (!query || searchable.includes(query)) &&
         (!collection || track.collection === collection) &&
         matchesOnlineStyle(track, style)
@@ -1388,7 +1393,12 @@ export function attachSoundtrackPanel({
     });
   }
   function renderOnlineCatalogue() {
-    const matches = onlineMatches();
+    const matches = onlineMatches(),
+      excluded = draft.listening?.recordingMode
+        ? (onlineCatalogue?.tracks ?? []).filter(
+            (track) => !onlineSoundtrackRecordingAllowed(track),
+          ).length
+        : 0;
     playOnlineResults.disabled = !matches.length;
     onlineResults.replaceChildren(
       ...matches.map((track) => {
@@ -1415,7 +1425,7 @@ export function attachSoundtrackPanel({
       }),
     );
     if (onlineCatalogue)
-      onlineStatus.textContent = `${matches.length} of ${onlineCatalogue.tracks.length} published recordings shown. Play one song or shuffle every current result.`;
+      onlineStatus.textContent = `${matches.length} of ${onlineCatalogue.tracks.length} published recordings shown.${excluded ? ` Recording mode excludes ${excluded} without verified gameplay-video and Content ID clearance.` : ''} Play one song or shuffle every current result.`;
   }
   async function loadOnlineCatalogue(force = false) {
     if (disposed || (onlineCatalogueController && !force)) return;
@@ -1966,6 +1976,7 @@ export function attachSoundtrackPanel({
     renderAssignments();
     refreshAlbumControls();
     refreshCatalogueControls();
+    if (onlineCatalogue) renderOnlineCatalogue();
     renderBackup();
     dirtyState();
     update();

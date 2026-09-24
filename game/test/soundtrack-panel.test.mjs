@@ -400,7 +400,7 @@ function onlineCatalogueResponse(catalogue) {
     redirected: false,
     url: ONLINE_SOUNDTRACK_CATALOGUE_URL,
     headers: { get: () => String(body.byteLength) },
-    arrayBuffer: async () => body.buffer,
+    body: new Response(body).body,
   };
 }
 
@@ -1947,6 +1947,7 @@ test('public archive searches and plays any published recording through the shar
     requests = [];
   const app = await setup(t, {
     callbacks: {
+      catalogue: emptyCatalogue,
       onlineCatalogueDownload: {
         fetch: async (url, options) => {
           requests.push([url, options]);
@@ -1981,6 +1982,13 @@ test('public archive searches and plays any published recording through the shar
   const shuffled = app.calls.findLast(([name]) => name === 'remote');
   assert.equal(shuffled[1].length, 2);
   assert.deepEqual(shuffled[2], { order: 'shuffle' });
+
+  app.node('recording-mode').checked = true;
+  await app.click('apply-listening');
+  assert.equal((await app.store.read()).library.listening.recordingMode, true);
+  assert.equal(app.node('online-results').children.length, 0);
+  assert.equal(app.node('online-play-all').disabled, true);
+  assert.match(app.node('online-status').textContent, /Recording mode excludes 3/);
 });
 
 test('public archive failure and cancellation preserve built-in music controls', async (t) => {
