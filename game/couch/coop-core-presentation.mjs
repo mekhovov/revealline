@@ -5,6 +5,37 @@ export function teamCoreState(stronghold) {
   return stronghold.defeated ? 'secured' : stronghold.shielded ? 'shielded' : 'exposed';
 }
 
+// Copy only the immutable geometry needed by the shared visible-bound resolver.
+// Older prepared snapshots declared only a pivot and deliberately retain their
+// original full-frame sizing.
+function coreImageGeometry(source) {
+  const geometry = { pivot: Object.freeze({ x: 0.5, y: 0.5 }) },
+    frame = source?.frame,
+    occupied = source?.occupiedBounds;
+  if (
+    Number.isFinite(frame?.width) &&
+    frame.width > 0 &&
+    Number.isFinite(frame?.height) &&
+    frame.height > 0 &&
+    Number.isFinite(occupied?.x) &&
+    Number.isFinite(occupied?.y) &&
+    Number.isFinite(occupied?.width) &&
+    occupied.width > 0 &&
+    Number.isFinite(occupied?.height) &&
+    occupied.height > 0
+  ) {
+    geometry.frame = Object.freeze({ width: frame.width, height: frame.height });
+    geometry.occupiedBounds = Object.freeze({
+      x: occupied.x,
+      y: occupied.y,
+      width: occupied.width,
+      height: occupied.height,
+    });
+    geometry.rotors = Object.freeze([]);
+  }
+  return Object.freeze(geometry);
+}
+
 /** Page-owned, already decoded frames. Cosmetic states follow the authoritative
  * stronghold; no attack, contact geometry, timer or simulation state is written. */
 export function prepareTeamCores(snapshot) {
@@ -30,7 +61,7 @@ export function prepareTeamCores(snapshot) {
     frames[id] = Object.freeze({
       kind: 'image',
       image: frame.image,
-      geometry: Object.freeze({ pivot: Object.freeze({ x: 0.5, y: 0.5 }) }),
+      geometry: coreImageGeometry(frame.geometry),
     });
   }
   return Object.freeze(frames);

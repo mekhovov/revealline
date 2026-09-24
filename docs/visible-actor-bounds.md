@@ -10,9 +10,11 @@ exact full-frame sizing.
 Current prepared actors target at least 24 CSS pixels on desktop boards and 20 CSS pixels on compact
 boards; ordinary actors remain capped at 32 CSS pixels, with the existing larger boss allowance.
 
-The same bounded calculation is shared by the Journey player, Journey enemies and Team actors. Team
-edge placement reserves the enlarged complete source frame so transparent pixels, rotors and the
-heading marker remain on the board at every corner, heading and bank angle.
+The same bounded calculation is shared by the Journey player, Journey enemies, Team pilots and Team
+strongholds. Boss-sized stronghold art is now measured from its visible occupied bounds instead of
+its transparent 64-pixel frame. Team edge placement reserves the enlarged complete source frame so
+transparent pixels, rotors and the heading marker remain on the board at every corner, heading and
+bank angle.
 
 This change is presentation-only. Contact rings remain at their existing simulation coordinates and
 radii, replay checkpoints do not change, movement and difficulty are unchanged, and prepared image
