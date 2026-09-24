@@ -198,11 +198,13 @@ const coreRegistration = {
   path: `game/audio/soundtracks/${coreTrack.asset.sha256}.mp3`,
 };
 
-test('code-owned core audio prepares and plays with Installed only without contacting the archive', async () => {
+test('code-owned core audio honors local-only preparation and Installed only playback', async () => {
   const urls = [];
+  let local = null;
   const source = createSoundtrackSource({
     catalogue: coreCatalogue,
     bundled: [coreRegistration],
+    readLocal: () => local,
     installedOnly: () => true,
     baseURL: 'https://example.test/releases/v1/',
     fetch: async (url) => {
@@ -210,11 +212,17 @@ test('code-owned core audio prepares and plays with Installed only without conta
       return responseFor(body, url);
     },
   });
-  for (const options of [{ localOnly: true }, {}, { purpose: 'offline' }, { purpose: 'export' }]) {
+  assert.equal(await source.readAsset(coreTrack.asset.sha256, { localOnly: true }), null);
+  assert.equal(urls.length, 0);
+  local = body;
+  assert.equal(await source.readAsset(coreTrack.asset.sha256, { localOnly: true }), body);
+  assert.equal(urls.length, 0);
+  local = null;
+  for (const options of [{}, { purpose: 'offline' }, { purpose: 'export' }]) {
     const found = await source.readAsset(coreTrack.asset.sha256, options);
     assert.deepEqual(Buffer.from(await found.arrayBuffer()), Buffer.from(await body.arrayBuffer()));
   }
-  assert.equal(urls.length, 4);
+  assert.equal(urls.length, 3);
   assert.ok(
     urls.every((url) => url === `https://example.test/releases/v1/${coreRegistration.path}`),
   );
@@ -245,49 +253,42 @@ test('bundled registrations cannot redirect, rename, change bytes, duplicate or 
       }),
     /duplicate bundled/,
   );
-  for (const permission of ['webPlayback', 'offlineCache']) {
-    assert.throws(
-      () =>
-        createSoundtrackSource({
-          catalogue: {
-            ...coreCatalogue,
-            tracks: [{ ...coreTrack, policy: { ...coreTrack.policy, [permission]: 'denied' } }],
-          },
-          bundled: [coreRegistration],
-        }),
-      /offline permission/,
-    );
+  for (const permission of ['webPlayback', 'offlineCache', 'redistribute']) {
+    for (const value of ['denied', 'unknown'])
+      assert.throws(
+        () =>
+          createSoundtrackSource({
+            catalogue: {
+              ...coreCatalogue,
+              tracks: [{ ...coreTrack, policy: { ...coreTrack.policy, [permission]: value } }],
+            },
+            bundled: [coreRegistration],
+          }),
+        /offline and redistribution permission/,
+      );
   }
 });
 
-test('bundled assets retain full-byte validation, cancellation and export rights', async () => {
+test('bundled assets retain full-byte validation and cancellation', async () => {
   const source = createSoundtrackSource({
     catalogue: coreCatalogue,
     bundled: [coreRegistration],
     fetch: async (url) => responseFor(new Blob([new Uint8Array(body.size)]), url),
   });
-  await assert.rejects(source.readAsset(coreTrack.asset.sha256, { localOnly: true }));
+  await assert.rejects(source.readAsset(coreTrack.asset.sha256));
   let requests = 0;
-  const protectedSource = createSoundtrackSource({
-    catalogue: {
-      ...coreCatalogue,
-      tracks: [{ ...coreTrack, policy: { ...coreTrack.policy, redistribute: 'denied' } }],
-    },
+  const abortSource = createSoundtrackSource({
+    catalogue: coreCatalogue,
     bundled: [coreRegistration],
     fetch: async () => {
       requests++;
       throw new Error('Unexpected request');
     },
   });
-  await assert.rejects(
-    protectedSource.readAsset(coreTrack.asset.sha256, { purpose: 'export' }),
-    /not approved/,
-  );
   const abort = new AbortController();
   abort.abort();
-  await assert.rejects(
-    protectedSource.readAsset(coreTrack.asset.sha256, { signal: abort.signal }),
-    { name: 'AbortError' },
-  );
+  await assert.rejects(abortSource.readAsset(coreTrack.asset.sha256, { signal: abort.signal }), {
+    name: 'AbortError',
+  });
   assert.equal(requests, 0);
 });

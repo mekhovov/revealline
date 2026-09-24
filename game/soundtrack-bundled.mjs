@@ -34,8 +34,9 @@ export function resolveBundledSoundtrackAssets(value, catalogue) {
         track.policy?.id === entry.id &&
         track.policy.sha256 === entry.sha256 &&
         track.policy.webPlayback === 'allowed' &&
-        track.policy.offlineCache === 'allowed',
-      'Bundled soundtrack must match an admitted recording and offline permission.',
+        track.policy.offlineCache === 'allowed' &&
+        track.policy.redistribute === 'allowed',
+      'Bundled soundtrack must match an admitted recording with offline and redistribution permission.',
     );
     ids.add(entry.id);
     hashes.add(entry.sha256);
