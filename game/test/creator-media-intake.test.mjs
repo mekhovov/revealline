@@ -146,6 +146,25 @@ test('ambiguous normalized stems are reported per video and never auto-selected'
   assert.equal(f.state().captured, 0);
 });
 
+test('an ambiguous filename hint can be corrected with an exact image hash', async () => {
+  const selected = image('clip.jpg', 'chosen'),
+    alternative = image('CLIP.PNG', 'other'),
+    movie = video('clip.mp4', 'movie'),
+    selectedHash = await hash(selected.blob),
+    f = factories(),
+    prepared = await prepareCreatorMediaIntake([alternative, movie, selected], {
+      ...f,
+      pairingFor: ({ assetSha256 }) => (assetSha256 === undefined ? undefined : selectedHash),
+    }),
+    story = prepared.dependencies.stories[0],
+    videoItem = prepared.items.find((item) => item.kind === 'video');
+  assert.equal(story.poster.origin.kind, 'supplied-image');
+  assert.equal(story.poster.origin.sourceImageSha256, selectedHash);
+  assert.equal(videoItem.video.selectedPairingAssetSha256, selectedHash);
+  assert.ok(prepared.items.every((item) => item.errors.length === 0));
+  assert.equal(f.state().captured, 0);
+});
+
 test('same-stem videos without an image remain independent video-only items', async () => {
   const f = factories(),
     prepared = await prepareCreatorMediaIntake(
@@ -173,6 +192,30 @@ test('video-only input captures 10/50/90 percent candidates and defaults to midp
   assert.equal(prepared.dependencies.stories[0].playbackRange.retainsCompleteOriginal, true);
   assert.equal(prepared.assets.filter((item) => item.role.startsWith('poster')).length, 3);
   assert.equal(prepared.assets.find((item) => item.role === 'victory-video-original').blob.size, 5);
+});
+
+test('an exact custom poster time joins the three suggestions and becomes the sole poster', async () => {
+  const f = factories(),
+    prepared = await prepareCreatorMediaIntake([video('custom.mp4', 'movie')], {
+      ...f,
+      posterTimeFor: () => 3.25,
+      playbackRangeFor: () => ({ startSeconds: 1.5, endSeconds: 7.75 }),
+    }),
+    movie = prepared.items[0],
+    selected = movie.video.posterCandidates.find(
+      (candidate) => candidate.sha256 === movie.video.selectedPosterSha256,
+    );
+  assert.deepEqual(
+    movie.video.posterCandidates.map((candidate) => candidate.capture.requestedTime),
+    [1, 3.25, 5, 9],
+  );
+  assert.equal(selected.capture.requestedTime, 3.25);
+  assert.equal(prepared.assets.filter((asset) => asset.role === 'poster').length, 1);
+  assert.deepEqual(prepared.dependencies.stories[0].playbackRange, {
+    startSeconds: 1.5,
+    endSeconds: 7.75,
+    retainsCompleteOriginal: true,
+  });
 });
 
 test('captured dependency preserves requested and observed timestamps separately', async () => {

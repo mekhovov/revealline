@@ -244,6 +244,52 @@ img {
   flex-basis: 100%;
   margin: 0;
 }
+.creator-media-card {
+  display: grid;
+  gap: 0.75rem;
+  margin: 1rem 0;
+  padding: 1rem;
+  border: 1px solid #49636a;
+  border-radius: 12px;
+  background: #101923;
+}
+.creator-media-card-error {
+  border-color: #b16b5e;
+}
+.creator-media-card h3,
+.creator-media-card h4,
+.creator-media-card p {
+  margin: 0;
+}
+.creator-poster-candidates {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+  gap: 0.75rem;
+}
+.creator-poster-option {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.55rem;
+  border: 1px solid #49636a;
+  border-radius: 8px;
+}
+.creator-poster-option img {
+  grid-column: 1 / -1;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: contain;
+  background: #17252e;
+}
+.creator-playback-range {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+.creator-playback-range .muted {
+  grid-column: 1 / -1;
+}
 .batch-include {
   flex-direction: row;
   align-items: center;
@@ -269,6 +315,12 @@ summary {
 @media (max-width: 650px) {
   .review-grid {
     grid-template-columns: 1fr;
+  }
+  .creator-playback-range {
+    grid-template-columns: 1fr;
+  }
+  .creator-playback-range .muted {
+    grid-column: 1;
   }
   main {
     margin-top: 1.5rem;
