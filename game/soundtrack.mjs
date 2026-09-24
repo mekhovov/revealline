@@ -194,9 +194,9 @@ export function emptySoundtrackLibrary({ catalogue = false, version = 3 } = {}) 
           installedTrackIds: [],
           tags: {},
           listening: {
-            // New players land on the hosted retro collection immediately. Older
+            // New players land on the bundled Ukrainian opening theme. Older
             // saved libraries keep their explicit choice during upgrade.
-            mode: version === 2 ? 'auto' : 'synth90s',
+            mode: version === 2 ? 'auto' : 'ukrainian',
             genres: [...(version === 2 ? LEGACY_SOUNDTRACK_GENRES : SOUNDTRACK_GENRES)],
             installedOnly: false,
             ...(version === 2 ? {} : { recordingMode: false }),
@@ -796,7 +796,10 @@ export function resolveSoundtrackCollections(value) {
       'Invalid soundtrack collection tracks.',
     );
     required(
-      collection.order === 'shuffle' && collection.repeat === 'all',
+      (collection.order === 'shuffle' ||
+        (collection.id === 'builtin.album.ukrainian.shchedryk-opening' &&
+          collection.order === 'ordered')) &&
+        collection.repeat === 'all',
       'Invalid soundtrack collection playback.',
     );
   }

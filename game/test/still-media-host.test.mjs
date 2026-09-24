@@ -337,7 +337,7 @@ test('actual host omits unused trusted online pins from an importable backup wit
   refuseRecoveryNetwork(t);
   const h = await setup(t);
   const catalogue = resolveSoundtrackCatalogue(SOUNDTRACK_CATALOGUE);
-  assert.equal(catalogue.tracks.length, 70);
+  assert.equal(catalogue.tracks.length, 71);
   const store = await saveRecoveryFixture(
     h,
     setCatalogueTracks(emptySoundtrackLibrary(), catalogue.tracks),
