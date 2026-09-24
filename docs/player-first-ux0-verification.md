@@ -462,3 +462,27 @@ proofs and six current hosts. Its separate fixed routes cover both arenas and
 all three difficulties, require both pilots' useful returns, preserve reserves,
 and reach real outcomes with public keyboard input. Specialized Team and complete
 Journey cohorts remain separate qualification work.
+
+### Explicit Versus handoff and disk-constrained qualification
+
+The updated final-sequence contract is Browse missions, followed by the player's
+choice. Retaining the old tests' automatic Journey-to-Classic redirect would
+contradict that contract. Updating those journeys exposed a real manual handoff
+defect: setup serialization and independent picture preflight were restricted to
+automatic Next. They now also protect explicit same-mode departure. Preparation
+owns visible Cancel before pack materialization; Stay/Replace temporarily owns
+focus, and accepted input receives a fresh lease before inventory confirmation.
+
+All ten complete continuation tests pass, including a new paused Stay/Replace
+journey and retained-result failure/cancellation. Seven complete equipment-help
+checks pass after awaiting the actual controller-triggered Missions promise.
+Historical Journey ownership passes its complete save/import/Classic-Stay/restore
+journey, including the unchanged hidden-Skip and exact-label guards. The latter
+cases exercise saved-input ownership, not progression or image migration.
+
+These candidates were executed from exact source held in memory because ENOSPC
+prevented even small file writes. They are protected as GitHub blobs/commits on
+`codex/ux0-disk-checkpoint`, with repository formatting and lint checked. The
+canonical PR must run its normal full checks on that committed source before
+acceptance. Missing temp-file tests, full host wrappers and public browser tests
+are still pending; memory execution does not waive any release gate.

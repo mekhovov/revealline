@@ -1521,3 +1521,18 @@ Twin inner-receiver example and its limits are documented in
 ## UX0 original ownership and activation focus
 
 Use the same authored-level resolver for picture preparation and Victory Story pin validation when gameplay tuning derives an execution level. Retain campaign/theme/story identity checks and historical readers. Verify real wins, Story, difficulty Restart and unchanged accepted originals. Menu activation must retain the tapped mission even when touch does not move native focus from a different card. Keep ordinary keyboard selection capture on Back; test cancelled and failed launches as well as newer-focus ownership. Home primary focus must select an eligible enabled visible action after boot, with Missions as the disabled-Continue fallback. Join real asynchronous menu operations in host tests and re-query installed cards after source refresh; never bypass departure confirmation or activate stale controls.
+
+## UX0 manual Versus content departure
+
+Treat an explicit mission selection and automatic Next as distinct entry actions
+with the same required picture and setup protections. Final Journey results open
+Browse missions. Selecting a same-mode Classic mission must preserve the exact
+match format, steering, timer, touch, controller assignments and difficulty in its
+validated handoff. Start preparation/status/cancellation before materializing the
+selected pack. Verify its original in a separate owner; leave both previous boards
+and picture intact until departure succeeds. Release the opening focus lease while
+Stay/Replace owns input, then acquire a fresh lease and reauthenticate inventory
+before navigating. A failed choice returns to the selected gallery card; Cancel
+keeps the existing race with a reachable control. Retain stale-input, foreground
+and exact-edition guards. Run complete continuation, inventory and capability
+host files; a modeled successful handoff is separate from public browser proof.
