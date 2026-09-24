@@ -63,10 +63,9 @@ export function createSoundtrackSource({
       throwIfSoundtrackAborted(signal);
       if (local) return local;
       const core = bundledByHash.get(hash);
-      // Shipped core recordings may prepare from this edition's own directory.
-      // Without a code-owned registration, silent preparation remains local-only
-      // and cannot authorize archive inventory or recording requests.
-      if (localOnly && !core) return null;
+      // Silent preparation only uses already-owned originals. A core registration
+      // cannot authorize requests until the host explicitly allows acquisition.
+      if (localOnly) return null;
       required(track, 'This recording is missing locally. Restore its complete soundtrack backup.');
       required(
         purpose !== 'playback' || !installedOnly() || core,
