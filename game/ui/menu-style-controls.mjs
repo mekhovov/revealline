@@ -41,6 +41,9 @@ export function attachMenuStyleControls({
   ornaments.addEventListener('change', chooseOrnaments);
   let disposed = false;
   return Object.freeze({
+    // Read-only intent for the shared appearance boundary resolver. Keep the
+    // v1 menu record independently owned; callers cannot mutate through here.
+    snapshot: () => preferences.snapshot(),
     setPresentation: (snapshot) => appearance.setPresentation(snapshot),
     dispose() {
       if (disposed) return;
