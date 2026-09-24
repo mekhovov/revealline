@@ -1,0 +1,1262 @@
+{
+  "format": "SpatialTwoBaysAlternateMatrixV1",
+  "scope": "Seed 1, current gp4, same east-first 42-cell occupied-region connection across Gentle/Standard/Expert and immediate/grid-center. Legal-input replay only, not human balance evidence. Baseline failures and bounded launch-delay samples are preserved. The initial search/config was capped at 240000 simulated ticks including baseline and sampled prefixes, excluding independent replay verification. Expert/grid-center additionally received ONE separately authorized 240000-tick continuation budget; its original unfinished sample and original search remain recorded. Baseline and launch samples inherit their containing row's mission, preset, control, seed and simulation identities. Search-attempt failures are counted, not represented as independently retained replay fixtures.",
+  "sourceIdentity": {
+    "gitRevision": "138c07131169e42fdd451bb86f48413bcade2211",
+    "dirty": true,
+    "sourceFiles": 536,
+    "sourceSha256": "3cebabeb0880f7f527f208cb3a69ed25c2a8f66cdff2057fc5f4d01dd80c4523",
+    "digestScope": "All non-test game .mjs files, route CLI, spatial assessment, and bent-route proposal helper.",
+    "stableDuringProbe": true
+  },
+  "searchElapsedSeconds": 12.998596500000001,
+  "outcomes": {
+    "full-clear-qualified": 6,
+    "prefix-only-qualified": 0,
+    "sampled-prefix-failed": 0
+  },
+  "rows": [
+    {
+      "missionId": "two-bays",
+      "difficulty": "gentle",
+      "seed": 1,
+      "turnPolicy": "immediate",
+      "sourceProjectIdentity": "23c1fea4f5fea27a",
+      "authoredSimulationIdentity": "a36cd706defbfb50",
+      "simulationIdentity": "d4fee73b54c4e806",
+      "levelIdentity": "df6ab9cba2a44ebe",
+      "gameplayTuning": {
+        "version": "gameplay-pressure.v4",
+        "difficulty": "gentle",
+        "enemySpeed": 0.75,
+        "playerSpeed": 1,
+        "enemyDensity": 0,
+        "adminOverride": false,
+        "overrides": {
+          "enemySpeed": 1,
+          "playerSpeed": 1,
+          "enemyDensity": 1
+        }
+      },
+      "ruleset": "xonix-core.v6",
+      "status": "no-loss-clear",
+      "coverage": 0.7934879571810883,
+      "coverageGoal": 0.68,
+      "ticks": 2802,
+      "cuts": 5,
+      "losses": 0,
+      "failureCause": null,
+      "checkpoint": "8900b30fe82680a0",
+      "replayVerified": true,
+      "approach": "east-first",
+      "qualification": "full-clear-qualified",
+      "prefixQualified": true,
+      "prefixEvidence": {
+        "status": "route-exhausted",
+        "coverage": 0.01873327386262266,
+        "ticks": 591,
+        "cuts": 1,
+        "losses": 0,
+        "failureCause": null,
+        "checkpoint": "d84a8459f328f43c",
+        "replayVerified": true,
+        "segments": [["right", 591]],
+        "firstClosure": {
+          "tick": 591,
+          "claimedCells": 42,
+          "retainedRegions": 3
+        }
+      },
+      "baselineSample": {
+        "status": "life-lost",
+        "coverage": 0.15165031222123104,
+        "ticks": 2614,
+        "cuts": 3,
+        "losses": 1,
+        "failureCause": "enemy-trail",
+        "checkpoint": "48e3d87a54f933bf",
+        "replayVerified": true,
+        "segments": [
+          ["right", 591],
+          [null, 60],
+          ["right", 7],
+          ["left", 41],
+          ["up", 224],
+          [null, 60],
+          ["down", 224],
+          ["left", 543],
+          ["down", 108],
+          ["left", 374],
+          [null, 60],
+          ["right", 7],
+          ["up", 108],
+          ["right", 207]
+        ]
+      },
+      "launchSamples": [
+        {
+          "status": "route-exhausted",
+          "coverage": 0.01873327386262266,
+          "ticks": 591,
+          "cuts": 1,
+          "losses": 0,
+          "failureCause": null,
+          "checkpoint": "d84a8459f328f43c",
+          "replayVerified": true,
+          "segments": [["right", 591]],
+          "firstClosure": {
+            "tick": 591,
+            "claimedCells": 42,
+            "retainedRegions": 3
+          },
+          "qualified": true
+        }
+      ],
+      "launchDelayTicks": 0,
+      "sampledTicks": 591,
+      "searchHistory": [
+        {
+          "policy": "efficient",
+          "budget": 236795,
+          "used": 141405,
+          "candidateLimit": 24,
+          "maxCuts": 32,
+          "failedAttempts": 54,
+          "attemptCount": 283,
+          "failuresByCause": {
+            "enemy-trail": 54
+          },
+          "exhausted": false
+        }
+      ],
+      "segments": [
+        ["right", 591],
+        [null, 120],
+        ["right", 7],
+        ["up", 231],
+        ["left", 108],
+        ["down", 231],
+        ["left", 136],
+        ["down", 238],
+        [null, 60],
+        ["down", 7],
+        ["left", 55],
+        ["up", 238],
+        [null, 60],
+        ["down", 61],
+        ["left", 659]
+      ]
+    },
+    {
+      "missionId": "two-bays",
+      "difficulty": "gentle",
+      "seed": 1,
+      "turnPolicy": "grid-center",
+      "sourceProjectIdentity": "23c1fea4f5fea27a",
+      "authoredSimulationIdentity": "a36cd706defbfb50",
+      "simulationIdentity": "d4fee73b54c4e806",
+      "levelIdentity": "df6ab9cba2a44ebe",
+      "gameplayTuning": {
+        "version": "gameplay-pressure.v4",
+        "difficulty": "gentle",
+        "enemySpeed": 0.75,
+        "playerSpeed": 1,
+        "enemyDensity": 0,
+        "adminOverride": false,
+        "overrides": {
+          "enemySpeed": 1,
+          "playerSpeed": 1,
+          "enemyDensity": 1
+        }
+      },
+      "ruleset": "xonix-core.v6",
+      "status": "no-loss-clear",
+      "coverage": 0.7024977698483497,
+      "coverageGoal": 0.68,
+      "ticks": 3715,
+      "cuts": 6,
+      "losses": 0,
+      "failureCause": null,
+      "checkpoint": "be03748864ced9cb",
+      "replayVerified": true,
+      "approach": "east-first",
+      "qualification": "full-clear-qualified",
+      "prefixQualified": true,
+      "prefixEvidence": {
+        "status": "route-exhausted",
+        "coverage": 0.01873327386262266,
+        "ticks": 591,
+        "cuts": 1,
+        "losses": 0,
+        "failureCause": null,
+        "checkpoint": "9a737561f0ed7b71",
+        "replayVerified": true,
+        "segments": [["right", 591]],
+        "firstClosure": {
+          "tick": 591,
+          "claimedCells": 42,
+          "retainedRegions": 3
+        }
+      },
+      "baselineSample": {
+        "status": "life-lost",
+        "coverage": 0.01873327386262266,
+        "ticks": 990,
+        "cuts": 1,
+        "losses": 1,
+        "failureCause": "self-contact",
+        "checkpoint": "72939d51a74aee13",
+        "replayVerified": true,
+        "segments": [
+          ["right", 591],
+          [null, 60],
+          ["right", 7],
+          ["left", 41],
+          ["up", 224],
+          [null, 60],
+          ["down", 7]
+        ]
+      },
+      "launchSamples": [
+        {
+          "status": "route-exhausted",
+          "coverage": 0.01873327386262266,
+          "ticks": 591,
+          "cuts": 1,
+          "losses": 0,
+          "failureCause": null,
+          "checkpoint": "9a737561f0ed7b71",
+          "replayVerified": true,
+          "segments": [["right", 591]],
+          "firstClosure": {
+            "tick": 591,
+            "claimedCells": 42,
+            "retainedRegions": 3
+          },
+          "qualified": true
+        }
+      ],
+      "launchDelayTicks": 0,
+      "sampledTicks": 591,
+      "searchHistory": [
+        {
+          "policy": "efficient",
+          "budget": 238419,
+          "used": 156608,
+          "candidateLimit": 24,
+          "maxCuts": 32,
+          "failedAttempts": 70,
+          "attemptCount": 356,
+          "failuresByCause": {
+            "enemy-trail": 70
+          },
+          "exhausted": false
+        }
+      ],
+      "segments": [
+        ["right", 591],
+        [null, 120],
+        ["right", 7],
+        ["up", 231],
+        ["left", 108],
+        ["down", 477],
+        ["up", 244],
+        ["left", 217],
+        ["down", 246],
+        ["up", 285],
+        ["left", 632],
+        ["right", 20],
+        ["left", 14],
+        ["down", 163],
+        ["right", 360]
+      ]
+    },
+    {
+      "missionId": "two-bays",
+      "difficulty": "standard",
+      "seed": 1,
+      "turnPolicy": "immediate",
+      "sourceProjectIdentity": "23c1fea4f5fea27a",
+      "authoredSimulationIdentity": "7120fad1ee76e508",
+      "simulationIdentity": "3c9d5a827c05829e",
+      "levelIdentity": "0144d4e54ec56781",
+      "gameplayTuning": {
+        "version": "gameplay-pressure.v4",
+        "difficulty": "standard",
+        "enemySpeed": 1,
+        "playerSpeed": 1,
+        "enemyDensity": 0,
+        "adminOverride": false,
+        "overrides": {
+          "enemySpeed": 1,
+          "playerSpeed": 1,
+          "enemyDensity": 1
+        }
+      },
+      "ruleset": "xonix-core.v6",
+      "status": "no-loss-clear",
+      "coverage": 0.7867975022301517,
+      "coverageGoal": 0.68,
+      "ticks": 3405,
+      "cuts": 4,
+      "losses": 0,
+      "failureCause": null,
+      "checkpoint": "740515afa146e8d9",
+      "replayVerified": true,
+      "approach": "east-first",
+      "qualification": "full-clear-qualified",
+      "prefixQualified": true,
+      "prefixEvidence": {
+        "status": "route-exhausted",
+        "coverage": 0.01873327386262266,
+        "ticks": 591,
+        "cuts": 1,
+        "losses": 0,
+        "failureCause": null,
+        "checkpoint": "4c01824d2908d69c",
+        "replayVerified": true,
+        "segments": [["right", 591]],
+        "firstClosure": {
+          "tick": 591,
+          "claimedCells": 42,
+          "retainedRegions": 3
+        }
+      },
+      "baselineSample": {
+        "status": "no-loss-clear",
+        "coverage": 0.7867975022301517,
+        "ticks": 3405,
+        "cuts": 4,
+        "losses": 0,
+        "failureCause": null,
+        "checkpoint": "740515afa146e8d9",
+        "replayVerified": true,
+        "segments": [
+          ["right", 591],
+          [null, 60],
+          ["right", 7],
+          ["left", 41],
+          ["up", 224],
+          [null, 60],
+          ["down", 224],
+          ["left", 543],
+          ["down", 108],
+          ["left", 374],
+          [null, 60],
+          ["right", 7],
+          ["up", 108],
+          ["right", 760],
+          ["down", 238]
+        ]
+      },
+      "launchSamples": [
+        {
+          "status": "route-exhausted",
+          "coverage": 0.01873327386262266,
+          "ticks": 591,
+          "cuts": 1,
+          "losses": 0,
+          "failureCause": null,
+          "checkpoint": "4c01824d2908d69c",
+          "replayVerified": true,
+          "segments": [["right", 591]],
+          "firstClosure": {
+            "tick": 591,
+            "claimedCells": 42,
+            "retainedRegions": 3
+          },
+          "qualified": true
+        }
+      ],
+      "launchDelayTicks": 0,
+      "sampledTicks": 591,
+      "searchHistory": [],
+      "segments": [
+        ["right", 591],
+        [null, 60],
+        ["right", 7],
+        ["left", 41],
+        ["up", 224],
+        [null, 60],
+        ["down", 224],
+        ["left", 543],
+        ["down", 108],
+        ["left", 374],
+        [null, 60],
+        ["right", 7],
+        ["up", 108],
+        ["right", 760],
+        ["down", 238]
+      ]
+    },
+    {
+      "missionId": "two-bays",
+      "difficulty": "standard",
+      "seed": 1,
+      "turnPolicy": "grid-center",
+      "sourceProjectIdentity": "23c1fea4f5fea27a",
+      "authoredSimulationIdentity": "7120fad1ee76e508",
+      "simulationIdentity": "3c9d5a827c05829e",
+      "levelIdentity": "0144d4e54ec56781",
+      "gameplayTuning": {
+        "version": "gameplay-pressure.v4",
+        "difficulty": "standard",
+        "enemySpeed": 1,
+        "playerSpeed": 1,
+        "enemyDensity": 0,
+        "adminOverride": false,
+        "overrides": {
+          "enemySpeed": 1,
+          "playerSpeed": 1,
+          "enemyDensity": 1
+        }
+      },
+      "ruleset": "xonix-core.v6",
+      "status": "no-loss-clear",
+      "coverage": 0.7230151650312221,
+      "coverageGoal": 0.68,
+      "ticks": 3314,
+      "cuts": 4,
+      "losses": 0,
+      "failureCause": null,
+      "checkpoint": "a06fd44fcc1c52d5",
+      "replayVerified": true,
+      "approach": "east-first",
+      "qualification": "full-clear-qualified",
+      "prefixQualified": true,
+      "prefixEvidence": {
+        "status": "route-exhausted",
+        "coverage": 0.01873327386262266,
+        "ticks": 591,
+        "cuts": 1,
+        "losses": 0,
+        "failureCause": null,
+        "checkpoint": "42edec10b82d7445",
+        "replayVerified": true,
+        "segments": [["right", 591]],
+        "firstClosure": {
+          "tick": 591,
+          "claimedCells": 42,
+          "retainedRegions": 3
+        }
+      },
+      "baselineSample": {
+        "status": "life-lost",
+        "coverage": 0.01873327386262266,
+        "ticks": 967,
+        "cuts": 1,
+        "losses": 1,
+        "failureCause": "enemy-trail",
+        "checkpoint": "4a9cb3e73cdafcc7",
+        "replayVerified": true,
+        "segments": [
+          ["right", 591],
+          [null, 60],
+          ["right", 7],
+          ["left", 41],
+          ["up", 224],
+          [null, 44]
+        ]
+      },
+      "launchSamples": [
+        {
+          "status": "route-exhausted",
+          "coverage": 0.01873327386262266,
+          "ticks": 591,
+          "cuts": 1,
+          "losses": 0,
+          "failureCause": null,
+          "checkpoint": "42edec10b82d7445",
+          "replayVerified": true,
+          "segments": [["right", 591]],
+          "firstClosure": {
+            "tick": 591,
+            "claimedCells": 42,
+            "retainedRegions": 3
+          },
+          "qualified": true
+        }
+      ],
+      "launchDelayTicks": 0,
+      "sampledTicks": 591,
+      "searchHistory": [
+        {
+          "policy": "efficient",
+          "budget": 238442,
+          "used": 141201,
+          "candidateLimit": 24,
+          "maxCuts": 32,
+          "failedAttempts": 65,
+          "attemptCount": 212,
+          "failuresByCause": {
+            "enemy-trail": 62,
+            "self-contact": 3
+          },
+          "exhausted": false
+        }
+      ],
+      "segments": [
+        ["right", 591],
+        [null, 60],
+        ["right", 7],
+        ["left", 41],
+        ["up", 238],
+        ["down", 237],
+        ["left", 530],
+        ["down", 1],
+        ["right", 26],
+        ["down", 95],
+        ["left", 374],
+        ["right", 387],
+        ["down", 1],
+        ["left", 26],
+        ["down", 149],
+        ["right", 312],
+        ["up", 239]
+      ]
+    },
+    {
+      "missionId": "two-bays",
+      "difficulty": "expert",
+      "seed": 1,
+      "turnPolicy": "immediate",
+      "sourceProjectIdentity": "23c1fea4f5fea27a",
+      "authoredSimulationIdentity": "ad8ef2f2b2b6c354",
+      "simulationIdentity": "2053d82d24feea56",
+      "levelIdentity": "263e167753e27605",
+      "gameplayTuning": {
+        "version": "gameplay-pressure.v4",
+        "difficulty": "expert",
+        "enemySpeed": 1.2,
+        "playerSpeed": 1,
+        "enemyDensity": 0.5,
+        "adminOverride": false,
+        "overrides": {
+          "enemySpeed": 1,
+          "playerSpeed": 1,
+          "enemyDensity": 1
+        }
+      },
+      "ruleset": "xonix-core.v6",
+      "status": "no-loss-clear",
+      "coverage": 0.6913470115967886,
+      "coverageGoal": 0.68,
+      "ticks": 4643,
+      "cuts": 7,
+      "losses": 0,
+      "failureCause": null,
+      "checkpoint": "00aa78c5a41687f6",
+      "replayVerified": true,
+      "approach": "east-first",
+      "qualification": "full-clear-qualified",
+      "prefixQualified": true,
+      "prefixEvidence": {
+        "status": "route-exhausted",
+        "coverage": 0.01873327386262266,
+        "ticks": 891,
+        "cuts": 1,
+        "losses": 0,
+        "failureCause": null,
+        "checkpoint": "3cfb5036c3a91128",
+        "replayVerified": true,
+        "segments": [
+          [null, 300],
+          ["right", 591]
+        ],
+        "firstClosure": {
+          "tick": 891,
+          "claimedCells": 42,
+          "retainedRegions": 3
+        }
+      },
+      "baselineSample": {
+        "status": "life-lost",
+        "coverage": 0,
+        "ticks": 532,
+        "cuts": 0,
+        "losses": 1,
+        "failureCause": "enemy-trail",
+        "checkpoint": "27cecda61feba04a",
+        "replayVerified": true,
+        "segments": [["right", 532]]
+      },
+      "launchSamples": [
+        {
+          "status": "life-lost",
+          "coverage": 0,
+          "ticks": 532,
+          "cuts": 0,
+          "losses": 1,
+          "failureCause": "enemy-trail",
+          "checkpoint": "27cecda61feba04a",
+          "replayVerified": true,
+          "segments": [["right", 532]],
+          "firstClosure": null,
+          "qualified": false
+        },
+        {
+          "status": "life-lost",
+          "coverage": 0,
+          "ticks": 532,
+          "cuts": 0,
+          "losses": 1,
+          "failureCause": "enemy-trail",
+          "checkpoint": "f254dad2e2230385",
+          "replayVerified": true,
+          "segments": [
+            [null, 15],
+            ["right", 517]
+          ],
+          "firstClosure": null,
+          "qualified": false
+        },
+        {
+          "status": "life-lost",
+          "coverage": 0,
+          "ticks": 532,
+          "cuts": 0,
+          "losses": 1,
+          "failureCause": "enemy-trail",
+          "checkpoint": "aababec65627d56b",
+          "replayVerified": true,
+          "segments": [
+            [null, 30],
+            ["right", 502]
+          ],
+          "firstClosure": null,
+          "qualified": false
+        },
+        {
+          "status": "life-lost",
+          "coverage": 0,
+          "ticks": 532,
+          "cuts": 0,
+          "losses": 1,
+          "failureCause": "enemy-trail",
+          "checkpoint": "d2d183c650a1276e",
+          "replayVerified": true,
+          "segments": [
+            [null, 45],
+            ["right", 487]
+          ],
+          "firstClosure": null,
+          "qualified": false
+        },
+        {
+          "status": "life-lost",
+          "coverage": 0,
+          "ticks": 532,
+          "cuts": 0,
+          "losses": 1,
+          "failureCause": "enemy-trail",
+          "checkpoint": "6ff005f79602bf29",
+          "replayVerified": true,
+          "segments": [
+            [null, 60],
+            ["right", 472]
+          ],
+          "firstClosure": null,
+          "qualified": false
+        },
+        {
+          "status": "life-lost",
+          "coverage": 0,
+          "ticks": 532,
+          "cuts": 0,
+          "losses": 1,
+          "failureCause": "enemy-trail",
+          "checkpoint": "5d48e20294089ecf",
+          "replayVerified": true,
+          "segments": [
+            [null, 90],
+            ["right", 442]
+          ],
+          "firstClosure": null,
+          "qualified": false
+        },
+        {
+          "status": "life-lost",
+          "coverage": 0,
+          "ticks": 532,
+          "cuts": 0,
+          "losses": 1,
+          "failureCause": "enemy-trail",
+          "checkpoint": "defaae4f29eb8c13",
+          "replayVerified": true,
+          "segments": [
+            [null, 120],
+            ["right", 412]
+          ],
+          "firstClosure": null,
+          "qualified": false
+        },
+        {
+          "status": "life-lost",
+          "coverage": 0,
+          "ticks": 532,
+          "cuts": 0,
+          "losses": 1,
+          "failureCause": "enemy-trail",
+          "checkpoint": "5f63400a37a2086b",
+          "replayVerified": true,
+          "segments": [
+            [null, 150],
+            ["right", 382]
+          ],
+          "firstClosure": null,
+          "qualified": false
+        },
+        {
+          "status": "life-lost",
+          "coverage": 0,
+          "ticks": 540,
+          "cuts": 0,
+          "losses": 1,
+          "failureCause": "enemy-trail",
+          "checkpoint": "1fcbb737ff6968f8",
+          "replayVerified": true,
+          "segments": [
+            [null, 180],
+            ["right", 360]
+          ],
+          "firstClosure": null,
+          "qualified": false
+        },
+        {
+          "status": "life-lost",
+          "coverage": 0,
+          "ticks": 548,
+          "cuts": 0,
+          "losses": 1,
+          "failureCause": "enemy-trail",
+          "checkpoint": "99db982f8dd7ac99",
+          "replayVerified": true,
+          "segments": [
+            [null, 210],
+            ["right", 338]
+          ],
+          "firstClosure": null,
+          "qualified": false
+        },
+        {
+          "status": "life-lost",
+          "coverage": 0,
+          "ticks": 631,
+          "cuts": 0,
+          "losses": 1,
+          "failureCause": "enemy-trail",
+          "checkpoint": "4aa1bd926f6d65ca",
+          "replayVerified": true,
+          "segments": [
+            [null, 240],
+            ["right", 391]
+          ],
+          "firstClosure": null,
+          "qualified": false
+        },
+        {
+          "status": "route-exhausted",
+          "coverage": 0.01873327386262266,
+          "ticks": 891,
+          "cuts": 1,
+          "losses": 0,
+          "failureCause": null,
+          "checkpoint": "3cfb5036c3a91128",
+          "replayVerified": true,
+          "segments": [
+            [null, 300],
+            ["right", 591]
+          ],
+          "firstClosure": {
+            "tick": 891,
+            "claimedCells": 42,
+            "retainedRegions": 3
+          },
+          "qualified": true
+        }
+      ],
+      "launchDelayTicks": 300,
+      "sampledTicks": 6866,
+      "searchHistory": [
+        {
+          "policy": "efficient",
+          "budget": 232602,
+          "used": 172997,
+          "candidateLimit": 24,
+          "maxCuts": 32,
+          "failedAttempts": 185,
+          "attemptCount": 430,
+          "failuresByCause": {
+            "enemy-trail": 183,
+            "enemy-player": 2
+          },
+          "exhausted": false
+        }
+      ],
+      "segments": [
+        [null, 300],
+        ["right", 598],
+        ["left", 163],
+        ["down", 238],
+        [null, 60],
+        ["down", 7],
+        ["left", 81],
+        ["up", 238],
+        ["down", 47],
+        ["right", 75],
+        [null, 60],
+        ["right", 7],
+        ["up", 54],
+        ["left", 312],
+        ["up", 224],
+        [null, 60],
+        ["down", 7],
+        ["up", 14],
+        ["right", 312],
+        ["down", 475],
+        ["left", 801],
+        ["up", 163],
+        ["right", 347]
+      ]
+    },
+    {
+      "missionId": "two-bays",
+      "difficulty": "expert",
+      "seed": 1,
+      "turnPolicy": "grid-center",
+      "sourceProjectIdentity": "23c1fea4f5fea27a",
+      "authoredSimulationIdentity": "ad8ef2f2b2b6c354",
+      "simulationIdentity": "2053d82d24feea56",
+      "levelIdentity": "263e167753e27605",
+      "gameplayTuning": {
+        "version": "gameplay-pressure.v4",
+        "difficulty": "expert",
+        "enemySpeed": 1.2,
+        "playerSpeed": 1,
+        "enemyDensity": 0.5,
+        "adminOverride": false,
+        "overrides": {
+          "enemySpeed": 1,
+          "playerSpeed": 1,
+          "enemyDensity": 1
+        }
+      },
+      "ruleset": "xonix-core.v6",
+      "status": "no-loss-clear",
+      "coverage": 0.7216770740410348,
+      "coverageGoal": 0.68,
+      "ticks": 5518,
+      "cuts": 11,
+      "losses": 0,
+      "failureCause": null,
+      "checkpoint": "b8e3569f78708943",
+      "replayVerified": true,
+      "approach": "east-first",
+      "qualification": "full-clear-qualified",
+      "prefixQualified": true,
+      "prefixEvidence": {
+        "status": "route-exhausted",
+        "coverage": 0.01873327386262266,
+        "ticks": 891,
+        "cuts": 1,
+        "losses": 0,
+        "failureCause": null,
+        "checkpoint": "854d15e4337ab0e4",
+        "replayVerified": true,
+        "segments": [
+          [null, 300],
+          ["right", 591]
+        ],
+        "firstClosure": {
+          "tick": 891,
+          "claimedCells": 42,
+          "retainedRegions": 3
+        }
+      },
+      "baselineSample": {
+        "status": "life-lost",
+        "coverage": 0,
+        "ticks": 532,
+        "cuts": 0,
+        "losses": 1,
+        "failureCause": "enemy-trail",
+        "checkpoint": "8670d7c2d3f3f02e",
+        "replayVerified": true,
+        "segments": [["right", 532]]
+      },
+      "launchSamples": [
+        {
+          "status": "life-lost",
+          "coverage": 0,
+          "ticks": 532,
+          "cuts": 0,
+          "losses": 1,
+          "failureCause": "enemy-trail",
+          "checkpoint": "8670d7c2d3f3f02e",
+          "replayVerified": true,
+          "segments": [["right", 532]],
+          "firstClosure": null,
+          "qualified": false
+        },
+        {
+          "status": "life-lost",
+          "coverage": 0,
+          "ticks": 532,
+          "cuts": 0,
+          "losses": 1,
+          "failureCause": "enemy-trail",
+          "checkpoint": "d4742ac993ef44a9",
+          "replayVerified": true,
+          "segments": [
+            [null, 15],
+            ["right", 517]
+          ],
+          "firstClosure": null,
+          "qualified": false
+        },
+        {
+          "status": "life-lost",
+          "coverage": 0,
+          "ticks": 532,
+          "cuts": 0,
+          "losses": 1,
+          "failureCause": "enemy-trail",
+          "checkpoint": "2267643cb155810f",
+          "replayVerified": true,
+          "segments": [
+            [null, 30],
+            ["right", 502]
+          ],
+          "firstClosure": null,
+          "qualified": false
+        },
+        {
+          "status": "life-lost",
+          "coverage": 0,
+          "ticks": 532,
+          "cuts": 0,
+          "losses": 1,
+          "failureCause": "enemy-trail",
+          "checkpoint": "840eb0ad53c79252",
+          "replayVerified": true,
+          "segments": [
+            [null, 45],
+            ["right", 487]
+          ],
+          "firstClosure": null,
+          "qualified": false
+        },
+        {
+          "status": "life-lost",
+          "coverage": 0,
+          "ticks": 532,
+          "cuts": 0,
+          "losses": 1,
+          "failureCause": "enemy-trail",
+          "checkpoint": "cfef6a20ccb5ad85",
+          "replayVerified": true,
+          "segments": [
+            [null, 60],
+            ["right", 472]
+          ],
+          "firstClosure": null,
+          "qualified": false
+        },
+        {
+          "status": "life-lost",
+          "coverage": 0,
+          "ticks": 532,
+          "cuts": 0,
+          "losses": 1,
+          "failureCause": "enemy-trail",
+          "checkpoint": "ff555cb01128ebb3",
+          "replayVerified": true,
+          "segments": [
+            [null, 90],
+            ["right", 442]
+          ],
+          "firstClosure": null,
+          "qualified": false
+        },
+        {
+          "status": "life-lost",
+          "coverage": 0,
+          "ticks": 532,
+          "cuts": 0,
+          "losses": 1,
+          "failureCause": "enemy-trail",
+          "checkpoint": "a32eea6c506946b7",
+          "replayVerified": true,
+          "segments": [
+            [null, 120],
+            ["right", 412]
+          ],
+          "firstClosure": null,
+          "qualified": false
+        },
+        {
+          "status": "life-lost",
+          "coverage": 0,
+          "ticks": 532,
+          "cuts": 0,
+          "losses": 1,
+          "failureCause": "enemy-trail",
+          "checkpoint": "e00375e6c2add167",
+          "replayVerified": true,
+          "segments": [
+            [null, 150],
+            ["right", 382]
+          ],
+          "firstClosure": null,
+          "qualified": false
+        },
+        {
+          "status": "life-lost",
+          "coverage": 0,
+          "ticks": 540,
+          "cuts": 0,
+          "losses": 1,
+          "failureCause": "enemy-trail",
+          "checkpoint": "356e4e33830a02c0",
+          "replayVerified": true,
+          "segments": [
+            [null, 180],
+            ["right", 360]
+          ],
+          "firstClosure": null,
+          "qualified": false
+        },
+        {
+          "status": "life-lost",
+          "coverage": 0,
+          "ticks": 548,
+          "cuts": 0,
+          "losses": 1,
+          "failureCause": "enemy-trail",
+          "checkpoint": "504a54de46b95c75",
+          "replayVerified": true,
+          "segments": [
+            [null, 210],
+            ["right", 338]
+          ],
+          "firstClosure": null,
+          "qualified": false
+        },
+        {
+          "status": "life-lost",
+          "coverage": 0,
+          "ticks": 631,
+          "cuts": 0,
+          "losses": 1,
+          "failureCause": "enemy-trail",
+          "checkpoint": "2c0637aaadef07de",
+          "replayVerified": true,
+          "segments": [
+            [null, 240],
+            ["right", 391]
+          ],
+          "firstClosure": null,
+          "qualified": false
+        },
+        {
+          "status": "route-exhausted",
+          "coverage": 0.01873327386262266,
+          "ticks": 891,
+          "cuts": 1,
+          "losses": 0,
+          "failureCause": null,
+          "checkpoint": "854d15e4337ab0e4",
+          "replayVerified": true,
+          "segments": [
+            [null, 300],
+            ["right", 591]
+          ],
+          "firstClosure": {
+            "tick": 891,
+            "claimedCells": 42,
+            "retainedRegions": 3
+          },
+          "qualified": true
+        }
+      ],
+      "launchDelayTicks": 300,
+      "sampledTicks": 6866,
+      "searchHistory": [
+        {
+          "policy": "efficient",
+          "budget": 232602,
+          "used": 232602,
+          "candidateLimit": 24,
+          "maxCuts": 32,
+          "failedAttempts": 255,
+          "attemptCount": 537,
+          "failuresByCause": {
+            "enemy-trail": 247,
+            "self-contact": 7,
+            "enemy-player": 1
+          },
+          "exhausted": true
+        }
+      ],
+      "segments": [
+        [null, 300],
+        ["right", 598],
+        ["left", 163],
+        ["down", 259],
+        ["left", 204],
+        ["up", 251],
+        ["down", 156],
+        ["right", 218],
+        ["up", 1],
+        ["left", 26],
+        ["up", 1],
+        ["right", 26],
+        ["up", 149],
+        ["left", 190],
+        ["up", 225],
+        ["down", 237],
+        ["left", 592],
+        ["right", 102],
+        ["down", 258],
+        ["up", 27],
+        ["right", 245],
+        ["up", 1],
+        ["left", 26],
+        ["up", 1],
+        ["right", 26],
+        ["up", 109],
+        ["right", 27],
+        ["down", 1],
+        ["left", 26],
+        ["down", 1],
+        ["right", 26],
+        ["down", 14],
+        ["right", 27],
+        ["up", 1],
+        ["left", 26],
+        ["up", 13],
+        ["right", 402],
+        [null, 60],
+        ["right", 7],
+        ["left", 135],
+        ["up", 103],
+        ["down", 20],
+        ["up", 238]
+      ],
+      "continuationEvidence": {
+        "sourceIdentity": {
+          "gitRevision": "138c07131169e42fdd451bb86f48413bcade2211",
+          "sourceFiles": 536,
+          "sourceSha256": "3cebabeb0880f7f527f208cb3a69ed25c2a8f66cdff2057fc5f4d01dd80c4523",
+          "dirty": true
+        },
+        "elapsedSeconds": 1.532447041,
+        "initialQualification": "prefix-only-qualified",
+        "initialEvidence": {
+          "status": "route-exhausted",
+          "coverage": 0.6538804638715433,
+          "ticks": 4955,
+          "cuts": 9,
+          "losses": 0,
+          "failureCause": null,
+          "checkpoint": "40e5d3f6eed548c1",
+          "replayVerified": true,
+          "segments": [
+            [null, 300],
+            ["right", 598],
+            ["left", 163],
+            ["down", 259],
+            ["left", 204],
+            ["up", 251],
+            ["down", 156],
+            ["right", 218],
+            ["up", 1],
+            ["left", 26],
+            ["up", 1],
+            ["right", 26],
+            ["up", 149],
+            ["left", 190],
+            ["up", 225],
+            ["down", 237],
+            ["left", 592],
+            ["right", 102],
+            ["down", 258],
+            ["up", 27],
+            ["right", 245],
+            ["up", 1],
+            ["left", 26],
+            ["up", 1],
+            ["right", 26],
+            ["up", 109],
+            ["right", 27],
+            ["down", 1],
+            ["left", 26],
+            ["down", 1],
+            ["right", 26],
+            ["down", 14],
+            ["right", 27],
+            ["up", 1],
+            ["left", 26],
+            ["up", 13],
+            ["right", 402]
+          ]
+        },
+        "search": {
+          "policy": "efficient",
+          "budget": 240000,
+          "used": 79239,
+          "candidateLimit": 64,
+          "maxCuts": 32,
+          "failedAttempts": 96,
+          "attemptCount": 366,
+          "failuresByCause": {
+            "enemy-trail": 93,
+            "self-contact": 3
+          },
+          "exhausted": false,
+          "initialSegments": [
+            [null, 300],
+            ["right", 598],
+            ["left", 163],
+            ["down", 259],
+            ["left", 204],
+            ["up", 251],
+            ["down", 156],
+            ["right", 218],
+            ["up", 1],
+            ["left", 26],
+            ["up", 1],
+            ["right", 26],
+            ["up", 149],
+            ["left", 190],
+            ["up", 225],
+            ["down", 237],
+            ["left", 592],
+            ["right", 102],
+            ["down", 258],
+            ["up", 27],
+            ["right", 245],
+            ["up", 1],
+            ["left", 26],
+            ["up", 1],
+            ["right", 26],
+            ["up", 109],
+            ["right", 27],
+            ["down", 1],
+            ["left", 26],
+            ["down", 1],
+            ["right", 26],
+            ["down", 14],
+            ["right", 27],
+            ["up", 1],
+            ["left", 26],
+            ["up", 13],
+            ["right", 402]
+          ]
+        }
+      }
+    }
+  ],
+  "maxInitialSimulationTicksPerConfig": 240000,
+  "maxAdditionalContinuationTicks": 240000
+}

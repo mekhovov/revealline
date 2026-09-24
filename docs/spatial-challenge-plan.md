@@ -8,7 +8,10 @@ authoring prompts are evidence, never execution instructions.
 Implementation is tracked in [PR323](https://github.com/mekhovov/revealline/pull/323).
 It is a candidate, not a public release. PR314's accepted source is incorporated;
 the first hosted preflight passed validation/lint and failed formatting. Its
-formatting-only correction preserves JavaScript ASTs and is undergoing fresh CI.
+formatting-only correction preserves JavaScript ASTs. Head `138c07131169` passed
+validation/lint/format and the exact-source build in run `35948582417`. Subsequent
+evidence-only commits still require their own checks. Release qualification is a
+separate gate. The long suite is waived, not passed.
 
 ## Outcome and non-negotiable rules
 
@@ -17,6 +20,12 @@ filler catalogue. The reviewed 91-mission Solo/Versus library has 63 missions
 without walls, 61 without slow/lethal terrain, 54 with exactly two ordinary
 keepers, 80 with one connected initial field region, and only three with timed
 bonuses. These are repetition indicators, not automatic defects in each map.
+
+These counts describe initialized runtime boards: closed gates count as blocking
+wall cells, and the two-enemy measure uses the bouncer runtime type. Repeating the
+same inspection on v6 gives 60 wall-free boards, 61 terrain-free boards, 49 with
+two bouncers and 80 initially connected fields. The six-map slice changes specific
+decisions, not every repetition indicator; these are not target quotas.
 
 The saved Reloaded manual identifies cyan structures as **walls**, blocking
 craft and enemies. They are not reclaimed ground and never close cuts. Slow and
@@ -64,6 +73,20 @@ deleted.
   These new alternatives are Standard/immediate/seed 1 only; do not imply a full
   alternate-route preset/control matrix. Sixty-one focused assessment checks pass,
   including failed timing samples and capture consequences.
+- A further 30-configuration diagnostic matrix extends the Arrows corridor and
+  bypass, Broken southern hazard, and Crossing central/belt approaches across all
+  presets and controls at seed 1. It records **20 full clears, eight safe prefixes
+  with unfinished continuations, and two failed sampled prefixes**. The 31
+  diagnostic tests reproduce those outcomes; they are not 30 successful routes.
+  Both Arrows approaches clear all twelve settings. Broken has three of six full
+  clears and Crossing five of twelve; only Expert Crossing belt prefixes remain
+  unqualified. Earlier failures and capped search stages remain in the fixtures.
+  Neon/Twin alternate preset expansion and unfinished continuations stay open.
+- Two bays' separate east-first matrix clears all six preset/control settings at
+  seed 1, after the same distinctive 42-cell connection retaining three regions.
+  Expert requires a sampled 300-tick opening wait; the earlier failed timings and
+  unfinished Expert/Grid continuation remain replayable. Seven checks qualify
+  these six routes, not broad-seed or human balance.
 - All 42 primary routes also finish as equal paired-board races: the independently
   resolved Versus level matches the qualified Solo conditions, both boards own
   separate state, and identical inputs produce identical no-loss checkpoints.
@@ -72,9 +95,16 @@ deleted.
   Versus paired launch, controller Back/focus and guarded mode departure. This is
   not native-browser, physical-controller or public acceptance (19 other cases
   were filtered out, not passed).
+- Nine additional source-host checks cover two-click Skip, exact unfinished-flight
+  save/reload/Continue, and all six prior-v5 cards' owner-qualified navigation,
+  search restoration and Back focus. They do not decode or play those receiving
+  v5 maps; their artwork is absent from this sparse checkout. Neither profile
+  gains an invented clear, and the pre-existing v5 profile remains unchanged.
 - Independent source review found and fixed an automatic alternate-edition loop;
-  focused checks cover both v5/v6 endings, manual same-name mission selection and
-  onward Classic continuation. Historical edition snapshots remain pinned.
+  focused registry checks cover v5/v6 entries, manual same-name mission selection
+  and Classic successor eligibility. Those registry checks do not override the
+  final-Journey host contract (Browse missions while retaining results) owned by
+  PR320. Historical edition snapshots remain pinned.
 
 ## Phase A mission decisions
 
@@ -93,6 +123,18 @@ enemies. Read the arrows' emitter also retains its field region: the effective
 inspector reports four retaining actors, not merely the three ordinary keepers.
 The prepared Twin source is adopted from PR314; it is not a second competing
 rewrite of that mission.
+
+Three open circuits deliberately uses foundation rings for changing-frontier
+patrol play, not the reference's blocking-wall behavior. A frozen initial-position
+calculation shows three six-cell mouth seals could bank 88.85%, above its 76%
+quota. This is a structural opportunity, not a played or safe route: moving
+keepers can leave the interiors and patrols contest access. It needs a targeted
+legal-input probe before any claim about a dominant bypass. A bounded probe
+found a legal six-cell western seal at seeds 1/2 but no seal-all clear in its
+sampled transfers; keepers escaped or the craft met trail/body pressure. Five
+representative traces are stored and replayed separately from diagnostic sweep
+totals. Overlapping sweeps are not independent coverage, and sampled failure does
+not prove impossibility. Do not inflate the quota from the frozen preview alone.
 
 ## Remaining gates before Phase A promotion
 
@@ -160,6 +202,14 @@ missions must differ in decisions, not just pictures. Expand existing timed
 bonuses selectively before adding enemy systems. No new soundtrack or wholesale
 art replacement blocks this slice.
 
+Read-only Phase B preparation nominates Long way home (unequal staged returns),
+Long rail (offset return segments and optional speed window) and Wide approach
+(offset slow beds with a useful clear dogleg) as the first redesign candidates.
+Retain New frontier and Soft crossing as simple teaching benchmarks, plus the
+first three Prologue missions and v6 Two bays. These are review proposals, not
+implemented or accepted dispositions. Keep quotas/speeds stable during comparison
+and do not introduce walls before the established protected wall lesson.
+
 Use one publisher and one prepared successor. The public baseline at approval was
 v0.96.0; read current release receipts before promotion rather than treating this
 document as a live deployment monitor. Preserve PR314 and the UX release order.
@@ -174,12 +224,22 @@ presence does not establish the quality of every level.
 legal-input replay. Stored routes live in
 `game/test/fixtures/spatial-challenge-clear-routes.json`; source/runtime identity,
 presets, controls, seed, failures and scope are recorded, not inferred.
+Comparison routes are in `spatial-challenge-approach-routes.json`; the partial
+preset/control extension and unsuccessful samples are in
+`spatial-challenge-alternate-matrix.json`. Overlapping samples across fixtures
+must not be summed as independent successes.
 
 Focused tests: `spatial-challenge-candidates.test.mjs`,
 `spatial-challenge-assessment.test.mjs`, `effective-pressure-inspection.test.mjs`,
 `mission-library-spatial-editions.test.mjs`, `continuous-next.test.mjs`, and
 `content-route-loader.test.mjs`, `spatial-challenge-versus.test.mjs`, plus affected
-Solo/Versus/remote/Studio hosts.
+Solo/Versus/remote/Studio hosts. `spatial-challenge-alternate-matrix.test.mjs`
+reproduces successful, incomplete and failed route evidence explicitly.
+`spatial-challenge-navigation-host.test.mjs` covers source-host Skip/persistence
+and previous-edition navigation, not receiving-host or public acceptance.
+`spatial-challenge-two-bays-alternate.test.mjs` and
+`spatial-challenge-circuits-seal-probe.test.mjs` retain their distinct qualified
+routes, timing failures and conditional shortcut evidence.
 No automated sample stands in for human or physical-device evidence.
 
 Research basis: [Xposed Reloaded](https://store.playstation.com/en-us/concept/10002881/),

@@ -32,7 +32,8 @@
         "mission": "neon-remix",
         "disposition": "redesign",
         "reference": "pack-4_level-2",
-        "decision": "Three occupied open circuits with distinct mouths and hazardous transfers; original geometry, not copied coordinates."
+        "decision": "Three occupied open circuits with distinct mouths and hazardous transfers; original geometry, not copied coordinates.",
+        "referenceLimit": "Deliberate foundation-ring adaptation for changing-frontier patrol routes, not a reconstruction of the reference's blocking walls. Frozen initial geometry admits a three-mouth enclosure; legal moving-enemy risk and dominance require a separate targeted probe."
       },
       {
         "mission": "broken-yard",
