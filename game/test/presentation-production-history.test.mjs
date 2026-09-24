@@ -414,6 +414,19 @@ test('production refuses silent slot contract mutation and can explicitly return
 test('Journey feedback dependencies bind only the reviewed integrated effects inputs', async () => {
   const production = await createFieldKitProduction();
   const resolved = resolvePresentation(production.document);
+  const reviewPath = 'docs/verification/trail-effects-continuation-2026-09-24/review.json';
+  const reviewBytes = await fs.readFile(new URL(`../../${reviewPath}`, import.meta.url));
+  const reviewHash = createHash('sha256').update(reviewBytes).digest('hex');
+  const review = JSON.parse(reviewBytes);
+  assert.equal(reviewHash, 'f99de242bac7ac5b49c06047e156eb5a6decdf73b4d0ac3f47649ec010571917');
+  assert.equal(
+    review.priorReview.sha256,
+    '5b13693d6d19b5b0e5e845b9e69a5971a0e36b40ffa8ff457f3418da5a0a6c8c',
+  );
+  assert.equal(
+    review.fingerprint.sha256,
+    '832e6fbcb3da51dff0ef5a07f60221e4dbba25256af1d32d1800ed1b21500f9f',
+  );
   for (const slotId of [
     'trail.active',
     'trail.secured',
@@ -430,14 +443,14 @@ test('Journey feedback dependencies bind only the reviewed integrated effects in
     assert.equal(asset.quality.stage, 'reviewed', slotId);
     assert.ok(
       asset.provenance.source.endsWith(
-        'sha256:13a140c0872eaa646b79f26c068b90527a1d0034131284bbbe9f5b5a5e3829d9',
+        'sha256:832e6fbcb3da51dff0ef5a07f60221e4dbba25256af1d32d1800ed1b21500f9f',
       ),
     );
     assert.match(asset.provenance.source, /game\/ui\/lane-presentation\.mjs/);
     assert.match(asset.provenance.source, /game\/content-design\/actor-marker\.mjs/);
     assert.equal(
       asset.quality.evidence.some((entry) =>
-        entry.includes('Scoped integrated Journey effects review'),
+        entry.includes(`Scoped trail/effects functional continuation: ${reviewPath}`),
       ),
       true,
     );
