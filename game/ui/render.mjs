@@ -18,7 +18,6 @@ import { drawDirectionalFields, directionalView } from './directional-view.mjs';
 import { createAnimationState, advanceAnimation } from '../../authoring/motion-lab/animation.mjs';
 import { fittedBodySize, paintCharacter } from '../../authoring/motion-lab/render-character.mjs';
 import { playerBodyOffset } from './player-body-layout.mjs';
-import { drawPlayerLocator } from './player-locator.mjs';
 import { createSceneArt } from './scene-art.mjs';
 import { createEnemyBodyAssets } from './enemy-body-assets.mjs';
 import {
@@ -913,17 +912,6 @@ export class BoardPainter {
       ctx.lineWidth = 1;
       ctx.stroke();
       ctx.restore();
-      if (
-        ['xonix-core.v6', 'xonix-core.v7', 'xonix-core.v8', 'xonix-core.v9'].includes(state.ruleset)
-      )
-        drawPlayerLocator(ctx, {
-          x: (state.player.x + bodyOffset.x) * CELL,
-          y: (state.player.y + bodyOffset.y) * CELL,
-          diameter: playerSize.diameter,
-          screenScale: canvasCSSWidth / W,
-          width: W,
-          height: H,
-        });
       if ((state.ability.shieldUntil || 0) > t || state.player.graceUntil > t) {
         ctx.strokeStyle = p.safe;
         ctx.lineWidth = 2;

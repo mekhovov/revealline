@@ -1,5 +1,13 @@
 # Foundation craft locator — scoped contrast repair
 
+> **Superseded in v0.102.0.** Player review found that the detached white
+> corner brackets obscured the craft silhouette and read as unexplained visual
+> noise. Current rendering removes the locator from every Journey ruleset. The
+> approved body artwork, animated rotors, simulation-radius contact ring and
+> real shield cue remain unchanged. A renderer regression test verifies both
+> the bracket removal and the retained contact cue. The record below remains as
+> historical evidence for the earlier experiment.
+
 The Courtyard partial-reveal check exposed a small gray craft over pale,
 detailed architecture. The core.v6 foundation renderer now adds four static
 corner marks in functional light ink with a dark under-stroke. This remains
