@@ -1,0 +1,222 @@
+{
+  "sourceCommit": "806645586667b285ff2f456cdc453888ca14f937",
+  "baseCommit": "b639b25350d1f0b7dde25a7fe31376f1148af254",
+  "files": [
+    {
+      "path": "publishing/pages-controller/metadata.mjs",
+      "bytes": 7210,
+      "gitBlob": "bf16e1b1d0249a631ae6c02aecf97a31f9d8b128",
+      "sha256": "06e4aba58551cba45a6c8db3d95fb5bded8928d30c748cc276490daa7455e3e9"
+    },
+    {
+      "path": "publishing/pages-controller/source-qualification.mjs",
+      "bytes": 6191,
+      "gitBlob": "cb5b41f700d6e3aee9e7bc6e125853dba801b0b6",
+      "sha256": "8192b25f2c3cd5757c0a00a749a13e501d8483bafcc1321329c05ebef8fea84a"
+    },
+    {
+      "path": "publishing/pages-controller/catalog.mjs",
+      "bytes": 7355,
+      "gitBlob": "2f67c885ad7acbdb3fe10776aa4bf470b5353260",
+      "sha256": "f4b8a843164e2de9a58bb97f313d3cec6b6ec62db19b78ba028d3451576bc127"
+    },
+    {
+      "path": "scripts/pages-current-entry.mjs",
+      "bytes": 7533,
+      "gitBlob": "951b8f4d516cbad25bc779a6a3c87938bcb229c2",
+      "sha256": "b81b0b52ef6fb3d6b2eec0628fbf3fed94dbcb1383a8e558d34054f61f6b3ec4"
+    },
+    {
+      "path": "scripts/build-pages.mjs",
+      "bytes": 11636,
+      "gitBlob": "fd7dafc6316aa38cf716ead793341c399a37c8b6",
+      "sha256": "5d96e44581fc8cbb56ccbb40d916f9515b983ec8c9b22e0bebdf82acab2fa431"
+    },
+    {
+      "path": "scripts/pages-capacity.mjs",
+      "bytes": 6432,
+      "gitBlob": "8d6f2ccdcf2204294bbcda540b4b18bbacda856b",
+      "sha256": "5a7a09841f5fdbe34de8a3d7287e24c52c05048301a2486d76bf9a17678922d6"
+    },
+    {
+      "path": "scripts/release-catalog.mjs",
+      "bytes": 5549,
+      "gitBlob": "e7382aa3cb583ab6b5168d45682c2addb2faa5b9",
+      "sha256": "001b98a89348d726f4dfbfbb0d70088707db0d9946ffcb35de598e8b2359f953"
+    },
+    {
+      "path": "scripts/game-cli.mjs",
+      "bytes": 66240,
+      "gitBlob": "8680788c3cda17ee6f71ddd47718c59c14eb26f1",
+      "sha256": "1abbbcf254164395dcc3457fc75ccf6ea1962c1929a78a61f44a5704de72acb2"
+    },
+    {
+      "path": "scripts/pack-indexes.mjs",
+      "bytes": 5421,
+      "gitBlob": "2a4564ee1e88ef4f61b556b79f415aced69523aa",
+      "sha256": "34ecdb35caecd581a5477e3972130f1ef67004fcd7add7f055126cb65a52a35e"
+    },
+    {
+      "path": "game/content-launch.mjs",
+      "bytes": 9259,
+      "gitBlob": "ea4d5af71f011fa26f4897190e2a5b91798b30e5",
+      "sha256": "cec26626541e3a7bb89ff07d7b787040668ff308c7833fd8e6636098d60c80a2"
+    },
+    {
+      "path": "game/data-json.mjs",
+      "bytes": 4920,
+      "gitBlob": "12481de8696e2e4ee60b2cad91f655d0081d274e",
+      "sha256": "bcf8c3cb859473a39973cc93cee347085d3146164b0b92a02e81df57f6ffc823"
+    },
+    {
+      "path": "scripts/pages-archive.mjs",
+      "bytes": 8850,
+      "gitBlob": "a3ab007c0aaa9c3b8754eaa1332576cc889f02fb",
+      "sha256": "275fad3b158297354f0510de0cc7c66618891046258b8e9b41f6118f2974679f"
+    },
+    {
+      "path": "scripts/test-pages-archive.mjs",
+      "bytes": 17128,
+      "gitBlob": "75657b2d5eb7a8cae2bf7ff6b25c2296a45730fb",
+      "sha256": "16103097d6c97b1b745795f0eabe0ea550ce93ef4477d5dc397d573038daf995"
+    },
+    {
+      "path": "publishing/pages-controller/assemble.mjs",
+      "bytes": 21869,
+      "gitBlob": "cde89daffa4d2f94367ed01bcf6e117267f7214b",
+      "sha256": "cbe918aee705c9079843eddfd529128e7eff071353e9e64f37af95fb6bad4563"
+    },
+    {
+      "path": "publishing/pages-controller/assemble.test.mjs",
+      "bytes": 37986,
+      "gitBlob": "3251fd307e1dbd0781d327b55096fd1192025e19",
+      "sha256": "b0f4c51181893754f39ecdecf131012188a3b259ca580fe37f038dd4dcc64e65"
+    },
+    {
+      "path": "publishing/pages-controller/README.md",
+      "bytes": 24249,
+      "gitBlob": "d08fe7d20ffbfa8107121bb57cca5e31deabc635",
+      "sha256": "20483cbf1cfa639588c108d502c68b69662092a87904bbad05751bd6f8ea4a85"
+    },
+    {
+      "path": "publishing/pages-controller/archive-tag-fetch.test.mjs",
+      "bytes": 5554,
+      "gitBlob": "cafbca6d89ee15dc1570469bfbb12912cc57ef33",
+      "sha256": "de011a79becb1a60a7c963b80f0e8f998e1c14e7db2505c0a70cb5af8d4d8b1c"
+    },
+    {
+      "path": "publishing/pages-controller/archive-tag-fetch.mjs",
+      "bytes": 5237,
+      "gitBlob": "fcfeafc5ba4ea7f3d8d33fdd9f2d51995d4801c6",
+      "sha256": "2d5ec0f2cb17e88eeb28fb53cffd56ca85c132b86d9d9bbae9d2df3fb12c6422"
+    },
+    {
+      "path": "publishing/pages-controller/catalog.test.mjs",
+      "bytes": 4821,
+      "gitBlob": "24ae47cb4ed40f3391e6cad358f47e6e0ef8dfee",
+      "sha256": "0e07d58f4bf4b7c0c6131336cc10b7f9e1de515c1635acd5642832f99cfc0030"
+    },
+    {
+      "path": "publishing/pages-controller/metadata.test.mjs",
+      "bytes": 5410,
+      "gitBlob": "e0c19719f200de0cca95f66f00f80a51655847fb",
+      "sha256": "98fa3c0f50a31975e0d86856d841a052141d0e42399ba3edd7b94661d47fae8a"
+    },
+    {
+      "path": "publishing/pages-controller/release-asset.test.mjs",
+      "bytes": 2541,
+      "gitBlob": "1eb94bbb4841820961cb595411b857308437e1ad",
+      "sha256": "d0a12cd847914bd40ec5d0e31bface9adc91d835afbf4ab3101141cdddbf24d2"
+    },
+    {
+      "path": "publishing/pages-controller/release-asset.mjs",
+      "bytes": 2476,
+      "gitBlob": "adf6cc014894cfad94ab49754720469e3b979b0a",
+      "sha256": "e90ac62636137b67beb45a6a2cfdb7f67043767dfe05fddbb68b1659a00dbb53"
+    },
+    {
+      "path": "publishing/pages-controller/release-policy.test.mjs",
+      "bytes": 2775,
+      "gitBlob": "9acd505bd4cfd827574c171a545c0942a037c17d",
+      "sha256": "2a6892eb9cdd12409ebc2cc92737a1179fe72a3470abd527c129ea8631ba9269"
+    },
+    {
+      "path": "publishing/pages-controller/release-policy.mjs",
+      "bytes": 4083,
+      "gitBlob": "ed2848fc1bfc9e624c167e0bc9621e9f03a25c00",
+      "sha256": "bbc788bfd287de25cbab06f3692c41515c01f08d8075cd4f9ede6e8a25cc7d46"
+    },
+    {
+      "path": "publishing/pages-controller/sync-release-metadata.test.mjs",
+      "bytes": 15382,
+      "gitBlob": "6f17390a94cb5034a0e8df413420bc5e324e5e32",
+      "sha256": "6c6304ac73e34f11a20649ced187a7ededaafb4f5d73ee3f699d5681eef9780c"
+    },
+    {
+      "path": "publishing/pages-controller/sync-release-metadata.mjs",
+      "bytes": 12044,
+      "gitBlob": "baec8f1d103f87abcd888019323e4a3e244f6b00",
+      "sha256": "77cf7f21374a72372cabe7dc0ef7153559a9abc73faf3b85236939542b4595c1"
+    },
+    {
+      "path": "publishing/pages-controller/workflow.test.mjs",
+      "bytes": 8506,
+      "gitBlob": "996bb9e0eaa0af777380f0bba165fa64b621837d",
+      "sha256": "7e16f8935b0a8ba495267b5ecee30715bf6361224a091cebddc54235cd84db2c"
+    },
+    {
+      "path": "publishing/test-policy.test.mjs",
+      "bytes": 4352,
+      "gitBlob": "4dd258fc3134b239dc3b1c348e50618e5006c662",
+      "sha256": "9440c8ed19a8c83685ce9fcc0c0d29e175ad5b247de4378402c8da31b80dd40c"
+    },
+    {
+      "path": "publishing/test-policy.mjs",
+      "bytes": 3942,
+      "gitBlob": "36729f8e9aca0889f0f1a3f09ba1ecbc57852deb",
+      "sha256": "9b73988d42175f356e8abbea10c22060b40b8062754ee5203500f7e9a424672d"
+    },
+    {
+      "path": "publishing/test-policy.json",
+      "bytes": 490,
+      "gitBlob": "f031accada865eaeb4af8f2c41cb9bd76f5e7637",
+      "sha256": "b6887ba7f2b84a007b96de14fc867ac38ac8135d7c231c7ade7ebc52ba31704a"
+    },
+    {
+      "path": "game/presentation/page-entry.mjs",
+      "bytes": 2873,
+      "gitBlob": "8cc6717b29a509fab32ec23ffd6588f3029db72e",
+      "sha256": "b3e854f0422243e99b4400076605923be2a270429bb3c55cebb4565bb1c97474"
+    },
+    {
+      "path": ".github/workflows/deploy-pages.yml",
+      "bytes": 8674,
+      "gitBlob": "9ad200b2484bf6a5c7ed4a4b0931fb2d65708e70",
+      "sha256": "2f8796ec62aa08081bfdc607bb9b9030906ce48e1d1a8e72f113b36d8dd6ec73"
+    },
+    {
+      "path": ".github/workflows/publish-frozen-pages.yml",
+      "bytes": 4988,
+      "gitBlob": "6198771f0542c0117a6197afd7a9ba3d462fa861",
+      "sha256": "1319a51ec0cc7a6198c7ee0d384e6efb1098abdeea52d7ac1b500f48a5e976ae"
+    },
+    {
+      "path": ".github/workflows/qualify-release-source.yml",
+      "bytes": 12120,
+      "gitBlob": "20442643446ffe71434197ca77a88c0fc0c8a3b6",
+      "sha256": "016b1f019caa0f6c0065fe85f11a5382c9950688c6a6ceecb9c17b2005aa459d"
+    },
+    {
+      "path": "publishing/pages-controller/extract-current.py",
+      "bytes": 9266,
+      "gitBlob": "f464b0c5b02082eb185109fa49b0f82e5bceef22",
+      "sha256": "bf7640232afbe3c20ab927fb6be9165e2dd1efce29327e6dfa214e7023244d3f"
+    },
+    {
+      "path": "publishing/pages-controller/test_extract_current.py",
+      "bytes": 5358,
+      "gitBlob": "93c4abb370b6784f2ba133387b174ff28cbaf6d1",
+      "sha256": "e7b6172e6f41336b596b8e1dfa1fcb1d6aeb97a5104750f1d2bb6acd3219ff4e"
+    }
+  ]
+}

@@ -1,0 +1,67 @@
+{
+  "format": "revealline-publisher-native-parity.v1",
+  "sourceCommit": "806645586667b285ff2f456cdc453888ca14f937",
+  "baseCommit": "b639b25350d1f0b7dde25a7fe31376f1148af254",
+  "previousEvidence": {
+    "path": "native-proof.json",
+    "gitBlob": "55faf228b8514faea0db369d07833dd7eab03232",
+    "sha256": "8da11530a60e53cb6118a90c905df8a7c9da93aec10918c2700b2fc9b8ca93cb"
+  },
+  "sourceFilesVerifiedUnchanged": 36,
+  "runtime": {
+    "node": "v22.22.2",
+    "nodePath": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+    "python": "Python 3.14.4",
+    "platform": "darwin",
+    "arch": "arm64"
+  },
+  "filesystem": {
+    "temporaryDirectory": "/Volumes/RevealLineTemp/ux0-publisher/tmp",
+    "kind": "Real mounted OS RAM disk; normal filesystem APIs",
+    "mocked": false,
+    "importLoader": false
+  },
+  "results": [
+    {
+      "command": "TMPDIR=/Volumes/RevealLineTemp/ux0-publisher/tmp /Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node --test publishing/test-policy.test.mjs publishing/pages-controller/*.test.mjs",
+      "exitCode": 0,
+      "tests": 63,
+      "pass": 63,
+      "fail": 0,
+      "skipped": 0,
+      "log": "full-controller-node22.log"
+    },
+    {
+      "command": "TMPDIR=/Volumes/RevealLineTemp/ux0-publisher/tmp PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s publishing/pages-controller -p 'test_*.py' -v",
+      "exitCode": 0,
+      "tests": 5,
+      "pass": 5,
+      "fail": 0,
+      "skipped": 0,
+      "log": "full-python.log"
+    }
+  ],
+  "limits": [
+    "This proves the unchanged native publisher test commands on exact PR337 source; it does not relabel skipped hosted steps as executed.",
+    "Node22.22.2 matches the hosted workflow version. This macOS arm64 run is not Linux qualification.",
+    "The Node20 and Node22 controller results overlap and are not additive unique tests.",
+    "No workflow, repository, selector, game version, release or deployment was changed."
+  ],
+  "evidence": [
+    {
+      "path": "publisher-source-pins.json",
+      "bytes": 8579,
+      "sha256": "06b62f9ed84337f47b4a62482cc9b455e8cb230be299921cd687c10ea24f008d"
+    },
+    {
+      "path": "full-controller-node22.log",
+      "bytes": 13900,
+      "sha256": "268cfa028019266a5b1aaefb116c7834c717304410a44a5d09d0e9764f088190"
+    },
+    {
+      "path": "full-python.log",
+      "bytes": 866,
+      "sha256": "a371541ee996149ffc58c4a8c453cf7308888016485e0b437715e994d18469ed"
+    }
+  ]
+}

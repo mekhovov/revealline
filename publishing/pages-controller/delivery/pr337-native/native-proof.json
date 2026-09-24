@@ -1,0 +1,65 @@
+{
+  "format": "revealline-archive-capacity-native-tests.v1",
+  "sourceCommit": "806645586667b285ff2f456cdc453888ca14f937",
+  "baseCommit": "b639b25350d1f0b7dde25a7fe31376f1148af254",
+  "runtime": {
+    "node": "v20.19.5",
+    "platform": "darwin",
+    "arch": "arm64"
+  },
+  "filesystem": {
+    "root": "/Volumes/RevealLineTemp/ux0-publisher",
+    "temporaryDirectory": "/Volumes/RevealLineTemp/ux0-publisher/tmp",
+    "kind": "Real mounted OS RAM disk; normal node:fs and child processes",
+    "mocked": false,
+    "importLoader": false,
+    "volumeCapacityBytes": 134217728
+  },
+  "results": [
+    {
+      "command": "TMPDIR=/Volumes/RevealLineTemp/ux0-publisher/tmp node --test scripts/test-pages-archive.mjs publishing/pages-controller/assemble.test.mjs",
+      "exitCode": 0,
+      "tests": 27,
+      "pass": 27,
+      "fail": 0,
+      "skipped": 0,
+      "log": "full-two-files.log"
+    },
+    {
+      "command": "TMPDIR=/Volumes/RevealLineTemp/ux0-publisher/tmp node --test publishing/test-policy.test.mjs publishing/pages-controller/*.test.mjs",
+      "exitCode": 0,
+      "tests": 63,
+      "pass": 63,
+      "fail": 0,
+      "skipped": 0,
+      "log": "full-controller.log"
+    }
+  ],
+  "limits": [
+    "The two commands overlap on the complete assembly file; totals are not additive unique tests.",
+    "This is native local filesystem evidence, not a claim that the policy-skipped hosted test step executed.",
+    "No archive repository, selector, workflow, game version, tag, release or deployment changed."
+  ],
+  "evidence": [
+    {
+      "path": "source-pins.json",
+      "bytes": 3784,
+      "sha256": "04675055d16f4ea5f79e852820c24432bc233b06937f32c1602eb18a0170ba19"
+    },
+    {
+      "path": "controller-source-pins.json",
+      "bytes": 8090,
+      "sha256": "a7c49081abb69ad5b9be558fb818ed74d6e9587b8260f3d3a82f8d49729a24ec"
+    },
+    {
+      "path": "full-two-files.log",
+      "bytes": 8441,
+      "sha256": "8f3a035064ff14fce4c730aa890cf0bb14cb773df93dc0338dcbcc163f7f357a"
+    },
+    {
+      "path": "full-controller.log",
+      "bytes": 12972,
+      "sha256": "a212208145ba88379c4fe17eb36b1c6b65e4ab12fbcd671542a802b82a0df58d"
+    }
+  ]
+}
