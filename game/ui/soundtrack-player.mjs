@@ -254,6 +254,8 @@ export function createSoundtrackPlayer({
           })
         : null,
       playlistId: playlist?.id ?? null,
+      order: playlist?.order ?? null,
+      repeat: playlist?.repeat ?? null,
       pendingPlaylistId: pending?.playlist.id ?? null,
       selection: override,
       source: pending?.source ?? resolve().source,
@@ -954,8 +956,16 @@ export function createSoundtrackPlayer({
     setLibrary(next);
     return selectPlaylist(null);
   }
-  async function playRemotePlaylist(value, { order = 'ordered' } = {}) {
+  async function playRemotePlaylist(
+    value,
+    { order = 'ordered', repeat = 'all', startTrackId = null } = {},
+  ) {
     required(['ordered', 'shuffle'].includes(order), 'Invalid online soundtrack order.');
+    required(['all', 'one', 'off'].includes(repeat), 'Invalid online soundtrack repeat mode.');
+    required(
+      startTrackId === null || /^online\.[a-f0-9]{64}$/.test(startTrackId),
+      'Invalid online soundtrack start recording.',
+    );
     const owned = boundedJSON(value, {
       maxBytes: 512 * 1024,
       maxNodes: 10000,
@@ -989,6 +999,10 @@ export function createSoundtrackPlayer({
       eligibleTracks.length > 0,
       'Recording mode excludes these online soundtracks until gameplay-video and Content ID permissions are verified.',
     );
+    required(
+      startTrackId === null || eligibleTracks.some((track) => track.id === startTrackId),
+      'The chosen online soundtrack is unavailable in this playback mode.',
+    );
     remoteTracks = eligibleTracks;
     remoteSelection = {
       source: 'remote',
@@ -997,7 +1011,7 @@ export function createSoundtrackPlayer({
         title: 'Online soundtrack archive',
         trackIds: remoteTracks.map((track) => track.id),
         order,
-        repeat: 'all',
+        repeat,
       },
       notice: 'Streaming from the public RevealLine soundtrack archive.',
     };
@@ -1007,6 +1021,10 @@ export function createSoundtrackPlayer({
     failed = new Set();
     fallbackUsed = false;
     install(remoteSelection);
+    if (startTrackId !== null) {
+      const at = queue.indexOf(startTrackId);
+      queue = [...queue.slice(at), ...queue.slice(0, at)];
+    }
     return startAt(0, { fading: true, localOnly: false });
   }
   async function play() {
