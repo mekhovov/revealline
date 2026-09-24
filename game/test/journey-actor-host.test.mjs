@@ -40,14 +40,26 @@ test('material successor Solo earns the same exact clear and continues with its 
     return p.doc.body.dataset.flightState === 'running';
   });
   assert.equal(p.$('theme-select').value, 'horizon-actors-v1');
+  const acceptedPicture = p.rendered.backdrop;
+  assert.equal(acceptedPicture.kind, 'candidate-picture');
+  assert.equal(
+    acceptedPicture.assetRevision.sha256,
+    '3acf496d9a6bc9db2f83ac01d8255223b3913e7ae0a157e48559ac981c80b95d',
+  );
   const expected = createRun(p.rendered.run.level, { seed: 1, classId: 'scout' });
   p.key('ArrowDown');
   p.key('ArrowDown', false);
-  for (let i = 0; i < 414; i++) {
+  // The approved Standard pressure.v4 recipe completes this legal straight cut
+  // at tick 469; 414 was the untuned authored recipe.
+  for (let i = 0; i < 469; i++) {
     p.frame();
     stepRun(expected, { direction: 'down' }, FIXED_DT);
   }
   assert.equal(p.rendered.run.status, 'won');
+  assert.equal(expected.status, 'won');
+  assert.equal(expected.tick, 469);
+  assert.equal(p.rendered.run.classic.livesLost, 0);
+  assert.equal(p.rendered.backdrop, acceptedPicture);
   assert.deepEqual(authoritativeCheckpoint(p.rendered.run), authoritativeCheckpoint(expected));
   p.$('next-button').click();
   await settle(() => {

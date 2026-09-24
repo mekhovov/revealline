@@ -1,3 +1,4 @@
+import { chooseJourneyMission } from './helpers/library-selection.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { foundationReturnCaption, foundationCaptionForCell } from '../ui/foundation-feedback.mjs';
@@ -142,10 +143,13 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
       p.frame(0);
       return !p.$('race-pause').disabled;
     });
-    p.$('race-journey-find').click();
-    [...p.$('journey-cards').children]
-      .find((card) => card.dataset.missionId.endsWith('/nearby-shore'))
-      .click();
+    const previousRuns = [...p.renders];
+    await chooseJourneyMission(p, 'race-journey-find', 'opening', 'nearby-shore');
+    await settle(() => p.$('race-library-replace')?.open);
+    p.frame(0);
+    assert.equal(p.state(), 'paused');
+    assert.deepEqual(p.renders, previousRuns, 'Replacement waits for deliberate confirmation.');
+    p.$('race-library-play').click();
     await settle(() => {
       p.frame(0);
       return p.renders[0].levelId === 'nearby-shore' && !p.$('race-pause').disabled;

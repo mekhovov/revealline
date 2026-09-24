@@ -3,14 +3,56 @@ import assert from 'node:assert/strict';
 import { soloPage, settle, SoloElement } from './helpers/solo-dom.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
 import { attachMissionPicker } from '../ui/mission-picker.mjs';
+import { attachGameShell } from '../ui/game-shell.mjs';
 
 const visibleActions = (page) =>
   [...page.doc.querySelector('.home-actions').children]
     .filter((node) => !node.hidden)
     .map((node) => node.id || node.href);
 
-test('Mission setup keeps the original craft status in its modal and restores it after closing', async (t) => {
+// The ordinary host owns one asynchronous unified library. Exercise actual
+// activation and join its returned preparation rather than polling for a retired
+// dialog or clicking controls hidden behind it.
+async function openMissions(page, id = 'shell-play') {
+  const opener = page.$(id),
+    handler = opener.onclick;
+  let pending;
+  opener.onclick = (...args) => (pending = handler.apply(opener, args));
+  try {
+    opener.focus();
+    opener.click();
+  } finally {
+    opener.onclick = handler;
+  }
+  assert(pending instanceof Promise, 'Missions returns its actual preparation.');
+  await pending;
+  assert.equal(page.$('journey-chooser').open, true);
+  assert.equal(page.$('shell-missions').open, false);
+  const current = [...page.$('journey-cards').children].find(
+    (card) => JSON.parse(card.dataset.missionId)[3] === page.rendered.run.levelId,
+  );
+  assert(current, 'The current exact Legacy mission is present.');
+  assert.equal(page.doc.activeElement, current);
+}
+
+// Retain the historical shell component contract independently of normal player
+// navigation. Dispose the complete host before mounting its one replacement;
+// no second controller, simulation loop or shell owns these component tests.
+async function legacyMissionShell(t) {
   const page = await soloPage(t, { titleScreen: true });
+  page.win.emit('pagehide', { persisted: false });
+  const shell = attachGameShell({
+    document: page.doc,
+    initial: false,
+    canContinue: () => false,
+    pause() {},
+  });
+  t.after(() => shell.destroy());
+  return page;
+}
+
+test('retained Legacy setup keeps the original craft status in its modal and restores it after closing', async (t) => {
+  const page = await legacyMissionShell(t);
   const status = page.$('craft-preparation-status'),
     originalParent = status.parentNode,
     originalSiblings = [...originalParent.children],
@@ -64,7 +106,7 @@ test('direct briefing and disposal retain one craft presenter outside hidden mis
   assert.deepEqual(page.errors, []);
 });
 
-test('title keeps five game destinations and quick sound; About lives in Workshop and Back preserves an unstarted flight', async (t) => {
+test('title keeps its game destinations and quick sound; Workshop and unified Missions Back preserve an unstarted flight', async (t) => {
   // The native opening event and autofocus establish top-layer order when
   // Workshop retains Home beneath it. This finite DOM boundary owns neither
   // app navigation nor focus restoration; both remain the real implementations.
@@ -113,11 +155,12 @@ test('title keeps five game destinations and quick sound; About lives in Worksho
   page.$('shell-workshop-dialog').querySelector('button').click();
   assert.equal(page.$('shell-workshop-dialog').open, false);
   assert.equal(page.$('shell-home').open, true);
-  page.$('shell-play').click();
-  page.$('shell-prepare').click();
-  assert.equal(page.$('mission-picker-setup').open, true);
-  assert.equal(page.doc.activeElement.id, 'pack-select');
-  page.$('shell-missions-back').click();
+  await openMissions(page);
+  const setup = page.$('mission-picker-setup');
+  assert.equal(setup.closest('dialog'), page.$('journey-chooser'));
+  assert.equal(setup.querySelector('summary').textContent, 'Current Solo flight setup');
+  assert.equal(page.$('pack-select').closest('label').hidden, true);
+  page.$('journey-back').click();
   assert.equal(page.$('shell-home').open, true);
   assert.equal(page.doc.activeElement.id, 'shell-play', 'Back restores the actual title entry');
   page.frame(0);
@@ -127,8 +170,8 @@ test('title keeps five game destinations and quick sound; About lives in Worksho
   assert.deepEqual(page.errors, []);
 });
 
-test('mission gallery pages reuse locks; concealed pictures have no original and selection does not launch', async (t) => {
-  const page = await soloPage(t, { titleScreen: true });
+test('retained Legacy gallery pages reuse locks; concealed pictures have no original and selection does not launch', async (t) => {
+  const page = await legacyMissionShell(t);
   page.$('shell-play').click();
   const picker = attachMissionPicker({ document: page.doc });
   picker.sync();
@@ -157,21 +200,31 @@ test('mission gallery pages reuse locks; concealed pictures have no original and
   assert.equal(page.$('missions').querySelector('.selected').dataset.level, '0');
 });
 
-test('Deploy uses the existing start guard and Continue replaces Deploy after a paused flight', async (t) => {
-  const page = await soloPage(t, { titleScreen: true });
+test('retained Legacy Deploy respects a pending selector and forwards one accepted Start', async (t) => {
+  const page = await legacyMissionShell(t);
+  let starts = 0;
+  page.$('start-button').onclick = () => starts++;
   page.$('shell-play').click();
   page.$('pack-select').disabled = true;
   page.$('shell-deploy').click();
-  page.frame(0);
   assert.equal(page.$('shell-missions').open, true, 'A pending content switch blocks deployment');
+  assert.equal(starts, 0);
   assert.equal(page.rendered.run.tick, 0);
   page.$('pack-select').disabled = false;
-  // Browser observation normally refreshes the disabled button after the switch.
   page.$('shell-missions-back').click();
   page.$('shell-play').click();
   page.$('shell-deploy').click();
-  await settle(() => page.doc.body.dataset.flightState === 'running');
   assert.equal(page.$('shell-missions').open, false);
+  assert.equal(starts, 1, 'Only the accepted action reaches the host Start authority.');
+});
+
+test('visible title Start launches directly and Continue explicitly resumes the paused flight', async (t) => {
+  const page = await soloPage(t, { titleScreen: true });
+  page.$('shell-featured').click();
+  await settle(() => page.doc.body.dataset.flightState === 'running');
+  assert.equal(page.$('shell-home').open, false);
+  assert.equal(page.$('shell-missions').open, false);
+  assert.equal(page.$('journey-chooser')?.open ?? false, false);
   page.$('shell-menu').click();
   assert.deepEqual(visibleActions(page), [
     'shell-continue',
@@ -218,8 +271,7 @@ for (const origin of ['home', 'flight', 'brief']) {
         buttons: Array.from({ length: 17 }, () => ({ pressed: false, value: 0 })),
       };
       const page = await soloPage(t, { titleScreen: true, readPads: () => [pad] });
-      page.$('shell-play').click();
-      page.$('shell-deploy').click();
+      page.$('shell-featured').click();
       await settle(() => page.doc.body.dataset.flightState === 'running');
       page.key('ArrowDown');
       for (let i = 0; i < 24; i++) page.frame();
@@ -231,20 +283,21 @@ for (const origin of ['home', 'flight', 'brief']) {
       assert.equal(page.rendered.run.player.cutting, true);
       if (origin === 'home') {
         page.$('overlay-menu').click();
-        page.$('shell-play').click();
-        page.$('shell-prepare').click();
-        page.$('save-attempt-button').click();
+        await openMissions(page);
       } else if (origin === 'brief') page.$('overlay-brief').click();
-      else page.$('shell-packs').click();
+      else await openMissions(page, 'shell-packs');
       const checkpoint = authoritativeCheckpoint(page.rendered.run);
       const stored = [...page.storage.map];
-      assert.equal(page.$('shell-missions').open, true);
-      if (origin === 'brief') assert.equal(page.$('shell-missions').dataset.view, 'brief');
-      if (exit === 'button') page.$('shell-missions-back').click();
+      const dialog = page.$(origin === 'brief' ? 'shell-missions' : 'journey-chooser');
+      assert.equal(dialog.open, true);
+      assert.ok(page.storage.getItem('revealline.suspended.dev.v1'), 'The real cut is saved.');
+      if (origin === 'brief') assert.equal(dialog.dataset.view, 'brief');
+      if (exit === 'button')
+        page.$(origin === 'brief' ? 'shell-missions-back' : 'journey-back').click();
       else if (exit === 'escape') {
         const cancel = new Event('cancel', { cancelable: true });
-        if (page.$('shell-missions').dispatchEvent(cancel)) page.$('shell-missions').close();
-        assert.equal(cancel.defaultPrevented, true, 'The shell owns the native close destination');
+        if (dialog.dispatchEvent(cancel)) dialog.close();
+        assert.equal(cancel.defaultPrevented, true, 'The active owner handles native Back.');
       } else {
         page.frame();
         page.frame(); // Real controller adoption requires neutral samples.
@@ -255,7 +308,7 @@ for (const origin of ['home', 'flight', 'brief']) {
       }
       await Promise.resolve();
       page.frame(0);
-      assert.equal(page.$('shell-missions').open, false);
+      assert.equal(dialog.open, false);
       assert.equal(page.$('shell-home').open, origin === 'home');
       assert.equal(
         page.doc.activeElement.id,
@@ -287,8 +340,8 @@ for (const origin of ['home', 'flight', 'brief']) {
   }
 }
 
-test('Back to flight remains an intentional exit from title Missions', async (t) => {
-  const page = await soloPage(t, { titleScreen: true });
+test('retained Legacy Back to flight remains an intentional exit from title Missions', async (t) => {
+  const page = await legacyMissionShell(t);
   page.$('shell-play').click();
   page.$('shell-briefing').click();
   await Promise.resolve();

@@ -9,21 +9,8 @@ import { soloPage, settle, memoryStorage } from './helpers/solo-dom.mjs';
 import { couchPage } from './helpers/couch-host.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
+import { PNGImage } from './helpers/png-image.mjs';
 
-class CandidateImage {
-  width = 1774;
-  height = 887;
-  naturalWidth = 1774;
-  naturalHeight = 887;
-  set src(value) {
-    this.source = value;
-    queueMicrotask(() => this.onload?.());
-  }
-  async decode() {}
-  removeAttribute() {
-    this.source = '';
-  }
-}
 const fetchResponse = async (path) => {
   if (String(path).includes('/content-design/assets/')) return new Response(await readFile(path));
 };
@@ -32,7 +19,7 @@ async function solo(t, options = {}) {
     search: '?journey=opening',
     titleScreen: true,
     journeyIndexedDB: managedIndexedDB().indexedDB,
-    pictures: { Image: CandidateImage },
+    pictures: { Image: PNGImage },
     fetchResponse,
     ...options,
   });

@@ -1,0 +1,683 @@
+{
+  "format": "CurrentTeamSpatialHostRoutesV1",
+  "ruleset": "gameplay-pressure.v4",
+  "seed": 17,
+  "rows": [
+    {
+      "sourceId": "team-spatial-originals-review",
+      "sourceRevision": "return-network-1",
+      "missionId": "shared-lookout",
+      "difficulty": "gentle",
+      "authoredIdentity": "fe31917deb35a373",
+      "tunedIdentity": "a15192de4ed4d7e5",
+      "tick": 3173,
+      "coverage": 0.8066169617893756,
+      "closed": [2, 2],
+      "method": "legal safe-path straight-return greedy",
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 767
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 381
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 537
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 374
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 28
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 387
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 83
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 530
+        }
+      ],
+      "pickups": []
+    },
+    {
+      "sourceId": "team-spatial-originals-review",
+      "sourceRevision": "return-network-1",
+      "missionId": "shared-lookout",
+      "difficulty": "standard",
+      "authoredIdentity": "62a3cea11c91e544",
+      "tunedIdentity": "6e3f47e042c44f50",
+      "tick": 5026,
+      "closed": [2, 3],
+      "pickups": [],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 808
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 143
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 136
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 900
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 299
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 710
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 204
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 537
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 129
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 366
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 292
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 340
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 157
+        }
+      ]
+    },
+    {
+      "sourceId": "team-spatial-originals-review",
+      "sourceRevision": "return-network-1",
+      "missionId": "shared-lookout",
+      "difficulty": "expert",
+      "authoredIdentity": "d5245fd102eb220e",
+      "tunedIdentity": "f1ab53669d13e892",
+      "tick": 4807,
+      "coverage": 0.7469711090400746,
+      "closed": [4, 2],
+      "method": "legal safe-path straight-return greedy",
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 14
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 808
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 143
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 218
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 849
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 56
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 102
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 272
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 951
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 217
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 537
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 266
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 21
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 347
+        }
+      ],
+      "pickups": []
+    },
+    {
+      "sourceId": "team-spatial-originals-review",
+      "sourceRevision": "return-network-1",
+      "missionId": "twin-depots",
+      "difficulty": "gentle",
+      "authoredIdentity": "23635ee3f3208bfb",
+      "tunedIdentity": "2daf63aa8a789937",
+      "tick": 5637,
+      "coverage": 0.7633079847908745,
+      "closed": [5, 2],
+      "method": "legal safe-path straight-return greedy",
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 224
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 224
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 191
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 469
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 272
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 469
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 191
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 279
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 157
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 34
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 286
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 136
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 469
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 469
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 312
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 469
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 469
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 469
+        }
+      ],
+      "pickups": []
+    },
+    {
+      "sourceId": "team-spatial-originals-review",
+      "sourceRevision": "return-network-1",
+      "missionId": "twin-depots",
+      "difficulty": "standard",
+      "authoredIdentity": "78895a1f2fd1f045",
+      "tunedIdentity": "1b2625eaf0f10fce",
+      "tick": 3201,
+      "closed": [3, 3],
+      "pickups": [],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 224
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 224
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 82
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 177
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 469
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 178
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 177
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 183
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 95
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 462
+        }
+      ]
+    },
+    {
+      "sourceId": "team-spatial-originals-review",
+      "sourceRevision": "return-network-1",
+      "missionId": "twin-depots",
+      "difficulty": "expert",
+      "authoredIdentity": "6b7546c038eb0282",
+      "tunedIdentity": "602c4cdcfa73da4b",
+      "tick": 3289,
+      "coverage": 0.7609315589353612,
+      "closed": [5, 2],
+      "method": "legal safe-path straight-return greedy",
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 224
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 238
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 136
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 96
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 287
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 184
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 157
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 157
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 191
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 123
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 184
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 95
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 286
+        }
+      ],
+      "pickups": []
+    }
+  ]
+}

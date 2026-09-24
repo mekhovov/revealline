@@ -1,6 +1,13 @@
 # RevealLine: detailed delivery history
 
-## Current status — 23 September 2026
+## Current execution order — 24 September 2026
+
+The approved [player-first UX execution board](player-first-ux-execution.md) now
+controls UX0–UX6 priorities, acceptance and release discipline. UX0 is implementing;
+it is not a public release. Its dated reconciliation records the separate v0.96.0
+promotion and the v0.98.0 UX0 candidate. Preserve the older observations below.
+
+## Previous status — 23 September 2026
 
 Use the [completed and remaining delivery plan](plan-status-2026-09-23.md) for the
 current release state, priorities, estimates and P00–P15 closure checklist.

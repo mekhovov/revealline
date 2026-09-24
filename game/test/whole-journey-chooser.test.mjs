@@ -59,7 +59,8 @@ for (const mode of ['solo', 'versus'])
     chooser.open(opener);
     assert.equal(paused, 1);
     assert.equal($('journey-chooser').open, true);
-    assert.equal(doc.activeElement, $('journey-search'));
+    assert.equal(doc.activeElement, $('journey-cards').children[0]);
+    assert.equal(chooser.primary(), doc.activeElement);
     assert.equal($('journey-cards').children.length, 83);
     assert.equal($('journey-campaign').options.length, 26);
     assert.match($('journey-cards').children[0].textContent, /Cleared/);
@@ -79,6 +80,7 @@ for (const mode of ['solo', 'versus'])
     assert.equal($('journey-chooser').open, false);
     assert.equal(sequence.next(home.id), null);
     chooser.open(opener);
+    assert.equal(doc.activeElement.dataset.missionId, home.id);
     $('journey-search').value = '';
     $('journey-search').emit('input');
     const skipped = $('journey-cards').children[1];
@@ -93,8 +95,43 @@ for (const mode of ['solo', 'versus'])
     $('journey-search').emit('input');
     assert.equal($('journey-cards').children.length, 0);
     assert.match($('journey-chooser-status').textContent, /0 missions/);
+    assert.equal(chooser.primary(), $('journey-search'));
     $('journey-back').click();
     assert.equal($('journey-chooser').open, false);
     assert.equal(doc.activeElement, opener);
     assert.deepEqual(state, before, 'Selection/filtering must not award, skip or erase progress');
   });
+
+test('historical chooser starts at the current mission and retains deliberate browsing focus', () => {
+  const catalog = createJourneyCatalog([
+    {
+      id: 'first',
+      title: 'First campaign',
+      levels: [
+        { id: 'one', name: 'One' },
+        { id: 'two', name: 'Two' },
+        { id: 'three', name: 'Three' },
+      ],
+    },
+  ]);
+  const state = emptyJourneyProfile();
+  state.cursors.solo = catalog.missions[1].id;
+  const before = structuredClone(state);
+  const doc = new Document();
+  const chooser = attachJourneyChooser({
+    document: doc,
+    catalog,
+    profile: { snapshot: () => structuredClone(state) },
+    onChoose() {},
+  });
+  chooser.open();
+  assert.equal(doc.activeElement.dataset.missionId, catalog.missions[1].id);
+  assert.ok(doc.activeElement.scrolled > 0);
+  doc.getElementById('journey-cards').children[2].focus();
+  chooser.close();
+  chooser.open();
+  assert.equal(doc.activeElement.dataset.missionId, catalog.missions[2].id);
+  assert.equal(chooser.primary(), doc.activeElement);
+  assert.deepEqual(state, before);
+  chooser.destroy();
+});

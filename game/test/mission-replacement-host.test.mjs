@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { soloPage, SoloElement, memoryStorage, settle } from './helpers/solo-dom.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
+import { createRun, stepRun, FIXED_DT } from '../core/index.mjs';
 import { emptyLibrary, setCampaignProgress, saveLibrary, updatePreferences } from '../library.mjs';
 import { emptyProgress } from '../progress.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
@@ -74,12 +75,37 @@ async function flight(h, paused = true) {
   await settle(() => h.doc.body.dataset.pictureState === 'ready');
   h.$('start-button').click();
   await settle(() => h.doc.body.dataset.flightState === 'running');
+  h.frame(0); // Paint the newly started attempt before taking its reference.
+  const run = h.rendered.run,
+    reference = createRun(run.level, {
+      seed: run.seed,
+      classId: run.classId,
+      turnPolicy: run.turnPolicy,
+      classRecipes: run.classRecipes,
+    });
+  assert.deepEqual(authoritativeCheckpoint(run), authoritativeCheckpoint(reference));
+  // Current movement reaches the old 27-tick intersection before Right can
+  // stay queued. This legal prefix creates a real exposed cut and pending turn.
   h.key('ArrowDown');
-  for (let n = 0; n < 27; n++) h.frame();
+  for (let n = 0; n < 8; n++) {
+    stepRun(reference, { direction: 'down' }, FIXED_DT);
+    h.frame();
+  }
   h.key('ArrowDown', false);
   h.key('ArrowRight');
+  stepRun(reference, { direction: 'right' }, FIXED_DT);
   h.frame();
   h.key('ArrowRight', false);
+  assert.deepEqual(
+    authoritativeCheckpoint(run),
+    authoritativeCheckpoint(reference),
+    JSON.stringify({
+      hostTick: run.tick,
+      referenceTick: reference.tick,
+      hostPlayer: run.player,
+      referencePlayer: reference.player,
+    }),
+  );
   assert.equal(
     h.rendered.run.player.cutting,
     true,

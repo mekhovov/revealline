@@ -1,3 +1,7 @@
+import {
+  playCurrentExternalRoute,
+  proveHistoricalExternalRoute,
+} from './helpers/external-current-host-route.mjs';
 // Actual app/core/store source. DOM, IndexedDB and image dimensions are finite
 // modeled boundaries; original compiler bytes/hashes are real, not native browser proof.
 import test from 'node:test';
@@ -208,6 +212,8 @@ async function page(t, f = {}, release = false) {
 const id = (e, kind) => `optional-worlds-source-${e.descriptor.id}-${kind}`;
 const playControl = (p, e) => p.$(id(e, 'download')) ?? p.$(id(e, 'choose'));
 async function open(p) {
+  // Mount the retained More Worlds component for its import/ownership contract.
+  // Ordinary player entry now uses unified Missions; this is not public-entry evidence.
   p.$('shell-menu').click();
   p.$('shell-play').click();
   p.$('shell-mode-choice').open = true;
@@ -357,16 +363,8 @@ test('three Sentinel Download & play choices preserve an unrelated cut through S
         await play(p, e, { replaceFlight: e === allEditions[0] });
         assert.equal(p.rendered.backdrop.pin.identity.baseCampaignKey, e.descriptor.campaignKey);
         assert.equal(p.rendered.backdrop.pin.sha256, e.descriptor.originals[0].sha256);
-        for (const step of route.segments) {
-          if (step.input.direction) direction(p, step.input.direction);
-          if (step.input.action) p.key('KeyE');
-          ticks(p, step.ticks);
-          if (step.input.action) p.key('KeyE', false);
-        }
-        p.frame(0);
-        assert.equal(p.rendered.run.status, 'won');
-        assert.equal(p.rendered.run.score, route.expected.score);
-        assert.equal(p.rendered.run.lives, route.expected.lives);
+        proveHistoricalExternalRoute(e, route);
+        playCurrentExternalRoute(p, e);
       }
       const library = loadLibrary(f.storage, 'revealline.library.release-0.36.0.v1').library;
       receipts = library.pictureReceipts;

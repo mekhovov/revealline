@@ -237,11 +237,12 @@ test('lobby keyboard navigation reaches Race and accessibility controls while ex
   assert.equal(left, 1, 'Lobby Back activates the visible Race destination.');
   f.$('coop-start').click();
   f.$('coop-pause').click();
-  for (let index = 0; index < 6; index++) {
+  for (let index = 0; index < 30; index++) {
     f.press('Tab');
     assert.ok(
-      f.$('coop-overlay').contains(f.doc.activeElement),
-      'Paused navigation stays in the overlay.',
+      f.$('coop-overlay').contains(f.doc.activeElement) ||
+        f.$('coop-home').closest('.masthead').contains(f.doc.activeElement),
+      'Paused navigation includes the visible masthead and excludes flight controls.',
     );
   }
 });
@@ -276,7 +277,7 @@ test('real keyboard self-crossings explain the shared recovery and cause-aware r
   // An authored empty arena isolates input, recovery and debrief behavior from enemy motion.
   pack.levels[0].enemies = [];
   await f.selectFile(JSON.stringify(pack));
-  f.$('coop-difficulty').value = 'expert';
+  await f.choose('coop-difficulty', 'expert');
   f.$('coop-start').click();
   f.tick(3);
   const loop = () => {
@@ -929,10 +930,7 @@ for (const [kind, id, label] of departures)
       unchangedPaused(f, held);
       f.$('coop-discard-stay').click();
       assert.equal(f.$('coop-discard-dialog').open, false);
-      assert.equal(
-        f.doc.activeElement.id,
-        kind === 'setup' || kind === 'retry' ? id : 'coop-resume',
-      );
+      assert.equal(f.doc.activeElement.id, id, 'Stay restores the actual visible opener.');
       unchangedPaused(f, held);
       f.$('coop-resume').click();
       f.tick(65);
@@ -1124,7 +1122,7 @@ for (const mode of ['blur', 'hidden', 'pagehide'])
     unchangedPaused(f, before);
   });
 
-test('faulted attempt cannot Resume and both native Back and header Stay return to visible Retry', async (t) => {
+test('faulted attempt cannot Resume; Back focuses Retry and header Stay restores its opener', async (t) => {
   const errors = [];
   t.mock.method(console, 'error', (e) => errors.push(e));
   const f = await page(t, { nativeFocus: true, capturePaint: true });
@@ -1140,7 +1138,7 @@ test('faulted attempt cannot Resume and both native Back and header Stay return 
   f.$('coop-home').click();
   assert.match(f.$('coop-discard-copy').textContent, /cannot resume/);
   f.$('coop-discard-stay').click();
-  assert.equal(f.doc.activeElement.id, 'coop-retry');
+  assert.equal(f.doc.activeElement.id, 'coop-home');
   f.$('coop-resume').click();
   unchangedPaused(f, before);
   f.$('coop-retry').click();

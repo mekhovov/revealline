@@ -43,6 +43,21 @@ const missionCard = (page) =>
   [...(page.$('journey-cards')?.children ?? [])].find(
     (button) => button.dataset.missionId === missionId,
   );
+function assertCurrentBaseCardFocused(page) {
+  const row = index.missions.find(
+    (item) => item.source === 'base' && item.levelId === page.renders[0].levelId,
+  );
+  assert.ok(row, 'The fixture retains an exact indexed base-game mission.');
+  const id = libraryMissionId({
+    owner: JSON.stringify(['classic', row.source, row.packId]),
+    edition: row.sourceFile.sha256,
+    campaign: row.campaignKey,
+    mission: row.levelId,
+    revision: row.levelRevision,
+  });
+  assert.equal(page.doc.activeElement.dataset.missionId, id);
+  assert.equal(page.$('journey-cards').contains(page.doc.activeElement), true);
+}
 const packKey = 'revealline.packs.dev.v1';
 const hostTest = (name, run) => test(name, { timeout: 120000 }, run);
 
@@ -292,7 +307,7 @@ hostTest(
       before = snapshot(p);
     await openCatalogue(p);
     assert.equal(p.$('optional-worlds-manage')?.getClientRects().length ?? 0, 0);
-    assert.equal(p.doc.activeElement, p.$('journey-search'));
+    assertCurrentBaseCardFocused(p);
     await closeCatalogue(p);
     assert.ok(
       p.doc.activeElement === p.$('race-chapters'),
@@ -858,7 +873,7 @@ hostTest(
       () => p.$('journey-chooser')?.open && missionCard(p)?.disabled === false,
       'South must open the shared All missions chooser.',
     );
-    assert.equal(p.doc.activeElement.id, 'journey-search');
+    assertCurrentBaseCardFocused(p);
     assertRetained(p, before);
     p.pulse(1, 1);
     assert.equal(p.$('journey-chooser').open, true, 'The other pad does not own this menu.');

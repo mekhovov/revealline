@@ -47,7 +47,10 @@ test('earned First Connection focuses Next and one explicit action prepares and 
   earnTeamVictory(t, f, 'relay-yard');
   assert.equal(f.$('coop-next').hidden, true);
   assert.equal(f.doc.activeElement.id, 'coop-discovery-paused');
-  assert.match(f.$('coop-overlay-copy').textContent, /Pack complete.*Browse Team arenas/i);
+  assert.match(
+    f.$('coop-overlay-copy').textContent,
+    /End of the Team mission library\. Browse Team arenas/i,
+  );
   f.tap('Enter');
   await waitFor(() => f.$('journey-chooser')?.open);
   f.$('journey-back').focus();
@@ -420,7 +423,10 @@ test('a completed Team pack focuses Browse Team arenas and keeps the earned resu
   assert.equal(f.$('coop-next').hidden, true);
   assert.equal(f.$('coop-next-cancel').hidden, true);
   assert.equal(f.doc.activeElement.id, 'coop-discovery-paused');
-  assert.match(f.$('coop-overlay-copy').textContent, /Pack complete.*Browse Team arenas/i);
+  assert.match(
+    f.$('coop-overlay-copy').textContent,
+    /End of the Team mission library\. Browse Team arenas/i,
+  );
   f.$('coop-next').click();
   f.tick(5);
   assertResult(f, result);

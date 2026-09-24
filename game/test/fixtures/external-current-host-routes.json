@@ -1,0 +1,657 @@
+{
+  "format": "revealline-external-current-host-routes.v1",
+  "ruleset": "gameplay-pressure.v4",
+  "seed": 1,
+  "classId": "scout",
+  "turnPolicy": "immediate",
+  "difficulty": "standard",
+  "routes": {
+    "countercurrent": [
+      {
+        "direction": null,
+        "ticks": 960
+      },
+      {
+        "direction": "up",
+        "ticks": 244
+      },
+      {
+        "direction": "right",
+        "ticks": 434
+      },
+      {
+        "direction": "down",
+        "ticks": 475
+      },
+      {
+        "direction": "up",
+        "ticks": 285
+      },
+      {
+        "direction": "right",
+        "ticks": 524
+      }
+    ],
+    "fracture": [
+      {
+        "direction": "up",
+        "ticks": 244
+      },
+      {
+        "direction": "right",
+        "ticks": 231
+      },
+      {
+        "direction": "down",
+        "ticks": 475
+      },
+      {
+        "direction": "right",
+        "ticks": 285
+      },
+      {
+        "direction": "up",
+        "ticks": 469
+      }
+    ],
+    "sentinel": [
+      {
+        "direction": null,
+        "ticks": 1
+      },
+      {
+        "direction": null,
+        "ticks": 1,
+        "action": true
+      },
+      {
+        "direction": null,
+        "ticks": 58
+      },
+      {
+        "direction": "down",
+        "ticks": 231
+      },
+      {
+        "direction": "right",
+        "ticks": 570
+      },
+      {
+        "direction": "up",
+        "ticks": 469
+      },
+      {
+        "direction": "down",
+        "ticks": 7
+      },
+      {
+        "direction": "up",
+        "ticks": 14
+      },
+      {
+        "direction": "left",
+        "ticks": 570
+      },
+      {
+        "direction": "down",
+        "ticks": 190
+      },
+      {
+        "direction": "right",
+        "ticks": 571
+      },
+      {
+        "direction": "left",
+        "ticks": 122
+      },
+      {
+        "direction": "up",
+        "ticks": 184
+      }
+    ],
+    "foundry": [
+      {
+        "direction": "down",
+        "ticks": 136
+      },
+      {
+        "direction": "left",
+        "ticks": 217
+      },
+      {
+        "direction": "down",
+        "ticks": 333
+      }
+    ],
+    "countercurrent-cut": [
+      {
+        "direction": "up",
+        "ticks": 62
+      }
+    ],
+    "fracture-cut": [
+      {
+        "direction": "left",
+        "ticks": 62
+      }
+    ]
+  },
+  "bindings": [
+    {
+      "packId": "countercurrent-fpv",
+      "campaignId": "countercurrent-fpv",
+      "levelId": "countercurrent-offset-docks",
+      "index": 0,
+      "routeId": "countercurrent",
+      "authoredIdentity": "bf9d6fd28af3f4fb",
+      "tunedIdentity": "f75c3cbeba26f399",
+      "classIdentity": "7e227f8892b88ebd",
+      "expected": {
+        "status": "won",
+        "tick": 2922,
+        "score": 15740,
+        "lives": 3,
+        "livesLost": 0,
+        "coverage": 0.6879370629370629,
+        "trailCells": 0
+      },
+      "captures": [
+        {
+          "tick": 2106,
+          "count": 1042
+        },
+        {
+          "tick": 2922,
+          "count": 532
+        }
+      ],
+      "objectives": []
+    },
+    {
+      "packId": "countercurrent-fpv",
+      "campaignId": "countercurrent-fpv",
+      "levelId": "countercurrent-sandbar-braid",
+      "index": 1,
+      "routeId": "countercurrent-cut",
+      "authoredIdentity": "4f54dba01f088b58",
+      "tunedIdentity": "bf3b82cb7b60ee2d",
+      "classIdentity": "7e227f8892b88ebd",
+      "expected": {
+        "status": "running",
+        "tick": 62,
+        "score": 0,
+        "lives": 3,
+        "livesLost": 0,
+        "coverage": 0,
+        "trailCells": 5
+      },
+      "captures": [],
+      "objectives": []
+    },
+    {
+      "packId": "countercurrent-ukraine",
+      "campaignId": "countercurrent-ukraine",
+      "levelId": "countercurrent-offset-docks",
+      "index": 0,
+      "routeId": "countercurrent",
+      "authoredIdentity": "ca92551176edad97",
+      "tunedIdentity": "f7a67e32a02c1752",
+      "classIdentity": "7e227f8892b88ebd",
+      "expected": {
+        "status": "won",
+        "tick": 2922,
+        "score": 15740,
+        "lives": 3,
+        "livesLost": 0,
+        "coverage": 0.6879370629370629,
+        "trailCells": 0
+      },
+      "captures": [
+        {
+          "tick": 2106,
+          "count": 1042
+        },
+        {
+          "tick": 2922,
+          "count": 532
+        }
+      ],
+      "objectives": []
+    },
+    {
+      "packId": "countercurrent-retro",
+      "campaignId": "countercurrent-retro",
+      "levelId": "countercurrent-offset-docks",
+      "index": 0,
+      "routeId": "countercurrent",
+      "authoredIdentity": "079128cf018c0ef6",
+      "tunedIdentity": "c1903ff8b8014c68",
+      "classIdentity": "7e227f8892b88ebd",
+      "expected": {
+        "status": "won",
+        "tick": 2922,
+        "score": 15740,
+        "lives": 3,
+        "livesLost": 0,
+        "coverage": 0.6879370629370629,
+        "trailCells": 0
+      },
+      "captures": [
+        {
+          "tick": 2106,
+          "count": 1042
+        },
+        {
+          "tick": 2922,
+          "count": 532
+        }
+      ],
+      "objectives": []
+    },
+    {
+      "packId": "countercurrent-coupa",
+      "campaignId": "countercurrent-coupa",
+      "levelId": "countercurrent-offset-docks",
+      "index": 0,
+      "routeId": "countercurrent",
+      "authoredIdentity": "05033eae2029a32e",
+      "tunedIdentity": "f01af8b266279988",
+      "classIdentity": "7e227f8892b88ebd",
+      "expected": {
+        "status": "won",
+        "tick": 2922,
+        "score": 15740,
+        "lives": 3,
+        "livesLost": 0,
+        "coverage": 0.6879370629370629,
+        "trailCells": 0
+      },
+      "captures": [
+        {
+          "tick": 2106,
+          "count": 1042
+        },
+        {
+          "tick": 2922,
+          "count": 532
+        }
+      ],
+      "objectives": []
+    },
+    {
+      "packId": "fracture-lines-fpv",
+      "campaignId": "fracture-lines-fpv",
+      "levelId": "fracture-lines-split-ring",
+      "index": 0,
+      "routeId": "fracture",
+      "authoredIdentity": "9efd355093b84822",
+      "tunedIdentity": "712e812f9dffb737",
+      "classIdentity": "7e227f8892b88ebd",
+      "expected": {
+        "status": "won",
+        "tick": 1704,
+        "score": 16320,
+        "lives": 3,
+        "livesLost": 0,
+        "coverage": 0.7338129496402878,
+        "trailCells": 0
+      },
+      "captures": [
+        {
+          "tick": 943,
+          "count": 578
+        },
+        {
+          "tick": 1704,
+          "count": 1054
+        }
+      ],
+      "objectives": []
+    },
+    {
+      "packId": "fracture-lines-fpv",
+      "campaignId": "fracture-lines-fpv",
+      "levelId": "fracture-lines-fault-fan",
+      "index": 1,
+      "routeId": "fracture-cut",
+      "authoredIdentity": "929ed259ba9b6892",
+      "tunedIdentity": "b8b62705f094fe8e",
+      "classIdentity": "7e227f8892b88ebd",
+      "expected": {
+        "status": "running",
+        "tick": 62,
+        "score": 0,
+        "lives": 3,
+        "livesLost": 0,
+        "coverage": 0,
+        "trailCells": 5
+      },
+      "captures": [],
+      "objectives": []
+    },
+    {
+      "packId": "fracture-lines-ukraine",
+      "campaignId": "fracture-lines-ukraine",
+      "levelId": "fracture-lines-split-ring",
+      "index": 0,
+      "routeId": "fracture",
+      "authoredIdentity": "ca96540764601309",
+      "tunedIdentity": "a2eb5ed21747d0aa",
+      "classIdentity": "7e227f8892b88ebd",
+      "expected": {
+        "status": "won",
+        "tick": 1704,
+        "score": 16320,
+        "lives": 3,
+        "livesLost": 0,
+        "coverage": 0.7338129496402878,
+        "trailCells": 0
+      },
+      "captures": [
+        {
+          "tick": 943,
+          "count": 578
+        },
+        {
+          "tick": 1704,
+          "count": 1054
+        }
+      ],
+      "objectives": []
+    },
+    {
+      "packId": "fracture-lines-retro",
+      "campaignId": "fracture-lines-retro",
+      "levelId": "fracture-lines-split-ring",
+      "index": 0,
+      "routeId": "fracture",
+      "authoredIdentity": "c14f495a6a3f0110",
+      "tunedIdentity": "3c933127b1f985ec",
+      "classIdentity": "7e227f8892b88ebd",
+      "expected": {
+        "status": "won",
+        "tick": 1704,
+        "score": 16320,
+        "lives": 3,
+        "livesLost": 0,
+        "coverage": 0.7338129496402878,
+        "trailCells": 0
+      },
+      "captures": [
+        {
+          "tick": 943,
+          "count": 578
+        },
+        {
+          "tick": 1704,
+          "count": 1054
+        }
+      ],
+      "objectives": []
+    },
+    {
+      "packId": "fracture-lines-coupa",
+      "campaignId": "fracture-lines-coupa",
+      "levelId": "fracture-lines-split-ring",
+      "index": 0,
+      "routeId": "fracture",
+      "authoredIdentity": "ae82ddb0ab26456c",
+      "tunedIdentity": "7d31857d075ed614",
+      "classIdentity": "7e227f8892b88ebd",
+      "expected": {
+        "status": "won",
+        "tick": 1704,
+        "score": 16320,
+        "lives": 3,
+        "livesLost": 0,
+        "coverage": 0.7338129496402878,
+        "trailCells": 0
+      },
+      "captures": [
+        {
+          "tick": 943,
+          "count": 578
+        },
+        {
+          "tick": 1704,
+          "count": 1054
+        }
+      ],
+      "objectives": []
+    },
+    {
+      "packId": "route-worlds-ukraine",
+      "campaignId": "route-worlds-ukraine",
+      "levelId": "route-worlds-ukraine-foundry",
+      "index": 0,
+      "routeId": "foundry",
+      "authoredIdentity": "c730f3c74eee3a60",
+      "tunedIdentity": "e624e140303c4af2",
+      "classIdentity": "7e227f8892b88ebd",
+      "expected": {
+        "status": "won",
+        "tick": 686,
+        "score": 23040,
+        "lives": 1,
+        "livesLost": 0,
+        "coverage": 1,
+        "trailCells": 0
+      },
+      "captures": [
+        {
+          "tick": 686,
+          "count": 2304
+        }
+      ],
+      "objectives": []
+    },
+    {
+      "packId": "route-worlds-retro",
+      "campaignId": "route-worlds-retro",
+      "levelId": "route-worlds-retro-foundry",
+      "index": 0,
+      "routeId": "foundry",
+      "authoredIdentity": "71980a0a066848be",
+      "tunedIdentity": "fd08e6c9726bc934",
+      "classIdentity": "7e227f8892b88ebd",
+      "expected": {
+        "status": "won",
+        "tick": 686,
+        "score": 23040,
+        "lives": 1,
+        "livesLost": 0,
+        "coverage": 1,
+        "trailCells": 0
+      },
+      "captures": [
+        {
+          "tick": 686,
+          "count": 2304
+        }
+      ],
+      "objectives": []
+    },
+    {
+      "packId": "route-worlds-coupa",
+      "campaignId": "route-worlds-coupa",
+      "levelId": "route-worlds-coupa-foundry",
+      "index": 0,
+      "routeId": "foundry",
+      "authoredIdentity": "0812156d3938edd2",
+      "tunedIdentity": "c4330991435198f1",
+      "classIdentity": "7e227f8892b88ebd",
+      "expected": {
+        "status": "won",
+        "tick": 686,
+        "score": 23040,
+        "lives": 1,
+        "livesLost": 0,
+        "coverage": 1,
+        "trailCells": 0
+      },
+      "captures": [
+        {
+          "tick": 686,
+          "count": 2304
+        }
+      ],
+      "objectives": []
+    },
+    {
+      "packId": "sentinel-circuit-fpv",
+      "campaignId": "sentinel-circuit-fpv",
+      "levelId": "sentinel-circuit-fpv-listening-court",
+      "index": 0,
+      "routeId": "sentinel",
+      "authoredIdentity": "df9bf840b464856c",
+      "tunedIdentity": "7a01df15bb202d50",
+      "classIdentity": "7e227f8892b88ebd",
+      "expected": {
+        "status": "won",
+        "tick": 2988,
+        "score": 22360,
+        "lives": 3,
+        "livesLost": 0,
+        "coverage": 0.9545851528384279,
+        "trailCells": 0
+      },
+      "captures": [
+        {
+          "tick": 1330,
+          "count": 986
+        },
+        {
+          "tick": 2675,
+          "count": 813
+        },
+        {
+          "tick": 2988,
+          "count": 387
+        }
+      ],
+      "objectives": [
+        {
+          "tick": 2988,
+          "id": "court-listening-relay"
+        }
+      ]
+    },
+    {
+      "packId": "sentinel-circuit-ukraine",
+      "campaignId": "sentinel-circuit-ukraine",
+      "levelId": "sentinel-circuit-ukraine-listening-court",
+      "index": 0,
+      "routeId": "sentinel",
+      "authoredIdentity": "436859d1f847b391",
+      "tunedIdentity": "1af49ebcf6971992",
+      "classIdentity": "7e227f8892b88ebd",
+      "expected": {
+        "status": "won",
+        "tick": 2988,
+        "score": 22360,
+        "lives": 3,
+        "livesLost": 0,
+        "coverage": 0.9545851528384279,
+        "trailCells": 0
+      },
+      "captures": [
+        {
+          "tick": 1330,
+          "count": 986
+        },
+        {
+          "tick": 2675,
+          "count": 813
+        },
+        {
+          "tick": 2988,
+          "count": 387
+        }
+      ],
+      "objectives": [
+        {
+          "tick": 2988,
+          "id": "court-listening-relay"
+        }
+      ]
+    },
+    {
+      "packId": "sentinel-circuit-retro",
+      "campaignId": "sentinel-circuit-retro",
+      "levelId": "sentinel-circuit-retro-listening-court",
+      "index": 0,
+      "routeId": "sentinel",
+      "authoredIdentity": "e7a39853072890d9",
+      "tunedIdentity": "a745a272a9e2fa2a",
+      "classIdentity": "7e227f8892b88ebd",
+      "expected": {
+        "status": "won",
+        "tick": 2988,
+        "score": 22360,
+        "lives": 3,
+        "livesLost": 0,
+        "coverage": 0.9545851528384279,
+        "trailCells": 0
+      },
+      "captures": [
+        {
+          "tick": 1330,
+          "count": 986
+        },
+        {
+          "tick": 2675,
+          "count": 813
+        },
+        {
+          "tick": 2988,
+          "count": 387
+        }
+      ],
+      "objectives": [
+        {
+          "tick": 2988,
+          "id": "court-listening-relay"
+        }
+      ]
+    },
+    {
+      "packId": "sentinel-circuit-coupa",
+      "campaignId": "sentinel-circuit-coupa",
+      "levelId": "sentinel-circuit-coupa-listening-court",
+      "index": 0,
+      "routeId": "sentinel",
+      "authoredIdentity": "5634727fc2c5151d",
+      "tunedIdentity": "18cb06b27b502028",
+      "classIdentity": "7e227f8892b88ebd",
+      "expected": {
+        "status": "won",
+        "tick": 2988,
+        "score": 22360,
+        "lives": 3,
+        "livesLost": 0,
+        "coverage": 0.9545851528384279,
+        "trailCells": 0
+      },
+      "captures": [
+        {
+          "tick": 1330,
+          "count": 986
+        },
+        {
+          "tick": 2675,
+          "count": 813
+        },
+        {
+          "tick": 2988,
+          "count": 387
+        }
+      ],
+      "objectives": [
+        {
+          "tick": 2988,
+          "id": "court-listening-relay"
+        }
+      ]
+    }
+  ]
+}

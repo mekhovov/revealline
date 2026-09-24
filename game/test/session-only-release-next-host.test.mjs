@@ -1,3 +1,4 @@
+import { winCurrentOpening } from './helpers/solo-opening-win.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
@@ -178,10 +179,7 @@ test('session-only Next prepares a new exact original without persistent writes'
     page.frame(0);
     return page.doc.body.dataset.flightState === 'running';
   });
-  page.key('ArrowDown');
-  page.key('ArrowDown', false);
-  for (let i = 0; i < 1200 && page.rendered.run.status !== 'won'; i++) page.frame();
-  assert.equal(page.rendered.run.status, 'won');
+  winCurrentOpening(page);
   assert.equal(page.$('next-button').hidden, false);
   const won = page.rendered.run,
     writes = memory.allPuts.length,

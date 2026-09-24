@@ -173,7 +173,19 @@ async function host(t, mode, { fetchResponse, defaultEntry = false } = {}) {
   (mode === 'team' ? p.pads : pads).push(pad);
   let now = 1000;
   t.mock.method(performance, 'now', () => now);
+  function layoutMissionCards() {
+    // Finite three-column browser geometry. A shared default rectangle would
+    // incorrectly model every mission as an overlapping control in one row.
+    for (const [index, card] of [...(p.$('journey-cards')?.children ?? [])].entries())
+      card._rect = {
+        x: (index % 3) * 180,
+        y: Math.floor(index / 3) * 150,
+        width: 160,
+        height: 130,
+      };
+  }
   const frame = () => {
+    layoutMissionCards();
     now += 30;
     mode === 'team' ? p.tick(2) : p.frame(30);
   };
@@ -187,7 +199,16 @@ async function host(t, mode, { fetchResponse, defaultEntry = false } = {}) {
   frame();
   if (mode !== 'solo') pulse(0); // Couch adoption is not an action.
   function reach(target, direction = 13) {
-    for (let i = 0; i < 260 && p.doc.activeElement !== target; i++) pulse(direction);
+    for (let i = 0; i < 260 && p.doc.activeElement !== target; i++) {
+      layoutMissionCards();
+      const grid = p.$('journey-cards'),
+        current = p.doc.activeElement;
+      if (grid?.contains(current) && grid.contains(target)) {
+        const from = current.getBoundingClientRect(),
+          to = target.getBoundingClientRect();
+        pulse(to.y < from.y ? 12 : to.y > from.y ? 13 : to.x < from.x ? 14 : 15);
+      } else pulse(direction);
+    }
     assert.equal(
       p.doc.activeElement,
       target,

@@ -1,8 +1,13 @@
+import { openMissionLibrary, activateMissionCard } from './helpers/library-selection.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { soloPage, memoryStorage, settle } from './helpers/solo-dom.mjs';
 import { PNGImage } from './helpers/png-image.mjs';
+import { acceptGameDataReplacement } from './helpers/backup-preflight.mjs';
+import { classicLibrarySources } from '../mission-library/classic-source.mjs';
+import { createMissionLibrary } from '../mission-library/library.mjs';
+import { applyGameplayTuning, resolveGameplayTuning } from '../gameplay-tuning.mjs';
 import { waitFor } from './helpers/wait-for.mjs';
 import { authoritativeCheckpoint, verifyReplay } from '../replay.mjs';
 import { emptyLibrary, updatePreferences, saveLibrary, loadLibrary } from '../library.mjs';
@@ -16,6 +21,20 @@ const campaign = JSON.parse(await readFile(new URL('../content/campaign.json', i
 const pack = JSON.parse(
   await readFile(new URL('../content/packs/fpv-arcade-r5.json', import.meta.url)),
 );
+const index = JSON.parse(
+  await readFile(new URL('../content/mission-library-index.json', import.meta.url), 'utf8'),
+);
+const pressureMission = createMissionLibrary(
+  classicLibrarySources(index, {
+    availability: () => ({ state: 'ready' }),
+    launch: () => true,
+  }),
+).missions.find(
+  (mission) =>
+    mission.ownerId === JSON.stringify(['classic', 'bundled', pack.id]) &&
+    mission.runtimeId === pack.campaigns[0].levels[0].id,
+);
+assert.ok(pressureMission, 'The exact bundled Pressure Lines edition is indexed.');
 const PRESSURE_ORIGINALS_TIMEOUT_MS = 180000;
 const ticks = (page, count) => {
   for (let n = 0; n < count; n++) page.frame();
@@ -71,26 +90,42 @@ function imageBoundary(t) {
 }
 
 async function choosePressureChapter(page) {
-  // Title Start now launches the selected mission. Choose this chapter explicitly
-  // through Missions before testing its authored Arcade rules.
-  page.$('shell-play').click();
-  assert.equal(page.$('shell-missions').open, true);
-  page.$('shell-prepare').click();
-  assert.equal(page.$('mission-picker-setup').open, true);
-  page.change('pack-select', pack.id);
+  // Choose the exact authored edition through the visible unified gallery.
+  // This source still requires Download followed by a deliberate Play action.
+  await openMissionLibrary(page, 'shell-play');
+  const card = [...page.$('journey-cards').children].find(
+    (element) => element.dataset.missionId === pressureMission.id,
+  );
+  assert.ok(card, 'The bundled Pressure Lines mission is reachable from Missions.');
+  assert.match(card.querySelector('.journey-card-action').textContent, /^Download/);
+  const preparing = activateMissionCard(card);
   // This action imports and authenticates the complete original-image pack.
   // Keep the same bounded allowance as other bulk-original hosts; input waits
   // retain their shared deadline and no application timeout is changed.
   try {
+    await preparing;
+    const readyCard = [...page.$('journey-cards').children].find(
+      (element) => element.dataset.missionId === pressureMission.id,
+    );
+    assert.ok(readyCard);
+    assert.equal(readyCard.querySelector('.journey-card-action').textContent, 'Play');
+    assert.equal(page.$('journey-chooser').open, true);
+    await activateMissionCard(readyCard);
     await waitFor(
-      () =>
-        !page.$('pack-select').disabled &&
-        page.$('pack-select').value === pack.id &&
-        page.doc.body.dataset.pictureState === 'ready',
+      () => {
+        page.frame(0);
+        return (
+          !page.$('pack-select').disabled &&
+          page.$('pack-select').value === pack.id &&
+          page.rendered.run.levelId === pressureMission.runtimeId &&
+          page.doc.body.dataset.pictureState === 'ready' &&
+          page.doc.body.dataset.flightState === 'running'
+        );
+      },
       {
         timeoutMs: PRESSURE_ORIGINALS_TIMEOUT_MS,
         message:
-          'Selected Pressure Lines mission must finish its exact picture preparation before Deploy.',
+          'Selected Pressure Lines mission must prepare its exact picture and launch from the gallery.',
       },
     );
   } catch (error) {
@@ -100,6 +135,7 @@ async function choosePressureChapter(page) {
       pictureState: page.doc.body.dataset.pictureState,
       packStatus: page.$('pack-status').textContent,
       runMessage: page.$('run-message').textContent,
+      chooserStatus: page.$('journey-chooser-status')?.textContent,
       errors: page.errors.map((value) => String(value?.stack ?? value)),
     })}`;
     throw error;
@@ -137,8 +173,7 @@ test('selected pressure chapter hides manual actions and actual keyboard action 
   assert.doesNotMatch(page.$('controller-help').textContent, /: supply/i);
   for (const id of ['action-button', 'pickup-button', 'boost-button', 'ability-state'])
     assert.equal(page.$(id).hidden, true, id);
-  page.$('shell-deploy').click();
-  assert.equal(page.$('shell-missions').open, false, 'Deploy leaves the mission browser.');
+  assert.equal(page.$('journey-chooser').open, false, 'Play leaves the mission browser.');
   await settle(() => page.doc.body.dataset.flightState === 'running');
   page.frame(); // Consume the explicit-start neutral tick before fresh action attempts.
   page.key('ArrowDown');
@@ -164,27 +199,42 @@ test('selected pressure chapter hides manual actions and actual keyboard action 
     authoritativeCheckpoint(original.state),
     authoritativeCheckpoint(withoutActions.state),
   );
-  assert.equal(page.rendered.run.rules.moveSpeed, 15);
+  assert.equal(
+    page.rendered.run.rules.moveSpeed,
+    applyGameplayTuning(pack.campaigns[0].levels[0], resolveGameplayTuning('standard')).rules
+      .moveSpeed,
+    'Manual boost attempts cannot alter the accepted current Standard movement rules.',
+  );
   assert.equal(page.rendered.run.ability.cooldownUntil, 0);
   controls(page, 'hidden');
   assert.deepEqual(page.errors, []);
 });
 
 for (const turnPolicy of ['immediate', 'grid-center']) {
-  test(`${turnPolicy}: first Arcade Down cut keeps rendering and saves after a batched capture`, async (t) => {
+  test(`${turnPolicy}: a legal Arcade cut keeps rendering and saves after a batched capture`, async (t) => {
     imageBoundary(t);
     const page = await soloPage(t, { titleScreen: true, storage: storageWith({ turnPolicy }) });
     await choosePressureChapter(page);
-    page.$('shell-deploy').click();
-    assert.equal(page.$('shell-missions').open, false, 'Deploy leaves the mission browser.');
+    assert.equal(page.$('journey-chooser').open, false, 'Play leaves the mission browser.');
     await settle(() => page.doc.body.dataset.flightState === 'running');
     page.frame(0);
+    // v4 Standard uses 8.84 cells/s, so the old instant Down recording now
+    // legitimately loses a life. Let the authored threats pass, move one cell
+    // west on the safe boundary, then cross with the same unmodified actors.
+    const run = page.rendered.run;
+    for (let frame = 0; frame < 100 && run.tick < 972; frame++)
+      page.frame((Math.min(12, 972 - run.tick) * 1000) / 120);
+    assert.equal(run.tick, 972, 'The player deliberately waits on the safe boundary.');
+    page.key('ArrowLeft');
+    page.key('ArrowLeft', false);
+    page.frame(100);
+    assert.equal(run.tick, 984);
     page.key('ArrowDown');
     page.key('ArrowDown', false);
-    for (let frame = 0; frame < 240 && page.rendered.run.coverage === 0; frame++)
-      page.frame(1000 / 60);
-    const run = page.rendered.run;
-    assert.ok(run.coverage > 0.5, 'The ordinary first cut closes through the central slow field.');
+    // Two fixed steps share each draw, including the step that closes the cut.
+    for (let frame = 0; frame < 300 && run.coverage === 0; frame++) page.frame(1000 / 60);
+    assert.ok(run.coverage > 0.5, 'The first legal cut claims more than half the authored map.');
+    assert.equal(run.lives, 3, 'Waiting and steering use the real safe route without a loss.');
     assert.equal(run.player.cutting, false);
     const stopped = { x: run.player.x, y: run.player.y };
     for (let frame = 0; frame < 60; frame++) page.frame(1000 / 60);
@@ -282,6 +332,7 @@ test('Always enables actual mouse steering and survives a complete backup; omitt
   delete older.library.preferences.screenControls;
   page.$('save-json').value = JSON.stringify(older);
   page.$('import-save').click();
+  await acceptGameDataReplacement(page);
   await settle(() => !page.$('import-save').disabled);
   assert.match(page.$('save-status').textContent, /Game data restored/);
   assert.equal(page.$('screen-controls').value, 'auto');
@@ -293,6 +344,7 @@ test('Always enables actual mouse steering and survives a complete backup; omitt
   assert.deepEqual(JSON.parse(page.storage.getItem(sessionKey)), backup.session);
   page.$('save-json').value = JSON.stringify(backup);
   page.$('import-save').click();
+  await acceptGameDataReplacement(page);
   await settle(() => !page.$('import-save').disabled);
   assert.equal(page.$('screen-controls').value, 'always');
   assert.equal(
@@ -633,6 +685,7 @@ test('complete-backup import and Undo adopt hand placement without rewriting the
     session: original,
   });
   page.$('import-save').click();
+  await acceptGameDataReplacement(page);
   await settle(() => !page.$('import-save').disabled);
   assert.match(page.$('save-status').textContent, /Game data restored/);
   steeringHand(page, 'right');

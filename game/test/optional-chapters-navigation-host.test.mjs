@@ -7,7 +7,7 @@ import {
 const scenario = optionalChapterScenarios.find(
   (item) =>
     item.name ===
-    'keyboard and standard controller enter More chapters with Mode collapsed and return without flying',
+    'retained More chapters supports keyboard and standard controller with Mode collapsed and returns without flying',
 );
 test(scenario.name, scenario.run);
 test(

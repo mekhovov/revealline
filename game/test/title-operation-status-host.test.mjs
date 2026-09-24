@@ -35,8 +35,21 @@ async function basePage(t, options = {}) {
   return soloPage(t, { campaign, titleScreen: true, ...options });
 }
 
+// The operation messages belong to the retained chapter selector. Mount only
+// that native dialog boundary; current Missions uses the unified catalogue.
+// Actual selector callbacks, title Start/Continue and flight outcomes stay real.
+function openRetainedChapters(page) {
+  page.$('shell-menu').click();
+  page.$('shell-home').close();
+  page.$('shell-missions').showModal();
+}
+function backToTitle(page) {
+  page.$('shell-briefing').click();
+  page.$('shell-menu').click();
+  assert.equal(page.$('shell-home').open, true);
+}
 async function selectBase(page) {
-  page.$('shell-play').click();
+  openRetainedChapters(page);
   page.change('pack-select', '');
   await settle(() => !page.$('pack-select').disabled, 'Base selection must finish');
   assert.equal(
@@ -44,14 +57,20 @@ async function selectBase(page) {
     'Base game · Base return selected and ready.',
   );
   assert.equal(page.$('shell-featured-status').hidden, false);
-  page.$('shell-briefing').click();
-  await settle(() => page.doc.body.dataset.pictureState === 'ready');
+  backToTitle(page);
+  page.$('shell-featured').click();
+  await settle(() => {
+    page.frame(0);
+    return page.doc.body.dataset.flightState === 'running';
+  });
+  assert.equal(page.rendered.run.levelId, 'base-return');
+  assert.equal(page.$('shell-home').open, false);
+  assert.equal(page.$('shell-missions').open, false);
 }
 
 test('completed Base flight does not retain its old selection message beside the named Title Start', async (t) => {
   const page = await basePage(t);
   await selectBase(page);
-  page.$('start-button').click();
   page.key('ArrowDown');
   for (let i = 0; i < 1000 && page.rendered.run.status === 'running'; i++) page.frame();
   page.key('ArrowDown', false);
@@ -83,7 +102,6 @@ test('completed Base flight does not retain its old selection message beside the
 test('a paused Base flight keeps its actual Continue destination', async (t) => {
   const page = await basePage(t);
   await selectBase(page);
-  page.$('start-button').click();
   page.key('ArrowDown');
   for (let i = 0; i < 20; i++) page.frame();
   page.key('ArrowDown', false);
@@ -97,7 +115,7 @@ test('a paused Base flight keeps its actual Continue destination', async (t) => 
   assert.deepEqual(page.errors, []);
 });
 
-test('failed explicit Missions chapter selection remains visible after leaving and reopening the title', async (t) => {
+test('failed retained chapter selection remains visible after leaving and reopening the title', async (t) => {
   let attempted = false;
   const page = await basePage(t, {
     fetchJSON(path) {
@@ -110,7 +128,7 @@ test('failed explicit Missions chapter selection remains visible after leaving a
   const run = page.rendered.run,
     tick = run.tick,
     saved = page.storage.getItem('revealline.suspended.dev.v1');
-  page.$('shell-play').click();
+  openRetainedChapters(page);
   page.change('pack-select', 'fpv-arcade-r5');
   await settle(() => !page.$('pack-select').disabled, 'Requested chapter failure must settle');
   assert.equal(attempted, true, 'The explicit Missions choice requests Pressure Lines');
@@ -122,12 +140,12 @@ test('failed explicit Missions chapter selection remains visible after leaving a
   );
   assert.equal(status.hidden, false);
   const message = status.textContent;
-  page.$('shell-missions-back').click();
+  backToTitle(page);
   assert.equal(page.$('shell-home').open, true);
   assert.equal(status.hidden, false);
   assert.equal(status.textContent, message);
-  page.$('shell-play').click();
-  page.$('shell-missions-back').click();
+  openRetainedChapters(page);
+  backToTitle(page);
   assert.equal(page.$('shell-home').open, true);
   assert.equal(status.hidden, false);
   assert.equal(status.textContent, message);

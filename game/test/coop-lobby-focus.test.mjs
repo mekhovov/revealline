@@ -29,7 +29,7 @@ async function returning(t, rect = offscreen) {
   f.$('coop-discard-confirm').focus();
   const target = f.$('coop-start'),
     calls = [],
-    picture = f.drawImages.at(-1),
+    picture = f.drawImages.findLast((image) => image.sha256),
     reads = f.artwork.calls.reads.length,
     urls = [...f.artwork.calls.urls],
     releases = [...f.artwork.calls.releases];
@@ -61,6 +61,7 @@ async function returning(t, rect = offscreen) {
 }
 
 function unchangedPicture(f) {
+  assert.ok(f.picture?.sha256, 'The retained picture is the decoded artwork, not an actor sprite.');
   assert.equal(f.artwork.calls.reads.length, f.reads);
   assert.deepEqual(f.artwork.calls.urls, f.urls);
   assert.deepEqual(f.artwork.calls.releases, f.releases);
@@ -96,7 +97,10 @@ test('confirmed Change setup reveals the offscreen focused Start after rendering
   assert.equal(f.doc.activeElement.id, 'coop-canvas');
   assert.equal(f.$('coop-coverage').textContent, '0.0%');
   assert.equal(f.$('coop-clock').textContent, '0:00');
-  assert.equal(f.drawImages.at(-1), f.picture);
+  assert.equal(
+    f.drawImages.findLast((image) => image.sha256),
+    f.picture,
+  );
 });
 
 test('return to an already visible Start preserves the current viewport', async (t) => {

@@ -5,7 +5,7 @@ import { createHash, webcrypto } from 'node:crypto';
 import { page } from './helpers/coop-host.mjs';
 import { waitFor } from './helpers/coop-presentation-fixture.mjs';
 import { createTeamSpatialOriginalCandidates } from '../content-design/team-spatial-originals.mjs';
-import { teamPressureFixtures } from './helpers/team-pressure-fixtures.mjs';
+import { playTeamEditionRoute } from './helpers/team-edition-host-route.mjs';
 import { createModeReturn } from '../mode-return.mjs';
 
 const base = 'http://localhost/game/couch/relay-rescue.html';
@@ -18,7 +18,8 @@ const originals = new Map(
     ]),
   ),
 );
-const routes = await teamPressureFixtures();
+const decodedOriginals = new WeakSet();
+const currentImage = (f) => f.drawImages.findLast((image) => decodedOriginals.has(image));
 const enter = (f, id) => {
   f.$(id).focus();
   f.tap('Enter');
@@ -40,6 +41,7 @@ async function fresh(t, href = base, extra = {}) {
           this.width = this.naturalWidth = bytes.readUInt32BE(16);
           this.height = this.naturalHeight = bytes.readUInt32BE(20);
           this.sha256 = createHash('sha256').update(bytes).digest('hex');
+          decodedOriginals.add(this);
         }
       }
       install('Image', { value: OriginalImage });
@@ -100,25 +102,20 @@ test('queryless Team offers all twelve original missions across five campaigns a
   enter(f, 'journey-back');
   enter(f, 'coop-start');
   assert.equal(f.$('coop-menu').hidden, true);
-  f.tick(2);
   const first = source.missions[0];
+  const firstAsset = source.assets.find(
+    (asset) => asset.id === first.presentation.backgroundAssetId,
+  );
+  let picture;
+  playTeamEditionRoute(f, source, first.id, 'standard', () => {
+    picture ??= currentImage(f);
+    assert.equal(picture?.sha256, firstAsset.sha256);
+    assert.equal(currentImage(f), picture);
+  });
   assert.equal(
-    f.drawImages.at(-1).sha256,
+    currentImage(f).sha256,
     source.assets.find((asset) => asset.id === first.presentation.backgroundAssetId).sha256,
   );
-  const route = routes.find((row) => row.missionId === first.id && row.difficulty === 'standard');
-  const keys = [
-    { up: 'KeyW', down: 'KeyS', left: 'KeyA', right: 'KeyD' },
-    { up: 'ArrowUp', down: 'ArrowDown', left: 'ArrowLeft', right: 'ArrowRight' },
-  ];
-  let previous = [null, null];
-  for (const segment of route.log) {
-    for (const [seat, direction] of [segment.a, segment.b].entries())
-      if (direction && direction !== previous[seat]) f.tap(keys[seat][direction]);
-    previous = [segment.a, segment.b];
-    for (let n = 0; n < segment.ticks && f.$('coop-overlay').hidden; n++) f.tick();
-    if (!f.$('coop-overlay').hidden) break;
-  }
   assert.equal(f.$('coop-overlay-kicker').textContent, 'A WORLD YOU REVEALED TOGETHER');
   enter(f, 'coop-next');
   await waitFor(() => f.$('coop-overlay').hidden);
@@ -158,7 +155,7 @@ test('explicit spatial review entry retains its original review labels and exact
   const asset = source.assets.find(
     (item) => item.id === source.missions[0].presentation.backgroundAssetId,
   );
-  assert.equal(f.drawImages.at(-1).sha256, asset.sha256);
+  assert.equal(currentImage(f).sha256, asset.sha256);
 });
 
 test('catalogue switching keeps origin but clears legacy return tokens and requires unfinished-attempt confirmation', async (t) => {

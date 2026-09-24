@@ -1,5 +1,9 @@
 # Reveal Line — completed work and remaining delivery plan
 
+> **Superseded execution order:** Follow the [24 September player-first UX board](player-first-ux-execution.md)
+> for current UX work and its release checkpoint. The dated acceptance records below
+> remain historical; their old public version and PR counts are not live status.
+
 Status checked **23 September 2026, 14:32 UTC**. This is the current status and
 priority register for the approved Xposed-led Journey and unified-library plan.
 It supersedes older status/queue paragraphs, not their design contracts, source

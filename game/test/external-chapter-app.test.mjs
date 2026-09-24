@@ -8,13 +8,22 @@ import { waitFor } from './helpers/wait-for.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
 import { buildExternalPilot } from '../../authoring/library/external-chapter-pilot/build.mjs';
 import { SOURCE_EXTERNAL_CHAPTER } from '../external-chapter-source.mjs';
-import { authoritativeCheckpoint } from '../replay.mjs';
+import {
+  authoritativeCheckpoint,
+  createRecorder,
+  recordInput,
+  exportReplay,
+  verifyReplay,
+} from '../replay.mjs';
+import { createRun, stepRun, FIXED_DT } from '../core/index.mjs';
+import { applyGameplayTuning, resolveGameplayTuning } from '../gameplay-tuning.mjs';
+import { dataIdentity } from '../data-json.mjs';
 import { loadLibrary } from '../library.mjs';
 import { createManagedMediaStore } from '../managed-media-store.mjs';
 import { createStillMediaStore } from '../media-store.mjs';
 import { createStillAuthoringCatalog } from '../ui/still-media-catalog.mjs';
 import { createExternalChapterHost } from '../external-chapter-host.mjs';
-import { emptyPackLibrary, exportPackLibrary } from '../packs.mjs';
+import { emptyPackLibrary, exportPackLibrary, scenarioFromPack } from '../packs.mjs';
 import { FORMATS, TOKEN_DEFAULTS } from '../presentation/model.mjs';
 import { CURRENT_PICTURES } from '../presentation/current-pictures.mjs';
 import { COMPILED_PRESENTATION_FORMAT } from '../presentation/host.mjs';
@@ -82,14 +91,17 @@ function releasePictureManifest() {
 }
 const profile = 'revealline.library.dev.v1',
   packsKey = 'revealline.packs.dev.v1';
-const routes = JSON.parse(
-  await readFile(
-    new URL('../../authoring/library/four-worlds-chapters/routes.json', import.meta.url),
-  ),
-).routes;
-const route = routes.find(
-  (r) => r.packId === pilot.prior.id && r.difficulty === 'standard' && r.turnPolicy === 'immediate',
-);
+// Current Standard/v4 route; historical production routes remain unchanged.
+// This is legal-input receipt/storage evidence, not human balance qualification.
+const externalWinRoute = [
+  [null, 120],
+  ['left', 68],
+  ['down', 476],
+  ['up', 339],
+  ['right', 109],
+  ['down', 108],
+  ['left', 103],
+];
 const PICTURE_READY_TIMEOUT_MS = 30000;
 const settle = (predicate, message = 'Native source host should finish its bounded operation.') =>
   waitFor(predicate, { timeoutMs: PICTURE_READY_TIMEOUT_MS, message });
@@ -322,6 +334,49 @@ function direction(p, value) {
     p.key('Arrow' + value[0].toUpperCase() + value.slice(1), false);
   }
 }
+function winExternal(p) {
+  const scenario = scenarioFromPack(
+      pilot.prepared.pack,
+      pilot.prepared.pack.campaigns[0].id,
+      pilot.prepared.pack.campaigns[0].levels[0].id,
+    ),
+    level = applyGameplayTuning(scenario.level, resolveGameplayTuning('standard')),
+    options = {
+      seed: 1,
+      classId: 'scout',
+      turnPolicy: 'immediate',
+      classRecipes: scenario.classRecipes,
+    },
+    reference = createRun(level, options),
+    recorder = createRecorder(level, options);
+  assert.equal(dataIdentity(level), 'c53a143c260df0f8');
+  assert.deepEqual(p.rendered.run.level, level);
+  for (const [steer, count] of externalWinRoute) {
+    direction(p, steer);
+    let frameTicks = 0;
+    for (let tick = 0; tick < count; tick++) {
+      assert.equal(reference.status, 'running');
+      recordInput(recorder, { direction: steer });
+      stepRun(reference, { direction: steer }, FIXED_DT);
+      assert.equal(reference.lives, 3);
+      frameTicks++;
+      const closure = reference.events.some((event) => event.type === 'capture.stopped');
+      if (closure || frameTicks === 12 || tick === count - 1) {
+        p.frame(frameTicks * FIXED_DT * 1000);
+        frameTicks = 0;
+        if (closure && tick < count - 1 && reference.status === 'running') {
+          assert.equal(p.rendered.run.player.speed, 0);
+          direction(p, steer);
+        }
+      }
+    }
+  }
+  assert.equal(reference.status, 'won');
+  assert.equal(authoritativeCheckpoint(reference).hash, '62dbb01b553a40ac');
+  const replay = verifyReplay(exportReplay(recorder, reference));
+  assert.equal(replay.match, true, JSON.stringify(replay.diagnostics));
+  assert.equal(authoritativeCheckpoint(p.rendered.run).hash, '62dbb01b553a40ac');
+}
 
 test('fresh native source installation assigns release pictures after durable install and retains every authored original', async (t) => {
   const requests = [],
@@ -406,10 +461,7 @@ test('native pair install preserves an unfinished unrelated flight, then explici
     p.rendered.backdrop.pin.sha256,
     releasedExternalOriginal(pilot.descriptor, 0).sha256,
   );
-  for (const segment of route.segments) {
-    direction(p, segment.input.direction);
-    ticks(p, segment.ticks);
-  }
+  winExternal(p);
   p.frame(0);
   assert.equal(p.rendered.run.status, 'won');
   const library = loadLibrary(p.storage, profile).library;
@@ -772,10 +824,7 @@ test('source install and unrelated chapter win preserve an earlier exact first-e
   const originals = await story.exportInventory();
   await install(p);
   await play(p);
-  for (const segment of route.segments) {
-    direction(p, segment.input.direction);
-    ticks(p, segment.ticks);
-  }
+  winExternal(p);
   p.frame(0);
   assert.equal(p.rendered.run.status, 'won');
   const next = loadLibrary(p.storage, profile).library;

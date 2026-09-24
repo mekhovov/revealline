@@ -21,7 +21,7 @@ const campaign = {
   levels: [retryFixture('self-contact').level],
 };
 
-test('actual chapter selection survives reload while the other saved flight stays explicit and exact', async (t) => {
+test('retained chapter selector persists its choice while the other saved flight stays explicit and exact', async (t) => {
   const storage = memoryStorage();
   const assets = managedIndexedDB();
   let originalSave, originalCheckpoint, selection;
@@ -44,7 +44,11 @@ test('actual chapter selection survives reload while the other saved flight stay
       originalSave = storage.getItem(sessionKey);
       assert.equal(JSON.parse(originalSave).replay.ticks, 12);
       p.$('shell-menu').click();
-      p.$('shell-play').click();
+      // Ordinary Missions now opens the unified Download/Play catalogue.
+      // This retained selector test mounts only its native dialog boundary;
+      // real host replacement, installed artwork, bookmarking and restore run.
+      p.$('shell-home').close();
+      p.$('shell-missions').showModal();
       assert.equal(p.$('shell-missions').open, true);
       p.$('shell-prepare').click();
       assert.equal(p.$('mission-picker-setup').open, true);

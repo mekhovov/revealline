@@ -1,3 +1,4 @@
+import { winCurrentOpening } from './helpers/solo-opening-win.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { soloPage, settle } from './helpers/solo-dom.mjs';
@@ -31,11 +32,7 @@ test('confirmed Restart clears completed preparation status before real victory'
     h.doc.documentElement.dataset.presentationManifest,
     original.visualThemePin.presentation.sha256,
   );
-  h.key('ArrowDown');
-  for (let i = 0; i < 460; i++) h.frame();
-  h.key('ArrowDown', false);
-  h.frame(0);
-  assert.equal(h.rendered.run.status, 'won', 'The actual opening mission reaches victory');
+  winCurrentOpening(h);
   assert.equal(resumedStatus, '', 'Readiness instruction retires when Restart starts flying');
   assert.equal(h.$('flight-preparation-status').textContent, '', 'Results retain no stale Resume');
   assert.deepEqual(h.errors, []);

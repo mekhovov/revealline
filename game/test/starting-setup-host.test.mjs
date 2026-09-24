@@ -48,23 +48,32 @@ async function flight(h, { paused = true } = {}) {
   h.$('start-button').click();
   await settle(() => h.doc.body.dataset.flightState === 'running');
   h.key('ArrowDown');
-  frames(h, 27);
+  // The current 8.84-cell/s preset leaves a real cut before the next cell
+  // centre; the queued turn must also survive the two later Resume ticks.
+  frames(h, 8);
   h.key('ArrowDown', false);
   h.key('ArrowRight');
   h.frame();
   h.key('ArrowRight', false);
   assert.equal(h.rendered.run.player.queuedDirection, 'right');
   if (paused) {
-    h.$('overlay-menu').click();
-    h.$('shell-packs').click();
+    h.$('pause-button').click();
+    await action(h.$('shell-packs'));
+    assert.equal(h.$('journey-chooser').open, true);
+    assert.equal(h.$('mission-picker-setup').closest('dialog'), h.$('journey-chooser'));
+    // The finite DOM models native <summary> expansion only; the controls and
+    // their setup/replacement handlers remain the actual host implementations.
     h.$('mission-picker-setup').open = true;
+    h.$('mission-picker-setup').emit('toggle');
   }
   h.frame(0);
 }
-function preserved(h, run, before) {
-  frames(h);
+function preserved(h, run, before, { disposed = false } = {}) {
+  // pagehide destroys Phaser and its DOM. Late storage callbacks must remain
+  // harmless, but a real browser never runs another frame on that dead scene.
+  if (!disposed) frames(h);
   assert.equal(h.rendered.run, run);
-  assert.deepEqual(checkpoint(h), before);
+  assert.deepEqual(disposed ? authoritativeCheckpoint(run) : checkpoint(h), before);
   assert.equal(h.rendered.paused, true);
   assert.deepEqual(h.errors, []);
 }
@@ -113,7 +122,7 @@ for (const choice of choices)
       assert.equal(h.storage.getItem(slot), retained);
       assert.equal(loadLibrary(h.storage, profile).library.preferences[choice.field], choice.after);
       assert.equal(verifyReplay(JSON.parse(retained).replay).match, true);
-      h.$('shell-missions').close();
+      if (h.$('journey-chooser')?.open) h.$('journey-back').click();
       await action(h.$('continue-saved'));
       h.frame(0);
       assert.deepEqual(checkpoint(h), before);
@@ -199,11 +208,11 @@ for (const method of ['button', 'Escape', 'controller', 'pagehide'])
     await pending;
     assert.equal(h.storage.getItem(slot), raw);
     assert.equal(h.storage.getItem(profile), prefs);
-    preserved(h, run, before);
+    preserved(h, run, before, { disposed: method === 'pagehide' });
     if (method !== 'pagehide') {
       assert.equal(h.$('mission-replace-dialog').open, false);
       assert.equal(h.doc.activeElement.id, 'turn-select');
-      h.$('shell-missions').close();
+      h.$('journey-back').click();
       const expected = verifyReplay(JSON.parse(raw).replay).state;
       const tick = run.tick;
       h.$('start-button').click();

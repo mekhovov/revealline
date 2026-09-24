@@ -63,6 +63,21 @@ function nativeFocus(t) {
       focus.apply(this, args);
   });
 }
+// This is the retained picker component, with its actual host rebuild and
+// controller adapter. Public Missions now opens the unified catalogue, covered
+// by mission-library-solo-host/controller-host; do not create that second owner.
+function openRetainedPicker(h) {
+  h.$('shell-menu').click();
+  h.$('shell-home').close();
+  h.$('shell-missions').showModal();
+  attachMissionPicker({ document: h.doc }).focusSelectedChapter();
+  assert.equal(h.$('shell-missions').open, true);
+}
+function returnHome(h) {
+  h.$('shell-missions-back').click();
+  h.$('shell-menu').click();
+  assert.equal(h.$('shell-home').open, true);
+}
 async function setup(t) {
   nativeFocus(t);
   const h = await soloPage(t, { campaign, storage: completedStorage(), titleScreen: true });
@@ -70,9 +85,7 @@ async function setup(t) {
   h.doc.defaultView = h.win;
   await settle(() => h.doc.body.dataset.pictureState === 'ready');
   assert.equal(h.$('shell-home').open, true);
-  h.$('shell-play').focus();
-  h.$('shell-play').click();
-  assert.equal(h.$('shell-missions').open, true);
+  openRetainedPicker(h);
   const profile = h.storage.getItem('revealline.library.dev.v1');
   return Object.assign(h, { profile });
 }
@@ -159,7 +172,7 @@ function readinessMutationDelivery(t) {
 }
 
 for (const input of ['pointer', 'keyboard', 'controller'])
-  test(`${input}: completed mission selection retains a connected selected card after its actual host rebuild`, async (t) => {
+  test(`retained picker ${input}: completed mission selection retains a connected selected card after its actual host rebuild`, async (t) => {
     const deliverReadiness = input === 'controller' ? readinessMutationDelivery(t) : null;
     const h = await setup(t),
       card = h.$('missions').querySelectorAll('button')[0];
@@ -246,7 +259,7 @@ for (const input of ['pointer', 'keyboard', 'controller'])
   });
 
 for (const newer of ['another control', 'background', 'hidden page', 'Back to Home'])
-  test(`queued completed-card focus does not override ${newer}`, async (t) => {
+  test(`retained picker queued completed-card focus does not override ${newer}`, async (t) => {
     const h = await setup(t),
       card = h.$('missions').querySelectorAll('button')[0],
       back = h.$('shell-missions-back');
@@ -257,7 +270,7 @@ for (const newer of ['another control', 'background', 'hidden page', 'Back to Ho
     else if (newer === 'hidden page') h.doc.hidden = true;
     else {
       back.focus();
-      back.click();
+      returnHome(h);
     }
     const owned = h.doc.activeElement;
     await new Promise((resolve) => setImmediate(resolve));
@@ -270,14 +283,13 @@ for (const newer of ['another control', 'background', 'hidden page', 'Back to Ho
     assert.deepEqual(h.errors, []);
   });
 
-test('a newer reopened Missions visit retains its actual chapter focus', async (t) => {
+test('a newer reopened retained picker visit retains its actual chapter focus', async (t) => {
   const h = await setup(t),
     card = h.$('missions').querySelectorAll('button')[0];
   card.focus();
   card.querySelector('.mission-gallery-state').click();
-  h.$('shell-missions-back').click();
-  h.$('shell-play').focus();
-  h.$('shell-play').click();
+  returnHome(h);
+  openRetainedPicker(h);
   const newer = h.doc.activeElement;
   assert.equal(newer.classList.contains('mission-picker-card'), true);
   await new Promise((resolve) => setImmediate(resolve));
@@ -286,7 +298,7 @@ test('a newer reopened Missions visit retains its actual chapter focus', async (
   assert.deepEqual(h.errors, []);
 });
 
-test('destroying the picker retires queued card focus and removes both click listeners', async (t) => {
+test('destroying the retained picker retires queued card focus and removes both click listeners', async (t) => {
   const h = await setup(t),
     picker = attachMissionPicker({ document: h.doc }),
     missions = h.$('missions'),
