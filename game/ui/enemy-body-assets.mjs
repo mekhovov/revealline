@@ -47,7 +47,7 @@ async function readBounded(response, maxBytes, signal) {
 }
 
 let catalogPromise = null;
-async function defaultCatalog() {
+export async function loadEnemyPresentationCatalog() {
   catalogPromise ??= (async () => {
     const response = await fetch(new URL('../content/enemy-presentations.json', import.meta.url));
     const bytes = await readBounded(response, ENEMY_PRESENTATION_LIMITS.bytes);
@@ -237,7 +237,7 @@ export function createEnemyImagePool({ load = loadEnemyDrawable } = {}) {
 const sharedPool = createEnemyImagePool();
 export function createEnemyBodyAssets({
   pool = sharedPool,
-  catalog = defaultCatalog,
+  catalog = loadEnemyPresentationCatalog,
   changed = () => {},
 } = {}) {
   let model = null,
@@ -263,11 +263,12 @@ export function createEnemyBodyAssets({
       if (!leases.has(type)) leases.set(type, pool.acquire(record, changed));
   }
   return Object.freeze({
-    update(frames, uploaded = {}) {
-      desired = [...frames].slice(0, 64);
+    update(frames, uploaded = {}, { image = () => true } = {}) {
+      const all = [...frames].slice(0, 64);
+      desired = all.filter(image);
       overrides = uploaded;
       if (model) return reconcile();
-      if (loading || failed || !desired.some((frame) => frame.themeId === 'fpv')) return;
+      if (loading || failed || !all.some((frame) => frame.themeId === 'fpv')) return;
       loading = true;
       const ticket = generation;
       Promise.resolve()
@@ -295,6 +296,9 @@ export function createEnemyBodyAssets({
       return drawable
         ? { image: drawable.image, record, kind: drawable.kind, rgbaBytes: drawable.rgbaBytes }
         : null;
+    },
+    record(frame) {
+      return model?.forFrame(frame, overrides) ?? null;
     },
     status() {
       return failed || [...leases.values()].some((lease) => lease.error())

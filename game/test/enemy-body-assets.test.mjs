@@ -123,6 +123,26 @@ test('active types only, separate bosses, uploads and non-FPV skin changes relea
   assets.clear();
 });
 
+test('compiled bodies receive catalog motion records without decoding duplicate images', async () => {
+  let loads = 0;
+  const pool = createEnemyImagePool({
+    load: async () => {
+      loads++;
+      return { image: {}, release() {} };
+    },
+  });
+  const assets = createEnemyBodyAssets({ pool, catalog: async () => model });
+  const bouncer = frame('bouncer');
+  assets.update([bouncer], {}, { image: () => false });
+  await tick();
+  await tick();
+  assert.equal(loads, 0, 'Compiled presentation must remain the only decoded image.');
+  assert.equal(assets.current(bouncer), null);
+  assert.equal(assets.record(bouncer), model.entries[0]);
+  assert.equal(assets.record(frame('bouncer', 'ukraine')), null);
+  assets.clear();
+});
+
 test('late catalog cannot load a retired context; failed image retries only after a boundary', async () => {
   const pending = deferred();
   let loads = 0;

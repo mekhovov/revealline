@@ -7,6 +7,7 @@ import {
   drawPresentedActor,
 } from '../ui/actor-presentation.mjs';
 import { drawPresentationImage } from '../ui/presentation-draw-image.mjs';
+import { loadEnemyPresentationCatalog } from '../ui/enemy-body-assets.mjs';
 
 import { coopPilotBodyOffset } from './coop-actor-layout.mjs';
 
@@ -15,9 +16,21 @@ const DIRECTION = Object.freeze({ up: [0, -1], right: [1, 0], down: [0, 1], left
 // Image reuse is explicit. These roles never replace a Team behavior/type.
 export const COOP_ACTOR_ROLES = Object.freeze({
   pilot: Object.freeze({ role: 'team-pilot', slot: 'player.scout' }),
-  drifter: Object.freeze({ role: 'team-field-bouncer', slot: 'enemy.bouncer' }),
-  hunter: Object.freeze({ role: 'team-line-hunter', slot: 'enemy.border-patrol' }),
-  'claimed-rover': Object.freeze({ role: 'team-reclaimed-roamer', slot: 'enemy.claimed-rover' }),
+  drifter: Object.freeze({
+    role: 'team-field-bouncer',
+    slot: 'enemy.bouncer',
+    motionType: 'bouncer',
+  }),
+  hunter: Object.freeze({
+    role: 'team-line-hunter',
+    slot: 'enemy.border-patrol',
+    motionType: 'border-patrol',
+  }),
+  'claimed-rover': Object.freeze({
+    role: 'team-reclaimed-roamer',
+    slot: 'enemy.claimed-rover',
+    motionType: 'claimed-rover',
+  }),
   core: Object.freeze({ role: 'team-stronghold', slot: 'enemy.relay-sentinel' }),
 });
 const key = (kind, id) => `${kind}:${id}`;
@@ -78,7 +91,9 @@ function pilotPose(run, player, frame, old, dt, reduced) {
 }
 
 /** Borrow prepared sprites and keep cosmetic samples only; never acquire assets or mutate a run. */
-export function createCoopActorPresentation() {
+export function createCoopActorPresentation({
+  loadEnemyCatalog = loadEnemyPresentationCatalog,
+} = {}) {
   const sampler = createActorPresentation();
   let snapshot = null,
     sprites = new Map(),
@@ -89,7 +104,9 @@ export function createCoopActorPresentation() {
     pilots = new Map(),
     attempt = null,
     previousTick = null,
-    previousTime = 0;
+    previousTime = 0,
+    motionCatalog = null,
+    catalogGeneration = 0;
   function reset() {
     sampler.reset();
     entries = new Map();
@@ -123,6 +140,21 @@ export function createCoopActorPresentation() {
     enemySprites = nextEnemies;
     coreFrames = nextCoreFrames;
     reset();
+    const ticket = ++catalogGeneration;
+    motionCatalog = null;
+    const theme = next?.resolved?.theme;
+    if (!next || (theme?.id !== 'fpv' && theme?.family !== 'fpv')) return Promise.resolve();
+    return Promise.resolve()
+      .then(loadEnemyCatalog)
+      .then(
+        (catalog) => {
+          if (ticket === catalogGeneration) motionCatalog = catalog;
+        },
+        () => {
+          // Surface accents are optional. Prepared bodies and functional Team
+          // cues remain usable when the bounded catalog is unavailable.
+        },
+      );
   }
   function update(
     run,
@@ -265,8 +297,15 @@ export function createCoopActorPresentation() {
               1 / screenScale,
             )
           : null;
+      const bodyRecord = description.enemy
+        ? (motionCatalog?.forFrame(
+            { ...frame, type: description.motionType, themeId: 'fpv' },
+            {},
+          ) ?? null)
+        : null;
       next.set(id, {
         sprite,
+        bodyRecord,
         secured: description.secured === true,
         customCore: description.customCore === true,
         frame: Object.freeze({
@@ -314,7 +353,7 @@ export function createCoopActorPresentation() {
           sprite.geometry,
         );
       } else
-        drawPresentedActor(ctx, frame, palette, sprite.image, sprite.geometry, null, {
+        drawPresentedActor(ctx, frame, palette, sprite.image, sprite.geometry, entry.bodyRecord, {
           bodyOffset: frame.bodyOffset,
         });
     } finally {
