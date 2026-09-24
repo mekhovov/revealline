@@ -1,57 +1,127 @@
-# Core soundtrack expansion — 24 September 2026
+# Core soundtrack expansion — updated 24 September 2026
 
-## Delivery order and baseline
+## Priority and accounting
 
-The approved priority is stronger 90s retro and heavier metal, with Ukrainian
-admission research running in parallel. Publish each fully cleared batch without
-waiting for the other family. AI original production remains paused at 0/36
-approved recordings. Do not count prompts, scores or rejected candidates.
+Complete stronger retro and heavier metal first, while progressing a varied Ukrainian collection with documented musical roots. Deliver small reviewed batches through separate PRs
+and verify each public release. Do not pad the collection with alternate versions
+of one composition or loosely labelled generic folk music.
 
-At source `71a0ffeaeb5079ac6e87a7d80327c6b34948aaa3`, the game already includes 70
-rights-audited hosted recordings in 15 albums, simplified player controls, the
-fresh-profile synth default, upload/custom playlists and offline albums. Full
-listening acceptance of these 70 remains separate. Their inventory and saved
-identities must not be rewritten when adding music. Ukrainian hosted recordings:
-zero. Private UA-FPV packs preserve 80 filenames and 77 distinct recordings.
+| Category                                        | Actual completed state                                                      | Still pending                                                                  |
+| ----------------------------------------------- | --------------------------------------------------------------------------- | ------------------------------------------------------------------------------ |
+| Existing game catalogue                         | 70 hosted recordings in 15 albums; identities and inventory preserved       | Full musical listening acceptance and later curation                           |
+| New retro/metal preview                         | 13 recordings publicly available: 7 retro, 6 metal                          | Musical acceptance and admission into the game                                 |
+| New Ukrainian preview                           | 1 Shchedryk/metal recording publicly available through merged archive PR #3 | Full listening, instrumental and cultural review, game admission               |
+| New standard game recordings from these batches | **0 approved/admitted**                                                     | Admit only after the recording-specific review gates pass                      |
+| UA-FPV                                          | Existing private upload packs preserve 80 filenames / 77 unique recordings  | Recording-specific public redistribution permission                            |
+| GPT originals                                   | **0/36 approved; production paused**                                        | Reconsider production method only after the licensed core styles are delivered |
 
-## Completed engineering
+Archive previews and technically qualified candidates are not additional game
+built-ins. The existing baseline includes simplified music controls, a fresh-profile synth
+default, shuffle-all, uploads, custom playlists and offline albums. This plan
+extends that catalogue; it does not claim new verification of every baseline
+feature in this delivery.
 
-- Draft game PR #321 adds exact-hash reviewed-batch admission without changing the current 70 tracks or 15 albums.
-- Immutable `/batches/<id>/` archive bases are supported while preserving existing root archive URLs.
-- 77 focused tests passed; an independent review found no concrete defect and reran 39 relevant tests successfully.
-- Hosted audio preparation preserves native sources and derives 256 kbps MP3s with full decoding and encoded loudness/peak measurements.
+## Completed
 
-These are engineering results, not listening approval or a released music batch.
+### Core archive delivery
 
-## In progress
+- Archive PR #2 merged at `7a334fdf`; Pages run **35945896276** succeeded.
+- The [core listening preview](https://mekhovov.github.io/revealline-soundtracks-01/batches/core-20260924/)
+  publicly serves all 13 permitted MP3 derivatives, totalling **57,494,195 bytes**.
+- Direct public checks verified the exact bytes and hashes of all 13 MP3s and
+  five checked static files. Limited browser playback/filter checks establish
+  technical operation only, not complete-track listening approval.
+- Exact native sources, creator-page licence snapshots and technical receipts
+  are retained under `intake/archive/core-20260924/`. New public files use the
+  immutable `batches/core-20260924/` base; the original 70-recording inventory,
+  objects and static pins remain unchanged.
+- All 13 passed full decoding, native game MP3 inspection and encoded loudness /
+  peak checks. The six metal candidates are four Vitalezzz recordings, Bogart
+  VGM's _German Industrial Metal_ and MintoDog's _Heavy Boss Battle 1_. The seven
+  retro candidates are distinct Ragnar Random compositions; several are short
+  arcade cues and must be judged as such.
 
-| Batch         | Candidate count | Current boundary                                                                                                                                                                                                                                                                       |
-| ------------- | --------------: | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Heavier metal |               6 | Four additional Vitalezzz tracks, Bogart VGM's German Industrial Metal and MintoDog's Heavy Boss Battle 1. Individual CC0/CC BY source downloads selected; all six passed hosted full decoding, MP3 inspection and loudness checks; listening remains pending.                         |
-| Retro arcade  |               7 | Unused Ragnar Random compositions selected after comparison against all 70 current entries. Source descriptions cover SID, Genesis/FM and NES-like instruments; seven passed technical checks. Most are short arcade cues; instrumentation and arrangement remain listening questions. |
-| Ukrainian     |         4 leads | Alexander Nakarada's CC BY 4.0 Shchedryk/metal adaptation, two Oleg Mazur arrangements and Mark Wilson X's short fusion cue. Exact recording acquisition, applicable licence, listening and cultural review remain open.                                                               |
+### Framework and Ukrainian preparation
 
-The candidate counts are not released or approved counts. Hosted preparation
-retains native source files, licence-page snapshots, hashes, complete decoder
-results, game MP3 inspection, tool versions and encoded loudness/peak results.
-The archive intake is outside Pages staging. Local disk is below the 1 GiB
-reserve, so no local audio acquisition, rendering or release build is attempted.
+- Game PR #321 implements additive, exact-hash reviewed-batch admission and
+  narrowly allowed immutable archive batch URLs. Pending entries cannot grant
+  themselves rights or listening approval; the current 70 identities remain
+  unchanged. Focused tests passed **77/77**, with an independent **39-test** rerun.
+- At game head **`539418e`**, preflight and production qualification gates have
+  passed. **Four explicit test shards are still running; the source is unfrozen.**
+  Regular PR build **35945949208** passed; its policy-skipped test and release
+  gate are not passes. This is not a released framework update. Evidence added
+  after `539418e` is documentation only; do not attribute that earlier run to a
+  later commit.
+- Archive PR #3 at **`f7a2fcf`** passed independent review and all three exact-head
+  archive checks, then merged at **`9dd04b6`**. Pages run **35946536633** succeeded.
+  The [Shchedryk listening preview](https://mekhovov.github.io/revealline-soundtracks-01/batches/ukrainian-shchedryk-20260924/)
+  serves one Alexander Nakarada recording, _Carol of the Bells (Metal Version)_.
+  Technical qualification measured:
+  **270.028 seconds, −15.99 LUFS, −4.56 dBTP**. All three creator track/licensing/FAQ
+  snapshots and exact source/delivery identities are preserved. Public verification
+  checked its 8,641,768-byte MP3 and eight metadata/static files against the
+  committed hashes. Browser playback advanced to 14 seconds with no media error;
+  Pause worked. These are technical checks, not musical approval.
+- The Ukrainian candidate is a **Ukrainian-melody metal adaptation of Shchedryk**,
+  with cultural and instrumental review pending. **Content ID is registered**;
+  Recording mode must exclude it. One adaptation does not complete the intended
+  4–6 distinct Ukrainian recordings. Full listening review of the existing 70 is
+  not a prerequisite for releasing a separately accepted new batch.
 
-## Ukrainian decisions and source evidence
+## Remaining phases, release order and effort
 
-- [Oleg Mazur — Ой у лузі червона калина](https://soundcloud.com/fm_freemusic/oy-u-luz-chervona-kalina-the-red-viburnum-in-the-meadow-ukrainian-patriotic-march-by-oleg-mazur): creator page marks CC-BY and permits sharing, modification and commercial use. Obtain the exact file through the creator's linked authorised download and preserve the licence version. Instrumental status, arrangement provenance and gameplay fit remain unverified.
-- [Oleg Mazur — Боже великий, єдиний / Prayer for Ukraine](https://soundcloud.com/fm_freemusic/bozhe-velikiy-diniy-prayer-for-ukraine-spiritual-anthem-of-ukraine-by-oleg-mazur): same creator-origin permission lead; candidate for solemn menu/reflection use. Do not classify it as energetic combat music from its title.
-- [Mark Wilson X — Carol of the Bells](https://soundcloud.com/mark-wilson-x/carol-of-the-bells-royalty-free-cc-by): CC BY 4.0 creator statement; FMA identifies an instrumental recording of about 1:21. Treat it as a short Shchedryk/metal fusion cue, not a full-length original or a traditional regional performance. Verify the exact recording and arrangement before admission.
-- [Hutsul Havoc](https://pixabay.com/music/main-title-hutsul-havoc-ethno-action-ukrainian-soundtrack-192015/), [Hutsul Fantasy](https://pixabay.com/music/folk-hutsul-fantasy-132797/) and bandura candidates remain excluded from the standalone MP3 archive under Pixabay's standalone-distribution restriction. Hutsul Fantasy is currently credited to `_Music_for_Creators_`, not Rockot. Separate recording-specific permission would be required.
-- Holizna's title **Ukraine** does not establish Ukrainian musical motifs. Do not fill this collection with generically tagged music.
-- UA-FPV possession and YouTube availability do not establish public redistribution permission. Reuse the existing private packs and guide; no creator has been contacted by this work.
+These are approximate hands-on engineering efforts, not delivery dates. Listening,
+rights decisions, reviewer availability and hosted CI queues can extend elapsed time.
 
-The Oleg Mazur Hypeddit download currently asks the visitor to connect SoundCloud
-and comment, like, repost and follow before downloading. No such social actions
-are authorized or performed by this work. A freely accessible creator download
-or an independently supplied authorized original is still needed. FMA's Mark
-Wilson X page returned HTTP 403 through the research reader; the recording has
-not been acquired.
+| Priority      | Next deliverable                               | Remaining work and acceptance                                                                                                                                                                                                                                                                                                                                                                  | Engineering effort                                                                                                                                       |
+| ------------- | ---------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1             | Finish the started technical changes           | Complete PR #321's four explicitly enabled shards and publisher coordination. Independent source review, the regular PR build and both archive deployments are complete. The current game PR update only adds evidence/documentation after checked source `539418e`; a future admitted release needs fresh qualification of its actual source. Retain every failed or partial run.             | 0.5–1 day, plus CI/publisher queue                                                                                                                       |
+| 1A — parallel | First reviewed retro/metal game batch          | Review all 13 full tracks and reject weak fits. Confirm retro instrumentation/energy and heavier metal articulation; check repeated sessions, transitions, warning audibility, mono and small speakers. Record genuine reviewer evidence. Admit only accepted recordings with exact rights/hash pins and scene/energy metadata.                                                                | 0.5–1 day after listening decisions; allow a separate 2–4-hour listening session, with repetition/device checks additional                               |
+| 1B — parallel | First accurate Ukrainian game admission        | Complete full-track, instrumental and Ukrainian cultural review of the Nakarada candidate. Admit it only if accepted, retaining its adaptation label and Content ID exclusion. Seek additional distinct compositions with recording-specific rights and authorized downloads; publish accepted pieces incrementally.                                                                           | 0.5–1 day for the prepared candidate after review; 1–2 days of bounded research/preparation for further candidates, with no reliable rights/reviewer ETA |
+| 3             | Qualify and publish the resulting game release | Test current/next transport, mixed queues, menu/game continuity, installs/removal, backup restoration and cold offline restart. Qualify the actual integrated source, freeze and independently inspect the hosted artifact, allocate the version through the release owner, publish through the game PR plus separate Pages selector PR, and directly prove public playback/version/downloads. | 0.5–1 day, plus CI/release queue                                                                                                                         |
+| 5             | Curate the existing collection                 | Review weak or short fits in the existing 70, refine style/scene/energy matching through the trusted ID/hash curation overlay, and retain saved identities. Broader genres follow core-style acceptance.                                                                                                                                                                                       | 1–2 days per selected curation batch, plus listening                                                                                                     |
+| Deferred      | Original production and blocked recordings     | Keep AI production paused after the rejected pilots. Preserve scores/evidence for a later quality-method decision. UA-FPV public hosting and restricted-license sources remain on hold; existing private upload packs remain available.                                                                                                                                                        | No responsible completion date until the relevant quality/rights dependencies are resolved                                                               |
+
+Priorities 1A and 1B run in parallel. Either accepted family can ship first;
+Ukrainian sourcing does not hold a completed retro/metal batch.
+
+The Releases task controls version allocation and sequencing. Its current
+queue is PR #314 / v0.97 followed by PR #320 / provisional v0.98; authoritative
+owner confirmation is required before allocating a soundtrack version. No new
+version is allocated by this plan. Keep unrelated queued changes isolated; refresh
+against accepted main before freezing and requalify any resulting source changes.
+Archive-only publication does not bump the game's version or demonstrate game
+admission. Once a game item is ready, ship it independently rather than waiting for
+every musical family or the paused 36-original milestone.
+
+## Rights and musical holds preserved
+
+- **Oleg Mazur — [Ой у лузі червона калина](https://soundcloud.com/fm_freemusic/oy-u-luz-chervona-kalina-the-red-viburnum-in-the-meadow-ukrainian-patriotic-march-by-oleg-mazur)
+  and [Prayer for Ukraine](https://soundcloud.com/fm_freemusic/bozhe-velikiy-diniy-prayer-for-ukraine-spiritual-anthem-of-ukraine-by-oleg-mazur):**
+  creator CC-BY leads remain held for an exact authorized original and licence
+  version. Hypeddit currently asks for SoundCloud connection, comment, like,
+  repost and follow; none are authorized or performed. Prayer is a solemn/menu
+  possibility, not presumed action music.
+- **[Mark Wilson X — Carol of the Bells](https://freemusicarchive.org/music/mark-wilson-x/single/carol-of-the-bells/):**
+  [creator CC BY 4.0 statement](https://soundcloud.com/mark-wilson-x/carol-of-the-bells-royalty-free-cc-by) and approximately 1:21 instrumental metadata remain leads;
+  exact acquisition/arrangement review is unresolved after the research reader's
+  HTTP 403. Another Shchedryk arrangement does not add a distinct composition.
+- **Pixabay [Hutsul Havoc](https://pixabay.com/music/main-title-hutsul-havoc-ethno-action-ukrainian-soundtrack-192015/), [Hutsul Fantasy](https://pixabay.com/music/folk-hutsul-fantasy-132797/) and bandura recordings:** standalone MP3 redistribution is not
+  cleared. Hutsul Fantasy is credited to `_Music_for_Creators_`, not Rockot.
+  Keep these outside the public archive unless recording-specific permission
+  resolves delivery. Do not substitute preview hotlinks for permission.
+- **Six Lysenko piano performances:** Couranta, Valse of Farewell, Barcarole,
+  Dream op. 12, Song of Love and By a Cradle retain their documented Lviv
+  Conservatory / Wikimedia Ukraine recording provenance and **CC BY-SA 3.0**
+  status. They are held for a separate share-alike audiovisual delivery decision;
+  do not relabel them as CC BY to pass the compiler. The exact file, pianist and duration table remains below. Their composition /
+  edition clearance and classical context remain separate from recording rights.
+- **UA-FPV:** possession and YouTube availability do not establish public MP3
+  redistribution rights. Keep the existing private packs and upload guide; no
+  outreach or new public admission is implied.
+- **Generic geographic titles:** Holizna's _Ukraine_ and similar labels alone do
+  not establish Ukrainian musical motifs. Do not use them to fill a numeric quota.
 
 ### Documented Ukrainian classical fallback — held
 
@@ -75,43 +145,58 @@ is documented Ukrainian classical piano music, not an energetic folk-electronic
 album. Its composition/edition clearance and gameplay context remain separate
 from recording permission.
 
-## Qualification evidence and current blockers
+### New optional ceremonial lead — not an admission
 
-Archive PR #2 retains failed intake runs 35943657893, 35943774127 and 35943850666 (three source filenames did not match creator download links). Run 35944115394 then passed 13 recordings and rejected Angry Bullfrogs Riding Motorbikes because it is shorter than the 60-second intake floor. The candidate was excluded; the duration gate was not waived. Run 35944483804 subsequently hit HTTP 502 on one source. Fresh run 35944843598 at archive source `4e9e572848848a314cd48f31a290b83850ee6b65` passed all 13. Artifact 10786113658 has ZIP SHA-256 `0b95238aa7bb27a89b12864f35ac1df850e7a69dae5b7fea3257a764ebf58f5c`.
+[Luke Minovych Horenko — Ще не вмерла Україна](https://commons.wikimedia.org/wiki/File:%D0%9B._%D0%93%D0%BE%D1%80%D0%B5%D0%BD%D0%BA%D0%BE_-_%D0%A9%D0%B5_%D0%BD%D0%B5_%D0%B2%D0%BC%D0%B5%D1%80%D0%BB%D0%B0_%D0%A3%D0%BA%D1%80%D0%B0%D1%97%D0%BD%D0%B0.ogg)
+is a creator-published synthesized instrumental recording under **CC0**, dated
+27 March 2020, with a directly linked authorized original. Source metadata gives
+93.214 seconds and 4,233,544 bytes; these have not been verified against acquired
+audio. [Ukrainian government composition history](https://www.kmu.gov.ua/news/247989866)
+identifies Verbytsky's music and Chubynsky's text.
 
-Full game qualification run 35944418013 at `913306a736443959b4b8ff913c0976093a2b06bb` failed before source validation: two inherited release-utility diagnostics fixtures exhaust mocked Git responses in `publishing/utility/test_upload_diagnostics.py`. The separately reviewed fixture-only repair, PR #322, is accepted at `d0c73b4723798f6490f2680a59fd8d8a59983ac1`. Soundtrack work has been rebased onto that accepted fix; full qualification of the refreshed exact head remains required. Later gates were skipped, not passed. The four local archive-builder tests could not pass the existing 1 GiB free-disk guard; hosted qualification must cover them.
+Hold it for sound quality, composition/arrangement and cultural-context review.
+It is an optional ceremonial/menu possibility, not a substitute for the requested
+energetic Ukrainian repertoire. The US Navy rendition is the same composition and
+must not be counted again. No audio was downloaded or auditioned during this lead's
+research.
 
-## Candidate files now on GitHub
+## Public verification records
 
-Archive PR #2 commits all 13 MP3 derivatives (57,494,195 bytes), their exact native downloads and licence snapshots at `9e386c9c489bd193c830cd60ac6f26e7553dc335`. Hosted Pages verification 35945506601 checked all 83 archive recordings and 412,480,317 audio bytes. The original 70-recording inventory and static pins remain unchanged. New files live under `batches/core-20260924/`; source evidence is retained under `intake/archive/core-20260924/`. The browser preview's metal filter and combined retro/search controls were checked locally. Public deployment/playback and musical acceptance are still separate gates.
+Committed reports under `docs/verification/core-soundtracks-2026-09-24/` record
+exact public bytes/hashes, deployed commit/run identities and limited desktop
+browser observations. The first Ukrainian HTTP probe incorrectly required the
+hidden `.nojekyll` Pages control marker to be publicly served and got HTTP 404.
+That failed attempt is retained. The corrected probe excludes only that marker
+and requires every runtime asset, MP3 and public metadata file to match. It does
+not count the control marker as an HTTP pass.
 
-Ukrainian archive PR #3 prepares one distinct composition: Alexander Nakarada's **Carol of the Bells (Metal Version)**, accurately described as a Ukrainian-melody metal adaptation of Shchedryk. Hosted run 35945483057 passed complete decoding, game inspection and encoded measurements: 270.028 seconds, −15.99 LUFS, −4.56 dBTP. Exact creator licence, Content ID and FAQ snapshots are retained. Content ID is **true**, so recording mode excludes it. Full listening, instrumental-content and Ukrainian cultural review are still pending; this one adaptation does not complete the 4–6-recording target.
+## Historical qualification evidence — retain
 
-## Remaining release gates
+- Archive failed intake runs **35943657893**, **35943774127** and **35943850666**:
+  three source filenames differed from creator download links.
+- Run **35944115394** passed 13 recordings and rejected _Angry Bullfrogs Riding
+  Motorbikes_ below the 60-second floor. It was excluded; the gate was not waived.
+- Run **35944483804** encountered source HTTP 502. Fresh run **35944843598** at
+  `4e9e572848848a314cd48f31a290b83850ee6b65` passed all 13. Artifact **10786113658**
+  has ZIP SHA-256
+  `0b95238aa7bb27a89b12864f35ac1df850e7a69dae5b7fea3257a764ebf58f5c`.
+- Source/derivative archival commit **`9e386c9c489bd193c830cd60ac6f26e7553dc335`**
+  preserved all 13 MP3s, native originals and snapshots. Hosted verification
+  **35945506601** checked the archive's then-total **83 recordings / 412,480,317
+  audio bytes**. This is an archive count, not the game's built-in count.
+- Game qualification **35944418013** at
+  `913306a736443959b4b8ff913c0976093a2b06bb` failed before source validation because
+  two inherited diagnostics fixtures exhausted mocked Git responses in
+  `publishing/utility/test_upload_diagnostics.py`. Later gates were skipped, not
+  passed. The independently reviewed fixture-only PR #322 was accepted at
+  `d0c73b4723798f6490f2680a59fd8d8a59983ac1`; the soundtrack branch was refreshed
+  onto that fix. Current exact-head progress is reported above.
+- Four local archive-builder tests were blocked by the existing **1 GiB free-disk
+  guard**. Do not bypass it or count blocked checks as passes. Use hosted audio
+  acquisition, builds and actual-byte verification while local reserve is low.
+- Ukrainian technical run **35945483057** passed the prepared Nakarada recording.
+  It provides no full listening, instrumental-content or cultural approval.
 
-1. Complete technical preparation and independently check exact source/derivative evidence.
-2. Listen to every complete candidate, including repeated playback, transitions,
-   warnings, mono and small-speaker use. Obtain cultural review for Ukrainian
-   entries. Do not fabricate reviewer names or approval timestamps.
-3. Commit permitted MP3s and archive source masters with verified hashes. Publish
-   each approved batch under a new immutable archive base path; preserve the old
-   70-track inventory and objects.
-4. Admit only the reviewed batch through the game compiler; retain source,
-   licence, exact recording identity, scene/energy metadata and Content ID status.
-5. Verify online playback, mixed queues, installation/removal and cold offline
-   playback. Qualify the actual integrated release source through the established
-   six gates, hosted build and independent artifact checks.
-6. Coordinate the next version with the Releases task, then release through a
-   game PR and separate Pages selector PR. Verify the public version and playback.
-
-Existing-collection curation and broader storage/device improvements follow
-these batches. Metadata changes to existing catalogue IDs need the approved
-trusted ID/hash curation overlay rather than replacement of saved pins.
-
-## Effort estimates
-
-Retro and metal preparation: 1–2 working days per 6–10-track accepted batch.
-Ukrainian research/preparation: 1–2 days; permission and reviewer availability
-prevent a reliable publication date. CI queues and listening review are outside
-these engineering estimates. New music remains unapproved until all relevant
-gates above are actually complete.
+Physical iPhone/desktop listening and cold offline checks remain distinct from
+automated or simulated checks. No reviewer names, approval timestamps or musical
+acceptance may be inferred from technical success.
