@@ -33,6 +33,7 @@ import {
   createWholeVarietyCandidates,
   createWholeSortingCandidates,
   createWholeImpactCandidates,
+  createWholePressureCandidates,
 } from '../content-design/whole-spatial-candidates.mjs';
 import { withCampaignPresentation } from '../content-design/campaign-presentation.mjs';
 import { createTeamSignalCandidates } from '../content-design/team-signal-candidates.mjs';
@@ -973,6 +974,7 @@ $('whole-variety').onclick = guarded(() => {
       'variety-1': createWholeVarietyCandidates,
       'sorting-lanes-1': createWholeSortingCandidates,
       'global-impact-1': createWholeImpactCandidates,
+      'pressure-arcs-1': createWholePressureCandidates,
     }[$('whole-variety-edition').value] ?? createWholeVarietyCandidates;
   $('source').value = JSON.stringify(create({ artwork: true }), null, 2);
   sourceChanged = true;

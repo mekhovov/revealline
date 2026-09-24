@@ -34,6 +34,7 @@ const golden = {
   'whole-spatial-v4': [252113, 'fd5175f63b842b7f71a11cab9e8067f6b7d9d698f026122c83ae14997a91d448'],
   'whole-spatial-v5': [252377, '74162393aa803207f7e933f4ded83a64a6b223c926aecc5be7bffd113fd959fe'],
   'whole-spatial-v6': [254781, 'c884d472a6b895157f8391db2c3408722ddb7d506f85b70c47185e69f724ea76'],
+  'whole-spatial-v7': [255610, 'd809ffcf9884e85d3dd778d4824ad1797ae76b5fe18c0f0c6382f9042c5f193c'],
 };
 
 test('all supported routes are covered by pinned edition snapshots', () => {
