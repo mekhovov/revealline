@@ -13,6 +13,7 @@ export function attachGameShell({
   canContinue,
   initial = true,
   initialFocus = true,
+  keyboardNavigation = true,
   training = false,
   practiceReturn = null,
   onFeatured,
@@ -191,6 +192,12 @@ export function attachGameShell({
     focusClearance.refresh();
     if (!focusMissions?.()) $('pack-select').focus();
   };
+  const primary = () =>
+    isolated
+      ? $('shell-course-return')
+      : canContinue()
+        ? $('shell-continue')
+        : $('shell-featured') || $('shell-play');
   const openHome = ({ focus = true, returnGuard = null } = {}) => {
     if (destroyed) return;
     if (practiceReturn) {
@@ -226,13 +233,7 @@ export function attachGameShell({
         status.hidden = true;
       home.showModal();
     }
-    if (focus)
-      (isolated
-        ? $('shell-course-return')
-        : canContinue()
-          ? $('shell-continue')
-          : $('shell-featured') || $('shell-play')
-      ).focus();
+    if (focus) primary().focus();
   };
   const forward = (source, target, { keepHome = false } = {}) => {
     $(source).onclick = () => {
@@ -679,7 +680,11 @@ export function attachGameShell({
       cancelWorkshop(event);
       return;
     }
-    if (!['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.key)) return;
+    if (
+      !keyboardNavigation ||
+      !['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.key)
+    )
+      return;
     const dialog = topDialog();
     if (!dialog || !event.target?.closest?.('button,a')) return;
     const controls = [...dialog.querySelectorAll('button,a,select,input,summary')].filter(
@@ -698,6 +703,7 @@ export function attachGameShell({
   doc.addEventListener('keydown', keydown);
   if (initial) openHome({ focus: initialFocus });
   return {
+    primary,
     openHome,
     openMissions,
     openWorkshop,

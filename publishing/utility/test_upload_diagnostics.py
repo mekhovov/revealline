@@ -221,9 +221,12 @@ class RetentionTests(unittest.TestCase):
                 env = {'UTILITY_BINDING': encoded(value).decode(), 'GITHUB_ACTIONS': 'true',
                        'GITHUB_EVENT_NAME': 'workflow_dispatch', 'UTILITY_WORKFLOW_SHA': 'e' * 40,
                        'GH_TOKEN': SECRET}
+                # HEAD, clean status, workflow tree, then the exact source policy
+                # lookup. This historical-source fixture has no policy file, so
+                # the reader retains required tests instead of granting a waiver.
                 with patch.object(sys, 'argv', arguments), patch.dict(utility.os.environ, env), \
                         patch.object(utility, 'source_identity', return_value=value['source']), \
-                        patch.object(utility.subprocess, 'check_output', side_effect=['e' * 40, '', 'f' * 40]), \
+                        patch.object(utility.subprocess, 'check_output', side_effect=['e' * 40, '', 'f' * 40, b'']), \
                         patch.object(utility, 'inspect_original', return_value={}), \
                         patch.object(utility, 'upload_originals', side_effect=error):
                     with self.assertRaises(module.Ambiguous):
