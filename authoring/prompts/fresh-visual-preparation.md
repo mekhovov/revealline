@@ -2,7 +2,26 @@
 
 > Extend Reveal Line's fresh-attempt presentation policy to another reviewed complete collection. Use exact authored owner and level hashes, compatible edition/mode, catalogue revision and compiled manifest bytes. Keep gameplay and earned-original identity separate. Stage assets and the accepted picture together before replacing a result or starting simulation. Pin both on a new save; retain them on Retry, Restart and Continue. Cancel obsolete work and release only its unadopted resources. Never silently use the decorative page theme when a declared collection is broken. Preserve historical readers and the prior release's hash-named manifests/payloads. Test one-action Start/Next, actual win/Retry, failure/cancellation/focus loss, Standard/Gentle originals and source-byte restoration before expanding the policy. Keep uncovered content explicit. Update generation and authoring guidance, then run composed-source, native, offline and immutable-public release gates.
 
+> With a decoded released picture and pinned visual collection, enter a legal
+> cut, Pause, change the next-attempt difficulty and confirm Restart. Require a
+> fresh run/recorder under the selected recipe while the complete accepted
+> picture/story choices and visual pin remain identical. Rebind the retained
+> media's execution context through the existing validated Retry helper. Repeat
+> during recovery, after saved Continue and through terminal Retry. Resume alone
+> must preserve the old attempt and difficulty; changing a preference must not
+> rewrite its saved checkpoint or silently select new artwork.
+
 For regression work, use the actual published picture bindings and preserve separately authenticated installed originals. Wait for real running state before movement; wait for visible refusal in intentionally blocked recovery cases. Keep no-write, exact-checkpoint and immutable-history assertions. A corrected fixture must not disable presentation loading or accept any arbitrary picture merely to pass.
+
+Validate Victory Story against the same authored picture owner used during
+preparation when a difficulty recipe derives the execution level. Keep the exact
+campaign, content, picture/story choice and theme guards. Exercise the real
+victory action; a fresh difficulty must not make its retained original unavailable.
+
+Test a touch tap on one mission while another card retains native keyboard focus.
+Cancel replacement and fail preparation separately; restore the tapped mission
+without stealing a newer action's focus. At Home, disable Continue during the
+ready handoff and require a visible enabled fallback without adopting the save.
 
 For large installed campaigns, keep the existing library and heap limits. Avoid re-encoding serialized pack pointers for snapshot equality; compare strings byte-exactly and legacy objects canonically. Prove stale writes still refuse, existing chapters survive, and Download & play reaches the selected mission. Record real browser play separately from modeled PNG decoding and source tests.
 
@@ -37,3 +56,16 @@ from this bounded status correction.
 ## Review a reader-only recipe successor
 
 Compare the exact accepted production bundle with the generated successor. For each reopened UI/audio slot, list all changed fields and prove whether recipe content, tokens, geometry, payloads and historical parents remain unchanged. Review the changed readers, ownership, cancellation and late-completion behavior against the exact source. Exercise a presentation switch during a pending music read and cue decode; old bytes must not become active. Record source-bound functional approval separately from visual, listening, musical, physical-device, offline and public acceptance. Do not infer audio-file decode from a recipe-only theme, and do not promote a collection merely because its registry has no missing slots.
+
+## Review explicit Versus mission selection
+
+> Finish a Journey sequence and use Browse missions to select an exact Classic
+> mission. Preserve the current format, steering policy, timer, touch preference,
+> controller slots and difficulty. Acknowledge preparation before pack reads,
+> authenticate the selected original without adopting either new board, then
+> navigate with an exact validated handoff. Repeat from a paused attempt: Stay
+> retains both checkpoints and the accepted picture; Replace rechecks inventory
+> under fresh input ownership. Fail and cancel target preparation, release a late
+> response and prove that the old result remains usable without a stale launch.
+> Keep the chooser's original error/selection return owner; do not add a competing
+> reopen path. Run the entire affected host files and final source gates.

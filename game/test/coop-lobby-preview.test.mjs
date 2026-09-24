@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { page } from './helpers/coop-host.mjs';
 import { deferred, waitFor } from './helpers/coop-presentation-fixture.mjs';
-import { coverageClear } from './helpers/coop-route-search.mjs';
+import { earnTeamVictory } from './helpers/coop-win.mjs';
 import { COOP_STARTER_PACK } from '../coop/library.mjs';
 import {
   COOP_PICTURE_BINDINGS,
@@ -512,35 +512,7 @@ test('earned First Connection victory keeps preview in the hidden lobby and Chan
   assert.ok(image);
   f.$('coop-start').focus();
   f.tap('Enter');
-  const keys = [
-    { up: 'KeyW', down: 'KeyS', left: 'KeyA', right: 'KeyD', boost: 'ShiftLeft', support: 'KeyQ' },
-    {
-      up: 'ArrowUp',
-      down: 'ArrowDown',
-      left: 'ArrowLeft',
-      right: 'ArrowRight',
-      boost: 'ShiftRight',
-      support: 'Enter',
-    },
-  ];
-  const route = coverageClear('standard', { boost: true, cover: true });
-  assert.equal(route.run.status, 'won');
-  f.tick();
-  for (const commands of route.log) {
-    commands.forEach((command, seat) => {
-      if (command.direction) f.tap(keys[seat][command.direction]);
-      if (command.boost) f.press(keys[seat].boost);
-      if (command.support) f.press(keys[seat].support);
-    });
-    f.tick();
-    commands.forEach((command, seat) => {
-      for (const action of ['boost', 'support'])
-        if (command[action])
-          f.doc.activeElement.emit('keyup', { key: keys[seat][action], code: keys[seat][action] });
-    });
-    if (!f.$('coop-overlay').hidden) break;
-  }
-  assert.equal(f.$('coop-overlay-kicker').textContent, 'A WORLD YOU REVEALED TOGETHER');
+  earnTeamVictory(t, f);
   assertMysteryPreview(f); // The hidden lobby never turns into an unearned full-image gallery.
   assertLobbyOwned(f);
   assert.equal(f.$('coop-menu').hidden, true);

@@ -15,11 +15,12 @@ import { createJourneyBackend } from '../journey/profile.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
 import { page } from './helpers/coop-host.mjs';
 import { waitFor } from './helpers/coop-presentation-fixture.mjs';
-import { teamPressureFixtures } from './helpers/team-pressure-fixtures.mjs';
+import { playTeamEditionRoute, teamEditionRoute } from './helpers/team-edition-host-route.mjs';
 
 const source = createTeamPressureOriginalCandidates(),
   host = createCandidateTeamHost(source, { corePackIds: source.packs.map((p) => p.id) });
-const rows = await teamPressureFixtures();
+const decodedOriginals = new WeakSet();
+const currentImage = (f) => f.drawImages.findLast((image) => decodedOriginals.has(image));
 const originals = new Map(
   await Promise.all(
     source.assets.map(async (a) => [
@@ -28,25 +29,6 @@ const originals = new Map(
     ]),
   ),
 );
-const keys = [
-  { up: 'KeyW', down: 'KeyS', left: 'KeyA', right: 'KeyD' },
-  { up: 'ArrowUp', down: 'ArrowDown', left: 'ArrowLeft', right: 'ArrowRight' },
-];
-// Actual keyboard-host baseline: live seed17, initial1tick, no state injection.
-const hostClears = [
-  [3200, '66.8%'],
-  [3186, '81.7%'],
-  [2513, '83.7%'],
-  [2866, '74.8%'],
-  [4037, '82.9%'],
-  [4361, '73.8%'],
-  [2357, '87.7%'],
-  [3927, '77.3%'],
-  [2901, '81.6%'],
-  [2194, '77.8%'],
-  [3216, '80.8%'],
-  [3095, '89.8%'],
-];
 const enter = (f, node) => {
   node.focus();
   f.tap('Enter');
@@ -61,6 +43,7 @@ function environment(install, failures) {
       this.width = this.naturalWidth = b.readUInt32BE(16);
       this.height = this.naturalHeight = b.readUInt32BE(20);
       this.sha256 = createHash('sha256').update(b).digest('hex');
+      decodedOriginals.add(this);
     }
     removeAttribute(name) {
       if (name === 'src') this.releases++;
@@ -110,34 +93,18 @@ test('twelve pressure originals play across all five campaigns; failed Next keep
     assert.equal(f.$('coop-level').value, mission.id);
     assert.equal(f.$('coop-menu').hidden, true);
     assert.equal(f.$('coop-difficulty').value, 'standard');
-    f.tick(2);
-    const picture = f.drawImages.at(-1),
-      asset = source.assets.find((a) => a.id === mission.presentation.backgroundAssetId);
+    let picture;
+    const reference = playTeamEditionRoute(f, source, mission.id, 'standard', () => {
+      picture ??= currentImage(f);
+      assert(picture);
+      assert.equal(currentImage(f), picture);
+    });
+    const asset = source.assets.find((a) => a.id === mission.presentation.backgroundAssetId);
     assert.equal(picture.sha256, asset.sha256);
-    const row = rows.find((r) => r.missionId === mission.id && r.difficulty === 'standard');
-    let previous = [null, null],
-      frames = 1;
-    for (const segment of row.log) {
-      for (const [seat, d] of [segment.a, segment.b].entries())
-        if (d && d !== previous[seat]) f.tap(keys[seat][d]);
-      previous = [segment.a, segment.b];
-      for (let n = 0; n < segment.ticks && f.$('coop-overlay').hidden; n++) {
-        f.tick();
-        frames++;
-      }
-      if (!f.$('coop-overlay').hidden) break;
-    }
-    assert.equal(
-      f.$('coop-overlay-kicker').textContent,
-      'A WORLD YOU REVEALED TOGETHER',
-      mission.id,
-    );
     assert.equal(f.$('coop-reserves').textContent, '2 reserves', mission.id);
-    assert.deepEqual([frames, f.$('coop-coverage').textContent], hostClears[index], mission.id);
     t.diagnostic(
-      `${mission.id}: host ${frames}ticks, ${f.$('coop-coverage').textContent}; live seed17 + initial1tick (not historical delay0 checkpoint)`,
+      `${mission.id}: ${reference.run.tick} public-input ticks, ${f.$('coop-coverage').textContent}; exact current edition and tuning`,
     );
-    assert.equal(f.drawImages.at(-1), picture);
     if (index === 0) {
       const next = source.missions[1].presentation.backgroundAssetId;
       failures.add(next);
@@ -153,7 +120,7 @@ test('twelve pressure originals play across all five campaigns; failed Next keep
       await waitFor(() => f.$('coop-overlay').hidden);
       assert.equal(picture.releases, 1);
       assert.equal(f.$('coop-coverage').textContent, '0.0%');
-    } else assert.equal(f.$('coop-next').hidden, true);
+    } else assert.equal(f.$('coop-next').hidden, true, f.$('coop-overlay-copy').textContent);
   }
   await new Promise((resolve) => setImmediate(resolve));
   const next = await createJourneyBackend({
@@ -245,9 +212,6 @@ test('pressure difficulty, reversible Skip, chooser and reload use scoped bookma
 test('changing-return edition crosses into both revised maps and exits to the unchanged finale with isolated receipts', async (t) => {
   const spatial = createTeamSpatialOriginalCandidates();
   const journey = createCandidateTeamHost(spatial, { corePackIds: spatial.packs.map((p) => p.id) });
-  const revised = JSON.parse(
-    await readFile(new URL('./fixtures/team-roamer-spatial-routes.json', import.meta.url)),
-  ).rows;
   const memory = managedIndexedDB(),
     failures = new Set();
   const pressure = createJourneyBackend({ ...memory, profileKey: TEAM_PRESSURE_PROFILE_KEY });
@@ -274,34 +238,15 @@ test('changing-return edition crosses into both revised maps and exits to the un
     const mission = spatial.missions[index];
     assert.equal(f.$('coop-level').value, mission.id);
     assert.equal(f.$('coop-menu').hidden, true);
-    f.tick(2);
-    const row = [...revised, ...rows].find(
-      (r) => r.missionId === mission.id && r.difficulty === 'standard',
-    );
-    const picture = f.drawImages.at(-1),
-      asset = spatial.assets.find((a) => a.id === mission.presentation.backgroundAssetId);
+    let picture;
+    playTeamEditionRoute(f, spatial, mission.id, 'standard', () => {
+      picture ??= currentImage(f);
+      assert(picture);
+      assert.equal(currentImage(f), picture);
+    });
+    const asset = spatial.assets.find((a) => a.id === mission.presentation.backgroundAssetId);
     assert.equal(picture.sha256, asset.sha256);
-    let previous = [null, null],
-      frames = 1;
-    for (const s of row.log) {
-      for (const [seat, d] of [s.a, s.b].entries())
-        if (d && d !== previous[seat]) f.tap(keys[seat][d]);
-      previous = [s.a, s.b];
-      for (let n = 0; n < s.ticks && f.$('coop-overlay').hidden; n++) {
-        f.tick();
-        frames++;
-      }
-      if (!f.$('coop-overlay').hidden) break;
-    }
-    assert.equal(
-      f.$('coop-overlay-kicker').textContent,
-      'A WORLD YOU REVEALED TOGETHER',
-      mission.id,
-    );
     assert.equal(f.$('coop-reserves').textContent, '2 reserves');
-    const expected =
-      index === 8 ? [4422, '81.5%'] : index === 9 ? [4303, '76.3%'] : hostClears[index];
-    assert.deepEqual([frames, f.$('coop-coverage').textContent], expected, mission.id);
     if (index === 7) {
       const next = spatial.missions[8].presentation.backgroundAssetId;
       failures.add(next);
@@ -315,7 +260,17 @@ test('changing-return edition crosses into both revised maps and exits to the un
       enter(f, f.$('coop-next'));
       await waitFor(() => f.$('coop-overlay').hidden);
       assert.equal(picture.releases, 1);
-    } else assert.equal(f.$('coop-next').hidden, true);
+    } else {
+      // This is the canonical complete library: the twelve Journey missions
+      // continue into its retained legacy arenas instead of a dead end.
+      assert.equal(f.$('coop-next').hidden, false);
+      assert.equal(f.$('coop-next').textContent, 'Next: First Connection');
+      enter(f, f.$('coop-next'));
+      await waitFor(() => f.$('coop-overlay').hidden);
+      assert.equal(f.$('coop-level').value, 'first-connection');
+      assert.equal(f.$('coop-menu').hidden, true);
+      assert.equal(picture.releases, 1);
+    }
   }
   await new Promise((resolve) => setImmediate(resolve));
   const profile = await backend.read();
@@ -329,7 +284,7 @@ test('changing-return edition crosses into both revised maps and exits to the un
   for (const mission of journey.catalog.missions.slice(7))
     assert.equal(
       profile.clears.team[mission.id].gameplayId,
-      journey.row(mission, 'standard').simulationIdentity,
+      teamEditionRoute(spatial, mission.levelId, 'standard').gameplayId,
     );
   assert.deepEqual(await pressure.read(), oldPressure);
   assert.deepEqual(await historical.read(), oldHistorical);

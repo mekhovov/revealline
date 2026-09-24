@@ -37,7 +37,9 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
     );
     page.key('ArrowDown');
     page.key('ArrowDown', false);
-    ticks(page, 13);
+    // With the host's v4 8.84-cell/s preset, this leaves the same-direction
+    // tap and queued turn before the next cell centre, not just after it.
+    ticks(page, 11);
     const run = page.rendered.run;
     const y = run.player.y;
     page.key('ArrowDown');
@@ -188,19 +190,38 @@ test('recovery inside a multi-tick frame clears intent and requires fresh post-r
   assert.equal(verifyReplay(JSON.parse(page.storage.getItem(sessionKey)).replay).match, true);
 });
 
-test('title, missions, briefing and settings use real shell navigation without starting flight', async (t) => {
+test('title, missions and settings use the current library navigation without starting flight', async (t) => {
   const page = await soloPage(t, { campaign, titleScreen: true });
+  const run = page.rendered.run,
+    checkpoint = authoritativeCheckpoint(run),
+    missions = page.$('shell-play'),
+    open = missions.onclick;
   assert.equal(page.$('shell-home').open, true);
-  page.$('shell-play').click();
-  assert.equal(page.$('shell-home').open, false);
-  assert.equal(page.$('shell-missions').open, true);
-  assert.equal(page.$('shell-mission-content').contains(page.$('pack-select')), true);
-  page.$('shell-briefing').click();
+  let opening;
+  missions.onclick = (...args) => (opening = open.apply(missions, args));
+  try {
+    missions.focus();
+    missions.click();
+  } finally {
+    missions.onclick = open;
+  }
+  assert.ok(opening instanceof Promise, 'The real button returns its catalogue preparation.');
+  assert.equal(page.$('mission-library-opening-status').textContent, 'Preparing missions…');
+  await opening;
+  assert.equal(page.$('journey-chooser').open, true);
+  assert.equal(page.$('shell-home').open, true, 'The library retains its Home parent.');
+  assert.equal(page.$('journey-cards').children.length > 0, true);
   page.frame(0);
   assert.equal(page.rendered.run.tick, 0);
-  page.$('shell-settings').click();
+  assert.equal(page.rendered.run, run);
+  assert.equal(page.rendered.paused, true);
+  assert.deepEqual(authoritativeCheckpoint(run), checkpoint);
+  page.$('journey-back').click();
+  assert.equal(page.doc.activeElement, page.$('shell-play'));
+  page.$('shell-options').click();
   assert.equal(page.$('settings-dialog').open, true);
   assert.equal(page.rendered.run.tick, 0);
+  assert.deepEqual(authoritativeCheckpoint(run), checkpoint);
   assert.deepEqual(page.errors, []);
 });
 
@@ -216,7 +237,7 @@ async function liveForegroundCut(t, turnPolicy) {
   await settle(() => page.doc.body.dataset.flightState === 'running');
   page.key('ArrowDown');
   page.key('ArrowDown', false);
-  ticks(page, 13);
+  ticks(page, 12); // Queue before the next cell centre under the host's v4 preset.
   page.key('ArrowRight');
   page.key('ArrowRight', false);
   ticks(page, 1);

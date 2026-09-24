@@ -5,24 +5,22 @@ import { soloPage, memoryStorage, settle } from './helpers/solo-dom.mjs';
 import { couchPage } from './helpers/couch-host.mjs';
 import { page as teamPage } from './helpers/coop-host.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
-import { authoritativeCheckpoint } from '../replay.mjs';
+import {
+  authoritativeCheckpoint,
+  createRecorder,
+  recordInput,
+  exportReplay,
+  verifyReplay,
+} from '../replay.mjs';
+import { chooseJourneyMission } from './helpers/library-selection.mjs';
+import { playCurrentTeamRoute } from './helpers/current-team-route.mjs';
+import { createTeamJourneyCandidates } from '../content-design/team-journey-candidates.mjs';
+import { PNGImage } from './helpers/png-image.mjs';
+import { createAuthoredJourneyRoute } from '../content-design/route.mjs';
+import { compileContentProject, resolveMission } from '../content-design/project.mjs';
+import { applyGameplayTuning, resolveGameplayTuning } from '../gameplay-tuning.mjs';
 import { createRun, stepRun, FIXED_DT } from '../core/index.mjs';
 import { JOURNEY_REACTION_PREFERENCES_KEY as preferenceKey } from '../journey/reaction-preferences.mjs';
-
-class Picture {
-  width = 1774;
-  height = 887;
-  naturalWidth = 1774;
-  naturalHeight = 887;
-  set src(value) {
-    this.source = value;
-    queueMicrotask(() => this.onload?.());
-  }
-  async decode() {}
-  removeAttribute() {
-    this.source = '';
-  }
-}
 
 const fetchResponse = async (path) =>
   String(path).includes('/content-design/assets/') ? new Response(await readFile(path)) : undefined;
@@ -33,33 +31,60 @@ test('a real released Sentinel uses its caption only after victory, with exact p
     titleScreen: true,
     storage: memoryStorage(),
     journeyIndexedDB: managedIndexedDB().indexedDB,
-    pictures: { Image: Picture },
+    pictures: { Image: PNGImage },
     fetchResponse,
   });
-  p.$('shell-play').click();
-  p.$('journey-cards')
-    .children.find((card) => card.dataset.missionId.endsWith('/first-relay'))
-    .click();
+  await chooseJourneyMission(p, 'shell-play', 'whole-originals-v3', 'first-relay');
   await settle(() => {
     p.frame(0);
     return p.rendered.run.levelId === 'first-relay' && p.doc.body.dataset.flightState === 'running';
   });
   assert.equal(p.$('journey-reactions').hidden, true);
-  const reference = createRun(p.rendered.run.level, { seed: 1, classId: 'scout' });
-  const fixture = JSON.parse(
-    await readFile(new URL('./fixtures/sentinel-clear-routes.json', import.meta.url)),
+  const manifest = resolveMission(
+    compileContentProject(createAuthoredJourneyRoute('whole-originals-v3').source),
+    'first-relay',
   );
-  const row = fixture.sets
-    .find((set) => set.difficulty === 'standard' && set.turnPolicy === 'immediate')
-    .rows.find((row) => row[0] === 'first-relay');
+  const level = applyGameplayTuning(manifest.level, resolveGameplayTuning('standard'));
+  assert.deepEqual(p.rendered.run.level, level);
+  assert.deepEqual(p.rendered.backdrop.assetRevision, manifest.background);
+  const acceptedPicture = p.rendered.backdrop;
+  const options = { seed: 1, classId: 'scout' };
+  const reference = createRun(level, options),
+    recorder = createRecorder(level, options);
+  // Legal current Standard route; historical untuned feasibility logs stay unchanged.
+  // Waiting follows completed cuts, and each closure requires a fresh real gesture.
+  const segments = [
+    ['down', 470],
+    [null, 60],
+    ['down', 7],
+    ['up', 353],
+    ['right', 530],
+    ['left', 489],
+    ['down', 244],
+    ['right', 217],
+    ['down', 27],
+    ['left', 210],
+    [null, 960],
+    ['right', 7],
+    ['up', 26],
+    ['left', 14],
+    ['up', 150],
+    ['right', 312],
+    ['down', 27],
+    ['left', 251],
+    [null, 600],
+    ['right', 88],
+    ['up', 21],
+  ];
   const keys = { up: 'ArrowUp', down: 'ArrowDown', left: 'ArrowLeft', right: 'ArrowRight' };
-  for (const [direction, ticks] of row[3]) {
+  for (const [direction, ticks] of segments) {
     if (direction) {
       p.key(keys[direction]);
       p.key(keys[direction], false);
     }
     let frames = 0;
     for (let tick = 0; tick < ticks; tick++) {
+      recordInput(recorder, { direction });
       stepRun(reference, { direction }, FIXED_DT);
       frames++;
       const closure = reference.events.some((event) => event.type === 'capture.stopped');
@@ -75,7 +100,13 @@ test('a real released Sentinel uses its caption only after victory, with exact p
     }
   }
   assert.equal(p.rendered.run.status, 'won');
+  assert.equal(p.rendered.run.tick, 5063);
+  assert.equal(p.rendered.run.classic.livesLost, 0);
+  assert(p.rendered.run.objectives.every((objective) => objective.captured));
+  assert.equal(p.rendered.run.encounter.defeated, true);
   assert.deepEqual(authoritativeCheckpoint(p.rendered.run), authoritativeCheckpoint(reference));
+  assert.equal(verifyReplay(exportReplay(recorder, reference)).match, true);
+  assert.equal(p.rendered.backdrop, acceptedPicture);
   assert.equal(p.$('journey-reactions').hidden, false);
   assert.match(p.$('journey-reactions').textContent, /^Sentinel — /);
   assert.match(p.$('overlay-copy').textContent, /captured.*points/);
@@ -90,7 +121,7 @@ test('Solo result has a silent optional Guide caption; changing the choice prese
     titleScreen: true,
     storage,
     journeyIndexedDB: managedIndexedDB().indexedDB,
-    pictures: { Image: Picture },
+    pictures: { Image: PNGImage },
     fetchResponse,
   });
   assert.equal(p.$('journey-reactions').hidden, true);
@@ -99,7 +130,8 @@ test('Solo result has a silent optional Guide caption; changing the choice prese
   assert.equal(p.$('journey-reactions').hidden, true);
   p.key('ArrowDown');
   p.key('ArrowDown', false);
-  for (let i = 0; i < 414; i++) p.frame();
+  // Standard pressure.v4 completes the same straight return at tick469.
+  for (let i = 0; i < 469; i++) p.frame();
   assert.equal(p.rendered.run.status, 'won');
   assert.equal(p.$('journey-reactions').hidden, false);
   assert.match(p.$('journey-reactions').textContent, /^Guide — /);
@@ -173,20 +205,9 @@ test('real authored Team victory uses Engineer and does not replace completion f
   assert.equal(f.$('coop-journey-reactions').hidden, true);
   f.$('coop-start').focus();
   f.tap('Enter');
-  f.tick(2);
-  const route = JSON.parse(
-    await readFile(new URL('./fixtures/team-opening-routes.json', import.meta.url)),
-  ).routes.find((row) => row.missionId === 'twin-landings' && row.difficulty === 'standard');
-  const keys = [
-    { up: 'KeyW', right: 'KeyD', down: 'KeyS', left: 'KeyA' },
-    { up: 'ArrowUp', right: 'ArrowRight', down: 'ArrowDown', left: 'ArrowLeft' },
-  ];
-  for (const segment of route.log) {
-    for (const [seat, direction] of [segment.a, segment.b].entries())
-      if (direction) f.tap(keys[seat][direction]);
-    for (let tick = 0; tick < segment.ticks && f.$('coop-overlay').hidden; tick++) f.tick();
-    if (!f.$('coop-overlay').hidden) break;
-  }
+  playCurrentTeamRoute(f, createTeamJourneyCandidates(), 'twin-landings', 'standard', () => {
+    if (f.$('coop-overlay').hidden) assert.equal(f.$('coop-journey-reactions').hidden, true);
+  });
   assert.equal(f.$('coop-overlay-kicker').textContent, 'A WORLD YOU REVEALED TOGETHER');
   assert.match(f.$('coop-overlay-copy').textContent, /Joint Cuts.*rescues/);
   assert.match(f.$('coop-journey-reactions').textContent, /^Engineer — /);

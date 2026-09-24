@@ -6,6 +6,7 @@ import { compileContentProject, resolveMission } from '../content-design/project
 import { createTeamTestPack } from '../content-design/team-export.mjs';
 import { assessTeamTimedRoute } from './helpers/team-timed-route.mjs';
 import { page } from './helpers/coop-host.mjs';
+import { playCurrentTeamRoute } from './helpers/current-team-route.mjs';
 
 const read = async (name) =>
   JSON.parse(await readFile(new URL(`./fixtures/${name}.json`, import.meta.url)));
@@ -13,10 +14,6 @@ const evidence = await read('team-timed-optional-host');
 const original = await read('team-timed-routes');
 const source = createTeamTimedCandidates();
 const project = compileContentProject(source);
-const keys = [
-  { up: 'KeyW', down: 'KeyS', left: 'KeyA', right: 'KeyD' },
-  { up: 'ArrowUp', down: 'ArrowDown', left: 'ArrowLeft', right: 'ArrowRight' },
-];
 const oldRoute = (row) => {
   const matches = original.rows.filter(
     (r) =>
@@ -105,37 +102,34 @@ for (const row of evidence.rows) {
     assert.equal(f.$('coop-difficulty').value, row.difficulty);
     f.$('coop-start').focus();
     f.tap('Enter');
-    f.tick(2); // Timestamp RAF, then one initial production release/idle step.
     const reserves = row.checks[1].result.initialReserves;
-    let frames = 1,
-      previous = [null, null];
-    for (const segment of log) {
-      for (const [seat, direction] of [segment.a, segment.b].entries())
-        if (direction && direction !== previous[seat]) f.tap(keys[seat][direction]);
-      previous = [segment.a, segment.b];
-      for (let n = 0; n < segment.ticks && f.$('coop-overlay').hidden; n++) {
-        f.tick();
-        frames++;
-        assert.equal(
-          f.$('coop-reserves').textContent,
-          `${reserves} reserve${reserves === 1 ? '' : 's'}`,
-        );
-        assert.doesNotMatch(
-          f.$('coop-bonus-live').textContent,
-          /Pilot [12] speed|Enemies slow|Enemies frozen/,
-        );
-        assert.doesNotMatch(
-          f.$('coop-message').textContent,
-          /(?:Sunflower|Skyline)(?: \+ (?:Sunflower|Skyline))? collected|one shared reserve gained|shared reserves already full/,
-        );
-      }
-      if (!f.$('coop-overlay').hidden) break;
-    }
+    const reference = playCurrentTeamRoute(f, source, row.missionId, row.difficulty, () => {
+      assert.equal(
+        f.$('coop-reserves').textContent,
+        `${reserves} reserve${reserves === 1 ? '' : 's'}`,
+      );
+      assert.doesNotMatch(
+        f.$('coop-bonus-live').textContent,
+        /Pilot [12] speed|Enemies slow|Enemies frozen/,
+      );
+      assert.doesNotMatch(
+        f.$('coop-message').textContent,
+        /(?:Sunflower|Skyline)(?: \+ (?:Sunflower|Skyline))? collected|one shared reserve gained|shared reserves already full/,
+      );
+    });
+    assert(!reference.events.some((event) => event.type === 'powerup.collected'));
+    assert(
+      [0, 1].every(
+        (seat) =>
+          reference.events.filter(
+            (event) =>
+              event.type === 'cut.closed' && event.player === seat && event.reason === 'return',
+          ).length >= 2,
+      ),
+    );
     assert.equal(f.$('coop-menu').hidden, true);
     assert.equal(f.$('coop-overlay').hidden, false);
     assert.equal(f.$('coop-overlay-kicker').textContent, 'A WORLD YOU REVEALED TOGETHER');
-    assert.equal(f.$('coop-coverage').textContent, row.keyboard.coverageText);
-    assert.equal(frames, row.keyboard.tick);
     assert.deepEqual(f.visits, []);
     t.diagnostic(
       'Driven-frame HUD evidence; no engine injection, physical controller or human-balance claim.',

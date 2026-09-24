@@ -1,6 +1,14 @@
 # RevealLine: detailed delivery history
 
-## Current status — 23 September 2026
+## Current execution order — 24 September 2026
+
+The approved [player-first UX execution board](player-first-ux-execution.md) now
+controls UX0–UX6 priorities, acceptance and release discipline. Immutable v0.98.0
+was published from the independent FPV presentation line. UX0 is reconciled onto
+that baseline as the v0.100.0 candidate; it is not yet a public release. Preserve
+the older observations below as dated evidence.
+
+## Previous status — 23 September 2026
 
 Use the [completed and remaining delivery plan](plan-status-2026-09-23.md) for the
 current release state, priorities, estimates and P00–P15 closure checklist.

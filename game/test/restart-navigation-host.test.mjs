@@ -62,7 +62,8 @@ async function flight(t, options = {}) {
   h.$('start-button').click();
   await settle(() => h.doc.body.dataset.flightState === 'running');
   h.key('ArrowDown');
-  frames(h, 27);
+  // Queue before the next cell centre under the current approved speed.
+  frames(h, 8);
   h.key('ArrowDown', false);
   h.key('ArrowRight');
   h.frame();
