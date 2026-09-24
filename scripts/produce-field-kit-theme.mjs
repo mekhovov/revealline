@@ -109,11 +109,11 @@ export function fieldKitEquipmentQuality(slotId, source, originalHash, successor
 // release readiness gate rather than silently inheriting this review.
 const REVIEWED_RECIPE_INPUTS = {
   screens: {
-    sha256: 'ceefa6797f3d66c628c5710008a20d68fd1e4afd4baba69b7655cdcdcb8d8996',
+    sha256: 'acf6426f5cd47f21a85ec5ae9da9549ed58fbe330b097c979dc85b87afe2d68a',
     evidence: [
-      'Scoped integrated screen continuation: docs/verification/integrated-fpv-presentation-2026-09-24/review.json sha256:5743669fa1b230c486bf92435e2922a8a775b86a3de10fd42f84c2e51a85ca51; four ordered screen inputs sha256:ceefa6797f3d66c628c5710008a20d68fd1e4afd4baba69b7655cdcdcb8d8996. Only field-kit-surfaces.css changes to map the two registered menu palettes onto existing supporting-page semantic tokens.',
-      'Focused surface and menu-host checks cover the shared tokens, persisted palette choice, keyboard/controller focus and paused Solo, Team and Versus state. Board geometry, input hit targets, runtime state, payloads and content ownership remain unchanged.',
-      'Bounded functional source continuation only. Complete navigation, forced-colour, screen-reader, every viewport, physical device, frozen/public and human acceptance remain separate. Historical reviews and payloads remain immutable.',
+      'Scoped compact Home continuation: docs/verification/compact-home-v01050/review.json sha256:2bb71224c4d0ac4bc577809b29d2e5029d13bdd3d0b597dcf726116e800bfede; four ordered screen inputs sha256:acf6426f5cd47f21a85ec5ae9da9549ed58fbe330b097c979dc85b87afe2d68a. Only field-kit-flow.css changes to compact the player menu and disclosures.',
+      'The complete Field Kit flow file passes18 checks; focused return checks and a1280×720 browser review cover initial focus, compact grouping, More routes and44 CSS pixel player targets. Board geometry, runtime state, payloads and content ownership remain unchanged.',
+      'Bounded player-menu continuation only. Complete navigation, forced-colour, screen-reader, zoom, every viewport, physical device, frozen/public and human acceptance remain separate. Historical reviews and payloads remain immutable.',
     ],
   },
   ui: {
