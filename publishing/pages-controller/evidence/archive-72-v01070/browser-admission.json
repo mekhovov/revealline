@@ -1,0 +1,20 @@
+{
+  "format": "revealline-archive-browser-admission.v1",
+  "status": "PASS",
+  "archiveId": "archive-72",
+  "infrastructureCommit": "12f9b350f9461d7721ba389af9c7590d6b5f621f",
+  "deploymentId": 6649956472,
+  "versions": ["v0.107.0"],
+  "scope": "Historical online preservation: exact archive routes, full-body hashes and bounded in-app-browser Home, saved Continue, live gameplay, Pause and Resume verification. This is not renewed full v0.107.0 gameplay acceptance.",
+  "evidence": [
+    {
+      "path": "evidence/archive-72-v01070/public-observation.json",
+      "sha256": "ab0800d785115ec1d46add22e617e400d31c6cb4ece2f185692ccc6964804cc0"
+    }
+  ],
+  "limitations": [
+    "The continued mission was not completed during this archive-only observation.",
+    "No physical controller, physical touch, screen reader, offline, full-mission, exhaustive selector or device-matrix qualification is claimed.",
+    "The browser shared existing local saved data and preferences; they are not evidence of a fresh-profile default."
+  ]
+}
