@@ -31,14 +31,17 @@ Use HTTPS for a public site. Configure the host to serve `.mjs`/`.js` as JavaScr
 
 ## GitHub Pages
 
-Source pull requests use `.github/workflows/deploy-pages.yml`: validation, lint, formatting,
-production provenance checks, four isolated test shards, and the ordinary static build. These
-checks use the pull request source. An already qualified immutable release is published from its
-original ZIP; publication does not rerun today's test sharder inside an older tag.
+Source pull requests use `.github/workflows/deploy-pages.yml`. While the temporary
+[fast-release mode](fast-release-mode.md) is active, one exact-source path performs release-critical
+validation and the ordinary static build. Full tests, lint, formatting, native formatting, and
+extended production checks are deferred and do not block merge or publication. The workflow does
+not claim that deferred checks passed. An already qualified immutable release is published from
+its original ZIP; publication does not rerun today's test sharder inside an older tag.
 
-The pull-request package build requires the preflight checks, but does not wait for the optional
-test-shard matrix. A failed shard remains visible in Actions and must be resolved before a source
-revision can be qualified as a release; it simply does not hide the separate build result.
+`release-ready` is the stable aggregate PR result. In fast mode it requires exact-source preflight
+and the build. In restored full mode it also requires every test shard. Avoid configuring individual
+matrix job names as required checks; the aggregate avoids stale required contexts when the matrix
+changes.
 
 The sole Pages publisher is `.github/workflows/publish-frozen-pages.yml`, running from `main`
 through the existing main-only `github-pages` environment. Its reviewed
@@ -77,10 +80,12 @@ selector. Future release tags containing this routing workflow can request publi
 for them, rather than assuming a new controller exists inside an old release. GitHub resolves event
 workflows from their associated commit or ref. [GitHub workflow events](https://docs.github.com/en/actions/concepts/workflows-and-actions/workflows)
 
-Pull requests that change only the controller or its deployment instructions run focused controller
-checks and build a non-publishable preview. They cannot upload a Pages artifact or enter deployment.
-A successful build is not public acceptance: after deployment, verify the published bytes and test
-play, saved-run ownership, historical entries, and offline coexistence in the actual browser.
+Pull requests that change only the controller or its deployment instructions build a non-publishable
+preview. Focused controller test suites are deferred in fast mode, while selector validation,
+bounded extraction, artifact assembly, and an independent reread of every prepared byte remain
+mandatory. Pull requests cannot upload a Pages artifact or enter deployment. A successful build is
+not public acceptance: after deployment, verify the published bytes and test play, saved-run
+ownership, historical entries, and offline coexistence in the actual browser.
 
 Source test jobs keep the selected checkout in `source/` and obtain the shard utility from a
 separate `automation/` checkout pinned to `github.workflow_sha`. The utility accepts `--root .`
