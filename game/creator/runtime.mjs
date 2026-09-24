@@ -14,6 +14,13 @@ export const creatorAttemptKey = (editionId) => `revealline.creator.attempt.v1.$
 export function createCreatorRuntime(prepared, { decodeImage, buildVersion = 'dev' } = {}) {
   required(isPreparedCreatorBundle(prepared), 'Verify the installed edition before playing.');
   const { project, themes, provenance } = prepared.manifest.content;
+  const provenances = Array.isArray(provenance) ? provenance : [provenance];
+  const provenanceByMission = new Map(provenances.map((entry) => [entry.missionId, entry]));
+  const pack = project.packs.find((entry) => entry.id === prepared.manifest.content.packId);
+  const campaigns = new Map(project.campaigns.map((entry) => [entry.id, entry]));
+  const missionOrder = pack.campaignIds.flatMap(
+    (campaignId) => campaigns.get(campaignId).missionIds,
+  );
   const preparer = createContentAttemptPreparer(project, {
     themes,
     buildVersion,
@@ -32,8 +39,10 @@ export function createCreatorRuntime(prepared, { decodeImage, buildVersion = 'de
       .journey()
       .missions.find((item) => item.id === missionId || item.levelId === missionId);
     required(mission, 'Choose a mission from this installed edition.');
+    const missionProvenance = provenanceByMission.get(mission.levelId);
+    required(missionProvenance, 'This mission is missing its generation evidence.');
     const candidate = await preparer.prepare(
-      { missionId: mission.id, difficulty, turnPolicy, seed: provenance.runtimeSeed },
+      { missionId: mission.id, difficulty, turnPolicy, seed: missionProvenance.runtimeSeed },
       { signal },
     );
     if (disposed || ticket !== generation || signal?.aborted) {
@@ -52,10 +61,16 @@ export function createCreatorRuntime(prepared, { decodeImage, buildVersion = 'de
   return Object.freeze({
     editionId: prepared.editionId,
     catalog: preparer.catalog,
+    missionOrder: Object.freeze([...missionOrder]),
+    nextMissionId(missionId) {
+      const index = missionOrder.indexOf(missionId);
+      required(index >= 0, 'Choose a mission from this installed edition.');
+      return missionOrder[index + 1] ?? null;
+    },
     current: () => attempt,
     runId: () => runId,
     async start(
-      { missionId = provenance.missionId, difficulty = 'standard', turnPolicy = 'immediate' } = {},
+      { missionId = missionOrder[0], difficulty = 'standard', turnPolicy = 'immediate' } = {},
       options,
     ) {
       return adopt(await prepare(missionId, difficulty, turnPolicy, options));
@@ -105,10 +120,6 @@ export function createCreatorRuntime(prepared, { decodeImage, buildVersion = 'de
         saved.format === 'revealline-creator-attempt.v1' && saved.editionId === prepared.editionId,
         'This saved attempt belongs to a different installed edition.',
       );
-      required(
-        saved.session?.replay?.options?.seed === provenance.runtimeSeed,
-        'Saved attempt uses a different runtime seed.',
-      );
       const candidate = await prepare(
         saved.missionId,
         saved.difficulty,
@@ -116,6 +127,11 @@ export function createCreatorRuntime(prepared, { decodeImage, buildVersion = 'de
         { signal },
       );
       try {
+        required(
+          saved.session?.replay?.options?.seed ===
+            provenanceByMission.get(candidate.manifest.missionId)?.runtimeSeed,
+          'Saved attempt uses a different runtime seed.',
+        );
         const restored = await restoreSession(saved.session, {
           campaign: candidate.entry.campaign,
           campaignKey: key(candidate.entry),
