@@ -3,6 +3,7 @@ import {
   installCoopPresentation,
   waitFor as waitForTeamPicture,
 } from './helpers/coop-presentation-fixture.mjs';
+import { installActorAppearanceTransport } from './helpers/actor-appearance-transport.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
@@ -123,6 +124,13 @@ async function teamPage(t, store, { systemReduced = false } = {}) {
       Object.defineProperty(globalThis, key, { configurable: true, ...descriptor });
     },
   });
+  installActorAppearanceTransport({
+    baseURL: new URL('../presentation/compiled/', globals.location.href),
+    install(key, descriptor) {
+      originals.set(key, Object.getOwnPropertyDescriptor(globalThis, key));
+      Object.defineProperty(globalThis, key, { configurable: true, ...descriptor });
+    },
+  });
   await import(`../couch/relay-rescue.mjs?menu-style-host=${++sequence}`);
   await waitForTeamPicture(
     () => $('coop-picture-status').dataset.state === 'ready',
@@ -182,7 +190,7 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
     change(page, 'menu-ornaments', 'rich');
     page.frame(0);
     assert.deepEqual(raw(store), { palette: 'ukrainian', ornaments: 'rich' });
-    assert.equal(page.doc.body.dataset.menuPalette, 'ukrainian');
+    assert.equal(page.doc.body.dataset.menuPalette, 'field-kit');
     assert.equal(page.doc.body.dataset.textSize, 'large');
     assert.strictEqual(page.rendered.run, run);
     assert.strictEqual(page.rendered.backdrop, backdrop);
@@ -216,7 +224,7 @@ test('one separate menu record survives Solo, Team, Versus and Solo return witho
     DISPLAY_PREFERENCES_KEY,
     JSON.stringify({ textFace: 'plain', textSize: 'large', reducedEffects: true }),
   );
-  await t.test('Solo opts into Ukrainian rich menus from the real Settings', async (t) => {
+  await t.test('Solo opts into FPV Field Kit rich menus from the real Settings', async (t) => {
     const page = await soloPage(t, { campaign, storage: store, titleScreen: true });
     page.$('shell-options').click();
     page.$('settings-tab-display').click();

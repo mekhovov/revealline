@@ -1,5 +1,6 @@
 import { EPS, movingCirclesTime } from '../core/geometry.mjs';
 import { cellAt, enemyWallContact, positionAt } from './geometry.mjs';
+import { hasTeamLineImpacts } from './foundations.mjs';
 
 export const COOP_TIMING = Object.freeze({
   gentle: { recovery: 16, hunterWarning: 1.6, emitterWarning: 1.5, huntersAtOnce: 1 },
@@ -54,6 +55,54 @@ export function initializeThreats(run) {
   }
 }
 
+/** One source can seed one pair per owned cut. Both fronts keep the stable
+ * player/cut identity while Team capture may trim or rebase the live trail. */
+export function seedTrailImpacts(
+  run,
+  { owner, source = 'enemy', player: playerId, cellIndex },
+  emit,
+) {
+  if (!hasTeamLineImpacts(run.level)) return [];
+  const player = run.players[playerId];
+  if (
+    player?.status !== 'active' ||
+    !player.cutting ||
+    !Number.isInteger(player.cutId) ||
+    !player.trail.some((cell) => cell.index === cellIndex)
+  )
+    return [];
+  const sourceKey = `${source}:${owner}`;
+  if (player.impactSources.includes(sourceKey)) return [];
+  player.impactSources.push(sourceKey);
+  const x = (cellIndex % run.width) + 0.5;
+  const y = Math.floor(cellIndex / run.width) + 0.5;
+  const seed = run.nextImpactId++;
+  const impacts = [-1, 1].map((direction) => ({
+    id: `impact-${seed}-${direction < 0 ? 'departure' : 'player'}`,
+    version: 'team-line-impact.v2',
+    owner,
+    source,
+    player: player.id,
+    cutId: player.cutId,
+    direction,
+    speed: run.level.lineImpact.speed,
+    cellIndex,
+    x,
+    y,
+    progress: 0,
+  }));
+  run.impacts.push(...impacts);
+  emit(run, 'impact.launched', {
+    impacts: impacts.map((impact) => impact.id),
+    owner,
+    source,
+    player: player.id,
+    cutId: player.cutId,
+    cellIndex,
+  });
+  return impacts;
+}
+
 function targetTrail(run, origin, range, reachable = () => true) {
   const pressure = run.players.map(
     (player) =>
@@ -98,7 +147,7 @@ function hunterRecovery(run, enemy, emit) {
 }
 
 /** All target changes occur at a visible warning boundary, never during a committed attack. */
-export function updateThreatClocks(run, emit) {
+export function updateThreatClocks(run, emit, { suppressImpacts = false } = {}) {
   const timing = COOP_TIMING[run.difficulty];
   const encounter = encounterFor(run);
   const waiting = [];
@@ -209,28 +258,42 @@ export function updateThreatClocks(run, emit) {
     if (emitter.phase === 'warning') {
       const player = run.players[emitter.target];
       if (
+        !suppressImpacts &&
         player?.status === 'active' &&
         player.cutting &&
         player.graceUntil <= run.time + EPS &&
         player.trail.some((cell) => cell.index === emitter.cellIndex) &&
         run.cells[emitter.cellIndex] === 0
       ) {
-        const impact = {
-          id: `impact-${run.nextImpactId++}`,
-          owner: stronghold.id,
-          player: player.id,
-          cellIndex: emitter.cellIndex,
-          x: (emitter.cellIndex % run.width) + 0.5,
-          y: Math.floor(emitter.cellIndex / run.width) + 0.5,
-          progress: 0,
-        };
-        run.impacts.push(impact);
-        emit(run, 'impact.launched', {
-          impact: impact.id,
-          owner: impact.owner,
-          player: player.id,
-          cellIndex: impact.cellIndex,
-        });
+        if (hasTeamLineImpacts(run.level))
+          seedTrailImpacts(
+            run,
+            {
+              owner: stronghold.id,
+              source: 'emitter',
+              player: player.id,
+              cellIndex: emitter.cellIndex,
+            },
+            emit,
+          );
+        else {
+          const impact = {
+            id: `impact-${run.nextImpactId++}`,
+            owner: stronghold.id,
+            player: player.id,
+            cellIndex: emitter.cellIndex,
+            x: (emitter.cellIndex % run.width) + 0.5,
+            y: Math.floor(emitter.cellIndex / run.width) + 0.5,
+            progress: 0,
+          };
+          run.impacts.push(impact);
+          emit(run, 'impact.launched', {
+            impact: impact.id,
+            owner: impact.owner,
+            player: player.id,
+            cellIndex: impact.cellIndex,
+          });
+        }
       }
       emitter.phase = 'cooldown';
       emitter.phaseUntil = run.time + encounter.emitterCooldown;
@@ -276,6 +339,7 @@ export function clearInvalidImpacts(run, emit) {
     const keep =
       player?.status === 'active' &&
       player.cutting &&
+      (impact.version !== 'team-line-impact.v2' || player.cutId === impact.cutId) &&
       !owner?.defeated &&
       run.cells[impact.cellIndex] === 0 &&
       player.trail.some((cell) => cell.index === impact.cellIndex);
@@ -295,49 +359,66 @@ export function planImpacts(run, velocities, horizon) {
   return run.impacts.map((impact) => {
     const player = run.players[impact.player];
     const index = player.trail.findIndex((cell) => cell.index === impact.cellIndex);
-    const next = player.trail[index + 1];
-    const target = next ? { x: next.x + 0.5, y: next.y + 0.5 } : player;
+    const direction = impact.direction ?? 1;
+    const next = player.trail[index + direction];
+    const expires = direction < 0 && !next;
+    const target = next
+      ? { x: next.x + 0.5, y: next.y + 0.5 }
+      : expires
+        ? player.safeAnchor
+        : player;
     const dx = target.x - impact.x;
     const dy = target.y - impact.y;
     const distance = Math.hypot(dx, dy);
+    const speed = impact.speed ?? 14;
     const velocity =
-      distance > EPS ? { x: (dx / distance) * 14, y: (dy / distance) * 14 } : { x: 0, y: 0 };
-    const waypointAt = next ? distance / 14 : Infinity;
-    const fraction = movingCirclesTime(
-      impact,
-      positionAt(impact, velocity, horizon),
-      player,
-      positionAt(player, velocities[player.id], horizon),
-      0.3,
-    );
+      distance > EPS ? { x: (dx / distance) * speed, y: (dy / distance) * speed } : { x: 0, y: 0 };
+    const waypointAt = next || expires ? distance / speed : Infinity;
+    const fraction =
+      direction < 0
+        ? null
+        : movingCirclesTime(
+            impact,
+            positionAt(impact, velocity, horizon),
+            player,
+            positionAt(player, velocities[player.id], horizon),
+            0.3,
+          );
     return {
       impact,
       velocity,
       waypointAt,
       nextCellIndex: next?.index ?? null,
+      expires,
       contactAt: fraction === null ? Infinity : fraction * horizon,
     };
   });
 }
 
 export function advanceImpacts(plans, seconds) {
+  const expired = [];
   for (const plan of plans) {
     plan.impact.x += plan.velocity.x * seconds;
     plan.impact.y += plan.velocity.y * seconds;
-    plan.impact.progress += 14 * seconds;
+    plan.impact.progress += (plan.impact.speed ?? 14) * seconds;
     if (plan.waypointAt <= seconds + EPS && plan.nextCellIndex !== null) {
       plan.impact.cellIndex = plan.nextCellIndex;
       plan.impact.progress = 0;
-    }
+    } else if (plan.waypointAt <= seconds + EPS && plan.expires) expired.push(plan.impact);
   }
+  return expired;
 }
 
 export function useSupport(run, player, emit) {
   if (player.support.readyAt > run.time + EPS) return;
   player.support.readyAt = run.time + 8;
+  const role = player.supportRole ?? 'hybrid';
+  const canSlow = role === 'hybrid' || role === 'disruptor';
+  const canIntercept = role === 'hybrid' || role === 'interceptor';
   const slowedEnemies = [];
   for (const enemy of run.enemies)
     if (
+      canSlow &&
       enemy.active !== false &&
       Math.hypot(enemy.x - player.x, enemy.y - player.y) <= 6 + EPS &&
       enemy.slowUntil <= run.time + EPS
@@ -351,6 +432,7 @@ export function useSupport(run, player, emit) {
     }
   const interceptedImpacts = [];
   run.impacts = run.impacts.filter((impact) => {
+    if (!canIntercept) return true;
     if (Math.hypot(impact.x - player.x, impact.y - player.y) > 6 + EPS) return true;
     interceptedImpacts.push(impact.id);
     emit(run, 'impact.intercepted', {
@@ -365,8 +447,19 @@ export function useSupport(run, player, emit) {
   player.support.intercepts += interceptedImpacts.length;
   player.support.slows += slowedEnemies.length;
   run.team.interceptions += interceptedImpacts.length;
-  run.supportEffects.push({ player: player.id, x: player.x, y: player.y, until: run.time + 0.3 });
-  emit(run, 'support.pulse', { player: player.id, slowedEnemies, interceptedImpacts });
+  run.supportEffects.push({
+    player: player.id,
+    role,
+    x: player.x,
+    y: player.y,
+    until: run.time + 0.3,
+  });
+  emit(run, 'support.pulse', {
+    player: player.id,
+    role,
+    slowedEnemies,
+    interceptedImpacts,
+  });
 }
 
 export function strongholdIndex(run, point) {

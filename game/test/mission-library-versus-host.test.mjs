@@ -354,7 +354,7 @@ for (const collection of ['Journey', 'Classic'])
     assert.equal(destination.pathname, '/game/couch/relay-rescue.html');
     assert.equal(
       destination.searchParams.get('journey'),
-      collection === 'Journey' ? 'team-spatial-originals-1' : 'legacy',
+      collection === 'Journey' ? 'team-trail-impact-originals-1' : 'legacy',
     );
     assert.equal(destination.searchParams.get('library-mission'), target.dataset.missionId);
     assert.equal(p.doc.documentElement.dataset.toolState, 'ready');

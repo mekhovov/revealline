@@ -24,9 +24,11 @@ export const ACTOR_PRESENTATION_LIMITS = Object.freeze({
   baseLogicalSize: 64,
   baseBossLogicalSize: 80,
   desktopMinimum: 24,
-  phoneMinimum: 16,
+  phoneMinimum: 20,
   maximumCSSSize: 32,
 });
+const ROTOR_SWEEP_FACTOR = Math.sqrt(32) / 5;
+const imagePaintMetrics = new WeakMap();
 
 // Presentation scale is bounded independently of simulation/world geometry.
 export const actorScreenScale = (value) => clamp(finite(value, 1), 0.1, 4);
@@ -63,12 +65,97 @@ export function actorDiameter({
     boss = role === 'boss';
   const base = (style === 'microtile' ? 26 : style === 'props' ? 34 : 30) * (boss ? 1.3 : 1);
   const desired = base * clamp(finite(scale, 1), 0.75, 1.5);
-  const minimum = canvasCSSWidth >= 480 ? 24 : 16;
+  const minimum =
+    canvasCSSWidth >= 480
+      ? ACTOR_PRESENTATION_LIMITS.desktopMinimum
+      : ACTOR_PRESENTATION_LIMITS.phoneMinimum;
   return clamp(
     clamp(desired, minimum / s, (boss ? 40 : 32) / s),
     Math.min(18, (boss ? 40 : 32) / s),
     actorLogicalLimit({ screenScale: s, minimumCSSSize: minimum, boss }),
   );
+}
+
+/** Resolve the actually visible part of a prepared sprite. Asset geometry is
+ * frame-normalized, while the renderer fits a possibly rectangular frame into
+ * a square logical diameter. Rotor sweep is included so transparent padding
+ * cannot make an animated actor look smaller than its requested display size.
+ * Missing/legacy geometry deliberately keeps the old full-frame behavior. */
+export function actorImagePaintMetrics(diameter, geometry) {
+  const cacheable = geometry && typeof geometry === 'object' && Object.isFrozen(geometry),
+    cached = cacheable ? imagePaintMetrics.get(geometry) : null;
+  if (cached?.diameter === diameter) return cached.value;
+  const frame = geometry?.frame,
+    pivot = geometry?.pivot;
+  if (
+    !Number.isFinite(diameter) ||
+    diameter <= 0 ||
+    !Number.isFinite(frame?.width) ||
+    frame.width <= 0 ||
+    !Number.isFinite(frame?.height) ||
+    frame.height <= 0 ||
+    !Number.isFinite(pivot?.x) ||
+    !Number.isFinite(pivot?.y)
+  )
+    return Object.freeze({
+      scale: 1,
+      width: diameter,
+      height: diameter,
+      visible: Object.freeze({ left: 0, top: 0, right: 1, bottom: 1 }),
+    });
+  const size = Math.max(frame.width, frame.height),
+    frameWidth = frame.width / size,
+    frameHeight = frame.height / size,
+    occupied = geometry.occupiedBounds;
+  let left = 0,
+    top = 0,
+    right = 1,
+    bottom = 1;
+  if (
+    Number.isFinite(occupied?.x) &&
+    Number.isFinite(occupied?.y) &&
+    Number.isFinite(occupied?.width) &&
+    occupied.width > 0 &&
+    Number.isFinite(occupied?.height) &&
+    occupied.height > 0
+  ) {
+    left = occupied.x;
+    top = occupied.y;
+    right = occupied.x + occupied.width;
+    bottom = occupied.y + occupied.height;
+    for (const rotor of geometry.rotors ?? []) {
+      if (
+        !Number.isFinite(rotor?.x) ||
+        !Number.isFinite(rotor?.y) ||
+        !Number.isFinite(rotor?.radiusScale) ||
+        rotor.radiusScale <= 0
+      )
+        continue;
+      const radiusX = 0.16 * rotor.radiusScale * ROTOR_SWEEP_FACTOR,
+        // Rotor rendering scales both axes from the painted frame width.
+        radiusY = radiusX * (frameWidth / frameHeight),
+        x = pivot.x + rotor.x,
+        y = pivot.y + rotor.y;
+      left = Math.min(left, x - radiusX);
+      top = Math.min(top, y - radiusY);
+      right = Math.max(right, x + radiusX);
+      bottom = Math.max(bottom, y + radiusY);
+    }
+    left = clamp(left, 0, 1);
+    top = clamp(top, 0, 1);
+    right = clamp(right, left, 1);
+    bottom = clamp(bottom, top, 1);
+  }
+  const visibleSpan = Math.max((right - left) * frameWidth, (bottom - top) * frameHeight),
+    scale = clamp(1 / Math.max(visibleSpan, 0.5), 1, 2);
+  const value = Object.freeze({
+    scale,
+    width: diameter * frameWidth * scale,
+    height: diameter * frameHeight * scale,
+    visible: Object.freeze({ left, top, right, bottom }),
+  });
+  if (cacheable) imagePaintMetrics.set(geometry, { diameter, value });
+  return value;
 }
 
 /** Retain only previous observed positions and cosmetic clocks, never entity references. */
@@ -630,10 +717,11 @@ export function drawPresentedActor(
   ctx.rotate(frame.heading);
   ctx.scale(1 - frame.bank * 0.35, 1 + frame.bank * 0.2);
   const d = frame.diameter;
+  let bodyPaintDiameter = d;
   if (image && geometry) {
-    const size = Math.max(geometry.frame.width, geometry.frame.height),
-      width = (d * geometry.frame.width) / size,
-      height = (d * geometry.frame.height) / size;
+    const paint = actorImagePaintMetrics(d, geometry),
+      { width, height } = paint;
+    bodyPaintDiameter = Math.max(width, height);
     // The release host already cropped the declared source frame. Pivot and
     // motor anchors remain normalized to that entire frame, including alpha.
     ctx.drawImage(image, -geometry.pivot.x * width, -geometry.pivot.y * height, width, height);
@@ -660,7 +748,7 @@ export function drawPresentedActor(
     ctx.scale(d / 28, d / 28);
     drawEnemySilhouette(ctx, frame, colors);
   }
-  if (image && bodyRecord) drawEnemyBodyMotion(ctx, frame, bodyRecord, d);
+  if (image && bodyRecord) drawEnemyBodyMotion(ctx, frame, bodyRecord, bodyPaintDiameter);
   if (image) ctx.scale(d / 28, d / 28);
   // Two small nose pixels give rounded/compact and uploaded bodies a stable
   // heading cue. They remain within the body envelope, never a targeting ray.

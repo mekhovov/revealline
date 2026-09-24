@@ -1019,6 +1019,7 @@ export function attachLibraryPanel(api) {
           'xonix-session.v3',
           'xonix-session.v4',
           'xonix-session.v5',
+          'xonix-session.v6',
         ].includes(parsed.format)
       ) {
         operation.commit('Restoring the verified saved flight…');

@@ -7,21 +7,24 @@ import { createJourneyBackend } from '../journey/profile.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
 import { workshopReturnLinks } from '../ui/workshop-return.mjs';
 
-// Browser decoder boundary only. The host still reads and verifies the real
-// registered originals; this fixture makes no native image/layout claim.
-class Picture {
-  width = 1774;
-  height = 887;
-  naturalWidth = 1774;
-  naturalHeight = 887;
-  set src(value) {
-    this.source = value;
-    queueMicrotask(() => this.onload?.());
-  }
-  async decode() {}
-  removeAttribute() {
-    this.source = '';
-  }
+// Browser decoder boundary only. The host still reads, hashes and verifies the
+// registered originals; these dimensions match the two real fixture families
+// without adding asynchronous browser-codec timing to synchronous host tests.
+function picture(width, height) {
+  return class Picture {
+    width = width;
+    height = height;
+    naturalWidth = width;
+    naturalHeight = height;
+    set src(value) {
+      this.source = value;
+      queueMicrotask(() => this.onload?.());
+    }
+    async decode() {}
+    removeAttribute() {
+      this.source = '';
+    }
+  };
 }
 
 // Match the existing Workshop host fixture's native dialog focus/queued close
@@ -46,12 +49,13 @@ function nativeDialogs(t) {
 }
 
 async function page(t, options = {}) {
+  const authored = !options.search || String(options.search).includes('course=');
   return soloPage(t, {
     // Deliberately bypass the historical helper's explicit Legacy default.
     search: '',
     titleScreen: true,
     journeyIndexedDB: managedIndexedDB().indexedDB,
-    pictures: { Image: Picture },
+    pictures: { Image: authored ? picture(1774, 887) : picture(768, 576) },
     fetchResponse: async (path) => {
       if (String(path).includes('/content-design/assets/'))
         return new Response(await readFile(path));
@@ -82,12 +86,12 @@ test('ordinary Solo entry offers 91 Journey and 110 Classic missions and direct 
   assert.equal(p.$('shell-continue').hidden, true);
   assert.equal(p.$('shell-title-edition').textContent, 'NEW JOURNEY / 91 MISSIONS');
   assert.match(p.$('shell-destination').textContent, /Start · First return/);
-  assert.equal(new URL(p.$('shell-playground').href).search, '?journey=whole-spatial-v5');
+  assert.equal(new URL(p.$('shell-playground').href).search, '?journey=whole-spatial-v9');
   assert.equal(p.$('shell-catalogue').textContent, 'All missions');
   assert.equal(p.$('shell-catalogue').getAttribute('href'), './?journey=legacy');
   assert.equal(
     p.$('shell-title-versus').getAttribute('href'),
-    'couch/?journey=whole-spatial-v5&return=solo',
+    'couch/?journey=whole-spatial-v9&return=solo',
   );
   assert.equal(
     p.$('shell-title-team').querySelector('.game-mode-description').textContent,
@@ -138,7 +142,7 @@ test('ordinary Solo entry offers 91 Journey and 110 Classic missions and direct 
 
 test('ordinary Solo Continue uses its current Journey bookmark without converting old records', async (t) => {
   const memory = managedIndexedDB();
-  const current = createJourneyBackend({ ...memory, profileKey: 'journey-whole-spatial-v5' });
+  const current = createJourneyBackend({ ...memory, profileKey: 'journey-whole-spatial-v9' });
   const previous = createJourneyBackend(memory);
   await previous.commit([{ type: 'select', mode: 'solo', missionId: 'official/old/mission' }]);
   const old = await previous.read();
@@ -176,7 +180,7 @@ test('Legacy is explicitly accessible and its unified selector opens an exact Ne
   await settle(() => new URL(globalThis.location.href).searchParams.has('library-mission'));
   const target = new URL(globalThis.location.href);
   assert.equal(target.origin + target.pathname, 'http://localhost/game/');
-  assert.equal(target.searchParams.get('journey'), 'whole-spatial-v5');
+  assert.equal(target.searchParams.get('journey'), 'whole-spatial-v9');
   assert.equal(target.searchParams.get('library-mission'), card.dataset.missionId);
   assert.deepEqual(p.errors, []);
 });
@@ -219,7 +223,7 @@ test('switching from a running default Journey to Legacy has an explicit Stay or
   assert.equal(target.origin + target.pathname, 'http://localhost/game/');
   assert.equal(target.searchParams.get('journey'), 'legacy');
   assert.equal(target.searchParams.get('library-mission'), card.dataset.missionId);
-  assert(storage.getItem('revealline.suspended.journey-whole-spatial.v5'));
+  assert(storage.getItem('revealline.suspended.journey-whole-spatial.v9'));
   assert.deepEqual(p.errors, []);
 });
 
@@ -268,7 +272,16 @@ test('a Legacy pack entry retains its catalogue through the actual Workshop tool
       nativeDialogs(t);
       const p = await page(t, { search: new URL(back).search });
       assert.equal(p.doc.body.classList.contains('journey-preview'), false);
-      assert.equal(p.$('shell-workshop-dialog').open, true);
+      assert.equal(
+        p.$('shell-workshop-dialog').open,
+        true,
+        JSON.stringify({
+          home: p.$('shell-home').open,
+          active: p.doc.activeElement.id,
+          href: globalThis.location.href,
+          errors: p.errors.map(String),
+        }),
+      );
       assert.equal(p.doc.activeElement.id, 'shell-playground');
       assert.equal(p.rendered.run.tick, 0);
       assert.equal(p.rendered.paused, true);

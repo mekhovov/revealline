@@ -8,7 +8,7 @@ import { page as teamPage } from './helpers/coop-host.mjs';
 import { Element } from './helpers/couch-dom.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
 import { waitFor } from './helpers/wait-for.mjs';
-import { createTeamSpatialOriginalCandidates } from '../content-design/team-spatial-originals.mjs';
+import { createTeamImpactOriginalCandidates } from '../content-design/team-impact-originals.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
 
 const settle = (predicate) => waitFor(predicate, { timeoutMs: 15000 });
@@ -111,7 +111,7 @@ async function host(t, mode, { fetchResponse, defaultEntry = false } = {}) {
       },
     });
   else {
-    const source = defaultEntry ? createTeamSpatialOriginalCandidates() : null;
+    const source = defaultEntry ? createTeamImpactOriginalCandidates() : null;
     const originals = new Map(
       await Promise.all(
         (source?.assets ?? []).map(async (asset) => [
@@ -128,7 +128,8 @@ async function host(t, mode, { fetchResponse, defaultEntry = false } = {}) {
         ? {
             href: 'http://localhost/game/couch/relay-rescue.html',
             beforeImport({ install }) {
-              const BaseImage = globalThis.Image;
+              const BaseImage = globalThis.Image,
+                actorFetch = globalThis.fetch;
               install('Image', {
                 value: class extends BaseImage {
                   async decode() {
@@ -146,7 +147,7 @@ async function host(t, mode, { fetchResponse, defaultEntry = false } = {}) {
                   const asset = source.assets.find((row) =>
                     new URL(url).pathname.endsWith('/' + row.path),
                   );
-                  assert(asset, 'Only registered Team artwork is fetched');
+                  if (!asset) return actorFetch(url);
                   return new Response(originals.get(asset.path));
                 },
               });
@@ -353,7 +354,7 @@ for (const mode of ['solo', 'versus', 'team'])
       assert.equal(p.renders[0].level.id, 'first-return');
       assert.equal(p.renders[1].level.id, 'first-return');
     } else assert.equal(p.$('coop-level').value, 'twin-landings');
-    const edition = mode === 'team' ? 'team-spatial-originals-1' : 'whole-spatial-v5';
+    const edition = mode === 'team' ? 'team-trail-impact-originals-1' : 'whole-spatial-v6';
     const card = [...p.$('journey-cards').children].find((row) => {
       const identity = JSON.parse(row.dataset.missionId);
       return identity[0] === `journey:${edition}` && identity[1] === edition;

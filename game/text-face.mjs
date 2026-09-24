@@ -8,6 +8,7 @@ const PLAIN_CANVAS_FONTS = Object.freeze({
   ui: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
   numeric: 'ui-monospace, "SFMono-Regular", Consolas, monospace',
 });
+const PIXEL_CANVAS_UI = "'Reveal Line Pixel', 'Field Kit UI', system-ui, sans-serif";
 
 export function resolveTextFace(value) {
   if (!TEXT_FACES.includes(value)) throw new TypeError('Unsupported text style.');
@@ -15,5 +16,10 @@ export function resolveTextFace(value) {
 }
 
 export function canvasTextFonts(face, themeFonts) {
-  return resolveTextFace(face) === 'plain' ? PLAIN_CANVAS_FONTS : themeFonts;
+  if (resolveTextFace(face) === 'plain') return PLAIN_CANVAS_FONTS;
+  return Object.freeze({
+    ...themeFonts,
+    ui: PIXEL_CANVAS_UI,
+    numeric: themeFonts?.numeric ?? "'Field Kit Mono', ui-monospace, monospace",
+  });
 }

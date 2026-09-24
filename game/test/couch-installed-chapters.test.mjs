@@ -532,6 +532,11 @@ test('installed couch reader authenticates the same three originals without acqu
     before = f.writes();
   const rows = await f.reader.refresh();
   assert.equal(rows.length, 3);
+  const owner = f.reader.presentationOwner(rows[0]);
+  assert.equal(owner.entry.sourcePackId, rows[0].sourcePackId);
+  assert.equal(owner.pack.id, rows[0].sourcePackId);
+  assert(Object.isFrozen(owner));
+  assert.throws(() => f.reader.presentationOwner({ ...rows[0] }), /current installed/);
   assert.ok(rows.every((row) => row.chapter === 'FPV Front · Pressure Pictures · Installed'));
   for (let i = 0; i < rows.length; i++) {
     const row = rows[i],
@@ -554,6 +559,7 @@ test('installed couch reader authenticates the same three originals without acqu
     /does not belong/,
   );
   const fresh = await f.reader.refresh();
+  assert.throws(() => f.reader.presentationOwner(rows[0]), /current installed/);
   await assert.rejects(f.reader.select(rows[0], { raceId: 9 }), /current installed/);
   assert.notEqual(fresh[0], rows[0]);
   f.reader.dispose();

@@ -26,6 +26,13 @@ export const FIELD_KIT_RETAINED_RUNTIME_60 = Object.freeze({
   commit: 'bc8b7565f2c4277145b4763d76d928c45e024f1c',
   originalPath: 'game/presentation/compiled/runtime.json',
 });
+export const FIELD_KIT_RETAINED_RUNTIME_62 = Object.freeze({
+  path: 'authoring/library/fpv-field-kit/retained/runtime.b4a7285520550e4cd04c7b9e80b4c6468c0a914faac77c05fa7f86a72c8a3c8f.json',
+  sha256: 'b4a7285520550e4cd04c7b9e80b4c6468c0a914faac77c05fa7f86a72c8a3c8f',
+  bytes: 1094096,
+  commit: '2e64c130d219dfece5134ba9119b85a5bf34904d',
+  originalPath: 'game/presentation/compiled/runtime.json',
+});
 const hash = (bytes) => createHash('sha256').update(bytes).digest('hex');
 
 /** Construct explicit compiler history from immutable authoring input and the
@@ -79,11 +86,15 @@ async function readPinnedOutput({ read, assets }, pin, revision) {
   return files;
 }
 
-/** Preserve exact committed54, accepted58 and retained60 runtime manifests and their complete lazy
+/** Preserve exact committed54, accepted58 and retained60/62 runtime manifests and their complete lazy
  * dependencies. New ledger revisions never authorize implicit output-directory IO. */
 export async function readFieldKitRetainedOutput(options) {
   const legacy = await readPinnedOutput(options, FIELD_KIT_RETAINED_RUNTIME, 54);
   const accepted = await readPinnedOutput(options, FIELD_KIT_RETAINED_RUNTIME_58, 58);
   const held = await readPinnedOutput(options, FIELD_KIT_RETAINED_RUNTIME_60, 60);
-  return retainPresentationOutput(held, await retainPresentationOutput(accepted, legacy));
+  const actors = await readPinnedOutput(options, FIELD_KIT_RETAINED_RUNTIME_62, 62);
+  return retainPresentationOutput(
+    actors,
+    await retainPresentationOutput(held, await retainPresentationOutput(accepted, legacy)),
+  );
 }

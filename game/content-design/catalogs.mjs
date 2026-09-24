@@ -35,9 +35,18 @@ export const JOURNEY_POLICY = freezeDesign({
   id: 'journey-arcade-v2',
   arcadeActions: { version: ARCADE_ACTIONS_VERSION },
 });
+// Explicit successor: every eligible enemy and active lane uses the proven
+// Pressure Lines travelling-impact contract. Historical projects retain their
+// selective carrier descriptors and exact replay identities.
+export const TRAIL_IMPACT_JOURNEY_POLICY = freezeDesign({
+  ...JOURNEY_POLICY,
+  id: 'journey-trail-impact-v3',
+  lineImpact: { version: 'line-impact.v1', speed: 24 },
+});
 export function journeyPolicy(id) {
   if (id === LEGACY_JOURNEY_POLICY.id) return LEGACY_JOURNEY_POLICY;
   if (id === JOURNEY_POLICY.id) return JOURNEY_POLICY;
+  if (id === TRAIL_IMPACT_JOURNEY_POLICY.id) return TRAIL_IMPACT_JOURNEY_POLICY;
   throw new Error('Project must pin a registered Journey policy.');
 }
 export const DIFFICULTY_CATALOG = freezeDesign({
@@ -377,6 +386,34 @@ export const COMBAT_ACTOR_CATALOG = freezeDesign({
   },
 });
 
+// Current-rules pressure tells match the accepted Pressure Lines cadence without
+// rewriting the earlier v7 encounter studies. The authored recovery value is
+// intentionally 353 ticks: the registered Standard rest factor (0.85) resolves
+// it once to 300 ticks / 2.5 seconds. Gentle and Expert keep their established
+// difficulty-specific recovery windows.
+const currentPressureRole = (mode) => {
+  const role = pressureRole(mode);
+  return {
+    ...role,
+    warning: 'locked-target-and-90-actor-tick-warning',
+    pressureRecipe: {
+      ...role.pressureRecipe,
+      warningTicks: 90,
+      commitTicks: 144,
+      cooldownTicks: 353,
+    },
+  };
+};
+export const CURRENT_PRESSURE_ACTOR_CATALOG = freezeDesign({
+  format: 'ActorCatalogV1',
+  id: 'journey-actors-v9',
+  roles: {
+    ...COMBAT_ACTOR_CATALOG.roles,
+    'trail-pursuer': currentPressureRole('trail-pursuit'),
+    'heading-interceptor': currentPressureRole('head-intercept'),
+  },
+});
+
 /** Resolved once by authoring; the simulation never applies preset factors. */
 export function journeyCombatTiming(
   roleId,
@@ -448,6 +485,7 @@ export function journeyActors(id = ACTOR_CATALOG.id) {
     [SENTINEL_ACTOR_CATALOG.id]: SENTINEL_ACTOR_CATALOG,
     [PRESSURE_ACTOR_CATALOG.id]: PRESSURE_ACTOR_CATALOG,
     [COMBAT_ACTOR_CATALOG.id]: COMBAT_ACTOR_CATALOG,
+    [CURRENT_PRESSURE_ACTOR_CATALOG.id]: CURRENT_PRESSURE_ACTOR_CATALOG,
   };
   required(Object.hasOwn(catalogs, id), 'Project must pin a registered actor catalog.');
   return catalogs[id];

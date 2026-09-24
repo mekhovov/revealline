@@ -16,9 +16,57 @@ export function createAuthoredJourneyRouteDefinition(
     createWholeTimedCandidates,
     createWholeVarietyCandidates,
     createWholeSortingCandidates,
+    createWholeImpactCandidates,
+    createWholePressureCandidates,
+    createWholeCulturalPressureCandidates,
+    createWholeErosionReviewCandidates,
   },
 ) {
   if (!isAuthoredJourneyRouteId(id)) return null;
+  if (id === 'whole-spatial-v9')
+    return freezeDesign({
+      id,
+      label: 'Whole Journey erosion repair and escape review · balance pending',
+      sessionKey: 'revealline.suspended.journey-whole-spatial.v9',
+      profileKey: 'journey-whole-spatial-v9',
+      source: createWholeErosionReviewCandidates({ artwork: true }),
+      corePackIds: [...WHOLE_JOURNEY_CORE_PACK_IDS],
+      optionalCampaignIds: ['ornament-crossings', 'workshop-routing'],
+      preserveOriginalThemes: true,
+    });
+  if (id === 'whole-spatial-v8')
+    return freezeDesign({
+      id,
+      label: 'Whole Journey Ukrainian and FPV readable pressure review · balance pending',
+      sessionKey: 'revealline.suspended.journey-whole-spatial.v8',
+      profileKey: 'journey-whole-spatial-v8',
+      source: createWholeCulturalPressureCandidates({ artwork: true }),
+      corePackIds: [...WHOLE_JOURNEY_CORE_PACK_IDS],
+      optionalCampaignIds: ['ornament-crossings', 'workshop-routing'],
+      preserveOriginalThemes: true,
+    });
+  if (id === 'whole-spatial-v7')
+    return freezeDesign({
+      id,
+      label: 'Whole Journey readable pursuit and interception review · balance pending',
+      sessionKey: 'revealline.suspended.journey-whole-spatial.v7',
+      profileKey: 'journey-whole-spatial-v7',
+      source: createWholePressureCandidates({ artwork: true }),
+      corePackIds: [...WHOLE_JOURNEY_CORE_PACK_IDS],
+      optionalCampaignIds: ['ornament-crossings', 'workshop-routing'],
+      preserveOriginalThemes: true,
+    });
+  if (id === 'whole-spatial-v6')
+    return freezeDesign({
+      id,
+      label: 'Whole Journey travelling trail-impact review · balance pending',
+      sessionKey: 'revealline.suspended.journey-whole-spatial.v6',
+      profileKey: 'journey-whole-spatial-v6',
+      source: createWholeImpactCandidates({ artwork: true }),
+      corePackIds: [...WHOLE_JOURNEY_CORE_PACK_IDS],
+      optionalCampaignIds: ['ornament-crossings', 'workshop-routing'],
+      preserveOriginalThemes: true,
+    });
   if (id === 'whole-spatial-v5')
     return freezeDesign({
       id,

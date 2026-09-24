@@ -1,7 +1,7 @@
 export const DEFAULT_JOURNEY_ROUTES = Object.freeze({
-  solo: 'whole-spatial-v5',
-  versus: 'whole-spatial-v5',
-  team: 'team-spatial-originals-1',
+  solo: 'whole-spatial-v9',
+  versus: 'whole-spatial-v9',
+  team: 'team-trail-impact-originals-1',
 });
 
 // An explicit legacy launch must reach its existing validator, even when its

@@ -7,6 +7,7 @@ import { applyFieldKitCopy, fieldKitCopy } from '../ui/field-kit-copy.mjs';
 import { readFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { collectBuildFiles, validateBuildReferences } from '../../scripts/game-cli.mjs';
+import { MENU_STYLE_PREFERENCES_KEY } from '../menu-style-preferences.mjs';
 
 test('Workshop destinations ship their actual authoring runtime and return paths', async () => {
   const root = fileURLToPath(new URL('../../', import.meta.url));
@@ -144,6 +145,54 @@ test('supporting page text size remains presentation only and listeners are rele
   control.value = 'standard';
   control.emit('change');
   assert.equal(doc.body.dataset.textSize, 'large');
+});
+
+test('supporting pages read the shared UI skin without writing or competing with native game controls', () => {
+  const stored = JSON.stringify({ palette: 'ukrainian', ornaments: 'rich' }),
+    writes = [],
+    storage = {
+      getItem: (key) => (key === MENU_STYLE_PREFERENCES_KEY ? stored : null),
+      setItem: (...entry) => writes.push(entry),
+    },
+    win = new Document().defaultView;
+  const support = new Document();
+  support.body.dataset.fieldKitPage = 'replay';
+  const owner = attachFieldKitSurfaces({
+    document: support,
+    window: win,
+    getStorage: () => storage,
+  });
+  assert.equal(support.body.dataset.menuPalette, 'field-kit');
+  assert.equal(support.body.dataset.menuOrnaments, 'rich');
+  assert.deepEqual(writes, []);
+  owner.destroy();
+  assert.equal(support.body.dataset.menuPalette, undefined);
+  assert.equal(support.body.dataset.menuOrnaments, undefined);
+
+  const game = new Document(),
+    control = game.createElement('select');
+  game.body.dataset.fieldKitPage = 'couch';
+  control.id = 'race-menu-palette';
+  game.body.append(control);
+  const native = attachFieldKitSurfaces({
+    document: game,
+    window: win,
+    getStorage: () => storage,
+  });
+  assert.equal(game.body.dataset.menuPalette, undefined);
+  assert.deepEqual(writes, []);
+  native.destroy();
+});
+
+test('support-skin CSS owns chrome tokens but never canvas, board geometry or hidden focus', async () => {
+  const css = await readFile(new URL('../ui/field-kit-surfaces.css', import.meta.url), 'utf8'),
+    start = css.indexOf("body.field-kit-support[data-menu-palette='neon']"),
+    skin = css.slice(start, css.indexOf('.field-kit[data-field-kit-page]', start));
+  assert.match(css, /body\.field-kit-support\[data-menu-palette='neon'\]/);
+  assert.match(css, /body\.field-kit-support\[data-menu-palette='field-kit'\]/);
+  assert.match(css, /--fk-bg: var\(--rl-support-bg\)/);
+  assert.ok(start >= 0);
+  assert.doesNotMatch(skin, /\bcanvas\b|display:\s*none|visibility:\s*hidden|pointer-events/);
 });
 
 test('surface copy has stable English fallback keys and preserves native controls', () => {

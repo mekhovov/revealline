@@ -174,6 +174,16 @@
           <p id="race-message" role="status">Both boards use the same map, class and seed.</p>
           <p id="race-summary" class="race-summary"></p>
           <div class="race-fields">
+            <label
+              >Actors<select id="race-actor-style" aria-describedby="race-actor-style-status">
+                <option value="fpv">FPV Field Kit</option>
+                <option value="campaign">Campaign actors</option>
+              </select></label
+            >
+            <p id="race-actor-style-status" class="race-footnote" role="status">
+              Applies to a new race or Next mission. Resume and Rematch keep their accepted actors.
+              Custom chapters keep authored actors.
+            </p>
             <label id="race-journey-difficulty-field" hidden
               >Next fresh race difficulty
               <select id="race-journey-difficulty"></select>
@@ -220,7 +230,7 @@
             <button id="race-help" type="button">How to play</button>
             <button id="race-review" type="button" hidden>View both boards</button>
             <a id="race-solo-return" href="../?journey=legacy">Return to solo</a>
-            <a id="race-library-switch" href="?journey=whole-spatial-v5">New Journey</a>
+            <a id="race-library-switch" href="?journey=whole-spatial-v9">New Journey</a>
           </div>
           <p id="race-format-note" class="race-footnote">
             One race. Choose First to two in Race setup for a longer match. Couch races do not
@@ -413,9 +423,9 @@
               </select></label
             >
             <label class="field-kit-page-text"
-              >Menu colours<select id="race-menu-palette">
-                <option value="auto">Automatic</option>
-                <option value="ukrainian">Ukrainian blue &amp; yellow</option>
+              >UI skin<select id="race-menu-palette">
+                <option value="auto">Neon Arcade</option>
+                <option value="ukrainian">FPV Field Kit</option>
               </select></label
             >
             <label class="field-kit-page-text"

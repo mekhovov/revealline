@@ -206,7 +206,7 @@ test('another failed bootstrap Retry remains actionable and a later explicit Ret
   assertLobby(f, 'first-connection');
 });
 
-test('recovered presentation updates automatic menu appearance while unsupported Team artwork stays blocked', async (t) => {
+test('recovered presentation leaves explicit Neon Arcade UI skin independent while unsupported Team artwork stays blocked', async (t) => {
   const f = await failedBootstrap(t, {
     load({ snapshot, calls }) {
       if (calls.loads === 1) throw new Error('Controlled initial presentation outage.');
@@ -216,7 +216,7 @@ test('recovered presentation updates automatic menu appearance while unsupported
     },
   });
   assert.equal(f.$('coop-menu-palette').value, 'auto');
-  assert.equal(f.doc.body.dataset.menuPalette, 'ukrainian');
+  assert.equal(f.doc.body.dataset.menuPalette, 'neon');
   retry(f);
   await terminal(f);
   assert.equal(f.artwork.calls.loads, 2);
@@ -235,7 +235,7 @@ test('recovered presentation updates automatic menu appearance while unsupported
   );
   assert.equal(
     f.doc.body.dataset.menuPalette,
-    'authored',
-    'Automatic menu appearance follows the successfully recovered page presentation.',
+    'neon',
+    'The UI skin stays independent of the successfully recovered page presentation.',
   );
 });

@@ -8,7 +8,11 @@ import { createDefaultThemeBundle } from '../presentation/catalog.mjs';
 import { resolvePresentation } from '../presentation/model.mjs';
 import { canvasPresentation } from '../presentation/runtime.mjs';
 import { mediaFixture } from './helpers/media-fixtures.mjs';
-import { createActorPresentation, drawPresentedActor } from '../ui/actor-presentation.mjs';
+import {
+  actorImagePaintMetrics,
+  createActorPresentation,
+  drawPresentedActor,
+} from '../ui/actor-presentation.mjs';
 import { drawClassicTerrain, drawClassicPickups } from '../ui/classic-view.mjs';
 import { createEnemyPresentations } from '../enemy-presentations.mjs';
 import { createEnemyBodyAssets, createEnemyImagePool } from '../ui/enemy-body-assets.mjs';
@@ -114,6 +118,28 @@ test('compiled bodies adopt normalized pivots and bitmap dimensions without chan
   );
 });
 
+test('compiled player sprites size their visible body and rotor sweep instead of transparent padding', () => {
+  const { painter, run, sprites } = fixture(),
+    sprite = sprites['player.scout.detailed'];
+  sprite.geometry.occupiedBounds = { x: 0.25, y: 0.25, width: 0.5, height: 0.5 };
+  const before = authoritativeCheckpoint(run),
+    canvas = surface();
+  painter.draw(canvas.ctx, run, 0, { paused: true, reduced: true });
+  const draw = draws(canvas.calls, sprite.image)[0],
+    expected = actorImagePaintMetrics(32, sprite.geometry),
+    visibleWidth = draw.args[3] * (expected.visible.right - expected.visible.left),
+    visibleHeight = draw.args[4] * (expected.visible.bottom - expected.visible.top);
+  assert.equal(draw.args[3], expected.width / 16);
+  assert.equal(draw.args[4], expected.height / 16);
+  assert.ok(Math.abs(Math.max(visibleWidth, visibleHeight) * 16 - 32) < 1e-9);
+  assert.ok(
+    canvas.calls.some(
+      (entry) => entry.op === 'arc' && entry.args[2] === run.rules.playerRadius * 16,
+    ),
+  );
+  assert.deepEqual(authoritativeCheckpoint(run), before);
+});
+
 test('phone and microtile presentations choose compact art; explicit player and enemy overrides retain priority', () => {
   const { painter, run, sprites } = fixture(),
     compact = surface();
@@ -171,6 +197,120 @@ test('current non-FPV worlds retain their original canvas art while the interfac
   painter.draw(canvas.ctx, run, 0, { paused: true, reduced: true });
   assert.equal(draws(canvas.calls, painter.image).length, 1);
   assert.equal(draws(canvas.calls, sprites['player.scout.detailed'].image).length, 0);
+});
+
+test('an explicit prepared FPV actor view changes actors without replacing the authored world', () => {
+  const theme = themes.find((item) => item.id === 'ukraine');
+  const { painter, run, sprites } = fixture(theme);
+  const actorSnapshot = painter.presentation;
+  painter.bodyId = theme.player;
+  painter.body = presets.characters[painter.bodyId];
+  painter.recipe = presets.animationRecipes[painter.body.animationRecipe];
+  run.enemies = [{ id: 'guard', type: 'bouncer', x: 10, y: 10, vx: 1, vy: 1, radius: 0.2 }];
+  run.cells[7 * run.width + 9] = 2;
+  const before = authoritativeCheckpoint(run),
+    body = structuredClone(painter.body),
+    canvas = surface();
+  painter.draw(canvas.ctx, run, 0, {
+    paused: true,
+    reduced: true,
+    actorAppearance: { style: 'fpv', snapshot: actorSnapshot },
+  });
+  assert.equal(draws(canvas.calls, sprites['player.scout.detailed'].image).length, 1);
+  assert.equal(draws(canvas.calls, sprites['enemy.bouncer'].image).length, 1);
+  assert.equal(draws(canvas.calls, sprites['terrain.wall'].image).length, 0);
+  assert.equal(canvas.calls.find((call) => call.op === 'fillRect').fillStyle, theme.palette.field);
+  assert.equal(canvas.calls.find((call) => call.op === 'drawImage').args[0], painter.background);
+  assert.equal(painter.theme, theme);
+  assert.equal(painter.bodyId, theme.player);
+  assert.deepEqual(painter.body, body);
+  assert.deepEqual(authoritativeCheckpoint(run), before);
+});
+
+test('the explicit actor view respects custom player and enemy bodies', () => {
+  const { painter, run, sprites } = fixture(themes.find((item) => item.id === 'ukraine'));
+  const player = image('custom player'),
+    enemy = image('custom enemy'),
+    canvas = surface();
+  painter.image = player;
+  painter.images.enemy = enemy;
+  painter.overrides = {
+    player: { dataUrl: 'custom player choice' },
+    enemy: { dataUrl: 'custom enemy choice' },
+  };
+  run.enemies = [{ id: 'guard', type: 'bouncer', x: 10, y: 10, vx: 1, vy: 1, radius: 0.2 }];
+  painter.draw(canvas.ctx, run, 0, {
+    paused: true,
+    reduced: true,
+    actorAppearance: { style: 'fpv', snapshot: painter.presentation },
+  });
+  assert.equal(draws(canvas.calls, player).length, 1);
+  assert.equal(draws(canvas.calls, enemy).length, 1);
+  assert.equal(draws(canvas.calls, sprites['player.scout.detailed'].image).length, 0);
+  assert.equal(draws(canvas.calls, sprites['enemy.bouncer'].image).length, 0);
+});
+
+test('FPV actor choice maps every active class without rewriting the authored body or class', () => {
+  const roles = presets.characterPresentations.sets.find(
+    (set) => set.themeId === 'fpv',
+  ).classBodies;
+  for (const role of Object.keys(roles)) {
+    const { painter, run, sprites } = fixture(themes.find((item) => item.id === 'ukraine'));
+    painter.bodyId = painter.theme.player;
+    painter.body = presets.characters[painter.bodyId];
+    painter.recipe = presets.animationRecipes[painter.body.animationRecipe];
+    run.activeClassId = role;
+    for (const treatment of ['compact', 'detailed'])
+      sprites[`player.${role}.${treatment}`] = {
+        image: image(`${role}-${treatment}`),
+        geometry: sprites['player.scout.detailed'].geometry,
+      };
+    const before = authoritativeCheckpoint(run),
+      body = painter.body;
+    for (const [displayCSSWidth, treatment] of [
+      [1152, 'detailed'],
+      [320, 'compact'],
+    ]) {
+      const canvas = surface();
+      painter.draw(canvas.ctx, run, 0, {
+        reduced: true,
+        paused: true,
+        displayCSSWidth,
+        actorAppearance: { style: 'fpv', snapshot: painter.presentation },
+      });
+      assert.equal(draws(canvas.calls, sprites[`player.${role}.${treatment}`].image).length, 1);
+      assert.equal(painter.body, body);
+      assert.equal(painter.bodyId, painter.theme.player);
+      assert.deepEqual(authoritativeCheckpoint(run), before);
+    }
+  }
+});
+
+test('campaign and historical actor paths remain identical; unprepared explicit FPV fails before paint', () => {
+  const theme = themes.find((item) => item.id === 'ukraine');
+  const historical = fixture(theme),
+    campaign = fixture(theme),
+    first = surface(),
+    second = surface();
+  historical.painter.draw(first.ctx, historical.run, 0, { paused: true, reduced: true });
+  campaign.painter.draw(second.ctx, campaign.run, 0, {
+    paused: true,
+    reduced: true,
+    actorAppearance: { style: 'campaign', snapshot: null },
+  });
+  assert.deepEqual(second.calls, first.calls);
+  for (const actorAppearance of [
+    { style: 'fpv', snapshot: null },
+    { style: 'fpv', snapshot: {} },
+    { style: 'unknown', snapshot: null },
+  ]) {
+    const canvas = surface();
+    assert.throws(
+      () => campaign.painter.draw(canvas.ctx, campaign.run, 0, { actorAppearance }),
+      /actor/i,
+    );
+    assert.equal(canvas.calls.length, 0);
+  }
 });
 
 test('published motion settings scale cosmetic clocks and zero motion keeps functional effect timing', () => {

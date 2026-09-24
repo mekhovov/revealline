@@ -73,6 +73,13 @@ import { Soundscape, DEFAULT_TRACKS } from '../ui/audio.mjs';
 import { createAudioMaster } from '../ui/audio-master.mjs';
 import { createAudioPreferences } from '../audio-preferences.mjs';
 import { createDisplayPreferences } from '../display-preferences.mjs';
+import { createActorStylePreferences } from '../actor-style-preferences.mjs';
+import { prepareActorAppearanceLease } from '../presentation/actor-appearance-lease.mjs';
+import { createJourneyVisualThemeIdentityAdapter } from '../presentation/journey-visual-theme-identities.mjs';
+import { prepareCampaignVisualThemeContext } from '../presentation/visual-theme-identities.mjs';
+import { createExecutionCatalog } from '../campaign-contexts.mjs';
+import { verifyIndexedInstalledPack } from '../mission-library/pack-identity.mjs';
+import { prepareMissionLibraryIndex } from '../mission-library/classic-source.mjs';
 import { attachMenuStyleControls } from '../ui/menu-style-controls.mjs';
 import { attachPreferenceRestoration } from '../ui/preference-restoration.mjs';
 import { settingsTabOwnsKey } from '../ui/settings-panels.mjs';
@@ -156,6 +163,18 @@ const menuStyle = attachMenuStyleControls({
   getStorage: () => localStorage,
   prefix: 'race-',
 });
+const actorPreferences = createActorStylePreferences({
+  window,
+  getStorage: () => localStorage,
+  onWarning: (message) => {
+    $('race-actor-style-status').textContent = message;
+  },
+});
+const stopActorView = actorPreferences.subscribe(({ actorStyle }) => {
+  $('race-actor-style').value = actorStyle;
+});
+$('race-actor-style').onchange = () =>
+  actorPreferences.set({ actorStyle: $('race-actor-style').value });
 $('race-text-face').onchange = () =>
   displayPreferences.set({ textFace: $('race-text-face').value });
 $('race-text-size').onchange = () =>
@@ -221,6 +240,8 @@ const releaseArtwork = (event) => {
   if (event.persisted) return;
   stopMasterView();
   stopDisplayView();
+  stopActorView();
+  actorPreferences.dispose();
   audioRestoration.dispose();
   displayRestoration.dispose();
   displayPreferences.dispose();
@@ -583,6 +604,8 @@ try {
     generation = 0,
     raceSequence = 0,
     roundRecipe = null,
+    actorLease = null,
+    actorAppearance = null,
     nextAttempt = null,
     libraryContinuation = null,
     libraryCompleteMatch = null,
@@ -610,6 +633,132 @@ try {
   });
   const journeyReactions = attachJourneyReactions({ prefix: 'race-' });
   let preparationDisplay = null;
+  let actorJourneyIdentity = null,
+    actorMissionIndex = null;
+  const readActorMissionIndex = () =>
+    (actorMissionIndex ??= json('../content/mission-library-index.json')
+      .then(prepareMissionLibraryIndex)
+      .catch((error) => {
+        actorMissionIndex = null;
+        throw error;
+      }));
+  function showActorNotice(recipe) {
+    $('race-actor-style-status').textContent =
+      actorPreferences.getWarning() ||
+      recipe.actorNotice ||
+      'Applies to a new race or Next mission. Resume and Rematch keep their accepted actors. Custom chapters keep authored actors.';
+  }
+  const actorExecutionOwners = new WeakMap();
+  async function prepareActors(recipe, { signal, onStatus, reader = installed } = {}) {
+    const row = recipe.entry;
+    recipe.actorNotice = '';
+    let content, scope;
+    if (candidateJourney?.owns(row)) {
+      actorJourneyIdentity ??= createJourneyVisualThemeIdentityAdapter(authoredRoute.source, {
+        mode: 'versus',
+      });
+      content = await (
+        await actorJourneyIdentity
+      ).prepareHostSelection(
+        {
+          host: candidateJourney,
+          selection: row,
+          level: row.level,
+          association: {
+            editionId: authoredRoute.id,
+            contentThemeId: recipe.theme.id,
+            mode: 'versus',
+          },
+        },
+        { signal },
+      );
+      scope = 'journey';
+    } else {
+      let entry, pack;
+      if (row.pictureEntry === baseEntry || (featured && row.pictureEntry === featured.resolved)) {
+        if (!actorExecutionOwners.has(row.pictureEntry))
+          actorExecutionOwners.set(
+            row.pictureEntry,
+            createExecutionCatalog([row.pictureEntry]).select(
+              campaignKey(row.pictureEntry.campaign),
+              'standard',
+            ),
+          );
+        entry = actorExecutionOwners.get(row.pictureEntry);
+        pack = row.pictureEntry === baseEntry ? null : featured.pack;
+        scope = row.pictureEntry === baseEntry ? 'builtin' : null;
+      } else {
+        ({ entry, pack } = reader.presentationOwner(row));
+      }
+      if (pack) {
+        let index;
+        try {
+          index = await readActorMissionIndex();
+        } catch (error) {
+          if (signal?.aborted || recipe.actorPresentation) throw error;
+          // Missing optional authority never grants FPV ownership. A fresh
+          // unknown pack remains playable through its validated authored path.
+          // Accepted FPV pins and later actor asset/hash failures stay strict.
+          recipe.actorNotice =
+            'FPV eligibility could not be checked for this chapter. Its authored actors are kept; try a fresh race when the mission index is available.';
+          return null;
+        }
+        const original = index.missions.find(
+          (item) =>
+            item.packId === pack.id &&
+            item.campaignKey === entry.baseCampaignKey &&
+            item.levelId === row.level.id &&
+            item.modes.includes('versus'),
+        );
+        if (!original || !(await verifyIndexedInstalledPack(pack, original))) return null;
+        scope = 'trusted-pack';
+      }
+      // Unknown/modified packs retain authored actors; names and IDs grant no authority.
+      if (!scope) return null;
+      content = await prepareCampaignVisualThemeContext(
+        {
+          entry,
+          level: row.level,
+          association: { editionId: 'field-kit', contentThemeId: recipe.theme.id, mode: 'versus' },
+        },
+        { signal },
+      );
+    }
+    return prepareActorAppearanceLease(
+      {
+        content,
+        scope,
+        style: recipe.actorStyle,
+        ...(recipe.actorPresentation ? { presentation: recipe.actorPresentation } : {}),
+      },
+      {
+        baseURL: new URL('../presentation/compiled/', location.href),
+        signal,
+        onStatus,
+        currentManifestSha256: presentationPage.current()?.manifestSha256 ?? null,
+      },
+    );
+  }
+  function publishActors(next) {
+    if (next === actorLease) return () => {};
+    const previous = actorLease;
+    actorLease = next;
+    actorAppearance = next
+      ? Object.freeze({ style: next.pin().style, snapshot: next.snapshot })
+      : null;
+    return () => {
+      if (previous !== next) previous?.release();
+    };
+  }
+  function showAcceptedSetup() {
+    if (!roundRecipe) return;
+    $('race-level').value = roundRecipe.entry.key;
+    $('race-theme').value = roundRecipe.theme.id;
+    $('race-class').value = roundRecipe.classId;
+    $('race-turn').value = roundRecipe.turnPolicy;
+    $('race-time').value = String(roundRecipe.seconds);
+    $('race-format').value = roundRecipe.format;
+  }
   let menuRouter, navigation, shell, reading;
   let readingModality = 'pointer';
   const readingPrompt = ({ scrollable }) =>
@@ -719,11 +868,11 @@ try {
     preparationDisplay?.finish({ state: 'cancelled', message: '' });
     preparationDisplay = null;
     contentController?.abort();
-    const retainedResult =
-      nextAttempt?.previous === match && (candidateJourney || match?.status === 'finished');
+    const retainedResult = nextAttempt?.previous === match;
     if (retainedResult) {
       nextAttempt.lease?.cancel();
       installed?.cancel();
+      showAcceptedSetup();
     } else {
       installed?.clear();
       backdrop = null;
@@ -747,7 +896,44 @@ try {
       !!contentError,
     );
   };
+  function setupRecipe() {
+    const entry = maps.find((m) => m.key === $('race-level').value);
+    const classId = candidateJourney
+      ? 'scout'
+      : entry.classes.some((c) => c.id === $('race-class').value)
+        ? $('race-class').value
+        : entry.classes[0].id;
+    const themeId =
+      selectedMapKey !== entry.key && entry.defaultThemeId
+        ? entry.defaultThemeId
+        : $('race-theme').value;
+    const preference = actorPreferences.snapshot();
+    return {
+      entry,
+      classId,
+      theme: entry.themes.find((t) => t.id === themeId) || entry.themes[0],
+      seed: candidateJourney ? 1 : 2026,
+      turnPolicy: $('race-turn').value,
+      seconds: candidateJourney ? 0 : Number($('race-time').value),
+      format: $('race-format').value === 'first-to-two' ? 'first-to-two' : 'single',
+      actorStyle: preference.actorStyle,
+      actorPreferenceRevision: preference.revision,
+    };
+  }
   function prepare() {
+    const configured = setupRecipe();
+    // Menu changes stage a complete replacement, keeping both accepted boards
+    // and their actors usable if either picture or actor acquisition fails.
+    if (match && contentReady)
+      return prepareNext(configured.entry, document.activeElement, {
+        configured,
+        fresh: true,
+      }).then((prepared) => {
+        // Menu preparation does not transfer an activation into startRace.
+        // Its focus observers must end here even though the new pair is ready.
+        prepared?.releaseFocus();
+        return !!prepared;
+      });
     nextAttempt?.lease?.cancel();
     nextAttempt = null;
     preparedFocusMatch = null;
@@ -791,6 +977,8 @@ try {
       turnPolicy: $('race-turn').value,
       seconds: candidateJourney ? 0 : Number($('race-time').value),
       format: $('race-format').value === 'first-to-two' ? 'first-to-two' : 'single',
+      actorStyle: configured.actorStyle,
+      actorPreferenceRevision: configured.actorPreferenceRevision,
     };
     $('race-format').value = roundRecipe.format;
     match = createRound(roundRecipe);
@@ -823,6 +1011,7 @@ try {
     );
   }
   function paintRound(recipe) {
+    showActorNotice(recipe);
     const { entry, theme, classId } = recipe,
       level = entry.level,
       { width, height } = boardPaintSizeForLevel(level);
@@ -882,6 +1071,8 @@ try {
     });
     preparationDisplay = display;
     return (async () => {
+      let nextActors = null,
+        adoptedActors = false;
       try {
         const image = await owner.select(entry, {
           themeId: theme.id,
@@ -891,8 +1082,17 @@ try {
         });
         if (disposed || controller.signal.aborted || match !== selectedRun || ticket !== generation)
           return false;
+        nextActors = await prepareActors(roundRecipe, {
+          signal: controller.signal,
+          onStatus: (status) => display.update(status),
+        });
+        if (!current()) return false;
+        const retireActors = publishActors(nextActors);
+        adoptedActors = true;
         backdrop = image;
         contentReady = true;
+        retireActors();
+        showActorNotice(roundRecipe);
         $('race-message').textContent = [
           staticEntry ? featuredStatus : '',
           image?.notice,
@@ -905,11 +1105,12 @@ try {
       } catch (error) {
         if (disposed || controller.signal.aborted || match !== selectedRun || ticket !== generation)
           return false;
-        contentError = `This ${staticEntry ? 'map picture' : 'chapter'} could not load: ${error.message}`;
+        contentError = `This ${staticEntry ? 'map picture or actor appearance' : 'chapter'} could not load: ${error.message}`;
         $('race-message').textContent = contentError;
         display.finish({ state: 'error', message: '' });
         return false;
       } finally {
+        if (!adoptedActors) nextActors?.release();
         if (!disposed && controller === contentController && !controller.signal.aborted) {
           contentBusy = false;
           updateMenu();
@@ -926,10 +1127,22 @@ try {
       return 'Next mission';
     return roundRecipe.format === 'single' || won.some((n) => n >= 2) ? 'Rematch' : 'Next round';
   }
-  async function prepareNext(destination = null, focusOrigin = $('race-start')) {
+  async function prepareNext(
+    destination = null,
+    focusOrigin = $('race-start'),
+    { configured = null, fresh = false } = {},
+  ) {
     const target = destination ?? roundRecipe.entry;
+    const sameMission =
+      target === roundRecipe.entry ||
+      (candidateJourney?.owns(target) &&
+        candidateJourney.owns(roundRecipe.entry) &&
+        target.mission.id === roundRecipe.entry.mission.id);
+    fresh ||= !sameMission || match.status === 'ready';
+    const preference = actorPreferences.snapshot();
     const baseRecipe =
-      target === roundRecipe.entry
+      configured ??
+      (target === roundRecipe.entry
         ? roundRecipe
         : {
             ...roundRecipe,
@@ -942,9 +1155,12 @@ try {
                 ? roundRecipe.classId
                 : target.classes[0].id,
             seed: candidateJourney ? 1 : roundRecipe.seed,
-          };
+          });
     const recipe = {
       ...baseRecipe,
+      actorStyle: fresh ? preference.actorStyle : roundRecipe.actorStyle,
+      actorPreferenceRevision: fresh ? preference.revision : roundRecipe.actorPreferenceRevision,
+      actorPresentation: fresh ? null : (actorLease?.pin().presentation ?? null),
       tuning: gameplayTuning.snapshot(
         target.difficulty ?? browsingJourneyPreferences.snapshot().difficulty,
       ),
@@ -953,6 +1169,9 @@ try {
       !nextAttempt ||
       nextAttempt.previous !== match ||
       nextAttempt.previousRecipe !== roundRecipe ||
+      configured ||
+      nextAttempt.recipe.actorStyle !== recipe.actorStyle ||
+      nextAttempt.recipe.actorPreferenceRevision !== recipe.actorPreferenceRevision ||
       nextAttempt.recipe.entry !== target ||
       dataIdentity(nextAttempt.recipe.tuning) !== dataIdentity(recipe.tuning)
     ) {
@@ -962,6 +1181,7 @@ try {
         previousGeneration: generation,
         previousRecipe: roundRecipe,
         recipe,
+        freshActors: fresh,
         journeyRevision: journeyPreferences?.snapshot().revision,
         match: createRound(recipe),
         raceId: ++raceSequence,
@@ -990,11 +1210,13 @@ try {
       contentController === controller &&
       nextAttempt === attempt &&
       journeyPreferences?.snapshot().revision === attempt.journeyRevision &&
+      (!attempt.freshActors ||
+        actorPreferences.snapshot().revision === attempt.recipe.actorPreferenceRevision) &&
       roundRecipe === attempt.previousRecipe &&
       match === attempt.previous &&
       generation === attempt.previousGeneration;
     const display = preparationStatus.begin({
-      message: `Preparing ${continuationAction().toLowerCase()}: ${attempt.recipe.entry.level.name}. Your current race is kept until the picture is ready…`,
+      message: `Preparing ${continuationAction().toLowerCase()}: ${attempt.recipe.entry.level.name}. Your current race is kept until its picture and actors are ready…`,
       stage: 'verifying',
       isCurrent: () =>
         current() ||
@@ -1010,6 +1232,8 @@ try {
     updateMenu();
     restoreFocus.pending($('race-picture-cancel'), current());
     let lease = null,
+      nextActors = null,
+      ownsNextActors = false,
       prepared = null;
     try {
       lease = await owner.stage(entry, {
@@ -1020,9 +1244,24 @@ try {
       });
       if (!current()) return null;
       attempt.lease = lease;
+      if (
+        !attempt.freshActors &&
+        entry === roundRecipe.entry &&
+        attempt.recipe.theme.id === roundRecipe.theme.id
+      )
+        nextActors = actorLease;
+      else {
+        nextActors = await prepareActors(attempt.recipe, {
+          signal: controller.signal,
+          onStatus: (status) => display.update(status),
+        });
+        ownsNextActors = true;
+      }
+      if (!current()) return null;
       await lease.confirm({ onStatus: (status) => display.update(status) });
       if (!current()) return null;
       const retirePrevious = lease.commit();
+      const retireActors = publishActors(nextActors);
       // Publish only plain references before cleanup can call back into the page.
       match = attempt.match;
       if (
@@ -1042,6 +1281,7 @@ try {
       nextAttempt = null;
       adopted = true;
       retirePrevious();
+      retireActors();
       if (
         disposed ||
         controller.signal.aborted ||
@@ -1056,6 +1296,12 @@ try {
         ...entry.themes.map((item) => new Option(item.name, item.id)),
       );
       $('race-theme').value = attempt.recipe.theme.id;
+      $('race-class').replaceChildren(
+        ...entry.classes
+          .filter((item) => !candidateJourney || item.id === 'scout')
+          .map((item) => new Option(item.label, item.id)),
+      );
+      $('race-class').value = attempt.recipe.classId;
       paintRound(attempt.recipe);
       if (candidateJourney)
         journeyProfile.record({
@@ -1082,16 +1328,29 @@ try {
       return prepared;
     } catch (error) {
       if (current()) {
-        contentError = `The ${continuationAction().toLowerCase()} picture could not be prepared. Results are kept. Choose ${continuationAction()} to retry.`;
+        contentError = `The ${continuationAction().toLowerCase()} picture or actors could not be prepared. Both boards are kept. Choose ${continuationAction()} to retry.`;
         $('race-message').textContent = contentError;
         display.finish({ state: 'error', message: '' });
         console.warn('Next picture preparation failed.', error);
       }
       return null;
     } finally {
+      if (!adopted && ownsNextActors) nextActors?.release();
       lease?.cancel();
       if (attempt.lease === lease) attempt.lease = null;
       if (!disposed && controller === contentController && !controller.signal.aborted) {
+        if (!adopted) showAcceptedSetup();
+        if (
+          !adopted &&
+          attempt.freshActors &&
+          actorPreferences.snapshot().revision !== attempt.recipe.actorPreferenceRevision
+        ) {
+          preparationStatus.clear();
+          preparationDisplay = null;
+          contentError =
+            'Actor choice changed. Both previous boards are kept. Choose Start or Next to use the new choice.';
+          $('race-message').textContent = contentError;
+        }
         contentBusy = false;
         updateMenu();
       }
@@ -1132,12 +1391,13 @@ try {
     if (
       match.status === 'ready' &&
       !destination &&
-      dataIdentity(roundRecipe.tuning) !==
-        dataIdentity(
-          gameplayTuning.snapshot(
-            roundRecipe.entry.difficulty ?? browsingJourneyPreferences.snapshot().difficulty,
-          ),
-        )
+      (roundRecipe.actorStyle !== actorPreferences.snapshot().actorStyle ||
+        dataIdentity(roundRecipe.tuning) !==
+          dataIdentity(
+            gameplayTuning.snapshot(
+              roundRecipe.entry.difficulty ?? browsingJourneyPreferences.snapshot().difficulty,
+            ),
+          ))
     )
       destination = roundRecipe.entry;
     const intent = ++startIntentEpoch,
@@ -2080,7 +2340,7 @@ try {
     if (missionLibrary) return missionLibrary;
     if (missionLibraryLoading) return missionLibraryLoading;
     missionLibraryLoading = (async () => {
-      const index = await json('../content/mission-library-index.json');
+      const index = await readActorMissionIndex();
       const route =
         authoredRoute || (await loadAuthoredJourneyRoute(DEFAULT_JOURNEY_ROUTES.versus));
       const originalThemes = (await json('../content-design/themes.json')).themes;
@@ -2419,16 +2679,22 @@ try {
     { signal, onStatus, attempt, isCurrent, selection = null },
   ) {
     const tuning = gameplayTuning.snapshot(browsingJourneyPreferences.snapshot().difficulty);
+    const actorPreference = actorPreferences.snapshot();
     const candidateReader = createCouchInstalledChapters({
       channel: contentChannel,
       registeredEntries: [baseEntry],
       presentationPage,
     });
     let lease = null,
+      nextActors = null,
       nextStatic = null,
       adopted = false;
     const check = () => {
-      if (!isCurrent() || signal.aborted)
+      if (
+        !isCurrent() ||
+        signal.aborted ||
+        actorPreferences.snapshot().revision !== actorPreference.revision
+      )
         throw new DOMException(
           'Chapter preparation cancelled; the current race is kept.',
           'AbortError',
@@ -2437,6 +2703,7 @@ try {
     const cleanup = () => {
       if (adopted) return;
       lease?.cancel();
+      nextActors?.release();
       candidateReader.dispose();
       nextStatic?.dispose();
     };
@@ -2467,6 +2734,8 @@ try {
         format: attempt.recipe.format,
         seed: attempt.recipe.seed,
         tuning,
+        actorStyle: actorPreference.actorStyle,
+        actorPreferenceRevision: actorPreference.revision,
       };
       const nextMatch = createRound(recipe),
         raceId = ++raceSequence;
@@ -2476,6 +2745,8 @@ try {
         signal,
         onStatus,
       });
+      check();
+      nextActors = await prepareActors(recipe, { signal, onStatus, reader: candidateReader });
       check();
       nextStatic = createCouchStaticPictures({
         entries: [baseEntry, ...(featured ? [featured.resolved] : [])],
@@ -2496,6 +2767,7 @@ try {
           const previousReader = installed,
             previousStatic = staticPictures,
             previousController = contentController;
+          const retireActors = publishActors(nextActors);
           // Publish the entire accepted attempt before any DOM or retirement callback.
           installed = candidateReader;
           staticPictures = nextStatic;
@@ -2533,6 +2805,7 @@ try {
             shell.scope() === attempt.scope;
           previousController?.abort();
           retire();
+          retireActors();
           previousReader?.dispose();
           previousStatic?.dispose();
           if (accepted()) {
@@ -2780,6 +3053,7 @@ try {
     'race-solo-return',
     'race-library-switch',
     'race-level',
+    'race-actor-style',
     'race-theme',
     'race-class',
     'race-turn',
@@ -2979,6 +3253,9 @@ try {
     if (event.persisted) return;
     contentController?.abort();
     disposed = true;
+    actorLease?.release();
+    actorLease = null;
+    actorAppearance = null;
     journeyChooser?.destroy();
     missionLibrary?.library.dispose();
     libraryInstaller?.dispose();
@@ -3164,6 +3441,7 @@ try {
         fullReveal: run.status === 'won',
         celebrationPaused: document.hidden,
         backdrop,
+        actorAppearance,
       });
     }
     (music || sound).update(

@@ -3,6 +3,8 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { createMenuAppearance } from '../ui/menu-appearance.mjs';
 import {
+  FPV_FIELD_KIT_MENU_STYLE,
+  NEON_ARCADE_MENU_STYLE,
   UKRAINIAN_MENU_STYLE,
   menuStyleVariables,
   resolveMenuStyle,
@@ -56,7 +58,7 @@ function contrast(a, b) {
   return (Math.max(first, second) + 0.05) / (Math.min(first, second) + 0.05);
 }
 
-test('automatic menu choice preserves another authored theme and explicit Ukrainian never alters its canvas inputs', () => {
+test('Neon Arcade remains independent of authored themes and FPV Field Kit never alters canvas inputs', () => {
   const doc = fixture(),
     appearance = createMenuAppearance({ document: doc }),
     authored = snapshot('night-shift');
@@ -65,9 +67,9 @@ test('automatic menu choice preserves another authored theme and explicit Ukrain
   doc.documentElement.style.setProperty('--fk-cyan', '#123456');
   doc.documentElement.style.setProperty('--fk-font-ui', 'Owned UI');
   appearance.setPresentation(authored);
-  assert.equal(doc.body.dataset.menuPalette, 'authored');
+  assert.equal(doc.body.dataset.menuPalette, 'neon');
   appearance.set({ palette: 'ukrainian', ornaments: 'rich' });
-  assert.equal(doc.body.dataset.menuPalette, 'ukrainian');
+  assert.equal(doc.body.dataset.menuPalette, 'field-kit');
   assert.equal(JSON.stringify(authored), original);
   assert.deepEqual(canvasPresentation(authored.resolved), canvas);
   assert.equal(doc.documentElement.style['--fk-cyan'], '#123456');
@@ -80,15 +82,15 @@ test('automatic menu choice preserves another authored theme and explicit Ukrain
   appearance.dispose();
 });
 
-test('automatic FPV and declared unavailable-snapshot fallback select the approved menu palette only', () => {
+test('default Neon Arcade remains selected across FPV, campaign and unavailable presentations', () => {
   const doc = fixture(),
     appearance = createMenuAppearance({ document: doc });
   appearance.setPresentation(snapshot('fpv'));
-  assert.equal(doc.body.dataset.menuPalette, 'ukrainian');
+  assert.equal(doc.body.dataset.menuPalette, 'neon');
   appearance.setPresentation(snapshot('copper'));
-  assert.equal(doc.body.dataset.menuPalette, 'authored');
+  assert.equal(doc.body.dataset.menuPalette, 'neon');
   appearance.setPresentation(null);
-  assert.equal(doc.body.dataset.menuPalette, 'ukrainian');
+  assert.equal(doc.body.dataset.menuPalette, 'neon');
   appearance.dispose();
 });
 
@@ -144,7 +146,7 @@ test('replacement ownership removes old decorations and a stale completion canno
   old.setPresentation(snapshot('fpv'));
   old.dispose();
   assert.equal(doc.querySelectorAll('.menu-ornament').length, 3);
-  assert.equal(doc.body.dataset.menuPalette, 'authored');
+  assert.equal(doc.body.dataset.menuPalette, 'neon');
   assert.equal(doc.body.dataset.menuOrnaments, 'off');
   next.dispose();
   assert.equal(doc.querySelectorAll('.menu-ornament').length, 0);
@@ -166,21 +168,33 @@ test('cleanup restores previous values but preserves a later external writer', (
   assert.equal(doc.body.dataset.menuPalette, 'external');
 });
 
-test('approved token pairs preserve functional text and cue contrast on the menu panels', () => {
-  const { tokens } = UKRAINIAN_MENU_STYLE;
-  for (const background of [tokens.ink, tokens.panel, tokens.panelRaised]) {
-    for (const name of ['text', 'muted'])
-      assert.ok(contrast(tokens[name], background) >= 4.5, `${name} text on ${background}`);
-    for (const name of ['cyan', 'amber', 'hazard', 'controlLine'])
-      assert.ok(contrast(tokens[name], background) >= 3, `${name} cue on ${background}`);
+test('both approved UI skins preserve functional text and cue contrast on menu panels', () => {
+  for (const style of [NEON_ARCADE_MENU_STYLE, FPV_FIELD_KIT_MENU_STYLE]) {
+    const { tokens } = style;
+    for (const background of [tokens.ink, tokens.panel, tokens.panelRaised]) {
+      for (const name of ['text', 'muted'])
+        assert.ok(
+          contrast(tokens[name], background) >= 4.5,
+          `${style.id} ${name} text on ${background}`,
+        );
+      for (const name of ['cyan', 'amber', 'hazard', 'controlLine'])
+        assert.ok(
+          contrast(tokens[name], background) >= 3,
+          `${style.id} ${name} cue on ${background}`,
+        );
+    }
+    assert.ok(
+      contrast(tokens.ink, tokens.amber) >= 4.5,
+      `${style.id} dark text remains readable on the primary action.`,
+    );
+    for (const name of ['cyan', 'hazard'])
+      assert.ok(
+        contrast(tokens.ink, tokens[name]) >= 4.5,
+        `${style.id} dark action text on ${name}`,
+      );
+    assert.equal(Object.isFrozen(style.tokens), true);
   }
-  assert.ok(
-    contrast(tokens.ink, tokens.amber) >= 4.5,
-    'Dark text remains readable on the primary action.',
-  );
-  for (const name of ['cyan', 'hazard'])
-    assert.ok(contrast(tokens.ink, tokens[name]) >= 4.5, `Dark action text on ${name}`);
-  assert.equal(Object.isFrozen(UKRAINIAN_MENU_STYLE.tokens), true);
+  assert.strictEqual(UKRAINIAN_MENU_STYLE, FPV_FIELD_KIT_MENU_STYLE);
 });
 
 test('the static menu stylesheet does not animate decorations or style canvas, HUD, fonts or theme image variables', async () => {
@@ -193,9 +207,22 @@ test('the static menu stylesheet does not animate decorations or style canvas, H
   assert.match(css, /animation:\s*none !important/);
   assert.match(css, /@media \(forced-colors: active\)/);
   assert.deepEqual(resolveMenuStyle({ palette: 'auto', ornaments: 'off' }, 'fpv'), {
-    palette: 'ukrainian',
+    palette: 'neon',
     ornaments: 'off',
   });
+  assert.deepEqual(resolveMenuStyle({ palette: 'ukrainian', ornaments: 'rich' }, 'retro'), {
+    palette: 'field-kit',
+    ornaments: 'rich',
+  });
+});
+
+test('Solo, Versus and Team expose the same two UI skin names independently of actors', async () => {
+  for (const path of ['../index.html', '../couch/index.html', '../couch/relay-rescue.html']) {
+    const html = await readFile(new URL(path, import.meta.url), 'utf8');
+    assert.match(html, />UI skin<select id="(?:race-|coop-)?menu-palette">/);
+    assert.match(html, /<option value="auto">Neon Arcade<\/option>/);
+    assert.match(html, /<option value="ukrainian">FPV Field Kit<\/option>/);
+  }
 });
 
 function observeDialogs(doc) {

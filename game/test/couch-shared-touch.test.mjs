@@ -107,6 +107,69 @@ for (const mode of ['stick', 'swipe', 'dpad'])
   });
 
 for (const mode of ['stick', 'swipe', 'dpad'])
+  test(`${mode}: a per-seat capture reset retires a held finger without interrupting its partner`, (t) => {
+    const f = fixture(t, mode);
+    f.pointer(0, 'pointerdown', mode === 'dpad' ? 145 : 78, 78, 11);
+    f.pointer(1, 'pointerdown', 78, mode === 'dpad' ? 145 : 78, 22);
+    if (mode !== 'dpad') {
+      f.pointer(0, 'pointermove', 115, 78, 11);
+      f.pointer(1, 'pointermove', 78, 115, 22);
+    }
+    assert.deepEqual(
+      f.input.consume().map((command) => command.direction),
+      ['right', 'down'],
+    );
+    assert.equal(f.surfaces[0].hasPointerCapture(11), true);
+    assert.equal(f.surfaces[1].hasPointerCapture(22), true);
+
+    // Exercise the input reset invoked by capture handlers, not a simulated
+    // closure: both fingers are still physically down when this seat clears.
+    f.input.clearPlayer(0);
+    assert.equal(f.surfaces[0].hasPointerCapture(11), false);
+    assert.equal(f.surfaces[1].hasPointerCapture(22), true);
+    assert.equal(f.pauses(), 0, 'Deliberate capture release is not a pointer interruption.');
+    for (const type of ['pointermove', 'lostpointercapture', 'pointercancel']) {
+      f.pointer(0, type, 5, 78, 11);
+      f.input.poll();
+      for (let substep = 0; substep < 3; substep++) {
+        const commands = f.input.consume();
+        assert.deepEqual(
+          commands.map((command) => command.direction),
+          [null, 'down'],
+          'Stale events cannot restore the cleared heading or retire the partner.',
+        );
+        assert.equal(commands[0].steer, false);
+      }
+      assert.equal(f.pauses(), 0);
+      assert.equal(f.surfaces[1].hasPointerCapture(22), true);
+    }
+
+    f.pointer(0, 'pointerup', 5, 78, 11);
+    f.pointer(0, 'pointerdown', mode === 'dpad' ? 5 : 78, 78, 33);
+    if (mode !== 'dpad') f.pointer(0, 'pointermove', 5, 78, 33);
+    assert.deepEqual(
+      f.input.consume().map((command) => command.direction),
+      ['left', 'down'],
+      'A new gesture resumes only the cleared player.',
+    );
+    f.pointer(0, 'lostpointercapture', 5, 78, 11);
+    assert.equal(f.surfaces[0].hasPointerCapture(33), true);
+    assert.equal(f.input.snapshotDirection(0), 'left');
+    assert.equal(f.pauses(), 0, 'A late old capture event cannot cancel the new owner.');
+
+    f.pointer(1, 'pointermove', 145, mode === 'swipe' ? 115 : 78, 22);
+    assert.equal(
+      f.input.snapshotDirection(1),
+      'right',
+      'The original partner finger still steers.',
+    );
+    assert.equal(f.surfaces[1].hasPointerCapture(22), true);
+    f.pointer(0, 'pointerup', 5, 78, 33);
+    assert.equal(f.input.snapshotDirection(0), 'left', 'Fresh steering persists after release.');
+    assert.equal(f.pauses(), 0);
+  });
+
+for (const mode of ['stick', 'swipe', 'dpad'])
   test(`${mode}: cancellation belongs to the captured finger and preserves the other seat`, (t) => {
     const f = fixture(t, mode);
     f.pointer(0, 'pointerdown', mode === 'dpad' ? 145 : 78, 78, 11);
