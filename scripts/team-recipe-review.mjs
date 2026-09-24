@@ -3,7 +3,7 @@ import { createHash } from 'node:crypto';
 const hash = (bytes) => createHash('sha256').update(bytes).digest('hex');
 const reviewedRecord = '7ecaeb6dc9c2fcf1804ed364ef1b818e3323f4a390629fd4575c0772cf4df45b';
 const successorRecord = '45e41eee3cacac251ede3f0304834a1fda311f8bd70f4d0b66aaceb493b8fc05';
-const continuationRecord = 'ff4b6344e7be9659c7e6b5bea12a9b6456b9f76e0d3587bf712c7b156d672a81';
+const continuationRecord = 'edfc40e9576b231f786003e190d223918ce5330f8bf3002e210d7559348306d0';
 const priorReviewPath = 'docs/verification/team37/review.json';
 const successorReviewPath = 'docs/verification/team-specialist-cues-2026-09-24/review.json';
 const continuationReviewPath =
@@ -67,7 +67,11 @@ export function fieldKitTeamRecipeQuality({
         continuation.priorReview?.sha256 !== successorRecord ||
         continuation.priorReview?.fingerprintSHA256 !== successor.fingerprint.sha256 ||
         continuation.fingerprint?.group !== 'team' ||
-        continuation.fingerprint?.paths !== successor.fingerprint.paths ||
+        continuation.fingerprint?.paths !==
+          successor.fingerprint.paths.replace(
+            'game/ui/enemy-body-motion.mjs',
+            'game/ui/enemy-body-assets.mjs; game/ui/enemy-body-motion.mjs',
+          ) ||
         source !== `${continuation.fingerprint.paths} sha256:${continuation.fingerprint.sha256}`
       )
         return unreviewed();
