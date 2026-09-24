@@ -356,6 +356,8 @@ export async function prepareCreatorMediaIntake(
     signal,
     inspectVideo = openVideoPosterSource,
     prepareImage = prepareCreatorImage,
+    pairingFor,
+    posterTimeFor = ({ video }) => video.durationSeconds * 0.5,
     playbackRangeFor = ({ video }) => ({
       startSeconds: 0,
       endSeconds: video.durationSeconds,
@@ -424,7 +426,8 @@ export async function prepareCreatorMediaIntake(
   }
 
   const stories = [],
-    videoDetails = new Map();
+    videoDetails = new Map(),
+    resolvedVideoPairings = new Set();
   for (const row of orderedRows.filter((item) => item.kind === 'video')) {
     creatorAbort(signal);
     if (row.error) continue;
@@ -446,39 +449,74 @@ export async function prepareCreatorMediaIntake(
         suggestion = suggestions.get(row.index),
         posterCandidates = [];
       let poster = null;
-      if (suggestion?.status === 'ambiguous')
+      errorCode = 'invalid-poster-choice';
+      const pairingChoice = pairingFor?.({
+        video,
+        assetSha256: row.sha256,
+        suggestion,
+        imageAssetSha256s: Object.freeze([...imageByHash.keys()].sort()),
+      });
+      required(
+        pairingChoice === undefined ||
+          pairingChoice === null ||
+          (typeof pairingChoice === 'string' && hashValid(pairingChoice)),
+        'Poster pairing choice must be an exact image hash, frame capture, or automatic.',
+      );
+      if (pairingChoice !== undefined) resolvedVideoPairings.add(row.index);
+      if (suggestion?.status === 'ambiguous' && pairingChoice === undefined)
         throw Object.assign(
           fail('Multiple files share this name. Choose the exact poster/video pairing.'),
           { creatorCode: 'ambiguous-pairing' },
         );
-      if (suggestion?.status === 'suggested') {
-        poster = imageByHash.get(suggestion.candidateAssetSha256s[0]);
+      const pairedImageSha256 =
+        pairingChoice === undefined
+          ? suggestion?.status === 'suggested'
+            ? suggestion.candidateAssetSha256s[0]
+            : null
+          : pairingChoice;
+      if (pairedImageSha256) {
+        poster = imageByHash.get(pairedImageSha256);
         if (!poster)
           throw Object.assign(
-            fail('The suggested poster could not be prepared. Choose or restore its original.'),
+            fail('The selected poster could not be prepared. Choose or restore its original.'),
             { creatorCode: 'missing-poster-original' },
           );
       } else {
         errorCode = 'poster-capture-failed';
-        for (const ratio of [0.1, 0.5, 0.9]) {
+        const selectedTime = posterTimeFor({
+          video,
+          assetSha256: row.sha256,
+          suggestion,
+        });
+        required(
+          Number.isFinite(selectedTime) &&
+            selectedTime >= 0 &&
+            selectedTime <= video.durationSeconds,
+          'Poster capture time must be finite and inside the inspected video.',
+        );
+        const captureTimes = [
+          ...new Set(
+            [0.1, 0.5, 0.9].map((ratio) => video.durationSeconds * ratio).concat(selectedTime),
+          ),
+        ].sort((a, b) => a - b);
+        for (const requestedTime of captureTimes) {
           creatorAbort(signal);
-          const requestedTime = video.durationSeconds * ratio,
-            captured = await validateCandidate(
-              await opened.capture(
-                requestedTime,
-                {
-                  id: `creator-video-${video.sha256.slice(0, 16)}-${Math.round(ratio * 100)}`,
-                  provenance: {
-                    kind: 'user-supplied',
-                    credit: 'Creator supplied video',
-                    source: `Frame captured at requested ${requestedTime} seconds`,
-                  },
+          const captured = await validateCandidate(
+            await opened.capture(
+              requestedTime,
+              {
+                id: `creator-video-${video.sha256.slice(0, 16)}-${Math.round(requestedTime * 1000)}`,
+                provenance: {
+                  kind: 'user-supplied',
+                  credit: 'Creator supplied video',
+                  source: `Frame captured at requested ${requestedTime} seconds`,
                 },
-                { signal },
-              ),
-              video.sha256,
-              signal,
-            );
+              },
+              { signal },
+            ),
+            video.sha256,
+            signal,
+          );
           creatorAbort(signal);
           const candidate = freezeMedia({
             sha256: captured.asset.sha256,
@@ -498,11 +536,14 @@ export async function prepareCreatorMediaIntake(
           posterCandidates.push(candidate);
           assets.set(candidate.sha256, {
             sha256: candidate.sha256,
-            role: ratio === 0.5 ? 'poster' : 'poster-alternative',
+            role: 'poster-alternative',
             blob: captured.blob,
           });
         }
-        poster = posterCandidates[1];
+        poster = posterCandidates.find(
+          (candidate) => candidate.capture.requestedTime === selectedTime,
+        );
+        required(poster, 'The selected poster frame was not captured.');
         const selected = assets.get(poster.sha256);
         assets.set(poster.sha256, { ...selected, role: 'poster' });
       }
@@ -520,6 +561,7 @@ export async function prepareCreatorMediaIntake(
           playbackRange,
           posterCandidates,
           selectedPosterSha256: poster.sha256,
+          selectedPairingAssetSha256: pairedImageSha256,
         }),
       );
     } catch (error) {
@@ -539,7 +581,12 @@ export async function prepareCreatorMediaIntake(
       .map((row) => {
         const pairing = suggestions.get(row.index) ?? null,
           errors = [];
-        if (pairing?.status === 'ambiguous')
+        const ambiguityResolved =
+          pairing?.status === 'ambiguous' &&
+          rows
+            .filter((candidate) => candidate.kind === 'video' && candidate.stem === row.stem)
+            .every((candidate) => resolvedVideoPairings.has(candidate.index));
+        if (pairing?.status === 'ambiguous' && !ambiguityResolved)
           errors.push(
             issue(
               'ambiguous-pairing',
