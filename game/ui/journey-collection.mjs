@@ -71,10 +71,20 @@ export function attachJourneyCollection({ document: doc = globalThis.document, g
   });
   async function show() {
     if (!selected || !viewer.open) return;
+    // Retry is removed after a successful fetch. Move its focus to the
+    // persistent Back action first so keyboard and controller users never
+    // fall out of the modal when the transient control disappears.
+    if (doc.activeElement === retry) back.focus({ preventScroll: true });
     retry.hidden = true;
     const record = selected;
     const loaded = await artwork.show(record);
-    if (viewer.open && selected === record) retry.hidden = loaded;
+    if (viewer.open && selected === record) {
+      retry.hidden = loaded;
+      // The decoded image can increase the dialog height after Back received
+      // focus. Keep that focus visible on short landscape screens.
+      if (doc.activeElement === back)
+        back.scrollIntoView?.({ block: 'nearest', inline: 'nearest' });
+    }
   }
   retry.onclick = show;
   function render() {
