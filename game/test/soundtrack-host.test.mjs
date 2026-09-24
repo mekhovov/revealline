@@ -727,10 +727,11 @@ test('quick Solo controls play from the menu, pause independently and skip witho
 
 for (const gesture of ['keyboard', 'pointer']) {
   test(`quick Solo ${gesture} retry owns its blocked playback gesture exactly once`, async (t) => {
-    const { page } = await setup(t);
+    const { page } = await setup(t, { audioPreferences: { musicEnabled: true } });
     const media = musicMedia(page),
       originalPlay = media.play.bind(media);
     await waitFor(() => !!media.src, 'Original is ready');
+    assert.equal(media.muted, false, 'Unmuted master permits lifecycle capture retry');
     media.play = async () => {
       throw Object.assign(new Error('Gesture refused'), { name: 'NotAllowedError' });
     };
