@@ -163,6 +163,17 @@ body.field-kit.game-shell:is([data-flight-state='running'], [data-flight-state='
 .game-shell .game-overlay[data-kind='pause'] .pause-mission-info {
   width: 100%;
 }
+.game-shell .game-overlay[data-kind='ready'] .pause-mission-info {
+  width: 100%;
+}
+.game-shell .game-overlay[data-kind='ready'] .pause-mission-info > summary {
+  display: none;
+}
+.game-shell .game-overlay[data-kind='ready'] .pause-mission-info > div {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+}
 .game-shell .game-overlay[data-kind='pause'] .pause-mission-info > summary {
   min-height: 44px;
   display: flex;
