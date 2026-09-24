@@ -149,7 +149,10 @@ function prepared({ tag = 'approved-wall', wall = true, motionScale = 1, reader 
   });
   const tile = Object.freeze({ image, asset: wallAsset, geometry: imagePresentation(wallAsset) });
   const snapshot = {
-    resolved: compiled.resolved,
+    // This terrain-only fixture prepares one image. Do not advertise unrelated
+    // production actor/objective images without supplying their decoded frames.
+    // Full Team slot integration is exercised by the presentation host suites.
+    resolved: { ...compiled.resolved, assets: { 'terrain.wall': wallAsset } },
     canvas: { palette, motionScale },
     fonts: { ui: 'Prepared Team UI, sans-serif', numeric: 'Prepared Team Mono, monospace' },
   };

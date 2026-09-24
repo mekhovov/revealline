@@ -150,6 +150,9 @@ export function bootCoop({
   candidateNotice = '',
   candidateEditionLabel = '',
 } = {}) {
+  // Consume native setup intent before applying saved defaults. Only an actual
+  // difficulty edit changes the global preference; opening its selector does not.
+  const earlySelection = globalThis.RevealLineTeamEntry?.take();
   // Entry links select a code-owned destination, never a supplied URL or referrer.
   // Older/direct links and ambiguous contexts retain the existing Versus return.
   const entryParams = new URL(location.href).searchParams;
@@ -360,6 +363,10 @@ export function bootCoop({
     getStorage: () => localStorage,
     onWarning: () => renderActorStyle(),
   });
+  const earlyDifficulty = earlySelection?.difficulty;
+  if (earlyDifficulty?.changed && ['gentle', 'standard', 'expert'].includes(earlyDifficulty.value))
+    gameplayPreferences.choose(earlyDifficulty.value);
+  if (candidatePreferences) candidateDifficulty = gameplayPreferences.snapshot().difficulty;
   const attemptTuning = new WeakMap();
   const normalGameplayIdentities = new WeakMap();
   if (!candidatePreferences) $('coop-difficulty').value = gameplayPreferences.snapshot().difficulty;
@@ -711,23 +718,31 @@ export function bootCoop({
     },
   });
   const router = createControllerRouter({ readPads: () => framePads });
+  const menuMasthead = $('coop-home').closest('.masthead');
+  let compositeMenu = false;
   const navigation = attachControllerNavigation({
     onTabBoundary: () => playgroundTabBoundary({ window, suspend: () => suspend() }),
     getScope: scope,
-    getRoot: () =>
-      music?.root() ||
-      (settingsDialog.open
-        ? settingsDialog
-        : earnedDialog.open
-          ? earnedDialog
-          : departure
-            ? departureDialog
-            : discovery?.isOpen()
-              ? $('journey-chooser')
-              : run
-                ? $('coop-overlay')
-                : $('coop-app')),
-    accept: (element) => !element.closest('.race-pad'),
+    getRoot: () => {
+      const modal =
+        music?.root() ||
+        (settingsDialog.open
+          ? settingsDialog
+          : earnedDialog.open
+            ? earnedDialog
+            : departure
+              ? departureDialog
+              : discovery?.isOpen()
+                ? $('journey-chooser')
+                : null);
+      // Pause/results restore the visible masthead alongside the overlay.
+      // Keep their common root while excluding gameplay and hidden lobby UI.
+      compositeMenu = !modal && !!run;
+      return modal || $('coop-app');
+    },
+    accept: (element) =>
+      !element.closest('.race-pad') &&
+      (!compositeMenu || $('coop-overlay').contains(element) || !!menuMasthead?.contains(element)),
     getDefaultFocus: primary,
     keyboard: true,
     ownsKeyboardEvent: (event) => !music?.root() && settingsTabOwnsKey(event, settingsDialog),
@@ -2955,6 +2970,11 @@ export function bootCoop({
       document,
       library: getTeamLibrary(),
       mode: 'team',
+      getCurrentId: () =>
+        missionLibrary.missions.find((row) => {
+          const bound = libraryRuntimeRows.get(row)?.();
+          return bound?.pack === pack && bound.level === selectedLevel();
+        })?.id,
       readState: librarySession.read,
       writeState: librarySession.write,
       launchContext: teamLibraryContext,
@@ -3196,7 +3216,7 @@ export function bootCoop({
   }
   discovery = {
     isOpen: () => Boolean($('journey-chooser')?.open),
-    primary: () => $('journey-search') ?? $('coop-discovery-open'),
+    primary: () => libraryChooser?.primary() ?? $('coop-discovery-open'),
     async open(opener) {
       if (!canOpenDiscovery()) return;
       libraryOpening?.dispose();
@@ -3592,9 +3612,12 @@ export function bootCoop({
       return;
     }
     if (restore && !disposed && !document.hidden && document.hasFocus?.() !== false) {
-      // Header links are outside the paused navigation root. Return to its safe
-      // primary instead of leaving keyboard focus outside the active panel.
-      const origin = $('coop-overlay').contains(ticket.opener) ? ticket.opener : primary();
+      // Both the pause panel and its visible masthead are navigable owners.
+      // Stay returns to the exact opener without resuming either player.
+      const origin =
+        $('coop-overlay').contains(ticket.opener) || menuMasthead?.contains(ticket.opener)
+          ? ticket.opener
+          : primary();
       (visibleAction(origin) ? origin : primary()).focus({ preventScroll: true });
     }
   }
@@ -4440,7 +4463,6 @@ export function bootCoop({
   };
   // The classic entry owns intent before the select becomes interactive.
   // Without that evidence, retain native setup rather than override a choice.
-  const earlySelection = globalThis.RevealLineTeamEntry?.take();
   const validArena = (id) => COOP_STARTER_PACK.levels.some((level) => level.id === id);
   if (!earlySelection || earlySelection.claimed) {
     const selected = earlySelection?.changed ? earlySelection.value : $('coop-level').value;

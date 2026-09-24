@@ -7,6 +7,7 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { PNGImage } from './helpers/png-image.mjs';
 import { soloPage } from './helpers/solo-dom.mjs';
+import { openMissionLibrary } from './helpers/library-selection.mjs';
 import { waitFor } from './helpers/wait-for.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
 // Full multi-row chapter validation authenticates existing large embedded originals.
@@ -50,10 +51,18 @@ function downloads(t, intercept = () => null) {
   });
   return requests;
 }
-async function open(page) {
+function retainedMissions(page) {
+  if (page.$('journey-chooser')?.open) page.$('journey-back').click();
   page.$('shell-menu').click();
-  page.$('shell-play').click();
+  // These scenarios qualify the retained More worlds installer and its host
+  // transactions. Mount that native parent without opening a concurrent public
+  // catalogue; current Download & play journeys have their own library suite.
+  page.$('shell-home').close();
+  page.$('shell-missions').showModal();
   assert.equal(page.$('shell-mode-choice').open, false);
+}
+async function open(page) {
+  retainedMissions(page);
   page.$('shell-worlds').click();
   await settle(
     () =>
@@ -64,9 +73,10 @@ async function open(page) {
 test('More worlds discovers Tactical and one Download & play retains the old run until preparation finishes', async (t) => {
   images(t);
   const page = await soloPage(t, { titleScreen: true });
-  page.$('shell-play').click();
-  assert.equal(page.$('shell-missions').open, true);
-  page.$('shell-prepare').click();
+  await openMissionLibrary(page, 'shell-play');
+  assert.equal(page.$('journey-chooser').contains(page.$('mission-picker-setup')), true);
+  page.$('mission-picker-setup').open = true;
+  page.$('mission-picker-setup').emit('toggle');
   assert.equal(page.$('mission-picker-setup').open, true);
   page.change('pack-select', 'fpv-arcade-r5');
   await settle(
@@ -146,9 +156,7 @@ test('offline Play of the current chapter preserves its paused cut without repla
     checkpoint = authoritativeCheckpoint(run);
   assert.equal(run.player.cutting, true);
   const requests = downloads(t, () => Promise.reject(new Error('Offline fixture')));
-  page.$('shell-menu').click();
-  page.$('shell-play').click();
-  assert.equal(page.$('shell-mode-choice').open, false);
+  retainedMissions(page);
   page.$('shell-worlds').click();
   await settle(() => !page.$('optional-worlds-reload').disabled);
   assert.match(page.$('optional-worlds-status').textContent, /Online list unavailable/);
@@ -221,7 +229,7 @@ for (const saveFailure of ['none', 'quota', 'readback'])
     assert.equal(requests.length, 2);
     page.$('mission-replace-stay').click();
     page.$('optional-worlds-back').click();
-    page.$('shell-play').click();
+    retainedMissions(page);
     page.$('shell-mode-choice').open = true;
     page.$('shell-worlds').click();
     assert.equal(page.$(`optional-worlds-install-${first.id}`).disabled, true);
@@ -312,7 +320,7 @@ test('a failed asset transaction keeps the installed library and current run; Do
   assert.deepEqual(page.errors, []);
 });
 
-test('keyboard and standard controller enter More chapters with Mode collapsed and return without flying', async (t) => {
+test('retained More chapters supports keyboard and standard controller with Mode collapsed and returns without flying', async (t) => {
   const page = await soloPage(t, { titleScreen: true });
   downloads(t);
   const checkpoint = authoritativeCheckpoint(page.rendered.run);
@@ -346,9 +354,10 @@ test('keyboard and standard controller enter More chapters with Mode collapsed a
     }
     target.emit('keyup', { key: name, code: name });
   };
-  for (let i = 0; i < 30 && page.doc.activeElement.id !== 'shell-play'; i++) key('ArrowDown');
-  assert.equal(page.doc.activeElement.id, 'shell-play');
-  key('Enter');
+  // Mount the retained parent as a component boundary. Public Missions now
+  // opens the unified catalogue, covered by the library/navigation host suites.
+  retainedMissions(page);
+  page.$('shell-missions-back').focus();
   assert.equal(page.$('shell-home').open, false);
   assert.equal(page.$('shell-missions').open, true);
   const modeChoice = page.$('shell-mode-choice');
@@ -428,8 +437,8 @@ test('keyboard and standard controller enter More chapters with Mode collapsed a
   press(1);
   assert.equal(page.$('optional-worlds-dialog').open, false);
   assert.equal(page.$('shell-home').open, true);
-  seek('shell-play', () => press(13));
-  press(0);
+  retainedMissions(page);
+  page.$('shell-missions-back').focus();
   assert.equal(page.$('shell-home').open, false);
   assert.equal(page.$('shell-missions').open, true);
   assert.equal(modeChoice.open, false);

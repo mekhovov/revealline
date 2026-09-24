@@ -4,27 +4,15 @@ import { readFile } from 'node:fs/promises';
 import { soloPage, SoloElement, memoryStorage } from './helpers/solo-dom.mjs';
 import { couchPage } from './helpers/couch-host.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
+import { PNGImage } from './helpers/png-image.mjs';
 import { waitFor } from './helpers/wait-for.mjs';
 import { teamReturnHref } from '../mode-return.mjs';
 import { readVersusSoloReturnToken } from '../mode-return-v2.mjs';
 import { readMissionLibraryReturn } from '../mission-library/handoff.mjs';
 import { JOURNEY_PREFERENCES_KEY, JOURNEY_PREFERENCES_VERSION } from '../journey/preferences.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
+import { activateMissionCard, openMissionLibrary } from './helpers/library-selection.mjs';
 
-class Picture {
-  width = 1774;
-  height = 887;
-  naturalWidth = 1774;
-  naturalHeight = 887;
-  set src(value) {
-    this.source = value;
-    queueMicrotask(() => this.onload?.());
-  }
-  async decode() {}
-  removeAttribute() {
-    this.source = '';
-  }
-}
 const settle = (condition) => waitFor(condition, { timeoutMs: 10000 });
 // Compiling the real Journey before the held request is a boot precondition,
 // not the post-action response under test. Keep those action waits at ten seconds.
@@ -72,7 +60,7 @@ async function solo(t, options = {}) {
   return soloPage(t, {
     titleScreen: true,
     journeyIndexedDB: managedIndexedDB().indexedDB,
-    pictures: { Image: Picture },
+    pictures: { Image: PNGImage },
     fetchResponse: async (path) => {
       if (String(path).includes('/content-design/assets/'))
         return new Response(await readFile(path));
@@ -100,10 +88,32 @@ async function versus(t, options = {}) {
   });
 }
 async function open(p, host, mode) {
-  const opener = host === 'solo' ? 'shell-play' : 'race-library-switch';
-  p.$(opener).focus();
-  p.$(opener).click();
-  await settle(() => p.$('journey-chooser')?.open && p.$('journey-mode'));
+  if (host === 'solo') await openMissionLibrary(p, 'shell-play');
+  else {
+    const opener = p.$('race-library-switch'),
+      listeners = opener.listeners.get('click'),
+      pending = [];
+    opener.listeners.set(
+      'click',
+      new Set(
+        [...listeners].map((listener) => (event) => {
+          const result = listener.call(opener, event);
+          if (result instanceof Promise) pending.push(result);
+          return result;
+        }),
+      ),
+    );
+    try {
+      opener.focus();
+      opener.click();
+    } finally {
+      opener.listeners.set('click', listeners);
+    }
+    assert.equal(pending.length, 1, 'The visible Missions action owns preparation.');
+    assert.match(p.$('race-message').textContent, /Preparing missions/);
+    await pending[0];
+    assert.equal(p.$('journey-chooser').open, true);
+  }
   p.$('journey-mode').value = mode;
   p.$('journey-mode').emit('change');
   return [...p.$('journey-cards').children];
@@ -439,9 +449,12 @@ test('unfinished Legacy library departure checks its saved attempt before mintin
     previewStorage = memoryStorage();
   const p = await solo(t, { storage, previewStorage, titleScreen: false });
   p.$('start-button').click();
+  await settle(() => p.doc.body.dataset.flightState === 'running');
   p.key('ArrowDown');
   for (let index = 0; index < 24; index++) p.frame();
   p.key('ArrowDown', false);
+  assert.equal(p.rendered.run.tick, 24);
+  assert.ok(p.rendered.run.trail.length > 0, 'Departure must protect a genuine unfinished cut.');
   p.$('overlay-menu').click();
   const cards = await open(p, 'solo', 'team');
   const checkpoint = authoritativeCheckpoint(p.rendered.run);
@@ -511,7 +524,7 @@ test('late Classic checked return without saved browse state uses the retained m
       const card = cards.find((item) => JSON.parse(item.dataset.missionId)[3] === 'signal-12');
       assert.ok(card);
       missionId = card.dataset.missionId;
-      card.click();
+      await activateMissionCard(card);
       await settle(() => {
         p.frame(0);
         return (

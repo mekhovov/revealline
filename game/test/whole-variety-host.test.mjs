@@ -10,8 +10,13 @@ import { createJourneyBackend } from '../journey/profile.mjs';
 import { createCulturalWorkshopArtCandidates } from '../content-design/cultural-workshop-art-candidates.mjs';
 import { createSpatialBalanceCandidates } from '../content-design/spatial-balance-candidates.mjs';
 import { compileContentProject, resolveMission } from '../content-design/project.mjs';
-import { createRun, stepRun, FIXED_DT } from '../core/index.mjs';
+import { createRun, stepRun, FIXED_DT, CLASSES } from '../core/index.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
+import { chooseJourneyMission, openMissionLibrary } from './helpers/library-selection.mjs';
+import { expectedRouteEvidence } from './helpers/route-evidence.mjs';
+import { createWholeVarietyCandidates } from '../content-design/whole-spatial-candidates.mjs';
+import { applyGameplayTuning, resolveGameplayTuning } from '../gameplay-tuning.mjs';
+import { dataIdentity } from '../data-json.mjs';
 
 class Picture {
   width = 1774;
@@ -33,10 +38,17 @@ const arrows = { up: 'ArrowUp', down: 'ArrowDown', left: 'ArrowLeft', right: 'Ar
 const wasd = { up: 'KeyW', down: 'KeyS', left: 'KeyA', right: 'KeyD' };
 const pictured = compileContentProject(createCulturalWorkshopArtCandidates({ spatial: true }));
 const greybox = compileContentProject(createSpatialBalanceCandidates());
+const current = compileContentProject(createWholeVarietyCandidates({ artwork: true }));
+const tuned = JSON.parse(
+  await readFile(new URL('./fixtures/whole-variety-tuned-host-routes.json', import.meta.url)),
+);
+const endings = JSON.parse(
+  await readFile(new URL('./fixtures/default-journey-tuned-endings.json', import.meta.url)),
+);
 
 // Derive the pictured checksum independently from the isolated donor, proving the
 // original greybox golden first. No generated fixture or host-state injection.
-function recording(id) {
+function historicalRecording(id) {
   const row = VARIETY_ROUTES.find(
     (r) => r.id === id && r.difficulty === 'standard' && r.turnPolicy === 'immediate',
   );
@@ -69,13 +81,7 @@ const runs = (p, mode) => (mode === 'solo' ? [p.rendered.run] : p.renders);
 const findButton = (mode) => (mode === 'solo' ? 'shell-packs' : 'race-journey-find');
 const nextButton = (mode) => (mode === 'solo' ? 'next-button' : 'race-journey-next');
 const skipButton = (mode) => (mode === 'solo' ? 'journey-skip' : 'race-journey-skip');
-function choose(p, mode, id) {
-  p.$(findButton(mode)).click();
-  const card = p.$('journey-cards').children.find((n) => n.dataset.missionId.endsWith(`/${id}`));
-  assert(card);
-  card.click();
-  return card.dataset.missionId;
-}
+const choose = (p, mode, id) => chooseJourneyMission(p, findButton(mode), 'whole-spatial-v4', id);
 async function page(t, mode, disk, extra = {}) {
   return mode === 'solo'
     ? soloPage(t, {
@@ -114,25 +120,50 @@ for (const [mode, arc] of [
     const disk = managedIndexedDB();
     const backend = createJourneyBackend({ ...disk, profileKey: 'journey-whole-spatial-v4' });
     const p = await page(t, mode, disk);
-    const first = choose(p, mode, arc[0]);
+    const first = await choose(p, mode, arc[0]);
     const prefix = first.slice(0, first.lastIndexOf('/') + 1);
     for (const [index, id] of arc.entries()) {
       await running(p, mode, id);
       assert.equal(p.$('journey-chooser').open, false);
       for (const run of runs(p, mode)) assert.equal(run.player.speed, 0);
-      playKeyboardRoute(p, () => runs(p, mode), controls(mode), recording(id));
+      historicalRecording(id);
+      const manifest = resolveMission(current, id);
+      const level = applyGameplayTuning(manifest.level, resolveGameplayTuning('standard'));
+      const fresh = tuned.rows.find((r) => r.id === id) ?? endings.rows.find((r) => r.id === id);
+      assert.equal(manifest.simulationIdentity, fresh.authoredIdentity);
+      for (const run of runs(p, mode)) {
+        assert.deepEqual(run.level, level);
+        assert.equal(
+          dataIdentity({ ruleset: run.ruleset, level, classes: CLASSES }),
+          fresh.gameplayIdentity,
+        );
+      }
+      const pictures =
+        mode === 'solo' ? [p.rendered.backdrop] : p.drawOptions.map((o) => o.backdrop);
+      assert(
+        pictures.every((picture) => picture.assetRevision.sha256 === manifest.background.sha256),
+      );
+      playKeyboardRoute(p, () => runs(p, mode), controls(mode), {
+        ...fresh,
+        evidence: expectedRouteEvidence(
+          tuned.rows.some((row) => row.id === id) ? tuned.routeEvidence : endings.evidence,
+          id,
+        ),
+      });
       await waitFor(backend, (profile) => !!profile.clears[mode][prefix + id]);
       if (index < arc.length - 1) p.$(nextButton(mode)).click();
     }
     const prior = [...runs(p, mode)];
     if (mode === 'solo') {
-      assert.match(p.$('next-button').textContent, /End of sequence/);
+      assert.match(p.$('next-button').textContent, /Browse missions/);
       p.$('next-button').click();
+      await settle(() => p.$('journey-chooser')?.open && p.$('journey-collection'));
     } else {
-      assert.equal(p.$('race-journey-next').hidden, true);
+      assert.equal(p.$('race-journey-next').hidden, false);
+      assert.equal(p.$('race-journey-next').textContent, 'Browse missions');
       assert.match(p.$('race-message').textContent, /End of this optional sequence/);
       assert.match(p.$('race-start').textContent, /Rematch/);
-      p.$('race-journey-find').click();
+      await openMissionLibrary(p, 'race-journey-find');
     }
     assert.equal(p.$('journey-chooser').open, true);
     p.frame(0);
@@ -154,7 +185,7 @@ for (const mode of ['solo', 'versus'])
     const disk = managedIndexedDB();
     const backend = createJourneyBackend({ ...disk, profileKey: 'journey-whole-spatial-v4' });
     const p = await page(t, mode, disk);
-    const first = choose(p, mode, 'cross-stitch-crossings');
+    const first = await choose(p, mode, 'cross-stitch-crossings');
     await running(p, mode, 'cross-stitch-crossings');
     p.$(skipButton(mode)).click();
     assert.equal(runs(p, mode)[0].levelId, 'cross-stitch-crossings');
@@ -171,7 +202,7 @@ test('a manually selected last optional race that both pilots lose never claims 
   const disk = managedIndexedDB();
   const backend = createJourneyBackend({ ...disk, profileKey: 'journey-whole-spatial-v4' });
   const p = await page(t, 'versus', disk);
-  choose(p, 'versus', 'toolbench-weave');
+  await choose(p, 'versus', 'toolbench-weave');
   await running(p, 'versus', 'toolbench-weave');
   // Deliberately reverse through an unfinished line using actual fresh keys.
   // Do not mutate lives, match status, positions or the completion store.
@@ -185,7 +216,8 @@ test('a manually selected last optional race that both pilots lose never claims 
   assert(p.renders.every((r) => r.status === 'lost'));
   assert.match(p.$('race-message').textContent, /End of this optional sequence/);
   assert.doesNotMatch(p.$('race-message').textContent, /sequence complete/i);
-  assert.equal(p.$('race-journey-next').hidden, true);
+  assert.equal(p.$('race-journey-next').hidden, false);
+  assert.equal(p.$('race-journey-next').textContent, 'Browse missions');
   assert.deepEqual((await backend.read()).clears.versus, {});
 });
 
@@ -222,7 +254,7 @@ test('optional Solo picture failure preserves the attempt and exact menu save re
   };
   await t.test('failed Skip cannot change the run, picture, cursor or award state', async (t) => {
     const p = await page(t, 'solo', disk, extra);
-    const id = choose(p, 'solo', 'cross-stitch-crossings');
+    const id = await choose(p, 'solo', 'cross-stitch-crossings');
     await running(p, 'solo', 'cross-stitch-crossings');
     await waitFor(backend, (profile) => profile.cursors.solo === id);
     const run = p.rendered.run,

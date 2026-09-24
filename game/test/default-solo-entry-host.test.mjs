@@ -6,6 +6,7 @@ import { managedIndexedDB } from './helpers/managed-idb.mjs';
 import { createJourneyBackend } from '../journey/profile.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
 import { workshopReturnLinks } from '../ui/workshop-return.mjs';
+import { openMissionLibrary } from './helpers/library-selection.mjs';
 
 // Browser decoder boundary only. The host still reads, hashes and verifies the
 // registered originals; these dimensions match the two real fixture families
@@ -70,9 +71,7 @@ async function running(p, levelId) {
   });
 }
 async function missions(p, opener = 'shell-play') {
-  p.$(opener).focus();
-  p.$(opener).click();
-  await settle(() => p.$('journey-chooser')?.open && p.$('journey-collection'));
+  await openMissionLibrary(p, opener);
 }
 function collection(p, value) {
   p.$('journey-collection').value = value;

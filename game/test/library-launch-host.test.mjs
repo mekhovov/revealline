@@ -12,6 +12,7 @@ import {
 } from '../library.mjs';
 import { createRun, stepRun, getSummary, FIXED_DT } from '../core/index.mjs';
 import { createDifficultyContext } from '../campaign-difficulty.mjs';
+import { applyGameplayTuning, resolveGameplayTuning } from '../gameplay-tuning.mjs';
 import { BoardPainter } from '../ui/render.mjs';
 
 const read = async (path) => JSON.parse(await readFile(new URL(path, import.meta.url)));
@@ -137,14 +138,29 @@ async function flight(h) {
   await settle(() => h.doc.body.dataset.pictureState === 'ready');
   h.$('start-button').click();
   await settle(() => h.doc.body.dataset.flightState === 'running');
+  const accepted = h.rendered.run,
+    reference = createRun(accepted.level, {
+      seed: accepted.seed,
+      classId: accepted.classId,
+      classRecipes: accepted.classRecipes,
+      turnPolicy: accepted.turnPolicy,
+    });
+  assert.equal(accepted.turnPolicy, 'grid-center');
+  assert.deepEqual(authoritativeCheckpoint(accepted), authoritativeCheckpoint(reference));
   h.key('ArrowDown');
-  frames(h, 27);
+  // Current movement crosses the next center on tick28. Turn one tick earlier
+  // so the actual saved cut retains a pending direction, not a committed turn.
+  frames(h, 26);
+  for (let tick = 0; tick < 26; tick++) stepRun(reference, { direction: 'down' }, FIXED_DT);
   h.key('ArrowDown', false);
   h.key('ArrowRight');
   h.frame();
+  stepRun(reference, { direction: 'right' }, FIXED_DT);
   h.key('ArrowRight', false);
   assert.equal(h.rendered.run.player.cutting, true);
+  assert.equal(h.rendered.run.player.direction, 'down');
   assert.equal(h.rendered.run.player.queuedDirection, 'right');
+  assert.deepEqual(authoritativeCheckpoint(h.rendered.run), authoritativeCheckpoint(reference));
   h.$('pause-button').click();
   h.frame(0);
 }
@@ -300,9 +316,21 @@ for (const [kind, parent] of [
     assert.equal(h.doc.activeElement.id, 'start-button');
     if (kind === 'picture') {
       assert.equal(h.rendered.run.seed, 37);
-      assert.equal(
-        h.rendered.run.revision,
-        createDifficultyContext(campaign, 'gentle').campaign.levels[0].revision,
+      const level = applyGameplayTuning(
+        createDifficultyContext(campaign, 'gentle').campaign.levels[0],
+        resolveGameplayTuning('standard'),
+      );
+      assert.deepEqual(h.rendered.run.level, level);
+      assert.deepEqual(
+        authoritativeCheckpoint(h.rendered.run),
+        authoritativeCheckpoint(
+          createRun(level, {
+            seed: 37,
+            classId: 'scout',
+            classRecipes: campaign.classRecipes,
+            turnPolicy: 'grid-center',
+          }),
+        ),
       );
       assert.equal(h.rendered.run.lives, 5);
     }

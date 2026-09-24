@@ -4,6 +4,10 @@ import { readFileSync } from 'node:fs';
 import { soloPage, settle, SoloElement } from './helpers/solo-dom.mjs';
 import { retryFixture } from './fixtures/retry-scenarios.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
+import { createRun, stepRun, FIXED_DT } from '../core/index.mjs';
+import { managedIndexedDB } from './helpers/managed-idb.mjs';
+import { preparePack, emptyPackLibrary, installPack, exportPackLibrary } from '../packs.mjs';
+import { openMissionLibrary } from './helpers/library-selection.mjs';
 
 const classes = JSON.parse(readFileSync(new URL('../content/classes.json', import.meta.url)));
 const failCampaign = {
@@ -20,8 +24,39 @@ function key(page, key, extra = {}) {
   // Native button activation is the modeled DOM boundary, never a game action stub.
   if (!event.defaultPrevented && ['Enter', ' '].includes(key) && target.tagName === 'BUTTON')
     target.click();
+  const dialog = target.closest('dialog[open]');
+  if (!event.defaultPrevented && key === 'Tab' && dialog) {
+    // Native Tab advances editable controls; menu arrows intentionally remain
+    // native inside a select/input instead of skipping or changing its owner.
+    const stops = [
+      ...dialog.querySelectorAll('button,a[href],input,select,textarea,summary'),
+    ].filter(
+      (node) =>
+        !node.disabled &&
+        node.tabIndex >= 0 &&
+        !node.closest('[hidden],[inert],[aria-hidden="true"]') &&
+        (!node.closest('details:not([open])') || node.tagName === 'SUMMARY') &&
+        node.getClientRects().length,
+    );
+    stops[stops.indexOf(target) + (extra.shiftKey ? -1 : 1)]?.focus();
+  }
   target.emit('keyup', { key, code: key === ' ' ? 'Space' : key, ...extra });
   return event;
+}
+function observeAction(button, activate) {
+  const original = button.onclick;
+  let operation;
+  button.onclick = function (...args) {
+    operation = original.apply(this, args);
+    return operation;
+  };
+  try {
+    activate();
+    assert.equal(typeof operation?.then, 'function', 'The real activation exposes its operation.');
+    return operation;
+  } finally {
+    button.onclick = original;
+  }
 }
 function steps(page, count) {
   for (let i = 0; i < count; i++) page.frame();
@@ -30,11 +65,33 @@ async function win(t) {
   const page = await soloPage(t);
   page.$('start-button').click();
   await settle(() => page.doc.body.dataset.flightState === 'running');
+  const run = page.rendered.run,
+    reference = createRun(run.level, {
+      seed: run.seed,
+      classId: run.classId,
+      turnPolicy: run.turnPolicy,
+      classRecipes: run.classRecipes,
+    });
+  // A legal current First Signal route: wait for the patrol to clear the
+  // crossing, then make one cut. Authored enemies, tuning and outcomes stay intact.
+  for (let i = 0; i < 180; i++) {
+    stepRun(reference, {}, FIXED_DT);
+    page.frame();
+  }
   page.key('ArrowDown');
-  for (let i = 0; i < 1200 && page.rendered.run.status === 'running'; i++) page.frame();
+  for (let i = 0; i < 469; i++) {
+    stepRun(reference, { direction: 'down' }, FIXED_DT);
+    page.frame();
+  }
   page.key('ArrowDown', false);
   page.frame(0);
   assert.equal(page.rendered.run.status, 'won');
+  assert.equal(reference.status, 'won');
+  assert.equal(run.tick, 649);
+  assert.equal(run.lives, 3);
+  assert.deepEqual(authoritativeCheckpoint(run), authoritativeCheckpoint(reference));
+  if (!page.$('skip-celebration').hidden) page.$('skip-celebration').click();
+  page.frame(0);
   assert.equal(page.$('game-overlay').dataset.kind, 'won');
   return page;
 }
@@ -201,55 +258,64 @@ test('a legal terminal self-contact focuses Retry and keyboard retry starts only
   assert.deepEqual(page.errors, []);
 });
 
-test('held Confirm cannot cross Next adoption into another action; Pause requires fresh Resume', async (t) => {
-  const page = await win(t),
-    controls = controller(page, t);
-  const previous = page.rendered.run,
-    resultCheckpoint = authoritativeCheckpoint(previous);
-  page.$('next-button').focus();
-  controls.pad.buttons[0] = { pressed: true, value: 1 };
-  controls.frame();
-  for (let i = 0; i < 5; i++) controls.frame();
-  assert.equal(page.rendered.run, previous, 'Held Confirm does not replace a pending result.');
-  assert.deepEqual(authoritativeCheckpoint(previous), resultCheckpoint);
-  assert.equal(page.$('game-overlay').dataset.kind, 'won');
-  await settle(() => {
+test(
+  'held Confirm cannot cross Next adoption into another action; Pause requires fresh Resume',
+  { timeout: 120000 },
+  async (t) => {
+    const page = await win(t),
+      controls = controller(page, t);
+    const previous = page.rendered.run,
+      resultCheckpoint = authoritativeCheckpoint(previous);
+    page.$('next-button').focus();
+    const nextOperation = observeAction(page.$('next-button'), () => {
+      controls.pad.buttons[0] = { pressed: true, value: 1 };
+      controls.frame();
+    });
+    assert.equal(page.$('flight-preparation-status').hidden, false);
+    const status = page.$('flight-preparation-status').querySelector('[role="status"]');
+    assert.equal(status.getAttribute('aria-live'), 'polite');
+    assert.equal(status.textContent, 'Relay Orchard: Reading this flight’s picture choices…');
+    for (let i = 0; i < 5; i++) controls.frame();
+    assert.equal(page.rendered.run, previous, 'Held Confirm does not replace a pending result.');
+    assert.deepEqual(authoritativeCheckpoint(previous), resultCheckpoint);
+    assert.equal(page.$('game-overlay').dataset.kind, 'won');
+    await nextOperation;
     page.frame(0);
-    return page.doc.body.dataset.flightState === 'running';
-  });
-  const next = page.rendered.run;
-  assert.notEqual(next, previous);
-  assert.notEqual(next.levelId, previous.levelId);
-  assert.equal(next.tick, 0);
-  assert.equal(page.$('game-overlay').hidden, true, 'The accepted Next action starts directly.');
-  assert.equal(page.doc.activeElement.id, 'game-canvas');
-  const location = [next.player.x, next.player.y];
-  for (let i = 0; i < 6; i++) controls.frame();
-  assert.equal(page.rendered.run, next, 'Held Confirm cannot select another destination.');
-  assert.deepEqual([next.player.x, next.player.y], location, 'Menu Confirm adds no movement.');
-  page.key('Escape');
-  page.frame(0);
-  assert.equal(page.$('game-overlay').dataset.kind, 'pause');
-  assert.equal(page.doc.activeElement.id, 'start-button');
-  assert.equal(page.doc.body.dataset.flightState, 'paused');
-  const paused = authoritativeCheckpoint(next);
-  for (let i = 0; i < 6; i++) controls.frame();
-  assert.equal(page.doc.body.dataset.flightState, 'paused', 'Still-held Confirm cannot Resume.');
-  assert.deepEqual(authoritativeCheckpoint(next), paused);
-  controls.pad.buttons[0] = { pressed: false, value: 0 };
-  controls.frame();
-  assert.equal(key(page, 'Enter', { repeat: true }).defaultPrevented, true);
-  key(page, 'Escape', { repeat: true });
-  page.frame(0);
-  assert.equal(page.doc.body.dataset.flightState, 'paused');
-  assert.deepEqual(authoritativeCheckpoint(next), paused);
-  key(page, 'Enter');
-  steps(page, 6);
-  assert.equal(page.doc.body.dataset.flightState, 'running');
-  assert.equal(page.rendered.run, next);
-  assert.deepEqual([next.player.x, next.player.y], location);
-  assert.deepEqual(page.errors, []);
-});
+    assert.equal(page.doc.body.dataset.flightState, 'running');
+    const next = page.rendered.run;
+    assert.notEqual(next, previous);
+    assert.notEqual(next.levelId, previous.levelId);
+    assert.equal(next.tick, 0);
+    assert.equal(page.$('game-overlay').hidden, true, 'The accepted Next action starts directly.');
+    assert.equal(page.doc.activeElement.id, 'game-canvas');
+    const location = [next.player.x, next.player.y];
+    for (let i = 0; i < 6; i++) controls.frame();
+    assert.equal(page.rendered.run, next, 'Held Confirm cannot select another destination.');
+    assert.deepEqual([next.player.x, next.player.y], location, 'Menu Confirm adds no movement.');
+    page.key('Escape');
+    page.frame(0);
+    assert.equal(page.$('game-overlay').dataset.kind, 'pause');
+    assert.equal(page.doc.activeElement.id, 'start-button');
+    assert.equal(page.doc.body.dataset.flightState, 'paused');
+    const paused = authoritativeCheckpoint(next);
+    for (let i = 0; i < 6; i++) controls.frame();
+    assert.equal(page.doc.body.dataset.flightState, 'paused', 'Still-held Confirm cannot Resume.');
+    assert.deepEqual(authoritativeCheckpoint(next), paused);
+    controls.pad.buttons[0] = { pressed: false, value: 0 };
+    controls.frame();
+    assert.equal(key(page, 'Enter', { repeat: true }).defaultPrevented, true);
+    key(page, 'Escape', { repeat: true });
+    page.frame(0);
+    assert.equal(page.doc.body.dataset.flightState, 'paused');
+    assert.deepEqual(authoritativeCheckpoint(next), paused);
+    key(page, 'Enter');
+    steps(page, 6);
+    assert.equal(page.doc.body.dataset.flightState, 'running');
+    assert.equal(page.rendered.run, next);
+    assert.deepEqual([next.player.x, next.player.y], location);
+    assert.deepEqual(page.errors, []);
+  },
+);
 
 test('short results omit reading controls; overflow reading scrolls by keyboard and ends without launching', async (t) => {
   const previous = Object.getOwnPropertyDescriptor(globalThis, 'ResizeObserver'),
@@ -321,50 +387,139 @@ test('short results omit reading controls; overflow reading scrolls by keyboard 
   assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
 });
 
-test('result keyboard picture/Back and appearance/settings return keep the same earned attempt', async (t) => {
-  const page = await win(t),
-    checkpoint = authoritativeCheckpoint(page.rendered.run);
-  page.$('view-picture').focus();
-  key(page, 'Enter');
-  page.frame(0);
-  assert.equal(page.doc.body.dataset.flightState, 'picture');
-  key(page, 'Escape');
-  page.frame(0);
-  assert.equal(page.doc.body.dataset.flightState, 'result');
-  assert.equal(page.doc.activeElement.id, 'view-picture');
-  page.$('choose-appearance').focus();
-  key(page, 'Enter');
-  assert.equal(page.$('shell-missions').open, true);
-  assert.equal(page.doc.activeElement.id, 'body-select');
-  assert.equal(page.$('body-select').closest('details').open, true);
-  assert.equal(key(page, 'ArrowDown').defaultPrevented, false, 'Native select editing is retained');
-  page.$('shell-briefing').focus();
-  key(page, 'Enter');
-  assert.equal(page.$('shell-missions').open, false);
-  assert.equal(page.doc.activeElement.id, 'next-button');
-  assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
-  assert.deepEqual(page.errors, []);
-});
+test(
+  'result keyboard picture/Back and current appearance setup return keep the same earned attempt',
+  { timeout: 120000 },
+  async (t) => {
+    const page = await win(t),
+      checkpoint = authoritativeCheckpoint(page.rendered.run);
+    page.$('view-picture').focus();
+    key(page, 'Enter');
+    page.frame(0);
+    assert.equal(page.doc.body.dataset.flightState, 'picture');
+    key(page, 'Escape');
+    page.frame(0);
+    assert.equal(page.doc.body.dataset.flightState, 'result');
+    assert.equal(page.doc.activeElement.id, 'view-picture');
+    page.$('choose-appearance').focus();
+    const appearanceOperation = observeAction(page.$('choose-appearance'), () =>
+      key(page, 'Enter'),
+    );
+    assert.equal(page.$('mission-library-opening-status').getAttribute('role'), 'status');
+    assert.equal(page.$('mission-library-opening-status').textContent, 'Preparing missions…');
+    await appearanceOperation;
+    assert.equal(page.$('journey-chooser').open, true);
+    assert.equal(page.doc.activeElement.id, 'body-select');
+    assert.equal(page.$('body-select').closest('details').open, true);
+    assert.equal(
+      key(page, 'ArrowDown').defaultPrevented,
+      false,
+      'Native select editing is retained',
+    );
+    page.$('journey-back').focus();
+    key(page, 'Enter');
+    assert.equal(page.$('journey-chooser').open, false);
+    assert.equal(page.doc.activeElement.id, 'choose-appearance');
+    assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
+    assert.deepEqual(page.errors, []);
+  },
+);
 
-test('campaign-complete replay choice opens the visible Missions dialog without changing the completed run', async (t) => {
-  const campaign = structuredClone(failCampaign);
-  campaign.levels[0].goal.coverage = 0.1;
-  const page = await soloPage(t, { campaign });
-  page.$('start-button').click();
-  await settle(() => page.doc.body.dataset.flightState === 'running');
+test('final installed campaign keeps its result while keyboard Missions opens the shared library and returns', async (t) => {
+  const source = JSON.parse(
+    readFileSync(new URL('../content/packs/night-shift.json', import.meta.url)),
+  );
+  source.id = 'terminal-final-campaign';
+  source.campaigns = [
+    {
+      ...source.campaigns[0],
+      id: 'terminal-final-campaign',
+      levels: [
+        { ...failCampaign.levels[0], id: 'terminal-final-mission', goal: { coverage: 0.1 } },
+      ],
+    },
+  ];
+  source.levelVisuals = [];
+  source.visualOverrides = {};
+  const { pack } = await preparePack(source),
+    assets = managedIndexedDB();
+  const db = await new Promise((resolve, reject) => {
+    const request = assets.indexedDB.open('revealline-assets-v1', 1);
+    request.onupgradeneeded = () => request.result.createObjectStore('assets');
+    request.onsuccess = () => resolve(request.result);
+    request.onerror = () => reject(request.error);
+  });
+  try {
+    await new Promise((resolve, reject) => {
+      const tx = db.transaction('assets', 'readwrite');
+      tx.objectStore('assets').put(
+        exportPackLibrary(installPack(emptyPackLibrary(), pack)),
+        'revealline.packs.dev.v1',
+      );
+      tx.oncomplete = resolve;
+      tx.onabort = tx.onerror = () => reject(tx.error);
+    });
+  } finally {
+    db.close();
+  }
+  const page = await soloPage(t, { assetIndexedDB: assets.indexedDB });
+  await openMissionLibrary(page, 'shell-packs');
+  page.change('journey-collection', 'Custom');
+  const card = [...page.$('journey-cards').children].find(
+    (node) => JSON.parse(node.dataset.missionId)[3] === 'terminal-final-mission',
+  );
+  assert(card);
+  card.focus();
+  key(page, 'Enter');
+  await settle(() => {
+    page.frame(0);
+    return (
+      page.doc.body.dataset.flightState === 'running' &&
+      page.rendered.run.levelId === 'terminal-final-mission'
+    );
+  });
+  assert.equal(page.rendered.run.levelId, 'terminal-final-mission');
   page.key('ArrowDown');
   for (let i = 0; i < 1200 && page.rendered.run.status === 'running'; i++) page.frame();
   page.key('ArrowDown', false);
   page.frame(0);
   assert.equal(page.rendered.run.status, 'won');
+  if (!page.$('skip-celebration').hidden) {
+    assert.equal(page.doc.activeElement.id, 'skip-celebration');
+    key(page, 'Enter');
+    page.frame(0);
+  }
+  assert.equal(page.doc.activeElement.id, 'next-button');
+  const run = page.rendered.run,
+    checkpoint = authoritativeCheckpoint(run);
   key(page, 'Enter');
-  await settle(() => page.$('game-overlay').dataset.kind === 'campaign-complete');
-  const checkpoint = authoritativeCheckpoint(page.rendered.run);
-  page.$('choose-mission').focus();
+  await settle(() =>
+    /End of the Solo mission library/.test(page.$('flight-preparation-status').textContent),
+  );
+  assert.equal(page.$('game-overlay').dataset.kind, 'won');
+  assert.equal(page.rendered.run, run);
+  assert.deepEqual(authoritativeCheckpoint(run), checkpoint);
+  const opener = page.$('shell-packs'),
+    handler = opener.onclick;
+  let opening;
+  opener.onclick = (...args) => (opening = handler.apply(opener, args));
+  try {
+    opener.focus();
+    key(page, 'Enter');
+  } finally {
+    opener.onclick = handler;
+  }
+  assert(opening instanceof Promise);
+  await opening;
+  assert.equal(page.$('journey-chooser').open, true);
+  assert.equal(JSON.parse(page.doc.activeElement.dataset.missionId)[3], 'terminal-final-mission');
+  page.$('journey-back').focus();
   key(page, 'Enter');
-  assert.equal(page.$('shell-missions').open, true);
-  assert.ok(page.$('missions').contains(page.doc.activeElement));
-  assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
+  assert.equal(page.$('journey-chooser').open, false);
+  assert.equal(page.doc.activeElement, opener);
+  assert.equal(page.rendered.run, run);
+  assert.deepEqual(authoritativeCheckpoint(run), checkpoint);
+  assert.deepEqual(page.errors, []);
 });
 
 for (const pointerId of [41, undefined])
@@ -422,7 +577,13 @@ for (const mode of ['keyboard', 'controller']) {
     assert.equal(page.rendered.run.player.cutting, true);
     const checkpoint = authoritativeCheckpoint(page.rendered.run);
     const pad = mode === 'controller' ? controller(page, t) : null;
-    const direction = () => (pad ? pad.pulse(13) : key(page, 'ArrowDown'));
+    const direction = () =>
+      pad
+        ? pad.pulse(13)
+        : key(
+            page,
+            /^(SELECT|INPUT|TEXTAREA)$/.test(page.doc.activeElement.tagName) ? 'Tab' : 'ArrowDown',
+          );
     const confirm = () => (pad ? pad.pulse(0) : key(page, 'Enter'));
     const activate = (element, root) => {
       for (let i = 0; i < 140 && page.doc.activeElement !== element; i++) {
@@ -434,8 +595,16 @@ for (const mode of ['keyboard', 'controller']) {
       }
       assert.equal(page.doc.activeElement.id, element.id);
       assert.ok(page.doc.activeElement === element, 'Requested native control is reachable');
-      confirm();
+      const handler = element.onclick;
+      let pending;
+      if (handler) element.onclick = (...args) => (pending = handler.apply(element, args));
+      try {
+        confirm();
+      } finally {
+        if (handler) element.onclick = handler;
+      }
       page.frame(0);
+      return pending;
     };
     activate(page.$('overlay-menu'), page.$('game-overlay'));
     assert.equal(page.$('shell-home').open, true);
@@ -454,11 +623,14 @@ for (const mode of ['keyboard', 'controller']) {
       'Settings returns to its title-menu opener while the live cut stays paused',
     );
     assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
-    activate(page.$('shell-play'), page.$('shell-home'));
-    assert.equal(page.$('shell-missions').open, true);
-    activate(page.$('shell-briefing'), page.$('shell-missions'));
-    assert.equal(page.$('shell-missions').open, false);
-    assert.equal(page.doc.activeElement.id, 'start-button');
+    const opening = activate(page.$('shell-play'), page.$('shell-home'));
+    assert(opening instanceof Promise, 'The actual Missions action prepares its catalogue.');
+    await opening;
+    assert.equal(page.$('journey-chooser').open, true);
+    activate(page.$('journey-back'), page.$('journey-chooser'));
+    assert.equal(page.$('journey-chooser').open, false);
+    assert.equal(page.$('shell-home').open, true);
+    assert.equal(page.doc.activeElement.id, 'shell-play');
     assert.equal(page.doc.body.dataset.flightState, 'paused');
     assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
     assert.deepEqual(page.errors, []);

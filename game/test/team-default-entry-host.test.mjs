@@ -17,6 +17,7 @@ const originals = new Map(
     ]),
   ),
 );
+const decodedOriginals = new WeakSet();
 const enter = (f, id) => {
   f.$(id).focus();
   f.tap('Enter');
@@ -39,6 +40,7 @@ async function fresh(t, href = base, extra = {}) {
           this.width = this.naturalWidth = bytes.readUInt32BE(16);
           this.height = this.naturalHeight = bytes.readUInt32BE(20);
           this.sha256 = createHash('sha256').update(bytes).digest('hex');
+          decodedOriginals.add(this);
         }
       }
       install('Image', { value: OriginalImage });
@@ -99,7 +101,6 @@ test('queryless Team offers all twelve original missions across five campaigns a
   enter(f, 'journey-back');
   enter(f, 'coop-start');
   assert.equal(f.$('coop-menu').hidden, true);
-  f.tick(2);
   const first = source.missions[0];
   const expectedBackground = source.assets.find(
     (asset) => asset.id === first.presentation.backgroundAssetId,

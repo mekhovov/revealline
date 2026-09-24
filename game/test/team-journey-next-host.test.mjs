@@ -1,7 +1,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
 import { page } from './helpers/coop-host.mjs';
+import { teamImage } from './helpers/coop-win.mjs';
+import { playCurrentTeamRoute } from './helpers/current-team-route.mjs';
+import { dataIdentity } from '../data-json.mjs';
+import { applyGameplayTuning, resolveGameplayTuning } from '../gameplay-tuning.mjs';
 import { deferred, waitFor } from './helpers/coop-presentation-fixture.mjs';
 import { createTeamJourneyCandidates } from '../content-design/team-journey-candidates.mjs';
 import { createTeamTestPack } from '../content-design/team-export.mjs';
@@ -18,14 +21,6 @@ const navigation = createCandidateTeamHost(source, {
 const keys = [
   { up: 'KeyW', right: 'KeyD', down: 'KeyS', left: 'KeyA' },
   { up: 'ArrowUp', right: 'ArrowRight', down: 'ArrowDown', left: 'ArrowLeft' },
-];
-const read = async (name) =>
-  JSON.parse(await readFile(new URL(`./fixtures/${name}.json`, import.meta.url)));
-const routes = [
-  ...(await read('team-opening-routes')).routes,
-  ...(await read('team-foundation-routes')).clear,
-  ...(await read('team-material-routes')).routes,
-  ...(await read('team-roamer-routes')).routes,
 ];
 function storage(difficulty) {
   return {
@@ -49,20 +44,7 @@ async function journeyPage(t, options = {}) {
   });
 }
 function clear(f, missionId, difficulty = 'standard') {
-  const route = routes.find((row) => row.missionId === missionId && row.difficulty === difficulty);
-  assert(route, `${missionId}/${difficulty} requires a recorded command route`);
-  f.tick(2);
-  for (const segment of route.log) {
-    for (const [seat, direction] of [segment.a, segment.b].entries())
-      if (direction) f.tap(keys[seat][direction]);
-    for (let tick = 0; tick < segment.ticks && f.$('coop-overlay').hidden; tick++) f.tick();
-    if (!f.$('coop-overlay').hidden) break;
-  }
-  assert.equal(
-    f.$('coop-overlay-kicker').textContent,
-    'A WORLD YOU REVEALED TOGETHER',
-    `${missionId}: ${f.$('coop-message').textContent}, ${f.$('coop-coverage').textContent}`,
-  );
+  return playCurrentTeamRoute(f, source, missionId, difficulty);
 }
 async function next(f) {
   f.$('coop-next').focus();
@@ -109,7 +91,7 @@ test('explicit Team Journey earns twelve consecutive clears across all five camp
       assert.equal(f.$('coop-experiment').value, 'full');
     } else {
       assert.equal(f.$('coop-next').hidden, true);
-      assert.match(f.$('coop-overlay-copy').textContent, /Team Journey test complete/);
+      assert.match(f.$('coop-overlay-copy').textContent, /End of the Team Journey test route/);
     }
   }
   t.diagnostic(
@@ -160,8 +142,8 @@ test('identical imported Team mission IDs never join the code-owned Journey rout
   f.$('coop-start').click();
   clear(f, 'twin-landings');
   assert.equal(f.$('coop-next').hidden, true);
-  assert.match(f.$('coop-overlay-copy').textContent, /Pack complete/);
-  assert.doesNotMatch(f.$('coop-overlay-copy').textContent, /Team Journey test complete/);
+  assert.match(f.$('coop-overlay-copy').textContent, /End of this pack/);
+  assert.doesNotMatch(f.$('coop-overlay-copy').textContent, /End of the Team Journey test route/);
 });
 
 test('optional chooser offers all twelve Team candidates and starts any selected campaign without an extra lobby', async (t) => {
@@ -218,9 +200,10 @@ for (const failure of ['loading', 'first-paint', 'adoption'])
       copy: f.$('coop-overlay-copy').textContent,
       coverage: f.$('coop-coverage').textContent,
       status: f.$('coop-pack-status').textContent,
-      image: f.drawImages.at(-1),
+      image: teamImage(f),
       options: [...f.$('coop-level').querySelectorAll('option')].map((option) => option.value),
     };
+    assert.ok(before.image, 'The accepted attempt has a decoded original to preserve.');
     if (failure === 'loading') rejectRead = true;
     if (failure === 'first-paint') f.failNextPaint();
     if (failure === 'adoption') {
@@ -247,7 +230,7 @@ for (const failure of ['loading', 'first-paint', 'adoption'])
     assert.equal(f.$('coop-overlay-copy').textContent, before.copy);
     assert.equal(f.$('coop-coverage').textContent, before.coverage);
     assert.equal(f.$('coop-pack-status').textContent, before.status);
-    assert.equal(f.drawImages.at(-1), before.image);
+    assert.equal(teamImage(f), before.image);
     assert.deepEqual(
       [...f.$('coop-level').querySelectorAll('option')].map((option) => option.value),
       before.options,
@@ -312,7 +295,13 @@ test('real Team host restores the next mission from a legally earned cross-relea
     assert.equal(profile.cursors.team, mission.id);
     assert.equal(
       profile.clears.team[mission.id].gameplayId,
-      navigation.row(mission).simulationIdentity,
+      dataIdentity({
+        ruleset: navigation.row(mission).pack.ruleset,
+        level: applyGameplayTuning(
+          navigation.row(mission).level,
+          resolveGameplayTuning('standard'),
+        ),
+      }),
     );
     const errors = [];
     t.mock.method(console, 'error', (error) => errors.push(error));

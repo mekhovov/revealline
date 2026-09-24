@@ -13,6 +13,7 @@ import { createExecutionCatalog } from '../campaign-contexts.mjs';
 import { campaignKey, emptyLibrary } from '../library.mjs';
 import { emptyPackLibrary } from '../packs.mjs';
 import { BACKUP_FORMAT } from '../backup.mjs';
+import { acceptGameDataReplacement } from './helpers/backup-preflight.mjs';
 const slot = 'revealline.suspended.dev.v1';
 const ticks = (h, n = 1) => {
   for (let i = 0; i < n; i++) h.frame();
@@ -53,6 +54,7 @@ test('one title Start launches the actual named selected mission without opening
   const h = await soloPage(t, { titleScreen: true }),
     run = h.rendered.run;
   assert.match(h.$('shell-destination').textContent, /Start · First Signal/);
+  assert.equal(h.doc.activeElement, h.$('shell-featured'));
   await start(h);
   h.frame(0);
   assert.equal(h.rendered.run, run);
@@ -96,6 +98,7 @@ for (const policy of ['immediate', 'grid-center']) {
     await t.test('explicit title Continue', async (t) => {
       const h = await soloPage(t, { storage, titleScreen: true });
       assert.equal(h.$('shell-continue').hidden, false);
+      assert.equal(h.doc.activeElement, h.$('shell-continue'));
       h.$('shell-continue').click();
       await settle(() => h.doc.body.dataset.flightState === 'running');
       assert.deepEqual(snapshot(h), before);
@@ -546,7 +549,10 @@ test('an unavailable visual pin preserves flight and recovery without current-th
       { type: 'application/json' },
     ),
   ];
-  await h.$('save-file').onchange();
+  const replacement = h.$('save-file').onchange();
+  assert.equal(storage.getItem(slot), bytes, 'Preparing replacement preserves the saved flight.');
+  await acceptGameDataReplacement(h);
+  await replacement;
   assert.match(h.$('save-status').textContent, /Game data restored/);
   assert.match(
     h.$('save-status').textContent,

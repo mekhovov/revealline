@@ -12,6 +12,16 @@ const missing = () =>
     'Presentation file unavailable: ./assets/d76f309d8385cd5d20fc2fff72b7f3abc19299cccdde767d76dd9f4a4960929d.png',
   );
 const settle = (f, state) => waitFor(() => f.$('coop-picture-status').dataset.state === state);
+function assertAcceptedPicture(f, levelId) {
+  const binding = COOP_PICTURE_BINDINGS.find((row) => row.levelId === levelId),
+    decoded = f.artwork.calls.decodes.at(-1);
+  assert.ok(binding);
+  assert.ok(decoded, 'The selected arena must finish decoding its exact original.');
+  assert.equal(decoded.sha256, binding.picture.sha256);
+  // Shared actors now paint after the original. Verify the accepted decoder
+  // object at the background layer instead of treating the final sprite as art.
+  assert.equal(f.drawImages[0], decoded, 'The accepted original paints beneath shared actors.');
+}
 
 // Native methods remain finite observations. The actual browser owns scrolling,
 // viewport fit and hit testing; the real host owns selection, errors and focus.
@@ -99,7 +109,7 @@ for (const [width, height] of [
     assert.equal(f.drawImages.length, 0);
     f.tap('Enter');
     assert.equal(f.doc.activeElement.id, 'coop-canvas');
-    assert.equal(f.drawImages.at(-1).sha256, COOP_PICTURE_BINDINGS[1].picture.sha256);
+    assertAcceptedPicture(f, 'relay-yard');
   });
 
 test('visible recovery controls retain their viewport and explicit Cancel reveals only its own Retry', async (t) => {
@@ -147,7 +157,7 @@ test('a failed picture can be replaced by a different arena through the real sel
   assert.equal(f.doc.activeElement.id, 'coop-start');
   assert.equal(f.drawImages.length, 0);
   f.tap('Enter');
-  assert.equal(f.drawImages.at(-1).sha256, COOP_PICTURE_BINDINGS[0].picture.sha256);
+  assertAcceptedPicture(f, 'first-connection');
   assert.equal(f.$('coop-stage').textContent, 'FIRST CONNECTION');
 });
 

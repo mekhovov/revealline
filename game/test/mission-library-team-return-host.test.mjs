@@ -177,13 +177,42 @@ for (const route of [
 ])
   test(`outgoing Team ${route} mission handoff preserves its exact finite source route`, async (t) => {
     const f = await fixture(t, root + `couch/relay-rescue.html?journey=${route}`);
-    f.$('coop-discovery-open').focus();
-    f.tap('Enter');
-    await waitFor(() => f.$('journey-chooser')?.open);
-    f.$('journey-mode').focus();
-    f.$('journey-mode').value = 'solo';
-    f.$('journey-mode').emit('change');
-    await waitFor(() => f.$('journey-cards').children.length === 201);
+    const opener = f.$('coop-discovery-open'),
+      handler = opener.onclick;
+    let opening;
+    opener.onclick = (...args) => (opening = handler.apply(opener, args));
+    try {
+      opener.focus();
+      f.tap('Enter');
+    } finally {
+      opener.onclick = handler;
+    }
+    assert(opening instanceof Promise, 'Keyboard activation owns catalogue preparation.');
+    await opening;
+    assert.equal(f.$('journey-chooser').open, true);
+    const mode = f.$('journey-mode'),
+      listeners = mode.listeners.get('change'),
+      pending = [];
+    mode.listeners.set(
+      'change',
+      new Set(
+        [...listeners].map((listener) => (event) => {
+          const result = listener.call(mode, event);
+          if (result instanceof Promise) pending.push(result);
+          return result;
+        }),
+      ),
+    );
+    try {
+      mode.focus();
+      mode.value = 'solo';
+      mode.emit('change');
+    } finally {
+      mode.listeners.set('change', listeners);
+    }
+    assert.equal(pending.length, 1, 'Mode selection owns one remote metadata operation.');
+    await pending[0];
+    assert.equal(f.$('journey-cards').children.length, 201);
     const selected = f.$('journey-cards').children[8];
     selected.focus();
     f.tap('Enter');
