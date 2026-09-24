@@ -1,0 +1,112 @@
+{
+  "format": "revealline-source-check.v1",
+  "feature": "M2 bundled soundtrack source infrastructure only",
+  "revision": 4,
+  "checkedAt": "2026-09-24T14:14:39.462142Z",
+  "candidateBaseRevision": "b79a979cb0a1653499e8c4432c3e755374015230",
+  "supersedes": "source-infrastructure-r3.json",
+  "scope": "Rebased the three reviewed bundled-source commits onto the corrected production-63 candidate, then appended a reproducible production-64 Field Kit successor for the changed audio-source fingerprints.",
+  "sourceFiles": [
+    {
+      "path": "game/soundtrack-bundled.mjs",
+      "bytes": 1980,
+      "sha256": "4603942591731b0bc214b0d27d0d8c957462485ba0dcd0dd074d7449a39c77ce"
+    },
+    {
+      "path": "game/soundtrack-source.mjs",
+      "bytes": 4608,
+      "sha256": "ce8518de9719d9d827f14ba130e93bd67bce030334e5a58ed2f0c33f5829b6a5"
+    },
+    {
+      "path": "game/test/soundtrack-source.test.mjs",
+      "bytes": 10835,
+      "sha256": "8db6222e340af46bc38a235d8ea5085e408a20e226378210ba9b14f3a819220b"
+    }
+  ],
+  "fieldKit": {
+    "parentRevision": 63,
+    "revision": 64,
+    "bundle": {
+      "path": "authoring/library/fpv-field-kit/production.rltheme",
+      "bytes": 8382705,
+      "sha256": "28e98e75b5ba79eb9cf171885ce285f28e1c2067e9ec98bba9c2afe25e923809"
+    },
+    "compiled": [
+      {
+        "path": "game/presentation/compiled/manifest.json",
+        "bytes": 29118,
+        "sha256": "3ea532f48c1a710f21fb89e3afb2b7220b75f5dd773a314a36c9e6ee79a0bfc7"
+      },
+      {
+        "path": "game/presentation/compiled/runtime.json",
+        "bytes": 1096945,
+        "sha256": "af07e338341d1d0237b6a5f7f104b6e46cddd0b066323b67b95642a9c2c7fc32"
+      },
+      {
+        "path": "game/presentation/compiled/studio.json",
+        "bytes": 4963184,
+        "sha256": "197d2c6094faac2e8ec2eade247ab7a0b6aacf2157a49440efc94216c575e98a"
+      }
+    ],
+    "result": {
+      "slots": 335,
+      "files": 140,
+      "assetBytes": 4009342,
+      "coverage": {
+        "missing": 0,
+        "source": 107,
+        "produced": 0,
+        "reviewed": 228
+      }
+    },
+    "reviewBoundary": "This revision binds source fingerprints only. It adds no screen artwork, soundtrack recording, listening approval or player-visible default."
+  },
+  "checks": {
+    "node": "20.19.5",
+    "sourceSuite": {
+      "tests": 11,
+      "pass": 11,
+      "fail": 0,
+      "skip": 0,
+      "outputSha256": "3688c364682cd483ef3add48e10f51ac40b0274c1fde629f0e3aa78534987de0"
+    },
+    "prettier": {
+      "version": "3.6.2",
+      "status": "pass"
+    },
+    "eslint": {
+      "status": "pass",
+      "scope": [
+        "game/soundtrack-bundled.mjs",
+        "game/soundtrack-source.mjs",
+        "game/test/soundtrack-source.test.mjs"
+      ]
+    },
+    "productionReproducibility": {
+      "command": "node scripts/produce-field-kit-theme.mjs --check",
+      "status": "pass"
+    },
+    "hostedQualification": "Pending accepted merge of the candidate baseline and a fresh exact-head run.",
+    "validation": {
+      "command": "npm run validate",
+      "status": "pass",
+      "files": 1067,
+      "version": "0.98.0"
+    },
+    "fullLint": {
+      "command": "npm run lint",
+      "status": "pass"
+    },
+    "fullFormat": {
+      "command": "npm run format:check",
+      "status": "pass"
+    }
+  },
+  "admission": {
+    "recordingsAdded": 0,
+    "defaultChanged": false,
+    "bundledRegistrationsActivated": 0,
+    "mp3Downloaded": false,
+    "listeningApprovalClaimed": false
+  }
+}
