@@ -23,6 +23,10 @@ import {
   createTeamSpecialistOriginalCandidates,
   TEAM_SPECIALIST_PROFILE_KEY,
 } from './team-specialist-originals.mjs';
+import {
+  createTeamPartnerSpecialistOriginalCandidates,
+  TEAM_PARTNER_SPECIALIST_PROFILE_KEY,
+} from './team-partner-specialist-originals.mjs';
 
 /** Prepare the exact Team edition selected by the host's entry policy.
  * Player-facing copy does not grant official awards, artwork qualification
@@ -34,17 +38,20 @@ export async function createTeamGreyboxEntry({
   spatial = false,
   impact = false,
   specialist = false,
+  partnerSpecialist = false,
   reviewCopy = true,
 } = {}) {
-  const source = specialist
-    ? createTeamSpecialistOriginalCandidates()
-    : impact
-      ? createTeamImpactOriginalCandidates()
-      : spatial
-        ? createTeamSpatialOriginalCandidates()
-        : pressure
-          ? createTeamPressureOriginalCandidates()
-          : createTeamJourneyCandidates({ artwork });
+  const source = partnerSpecialist
+    ? createTeamPartnerSpecialistOriginalCandidates()
+    : specialist
+      ? createTeamSpecialistOriginalCandidates()
+      : impact
+        ? createTeamImpactOriginalCandidates()
+        : spatial
+          ? createTeamSpatialOriginalCandidates()
+          : pressure
+            ? createTeamPressureOriginalCandidates()
+            : createTeamJourneyCandidates({ artwork });
   const preferences = createJourneyPreferences({ window: globalThis.window ?? globalThis });
   const snapshot = preferences.snapshot();
   const candidateJourney = createCandidateTeamHost(source, {
@@ -52,15 +59,17 @@ export async function createTeamGreyboxEntry({
   });
   const candidateProgress = createTeamJourneyProgress(
     candidateJourney,
-    specialist
-      ? { profileKey: TEAM_SPECIALIST_PROFILE_KEY }
-      : impact
-        ? { profileKey: TEAM_IMPACT_PROFILE_KEY }
-        : spatial
-          ? { profileKey: TEAM_SPATIAL_PROFILE_KEY }
-          : pressure
-            ? { profileKey: TEAM_PRESSURE_PROFILE_KEY }
-            : {},
+    partnerSpecialist
+      ? { profileKey: TEAM_PARTNER_SPECIALIST_PROFILE_KEY }
+      : specialist
+        ? { profileKey: TEAM_SPECIALIST_PROFILE_KEY }
+        : impact
+          ? { profileKey: TEAM_IMPACT_PROFILE_KEY }
+          : spatial
+            ? { profileKey: TEAM_SPATIAL_PROFILE_KEY }
+            : pressure
+              ? { profileKey: TEAM_PRESSURE_PROFILE_KEY }
+              : {},
   );
   await candidateProgress.load();
   return Object.freeze({
@@ -76,8 +85,8 @@ export async function createTeamGreyboxEntry({
     ),
     candidateDifficulty: snapshot.difficulty,
     candidateEditionLabel:
-      pressure || spatial || impact || specialist
-        ? `${specialist ? 'complementary specialist edition' : impact ? 'owned trail-impact edition' : spatial ? 'changing-return pressure edition' : 'pressure edition'} · enemy speed Gentle ×1 / Standard ×1.4 / Expert ×1.75 · shared reserves 4 / 2 / 1`
+      pressure || spatial || impact || specialist || partnerSpecialist
+        ? `${partnerSpecialist ? 'partner-action specialist edition' : specialist ? 'complementary specialist edition' : impact ? 'owned trail-impact edition' : spatial ? 'changing-return pressure edition' : 'pressure edition'} · enemy speed Gentle ×1 / Standard ×1.4 / Expert ×1.75 · shared reserves 4 / 2 / 1`
         : '',
     candidateNotice: snapshot.durable ? '' : snapshot.error,
   });
