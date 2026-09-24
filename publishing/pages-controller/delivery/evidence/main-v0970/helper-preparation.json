@@ -1,0 +1,47 @@
+{
+  "status": "PREPARED_ACTUAL_V097_MAIN_DEPLOYMENT_BINDING_REQUIRED",
+  "version": "v0.97.0",
+  "sourceRevision": "1518e15e248b59c6470cc6931023eaf6f1ac363c",
+  "sourceTree": "c618b5d01fd0742a5dfc8c55c9d851d1d21d58e8",
+  "helpers": {
+    "binding.py": "8c96afdc2cc75f80c1de3aee078daa2ba619e3c7a338603e4a33264295465c73",
+    "http_audit.py": "dc4e383e09c6d63554c6b1d08822c4bf83bf3648aaac4f2d1646437ef0d73601",
+    "test_binding.py": "43d19c6d73dd938546df2c97bceb4194b5785dd3045ebaf1937f75ec5b5651e3",
+    "test_http_audit.py": "97b81fc1548666382b0d18dbf773c877b214f19151accf0a127cfdd71ced6072"
+  },
+  "tests": {
+    "passed": 38,
+    "failed": 0,
+    "log": "helper-tests-first.txt",
+    "sha256": "44d9794b9e25732e443bca98dd066cc470c5376de9163de198a0af3d33898c14"
+  },
+  "review": {
+    "independentReadOnly": "approved",
+    "noDuplicateTestRun": true
+  },
+  "capacity": {
+    "maxInventoryFiles": 4608,
+    "minimumFreeMetadataBytes": 62914560,
+    "persistedCapBytes": 58720256,
+    "maxLogLineBytes": 2048,
+    "maxReportBytes": 14680064,
+    "maxSetupBytes": 4194304,
+    "worstCaseBytes": 56623104,
+    "formula": "4608 files * (3 attempt rows + 1 final row) * 2048 bytes + 14 MiB report + 4 MiB setup",
+    "payloadPersistence": false,
+    "oversizeShortWriteOrENOSPC": "Raises visibly; never a partial PASS.",
+    "observedFreeBytes": 61440000
+  },
+  "authority": {
+    "reviewed": false,
+    "controllerCommit": null,
+    "controllerTree": null,
+    "runId": null,
+    "deploymentId": null,
+    "deploymentStatusId": null,
+    "receiptArtifactId": null
+  },
+  "sizingPreview": "PR337 v0.96.0 receipt only; never accepted as v0.97 main publication authority.",
+  "publicHTTPAudit": "NOT_RUN",
+  "physicalBrowserOfflineListening": "NOT_QUALIFIED_BY_THIS_TOOL"
+}
