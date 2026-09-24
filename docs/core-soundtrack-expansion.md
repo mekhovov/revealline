@@ -24,17 +24,47 @@ reviewer names, listening approval or device results.
 | --- | --- | --- |
 | Existing catalogue | 70 hosted recordings / 15 albums; earlier 24-track collection is included | Selective listening and trusted metadata curation |
 | Player framework | Simplified chooser, mixed playlists, uploads, creator tools, optional offline albums, recovery and rights enforcement | Targeted released-source verification and demonstrated fixes |
-| New archive previews | Seven retro, six metal and one Nakarada recording published | Zero new game admissions from these batches |
+| New archive previews | Seven retro, six metal and one Nakarada recording previously published; two more Nakarada metal previews publicly verified after archive PR #6 | Listening approval and game admission remain; zero new game admissions from these batches |
 | Retro previews | User rejected all seven listed below | Better replacement auditions |
 | Metal previews | Existing six preserved as backups | Substantially heavier replacements |
 | Nakarada Shchedryk | User explicitly approved musical direction; exact MP3 technically checked | Game admission, opening theme and gameplay/device/cultural evidence |
 | UA-FPV | Four private import packs preserve 80 filenames / 77 unique recordings | Recording-specific public permission and game admission |
-| Quick controls | Existing transport APIs support music pause and next | B/N and main/pause-menu controls |
+| Quick controls | B/N and main/pause-menu source implementation independently reviewed in draft PR #333 | Required full qualification, browser/controller/device checks and release |
 | AI originals | Scores, candidates and rejection evidence retained | Paused; 0/36 approved |
 | Historical releases | PRs #209, #250, #263 and #268 merged | Preserve delivered behavior, do not redo historical release work |
 
 ### Current execution snapshot
 
+- M0 was merged through docs-only PR [#330](https://github.com/mekhovov/revealline/pull/330)
+  at commit [efacbf087](https://github.com/mekhovov/revealline/commit/efacbf087eb9e1d15019f0d6aecd5ae32ac313fa).
+  Plan consolidation is complete; implementation and evidence updates continue here.
+- M2's inactive bundled-source infrastructure is in draft PR
+  [#331](https://github.com/mekhovov/revealline/pull/331), reviewed at
+  4fd7eb0b7e850b538b30450cedaa1bcd83f3845a with 11/11 focused source tests passing.
+  It registers no recording, changes no default and does not yet bundle Shchedryk.
+- M3 draft PR [#333](https://github.com/mekhovov/revealline/pull/333) has independently
+  reviewed runtime at 99ae9a939805e026820e27d8ead5eb7f1f09ac42. The latest
+  da750277179b3e22f3962cdc3b5dd684b411005e adds evidence only. Forty affected tests
+  passed after the retry-race correction; the earlier focused run passed 105 tests.
+  These are overlapping scoped runs, not full source qualification. The unchanged
+  declared Field Kit fingerprints do not approve the new UI/audio behavior.
+- Archive [PR #4](https://github.com/mekhovov/revealline-soundtracks-01/pull/4)
+  merged at 62dfd72d561621218c63443b6ab621f6f67d46cc and acquired two Nakarada
+  auditions through the existing hosted intake. Separate
+  [PR #5](https://github.com/mekhovov/revealline-soundtracks-01/pull/5) merged at
+  962b62f21df75ca81c84deceaf44c32b1d79ff28: its source-bound itch.io metadata
+  resolver covers six synth and four metal candidates without acquiring their audio.
+- Archive [PR #6](https://github.com/mekhovov/revealline-soundtracks-01/pull/6)
+  merged at 40a283d9a2ed2f5a00837ae60273f3884a52e706. The Dobermann and Folklore
+  preview retains exact native sources, licence snapshots and technical receipts.
+  Independent artifact review and all 20 archive/preview member hash checks passed.
+  Pages [run 35953352751](https://github.com/mekhovov/revealline-soundtracks-01/actions/runs/35953352751)
+  passed. Direct verification matched the live manifest and all nine servable member
+  hashes, including both full MP3s. In-app browser playback advanced for both tracks;
+  Next switched songs and Pause changed the action to Resume music. The .nojekyll
+  control file returned HTTP 404 and remains an explicit partial-check exception.
+  Full-track listening, game admission and physical device acceptance remain; neither
+  recording is classified as Ukrainian.
 - PR [#321](https://github.com/mekhovov/revealline/pull/321) remains draft at
   `e6a766abce745e1993c53a2652d8e03e50e7a5e5`.
 - Qualification [35945946346](https://github.com/mekhovov/revealline/actions/runs/35945946346)
@@ -72,13 +102,13 @@ version is allocated without the release owner's confirmation.
 
 | ID | State / priority | Dependency | Next action and completion condition | Effort | PR / evidence | Released version |
 | --- | --- | --- | --- | --- | --- | --- |
-| M0 | In review; first | None | Commit this complete master plan through a scoped docs PR; retain all histories and update every later item here | 0.5 day | This docs PR; prior source PR #321 | None needed for docs |
+| M0 | Complete; maintenance continues | None | Preserve all histories and update this ledger after each meaningful milestone | Complete | [PR #330](https://github.com/mekhovov/revealline/pull/330), merged efacbf087; prior source PR #321 | Docs merged; no runtime release required |
 | M1 | Diagnosed in part; awaiting accepted shared fixes | Accepted PR #320 corrections; remaining failure audit | Reuse reviewed baseline corrections, classify residual failures, then independently review and pass fresh exact-source qualification | 0.5 day triage; repair re-estimated after diagnosis | PR #321; run35945946346 | Unreleased |
-| M2 | Active preparation; first content release | M1; remaining recording acceptance | Admit Nakarada; bundle exact opening theme; publicly prove menu, offline and preference behavior | 1–2 days after gates | [Archive PR #3](https://github.com/mekhovov/revealline-soundtracks-01/pull/3); [public preview](https://mekhovov.github.io/revealline-soundtracks-01/batches/ukrainian-shchedryk-20260924/); [source-only draft PR #331](https://github.com/mekhovov/revealline/pull/331) | Unreleased |
-| M3 | Active preparation; independent | Accepted main; source/device tests | B/N and compact main/pause-menu controls across Solo/Versus/Team; separate feature PR | About 1 day plus checks | Feature PR pending | Unreleased |
+| M2 | Source infrastructure reviewed; admission remains | M1; remaining recording acceptance; full qualification | Qualify inactive bundled-source adapter, then admit/bundle exact opening theme and prove menu, offline and preference behavior | 1–2 days after gates | [Archive PR #3](https://github.com/mekhovov/revealline-soundtracks-01/pull/3); [public preview](https://mekhovov.github.io/revealline-soundtracks-01/batches/ukrainian-shchedryk-20260924/); [source-only draft PR #331](https://github.com/mekhovov/revealline/pull/331), 4fd7eb0b, 11 focused tests | Unreleased |
+| M3 | Source implemented and reviewed; qualification remains | Accepted main; complete source/browser/controller/device checks | Pass full required gates, verify actual controls and publish through the release pipeline | About 1 day remaining, excluding CI and device-access waits | [Draft PR #333](https://github.com/mekhovov/revealline/pull/333), da750277; reviewed runtime 99ae9a93 | Unreleased |
 | M4 | Active research; parallel | Exact published rights and musical/cultural review | Target six additional distinct Ukrainian compositions; publish cleared subsets | 1–2 days per research round; rights/review date unknown | Candidate/hold register below | Unreleased |
-| M5 | Active sourcing; parallel | Six complete auditions and exact-file licences | Replace rejected retro with accepted Xposed-style synth batch | 1–2 days preparation + 1–2 days integration after approval | Candidate slate below | Unreleased |
-| M6 | Active sourcing; parallel | Six complete auditions and exact-file licences | Add heavier metal; preserve existing six backups outside standard shuffle | 1–2 days preparation + 1–2 days integration after approval | Candidate slate below | Unreleased |
+| M5 | Source bindings prepared; audio/review remains | Hosted intake integration; six complete auditions and exact-file licences | Acquire small authorized files, verify and audition six replacements; integrate only accepted tracks | 1–2 days preparation + 1–2 days integration after approval | [Archive PR #5](https://github.com/mekhovov/revealline-soundtracks-01/pull/5); candidate slate below | Unreleased |
+| M6 | Two previews publicly verified; listening and other candidates remain | Listening approval; remaining four source files | Audition Nakarada pair, acquire David KBD candidates, and admit only accepted heavier metal; preserve backups | 1–2 days preparation + 1–2 days integration after approval | [Archive PRs #4](https://github.com/mekhovov/revealline-soundtracks-01/pull/4), [#5](https://github.com/mekhovov/revealline-soundtracks-01/pull/5), [#6](https://github.com/mekhovov/revealline-soundtracks-01/pull/6) | Unreleased in game |
 | M7 | Blocked public rights; scope retained | Recording-specific public redistribution and applicable artwork evidence | Include all 77 recordings / 80 filenames; publish cleared entries; maintain private pack route | About 1 day integration after clearance; clearance date unknown | UA-FPV manifests/private packs/guide | Public collection unreleased |
 | M8 | Remaining verification | Released source and device access | Audit existing playback/storage/creator contracts; release demonstrated fixes separately | 1–2 days initial audit; fixes separately estimated | Existing regression suites | Per-feature evidence required |
 | M9 | Later | Core style releases | Review existing 70 selectively; add trusted ID/hash curation overlay preserving saved pins | 1–2 days per selected batch plus listening | Curation PR pending | Unreleased |
@@ -90,6 +120,12 @@ Ukrainian, synth or metal subset can ship without waiting for the other families
 Full listening review of the existing 70 is not a prerequisite for a new batch.
 
 ## M2 — Shchedryk opening theme
+
+Implementation checkpoint: PR #331 binds bundled identity, exact bytes, local path
+and effective permissions across same-hash aliases. Registrations remain empty;
+silent local-only preparation remains request-free. Eleven focused regressions and
+independent source review passed. Actual recording admission, startup policy,
+core/offline packaging and budget accounting remain to implement and qualify.
 
 - Use **Carol of the Bells (Metal Version) — Alexander Nakarada**. Preserve its
   existing ID, exact 8,641,768-byte MP3 and SHA-256
@@ -115,6 +151,14 @@ Full listening review of the existing 70 is not a prerequisite for a new batch.
   warning, mono/small-speaker and cultural/device evidence remain separate gates.
 
 ## M3 — immediate music controls
+
+Implementation checkpoint: PR #333 implements these controls and fixes the Solo
+lifecycle retry capture race found in review. The latest change records declared
+Field Kit fingerprints unchanged; it does not claim new UI/audio acceptance.
+Exact-runtime preflight passed validation, lint, both formatting checks and
+production reproducibility, while test/release-gate jobs were skipped. Require
+fresh latest-head checks, all four shards and browser/controller/device evidence
+before release.
 
 - **B** plays/pauses music; **N** selects the next song in gameplay and ordinary menus.
 - Compact Now Playing, Play/Pause and Next appear in main and pause menus across
@@ -159,6 +203,26 @@ messages or social-account actions are implied by this work. Preserve these hold
 - NC/ND recordings, conflicting custom licences and unverified sample provenance
   remain outside admission. Keep every researched lead and reason in the register.
 
+### Additional Ukrainian research — 24 September
+
+- The Doox — **Сонце**: the [artist's exact recording page](https://thedoox.bandcamp.com/track/--2)
+  links CC BY-SA 4.0 and offers paid acquisition for USD 1. No purchase is
+  authorized; acquisition and ShareAlike game-delivery review remain. A label
+  SoundCloud CC-BY claim for LIRA conflicts with the
+  [label's all-rights-reserved album page](https://zefra.bandcamp.com/album/the-doox-lira-2018).
+  Do not extend either page's terms to other recordings or admit from conflicting metadata.
+- Sascha Ende — **Світло повернеться**:
+  [the exact source page](https://ende.app/en/song/13316-svitlo-povernetsia-the-light-will-return-ukraine)
+  lists CC BY 4.0. This is an AI-assisted contemporary cinematic Ukrainian vocal
+  candidate. Full listening, pronunciation and provenance review remain; it is
+  not evidence of traditional repertoire and does not fill that quota.
+- Bodg — **WW3**: [the recording page](https://www.soundclick.com/track/14723325/bodg/bodg-ww3)
+  is a sourcing lead only. Verify its exact licence version and native recording
+  before intake. The artist's Ukrainian identity does not establish Ukrainian
+  musical motifs or cultural suitability.
+
+No additional Ukrainian recording in this update is admitted or musically approved.
+
 ### 90s Synth
 
 Prioritize Xposed / Xposed Reloaded fullness: moving bass, layered synths and arps,
@@ -171,6 +235,12 @@ Next six complete auditions (unapproved): DOS-88 **Race to Mars, City Stomper,
 Automata v2, Crash Landing**; escp **Synthasia, Twilight City**. Verify exact
 creator downloads, composition uniqueness, licences and full-track suitability.
 
+Source preparation is now merged in archive PR #5. The separate resolver verifies
+the creator/game/upload bindings for all six files without retaining signed URL
+tokens. Thirteen unit tests and ten live metadata resolutions (including the four
+metal candidates) passed; media hashes, decoding, loudness and listening remain
+pending. Integrate the helper into bounded hosted intake before acquiring audio.
+
 ### Metal
 
 Prioritize articulated low/palm-muted riffs, rhythmic rests, bass/kick coordination,
@@ -180,6 +250,23 @@ Slain, Prodeus and DOOM for articulation and arrangement, not copied melodies.
 Next six complete auditions (unapproved): David KBD **The Desolation of a
 Civilization, Agony Space-deep, God of Darkness, Suffocation**; Alexander Nakarada
 **The Dobermann, Folklore**. Generic folk-metal is not automatically Ukrainian.
+
+The two Nakarada files now have a separate
+[preview collection](https://mekhovov.github.io/revealline-soundtracks-01/batches/metal-nakarada-audition-20260924/),
+merged through archive PR #6 and verified on Pages with exact live hashes and
+both tracks playing, Next and Pause. This was a transport check, not complete-track
+listening or game/device acceptance. Hosted
+[intake run 35952608258](https://github.com/mekhovov/revealline-soundtracks-01/actions/runs/35952608258)
+fully decoded both and measured the permitted MP3 derivatives: The Dobermann
+240.096 seconds, -16.00 LUFS / -3.13 dBTP; Folklore 300.539 seconds,
+-16.08 LUFS / -1.22 dBTP. Native originals, creator/source/licence snapshots,
+exact hashes and pending-review receipts remain in the immutable
+[intake archive](https://github.com/mekhovov/revealline-soundtracks-01/tree/40a283d9a2ed2f5a00837ae60273f3884a52e706/intake/archive/metal-nakarada-audition-20260924).
+
+Both recordings are CC BY 4.0 with registered Content ID; intake policy marks
+both ineligible for Recording mode. These are candidate previews, not listening-approved tracks, Ukrainian
+additions or game admissions. The other four David KBD recordings have verified
+metadata bindings from PR #5 but no acquired/qualified audio in this intake yet.
 
 Retain the expansion target of **12–20 distinct retro/metal recordings**, normally
 6–10 per family, delivered as independently accepted batches.
@@ -231,6 +318,19 @@ records. These establish musical properties, not redistribution permission.
   not replacement. Unpublishable recordings remain usable through that private route.
 
 ## M8–M10 — existing contracts to preserve and verify
+
+### M8.discovery — make new archive collections easy to find
+
+Status: demonstrated gap, not implemented. The root archive player has no links
+to the new batches, although batches.json registers all three collections. The
+[existing root-inventory regression](https://github.com/mekhovov/revealline-soundtracks-01/blob/40a283d9a2ed2f5a00837ae60273f3884a52e706/test-verify.mjs)
+pins the original root HTML/manifest contract; preserve those historical hashes.
+
+Next action: add a separately pinned public collection index and link it from
+the game/docs, preserving the original archive entry point. Estimate: about
+0.5 day plus review and deployment. Dependency: review the new index contract
+and verify links to each immutable preview collection. No feature PR or released
+version exists yet. The direct new preview URL above is usable in the meantime.
 
 ### Playback and user interface
 
