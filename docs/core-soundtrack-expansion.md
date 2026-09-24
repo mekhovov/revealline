@@ -77,9 +77,15 @@ from recording permission.
 
 ## Qualification evidence and current blockers
 
-Archive PR #2 retains failed intake runs 35943657893, 35943774127 and 35943850666 (three source filenames did not match creator download links). Run 35944115394 then passed 13 recordings and rejected Angry Bullfrogs Riding Motorbikes because it is shorter than the 60-second intake floor. The candidate was excluded; the duration gate was not waived. Fresh 13-candidate run 35944483804 is required.
+Archive PR #2 retains failed intake runs 35943657893, 35943774127 and 35943850666 (three source filenames did not match creator download links). Run 35944115394 then passed 13 recordings and rejected Angry Bullfrogs Riding Motorbikes because it is shorter than the 60-second intake floor. The candidate was excluded; the duration gate was not waived. Run 35944483804 subsequently hit HTTP 502 on one source. Fresh run 35944843598 at archive source `4e9e572848848a314cd48f31a290b83850ee6b65` passed all 13. Artifact 10786113658 has ZIP SHA-256 `0b95238aa7bb27a89b12864f35ac1df850e7a69dae5b7fea3257a764ebf58f5c`.
 
-Full game qualification run 35944418013 at `913306a736443959b4b8ff913c0976093a2b06bb` failed before source validation: two inherited release-utility diagnostics fixtures exhaust mocked Git responses in `publishing/utility/test_upload_diagnostics.py`. A separate fixture-only repair is being coordinated with Releases. Later gates were skipped, not passed. The four local archive-builder tests could not pass the existing 1 GiB free-disk guard; hosted qualification must cover them.
+Full game qualification run 35944418013 at `913306a736443959b4b8ff913c0976093a2b06bb` failed before source validation: two inherited release-utility diagnostics fixtures exhaust mocked Git responses in `publishing/utility/test_upload_diagnostics.py`. The separately reviewed fixture-only repair, PR #322, is accepted at `d0c73b4723798f6490f2680a59fd8d8a59983ac1`. Soundtrack work has been rebased onto that accepted fix; full qualification of the refreshed exact head remains required. Later gates were skipped, not passed. The four local archive-builder tests could not pass the existing 1 GiB free-disk guard; hosted qualification must cover them.
+
+## Candidate files now on GitHub
+
+Archive PR #2 commits all 13 MP3 derivatives (57,494,195 bytes), their exact native downloads and licence snapshots at `9e386c9c489bd193c830cd60ac6f26e7553dc335`. Hosted Pages verification 35945506601 checked all 83 archive recordings and 412,480,317 audio bytes. The original 70-recording inventory and static pins remain unchanged. New files live under `batches/core-20260924/`; source evidence is retained under `intake/archive/core-20260924/`. The browser preview's metal filter and combined retro/search controls were checked locally. Public deployment/playback and musical acceptance are still separate gates.
+
+Ukrainian archive PR #3 prepares one distinct composition: Alexander Nakarada's **Carol of the Bells (Metal Version)**, accurately described as a Ukrainian-melody metal adaptation of Shchedryk. Hosted run 35945483057 passed complete decoding, game inspection and encoded measurements: 270.028 seconds, −15.99 LUFS, −4.56 dBTP. Exact creator licence, Content ID and FAQ snapshots are retained. Content ID is **true**, so recording mode excludes it. Full listening, instrumental-content and Ukrainian cultural review are still pending; this one adaptation does not complete the 4–6-recording target.
 
 ## Remaining release gates
 
