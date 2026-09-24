@@ -76,8 +76,19 @@ for (const row of fixture.rows)
       );
       assert(search.selectedClosures <= search.attemptedProposals - search.failedProposals);
       if (previous) {
-        assert.equal(sample.stage, 'continuation');
-        assert.equal(search.simulationTickBudget, fixture.searchBudgets.optionalContinuation);
+        const additional = sample.stage === 'additional-continuation';
+        if (additional) {
+          assert.equal(row.missionId, 'windbreak-weave');
+          assert.equal(previous.stage, 'continuation');
+          assert.equal(previous.status, 'route-exhausted');
+          assert.equal(previous.search.exhausted, true);
+        } else assert.equal(sample.stage, 'continuation');
+        assert.equal(
+          search.simulationTickBudget,
+          additional
+            ? fixture.searchBudgets.additionalWindbreakContinuation
+            : fixture.searchBudgets.optionalContinuation,
+        );
         assert.equal(search.prefixTicks, previous.ticks);
         assert.deepEqual(
           inputs(sample.segments).slice(0, previous.ticks),
@@ -92,8 +103,29 @@ for (const row of fixture.rows)
       usedTicks += search.simulatedTicks;
       previous = sample;
     }
-    assert(usedTicks <= fixture.searchBudgets.maximumPerMission);
-    assert.equal(row.samples.length, row.samples[0].status === 'no-loss-clear' ? 1 : 2);
+    const windbreak = row.missionId === 'windbreak-weave';
+    assert(
+      usedTicks <=
+        (windbreak
+          ? fixture.searchBudgets.maximumWindbreak
+          : fixture.searchBudgets.maximumPerMission),
+    );
+    assert.equal(
+      row.samples.length,
+      windbreak ? 3 : row.samples[0].status === 'no-loss-clear' ? 1 : 2,
+    );
+    if (row.missionId !== 'twin-lens-chambers') {
+      assert.equal(row.revalidation.unchangedRuntime, true);
+      assert.equal(
+        row.revalidation.previousSourceProjectIdentity,
+        fixture.preReviewIdentity.sourceProjectIdentity,
+      );
+      assert.equal(
+        row.revalidation.currentSourceProjectIdentity,
+        fixture.sourceIdentity.sourceProjectIdentity,
+      );
+      assert.equal(row.revalidation.replayedSamples, row.samples.length - (windbreak ? 1 : 0));
+    }
     if (row.qualification === 'primary-clear-qualified') {
       assert.equal(previous.status, 'no-loss-clear');
       assert(previous.coverage >= previous.coverageGoal);
@@ -121,6 +153,8 @@ test('the atlas evidence covers exactly nine bounded Standard seed-one samples',
   assert.equal(fixture.searchBudgets.initial, 120000);
   assert.equal(fixture.searchBudgets.optionalContinuation, 160000);
   assert.equal(fixture.searchBudgets.maximumPerMission, 280000);
+  assert.equal(fixture.searchBudgets.additionalWindbreakContinuation, 160000);
+  assert.equal(fixture.searchBudgets.maximumWindbreak, 440000);
   for (const qualification of ['primary-clear-qualified', 'primary-route-incomplete'])
     assert.equal(
       fixture.outcomes[qualification],
@@ -128,4 +162,38 @@ test('the atlas evidence covers exactly nine bounded Standard seed-one samples',
     );
   assert(fixture.rows.every((row) => row.difficulty === 'standard'));
   assert(fixture.rows.every((row) => row.turnPolicy === 'immediate' && row.seed === 1));
+});
+
+test('pre-review identity and superseded Twin evidence are not current acceptance', () => {
+  assert.notEqual(
+    fixture.preReviewIdentity.sourceProjectIdentity,
+    fixture.sourceIdentity.sourceProjectIdentity,
+  );
+  assert.deepEqual(
+    fixture.revalidationProvenance.unchangedRuntimeMissionIds,
+    UKRAINIAN_ORNAMENT_ATLAS_IDS.filter((id) => id !== 'twin-lens-chambers'),
+  );
+  assert.deepEqual(fixture.revalidationProvenance.changedGeometryMissionIds, [
+    'twin-lens-chambers',
+  ]);
+  assert.equal(
+    fixture.revalidationProvenance.replayedSamples,
+    fixture.rows.reduce((sum, row) => sum + (row.revalidation?.replayedSamples ?? 0), 0),
+  );
+  assert.equal(fixture.supersededGeometry.length, 1);
+  const superseded = fixture.supersededGeometry[0];
+  assert.equal(superseded.status, 'superseded-geometry-not-current-acceptance');
+  assert.equal(superseded.missionId, 'twin-lens-chambers');
+  assert.deepEqual(superseded.sourceIdentity, fixture.preReviewIdentity);
+  assert.equal(superseded.evidence.missionId, superseded.missionId);
+  assert(
+    superseded.evidence.samples.every(
+      (sample) => sample.sourceProjectIdentity === fixture.preReviewIdentity.sourceProjectIdentity,
+    ),
+  );
+  const current = fixture.rows.find((row) => row.missionId === superseded.missionId);
+  assert.notEqual(
+    current.samples[0].simulationIdentity,
+    superseded.evidence.samples[0].simulationIdentity,
+  );
 });
