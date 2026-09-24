@@ -2,6 +2,7 @@ import { applyFieldKitCopy } from './field-kit-copy.mjs';
 import { attachSettingsPanels } from './settings-panels.mjs';
 import { createMenuStylePreferences } from '../menu-style-preferences.mjs';
 import { createMenuAppearance } from './menu-appearance.mjs';
+import { resolveAppearanceForBoundary } from '../presentation/appearance-policy.mjs';
 
 /** Presentation navigation only. Original host controls own preferences and saves. */
 export function attachFieldKitSurfaces({
@@ -34,11 +35,28 @@ export function attachFieldKitSurfaces({
   if (doc.body?.dataset.fieldKitPage && !hasNativeSkinOwner) {
     const appearance = createMenuAppearance({ document: doc }),
       preferences = createMenuStylePreferences({ window: win, getStorage }),
-      stopAppearance = preferences.subscribe((state) => appearance.set(state));
+      body = doc.body,
+      priorSkin = {
+        present: Object.hasOwn(body.dataset, 'uiSkin'),
+        value: body.dataset.uiSkin,
+      };
+    let ownedSkin = null;
+    const stopAppearance = preferences.subscribe((state) => {
+      appearance.set(state);
+      const resolved = resolveAppearanceForBoundary({
+        menuPreference: state,
+        boundary: 'authored-preview',
+      });
+      body.dataset.uiSkin = resolved.uiSkin;
+      ownedSkin = resolved.uiSkin;
+    });
     removers.push(() => {
       stopAppearance();
       preferences.dispose();
       appearance.dispose();
+      if (body.dataset.uiSkin !== ownedSkin) return;
+      if (priorSkin.present) body.dataset.uiSkin = priorSkin.value;
+      else delete body.dataset.uiSkin;
     });
   }
   const openLibrary = (panel) => {
