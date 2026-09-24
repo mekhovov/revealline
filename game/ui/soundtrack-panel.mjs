@@ -35,6 +35,7 @@ import {
   fetchSoundtrackAlbum,
   fetchSoundtrackAlbumCatalog,
 } from '../soundtrack-album-download.mjs';
+import { fetchOnlineSoundtrackCatalogue } from '../online-soundtrack-catalogue.mjs';
 
 const copy = (value) => structuredClone(value);
 const message = (error) => error?.message || String(error);
@@ -68,6 +69,7 @@ export function attachSoundtrackPanel({
   onMasterVolume = null,
   beforeAudio = async () => {},
   albumDownload = {},
+  onlineCatalogueDownload = {},
   catalogue = null,
   readAsset,
 } = {}) {
@@ -100,6 +102,9 @@ export function attachSoundtrackPanel({
   let albumCatalog = null,
     albumEditors = null,
     albumGeneration = 0;
+  let onlineCatalogue = null,
+    onlineCatalogueController = null,
+    onlineCatalogueGeneration = 0;
   const albumControls = new Map();
   const node = (tag, id, text, attrs = {}) => {
     const element = doc.createElement(tag);
@@ -427,6 +432,61 @@ export function attachSoundtrackPanel({
     useSelection,
   );
   quickGrid.append(allCard, styleCard, playlistCard);
+  const onlineSearch = input('online-search', 'Search the public archive', {
+    type: 'search',
+    placeholder: 'Title, artist, collection or style',
+    autocomplete: 'off',
+  });
+  const onlineStyle = input('online-style', 'Style', { tag: 'select' });
+  options(onlineStyle.element, [
+    ['', 'All styles'],
+    ['synth', 'Synthwave, electro & retro'],
+    ['metal', 'Metal'],
+    ['ukrainian', 'Ukrainian'],
+    ['fusion', 'Fusion'],
+    ['other', 'Other styles'],
+  ]);
+  const onlineCollection = input('online-collection', 'Collection', { tag: 'select' });
+  options(onlineCollection.element, [['', 'All collections']]);
+  const onlineStatus = node(
+    'p',
+    'online-status',
+    'The public catalogue loads when the music player opens.',
+    { class: 'soundtrack-online-status', role: 'status', 'aria-live': 'polite' },
+  );
+  const onlineResults = node('div', 'online-results', null, {
+    class: 'soundtrack-online-results',
+  });
+  const playOnlineResults = button('online-play-all', 'Shuffle these songs', () => {
+    const matches = onlineMatches();
+    if (matches.length)
+      return controlMusic(() => player.playRemotePlaylist(matches, { order: 'shuffle' }), true);
+  });
+  playOnlineResults.classList.add('soundtrack-primary-action');
+  playOnlineResults.disabled = true;
+  const reloadOnline = button('online-reload', 'Refresh catalogue', () =>
+    loadOnlineCatalogue(true),
+  );
+  const onlineArchive = section(
+    'Play the public soundtrack archive',
+    node(
+      'p',
+      null,
+      'Search every published recording and play it here. Songs stream through the game music player; nothing opens in another tab and no full album is downloaded.',
+      { class: 'soundtrack-lede' },
+    ),
+    row(onlineSearch.field, onlineStyle.field, onlineCollection.field),
+    row(playOnlineResults, reloadOnline),
+    onlineStatus,
+    onlineResults,
+    node(
+      'p',
+      null,
+      'Archive availability and a published licence do not mean a recording has passed the standard game-playlist listening review. Use Community downloads for offline albums and creator credits.',
+      { class: 'micro-note' },
+    ),
+  );
+  onlineArchive.classList.add('soundtrack-online-card');
   const transport = section(
     'Now playing',
     now,
@@ -1076,7 +1136,7 @@ export function attachSoundtrackPanel({
       'Browse albums and credits, then Add to draft to download and preview individual tracks. Remove offline download keeps track details and playlists; Download again restores the album. Save all changes confirms the draft. Your current playlist stays selected.',
       { class: 'micro-note' },
     ),
-    node('a', 'licensed-previews', 'Browse licensed MP3 previews (opens a new tab)', {
+    node('a', 'licensed-previews', 'Open the public archive website', {
       href: 'https://mekhovov.github.io/revealline-soundtracks-01/',
       target: '_blank',
       rel: 'noopener noreferrer',
@@ -1086,8 +1146,8 @@ export function attachSoundtrackPanel({
       'p',
       'licensed-previews-info',
       catalogue?.tracks.some((track) => track.archiveId)
-        ? 'The separate archive hosts these licensed recordings and their creator credits. Choose a built-in album or music style here to listen online. MP3 and album-file downloads remain available for manual import. Full musical suitability review is still pending.'
-        : 'The separate archive has 70 creator-licensed previews with credits and license notices. Download selected MP3s, then import them through Add MP3 files. They are not installed automatically; musical suitability has not been reviewed.',
+        ? 'The archive website provides credits, licence evidence and MP3 downloads. The searchable public archive above plays every published recording directly inside the game.'
+        : 'The archive website provides credits, licence evidence and MP3 downloads. Use the searchable public archive above to stream published recordings directly inside the game.',
       { class: 'micro-note' },
     ),
     albumBrowse,
@@ -1272,6 +1332,7 @@ export function attachSoundtrackPanel({
     operationRow,
     transport,
     quickListen,
+    onlineArchive,
     masterControls,
     columns,
     node('div', null, null, { class: 'soundtrack-footer' }),
@@ -1285,6 +1346,111 @@ export function attachSoundtrackPanel({
 
   function tracks() {
     return soundtrackTracks(draft);
+  }
+  function matchesOnlineStyle(track, style) {
+    if (!style) return true;
+    const tags = track.tags.map((tag) => tag.toLowerCase()),
+      has = (...values) => values.some((value) => tags.some((tag) => tag.includes(value)));
+    if (style === 'ukrainian') return has('ukrainian', 'shchedryk');
+    if (style === 'metal') return has('metal', 'djent', 'thrash', 'brutal', 'rock');
+    if (style === 'synth') return has('synth', 'electronic', 'chiptune', 'retro');
+    if (style === 'fusion') {
+      const families = [
+        has('ukrainian', 'shchedryk'),
+        has('metal', 'djent', 'thrash', 'brutal', 'rock'),
+        has('synth', 'electronic', 'chiptune', 'retro'),
+      ];
+      return families.filter(Boolean).length > 1;
+    }
+    return !['ukrainian', 'metal', 'synth', 'fusion'].some((family) =>
+      matchesOnlineStyle(track, family),
+    );
+  }
+  function onlineMatches() {
+    const query = onlineSearch.element.value.trim().toLowerCase(),
+      collection = onlineCollection.element.value,
+      style = onlineStyle.element.value;
+    return (onlineCatalogue?.tracks ?? []).filter((track) => {
+      const searchable = [
+        track.title,
+        track.artist,
+        track.collection,
+        track.fileName,
+        ...track.tags,
+      ]
+        .join(' ')
+        .toLowerCase();
+      return (
+        (!query || searchable.includes(query)) &&
+        (!collection || track.collection === collection) &&
+        matchesOnlineStyle(track, style)
+      );
+    });
+  }
+  function renderOnlineCatalogue() {
+    const matches = onlineMatches();
+    playOnlineResults.disabled = !matches.length;
+    onlineResults.replaceChildren(
+      ...matches.map((track) => {
+        const play = button(`online-play-${track.sha256}`, 'Play', () => {
+          const queue = [track, ...matches.filter((candidate) => candidate.id !== track.id)];
+          return controlMusic(() => player.playRemotePlaylist(queue, { order: 'ordered' }), true);
+        });
+        play.setAttribute('aria-label', `Play ${track.title} by ${track.artist}`);
+        const details = node('div', null, null, { class: 'soundtrack-online-details' });
+        details.append(
+          node('strong', null, track.title),
+          node('span', null, track.artist),
+          node('small', null, `${track.collection} · ${track.tags.join(' · ')}`),
+        );
+        const source = node('a', null, 'Source', {
+          href: track.websites[0].url,
+          target: '_blank',
+          rel: 'noopener noreferrer',
+          class: 'soundtrack-online-source',
+        });
+        const item = node('article', null, null, { class: 'soundtrack-online-track' });
+        item.append(play, details, source);
+        return item;
+      }),
+    );
+    if (onlineCatalogue)
+      onlineStatus.textContent = `${matches.length} of ${onlineCatalogue.tracks.length} published recordings shown. Play one song or shuffle every current result.`;
+  }
+  async function loadOnlineCatalogue(force = false) {
+    if (disposed || (onlineCatalogueController && !force)) return;
+    onlineCatalogueController?.abort();
+    const generation = ++onlineCatalogueGeneration,
+      current = new AbortController();
+    onlineCatalogueController = current;
+    reloadOnline.disabled = true;
+    onlineStatus.textContent = 'Loading the public soundtrack catalogue…';
+    try {
+      const loaded = await fetchOnlineSoundtrackCatalogue({
+        ...onlineCatalogueDownload,
+        signal: current.signal,
+      });
+      if (disposed || !dialog.open || generation !== onlineCatalogueGeneration) return;
+      onlineCatalogue = loaded;
+      options(onlineCollection.element, [
+        ['', 'All collections'],
+        ...[...new Set(loaded.tracks.map((track) => track.collection))]
+          .sort((a, b) => a.localeCompare(b))
+          .map((collection) => [collection, collection]),
+      ]);
+      renderOnlineCatalogue();
+    } catch (error) {
+      if (error?.name !== 'AbortError' && !disposed && generation === onlineCatalogueGeneration) {
+        onlineStatus.textContent = `The public archive is unavailable: ${message(error)} Built-in, installed and uploaded music still works.`;
+        onlineResults.replaceChildren();
+        playOnlineResults.disabled = true;
+      }
+    } finally {
+      if (generation === onlineCatalogueGeneration) {
+        onlineCatalogueController = null;
+        reloadOnline.disabled = disposed;
+      }
+    }
   }
   function renderAlbums() {
     if (!albumCatalog) return;
@@ -2201,6 +2367,7 @@ export function attachSoundtrackPanel({
     onOpen();
     returnFocus = doc.activeElement;
     if (!dialog.open) dialog.showModal();
+    if (!onlineCatalogue && !onlineCatalogueController) void loadOnlineCatalogue();
     closeButton.focus();
     if (!saved) {
       const focusIsEmpty = () => doc.activeElement === doc.body || doc.activeElement === dialog;
@@ -2251,6 +2418,9 @@ export function attachSoundtrackPanel({
   }
   function close({ restoreFocus = true, restoreMusic = true } = {}) {
     if (busy || disposed || !dialog.open) return false;
+    onlineCatalogueController?.abort();
+    onlineCatalogueController = null;
+    onlineCatalogueGeneration++;
     void playback(() => stopAudition(restoreMusic));
     dialog.close();
     if (
@@ -2298,6 +2468,9 @@ export function attachSoundtrackPanel({
   tracksSelect.element.onchange = () => renderTrack();
   playlistsSelect.element.onchange = () => renderPlaylist();
   scope.element.onchange = () => renderAssignments();
+  onlineSearch.element.oninput = () => renderOnlineCatalogue();
+  onlineStyle.element.onchange = () => renderOnlineCatalogue();
+  onlineCollection.element.onchange = () => renderOnlineCatalogue();
   seek.element.onchange = () => playback(() => player.seek(Number(seek.element.value)));
   volume.element.oninput = () =>
     playback(async () => {
@@ -2370,6 +2543,9 @@ export function attachSoundtrackPanel({
   function dispose() {
     if (disposed) return;
     controller?.abort();
+    onlineCatalogueController?.abort();
+    onlineCatalogueController = null;
+    onlineCatalogueGeneration++;
     disposed = true;
     feedback.dispose();
     transportFeedback.dispose();
