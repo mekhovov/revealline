@@ -1,13 +1,13 @@
 # Phase 1 acceptance — candidate, not released
 
-Status: implementation and local verification in progress. Phase 0 PR [#384](https://github.com/mekhovov/revealline/pull/384) merged as `0222b6294e4062db56530e3c967cbaf598ebd71d`; its hosted preflight, build and release-ready passed. Phase 1 is isolated on `codex/creator-phase1-image`, rebased onto reviewed main `5c2abaa3` after the compact Home merge. A release version has not been allocated here.
+Status: local candidate implemented; draft PR [#388](https://github.com/mekhovov/revealline/pull/388) is open for hosted checks and acceptance. Phase 0 PR [#384](https://github.com/mekhovov/revealline/pull/384) merged as `0222b6294e4062db56530e3c967cbaf598ebd71d`; its hosted preflight, build and release-ready passed. Phase 1 is isolated on `codex/creator-phase1-image`, rebased onto reviewed main `5c2abaa3` after the compact Home merge. A release version has not been allocated here.
 
 ## Completed local evidence
 
 - Fifteen focused creator tests pass: bounded variant feasibility across actual presets/steering/seeds; artwork versus gameplay changes; cancellation; oriented fitting and bitmap cleanup; exact package roundtrip; private asset exclusion; corrupt/trailing bytes and forged evidence; stale approvals; atomic installation and immutable editions; interrupted-install rollback followed by byte-identical export and successful retry; exact unfinished-session recovery and legal completion; source backup/checkpoint roundtrip and concurrent-head refusal; Custom classification independent of labels.
 - Shared media-store and managed-media-store suites passed alongside the earlier twelve creator tests: 52 total. Their cases cover quotas, blocked upgrades, concurrent storage generations, interrupted writes, cancellation, original-byte retention and atomic rollback. The two later source/library creator tests also passed separately.
 - All 27 installed-library, Custom-source and current-guide regression tests pass.
-- Scoped ESLint and Prettier passed. Hosted PR/build gates remain pending until the Phase 1 PR is opened.
+- Scoped ESLint and Prettier passed. The combined scoped run passed 82/82 tests on Node 20.19.5. Hosted PR/build gates are running.
 - Native in-app browser file chooser selected the original procedural portrait fixture (640 × 960, 6,482 bytes). Generation saved source checkpoint 1, displayed the fitted 1280 × 640 PNG and generated map, and presented validation/credits/size review.
 - Native approval and actual download created a 57,900-byte `.rlpack`, SHA-256 `e2eceea9c5071ca2d628ee5141e88d58438dc4841484ea578bc42b3757da12b4`. Full edition identity: `55f6a938a1cfa9d703f397aa11cd5630ace3a9435ed89a8d65167859e3add7ce`.
 - Installation on local origin port 8772 showed deduplicated staging space and an installed campaign. Ordinary Start, legal keyboard input, Pause, reload, Resume saved attempt and explicit Resume succeeded. A legal completion reached 100%, three lives and 23,800 points. Reload retained the exact earned-picture entry.
@@ -20,10 +20,14 @@ Status: implementation and local verification in progress. Phase 0 PR [#384](htt
 - On the independent origin, reload retained the earned portrait. Start and Retry each reached 100% / 23,800 points through legal Down input; Back to my creations returned to the installed list.
 - Two simultaneous players for the same edition showed the writer restriction in the second tab. That tab still completed legally and offered continuation and a downloadable session-only progress backup. The actual 709-byte `revealline-journey-backup.v2` download parsed correctly, SHA-256 `3d34c0e2f0d713c1b475d5168a9c37d51d36fc06ea5b086e73410331b28b3036`. This exercises refused progress writes; it does not simulate browser-wide quota exhaustion.
 
+- An approved title revision installed as edition `888751f017b4a27ce9d4e4ec45a59135ea6469ce13db509b22e84a987482a0d8`, alongside the original. Opening the new player showed no earned picture; reloading the original player retained its earned portrait.
+
 ## Failure records and corrections
 
 - The first native play attempt used the input adapter's held-key default. A tap did not continue the expected crossing. The Custom player now explicitly uses the shared continuous-steering adapter; the subsequent legal win and transferred-pack win passed.
 - The browser's accessibility tree exposes a disclosure as a button, but a Playwright role locator did not match it. The observed native disclosure control opened correctly; actual file chooser selection then succeeded. This was an automation locator mismatch, not a product import failure.
+- Source-backup and Advanced Studio handoff now require the single-picture structural envelope before replacing the current draft. Missing root entries and picture dependencies are rejected; uncompilable gameplay remains recoverable as source. The final guarded handoff loaded the valid Studio edit and saved checkpoint 4.
+- A requested 390 × 844 browser viewport override did not change the observed 1280 × 720 DOM viewport. The override was reset. No phone-layout acceptance is inferred from the screenshot.
 - A duplicate draft save could synchronously settle before its running-promise assignment, leaving a completed promise marked active. This interfered with navigation and later saving. The lifecycle now clears after awaiting the assigned promise; native unchanged-save, Studio navigation, subsequent edit, and reload passed. Editing/recovery controls also remain available after restoring an unapproved draft.
 - The thin checkout initially lacked the existing test MP3 and renderer dependency files. Exact tracked fixtures and presentation modules were hydrated; no production validators or tests were bypassed.
 - GitHub API rate limiting temporarily blocked check retrieval. After quota recovered, Phase 0 preflight/build/release-ready success and merge were verified. Skipped broad tests under the repository's current release policy are not counted as passed.
