@@ -5,8 +5,10 @@ export const TEAM_MISSION_FORMATS = Object.freeze([
   'TeamMissionV2',
   'TeamMissionV3',
   'TeamMissionV4',
+  'TeamMissionV5',
 ]);
 export const teamRoleQualified = (format, role) =>
   TEAM_MISSION_FORMATS.includes(format) &&
   (role === 'field-keeper' ||
-    (['TeamMissionV3', 'TeamMissionV4'].includes(format) && role === 'reclaimed-roamer'));
+    (['TeamMissionV3', 'TeamMissionV4', 'TeamMissionV5'].includes(format) &&
+      role === 'reclaimed-roamer'));

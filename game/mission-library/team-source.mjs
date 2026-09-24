@@ -2,7 +2,7 @@ import { journeyLibrarySource } from './journey-source.mjs';
 import { journeyMissionDetails, authoredJourneyMissionTags } from './journey-presentation.mjs';
 import { COOP_STARTER_PACK } from '../coop/library.mjs';
 
-export const TEAM_LIBRARY_JOURNEY_EDITION = 'team-spatial-originals-1';
+export const TEAM_LIBRARY_JOURNEY_EDITION = 'team-trail-impact-originals-1';
 export const TEAM_LIBRARY_CLASSIC_SOURCE = 'team-classic:relay-rescue-starter';
 
 /** Team's runtime rows and opaque imported-art owner remain outside display

@@ -151,6 +151,7 @@ test('all review routes keep explicit external-tab safety and distinct accessibl
     '../couch/relay-rescue.html?journey=team-depot-spatial-1',
     '../couch/relay-rescue.html?journey=team-pressure-originals-1',
     '../couch/relay-rescue.html?journey=team-spatial-originals-1',
+    '../couch/relay-rescue.html?journey=team-trail-impact-originals-1',
   );
   assert.deepEqual(links.map((link) => link.getAttribute('href')).toSorted(), expected.toSorted());
   const labels = links.map((link) => link.getAttribute('aria-label'));
@@ -163,15 +164,17 @@ test('all review routes keep explicit external-tab safety and distinct accessibl
     if (edition && href.includes('relay-rescue')) {
       assert.equal(
         link.getAttribute('aria-label'),
-        edition === 'team-spatial-originals-1'
-          ? 'Play bundled Team changing-return test (does not include draft edits) · team-spatial-originals-1 (new tab)'
-          : edition === 'team-pressure-originals-1'
-            ? 'Play bundled Team pressure test (does not include draft edits) · team-pressure-originals-1 (new tab)'
-            : edition === 'team-depot-spatial-1'
-              ? 'Play bundled depot-lane test (does not include draft edits) · team-depot-spatial-1 (new tab)'
-              : edition === 'team-window-spatial-1'
-                ? 'Play bundled outer-pocket test (does not include draft edits) · team-window-spatial-1 (new tab)'
-                : 'Play bundled Shared windows test (does not include draft edits) · team-timed-originals (new tab)',
+        edition === 'team-trail-impact-originals-1'
+          ? 'Play bundled Team travelling-impact test (does not include draft edits) · team-trail-impact-originals-1 (new tab)'
+          : edition === 'team-spatial-originals-1'
+            ? 'Play bundled Team changing-return test (does not include draft edits) · team-spatial-originals-1 (new tab)'
+            : edition === 'team-pressure-originals-1'
+              ? 'Play bundled Team pressure test (does not include draft edits) · team-pressure-originals-1 (new tab)'
+              : edition === 'team-depot-spatial-1'
+                ? 'Play bundled depot-lane test (does not include draft edits) · team-depot-spatial-1 (new tab)'
+                : edition === 'team-window-spatial-1'
+                  ? 'Play bundled outer-pocket test (does not include draft edits) · team-window-spatial-1 (new tab)'
+                  : 'Play bundled Shared windows test (does not include draft edits) · team-timed-originals (new tab)',
       );
     } else if (edition) {
       const mode = href.includes('/couch/') ? 'Versus' : 'Solo';
