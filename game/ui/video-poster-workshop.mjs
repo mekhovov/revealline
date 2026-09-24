@@ -14,7 +14,10 @@ export function attachVideoPosterWorkshop({
   document: doc = document,
   window: win = window,
   openSource = openVideoPosterSource,
-  physicalTrim = createOptionalPhysicalTrimBoundary(),
+  physicalTrim = createOptionalPhysicalTrimBoundary({
+    loadAdapter: async () =>
+      (await import('../mediabunny-trim-adapter.mjs')).createMediabunnyTrimAdapter(),
+  }),
   URLImpl = globalThis.URL,
   readPads,
 } = {}) {
@@ -345,11 +348,15 @@ export function attachVideoPosterWorkshop({
     const selectedSource = source,
       current = begin('Checking the optional physical video converter…');
     try {
-      const capability = await physicalTrim.support(selectedSource.info);
+      const capability = await physicalTrim.support(selectedSource.info, {
+        original: selectedSource.original,
+        range: playbackRange,
+        signal: current.controller.signal,
+      });
       if (!current.current() || source !== selectedSource) return false;
       trimCapability = capability;
       $('trim-support').textContent = capability.supported
-        ? `Physical trim adapter available for ${capability.formats.join(', ')}. Output is downloadable only after changed-byte and decoded-output verification.`
+        ? `${capability.detail || `Physical trim adapter available for ${capability.formats.join(', ')}.`} Output is downloadable only after changed-byte and decoded-output verification.`
         : `${capability.reason} Playback range remains available and keeps the complete original.`;
       setStatus(
         capability.supported

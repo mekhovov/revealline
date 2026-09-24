@@ -91,6 +91,11 @@ const requiredRuntime = [
   'game/media-bundle.mjs',
   'game/media-store.mjs',
   'game/managed-media-store.mjs',
+  'game/video-editor.mjs',
+  'game/mediabunny-trim-adapter.mjs',
+  'game/vendor/mediabunny-1.59.1.min.mjs',
+  'game/vendor/mediabunny-1.59.1.json',
+  'game/vendor/MEDIABUNNY-LICENSE.txt',
   'game/content/campaign.json',
   'game/content/classes.json',
   'game/content/themes.json',
@@ -105,7 +110,6 @@ test('actual release allowlist ships the standalone still entry and exact existi
     ...requiredRuntime,
     ...storyRuntime,
     'game/video-poster.mjs',
-    'game/video-editor.mjs',
     'game/ui/video-poster-workshop.mjs',
   ])
     assert.ok(files.includes(name), `Missing workshop distribution dependency: ${name}`);
@@ -188,6 +192,10 @@ async function fixture(t) {
     ...publicationEntries,
     ...storyRuntime,
     ...fieldKitFiles,
+    'game/mediabunny-trim-adapter.mjs',
+    'game/vendor/mediabunny-1.59.1.min.mjs',
+    'game/vendor/mediabunny-1.59.1.json',
+    'game/vendor/MEDIABUNNY-LICENSE.txt',
     'game/ui/still-media-panel.css',
     'game/offline.mjs',
     'game/offline/service-worker.template.js',
@@ -248,6 +256,10 @@ for (const version of ['0.32.0', 'v0.32.0'])
       ...storyRuntime,
       'game/video-poster.mjs',
       'game/video-editor.mjs',
+      'game/mediabunny-trim-adapter.mjs',
+      'game/vendor/mediabunny-1.59.1.min.mjs',
+      'game/vendor/mediabunny-1.59.1.json',
+      'game/vendor/MEDIABUNNY-LICENSE.txt',
       'game/ui/video-poster-workshop.mjs',
       ...fieldKitFiles,
       'game/ui/still-media-host.mjs',
@@ -266,6 +278,10 @@ for (const version of ['0.32.0', 'v0.32.0'])
       assert.deepEqual(zip.get(name), bytes);
     }
     assert.equal(offline.version, version);
+    const credits = await fs.readFile(path.join(out, 'credits.html'), 'utf8');
+    assert.match(credits, /Mediabunny 1\.59\.1/);
+    assert.match(credits, /game\/vendor\/MEDIABUNNY-LICENSE\.txt/);
+    assert.match(credits, /game\/vendor\/mediabunny-1\.59\.1\.json/);
     const { readStillWorkshopChannel } = await import(
       pathToFileURL(path.join(out, 'game/ui/still-media-host.mjs')).href
     );

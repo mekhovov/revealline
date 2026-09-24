@@ -1,0 +1,12 @@
+{
+  "package": "mediabunny",
+  "version": "1.59.1",
+  "source": "https://registry.npmjs.org/mediabunny/-/mediabunny-1.59.1.tgz",
+  "homepage": "https://mediabunny.dev/",
+  "artifact": "mediabunny-1.59.1.min.mjs",
+  "artifactSha256": "25795ed46b204b6b8613cf76f7337ee3f52000f4c3d39d7bb24595d67b46a7e2",
+  "license": "MPL-2.0",
+  "licenseFile": "MEDIABUNNY-LICENSE.txt",
+  "licenseSha256": "3f3d9e0024b1921b067d6f7f88deb4a60cbe7a78e76c64e3f1d7fc3b779b9d04",
+  "usage": "Lazy browser load after a creator requests physical trim support."
+}

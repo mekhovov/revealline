@@ -110,7 +110,8 @@ test('optional physical trim verifies changed bytes and decoded duration/orienta
     async loadAdapter() {
       loads++;
       return {
-        async support(source) {
+        async support(original, source) {
+          assert.ok(original === undefined || original instanceof Blob);
           assert.equal(source, info);
           return { supported: true, formats: ['video/mp4'] };
         },
