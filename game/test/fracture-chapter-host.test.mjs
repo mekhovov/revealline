@@ -1,3 +1,7 @@
+import {
+  playCurrentExternalRoute,
+  proveHistoricalExternalRoute,
+} from './helpers/external-current-host-route.mjs';
 import { acceptGameDataReplacement } from './helpers/backup-preflight.mjs';
 // Actual app/core/store source. DOM, IndexedDB and image dimensions are finite
 // modeled boundaries; original compiler bytes/hashes are real, not native browser proof.
@@ -212,6 +216,8 @@ async function page(t, f = {}, release = false) {
 const id = (e, kind) => `optional-worlds-source-${e.descriptor.id}-${kind}`;
 const primary = (p, e) => p.$(id(e, 'download')) ?? p.$(id(e, 'choose'));
 async function open(p) {
+  // Mount the retained More Worlds component for its import/ownership contract.
+  // Ordinary player entry now uses unified Missions; this is not public-entry evidence.
   p.$('shell-menu').click();
   p.$('shell-play').click();
   p.$('shell-mode-choice').open = true;
@@ -313,8 +319,8 @@ function ticks(p, n) {
 }
 
 const profile = 'revealline.library.release-0.37.0.v1';
-// Reuse the existing shorter legal route for integration. The full independent
-// north/south/difficulty/policy geometry proof remains unchanged and separate.
+// Retain the authored route as a separate historical proof. Fresh player-host
+// traces below use the current approved tuning without rewriting that evidence.
 const routeFor = (levelId) =>
   proof.routes.find(
     (r) =>
@@ -323,20 +329,6 @@ const routeFor = (levelId) =>
       r.turnPolicy === 'immediate' &&
       r.route === 'south',
   );
-function playPrefix(p, route, maximum = Infinity) {
-  let consumed = 0;
-  for (const step of route.segments) {
-    if (consumed >= maximum) break;
-    assert.equal(step.input.action, false);
-    assert.equal(step.input.pickup, false);
-    assert.equal(step.input.switchClass, null);
-    if (step.input.direction) direction(p, step.input.direction);
-    const count = Math.min(step.ticks, maximum - consumed);
-    ticks(p, count);
-    consumed += count;
-  }
-  p.frame(0);
-}
 
 test('four Fracture owners download with explicit Stay, then Play without a second Start; exact earned and saved data recover', async (t) => {
   const f = {};
@@ -394,10 +386,8 @@ test('four Fracture owners download with explicit Stay, then Play without a seco
         assert.equal(p.rendered.backdrop.pin.identity.baseCampaignKey, e.descriptor.campaignKey);
         assert.equal(p.rendered.backdrop.pin.sha256, selectedOriginal(e.descriptor, 0).sha256);
         const route = routeFor(e.descriptor.originals[0].levelId);
-        playPrefix(p, route);
-        assert.equal(p.rendered.run.status, 'won');
-        assert.equal(p.rendered.run.score, route.expected.score);
-        assert.equal(p.rendered.run.lives, route.expected.lives);
+        proveHistoricalExternalRoute(e, route);
+        playCurrentExternalRoute(p, e);
         const earned = loadLibrary(f.storage, profile).library.pictureReceipts;
         assert.deepEqual(earned.slice(0, prior.length), prior);
         prior = structuredClone(earned);
@@ -437,9 +427,8 @@ test('four Fracture owners download with explicit Stay, then Play without a seco
       );
       assert.equal(p.rendered.backdrop.pin.sha256, selectedOriginal(selected.descriptor, 1).sha256);
       const route = routeFor(selected.descriptor.originals[1].levelId);
-      const boundary = route.saved.find((s) => s.trailCells > 0 && s.tick < route.expected.tick);
-      assert.ok(boundary);
-      playPrefix(p, route, boundary.tick);
+      proveHistoricalExternalRoute(selected, route, 1);
+      playCurrentExternalRoute(p, selected, 1);
       p.$('pause-button').click();
       p.frame(0);
       assert(p.rendered.run.trail.length > 0);
