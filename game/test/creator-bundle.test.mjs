@@ -87,12 +87,42 @@ test('portable roundtrip preserves exact edition and editable source, excluding 
   const restored = await importCreatorBundle(file, { decodeImage });
   assert.equal(restored.editionId, pack.editionId);
   assert.deepEqual(restored.manifest, pack.manifest);
+  assert.deepEqual(restored.manifest.content.compatibility, {
+    format: 'revealline-creator-runtime.v2',
+    modes: ['solo', 'versus'],
+    gameplayPolicy: 'compiled-preset-v1',
+  });
+  assert.deepEqual(restored.manifest.content.project.missions[0].modes, ['solo', 'versus']);
   assert.equal((await file.text()).includes('private original'), false);
   const media = await creatorArtworkLoader(restored)(restored.manifest.content.project.assets[0]);
   assert.match(
     verifiedPreviewBackground(restored.manifest.content.project.assets[0], media).dataUrl,
     /^data:image\/png/,
   );
+});
+test('retained creator-layouts.v2 packages keep the Solo runtime.v1 transfer contract', async () => {
+  const f = await fixture('Retained Solo edition');
+  f.content.project.missions[0].modes = ['solo'];
+  f.content.project.missions[0].actors = [];
+  f.content.project.missions[0].design.counterplay =
+    'There are no enemies in this verified creator template.';
+  f.content.project.missions[0].design.difficulty.threatDensity = 0;
+  f.content.provenance = {
+    ...f.content.provenance,
+    templateVersion: 'creator-layouts.v2',
+  };
+  const pack = await prepareCreatorBundle(f.content, f.assets, { decodeImage });
+  assert.deepEqual(pack.manifest.content.compatibility, {
+    format: 'revealline-creator-runtime.v1',
+    modes: ['solo'],
+    gameplayPolicy: 'compiled-preset-v1',
+  });
+  const restored = await importCreatorBundle(
+    exportCreatorBundle(pack, approveCreatorBundle(pack)),
+    { decodeImage },
+  );
+  assert.equal(restored.editionId, pack.editionId);
+  assert.deepEqual(restored.manifest.content.project.missions[0].modes, ['solo']);
 });
 test('stale/forged approvals, corrupt payloads, trailing bytes and altered evidence fail closed', async () => {
   const pack = await prepared();

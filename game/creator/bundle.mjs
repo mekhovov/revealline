@@ -17,6 +17,11 @@ export const CREATOR_COMPATIBILITY = freezeDesign({
   modes: ['solo'],
   gameplayPolicy: 'compiled-preset-v1',
 });
+export const CREATOR_VERSUS_COMPATIBILITY = freezeDesign({
+  format: 'revealline-creator-runtime.v2',
+  modes: ['solo', 'versus'],
+  gameplayPolicy: 'compiled-preset-v1',
+});
 const MAGIC = new TextEncoder().encode('RLCNB1\r\n');
 const preparations = new WeakSet(),
   approvals = new WeakMap();
@@ -57,6 +62,11 @@ function scopedProvenance(source, missionIds) {
   return ordered.length === 1 ? ordered[0] : ordered;
 }
 
+const knownCompatibility = (value) =>
+  [CREATOR_COMPATIBILITY, CREATOR_VERSUS_COMPATIBILITY].some(
+    (candidate) => canonicalJSON(value) === canonicalJSON(candidate),
+  );
+
 /** Export scope is determined from the selected pack, never from the browser's
  * media inventory. Campaign and mission order follow the authored pack graph. */
 function scopedContent(source) {
@@ -86,9 +96,19 @@ function scopedContent(source) {
   project.maps = project.maps.filter((map) =>
     project.missions.some((m) => m.map.id === map.id && m.map.revision === map.revision),
   );
+  const provenance = scopedProvenance(input.provenance, missionIds);
+  const provenances = Array.isArray(provenance) ? provenance : [provenance];
+  const solo = project.missions.every(
+    (mission) => mission.modes.length === 1 && mission.modes[0] === 'solo',
+  );
+  const versus = project.missions.every(
+    (mission) =>
+      mission.modes.length === 2 && mission.modes[0] === 'solo' && mission.modes[1] === 'versus',
+  );
+  required(solo || versus, 'Creator missions must declare one consistent supported mode set.');
   required(
-    project.missions.every((mission) => mission.modes.length === 1 && mission.modes[0] === 'solo'),
-    'This creator version supports Solo.',
+    !versus || provenances.every((entry) => entry.templateVersion === 'creator-layouts.v3'),
+    'Only qualified creator-layouts.v3 missions support Versus.',
   );
   const wantedAssets = new Set(
     project.missions.map((mission) => mission.presentation.backgroundAssetId),
@@ -105,7 +125,6 @@ function scopedContent(source) {
     themes.length === wantedThemes.size && themes.every((theme) => validateTheme(theme).valid),
     'Every mission needs one valid presentation theme.',
   );
-  const provenance = scopedProvenance(input.provenance, missionIds);
   exactKeys(input.credits, ['creator', 'picture', 'license'], 'creator credits');
   required(
     Object.values(input.credits).length === 3 &&
@@ -120,7 +139,7 @@ function scopedContent(source) {
     themes,
     provenance,
     credits: input.credits,
-    compatibility: CREATOR_COMPATIBILITY,
+    compatibility: versus ? CREATOR_VERSUS_COMPATIBILITY : CREATOR_COMPATIBILITY,
   });
 }
 
@@ -283,8 +302,9 @@ export async function prepareCreatorBundle(source, sourceAssets, { signal, decod
         ? { pictures: content.project.assets, campaigns: content.project.campaigns }
         : {}),
       credits: content.credits,
-      validation:
-        'Automated route verified for all Solo presets and steering modes. Visual review is still required.',
+      validation: content.compatibility.modes.includes('versus')
+        ? 'Automated route verified for all Solo presets and equal-board Versus configurations. Visual review is still required.'
+        : 'Automated route verified for all Solo presets and steering modes. Visual review is still required.',
     }),
   });
   preparations.add(result);
@@ -308,7 +328,7 @@ export async function inspectCreatorManifest(source) {
   );
   const { compatibility, ...content } = manifest.content;
   required(
-    canonicalJSON(compatibility) === canonicalJSON(CREATOR_COMPATIBILITY) &&
+    knownCompatibility(compatibility) &&
       canonicalJSON(scopedContent(content)) === canonicalJSON(manifest.content),
     'Content manifest requires unsupported or unrelated content.',
   );
@@ -383,7 +403,7 @@ export async function importCreatorBundle(source, { signal, decodeImage } = {}) 
     'bundle content',
   );
   required(
-    canonicalJSON(manifest.content.compatibility) === canonicalJSON(CREATOR_COMPATIBILITY),
+    knownCompatibility(manifest.content.compatibility),
     'This pack requires an unsupported creator runtime.',
   );
   required(
