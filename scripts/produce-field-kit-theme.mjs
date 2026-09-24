@@ -125,10 +125,10 @@ const REVIEWED_RECIPE_INPUTS = {
     ],
   },
   audio: {
-    sha256: '82f403fca97ec49fd0dd1fd7698324bdf120d21918ecd39fa7f44dc475269123',
+    sha256: '6884da9db87f9c495ede7e866f3bf460518f7f38a9c6035c9907bea1448f69c2',
     evidence: [
-      'Scoped public-archive playback source review: docs/verification/online-soundtrack-archive-2026-09-24/review.json sha256:d7a966af00218daef9a76fa14868bcbd1caeeec437e500399ef744b6304383af. Fifteen ordered audio inputs sha256:82f403fca97ec49fd0dd1fd7698324bdf120d21918ecd39fa7f44dc475269123 bind the bounded catalogue trust boundary, player transport, native searchable panel and enforced Content ID policy.',
-      'All8 selected roles remain the same procedural recipes with no new audio files. Focused tests cover bounded streamed catalogue decode, exact immutable paths, direct streaming, transport continuity, Recording-mode transitions, filters, failure and cancellation. Local browser inspection covered the live 104-recording catalogue and in-dialog playback.',
+      'Scoped multi-style archive-player source review: docs/verification/online-soundtrack-style-player-2026-09-24/review.json sha256:ae88725f1e9acba2ae9524dcd0f1f5d76ee078685c086ef002dbfecea90a8efb. Fifteen ordered audio inputs sha256:6884da9db87f9c495ede7e866f3bf460518f7f38a9c6035c9907bea1448f69c2 preserve the bounded catalogue trust boundary while adding combined styles, queue order and repeat controls.',
+      'All8 selected roles remain the same procedural recipes with no new audio files. Focused tests cover bounded decode, exact immutable paths, clicked-first streaming, combined style filters, shuffle and ordered queues, repeat all/one/off, Recording-mode transitions, failure and cancellation.',
       'No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, cold-offline, frozen-build or public game approval. Archive previews remain outside trusted Automatic and built-in playlists; historical records and original payloads are immutable.',
     ],
   },
