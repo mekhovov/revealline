@@ -89,6 +89,8 @@ test('online archive playback streams its exact HTTPS object through the shared 
       url: `https://mekhovov.github.io/revealline-soundtracks-01/batches/creator-album/objects/${sha256}.mp3`,
       bytes: 1234,
       sha256,
+      contentId: false,
+      recordingModeEligible: true,
       websites: [{ label: 'Creator source', url: 'https://creator.example/song' }],
       rights: {
         kind: 'licensed',
@@ -121,10 +123,25 @@ test('online archive playback rejects forged hosts, hashes and duplicate recordi
       artist: 'Creator',
       url: `https://mekhovov.github.io/revealline-soundtracks-01/objects/${sha256}.mp3`,
       sha256,
+      contentId: false,
+      recordingModeEligible: true,
     },
     before = h.player.snapshot();
   await assert.rejects(
     h.player.playRemotePlaylist([{ ...remote, url: `https://example.com/objects/${sha256}.mp3` }]),
+    /Invalid online soundtrack/,
+  );
+  await assert.rejects(
+    h.player.playRemotePlaylist([
+      {
+        ...remote,
+        url: `https://mekhovov.github.io/unrelated-project/objects/${sha256}.mp3`,
+      },
+    ]),
+    /Invalid online soundtrack/,
+  );
+  await assert.rejects(
+    h.player.playRemotePlaylist([{ ...remote, url: `${remote.url}?download=1` }]),
     /Invalid online soundtrack/,
   );
   await assert.rejects(
@@ -137,6 +154,67 @@ test('online archive playback rejects forged hosts, hashes and duplicate recordi
     before,
     'rejected remote metadata must not change playback',
   );
+  h.player.dispose();
+});
+
+test('Recording mode excludes online tracks without verified gameplay-video and Content ID clearance', async () => {
+  const library = upgradeSoundtrackLibrary(emptySoundtrackLibrary()),
+    h = setup({
+      library: {
+        ...library,
+        listening: { ...library.listening, recordingMode: true },
+      },
+    }),
+    allowedHash = 'd'.repeat(64),
+    blockedHash = 'e'.repeat(64),
+    remote = (sha256, policy) => ({
+      id: `online.${sha256}`,
+      kind: 'remote',
+      title: `Remote ${sha256[0]}`,
+      artist: 'Creator',
+      url: `https://mekhovov.github.io/revealline-soundtracks-01/objects/${sha256}.mp3`,
+      sha256,
+      ...policy,
+    });
+  await assert.rejects(
+    h.player.playRemotePlaylist([
+      remote(blockedHash, { contentId: true, recordingModeEligible: false }),
+    ]),
+    /Recording mode excludes/,
+  );
+  assert.equal(h.media.plays, 0);
+  assert.equal(
+    await h.player.playRemotePlaylist([
+      remote(blockedHash, { contentId: true, recordingModeEligible: false }),
+      remote(allowedHash, { contentId: false, recordingModeEligible: true }),
+    ]),
+    true,
+  );
+  assert.equal(h.media.src.endsWith(`/${allowedHash}.mp3`), true);
+  h.player.dispose();
+});
+
+test('invalid local selections preserve active online playback', async () => {
+  const h = setup({ library: emptySoundtrackLibrary() }),
+    sha256 = 'f'.repeat(64),
+    remote = {
+      id: `online.${sha256}`,
+      kind: 'remote',
+      title: 'Remote song',
+      artist: 'Creator',
+      url: `https://mekhovov.github.io/revealline-soundtracks-01/objects/${sha256}.mp3`,
+      sha256,
+      contentId: false,
+      recordingModeEligible: true,
+    };
+  await h.player.playRemotePlaylist([remote]);
+  const before = h.player.snapshot();
+  await assert.rejects(h.player.selectPlaylist('missing.playlist'));
+  assert.deepEqual(h.player.snapshot(), before);
+  await assert.rejects(
+    h.player.selectListening({ ...emptySoundtrackLibrary().listening, mode: 'invalid' }),
+  );
+  assert.deepEqual(h.player.snapshot(), before);
   h.player.dispose();
 });
 test('preparing a local MP3 keeps playback silent, then a gesture wake starts it before context resume settles', async () => {
