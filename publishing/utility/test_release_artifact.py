@@ -141,6 +141,11 @@ class BindingTests(unittest.TestCase):
 
 
 class InspectionCommandTests(unittest.TestCase):
+    def test_utility_sparse_checkouts_include_policy_module_and_data(self):
+        workflow = (Path(__file__).parents[2] / '.github/workflows/qualify-release-source.yml').read_text()
+        policy_pair = '            publishing/test-policy.mjs\n            publishing/test-policy.json\n'
+        self.assertEqual(workflow.count(policy_pair), 2)
+
     def test_release_utility_passes_exact_distribution_cap(self):
         text = Path(utility.__file__).read_text()
         self.assertIn("'--max-distribution-bytes'", text)
