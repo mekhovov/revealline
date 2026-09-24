@@ -21,6 +21,7 @@ import {
 import { createTeamOpeningCandidates } from '../content-design/team-candidates.mjs';
 import { compileContentProject, resolveMission } from '../content-design/project.mjs';
 import { applyGameplayTuning, resolveGameplayTuning } from '../gameplay-tuning.mjs';
+import { createEnemyPresentations } from '../enemy-presentations.mjs';
 
 const compiled = validateCompiledPresentation(
   JSON.parse(await readFile(new URL('../presentation/compiled/runtime.json', import.meta.url))),
@@ -34,6 +35,9 @@ const approvedActors = validateCompiledPresentation(
       ),
     ),
   ),
+);
+const enemyMotionCatalog = createEnemyPresentations(
+  JSON.parse(await readFile(new URL('../content/enemy-presentations.json', import.meta.url))),
 );
 const SLOTS = [
   [
@@ -246,7 +250,39 @@ test('explicit Team roles reuse prepared slots without changing actual types or 
   );
 });
 
-test('qualified Team roamers borrow the existing tracked body once and freeze locomotion until activation', () => {
+test('Team prepared enemies reuse catalog surface motion without loading another body image', async () => {
+  let catalogLoads = 0;
+  const p = prepared(),
+    adapter = createCoopActorPresentation({
+      loadEnemyCatalog: async () => {
+        catalogLoads++;
+        return enemyMotionCatalog;
+      },
+    }),
+    run = createCoop(RELAY_YARD),
+    view = surface();
+  await adapter.setPresentation(p.snapshot);
+  adapter.update(run);
+  const drifter = run.enemies.find((enemy) => enemy.type === 'drifter'),
+    hunter = run.enemies.find((enemy) => enemy.type === 'hunter');
+
+  assert.equal(adapter.draw(view.ctx, 'enemy', drifter.id, palette), true);
+  assert.equal(
+    view.calls.filter((call) => call.name === 'fillRect' && call.state.globalAlpha === 0.55).length,
+    enemyMotionCatalog.entries.find((record) => record.type === 'bouncer').motion.length,
+  );
+  view.reset();
+  assert.equal(adapter.draw(view.ctx, 'enemy', hunter.id, palette), true);
+  assert.equal(
+    view.calls.filter((call) => call.name === 'fillRect' && call.state.globalAlpha === 0.55).length,
+    0,
+    'The baked patrol body keeps its catalog-declared no-extra-parts treatment.',
+  );
+  assert.equal(catalogLoads, 1);
+  assert.equal(p.closed(), 0);
+});
+
+test('qualified Team roamers borrow the tracked body and its bounded motion treatment', async () => {
   const source = createTeamOpeningCandidates();
   source.actorCatalogId = 'journey-actors-v2';
   source.missions[0].team.format = 'TeamMissionV3';
@@ -264,9 +300,10 @@ test('qualified Team roamers borrow the existing tracked body once and freeze lo
     ),
   );
   const p = prepared(),
-    adapter = createCoopActorPresentation(),
-    actor = run.enemies.find((e) => e.id === 'roamer');
-  adapter.setPresentation(p.snapshot);
+    adapter = createCoopActorPresentation({ loadEnemyCatalog: async () => enemyMotionCatalog }),
+    actor = run.enemies.find((e) => e.id === 'roamer'),
+    view = surface();
+  await adapter.setPresentation(p.snapshot);
   for (const mode of ['dormant', 'warning', 'active']) {
     actor.rover.mode = mode;
     run.tick++;
@@ -279,6 +316,11 @@ test('qualified Team roamers borrow the existing tracked body once and freeze lo
     assert.equal(frame.locked, mode !== 'active');
     assert.deepEqual(run, before);
   }
+  assert.equal(adapter.draw(view.ctx, 'enemy', actor.id, palette), true);
+  assert.equal(
+    view.calls.filter((call) => call.name === 'fillRect' && call.state.globalAlpha === 0.55).length,
+    enemyMotionCatalog.entries.find((record) => record.type === 'claimed-rover').motion.length,
+  );
   assert.equal(p.reads.filter((slot) => slot === 'enemy.claimed-rover').length, 1);
   assert.equal(p.closed(), 0);
 });
