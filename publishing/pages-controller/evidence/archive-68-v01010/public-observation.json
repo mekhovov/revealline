@@ -1,0 +1,23 @@
+{
+  "format": "revealline-archive-public-observation.v1",
+  "status": "PASS",
+  "archiveId": "archive-68",
+  "version": "v0.101.0",
+  "infrastructureCommit": "6f1ffe9e530f1fe57fa98553651ee0b0a50e97d4",
+  "infrastructureTree": "13b4fe4a9959a9819ae86cc7a0c6fc4010019252",
+  "runId": 36037875757,
+  "deploymentId": 6644569138,
+  "deploymentStatusId": 18797536049,
+  "receiptArtifactId": 10825029335,
+  "observed": [
+    "The archive root, release record and game index returned HTTP 200 from their exact canonical URLs.",
+    "A real in-app browser loaded the archived game and exposed the Reveal / Line main screen.",
+    "The visible menu reported Version v0.101.0 and offered Solo, Versus, Team, Missions, Collection, Settings and Workshop.",
+    "The unified selector rendered 279 Solo missions and visibly retained separate Current rules and Original rules Classic campaigns."
+  ],
+  "limitations": [
+    "This is bounded historical preservation evidence, not renewed gameplay or balance acceptance for v0.101.0.",
+    "No Classic mission was downloaded or launched during this archive-only observation.",
+    "No physical controller, physical touch, screen reader, offline, full-mission, exhaustive selector or device-matrix qualification is claimed."
+  ]
+}
