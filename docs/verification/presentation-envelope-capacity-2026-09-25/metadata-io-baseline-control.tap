@@ -1,0 +1,50 @@
+TAP version 13
+# (node:89286) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
+# --import 'data:text/javascript,import { register } from "node:module"; import { pathToFileURL } from "node:url"; register("./scripts/.envelope-baseline-control.mjs", pathToFileURL("./"));'
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: Studio saves compact metadata, reads without migration writes and retains CAS history checks
+ok 1 - Studio saves compact metadata, reads without migration writes and retains CAS history checks # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.361792
+  ...
+# Subtest: unencodable edits fail before opening storage and malformed persisted dictionaries never write
+ok 2 - unencodable edits fail before opening storage and malformed persisted dictionaries never write # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.051917
+  ...
+# Subtest: compiler and published Studio preserve compact logical history and validate before asset requests
+ok 3 - compiler and published Studio preserve compact logical history and validate before asset requests # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.082125
+  ...
+# Subtest: current production bytes stay exact and over-budget pretty Studio output retains bounded canonical bytes
+not ok 4 - current production bytes stay exact and over-budget pretty Studio output retains bounded canonical bytes
+  ---
+  duration_ms: 5994.306209
+  location: '/private/tmp/revealline-soundtrack-ledger-v106/game/test/presentation-metadata-io.test.mjs:184:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+
+    + 3386243
+    - 5242880
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 5242880
+  actual: 3386243
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///private/tmp/revealline-soundtrack-ledger-v106/game/test/presentation-metadata-io.test.mjs:202:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+1..4
+# tests 4
+# suites 0
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 3
+# todo 0
+# duration_ms 6211.520583

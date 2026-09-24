@@ -1,0 +1,70 @@
+TAP version 13
+# Subtest: P02 retains the published P01 history and appends audio7 under a new fpv24
+ok 1 - P02 retains the published P01 history and appends audio7 under a new fpv24
+  ---
+  duration_ms: 7912.919875
+  ...
+# Subtest: P03 retains the measured fpv25 source-stage checkpoint after published P02
+ok 2 - P03 retains the measured fpv25 source-stage checkpoint after published P02
+  ---
+  duration_ms: 2310.510042
+  ...
+# Subtest: current P03 reproduction retains its measured source stage before any review successor
+ok 3 - current P03 reproduction retains its measured source stage before any review successor
+  ---
+  duration_ms: 5883.515917
+  ...
+# Subtest: Journey music review retains fpv33 source evidence and every earlier immutable record
+ok 4 - Journey music review retains fpv33 source evidence and every earlier immutable record
+  ---
+  duration_ms: 4765.683458
+  ...
+# Subtest: unchanged production preserves its exact document and appends changed revisions
+ok 5 - unchanged production preserves its exact document and appends changed revisions
+  ---
+  duration_ms: 867.14575
+  ...
+# Subtest: review evidence gets an immutable successor and normal reproduction keeps the review
+ok 6 - review evidence gets an immutable successor and normal reproduction keeps the review
+  ---
+  duration_ms: 971.206875
+  ...
+# Subtest: production refuses silent slot contract mutation and can explicitly return to an old revision
+ok 7 - production refuses silent slot contract mutation and can explicitly return to an old revision
+  ---
+  duration_ms: 676.897
+  ...
+# Subtest: Journey feedback dependencies bind only the reviewed player-craft effects inputs
+ok 8 - Journey feedback dependencies bind only the reviewed player-craft effects inputs
+  ---
+  duration_ms: 306.097458
+  ...
+# Subtest: shared-host UI and audio bind only their reviewed current inputs
+ok 9 - shared-host UI and audio bind only their reviewed current inputs
+  ---
+  duration_ms: 286.889667
+  ...
+# Subtest: soundtrack screen and Journey motion reviews bind only the inspected current inputs
+ok 10 - soundtrack screen and Journey motion reviews bind only the inspected current inputs
+  ---
+  duration_ms: 284.213542
+  ...
+# Subtest: changed recipe inputs reopen only their own reviewed group
+ok 11 - changed recipe inputs reopen only their own reviewed group
+  ---
+  duration_ms: 18187.915792
+  ...
+# Subtest: the whole production collection has capacity for immutable review successors
+ok 12 - the whole production collection has capacity for immutable review successors
+  ---
+  duration_ms: 44348.063542
+  ...
+1..12
+# tests 12
+# suites 0
+# pass 12
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 87045.583208

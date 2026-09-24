@@ -23,11 +23,18 @@ const logicalOptions = options(
   PRESENTATION_METADATA_LIMITS.records,
 );
 const rawOptions = options(PRESENTATION_METADATA_LIMITS.encodedBytes, 2048);
-const envelopeOptions = options(
-  PRESENTATION_METADATA_LIMITS.encodedBytes,
-  PRESENTATION_METADATA_LIMITS.records,
-  PRESENTATION_METADATA_LIMITS.depth + 1,
-);
+const MAX_DICTIONARY_ENTRIES = PRESENTATION_METADATA_LIMITS.records;
+const envelopeOptions = {
+  ...options(
+    PRESENTATION_METADATA_LIMITS.encodedBytes,
+    MAX_DICTIONARY_ENTRIES,
+    PRESENTATION_METADATA_LIMITS.depth + 1,
+  ),
+  // Indexing replaces each provenance string with one node. Only the bounded
+  // dictionary entries and three wrapper nodes (object, format, array) are new.
+  // Expanded documents still cross the unchanged logical node limit below.
+  maxNodes: PRESENTATION_METADATA_LIMITS.nodes + MAX_DICTIONARY_ENTRIES + 3,
+};
 function documentAssets(document) {
   required(plainObject(document) && Array.isArray(document.assets), 'Invalid metadata document.');
   required(
