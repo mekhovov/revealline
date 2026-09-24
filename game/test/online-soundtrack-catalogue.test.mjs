@@ -81,7 +81,7 @@ test('online catalogue fetch is direct, credential-free and bounded', async () =
         redirected: false,
         url,
         headers: new Headers({ 'content-length': String(bytes.byteLength) }),
-        arrayBuffer: async () => bytes.buffer,
+        body: new Response(bytes).body,
       };
     },
   });
@@ -95,9 +95,44 @@ test('online catalogue fetch is direct, credential-free and bounded', async () =
         redirected: true,
         url,
         headers: new Headers(),
-        arrayBuffer: async () => bytes.buffer,
+        body: new Response(bytes).body,
       }),
     }),
     /direct HTTP 200/,
   );
+});
+
+test('online catalogue stops reading a streamed response at its byte limit', async () => {
+  const chunk = new Uint8Array(256 * 1024),
+    source = [chunk, chunk, new Uint8Array(1), chunk];
+  let reads = 0,
+    cancelled = false;
+  const body = {
+    getReader() {
+      return {
+        async read() {
+          reads++;
+          return source.length ? { done: false, value: source.shift() } : { done: true };
+        },
+        async cancel() {
+          cancelled = true;
+        },
+        releaseLock() {},
+      };
+    },
+  };
+  await assert.rejects(
+    fetchOnlineSoundtrackCatalogue({
+      fetch: async (url) => ({
+        status: 200,
+        redirected: false,
+        url,
+        headers: new Headers(),
+        body,
+      }),
+    }),
+    /exceeds its byte limit/,
+  );
+  assert.equal(reads, 3);
+  assert.equal(cancelled, true);
 });
