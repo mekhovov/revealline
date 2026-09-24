@@ -58,6 +58,11 @@ const MIME = {
   '.md': 'text/plain; charset=utf-8',
 };
 const sha256 = (bytes) => createHash('sha256').update(bytes).digest('hex');
+async function sha256File(file) {
+  const hash = createHash('sha256');
+  for await (const chunk of createReadStream(file)) hash.update(chunk);
+  return hash.digest('hex');
+}
 const json = (value) => `${JSON.stringify(value, null, 2)}\n`;
 const fail = (message) => {
   throw new Error(message);
@@ -1052,21 +1057,35 @@ export async function releaseSnapshot({ root = PROJECT_ROOT, ref, version } = {}
       fail('Another snapshot owns releases/.snapshot-lock; inspect it before retrying');
     throw e;
   }
-  // Node resolves an entry module's URL through directory symlinks. Older frozen
-  // CLIs compare that URL with argv[1], so pass the canonical path even when the
-  // temporary root is an alias such as macOS /var -> /private/var.
-  const temporary = await fs.realpath(await fs.mkdtemp(path.join(os.tmpdir(), 'xonix-snapshot-')));
   const staging = await fs.mkdtemp(path.join(releases, '.snapshot-'));
+  let temporary;
   try {
-    const archivePath = path.join(temporary, 'source.tar');
-    command('git', ['archive', '--format=tar', `--output=${archivePath}`, commit], { cwd: root });
-    const archive = await fs.readFile(archivePath),
+    const checkedOutCommit = command('git', ['rev-parse', 'HEAD'], { cwd: root }).trim();
+    let archivePath, sourceArchiveSha256;
+    let source = root;
+    if (checkedOutCommit === commit) {
+      // Qualification already checks out this exact immutable commit. Build there
+      // and stream its source tar directly into the staged snapshot: unpacking a
+      // multi-gigabyte archive solely to rebuild the same checkout exhausts the
+      // hosted runner without adding provenance.
+      archivePath = path.join(staging, 'source.tar');
+      command('git', ['archive', '--format=tar', `--output=${archivePath}`, commit], { cwd: root });
+      sourceArchiveSha256 = await sha256File(archivePath);
+    } else {
+      // Historical callers still build from the selected immutable tree, not the
+      // caller's checkout. Keep that defensive path for local archive tooling.
+      temporary = await fs.realpath(await fs.mkdtemp(path.join(os.tmpdir(), 'xonix-snapshot-')));
+      archivePath = path.join(temporary, 'source.tar');
+      command('git', ['archive', '--format=tar', `--output=${archivePath}`, commit], { cwd: root });
+      const archive = await fs.readFile(archivePath);
       source = path.join(temporary, 'source');
-    await fs.mkdir(source);
-    for (const entry of readTarEntries(archive)) {
-      const target = path.join(source, entry.name);
-      await fs.mkdir(path.dirname(target), { recursive: true });
-      await fs.writeFile(target, entry.bytes);
+      await fs.mkdir(source);
+      for (const entry of readTarEntries(archive)) {
+        const target = path.join(source, entry.name);
+        await fs.mkdir(path.dirname(target), { recursive: true });
+        await fs.writeFile(target, entry.bytes);
+      }
+      sourceArchiveSha256 = sha256(archive);
     }
     const frozenCli = path.join(source, 'scripts/game-cli.mjs');
     if (!(await exists(frozenCli)))
@@ -1091,13 +1110,14 @@ export async function releaseSnapshot({ root = PROJECT_ROOT, ref, version } = {}
       formatVersion: FORMAT_VERSION,
       version,
       sourceRevision: commit,
-      sourceArchiveSha256: sha256(archive),
+      sourceArchiveSha256,
       distributionSha256: sha256(zip),
       manifestSha256: sha256(manifest),
       play: `${version}/site/game/`,
       download: `${version}/site/distribution.zip`,
     };
-    await transferSnapshotArchive(archivePath, staging);
+    if (archivePath !== path.join(staging, 'source.tar'))
+      await transferSnapshotArchive(archivePath, staging);
     await fs.writeFile(path.join(staging, 'release.json'), json(release));
     // Only snapshot-owned labels enter the index. Invalid neighboring folders fail loudly.
     const prior = [];
@@ -1126,7 +1146,7 @@ export async function releaseSnapshot({ root = PROJECT_ROOT, ref, version } = {}
     await fs.rename(path.join(releases, '.index.html.tmp'), path.join(releases, 'index.html'));
     return { ...release, directory: destination };
   } finally {
-    await fs.rm(temporary, { recursive: true, force: true });
+    if (temporary) await fs.rm(temporary, { recursive: true, force: true });
     await fs.rm(staging, { recursive: true, force: true });
     await fs.rm(lock, { recursive: true, force: true });
   }
