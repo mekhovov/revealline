@@ -422,6 +422,13 @@ The next focused source comparisons follow this feedback:
 | Scott Buckley — [Neon](https://www.scottbuckley.com.au/library/neon/) | Creator describes moody 1980s electronica with arpeggios, pads and a synth lead solo. | Exact track page CC BY 4.0; compare the full original mix. No acceptance or acquired master. |
 | Shane Ivers — [Neon Noir](https://www.silvermansound.com/free-music/neon-noir) | 5:12; creator describes warm analogue bass, strings, electronic drums and DX7 character. | Musical reference / delivery hold. The track page says CC BY 4.0, but the current [licensing page](https://www.silvermansound.com/licenses) also prohibits standalone audio redistribution. Resolve that conflict before public MP3 admission; do not silently treat it as a cleared archive asset. |
 
+Scott Buckley's [Using This Music terms](https://www.scottbuckley.com.au/library/using-this-music/)
+also require synchronisation with other media alongside restrictions on isolated
+resale and music-platform uploads. Keep the separate standalone MP3 archive route
+on hold until this wording is resolved against the exact CC BY grant. This does
+not erase the published credited game-use route: assess game delivery and archive
+redistribution separately, without substituting hidden download URLs for rights.
+
 Scott Buckley's [Content ID guidance](https://www.scottbuckley.com.au/library/copyright-claims-release/)
 describes a library claim system. If admitted, these recordings must be excluded
 from the existing Recording mode while classified as registered; a CC licence
