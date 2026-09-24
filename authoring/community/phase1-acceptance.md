@@ -1,0 +1,37 @@
+# Phase 1 acceptance — candidate, not released
+
+Status: implementation and local verification in progress. Phase 0 PR [#384](https://github.com/mekhovov/revealline/pull/384) merged as `0222b6294e4062db56530e3c967cbaf598ebd71d`; its hosted preflight, build and release-ready passed. Phase 1 is isolated on `codex/creator-phase1-image`, rebased onto reviewed main `5c2abaa3` after the compact Home merge. A release version has not been allocated here.
+
+## Completed local evidence
+
+- Fifteen focused creator tests pass: bounded variant feasibility across actual presets/steering/seeds; artwork versus gameplay changes; cancellation; oriented fitting and bitmap cleanup; exact package roundtrip; private asset exclusion; corrupt/trailing bytes and forged evidence; stale approvals; atomic installation and immutable editions; interrupted-install rollback followed by byte-identical export and successful retry; exact unfinished-session recovery and legal completion; source backup/checkpoint roundtrip and concurrent-head refusal; Custom classification independent of labels.
+- Shared media-store and managed-media-store suites passed alongside the earlier twelve creator tests: 52 total. Their cases cover quotas, blocked upgrades, concurrent storage generations, interrupted writes, cancellation, original-byte retention and atomic rollback. The two later source/library creator tests also passed separately.
+- All 27 installed-library, Custom-source and current-guide regression tests pass.
+- Scoped ESLint and Prettier passed. Hosted PR/build gates remain pending until the Phase 1 PR is opened.
+- Native in-app browser file chooser selected the original procedural portrait fixture (640 × 960, 6,482 bytes). Generation saved source checkpoint 1, displayed the fitted 1280 × 640 PNG and generated map, and presented validation/credits/size review.
+- Native approval and actual download created a 57,900-byte `.rlpack`, SHA-256 `e2eceea9c5071ca2d628ee5141e88d58438dc4841484ea578bc42b3757da12b4`. Full edition identity: `55f6a938a1cfa9d703f397aa11cd5630ace3a9435ed89a8d65167859e3add7ce`.
+- Installation on local origin port 8772 showed deduplicated staging space and an installed campaign. Ordinary Start, legal keyboard input, Pause, reload, Resume saved attempt and explicit Resume succeeded. A legal completion reached 100%, three lives and 23,800 points. Reload retained the exact earned-picture entry.
+- The actual downloaded `.rlpack` was selected through the native file chooser on a previously unused origin at port 8773. It independently verified, reviewed and installed with the identical full edition identity, then completed through ordinary keyboard play at 100% and 23,800 points. This is separate origin storage, **not** a claim of a separate browser profile or engine.
+- Native Back up source project downloaded a 46,492-byte `.rlsource`, SHA-256 `d8415db7accaf723dbc3261b0967c80f7d86840675bdd9659cae52e9bca9c16e`. Binary inspection verified both payload hashes, no trailing bytes, the exact runtime PNG (`0181b0ebe428c9ad652a3982aad0384762da06477136cfe1d7284e996e235185`) and original (`0d71c51916f61af8d285cc5ef4a3293e38caacdf599cdb988c21b58e148e1775`). The share pack contains only the runtime PNG and no original reference.
+
+- Actual `.rlsource` selection restored the original portrait and regenerated its review. Advanced Studio opened an editable copy, saved a title change as checkpoint 2, and ran its exact practice preview to a legal 100% completion. The displayed picture matched the supplied portrait; practice remained explicitly ineligible for awards. Return to picture creator and Load saved Studio edits restored the edited title, saved creator checkpoint 2, and verified all supported routes again.
+- After approval, editing the title immediately hid Install and Download and disabled Approve. Reload restored the new title at checkpoint 3 with approval still absent. Saving an unchanged checkpoint followed by navigation and a subsequent edit now works.
+- Main game → Missions → Collection: Custom displayed the installed edition with Cleared status. Its Play card navigated to the exact edition's ordinary Custom player, with the earned portrait present.
+- On the independent origin, reload retained the earned portrait. Start and Retry each reached 100% / 23,800 points through legal Down input; Back to my creations returned to the installed list.
+- Two simultaneous players for the same edition showed the writer restriction in the second tab. That tab still completed legally and offered continuation and a downloadable session-only progress backup. The actual 709-byte `revealline-journey-backup.v2` download parsed correctly, SHA-256 `3d34c0e2f0d713c1b475d5168a9c37d51d36fc06ea5b086e73410331b28b3036`. This exercises refused progress writes; it does not simulate browser-wide quota exhaustion.
+
+## Failure records and corrections
+
+- The first native play attempt used the input adapter's held-key default. A tap did not continue the expected crossing. The Custom player now explicitly uses the shared continuous-steering adapter; the subsequent legal win and transferred-pack win passed.
+- The browser's accessibility tree exposes a disclosure as a button, but a Playwright role locator did not match it. The observed native disclosure control opened correctly; actual file chooser selection then succeeded. This was an automation locator mismatch, not a product import failure.
+- A duplicate draft save could synchronously settle before its running-promise assignment, leaving a completed promise marked active. This interfered with navigation and later saving. The lifecycle now clears after awaiting the assigned promise; native unchanged-save, Studio navigation, subsequent edit, and reload passed. Editing/recovery controls also remain available after restoring an unapproved draft.
+- The thin checkout initially lacked the existing test MP3 and renderer dependency files. Exact tracked fixtures and presentation modules were hydrated; no production validators or tests were bypassed.
+- GitHub API rate limiting temporarily blocked check retrieval. After quota recovered, Phase 0 preflight/build/release-ready success and merge were verified. Skipped broad tests under the repository's current release policy are not counted as passed.
+
+## Remaining acceptance gates
+
+Hosted full-checkout build/preflight/release-ready, genuine clean-profile verification, browser-wide storage-failure UI, and public deployed identity/hashes/released behavior remain pending. The isolated-origin check and shared atomic rollback/quota tests are recorded at their actual scope, not substituted for those observations.
+
+The user explicitly directed **“use builtin browser instead”** after Safari control was unavailable. Acceptance therefore uses the Codex in-app browser; Firefox and Safari are untested rather than requiring another permissions prompt. No separate Chromium installation, genuinely clean profile or physical mobile support is claimed. Inline native screenshots were observed in the task; exported screenshot files or screenshot hashes are not claimed.
+
+Publication remains with the existing publication task; no version/tag or Pages selector was changed by this phase. Do not mark the phase complete or move to its dependent release until the required acceptance and publication gates are satisfied.
