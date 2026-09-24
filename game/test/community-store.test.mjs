@@ -453,3 +453,38 @@ test('catalog page renders remote metadata only with textContent', async () => {
   assert.doesNotMatch(page, /innerHTML|insertAdjacentHTML|document\.write/u);
   assert.match(page, /textContent/u);
 });
+
+test('publisher retries the same immutable submission after an interrupted resumable upload', async () => {
+  const source = await packageFixture('Resume crossing');
+  const submission = {
+    id: '33333333-3333-4333-8333-333333333333',
+    editionId: `ed_${'e'.repeat(64)}`,
+    status: 'draft',
+  };
+  let creates = 0;
+  let uploads = 0;
+  const client = {
+    async createSubmission() {
+      creates += 1;
+      return {
+        submission,
+        upload: { href: '/v1/uploads', resumable: true, protocol: 'tus-1.0' },
+      };
+    },
+    async uploadSubmission() {
+      uploads += 1;
+      if (uploads === 1) throw new Error('Upload interrupted at 4 bytes.');
+    },
+    async submit(id) {
+      assert.equal(id, submission.id);
+      return { submission: { ...submission, status: 'queued' } };
+    },
+  };
+  const publisher = createCommunityPublisher({ client, decodeImage });
+  await publisher.select(source.blob);
+  const input = { title: 'Resume crossing', slug: 'resume-crossing', version: '1.0.0' };
+  await assert.rejects(publisher.publish(input), /interrupted/u);
+  assert.equal((await publisher.publish(input)).status, 'queued');
+  assert.equal(creates, 1);
+  assert.equal(uploads, 2);
+});

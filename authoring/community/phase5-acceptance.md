@@ -35,28 +35,42 @@ by this candidate.
   immutable records, Player B's store downloads and installs exact validated bytes, a report is
   accepted, Bob cannot unlist Alice's edition, Alice can, and the installed edition remains
   offline-playable after public removal.
+- The production browser boundary restores a same-origin Better Auth session and supports email
+  sign-up, sign-in and sign-out without persisting credentials or session tokens. A real Better
+  Auth memory-adapter session created through the browser client owns a submission, uploads exact
+  bytes, observes automatic publication, unlists that edition, and loses owner access after
+  sign-out.
+- The browser tus 1.0 transport creates an upload with immutable metadata, sends bounded PATCH
+  chunks, retains only the opaque upload URL after a connection failure, reads the authoritative
+  server offset with HEAD, and resumes the same draft without creating another submission. Focused
+  coverage interrupts after four bytes and completes from that offset.
 - Built-in-browser startup at the isolated integration source rendered discovery filters, local
   navigation and the publishing form. With the API intentionally absent, it reported the catalog as
   unavailable, kept the installed-play recovery message visible and left upload disabled because no
   account adapter was configured.
+- A follow-up attempt to exercise the new account form against a real local Better Auth/Fastify
+  process was blocked because the subtask built-in browser rejected loopback navigation. The exact
+  same-origin account/publish path is covered through Fastify and Better Auth in-process; a visible
+  browser pass remains open.
 
-The focused Phase 5 suite passes 10/10 scenarios on Node 20.19.5. The Phase 4 service suite plus the
-new cross-layer scenario passes 22/22. Scoped ESLint, Prettier and diff checks are recorded on the
-final commit.
+The focused Phase 5 store suite passes 11/11 scenarios and the account/tus browser boundary passes
+2/2 on Node 20.19.5. The Phase 4 service suite passes 21/21, including the real Better Auth
+browser-client scenario. Scoped ESLint, Prettier and diff checks are recorded on the final commit.
 
 ## Integrated service contract
 
 The service provides cursor/search catalog results, stable collection/latest-edition metadata,
 bounded preview bytes, reports, owner-only unlisting and owner-only submission status. Direct and
-tus uploads remain transport adapters; the browser does not invent a successful upload or
-publication.
+tus uploads remain transport adapters. The browser implements the service's bounded tus 1.0
+creation/offset/chunk contract and treats only server responses as upload progress.
 
 ## Remaining acceptance gates
 
 - Exercise Creator A publish → automatic validation → listing → Player B preview/install → legal win
   → reload/offline play in a clean built-in-browser origin.
-- Exercise a real interrupted resumable upload, service restart, catalog outage, report, unlist and
-  immutable update with the containerized service.
+- Exercise service restart, catalog outage, report, unlist and immutable update with the
+  containerized PostgreSQL service. The browser and mounted server interruption/resume paths are
+  independently covered; restart persistence still needs container acceptance.
 - Rehearse database/blob recovery and verify that an unlisted edition stays playable for players who
   already installed its exact bytes.
 - Run hosted preflight/build/release-ready checks and publish only through the release coordinator.
@@ -66,6 +80,6 @@ preserves historical references monotonically; the UI calls the implemented oper
 recovery download** and does not describe it as uninstall or runtime offloading.
 
 The cross-layer test uses the in-memory repository and blob store. It does not qualify the Docker
-Compose topology, PostgreSQL migration on an existing volume, Better Auth account recovery, a real
-interrupted tus upload, disk/S3 failover, or production backup/restore. Those operations remain
+Compose topology, PostgreSQL migration on an existing volume, Better Auth account recovery,
+disk/S3 failover, or production backup/restore. Those operations remain
 deployment acceptance work and no AWS, domain, mail, or public-service availability is claimed.
