@@ -176,13 +176,6 @@ test('Recording mode excludes online tracks without verified gameplay-video and 
       sha256,
       ...policy,
     });
-  await assert.rejects(
-    h.player.playRemotePlaylist([
-      remote(blockedHash, { contentId: true, recordingModeEligible: false }),
-    ]),
-    /Recording mode excludes/,
-  );
-  assert.equal(h.media.plays, 0);
   assert.equal(
     await h.player.playRemotePlaylist([
       remote(blockedHash, { contentId: true, recordingModeEligible: false }),
@@ -191,6 +184,44 @@ test('Recording mode excludes online tracks without verified gameplay-video and 
     true,
   );
   assert.equal(h.media.src.endsWith(`/${allowedHash}.mp3`), true);
+  const beforeRejectedQueue = h.player.snapshot();
+  await assert.rejects(
+    h.player.playRemotePlaylist([
+      remote(blockedHash, { contentId: true, recordingModeEligible: false }),
+    ]),
+    /Recording mode excludes/,
+  );
+  assert.deepEqual(h.player.snapshot(), beforeRejectedQueue);
+  assert.equal(await h.player.next(), true);
+  assert.equal(h.media.src.endsWith(`/${allowedHash}.mp3`), true);
+  h.player.dispose();
+});
+
+test('enabling Recording mode through a library refresh retires restricted remote playback', async () => {
+  const library = upgradeSoundtrackLibrary(emptySoundtrackLibrary()),
+    h = setup({ library }),
+    sha256 = '9'.repeat(64),
+    remote = {
+      id: `online.${sha256}`,
+      kind: 'remote',
+      title: 'Content ID remote',
+      artist: 'Creator',
+      url: `https://mekhovov.github.io/revealline-soundtracks-01/objects/${sha256}.mp3`,
+      sha256,
+      contentId: true,
+      recordingModeEligible: false,
+    };
+  assert.equal(await h.player.playRemotePlaylist([remote]), true);
+  assert.equal(h.player.snapshot().source, 'remote');
+  h.player.setLibrary({
+    ...library,
+    listening: { ...library.listening, recordingMode: true },
+  });
+  assert.notEqual(h.player.snapshot().source, 'remote');
+  assert.notEqual(h.player.snapshot().track?.id, remote.id);
+  const plays = h.media.plays;
+  await h.player.next();
+  assert.equal(h.media.plays, plays);
   h.player.dispose();
 });
 
