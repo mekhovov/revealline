@@ -17,8 +17,14 @@ const spatial = compileContentProject(createSpatialChallengeJourney());
 const fixture = JSON.parse(
   readFileSync(new URL('./fixtures/spatial-challenge-clear-routes.json', import.meta.url), 'utf8'),
 );
-for (const row of fixture.rows)
-  test(`current gp4 legal-input clear and replay: ${row.missionId}`, () => {
+const approaches = JSON.parse(
+  readFileSync(
+    new URL('./fixtures/spatial-challenge-approach-routes.json', import.meta.url),
+    'utf8',
+  ),
+);
+for (const row of [...fixture.rows, ...approaches.rows])
+  test(`current gp4 legal-input clear and replay: ${row.missionId}/${row.difficulty}/${row.turnPolicy}/seed${row.seed}/${row.approach ?? 'primary'}`, () => {
     const mission = prepareSpatialMission(spatial, row.missionId, { difficulty: row.difficulty });
     assert.equal(mission.simulationIdentity, row.simulationIdentity);
     assert.equal(mission.authoredSimulationIdentity, row.authoredSimulationIdentity);
@@ -112,4 +118,49 @@ test('spatial assessment rejects invalid seeds, steering, segments, and excessiv
     { policy: 'perfect' },
   ])
     assert.throws(() => searchSpatialRoute(prepared, patch), /Invalid/);
+});
+
+test('qualification receipts have unique current configurations and an explicit superseded boundary', () => {
+  const current = [...fixture.rows, ...fixture.incompleteSearches];
+  const key = (row) => [row.missionId, row.difficulty, row.turnPolicy, row.seed].join('/');
+  assert.equal(new Set(current.map(key)).size, current.length);
+  for (const missionId of [
+    'two-bays',
+    'neon-remix',
+    'broken-yard',
+    'read-the-arrows',
+    'crossing-complete',
+    'twin-receivers',
+  ])
+    for (const difficulty of ['gentle', 'standard', 'expert'])
+      for (const turnPolicy of ['immediate', 'grid-center']) {
+        const row = fixture.rows.find(
+          (r) =>
+            r.missionId === missionId &&
+            r.difficulty === difficulty &&
+            r.turnPolicy === turnPolicy &&
+            r.seed === 1,
+        );
+        assert(row, key({ missionId, difficulty, turnPolicy, seed: 1 }));
+      }
+  assert.equal(fixture.supersededGeometry.rows.length, 14);
+  assert(
+    fixture.supersededGeometry.rows.every((row) =>
+      ['two-bays', 'read-the-arrows'].includes(row.missionId),
+    ),
+  );
+});
+test('Two bays east-first alternative begins with an actual occupied-region line-only connection', () => {
+  const row = approaches.rows.find((r) => r.missionId === 'two-bays');
+  const mission = prepareSpatialMission(spatial, row.missionId, { difficulty: row.difficulty });
+  const result = assessSpatialRoute(mission, {
+    seed: row.seed,
+    turnPolicy: row.turnPolicy,
+    segments: row.segments.map(([direction, ticks]) => ({ direction, ticks })),
+  });
+  assert.equal(row.segments[0][0], 'right');
+  const closure = result.closures[0];
+  assert.equal(closure.claimedCells, 42);
+  assert.equal(closure.retainedComponents.filter((c) => c.retained).length, 3);
+  assert.equal(result.status, 'no-loss-clear');
 });
