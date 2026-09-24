@@ -1,5 +1,5 @@
-import { isAuthoredJourneyRouteId } from "./mode-href.mjs";
-import { createAuthoredJourneyRouteDefinition } from "./route-definition.mjs";
+import { isAuthoredJourneyRouteId } from './mode-href.mjs';
+import { createAuthoredJourneyRouteDefinition } from './route-definition.mjs';
 
 /** Load only the explicitly selected source family. Imports are fixed local
  * modules, never URLs derived from user/imported data. Keep source construction
@@ -7,15 +7,15 @@ import { createAuthoredJourneyRouteDefinition } from "./route-definition.mjs";
 export async function loadAuthoredJourneyRoute(id) {
   if (!isAuthoredJourneyRouteId(id)) return null;
   let factories;
-  if (id === "whole-spatial-v6") {
-    factories = await import("./spatial-challenge-journey.mjs");
-  } else if (id.startsWith("whole-spatial-")) {
-    factories = await import("./whole-spatial-candidates.mjs");
-  } else if (id.startsWith("whole-originals")) {
-    factories = await import("./whole-journey-candidates.mjs");
+  if (id === 'whole-spatial-v6') {
+    factories = await import('./spatial-challenge-journey.mjs');
+  } else if (id.startsWith('whole-spatial-')) {
+    factories = await import('./whole-spatial-candidates.mjs');
+  } else if (id.startsWith('whole-originals')) {
+    factories = await import('./whole-journey-candidates.mjs');
   } else {
-    const opening = import("./horizon-candidates.mjs");
-    const border = id === "authored" ? import("./border-candidates.mjs") : null;
+    const opening = import('./horizon-candidates.mjs');
+    const border = id === 'authored' ? import('./border-candidates.mjs') : null;
     const [first, second] = await Promise.all([opening, border]);
     factories = { ...first, ...second };
   }
