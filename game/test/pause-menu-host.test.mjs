@@ -3,6 +3,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { settle, soloPage } from './helpers/solo-dom.mjs';
+import { openMissionLibrary } from './helpers/library-selection.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
 
 function frames(page, count) {
@@ -64,12 +65,16 @@ test('Restart is limited to Pause and does not leak into briefings or result men
   const page = await soloPage(t);
   assert.equal(page.$('game-overlay').dataset.kind, 'ready');
   assert.equal(page.$('overlay-restart').hidden, true);
+  assert.equal(page.$('pause-mission-info').hidden, false);
+  assert.equal(page.$('pause-mission-info').open, true, 'ready brief remains directly available');
   page.$('start-button').click();
   await settle(() => page.doc.body.dataset.flightState === 'running');
   page.key('Escape');
   page.key('Escape', false);
   page.frame(0);
   assert.equal(page.$('overlay-restart').hidden, false);
+  assert.equal(page.$('pause-mission-info').hidden, false);
+  assert.equal(page.$('pause-mission-info').open, false, 'Pause details start collapsed');
   page.$('start-button').click();
   await settle(() => page.doc.body.dataset.flightState === 'running');
   assert.equal(page.$('game-overlay').hidden, true);
@@ -78,5 +83,46 @@ test('Restart is limited to Pause and does not leak into briefings or result men
     false,
     'the hidden overlay retains its menu state',
   );
+  assert.deepEqual(page.errors, []);
+});
+
+test('Pause owns Sound, Missions, Help and Settings and each child restores its exact opener', async (t) => {
+  const page = await soloPage(t);
+  page.$('start-button').click();
+  await settle(() => page.doc.body.dataset.flightState === 'running');
+  page.key('Escape');
+  page.key('Escape', false);
+  page.frame(0);
+
+  const run = page.rendered.run,
+    checkpoint = authoritativeCheckpoint(run);
+  const initialSoundState = page.$('overlay-sound').getAttribute('aria-pressed');
+  page.$('overlay-sound').click();
+  assert.notEqual(page.$('overlay-sound').getAttribute('aria-pressed'), initialSoundState);
+  assert.equal(page.rendered.paused, true);
+  assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
+  for (const [opener, dialog] of [
+    ['overlay-help', 'help-dialog'],
+    ['overlay-settings', 'settings-dialog'],
+  ]) {
+    page.$(opener).focus();
+    page.$(opener).click();
+    assert.equal(page.$(dialog).open, true);
+    page.$(dialog).querySelector('[data-close]').click();
+    await Promise.resolve();
+    assert.equal(page.$(dialog).open, false);
+    assert.equal(page.doc.activeElement, page.$(opener));
+    assert.equal(page.rendered.paused, true);
+    assert.equal(page.rendered.run, run);
+    assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
+  }
+
+  await openMissionLibrary(page, 'overlay-missions');
+  page.$('journey-back').click();
+  await Promise.resolve();
+  assert.equal(page.doc.activeElement, page.$('overlay-missions'));
+  assert.equal(page.rendered.paused, true);
+  assert.equal(page.rendered.run, run);
+  assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
   assert.deepEqual(page.errors, []);
 });

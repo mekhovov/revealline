@@ -287,8 +287,10 @@ for (const origin of ['home', 'flight', 'brief']) {
       if (origin === 'home') {
         page.$('overlay-menu').click();
         await openMissions(page);
-      } else if (origin === 'brief') page.$('overlay-brief').click();
-      else await openMissions(page, 'shell-packs');
+      } else if (origin === 'brief') {
+        page.$('pause-mission-info-toggle').click();
+        page.$('overlay-brief').click();
+      } else await openMissions(page, 'shell-packs');
       const checkpoint = authoritativeCheckpoint(page.rendered.run);
       const stored = [...page.storage.map];
       const dialog = page.$(origin === 'brief' ? 'shell-missions' : 'journey-chooser');
