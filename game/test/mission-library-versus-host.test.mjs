@@ -93,15 +93,33 @@ async function fixture(t, { href, fetchResponse, installedSource, ...options } =
   return p;
 }
 async function open(p) {
-  p.$('race-library-switch').focus();
-  p.$('race-library-switch').click();
+  // Preserve the real anchor click and Couch-shell departure guards while
+  // joining its operation, rather than timing catalogue compilation with polls.
+  const opener = p.$('race-library-switch'),
+    listeners = opener.listeners.get('click'),
+    pending = [];
+  opener.listeners.set(
+    'click',
+    new Set(
+      [...listeners].map((listener) => (event) => {
+        const result = listener.call(opener, event);
+        if (result instanceof Promise) pending.push(result);
+        return result;
+      }),
+    ),
+  );
   try {
-    await settle(() => p.$('journey-chooser')?.open);
-  } catch (error) {
-    error.message += ` ${p.$('race-message').textContent}`;
-    throw error;
+    opener.focus();
+    opener.click();
+  } finally {
+    opener.listeners.set('click', listeners);
   }
+  assert.equal(pending.length, 1, 'The real Missions click owns one preparation.');
+  assert.match(p.$('race-message').textContent, /Preparing missions/);
+  await pending[0];
+  assert.equal(p.$('journey-chooser')?.open, true, p.$('race-message').textContent);
 }
+
 async function running(p, id) {
   try {
     await settle(() => {
