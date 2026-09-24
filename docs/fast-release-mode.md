@@ -49,9 +49,10 @@ main-only `github-pages` deployment environment. These checks prevent publishing
 corrupt frozen release and are not performance-only validation.
 
 The release event only routes an eligible tag to the sole publisher. It does not rebuild historical
-source or rerun the full test suite. Workflow, policy, skill, documentation, and controller-test-only
-merges receive their pull-request preview but do not redeploy unchanged Pages bytes after merge. A
-reviewed selector change or an eligible release event remains the production trigger.
+source or rerun the full test suite. Workflow, policy, skill, documentation, evidence-only, and
+controller-test-only merges receive their pull-request preview but do not redeploy unchanged Pages
+bytes after merge. A reviewed selector change or an eligible release event remains the production
+trigger.
 
 ## Restore the full pipeline
 
