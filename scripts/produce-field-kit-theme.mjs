@@ -153,10 +153,10 @@ const REVIEWED_RECIPE_INPUTS = {
     ],
   },
   audio: {
-    sha256: '6a6124afeb891475a882e51289d28df2615fb7ed144b675357c00aa9bd255567',
+    sha256: '7d0a0e9c97c17036a941256a75d9168a6d46e1426cecd356ddffbe39ab301233',
     evidence: [
-      'Scoped multi-style archive-player source review: docs/verification/online-soundtrack-style-player-2026-09-24/review.json sha256:020e038464eb3768bfaa6107c41d70affed7e0f1901e63e0335a8f8027b7ce5d. Fifteen ordered audio inputs sha256:6a6124afeb891475a882e51289d28df2615fb7ed144b675357c00aa9bd255567 preserve the bounded catalogue trust boundary while adding combined styles, queue order and repeat controls.',
-      'All8 selected roles remain the same procedural recipes with no new audio files. Focused tests cover bounded decode, exact immutable paths, clicked-first streaming, distinct Synth/electronic, Metal, Ukrainian, Chiptune, Rock and Ambient filters, Fusion/Other grouping, shuffle and ordered queues, repeat all/one/off, Recording-mode transitions, failure and cancellation.',
+      'Scoped bundled-source continuation: docs/verification/shchedryk-opening-2026-09-24/audio-source-review-r1.json sha256:48afbd853953778910af6d137b430ba91a860854a143d0454f0d4df638239134. Fifteen ordered audio inputs sha256:7d0a0e9c97c17036a941256a75d9168a6d46e1426cecd356ddffbe39ab301233 preserve the multi-style archive player and add an inactive, exact-identity adapter for future code-owned audio.',
+      'Eleven focused rights and source tests cover local-only zero requests, owned-local reuse, explicit acquisition, Installed-only playback, exact identity/path/bytes, duplicate rejection, effective-rights intersection, corrupt bytes and cancellation. Empty registrations add no recording, file, default, autoplay or storage write.',
       'No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, cold-offline, frozen-build or public game approval. Archive previews remain outside trusted Automatic and built-in playlists; historical records and original payloads are immutable.',
     ],
   },

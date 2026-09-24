@@ -51781,6 +51781,206 @@
         },
         "recipe": { "id": "audio.music.v1" },
         "revision": 30
+      },
+      {
+        "description": "focus audio cue: existing bounded component with Field Kit tokens and state styling.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "audio.focus.field-kit",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored runtime recipe",
+          "parent": { "id": "audio.focus.field-kit", "revision": 30 },
+          "prompt": 137,
+          "source": 492
+        },
+        "quality": {
+          "evidence": [
+            "Scoped bundled-source continuation: docs/verification/shchedryk-opening-2026-09-24/audio-source-review-r1.json sha256:48afbd853953778910af6d137b430ba91a860854a143d0454f0d4df638239134. Fifteen ordered audio inputs sha256:7d0a0e9c97c17036a941256a75d9168a6d46e1426cecd356ddffbe39ab301233 preserve the multi-style archive player and add an inactive, exact-identity adapter for future code-owned audio.",
+            "Eleven focused rights and source tests cover local-only zero requests, owned-local reuse, explicit acquisition, Installed-only playback, exact identity/path/bytes, duplicate rejection, effective-rights intersection, corrupt bytes and cancellation. Empty registrations add no recording, file, default, autoplay or storage write.",
+            "No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, cold-offline, frozen-build or public game approval. Archive previews remain outside trusted Automatic and built-in playlists; historical records and original payloads are immutable."
+          ],
+          "stage": "reviewed"
+        },
+        "recipe": { "id": "audio.ui.v1" },
+        "revision": 31
+      },
+      {
+        "description": "confirm audio cue: existing bounded component with Field Kit tokens and state styling.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "audio.confirm.field-kit",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored runtime recipe",
+          "parent": { "id": "audio.confirm.field-kit", "revision": 30 },
+          "prompt": 51,
+          "source": 492
+        },
+        "quality": {
+          "evidence": [
+            "Scoped bundled-source continuation: docs/verification/shchedryk-opening-2026-09-24/audio-source-review-r1.json sha256:48afbd853953778910af6d137b430ba91a860854a143d0454f0d4df638239134. Fifteen ordered audio inputs sha256:7d0a0e9c97c17036a941256a75d9168a6d46e1426cecd356ddffbe39ab301233 preserve the multi-style archive player and add an inactive, exact-identity adapter for future code-owned audio.",
+            "Eleven focused rights and source tests cover local-only zero requests, owned-local reuse, explicit acquisition, Installed-only playback, exact identity/path/bytes, duplicate rejection, effective-rights intersection, corrupt bytes and cancellation. Empty registrations add no recording, file, default, autoplay or storage write.",
+            "No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, cold-offline, frozen-build or public game approval. Archive previews remain outside trusted Automatic and built-in playlists; historical records and original payloads are immutable."
+          ],
+          "stage": "reviewed"
+        },
+        "recipe": { "id": "audio.ui.v1" },
+        "revision": 31
+      },
+      {
+        "description": "cancel audio cue: existing bounded component with Field Kit tokens and state styling.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "audio.cancel.field-kit",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored runtime recipe",
+          "parent": { "id": "audio.cancel.field-kit", "revision": 30 },
+          "prompt": 34,
+          "source": 492
+        },
+        "quality": {
+          "evidence": [
+            "Scoped bundled-source continuation: docs/verification/shchedryk-opening-2026-09-24/audio-source-review-r1.json sha256:48afbd853953778910af6d137b430ba91a860854a143d0454f0d4df638239134. Fifteen ordered audio inputs sha256:7d0a0e9c97c17036a941256a75d9168a6d46e1426cecd356ddffbe39ab301233 preserve the multi-style archive player and add an inactive, exact-identity adapter for future code-owned audio.",
+            "Eleven focused rights and source tests cover local-only zero requests, owned-local reuse, explicit acquisition, Installed-only playback, exact identity/path/bytes, duplicate rejection, effective-rights intersection, corrupt bytes and cancellation. Empty registrations add no recording, file, default, autoplay or storage write.",
+            "No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, cold-offline, frozen-build or public game approval. Archive previews remain outside trusted Automatic and built-in playlists; historical records and original payloads are immutable."
+          ],
+          "stage": "reviewed"
+        },
+        "recipe": { "id": "audio.ui.v1" },
+        "revision": 31
+      },
+      {
+        "description": "capture audio cue: existing bounded component with Field Kit tokens and state styling.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "audio.capture.field-kit",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored runtime recipe",
+          "parent": { "id": "audio.capture.field-kit", "revision": 30 },
+          "prompt": 36,
+          "source": 492
+        },
+        "quality": {
+          "evidence": [
+            "Scoped bundled-source continuation: docs/verification/shchedryk-opening-2026-09-24/audio-source-review-r1.json sha256:48afbd853953778910af6d137b430ba91a860854a143d0454f0d4df638239134. Fifteen ordered audio inputs sha256:7d0a0e9c97c17036a941256a75d9168a6d46e1426cecd356ddffbe39ab301233 preserve the multi-style archive player and add an inactive, exact-identity adapter for future code-owned audio.",
+            "Eleven focused rights and source tests cover local-only zero requests, owned-local reuse, explicit acquisition, Installed-only playback, exact identity/path/bytes, duplicate rejection, effective-rights intersection, corrupt bytes and cancellation. Empty registrations add no recording, file, default, autoplay or storage write.",
+            "No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, cold-offline, frozen-build or public game approval. Archive previews remain outside trusted Automatic and built-in playlists; historical records and original payloads are immutable."
+          ],
+          "stage": "reviewed"
+        },
+        "recipe": { "id": "audio.ui.v1" },
+        "revision": 31
+      },
+      {
+        "description": "failure audio cue: existing bounded component with Field Kit tokens and state styling.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "audio.failure.field-kit",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored runtime recipe",
+          "parent": { "id": "audio.failure.field-kit", "revision": 30 },
+          "prompt": 78,
+          "source": 492
+        },
+        "quality": {
+          "evidence": [
+            "Scoped bundled-source continuation: docs/verification/shchedryk-opening-2026-09-24/audio-source-review-r1.json sha256:48afbd853953778910af6d137b430ba91a860854a143d0454f0d4df638239134. Fifteen ordered audio inputs sha256:7d0a0e9c97c17036a941256a75d9168a6d46e1426cecd356ddffbe39ab301233 preserve the multi-style archive player and add an inactive, exact-identity adapter for future code-owned audio.",
+            "Eleven focused rights and source tests cover local-only zero requests, owned-local reuse, explicit acquisition, Installed-only playback, exact identity/path/bytes, duplicate rejection, effective-rights intersection, corrupt bytes and cancellation. Empty registrations add no recording, file, default, autoplay or storage write.",
+            "No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, cold-offline, frozen-build or public game approval. Archive previews remain outside trusted Automatic and built-in playlists; historical records and original payloads are immutable."
+          ],
+          "stage": "reviewed"
+        },
+        "recipe": { "id": "audio.ui.v1" },
+        "revision": 31
+      },
+      {
+        "description": "victory audio cue: existing bounded component with Field Kit tokens and state styling.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "audio.victory.field-kit",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored runtime recipe",
+          "parent": { "id": "audio.victory.field-kit", "revision": 30 },
+          "prompt": 355,
+          "source": 492
+        },
+        "quality": {
+          "evidence": [
+            "Scoped bundled-source continuation: docs/verification/shchedryk-opening-2026-09-24/audio-source-review-r1.json sha256:48afbd853953778910af6d137b430ba91a860854a143d0454f0d4df638239134. Fifteen ordered audio inputs sha256:7d0a0e9c97c17036a941256a75d9168a6d46e1426cecd356ddffbe39ab301233 preserve the multi-style archive player and add an inactive, exact-identity adapter for future code-owned audio.",
+            "Eleven focused rights and source tests cover local-only zero requests, owned-local reuse, explicit acquisition, Installed-only playback, exact identity/path/bytes, duplicate rejection, effective-rights intersection, corrupt bytes and cancellation. Empty registrations add no recording, file, default, autoplay or storage write.",
+            "No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, cold-offline, frozen-build or public game approval. Archive previews remain outside trusted Automatic and built-in playlists; historical records and original payloads are immutable."
+          ],
+          "stage": "reviewed"
+        },
+        "recipe": { "id": "audio.ui.v1" },
+        "revision": 31
+      },
+      {
+        "description": "pickup audio cue: existing bounded component with Field Kit tokens and state styling.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "audio.pickup.field-kit",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored runtime recipe",
+          "parent": { "id": "audio.pickup.field-kit", "revision": 30 },
+          "prompt": 225,
+          "source": 492
+        },
+        "quality": {
+          "evidence": [
+            "Scoped bundled-source continuation: docs/verification/shchedryk-opening-2026-09-24/audio-source-review-r1.json sha256:48afbd853953778910af6d137b430ba91a860854a143d0454f0d4df638239134. Fifteen ordered audio inputs sha256:7d0a0e9c97c17036a941256a75d9168a6d46e1426cecd356ddffbe39ab301233 preserve the multi-style archive player and add an inactive, exact-identity adapter for future code-owned audio.",
+            "Eleven focused rights and source tests cover local-only zero requests, owned-local reuse, explicit acquisition, Installed-only playback, exact identity/path/bytes, duplicate rejection, effective-rights intersection, corrupt bytes and cancellation. Empty registrations add no recording, file, default, autoplay or storage write.",
+            "No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, cold-offline, frozen-build or public game approval. Archive previews remain outside trusted Automatic and built-in playlists; historical records and original payloads are immutable."
+          ],
+          "stage": "reviewed"
+        },
+        "recipe": { "id": "audio.ui.v1" },
+        "revision": 31
+      },
+      {
+        "description": "Theme music: existing bounded component with Field Kit tokens and state styling.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "audio.music.field-kit",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored runtime recipe",
+          "parent": { "id": "audio.music.field-kit", "revision": 30 },
+          "prompt": 323,
+          "source": 492
+        },
+        "quality": {
+          "evidence": [
+            "Scoped bundled-source continuation: docs/verification/shchedryk-opening-2026-09-24/audio-source-review-r1.json sha256:48afbd853953778910af6d137b430ba91a860854a143d0454f0d4df638239134. Fifteen ordered audio inputs sha256:7d0a0e9c97c17036a941256a75d9168a6d46e1426cecd356ddffbe39ab301233 preserve the multi-style archive player and add an inactive, exact-identity adapter for future code-owned audio.",
+            "Eleven focused rights and source tests cover local-only zero requests, owned-local reuse, explicit acquisition, Installed-only playback, exact identity/path/bytes, duplicate rejection, effective-rights intersection, corrupt bytes and cancellation. Empty registrations add no recording, file, default, autoplay or storage write.",
+            "No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, cold-offline, frozen-build or public game approval. Archive previews remain outside trusted Automatic and built-in playlists; historical records and original payloads are immutable."
+          ],
+          "stage": "reviewed"
+        },
+        "recipe": { "id": "audio.music.v1" },
+        "revision": 31
       }
     ],
     "collections": [
@@ -52759,11 +52959,11 @@
     ],
     "format": "revealline-theme-bundle.v1",
     "id": "field-kit",
-    "revision": 75,
+    "revision": 76,
     "selection": {
       "base": { "id": "base", "revision": 1 },
       "collection": null,
-      "theme": { "id": "fpv", "revision": 75 }
+      "theme": { "id": "fpv", "revision": 76 }
     },
     "slots": [
       {
@@ -74397,6 +74597,24 @@
         "name": "FPV Field Kit",
         "parent": { "id": "fpv", "revision": 74 },
         "revision": 75,
+        "tokens": {}
+      },
+      {
+        "bindings": {
+          "audio.cancel": { "id": "audio.cancel.field-kit", "revision": 31 },
+          "audio.capture": { "id": "audio.capture.field-kit", "revision": 31 },
+          "audio.confirm": { "id": "audio.confirm.field-kit", "revision": 31 },
+          "audio.failure": { "id": "audio.failure.field-kit", "revision": 31 },
+          "audio.focus": { "id": "audio.focus.field-kit", "revision": 31 },
+          "audio.music": { "id": "audio.music.field-kit", "revision": 31 },
+          "audio.pickup": { "id": "audio.pickup.field-kit", "revision": 31 },
+          "audio.victory": { "id": "audio.victory.field-kit", "revision": 31 }
+        },
+        "format": "revealline-presentation-theme.v1",
+        "id": "fpv",
+        "name": "FPV Field Kit",
+        "parent": { "id": "fpv", "revision": 75 },
+        "revision": 76,
         "tokens": {}
       }
     ]
