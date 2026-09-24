@@ -8,6 +8,7 @@ import { openVideoPosterSource, VIDEO_POSTER_LIMITS } from '../video-poster.mjs'
 import { creatorAbort, creatorSHA256, ownCreatorBlob } from './bytes.mjs';
 import { creatorStoryAssetFacts, validateCreatorStoryBindings } from './media-bundle.mjs';
 import { validateCreatorProvenance, verifyCreatorRoutes } from './templates.mjs';
+import { verifyCreatorVersusRoutes } from './versus.mjs';
 
 export const CREATOR_BUNDLE_FORMAT = 'revealline-content-bundle.v1';
 export const CREATOR_BUNDLE_LIMITS = Object.freeze({
@@ -23,6 +24,17 @@ export const CREATOR_COMPATIBILITY = freezeDesign({
 export const CREATOR_VIDEO_COMPATIBILITY = freezeDesign({
   format: 'revealline-creator-runtime.v2',
   modes: ['solo'],
+  gameplayPolicy: 'compiled-preset-v1',
+  victoryStories: 'revealline-creator-story-bindings.v1',
+});
+export const CREATOR_VERSUS_COMPATIBILITY = freezeDesign({
+  format: 'revealline-creator-runtime.v2',
+  modes: ['solo', 'versus'],
+  gameplayPolicy: 'compiled-preset-v1',
+});
+export const CREATOR_VIDEO_VERSUS_COMPATIBILITY = freezeDesign({
+  format: 'revealline-creator-runtime.v3',
+  modes: ['solo', 'versus'],
   gameplayPolicy: 'compiled-preset-v1',
   victoryStories: 'revealline-creator-story-bindings.v1',
 });
@@ -66,6 +78,25 @@ function scopedProvenance(source, missionIds) {
   return ordered.length === 1 ? ordered[0] : ordered;
 }
 
+const knownCompatibility = (value) =>
+  [
+    CREATOR_COMPATIBILITY,
+    CREATOR_VIDEO_COMPATIBILITY,
+    CREATOR_VERSUS_COMPATIBILITY,
+    CREATOR_VIDEO_VERSUS_COMPATIBILITY,
+  ].some(
+    (candidate) => canonicalJSON(value) === canonicalJSON(candidate),
+  );
+
+const creatorCompatibility = ({ media, versus }) =>
+  media
+    ? versus
+      ? CREATOR_VIDEO_VERSUS_COMPATIBILITY
+      : CREATOR_VIDEO_COMPATIBILITY
+    : versus
+      ? CREATOR_VERSUS_COMPATIBILITY
+      : CREATOR_COMPATIBILITY;
+
 /** Export scope is determined from the selected pack, never from the browser's
  * media inventory. Campaign and mission order follow the authored pack graph. */
 function scopedContent(source) {
@@ -106,9 +137,19 @@ function scopedContent(source) {
   project.maps = project.maps.filter((map) =>
     project.missions.some((m) => m.map.id === map.id && m.map.revision === map.revision),
   );
+  const provenance = scopedProvenance(input.provenance, missionIds);
+  const provenances = Array.isArray(provenance) ? provenance : [provenance];
+  const solo = project.missions.every(
+    (mission) => mission.modes.length === 1 && mission.modes[0] === 'solo',
+  );
+  const versus = project.missions.every(
+    (mission) =>
+      mission.modes.length === 2 && mission.modes[0] === 'solo' && mission.modes[1] === 'versus',
+  );
+  required(solo || versus, 'Creator missions must declare one consistent supported mode set.');
   required(
-    project.missions.every((mission) => mission.modes.length === 1 && mission.modes[0] === 'solo'),
-    'This creator version supports Solo.',
+    !versus || provenances.every((entry) => entry.templateVersion === 'creator-layouts.v3'),
+    'Only qualified creator-layouts.v3 missions support Versus.',
   );
   const wantedAssets = new Set(
     project.missions.map((mission) => mission.presentation.backgroundAssetId),
@@ -125,7 +166,6 @@ function scopedContent(source) {
     themes.length === wantedThemes.size && themes.every((theme) => validateTheme(theme).valid),
     'Every mission needs one valid presentation theme.',
   );
-  const provenance = scopedProvenance(input.provenance, missionIds);
   exactKeys(input.credits, ['creator', 'picture', 'license'], 'creator credits');
   required(
     Object.values(input.credits).length === 3 &&
@@ -144,7 +184,7 @@ function scopedContent(source) {
     provenance,
     credits: input.credits,
     ...(media ? { media } : {}),
-    compatibility: media ? CREATOR_VIDEO_COMPATIBILITY : CREATOR_COMPATIBILITY,
+    compatibility: creatorCompatibility({ media, versus }),
   });
 }
 
@@ -320,6 +360,12 @@ export async function prepareCreatorBundle(
       signal,
       buildVersion: 'creator-route-v1',
     });
+    if (content.compatibility.modes.includes('versus'))
+      await verifyCreatorVersusRoutes(content.project, provenance, {
+        signal,
+        buildVersion: 'creator-versus-v1',
+        verifiedSoloRoutes: routes,
+      });
     verified.push({ missionId: provenance.missionId, routes });
   }
   const evidence = verified.length === 1 ? verified[0].routes : freezeDesign(verified);
@@ -369,8 +415,9 @@ export async function prepareCreatorBundle(
         : {}),
       credits: content.credits,
       ...(content.media ? { stories: content.media.stories.length } : {}),
-      validation:
-        'Automated route verified for all Solo presets and steering modes. Visual review is still required.',
+      validation: content.compatibility.modes.includes('versus')
+        ? 'Automated route verified for all Solo presets and equal-board Versus configurations. Visual review is still required.'
+        : 'Automated route verified for all Solo presets and steering modes. Visual review is still required.',
     }),
   });
   preparations.add(result);
@@ -402,8 +449,7 @@ export async function inspectCreatorManifest(source) {
   );
   const { compatibility, ...content } = manifest.content;
   required(
-    canonicalJSON(compatibility) ===
-      canonicalJSON(manifest.content.media ? CREATOR_VIDEO_COMPATIBILITY : CREATOR_COMPATIBILITY) &&
+    knownCompatibility(compatibility) &&
       canonicalJSON(scopedContent(content)) === canonicalJSON(manifest.content),
     'Content manifest requires unsupported or unrelated content.',
   );
@@ -498,8 +544,7 @@ export async function importCreatorBundle(
     'bundle content',
   );
   required(
-    canonicalJSON(manifest.content.compatibility) ===
-      canonicalJSON(manifest.content.media ? CREATOR_VIDEO_COMPATIBILITY : CREATOR_COMPATIBILITY),
+    knownCompatibility(manifest.content.compatibility),
     'This pack requires an unsupported creator runtime.',
   );
   required(
