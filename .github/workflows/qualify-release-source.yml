@@ -11,92 +11,25 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20.19.x
-      - name: Install dependencies
-        run: npm ci
-      - name: Compare twenty portable routes and unchanged raw replay
+      - name: Compare current input routes without changing runtime acceptance
         run: |
           node --input-type=module <<'JS'
-          import { readFile } from 'node:fs/promises';
-          import { createAuthoredJourneyRoute } from './game/content-design/route.mjs';
-          import { compileContentProject, resolveMission } from './game/content-design/project.mjs';
-          import { createWholeSortingCandidates } from './game/content-design/whole-spatial-candidates.mjs';
-          import { createRun, stepRun, FIXED_DT } from './game/core/index.mjs';
-          import { applyGameplayTuning, resolveGameplayTuning } from './game/gameplay-tuning.mjs';
-          import { authoritativeCheckpoint, createRecorder,recordInput,exportReplay,verifyReplay } from './game/replay.mjs';
-          import { routeEvidenceCheckpoint } from './game/test/helpers/route-evidence.mjs';
-          const authored=compileContentProject(createAuthoredJourneyRoute('authored').source);
-          const current=compileContentProject(createWholeSortingCandidates({artwork:true}));
-          const fixture=JSON.parse(await readFile('./game/test/fixtures/candidate-solo-tuned-host-routes.json'));
-          const endingFixture=JSON.parse(await readFile('./game/test/fixtures/default-journey-tuned-endings.json'));
-          const candidates=[...fixture.rows,...fixture.optional].map(([id,,,checkpoint,segments])=>({family:'authored',id,checkpoint,project:authored,seed:1,turnPolicy:'immediate',segments:segments.map(([direction,ticks])=>({direction,ticks}))}));
-          for(const row of endingFixture.rows)candidates.push({...row,family:'default',project:current});
+          import {compileContentProject,resolveMission} from './game/content-design/project.mjs';
+          import {createWholeSortingCandidates} from './game/content-design/whole-spatial-candidates.mjs';
+          import {applyGameplayTuning,resolveGameplayTuning} from './game/gameplay-tuning.mjs';
+          import {createRun,stepRun,FIXED_DT} from './game/core/index.mjs';
+          import {authoritativeCheckpoint,createRecorder,recordInput,exportReplay,verifyReplay} from './game/replay.mjs';
+          const project=compileContentProject(createWholeSortingCandidates({artwork:true}));
+          const rows=[{"id":"sorting-yard","difficulty":"standard","turnPolicy":"immediate","delaySeconds":0,"seed":1,"status":"won","simulationIdentity":"d8ba12cc433414ef","ticks":3920,"lives":3,"coverage":0.8064864864864865,"cuts":7,"searchSteps":7,"searchWaitTicks":[0],"checkpoint":"3840b8ae30762b14","events":[[319,"cut.closed",null],[646,"cut.closed",null],[1163,"cut.closed",null],[1842,"cut.closed",null],[2643,"cut.closed",null],[3363,"cut.closed",null],[3920,"cut.closed",null]],"closures":[[319,0.21945945945945947],[646,0.36324324324324325],[1163,0.492972972972973],[1842,0.6389189189189189],[2643,0.6972972972972973],[3363,0.745945945945946],[3920,0.8064864864864865]],"segments":[{"direction":"up","ticks":27},{"direction":"right","ticks":95},{"direction":"up","ticks":197},{"direction":"down","ticks":7},{"direction":"up","ticks":14},{"direction":"left","ticks":244},{"direction":"down","ticks":259},{"direction":"left","ticks":109},{"direction":"down","ticks":218},{"direction":"up","ticks":217},{"direction":"right","ticks":244},{"direction":"down","ticks":218},{"direction":"up","ticks":217},{"direction":"right","ticks":245},{"direction":"down","ticks":81},{"direction":"right","ticks":258},{"direction":"up","ticks":81},{"direction":"left","ticks":421},{"direction":"down","ticks":218},{"direction":"up","ticks":271},{"direction":"left","ticks":81},{"direction":"up","ticks":198}],"format":"WholeSortingTunedHostRouteV1","scope":"Fresh Standard pressure.v4 keyboard host route; lossless technical feasibility and same-runtime replay verified by bounded pure simulation. Historical authored routes stay unchanged. Not human balance evidence."},{"id":"behind-the-patrol","difficulty":"standard","turnPolicy":"immediate","delaySeconds":0,"seed":1,"status":"won","simulationIdentity":"eb3e7ac4750312f0","ticks":3534,"lives":3,"coverage":0.7680170575692964,"cuts":2,"searchSteps":2,"searchWaitTicks":[0,60,120,240,600,960],"checkpoint":"415d1d79099d1b5a","events":[[1813,"cut.closed",null],[3534,"cut.closed",null]],"closures":[[1813,0.09211087420042643],[3534,0.7680170575692964]],"segments":[{"direction":"left","ticks":244},{"direction":"down","ticks":475},{"direction":"right","ticks":339},{"direction":"up","ticks":326},{"direction":"right","ticks":109},{"direction":"down","ticks":320},{"direction":null,"ticks":960},{"direction":"down","ticks":7},{"direction":"right","ticks":285},{"direction":"up","ticks":469}],"format":"WholeTimedTunedHostRouteV1","scope":"Fresh Standard pressure.v4 keyboard host route; one bonus collection and lossless real win, verified same-runtime public replay. Historical authored route remains unchanged. Technical feasibility, not human balance evidence."},{"id":"cross-stitch-crossings","difficulty":"standard","turnPolicy":"immediate","delaySeconds":0,"seed":1,"status":"won","simulationIdentity":"852bcedb97f9487c","ticks":5370,"lives":3,"coverage":0.7321755027422303,"cuts":5,"searchSteps":5,"searchWaitTicks":[0],"checkpoint":"7e1f00bf9ed83b4f","events":[[1134,"cut.closed",null],[2762,"cut.closed",null],[3767,"cut.closed",null],[4651,"cut.closed",null],[5370,"cut.closed",null]],"closures":[[1134,0.20612431444241316],[2762,0.3596892138939671],[3767,0.5388482632541134],[4651,0.6302559414990859],[5370,0.7321755027422303]],"segments":[{"direction":"right","ticks":665},{"direction":"down","ticks":476},{"direction":"left","ticks":773},{"direction":"up","ticks":81},{"direction":"right","ticks":774},{"direction":"up","ticks":394},{"direction":"left","ticks":217},{"direction":"down","ticks":394},{"direction":"up","ticks":326},{"direction":"left","ticks":551},{"direction":"right","ticks":400},{"direction":"down","ticks":319}]},{"id":"rushnyk-bands","difficulty":"standard","turnPolicy":"immediate","delaySeconds":0,"seed":1,"status":"won","simulationIdentity":"8cfc613ef1423233","ticks":6676,"lives":3,"coverage":0.7722969606377678,"cuts":7,"searchSteps":7,"searchWaitTicks":[0],"checkpoint":"61a233cc0236878f","events":[[1827,"cut.closed",null],[2317,"cut.closed",null],[3742,"cut.closed",null],[4829,"cut.closed",null],[4924,"cut.closed",null],[5630,"cut.closed",null],[6676,"cut.closed",null]],"closures":[[1827,0.17438963627304435],[2317,0.26756352765321373],[3742,0.39810662680617837],[4829,0.4419531639262581],[4924,0.5132037867463877],[5630,0.5560538116591929],[6676,0.7722969606377678]],"segments":[{"direction":"right","ticks":801},{"direction":"down","ticks":68},{"direction":"left","ticks":958},{"direction":"right","ticks":7},{"direction":"left","ticks":14},{"direction":"down","ticks":122},{"direction":"right","ticks":354},{"direction":"up","ticks":122},{"direction":"right","ticks":611},{"direction":"down","ticks":108},{"direction":"left","ticks":577},{"direction":"right","ticks":7},{"direction":"left","ticks":14},{"direction":"down","ticks":14},{"direction":"left","ticks":380},{"direction":"down","ticks":81},{"direction":"right","ticks":598},{"direction":"up","ticks":88},{"direction":"down","ticks":115},{"direction":"left","ticks":591},{"direction":"right","ticks":7},{"direction":"up","ticks":122},{"direction":"right","ticks":624},{"direction":"down","ticks":293}]},{"id":"pysanka-sections","difficulty":"standard","turnPolicy":"immediate","delaySeconds":0,"seed":1,"status":"won","simulationIdentity":"b9476a2dbf48e81a","ticks":6326,"lives":3,"coverage":0.8055286129970902,"cuts":11,"searchSteps":11,"searchWaitTicks":[0],"checkpoint":"a0aadc24ad7c1261","events":[[334,"cut.closed",null],[728,"cut.closed",null],[1150,"cut.closed",null],[1476,"cut.closed",null],[1857,"cut.closed",null],[2156,"cut.closed",null],[2646,"cut.closed",null],[3935,"cut.closed",null],[5089,"cut.closed",null],[5917,"cut.closed",null],[6326,"cut.closed",null]],"closures":[[334,0.021823472356935016],[728,0.056741028128031036],[1150,0.08438409311348205],[1476,0.11251212415130941],[1857,0.13870029097963144],[2156,0.16197866149369544],[2646,0.20562560620756548],[3935,0.2909796314258002],[5089,0.5863239573229874],[5917,0.7356935014548982],[6326,0.8055286129970902]],"segments":[{"direction":"down","ticks":68},{"direction":"left","ticks":95},{"direction":"up","ticks":109},{"direction":"right","ticks":245},{"direction":"down","ticks":109},{"direction":"left","ticks":102},{"direction":"right","ticks":7},{"direction":"up","ticks":109},{"direction":"left","ticks":14},{"direction":"up","ticks":95},{"direction":"left","ticks":108},{"direction":"down","ticks":96},{"direction":"up","ticks":27},{"direction":"left","ticks":109},{"direction":"down","ticks":108},{"direction":"right","ticks":163},{"direction":"down","ticks":109},{"direction":"right","ticks":109},{"direction":"up","ticks":75},{"direction":"down","ticks":34},{"direction":"right","ticks":108},{"direction":"up","ticks":109},{"direction":"left","ticks":48},{"direction":"right","ticks":47},{"direction":"down","ticks":14},{"direction":"right","ticks":82},{"direction":"up","ticks":109},{"direction":"left","ticks":238},{"direction":"right","ticks":237},{"direction":"down","ticks":27},{"direction":"right","ticks":82},{"direction":"up","ticks":108},{"direction":"left","ticks":835},{"direction":"right","ticks":740},{"direction":"down","ticks":421},{"direction":"up","ticks":81},{"direction":"left","ticks":740},{"direction":"right","ticks":75},{"direction":"up","ticks":334}]},{"id":"four-motor-landings","difficulty":"standard","turnPolicy":"immediate","delaySeconds":0,"seed":1,"status":"won","simulationIdentity":"26227c545dbfbde9","ticks":5674,"lives":3,"coverage":0.7172665623369848,"cuts":7,"searchSteps":7,"searchWaitTicks":[0],"checkpoint":"6c76cf55e63f9d92","events":[[1230,"cut.closed",null],[2072,"cut.closed",null],[3839,"cut.closed",null],[3921,"cut.closed",null],[4722,"cut.closed",null],[5347,"cut.closed",null],[5674,"cut.closed",null]],"closures":[[1230,0.1825769431403234],[2072,0.21283255086071987],[3839,0.26917057902973396],[3921,0.32655190401669276],[4722,0.5706833594157538],[5347,0.6838810641627543],[5674,0.7172665623369848]],"segments":[{"direction":"left","ticks":204},{"direction":"down","ticks":68},{"direction":"right","ticks":965},{"direction":"down","ticks":407},{"direction":"left","ticks":27},{"direction":"up","ticks":401},{"direction":"down","ticks":7},{"direction":"up","ticks":14},{"direction":"left","ticks":937},{"direction":"down","ticks":82},{"direction":"right","ticks":734},{"direction":"up","ticks":75},{"direction":"down","ticks":75},{"direction":"left","ticks":407},{"direction":"down","ticks":326},{"direction":"right","ticks":298},{"direction":"up","ticks":320},{"direction":"down","ticks":7},{"direction":"up","ticks":14},{"direction":"right","ticks":306}]},{"id":"circuit-lanes","difficulty":"standard","turnPolicy":"immediate","delaySeconds":0,"seed":1,"status":"won","simulationIdentity":"2e1451e77ea8e230","ticks":3564,"lives":3,"coverage":0.7287050713934022,"cuts":4,"searchSteps":4,"searchWaitTicks":[0],"checkpoint":"977c98c93fd89e0e","events":[[1039,"cut.closed",null],[2003,"cut.closed",null],[2532,"cut.closed",null],[3564,"cut.closed",null]],"closures":[[1039,0.2481536189069424],[2003,0.5465288035450517],[2532,0.6154603643525357],[3564,0.7287050713934022]],"segments":[{"direction":"right","ticks":570},{"direction":"down","ticks":476},{"direction":"left","ticks":488},{"direction":"up","ticks":469},{"direction":"down","ticks":47},{"direction":"right","ticks":489},{"direction":"down","ticks":421},{"direction":"left","ticks":312},{"direction":"up","ticks":217},{"direction":"right","ticks":54},{"direction":"down","ticks":21}]},{"id":"twin-lens-chambers","difficulty":"standard","turnPolicy":"immediate","delaySeconds":0,"seed":1,"status":"won","simulationIdentity":"287cf81b9921d7dc","ticks":3646,"lives":3,"coverage":0.821,"cuts":8,"searchSteps":8,"searchWaitTicks":[0],"checkpoint":"1256b3d5e7923212","events":[[509,"cut.closed",null],[997,"cut.closed",null],[1269,"cut.closed",null],[1662,"cut.closed",null],[2070,"cut.closed",null],[2599,"cut.closed",null],[2871,"cut.closed",null],[3646,"cut.closed",null]],"closures":[[509,0.054],[997,0.108],[1269,0.125],[1662,0.176],[2070,0.206],[2599,0.2375],[2871,0.565],[3646,0.821]],"segments":[{"direction":"down","ticks":27},{"direction":"left","ticks":54},{"direction":"down","ticks":163},{"direction":"right","ticks":108},{"direction":"up","ticks":157},{"direction":"down","ticks":7},{"direction":"up","ticks":217},{"direction":"left","ticks":108},{"direction":"down","ticks":163},{"direction":"up","ticks":27},{"direction":"left","ticks":109},{"direction":"down","ticks":54},{"direction":"right","ticks":82},{"direction":"up","ticks":54},{"direction":"left","ticks":244},{"direction":"down","ticks":27},{"direction":"right","ticks":68},{"direction":"down","ticks":13},{"direction":"left","ticks":68},{"direction":"down","ticks":55},{"direction":"right","ticks":312},{"direction":"down","ticks":176},{"direction":"right","ticks":109},{"direction":"up","ticks":197},{"direction":"down","ticks":7},{"direction":"up","ticks":265},{"direction":"down","ticks":7},{"direction":"up","ticks":14},{"direction":"right","ticks":285},{"direction":"down","ticks":469}]}];
           const results=[];
-          for(const row of candidates){
-           const level=applyGameplayTuning(resolveMission(row.project,row.id).level,resolveGameplayTuning('standard'));
+          for(const row of rows){
+           const manifest=resolveMission(project,row.id),level=applyGameplayTuning(manifest.level,resolveGameplayTuning('standard'));
            const options={seed:row.seed,classId:'scout',turnPolicy:row.turnPolicy};
            const run=createRun(level,options),recorder=createRecorder(level,options);
-           for(const {direction,ticks} of row.segments)for(let tick=0;tick<ticks;tick++){recordInput(recorder,{direction});stepRun(run,{direction},FIXED_DT);}
-           const checkpoint=authoritativeCheckpoint(run), replay=verifyReplay(exportReplay(recorder,run));
-           const portable=routeEvidenceCheckpoint(run);
-           results.push({family:row.family,id:row.id,rawExpected:row.checkpoint,checkpoint,portable,status:run.status,tick:run.tick,livesLost:run.classic.livesLost,replayMatch:replay.match});
-           if(checkpoint.hash!==row.checkpoint)console.log('ROUTE_STATE='+JSON.stringify({id:row.id,family:row.family,run}));
+           for(const {direction,ticks}of row.segments)for(let i=0;i<ticks;i++){recordInput(recorder,{direction});stepRun(run,{direction},FIXED_DT);}
+           const checkpoint=authoritativeCheckpoint(run),match=verifyReplay(exportReplay(recorder,run)).match;
+           results.push({id:row.id,status:run.status,tick:run.tick,livesLost:run.classic.livesLost,expected:row.checkpoint,checkpoint:checkpoint.hash,match});
+           if(checkpoint.hash!==row.checkpoint)console.log('WHOLE_STATE='+JSON.stringify({id:row.id,run}));
           }
-          console.log('PROBE_RESULTS='+JSON.stringify({node:process.version,v8:process.versions.v8,arch:process.arch,platform:process.platform,results}));
-          JS
-      - name: Inspect external Sentinel and device routes
-        run: |
-          node --input-type=module <<'JS'
-          // Run from repository root: node --input-type=module < /tmp/ux0-additional-route-probe.mjs
-          // Read-only, no production mutation; reports exact hashes without relaxing them.
-          import { readFile } from 'node:fs/promises';
-          import { buildExternalPilot } from './authoring/library/external-chapter-pilot/build.mjs';
-          import { scenarioFromPack } from './game/packs.mjs';
-          import { createRun, stepRun, FIXED_DT } from './game/core/index.mjs';
-          import { applyGameplayTuning, resolveGameplayTuning } from './game/gameplay-tuning.mjs';
-          import { dataIdentity } from './game/data-json.mjs';
-          import { authoritativeCheckpoint, createRecorder, recordInput, exportReplay, verifyReplay } from './game/replay.mjs';
-          import { createSentinelInnerCandidates } from './game/content-design/sentinel-inner-candidates.mjs';
-          import { createSentinelSpatialCandidates } from './game/content-design/sentinel-spatial-candidates.mjs';
-          import { compileContentProject, resolveMission } from './game/content-design/project.mjs';
-          
-          console.log(JSON.stringify({ category: 'environment', platform: process.platform, arch: process.arch, node: process.version }));
-          function runRoute(category, label, level, options, segments, expected = {}) {
-            const run = createRun(level, options);
-            const recorder = createRecorder(level, options);
-            let premature = null;
-            for (const segment of segments) {
-              const direction = Array.isArray(segment) ? segment[0] : segment.direction;
-              const ticks = Array.isArray(segment) ? segment[1] : segment.ticks;
-              for (let i = 0; i < ticks; i++) {
-                if (run.status !== 'running') premature ??= { status: run.status, tick: run.tick };
-                recordInput(recorder, { direction });
-                stepRun(run, { direction }, FIXED_DT);
-              }
-            }
-            const checkpoint = authoritativeCheckpoint(run);
-            const replay = verifyReplay(exportReplay(recorder, run));
-            console.log(JSON.stringify({ category, label, expected, actual: { levelIdentity: dataIdentity(level), checkpoint, status: run.status, tick: run.tick, lives: run.lives, coverage: run.coverage, player: run.player, enemies: run.enemies }, hashMatches: expected.checkpoint ? expected.checkpoint === checkpoint.hash : null, replayMatch: replay.match, premature }));
-            return run;
-          }
-          
-          const pilot = await buildExternalPilot();
-          const scenario = scenarioFromPack(pilot.prepared.pack, pilot.prepared.pack.campaigns[0].id, pilot.prepared.pack.campaigns[0].levels[0].id);
-          runRoute('external', 'first original Standard/v4', applyGameplayTuning(scenario.level, resolveGameplayTuning('standard')), { seed: 1, classId: 'scout', turnPolicy: 'immediate', classRecipes: scenario.classRecipes }, [[null,120],['left',68],['down',476],['up',339],['right',109],['down',108],['left',103]], { levelIdentity: 'c53a143c260df0f8', checkpoint: '62dbb01b553a40ac', status: 'won' });
-          
-          const inner = compileContentProject(createSentinelInnerCandidates());
-          const fixture = JSON.parse(await readFile('game/test/fixtures/sentinel-inner-clear-routes.json', 'utf8'));
-          for (const row of [...fixture.rows, ...fixture.incompleteSearches]) {
-            const manifest = resolveMission(inner, row.id, { difficulty: row.difficulty });
-            runRoute('sentinel-inner', [row.kind ?? 'incomplete-prefix', row.difficulty, row.turnPolicy].join('/'), manifest.level, { seed: 1, classId: 'scout', turnPolicy: row.turnPolicy }, row.segments, { simulationIdentity: row.simulationIdentity, resolvedSimulationIdentity: manifest.simulationIdentity, checkpoint: row.checkpoint, status: row.status, ticks: row.ticks, coverage: row.coverage });
-          }
-          const spatial = compileContentProject(createSentinelSpatialCandidates());
-          const prior = JSON.parse(await readFile('game/test/fixtures/sentinel-spatial-clear-routes.json', 'utf8')).rows.find(row => row.id === 'twin-receivers' && row.difficulty === 'standard' && row.turnPolicy === 'immediate');
-          runRoute('sentinel-historical', 'spatial Standard immediate', resolveMission(spatial, prior.id).level, { seed: 1, classId: 'scout', turnPolicy: prior.turnPolicy }, prior.segments, { checkpoint: prior.checkpoint, status: 'won' });
-          
-          const pack = JSON.parse(await readFile('game/content/packs/fpv-arcade-r5.json', 'utf8'));
-          for (const turnPolicy of ['immediate', 'grid-center']) {
-            // This fixture has no fixed checksum. Its acceptance is >50% coverage/3 lives
-            // plus host stop-on-capture and same-runtime replay equality.
-            runRoute('device-capture', turnPolicy, applyGameplayTuning(pack.campaigns[0].levels[0], resolveGameplayTuning('standard')), { seed: 1, classId: 'scout', turnPolicy, classRecipes: pack.classRecipes }, [[null,972],['left',12],['down',470]], { status: 'running', minimumCoverage: 0.5, lives: 3 });
-          }
+          console.log('WHOLE_RESULTS='+JSON.stringify({node:process.version,arch:process.arch,platform:process.platform,results}));
           JS
