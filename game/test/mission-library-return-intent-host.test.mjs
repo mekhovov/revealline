@@ -11,6 +11,7 @@ import { readVersusSoloReturnToken } from '../mode-return-v2.mjs';
 import { readMissionLibraryReturn } from '../mission-library/handoff.mjs';
 import { JOURNEY_PREFERENCES_KEY, JOURNEY_PREFERENCES_VERSION } from '../journey/preferences.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
+import { activateMissionCard, openMissionLibrary } from './helpers/library-selection.mjs';
 
 const settle = (condition) => waitFor(condition, { timeoutMs: 10000 });
 // Compiling the real Journey before the held request is a boot precondition,
@@ -87,10 +88,32 @@ async function versus(t, options = {}) {
   });
 }
 async function open(p, host, mode) {
-  const opener = host === 'solo' ? 'shell-play' : 'race-library-switch';
-  p.$(opener).focus();
-  p.$(opener).click();
-  await settle(() => p.$('journey-chooser')?.open && p.$('journey-mode'));
+  if (host === 'solo') await openMissionLibrary(p, 'shell-play');
+  else {
+    const opener = p.$('race-library-switch'),
+      listeners = opener.listeners.get('click'),
+      pending = [];
+    opener.listeners.set(
+      'click',
+      new Set(
+        [...listeners].map((listener) => (event) => {
+          const result = listener.call(opener, event);
+          if (result instanceof Promise) pending.push(result);
+          return result;
+        }),
+      ),
+    );
+    try {
+      opener.focus();
+      opener.click();
+    } finally {
+      opener.listeners.set('click', listeners);
+    }
+    assert.equal(pending.length, 1, 'The visible Missions action owns preparation.');
+    assert.match(p.$('race-message').textContent, /Preparing missions/);
+    await pending[0];
+    assert.equal(p.$('journey-chooser').open, true);
+  }
   p.$('journey-mode').value = mode;
   p.$('journey-mode').emit('change');
   return [...p.$('journey-cards').children];
@@ -501,7 +524,7 @@ test('late Classic checked return without saved browse state uses the retained m
       const card = cards.find((item) => JSON.parse(item.dataset.missionId)[3] === 'signal-12');
       assert.ok(card);
       missionId = card.dataset.missionId;
-      card.click();
+      await activateMissionCard(card);
       await settle(() => {
         p.frame(0);
         return (
