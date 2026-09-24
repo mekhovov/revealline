@@ -54,6 +54,7 @@ let sourceFile = null,
   controller = null,
   busy = true,
   pictureURL = null,
+  batchMode = false,
   sourceVersion = 0,
   saveTimer = null;
 const batchSeed = crypto.getRandomValues(new Uint32Array(1))[0];
@@ -78,7 +79,7 @@ const batchApprovalAdapter = null;
 const batchEnabled = !!batchApprovalAdapter;
 
 function controls() {
-  $('edits').hidden = !content;
+  $('edits').hidden = !content || batchMode;
   $('generate').disabled = busy || (!sourceFile && !content);
   $('approve').disabled = busy || !prepared;
   $('install').disabled = busy || !installReview?.enoughManagedSpace;
@@ -272,14 +273,26 @@ async function operation(action) {
   }
 }
 function showReview(pack) {
-  if (pictureURL) URL.revokeObjectURL(pictureURL);
-  pictureURL = URL.createObjectURL(pack.assets[0].blob);
-  $('picture').src = pictureURL;
-  $('picture').alt = pack.review.picture.alt;
   const project = pack.manifest.content.project;
-  const provenance = pack.manifest.content.provenance;
-  const mission = project.missions[0];
-  $('picture-caption').textContent = mission.name;
+  const provenances = Array.isArray(pack.manifest.content.provenance)
+    ? pack.manifest.content.provenance
+    : [pack.manifest.content.provenance];
+  const provenance = provenances[0];
+  const mission = project.missions.find(({ id: missionId }) => missionId === provenance.missionId);
+  const picture = project.assets.find(
+    ({ id: assetId }) => assetId === mission?.presentation.backgroundAssetId,
+  );
+  const runtime = pack.assets.find(({ sha256 }) => sha256 === picture?.sha256);
+  if (!mission || !picture || !runtime)
+    throw new Error('The reviewed campaign is missing its first mission picture.');
+  if (pictureURL) URL.revokeObjectURL(pictureURL);
+  pictureURL = URL.createObjectURL(runtime.blob);
+  $('picture').src = pictureURL;
+  $('picture').alt = picture.alt;
+  $('picture-caption').textContent =
+    project.missions.length === 1
+      ? mission.name
+      : `${mission.name} · first of ${project.missions.length} levels`;
   const preview = prepareContentPreview(project, provenance.missionId);
   paintContentMap($('map').getContext('2d'), preview, { width: 720, showCapture: false });
   const template = CREATOR_TEMPLATES.find(({ id }) => id === provenance.templateId);
@@ -291,10 +304,10 @@ function showReview(pack) {
   const foundations = map?.foundations.length ?? 0;
   const terrain = map?.terrain.length ?? 0;
   $('map-caption').textContent =
-    `${template?.name ?? 'Verified crossing'} · 72 × 36 cells · Solo · ${enemies} ${enemies === 1 ? 'enemy' : 'enemies'} · ${walls} wall${walls === 1 ? '' : 's'} · ${foundations} safe island${foundations === 1 ? '' : 's'} · ${terrain} terrain zone${terrain === 1 ? '' : 's'} · verified completion route.`;
+    `${template?.name ?? 'Verified crossing'} · 72 × 36 cells · Solo · ${enemies} ${enemies === 1 ? 'enemy' : 'enemies'} · ${walls} wall${walls === 1 ? '' : 's'} · ${foundations} safe island${foundations === 1 ? '' : 's'} · ${terrain} terrain zone${terrain === 1 ? '' : 's'} · verified completion route${provenances.length === 1 ? '.' : `; ${provenances.length} mission configurations verified.`}`;
   $('validation').textContent = pack.review.validation;
   $('package-size').textContent =
-    `${mib(pack.bytes)} portable pack. Includes one PNG derivative. Source originals and player progress are excluded.`;
+    `${mib(pack.bytes)} portable pack. Includes ${project.assets.length} PNG derivative${project.assets.length === 1 ? '' : 's'}. Source originals and player progress are excluded.`;
   $('review').hidden = false;
 }
 async function generate(signal) {
@@ -333,6 +346,7 @@ async function generate(signal) {
 }
 function choose(file) {
   if (!file) return;
+  batchMode = false;
   sourceFile = file;
   invalidate();
   $('mission-title').value = file.name.replace(/\.[^.]+$/, '').slice(0, 160) || 'First picture';
@@ -355,6 +369,7 @@ function chooseFiles(files) {
     return;
   }
   controller?.abort();
+  batchMode = true;
   sourceFile = image = content = prepared = approval = installReview = null;
   $('review').hidden = true;
   $('approved').hidden = true;
@@ -370,6 +385,7 @@ function chooseFiles(files) {
 async function openPrepared(pack) {
   const { compatibility: _compatibility, ...selected } = pack.manifest.content;
   content = structuredClone(selected);
+  batchMode = content.project.missions.length > 1;
   sourceFile = image = null;
   draft.source = await prepareCreatorSource(
     { draftId: id, content, editing: { fit: 'contain' }, originalSha256: null },
@@ -388,6 +404,7 @@ async function openPrepared(pack) {
 }
 async function openSource(source) {
   content = structuredClone(source.document.content);
+  batchMode = content.project.missions.length > 1;
   draft.source = source;
   image = null;
   sourceFile = source.assets.find((a) => a.sha256 === source.document.originalSha256)?.blob ?? null;
@@ -410,7 +427,8 @@ async function listInstalled() {
       title.textContent = manifest.content.project.name;
       const edition = document.createElement('p');
       edition.className = 'muted';
-      edition.textContent = `Edition ${manifest.editionId.slice(0, 12)} · one Solo mission`;
+      const missions = manifest.content.project.missions.length;
+      edition.textContent = `Edition ${manifest.editionId.slice(0, 12)} · ${missions} Solo mission${missions === 1 ? '' : 's'}`;
       const play = document.createElement('a');
       play.href = `./player.html?edition=${manifest.editionId}`;
       play.textContent = 'Play campaign →';
