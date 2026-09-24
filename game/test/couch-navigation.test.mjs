@@ -4,6 +4,7 @@ import { readFile } from 'node:fs/promises';
 import { authoritativeCheckpoint } from '../replay.mjs';
 import { createRun, stepRun, releaseInputs, FIXED_DT } from '../core/index.mjs';
 import { retryFixture } from './fixtures/retry-scenarios.mjs';
+import { applyGameplayTuning, resolveGameplayTuning } from '../gameplay-tuning.mjs';
 import { couchPage as page } from './helpers/couch-host.mjs';
 
 const read = async (path) => JSON.parse(await readFile(new URL(path, import.meta.url), 'utf8'));
@@ -294,6 +295,86 @@ test('persisted return and Ready Escape preserve the true state and cancel a pen
   assert.deepEqual(f.checkpoint(), checkpoint);
 });
 
+for (const adapter of ['keyboard', 'controller']) {
+  test(`${adapter}: visible reaction settings and storage retry are reachable without starting either board`, async (t) => {
+    const preferenceKey = 'revealline.journey-reactions.v1',
+      values = new Map(),
+      writes = [];
+    let unavailable = true;
+    const f = await page(t, {
+      pads: adapter === 'controller' ? [pad(0)] : [],
+      nativeKeyboard: true,
+      storage: {
+        getItem: (key) => values.get(key) ?? null,
+        setItem(key, value) {
+          if (key === preferenceKey) {
+            writes.push(value);
+            if (unavailable) throw new Error('Storage temporarily unavailable');
+          }
+          values.set(key, value);
+        },
+      },
+    });
+    if (adapter === 'controller') f.join(0);
+    f.$('race-options').click();
+    f.$('race-settings-tab-display').click();
+    f.frame();
+    const before = f.checkpoint();
+    const next = () => {
+      if (adapter === 'controller') f.pulse(0, 13);
+      else {
+        const target = f.doc.activeElement;
+        target.emit('keydown', { key: 'Tab', code: 'Tab', repeat: false });
+        target.emit('keyup', { key: 'Tab', code: 'Tab' });
+      }
+    };
+    const activate = () => {
+      if (adapter === 'controller') f.pulse(0, 0);
+      else {
+        const target = f.doc.activeElement;
+        if (target.type === 'checkbox') {
+          const event = target.emit('keydown', { key: ' ', code: 'Space', repeat: false });
+          assert.equal(
+            event.defaultPrevented,
+            false,
+            'Checkbox activation keeps browser ownership',
+          );
+          target.emit('keyup', { key: ' ', code: 'Space' });
+          target.click(); // Browser default Space activation, after the real navigation handler.
+        } else {
+          f.key('Enter', true, target);
+          f.key('Enter', false, target);
+        }
+      }
+    };
+    f.focus('race-reduced');
+    next();
+    assert.equal(f.doc.activeElement.id, 'race-journey-reactions-enabled');
+    assert.equal(f.doc.activeElement.checked, true);
+    activate();
+    assert.equal(f.$('race-journey-reactions-enabled').checked, false);
+    assert.equal(writes.length, 1);
+    assert.equal(f.$('race-journey-reactions-retry').hidden, false);
+    next();
+    assert.equal(f.doc.activeElement.id, 'race-journey-reactions-retry');
+    unavailable = false;
+    activate();
+    assert.equal(writes.length, 2);
+    assert.equal(JSON.parse(values.get(preferenceKey)).enabled, false);
+    assert.equal(f.$('race-journey-reactions-retry').hidden, true);
+    f.focus('race-reduced');
+    next();
+    next();
+    assert.notEqual(
+      f.doc.activeElement.id,
+      'race-journey-reactions-retry',
+      'Hidden recovery cannot be selected',
+    );
+    assert.equal(f.state(), 'ready');
+    assert.deepEqual(f.checkpoint(), before);
+  });
+}
+
 test('API errors and unsupported pads remain usable with keyboard and truthful Ready status', async (t) => {
   const unsupported = pad(0);
   unsupported.mapping = '';
@@ -328,12 +409,15 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
         f.button(0, 0, false);
       });
       assert.equal(f.tick(), 0);
-      const oracle = createRun(sentinel.campaigns[0].levels[0], {
-        seed: 2026,
-        classId: 'scout',
-        turnPolicy,
-        classRecipes: await read('../content/classes.json'),
-      });
+      const oracle = createRun(
+        applyGameplayTuning(sentinel.campaigns[0].levels[0], resolveGameplayTuning()),
+        {
+          seed: 2026,
+          classId: 'scout',
+          turnPolicy,
+          classRecipes: await read('../content/classes.json'),
+        },
+      );
       let direction = null;
       for (const [index, segment] of route.segments.entries()) {
         if (direction)
@@ -343,9 +427,12 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
         // Pause would freeze the clocks and cannot substitute for these waits.
         direction = segment.input.direction ?? (index === 2 ? 'up' : 'down');
         if (direction) f.key({ up: 'KeyW', right: 'KeyD', down: 'KeyS', left: 'KeyA' }[direction]);
-        f.frames(segment.ticks);
-        for (let i = 0; i < segment.ticks; i++)
-          stepRun(oracle, { ...segment.input, direction }, FIXED_DT);
+        // v4 reference pacing reaches the same legal release cut a few ticks
+        // later. Extend only the final held direction; the immutable v3 replay
+        // remains covered by its own historical replay tests.
+        const ticks = segment.ticks + (index === route.segments.length - 1 ? 16 : 0);
+        f.frames(ticks);
+        for (let i = 0; i < ticks; i++) stepRun(oracle, { ...segment.input, direction }, FIXED_DT);
       }
       if (direction)
         f.key({ up: 'KeyW', right: 'KeyD', down: 'KeyS', left: 'KeyA' }[direction], false);
@@ -353,7 +440,7 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
       assert.equal(f.state(), 'finished');
       assert.equal(f.renders[0].lives, 3);
       assert.equal(f.renders[0].score, route.expected.score);
-      assert.equal(f.renders[0].tick, route.expected.tick);
+      assert.equal(f.renders[0].tick, turnPolicy === 'immediate' ? 1796 : 1800);
       releaseInputs(oracle);
       assert.deepEqual(authoritativeCheckpoint(f.renders[0]), authoritativeCheckpoint(oracle));
       f.frame();
@@ -567,7 +654,9 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
         classic: { version: 'classic.v1', terrain: [], powerups: [] },
         spawn: { x: 36.5, y: 0.5 },
         goal: { coverage: 0.99 },
-        enemies: [{ id: 'seed', type: 'bouncer', x: 60.5, y: 18.5, vx: 1, vy: 0 }],
+        // Keep the capture seed in the far column regardless of reference-paced
+        // enemy speed; this fixture isolates per-player cut release, not combat.
+        enemies: [{ id: 'seed', type: 'bouncer', x: 60.5, y: 18.5, vx: 0, vy: 1 }],
         rules: {
           moveSpeed: 13,
           lives: 3,
@@ -617,7 +706,10 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
       assert.equal(first.player.cutting, false);
       assert.ok(first.claimedCount > 0);
       assert.equal(f.renders[1].claimedCount, 0);
-      assert.ok(Math.abs(f.renders[1].player.y - otherY - 24 * 13 * FIXED_DT) < 1e-8);
+      assert.ok(
+        Math.abs(f.renders[1].player.y - otherY - 24 * f.renders[1].rules.moveSpeed * FIXED_DT) <
+          1e-8,
+      );
       const stops = f.observedEvents.filter((event) => event.type === 'capture.stopped');
       assert.equal(stops.length, 1);
       assert.equal(

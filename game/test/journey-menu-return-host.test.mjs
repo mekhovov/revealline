@@ -3,30 +3,17 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { soloPage, settle } from './helpers/solo-dom.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
+import { PNGImage } from './helpers/png-image.mjs';
 import { createJourneyBackend } from '../journey/profile.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
 
-class CandidateImage {
-  width = 1774;
-  height = 887;
-  naturalWidth = 1774;
-  naturalHeight = 887;
-  set src(value) {
-    this.source = value;
-    queueMicrotask(() => this.onload?.());
-  }
-  async decode() {}
-  removeAttribute() {
-    this.source = '';
-  }
-}
 async function setup(t, route = 'authored') {
   const memory = managedIndexedDB();
   const p = await soloPage(t, {
     search: `?journey=${route}`,
     titleScreen: true,
     journeyIndexedDB: memory.indexedDB,
-    pictures: { Image: CandidateImage },
+    pictures: { Image: PNGImage },
     fetchResponse: async (path) => {
       if (String(path).includes('/content-design/assets/'))
         return new Response(await readFile(path));
@@ -40,7 +27,10 @@ async function open(p, id) {
   opener.click();
   await settle(() => p.$('journey-chooser')?.open && p.$('journey-collection'));
   assert.equal(p.$('journey-chooser').open, true);
-  assert.equal(p.doc.activeElement, p.$('journey-search'));
+  assert.equal(
+    p.doc.activeElement,
+    [...p.$('journey-cards').children].find((card) => !card.disabled),
+  );
   return opener;
 }
 function back(p, method, t) {
