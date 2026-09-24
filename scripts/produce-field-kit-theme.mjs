@@ -38,7 +38,7 @@ const sources = {
     'game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs; game/ui/relay-view.mjs; game/ui/directional-view.mjs; game/ui/enemy-body-assets.mjs; game/ui/enemy-body-motion.mjs; game/enemy-catalog.mjs',
   team: 'game/couch/coop-view.mjs; game/couch/coop-actor-presentation.mjs; game/couch/coop-anchor-presentation.mjs; game/couch/coop-core-presentation.mjs; game/couch/coop-support-presentation.mjs; game/couch/coop-emitter-presentation.mjs; game/couch/coop-rescue-presentation.mjs; game/couch/coop-pilot-slots.mjs; game/couch/coop-enemy-slots.mjs; game/couch/coop-outcome-presentation.mjs; game/presentation/team-runtime-slots.mjs; game/ui/actor-presentation.mjs; game/presentation/catalog.mjs; game/couch/coop-actor-layout.mjs; game/couch/coop-terrain-trail.mjs; game/couch/coop-bonus-view.mjs; game/couch/candidate-team-pictures.mjs; game/content-design/material-markers.mjs; game/presentation/journey-actor-materials.mjs; authoring/motion-lab/render-character.mjs; game/ui/classic-view.mjs; game/ui/presentation-draw-image.mjs; game/ui/enemy-body-assets.mjs; game/ui/enemy-body-motion.mjs; authoring/motion-lab/animation.mjs; game/content-design/actor-marker.mjs; game/enemy-catalog.mjs',
   audio:
-    'game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/ui/soundtrack-panel.mjs; game/ui/soundtrack-panel.css; game/soundtrack-albums.mjs; game/soundtrack-portable.mjs; game/content/soundtrack-catalogue.mjs; game/online-soundtrack-catalogue.mjs',
+    'game/app.mjs; game/couch/couch-music-host.mjs; game/opening-soundtrack.mjs; game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/soundtrack-bundled.mjs; game/ui/soundtrack-panel.mjs; game/ui/soundtrack-panel.css; game/soundtrack-albums.mjs; game/soundtrack-portable.mjs; game/content/soundtrack-catalogue.mjs; game/online-soundtrack-catalogue.mjs',
 };
 
 // Image review is independent of the 37 Team recipes. Bind original bytes and
@@ -153,11 +153,11 @@ const REVIEWED_RECIPE_INPUTS = {
     ],
   },
   audio: {
-    sha256: '7d0a0e9c97c17036a941256a75d9168a6d46e1426cecd356ddffbe39ab301233',
+    sha256: 'f6125c55cee6b87ded6b3620cde6cd5710661a0a03d9ae0b756bd1b1348efbc6',
     evidence: [
-      'Scoped bundled-source continuation: docs/verification/shchedryk-opening-2026-09-24/audio-source-review-r1.json sha256:48afbd853953778910af6d137b430ba91a860854a143d0454f0d4df638239134. Fifteen ordered audio inputs sha256:7d0a0e9c97c17036a941256a75d9168a6d46e1426cecd356ddffbe39ab301233 preserve the multi-style archive player and add an inactive, exact-identity adapter for future code-owned audio.',
-      'Eleven focused rights and source tests cover local-only zero requests, owned-local reuse, explicit acquisition, Installed-only playback, exact identity/path/bytes, duplicate rejection, effective-rights intersection, corrupt bytes and cancellation. Empty registrations add no recording, file, default, autoplay or storage write.',
-      'No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, cold-offline, frozen-build or public game approval. Archive previews remain outside trusted Automatic and built-in playlists; historical records and original payloads are immutable.',
+      'Scoped opening-theme admission continuation: docs/verification/shchedryk-opening-2026-09-24/audio-admission-review-r2.json sha256:b4aeb17a4d1fa7bce8a3a35cb27d0187e9929f35a58ddd3da2d1badadb786be8. Nineteen ordered audio inputs sha256:f6125c55cee6b87ded6b3620cde6cd5710661a0a03d9ae0b756bd1b1348efbc6 admit one exact code-owned recording after the preserved inactive bundled-source revision.',
+      'The exact 8,641,768-byte MP3 and CC BY policy are pinned. Fresh generation-zero profiles prepare an ordered Shchedryk-to-Ukrainian queue without playing; persisted choices and intentional transport state remain owned by their existing sessions. Content ID policy excludes Recording mode, and core bytes cannot create an installed duplicate.',
+      'Scoped source, rights and storage review only. Full-track and repeated-session listening, warning audibility, transitions, Ukrainian cultural review, physical devices, cold offline, frozen build and public game acceptance remain required. Historical records and original payloads remain immutable.',
     ],
   },
   motion: {
