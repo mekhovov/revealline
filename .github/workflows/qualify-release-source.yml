@@ -13,26 +13,90 @@ jobs:
           node-version: 20.19.x
       - name: Install dependencies
         run: npm ci
-      - name: Compare unchanged route checkpoints and public replay
+      - name: Compare twenty portable routes and unchanged raw replay
         run: |
           node --input-type=module <<'JS'
-          import { readFile, writeFile } from 'node:fs/promises';
+          import { readFile } from 'node:fs/promises';
           import { createAuthoredJourneyRoute } from './game/content-design/route.mjs';
           import { compileContentProject, resolveMission } from './game/content-design/project.mjs';
+          import { createWholeSortingCandidates } from './game/content-design/whole-spatial-candidates.mjs';
           import { createRun, stepRun, FIXED_DT } from './game/core/index.mjs';
           import { applyGameplayTuning, resolveGameplayTuning } from './game/gameplay-tuning.mjs';
-          import {authoritativeCheckpoint, createRecorder,recordInput,exportReplay,verifyReplay} from './game/replay.mjs';
-          const project=compileContentProject(createAuthoredJourneyRoute('authored').source);
+          import { authoritativeCheckpoint, createRecorder,recordInput,exportReplay,verifyReplay } from './game/replay.mjs';
+          import { routeEvidenceCheckpoint } from './game/test/helpers/route-evidence.mjs';
+          const authored=compileContentProject(createAuthoredJourneyRoute('authored').source);
+          const current=compileContentProject(createWholeSortingCandidates({artwork:true}));
           const fixture=JSON.parse(await readFile('./game/test/fixtures/candidate-solo-tuned-host-routes.json'));
+          const endingFixture=JSON.parse(await readFile('./game/test/fixtures/default-journey-tuned-endings.json'));
+          const candidates=[...fixture.rows,...fixture.optional].map(([id,,,checkpoint,segments])=>({family:'authored',id,checkpoint,project:authored,seed:1,turnPolicy:'immediate',segments:segments.map(([direction,ticks])=>({direction,ticks}))}));
+          for(const row of endingFixture.rows)candidates.push({...row,family:'default',project:current});
           const results=[];
-          for(const [id,,,expected,segments] of [...fixture.rows,...fixture.optional]) {
-           const level=applyGameplayTuning(resolveMission(project,id).level,resolveGameplayTuning('standard'));
-           const options={seed:1,classId:'scout',turnPolicy:'immediate'};
+          for(const row of candidates){
+           const level=applyGameplayTuning(resolveMission(row.project,row.id).level,resolveGameplayTuning('standard'));
+           const options={seed:row.seed,classId:'scout',turnPolicy:row.turnPolicy};
            const run=createRun(level,options),recorder=createRecorder(level,options);
-           for(const [direction,ticks] of segments)for(let i=0;i<ticks;i++){recordInput(recorder,{direction});stepRun(run,{direction},FIXED_DT);}
+           for(const {direction,ticks} of row.segments)for(let tick=0;tick<ticks;tick++){recordInput(recorder,{direction});stepRun(run,{direction},FIXED_DT);}
            const checkpoint=authoritativeCheckpoint(run), replay=verifyReplay(exportReplay(recorder,run));
-           results.push({id,expected,checkpoint,status:run.status,tick:run.tick,replayMatch:replay.match});
-           if(checkpoint.hash!==expected)console.log('ROUTE_STATE='+JSON.stringify({id,run}));
+           const portable=routeEvidenceCheckpoint(run);
+           results.push({family:row.family,id:row.id,rawExpected:row.checkpoint,checkpoint,portable,status:run.status,tick:run.tick,livesLost:run.classic.livesLost,replayMatch:replay.match});
+           if(checkpoint.hash!==row.checkpoint)console.log('ROUTE_STATE='+JSON.stringify({id:row.id,family:row.family,run}));
           }
-          console.log(JSON.stringify({node:process.version,v8:process.versions.v8,arch:process.arch,results},null,2));
+          console.log('PROBE_RESULTS='+JSON.stringify({node:process.version,v8:process.versions.v8,arch:process.arch,platform:process.platform,results}));
+          JS
+      - name: Inspect external Sentinel and device routes
+        run: |
+          node --input-type=module <<'JS'
+          // Run from repository root: node --input-type=module < /tmp/ux0-additional-route-probe.mjs
+          // Read-only, no production mutation; reports exact hashes without relaxing them.
+          import { readFile } from 'node:fs/promises';
+          import { buildExternalPilot } from './authoring/library/external-chapter-pilot/build.mjs';
+          import { scenarioFromPack } from './game/packs.mjs';
+          import { createRun, stepRun, FIXED_DT } from './game/core/index.mjs';
+          import { applyGameplayTuning, resolveGameplayTuning } from './game/gameplay-tuning.mjs';
+          import { dataIdentity } from './game/data-json.mjs';
+          import { authoritativeCheckpoint, createRecorder, recordInput, exportReplay, verifyReplay } from './game/replay.mjs';
+          import { createSentinelInnerCandidates } from './game/content-design/sentinel-inner-candidates.mjs';
+          import { createSentinelSpatialCandidates } from './game/content-design/sentinel-spatial-candidates.mjs';
+          import { compileContentProject, resolveMission } from './game/content-design/project.mjs';
+          
+          console.log(JSON.stringify({ category: 'environment', platform: process.platform, arch: process.arch, node: process.version }));
+          function runRoute(category, label, level, options, segments, expected = {}) {
+            const run = createRun(level, options);
+            const recorder = createRecorder(level, options);
+            let premature = null;
+            for (const segment of segments) {
+              const direction = Array.isArray(segment) ? segment[0] : segment.direction;
+              const ticks = Array.isArray(segment) ? segment[1] : segment.ticks;
+              for (let i = 0; i < ticks; i++) {
+                if (run.status !== 'running') premature ??= { status: run.status, tick: run.tick };
+                recordInput(recorder, { direction });
+                stepRun(run, { direction }, FIXED_DT);
+              }
+            }
+            const checkpoint = authoritativeCheckpoint(run);
+            const replay = verifyReplay(exportReplay(recorder, run));
+            console.log(JSON.stringify({ category, label, expected, actual: { levelIdentity: dataIdentity(level), checkpoint, status: run.status, tick: run.tick, lives: run.lives, coverage: run.coverage, player: run.player, enemies: run.enemies }, hashMatches: expected.checkpoint ? expected.checkpoint === checkpoint.hash : null, replayMatch: replay.match, premature }));
+            return run;
+          }
+          
+          const pilot = await buildExternalPilot();
+          const scenario = scenarioFromPack(pilot.prepared.pack, pilot.prepared.pack.campaigns[0].id, pilot.prepared.pack.campaigns[0].levels[0].id);
+          runRoute('external', 'first original Standard/v4', applyGameplayTuning(scenario.level, resolveGameplayTuning('standard')), { seed: 1, classId: 'scout', turnPolicy: 'immediate', classRecipes: scenario.classRecipes }, [[null,120],['left',68],['down',476],['up',339],['right',109],['down',108],['left',103]], { levelIdentity: 'c53a143c260df0f8', checkpoint: '62dbb01b553a40ac', status: 'won' });
+          
+          const inner = compileContentProject(createSentinelInnerCandidates());
+          const fixture = JSON.parse(await readFile('game/test/fixtures/sentinel-inner-clear-routes.json', 'utf8'));
+          for (const row of [...fixture.rows, ...fixture.incompleteSearches]) {
+            const manifest = resolveMission(inner, row.id, { difficulty: row.difficulty });
+            runRoute('sentinel-inner', [row.kind ?? 'incomplete-prefix', row.difficulty, row.turnPolicy].join('/'), manifest.level, { seed: 1, classId: 'scout', turnPolicy: row.turnPolicy }, row.segments, { simulationIdentity: row.simulationIdentity, resolvedSimulationIdentity: manifest.simulationIdentity, checkpoint: row.checkpoint, status: row.status, ticks: row.ticks, coverage: row.coverage });
+          }
+          const spatial = compileContentProject(createSentinelSpatialCandidates());
+          const prior = JSON.parse(await readFile('game/test/fixtures/sentinel-spatial-clear-routes.json', 'utf8')).rows.find(row => row.id === 'twin-receivers' && row.difficulty === 'standard' && row.turnPolicy === 'immediate');
+          runRoute('sentinel-historical', 'spatial Standard immediate', resolveMission(spatial, prior.id).level, { seed: 1, classId: 'scout', turnPolicy: prior.turnPolicy }, prior.segments, { checkpoint: prior.checkpoint, status: 'won' });
+          
+          const pack = JSON.parse(await readFile('game/content/packs/fpv-arcade-r5.json', 'utf8'));
+          for (const turnPolicy of ['immediate', 'grid-center']) {
+            // This fixture has no fixed checksum. Its acceptance is >50% coverage/3 lives
+            // plus host stop-on-capture and same-runtime replay equality.
+            runRoute('device-capture', turnPolicy, applyGameplayTuning(pack.campaigns[0].levels[0], resolveGameplayTuning('standard')), { seed: 1, classId: 'scout', turnPolicy, classRecipes: pack.classRecipes }, [[null,972],['left',12],['down',470]], { status: 'running', minimumCoverage: 0.5, lives: 3 });
+          }
           JS
