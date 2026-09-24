@@ -1649,6 +1649,7 @@ export function bootCoop({
     retry = false,
     origin = document.activeElement,
     initial = false,
+    passive = false,
     onPrepared = null,
   } = {}) {
     if (disposed || departure || importDisplay || running()) return Promise.resolve();
@@ -1661,7 +1662,7 @@ export function bootCoop({
       return Promise.resolve().then(() => {
         if (request !== importRequest || pack !== selectedPack || $('coop-level').value !== levelId)
           return;
-        return preparePicture({ retry, origin, initial });
+        return preparePicture({ retry, origin, initial, passive });
       });
     }
     if (!retry || !pictureSelection) {
@@ -1676,7 +1677,8 @@ export function bootCoop({
     }
     const selection = pictureSelection;
     if (pictureOperation) return pictureOperation.promise;
-    const focus = pictureFocus(origin, initial),
+    const passivePreparation = passive || document.documentElement.dataset.toolState !== 'ready',
+      focus = pictureFocus(origin, initial || passivePreparation),
       controller = new AbortController();
     const operation = { selection, controller, focus, run, generation };
     pictureOperation = operation;
@@ -1689,7 +1691,10 @@ export function bootCoop({
       run === operation.run &&
       generation === operation.generation;
     pictureUI('Preparing the exact Team picture…');
-    focus.pending($('coop-picture-cancel'));
+    // Initial preparation is passive: do not turn the first controller Confirm
+    // into Cancel. Deliberate selector/retry work still exposes and focuses its
+    // owned cancellation action.
+    if (!passivePreparation && origin !== $('coop-start')) focus.pending($('coop-picture-cancel'));
     operation.promise = (async () => {
       try {
         const snapshot = await (retry ? presentationPage.retry() : presentationPage.ready);
@@ -4724,6 +4729,7 @@ export function bootCoop({
     handoffGeneration = generation;
   const preparation = preparePicture({
     initial: initialFocusPending,
+    passive: true,
     origin: initialFocusPending ? document.activeElement : null,
     onPrepared(selection) {
       if (
@@ -4754,7 +4760,12 @@ export function bootCoop({
   });
   if (incomingAutoStart) handoffOpening = trackMissionLibraryOpening({ document });
   void preparation.finally(() => handoffOpening?.dispose());
-  if (initialFocusPending && unclaimedFocus(document.activeElement) && foreground())
+  if (
+    initialFocusPending &&
+    !pictureOperation &&
+    unclaimedFocus(document.activeElement) &&
+    foreground()
+  )
     navigation.focusAvailable();
   initialFocusPending = false;
   frame = requestAnimationFrame(update);
