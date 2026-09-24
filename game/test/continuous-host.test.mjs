@@ -192,18 +192,36 @@ test('recovery inside a multi-tick frame clears intent and requires fresh post-r
 
 test('title, missions and settings use the current library navigation without starting flight', async (t) => {
   const page = await soloPage(t, { campaign, titleScreen: true });
+  const run = page.rendered.run,
+    checkpoint = authoritativeCheckpoint(run),
+    missions = page.$('shell-play'),
+    open = missions.onclick;
   assert.equal(page.$('shell-home').open, true);
-  page.$('shell-play').click();
-  await settle(() => page.$('journey-chooser')?.open);
+  let opening;
+  missions.onclick = (...args) => (opening = open.apply(missions, args));
+  try {
+    missions.focus();
+    missions.click();
+  } finally {
+    missions.onclick = open;
+  }
+  assert.ok(opening instanceof Promise, 'The real button returns its catalogue preparation.');
+  assert.equal(page.$('mission-library-opening-status').textContent, 'Preparing missions…');
+  await opening;
+  assert.equal(page.$('journey-chooser').open, true);
   assert.equal(page.$('shell-home').open, true, 'The library retains its Home parent.');
   assert.equal(page.$('journey-cards').children.length > 0, true);
   page.frame(0);
   assert.equal(page.rendered.run.tick, 0);
+  assert.equal(page.rendered.run, run);
+  assert.equal(page.rendered.paused, true);
+  assert.deepEqual(authoritativeCheckpoint(run), checkpoint);
   page.$('journey-back').click();
   assert.equal(page.doc.activeElement, page.$('shell-play'));
   page.$('shell-options').click();
   assert.equal(page.$('settings-dialog').open, true);
   assert.equal(page.rendered.run.tick, 0);
+  assert.deepEqual(authoritativeCheckpoint(run), checkpoint);
   assert.deepEqual(page.errors, []);
 });
 

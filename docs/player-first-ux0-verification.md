@@ -106,8 +106,10 @@ source passed preflight and its Pages-controller checks; its ordinary build and
 four complete shards were initially running. Its ordinary build subsequently
 passed; its superseded shards were cancelled and do not count as passes. Source
 `20b295488` then passed hosted preflight and the ordinary build in run35945156180;
-its complete shards remain pending at this checkpoint. Later working-tree
-corrections require their own exact-head checks before acceptance.
+its superseded shards were cancelled, not passed. After integrating main
+`1518e15e2`, source `f43557ae0` passes hosted preflight in run35946474634; its
+ordinary build and complete shards are running. Later working-tree corrections
+require their own exact-head checks before acceptance.
 
 Baseline reproduction separates these corrections from gameplay changes:
 
@@ -219,3 +221,15 @@ held-controller, touch-modality and Undo assertions remain intact. An immediate
 straight Down now loses a life under the already-shipped Standard tuning; UX3/UX6
 must assess its teaching and human fairness rather than treating this route proof
 as player-balance acceptance.
+
+The complete continuous-host, modal-navigation and Studio-return cohort passes
+79 checks. The Missions button returns its existing preparation operation so the
+host test joins the real focused activation rather than assuming a five-second
+cold-catalogue deadline. Immediate loading, retained run/checkpoint, paused state,
+Home parent and exact Back focus remain asserted; no production timeout changes.
+
+A hosted-only `two-bays` fixture checkpoint mismatch remains under investigation.
+The same 17 independent routes and public replay checks pass on three installed
+macOS/arm64 Node versions and with optimization disabled. This does not prove
+cross-platform determinism. Keep the fixed fixture checkpoint and exact host/core
+and replay checks; identify the hosted state difference before accepting a fix.

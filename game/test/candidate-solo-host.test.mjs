@@ -1,11 +1,18 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
+import { arch, platform, versions } from 'node:process';
 import { soloPage, settle, memoryStorage } from './helpers/solo-dom.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
 import { createJourneyBackend } from '../journey/profile.mjs';
 import { JOURNEY_PREFERENCES_KEY } from '../journey/preferences.mjs';
-import { authoritativeCheckpoint, verifyReplay } from '../replay.mjs';
+import {
+  authoritativeCheckpoint,
+  createRecorder,
+  recordInput,
+  exportReplay,
+  verifyReplay,
+} from '../replay.mjs';
 import { createRun, stepRun, FIXED_DT, CLASSES } from '../core/index.mjs';
 import { PNGImage } from './helpers/png-image.mjs';
 import { applyGameplayTuning, resolveGameplayTuning } from '../gameplay-tuning.mjs';
@@ -71,7 +78,9 @@ function playRoute(p, [id, authoredIdentity, gameplayIdentity, checkpoint, segme
     dataIdentity({ ruleset: p.rendered.run.ruleset, level, classes: CLASSES }),
     gameplayIdentity,
   );
-  const reference = createRun(level, { seed: 1, classId: 'scout', turnPolicy: 'immediate' });
+  const options = { seed: 1, classId: 'scout', turnPolicy: 'immediate' };
+  const reference = createRun(level, options),
+    recorder = createRecorder(level, options);
   const keys = { up: 'ArrowUp', right: 'ArrowRight', down: 'ArrowDown', left: 'ArrowLeft' };
   for (const [direction, ticks] of segments) {
     if (direction !== null) {
@@ -81,6 +90,7 @@ function playRoute(p, [id, authoredIdentity, gameplayIdentity, checkpoint, segme
     let frameTicks = 0;
     for (let tick = 0; tick < ticks; tick++) {
       assert.equal(reference.status, 'running', `${id}: route outlived the reference`);
+      recordInput(recorder, { direction });
       stepRun(reference, { direction }, FIXED_DT);
       assert.equal(reference.lives, 3, `${id}: renewed route must remain lossless`);
       frameTicks++;
@@ -97,9 +107,29 @@ function playRoute(p, [id, authoredIdentity, gameplayIdentity, checkpoint, segme
     }
   }
   assert.equal(reference.status, 'won', id);
-  assert.equal(authoritativeCheckpoint(reference).hash, checkpoint, id);
   assert.equal(p.rendered.run.status, 'won', id);
-  assert.equal(authoritativeCheckpoint(p.rendered.run).hash, checkpoint, id);
+  const referenceCheckpoint = authoritativeCheckpoint(reference),
+    hostCheckpoint = authoritativeCheckpoint(p.rendered.run);
+  assert.deepEqual(hostCheckpoint, referenceCheckpoint, `${id}: host and reference must agree`);
+  assert.equal(verifyReplay(exportReplay(recorder, reference)).match, true, `${id}: public replay`);
+  assert.equal(
+    referenceCheckpoint.hash,
+    checkpoint,
+    referenceCheckpoint.hash === checkpoint
+      ? id
+      : JSON.stringify(
+          {
+            id,
+            runtime: { arch, platform, node: versions.node, v8: versions.v8 },
+            expectedCheckpoint: checkpoint,
+            referenceCheckpoint,
+            hostCheckpoint,
+            reference,
+          },
+          null,
+          2,
+        ),
+  );
 }
 
 test('the final authored core mission offers Find missions without recording a fictitious skip', async (t) => {
