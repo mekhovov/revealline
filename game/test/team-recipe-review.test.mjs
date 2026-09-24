@@ -17,6 +17,10 @@ const bytes = await read('docs/verification/team37/review.json');
 const review = JSON.parse(bytes);
 const successorBytes = await read('docs/verification/team-specialist-cues-2026-09-24/review.json');
 const successor = JSON.parse(successorBytes);
+const continuationBytes = await read(
+  'docs/verification/team-integrated-presentation-continuation-2026-09-24/review.json',
+);
+const continuation = JSON.parse(continuationBytes);
 const fingerprint = (await fieldKitRecipeSources(read)).team;
 const defaults = createDefaultThemeBundle().assets;
 const production = await createFieldKitProduction();
@@ -36,6 +40,7 @@ const input = (role) => ({
   inheritedAssets: images,
   reviewBytes: bytes,
   successorReviewBytes: successorBytes,
+  continuationReviewBytes: continuationBytes,
 });
 const stage = (args) => fieldKitTeamRecipeQuality(args).stage;
 
@@ -49,9 +54,11 @@ test('all37 exact defaults receive only the scoped Team declaration in current a
     assert.equal(asset.kind, 'recipe');
     assert.deepEqual(asset.recipe, role.defaultRecipePayload);
     assert.deepEqual(asset.quality, fieldKitTeamRecipeQuality(input(role)));
-    assert.match(asset.quality.evidence[0], /Team specialist functional successor:/);
+    assert.match(asset.quality.evidence[0], /Team integrated-presentation continuation:/);
     assert.ok(
-      asset.quality.evidence[0].includes(createHash('sha256').update(successorBytes).digest('hex')),
+      asset.quality.evidence[0].includes(
+        createHash('sha256').update(continuationBytes).digest('hex'),
+      ),
     );
   }
   // Default ancestor records remain source and are not mutated by the gate.
@@ -89,26 +96,45 @@ test('changed/unknown roles, payloads, default records and review bytes remain s
       'source',
     );
     assert.equal(stage({ ...original, successorReviewBytes: null }), 'source');
+    assert.equal(
+      stage({
+        ...original,
+        continuationReviewBytes: Buffer.concat([continuationBytes, Buffer.from('\n')]),
+      }),
+      'source',
+    );
+    assert.equal(stage({ ...original, continuationReviewBytes: null }), 'source');
   }
   for (const slotId of ['team.unknown', 'team.anchor.available', '__proto__', 'trail.active'])
     assert.equal(stage({ ...input(review.recipes[0]), slotId }), 'source');
 });
 
-test('the exact three-input successor and every renderer dependency fail closed', async () => {
+test('the exact continuation chain and every renderer dependency fail closed', async () => {
   assert.equal(successor.priorReview.sha256, createHash('sha256').update(bytes).digest('hex'));
   assert.equal(
     fingerprint,
-    `${successor.fingerprint.paths} sha256:${successor.fingerprint.sha256}`,
+    `${continuation.fingerprint.paths} sha256:${continuation.fingerprint.sha256}`,
   );
-  const changes = new Map(successor.changedInputs.map((entry) => [entry.path, entry]));
+  assert.equal(
+    continuation.priorReview.sha256,
+    createHash('sha256').update(successorBytes).digest('hex'),
+  );
+  assert.equal(continuation.priorReview.fingerprintSHA256, successor.fingerprint.sha256);
+  const successorChanges = new Map(successor.changedInputs.map((entry) => [entry.path, entry]));
+  const continuationChanges = new Map(
+    continuation.changedInputs.map((entry) => [entry.path, entry]),
+  );
   for (const entry of review.fingerprint.inputs) {
     const current = createHash('sha256')
       .update(await read(entry.path))
       .digest('hex');
-    if (changes.has(entry.path)) {
-      assert.equal(changes.get(entry.path).priorSHA256, entry.sha256, entry.path);
-      assert.equal(changes.get(entry.path).currentSHA256, current, entry.path);
-    } else assert.equal(current, entry.sha256, entry.path);
+    const predecessor = successorChanges.get(entry.path)?.currentSHA256 ?? entry.sha256;
+    if (successorChanges.has(entry.path))
+      assert.equal(successorChanges.get(entry.path).priorSHA256, entry.sha256, entry.path);
+    if (continuationChanges.has(entry.path)) {
+      assert.equal(continuationChanges.get(entry.path).priorSHA256, predecessor, entry.path);
+      assert.equal(continuationChanges.get(entry.path).currentSHA256, current, entry.path);
+    } else assert.equal(current, predecessor, entry.path);
     const changed = (
       await fieldKitRecipeSources(async (name) => {
         const value = await read(name);
@@ -132,6 +158,16 @@ test('the exact three-input successor and every renderer dependency fail closed'
     stage({ ...input(review.recipes[0]), source: legacy, successorReviewBytes: null }),
     'reviewed',
     'the immutable prior declaration remains independently usable for its exact source',
+  );
+  const specialist = `${successor.fingerprint.paths} sha256:${successor.fingerprint.sha256}`;
+  assert.equal(
+    stage({
+      ...input(review.recipes[0]),
+      source: specialist,
+      continuationReviewBytes: null,
+    }),
+    'reviewed',
+    'the immutable specialist successor remains independently usable for its exact source',
   );
 });
 
