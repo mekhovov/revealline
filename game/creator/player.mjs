@@ -30,7 +30,9 @@ let runtime,
   previousTime = null,
   frameId,
   lastSaveTick = 0,
-  pictureURL;
+  pictureURL,
+  pictureSha256,
+  nextMissionId = null;
 const saveKey = creatorAttemptKey(edition);
 function persistAttempt() {
   const attempt = runtime?.current();
@@ -98,13 +100,34 @@ async function operation(action) {
     updateControls();
   }
 }
-async function showEarned() {
-  const mission = pack.manifest.content.project.missions[0];
-  const receipt = profile.snapshot().clears.solo[mission.id];
-  if (!receipt || !receipt.gameplayId.startsWith(`${pack.editionId}:`)) return;
-  pictureURL ??= URL.createObjectURL(pack.assets[0].blob);
+async function showEarned(preferredMissionId = null) {
+  const project = pack.manifest.content.project;
+  const clears = profile.snapshot().clears.solo;
+  const missions = preferredMissionId
+    ? [
+        project.missions.find(({ id }) => id === preferredMissionId),
+        ...project.missions.filter(({ id }) => id !== preferredMissionId),
+      ]
+    : project.missions;
+  const mission = missions.find(
+    (candidate) => candidate && clears[candidate.id]?.gameplayId.startsWith(`${pack.editionId}:`),
+  );
+  if (!mission) {
+    $('earned').hidden = true;
+    return;
+  }
+  const receipt = clears[mission.id];
+  const picture = project.assets.find(({ id }) => id === mission.presentation.backgroundAssetId);
+  const runtimePicture = pack.assets.find(({ sha256 }) => sha256 === picture?.sha256);
+  if (!picture || !runtimePicture)
+    throw new Error('The earned mission picture is missing from this installed edition.');
+  if (pictureSha256 !== picture.sha256) {
+    if (pictureURL) URL.revokeObjectURL(pictureURL);
+    pictureURL = URL.createObjectURL(runtimePicture.blob);
+    pictureSha256 = picture.sha256;
+  }
   $('earned-picture').src = pictureURL;
-  $('earned-picture').alt = pack.review.picture.alt;
+  $('earned-picture').alt = picture.alt;
   $('earned-caption').textContent =
     `${mission.name} · completed on ${receipt.difficulty}. ${pack.manifest.content.credits.picture}`;
   $('earned').hidden = false;
@@ -120,6 +143,7 @@ async function adoptDisplay(attempt, running) {
   $('difficulty').value = attempt.selection.difficulty;
   $('steering').value = attempt.selection.turnPolicy;
   ended = false;
+  nextMissionId = null;
   paused = true;
   lastSaveTick = attempt.run.tick;
   $('next').hidden = true;
@@ -141,10 +165,16 @@ async function finish() {
     try {
       profile.record(await runtime.completion());
       await profile.flush();
-      await showEarned();
-      status('Campaign complete. Your picture is in this campaign’s collection.');
+      const missionId = runtime.current().manifest.missionId;
+      await showEarned(missionId);
+      nextMissionId = runtime.nextMissionId(missionId);
+      status(
+        nextMissionId
+          ? 'Level complete. Your picture is saved; continue when you are ready.'
+          : 'Campaign complete. Your pictures are in this campaign’s collection.',
+      );
       $('next').hidden = false;
-      $('next').textContent = 'Back to my creations';
+      $('next').textContent = nextMissionId ? 'Next level' : 'Back to my creations';
     } catch (error) {
       fail(error);
     }
@@ -157,6 +187,8 @@ async function finish() {
     ) {
       localStorage.removeItem(saveKey);
       savedRaw = null;
+      if (runtime.current().run.status === 'won')
+        $('save-status').textContent = 'Completion saved on this device.';
     }
   } catch {
     /* Progress export and Next remain available when local storage refuses access. */
@@ -216,7 +248,20 @@ $('pause').onclick = () => {
   else pause();
 };
 $('next').onclick = () => {
-  location.href = './#installed';
+  if (!nextMissionId) return void (location.href = './#installed');
+  const missionId = nextMissionId;
+  void operation(async () => {
+    const current = runtime.current().selection;
+    $('earned').hidden = true;
+    await adoptDisplay(
+      await runtime.start({
+        missionId,
+        difficulty: current.difficulty,
+        turnPolicy: current.turnPolicy,
+      }),
+      true,
+    );
+  });
 };
 $('export-attempt').onclick = () => {
   try {
