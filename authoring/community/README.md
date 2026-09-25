@@ -2,6 +2,10 @@
 
 Start with the [beginner creator guide](index.html), the [single-picture walkthrough](image-campaign-guide.md), or the Phase 2 [batch campaign walkthrough](batch-image-campaign-guide.md). The single-image creator provides generation, review, portable `.rlpack` files and installed Custom gameplay; [its acceptance record](phase1-acceptance.md) tracks verification and public release separately. Batch creation remains an implementation candidate with [its own open acceptance gates](phase2-acceptance.md). The [framework reference](framework-reference.md), [maintainer guide](maintainer-guide.md), and [phased delivery register](delivery-plan.md) distinguish released behavior from mixed-media and community-store work. The historical manual trials below retain their original scope and identities.
 
+The [combined creator feature acceptance record](combined-release-acceptance.md) is the current
+source and release authority for the consolidated implementation. Individual phase records remain
+supporting evidence and do not imply separate releases.
+
 The [video campaign review guide](video-campaign-guide.md) documents the Phase 3 mixed-media review contract, exact pairing corrections, poster choices, playback ranges and optional post-win story behavior. The main creator flow now persists those exact dependencies before approval; the [Phase 3 acceptance record](phase3-acceptance.md) separates completed browser evidence from the remaining player-story and release gates.
 
 The account, resumable upload, exact validation, automatic catalog publication, report and
