@@ -7,11 +7,11 @@
   "versions": [
     "v0.111.0"
   ],
-  "scope": "Historical online preservation: complete exact-byte public audit plus fresh Home, Sound toggle, mission browser, First return launch and live timer through the archived native UI. This does not claim physical-device/controller, comprehensive offline, or balance acceptance.",
+  "scope": "Historical online preservation: complete exact-byte public audit plus fresh Home, Solo gallery/launch, Versus launch and Team launch through the archived native UI. This does not claim physical-device/controller, comprehensive offline, or balance acceptance.",
   "evidence": [
     {
       "path": "evidence/archive-76-v01110/public-acceptance.json",
-      "sha256": "ee072f747766531e55ef5f39579b03c5b353d2c6938edfe9e920ef9268621bc9"
+      "sha256": "b08af007d9d7aae44b09f10fbb88a42545815fa3fb5c22b7c6a4aa972cb6480a"
     }
   ],
   "limitations": [

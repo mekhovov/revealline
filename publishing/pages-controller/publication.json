@@ -9376,12 +9376,12 @@
         },
         {
           "path": "evidence/archive-76-v01110/browser-admission.json",
-          "sha256": "dbad2cca5f0baaf4cb3bd43dd7b6ba2d8f9f712832cf1a5b7558b1523f7ce89d",
+          "sha256": "9bbc8ca161d9d74d407b43a590095876136ecb0d8b290ebf7dc3d99070c4c9e7",
           "kind": "browser"
         },
         {
           "path": "evidence/archive-76-v01110/public-acceptance.json",
-          "sha256": "ee072f747766531e55ef5f39579b03c5b353d2c6938edfe9e920ef9268621bc9",
+          "sha256": "b08af007d9d7aae44b09f10fbb88a42545815fa3fb5c22b7c6a4aa972cb6480a",
           "kind": "reference"
         },
         {
@@ -9396,12 +9396,12 @@
         },
         {
           "path": "evidence/archive-76-v01110/evidence-manifest.json",
-          "sha256": "0500a815b39562ee028f30231043db841a00f6e0e75cc3ab9433bbb305b643a7",
+          "sha256": "16d1f7464cc6cc7a3194a842252469a948f0f107b9c0e60a06af118aa1ca70b8",
           "kind": "reference"
         },
         {
           "path": "evidence/archive-76-v01110/evidence.zip",
-          "sha256": "fd1beb16c9ffba08ae0f299e298adce2bdb7e9b00c4103bba4d5986f434c8b61",
+          "sha256": "6e2dcbd2267e490097e50a160fa9761bfacf66b5247e27face49d9afeb7daf95",
           "kind": "reference"
         }
       ]
