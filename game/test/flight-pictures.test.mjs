@@ -1,6 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createFlightPictures } from '../ui/flight-pictures.mjs';
+import { getLocale, setLocale } from '../i18n/index.mjs';
+import { flightPictureStatus } from '../ui/flight-picture-copy.mjs';
 import { waitFor } from './helpers/wait-for.mjs';
 import {
   createPictureIdentityCatalog,
@@ -381,4 +383,34 @@ test('status callback cancellation retires a staged session before acquisition o
   assert.equal(owner.pins(), undefined);
   assert.deepEqual(stage.counts, { acquired: 0, accepted: 0, discarded: 1, released: 0 });
   owner.dispose();
+});
+
+test('accepted picture phases and failures retranslate without changing frozen choices', async (context) => {
+  const locale = getLocale();
+  context.after(() => setLocale(locale, { persist: false }));
+  const { options } = setup();
+  const failure = new Error('Original transport diagnostic');
+  const reports = [];
+  const owner = createFlightPictures({
+    ...options,
+    acquire: async () => {
+      throw failure;
+    },
+  });
+  context.after(() => owner.dispose());
+  setLocale('en', { persist: false });
+  await assert.rejects(
+    owner.ensure(undefined, { onStatus: (status) => reports.push(status) }),
+    (error) => error === failure,
+  );
+  const pins = JSON.stringify(owner.pins());
+  assert.equal(reports.at(-1).diagnostic, failure.message);
+  setLocale('uk', { persist: false });
+  for (const report of reports) {
+    assert.notEqual(flightPictureStatus(report), report.message);
+    assert.doesNotMatch(flightPictureStatus(report), /[A-Za-z]/);
+  }
+  assert.equal(JSON.stringify(owner.pins()), pins);
+  assert.equal(owner.current(), null);
+  assert.equal(owner.ready('fpv'), false);
 });
