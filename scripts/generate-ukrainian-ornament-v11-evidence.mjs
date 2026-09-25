@@ -5,10 +5,7 @@ import { compileContentProject } from '../game/content-design/project.mjs';
 import { createUkrainianOrnamentJourney } from '../game/content-design/ukrainian-ornament-candidates.mjs';
 import { createUkrainianOrnamentAtlasJourney } from '../game/content-design/ukrainian-ornament-atlas.mjs';
 import { GAMEPLAY_TUNING_VERSION } from '../game/gameplay-tuning.mjs';
-import {
-  assessSpatialRoute,
-  prepareSpatialMission,
-} from './lib/spatial-challenge-assessment.mjs';
+import { assessSpatialRoute, prepareSpatialMission } from './lib/spatial-challenge-assessment.mjs';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const fixtures = new URL('../game/test/fixtures/', import.meta.url);
@@ -161,7 +158,8 @@ async function buildAtlas() {
       format: old.supersedes?.format ?? old.format,
       sourceProjectIdentity:
         old.supersedes?.sourceProjectIdentity ?? old.sourceIdentity?.sourceProjectIdentity,
-      reason: 'The former atlas evidence predates the v11 lineage rebuild and is not current acceptance.',
+      reason:
+        'The former atlas evidence predates the v11 lineage rebuild and is not current acceptance.',
     },
     outcomes: counts(samples),
     rows,
