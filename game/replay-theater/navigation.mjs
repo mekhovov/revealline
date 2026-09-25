@@ -1,3 +1,4 @@
+import { localizedText, t } from '../i18n/index.mjs';
 import { createControllerRouter } from '../ui/controller-router.mjs';
 import { attachControllerNavigation } from '../ui/controller-navigation.mjs';
 
@@ -31,7 +32,7 @@ export function attachReplayNavigation({
   };
   function hint(message) {
     const node = $('navigation-status');
-    if (node && node.textContent !== message) node.textContent = message;
+    if (node && node.textContent !== message) localizedText(node, () =>message);
   }
   const preferred = () =>
     pending()
@@ -97,7 +98,7 @@ export function attachReplayNavigation({
       pause();
       focus($('return-game'));
       hint(
-        `Playback paused. ${$('return-game').textContent.trim() || 'Return'} is focused; activate it to leave.`,
+        `Playback paused. ${$('return-game').textContent.trim() || t("interface:return")} is focused; activate it to leave.`,
       );
     }
     router.clear();
@@ -137,7 +138,7 @@ export function attachReplayNavigation({
         pause();
         focus(preferred());
         router.clear();
-        hint('Playback paused. Choose Play when ready.');
+        hint(t("interface:playbackPausedChoosePlayWhenReady"));
       }
     },
     onNativeInput: () => router.clear(),
@@ -192,7 +193,7 @@ export function attachReplayNavigation({
         status = frame.status.code;
         hint(
           status === 'connected'
-            ? 'D-pad moves focus · South confirms · East goes back · Menu pauses playback.'
+            ? t("interface:dPadMovesFocusSouthConfirmsEastGoesBackMenu")
             : frame.status.message,
         );
       }
