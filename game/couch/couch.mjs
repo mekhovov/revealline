@@ -3557,15 +3557,18 @@ try {
       });
     }
     $('series-score').textContent = `${won[0]} : ${won[1]}`;
+    $('race-match-score').hidden = roundRecipe.format !== 'first-to-two';
     const left =
       match.limitTicks === null
         ? null
         : Math.max(0, Math.ceil((match.limitTicks - match.tick) / 120));
+    const elapsed = Math.max(0, Math.floor(match.tick / 120));
+    $('race-clock-label').textContent = left === null ? 'ELAPSED' : 'TIME LEFT';
     $('race-clock').textContent =
       left === null
-        ? 'No countdown'
+        ? `${Math.floor(elapsed / 60)}:${String(elapsed % 60).padStart(2, '0')}`
         : `${Math.floor(left / 60)}:${String(left % 60).padStart(2, '0')}`;
-    $('race-clock').dataset.compact = left === null ? '∞' : $('race-clock').textContent;
+    $('race-clock').dataset.compact = $('race-clock').textContent;
     for (let i = 0; i < 2; i++) {
       const run = match.runs[i];
       const returnCaption = foundationCaptions.get(run) || '',
@@ -3573,8 +3576,27 @@ try {
       if (returnRegion.textContent !== returnCaption) returnRegion.textContent = returnCaption;
       returnRegion.hidden = !returnCaption || match.status === 'finished';
       $(`racer-stats-${i}`).textContent =
-        `${(run.coverage * 100).toFixed(1)}% · ${run.lives} lives · ${run.score} points`;
-      $(`racer-state-${i}`).textContent = match.status === 'running' ? run.status : match.status;
+        `${(run.coverage * 100).toFixed(1)}% / ${Math.round(run.level.goal.coverage * 100)}% target · ${run.lives} ${run.lives === 1 ? 'life' : 'lives'} · ${run.score} pts`;
+      const playerState =
+        match.status === 'paused'
+          ? 'Paused'
+          : match.status === 'finished'
+            ? run.status === 'won'
+              ? 'Target reached'
+              : run.status === 'lost'
+                ? 'Flight ended'
+                : 'Round complete'
+            : run.status === 'respawning'
+              ? 'Recovering'
+              : run.status === 'won'
+                ? 'Target reached'
+                : run.status === 'lost'
+                  ? 'Flight ended'
+                  : run.player.cutting
+                    ? 'Line exposed'
+                    : 'In flight';
+      $(`racer-state-${i}`).textContent = playerState;
+      $(`racer-state-${i}`).dataset.state = match.status === 'running' ? run.status : match.status;
       const cue = encounterView(run),
         group = $(`racer-encounter-${i}`),
         title = $(`racer-encounter-title-${i}`),
