@@ -1,8 +1,11 @@
 # Offline game and optional recordings
 
 Implementation branch: `codex/offline-pwa`, based on freshly fetched `origin/main`
-`5d6c0ec3e6995cd0485fe5065ff5ea2bf82e0cdc` (0.116.0). The existing
+`0e678f42579c957eb66de0d4bb842e56e324842e` (0.130.0 source line). The existing
 `codex/fpv-redesign` checkout and its uncommitted work were preserved.
+The prepared release slot is v0.132.0 because v0.130.0 and v0.131.0 are already
+allocated. The package version stays on the current source line until the release
+train advances; this branch does not publish or tag a release.
 
 ## Player flow
 
@@ -39,7 +42,7 @@ playlists, assignments, mute and pause preferences are preserved.
 `offline-content.json` is generated from exact frozen build bytes. It records hashes,
 sizes, chapter dependencies, soundtrack groups, original-image offsets inside
 official media bundles, and mission-to-group mappings. The inventory currently
-covers **1,515 mission entries** across Classic, historical/current Journey and Team.
+covers **1,697 mission entries** across Classic, historical/current Journey and Team.
 Every indexed Classic source and authored asset is checked against its shipped bytes.
 
 `offline-inventory.json` classifies every shipped file plus optional recording
@@ -115,6 +118,12 @@ the selected commit is rebuilt from its Git archive to preserve frozen provenanc
 | 3 — Optional recordings | Independent albums, local playback, procedural fallback, import preservation; focused tests and blocked-host browser checks | Device playback with zero/some/all albums and a partial album |
 | 4 — Updates and lifecycle | Explicit checks, hash reuse, journaled migration, writer-lock gates, previous edition, input/wake-lock handling; real A → B and offline rollback | Device background/resume, controller and multi-window qualification |
 | 5 — Publication | Frozen publisher integration and build/release checks; evidence retained | Full repository suite is not green; hardware matrix and publishing remain pending |
+
+The current rebased candidate contains 1,256 manifest files. Its required core is
+44,785,282 bytes across 1,093 files, with zero MP3 files, below the 64 MiB limit.
+Deduplicated gameplay is 595,377,173 bytes and the 71 optional recordings total
+363,627,890 bytes. These values come from the generated v0.130.0 source build and
+are the release-planning baseline for v0.132.0.
 
 See [verification.md](verification.md) for commands, browser evidence and outstanding
 hardware checks. Automated tests and an embedded browser are not a substitute for

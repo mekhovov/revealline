@@ -1,7 +1,8 @@
 # Verification record — 2026-09-25
 
 This is an implementation/qualification record, not a published platform-support claim.
-The baseline is `5d6c0ec3e6995cd0485fe5065ff5ea2bf82e0cdc`, fetched from `main`.
+The implementation was rebased onto `0e678f42579c957eb66de0d4bb842e56e324842e`,
+fetched from `main` (0.130.0 source line). The prepared release slot is v0.132.0.
 No release or site was published during this work.
 
 ## Automated checks
@@ -10,11 +11,11 @@ No release or site was published during this work.
 | --- | --- |
 | Unchanged baseline build | Passed; 1,145 files, 595,516,304 distribution bytes |
 | Initial baseline offline/audio tests | 113 passed |
-| Focused downloader, official chapter/media, migration, worker, wake-lock, audio and backup tests | 262 passed |
+| Rebased downloader, official chapter/media, migration, worker, wake-lock, audio and backup tests | 271 passed |
 | Publication, launcher, frozen snapshot and native-wrapper checks | 85 passed |
 | Save/host lifecycle regression checks | New lifecycle failures fixed; existing Team fixture failures remain |
-| Content validation and presentation metadata | Passed |
-| ESLint and repository formatting | Passed, including native formatting |
+| Current-main comparison | Team picture fixture, Versus transport timeout and one presentation expectation reproduce on unchanged main |
+| Content validation, presentation reproduction, ESLint and formatting | Passed on the final rebased source |
 | Full repository suite | Test runner exited 1; captured 12,315 top-level results, including 1,297 failures. Final TAP totals are absent; not a green qualification gate. |
 
 Reproduce the principal tests from the worktree root:
@@ -66,13 +67,11 @@ background Git metadata writes. One build attempt hit `ENOSPC`; removing the
 completed temporary baseline worktree recovered space, while the previous valid
 distribution remained intact.
 
-Detailed local logs live under `.cache/offline-pwa/`: `final-focused.log`,
-`publication-tests.log`, `regression-focused.log`, `couch-local-fallback.log`,
-`recovery-tests.log`, `test.log`, `baseline-failures*.log`, `build-final.log`,
-`validate.log`, `presentation.log`, `lint-latest.log` and `format-check.log`.
-Generated inventories and the distribution manifest are in `dist/`.
+Historical implementation and baseline logs are retained under
+`docs/offline-pwa/evidence/`. Generated current inventories and the distribution
+manifest are in the ignored local `dist/` directory.
 
-Production reproduction (`produce-field-kit-theme.mjs --check`) passes at revision 80.
+Production reproduction (`produce-field-kit-theme.mjs --check`) passes at revision 83.
 The uncommitted ledger's declaration check passes with 194 required reviewed slots;
 this is not a committed-source release-readiness receipt. The three new source-ledger
 regressions are fixed; its complete test file still has one failure also reproduced
@@ -83,18 +82,19 @@ Its sole remaining Flight Records picture-initialization timeout also reproduces
 on unchanged main (16/17), while that exact case passes in isolation on both trees.
 The standard Cache API fixture was updated for the worker's new hash-index lookup.
 
-The final ordinary build contains 1,167 files; every manifest hash and byte count
+The final rebased ordinary build contains 1,256 files; every manifest hash and byte count
 was rechecked. ZIP SHA-256:
-`c952ea74472dbf37df32dd82cb66298d110c0a7e7b3dc1078eba8d7c073ed98c`.
+`fa789382e8b5bccdefd68335caffc77a81824971127e9f138c979da3ad2a9a0f`.
 It is an uncommitted local build, not a frozen release. See
 [evidence/build-identity.json](evidence/build-identity.json) and
 [evidence/inventory-summary.json](evidence/inventory-summary.json).
 
-Deduplicated gameplay is **593,828,499 bytes (566.3 MiB)**, versus **354,986,122
-bytes (338.5 MiB)** of optional recordings. Runtime plus gameplay cache storage is
-595,664,450 bytes. The conservative worst-case two-edition peak is 1,203,687,346
+Deduplicated gameplay is **595,377,173 bytes (567.8 MiB)**, versus **363,627,890
+bytes (346.8 MiB)** of optional recordings. The required core is 44,785,282 bytes
+across 1,093 files and contains no MP3. Runtime plus gameplay cache storage is
+597,213,124 bytes. The conservative worst-case two-edition peak is 1,206,784,694
 bytes before saves, imports and browser overhead. The first-download peak is
-608,022,896 bytes. Storage estimates are advisory, and caches share the origin quota.
+609,571,570 bytes. Storage estimates are advisory, and caches share the origin quota.
 
 ## Browser evidence
 
@@ -102,7 +102,9 @@ Test surface: Codex In-app Browser on macOS 26.6.2 (25G83). The browser tool doe
 an exact engine/version or provide a physical installed mobile device. This does
 not qualify Android, iOS/iPadOS or Safari Add to Dock.
 
-The packaged build was served on `127.0.0.1:8778`. The all-game download reached
+The following browser evidence was captured on the earlier v0.116 implementation
+build and remains behavioral evidence, not qualification of the current rebased
+candidate. The packaged build was served on `127.0.0.1:8778`. The all-game download reached
 **Game ready offline** while **Soundtracks: 0 downloaded of 70** remained unchanged.
 The server process was then stopped, so requests actually failed; no fake
 `navigator.onLine` override was used. The original tab was closed before opening

@@ -1,14 +1,17 @@
 {
-  "version": "0.116.0",
-  "missions": 1515,
-  "groups": 50,
+  "version": "0.130.0",
+  "targetRelease": "v0.132.0",
+  "missions": 1697,
+  "gameplayGroups": 35,
+  "soundtrackGroups": 16,
+  "soundtrackFiles": 71,
   "sizes": {
-    "gameplayBytes": 593828499,
-    "coreBytes": 43236608,
-    "gameplayStorageBytes": 595664450,
-    "soundtrackBytes": 354986122,
+    "gameplayBytes": 595377173,
+    "coreBytes": 44785282,
+    "gameplayStorageBytes": 597213124,
+    "soundtrackBytes": 363627890,
     "largestFileBytes": 12358446,
-    "firstDownloadPeakBytes": 608022896,
-    "worstCaseTwoEditionPeakBytes": 1203687346
+    "firstDownloadPeakBytes": 609571570,
+    "worstCaseTwoEditionPeakBytes": 1206784694
   }
 }

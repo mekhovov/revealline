@@ -7,6 +7,7 @@ import {
 } from '../i18n/index.mjs';
 import { createGameWakeLock } from '../ui/game-wake-lock.mjs';
 import { localOfficialRecordingIds } from '../official-downloads.mjs';
+import { installedPresentation } from '../installed-app.mjs';
 import { attachMusicCredit, musicStatusLabel } from '../ui/music-credit.mjs';
 import { attachQuickMusicControls } from '../ui/quick-music-controls.mjs';
 import {
@@ -180,7 +181,6 @@ export function attachCouchMusicHost({
   }
   const source = createSoundtrackSource({
     catalogue: SOUNDTRACK_CATALOGUE,
-    localPlayback: () => true,
     archives: SOUNDTRACK_ARCHIVES,
     bundled: SOUNDTRACK_BUNDLED_ASSETS,
     readLocal: (hash, options) =>
@@ -189,7 +189,7 @@ export function attachCouchMusicHost({
   });
   const wakeLock = createGameWakeLock({ document: doc });
   const player = createSoundtrackPlayer({
-    localPlayback: true,
+    localPlayback: installedPresentation(),
     soundscape: sound,
     audioElement: media,
     secondAudioElement: doc.createElement('audio'),

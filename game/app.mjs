@@ -1,4 +1,4 @@
-import { invalidateInstalledMigration } from './installed-app.mjs';
+import { installedPresentation, invalidateInstalledMigration } from './installed-app.mjs';
 import { createGameWakeLock } from './ui/game-wake-lock.mjs';
 import { localOfficialChapter } from './official-chapter-source.mjs';
 import { localOfficialRecordingIds } from './official-downloads.mjs';
@@ -1611,7 +1611,6 @@ try {
       if (soundtrackDisposed) return;
       const source = createSoundtrackSource({
         catalogue,
-        localPlayback: () => true,
         archives: SOUNDTRACK_ARCHIVES,
         bundled: SOUNDTRACK_BUNDLED_ASSETS,
         readLocal: (hash) => soundtrackAssets.get(hash),
@@ -1622,7 +1621,7 @@ try {
         throw new Error(t('interface:thisBrowserDoesNotProvideFileAudioPlaybackBuiltIn'));
       soundtrackStore = createSoundtrackStore({ managedStore: pictureManager });
       soundtrackPlayer = createSoundtrackPlayer({
-        localPlayback: true,
+        localPlayback: installedPresentation(),
         localRecordingIds: await localOfficialRecordingIds(catalogue),
         catalogue,
         bundledTrackIds: SOUNDTRACK_BUNDLED_ASSETS.map(({ id }) => id),

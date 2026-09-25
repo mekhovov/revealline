@@ -1,7 +1,7 @@
 {
   "format": "revealline-scoped-audio-recipe-review-successor.v1",
   "status": "bounded offline selection and file-ownership source review; physical-device and public acceptance pending",
-  "candidateBase": "5d6c0ec3e6995cd0485fe5065ff5ea2bf82e0cdc",
+  "candidateBase": "0e678f42579c957eb66de0d4bb842e56e324842e",
   "priorReview": {
     "path": "docs/verification/online-soundtrack-reconciliation-2026-09-25/source-review.json",
     "sha256": "55198d5d74044c8a272f50b32fb01240245dea1843869d22f7dab21d0c310e42",
@@ -9,20 +9,20 @@
   },
   "fingerprint": {
     "group": "audio",
-    "paths": "game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/ui/soundtrack-panel.mjs; game/ui/soundtrack-panel.css; game/soundtrack-albums.mjs; game/soundtrack-portable.mjs; game/content/soundtrack-catalogue.mjs; game/online-soundtrack-catalogue.mjs; game/official-downloads.mjs; game/soundtrack-download-volumes.mjs; game/installed-app.mjs; game/managed-media-store.mjs; game/media-storage-record.mjs",
-    "sha256": "0e133a2f5282644855ac48e26084578eb58285599363fd6378fbc935c3f556bc",
+    "paths": "game/app.mjs; game/couch/couch-music-host.mjs; game/opening-soundtrack.mjs; game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/soundtrack-bundled.mjs; game/ui/soundtrack-panel.mjs; game/ui/soundtrack-panel.css; game/soundtrack-albums.mjs; game/soundtrack-portable.mjs; game/content/soundtrack-catalogue.mjs; game/online-soundtrack-catalogue.mjs; game/official-downloads.mjs; game/soundtrack-download-volumes.mjs; game/installed-app.mjs; game/managed-media-store.mjs; game/media-storage-record.mjs",
+    "sha256": "a78ed382b88ab15068943f1774f782a47f2f6360c4d9059351a90437d939fbee",
     "algorithm": "SHA256 of ordered raw source bytes concatenated, matching fieldKitRecipeSources"
   },
   "changedInput": {
-    "assessment": "Gameplay selects imported or verified official local recordings, with the existing procedural fallback for Automatic and silence for an empty explicit selection. Streaming remains an explicit listening action. Official file checkpoints commit independently of settings drafts; removal preserves imports and preferences. Five download/storage helpers are now included in the audio source closure."
+    "assessment": "Installed gameplay selects imported or verified official local recordings, with procedural fallback for Automatic and silence for an empty explicit selection. Streaming remains an explicit listening action. Official recording checkpoints commit independently of settings drafts; removal preserves imports, playlists and preferences. A locally shipped recording is excluded from the gameplay cache and remains an optional, explicitly downloaded soundtrack."
   },
-  "unchangedBindings": "The eight selected audio roles retain their procedural recipe IDs; no recording or synthesized composition bytes are added.",
+  "unchangedBindings": "The eight selected audio roles retain their procedural recipe IDs; essential effects and procedural music remain in the gameplay download.",
   "evidence": {
     "focusedTests": {
-      "passed": 262,
+      "passed": 271,
       "command": "See docs/offline-pwa/verification.md"
     },
-    "browser": "Codex In-app Browser on macOS 26.6.2: all gameplay prepared with zero MP3 requests; actual local-server shutdown and external CSP block; cold stable-launcher Solo win with sound enabled; optional music failure retained Game ready offline.",
+    "browser": "Prior implementation evidence on macOS 26.6.2 prepared all gameplay with zero MP3 requests, cold-launched the stable app after server shutdown and preserved gameplay readiness after an optional music failure. Current rebased release qualification remains pending.",
     "artifacts": [
       "docs/offline-pwa/evidence/network-summary.json",
       "docs/offline-pwa/evidence/stable-launcher-offline-win.png"

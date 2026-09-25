@@ -15,6 +15,7 @@ import {
   packNavigationSummary,
   validateNavigationCatalogs,
 } from './pack-indexes.mjs';
+import { SOUNDTRACK_BUNDLED_ASSETS } from '../game/content/soundtrack-catalogue.mjs';
 
 export const PROJECT_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const MARKER = '.xonix-build.json';
@@ -652,6 +653,10 @@ async function addOfflineEntries(
     ...optional,
     ...excludedBodyPaths,
     ...(optionalArtwork?.files.map((file) => file.path) ?? []),
+    // Recorded music is an optional enhancement. Keep even locally shipped
+    // recordings out of the bounded gameplay cache so procedural music and
+    // essential sound effects remain the complete offline baseline.
+    ...SOUNDTRACK_BUNDLED_ASSETS.map((asset) => asset.path),
   ]);
   // Every official chapter uses the same durable store, even when its JSON is small.
   // Otherwise opening a small chapter would consume a user-import slot.
