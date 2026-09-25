@@ -1,0 +1,79 @@
+{
+  "format": "revealline-archive-public-acceptance.v1",
+  "archive": {
+    "id": "archive-76",
+    "repository": "mekhovov/revealline-archive-76",
+    "url": "https://mekhovov.github.io/revealline-archive-76/"
+  },
+  "preservedRelease": {
+    "version": "v0.111.0",
+    "sourceRevision": "3883259987913cb646eb44cf2580083dad673a70",
+    "sourceTree": "778395d732fc1c5fcf21d8af5b0054e296e7753a",
+    "tagObject": "2c725cfdaf9b9955978d26a77dfbcadeb2ef9aea",
+    "releaseId": 396274293,
+    "distributionSha256": "f594c2de129a74037c926e36ebac94dd65513512dd13e7d2d0514a463904e15b"
+  },
+  "archiveSource": {
+    "pr": 1,
+    "head": "c9bfbf891c559f482adbc890ba3b4a902e549381",
+    "mergeCommit": "d1c19658d55dca7d3e1d13499673512923a623e0",
+    "mergeTree": "7c407f2ac8662f7838c7126bbc704b73decc6a6d",
+    "review": "SAFE",
+    "reviewedExactHead": "c9bfbf891c559f482adbc890ba3b4a902e549381"
+  },
+  "hosted": {
+    "exactHeadPrRun": 36094519021,
+    "exactMainRun": 36094583007,
+    "buildJob": 107944028051,
+    "deployJob": 107944147188,
+    "receiptsArtifact": {
+      "id": 10846494304,
+      "name": "archive76-verification-receipts",
+      "size_in_bytes": 60634,
+      "digest": "sha256:d7b991f1bb0dccda2daea4e280f5d516913ea75c66d66d82112c038726ac543b"
+    },
+    "pagesArtifact": {
+      "id": 10846504298,
+      "name": "github-pages",
+      "size_in_bytes": 534687036,
+      "digest": "sha256:e153cda569db64bb3c182f9c0ca1fb2fed36c74ac02ffaf9be44a1d5d50fbd3d"
+    },
+    "deployment": {
+      "id": 6653723980,
+      "statusId": 18818234941,
+      "state": "success",
+      "environmentUrl": "https://mekhovov.github.io/revealline-archive-76/",
+      "createdAt": "2026-09-25T04:29:30Z"
+    },
+    "receipts": {
+      "expectedInventorySha256": "a58e24084868ed60eeb7d1b352245eadad347e5cb67eafc59a6d095867e98f79",
+      "receiptSha256": "c4cb5e026d64a1de5ed826f1ceea7cdf2a0265197e2785432d6fd46a18380be6",
+      "zipReceiptSha256": "1895e4383a94adee844eee00e092d6669df01573a1d34d6ff4bb9328ae646fd2",
+      "files": 1146,
+      "bytes": 595553722,
+      "toolingCommit": "b13089b702391c275f2505d1a76c87eebb9dcce0",
+      "status": "PASS"
+    }
+  },
+  "publicByteAudit": {
+    "status": "PASS",
+    "method": "GET every finite expected path; compare exact byte count and SHA-256 without retaining bodies",
+    "files": 1146,
+    "bytes": 595553722,
+    "failures": 0,
+    "verifiedAt": "2026-09-25T04:31:03.368Z"
+  },
+  "browserAcceptance": {
+    "status": "PASS",
+    "surface": "Codex in-app browser",
+    "base": "https://mekhovov.github.io/revealline-archive-76/releases/v0.111.0/site/game/",
+    "observations": [
+      "Archive landing linked the exact v0.111.0 canonical route.",
+      "Home loaded New Journey with 91 missions; the Sound control toggled from off to on.",
+      "Missions loaded 279 Solo entries, and First return opened its mission overlay.",
+      "Start mission entered the live board; the timer advanced and pause control became available."
+    ],
+    "scope": "Browser interaction admission only; does not claim physical touch/controller devices, comprehensive offline, or full mission balance."
+  },
+  "accepted": true
+}
