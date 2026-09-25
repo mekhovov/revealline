@@ -126,6 +126,7 @@ for (const difficulty of ['gentle', 'standard', 'expert'])
     assert.equal(p.renders[1].status, 'won');
     assert.equal(p.renders[0].coverage, p.renders[1].coverage);
     assert.match(p.$('race-message').textContent, /Draw.*First clear/);
+    assert.equal(p.$('race-journey-next').textContent, 'Next: Choose your share');
     const previous = p.renders[0],
       picture = p.drawOptions[0].backdrop;
     assert.equal(p.$('race-journey-next').hidden, false);

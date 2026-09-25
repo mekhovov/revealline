@@ -20,7 +20,8 @@ import { compileContentProject, resolveMission } from '../content-design/project
 import { dataIdentity } from '../data-json.mjs';
 import { expectedRouteEvidence, assertRouteEvidence } from './helpers/route-evidence.mjs';
 
-const authoredProject = compileContentProject(createAuthoredJourneyRoute('authored').source);
+const authoredRoute = createAuthoredJourneyRoute('authored');
+const authoredProject = compileContentProject(authoredRoute.source);
 const {
   rows: tunedRoutes,
   optional: optionalRoutes,
@@ -138,6 +139,22 @@ test('the final authored core mission offers Find missions without recording a f
   assert.equal(p.$('journey-skip').textContent, 'Find missions');
   assert.deepEqual(p.errors, []);
 });
+
+for (const [missionId, expected] of [
+  ['first-return', 'Next: Choose your share'],
+  ['two-keepers', 'Next campaign: Horizon School'],
+])
+  test(`Solo result for ${missionId} names its owned continuation`, async (t) => {
+    const { p } = await setup(t);
+    await openMissions(p);
+    missionCard(p, 'opening', missionId).click();
+    await running(p, missionId);
+    p.$('pause-button').click();
+    p.rendered.run.status = 'won';
+    p.$('show-result').click();
+    assert.equal(p.$('next-button').textContent, expected);
+    assert.deepEqual(p.errors, []);
+  });
 
 test('cross-pack Skip failure keeps Horizon intact, then retries into Border without awarding a clear', async (t) => {
   let refuseBorder = false;
