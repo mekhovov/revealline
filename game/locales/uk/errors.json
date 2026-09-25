@@ -385,6 +385,7 @@
   "creator.teamTransactionFailed": "Транзакція встановленої командної кампанії завершилася помилкою.",
   "creator.teamClockInvalid": "Годинник установленої командної кампанії некоректний.",
   "creator.removeTeamCampaignFirst": "Видали встановлену командну кампанію перед додаванням іншої.",
+  "creator.teamMediaBudgetExceeded": "Установлені командні кампанії перевищують бюджет керованого сховища медіафайлів.",
   "creator.teamInstallFailed": "Не вдалося встановити командну кампанію.",
   "creator.teamEditionIdentityConflict": "Ідентифікатор установленого командного видання вже пов’язаний з іншими байтами.",
   "creator.teamInventoryDamaged": "Перелік установлених командних кампаній пошкоджено.",
