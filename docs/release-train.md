@@ -10,8 +10,12 @@ RevealLine keeps development parallel and publishing serial.
 - New non-release pull requests are automatically returned to draft status.
   For an exceptional non-product maintenance PR, apply the
   `release-train-approved` label before marking it ready for review.
-- Documentation, Pages-controller, and workflow-only maintenance remains
-  eligible without consuming a product version.
+- Documentation, test-only evidence under `game/test/`, Pages-controller, and
+  workflow-only maintenance remain eligible without consuming a product
+  version. A PR that also changes runtime remains product work.
+- A promoted release PR may aggregate several independently reviewed roots when
+  their dependency order is explicit. Review every merge delta, build the exact
+  aggregate once, and preserve each source PR and its focused evidence.
 - After the promoted root merges, qualify/freeze/release it once, complete the
   separate Pages selector and public acceptance, then promote the next root.
 

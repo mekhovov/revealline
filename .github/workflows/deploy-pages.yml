@@ -111,11 +111,13 @@ jobs:
             "repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER/files?per_page=100" \
             --jq '.[].filename')
           if [ "${#paths[@]}" -gt 0 ] && printf '%s\n' "${paths[@]}" | \
-            grep -Ev '^(docs/|publishing/|\.github/workflows/)' >/dev/null; then
+            grep -Ev '^(docs/|publishing/|\.github/workflows/|game/test/)' >/dev/null; then
             echo 'mode=hold' >> "$GITHUB_OUTPUT"
           else
-            # Documentation and release-controller maintenance are bounded
-            # non-product work; they do not allocate a product release slot.
+            # Documentation, test-only evidence, and release-controller
+            # maintenance are bounded non-product work; they do not allocate a
+            # product release slot. Any accompanying runtime path still holds
+            # the whole PR in the product lane.
             echo 'mode=maintenance' >> "$GITHUB_OUTPUT"
           fi
 
