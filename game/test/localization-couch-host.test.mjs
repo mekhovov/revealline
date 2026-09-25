@@ -40,3 +40,49 @@ test('Couch language changes translate the lobby and paused help without changin
     assert.equal(f.doc.activeElement, focused);
   }
 });
+
+test('controller edits the lobby and Settings language selectors without starting either board', async (context) => {
+  const { attachLanguageControls } = await import('../i18n/index.mjs');
+  const locale = getLocale();
+  context.after(() => setLocale(locale, { persist: false }));
+  setLocale('en', { persist: false });
+  const pad = {
+    index: 0,
+    id: 'Test pad',
+    connected: true,
+    mapping: 'standard',
+    axes: [0, 0, 0, 0],
+    buttons: Array.from({ length: 16 }, () => ({ value: 0, pressed: false })),
+  };
+  const f = await couchPage(context, { pads: [pad] });
+  attachLanguageControls(f.doc);
+  const lobby = f.$('race-language-select');
+  const settings = f.$('race-settings-language-select');
+  assert.ok(f.$('race-main').contains(lobby));
+  assert.ok(f.$('race-settings-panel-display').contains(settings));
+  const checkpoint = f.checkpoint();
+  f.join(0);
+  f.focus(lobby.id);
+  f.pulse(0, 0);
+  assert.equal(lobby.getAttribute('data-controller-editing'), 'true');
+  f.pulse(0, 13);
+  f.pulse(0, 0);
+  assert.equal(getLocale(), 'uk');
+  assert.equal(f.doc.activeElement, lobby);
+  assert.equal(lobby.value, 'uk');
+  assert.equal(settings.value, 'uk');
+  assert.deepEqual(f.checkpoint(), checkpoint);
+  f.$('race-options').click();
+  f.$('race-settings-tab-display').click();
+  f.frame(0);
+  f.focus(settings.id);
+  f.pulse(0, 0);
+  assert.equal(settings.getAttribute('data-controller-editing'), 'true');
+  f.pulse(0, 12);
+  f.pulse(0, 0);
+  assert.equal(getLocale(), 'en');
+  assert.equal(f.doc.activeElement, settings);
+  assert.equal(lobby.value, 'en');
+  assert.equal(settings.value, 'en');
+  assert.deepEqual(f.checkpoint(), checkpoint);
+});
