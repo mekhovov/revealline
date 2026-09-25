@@ -1,0 +1,80 @@
+{
+  "format": "revealline-archive-public-acceptance.v1",
+  "archive": {
+    "id": "archive-78",
+    "repository": "mekhovov/revealline-archive-78",
+    "url": "https://mekhovov.github.io/revealline-archive-78/"
+  },
+  "preservedRelease": {
+    "version": "v0.112.0",
+    "sourceRevision": "eca4e32baf190b2cf9184466a45b1627746c00ea",
+    "sourceTree": "03f11f09495c37202de795d5d9af10c9f908840e",
+    "tagObject": "defad0ab0d624a6f270c340208db7d82bcf28193",
+    "releaseId": 396369453,
+    "distributionSha256": "2d6714f5c6215e52e885bddb895c910de221e068510d9478d4a703bbfe7aa8a8"
+  },
+  "archiveSource": {
+    "pr": 1,
+    "head": "b33b3f0fde57f05375d8220db1a6682060857d17",
+    "mergeCommit": "d5c4d6c55e622f0a9e23c06ca0c35ee8b496fb8f",
+    "mergeTree": "b001c97ceff837093f3fc3c419bd4db2730a06d6",
+    "review": "SAFE",
+    "reviewedExactHead": "b33b3f0fde57f05375d8220db1a6682060857d17"
+  },
+  "hosted": {
+    "exactHeadPrRun": 36111242534,
+    "exactMainRun": 36111544694,
+    "buildJob": 107995905464,
+    "deployJob": 107996099495,
+    "receiptsArtifact": {
+      "id": 10853076895,
+      "name": "archive78-verification-receipts",
+      "size_in_bytes": 60636,
+      "digest": "sha256:04852798fc2b786f551ce203bf6b204d7def0e366dc34a452377f87cd3effd71"
+    },
+    "pagesArtifact": {
+      "id": 10853740708,
+      "name": "github-pages",
+      "size_in_bytes": 534693352,
+      "digest": "sha256:d7ff5d7b06cca61b556b3cd48cf6b582e8737955e3a54e856aa20ca40da5c318"
+    },
+    "deployment": {
+      "id": 6656528346,
+      "statusId": 18824695574,
+      "state": "success",
+      "environmentUrl": "https://mekhovov.github.io/revealline-archive-78/",
+      "createdAt": "2026-09-25T08:11:48Z"
+    },
+    "receipts": {
+      "expectedInventorySha256": "555a10c7d070c2f01170c6ad8f2197ee778c64921c65079269cd0f28efdd0f2d",
+      "receiptSha256": "e3258fd1c281292d6c46c586f9cbcda81e81c09845a4e9466243d6b24e35224b",
+      "zipReceiptSha256": "d3de0f8ade29a214e6f0831163cf9b7cf8c8a68a532c8daae6b5d6766fdca708",
+      "files": 1146,
+      "bytes": 595631996,
+      "toolingCommit": "b13089b702391c275f2505d1a76c87eebb9dcce0",
+      "status": "PASS"
+    }
+  },
+  "publicByteAudit": {
+    "status": "PASS",
+    "method": "GET every finite expected path; compare exact byte count and SHA-256 without retaining bodies",
+    "files": 1146,
+    "bytes": 595631996,
+    "failures": 0,
+    "transportRetries": 0,
+    "verifiedAt": "2026-09-25T08:15:57Z"
+  },
+  "browserAcceptance": {
+    "status": "PASS",
+    "surface": "Codex in-app browser",
+    "base": "https://mekhovov.github.io/revealline-archive-78/releases/v0.112.0/site/game/",
+    "observations": [
+      "The archive root opened the preserved v0.112.0 title with 91 missions.",
+      "The native More panel reported VERSION V0.112.0.",
+      "About reported START PLAYING V0.112.0; Build Information listed v0.112.0 preserved and 153 preserved builds; RETURN TO GAME restored the exact Archive78 title.",
+      "The return title produced no captured console warnings or errors."
+    ],
+    "scope": "Fresh browser navigation admission only; does not claim physical touch/controller devices, comprehensive offline use, all modes, or mission balance."
+  },
+  "accepted": true
+}
