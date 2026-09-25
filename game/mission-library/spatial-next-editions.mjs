@@ -15,6 +15,7 @@ import { t } from '../i18n/index.mjs';
 const SPATIAL_V9_MISSIONS = Object.freeze(['stepping-stones', 'return-pocket', 'neutral-ground']);
 const HORIZON_V10_MISSIONS = Object.freeze(['island-outpost', 'long-way-home', 'horizon-remix']);
 const BORDER_V11_MISSIONS = Object.freeze(['second-landing', 'long-rail', 'new-frontier']);
+const BORDER_SIGNAL_V12_MISSIONS = Object.freeze(['border-remix', 'dry-spine', 'wide-approach']);
 const ORNAMENT_V1_MISSIONS = Object.freeze([
   'cross-stitch-crossings',
   'rushnyk-bands',
@@ -29,6 +30,12 @@ const EDITION_HISTORY = Object.freeze({
     Object.freeze({ routeId: 'whole-spatial-v9', missionIds: SPATIAL_V9_MISSIONS }),
   ]),
   'whole-spatial-v12': Object.freeze([
+    Object.freeze({ routeId: 'whole-spatial-v11', missionIds: BORDER_V11_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v10', missionIds: HORIZON_V10_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v9', missionIds: SPATIAL_V9_MISSIONS }),
+  ]),
+  'whole-spatial-v13': Object.freeze([
+    Object.freeze({ routeId: 'whole-spatial-v12', missionIds: BORDER_SIGNAL_V12_MISSIONS }),
     Object.freeze({ routeId: 'whole-spatial-v11', missionIds: BORDER_V11_MISSIONS }),
     Object.freeze({ routeId: 'whole-spatial-v10', missionIds: HORIZON_V10_MISSIONS }),
     Object.freeze({ routeId: 'whole-spatial-v9', missionIds: SPATIAL_V9_MISSIONS }),
