@@ -1,5 +1,5 @@
 import { contentText } from '../i18n/content.mjs';
-import { localizedText, t } from '../i18n/index.mjs';
+import { localizedText, localizedMessage, render, t } from '../i18n/index.mjs';
 /** Bind the finite first-party reading surfaces. The navigation adapter owns
  * scrolling/focus; this host layer owns visible controls and the pause boundary. */
 export function attachControllerReading({
@@ -18,11 +18,16 @@ export function attachControllerReading({
   // An explicit list owns only those surfaces; omitted keeps the Solo defaults
   // and additional surfaces. Entries remain [region, entry, label, unit] tuples.
   const definitions = surfaceDefinitions ?? [
-    ['overlay-reading', 'overlay-read', t('interface:missionDetails'), 'overlay-reading-unit'],
+    [
+      'overlay-reading',
+      'overlay-read',
+      localizedMessage('interface:missionDetails'),
+      'overlay-reading-unit',
+    ],
     [
       'mission-brief-reading',
       'mission-brief-read',
-      t('interface:missionBrief'),
+      localizedMessage('interface:missionBrief'),
       'mission-brief-unit',
     ],
     ...additionalSurfaces,
@@ -69,7 +74,7 @@ export function attachControllerReading({
       surface.entry.setAttribute('aria-pressed', String(active));
       localizedText(surface.hint, () =>
         active
-          ? `Reading ${surface.label}. ${prompt(surface.region)}`
+          ? t('gameplay:reading', { value1: render(surface.label), value2: prompt(surface.region) })
           : t('interface:readWithoutStartingOrResuming'),
       );
       if (surface.id === 'overlay-reading' && (compactOverlay || surface.region.hidden)) {
@@ -273,7 +278,8 @@ export function attachControllerReading({
           region: surface.region,
           origin: surface.entry,
           exit: surface.done,
-          label: surface.label,
+          label: render(surface.label),
+          getLabel: () => render(surface.label),
         }),
         revision = readingRevision;
       // Install the final hint before measuring/revealing the unit: its longer

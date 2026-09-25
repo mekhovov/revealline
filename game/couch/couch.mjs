@@ -3470,8 +3470,18 @@ try {
     getReadingPrompt: readingPrompt,
     revealOnResize: true,
     surfaceDefinitions: [
-      ['race-help-reading', 'race-help-read', t('interface:couchControls'), 'race-help-unit'],
-      ['race-data-reading', 'race-data-read', t('interface:versusGameData'), 'race-data-unit'],
+      [
+        'race-help-reading',
+        'race-help-read',
+        localizedMessage('interface:couchControls'),
+        'race-help-unit',
+      ],
+      [
+        'race-data-reading',
+        'race-data-read',
+        localizedMessage('interface:versusGameData'),
+        'race-data-unit',
+      ],
     ],
   });
   $('race-menu-release').onclick = () => {
