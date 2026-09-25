@@ -12,7 +12,14 @@ const scripts = await Promise.all(
   ),
 );
 const key = 'revealline.locale.v1';
-function runtime({ saved, languages, language, blocked = false, weakRef = WeakRef } = {}) {
+function runtime({
+  saved,
+  languages,
+  language,
+  blocked = false,
+  weakRef = WeakRef,
+  document,
+} = {}) {
   const values = new Map(saved === undefined ? [] : [[key, saved]]);
   const events = new Map();
   const context = vm.createContext({
@@ -20,6 +27,7 @@ function runtime({ saved, languages, language, blocked = false, weakRef = WeakRe
     console,
     WeakRef: weakRef,
     navigator: { languages, language },
+    document,
     localStorage: {
       getItem: (name) => {
         if (blocked) throw Error('Blocked');
@@ -121,6 +129,57 @@ test('text and attribute bindings update in place without changing editor values
   assert.equal(node.value, 'Unsaved title');
   assert.equal(node.selectionStart, 3);
   assert.equal(node.scrollTop, 14);
+});
+
+test('locale layout pins scroll without leaving authored scroll anchoring overridden', () => {
+  for (const original of ['', 'auto']) {
+    let anchor = original,
+      priority = original ? 'important' : '';
+    const label = { textContent: '', isConnected: true };
+    const root = {
+      scrollTop: 90,
+      scrollLeft: 12,
+      style: {
+        getPropertyValue: () => anchor,
+        getPropertyPriority: () => priority,
+        setProperty(_key, value, nextPriority) {
+          anchor = value;
+          priority = nextPriority;
+        },
+        removeProperty() {
+          anchor = '';
+          priority = '';
+        },
+      },
+      getBoundingClientRect() {
+        assert.equal(
+          anchor,
+          'none',
+          'Anchoring is disabled while translated geometry is committed.',
+        );
+        assert.equal(label.textContent, 'Пауза');
+        this.scrollTop = 65;
+        return {};
+      },
+    };
+    const document = {
+      documentElement: root,
+      querySelectorAll: (selector) => (selector === '*' ? [root, label] : []),
+    };
+    const { api } = runtime({ document });
+    api.localizedText(label, () => api.t('common:actions.pause'));
+    api.setLocale('uk', { persist: false });
+    assert.equal(root.scrollTop, 90);
+    assert.equal(root.scrollLeft, 12);
+    assert.equal(anchor, original);
+    assert.equal(priority, original ? 'important' : '');
+    api.onLocaleChange(() => {
+      throw new Error('Broken presentation observer');
+    });
+    assert.throws(() => api.setLocale('en', { persist: false }), /Broken presentation observer/);
+    assert.equal(anchor, original, 'A failing observer must also release its temporary style.');
+    assert.equal(priority, original ? 'important' : '');
+  }
 });
 
 test('content uses exact identity and field; edited imports retain authored text and hashes', async () => {
