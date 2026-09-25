@@ -48,33 +48,58 @@ reviewer names, listening approval or device results.
 
 ### Active — release order and effort
 
-1. **M3 quick controls:** finish scoped review and qualification of #333, then
-   publish and verify B/N, touch and controller behavior. About one engineering day
-   remains after publisher sequencing, excluding CI/device waits.
-2. **M2 opening theme:** release the source-only infrastructure, then selectively
-   rebuild and qualify Shchedryk from #439. Allow 1–2 engineering days after the
-   adapter release and outstanding listening/cultural/device evidence; review
-   availability has no committed date. M4–M6 research continues in parallel.
+1. **M6 Purgatory publication:** independently review clean draft #26, merge only
+   if accepted, deploy and verify its exact public bytes. Allow about half a working
+   day for review/publication plus CI/Pages waits. Listening approval and game
+   admission remain separate, unscheduled gates.
+2. **M1 admission gate:** #321 conflicts with current main and its last full
+   qualification failed. Reconcile the narrow evidence gate, diagnose any residual
+   exact-source failures and obtain independent review before composing it with
+   source infrastructure. Allow about half a working day for rebase and triage;
+   repair time is unknown until the fresh exact-head run completes.
+3. **M3 quick controls:** #333 now conflicts with current main. Reconcile it before
+   scoped review and qualification, then publish and verify B/N, touch and controller
+   behavior. About one engineering day remains after conflict resolution and
+   publisher sequencing, excluding CI/device waits.
+4. **M2 opening theme:** #331 also conflicts with current main; #439 is clean only
+   against that stale stacked base and cannot release independently. Reconcile and
+   release the source-only infrastructure first, then selectively rebuild and qualify
+   Shchedryk. Allow 1–2 engineering days for the adapter after conflict resolution,
+   then 1–2 days for the theme after accepted #331, excluding listening/cultural/
+   device review and CI waits. M4–M6 research continues in parallel.
 
-The coordinator's **tentative, conditional** post-v0.111.1 train is v0.117 for
-quick controls (#333), v0.118 for an infrastructure rebuild of #321 + #331 with
-#423/#462 documentation, then v0.119 for selective Shchedryk admission rebuilt
-atop accepted #331 and current main. These are queue proposals, not allocated or
-accepted releases. No merge or version allocation precedes the prior item's
-public acceptance. Refresh and qualify each actual resulting source; skipped
-suites remain exclusions, never passes. Existing #439 is implementation evidence
-for the selective rebuild, not authorization to merge its old stack unchanged.
+The latest public/general GitHub release is **v0.115.0**. Current PR titles propose
+v0.125.0 for quick controls (#333), v0.126.0 input for #331 and v0.127.0 for #439,
+but those labels do not make their conflicting/stale stacks releasable or prove a
+final publisher allocation. No merge or version allocation precedes the prior
+item's public acceptance. Refresh and qualify each actual resulting source;
+skipped suites remain exclusions, never passes. Existing #439 is implementation
+evidence for the selective rebuild, not authorization to merge its old stack
+unchanged.
 
 ### Blocked and held
 
 - Physical-device/controller and cold-offline qualification remain open after
   scoped desktop acceptance. The initial selector's failed reread is retained as
   failure evidence; the successful successor closes that publication blocker.
-- #331 is intentionally held without an allocated release slot. Two inherited
-  Team drifter assertions remain separately recorded; skipped jobs are not passes.
+- #321, #331 and #333 are conflicting with authoritative main
+  `957076b1d1bc14e2a8f65ded73f8f666f6df90dd`; their prior focused checks remain
+  historical evidence, not current-main qualification. #321's failed four-shard
+  qualification remains a failure. #439 is mergeable only relative to stale stacked
+  #331 and is not independently releasable. Two inherited Team drifter assertions
+  remain separately recorded; skipped jobs are not passes.
 - Musical, transition, warning-audibility, cultural and physical-device evidence
   cannot be replaced by transport tests. UA-FPV public redistribution still needs
   recording-specific permission; the four private packs remain available.
+- The four public PR #25 synth recordings and the four draft PR #26 Purgatory
+  recordings are listening-unapproved and unadmitted. PR #26 also awaits an
+  independent publication review. These human review gates have no committed ETA.
+  Do not publicly redistribute Pixabay or UA-FPV recordings without exact-recording
+  permission. Shchedryk remains excluded from Recording mode because of Content ID.
+- Current free space is **4,704,716 KiB (about 4.49 GiB)**, above the required
+  1 GiB floor. The data volume is still 99% used, so preserve that floor and keep
+  large audio/build operations bounded; disk is a capacity risk, not a current
+  blocker. Historical below-floor failures remain evidence and are not rewritten.
 
 ### Deferred
 
@@ -209,22 +234,38 @@ originals approved. No deadline is assigned to unresolved rights or paused music
   transport milestone, not musical approval, game admission or a default-playlist
   change.
 - Archive draft [PR #22](https://github.com/mekhovov/revealline-soundtracks-01/pull/22)
-  (Reckless punk-metal) remains open at
-  `964b00b264985da4d0e6a41545c77f9a1a7456a7`; draft
+  (Reckless punk-metal) remains clean/mergeable at
+  `964b00b264985da4d0e6a41545c77f9a1a7456a7`, but its base
+  `41ea4448cf9602960ada28cd2c7c9a4cd5cb6b38` predates current archive main and
+  must be reconciled before review. Draft
   [PR #23](https://github.com/mekhovov/revealline-soundtracks-01/pull/23)
-  (runner2088 retrowave) remains open at
+  (runner2088 retrowave) is conflicting at
   `e6e746a83f08708b4b24cf1a2522a4924624001a`. Neither is published by the
-  current archive main. Purgatory vol. 3 source preparation merged through
+  current archive main. Allow about half a working day per draft for rebase/
+  conflict resolution and fresh applicable checks before independent review;
+  publication and listening time remain additional. Purgatory vol. 3 source preparation merged through
   [PR #21](https://github.com/mekhovov/revealline-soundtracks-01/pull/21) as
   `41ea4448cf9602960ada28cd2c7c9a4cd5cb6b38`; its four-track exact artifact is
-  technically reviewed, and a separately reviewed Purgatory publication is the
-  next archive batch. Technical preparation does not approve those recordings.
+  technically reviewed. Publication draft
+  [PR #26](https://github.com/mekhovov/revealline-soundtracks-01/pull/26) is
+  clean/mergeable at `f099a942f3a01146e83627bb02be24daa014624e` on current archive
+  main. Exact applicable verify/source checks
+  [36149040244](https://github.com/mekhovov/revealline-soundtracks-01/actions/runs/36149040244),
+  [36149040063](https://github.com/mekhovov/revealline-soundtracks-01/actions/runs/36149040063)
+  and [36149039993](https://github.com/mekhovov/revealline-soundtracks-01/actions/runs/36149039993)
+  passed; event-inapplicable deploy/prepare/assemble jobs were skipped and are not
+  passes. If independently reviewed, merged and deployed, it would append exactly
+  four Purgatory auditions and raise the public archive to **136 recordings across
+  14 collections**. It remains draft, unpublished, listening-unapproved, excluded
+  from the game catalogue/defaults and Recording-mode ineligible. Allow about half
+  a working day for independent review, merge/deploy and public byte verification,
+  excluding CI/Pages waits. Technical preparation does not approve those recordings.
 - Authoritative game GitHub state has
   [PR #370](https://github.com/mekhovov/revealline/pull/370) merged as
   `3883259987913cb646eb44cf2580083dad673a70` and
   [v0.111.0](https://github.com/mekhovov/revealline/releases/tag/v0.111.0)
   published as the public soundtrack archive player. Current game main is
-  `902da32de72d5f2772f11d2a6575f334d56c7cb8`, and the latest general GitHub
+  `957076b1d1bc14e2a8f65ded73f8f666f6df90dd`, and the latest public/general GitHub
   release is v0.115.0. Later game releases do not convert these archive auditions
   into trusted built-ins or defaults.
 - UA-FPV remains on its recording-specific public-redistribution rights hold; its
@@ -244,7 +285,9 @@ originals approved. No deadline is assigned to unresolved rights or paused music
   inherited drifter source-stage failures remain. Field Kit revision 79 preserves
   exact Team image identities and revisions 58–78. This is scoped evidence, not qualification or
   recording admission: registrations remain empty, no MP3 is bundled and no default
-  changes. Hosted [run 36092960845](https://github.com/mekhovov/revealline/actions/runs/36092960845)
+  changes. The draft now conflicts with authoritative main; its earlier clean base
+  and focused results do not qualify the current release source. Hosted
+  [run 36092960845](https://github.com/mekhovov/revealline/actions/runs/36092960845)
   passed preflight; test/build/release-gate jobs were skipped and release-ready
   failed because this draft intentionally has `ADMISSION=hold` and no release slot.
   Fresh accepted-base gates and release remain. Opening-theme
@@ -273,8 +316,12 @@ originals approved. No deadline is assigned to unresolved rights or paused music
   recipe/history checks pass. Audit revision 6 closes all nine runtime dependencies
   and verifies mutation/missing-input refusal. Field Kit revision 78 reopens UI,
   screen and audio recipes at `source`, without inheriting revision-77 approval.
-  Hosted exact-source gates, scoped review, independent final review and
-  browser/controller/device acceptance remain; no release version is allocated.
+  Authoritative GitHub now reports head
+  `77a3b8a93ca995e61eacf7e846a01ef7886db557` conflicting with current main.
+  Prior preflight passes remain scoped historical evidence; build/test/release-gate
+  skips are not passes, and the prior release-ready failures remain failures.
+  Conflict resolution, fresh hosted exact-source gates, scoped review, independent
+  final review and browser/controller/device acceptance remain.
 - Archive [PR #4](https://github.com/mekhovov/revealline-soundtracks-01/pull/4)
   merged at 62dfd72d561621218c63443b6ab621f6f67d46cc and acquired two Nakarada
   auditions through the existing hosted intake. Separate
@@ -322,7 +369,8 @@ originals approved. No deadline is assigned to unresolved rights or paused music
   That publication round provided **twelve public auditions: six synth, four David KBD
   metal and two Nakarada metal**, with **zero new game admissions**.
 - PR [#321](https://github.com/mekhovov/revealline/pull/321) remains draft at
-  `e6a766abce745e1993c53a2652d8e03e50e7a5e5`.
+  `e6a766abce745e1993c53a2652d8e03e50e7a5e5` and is conflicting with current
+  main. Its stale-base evidence is unqualified for release.
 - Qualification [35945946346](https://github.com/mekhovov/revealline/actions/runs/35945946346)
   at `539418e41a198b02843c70baf488008716089a9a` finished with all four test shards
   failed. Qualify passed; freeze was skipped. Previous “still running” wording
@@ -390,7 +438,9 @@ originals approved. No deadline is assigned to unresolved rights or paused music
   revision is reserved. PRs #321/#333 still need accepted-base qualification.
 - Local free space is approximately **100 MiB**, below the unchanged 1 GiB floor.
   Source preparation uses memory and hosted Git operations; no local audio
-  downloads, checkouts, builds or user-file cleanup occurred.
+  downloads, checkouts, builds or user-file cleanup occurred. This is a historical
+  checkpoint; the current 25 September reading is 4,704,716 KiB (about 4.49 GiB),
+  above the floor but still on a 99%-used volume.
 - The latest metal decision below preserves the Shchedryk decision, Ukrainian
   research, synth reference history, older metal backups and paused originals.
 
@@ -557,12 +607,12 @@ version is allocated without the release owner's confirmation.
 | ID | State / priority | Dependency | Next action and completion condition | Effort | PR / evidence | Released version |
 | --- | --- | --- | --- | --- | --- | --- |
 | M0 | Complete; maintenance continues | None | Preserve all histories and update this ledger after each meaningful milestone | Complete | [PR #330](https://github.com/mekhovov/revealline/pull/330), merged efacbf087; prior source PR #321 | Docs merged; no runtime release required |
-| M1 | Shared UX0 baseline accepted; residual #321 qualification remains | Latest accepted main; remaining #321 failure audit | Rebase the admission gate onto accepted source, classify residual failures, then independently review and pass fresh exact-source qualification | 0.5 day triage; repair re-estimated after diagnosis | PR #321; historical run35945946346; shared fixes landed through PR #374 at c1b70a3674db230bd1433a6805dde05f3a59cb81 | Unreleased |
-| M2 | #331 adapter and stacked #439 opening theme active drafts | #331 source release; recording review and #439 qualification | Refresh against accepted main, release the inactive infrastructure, then selectively rebuild the theme and prove menu, offline and preference behavior | 1–2 days after source release and required reviews; waits excluded | [Draft #331](https://github.com/mekhovov/revealline/pull/331), b1ae8bca: 111/111 focused, separate Team 1/3; [draft #439](https://github.com/mekhovov/revealline/pull/439), cd19167c: 245/245 + 14/14 | Unreleased |
-| M3 | Nine-input dependency gap closed; review and release remain | Source-stage review; #333 qualification and device checks | Refresh against accepted main, complete scoped review and authorized exact-source gates, then verify B/N and touch/controller behavior publicly | About 1 day remaining, excluding CI/device waits and failure diagnosis | [Draft PR #333](https://github.com/mekhovov/revealline/pull/333), ed59771e; 54/54 focused; revision 78 source-stage evidence | Unreleased |
+| M1 | #321 is conflicting and unqualified; shared UX0 baseline remains accepted | Latest accepted main; remaining #321 failure audit | Rebase the admission gate onto accepted source, classify residual failures, then independently review and pass fresh exact-source qualification | 0.5 day rebase/triage; repair re-estimated after diagnosis | [Draft PR #321](https://github.com/mekhovov/revealline/pull/321), e6a766ab; historical failed run 35945946346; shared fixes landed through PR #374 at c1b70a3674db230bd1433a6805dde05f3a59cb81 | Unreleased |
+| M2 | #331 conflicts with main; #439 is clean only on stale stacked #331 | #331 reconciliation/source release; recording review and #439 qualification | Refresh #331 against accepted main, release the inactive infrastructure, then selectively rebuild the theme and prove menu, offline and preference behavior | 1–2 days for #331 after conflict resolution, then 1–2 days for #439 after accepted #331; review/CI/device waits excluded | [Draft #331](https://github.com/mekhovov/revealline/pull/331), b1ae8bca: historical 111/111 focused, separate Team 1/3; [stacked draft #439](https://github.com/mekhovov/revealline/pull/439), cd19167c: historical 245/245 + 14/14 | Unreleased |
+| M3 | #333 conflicts with main; prior nine-input dependency closure is historical evidence | Current-main reconciliation; source-stage review; exact qualification and device checks | Refresh against accepted main, complete scoped review and authorized exact-source gates, then verify B/N and touch/controller behavior publicly | About 1 engineering day after conflict resolution, excluding CI/device waits and failure diagnosis | [Draft PR #333](https://github.com/mekhovov/revealline/pull/333), current head 77a3b8a9; prior ed59771e 54/54 focused and revision-78 evidence | Unreleased |
 | M4 | Active research; parallel | Exact published rights and musical/cultural review | Target six additional distinct Ukrainian compositions; publish cleared subsets | 1–2 days per research round; rights/review date unknown | Candidate/hold register below | Unreleased |
 | M5 | Four third-direction synth auditions are public; runner2088 remains draft; Electric Dreams remains the closest reference | Musical fit, full listening and exact admission review; public-archive holds remain | Review 90s Racer Techno, Neon Pulse, Prismatic Light and Future Travel; keep PR #23 draft until independently reconciled; admit only a musically accepted subset | Several hours per comparison round; 1–2 days integration/verification after approval; CI/review waits excluded | Archive [PR #25](https://github.com/mekhovov/revealline-soundtracks-01/pull/25), Pages run 36147468099 and M5.a feedback below; draft [PR #23](https://github.com/mekhovov/revealline-soundtracks-01/pull/23) | Unreleased in game |
-| M6 | Purgatory source preparation complete; Reckless remains draft; groove-first direction retained | Separate publication review, full listening, transitions, warnings, Content ID and gameplay acceptance | Publish the technically prepared Purgatory batch through a separate reviewed archive change; keep PR #22 draft; admit only a musically accepted subset | One publication batch plus several hours per listening/research round; 1–2 days integration after approval, excluding review/CI waits | Merged source [PR #21](https://github.com/mekhovov/revealline-soundtracks-01/pull/21); draft [PR #22](https://github.com/mekhovov/revealline-soundtracks-01/pull/22); prior archive #11/#12 evidence retained | Unreleased in game |
+| M6 | Purgatory publication draft #26 is clean/exact-check passing; Reckless #22 is clean on a stale base; groove-first direction retained | Independent publication review, full listening, transitions, warnings, Content ID and gameplay acceptance | Review #26, then merge/deploy and verify exact public bytes if accepted; reconcile #22 separately; admit only a musically accepted subset | About 0.5 working day for #26 review/publication plus CI/Pages waits; several hours per listening round; 1–2 days integration after approval | Merged source [PR #21](https://github.com/mekhovov/revealline-soundtracks-01/pull/21); draft publication [PR #26](https://github.com/mekhovov/revealline-soundtracks-01/pull/26), f099a942; stale-base draft [PR #22](https://github.com/mekhovov/revealline-soundtracks-01/pull/22) | Unreleased in game |
 | M7 | Blocked public rights; scope retained | Recording-specific public redistribution and applicable artwork evidence | Include all 77 recordings / 80 filenames; publish cleared entries; maintain private pack route | About 1 day integration after clearance; clearance date unknown | UA-FPV manifests/private packs/guide | Public collection unreleased |
 | M8 | Native streaming published; primary v0.111.1 and Archive76 desktop proof covered the then-current 128-track archive | Released source and device access | Verify in-game discovery of the current 132-track archive plus remaining style/order/repeat/fallback, physical-device/controller and cold-offline cases; audit playback/storage/creator contracts and release demonstrated fixes separately | 1–2 days initial audit; fixes separately estimated | PR #370, v0.111.0, Archive76 and primary run 36095346816 evidence above; current archive Pages run 36147468099; existing regression suites | Primary v0.111.1 scoped desktop acceptance complete; current 132-track game check pending |
 | M9 | Later | Core style releases | Review existing 70 selectively; add trusted ID/hash curation overlay preserving saved pins | 1–2 days per selected batch plus listening | Curation PR pending | Unreleased |
