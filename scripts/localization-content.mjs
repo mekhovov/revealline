@@ -232,6 +232,13 @@ export async function contentSources(root) {
   }
   sources.push({ source: 'game/core/registry.mjs#CLASSES', data: CLASSES });
   sources.push({ source: 'game/coop/library.mjs#COOP_STARTER_PACK', data: COOP_STARTER_PACK });
+  const { createStarterProject } = await import(
+    pathToFileURL(path.join(root, 'game/content-design/starter.mjs')).href
+  );
+  sources.push({
+    source: 'game/content-design/starter.mjs#createStarterProject',
+    data: createStarterProject(),
+  });
   sources.push(...(await currentJourneySources(root)));
   return sources;
 }
