@@ -669,3 +669,31 @@ With the localhost server stopped, reloading reaches the Ukrainian v0.114.0 main
 switching English → Ukrainian still works from the cached catalog. Time remains at 0:00.
 The uncached optional Journey picture correctly produces its translated paused/retry notice;
 this checks core offline startup/localization, not availability of optional original artwork.
+
+## Studio candidate discovery and checkpoint feedback
+
+Candidate discovery indexes its semantic HTML translation markers in English and Ukrainian,
+plus the existing authored keywords, control IDs and route links. Named rich-text slots are
+excluded from search terms. Either language can find a study regardless of startup locale;
+switching languages updates the result count without rebuilding entries or changing the query.
+The library accepts live inspection messages and clears their bindings when the source changes.
+
+Studio's normal checkpoint, current-source, unapplied-edit and inspection messages are now
+localized. Registered project names resolve by content identity at presentation time; custom
+names and JSON remain authored. Storage/startup recovery sentences translate while underlying
+model/browser error details still require the remaining error-localization work.
+
+The initial surrounding run passed 34 of 36 checks. Both failures were in new test cases that
+used an internal option value as a search query; discovery has always indexed control IDs and
+published route links, not option values. Those cases now use the actual v11 route. All 16
+candidate-library checks pass in the final rerun, alongside the 20 unchanged surrounding
+Studio/preview/navigation checks from the initial run. This includes both startup locales,
+query/result/node identity, focused search input, unsaved source, checkpoint and selected edition,
+all Ukrainian count forms, literal authored names and cleared-feedback ownership. Changed-file
+lint/format and source/key/plural checks pass with 7,703 messages / 6,140 referenced keys.
+
+A real browser finds the inner-receiver study with a Ukrainian query, retains it across both
+language directions, and updates checkpoint/current-draft text. Inspecting an unapplied custom
+project name containing Ґ Є І Ї translates the feedback but preserves that name and source.
+Editing again clears the accepted inspection; changing language does not revive it or enable
+Apply. No inspection was applied or saved, and the temporary source text was restored.
