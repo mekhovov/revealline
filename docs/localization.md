@@ -827,3 +827,14 @@ The browser provider now reports no available browsers; both inventory and openi
 Studio tab were attempted. Browser verification of this batch is outstanding, alongside the
 remaining Studio host/encounter copy, deeper shared compiler errors and whole-project release
 checks. This focused checkpoint is not a claim of full coverage or merge readiness.
+
+## Studio Sentinel encounter editor
+
+The previous six-editor checkpoint passed the full catalog/content-registry check (8,013 messages
+and 6,444 references). The Sentinel editor now translates its fixed timings and qualification,
+core/shield placeholder options, replacement/removal controls, feedback and primary authoring
+errors. Actual objective and actor IDs remain authored identifiers. Its 7 existing encounter tests
+and all 8 editor locale tests pass (15/15), including a new live-switch test preserving pending
+shield links, option nodes, focus, visible model failures and armed removal without draft reads or
+writes. Removing after confirmation preserves objectives and map geometry. Changed-file lint
+and formatting pass; source/key/plural validation reports 8,035 messages / 6,466 references.

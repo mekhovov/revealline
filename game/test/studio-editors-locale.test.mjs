@@ -19,6 +19,8 @@ import { createDirectionalEditor } from '../studio/directional-editor.mjs';
 import { createRelayEditor } from '../studio/relay-editor.mjs';
 import { createGeometryEditor } from '../studio/geometry-editor.mjs';
 import { Document } from './helpers/couch-dom.mjs';
+import { createEncounterEditor } from '../studio/encounter-editor.mjs';
+import { sentinelProjectFixture } from './helpers/sentinel-project.mjs';
 
 const mapFor = (p) =>
   p.maps.find((m) => m.id === p.missions[0].map.id && m.revision === p.missions[0].map.revision);
@@ -123,11 +125,21 @@ const cases = [
     count: (p) => mapFor(p).foundations.length,
   },
 ];
-function fixture(config) {
+function fixture(config, initialSource = initial) {
   const document = new Document();
   for (const id of config.fields.split(' ')) {
     const node = document.createElement(
-      ['select', 'kind', 'direction', 'objective'].includes(id)
+      [
+        'select',
+        'kind',
+        'direction',
+        'objective',
+        'core',
+        'shield-0',
+        'shield-1',
+        'shield-2',
+        'shield-3',
+      ].includes(id)
         ? 'select'
         : ['form'].includes(id)
           ? 'form'
@@ -136,7 +148,7 @@ function fixture(config) {
     node.id = `${config.prefix}-${id}`;
     document.body.append(node);
   }
-  let source = structuredClone(initial),
+  let source = structuredClone(initialSource),
     reads = 0,
     writes = 0;
   const editor = config.create({
@@ -337,6 +349,68 @@ test('all six models keep canonical error text and carry hidden immutable locali
         });
     }
     assert.equal(JSON.stringify(initial), before);
+  } finally {
+    setLocale(previous, { persist: false });
+  }
+});
+
+test('Sentinel selectors, model failures and armed removal switch without altering the encounter', () => {
+  const previous = getLocale();
+  const f = fixture(
+    {
+      prefix: 'sentinel',
+      create: createEncounterEditor,
+      fields:
+        'tools qualification core shield-0 shield-1 shield-2 shield-3 enemy submit remove result form',
+    },
+    sentinelProjectFixture(),
+  );
+  const before = JSON.stringify(f.source());
+  try {
+    f.node('shield-1').value = '';
+    f.node('core').focus();
+    const options = [...f.node('core').options],
+      reads = f.reads();
+    for (const locale of ['uk', 'en', 'uk']) {
+      setLocale(locale, { persist: false });
+      assert.equal(f.node('core').value, 'core');
+      assert.equal(f.node('shield-1').value, '');
+      assert.equal(f.document.activeElement, f.node('core'));
+      assert.deepEqual([...f.node('core').options], options);
+      assert.equal(options[0].textContent, t('tools:studio.encounter.core'));
+      assert.equal(f.node('qualification').textContent, t('tools:studio.encounter.qualification'));
+      assert.equal(f.reads(), reads);
+      assert.equal(f.writes(), 0);
+      assert.equal(JSON.stringify(f.source()), before);
+    }
+    f.node('core').value = '';
+    f.submit();
+    const errorReads = f.reads();
+    for (const locale of ['en', 'uk']) {
+      setLocale(locale, { persist: false });
+      assert.equal(
+        f.node('result').textContent,
+        t('tools:studio.editor.notApplied', { message: t('errors:studio.encounter.core') }),
+      );
+      assert.equal(f.reads(), errorReads);
+      assert.equal(f.writes(), 0);
+    }
+    f.node('remove').onclick();
+    const armedReads = f.reads();
+    for (const locale of ['en', 'uk']) {
+      setLocale(locale, { persist: false });
+      assert.equal(f.node('remove').textContent, t('tools:studio.encounter.confirmRemove'));
+      assert.equal(f.reads(), armedReads);
+      assert.equal(f.writes(), 0);
+      assert.equal(JSON.stringify(f.source()), before);
+    }
+    const geometry = structuredClone(f.source().maps),
+      objectives = structuredClone(f.source().missions[0].objectives);
+    f.node('remove').onclick();
+    assert.equal(f.writes(), 1, f.node('result').textContent);
+    assert.equal(f.source().missions[0].encounter, null);
+    assert.deepEqual(f.source().maps, geometry);
+    assert.deepEqual(f.source().missions[0].objectives, objectives);
   } finally {
     setLocale(previous, { persist: false });
   }
