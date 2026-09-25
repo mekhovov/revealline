@@ -18,6 +18,10 @@ test('release source title, package, lock and build versions must match exactly'
     buildVersion: '0.111.1',
   };
   assert.equal(verifySourceVersion(valid), 'v0.111.1');
+  assert.equal(
+    verifySourceVersion({ ...valid, title: 'Release evidence v0.111.1 — recovery' }),
+    'v0.111.1',
+  );
   for (const field of ['lockVersion', 'rootVersion', 'buildVersion'])
     assert.throws(() => verifySourceVersion({ ...valid, [field]: '0.111.0' }), /does not match/);
   assert.throws(() => verifySourceVersion({ ...valid, title: 'Fix v0.111.1' }), /exact Release/);

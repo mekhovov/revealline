@@ -39,6 +39,11 @@ test('source qualification retains mandatory guards and restorable suites while 
     legacy,
     /Require the previous stable release on public Pages\n\s+if: steps\.admission\.outputs\.mode == 'release'/,
   );
+  assert.match(legacy, /Release\\ evidence\\ v/);
+  assert.match(legacy, /restricted to a non-empty docs-only diff/);
+  assert.match(legacy, /echo 'mode=release-evidence'/);
+  assert.match(legacy, /needs\.preflight\.outputs\.admission == 'release-evidence'/);
+  assert.match(legacy, /if \[ "\$ADMISSION" = release-evidence \]/);
   assert.match(legacy, /release-train-boundary\.mjs public/);
   assert.match(legacy, /PR_BASE_SHA: \$\{\{ github\.event\.pull_request\.base\.sha \}\}/);
   assert.match(legacy, /contents\/package\.json\?ref=\$PR_BASE_SHA/);
