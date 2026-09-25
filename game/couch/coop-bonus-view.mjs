@@ -1,3 +1,4 @@
+import { t } from '../i18n/index.mjs';
 import { boundedJSON, exactKeys, required, stableId } from '../data-json.mjs';
 import { validateTimedBonuses, TIMED_BONUS_TRAIL_VERSION } from '../core/timed-bonuses.mjs';
 import {
@@ -10,10 +11,10 @@ import { drawClassicPickups } from '../ui/classic-view.mjs';
 import { CLASSIC_EFFECTS } from '../core/classic-state.mjs';
 
 const labels = Object.freeze({
-  'extra-life': 'Shared reserve',
-  'player-speed': 'Pilot speed',
-  'enemy-slow': 'Enemies slow',
-  'enemy-freeze': 'Enemies frozen',
+  'extra-life': t("interface:sharedReserve"),
+  'player-speed': t("interface:pilotSpeed"),
+  'enemy-slow': t("interface:enemiesSlow"),
+  'enemy-freeze': t("interface:enemiesFrozen"),
 });
 const integer = (n) => Number.isSafeInteger(n) && n >= 0;
 function own(object, key) {
@@ -21,7 +22,7 @@ function own(object, key) {
   if (!property) return undefined;
   required(
     Object.hasOwn(property, 'value') && property.enumerable,
-    'Team bonus view refuses accessors or hidden fields.',
+    t("interface:teamBonusViewRefusesAccessorsOrHiddenFields"),
   );
   return property.value;
 }
@@ -42,7 +43,7 @@ export function coopBonusView(run) {
   if (state === undefined && definition === undefined) return null;
   required(
     state !== undefined && definition !== undefined,
-    'Team bonus definition/state mismatch.',
+    t("interface:teamBonusDefinitionStateMismatch"),
   );
   required(
     ((own(run, 'ruleset') === COOP_BONUS_RULESET &&
@@ -51,20 +52,20 @@ export function coopBonusView(run) {
         own(level, 'version') === COOP_IMPACT_LEVEL_VERSION)) &&
       own(run, 'width') === 72 &&
       own(run, 'height') === 36,
-    'Unsupported Team bonus runtime.',
+    t("interface:unsupportedTeamBonusRuntime"),
   );
   const { recipe, data } = boundedJSON(
     { recipe: definition, data: state },
     { maxBytes: 65536, maxNodes: 4096, maxDepth: 8 },
   );
-  required(recipe.version === TIMED_BONUS_TRAIL_VERSION, 'Unsupported Team bonus descriptor.');
+  required(recipe.version === TIMED_BONUS_TRAIL_VERSION, t("interface:unsupportedTeamBonusDescriptor"));
   const ids = new Set(),
     empty = new Uint8Array(72 * 36);
   validateTimedBonuses(
     { width: 72, height: 36, classic: { timedBonuses: recipe } },
     {
       identity(item) {
-        required(!ids.has(item.id), 'Duplicate Team schedule.');
+        required(!ids.has(item.id), t("interface:duplicateTeamSchedule"));
         ids.add(item.id);
       },
       walls: empty,
@@ -72,8 +73,8 @@ export function coopBonusView(run) {
       powerupCells: [],
     },
   );
-  exactKeys(data, ['version', 'timed', 'items', 'effects', 'lastDamageTime'], 'Team bonus state');
-  required(data.version === 'team-bonus-state.v1', 'Unsupported Team bonus state.');
+  exactKeys(data, ['version', 'timed', 'items', 'effects', 'lastDamageTime'], t("interface:teamBonusState"));
+  required(data.version === 'team-bonus-state.v1', t("interface:unsupportedTeamBonusState"));
   const tick = own(run, 'tick'),
     time = own(run, 'time'),
     status = own(run, 'status');
@@ -82,7 +83,7 @@ export function coopBonusView(run) {
       Number.isFinite(time) &&
       time >= 0 &&
       ['ready', 'running', 'paused', 'won', 'lost'].includes(status),
-    'Invalid Team bonus clock/status.',
+    t("interface:invalidTeamBonusClockStatus"),
   );
   required(
     Array.isArray(data.lastDamageTime) &&
@@ -90,28 +91,28 @@ export function coopBonusView(run) {
       data.lastDamageTime.every(
         (n) => n === null || (Number.isFinite(n) && n >= 0 && n <= time + 1e-9),
       ),
-    'Invalid Team damage instants.',
+    t("interface:invalidTeamDamageInstants"),
   );
-  exactKeys(data.timed, ['version', 'clock', 'schedules'], 'Team schedule state');
+  exactKeys(data.timed, ['version', 'clock', 'schedules'], t("interface:teamScheduleState"));
   required(
     data.timed.version === 'timed-bonus-state.v1' &&
       integer(data.timed.clock) &&
       data.timed.clock <= tick,
-    'Invalid Team schedule clock.',
+    t("interface:invalidTeamScheduleClock"),
   );
   required(
     Array.isArray(data.timed.schedules) &&
       data.timed.schedules.length === recipe.schedules.length &&
       Array.isArray(data.items) &&
       data.items.length <= 8,
-    'Invalid Team schedule/item counts.',
+    t("interface:invalidTeamScheduleItemCounts"),
   );
   const items = new Map();
   for (const item of data.items) {
-    exactKeys(item, ['id', 'kind', 'x', 'y', 'collectedTick'], 'Team pickup');
+    exactKeys(item, ['id', 'kind', 'x', 'y', 'collectedTick'], t("interface:teamPickup"));
     required(
       stableId(item.id) && !items.has(item.id) && item.collectedTick === null,
-      'Invalid live Team pickup.',
+      t("interface:invalidLiveTeamPickup"),
     );
     items.set(item.id, item);
   }
@@ -122,14 +123,14 @@ export function coopBonusView(run) {
     exactKeys(
       schedule,
       ['id', 'phase', 'deadline', 'currentAnchor', 'previousAnchor', 'appearances', 'collections'],
-      'Team schedule',
+      t("interface:teamSchedule"),
     );
     const authored = recipe.schedules.find((entry) => entry.id === schedule.id);
-    required(authored && !seen.has(schedule.id), 'Invalid Team schedule identity.');
+    required(authored && !seen.has(schedule.id), t("interface:invalidTeamScheduleIdentity"));
     seen.add(schedule.id);
     required(
       ['cooldown', 'announce', 'available', 'exhausted'].includes(schedule.phase),
-      'Invalid Team schedule phase.',
+      t("interface:invalidTeamSchedulePhase"),
     );
     required(
       integer(schedule.appearances) &&
@@ -137,12 +138,12 @@ export function coopBonusView(run) {
         integer(schedule.collections) &&
         schedule.collections <= authored.maxCollections &&
         schedule.collections <= schedule.appearances,
-      'Invalid Team grant counters.',
+      t("interface:invalidTeamGrantCounters"),
     );
     const anchorIndex = (n) => integer(n) && n < authored.anchors.length;
     required(
       schedule.previousAnchor === null || anchorIndex(schedule.previousAnchor),
-      'Invalid prior Team anchor.',
+      t("interface:invalidPriorTeamAnchor"),
     );
     if (!['announce', 'available'].includes(schedule.phase)) {
       required(
@@ -151,7 +152,7 @@ export function coopBonusView(run) {
           (schedule.phase === 'exhausted'
             ? schedule.deadline === null
             : integer(schedule.deadline)),
-        'Invalid inactive Team schedule.',
+        t("interface:invalidInactiveTeamSchedule"),
       );
       continue;
     }
@@ -162,7 +163,7 @@ export function coopBonusView(run) {
         integer(schedule.deadline) &&
         schedule.deadline > data.timed.clock &&
         schedule.deadline - data.timed.clock <= duration,
-      'Invalid live Team window.',
+      t("interface:invalidLiveTeamWindow"),
     );
     const anchor = authored.anchors[schedule.currentAnchor],
       item = items.get(schedule.id);
@@ -170,7 +171,7 @@ export function coopBonusView(run) {
       schedule.phase === 'available'
         ? item && item.kind === authored.kind && item.x === anchor.x && item.y === anchor.y
         : !item,
-      'Team pickup does not match its window.',
+      t("interface:teamPickupDoesNotMatchItsWindow"),
     );
     const visual = {
       id: schedule.id,
@@ -188,11 +189,11 @@ export function coopBonusView(run) {
     }
     timedBonuses.push(visual);
   }
-  required(items.size === 0, 'Unowned Team pickup.');
-  exactKeys(data.effects, ['player-speed', 'enemy-slow', 'enemy-freeze'], 'Team effects');
+  required(items.size === 0, t("interface:unownedTeamPickup"));
+  exactKeys(data.effects, ['player-speed', 'enemy-slow', 'enemy-freeze'], t("interface:teamEffects"));
   required(
     Array.isArray(data.effects['player-speed']) && data.effects['player-speed'].length === 2,
-    'Invalid Team pilot effects.',
+    t("interface:invalidTeamPilotEffects"),
   );
   const effects = [];
   for (const [kind, seat, effect] of [
@@ -200,14 +201,14 @@ export function coopBonusView(run) {
     ['enemy-slow', null, data.effects['enemy-slow']],
     ['enemy-freeze', null, data.effects['enemy-freeze']],
   ]) {
-    exactKeys(effect, ['from', 'until'], 'Team effect');
+    exactKeys(effect, ['from', 'until'], t("interface:teamEffect"));
     required(
       integer(effect.from) &&
         integer(effect.until) &&
         effect.until >= effect.from &&
         effect.from <= tick + 1 &&
         effect.until <= tick + 1 + CLASSIC_EFFECTS[kind],
-      'Invalid Team effect window.',
+      t("interface:invalidTeamEffectWindow"),
     );
     if (tick >= effect.from && tick < effect.until)
       effects.push({
@@ -254,19 +255,19 @@ export function coopBonusLive(view) {
   const effects = view.effects.map((effect) => `${effect.label} ${Math.ceil(effect.seconds)}s`);
   const count = view.powerups.length;
   if (count) effects.unshift(`${count} timed pickup${count === 1 ? '' : 's'} available`);
-  else if (view.timedBonuses.length) effects.unshift('Pickup incoming');
+  else if (view.timedBonuses.length) effects.unshift(t("interface:pickupIncoming"));
   return effects.join(' · ');
 }
 
 export const TEAM_BONUS_HELP =
-  'Optional shared pickups: hollow symbols announce; touch a solid symbol before its ring expires. Enclosure does not collect it. Misses may return elsewhere. Speed affects the collector; enemy effects and reserves are shared. Freeze stops enemy contact, not lethal field or your own line.';
+  t("interface:optionalSharedPickupsHollowSymbolsAnnounceTouchASolidSymbol");
 
 export function coopBonusCaption(event, names) {
   if (event.type === 'powerup.collected') {
     const owner = event.players.map((seat) => names[seat]).join(' + ');
     return event.kind === 'extra-life'
       ? `${owner}: ${event.gain ? 'one shared reserve gained' : 'shared reserves already full'}.`
-      : `${owner} collected ${labels[event.kind].toLowerCase()}. ${event.kind === 'player-speed' ? 'Only the collector gains speed.' : 'The effect is shared.'}`;
+      : `${owner} collected ${labels[event.kind].toLowerCase()}. ${event.kind === 'player-speed' ? t("interface:onlyTheCollectorGainsSpeed") : t("interface:theEffectIsShared")}`;
   }
   if (event.type === 'bonus.announced')
     return `${labels[event.kind]} incoming. Hollow symbols cannot be collected.`;
@@ -275,6 +276,6 @@ export function coopBonusCaption(event, names) {
   if (event.type === 'bonus.expired')
     return `${labels[event.kind]} expired. A later window may appear elsewhere.`;
   if (event.type === 'bonus.cancelled')
-    return 'Pickup window cancelled: its anchor is no longer eligible.';
+    return t("interface:pickupWindowCancelledItsAnchorIsNoLongerEligible");
   return null;
 }
