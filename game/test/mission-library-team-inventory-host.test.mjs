@@ -118,7 +118,7 @@ test('actual Team library browses same-ID Custom artwork with no decodes and han
   const f = await fixture(t, [custom]);
   const before = await f.pointer.snapshot();
   await open(f);
-  assert.equal(cards(f).length, 204);
+  assert.equal(cards(f).length, 288);
   assert.match(f.$('coop-library-remote-status').textContent, /All missions loaded/);
   const rows = collection(f, 'Custom');
   assert.equal(rows.length, 3);
@@ -220,6 +220,9 @@ test('a later held inventory refresh interrupted by blur offers Retry and cannot
   );
   assert.equal(f.visits.length, 0);
   f.win.emit('focus');
+  // Foreground recovery deliberately holds stale controller Confirm until the
+  // first neutral sampled frame. Retry uses the fresh keyboard action after it.
+  f.tick();
   f.$('coop-library-remote-retry').focus();
   f.tap('Enter');
   await settle(() => /All missions loaded/.test(f.$('coop-library-remote-status').textContent));

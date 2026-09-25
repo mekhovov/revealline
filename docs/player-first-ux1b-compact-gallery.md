@@ -35,7 +35,11 @@ The candidate adds or updates focused coverage for:
 - real Versus controller activation, including failed download, one owned Retry, repeated-Confirm suppression, and automatic play after preparation;
 - real Team controller activation against the current Journey presentation fixture.
 - current v0.130 Versus inventory and handoff expectations: 19/19 host cases pass with all 285 compatible mission identities and the exact `whole-spatial-v11` route.
+- current Solo inventory and handoff expectations: 22/22 host cases pass with 285 compatible identities and the exact `whole-spatial-v11` route.
+- current Team inventory, refresh, cancellation, and recovery expectations: 4/4 host cases pass with 288 compatible identities.
+- current Team picture-binding and imported-map compatibility expectations: 38/38 cases pass against exact FPV presentation revision 82 while retained revisions 58–81 remain recoverable.
+- controller gallery navigation: 8/8; device controls: 15/15; featured campaign switching: 5/5.
 
 ## Evidence limits
 
-This is a release candidate, not a public release. Browser screenshots, physical touch hardware, and a physical controller are not qualified here. The repository's committed temporary fast-release policy waives the long automated suites; it does not turn them into passing evidence. Focused current-source checks qualify the changed gallery and controller paths. A broader current-source run found that the FPV theme advanced to revision 82 while Team's exact picture-binding policy still ends at revision 79; that production drift remains a release blocker and must be corrected without weakening Team assertions before this candidate can publish. The candidate does not redesign mission Details, results, Pause, HUD, Collection records, or gameplay teaching; those remain in UX2-UX5.
+This is a release candidate, not a public release. Browser screenshots, physical touch hardware, and a physical controller are not qualified here. The repository's committed temporary fast-release policy waives the long automated suites; it does not turn them into passing evidence. Focused current-source checks qualify the changed gallery and controller paths. The FPV revision-82 Team binding drift discovered during broad verification was corrected independently before this candidate was rebased; exact current Team assertions now pass without weakening their retained-history checks. The candidate does not redesign mission Details, results, Pause, HUD, Collection records, or gameplay teaching; those remain in UX2-UX5.
