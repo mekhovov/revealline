@@ -23,11 +23,10 @@ states. Skipped suites are never counted as passes.
 - **PR476 is merged and Pages workflow run 36095346816 passed.** Its exact archive
   preview covered 76 admitted releases with zero observations; focused evidence
   included 63 controller tests and five archive-extraction tests.
-- PR477 advanced protected main from
-  `08a79df2f2a32265e228004c26f11a236b207a16` to
-  `dfd837da1611a54cbaec88b4fc2fa642d102fd86`. Release qualification must use a
-  fresh protected-main authority rather than treating either recorded commit as
-  permanently current. Publication remains serialized through one publisher.
+- Protected main continues to advance through reviewed maintenance and status
+  corrections. Release qualification must therefore fetch and record fresh
+  protected-main authority rather than treating a dated commit as permanently
+  current. Publication remains serialized through one publisher.
 
 ## 2. Completed and publicly delivered
 
@@ -52,19 +51,19 @@ remain open.
 
 ## 3. Prepared work that is not public
 
-| Candidate                      | Current evidence                                                                                                                                 | Required before release                                                                                                                        |
-| ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------- |
-| Complete creator framework     | PR465 is the reserved v0.112.0 aggregate; its release owner is still reconciling the exact terminal head and it is not yet a qualified candidate | Finish the aggregate, reconcile protected main, set all version identities, complete focused/build/visual review, release, and verify publicly |
-| Couch quick start              | PR482 is the reserved v0.113.0 aggregate; PR478 is its superseded quick-start component evidence rather than a separately mergeable release      | Reconcile the exact aggregate on accepted v0.112.0, then finish exact-head hosted gates, release, and verify publicly                          |
-| Character trail/impact cleanup | PR482 contains the canonical PR447/PR403 trail patch plus reviewed craft-silhouette cleanup; PR447 and PR403 must not merge separately           | Verify the exact final aggregate preserves the clean craft silhouette, then qualify and release                                                |
-| Shared Home/lobbies/Pause      | Clean unversioned candidate covers compact Home, collapsed Couch setup, More/Releases, Sound and shared Pause; final focused cohorts are running | Reconcile on the accepted release, finish keyboard/controller/touch and responsive review, then release                                        |
-| Gameplay HUD/layout            | Clean 15-path candidate; 324/324 responsive/controller/touch checks passed                                                                       | Rebase on accepted release source, production build, visual/browser checks, release                                                            |
-| Deliberate terminal failure    | Clean 17-path candidate; 51 focused terminal/recovery/Team checks passed                                                                         | Rebase, build, browser checks, release; no automatic terminal restart may return                                                               |
-| Settings/Help return           | Clean candidate; 30 focused and 102 history checks passed                                                                                        | Rebase, cross-mode opener/focus review, release                                                                                                |
-| Journey rewards                | Solo and Couch exact-picture candidates exist with focused evidence                                                                              | Consolidate mode-scoped completion, exact artwork retention, Collection visibility, migration/history checks, release                          |
-| Compact mission gallery        | Earlier UX1-B candidate exists                                                                                                                   | Restack after rewards; finish complete-gallery selection, previews, one-action play, lazy resource handling, and responsive spatial navigation |
-| Reviewed Team library          | PR475 exposes 12 opt-in specialist candidates                                                                                                    | Reconcile dependency stack, clear production-ledger debt, human balance, device checks, and explicit adoption decision                         |
-| Appearance/theme surfaces      | PR408/414/417/418 form a proposed aggregate                                                                                                      | Restack, remove overlap, prove accessibility and all affected surfaces, then release                                                           |
+| Candidate                      | Current evidence                                                                                                                                                                   | Required before release                                                                                                                                 |
+| ------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Complete creator framework     | PR465 is a large, unversioned creator/admin draft. Release coordination currently reserves v0.112.0 for it, but no terminal release head exists                                    | Resolve its priority against the approved player-first queue. If retained first, finish and qualify it; otherwise keep it deferred and release the slot |
+| Couch quick start              | PR482 is the current player aggregate; PR478 is its superseded quick-start component evidence rather than a separately mergeable release                                           | Reconcile the exact aggregate on the accepted immediate predecessor, recheck the next unused version, then finish hosted gates and public verification  |
+| Character trail/impact cleanup | PR482 contains the canonical PR447/PR403 trail patch plus reviewed craft-silhouette cleanup; PR447 and PR403 must not merge separately                                             | Verify the exact final aggregate preserves the clean craft silhouette, then qualify and release                                                         |
+| Shared Home/lobbies/Pause      | Clean unversioned candidate covers compact Home, collapsed Couch setup, More/Releases, Sound and shared Pause; reconciliation is active                                            | Reconcile on the accepted release, fix its remaining lifecycle failures, finish keyboard/controller/touch and responsive review, then release           |
+| Gameplay HUD/layout            | Clean 15-path candidate; 324/324 responsive/controller/touch checks passed                                                                                                         | Rebase on accepted release source, production build, visual/browser checks, release                                                                     |
+| Deliberate terminal failure    | Clean 17-path candidate; 51 focused terminal/recovery/Team checks passed                                                                                                           | Rebase, build, browser checks, release; no automatic terminal restart may return                                                                        |
+| Settings/Help return           | Clean candidate; 30 focused and 102 history checks passed                                                                                                                          | Rebase, cross-mode opener/focus review, release                                                                                                         |
+| Journey rewards                | Solo and Couch exact-picture candidates exist with focused evidence                                                                                                                | Consolidate mode-scoped completion, exact artwork retention, Collection visibility, migration/history checks, release                                   |
+| Compact mission gallery        | Earlier UX1-B candidate exists                                                                                                                                                     | Restack after rewards; finish complete-gallery selection, previews, one-action play, lazy resource handling, and responsive spatial navigation          |
+| Reviewed Team library          | PR475 exposes 12 opt-in specialist candidates                                                                                                                                      | Reconcile dependency stack, clear production-ledger debt, human balance, device checks, and explicit adoption decision                                  |
+| Appearance/theme surfaces      | Current main already ships global Appearance/Audio settings, FPV palette, ornaments, quick Sound and return ownership. Old PRs add a small resolver plus supporting/admin surfaces | Defer creator/admin parts; release only a visually reviewed core resolver after menus and rewards, then continue full-theme restoration later           |
 
 Candidate tests prove deterministic behavior in the tested scope. They do not prove
 physical controller/touch behavior, offline readiness, whole-campaign balance, or
@@ -75,22 +74,22 @@ that a level is enjoyable.
 Release publication remains sequential. Implementation, review, and focused tests
 continue in parallel so the next feature is ready when the publisher becomes free.
 
-| Order     | Deliverable                                                                   |   ETA after its release slot opens | Blocking acceptance                                                                                                                                              |
-| --------- | ----------------------------------------------------------------------------- | ---------------------------------: | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **R0**    | Preserve v0.111.0 and make v0.111.1 the public Pages default                  |                       **Complete** | PR476 merged; archive exact-byte audit passed; Pages deployed; public marker and ordinary Solo/Versus/Team entry passed                                          |
-| **R1**    | Complete creator campaign framework; reserved v0.112.0                        |              **owner in progress** | One terminal aggregate, current-main ancestry, all version identities, focused/build/visual review, immutable release and public proof                           |
-| **R2**    | PR482: Couch quick start plus canonical trail/impact cleanup; v0.113.0        |                     **6–12 hours** | Reconcile on accepted v0.112.0; one Start with valid defaults, Cancel cannot steal controller Confirm, clean actor silhouette, responsive evidence, public proof |
-| **R3**    | Shared appearance surfaces; tentative v0.114.0                                |                     **8–16 hours** | Exact aggregate on accepted main, accessibility/contrast/reduced-effects checks, no presentation-history regression, public evidence                             |
-| **R4**    | Reviewed Team specialist library; tentative v0.115.0                          |               **1–2 working days** | All 12 entries explicitly reachable, Original editions preserved, picture/Next/Continue correctness, human cooperative review                                    |
-| **R5**    | Journey rewards and working Collection; tentative v0.116.0                    |                     **8–16 hours** | Mode-scoped completion, exact earned pictures, Retry retention, correct Collection entries and return focus                                                      |
-| **UX1-B** | Compact complete mission gallery                                              |               **1–2 working days** | Complete campaign-grouped gallery, current selection restoration, one-action ready/download-and-play, keyboard/D-pad/touch spatial navigation                    |
-| **UX2**   | Shared Home, lobbies, Pause, More, Releases, Settings, Help, and Sound        |               **1–2 working days** | Same player-facing structure in Solo/Versus/Team; direct Start/Continue; optional setup collapsed; exact opener restoration                                      |
-| **UX3**   | Gameplay HUD, touch layout, and contextual teaching                           |                     **8–16 hours** | Whole boards, critical HUD, and controls fit desktop, handheld, portrait, and short landscape; reduced-effects parity                                            |
-| **UX4**   | Countdown, deliberate failure/Retry, named Next, campaign endings             |                     **6–12 hours** | No pre-Go simulation, automatic terminal restart, accidental held-input Retry, duplicate award, or stale successor launch                                        |
-| **UX5**   | Settings, difficulty, Help, replay/Collection navigation, and recovery states |                     **6–12 hours** | Complete focus/input/loading coverage; ordinary play never needs Workshop or a file picker                                                                       |
-| **UX6**   | Whole player-experience qualification                                         | **2–4 working days** after UX1–UX5 | Required end-to-end journeys pass; physical-device and offline limits recorded separately                                                                        |
+| Order     | Deliverable                                                                   |                                   ETA after its release slot opens | Blocking acceptance                                                                                                                           |
+| --------- | ----------------------------------------------------------------------------- | -----------------------------------------------------------------: | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| **R0**    | Preserve v0.111.0 and make v0.111.1 the public Pages default                  |                                                       **Complete** | PR476 merged; archive exact-byte audit passed; Pages deployed; public marker and ordinary Solo/Versus/Team entry passed                       |
+| **Gate**  | Resolve the PR465/v0.112.0 publisher reservation                              | **under 1 hour for decision**; **1–3 days if PR465 remains first** | Do not let an unqualified creator/admin draft silently block the explicitly prioritized player queue                                          |
+| **R1**    | PR482: Couch quick start plus canonical trail/impact/craft cleanup            |                  **4–8 hours after predecessor public acceptance** | One Start with valid defaults, Cancel cannot steal controller Confirm, clean actor silhouette, exact-head hosted gates and public proof       |
+| **R2**    | Shared Home, lobbies, Pause, More, Releases, Settings, Help, and Sound        |                                                     **8–16 hours** | Same player-facing structure in Solo/Versus/Team; direct Start/Continue; optional setup collapsed; exact opener restoration                   |
+| **R3**    | Journey rewards and working Collection                                        |                                                     **8–16 hours** | Mode-scoped completion, exact earned pictures, Retry retention, correct Collection entries and return focus                                   |
+| **R4**    | Bounded core appearance resolver                                              |                                                      **4–8 hours** | Use current global settings, avoid UX2/reward overlap, prove visual/accessibility value and exact restoration                                 |
+| **R5**    | Reviewed Team specialist library                                              |                                               **1–2 working days** | All 12 entries explicitly reachable, Original editions preserved, picture/Next/Continue correctness, human cooperative review                 |
+| **UX1-B** | Compact complete mission gallery                                              |                                               **1–2 working days** | Complete campaign-grouped gallery, current selection restoration, one-action ready/download-and-play, keyboard/D-pad/touch spatial navigation |
+| **UX3**   | Gameplay HUD, touch layout, and contextual teaching                           |                                                     **8–16 hours** | Whole boards, critical HUD, and controls fit desktop, handheld, portrait, and short landscape; reduced-effects parity                         |
+| **UX4**   | Countdown, deliberate failure/Retry, named Next, campaign endings             |                                                     **6–12 hours** | No pre-Go simulation, automatic terminal restart, accidental held-input Retry, duplicate award, or stale successor launch                     |
+| **UX5**   | Settings, difficulty, Help, replay/Collection navigation, and recovery states |                                                     **6–12 hours** | Complete focus/input/loading coverage; ordinary play never needs Workshop or a file picker                                                    |
+| **UX6**   | Whole player-experience qualification                                         |                                 **2–4 working days** after UX1–UX5 | Required end-to-end journeys pass; physical-device and offline limits recorded separately                                                     |
 
-The R3–R5 version numbers are tentative until each aggregate is rebuilt on the
+All future version numbers are tentative until each aggregate is rebuilt on the
 accepted public source and the next unused version is rechecked.
 
 ## 5. Remaining original programme after player-first UX
@@ -118,9 +117,11 @@ and persistent co-op saves remain deferred.
 1. **Serialized publishing:** only one task may merge, tag, archive, or deploy a
    release. Parallel work shortens preparation time but cannot make publication
    concurrent.
-2. **Moving main:** PR465 must become the exact v0.112.0 candidate first. PR482
-   is the reserved v0.113.0 aggregate and must later be rebuilt on accepted
-   v0.112.0 before its required checks can count. PR478, PR447, and PR403 are
+2. **Publisher-order conflict:** coordination currently reserves v0.112.0 for
+   the large, unversioned PR465 creator/admin draft, while the user's explicit
+   priority is player-critical character, Couch and menu UX. The sole publisher
+   must either provide PR465's terminal source and ETA or release that slot.
+   PR482 remains draft until this is resolved. PR478, PR447, and PR403 are
    superseded component branches, not independent release candidates.
 3. **Temporary suite waiver:** long automated suites are skipped by committed
    policy. Focused tests, lint/format/validation, build/provenance, exact hashes,
