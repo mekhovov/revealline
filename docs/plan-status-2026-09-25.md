@@ -23,8 +23,11 @@ states. Skipped suites are never counted as passes.
 - **PR476 is merged and Pages workflow run 36095346816 passed.** Its exact archive
   preview covered 76 admitted releases with zero observations; focused evidence
   included 63 controller tests and five archive-extraction tests.
-- Protected main is `08a79df2f014747512bfa67af209180402d07d4d`.
-  Publication remains serialized through one publisher.
+- PR477 advanced protected main from
+  `08a79df2f2a32265e228004c26f11a236b207a16` to
+  `dfd837da1611a54cbaec88b4fc2fa642d102fd86`. Release qualification must use a
+  fresh protected-main authority rather than treating either recorded commit as
+  permanently current. Publication remains serialized through one publisher.
 
 ## 2. Completed and publicly delivered
 
@@ -51,8 +54,9 @@ remain open.
 
 | Candidate                      | Current evidence                                                                                                                                 | Required before release                                                                                                                        |
 | ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------- |
-| Couch quick start              | Combined v0.113.0 candidate is reconciled on current main; its earlier extended Couch suite passed 201/201                                       | Finish the aggregate's focused/static/build and visual review, open one feature PR, release, and verify publicly                               |
-| Character trail/impact cleanup | Combined into that v0.113.0 candidate; removes distracting corner-like artifacts and sharpens readable impact feedback                           | Verify the exact aggregate preserves the clean craft silhouette, then qualify and release                                                      |
+| Complete creator framework     | PR465 is the reserved v0.112.0 aggregate; its release owner is still reconciling the exact terminal head and it is not yet a qualified candidate | Finish the aggregate, reconcile protected main, set all version identities, complete focused/build/visual review, release, and verify publicly |
+| Couch quick start              | Draft PR478 is the reserved v0.113.0 aggregate and is behind protected main; an earlier candidate's extended Couch suite passed 201/201          | Reconcile the exact aggregate on accepted v0.112.0, then finish focused/static/build and visual review, release, and verify publicly           |
+| Character trail/impact cleanup | Allocated to the same v0.113.0 aggregate; removes distracting corner-like artifacts and sharpens readable impact feedback                        | Verify the exact final aggregate preserves the clean craft silhouette, then qualify and release                                                |
 | Shared Home/lobbies/Pause      | Clean unversioned candidate covers compact Home, collapsed Couch setup, More/Releases, Sound and shared Pause; final focused cohorts are running | Reconcile on the accepted release, finish keyboard/controller/touch and responsive review, then release                                        |
 | Gameplay HUD/layout            | Clean 15-path candidate; 324/324 responsive/controller/touch checks passed                                                                       | Rebase on accepted release source, production build, visual/browser checks, release                                                            |
 | Deliberate terminal failure    | Clean 17-path candidate; 51 focused terminal/recovery/Team checks passed                                                                         | Rebase, build, browser checks, release; no automatic terminal restart may return                                                               |
@@ -71,21 +75,22 @@ that a level is enjoyable.
 Release publication remains sequential. Implementation, review, and focused tests
 continue in parallel so the next feature is ready when the publisher becomes free.
 
-| Order     | Deliverable                                                                   |   ETA after its release slot opens | Blocking acceptance                                                                                                                                                                    |
-| --------- | ----------------------------------------------------------------------------- | ---------------------------------: | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **R0**    | Preserve v0.111.0 and make v0.111.1 the public Pages default                  |                       **Complete** | PR476 merged; archive exact-byte audit passed; Pages deployed; public marker and ordinary Solo/Versus/Team entry passed                                                                |
-| **R1**    | Couch quick start plus canonical trail/impact cleanup; tentative v0.113.0     |                     **6–12 hours** | One Start with valid defaults, Cancel cannot steal controller Confirm, optional setup collapsed, clean actor silhouette, responsive input evidence, immutable release and public proof |
-| **R2**    | Shared appearance surfaces; tentative v0.114.0                                |                     **8–16 hours** | Exact aggregate on accepted main, accessibility/contrast/reduced-effects checks, no presentation-history regression, public evidence                                                   |
-| **R3**    | Journey rewards and working Collection; tentative v0.115.0                    |                     **8–16 hours** | Mode-scoped completion, exact earned pictures, Retry retention, correct Collection entries and return focus                                                                            |
-| **R4**    | Reviewed Team specialist library; tentative v0.116.0                          |               **1–2 working days** | All 12 entries explicitly reachable, Original editions preserved, picture/Next/Continue correctness, human cooperative review                                                          |
-| **UX1-B** | Compact complete mission gallery                                              |               **1–2 working days** | Complete campaign-grouped gallery, current selection restoration, one-action ready/download-and-play, keyboard/D-pad/touch spatial navigation                                          |
-| **UX2**   | Shared Home, lobbies, Pause, More, Releases, Settings, Help, and Sound        |               **1–2 working days** | Same player-facing structure in Solo/Versus/Team; direct Start/Continue; optional setup collapsed; exact opener restoration                                                            |
-| **UX3**   | Gameplay HUD, touch layout, and contextual teaching                           |                     **8–16 hours** | Whole boards, critical HUD, and controls fit desktop, handheld, portrait, and short landscape; reduced-effects parity                                                                  |
-| **UX4**   | Countdown, deliberate failure/Retry, named Next, campaign endings             |                     **6–12 hours** | No pre-Go simulation, automatic terminal restart, accidental held-input Retry, duplicate award, or stale successor launch                                                              |
-| **UX5**   | Settings, difficulty, Help, replay/Collection navigation, and recovery states |                     **6–12 hours** | Complete focus/input/loading coverage; ordinary play never needs Workshop or a file picker                                                                                             |
-| **UX6**   | Whole player-experience qualification                                         | **2–4 working days** after UX1–UX5 | Required end-to-end journeys pass; physical-device and offline limits recorded separately                                                                                              |
+| Order     | Deliverable                                                                   |   ETA after its release slot opens | Blocking acceptance                                                                                                                                              |
+| --------- | ----------------------------------------------------------------------------- | ---------------------------------: | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **R0**    | Preserve v0.111.0 and make v0.111.1 the public Pages default                  |                       **Complete** | PR476 merged; archive exact-byte audit passed; Pages deployed; public marker and ordinary Solo/Versus/Team entry passed                                          |
+| **R1**    | Complete creator campaign framework; reserved v0.112.0                        |              **owner in progress** | One terminal aggregate, current-main ancestry, all version identities, focused/build/visual review, immutable release and public proof                           |
+| **R2**    | Couch quick start plus canonical trail/impact cleanup; reserved v0.113.0      |                     **6–12 hours** | Reconcile on accepted v0.112.0; one Start with valid defaults, Cancel cannot steal controller Confirm, clean actor silhouette, responsive evidence, public proof |
+| **R3**    | Shared appearance surfaces; tentative v0.114.0                                |                     **8–16 hours** | Exact aggregate on accepted main, accessibility/contrast/reduced-effects checks, no presentation-history regression, public evidence                             |
+| **R4**    | Reviewed Team specialist library; tentative v0.115.0                          |               **1–2 working days** | All 12 entries explicitly reachable, Original editions preserved, picture/Next/Continue correctness, human cooperative review                                    |
+| **R5**    | Journey rewards and working Collection; tentative v0.116.0                    |                     **8–16 hours** | Mode-scoped completion, exact earned pictures, Retry retention, correct Collection entries and return focus                                                      |
+| **UX1-B** | Compact complete mission gallery                                              |               **1–2 working days** | Complete campaign-grouped gallery, current selection restoration, one-action ready/download-and-play, keyboard/D-pad/touch spatial navigation                    |
+| **UX2**   | Shared Home, lobbies, Pause, More, Releases, Settings, Help, and Sound        |               **1–2 working days** | Same player-facing structure in Solo/Versus/Team; direct Start/Continue; optional setup collapsed; exact opener restoration                                      |
+| **UX3**   | Gameplay HUD, touch layout, and contextual teaching                           |                     **8–16 hours** | Whole boards, critical HUD, and controls fit desktop, handheld, portrait, and short landscape; reduced-effects parity                                            |
+| **UX4**   | Countdown, deliberate failure/Retry, named Next, campaign endings             |                     **6–12 hours** | No pre-Go simulation, automatic terminal restart, accidental held-input Retry, duplicate award, or stale successor launch                                        |
+| **UX5**   | Settings, difficulty, Help, replay/Collection navigation, and recovery states |                     **6–12 hours** | Complete focus/input/loading coverage; ordinary play never needs Workshop or a file picker                                                                       |
+| **UX6**   | Whole player-experience qualification                                         | **2–4 working days** after UX1–UX5 | Required end-to-end journeys pass; physical-device and offline limits recorded separately                                                                        |
 
-The R1–R4 version numbers are tentative until each aggregate is rebuilt on the
+The R3–R5 version numbers are tentative until each aggregate is rebuilt on the
 accepted public source and the next unused version is rechecked.
 
 ## 5. Remaining original programme after player-first UX
@@ -113,9 +118,10 @@ and persistent co-op saves remain deferred.
 1. **Serialized publishing:** only one task may merge, tag, archive, or deploy a
    release. Parallel work shortens preparation time but cannot make publication
    concurrent.
-2. **Moving main:** the v0.113.0 candidate is reconciled on current main. Later
-   prepared candidates predate that merge and must be reconciled on the newest
-   accepted source before their required checks can count.
+2. **Moving main:** both reserved release aggregates are still draft work. PR465
+   must become the exact v0.112.0 candidate first; PR478 is behind protected main
+   and must later be rebuilt on accepted v0.112.0 before its required checks can
+   count.
 3. **Temporary suite waiver:** long automated suites are skipped by committed
    policy. Focused tests, lint/format/validation, build/provenance, exact hashes,
    archives, and public checks remain mandatory. Skipped suites are not passes.
