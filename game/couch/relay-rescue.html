@@ -120,6 +120,46 @@
               </details>
             </div>
           </div>
+          <details id="coop-optional-setup" class="optional-setup">
+            <summary id="coop-optional-setup-toggle">Team options</summary>
+            <p id="coop-advanced-note" class="setup-note"></p>
+            <div class="setup">
+              <label
+                >Play style<select id="coop-experiment">
+                  <option value="full">Full teamwork</option>
+                  <option value="joint">Joint Cuts + ordinary cover</option>
+                  <option value="independent">Individual cuts + ordinary cover</option>
+                </select></label
+              >
+              <label
+                >Difficulty<select id="coop-difficulty">
+                  <option value="gentle">Gentle</option>
+                  <option value="standard" selected>Standard</option>
+                  <option value="expert">Expert</option>
+                </select></label
+              >
+              <label
+                >Actors<select id="coop-actor-style" aria-describedby="coop-actor-style-note">
+                  <option value="fpv" selected>FPV</option>
+                  <option value="campaign">Campaign</option>
+                </select></label
+              >
+            </div>
+            <p id="coop-actor-style-note" class="setup-note" role="status"></p>
+            <details class="pack-picker">
+              <summary>Created Team packs</summary>
+              <label for="coop-pack-file">Open a Team pack or artwork bundle</label>
+              <input
+                id="coop-pack-file"
+                type="file"
+                accept=".json,.rlteam,application/json,application/vnd.revealline.team-presentation"
+              />
+              <button id="coop-pack-cancel" type="button" hidden>Stop waiting</button>
+              <button id="coop-pack-retry" type="button" hidden>Retry pack</button>
+              <p id="coop-pack-status" role="status">Relay Rescue · 2 levels</p>
+              <button id="coop-pack-reset" type="button" hidden>Return to Relay Rescue</button>
+            </details>
+          </details>
           <div id="coop-lobby-tools"></div>
           <div
             id="coop-music-menu-now-playing"
@@ -391,6 +431,15 @@
             <button id="coop-picture-retry" type="button" hidden>Retry picture</button>
           </div>
         </section>
+        <details id="coop-more">
+          <summary id="coop-more-toggle">More</summary>
+          <nav class="coop-more-destinations" aria-label="More destinations">
+            <a id="coop-more-home" href="../">Home</a>
+            <a id="coop-more-catalogue" href="relay-rescue.html?journey=legacy">Legacy arenas</a>
+            <a id="coop-more-about" href="../../site/about.html#versions">About &amp; credits</a>
+            <a id="coop-release-explorer">Releases</a>
+          </nav>
+        </details>
         <details id="coop-help">
           <summary id="coop-help-toggle">How to play and controls</summary>
           <div id="coop-help-unit">

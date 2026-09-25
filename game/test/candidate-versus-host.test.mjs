@@ -105,7 +105,7 @@ for (const difficulty of ['gentle', 'standard', 'expert'])
     assert.equal(p.$('race-time-field').hidden, true);
     assert.equal(p.$('race-clock').textContent, 'No countdown');
     assert.equal(p.$('race-clock').dataset.compact, '∞');
-    assert.match(p.$('race-summary').textContent, /No race countdown/);
+    assert.equal(p.$('race-summary').textContent, 'One race · First return');
     assert.match(p.$('race-format-help').textContent, /No race countdown/);
     assert.doesNotMatch(p.$('race-format-help').textContent, /At the time limit/);
     assert.equal(p.drawOptions[0].backdrop, p.drawOptions[1].backdrop);
@@ -295,7 +295,11 @@ test('controller can open and leave the flat chooser without starting or clearin
   await waitFor(() => p.$('journey-chooser')?.open && p.$('journey-collection'));
   p.frame(); // The asynchronously mounted scope observes a neutral controller frame.
   assert.equal(p.$('journey-chooser').open, true);
-  assert.equal(p.$('journey-cards').children.length, 120);
+  assert.equal(
+    p.$('journey-cards').children.length,
+    198,
+    'the complete 66-mission opening catalogue exposes all three difficulty cards',
+  );
   const card = p.$('journey-cards').children[0];
   assert.match(card.textContent, /Band 1\/12.*Standard.*Optional challenge/);
   card.focus();
