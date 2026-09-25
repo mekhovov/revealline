@@ -468,7 +468,7 @@ for (const wide of [false, true]) {
   });
 }
 
-test('custom player art retains its aspect ratio and rotor anchor coordinates independently of enemy slots', () => {
+test('custom player art retains its aspect ratio without detached rotor overlays or enemy-slot coupling', () => {
   const image = { id: 'custom-player', naturalWidth: 40, naturalHeight: 80 },
     enemyImage = { id: 'custom-enemy' },
     { p, s, run } = playerFixture({ image });
@@ -480,13 +480,15 @@ test('custom player art retains its aspect ratio and rotor anchor coordinates in
   assert.ok(player && enemy);
   assert.equal(player.args[3] / player.args[4], 0.5);
   for (const anchor of rotorAnchors(p.body)) {
-    assert.ok(
+    assert.equal(
       s.calls.some(
         (call) =>
           call.op === 'translate' &&
           Math.abs(call.args[0] - anchor.x * player.args[3]) < 1e-9 &&
           Math.abs(call.args[1] - anchor.y * player.args[4]) < 1e-9,
       ),
+      false,
+      'gameplay keeps the approved player body free of external corner blades',
     );
   }
   assert.equal(p.image, image);

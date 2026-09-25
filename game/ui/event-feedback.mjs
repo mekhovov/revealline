@@ -91,6 +91,8 @@ export function drawEventFeedback(
     // Small themed debris stays local to the failed craft, never follows respawn.
     const offset = reduced ? 5 : 4 + Math.min(event.age, 0.35) * 15;
     if (themeId === 'fpv') {
+      // Four solid rotor fragments communicate the broken FPV frame without
+      // putting bright square brackets around the craft silhouette.
       for (const [x, y] of [
         [-1, -1],
         [1, -1],
@@ -98,7 +100,7 @@ export function drawEventFeedback(
         [1, 1],
       ]) {
         ctx.fillRect(x * offset - 2, y * offset - 1, 4, 2);
-        ctx.strokeRect(x * offset - 3, y * offset - 3, 6, 6);
+        ctx.fillRect(x * (offset + 2) - 1, y * (offset + 2) - 1, 2, 2);
       }
       ctx.fillRect(-2, -4, 4, 8);
     } else if (themeId === 'ukraine') {

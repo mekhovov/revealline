@@ -20,6 +20,7 @@ import { createExternalChapterInventoryReader } from '../external-chapter-pointe
 import { inspectPackLibraryMetadata, PACK_LIBRARY_VERSION } from '../packs.mjs';
 import { createCouchChapterInstaller } from '../couch/couch-chapter-install.mjs';
 import { loadOptionalCatalog } from '../optional-chapters.mjs';
+import { createSpatialNextEditionSources } from './spatial-next-editions.mjs';
 
 /** Read-only remote browsing, with deliberate verified chapter preparation.
  * Compiler-qualified Journey and inspected installed metadata grant an exact
@@ -78,7 +79,14 @@ export async function createRemoteSoloVersusLibrarySources({
     optionalCampaignIds: route.optionalCampaignIds,
   };
   const solo = createCandidateSoloHost(route.source, options);
+  let spatialEditions;
   try {
+    spatialEditions = await createSpatialNextEditionSources({
+      activeRouteId: route.id,
+      originalThemes: themeFile.value.themes,
+      difficulty,
+      launch,
+    });
     const versus = createCandidateVersusHost(route.source, options);
     const sourceFor = (host, manifest) => ({
       ...journeyLibrarySource({
@@ -136,7 +144,7 @@ export async function createRemoteSoloVersusLibrarySources({
       // metadata or Journey materials. No pictures are decoded by this read.
       const owner = await installedSources({
         index,
-        journey,
+        journeySources: [journey, ...spatialEditions.sources],
         baseEntry: {
           campaign: baseCampaign,
           classRecipes: classesFile.value,
@@ -160,6 +168,7 @@ export async function createRemoteSoloVersusLibrarySources({
         state: owner.state,
         dispose() {
           owner.dispose();
+          spatialEditions.dispose();
           solo.preparer.dispose();
         },
       });
@@ -177,12 +186,16 @@ export async function createRemoteSoloVersusLibrarySources({
       progress: () => '',
     });
     return Object.freeze({
-      sources: Object.freeze([journey, ...retained]),
+      sources: Object.freeze([journey, ...spatialEditions.sources, ...retained]),
       refresh: async () => {},
       state: () => ({ ready: false, reason: 'Installed chapters have not been checked.' }),
-      dispose: () => solo.preparer.dispose(),
+      dispose() {
+        spatialEditions.dispose();
+        solo.preparer.dispose();
+      },
     });
   } catch (error) {
+    spatialEditions?.dispose();
     solo.preparer.dispose();
     throw error;
   }
@@ -192,7 +205,7 @@ export async function createRemoteSoloVersusLibrarySources({
  * stays with the receiving host; this owner never treats a DTO as a runtime. */
 async function installedSources({
   index,
-  journey,
+  journeySources,
   baseEntry,
   installed,
   loadBaseThemes,
@@ -296,7 +309,7 @@ async function installedSources({
     await refresh();
     factory = await createMetadataInstalledMissionLibrary({
       index,
-      journeySources: [journey],
+      journeySources,
       getInventory: currentInventory,
       baseEntry,
       compatibility({ entry, level }) {

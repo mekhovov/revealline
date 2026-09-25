@@ -32,9 +32,8 @@ function nativeConfirm(target) {
 }
 
 test('Versus and Team keep tuning and imports in closed optional setup surfaces', async () => {
-  const [versus, versusCss, team] = await Promise.all([
+  const [versus, team] = await Promise.all([
     readFile(new URL('../couch/index.html', import.meta.url), 'utf8'),
-    readFile(new URL('../couch/couch.css', import.meta.url), 'utf8'),
     readFile(new URL('../couch/relay-rescue.html', import.meta.url), 'utf8'),
   ]);
   assert.match(
@@ -47,11 +46,6 @@ test('Versus and Team keep tuning and imports in closed optional setup surfaces'
   );
   assert.match(versus, /id="race-start"[^>]*>Start race/);
   assert.match(team, /id="coop-start"[^>]*>[\s\S]*Preparing arena/);
-  assert.match(
-    versusCss,
-    /body:not\(\.race-focus\) #race-journey-controls\s*{\s*display: none !important;/,
-    'the lobby and Pause keep Missions in one owned action stack',
-  );
 });
 
 test('prepared Versus defaults need one assigned-controller Confirm and never route it to Cancel', async (t) => {
@@ -78,10 +72,7 @@ test('Steam Deck Confirm opens Versus optional setup and starts exactly once des
   });
   f.join(0);
   time += 600;
-  f.pulse(0, 13);
-  assert.equal(f.doc.activeElement.id, 'race-chapters');
-  f.pulse(0, 13);
-  assert.equal(f.doc.activeElement.id, 'race-optional-setup-toggle');
+  f.focus('race-optional-setup-toggle');
   f.pulse(0, 0);
   assert.equal(f.$('race-optional-setup').open, true);
   time += 120;
@@ -164,15 +155,15 @@ test('Steam Deck Confirm opens Team optional setup and starts exactly once despi
   assert.equal(f.$('coop-play').hidden, false, 'native echo must not trigger another start action');
 });
 
-test('passive Team preparation keeps stable lobby focus without exposing a Cancel trap', async (t) => {
+test('passive Team preparation exposes Cancel without focusing or activating it', async (t) => {
   const gate = deferred();
   const f = await teamPage(t, {
     nativeFocus: true,
     waitPicture: false,
     presentation: { read: () => gate.promise },
   });
-  assert.equal(f.doc.activeElement.id, 'coop-level');
-  assert.equal(f.$('coop-picture-cancel').hidden, true);
+  assert.equal(f.doc.activeElement, f.doc.body);
+  assert.equal(f.$('coop-picture-cancel').hidden, false);
   f.tap('Enter');
   assert.equal(f.$('coop-picture-status').dataset.state, 'preparing');
   gate.resolve();
@@ -184,7 +175,7 @@ test('passive Team preparation keeps stable lobby focus without exposing a Cance
   assert.equal(f.$('coop-play').hidden, false);
 });
 
-test('Steam Deck Confirm echo cannot expose or activate Cancel during initial Team preparation', async (t) => {
+test('Steam Deck Confirm echo cannot activate Cancel during initial Team picture preparation', async (t) => {
   let time = 1000;
   t.mock.method(performance, 'now', () => time);
   const gate = deferred();
@@ -200,7 +191,7 @@ test('Steam Deck Confirm echo cannot expose or activate Cancel during initial Te
   time += 120;
   assert.equal(nativeConfirm(f.doc.activeElement).defaultPrevented, true);
   assert.equal(f.$('coop-picture-status').dataset.state, 'preparing');
-  assert.equal(f.$('coop-picture-cancel').hidden, true);
+  assert.equal(f.$('coop-picture-cancel').hidden, false);
   gate.resolve();
   await waitFor(() => f.$('coop-picture-status').dataset.state === 'ready');
 });

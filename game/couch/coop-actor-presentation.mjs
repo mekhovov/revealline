@@ -357,6 +357,10 @@ export function createCoopActorPresentation({
       } else
         drawPresentedActor(ctx, frame, palette, sprite.image, sprite.geometry, entry.bodyRecord, {
           bodyOffset: frame.bodyOffset,
+          // Player sprites own their complete readable silhouette. Extra
+          // procedural blades resemble detached corner brackets on compact
+          // Team boards; enemy actors retain their authored rotor treatment.
+          showRotors: kind !== 'pilot',
         });
     } finally {
       ctx.restore();

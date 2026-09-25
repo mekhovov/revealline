@@ -766,7 +766,11 @@ export class BoardPainter {
         reduced,
         screenScale: canvasCSSWidth / W,
       });
-      drawLineImpacts(ctx, classic, { screenScale: canvasCSSWidth / W });
+      drawLineImpacts(ctx, classic, {
+        screenScale: canvasCSSWidth / W,
+        time: this.time,
+        reduced,
+      });
       for (const e of state.enemies) {
         if (
           drawClassicEnemy(
@@ -896,6 +900,10 @@ export class BoardPainter {
         colors: { body: p.safe, accent: p.accent },
         x: state.player.x + bodyOffset.x,
         y: state.player.y + bodyOffset.y,
+        // Approved player sprites already contain their motor hubs. The old
+        // procedural blades read as four detached white corner brackets at
+        // gameplay scale, so keep the authored silhouette unobstructed.
+        showRotors: false,
       });
       ctx.restore();
       // This ring stays at the simulation contact radius, independent of body

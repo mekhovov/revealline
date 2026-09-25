@@ -12,6 +12,7 @@ import {
   createWholeErosionReviewCandidates,
 } from './whole-spatial-candidates.mjs';
 import { createWholeJourneyCandidates } from './whole-journey-candidates.mjs';
+import { createSpatialNextBatchCandidates } from './spatial-next-batch-candidates.mjs';
 
 import { createAuthoredJourneyRouteDefinition } from './route-definition.mjs';
 export { createCandidateSequence } from './sequence.mjs';
@@ -32,5 +33,6 @@ export function createAuthoredJourneyRoute(id) {
     createWholePressureCandidates,
     createWholeCulturalPressureCandidates,
     createWholeErosionReviewCandidates,
+    createSpatialNextBatchCandidates,
   });
 }

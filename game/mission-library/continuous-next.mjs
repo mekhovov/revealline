@@ -9,7 +9,9 @@ export function librarySuccessor(library, currentRow, mode) {
   const rows = library.forMode(mode);
   const index = rows.indexOf(currentRow);
   if (index < 0) throw new Error('The current mission does not belong to this mode.');
-  if (currentRow.collection !== 'Classic') return rows[index + 1] ?? null;
+  if (currentRow.automaticContinuation === false) return null;
+  if (currentRow.collection !== 'Classic')
+    return rows.slice(index + 1).find((row) => row.automaticContinuation !== false) ?? null;
   const edition = JSON.parse(currentRow.ownerId)[3] ?? 'original';
   return (
     rows
