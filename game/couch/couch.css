@@ -180,6 +180,9 @@ body.candidate-journey .race-shell {
   font-size: 24px;
   list-style-position: inside;
 }
+.race-optional-setup > summary:hover {
+  border-color: #9deeff;
+}
 .race-optional-setup[open] > summary {
   border-bottom: 1px solid #537ca0;
 }
