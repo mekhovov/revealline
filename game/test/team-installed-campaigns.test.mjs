@@ -1,16 +1,16 @@
-import test from "node:test";
-import assert from "node:assert/strict";
-import { canonicalJSON, dataIdentity } from "../data-json.mjs";
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { canonicalJSON, dataIdentity } from '../data-json.mjs';
 import {
   createCreatorTeamAttempt,
   generateCreatorTeamCampaign,
   prepareCreatorTeamCampaign,
-} from "../creator/team.mjs";
+} from '../creator/team.mjs';
 import {
   CREATOR_TEAM_DATABASE,
   createInstalledTeamCampaignStore,
-} from "../creator/team-installed.mjs";
-import { managedIndexedDB } from "./helpers/managed-idb.mjs";
+} from '../creator/team-installed.mjs';
+import { managedIndexedDB } from './helpers/managed-idb.mjs';
 
 async function prepared(seed = 12) {
   const generated = generateCreatorTeamCampaign({
@@ -27,8 +27,8 @@ function writeEdition(indexedDB, editionId, update) {
     opened.onerror = () => reject(opened.error);
     opened.onsuccess = () => {
       const db = opened.result,
-        tx = db.transaction("editions", "readwrite"),
-        store = tx.objectStore("editions"),
+        tx = db.transaction('editions', 'readwrite'),
+        store = tx.objectStore('editions'),
         read = store.get(editionId);
       read.onsuccess = () => store.put(update(read.result), editionId);
       tx.oncomplete = () => {
@@ -40,7 +40,7 @@ function writeEdition(indexedDB, editionId, update) {
   });
 }
 
-test("verified Team portable bytes install once and reopen through exact replay verification", async () => {
+test('verified Team portable bytes install once and reopen through exact replay verification', async () => {
   const memory = managedIndexedDB(),
     store = createInstalledTeamCampaignStore({
       indexedDB: memory.indexedDB,
@@ -64,18 +64,12 @@ test("verified Team portable bytes install once and reopen through exact replay 
   assert.deepEqual(inventory.editions[0].progress.clears, {});
   const loaded = await store.load(first.editionId);
   assert.equal(loaded.editionId, first.editionId);
-  assert.equal(
-    canonicalJSON(loaded.prepared.pack),
-    canonicalJSON(campaign.pack),
-  );
-  assert.equal(
-    canonicalJSON(loaded.prepared.evidence),
-    canonicalJSON(campaign.evidence),
-  );
+  assert.equal(canonicalJSON(loaded.prepared.pack), canonicalJSON(campaign.pack));
+  assert.equal(canonicalJSON(loaded.prepared.evidence), canonicalJSON(campaign.evidence));
   store.close();
 });
 
-test("changed Team bytes create an immutable adjacent edition and never reinterpret the first", async () => {
+test('changed Team bytes create an immutable adjacent edition and never reinterpret the first', async () => {
   const memory = managedIndexedDB();
   let clock = 1;
   const store = createInstalledTeamCampaignStore({
@@ -103,20 +97,20 @@ test("changed Team bytes create an immutable adjacent edition and never reinterp
   );
 });
 
-test("legal Team clears persist under the exact edition and reject mutable run identities", async () => {
+test('legal Team clears persist under the exact edition and reject mutable run identities', async () => {
   const memory = managedIndexedDB(),
     store = createInstalledTeamCampaignStore({ indexedDB: memory.indexedDB }),
     campaign = await prepared(7),
     { editionId } = await store.install(campaign),
     level = campaign.pack.levels[0],
-    run = createCreatorTeamAttempt(campaign.pack, level.id, "standard", "full"),
+    run = createCreatorTeamAttempt(campaign.pack, level.id, 'standard', 'full'),
     receipt = {
       editionId,
       levelId: level.id,
-      runId: "run-installed-team-1",
+      runId: 'run-installed-team-1',
       gameplayId: dataIdentity({ ruleset: run.ruleset, level: run.level }),
-      difficulty: "standard",
-      presetId: "full",
+      difficulty: 'standard',
+      presetId: 'full',
     };
   const first = await store.recordCompletion(receipt),
     duplicate = await store.recordCompletion(receipt),
@@ -126,15 +120,10 @@ test("legal Team clears persist under the exact edition and reject mutable run i
   assert.deepEqual(inventory.editions[0].progress.clears[level.id], {
     runId: receipt.runId,
     gameplayId: receipt.gameplayId,
-    difficulty: "standard",
-    presetId: "full",
+    difficulty: 'standard',
+    presetId: 'full',
   });
-  const changedAttempt = createCreatorTeamAttempt(
-    campaign.pack,
-    level.id,
-    "gentle",
-    "full",
-  );
+  const changedAttempt = createCreatorTeamAttempt(campaign.pack, level.id, 'gentle', 'full');
   await assert.rejects(
     store.recordCompletion({
       ...receipt,
@@ -142,29 +131,29 @@ test("legal Team clears persist under the exact edition and reject mutable run i
         ruleset: changedAttempt.ruleset,
         level: changedAttempt.level,
       }),
-      difficulty: "gentle",
+      difficulty: 'gentle',
     }),
     /cannot change identity/,
   );
   await assert.rejects(
     store.recordCompletion({
       ...receipt,
-      runId: "run-installed-team-2",
-      gameplayId: "changed-gameplay",
+      runId: 'run-installed-team-2',
+      gameplayId: 'changed-gameplay',
     }),
     /does not match the installed configuration/,
   );
   await assert.rejects(
     store.recordCompletion({
       ...receipt,
-      editionId: "f".repeat(64),
-      runId: "missing",
+      editionId: 'f'.repeat(64),
+      runId: 'missing',
     }),
     /no longer installed/,
   );
 });
 
-test("inventory and launch reject changed stored package bytes before gameplay", async () => {
+test('inventory and launch reject changed stored package bytes before gameplay', async () => {
   const memory = managedIndexedDB(),
     store = createInstalledTeamCampaignStore({ indexedDB: memory.indexedDB }),
     campaign = await prepared(19),
