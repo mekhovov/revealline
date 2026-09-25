@@ -37,7 +37,7 @@ const golden = {
   'whole-spatial-v7': [255610, 'd809ffcf9884e85d3dd778d4824ad1797ae76b5fe18c0f0c6382f9042c5f193c'],
   'whole-spatial-v8': [257423, 'e5092f194c459c9c4f618832d54e7769b28ac894bac097a8e91fdc6ed22e2c0e'],
   'whole-spatial-v9': [257778, '80d2406bece474a0dc169e9d8ea31b473d04d68144e8df6dd4eff41c7850e27a'],
-  'whole-spatial-v10': [258783, '527a19b85b64098232166096aae02e671bf1ee4940a39a37b10996c1de1ca4ad'],
+  'whole-spatial-v10': [258783, '04b2c25e1e6bbbf8890b89a6661ec80fadac53f280ae2ae2caf77fd3de3ed4fc'],
 };
 
 test('all supported routes are covered by pinned edition snapshots', () => {
@@ -178,6 +178,7 @@ test('all literal lazy imports and shared modules are in the actual game build i
   const source = await readFile(new URL(loaderURL), 'utf8');
   const imports = [...source.matchAll(/import\('(.+?)'\)/g)].map((m) => m[1]);
   assert.deepEqual(imports, [
+    './spatial-next-batch-candidates.mjs',
     './whole-spatial-candidates.mjs',
     './whole-journey-candidates.mjs',
     './horizon-candidates.mjs',

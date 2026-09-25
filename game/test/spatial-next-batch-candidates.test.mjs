@@ -170,10 +170,44 @@ for (const artwork of [false, true])
 
 test('topology has one reachable field and no single-exit component', () => {
   const expectedWalls = { 'stepping-stones': 0, 'return-pocket': 0, 'neutral-ground': 0 };
+  const expectedBudgets = {
+    'stepping-stones': {
+      oldFoundations: 64,
+      newFoundations: 62,
+      oldEligible: 2316,
+      newEligible: 2318,
+    },
+    'return-pocket': {
+      oldFoundations: 165,
+      newFoundations: 154,
+      oldEligible: 2215,
+      newEligible: 2226,
+    },
+    'neutral-ground': {
+      oldFoundations: 145,
+      newFoundations: 140,
+      oldEligible: 2235,
+      newEligible: 2240,
+    },
+  };
   for (const id of IDS) {
     const previous = map(oldProject, id);
     const current = map(project, id);
     assert.notEqual(current.geometryIdentity, previous.geometryIdentity);
+    assert.deepEqual(
+      {
+        oldFoundations: previous.geometry.foundationCount,
+        newFoundations: current.geometry.foundationCount,
+        oldEligible: previous.geometry.eligibleCount,
+        newEligible: current.geometry.eligibleCount,
+      },
+      expectedBudgets[id],
+    );
+    const coverage = mission(project, id).coverage;
+    assert(
+      Math.ceil(current.geometry.eligibleCount * coverage) >=
+        Math.ceil(previous.geometry.eligibleCount * coverage),
+    );
     assert.equal(current.source.walls.length, expectedWalls[id]);
     assert.deepEqual(current.source.terrain, previous.source.terrain);
     assert.deepEqual(current.source.speedZones, previous.source.speedZones);
@@ -242,11 +276,11 @@ function closeRoute(run, id, approach, sidecars = {}) {
     position('right', (state) => state.player.x >= 35.4);
     close('down');
   } else if (id === 'return-pocket' && approach === 'upper-band-first') {
-    position('up', (state) => state.player.y <= 9.6);
+    position('up', (state) => state.player.y <= 11.6);
     position('right', (state) => state.player.x >= 40.4);
     close('up');
   } else if (id === 'return-pocket' && approach === 'lower-band-first') {
-    position('down', (state) => state.player.y >= 26.4);
+    position('down', (state) => state.player.y >= 24.4);
     position('right', (state) => state.player.x >= 40.4);
     close('down');
   } else if (id === 'neutral-ground' && approach === 'slow-bed-first') {
@@ -264,12 +298,12 @@ function closeRoute(run, id, approach, sidecars = {}) {
 }
 
 const EXPECTED_CLAIMS = Object.freeze({
-  'near-spikelet-first': 7,
-  'sun-landing-first': 13,
-  'upper-band-first': 7,
-  'lower-band-first': 7,
+  'near-spikelet-first': 8,
+  'sun-landing-first': 14,
+  'upper-band-first': 9,
+  'lower-band-first': 9,
   'slow-bed-first': 24,
-  'upper-branch-first': 29,
+  'upper-branch-first': 31,
 });
 
 for (const selection of SPATIAL_NEXT_BATCH_SELECTIONS)

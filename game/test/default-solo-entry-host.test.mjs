@@ -87,12 +87,12 @@ test('ordinary Solo entry offers 91 Journey and 110 Classic missions and direct 
   assert.equal(p.$('shell-continue').hidden, true);
   assert.equal(p.$('shell-title-edition').textContent, 'NEW JOURNEY / 91 MISSIONS');
   assert.match(p.$('shell-destination').textContent, /Start · First return/);
-  assert.equal(new URL(p.$('shell-playground').href).search, '?journey=whole-spatial-v9');
+  assert.equal(new URL(p.$('shell-playground').href).search, '?journey=whole-spatial-v10');
   assert.equal(p.$('shell-catalogue').textContent, 'All missions');
   assert.equal(p.$('shell-catalogue').getAttribute('href'), './?journey=legacy');
   assert.equal(
     p.$('shell-title-versus').getAttribute('href'),
-    'couch/?journey=whole-spatial-v9&return=solo',
+    'couch/?journey=whole-spatial-v10&return=solo',
   );
   assert.equal(
     p.$('shell-title-team').querySelector('.game-mode-description').textContent,
@@ -143,7 +143,7 @@ test('ordinary Solo entry offers 91 Journey and 110 Classic missions and direct 
 
 test('ordinary Solo Continue uses its current Journey bookmark without converting old records', async (t) => {
   const memory = managedIndexedDB();
-  const current = createJourneyBackend({ ...memory, profileKey: 'journey-whole-spatial-v9' });
+  const current = createJourneyBackend({ ...memory, profileKey: 'journey-whole-spatial-v10' });
   const previous = createJourneyBackend(memory);
   await previous.commit([{ type: 'select', mode: 'solo', missionId: 'official/old/mission' }]);
   const old = await previous.read();
@@ -181,7 +181,7 @@ test('Legacy is explicitly accessible and its unified selector opens an exact Ne
   await settle(() => new URL(globalThis.location.href).searchParams.has('library-mission'));
   const target = new URL(globalThis.location.href);
   assert.equal(target.origin + target.pathname, 'http://localhost/game/');
-  assert.equal(target.searchParams.get('journey'), 'whole-spatial-v9');
+  assert.equal(target.searchParams.get('journey'), 'whole-spatial-v10');
   assert.equal(target.searchParams.get('library-mission'), card.dataset.missionId);
   assert.deepEqual(p.errors, []);
 });

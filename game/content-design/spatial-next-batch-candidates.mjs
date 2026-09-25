@@ -78,11 +78,11 @@ export const SPATIAL_NEXT_BATCH_SELECTIONS = freezeDesign([
 const revisions = Object.freeze({
   'stepping-stones': {
     foundations: [
-      rect(9, 8, 7, 5),
-      rect(30, 14, 10, 8),
-      rect(48, 6, 8, 4),
-      rect(48, 26, 8, 4),
-      rect(62, 15, 5, 6),
+      rect(10, 9, 4, 3),
+      rect(33, 15, 5, 4),
+      rect(50, 7, 3, 3),
+      rect(50, 26, 3, 3),
+      rect(62, 15, 4, 3),
     ],
     walls: [],
     design: {
@@ -101,11 +101,11 @@ const revisions = Object.freeze({
   },
   'return-pocket': {
     foundations: [
-      rect(25, 8, 23, 3),
-      rect(25, 25, 23, 3),
-      rect(25, 11, 3, 14),
-      rect(42, 13, 6, 4),
-      rect(42, 19, 6, 4),
+      rect(25, 10, 18, 3),
+      rect(25, 23, 18, 3),
+      rect(25, 12, 3, 12),
+      rect(39, 15, 4, 2),
+      rect(39, 19, 4, 2),
     ],
     walls: [],
     design: {
@@ -125,11 +125,11 @@ const revisions = Object.freeze({
   },
   'neutral-ground': {
     foundations: [
-      rect(33, 9, 5, 19),
+      rect(33, 9, 4, 13),
       rect(25, 17, 8, 3),
-      rect(38, 20, 10, 3),
-      rect(29, 6, 13, 3),
-      rect(29, 28, 13, 3),
+      rect(37, 18, 8, 3),
+      rect(30, 7, 10, 2),
+      rect(30, 22, 10, 2),
     ],
     walls: [],
     design: {

@@ -375,12 +375,25 @@ for (const mode of ['solo', 'versus', 'team'])
       assert.equal(p.renders[0].level.id, 'first-return');
       assert.equal(p.renders[1].level.id, 'first-return');
     } else assert.equal(p.$('coop-level').value, 'twin-landings');
-    const edition = mode === 'team' ? 'team-trail-impact-originals-1' : 'whole-spatial-v6';
+    const edition = mode === 'team' ? 'team-trail-impact-originals-1' : 'whole-spatial-v10';
     const card = [...p.$('journey-cards').children].find((row) => {
       const identity = JSON.parse(row.dataset.missionId);
       return identity[0] === `journey:${edition}` && identity[1] === edition;
     });
     assert(card, 'The normal host offers its current, not Classic, mission edition.');
+    if (mode !== 'team') {
+      const prior = [...p.$('journey-cards').children].filter((row) => {
+        const identity = JSON.parse(row.dataset.missionId);
+        return (
+          identity[0] === 'journey:whole-spatial-v9' &&
+          identity[1] === 'whole-spatial-v9' &&
+          ['stepping-stones', 'return-pocket', 'neutral-ground'].includes(
+            identity[3].split('/').at(-1),
+          )
+        );
+      });
+      assert.equal(prior.length, 3, 'The normal selector exposes exactly three prior v9 cards.');
+    }
     assert.equal(card.querySelector('.journey-card-action').textContent, 'Play');
     assert.equal(card.disabled, false);
     reach(card);
