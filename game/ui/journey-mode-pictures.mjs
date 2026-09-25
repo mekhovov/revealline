@@ -12,6 +12,7 @@ export function attachJourneyModePictures({
   editionId,
   catalog,
   profile,
+  acquire,
 }) {
   if (!labels[mode] || !button || !editionId || !catalog || !profile)
     throw new TypeError('Journey pictures need an exact mode, edition, catalogue and profile.');
@@ -52,7 +53,7 @@ export function attachJourneyModePictures({
   viewer.append(viewTitle, canvas, viewStatus, retry, back);
   dialog.append(heading, status, grid, viewer);
   doc.body.append(dialog);
-  const artwork = createJourneyArtworkView({ canvas, status: viewStatus });
+  const artwork = createJourneyArtworkView({ canvas, status: viewStatus, acquire });
   let disposed = false,
     revision = 0,
     opener = null,
@@ -72,6 +73,7 @@ export function attachJourneyModePictures({
   }
   async function showSelected() {
     if (!selected || !dialog.open || viewer.hidden) return false;
+    if (doc.activeElement === retry) back.focus({ preventScroll: true });
     retry.hidden = true;
     const record = selected,
       loaded = await artwork.show(record);
