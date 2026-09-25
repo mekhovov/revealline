@@ -1,3 +1,4 @@
+import { t } from '../i18n/index.mjs';
 const cueNames = new Set(['focus', 'confirm', 'cancel', 'capture', 'failure', 'victory', 'pickup']);
 
 /** Read-only session cache. An unavailable cue uses its existing procedural
@@ -45,7 +46,7 @@ export function createPublishedCues({ sound, readAudio }) {
               decoded.duration > 15 ||
               decoded.length * decoded.numberOfChannels > 4 * 1024 * 1024
             )
-              throw new Error('Published cue exceeds its decoded budget.');
+              throw new Error(t("interface:publishedCueExceedsItsDecodedBudget"));
             return decoded;
           })
           .then((decoded) => {
@@ -127,13 +128,13 @@ export function attachPublishedAudio({
             allowed: allowMusic,
             readBlob: async (options) => {
               if (closed || snapshot !== accepted)
-                throw new DOMException('Published theme changed.', 'AbortError');
+                throw new DOMException(t("interface:publishedThemeChanged"), 'AbortError');
               const result = await host?.readAudio('audio.music', {
                 ...options,
                 snapshot: accepted,
               });
               if (closed || snapshot !== accepted)
-                throw new DOMException('Published theme changed.', 'AbortError');
+                throw new DOMException(t("interface:publishedThemeChanged"), 'AbortError');
               return result?.blob;
             },
           }
