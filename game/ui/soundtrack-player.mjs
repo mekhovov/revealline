@@ -14,6 +14,11 @@ import {
 import { validateTrack } from './music.mjs';
 import { inspectMP3, ownSoundtrackBlob, throwIfSoundtrackAborted } from '../mp3.mjs';
 import { bindAudioMasterMedia } from './audio-master.mjs';
+import {
+  isResolvedOnlineSoundtrackTrack,
+  onlineSoundtrackRecordingAllowed,
+  onlineSoundtrackRecordingURL,
+} from '../online-soundtrack-catalogue.mjs';
 
 const wait = (ms, signal) =>
   new Promise((resolve, reject) => {
@@ -29,6 +34,7 @@ const wait = (ms, signal) =>
     signal?.addEventListener('abort', cancel, { once: true });
     if (signal?.aborted) cancel();
   });
+const overlapTrack = (track) => ['mp3', 'remote'].includes(track?.kind);
 /** Session transport only. The host owns gestures, page lifecycle, settings persistence and SFX. */
 export function createSoundtrackPlayer({
   soundscape,
@@ -84,6 +90,7 @@ export function createSoundtrackPlayer({
   const decks = [audioElement, secondAudioElement].filter(Boolean).map((media) => ({
     media,
     url: null,
+    ownedURL: false,
     listeners: [],
     resource: 0,
     weight: 0,
@@ -126,6 +133,8 @@ export function createSoundtrackPlayer({
     dirty = false;
   let published = null,
     authored = null,
+    remoteTracks = [],
+    remoteSelection = null,
     lastPositionSecond = -1,
     notice = null,
     selectionNotice = null;
@@ -149,6 +158,7 @@ export function createSoundtrackPlayer({
     ...soundtrackTracks(library),
     ...(authored ? [authored] : []),
     ...(published ? [published] : []),
+    ...remoteTracks,
   ];
   const resolveBase = () => {
     if (
@@ -169,6 +179,7 @@ export function createSoundtrackPlayer({
     return selected;
   };
   const resolve = () => {
+    if (remoteSelection) return remoteSelection;
     const selected = resolveBase();
     const defaultChoice =
       selected.source === 'default' ||
@@ -210,12 +221,11 @@ export function createSoundtrackPlayer({
       const p = soundscape.musicPosition();
       return { ...p, positionSeconds: pendingSeek ?? p.positionSeconds };
     }
-    const durationSeconds =
-      current.kind === 'published'
-        ? Number.isFinite(activeDeck.media.duration)
-          ? Math.max(0, activeDeck.media.duration)
-          : 0
-        : current.asset.durationSeconds;
+    const durationSeconds = ['published', 'remote'].includes(current.kind)
+      ? Number.isFinite(activeDeck.media.duration)
+        ? Math.max(0, activeDeck.media.duration)
+        : 0
+      : current.asset.durationSeconds;
     return {
       positionSeconds:
         pendingSeek ??
@@ -246,6 +256,8 @@ export function createSoundtrackPlayer({
           })
         : null,
       playlistId: playlist?.id ?? null,
+      order: playlist?.order ?? null,
+      repeat: playlist?.repeat ?? null,
       pendingPlaylistId: pending?.playlist.id ?? null,
       selection: override,
       source: pending?.source ?? resolve().source,
@@ -313,12 +325,13 @@ export function createSoundtrackPlayer({
     try {
       deck.media.load();
     } catch {}
-    if (deck.url !== null) {
+    if (deck.url !== null && deck.ownedURL) {
       try {
         URLImpl.revokeObjectURL(deck.url);
       } catch {}
-      deck.url = null;
     }
+    deck.url = null;
+    deck.ownedURL = false;
   }
   function cancelPreload(keep = null) {
     preloadOperation?.abort();
@@ -358,6 +371,11 @@ export function createSoundtrackPlayer({
       };
       emit();
     }
+    if (track.kind === 'remote') {
+      throwIfSoundtrackAborted(signal);
+      installDeckURL(deck, track, track.url, { owned: false });
+      return true;
+    }
     const original =
       track.kind === 'published'
         ? await track.readBlob({ signal })
@@ -393,9 +411,10 @@ export function createSoundtrackPlayer({
     installDeckURL(deck, track, URLImpl.createObjectURL(blob));
     return true;
   }
-  function installDeckURL(deck, track, ownedURL) {
+  function installDeckURL(deck, track, ownedURL, { owned = true } = {}) {
     clearDeck(deck);
     deck.url = ownedURL;
+    deck.ownedURL = owned;
     const resource = deck.resource,
       expectedURL = deck.url;
     const valid = () =>
@@ -439,12 +458,14 @@ export function createSoundtrackPlayer({
   }
   function transferDeck(from, to, track) {
     const ownedURL = from.url;
+    const ownsURL = from.ownedURL;
     required(ownedURL !== null, 'Prepared audio is no longer available.');
     // Keep the object URL while moving playback to an already permitted element.
     from.url = null;
+    from.ownedURL = false;
     clearDeck(from);
     from.weight = 0;
-    installDeckURL(to, track, ownedURL);
+    installDeckURL(to, track, ownedURL, { owned: ownsURL });
   }
   function prepareNext() {
     if (
@@ -453,7 +474,7 @@ export function createSoundtrackPlayer({
       !desired ||
       audioMaster?.snapshot().muted ||
       status !== 'playing' ||
-      current?.kind !== 'mp3' ||
+      !overlapTrack(current) ||
       decks.length < 2 ||
       dirty ||
       pending ||
@@ -464,7 +485,7 @@ export function createSoundtrackPlayer({
       return;
     const at = playableIndex(nextIndex(true));
     const track = tracks().find((t) => t.id === queue[at]);
-    if (!track || track.kind !== 'mp3') return;
+    if (!overlapTrack(track)) return;
     const deck = decks.find((d) => d !== activeDeck),
       controller = new AbortController();
     preloadOperation = controller;
@@ -494,7 +515,7 @@ export function createSoundtrackPlayer({
       !desired ||
       suspended ||
       status !== 'playing' ||
-      current?.kind !== 'mp3' ||
+      !overlapTrack(current) ||
       dirty ||
       pending ||
       fadeMs === 0 ||
@@ -557,8 +578,8 @@ export function createSoundtrackPlayer({
       decks.length === 2 &&
       desired &&
       status === 'playing' &&
-      current?.kind === 'mp3' &&
-      nextTrack?.kind === 'mp3';
+      overlapTrack(current) &&
+      overlapTrack(nextTrack);
     cancel(prepared?.deck);
     const token = generation,
       controller = new AbortController();
@@ -746,16 +767,20 @@ export function createSoundtrackPlayer({
       at < 0 &&
       !fallbackUsed &&
       (library.format === SOUNDTRACK_FORMAT ||
-        ['catalogue', 'catalogue-fallback', 'unavailable', 'published'].includes(playlistSource))
+        ['catalogue', 'catalogue-fallback', 'unavailable', 'published', 'remote'].includes(
+          playlistSource,
+        ))
     ) {
       fallbackUsed = true;
-      install(
-        playlistSource === 'published'
-          ? resolve()
-          : library.format === SOUNDTRACK_FORMAT
-            ? resolveSoundtrackSelection(emptySoundtrackLibrary())
-            : soundtrackFallbackSelection(library.listening.mode, library.listening.genres),
-      );
+      let fallback;
+      if (['published', 'remote'].includes(playlistSource)) {
+        remoteSelection = null;
+        remoteTracks = [];
+        fallback = resolve();
+      } else if (library.format === SOUNDTRACK_FORMAT)
+        fallback = resolveSoundtrackSelection(emptySoundtrackLibrary());
+      else fallback = soundtrackFallbackSelection(library.listening.mode, library.listening.genres);
+      install(fallback);
       at = playableIndex(0);
     }
     if (at < 0) {
@@ -858,6 +883,31 @@ export function createSoundtrackPlayer({
       previousStored = library.selection.playlistId;
     cancelPreload();
     library = next;
+    if (remoteSelection && next.listening?.recordingMode) {
+      const allowed = remoteTracks.filter(onlineSoundtrackRecordingAllowed),
+        currentAllowed =
+          current?.kind !== 'remote' || allowed.some((track) => track.id === current.id);
+      if (!allowed.length || !currentAllowed) {
+        remoteSelection = null;
+        remoteTracks = [];
+        if (current?.kind === 'remote') {
+          cancel();
+          clearMedia();
+          soundscape.pauseMusic();
+          current = null;
+          status = 'paused';
+        }
+      } else if (allowed.length !== remoteTracks.length) {
+        remoteTracks = allowed;
+        remoteSelection = {
+          ...remoteSelection,
+          playlist: {
+            ...remoteSelection.playlist,
+            trackIds: allowed.map((track) => track.id),
+          },
+        };
+      }
+    }
     if (override !== null && !soundtrackPlaylists(next).some((p) => p.id === override))
       override = null;
     if (!current || next.selection.playlistId !== previousStored)
@@ -892,6 +942,8 @@ export function createSoundtrackPlayer({
   }
   async function selectPlaylist(id) {
     resolveSoundtrackSelection({ ...library, selection: { playlistId: id } }, context);
+    remoteSelection = null;
+    remoteTracks = [];
     override = id;
     notice = null;
     failed = new Set();
@@ -900,8 +952,86 @@ export function createSoundtrackPlayer({
     return startAt(0, { fading: true });
   }
   async function selectListening(listening) {
-    setLibrary({ ...upgradeSoundtrackLibrary(library), listening });
+    const next = resolveSoundtrackLibrary({ ...upgradeSoundtrackLibrary(library), listening });
+    remoteSelection = null;
+    remoteTracks = [];
+    setLibrary(next);
     return selectPlaylist(null);
+  }
+  async function playRemotePlaylist(
+    value,
+    { order = 'ordered', repeat = 'all', startTrackId = null } = {},
+  ) {
+    required(
+      Array.isArray(value) && value.every(isResolvedOnlineSoundtrackTrack),
+      'Online soundtracks must come from the resolved project catalogue.',
+    );
+    required(['ordered', 'shuffle'].includes(order), 'Invalid online soundtrack order.');
+    required(['all', 'one', 'off'].includes(repeat), 'Invalid online soundtrack repeat mode.');
+    required(
+      startTrackId === null || /^online\.[a-f0-9]{64}$/.test(startTrackId),
+      'Invalid online soundtrack start recording.',
+    );
+    const owned = boundedJSON(value, {
+      maxBytes: 512 * 1024,
+      maxNodes: 10000,
+      maxDepth: 5,
+      maxArray: 256,
+      maxString: 2048,
+    });
+    required(Array.isArray(owned) && owned.length >= 1, 'Choose at least one online soundtrack.');
+    const ids = new Set();
+    const validated = owned.map((track) => {
+      required(
+        track?.kind === 'remote' &&
+          /^online\.[a-f0-9]{64}$/.test(track.id) &&
+          track.sha256 === track.id.slice('online.'.length) &&
+          typeof track.title === 'string' &&
+          typeof track.artist === 'string' &&
+          [true, false, null, 'unknown'].includes(track.contentId) &&
+          typeof track.recordingModeEligible === 'boolean' &&
+          (!track.recordingModeEligible || track.contentId === false) &&
+          onlineSoundtrackRecordingURL(track.url, track.sha256) &&
+          !ids.has(track.id),
+        'Invalid online soundtrack recording.',
+      );
+      ids.add(track.id);
+      return Object.freeze({ ...track, websites: Object.freeze(track.websites ?? []) });
+    });
+    const eligibleTracks = library.listening?.recordingMode
+      ? validated.filter(onlineSoundtrackRecordingAllowed)
+      : validated;
+    required(
+      eligibleTracks.length > 0,
+      'Recording mode excludes these online soundtracks until gameplay-video and Content ID permissions are verified.',
+    );
+    required(
+      startTrackId === null || eligibleTracks.some((track) => track.id === startTrackId),
+      'The chosen online soundtrack is unavailable in this playback mode.',
+    );
+    remoteTracks = eligibleTracks;
+    remoteSelection = {
+      source: 'remote',
+      playlist: {
+        id: 'online.archive.current',
+        title: 'Online soundtrack archive',
+        trackIds: remoteTracks.map((track) => track.id),
+        order,
+        repeat,
+      },
+      notice: 'Streaming from the public RevealLine soundtrack archive.',
+    };
+    intentionallyPaused = false;
+    desired = true;
+    notice = null;
+    failed = new Set();
+    fallbackUsed = false;
+    install(remoteSelection);
+    if (startTrackId !== null) {
+      const at = queue.indexOf(startTrackId);
+      queue = [...queue.slice(at), ...queue.slice(0, at)];
+    }
+    return startAt(0, { fading: true, localOnly: false });
   }
   async function play() {
     if (disposed || suspended) return false;
@@ -1119,6 +1249,7 @@ export function createSoundtrackPlayer({
     setContext,
     setAuthoredTrack,
     setPublishedTrack,
+    playRemotePlaylist,
     selectPlaylist,
     selectListening,
     prepare,
