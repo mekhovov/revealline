@@ -433,7 +433,12 @@ export function createControllerRouter({
             : null);
       if (edge(buttons.menu)) ui.menu = true;
       else if (edge(buttons.back) || (aliases && (edge(3) || edge(8)))) ui.back = true;
-      else if (edge(buttons.confirm) || (aliases && edge(2))) ui.confirm = true;
+      else if (
+        confirms(pad.buttons) &&
+        !confirms(previousButtons) &&
+        (pad.buttons.has(buttons.confirm) || (aliases && pad.buttons.has(2)))
+      )
+        ui.confirm = true;
       if (!ui.menu && !ui.back && !ui.confirm && direction) {
         if (direction !== repeatDirection || time >= repeatAt) {
           ui.direction = direction;

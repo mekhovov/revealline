@@ -16,7 +16,9 @@ export function attachControllerConfirmGuard({
     controllerHeld = false,
     suppressUntil = -Infinity,
     nativeActivationAt = -Infinity,
-    neutralAfterLifecycle = false;
+    neutralAfterLifecycle = false,
+    activationDepth = 0,
+    controllerActivated = false;
   const listen = (type, callback) => {
     doc.addEventListener(type, callback, { capture: true });
     listeners.push(() => doc.removeEventListener(type, callback, { capture: true }));
@@ -62,10 +64,16 @@ export function attachControllerConfirmGuard({
   });
   listen('pointerdown', (event) => {
     if (!isPrimaryActivation(event)) return;
-    // A real touchscreen/pen gesture that starts after A is physically up owns
-    // the new interaction. Steam's compatibility stream remains guarded: it
-    // identifies itself through firesTouchEvents (and is normally mouse-like).
-    if (isDirectTouch(event) && !neutralAfterLifecycle && !controllerHeld && !confirmPressed()) {
+    // Direct touch/pen may take over after an uncommitted controller lifecycle.
+    // Once activate() commits the controller action, every primary release path
+    // stays guarded because Steam's duplicate may itself be touch-classified.
+    if (
+      isDirectTouch(event) &&
+      !controllerActivated &&
+      !neutralAfterLifecycle &&
+      !controllerHeld &&
+      !confirmPressed()
+    ) {
       primaryPointer = null;
       suppressUntil = -Infinity;
       return;
@@ -88,26 +96,11 @@ export function attachControllerConfirmGuard({
         consume(event);
     });
   listen('click', (event) => {
-    // HTMLElement.click() is untrusted in browsers and is the controller
-    // adapter's intended activation. A trusted native activation can arrive
-    // first, before the Gamepad API exposes the same physical press. In that
-    // order, keep the native action and consume the controller click instead.
-    const programmatic =
-      event.isTrusted === false ||
-      (event.isTrusted == null && (event.detail == null || event.detail === 0));
-    if (programmatic) {
-      const nativeLeadAge = now() - nativeActivationAt;
-      if (controllerOwnsGesture() && nativeLeadAge >= 0 && nativeLeadAge <= nativeLeadWindowMs) {
-        nativeActivationAt = -Infinity;
-        consume(event);
-      }
-      return;
-    }
-    // A trusted release can be mouse, touch, pen, touch-derived compatibility
-    // input, or a keyboard/accessibility PointerEvent with no pointer. Steam's
-    // duplicate must not escape merely because Chrome classifies its source as
-    // touch-capable.
-    if (event.isTrusted === true && (hasActivePointer() || controllerOwnsGesture())) {
+    // Only activate() may authorize an untrusted HTMLElement.click(). Steam
+    // Input and browser/accessibility adapters can also expose untrusted clicks,
+    // so isTrusted cannot identify the controller adapter's intended action.
+    if (activationDepth > 0) return;
+    if (hasActivePointer() || controllerOwnsGesture()) {
       primaryPointer = null;
       consume(event);
       return;
@@ -126,6 +119,8 @@ export function attachControllerConfirmGuard({
     suppressUntil = -Infinity;
     nativeActivationAt = -Infinity;
     neutralAfterLifecycle = false;
+    activationDepth = 0;
+    controllerActivated = false;
   };
   doc.defaultView?.addEventListener?.('blur', reset);
   listen('visibilitychange', reset);
@@ -143,12 +138,29 @@ export function attachControllerConfirmGuard({
         return;
       }
       if (pressed) {
+        if (!controllerHeld) controllerActivated = false;
         controllerHeld = true;
         suppressUntil = Infinity;
       } else if (controllerHeld) {
         controllerHeld = false;
         suppressUntil = now() + echoWindowMs;
         if (primaryPointer !== null) primaryPointer.expiresAt = suppressUntil;
+      }
+    },
+    activate(element) {
+      if (!element || typeof element.click !== 'function' || controllerActivated) return false;
+      const nativeLeadAge = now() - nativeActivationAt;
+      controllerActivated = true;
+      if (nativeLeadAge >= 0 && nativeLeadAge <= nativeLeadWindowMs) {
+        nativeActivationAt = -Infinity;
+        return false;
+      }
+      activationDepth++;
+      try {
+        element.click();
+        return true;
+      } finally {
+        activationDepth--;
       }
     },
     requireNeutral() {
