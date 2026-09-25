@@ -23,14 +23,13 @@ services:
     volumes:
       - ./migrations:/migrations:ro
     command:
-      [
-        'psql',
-        '--host=postgres',
-        '--username=revealline',
-        '--dbname=revealline',
-        '--set=ON_ERROR_STOP=1',
-        '--file=/migrations/001_initial.sql',
-      ]
+      - /bin/sh
+      - -ec
+      - >-
+        for file in /migrations/*.sql; do
+          psql --host=postgres --username=revealline --dbname=revealline
+          --set=ON_ERROR_STOP=1 --file="$file";
+        done
     restart: 'no'
 
   api:

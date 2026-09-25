@@ -8,6 +8,8 @@ export class MemoryCommunityRepository {
   #jobs = new Map();
   #reports = new Map();
   #audit = [];
+  #admissionWindows = new Map();
+  #admissionEvents = new Map();
 
   constructor({ clock = () => new Date() } = {}) {
     this.clock = clock;
@@ -19,6 +21,66 @@ export class MemoryCommunityRepository {
 
   async health() {
     return true;
+  }
+
+  async consumeAdmission({ action, subjectHash, idempotencyHash = null, cost, limit, windowMs }) {
+    const nowMs = this.clock().getTime();
+    const windowStartMs = Math.floor(nowMs / windowMs) * windowMs;
+    const windowStartedAt = new Date(windowStartMs).toISOString();
+    const retryAt = new Date(windowStartMs + windowMs).toISOString();
+    const retryAfterSeconds = Math.max(1, Math.ceil((windowStartMs + windowMs - nowMs) / 1_000));
+    const now = new Date(nowMs).toISOString();
+    let removed = 0;
+    for (const [key, event] of this.#admissionEvents) {
+      if (removed >= 64) break;
+      if (event.expiresAt <= now) {
+        this.#admissionEvents.delete(key);
+        removed += 1;
+      }
+    }
+    removed = 0;
+    for (const [key, window] of this.#admissionWindows) {
+      if (removed >= 64) break;
+      if (window.expiresAt <= now) {
+        this.#admissionWindows.delete(key);
+        removed += 1;
+      }
+    }
+    const eventKey = idempotencyHash ? `${action}\0${subjectHash}\0${idempotencyHash}` : null;
+    const previous = eventKey ? this.#admissionEvents.get(eventKey) : null;
+    if (previous && previous.expiresAt > now) {
+      const previousWindow = this.#admissionWindows.get(previous.windowKey);
+      return {
+        allowed: true,
+        reused: true,
+        remaining: Math.max(0, limit - (previousWindow?.used ?? previous.cost)),
+        retryAt: previous.retryAt,
+        retryAfterSeconds: Math.max(1, Math.ceil((Date.parse(previous.retryAt) - nowMs) / 1_000)),
+      };
+    }
+    const windowKey = `${action}\0${subjectHash}\0${windowStartedAt}`;
+    const window = this.#admissionWindows.get(windowKey) ?? {
+      used: 0,
+      expiresAt: retryAt,
+    };
+    if (window.used + cost > limit)
+      return { allowed: false, reused: false, remaining: 0, retryAt, retryAfterSeconds };
+    window.used += cost;
+    this.#admissionWindows.set(windowKey, window);
+    if (eventKey)
+      this.#admissionEvents.set(eventKey, {
+        windowKey,
+        cost,
+        expiresAt: retryAt,
+        retryAt,
+      });
+    return {
+      allowed: true,
+      reused: false,
+      remaining: limit - window.used,
+      retryAt,
+      retryAfterSeconds,
+    };
   }
 
   async createSubmission(candidate) {
@@ -242,8 +304,46 @@ export class MemoryCommunityRepository {
       details,
       status: 'open',
       createdAt: now,
+      resolvedAt: null,
+      resolvedBy: null,
+      resolution: null,
     };
     this.#reports.set(key, report);
+    return { report: copy(report), reused: false };
+  }
+
+  async listReports({ status, limit, cursor }) {
+    const ordered = [...this.#reports.values()]
+      .filter((report) => report.status === status)
+      .sort((a, b) => a.createdAt.localeCompare(b.createdAt) || a.id.localeCompare(b.id));
+    const filtered = cursor
+      ? ordered.filter((report) => `${report.createdAt}|${report.id}` > cursor)
+      : ordered;
+    const rows = filtered.slice(0, limit);
+    const last = rows.at(-1);
+    return {
+      rows: copy(rows),
+      nextCursor: filtered.length > rows.length && last ? `${last.createdAt}|${last.id}` : null,
+    };
+  }
+
+  async resolveReport({ id, actorSubject, resolution }) {
+    const report = [...this.#reports.values()].find((candidate) => candidate.id === id);
+    if (!report) return null;
+    if (report.status === 'resolved') return { report: copy(report), reused: true };
+    report.status = 'resolved';
+    report.resolvedAt = this.#now();
+    report.resolvedBy = actorSubject;
+    report.resolution = resolution;
+    this.#audit.push({
+      id: randomUUID(),
+      action: 'report.resolved',
+      editionId: report.editionId,
+      reportId: report.id,
+      actorSubject,
+      reason: resolution,
+      createdAt: report.resolvedAt,
+    });
     return { report: copy(report), reused: false };
   }
 

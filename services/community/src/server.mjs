@@ -1,4 +1,5 @@
 import { Pool } from 'pg';
+import { createAdmissionController } from './admission.mjs';
 import { buildCommunityApp } from './app.mjs';
 import { createTokenAuthenticator } from './auth.mjs';
 import { createSessionAuthenticator } from './auth.mjs';
@@ -14,6 +15,10 @@ if (!config.databaseUrl) throw new Error('COMMUNITY_DATABASE_URL is required.');
 
 const pool = new Pool({ connectionString: config.databaseUrl, max: 10 });
 const repository = new PostgresCommunityRepository({ pool });
+const admission = createAdmissionController({
+  repository,
+  policies: config.admissionPolicies,
+});
 const blobStore = new DiskBlobStore({ root: config.blobRoot });
 const betterAuth = config.betterAuth
   ? createCommunityBetterAuth({ database: pool, ...config.betterAuth })
@@ -31,6 +36,7 @@ const tus = createCommunityTusServer({
   repository,
   blobStore,
   maxPackageBytes: config.maxPackageBytes,
+  admission,
 });
 const app = buildCommunityApp({
   repository,
@@ -40,6 +46,8 @@ const app = buildCommunityApp({
   validatorVersion: config.validatorVersion,
   uploadTransport: new TusUploadTransportBoundary({ endpoint: '/v1/uploads' }),
   tus,
+  admission,
+  trustProxy: config.trustProxyHops ?? false,
   logger: true,
 });
 if (betterAuth) mountCommunityBetterAuth(app, betterAuth);

@@ -11,13 +11,15 @@ export const SUBMISSION_STATES = Object.freeze([
 ]);
 
 export const PACKAGE_MEDIA_TYPE = 'application/vnd.revealline.rlpack';
+const UUID_V4 = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/u;
 
 export class CommunityError extends Error {
-  constructor(statusCode, code, message) {
+  constructor(statusCode, code, message, { retryAfterSeconds = null } = {}) {
     super(message);
     this.name = 'CommunityError';
     this.statusCode = statusCode;
     this.code = code;
+    this.retryAfterSeconds = retryAfterSeconds;
   }
 }
 
@@ -134,6 +136,52 @@ export function validateReport(input) {
   const details = plainText(input.details ?? '', 'details', { max: 2_000, multiline: true });
   return { reason, details };
 }
+
+export function parseReportQuery(query, { defaultLimit = 20, maxLimit = 50 } = {}) {
+  const limit = query?.limit === undefined ? defaultLimit : Number(query.limit);
+  if (!Number.isSafeInteger(limit) || limit < 1 || limit > maxLimit)
+    fail(400, 'invalid_request', `limit must be between 1 and ${maxLimit}.`);
+  const status = query?.status ?? 'open';
+  if (!['open', 'resolved'].includes(status))
+    fail(400, 'invalid_request', 'status must be open or resolved.');
+  const cursor = query?.cursor;
+  if (cursor !== undefined) {
+    const separator = typeof cursor === 'string' ? cursor.lastIndexOf('|') : -1;
+    const timestamp = separator < 0 ? '' : cursor.slice(0, separator);
+    const reportId = separator < 0 ? '' : cursor.slice(separator + 1);
+    const parsedTimestamp = new Date(timestamp);
+    if (
+      !UUID_V4.test(reportId) ||
+      Number.isNaN(parsedTimestamp.getTime()) ||
+      parsedTimestamp.toISOString() !== timestamp
+    )
+      fail(400, 'invalid_request', 'cursor is invalid.');
+  }
+  return { limit, status, cursor: cursor ?? null };
+}
+
+export function validateReportId(value) {
+  if (typeof value !== 'string' || !UUID_V4.test(value))
+    fail(400, 'invalid_request', 'report id is invalid.');
+  return value;
+}
+
+export function validateReportResolution(input) {
+  if (!input || typeof input !== 'object' || Array.isArray(input))
+    fail(400, 'invalid_request', 'Request body must be an object.');
+  return plainText(input.resolution, 'resolution', { min: 1, max: 1_000, multiline: true });
+}
+
+export const toAdminReport = (row) => ({
+  id: row.id,
+  editionId: row.editionId,
+  reason: row.reason,
+  details: row.details,
+  status: row.status,
+  createdAt: row.createdAt,
+  resolvedAt: row.resolvedAt ?? null,
+  resolution: row.resolution ?? null,
+});
 
 export const toPublicEdition = (row) => ({
   editionId: row.editionId,
