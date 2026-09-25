@@ -1,3 +1,4 @@
+import { t } from '../i18n/index.mjs';
 import { canonicalJSON, required, stableId } from '../data-json.mjs';
 import { compileAssetRevision } from '../content-design/assets.mjs';
 import { isCandidatePictureFor } from '../content-design/picture.mjs';
@@ -5,7 +6,7 @@ import { createCandidateCouchPictures } from './candidate-pictures.mjs';
 import { journeyActorThemeMaterial } from '../presentation/journey-actor-materials.mjs';
 
 const bindings = new WeakMap();
-const cancelled = () => new DOMException('Candidate Team picture cancelled.', 'AbortError');
+const cancelled = () => new DOMException(t("interface:candidateTeamPictureCancelled"), 'AbortError');
 
 /** Defensive renderer admission, not a substitute for the host's exact request
  * checks. Only a live authenticated candidate display owner can vary dimensions. */
@@ -42,10 +43,10 @@ export function candidateTeamActorMaterial(binding, level, snapshot) {
  * their 1152×576 contract. Each host selection owns this lease independently,
  * so failed Next/preview preparation never retires the previous playing picture. */
 export function createCandidateTeamPictures({ row, owns, getSnapshot, acquire } = {}) {
-  required(typeof owns === 'function' && owns(row), 'Choose an owned Team candidate row.');
-  required(typeof getSnapshot === 'function', 'A prepared Team snapshot reader is required.');
+  required(typeof owns === 'function' && owns(row), t("interface:chooseAnOwnedTeamCandidateRow"));
+  required(typeof getSnapshot === 'function', t("interface:aPreparedTeamSnapshotReaderIsRequired"));
   const asset = compileAssetRevision(row.background);
-  required(asset.width === asset.height * 2, 'Team candidate originals must have a 2:1 frame.');
+  required(asset.width === asset.height * 2, t("interface:teamCandidateOriginalsMustHaveA21Frame"));
   const packJSON = canonicalJSON(row.pack);
   const pictureRow = Object.freeze({ asset, defaultThemeId: 'fpv' });
   const pictures = createCandidateCouchPictures({ owns: (value) => value === pictureRow, acquire });
@@ -64,26 +65,26 @@ export function createCandidateTeamPictures({ row, owns, getSnapshot, acquire } 
         request.levelId === row.level.id &&
         canonicalJSON(request.pack) === packJSON &&
         !request.artworkSource,
-      'Candidate Team picture requires its exact owned pack, level and theme.',
+      t("interface:candidateTeamPictureRequiresItsExactOwnedPackLevelAnd"),
     );
     required(
       !attemptId || attemptId === request.attemptId,
-      'Keep the exact candidate Team attempt.',
+      t("interface:keepTheExactCandidateTeamAttempt"),
     );
     const current = getSnapshot();
     const theme = current?.resolved?.theme;
     required(
       theme?.id === 'fpv' && Number.isSafeInteger(theme.revision) && theme.revision > 0,
-      'Prepare the matching Team theme first.',
+      t("interface:prepareTheMatchingTeamThemeFirst"),
     );
     const identity = canonicalJSON([theme.id, theme.revision, current.resolved.collection ?? null]);
     required(
       !snapshot || snapshot === current,
-      'Team presentation changed; prepare a new attempt.',
+      t("interface:teamPresentationChangedPrepareANewAttempt"),
     );
     required(
       !themeJSON || themeJSON === identity,
-      'Team theme identity changed during preparation.',
+      t("interface:teamThemeIdentityChangedDuringPreparation"),
     );
     if (closed || request.signal?.aborted) throw cancelled();
     return current;
@@ -101,7 +102,7 @@ export function createCandidateTeamPictures({ row, owns, getSnapshot, acquire } 
       if (accepted) {
         required(
           candidateTeamPictureFrame(accepted, row.level, snapshot),
-          'Team original is unavailable.',
+          t("interface:teamOriginalIsUnavailable"),
         );
         return accepted;
       }
@@ -118,7 +119,7 @@ export function createCandidateTeamPictures({ row, owns, getSnapshot, acquire } 
           current();
           request.onStatus?.({
             ...status,
-            message: 'Verifying this Team mission’s original picture…',
+            message: t("interface:verifyingThisTeamMissionSOriginalPicture"),
           });
           current();
         },
@@ -145,7 +146,7 @@ export function createCandidateTeamPictures({ row, owns, getSnapshot, acquire } 
           status: 'ready',
           stage: 'ready',
           progress: null,
-          message: 'Team original ready. Start remains a separate action.',
+          message: t("interface:teamOriginalReadyStartRemainsASeparateAction"),
         });
         current();
         const retire = staged.commit();
@@ -161,7 +162,7 @@ export function createCandidateTeamPictures({ row, owns, getSnapshot, acquire } 
       check(request);
       required(
         accepted && candidateTeamPictureFrame(accepted, row.level, snapshot),
-        'The exact Team candidate picture is not ready.',
+        t("interface:theExactTeamCandidatePictureIsNotReady"),
       );
       return accepted;
     },

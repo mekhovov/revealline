@@ -1,3 +1,4 @@
+import { t } from '../i18n/index.mjs';
 import { drawActiveTrail, drawCapturePulse } from '../ui/actor-presentation.mjs';
 import { drawPresentationImage } from '../ui/presentation-draw-image.mjs';
 
@@ -100,7 +101,7 @@ export function prepareCoopWall(snapshot) {
     !pivot ||
     ![pivot.x, pivot.y].every((value) => Number.isFinite(value) && value >= 0 && value <= 1)
   )
-    throw new TypeError('Team terrain needs its prepared image and normalized pivot.');
+    throw new TypeError(t("interface:teamTerrainNeedsItsPreparedImageAndNormalizedPivot"));
   return tile;
 }
 

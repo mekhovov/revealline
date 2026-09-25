@@ -1,3 +1,4 @@
+import { t } from '../i18n/index.mjs';
 /** Keep ordinary link activation inside a controller practice session. This is
  * a UI guard, not a sandbox for same-origin scripts or browser navigation. The
  * host separately enforces practice before acquiring any profile writer. */
@@ -12,7 +13,7 @@ export function attachPracticeNavigation({
     typeof doc?.removeEventListener !== 'function' ||
     typeof onBlocked !== 'function'
   )
-    throw new TypeError('Practice navigation needs a document and notice callback.');
+    throw new TypeError(t("interface:practiceNavigationNeedsADocumentAndNoticeCallback"));
   let destroyed = false;
   function sameDocumentFragment(href) {
     if (typeof href !== 'string' || !href.includes('#')) return false;
