@@ -93,15 +93,34 @@ test('bounded video transform profiles preserve display aspect/orientation witho
     sourceSha256: info.sha256,
     sourceWidth: 1920,
     sourceHeight: 1080,
+    sourceDisplayOrientation: 'landscape',
     width: 1280,
     height: 720,
+    outputDisplayOrientation: 'landscape',
     fit: 'contain',
     allowsUpscale: false,
     targetVideoBitrate: 2_500_000,
   });
   const compactPortrait = prepareVideoTransform(portrait, 'compact');
   assert.deepEqual([compactPortrait.width, compactPortrait.height], [202, 358]);
+  assert.equal(compactPortrait.sourceDisplayOrientation, 'portrait');
+  assert.equal(compactPortrait.outputDisplayOrientation, 'portrait');
   assert.ok(compactPortrait.width < compactPortrait.height);
+  const rotatedDisplay = { ...info, width: 360, height: 640 };
+  assert.deepEqual(
+    [
+      prepareVideoTransform(rotatedDisplay, 'source').width,
+      prepareVideoTransform(rotatedDisplay, 'source').height,
+    ],
+    [360, 640],
+  );
+  assert.deepEqual(
+    [
+      prepareVideoTransform(rotatedDisplay, 'compact').width,
+      prepareVideoTransform(rotatedDisplay, 'compact').height,
+    ],
+    [202, 358],
+  );
   const small = prepareVideoTransform(info, 'balanced');
   assert.deepEqual([small.width, small.height], [640, 360]);
   assert.throws(() => prepareVideoTransform(info, 'unbounded'), /supported video size/);
@@ -453,6 +472,75 @@ test('resize/compression review binds exact decoded dimensions and a bounded bit
   assert.equal(result.evidence.transform.targetVideoBitrate, 900_000);
   assert.equal(result.evidence.transform.observedContainerBitsPerSecond, 400_000);
   assert.equal(result.evidence.transform.bitrateReviewLimit, 2_056_000);
+});
+
+test('portrait display orientation survives profile derivation and exact output inspection', async () => {
+  const portraitBytes = Buffer.from('rotated display-matrix source'),
+    outputBytes = Buffer.alloc(50_000, 11),
+    portraitInfo = Object.freeze({
+      ...info,
+      width: 360,
+      height: 640,
+      durationSeconds: 4,
+      bytes: portraitBytes.length,
+      sha256: digest(portraitBytes),
+    });
+  const boundary = createOptionalPhysicalTrimBoundary({
+    loadAdapter: async () => ({
+      support: async (_original, source, _range, options) => {
+        assert.deepEqual([source.width, source.height], [360, 640]);
+        assert.deepEqual([options.transform.width, options.transform.height], [202, 358]);
+        return { supported: true, formats: ['video/mp4'] };
+      },
+      trim: async (_original, _range, options) => {
+        assert.deepEqual([options.transform.width, options.transform.height], [202, 358]);
+        return { blob: new Blob([outputBytes], { type: 'video/mp4' }) };
+      },
+    }),
+    inspectVideo: async (blob) => {
+      const bytes = Buffer.from(await blob.arrayBuffer()),
+        source = bytes.equals(portraitBytes);
+      return {
+        info: {
+          mime: 'video/mp4',
+          width: source ? 360 : 202,
+          height: source ? 640 : 358,
+          durationSeconds: 4,
+          bytes: bytes.length,
+          sha256: digest(bytes),
+        },
+        dispose() {},
+      };
+    },
+    inspectAudio: exactAudioInspection(),
+    inspectVisual: exactVisualInspection,
+  });
+  const original = new Blob([portraitBytes], { type: 'video/mp4' });
+  assert.equal(
+    (
+      await boundary.support(portraitInfo, {
+        original,
+        range: { startSeconds: 0, endSeconds: 4 },
+        transform: 'compact',
+      })
+    ).supported,
+    true,
+  );
+  const result = await boundary.trim(
+    original,
+    portraitInfo,
+    { startSeconds: 0, endSeconds: 4 },
+    { transform: 'compact' },
+  );
+  assert.deepEqual([result.info.width, result.info.height], [202, 358]);
+  assert.deepEqual(
+    [result.evidence.transform.sourceWidth, result.evidence.transform.sourceHeight],
+    [360, 640],
+  );
+  assert.equal(result.evidence.transform.sourceDisplayOrientation, 'portrait');
+  assert.equal(result.evidence.transform.outputDisplayOrientation, 'portrait');
+  assert.deepEqual([result.evidence.transform.width, result.evidence.transform.height], [202, 358]);
+  assert.ok(result.info.width < result.info.height);
 });
 
 test('resize/compression withholds output on dimension or bitrate drift', async () => {
