@@ -27,10 +27,13 @@ const exactRootTests = new Set([
   'mediabunny-trim-adapter.test.mjs',
   'mission-library-custom-source.test.mjs',
   'mission-library-metadata-custom-source.test.mjs',
+  'mission-library-team-source.test.mjs',
   'practice-media-v3-host.test.mjs',
   'profile-shared-media.test.mjs',
   'still-workshop-build.test.mjs',
   'story-media-store.test.mjs',
+  'team-installed-campaigns.test.mjs',
+  'team-installed-host.test.mjs',
 ]);
 const rootTestPrefixes = [
   'community-',
