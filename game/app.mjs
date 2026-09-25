@@ -88,6 +88,7 @@ import {
   prepareOptionalDownload,
   verifyOptionalInstalled,
 } from './optional-chapters.mjs';
+import { presentSourceChapter } from './ui/optional-chapter-presentation.mjs';
 import { attachOptionalChaptersPanel } from './ui/optional-chapters-panel.mjs';
 import { arcadeActionCapabilities } from './core/arcade-actions.mjs';
 import {
@@ -10492,65 +10493,69 @@ try {
     getLibrary: () => packs,
     getUsage: () => chapterSnapshot?.usage,
     sourceChapters: !practiceSession
-      ? SOURCE_EXTERNAL_EDITIONS.map(({ descriptor, name, description, mode, levels }) => ({
-          id: descriptor.id,
-          controlId:
-            descriptor.id === SOURCE_EXTERNAL_CHAPTER.id ? 'source' : `source-${descriptor.id}`,
-          name,
-          description,
-          mode,
-          themeId: descriptor.themeId,
-          levels,
-          sourceOnly: !isRelease,
-          bytes: descriptor.pack.bytes + descriptor.media.bytes,
-          download: isRelease
-            ? (options) => installSourceChapter(descriptor.id, null, { ...options, download: true })
-            : null,
-          backupSupported: !!externalBackup,
-          async inspect({ signal }) {
-            const snapshot = await inspectChapters({ signal });
-            if (snapshot.status !== 'checked') return { status: snapshot.reason };
-            const installed = snapshot.index.chapters.some((d) => d.id === descriptor.id);
-            if (installed) await externalChapters.readiness(snapshot, descriptor.id, { signal });
-            return { status: installed ? 'installed' : 'absent' };
-          },
-          install: (files, options) => installSourceChapter(descriptor.id, files, options),
-          async play({ signal, onStatus, launch }) {
-            if (!storedStateAdopted || !persistenceReady)
-              throw new Error(t('interface:reloadAfterRecoveryBeforePlayingThisChapter'));
-            const snapshot = await checkedChapters({ signal });
-            await externalChapters.readiness(snapshot, descriptor.id, { signal });
-            assertWorldPlay(launch);
-            adoptContentCatalog(contentFromChapters(snapshot));
-            const pack = packs.packs.find((item) => item.id === descriptor.id);
-            return requestWorldPlay(pack, { signal, launch, onStatus });
-          },
-          async choose({ signal, onStatus, launch }) {
-            if (!storedStateAdopted || !persistenceReady)
-              throw new Error(
-                t('interface:reloadAfterRecoveryToAdoptThePreservedProfileBeforeChoosing'),
+      ? SOURCE_EXTERNAL_EDITIONS.map((edition) => {
+          const { descriptor, name, description, mode, levels } = edition;
+          return presentSourceChapter(edition, {
+            id: descriptor.id,
+            controlId:
+              descriptor.id === SOURCE_EXTERNAL_CHAPTER.id ? 'source' : `source-${descriptor.id}`,
+            name,
+            description,
+            mode,
+            themeId: descriptor.themeId,
+            levels,
+            sourceOnly: !isRelease,
+            bytes: descriptor.pack.bytes + descriptor.media.bytes,
+            download: isRelease
+              ? (options) =>
+                  installSourceChapter(descriptor.id, null, { ...options, download: true })
+              : null,
+            backupSupported: !!externalBackup,
+            async inspect({ signal }) {
+              const snapshot = await inspectChapters({ signal });
+              if (snapshot.status !== 'checked') return { status: snapshot.reason };
+              const installed = snapshot.index.chapters.some((d) => d.id === descriptor.id);
+              if (installed) await externalChapters.readiness(snapshot, descriptor.id, { signal });
+              return { status: installed ? 'installed' : 'absent' };
+            },
+            install: (files, options) => installSourceChapter(descriptor.id, files, options),
+            async play({ signal, onStatus, launch }) {
+              if (!storedStateAdopted || !persistenceReady)
+                throw new Error(t('interface:reloadAfterRecoveryBeforePlayingThisChapter'));
+              const snapshot = await checkedChapters({ signal });
+              await externalChapters.readiness(snapshot, descriptor.id, { signal });
+              assertWorldPlay(launch);
+              adoptContentCatalog(contentFromChapters(snapshot));
+              const pack = packs.packs.find((item) => item.id === descriptor.id);
+              return requestWorldPlay(pack, { signal, launch, onStatus });
+            },
+            async choose({ signal, onStatus, launch }) {
+              if (!storedStateAdopted || !persistenceReady)
+                throw new Error(
+                  t('interface:reloadAfterRecoveryToAdoptThePreservedProfileBeforeChoosing'),
+                );
+              preparationStatus(
+                onStatus,
+                t('interface:checkingInstalledChapterOriginals'),
+                'verifying',
+                () => !signal?.aborted,
               );
-            preparationStatus(
-              onStatus,
-              t('interface:checkingInstalledChapterOriginals'),
-              'verifying',
-              () => !signal?.aborted,
-            );
-            const snapshot = await checkedChapters({ signal });
-            await externalChapters.readiness(snapshot, descriptor.id, { signal });
-            if (signal.aborted || !launch?.isCurrent())
-              throw new DOMException(t('interface:chapterSelectionCancelled'), 'AbortError');
-            // Reconcile only checked content; this does not replace the run.
-            // The explicit selection below still requires Stay / Replace.
-            adoptContentCatalog(contentFromChapters(snapshot));
-            const pack = packs.packs.find((p) => p.id === descriptor.id);
-            return requestWorldLaunch(
-              resolvePackCampaign(pack, pack.campaigns[0].id),
-              launch,
-              onStatus,
-            );
-          },
-        }))
+              const snapshot = await checkedChapters({ signal });
+              await externalChapters.readiness(snapshot, descriptor.id, { signal });
+              if (signal.aborted || !launch?.isCurrent())
+                throw new DOMException(t('interface:chapterSelectionCancelled'), 'AbortError');
+              // Reconcile only checked content; this does not replace the run.
+              // The explicit selection below still requires Stay / Replace.
+              adoptContentCatalog(contentFromChapters(snapshot));
+              const pack = packs.packs.find((p) => p.id === descriptor.id);
+              return requestWorldLaunch(
+                resolvePackCampaign(pack, pack.campaigns[0].id),
+                launch,
+                onStatus,
+              );
+            },
+          });
+        })
       : [],
     loadCatalog: async ({ signal }) => {
       const options = { signal, baseURL: new URL('../', location.href) };
