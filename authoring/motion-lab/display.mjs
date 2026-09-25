@@ -1,4 +1,4 @@
-import { localizedText } from '../../game/i18n/index.mjs';
+import { localizedText, t, getLocale } from '../../game/i18n/index.mjs';
 import { createDisplayPreferences } from '../../game/display-preferences.mjs';
 import { applyFieldKitCopy, fieldKitCopy } from '../../game/ui/field-kit-copy.mjs';
 
@@ -14,7 +14,7 @@ export function getMotionDisplay(
   applyFieldKitCopy(doc);
   const control = doc.querySelector('[data-motion-text-size]');
   const notice = doc.getElementById('motion-display-notice');
-  const ordinaryNotice = fieldKitCopy('motion.sharedReading', doc.documentElement?.lang);
+  const ordinaryNotice = () => fieldKitCopy('motion.sharedReading', getLocale());
   let disposed = false,
     away = false,
     revealingResize = false,
@@ -139,12 +139,13 @@ export function getMotionDisplay(
       render(preferences.snapshot());
     }, 0);
   };
-  if (notice) localizedText(notice, () =>ordinaryNotice);
+  if (notice) localizedText(notice, ordinaryNotice);
   const preferences = createDisplayPreferences({
     window: host,
     getStorage: () => host.localStorage,
-    onWarning(message) {
-      if (!disposed && notice) localizedText(notice, () =>message || ordinaryNotice);
+    onWarning(message, key) {
+      if (!disposed && notice)
+        localizedText(notice, () => (key ? t(key) : message || ordinaryNotice()));
     },
   });
   const render = (value) => {
