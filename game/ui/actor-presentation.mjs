@@ -683,7 +683,7 @@ export function drawPresentedActor(
   image = null,
   geometry = null,
   bodyRecord = null,
-  { bodyOffset = null } = {},
+  { bodyOffset = null, showRotors = true } = {},
 ) {
   if (!frame) return;
   const colors = {
@@ -725,7 +725,7 @@ export function drawPresentedActor(
     // The release host already cropped the declared source frame. Pivot and
     // motor anchors remain normalized to that entire frame, including alpha.
     ctx.drawImage(image, -geometry.pivot.x * width, -geometry.pivot.y * height, width, height);
-    for (const anchor of geometry.rotors) {
+    for (const anchor of showRotors ? geometry.rotors : []) {
       ctx.save();
       ctx.translate(anchor.x * width, anchor.y * height);
       const scale = (0.16 * anchor.radiusScale * width) / 5;
