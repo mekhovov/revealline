@@ -133,8 +133,8 @@ test('v6 remains historical while v7 keeps isolated progress after the normal en
     authoredJourneyModeHref(route.id, 'versus'),
     'couch/?journey=whole-spatial-v7&return=solo',
   );
-  assert.equal(DEFAULT_JOURNEY_ROUTES.solo, 'whole-spatial-v12');
-  assert.equal(DEFAULT_JOURNEY_ROUTES.versus, 'whole-spatial-v12');
+  assert.equal(DEFAULT_JOURNEY_ROUTES.solo, 'whole-spatial-v13');
+  assert.equal(DEFAULT_JOURNEY_ROUTES.versus, 'whole-spatial-v13');
 });
 
 test('pressure successor leaves the first three Prologue missions byte-equivalent', () => {
@@ -151,7 +151,7 @@ test('pressure successor leaves the first three Prologue missions byte-equivalen
 });
 
 test('the actual default route resolves one effective pressure role and its exact roster for every preset', () => {
-  assert.equal(effectiveRoute.id, 'whole-spatial-v12');
+  assert.equal(effectiveRoute.id, 'whole-spatial-v13');
   for (const [id, expected] of Object.entries(effectiveRoster))
     for (const difficulty of ['gentle', 'standard', 'expert'])
       for (const mode of ['solo', 'versus']) {
