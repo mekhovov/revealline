@@ -1626,5 +1626,18 @@
   "motionLab.collectionReason.scopeLimit": "the limit for saved appearance scopes was reached",
   "motionLab.collectionReason.labOnly": "test results are available only in the lab",
   "motionLab.collectionReason.unknownFixture": "this test scenario is unknown",
-  "motionLab.collectionReason.invalid": "the collection data is invalid"
+  "motionLab.collectionReason.invalid": "the collection data is invalid",
+  "studio.capture.snapshot": "Frozen snapshot: {{retained}} retained regions, {{filledRegions}} would-fill regions, {{filledCells}} would-fill cells and {{trailCells}} hypothetical trail cells.",
+  "studio.capture.anchors": "Field anchors: {{ids}}.",
+  "studio.capture.objectives": "Affected objectives: {{ids}}.",
+  "studio.capture.combat": "Would-remove optional actors: {{ids}}.",
+  "studio.capture.assumption": "Snapshot only. A legal closure must be verified; moving enemies may change the outcome.",
+  "studio.capture.none": "none",
+  "studio.capture.inactive": "OFF",
+  "studio.difficulty.solo_one": "{{name}} · {{count}} life · enemy speed ×{{speed}}",
+  "studio.difficulty.shared_one": "{{name}} · {{count}} shared life · enemy speed ×{{speed}}",
+  "studio.capture.gates_one": "Would-open gates: {{ids}}. {{count}} reserved gate cell never counts toward earned coverage.",
+  "studio.difficulty.solo_other": "{{name}} · {{count}} lives · enemy speed ×{{speed}}",
+  "studio.difficulty.shared_other": "{{name}} · {{count}} shared lives · enemy speed ×{{speed}}",
+  "studio.capture.gates_other": "Would-open gates: {{ids}}. {{count}} reserved gate cells never count toward earned coverage."
 }

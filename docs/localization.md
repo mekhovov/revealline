@@ -620,3 +620,52 @@ The complete game validation and presentation-metadata check passed after adding
 copy helper to the distribution inventory. The long Ukrainian v11 card has no horizontal
 overflow at a 390-pixel viewport. A new distribution build and native staging are pending;
 this remains an incomplete migration, not merge-ready certification.
+
+## v0.114.0 distribution verification and Studio preview labels
+
+Rebased the 25 localization commits onto `dce04f9ea` (the v0.114.0 publication merge).
+Its changes are publication records only; no current game, tool, site or build-script
+text changed. Immutable publication metadata remains as published.
+
+The compressed-catalog distribution built successfully at `99531f88e` (rebased equivalent
+`072178fa2`). All 1,176 distribution files and every offline entry passed hash/size checks.
+The core offline inventory contains 1,007 files / 66,552,725 bytes, leaving 556,139 bytes
+under the unchanged 64 MiB limit. Its catalog has 14 canonical JSON files and 24 localization
+assets in total. The current Motion copy helper and both translation runtimes/licenses
+are present in the offline inventory.
+
+Desktop staging and subsequent verification passed for all 1,176 files / 598,542,572 bytes.
+iPhone staging with the official bridge and subsequent verification passed for all 1,177
+files / 598,612,865 bytes. All 24 localization assets matched the web build byte-for-byte on
+both platforms. These are staging checks, not desktop GUI or iPhone simulator tests. Receipts
+are retained under `/tmp/rl-i18n/rebase/v114-*`; generated archives/native staging copies were
+removed to conserve disk space. An exact core-offline fixture is retained for browser checks;
+it deliberately omits optional originals and is not a complete distribution.
+
+A fresh browser origin verifies the packaged v0.114.0 menu, the v11 default route, immediate
+English-to-Ukrainian switching and generated Ukrainian credits with the original runtime
+attribution links. The previous test origin still served its explicitly prepared older
+release, so current-build checks use a fresh origin. Browser cache preparation initially
+failed with a Cache API internal write error while the disk had about 220 MiB free; its
+retry after freeing generated artifacts is recorded separately below.
+
+Studio difficulty options now share the mission-browser difficulty names and use whole
+localized life/speed labels, including Ukrainian plural forms and decimal commas. Frozen
+capture explanations and inactive canvas labels translate at presentation time. A locale
+change only repaints the last accepted snapshot; it does not recompile the project or rerun
+editor synchronization. The underlying capture record and canonical assumption remain intact.
+
+All 25 focused Studio/difficulty/capture tests pass, including live option identity, focus,
+unapplied source text, cursor/scroll state, plural counts and identical capture/canvas geometry.
+Changed-file lint and formatting pass. Source/key/interpolation/plural checks pass with 7,688
+messages / 6,127 references. Browser cross-tab Ukrainian → English → Ukrainian preserves an
+unapplied JSON edit, cursor, selected Expert difficulty and the saved checkpoint while updating
+both difficulty labels and the capture explanation. The temporary JSON text was restored.
+This Studio increment postdates the verified distribution; its next full build is still due.
+Other Studio dynamic authoring text and wider migration/test work remain incomplete.
+
+The offline retry succeeded: all 1,007 files verified with no missing or corrupt entries.
+With the localhost server stopped, reloading reaches the Ukrainian v0.114.0 main menu and
+switching English → Ukrainian still works from the cached catalog. Time remains at 0:00.
+The uncached optional Journey picture correctly produces its translated paused/retry notice;
+this checks core offline startup/localization, not availability of optional original artwork.
