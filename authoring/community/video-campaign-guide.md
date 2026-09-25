@@ -20,5 +20,7 @@ campaign.
 
 The media review controller produces a `revealline-creator-media-intake.v1` prepared result and a
 strict `revealline-creator-media-dependencies.v1` closure. Campaign assembly must store those exact
-manifest and asset bytes before the main creator page exposes video approval. Physical trimming and
-format conversion remain separate future operations.
+manifest and asset bytes before the main creator page exposes video approval. The optional
+[media editor](media-editor-guide.md) remains a separate local preparation step: trim, conversion,
+resize or compression produces a verified MP4 that the creator must deliberately select as the
+campaign input. A playback range alone still retains the complete original bytes.

@@ -52,6 +52,7 @@ label {
 }
 button,
 input,
+select,
 a,
 summary {
   font: inherit;
@@ -80,7 +81,8 @@ a:hover {
   outline: 3px solid #ffb7de;
   outline-offset: 4px;
 }
-input {
+input,
+select {
   width: 100%;
   min-height: 48px;
   border: 2px solid #50647d;
@@ -122,7 +124,8 @@ input::file-selector-button {
   margin: 0;
 }
 button:disabled,
-input:disabled {
+input:disabled,
+select:disabled {
   opacity: 0.5;
   cursor: default;
 }
@@ -138,6 +141,7 @@ input:disabled {
 #video-poster-metadata,
 #video-poster-evidence,
 #video-poster-playback-evidence,
+#video-poster-transform-plan,
 #video-poster-trim-support,
 #video-poster-trim-evidence {
   white-space: pre-wrap;
