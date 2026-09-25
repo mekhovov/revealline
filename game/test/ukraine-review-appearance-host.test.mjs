@@ -28,3 +28,17 @@ test('Ukrainian review controls and fixed comparison canvases keep their contrac
   assert.match(variants, /select,\s*button\s*{[^}]*min-height:\s*44px/s);
   assert.match(variants, /canvas\s*{[^}]*width:\s*780px;[^}]*height:\s*215px/s);
 });
+
+test('Ukrainian role reviews load the shared locale runtime and bind dynamic copy', async () => {
+  for (const [name, path] of pages) {
+    const html = await readFile(new URL(path, import.meta.url), 'utf8');
+    assert.match(html, /vendor\/i18next-26\.4\.2\.min\.js/, name);
+    assert.match(html, /game\/i18n\/catalogs\.mjs/, name);
+    assert.match(html, /game\/i18n\/bootstrap\.mjs/, name);
+    assert.match(html, /data-language-control/, name);
+    assert.match(html, /data-i18n=/, name);
+    assert.match(html, /localizedText/, name);
+    assert.match(html, /localizedAttribute/, name);
+    assert.doesNotMatch(html, /\.textContent\s*=\s*(?:'|"|`)/, name);
+  }
+});
