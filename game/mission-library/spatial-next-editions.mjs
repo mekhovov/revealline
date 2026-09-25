@@ -14,6 +14,66 @@ const REVISED_MISSIONS = new Set(['stepping-stones', 'return-pocket', 'neutral-g
 const ACTIVE_ROUTE_ID = 'whole-spatial-v10';
 const PRIOR_ROUTE_ID = 'whole-spatial-v9';
 
+/** Bound the display projection before compilation. compileContentProject
+ * resolves every mission/preset/mode it receives, so filtering only after an
+ * execution catalog is built would make three historical cards pay for the
+ * complete 91-mission edition twice. The full v9 route remains the launch
+ * authority; this projection owns card/details qualification only. */
+export function spatialNextPriorEditionProjection(source) {
+  required(
+    source &&
+      ['maps', 'missions', 'campaigns', 'packs', 'assets'].every((key) =>
+        Array.isArray(source[key]),
+      ),
+    'Spatial edition needs a complete prior source.',
+  );
+  const missions = source.missions.filter((mission) => REVISED_MISSIONS.has(mission.id));
+  required(
+    missions.length === REVISED_MISSIONS.size &&
+      new Set(missions.map((mission) => mission.id)).size === REVISED_MISSIONS.size,
+    'Spatial edition must project each prior mission exactly once.',
+  );
+  const mapKeys = new Set(missions.map((mission) => JSON.stringify(mission.map)));
+  const maps = source.maps.filter((map) =>
+    mapKeys.has(JSON.stringify({ id: map.id, revision: map.revision })),
+  );
+  required(maps.length === mapKeys.size, 'Spatial edition map projection is incomplete.');
+
+  const campaigns = source.campaigns.flatMap((campaign) => {
+    const missionIds = campaign.missionIds.filter((id) => REVISED_MISSIONS.has(id));
+    return missionIds.length ? [{ ...campaign, missionIds }] : [];
+  });
+  for (const mission of missions)
+    required(
+      campaigns.filter((campaign) => campaign.missionIds.includes(mission.id)).length === 1,
+      'Spatial edition mission needs one prior campaign owner.',
+    );
+  const campaignIds = new Set(campaigns.map((campaign) => campaign.id));
+  const packs = source.packs.flatMap((pack) => {
+    const owned = pack.campaignIds.filter((id) => campaignIds.has(id));
+    return owned.length ? [{ ...pack, campaignIds: owned }] : [];
+  });
+  for (const campaign of campaigns)
+    required(
+      packs.filter((pack) => pack.campaignIds.includes(campaign.id)).length === 1,
+      'Spatial edition campaign needs one prior pack owner.',
+    );
+
+  const assetIds = new Set(
+    missions.map((mission) => mission.presentation.backgroundAssetId).filter((id) => id !== null),
+  );
+  const assets = source.assets.filter((asset) => assetIds.has(asset.id));
+  required(assets.length === assetIds.size, 'Spatial edition asset projection is incomplete.');
+  return {
+    ...source,
+    maps,
+    missions,
+    campaigns,
+    packs,
+    assets,
+  };
+}
+
 /** Add only the three prior v9 mission cards beside the active v10 Journey.
  * They remain manual launches into the complete v9 route; this three-card view
  * never becomes an automatic Next sequence or cross-edition progress owner. */
@@ -48,7 +108,7 @@ export async function createSpatialNextEditionSources({
     'Spatial editions need valid, unique candidate themes.',
   );
   const themeIds = new Set(themes.map((theme) => theme.id));
-  const project = compileContentProject(route.source);
+  const project = compileContentProject(spatialNextPriorEditionProjection(route.source));
   let disposed = false;
   const qualified = ['solo', 'versus'].map((mode) => {
     const executions = createContentExecutionCatalog(project, { mode });

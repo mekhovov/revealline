@@ -218,9 +218,7 @@ async function host(t, mode, { fetchResponse, defaultEntry = false } = {}) {
   }
   const opener = p.$(
     mode === 'solo'
-      ? defaultEntry
-        ? 'shell-catalogue'
-        : 'shell-play'
+      ? 'shell-play'
       : mode === 'versus'
         ? 'race-library-switch'
         : 'coop-discovery-open',
@@ -400,7 +398,7 @@ for (const mode of ['solo', 'versus', 'team'])
     assert.deepEqual(snapshot(), before, 'Browsing must not start or advance a mission.');
     pulse(1);
     assert.equal(p.$('journey-chooser').open, false);
-    assert.equal(p.doc.activeElement, opener, 'East returns to the exact All missions opener.');
+    assert.equal(p.doc.activeElement, opener, 'East returns to the exact Missions opener.');
     for (let index = 0; index < 6; index++) frame();
     assert.deepEqual(snapshot(), before, 'Controller confirm/back input must not leak into play.');
     if (mode === 'team') {

@@ -1,13 +1,17 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
-import { createSpatialNextEditionSources } from '../mission-library/spatial-next-editions.mjs';
+import {
+  createSpatialNextEditionSources,
+  spatialNextPriorEditionProjection,
+} from '../mission-library/spatial-next-editions.mjs';
 import { createMissionLibrary } from '../mission-library/library.mjs';
 import { journeyLibrarySource } from '../mission-library/journey-source.mjs';
 import { librarySuccessor } from '../mission-library/continuous-next.mjs';
 import { missionLibraryHref, readMissionLibraryHandoff } from '../mission-library/handoff.mjs';
 import { createCandidateVersusHost } from '../content-design/versus-host.mjs';
 import { loadAuthoredJourneyRoute } from '../content-design/route-loader.mjs';
+import { compileContentProject, resolveMission } from '../content-design/project.mjs';
 import { journeyActorThemeCandidates } from '../presentation/journey-actor-materials.mjs';
 import { authoredJourneyMissionTags } from '../mission-library/journey-presentation.mjs';
 
@@ -17,8 +21,38 @@ const originalThemes = JSON.parse(
 const revised = ['stepping-stones', 'return-pocket', 'neutral-ground'];
 const sourceId = (row) => row.runtimeId.split('/').at(-1);
 
+test('prior-edition qualification is bounded to the three preserved mission owners', async () => {
+  const route = await loadAuthoredJourneyRoute('whole-spatial-v9');
+  const projected = spatialNextPriorEditionProjection(route.source);
+  assert.deepEqual(projected.missions.map((mission) => mission.id).toSorted(), revised.toSorted());
+  assert.equal(projected.maps.length, 3);
+  assert.equal(projected.campaigns.length, 3);
+  assert.equal(projected.packs.length, 3);
+  assert.equal(projected.assets.length, 3);
+  assert.equal(projected.campaigns.flatMap((campaign) => campaign.missionIds).length, 3);
+  assert.equal(projected.packs.flatMap((pack) => pack.campaignIds).length, 3);
+});
+
+test('bounded prior projection preserves exact v9 manifests across modes and presets', async () => {
+  const route = await loadAuthoredJourneyRoute('whole-spatial-v9');
+  const full = compileContentProject(route.source);
+  const projected = compileContentProject(spatialNextPriorEditionProjection(route.source));
+  for (const id of revised)
+    for (const mode of ['solo', 'versus'])
+      for (const difficulty of ['gentle', 'standard', 'expert']) {
+        const expected = resolveMission(full, id, { mode, difficulty });
+        const actual = resolveMission(projected, id, { mode, difficulty });
+        assert.equal(actual.simulationIdentity, expected.simulationIdentity);
+        assert.deepEqual(actual.level, expected.level);
+        assert.deepEqual(actual.presentation, expected.presentation);
+        assert.deepEqual(actual.background, expected.background);
+        assert.deepEqual(actual.design, expected.design);
+      }
+});
+
 test('v10 selector exposes exactly three separately qualified v9 cards in Solo and Versus', async (t) => {
   const launches = [];
+  const started = performance.now();
   const owner = await createSpatialNextEditionSources({
     activeRouteId: 'whole-spatial-v10',
     originalThemes,
@@ -27,6 +61,10 @@ test('v10 selector exposes exactly three separately qualified v9 cards in Solo a
       return true;
     },
   });
+  assert(
+    performance.now() - started < 2500,
+    'Three prior cards must not compile the complete 91-mission edition at selector startup.',
+  );
   t.after(owner.dispose);
   const library = createMissionLibrary(owner.sources);
   assert.equal(library.missions.length, 3);
