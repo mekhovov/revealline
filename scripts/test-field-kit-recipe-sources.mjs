@@ -36,6 +36,7 @@ test('every declared helper invalidates all sharing groups and leaves nonconsume
     ['authoring/motion-lab/render-character.mjs', ['motion', 'team']],
     ['game/ui/classic-view.mjs', ['effects', 'team']],
     ['game/couch/coop-view.mjs', ['team']],
+    ['game/soundtrack-bundled.mjs', ['audio']],
     ['game/soundtrack-portable.mjs', ['audio']],
     ['game/content/soundtrack-catalogue.mjs', ['audio']],
     ['game/online-soundtrack-catalogue.mjs', ['audio']],
