@@ -1,0 +1,79 @@
+{
+  "format": "revealline-archive-public-acceptance.v1",
+  "archive": {
+    "id": "archive-80",
+    "repository": "mekhovov/revealline-archive-80",
+    "url": "https://mekhovov.github.io/revealline-archive-80/"
+  },
+  "preservedRelease": {
+    "version": "v0.113.1",
+    "sourceRevision": "7c6f84a473b3d2dca8f745c9a3bcc2745437f458",
+    "sourceTree": "289b27033863bea1399df03eeb0f02c7ebb3bf01",
+    "tagObject": "2398d0365ed0135e9626219e77332df64940b7fa",
+    "releaseId": 396455342,
+    "distributionSha256": "069ed3088d123cd42e5e9c46ccc7d75fb1a8f7ebec0e932e1d66a46ba4afa78c"
+  },
+  "archiveSource": {
+    "pr": 1,
+    "head": "473f60c6b284d1a3f39d202184b67debe0df9f92",
+    "mergeCommit": "224002dd166475e25d8b7b23927dc8a6554d43be",
+    "mergeTree": "8cd0a27e09e63a58d9fdb7dbc6a534303f048cae",
+    "review": "SAFE",
+    "reviewedExactHead": "473f60c6b284d1a3f39d202184b67debe0df9f92"
+  },
+  "hosted": {
+    "exactHeadPrRun": 36123196791,
+    "exactMainRun": 36123279076,
+    "buildJob": 108033523261,
+    "deployJob": 108033681381,
+    "receiptsArtifact": {
+      "id": 10857794321,
+      "name": "archive80-verification-receipts",
+      "size_in_bytes": 60761,
+      "digest": "sha256:4acfd47016a3d44caaf1293fb7330007d108ba5a6ab66082b6d80f024c0eb2be"
+    },
+    "pagesArtifact": {
+      "id": 10857594390,
+      "name": "github-pages",
+      "size_in_bytes": 534700099,
+      "digest": "sha256:2e04dc31f89f0e71930ef483120c276e09761b6208ade1ccda81a2305d7c626a"
+    },
+    "deployment": {
+      "id": 6658568593,
+      "statusId": 18829404348,
+      "state": "success",
+      "environmentUrl": "https://mekhovov.github.io/revealline-archive-80/",
+      "createdAt": "2026-09-25T10:19:13Z"
+    },
+    "receipts": {
+      "expectedInventorySha256": "3dfeff9e2365cc71cb928965aeda4fc67844f3c30eb8a77ed0f441af7c5a1a3c",
+      "receiptSha256": "f181552f39bea9d45a93f8add912e2fac41c73cea4f3a5e5dfb7445ea58c6568",
+      "zipReceiptSha256": "a25522c0b7ab0c8b0343c688d515c5571da8d6d106e2cecffbd00c0b5f27809e",
+      "files": 1148,
+      "bytes": 595654918,
+      "toolingCommit": "b13089b702391c275f2505d1a76c87eebb9dcce0",
+      "status": "PASS"
+    }
+  },
+  "publicByteAudit": {
+    "status": "PASS",
+    "method": "GET every finite expected path; compare exact byte count and SHA-256 without retaining bodies",
+    "files": 1148,
+    "bytes": 595654918,
+    "failures": 0,
+    "transportRetries": 0,
+    "verifiedAt": "2026-09-25T10:24:15.381980Z"
+  },
+  "browserAcceptance": {
+    "status": "PASS",
+    "surface": "Codex in-app browser",
+    "base": "https://mekhovov.github.io/revealline-archive-80/releases/v0.113.1/site/game/",
+    "observations": [
+      "The archive opened the preserved v0.113.1 title with 91 missions and focused Continue.",
+      "Keyboard Return launched the saved Prologue flight; the game exposed the authored 30% target and three lives.",
+      "Escape opened PAUSED with focus on Resume, and Return explicitly resumed the same mission."
+    ],
+    "scope": "Fresh keyboard browser navigation admission only; does not claim physical touch/controller devices, comprehensive offline use, all modes, or mission balance."
+  },
+  "accepted": true
+}
