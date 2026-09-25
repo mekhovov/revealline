@@ -6,6 +6,7 @@ import {
 } from './ui/gameplay-copy.mjs';
 import { contentText } from './i18n/content.mjs';
 import { flightPictureFailure, flightPictureStatus } from './ui/flight-picture-copy.mjs';
+import { profileWriterMessage } from './ui/profile-writer-copy.mjs';
 import {
   t,
   localizedText,
@@ -668,7 +669,7 @@ try {
       });
     },
   });
-  let packWarning = scenario ? '' : writer.reason || '';
+  let packWarning = !scenario && writer.reason ? () => profileWriterMessage(writer) : '';
   if (persistenceReady) {
     try {
       const chapters = await inspectChapters();
@@ -683,7 +684,7 @@ try {
       if (result.warning) packWarning = result.warning;
     } catch (e) {
       persistenceReady = false;
-      packWarning = t('gameplay:storageRecovery', { value1: e.message });
+      packWarning = () => t('gameplay:storageRecovery', { value1: e.message });
     }
   }
 
@@ -814,7 +815,9 @@ try {
     progress = progressFor(library, campaign);
   }
   if (loaded.warning || packWarning) {
-    localizedText($('save-warning'), () => [loaded.warning, packWarning].filter(Boolean).join(' '));
+    localizedText($('save-warning'), () =>
+      [loaded.warning, packWarning].map(renderMessage).filter(Boolean).join(' '),
+    );
     show('save-warning', true);
   }
   const initialSelection = candidateHost
@@ -4726,9 +4729,12 @@ try {
             })
           : {
               ok: false,
-              warning:
-                writer.reason ||
-                t('interface:storageRecoveryMustFinishBeforeSavingExportYourSessionBefore'),
+              get warning() {
+                return (
+                  profileWriterMessage(writer) ||
+                  t('interface:storageRecoveryMustFinishBeforeSavingExportYourSessionBefore')
+                );
+              },
             };
     } catch {
       saved = { ok: false, warning: t('interface:storageIsUnavailableExportYourPlayerLibrary') };
@@ -5390,7 +5396,9 @@ try {
   function assertWriter() {
     if (courseSession) throw new Error(t('interface:trainingDoesNotWriteCampaignData'));
     if (!persistenceReady || !writer.writable)
-      throw new Error(writer.reason || t('interface:storageRecoveryMustFinishBeforeSaving'));
+      throw new Error(
+        profileWriterMessage(writer) || t('interface:storageRecoveryMustFinishBeforeSaving'),
+      );
     if (localStorage.getItem(`${libraryKey}.backup-lock`) !== null)
       throw new Error(t('interface:aBackupIsBeingRestoredSavingResumesWhenItFinishes'));
   }
@@ -6154,7 +6162,7 @@ try {
         let committed = false;
         try {
           refreshContentSelectors();
-          if (!writer.writable) throw new Error(writer.reason);
+          if (!writer.writable) throw new Error(profileWriterMessage(writer));
           if (!persistenceReady) {
             const recovered = await recoverBackupImport(backupAdapters());
             if (!recovered.ok) throw new Error(recovered.warning);
