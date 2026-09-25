@@ -230,3 +230,32 @@ for (const prefix of ['race', 'coop']) {
     assert.equal(f.host.session.snapshot().transportChoice, 'play');
   });
 }
+
+test('language changes preserve the remembered music session, volume focus and library writes', async (context) => {
+  const { getLocale, setLocale } = await import('../i18n/index.mjs');
+  const locale = getLocale();
+  context.after(() => setLocale(locale, { persist: false }));
+  setLocale('en', { persist: false });
+  const f = await setup(context, { prefix: 'race' });
+  const volume = f.doc.getElementById('race-music-volume');
+  volume.focus();
+  volume.value = '0.37';
+  const session = f.host.session.snapshot();
+  const playback = f.host.player.snapshot();
+  const writes = f.memory.allPuts.length;
+  const plays = f.audio.media.plays;
+  const title = f.doc.getElementById('race-music-title');
+  const button = f.doc.getElementById('race-music-play');
+  setLocale('uk', { persist: false });
+  assert.equal(title.textContent, 'Музика');
+  assert.notEqual(button.textContent, 'Play music');
+  assert.equal(volume.value, '0.37');
+  assert.equal(f.doc.activeElement, volume);
+  assert.deepEqual(f.host.session.snapshot(), session);
+  assert.deepEqual(f.host.player.snapshot(), playback);
+  assert.equal(f.memory.allPuts.length, writes);
+  assert.equal(f.audio.media.plays, plays);
+  setLocale('en', { persist: false });
+  assert.equal(title.textContent, 'Music');
+  assert.equal(f.doc.activeElement, volume);
+});
