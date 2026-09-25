@@ -523,7 +523,8 @@ body.unified-missions #race-library-switch {
   .race-shell {
     padding-inline: max(16px, env(safe-area-inset-left)) max(16px, env(safe-area-inset-right));
   }
-  .race-fields {
+  .race-fields,
+  .race-optional-setup > .race-fields {
     grid-template-columns: 1fr;
     gap: 14px;
   }

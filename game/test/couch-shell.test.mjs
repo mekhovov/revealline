@@ -115,9 +115,14 @@ test('lobby, setup and children use reachable native controls and Back restores 
   assert.equal(currentMode.getAttribute('tabindex'), null);
   assert.equal(currentMode.getAttribute('href'), null);
   assert.equal(f.doc.activeElement.id, 'race-start');
-  assert.equal(f.$('race-optional-setup').open, false);
-  assert.equal(f.$('race-journey-difficulty').closest('details'), f.$('race-optional-setup'));
-  press(f, 'Tab', f.doc.activeElement, { shiftKey: true });
+  // Optional tuning stays out of the quick-start path while the disclosure is
+  // closed. Mode links and Start retain a short native Tab order.
+  for (const id of ['race-coop', 'race-solo-return']) {
+    press(f, 'Tab', f.doc.activeElement, { shiftKey: true });
+    assert.equal(f.doc.activeElement.id, id);
+  }
+  assert.equal(f.doc.activeElement.getAttribute('href'), '../?journey=legacy');
+  press(f, 'Tab');
   assert.equal(f.doc.activeElement.id, 'race-coop');
   assert.equal(
     f.doc.activeElement.getAttribute('href'),
@@ -131,9 +136,17 @@ test('lobby, setup and children use reachable native controls and Back restores 
   assert.equal(f.doc.activeElement.id, 'race-optional-setup-toggle');
   f.doc.activeElement.click();
   assert.equal(f.$('race-optional-setup').open, true);
-  for (let steps = 0; f.doc.activeElement.id !== 'race-focus' && steps < 8; steps++)
+  for (const id of [
+    'race-actor-style',
+    'race-journey-difficulty',
+    'race-journey-preferences-retry',
+    'race-journey-preferences-export',
+    'race-focus',
+  ]) {
     press(f, 'Tab');
-  assert.equal(f.doc.activeElement.id, 'race-focus', 'Advanced setup remains keyboard reachable.');
+    assert.equal(f.doc.activeElement.id, id);
+  }
+  assert.equal(f.doc.activeElement.id, 'race-focus');
   f.doc.activeElement.click();
   assert.equal(f.doc.activeElement.id, 'race-level');
   assert.equal(f.$('race-main').inert, true);
@@ -201,8 +214,6 @@ test('pause children and cancelled new match preserve two different continuation
   f.frame();
   const held = f.checkpoint(),
     oldRuns = [...f.renders];
-  f.$('race-optional-setup').open = true;
-  f.$('race-optional-setup').setAttribute('open', '');
   assert.equal(
     f
       .$('race-main')
@@ -223,21 +234,17 @@ test('pause children and cancelled new match preserve two different continuation
   assert.ok(f.renders[0].player.x > oldRuns[0].level.spawn.x);
   assert.ok(f.renders[1].player.x < oldRuns[1].level.spawn.x);
   f.$('race-pause').click();
-  f.$('race-optional-setup').open = true;
-  f.$('race-optional-setup').setAttribute('open', '');
   f.$('race-focus').click();
   assert.equal(f.$('race-confirm').hidden, false);
   f.$('race-confirm-reset').click();
+  f.frame();
   await waitFor(
     () => {
       f.frame(0);
       return f.state() === 'ready';
     },
-    {
-      message: 'New-match preparation did not publish its ready replacement.',
-    },
+    { message: 'The explicit new-match replacement did not finish staging.' },
   );
-  f.frame(0);
   assert.equal(f.state(), 'ready');
   assert.notEqual(f.renders[0], oldRuns[0]);
   assert.equal(f.$('race-setup').hidden, false);
