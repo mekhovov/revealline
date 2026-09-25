@@ -14,6 +14,16 @@ const resources = Object.fromEntries(
     ]),
   ),
 );
+const toolResources = Object.fromEntries(
+  await Promise.all(
+    ['en', 'uk'].map(async (locale) => [
+      locale,
+      JSON.parse(
+        await fs.readFile(new URL(`../game/locales/${locale}/tools.json`, import.meta.url)),
+      ),
+    ]),
+  ),
+);
 const assets = [
   'game/vendor/i18next-26.4.2.min.js',
   'game/i18n/catalogs.mjs',
@@ -98,4 +108,64 @@ test('historical distributions without localization never request missing new ru
     assert.doesNotMatch(source, /src="[^\"]*(?:i18n|i18next)/);
     assert.doesNotMatch(source, /data-language-control/);
   }
+});
+
+test('maintained sprite review pages localize static and generated presentation text', async () => {
+  const pages = [
+    {
+      file: '../authoring/library/fpv-enemy-presentations/index.html',
+      assetPrefix: '../../../game/',
+    },
+    {
+      file: '../game/assets/field-kit/sprites/review.html',
+      assetPrefix: '../../../',
+    },
+  ];
+  for (const { file, assetPrefix } of pages) {
+    const source = await fs.readFile(new URL(file, import.meta.url), 'utf8');
+    const nodes = descendants(parse(source));
+    assert.ok(
+      nodes.some((node) => attribute(node, 'data-language-control') !== undefined),
+      file,
+    );
+    for (const asset of [
+      'vendor/i18next-26.4.2.min.js',
+      'i18n/catalogs.mjs',
+      'i18n/bootstrap.mjs',
+      'i18n/style.css',
+    ])
+      assert.ok(source.includes(`"${assetPrefix}${asset}"`), `${file}: ${asset}`);
+    const keys = nodes.flatMap((node) =>
+      [
+        'data-i18n',
+        'data-i18n-alt',
+        'data-description-key',
+        'data-requirement-key',
+        'data-prompt-key',
+      ]
+        .map((name) => attribute(node, name))
+        .filter(Boolean),
+    );
+    assert.ok(keys.length > 10, `${file}: catalog coverage`);
+    for (const key of keys) {
+      if (key.startsWith('common:')) continue;
+      assert.match(key, /^tools:/, `${file}: ${key}`);
+      for (const locale of ['en', 'uk'])
+        assert.equal(
+          typeof toolResources[locale][key.slice('tools:'.length)],
+          'string',
+          `${locale}: ${key}`,
+        );
+    }
+  }
+  const generated = await fs.readFile(
+    new URL('../game/assets/field-kit/sprites/review.html', import.meta.url),
+    'utf8',
+  );
+  assert.match(generated, /onLocaleChange\(update\)/);
+  assert.match(generated, /localizedAttribute\(node,\s*['"]alt['"]/);
+  assert.doesNotMatch(generated, /textContent\s*=\s*['"](?:Prompt copied|Text selected)/);
+  const inlineScripts = [...generated.matchAll(/<script>([\s\S]*?)<\/script>/g)];
+  assert.ok(inlineScripts.length);
+  assert.doesNotThrow(() => new Function(inlineScripts.at(-1)[1]));
 });
