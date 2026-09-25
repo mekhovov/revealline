@@ -237,6 +237,10 @@ export function createMissionLibrary(sources = []) {
       const { owner, entry } = requireRow(row, mode);
       return owner.progress?.(entry, mode) ?? '';
     },
+    completion(row, mode) {
+      const { owner, entry } = requireRow(row, mode);
+      return owner.completion?.(entry, mode) ?? null;
+    },
     card(row, mode) {
       const { owner, entry } = requireRow(row, mode);
       return owner.card?.(entry, mode) ?? null;

@@ -3,6 +3,7 @@ import { mountPresentationPage } from '../presentation/page.mjs';
 import { createCouchShell } from './couch-shell.mjs';
 import { attachJourneyReactions } from '../ui/journey-reactions.mjs';
 import { attachJourneySaveCue } from '../ui/journey-save-cue.mjs';
+import { attachJourneyModePictures } from '../ui/journey-mode-pictures.mjs';
 import { createBoardFootprints } from './board-footprint.mjs';
 import { readVersusSoloReturnToken } from '../mode-return-v2.mjs';
 import { prepareCouchChapter } from './couch-chapter.mjs';
@@ -93,6 +94,7 @@ import { createCharacterPresentations } from '../character-presentations.mjs';
 import { emptyProgress, unlockedBodies } from '../progress.mjs';
 import { createOperationStatus } from '../ui/operation-status.mjs';
 import { foundationReturnCaption } from '../ui/foundation-feedback.mjs';
+import { isCandidatePictureFor } from '../content-design/picture.mjs';
 import { releaseExplorerHref } from '../release-explorer.mjs';
 const $ = (id) => document.getElementById(id);
 $('race-release-explorer').href = releaseExplorerHref(
@@ -240,7 +242,8 @@ let featured,
   music,
   boardFootprints,
   candidateJourney,
-  journeyPreferences;
+  journeyPreferences,
+  journeyPictures;
 // Read-only fallback for remote Journey cards when this host runs Classic rules.
 const browsingJourneyPreferences = createJourneyPreferences({ window });
 const gameplayTuning = createGameplayTuningController({ eventTarget: window });
@@ -268,6 +271,7 @@ const releaseArtwork = (event) => {
   installed?.dispose();
   staticPictures?.dispose();
   journeyPreferences?.dispose();
+  journeyPictures?.dispose();
   browsingJourneyPreferences.dispose();
   gameplayTuningPanel?.dispose();
   gameplayTuning.dispose();
@@ -419,6 +423,14 @@ try {
       },
     });
     await journeyProfile.load();
+    journeyPictures = attachJourneyModePictures({
+      document,
+      button: $('race-journey-pictures'),
+      mode: 'versus',
+      editionId: authoredRoute.id,
+      catalog: candidateJourney.catalog,
+      profile: journeyProfile,
+    });
     $('race-journey-controls').hidden = false;
   }
   const maps = candidateJourney
@@ -3214,6 +3226,7 @@ try {
     'race-journey-next',
     'race-journey-skip',
     'race-journey-find',
+    'race-journey-pictures',
     'race-journey-difficulty',
     'race-journey-preferences-retry',
     'race-journey-preferences-export',
@@ -3291,11 +3304,13 @@ try {
         ? $('race-library-stay')
         : music?.root()
           ? music.primary()
-          : $('journey-backup')?.open
-            ? $('journey-backup-export')
-            : $('journey-chooser')?.open
-              ? journeyChooser?.primary() || $('journey-search')
-              : shell.primary(),
+          : journeyPictures?.root()
+            ? journeyPictures.primary()
+            : $('journey-backup')?.open
+              ? $('journey-backup-export')
+              : $('journey-chooser')?.open
+                ? journeyChooser?.primary() || $('journey-search')
+                : shell.primary(),
     keyboard: true,
     nativeReadingScroll: true,
     ownsKeyboardEvent: (event) =>
@@ -3305,7 +3320,9 @@ try {
       (element.tagName === 'A' &&
         !!element.closest('#race-music-now-playing, #race-music-menu-now-playing')) ||
       menuIds.has(element.id) ||
-      !!element.closest('#journey-chooser, #journey-backup, #race-gameplay-tuning'),
+      !!element.closest(
+        '#journey-chooser, #journey-backup, #race-gameplay-tuning, [data-journey-mode-pictures]',
+      ),
     getControlLabels: () => ({
       directions: 'D-pad / left stick',
       confirm: 'South',
@@ -3318,21 +3335,25 @@ try {
         ? libraryDecision.finish(false)
         : music?.root()
           ? music.back()
-          : $('journey-backup')?.open
-            ? $('journey-backup-back').click()
-            : $('journey-chooser')?.open
-              ? journeyChooser.close()
-              : shell.back(),
+          : journeyPictures?.root()
+            ? journeyPictures.close()
+            : $('journey-backup')?.open
+              ? $('journey-backup-back').click()
+              : $('journey-chooser')?.open
+                ? journeyChooser.close()
+                : shell.back(),
     onMenu: () =>
       libraryDecision
         ? libraryDecision.finish(false)
         : music?.root()
           ? music.back()
-          : $('journey-backup')?.open
-            ? $('journey-backup-back').click()
-            : $('journey-chooser')?.open
-              ? journeyChooser.close()
-              : shell.back(),
+          : journeyPictures?.root()
+            ? journeyPictures.close()
+            : $('journey-backup')?.open
+              ? $('journey-backup-back').click()
+              : $('journey-chooser')?.open
+                ? journeyChooser.close()
+                : shell.back(),
     onHint: (message, context) => {
       if (
         context?.kind === 'reading' &&
@@ -3458,6 +3479,7 @@ try {
     actorLease = null;
     actorAppearance = null;
     journeyChooser?.destroy();
+    journeyPictures?.dispose();
     missionLibrary?.library.dispose();
     spatialEditionOwner?.dispose();
     libraryInstaller?.dispose();
@@ -3552,23 +3574,59 @@ try {
       finished = true;
       clear();
       if (match.winner !== null) won[match.winner]++;
+      let journeyRewardFailure = null;
       if (
         candidateJourney &&
         !roundRecipe.tuning.adminOverride &&
         match.runs.some((run) => run.status === 'won')
-      )
-        journeyProfile.record({
-          type: 'complete',
-          mode: 'versus',
-          missionId: roundRecipe.entry.mission.id,
-          runId: `${journeySessionId}:${generation}`,
-          difficulty: roundRecipe.entry.difficulty,
-          gameplayId: dataIdentity({
+      ) {
+        const runId = `${journeySessionId}:${generation}`,
+          gameplayId = dataIdentity({
             ruleset: match.ruleset,
             level: roundRecipe.runtimeLevel,
             classes: roundRecipe.entry.classes,
           }),
-        });
+          acceptedPicture =
+            backdrop && isCandidatePictureFor(roundRecipe.entry.asset, backdrop) ? backdrop : null,
+          completion = {
+            type: 'complete',
+            mode: 'versus',
+            missionId: roundRecipe.entry.mission.id,
+            runId,
+            difficulty: roundRecipe.entry.difficulty,
+            gameplayId,
+            ...(acceptedPicture
+              ? {
+                  picture: {
+                    mode: 'versus',
+                    editionId: authoredRoute.id,
+                    missionId: roundRecipe.entry.mission.id,
+                    campaignKey: roundRecipe.entry.musicCampaignKey,
+                    levelId: roundRecipe.entry.level.id,
+                    levelRevision: String(roundRecipe.entry.level.revision),
+                    runId,
+                    gameplayId,
+                    difficulty: roundRecipe.entry.difficulty,
+                    name: roundRecipe.entry.mission.name,
+                    campaignTitle: roundRecipe.entry.mission.campaignTitle,
+                    themeId: roundRecipe.theme.id,
+                    asset: acceptedPicture.assetRevision,
+                  },
+                }
+              : {}),
+          };
+        try {
+          journeyProfile.record(completion);
+        } catch (error) {
+          const { picture: _picture, ...receipt } = completion;
+          try {
+            journeyProfile.record(receipt);
+          } catch {
+            /* Existing stored progress stays intact. */
+          }
+          journeyRewardFailure = `Race complete. Its original could not be retained: ${error.message}`;
+        }
+      }
       const name =
         match.winner === 0 ? 'Sunflower' : match.winner === 1 ? 'Skyline' : 'Both players';
       const series = roundRecipe.format === 'first-to-two';
@@ -3580,6 +3638,7 @@ try {
             ? ' Continue with Next round, or Browse missions.'
             : ` ${candidateJourney.isCore(roundRecipe.entry.mission.id) ? 'End of the main Journey.' : 'End of this optional sequence.'} Browse missions or Rematch whenever you like.`
           : ' Choose Next mission to continue, or keep playing this mission.';
+      if (journeyRewardFailure) $('race-message').textContent += ` ${journeyRewardFailure}`;
       $('race-start').textContent = `${continuationAction()}: ${roundRecipe.entry.level.name}`;
       painters.forEach((p, i) => {
         if (match.runs[i].status === 'won')
