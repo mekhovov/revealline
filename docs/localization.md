@@ -98,7 +98,7 @@ practice teardown storage-listener assertion. The First Flight
 handoff timeout is intermittent here and remains unresolved; do not dismiss it as a
 baseline failure.
 
-At this checkpoint, catalog validation covers **7,191 messages** in both languages.
+At this checkpoint, catalog validation covers **7,215 messages** in both languages.
 The current interface, content, and tools catalogs are fully translated. This is not full
 coverage: the source audit still finds dynamic messages, Classic library metadata, tool
 JavaScript, and user-facing errors outside the catalogs. Do not declare completion from
@@ -284,3 +284,33 @@ storage calls, unchanged draft bytes and retained diagnostic rows. A source-brow
 confirms English → Ukrainian → English storage status in the same Settings category,
 with focus retained. Extraction reports no missing registered content. This does not
 resolve the uncatalogued source audit or the unclassified full-suite failures.
+
+## Classic presentation checkpoint
+
+Classic mission-library adapters now translate the original verified index records while
+retaining separate canonical Current/Original-rule owners. Names, campaign titles, edition
+labels and numeric rule summaries resolve at presentation time; modified metadata keeps
+its authored text. Lives and enemy counts use shared Ukrainian plural forms. Download
+size labels use locale formatting; accepted completion, cancellation and launch messages
+retain live producers. Catalog coverage is 7,215 messages / 5,798 referenced keys.
+
+The generated catalog now shares sorted message prefixes and repeated values, preserving
+complete source sentences and synchronous initialization without another runtime dependency.
+Round-trip tests compare all namespaces and include missing values, Unicode, escapes and
+plural forms. The current bundle is about 66 KiB smaller despite the new Classic messages.
+
+The focused Classic/picker/catalog suite passes 85 tests. Validation, lint and formatting
+pass. The broader host/pages run finishes with 36 passes and 14 failures. All 14 reproduce
+with identical errors and assertions on main `0395ddbda`: stale mission-count/default-route
+expectations, the late Base First Flight handoff and the bundled Versus retry timeout.
+Do not treat this as a clean test run or generalize it to unclassified full-suite failures. Browser
+cross-tab switching updates an open Classic card in both directions while retaining search
+text and focused input. A 375-pixel Large-text check finds the search field squeezed to
+33 pixels by its translated adjacent controls; fix this before closing the checkpoint.
+The session-only display-preference notice also remains English and needs a live binding.
+
+The Classic web build passes with 1167 files / 598928762 bytes. Its archive
+SHA-256 is `624c9ef9d598d73926a4410bdf34e24004c8269bcfcdf3e5c5377fc3c43fdf17`.
+The offline inventory has 998 files / 67046281 bytes, leaving 62583
+bytes under the unchanged limit. Native figures above predate the Classic adapters and
+need refreshing after the remaining browser fixes.
