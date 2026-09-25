@@ -415,15 +415,7 @@ export function resolveSoundtrackSelection(value, context = {}, { catalogue } = 
     scope = copy(context);
   exactKeys(
     scope,
-    [
-      'mapKey',
-      'campaignKey',
-      'themeId',
-      'scene',
-      'energy',
-      'installedTrackIds',
-      'bundledTrackIds',
-    ],
+    ['mapKey', 'campaignKey', 'themeId', 'scene', 'energy', 'installedTrackIds', 'bundledTrackIds'],
     'soundtrack context',
   );
   for (const key of ['mapKey', 'campaignKey', 'themeId'])
