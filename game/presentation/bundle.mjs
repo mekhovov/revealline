@@ -2,7 +2,12 @@ import { boundedJSON, canonicalJSON, exactKeys, required } from '../data-json.mj
 import { inspectImageDataUrl } from '../content.mjs';
 import { browserDecodeImage } from '../imports.mjs';
 import { LIMITS, validateThemeBundle } from './model.mjs';
-import { encodePresentationDocument, decodePresentationDocument } from './document-codec.mjs';
+import {
+  encodePresentationDocument,
+  decodePresentationDocument,
+  ownLegacyPresentationDocument,
+  PRESENTATION_METADATA_LIMITS,
+} from './document-codec.mjs';
 
 const MAGIC_V1 = new TextEncoder().encode('RLTHM1\r\n');
 const MAGIC_V2 = new TextEncoder().encode('RLTHM2\r\n');
@@ -160,7 +165,14 @@ export async function exportThemeBundle(source, sourceAssets = new Map(), option
   const metadata = encodePresentationDocument(document);
   // Raw codec output also proves the legacy 2048-item array bound. A compact
   // document must never be emitted under an older header its reader cannot use.
-  const legacyCompatible = metadata === canonicalJSON(document);
+  let legacyCompatible = false;
+  try {
+    ownLegacyPresentationDocument(document);
+    legacyCompatible = metadata === canonicalJSON(document);
+  } catch (error) {
+    if (!(error instanceof TypeError)) throw error;
+    // A valid v3 document can exceed the frozen RLTHM1/2 logical contract.
+  }
   let magic = MAGIC_V3;
   let manifest = new TextEncoder().encode(metadata);
   if (legacyCompatible) {
@@ -222,13 +234,16 @@ export async function importThemeBundle(
     // use a larger, explicitly versioned encoded representation.
     const manifest = boundedJSON(metadata, {
       maxBytes: LIMITS.manifestBytes,
-      maxNodes: 110000,
+      maxNodes: PRESENTATION_METADATA_LIMITS.legacyEnvelopeNodes,
       maxArray: 2048,
       maxDepth: 20,
       maxString: 8192,
     });
     exactKeys(manifest, compact ? ['document'] : ['document', 'assets'], 'theme transfer');
-    document = validateThemeBundle(manifest.document, { previous, expectedRevision });
+    document = validateThemeBundle(ownLegacyPresentationDocument(manifest.document), {
+      previous,
+      expectedRevision,
+    });
     table = compact ? payloadTable(document) : manifest.assets;
   }
   required(Array.isArray(table) && table.length <= LIMITS.assets, 'Invalid theme asset table.');
