@@ -1,5 +1,7 @@
 /** A browsing registry, never a gameplay catalogue or a progression sequence.
  * Only exact registered rows can reach their original owner's adapters. */
+import { t } from '../i18n/index.mjs';
+
 export const LIBRARY_COLLECTIONS = Object.freeze(['Journey', 'Classic', 'Custom']);
 export const LIBRARY_MODES = Object.freeze(['solo', 'versus', 'team']);
 export const LIBRARY_TAGS = Object.freeze([
@@ -14,7 +16,11 @@ export const LIBRARY_TAGS = Object.freeze([
 
 function text(value, label, maximum = 1024) {
   if (typeof value !== 'string' || !value.trim() || value.length > maximum)
-    throw new TypeError(`Mission library needs ${label}.`);
+    throw new TypeError(
+      t('errors:missionLibrary.needsField', {
+        field: t(`errors:missionLibrary.field.${label}`),
+      }),
+    );
   return value;
 }
 
@@ -22,20 +28,20 @@ function text(value, label, maximum = 1024) {
 // IDs containing slashes, colons or strings that happen to match edition names.
 export function libraryMissionId({ owner, edition, campaign, mission, revision = '' }) {
   return JSON.stringify([
-    text(owner, 'an owner'),
-    text(edition, 'an edition'),
-    text(campaign, 'a campaign'),
-    text(mission, 'a mission'),
+    text(owner, 'owner'),
+    text(edition, 'edition'),
+    text(campaign, 'campaign'),
+    text(mission, 'mission'),
     typeof revision === 'string' ? revision : String(revision),
   ]);
 }
 
 function readiness(value) {
   if (!value || !['ready', 'download', 'unavailable'].includes(value.state))
-    throw new TypeError('An owner must report explicit mission availability.');
+    throw new TypeError(t('errors:missionLibrary.availabilityRequired'));
   if (value.state === 'download' && (!Number.isSafeInteger(value.bytes) || value.bytes <= 0))
-    throw new TypeError('A downloadable mission needs its exact positive byte size.');
-  if (value.state === 'unavailable') text(value.reason, 'an unavailable reason');
+    throw new TypeError(t('errors:missionLibrary.downloadBytes'));
+  if (value.state === 'unavailable') text(value.reason, 'unavailableReason');
   return Object.freeze({
     state: value.state,
     ...(value.state === 'download' ? { bytes: value.bytes } : {}),
@@ -69,9 +75,9 @@ export function createMissionLibrary(sources = []) {
   function requireRow(row, mode) {
     const binding = authority.get(row);
     if (disposed || !binding || owners.get(binding.owner.id) !== binding.owner)
-      throw new Error('This mission selection is stale. Refresh the library and try again.');
+      throw new Error(t('errors:missionLibrary.staleSelection'));
     if (mode !== undefined && (!LIBRARY_MODES.includes(mode) || !row.modes.includes(mode)))
-      throw new Error('This mission does not support the selected mode.');
+      throw new Error(t('errors:missionLibrary.unsupportedMode'));
     return binding;
   }
   function rebuild() {
@@ -91,15 +97,15 @@ export function createMissionLibrary(sources = []) {
     }
   }
   function register(source) {
-    if (disposed) throw new Error('The mission library is closed.');
-    text(source.id, 'a source ID');
-    text(source.editionId, 'an edition ID');
-    text(source.edition, 'an edition name', 160);
+    if (disposed) throw new Error(t('errors:missionLibrary.closed'));
+    text(source.id, 'sourceId');
+    text(source.editionId, 'editionId');
+    text(source.edition, 'editionName', 160);
     if (
       source.automaticContinuation !== undefined &&
       typeof source.automaticContinuation !== 'boolean'
     )
-      throw new TypeError('Mission source automatic continuation must be a boolean.');
+      throw new TypeError(t('errors:missionLibrary.automaticContinuationBoolean'));
     if (
       !LIBRARY_COLLECTIONS.includes(source.collection) ||
       !Array.isArray(source.entries) ||
@@ -108,12 +114,12 @@ export function createMissionLibrary(sources = []) {
       typeof source.availability !== 'function' ||
       typeof source.launch !== 'function'
     )
-      throw new TypeError('A mission source needs collection, entries and owner adapters.');
+      throw new TypeError(t('errors:missionLibrary.sourceAdapters'));
     const owner = { ...source, rows: [] };
     const ids = new Set();
     for (const entry of source.entries) {
       const info = source.describe(entry);
-      text(info.campaignKey, 'a campaign identity');
+      text(info.campaignKey, 'campaignIdentity');
       const id = libraryMissionId({
         owner: source.id,
         edition: source.editionId,
@@ -121,7 +127,7 @@ export function createMissionLibrary(sources = []) {
         mission: info.id,
         revision: info.revision ?? '',
       });
-      if (ids.has(id)) throw new TypeError('A source contains a duplicate mission identity.');
+      if (ids.has(id)) throw new TypeError(t('errors:missionLibrary.duplicateIdentity'));
       ids.add(id);
       if (
         !Array.isArray(info.modes) ||
@@ -129,7 +135,7 @@ export function createMissionLibrary(sources = []) {
         new Set(info.modes).size !== info.modes.length ||
         info.modes.some((mode) => !LIBRARY_MODES.includes(mode))
       )
-        throw new TypeError('A mission needs validated supported modes.');
+        throw new TypeError(t('errors:missionLibrary.supportedModes'));
       const tags = [...new Set([source.collection, ...(info.tags ?? [])])];
       if (
         tags.some(
@@ -138,9 +144,9 @@ export function createMissionLibrary(sources = []) {
             (LIBRARY_COLLECTIONS.includes(tag) && tag !== source.collection),
         )
       )
-        throw new TypeError('A mission has an invalid or conflicting collection tag.');
+        throw new TypeError(t('errors:missionLibrary.collectionTag'));
       if (!Number.isInteger(info.levelIndex) || info.levelIndex < 0)
-        throw new TypeError('A mission needs its original authored position.');
+        throw new TypeError(t('errors:missionLibrary.authoredPosition'));
       const row = Object.freeze({
         id,
         runtimeId: info.id,
@@ -150,8 +156,8 @@ export function createMissionLibrary(sources = []) {
         collection: source.collection,
         automaticContinuation: source.automaticContinuation !== false,
         campaignKey: JSON.stringify([source.id, source.editionId, info.campaignKey]),
-        campaignTitle: text(info.campaignTitle, 'a campaign title', 160),
-        name: text(info.name, 'a mission name', 160),
+        campaignTitle: text(info.campaignTitle, 'campaignTitle', 160),
+        name: text(info.name, 'missionName', 160),
         levelIndex: info.levelIndex,
         modes: Object.freeze([...info.modes]),
         tags: Object.freeze(tags),
@@ -164,7 +170,7 @@ export function createMissionLibrary(sources = []) {
     const count = [...owners.values()]
       .filter((item) => item.id !== source.id)
       .reduce((sum, item) => sum + item.rows.length, owner.rows.length);
-    if (count > 4096) throw new TypeError('The mission library contains too many missions.');
+    if (count > 4096) throw new TypeError(t('errors:missionLibrary.tooManyMissions'));
     // Build the complete replacement before invalidating the accepted owner.
     const previous = owners.get(source.id);
     if (previous) cancelOwner(previous);
@@ -211,7 +217,8 @@ export function createMissionLibrary(sources = []) {
       return rows.find((row) => row.id === id) ?? null;
     },
     forMode(mode) {
-      if (!LIBRARY_MODES.includes(mode)) throw new TypeError('Unknown library mode.');
+      if (!LIBRARY_MODES.includes(mode))
+        throw new TypeError(t('errors:missionLibrary.unknownMode'));
       return rows.filter((row) => row.modes.includes(mode));
     },
     search(query = '', { mode = 'solo', collection = '', campaign = '', tag = '' } = {}) {
@@ -219,7 +226,7 @@ export function createMissionLibrary(sources = []) {
         !LIBRARY_MODES.includes(mode) ||
         (collection && !LIBRARY_COLLECTIONS.includes(collection))
       )
-        throw new TypeError('Unknown library filter.');
+        throw new TypeError(t('errors:missionLibrary.unknownFilter'));
       const words = String(query)
         .normalize('NFKC')
         .toLocaleLowerCase()
@@ -272,9 +279,9 @@ export function createMissionLibrary(sources = []) {
       const state = availability(row, mode);
       requireRow(row, mode); // Availability may reconcile an installed owner.
       if (state.state === 'ready') return state;
-      if (state.state === 'preparing') throw new Error('This mission is already preparing.');
+      if (state.state === 'preparing') throw new Error(t('errors:missionLibrary.alreadyPreparing'));
       if (typeof owner.prepare !== 'function' || (state.state === 'unavailable' && !state.retry))
-        throw new Error(state.reason || 'This mission cannot be prepared.');
+        throw new Error(state.reason || t('errors:missionLibrary.cannotPrepare'));
       if (signal?.aborted) return { state: 'cancelled' };
       const controller = new AbortController();
       const abort = () => controller.abort();
@@ -305,7 +312,9 @@ export function createMissionLibrary(sources = []) {
           failures,
           row,
           mode,
-          typeof error?.message === 'string' ? error.message : 'Preparation failed.',
+          typeof error?.message === 'string'
+            ? error.message
+            : t('errors:missionLibrary.preparationFailed'),
         );
         throw error;
       } finally {
@@ -321,14 +330,15 @@ export function createMissionLibrary(sources = []) {
     launch(row, { mode = 'solo', ...context } = {}) {
       const { owner, entry } = requireRow(row, mode);
       if (availability(row, mode).state !== 'ready')
-        throw new Error('Prepare this mission before choosing Play.');
+        throw new Error(t('errors:missionLibrary.prepareBeforePlay'));
       requireRow(row, mode);
       // The host still owns its runtime validation, departure guard and atomic
       // picture adoption. Never pass a lookup-by-name replacement for entry.
       return owner.launch(entry, { ...context, mode, libraryMissionId: row.id });
     },
     subscribe(listener) {
-      if (typeof listener !== 'function') throw new TypeError('A listener must be a function.');
+      if (typeof listener !== 'function')
+        throw new TypeError(t('errors:missionLibrary.listenerFunction'));
       listeners.add(listener);
       return () => listeners.delete(listener);
     },
