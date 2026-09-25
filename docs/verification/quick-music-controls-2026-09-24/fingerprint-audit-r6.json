@@ -1,0 +1,135 @@
+{
+  "format": "revealline-quick-music-fingerprint-audit.v2",
+  "checkedAt": "2026-09-25T04:11:27Z",
+  "acceptedBaseCommit": "c7990977f49d40e79873782a219e4d4dc47c8890",
+  "implementationCommit": "4d69452dd213c876b1134bd63931caa61ba24c2c",
+  "pullRequest": "https://github.com/mekhovov/revealline/pull/333",
+  "historicalAudit": "docs/verification/quick-music-controls-2026-09-24/fingerprint-audit-r5.json",
+  "decision": "Revision 5 exposed nine runtime inputs outside the Field Kit closure. Revision 6 binds every input to its actual UI, screen and audio consumers, appends a source-stage successor, and refuses inherited review evidence until the changed presentation is independently inspected.",
+  "production": {
+    "priorRevision": 77,
+    "currentRevision": 78,
+    "stage": "source",
+    "reviewedApprovalInherited": false,
+    "slots": 335,
+    "files": 140,
+    "assetBytes": 4009342,
+    "coverage": {
+      "missing": 0,
+      "source": 175,
+      "produced": 0,
+      "reviewed": 160
+    }
+  },
+  "groups": {
+    "ui": {
+      "sha256": "5751c6563166f7f6037e79c4b2e27a4a933f4f8dbac70c4a4aac68964844ec79",
+      "newInputs": [
+        "game/ui/quick-music-controls.mjs",
+        "game/ui/quick-music-controls.css",
+        "game/app.mjs",
+        "game/couch/couch-music-host.mjs",
+        "game/couch/couch.mjs",
+        "game/couch/relay-rescue.mjs",
+        "game/index.html",
+        "game/couch/index.html",
+        "game/couch/relay-rescue.html"
+      ]
+    },
+    "screens": {
+      "sha256": "4ea3022b565172e8c50ff248a1198a03f117c7a8d64c5ad2335fbe713de87c73",
+      "newInputs": [
+        "game/ui/quick-music-controls.mjs",
+        "game/ui/quick-music-controls.css",
+        "game/app.mjs",
+        "game/couch/couch-music-host.mjs",
+        "game/couch/couch.mjs",
+        "game/couch/relay-rescue.mjs",
+        "game/index.html",
+        "game/couch/index.html",
+        "game/couch/relay-rescue.html"
+      ]
+    },
+    "audio": {
+      "sha256": "a2d51da1238e8a30bd4a6a8083477121de2ba7420b67e79bd5806ce60315ce9f",
+      "newInputs": [
+        "game/ui/quick-music-controls.mjs",
+        "game/app.mjs",
+        "game/couch/couch-music-host.mjs",
+        "game/couch/couch.mjs",
+        "game/couch/relay-rescue.mjs"
+      ]
+    }
+  },
+  "sourceFiles": [
+    {
+      "path": "game/ui/quick-music-controls.mjs",
+      "bytes": 7835,
+      "sha256": "91e41346b0956a7ae20174dbf7b9bfe327c69f9f9347f5fb5e0f816fc1e71074"
+    },
+    {
+      "path": "game/ui/quick-music-controls.css",
+      "bytes": 713,
+      "sha256": "f55f65d8572c109483481023943fc98d219cf7c5b9002663ff835404312dffff"
+    },
+    {
+      "path": "game/app.mjs",
+      "bytes": 417127,
+      "sha256": "c4671086c1d2829a19a8c161ae91a5bb75970a6071548aad8a554284924c1f53"
+    },
+    {
+      "path": "game/couch/couch-music-host.mjs",
+      "bytes": 14384,
+      "sha256": "515b8f549f4cd65f2e7f48cc806fb5af027c91b0087085fe746345383729be7f"
+    },
+    {
+      "path": "game/couch/couch.mjs",
+      "bytes": 147020,
+      "sha256": "3c32a3480312658ce7e5005484b3ced273381a5644c41f50a22950ecf9e25c48"
+    },
+    {
+      "path": "game/couch/relay-rescue.mjs",
+      "bytes": 186698,
+      "sha256": "6972c0494dff054a3c56a8e90ca3f15ef418badab03f933a0d58c7cccea05ba4"
+    },
+    {
+      "path": "game/index.html",
+      "bytes": 82536,
+      "sha256": "f93ccfdba243b8efada71d62dea4b5d4efd6ea89e2d3fc14504cc27db8055c41"
+    },
+    {
+      "path": "game/couch/index.html",
+      "bytes": 26221,
+      "sha256": "08e8f9608711951b1b7d1020906ac3b7312b75aeae66503f9d5a9edd2c4dbe0c"
+    },
+    {
+      "path": "game/couch/relay-rescue.html",
+      "bytes": 30348,
+      "sha256": "d21454dbac38097cb71b9b8783b491a3feb24e19652a396ad4bc8ab7ada2734a"
+    }
+  ],
+  "verification": {
+    "recipeDependencyAndProductionHistory": {
+      "tests": 14,
+      "pass": 14,
+      "fail": 0,
+      "coverage": "Each new input changes exactly its declared consumer groups and each missing input is refused."
+    },
+    "quickControlsAndActualHosts": {
+      "tests": 40,
+      "pass": 40,
+      "fail": 0
+    },
+    "producerReproducibility": "pass",
+    "prettier": "pass",
+    "eslint": "pass",
+    "diffCheck": "pass"
+  },
+  "independentReview": "pending",
+  "remainingAcceptance": [
+    "Independent source and generated-evidence review at the final pull-request head.",
+    "Actual browser layout and focus checks for Solo, Versus and Team main/pause rows.",
+    "Physical keyboard, touch and controller checks.",
+    "Frozen artifact, offline and deployed public playback acceptance after version allocation."
+  ]
+}
