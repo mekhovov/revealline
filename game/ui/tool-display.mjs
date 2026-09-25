@@ -1,4 +1,4 @@
-import { t, localizedText } from '../i18n/index.mjs';
+import { t, localizedText, getLocale } from '../i18n/index.mjs';
 import { createDisplayPreferences } from '../display-preferences.mjs';
 import { applyFieldKitCopy, fieldKitCopy } from './field-kit-copy.mjs';
 
@@ -13,13 +13,10 @@ export function mountToolDisplay({
   applyFieldKitCopy(doc);
   const controls = [...doc.querySelectorAll('[data-tool-text-size]')];
   const notice = doc.getElementById('host-display-notice');
-  const ordinaryNotice = fieldKitCopy(
-    'display.sharedToolNotice',
-    doc.documentElement?.lang || 'en',
-  );
+  const ordinaryNotice = () => fieldKitCopy('display.sharedToolNotice', getLocale());
   // This live notice has one owner. Later cosmetic copy mounting must not erase
   // a failed-save message from an early interaction.
-  if (notice) localizedText(notice, () => ordinaryNotice);
+  if (notice) localizedText(notice, ordinaryNotice);
   let disposed = false,
     restoreTimer = null;
   const defer = host.setTimeout?.bind(host) ?? globalThis.setTimeout;
@@ -27,8 +24,9 @@ export function mountToolDisplay({
   const preferences = createDisplayPreferences({
     window: host,
     getStorage,
-    onWarning(message) {
-      if (!disposed && notice) localizedText(notice, () => message || ordinaryNotice);
+    onWarning(message, key) {
+      if (!disposed && notice)
+        localizedText(notice, () => (key ? t(key) : message || ordinaryNotice()));
     },
   });
   const render = (state) => {
