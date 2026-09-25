@@ -102,8 +102,12 @@ import { trackMissionLibraryOpening } from '../mission-library/opening-intent.mj
 import { attachTeamLibraryPreview, paintTeamPicturePreview } from './team-library-preview.mjs';
 
 import { teamReturnHref } from '../mode-return.mjs';
+import { releaseExplorerHref } from '../release-explorer.mjs';
 
 const $ = (id) => document.getElementById(id);
+$('coop-release-explorer').href = releaseExplorerHref(
+  globalThis.location?.href ?? document.baseURI ?? 'http://localhost/game/couch/relay-rescue.html',
+);
 const unclaimedFocus = (element) =>
   !element || element === document.body || element === document.documentElement;
 // Capture before attached() can hide a deliberately focused loader recovery link.
@@ -190,6 +194,8 @@ export function bootCoop({
   const catalogueHref = `relay-rescue.html${catalogueParams.size ? `?${catalogueParams}` : ''}`;
   $('coop-catalogue').setAttribute('href', catalogueHref);
   $('coop-catalogue').textContent = candidateJourney ? 'Legacy arenas' : 'New journey';
+  $('coop-more-catalogue').setAttribute('href', catalogueHref);
+  $('coop-more-catalogue').textContent = $('coop-catalogue').textContent;
   const returnHref = () => {
     // Mission identity and source navigation are independent. A checked Solo
     // return ticket remains stronger than the finite edition-navigation hint.
@@ -557,6 +563,21 @@ export function bootCoop({
     modeChoices.hidden = running();
     const destination = $(paused ? 'coop-pause-tools' : 'coop-lobby-tools');
     if (tools.parentNode !== destination) destination.append(tools);
+    const pauseCore = $('coop-pause-core'),
+      help = $('coop-help'),
+      settings = $('coop-settings-open'),
+      sound = $('coop-quick-sound'),
+      pausedAttempt = paused && run?.status === 'paused';
+    pauseCore.hidden = !pausedAttempt;
+    if (pausedAttempt) {
+      pauseCore.append(help);
+      pauseCore.append(settings);
+      pauseCore.append($('coop-home-paused'));
+    } else {
+      tools.append(help);
+      tools.append(settings);
+      tools.append(sound);
+    }
     tools.hidden = running();
     if (tools.hidden) {
       $('coop-help').open = false;
@@ -596,9 +617,18 @@ export function bootCoop({
       stopWaiting();
       return;
     }
-    const details =
-      document.activeElement?.closest('details') || tools.querySelector('details[open]');
-    if (details?.open && tools.contains(details)) {
+    const pauseCore = $('coop-pause-core'),
+      details =
+        document.activeElement?.closest('details') ||
+        (!run
+          ? $('coop-menu').querySelector('details[open]')
+          : pauseCore.querySelector('details[open]') || tools.querySelector('details[open]'));
+    if (
+      details?.open &&
+      (pauseCore.contains(details) ||
+        tools.contains(details) ||
+        (!run && $('coop-menu').contains(details)))
+    ) {
       details.open = false;
       details.querySelector('summary')?.focus({ preventScroll: true });
     } else if (run?.status === 'paused') primary().focus({ preventScroll: true });
@@ -1384,6 +1414,42 @@ export function bootCoop({
       },
     };
   }
+  function focusPreparedStart(selection, epoch) {
+    const target = $('coop-start'),
+      visit = settingsVisit,
+      beforeScope = scope();
+    if (!visibleAction(target)) return;
+    target.focus({ preventScroll: true });
+    const owns = () =>
+      !disposed &&
+      !inactive &&
+      foreground() &&
+      !run &&
+      pictureSelection === selection &&
+      generation === epoch &&
+      settingsVisit === visit &&
+      scope() === beforeScope &&
+      document.activeElement === target &&
+      visibleAction(target);
+    const reveal = () => {
+      if (!owns()) return;
+      const rect = target.getBoundingClientRect(),
+        width = document.documentElement.clientWidth || window.innerWidth,
+        height = document.documentElement.clientHeight || window.innerHeight;
+      if (
+        ![rect.left, rect.top, rect.right, rect.bottom, width, height].every(Number.isFinite) ||
+        rect.width <= 0 ||
+        rect.height <= 0 ||
+        width <= 16 ||
+        height <= 16 ||
+        (rect.left >= 8 && rect.top >= 8 && rect.right <= width - 8 && rect.bottom <= height - 8)
+      )
+        return;
+      if (owns())
+        target.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'instant' });
+    };
+    setTimeout(reveal, 0);
+  }
   let previewBinding = null,
     previewState = 'preparing',
     pictureMessage = '';
@@ -1410,10 +1476,10 @@ export function bootCoop({
       name = level?.name;
     $('coop-preview-caption').textContent =
       level?.journeyDifficulty && !selection.artworkSource && !selection.journeyRow?.background
-        ? `${name} geometry test. Preview scenery is not authored mission artwork. Browse arenas for an optional full preview; viewing earns no progress. Scenery does not mark obstacles.`
+        ? `${name} · Preview scenery is not authored mission artwork or collision geometry.`
         : name
-          ? `${name} teaser. Browse arenas for an optional full preview; viewing earns no progress. Scenery does not mark obstacles.`
-          : 'Selected arena teaser. Browse arenas for an optional full preview; viewing earns no progress. Scenery does not mark obstacles.';
+          ? `${name} teaser · preview only · scenery is not collision geometry.`
+          : 'Arena teaser · preview only · scenery is not collision geometry.';
     if (binding && previewBinding === binding && !retry) return;
     const cleared = clearPicturePreview();
     message.hidden = false;
@@ -1734,7 +1800,18 @@ export function bootCoop({
           return;
         }
         pictureUI('Team picture ready. Start remains a separate action.');
-        focus.finish(run ? $('coop-retry') : () => navigation.focusAvailable());
+        focus.finish(
+          run
+            ? $('coop-retry')
+            : () => {
+                if (visibleAction($('coop-start'))) focusPreparedStart(selection, generation);
+                else {
+                  const fallback = $('coop-app').querySelector('a[href]');
+                  if (visibleAction(fallback)) fallback.focus({ preventScroll: true });
+                  else navigation.focusAvailable();
+                }
+              },
+        );
       } catch (error) {
         if (!current()) return;
         try {
@@ -3813,12 +3890,17 @@ export function bootCoop({
     cancelDeparture({ restore: false });
     // Losing foreground also retires menu ownership while already paused.
     // A reader or held menu repeat must not outlive this lifecycle boundary.
+    controllerConfirmGuard.requireNeutral();
     clear();
     framePads = [];
     last = null;
   };
   const returned = () => {
     if (disposed || !foreground()) return;
+    // visibilitychange also resets native echo state before this handler runs.
+    // Re-establish the lifecycle neutral gate so a controller still held while
+    // returning cannot suppress the first deliberate keyboard action after release.
+    controllerConfirmGuard.requireNeutral();
     inactive = false;
     last = null;
     if (music && !loopStopped) void music.resume();
@@ -4052,6 +4134,7 @@ export function bootCoop({
   $('coop-resume').onclick = resume;
   $('coop-pause').onclick = pause;
   $('coop-lobby').onclick = () => requestDeparture('setup', $('coop-lobby'));
+  $('coop-home-paused').onclick = () => requestDeparture('home', $('coop-home-paused'));
   function supportGuidance(guidance) {
     $('coop-support-help').textContent = guidance.supportText;
     $('coop-help-support').textContent =
@@ -4566,6 +4649,7 @@ export function bootCoop({
     cancelDiscoveryPreparation();
     $('coop-discovery-open').onclick = null;
     $('coop-discovery-paused').onclick = null;
+    $('coop-home-paused').onclick = null;
     automaticRetry = null;
     document.removeEventListener('focusin', retryFocusChanged);
     cancelNext({ announce: false });
@@ -4727,11 +4811,17 @@ export function bootCoop({
     : null;
   $('coop-start').disabled = false;
   $('coop-start').textContent = 'Start together →';
+  const advancedEditionNote = defaultJourney
+    ? `Original pictures need a connection; core offline preparation does not save them.`
+    : candidateJourney
+      ? `Team Journey ${candidateEditionLabel ? `${candidateEditionLabel} · ` : ''}${candidateJourney.rows.some((row) => row.background) ? `original-art test · ${candidateJourney.catalog.missions.length} missions · human validation pending.` : `geometry test · ${candidateJourney.catalog.missions.length} missions · human validation and original artwork pending.`} ${candidatePreferences ? '' : candidateNotice}`.trim()
+      : '';
+  $('coop-advanced-note').textContent = advancedEditionNote;
   bootDisplay.finish({
     message: defaultJourney
-      ? `Team Journey · ${candidateJourney.catalog.missions.length} missions · original artwork. Start together or browse another mission. Pictures need a connection; core offline preparation does not save them.`
+      ? `Team Journey · ${candidateJourney.catalog.missions.length} missions`
       : candidateJourney
-        ? `Team Journey ${candidateEditionLabel ? `${candidateEditionLabel} · ` : ''}${candidateJourney.rows.some((row) => row.background) ? `original-art test · ${candidateJourney.catalog.missions.length} missions · human validation pending.` : `geometry test · ${candidateJourney.catalog.missions.length} missions · human validation and original artwork pending.`} ${candidatePreferences ? '' : candidateNotice}`.trim()
+        ? `Team Journey · ${candidateJourney.catalog.missions.length} missions`
         : 'Two players · one screen · a shared victory',
   });
   document.documentElement.dataset.toolState = 'ready';

@@ -1062,14 +1062,50 @@ kbd {
   margin-top: var(--fk-space-4);
   text-align: left;
 }
-.coop-tools details {
+.coop-more-destinations {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+.coop-more-destinations > * {
+  justify-content: center;
+  min-width: 0;
+  min-height: var(--fk-target-size);
+  padding: 8px 12px;
+  border: 1px solid var(--fk-control-line);
+  background: var(--fk-panel);
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+.coop-more-destinations {
+  margin-block: 8px;
+}
+.coop-tools details,
+.coop-pause-core details {
   border-top: 1px solid var(--fk-line);
   padding-block: var(--fk-space-2);
 }
-.coop-tools summary {
+.coop-tools summary,
+.coop-pause-core summary {
   cursor: pointer;
   display: list-item;
   padding: var(--fk-space-2);
+}
+.coop-pause-core {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+.coop-pause-core > * {
+  min-width: 0;
+  min-height: var(--fk-target-size);
+}
+.coop-pause-core > #coop-help {
+  grid-column: 1 / -1;
+  padding: 0;
+}
+.coop-pause-core > #coop-help[open] {
+  padding-bottom: var(--fk-space-2);
 }
 .coop-tools label,
 .coop-tools select,
@@ -1421,7 +1457,7 @@ kbd {
 }
 #coop-menu .setup {
   display: grid;
-  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr) minmax(0, 0.7fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   margin-block: 14px;
 }
 #coop-menu .setup :is(label, select) {
@@ -1486,6 +1522,10 @@ kbd {
 .coop-launch-actions .pack-picker {
   margin-top: 0;
 }
+/* The lobby's shared mode selector is the single mode-switching owner. */
+body:not(.playing) .masthead :is(.mode-label, #coop-race) {
+  display: none;
+}
 #coop-lobby-tools .coop-tools {
   display: flex;
   flex-wrap: wrap;
@@ -1507,6 +1547,16 @@ kbd {
 #coop-lobby-tools #coop-help[open] {
   flex-basis: 100%;
 }
+#coop-lobby-tools #coop-more {
+  flex-basis: 100%;
+}
+#coop-lobby-tools #coop-catalogue {
+  display: none;
+}
+#coop-lobby-tools :is(#coop-settings-open, #coop-quick-sound) {
+  flex: 1 1 10rem;
+}
+/* More stays collapsed below the direct Pause actions. */
 #coop-help-reading .briefing {
   border: 0;
   background: none;
@@ -1523,6 +1573,9 @@ kbd {
   .coop-launch-grid {
     grid-template-columns: minmax(0, 1fr);
     gap: 12px;
+  }
+  .coop-more-destinations {
+    grid-template-columns: minmax(0, 1fr);
   }
   #coop-menu .coop-preview-frame {
     max-width: 360px;
