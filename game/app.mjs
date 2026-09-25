@@ -9382,7 +9382,8 @@ try {
           ?.manifests.find((manifest) => manifest.missionId === mission.levelId);
       const source = journeyLibrarySource({
         editionId: route.id,
-        edition: route.id === DEFAULT_JOURNEY_ROUTES.solo ? t("interface:newJourney") : route.label,
+        edition: route.id === DEFAULT_JOURNEY_ROUTES.solo ? 'New Journey' : route.label,
+        editionLabel: () => route.id === DEFAULT_JOURNEY_ROUTES.solo ? t("interface:newJourney") : contentText(route, 'label'),
         catalog: host.catalog,
         profile,
         details: (mission) => journeyMissionDetails(manifestFor(mission)),
@@ -9398,7 +9399,8 @@ try {
       });
       const versusSource = journeyLibrarySource({
         editionId: route.id,
-        edition: route.id === DEFAULT_JOURNEY_ROUTES.solo ? t("interface:newJourney") : route.label,
+        edition: route.id === DEFAULT_JOURNEY_ROUTES.solo ? 'New Journey' : route.label,
+        editionLabel: () => route.id === DEFAULT_JOURNEY_ROUTES.solo ? t("interface:newJourney") : contentText(route, 'label'),
         catalog: versusPreview.catalog,
         profile,
         details: (mission) =>
