@@ -207,10 +207,10 @@ async function running(p, id) {
   }
 }
 
-test('Classic Solo mounts all 91 Journey, 110 Original and 84 compatible Current Classic missions', async (t) => {
+test('Classic Solo mounts all91 Journey, 110 Original and 78 compatible Current Classic missions', async (t) => {
   const p = await soloPage(t, { titleScreen: true });
   await open(p);
-  assert.equal(p.$('journey-cards').children.length, 285);
+  assert.equal(p.$('journey-cards').children.length, 279);
   assert.equal(p.$('journey-collection').value, '');
   const cards = [...p.$('journey-cards').children];
   assert.match(cards[0].textContent, /Journey/);
@@ -266,7 +266,7 @@ test('Journey setup changes next preset and library details without replacing th
   assert.deepEqual(p.errors, []);
 });
 
-test('unified Solo Download & play launches the selected late installed Classic once', async (t) => {
+test('unified Solo Download becomes Play inline and launches the selected late installed Classic', async (t) => {
   const p = await soloPage(t, { titleScreen: true });
   await open(p);
   p.$('journey-collection').value = 'Classic';
@@ -282,13 +282,18 @@ test('unified Solo Download & play launches the selected late installed Classic 
   assert.match(card.textContent, /Download/);
   card.focus();
   card.click();
+  await settle(() => card.textContent.endsWith('Play'));
+  assert.equal(p.$('journey-chooser').open, true);
+  assert.equal(p.$('journey-search').value, 'night');
+  assert.equal(p.doc.activeElement, card);
+  assert.notEqual(p.doc.body.dataset.flightState, 'running');
+  card.click();
   await running(p, row.runtimeId);
   assert.equal(p.$('journey-chooser').open, false);
-  assert.equal(p.$('journey-search').value, 'night');
   assert.deepEqual(p.errors, []);
 });
 
-test('unified Solo failed Download retries inline and preserves the flight until retry succeeds', async (t) => {
+test('unified Solo failed Download retries inline and Back restores Missions without replacing the prepared flight', async (t) => {
   let available = false,
     requests = 0;
   const p = await soloPage(t, {
@@ -324,10 +329,16 @@ test('unified Solo failed Download retries inline and preserves the flight until
   assert.deepEqual(authoritativeCheckpoint(initial), checkpoint);
   available = true;
   card.click();
-  await running(p, row.runtimeId);
+  await settle(() => card.textContent.endsWith('Play'));
   assert.equal(requests, 2);
+  assert.equal(p.doc.activeElement, card);
+  assert.notEqual(p.doc.body.dataset.flightState, 'running');
+  p.$('journey-back').click();
   assert.equal(p.$('journey-chooser').open, false);
-  assert.notEqual(p.rendered.run, initial);
+  assert.equal(p.$('shell-home').open, true);
+  assert.equal(p.doc.activeElement.id, 'shell-play');
+  assert.equal(p.rendered.run, initial);
+  assert.deepEqual(authoritativeCheckpoint(initial), checkpoint);
   await open(p);
   assert.equal(p.$('journey-search').value, 'night');
   assert.equal(p.doc.activeElement, selected());
@@ -476,10 +487,10 @@ test('unknown incoming identity reports failure and never starts a different mis
   assert.deepEqual(p.errors, []);
 });
 
-test('default Journey mounts 285 missions and hands the exact Classic selection to its own host', async (t) => {
+test('default Journey mounts201 missions and hands the exact Classic selection to its own host', async (t) => {
   const p = await journeyPage(t);
   await open(p);
-  assert.equal(p.$('journey-cards').children.length, 285);
+  assert.equal(p.$('journey-cards').children.length, 201);
   [...p.$('journey-cards').children].find((card) => card.dataset.missionId === lateBase.id).click();
   await settle(() => globalThis.location.href.includes('library-mission='));
   const destination = new URL(globalThis.location.href);
@@ -497,7 +508,7 @@ test('Classic hands a Journey card directly to its new-edition host', async (t) 
   card.click();
   await settle(() => globalThis.location.href.includes('library-mission='));
   const destination = new URL(globalThis.location.href);
-  assert.equal(destination.searchParams.get('journey'), 'whole-spatial-v11');
+  assert.equal(destination.searchParams.get('journey'), 'whole-spatial-v5');
   assert.equal(destination.searchParams.get('library-mission'), id);
   assert.deepEqual(p.errors, []);
 });
@@ -513,14 +524,14 @@ test('Solo mode filter exposes the same qualified Journey identities in Versus w
     cards.map((card) => card.dataset.missionId),
     original,
   );
-  assert.equal(new Set(original).size, 285);
+  assert.equal(new Set(original).size, 201);
   const target = cards[1];
   assert.match(target.textContent, /Journey.*Band 1\/12.*Play/);
   target.click();
   await settle(() => globalThis.location.href.includes('library-mission='));
   const destination = new URL(globalThis.location.href);
   assert.equal(destination.pathname, '/game/couch/');
-  assert.equal(destination.searchParams.get('journey'), 'whole-spatial-v11');
+  assert.equal(destination.searchParams.get('journey'), 'whole-spatial-v5');
   assert.equal(destination.searchParams.get('library-mission'), target.dataset.missionId);
   assert.deepEqual(p.errors, []);
 });
