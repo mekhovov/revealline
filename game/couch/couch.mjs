@@ -3740,7 +3740,9 @@ try {
           } catch {
             /* Existing stored progress stays intact. */
           }
-          journeyRewardFailure = `Race complete. Its original could not be retained: ${error.message}`;
+          journeyRewardFailure = localizedMessage('interface:journeyPictures.versusRetainFailed', {
+            error: error.message,
+          });
         }
       }
       const name = () =>
