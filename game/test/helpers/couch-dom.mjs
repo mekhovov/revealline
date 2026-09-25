@@ -219,7 +219,7 @@ export class Element extends Events {
       const excluded = [...part.matchAll(/:not\(([^)]+)\)/g)].map((match) => match[1]);
       if (excluded.some((item) => this.matches(item))) return false;
       part = part.replace(/:not\([^)]+\)/g, '');
-      const tag = part.match(/^[a-z]+/i)?.[0];
+      const tag = part.match(/^[a-z][a-z0-9-]*/i)?.[0];
       if (tag && this.tagName !== tag.toUpperCase()) return false;
       for (const match of part.matchAll(/\[([^=\]]+)(?:=["']?([^"'\]]+)["']?)?\]/g)) {
         const [, key, value] = match;

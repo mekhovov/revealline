@@ -407,3 +407,26 @@ so IDs passed to `node(tag, id, text)` do not appear as displayed labels. Compar
 text producers remain lower-confidence review candidates. All seven audit tests and its
 targeted lint/format checks pass. This improves review precision; it does not certify
 complete translation coverage. Collection reward presentation is the next open batch.
+
+## Collection reward presentation
+
+Code-owned achievement and milestone IDs now resolve localized presentation without
+changing canonical progress records, campaign thresholds or award rules. Collection and
+appearance hints share milestone names; body and campaign names use verified content
+records. Mission accessibility labels also update live. Remaining/progress counts use
+complete plural messages, including Ukrainian one/few/many/other forms.
+
+All 36 Collection, reward, appearance-rule and difficulty-access tests pass. The added
+host case keeps the open context, row nodes, focus, simulation checkpoint, stored bytes
+and write counts unchanged across repeated switches; custom chapter names remain authored.
+The minimal DOM fixture now recognizes numbered heading tags in selectors. Catalog checks
+pass with 7,301 messages / 5,865 referenced keys; targeted lint and formatting pass.
+
+The source browser confirms cross-tab Ukrainian → English → Ukrainian updates in an open
+Collection while retaining its reading control focus and expanded section. A compact-screen
+review exposed overly narrow reading buttons and appearance columns. Reading actions now
+stack when their container is narrow, and appearance pictures stack above text below
+480 pixels. At a 320-pixel viewport, both Standard and Large Ukrainian text have a
+304-pixel dialog with matching scroll width; the reading controls no longer split labels
+inside words. The viewport override was reset. The distribution/native figures above
+predate this Collection batch.
