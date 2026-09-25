@@ -1,4 +1,4 @@
-import { t, localizedText, localizedMessage } from '../i18n/index.mjs';
+import { t, localizedText, localizedMessage, localizedAttribute } from '../i18n/index.mjs';
 import { createOperationStatus } from '../ui/operation-status.mjs';
 import { attachTeamDiscoveryPictures } from './team-discovery-pictures.mjs';
 
@@ -104,7 +104,11 @@ export function attachTeamDiscovery({
     try {
       controls(owner, true);
       if (!current()) return;
-      describe(owner, `Preparing ${row.title}… Your current attempt stays available.`, 'preparing');
+      describe(
+        owner,
+        () => t('interface:team.preparingAttemptDestination', { mission: row.title }),
+        'preparing',
+      );
       if (!current()) return;
       cancel.focus({ preventScroll: true });
       if (!current()) return;
@@ -141,7 +145,7 @@ export function attachTeamDiscovery({
         owner,
         error?.name === 'AbortError'
           ? t('interface:preparationCancelledYourCurrentAttemptIsUnchanged')
-          : `Could not prepare ${row.title}. Your current attempt is unchanged. Try Play again.`,
+          : () => t('interface:team.arenaPreparationFailed', { mission: row.title }),
         error?.name === 'AbortError' ? 'ready' : 'error',
       );
       restoreCard(owner, button);
@@ -167,8 +171,14 @@ export function attachTeamDiscovery({
       localizedText(goal, () => row.goal);
       const button = document.createElement('button');
       button.type = 'button';
-      localizedText(button, () => `Play ${row.title}`);
-      button.setAttribute('aria-label', `Play ${row.title} · ${row.packName} · ${row.sourceLabel}`);
+      localizedText(button, () => t('interface:team.playMission', { mission: row.title }));
+      localizedAttribute(button, 'aria-label', () =>
+        t('interface:team.playMissionLabel', {
+          mission: row.title,
+          campaign: row.packName,
+          source: row.sourceLabel,
+        }),
+      );
       button.className = 'field-kit-primary team-discovery-play';
       button.onclick = () => play(owner, row, button);
       card.append(pack, title, goal);
@@ -246,7 +256,7 @@ export function attachTeamDiscovery({
     describe(
       owner,
       count
-        ? `${count} of ${owner.cards.length} Team missions. Play directly; your current attempt stays available.`
+        ? t('interface:team.filteredMissions', { count, total: owner.cards.length })
         : t('interface:noMatchingTeamMissionsClearSearchOrChooseAllCampaigns'),
     );
     onViewChange();

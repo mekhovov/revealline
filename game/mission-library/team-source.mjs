@@ -81,6 +81,7 @@ export function teamArenaLibrarySource({
   progress = () => '',
   launch,
 }) {
+  const editionLabel = () => (typeof edition === 'function' ? edition() : edition);
   if (!['Classic', 'Custom'].includes(collection))
     throw new TypeError(t('errors:missionLibrary.unknownTeamCollection'));
   if (
@@ -119,7 +120,7 @@ export function teamArenaLibrarySource({
   return {
     id: sourceId,
     editionId,
-    edition,
+    edition: editionLabel(),
     collection,
     entries: rows,
     describe: (row) => ({
@@ -132,6 +133,7 @@ export function teamArenaLibrarySource({
       modes: ['team'],
       rules: row.goal,
     }),
+    presentation: () => ({ edition: editionLabel() }),
     availability: (row) =>
       current(row)
         ? { state: 'ready' }
