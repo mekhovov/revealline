@@ -56,6 +56,8 @@ function videoFacts(info) {
 }
 
 const evenFloor = (value) => Math.max(2, Math.floor(value / 2) * 2);
+const displayOrientation = (width, height) =>
+  width === height ? 'square' : width < height ? 'portrait' : 'landscape';
 
 export function prepareVideoTransform(info, profile = 'source') {
   videoFacts(info);
@@ -93,8 +95,10 @@ export function prepareVideoTransform(info, profile = 'source') {
     sourceSha256: info.sha256,
     sourceWidth: info.width,
     sourceHeight: info.height,
+    sourceDisplayOrientation: displayOrientation(info.width, info.height),
     width,
     height,
+    outputDisplayOrientation: displayOrientation(width, height),
     fit: 'contain',
     allowsUpscale: false,
     targetVideoBitrate: selected.targetVideoBitrate ?? null,
