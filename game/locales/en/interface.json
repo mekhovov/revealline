@@ -1042,6 +1042,7 @@
   "lifeLost": "LIFE LOST",
   "shieldUsed": "SHIELD USED",
   "ready2": "READY",
+  "startCueGo": "GO",
   "courseEntryWasCancelled": "Course entry was cancelled.",
   "courseEntryNeedsAnUnfinishedFlightAndCheckedStorageAdapters": "Course entry needs an unfinished flight and checked storage adapters.",
   "theExistingSavedFlightCannotBeReadSafelyItsBytes": "The existing saved flight cannot be read safely. Its bytes were kept.",
