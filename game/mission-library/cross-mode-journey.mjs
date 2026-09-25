@@ -3,6 +3,7 @@ import { LIBRARY_MODES, LIBRARY_TAGS, libraryMissionId } from './library.mjs';
 
 const METHODS = [
   'describe',
+  'presentation',
   'availability',
   'prepare',
   'progress',
@@ -194,6 +195,9 @@ export function combineJourneyLibrarySources(qualifiedSources) {
     ...identity,
     entries,
     describe: (entry) => owned(entry).description,
+    // Common display metadata was checked for equality across modes above.
+    // Keep its locale projection delegated to an exact original entry too.
+    presentation: (entry) => delegate(entry, owned(entry).description.modes[0], 'presentation'),
     availability: (entry, mode) => delegate(entry, mode, 'availability'),
     progress: (entry, mode) => delegate(entry, mode, 'progress') ?? '',
     completion: (entry, mode) => delegate(entry, mode, 'completion') ?? null,
