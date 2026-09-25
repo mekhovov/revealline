@@ -9,7 +9,7 @@ export function attachMissionGallery({ document: doc = globalThis.document, miss
   const make = (tag, className, text) => {
     const node = doc.createElement(tag);
     node.className = className;
-    if (text) localizedText(node, () =>text);
+    if (text) localizedText(node, () => text);
     return node;
   };
   const pager = make('nav', 'mission-gallery-pages'),
@@ -91,7 +91,7 @@ export function attachMissionGallery({ document: doc = globalThis.document, miss
     pager.hidden = buttons.length <= 6;
     previous.disabled = page === 0;
     next.disabled = (page + 1) * 6 >= buttons.length;
-    localizedText(status, () =>`${page + 1} / ${Math.max(1, Math.ceil(buttons.length / 6))}`);
+    localizedText(status, () => `${page + 1} / ${Math.max(1, Math.ceil(buttons.length / 6))}`);
   }
   const move = (delta) => {
     page += delta;

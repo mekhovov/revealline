@@ -4,7 +4,7 @@ import { isMediaLibrary } from '../media-library.mjs';
 import { CONTENT_LIMITS, inspectImageDataUrl } from '../content.mjs';
 import { snapshotPictureChoice } from '../presentation-pins.mjs';
 
-const cancelled = () => new DOMException(t("interface:pictureAcquisitionCancelled"), 'AbortError');
+const cancelled = () => new DOMException(t('interface:pictureAcquisitionCancelled'), 'AbortError');
 const check = (signal) => {
   if (signal?.aborted) throw cancelled();
 };
@@ -14,7 +14,7 @@ const disposeImage = (image) => {
 };
 
 function browserDecode(source, { signal, ImageClass }) {
-  required(typeof ImageClass === 'function', t("interface:browserPictureDecodingIsUnavailable"));
+  required(typeof ImageClass === 'function', t('interface:browserPictureDecodingIsUnavailable'));
   check(signal);
   return new Promise((resolve, reject) => {
     const image = new ImageClass();
@@ -31,13 +31,19 @@ function browserDecode(source, { signal, ImageClass }) {
       } else resolve(image);
     };
     const abort = () => finish(cancelled());
-    const timer = setTimeout(() => finish(new Error(t("interface:savedPictureDecodeTimedOut"))), 15000);
+    const timer = setTimeout(
+      () => finish(new Error(t('interface:savedPictureDecodeTimedOut'))),
+      15000,
+    );
     signal?.addEventListener('abort', abort, { once: true });
     image.onerror = () =>
-      finish(new Error(t("interface:theSavedPictureCouldNotDecodeRestoreItsOriginal")));
+      finish(new Error(t('interface:theSavedPictureCouldNotDecodeRestoreItsOriginal')));
     image.onload = async () => {
       try {
-        required(typeof image.decode === 'function', t("interface:completePictureDecodingIsUnavailable"));
+        required(
+          typeof image.decode === 'function',
+          t('interface:completePictureDecodingIsUnavailable'),
+        );
         await image.decode();
         finish();
       } catch (error) {
@@ -101,13 +107,16 @@ export async function acquireAuthoredPicture(
     maxBytes: CONTENT_LIMITS.maxEncodedImageChars + CONTENT_LIMITS.maxMetadataChars,
     maxString: CONTENT_LIMITS.maxEncodedImageChars,
   });
-  exactKeys(background, ['dataUrl', 'name', 'fit', 'metadata'], t("interface:authoredBackground"));
+  exactKeys(background, ['dataUrl', 'name', 'fit', 'metadata'], t('interface:authoredBackground'));
   const header = inspectImageDataUrl(background.dataUrl);
   required(header.valid, `The authored background image is invalid: ${header.errors.join('; ')}`);
   const fit = background.fit ?? 'cover';
-  required(['contain', 'cover'].includes(fit), t("interface:theAuthoredBackgroundFitIsUnsupported"));
+  required(
+    ['contain', 'cover'].includes(fit),
+    t('interface:theAuthoredBackgroundFitIsUnsupported'),
+  );
   const decode = decodeImage ?? ((src, options) => browserDecode(src, { ...options, ImageClass }));
-  required(typeof decode === 'function', t("interface:aPictureDecoderIsRequired"));
+  required(typeof decode === 'function', t('interface:aPictureDecoderIsRequired'));
   let image = null;
   const dispose = () => {
     const prior = image;
@@ -123,7 +132,7 @@ export async function acquireAuthoredPicture(
         image.height === header.height &&
         (image.naturalWidth ?? image.width) === header.width &&
         (image.naturalHeight ?? image.height) === header.height,
-      t("interface:decodedAuthoredPictureDimensionsDifferFromItsOriginal"),
+      t('interface:decodedAuthoredPictureDimensionsDifferFromItsOriginal'),
     );
     check(signal);
     return Object.freeze({ image, fit, dispose });
@@ -147,14 +156,14 @@ export async function decodeOwnedPicture(
   check(signal);
   required(
     typeof source === 'string' && source.length > 0,
-    t("interface:aVerifiedPictureSourceIsRequired"),
+    t('interface:aVerifiedPictureSourceIsRequired'),
   );
   required(
     Number.isFinite(timeoutMs) && timeoutMs > 0 && timeoutMs <= 15000,
-    t("interface:invalidPictureDecodeTimeout"),
+    t('interface:invalidPictureDecodeTimeout'),
   );
   const decode = decodeImage ?? ((src, options) => browserDecode(src, { ...options, ImageClass }));
-  required(typeof decode === 'function', t("interface:aPictureDecoderIsRequired"));
+  required(typeof decode === 'function', t('interface:aPictureDecoderIsRequired'));
   const controller = new AbortController();
   let timer,
     abort,
@@ -166,7 +175,7 @@ export async function decodeOwnedPicture(
     };
     signal?.addEventListener('abort', abort, { once: true });
     timer = setTimeout(() => {
-      reject(new Error(t("interface:savedPictureDecodeTimedOut")));
+      reject(new Error(t('interface:savedPictureDecodeTimedOut')));
       controller.abort();
     }, timeoutMs);
   });
@@ -201,7 +210,7 @@ export async function acquirePresentationImage(
   if (pin.kind === 'legacy') return null;
   required(
     isMediaLibrary(metadata?.document?.library),
-    t("interface:pictureAcquisitionNeedsValidatedMetadata"),
+    t('interface:pictureAcquisitionNeedsValidatedMetadata'),
   );
   const library = metadata.document.library,
     asset = library.assets.find((item) => item.id === pin.assetId),
@@ -214,20 +223,20 @@ export async function acquirePresentationImage(
       asset.sha256 === pin.sha256 &&
       presentation.poster.assetId === pin.assetId &&
       canonicalJSON(presentation.identity) === canonicalJSON(pin.identity),
-    t("interface:theSavedPictureRevisionIsMissingRestoreItsRlmediaOriginals"),
+    t('interface:theSavedPictureRevisionIsMissingRestoreItsRlmediaOriginals'),
   );
   required(
     typeof store?.readAsset === 'function',
-    t("interface:pictureAcquisitionNeedsAStillMediaStore"),
+    t('interface:pictureAcquisitionNeedsAStillMediaStore'),
   );
   required(
     typeof URLImpl?.createObjectURL === 'function' &&
       typeof URLImpl?.revokeObjectURL === 'function',
-    t("interface:localPictureObjectUrlsAreUnavailable"),
+    t('interface:localPictureObjectUrlsAreUnavailable'),
   );
   required(
     decodeImage === undefined || typeof decodeImage === 'function',
-    t("interface:aPictureDecoderIsRequired"),
+    t('interface:aPictureDecoderIsRequired'),
   );
   let url = null,
     image = null;
@@ -257,13 +266,13 @@ export async function acquirePresentationImage(
             image.height === asset.height &&
             (image.naturalWidth ?? image.width) === asset.width &&
             (image.naturalHeight ?? image.height) === asset.height,
-          t("interface:decodedSavedPictureDimensionsDifferFromItsOriginal"),
+          t('interface:decodedSavedPictureDimensionsDifferFromItsOriginal'),
         );
         return { naturalWidth: asset.width, naturalHeight: asset.height };
       },
     });
     check(signal);
-    required(image, t("interface:pictureAcquisitionDidNotProduceADecodedImage"));
+    required(image, t('interface:pictureAcquisitionDidNotProduceADecodedImage'));
     return Object.freeze({
       image,
       fit: presentation.poster.fit,
@@ -294,7 +303,7 @@ export function pictureDisplayContext(source) {
       value.levelRevision.length > 0 &&
       value.levelRevision.length <= 80 &&
       stableId(value.themeId),
-    t("interface:invalidPictureDisplayContext"),
+    t('interface:invalidPictureDisplayContext'),
   );
   return Object.freeze(value);
 }
@@ -316,7 +325,7 @@ export function createPresentationImageSlot({ acquire = acquirePresentationImage
     pending = null;
   };
   function setContext(source) {
-    required(!disposed, t("interface:pictureSlotIsDisposed"));
+    required(!disposed, t('interface:pictureSlotIsDisposed'));
     const next = pictureDisplayContext(source);
     if (context && canonicalJSON(next) === canonicalJSON(context)) return false;
     invalidate();
@@ -327,15 +336,15 @@ export function createPresentationImageSlot({ acquire = acquirePresentationImage
     return true;
   }
   async function load(request, { context: expectedContext, signal, ...options } = {}) {
-    required(!disposed && context, t("interface:setThePictureDisplayContextBeforeLoading"));
+    required(!disposed && context, t('interface:setThePictureDisplayContextBeforeLoading'));
     required(
       canonicalJSON(pictureDisplayContext(expectedContext)) === canonicalJSON(context),
-      t("interface:pictureRequestBelongsToAnEarlierDisplayContext"),
+      t('interface:pictureRequestBelongsToAnEarlierDisplayContext'),
     );
     const pin = snapshotPictureChoice(request.pin);
     required(
       pin.identity.levelId === context.levelId && pin.identity.themeId === context.themeId,
-      t("interface:pictureRequestDiffersFromTheActiveMapWorld"),
+      t('interface:pictureRequestDiffersFromTheActiveMapWorld'),
     );
     invalidate();
     const ticket = generation,

@@ -54,16 +54,16 @@ export function attachCouchMusicHost({
     menuGestureAccepted = false;
   const section = doc.createElement('section');
   section.setAttribute('data-couch-music', prefix);
-  section.setAttribute('aria-label', t("interface:music"));
+  section.setAttribute('aria-label', t('interface:music'));
   const make = (tag, name, text) => {
     const node = doc.createElement(tag);
     node.id = `${prefix}-music-${name}`;
-    if (text !== undefined) localizedText(node, () =>text);
+    if (text !== undefined) localizedText(node, () => text);
     section.append(node);
     return node;
   };
-  make('h3', 'title', t("interface:music"));
-  const status = make('p', 'status', t("interface:loadingTheSharedMusicLibrary"));
+  make('h3', 'title', t('interface:music'));
+  const status = make('p', 'status', t('interface:loadingTheSharedMusicLibrary'));
   status.setAttribute('role', 'status');
   status.setAttribute('aria-live', 'polite');
   const action = (name, text, fn) => {
@@ -72,11 +72,11 @@ export function attachCouchMusicHost({
     node.onclick = () => run(fn);
     return node;
   };
-  const play = action('play', t("interface:playMusic2"), () => session.play());
-  action('pause', t("interface:pauseMusic"), () => session.pause());
-  action('previous', t("interface:previousTrack"), () => player.previous());
-  action('next', t("interface:nextTrack"), () => player.next());
-  const label = make('label', 'volume-label', t("interface:musicVolumeThisSession"));
+  const play = action('play', t('interface:playMusic2'), () => session.play());
+  action('pause', t('interface:pauseMusic'), () => session.pause());
+  action('previous', t('interface:previousTrack'), () => player.previous());
+  action('next', t('interface:nextTrack'), () => player.next());
+  const label = make('label', 'volume-label', t('interface:musicVolumeThisSession'));
   label.setAttribute('for', `${prefix}-music-volume`);
   const volume = make('input', 'volume');
   for (const [key, value] of Object.entries({ type: 'range', min: '0', max: '1', step: '0.01' })) {
@@ -92,9 +92,9 @@ export function attachCouchMusicHost({
       report(error);
     }
   };
-  action('library', t("interface:musicLibrary"), () => open());
-  const retry = action('retry', t("interface:retryMusicLibrary"), () => load());
-  make('p', 'note', t("interface:musicVolumeLastsForThisVisitMasterSoundIsShared"));
+  action('library', t('interface:musicLibrary'), () => open());
+  const retry = action('retry', t('interface:retryMusicLibrary'), () => load());
+  make('p', 'note', t('interface:musicVolumeLastsForThisVisitMasterSoundIsShared'));
   root.append(section);
   const compactCredit = attachMusicCredit({
     document: doc,
@@ -113,7 +113,7 @@ export function attachCouchMusicHost({
         link = doc.createElement('a');
       title.className = 'couch-music-credit-title';
       file.className = 'couch-music-credit-file';
-      localizedText(link, () =>t("interface:musicSource"));
+      localizedText(link, () => t('interface:musicSource'));
       link.setAttribute('target', '_blank');
       link.setAttribute('rel', 'noopener noreferrer');
       node.replaceChildren(title, file, link);
@@ -146,18 +146,20 @@ export function attachCouchMusicHost({
       credit.node.hidden = !audible;
       if (!audible) continue;
       const title = `Now playing: ${track.title}${track.artist ? ` · ${track.artist}` : ''}`,
-        file = track.fileName ? `File: ${track.fileName}` : t("interface:originalFilenameNotRecorded"),
+        file = track.fileName
+          ? `File: ${track.fileName}`
+          : t('interface:originalFilenameNotRecorded'),
         url = sourceWebsite(track),
         identity = JSON.stringify([title, file, url]);
       if (credit.identity === identity) continue;
       credit.identity = identity;
-      localizedText(credit.title, () =>title);
+      localizedText(credit.title, () => title);
       credit.title.setAttribute('title', title);
-      localizedText(credit.file, () =>file);
+      localizedText(credit.file, () => file);
       credit.file.setAttribute('title', file);
       credit.link.hidden = !url;
       if (url) {
-        localizedText(credit.link, () =>`Source: ${new URL(url).hostname}`);
+        localizedText(credit.link, () => `Source: ${new URL(url).hostname}`);
         credit.link.setAttribute('href', url);
       } else credit.link.removeAttribute('href');
     }
@@ -223,7 +225,7 @@ export function attachCouchMusicHost({
     onVolume: () => render(),
     onPlayback: () => render(),
     onOpen: () => {
-      if (!canOpen()) throw new Error(t("interface:returnToAudioSettingsToOpenTheMusicLibrary"));
+      if (!canOpen()) throw new Error(t('interface:returnToAudioSettingsToOpenTheMusicLibrary'));
       visit = getOwner();
       onOpen();
     },
@@ -247,16 +249,16 @@ export function attachCouchMusicHost({
       ['idle', 'loading', 'saving'].includes(state.library.status) || state.preparing;
     const text = preparing
       ? state.library.status === 'saving'
-        ? t("interface:savingTheSharedMusicLibrary")
-        : t("interface:preparingTheSharedMusicLibrary")
+        ? t('interface:savingTheSharedMusicLibrary')
+        : t('interface:preparingTheSharedMusicLibrary')
       : state.library.error
         ? `Music library: ${state.library.error}. Gameplay and built-in music remain available.`
         : warning ||
           contextWarning ||
           track.preparation?.message ||
           track.error ||
-          `${track.track?.title || t("interface:selectedSoundtrack")} · ${track.status}${state.needsPlayGesture ? (" " + t("interface:choosePlayMusic") + "") : ''}`;
-    if (status.textContent !== text) localizedText(status, () =>text);
+          `${track.track?.title || t('interface:selectedSoundtrack')} · ${track.status}${state.needsPlayGesture ? ' ' + t('interface:choosePlayMusic') + '' : ''}`;
+    if (status.textContent !== text) localizedText(status, () => text);
     status.dataset.state = preparing
       ? 'busy'
       : state.library.error || warning || track.error
@@ -383,7 +385,7 @@ export function attachCouchMusicHost({
       session.setAcceptedContext(context);
       render();
     },
-    contextPending(themeId, message = t("interface:preparingExactMissionMusicAssignments")) {
+    contextPending(themeId, message = t('interface:preparingExactMissionMusicAssignments')) {
       contextWarning = message;
       context = Object.freeze({ scene: context.scene ?? 'menu', themeId });
       session.setAcceptedContext(context);

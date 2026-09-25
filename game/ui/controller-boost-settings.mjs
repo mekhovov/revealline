@@ -9,7 +9,11 @@ export function attachControllerBoostSettings({ select, status, getMode, applyMo
     if (destroyed) return;
     const mode = resolveControllerBoostMode(getMode());
     select.value = mode;
-    localizedText(status, () =>t("gameplay:controllerBoost", { value1: mode === 'hold' ? t("interface:hold") : t("interface:toggle") }));
+    localizedText(status, () =>
+      t('gameplay:controllerBoost', {
+        value1: mode === 'hold' ? t('interface:hold') : t('interface:toggle'),
+      }),
+    );
   };
   const changed = () => {
     if (destroyed) return;
@@ -17,11 +21,15 @@ export function attachControllerBoostSettings({ select, status, getMode, applyMo
       const result = applyMode(resolveControllerBoostMode(select.value));
       refresh();
       status.textContent += result?.ok
-        ? (" " + t("interface:savedOnThisDevice") + "")
-        : t("gameplay:sessionOnly", { value1: result?.warning || t("interface:exportYourPlayerLibraryToKeepThisPreference") });
+        ? ' ' + t('interface:savedOnThisDevice') + ''
+        : t('gameplay:sessionOnly', {
+            value1: result?.warning || t('interface:exportYourPlayerLibraryToKeepThisPreference'),
+          });
     } catch (error) {
       refresh();
-      localizedText(status, () =>t("gameplay:controllerBoostUnchanged", { value1: error.message }));
+      localizedText(status, () =>
+        t('gameplay:controllerBoostUnchanged', { value1: error.message }),
+      );
     }
   };
   select.addEventListener('change', changed);
@@ -40,7 +48,12 @@ export function renderControllerBoostCue(element, state, buttonLabel, canToggle 
   const hidden = state.mode !== 'toggle';
   const text = hidden
     ? ''
-    : t("gameplay:controllerBoost2", { value1: state.latched ? 'on' : 'off', value2: canToggle ? t("gameplay:toTurn", { value1: buttonLabel, value2: state.latched ? 'off' : 'on' }) : '' });
+    : t('gameplay:controllerBoost2', {
+        value1: state.latched ? 'on' : 'off',
+        value2: canToggle
+          ? t('gameplay:toTurn', { value1: buttonLabel, value2: state.latched ? 'off' : 'on' })
+          : '',
+      });
   if (element.hidden !== hidden) element.hidden = hidden;
-  if (element.textContent !== text) localizedText(element, () =>text);
+  if (element.textContent !== text) localizedText(element, () => text);
 }

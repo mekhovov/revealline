@@ -15,14 +15,15 @@ export function attachMenuStyleControls({
   const palette = doc.getElementById(`${prefix}menu-palette`),
     ornaments = doc.getElementById(`${prefix}menu-ornaments`),
     status = doc.getElementById(`${prefix}menu-style-status`);
-  if (!palette || !ornaments || !status) throw new TypeError(t("interface:menuStyleControlsAreMissing"));
+  if (!palette || !ornaments || !status)
+    throw new TypeError(t('interface:menuStyleControlsAreMissing'));
   const appearance = createMenuAppearance({ document: doc });
   const preferences = createMenuStylePreferences({
     window: win,
     getStorage,
     writable,
     onWarning: (message) => {
-      localizedText(status, () =>message);
+      localizedText(status, () => message);
     },
   });
   const render = (state) => {

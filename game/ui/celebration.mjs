@@ -27,7 +27,7 @@ export function createCelebration({ theme = {}, levelId = '', seed = 0, reduced 
 export function advanceCelebration(state, dt, { paused = false, reduced = false } = {}) {
   if (!state) return null;
   if (!Number.isFinite(dt) || dt < 0)
-    throw new TypeError(t("interface:celebrationDtMustBeFiniteAndNonnegative"));
+    throw new TypeError(t('interface:celebrationDtMustBeFiniteAndNonnegative'));
   if (reduced) return { ...state, reduced: true, elapsed: state.duration };
   if (paused || state.elapsed >= state.duration) return state;
   return { ...state, elapsed: Math.min(state.duration, state.elapsed + Math.min(dt, 0.25)) };
