@@ -226,8 +226,14 @@ test('controller-only authored win, Retry, second win and Next retain one delibe
   const advance = async () => {
     await settle(() => {
       p.frame(0);
-      return p.doc.body.dataset.flightState === 'running';
+      return (
+        p.doc.body.dataset.flightState === 'running' ||
+        p.$('game-overlay').dataset.kind === 'retry-ready'
+      );
     });
+    if (p.$('game-overlay').dataset.kind === 'retry-ready')
+      for (let frame = 0; frame < 6; frame++) p.frame(100);
+    assert.equal(p.doc.body.dataset.flightState, 'running');
   };
   const win = async () => {
     press(13);

@@ -573,6 +573,11 @@ body.field-kit[data-field-kit-page]
   }
 }
 @media (min-width: 800px) and (min-height: 501px) {
+  .field-kit.game-shell .game-overlay[data-kind='lost'] .overlay-card,
+  .field-kit.game-shell .game-overlay[data-kind='retry-ready'] .overlay-card {
+    width: min(560px, 100%);
+    max-width: 560px;
+  }
   .field-kit.game-shell .game-overlay[data-kind='won'] .overlay-card {
     width: min(1000px, 100%);
     max-width: 1000px;

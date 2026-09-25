@@ -43,17 +43,24 @@ async function lose(t) {
   return f;
 }
 
-test('new Team edition automatically retries the same exact mission without rereading art or carrying held directions', async (t) => {
+test('terminal Team failure waits for deliberate Retry, then reuses the exact picture without held directions', async (t) => {
   const f = await lose(t);
   const reads = f.artwork.calls.reads.length;
-  f.tick(90);
-  assert.equal(f.$('coop-overlay').hidden, true);
+  const endedAt = f.$('coop-clock').textContent;
+  f.tick(150);
+  assert.equal(f.$('coop-overlay').hidden, false);
   assert.equal(f.$('coop-menu').hidden, true);
-  assert.equal(f.$('coop-reserves').textContent, '1 reserve');
-  assert.equal(f.$('coop-coverage').textContent, '0.0%');
-  assert.match(f.$('coop-message').textContent, /unfinished line crossed itself.*New attempt/);
+  assert.equal(f.$('coop-reserves').textContent, '0 reserves');
+  assert.equal(f.$('coop-clock').textContent, endedAt);
+  assert.match(f.$('coop-overlay-copy').textContent, /unfinished line crossed itself/);
+  assert.doesNotMatch(f.$('coop-overlay-copy').textContent, /starts shortly/);
   assert.equal(f.artwork.calls.reads.length, reads);
   assert.equal(f.$('coop-level').value, 'twin-landings');
+  f.$('coop-retry').click();
+  assert.equal(f.$('coop-overlay').hidden, true);
+  assert.equal(f.$('coop-reserves').textContent, '1 reserve');
+  assert.equal(f.$('coop-coverage').textContent, '0.0%');
+  assert.equal(f.artwork.calls.reads.length, reads);
   f.tick(90);
   assert.equal(f.$('coop-state-0').textContent, 'On reclaimed ground');
   assert.equal(f.$('coop-state-1').textContent, 'On reclaimed ground');
@@ -68,7 +75,7 @@ for (const action of [
   'manual-retry',
   'disconnect',
 ]) {
-  test(`Team automatic retry loses authority after ${action}`, async (t) => {
+  test(`terminal Team result remains deliberate after ${action}`, async (t) => {
     const f = await lose(t);
     if (action === 'focus') f.$('coop-lobby').focus();
     if (action === 'focus-return') {
@@ -109,7 +116,7 @@ for (const action of [
   });
 }
 
-test('Team automatic retry stops after a painter failure instead of retrying in a loop', async (t) => {
+test('terminal Team result stays stopped after a painter failure instead of retrying in a loop', async (t) => {
   const f = await lose(t);
   const errors = [];
   t.mock.method(console, 'error', (error) => errors.push(error));
