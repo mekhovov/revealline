@@ -415,7 +415,9 @@ export function attachLibraryPanel(api) {
     pager.change = change;
     previous.disabled = page === 0;
     next.disabled = page >= pages - 1;
-    localizedText(label, () => `${total} entries · page ${page + 1} of ${pages}`);
+    localizedText(label, () =>
+      t('interface:library.page', { count: total, page: page + 1, pages }),
+    );
     if (id === 'gallery-pages') {
       nav.hidden = pages <= 1;
       if (nav.hidden) {
