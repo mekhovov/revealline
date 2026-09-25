@@ -25,6 +25,14 @@ shards are recorded as deferred rather than passes. Post-merge qualification use
 `run_tests=false` and `freeze_snapshot=true` before the guarded release, selector,
 Pages and public verification sequence.
 
+The accepted v0.115.0 source and its corrective merge now end at
+`902da32de72d5f2772f11d2a6575f334d56c7cb8`: current Team picture authority is
+FPV revision 79, retained authority covers revisions 58–78, and the finite host
+accepts 22 current-plus-retained policies. The next isolated local candidate is
+v0.116.0 for exact Solo, Versus and Team Journey picture rewards. It preserves the
+accepted compact Home/lobby/Pause behavior and is not yet merged, tagged, deployed
+or publicly accepted.
+
 Player review of the published craft found that its detached white corner
 locator obscures the silhouette and has no clear gameplay meaning. The bounded
 v0.103.0 correction removes that overlay from current Journey rendering while
@@ -338,7 +346,7 @@ successful actions retire hints and Retry does not repeat long introductions.
 | Phase | State                        | Independent releases and blocking acceptance                                                                                                                                                                                                                                                                                                                                                                            |
 | ----- | ---------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | UX0   | PR320 qualifying, not public | Baseline/input: spatial Journey grid, omitted Couch controls, primary boot/mission focus, one menu-key owner; resolve reproduced targeted and mandatory full-suite failures with contract evidence. The reachability audit adds Legacy Versus continuation and Team paused header controls. Qualification also corrects requested Workshop return and prevents automatic optional-Remix entry at a core Journey ending. |
-| UX1   | Remaining                    | Compact complete gallery, map/artwork previews, one-action play, selection restoration and Journey Collection rewards; all content sources and separate mode completion pass.                                                                                                                                                                                                                                           |
+| UX1   | v0.116.0 candidate           | Exact Journey rewards and completed-card artwork are integrated locally on accepted v0.115.0; final exact-head checks, merge, freeze, deployment and public acceptance remain. Compact complete gallery, map/artwork previews and all-source grouping remain later UX1-B work.                                                                                                                                          |
 | UX2   | Remaining                    | Shared Home/lobbies/Pause, remove duplicate entry points and tuning prose, consistent Back/Help/Settings/Sound; direct Start and exact return focus pass.                                                                                                                                                                                                                                                               |
 | UX3   | Remaining                    | Objective-led HUD, responsive boards/touch controls, contextual hints; complete playable boards and controls coexist on short landscape and portrait.                                                                                                                                                                                                                                                                   |
 | UX4   | Remaining                    | Separate countdown/short Retry, deliberate terminal Retry, named Next and campaign-ending releases; no pre-Go ticks, stale launches, lost results or duplicate awards.                                                                                                                                                                                                                                                  |
@@ -387,11 +395,13 @@ after that moves UX0 to Completed does implementation advance to UX1-A.
 
 ### UX1 implementation boundaries
 
-Current preparation combines **UX1-A1: exact Solo Journey pictures** and
-**UX1-A2: Versus/Team admission** on current main, followed by UX1-B. See
+The v0.116.0 candidate combines **UX1-A1: exact Solo Journey pictures** and
+**UX1-A2: Versus/Team admission** on accepted main
+`902da32de72d5f2772f11d2a6575f334d56c7cb8`, followed by UX1-B. See
 [the UX1-A1 draft contract and evidence](ux1-a1-journey-rewards.md) and the
-[A2 cross-mode contract](ux1-a2-cross-mode-rewards.md). The combined draft remains
-unversioned and has no public-release acceptance. The historical preparation
+[A2 cross-mode contract](ux1-a2-cross-mode-rewards.md). The combined candidate is
+versioned locally but has no merge, tag, deployment or public-release acceptance.
+The historical preparation
 findings below remain applicable.
 
 Source preparation identifies why Journey wins announce a picture while Collection

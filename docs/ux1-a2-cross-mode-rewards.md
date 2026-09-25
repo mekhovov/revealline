@@ -1,7 +1,7 @@
 # UX1-A2: exact Versus and Team Journey pictures
 
-Status: reconciled with UX1-A1 against main
-`fb703070ea4d4a48fa73ba23a8819bb2053aea6f`. It remains unversioned and does not
+Status: v0.116.0 release candidate reconciled with UX1-A1 onto accepted v0.115.0
+corrective main `902da32de72d5f2772f11d2a6575f334d56c7cb8`. This local candidate does not
 merge, tag, deploy or change an immutable release.
 
 ## Implemented slice
@@ -51,6 +51,9 @@ Collection information architecture and artwork-first gallery remain UX1-B/UX5.
 
 ## Focused evidence
 
+The following evidence belongs to the exact pre-integration draft and must be
+rerun on the final v0.116.0 candidate after the accepted v0.115.0 merge:
+
 - Journey ledger and Team progress files: 16/16 tests passed, with no skips. This
   covers historical reader preservation, atomic storage, cross-mode isolation,
   invalid presentation fallback and store recreation.
@@ -67,19 +70,18 @@ Collection information architecture and artwork-first gallery remain UX1-B/UX5.
   its opener. One selected case passed; twelve unrelated cases were unselected by
   the test-name filter.
 
-Current main already carries the later closed Team picture authority at theme
-revision 77 with exact retained revisions 58–76 and a bounded twenty-policy host.
-The reconciliation preserves that accepted authority; it does not replay the stale
-revision-69-to-73 repair from the old stack. The combined reward, storage,
+Accepted main carries the closed Team picture authority at theme revision 79 with
+exact retained revisions 58–78 and a bounded 22-policy host. The reconciliation
+preserves that accepted authority; it does not replay any stale picture-binding
+repair from the old stack. The combined reward, storage,
 current-authority, Legacy Team and real Solo/Team host run passes 117/117 with no
 skips. Both changed all-campaign Versus journeys pass; eleven unrelated cases are
 unselected by the focused name filter.
 
-A complete Versus file retains one inherited current-main fixture failure: its
-unchanged controller chooser case expects 120 cards while the current catalogue
-renders 198. It does not exercise the added reward assertions. Catalogue fixture
-repair belongs with the compact-gallery/content inventory work, not this reward
-contract.
+The v0.116.0 integration keeps the accepted 198-card catalogue assertion, adds the
+exact current-route inventory comparison and bounds continuation preparation to 15
+seconds. Its final focused result is recorded separately rather than relabeling the
+earlier draft run.
 
 Focused source evidence is not release acceptance. Visual review, actual reload,
 Retry and Next recovery with missing bytes, physical controller/touch checks,
@@ -96,6 +98,7 @@ Pages verification remain required before this stack can ship.
 3. Verify keyboard, controller/D-pad and touch access to the mode-local dialog at
    desktop, 1280×800, portrait and short-landscape layouts. Hardware evidence stays
    distinct from modeled input.
-4. Version, freeze, deploy and publicly verify this feature only after the current
-   serialized publisher lane is accepted. This draft performs none of those actions.
+4. Freeze, deploy and publicly verify this versioned feature only after the current
+   serialized publisher lane is accepted. This local candidate performs none of
+   those actions.
 5. Continue UX1-B for the complete compact campaign gallery and UX2–UX6 afterward.
