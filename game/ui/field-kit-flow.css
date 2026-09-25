@@ -58,22 +58,18 @@
   touch-action: manipulation;
   color: var(--fk-text);
 }
-.field-kit.game-shell
-  .home-actions
-  :is(
-    #shell-course-return,
-    #shell-featured,
-    #shell-continue,
-    #shell-play,
-    #shell-gallery,
-    #shell-options
-  ) {
+.field-kit.game-shell .home-actions :is(#shell-course-return, #shell-featured, #shell-continue) {
   grid-column: 1 / -1;
 }
 .field-kit.game-shell .home-actions :is(#shell-featured, #shell-continue) {
   color: var(--fk-on-accent);
   background: var(--fk-amber);
   border-color: var(--fk-amber);
+}
+.field-kit.game-shell
+  .home-actions
+  :is(#shell-play, #shell-gallery, #shell-options, #shell-workshop, #shell-sound) {
+  grid-column: auto;
 }
 .field-kit.game-shell .home-actions :is(.button, #shell-play, #shell-featured):hover {
   border-color: var(--fk-cyan);
@@ -86,6 +82,7 @@
 }
 .field-kit .home-destination {
   max-width: 38ch;
+  margin-block: 10px 0;
   color: var(--fk-cyan);
   font-size: var(--fk-text-secondary);
   line-height: 1.5;
