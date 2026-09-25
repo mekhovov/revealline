@@ -1,17 +1,19 @@
 import { required } from '../data-json.mjs';
+import { t } from '../i18n/index.mjs';
 
 const nativeSize = Object.getOwnPropertyDescriptor(Blob.prototype, 'size').get;
 export const creatorAbort = (signal) => {
-  if (signal?.aborted) throw new DOMException('Creator operation cancelled.', 'AbortError');
+  if (signal?.aborted)
+    throw new DOMException(t('errors:creator.operationCancelled'), 'AbortError');
 };
-export function ownCreatorBlob(source, maxBytes, label = 'File') {
+export function ownCreatorBlob(source, maxBytes, label = t('interface:file')) {
   let size;
   try {
     size = nativeSize.call(source);
   } catch {
-    throw new TypeError(`${label} must be a native file or Blob.`);
+    throw new TypeError(t('errors:creator.nativeBlobRequired', { label }));
   }
-  required(size > 0 && size <= maxBytes, `${label} exceeds its byte budget or is empty.`);
+  required(size > 0 && size <= maxBytes, t('errors:creator.blobByteBudget', { label }));
   return Blob.prototype.slice.call(source, 0, size);
 }
 export async function creatorSHA256(bytes) {
