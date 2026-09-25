@@ -22,14 +22,11 @@ jobs:
           script: |
             const pull = context.payload.pull_request;
             const targetPrefix = /^\[Target v\d+\.\d+\.\d+(?: input)?\]\s*/;
-            const inputPrefix = /^\[Target v\d+\.\d+\.\d+ input\]\s*/;
             const releasePrefix = /^Release v\d+\.\d+\.\d+\b/;
             const milestone = pull.milestone?.title ?? '';
             const version = milestone.match(/^v(\d+\.\d+\.\d+)(?:\b|\s|—|-)/)?.[1] ?? null;
             const baseTitle = pull.title.replace(targetPrefix, '').trim();
-            const input =
-              inputPrefix.test(pull.title) ||
-              pull.labels.some(({ name }) => name === 'release-aggregate-input');
+            const input = pull.labels.some(({ name }) => name === 'release-aggregate-input');
             const expectedTitle = releasePrefix.test(pull.title)
               ? pull.title
               : version
