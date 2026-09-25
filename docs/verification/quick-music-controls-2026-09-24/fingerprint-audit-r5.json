@@ -1,0 +1,232 @@
+{
+  "format": "revealline-quick-music-fingerprint-audit.v1",
+  "checkedAt": "2026-09-25T02:16:00.356Z",
+  "stackedBaseCommit": "7cbf5771f69917dd9b24cc88e9687fec77f2a876",
+  "runtimeSourceCommit": "7aa937a1f64bc9367cdd09759f637f513f1792eb",
+  "pullRequest": "https://github.com/mekhovov/revealline/pull/333",
+  "method": "Read each ordered source group from scripts/produce-field-kit-theme.mjs on the exact PR #370 stack base and candidate; compare SHA-256 concatenations and changed paths. Focused suites execute from the reconciled worktree.",
+  "groups": {
+    "ui": {
+      "orderedInputs": [
+        "game/ui/field-kit-components.css",
+        "game/ui/field-kit-compiled.css",
+        "game/presentation/host.mjs",
+        "game/presentation/team-runtime-slots.mjs",
+        "game/ui/operation-status.css",
+        "game/ui/operation-status.mjs",
+        "game/presentation/dom-ownership.mjs"
+      ],
+      "baseSha256": "4b7db79dd3f6931dd72c0ae702f15a5a5d8ff2b7044aca5a2e02886e8e61636a",
+      "candidateSha256": "4b7db79dd3f6931dd72c0ae702f15a5a5d8ff2b7044aca5a2e02886e8e61636a",
+      "changedInputs": []
+    },
+    "screens": {
+      "orderedInputs": [
+        "game/ui/field-kit-flow.css",
+        "game/ui/field-kit-surfaces.css",
+        "game/ui/field-kit-compiled.css",
+        "site/release-catalog.css"
+      ],
+      "baseSha256": "acf6426f5cd47f21a85ec5ae9da9549ed58fbe330b097c979dc85b87afe2d68a",
+      "candidateSha256": "acf6426f5cd47f21a85ec5ae9da9549ed58fbe330b097c979dc85b87afe2d68a",
+      "changedInputs": []
+    },
+    "motion": {
+      "orderedInputs": [
+        "authoring/motion-lab/render-character.mjs",
+        "game/ui/actor-presentation.mjs",
+        "game/presentation/journey-actor-materials.mjs"
+      ],
+      "baseSha256": "c35fcf823a0923f27f1193afa247e2d0c93b6fc4161976a5d6a2b67a5bc143a9",
+      "candidateSha256": "c35fcf823a0923f27f1193afa247e2d0c93b6fc4161976a5d6a2b67a5bc143a9",
+      "changedInputs": []
+    },
+    "effects": {
+      "orderedInputs": [
+        "game/ui/classic-view.mjs",
+        "game/ui/event-feedback.mjs",
+        "game/content-design/actor-marker.mjs",
+        "game/ui/lane-presentation.mjs",
+        "game/ui/render.mjs",
+        "game/ui/relay-view.mjs",
+        "game/ui/directional-view.mjs",
+        "game/ui/enemy-body-assets.mjs",
+        "game/ui/enemy-body-motion.mjs",
+        "game/enemy-catalog.mjs"
+      ],
+      "baseSha256": "654fed2ce5b5e9b5e0c6bb79a6d7095093a4ed8128877b1a7f0658d830c275e7",
+      "candidateSha256": "654fed2ce5b5e9b5e0c6bb79a6d7095093a4ed8128877b1a7f0658d830c275e7",
+      "changedInputs": []
+    },
+    "team": {
+      "orderedInputs": [
+        "game/couch/coop-view.mjs",
+        "game/couch/coop-actor-presentation.mjs",
+        "game/couch/coop-anchor-presentation.mjs",
+        "game/couch/coop-core-presentation.mjs",
+        "game/couch/coop-support-presentation.mjs",
+        "game/couch/coop-emitter-presentation.mjs",
+        "game/couch/coop-rescue-presentation.mjs",
+        "game/couch/coop-pilot-slots.mjs",
+        "game/couch/coop-enemy-slots.mjs",
+        "game/couch/coop-outcome-presentation.mjs",
+        "game/presentation/team-runtime-slots.mjs",
+        "game/ui/actor-presentation.mjs",
+        "game/presentation/catalog.mjs",
+        "game/couch/coop-actor-layout.mjs",
+        "game/couch/coop-terrain-trail.mjs",
+        "game/couch/coop-bonus-view.mjs",
+        "game/couch/candidate-team-pictures.mjs",
+        "game/content-design/material-markers.mjs",
+        "game/presentation/journey-actor-materials.mjs",
+        "authoring/motion-lab/render-character.mjs",
+        "game/ui/classic-view.mjs",
+        "game/ui/presentation-draw-image.mjs",
+        "game/ui/enemy-body-assets.mjs",
+        "game/ui/enemy-body-motion.mjs",
+        "authoring/motion-lab/animation.mjs",
+        "game/content-design/actor-marker.mjs",
+        "game/enemy-catalog.mjs"
+      ],
+      "baseSha256": "af9b229c4a1d0aa5a5c44516e8def34255f03d9e510f7e780e797b58f79d2210",
+      "candidateSha256": "af9b229c4a1d0aa5a5c44516e8def34255f03d9e510f7e780e797b58f79d2210",
+      "changedInputs": []
+    },
+    "audio": {
+      "orderedInputs": [
+        "game/ui/audio.mjs",
+        "game/ui/published-audio.mjs",
+        "game/ui/soundtrack-player.mjs",
+        "game/ui/audio-master.mjs",
+        "game/soundtrack.mjs",
+        "game/soundtrack-rights.mjs",
+        "game/soundtrack-bundle.mjs",
+        "game/soundtrack-share.mjs",
+        "game/soundtrack-source.mjs",
+        "game/ui/soundtrack-panel.mjs",
+        "game/ui/soundtrack-panel.css",
+        "game/soundtrack-albums.mjs",
+        "game/soundtrack-portable.mjs",
+        "game/content/soundtrack-catalogue.mjs",
+        "game/online-soundtrack-catalogue.mjs"
+      ],
+      "baseSha256": "6b9b58a0d51a1b15d533e76b531cb4db09662274c8b5cad3988b06f01e7327c4",
+      "candidateSha256": "6b9b58a0d51a1b15d533e76b531cb4db09662274c8b5cad3988b06f01e7327c4",
+      "changedInputs": []
+    }
+  },
+  "changedRuntimePathsOutsideCurrentGroups": [
+    "game/app.mjs",
+    "game/couch/couch-music-host.mjs",
+    "game/couch/couch.mjs",
+    "game/couch/index.html",
+    "game/couch/relay-rescue.html",
+    "game/couch/relay-rescue.mjs",
+    "game/index.html",
+    "game/ui/quick-music-controls.css",
+    "game/ui/quick-music-controls.mjs"
+  ],
+  "sourceFiles": [
+    {
+      "path": "game/app.mjs",
+      "bytes": 417127,
+      "sha256": "c4671086c1d2829a19a8c161ae91a5bb75970a6071548aad8a554284924c1f53"
+    },
+    {
+      "path": "game/couch/couch-music-host.mjs",
+      "bytes": 14384,
+      "sha256": "515b8f549f4cd65f2e7f48cc806fb5af027c91b0087085fe746345383729be7f"
+    },
+    {
+      "path": "game/couch/couch.mjs",
+      "bytes": 147020,
+      "sha256": "3c32a3480312658ce7e5005484b3ced273381a5644c41f50a22950ecf9e25c48"
+    },
+    {
+      "path": "game/couch/index.html",
+      "bytes": 26221,
+      "sha256": "08e8f9608711951b1b7d1020906ac3b7312b75aeae66503f9d5a9edd2c4dbe0c"
+    },
+    {
+      "path": "game/couch/relay-rescue.html",
+      "bytes": 30348,
+      "sha256": "d21454dbac38097cb71b9b8783b491a3feb24e19652a396ad4bc8ab7ada2734a"
+    },
+    {
+      "path": "game/couch/relay-rescue.mjs",
+      "bytes": 186698,
+      "sha256": "6972c0494dff054a3c56a8e90ca3f15ef418badab03f933a0d58c7cccea05ba4"
+    },
+    {
+      "path": "game/index.html",
+      "bytes": 82536,
+      "sha256": "f93ccfdba243b8efada71d62dea4b5d4efd6ea89e2d3fc14504cc27db8055c41"
+    },
+    {
+      "path": "game/ui/quick-music-controls.css",
+      "bytes": 713,
+      "sha256": "f55f65d8572c109483481023943fc98d219cf7c5b9002663ff835404312dffff"
+    },
+    {
+      "path": "game/ui/quick-music-controls.mjs",
+      "bytes": 7835,
+      "sha256": "91e41346b0956a7ae20174dbf7b9bfe327c69f9f9347f5fb5e0f816fc1e71074"
+    }
+  ],
+  "productionFilesChanged": [],
+  "decision": "No production-ledger write or review-pin update is justified under the current declared dependency graph. The quick-control host, CSS and module remain outside the declared Field Kit recipe groups; unchanged fingerprints preserve revisions 1 through 77 without extending their approval to the new controls.",
+  "verification": {
+    "focusedAudioControlHostPanelPlayer": {
+      "tests": 346,
+      "pass": 346,
+      "fail": 0,
+      "skipped": 0
+    },
+    "presentationProductionHistory": {
+      "tests": 12,
+      "pass": 12,
+      "fail": 0
+    },
+    "inheritedTeamProductionHistory": {
+      "stackBase": {
+        "tests": 3,
+        "pass": 1,
+        "fail": 2
+      },
+      "candidate": {
+        "tests": 3,
+        "pass": 1,
+        "fail": 2
+      },
+      "exactFailure": "team.enemy.drifter remains source rather than reviewed",
+      "interpretation": "Identical pre-existing failure at the exact PR #370 base and candidate; this feature changes no Team recipe input or production output. It remains a qualification blocker owned by the accepted baseline/PR #370 lane, not a pass."
+    },
+    "inheritedCouchNavigationHost": {
+      "stackBase": {
+        "selected": 3,
+        "pass": 0,
+        "fail": 3,
+        "skipped": 45
+      },
+      "candidate": {
+        "selected": 3,
+        "pass": 0,
+        "fail": 3,
+        "skipped": 45
+      },
+      "exactFailures": [
+        "actual select previews cancel without replacing the duel and commit once through onchange",
+        "lobby, setup and children use reachable native controls and Back restores the actual opener",
+        "pause children and cancelled new match preserve two different continuations; reset is explicit"
+      ],
+      "interpretation": "Targeted runs reproduce the same three existing failures on the exact PR #370 base and candidate. They remain explicit upstream qualification blockers and are not counted as quick-control passes."
+    }
+  },
+  "independentReview": "pending",
+  "remainingAcceptance": [
+    "Independent source/diff review at the final stacked head after PR #370 stabilizes.",
+    "Actual browser layout and focus checks for Solo, Versus and Team main/pause rows.",
+    "Physical keyboard, touch and controller navigation/Confirm checks, including blocked playback retry and custom-binding precedence.",
+    "Frozen artifact, offline and deployed public playback acceptance after version allocation."
+  ]
+}

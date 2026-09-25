@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { attachCouchMusicHost } from '../couch/couch-music-host.mjs';
+import { BUILTIN_SOUNDTRACK_TRACKS } from '../soundtrack.mjs';
 import { createAudioMaster } from '../ui/audio-master.mjs';
 import { createManagedMediaStore } from '../managed-media-store.mjs';
 import { prepareSoundtrackLibrary } from '../soundtrack-bundle.mjs';
@@ -9,7 +10,10 @@ import { audioHarness, settleUntil } from './helpers/soundtrack-audio.mjs';
 import { fixture, structuralProbe, memoryIndexedDB } from './helpers/soundtrack-fixtures.mjs';
 
 const recording = await fixture('menu-gesture');
-async function setup(t, { prefix = 'coop', muted = false, volume = 0.65, ready = true } = {}) {
+async function setup(
+  t,
+  { prefix = 'coop', muted = false, volume = 0.65, ready = true, twoTracks = false } = {},
+) {
   const doc = new Document(),
     audio = audioHarness(),
     memory = memoryIndexedDB(),
@@ -24,7 +28,7 @@ async function setup(t, { prefix = 'coop', muted = false, volume = 0.65, ready =
       {
         id: 'menu.test',
         title: 'Menu recording',
-        trackIds: [recording.track.id],
+        trackIds: [recording.track.id, ...(twoTracks ? [BUILTIN_SOUNDTRACK_TRACKS[0].id] : [])],
         order: 'ordered',
         repeat: 'all',
       },
@@ -53,11 +57,16 @@ async function setup(t, { prefix = 'coop', muted = false, volume = 0.65, ready =
   const pause = doc.createElement('button');
   pause.id = `${prefix}-pause`;
   pause.textContent = 'Pause';
-  doc.body.append(pause);
+  const start = doc.createElement('button'),
+    resume = doc.createElement('button');
+  start.id = `${prefix}-start`;
+  resume.id = `${prefix}-resume`;
+  doc.body.append(start, resume, pause);
   const host = attachCouchMusicHost({
     document: doc,
     root: doc.body,
     prefix,
+    quickAfter: [`${prefix}-start`, `${prefix}-resume`],
     soundscape: audio.soundscape,
     audioMaster: master,
   });
@@ -185,3 +194,39 @@ for (const prefix of ['race', 'coop'])
     assert.equal(pause.getAttribute('data-track-caption'), `Paused: ${recording.track.title}`);
     assert.equal(f.doc.activeElement, pause);
   });
+
+for (const prefix of ['race', 'coop']) {
+  test(`${prefix}: quick buttons and B/N preserve music-only Pause through session Start and focus`, async (t) => {
+    const f = await setup(t, { prefix, twoTracks: true });
+    const toggle = f.doc.getElementById(`${prefix}-quick-music-0-toggle`);
+    const pausedToggle = f.doc.getElementById(`${prefix}-quick-music-1-toggle`);
+    const master = f.master.snapshot(),
+      writes = f.memory.allPuts.length;
+    const resume = f.doc.getElementById(`${prefix}-resume`);
+    resume.focus();
+    assert(f.host.contains(toggle), 'Versus controller acceptance includes the quick row');
+    toggle.emit('pointerdown', { isTrusted: true });
+    assert.equal(f.audio.media.plays, 0, 'Pointer capture must not autoplay before the control');
+    toggle.click();
+    assert.equal(f.audio.media.plays, 1, 'Direct activation reaches media before awaiting');
+    await settleUntil(() => f.host.player.snapshot().playing);
+    pausedToggle.click();
+    assert.equal(f.host.session.snapshot().transportChoice, 'pause');
+    assert.equal(await f.host.session.start(), false);
+    const plays = f.audio.media.plays;
+    f.doc.body.emit('keydown', { code: 'KeyN', key: 'n' });
+    await settleUntil(() => f.host.player.snapshot().track?.id === BUILTIN_SOUNDTRACK_TRACKS[0].id);
+    assert.equal(f.host.player.snapshot().desired, false);
+    assert.equal(f.host.player.snapshot().playing, false);
+    assert.equal(f.audio.media.plays, plays);
+    f.host.suspend();
+    await f.host.resume();
+    assert.equal(f.host.player.snapshot().desired, false);
+    assert.equal(f.doc.activeElement, resume);
+    assert.deepEqual(f.master.snapshot(), master);
+    assert.equal(f.memory.allPuts.length, writes);
+    f.doc.body.emit('keydown', { code: 'KeyB', key: 'b' });
+    await settleUntil(() => f.host.player.snapshot().playing);
+    assert.equal(f.host.session.snapshot().transportChoice, 'play');
+  });
+}
