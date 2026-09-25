@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { page } from './helpers/coop-host.mjs';
 import { teamImage } from './helpers/coop-win.mjs';
+import { candidateTeamPictureTransport } from './helpers/candidate-team-picture-transport.mjs';
 import { playCurrentTeamRoute } from './helpers/current-team-route.mjs';
 import { dataIdentity } from '../data-json.mjs';
 import { applyGameplayTuning, resolveGameplayTuning } from '../gameplay-tuning.mjs';
@@ -15,6 +16,9 @@ import { JOURNEY_PREFERENCES_KEY, JOURNEY_PREFERENCES_VERSION } from '../journey
 
 const href = 'http://localhost/game/couch/relay-rescue.html?journey=team-greybox';
 const source = createTeamJourneyCandidates();
+const installCandidatePicture = await candidateTeamPictureTransport(
+  createTeamJourneyCandidates({ artwork: true }),
+);
 const navigation = createCandidateTeamHost(source, {
   corePackIds: source.packs.map((pack) => pack.id),
 });
@@ -518,9 +522,11 @@ for (const failure of ['loading', 'first-paint', 'adoption'])
     assert.equal(f.$('coop-level').value, 'stepping-exchange');
   });
 
-test('Skip from a legitimately lost Team attempt cancels automatic retry and still requires confirmation', async (t) => {
+test('Skip from a legitimately lost Team attempt keeps the result until deliberate confirmation', async (t) => {
   const f = await journeyPage(t, {
+    href: 'http://localhost/game/couch/relay-rescue.html?journey=team-originals',
     beforeImport({ install }) {
+      installCandidatePicture(install);
       install('localStorage', { value: storage('expert') });
     },
   });
@@ -540,7 +546,7 @@ test('Skip from a legitimately lost Team attempt cancels automatic retry and sti
     if (cycle === 0) f.tick(180);
   }
   assert.equal(f.$('coop-overlay').hidden, false);
-  assert.match(f.$('coop-overlay-copy').textContent, /starts shortly/);
+  assert.doesNotMatch(f.$('coop-overlay-copy').textContent, /starts shortly/);
   armSkip(f, 'coop-journey-skip-confirm');
   f.tick(150);
   assert.equal(f.$('coop-overlay').hidden, false);
