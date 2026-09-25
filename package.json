@@ -28,7 +28,8 @@
     "format:native:check": "prettier --check \"platforms/desktop/*.mjs\" \"platforms/desktop/test/*.mjs\" \"platforms/ios/{bridge,scripts,test,diagnostics}/*.{mjs,js,html,css}\"",
     "i18n:build": "node scripts/localization.mjs build",
     "i18n:check": "node scripts/localization.mjs check",
-    "i18n:extract": "node scripts/localization.mjs extract"
+    "i18n:extract": "node scripts/localization.mjs extract",
+    "i18n:check:main": "node scripts/localization-main.mjs && npm run i18n:check"
   },
   "dependencies": {
     "mediabunny": "1.59.1",
