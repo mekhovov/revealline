@@ -1,21 +1,28 @@
 # Phase 8 acceptance record
 
-Status: **bounded silent-AVC browser conversion implemented with fail-closed audio inventory;
-audio conversion remains open**.
+Status: **bounded silent MP4/WebM trim, conversion, resize and compression implemented with
+fail-closed audio inventory; audio conversion remains open**.
 
 ## Automated evidence
 
 The original final scoped run passed 100/100 tests across the adapter, editor boundary, poster
 capture/workshop, mixed-media intake/review and release-build graph. The follow-up exact-byte audio
 gate passed 36/36 focused adapter, editor-boundary and workshop tests. The visual-boundary
-follow-up passed 44/44 focused editor, adapter, workshop and release-build tests.
+follow-up passed 44/44 focused editor, adapter, workshop and release-build tests. The silent-WebM
+conversion follow-up passed 41/41 focused adapter, editor-boundary and workshop tests, followed by
+105/105 across those boundaries plus video inspection, mixed-media intake/review, portable video
+bundles and the focused release-build fixture.
+The bounded resize/compression follow-up passed 48/48 focused adapter, editor-boundary and workshop
+tests, then 112/112 across those boundaries plus video inspection, mixed-media intake/review,
+portable video bundles and the focused release-build fixture.
 
 - Playback ranges validate positive in-bounds timing and retain the complete original.
 - Directional decoded-frame stepping requires browser presented-frame evidence and rejects an estimate-only
   capture before allocating another result.
 - Pinned Mediabunny 1.59.1 loads lazily only after a physical-trim support check.
-- The production adapter accepts exactly one silent AVC/H.264 MP4 when browser WebCodecs decode and
-  encode probes pass. Audio, WebM, non-AVC, multi-video and unavailable-codec cases are explicit.
+- The production adapter accepts exactly one silent MP4 or WebM video track when browser WebCodecs
+  can decode its actual codec and encode AVC. It always emits AVC MP4; audio, multi-video,
+  additional-track and unavailable-codec cases remain explicit.
 - A separate track-inventory pass authenticates the exact source and output SHA-256/byte count and
   requires zero audio tracks. Audio-bearing sources stop before adapter capability checks;
   audio-bearing outputs stay private even when an adapter claims verified synchronization.
@@ -27,6 +34,15 @@ follow-up passed 44/44 focused editor, adapter, workshop and release-build tests
 - Unchanged bytes, duration drift and changed orientation are rejected by the outer boundary.
 - Workshop tests cover frame-step enablement, estimate-only disablement, playback/trim wording,
   unsupported conversion, verified output URL lifetime and explicit zero-audio provenance.
+- Cross-container boundary tests bind WebM source identity to an independently reopened AVC MP4
+  output; an adapter cannot publish bytes by changing only its claimed MIME or codec label.
+- Balanced and Compact profiles derive exact even output dimensions inside 1280 × 720 or 640 × 360,
+  preserve the inspected aspect/orientation, disable upscaling, and bind a 2.5 or 0.9 Mbit/s target
+  into the reviewed evidence. Full-range conversion is allowed only after selecting a transform.
+- The outer boundary requires decoded output dimensions to equal the reviewed plan, independently
+  authenticates one AVC video track and zero audio tracks, records the exact-byte/duration
+  whole-container average, and rejects it above two times the requested target plus 256 kbit/s.
+  Tests withhold output for dimension, bitrate, codec, audio and boundary-picture drift.
 
 ## Local parser cross-check
 
@@ -66,6 +82,43 @@ fixture then passed the production path:
   passed. The download appeared as `RevealLine-trimmed.mp4`, audio was labeled `not-present`, and
   the browser console had no warning or error.
 
+The same built-in browser then exercised the new cross-container path with a temporary FFmpeg 9.0.2
+`testsrc2` fixture; no fixture bytes were committed:
+
+- source: WebM, VP9, no audio, 320 × 180, 4 seconds, 56,751 bytes, SHA-256
+  `9dd28bf5cea043205e7246f4ec7314d1d5a0a7539d51f2b94b426a4aace96736`;
+- requested physical range: 1–3 seconds;
+- capability: the lazy converter confirmed VP9 decode and AVC encode support in this browser;
+- output: MP4, AVC/H.264, 320 × 180, 2 seconds, 47,003 bytes, SHA-256
+  `0f763062363af56be5e7962a3ad8179868450cd4edbe16c0041fc38feb300c4c`;
+- decoded visual boundary error: start `0.000595`, end `0.000794`, with fresh presented-frame
+  evidence and the same recorded `0.08` mean RGB limit;
+- result: exact-byte source/output identities, zero-audio inventories, decoded duration and both
+  visual edges passed; the verified MP4 download appeared and the console had no warning or error.
+
+A second temporary VP9 WebM containing one Opus track was 95,604 bytes with SHA-256
+`7c5210731e9bca608050cf12ca59c5dff2606633359eda3f2e146650a0966d78`. FFprobe reported VP9 plus
+Opus, and the production exact-byte inventory independently reported one `opus` audio track. The
+built-in workshop rejected it before adapter capability/conversion, kept the original unchanged and
+left the physical-download action disabled.
+
+The built-in browser also completed the bounded resize/compression path using a temporary 1280 ×
+720 `testsrc2` VP9 WebM; no fixture bytes were committed:
+
+- source: WebM, VP9, no audio, 1280 × 720, 4 seconds, 614,824 bytes, SHA-256
+  `6e494b220ba5a996e65377fea346f7ec35c8d3e9d9ed1d64b0f20c8878b8c200`;
+- reviewed plan: Compact, complete 0–4 second range, fit inside 640 × 360 without upscaling, 0.9
+  Mbit/s AVC target;
+- capability: the lazy converter confirmed VP9 decode and 640 × 360 AVC encode support for that
+  exact plan;
+- output: MP4, independently authenticated AVC/H.264, zero audio, 640 × 360, 4 seconds, 161,103
+  bytes, SHA-256 `5d9d8b45be65bf1798d1e65f84938fa8ae6e59d638407ff6201ae97592f73a30`;
+- observed whole-container average: 322,206 bit/s, below the recorded 2,056,000 bit/s review limit;
+- decoded visual boundary error: start `0.003`, end `0.002669`, with fresh presented-frame
+  evidence bound to the exact source/output hashes and full range;
+- result: the transformed-video download appeared, and the browser console had no warning or
+  error.
+
 ## Build note
 
 The focused release-build fixture passed 5/5 cases and authenticated the exact vendored module,
@@ -78,12 +131,16 @@ gate. That full-tree snapshot gate remains open; it must not be reported as a su
 
 ## Open release gates
 
-- Qualify silent AVC input/output in Firefox and Safari as well as the built-in Chromium browser.
+- Qualify silent AVC MP4 and VP9 WebM input plus AVC output in Firefox and Safari as well as the
+  built-in Chromium browser. Other codecs remain conditional on their actual per-browser decode
+  probe and require their own recorded fixtures before any compatibility claim.
 - Add an independent decoded-audio timestamp and synchronization verifier before enabling audio;
   the current same-parser track inventory proves track absence only.
 - Verify orientation metadata, audio synchronization and target-browser playback on transformed
   files.
-- Add resizing, compression and broader conversion only after their decoded output checks exist.
+- Qualify the Balanced and Compact profiles with recorded landscape and portrait fixtures in every
+  supported browser; the automated boundary currently proves the policy and fail-closed checks.
 
-The broader phase remains incomplete while audio, resize, compression and cross-browser acceptance
-are open. Playback range and poster capture do not count as physical trimming.
+The broader phase remains incomplete while audio and cross-browser/orientation acceptance are open.
+Playback range and poster capture do not count as physical trimming, conversion, resize or
+compression.
