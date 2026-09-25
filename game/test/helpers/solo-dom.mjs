@@ -471,6 +471,9 @@ export async function soloPage(
     win.emit('pagehide', { persisted: false });
     await new Promise((resolve) => setImmediate(resolve));
     db.close();
+    // Model the retired page, not a still-connected document in the next host's
+    // JavaScript realm. Live locale bindings must not refresh detached controls.
+    doc.documentElement.remove();
     console.error = originalError;
     for (const [key, value] of originals)
       value ? Object.defineProperty(globalThis, key, value) : delete globalThis[key];
