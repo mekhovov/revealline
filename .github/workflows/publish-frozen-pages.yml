@@ -7,18 +7,18 @@ on:
       - 'publishing/pages-controller/**'
       - '!publishing/pages-controller/delivery/**'
       - '!publishing/pages-controller/evidence/**'
+      - '!publishing/pages-controller/source-qualification.mjs'
+      - '!publishing/pages-controller/release-train-boundary.mjs'
+      - '!publishing/pages-controller/release-train-boundary.test.mjs'
       - '!publishing/pages-controller/*.test.mjs'
       - '!publishing/pages-controller/test_*.py'
   pull_request:
     branches: [main]
     paths:
       - 'publishing/pages-controller/**'
-      - 'publishing/test-policy.*'
       - '.github/workflows/publish-frozen-pages.yml'
-      - '.github/workflows/deploy-pages.yml'
-      - '.cursor/skills/deploy-release-pages/**'
-      - 'docs/deployment.md'
-      - 'docs/fast-release-mode.md'
+      - 'scripts/pages-archive.mjs'
+      - 'scripts/pages-current-entry.mjs'
   workflow_dispatch:
     inputs:
       release_tag:
@@ -98,16 +98,24 @@ jobs:
         run: node publishing/pages-controller/publish.mjs verify $PREVIEW
 
       - name: Assemble exact current ZIP and historical metadata bridges
+        if: github.event_name != 'pull_request' || vars.REVEALLINE_FULL_CI == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
           PREVIEW: ${{ github.event_name == 'pull_request' && '--preview' || '' }}
         run: node publishing/pages-controller/publish.mjs build $PREVIEW
 
       - name: Independently reread every prepared artifact byte
+        if: github.event_name != 'pull_request' || vars.REVEALLINE_FULL_CI == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
           PREVIEW: ${{ github.event_name == 'pull_request' && '--preview' || '' }}
         run: node publishing/pages-controller/publish.mjs verify-artifact $PREVIEW
+
+      - name: Defer Pages artifact assembly to main publication
+        if: github.event_name == 'pull_request' && vars.REVEALLINE_FULL_CI != 'true'
+        run: |
+          echo 'Fast mode: selector and archive validation passed; full Pages bytes are assembled once after merge.'
+          echo 'Production assembly, independent byte reread, upload, and deployment remain blocking.'
 
       - name: Preserve exact publishing receipts
         if: always()

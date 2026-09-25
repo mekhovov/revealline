@@ -60,7 +60,8 @@
   background: #0c1424;
 }
 .soundtrack-now-card,
-.soundtrack-listen-card {
+.soundtrack-listen-card,
+.soundtrack-online-card {
   border-color: #3f7592;
   border-radius: 8px;
   background: linear-gradient(135deg, #112640 0%, #0c1728 70%), #0c1424;
@@ -78,8 +79,95 @@
   background: linear-gradient(90deg, #4adbc6, #f4c552 52%, #ff6e79);
 }
 .soundtrack-listen-card > h3,
-.soundtrack-now-card > h3 {
+.soundtrack-now-card > h3,
+.soundtrack-online-card > h3 {
   font-size: 18px;
+}
+.soundtrack-online-card {
+  border-color: #7f6ab7;
+  background: #101326;
+}
+.soundtrack-online-card > .soundtrack-actions > .soundtrack-field {
+  min-width: min(220px, 100%);
+  flex: 1 1 220px;
+  margin: 0;
+}
+.soundtrack-online-styles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #3b4868;
+}
+.soundtrack-online-styles legend {
+  padding: 0 5px;
+  color: #c8d8e9;
+}
+.soundtrack-online-style {
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+  padding: 5px 8px;
+  background: #0a1a2c;
+  border: 1px solid #324968;
+  border-radius: 3px;
+  cursor: pointer;
+}
+.soundtrack-online-style:focus-within {
+  border-color: #a5f5ec;
+  outline: 2px solid #a5f5ec55;
+}
+.soundtrack-online-status {
+  margin: 12px 0 8px;
+  color: #bcd0e8;
+}
+.soundtrack-online-results {
+  display: grid;
+  max-height: min(460px, 56vh);
+  border: 1px solid #2c3e58;
+  background: #070d18;
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+.soundtrack-online-track {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: center;
+  min-width: 0;
+  padding: 9px;
+  border-bottom: 1px solid #1d2c42;
+}
+.soundtrack-online-track:last-child {
+  border-bottom: 0;
+}
+.soundtrack-online-track:hover,
+.soundtrack-online-track:focus-within {
+  background: #142039;
+}
+.soundtrack-online-details {
+  display: grid;
+  min-width: 0;
+}
+.soundtrack-online-details strong,
+.soundtrack-online-details span,
+.soundtrack-online-details small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.soundtrack-online-details strong {
+  color: #f7f0ff;
+}
+.soundtrack-online-details span {
+  color: #9de3d9;
+}
+.soundtrack-online-details small {
+  color: #8296b0;
+}
+.soundtrack-online-source {
+  color: #f4c552;
 }
 .soundtrack-lede {
   max-width: 62ch;
@@ -317,6 +405,12 @@
   }
   .soundtrack-section {
     padding: 12px;
+  }
+  .soundtrack-online-track {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+  .soundtrack-online-source {
+    grid-column: 2;
   }
   .soundtrack-footer {
     position: static;
