@@ -198,13 +198,26 @@ Unrelated text changes before the refresh still invalidate it, even if translati
 the old caption. This prevents the next controller frame from moving focus to Resume solely
 because the translated reading text changed. Reading prompts and labels translate live.
 
-The focused localization/controller suite passed 238 checks before the final artwork-status
-additions; a broader final checkpoint run is in progress. The Team regression run passed
-104 of 107 checks. Three existing lifecycle-resume cases fail at the final Resume assertion;
-they are not yet classified against main and must remain in the failure investigation.
+The final localization/controller, operation-status, and lobby-preview checkpoint suite
+passed 266 checks; the additional accepted-status producer regression passed five checks. The Team regression run passed
+104 of 107 checks. Three lifecycle-resume cases fail at the final Resume assertion; a separate current-main
+checkout reproduces all three at the same assertion. Sampled Team pressure, timed-bonus,
+and partner-return golden checkpoints also reproduce the exact observed hash mismatch on main.
 The original full suite is still running and has advanced beyond its long v3 host scenarios.
 Those scenarios reported timeouts; do not discard them as baseline failures without evidence.
 A browser cross-tab language switch retained Team reading focus, the active reader, the 0:03
 paused clock, and HUD state in both directions. The built More menu also now shows the
-correct translated All missions link without raw slot markers. Rebuild and native refresh
-are still required for this Team checkpoint.
+correct translated All missions link without raw slot markers. The refreshed web distribution and both native stages pass for this Team checkpoint:
+1,162 web/desktop files / 598,900,053 bytes, and 1,167 iPhone files / 598,980,332 bytes.
+All 21 localization assets match source bytes in both native stages. The web archive SHA-256
+is ae50a8c92b6cffef840d219d896f07b6e2a99b7d44ddbdeabb7351055e26f023.
+The core offline inventory is 993 files / 67,043,819 bytes, with 65,045 bytes remaining
+under its existing limit. Disposable native stages were removed after verification.
+
+Browser offline preparation verified all 993 files. With the local server stopped, the game
+reopened from the prepared cache and switched English/Ukrainian. Launching the current
+Journey then failed fetching its original artwork: the existing offline policy excludes that
+optional artwork. This is not a successful offline flight check. The optional-artwork note,
+phase/verification messages and picture-fetch failure still contain uncatalogued English and
+must be localized. The preview server was restored after the check; no external service was
+changed. Full downloaded/native distributions contain the originals.
