@@ -1,8 +1,8 @@
 # Border and Signal Ukrainian spatial successor draft
 
-Status: implementation prepared on top of `whole-spatial-v12`; route registration,
-edition cards, default enrollment, two-route closure evidence and release version are
-intentionally deferred until the preceding Border batch is accepted.
+Status: implementation and local `whole-spatial-v13` enrollment are prepared on top
+of `whole-spatial-v12`. Release version and publication remain deferred until the
+preceding Border batch is accepted.
 
 ## Scope
 
@@ -49,14 +49,15 @@ rectilinear abstractions. People and animals are never translated into targets.
 - Both authored approaches close successfully across Gentle, Standard and Expert,
   both steering policies and two deterministic seeds.
 - All six approaches reproduce exactly and remain equal on both Versus boards.
+- A distinct v13 route/profile is registered locally and the Studio selector exposes
+  v12 and v13 separately.
 - Two deterministic seeds survive a twelve-second idle opening without damage on
   all three presets.
 - Changed-file formatting and diff checks.
 
 ## Required before enrollment
 
-- Register a successor route/profile and three prior-edition cards without crossing
-  Next between editions.
+- Qualify the three v12 prior-edition cards and prove Next cannot cross editions.
 - Update Studio/default hosts only after the v12 batch is publicly accepted.
 - Run hosted validation, lint, format, build and provenance gates from a complete
   checkout. Long suites remain explicit, never inferred.
