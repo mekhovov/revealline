@@ -506,6 +506,9 @@ export function addPublicEntries(entries, info) {
           )
             ? '<p>Opening-theme music: <cite>Carol of the Bells (Metal Version)</cite> by <a href="https://creatorchords.com/music/carol-of-the-bells-metal-version/">Alexander Nakarada (CreatorChords)</a>, licensed under <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International</a>. This is a modern metal adaptation of the melody associated with Mykola Leontovych’s <cite>Shchedryk</cite>; it does not claim traditional Ukrainian instrumentation.</p>'
             : '') +
+          (localized && has('game/vendor/LZ-STRING-LICENSE.txt')
+            ? '<p data-i18n-rich="website:page.catalogCompressionNotice">Translation catalogs use lz-string by pieroxy under its <a href="./game/vendor/LZ-STRING-LICENSE.txt" data-i18n-slot="license" data-i18n="website:page.license">MIT license</a>.</p>'
+            : '') +
           (has('game/ui/fonts/field-kit/provenance.json')
             ? '<p data-i18n-rich="website:page.fontNotices">Pixel display type: Tiny5 by the Tiny5 Project Authors and designer Stefan Schmidt (<a data-i18n-slot="slot0" href="./game/ui/fonts/OFL.txt">OFL 1.1</a>), self-hosted and unmodified with Cyrillic and Ukrainian glyph coverage; <a data-i18n-slot="slot1" href="./game/ui/fonts/provenance.json" data-i18n="website:page.fontSource">source and checksum record</a>. Supporting display type: Handjet by the Handjet Project Authors (<a data-i18n-slot="slot2" href="./game/ui/fonts/field-kit/Handjet-OFL.txt">OFL 1.1</a>), instantiated at weight 600, element shape 2 and element grid 1. Interface type: Exo 2 by the Exo 2 Project Authors (<a data-i18n-slot="slot3" href="./game/ui/fonts/field-kit/Exo2-OFL.txt">OFL 1.1</a>), retaining weights 400–600. Numeric type: IBM Plex Mono by IBM Corp. (<a data-i18n-slot="slot4" href="./game/ui/fonts/field-kit/IBMPlexMono-OFL.txt">OFL 1.1</a>), weight 500. The supporting WOFF2 files retain full English and Ukrainian letter coverage. <a data-i18n-slot="slot5" href="./game/ui/fonts/field-kit/provenance.json" data-i18n="website:page.supportingFontSources">Supporting-font source versions, build recipe and file checksums</a>.</p>'
             : ''),
@@ -701,8 +704,11 @@ async function addOfflineEntries(
     )
     .sort((a, b) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0))
     .map((e) => ({ path: e.name, bytes: e.bytes.length, sha256: sha256(e.bytes) }));
-  if (files.length > 2000 || files.reduce((n, f) => n + f.bytes, 0) > 64 * 1024 * 1024)
-    fail('Offline distribution exceeds 2000 files or 64 MiB; split optional content into packs');
+  const totalBytes = files.reduce((n, f) => n + f.bytes, 0);
+  if (files.length > 2000 || totalBytes > 64 * 1024 * 1024)
+    fail(
+      `Offline distribution exceeds 2000 files or 64 MiB (${files.length} files / ${totalBytes} bytes); split optional content into packs`,
+    );
   const config = {
     format: 'revealline-offline.v1',
     version: info.version,
