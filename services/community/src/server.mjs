@@ -1,4 +1,5 @@
 import { Pool } from 'pg';
+import { createWebhookAccountMailDelivery } from './account-mail.mjs';
 import { createAdmissionController } from './admission.mjs';
 import { buildCommunityApp } from './app.mjs';
 import { createTokenAuthenticator } from './auth.mjs';
@@ -28,7 +29,11 @@ const admission = createAdmissionController({
 });
 const blobStore = new DiskBlobStore({ root: config.blobRoot });
 const betterAuth = config.betterAuth
-  ? createCommunityBetterAuth({ database: pool, ...config.betterAuth })
+  ? createCommunityBetterAuth({
+      database: pool,
+      ...config.betterAuth,
+      mailDelivery: createWebhookAccountMailDelivery(config.betterAuth.mail),
+    })
   : null;
 const authenticator = betterAuth
   ? createSessionAuthenticator({
