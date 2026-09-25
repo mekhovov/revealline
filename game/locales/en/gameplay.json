@@ -460,8 +460,8 @@
   "team.relayObjective": "{{secured}} / {{total}} secured · Relay {{relay}} · {{objective}}",
   "team.challengeCore": "{{name}} · stronghold challenge",
   "team.challengeTerritory": "{{name}} · territory challenge",
-  "team.previewGeometry": "{{name}} geometry test. Preview scenery is not authored mission artwork. Browse arenas for an optional full preview; viewing earns no progress. Scenery does not mark obstacles.",
-  "team.previewTeaser": "{{name}} teaser. Browse arenas for an optional full preview; viewing earns no progress. Scenery does not mark obstacles.",
+  "team.previewGeometry": "{{name}} · Preview scenery is not authored mission artwork or collision geometry.",
+  "team.previewTeaser": "{{name}} teaser · preview only · scenery is not collision geometry.",
   "team.actorStyleNext": "New missions use this actor style. Retry keeps the current actors. Custom packs and artwork stay original.",
   "team.reserves_one": "{{count}} reserve",
   "team.reserves_other": "{{count}} reserves",
@@ -477,5 +477,6 @@
   "team.pictureDestinationPreparing": "Preparing {{name}} artwork… Your result stays available.",
   "controller.steer": "Stick / D-pad: steer.",
   "controller.keepFlying": "Lift the stick to keep flying.",
-  "controller.menuEditingHelp": "{{navigation}} Confirm a select or slider to edit; confirm again to apply or go back to cancel."
+  "controller.menuEditingHelp": "{{navigation}} Confirm a select or slider to edit; confirm again to apply or go back to cancel.",
+  "team.previewUnnamed": "Arena teaser · preview only · scenery is not collision geometry."
 }
