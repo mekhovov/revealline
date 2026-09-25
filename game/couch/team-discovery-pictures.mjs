@@ -1,4 +1,4 @@
-import { t, localizedText } from '../i18n/index.mjs';
+import { t, localizedText, localizedAttribute } from '../i18n/index.mjs';
 import { createOperationStatus } from '../ui/operation-status.mjs';
 
 /** Gallery-owned copies only. One underlying preparation remains in flight until
@@ -216,7 +216,9 @@ export function attachTeamDiscoveryPictures({
     list.hidden = true;
     preview.panel.hidden = false;
     preview.retry.hidden = true;
-    localizedText(preview.title, () => `${card.row.title} · Locked preview`);
+    localizedText(preview.title, () =>
+      t('interface:team.lockedPreviewTitle', { mission: card.row.title }),
+    );
     localizedText(back, () => t('interface:backToArenas'));
     onViewChange();
     if (!live(owner) || detail !== shown) return;
@@ -301,9 +303,12 @@ export function attachTeamDiscoveryPictures({
         button.type = 'button';
         button.className = 'team-discovery-preview-button';
         localizedText(button, () => t('interface:previewPicture'));
-        button.setAttribute(
-          'aria-label',
-          `Preview ${source.row.title} · ${source.row.packName} · ${source.row.sourceLabel}`,
+        localizedAttribute(button, 'aria-label', () =>
+          t('interface:team.previewMissionLabel', {
+            mission: source.row.title,
+            campaign: source.row.packName,
+            source: source.row.sourceLabel,
+          }),
         );
         frame.append(canvas);
         figure.append(frame, message);
