@@ -9,13 +9,15 @@ import { SESSION_STORAGE_BYTES } from '../sessions.mjs';
 import { downloadCreatorFile } from './download.mjs';
 import { createCreatorVictoryStoryHost } from './victory-story-host.mjs';
 import { createCreatorPlayerVictoryStory } from './player-victory-story.mjs';
+import { localizedMessage, localizedText, t } from '../i18n/index.mjs';
 
 const $ = (id) => document.getElementById(id);
 const status = (message, error = false) => {
-  $('status').textContent = message;
+  localizedText($('status'), message);
   $('status').classList.toggle('error', error);
 };
-const fail = (error) => status(error.message || 'This operation could not finish.', true);
+const fail = (error) =>
+  status(error.message || localizedMessage('errors:creator.operationFailed'), true);
 const store = createCreatorStore();
 const edition = new URLSearchParams(location.search).get('edition');
 let runtime,
@@ -41,19 +43,24 @@ function persistAttempt() {
   const attempt = runtime?.current();
   if (!attempt || !['running', 'respawning'].includes(attempt.run.status)) return;
   try {
-    if (!lease?.writable) throw new Error(lease?.reason || 'Saving is unavailable.');
+    if (!lease?.writable)
+      throw new Error(lease?.reason || t('errors:creator.savingUnavailable'));
     const saved = JSON.stringify(runtime.suspend());
     if (new TextEncoder().encode(saved).length > SESSION_STORAGE_BYTES)
-      throw new Error('Attempt exceeds the local save budget. Download it to keep it.');
+      throw new Error(t('errors:creator.attemptSaveBudgetExceeded'));
     if (localStorage.getItem(saveKey) !== savedRaw)
-      throw new Error(
-        'The saved attempt changed in another tab. Download this attempt before reloading.',
-      );
+      throw new Error(t('errors:creator.attemptChangedInAnotherTab'));
     localStorage.setItem(saveKey, saved);
     savedRaw = saved;
-    $('save-status').textContent = 'Unfinished attempt saved on this device.';
+    localizedText(
+      $('save-status'),
+      localizedMessage('interface:creator.attemptSavedOnDevice'),
+    );
   } catch (error) {
-    $('save-status').textContent = `${error.message} Download the unfinished attempt to keep it.`;
+    localizedText(
+      $('save-status'),
+      localizedMessage('interface:creator.attemptSaveFailed', { error: error.message }),
+    );
   }
 }
 function pause() {
@@ -63,17 +70,17 @@ function pause() {
   runtime.pause();
   accumulator = 0;
   persistAttempt();
-  $('pause').textContent = 'Resume';
-  status('Paused. Resume when you are ready.');
+  localizedText($('pause'), localizedMessage('common:actions.resume'));
+  status(localizedMessage('interface:creator.pausedReady'));
 }
 function setRunning() {
   paused = false;
   input.clear();
   previousTime = null;
   accumulator = 0;
-  $('pause').textContent = 'Pause';
+  localizedText($('pause'), localizedMessage('common:actions.pause'));
   $('arena').focus();
-  status('Close a line on safe ground to reveal your picture.');
+  status(localizedMessage('interface:creator.closeLineToReveal'));
 }
 function updateControls() {
   const hasRun = !!runtime?.current();
@@ -123,7 +130,7 @@ async function showEarned(preferredMissionId = null) {
   const picture = project.assets.find(({ id }) => id === mission.presentation.backgroundAssetId);
   const runtimePicture = pack.assets.find(({ sha256 }) => sha256 === picture?.sha256);
   if (!picture || !runtimePicture)
-    throw new Error('The earned mission picture is missing from this installed edition.');
+    throw new Error(t('errors:creator.earnedPictureMissing'));
   if (pictureSha256 !== picture.sha256) {
     if (pictureURL) URL.revokeObjectURL(pictureURL);
     pictureURL = URL.createObjectURL(runtimePicture.blob);
@@ -133,8 +140,13 @@ async function showEarned(preferredMissionId = null) {
   $('earned-picture').alt = picture.alt;
   if ($('earned-picture').parentElement !== $('creator-story-stage'))
     $('creator-story-stage').replaceChildren($('earned-picture'));
-  $('earned-caption').textContent =
-    `${mission.name} · completed on ${receipt.difficulty}. ${pack.manifest.content.credits.picture}`;
+  localizedText($('earned-caption'), () =>
+    t('interface:creator.earnedPictureCaption', {
+      mission: mission.name,
+      difficulty: t(`interface:missionLibrary.difficulty.${receipt.difficulty}`),
+      credit: pack.manifest.content.credits.picture,
+    }),
+  );
   $('earned').hidden = false;
   return Object.freeze({
     mission,
@@ -161,8 +173,8 @@ async function adoptDisplay(attempt, running) {
   persistAttempt();
   if (running) setRunning();
   else {
-    $('pause').textContent = 'Resume';
-    status('Saved attempt restored. Press Resume to continue.');
+    localizedText($('pause'), localizedMessage('common:actions.resume'));
+    status(localizedMessage('interface:creator.savedAttemptRestored'));
   }
 }
 async function finish() {
@@ -172,7 +184,7 @@ async function finish() {
   updateControls();
   input.clear();
   if (runtime.current().run.status === 'won') {
-    status('Picture revealed. Verifying your completion…');
+    status(localizedMessage('interface:creator.pictureRevealedVerifying'));
     try {
       const receipt = await runtime.completion();
       profile.record(receipt);
@@ -182,11 +194,18 @@ async function finish() {
       nextMissionId = runtime.nextMissionId(missionId);
       status(
         nextMissionId
-          ? 'Level complete. Your picture is saved; continue when you are ready.'
-          : 'Campaign complete. Your pictures are in this campaign’s collection.',
+          ? localizedMessage('interface:creator.levelCompletePictureSaved')
+          : localizedMessage('interface:creator.campaignCompletePicturesSaved'),
       );
       $('next').hidden = false;
-      $('next').textContent = nextMissionId ? 'Next level' : 'Back to my creations';
+      localizedText(
+        $('next'),
+        localizedMessage(
+          nextMissionId
+            ? 'interface:creator.nextLevel'
+            : 'interface:creator.backToMyCreationsAction',
+        ),
+      );
       if (earned)
         void storyPlayer.show({
           receipt,
@@ -196,7 +215,7 @@ async function finish() {
     } catch (error) {
       fail(error);
     }
-  } else status('Try another crossing. Retry starts the same mission with the same rules.');
+  } else status(localizedMessage('interface:creator.tryAnotherCrossing'));
   try {
     if (
       lease.writable &&
@@ -206,7 +225,10 @@ async function finish() {
       localStorage.removeItem(saveKey);
       savedRaw = null;
       if (runtime.current().run.status === 'won')
-        $('save-status').textContent = 'Completion saved on this device.';
+        localizedText(
+          $('save-status'),
+          localizedMessage('interface:creator.completionSavedOnDevice'),
+        );
     }
   } catch {
     /* Progress export and Next remain available when local storage refuses access. */
@@ -243,8 +265,12 @@ function frame(time) {
     fullReveal: attempt.run.status === 'won',
     backdrop: attempt.picture,
   });
-  $('hud').textContent =
-    `${Math.round(attempt.run.coverage * 100)}% revealed · ${attempt.run.lives} lives · ${attempt.run.score} points${paused && !ended ? ' · Paused' : ''}`;
+  $('hud').textContent = t('interface:creator.hud', {
+    coverage: Math.round(attempt.run.coverage * 100),
+    lives: t('common:counts.lives', { count: attempt.run.lives }),
+    points: t('common:counts.points', { count: attempt.run.score }),
+    paused: paused && !ended ? t('interface:creator.hudPaused') : '',
+  });
 }
 $('start').onclick = () =>
   operation(async () =>
@@ -295,7 +321,7 @@ $('import-attempt').onchange = () =>
   operation(async () => {
     const file = $('import-attempt').files[0];
     if (!file || file.size > SESSION_STORAGE_BYTES)
-      throw new Error('Choose an attempt file under 2 MiB.');
+      throw new Error(t('errors:creator.chooseBoundedAttempt'));
     pause();
     await adoptDisplay(await runtime.restore(await file.text()), false);
   });
@@ -313,7 +339,7 @@ $('import-progress').onchange = () =>
   operation(async () => {
     const file = $('import-progress').files[0];
     if (!file || file.size > 8 * 1024 * 1024)
-      throw new Error('Choose a bounded campaign progress backup.');
+      throw new Error(t('errors:creator.chooseBoundedProgress'));
     profile.restore(await file.text());
     await profile.flush();
     storyPlayer.reset();
@@ -336,7 +362,7 @@ window.addEventListener('pagehide', () => {
 try {
   pack = await loadInstalledCreatorBundle(store, edition);
   const response = await fetch('../../authoring/motion-lab/presets.json');
-  if (!response.ok) throw new Error('Game presentation presets are unavailable.');
+  if (!response.ok) throw new Error(t('errors:creator.presentationPresetsUnavailable'));
   painter = new BoardPainter(await response.json());
   lease = await claimProfileWriter(navigator.locks, `revealline.creator.${edition}`);
   const profileKey = creatorProfileKey(edition);
@@ -355,7 +381,11 @@ try {
           },
         }),
     onStatus: (value) => {
-      if (value.error) $('save-status').textContent = `Session only: ${value.error}`;
+      if (value.error)
+        localizedText(
+          $('save-status'),
+          localizedMessage('interface:creator.sessionOnlyError', { error: value.error }),
+        );
     },
   });
   await profile.load();
@@ -387,16 +417,18 @@ try {
   try {
     savedRaw = localStorage.getItem(saveKey);
   } catch {
-    $('save-status').textContent =
-      'Local attempt storage is unavailable. Download an attempt before leaving.';
+    localizedText(
+      $('save-status'),
+      localizedMessage('interface:creator.attemptStorageUnavailable'),
+    );
   }
   $('title').textContent = pack.review.name;
   status(
     savedRaw
-      ? 'An unfinished attempt is available. Resume it or start the mission again.'
-      : 'Ready to play your installed Custom campaign.',
+      ? localizedMessage('interface:creator.unfinishedAttemptAvailable')
+      : localizedMessage('interface:creator.readyToPlayCustomCampaign'),
   );
-  if (!lease.writable) $('save-status').textContent = lease.reason;
+  if (!lease.writable) localizedText($('save-status'), lease.reason);
   await showEarned();
   busy = false;
   updateControls();

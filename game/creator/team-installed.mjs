@@ -8,6 +8,7 @@ import {
   importCreatorTeamCampaign,
   validateCreatorTeamCampaign,
 } from './team.mjs';
+import { t } from '../i18n/index.mjs';
 
 export const CREATOR_TEAM_DATABASE = 'revealline-creator-team-v1';
 export const CREATOR_TEAM_EDITION_FORMAT = 'revealline-installed-team-edition.v1';
@@ -23,11 +24,13 @@ const editionPattern = /^[a-f0-9]{64}$/;
 const text = (value, maximum = 160) =>
   typeof value === 'string' && value.length > 0 && value.length <= maximum;
 
-const cancelled = () => new DOMException('Team library operation cancelled.', 'AbortError');
+const cancelled = () =>
+  new DOMException(t('errors:creator.teamLibraryCancelled'), 'AbortError');
 const requestResult = (request) =>
   new Promise((resolve, reject) => {
     request.onsuccess = () => resolve(request.result);
-    request.onerror = () => reject(request.error || new Error('Team library request failed.'));
+    request.onerror = () =>
+      reject(request.error || new Error(t('errors:creator.teamLibraryRequestFailed')));
   });
 
 function validateState(source) {
@@ -37,12 +40,16 @@ function validateState(source) {
     maxNodes: 8,
     maxDepth: 2,
   });
-  exactKeys(state, ['format', 'generation'], 'installed Team state');
+  exactKeys(
+    state,
+    ['format', 'generation'],
+    t('interface:creator.label.installedTeamState'),
+  );
   required(
     state.format === STATE_FORMAT &&
       Number.isSafeInteger(state.generation) &&
       state.generation >= 0,
-    'Installed Team state is damaged.',
+    t('errors:creator.installedTeamStateDamaged'),
   );
   return state;
 }
@@ -65,7 +72,11 @@ export function validateInstalledTeamProgress(source, editionId) {
     maxArray: 32,
     maxString: 160,
   });
-  exactKeys(progress, ['format', 'editionId', 'generation', 'clears'], 'installed Team progress');
+  exactKeys(
+    progress,
+    ['format', 'editionId', 'generation', 'clears'],
+    t('interface:creator.label.installedTeamProgress'),
+  );
   required(
     progress.format === CREATOR_TEAM_PROGRESS_FORMAT &&
       progress.editionId === editionId &&
@@ -74,21 +85,21 @@ export function validateInstalledTeamProgress(source, editionId) {
       progress.clears &&
       typeof progress.clears === 'object' &&
       !Array.isArray(progress.clears),
-    'Installed Team progress is damaged.',
+    t('errors:creator.installedTeamProgressDamaged'),
   );
   for (const [levelId, receipt] of Object.entries(progress.clears)) {
-    required(text(levelId, 80), 'Installed Team progress contains an invalid level identity.');
+    required(text(levelId, 80), t('errors:creator.teamProgressInvalidLevel'));
     exactKeys(
       receipt,
       ['runId', 'gameplayId', 'difficulty', 'presetId'],
-      'installed Team completion',
+      t('interface:creator.label.installedTeamCompletion'),
     );
     required(
       text(receipt.runId, 160) &&
         text(receipt.gameplayId, 160) &&
         difficulties.has(receipt.difficulty) &&
         presets.has(receipt.presetId),
-      'Installed Team completion receipt is damaged.',
+      t('errors:creator.teamReceiptDamaged'),
     );
   }
   return progress;
@@ -105,7 +116,7 @@ async function inspectEdition(source, expectedId) {
   exactKeys(
     row,
     ['format', 'editionId', 'installedAt', 'bytes', 'portable'],
-    'installed Team edition',
+    t('interface:creator.label.installedTeamEdition'),
   );
   required(
     row.format === CREATOR_TEAM_EDITION_FORMAT &&
@@ -117,13 +128,13 @@ async function inspectEdition(source, expectedId) {
       row.bytes > 0 &&
       row.bytes <= COOP_PACK_MAX_BYTES &&
       typeof row.portable === 'string',
-    'Installed Team edition is damaged.',
+    t('errors:creator.teamEditionDamaged'),
   );
   const bytes = new TextEncoder().encode(row.portable);
-  required(bytes.byteLength === row.bytes, 'Installed Team edition byte count differs.');
+  required(bytes.byteLength === row.bytes, t('errors:creator.teamEditionByteCount'));
   required(
     (await creatorSHA256(bytes)) === row.editionId,
-    'Installed Team edition failed its integrity check.',
+    t('errors:creator.teamEditionIntegrity'),
   );
   const document = boundedJSON(row.portable, {
     maxBytes: COOP_PACK_MAX_BYTES,
@@ -131,8 +142,15 @@ async function inspectEdition(source, expectedId) {
     maxDepth: 20,
     maxArray: 1024,
   });
-  exactKeys(document, ['format', 'pack', 'provenance', 'evidence'], 'portable Team campaign');
-  required(document.format === CREATOR_TEAM_PORTABLE_FORMAT, 'Unsupported installed Team format.');
+  exactKeys(
+    document,
+    ['format', 'pack', 'provenance', 'evidence'],
+    t('interface:creator.label.portableTeamCampaign'),
+  );
+  required(
+    document.format === CREATOR_TEAM_PORTABLE_FORMAT,
+    t('errors:creator.unsupportedInstalledTeamFormat'),
+  );
   const validated = validateCreatorTeamCampaign(document.pack, document.provenance);
   return Object.freeze({
     editionId: row.editionId,
@@ -155,8 +173,10 @@ export function createInstalledTeamCampaignStore({
     closed = false;
   function open(signal) {
     creatorAbort(signal);
-    if (closed) return Promise.reject(new Error('Installed Team library is closed.'));
-    if (!indexedDB) return Promise.reject(new Error('This browser cannot store Team campaigns.'));
+    if (closed)
+      return Promise.reject(new Error(t('errors:creator.teamLibraryClosed')));
+    if (!indexedDB)
+      return Promise.reject(new Error(t('errors:creator.teamStorageUnsupported')));
     if (opening) return opening;
     opening = new Promise((resolve, reject) => {
       const request = indexedDB.open(CREATOR_TEAM_DATABASE, DATABASE_VERSION);
@@ -164,7 +184,7 @@ export function createInstalledTeamCampaignStore({
       const fail = (error) => {
         failed = true;
         opening = null;
-        reject(error || new Error('Installed Team library could not open.'));
+        reject(error || new Error(t('errors:creator.teamLibraryOpenFailed')));
       };
       request.onupgradeneeded = () => {
         try {
@@ -177,12 +197,17 @@ export function createInstalledTeamCampaignStore({
         }
       };
       request.onerror = () => fail(request.error);
-      request.onblocked = () => fail(new Error('Close older game tabs to update Team storage.'));
+      request.onblocked = () =>
+        fail(new Error(t('errors:creator.closeTabsForTeamStorage')));
       request.onsuccess = () => {
         const db = request.result;
         if (failed || closed || signal?.aborted) {
           db.close();
-          fail(signal?.aborted ? cancelled() : new Error('Installed Team library is closed.'));
+          fail(
+            signal?.aborted
+              ? cancelled()
+              : new Error(t('errors:creator.teamLibraryClosed')),
+          );
           return;
         }
         db.onversionchange = () => {
@@ -250,7 +275,9 @@ export function createInstalledTeamCampaignStore({
       };
       tx.onabort = tx.onerror = () => {
         signal?.removeEventListener('abort', abort);
-        reject(failure || tx.error || new Error('Installed Team transaction failed.'));
+        reject(
+          failure || tx.error || new Error(t('errors:creator.teamTransactionFailed')),
+        );
       };
     });
   }
@@ -264,7 +291,7 @@ export function createInstalledTeamCampaignStore({
     const installedAt = now();
     required(
       Number.isSafeInteger(installedAt) && installedAt >= 0,
-      'Installed Team clock is invalid.',
+      t('errors:creator.teamClockInvalid'),
     );
     const row = {
       format: CREATOR_TEAM_EDITION_FORMAT,
@@ -302,7 +329,7 @@ export function createInstalledTeamCampaignStore({
           const keys = keysRequest.result;
           required(
             keys.length < MAX_EDITIONS,
-            'Remove an installed Team campaign before adding another.',
+            t('errors:creator.removeTeamCampaignFirst'),
           );
           const state = validateState(stateRequest.result);
           state.generation++;
@@ -326,7 +353,7 @@ export function createInstalledTeamCampaignStore({
       };
       tx.onabort = tx.onerror = () => {
         signal?.removeEventListener('abort', abort);
-        reject(failure || tx.error || new Error('Team installation failed.'));
+        reject(failure || tx.error || new Error(t('errors:creator.teamInstallFailed')));
       };
     });
     creatorAbort(signal);
@@ -334,7 +361,7 @@ export function createInstalledTeamCampaignStore({
       const inspected = await inspectEdition(result.existing, editionId);
       required(
         inspected.portable === portableText,
-        'Installed Team edition identity is already bound to different bytes.',
+        t('errors:creator.teamEditionIdentityConflict'),
       );
       return Object.freeze({ editionId, alreadyInstalled: true });
     }
@@ -361,14 +388,14 @@ export function createInstalledTeamCampaignStore({
     creatorAbort(signal);
     required(
       snapshot.keys.length === snapshot.rows.length && snapshot.rows.length <= MAX_EDITIONS,
-      'Installed Team inventory is damaged.',
+      t('errors:creator.teamInventoryDamaged'),
     );
     const byEdition = new Map(
       snapshot.progressRows.map((row) => {
         const editionId = row?.editionId;
         required(
           editionPattern.test(editionId),
-          'Installed Team progress has no edition identity.',
+          t('errors:creator.teamProgressMissingEdition'),
         );
         return [editionId, validateInstalledTeamProgress(row, editionId)];
       }),
@@ -395,14 +422,14 @@ export function createInstalledTeamCampaignStore({
     });
   }
   async function load(editionId, { signal } = {}) {
-    required(editionPattern.test(editionId), 'Choose an installed Team edition.');
+    required(editionPattern.test(editionId), t('errors:creator.chooseInstalledTeamEdition'));
     const source = await transaction(
       ['editions'],
       'readonly',
       (tx) => requestResult(tx.objectStore('editions').get(editionId)),
       signal,
     );
-    required(source !== undefined, 'This exact Team edition is not installed.');
+    required(source !== undefined, t('errors:creator.exactTeamEditionNotInstalled'));
     const inspected = await inspectEdition(source, editionId);
     creatorAbort(signal);
     const prepared = await importCreatorTeamCampaign(
@@ -413,7 +440,7 @@ export function createInstalledTeamCampaignStore({
     );
     required(
       canonicalJSON(prepared.pack) === canonicalJSON(inspected.pack),
-      'Installed Team pack changed while it was being prepared.',
+      t('errors:creator.teamPackChanged'),
     );
     return Object.freeze({ editionId, prepared });
   }
@@ -428,7 +455,7 @@ export function createInstalledTeamCampaignStore({
         text(gameplayId, 160) &&
         difficulties.has(difficulty) &&
         presets.has(presetId),
-      'Team completion needs an exact installed attempt identity.',
+      t('errors:creator.teamCompletionIdentityRequired'),
     );
     const db = await open(signal);
     creatorAbort(signal);
@@ -452,7 +479,7 @@ export function createInstalledTeamCampaignStore({
         try {
           required(
             editionRequest.result !== undefined,
-            'This exact Team edition is no longer installed.',
+            t('errors:creator.teamEditionNoLongerInstalled'),
           );
           const document = boundedJSON(editionRequest.result.portable, {
             maxBytes: COOP_PACK_MAX_BYTES,
@@ -463,12 +490,12 @@ export function createInstalledTeamCampaignStore({
           const validated = validateCreatorTeamCampaign(document.pack, document.provenance);
           required(
             validated.pack.levels.some((level) => level.id === levelId),
-            'This level does not belong to the installed Team edition.',
+            t('errors:creator.levelNotInTeamEdition'),
           );
           const attempt = createCreatorTeamAttempt(validated.pack, levelId, difficulty, presetId);
           required(
             gameplayId === dataIdentity({ ruleset: attempt.ruleset, level: attempt.level }),
-            'This Team completion does not match the installed configuration.',
+            t('errors:creator.teamCompletionMismatch'),
           );
           const progress = validateInstalledTeamProgress(progressRequest.result, editionId),
             previous = progress.clears[levelId],
@@ -476,7 +503,7 @@ export function createInstalledTeamCampaignStore({
           if (previous?.runId === runId) {
             required(
               canonicalJSON(previous) === canonicalJSON(receipt),
-              'A Team completion run cannot change identity.',
+              t('errors:creator.teamRunIdentityChanged'),
             );
           } else {
             progress.clears[levelId] = receipt;
@@ -500,7 +527,9 @@ export function createInstalledTeamCampaignStore({
       };
       tx.onabort = tx.onerror = () => {
         signal?.removeEventListener('abort', abort);
-        reject(failure || tx.error || new Error('Team completion save failed.'));
+        reject(
+          failure || tx.error || new Error(t('errors:creator.teamCompletionSaveFailed')),
+        );
       };
     });
   }
