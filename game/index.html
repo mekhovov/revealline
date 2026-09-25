@@ -627,7 +627,7 @@
                     id="overlay-menu"
                     class="button secondary"
                     type="button"
-                    data-i18n="interface:home"
+                    data-i18n="common:navigation.home"
                   >
                     Home
                   </button>
@@ -2671,11 +2671,26 @@ No offline check yet.</pre
     <dialog id="shell-home" class="shell-home" aria-labelledby="shell-title">
       <div class="home-art" aria-hidden="true"></div>
       <div class="home-content">
-        <p id="shell-title-edition" class="eyebrow" data-i18n="interface:fpvFieldKitFlightReady">FPV FIELD KIT / FLIGHT READY</p>
-        <h1 id="shell-title" data-i18n-rich="interface:reveal">REVEAL<span data-i18n="interface:line" data-i18n-slot="slot0">/ LINE</span></h1>
-        <nav id="shell-title-modes" aria-label="Choose play mode">
-          <a id="shell-title-versus" href="couch/?return=solo" data-i18n="common:game.couchVersus">Couch Versus</a>
-          <a id="shell-title-team" href="couch/relay-rescue.html?return=solo" data-i18n="common:game.couchTeam">Couch Team</a>
+        <p id="shell-title-edition" class="eyebrow" data-i18n="interface:fpvFieldKitFlightReady">
+          FPV FIELD KIT / FLIGHT READY
+        </p>
+        <h1 id="shell-title" data-i18n-rich="interface:reveal">
+          REVEAL<span data-i18n="interface:line" data-i18n-slot="slot0">/ LINE</span>
+        </h1>
+        <nav
+          id="shell-title-modes"
+          aria-label="Choose play mode"
+          data-i18n-aria-label="common:game.chooseMode"
+        >
+          <a id="shell-title-versus" href="couch/?return=solo" data-i18n="common:game.couchVersus"
+            >Couch Versus</a
+          >
+          <a
+            id="shell-title-team"
+            href="couch/relay-rescue.html?return=solo"
+            data-i18n="common:game.couchTeam"
+            >Couch Team</a
+          >
         </nav>
         <p id="shell-featured-status" class="home-status" role="status" hidden></p>
         <p id="shell-flight-status" class="home-status" role="status" hidden></p>
@@ -2746,7 +2761,7 @@ No offline check yet.</pre
             type="button"
             class="button secondary"
             data-field-kit-copy="navigation.workshop"
-            data-i18n="interface:more"
+            data-i18n="common:navigation.more"
           >
             More
           </button>
@@ -2762,7 +2777,9 @@ No offline check yet.</pre
         </nav>
         <p id="shell-destination" class="home-destination" aria-live="polite"></p>
         <details id="shell-play-options" class="home-play-options" data-course-hide>
-          <summary>Difficulty &amp; appearance</summary>
+          <summary data-i18n="interface:home.difficultyAppearance">
+            Difficulty &amp; appearance
+          </summary>
           <div class="home-play-options-fields">
             <label class="field">
               <span data-i18n="interface:difficulty">Difficulty</span>
@@ -2845,7 +2862,7 @@ No offline check yet.</pre
       <div class="shell-dialog-heading">
         <div>
           <p class="eyebrow" data-i18n="interface:revealLineMenu">REVEAL LINE / MENU</p>
-          <h2 id="shell-workshop-title" data-i18n="interface:more">More</h2>
+          <h2 id="shell-workshop-title" data-i18n="common:navigation.more">More</h2>
         </div>
         <button
           type="button"
@@ -2859,7 +2876,7 @@ No offline check yet.</pre
       <nav
         class="workshop-destinations more-destinations"
         aria-label="More destinations"
-        data-i18n-aria-label="interface:moreDestinations"
+        data-i18n-aria-label="common:navigation.moreDestinations"
       >
         <a
           id="shell-catalogue"
@@ -3110,7 +3127,7 @@ No offline check yet.</pre
             id="shell-versus"
             href="couch/"
             class="button secondary"
-            data-i18n="common:game.couchVersus2Players"
+            data-i18n="interface:couchVersus2Players"
             >Couch Versus · 2 players</a
           >
         </nav>

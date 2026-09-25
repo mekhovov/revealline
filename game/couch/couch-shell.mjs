@@ -530,11 +530,8 @@ export function createCouchShell({
     }
     const series = format === 'first-to-two';
     setText('race-summary', summary);
-    setText(
-      'race-format-note', () =>
-      series
-        ? 'First to two · Solo progress stays separate'
-        : 'One race · Longer matches are in Match options · Solo progress stays separate',
+    setText('race-format-note', () =>
+      series ? t('interface:couch.seriesNote') : t('interface:couch.singleRaceNote'),
     );
     setText(
       'race-format-help',
@@ -560,13 +557,19 @@ export function createCouchShell({
     $('race-retry').disabled = !paused || contentBusy;
     $('race-home').hidden = !paused;
     $('race-optional-setup').hidden = paused;
-    setText('race-chapters', paused ? 'Missions' : 'Browse missions');
+    setText('race-chapters', () =>
+      paused ? t('interface:missions') : t('interface:browseMissions'),
+    );
     $('race-pause').disabled = status !== 'running' && screen !== 'review';
     // Do not replace the native click target's content on every flight frame.
     setText('race-pause', () =>
       screen === 'review' ? t('interface:results2') : t('common:actions.pause'),
     );
-    localizedText($('race-focus'), () => status === 'ready' ? 'Advanced setup' : 'New match options');
+    localizedText($('race-focus'), () =>
+      status === 'ready'
+        ? t('interface:couch.advancedSetup')
+        : t('interface:couch.newMatchOptions'),
+    );
     $('race-class-field').hidden = !equipment[0].action;
     $('race-class').disabled = !equipment[0].action || status !== 'ready';
     for (const id of ['race-level', 'race-theme', 'race-turn', 'race-time', 'race-format'])

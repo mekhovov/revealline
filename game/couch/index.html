@@ -389,7 +389,9 @@
             >
               Start race
             </button>
-            <button id="race-retry" type="button" hidden>Retry race</button>
+            <button id="race-retry" type="button" hidden data-i18n="interface:couch.retryRace">
+              Retry race
+            </button>
             <button
               id="race-journey-save-options"
               type="button"
@@ -418,7 +420,9 @@
               Browse missions
             </button>
             <details id="race-optional-setup" class="race-optional-setup">
-              <summary id="race-optional-setup-toggle">Match options</summary>
+              <summary id="race-optional-setup-toggle" data-i18n="interface:couch.matchOptions">
+                Match options
+              </summary>
               <div class="race-fields">
                 <label
                   ><span data-i18n="interface:actors">Actors</span
@@ -459,7 +463,9 @@
                     Export difficulty
                   </button>
                 </div>
-                <button id="race-focus" type="button">Advanced setup</button>
+                <button id="race-focus" type="button" data-i18n="interface:couch.advancedSetup">
+                  Advanced setup
+                </button>
               </div>
             </details>
             <button id="race-options" type="button" data-i18n="common:navigation.settings">
@@ -474,14 +480,29 @@
             >
               Sound: off
             </button>
-            <button id="race-help" type="button" data-i18n="common:navigation.howToPlay">How to play</button>
-            <a id="race-home" href="../" hidden>Home</a>
-            <button id="race-review" type="button" hidden data-i18n="interface:viewBothBoards">View both boards</button>
-            <a id="race-solo-return" href="../?journey=legacy" data-i18n="interface:returnToSolo">Return to solo</a>
-            <a id="race-library-switch" href="?journey=whole-spatial-v11" data-i18n="interface:newJourney">New Journey</a>
+            <button id="race-help" type="button" data-i18n="common:navigation.howToPlay">
+              How to play
+            </button>
+            <a id="race-home" href="../" hidden data-i18n="common:navigation.home">Home</a>
+            <button id="race-review" type="button" hidden data-i18n="interface:viewBothBoards">
+              View both boards
+            </button>
+            <a id="race-solo-return" href="../?journey=legacy" data-i18n="interface:returnToSolo"
+              >Return to solo</a
+            >
+            <a
+              id="race-library-switch"
+              href="?journey=whole-spatial-v11"
+              data-i18n="interface:newJourney"
+              >New Journey</a
+            >
           </div>
           <div id="race-language" data-language-control></div>
-          <p id="race-format-note" class="race-footnote">
+          <p
+            id="race-format-note"
+            class="race-footnote"
+            data-i18n="interface:couch.defaultRaceNote"
+          >
             One race · Match options includes First to two · Solo progress stays separate
           </p>
           <aside
@@ -527,7 +548,9 @@
             SAME CONDITIONS / TWO ROUTES
           </p>
           <h1 id="race-setup-title" data-i18n="interface:raceSetup">Race setup</h1>
-          <p>Optional match changes. Both players always receive the same conditions.</p>
+          <p data-i18n="interface:couch.optionalMatchChanges">
+            Optional match changes. Both players always receive the same conditions.
+          </p>
           <div class="race-fields">
             <label
               ><span data-i18n="interface:map">Map</span
@@ -570,8 +593,14 @@
           </div>
           <p id="race-loadout" class="race-summary"></p>
           <p id="race-installed-status" role="status"></p>
-          <button id="race-installed-refresh" type="button" data-i18n="interface:refreshInstalledChapters">Refresh installed chapters</button>
-          <button id="race-setup-back" type="button">Done</button>
+          <button
+            id="race-installed-refresh"
+            type="button"
+            data-i18n="interface:refreshInstalledChapters"
+          >
+            Refresh installed chapters
+          </button>
+          <button id="race-setup-back" type="button" data-i18n="common:actions.done">Done</button>
         </section>
         <section
           id="race-options-panel"
@@ -860,7 +889,9 @@
           hidden
           inert
         >
-          <p class="race-kicker">REVEAL LINE / HOW TO PLAY</p>
+          <p class="race-kicker" data-i18n="interface:couch.helpKicker">
+            REVEAL LINE / HOW TO PLAY
+          </p>
           <h1 id="race-help-title" data-i18n="common:navigation.howToPlay">How to play</h1>
           <div id="race-help-unit">
             <div class="reading-toolbar">
@@ -926,11 +957,20 @@
             </div>
           </div>
           <details class="race-secondary-details">
-            <summary id="race-more-toggle">More</summary>
-            <nav class="race-more-destinations" aria-label="More destinations">
-              <a id="race-more-home" href="../">Home</a>
-              <a id="race-more-about" href="../../site/about.html#versions">About &amp; credits</a>
-              <a id="race-release-explorer">Releases</a>
+            <summary id="race-more-toggle" data-i18n="common:navigation.more">More</summary>
+            <nav
+              class="race-more-destinations"
+              aria-label="More destinations"
+              data-i18n-aria-label="common:navigation.moreDestinations"
+            >
+              <a id="race-more-home" href="../" data-i18n="common:navigation.home">Home</a>
+              <a
+                id="race-more-about"
+                href="../../site/about.html#versions"
+                data-i18n="common:navigation.aboutCredits"
+                >About &amp; credits</a
+              >
+              <a id="race-release-explorer" data-i18n="common:navigation.releases">Releases</a>
             </nav>
           </details>
           <button id="race-help-back" type="button" data-i18n="common:actions.back">Back</button>
