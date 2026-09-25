@@ -37,6 +37,10 @@ values. Count messages require Ukrainian `one`, `few`, `many`, and `other` forms
 - `contentText(record, fieldPath)` translates an exact registered first-party record.
   Modified imports retain their original authored text. Do not translate canonical
   campaign/pack data before hashing, validation, saving, or replay recording.
+- Mission-library sources may expose `presentation(entry)` for live display fields.
+  The library delegates through the original owner, including combined Solo/Versus
+  sources. Search includes translated names without replacing canonical rows or
+  launch objects. Edition labels must be deferred separately from source identity.
 
 Explicit choices use `revealline.locale.v1`, outside game saves and exports. Resolution is
 saved `en`/`uk`, then the first supported browser preference, then browser language, then
@@ -65,21 +69,33 @@ and missing Ukrainian remains detectable. Complete these before marking the task
 - Translate the remaining new interface/tool catalogs and all new dynamic sentences.
   Inspect `game/studio`, classic `.js` tools, generated current-version pages, and
   user-facing errors; extraction of existing keys alone is not a raw-text coverage audit.
-- Register current authored Journey sources and their compiled presentation records,
-  Team content, optional first-party packs, soundtrack metadata, and image descriptions.
-  The content registry still needs rebuilding for main's new content. Preserve hashes.
+- The registry now includes the current default authored Journey and Team sources,
+  compiled executions, navigation records, cards and manifest design fields. Finish
+  their translations and presentation adapters; add maintained nondefault editions,
+  optional first-party packs and derived Classic metadata. Preserve hashes.
 - Finish live bindings for derived labels, statuses, canvas text, dropdown options, and
   presentation adapters. Check unsaved editor data, selections, focus, and scroll.
 - Reconcile generated public-page locale assets with current `publicPage` arguments,
   root launch asset rewriting, offline inventories, and native staging.
 - Review shared keys and Ukrainian grammar, especially reused nouns/adjectives.
 - Run full validation, lint, formatting, tests, builds, native staging, and route checks.
-  The focused suite currently passes; two continuous-host assertions expected legacy
-  session v4 but received v6 and need baseline investigation before reporting test status.
+  Two continuous-host assertions expected legacy session v4 but received v6 and need
+  baseline investigation before reporting test status.
 
-The checkout temporarily uses sparse exclusions for `docs/research` and
-`docs/verification` after a disk-space failure. Restore those tracked files with
-`git sparse-checkout disable` before full distribution verification when space permits.
+The active checkout's temporary sparse exclusions have been removed. The full suite
+is running, with failures still under investigation. A clean main checkout reproduces
+the Team Studio initial-state hash mismatch, Custom-pack chooser timeout, Team artwork
+registration failure, combat study's missing `player-locator.mjs` dependency, controller
+snapshot-key mismatch, and Team terrain missing-exception assertion. The First Flight
+handoff timeout is intermittent here and remains unresolved; do not dismiss it as a
+baseline failure.
+
+The current focused localization/library suite passes 97 tests, and lint passes for the
+runtime, extractor and library files changed in this checkpoint. Browser checks confirm
+Ukrainian Journey-name search, retained mode controls, restart persistence and cross-tab
+refresh of an open mission card without clearing its typed search. Catalog validation
+still deliberately fails for 1,642 missing Ukrainian messages: 526 interface, 732 tools,
+and 384 content entries. These counts do not include unextracted raw dynamic text.
 
 ## Design references
 

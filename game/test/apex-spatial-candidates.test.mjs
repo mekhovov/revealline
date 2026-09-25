@@ -19,7 +19,10 @@ const controls = ['immediate', 'grid-center'];
 test('Studio study uses existing explicit inspection and Apply, not automatic enrollment', async () => {
   const host = await readFile(new URL('../studio/studio.mjs', import.meta.url), 'utf8');
   const html = await readFile(new URL('../studio/index.html', import.meta.url), 'utf8');
-  assert(html.includes('id="apex-spatial">Inspect Home Signal contested-return study</button>'));
+  assert.match(
+    html,
+    /id="apex-spatial"[^>]*>\s*Inspect Home Signal contested-return study\s*<\/button>/,
+  );
   const action = host.slice(
     host.indexOf("$('apex-spatial').onclick"),
     host.indexOf("$('whole-journey').onclick"),
