@@ -27,6 +27,8 @@ function poster(time, observed = time) {
       observedMediaTime: observed,
       playheadTime: time,
       sourceSha256: 'a'.repeat(64),
+      timingEvidence: observed === null ? 'playhead-estimate' : 'presented-frame',
+      decodedFrame: observed === null ? null : { width: 1, height: 1 },
     },
   };
 }
@@ -123,10 +125,12 @@ async function setup(t, options = {}) {
         urls.delete(url);
       },
     },
+    ...(options.physicalTrim ? { physicalTrim: options.physicalTrim } : {}),
     async openSource(file, { signal }) {
       assert.ok(file instanceof Blob);
       if (options.openSource) return options.openSource(file, { signal });
       const s = {
+        original: file,
         info: {
           mime: 'video/mp4',
           width: 1,
@@ -236,6 +240,92 @@ test('fallback timing is explicitly unavailable, never substituted with requeste
   await h.host.capture();
   assert.match(h.$('evidence').textContent, /Frame timestamp unavailable.*Approximate playhead: 3/);
   assert.doesNotMatch(h.$('evidence').textContent, /Observed frame timestamp/);
+  assert.equal(h.$('step-back').disabled, true);
+  assert.equal(h.$('step-forward').disabled, true);
+});
+
+test('presented-frame evidence enables bounded directional seek and publishes only changed decoded time', async (t) => {
+  let initial = true;
+  const h = await setup(t, {
+    capture(time) {
+      if (initial) {
+        initial = false;
+        return poster(time, 2);
+      }
+      return poster(time, time - 2 > 1 / 60 ? 2.04 : 2);
+    },
+  });
+  await h.inspect();
+  h.$('time').value = '2';
+  await h.host.capture();
+  assert.equal(h.$('step-forward').disabled, false);
+  assert.equal(await h.host.stepFrame(1), true);
+  assert.match(h.$('status').textContent, /moved from 2 s to 2.04 s/);
+  assert.equal(h.$('time').value, '2.04');
+  assert.match(h.$('evidence').textContent, /Observed frame timestamp: 2.04/);
+  assert.equal(h.urls.size, 1, 'Superseded repeated-seek PNGs are never published as URLs.');
+});
+
+test('playback range stays separate from explicitly unavailable physical trim', async (t) => {
+  const h = await setup(t, {
+    physicalTrim: {
+      support: async () => ({
+        supported: false,
+        formats: [],
+        reason: 'No verified physical video converter is installed in this test build.',
+      }),
+    },
+  });
+  await h.inspect();
+  h.$('playback-start').value = '1';
+  h.$('playback-end').value = '4';
+  assert.equal(h.host.applyPlaybackRange(), true);
+  assert.match(h.$('playback-evidence').textContent, /1–4 s.*complete 100-byte original/i);
+  assert.match(h.$('status').textContent, /No video bytes were trimmed/);
+  assert.equal(await h.host.checkPhysicalTrim(), false);
+  assert.match(h.$('trim-support').textContent, /No verified physical video converter/);
+  assert.equal(h.$('trim').disabled, true);
+  assert.equal(h.$('trim-download').hidden, true);
+});
+
+test('verified optional trim publishes the adapter output URL and explicit audio provenance', async (t) => {
+  const output = new Blob(['trimmed'], { type: 'video/mp4' });
+  const h = await setup(t, {
+    physicalTrim: {
+      support: async () => ({ supported: true, formats: ['video/mp4'], reason: '' }),
+      trim: async (_original, _info, range) => {
+        assert.equal(range.startSeconds, 1);
+        assert.equal(range.endSeconds, 4);
+        return {
+          blob: output,
+          info: {
+            mime: 'video/mp4',
+            width: 1,
+            height: 1,
+            durationSeconds: 3,
+            bytes: output.size,
+          },
+          evidence: {
+            outputSha256: 'c'.repeat(64),
+            audioSync: { status: 'unverified', note: 'No audio decoder evidence.' },
+          },
+        };
+      },
+    },
+  });
+  await h.inspect();
+  h.$('playback-start').value = '1';
+  h.$('playback-end').value = '4';
+  assert.equal(h.host.applyPlaybackRange(), true);
+  assert.equal(await h.host.checkPhysicalTrim(), true);
+  assert.equal(h.$('trim').disabled, false);
+  assert.equal(await h.host.trimVideo(), true);
+  assert.equal(h.$('trim-download').hidden, false);
+  assert.equal(h.$('trim-download').download, 'RevealLine-trimmed.mp4');
+  assert.match(h.$('trim-evidence').textContent, /Audio synchronization: unverified/);
+  assert.deepEqual(await h.urls.values().next().value.text(), 'trimmed');
+  h.host.clear();
+  assert.equal(h.urls.size, 0);
 });
 
 test('invalid numeric times do not clamp, allocate or disturb an existing poster', async (t) => {

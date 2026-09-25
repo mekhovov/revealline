@@ -11,6 +11,11 @@ The [Phase 5 community-store acceptance record](phase5-acceptance.md) documents 
 client candidate, exact immutable install/update/offline behavior, reference-aware recovery
 removal, and the remaining hosted-production gates.
 
+The [optional media editor guide](media-editor-guide.md) documents the bounded Phase 8 slice:
+playback ranges, evidence-backed decoded-frame stepping, and verified physical trimming for a
+single silent AVC/H.264 MP4 track. [Its acceptance record](phase8-acceptance.md) preserves the
+explicit limits: audio-bearing, WebM, non-AVC, and multi-track inputs are not physically trimmed.
+
 This is a tested local authoring guide for Reveal Line. It covers a small mission project and a separate editable presentation collection. It does not claim that a finished DroneAid/community edition, catalogue installer, or public release has already been produced.
 
 Use [Content Studio](../../game/studio/index.html), [Asset Studio](../asset-studio/index.html), and the [copyable community prompts](../prompts/community-creation.md). Start from the [example project](example-project.json) when reproducing this guide. It is a small greybox with Solo/Versus support, not a finished campaign.
