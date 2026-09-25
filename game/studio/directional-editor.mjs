@@ -1,3 +1,6 @@
+import { localizedMessage, localizedText, t } from '../i18n/index.mjs';
+import { editorMessageError, showEditorFailure } from './editor-copy.mjs';
+import { studioDirectionName } from './preview-copy.mjs';
 import { dataIdentity } from '../data-json.mjs';
 import { editContentDirectional } from '../content-design/directional.mjs';
 import { missionEditContext } from './edit-context.mjs';
@@ -15,7 +18,7 @@ export function createDirectionalEditor({ document, getSource, getMission, apply
     );
   function disarm() {
     armed = false;
-    $('remove').textContent = 'Remove selected field';
+    localizedText($('remove'), localizedMessage('tools:studio.directional.remove'));
   }
   function select() {
     disarm();
@@ -25,9 +28,13 @@ export function createDirectionalEditor({ document, getSource, getMission, apply
     for (const axis of ['x', 'y', 'w', 'h']) $(axis).value = zone?.[axis] ?? '';
     $('direction').value = zone?.direction ?? 'right';
     $('remove').disabled = !zone;
-    $('submit').textContent = zone ? 'Validate & replace field' : 'Validate & add field';
-    $('result').textContent =
-      'Only this mission receives the edited map. Preview the arrows and play both directions before publishing.';
+    localizedText(
+      $('submit'),
+      zone
+        ? localizedMessage('tools:studio.directional.replace')
+        : localizedMessage('tools:studio.directional.add'),
+    );
+    localizedText($('result'), localizedMessage('tools:studio.directional.help'));
   }
   function sync() {
     const mission = getMission(),
@@ -36,11 +43,14 @@ export function createDirectionalEditor({ document, getSource, getMission, apply
       enabled = ['MissionDesignV3', 'MissionDesignV4'].includes(mission?.format);
     $('enable').disabled = !qualified || enabled;
     $('tools').disabled = !qualified || !enabled;
-    $('qualification').textContent = !qualified
-      ? 'Directional editing needs a Solo or Versus mission. Team behavior is not yet qualified.'
-      : enabled
-        ? 'Arrow fields affect only moving craft on unclaimed cells: ×1.25 with, ×0.8 against, ×1 across. No drift or enemy effect. Capture removes the effect; erosion restores it.'
-        : 'Enable an explicit directional edition for this mission. Existing relay links remain intact; other missions and historical maps do not change.';
+    localizedText(
+      $('qualification'),
+      !qualified
+        ? localizedMessage('tools:studio.directional.unavailable')
+        : enabled
+          ? localizedMessage('tools:studio.directional.enabled')
+          : localizedMessage('tools:studio.directional.enableHelp'),
+    );
     const next = context();
     if (key === next) return;
     key = next;
@@ -49,12 +59,19 @@ export function createDirectionalEditor({ document, getSource, getMission, apply
     const selected = $('select').value;
     $('select').replaceChildren(
       ...[
-        ['', '+ New field'],
-        ...(map?.speedZones ?? []).map((zone) => [zone.id, `${zone.id} · ${zone.direction}`]),
+        ['', localizedMessage('tools:studio.directional.new')],
+        ...(map?.speedZones ?? []).map((zone) => [
+          zone.id,
+          () =>
+            t('tools:studio.editor.itemDetail', {
+              id: zone.id,
+              detail: studioDirectionName(zone.direction),
+            }),
+        ]),
       ].map(([value, text]) => {
         const option = document.createElement('option');
         option.value = value;
-        option.textContent = text;
+        localizedText(option, text);
         return option;
       }),
     );
@@ -63,15 +80,14 @@ export function createDirectionalEditor({ document, getSource, getMission, apply
   }
   function commit(action) {
     try {
-      if (key !== context())
-        throw new Error('The draft context changed. Refresh the directional selection.');
+      if (key !== context()) throw editorMessageError('errors:studio.directional.contextChanged');
       const command = { action, expectedMap, expectedMission };
       if (action !== 'enable') command.id = $('id').value.trim();
       if (['add', 'replace'].includes(action)) {
         command.zone = Object.fromEntries(
           ['x', 'y', 'w', 'h'].map((axis) => {
             if (!$(axis).value.trim())
-              throw new Error('Enter all four whole-cell rectangle coordinates.');
+              throw editorMessageError('errors:studio.wholeRectangleCoordinates');
             return [axis, Number($(axis).value)];
           }),
         );
@@ -83,10 +99,9 @@ export function createDirectionalEditor({ document, getSource, getMission, apply
       sync();
       $('select').value = ['enable', 'remove'].includes(action) ? '' : command.id;
       select();
-      $('result').textContent =
-        'Applied to the local draft after shared preset/mode validation. Undo is available; publication and human qualification remain separate.';
+      localizedText($('result'), localizedMessage('tools:studio.directional.applied'));
     } catch (error) {
-      $('result').textContent = `Not applied: ${error.message}`;
+      showEditorFailure($('result'), error);
     }
   }
   $('enable').onclick = () => {
@@ -104,9 +119,8 @@ export function createDirectionalEditor({ document, getSource, getMission, apply
     if (!$('select').value) return;
     if (!armed) {
       armed = true;
-      $('remove').textContent = 'Confirm remove field';
-      $('result').textContent =
-        'Remove this field from the selected mission’s new map revision? Activate again to confirm.';
+      localizedText($('remove'), localizedMessage('tools:studio.directional.confirmRemove'));
+      localizedText($('result'), localizedMessage('tools:studio.directional.removeAgain'));
       return;
     }
     commit('remove');

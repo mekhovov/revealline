@@ -1,4 +1,5 @@
-import { boundedJSON, exactKeys, required, dataIdentity } from '../data-json.mjs';
+import { requireAuthoring as required } from './authoring-error.mjs';
+import { boundedJSON, exactKeys, dataIdentity } from '../data-json.mjs';
 import { compileContentProject } from './project.mjs';
 import { forkMissionMap } from './drafts.mjs';
 
@@ -7,7 +8,11 @@ import { forkMissionMap } from './drafts.mjs';
 export function editContentGeometry(source, missionId, input) {
   const project = compileContentProject(source).source;
   const command = boundedJSON(input, { maxBytes: 4096, maxNodes: 32, maxDepth: 3 });
-  required(['replace', 'remove'].includes(command.action), 'Choose replace or remove geometry.');
+  required(
+    ['replace', 'remove'].includes(command.action),
+    'Choose replace or remove geometry.',
+    'errors:studio.rectangle.operation',
+  );
   exactKeys(
     command,
     [
@@ -22,20 +27,23 @@ export function editContentGeometry(source, missionId, input) {
   required(
     ['walls', 'foundations', 'terrain'].includes(command.surface),
     'Choose an authored rectangle.',
+    'errors:studio.rectangle.authored',
   );
   const mission = project.missions.find((entry) => entry.id === missionId);
-  required(mission, 'Choose an existing mission.');
+  required(mission, 'Choose an existing mission.', 'errors:studio.existingMission');
   const map = project.maps.find(
     (entry) => entry.id === mission.map.id && entry.revision === mission.map.revision,
   );
   required(
     command.expectedMap === dataIdentity(map),
     'The map changed. Select its current rectangle before editing.',
+    'errors:studio.rectangle.sourceChanged',
   );
   const list = structuredClone(map[command.surface] ?? []);
   required(
     Number.isSafeInteger(command.index) && command.index >= 0 && command.index < list.length,
     'Choose an existing rectangle.',
+    'errors:studio.rectangle.existing',
   );
   if (command.action === 'remove') list.splice(command.index, 1);
   else {
