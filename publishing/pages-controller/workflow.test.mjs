@@ -30,6 +30,20 @@ test('source qualification retains mandatory guards and restorable suites while 
   assert.doesNotMatch(legacy, /cp \.ci-tools/);
   assert.match(legacy, /node --test scripts\/test-production-\*\.mjs/);
   assert.match(legacy, /run: npm run build/);
+  assert.match(legacy, /Build pull-request artifact\n\s+if: vars\.REVEALLINE_FULL_CI == 'true'/);
+  assert.match(
+    legacy,
+    /Defer full artifact build to merged-source qualification\n\s+if: vars\.REVEALLINE_FULL_CI != 'true'/,
+  );
+  assert.match(
+    legacy,
+    /Require the previous stable release on public Pages\n\s+if: steps\.admission\.outputs\.mode == 'release'/,
+  );
+  assert.match(legacy, /release-train-boundary\.mjs public/);
+  assert.match(
+    legacy,
+    /Require exact release version identity[\s\S]*?release-train-boundary\.mjs source \./,
+  );
   // Release routing reads controller infrastructure from main, never today's runner in an old tag.
   const gate = legacy.slice(legacy.indexOf('  release_gate:'), legacy.indexOf('  preflight:'));
   assert.match(gate, /ref: main/);
@@ -48,6 +62,14 @@ test('source qualification retains mandatory guards and restorable suites while 
   assert.match(workflow, /cancel-in-progress: \$\{\{ github\.event_name == 'pull_request' \}\}/);
   assert.match(workflow, /group: frozen-pages-/);
   assert.match(legacy, /group: source-gates-\$\{\{ github.ref \}\}/);
+  assert.match(
+    legacy,
+    /pull_request:\n\s+branches: \[main\]\n\s+types: \[opened, synchronize, reopened, edited\]/,
+  );
+  assert.doesNotMatch(
+    legacy.slice(legacy.indexOf('  pull_request:'), legacy.indexOf('  workflow_dispatch:')),
+    /paths-ignore:/,
+  );
   const sourceConcurrency = legacy.slice(legacy.indexOf('concurrency:'), legacy.indexOf('jobs:'));
   assert.match(
     sourceConcurrency,
@@ -82,7 +104,7 @@ test('fast mode waives long suites while release source and publication guards s
   }
   assert.match(
     pr,
-    /test:\n\s+if: >-\n\s+github.event_name == 'pull_request' &&\n\s+vars.REVEALLINE_FULL_CI == 'true' &&\n\s+needs.preflight.outputs.runTests == 'true'/,
+    /test:\n\s+if: >-\n\s+github.event_name == 'pull_request' &&\n\s+needs.preflight.outputs.admission == 'release' &&\n\s+vars.REVEALLINE_FULL_CI == 'true' &&\n\s+needs.preflight.outputs.runTests == 'true'/,
   );
   assert.match(
     pr,
@@ -112,7 +134,8 @@ test('fast mode waives long suites while release source and publication guards s
       [
         'Validate release-critical source',
         'Verify exact tracked source before commands',
-        'Build pull-request artifact',
+        'Defer full artifact build to merged-source qualification',
+        'Verify tracked source after fast release gate',
       ],
     ],
     [
@@ -128,14 +151,7 @@ test('fast mode waives long suites while release source and publication guards s
         'Verify all originals and upload two absent members to the existing draft',
       ],
     ],
-    [
-      pages,
-      [
-        'Validate frozen selector and admitted archives',
-        'Assemble exact current ZIP and historical metadata bridges',
-        'Independently reread every prepared artifact byte',
-      ],
-    ],
+    [pages, ['Validate frozen selector and admitted archives']],
   ]) {
     const blocks = workflow.split('      - name: ');
     for (const name of names) {
@@ -144,6 +160,33 @@ test('fast mode waives long suites while release source and publication guards s
       assert.doesNotMatch(block, /if:.*test_policy|if:.*runTests/, name);
     }
   }
+  assert.match(
+    pages,
+    /Assemble exact current ZIP and historical metadata bridges\n\s+if: github\.event_name != 'pull_request' \|\| vars\.REVEALLINE_FULL_CI == 'true'/,
+  );
+  assert.match(
+    pages,
+    /Independently reread every prepared artifact byte\n\s+if: github\.event_name != 'pull_request' \|\| vars\.REVEALLINE_FULL_CI == 'true'/,
+  );
+  assert.match(
+    pages,
+    /Defer Pages artifact assembly to main publication\n\s+if: github\.event_name == 'pull_request' && vars\.REVEALLINE_FULL_CI != 'true'/,
+  );
+});
+
+test('draft staging shares the bounded maintenance path policy without checking out PR code', async () => {
+  const workflow = await fs.readFile(
+    new URL('../../.github/workflows/stage-unallocated-pr.yml', import.meta.url),
+    'utf8',
+  );
+  for (const path of ['docs\\/', 'publishing\\/', '\\.github\\/workflows\\/', 'game\\/test\\/'])
+    assert.ok(workflow.includes(path), `Missing maintenance path: ${path}`);
+  assert.match(workflow, /github\.paginate\(github\.rest\.pulls\.listFiles/);
+  assert.match(workflow, /files\.length > 0/);
+  assert.match(workflow, /files\.every/);
+  assert.match(workflow, /if \(maintenance\) \{[\s\S]*?return;/);
+  assert.doesNotMatch(workflow, /actions\/checkout|pull_request_target[\s\S]*?run:/);
+  assert.match(workflow, /convertPullRequestToDraft/);
 });
 
 test('publisher infrastructure suites run only when full CI and the test policy are enabled', async () => {
@@ -237,17 +280,17 @@ test('delivery-only push is excluded after the controller glob while PR review a
   assert.ok(!pullRequest.includes(negative));
   assert.match(push, /branches: \[main\]/);
   for (const previewOnlyPath of [
-    'publishing/test-policy.*',
     '.github/workflows/publish-frozen-pages.yml',
-    '.github/workflows/deploy-pages.yml',
-    '.cursor/skills/deploy-release-pages/**',
-    'docs/deployment.md',
-    'docs/fast-release-mode.md',
+    'scripts/pages-archive.mjs',
+    'scripts/pages-current-entry.mjs',
   ]) {
     assert.ok(!push.includes(previewOnlyPath));
     assert.ok(pullRequest.includes(previewOnlyPath));
   }
   assert.ok(push.includes('!publishing/pages-controller/evidence/**'));
+  assert.ok(push.includes('!publishing/pages-controller/source-qualification.mjs'));
+  assert.ok(push.includes('!publishing/pages-controller/release-train-boundary.mjs'));
+  assert.ok(push.includes('!publishing/pages-controller/release-train-boundary.test.mjs'));
   assert.ok(push.includes('!publishing/pages-controller/*.test.mjs'));
   assert.ok(push.includes('!publishing/pages-controller/test_*.py'));
   assert.match(workflow, /publish\.mjs verify-artifact/);
