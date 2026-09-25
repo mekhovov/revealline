@@ -116,11 +116,35 @@ export async function validateWaivedSourceQualification({
     )
   )
     throw new Error('Waived source qualification evidence pins are incomplete.');
-  const build = qualification.ordinaryBuildCorroboration,
+  const premerge = qualification.preMergeValidationCorroboration,
+    legacyBuild = qualification.ordinaryBuildCorroboration,
     frozen = qualification.frozenArtifactCorroboration;
   if (
-    build?.command !== 'npm run build' ||
-    !successfulStep(build) ||
+    (premerge === undefined) === (legacyBuild === undefined) ||
+    !(
+      (premerge?.command === 'npm run validate' &&
+        exact(premerge, [
+          'runId',
+          'jobId',
+          'command',
+          'step',
+          'sourceRevision',
+          'sourceTree',
+          'artifactBuild',
+          'scope',
+        ]) &&
+        positive(premerge.runId, 1e14) &&
+        positive(premerge.jobId, 1e14) &&
+        successfulStep(premerge) &&
+        COMMIT.test(premerge.sourceRevision) &&
+        COMMIT.test(premerge.sourceTree) &&
+        typeof premerge.scope === 'string' &&
+        Boolean(premerge.scope.trim()) &&
+        exact(premerge.artifactBuild, ['status', 'step']) &&
+        premerge.artifactBuild?.status === 'deferred-to-frozen-source' &&
+        successfulStep(premerge.artifactBuild)) ||
+      (legacyBuild?.command === 'npm run build' && successfulStep(legacyBuild))
+    ) ||
     !positive(frozen?.artifactId, 1e14) ||
     (Object.hasOwn(frozen, 'runId') && frozen.runId !== waiver.runId) ||
     ![
@@ -130,7 +154,9 @@ export async function validateWaivedSourceQualification({
       'frozenOfflineInventoryAndBindingsVerified',
     ].every((key) => frozen[key] === true)
   )
-    throw new Error('Waived source qualification build or frozen artifact proof is incomplete.');
+    throw new Error(
+      'Waived source qualification PR validation/deferral or frozen artifact proof is incomplete.',
+    );
   const bytes = await readPolicyEvidence(
     qualification.sourceRevision,
     'publishing/test-policy.json',

@@ -15,6 +15,17 @@ def fixture():
         del q[key]
     q.update(format=utility.WAIVER_FORMAT, status='qualified-with-test-waiver', releaseEligible=True,
              tests={'status': 'waived', 'counts': None})
+    q.pop('ordinaryBuildCorroboration')
+    q['preMergeValidationCorroboration'] = {
+        'runId': 19, 'jobId': 104, 'command': 'npm run validate',
+        'sourceRevision': value['source']['commit'],
+        'sourceTree': value['source']['tree'],
+        'step': {'name': 'Validate release-critical source', 'number': 20,
+                 'status': 'completed', 'conclusion': 'success'},
+        'artifactBuild': {'status': 'deferred-to-frozen-source',
+                          'step': {'name': 'Defer full artifact build to merged-source qualification',
+                                   'number': 21, 'status': 'completed', 'conclusion': 'success'}},
+        'scope': 'Exact PR source validation; artifact deferred to frozen source'}
     q['gates'].pop()
     names = ['Validate source', 'Lint source', 'Check formatting', 'Check native formatting', 'Check motion lab syntax']
     for index, (gate, name) in enumerate(zip(q['gates'], names), 1):
@@ -30,8 +41,23 @@ def fixture():
          'conclusion': 'success', 'steps': [copy.deepcopy(g['step']) for g in q['gates']]},
         {'id': 102, 'run_id': 18, 'name': 'test', 'head_sha': 'a' * 40, 'status': 'completed', 'conclusion': 'skipped'},
         {'id': 103, 'run_id': 18, 'name': 'freeze', 'head_sha': 'a' * 40, 'status': 'completed', 'conclusion': 'success'}]}
+    pr_run = {'id': 19, 'event': 'pull_request', 'path': '.github/workflows/deploy-pages.yml',
+              'head_sha': value['source']['commit'], 'status': 'completed', 'conclusion': 'success'}
+    before = {'name': 'Verify exact tracked source before commands', 'number': 19,
+              'status': 'completed', 'conclusion': 'success'}
+    after = {'name': 'Verify tracked source after fast release gate', 'number': 22,
+             'status': 'completed', 'conclusion': 'success'}
+    pr_job = {'id': 104, 'run_id': 19, 'name': 'build', 'head_sha': value['source']['commit'],
+              'status': 'completed', 'conclusion': 'success',
+              'steps': [before, copy.deepcopy(q['preMergeValidationCorroboration']['step']),
+                        copy.deepcopy(q['preMergeValidationCorroboration']['artifactBuild']['step']), after]}
+    pr_jobs = {'total_count': 1, 'jobs': [pr_job]}
+    equivalence = {'prSource': {'commit': value['source']['commit'], 'tree': value['source']['tree']},
+                   'frozenSource': {'commit': value['source']['commit'], 'tree': value['source']['tree']}}
     originals = {'publishing/test-policy.json': encoded(policy), 'runs/manual/run.json': encoded(run),
-                 'runs/manual/jobs.json': encoded(jobs)}
+                 'runs/manual/jobs.json': encoded(jobs), 'runs/pr/run.json': encoded(pr_run),
+                 'runs/pr/jobs.json': encoded(pr_jobs),
+                 'preparation/source-equivalence.json': encoded(equivalence)}
     pins = {name: {'path': name, 'bytes': len(body), 'sha256': utility.sha(body)} for name, body in originals.items()}
     q['testPolicy'] = {k: policy[k] for k in ['mode', 'authorization', 'reason']}
     q['testPolicy']['policyEvidence'] = pins['publishing/test-policy.json']
@@ -61,11 +87,18 @@ class WaiverTests(unittest.TestCase):
             lambda x: x['tests'].update(extra=True), lambda x: x.update(releaseEligible=False),
             lambda x: x['gates'].pop(), lambda x: x['gates'][0]['step'].update(conclusion='skipped'),
             lambda x: x['gates'][0].update(command='true'), lambda x: x.update(sourceTree='f' * 40),
-            lambda x: x['ordinaryBuildCorroboration']['step'].update(conclusion='failure'),
+            lambda x: x['preMergeValidationCorroboration']['step'].update(conclusion='failure'),
+            lambda x: x['preMergeValidationCorroboration']['artifactBuild']['step'].update(conclusion='failure'),
+            lambda x: x['preMergeValidationCorroboration']['artifactBuild'].update(status='built-on-pr'),
+            lambda x: x['preMergeValidationCorroboration'].update(sourceRevision='short'),
+            lambda x: x.update(ordinaryBuildCorroboration={'command': 'npm run build',
+                'step': {'status': 'completed', 'conclusion': 'success'}}),
             lambda x: x['frozenArtifactCorroboration'].update(allInnerZipManifestBytesVerified=False),
             lambda x: x['testPolicy'].update(authorization='agent-inferred'),
             lambda x: x['testPolicy']['policyEvidence'].update(bytes=16385),
-            lambda x: x['waiverEvidence'].update(runId=19), lambda x: x['evidencePins'].pop()]
+            lambda x: x['waiverEvidence'].update(runId=19),
+            lambda x: x.update(evidencePins=[p for p in x['evidencePins']
+                if p['path'] != 'runs/manual/jobs.json'])]
         for index, mutate in enumerate(mutations):
             bad = copy.deepcopy(q); mutate(bad)
             with self.subTest(index=index), self.assertRaises((ValueError, KeyError)):

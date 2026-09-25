@@ -8,8 +8,9 @@ RevealLine keeps development parallel and publishing serial.
   title are intentionally held before a costly build and cannot merge by the
   release-ready check.
 - New non-release pull requests are automatically returned to draft status.
-  For an exceptional non-product maintenance PR, apply the
-  `release-train-approved` label before marking it ready for review.
+  Bounded docs, publishing/controller, workflow, and `game/test/`-only maintenance
+  PRs stay ready automatically. For an exceptional non-product maintenance PR outside
+  those paths, apply the `release-train-approved` label before marking it ready for review.
 - Documentation, test-only evidence under `game/test/`, Pages-controller, and
   workflow-only maintenance remain eligible without consuming a product
   version. A PR that also changes runtime remains product work.

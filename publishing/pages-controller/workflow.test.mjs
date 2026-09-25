@@ -30,6 +30,11 @@ test('source qualification retains mandatory guards and restorable suites while 
   assert.doesNotMatch(legacy, /cp \.ci-tools/);
   assert.match(legacy, /node --test scripts\/test-production-\*\.mjs/);
   assert.match(legacy, /run: npm run build/);
+  assert.match(legacy, /Build pull-request artifact\n\s+if: vars\.REVEALLINE_FULL_CI == 'true'/);
+  assert.match(
+    legacy,
+    /Defer full artifact build to merged-source qualification\n\s+if: vars\.REVEALLINE_FULL_CI != 'true'/,
+  );
   // Release routing reads controller infrastructure from main, never today's runner in an old tag.
   const gate = legacy.slice(legacy.indexOf('  release_gate:'), legacy.indexOf('  preflight:'));
   assert.match(gate, /ref: main/);
@@ -82,7 +87,7 @@ test('fast mode waives long suites while release source and publication guards s
   }
   assert.match(
     pr,
-    /test:\n\s+if: >-\n\s+github.event_name == 'pull_request' &&\n\s+vars.REVEALLINE_FULL_CI == 'true' &&\n\s+needs.preflight.outputs.runTests == 'true'/,
+    /test:\n\s+if: >-\n\s+github.event_name == 'pull_request' &&\n\s+needs.preflight.outputs.admission == 'release' &&\n\s+vars.REVEALLINE_FULL_CI == 'true' &&\n\s+needs.preflight.outputs.runTests == 'true'/,
   );
   assert.match(
     pr,
@@ -112,7 +117,8 @@ test('fast mode waives long suites while release source and publication guards s
       [
         'Validate release-critical source',
         'Verify exact tracked source before commands',
-        'Build pull-request artifact',
+        'Defer full artifact build to merged-source qualification',
+        'Verify tracked source after fast release gate',
       ],
     ],
     [
@@ -144,6 +150,21 @@ test('fast mode waives long suites while release source and publication guards s
       assert.doesNotMatch(block, /if:.*test_policy|if:.*runTests/, name);
     }
   }
+});
+
+test('draft staging shares the bounded maintenance path policy without checking out PR code', async () => {
+  const workflow = await fs.readFile(
+    new URL('../../.github/workflows/stage-unallocated-pr.yml', import.meta.url),
+    'utf8',
+  );
+  for (const path of ['docs\\/', 'publishing\\/', '\\.github\\/workflows\\/', 'game\\/test\\/'])
+    assert.ok(workflow.includes(path), `Missing maintenance path: ${path}`);
+  assert.match(workflow, /github\.paginate\(github\.rest\.pulls\.listFiles/);
+  assert.match(workflow, /files\.length > 0/);
+  assert.match(workflow, /files\.every/);
+  assert.match(workflow, /if \(maintenance\) \{[\s\S]*?return;/);
+  assert.doesNotMatch(workflow, /actions\/checkout|pull_request_target[\s\S]*?run:/);
+  assert.match(workflow, /convertPullRequestToDraft/);
 });
 
 test('publisher infrastructure suites run only when full CI and the test policy are enabled', async () => {

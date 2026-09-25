@@ -297,7 +297,7 @@ def assemble(config, output):
     step(freeze, 'Freeze the exact qualified commit')
     step(freeze, 'Retain original release assets')
     step(build, 'Verify exact tracked source before commands')
-    step(build, 'Verify tracked source after build')
+    step(build, 'Verify tracked source after fast release gate')
     originals, verify, artifact, inspection_run = inspect(config, evidence, repo, source, manual)
     for row in config.get('extraEvidence', []):
         name = safe(row['name'])
@@ -318,9 +318,12 @@ def assemble(config, output):
         'testPolicy': {**{k: policy[k] for k in ('mode', 'authorization', 'reason')}, 'policyEvidence': pin(POLICY, policy_body)},
         'waiverEvidence': {'runId': manual['id'], 'runEvidence': pin('runs/manual/run.json', evidence['runs/manual/run.json']),
                           'jobsEvidence': pin('runs/manual/jobs.json', evidence['runs/manual/jobs.json'])},
-        'ordinaryBuildCorroboration': {'runId': pr_run['id'], 'jobId': build['id'], 'command': 'npm run build',
-            'step': step(build, 'Build pull-request artifact'), 'sourceRevision': pr_source['commit'],
-            'sourceTree': pr_source['tree'], 'scope': 'Separately identified PR build; only proven unchanged build inputs.'},
+        'preMergeValidationCorroboration': {'runId': pr_run['id'], 'jobId': build['id'],
+            'command': 'npm run validate', 'step': step(build, 'Validate release-critical source'),
+            'sourceRevision': pr_source['commit'], 'sourceTree': pr_source['tree'],
+            'artifactBuild': {'status': 'deferred-to-frozen-source',
+                'step': step(build, 'Defer full artifact build to merged-source qualification')},
+            'scope': 'Exact PR source validation only; the complete artifact is built once from frozen merged source.'},
         'frozenArtifactCorroboration': {'artifactId': artifact['id'], 'runId': artifact['runId'],
             'inspectionRunId': inspection_run['id'], 'wholeOriginalArtifactVerifiedBeforeQualification': True,
             'sourceTarGitBlobTypeModeAndPaxCommitVerified': True, 'allInnerZipManifestBytesVerified': True,

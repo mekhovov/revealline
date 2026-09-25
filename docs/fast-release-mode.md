@@ -15,17 +15,23 @@ The `Build and deploy GitHub Pages` workflow keeps only the minimum release path
 1. exact pull-request head and tracked-source identity before commands;
 2. dependency installation;
 3. release-critical source and distribution-reference validation (`npm run validate`);
-4. the ordinary deterministic static build (`npm run build`);
-5. exact tracked-source identity after the build; and
+4. an explicit deferral of the complete artifact build to merged-source qualification;
+5. exact tracked-source identity after the fast release gate; and
 6. the aggregate `release-ready` result.
 
 The preflight and build remain separate job names because frozen-release evidence binds those exact
 contexts. Preflight records only the test policy; the build job is the sole PR source checkout and
-performs the required identity check before and after the build. Superseded runs for the same PR are
-cancelled by the workflow concurrency group. Pages previews use a partial sparse checkout of
+performs validation plus required identity checks before and after the fast gate. It does **not**
+assemble the several-hundred-megabyte distribution in fast mode. Superseded runs for the same PR
+are cancelled by the workflow concurrency group. Pages previews use a partial sparse checkout of
 the controller, workflow contracts, test policy, and two archive helpers while retaining all tags
 and on-demand Git objects needed to verify frozen source identities. Production publications remain
 serialized and are never cancelled by a newer run.
+
+The staging workflow uses the same bounded maintenance paths as preflight. Documentation,
+publishing/controller, workflow, and `game/test/`-only pull requests may remain ready without a
+product version; mixed or runtime changes still return to draft until they receive an exact release
+title or the explicit `release-train-approved` label.
 
 These checks are deferred from the pull-request workflow in fast mode and cannot block merge:
 
@@ -35,6 +41,11 @@ These checks are deferred from the pull-request workflow in fast mode and cannot
 - source and native Prettier checks;
 - motion-lab syntax and extended Field Kit provenance checks; and
 - focused Pages-controller unit tests.
+
+The complete deterministic `npm run build` is also deferred from the pull request, but it is not
+waived for release. Merged-source qualification builds it once from the exact merge commit, freezes
+it, and independently inspects its original bytes before publication. This removes the duplicate PR
+artifact assembly while preserving the authoritative post-merge release artifact gate.
 
 Before an immutable release is frozen, manual source qualification still requires validation,
 ESLint, source and native formatting, motion-lab syntax, Field Kit reproduction/readiness, and exact
@@ -67,7 +78,8 @@ during an active release:
 
 1. Open and merge a reviewed PR that changes `publishing/test-policy.json` from `waived` to
    `required`, updates its reason/restoration text, and updates any authorization constant required
-   by that policy schema. Run the policy and Pages-controller tests in that PR.
+   by that policy schema. Run the policy and Pages-controller tests in that PR. The tracked workflow
+   already restores the PR artifact build automatically when `REVEALLINE_FULL_CI=true`.
 2. After that PR is on `main`, set the repository variable:
 
    ```sh
