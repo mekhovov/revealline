@@ -4,11 +4,20 @@ import { creatorAbort, creatorSHA256 } from './bytes.mjs';
 import {
   createCreatorTeamAttempt,
   CREATOR_TEAM_PORTABLE_FORMAT,
+  CREATOR_TEAM_PORTABLE_MIME,
   exportCreatorTeamCampaign,
   importCreatorTeamCampaign,
   validateCreatorTeamCampaign,
 } from './team.mjs';
 import { t } from '../i18n/index.mjs';
+import {
+  CREATOR_TEAM_MEDIA_LIMITS,
+  CREATOR_TEAM_MEDIA_MIME,
+  exportCreatorTeamMediaCampaign,
+  importCreatorTeamMediaCampaign,
+  isPreparedCreatorTeamMediaCampaign,
+  creatorTeamMediaForLevel,
+} from './team-media.mjs';
 import { createCoop, startCoop, stepCoop } from '../coop/core.mjs';
 import {
   applyGameplayTuning,
@@ -341,18 +350,19 @@ export function validateInstalledTeamProgress(source, editionId) {
 }
 
 async function inspectEdition(source, expectedId) {
-  const row = boundedJSON(source, {
-    maxBytes: COOP_PACK_MAX_BYTES * 2,
-    maxNodes: 60000,
-    maxDepth: 24,
-    maxArray: 2048,
-    maxString: COOP_PACK_MAX_BYTES,
-  });
+  required(
+    source && Object.getPrototypeOf(source) === Object.prototype,
+    t('errors:creator.teamEditionDamaged'),
+  );
+  const media = Object.hasOwn(source, 'payload');
   exactKeys(
-    row,
-    ['format', 'editionId', 'installedAt', 'bytes', 'portable'],
+    source,
+    media
+      ? ['format', 'editionId', 'installedAt', 'bytes', 'gameplay', 'payload']
+      : ['format', 'editionId', 'installedAt', 'bytes', 'portable'],
     t('interface:creator.label.installedTeamEdition'),
   );
+  const row = source;
   required(
     row.format === CREATOR_TEAM_EDITION_FORMAT &&
       editionPattern.test(row.editionId) &&
@@ -361,22 +371,28 @@ async function inspectEdition(source, expectedId) {
       row.installedAt >= 0 &&
       Number.isSafeInteger(row.bytes) &&
       row.bytes > 0 &&
-      row.bytes <= COOP_PACK_MAX_BYTES &&
-      typeof row.portable === 'string',
+      row.bytes <= (media ? CREATOR_TEAM_MEDIA_LIMITS.bytes : COOP_PACK_MAX_BYTES) &&
+      (media
+        ? row.payload instanceof Blob && typeof row.gameplay === 'string'
+        : typeof row.portable === 'string'),
     t('errors:creator.teamEditionDamaged'),
   );
-  const bytes = new TextEncoder().encode(row.portable);
+  const exactPayload = media
+      ? Blob.prototype.slice.call(row.payload, 0, row.payload.size, CREATOR_TEAM_MEDIA_MIME)
+      : new Blob([row.portable], { type: CREATOR_TEAM_PORTABLE_MIME }),
+    bytes = new Uint8Array(await exactPayload.arrayBuffer());
   required(bytes.byteLength === row.bytes, t('errors:creator.teamEditionByteCount'));
   required(
     (await creatorSHA256(bytes)) === row.editionId,
     t('errors:creator.teamEditionIntegrity'),
   );
-  const document = boundedJSON(row.portable, {
-    maxBytes: COOP_PACK_MAX_BYTES,
-    maxNodes: 50000,
-    maxDepth: 20,
-    maxArray: 1024,
-  });
+  const gameplay = media ? row.gameplay : row.portable,
+    document = boundedJSON(gameplay, {
+      maxBytes: COOP_PACK_MAX_BYTES,
+      maxNodes: 50000,
+      maxDepth: 20,
+      maxArray: 1024,
+    });
   exactKeys(
     document,
     ['format', 'pack', 'provenance', 'evidence'],
@@ -391,7 +407,9 @@ async function inspectEdition(source, expectedId) {
     editionId: row.editionId,
     installedAt: row.installedAt,
     bytes: row.bytes,
-    portable: row.portable,
+    portable: gameplay,
+    hasMedia: media,
+    ...(media ? { payload: exactPayload } : {}),
     pack: validated.pack,
     provenance: validated.provenance,
   });
@@ -403,6 +421,8 @@ async function inspectEdition(source, expectedId) {
 export function createInstalledTeamCampaignStore({
   indexedDB = globalThis.indexedDB,
   now = Date.now,
+  decodeImage,
+  inspectVideo,
 } = {}) {
   let opening = null,
     closed = false;
@@ -557,11 +577,17 @@ export function createInstalledTeamCampaignStore({
   }
   async function install(prepared, { signal } = {}) {
     creatorAbort(signal);
-    const portable = exportCreatorTeamCampaign(prepared);
+    const media = isPreparedCreatorTeamMediaCampaign(prepared),
+      portable = media
+        ? exportCreatorTeamMediaCampaign(prepared)
+        : exportCreatorTeamCampaign(prepared);
     const bytes = new Uint8Array(await portable.arrayBuffer());
     creatorAbort(signal);
     const editionId = await creatorSHA256(bytes);
-    const portableText = new TextDecoder('utf-8', { fatal: true }).decode(bytes);
+    const portableText = media
+        ? await exportCreatorTeamCampaign(prepared.gameplay).text()
+        : new TextDecoder('utf-8', { fatal: true }).decode(bytes),
+      exactPayload = media ? new Blob([bytes], { type: CREATOR_TEAM_MEDIA_MIME }) : null;
     const installedAt = now();
     required(
       Number.isSafeInteger(installedAt) && installedAt >= 0,
@@ -572,7 +598,7 @@ export function createInstalledTeamCampaignStore({
       editionId,
       installedAt,
       bytes: bytes.byteLength,
-      portable: portableText,
+      ...(media ? { gameplay: portableText, payload: exactPayload } : { portable: portableText }),
     };
     const db = await open(signal);
     creatorAbort(signal);
@@ -582,6 +608,7 @@ export function createInstalledTeamCampaignStore({
         metadata = tx.objectStore('metadata'),
         existingRequest = editions.get(editionId),
         keysRequest = editions.getAllKeys(),
+        rowsRequest = editions.getAll(),
         stateRequest = metadata.get(STATE_KEY);
       let failure,
         ready = 0,
@@ -593,7 +620,7 @@ export function createInstalledTeamCampaignStore({
         } catch {}
       };
       const stage = () => {
-        if (++ready !== 3) return;
+        if (++ready !== 4) return;
         try {
           const existing = existingRequest.result;
           if (existing !== undefined) {
@@ -602,6 +629,11 @@ export function createInstalledTeamCampaignStore({
           }
           const keys = keysRequest.result;
           required(keys.length < MAX_EDITIONS, t('errors:creator.removeTeamCampaignFirst'));
+          required(
+            rowsRequest.result.reduce((sum, item) => sum + item.bytes, row.bytes) <=
+              CREATOR_TEAM_MEDIA_LIMITS.bytes,
+            t('errors:creator.teamMediaBudgetExceeded'),
+          );
           const state = validateState(stateRequest.result);
           state.generation++;
           editions.put(row, editionId);
@@ -617,6 +649,7 @@ export function createInstalledTeamCampaignStore({
       signal?.addEventListener('abort', abort, { once: true });
       existingRequest.onsuccess = stage;
       keysRequest.onsuccess = stage;
+      rowsRequest.onsuccess = stage;
       stateRequest.onsuccess = stage;
       tx.oncomplete = () => {
         signal?.removeEventListener('abort', abort);
@@ -630,10 +663,7 @@ export function createInstalledTeamCampaignStore({
     creatorAbort(signal);
     if (result.existing) {
       const inspected = await inspectEdition(result.existing, editionId);
-      required(
-        inspected.portable === portableText,
-        t('errors:creator.teamEditionIdentityConflict'),
-      );
+      required(inspected.bytes === row.bytes, t('errors:creator.teamEditionIdentityConflict'));
       return Object.freeze({ editionId, alreadyInstalled: true });
     }
     return Object.freeze({ editionId, alreadyInstalled: false });
@@ -689,7 +719,14 @@ export function createInstalledTeamCampaignStore({
       editions: Object.freeze(editions),
     });
   }
-  async function load(editionId, { signal } = {}) {
+  async function load(
+    editionId,
+    {
+      signal,
+      decodeImage: loadDecodeImage = decodeImage,
+      inspectVideo: loadInspectVideo = inspectVideo,
+    } = {},
+  ) {
     required(editionPattern.test(editionId), t('errors:creator.chooseInstalledTeamEdition'));
     const source = await transaction(
       ['editions'],
@@ -701,16 +738,21 @@ export function createInstalledTeamCampaignStore({
     const inspected = await inspectEdition(source, editionId);
     creatorAbort(signal);
     const prepared = await importCreatorTeamCampaign(
-      new Blob([inspected.portable], {
-        type: 'application/vnd.revealline.team+json',
-      }),
-      { signal },
-    );
+        new Blob([inspected.portable], { type: CREATOR_TEAM_PORTABLE_MIME }),
+        { signal },
+      ),
+      media = inspected.payload
+        ? await importCreatorTeamMediaCampaign(inspected.payload, {
+            signal,
+            decodeImage: loadDecodeImage,
+            inspectVideo: loadInspectVideo,
+          })
+        : null;
     required(
       canonicalJSON(prepared.pack) === canonicalJSON(inspected.pack),
       t('errors:creator.teamPackChanged'),
     );
-    return Object.freeze({ editionId, prepared });
+    return Object.freeze({ editionId, prepared, media });
   }
   async function restoreAttempt(editionId, levelId, { signal } = {}) {
     required(
@@ -764,7 +806,7 @@ export function createInstalledTeamCampaignStore({
       source.editionId,
       ({ edition: currentEdition, progress: currentProgress, put }) => {
         required(
-          currentEdition?.portable === edition.portable,
+          (currentEdition?.gameplay ?? currentEdition?.portable) === edition.portable,
           'The installed Team edition changed while its attempt was saving.',
         );
         const progress = validateInstalledTeamProgress(currentProgress, source.editionId);
@@ -839,6 +881,32 @@ export function createInstalledTeamCampaignStore({
         presets.has(presetId),
       t('errors:creator.teamCompletionIdentityRequired'),
     );
+    const installedSource = await transaction(
+      ['editions'],
+      'readonly',
+      (tx) => requestResult(tx.objectStore('editions').get(editionId)),
+      signal,
+    );
+    required(installedSource !== undefined, 'This exact Team edition is no longer installed.');
+    const inspectedEdition = await inspectEdition(installedSource, editionId);
+    if (inspectedEdition.payload) {
+      const media = await importCreatorTeamMediaCampaign(inspectedEdition.payload, {
+          signal,
+          decodeImage,
+          inspectVideo,
+        }),
+        expected = creatorTeamMediaForLevel(media, levelId).picture.descriptor,
+        supplied = validateReward(reward);
+      required(
+        supplied &&
+          supplied.sha256 === expected.sha256 &&
+          supplied.bytes === expected.bytes &&
+          supplied.mime === expected.mime &&
+          supplied.width === expected.width &&
+          supplied.height === expected.height,
+        'Team completion reward differs from this exact media edition.',
+      );
+    }
     const db = await open(signal);
     creatorAbort(signal);
     return new Promise((resolve, reject) => {
@@ -863,12 +931,15 @@ export function createInstalledTeamCampaignStore({
             editionRequest.result !== undefined,
             t('errors:creator.teamEditionNoLongerInstalled'),
           );
-          const document = boundedJSON(editionRequest.result.portable, {
-            maxBytes: COOP_PACK_MAX_BYTES,
-            maxNodes: 50000,
-            maxDepth: 20,
-            maxArray: 1024,
-          });
+          const document = boundedJSON(
+            editionRequest.result.gameplay ?? editionRequest.result.portable,
+            {
+              maxBytes: COOP_PACK_MAX_BYTES,
+              maxNodes: 50000,
+              maxDepth: 20,
+              maxArray: 1024,
+            },
+          );
           const validated = validateCreatorTeamCampaign(document.pack, document.provenance);
           required(
             validated.pack.levels.some((level) => level.id === levelId),
