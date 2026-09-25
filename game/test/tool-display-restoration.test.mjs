@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { Document, Events } from './helpers/couch-dom.mjs';
 import { mountToolDisplay } from '../ui/tool-display.mjs';
 import { DISPLAY_PREFERENCES_KEY } from '../display-preferences.mjs';
+import { getLocale, setLocale } from '../i18n/index.mjs';
 
 // The real preference/display owners run here. Browser history form restoration
 // and task scheduling are explicit model inputs, not a native BFCache claim.
@@ -130,6 +131,25 @@ test('history repair retains unsaved local intent and its persistence warning', 
   assert.equal(f.notice.textContent, warning);
   assert.equal(f.writes.length, 1, 'Only the explicit failed save was attempted.');
   f.assertChildUnchanged();
+});
+
+test('failed display-save notices translate in place without retrying storage or touching the child', (context) => {
+  const locale = getLocale();
+  context.after(() => setLocale(locale, { persist: false }));
+  setLocale('en', { persist: false });
+  const f = fixture(context);
+  f.failedSave = true;
+  f.choose('large');
+  const warning = f.notice.textContent;
+  for (const locale of ['uk', 'en']) {
+    setLocale(locale, { persist: false });
+    if (locale === 'uk') assert.match(f.notice.textContent, /не вдалося зберегти/);
+    else assert.equal(f.notice.textContent, warning);
+    assert.equal(f.control.value, 'large');
+    assert.equal(f.doc.body.dataset.textSize, 'large');
+    assert.equal(f.writes.length, 1);
+    f.assertChildUnchanged();
+  }
 });
 
 test('deferred repair reads newer explicit intent instead of replaying the earlier snapshot', (t) => {
