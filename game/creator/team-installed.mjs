@@ -24,8 +24,7 @@ const editionPattern = /^[a-f0-9]{64}$/;
 const text = (value, maximum = 160) =>
   typeof value === 'string' && value.length > 0 && value.length <= maximum;
 
-const cancelled = () =>
-  new DOMException(t('errors:creator.teamLibraryCancelled'), 'AbortError');
+const cancelled = () => new DOMException(t('errors:creator.teamLibraryCancelled'), 'AbortError');
 const requestResult = (request) =>
   new Promise((resolve, reject) => {
     request.onsuccess = () => resolve(request.result);
@@ -40,11 +39,7 @@ function validateState(source) {
     maxNodes: 8,
     maxDepth: 2,
   });
-  exactKeys(
-    state,
-    ['format', 'generation'],
-    t('interface:creator.label.installedTeamState'),
-  );
+  exactKeys(state, ['format', 'generation'], t('interface:creator.label.installedTeamState'));
   required(
     state.format === STATE_FORMAT &&
       Number.isSafeInteger(state.generation) &&
@@ -173,10 +168,8 @@ export function createInstalledTeamCampaignStore({
     closed = false;
   function open(signal) {
     creatorAbort(signal);
-    if (closed)
-      return Promise.reject(new Error(t('errors:creator.teamLibraryClosed')));
-    if (!indexedDB)
-      return Promise.reject(new Error(t('errors:creator.teamStorageUnsupported')));
+    if (closed) return Promise.reject(new Error(t('errors:creator.teamLibraryClosed')));
+    if (!indexedDB) return Promise.reject(new Error(t('errors:creator.teamStorageUnsupported')));
     if (opening) return opening;
     opening = new Promise((resolve, reject) => {
       const request = indexedDB.open(CREATOR_TEAM_DATABASE, DATABASE_VERSION);
@@ -197,17 +190,12 @@ export function createInstalledTeamCampaignStore({
         }
       };
       request.onerror = () => fail(request.error);
-      request.onblocked = () =>
-        fail(new Error(t('errors:creator.closeTabsForTeamStorage')));
+      request.onblocked = () => fail(new Error(t('errors:creator.closeTabsForTeamStorage')));
       request.onsuccess = () => {
         const db = request.result;
         if (failed || closed || signal?.aborted) {
           db.close();
-          fail(
-            signal?.aborted
-              ? cancelled()
-              : new Error(t('errors:creator.teamLibraryClosed')),
-          );
+          fail(signal?.aborted ? cancelled() : new Error(t('errors:creator.teamLibraryClosed')));
           return;
         }
         db.onversionchange = () => {
@@ -275,9 +263,7 @@ export function createInstalledTeamCampaignStore({
       };
       tx.onabort = tx.onerror = () => {
         signal?.removeEventListener('abort', abort);
-        reject(
-          failure || tx.error || new Error(t('errors:creator.teamTransactionFailed')),
-        );
+        reject(failure || tx.error || new Error(t('errors:creator.teamTransactionFailed')));
       };
     });
   }
@@ -327,10 +313,7 @@ export function createInstalledTeamCampaignStore({
             return;
           }
           const keys = keysRequest.result;
-          required(
-            keys.length < MAX_EDITIONS,
-            t('errors:creator.removeTeamCampaignFirst'),
-          );
+          required(keys.length < MAX_EDITIONS, t('errors:creator.removeTeamCampaignFirst'));
           const state = validateState(stateRequest.result);
           state.generation++;
           editions.put(row, editionId);
@@ -393,10 +376,7 @@ export function createInstalledTeamCampaignStore({
     const byEdition = new Map(
       snapshot.progressRows.map((row) => {
         const editionId = row?.editionId;
-        required(
-          editionPattern.test(editionId),
-          t('errors:creator.teamProgressMissingEdition'),
-        );
+        required(editionPattern.test(editionId), t('errors:creator.teamProgressMissingEdition'));
         return [editionId, validateInstalledTeamProgress(row, editionId)];
       }),
     );
@@ -527,9 +507,7 @@ export function createInstalledTeamCampaignStore({
       };
       tx.onabort = tx.onerror = () => {
         signal?.removeEventListener('abort', abort);
-        reject(
-          failure || tx.error || new Error(t('errors:creator.teamCompletionSaveFailed')),
-        );
+        reject(failure || tx.error || new Error(t('errors:creator.teamCompletionSaveFailed')));
       };
     });
   }

@@ -3,8 +3,7 @@ import { t } from '../i18n/index.mjs';
 
 const nativeSize = Object.getOwnPropertyDescriptor(Blob.prototype, 'size').get;
 export const creatorAbort = (signal) => {
-  if (signal?.aborted)
-    throw new DOMException(t('errors:creator.operationCancelled'), 'AbortError');
+  if (signal?.aborted) throw new DOMException(t('errors:creator.operationCancelled'), 'AbortError');
 };
 export function ownCreatorBlob(source, maxBytes, label = t('interface:file')) {
   let size;
