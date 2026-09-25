@@ -60,3 +60,47 @@ test('technical identifiers and property keys are not display candidates', () =>
   );
   assert.deepEqual(found, []);
 });
+
+test('DOM helper signatures distinguish element IDs from labels and honor lexical shadowing', () => {
+  const found = auditSource(
+    `
+    const node = (tag, text = '') => { const element = document.createElement(tag); element.textContent = text; return element; };
+    node('p', 'Outer caption');
+    function panel() {
+      function node(tag, id, text = '') { const element = document.createElement(tag); element.id = id; localizedText(element, () => text); return element; }
+      node('p', 'status', 'Pending download');
+      node('p', 'title', t('common:actions.cancel'));
+    }
+    node('button', 'Open panel');
+  `,
+    'game/example.mjs',
+  );
+  assert.deepEqual(
+    found.map(({ text, kind }) => ({ text, kind })),
+    [
+      { text: 'Outer caption', kind: 'dom-factory' },
+      { text: 'Pending download', kind: 'dom-factory' },
+      { text: 'Open panel', kind: 'dom-factory' },
+    ],
+  );
+});
+
+test('state comparisons within display producers remain review candidates rather than display copy', () => {
+  const found = auditSource(
+    `
+    localizedText(label, () => state === 'Ready' ? 'Begin flight' : 'Preparing flight');
+    label.textContent = kind !== 'flight' ? 'Open menu' : 'Keep flying';
+  `,
+    'game/example.mjs',
+  );
+  assert.deepEqual(
+    found.map(({ text, kind }) => ({ text, kind })),
+    [
+      { text: 'Ready', kind: 'review' },
+      { text: 'Begin flight', kind: 'dom' },
+      { text: 'Preparing flight', kind: 'dom' },
+      { text: 'Open menu', kind: 'dom' },
+      { text: 'Keep flying', kind: 'dom' },
+    ],
+  );
+});
