@@ -83,6 +83,9 @@ const warningKeys = {
   'density-target-not-reached': 'tools:studio.gameplay.densityWarning',
   'encounter-roster-preserved': 'tools:studio.gameplay.encounterWarning',
 };
+export function studioActorDomain(domain) {
+  return domainKeys[domain] ? t(domainKeys[domain]) : domain;
+}
 /** The inspector's canonical report remains usable by the CLI and identity
  * checks. Localized labels never enter that report or its runtime recipe. */
 export function studioGameplayText(report, status = {}) {
@@ -97,7 +100,7 @@ export function studioGameplayText(report, status = {}) {
           t('tools:studio.gameplay.actor', {
             id: actor.id,
             speed: Number(actor.speed.toFixed(3)),
-            domain: domainKeys[actor.domain] ? t(domainKeys[actor.domain]) : actor.domain,
+            domain: studioActorDomain(actor.domain),
           }),
         )
         .join('; ') || t('tools:studio.capture.none'),
