@@ -46,14 +46,15 @@ rectilinear abstractions. People and animals are never translated into targets.
 - Exact preservation of enemies, rules, objectives, terrain, bonuses and schedules
   across Gentle, Standard and Expert in Solo and Versus.
 - Valid compiled topology for all three presets.
+- Both authored approaches close successfully across Gentle, Standard and Expert,
+  both steering policies and two deterministic seeds.
+- All six approaches reproduce exactly and remain equal on both Versus boards.
 - Two deterministic seeds survive a twelve-second idle opening without damage on
   all three presets.
 - Changed-file formatting and diff checks.
 
 ## Required before enrollment
 
-- Author and simulate both documented approaches under both control styles.
-- Record deterministic closure/replay and paired-board equality evidence.
 - Register a successor route/profile and three prior-edition cards without crossing
   Next between editions.
 - Update Studio/default hosts only after the v12 batch is publicly accepted.
