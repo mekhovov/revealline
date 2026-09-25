@@ -27,7 +27,7 @@ reviewer names, listening approval or device results.
 | Native archive streaming | PR #523 is released in immutable v0.130.0; the public desktop game loaded 136/136 archive recordings and completed remote → included → remote playback without audio loss | Physical iPhone/controller and cold-offline acceptance remain separate |
 | New archive previews | 136 public archive recordings across 14 collections; the immutable 104-recording baseline and its later 32 additions retain separate publication evidence | Full listening, taste approval and game admission remain; zero new game admissions |
 | Retro previews | Seven earlier rejections and six rejected DOS-88/escp previews are retained; four third-direction synth auditions are public and listening-unapproved | Review the new four against the Electric Dreams/night-drive direction; runner2088 remains draft |
-| Metal previews | Six older backups, four Eternity recordings, four industrial/thrash previews, four nonduplicate YannZ-centered groove auditions and four Purgatory auditions are public alongside the earlier Nakarada pair | Complete Purgatory musical, transition and gameplay review; Reckless remains a stale-base draft |
+| Metal previews | Six older backups, four Eternity recordings, four industrial/thrash previews, four nonduplicate YannZ-centered groove auditions and four Purgatory auditions are public alongside the earlier Nakarada pair | Complete the seven-track Interstellar/Purgatory review; Reckless is current-base and technically repaired but remains a listening-unapproved draft |
 | Nakarada Shchedryk | User approved the direction; exact MP3 admission is public in v0.130.0 and played from the bundled source during desktop transition verification | Full-track/repeated-session, physical-device and Ukrainian cultural acceptance |
 | UA-FPV | Four private import packs preserve 80 filenames / 77 unique recordings | Recording-specific public permission and game admission |
 | Quick controls | Replacement PR #516 is included in public v0.130.0; historical PR #333 is closed | B/N plus touch/controller physical-device acceptance |
@@ -52,12 +52,20 @@ reviewer names, listening approval or device results.
   deployed it to the primary route. Direct public desktop acceptance loaded
   **136/136**, streamed Drama beyond the 12-second watchdog, switched to bundled
   Shchedryk, then returned to streamed Cyber Anxiety with no warning/error log.
+- Test-only [PR #555](https://github.com/mekhovov/revealline/pull/555) merged as
+  `8acf3f8c6f3d5ba63cefdcce0dafd687ba08a180` on the latest main. Focused Node
+  20.20.0 verification passed the two changed scenarios, hosted preflight and
+  release-ready passed, and independent review was clean. It adds no runtime or
+  release change; it prevents regressions in catalogue outage/Refresh and the real
+  player recovery sequence across remote and included sources.
 
 ### Active — release order and effort
 
-1. **M8 stream recovery:** desktop delivery is complete in v0.130.0. Physical
-   iPhone/controller and cold-offline checks remain and do not reopen the released
-   desktop repair.
+1. **M8 stream recovery:** desktop delivery is complete in v0.130.0. Merged test-only
+   [PR #555](https://github.com/mekhovov/revealline/pull/555) now protects the real
+   remote-stall → included-fallback → remote-retry → included-switch sequence and
+   catalogue 503 → Refresh recovery. Physical iPhone/controller and cold-offline
+   checks remain and do not reopen the released desktop repair.
 2. **M3 quick controls:** replacement PR #516 is public in v0.130.0. Physical B/N,
    touch and controller acceptance remains.
 3. **M1/M2 soundtrack admission and opening theme:** aggregate #518 and theme #519
@@ -81,6 +89,12 @@ explicit fast-release policy remain exclusions, never passes.
 - Physical-device/controller and cold-offline qualification remain open after
   scoped desktop acceptance. The initial selector's failed reread is retained as
   failure evidence; the successful successor closes that publication blocker.
+- Cold-offline browser acceptance must reuse the stable `/app/` launcher and official
+  content store being developed in draft [PR #536](https://github.com/mekhovov/revealline/pull/536),
+  rather than adding a second launcher to the current edition worker. Before that
+  release can satisfy M2/M8, reconcile its zero-MP3 required-core policy with the
+  master plan's bundled Shchedryk opening-theme exception; this is an explicit
+  cross-feature decision, not an assumed soundtrack-policy change.
 - Historical inputs #321, #331, #333 and #439 are closed and superseded by merged
   replacements #518, #516 and #519, which are public in v0.130.0. Their earlier
   failures and focused checks remain historical evidence; skipped jobs are not
@@ -93,10 +107,10 @@ explicit fast-release policy remain exclusions, never passes.
   admission review gates have no committed ETA.
   Do not publicly redistribute Pixabay or UA-FPV recordings without exact-recording
   permission. Shchedryk remains excluded from Recording mode because of Content ID.
-- Current free space fell to **about 541 MiB** after parallel release work, below
-  the required 1 GiB floor. Local audio checkout, rendering and heavy builds are
-  blocked. Continue only hosted or bounded metadata work until owner-coordinated
-  cleanup restores the reserve; never delete user files, frozen releases or evidence.
+- Free space is **at or slightly below the required 1 GiB floor**; checkpoints during
+  this reconciliation fluctuated by only a few MiB around that boundary. Treat the
+  reserve as volatile and keep local audio checkout, rendering and heavy builds held; continue only hosted or bounded metadata work until
+  owner-coordinated cleanup restores a usable margin; never delete user files, frozen releases or evidence.
 
 ### Deferred
 
@@ -269,10 +283,19 @@ originals approved. No deadline is assigned to unresolved rights or paused music
   transport milestone, not musical approval, game admission or a default-playlist
   change.
 - Archive draft [PR #22](https://github.com/mekhovov/revealline-soundtracks-01/pull/22)
-  (Reckless punk-metal) remains clean/mergeable at
-  `964b00b264985da4d0e6a41545c77f9a1a7456a7`, but its base
-  `41ea4448cf9602960ada28cd2c7c9a4cd5cb6b38` predates current archive main and
-  must be reconciled before review. Draft
+  (Reckless punk-metal) is reconciled onto archive main
+  `824e34e4957ab29b7ef841115f631a579f741fc4` at head
+  `fec06dd45eacea56d00acbd470a43999b2f22710`. Independent review found that
+  generated intake evidence omitted transitive pin-file dependencies and described
+  loop endpoints as full durations. The repaired head binds every loaded pin file,
+  regression-checks binding coverage and labels loop-end metadata accurately. Local
+  bounded verification passed binding 2/2, Reckless 9/9, complete intake 146/146,
+  manifest and diff checks. Fresh exact-head verify, Reckless prepare and all four
+  transitive source checks passed in runs 36193952164, 36193952191, 36193952156,
+  36193952174, 36193952176 and 36193952177; event-inapplicable publication jobs
+  were skipped and are not passes. Hosted artifact 10889860079 is 20,781,317 bytes
+  with ZIP SHA-256 `00211751f1701748948ca922c589120ad15db47b512b7bab15ca691a082bbc72`;
+  it remains undownloaded and uninspected under the disk policy. Draft
   [PR #23](https://github.com/mekhovov/revealline-soundtracks-01/pull/23)
   (runner2088 retrowave) is conflicting at
   `e6e746a83f08708b4b24cf1a2522a4924624001a`. Neither is published by the
@@ -303,9 +326,11 @@ originals approved. No deadline is assigned to unresolved rights or paused music
   [PR #370](https://github.com/mekhovov/revealline/pull/370) merged as
   `3883259987913cb646eb44cf2580083dad673a70` and
   [v0.111.0](https://github.com/mekhovov/revealline/releases/tag/v0.111.0)
-  published as the public soundtrack archive player. Current game main is
-  `359b313e6aaeb95cf05ec73667ea2f1bacf94f29` after the v0.131 localization source
-  merge; the latest public/general GitHub release remains v0.130.0. Later source or
+  published as the public soundtrack archive player. The latest non-documentation
+  game baseline before this docs-only plan update is
+  `fce62eb754366e6e22a33bebf86e3ee59db84e66` after the v0.131 maintained-tools
+  localization, production-ledger and Team fixture fixes; soundtrack regression
+  PR #555 remains merged in its ancestry. The latest public/general GitHub release remains v0.130.0. Later source or
   game releases do not convert archive auditions into trusted built-ins or defaults.
 - UA-FPV remains on its recording-specific public-redistribution rights hold; its
   four private import packs remain available. The rejected local AI-production
@@ -610,9 +635,9 @@ version is allocated without the release owner's confirmation.
 | M3 | Quick controls are public | Physical keyboard/touch/controller access | Verify B/N plus touch/controller Play/Pause and Next on physical targets | About 0.5 day hands-on, excluding device access | Historical #333; merged replacement [PR #516](https://github.com/mekhovov/revealline/pull/516) at 7ccbb6d3 | v0.130.0 public; device acceptance pending |
 | M4 | Active research; parallel | Exact published rights and musical/cultural review | Target six additional distinct Ukrainian compositions; publish cleared subsets | 1–2 days per research round; rights/review date unknown | Candidate/hold register below | Unreleased |
 | M5 | Four third-direction synth auditions are public; runner2088 remains draft; Electric Dreams remains the closest reference | Musical fit, full listening and exact admission review; public-archive holds remain | Review 90s Racer Techno, Neon Pulse, Prismatic Light and Future Travel; keep PR #23 draft until independently reconciled; admit only a musically accepted subset | Several hours per comparison round; 1–2 days integration/verification after approval; CI/review waits excluded | Archive [PR #25](https://github.com/mekhovov/revealline-soundtracks-01/pull/25), Pages run 36147468099 and M5.a feedback below; draft [PR #23](https://github.com/mekhovov/revealline-soundtracks-01/pull/23) | Unreleased in game |
-| M6 | Purgatory PR #26 is public; Reckless #22 is refreshed onto current archive main at 80373786 and exact-head checks are running; groove-first direction retained | Full listening, transitions, warnings, Content ID and gameplay acceptance | Finish #22 exact-head checks and independent review; publish only as listening-unapproved auditions, then admit only a musically accepted subset | Several hours per listening round; 1–2 days integration after approval; CI waits excluded | Merged publication [PR #26](https://github.com/mekhovov/revealline-soundtracks-01/pull/26), 824e34e4 and Pages run 36160861165; refreshed draft [PR #22](https://github.com/mekhovov/revealline-soundtracks-01/pull/22) | Purgatory auditions public; Reckless pending; unreleased in game |
+| M6 | Purgatory PR #26 is public; Reckless #22 is current-base at fec06dd4 with the independently found transitive-binding defect repaired and exact-head checks green; groove-first direction retained | Artifact inspection, full listening, transitions, warnings, Content ID and gameplay acceptance | Finish #22 bounded artifact/listening review; publish only as listening-unapproved auditions, then admit only a musically accepted subset | Several hours per listening round; 1–2 days integration after approval; CI waits excluded | Merged publication [PR #26](https://github.com/mekhovov/revealline-soundtracks-01/pull/26), 824e34e4 and Pages run 36160861165; repaired draft [PR #22](https://github.com/mekhovov/revealline-soundtracks-01/pull/22), local binding 2/2, Reckless 9/9 and intake 146/146 | Purgatory auditions public; Reckless pending; unreleased in game |
 | M7 | Blocked public rights; scope retained | Recording-specific public redistribution and applicable artwork evidence | Include all 77 recordings / 80 filenames; publish cleared entries; maintain private pack route | About 1 day integration after clearance; clearance date unknown | UA-FPV manifests/private packs/guide | Public collection unreleased |
-| M8 | Public desktop compatibility/stall repair complete | Physical device and cold-offline access | Keep the 136/136 parser, persistent remote deck, watchdog and mixed-queue regressions green; finish separate iPhone/controller/cold-offline checks | About 0.5 day once devices/offline harness are available | PR #370, v0.111.0, Archive76; merged repair [PR #523](https://github.com/mekhovov/revealline/pull/523); 177/177 focused tests; v0.130 qualification, inspection, selector and public-browser evidence above | v0.130.0 public; desktop accepted |
+| M8 | Public desktop compatibility/stall repair complete; real-player recovery regression merged | Physical device access and the accepted offline-app runtime | Keep the 136/136 parser, persistent remote deck, watchdog and mixed queues green; coordinate cold-restart browser acceptance with draft offline-app [PR #536](https://github.com/mekhovov/revealline/pull/536), then finish iPhone/controller checks | About 0.5 day after the offline runtime is accepted, plus device access | PR #370, v0.111.0, Archive76; merged repair [PR #523](https://github.com/mekhovov/revealline/pull/523); merged regression [PR #555](https://github.com/mekhovov/revealline/pull/555); 177/177 prior focused tests; v0.130 qualification, inspection, selector and public-browser evidence above | v0.130.0 public; desktop accepted; cold offline pending |
 | M9 | Later | Core style releases | Review existing 70 selectively; add trusted ID/hash curation overlay preserving saved pins | 1–2 days per selected batch plus listening | Curation PR pending | Unreleased |
 | M10 | Later | Core styles delivered | Broader musical variety in small accepted albums | 1–2 days per batch plus review | Separate future album PRs | Unreleased |
 | M11 | Deferred / paused | Better production method and accepted pilots | Retain full 36-original brief; do not resume rejected production method | Unscheduled | Candidate/rejection archives | 0/36 approved |
@@ -1223,8 +1248,12 @@ rights that the older adapter rejected. Merged PR #523 and public v0.130.0 now
 accept the trusted structure, keep remote playback on a persistent media element,
 recover from bounded stalls and support online-plus-included mixed queues. Public
 desktop acceptance loaded 136/136 and completed streamed Drama → bundled Shchedryk
-→ streamed Cyber Anxiety in one session. Focused failure-fallback tests are green;
-physical-device/controller and cold-offline checks remain pending. Preserve the
+→ streamed Cyber Anxiety in one session. Focused failure-fallback tests are green.
+Merged test-only PR #555 extends those checks through catalogue 503 → Refresh and
+real-player remote stall → included fallback → remote retry → included switch.
+Physical-device/controller and cold-offline checks remain pending; the latter
+coordinates with draft offline-app PR #536 instead of duplicating its launcher/runtime.
+Preserve the
 archive as the canonical source; the game streams exact immutable objects through
 the transport while included and uploaded audio retain local crossfades. Preserve
 every historic root-inventory assertion and the user-visible distinction between published auditions and admitted
