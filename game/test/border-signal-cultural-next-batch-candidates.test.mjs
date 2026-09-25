@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
 import {
   BORDER_SIGNAL_CULTURAL_NEXT_BATCH_REVISION,
   BORDER_SIGNAL_CULTURAL_NEXT_BATCH_SELECTIONS,
@@ -9,6 +10,14 @@ import {
 import { createBorderCulturalNextBatchCandidates } from '../content-design/border-cultural-next-batch-candidates.mjs';
 import { compileContentProject, resolveMission } from '../content-design/project.mjs';
 import { inspectMissionTopology } from '../content-design/diagnostics.mjs';
+import { createAuthoredJourneyRoute } from '../content-design/route.mjs';
+import { loadAuthoredJourneyRoute } from '../content-design/route-loader.mjs';
+import { DEFAULT_JOURNEY_ROUTES } from '../content-design/default-entry.mjs';
+import {
+  AUTHORED_JOURNEY_ROUTE_IDS,
+  authoredJourneyModeHref,
+  authoredJourneyUsesActorMaterials,
+} from '../content-design/mode-href.mjs';
 import { createRun, stepRun, FIXED_DT } from '../core/index.mjs';
 import {
   authoritativeCheckpoint,
@@ -259,3 +268,50 @@ for (const selection of BORDER_SIGNAL_CULTURAL_NEXT_BATCH_SELECTIONS)
       );
       assert.deepEqual(authoritativeCheckpoint(run), authoritativeCheckpoint(duel.runs[0]));
     });
+
+test('registered v13 successor preserves v12 and authored order with isolated ownership', async () => {
+  const current = createAuthoredJourneyRoute('whole-spatial-v13');
+  const previous = createAuthoredJourneyRoute('whole-spatial-v12');
+  assert.deepEqual(await loadAuthoredJourneyRoute(current.id), current);
+  assert.equal(current.profileKey, 'journey-whole-spatial-v13');
+  assert.equal(current.sessionKey, 'revealline.suspended.journey-whole-spatial.v13');
+  assert.notEqual(current.profileKey, previous.profileKey);
+  assert.notEqual(current.sessionKey, previous.sessionKey);
+  assert.deepEqual(previous.source, beforeSource);
+  assert.deepEqual(current.source, source);
+  assert.deepEqual(current.corePackIds, previous.corePackIds);
+  assert.deepEqual(current.optionalCampaignIds, previous.optionalCampaignIds);
+  assert(authoredJourneyUsesActorMaterials(current.id));
+  assert(AUTHORED_JOURNEY_ROUTE_IDS.includes(current.id));
+  assert.deepEqual(DEFAULT_JOURNEY_ROUTES, {
+    solo: 'whole-spatial-v13',
+    versus: 'whole-spatial-v13',
+    team: 'team-trail-impact-originals-1',
+  });
+  assert.equal(authoredJourneyModeHref(current.id, 'solo'), '../?journey=whole-spatial-v13');
+  assert.equal(
+    authoredJourneyModeHref(current.id, 'versus'),
+    'couch/?journey=whole-spatial-v13&return=solo',
+  );
+  for (const key of ['campaigns', 'packs'])
+    assert.deepEqual(
+      current.source[key].map((item) =>
+        key === 'campaigns' ? [item.id, item.missionIds] : [item.id, item.campaignIds],
+      ),
+      previous.source[key].map((item) =>
+        key === 'campaigns' ? [item.id, item.missionIds] : [item.id, item.campaignIds],
+      ),
+    );
+});
+
+test('Studio exposes v12 and v13 separately and defaults its selector to v13', async () => {
+  const html = await readFile(new URL('../studio/index.html', import.meta.url), 'utf8');
+  const script = await readFile(new URL('../studio/studio.mjs', import.meta.url), 'utf8');
+  assert.match(html, /value="border-cultural-routes-1">/);
+  assert.match(html, /value="border-signal-cultural-routes-1" selected/);
+  assert.match(html, /journey=whole-spatial-v13/);
+  assert.match(
+    script,
+    /'border-signal-cultural-routes-1': createBorderSignalCulturalNextBatchCandidates/,
+  );
+});
