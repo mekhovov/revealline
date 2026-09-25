@@ -63,9 +63,9 @@ export function createFlightInformationBridge() {
         typeof attempt !== 'string' ||
         !attempt
       )
-        throw new TypeError(t("interface:anAcceptedRunAndItsAttemptIdentityAreRequired"));
+        throw new TypeError(t('interface:anAcceptedRunAndItsAttemptIdentityAreRequired'));
       if (!Number.isSafeInteger(generation + 1))
-        throw new RangeError(t("interface:presentationGenerationExhausted"));
+        throw new RangeError(t('interface:presentationGenerationExhausted'));
       clear();
       run = acceptedRun;
       owner = Object.freeze({ attempt, generation: ++generation });
@@ -83,7 +83,7 @@ export function createFlightInformationBridge() {
         !(message.cue === null || typeof message.cue === 'string') ||
         typeof writeWarning !== 'function'
       )
-        throw new TypeError(t("interface:aCompleteMessageAndSynchronousWarningWriterAreRequired"));
+        throw new TypeError(t('interface:aCompleteMessageAndSynchronousWarningWriterAreRequired'));
       // Consume before calling the writer: duplicate or reentrant completion cannot reuse this token.
       sequence++;
       const previousContext = context;
@@ -132,7 +132,7 @@ export function createFlightInformationBridge() {
       // A newer batch supersedes an unfinished older one; no partial batch is published.
       pending = null;
       try {
-        if (!Array.isArray(events)) throw new TypeError(t("interface:expectedEventArray"));
+        if (!Array.isArray(events)) throw new TypeError(t('interface:expectedEventArray'));
         const ticket = Object.freeze({});
         pending = {
           ticket,
