@@ -41,6 +41,48 @@ const invariantLabels = new Set([
 const propertyName = (node) => (node?.computed ? node.property?.value : node?.property?.name);
 const callName = (node) => node?.callee?.name || propertyName(node?.callee);
 const attribute = (node, name) => node.attrs?.find((item) => item.name === name)?.value;
+const factoryNames = new Set(['text', 'node', 'el']);
+const parameterName = (node) => (node?.type === 'AssignmentPattern' ? node.left?.name : node?.name);
+
+/** Resolve local DOM helpers before reviewing their call sites. Several tools
+ * use node(tag, id, text); an ID is not untranslated display text. */
+function factoryArguments(tree) {
+  const scopes = new WeakMap();
+  const isFunction = (node) => /^(?:Function|ArrowFunction)/.test(node.type);
+  const describe = (node) => {
+    if (!node || !isFunction(node)) return 1;
+    const index = node.params.findIndex((parameter) =>
+      /^(?:text|label|caption|content)$/.test(parameterName(parameter)),
+    );
+    return index < 0 ? 1 : index;
+  };
+  function index(node, scope = null) {
+    if (!node || typeof node !== 'object' || !node.type) return;
+    if (node.type === 'FunctionDeclaration' && factoryNames.has(node.id?.name))
+      scope?.definitions.set(node.id.name, describe(node));
+    if (node.type === 'VariableDeclarator' && factoryNames.has(node.id?.name))
+      scope?.definitions.set(node.id.name, describe(node.init));
+    if (node.type === 'Program' || node.type === 'BlockStatement' || isFunction(node)) {
+      scope = { parent: scope, definitions: new Map() };
+      if (isFunction(node))
+        for (const parameter of node.params)
+          if (factoryNames.has(parameterName(parameter)))
+            scope.definitions.set(parameterName(parameter), 1);
+    }
+    scopes.set(node, scope);
+    for (const [key, value] of Object.entries(node)) {
+      if (['loc', 'start', 'end'].includes(key)) continue;
+      if (Array.isArray(value)) value.forEach((child) => index(child, scope));
+      else if (value && typeof value === 'object') index(value, scope);
+    }
+  }
+  index(tree);
+  return (node, name) => {
+    for (let scope = scopes.get(node); scope; scope = scope.parent)
+      if (scope.definitions.has(name)) return scope.definitions.get(name);
+    return 1;
+  };
+}
 function readable(value, direct = false) {
   if (typeof value !== 'string') return false;
   const text = value.replace(/\{\{[^}]*\}\}/g, '').trim();
@@ -93,10 +135,19 @@ export function auditSource(source, file) {
     markup(parseHTML(source, { sourceCodeLocationInfo: true }));
     return candidates;
   }
+  const tree = parseJS(source, { ecmaVersion: 'latest', sourceType: 'module', locations: true });
+  const factoryArgument = factoryArguments(tree);
   function context(ancestors) {
     for (let index = ancestors.length - 1; index >= 0; index--) {
       const node = ancestors[index];
       const child = ancestors[index + 1];
+      // State tests inside a text producer do not contribute their literals to
+      // its displayed result. Keep them in the lower-confidence review tier.
+      if (
+        (node.type === 'ConditionalExpression' && child === node.test) ||
+        (node.type === 'BinaryExpression' && /^(?:===?|!==?|[<>]=?)$/.test(node.operator))
+      )
+        return 'review';
       if (
         node.type === 'AssignmentExpression' &&
         child === node.right &&
@@ -131,9 +182,9 @@ export function auditSource(source, file) {
       )
         return 'canvas-or-option';
       if (
-        ['text', 'node', 'el'].includes(name) &&
+        factoryNames.has(name) &&
         /^(?:p|h[1-6]|span|div|label|button|option|small|strong)$/.test(node.arguments[0]?.value) &&
-        child === node.arguments[1]
+        child === node.arguments[factoryArgument(node, name)]
       )
         return 'dom-factory';
       if (node.type === 'NewExpression' && /Error$/.test(name)) return 'error';
@@ -167,7 +218,7 @@ export function auditSource(source, file) {
       else if (value && typeof value === 'object') walk(value, [...ancestors, node]);
     }
   }
-  walk(parseJS(source, { ecmaVersion: 'latest', sourceType: 'module', locations: true }));
+  walk(tree);
   return candidates;
 }
 
