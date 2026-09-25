@@ -71,6 +71,32 @@ test('live HUD plurals and mission summaries cover Ukrainian count categories', 
   assert.equal(JSON.stringify(run), before);
 });
 
+test('live flight event announcements use the active locale', async (context) => {
+  const locale = getLocale();
+  context.after(() => setLocale(locale));
+  const app = await fs.readFile(new URL('../app.mjs', import.meta.url), 'utf8');
+
+  assert.doesNotMatch(app, /`Live line exposed\. Reach \$\{/);
+  assert.doesNotMatch(app, /`Line struck! Reach \$\{/);
+  assert.match(app, /gameplay:liveLineExposedReachReclaimedGroundToSecureIt/);
+  assert.match(app, /gameplay:lineStruckReachReclaimedGroundBeforeTheTravellingSparkCatches/);
+
+  setLocale('en');
+  assert.equal(
+    t('gameplay:liveLineExposedReachReclaimedGroundToSecureIt'),
+    'Live line exposed. Reach reclaimed ground to secure it.',
+  );
+  setLocale('uk');
+  assert.equal(
+    t('gameplay:liveLineExposedReachReclaimedGroundToSecureIt'),
+    'Активна лінія вразлива. Дістанься відвойованої території, щоб закріпити її.',
+  );
+  assert.equal(
+    t('gameplay:lineStruckReachReclaimedGroundBeforeTheTravellingSparkCatches'),
+    'Удар по лінії! Дістанься відвойованої території, перш ніж тебе наздожене іскра.',
+  );
+});
+
 test('Journey source and actor-theme labels translate only for exact registered content', async (context) => {
   const locale = getLocale();
   context.after(() => setLocale(locale));
