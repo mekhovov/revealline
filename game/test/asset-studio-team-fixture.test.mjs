@@ -128,36 +128,37 @@ function assertScenario(run, scenario) {
 }
 
 // Independently captured full-state hashes from exact cbd950ab real-core command
-// replay. These catch a changed trace, seed, rules, timing or fabricated state;
+// replay, including the explicit historical `hybrid` support role introduced by
+// 6bb6918e. These catch a changed trace, seed, rules, timing or fabricated state;
 // core709 is an intermediate waypoint checked semantically above.
 const expected = {
   'first-connection': [
-    ['initial', 0, '1983e348a7320fb71a77c43be7d1e6cf7ea523268b1663a8556127df626493b1'],
-    ['cutting', 65, 'd980bd3b486795f30011065a4f2e355850754692ec8d4c0b0e7f408a72e9c399'],
-    ['warning', 90, '887fafa0066cd6c2b11490138ad24281851d50bb3d033169c4034704def33c20'],
-    ['charge', 234, '118dc797bf72d19ad65b92b42827addd99fb2fa54b39dd4f733382d4992826be'],
-    ['capture', 414, 'e5d4bea4814429c1d047771ef99cbb3aeed86738eb8ad0e7601748f4105821b9'],
+    ['initial', 0, '4e7e01510bd5de0a22d6a68c26ca336000f7cded4f4f8ff15d66886b2499c7b6'],
+    ['cutting', 65, '1eb67486c7d38de57ffd908140986d656c0fe0b00eec8c0048a011fe268b7904'],
+    ['warning', 90, '91ffc47295aa740058a8baec92faf5bb23a6805088753ba9af42e946fd9da46d'],
+    ['charge', 234, 'a9339757c03c879cdbaa22c4516619ca7ef4dba5e55e756ba9322fb840d22a84'],
+    ['capture', 414, '918a2b717e397d40151a7e80dfa48398a6ff75ce56899655d6e39c463aa9dc53'],
     ['support', 211, null],
-    ['victory', 1179, '354e9d07c4ebcfb5fd889310cf445dd814eb4b645d6f6405775ce700e5aba17c'],
+    ['victory', 1179, '4c04826fe4dd60ed803f243684f25dea3c3d0ef8ee3373f56cf638e6bc961642'],
   ],
   'relay-yard': [
-    ['initial', 0, '7574881b6ad3392ee47cc466d7416c186e2dad83634496b4556683af14637e07'],
-    ['cutting', 65, 'dbbfbb2ab8cff67cd2edafeb912f9d333de9bd895022fcc566372d1f29d0597b'],
-    ['warning', 180, '5fc2be4395feebba172d1ef44fc803acfb56e66dfd69139473a2d78f58ed8a9f'],
-    ['charge', 324, '06fe31a7ca3a5dc0904d713d3c700e799c0430bf3ffb26be418bea68f8446d72'],
-    ['capture', 414, 'b7204d17dad51a1f9b99bf89b2eb090b7e013778770a754e4ecd1e4c61e31729'],
+    ['initial', 0, '85de0a167871d3650ac2793dd7d58d4b578fbcd1cab3e55f15d0686732c0e34b'],
+    ['cutting', 65, 'c07bf72f78733399f18626a70d0fd40bb00a116aecfddc23c7acd5cac93d5050'],
+    ['warning', 180, 'b9ddeaed23827a5a26a30f20deb5f26fbf436381a869ac4b5ab3eb54e1f789a9'],
+    ['charge', 324, '01424754b8d9eaaa1940d7843663ccc2de67c6256babb8a177e7e18c00032358'],
+    ['capture', 414, 'c52f9ed343a83ed6f248301d598e0bca551377102fc72e881d2c54fd40a38451'],
     ['support', 291, null],
     ['emitter-warning', 360, null],
     ['emitter-spark', 430, null],
-    ['anchors', 653, '71d76e6da82d7ef229921fec563f639c9c095ea734e49a2b815ac98bec6a8c46'],
+    ['anchors', 653, 'c24a7c2b82821959c3055fa06469559151bc3503e554d7ed9d57a10219811007'],
     ['core', 709, null],
-    ['victory', 832, 'a10cec4c1aff590a841bfe8a483d316012de1f4ce1e8354673d68477d7a88879'],
-    ['downed-p1', 483, '98c720bef88cffbd510c2ce615cc3cf74668b4efa371072a5a1339c5223a8974'],
-    ['rescue-p1', 560, '7c65834e898cc05cfd731c255fa117315e7fac20f4ba55a637ed5cef37b0d5ce'],
-    ['recovered-p1', 620, 'e0be1c1987029bfb17838ea9a08d3e7685cd9019be2e202169b75cd8f405455e'],
-    ['downed-p2', 483, '82d57dbc82955180aa2d2e3272c3c3418fcd3f85597e82ea13ed6628914b36ee'],
-    ['rescue-p2', 560, 'e8c882d6c8d688b8dba88af66fe084fd4dd0d2892af2b4dfc9f675728bc177e6'],
-    ['recovered-p2', 620, '7b2c015a7c59e63a10e10e90396a567b6c98208525d80e2056d98135f585a458'],
+    ['victory', 832, '9e8bb4842a0e50dc2493ad12c2d8c62e3f44f4e38dbd765132a58706c6d18579'],
+    ['downed-p1', 483, '909fab140d96746e599825510d7228be1ac31e41f9f9c5dfb5668bd004edd625'],
+    ['rescue-p1', 560, '94c74c1fd5e45902801d30f91404bb6af107755f21f52a6ba3838520ce19874b'],
+    ['recovered-p1', 620, '42a7dc2f31b6596cc3a9db6574814de26f223e07b5b97ff26a19a28fe524d780'],
+    ['downed-p2', 483, 'b76c59972abdc7199f208667b922e3ea8b72d9bb54b49f35484dd58e602e15e5'],
+    ['rescue-p2', 560, '2f679a5371c4ea213787ef2876e7709a8536f7ddd77b97c692b10a30eb05da1f'],
+    ['recovered-p2', 620, '9b942b1a88917d5ab04ec190d6db33b0326a435b098ee368f7d940ea27598720'],
   ],
 };
 for (const [arena, cases] of Object.entries(expected)) {
