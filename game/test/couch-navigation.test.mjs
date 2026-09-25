@@ -523,21 +523,43 @@ test('native checkboxes and both held touch pads stay independent after leaving 
   const left = pads[1].querySelector('.touch-surface');
   for (const surface of [right, left])
     surface.getBoundingClientRect = () => ({ left: 0, top: 0, width: 156, height: 156 });
-  right.emit('pointerdown', { pointerId: 41, button: 0, clientX: 78, clientY: 78 });
-  left.emit('pointerdown', { pointerId: 42, button: 0, clientX: 78, clientY: 78 });
-  right.emit('pointermove', { pointerId: 41, clientX: 120, clientY: 78 });
-  left.emit('pointermove', { pointerId: 42, clientX: 30, clientY: 78 });
+  right.emit('pointerdown', {
+    pointerId: 41,
+    pointerType: 'touch',
+    button: 0,
+    clientX: 78,
+    clientY: 78,
+  });
+  left.emit('pointerdown', {
+    pointerId: 42,
+    pointerType: 'touch',
+    button: 0,
+    clientX: 78,
+    clientY: 78,
+  });
+  right.emit('pointermove', {
+    pointerId: 41,
+    pointerType: 'touch',
+    clientX: 120,
+    clientY: 78,
+  });
+  left.emit('pointermove', {
+    pointerId: 42,
+    pointerType: 'touch',
+    clientX: 30,
+    clientY: 78,
+  });
   f.frames(20);
   assert.ok(f.renders[0].player.x > f.renders[0].level.spawn.x);
   assert.ok(f.renders[1].player.x < f.renders[1].level.spawn.x);
-  right.emit('pointerup', { pointerId: 41 });
-  left.emit('pointerup', { pointerId: 42 });
+  right.emit('pointerup', { pointerId: 41, pointerType: 'touch' });
+  left.emit('pointerup', { pointerId: 42, pointerType: 'touch' });
   const positions = f.renders.map((run) => run.player.x);
   f.frames(8);
   assert.ok(f.renders[0].player.x > positions[0]);
   assert.ok(f.renders[1].player.x < positions[1]);
-  right.emit('pointerdown', { pointerId: 43, button: 0 });
-  right.emit('pointercancel', { pointerId: 43 });
+  right.emit('pointerdown', { pointerId: 43, pointerType: 'touch', button: 0 });
+  right.emit('pointercancel', { pointerId: 43, pointerType: 'touch' });
   f.frame();
   assert.equal(f.state(), 'paused');
 });
