@@ -1555,7 +1555,7 @@ export function attachSoundtrackPanel({
             ? ' ' + t('interface:someRecordingsDoNotAllowOfflineStorage')
             : '';
         const bundled = bundledCount
-          ? ` ${bundledCount} core recording${bundledCount === 1 ? ' is' : 's are'} included with the game and never duplicated in the media budget.`
+          ? ` ${t('interface:soundtrack.coreRecordingIncluded', { count: bundledCount })}`
           : '';
         return `${location} ${state}${bundled}${rights}`;
       });
