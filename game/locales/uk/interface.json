@@ -1042,6 +1042,7 @@
   "lifeLost": "ЖИТТЯ ВТРАЧЕНО",
   "shieldUsed": "ЩИТ ВИКОРИСТАНО",
   "ready2": "ГОТОВО",
+  "startCueGo": "РУШ",
   "courseEntryWasCancelled": "Початок курсу скасовано.",
   "courseEntryNeedsAnUnfinishedFlightAndCheckedStorageAdapters": "Початок курсу потребує незавершеного польоту й перевірених адаптерів сховища.",
   "theExistingSavedFlightCannotBeReadSafelyItsBytes": "Наявний збережений політ неможливо безпечно прочитати. Його байти збережено.",

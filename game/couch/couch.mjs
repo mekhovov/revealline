@@ -10,6 +10,7 @@ import { t, localizedText, localizedOption, localizedMessage, render } from '../
 import { attachCouchTouch } from '../ui/couch-touch.mjs';
 import { mountPresentationPage } from '../presentation/page.mjs';
 import { createCouchShell } from './couch-shell.mjs';
+import { createMissionStartCue } from './start-cue.mjs';
 import { attachJourneyReactions } from '../ui/journey-reactions.mjs';
 import { attachJourneySaveCue } from '../ui/journey-save-cue.mjs';
 import { attachJourneyModePictures } from '../ui/journey-mode-pictures.mjs';
@@ -657,6 +658,8 @@ try {
   });
   publishedAudio.setPlayer(publishedPlayer);
   let neutralResumeTick = false;
+  let startCue = null,
+    pendingStartCueKind = null;
   const freeBodies = characterPresentations.availableBodies(
     unlockedBodies(emptyProgress(campaign), campaign),
   );
@@ -715,6 +718,52 @@ try {
     disposed = false,
     frameId = null,
     stopNative = () => {};
+  function hideStartCue() {
+    startCue = null;
+    $('race-start-cue').hidden = true;
+    delete $('race-start-cue').dataset.kind;
+    delete $('race-start-cue').dataset.phase;
+    $('race-start-cue-label').textContent = '';
+  }
+  function beginStartCue(kind) {
+    startCue = { owner: match, generation, cue: createMissionStartCue(kind), released: false };
+    pendingStartCueKind = null;
+    $('race-start-cue').hidden = false;
+    $('race-start-cue').dataset.kind = kind;
+    $('race-start-cue-label').textContent = kind === 'retry' ? t('interface:ready2') : '3';
+    clear({ resetDirection: true });
+  }
+  function advanceStartCue(now) {
+    if (!startCue) return { active: false, blocksPlay: false, released: false };
+    if (
+      startCue.owner !== match ||
+      startCue.generation !== generation ||
+      match.status !== 'running'
+    ) {
+      hideStartCue();
+      return { active: false, blocksPlay: false, released: false };
+    }
+    const state = startCue.cue.sample(now);
+    if (state.active) {
+      $('race-start-cue-label').textContent =
+        state.label === 'READY'
+          ? t('interface:ready2')
+          : state.label === 'GO'
+            ? t('interface:startCueGo')
+            : state.label;
+      $('race-start-cue').dataset.phase = String(state.phase);
+    }
+    let released = false;
+    if (!state.blocksPlay && !startCue.released) {
+      startCue.released = true;
+      released = true;
+      // Menu Confirm, touch and movement held through the cue are not gameplay input.
+      clear({ resetDirection: true });
+      neutralResumeTick = true;
+    }
+    if (!state.active) hideStartCue();
+    return { ...state, released };
+  }
   const preparationStatus = createOperationStatus($('race-preparation'), {
     isCurrent: () => !disposed,
   });
@@ -1480,6 +1529,10 @@ try {
     // Suspend and controller-loss paths also pass here. Picture preparation
     // may finish, but an interrupted gesture no longer authorizes a start.
     startIntentEpoch++;
+    if (startCue) {
+      pendingStartCueKind = startCue.cue.kind;
+      hideStartCue();
+    }
     sound.pause();
     if (!match || match.status === 'finished') return;
     pauseDuel(match, { preserveContinuation: true });
@@ -1519,7 +1572,19 @@ try {
           ))
     )
       destination = roundRecipe.entry;
-    const intent = ++startIntentEpoch,
+    const acceptedEntry = roundRecipe?.entry,
+      acceptedStatus = match.status,
+      requestedRetry =
+        focusOrigin === $('race-retry') ||
+        (acceptedStatus === 'finished' && destination && destination.key === acceptedEntry?.key),
+      requestedCue =
+        pendingStartCueKind ||
+        (requestedRetry
+          ? 'retry'
+          : acceptedStatus === 'ready' || acceptedStatus === 'finished' || destination
+            ? 'mission'
+            : null),
+      intent = ++startIntentEpoch,
       ownsStartIntent = () =>
         !disposed && intent === startIntentEpoch && !document.hidden && document.hasFocus();
     let nextConfirmed = false,
@@ -1682,7 +1747,8 @@ try {
       clear();
       if (!ownsStartIntent() || (nextFocus && !nextFocus.ownsAction())) return;
       resumeDuel(match, { preserveContinuation: true });
-      neutralResumeTick = true;
+      if (requestedCue) beginStartCue(requestedCue);
+      else neutralResumeTick = true;
       // Race effects are independent of the music transport and its readiness.
       void sound.enable();
       if (music) void music.start();
@@ -3630,7 +3696,8 @@ try {
       last = 0;
       if (music) void music.resume();
     }
-    const dt = last ? Math.max(0, (now - last) / 1000) : 0;
+    const cueState = advanceStartCue(now);
+    const dt = cueState.released ? 0 : last ? Math.max(0, (now - last) / 1000) : 0;
     last = now;
     const wasRunning = match.status === 'running';
     if (available) {
@@ -3640,7 +3707,7 @@ try {
       if (!wasRunning) sampleMenu(now);
       pendingPadLoss = false;
     }
-    if (available && wasRunning && match.status === 'running') {
+    if (available && wasRunning && match.status === 'running' && !cueState.blocksPlay) {
       if (dt > 0.25) pause();
       else {
         accumulator += dt;
