@@ -79,7 +79,7 @@ and missing Ukrainian remains detectable. Complete these before marking the task
   optional first-party packs and derived Classic metadata. Preserve hashes.
 - Finish live bindings for derived labels, statuses, canvas text, dropdown options, and
   presentation adapters. Check unsaved editor data, selections, focus, and scroll.
-- Finish native staging and route checks against the latest rebased build.
+- Refresh native staging and finish route checks against each final rebased build.
   Generated privacy/credits pages and current-entry aliases now load the same local
   runtime, use translated messages and retained attribution links, and rewrite root
   asset paths. Historical frozen releases stay unchanged.
@@ -148,12 +148,26 @@ locale changes only refresh presentation, retain transport/volume/library state,
 on disposal. Rebinding identical text keeps the native gesture target while accepting the new
 message producer. Encounter guidance translates complete sentences with locale-aware counts.
 
-The latest full web rebuild passed the offline inventory limit but failed writing its archive
-with ENOSPC. The previous disposable output and this task's baseline comparison worktree were
-removed; less than 1 GiB remains available on the shared disk. This does not invalidate the
-previous successful desktop staging, but current-main desktop/iPhone staging is still pending.
-Do not describe the latest distribution build or iPhone staging as verified. The full test
-suite remains active in its original process; focused checks supplement it while failures are
+Current-main web builds now complete successfully after disk space was recovered. The
+latest verified offline inventory has 992 files / 67,018,785 bytes, below the existing
+64 MiB cap. Desktop staging verified all 1,161 files / 598,853,770 bytes; iPhone staging
+verified 1,166 files / 598,934,049 bytes, including the repaired review-page markup.
+Both native stages byte-verified all 21 localization assets. These are staging checks,
+not a native GUI or simulator certification. Disposable stage directories were removed
+after verification to retain shared disk space. Refresh these checks after further changes.
+
+Compact Ukrainian Settings labels now stack above full-width controls on narrow screens,
+including Large text. Both couch modes expose language controls within controller menu
+navigation. A built-browser check exposed an old rich-text subscription reclaiming a
+host-owned link; the binding now relinquishes ownership without restoring removed slots
+or displaying slot placeholders. Regression tests cover both directions of switching.
+
+The full suite remains active in its original process. One old VM fixture omitted the
+translator and spun forever waiting for admission; only that proven-stuck child was
+terminated after the corrected fixture passed all three cases. Its bounded wait now
+fails explicitly if admission never begins. The canvas renderer's local animation clock
+also shadowed the imported translator on error paths; it now uses an unambiguous name,
+and lint checks prevent the same collision. Remaining suite failures are still being
 triaged. No mergeable PR exists yet.
 
 Startup locale assets now follow the inline dark-screen guard; the locale stylesheet

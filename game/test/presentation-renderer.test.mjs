@@ -17,6 +17,7 @@ import { drawClassicTerrain, drawClassicPickups } from '../ui/classic-view.mjs';
 import { createEnemyPresentations } from '../enemy-presentations.mjs';
 import { createEnemyBodyAssets, createEnemyImagePool } from '../ui/enemy-body-assets.mjs';
 import { canvasTextFonts } from '../text-face.mjs';
+import { getLocale, setLocale, t } from '../i18n/index.mjs';
 
 const read = (path) => JSON.parse(readFileSync(new URL(path, import.meta.url)));
 const presets = read('../../authoring/motion-lab/presets.json');
@@ -310,6 +311,37 @@ test('campaign and historical actor paths remain identical; unprepared explicit 
       /actor/i,
     );
     assert.equal(canvas.calls.length, 0);
+  }
+});
+
+test('actor preparation errors translate without advancing or painting the flight', () => {
+  const originalLocale = getLocale();
+  const { painter, run } = fixture(themes.find((theme) => theme.id === 'ukraine'));
+  const before = authoritativeCheckpoint(run);
+  try {
+    for (const locale of ['uk', 'en']) {
+      setLocale(locale);
+      for (const [actorAppearance, key] of [
+        [
+          { style: 'fpv', snapshot: null },
+          'interface:actorAppearanceRequiresASupportedStyleAndPreparedFpvAssets',
+        ],
+        [
+          { style: 'fpv', snapshot: { image: () => null } },
+          'interface:actorAppearanceIsMissingThePreparedPlayerRole',
+        ],
+      ]) {
+        const canvas = surface();
+        assert.throws(() => painter.draw(canvas.ctx, run, 0, { actorAppearance }), {
+          name: 'TypeError',
+          message: t(key),
+        });
+        assert.deepEqual(authoritativeCheckpoint(run), before);
+        assert.equal(canvas.calls.length, 0);
+      }
+    }
+  } finally {
+    setLocale(originalLocale);
   }
 });
 
