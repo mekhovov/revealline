@@ -11,6 +11,7 @@ import {
 } from '../replay.mjs';
 import { createRun, stepRun, FIXED_DT } from '../core/index.mjs';
 import { FRESH_SOLO_VISUAL_RELEASE } from '../presentation/fresh-visual-theme.mjs';
+import { ACTOR_SESSION_FORMAT } from '../sessions.mjs';
 const slot = 'revealline.suspended.dev.v1';
 const ticks = (h, n) => {
   for (let i = 0; i < n; i++) h.frame();
@@ -66,7 +67,7 @@ function winOpening(h) {
 function saved(h) {
   h.$('pause-button').click();
   const value = JSON.parse(h.storage.getItem(slot));
-  assert.equal(value.format, 'xonix-session.v5');
+  assert.equal(value.format, ACTOR_SESSION_FORMAT);
   assert.deepEqual(value.visualThemePin.selection, FRESH_SOLO_VISUAL_RELEASE.selection);
   assert.equal(
     value.visualThemePin.presentation.sha256,
@@ -131,8 +132,10 @@ test('real victory Retry retains visuals and failed Next keeps results before on
   h.$('retry-button').click();
   await settle(() => {
     h.frame(0);
-    return h.doc.body.dataset.flightState === 'running' && h.rendered.run !== won;
+    return h.$('game-overlay').dataset.kind === 'retry-ready' && h.rendered.run !== won;
   });
+  for (let frame = 0; frame < 6; frame++) h.frame(100);
+  assert.equal(h.doc.body.dataset.flightState, 'running');
   assert.deepEqual(saved(h).visualThemePin, firstPin);
   h.$('start-button').click();
   await settle(() => h.doc.body.dataset.flightState === 'running');
@@ -271,7 +274,7 @@ test('First Flight checked departure keeps the complete accepted visual referenc
   h.$('first-flight-help-enter').click();
   await settle(() => h.win.location.href.includes('course=first-flight'));
   const retained = JSON.parse(h.storage.getItem(slot));
-  assert.equal(retained.format, 'xonix-session.v5');
+  assert.equal(retained.format, ACTOR_SESSION_FORMAT);
   assert.deepEqual(retained.visualThemePin, before.visualThemePin);
   assert.deepEqual(retained.presentationPins, before.presentationPins);
   assert.deepEqual(retained.replay.checkpoint, before.replay.checkpoint);
