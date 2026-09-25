@@ -514,10 +514,16 @@ for (const route of ['opening', 'authored'])
       if (id !== rows.at(-1)[0]) {
         const previous = p.renders[0];
         p.$('race-journey-next').click();
-        await waitFor(() => {
-          p.frame(0);
-          return p.renders[0] !== previous && !p.$('race-pause').disabled;
-        });
+        await waitFor(
+          () => {
+            p.frame(0);
+            return p.renders[0] !== previous && !p.$('race-pause').disabled;
+          },
+          {
+            message: `Versus did not prepare the mission after ${id}.`,
+            timeoutMs: 15_000,
+          },
+        );
       }
     }
     assert.equal(p.$('race-journey-next').hidden, false);
