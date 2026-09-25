@@ -116,5 +116,14 @@
   "studio.rectangle.authored": "Choose an authored rectangle.",
   "studio.rectangle.sourceChanged": "The map changed. Select its current rectangle before editing.",
   "studio.rectangle.existing": "Choose an existing rectangle.",
-  "studio.objective.linkedGates": "Objective controls relay gates: {{gates}}. Relink or remove those gates first."
+  "studio.objective.linkedGates": "Objective controls relay gates: {{gates}}. Relink or remove those gates first.",
+  "studio.encounter.contextChanged": "The draft context changed. Refresh the encounter selection.",
+  "studio.encounter.operation": "Choose an encounter operation.",
+  "studio.encounter.teamUnavailable": "Sentinel encounters are not qualified for Team.",
+  "studio.encounter.sourceChanged": "The map or mission changed. Refresh the encounter selection before editing.",
+  "studio.encounter.existing": "Choose an existing Sentinel encounter.",
+  "studio.encounter.stableId": "Give the Sentinel a stable actor ID.",
+  "studio.encounter.identity": "Keep the existing Sentinel actor ID when replacing links.",
+  "studio.encounter.keeper": "Only an explicitly selected field keeper can become the Sentinel.",
+  "studio.encounter.core": "Choose a visible required core objective."
 }
