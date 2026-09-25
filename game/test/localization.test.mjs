@@ -1,7 +1,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
+import os from 'node:os';
+import path from 'node:path';
 import vm from 'node:vm';
+import { ordinaryPath } from '../../authoring/production/sources.mjs';
 import { contentText } from '../i18n/content.mjs';
 import { setLocale } from '../i18n/index.mjs';
 import { dataIdentity } from '../data-json.mjs';
@@ -73,6 +76,28 @@ test('automatic detection is not persisted; explicit choice survives restart and
   assert.equal(blocked.api.setLocale('uk').saved, false);
   assert.equal(blocked.api.t('common:language.label'), 'Мова');
   assert.throws(() => blocked.api.setLocale('ru'), /Unsupported/);
+});
+
+test('production source diagnostics follow the active locale without changing source names', async () => {
+  const root = await fs.mkdtemp(path.join(os.tmpdir(), 'revealline-i18n-production-'));
+  try {
+    await fs.mkdir(path.join(root, 'game'));
+    await fs.writeFile(path.join(root, 'game/source.json'), '{}');
+    await fs.symlink('source.json', path.join(root, 'game/linked.json'));
+    setLocale('uk', { persist: false });
+    await assert.rejects(
+      ordinaryPath(root, 'game/linked.json'),
+      /Джерело через символічне посилання відхилено: game\/linked\.json/,
+    );
+    setLocale('en', { persist: false });
+    await assert.rejects(
+      ordinaryPath(root, 'game/linked.json'),
+      /Symlink source refused: game\/linked\.json/,
+    );
+  } finally {
+    setLocale('en', { persist: false });
+    await fs.rm(root, { recursive: true, force: true });
+  }
 });
 
 test('cross-tab changes update language only and ignore game-save storage events', () => {
