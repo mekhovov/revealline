@@ -1,29 +1,87 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
+import { webcrypto } from 'node:crypto';
 import {
   createTeamPartnerSpecialistOriginalCandidates,
   TEAM_MATERIAL_SPECIALIST_CAMPAIGN_ID,
   TEAM_PARTNER_SPECIALIST_MISSIONS,
+  TEAM_PARTNER_SPECIALIST_PROFILE_KEY,
+  TEAM_PARTNER_SPECIALIST_SUCCESSOR_ROWS,
 } from '../content-design/team-partner-specialist-originals.mjs';
 import { createTeamSpecialistOriginalCandidates } from '../content-design/team-specialist-originals.mjs';
+import { createTeamGreyboxEntry } from '../content-design/team-entry.mjs';
 import { createCandidateTeamHost } from '../content-design/team-host.mjs';
 import { compileContentProject, resolveMission } from '../content-design/project.mjs';
 import { createTeamTestPack } from '../content-design/team-export.mjs';
+import { acquireCandidatePicture } from '../content-design/picture.mjs';
+import { loadPreviewArtwork } from '../content-design/assets.mjs';
 import { createCoop, FIXED_DT, startCoop, stepCoop } from '../coop/core.mjs';
 import { useSupport } from '../coop/threats.mjs';
+import {
+  candidateTeamPictureFrame,
+  createCandidateTeamPictures,
+} from '../couch/candidate-team-pictures.mjs';
 import { measureTeamPartnerReturns } from './helpers/team-partner-return.mjs';
 
 const source = createTeamPartnerSpecialistOriginalCandidates();
 const previous = createTeamSpecialistOriginalCandidates();
 const project = compileContentProject(source);
 const changed = new Set(TEAM_PARTNER_SPECIALIST_MISSIONS);
+const successorRows = new Set(TEAM_PARTNER_SPECIALIST_SUCCESSOR_ROWS);
+const candidateHost = createCandidateTeamHost(source, {
+  corePackIds: source.packs.map(({ id }) => id),
+});
+const previousHost = createCandidateTeamHost(previous, {
+  corePackIds: previous.packs.map(({ id }) => id),
+});
 const partnerReturns = JSON.parse(
   await readFile(new URL('./fixtures/team-partner-return-routes.json', import.meta.url)),
 );
 const neutral = { direction: null, boost: false, support: false };
+const pictureSnapshot = Object.freeze({
+  resolved: { theme: { id: 'fpv', revision: 73 }, collection: null },
+  canvas: {
+    palette: {
+      ink: '#f6f3e8',
+      paper: '#071527',
+      muted: '#a8b8cc',
+      accent: '#ffd64a',
+      safe: '#67aaff',
+      danger: '#ff7169',
+      field: '#10243e',
+      grid: '#182b43',
+      sky: '#233950',
+      land: '#526e67',
+    },
+    motionScale: 1,
+  },
+  fonts: { ui: 'sans-serif', numeric: 'monospace' },
+});
 
-test('two partner-action successors preserve maps, pictures and every historical project', () => {
+const missionRow = (host, id) =>
+  host.row(
+    host.catalog.missions.find(({ levelId }) => levelId === id),
+    'standard',
+  );
+
+async function candidatePicture(asset) {
+  const bytes = await readFile(new URL('../' + asset.path, import.meta.url));
+  const media = await loadPreviewArtwork(asset, {
+    fetchAsset: async () => new Response(bytes),
+    digest: (body) => webcrypto.subtle.digest('SHA-256', body),
+  });
+  return acquireCandidatePicture(asset, {
+    loadArtwork: async () => media,
+    decodeImage: async () => ({
+      width: asset.width,
+      height: asset.height,
+      removeAttribute() {},
+    }),
+  });
+}
+
+test('three truthful successor rows preserve maps, pictures and every historical project', () => {
   assert.deepEqual(source.maps, previous.maps);
   assert.deepEqual(source.assets, previous.assets);
   assert.deepEqual(
@@ -39,15 +97,22 @@ test('two partner-action successors preserve maps, pictures and every historical
       assert.deepEqual(mission.team.supportRoles, ['interceptor', 'disruptor']);
       assert(mission.design.combines.includes('complementary-support-roles'));
     } else if (mission.id === 'twin-depots') {
+      assert.equal(mission.revision, source.revision);
       assert.deepEqual(
-        { ...mission, design: old.design },
+        { ...mission, revision: old.revision, design: old.design },
         old,
-        'only the learning annotation advances after the earlier introduction',
+        'the learning-ledger successor advances its revision without changing runtime authoring',
       );
       assert(!mission.design.introduces.includes('complementary-support-roles'));
       assert(mission.design.practices.includes('complementary-support-roles'));
     } else assert.deepEqual(mission, old);
   }
+  assert.deepEqual(
+    source.missions
+      .filter(({ id }) => successorRows.has(id))
+      .map(({ id, revision }) => [id, revision]),
+    TEAM_PARTNER_SPECIALIST_SUCCESSOR_ROWS.map((id) => [id, source.revision]),
+  );
   assert.deepEqual(createTeamSpecialistOriginalCandidates(), previous);
 });
 
@@ -65,6 +130,15 @@ test('homogeneous campaign boundaries retain journey order and cross them direct
   assert.deepEqual(source.campaigns.find(({ id }) => id === 'changing-common-ground').missionIds, [
     'shared-lookout',
   ]);
+  assert.equal(
+    source.campaigns.find(({ id }) => id === 'complementary-specialists').revision,
+    source.revision,
+    'The campaign identity advances with the Twin depots learning-ledger successor.',
+  );
+  assert.equal(
+    source.packs.find(({ id }) => id === 'journey-team-changing-ground').revision,
+    source.revision,
+  );
 
   const host = createCandidateTeamHost(source, {
     corePackIds: source.packs.map(({ id }) => id),
@@ -78,6 +152,97 @@ test('homogeneous campaign boundaries retain journey order and cross them direct
     const destination = host.destination(host.row(mission));
     assert.equal(destination.next.mission.levelId, to);
     assert.equal(destination.crossesCampaign, true);
+  }
+});
+
+test('the direct content-design entry uses its isolated profile and is not publicly enrolled', async () => {
+  const entry = await createTeamGreyboxEntry({ partnerSpecialist: true });
+  const ordinary = await createTeamGreyboxEntry();
+  try {
+    assert.equal(
+      entry.candidateProgress.backupFilename,
+      `revealline-${TEAM_PARTNER_SPECIALIST_PROFILE_KEY}-progress.json`,
+    );
+    assert.match(entry.candidateEditionLabel, /^partner-action specialist edition/);
+    assert.equal(entry.candidateJourney.officialProgressEligible, false);
+    for (const id of TEAM_PARTNER_SPECIALIST_SUCCESSOR_ROWS)
+      assert.equal(missionRow(entry.candidateJourney, id).level.revision, source.revision);
+
+    assert.equal(ordinary.candidateProgress.backupFilename, 'revealline-journey-progress.json');
+    assert.equal(ordinary.candidateEditionLabel, '');
+    assert.notEqual(
+      missionRow(ordinary.candidateJourney, 'twin-depots').level.revision,
+      source.revision,
+    );
+
+    const publicHost = await readFile(
+      new URL('../couch/relay-rescue.mjs', import.meta.url),
+      'utf8',
+    );
+    assert.equal(publicHost.includes(TEAM_PARTNER_SPECIALIST_PROFILE_KEY), false);
+    assert.equal(publicHost.includes('partnerSpecialist:'), false);
+  } finally {
+    entry.candidateProgress.dispose();
+    entry.candidatePreferences.dispose();
+    ordinary.candidateProgress.dispose();
+    ordinary.candidatePreferences.dispose();
+  }
+});
+
+test('all three current successor rows own exact picture leases and reject stale or foreign rows', async () => {
+  for (const id of TEAM_PARTNER_SPECIALIST_SUCCESSOR_ROWS) {
+    const row = missionRow(candidateHost, id);
+    const stale = missionRow(previousHost, id);
+    const foreign = missionRow(
+      candidateHost,
+      TEAM_PARTNER_SPECIALIST_SUCCESSOR_ROWS.find((candidate) => candidate !== id),
+    );
+    assert.equal(row.level.revision, source.revision);
+    assert.notEqual(stale.level.revision, row.level.revision);
+    assert.throws(
+      () =>
+        createCandidateTeamPictures({
+          row: stale,
+          owns: candidateHost.owns,
+          getSnapshot: () => pictureSnapshot,
+          acquire: () => candidatePicture(stale.background),
+        }),
+      /owned Team candidate/,
+    );
+
+    const owner = createCandidateTeamPictures({
+      row,
+      owns: candidateHost.owns,
+      getSnapshot: () => pictureSnapshot,
+      acquire: () => candidatePicture(row.background),
+    });
+    const request = {
+      pack: structuredClone(row.pack),
+      levelId: row.level.id,
+      themeId: 'fpv',
+      attemptId: `partner-picture-${id}`,
+    };
+    try {
+      const binding = await owner.select(request);
+      assert.deepEqual(
+        candidateTeamPictureFrame(binding, row.level, pictureSnapshot),
+        row.background,
+      );
+      assert.equal(binding.choice.levelRevision, source.revision);
+      assert.equal(candidateTeamPictureFrame(binding, stale.level, pictureSnapshot), null);
+      assert.equal(candidateTeamPictureFrame(binding, foreign.level, pictureSnapshot), null);
+      assert.equal(owner.confirm(request), binding);
+      await assert.rejects(
+        owner.select({ ...request, pack: structuredClone(stale.pack) }),
+        /exact owned pack, level and theme/,
+      );
+      await assert.rejects(
+        owner.select({ ...request, levelId: foreign.level.id }),
+        /exact owned pack, level and theme/,
+      );
+    } finally {
+      owner.dispose();
+    }
   }
 });
 
@@ -97,6 +262,13 @@ test('only the two selected simulations adopt the v9 complementary-role runtime'
           'revealline-coop.v9',
         );
         assert.notEqual(actual.simulationIdentity, old.simulationIdentity);
+      } else if (mission.id === 'twin-depots') {
+        assert.deepEqual(
+          { ...actual.level, revision: old.level.revision },
+          old.level,
+          'Only the authored learning-ledger revision advances.',
+        );
+        assert.equal(actual.simulationIdentity, old.simulationIdentity);
       } else {
         assert.deepEqual(actual.level, old.level);
         assert.equal(actual.simulationIdentity, old.simulationIdentity);

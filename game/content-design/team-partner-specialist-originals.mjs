@@ -6,6 +6,10 @@ export const TEAM_PARTNER_SPECIALIST_MISSIONS = Object.freeze([
   'crossed-gardens',
   'shared-lookout',
 ]);
+export const TEAM_PARTNER_SPECIALIST_SUCCESSOR_ROWS = Object.freeze([
+  ...TEAM_PARTNER_SPECIALIST_MISSIONS,
+  'twin-depots',
+]);
 export const TEAM_MATERIAL_SPECIALIST_CAMPAIGN_ID = 'material-partner-specialists';
 
 const roles = Object.freeze(['interceptor', 'disruptor']);
@@ -103,11 +107,20 @@ export function createTeamPartnerSpecialistOriginalCandidates() {
   // This successor teaches the roles before Twin depots. Keep the later
   // specialist mission as practice instead of presenting the same rule twice.
   const twin = source.missions.find((mission) => mission.id === 'twin-depots');
+  if (!twin) throw new Error('Twin depots must remain the specialist-ledger successor.');
+  twin.revision = revision;
   twin.design = {
     ...twin.design,
     introduces: twin.design.introduces.filter((id) => id !== 'complementary-support-roles'),
     practices: [...new Set([...twin.design.practices, 'complementary-support-roles'])],
   };
+  const twinOwner = source.campaigns.find((campaign) => campaign.missionIds.includes(twin.id));
+  if (!twinOwner || twinOwner === lookoutOwner)
+    throw new Error('Twin depots needs its distinct specialist campaign owner.');
+  twinOwner.revision = revision;
+  const twinPack = source.packs.find((pack) => pack.campaignIds.includes(twinOwner.id));
+  if (!twinPack) throw new Error('Twin depots needs its specialist pack owner.');
+  twinPack.revision = revision;
 
   return structuredClone(compileContentProject(source).source);
 }
