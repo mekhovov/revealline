@@ -65,8 +65,8 @@ export const TEAM_SPECIALIST_DISPOSITIONS = freezeDesign([
   {
     missionId: 'twin-depots',
     disposition: 'advanced-specialist-retained',
-    revision: 'specialist-support-1',
-    reason: 'Retain the accepted two-chamber specialist execution unchanged.',
+    revision: 'partner-actions-1',
+    reason: 'Retain the corrected two-chamber practice ledger and specialist execution unchanged.',
   },
   {
     missionId: 'changing-courtyard',
