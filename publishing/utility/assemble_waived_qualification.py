@@ -119,6 +119,21 @@ def step(job, name):
     return {k: row[k] for k in ('name', 'number', 'status', 'conclusion')}
 
 
+def optional_step(job, name):
+    """Return one successful step, while allowing an absent/skipped alternate workflow branch."""
+    rows = [s for s in job.get('steps', []) if s.get('name') == name]
+    require(len(rows) <= 1, 'Duplicate step: ' + name)
+    if not rows:
+        return None
+    row = rows[0]
+    require(row.get('status') == 'completed' and row.get('conclusion') in ('success', 'skipped'),
+            'Unexpected step result: ' + name)
+    if row['conclusion'] == 'skipped':
+        return None
+    require(type(row.get('number')) is int and row['number'] > 0, 'Step number missing')
+    return {k: row[k] for k in ('name', 'number', 'status', 'conclusion')}
+
+
 def family(run, jobs, workflow, event, commit):
     require(run.get('status') == 'completed' and run.get('conclusion') == 'success' and
             run.get('path') == workflow and run.get('event') == event and run.get('head_sha') == commit and
@@ -297,25 +312,28 @@ def assemble(config, output):
     step(freeze, 'Freeze the exact qualified commit')
     step(freeze, 'Retain original release assets')
     step(build, 'Verify exact tracked source before commands')
-    build_step_names = [row.get('name') for row in build.get('steps', [])]
-    fast_verifier = 'Verify tracked source after fast release gate'
-    legacy_verifier = 'Verify tracked source after build'
-    require((fast_verifier in build_step_names) != (legacy_verifier in build_step_names),
-            'Exactly one PR source verifier generation required')
-    if fast_verifier in build_step_names:
-        step(build, fast_verifier)
+    validation = step(build, 'Validate release-critical source')
+    full_build = optional_step(build, 'Build pull-request artifact')
+    after_build = optional_step(build, 'Verify tracked source after build')
+    deferred_build = optional_step(build, 'Defer full artifact build to merged-source qualification')
+    after_fast_gate = optional_step(build, 'Verify tracked source after fast release gate')
+    legacy = (full_build, after_build)
+    fast = (deferred_build, after_fast_gate)
+    require(not any(legacy) or all(legacy), 'Incomplete historical PR build corroboration')
+    require(not any(fast) or all(fast), 'Incomplete fast PR validation corroboration')
+    require(all(legacy) != all(fast), 'Exactly one successful PR build corroboration mode required')
+    if all(fast):
         pr_corroboration = {'preMergeValidationCorroboration': {
             'runId': pr_run['id'], 'jobId': build['id'], 'command': 'npm run validate',
-            'step': step(build, 'Validate release-critical source'),
+            'step': validation,
             'sourceRevision': pr_source['commit'], 'sourceTree': pr_source['tree'],
             'artifactBuild': {'status': 'deferred-to-frozen-source',
-                'step': step(build, 'Defer full artifact build to merged-source qualification')},
+                'step': deferred_build},
             'scope': 'Exact PR source validation only; the complete artifact is built once from frozen merged source.'}}
     else:
-        step(build, legacy_verifier)
         pr_corroboration = {'ordinaryBuildCorroboration': {
             'runId': pr_run['id'], 'jobId': build['id'], 'command': 'npm run build',
-            'step': step(build, 'Build pull-request artifact'), 'sourceRevision': pr_source['commit'],
+            'step': full_build, 'sourceRevision': pr_source['commit'],
             'sourceTree': pr_source['tree'],
             'scope': 'Separately identified PR build; only proven unchanged build inputs.'}}
     originals, verify, artifact, inspection_run = inspect(config, evidence, repo, source, manual)
