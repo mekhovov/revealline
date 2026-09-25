@@ -1080,14 +1080,32 @@ kbd {
 .coop-more-destinations {
   margin-block: 8px;
 }
-.coop-tools details {
+.coop-tools details,
+.coop-pause-core details {
   border-top: 1px solid var(--fk-line);
   padding-block: var(--fk-space-2);
 }
-.coop-tools summary {
+.coop-tools summary,
+.coop-pause-core summary {
   cursor: pointer;
   display: list-item;
   padding: var(--fk-space-2);
+}
+.coop-pause-core {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+.coop-pause-core > * {
+  min-width: 0;
+  min-height: var(--fk-target-size);
+}
+.coop-pause-core > #coop-help {
+  grid-column: 1 / -1;
+  padding: 0;
+}
+.coop-pause-core > #coop-help[open] {
+  padding-bottom: var(--fk-space-2);
 }
 .coop-tools label,
 .coop-tools select,
@@ -1538,11 +1556,7 @@ body:not(.playing) .masthead :is(.mode-label, #coop-race) {
 #coop-lobby-tools :is(#coop-settings-open, #coop-quick-sound) {
   flex: 1 1 10rem;
 }
-/* More is a lobby destination. The retained Pause tools keep their existing
-   direct catalogue, Help, Settings and Sound hierarchy. */
-#coop-pause-tools #coop-more {
-  display: none;
-}
+/* More stays collapsed below the direct Pause actions. */
 #coop-help-reading .briefing {
   border: 0;
   background: none;
