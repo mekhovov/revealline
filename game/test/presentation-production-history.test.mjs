@@ -414,18 +414,18 @@ test('production refuses silent slot contract mutation and can explicitly return
 test('Journey feedback dependencies bind only the reviewed player-craft effects inputs', async () => {
   const production = await createFieldKitProduction();
   const resolved = resolvePresentation(production.document);
-  const reviewPath = 'docs/verification/enemy-surface-motion-continuation-2026-09-24/review.json';
+  const reviewPath = 'docs/verification/couch-craft-v01120/review.json';
   const reviewBytes = await fs.readFile(new URL(`../../${reviewPath}`, import.meta.url));
   const reviewHash = createHash('sha256').update(reviewBytes).digest('hex');
   const review = JSON.parse(reviewBytes);
-  assert.equal(reviewHash, 'f8dcdc60d973447bd6b482045c96f1a4059cfca899528dd7de7cacb95854684c');
+  assert.equal(reviewHash, 'fa2120613abf06bc578ba8388ba33af415392583e19e83c2297638af8010c305');
   assert.equal(
     review.effects.priorFingerprintSHA256,
-    'abd3aeef12041b55e76be3b026b52180f11df0f5b7a7f2a25ea560dacab0fdf1',
+    '654fed2ce5b5e9b5e0c6bb79a6d7095093a4ed8128877b1a7f0658d830c275e7',
   );
   assert.equal(
     review.effects.currentFingerprintSHA256,
-    '654fed2ce5b5e9b5e0c6bb79a6d7095093a4ed8128877b1a7f0658d830c275e7',
+    'e23e228b4bf4ee68bb7cbbd231aaebe66d6e3da8965fbeae9b2c4acc90f9e053',
   );
   for (const slotId of [
     'trail.active',
@@ -443,7 +443,7 @@ test('Journey feedback dependencies bind only the reviewed player-craft effects 
     assert.equal(asset.quality.stage, 'reviewed', slotId);
     assert.ok(
       asset.provenance.source.endsWith(
-        'sha256:654fed2ce5b5e9b5e0c6bb79a6d7095093a4ed8128877b1a7f0658d830c275e7',
+        'sha256:e23e228b4bf4ee68bb7cbbd231aaebe66d6e3da8965fbeae9b2c4acc90f9e053',
       ),
     );
     assert.match(asset.provenance.source, /game\/ui\/lane-presentation\.mjs/);
@@ -452,7 +452,7 @@ test('Journey feedback dependencies bind only the reviewed player-craft effects 
     assert.match(asset.provenance.source, /game\/ui\/enemy-body-motion\.mjs/);
     assert.equal(
       asset.quality.evidence.some((entry) =>
-        entry.includes(`Scoped enemy surface-motion continuation: ${reviewPath}`),
+        entry.includes(`Scoped trail, impact and wreck continuation: ${reviewPath}`),
       ),
       true,
     );
@@ -462,7 +462,8 @@ test('Journey feedback dependencies bind only the reviewed player-craft effects 
 test('shared-host UI and audio bind only their reviewed current inputs', async () => {
   const production = await createFieldKitProduction();
   const resolved = resolvePresentation(production.document);
-  const audioReviewPath = 'docs/verification/fresh-presentation-retention/review.json';
+  const audioReviewPath =
+    'docs/verification/online-soundtrack-reconciliation-2026-09-25/source-review.json';
   const audioReviewHash = createHash('sha256')
     .update(await fs.readFile(new URL(`../../${audioReviewPath}`, import.meta.url)))
     .digest('hex');
@@ -504,7 +505,7 @@ test('shared-host UI and audio bind only their reviewed current inputs', async (
       );
       assert.ok(
         asset.provenance.source.endsWith(
-          'sha256:f8952e5df3886a92e6cb1e7fa174a1ca8c99a83199ebd5ede342fa736962d601',
+          'sha256:6b9b58a0d51a1b15d533e76b531cb4db09662274c8b5cad3988b06f01e7327c4',
         ),
         slot.id,
       );
@@ -512,6 +513,7 @@ test('shared-host UI and audio bind only their reviewed current inputs', async (
       assert.match(asset.provenance.source, /game\/ui\/soundtrack-panel\.css/);
       assert.match(asset.provenance.source, /game\/soundtrack-portable\.mjs/);
       assert.match(asset.provenance.source, /game\/content\/soundtrack-catalogue\.mjs/);
+      assert.match(asset.provenance.source, /game\/online-soundtrack-catalogue\.mjs/);
     }
   }
 });
@@ -530,7 +532,7 @@ test('soundtrack screen and Journey motion reviews bind only the inspected curre
   );
   const fingerprints = {
     screens: 'acf6426f5cd47f21a85ec5ae9da9549ed58fbe330b097c979dc85b87afe2d68a',
-    motion: 'c35fcf823a0923f27f1193afa247e2d0c93b6fc4161976a5d6a2b67a5bc143a9',
+    motion: '03a9b8a5eceb9eee63da578807becbb0f7770713d3eb2bd04affe5a75d3316f4',
   };
   const reviewed = production.document.slots.filter(
     (slot) => slot.group in fingerprints && resolved.assets[slot.id].kind === 'recipe',
@@ -544,7 +546,7 @@ test('soundtrack screen and Journey motion reviews bind only the inspected curre
       asset.quality.evidence.some((entry) =>
         entry.includes(
           slot.group === 'motion'
-            ? 'Scoped visible-actor motion continuation'
+            ? 'Scoped clean-craft motion continuation: docs/verification/couch-craft-v01120/review.json sha256:fa2120613abf06bc578ba8388ba33af415392583e19e83c2297638af8010c305'
             : `Scoped compact-Home screen continuation: ${screenReviewPath} sha256:${screenReviewHash}`,
         ),
       ),
@@ -585,6 +587,7 @@ test('changed recipe inputs reopen only their own reviewed group', async (t) => 
     'soundtrack-albums.mjs',
     'soundtrack-portable.mjs',
     'content/soundtrack-catalogue.mjs',
+    'online-soundtrack-catalogue.mjs',
     'ui/soundtrack-panel.mjs',
   ];
   const inputs = new Map([

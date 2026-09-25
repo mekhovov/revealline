@@ -41,6 +41,8 @@ import {
   createWholeCulturalPressureCandidates,
   createWholeErosionReviewCandidates,
 } from '../content-design/whole-spatial-candidates.mjs';
+import { createSpatialNextBatchCandidates } from '../content-design/spatial-next-batch-candidates.mjs';
+import { createHorizonNextBatchCandidates } from '../content-design/horizon-next-batch-candidates.mjs';
 import { withCampaignPresentation } from '../content-design/campaign-presentation.mjs';
 import { createTeamSignalCandidates } from '../content-design/team-signal-candidates.mjs';
 import { createTeamJourneyCandidates } from '../content-design/team-journey-candidates.mjs';
@@ -1002,6 +1004,8 @@ $('whole-variety').onclick = guarded(() => {
       'pressure-arcs-1': createWholePressureCandidates,
       'cultural-pressure-1': createWholeCulturalPressureCandidates,
       'erosion-counterplay-1': createWholeErosionReviewCandidates,
+      'cultural-spatial-triptych-1': createSpatialNextBatchCandidates,
+      'horizon-cultural-joins-1': createHorizonNextBatchCandidates,
     }[$('whole-variety-edition').value] ?? createWholeVarietyCandidates;
   $('source').value = JSON.stringify(create({ artwork: true }), null, 2);
   sourceChanged = true;

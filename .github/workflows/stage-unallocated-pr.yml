@@ -1,0 +1,51 @@
+name: Stage unallocated pull requests
+
+on:
+  pull_request_target:
+    types: [opened, reopened, ready_for_review, edited, labeled, unlabeled]
+
+permissions:
+  pull-requests: write
+
+concurrency:
+  group: stage-unallocated-pr-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  stage:
+    # A release title allocates a product slot. Bounded maintenance paths are
+    # admitted without spending that slot; the label remains an explicit
+    # escape hatch for an independently reviewed exceptional change.
+    if: >-
+      !github.event.pull_request.draft &&
+      !startsWith(github.event.pull_request.title, 'Release v') &&
+      !contains(github.event.pull_request.labels.*.name, 'release-train-approved')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Keep bounded maintenance ready or return unallocated product work to draft
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const files = await github.paginate(github.rest.pulls.listFiles, {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.payload.pull_request.number,
+              per_page: 100,
+            });
+            const maintenance =
+              files.length > 0 &&
+              files.every(({ filename }) =>
+                /^(docs\/|publishing\/|\.github\/workflows\/|game\/test\/)/.test(filename),
+              );
+            if (maintenance) {
+              core.notice('Bounded maintenance paths do not consume a product release slot.');
+              return;
+            }
+            await github.graphql(
+              `mutation($pullRequestId: ID!) {
+                convertPullRequestToDraft(input: {pullRequestId: $pullRequestId}) {
+                  pullRequest { number isDraft }
+                }
+              }`,
+              { pullRequestId: context.payload.pull_request.node_id },
+            );

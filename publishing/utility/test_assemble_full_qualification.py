@@ -56,6 +56,10 @@ class FullTests(unittest.TestCase):
             'Verify exact tracked source before commands', 'Validate, lint, and format source',
             'Verify Field Kit production ledger and compiled output', 'Verify immutable production sources first',
             'Verify tracked source after preflight'])]
+        build = self.jobs['pr']['jobs'][0]
+        build['steps'] = [f.step(n, i + 1) for i, n in enumerate([
+            'Verify exact tracked source before commands', 'Build pull-request artifact',
+            'Verify tracked source after build'])]
         for role in ('pr', 'manual'):
             run = self.pr_run if role == 'pr' else self.manual
             for i in range(1, 5):

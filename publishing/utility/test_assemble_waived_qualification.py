@@ -26,7 +26,9 @@ class AdapterTests(unittest.TestCase):
         self.jobs = jobs
         self.pr_run = dict(self.manual, id=20, event='pull_request', path='.github/workflows/deploy-pages.yml')
         build = dict(jobs['jobs'][0], id=201, run_id=20, name='build', steps=[self.step(n, i + 1) for i, n in enumerate(
-            ['Verify exact tracked source before commands', 'Build pull-request artifact', 'Verify tracked source after build'])])
+            ['Verify exact tracked source before commands', 'Validate release-critical source',
+             'Defer full artifact build to merged-source qualification',
+             'Verify tracked source after fast release gate'])])
         self.pr_jobs = {'total_count': 2, 'jobs': [build, dict(build, name='preflight', id=202)]}
         self.inspection_run = dict(self.manual, id=21)
         inspection_jobs = {'total_count': 1, 'jobs': [dict(build, id=301, run_id=21, name='inspect-artifact')]}
@@ -132,6 +134,52 @@ class AdapterTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'Fresh ordinary output'):
             adapter.assemble(self.config, output)
 
+    def test_previous_successful_pr_build_generation_is_retained_truthfully(self):
+        jobs = copy.deepcopy(self.pr_jobs)
+        jobs['jobs'][0]['steps'] = [self.step(n, i + 1) for i, n in enumerate([
+            'Verify exact tracked source before commands', 'Validate release-critical source',
+            'Build pull-request artifact',
+            'Verify tracked source after build'])]
+        for name in ('Defer full artifact build to merged-source qualification',
+                     'Verify tracked source after fast release gate'):
+            skipped = self.step(name, len(jobs['jobs'][0]['steps']) + 1)
+            skipped['conclusion'] = 'skipped'
+            jobs['jobs'][0]['steps'].append(skipped)
+        Path(self.config['pr']['jobs']).write_bytes(adapter.encoded(jobs))
+        output = self.root / 'out'
+        adapter.assemble(self.config, output)
+        qualification = json.loads((output / 'source-qualification.json').read_bytes())
+        self.assertNotIn('preMergeValidationCorroboration', qualification)
+        self.assertEqual(qualification['ordinaryBuildCorroboration']['command'], 'npm run build')
+        self.assertEqual(qualification['ordinaryBuildCorroboration']['step']['name'],
+                         'Build pull-request artifact')
+
+    def test_current_fast_generation_allows_skipped_historical_steps(self):
+        jobs = copy.deepcopy(self.pr_jobs)
+        for name in ('Build pull-request artifact', 'Verify tracked source after build'):
+            skipped = self.step(name, len(jobs['jobs'][0]['steps']) + 1)
+            skipped['conclusion'] = 'skipped'
+            jobs['jobs'][0]['steps'].append(skipped)
+        Path(self.config['pr']['jobs']).write_bytes(adapter.encoded(jobs))
+        output = self.root / 'out'
+        adapter.assemble(self.config, output)
+        qualification = json.loads((output / 'source-qualification.json').read_bytes())
+        self.assertNotIn('ordinaryBuildCorroboration', qualification)
+        self.assertEqual(qualification['preMergeValidationCorroboration']['command'], 'npm run validate')
+
+    def test_pr_build_modes_cannot_be_partial_or_both_successful(self):
+        jobs = copy.deepcopy(self.pr_jobs)
+        jobs['jobs'][0]['steps'].append(self.step('Build pull-request artifact', 99))
+        Path(self.config['pr']['jobs']).write_bytes(adapter.encoded(jobs))
+        with self.assertRaisesRegex(ValueError, 'Incomplete historical PR build corroboration'):
+            adapter.assemble(self.config, self.root / 'out-partial')
+        jobs = copy.deepcopy(self.pr_jobs)
+        jobs['jobs'][0]['steps'].extend([self.step('Build pull-request artifact', 98),
+                                        self.step('Verify tracked source after build', 99)])
+        Path(self.config['pr']['jobs']).write_bytes(adapter.encoded(jobs))
+        with self.assertRaisesRegex(ValueError, 'Exactly one successful PR build corroboration mode required'):
+            adapter.assemble(self.config, self.root / 'out-both')
+
     def test_missing_failed_cancelled_or_success_instead_of_skipped_test_refused(self):
         for conclusion in ('failure', 'cancelled', 'success'):
             jobs = copy.deepcopy(self.jobs)
@@ -141,7 +189,7 @@ class AdapterTests(unittest.TestCase):
                 adapter.assemble(self.config, self.root / 'out')
             self.assertFalse((self.root / 'out').exists())
 
-    def test_gate_and_build_must_be_actual_successful_steps(self):
+    def test_gate_and_pr_validation_must_be_actual_successful_steps(self):
         for role, raw, job_index, step_index in [('manual', self.jobs, 0, 0), ('pr', self.pr_jobs, 0, 1)]:
             bad = copy.deepcopy(raw)
             bad['jobs'][job_index]['steps'][step_index]['conclusion'] = 'skipped'

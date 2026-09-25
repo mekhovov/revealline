@@ -5,23 +5,28 @@
 export function attachControllerConfirmGuard({
   document: doc = globalThis.document,
   confirmPressed,
+  now = () => globalThis.performance?.now?.() ?? Date.now(),
+  echoWindowMs = 1250,
 } = {}) {
   const keys = new Set(),
     listeners = [];
-  let mouse = false;
+  let mouse = false,
+    suppressUntil = -Infinity;
   const listen = (type, callback) => {
     doc.addEventListener(type, callback, { capture: true });
     listeners.push(() => doc.removeEventListener(type, callback, { capture: true }));
   };
   const consume = (event) => {
     event.preventDefault();
-    event.stopImmediatePropagation();
+    if (typeof event.stopImmediatePropagation === 'function') event.stopImmediatePropagation();
+    else event.stopPropagation?.();
   };
+  const controllerOwnsGesture = () => confirmPressed() || now() <= suppressUntil;
   const isMouse = (event) =>
     event.button === 0 &&
     (!event.pointerType || event.pointerType === 'mouse') &&
     !event.sourceCapabilities?.firesTouchEvents;
-  listen('keydown', (event) => {
+  const consumeConfirmKey = (event) => {
     if (
       !['Enter', ' '].includes(event.key) ||
       event.ctrlKey ||
@@ -30,16 +35,18 @@ export function attachControllerConfirmGuard({
       event.shiftKey
     )
       return;
-    if (!keys.has(event.key) && !confirmPressed()) return;
+    if (!keys.has(event.key) && !controllerOwnsGesture()) return;
     keys.add(event.key);
     consume(event);
-  });
+  };
+  listen('keydown', consumeConfirmKey);
+  listen('keypress', consumeConfirmKey);
   listen('keyup', (event) => {
     if (keys.delete(event.key)) consume(event);
   });
   listen('pointerdown', (event) => {
     if (!isMouse(event)) return;
-    mouse = confirmPressed();
+    mouse = controllerOwnsGesture();
     if (mouse) consume(event);
   });
   for (const type of ['pointerup', 'mousedown', 'mouseup'])
@@ -47,9 +54,14 @@ export function attachControllerConfirmGuard({
       if (mouse && isMouse(event)) consume(event);
     });
   listen('click', (event) => {
-    // Programmatic controller activation and keyboard/accessibility clicks must
-    // reach the control. Only the paired physical mouse sequence is consumed.
-    if (!mouse || !isMouse(event) || event.detail === 0) return;
+    if (!isMouse(event)) return;
+    // HTMLElement.click() is untrusted in browsers and is the controller
+    // adapter's intended activation. Steam/Chrome can separately emit a
+    // trusted detail:0 click without pointer events; consume that echo too.
+    const programmatic =
+      event.isTrusted === false || (event.isTrusted == null && event.detail === 0);
+    if (programmatic) return;
+    if (!mouse && !(event.isTrusted === true && controllerOwnsGesture())) return;
     mouse = false;
     consume(event);
   });
@@ -59,10 +71,14 @@ export function attachControllerConfirmGuard({
   const reset = () => {
     keys.clear();
     mouse = false;
+    suppressUntil = -Infinity;
   };
   doc.defaultView?.addEventListener?.('blur', reset);
   listen('visibilitychange', reset);
   return {
+    observe(pressed) {
+      if (pressed) suppressUntil = Math.max(suppressUntil, now() + echoWindowMs);
+    },
     destroy() {
       reset();
       listeners.forEach((remove) => remove());

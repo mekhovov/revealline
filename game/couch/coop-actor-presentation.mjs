@@ -3,6 +3,7 @@ import { prepareTeamPilots, teamPilotSlot } from './coop-pilot-slots.mjs';
 import { prepareTeamCores, teamCoreState } from './coop-core-presentation.mjs';
 import {
   actorDiameter,
+  actorImagePaintMetrics,
   createActorPresentation,
   drawPresentedActor,
 } from '../ui/actor-presentation.mjs';
@@ -342,19 +343,24 @@ export function createCoopActorPresentation({
       ctx.scale(1 / CELL, 1 / CELL);
       ctx.imageSmoothingEnabled = false;
       if (kind === 'core') {
+        const paint = actorImagePaintMetrics(frame.diameter, sprite.geometry);
         ctx.globalAlpha = entry.secured && !entry.customCore ? 0.45 : 1;
         drawPresentationImage(
           ctx,
           sprite.image,
           frame.x,
           frame.y,
-          frame.diameter,
-          frame.diameter,
+          paint.width,
+          paint.height,
           sprite.geometry,
         );
       } else
         drawPresentedActor(ctx, frame, palette, sprite.image, sprite.geometry, entry.bodyRecord, {
           bodyOffset: frame.bodyOffset,
+          // Player sprites own their complete readable silhouette. Extra
+          // procedural blades resemble detached corner brackets on compact
+          // Team boards; enemy actors retain their authored rotor treatment.
+          showRotors: kind !== 'pilot',
         });
     } finally {
       ctx.restore();

@@ -38,7 +38,7 @@ const sources = {
     'game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs; game/ui/relay-view.mjs; game/ui/directional-view.mjs; game/ui/enemy-body-assets.mjs; game/ui/enemy-body-motion.mjs; game/enemy-catalog.mjs',
   team: 'game/couch/coop-view.mjs; game/couch/coop-actor-presentation.mjs; game/couch/coop-anchor-presentation.mjs; game/couch/coop-core-presentation.mjs; game/couch/coop-support-presentation.mjs; game/couch/coop-emitter-presentation.mjs; game/couch/coop-rescue-presentation.mjs; game/couch/coop-pilot-slots.mjs; game/couch/coop-enemy-slots.mjs; game/couch/coop-outcome-presentation.mjs; game/presentation/team-runtime-slots.mjs; game/ui/actor-presentation.mjs; game/presentation/catalog.mjs; game/couch/coop-actor-layout.mjs; game/couch/coop-terrain-trail.mjs; game/couch/coop-bonus-view.mjs; game/couch/candidate-team-pictures.mjs; game/content-design/material-markers.mjs; game/presentation/journey-actor-materials.mjs; authoring/motion-lab/render-character.mjs; game/ui/classic-view.mjs; game/ui/presentation-draw-image.mjs; game/ui/enemy-body-assets.mjs; game/ui/enemy-body-motion.mjs; authoring/motion-lab/animation.mjs; game/content-design/actor-marker.mjs; game/enemy-catalog.mjs',
   audio:
-    'game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/ui/soundtrack-panel.mjs; game/ui/soundtrack-panel.css; game/soundtrack-albums.mjs; game/soundtrack-portable.mjs; game/content/soundtrack-catalogue.mjs',
+    'game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/ui/soundtrack-panel.mjs; game/ui/soundtrack-panel.css; game/soundtrack-albums.mjs; game/soundtrack-portable.mjs; game/content/soundtrack-catalogue.mjs; game/online-soundtrack-catalogue.mjs',
 };
 
 // Image review is independent of the 37 Team recipes. Bind original bytes and
@@ -125,26 +125,26 @@ const REVIEWED_RECIPE_INPUTS = {
     ],
   },
   audio: {
-    sha256: 'f8952e5df3886a92e6cb1e7fa174a1ca8c99a83199ebd5ede342fa736962d601',
+    sha256: '6b9b58a0d51a1b15d533e76b531cb4db09662274c8b5cad3988b06f01e7327c4',
     evidence: [
-      'Scoped retained-audio functional source review: docs/verification/fresh-presentation-retention/review.json sha256:120fbc1081856a6961f99bd479212695a09a4ce4b8debf3e3069a05620e75675. Fourteen audio inputs sha256:f8952e5df3886a92e6cb1e7fa174a1ca8c99a83199ebd5ede342fa736962d601; only published-audio.mjs changes accepted snapshot ownership and stale-reader rejection.',
-      'All8 selected roles remain the same procedural recipes with no audio files. Synthesis, catalogue, scheduling, gain/master authority, saved playback intent and soundtrack panel inputs are byte-identical. Source and lifecycle tests support the same functional player scope; native retained-image observations do not prove custom audio-file decoding.',
-      'No recording, composition, musical suitability, Ukrainian authenticity, native listening, physical-device, frozen-offline or public approval. The70 hosted recordings retain pending musical review and UA-FPV remains excluded without redistribution permission. All historical records and127 original payloads are immutable.',
+      'Scoped live archive reconciliation: docs/verification/online-soundtrack-reconciliation-2026-09-25/source-review.json sha256:55198d5d74044c8a272f50b32fb01240245dea1843869d22f7dab21d0c310e42. Fifteen ordered audio inputs sha256:6b9b58a0d51a1b15d533e76b531cb4db09662274c8b5cad3988b06f01e7327c4 preserve the bounded catalogue trust boundary, bind selection to resolver-owned policy and accept only the explicit default=false marker used by the 24 post-baseline auditions.',
+      'All8 selected roles remain the same procedural recipes with no new audio files. Focused tests cover bounded decode, exact immutable paths, rejection of default=true and forged Recording-mode policy, clicked-first streaming, style mixing, shuffle and ordered queues, repeat all/one/off, remote two-deck transitions, sequential fallback, failure and cancellation.',
+      'No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, cold-offline, frozen-build or public game approval. Archive previews remain outside trusted Automatic and built-in playlists; historical records and original payloads are immutable.',
     ],
   },
   motion: {
-    sha256: 'c35fcf823a0923f27f1193afa247e2d0c93b6fc4161976a5d6a2b67a5bc143a9',
+    sha256: '03a9b8a5eceb9eee63da578807becbb0f7770713d3eb2bd04affe5a75d3316f4',
     evidence: [
-      'Scoped visible-actor motion continuation: docs/verification/integrated-fpv-presentation-2026-09-24/review.json sha256:5743669fa1b230c486bf92435e2922a8a775b86a3de10fd42f84c2e51a85ca51; three ordered motion inputs sha256:c35fcf823a0923f27f1193afa247e2d0c93b6fc4161976a5d6a2b67a5bc143a9. Only actor-presentation.mjs changes to fit prepared visible bounds and rotor sweep to the requested display size.',
-      'Focused actor and renderer checks cover rectangular and transparent frames, compact/desktop minima, rotor sweep, reduced motion, fallback and unchanged simulation footprints. Positions, collision radii, authoritative clocks and role identities are unchanged.',
-      'Functional source/geometry continuation only, not subjective art, every-state native/device, human balance, frozen/public or release approval. Historical reviews and original payloads remain immutable; changed motion inputs reopen this group.',
+      'Scoped clean-craft motion continuation: docs/verification/couch-craft-v01120/review.json sha256:fa2120613abf06bc578ba8388ba33af415392583e19e83c2297638af8010c305; three ordered motion inputs sha256:03a9b8a5eceb9eee63da578807becbb0f7770713d3eb2bd04affe5a75d3316f4. Prepared FPV bodies can suppress duplicate procedural blades while the active cutting head gains bounded plate, direction and packet cues.',
+      'The exact candidate passed 202 focused actor, renderer, trail, controller, Couch and picture-parity checks. Positions, collision radii, authoritative clocks, path cells and role identities remain unchanged.',
+      'Bounded functional visual continuation only, not final subjective art, every-state native/device, human balance, frozen/public or release approval. Historical reviews and original payloads remain immutable; changed motion inputs reopen this group.',
     ],
   },
   effects: {
-    sha256: '654fed2ce5b5e9b5e0c6bb79a6d7095093a4ed8128877b1a7f0658d830c275e7',
+    sha256: 'e23e228b4bf4ee68bb7cbbd231aaebe66d6e3da8965fbeae9b2c4acc90f9e053',
     evidence: [
-      'Scoped enemy surface-motion continuation: docs/verification/enemy-surface-motion-continuation-2026-09-24/review.json sha256:f8dcdc60d973447bd6b482045c96f1a4059cfca899528dd7de7cacb95854684c; ten ordered effects inputs sha256:654fed2ce5b5e9b5e0c6bb79a6d7095093a4ed8128877b1a7f0658d830c275e7. Prepared enemy bodies now consume existing bounded catalog motion records without acquiring duplicate images.',
-      'The active-trail, secured-contour, travelling-impact, capture, failure, victory, pickup, shield, respawn and pressure painters remain unchanged. Focused actor, asset and motion checks preserve reduced effects, collision footprints, role identities and authoritative state.',
+      'Scoped trail, impact and wreck continuation: docs/verification/couch-craft-v01120/review.json sha256:fa2120613abf06bc578ba8388ba33af415392583e19e83c2297638af8010c305; ten ordered effects inputs sha256:e23e228b4bf4ee68bb7cbbd231aaebe66d6e3da8965fbeae9b2c4acc90f9e053. The active cutting head and authoritative travelling fronts gain bounded readable shapes, prepared player bodies suppress duplicate blades, and FPV failure debris uses compact solid fragments.',
+      'The exact candidate passed 202 focused actor, renderer, trail, controller, Couch and picture-parity checks. Reduced effects keeps essential state markers; collision footprints, impact coordinates, role identities, mission state and authoritative clocks remain unchanged.',
       'Functional and bounded visual continuation only. Historical reviews and original payloads remain immutable. Team recipes remain source-stage; complete art, final-byte physical-device, human pacing, frozen/public and release acceptance remain separate. Any effects input or review-byte change reopens this group.',
     ],
   },
