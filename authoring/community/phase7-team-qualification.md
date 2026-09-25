@@ -58,7 +58,27 @@ portable Team artifact has its own explicit API and MIME type and can launch
 through production Couch file intake. Exact portable bytes install under a
 SHA-256 edition identity. Fresh library visits discover immutable installed
 editions, replay their qualification before launch, and retain legal clear
-receipts within the exact edition. Unfinished-attempt recovery, durable picture
-rewards and creator media packaging remain integration work. Automated
-feasibility is not human balance, first-attempt success,
+receipts within the exact edition.
+
+Installed generated Team missions also retain one unfinished checkpoint per
+level. The checkpoint stores bounded run-length encoded two-player commands,
+the reviewed gameplay-pressure recipe, and an exact state identity. Reopening
+a mission reconstructs it from the immutable installed pack and replays every
+saved command before adopting the territory. Changed package bytes, gameplay
+identity, checkpoint bytes, a terminal run, stale progress generation, or an
+attempt replaced in another tab is rejected rather than silently overwritten.
+The host writes the initial checkpoint on launch, refreshes it during play and
+when pausing, and removes it after an exactly replayed legal win or terminal
+loss.
+
+A verified win retains its exact registered picture identity in the
+edition-scoped completion receipt. A fresh mission-library visit labels the
+clear as **Picture earned**, and prepares that registered original again when
+the mission is played. The Team portable format still contains gameplay and
+qualification evidence only; it does not contain creator image or video
+payloads. Imported local artwork remains visit-scoped, and Team victory videos
+remain unsupported until a portable Team media contract owns their bytes and
+playback binding.
+
+Automated feasibility is not human balance, first-attempt success,
 physical-controller certification or mobile certification.
