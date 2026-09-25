@@ -138,6 +138,81 @@ const explanations = {
   slowPickup: 'Amber hourglass with a pale waist and metal end caps.',
   freeze: 'Cyan eight-point freeze symbol with a pale central crystal and axial tips.',
 };
+const reviewKeys = Object.freeze({
+  descriptions: Object.freeze({
+    scout: 'tools:fieldKitSpriteReview.description.scout',
+    bomber: 'tools:fieldKitSpriteReview.description.bomber',
+    carrier: 'tools:fieldKitSpriteReview.description.carrier',
+    interceptor: 'tools:fieldKitSpriteReview.description.interceptor',
+    fiber: 'tools:fieldKitSpriteReview.description.fiber',
+    impact: 'tools:fieldKitSpriteReview.description.impact',
+    trapper: 'tools:fieldKitSpriteReview.description.trapper',
+    bouncer: 'tools:fieldKitSpriteReview.description.bouncer',
+    'border-patrol': 'tools:fieldKitSpriteReview.description.borderPatrol',
+    'contour-patrol': 'tools:fieldKitSpriteReview.description.contourPatrol',
+    'claimed-rover': 'tools:fieldKitSpriteReview.description.claimedRover',
+    eroder: 'tools:fieldKitSpriteReview.description.eroder',
+    'lane-boss': 'tools:fieldKitSpriteReview.description.laneBoss',
+    'relay-sentinel': 'tools:fieldKitSpriteReview.description.relaySentinel',
+    wall: 'tools:fieldKitSpriteReview.description.wall',
+    slowTerrain: 'tools:fieldKitSpriteReview.description.slowTerrain',
+    lethal: 'tools:fieldKitSpriteReview.description.lethal',
+    objective: 'tools:fieldKitSpriteReview.description.objective',
+    supply: 'tools:fieldKitSpriteReview.description.supply',
+    life: 'tools:fieldKitSpriteReview.description.life',
+    speed: 'tools:fieldKitSpriteReview.description.speed',
+    slowPickup: 'tools:fieldKitSpriteReview.description.slowPickup',
+    freeze: 'tools:fieldKitSpriteReview.description.freeze',
+  }),
+  requirements: Object.freeze({
+    playerNorth: 'tools:fieldKitSpriteReview.requirement.playerNorth',
+    playerFourHubs: 'tools:fieldKitSpriteReview.requirement.playerFourHubs',
+    playerSixHubs: 'tools:fieldKitSpriteReview.requirement.playerSixHubs',
+    playerReview: 'tools:fieldKitSpriteReview.requirement.playerReview',
+    enemyNorth: 'tools:fieldKitSpriteReview.requirement.enemyNorth',
+    enemyCues: 'tools:fieldKitSpriteReview.requirement.enemyCues',
+    enemyGameplay: 'tools:fieldKitSpriteReview.requirement.enemyGameplay',
+    terrainFootprint: 'tools:fieldKitSpriteReview.requirement.terrainFootprint',
+    terrainPattern: 'tools:fieldKitSpriteReview.requirement.terrainPattern',
+    terrainGameplay: 'tools:fieldKitSpriteReview.requirement.terrainGameplay',
+    pickupText: 'tools:fieldKitSpriteReview.requirement.pickupText',
+    pickupGameplay: 'tools:fieldKitSpriteReview.requirement.pickupGameplay',
+    pickupReview: 'tools:fieldKitSpriteReview.requirement.pickupReview',
+  }),
+});
+function reviewDescriptionKey(slotId) {
+  const id = slotId.split('.')[1];
+  return reviewKeys.descriptions[
+    slotId === 'pickup.slow' ? 'slowPickup' : slotId === 'terrain.slow' ? 'slowTerrain' : id
+  ];
+}
+function reviewRequirementKeys(slot) {
+  if (slot.id.startsWith('player.'))
+    return [
+      reviewKeys.requirements.playerNorth,
+      slot.geometry.rotorAnchors.length === 6
+        ? reviewKeys.requirements.playerSixHubs
+        : reviewKeys.requirements.playerFourHubs,
+      reviewKeys.requirements.playerReview,
+    ];
+  if (slot.id.startsWith('enemy.'))
+    return [
+      reviewKeys.requirements.enemyNorth,
+      reviewKeys.requirements.enemyCues,
+      reviewKeys.requirements.enemyGameplay,
+    ];
+  if (slot.id.startsWith('terrain.'))
+    return [
+      reviewKeys.requirements.terrainFootprint,
+      reviewKeys.requirements.terrainPattern,
+      reviewKeys.requirements.terrainGameplay,
+    ];
+  return [
+    reviewKeys.requirements.pickupText,
+    reviewKeys.requirements.pickupGameplay,
+    reviewKeys.requirements.pickupReview,
+  ];
+}
 const escapeHTML = (value) =>
   String(value).replace(
     /[&<>"']/g,
@@ -254,7 +329,17 @@ function sheetFor(entries) {
   return { width, height, rgba };
 }
 function reviewHTML(manifest) {
-  return `<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Field Kit sprite review</title><link rel="stylesheet" href="../../../ui/field-kit-fonts.css"><style>*{box-sizing:border-box}body{margin:0;background:#070b12;color:#f3f0db;font:18px/1.5 'Field Kit UI',sans-serif}header{padding:32px;max-width:1100px}h1{font:600 52px/1 'Field Kit Display',sans-serif;margin:12px 0}p{color:#a5b2bb}a{color:#78dce8}.status{color:#f4bf62;font:14px 'Field Kit Mono',monospace}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;padding:16px 32px 48px}.card{padding:20px;background:#101923;border:1px solid #425563;min-width:0}.card h2{font-size:19px;margin:0;color:#78dce8}.big{height:208px;display:grid;place-items:center;background:repeating-conic-gradient(#101923 0% 25%,#182531 0% 50%) 50%/16px 16px;margin:16px 0}.big img{width:192px;height:192px;image-rendering:pixelated}.native{display:flex;gap:20px;align-items:flex-end;min-height:64px}.native figure{display:grid;gap:6px;margin:0;justify-items:center;font:12px 'Field Kit Mono',monospace}.native img{image-rendering:pixelated}.light{background:#f3f0db;padding:8px}.card p{font-size:14px}.card code{font:12px 'Field Kit Mono',monospace;overflow-wrap:anywhere}summary{cursor:pointer;color:#78dce8;font-size:16px}textarea{width:100%;min-height:220px;background:#070b12;color:#f3f0db;border:1px solid #647786;padding:12px;resize:vertical;font:14px/1.5 'Field Kit UI',sans-serif}button{font:16px 'Field Kit UI',sans-serif;min-height:44px;background:#182531;color:#f3f0db;border:1px solid #647786;padding:8px 16px;margin:8px 0;cursor:pointer}button:focus-visible,a:focus-visible,summary:focus-visible{outline:3px solid #78dce8;outline-offset:3px}@media(max-width:500px){header{padding:24px}.grid{padding:12px;grid-template-columns:1fr}}</style><header><div class="status">PRODUCED · NOT YET REVIEWED</div><h1>Field Kit sprite review</h1><p>Thirty original code-authored pixel assets. No pixels were taken from the hardware concept study, legacy game art, or Xposed references. North is up; player images contain static motor hubs and no propellers. Compact 32 and detailed 64 are rendered directly at their native pixel grids.</p><p>Review the 20, 24, and 32 CSS pixel samples and enlarged clusters, then check the real board. This page is an asset review, not gameplay. Camera/front orientation and cosmetic geometry do not change hitboxes.</p><a href="./sprites.json">Complete provenance and geometry</a> · <a href="./contact-sheet.png">PNG contact sheet</a> · <a href="../../../../authoring/asset-studio/">Asset Studio</a></header><main class="grid">${manifest.assets.map((asset) => `<article class="card"><h2>${escapeHTML(asset.slotId)}</h2><div class="big"><img src="./${asset.file.path}" alt="${escapeHTML(asset.description)}" width="${asset.file.width}" height="${asset.file.height}"></div><div class="native">${[20, 24, 32].map((size) => `<figure><img src="./${asset.file.path}" alt="" style="width:${size}px;height:${size}px"><figcaption>${size}px</figcaption></figure>`).join('')}<figure><span class="light"><img src="./${asset.file.path}" alt="" style="width:32px;height:32px"></span><figcaption>light32</figcaption></figure></div><p>${escapeHTML(asset.description)}</p><p>${asset.file.width}×${asset.file.height}px · ${asset.colors.length} colors · ${asset.file.bytes} bytes · ${asset.geometry.rotorAnchors.length} motor anchors</p><details><summary>Requirements and geometry</summary><p>${asset.requirements.map(escapeHTML).join('<br>')}</p><code>${escapeHTML(JSON.stringify(asset.geometry))}</code></details><details><summary>Copyable AI variation brief</summary><textarea readonly>${escapeHTML(asset.provenance.prompt)}</textarea><button type="button">Copy full prompt</button><p role="status"></p></details></article>`).join('')}</main><script>document.querySelectorAll('button').forEach(button=>button.onclick=async()=>{const text=button.previousElementSibling;try{await navigator.clipboard.writeText(text.value);button.nextElementSibling.textContent='Prompt copied.'}catch{text.focus();text.select();button.nextElementSibling.textContent='Text selected. Press Ctrl/Cmd+C.'}})</script></html>`;
+  const palette = Object.values(FIELD_KIT_COLORS).join(', ');
+  return `<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="../../../i18n/style.css"><script src="../../../vendor/i18next-26.4.2.min.js"></script><script src="../../../i18n/catalogs.mjs"></script><script src="../../../i18n/bootstrap.mjs"></script><title data-i18n="tools:fieldKitSpriteReview.title">Field Kit sprite review</title><link rel="stylesheet" href="../../../ui/field-kit-fonts.css"><style>*{box-sizing:border-box}body{margin:0;background:#070b12;color:#f3f0db;font:18px/1.5 'Field Kit UI',sans-serif}header{padding:32px;max-width:1100px}h1{font:600 52px/1 'Field Kit Display',sans-serif;margin:12px 0}p{color:#a5b2bb}a{color:#78dce8}.status{color:#f4bf62;font:14px 'Field Kit Mono',monospace}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;padding:16px 32px 48px}.card{padding:20px;background:#101923;border:1px solid #425563;min-width:0}.card h2{font-size:19px;margin:0;color:#78dce8}.big{height:208px;display:grid;place-items:center;background:repeating-conic-gradient(#101923 0% 25%,#182531 0% 50%) 50%/16px 16px;margin:16px 0}.big img{width:192px;height:192px;image-rendering:pixelated}.native{display:flex;gap:20px;align-items:flex-end;min-height:64px}.native figure{display:grid;gap:6px;margin:0;justify-items:center;font:12px 'Field Kit Mono',monospace}.native img{image-rendering:pixelated}.light{background:#f3f0db;padding:8px}.card p,.card li{font-size:14px}.card code{font:12px 'Field Kit Mono',monospace;overflow-wrap:anywhere}summary{cursor:pointer;color:#78dce8;font-size:16px}textarea{width:100%;min-height:220px;background:#070b12;color:#f3f0db;border:1px solid #647786;padding:12px;resize:vertical;font:14px/1.5 'Field Kit UI',sans-serif}button{font:16px 'Field Kit UI',sans-serif;min-height:44px;background:#182531;color:#f3f0db;border:1px solid #647786;padding:8px 16px;margin:8px 0;cursor:pointer}button:focus-visible,a:focus-visible,summary:focus-visible{outline:3px solid #78dce8;outline-offset:3px}@media(max-width:500px){header{padding:24px}.grid{padding:12px;grid-template-columns:1fr}}</style><div data-language-control></div><header><div class="status" data-i18n="tools:fieldKitSpriteReview.status">PRODUCED · NOT YET REVIEWED</div><h1 data-i18n="tools:fieldKitSpriteReview.heading">Field Kit sprite review</h1><p data-i18n="tools:fieldKitSpriteReview.intro">Thirty original code-authored pixel assets. No pixels were taken from the hardware concept study, legacy game art, or Xposed references. North is up; player images contain static motor hubs and no propellers. Compact 32 and detailed 64 are rendered directly at their native pixel grids.</p><p data-i18n="tools:fieldKitSpriteReview.guidance">Review the 20, 24, and 32 CSS pixel samples and enlarged clusters, then check the real board. This page is an asset review, not gameplay. Camera/front orientation and cosmetic geometry do not change hitboxes.</p><a href="./sprites.json" data-i18n="tools:fieldKitSpriteReview.provenance">Complete provenance and geometry</a> · <a href="./contact-sheet.png" data-i18n="tools:fieldKitSpriteReview.contactSheet">PNG contact sheet</a> · <a href="../../../../authoring/asset-studio/" data-i18n="tools:fieldKitSpriteReview.assetStudio">Asset Studio</a></header><main class="grid">${manifest.assets
+    .map((asset) => {
+      const slot = ASSET_SLOTS.find(({ id }) => id === asset.slotId);
+      const descriptionKey = reviewDescriptionKey(asset.slotId);
+      const requirementKeys = reviewRequirementKeys(slot);
+      return `<article class="card"><h2>${escapeHTML(asset.slotId)}</h2><div class="big"><img src="./${asset.file.path}" data-description-key="${descriptionKey}" alt="${escapeHTML(asset.description)}" width="${asset.file.width}" height="${asset.file.height}"></div><div class="native">${[20, 24, 32].map((size) => `<figure><img src="./${asset.file.path}" alt="" style="width:${size}px;height:${size}px"><figcaption>${size}px</figcaption></figure>`).join('')}<figure><span class="light"><img src="./${asset.file.path}" alt="" style="width:32px;height:32px"></span><figcaption data-i18n="tools:fieldKitSpriteReview.lightSample">light 32</figcaption></figure></div><p data-description-key="${descriptionKey}">${escapeHTML(asset.description)}</p><p data-metrics data-width="${asset.file.width}" data-height="${asset.file.height}" data-colors="${asset.colors.length}" data-bytes="${asset.file.bytes}" data-motors="${asset.geometry.rotorAnchors.length}">${asset.file.width}×${asset.file.height}px · ${asset.colors.length} colors · ${asset.file.bytes} bytes · ${asset.geometry.rotorAnchors.length} motor anchors</p><details><summary data-i18n="tools:fieldKitSpriteReview.requirementsAndGeometry">Requirements and geometry</summary><ul>${requirementKeys.map((key, index) => `<li data-requirement-key="${key}">${escapeHTML(asset.requirements[index])}</li>`).join('')}</ul><code>${escapeHTML(JSON.stringify(asset.geometry))}</code></details><details><summary data-i18n="tools:fieldKitSpriteReview.copyablePrompt">Copyable AI variation brief</summary><textarea readonly data-prompt-key="tools:fieldKitSpriteReview.prompt.${asset.slotId.startsWith('player.') ? 'player' : 'other'}" data-slot-id="${asset.slotId}" data-width="${asset.file.width}" data-height="${asset.file.height}" data-colors="${palette}" data-geometry="${escapeHTML(JSON.stringify(asset.geometry))}" data-requirement-keys="${requirementKeys.join(',')}">${escapeHTML(asset.provenance.prompt)}</textarea><button type="button" data-i18n="tools:fieldKitSpriteReview.copyPrompt">Copy full prompt</button><p role="status"></p></details></article>`;
+    })
+    .join(
+      '',
+    )}</main><script>(()=>{const {t,localizedText,localizedAttribute,onLocaleChange,formatNumber}=RevealLineI18n;for(const node of document.querySelectorAll('[data-description-key]')){const value=()=>t(node.dataset.descriptionKey);if(node.tagName==='IMG')localizedAttribute(node,'alt',value);else localizedText(node,value)}for(const node of document.querySelectorAll('[data-requirement-key]'))localizedText(node,()=>t(node.dataset.requirementKey));for(const node of document.querySelectorAll('[data-metrics]'))localizedText(node,()=>t('tools:fieldKitSpriteReview.metrics',{width:node.dataset.width,height:node.dataset.height,colors:formatNumber(Number(node.dataset.colors)),bytes:formatNumber(Number(node.dataset.bytes)),motors:formatNumber(Number(node.dataset.motors))}));for(const text of document.querySelectorAll('[data-prompt-key]')){const update=()=>{text.value=t(text.dataset.promptKey,{slotId:text.dataset.slotId,width:text.dataset.width,height:text.dataset.height,colors:text.dataset.colors,geometry:text.dataset.geometry,requirements:text.dataset.requirementKeys.split(',').map(key=>'- '+t(key)).join('\\n')})};update();onLocaleChange(update)}for(const button of document.querySelectorAll('button'))button.onclick=async()=>{const text=button.previousElementSibling,status=button.nextElementSibling;try{await navigator.clipboard.writeText(text.value);localizedText(status,()=>t('tools:fieldKitSpriteReview.promptCopied'))}catch{text.focus();text.select();localizedText(status,()=>t('tools:fieldKitSpriteReview.textSelected'))}}})()</script></html>`;
 }
 export async function produceFieldKitSprites({ check = false } = {}) {
   const source = await readFile(resolve(root, 'game/presentation/pixel-art.mjs'));
