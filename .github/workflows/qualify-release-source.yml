@@ -241,6 +241,16 @@ jobs:
         with:
           node-version: 20.19.x
 
+      - name: Recheck release boundary before freezing merged source
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_HEAD_SHA: ${{ github.sha }}
+        run: |
+          VERSION="$(node -p "require('./package.json').version")"
+          PR_TITLE="Release v${VERSION} — merged-source qualification"
+          export PR_TITLE
+          node publishing/pages-controller/release-train-boundary.mjs public
+
       - name: Freeze the exact qualified commit
         run: |
           test "$(git rev-parse HEAD)" = "$GITHUB_SHA"

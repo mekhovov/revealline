@@ -1,0 +1,77 @@
+{
+  "formatVersion": 1,
+  "active": true,
+  "repository": "mekhovov/revealline",
+  "public": {
+    "version": "v0.112.0",
+    "tagObject": "defad0ab0d624a6f270c340208db7d82bcf28193",
+    "sourceRevision": "eca4e32baf190b2cf9184466a45b1627746c00ea",
+    "sourceTree": "03f11f09495c37202de795d5d9af10c9f908840e"
+  },
+  "blocked": {
+    "version": "v0.113.0",
+    "releaseId": 396407841,
+    "tagObject": "b203b267cffe9467613735cf6678708d7c77e7df",
+    "sourceRevision": "0395ddbda83d9903c7127714d6d8de8747a5e2ca",
+    "sourceTree": "586d3877e850c0b7da581f56861105db8aa8d41f",
+    "assets": [
+      {
+        "name": "distribution.zip",
+        "id": 587829644,
+        "size": 595831160,
+        "sha256": "1f7bf32729fb9616de0970b5c1d8dbc53c122dea5ac0db56a19544dbacc75811"
+      },
+      {
+        "name": "distribution.zip.sha256",
+        "id": 587824530,
+        "size": 83,
+        "sha256": "985819fec24555b7259d64931b3d66e789470bb380359af62b962c5e184ced4e"
+      },
+      {
+        "name": "manifest.json",
+        "id": 587824527,
+        "size": 208078,
+        "sha256": "c28badae68bb4159692211a72574d7b30a46c7a64bcaef6b7a4deed8a1b1eac6"
+      },
+      {
+        "name": "qualification-evidence-record.json",
+        "id": 587824532,
+        "size": 1989,
+        "sha256": "a74383474fb428ec38b7bd3d8dda14120476585cb1eb6fce07d849358280a47b"
+      },
+      {
+        "name": "release.json",
+        "id": 587824529,
+        "size": 468,
+        "sha256": "6cbc0097c26c7f138426137f715414881bd131871bdcecbf926ffcd26165a21b"
+      },
+      {
+        "name": "source-qualification-evidence.zip",
+        "id": 587824531,
+        "size": 336469,
+        "sha256": "5fbd0a7f1c6f03a6a3b4809e6a6da826f918f76f91c4b44abc7cf4122f37939a"
+      },
+      {
+        "name": "source-qualification.json",
+        "id": 587824553,
+        "size": 14729,
+        "sha256": "ca9fe8624fb93324601563ad4390803048d3b4f2b9816db9e62a2dea88861ed0"
+      },
+      {
+        "name": "source.tar",
+        "id": 587828314,
+        "size": 1687971840,
+        "sha256": "05da0e106aa0c89ea958cedb4334d8bf47e60a0582583c5540bf63586e1ab11c"
+      },
+      {
+        "name": "verification.json",
+        "id": 587824551,
+        "size": 1919,
+        "sha256": "3d86f584555c5e26e0b90c5d1fcdd688054f249f08dec6777532a6713fffe1c6"
+      }
+    ]
+  },
+  "requested": {
+    "version": "v0.113.1"
+  }
+}

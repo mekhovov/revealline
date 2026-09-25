@@ -40,6 +40,8 @@ test('source qualification retains mandatory guards and restorable suites while 
     /Require the previous stable release on public Pages\n\s+if: steps\.admission\.outputs\.mode == 'release'/,
   );
   assert.match(legacy, /release-train-boundary\.mjs public/);
+  assert.match(legacy, /publishing\/pages-controller\/hotfix-bridge\.json/);
+  assert.match(legacy, /PR_HEAD_SHA: \$\{\{ github\.event\.pull_request\.head\.sha \}\}/);
   assert.match(
     legacy,
     /Require exact release version identity[\s\S]*?release-train-boundary\.mjs source \./,
@@ -81,6 +83,9 @@ test('source qualification retains mandatory guards and restorable suites while 
     'utf8',
   );
   assert.equal((qualification.match(/cancel-in-progress: false/g) || []).length, 2);
+  assert.match(qualification, /Recheck release boundary before freezing merged source/);
+  assert.match(qualification, /PR_HEAD_SHA: \$\{\{ github\.sha \}\}/);
+  assert.match(qualification, /release-train-boundary\.mjs public/);
   assert.doesNotMatch(qualification, /cancel-in-progress: (?:true|\$)/);
   assert.match(workflow, /include-hidden-files: true/);
   assert.match(workflow, /publish\.mjs verify-artifact/);

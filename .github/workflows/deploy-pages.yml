@@ -76,6 +76,7 @@ jobs:
           persist-credentials: false
           sparse-checkout: |
             publishing/pages-controller/metadata.mjs
+            publishing/pages-controller/hotfix-bridge.json
             publishing/pages-controller/publication.json
             publishing/pages-controller/release-policy.mjs
             publishing/pages-controller/release-train-boundary.mjs
@@ -128,6 +129,7 @@ jobs:
         if: steps.admission.outputs.mode == 'release'
         env:
           GH_TOKEN: ${{ github.token }}
+          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
           PR_TITLE: ${{ github.event.pull_request.title }}
         run: node .source-gate-automation/publishing/pages-controller/release-train-boundary.mjs public
 
