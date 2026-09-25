@@ -76,10 +76,13 @@ test('joining needs an observed neutral then a deliberate button; join never act
   f.first.buttons[0].pressed = true;
   const joined = f.sample();
   assert.equal(joined.assigned.index, 0);
+  assert.equal(joined.confirmHeld, true, 'join Confirm remains observable to native-echo guards');
   assertNeutral(joined);
   assertNeutral(f.sample());
   f.first.buttons[0].pressed = false;
-  assertNeutral(f.sample());
+  const released = f.sample();
+  assert.equal(released.confirmHeld, false);
+  assertNeutral(released);
   f.first.buttons[0].pressed = true;
   assert.equal(f.sample().ui.confirm, true);
   assert.equal(f.sample().ui.confirm, false);
