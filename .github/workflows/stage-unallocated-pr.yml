@@ -6,6 +6,7 @@ on:
       [opened, reopened, ready_for_review, edited, labeled, unlabeled, milestoned, demilestoned]
 
 permissions:
+  issues: write
   pull-requests: write
 
 concurrency:
@@ -63,7 +64,7 @@ jobs:
       !contains(github.event.pull_request.labels.*.name, 'release-train-approved')
     runs-on: ubuntu-latest
     steps:
-      - name: Keep bounded maintenance ready or return unallocated product work to draft
+      - name: Keep bounded maintenance ready or mark unallocated product work on hold
         uses: actions/github-script@v7
         with:
           script: |
@@ -82,11 +83,14 @@ jobs:
               core.notice('Bounded maintenance paths do not consume a product release slot.');
               return;
             }
-            await github.graphql(
-              `mutation($pullRequestId: ID!) {
-                convertPullRequestToDraft(input: {pullRequestId: $pullRequestId}) {
-                  pullRequest { number isDraft }
-                }
-              }`,
-              { pullRequestId: context.payload.pull_request.node_id },
-            );
+            // GitHub's Actions integration cannot call the GraphQL
+            // convertPullRequestToDraft mutation. The required release-ready
+            // check already prevents this PR from merging, so label the hold
+            // explicitly instead of making queue hygiene itself fail.
+            await github.rest.issues.addLabels({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.payload.pull_request.number,
+              labels: ['release-train-hold'],
+            });
+            core.notice('Marked unallocated product work as release-train-hold.');
