@@ -90,7 +90,7 @@ test('Shared windows clears all three originals across two Next boundaries and o
   ]);
   const f = await timedPage(t, { failures, memory });
   assert.match(
-    f.$('coop-boot').textContent,
+    f.$('coop-advanced-note').textContent,
     /original-art test · 3 missions · human validation pending/,
   );
   assert.equal(f.$('coop-level').value, 'window-exchange');
@@ -225,7 +225,7 @@ for (const depot of [false, true])
     });
     assert.equal(f.$('coop-level').value, 'window-exchange');
     assert.match(
-      f.$('coop-boot').textContent,
+      f.$('coop-advanced-note').textContent,
       /original-art test · 3 missions · human validation pending/,
     );
     enter(f, f.$('coop-start'));

@@ -229,10 +229,24 @@ test('lobby keyboard navigation reaches Race and accessibility controls while ex
     assert.equal(f.doc.activeElement.closest('.race-pad'), null);
     seen.add(f.doc.activeElement.id);
   }
-  for (const id of ['coop-race', 'coop-level', 'coop-start'])
+  for (const id of ['coop-race', 'coop-advanced-setup-toggle', 'coop-start'])
     assert.ok(seen.has(id), `Lobby Tab must reach ${id}.`);
+  assert.equal(
+    seen.has('coop-level'),
+    false,
+    'Optional Team tuning stays outside the quick-start focus order while collapsed.',
+  );
+  f.disclose('coop-advanced-setup');
+  for (let index = 0; index < 20; index++) {
+    f.press('Tab');
+    seen.add(f.doc.activeElement.id);
+  }
+  assert.ok(seen.has('coop-level'), 'Opening Team options exposes the arena selector.');
   let left = 0;
   f.$('coop-race').onclick = () => left++;
+  f.press('Escape');
+  assert.equal(f.$('coop-advanced-setup').open, false, 'Back closes optional Team tuning first.');
+  assert.equal(left, 0, 'Closing Team options stays in the lobby.');
   f.press('Escape');
   assert.equal(left, 1, 'Lobby Back activates the visible Race destination.');
   f.$('coop-start').click();
