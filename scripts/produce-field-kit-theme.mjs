@@ -125,10 +125,10 @@ const REVIEWED_RECIPE_INPUTS = {
     ],
   },
   audio: {
-    sha256: '6b9b58a0d51a1b15d533e76b531cb4db09662274c8b5cad3988b06f01e7327c4',
+    sha256: '27ad86d9f0e3d84a149627ca3e95f3f2350c7dd7b79146d5cbc4da9320f12e3e',
     evidence: [
-      'Scoped live archive reconciliation: docs/verification/online-soundtrack-reconciliation-2026-09-25/source-review.json sha256:55198d5d74044c8a272f50b32fb01240245dea1843869d22f7dab21d0c310e42. Fifteen ordered audio inputs sha256:6b9b58a0d51a1b15d533e76b531cb4db09662274c8b5cad3988b06f01e7327c4 preserve the bounded catalogue trust boundary, bind selection to resolver-owned policy and accept only the explicit default=false marker used by the 24 post-baseline auditions.',
-      'All8 selected roles remain the same procedural recipes with no new audio files. Focused tests cover bounded decode, exact immutable paths, rejection of default=true and forged Recording-mode policy, clicked-first streaming, style mixing, shuffle and ordered queues, repeat all/one/off, remote two-deck transitions, sequential fallback, failure and cancellation.',
+      'Scoped bundled-source continuation: docs/verification/shchedryk-opening-2026-09-24/audio-source-review-r2.json sha256:99a2bcda11f17c4ad0220daa4aa98c9b5ed8f1008773d2fce9c12b59f1ef804b. Sixteen ordered audio inputs sha256:27ad86d9f0e3d84a149627ca3e95f3f2350c7dd7b79146d5cbc4da9320f12e3e preserve the live archive player and add an inactive, exact-identity adapter for future code-owned audio.',
+      'All8 selected roles remain the same procedural recipes with no new audio files. Focused tests cover local-only zero requests, owned-local reuse, explicit acquisition, Installed-only playback, exact identity/path/bytes, duplicate rejection, effective-rights intersection, corrupt bytes, cancellation and source-dependency invalidation.',
       'No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, cold-offline, frozen-build or public game approval. Archive previews remain outside trusted Automatic and built-in playlists; historical records and original payloads are immutable.',
     ],
   },

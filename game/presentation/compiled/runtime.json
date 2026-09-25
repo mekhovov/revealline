@@ -12,16 +12,20 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "audio.cancel.field-kit", "revision": 31 },
+          "parent": { "id": "audio.cancel.field-kit", "revision": 32 },
           "prompt": "Create one original FPV Field Kit cancel audio cue for slot audio.cancel. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
           "source": "game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/soundtrack-bundled.mjs; game/ui/soundtrack-panel.mjs; game/ui/soundtrack-panel.css; game/soundtrack-albums.mjs; game/soundtrack-portable.mjs; game/content/soundtrack-catalogue.mjs; game/online-soundtrack-catalogue.mjs sha256:27ad86d9f0e3d84a149627ca3e95f3f2350c7dd7b79146d5cbc4da9320f12e3e"
         },
         "quality": {
-          "evidence": ["Connected runtime recipe; screen and state review remains required."],
-          "stage": "source"
+          "evidence": [
+            "Scoped bundled-source continuation: docs/verification/shchedryk-opening-2026-09-24/audio-source-review-r2.json sha256:99a2bcda11f17c4ad0220daa4aa98c9b5ed8f1008773d2fce9c12b59f1ef804b. Sixteen ordered audio inputs sha256:27ad86d9f0e3d84a149627ca3e95f3f2350c7dd7b79146d5cbc4da9320f12e3e preserve the live archive player and add an inactive, exact-identity adapter for future code-owned audio.",
+            "All8 selected roles remain the same procedural recipes with no new audio files. Focused tests cover local-only zero requests, owned-local reuse, explicit acquisition, Installed-only playback, exact identity/path/bytes, duplicate rejection, effective-rights intersection, corrupt bytes, cancellation and source-dependency invalidation.",
+            "No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, cold-offline, frozen-build or public game approval. Archive previews remain outside trusted Automatic and built-in playlists; historical records and original payloads are immutable."
+          ],
+          "stage": "reviewed"
         },
         "recipe": { "id": "audio.ui.v1" },
-        "revision": 32
+        "revision": 33
       },
       "audio.capture": {
         "description": "capture audio cue: existing bounded component with Field Kit tokens and state styling.",
@@ -33,16 +37,20 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "audio.capture.field-kit", "revision": 31 },
+          "parent": { "id": "audio.capture.field-kit", "revision": 32 },
           "prompt": "Create one original FPV Field Kit capture audio cue for slot audio.capture. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
           "source": "game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/soundtrack-bundled.mjs; game/ui/soundtrack-panel.mjs; game/ui/soundtrack-panel.css; game/soundtrack-albums.mjs; game/soundtrack-portable.mjs; game/content/soundtrack-catalogue.mjs; game/online-soundtrack-catalogue.mjs sha256:27ad86d9f0e3d84a149627ca3e95f3f2350c7dd7b79146d5cbc4da9320f12e3e"
         },
         "quality": {
-          "evidence": ["Connected runtime recipe; screen and state review remains required."],
-          "stage": "source"
+          "evidence": [
+            "Scoped bundled-source continuation: docs/verification/shchedryk-opening-2026-09-24/audio-source-review-r2.json sha256:99a2bcda11f17c4ad0220daa4aa98c9b5ed8f1008773d2fce9c12b59f1ef804b. Sixteen ordered audio inputs sha256:27ad86d9f0e3d84a149627ca3e95f3f2350c7dd7b79146d5cbc4da9320f12e3e preserve the live archive player and add an inactive, exact-identity adapter for future code-owned audio.",
+            "All8 selected roles remain the same procedural recipes with no new audio files. Focused tests cover local-only zero requests, owned-local reuse, explicit acquisition, Installed-only playback, exact identity/path/bytes, duplicate rejection, effective-rights intersection, corrupt bytes, cancellation and source-dependency invalidation.",
+            "No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, cold-offline, frozen-build or public game approval. Archive previews remain outside trusted Automatic and built-in playlists; historical records and original payloads are immutable."
+          ],
+          "stage": "reviewed"
         },
         "recipe": { "id": "audio.ui.v1" },
-        "revision": 32
+        "revision": 33
       },
       "audio.confirm": {
         "description": "confirm audio cue: existing bounded component with Field Kit tokens and state styling.",
@@ -54,16 +62,20 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "audio.confirm.field-kit", "revision": 31 },
+          "parent": { "id": "audio.confirm.field-kit", "revision": 32 },
           "prompt": "Create one original FPV Field Kit confirm audio cue for slot audio.confirm. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
           "source": "game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/soundtrack-bundled.mjs; game/ui/soundtrack-panel.mjs; game/ui/soundtrack-panel.css; game/soundtrack-albums.mjs; game/soundtrack-portable.mjs; game/content/soundtrack-catalogue.mjs; game/online-soundtrack-catalogue.mjs sha256:27ad86d9f0e3d84a149627ca3e95f3f2350c7dd7b79146d5cbc4da9320f12e3e"
         },
         "quality": {
-          "evidence": ["Connected runtime recipe; screen and state review remains required."],
-          "stage": "source"
+          "evidence": [
+            "Scoped bundled-source continuation: docs/verification/shchedryk-opening-2026-09-24/audio-source-review-r2.json sha256:99a2bcda11f17c4ad0220daa4aa98c9b5ed8f1008773d2fce9c12b59f1ef804b. Sixteen ordered audio inputs sha256:27ad86d9f0e3d84a149627ca3e95f3f2350c7dd7b79146d5cbc4da9320f12e3e preserve the live archive player and add an inactive, exact-identity adapter for future code-owned audio.",
+            "All8 selected roles remain the same procedural recipes with no new audio files. Focused tests cover local-only zero requests, owned-local reuse, explicit acquisition, Installed-only playback, exact identity/path/bytes, duplicate rejection, effective-rights intersection, corrupt bytes, cancellation and source-dependency invalidation.",
+            "No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, cold-offline, frozen-build or public game approval. Archive previews remain outside trusted Automatic and built-in playlists; historical records and original payloads are immutable."
+          ],
+          "stage": "reviewed"
         },
         "recipe": { "id": "audio.ui.v1" },
-        "revision": 32
+        "revision": 33
       },
       "audio.failure": {
         "description": "failure audio cue: existing bounded component with Field Kit tokens and state styling.",
@@ -75,16 +87,20 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "audio.failure.field-kit", "revision": 31 },
+          "parent": { "id": "audio.failure.field-kit", "revision": 32 },
           "prompt": "Create one original FPV Field Kit failure audio cue for slot audio.failure. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
           "source": "game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/soundtrack-bundled.mjs; game/ui/soundtrack-panel.mjs; game/ui/soundtrack-panel.css; game/soundtrack-albums.mjs; game/soundtrack-portable.mjs; game/content/soundtrack-catalogue.mjs; game/online-soundtrack-catalogue.mjs sha256:27ad86d9f0e3d84a149627ca3e95f3f2350c7dd7b79146d5cbc4da9320f12e3e"
         },
         "quality": {
-          "evidence": ["Connected runtime recipe; screen and state review remains required."],
-          "stage": "source"
+          "evidence": [
+            "Scoped bundled-source continuation: docs/verification/shchedryk-opening-2026-09-24/audio-source-review-r2.json sha256:99a2bcda11f17c4ad0220daa4aa98c9b5ed8f1008773d2fce9c12b59f1ef804b. Sixteen ordered audio inputs sha256:27ad86d9f0e3d84a149627ca3e95f3f2350c7dd7b79146d5cbc4da9320f12e3e preserve the live archive player and add an inactive, exact-identity adapter for future code-owned audio.",
+            "All8 selected roles remain the same procedural recipes with no new audio files. Focused tests cover local-only zero requests, owned-local reuse, explicit acquisition, Installed-only playback, exact identity/path/bytes, duplicate rejection, effective-rights intersection, corrupt bytes, cancellation and source-dependency invalidation.",
+            "No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, cold-offline, frozen-build or public game approval. Archive previews remain outside trusted Automatic and built-in playlists; historical records and original payloads are immutable."
+          ],
+          "stage": "reviewed"
         },
         "recipe": { "id": "audio.ui.v1" },
-        "revision": 32
+        "revision": 33
       },
       "audio.focus": {
         "description": "focus audio cue: existing bounded component with Field Kit tokens and state styling.",
@@ -96,16 +112,20 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "audio.focus.field-kit", "revision": 31 },
+          "parent": { "id": "audio.focus.field-kit", "revision": 32 },
           "prompt": "Create one original FPV Field Kit focus audio cue for slot audio.focus. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
           "source": "game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/soundtrack-bundled.mjs; game/ui/soundtrack-panel.mjs; game/ui/soundtrack-panel.css; game/soundtrack-albums.mjs; game/soundtrack-portable.mjs; game/content/soundtrack-catalogue.mjs; game/online-soundtrack-catalogue.mjs sha256:27ad86d9f0e3d84a149627ca3e95f3f2350c7dd7b79146d5cbc4da9320f12e3e"
         },
         "quality": {
-          "evidence": ["Connected runtime recipe; screen and state review remains required."],
-          "stage": "source"
+          "evidence": [
+            "Scoped bundled-source continuation: docs/verification/shchedryk-opening-2026-09-24/audio-source-review-r2.json sha256:99a2bcda11f17c4ad0220daa4aa98c9b5ed8f1008773d2fce9c12b59f1ef804b. Sixteen ordered audio inputs sha256:27ad86d9f0e3d84a149627ca3e95f3f2350c7dd7b79146d5cbc4da9320f12e3e preserve the live archive player and add an inactive, exact-identity adapter for future code-owned audio.",
+            "All8 selected roles remain the same procedural recipes with no new audio files. Focused tests cover local-only zero requests, owned-local reuse, explicit acquisition, Installed-only playback, exact identity/path/bytes, duplicate rejection, effective-rights intersection, corrupt bytes, cancellation and source-dependency invalidation.",
+            "No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, cold-offline, frozen-build or public game approval. Archive previews remain outside trusted Automatic and built-in playlists; historical records and original payloads are immutable."
+          ],
+          "stage": "reviewed"
         },
         "recipe": { "id": "audio.ui.v1" },
-        "revision": 32
+        "revision": 33
       },
       "audio.music": {
         "description": "Theme music: existing bounded component with Field Kit tokens and state styling.",
@@ -117,16 +137,20 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "audio.music.field-kit", "revision": 31 },
+          "parent": { "id": "audio.music.field-kit", "revision": 32 },
           "prompt": "Create one original FPV Field Kit theme music for slot audio.music. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
           "source": "game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/soundtrack-bundled.mjs; game/ui/soundtrack-panel.mjs; game/ui/soundtrack-panel.css; game/soundtrack-albums.mjs; game/soundtrack-portable.mjs; game/content/soundtrack-catalogue.mjs; game/online-soundtrack-catalogue.mjs sha256:27ad86d9f0e3d84a149627ca3e95f3f2350c7dd7b79146d5cbc4da9320f12e3e"
         },
         "quality": {
-          "evidence": ["Connected runtime recipe; screen and state review remains required."],
-          "stage": "source"
+          "evidence": [
+            "Scoped bundled-source continuation: docs/verification/shchedryk-opening-2026-09-24/audio-source-review-r2.json sha256:99a2bcda11f17c4ad0220daa4aa98c9b5ed8f1008773d2fce9c12b59f1ef804b. Sixteen ordered audio inputs sha256:27ad86d9f0e3d84a149627ca3e95f3f2350c7dd7b79146d5cbc4da9320f12e3e preserve the live archive player and add an inactive, exact-identity adapter for future code-owned audio.",
+            "All8 selected roles remain the same procedural recipes with no new audio files. Focused tests cover local-only zero requests, owned-local reuse, explicit acquisition, Installed-only playback, exact identity/path/bytes, duplicate rejection, effective-rights intersection, corrupt bytes, cancellation and source-dependency invalidation.",
+            "No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, cold-offline, frozen-build or public game approval. Archive previews remain outside trusted Automatic and built-in playlists; historical records and original payloads are immutable."
+          ],
+          "stage": "reviewed"
         },
         "recipe": { "id": "audio.music.v1" },
-        "revision": 32
+        "revision": 33
       },
       "audio.pickup": {
         "description": "pickup audio cue: existing bounded component with Field Kit tokens and state styling.",
@@ -138,16 +162,20 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "audio.pickup.field-kit", "revision": 31 },
+          "parent": { "id": "audio.pickup.field-kit", "revision": 32 },
           "prompt": "Create one original FPV Field Kit pickup audio cue for slot audio.pickup. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
           "source": "game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/soundtrack-bundled.mjs; game/ui/soundtrack-panel.mjs; game/ui/soundtrack-panel.css; game/soundtrack-albums.mjs; game/soundtrack-portable.mjs; game/content/soundtrack-catalogue.mjs; game/online-soundtrack-catalogue.mjs sha256:27ad86d9f0e3d84a149627ca3e95f3f2350c7dd7b79146d5cbc4da9320f12e3e"
         },
         "quality": {
-          "evidence": ["Connected runtime recipe; screen and state review remains required."],
-          "stage": "source"
+          "evidence": [
+            "Scoped bundled-source continuation: docs/verification/shchedryk-opening-2026-09-24/audio-source-review-r2.json sha256:99a2bcda11f17c4ad0220daa4aa98c9b5ed8f1008773d2fce9c12b59f1ef804b. Sixteen ordered audio inputs sha256:27ad86d9f0e3d84a149627ca3e95f3f2350c7dd7b79146d5cbc4da9320f12e3e preserve the live archive player and add an inactive, exact-identity adapter for future code-owned audio.",
+            "All8 selected roles remain the same procedural recipes with no new audio files. Focused tests cover local-only zero requests, owned-local reuse, explicit acquisition, Installed-only playback, exact identity/path/bytes, duplicate rejection, effective-rights intersection, corrupt bytes, cancellation and source-dependency invalidation.",
+            "No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, cold-offline, frozen-build or public game approval. Archive previews remain outside trusted Automatic and built-in playlists; historical records and original payloads are immutable."
+          ],
+          "stage": "reviewed"
         },
         "recipe": { "id": "audio.ui.v1" },
-        "revision": 32
+        "revision": 33
       },
       "audio.victory": {
         "description": "victory audio cue: existing bounded component with Field Kit tokens and state styling.",
@@ -159,16 +187,20 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "audio.victory.field-kit", "revision": 31 },
+          "parent": { "id": "audio.victory.field-kit", "revision": 32 },
           "prompt": "Create one original FPV Field Kit victory audio cue for slot audio.victory. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
           "source": "game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/soundtrack-bundled.mjs; game/ui/soundtrack-panel.mjs; game/ui/soundtrack-panel.css; game/soundtrack-albums.mjs; game/soundtrack-portable.mjs; game/content/soundtrack-catalogue.mjs; game/online-soundtrack-catalogue.mjs sha256:27ad86d9f0e3d84a149627ca3e95f3f2350c7dd7b79146d5cbc4da9320f12e3e"
         },
         "quality": {
-          "evidence": ["Connected runtime recipe; screen and state review remains required."],
-          "stage": "source"
+          "evidence": [
+            "Scoped bundled-source continuation: docs/verification/shchedryk-opening-2026-09-24/audio-source-review-r2.json sha256:99a2bcda11f17c4ad0220daa4aa98c9b5ed8f1008773d2fce9c12b59f1ef804b. Sixteen ordered audio inputs sha256:27ad86d9f0e3d84a149627ca3e95f3f2350c7dd7b79146d5cbc4da9320f12e3e preserve the live archive player and add an inactive, exact-identity adapter for future code-owned audio.",
+            "All8 selected roles remain the same procedural recipes with no new audio files. Focused tests cover local-only zero requests, owned-local reuse, explicit acquisition, Installed-only playback, exact identity/path/bytes, duplicate rejection, effective-rights intersection, corrupt bytes, cancellation and source-dependency invalidation.",
+            "No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, cold-offline, frozen-build or public game approval. Archive previews remain outside trusted Automatic and built-in playlists; historical records and original payloads are immutable."
+          ],
+          "stage": "reviewed"
         },
         "recipe": { "id": "audio.ui.v1" },
-        "revision": 32
+        "revision": 33
       },
       "control.ability": {
         "description": "Brackets around an active diamond: class ability binding.",
@@ -10158,14 +10190,14 @@
       }
     },
     "bindings": {
-      "audio.cancel": { "id": "audio.cancel.field-kit", "revision": 32 },
-      "audio.capture": { "id": "audio.capture.field-kit", "revision": 32 },
-      "audio.confirm": { "id": "audio.confirm.field-kit", "revision": 32 },
-      "audio.failure": { "id": "audio.failure.field-kit", "revision": 32 },
-      "audio.focus": { "id": "audio.focus.field-kit", "revision": 32 },
-      "audio.music": { "id": "audio.music.field-kit", "revision": 32 },
-      "audio.pickup": { "id": "audio.pickup.field-kit", "revision": 32 },
-      "audio.victory": { "id": "audio.victory.field-kit", "revision": 32 },
+      "audio.cancel": { "id": "audio.cancel.field-kit", "revision": 33 },
+      "audio.capture": { "id": "audio.capture.field-kit", "revision": 33 },
+      "audio.confirm": { "id": "audio.confirm.field-kit", "revision": 33 },
+      "audio.failure": { "id": "audio.failure.field-kit", "revision": 33 },
+      "audio.focus": { "id": "audio.focus.field-kit", "revision": 33 },
+      "audio.music": { "id": "audio.music.field-kit", "revision": 33 },
+      "audio.pickup": { "id": "audio.pickup.field-kit", "revision": 33 },
+      "audio.victory": { "id": "audio.victory.field-kit", "revision": 33 },
       "control.ability": { "id": "control.ability.field-kit", "revision": 2 },
       "control.boost": { "id": "control.boost.field-kit", "revision": 2 },
       "control.cancel": { "id": "control.cancel.field-kit", "revision": 2 },
@@ -11044,7 +11076,7 @@
       "ui.tooltip": { "id": "ui.tooltip.field-kit", "revision": 19 }
     },
     "collection": null,
-    "theme": { "id": "fpv", "name": "FPV Field Kit", "revision": 78 },
+    "theme": { "id": "fpv", "name": "FPV Field Kit", "revision": 79 },
     "tokens": {
       "amber": "#f4bf62",
       "borderWidth": 2,
@@ -11072,7 +11104,7 @@
       "textSize": 18
     }
   },
-  "source": { "id": "field-kit", "revision": 78 },
+  "source": { "id": "field-kit", "revision": 79 },
   "urls": {
     "009d14748f943002091255caebd32e4df1c886569575f512ab0d55d7a3ff637a": "./assets/009d14748f943002091255caebd32e4df1c886569575f512ab0d55d7a3ff637a.png",
     "00b0f847cd1f80495615e3ada13899df67c6df05bf1f6d846ffc46cb3cc3fc5f": "./assets/00b0f847cd1f80495615e3ada13899df67c6df05bf1f6d846ffc46cb3cc3fc5f.png",
