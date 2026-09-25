@@ -21,6 +21,7 @@ const originalThemes = JSON.parse(
 const revised = ['stepping-stones', 'return-pocket', 'neutral-ground'];
 const revisedHorizon = ['island-outpost', 'long-way-home', 'horizon-remix'];
 const revisedBorder = ['second-landing', 'long-rail', 'new-frontier'];
+const revisedBorderSignal = ['border-remix', 'dry-spine', 'wide-approach'];
 const sourceId = (row) => row.runtimeId.split('/').at(-1);
 
 test('prior-edition qualification is bounded to the three preserved mission owners', async () => {
@@ -461,6 +462,123 @@ test('current and prior cards stay distinct while manual launch retains the full
     assert.equal(receiver.levelId, id);
     const successor = librarySuccessor(library, prior, 'versus');
     assert.equal(successor, null, 'A manually selected v9 card has no cross-edition library Next.');
+  }
+});
+
+test('v13 selector exposes three v12 Border/Signal cards and retains earlier history', async (t) => {
+  const launches = [];
+  const owner = await createSpatialNextEditionSources({
+    activeRouteId: 'whole-spatial-v13',
+    originalThemes,
+    launch: (context) => {
+      launches.push(context);
+      return true;
+    },
+  });
+  t.after(owner.dispose);
+  const library = createMissionLibrary(owner.sources);
+  assert.equal(library.missions.length, 12);
+  assert.equal(library.forMode('solo').length, 12);
+  assert.equal(library.forMode('versus').length, 12);
+  assert.equal(library.forMode('team').length, 0);
+  assert.deepEqual(
+    library.missions
+      .filter((row) => row.editionId === 'whole-spatial-v12')
+      .map(sourceId)
+      .toSorted(),
+    revisedBorderSignal.toSorted(),
+  );
+  assert.deepEqual(
+    library.missions
+      .filter((row) => row.editionId === 'whole-spatial-v11')
+      .map(sourceId)
+      .toSorted(),
+    revisedBorder.toSorted(),
+  );
+  assert.deepEqual(
+    library.missions
+      .filter((row) => row.editionId === 'whole-spatial-v10')
+      .map(sourceId)
+      .toSorted(),
+    revisedHorizon.toSorted(),
+  );
+  assert.deepEqual(
+    library.missions
+      .filter((row) => row.editionId === 'whole-spatial-v9')
+      .map(sourceId)
+      .toSorted(),
+    revised.toSorted(),
+  );
+  for (const row of library.missions) {
+    assert.equal(row.automaticContinuation, false);
+    assert.match(row.edition, /^Previous Journey · v(?:9|10|11|12)$/);
+    assert.equal(await library.launch(row, { mode: 'solo' }), true);
+    assert.equal(launches.at(-1).libraryMissionId, row.id);
+    assert.equal(launches.at(-1).mode, 'solo');
+  }
+});
+
+test('v13 active cards and exact v12 cards stay distinct and stop prior-edition Next', async (t) => {
+  const activeRoute = await loadAuthoredJourneyRoute('whole-spatial-v13');
+  const priorRoute = await loadAuthoredJourneyRoute('whole-spatial-v12');
+  const themes = journeyActorThemeCandidates(originalThemes, { includeOriginals: true });
+  const activeHost = createCandidateVersusHost(activeRoute.source, {
+    themes,
+    corePackIds: activeRoute.corePackIds,
+    optionalCampaignIds: activeRoute.optionalCampaignIds,
+  });
+  const priorHost = createCandidateVersusHost(priorRoute.source, {
+    themes,
+    corePackIds: priorRoute.corePackIds,
+    optionalCampaignIds: priorRoute.optionalCampaignIds,
+  });
+  let selected;
+  const owner = await createSpatialNextEditionSources({
+    activeRouteId: activeRoute.id,
+    originalThemes,
+    launch: (context) => {
+      selected = context;
+      return true;
+    },
+  });
+  t.after(owner.dispose);
+  const library = createMissionLibrary([
+    journeyLibrarySource({
+      editionId: activeRoute.id,
+      edition: 'New Journey',
+      catalog: activeHost.catalog,
+      tags: (mission) => authoredJourneyMissionTags(mission, activeHost.manifest(mission)),
+      launch: () => true,
+    }),
+    ...owner.sources,
+  ]);
+  assert.equal(library.missions.length, activeHost.catalog.missions.length + 12);
+  const activeRows = library
+    .forMode('versus')
+    .filter((row) => row.editionId === 'whole-spatial-v13');
+  const boundary = activeRows.findIndex(
+    (row, index) => activeRows[index + 1] && row.campaignKey !== activeRows[index + 1].campaignKey,
+  );
+  assert(boundary >= 0);
+  assert.equal(librarySuccessor(library, activeRows[boundary], 'versus'), activeRows[boundary + 1]);
+  assert.equal(librarySuccessor(library, activeRows.at(-1), 'versus'), null);
+  for (const id of revisedBorderSignal) {
+    const runtimeId = activeHost.catalog.missions.find((mission) => mission.levelId === id).id;
+    const editions = library.missions.filter((row) => row.runtimeId === runtimeId);
+    assert.equal(editions.length, 2);
+    assert.deepEqual(
+      new Set(editions.map((row) => row.editionId)),
+      new Set(['whole-spatial-v12', 'whole-spatial-v13']),
+    );
+    const prior = editions.find((row) => row.editionId === 'whole-spatial-v12');
+    const active = editions.find((row) => row.editionId === 'whole-spatial-v13');
+    assert(active.tags.includes('Ukrainian'));
+    assert(!prior.tags.includes('Ukrainian'));
+    assert.equal(await library.launch(prior, { mode: 'versus' }), true);
+    assert.equal(selected.libraryMissionId, prior.id);
+    assert.equal(selected.mode, 'versus');
+    assert.equal(priorHost.catalog.find(prior.runtimeId)?.levelId, id);
+    assert.equal(librarySuccessor(library, prior, 'versus'), null);
   }
 });
 
