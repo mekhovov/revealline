@@ -9,7 +9,10 @@ import { createVictoryStoryPresentation } from './victory-story.mjs';
  * verifies its exact retained descriptor and original; today's binding is irrelevant. */
 export async function acquirePinnedStory({ pin: source, media }, { signal, ...inspection } = {}) {
   const pin = snapshotStoryPin(source);
-  required(pin && media?.storyStore && media.story, t("interface:theCompatibleStoryStoreIsUnavailable"));
+  required(
+    pin && media?.storyStore && media.story,
+    t('interface:theCompatibleStoryStoreIsUnavailable'),
+  );
   const selected = await resolveAuthoredStoryPin(
     pin,
     {
@@ -19,7 +22,7 @@ export async function acquirePinnedStory({ pin: source, media }, { signal, ...in
     },
     { signal },
   );
-  required(selected.kind === 'available', t("interface:restoreThisStorySExactRlstoryOriginal"));
+  required(selected.kind === 'available', t('interface:restoreThisStorySExactRlstoryOriginal'));
   const prepared = await media.storyStore.acquire(
     { id: pin.id, revision: pin.revision, picturePin: pin.picturePin },
     { signal, ...inspection },
@@ -27,9 +30,9 @@ export async function acquirePinnedStory({ pin: source, media }, { signal, ...in
   const checked = requirePreparedVictoryStory(prepared, pin.picturePin);
   required(
     canonicalJSON(checked.descriptor) === canonicalJSON(selected.descriptor),
-    t("interface:theAcquiredMovieDoesNotMatchTheFrozenStoryRevision"),
+    t('interface:theAcquiredMovieDoesNotMatchTheFrozenStoryRevision'),
   );
-  if (signal?.aborted) throw new DOMException(t("interface:storyOpeningCancelled"), 'AbortError');
+  if (signal?.aborted) throw new DOMException(t('interface:storyOpeningCancelled'), 'AbortError');
   return prepared;
 }
 
@@ -58,8 +61,8 @@ export function createStoryDialog({
   dialog.setAttribute('aria-labelledby', title.id);
   close.type = 'button';
   close.className = 'dialog-close';
-  localizedText(close, () =>'×');
-  close.setAttribute('aria-label', t("interface:closeStory"));
+  localizedText(close, () => '×');
+  close.setAttribute('aria-label', t('interface:closeStory'));
   const feedback = createOperationStatus(notice);
   stage.className = 'story-stage';
   dialog.append(close, title, notice, stage);
@@ -71,7 +74,9 @@ export function createStoryDialog({
     previousSettings = null,
     externalCleanup = null;
   const failure = (error) =>
-    t("gameplay:storyUnavailableYourExactPictureStaysVisibleRestoreItsOriginal", { value1: error instanceof Error ? error.message : String(error) });
+    t('gameplay:storyUnavailableYourExactPictureStaysVisibleRestoreItsOriginal', {
+      value1: error instanceof Error ? error.message : String(error),
+    });
   function cancel() {
     feedback.clear();
     generation++;
@@ -97,17 +102,17 @@ export function createStoryDialog({
     }
   }
   async function open({ pin: source, title: label, drawPoster }, { signal } = {}) {
-    required(!disposed, t("interface:theStoryViewIsClosed"));
+    required(!disposed, t('interface:theStoryViewIsClosed'));
     const pin = snapshotStoryPin(source);
     required(
       pin && typeof drawPoster === 'function',
-      t("interface:anExactStoryAndDecodedPosterAreRequired"),
+      t('interface:anExactStoryAndDecodedPosterAreRequired'),
     );
     if (signal?.aborted) return false;
     // Draw offscreen first: a failed caller draw cannot replace an open prior picture.
     const canvas = doc.createElement('canvas');
     canvas.setAttribute('role', 'img');
-    localizedAttribute(canvas, "aria-label", () => t("interface:exactUnlockedPicture"));
+    localizedAttribute(canvas, 'aria-label', () => t('interface:exactUnlockedPicture'));
     drawPoster(canvas);
     cancel();
     const ticket = generation,
@@ -118,10 +123,10 @@ export function createStoryDialog({
     };
     signal?.addEventListener('abort', abort, { once: true });
     externalCleanup = () => signal?.removeEventListener('abort', abort);
-    localizedText(title, () =>label);
+    localizedText(title, () => label);
     stage.replaceChildren(canvas);
     const lease = feedback.begin({
-      message: t("interface:yourPictureIsReadyReadingOptionalStoryMetadata"),
+      message: t('interface:yourPictureIsReadyReadingOptionalStoryMetadata'),
       stage: 'reading',
       isCurrent: () => !disposed && generation === ticket && controller === own,
     });
@@ -143,7 +148,7 @@ export function createStoryDialog({
       const media = await readMedia({ signal: own.signal });
       if (!current()) return false;
       lease.update({
-        message: t("interface:checkingAndOpeningTheExactStoryOriginal"),
+        message: t('interface:checkingAndOpeningTheExactStoryOriginal'),
         stage: 'verifying',
       });
       const prepared = await acquire({ pin, media }, { signal: own.signal });
