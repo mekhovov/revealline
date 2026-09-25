@@ -226,3 +226,52 @@ test('locale changes do not call retired detached control producers', () => {
   retired = true;
   assert.doesNotThrow(() => api.setLocale('uk'));
 });
+
+test('an accepted host caption retires the original rich slots across locale changes and remounts', () => {
+  const { api } = runtime();
+  const doc = { createTextNode: (textContent) => ({ nodeType: 3, textContent, parentNode: null }) };
+  const link = {
+    nodeType: 1,
+    textContent: 'Original mission details',
+    parentNode: null,
+    getAttribute: (name) => (name === 'data-i18n-slot' ? 'slot0' : null),
+  };
+  const node = {
+    childNodes: [],
+    ownerDocument: doc,
+    isConnected: true,
+    getAttribute: (name) => (name === 'data-i18n-rich' ? 'interface:legacyMissions' : null),
+    get children() {
+      return this.childNodes.filter((child) => child.nodeType === 1);
+    },
+    get textContent() {
+      return this.childNodes.map((child) => child.textContent).join('');
+    },
+    set textContent(value) {
+      this.replaceChildren(...(value ? [doc.createTextNode(value)] : []));
+    },
+    append(child) {
+      child.parentNode = this;
+      this.childNodes.push(child);
+    },
+    replaceChildren(...children) {
+      for (const child of this.childNodes) child.parentNode = null;
+      this.childNodes = [];
+      children.forEach((child) => this.append(child));
+    },
+  };
+  node.append(link);
+  const root = { querySelectorAll: (selector) => (selector === '[data-i18n-rich]' ? [node] : []) };
+  api.translateDOM(root);
+  assert.match(node.textContent, /Legacy missions Original mission details/);
+  api.setLocale('uk');
+  assert.equal(link.parentNode, node);
+  api.localizedText(node, () => api.t('interface:allMissions'));
+  assert.equal(link.parentNode, null);
+  api.setLocale('en');
+  api.translateDOM(root);
+  assert.equal(node.textContent, 'All missions');
+  api.setLocale('uk');
+  assert.equal(node.textContent, 'Усі місії');
+  assert.doesNotMatch(node.textContent, /\[\[/);
+});
