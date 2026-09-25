@@ -58,6 +58,11 @@ test('compact Team menus translate in place while the shared pause controls keep
   const f = await teamPage(context, {
     nativeFocus: true,
     beforeImport: ({ doc }) => captions(doc),
+    presentation: {
+      load: ({ snapshot }) => {
+        snapshot.resolved.theme.revision = 79;
+      },
+    },
   });
   f.$('coop-optional-setup').open = true;
   f.$('coop-optional-setup-toggle').focus();
