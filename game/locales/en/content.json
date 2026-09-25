@@ -1043,5 +1043,8 @@
   "journey.twoLivesEnemies10FasterPlayerHandlingIsUnchanged": "Two lives, enemies 10% faster. Player handling is unchanged.",
   "journey.fiveLivesBaseEnemySpeed25LongerAttackRestsNoFailingCountdown": "Five lives, base enemy speed, 25% longer attack rests, no failing countdown.",
   "journey.threeLivesEnemies40FasterThanBase15ShorterAttackRests": "Three lives, enemies 40% faster than base, 15% shorter attack rests.",
-  "journey.twoLivesEnemies75FasterThanBase35ShorterAttackRests": "Two lives, enemies 75% faster than base, 35% shorter attack rests."
+  "journey.twoLivesEnemies75FasterThanBase35ShorterAttackRests": "Two lives, enemies 75% faster than base, 35% shorter attack rests.",
+  "team.starter.name": "Relay Rescue",
+  "team.firstConnection.name": "First Connection",
+  "team.relayYard.name": "Relay Yard"
 }
