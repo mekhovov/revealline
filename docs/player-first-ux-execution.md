@@ -6,15 +6,14 @@ requirements. Each independent feature is released before the next is accepted.
 
 ## Current delivery status
 
-Checkpoint on 24 September 2026: **the public root reports v0.104.0 from source
-`1deaae1a9a30c6146ecbb36c83cf43c9346a57c0`. It inherits v0.103.0's bounded
-player-craft cleanup and M0 preparation/input correction, and adds the qualified
-Classic current-rules launch repair. Archive68 preserves v0.101.0 with a complete
-1,133-file / 596,150,433-byte public audit. M1 v0.105.0 is merged as
-`5c2abaa3c4e516f6625fe707eb3e21a9925566ef` and is undergoing exact-source
-freeze/publication. M2 v0.107.0 is the next isolated player-menu candidate;
-M3–M4 and
-UX1–UX6 remain unfinished.** The former
+Checkpoint on 25 September 2026: **the public selector reports v0.109.0 from
+source `b13089b702391c275f2505d1a76c87eebb9dcce0`. The v0.110.0 actor-size
+candidate was frozen and inspected, but its final publication preflight found
+that compiled FPV presentation revision 74 was newer than Team's exact picture
+authority at revision 73. The immutable v0.110.0 tag remains preserved and is not
+promoted. v0.110.1 advances the two approved Team picture bindings and historical
+import policy to exact revision 74, retains revisions 58–73, and raises the finite
+policy bound by one. M3–M4 and UX1–UX6 remain unfinished.** The former
 PR320/v0.98 references below are retained as dated evidence. PR320 became conflicting
 after publication; its UX0-owned changes were reconciled onto the current main
 baseline without changing the immutable v0.98.0 tag.

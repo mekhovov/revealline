@@ -273,6 +273,7 @@ export function createControllerRouter({
           generation: assigned.generation,
         }
       : null,
+    confirmHeld: menuConfirmActive,
     disconnected,
   });
 
