@@ -459,7 +459,10 @@ test('Back cancels a pending setup replacement and preserves the accepted attemp
   gate.resolve();
   await loading;
   assert.equal(p.$('race-start').disabled, false);
-  assert.match(p.$('race-message').textContent, /cancelled/i);
+  assert.equal(
+    p.$('race-message').textContent,
+    'Rematch picture loading cancelled. Results are kept. Choose Rematch when you are ready.',
+  );
   assert.deepEqual(p.checkpoint(), checkpoint);
   assert.equal(p.drawOptions[0].backdrop, accepted);
   assert.equal(p.drawOptions[1].backdrop, accepted);

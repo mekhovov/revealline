@@ -3966,6 +3966,7 @@
   "couch.teamEdition_spatial": "changing-return pressure edition · enemy speed Gentle ×1 / Standard ×1.4 / Expert ×1.75 · shared reserves 4 / 2 / 1",
   "couch.teamEdition_pressure": "pressure edition · enemy speed Gentle ×1 / Standard ×1.4 / Expert ×1.75 · shared reserves 4 / 2 / 1",
   "couch.preparingContinuation": "Preparing {{action}}: {{mission}}. Your current race is kept until its picture and actors are ready…",
+  "couch.continuationPictureLoadingCancelled": "{{action}} picture loading cancelled. Results are kept. Choose {{action}} when you are ready.",
   "couch.preparingNextMission": "Preparing next mission: {{mission}}. Results are kept…",
   "couch.preparingSelectedMission": "Preparing {{mission}}. Your current race and picture are kept…",
   "selectedMission": "selected mission",

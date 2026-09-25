@@ -132,6 +132,25 @@ test('Ukrainian plural rules include zero, teens, compound counts and decimals',
     assert.equal(api.t('common:counts.levels', { count }), expected);
 });
 
+test('Couch continuation cancellation interpolates its localized action', () => {
+  for (const [saved, action, expected] of [
+    [
+      'en',
+      'Next round',
+      'Next round picture loading cancelled. Results are kept. Choose Next round when you are ready.',
+    ],
+    [
+      'uk',
+      'Наступний раунд',
+      'Завантаження зображення для дії «Наступний раунд» скасовано. Результати збережено. Оберіть «Наступний раунд», коли будете готові.',
+    ],
+  ])
+    assert.equal(
+      runtime({ saved }).api.t('interface:couch.continuationPictureLoadingCancelled', { action }),
+      expected,
+    );
+});
+
 test('text and attribute bindings update in place without changing editor values', () => {
   const { api } = runtime();
   const node = {
