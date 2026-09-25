@@ -61,9 +61,10 @@ Browse missions visible while actor, difficulty and advanced match setup live
 under Optional setup. Team keeps Arena,
 Start and Browse Team arenas visible while teamwork, difficulty, actors and created
 pack import live under Optional setup. Initial Team picture preparation exposes an
-explicit secondary Cancel without taking first focus. The current FPV revision 73
-picture authority and its retained revisions 58–72 are inherited unchanged from
-the v0.110 base; this quick-start successor does not reinterpret those bindings.
+explicit secondary Cancel without taking first focus. The quick-start CSS changes
+the deterministic production input, so the reconciled ledger advances from revision
+74 to revision 75. The exact two-picture Team authority is rebound to revision 75
+while retaining revisions 58–74 and every accepted original byte unchanged.
 Publication, responsive browser review and physical controller/touch evidence remain
 release gates rather than claims of this source checkpoint.
 
