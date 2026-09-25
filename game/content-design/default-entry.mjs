@@ -1,6 +1,6 @@
 export const DEFAULT_JOURNEY_ROUTES = Object.freeze({
-  solo: 'whole-spatial-v13',
-  versus: 'whole-spatial-v13',
+  solo: 'whole-spatial-v14',
+  versus: 'whole-spatial-v14',
   team: 'team-trail-impact-originals-1',
 });
 
