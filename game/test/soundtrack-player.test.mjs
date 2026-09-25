@@ -1055,9 +1055,11 @@ test('scene selection switches menu/gameplay music without changing paused liste
     id: `qa.${role}`,
     title: role,
   }));
+  const base = upgradeSoundtrackLibrary(emptySoundtrackLibrary());
   const library = {
-    ...upgradeSoundtrackLibrary(emptySoundtrackLibrary()),
+    ...base,
     tracks: entries,
+    listening: { ...base.listening, mode: 'synth90s' },
     tags: Object.fromEntries(
       entries.map((track) => [
         track.id,
