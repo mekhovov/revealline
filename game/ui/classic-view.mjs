@@ -716,7 +716,7 @@ export function drawClassicStatus(
     ctx.scale(0.65, 0.65);
     icon(ctx, effect.kind);
     ctx.restore();
-    ctx.font = `500 14px ${fonts?.ui || t("interface:fieldKitUiFieldKitMonoSansSerif")}`;
+    ctx.font = `500 14px ${fonts?.ui || '"Field Kit UI", "Field Kit Mono", sans-serif' }`;
     ctx.textBaseline = 'middle';
     ctx.textAlign = 'left';
     const label = compact
