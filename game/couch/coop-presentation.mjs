@@ -39,7 +39,7 @@ function pictureIdentity(picture) {
 }
 function historicalPolicy(source) {
   if (source === null || source === undefined) return null;
-  const policy = boundedJSON(source, { maxBytes: 4096, maxArray: 20 });
+  const policy = boundedJSON(source, { maxBytes: 4096, maxArray: 22 });
   fields(
     policy,
     'version themeId themeRevision collection picture',
@@ -62,9 +62,9 @@ function historicalPolicy(source) {
 function historicalPolicies(source) {
   if (source === null || source === undefined) return [];
   const entries = Array.isArray(source)
-    ? // Current77 plus the nineteen explicitly preserved58–76 policies.
+    ? // Current79 plus the twenty-one explicitly preserved58–78 policies.
       // Another supported edition must deliberately revisit this finite bound.
-      boundedJSON(source, { maxBytes: 20 * 1024, maxArray: 20 })
+      boundedJSON(source, { maxBytes: 22 * 1024, maxArray: 22 })
     : [source];
   const seen = new Set();
   return freezePresentation(
