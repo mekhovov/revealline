@@ -199,12 +199,23 @@ export async function couchPage(
       }
     }
   }
-  function frame(ms = 1000 / 120) {
+  function runFrame(ms) {
     now += ms;
     const first = rafs.entries().next().value;
     if (!first) return;
     rafs.delete(first[0]);
     first[1](now);
+  }
+  function frame(ms = 1000 / 120, { preserveStartCue = false } = {}) {
+    const cue = $('race-start-cue');
+    if (!preserveStartCue && cue && !cue.hidden) {
+      // Most host tests exercise simulation rules rather than presentation time.
+      // Settle the real cue through RAF before applying their requested frame;
+      // dedicated cue tests opt into each exact boundary above.
+      runFrame(0);
+      if (!cue.hidden) runFrame(3000);
+    }
+    runFrame(ms);
   }
   function button(index, button, pressed) {
     pads[index].buttons[button] = { pressed, value: pressed ? 1 : 0 };
