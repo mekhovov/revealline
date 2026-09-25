@@ -1,4 +1,5 @@
 import globals from 'globals';
+import { noShadowedTranslator } from './scripts/eslint-localization.mjs';
 
 export default [
   {
@@ -23,7 +24,9 @@ export default [
       'eslint.config.mjs',
     ],
     languageOptions: { ecmaVersion: 'latest', sourceType: 'module' },
+    plugins: { localization: { rules: { 'no-shadowed-translator': noShadowedTranslator } } },
     rules: {
+      'localization/no-shadowed-translator': 'error',
       'no-undef': ['error', { typeof: true }],
       'no-unreachable': 'error',
     },
