@@ -30,6 +30,7 @@
     'team-spatial-originals-1',
     'team-trail-impact-originals-1',
     'team-specialist-originals-1',
+    'team-complete-specialist-originals-1',
     'team-timed-originals',
     'team-window-spatial-1',
     'team-depot-spatial-1',
