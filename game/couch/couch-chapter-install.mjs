@@ -28,7 +28,7 @@ function indexedSourceRow(row) {
     rulesEdition === undefined ||
       rulesEdition === CLASSIC_RULES_ORIGINAL ||
       rulesEdition === CLASSIC_RULES_CURRENT,
-    'Choose a supported Classic rules edition.',
+    t('errors:chapters.unsupportedClassicRules'),
   );
   return source;
 }
