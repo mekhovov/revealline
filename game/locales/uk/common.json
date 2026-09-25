@@ -187,5 +187,21 @@
   "storage.writerInvalidKey": "Для запису профілю потрібен дійсний ключ. Прогрес зберігається лише в цьому сеансі.",
   "storage.writerReleased": "Право на збереження звільнено. Перезавантажте цю вкладку, щоб знову зберігати прогрес; експорт залишається доступним.",
   "rewards.firstClear": "Перша перемога",
-  "rewards.chapterExplorer": "Дослідник розділу"
+  "rewards.chapterExplorer": "Дослідник розділу",
+  "controls.unknownButton": "Невідома кнопка",
+  "controls.buttonsOnly": "Лише кнопки",
+  "controls.leftStick": "Лівий стік",
+  "controls.rightStick": "Правий стік",
+  "controls.axes": "Осі {{x}}/{{y}}",
+  "controls.stickBothInverted": "{{stick}} (горизонтальну й вертикальну осі інвертовано)",
+  "controls.stickHorizontalInverted": "{{stick}} (горизонтальну вісь інвертовано)",
+  "controls.stickVerticalInverted": "{{stick}} (вертикальну вісь інвертовано)",
+  "controls.defaultMenuShortcuts": "Бампери / тригери: попереднє / наступне · ліва кнопка: підтвердити · верхня кнопка: назад.",
+  "controls.promptAbility": "{{button}}: здібність.",
+  "controls.promptPause": "{{button}}: пауза.",
+  "controls.promptSupply": "{{button}}: припаси.",
+  "controls.promptFieldGuide": "{{button}}: польовий довідник.",
+  "controls.promptHangar": "{{button}}: ангар.",
+  "controls.promptMissions": "{{button}}: місії.",
+  "controls.promptBoost": "{{button}}: прискорення."
 }
