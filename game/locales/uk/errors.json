@@ -57,5 +57,12 @@
   "studio.bonus.existing": "Обери наявний бонус.",
   "studio.bonus.identity": "Ідентифікатор бонусу має збігатися з ідентифікатором у команді.",
   "studio.bonus.contextChanged": "Контекст чернетки змінився. Онови вибір бонусу.",
-  "studio.bonus.coordinates": "Введи обидві координати центра клітини."
+  "studio.bonus.coordinates": "Введи обидві координати центра клітини.",
+  "studio.actor.operation": "Обери дію з персонажем.",
+  "studio.actor.stableId": "Укажи сталий ID персонажа.",
+  "studio.actor.duplicateId": "Такий ID персонажа вже існує.",
+  "studio.actor.existing": "Обери наявного персонажа.",
+  "studio.actor.identity": "Ідентифікатор персонажа має збігатися з ідентифікатором у команді.",
+  "studio.actor.contextChanged": "Контекст чернетки змінився. Онови вибір персонажа перед застосуванням.",
+  "studio.actor.coordinates": "введи обидві координати."
 }
