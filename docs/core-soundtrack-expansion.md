@@ -77,9 +77,9 @@ explicit fast-release policy remain exclusions, never passes.
   scoped desktop acceptance. The initial selector's failed reread is retained as
   failure evidence; the successful successor closes that publication blocker.
 - Historical inputs #321, #331, #333 and #439 are closed and superseded by merged
-  current-main replacements #518, #516 and #519. Their earlier failures and focused
-  checks remain historical evidence. The replacements are scheduled source merges,
-  not public feature acceptance; skipped jobs are not passes.
+  replacements #518, #516 and #519, which are public in v0.130.0. Their earlier
+  failures and focused checks remain historical evidence; skipped jobs are not
+  passes. Physical-device and cold-offline acceptance remains incomplete.
 - Musical, transition, warning-audibility, cultural and physical-device evidence
   cannot be replaced by transport tests. UA-FPV public redistribution still needs
   recording-specific permission; the four private packs remain available.
@@ -88,10 +88,10 @@ explicit fast-release policy remain exclusions, never passes.
   admission review gates have no committed ETA.
   Do not publicly redistribute Pixabay or UA-FPV recordings without exact-recording
   permission. Shchedryk remains excluded from Recording mode because of Content ID.
-- Current free space is **10,695,908 KiB (about 10.20 GiB)**, above the required
-  1 GiB floor. The data volume is still 98% used, so preserve that floor and keep
-  large audio/build operations bounded; disk is a capacity risk, not a current
-  blocker. Historical below-floor failures remain evidence and are not rewritten.
+- Current free space fell to **about 541 MiB** after parallel release work, below
+  the required 1 GiB floor. Local audio checkout, rendering and heavy builds are
+  blocked. Continue only hosted or bounded metadata work until owner-coordinated
+  cleanup restores the reserve; never delete user files, frozen releases or evidence.
 
 ### Deferred
 
@@ -299,63 +299,22 @@ originals approved. No deadline is assigned to unresolved rights or paused music
   `3883259987913cb646eb44cf2580083dad673a70` and
   [v0.111.0](https://github.com/mekhovov/revealline/releases/tag/v0.111.0)
   published as the public soundtrack archive player. Current game main is
-  `a4c1eae5084b87f7cb36ac44a5258f0f4b6476b0`, and the latest public/general GitHub
-  release is v0.115.1. Later game releases do not convert these archive auditions
-  into trusted built-ins or defaults.
+  `359b313e6aaeb95cf05ec73667ea2f1bacf94f29` after the v0.131 localization source
+  merge; the latest public/general GitHub release remains v0.130.0. Later source or
+  game releases do not convert archive auditions into trusted built-ins or defaults.
 - UA-FPV remains on its recording-specific public-redistribution rights hold; its
   four private import packs remain available. The rejected local AI-production
   method remains paused with **0/36 originals approved**.
 - M0 was merged through docs-only PR [#330](https://github.com/mekhovov/revealline/pull/330)
   at commit [efacbf087](https://github.com/mekhovov/revealline/commit/efacbf087eb9e1d15019f0d6aecd5ae32ac313fa).
   Plan consolidation is complete; implementation and evidence updates continue here.
-- M2's historical source review on draft PR
-  [#331](https://github.com/mekhovov/revealline/pull/331) covered
-  4fd7eb0b7e850b538b30450cedaa1bcd83f3845a with 11/11 focused source tests passing.
-  The later 80d6e2f ledger failure and 71b787ed reconciliation are retained history.
-  Its refreshed draft head is `b1ae8bcafd371840916e18ec5b90a68ec666a8e5`, based on
-  accepted source `cd9565357add4d1521faae76e6d029446b6d8503`.
-  Soundtrack source, dependencies, production history and Team picture/import
-  checks pass 111/111. A separate Team production-history suite passes 1/3; two
-  inherited drifter source-stage failures remain. Field Kit revision 79 preserves
-  exact Team image identities and revisions 58–78. This is scoped evidence, not qualification or
-  recording admission: registrations remain empty, no MP3 is bundled and no default
-  changes. The draft now conflicts with authoritative main; its earlier clean base
-  and focused results do not qualify the current release source. Hosted
-  [run 36092960845](https://github.com/mekhovov/revealline/actions/runs/36092960845)
-  passed preflight; test/build/release-gate jobs were skipped and release-ready
-  failed because this draft intentionally has `ADMISSION=hold` and no release slot.
-  Fresh accepted-base gates and release remain. Opening-theme
-  [draft PR #439](https://github.com/mekhovov/revealline/pull/439) is now active at
-  `cd19167c176c57bf70e062cc1826befe408cf5a9`, stacked on #331. It contains the exact
-  MP3, registration and startup/storage policy; current focused evidence is
-  **245/245** soundtrack/Couch/player/catalogue/distribution/rights checks and
-  **14/14** complete production-history/recipe-source checks, with zero failures
-  or skips. Production reproduction/readiness pass at scoped reviewed revision 81.
-  Earlier head `55c5eb09a5931c5f35c10d615b92fb80b6b3aa09` and its 182/182 + 5/5
-  results remain historical evidence. Accepted-base hosted/frozen qualification,
-  listening/cultural/device/offline review and public delivery remain; neither
-  draft has been merged or released.
-- M3 draft PR [#333](https://github.com/mekhovov/revealline/pull/333) has independently
-  reviewed historical runtime at 99ae9a939805e026820e27d8ead5eb7f1f09ac42. Earlier
-  commit da750277179b3e22f3962cdc3b5dd684b411005e added evidence only. Forty affected tests
-  passed after the retry-race correction; the earlier focused run passed 105 tests.
-  These are overlapping scoped runs, not full source qualification. The unchanged
-  declared Field Kit fingerprints do not approve the new UI/audio behavior.
-  Exact-head [run 35953405357](https://github.com/mekhovov/revealline/actions/runs/35953405357)
-  at da750277 passed preflight and build; test shards and release_gate were skipped.
-  The prior cec13c56 checkpoint passed 439/439 focused audio/control tests and
-  12/12 history checks; its separate 7/10 Team cohort remains historical evidence.
-  Current draft head `ed59771ece1a27d0e677d0f0626448c086fa0d34` is rebased onto
-  `c7990977f49d40e79873782a219e4d4dc47c8890`. Its 40/40 control/host tests and 14/14
-  recipe/history checks pass. Audit revision 6 closes all nine runtime dependencies
-  and verifies mutation/missing-input refusal. Field Kit revision 78 reopens UI,
-  screen and audio recipes at `source`, without inheriting revision-77 approval.
-  Authoritative GitHub now reports head
-  `77a3b8a93ca995e61eacf7e846a01ef7886db557` conflicting with current main.
-  Prior preflight passes remain scoped historical evidence; build/test/release-gate
-  skips are not passes, and the prior release-ready failures remain failures.
-  Conflict resolution, fresh hosted exact-source gates, scoped review, independent
-  final review and browser/controller/device acceptance remain.
+- M1/M2/M3 successors #518, #519 and #516 are merged and public in v0.130.0.
+  v0.130.0 exact source `5022108ca458e9355e9567efddfee50fb49af5c1`
+  passed qualification/freeze run 36178689258 and strict inspection run 36179711241.
+  Public desktop acceptance covered 136/136 archive loading and remote → bundled
+  Shchedryk → remote playback. Remaining acceptance is physical B/N/touch/controller,
+  full-track/repeated Shchedryk listening, Ukrainian cultural review and cold-offline
+  behavior. Historical draft heads remain evidence and must not be revived.
 - Archive [PR #4](https://github.com/mekhovov/revealline-soundtracks-01/pull/4)
   merged at 62dfd72d561621218c63443b6ab621f6f67d46cc and acquired two Nakarada
   auditions through the existing hosted intake. Separate
@@ -646,7 +605,7 @@ version is allocated without the release owner's confirmation.
 | M3 | Quick controls are public | Physical keyboard/touch/controller access | Verify B/N plus touch/controller Play/Pause and Next on physical targets | About 0.5 day hands-on, excluding device access | Historical #333; merged replacement [PR #516](https://github.com/mekhovov/revealline/pull/516) at 7ccbb6d3 | v0.130.0 public; device acceptance pending |
 | M4 | Active research; parallel | Exact published rights and musical/cultural review | Target six additional distinct Ukrainian compositions; publish cleared subsets | 1–2 days per research round; rights/review date unknown | Candidate/hold register below | Unreleased |
 | M5 | Four third-direction synth auditions are public; runner2088 remains draft; Electric Dreams remains the closest reference | Musical fit, full listening and exact admission review; public-archive holds remain | Review 90s Racer Techno, Neon Pulse, Prismatic Light and Future Travel; keep PR #23 draft until independently reconciled; admit only a musically accepted subset | Several hours per comparison round; 1–2 days integration/verification after approval; CI/review waits excluded | Archive [PR #25](https://github.com/mekhovov/revealline-soundtracks-01/pull/25), Pages run 36147468099 and M5.a feedback below; draft [PR #23](https://github.com/mekhovov/revealline-soundtracks-01/pull/23) | Unreleased in game |
-| M6 | Purgatory PR #26 is publicly deployed; Reckless #22 is clean on a stale base; groove-first direction retained | Full listening, transitions, warnings, Content ID and gameplay acceptance | Review the four public Purgatory auditions; reconcile #22 separately; admit only a musically accepted subset | Several hours per listening round; 1–2 days integration after approval; about 0.5 working day to reconcile #22 before fresh review | Merged publication [PR #26](https://github.com/mekhovov/revealline-soundtracks-01/pull/26), 824e34e4 and Pages run 36160861165; stale-base draft [PR #22](https://github.com/mekhovov/revealline-soundtracks-01/pull/22) | Public auditions only; unreleased in game |
+| M6 | Purgatory PR #26 is public; Reckless #22 is refreshed onto current archive main at 80373786 and exact-head checks are running; groove-first direction retained | Full listening, transitions, warnings, Content ID and gameplay acceptance | Finish #22 exact-head checks and independent review; publish only as listening-unapproved auditions, then admit only a musically accepted subset | Several hours per listening round; 1–2 days integration after approval; CI waits excluded | Merged publication [PR #26](https://github.com/mekhovov/revealline-soundtracks-01/pull/26), 824e34e4 and Pages run 36160861165; refreshed draft [PR #22](https://github.com/mekhovov/revealline-soundtracks-01/pull/22) | Purgatory auditions public; Reckless pending; unreleased in game |
 | M7 | Blocked public rights; scope retained | Recording-specific public redistribution and applicable artwork evidence | Include all 77 recordings / 80 filenames; publish cleared entries; maintain private pack route | About 1 day integration after clearance; clearance date unknown | UA-FPV manifests/private packs/guide | Public collection unreleased |
 | M8 | Public desktop compatibility/stall repair complete | Physical device and cold-offline access | Keep the 136/136 parser, persistent remote deck, watchdog and mixed-queue regressions green; finish separate iPhone/controller/cold-offline checks | About 0.5 day once devices/offline harness are available | PR #370, v0.111.0, Archive76; merged repair [PR #523](https://github.com/mekhovov/revealline/pull/523); 177/177 focused tests; v0.130 qualification, inspection, selector and public-browser evidence above | v0.130.0 public; desktop accepted |
 | M9 | Later | Core style releases | Review existing 70 selectively; add trusted ID/hash curation overlay preserving saved pins | 1–2 days per selected batch plus listening | Curation PR pending | Unreleased |
@@ -659,14 +618,11 @@ Full listening review of the existing 70 is not a prerequisite for a new batch.
 
 ## M2 — Shchedryk opening theme
 
-Implementation checkpoint: PR #331 binds bundled identity, exact bytes, local path
-and effective permissions across same-hash aliases. Registrations remain empty;
-silent local-only preparation remains request-free. Historical source evidence,
-the current 111/111 focused checks and two separate inherited failures are retained
-above. Stacked draft #439 implements the exact recording, startup policy,
-core/offline packaging and budget accounting; its current 245/245 + 14/14 checks
-and revision-81 scoped review do not replace accepted-base hosted/frozen
-qualification, recording/device/offline reviews or public delivery.
+Implementation checkpoint: replacement PRs #518 and #519 are included in public
+v0.130.0. Exact identity, bundled bytes, startup/storage policy and Recording-mode
+exclusion survived aggregate qualification and frozen inspection. Public desktop
+transition testing played the bundled recording between two remote streams. Full-track,
+repeated-session, cultural, cold-offline and physical-device review remains open.
 
 - Use **Carol of the Bells (Metal Version) — Alexander Nakarada**. Preserve its
   existing ID, exact 8,641,768-byte MP3 and SHA-256
@@ -693,26 +649,12 @@ qualification, recording/device/offline reviews or public delivery.
 
 ## M3 — immediate music controls
 
-Implementation checkpoint: PR #333 implements these controls and fixes the Solo
-lifecycle retry capture race found in review. The refreshed ed59771e head and
-54/54 scoped results are recorded above. The historical audit recorded declared
-Field Kit fingerprints unchanged; it does not claim new UI/audio acceptance.
-Exact-head run 35953405357 at da750277 passed preflight and build, including
-validation, lint, both formatting checks and production reproducibility; test
-shards/release_gate were skipped. Require all four shards and browser/controller/
-device evidence on the eventual accepted source before release.
-
-The [historical dependency audit](https://github.com/mekhovov/revealline/pull/333#issuecomment-5808657043)
-found that all nine changed runtime inputs were omitted: quick-music-controls.mjs
-and .css, app.mjs, couch/couch-music-host.mjs, couch/couch.mjs,
-couch/relay-rescue.mjs and all three mode HTML files. Revision-6 evidence now binds
-all nine to UI/screens and the five playback-owning JavaScript paths to audio.
-The explicit recipe-source and production-history tests cover consumer-group
-mutation, missing-input refusal and immutable prior records. Revision 78 reproduces
-with reopened source-stage recipes; complete scoped UI/screen/audio review before
-qualification. Coordinate successors from the actual accepted main ledger, with no
-inherited approval or reserved revision. Earlier audits remain unchanged evidence
-of the original limitation, which the current source closes.
+Implementation checkpoint: replacement PR #516 is included in public v0.130.0.
+Focused automated coverage includes B/N conflicts, shortcut opt-out, background
+ownership, pause during load, Next while paused, focus and buttons. Public source
+matches the reviewed quick-control module. Physical keyboard, touch and controller
+acceptance remains open; historical #333 evidence is retained without reviving its
+stale branch.
 
 - **B** plays/pauses music; **N** selects the next song in gameplay and ordinary menus.
 - Compact Now Playing, Play/Pause and Next appear in main and pause menus across
