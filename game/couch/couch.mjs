@@ -63,6 +63,7 @@ import {
 import { FIXED_DT, releaseInputs } from '../core/index.mjs';
 import { attachCouchInput } from './couch-input.mjs';
 import { createControllerRouter } from '../ui/controller-router.mjs';
+import { attachControllerConfirmGuard } from '../ui/controller-confirm-guard.mjs';
 import { attachControllerNavigation } from '../ui/controller-navigation.mjs';
 import { playgroundTabBoundary } from '../ui/playground-tab-boundary.mjs';
 import { attachControllerReading } from '../ui/controller-reading.mjs';
@@ -94,7 +95,11 @@ import { emptyProgress, unlockedBodies } from '../progress.mjs';
 import { createOperationStatus } from '../ui/operation-status.mjs';
 import { foundationReturnCaption } from '../ui/foundation-feedback.mjs';
 import { isCandidatePictureFor } from '../content-design/picture.mjs';
+import { releaseExplorerHref } from '../release-explorer.mjs';
 const $ = (id) => document.getElementById(id);
+$('race-release-explorer').href = releaseExplorerHref(
+  globalThis.location?.href ?? document.baseURI ?? 'http://localhost/game/couch/',
+);
 const unclaimedFocus = (element) =>
   !element || element === document.body || element === document.documentElement;
 // Capture before attached() can hide a deliberately chosen loader recovery link.
@@ -360,6 +365,7 @@ try {
     libraryInstaller = null,
     libraryInstallerFactory = null,
     librarySoloPreview = null,
+    spatialEditionOwner = null,
     libraryOpenEpoch = 0,
     libraryDecision = null,
     libraryLaunchController = null,
@@ -394,7 +400,7 @@ try {
     $('race-journey-note').hidden = false;
     $('race-journey-note').textContent =
       authoredRoute.id === DEFAULT_JOURNEY_ROUTES.versus
-        ? `New Journey / ${candidateJourney.catalog.missions.length} missions. Original pictures need a connection; core offline preparation does not save them.`
+        ? `New Journey · ${candidateJourney.catalog.missions.length} missions`
         : `${authoredRoute.label.toUpperCase()} / UNVALIDATED VERSUS TEST BUILD. Web previews need a connection for original pictures; core offline preparation does not save them.`;
     $('race-journey-difficulty-field').hidden = false;
     $('race-journey-difficulty').replaceChildren(
@@ -1146,7 +1152,7 @@ try {
         $('race-message').textContent = [
           staticEntry ? featuredStatus : '',
           image?.notice,
-          'Both boards use the same map, class, seed and prepared picture. Start when you are ready.',
+          'Ready. First clear wins.',
         ]
           .filter(Boolean)
           .join(' ');
@@ -1426,7 +1432,7 @@ try {
     }
     updateMenu();
   }
-  async function startRace(destination = null, { rulesEdition } = {}) {
+  async function startRace(destination = null, { rulesEdition, focusOrigin = null } = {}) {
     if (
       disposed ||
       contentBusy ||
@@ -1481,7 +1487,9 @@ try {
       // An exact library destination prepares its own picture. A failed unused
       // opener must not gate it; use an enabled, visible action as the focus
       // origin until the new attempt makes Start available again.
-      const start = destination && !contentReady ? $('race-library-switch') : $('race-start'),
+      const start =
+          focusOrigin ||
+          (destination && !contentReady ? $('race-library-switch') : $('race-start')),
         previousRun = match,
         previousGeneration = generation,
         previousController = contentController;
@@ -1556,10 +1564,8 @@ try {
           },
         );
         if (confirmation?.then) {
-          restoreFocus.pending(
-            $('race-picture-cancel'),
-            ownsStartIntent() && controller === contentController && !controller.signal.aborted,
-          );
+          // Start owns this preparation through launch. Keep focus with that
+          // deliberate action so a held or repeated Confirm cannot become Cancel.
           await confirmation;
         }
         if (!ownsReadyStart()) return;
@@ -1940,6 +1946,10 @@ try {
       won = [0, 0];
       prepare();
       contentScope = 'setup';
+    },
+    onRetry: () => {
+      if (match?.status !== 'paused' || disposed) return;
+      void startRace(roundRecipe.entry, { focusOrigin: $('race-retry') });
     },
   });
 
@@ -2493,6 +2503,15 @@ try {
         launch: departLibraryMission,
         difficulty: () => (journeyPreferences || browsingJourneyPreferences).snapshot().difficulty,
       });
+      const { createSpatialNextEditionSources } = await import(
+        '../mission-library/spatial-next-editions.mjs'
+      );
+      spatialEditionOwner = await createSpatialNextEditionSources({
+        activeRouteId: route.id,
+        originalThemes,
+        difficulty: () => (journeyPreferences || browsingJourneyPreferences).snapshot().difficulty,
+        launch: departLibraryMission,
+      });
       // Browsing must survive a denied storage getter. Only deliberate verified
       // installation/Play constructs this independent writer/decoder service.
       libraryInstallerFactory ??= () =>
@@ -2522,6 +2541,7 @@ try {
       }
       if (disposed || artworkLifetime.signal.aborted) {
         libraryInventory.close();
+        spatialEditionOwner.dispose();
         throw new DOMException('Mission library closed.', 'AbortError');
       }
       await refreshLibraryInventory();
@@ -2605,6 +2625,7 @@ try {
               }),
             },
           ]),
+          ...spatialEditionOwner.sources,
           ...teamSources,
         ],
         compatibility: ({ entry, level }) => {
@@ -2715,6 +2736,7 @@ try {
       });
       if (disposed || artworkLifetime.signal.aborted) {
         result.library.dispose();
+        spatialEditionOwner.dispose();
         throw new DOMException('Mission library closed.', 'AbortError');
       }
       const state = createMissionLibrarySessionState({ mode: 'versus' });
@@ -3168,17 +3190,13 @@ try {
     // lease, including an update reentered from prior-image cleanup.
     const focusTransition = match !== preparedFocusMatch;
     preparedFocusMatch = null;
-    const themeName =
-      authoredRoute?.id === DEFAULT_JOURNEY_ROUTES.versus
-        ? theme.name.replace(/ · material review$/, '')
-        : theme.name;
     shell?.update({
       match,
       won,
       format: roundRecipe.format,
       contentBusy,
       focusTransition,
-      summary: `${roundRecipe.tuning.adminOverride ? 'ADMIN PLAYTEST · ' : ''}${roundRecipe.format === 'first-to-two' ? 'First to two' : 'One race'} · ${entry.chapter} · ${entry.level.name} · ${mode(entry.level)} · ${themeName} · ${roundRecipe.turnPolicy === 'grid-center' ? 'Grid-center turns' : 'Immediate turns'} · ${roundRecipe.seconds === 0 ? 'No race countdown' : `${roundRecipe.seconds} seconds`}`,
+      summary: `${roundRecipe.tuning.adminOverride ? 'ADMIN PLAYTEST · ' : ''}${roundRecipe.format === 'first-to-two' ? 'First to two' : 'One race'} · ${entry.level.name}`,
     });
     $('race-time-field').hidden = !!candidateJourney;
     // Reconcile deliberate layout transitions immediately, including browsers
@@ -3191,9 +3209,14 @@ try {
     if ($('race-menu-status').textContent !== text) $('race-menu-status').textContent = text;
   }
   menuRouter = createControllerRouter({ readPads: readAssignedMenuPads });
+  const controllerConfirmGuard = attachControllerConfirmGuard({
+    confirmPressed: () => menuRouter.menuConfirmPressed(),
+  });
   const menuIds = new Set([
     'race-coop',
     'race-start',
+    'race-retry',
+    'race-optional-setup-toggle',
     'race-chapters',
     'race-journey-next',
     'race-journey-skip',
@@ -3219,6 +3242,12 @@ try {
     'race-data-reading-done',
     'race-data-reading',
     'race-help',
+    'race-home',
+    'race-more-toggle',
+    'race-optional-setup-toggle',
+    'race-more-home',
+    'race-more-about',
+    'race-release-explorer',
     'race-solo-return',
     'race-library-switch',
     'race-level',
@@ -3359,6 +3388,9 @@ try {
     // Clear before sampling so that this frame cannot claim a new menu owner.
     if (assignmentsChanged || pendingPadLoss) menuRouter.clear();
     const result = menuRouter.sample({ scope, timeMs: now });
+    // Joining consumes the controller edge as assignment, but Steam may still
+    // mirror that same physical press as a delayed native Enter/click.
+    controllerConfirmGuard.observe(result.confirmHeld || result.status.code === 'joined');
     if (result.status.code === 'joined' || Object.values(result.ui).some(Boolean))
       setReadingModality('controller');
     const released = !menuOwner && result.disconnected;
@@ -3444,6 +3476,7 @@ try {
     journeyChooser?.destroy();
     journeyPictures?.dispose();
     missionLibrary?.library.dispose();
+    spatialEditionOwner?.dispose();
     libraryInstaller?.dispose();
     libraryInventory?.close();
     librarySoloPreview?.preparer.dispose();
@@ -3451,6 +3484,7 @@ try {
     couchTouch.destroy();
     journeyReactions.dispose();
     input.destroy();
+    controllerConfirmGuard.destroy();
     menuRouter.destroy();
     reading.destroy();
     navigation.destroy();

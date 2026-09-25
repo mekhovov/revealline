@@ -908,7 +908,7 @@ for (const failure of ['read', 'decode'])
     await action(page.$('race-start'));
     page.frame(0);
     assertInstalledResult(page, result);
-    assert.match(page.$('race-message').textContent, /Results are kept/i);
+    assert.match(page.$('race-message').textContent, /Both boards are kept/i);
     assert.equal(page.doc.activeElement.id, 'race-start');
     assert.equal(diagnostics.length, 1);
     assert.equal(diagnostics[0][0], 'Next picture preparation failed.');
@@ -948,7 +948,7 @@ test('installed rematch refuses media metadata changed during its selected decod
   assert.equal((await pending).error, null);
   page.frame(0);
   assertInstalledResult(page, result);
-  assert.match(page.$('race-message').textContent, /Results are kept/i);
+  assert.match(page.$('race-message').textContent, /Both boards are kept/i);
   assert.equal(diagnostics.length, 1);
   assert.match(diagnostics[0][1].message, /changed|generation/i);
   page.frames(20);

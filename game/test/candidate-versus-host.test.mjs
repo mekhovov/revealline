@@ -106,7 +106,7 @@ for (const difficulty of ['gentle', 'standard', 'expert'])
     assert.equal(p.$('race-time-field').hidden, true);
     assert.equal(p.$('race-clock').textContent, 'No countdown');
     assert.equal(p.$('race-clock').dataset.compact, '∞');
-    assert.match(p.$('race-summary').textContent, /No race countdown/);
+    assert.equal(p.$('race-summary').textContent, 'One race · First return');
     assert.match(p.$('race-format-help').textContent, /No race countdown/);
     assert.doesNotMatch(p.$('race-format-help').textContent, /At the time limit/);
     assert.equal(p.drawOptions[0].backdrop, p.drawOptions[1].backdrop);
@@ -296,8 +296,13 @@ test('controller can open and leave the flat chooser without starting or clearin
   await waitFor(() => p.$('journey-chooser')?.open && p.$('journey-collection'));
   p.frame(); // The asynchronously mounted scope observes a neutral controller frame.
   assert.equal(p.$('journey-chooser').open, true);
-  const cards = [...p.$('journey-cards').children],
-    route = createAuthoredJourneyRoute('opening'),
+  const cards = [...p.$('journey-cards').children];
+  assert.equal(
+    cards.length,
+    198,
+    'the complete 66-mission opening catalogue exposes all three difficulty cards',
+  );
+  const route = createAuthoredJourneyRoute('opening'),
     themes = JSON.parse(
       await readFile(new URL('../content-design/themes.json', import.meta.url)),
     ).themes,
@@ -549,8 +554,8 @@ for (const route of ['opening', 'authored'])
             operation,
             new Promise((_, reject) => {
               timer = setTimeout(
-                () => reject(new Error(`${id} continuation did not settle.`)),
-                120000,
+                () => reject(new Error(`Versus did not prepare the mission after ${id}.`)),
+                15_000,
               );
             }),
           ]);

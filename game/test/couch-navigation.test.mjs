@@ -6,6 +6,7 @@ import { createRun, stepRun, releaseInputs, FIXED_DT } from '../core/index.mjs';
 import { retryFixture } from './fixtures/retry-scenarios.mjs';
 import { applyGameplayTuning, resolveGameplayTuning } from '../gameplay-tuning.mjs';
 import { couchPage as page } from './helpers/couch-host.mjs';
+import { waitFor } from './helpers/wait-for.mjs';
 
 const read = async (path) => JSON.parse(await readFile(new URL(path, import.meta.url), 'utf8'));
 const base = await read('../content/campaign.json');
@@ -78,6 +79,8 @@ test('actual select previews cancel without replacing the duel and commit once t
   f.join(0);
   const run = f.renders[0],
     original = f.$('race-level').value;
+  f.$('race-optional-setup').open = true;
+  f.$('race-optional-setup').setAttribute('open', '');
   f.$('race-focus').click();
   f.frame();
   f.focus('race-level');
@@ -88,10 +91,26 @@ test('actual select previews cancel without replacing the duel and commit once t
   f.pulse(0, 1);
   assert.equal(f.editors().length, 0);
   assert.equal(f.renders[0], run);
+  const handler = f.$('race-level').onchange;
+  let preparation;
+  f.$('race-level').onchange = (event) => (preparation = handler(event));
   f.pulse(0, 0);
   f.pulse(0, 13);
-  f.pulse(0, 0);
+  try {
+    f.pulse(0, 0);
+    await preparation;
+    f.frame(0);
+  } finally {
+    f.$('race-level').onchange = handler;
+  }
   assert.notEqual(f.$('race-level').value, original);
+  await waitFor(
+    () => {
+      f.frame(0);
+      return f.renders[0] !== run;
+    },
+    { message: 'The committed native select change did not finish staging its replacement.' },
+  );
   assert.notEqual(f.renders[0], run);
   const newRun = f.renders[0];
   f.frames(30);
@@ -515,21 +534,43 @@ test('native checkboxes and both held touch pads stay independent after leaving 
   const left = pads[1].querySelector('.touch-surface');
   for (const surface of [right, left])
     surface.getBoundingClientRect = () => ({ left: 0, top: 0, width: 156, height: 156 });
-  right.emit('pointerdown', { pointerId: 41, button: 0, clientX: 78, clientY: 78 });
-  left.emit('pointerdown', { pointerId: 42, button: 0, clientX: 78, clientY: 78 });
-  right.emit('pointermove', { pointerId: 41, clientX: 120, clientY: 78 });
-  left.emit('pointermove', { pointerId: 42, clientX: 30, clientY: 78 });
+  right.emit('pointerdown', {
+    pointerId: 41,
+    pointerType: 'touch',
+    button: 0,
+    clientX: 78,
+    clientY: 78,
+  });
+  left.emit('pointerdown', {
+    pointerId: 42,
+    pointerType: 'touch',
+    button: 0,
+    clientX: 78,
+    clientY: 78,
+  });
+  right.emit('pointermove', {
+    pointerId: 41,
+    pointerType: 'touch',
+    clientX: 120,
+    clientY: 78,
+  });
+  left.emit('pointermove', {
+    pointerId: 42,
+    pointerType: 'touch',
+    clientX: 30,
+    clientY: 78,
+  });
   f.frames(20);
   assert.ok(f.renders[0].player.x > f.renders[0].level.spawn.x);
   assert.ok(f.renders[1].player.x < f.renders[1].level.spawn.x);
-  right.emit('pointerup', { pointerId: 41 });
-  left.emit('pointerup', { pointerId: 42 });
+  right.emit('pointerup', { pointerId: 41, pointerType: 'touch' });
+  left.emit('pointerup', { pointerId: 42, pointerType: 'touch' });
   const positions = f.renders.map((run) => run.player.x);
   f.frames(8);
   assert.ok(f.renders[0].player.x > positions[0]);
   assert.ok(f.renders[1].player.x < positions[1]);
-  right.emit('pointerdown', { pointerId: 43, button: 0 });
-  right.emit('pointercancel', { pointerId: 43 });
+  right.emit('pointerdown', { pointerId: 43, pointerType: 'touch', button: 0 });
+  right.emit('pointercancel', { pointerId: 43, pointerType: 'touch' });
   f.frame();
   assert.equal(f.state(), 'paused');
 });

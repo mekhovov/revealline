@@ -43,6 +43,7 @@ export function createCouchShell({
   coarse = false,
   onTransition = () => {},
   onNewMatch = () => {},
+  onRetry = () => {},
   getDepartureState = () => null,
   onLeaveRequest = () => {},
   getSoloReturnToken = () => null,
@@ -65,6 +66,7 @@ export function createCouchShell({
   const libraryLabel = isJourney ? 'Legacy library' : 'New Journey';
   $('race-library-switch').setAttribute('href', libraryHref);
   $('race-library-switch').textContent = onMissions ? 'All missions' : libraryLabel;
+  doc.body.classList.toggle('unified-missions', Boolean(onMissions));
   if (authoredDestinations) {
     $('race-solo-return').setAttribute('href', authoredDestinations.solo);
     $('race-coop').setAttribute('href', authoredDestinations.team);
@@ -261,6 +263,10 @@ export function createCouchShell({
   function setup() {
     show(status === 'ready' ? 'setup' : 'confirm', { remember: $('race-focus') });
   }
+  function retry() {
+    if (status !== 'paused') return;
+    onRetry();
+  }
   const foreground = () => !doc.hidden && doc.hasFocus?.() !== false;
   function soloReturnToken() {
     try {
@@ -399,6 +405,7 @@ export function createCouchShell({
     if (!departureCurrent(ticket)) cancelDeparture();
   }
   listen($('race-focus'), 'click', setup);
+  listen($('race-retry'), 'click', retry);
   listen($('race-review'), 'click', () => {
     if (status === 'finished') show('review', { remember: $('race-review') });
   });
@@ -420,6 +427,7 @@ export function createCouchShell({
   });
   for (const [id, kind] of [
     ['race-solo-return', 'solo'],
+    ['race-home', 'solo'],
     ['race-coop', 'team'],
     ['race-library-switch', 'library'],
   ])
@@ -491,6 +499,7 @@ export function createCouchShell({
       $('race-solo-return').setAttribute('href', soloHref);
     const previous = status;
     status = match.status;
+    doc.body.dataset.couchStatus = status;
     if (departure && !departureCurrent(departure)) cancelDeparture();
     equipment = match.runs.map(couchEquipment);
     if (status !== previous) {
@@ -502,7 +511,9 @@ export function createCouchShell({
     setText('race-summary', summary);
     setText(
       'race-format-note',
-      `${series ? 'First to two round wins.' : 'One race. Choose First to two in Race setup for a longer match.'} Couch races do not change your solo progress.`,
+      series
+        ? 'First to two · Solo progress stays separate'
+        : 'One race · Longer matches are in Match options · Solo progress stays separate',
     );
     setText(
       'race-format-help',
@@ -523,10 +534,16 @@ export function createCouchShell({
             : 'Two boards. One race.',
     );
     $('race-review').hidden = status !== 'finished';
+    const paused = status === 'paused';
+    $('race-retry').hidden = !paused;
+    $('race-retry').disabled = !paused || contentBusy;
+    $('race-home').hidden = !paused;
+    $('race-optional-setup').hidden = paused;
+    setText('race-chapters', paused ? 'Missions' : 'Browse missions');
     $('race-pause').disabled = status !== 'running' && screen !== 'review';
     // Do not replace the native click target's content on every flight frame.
     setText('race-pause', screen === 'review' ? 'Results' : 'Pause');
-    $('race-focus').textContent = status === 'ready' ? 'Race setup' : 'New match · setup';
+    $('race-focus').textContent = status === 'ready' ? 'Advanced setup' : 'New match options';
     $('race-class-field').hidden = !equipment[0].action;
     $('race-class').disabled = !equipment[0].action || status !== 'ready';
     for (const id of ['race-level', 'race-theme', 'race-turn', 'race-time', 'race-format'])

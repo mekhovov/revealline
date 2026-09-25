@@ -20,7 +20,14 @@ export function setBoardAvailability(document, available) {
   $('board').getContext('2d').clearRect(0, 0, $('board').width, $('board').height);
   $('map-name').textContent = 'Your first mission starts here';
   $('geometry').textContent = 'No mission selected. Create a mission to inspect its map and rules.';
-  for (const id of ['lesson', 'rules', 'effective', 'capture', 'capture-summary'])
+  for (const id of [
+    'lesson',
+    'rules',
+    'current-gameplay',
+    'effective',
+    'capture',
+    'capture-summary',
+  ])
     $(id).textContent = '';
   $('diagnostics').replaceChildren();
   $('trail').value = '';

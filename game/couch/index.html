@@ -174,30 +174,6 @@
           </p>
           <p id="race-message" role="status">Both boards use the same map, class and seed.</p>
           <p id="race-summary" class="race-summary"></p>
-          <div class="race-fields">
-            <label
-              >Actors<select id="race-actor-style" aria-describedby="race-actor-style-status">
-                <option value="fpv">FPV Field Kit</option>
-                <option value="campaign">Campaign actors</option>
-              </select></label
-            >
-            <p id="race-actor-style-status" class="race-footnote" role="status">
-              Applies to a new race or Next mission. Resume and Rematch keep their accepted actors.
-              Custom chapters keep authored actors.
-            </p>
-            <label id="race-journey-difficulty-field" hidden
-              >Next fresh race difficulty
-              <select id="race-journey-difficulty"></select>
-              <span id="race-journey-difficulty-note" role="status"></span>
-            </label>
-            <div id="race-journey-preferences-recovery" hidden>
-              <p id="race-journey-preferences-message" role="status"></p>
-              <button id="race-journey-preferences-retry" type="button">
-                Retry saving difficulty
-              </button>
-              <button id="race-journey-preferences-export" type="button">Export difficulty</button>
-            </div>
-          </div>
           <div class="race-seats">
             <article class="seat sun">
               <span>PLAYER 1</span>
@@ -217,25 +193,54 @@
               >Relay Rescue · team up</a
             >
             <button id="race-start" class="race-primary" type="button">Start race</button>
+            <button id="race-retry" type="button" hidden>Retry race</button>
             <button id="race-journey-save-options" type="button" hidden>
               Progress not saved · Save options
             </button>
             <button id="race-chapter-retry" type="button" hidden>Retry picture</button>
             <button id="race-picture-cancel" type="button" hidden>Cancel picture loading</button>
-            <button id="race-chapters" type="button">All missions</button>
-            <button id="race-focus" type="button">Race setup</button>
+            <button id="race-chapters" type="button">Browse missions</button>
+            <details id="race-optional-setup" class="race-optional-setup">
+              <summary id="race-optional-setup-toggle">Match options</summary>
+              <div class="race-fields">
+                <label
+                  >Actors<select id="race-actor-style" aria-describedby="race-actor-style-status">
+                    <option value="fpv">FPV Field Kit</option>
+                    <option value="campaign">Campaign actors</option>
+                  </select></label
+                >
+                <p id="race-actor-style-status" class="race-footnote" role="status">
+                  New races use this actor style. Rematch keeps the accepted style.
+                </p>
+                <label id="race-journey-difficulty-field" hidden
+                  >Difficulty
+                  <select id="race-journey-difficulty"></select>
+                  <span id="race-journey-difficulty-note" role="status"></span>
+                </label>
+                <div id="race-journey-preferences-recovery" hidden>
+                  <p id="race-journey-preferences-message" role="status"></p>
+                  <button id="race-journey-preferences-retry" type="button">
+                    Retry saving difficulty
+                  </button>
+                  <button id="race-journey-preferences-export" type="button">
+                    Export difficulty
+                  </button>
+                </div>
+                <button id="race-focus" type="button">Advanced setup</button>
+              </div>
+            </details>
             <button id="race-options" type="button">Settings</button>
             <button id="race-quick-sound" type="button" class="quick-sound" aria-pressed="false">
               Sound: off
             </button>
             <button id="race-help" type="button">How to play</button>
+            <a id="race-home" href="../" hidden>Home</a>
             <button id="race-review" type="button" hidden>View both boards</button>
             <a id="race-solo-return" href="../?journey=legacy">Return to solo</a>
-            <a id="race-library-switch" href="?journey=whole-spatial-v9">New Journey</a>
+            <a id="race-library-switch" href="?journey=whole-spatial-v11">New Journey</a>
           </div>
           <p id="race-format-note" class="race-footnote">
-            One race. Choose First to two in Race setup for a longer match. Couch races do not
-            change your solo progress.
+            One race · Match options includes First to two · Solo progress stays separate
           </p>
           <aside
             id="race-journey-save"
@@ -264,7 +269,7 @@
         >
           <p class="race-kicker">SAME CONDITIONS / TWO ROUTES</p>
           <h1 id="race-setup-title">Race setup</h1>
-          <p>Choose together. Each player starts with the same map, craft and time.</p>
+          <p>Optional match changes. Both players always receive the same conditions.</p>
           <div class="race-fields">
             <label>Map<select id="race-level"></select></label>
             <label
@@ -292,7 +297,7 @@
           <p id="race-loadout" class="race-summary"></p>
           <p id="race-installed-status" role="status"></p>
           <button id="race-installed-refresh" type="button">Refresh installed chapters</button>
-          <button id="race-setup-back" type="button">Done · back to lobby</button>
+          <button id="race-setup-back" type="button">Done</button>
         </section>
         <section
           id="race-options-panel"
@@ -503,7 +508,7 @@
           hidden
           inert
         >
-          <p class="race-kicker">FIND YOUR OWN LINE</p>
+          <p class="race-kicker">REVEAL LINE / HOW TO PLAY</p>
           <h1 id="race-help-title">How to play</h1>
           <div id="race-help-unit">
             <div class="reading-toolbar">
@@ -550,6 +555,14 @@
               </p>
             </div>
           </div>
+          <details class="race-secondary-details">
+            <summary id="race-more-toggle">More</summary>
+            <nav class="race-more-destinations" aria-label="More destinations">
+              <a id="race-more-home" href="../">Home</a>
+              <a id="race-more-about" href="../../site/about.html#versions">About &amp; credits</a>
+              <a id="race-release-explorer">Releases</a>
+            </nav>
+          </details>
           <button id="race-help-back" type="button">Back</button>
         </section>
         <section

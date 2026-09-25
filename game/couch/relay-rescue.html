@@ -48,7 +48,7 @@
             ><span>Loading Relay Rescue.</span>
           </p>
           <script src="team-entry.js"></script>
-          <div class="setup">
+          <div class="setup coop-arena-choice">
             <label
               >Arena<select id="coop-level">
                 <option value="first-connection" selected>
@@ -57,28 +57,7 @@
                 <option value="relay-yard">Relay Yard · stronghold challenge</option>
               </select></label
             >
-            <label
-              >Play style<select id="coop-experiment">
-                <option value="full">Full teamwork</option>
-                <option value="joint">Joint Cuts + ordinary cover</option>
-                <option value="independent">Individual cuts + ordinary cover</option>
-              </select></label
-            >
-            <label
-              >Difficulty<select id="coop-difficulty">
-                <option value="gentle">Gentle</option>
-                <option value="standard" selected>Standard</option>
-                <option value="expert">Expert</option>
-              </select></label
-            >
-            <label
-              >Actors<select id="coop-actor-style" aria-describedby="coop-actor-style-note">
-                <option value="fpv" selected>FPV</option>
-                <option value="campaign">Campaign</option>
-              </select></label
-            >
           </div>
-          <p id="coop-actor-style-note" class="setup-note" role="status"></p>
           <p id="coop-selection-status" class="setup-note" role="status" hidden></p>
           <div class="coop-launch-grid">
             <figure id="coop-picture-preview" class="coop-picture-preview" data-state="preparing">
@@ -105,21 +84,48 @@
                 Preparing arena…
               </button>
               <button id="coop-discovery-open" type="button" disabled>Browse Team arenas</button>
-              <details class="pack-picker">
-                <summary>Play a created co-op pack</summary>
-                <label for="coop-pack-file">Open a Team pack or artwork bundle</label>
-                <input
-                  id="coop-pack-file"
-                  type="file"
-                  accept=".json,.rlteam,application/json,application/vnd.revealline.team-presentation"
-                />
-                <button id="coop-pack-cancel" type="button" hidden>Stop waiting</button>
-                <button id="coop-pack-retry" type="button" hidden>Retry pack</button>
-                <p id="coop-pack-status" role="status">Relay Rescue · 2 levels</p>
-                <button id="coop-pack-reset" type="button" hidden>Return to Relay Rescue</button>
-              </details>
             </div>
           </div>
+          <details id="coop-optional-setup" class="optional-setup">
+            <summary id="coop-optional-setup-toggle">Team options</summary>
+            <p id="coop-advanced-note" class="setup-note"></p>
+            <div class="setup">
+              <label
+                >Play style<select id="coop-experiment">
+                  <option value="full">Full teamwork</option>
+                  <option value="joint">Joint Cuts + ordinary cover</option>
+                  <option value="independent">Individual cuts + ordinary cover</option>
+                </select></label
+              >
+              <label
+                >Difficulty<select id="coop-difficulty">
+                  <option value="gentle">Gentle</option>
+                  <option value="standard" selected>Standard</option>
+                  <option value="expert">Expert</option>
+                </select></label
+              >
+              <label
+                >Actors<select id="coop-actor-style" aria-describedby="coop-actor-style-note">
+                  <option value="fpv" selected>FPV</option>
+                  <option value="campaign">Campaign</option>
+                </select></label
+              >
+            </div>
+            <p id="coop-actor-style-note" class="setup-note" role="status"></p>
+            <details class="pack-picker">
+              <summary>Created Team packs</summary>
+              <label for="coop-pack-file">Open a Team pack or artwork bundle</label>
+              <input
+                id="coop-pack-file"
+                type="file"
+                accept=".json,.rlteam,application/json,application/vnd.revealline.team-presentation"
+              />
+              <button id="coop-pack-cancel" type="button" hidden>Stop waiting</button>
+              <button id="coop-pack-retry" type="button" hidden>Retry pack</button>
+              <p id="coop-pack-status" role="status">Relay Rescue · 2 levels</p>
+              <button id="coop-pack-reset" type="button" hidden>Return to Relay Rescue</button>
+            </details>
+          </details>
           <div id="coop-lobby-tools"></div>
           <div
             id="coop-music-menu-now-playing"
@@ -187,6 +193,9 @@
                   <button id="coop-view-picture" type="button" hidden>View picture</button>
                   <button id="coop-retry" type="button">Retry same arena</button>
                   <button id="coop-discovery-paused" type="button">Browse Team arenas</button>
+                  <div id="coop-pause-core" class="coop-pause-core" hidden>
+                    <button id="coop-home-paused" type="button">Home</button>
+                  </div>
                   <button id="coop-lobby" type="button">Change setup</button>
                 </div>
                 <div id="coop-pause-modes"></div>
@@ -392,6 +401,15 @@
             <button id="coop-picture-retry" type="button" hidden>Retry picture</button>
           </div>
         </section>
+        <details id="coop-more">
+          <summary id="coop-more-toggle">More</summary>
+          <nav class="coop-more-destinations" aria-label="More destinations">
+            <a id="coop-more-home" href="../">Home</a>
+            <a id="coop-more-catalogue" href="relay-rescue.html?journey=legacy">Legacy arenas</a>
+            <a id="coop-more-about" href="../../site/about.html#versions">About &amp; credits</a>
+            <a id="coop-release-explorer">Releases</a>
+          </nav>
+        </details>
         <details id="coop-help">
           <summary id="coop-help-toggle">How to play and controls</summary>
           <div id="coop-help-unit">

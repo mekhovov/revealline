@@ -34,7 +34,8 @@ const enter = (f, node) => {
   f.tap('Enter');
 };
 function environment(install, failures) {
-  const BaseImage = globalThis.Image;
+  const BaseImage = globalThis.Image,
+    actorFetch = globalThis.fetch;
   class CandidateImage extends BaseImage {
     releases = 0;
     async decode() {
@@ -53,8 +54,16 @@ function environment(install, failures) {
   install('Image', { value: CandidateImage });
   install('crypto', { value: webcrypto });
   install('fetch', {
-    value: async (url) => {
-      const a = source.assets.find((a) => new URL(url).pathname.endsWith('/' + a.path));
+    value: async (url, options = {}) => {
+      const pathname = new URL(url).pathname;
+      const a = source.assets.find((a) => pathname.endsWith('/' + a.path));
+      if (
+        !a &&
+        /\/presentation\/compiled\/(?:runtime(?:\.[a-f0-9]{64})?\.json|assets\/[a-f0-9]{64}\.(?:png|jpg|webp|ttf|otf|woff2))$/.test(
+          pathname,
+        )
+      )
+        return actorFetch(url, options);
       assert(a);
       if (failures.has(a.id)) throw Error('Modeled pressure original offline');
       return new Response(originals.get(a.path));
@@ -83,9 +92,13 @@ test('twelve pressure originals play across all five campaigns; failed Next keep
     { type: 'select', mode: 'team', missionId: host.catalog.missions[8].id },
   ]);
   const f = await pressurePage(t, { memory, failures });
+  assert.ok(
+    f.actorTransport.requests.some(({ relative }) => relative.startsWith('runtime')),
+    'Team uses the current compiled actor presentation authority',
+  );
   assert.equal(f.$('coop-level').value, 'twin-landings');
   assert.match(
-    f.$('coop-boot').textContent,
+    f.$('coop-advanced-note').textContent,
     /pressure edition.*enemy speed Gentle ×1 \/ Standard ×1.4 \/ Expert ×1.75.*human validation pending/,
   );
   enter(f, f.$('coop-start'));
@@ -232,7 +245,7 @@ test('changing-return edition crosses into both revised maps and exits to the un
     href: 'http://localhost/game/couch/relay-rescue.html?journey=team-spatial-originals-1',
   });
   assert.equal(f.$('coop-level').value, 'weaver-crossing');
-  assert.match(f.$('coop-boot').textContent, /changing-return pressure edition/);
+  assert.match(f.$('coop-advanced-note').textContent, /changing-return pressure edition/);
   enter(f, f.$('coop-start'));
   for (let index = 7; index < 12; index++) {
     const mission = spatial.missions[index];
@@ -261,15 +274,9 @@ test('changing-return edition crosses into both revised maps and exits to the un
       await waitFor(() => f.$('coop-overlay').hidden);
       assert.equal(picture.releases, 1);
     } else {
-      // This is the canonical complete library: the twelve Journey missions
-      // continue into its retained legacy arenas instead of a dead end.
-      assert.equal(f.$('coop-next').hidden, false);
-      assert.equal(f.$('coop-next').textContent, 'Next: First Connection');
-      enter(f, f.$('coop-next'));
-      await waitFor(() => f.$('coop-overlay').hidden);
-      assert.equal(f.$('coop-level').value, 'first-connection');
-      assert.equal(f.$('coop-menu').hidden, true);
-      assert.equal(picture.releases, 1);
+      assert.equal(f.$('coop-next').hidden, true);
+      assert.match(f.$('coop-overlay-copy').textContent, /End of the Team Journey test route/);
+      assert.equal(picture.releases, 0);
     }
   }
   await new Promise((resolve) => setImmediate(resolve));

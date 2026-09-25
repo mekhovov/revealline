@@ -121,7 +121,7 @@ export function freezePresentation(value) {
 function own(value) {
   return boundedJSON(value, {
     maxBytes: LIMITS.manifestBytes,
-    maxNodes: 100000,
+    maxNodes: PRESENTATION_METADATA_LIMITS.nodes,
     maxArray: 2048,
     maxDepth: 18,
     maxString: 8192,
