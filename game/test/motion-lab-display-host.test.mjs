@@ -9,6 +9,7 @@ import { Document, Element, Events } from './helpers/couch-dom.mjs';
 import { waitFor } from './helpers/wait-for.mjs';
 import { DISPLAY_PREFERENCES_KEY } from '../display-preferences.mjs';
 import { applyFieldKitCopy } from '../ui/field-kit-copy.mjs';
+import { getLocale } from '../i18n/index.mjs';
 
 const NativeURL = globalThis.URL;
 const route = new NativeURL('../../authoring/motion-lab/', import.meta.url);
@@ -124,7 +125,7 @@ async function harness(
     host = new Events(),
     media = Object.assign(new Events(), { matches: reduced });
   doc.defaultView = host;
-  doc.documentElement.lang = 'uk'; // Existing English fallback remains explicit.
+  doc.documentElement.lang = getLocale(); // Match the locale bootstrap used by the real page.
   const html = await readFile(new NativeURL('index.html', route), 'utf8');
   mountMarkup(doc, html);
   const scripts = [...html.matchAll(/<script\b([^>]*)>/g)].map((match) => ({
@@ -1676,4 +1677,76 @@ test('Motion resize reveals the control when its labeled field is taller than th
   assert.equal(calls.length, 1, 'Reentrant measurement does not schedule repeated scrolls.');
   target.emit('resize');
   assert.equal(calls.length, 1, 'Descendant events cannot pretend to be a viewport resize.');
+});
+
+test('Motion locale changes preserve paused movement, live controls and image ownership', async (t) => {
+  const { setLocale, getLocale } = await import('../i18n/index.mjs');
+  const previous = getLocale();
+  setLocale('en', { persist: false });
+  const h = await harness(t);
+  try {
+    await h.ready();
+    h.tick(0);
+    h.tick(100);
+    h.$('play-pause').click();
+    h.change('character-scale', '1.25', 'input');
+    h.change('cruise-speed', '11', 'input');
+    const focused = h.$('character-scale');
+    focused.focus();
+    const before = freezeView(h);
+    const options = [...h.$('character').children];
+    const writes = h.writes.length;
+    const requests = h.requests.length;
+    const gate = deferred();
+    selectBackground(h, {
+      name: 'Мій кадр.png',
+      type: 'image/png',
+      size: 122,
+      arrayBuffer: () => gate.promise,
+    });
+    const phase = h.$('background-status').dataset.state;
+    for (const locale of ['uk', 'en', 'uk']) {
+      setLocale(locale, { persist: false });
+      assert.equal(h.doc.activeElement, focused);
+      assert.deepEqual(h.$('character').children, options);
+      const view = freezeView(h);
+      delete view.queue;
+      const expected = { ...before };
+      delete expected.queue;
+      assert.deepEqual(view, expected);
+      assert.equal(h.frames.size, 0, 'Translating a paused study cannot grant Play intent.');
+      assert.equal(h.writes.length, writes);
+      assert.equal(h.requests.length, requests);
+      assert.equal(h.objectURLs.length, 0);
+      assert.equal(h.$('background-status').dataset.state, phase);
+      assert.match(
+        h.$('background-status').textContent,
+        locale === 'uk' ? /Підготовка локального/ : /Preparing local/,
+      );
+      assert.equal(h.$('play-pause').textContent, locale === 'uk' ? 'Відтворити' : 'Play');
+      assert.equal(h.$('scale-output').textContent, locale === 'uk' ? '1,25×' : '1.25×');
+      assert.match(h.$('motion-event').textContent, locale === 'uk' ? /Пауза/ : /Paused/);
+    }
+    gate.resolve(await (await backgroundFile('static-default.png')).arrayBuffer());
+    await waitFor(() => h.objectURLs.length === 1);
+    const accepted = h.images.at(-1);
+    accepted.onload();
+    const url = accepted.src;
+    assert.match(h.$('background-status').textContent, /Мій кадр\.png.*Лише локальний/);
+    setLocale('en', { persist: false });
+    assert.match(h.$('background-status').textContent, /Мій кадр\.png.*Local display only/);
+    assert.deepEqual(
+      freezeView(h),
+      before,
+      'Returning to English exposes unchanged movement coordinates.',
+    );
+    assert.equal(accepted.src, url);
+    assert.equal(h.revoked.includes(url), false);
+    assert.equal(h.objectURLs.length, 1);
+    assert.equal(h.frames.size, 0);
+    assert.equal(h.writes.length, writes);
+    assert.equal(h.doc.activeElement, focused);
+  } finally {
+    setLocale(previous, { persist: false });
+  }
 });
