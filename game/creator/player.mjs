@@ -43,8 +43,7 @@ function persistAttempt() {
   const attempt = runtime?.current();
   if (!attempt || !['running', 'respawning'].includes(attempt.run.status)) return;
   try {
-    if (!lease?.writable)
-      throw new Error(lease?.reason || t('errors:creator.savingUnavailable'));
+    if (!lease?.writable) throw new Error(lease?.reason || t('errors:creator.savingUnavailable'));
     const saved = JSON.stringify(runtime.suspend());
     if (new TextEncoder().encode(saved).length > SESSION_STORAGE_BYTES)
       throw new Error(t('errors:creator.attemptSaveBudgetExceeded'));
@@ -52,10 +51,7 @@ function persistAttempt() {
       throw new Error(t('errors:creator.attemptChangedInAnotherTab'));
     localStorage.setItem(saveKey, saved);
     savedRaw = saved;
-    localizedText(
-      $('save-status'),
-      localizedMessage('interface:creator.attemptSavedOnDevice'),
-    );
+    localizedText($('save-status'), localizedMessage('interface:creator.attemptSavedOnDevice'));
   } catch (error) {
     localizedText(
       $('save-status'),
@@ -129,8 +125,7 @@ async function showEarned(preferredMissionId = null) {
   const receipt = clears[mission.id];
   const picture = project.assets.find(({ id }) => id === mission.presentation.backgroundAssetId);
   const runtimePicture = pack.assets.find(({ sha256 }) => sha256 === picture?.sha256);
-  if (!picture || !runtimePicture)
-    throw new Error(t('errors:creator.earnedPictureMissing'));
+  if (!picture || !runtimePicture) throw new Error(t('errors:creator.earnedPictureMissing'));
   if (pictureSha256 !== picture.sha256) {
     if (pictureURL) URL.revokeObjectURL(pictureURL);
     pictureURL = URL.createObjectURL(runtimePicture.blob);
