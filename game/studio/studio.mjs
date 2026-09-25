@@ -89,6 +89,13 @@ import { observePreviewReadiness } from './preview-readiness.mjs';
 import { createCandidateLibrary } from './candidate-library.mjs';
 
 const $ = (id) => document.getElementById(id);
+const creatorDraftId = new URLSearchParams(location.search).get('creator-draft');
+if (creatorDraftId && /^[a-z][a-z0-9-]{0,59}$/.test(creatorDraftId)) {
+  const back = document.createElement('a');
+  back.href = `../creator/?draft=${encodeURIComponent(creatorDraftId)}`;
+  back.textContent = 'Return to picture creator';
+  document.querySelector('header').append(back);
+}
 const candidateLibrary = createCandidateLibrary({ document });
 const backend = createContentDraftBackend();
 const pacingInspector = createPacingInspector({ document, getSource: () => session.current() });
@@ -1165,7 +1172,14 @@ async function launchPreview(source, missionId, difficulty) {
     const pin = manifest.background;
     const [theme, artwork] = await Promise.all([
       loadPreviewTheme({ themeId: manifest.presentation.themeId, signal: controller.signal }),
-      pin ? loadPreviewArtwork(pin, { signal: controller.signal }) : null,
+      pin
+        ? (async () => {
+            const creatorDraft = new URLSearchParams(location.search).get('creator-draft');
+            if (!creatorDraft) return loadPreviewArtwork(pin, { signal: controller.signal });
+            const { loadCreatorDraftArtwork } = await import('../creator/draft-artwork.mjs');
+            return loadCreatorDraftArtwork(creatorDraft, pin, { signal: controller.signal });
+          })()
+        : null,
     ]);
     if (ticket !== previewRevision) return;
     result = prepareContentPreview(project, missionId, { difficulty, theme, artwork });

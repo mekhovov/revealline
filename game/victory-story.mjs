@@ -11,8 +11,7 @@ export const VICTORY_STORY_LIMITS = Object.freeze({
 const preparations = new WeakSet();
 const aborted = () => new DOMException('Story preparation cancelled.', 'AbortError');
 
-/** An explicit preview sidecar. This does not extend any stored v1 presentation or receipt. */
-export function validateVictoryStory(source, { library, identityCatalog } = {}) {
+function validateStoryDescriptor(source) {
   const value = boundedJSON(source, {
     maxBytes: 8192,
     maxArray: 16,
@@ -37,24 +36,6 @@ export function validateVictoryStory(source, { library, identityCatalog } = {}) 
   );
   value.picturePin = snapshotPictureChoice(value.picturePin);
   required(value.picturePin.kind === 'still', 'Story preview requires an exact managed still pin.');
-  required(
-    isMediaLibrary(library) && isMediaIdentityCatalog(identityCatalog),
-    'Story preview needs verified still and owner catalogs.',
-  );
-  const pin = value.picturePin;
-  const presentation = library.presentations.find(
-    (p) => p.id === pin.presentationId && p.revision === pin.presentationRevision,
-  );
-  const asset = library.assets.find((a) => a.id === pin.assetId);
-  required(
-    identityCatalog.has(pin.identity) &&
-      presentation &&
-      asset &&
-      canonicalJSON(presentation.identity) === canonicalJSON(pin.identity) &&
-      presentation.poster.assetId === pin.assetId &&
-      asset.sha256 === pin.sha256,
-    'Restore the exact historical poster and owner; current assignments cannot replace them.',
-  );
   exactKeys(
     value.source,
     ['sha256', 'bytes', 'mime', 'width', 'height', 'durationSeconds'],
@@ -97,6 +78,30 @@ export function validateVictoryStory(source, { library, identityCatalog } = {}) 
   return freezeMedia(value);
 }
 
+/** An explicit preview sidecar. This does not extend any stored v1 presentation or receipt. */
+export function validateVictoryStory(source, { library, identityCatalog } = {}) {
+  const value = validateStoryDescriptor(source);
+  required(
+    isMediaLibrary(library) && isMediaIdentityCatalog(identityCatalog),
+    'Story preview needs verified still and owner catalogs.',
+  );
+  const pin = value.picturePin;
+  const presentation = library.presentations.find(
+    (p) => p.id === pin.presentationId && p.revision === pin.presentationRevision,
+  );
+  const asset = library.assets.find((a) => a.id === pin.assetId);
+  required(
+    identityCatalog.has(pin.identity) &&
+      presentation &&
+      asset &&
+      canonicalJSON(presentation.identity) === canonicalJSON(pin.identity) &&
+      presentation.poster.assetId === pin.assetId &&
+      asset.sha256 === pin.sha256,
+    'Restore the exact historical poster and owner; current assignments cannot replace them.',
+  );
+  return value;
+}
+
 /** Authenticate a local original with the existing real inspection/hash path.
  * Injected decoder factories are trusted host capabilities, not JSON authority.
  */
@@ -107,6 +112,32 @@ export async function prepareVictoryStory(
   const owned = validateVictoryStory(descriptor, { library, identityCatalog });
   if (options.signal?.aborted) throw aborted();
   const inspected = await openVideoPosterSource(blob, options);
+  try {
+    if (options.signal?.aborted) throw aborted();
+    for (const [key, expected] of Object.entries(owned.source))
+      required(
+        inspected.info[key] === expected,
+        `Original video ${key} differs from the selected story.`,
+      );
+    const prepared = Object.freeze({ descriptor: owned, original: inspected.original });
+    preparations.add(prepared);
+    return prepared;
+  } finally {
+    inspected.dispose();
+  }
+}
+
+/** Authenticate an immutable portable story whose poster ownership was already
+ * established by another prepared capability, such as a verified .rlpack. */
+export async function preparePinnedVictoryStory({ descriptor, blob, picturePin }, options = {}) {
+  const owned = validateStoryDescriptor(descriptor);
+  required(
+    canonicalJSON(owned.picturePin) === canonicalJSON(snapshotPictureChoice(picturePin)),
+    'Portable story belongs to a different exact poster.',
+  );
+  if (options.signal?.aborted) throw aborted();
+  const inspectVideo = options.inspectVideo ?? openVideoPosterSource;
+  const inspected = await inspectVideo(blob, options);
   try {
     if (options.signal?.aborted) throw aborted();
     for (const [key, expected] of Object.entries(owned.source))

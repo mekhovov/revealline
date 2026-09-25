@@ -13,7 +13,7 @@ import { createJourneyPreferences } from '../journey/preferences.mjs';
 import { createActorStylePreferences } from '../actor-style-preferences.mjs';
 import { prepareActorAppearanceLease } from '../presentation/actor-appearance-lease.mjs';
 import { prepareTeamVisualThemeContext } from '../presentation/visual-theme-identities.mjs';
-import { dataIdentity } from '../data-json.mjs';
+import { canonicalJSON, dataIdentity } from '../data-json.mjs';
 import { attachCouchMusicHost } from './couch-music-host.mjs';
 import { prepareTeamMusicContext } from './couch-music-context.mjs';
 import { attachPublishedAudio } from '../ui/published-audio.mjs';
@@ -30,12 +30,7 @@ import {
   FIXED_DT,
 } from '../coop/core.mjs';
 import { COOP_PLAYTEST_CONFIGURATIONS } from '../coop/relay-yard.mjs';
-import {
-  COOP_STARTER_PACK,
-  readCoopPack,
-  coopGoalText,
-  coopPackDestination,
-} from '../coop/library.mjs';
+import { COOP_STARTER_PACK, coopGoalText, coopPackDestination } from '../coop/library.mjs';
 import { COOP_PACK_MAX_BYTES } from '../coop/recipes.mjs';
 import { attachCouchInput } from './couch-input.mjs';
 import { createCoopPainter } from './coop-view.mjs';
@@ -51,6 +46,8 @@ import {
 } from './coop-picture-bindings.mjs';
 import { decodeCoopPicture } from './coop-picture-image.mjs';
 import { createCoopPresentationImport } from './coop-import-source.mjs';
+import { readPlayableTeamCampaign } from './creator-team-import.mjs';
+import { createInstalledTeamCampaignStore } from '../creator/team-installed.mjs';
 import { COOP_PRESENTATION_MIME } from '../coop/presentation-envelope.mjs';
 import {
   coopFailureFeedback,
@@ -392,6 +389,13 @@ export function bootCoop({
   let previousPads = new Map();
   let pack = COOP_STARTER_PACK;
   let packArtworkSource = null;
+  let installedTeamStore = null,
+    installedTeamStorageError = null;
+  try {
+    installedTeamStore = createInstalledTeamCampaignStore();
+  } catch (error) {
+    installedTeamStorageError = error;
+  }
   let discovery = null,
     discoveryOperation = null,
     discoveryStarted = null,
@@ -416,6 +420,12 @@ export function bootCoop({
     libraryReturnFocus = true;
   const libraryRuntimeRows = new WeakMap();
   const libraryOtherSources = new Map();
+  const installedTeamSourceIds = new Set();
+  const installedTeamProgress = new Map();
+  let installedTeamRows = [],
+    installedTeamEditions = new Map(),
+    installedTeamGeneration = -1,
+    installedTeamLoading = null;
   const librarySession = createMissionLibrarySessionState({ mode: 'team' });
   const libraryVisit = crypto.randomUUID();
   const discoveryRows = (sourcePack, artworkSource, prefix) =>
@@ -459,6 +469,7 @@ export function bootCoop({
           candidateDifficulty),
     ),
     ...starterDiscoveryRows,
+    ...installedTeamRows,
     ...(localDiscoveryPack?.rows ?? []),
   ];
   const artworkImports = createCoopPresentationImport();
@@ -1580,7 +1591,13 @@ export function bootCoop({
     pictureUI('Picture loading cancelled. Retry picture when you are ready.');
     focus?.finish($('coop-picture-retry'));
   }
-  function newPictureSelection(recipe, sourcePack, pinnedPack = sourcePack, artworkSource = null) {
+  function newPictureSelection(
+    recipe,
+    sourcePack,
+    pinnedPack = sourcePack,
+    artworkSource = null,
+    installedEditionId = null,
+  ) {
     // Only code-owned exact recipes join this route. An imported pack with the
     // same IDs (or even the same bytes) keeps its independent local ordering.
     const journeyRow =
@@ -1594,6 +1611,7 @@ export function bootCoop({
       sourcePack,
       journeyRow,
       artworkSource,
+      installedEditionId,
       pack: structuredClone(pinnedPack),
       levelId: recipe.level.id,
       request: {
@@ -1770,6 +1788,11 @@ export function bootCoop({
         sourcePack,
         sourcePack,
         run ? (acceptedPicture?.artworkSource ?? null) : packArtworkSource,
+        run
+          ? (acceptedPicture?.installedEditionId ?? null)
+          : localDiscoveryPack?.pack === pack
+            ? (localDiscoveryPack.installedEditionId ?? null)
+            : null,
       );
     }
     const selection = pictureSelection;
@@ -2011,6 +2034,7 @@ export function bootCoop({
         : navigation.nextRow
           ? null
           : acceptedPicture.artworkSource,
+      nextDiscoveryRow?.installedEditionId ?? acceptedPicture.installedEditionId ?? null,
     );
     const rememberBuiltIn = selection.sourcePack === COOP_STARTER_PACK;
     const operation = {
@@ -2511,7 +2535,13 @@ export function bootCoop({
       ...currentRecipe().options,
       ...(row.journeyRow ? { difficulty: row.journeyRow.difficulty } : {}),
     });
-    const selection = newPictureSelection(recipe, row.pack, row.pack, row.artworkSource);
+    const selection = newPictureSelection(
+      recipe,
+      row.pack,
+      row.pack,
+      row.artworkSource,
+      row.installedEditionId ?? null,
+    );
     const previous = {
       run,
       generation,
@@ -2818,6 +2848,100 @@ export function bootCoop({
     const rows = missionLibrary.register(source);
     rows.forEach((row, index) => libraryRuntimeRows.set(row, () => resolve(source.entries[index])));
   }
+  const installedDifficultyLabel = (value) =>
+    ({ gentle: 'Gentle', standard: 'Standard', expert: 'Expert' })[value] ?? value;
+  const installedPresetLabel = (value) =>
+    value === 'full' ? 'Full teamwork' : 'Joint cuts and ordinary cover';
+  function installedProgressText(row) {
+    const receipt = installedTeamProgress.get(row.installedEditionId)?.clears?.[row.levelId];
+    return receipt
+      ? `Cleared on ${installedDifficultyLabel(receipt.difficulty)} · ${installedPresetLabel(receipt.presetId)}`
+      : 'Not cleared in this edition';
+  }
+  async function launchInstalledTeamRow(edition, row, context) {
+    if (
+      !installedTeamStore ||
+      installedTeamEditions.get(edition.editionId) !== edition ||
+      !context.isCurrent()
+    )
+      return false;
+    context.onStatus(`Verifying installed edition ${edition.editionId.slice(0, 12)}…`);
+    const loaded = await installedTeamStore.load(edition.editionId, {
+      signal: context.signal,
+    });
+    if (
+      !context.isCurrent() ||
+      installedTeamEditions.get(edition.editionId) !== edition ||
+      canonicalJSON(loaded.prepared.pack) !== canonicalJSON(edition.pack)
+    )
+      throw new Error('Installed Team edition changed. Reopen the mission library.');
+    return launchTeamLibraryRow(row, context);
+  }
+  async function includeInstalledTeamCampaigns() {
+    if (!installedTeamStore) return;
+    if (installedTeamLoading) return installedTeamLoading;
+    const loading = (async () => {
+      try {
+        const inventory = await installedTeamStore.inventory();
+        if (disposed || installedTeamLoading !== loading) return;
+        if (inventory.generation === installedTeamGeneration) return;
+        for (const sourceId of installedTeamSourceIds) missionLibrary?.remove(sourceId);
+        installedTeamSourceIds.clear();
+        installedTeamRows = [];
+        installedTeamEditions = new Map(
+          inventory.editions.map((edition) => [edition.editionId, edition]),
+        );
+        installedTeamProgress.clear();
+        for (const edition of inventory.editions) {
+          installedTeamProgress.set(edition.editionId, edition.progress);
+          const rows = discoveryRows(edition.pack, null, `installed-${edition.editionId}`).map(
+            (row) =>
+              Object.freeze({
+                ...row,
+                installedEditionId: edition.editionId,
+                sourceLabel: `Installed Team edition · ${edition.editionId.slice(0, 12)}`,
+              }),
+          );
+          installedTeamRows.push(...rows);
+          const sourceId = `team-installed:${edition.editionId}`;
+          installedTeamSourceIds.add(sourceId);
+          registerTeamSource(
+            teamArenaLibrarySource({
+              rows,
+              sourceId,
+              editionId: edition.editionId,
+              edition: `${edition.pack.name} · ${edition.editionId.slice(0, 12)}`,
+              collection: 'Custom',
+              isCurrent: (row) =>
+                installedTeamEditions.get(edition.editionId) === edition && rows.includes(row),
+              progress: installedProgressText,
+              launch: (row, context) => launchInstalledTeamRow(edition, row, context),
+            }),
+            (row) => row,
+          );
+        }
+        if (
+          libraryLocalOwner?.installedEditionId &&
+          installedTeamSourceIds.has(`team-installed:${libraryLocalOwner.installedEditionId}`)
+        ) {
+          if (libraryLocalOwner.librarySourceId)
+            missionLibrary.remove(libraryLocalOwner.librarySourceId);
+          libraryLocalOwner = null;
+          getTeamLibrary();
+        }
+        installedTeamGeneration = inventory.generation;
+        installedTeamStorageError = null;
+      } catch (error) {
+        if (error?.name !== 'AbortError') installedTeamStorageError = error;
+      }
+    })();
+    installedTeamLoading = loading;
+    try {
+      await loading;
+    } finally {
+      if (installedTeamLoading === loading) installedTeamLoading = null;
+    }
+  }
   function retireLibraryLaunch() {
     const owner = libraryLaunch;
     libraryLaunch = null;
@@ -3033,23 +3157,26 @@ export function bootCoop({
       );
     }
     if (libraryLocalOwner !== localDiscoveryPack) {
-      if (libraryLocalOwner) missionLibrary.remove(libraryLocalOwner.librarySourceId);
+      if (libraryLocalOwner?.librarySourceId)
+        missionLibrary.remove(libraryLocalOwner.librarySourceId);
       libraryLocalOwner = localDiscoveryPack;
       if (localDiscoveryPack) {
         const owner = localDiscoveryPack;
-        owner.librarySourceId = `team-custom:${libraryVisit}:${localDiscoveryRevision}`;
-        registerTeamSource(
-          teamArenaLibrarySource({
-            rows: owner.rows,
-            sourceId: owner.librarySourceId,
-            editionId: `${owner.pack.id}@${owner.pack.revision}`,
-            edition: `${owner.pack.name} · this visit`,
-            collection: 'Custom',
-            isCurrent: (row) => localDiscoveryPack === owner && owner.rows.includes(row),
-            launch: launchTeamLibraryRow,
-          }),
-          (row) => row,
-        );
+        if (!installedTeamSourceIds.has(`team-installed:${owner.installedEditionId}`)) {
+          owner.librarySourceId = `team-custom:${libraryVisit}:${localDiscoveryRevision}`;
+          registerTeamSource(
+            teamArenaLibrarySource({
+              rows: owner.rows,
+              sourceId: owner.librarySourceId,
+              editionId: `${owner.pack.id}@${owner.pack.revision}`,
+              edition: `${owner.pack.name} · this visit`,
+              collection: 'Custom',
+              isCurrent: (row) => localDiscoveryPack === owner && owner.rows.includes(row),
+              launch: launchTeamLibraryRow,
+            }),
+            (row) => row,
+          );
+        }
       }
     }
     return missionLibrary;
@@ -3097,7 +3224,12 @@ export function bootCoop({
       getCurrentId: () =>
         missionLibrary.missions.find((row) => {
           const bound = libraryRuntimeRows.get(row)?.();
-          return bound?.pack === pack && bound.level === selectedLevel();
+          return (
+            (bound?.pack === pack && bound.level === selectedLevel()) ||
+            (localDiscoveryPack?.installedEditionId &&
+              bound?.installedEditionId === localDiscoveryPack.installedEditionId &&
+              bound.levelId === selectedLevel().id)
+          );
         })?.id,
       readState: librarySession.read,
       writeState: librarySession.write,
@@ -3348,7 +3480,7 @@ export function bootCoop({
       libraryOpening = opening;
       getTeamLibrary();
       try {
-        await includeCurrentTeamJourney();
+        await Promise.all([includeCurrentTeamJourney(), includeInstalledTeamCampaigns()]);
         if (libraryOpening !== opening || !opening.current() || !canOpenDiscovery()) return;
         opening.dispose();
         libraryOpening = null;
@@ -3356,6 +3488,11 @@ export function bootCoop({
         ++libraryOtherModesVisit;
         libraryChooser.open(opener);
         libraryPreview.refresh();
+        if (installedTeamStorageError)
+          libraryStatus(
+            `Installed Team campaigns could not be checked: ${installedTeamStorageError.message}. This visit's arenas are still available.`,
+            'error',
+          );
         void libraryOtherModesLoad();
       } catch (error) {
         if (opening.current() && !disposed)
@@ -4070,6 +4207,49 @@ export function bootCoop({
     }
     if (terminalMessage) message(terminalMessage);
   }
+  function persistInstalledTeamCompletion(completedRun, picture, epoch) {
+    const editionId = picture?.installedEditionId;
+    const setup = COOP_PLAYTEST_CONFIGURATIONS.find((candidate) =>
+      ['jointCuts', 'assistCaptures', 'advancedCooperation'].every(
+        (key) => candidate[key] === completedRun.config[key],
+      ),
+    );
+    if (!installedTeamStore || !editionId || !['full', 'joint'].includes(setup?.id)) return;
+    const tuning = attemptTuning.get(completedRun);
+    void installedTeamStore
+      .recordCompletion({
+        editionId,
+        levelId: completedRun.level.id,
+        runId: `${libraryVisit}:${picture.request.attemptId}`,
+        gameplayId: tuning.gameplayId,
+        difficulty: completedRun.difficulty,
+        presetId: setup.id,
+      })
+      .then(
+        (progress) => {
+          installedTeamProgress.set(editionId, progress);
+          libraryChooser?.refresh();
+          if (
+            !disposed &&
+            run === completedRun &&
+            generation === epoch &&
+            acceptedPicture === picture
+          )
+            nextStatus('Installed Team progress saved for this exact edition.');
+        },
+        (error) => {
+          if (
+            !disposed &&
+            run === completedRun &&
+            generation === epoch &&
+            acceptedPicture === picture
+          )
+            nextStatus(
+              `Result kept for this session; installed Team progress was not saved: ${error.message}`,
+            );
+        },
+      );
+  }
   function update(now) {
     if (disposed) return;
     if (inactive || !foreground()) {
@@ -4144,7 +4324,10 @@ export function bootCoop({
           if (!running()) {
             const finishedAttempt = run,
               epoch = generation;
-            if (run.status === 'won') candidateProgress?.complete(run);
+            if (run.status === 'won') {
+              candidateProgress?.complete(run);
+              persistInstalledTeamCompletion(run, acceptedPicture, epoch);
+            }
             if (disposed || run !== finishedAttempt || generation !== epoch) break;
             clear();
             overlay();
@@ -4332,11 +4515,31 @@ export function bootCoop({
         } else {
           if (draft.file.size > COOP_PACK_MAX_BYTES)
             throw new TypeError('Choose a co-op pack smaller than 1 MiB.');
-          const source = await draft.file.text();
-          if (!current()) return;
           display.update({ message: 'Checking Team arenas and rules…', stage: 'verifying' });
           if (!current()) return;
-          draft.pack = readCoopPack(source);
+          const playable = await readPlayableTeamCampaign(draft.file, {
+            signal: controller.signal,
+          });
+          if (!current()) return;
+          draft.pack = playable.pack;
+          draft.creatorCampaign = playable.prepared;
+          if (playable.prepared && installedTeamStore) {
+            display.update({
+              message: 'Installing the exact verified Team edition…',
+              stage: 'verifying',
+            });
+            try {
+              const installed = await installedTeamStore.install(playable.prepared, {
+                signal: controller.signal,
+              });
+              if (!current()) return;
+              draft.installedEditionId = installed.editionId;
+              installedTeamGeneration = -1;
+            } catch (error) {
+              if (error?.name === 'AbortError') throw error;
+              draft.installError = error;
+            }
+          }
         }
         if (!packPicker.open) {
           cancelImport();
@@ -4347,6 +4550,7 @@ export function bootCoop({
           draft.pack,
           draft.pack,
           draft.artworkSource,
+          draft.installedEditionId,
         );
       }
       display.update({
@@ -4432,7 +4636,11 @@ export function bootCoop({
         pictureUI(
           draft.artworkSource
             ? 'Local artwork ready. Start remains a separate action.'
-            : 'Imported Team picture ready. Start remains a separate action.',
+            : draft.installedEditionId
+              ? 'Team campaign installed. Start remains a separate action.'
+              : draft.creatorCampaign
+                ? `Team campaign ready for this visit. Installation unavailable: ${(draft.installError ?? installedTeamStorageError)?.message ?? 'storage is unavailable'}.`
+                : 'Imported Team picture ready. Start remains a separate action.',
         );
         if (!current()) {
           rollback();
@@ -4447,7 +4655,17 @@ export function bootCoop({
         localDiscoveryPack = {
           pack: draft.pack,
           artworkSource: draft.artworkSource,
-          rows: discoveryRows(draft.pack, draft.artworkSource, `local-${++localDiscoveryRevision}`),
+          installedEditionId: draft.installedEditionId ?? null,
+          rows: discoveryRows(
+            draft.pack,
+            draft.artworkSource,
+            `local-${++localDiscoveryRevision}`,
+          ).map((row) =>
+            Object.freeze({
+              ...row,
+              installedEditionId: draft.installedEditionId ?? null,
+            }),
+          ),
         };
         committed = true;
         importOperation = null;
@@ -4528,7 +4746,16 @@ export function bootCoop({
       file.type === COOP_PRESENTATION_MIME || /\.rlteam$/i.test(file.name ?? '')
         ? 'artwork'
         : 'json';
-    const draft = { file, kind, pack: null, artworkSource: null, selection: null };
+    const draft = {
+      file,
+      kind,
+      pack: null,
+      artworkSource: null,
+      creatorCampaign: null,
+      installedEditionId: null,
+      installError: null,
+      selection: null,
+    };
     importDraft = draft;
     $('coop-pack-cancel').textContent = kind === 'artwork' ? 'Cancel import' : 'Stop waiting';
     return importAdopting
@@ -4738,6 +4965,8 @@ export function bootCoop({
     journeyReactions.dispose();
     journeyPictures?.dispose();
     arenaPreference.dispose();
+    installedTeamStore?.close();
+    installedTeamStore = null;
     candidateProgress?.dispose();
     candidatePreferences?.dispose();
     if (!candidatePreferences) gameplayPreferences.dispose();
