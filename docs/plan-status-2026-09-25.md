@@ -12,20 +12,18 @@ states. Skipped suites are never counted as passes.
 
 ## 1. Current release state
 
-- **Public Pages still selects v0.110.1.** It is the latest selector with accepted
-  public evidence.
+- **Public Pages selects v0.111.1.** Public Home, the 91-mission New Journey
+  gallery, prepared Solo play, Versus play, and the 12-mission Team Journey were
+  checked through the ordinary release URLs.
 - **v0.111.0 and v0.111.1 are immutable published releases.** v0.111.1 fixes
-  Steam Deck/Chrome confirmation echoes, but it is not yet the public Pages
-  default.
+  Steam Deck/Chrome confirmation echoes and is now the public Pages default.
 - **Archive76 now preserves v0.111.0.** Its public deployment passed an exact audit
   of 1,146 files and 595,553,722 bytes with zero failures. Fresh browser checks
   launched the 91-mission Solo and Versus Journeys and the 12-mission Team Journey.
-- **PR476 is the active release gate.** Exact head
-  `9b452c97cda8c9f1a8c3c438474f72805c515f97` has green preflight,
-  release-ready, archive assembly, 63 controller tests, five extraction tests,
-  and a clean 76-archive preview. It still needs protected merge, Pages deploy,
-  and public v0.111.1 acceptance.
-- Protected main is `251f2e859df42e8fc8e9b3bc412982b925b93fdf` until PR476 merges.
+- **PR476 is merged and Pages workflow run 36095346816 passed.** Its exact archive
+  preview covered 76 admitted releases with zero observations; focused evidence
+  included 63 controller tests and five archive-extraction tests.
+- Protected main is `16e111973943cdabdcccacf114228eaac3abfc98`.
   Publication remains serialized through one publisher.
 
 ## 2. Completed and publicly delivered
@@ -42,7 +40,7 @@ states. Skipped suites are never counted as passes.
 | Main actor            | Corner-bracket visual clutter was removed and the readable FPV craft restored                                     | v0.103.0                                                 |
 | Home and Pause        | Compact Home, global More menu, focused Pause hierarchy, and controller menu repairs                              | v0.105.0–v0.108.0; cross-mode consolidation remains open |
 | Team presentation     | Original pictures, readable actors, and corrected picture authority                                               | v0.109.0/v0.110.1                                        |
-| Release safety        | Immutable releases, protected main, exact-source qualification, archives, and reviewed selector                   | Active; current selector promotion remains R0            |
+| Release safety        | Immutable releases, protected main, exact-source qualification, archives, and reviewed selector                   | v0.111.1 publicly selected; discipline remains active    |
 
 The Xposed-led programme is not complete. Public releases provide the foundation,
 but consistent cross-mode player flows, rewards, gallery behavior, failure/retry,
@@ -51,18 +49,18 @@ remain open.
 
 ## 3. Prepared work that is not public
 
-| Candidate                      | Current evidence                                                                                    | Required before release                                                                                                                           |
-| ------------------------------ | --------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Couch quick start              | Clean local candidate; 201/201 extended Couch checks passed                                         | Rebuild on accepted main, combine with canonical character-trail correction, assign the next unused version, review, release, and verify publicly |
-| Character trail/impact cleanup | Six-file candidate; removes distracting corner-like artifacts and sharpens readable impact feedback | Restack on the accepted Couch source, regenerate exact presentation authority, visual review, and release                                         |
-| Shared Home/lobbies/Pause      | Cross-mode consolidation candidate is being reconciled                                              | Final inventory, keyboard/controller/touch checks, responsive review, release                                                                     |
-| Gameplay HUD/layout            | Clean 15-path candidate; 324/324 responsive/controller/touch checks passed                          | Rebase on accepted release source, production build, visual/browser checks, release                                                               |
-| Deliberate terminal failure    | Clean 17-path candidate; 51 focused terminal/recovery/Team checks passed                            | Rebase, build, browser checks, release; no automatic terminal restart may return                                                                  |
-| Settings/Help return           | Clean candidate; 30 focused and 102 history checks passed                                           | Rebase, cross-mode opener/focus review, release                                                                                                   |
-| Journey rewards                | Solo and Couch exact-picture candidates exist with focused evidence                                 | Consolidate mode-scoped completion, exact artwork retention, Collection visibility, migration/history checks, release                             |
-| Compact mission gallery        | Earlier UX1-B candidate exists                                                                      | Restack after rewards; finish complete-gallery selection, previews, one-action play, lazy resource handling, and responsive spatial navigation    |
-| Reviewed Team library          | PR475 exposes 12 opt-in specialist candidates                                                       | Reconcile dependency stack, clear production-ledger debt, human balance, device checks, and explicit adoption decision                            |
-| Appearance/theme surfaces      | PR408/414/417/418 form a proposed aggregate                                                         | Restack, remove overlap, prove accessibility and all affected surfaces, then release                                                              |
+| Candidate                      | Current evidence                                                                                                                                                                                           | Required before release                                                                                                                        |
+| ------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| Couch quick start              | Clean focused candidate exists; an earlier 201/201 Couch run passed. A later 55-test run was interrupted when its temporary worktree was removed, so that run is not counted as a pass or product failure. | Rebuild on accepted main, rerun focused checks in a retained worktree, assign the next unused version, review, release, and verify publicly    |
+| Character trail/impact cleanup | Six-file candidate; removes distracting corner-like artifacts and sharpens readable impact feedback                                                                                                        | Restack on the accepted Couch source, regenerate exact presentation authority, visual review, and release                                      |
+| Shared Home/lobbies/Pause      | Cross-mode consolidation candidate is being reconciled                                                                                                                                                     | Final inventory, keyboard/controller/touch checks, responsive review, release                                                                  |
+| Gameplay HUD/layout            | Clean 15-path candidate; 324/324 responsive/controller/touch checks passed                                                                                                                                 | Rebase on accepted release source, production build, visual/browser checks, release                                                            |
+| Deliberate terminal failure    | Clean 17-path candidate; 51 focused terminal/recovery/Team checks passed                                                                                                                                   | Rebase, build, browser checks, release; no automatic terminal restart may return                                                               |
+| Settings/Help return           | Clean candidate; 30 focused and 102 history checks passed                                                                                                                                                  | Rebase, cross-mode opener/focus review, release                                                                                                |
+| Journey rewards                | Solo and Couch exact-picture candidates exist with focused evidence                                                                                                                                        | Consolidate mode-scoped completion, exact artwork retention, Collection visibility, migration/history checks, release                          |
+| Compact mission gallery        | Earlier UX1-B candidate exists                                                                                                                                                                             | Restack after rewards; finish complete-gallery selection, previews, one-action play, lazy resource handling, and responsive spatial navigation |
+| Reviewed Team library          | PR475 exposes 12 opt-in specialist candidates                                                                                                                                                              | Reconcile dependency stack, clear production-ledger debt, human balance, device checks, and explicit adoption decision                         |
+| Appearance/theme surfaces      | PR408/414/417/418 form a proposed aggregate                                                                                                                                                                | Restack, remove overlap, prove accessibility and all affected surfaces, then release                                                           |
 
 Candidate tests prove deterministic behavior in the tested scope. They do not prove
 physical controller/touch behavior, offline readiness, whole-campaign balance, or
@@ -73,19 +71,19 @@ that a level is enjoyable.
 Release publication remains sequential. Implementation, review, and focused tests
 continue in parallel so the next feature is ready when the publisher becomes free.
 
-| Order     | Deliverable                                                                         |   ETA after its release slot opens | Blocking acceptance                                                                                                                                                                                        |
-| --------- | ----------------------------------------------------------------------------------- | ---------------------------------: | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **R0**    | Merge PR476 and make v0.111.1 the public Pages default                              |                      **1–3 hours** | Protected merge, Pages assembly/deploy, public version/source/bytes, ordinary Solo/Versus/Team checks                                                                                                      |
-| **R1**    | Couch quick start plus canonical character trail/impact cleanup; tentative v0.113.0 |                     **6–12 hours** | One Start with valid defaults, Cancel cannot steal controller Confirm, optional setup collapsed, clean actor silhouette, responsive keyboard/controller/touch evidence, immutable release and public proof |
-| **R2**    | Shared appearance surfaces; tentative v0.114.0                                      |                     **8–16 hours** | Exact aggregate on accepted main, accessibility/contrast/reduced-effects checks, no presentation-history break, public evidence                                                                            |
-| **R3**    | Reviewed Team specialist library; tentative v0.115.0                                |               **1–2 working days** | All 12 entries explicitly reachable, Original editions preserved, picture/Next/Continue correctness, human cooperative review                                                                              |
-| **R4**    | Journey rewards and working Collection; tentative v0.116.0                          |                     **8–16 hours** | Mode-scoped completion, exact earned pictures, Retry retention, correct Collection entries and return focus                                                                                                |
-| **UX1-B** | Compact complete mission gallery                                                    |               **1–2 working days** | Complete campaign-grouped gallery, current selection restoration, one-action ready/download-and-play, keyboard/D-pad/touch spatial navigation                                                              |
-| **UX2**   | Shared Home, lobbies, Pause, More, Releases, Settings, Help, and Sound              |               **1–2 working days** | Same player-facing structure in Solo/Versus/Team; direct Start/Continue; optional setup collapsed; exact opener restoration                                                                                |
-| **UX3**   | Gameplay HUD, touch layout, and contextual teaching                                 |                     **8–16 hours** | Whole boards, critical HUD, and controls fit desktop, handheld, portrait, and short landscape; reduced-effects parity                                                                                      |
-| **UX4**   | Countdown, deliberate failure/Retry, named Next, campaign endings                   |                     **6–12 hours** | No pre-Go simulation, automatic terminal restart, accidental held-input Retry, duplicate award, or stale successor launch                                                                                  |
-| **UX5**   | Settings, difficulty, Help, replay/Collection navigation, and recovery states       |                     **6–12 hours** | Complete focus/input/loading coverage; ordinary play never needs Workshop or a file picker                                                                                                                 |
-| **UX6**   | Whole player-experience qualification                                               | **2–4 working days** after UX1–UX5 | Required end-to-end journeys pass; physical-device and offline limits recorded separately                                                                                                                  |
+| Order     | Deliverable                                                                       |   ETA after its release slot opens | Blocking acceptance                                                                                                                                                                |
+| --------- | --------------------------------------------------------------------------------- | ---------------------------------: | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **R0**    | Preserve v0.111.0 and make v0.111.1 the public Pages default                      |                       **Complete** | PR476 merged; archive exact-byte audit passed; Pages deployed; public marker and ordinary Solo/Versus/Team entry passed                                                            |
+| **R1**    | Couch quick start; tentative v0.112.0                                             |                     **6–12 hours** | One Start with valid defaults, Cancel cannot steal controller Confirm, optional setup collapsed, responsive keyboard/controller/touch evidence, immutable release and public proof |
+| **R2**    | Character trail/impact cleanup and shared appearance surfaces; tentative v0.113.0 |                    **12–24 hours** | Clean actor silhouette, readable travelling impact and capture feedback, exact aggregate on accepted main, accessibility/contrast/reduced-effects checks, public evidence          |
+| **R3**    | Reviewed Team specialist library; tentative v0.114.0                              |               **1–2 working days** | All 12 entries explicitly reachable, Original editions preserved, picture/Next/Continue correctness, human cooperative review                                                      |
+| **R4**    | Journey rewards and working Collection; tentative v0.115.0                        |                     **8–16 hours** | Mode-scoped completion, exact earned pictures, Retry retention, correct Collection entries and return focus                                                                        |
+| **UX1-B** | Compact complete mission gallery                                                  |               **1–2 working days** | Complete campaign-grouped gallery, current selection restoration, one-action ready/download-and-play, keyboard/D-pad/touch spatial navigation                                      |
+| **UX2**   | Shared Home, lobbies, Pause, More, Releases, Settings, Help, and Sound            |               **1–2 working days** | Same player-facing structure in Solo/Versus/Team; direct Start/Continue; optional setup collapsed; exact opener restoration                                                        |
+| **UX3**   | Gameplay HUD, touch layout, and contextual teaching                               |                     **8–16 hours** | Whole boards, critical HUD, and controls fit desktop, handheld, portrait, and short landscape; reduced-effects parity                                                              |
+| **UX4**   | Countdown, deliberate failure/Retry, named Next, campaign endings                 |                     **6–12 hours** | No pre-Go simulation, automatic terminal restart, accidental held-input Retry, duplicate award, or stale successor launch                                                          |
+| **UX5**   | Settings, difficulty, Help, replay/Collection navigation, and recovery states     |                     **6–12 hours** | Complete focus/input/loading coverage; ordinary play never needs Workshop or a file picker                                                                                         |
+| **UX6**   | Whole player-experience qualification                                             | **2–4 working days** after UX1–UX5 | Required end-to-end journeys pass; physical-device and offline limits recorded separately                                                                                          |
 
 The R1–R4 version numbers are tentative until each aggregate is rebuilt on the
 accepted public source and the next unused version is rechecked.
@@ -112,30 +110,29 @@ and persistent co-op saves remain deferred.
 
 ## 6. Blockers and concerns
 
-1. **Public selector lag:** v0.111.1 is published but players still receive
-   v0.110.1 until PR476 merges and Pages passes. This is the immediate blocker.
-2. **Serialized publishing:** only one task may merge, tag, archive, or deploy a
+1. **Serialized publishing:** only one task may merge, tag, archive, or deploy a
    release. Parallel work shortens preparation time but cannot make publication
    concurrent.
-3. **Moving main:** every prepared candidate predates the final PR476 merge. Each
+2. **Moving main:** every prepared candidate predates the final PR476 merge. Each
    must be reconciled on the accepted source and rerun its required checks.
-4. **Temporary suite waiver:** long automated suites are skipped by committed
+3. **Temporary suite waiver:** long automated suites are skipped by committed
    policy. Focused tests, lint/format/validation, build/provenance, exact hashes,
    archives, and public checks remain mandatory. Skipped suites are not passes.
-5. **Hardware evidence:** modeled controller tests and browser clicks are not
+4. **Hardware evidence:** modeled controller tests and browser clicks are not
    physical Steam Deck/controller or touch certification. Those remain explicit
    acceptance limits.
-6. **Disk pressure:** parallel hydrated worktrees filled the shared volume. Clean,
-   recoverable completed worktrees were removed; active and unpushed work was
-   preserved. Builds require a maintained reserve.
-7. **Large draft queue:** many open PRs are stacked studies or superseded
+5. **Disk and worktree pressure:** parallel hydrated worktrees filled the shared
+   volume, and one focused Couch run lost its temporary worktree during execution.
+   Release evidence requires a clean, coordinated, retained worktree and a
+   maintained disk reserve.
+6. **Large draft queue:** many open PRs are stacked studies or superseded
    candidates. Terminal aggregates must be rebuilt and predecessors closed only
    after public acceptance; merging every draft independently would duplicate or
    regress behavior.
-8. **Human quality:** deterministic tests cannot establish fun, fairness,
+7. **Human quality:** deterministic tests cannot establish fun, fairness,
    understandable failure, or willingness to retry. Campaign and Team adoption
    require human play review.
-9. **Reference limits:** Xposed screenshots prove visible structure and art cues,
+8. **Reference limits:** Xposed screenshots prove visible structure and art cues,
    not hidden timing, collision, or enemy rules. Reveal Line adaptations remain
    original and governed by explicit contracts.
 
