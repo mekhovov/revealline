@@ -72,3 +72,22 @@ export function activeJourneyRules(run, preset, tuningVersion) {
     });
   return contentText(preset, 'description');
 }
+
+const statusKeys = {
+  ready: 'gameplay:status.ready',
+  running: 'gameplay:status.running',
+  paused: 'common:status.paused',
+  finished: 'gameplay:status.finished',
+  won: 'gameplay:status.won',
+  lost: 'gameplay:status.lost',
+  respawning: 'gameplay:status.respawning',
+};
+export const gameplayStatusLabel = (status) =>
+  statusKeys[status] ? t(statusKeys[status]) : status;
+
+export const gameplayStatsLabel = (run) =>
+  [
+    `${formatNumber(run.coverage * 100, { minimumFractionDigits: 1, maximumFractionDigits: 1 })}%`,
+    t('gameplay:hud.lives', { count: run.lives }),
+    t('gameplay:result.points', { count: run.score }),
+  ].join(' · ');

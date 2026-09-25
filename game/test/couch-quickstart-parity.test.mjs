@@ -44,7 +44,7 @@ test('Versus and Team keep tuning and imports in closed optional setup surfaces'
     team,
     /<details id="coop-optional-setup"[^>]*>[\s\S]*id="coop-experiment"[\s\S]*id="coop-difficulty"[\s\S]*id="coop-actor-style"[\s\S]*id="coop-pack-file"/,
   );
-  assert.match(versus, /id="race-start"[^>]*>Start race/);
+  assert.match(versus, /id="race-start"[^>]*>\s*Start race/);
   assert.match(team, /id="coop-start"[^>]*>[\s\S]*Preparing arena/);
 });
 

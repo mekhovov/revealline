@@ -186,6 +186,13 @@ test('caption bindings preserve appended controls and accept a direct Text node'
       this.childNodes.push(node);
     },
   };
+  api.localizedText(label, () => api.t('interface:standard'));
+  const initialCaption = label.childNodes[0];
+  api.localizedText(label, () => api.t('interface:display.textSize.standard'));
+  assert.equal(label.childNodes[0], initialCaption, 'equal English retains the native text node');
+  api.setLocale('uk');
+  assert.equal(initialCaption.textContent, 'Стандартний', 'the newly accepted meaning wins');
+  api.setLocale('en');
   api.localizedText(label, () => api.t('common:language.label'));
   const select = { value: 'unsaved', selectedIndex: 2, scrollTop: 30 };
   label.append(select);

@@ -119,7 +119,7 @@ export function difficultyRuleComparison(standardLevel, gentleLevel) {
   const standard = normalizedLevel(standardLevel),
     gentle = normalizedLevel(gentleLevel);
   const seconds = (value) =>
-    t('gameplay:difficulty.seconds', {
+    t('common:units.secondsShort', {
       seconds: formatNumber(value, { maximumFractionDigits: 2 }),
     });
   const limit = (value) => (value ? seconds(value) : t('gameplay:difficulty.noLimit'));

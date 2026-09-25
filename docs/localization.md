@@ -98,15 +98,16 @@ practice teardown storage-listener assertion. The First Flight
 handoff timeout is intermittent here and remains unresolved; do not dismiss it as a
 baseline failure.
 
-At this checkpoint, catalog validation passes **6,954 messages and 5,598 referenced keys**.
+At this checkpoint, catalog validation passes **7,044 messages and 5,666 referenced keys**.
 The current interface, content, and tools catalogs are fully translated. This is not full
 coverage: the source audit still finds dynamic messages, Classic library metadata, tool
 JavaScript, and user-facing errors outside the catalogs. Do not declare completion from
 catalog coverage alone. Twenty-nine reviewed repeated meanings now use common keys.
 
-The latest focused suite passes 59 locale, paused-flight, presentation, source-audit,
-registry, and generated-page tests. Native staging/resource tests pass 23 cases; markup
-integration checks pass 58 cases. Validation, lint, and the full formatting check pass.
+The latest focused suite passes 99 locale, paused-flight, couch navigation, music, encounter,
+controller-confirmation, and compact-bundle tests. Earlier source-audit and generated-page
+checks pass as recorded in the preceding checkpoint. Native staging/resource tests pass
+23 cases; markup integration checks pass 58 cases. Validation, lint, and the full formatting check pass.
 The full suite remains active; its older failures require focused reruns after fixes and
 comparison against main. A localization-aware HTML assertion must still verify its
 original labels, associations, and actions instead of dropping the behavior check.
@@ -129,8 +130,31 @@ include optional chapter/music originals and require the updated 768 MiB / 4,096
 native bounds; per-file integrity and 64 MiB bounds remain enforced. iPhone staging found
 one source review page without an explicit head/body; its markup is now explicit.
 
-Main advanced by 24 commits to eca4e32ba during this checkpoint. Rebase this saved work
-before continuing translation, regenerate catalogs, and rerun affected checks.
+The branch is rebased onto main eca4e32ba, including the new couch optional-setup flow,
+controller confirmation guard, and character presentation changes. The relocated controls
+retain their native behavior and translated labels. Repeated fetches still show no missing
+main commits. Continue checking before each translation checkpoint.
+
+The catalog bundle now stores each semantic key once across languages, reconstructing the
+same namespaces synchronously. Bundle tests compare every entry, including Ukrainian-only
+plural forms and intentionally missing values. Validation now checks interpolation in those
+extra plural forms and rejects orphan Ukrainian keys as well.
+
+Couch lobby, setup choices, results, HUD states, and music credit controls now use live
+presentation bindings. Shared music prefixes and duration/status labels use common keys.
+Current Journey chapter/mission names use verified record identities; abbreviated actor-theme
+names require the exact generated theme before resolving their original theme label. Music
+locale changes only refresh presentation, retain transport/volume/library state, and unsubscribe
+on disposal. Rebinding identical text keeps the native gesture target while accepting the new
+message producer. Encounter guidance translates complete sentences with locale-aware counts.
+
+The latest full web rebuild passed the offline inventory limit but failed writing its archive
+with ENOSPC. The previous disposable output and this task's baseline comparison worktree were
+removed; less than 1 GiB remains available on the shared disk. This does not invalidate the
+previous successful desktop staging, but current-main desktop/iPhone staging is still pending.
+Do not describe the latest distribution build or iPhone staging as verified. The full test
+suite remains active in its original process; focused checks supplement it while failures are
+triaged. No mergeable PR exists yet.
 
 Startup locale assets now follow the inline dark-screen guard; the locale stylesheet
 uses the same deferred, monitored loading as other game styles. The failure/launch
