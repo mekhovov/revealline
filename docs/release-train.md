@@ -7,6 +7,9 @@ RevealLine keeps development parallel and publishing serial.
 - The promoted root receives the hosted source build. Product PRs without that
   title are intentionally held before a costly build and cannot merge by the
   release-ready check.
+- New non-release pull requests are automatically returned to draft status.
+  For an exceptional non-product maintenance PR, apply the
+  `release-train-approved` label before marking it ready for review.
 - Documentation, Pages-controller, and workflow-only maintenance remains
   eligible without consuming a product version.
 - After the promoted root merges, qualify/freeze/release it once, complete the
