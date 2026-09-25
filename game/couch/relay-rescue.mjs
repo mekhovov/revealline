@@ -66,6 +66,7 @@ import {
 import { coopGroundName } from './coop-ground.mjs';
 import { terrainTransitionCaption } from '../ui/terrain-feedback.mjs';
 import { createControllerRouter } from '../ui/controller-router.mjs';
+import { attachControllerConfirmGuard } from '../ui/controller-confirm-guard.mjs';
 import { attachControllerNavigation } from '../ui/controller-navigation.mjs';
 import { playgroundTabBoundary } from '../ui/playground-tab-boundary.mjs';
 import { attachControllerReading } from '../ui/controller-reading.mjs';
@@ -725,6 +726,9 @@ export function bootCoop({
     },
   });
   const router = createControllerRouter({ readPads: () => framePads });
+  const controllerConfirmGuard = attachControllerConfirmGuard({
+    confirmPressed: () => router.menuConfirmPressed(),
+  });
   const menuMasthead = $('coop-home').closest('.masthead');
   let compositeMenu = false;
   const navigation = attachControllerNavigation({
@@ -3969,6 +3973,7 @@ export function bootCoop({
       previousPads = signatures;
       input.poll();
       const routed = router.sample({ scope: scope(), timeMs: now });
+      controllerConfirmGuard.observe(routed.confirmHeld);
       if (!running()) {
         if (routed.status.code === 'joined' || Object.values(routed.ui).some(Boolean))
           setReadingModality('controller');
@@ -4616,6 +4621,7 @@ export function bootCoop({
     clear();
     couchTouch.destroy();
     input.destroy();
+    controllerConfirmGuard.destroy();
     router.destroy();
     reading.destroy();
     navigation.destroy();
