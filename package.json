@@ -11,7 +11,7 @@
     "dev": "node scripts/game-cli.mjs serve --port 8768",
     "test": "node scripts/game-cli.mjs test",
     "test:creator-feature": "node scripts/check-creator-feature.mjs",
-    "validate": "node scripts/game-cli.mjs validate && node scripts/check-presentation-metadata.mjs",
+    "validate": "npm run i18n:check && node scripts/game-cli.mjs validate && node scripts/check-presentation-metadata.mjs",
     "lint": "eslint \"game/**/*.mjs\" \"scripts/**/*.mjs\" \"site/**/*.mjs\" \"platforms/**/*.{mjs,js}\" eslint.config.mjs --max-warnings 0",
     "build": "node scripts/game-cli.mjs build",
     "build:pages": "node scripts/build-pages.mjs",
@@ -25,15 +25,21 @@
     "ios:doctor": "npm --prefix platforms/ios run doctor",
     "ios:sync": "npm --prefix platforms/ios run native:sync",
     "format:native": "prettier --write \"platforms/desktop/*.mjs\" \"platforms/desktop/test/*.mjs\" \"platforms/ios/{bridge,scripts,test,diagnostics}/*.{mjs,js,html,css}\"",
-    "format:native:check": "prettier --check \"platforms/desktop/*.mjs\" \"platforms/desktop/test/*.mjs\" \"platforms/ios/{bridge,scripts,test,diagnostics}/*.{mjs,js,html,css}\""
+    "format:native:check": "prettier --check \"platforms/desktop/*.mjs\" \"platforms/desktop/test/*.mjs\" \"platforms/ios/{bridge,scripts,test,diagnostics}/*.{mjs,js,html,css}\"",
+    "i18n:build": "node scripts/localization.mjs build",
+    "i18n:check": "node scripts/localization.mjs check",
+    "i18n:extract": "node scripts/localization.mjs extract"
   },
   "dependencies": {
     "mediabunny": "1.59.1",
+    "i18next": "26.4.2",
     "phaser": "4.2.1"
   },
   "devDependencies": {
+    "acorn": "8.18.0",
     "eslint": "10.10.0",
     "globals": "17.12.0",
+    "parse5": "8.0.1",
     "prettier": "3.6.2"
   }
 }
