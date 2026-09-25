@@ -24,7 +24,7 @@ reviewer names, listening approval or device results.
 | --- | --- | --- |
 | Existing catalogue | 70 hosted recordings / 15 albums; earlier 24-track collection is included | Selective listening and trusted metadata curation |
 | Player framework | Simplified chooser, mixed playlists, uploads, creator tools, optional offline albums, recovery and rights enforcement | Targeted released-source verification and demonstrated fixes |
-| New archive previews | 104 archive recordings: 70 foundation recordings plus 34 retained previews; four nonduplicate groove-first auditions published through archive PRs #11/#12 | Full listening, taste approval and game admission remain; zero new game admissions |
+| New archive previews | 128 public archive recordings across 12 collections; the immutable 104-recording baseline and its later 24 additions retain separate publication evidence | Full listening, taste approval and game admission remain; zero new game admissions |
 | Retro previews | Seven earlier rejections retained; six DOS-88/escp previews also rejected for the requested direction | First comparison rejected; Electric Dreams now closest; continue source comparisons using the supplied night-drive references |
 | Metal previews | Six older backups preserved; four Eternity recordings retained after positive direction feedback; four industrial/thrash previews and four nonduplicate YannZ-centered groove auditions are public alongside the earlier Nakarada pair; the YannZ groove/djent direction is now the closest reference | Complete musical, transition and gameplay review of the latest four; continue searching for sustained groove-first tracks before game admission |
 | Nakarada Shchedryk | User explicitly approved musical direction; exact MP3 technically checked | Game admission, opening theme and gameplay/device/cultural evidence |
@@ -35,6 +35,41 @@ reviewer names, listening approval or device results.
 
 ### Current execution snapshot
 
+- Unified archive delivery is split into two reviewable changes. Archive
+  [PR #14](https://github.com/mekhovov/revealline-soundtracks-01/pull/14) merged as
+  `03a31a8b0f6e478b097b4468aaca92dfa275158c` and established the immutable
+  104-recording `catalogue.json` baseline, one searchable/playable root
+  player and the bounded `intake/add-music.mjs` workflow documented in
+  `UPLOAD_GUIDE.md`. Archive PRs #18/#19 added 24 separately evidenced auditions;
+  live archive main `275525e791d7f135e581f56c22100eb1bca16804` now serves 128 unique
+  recordings across 12 collections with 736,228,448 audio bytes. Exact-head archive
+  verification for the 104-recording baseline passed 32/32 checks. Direct
+  public verification covered text search, all eight collections, single and
+  combined style filters, shuffle/sequential order, repeat all/one/off, same-page
+  playback, Media Session, CORS and an exact byte-range MP3 response. Game
+  [PR #370](https://github.com/mekhovov/revealline/pull/370) adds the matching
+  trust boundary and native Music Player browser, so a result streams through
+  the existing transport without opening another page. Players can select one
+  or several styles, start any result, choose shuffle or sequential order and
+  choose repeat all, repeat one or a finite queue. Its combined catalogue,
+  player, panel and host cohort passes 184/184 tests; production history and recipe
+  source checks pass 14/14. Review found and the
+  successor fixes close Recording-mode bypass, wrong-repository URL acceptance,
+  unbounded response consumption, invalid-selection mutation and two follow-on
+  policy-transition cases. The v0.110.1 reconciliation keeps current main's picture
+  authority and version unchanged; Field Kit revisions 75–77 preserve main revision
+  74 and bind the reviewed audio fingerprints. Local native-browser playback
+  exposed all 128 recordings and 12 collections, filtered the search to Cyber Anxiety,
+  exposed all eight style selectors plus shuffle/sequential and repeat controls, and
+  streamed Cyber Anxiety through the shared in-game transport while the game URL
+  remained unchanged. Neither
+  PR admits previews into trusted Automatic/built-in playlists or establishes
+  musical approval. Fresh selective-port, live-count, production and focused-test
+  evidence is recorded in
+  `docs/verification/online-soundtrack-reconciliation-2026-09-25/review.json`.
+  Next: pass all exact-head hosted game gates, qualify the actual merge, publish an
+  immutable coordinated game release and repeat the playback proof on public game
+  Pages.
 - M0 was merged through docs-only PR [#330](https://github.com/mekhovov/revealline/pull/330)
   at commit [efacbf087](https://github.com/mekhovov/revealline/commit/efacbf087eb9e1d15019f0d6aecd5ae32ac313fa).
   Plan consolidation is complete; implementation and evidence updates continue here.
@@ -893,24 +928,32 @@ records. These establish musical properties, not redistribution permission.
 
 ## M8–M10 — existing contracts to preserve and verify
 
-### M8.discovery — make new archive collections easy to find
+### M8.discovery — make every published recording easy to find and play
 
 Status: **complete for the public archive.** Archive
 [PR #14](https://github.com/mekhovov/revealline-soundtracks-01/pull/14) merged at
 `03a31a8b0f6e478b097b4468aaca92dfa275158c`; Pages
 [run 36029085098](https://github.com/mekhovov/revealline-soundtracks-01/actions/runs/36029085098)
-published a root inventory of all 104 unique recordings. The root player now
-searches, filters seven style groups across eight collections, supports
+published the historical root inventory of 104 unique recordings. Archive PRs
+#18/#19 later preserved that baseline and raised the live root inventory to 128
+unique recordings across 12 collections at
+`275525e791d7f135e581f56c22100eb1bca16804`. The root player now searches,
+filters seven style groups, supports
 multi-style mixing and sequential/shuffle/repeat playback without leaving the
-page. `intake/add-music.mjs` accepts a
-single MP3 or recursive directory only after explicit source, licence, style and
-rights confirmation; it creates immutable hash paths, regenerates catalogue/player
-files, verifies them and can open the archive PR.
+page. Historical inventories and batch pages remain addressable.
 
-The game-native streaming adapter remains a separate M8/M3 delivery: PR #370 must
-be rebased after v0.107 and publicly qualified before this archive capability is
-called an in-game feature. Preserve every historic root-inventory assertion and
-the user-visible distinction between published auditions and admitted defaults.
+The upload fast path is also public: `intake/add-music.mjs` accepts one MP3 or a
+folder, reads common ID3 title/artist fields, creates stable identities and immutable
+hash paths, updates generated catalogue/player files, runs verification and can open
+a scoped PR. The operator must still provide source, licence, style tags and the
+explicit `--confirm-rights` assertion; automation cannot infer redistribution rights.
+
+The game-native streaming adapter remains a separate M8/M3 delivery: rebase and
+release PR #370 so the same complete catalogue and style controls work inside the
+game. Preserve the archive as the canonical source; the game streams exact immutable
+objects through its existing two-deck transport. Preserve every historic root-inventory
+assertion and the user-visible distinction between published auditions and admitted
+defaults.
 
 ### Playback and user interface
 

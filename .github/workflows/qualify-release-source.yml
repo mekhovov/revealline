@@ -1,8 +1,6 @@
 name: Qualify release source
 
 on:
-  push:
-    branches: ['codex/fpv-redesign-phase*']
   workflow_dispatch:
     inputs:
       operation:
@@ -48,9 +46,14 @@ jobs:
         env:
           EVENT_NAME: ${{ github.event_name }}
           OPERATION: ${{ inputs.operation || 'qualify' }}
+          SOURCE_REF: ${{ github.ref }}
           GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
+          if [ "$OPERATION" = qualify ] && [ "$SOURCE_REF" != refs/heads/main ]; then
+            echo "::error::Release qualification is reserved for merged main; received $SOURCE_REF."
+            exit 1
+          fi
           if [ "$EVENT_NAME" != workflow_dispatch ] || [ "$OPERATION" != qualify ]; then
             echo 'should_qualify=true' >> "$GITHUB_OUTPUT"
             exit 0
@@ -65,9 +68,27 @@ jobs:
           if [ -n "$earlier_run" ]; then
             echo "A qualification for $GITHUB_SHA is already active in run $earlier_run; skipping this duplicate."
             echo 'should_qualify=false' >> "$GITHUB_OUTPUT"
-          else
-            echo 'should_qualify=true' >> "$GITHUB_OUTPUT"
+            exit 0
           fi
+
+          # Once an exact SHA has a successful frozen snapshot, another
+          # qualification cannot add release evidence; it only consumes the
+          # serialized archive lane and risks a second write attempt. Utility
+          # inspection/upload operations deliberately remain available.
+          while read -r completed_run; do
+            [ -n "$completed_run" ] || continue
+            if gh api "repos/$GITHUB_REPOSITORY/actions/runs/$completed_run/jobs?per_page=100" \
+              --jq '[.jobs[] | select(.name == "freeze" and .status == "completed" and .conclusion == "success")] | length > 0' \
+              | grep -qx true; then
+              echo "A successful frozen snapshot for $GITHUB_SHA already exists in run $completed_run; skipping this duplicate."
+              echo 'should_qualify=false' >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+          done < <(gh api --paginate \
+            "repos/$GITHUB_REPOSITORY/actions/workflows/qualify-release-source.yml/runs?event=workflow_dispatch&status=completed&per_page=100" \
+            --jq '.workflow_runs[] | select(.head_sha == env.GITHUB_SHA and .conclusion == "success" and (.id | tostring) != env.GITHUB_RUN_ID) | .id')
+
+          echo 'should_qualify=true' >> "$GITHUB_OUTPUT"
 
   qualify:
     if: >-

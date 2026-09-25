@@ -1,0 +1,12 @@
+{
+  "auditedAt": "2026-09-25T02:28:44.523Z",
+  "base": "https://mekhovov.github.io/revealline/",
+  "currentVersion": "v0.110.1",
+  "gameSourceRevision": "f54a6ecbdf329c7fd175d90ec258537d035c72e7",
+  "controllerCommit": "2935527e36955eb55d4afe76383824ac4804e6bd",
+  "expectedFiles": 4562,
+  "completedFiles": 4562,
+  "expectedBytes": 628345590,
+  "matchedBytes": 628345590,
+  "failures": []
+}
