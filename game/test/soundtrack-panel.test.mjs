@@ -417,8 +417,13 @@ function onlineCatalogueResponse(catalogue) {
   };
 }
 
-async function settleOnlineCatalogue() {
-  await new Promise((resolve) => setImmediate(resolve));
+async function settleOnlineCatalogue(predicate = () => true, label = 'online catalogue update') {
+  const deadline = performance.now() + 2000;
+  for (;;) {
+    if (predicate()) return;
+    if (performance.now() >= deadline) throw new Error(`Timed out waiting for ${label}.`);
+    await new Promise((resolve) => setTimeout(resolve, 1));
+  }
 }
 
 test('shared master immediately governs audition output while retaining local volume and transport', async (t) => {
@@ -1969,7 +1974,10 @@ test('public archive searches and plays any published recording through the shar
       },
     },
   });
-  await settleOnlineCatalogue();
+  await settleOnlineCatalogue(
+    () => requests.length === 1 && app.node('online-results').children.length === 6,
+    'the public catalogue results',
+  );
   assert.equal(requests.length, 1);
   assert.equal(requests[0][0], ONLINE_SOUNDTRACK_CATALOGUE_URL);
   assert.equal(requests[0][1].credentials, 'omit');
@@ -2043,19 +2051,47 @@ test('public archive searches and plays any published recording through the shar
   assert.match(app.node('online-status').textContent, /Recording mode excludes 6/);
 });
 
-test('public archive failure and cancellation preserve built-in music controls', async (t) => {
+test('public archive catalogue outage can refresh without disabling built-in controls', async (t) => {
+  let attempts = 0;
   const failed = await setup(t, {
     callbacks: {
-      onlineCatalogueDownload: { fetch: async () => new Response('no', { status: 503 }) },
+      onlineCatalogueDownload: {
+        fetch: async () =>
+          ++attempts === 1
+            ? new Response('no', { status: 503 })
+            : onlineCatalogueResponse(onlineCatalogueFixture()),
+      },
     },
   });
-  await settleOnlineCatalogue();
+  await settleOnlineCatalogue(
+    () =>
+      attempts === 1 &&
+      /Built-in, installed and uploaded music still works/.test(
+        failed.node('online-status').textContent,
+      ),
+    'the public catalogue failure state',
+  );
+  assert.equal(attempts, 1);
   assert.match(
     failed.node('online-status').textContent,
     /Built-in, installed and uploaded music still works/,
   );
   await failed.click('play');
   assert(failed.calls.some(([name]) => name === 'play'));
+
+  await failed.click('online-reload');
+  await settleOnlineCatalogue(
+    () =>
+      attempts === 2 &&
+      /6 of 6 published recordings/.test(failed.node('online-status').textContent),
+    'the refreshed public catalogue',
+  );
+  assert.equal(attempts, 2);
+  assert.match(failed.node('online-status').textContent, /6 of 6 published recordings/);
+  await failed.click(`online-play-${'1'.repeat(64)}`);
+  const recovered = failed.calls.findLast(([name]) => name === 'remote');
+  assert.equal(recovered[1][0].title, 'Night Circuit');
+  assert.equal(recovered[2].mixWithLibrary, true);
 
   let aborted = false;
   const pending = await setup(t, {
@@ -2072,7 +2108,7 @@ test('public archive failure and cancellation preserve built-in music controls',
     },
   });
   assert.equal(pending.panel.close(), true);
-  await settleOnlineCatalogue();
+  await settleOnlineCatalogue(() => aborted, 'the cancelled public catalogue request');
   assert.equal(aborted, true);
   assert.equal(pending.node('dialog').open, false);
 });
