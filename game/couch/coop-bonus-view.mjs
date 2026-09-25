@@ -1,4 +1,4 @@
-import { t } from '../i18n/index.mjs';
+import { t, formatNumber } from '../i18n/index.mjs';
 import { boundedJSON, exactKeys, required, stableId } from '../data-json.mjs';
 import { validateTimedBonuses, TIMED_BONUS_TRAIL_VERSION } from '../core/timed-bonuses.mjs';
 import {
@@ -11,11 +11,13 @@ import { drawClassicPickups } from '../ui/classic-view.mjs';
 import { CLASSIC_EFFECTS } from '../core/classic-state.mjs';
 
 const labels = Object.freeze({
-  'extra-life': t('interface:sharedReserve'),
-  'player-speed': t('interface:pilotSpeed'),
-  'enemy-slow': t('interface:enemiesSlow'),
-  'enemy-freeze': t('interface:enemiesFrozen'),
+  'extra-life': 'interface:sharedReserve',
+  'player-speed': 'interface:pilotSpeed',
+  'enemy-slow': 'interface:enemiesSlow',
+  'enemy-freeze': 'interface:enemiesFrozen',
 });
+const bonusLabel = (kind, seat = null) =>
+  seat === null ? t(labels[kind]) : t('gameplay:team.bonusPilotSpeed', { seat: seat + 1 });
 const integer = (n) => Number.isSafeInteger(n) && n >= 0;
 function own(object, key) {
   const property = Object.getOwnPropertyDescriptor(object, key);
@@ -183,7 +185,7 @@ export function coopBonusView(run) {
     const visual = {
       id: schedule.id,
       kind: authored.kind,
-      label: labels[authored.kind],
+      label: bonusLabel(authored.kind),
       ...anchor,
       timed: true,
       phase: schedule.phase,
@@ -225,7 +227,7 @@ export function coopBonusView(run) {
       effects.push({
         kind,
         seat,
-        label: seat === null ? labels[kind] : `Pilot ${seat + 1} speed`,
+        label: bonusLabel(kind, seat),
         seconds: (effect.until - tick) / 120,
       });
   }
@@ -251,42 +253,60 @@ export function drawCoopBonuses(ctx, view, { screenScale = 1 } = {}) {
 
 export function coopBonusDetails(view) {
   if (!view) return '';
-  const windows = view.timedBonuses.map(
-    (item) =>
-      `${item.label} ${item.phase === 'announce' ? 'arrives in' : 'expires in'} ${item.seconds.toFixed(1)}s`,
+  const windows = view.timedBonuses.map((item) =>
+    t(item.phase === 'announce' ? 'gameplay:team.bonusArrives' : 'gameplay:team.bonusExpires', {
+      label: bonusLabel(item.kind),
+      seconds: formatNumber(item.seconds, { minimumFractionDigits: 1, maximumFractionDigits: 1 }),
+    }),
   );
-  const effects = view.effects.map(
-    (effect) => `${effect.label} active ${effect.seconds.toFixed(1)}s`,
+  const effects = view.effects.map((effect) =>
+    t('gameplay:team.bonusActive', {
+      label: bonusLabel(effect.kind, effect.seat),
+      seconds: formatNumber(effect.seconds, { minimumFractionDigits: 1, maximumFractionDigits: 1 }),
+    }),
   );
   return [...windows, ...effects].join(' · ');
 }
 
 export function coopBonusLive(view) {
   if (!view) return '';
-  const effects = view.effects.map((effect) => `${effect.label} ${Math.ceil(effect.seconds)}s`);
+  const effects = view.effects.map((effect) =>
+    t('gameplay:team.bonusSeconds', {
+      label: bonusLabel(effect.kind, effect.seat),
+      seconds: formatNumber(Math.ceil(effect.seconds)),
+    }),
+  );
   const count = view.powerups.length;
-  if (count) effects.unshift(`${count} timed pickup${count === 1 ? '' : 's'} available`);
+  if (count) effects.unshift(t('gameplay:team.bonusAvailable', { count }));
   else if (view.timedBonuses.length) effects.unshift(t('interface:pickupIncoming'));
   return effects.join(' · ');
 }
 
-export const TEAM_BONUS_HELP = t(
-  'interface:optionalSharedPickupsHollowSymbolsAnnounceTouchASolidSymbol',
-);
+export const teamBonusHelp = () =>
+  t('interface:optionalSharedPickupsHollowSymbolsAnnounceTouchASolidSymbol');
 
 export function coopBonusCaption(event, names) {
   if (event.type === 'powerup.collected') {
     const owner = event.players.map((seat) => names[seat]).join(' + ');
     return event.kind === 'extra-life'
-      ? `${owner}: ${event.gain ? 'one shared reserve gained' : 'shared reserves already full'}.`
-      : `${owner} collected ${labels[event.kind].toLowerCase()}. ${event.kind === 'player-speed' ? t('interface:onlyTheCollectorGainsSpeed') : t('interface:theEffectIsShared')}`;
+      ? t(event.gain ? 'gameplay:team.bonusReserveGained' : 'gameplay:team.bonusReservesFull', {
+          owner,
+        })
+      : t(
+          event.kind === 'player-speed'
+            ? 'gameplay:team.bonusCollectedSpeed'
+            : event.kind === 'enemy-slow'
+              ? 'gameplay:team.bonusCollectedSlow'
+              : 'gameplay:team.bonusCollectedFreeze',
+          { owner },
+        );
   }
   if (event.type === 'bonus.announced')
-    return `${labels[event.kind]} incoming. Hollow symbols cannot be collected.`;
+    return t('gameplay:team.bonusAnnounced', { label: bonusLabel(event.kind) });
   if (event.type === 'bonus.appeared')
-    return `${labels[event.kind]} available. Touch before the ring expires.`;
+    return t('gameplay:team.bonusAppeared', { label: bonusLabel(event.kind) });
   if (event.type === 'bonus.expired')
-    return `${labels[event.kind]} expired. A later window may appear elsewhere.`;
+    return t('gameplay:team.bonusExpired', { label: bonusLabel(event.kind) });
   if (event.type === 'bonus.cancelled')
     return t('interface:pickupWindowCancelledItsAnchorIsNoLongerEligible');
   return null;
