@@ -11,7 +11,49 @@ const seconds = (value, fallback, name) => {
   return result;
 };
 
-export function readConfig(environment = process.env) {
+const boundedInteger = (value, fallback, name, { minimum, maximum }) => {
+  const result = integer(value, fallback, name);
+  if (result < minimum || result > maximum)
+    throw new Error(`${name} must be between ${minimum} and ${maximum}.`);
+  return result;
+};
+
+const httpsOrigin = (value, name) => {
+  if (typeof value !== 'string' || value.length > 2_048)
+    throw new Error(`${name} must be an HTTPS origin.`);
+  let parsed;
+  try {
+    parsed = new URL(value);
+  } catch {
+    throw new Error(`${name} must be an HTTPS origin.`);
+  }
+  if (
+    parsed.protocol !== 'https:' ||
+    parsed.username ||
+    parsed.password ||
+    parsed.pathname !== '/' ||
+    parsed.search ||
+    parsed.hash
+  )
+    throw new Error(`${name} must be an HTTPS origin.`);
+  return parsed.origin;
+};
+
+const httpsEndpoint = (value, name) => {
+  if (typeof value !== 'string' || value.length > 2_048)
+    throw new Error(`${name} must be an absolute HTTPS URL.`);
+  let parsed;
+  try {
+    parsed = new URL(value);
+  } catch {
+    throw new Error(`${name} must be an absolute HTTPS URL.`);
+  }
+  if (parsed.protocol !== 'https:' || parsed.username || parsed.password || parsed.hash)
+    throw new Error(`${name} must be an absolute HTTPS URL.`);
+  return parsed.href;
+};
+
+export function readConfig(environment = process.env, { requireAuth = true } = {}) {
   const allowDevAuth = environment.COMMUNITY_ALLOW_DEV_AUTH === 'true';
   let developmentTokens;
   if (allowDevAuth) {
@@ -23,8 +65,15 @@ export function readConfig(environment = process.env) {
   }
   const secret = environment.BETTER_AUTH_SECRET;
   const baseURL = environment.BETTER_AUTH_URL;
-  if (!allowDevAuth && (!secret || secret.length < 32 || !baseURL))
-    throw new Error('BETTER_AUTH_SECRET (32+ characters) and BETTER_AUTH_URL are required.');
+  if (
+    requireAuth &&
+    !allowDevAuth &&
+    (typeof secret !== 'string' ||
+      secret.length < 32 ||
+      secret.length > 4_096 ||
+      /[\u0000-\u001f\u007f]/u.test(secret))
+  )
+    throw new Error('BETTER_AUTH_SECRET must contain 32–4096 non-control characters.');
   const maxPackageBytes = integer(
     environment.COMMUNITY_MAX_PACKAGE_BYTES,
     256 * 1024 * 1024,
@@ -126,16 +175,59 @@ export function readConfig(environment = process.env) {
       }),
     }),
     developmentTokens: developmentTokens ?? null,
-    betterAuth: allowDevAuth
-      ? null
-      : {
-          secret,
-          baseURL,
-          trustedOrigins: (environment.BETTER_AUTH_TRUSTED_ORIGINS ?? '')
-            .split(',')
-            .map((value) => value.trim())
-            .filter(Boolean),
-        },
+    betterAuth:
+      !requireAuth || allowDevAuth
+        ? null
+        : (() => {
+            const trustedOrigins = (environment.BETTER_AUTH_TRUSTED_ORIGINS ?? '')
+              .split(',')
+              .map((value) => value.trim())
+              .filter(Boolean);
+            if (trustedOrigins.length > 16)
+              throw new Error('BETTER_AUTH_TRUSTED_ORIGINS must contain at most 16 origins.');
+            const webhookToken = environment.COMMUNITY_ACCOUNT_MAIL_WEBHOOK_TOKEN;
+            if (
+              typeof webhookToken !== 'string' ||
+              webhookToken.length < 32 ||
+              webhookToken.length > 4_096 ||
+              /[\u0000-\u001f\u007f]/u.test(webhookToken)
+            )
+              throw new Error(
+                'COMMUNITY_ACCOUNT_MAIL_WEBHOOK_TOKEN must contain 32–4096 non-control characters.',
+              );
+            return Object.freeze({
+              secret,
+              baseURL: httpsOrigin(baseURL, 'BETTER_AUTH_URL'),
+              trustedOrigins: trustedOrigins.map((value, index) =>
+                httpsOrigin(value, `BETTER_AUTH_TRUSTED_ORIGINS entry ${index + 1}`),
+              ),
+              emailVerificationExpiresIn: boundedInteger(
+                environment.COMMUNITY_EMAIL_VERIFICATION_EXPIRES_SECONDS,
+                3_600,
+                'COMMUNITY_EMAIL_VERIFICATION_EXPIRES_SECONDS',
+                { minimum: 300, maximum: 86_400 },
+              ),
+              passwordResetExpiresIn: boundedInteger(
+                environment.COMMUNITY_PASSWORD_RESET_EXPIRES_SECONDS,
+                1_800,
+                'COMMUNITY_PASSWORD_RESET_EXPIRES_SECONDS',
+                { minimum: 300, maximum: 3_600 },
+              ),
+              mail: Object.freeze({
+                endpoint: httpsEndpoint(
+                  environment.COMMUNITY_ACCOUNT_MAIL_WEBHOOK_URL,
+                  'COMMUNITY_ACCOUNT_MAIL_WEBHOOK_URL',
+                ),
+                authorizationToken: webhookToken,
+                timeoutMs: boundedInteger(
+                  environment.COMMUNITY_ACCOUNT_MAIL_TIMEOUT_MS,
+                  5_000,
+                  'COMMUNITY_ACCOUNT_MAIL_TIMEOUT_MS',
+                  { minimum: 100, maximum: 30_000 },
+                ),
+              }),
+            });
+          })(),
     adminSubjects: new Set(
       (environment.COMMUNITY_ADMIN_SUBJECTS ?? '')
         .split(',')
