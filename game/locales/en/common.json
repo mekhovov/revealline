@@ -169,5 +169,7 @@
   "storage.writerUnavailable": "This browser cannot reserve the player library for safe writing. Progress is session-only; export a backup to keep it.",
   "storage.writerOccupied": "Another game tab owns saving. This tab is session-only; close the other game tab, then reload here to save. Export still works.",
   "storage.writerInvalidKey": "A valid profile writer key is required. Progress is session-only.",
-  "storage.writerReleased": "The saving lease was released. Reload this tab to save again; export remains available."
+  "storage.writerReleased": "The saving lease was released. Reload this tab to save again; export remains available.",
+  "rewards.firstClear": "First clear",
+  "rewards.chapterExplorer": "Chapter explorer"
 }
