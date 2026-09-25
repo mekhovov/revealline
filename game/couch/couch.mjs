@@ -156,8 +156,8 @@ const displayPreferences = createDisplayPreferences({
   window,
   matchMedia,
   getStorage: () => localStorage,
-  onWarning: (message) => {
-    localizedText($('race-display-status'), () => message);
+  onWarning: (message, key) => {
+    localizedText($('race-display-status'), () => (key ? t(key) : message));
   },
 });
 const renderDisplayPreferences = (state) => {

@@ -1,4 +1,4 @@
-import { t, localizedText } from '../i18n/index.mjs';
+import { t, localizedText, localizedMessage } from '../i18n/index.mjs';
 import { createDisplayPreferences } from '../display-preferences.mjs';
 import { attachPreferenceRestoration } from '../ui/preference-restoration.mjs';
 
@@ -20,9 +20,9 @@ export function mountReplayDisplay({
     cap = control('replay-system-reduction'),
     notice = control('replay-display-status');
   let disposed = false;
-  const warning = (message) => {
+  const warning = (message, key) => {
     if (disposed) return;
-    localizedText(notice, () => message);
+    localizedText(notice, () => (key ? t(key) : message));
     notice.hidden = !message;
   };
   const preferences = createDisplayPreferences({
@@ -50,14 +50,18 @@ export function mountReplayDisplay({
     getSnapshot: preferences.snapshot,
     render,
   });
-  warning(preferences.getWarning());
+  warning(preferences.getWarning(), preferences.getWarningKey());
   const change = (patch) => {
     if (disposed) return;
     try {
       preferences.set(patch);
     } catch (error) {
       render(preferences.snapshot());
-      warning(`The display preference could not be applied: ${error.message || error}`);
+      warning(
+        localizedMessage('common:preferences.applyFailed', {
+          error: error.message || String(error),
+        }),
+      );
     }
   };
   const bindings = [
