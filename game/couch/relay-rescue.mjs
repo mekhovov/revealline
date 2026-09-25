@@ -296,8 +296,8 @@ export function bootCoop({
     window,
     matchMedia,
     getStorage: () => localStorage,
-    onWarning: (message) => {
-      localizedText($('coop-display-status'), () => message);
+    onWarning: (message, key) => {
+      localizedText($('coop-display-status'), () => (key ? t(key) : message));
     },
   });
   const renderDisplayPreferences = (state) => {

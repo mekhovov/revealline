@@ -178,5 +178,8 @@
   "counts.lives_few": "{{count}} життя",
   "counts.lives_many": "{{count}} життів",
   "counts.enemies_few": "{{count}} вороги",
-  "counts.enemies_many": "{{count}} ворогів"
+  "counts.enemies_many": "{{count}} ворогів",
+  "preferences.displaySessionOnly": "Зміни вигляду діють лише в цьому сеансі; збереження тут вимкнено.",
+  "preferences.displaySaveFailed": "Вигляд змінено для цього сеансу, але не вдалося зберегти його для інших сторінок.",
+  "preferences.applyFailed": "Не вдалося застосувати це налаштування: {{error}}"
 }

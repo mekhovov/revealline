@@ -67,6 +67,7 @@ export function createDisplayPreferences({
     stored = false,
     unsaved = false,
     warning = '',
+    warningKey = '',
     systemReduced = false;
   const listeners = new Set();
   let media;
@@ -117,10 +118,11 @@ export function createDisplayPreferences({
     });
     return notify();
   };
-  const notice = (message) => {
+  const notice = (message, key = '') => {
     warning = message;
+    warningKey = key;
     try {
-      onWarning(message);
+      onWarning(message, key);
     } catch {
       // A notice cannot prevent the already accepted display change.
     }
@@ -129,7 +131,10 @@ export function createDisplayPreferences({
     try {
       if (!writable()) {
         unsaved = true;
-        notice('Display changes apply only to this session; saving is disabled here.');
+        notice(
+          'Display changes apply only to this session; saving is disabled here.',
+          'common:preferences.displaySessionOnly',
+        );
         return;
       }
       const storage = getStorage();
@@ -140,7 +145,10 @@ export function createDisplayPreferences({
       notice('');
     } catch {
       unsaved = true;
-      notice('Display changed for this session, but could not be saved for another page.');
+      notice(
+        'Display changed for this session, but could not be saved for another page.',
+        'common:preferences.displaySaveFailed',
+      );
     }
   };
   const receive = (event) => {
@@ -229,6 +237,7 @@ export function createDisplayPreferences({
       return !explicit && !stored && !disposed && state.revision === expectedRevision + 1;
     },
     getWarning: () => warning,
+    getWarningKey: () => warningKey,
     dispose() {
       if (disposed) return;
       disposed = true;

@@ -1,9 +1,44 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { soloPage, settle } from './helpers/solo-dom.mjs';
+import { readFile } from 'node:fs/promises';
+import { soloPage, settle, memoryStorage } from './helpers/solo-dom.mjs';
 import { getLocale, setLocale } from '../i18n/index.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
 import { readFlightInformation } from '../ui/flight-information-host.mjs';
+
+test('practice display notice keeps the active locale and accepted preference without saving progress', async (context) => {
+  const locale = getLocale();
+  context.after(() => setLocale(locale, { persist: false }));
+  setLocale('en', { persist: false });
+  const scenario = await readFile(
+    new URL('../content/scenarios/line-impact-demo.json', import.meta.url),
+    'utf8',
+  );
+  const page = await soloPage(context, {
+    search: '?practice=1',
+    previewStorage: memoryStorage({ 'revealline.playground.current': scenario }),
+  });
+  const control = page.$('text-size');
+  control.value = 'large';
+  control.emit('change');
+  control.focus();
+  assert.match(page.$('display-preferences-status').textContent, /only to this session/);
+  const checkpoint = authoritativeCheckpoint(page.rendered.run);
+  const saved = page.storage.getItem('revealline.library.dev.v1');
+  for (const locale of ['uk', 'en']) {
+    setLocale(locale, { persist: false });
+    assert.match(
+      page.$('display-preferences-status').textContent,
+      locale === 'uk' ? /лише в цьому сеансі/ : /only to this session/,
+    );
+    assert.equal(control.value, 'large');
+    assert.equal(page.doc.body.dataset.textSize, 'large');
+    assert.equal(page.doc.activeElement, control);
+    assert.equal(page.storage.getItem('revealline.library.dev.v1'), saved);
+    assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
+  }
+  assert.deepEqual(page.errors, []);
+});
 
 test('switching a paused flight updates accepted notices without advancing the run or rewriting saves', async (context) => {
   const originalLocale = getLocale();
