@@ -5,18 +5,23 @@
 export function attachControllerConfirmGuard({
   document: doc = globalThis.document,
   confirmPressed,
+  now = () => globalThis.performance?.now?.() ?? Date.now(),
+  echoWindowMs = 500,
 } = {}) {
   const keys = new Set(),
     listeners = [];
-  let mouse = false;
+  let mouse = false,
+    suppressUntil = -Infinity;
   const listen = (type, callback) => {
     doc.addEventListener(type, callback, { capture: true });
     listeners.push(() => doc.removeEventListener(type, callback, { capture: true }));
   };
   const consume = (event) => {
     event.preventDefault();
-    event.stopImmediatePropagation();
+    if (typeof event.stopImmediatePropagation === 'function') event.stopImmediatePropagation();
+    else event.stopPropagation?.();
   };
+  const controllerOwnsGesture = () => confirmPressed() || now() <= suppressUntil;
   const isMouse = (event) =>
     event.button === 0 &&
     (!event.pointerType || event.pointerType === 'mouse') &&
@@ -30,7 +35,7 @@ export function attachControllerConfirmGuard({
       event.shiftKey
     )
       return;
-    if (!keys.has(event.key) && !confirmPressed()) return;
+    if (!keys.has(event.key) && !controllerOwnsGesture()) return;
     keys.add(event.key);
     consume(event);
   });
@@ -39,7 +44,7 @@ export function attachControllerConfirmGuard({
   });
   listen('pointerdown', (event) => {
     if (!isMouse(event)) return;
-    mouse = confirmPressed();
+    mouse = controllerOwnsGesture();
     if (mouse) consume(event);
   });
   for (const type of ['pointerup', 'mousedown', 'mouseup'])
@@ -59,10 +64,14 @@ export function attachControllerConfirmGuard({
   const reset = () => {
     keys.clear();
     mouse = false;
+    suppressUntil = -Infinity;
   };
   doc.defaultView?.addEventListener?.('blur', reset);
   listen('visibilitychange', reset);
   return {
+    observe(pressed) {
+      if (pressed) suppressUntil = Math.max(suppressUntil, now() + echoWindowMs);
+    },
     destroy() {
       reset();
       listeners.forEach((remove) => remove());
