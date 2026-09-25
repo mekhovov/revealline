@@ -169,5 +169,14 @@
   "progress.ticks_one": "{{completed}} із {{total}} такту",
   "progress.ticks_few": "{{completed}} із {{total}} тактів",
   "progress.ticks_many": "{{completed}} із {{total}} тактів",
-  "progress.ticks_other": "{{completed}} із {{total}} такту"
+  "progress.ticks_other": "{{completed}} із {{total}} такту",
+  "counts.lives_one": "{{count}} життя",
+  "counts.lives_other": "{{count}} життя",
+  "counts.enemies_one": "{{count}} ворог",
+  "counts.enemies_other": "{{count}} ворога",
+  "units.cellsPerSecond": "{{speed}} кл./с",
+  "counts.lives_few": "{{count}} життя",
+  "counts.lives_many": "{{count}} життів",
+  "counts.enemies_few": "{{count}} вороги",
+  "counts.enemies_many": "{{count}} ворогів"
 }
