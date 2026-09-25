@@ -116,5 +116,14 @@
   "studio.rectangle.authored": "Обери авторський прямокутник.",
   "studio.rectangle.sourceChanged": "Карта змінилася. Обери її поточний прямокутник перед редагуванням.",
   "studio.rectangle.existing": "Обери наявний прямокутник.",
-  "studio.objective.linkedGates": "Ціль керує ретрансляторними воротами: {{gates}}. Спочатку зміни їхні зв’язки або видали ці ворота."
+  "studio.objective.linkedGates": "Ціль керує ретрансляторними воротами: {{gates}}. Спочатку зміни їхні зв’язки або видали ці ворота.",
+  "studio.encounter.contextChanged": "Чернетка змінилася. Онови вибір зіткнення.",
+  "studio.encounter.operation": "Обери дію зі зіткненням.",
+  "studio.encounter.teamUnavailable": "Зіткнення з Вартовим не перевірено для командного режиму.",
+  "studio.encounter.sourceChanged": "Карта або місія змінилася. Перед редагуванням онови вибір зіткнення.",
+  "studio.encounter.existing": "Обери наявне зіткнення з Вартовим.",
+  "studio.encounter.stableId": "Задай Вартовому сталий ID ворога.",
+  "studio.encounter.identity": "Під час заміни зв’язків збережи наявний ID Вартового.",
+  "studio.encounter.keeper": "Вартовим зіткнення може стати лише явно обраний вартовий поля.",
+  "studio.encounter.core": "Обери видиму обов’язкову ціль-ядро."
 }
