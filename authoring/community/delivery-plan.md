@@ -33,8 +33,9 @@ commits plus this exact-head compatibility update. Estimates are focused enginee
 
 ## Blockers and concerns
 
-- Protected `main` is moving quickly. This branch was rebased twice during this review and now has
-  zero commits behind `e11bf150f`; refresh it once more immediately before opening the follow-up PR.
+- PR #564 is intentionally draft with the `release-train-hold` label. The repository gate rejected
+  promotion because v0.132.0–v0.138.0 are already reserved and this product change has no immutable
+  slot. Rebase onto the last accepted predecessor and repeat the gates when the queue assigns one.
 - Docker and PostgreSQL clients are unavailable on this host. Exact fake-client and service tests
   cover the code paths, while live replica locking and database/blob restore still need deployment
   infrastructure.
