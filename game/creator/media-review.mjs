@@ -1,4 +1,11 @@
 import { prepareCreatorMediaIntake } from './media-intake.mjs';
+import {
+  formatNumber,
+  localizedAttribute,
+  localizedMessage,
+  localizedText,
+  t,
+} from '../i18n/index.mjs';
 
 const IMAGE_TYPES = new Set(['image/png', 'image/jpeg', 'image/webp']);
 const VIDEO_TYPES = new Set(['video/mp4', 'video/webm']);
@@ -11,20 +18,22 @@ function classify(file) {
   if (VIDEO_TYPES.has(file.type) || (!file.type && VIDEO_EXTENSIONS.test(file.name)))
     return 'video';
   throw new TypeError(
-    `${file.name || 'This file'} is not a supported PNG, JPEG, WebP, MP4 or WebM file.`,
+    t('errors:creator.unsupportedMediaFile', {
+      file: file.name || t('interface:creator.thisFile'),
+    }),
   );
 }
 
 function option(document, value, label) {
   const item = document.createElement('option');
   item.value = value;
-  item.textContent = label;
+  localizedText(item, label);
   return item;
 }
 
 function control(document, type, label) {
   const wrapper = document.createElement('label');
-  wrapper.textContent = label;
+  localizedText(wrapper, label);
   const input = document.createElement('input');
   input.type = type;
   wrapper.append(input);
@@ -32,7 +41,9 @@ function control(document, type, label) {
 }
 
 function seconds(value) {
-  return `${Number(value).toFixed(2)} s`;
+  return t('common:format.seconds', {
+    value: formatNumber(Number(value), { minimumFractionDigits: 2, maximumFractionDigits: 2 }),
+  });
 }
 
 /**
@@ -50,7 +61,7 @@ export function createCreatorMediaReviewController({
   onChange = () => {},
 } = {}) {
   if (!document?.createElement || !nodes?.surface || !nodes?.list || !nodes?.status)
-    throw new TypeError('Creator media review needs its document and review nodes.');
+    throw new TypeError(t('errors:creator.mediaReviewNodes'));
   let sources = [],
     prepared = null,
     running = null,
@@ -100,7 +111,7 @@ export function createCreatorMediaReviewController({
   function renderPosterCandidates(card, item, detail, assets) {
     if (!detail?.posterCandidates.length) return;
     const heading = document.createElement('h4');
-    heading.textContent = 'Poster frame';
+    localizedText(heading, () => t('interface:creator.posterFrame'));
     const candidates = document.createElement('div');
     candidates.className = 'creator-poster-candidates';
     for (const candidate of detail.posterCandidates) {
@@ -123,17 +134,28 @@ export function createCreatorMediaReviewController({
         const url = createObjectURL(asset.blob);
         renderURLs.push(url);
         image.src = url;
-        image.alt = `Frame requested at ${seconds(candidate.capture.requestedTime)}`;
+        localizedAttribute(image, 'alt', () =>
+          t('interface:creator.frameRequestedAt', {
+            time: seconds(candidate.capture.requestedTime),
+          }),
+        );
         label.append(image);
       }
       const text = document.createElement('span');
-      text.textContent =
-        `${seconds(candidate.capture.requestedTime)} requested · ` +
-        `${seconds(candidate.capture.playheadTime)} playhead`;
+      localizedText(text, () =>
+        t('interface:creator.posterTiming', {
+          requested: seconds(candidate.capture.requestedTime),
+          playhead: seconds(candidate.capture.playheadTime),
+        }),
+      );
       label.append(radio, text);
       candidates.append(label);
     }
-    const custom = control(document, 'number', 'Capture another time (seconds)');
+    const custom = control(
+      document,
+      'number',
+      localizedMessage('interface:creator.captureAnotherTime'),
+    );
     custom.input.min = '0';
     custom.input.max = String(detail.video.durationSeconds);
     custom.input.step = '0.01';
@@ -157,8 +179,8 @@ export function createCreatorMediaReviewController({
     const fields = document.createElement('div');
     fields.className = 'creator-playback-range';
     const selected = playbackRanges.get(item.assetSha256) ?? detail.playbackRange;
-    const start = control(document, 'number', 'Playback begins (seconds)');
-    const end = control(document, 'number', 'Playback ends (seconds)');
+    const start = control(document, 'number', localizedMessage('interface:creator.playbackBegins'));
+    const end = control(document, 'number', localizedMessage('interface:creator.playbackEnds'));
     for (const field of [start.input, end.input]) {
       field.min = '0';
       field.max = String(detail.video.durationSeconds);
@@ -179,8 +201,7 @@ export function createCreatorMediaReviewController({
     end.input.onchange = update;
     const note = document.createElement('p');
     note.className = 'muted';
-    note.textContent =
-      'This changes playback only. The complete original video remains in the campaign package.';
+    localizedText(note, () => t('interface:creator.playbackRangeHelp'));
     fields.append(start.wrapper, end.wrapper, note);
     card.append(fields);
   }
@@ -192,15 +213,33 @@ export function createCreatorMediaReviewController({
     title.textContent = item.name;
     const facts = document.createElement('p');
     facts.className = 'muted';
-    facts.textContent = item.video
-      ? `${item.video.video.width} × ${item.video.video.height} · ${seconds(item.video.video.durationSeconds)}`
-      : `Video · ${item.assetSha256?.slice(0, 12) ?? 'identity unavailable'}`;
+    localizedText(facts, () =>
+      item.video
+        ? t('interface:creator.videoFacts', {
+            width: item.video.video.width,
+            height: item.video.video.height,
+            duration: seconds(item.video.video.durationSeconds),
+          })
+        : t('interface:creator.videoIdentity', {
+            identity:
+              item.assetSha256?.slice(0, 12) ?? t('interface:creator.identityUnavailable'),
+          }),
+    );
     const pairLabel = document.createElement('label');
-    pairLabel.textContent = 'Reveal poster';
+    localizedText(pairLabel, () => t('interface:creator.revealPoster'));
     const pair = document.createElement('select');
     const unresolved = item.pairing?.status === 'ambiguous' && !pairing.has(item.assetSha256);
-    if (unresolved) pair.append(option(document, '', 'Choose the exact matching image'));
-    pair.append(option(document, '__frame__', 'Capture a frame from this video'));
+    if (unresolved)
+      pair.append(
+        option(document, '', localizedMessage('interface:creator.chooseMatchingImage')),
+      );
+    pair.append(
+      option(
+        document,
+        '__frame__',
+        localizedMessage('interface:creator.captureFrameFromVideo'),
+      ),
+    );
     for (const image of images) pair.append(option(document, image.assetSha256, imageLabel(image)));
     const currentPair = pairing.has(item.assetSha256)
       ? pairing.get(item.assetSha256)
@@ -241,22 +280,33 @@ export function createCreatorMediaReviewController({
     const videoCount = sources.filter((source) => source.kind === 'video').length;
     const imageCount = sources.length - videoCount;
     const errors = items.reduce((total, item) => total + item.errors.length, 0);
-    nodes.status.textContent = running
-      ? 'Inspecting media and capturing one full-size poster at a time…'
-      : lastError
-        ? lastError
-        : !prepared
-          ? `${imageCount} image${imageCount === 1 ? '' : 's'} and ${videoCount} video${videoCount === 1 ? '' : 's'} selected.`
-          : dirty
-            ? 'Media choices changed. Apply them to recapture and verify the exact campaign dependencies.'
-            : errors
-              ? `${errors} media choice${errors === 1 ? '' : 's'} need attention before approval.`
-              : videoCount
-                ? `${videoCount} victory ${videoCount === 1 ? 'story is' : 'stories are'} verified for review.`
-                : `${imageCount} image${imageCount === 1 ? ' is' : 's are'} verified for campaign review.`;
+    localizedText(nodes.status, () =>
+      running
+        ? t('interface:creator.inspectingMedia')
+        : lastError
+          ? lastError
+          : !prepared
+            ? t('interface:creator.mediaSelected', {
+                images: t('common:counts.images', { count: imageCount }),
+                videos: t('common:counts.videos', { count: videoCount }),
+              })
+            : dirty
+              ? t('interface:creator.mediaChoicesChanged')
+              : errors
+                ? t('interface:creator.mediaChoicesNeedAttention', { count: errors })
+                : videoCount
+                  ? t('interface:creator.victoryStoriesVerified', { count: videoCount })
+                  : t('interface:creator.imagesVerified', { count: imageCount }),
+    );
     if (nodes.apply) {
       nodes.apply.disabled = !!running || !sources.length || (!dirty && !!prepared);
-      nodes.apply.textContent = prepared ? 'Apply media choices' : 'Inspect media';
+      localizedText(nodes.apply, () =>
+        t(
+          prepared
+            ? 'interface:creator.applyMediaChoices'
+            : 'interface:creator.inspectMedia',
+        ),
+      );
     }
     if (nodes.cancel) nodes.cancel.hidden = !running;
     if (nodes.intake) nodes.intake.disabled = !!running;
@@ -316,8 +366,8 @@ export function createCreatorMediaReviewController({
     } catch (error) {
       lastError =
         error?.name === 'AbortError'
-          ? 'Media inspection cancelled. Your selected files and choices remain available.'
-          : error?.message || 'Media inspection could not finish.';
+          ? t('interface:creator.mediaInspectionCancelled')
+          : error?.message || t('interface:creator.mediaInspectionFailed');
       throw error;
     } finally {
       if (running === task) running = null;

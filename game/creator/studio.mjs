@@ -29,22 +29,35 @@ import { createBatchCreatorController } from './batch-ui.mjs';
 import { prepareReviewedCreatorBundle } from './batch-bundle.mjs';
 import { createCreatorMediaReviewController } from './media-review.mjs';
 import { prepareCreatorMediaCampaign } from './media-campaign.mjs';
+import {
+  formatNumber,
+  localizedMessage,
+  localizedText,
+  onLocaleChange,
+  t,
+} from '../i18n/index.mjs';
 
 const $ = (id) => document.getElementById(id),
   store = createCreatorStore(),
   backend = createCreatorDraftBackend(store);
 const status = (message, error = false) => {
-  $('status').textContent = message;
+  localizedText($('status'), message);
   $('status').classList.toggle('error', error);
 };
 const fail = (error) =>
   status(
     error.name === 'AbortError'
-      ? 'Cancelled. Your current draft is still available.'
+      ? localizedMessage('interface:creator.cancelledDraftAvailable')
       : error.message,
     error.name !== 'AbortError',
   );
-const mib = (bytes) => `${(bytes / 1048576).toFixed(2)} MiB`;
+const mib = (bytes) =>
+  t('common:format.mebibytes', {
+    value: formatNumber(bytes / 1048576, {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    }),
+  });
 const params = new URLSearchParams(location.search);
 const id = params.get('draft') ?? `creation-${crypto.randomUUID()}`;
 const draft = { id, revision: null, source: null, saved: null, running: null };
@@ -69,10 +82,7 @@ try {
   const themesResponse = await fetch('../content-design/themes.json');
   if (themesResponse.ok) themes = (await themesResponse.json()).themes;
 } catch {
-  status(
-    'Presentation themes are unavailable. Reconnect and reload to generate a new level.',
-    true,
-  );
+  status(localizedMessage('interface:creator.themesUnavailable'), true);
 }
 if (!params.has('draft')) {
   params.set('draft', id);
@@ -82,6 +92,29 @@ if (!params.has('draft')) {
 // one-mission preparations displayed on every review card.
 const batchApprovalAdapter = { approve: approveReviewedBatch };
 const batchEnabled = !!batchApprovalAdapter;
+const defaultFields = new Map([
+  ['name', 'interface:creator.defaultCollectionName'],
+  ['mission-title', 'interface:creator.defaultLevelTitle'],
+  ['description', 'interface:creator.defaultPictureDescription'],
+  ['creator-credit', 'interface:creator.defaultCreatorCredit'],
+  ['picture-credit', 'interface:creator.defaultPictureCredit'],
+  ['license', 'interface:creator.defaultLicense'],
+]);
+const localizedDefaults = new Map();
+const defaultOwned = new Set(defaultFields.keys());
+function refreshDefaultFields() {
+  for (const [field, key] of defaultFields) {
+    if (!defaultOwned.has(field)) continue;
+    const next = t(key);
+    const previous = localizedDefaults.get(field);
+    if (previous === undefined || $(field).value === previous) $(field).value = next;
+    localizedDefaults.set(field, next);
+  }
+}
+for (const field of defaultFields.keys())
+  $(field).addEventListener('input', () => defaultOwned.delete(field));
+onLocaleChange(refreshDefaultFields);
+refreshDefaultFields();
 
 function controls() {
   $('edits').hidden = !content || batchMode || mediaMode;
@@ -195,12 +228,15 @@ const batch = createBatchCreatorController({
       alt: item.title,
       estimatedBytes: itemPack.bytes,
       validation: itemPack.review.validation,
-      templateLabel:
-        `${generated.provenance.templateId} · ${generated.provenance.variantId} · ` +
-        `${enemies} ${enemies === 1 ? 'enemy' : 'enemies'} · ` +
-        `${walls} wall${walls === 1 ? '' : 's'} · ` +
-        `${foundations} safe island${foundations === 1 ? '' : 's'} · ` +
-        `${terrain} terrain zone${terrain === 1 ? '' : 's'} · verified Solo route evidence`,
+      templateLabel: () =>
+        t('interface:creator.templateSummary', {
+          template: generated.provenance.templateId,
+          variant: generated.provenance.variantId,
+          enemies: t('common:counts.enemies', { count: enemies }),
+          walls: t('common:counts.walls', { count: walls }),
+          foundations: t('common:counts.safeIslands', { count: foundations }),
+          terrain: t('common:counts.terrainZones', { count: terrain }),
+        }),
     };
   },
   approveBatch: batchApprovalAdapter?.approve,
@@ -209,18 +245,30 @@ const batch = createBatchCreatorController({
     $('batch-split-results').hidden = true;
   },
   onSplit: (chunks, settings) => {
-    $('batch-capacity').textContent =
-      `Accepted ${chunks.length} explicit parts: ${chunks.map((chunk, index) => `part ${index + 1} (${chunk.length})`).join(', ')}. Review and download or install each part before opening the next.`;
+    localizedText($('batch-capacity'), () =>
+      t('interface:creator.acceptedParts', {
+        count: chunks.length,
+        parts: chunks
+          .map((chunk, index) =>
+            t('interface:creator.partSummary', {
+              number: index + 1,
+              count: chunk.length,
+            }),
+          )
+          .join(', '),
+      }),
+    );
     const results = $('batch-split-results');
     const explanation = document.createElement('p');
-    explanation.textContent =
-      'Each button revalidates one exact part. Finish its install or download before reviewing another part.';
+    localizedText(explanation, () => t('interface:creator.splitReviewHelp'));
     results.replaceChildren(explanation);
     for (const [index, chunk] of chunks.entries()) {
       const button = document.createElement('button');
       button.type = 'button';
       button.className = 'secondary';
-      button.textContent = `Review part ${index + 1} of ${chunks.length}`;
+      localizedText(button, () =>
+        t('interface:creator.reviewPart', { current: index + 1, total: chunks.length }),
+      );
       button.onclick = () =>
         approveReviewedBatch(chunk, {
           ...settings,
@@ -242,12 +290,12 @@ const mediaReview = createCreatorMediaReviewController({
   },
   onPrepared: (reviewed) => {
     if (reviewed.items.some((item) => item.errors.length)) {
-      status('Resolve the media choices shown below before generating the campaign.', true);
+      status(localizedMessage('interface:creator.resolveMediaChoices'), true);
       return;
     }
     void operation(async (signal) => {
       invalidate();
-      status('Generating enemies, obstacles and verified routes for the reviewed media…');
+      status(localizedMessage('interface:creator.generatingReviewedMedia'));
       const result = await prepareCreatorMediaCampaign(
         reviewed,
         {
@@ -270,11 +318,15 @@ const mediaReview = createCreatorMediaReviewController({
       batchMode = false;
       mediaMode = true;
       sourceFile = image = null;
-      $('save-status').textContent =
-        'Video source files remain in this session. Download the approved .rlpack before leaving.';
+      localizedText(
+        $('save-status'),
+        localizedMessage('interface:creator.videoSourcesSessionOnly'),
+      );
       showReview(prepared);
       status(
-        `${content.project.missions.length} media level${content.project.missions.length === 1 ? '' : 's'} generated with enemies, obstacles and verified completion routes. Review before approving.`,
+        localizedMessage('interface:creator.mediaLevelsGenerated', {
+          count: content.project.missions.length,
+        }),
       );
     });
   },
@@ -300,9 +352,11 @@ function readLabels() {
   };
 }
 function fillLabels() {
+  defaultOwned.clear();
   $('name').value = content.project.name;
   $('mission-title').value = content.project.missions[0].name;
-  $('description').value = content.project.assets[0]?.alt ?? 'My reveal picture';
+  $('description').value =
+    content.project.assets[0]?.alt ?? t('interface:creator.defaultPictureDescription');
   $('creator-credit').value = content.credits.creator;
   $('picture-credit').value = content.credits.picture;
   $('license').value = content.credits.license;
@@ -367,10 +421,17 @@ async function saveDraft() {
         draft.revision = result.revision;
         draft.saved = next;
       }
-      $('save-status').textContent = `Saved locally · checkpoint ${draft.revision}.`;
+      localizedText(
+        $('save-status'),
+        localizedMessage('interface:creator.savedCheckpoint', { revision: draft.revision }),
+      );
     } catch (error) {
-      $('save-status').textContent =
-        `Session only: ${error.message} Your source backup remains downloadable.`;
+      localizedText(
+        $('save-status'),
+        localizedMessage('interface:creator.sessionOnlyBackupAvailable', {
+          error: error.message,
+        }),
+      );
     }
   })();
   // A duplicate checkpoint can finish synchronously. Assign first and clear
@@ -409,15 +470,19 @@ function showReview(pack) {
   );
   const runtime = pack.assets.find(({ sha256 }) => sha256 === picture?.sha256);
   if (!mission || !picture || !runtime)
-    throw new Error('The reviewed campaign is missing its first mission picture.');
+    throw new Error(t('errors:creator.firstMissionPictureMissing'));
   if (pictureURL) URL.revokeObjectURL(pictureURL);
   pictureURL = URL.createObjectURL(runtime.blob);
   $('picture').src = pictureURL;
   $('picture').alt = picture.alt;
-  $('picture-caption').textContent =
+  localizedText($('picture-caption'), () =>
     project.missions.length === 1
       ? mission.name
-      : `${mission.name} · first of ${project.missions.length} levels`;
+      : t('interface:creator.firstOfLevels', {
+          mission: mission.name,
+          count: project.missions.length,
+        }),
+  );
   const preview = prepareContentPreview(project, provenance.missionId);
   paintContentMap($('map').getContext('2d'), preview, { width: 720, showCapture: false });
   const template = CREATOR_TEMPLATES.find(({ id }) => id === provenance.templateId);
@@ -428,17 +493,32 @@ function showReview(pack) {
   const walls = map?.walls.length ?? 0;
   const foundations = map?.foundations.length ?? 0;
   const terrain = map?.terrain.length ?? 0;
-  $('map-caption').textContent =
-    `${template?.name ?? 'Verified crossing'} · 72 × 36 cells · Solo · ${enemies} ${enemies === 1 ? 'enemy' : 'enemies'} · ${walls} wall${walls === 1 ? '' : 's'} · ${foundations} safe island${foundations === 1 ? '' : 's'} · ${terrain} terrain zone${terrain === 1 ? '' : 's'} · verified completion route${provenances.length === 1 ? '.' : `; ${provenances.length} mission configurations verified.`}`;
+  localizedText($('map-caption'), () =>
+    t('interface:creator.mapSummary', {
+      template: template?.name ?? t('interface:creator.verifiedCrossing'),
+      enemies: t('common:counts.enemies', { count: enemies }),
+      walls: t('common:counts.walls', { count: walls }),
+      foundations: t('common:counts.safeIslands', { count: foundations }),
+      terrain: t('common:counts.terrainZones', { count: terrain }),
+      evidence: t('interface:creator.routeEvidence', { count: provenances.length }),
+    }),
+  );
   $('validation').textContent = pack.review.validation;
   const storyCount = pack.manifest.content.media?.stories.length ?? 0;
-  $('package-size').textContent =
-    `${mib(pack.bytes)} portable pack. Includes ${project.assets.length} PNG derivative${project.assets.length === 1 ? '' : 's'}${storyCount ? ` and ${storyCount} complete victory video${storyCount === 1 ? '' : 's'}` : ''}. Source image originals and player progress are excluded.`;
+  localizedText($('package-size'), () =>
+    t('interface:creator.packageSummary', {
+      size: mib(pack.bytes),
+      derivatives: t('common:counts.pngDerivatives', { count: project.assets.length }),
+      videos: storyCount
+        ? t('interface:creator.withVictoryVideos', { count: storyCount })
+        : '',
+    }),
+  );
   $('review').hidden = false;
 }
 async function generate(signal) {
   invalidate();
-  status('Preparing your picture and verifying the generated route…');
+  status(localizedMessage('interface:creator.preparingPictureRoute'));
   if (sourceFile)
     image = await prepareCreatorImage(
       sourceFile,
@@ -466,9 +546,7 @@ async function generate(signal) {
   await saveDraft();
   prepared = await prepareCreatorBundle(content, currentAssets(), { signal });
   showReview(prepared);
-  status(
-    'Your level is ready for review. Check the picture, title, map and credits before approving.',
-  );
+  status(localizedMessage('interface:creator.levelReadyForReview'));
 }
 function choose(file) {
   if (!file) return;
@@ -477,10 +555,17 @@ function choose(file) {
   mediaMode = false;
   mediaSource = null;
   sourceFile = file;
+  defaultOwned.delete('mission-title');
   invalidate();
-  $('mission-title').value = file.name.replace(/\.[^.]+$/, '').slice(0, 160) || 'First picture';
+  $('mission-title').value =
+    file.name.replace(/\.[^.]+$/, '').slice(0, 160) ||
+    t('interface:creator.defaultLevelTitle');
   $('fit').disabled = false;
-  status(`${file.name} selected. Generate to prepare its picture and level.`);
+  status(
+    localizedMessage('interface:creator.fileSelected', {
+      file: file.name,
+    }),
+  );
 }
 
 function chooseFiles(files) {
@@ -506,7 +591,9 @@ function chooseFiles(files) {
     $('play').hidden = true;
     const review = mediaReview.setFiles(selected);
     status(
-      `${review.sources.length} media file${review.sources.length === 1 ? '' : 's'} selected. Inspect them, resolve poster choices, then review the generated playable campaign.`,
+      localizedMessage('interface:creator.mediaFilesSelected', {
+        count: review.sources.length,
+      }),
     );
     controls();
     return;
@@ -516,7 +603,7 @@ function chooseFiles(files) {
   mediaSource = null;
   if (selected.length > 1 && !batchEnabled)
     return status(
-      'This build supports one picture at a time. Batch review will appear when campaign assembly is available.',
+      localizedMessage('interface:creator.batchUnavailable'),
       true,
     );
   if (selected.length === 1) {
@@ -536,14 +623,16 @@ function chooseFiles(files) {
   $('batch-options').hidden = false;
   const selectedBatch = batch.setFiles(selected);
   status(
-    `${selectedBatch.items.length} pictures selected in natural filename order. Review the order, then generate the included levels.`,
+    localizedMessage('interface:creator.batchSelected', {
+      count: selectedBatch.items.length,
+    }),
   );
   controls();
 }
 async function approveReviewedBatch(items, settings) {
   return operation(async (signal) => {
     invalidate();
-    status('Assembling the exact reviewed levels and verifying the complete campaign…');
+    status(localizedMessage('interface:creator.assemblingCampaign'));
     const result = await prepareReviewedCreatorBundle(
       items,
       {
@@ -570,14 +659,32 @@ async function approveReviewedBatch(items, settings) {
     $('approved').hidden = false;
     try {
       installReview = await reviewCreatorInstallation(store, prepared, approval, { signal });
-      $('storage-review').textContent =
-        `Pack: ${mib(installReview.packageBytes)}. Required staging space: ${mib(installReview.stagingBytes)}. Managed storage: ${mib(installReview.usedBytes)} of ${mib(installReview.limitBytes)}. ${installReview.enoughManagedSpace ? 'Ready to install.' : 'Download the pack to keep your work; storage is full.'}`;
+      const review = installReview;
+      localizedText($('storage-review'), () =>
+        t('interface:creator.storageReview', {
+          pack: mib(review.packageBytes),
+          staging: mib(review.stagingBytes),
+          used: mib(review.usedBytes),
+          limit: mib(review.limitBytes),
+          status: t(
+            review.enoughManagedSpace
+              ? 'interface:creator.readyToInstall'
+              : 'interface:creator.storageFullDownload',
+          ),
+        }),
+      );
     } catch (error) {
-      $('storage-review').textContent =
-        `Installation storage is unavailable: ${error.message} You can still download your pack.`;
+      localizedText(
+        $('storage-review'),
+        localizedMessage('interface:creator.installStorageUnavailable', {
+          error: error.message,
+        }),
+      );
     }
     status(
-      `${content.project.missions.length} reviewed levels approved as one immutable campaign. Install it or download the portable pack.`,
+      localizedMessage('interface:creator.reviewedLevelsApproved', {
+        count: content.project.missions.length,
+      }),
     );
   });
 }
@@ -597,9 +704,11 @@ async function openPrepared(pack) {
     invalidate();
     prepared = pack;
     showReview(pack);
-    $('save-status').textContent =
-      'This portable video campaign is verified for this session and can be installed.';
-    status('Pack verified. Review this exact media campaign before installing.');
+    localizedText(
+      $('save-status'),
+      localizedMessage('interface:creator.videoCampaignSessionVerified'),
+    );
+    status(localizedMessage('interface:creator.mediaPackVerified'));
     return;
   }
   draft.source = await prepareCreatorSource(
@@ -613,9 +722,7 @@ async function openPrepared(pack) {
   prepared = pack;
   showReview(pack);
   await saveDraft();
-  status(
-    'Pack verified. Review this exact picture and level before installing. Select a new source picture to change fitting.',
-  );
+  status(localizedMessage('interface:creator.picturePackVerified'));
 }
 async function openSource(source) {
   content = structuredClone(source.document.content);
@@ -632,14 +739,15 @@ async function openSource(source) {
   $('fit').disabled = !sourceFile;
   fillLabels();
   invalidate();
-  status('Source draft restored. Generate and review again before approving.');
+  status(localizedMessage('interface:creator.sourceDraftRestored'));
 }
 async function listInstalled() {
   const list = $('installed-list');
   list.replaceChildren();
   try {
     const manifests = await installedCreatorManifests(store);
-    if (!manifests.length) list.textContent = 'No creator campaigns installed yet.';
+    if (!manifests.length)
+      localizedText(list, () => t('interface:creator.noCampaignsInstalled'));
     for (const manifest of manifests) {
       const row = document.createElement('div');
       row.className = 'installed-item';
@@ -648,13 +756,18 @@ async function listInstalled() {
       const edition = document.createElement('p');
       edition.className = 'muted';
       const missions = manifest.content.project.missions.length;
-      edition.textContent = `Edition ${manifest.editionId.slice(0, 12)} · ${missions} Solo mission${missions === 1 ? '' : 's'}`;
+      localizedText(edition, () =>
+        t('interface:creator.installedEdition', {
+          edition: manifest.editionId.slice(0, 12),
+          missions: t('common:counts.missions', { count: missions }),
+        }),
+      );
       const play = document.createElement('a');
       play.href = `./player.html?edition=${manifest.editionId}`;
-      play.textContent = 'Play campaign →';
+      localizedText(play, () => t('interface:creator.playCampaign'));
       const edit = document.createElement('button');
       edit.className = 'secondary';
-      edit.textContent = 'Open editable source';
+      localizedText(edit, () => t('interface:creator.openEditableSource'));
       edit.onclick = () =>
         operation(async (signal) =>
           openPrepared(await loadInstalledCreatorBundle(store, manifest.editionId, { signal })),
@@ -663,7 +776,10 @@ async function listInstalled() {
       list.append(row);
     }
   } catch (error) {
-    list.textContent = `Library unavailable: ${error.message}`;
+    localizedText(
+      list,
+      localizedMessage('interface:creator.libraryUnavailable', { error: error.message }),
+    );
   }
 }
 $('image').onchange = () => chooseFiles($('image').files);
@@ -693,12 +809,15 @@ for (const key of [
     readLabels();
     if (content) {
       clearTimeout(saveTimer);
-      $('save-status').textContent = 'Saving draft changes…';
+      localizedText(
+        $('save-status'),
+        localizedMessage('interface:creator.savingDraftChanges'),
+      );
       saveTimer = setTimeout(() => {
         void saveDraft().catch(fail);
       }, 500);
     }
-    status('Changes are in your draft. Generate and review the updated level before approving.');
+    status(localizedMessage('interface:creator.draftChangesPending'));
   };
 $('generate').onclick = () => operation(generate);
 $('regenerate').onclick = () =>
@@ -723,13 +842,29 @@ $('approve').onclick = () =>
     $('approved').hidden = false;
     try {
       installReview = await reviewCreatorInstallation(store, prepared, approval, { signal });
-      $('storage-review').textContent =
-        `Pack: ${mib(installReview.packageBytes)}. Required staging space: ${mib(installReview.stagingBytes)}. Managed storage: ${mib(installReview.usedBytes)} of ${mib(installReview.limitBytes)}. ${installReview.enoughManagedSpace ? 'Ready to install.' : 'Download the pack to keep your work; storage is full.'}`;
+      const review = installReview;
+      localizedText($('storage-review'), () =>
+        t('interface:creator.storageReview', {
+          pack: mib(review.packageBytes),
+          staging: mib(review.stagingBytes),
+          used: mib(review.usedBytes),
+          limit: mib(review.limitBytes),
+          status: t(
+            review.enoughManagedSpace
+              ? 'interface:creator.readyToInstall'
+              : 'interface:creator.storageFullDownload',
+          ),
+        }),
+      );
     } catch (error) {
-      $('storage-review').textContent =
-        `Installation storage is unavailable: ${error.message} You can still download your pack.`;
+      localizedText(
+        $('storage-review'),
+        localizedMessage('interface:creator.installStorageUnavailable', {
+          error: error.message,
+        }),
+      );
     }
-    status('Approved. Install locally or download the portable pack.');
+    status(localizedMessage('interface:creator.approvedInstallOrDownload'));
   });
 $('install').onclick = () =>
   operation(async (signal) => {
@@ -737,7 +872,7 @@ $('install').onclick = () =>
     $('play').href = `./player.html?edition=${prepared.editionId}`;
     $('play').hidden = false;
     installReview = null;
-    status('Campaign installed. Open it to play and earn your picture.');
+    status(localizedMessage('interface:creator.campaignInstalled'));
     await listInstalled();
   });
 $('download').onclick = () => {
@@ -779,7 +914,7 @@ $('advanced').onclick = () =>
 $('load-advanced').onclick = () =>
   operation(async () => {
     const checkpoint = await createContentDraftBackend().read(advancedId);
-    if (!checkpoint) throw new Error('Save a checkpoint in Advanced Studio first.');
+    if (!checkpoint) throw new Error(t('errors:creator.saveAdvancedCheckpointFirst'));
     requireCreatorEditableProject(checkpoint.project);
     const next = { ...content, project: checkpoint.project };
     // Validate source dependencies before replacing the current editable draft.
@@ -796,9 +931,7 @@ $('load-advanced').onclick = () =>
     invalidate();
     fillLabels();
     await saveDraft();
-    status(
-      'Studio edits loaded into this draft. Generate to verify them; changed gameplay may need regeneration.',
-    );
+    status(localizedMessage('interface:creator.studioEditsLoaded'));
   });
 window.addEventListener('beforeunload', (event) => {
   if (saveTimer || draft.running || (draft.source && draft.source !== draft.saved)) {
@@ -819,20 +952,26 @@ try {
     draft.revision = saved.revision;
     await openSource(saved.source);
     draft.saved = draft.source;
-    $('save-status').textContent = `Restored local checkpoint ${saved.revision}.`;
+    localizedText(
+      $('save-status'),
+      localizedMessage('interface:creator.restoredCheckpoint', { revision: saved.revision }),
+    );
   }
 } catch (error) {
-  $('save-status').textContent =
-    `Draft storage unavailable: ${error.message} Creation and downloadable backups remain available.`;
+  localizedText(
+    $('save-status'),
+    localizedMessage('interface:creator.draftStorageUnavailable', {
+      error: error.message,
+    }),
+  );
 }
 controls();
 await listInstalled();
 busy = false;
 $('image').multiple = batchEnabled;
 if (batchEnabled) {
-  $('choose-title').textContent = '1. Choose pictures or videos';
-  $('intake-help').textContent =
-    'Or drop media here. Pictures can be up to 4 MiB and 16 megapixels. MP4/WebM videos are inspected locally; matching image/video names are suggested and exact hashes remain authoritative.';
-  status('Choose PNG, JPEG or WebP pictures, MP4/WebM videos, or a mixture to begin.');
+  localizedText($('choose-title'), () => t('interface:creator.chooseMediaHeading'));
+  localizedText($('intake-help'), () => t('interface:creator.dropMediaHelp'));
+  status(localizedMessage('interface:creator.chooseMediaToBegin'));
 }
 controls();
