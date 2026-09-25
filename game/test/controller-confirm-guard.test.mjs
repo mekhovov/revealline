@@ -149,6 +149,7 @@ test('a sampled Confirm owns delayed keyboard and mouse echoes after A is releas
   h.guard.observe(true);
   h.pad.buttons[0].pressed = false;
   h.sample();
+  h.guard.observe(false);
 
   time = 350;
   assert.equal(h.emit('keydown', { key: 'Enter' }), true);
@@ -177,6 +178,7 @@ test('a trusted click-only Steam echo is consumed while controller click() remai
   );
   h.pad.buttons[0].pressed = false;
   h.sample();
+  h.guard.observe(false);
 
   time = 1100;
   assert.equal(
@@ -206,6 +208,61 @@ test('a trusted Steam click arriving before the next gamepad frame is consumed',
     false,
     'controller navigation can still invoke the selected control',
   );
+});
+
+test('a native click that wins the first frame suppresses the matching controller click', (t) => {
+  let time = 100;
+  const h = setup(t, { guardNow: () => time });
+
+  assert.equal(
+    h.emit('click', {
+      button: -1,
+      pointerId: -1,
+      pointerType: '',
+      detail: 0,
+      isTrusted: true,
+    }),
+    false,
+    'the first trusted activation remains usable before Gamepad state catches up',
+  );
+  h.pad.buttons[0].pressed = true;
+  assert.equal(h.sample().ui.confirm, true);
+  h.guard.observe(true);
+  time = 116;
+  assert.equal(
+    h.emit('click', { button: 0, detail: 0 }),
+    true,
+    'the later controller .click() cannot apply the same press twice',
+  );
+  assert.equal(h.nativeEvents, 1, 'exactly one activation reaches the control');
+});
+
+test('a long-held A owns its keyboard and non-pointer release without a polling deadline', (t) => {
+  let time = 100;
+  const h = setup(t, { guardNow: () => time });
+
+  assert.equal(h.emit('keydown', { key: ' ' }), false, 'native input can lead Gamepad state');
+  h.pad.buttons[0].pressed = true;
+  assert.equal(h.sample().ui.confirm, true);
+  h.guard.observe(true);
+
+  time = 10_000;
+  h.pad.buttons[0].pressed = false;
+  h.sample();
+  h.guard.observe(false);
+  assert.equal(h.emit('keyup', { key: ' ' }), true, 'release default is canceled');
+  assert.equal(
+    h.emit('click', {
+      button: -1,
+      pointerId: -1,
+      pointerType: '',
+      detail: 0,
+      isTrusted: true,
+    }),
+    true,
+    'the release click is consumed even when it is not a mouse click',
+  );
+  assert.equal(h.nativeEvents, 1, 'only the leading keydown reaches native listeners');
 });
 
 test('a delayed native tail cannot activate the first control after paused Home opens', (t) => {
@@ -242,6 +299,7 @@ test('the echo window follows a long-held A press through its release', (t) => {
   h.guard.observe(true);
   h.pad.buttons[0].pressed = false;
   h.sample();
+  h.guard.observe(false);
 
   time = 1600;
   assert.equal(h.emit('keydown', { key: 'Enter' }), true);
