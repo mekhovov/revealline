@@ -1,4 +1,5 @@
 import { required } from '../data-json.mjs';
+import { localizedText, t } from '../i18n/index.mjs';
 
 const aborted = (error) => error?.name === 'AbortError';
 
@@ -10,11 +11,11 @@ const aborted = (error) => error?.name === 'AbortError';
 export function createCreatorPlayerVictoryStory({ runtime, host, nodes } = {}) {
   required(
     runtime?.prepareVictoryStory && host?.show && host?.close,
-    'Creator story playback needs its installed runtime and presentation host.',
+    t('errors:creator.storyPlaybackRuntime'),
   );
   required(
     nodes?.surface && nodes?.stage && nodes?.status && nodes?.retry,
-    'Creator story playback needs its earned-picture controls.',
+    t('errors:creator.storyPlaybackControls'),
   );
   let generation = 0,
     controller = null,
@@ -40,10 +41,10 @@ export function createCreatorPlayerVictoryStory({ runtime, host, nodes } = {}) {
   }
 
   async function show(request) {
-    required(!disposed, 'Creator story playback is closed.');
+    required(!disposed, t('errors:creator.storyPlaybackClosed'));
     required(
       request?.receipt && request?.posterElement && request?.posterAsset,
-      'Creator story playback needs the earned completion and exact poster.',
+      t('errors:creator.storyPlaybackCompletion'),
     );
     cancel();
     const token = generation,
@@ -52,7 +53,7 @@ export function createCreatorPlayerVictoryStory({ runtime, host, nodes } = {}) {
     current = request;
     hideRetry();
     nodes.status.classList.remove('error');
-    nodes.status.textContent = 'Checking this mission’s optional victory story…';
+    localizedText(nodes.status, () => t('interface:creator.checkingVictoryStory'));
     try {
       const result = await runtime.prepareVictoryStory(request.receipt, {
         signal: active.signal,
@@ -60,13 +61,13 @@ export function createCreatorPlayerVictoryStory({ runtime, host, nodes } = {}) {
       if (disposed || token !== generation || active.signal.aborted) return null;
       controller = null;
       if (!result) {
-        nodes.status.textContent = '';
+        localizedText(nodes.status, '');
         return null;
       }
       required(
         result.poster.id === request.posterAsset.id &&
           result.poster.sha256 === request.posterAsset.sha256,
-        'Victory story differs from the exact earned poster.',
+        t('errors:creator.storyPosterMismatch'),
       );
       return host.show({
         posterElement: request.posterElement,
@@ -80,9 +81,10 @@ export function createCreatorPlayerVictoryStory({ runtime, host, nodes } = {}) {
       nodes.surface.hidden = false;
       nodes.retry.hidden = false;
       nodes.status.classList.add('error');
-      nodes.status.textContent = `Victory video is unavailable. Your earned picture and Next remain available. ${
-        error instanceof Error ? error.message : String(error)
-      }`;
+      const reason = error instanceof Error ? error.message : String(error);
+      localizedText(nodes.status, () =>
+        t('interface:creator.victoryVideoUnavailable', { error: reason }),
+      );
       return null;
     }
   }
