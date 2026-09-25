@@ -134,14 +134,7 @@ test('fast mode waives long suites while release source and publication guards s
         'Verify all originals and upload two absent members to the existing draft',
       ],
     ],
-    [
-      pages,
-      [
-        'Validate frozen selector and admitted archives',
-        'Assemble exact current ZIP and historical metadata bridges',
-        'Independently reread every prepared artifact byte',
-      ],
-    ],
+    [pages, ['Validate frozen selector and admitted archives']],
   ]) {
     const blocks = workflow.split('      - name: ');
     for (const name of names) {
@@ -150,6 +143,18 @@ test('fast mode waives long suites while release source and publication guards s
       assert.doesNotMatch(block, /if:.*test_policy|if:.*runTests/, name);
     }
   }
+  assert.match(
+    pages,
+    /Assemble exact current ZIP and historical metadata bridges\n\s+if: github\.event_name != 'pull_request' \|\| vars\.REVEALLINE_FULL_CI == 'true'/,
+  );
+  assert.match(
+    pages,
+    /Independently reread every prepared artifact byte\n\s+if: github\.event_name != 'pull_request' \|\| vars\.REVEALLINE_FULL_CI == 'true'/,
+  );
+  assert.match(
+    pages,
+    /Defer Pages artifact assembly to main publication\n\s+if: github\.event_name == 'pull_request' && vars\.REVEALLINE_FULL_CI != 'true'/,
+  );
 });
 
 test('draft staging shares the bounded maintenance path policy without checking out PR code', async () => {
@@ -269,6 +274,7 @@ test('delivery-only push is excluded after the controller glob while PR review a
     assert.ok(pullRequest.includes(previewOnlyPath));
   }
   assert.ok(push.includes('!publishing/pages-controller/evidence/**'));
+  assert.ok(push.includes('!publishing/pages-controller/source-qualification.mjs'));
   assert.ok(push.includes('!publishing/pages-controller/*.test.mjs'));
   assert.ok(push.includes('!publishing/pages-controller/test_*.py'));
   assert.match(workflow, /publish\.mjs verify-artifact/);
