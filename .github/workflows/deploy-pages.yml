@@ -5,13 +5,7 @@ on:
     types: [published]
   pull_request:
     branches: [main]
-    paths-ignore:
-      - 'publishing/pages-controller/**'
-      - '.github/workflows/publish-frozen-pages.yml'
-      - '.github/workflows/deploy-pages.yml'
-      - '.cursor/skills/deploy-release-pages/**'
-      - 'docs/deployment.md'
-      - 'docs/fast-release-mode.md'
+    types: [opened, synchronize, reopened, edited]
   workflow_dispatch:
     inputs:
       release_tag:
@@ -27,6 +21,10 @@ concurrency:
   # Superseded PR heads cannot qualify the current source; do not queue behind them.
   # Release routing and manual runs keep their existing serialization.
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+# `release-ready` is the single required status on protected `main`. Do not add
+# pull-request path filters above: a filtered workflow leaves a required check
+# pending forever. Maintenance is classified in preflight and exits quickly.
 
 jobs:
   release_gate:
@@ -77,8 +75,13 @@ jobs:
           fetch-depth: 1
           persist-credentials: false
           sparse-checkout: |
+            publishing/pages-controller/metadata.mjs
+            publishing/pages-controller/publication.json
+            publishing/pages-controller/release-policy.mjs
+            publishing/pages-controller/release-train-boundary.mjs
             publishing/test-policy.json
             publishing/test-policy.mjs
+            scripts/pages-archive.mjs
           sparse-checkout-cone-mode: false
 
       - name: Set up Node.js
@@ -121,6 +124,13 @@ jobs:
             echo 'mode=maintenance' >> "$GITHUB_OUTPUT"
           fi
 
+      - name: Require the previous stable release on public Pages
+        if: steps.admission.outputs.mode == 'release'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_TITLE: ${{ github.event.pull_request.title }}
+        run: node .source-gate-automation/publishing/pages-controller/release-train-boundary.mjs public
+
       - name: Record temporary fast-release policy
         env:
           FULL_CI: ${{ vars.REVEALLINE_FULL_CI || 'false' }}
@@ -132,7 +142,7 @@ jobs:
             printf '%s\n' \
               '### Fast-release mode' \
               '' \
-              'Only exact-source identity, release-critical validation, and the production build block this PR.' \
+              'Only exact-source identity and release-critical validation block this PR.' \
               'No passing verdict is claimed for deferred checks. See `docs/fast-release-mode.md`.' >> "$GITHUB_STEP_SUMMARY"
           fi
 
@@ -205,8 +215,9 @@ jobs:
     if: github.event_name == 'pull_request' && needs.preflight.outputs.admission == 'release'
     env:
       EXPECTED_SOURCE: ${{ github.event.pull_request.head.sha }}
-    # Preflight selects the test policy. This is the sole PR source checkout,
-    # and it verifies exact source identity before and after the build.
+    # Preflight selects the test policy. This is the sole PR source checkout.
+    # Fast mode validates the exact source and defers the heavyweight artifact
+    # assembly to merged-source qualification; full CI retains the PR build.
     needs: [preflight]
     runs-on: ubuntu-latest
     steps:
@@ -225,7 +236,13 @@ jobs:
           path: .source-gate-automation
           fetch-depth: 1
           persist-credentials: false
-          sparse-checkout: scripts/check-source-identity.mjs
+          sparse-checkout: |
+            publishing/pages-controller/metadata.mjs
+            publishing/pages-controller/publication.json
+            publishing/pages-controller/release-policy.mjs
+            publishing/pages-controller/release-train-boundary.mjs
+            scripts/check-source-identity.mjs
+            scripts/pages-archive.mjs
           sparse-checkout-cone-mode: false
 
       - name: Set up Node.js
@@ -238,6 +255,11 @@ jobs:
         run: |
           test "$(git rev-parse HEAD)" = "$EXPECTED_SOURCE"
           node .source-gate-automation/scripts/check-source-identity.mjs --root .
+
+      - name: Require exact release version identity
+        env:
+          PR_TITLE: ${{ github.event.pull_request.title }}
+        run: node .source-gate-automation/publishing/pages-controller/release-train-boundary.mjs source .
 
       - name: Install dependencies
         run: npm ci
@@ -257,11 +279,23 @@ jobs:
           node --test scripts/test-production-*.mjs
 
       - name: Build pull-request artifact
-        if: github.event_name == 'pull_request'
+        if: vars.REVEALLINE_FULL_CI == 'true'
         run: npm run build
 
       - name: Verify tracked source after build
-        if: always()
+        if: always() && vars.REVEALLINE_FULL_CI == 'true'
+        run: |
+          test "$(git rev-parse HEAD)" = "$EXPECTED_SOURCE"
+          node .source-gate-automation/scripts/check-source-identity.mjs --root .
+
+      - name: Defer full artifact build to merged-source qualification
+        if: vars.REVEALLINE_FULL_CI != 'true'
+        run: |
+          echo 'Fast mode: the complete deterministic release artifact is built once from the merged commit.'
+          echo 'The merged-source qualification and frozen-artifact inspection remain release blockers.'
+
+      - name: Verify tracked source after fast release gate
+        if: always() && vars.REVEALLINE_FULL_CI != 'true'
         run: |
           test "$(git rev-parse HEAD)" = "$EXPECTED_SOURCE"
           node .source-gate-automation/scripts/check-source-identity.mjs --root .

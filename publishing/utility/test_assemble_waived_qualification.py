@@ -26,7 +26,9 @@ class AdapterTests(unittest.TestCase):
         self.jobs = jobs
         self.pr_run = dict(self.manual, id=20, event='pull_request', path='.github/workflows/deploy-pages.yml')
         build = dict(jobs['jobs'][0], id=201, run_id=20, name='build', steps=[self.step(n, i + 1) for i, n in enumerate(
-            ['Verify exact tracked source before commands', 'Build pull-request artifact', 'Verify tracked source after build'])])
+            ['Verify exact tracked source before commands', 'Validate release-critical source',
+             'Defer full artifact build to merged-source qualification',
+             'Verify tracked source after fast release gate'])])
         self.pr_jobs = {'total_count': 2, 'jobs': [build, dict(build, name='preflight', id=202)]}
         self.inspection_run = dict(self.manual, id=21)
         inspection_jobs = {'total_count': 1, 'jobs': [dict(build, id=301, run_id=21, name='inspect-artifact')]}
@@ -141,7 +143,7 @@ class AdapterTests(unittest.TestCase):
                 adapter.assemble(self.config, self.root / 'out')
             self.assertFalse((self.root / 'out').exists())
 
-    def test_gate_and_build_must_be_actual_successful_steps(self):
+    def test_gate_and_pr_validation_must_be_actual_successful_steps(self):
         for role, raw, job_index, step_index in [('manual', self.jobs, 0, 0), ('pr', self.pr_jobs, 0, 1)]:
             bad = copy.deepcopy(raw)
             bad['jobs'][job_index]['steps'][step_index]['conclusion'] = 'skipped'
