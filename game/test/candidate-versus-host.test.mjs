@@ -11,6 +11,7 @@ import { CLASSES } from '../core/index.mjs';
 import { playKeyboardRoute } from './helpers/keyboard-route.mjs';
 import { expectedRouteEvidence } from './helpers/route-evidence.mjs';
 import { createAuthoredJourneyRoute } from '../content-design/route.mjs';
+import { createCandidateVersusHost } from '../content-design/versus-host.mjs';
 import { compileContentProject, resolveMission } from '../content-design/project.mjs';
 import { applyGameplayTuning, resolveGameplayTuning } from '../gameplay-tuning.mjs';
 import { dataIdentity } from '../data-json.mjs';
@@ -295,12 +296,30 @@ test('controller can open and leave the flat chooser without starting or clearin
   await waitFor(() => p.$('journey-chooser')?.open && p.$('journey-collection'));
   p.frame(); // The asynchronously mounted scope observes a neutral controller frame.
   assert.equal(p.$('journey-chooser').open, true);
+  const cards = [...p.$('journey-cards').children];
   assert.equal(
-    p.$('journey-cards').children.length,
+    cards.length,
     198,
     'the complete 66-mission opening catalogue exposes all three difficulty cards',
   );
-  const card = p.$('journey-cards').children[0];
+  const route = createAuthoredJourneyRoute('opening'),
+    themes = JSON.parse(
+      await readFile(new URL('../content-design/themes.json', import.meta.url)),
+    ).themes,
+    currentInventory = createCandidateVersusHost(route.source, {
+      themes,
+      corePackIds: route.corePackIds,
+      optionalCampaignIds: route.optionalCampaignIds,
+    }).catalog.forMode('versus'),
+    currentCards = cards.filter((card) => {
+      const [ownerId, editionId] = JSON.parse(card.dataset.missionId);
+      return ownerId === 'journey:opening' && editionId === 'opening';
+    });
+  assert.deepEqual(
+    currentCards.map((card) => JSON.parse(card.dataset.missionId)[3]),
+    currentInventory.map((mission) => mission.id),
+  );
+  const card = currentCards[0];
   assert.match(card.textContent, /Band 1\/12.*Standard.*Optional challenge/);
   card.focus();
   const raw = JSON.stringify({ format: 'JourneyPreferencesV1', difficulty: 'expert' });
@@ -512,18 +531,40 @@ for (const route of ['opening', 'authored'])
       );
       assert.equal(p.$('journey-chooser')?.open ?? false, false);
       if (id !== rows.at(-1)[0]) {
-        const previous = p.renders[0];
-        p.$('race-journey-next').click();
-        await waitFor(
-          () => {
-            p.frame(0);
-            return p.renders[0] !== previous && !p.$('race-pause').disabled;
-          },
-          {
-            message: `Versus did not prepare the mission after ${id}.`,
-            timeoutMs: 15_000,
-          },
+        const previous = p.renders[0],
+          next = p.$('race-journey-next'),
+          handler = next.onclick;
+        let operation, timer;
+        next.onclick = function (...args) {
+          operation = handler.apply(this, args);
+          return operation;
+        };
+        try {
+          next.click();
+        } finally {
+          next.onclick = handler;
+        }
+        assert.equal(
+          typeof operation?.then,
+          'function',
+          `${id} activates the real owned continuation operation.`,
         );
+        try {
+          await Promise.race([
+            operation,
+            new Promise((_, reject) => {
+              timer = setTimeout(
+                () => reject(new Error(`Versus did not prepare the mission after ${id}.`)),
+                15_000,
+              );
+            }),
+          ]);
+        } finally {
+          clearTimeout(timer);
+        }
+        p.frame(0);
+        assert.notEqual(p.renders[0], previous, `${id} advances to its exact successor.`);
+        assert.equal(p.$('race-pause').disabled, false, `${id} successor starts immediately.`);
       }
     }
     assert.equal(p.$('race-journey-next').hidden, false);
@@ -550,6 +591,31 @@ for (const route of ['opening', 'authored'])
     }
     assert.equal(new Set(receipts.map(([, receipt]) => receipt.runId)).size, rows.length);
     assert.deepEqual(persisted.skipped.versus, []);
+    const retained = (await p.journeyBackend.readState()).pictures.records;
+    assert.equal(retained.length, rows.length);
+    assert(retained.every((record) => record.mode === 'versus'));
+    assert(retained.every((record) => record.editionId === route));
+    assert.equal(
+      retained.some((record) => record.mode === 'solo' || record.mode === 'team'),
+      false,
+      'Paired-board wins never infer Solo or Team rewards.',
+    );
+    for (const record of retained) {
+      const mission = resolveMission(project, record.levelId);
+      assert.deepEqual(record.asset, mission.background);
+    }
+    p.$('race-journey-pictures').focus();
+    p.$('race-journey-pictures').click();
+    await waitFor(
+      () =>
+        p.$('versus-journey-pictures')?.open &&
+        p.$('versus-journey-pictures').querySelectorAll('.journey-mode-picture-card').length ===
+          rows.length,
+    );
+    assert.match(p.$('versus-journey-pictures').textContent, /earned Versus originals/);
+    assert.doesNotMatch(p.$('versus-journey-pictures').textContent, /earned Solo|earned Team/);
+    p.$('versus-journey-pictures').querySelector('header').querySelector('button').click();
+    assert.equal(p.doc.activeElement, p.$('race-journey-pictures'));
     const previous = [...p.renders],
       pictures = p.drawOptions.map((options) => options.backdrop),
       checks = p.checkpoint();

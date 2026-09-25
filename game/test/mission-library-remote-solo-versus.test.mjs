@@ -96,6 +96,7 @@ test('remote Solo/Versus inventory preserves 91 current, six prior and 188 Class
     );
     for (const row of ready) {
       assert.equal(library.progress(row, mode), '');
+      assert.equal(library.completion(row, mode), null);
       assert.equal(await library.launch(row, { mode }), true);
       assert.equal(launches.at(-1).libraryMissionId, row.id);
       assert.equal(launches.at(-1).mode, mode);
