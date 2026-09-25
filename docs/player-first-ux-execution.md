@@ -59,8 +59,9 @@ version reservation. Versus keeps Start and Browse missions visible while actor,
 difficulty and advanced match setup live under Optional setup. Team keeps Arena,
 Start and Browse Team arenas visible while teamwork, difficulty, actors and created
 pack import live under Optional setup. Initial Team picture preparation exposes an
-explicit secondary Cancel without taking first focus, and current FPV revision 73
-retains the two exact reviewed Team picture associations plus revisions 58–72.
+explicit secondary Cancel without taking first focus. The current FPV revision 77
+picture authority and its retained revisions 58–76 are inherited unchanged from
+the merged source; this quick-start successor does not reinterpret those bindings.
 Publication, responsive browser review and physical controller/touch evidence remain
 release gates rather than claims of this source checkpoint.
 
