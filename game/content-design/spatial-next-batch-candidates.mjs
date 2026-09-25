@@ -1,5 +1,4 @@
 import { freezeDesign } from './catalogs.mjs';
-import { compileContentProject } from './project.mjs';
 import { createWholeErosionReviewCandidates } from './whole-spatial-candidates.mjs';
 
 export const SPATIAL_NEXT_BATCH_REVISION = 'cultural-spatial-triptych-1';
@@ -203,5 +202,8 @@ export function createSpatialNextBatchCandidates({ artwork = false } = {}) {
   for (const pack of project.packs)
     if (pack.campaignIds.some((id) => owningCampaignIds.has(id)))
       pack.revision = SPATIAL_NEXT_BATCH_REVISION;
-  return structuredClone(compileContentProject(project).source);
+  // Route hosts compile this complete 91-mission source once. Compiling here
+  // and cloning its raw source forced every consumer to perform the same full
+  // validation a second time before it could launch or browse the edition.
+  return structuredClone(project);
 }

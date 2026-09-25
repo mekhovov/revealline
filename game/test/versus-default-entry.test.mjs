@@ -101,7 +101,7 @@ test(
     assert.equal(p.$('race-leave-panel').hidden, true);
     assert.equal(p.$('journey-mode').value, 'versus');
     assert.equal(p.$('journey-collection').value, '');
-    assert.equal(p.$('journey-cards').children.length, 201);
+    assert.equal(p.$('journey-cards').children.length, 282);
     p.frame(0); // The newly opened dialog observes neutral before accepting Back.
     p.pulse(0, 1);
     assert.equal(p.$('journey-chooser').open, false);
