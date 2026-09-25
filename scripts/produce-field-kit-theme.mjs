@@ -109,11 +109,11 @@ export function fieldKitEquipmentQuality(slotId, source, originalHash, successor
 // release readiness gate rather than silently inheriting this review.
 const REVIEWED_RECIPE_INPUTS = {
   screens: {
-    sha256: 'acf6426f5cd47f21a85ec5ae9da9549ed58fbe330b097c979dc85b87afe2d68a',
+    sha256: '251d09ba8aa8710a134694874bd7ae87f2e76af0000825f9ad2b97da024d1dbd',
     evidence: [
-      'Scoped compact-Home screen continuation: docs/verification/compact-home-screen-continuation-2026-09-24/review.json sha256:96ae6b8c3b05239cf16ab3801dec2b7ef057aa188ffcab466fb2fc22ea17dd1b; four ordered screen inputs sha256:acf6426f5cd47f21a85ec5ae9da9549ed58fbe330b097c979dc85b87afe2d68a. Only field-kit-flow.css changes after the prior exact review, compacting Home and adding the More-menu surface with existing Field Kit tokens.',
-      'Focused flow and focus-restoration checks plus a source-native 1280 by 720 review cover the compact Home and More surfaces. Board geometry, simulation, mission content, payloads and data ownership remain unchanged.',
-      'Bounded functional source continuation only. Complete navigation, forced-colour, screen-reader, every viewport, physical device, frozen/public and human acceptance remain separate. Historical reviews and payloads remain immutable.',
+      'Scoped UX2 shared-screen continuation: docs/verification/ux2-v0115-screen-continuation/review.json sha256:f0baff0c70c3bb3d3e08b92e8bfdb28c60e77913333640160841f58bc4c5c094; four ordered screen inputs sha256:251d09ba8aa8710a134694874bd7ae87f2e76af0000825f9ad2b97da024d1dbd. Only field-kit-flow.css changes after the prior exact review, retaining full-width Start/Continue while compacting the secondary Home actions with existing Field Kit tokens.',
+      'Focused input and continuation checks plus retained local Chromium review at 1440 by 900, 390 by 844 and 844 by 390 cover the compact Home and direct player-shell routes. Board geometry, simulation, mission content, payloads and data ownership remain unchanged.',
+      'Bounded functional source continuation only. Complete navigation, forced-colour, screen-reader, every viewport, physical device, frozen/public and human acceptance remain separate. Long suites remain waived and are not represented as passing; historical reviews and payloads remain immutable.',
     ],
   },
   ui: {
