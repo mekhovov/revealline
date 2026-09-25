@@ -203,5 +203,6 @@
   "controls.promptFieldGuide": "{{button}}: польовий довідник.",
   "controls.promptHangar": "{{button}}: ангар.",
   "controls.promptMissions": "{{button}}: місії.",
-  "controls.promptBoost": "{{button}}: прискорення."
+  "controls.promptBoost": "{{button}}: прискорення.",
+  "actions.playback": "Відтворити"
 }
