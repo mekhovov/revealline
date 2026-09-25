@@ -1,3 +1,4 @@
+import { localizedText } from '../i18n/index.mjs';
 import { fieldKitCopy } from '../ui/field-kit-copy.mjs';
 
 /** Readable host text for map details that must not shrink with the canvas.
@@ -37,7 +38,7 @@ export function renderMapDiagnostics(list, level) {
     ...mapDiagnosticDescriptions(level, { locale: doc.documentElement?.lang || 'en' }).map(
       (description) => {
         const item = doc.createElement('li');
-        item.textContent = description;
+        localizedText(item, () =>description);
         return item;
       },
     ),
