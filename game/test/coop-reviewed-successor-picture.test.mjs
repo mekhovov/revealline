@@ -33,7 +33,7 @@ function snapshot(revision) {
   return { resolved: structuredClone(resolvePresentation(document)) };
 }
 function fixture(
-  revision = 79,
+  revision = 82,
   pack = COOP_STARTER_PACK,
   levelId = 'first-connection',
   policy = COOP_HISTORICAL_IMPORT_PICTURE_POLICIES,
@@ -71,14 +71,14 @@ function fixture(
   return { current, calls, request, presentation };
 }
 
-test('integrated79 retains complete58–78 picture and actor records and original bytes', async () => {
+test('integrated82 retains complete58–81 picture and actor records and original bytes', async () => {
   const retained = [
-    58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78,
+    58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81,
   ];
-  assert.equal(bundle.document.selection.theme.revision, 79);
+  assert.equal(bundle.document.selection.theme.revision, 82);
   assert.deepEqual(
     COOP_SUPPORTED_PICTURE_BINDINGS.map((row) => row.themeRevision),
-    [79, 79, ...retained.flatMap((revision) => [revision, revision])],
+    [82, 82, ...retained.flatMap((revision) => [revision, revision])],
   );
   assert.deepEqual(
     COOP_RETAINED_PICTURE_BINDINGS,
@@ -93,7 +93,7 @@ test('integrated79 retains complete58–78 picture and actor records and origina
       row.collection,
     ]),
     [
-      ['fpv', 79, null],
+      ['fpv', 82, null],
       ['fpv', 58, null],
       ['fpv', 59, null],
       ['fpv', 60, null],
@@ -115,6 +115,9 @@ test('integrated79 retains complete58–78 picture and actor records and origina
       ['fpv', 76, null],
       ['fpv', 77, null],
       ['fpv', 78, null],
+      ['fpv', 79, null],
+      ['fpv', 80, null],
+      ['fpv', 81, null],
     ],
   );
   const slots = [
@@ -128,7 +131,7 @@ test('integrated79 retains complete58–78 picture and actor records and origina
   ];
   assert.equal(slots.length, 8);
   const old = snapshot(58),
-    current = snapshot(79);
+    current = snapshot(82);
   for (const slot of slots) {
     const asset = current.resolved.assets[slot];
     assert.deepEqual(asset, old.resolved.assets[slot], slot);
@@ -153,7 +156,7 @@ test('integrated79 retains complete58–78 picture and actor records and origina
 });
 
 for (const revision of [
-  58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78,
+  58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81,
 ]) {
   test(`exact${revision} built-in and historical-import attempts retain their own verified lease`, async () => {
     for (const [pack, levelId, picture] of [
@@ -215,7 +218,7 @@ for (const revision of [
   });
 }
 
-test('finite host authority rejects54,57,80, other themes and collections before reads', async () => {
+test('finite host authority rejects54,57,83, other themes and collections before reads', async () => {
   for (const pack of [COOP_STARTER_PACK, imported]) {
     for (const change of [
       (s) => {
@@ -225,7 +228,7 @@ test('finite host authority rejects54,57,80, other themes and collections before
         s.resolved.theme.revision = 57;
       },
       (s) => {
-        s.resolved.theme.revision = 80;
+        s.resolved.theme.revision = 83;
       },
       (s) => {
         s.resolved.theme.id = 'other';
@@ -277,12 +280,13 @@ test('legacy singular policy retains exact59 support and malformed finite lists 
   }
 });
 
-test('historical picture authority remains bounded to twenty-two exact distinct revisions', () => {
+test('historical picture authority remains bounded to twenty-five exact distinct revisions', () => {
   const policies = [
-    58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80,
+    58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81,
+    82, 83,
   ].map((themeRevision) => ({
     ...COOP_RETAINED_HISTORICAL_IMPORT_PICTURE_POLICY,
     themeRevision,
   }));
-  assert.throws(() => fixture(79, imported, imported.levels[0].id, policies), /item budget/);
+  assert.throws(() => fixture(82, imported, imported.levels[0].id, policies), /item budget/);
 });
