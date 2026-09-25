@@ -725,6 +725,12 @@ test('offline source sentinel requires its template and does not silently emit a
 
 test('public package has local entry, accurate storage notices and enforced preview headers without changing source serving', async (t) => {
   const { root, out } = await fixture(t);
+  const openingTheme = path.join(
+    root,
+    'game/audio/soundtracks/d4147214e221be28f19d6c6c38afc8d3cf0289a0dc6ac579b26574a0c571bc58.mp3',
+  );
+  await fs.mkdir(path.dirname(openingTheme), { recursive: true });
+  await fs.writeFile(openingTheme, 'exact-path packaging fixture');
   await buildProject({ root, out });
   const sourceServer = await startServer({ root, port: 0 }),
     releaseServer = await startServer({ root: out, port: 0 });
@@ -756,7 +762,12 @@ test('public package has local entry, accurate storage notices and enforced prev
   assert.doesNotMatch(entry.body, /http-equiv="refresh"/);
   assert.match(entry.body, /\.\/game\/index.html/);
   assert.match((await getRaw(releaseServer.url, '/privacy.html')).body, /does not upload/);
-  assert.match((await getRaw(releaseServer.url, '/credits.html')).body, /PHASER-LICENSE/);
+  const credits = (await getRaw(releaseServer.url, '/credits.html')).body;
+  assert.match(credits, /PHASER-LICENSE/);
+  assert.match(credits, /Carol of the Bells \(Metal Version\)/);
+  assert.match(credits, /Alexander Nakarada \(CreatorChords\)/);
+  assert.match(credits, /Creative Commons Attribution 4\.0 International/);
+  assert.match(credits, /Mykola Leontovych’s <cite>Shchedryk<\/cite>/);
   const publishedHeaders = await fs.readFile(path.join(out, '_headers'), 'utf8');
   assert.match(publishedHeaders, /Content-Security-Policy/);
   assert.doesNotMatch(publishedHeaders, /revealline-soundtracks-01/);

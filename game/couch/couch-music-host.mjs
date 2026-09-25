@@ -1,7 +1,12 @@
 import { attachMusicCredit } from '../ui/music-credit.mjs';
 import { attachQuickMusicControls } from '../ui/quick-music-controls.mjs';
-import { SOUNDTRACK_CATALOGUE, SOUNDTRACK_ARCHIVES } from '../content/soundtrack-catalogue.mjs';
+import {
+  SOUNDTRACK_CATALOGUE,
+  SOUNDTRACK_ARCHIVES,
+  SOUNDTRACK_BUNDLED_ASSETS,
+} from '../content/soundtrack-catalogue.mjs';
 import { createSoundtrackSource } from '../soundtrack-source.mjs';
+import { prepareOpeningTheme, usesOpeningThemeDefault } from '../opening-soundtrack.mjs';
 import { Soundscape } from '../ui/audio.mjs';
 import { createSoundtrackPlayer } from '../ui/soundtrack-player.mjs';
 import { attachSoundtrackPanel } from '../ui/soundtrack-panel.mjs';
@@ -159,6 +164,7 @@ export function attachCouchMusicHost({
   const source = createSoundtrackSource({
     catalogue: SOUNDTRACK_CATALOGUE,
     archives: SOUNDTRACK_ARCHIVES,
+    bundled: SOUNDTRACK_BUNDLED_ASSETS,
     readLocal: (hash, options) =>
       library?.readAsset(hash, { ...options, allowMissing: true }) ?? null,
     installedOnly: () => library?.snapshot().library?.listening?.installedOnly ?? false,
@@ -168,6 +174,7 @@ export function attachCouchMusicHost({
     audioElement: media,
     secondAudioElement: doc.createElement('audio'),
     catalogue: source.catalogue,
+    bundledTrackIds: SOUNDTRACK_BUNDLED_ASSETS.map(({ id }) => id),
     audioMaster,
     readAsset: (hash, options) => source.readAsset(hash, options),
     onChange: () => {
@@ -196,6 +203,7 @@ export function attachCouchMusicHost({
   panel = attachSoundtrackPanel({
     document: doc,
     catalogue: source.catalogue,
+    bundled: SOUNDTRACK_BUNDLED_ASSETS,
     readAsset: (hash, options) => source.readAsset(hash, options),
     store,
     player,
@@ -280,7 +288,12 @@ export function attachCouchMusicHost({
     const pending = session.loadLibrary({ signal: lifetime.signal });
     render();
     try {
-      return await pending;
+      const result = await pending;
+      const accepted = library.snapshot().library;
+      const generation = library.snapshot().generation;
+      if (accepted && usesOpeningThemeDefault(accepted, { fresh: generation === 0 }))
+        await prepareOpeningTheme(player, accepted, { fresh: true });
+      return result;
     } finally {
       render();
     }

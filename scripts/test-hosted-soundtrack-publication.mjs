@@ -12,6 +12,7 @@ import {
 import {
   SOUNDTRACK_CATALOGUE,
   SOUNDTRACK_ARCHIVES,
+  SOUNDTRACK_BUNDLED_ASSETS,
   SOUNDTRACK_COLLECTIONS,
 } from '../game/content/soundtrack-catalogue.mjs';
 import { stableId } from '../game/data-json.mjs';
@@ -46,9 +47,17 @@ test('70 exact hosted recordings and15 albums compile reproducibly without local
     a.tracks.reduce((total, track) => total + track.asset.bytes, 0),
     354986122,
   );
-  assert.deepEqual(a.tracks, SOUNDTRACK_CATALOGUE.tracks);
+  assert.deepEqual(
+    a.tracks,
+    SOUNDTRACK_CATALOGUE.tracks.filter((track) => track.archiveId === 'licensed-preview-01'),
+  );
   assert.deepEqual(a.archives, SOUNDTRACK_ARCHIVES);
-  assert.deepEqual(a.collections, SOUNDTRACK_COLLECTIONS);
+  assert.deepEqual(
+    a.collections,
+    SOUNDTRACK_COLLECTIONS.filter(
+      (collection) => collection.id !== 'builtin.album.ukrainian.shchedryk-opening',
+    ),
+  );
   assert.equal(
     (await readdir(f.root, { recursive: true })).some((name) => name.endsWith('.mp3')),
     false,
@@ -148,8 +157,10 @@ test('changed evidence bytes fail the pinned source check', async (t) => {
 test('runtime includes hosted metadata while source production never fabricates absent audio', async () => {
   const runtime = await compilePublishedSoundtracks(source);
   const local = await compilePublishedSoundtracks(source, { delivery: 'source' });
-  assert.equal(runtime.catalogue.tracks.length, 70);
+  assert.equal(runtime.catalogue.tracks.length, 71);
   assert.equal(runtime.files.length, 0);
-  assert.equal(local.catalogue.tracks.length, 0);
+  assert.equal(local.catalogue.tracks.length, 1);
   assert.equal(local.files.length, 0);
+  assert.deepEqual(runtime.bundled, SOUNDTRACK_BUNDLED_ASSETS);
+  assert.deepEqual(local.bundled, SOUNDTRACK_BUNDLED_ASSETS);
 });

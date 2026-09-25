@@ -47,6 +47,7 @@ export function createSoundtrackPlayer({
   fadeMs = 1500,
   audioMaster,
   catalogue = null,
+  bundledTrackIds = [],
 } = {}) {
   required(
     soundscape?.persistentMusic === true &&
@@ -75,6 +76,14 @@ export function createSoundtrackPlayer({
     Number.isInteger(fadeMs) && fadeMs >= 0 && fadeMs <= 10000,
     'Invalid music transition duration.',
   );
+  required(
+    Array.isArray(bundledTrackIds) &&
+      bundledTrackIds.length <= 256 &&
+      new Set(bundledTrackIds).size === bundledTrackIds.length &&
+      bundledTrackIds.every((id) => typeof id === 'string' && /^[a-z0-9][a-z0-9._-]{0,127}$/.test(id)),
+    'Invalid bundled soundtrack identities.',
+  );
+  const bundledIds = Object.freeze([...bundledTrackIds]);
   required(
     !secondAudioElement ||
       (secondAudioElement !== audioElement &&
@@ -160,6 +169,8 @@ export function createSoundtrackPlayer({
     ...(published ? [published] : []),
     ...remoteTracks,
   ];
+  const selectionContext = () =>
+    bundledIds.length ? { ...context, bundledTrackIds: bundledIds } : context;
   const resolveBase = () => {
     if (
       cacheableCatalogue &&
@@ -172,7 +183,7 @@ export function createSoundtrackPlayer({
       library.selection.playlistId === override
         ? library
         : { ...library, selection: { playlistId: override } },
-      context,
+      selectionContext(),
       { catalogue: catalogue ?? undefined },
     );
     if (cacheableCatalogue) baseSelection = { library, context, override, selected };
@@ -926,7 +937,10 @@ export function createSoundtrackPlayer({
       maxDepth: 3,
       maxString: 512,
     });
-    resolveSoundtrackSelection({ ...library, selection: { playlistId: override } }, owned);
+    resolveSoundtrackSelection(
+      { ...library, selection: { playlistId: override } },
+      bundledIds.length ? { ...owned, bundledTrackIds: bundledIds } : owned,
+    );
     cancelPreload();
     const sceneChanged = (context.scene ?? 'gameplay') !== (owned.scene ?? 'gameplay');
     context = owned;
@@ -941,7 +955,10 @@ export function createSoundtrackPlayer({
     return snapshot();
   }
   async function selectPlaylist(id) {
-    resolveSoundtrackSelection({ ...library, selection: { playlistId: id } }, context);
+    resolveSoundtrackSelection(
+      { ...library, selection: { playlistId: id } },
+      selectionContext(),
+    );
     remoteSelection = null;
     remoteTracks = [];
     override = id;
