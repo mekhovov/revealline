@@ -1762,5 +1762,16 @@
   "studio.item.option": "{{name}}{{identity}}",
   "studio.item.archivedOption": "{{name}}{{identity}} · Archived",
   "studio.structure.orderLabel": "Pack, campaign and mission order",
-  "studio.structure.queueLabel": "Queued manual geometry"
+  "studio.structure.queueLabel": "Queued manual geometry",
+  "studio.editor.notApplied": "Not applied: {{message}}",
+  "studio.editor.confirmRemove": "Activate Remove again. Undo remains available.",
+  "studio.bonus.new": "+ New bonus",
+  "studio.bonus.remove": "Remove selected bonus",
+  "studio.bonus.confirmRemove": "Confirm remove bonus",
+  "studio.bonus.replace": "Validate & replace bonus",
+  "studio.bonus.add": "Validate & add bonus",
+  "studio.bonus.contactOnly": "Contact collection only; enclosing a pickup does not collect it. Keep required routes completable without bonuses.",
+  "studio.bonus.teamQualification": "Authored Team bonus behavior is not yet qualified. These controls remain unavailable.",
+  "studio.bonus.qualification": "Optional contact bonuses use shared engine effects and expiry. Speed should be an intentional detour, not forced before precision turns.",
+  "studio.bonus.applied": "Applied to the local draft. All supported presets and modes compiled. Undo is available; test the optional detour."
 }
