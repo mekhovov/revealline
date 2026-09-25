@@ -102,8 +102,12 @@ import { trackMissionLibraryOpening } from '../mission-library/opening-intent.mj
 import { attachTeamLibraryPreview, paintTeamPicturePreview } from './team-library-preview.mjs';
 
 import { teamReturnHref } from '../mode-return.mjs';
+import { releaseExplorerHref } from '../release-explorer.mjs';
 
 const $ = (id) => document.getElementById(id);
+$('coop-release-explorer').href = releaseExplorerHref(
+  globalThis.location?.href ?? document.baseURI ?? 'http://localhost/game/couch/relay-rescue.html',
+);
 const unclaimedFocus = (element) =>
   !element || element === document.body || element === document.documentElement;
 // Capture before attached() can hide a deliberately focused loader recovery link.
@@ -190,6 +194,8 @@ export function bootCoop({
   const catalogueHref = `relay-rescue.html${catalogueParams.size ? `?${catalogueParams}` : ''}`;
   $('coop-catalogue').setAttribute('href', catalogueHref);
   $('coop-catalogue').textContent = candidateJourney ? 'Legacy arenas' : 'New journey';
+  $('coop-more-catalogue').setAttribute('href', catalogueHref);
+  $('coop-more-catalogue').textContent = $('coop-catalogue').textContent;
   const returnHref = () => {
     // Mission identity and source navigation are independent. A checked Solo
     // return ticket remains stronger than the finite edition-navigation hint.
@@ -597,8 +603,9 @@ export function bootCoop({
       return;
     }
     const details =
-      document.activeElement?.closest('details') || tools.querySelector('details[open]');
-    if (details?.open && tools.contains(details)) {
+      document.activeElement?.closest('details') ||
+      (!run ? $('coop-menu').querySelector('details[open]') : tools.querySelector('details[open]'));
+    if (details?.open && (tools.contains(details) || (!run && $('coop-menu').contains(details)))) {
       details.open = false;
       details.querySelector('summary')?.focus({ preventScroll: true });
     } else if (run?.status === 'paused') primary().focus({ preventScroll: true });
@@ -1410,10 +1417,10 @@ export function bootCoop({
       name = level?.name;
     $('coop-preview-caption').textContent =
       level?.journeyDifficulty && !selection.artworkSource && !selection.journeyRow?.background
-        ? `${name} geometry test. Preview scenery is not authored mission artwork. Browse arenas for an optional full preview; viewing earns no progress. Scenery does not mark obstacles.`
+        ? `${name} · Preview scenery is not authored mission artwork or collision geometry.`
         : name
-          ? `${name} teaser. Browse arenas for an optional full preview; viewing earns no progress. Scenery does not mark obstacles.`
-          : 'Selected arena teaser. Browse arenas for an optional full preview; viewing earns no progress. Scenery does not mark obstacles.';
+          ? `${name} teaser · preview only · scenery is not collision geometry.`
+          : 'Arena teaser · preview only · scenery is not collision geometry.';
     if (binding && previewBinding === binding && !retry) return;
     const cleared = clearPicturePreview();
     message.hidden = false;
@@ -4727,11 +4734,17 @@ export function bootCoop({
     : null;
   $('coop-start').disabled = false;
   $('coop-start').textContent = 'Start together →';
+  const advancedEditionNote = defaultJourney
+    ? `Original pictures need a connection; core offline preparation does not save them.`
+    : candidateJourney
+      ? `Team Journey ${candidateEditionLabel ? `${candidateEditionLabel} · ` : ''}${candidateJourney.rows.some((row) => row.background) ? `original-art test · ${candidateJourney.catalog.missions.length} missions · human validation pending.` : `geometry test · ${candidateJourney.catalog.missions.length} missions · human validation and original artwork pending.`} ${candidatePreferences ? '' : candidateNotice}`.trim()
+      : '';
+  $('coop-advanced-note').textContent = advancedEditionNote;
   bootDisplay.finish({
     message: defaultJourney
-      ? `Team Journey · ${candidateJourney.catalog.missions.length} missions · original artwork. Start together or browse another mission. Pictures need a connection; core offline preparation does not save them.`
+      ? `Team Journey · ${candidateJourney.catalog.missions.length} missions`
       : candidateJourney
-        ? `Team Journey ${candidateEditionLabel ? `${candidateEditionLabel} · ` : ''}${candidateJourney.rows.some((row) => row.background) ? `original-art test · ${candidateJourney.catalog.missions.length} missions · human validation pending.` : `geometry test · ${candidateJourney.catalog.missions.length} missions · human validation and original artwork pending.`} ${candidatePreferences ? '' : candidateNotice}`.trim()
+        ? `Team Journey · ${candidateJourney.catalog.missions.length} missions`
         : 'Two players · one screen · a shared victory',
   });
   document.documentElement.dataset.toolState = 'ready';

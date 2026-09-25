@@ -61,7 +61,10 @@ test('twelve real-host Team clears reveal exact originals through eleven Next ha
     retainInitialDifficulty: true,
     beforeImport: ({ install }) => environment(install, failures),
   });
-  assert.match(f.$('coop-boot').textContent, /original-art test.*human validation pending/);
+  assert.match(
+    f.$('coop-advanced-note').textContent,
+    /original-art test.*human validation pending/,
+  );
   assert.doesNotMatch(f.$('coop-preview-caption').textContent, /not authored/);
   f.$('coop-start').focus();
   f.tap('Enter');
