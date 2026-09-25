@@ -125,11 +125,11 @@ const REVIEWED_RECIPE_INPUTS = {
     ],
   },
   audio: {
-    sha256: '27ad86d9f0e3d84a149627ca3e95f3f2350c7dd7b79146d5cbc4da9320f12e3e',
+    sha256: '5251ea0d06ea56068e783ef8d5bb42eb145e087b09e96cafb1825d7eb20c0ccd',
     evidence: [
-      'Scoped bundled-source continuation: docs/verification/shchedryk-opening-2026-09-24/audio-source-review-r2.json sha256:99a2bcda11f17c4ad0220daa4aa98c9b5ed8f1008773d2fce9c12b59f1ef804b. Sixteen ordered audio inputs sha256:27ad86d9f0e3d84a149627ca3e95f3f2350c7dd7b79146d5cbc4da9320f12e3e preserve the live archive player and add an inactive, exact-identity adapter for future code-owned audio.',
-      'All8 selected roles remain the same procedural recipes with no new audio files. Focused tests cover local-only zero requests, owned-local reuse, explicit acquisition, Installed-only playback, exact identity/path/bytes, duplicate rejection, effective-rights intersection, corrupt bytes, cancellation and source-dependency invalidation.',
-      'No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, cold-offline, frozen-build or public game approval. Archive previews remain outside trusted Automatic and built-in playlists; historical records and original payloads are immutable.',
+      'Scoped exact-recording admission: docs/verification/shchedryk-opening-2026-09-24/audio-admission-review-r3.json sha256:def03837c5c7946b1b5db18ef5ff392cb348ebe3470568a8e2e2a85f463fa7b7. Nineteen ordered audio inputs sha256:5251ea0d06ea56068e783ef8d5bb42eb145e087b09e96cafb1825d7eb20c0ccd admit one pinned Shchedryk adaptation and preserve the live archive player.',
+      'All8 selected roles retain their procedural recipes. Focused tests cover the exact identity/path/bytes, trusted rights, fresh-profile opening queue, persisted choices, Recording-mode exclusion, Installed-only bundled playback, duplicate-storage prevention and source-dependency invalidation.',
+      'The project owner approved the musical direction only. Complete-track, repeated-session, transition, warning-audibility, Ukrainian cultural, physical-device, cold-offline, frozen-build and public acceptance remain open; no other audition recording is admitted.',
     ],
   },
   motion: {
