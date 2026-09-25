@@ -57,5 +57,12 @@
   "studio.bonus.existing": "Choose an existing bonus.",
   "studio.bonus.identity": "Bonus identity must match the command.",
   "studio.bonus.contextChanged": "The draft context changed. Refresh the bonus selection.",
-  "studio.bonus.coordinates": "Enter both cell-centre coordinates."
+  "studio.bonus.coordinates": "Enter both cell-centre coordinates.",
+  "studio.actor.operation": "Choose an actor operation.",
+  "studio.actor.stableId": "Give the actor a stable ID.",
+  "studio.actor.duplicateId": "That actor ID already exists.",
+  "studio.actor.existing": "Choose an existing actor.",
+  "studio.actor.identity": "Actor identity must match the command.",
+  "studio.actor.contextChanged": "The draft context changed. Refresh the actor selection before applying.",
+  "studio.actor.coordinates": "enter both coordinates."
 }

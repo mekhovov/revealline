@@ -1175,5 +1175,17 @@
   "studio.islandWithinReach": "An island within reach",
   "studio.returnDecision": "Return to the island or continue to the far boundary?",
   "studio.connectIsland": "Connect the island in one cut.",
-  "studio.opening": "Opening"
+  "studio.opening": "Opening",
+  "studio.actor.counterplay.fieldKeeper": "Time a short cut or herd it away from a larger enclosure.",
+  "studio.actor.counterplay.perimeterPatrol": "Depart before it arrives; return behind its path.",
+  "studio.actor.counterplay.frontierPatrol": "Shape the frontier to move patrol pressure away from your next return.",
+  "studio.actor.counterplay.reclaimedRoamer": "Keep an escape corridor before enclosing it; the warning gives time to move away. Reclaimed ground still closes cuts but is not universally safe.",
+  "studio.actor.counterplay.territoryEroder": "Use permanent foundations and captured required-objective anchors to protect return routes. Repair valuable gaps; reclaim restores coverage without awarding points again.",
+  "studio.actor.counterplay.impactCarrier": "Keep a short return route and close before an impact reaches you. Body contact and a hit at the live endpoint remain immediate dangers. Ordinary field keepers still break trails immediately.",
+  "studio.actor.counterplay.laneEmitter": "Watch the locked lane, leave it during the warning, and close before it fires. Reclaimed ground shelters the craft from the lane, not from other enemy roles. Enclosure does not silently disable this field-retaining emitter.",
+  "studio.actor.counterplay.sentinel": "Capture every marked shield relay in a chosen order. Watch the locked lane and shelter on reclaimed ground. After the vertical attack, close a fresh eight-cell cut during CORE OPEN, or isolate the core and wait on reclaimed ground with no live trail.",
+  "studio.actor.counterplay.trailPursuer": "Close before the committed approach reaches your trail. The marked target locks before the attack; walls and reclaimed ground block sensing.",
+  "studio.actor.counterplay.headingInterceptor": "Turn after the heading target locks and take another return. It predicts only your observed direction, not your next turn; close to cancel the attack.",
+  "studio.actor.counterplay.scout": "Choose direct contact or enclose the scout. It never retains a field region and awards no extra score. Ordinary keepers still damage body and trail.",
+  "studio.actor.counterplay.sentry": "Change route after aim locks, return to ground, or remove the sentry by contact or enclosure. Only its shot harms the craft; ordinary keepers remain dangerous."
 }
