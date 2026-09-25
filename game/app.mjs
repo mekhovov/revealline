@@ -2477,17 +2477,22 @@ try {
   controllerReading = attachControllerReading({
     compactOverlay: !courseSession,
     additionalSurfaces: [
-      ['help-reading', 'help-read', t('common:navigation.howToPlay'), 'help-reading-unit'],
+      [
+        'help-reading',
+        'help-read',
+        localizedMessage('common:navigation.howToPlay'),
+        'help-reading-unit',
+      ],
       [
         'flight-details-reading',
         'flight-details-read',
-        t('interface:fieldDetails'),
+        localizedMessage('interface:fieldDetails'),
         'flight-details-unit',
       ],
       [
         'collection-reading',
         'collection-read',
-        t('interface:achievementsAndAppearances'),
+        localizedMessage('interface:achievementsAndAppearances'),
         'collection-reading-unit',
       ],
     ],
