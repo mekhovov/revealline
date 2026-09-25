@@ -124,9 +124,7 @@ test('the closed two-row authority is immutable and matches the complete authore
 });
 
 test('current77 picture association preserves the exact58–76 closed bindings and policies', () => {
-  const retained = [
-    58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76,
-  ];
+  const retained = [58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76];
   assert.deepEqual(
     [...new Set(COOP_SUPPORTED_PICTURE_BINDINGS.map((row) => row.themeRevision))].sort(),
     [...retained, 77],
@@ -179,7 +177,7 @@ test('the original retained62 manifest still selects and verifies both unchanged
   }
 });
 
-test('the complete real six-policy host configuration prepares both current starter pictures', async (t) => {
+test('the complete real twenty-policy host configuration prepares both current starter pictures', async (t) => {
   for (const index of [0, 1]) {
     const f = fixture(
       index,
@@ -196,7 +194,7 @@ test('the complete real six-policy host configuration prepares both current star
   }
 });
 
-test('historical policy capacity remains exactly seventeen and duplicate identities still fail', () => {
+test('historical policy capacity remains exactly twenty and duplicate identities still fail', () => {
   const create = (historicalImportPolicy) =>
     createCoopPresentation({
       bindings: COOP_SUPPORTED_PICTURE_BINDINGS,

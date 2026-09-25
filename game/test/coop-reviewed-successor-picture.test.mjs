@@ -63,9 +63,7 @@ function fixture(
 }
 
 test('integrated77 retains complete58–76 picture and actor records and original bytes', async () => {
-  const retained = [
-    58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76,
-  ];
+  const retained = [58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76];
   assert.equal(bundle.document.selection.theme.revision, 77);
   assert.deepEqual(
     COOP_SUPPORTED_PICTURE_BINDINGS.map((row) => row.themeRevision),
@@ -269,11 +267,9 @@ test('legacy singular policy retains exact59 support and malformed finite lists 
 test('historical picture authority remains bounded to twenty exact distinct revisions', () => {
   const policies = [
     58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78,
-  ].map(
-    (themeRevision) => ({
-      ...COOP_RETAINED_HISTORICAL_IMPORT_PICTURE_POLICY,
-      themeRevision,
-    }),
-  );
+  ].map((themeRevision) => ({
+    ...COOP_RETAINED_HISTORICAL_IMPORT_PICTURE_POLICY,
+    themeRevision,
+  }));
   assert.throws(() => fixture(77, imported, imported.levels[0].id, policies), /item budget/);
 });
