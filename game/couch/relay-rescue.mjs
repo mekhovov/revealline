@@ -3820,12 +3820,17 @@ export function bootCoop({
     cancelDeparture({ restore: false });
     // Losing foreground also retires menu ownership while already paused.
     // A reader or held menu repeat must not outlive this lifecycle boundary.
+    controllerConfirmGuard.requireNeutral();
     clear();
     framePads = [];
     last = null;
   };
   const returned = () => {
     if (disposed || !foreground()) return;
+    // visibilitychange also resets native echo state before this handler runs.
+    // Re-establish the lifecycle neutral gate so a controller still held while
+    // returning cannot suppress the first deliberate keyboard action after release.
+    controllerConfirmGuard.requireNeutral();
     inactive = false;
     last = null;
     if (music && !loopStopped) void music.resume();
