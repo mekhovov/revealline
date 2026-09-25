@@ -34,7 +34,8 @@ const enter = (f, node) => {
 };
 
 function environment(install, { failures = new Set(), gates = new Map() } = {}) {
-  const BaseImage = globalThis.Image;
+  const BaseImage = globalThis.Image,
+    actorFetch = globalThis.fetch;
   class CandidateImage extends BaseImage {
     releases = 0;
     async decode() {
@@ -53,8 +54,16 @@ function environment(install, { failures = new Set(), gates = new Map() } = {}) 
   install('Image', { value: CandidateImage });
   install('crypto', { value: webcrypto });
   install('fetch', {
-    value: async (url) => {
-      const asset = source.assets.find((a) => new URL(url).pathname.endsWith('/' + a.path));
+    value: async (url, options = {}) => {
+      const pathname = new URL(url).pathname;
+      const asset = source.assets.find((a) => pathname.endsWith('/' + a.path));
+      if (
+        !asset &&
+        /\/presentation\/compiled\/(?:runtime(?:\.[a-f0-9]{64})?\.json|assets\/[a-f0-9]{64}\.(?:png|jpg|webp|ttf|otf|woff2))$/.test(
+          pathname,
+        )
+      )
+        return actorFetch(url, options);
       assert(asset, 'Only exact registered pictures may be fetched');
       if (failures.has(asset.id)) throw Error('Modeled timed original offline');
       if (gates.has(asset.id)) await gates.get(asset.id).promise;
@@ -89,6 +98,10 @@ test('Shared windows clears all three originals across two Next boundaries and o
     { type: 'select', mode: 'team', missionId: 'existing-team-bookmark' },
   ]);
   const f = await timedPage(t, { failures, memory });
+  assert.ok(
+    f.actorTransport.requests.some(({ relative }) => relative.startsWith('runtime')),
+    'Team uses the current compiled actor presentation authority',
+  );
   assert.match(
     f.$('coop-advanced-note').textContent,
     /original-art test · 3 missions · human validation pending/,
