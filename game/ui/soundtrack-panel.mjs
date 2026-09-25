@@ -277,7 +277,7 @@ export function attachSoundtrackPanel({
   const masterToggle = button('master-mute', localizedMessage('interface:unmuteMasterSound'), () =>
     changeMaster('muted', !audioMaster.snapshot().muted),
   );
-  const masterVolume = input('master-volume', localizedMessage('interface:masterSoundVolume'), {
+  const masterVolume = input('master-volume', localizedMessage('common:audio.masterVolume'), {
     type: 'range',
     min: '0',
     max: '1',

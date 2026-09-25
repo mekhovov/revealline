@@ -4,6 +4,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 import { parse as parseJS } from 'acorn';
 import { parse as parseHTML } from 'parse5';
 import { extractContent } from './localization-content.mjs';
+import { auditSources } from './localization-audit.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const locales = ['en', 'uk'];
@@ -37,10 +38,37 @@ export async function contentBundle(directory = root, resources) {
     if (!key) throw new Error(`Uncatalogued content: ${source.file}${source.pointer}: ${text}`);
     return key;
   });
+  return compactContentRegistry(registry);
+}
+/** Source locations stay in extraction reports. Runtime records share exact
+ * field definitions across compiled difficulties and navigation projections. */
+export function compactContentRegistry(registry) {
+  const messages = [];
+  const messageIds = new Map();
+  const groups = [];
+  const groupIds = new Map();
+  const records = [];
+  for (const [identity, { fields }] of Object.entries(registry)) {
+    const entries = Object.entries(fields).map(([field, message]) => {
+      const serialized = JSON.stringify(message);
+      if (!messageIds.has(serialized)) {
+        messageIds.set(serialized, messages.length);
+        messages.push(message);
+      }
+      return [field, messageIds.get(serialized)];
+    });
+    const serialized = JSON.stringify(entries);
+    if (!groupIds.has(serialized)) {
+      groupIds.set(serialized, groups.length);
+      groups.push(entries);
+    }
+    records.push([identity, groupIds.get(serialized)]);
+  }
   return (
-    '// Generated from explicitly registered first-party content.\nexport default ' +
-    JSON.stringify(registry) +
-    ';\n'
+    '// Generated from explicitly registered first-party content.\n' +
+    `const messages = ${JSON.stringify(messages)};\n` +
+    `const groups = ${JSON.stringify(groups)}.map(entries => ({fields: Object.fromEntries(entries.map(([field, index]) => [field, messages[index]]))}));\n` +
+    `export default Object.fromEntries(${JSON.stringify(records)}.map(([identity, index]) => [identity, groups[index]]));\n`
   );
 }
 async function sourceFiles(directory = root) {
@@ -189,6 +217,12 @@ export async function validateLocalization(directory = root, { checkBundle = tru
 }
 async function main() {
   const command = process.argv[2] || 'check';
+  if (command === 'audit') {
+    console.log(
+      JSON.stringify(await auditSources(root, await sourceFiles(), await readCatalogs()), null, 2),
+    );
+    return;
+  }
   if (command === 'build') {
     const resources = await readCatalogs();
     await fs.writeFile(path.join(root, 'game/i18n/catalogs.mjs'), catalogBundle(resources));

@@ -1,4 +1,4 @@
-import { t } from './i18n/index.mjs';
+import { t, formatNumber } from './i18n/index.mjs';
 import { difficultyAccess } from './difficulty-access.mjs';
 import { campaignSelection } from './continuation.mjs';
 import { canPlay, appearanceMilestones, unlockedBodies, achievements } from './progress.mjs';
@@ -102,8 +102,8 @@ export function difficultyCue({ entry, nextMode, started, recovering = false, pr
             value1: current,
             value2:
               entry.difficulty === 'gentle'
-                ? 'at least five lives, slower moving enemies and no mission or cut deadline'
-                : 'the authored lives, hazards and deadlines',
+                ? t('gameplay:difficulty.gentleRules')
+                : t('gameplay:difficulty.standardRules'),
           }),
     retry: pending
       ? t('gameplay:retryStartsThisMapFromTheBeginningOnYourCurrent', {
@@ -118,8 +118,11 @@ export function difficultyCue({ entry, nextMode, started, recovering = false, pr
 export function difficultyRuleComparison(standardLevel, gentleLevel) {
   const standard = normalizedLevel(standardLevel),
     gentle = normalizedLevel(gentleLevel);
-  const seconds = (value) => `${Number(value.toFixed(2))}s`;
-  const limit = (value) => (value ? seconds(value) : 'none');
+  const seconds = (value) =>
+    t('gameplay:difficulty.seconds', {
+      seconds: formatNumber(value, { maximumFractionDigits: 2 }),
+    });
+  const limit = (value) => (value ? seconds(value) : t('gameplay:difficulty.noLimit'));
   const rows = [
     t('gameplay:startingLivesStandardGentle', {
       value1: standard.rules.lives,
@@ -136,10 +139,10 @@ export function difficultyRuleComparison(standardLevel, gentleLevel) {
     t('gameplay:maximumLineStandardGentle', {
       value1: standard.rules.maxTrailCells
         ? t('gameplay:cells', { value1: standard.rules.maxTrailCells })
-        : 'unlimited',
+        : t('gameplay:difficulty.unlimited'),
       value2: gentle.rules.maxTrailCells
         ? t('gameplay:cells', { value1: gentle.rules.maxTrailCells })
-        : 'unlimited',
+        : t('gameplay:difficulty.unlimited'),
     }),
   ];
   if (

@@ -690,7 +690,15 @@ async function addOfflineEntries(
     ...(optionalArtwork?.files.map((file) => file.path) ?? []),
   ]);
   const files = [...entries]
-    .filter((entry) => entry.name !== '_headers' && !excluded.has(entry.name))
+    // The complete generated catalog is cached. Canonical JSON sources are also
+    // distributed for contributors, but duplicating them in the offline cache
+    // would charge every player twice for the same translations.
+    .filter(
+      (entry) =>
+        entry.name !== '_headers' &&
+        !entry.name.startsWith('game/locales/') &&
+        !excluded.has(entry.name),
+    )
     .sort((a, b) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0))
     .map((e) => ({ path: e.name, bytes: e.bytes.length, sha256: sha256(e.bytes) }));
   if (files.length > 2000 || files.reduce((n, f) => n + f.bytes, 0) > 64 * 1024 * 1024)

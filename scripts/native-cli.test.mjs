@@ -8,6 +8,8 @@ import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { stageNative, verifySite, NATIVE_MARKER, IOS_CSP, iosHTMLPolicy } from './native-cli.mjs';
 import { PUBLIC_SECURITY_HEADERS } from './game-cli.mjs';
+import { loadNativeSite, MAX_SITE_BYTES } from '../platforms/desktop/resources.mjs';
+import { MAX_NATIVE_FILES, MAX_NATIVE_SITE_BYTES } from './native-cli.mjs';
 
 const hash = (bytes) => createHash('sha256').update(bytes).digest('hex');
 const json = (value) => `${JSON.stringify(value, null, 2)}\n`;
@@ -103,6 +105,36 @@ test('desktop staging preserves verified asset/manifest bytes and never rewrites
   assert.equal(await present(path.join(f.out, 'not-in-the-manifest.txt')), false);
   assert.deepEqual(await snapshot(f.site), before);
   assert.equal((await verifySite(f.out, { native: true })).marker.platform, 'desktop');
+});
+test('current-sized native inventories stage and load without dropping localization files', async (t) => {
+  const f = await fixture(t);
+  const additional = new Map(
+    Array.from({ length: 1100 }, (_, index) => [`game/item-${index}.json`, Buffer.from('{}')]),
+  );
+  additional.set(
+    'game/i18n/catalogs.mjs',
+    Buffer.from('globalThis.RevealLineTranslations={en:{},uk:{}};'),
+  );
+  for (const [name, bytes] of additional) {
+    await fs.mkdir(path.dirname(path.join(f.site, name)), { recursive: true });
+    await fs.writeFile(path.join(f.site, name), bytes);
+    f.manifest.files.push({ path: name, bytes: bytes.length, sha256: hash(bytes) });
+    f.manifest.totalBytes += bytes.length;
+  }
+  await f.writeManifest();
+  await stageNative({ site: f.site, out: f.out, platform: 'desktop' });
+  const site = await loadNativeSite(f.out);
+  assert.equal(site.fileCount, f.manifest.files.length);
+  assert.equal(
+    (await site.handle(new Request('revealline://app/game/i18n/catalogs.mjs'))).status,
+    200,
+  );
+  assert.equal(MAX_NATIVE_SITE_BYTES, MAX_SITE_BYTES);
+  await f.writeManifest({
+    ...f.manifest,
+    files: Array(MAX_NATIVE_FILES + 1).fill(f.manifest.files[0]),
+  });
+  await assert.rejects(verifySite(f.site), /Invalid native file inventory/);
 });
 test('iOS adds the explicit bridge and records both source and resulting inventory identities', async (t) => {
   const f = await fixture(t),

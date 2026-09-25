@@ -1,3 +1,9 @@
+import {
+  gameplayTuningDescription,
+  gameplayDifficultyLabel,
+  journeyPresetDescription,
+  activeJourneyRules,
+} from './ui/gameplay-copy.mjs';
 import { contentText } from './i18n/content.mjs';
 import {
   t,
@@ -236,7 +242,6 @@ import {
   applyGameplayTuning,
   createGameplayTuningController,
   recoverGameplayTuning,
-  gameplayTuningDescription,
 } from './gameplay-tuning.mjs';
 import { mountGameplayTuning } from './ui/gameplay-tuning.mjs';
 import { savedFlightPreview } from './continuation.mjs';
@@ -452,7 +457,7 @@ try {
     );
   function difficultyLabel(entry) {
     return candidateHost?.owns(entry)
-      ? entry.difficulty[0].toUpperCase() + entry.difficulty.slice(1)
+      ? gameplayDifficultyLabel(entry.difficulty)
       : legacyDifficultyLabel(entry);
   }
   const journeyEnabled = (params.get('journey') === '1' || authoredJourney) && !practiceSession;
@@ -514,10 +519,10 @@ try {
     onBlocked: () =>
       warning(
         courseSession
-          ? t('interface:useEndCourseOrReturnToTheGameToLeave')
+          ? localizedMessage('interface:useEndCourseOrReturnToTheGameToLeave')
           : controllerPreviewRequested
-            ? t('interface:useTheControllerPracticePageSHeaderLinksToLeave')
-            : t('interface:useThePlaygroundPageSHeaderLinksToOpenThe'),
+            ? localizedMessage('interface:useTheControllerPracticePageSHeaderLinksToLeave')
+            : localizedMessage('interface:useThePlaygroundPageSHeaderLinksToOpenThe'),
       ),
   });
   // Each archived release keeps its own profile schema, packs and save slot.
@@ -895,9 +900,9 @@ try {
     writeWarning(message, cue) {
       runMessageCue = cue;
       $('run-message').dataset.cue = cue || '';
-      localizedText($('run-message'), () => message);
+      const fullText = localizedText($('run-message'), message);
       captionUntil = (run?.time || 0) + 5;
-      return { fullText: message, cue, expiresAt: captionUntil };
+      return { fullText, cue, expiresAt: captionUntil };
     },
   });
   const packLaunchGuard = createPackLaunchGuard();
@@ -1062,10 +1067,10 @@ try {
     $('master-volume').value = volume;
     $('sound-button').setAttribute(
       'aria-label',
-      muted ? t('interface:unmuteSound') : t('interface:muteSound'),
+      muted ? t('common:audio.unmute') : t('interface:muteSound'),
     );
     localizedText($('settings-master-mute'), () =>
-      muted ? t('interface:unmuteSound') : t('interface:muteSound'),
+      muted ? t('common:audio.unmute') : t('interface:muteSound'),
     );
     localizedText($('shell-sound'), () =>
       muted ? t('interface:soundOff') : t('interface:soundOn'),
@@ -4550,54 +4555,53 @@ try {
     const nextPressure = gameplayTuning.snapshot(browsingJourneyPreferences.snapshot().difficulty);
     $('menu-difficulty').value = nextPressure.difficulty;
     $('menu-difficulty').disabled = contentSwitchBusy || backupBusy || sessionBusy;
-    localizedText(
-      $('menu-difficulty-note'),
-      () =>
-        `${nextPressure.difficulty}: ${gameplayTuningDescription(nextPressure)} ` +
-        'Next fresh attempt only; Resume keeps its rules. ' +
-        (nextPressure.adminOverride
-          ? '' + t('interface:adminPlaytestNoNormalClearsOrAwards') + ' '
-          : '') +
-        (browsingJourneyPreferences.snapshot().error || gameplayTuning.status().error || ''),
+    localizedText($('menu-difficulty-note'), () =>
+      t('gameplay:tuning.menuNote', {
+        difficulty: gameplayDifficultyLabel(nextPressure.difficulty),
+        description: gameplayTuningDescription(nextPressure),
+        admin: nextPressure.adminOverride ? t('interface:adminPlaytestNoNormalClearsOrAwards') : '',
+        error: browsingJourneyPreferences.snapshot().error || gameplayTuning.status().error || '',
+      }),
     );
     gameplayTuningPanel?.refresh();
     if (candidateHost?.owns(activeEntry)) {
       const next = journeyPreferences.snapshot();
       const catalogId = authoredRoute.source.difficultyCatalogId;
       $('difficulty-select').replaceChildren(
-        ...Object.keys(journeyDifficultyCatalog(catalogId).presets).map(
-          (id) => new Option(id[0].toUpperCase() + id.slice(1), id),
+        ...Object.keys(journeyDifficultyCatalog(catalogId).presets).map((id) =>
+          localizedOption(() => gameplayDifficultyLabel(id), id),
         ),
       );
       $('difficulty-select').value = next.difficulty;
       $('difficulty-select').disabled = contentSwitchBusy || backupBusy || sessionBusy;
       const nextPreset = journeyPreset(next.difficulty, catalogId);
-      const nextRules = [
-        'gameplay-pressure.v2',
-        'gameplay-pressure.v3',
-        'gameplay-pressure.v4',
-      ].includes(nextPressure.version)
-        ? `${nextPreset.lives} mission lives; ${nextPreset.failingDeadline ? t('interface:deadlinesOnlyOnAuthoredTimedMissions') : 'no failing countdown'}.`
-        : nextPreset.description;
-      localizedText(
-        $('difficulty-note'),
-        () =>
-          `This flight: ${activeEntry.difficulty}. Next fresh attempt: ${next.difficulty}. ${nextRules} ${gameplayTuningDescription(nextPressure)} Resume and Load preserve this flight. ${next.error}`,
+      localizedText($('difficulty-note'), () =>
+        t('gameplay:tuning.flightNote', {
+          current: gameplayDifficultyLabel(activeEntry.difficulty),
+          next: gameplayDifficultyLabel(next.difficulty),
+          rules: journeyPresetDescription(nextPreset, nextPressure.version),
+          description: gameplayTuningDescription(nextPressure),
+          error: next.error || '',
+        }),
       );
       show('difficulty-details', false);
       const currentTuning = recoverGameplayTuning(run?.level);
       const currentPreset = journeyPreset(activeEntry.difficulty, catalogId);
-      const currentRules = [
-        'gameplay-pressure.v2',
-        'gameplay-pressure.v3',
-        'gameplay-pressure.v4',
-      ].includes(currentTuning?.version)
-        ? `${run.level.rules.lives ?? currentPreset.lives} starting lives; ${run.level.rules.timeLimitSeconds > 0 ? `${run.level.rules.timeLimitSeconds}s deadline` : 'no failing countdown'}.`
-        : currentPreset.description;
-      localizedText(
-        $('overlay-difficulty'),
-        () =>
-          `Journey ${activeEntry.difficulty}. ${currentRules} ${currentTuning ? `${run.enemies.length} enemies · ${run.level.rules.moveSpeed.toFixed(1)} craft cells/s${currentTuning.adminOverride ? ' · ADMIN PLAYTEST' : ''}.` : ''}`,
+      localizedText($('overlay-difficulty'), () =>
+        t('gameplay:tuning.journeyNote', {
+          difficulty: gameplayDifficultyLabel(activeEntry.difficulty),
+          rules: activeJourneyRules(run, currentPreset, currentTuning?.version),
+          motion: currentTuning
+            ? t('gameplay:tuning.motion', {
+                count: run.enemies.length,
+                speed: formatNumber(run.level.rules.moveSpeed, {
+                  minimumFractionDigits: 1,
+                  maximumFractionDigits: 1,
+                }),
+                admin: currentTuning.adminOverride ? t('gameplay:tuning.adminBadge') : '',
+              })
+            : '',
+        }),
       );
       show('overlay-difficulty', true);
       return;
@@ -4612,10 +4616,18 @@ try {
     $('difficulty-select').value = library.preferences.campaignDifficulty;
     $('difficulty-select').disabled =
       !cue.available || courseSession || !!courseEntry || contentSwitchBusy || backupBusy;
-    localizedText(
-      $('difficulty-note'),
-      () =>
-        `${cue.copy} Main-menu pacing: ${nextPressure.difficulty}. ${gameplayTuningDescription(nextPressure)}`,
+    localizedText($('difficulty-note'), () =>
+      t('gameplay:tuning.classicNote', {
+        cue: difficultyCue({
+          entry: activeEntry,
+          nextMode: library.preferences.campaignDifficulty,
+          started,
+          recovering: sessionBusy,
+          practice,
+        }).copy,
+        difficulty: gameplayDifficultyLabel(nextPressure.difficulty),
+        description: gameplayTuningDescription(nextPressure),
+      }),
     );
     const standard = executionCatalog.select(activeEntry.baseCampaignKey, 'standard'),
       gentle = executionCatalog.select(activeEntry.baseCampaignKey, 'gentle');
@@ -5503,7 +5515,7 @@ try {
     if (notify)
       warning(
         saved.ok
-          ? t('interface:flightSavedLoadItFromLibrarySavesWheneverYouReturn')
+          ? localizedMessage('interface:flightSavedLoadItFromLibrarySavesWheneverYouReturn')
           : saved.warning,
       );
     return session;
@@ -7996,13 +8008,14 @@ try {
     });
     flightInformation.commitWarning(
       informationOwner,
-      courseSession
-        ? contentText(getFirstFlightLesson(courseRequest.lessonId), 'instructions.0')
-        : practice
-          ? t('interface:practiceUsesTheSameSimulationCampaignAwardsAreDisabled')
-          : campaignOverview
-            ? t('interface:campaignCompleteViewYourCollectionOrChooseAMissionTo')
-            : currentBriefing().status,
+      () =>
+        courseSession
+          ? contentText(getFirstFlightLesson(courseRequest.lessonId), 'instructions.0')
+          : practice
+            ? t('interface:practiceUsesTheSameSimulationCampaignAwardsAreDisabled')
+            : campaignOverview
+              ? t('interface:campaignCompleteViewYourCollectionOrChooseAMissionTo')
+              : currentBriefing().status,
       null,
       'host.ready',
     );
@@ -8051,7 +8064,7 @@ try {
     if (journeySkipArmed !== null) {
       journeySkipArmed = null;
       localizedText($('journey-skip'), () => t('interface:skipMission'));
-      warning(t('interface:skipCancelledContinueThisMission'));
+      warning(localizedMessage('interface:skipCancelledContinueThisMission'));
     }
     attemptFiles?.invalidate();
     if (contentSwitchTicket) packLaunchGuard.assert(contentSwitchTicket, packs);
@@ -8195,13 +8208,13 @@ try {
     if (['restored', 'paused-resume'].includes(runMessageCue))
       warning(
         run.player.cutting
-          ? t('interface:flightResumedYourUnfinishedLineIsStillExposed')
-          : t('interface:flightResumed'),
+          ? localizedMessage('interface:flightResumedYourUnfinishedLineIsStillExposed')
+          : localizedMessage('interface:flightResumed'),
         'resumed',
         'host.resumed',
       );
     if ($('run-message').textContent === picturePreparingMessage)
-      warning(t('interface:pictureReady'));
+      warning(localizedMessage('interface:pictureReady'));
     activateAudio().catch(() => {});
     show('game-overlay', false);
     show('continue-saved-note', false);
@@ -8219,7 +8232,7 @@ try {
     clearInput();
     show('skip-celebration', false);
     overlay('lost');
-    warning(t('interface:flightEndedReadTheDetailsOrTryAgain'));
+    warning(localizedMessage('interface:flightEndedReadTheDetailsOrTryAgain'));
     if (journeyEnabled && journeyMission() && !practice && !scenario)
       void prepareResultAttempt('retry');
   }
@@ -8244,7 +8257,7 @@ try {
     if (defeatActive) {
       defeatPaused = true;
       clearInput();
-      warning(t('interface:defeatPresentationPausedChooseShowDefeatMenuWhenReady'));
+      warning(localizedMessage('interface:defeatPresentationPausedChooseShowDefeatMenuWhenReady'));
       return;
     }
     if (celebrationActive) {
@@ -8262,8 +8275,8 @@ try {
     if (runMessageCue === 'resumed')
       warning(
         run.player.cutting
-          ? t('interface:flightPausedYourUnfinishedLineIsKeptPressResumeTo')
-          : t('interface:flightPausedPressResumeToContinue'),
+          ? localizedMessage('interface:flightPausedYourUnfinishedLineIsKeptPressResumeTo')
+          : localizedMessage('interface:flightPausedPressResumeToContinue'),
         'paused-resume',
         'host.paused',
       );
@@ -8327,9 +8340,11 @@ try {
               : 'running';
     $('coverage').innerHTML = `${(run.coverage * 100).toFixed(1)}<small>%</small>`;
     $('coverage').setAttribute('aria-valuenow', (run.coverage * 100).toFixed(1));
-    $('coverage').setAttribute(
-      'aria-valuetext',
-      `${(run.coverage * 100).toFixed(1)} percent revealed; target ${Math.round(run.level.goal.coverage * 100)} percent`,
+    localizedAttribute($('coverage'), 'aria-valuetext', () =>
+      t('gameplay:hud.coverageValue', {
+        coverage: formatNumber(run.coverage * 100, { maximumFractionDigits: 1 }),
+        target: Math.round(run.level.goal.coverage * 100),
+      }),
     );
     $('coverage-bar').style.width = `${run.coverage * 100}%`;
     $('goal-marker').style.left = `${run.level.goal.coverage * 100}%`;
@@ -8342,7 +8357,9 @@ try {
     localizedText($('lives'), () =>
       run.lives > 3 ? `◆ ×${run.lives}` : '◆ '.repeat(run.lives).trim() || '—',
     );
-    $('lives').setAttribute('aria-label', `${run.lives} lives`);
+    localizedAttribute($('lives'), 'aria-label', () =>
+      t('gameplay:hud.lives', { count: run.lives }),
+    );
     $('lives').dataset.compactValue = `♥ ${run.lives}`;
     localizedText($('time'), () => timeLabel(run.time));
     localizedText($('score'), () => String(run.score).padStart(5, '0'));
@@ -8383,19 +8400,31 @@ try {
                       : t('interface:safeGround'),
     );
     $('status-dot').style.background = run.player.cutting ? 'var(--danger)' : 'var(--safe)';
-    const left = Math.max(0, run.ability.cooldownUntil - run.time);
-    localizedText(
-      $('ability-state'),
-      () =>
-        `${left > 0 ? left.toFixed(1) + 's cooldown' : run.ability.capacity && run.ability.ammo === 0 ? t('interface:emptyRefillAtSupply') : t('common:status.ready')}${run.ability.capacity ? ' · ' + run.ability.ammo + '/' + run.ability.capacity + ' charges' : ''}`,
-    );
+    localizedText($('ability-state'), () => {
+      const left = Math.max(0, run.ability.cooldownUntil - run.time);
+      const status =
+        left > 0
+          ? t('gameplay:hud.cooldown', {
+              seconds: formatNumber(left, { minimumFractionDigits: 1, maximumFractionDigits: 1 }),
+            })
+          : run.ability.capacity && run.ability.ammo === 0
+            ? t('interface:emptyRefillAtSupply')
+            : t('common:status.ready');
+      return run.ability.capacity
+        ? t('gameplay:hud.charges', {
+            status,
+            ammo: run.ability.ammo,
+            capacity: run.ability.capacity,
+          })
+        : status;
+    });
     const canSwitchCraft = craftSwitchAvailable();
     $('hangar-button').disabled = !canSwitchCraft;
     show('hangar-button', canSwitchCraft);
     localizedText(
       $('loadout-note'),
       () =>
-        'Starting class changes begin a fresh attempt.' +
+        t('interface:startingClassChangesBeginAFreshAttempt') +
         (canSwitchCraft ? ' ' + t('interface:useAHangarToSwitchDuringFlight') + '' : ''),
     );
     $('restart-button').disabled = defeatActive || courseBlocked() || campaignOverview;
@@ -8414,7 +8443,14 @@ try {
           ? run.signal.resistant
             ? t('interface:fiberLinkSignalZoneBypassedLineRemainsVulnerable')
             : t('interface:signalInterferenceSlowerMovementOrDisabledEquipment')
-          : `${run.classRecipe.label}${canSwitchCraft ? (near && !run.player.cutting ? ' · Hangar in range' : ' ' + t('interface:returnToAHangarToChangeCraft') + '') : ''}`,
+          : canSwitchCraft
+            ? t(
+                near && !run.player.cutting
+                  ? 'gameplay:hud.hangarAvailable'
+                  : 'gameplay:hud.hangarReturn',
+                { craft: contentText(run.classRecipe, 'label') },
+              )
+            : contentText(run.classRecipe, 'label'),
     );
     if (run.rules.timeLimitSeconds)
       localizedText($('time'), () => timeLabel(Math.max(0, run.rules.timeLimitSeconds - run.time)));
@@ -8512,9 +8548,11 @@ try {
               `Line struck! Reach ${['xonix-core.v6', 'xonix-core.v7', 'xonix-core.v8', 'xonix-core.v9'].includes(run.ruleset) ? 'reclaimed' : 'safe'} ground before the travelling spark catches you.`,
             );
           if (event.type === 'lineImpact.arrived')
-            warning(t('interface:theTravellingImpactReachedYourCraftOneLifeLost'));
+            warning(localizedMessage('interface:theTravellingImpactReachedYourCraftOneLifeLost'));
           if (event.type === 'shield.absorbed')
-            warning(t('interface:shieldAbsorbedTheHitYourUnfinishedLineIsCancelledNo'));
+            warning(
+              localizedMessage('interface:shieldAbsorbedTheHitYourUnfinishedLineIsCancelledNo'),
+            );
           if (event.type === 'ability.rejected')
             warning(
               {
@@ -8534,7 +8572,7 @@ try {
               }[event.primitive] || `${theme.labels.ability} active.`,
             );
           if (event.type === 'pickup.collected')
-            warning(t('interface:suppliesReadyChooseYourNextOpportunity'));
+            warning(localizedMessage('interface:suppliesReadyChooseYourNextOpportunity'));
           if (event.type === 'capture.stopped')
             warning(
               [
@@ -8560,11 +8598,15 @@ try {
               }[event.kind] || t('interface:powerupCollected'),
             );
           if (event.type === 'rover.warning')
-            warning(t('interface:claimedGroundRoverWakingInOneSecondWatchTheMarked'));
+            warning(
+              localizedMessage('interface:claimedGroundRoverWakingInOneSecondWatchTheMarked'),
+            );
           if (event.type === 'rover.activated')
-            warning(t('interface:claimedGroundRoverActiveYourSecuredGroundStillHasA'));
+            warning(
+              localizedMessage('interface:claimedGroundRoverActiveYourSecuredGroundStillHasA'),
+            );
           if (event.type === 'erosion.warning')
-            warning(t('interface:theMarkedCapturedCellIsAboutToReopenWatchThe'));
+            warning(localizedMessage('interface:theMarkedCapturedCellIsAboutToReopenWatchThe'));
           if (event.type === 'cells.eroded')
             warning(
               [
@@ -8656,7 +8698,11 @@ try {
     if (disconnected) {
       clearInput();
       pause(true);
-      warning(t('interface:controllerDisconnectedYourFlightIsPausedReleaseControlsAndPress'));
+      warning(
+        localizedMessage(
+          'interface:controllerDisconnectedYourFlightIsPausedReleaseControlsAndPress',
+        ),
+      );
     } else {
       controllerNavigation.handle(controllerFrame.ui);
       const flight = controllerFrame?.flight ?? {};
@@ -8704,7 +8750,9 @@ try {
     ) {
       if (elapsed > 0.25) {
         pause(true);
-        warning(t('interface:pausedAfterALongFrameInterruptionResumeToContinueSafely'));
+        warning(
+          localizedMessage('interface:pausedAfterALongFrameInterruptionResumeToContinueSafely'),
+        );
         return;
       }
       accumulator += elapsed;
@@ -8730,7 +8778,7 @@ try {
           recordingStopped = true;
           recorder = null;
           $('export-replay').disabled = true;
-          warning(t('interface:the30MinuteReplayBudgetIsFullRecordingWasDiscarded'));
+          warning(localizedMessage('interface:the30MinuteReplayBudgetIsFullRecordingWasDiscarded'));
         }
         const beforeStatus = run.status;
         if (beforeStatus === 'respawning') {
@@ -8754,7 +8802,7 @@ try {
           command.direction &&
           run.player.speed > 0
         )
-          warning(t('interface:flightMoving'), 'secured');
+          warning(localizedMessage('interface:flightMoving'), 'secured');
         controls = controllerBoostAfterRecovery({
           beforeStatus,
           run,
@@ -8800,7 +8848,7 @@ try {
             recordingStopped = true;
             recorder = null;
             $('export-replay').disabled = true;
-            warning(t('interface:replayRecordingStoppedYouCanKeepPlayingStartANew'));
+            warning(localizedMessage('interface:replayRecordingStoppedYouCanKeepPlayingStartANew'));
           }
         if (courseObserver)
           try {
@@ -8957,7 +9005,7 @@ try {
                 localStorage.removeItem(sessionKey);
               }
             } catch {
-              warning(t('interface:playtestEndedButItsSavedSlotCouldNotBeCleared'));
+              warning(localizedMessage('interface:playtestEndedButItsSavedSlotCouldNotBeCleared'));
             }
           painter.startCelebration?.({
             levelId: run.levelId,
@@ -8969,7 +9017,8 @@ try {
           show('skip-celebration', true);
           show('show-result', false);
           warning(
-            journeyRewardFailure || t("interface:pictureUnlockedAWholeWorldFromOneBraveLine"),
+            journeyRewardFailure ||
+              localizedMessage('interface:pictureUnlockedAWholeWorldFromOneBraveLine'),
             null,
             'host.won',
           );
@@ -8988,7 +9037,7 @@ try {
           show('skip-celebration', true);
           $('skip-celebration').focus({ preventScroll: true });
           warning(
-            t('interface:lifeLostShowingTheFinalImpactChooseShowDefeatMenu'),
+            localizedMessage('interface:lifeLostShowingTheFinalImpactChooseShowDefeatMenu'),
             null,
             'host.lost',
           );
@@ -9328,7 +9377,7 @@ try {
     demo = true;
     prepare();
     resume();
-    warning(t('interface:demonstrationThisIsARealSimulatedCutItGrantsNo'));
+    warning(localizedMessage('interface:demonstrationThisIsARealSimulatedCutItGrantsNo'));
   };
   $('sound-button').onclick = () => setMasterMuted(!audioMaster.snapshot().muted);
   $('settings-master-mute').onclick = () => setMasterMuted(!audioMaster.snapshot().muted);

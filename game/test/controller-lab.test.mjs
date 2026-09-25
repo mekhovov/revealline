@@ -723,7 +723,7 @@ test('actual lab markup exposes all physical indices and four accessible numeric
     assert.doesNotMatch(contents, /Confirm|ability|Pick up|Boost|Hangar/);
   }
   for (let axis = 0; axis < 4; axis++) {
-    assert.match(html, new RegExp(`<label for="axis-${axis}">[^<]+</label\\s*>`));
+    assert.match(html, new RegExp(`<label[^>]*for="axis-${axis}"[^>]*>[^<]+</label\\s*>`));
     assert.match(html, new RegExp(`<output[^>]*id="axis-${axis}-value"[^>]*>0\\.00</output>`));
     assert.match(
       html,

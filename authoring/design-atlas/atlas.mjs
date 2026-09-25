@@ -54,7 +54,7 @@ function titleScreen(state) {
   const first = state === 'first-visit';
   return `<div class="mock-screen">${top('REVEALLINE', t('tools:soloFieldKit'))}
     <div class="mock-title-content"><div><p class="mock-logo">REVEAL<br /><span>LINE</span></p><p class="mock-subtitle">MAKE A PATH. REVEAL A WORLD.</p>
-    <div class="mock-menu"><button type="button" class="menu-focus" data-screen="${first ? 'missions' : 'briefing'}">${first ? t('tools:deploy') : t('tools:continue')}</button><button type="button" data-screen="missions">Missions</button><button type="button" data-screen="collection">Collection</button><button type="button" data-screen="settings">Settings</button><button type="button" data-screen="workshop">Workshop</button></div>
+    <div class="mock-menu"><button type="button" class="menu-focus" data-screen="${first ? 'missions' : 'briefing'}">${first ? t('common:actions.deploy') : t('common:actions.continue')}</button><button type="button" data-screen="missions">Missions</button><button type="button" data-screen="collection">Collection</button><button type="button" data-screen="settings">Settings</button><button type="button" data-screen="workshop">Workshop</button></div>
     <p class="menu-destination">${first ? t('tools:yourFirstRouteIsWaiting') : t('tools:firstLightRiverCrossingScout')}</p></div><div class="title-art">${drone}</div></div>
     <div class="mock-command"><span>Original FPV world</span><span class="desktop-hints"><kbd>↑↓</kbd> Move <kbd>Enter</kbd> Choose</span><span>PROPOSED TITLE</span></div></div>`;
 }
@@ -64,7 +64,7 @@ function missionsScreen(state) {
   return `<div class="mock-screen">${top(t('tools:missions'), t('tools:collection08Stars'))}
     <div class="mock-gallery-head"><div><h3>First Light</h3><p>Six routes into a new day · 01–06 of 12</p></div><div class="pack-tabs" aria-label="Illustrative pack tabs"><span>First Light</span><span>More worlds</span></div></div>
     ${missionCards(6, mystery)}
-    <div class="mission-choice"><div><strong>01 / First light</strong><p>Scout · Standard <span aria-hidden="true">/</span> ${mystery ? t('tools:artworkRevealsThroughPlay') : t('tools:threeMedalsEarned')}</p></div><div class="mock-actions">${action(t('tools:preview'), 'collection')}${action(t('tools:deploy2'), 'briefing', true)}</div></div>${commands()}</div>`;
+    <div class="mission-choice"><div><strong>01 / First light</strong><p>Scout · Standard <span aria-hidden="true">/</span> ${mystery ? t('tools:artworkRevealsThroughPlay') : t('tools:threeMedalsEarned')}</p></div><div class="mock-actions">${action(t('tools:preview'), 'collection')}${action(t('common:actions.deployArrow'), 'briefing', true)}</div></div>${commands()}</div>`;
 }
 
 function briefingScreen(state) {
@@ -72,7 +72,7 @@ function briefingScreen(state) {
   return `<div class="mock-screen">${top(t('tools:missionBrief01'), t('tools:firstLight2'))}<h3>Choose your route.</h3>
     <div class="brief-grid"><div class="mission-art terrain-0 brief-art"><span class="mission-number">FIRST LIGHT / ORIGINAL LAYOUT STUDY</span></div><dl class="brief-conditions"><div><dt>Craft</dt><dd>Scout / change</dd></div><div><dt>Difficulty</dt><dd>${gentle ? t('tools:gentle') : t('tools:standard')} / change</dd></div><div><dt>Coverage target</dt><dd>80%</dd></div><div><dt>Medal opportunity</dt><dd>Finish in 60 seconds</dd></div></dl></div>
     <p class="mock-description">Reconnect your unfinished line to claim the enclosed ground. Keep an eye on moving threats as the frontier changes.</p>
-    <div class="mock-actions">${action(t('tools:deploy2'), 'flight', true)}${action(t('tools:fieldGuide'), 'settings')}</div><p class="small-note">Proposed preparation screen. Retry reuses your setup without reopening this step.</p>${commands('missions')}</div>`;
+    <div class="mock-actions">${action(t('common:actions.deployArrow'), 'flight', true)}${action(t('tools:fieldGuide'), 'settings')}</div><p class="small-note">Proposed preparation screen. Retry reuses your setup without reopening this step.</p>${commands('missions')}</div>`;
 }
 
 function arenaMarkup(state) {
@@ -101,7 +101,7 @@ function resultsScreen(state) {
     <div class="results-content"><p class="eyebrow">${failed ? t('tools:retryTheRoute') : t('tools:worldRevealed')}</p><h3>${failed ? t('tools:signalLost') : t('tools:firstLightFound')}</h3>
     <div class="result-emblem${failed ? ' failure' : ''}" aria-hidden="true">${failed ? '×' : '★ ★ ★'}</div>
     ${failed ? '<p class="mock-description">A threat reached your unfinished line.<br />Try a shorter cut on your next flight.</p>' : '<div class="result-goals"><span><b>★</b>Mission complete</span><span><b>★</b>All lives saved</span><span><b>★</b>Within medal time</span></div><p class="result-score">11,450</p><p class="result-highscore">NEW HIGH SCORE</p>'}
-    <div class="mock-actions">${action(failed ? t('tools:retry2') : t('tools:nextMission'), 'flight', true)}${action(failed ? t('tools:missions2') : t('tools:viewPicture'), failed ? 'missions' : 'collection')}${failed ? '' : action(t('tools:retry'), 'flight')}</div></div>${commands('missions')}</div>`;
+    <div class="mock-actions">${action(failed ? t('tools:retry2') : t('tools:nextMission'), 'flight', true)}${action(failed ? t('tools:missions2') : t('common:actions.viewPicture'), failed ? 'missions' : 'collection')}${failed ? '' : action(t('common:actions.retry'), 'flight')}</div></div>${commands('missions')}</div>`;
 }
 
 function settingsScreen(state) {
@@ -111,7 +111,7 @@ function settingsScreen(state) {
 
 function collectionScreen(state) {
   const picture = state === 'picture';
-  return `<div class="mock-screen">${top(t('tools:collection'), t('tools:firstLight03Of12'))}<h3>${picture ? t('tools:aWorldWorthFinding') : t('tools:yourRevealedWorlds')}</h3>${picture ? '<div class="mission-art terrain-0 brief-art" style="min-height:300px;margin-bottom:20px" aria-label="Original abstract field illustration"><span class="mission-number">ILLUSTRATIVE ART / NOT A PRODUCTION BACKGROUND</span></div>' : missionCards(6, true)}<p class="mock-description">${picture ? t('tools:aQuietPictureViewSeparateFromAchievedCoverageReturnTo') : t('tools:collectedArtworkEarnedMedalsAndMemorableRoutesUnrevealedImagesRemain')}</p><div class="mock-actions">${action(picture ? t('tools:returnToCollection') : t('tools:viewPicture'), 'collection', true)}${action(t('tools:replayMission'), 'briefing')}</div>${commands()}</div>`;
+  return `<div class="mock-screen">${top(t('tools:collection'), t('tools:firstLight03Of12'))}<h3>${picture ? t('tools:aWorldWorthFinding') : t('tools:yourRevealedWorlds')}</h3>${picture ? '<div class="mission-art terrain-0 brief-art" style="min-height:300px;margin-bottom:20px" aria-label="Original abstract field illustration"><span class="mission-number">ILLUSTRATIVE ART / NOT A PRODUCTION BACKGROUND</span></div>' : missionCards(6, true)}<p class="mock-description">${picture ? t('tools:aQuietPictureViewSeparateFromAchievedCoverageReturnTo') : t('tools:collectedArtworkEarnedMedalsAndMemorableRoutesUnrevealedImagesRemain')}</p><div class="mock-actions">${action(picture ? t('tools:returnToCollection') : t('common:actions.viewPicture'), 'collection', true)}${action(t('tools:replayMission'), 'briefing')}</div>${commands()}</div>`;
 }
 
 function workshopScreen(state) {
