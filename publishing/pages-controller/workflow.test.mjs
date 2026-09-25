@@ -62,6 +62,11 @@ test('source qualification retains mandatory guards and restorable suites while 
   assert.match(workflow, /cancel-in-progress: \$\{\{ github\.event_name == 'pull_request' \}\}/);
   assert.match(workflow, /group: frozen-pages-/);
   assert.match(legacy, /group: source-gates-\$\{\{ github.ref \}\}/);
+  assert.match(legacy, /pull_request:\n\s+branches: \[main\]/);
+  assert.doesNotMatch(
+    legacy.slice(legacy.indexOf('  pull_request:'), legacy.indexOf('  workflow_dispatch:')),
+    /paths-ignore:/,
+  );
   const sourceConcurrency = legacy.slice(legacy.indexOf('concurrency:'), legacy.indexOf('jobs:'));
   assert.match(
     sourceConcurrency,

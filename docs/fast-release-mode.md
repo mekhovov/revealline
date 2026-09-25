@@ -33,12 +33,24 @@ publishing/controller, workflow, and `game/test/`-only pull requests may remain 
 product version; mixed or runtime changes still return to draft until they receive an exact release
 title or the explicit `release-train-approved` label.
 
+Every pull request targeting `main` reports the aggregate `release-ready` context, including
+documentation-only changes. Do not restore pull-request path filters on that workflow while the
+context is required: GitHub leaves a filtered required check pending instead of treating it as a
+successful maintenance decision.
+
 Release-title pull requests also fail closed until the previous latest stable release is both the
 reviewed selector on `main` and the version actually served by the public root and versioned game
 bytes. Their title version, package version, lockfile versions, and game build version must match
 before dependency installation. This prevents concurrent agents from merging a new source release
 while its predecessor is still waiting for archive/selector/Pages acceptance, and catches partial
 version bumps before the expensive post-merge freeze.
+
+The public-boundary check is enforced together with protected `main`: `release-ready` is required,
+strict up-to-date checks are enabled, and administrators are included. A green release PR therefore
+becomes stale when another pull request advances `main`; it must update onto the new base and rerun
+the boundary check before it can merge. Per-PR Actions concurrency only cancels superseded runs for
+that PR and is not a substitute for branch protection. Because this repository is owned by a
+personal account, GitHub's organization-only merge queue is not available.
 
 These checks are deferred from the pull-request workflow in fast mode and cannot block merge:
 
@@ -97,8 +109,9 @@ during an active release:
 3. Run **Qualify release source** once on current `main` with `run_tests=true`. Confirm all four
    shards, the already-mandatory static and production checks, source identity, and build pass. The
    request is honored only after the repository variable is `true`.
-4. If branch protection is introduced, require only `release-ready`, not the individual shard
-   contexts. `release-ready` requires tests whenever `REVEALLINE_FULL_CI=true`.
+4. Keep strict branch protection enabled and require only `release-ready`, not the individual shard
+   contexts. `release-ready` requires tests whenever `REVEALLINE_FULL_CI=true`; restoring full CI
+   does not require changing the protected-branch context.
 5. Update this document and `docs/deployment.md` in the same reviewed PR to state that full CI is
    restored.
 
