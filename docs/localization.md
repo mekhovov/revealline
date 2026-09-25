@@ -697,3 +697,36 @@ language directions, and updates checkpoint/current-draft text. Inspecting an un
 project name containing Ґ Є І Ї translates the feedback but preserves that name and source.
 Editing again clears the accepted inspection; changing language does not revive it or enable
 Apply. No inspection was applied or saved, and the temporary source text was restored.
+
+## v0.114.1 Studio board and current pressure
+
+Rebased onto `cdefaef72` (the merged v0.114.1 effective-pressure inspector). Resolution keeps
+both authored preview and fresh-attempt pressure inspection, including browser tuning, its
+canonical report and its cleanup subscription. The accepted draft is compiled once for both
+projections. Locale changes refresh presentation from accepted snapshots only.
+
+Studio now translates mission rules, geometry, actor descriptions, empty states and the new
+current-gameplay inspector. This includes every current pressure warning, shared Team lives,
+countdowns, relay gates, timed pickups and directional fields. Canonical actor recipes, reports,
+identities and source JSON are unchanged. The exact default starter project is registered;
+changing its owner, ID or nested map preserves all authored child text. Built-in names are
+resolved at presentation time. Ukrainian coordinate pairs use semicolons with decimal commas.
+
+Focused testing covers source/draft/cursor/focus preservation, empty-to-selected transitions,
+both difficulty editions and modes, all actor families used by these captions, warning codes
+and Ukrainian life plurals (including 0, 11, 21, 22 and decimals). The final affected rerun passes
+30/30 tests; previously passing surrounding compilation, capture, combat, emitter, sentinel,
+empty-board and current-rules checks remain valid. Two source-contract assertions were updated
+for legitimate cleanup additions and HTML whitespace; they still enforce the original behavior.
+Changed-file lint and formatting pass; source/key/plural checks report 7,784 messages and 6,213
+references. Logs are under `/tmp/rl-i18n/rebase/v1141-studio-board-*` on this validation host.
+
+A real browser on the no-cache source server shows Ukrainian starter names, board facts and
+v0.114.1 pressure values. Selecting Expert produces the authored 2-life preview alongside the
+actual fresh-attempt 2-enemy projection. Cross-tab Ukrainian → English → Ukrainian changes
+both displays while retaining an unapplied JSON edit, focused source control, cursor and Expert
+selection. Temporary JSON text was restored without applying or saving a draft change.
+
+This is a source checkpoint, not a full-coverage or merge-ready claim. Dynamic structure/editor
+copy, remaining owned errors and wider migration validation are outstanding. The earlier
+v0.114.0 build/native receipts do not certify these post-build changes.
