@@ -939,6 +939,21 @@ test('remote no-progress recovery falls back to included music and remains switc
   assert.equal(h.player.snapshot().track.kind, 'synth');
 });
 
+test('a remote play promise which never settles cannot leave the transport loading forever', async (t) => {
+  const [remote] = resolvedRemoteTracks([{ sha256: '9'.repeat(64), title: 'Pending stream' }]),
+    h = setup({ library: list([synthIds[0]], 'all'), remoteStallMs: 15 });
+  t.after(() => h.player.dispose());
+  h.media.play = function () {
+    this.plays++;
+    return new Promise(() => {});
+  };
+  void h.player.playRemotePlaylist([remote]);
+  await settleUntil(() => h.player.snapshot().track?.kind === 'synth');
+  assert.equal(h.player.snapshot().status, 'playing');
+  assert.equal(h.player.snapshot().desired, true);
+  assert.match(h.player.snapshot().notice, /stopped responding/);
+});
+
 test('online and included tracks form one trusted ordered session queue', async (t) => {
   const second = audioHarness().media,
     [remote] = resolvedRemoteTracks([{ sha256: '8'.repeat(64), title: 'Mixed stream' }]),
@@ -962,6 +977,28 @@ test('online and included tracks form one trusted ordered session queue', async 
   assert.equal(second.plays, 0);
   assert.equal(await h.player.next(), false);
   assert.equal(h.player.snapshot().status, 'ended');
+});
+
+test('Recording mode filters restricted remote tracks without dropping included mixed tracks', async (t) => {
+  const library = upgradeSoundtrackLibrary(list([synthIds[0]], 'off')),
+    [allowed, blocked] = resolvedRemoteTracks([
+      { sha256: 'a'.repeat(64), recordingModeEligible: true, contentId: false },
+      { sha256: 'b'.repeat(64), recordingModeEligible: false, contentId: true },
+    ]),
+    h = setup({ library, fadeMs: 0 });
+  t.after(() => h.player.dispose());
+  await h.player.playRemotePlaylist([allowed, blocked], {
+    repeat: 'off',
+    mixWithLibrary: true,
+  });
+  assert.deepEqual(h.player.snapshot().queue, [allowed.id, blocked.id, synthIds[0]]);
+  h.player.setLibrary({
+    ...library,
+    listening: { ...library.listening, recordingMode: true },
+  });
+  assert.equal(await h.player.next(), true);
+  assert.equal(h.player.snapshot().track.id, synthIds[0]);
+  assert.deepEqual(h.player.snapshot().queue, [allowed.id, synthIds[0]]);
 });
 
 test('two streaming decks preload only the next track and genuinely overlap the audible boundary', async (t) => {
