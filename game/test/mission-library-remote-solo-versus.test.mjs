@@ -8,6 +8,7 @@ import { loadAuthoredJourneyRoute } from '../content-design/route-loader.mjs';
 import { createCandidateVersusHost } from '../content-design/versus-host.mjs';
 import { journeyActorThemeCandidates } from '../presentation/journey-actor-materials.mjs';
 import { journeyLibrarySource } from '../mission-library/journey-source.mjs';
+import { createSpatialNextEditionSources } from '../mission-library/spatial-next-editions.mjs';
 
 const paths = [
   'content/mission-library-index.json',
@@ -34,7 +35,7 @@ function reader(seen, replace = (path, text) => text) {
   };
 }
 
-test('remote Solo/Versus inventory preserves91 exact Journey and110 Classic identities without images or saving', async (t) => {
+test('remote Solo/Versus inventory preserves 91 current, six prior and 188 Classic identities without images or saving', async (t) => {
   const reads = [],
     launches = [];
   const owner = await createRemoteSoloVersusLibrarySources({
@@ -49,11 +50,11 @@ test('remote Solo/Versus inventory preserves91 exact Journey and110 Classic iden
   t.after(owner.dispose);
   const library = createMissionLibrary(owner.sources);
   assert.equal(reads.length, 4);
-  assert.equal(library.missions.length, 201);
-  assert.equal(library.forMode('solo').length, 201);
-  assert.equal(library.forMode('versus').length, 201);
+  assert.equal(library.missions.length, 285);
+  assert.equal(library.forMode('solo').length, 285);
+  assert.equal(library.forMode('versus').length, 285);
   assert.equal(library.forMode('team').length, 0);
-  const route = await loadAuthoredJourneyRoute('whole-spatial-v9');
+  const route = await loadAuthoredJourneyRoute('whole-spatial-v11');
   const versus = createCandidateVersusHost(route.source, {
     themes: journeyActorThemeCandidates(JSON.parse(files.get(paths[1])).themes, {
       includeOriginals: route.preserveOriginalThemes === true,
@@ -61,6 +62,12 @@ test('remote Solo/Versus inventory preserves91 exact Journey and110 Classic iden
     corePackIds: route.corePackIds,
     optionalCampaignIds: route.optionalCampaignIds,
   });
+  const prior = await createSpatialNextEditionSources({
+    activeRouteId: route.id,
+    originalThemes: JSON.parse(files.get(paths[1])).themes,
+    launch: () => true,
+  });
+  t.after(prior.dispose);
   const receiver = createMissionLibrary([
     journeyLibrarySource({
       editionId: route.id,
@@ -68,6 +75,7 @@ test('remote Solo/Versus inventory preserves91 exact Journey and110 Classic iden
       catalog: versus.catalog,
       launch: () => true,
     }),
+    ...prior.sources,
     ...classicLibrarySources(index, {
       availability: () => ({ state: 'ready' }),
       launch: () => true,
@@ -81,7 +89,11 @@ test('remote Solo/Versus inventory preserves91 exact Journey and110 Classic iden
     const ready = library
       .forMode(mode)
       .filter((row) => library.availability(row, mode).state === 'ready');
-    assert.equal(ready.length, 103, '91 Journey +12 verified Base, not invented installed packs');
+    assert.equal(
+      ready.length,
+      109,
+      '91 current + six prior Journey +12 verified Base, not invented installed packs',
+    );
     for (const row of ready) {
       assert.equal(library.progress(row, mode), '');
       assert.equal(await library.launch(row, { mode }), true);
