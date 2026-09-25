@@ -875,7 +875,6 @@ export function bootCoop({
     keyboard: true,
     ownsKeyboardEvent: (event) => !music?.root() && settingsTabOwnsKey(event, settingsDialog),
     nativeReadingScroll: true,
-    activateControl: (element) => controllerConfirmGuard.activate(element),
     getReadingPrompt: readingPrompt,
     onNativeInput: (event) => setReadingModality(nextInputModality(readingModality, event)),
     onBack: back,
