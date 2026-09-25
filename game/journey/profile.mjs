@@ -330,7 +330,8 @@ export function createJourneyProfileStore({
     saving = null,
     ready = false,
     durable = false,
-    error = null;
+    error = null,
+    stateRevision = 0;
   const editionId = pictureEditionId(profileKey),
     applyEvent = (state, event) => applyStateEvent(state, event, editionId);
   const status = () => {
@@ -346,6 +347,7 @@ export function createJourneyProfileStore({
   const pictureSnapshot = () => structuredClone(pictures);
   const adopt = (state) => {
     ({ profile, pictures } = state);
+    stateRevision++;
   };
   const readState = async () =>
     backend.readState
@@ -411,6 +413,7 @@ export function createJourneyProfileStore({
     },
     snapshot,
     pictures: pictureSnapshot,
+    stateRevision: () => stateRevision,
     status,
     flush,
     backupFilename:
