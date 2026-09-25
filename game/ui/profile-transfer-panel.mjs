@@ -1,3 +1,4 @@
+import { reviewInstalledMigration, recordInstalledMigration } from '../installed-app.mjs';
 import { discoverProfileTransfers, prepareProfileTransfer } from '../profile-transfer.mjs';
 
 /** Explicit same-origin release copy. Source validation is read-only; all target
@@ -140,6 +141,13 @@ export function attachProfileTransferPanel({
         cancel.disabled = true;
         cancel.hidden = true;
         operation.phase('Preparing the verified collection copy…');
+        const installedReview = api.profileTransfer.installedApp
+          ? await reviewInstalledMigration(
+              fresh.source.version,
+              api.profileTransfer.currentVersion,
+              api.profileTransfer,
+            )
+          : null;
         const result = await applyPrepared(fresh.prepared, operation, {
           verifySource: async () => {
             operation.phase('Rechecking the earlier release before replacement…');
@@ -159,6 +167,7 @@ export function attachProfileTransferPanel({
           },
         });
         operation.check();
+        await recordInstalledMigration(installedReview, api.profileTransfer);
         report(
           `Copied from ${fresh.source.version}. ${result.undo ? 'Undo game-data import restores the previous collection.' : 'The previous collection could not form a verified backup; Undo is unavailable.'} ${fresh.preview.hasSession ? 'Your saved flight is ready to load, paused.' : ''} ${result.warning || ''}`,
         );

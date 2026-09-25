@@ -1,3 +1,5 @@
+import { createGameWakeLock } from '../ui/game-wake-lock.mjs';
+import { localOfficialRecordingIds } from '../official-downloads.mjs';
 import { attachMusicCredit } from '../ui/music-credit.mjs';
 import { attachQuickMusicControls } from '../ui/quick-music-controls.mjs';
 import {
@@ -163,13 +165,16 @@ export function attachCouchMusicHost({
   }
   const source = createSoundtrackSource({
     catalogue: SOUNDTRACK_CATALOGUE,
+    localPlayback: () => true,
     archives: SOUNDTRACK_ARCHIVES,
     bundled: SOUNDTRACK_BUNDLED_ASSETS,
     readLocal: (hash, options) =>
       library?.readAsset(hash, { ...options, allowMissing: true }) ?? null,
     installedOnly: () => library?.snapshot().library?.listening?.installedOnly ?? false,
   });
+  const wakeLock = createGameWakeLock({ document: doc });
   const player = createSoundtrackPlayer({
+    localPlayback: true,
     soundscape: sound,
     audioElement: media,
     secondAudioElement: doc.createElement('audio'),
@@ -347,7 +352,10 @@ export function attachCouchMusicHost({
   doc.addEventListener('keydown', startRememberedMenuMusic, true);
   // A native click observes explicit mute/unmute after its own button handler.
   doc.addEventListener('click', startRememberedMenuMusic);
-  void run(load);
+  void run(async () => {
+    player.setLocalRecordingIds(await localOfficialRecordingIds(source.catalogue));
+    await load();
+  });
   return Object.freeze({
     sound,
     player,
@@ -368,6 +376,7 @@ export function attachCouchMusicHost({
       render();
     },
     update(active, theme, state) {
+      wakeLock.setActive(active);
       const scene = getScene({ active, scene: context.scene });
       if (context.scene !== scene) {
         context = Object.freeze({ ...context, scene });
@@ -392,6 +401,7 @@ export function attachCouchMusicHost({
     dispose() {
       if (disposed) return;
       disposed = true;
+      wakeLock.dispose();
       lifetime.abort();
       doc.removeEventListener('pointerdown', startRememberedMenuMusic, true);
       doc.removeEventListener('keydown', startRememberedMenuMusic, true);

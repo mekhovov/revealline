@@ -1137,29 +1137,29 @@ test('Couch explicit scene keeps level music across inactive Pause, Settings, re
   });
   host.player.setAuthoredTrack(DEFAULT_TRACKS[1]);
   host.update(false, { family: 'fpv' });
-  assert.equal(host.player.snapshot().source, 'catalogue');
-  assert.equal(host.player.snapshot().playlistId, 'builtin.listening.auto.menu');
+  assert.equal(host.player.snapshot().source, 'catalogue-fallback');
+  assert.equal(host.player.snapshot().playlistId, 'builtin.listening.auto.fallback');
   scene = 'gameplay';
   host.update(true, { family: 'fpv' });
   await host.player.prepare();
-  assert.equal(host.player.snapshot().source, 'catalogue');
+  assert.equal(host.player.snapshot().source, 'authored');
   const before = host.player.snapshot();
-  assert.equal(before.pendingPlaylistId ?? before.playlistId, 'builtin.listening.auto.gameplay');
+  assert.equal(before.pendingPlaylistId ?? before.playlistId, 'builtin.authored.current');
   for (const status of ['paused', 'settings', 'finished', 'retry']) {
     host.update(false, { family: 'fpv' }, { status });
-    assert.equal(host.player.snapshot().source, 'catalogue');
+    assert.equal(host.player.snapshot().source, 'authored');
     assert.equal(
       host.player.snapshot().pendingPlaylistId ?? host.player.snapshot().playlistId,
-      'builtin.listening.auto.gameplay',
+      'builtin.authored.current',
     );
     assert.deepEqual(host.player.snapshot().queue, before.queue);
     assert.equal(host.player.snapshot().track.id, before.track.id);
   }
   scene = 'menu';
   host.update(false, { family: 'fpv' });
-  assert.equal(host.player.snapshot().source, 'catalogue');
+  assert.equal(host.player.snapshot().source, 'catalogue-fallback');
   assert.equal(
     host.player.snapshot().pendingPlaylistId ?? host.player.snapshot().playlistId,
-    'builtin.listening.auto.menu',
+    'builtin.listening.auto.fallback',
   );
 });

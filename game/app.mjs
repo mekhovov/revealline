@@ -1,3 +1,7 @@
+import { invalidateInstalledMigration } from './installed-app.mjs';
+import { createGameWakeLock } from './ui/game-wake-lock.mjs';
+import { localOfficialChapter } from './official-chapter-source.mjs';
+import { localOfficialRecordingIds } from './official-downloads.mjs';
 import {
   freshSoloVisualSelection,
   prepareFreshSoloVisualTheme,
@@ -203,6 +207,7 @@ import {
 } from './library.mjs';
 import {
   emptyPackLibrary,
+  isOfficialPack,
   importPackLibrary,
   exportPackLibrary,
   preparePack,
@@ -1560,6 +1565,7 @@ try {
       if (soundtrackDisposed) return;
       const source = createSoundtrackSource({
         catalogue,
+        localPlayback: () => true,
         archives: SOUNDTRACK_ARCHIVES,
         bundled: SOUNDTRACK_BUNDLED_ASSETS,
         readLocal: (hash) => soundtrackAssets.get(hash),
@@ -1572,6 +1578,8 @@ try {
         );
       soundtrackStore = createSoundtrackStore({ managedStore: pictureManager });
       soundtrackPlayer = createSoundtrackPlayer({
+        localPlayback: true,
+        localRecordingIds: await localOfficialRecordingIds(catalogue),
         catalogue,
         bundledTrackIds: SOUNDTRACK_BUNDLED_ASSETS.map(({ id }) => id),
         audioMaster,
@@ -4886,6 +4894,7 @@ try {
         preserveCurrentRun &&
         before.packs.some(
           (old) =>
+            !isOfficialPack(old) &&
             JSON.stringify(next.packs.find((item) => item.id === old.id)) !== JSON.stringify(old),
         )
       )
@@ -4953,6 +4962,19 @@ try {
       busy: true,
       stage: 'downloading',
     });
+    const official = await packLaunchGuard.run(
+      operation,
+      before,
+      () => packs,
+      () => localOfficialChapter(packId),
+    );
+    if (official) {
+      await replacePackLibrary(installPack(before, official), {
+        contentSwitchTicket: operation,
+        preserveCurrentRun,
+      });
+      return { pack: official, installed: true };
+    }
     const source = await packLaunchGuard.run(
       operation,
       before,
@@ -5109,11 +5131,15 @@ try {
         before,
         () => packs,
         () =>
-          prepareOptionalDownload(summary, {
-            library: before,
-            signal,
-            baseURL: new URL('../', location.href),
-          }),
+          localOfficialChapter(summary.id).then(
+            (official) =>
+              official ||
+              prepareOptionalDownload(summary, {
+                library: before,
+                signal,
+                baseURL: new URL('../', location.href),
+              }),
+          ),
       );
       packLaunchGuard.assert(operation, packs);
       preparationStatus(
@@ -5907,6 +5933,7 @@ try {
           readAsset: readAssetStore,
           lockManager: navigator.locks,
           currentVersion: buildVersion,
+          installedApp: true,
           ...(externalBackup ? { readExternalSnapshot: externalBackup.readExternalSnapshot } : {}),
         }
       : null,
@@ -5974,6 +6001,7 @@ try {
         throw new Error('End First Flight before replacing player data.');
     },
     beforeProfileReplacement: () => {
+      invalidateInstalledMigration();
       if (courseSession || courseEntry)
         throw new Error('End First Flight before replacing player data.');
       invalidateContentSwitch();
@@ -8257,7 +8285,13 @@ try {
       throw error;
     }
   }
+  const gameWakeLock = createGameWakeLock();
+  window.addEventListener('pagehide', (event) => {
+    if (event.persisted) gameWakeLock.setActive(false);
+    else gameWakeLock.dispose();
+  });
   function update(elapsed) {
+    gameWakeLock.setActive(started && !paused && run.status === 'running' && !document.hidden);
     if (document.hidden || !document.hasFocus()) {
       if (!controllerInactive) {
         controllerInactive = true;

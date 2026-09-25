@@ -3120,7 +3120,7 @@ test('published catalogue albums are visible and selectable without downloads or
     [['select', album.id]],
   );
   assert(!app.calls.some(([name]) => name === 'play'));
-  assert.match(app.node('original-status').textContent, /downloaded and checked individually/);
+  assert.match(app.node('original-status').textContent, /local recordings or the procedural score/);
   assert.match(app.node('licensed-previews-info').textContent, /plays every published recording/);
   await app.click('play');
   assert(
@@ -3209,7 +3209,7 @@ test('offline album download stages only its recordings and removal preserves it
   assert.equal(saved.library.selection.playlistId, first.id);
   assert.equal(app.node(`download-${suffix}`).disabled, false);
   assert.equal(app.node(`offload-${suffix}`).disabled, true);
-  assert.match(app.node(`availability-${suffix}`).textContent, /available online/);
+  assert.match(app.node(`availability-${suffix}`).textContent, /explicitly choose a stream/);
 });
 
 test('a competing library save prevents album selection from replacing newer data or player intent', async (t) => {

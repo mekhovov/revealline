@@ -59,6 +59,9 @@ function host(configPatch = {}, storage = new Map(), options = {}) {
       if (!storage.has(key)) storage.set(key, new Map());
       const data = storage.get(key);
       return {
+        async keys() {
+          return [...data.keys()].map((url) => new Request(url));
+        },
         async match(url) {
           await options.beforeMatch?.({ key, url });
           const entry = data.get(typeof url === 'string' ? url : url.url);
@@ -246,6 +249,99 @@ test('a cached version supports nested navigations and sibling shipped assets wi
     request: new Request(`${scope}authoring/motion-lab/animation.mjs`),
   });
   assert.match(await asset.text(), /animation=true/);
+  assert.equal(h.calls.length, 0);
+});
+
+test('durable runtime resumes verified files after quota failure and worker replacement', async () => {
+  const storage = new Map();
+  let fail = true;
+  const first = host({ downloadFiles: [] }, storage, {
+    beforePut({ url }) {
+      if (fail && url.endsWith('/game/app.mjs'))
+        throw new DOMException('full', 'QuotaExceededError');
+    },
+  });
+  await assert.rejects(first.dispatch('install'), /full/);
+  assert.equal((await first.report()).status, 'not-ready');
+  fail = false;
+  const reopened = host({ downloadFiles: [] }, storage);
+  await reopened.dispatch('install');
+  assert.equal((await reopened.report()).status, 'ready');
+  assert.equal(reopened.calls.includes(`${scope}game/index.html`), false);
+  assert.equal(reopened.calls.length, 2);
+});
+
+test('an edition update reuses verified hashes and only downloads changed runtime files', async () => {
+  const storage = new Map(),
+    first = host({ downloadFiles: [] }, storage);
+  await first.dispatch('install');
+  const changed = host({ downloadFiles: [], buildId: 'b'.repeat(64) }, storage, {
+    entries: [
+      ['game/index.html', '<title>New edition</title>'],
+      ['game/app.mjs', 'export const game=true;'],
+    ],
+  });
+  await changed.dispatch('install');
+  assert.deepEqual(changed.calls, [`${scope}game/index.html`]);
+  assert.equal((await changed.report()).status, 'ready');
+  assert.equal((await first.report()).status, 'ready');
+});
+
+test('identical runtime bytes at different URLs download once but remain addressable offline', async () => {
+  const h = host({ downloadFiles: [] }, new Map(), {
+    entries: [
+      ['icons/icon.png', 'same image'],
+      ['app/icon.png', 'same image'],
+    ],
+  });
+  await h.dispatch('install');
+  h.network.clear();
+  assert.equal(h.calls.length, 1);
+  const response = await h.dispatch('fetch', { request: new Request(`${scope}app/icon.png`) });
+  assert.equal(await response.text(), 'same image');
+  assert.equal((await h.report()).status, 'ready');
+});
+
+test('explicit pause stops durable preparation after its atomic file checkpoint', async () => {
+  const storage = new Map();
+  const h = host({ downloadFiles: [] }, storage, {
+    async beforePut({ url }) {
+      if (url.endsWith('/game/index.html'))
+        await h.dispatch('message', {
+          source: { url: `${scope}game/downloads.html` },
+          data: { type: 'revealline.offline-pause', buildId: 'a'.repeat(64) },
+        });
+    },
+  });
+  await assert.rejects(h.dispatch('install'), { name: 'AbortError' });
+  assert.equal((await h.report()).status, 'not-ready');
+  const resume = host({ downloadFiles: [] }, storage);
+  await resume.dispatch('install');
+  assert.equal(resume.calls.includes(`${scope}game/index.html`), false);
+  assert.equal((await resume.report()).status, 'ready');
+});
+
+test('complete cached files serve audio byte ranges without caching a partial response', async () => {
+  const h = host({ downloadFiles: [] }, new Map(), { entries: [['game/tone.mp3', '0123456789']] });
+  await h.dispatch('install');
+  h.network.clear();
+  h.calls.length = 0;
+  for (const [range, body] of [
+    ['bytes=2-5', '2345'],
+    ['bytes=-3', '789'],
+    ['bytes=8-', '89'],
+  ]) {
+    const response = await h.dispatch('fetch', {
+      request: new Request(`${scope}game/tone.mp3`, { headers: { Range: range } }),
+    });
+    assert.equal(response.status, 206);
+    assert.equal(await response.text(), body);
+  }
+  const bad = await h.dispatch('fetch', {
+    request: new Request(`${scope}game/tone.mp3`, { headers: { Range: 'bytes=99-' } }),
+  });
+  assert.equal(bad.status, 416);
+  assert.equal((await h.report()).status, 'ready');
   assert.equal(h.calls.length, 0);
 });
 
