@@ -6,7 +6,7 @@ import { PostgresCommunityRepository } from './postgres-repository.mjs';
 import { createCreatorPackageValidator } from './validator.mjs';
 import { processNextValidationJob } from './worker.mjs';
 
-const config = readConfig();
+const config = readConfig(process.env, { requireAuth: false });
 if (!config.databaseUrl) throw new Error('COMMUNITY_DATABASE_URL is required.');
 const pool = new Pool({ connectionString: config.databaseUrl, max: 2 });
 const repository = new PostgresCommunityRepository({ pool });
