@@ -5,12 +5,14 @@ import {
   activeJourneyRules,
 } from './ui/gameplay-copy.mjs';
 import { contentText } from './i18n/content.mjs';
+import { flightPictureFailure, flightPictureStatus } from './ui/flight-picture-copy.mjs';
 import {
   t,
   localizedText,
   localizedAttribute,
   localizedOption,
   localizedMessage,
+  render as renderMessage,
   onLocaleChange,
   formatNumber,
 } from './i18n/index.mjs';
@@ -1133,10 +1135,10 @@ try {
     pictureResume = null,
     pictureThemePending = null,
     pictureGeneration = 0;
-  const picturePreparingMessage = t(
+  const picturePreparingMessage = localizedMessage(
     'interface:preparingTheChosenPictureFlightStaysPausedUntilItIs',
   );
-  const savedFlightRestoredMessage = t(
+  const savedFlightRestoredMessage = localizedMessage(
     'interface:savedFlightVerifiedAndRestoredPressResumeToContinue',
   );
   const preparationFeedback = createOperationStatus($('flight-preparation-status'));
@@ -1155,7 +1157,7 @@ try {
       update(status) {
         if (preparationOperation !== operation || status.status !== 'preparing') return;
         operation.status.update({
-          message: status.message,
+          message: () => flightPictureStatus(status),
           stage: status.stage,
           progress: status.progress ?? null,
         });
@@ -1470,9 +1472,7 @@ try {
     if (error?.name === 'AbortError') return;
     const needsWriter = error instanceof ReleasePictureWriteRequiredError;
     pictureRecovery = needsWriter ? { owner: flightPictures, run, themeId: theme.id } : null;
-    const message = needsWriter
-      ? error.message
-      : `Picture unavailable: ${error.message} Your flight remains paused. Retry after restoring its original media.`;
+    const message = () => flightPictureFailure(error, { paused: true });
     notify(message);
     // An unjoined prewarm has no launch lease to publish its terminal feedback.
     // Keep other preparation owners in charge of their existing presenter.
@@ -3778,7 +3778,11 @@ try {
         onStatus: (status) =>
           preparationStatus(
             request.onStatus,
-            `${level.name}: ${status.message}`,
+            () =>
+              t('interface:picture.missionStatus', {
+                name: contentText(level, 'name'),
+                message: flightPictureStatus(status),
+              }),
             status.stage,
             () => worldAttemptCurrent(ticket),
           ),
@@ -7636,7 +7640,14 @@ try {
         signal: ticket.controller.signal,
         onStatus(status) {
           if (resultAttemptCurrent(ticket))
-            ticket.feedback.update({ ...status, message: `${level.name}: ${status.message}` });
+            ticket.feedback.update({
+              ...status,
+              message: () =>
+                t('interface:picture.missionStatus', {
+                  name: contentText(level, 'name'),
+                  message: flightPictureStatus(status),
+                }),
+            });
         },
       });
       if (!resultAttemptCurrent(ticket))
@@ -8178,12 +8189,7 @@ try {
         })
         .catch((error) => {
           if (pictureResume === ticket) {
-            feedback.finish(
-              error instanceof ReleasePictureWriteRequiredError
-                ? error.message
-                : `Picture unavailable: ${error.message}`,
-              'error',
-            );
+            feedback.finish(() => flightPictureFailure(error), 'error');
             pictureFailure(error, notify);
           }
         })
@@ -8218,7 +8224,7 @@ try {
         'resumed',
         'host.resumed',
       );
-    if ($('run-message').textContent === picturePreparingMessage)
+    if ($('run-message').textContent === renderMessage(picturePreparingMessage))
       warning(localizedMessage('interface:pictureReady'));
     activateAudio().catch(() => {});
     show('game-overlay', false);
@@ -9114,7 +9120,8 @@ try {
     });
     pictureThemePending = { ticket, controller };
     const feedback = themeFeedback.begin({
-      message: `Preparing ${next.name || next.id} artwork…`,
+      message: () =>
+        t('interface:picture.preparingArtwork', { name: contentText(next, 'name') || next.id }),
       isCurrent: () => pictureThemePending?.ticket === ticket && !controller.signal.aborted,
     });
     $('theme-preparation-cancel').hidden = false;
@@ -9122,7 +9129,8 @@ try {
       await candidate.ensure(next.id, {
         signal: controller.signal,
         onStatus: (status) => {
-          if (status.status === 'preparing') feedback.update(status);
+          if (status.status === 'preparing')
+            feedback.update({ ...status, message: () => flightPictureStatus(status) });
         },
       });
       if (owner !== flightPictures || ticket !== pictureGeneration || document.hidden) return;
