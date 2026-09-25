@@ -472,5 +472,6 @@
   "productionSources.conflictingOriginalIdentity": "Конфлікт ідентичності оригіналу за шляхом {{path}}",
   "productionSources.byteCountDiffers": "Кількість байтів відрізняється",
   "productionSources.fileGrew": "Файл збільшився під час читання",
-  "productionSources.originalHashDiffers": "Хеш оригіналу відрізняється"
+  "productionSources.originalHashDiffers": "Хеш оригіналу відрізняється",
+  "studio.operationCancelled": "Операцію Студії скасовано."
 }

@@ -2029,5 +2029,15 @@
   "studio.trace.saved_one": "Local tracing revision {{revision}} · {{name}} · {{count}} rectangle. Restore saved tracing after reopening. Geometry still requires Inspect and Apply. Project backups do not contain this picture.",
   "studio.trace.saved_other": "Local tracing revision {{revision}} · {{name}} · {{count}} rectangles. Restore saved tracing after reopening. Geometry still requires Inspect and Apply. Project backups do not contain this picture.",
   "studio.trace.imported_one": "Inspected backup: {{project}} / {{mission}}, {{name}}, {{count}} rectangle. Restore backup tracing explicitly; the exact matching map is required. No geometry has changed.",
-  "studio.trace.imported_other": "Inspected backup: {{project}} / {{mission}}, {{name}}, {{count}} rectangles. Restore backup tracing explicitly; the exact matching map is required. No geometry has changed."
+  "studio.trace.imported_other": "Inspected backup: {{project}} / {{mission}}, {{name}}, {{count}} rectangles. Restore backup tracing explicitly; the exact matching map is required. No geometry has changed.",
+  "studio.operation.stoppedWaiting": "Stopped waiting. The local save is still running; workspace changes stay locked until it finishes.",
+  "studio.operation.cancelledEditsUnchanged": "Cancelled. The workspace and pixel edits are unchanged.",
+  "studio.operation.verifyingAndSaving": "Verifying and saving the local revision…",
+  "studio.operation.stopWaiting": "Stop waiting",
+  "studio.operation.complete": "Studio operation complete.",
+  "studio.operation.cancelledWorkspaceUnchanged": "Cancelled. The workspace is unchanged.",
+  "studio.returnToPictureCreator": "Return to picture creator",
+  "toolLaunch.reload": "Reload this tool",
+  "toolLaunch.stillLoading": "Still loading tool modules. You can wait, reload, or use the page’s Back link.",
+  "toolLaunch.startFailed": "This tool could not start: {{error}}. Reload to try again, or use the page’s Back link."
 }

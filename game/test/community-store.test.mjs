@@ -448,10 +448,10 @@ test('two injected creator accounts publish independently and track queued statu
   await assert.rejects(clients.bob.unlistEdition(`ed_${'c'.repeat(64)}`), /Not found/u);
 });
 
-test('catalog page renders remote metadata only with textContent', async () => {
+test('catalog page renders remote metadata only with safe localized text bindings', async () => {
   const page = await readFile(new URL('../community/page.mjs', import.meta.url), 'utf8');
   assert.doesNotMatch(page, /innerHTML|insertAdjacentHTML|document\.write/u);
-  assert.match(page, /textContent/u);
+  assert.match(page, /localizedText/u);
 });
 
 test('publisher retries the same immutable submission after an interrupted resumable upload', async () => {

@@ -6,6 +6,12 @@
   if (host.RevealLineToolLaunch || !script) return;
   const moduleURL = new URL(script.dataset.module, doc.baseURI).href;
   const statusId = script.dataset.status;
+  const i18n = host.RevealLineI18n;
+  const copy = (key, values, fallback) => (i18n?.message ? i18n.message(key, values) : fallback);
+  const write = (target, value) => {
+    if (i18n?.localizedText) i18n.localizedText(target, value);
+    else target.textContent = value;
+  };
   let attached = false,
     live = true,
     timer = null,
@@ -15,7 +21,7 @@
     const target = doc.getElementById(statusId);
     if (!live || !target) return;
     const label = target.querySelector('.operation-status-label') || target;
-    label.textContent = text;
+    write(label, text);
     label.setAttribute('role', 'status');
     label.setAttribute('aria-live', 'polite');
     target.hidden = false;
@@ -31,7 +37,7 @@
       reload.style.display = 'inline-flex';
       reload.style.alignItems = 'center';
       reload.href = doc.baseURI;
-      reload.textContent = 'Reload this tool';
+      write(reload, copy('tools:toolLaunch.reload', undefined, 'Reload this tool'));
       target.after(reload);
     }
     reload.hidden = false;
@@ -50,7 +56,11 @@
     timer = host.setTimeout(() => {
       if (!attached && live)
         message(
-          'Still loading tool modules. You can wait, reload, or use the page’s Back link.',
+          copy(
+            'tools:toolLaunch.stillLoading',
+            undefined,
+            'Still loading tool modules. You can wait, reload, or use the page’s Back link.',
+          ),
           'busy',
         );
     }, 15000);
@@ -61,7 +71,11 @@
       .catch((error) => {
         host.clearTimeout(timer);
         message(
-          `This tool could not start: ${String(error.message || error).slice(0, 240)}. Reload to try again, or use the page’s Back link.`,
+          copy(
+            'tools:toolLaunch.startFailed',
+            { error: String(error.message || error).slice(0, 240) },
+            `This tool could not start: ${String(error.message || error).slice(0, 240)}. Reload to try again, or use the page’s Back link.`,
+          ),
           'error',
         );
       });

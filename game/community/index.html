@@ -3,53 +3,92 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Community campaigns · RevealLine</title>
+    <link rel="stylesheet" href="../i18n/style.css" />
+    <script src="../vendor/i18next-26.4.2.min.js"></script>
+    <script src="../i18n/catalogs.mjs"></script>
+    <script src="../i18n/bootstrap.mjs"></script>
+    <title data-i18n="interface:community.pageTitle">Community campaigns · RevealLine</title>
     <link rel="stylesheet" href="./community.css" />
     <script type="module" src="./page.mjs"></script>
   </head>
   <body>
+    <div data-language-control></div>
     <header>
-      <a href="../">← RevealLine</a><a href="../creator/">Create a campaign</a>
-      <span>Free community campaigns</span>
+      <a href="../" data-i18n="interface:community.backToRevealLine">← RevealLine</a
+      ><a href="../creator/" data-i18n="interface:community.createCampaign">Create a campaign</a>
+      <span data-i18n="interface:community.freeCampaigns">Free community campaigns</span>
     </header>
     <main>
-      <p class="eyebrow">DISCOVER / INSTALL / PLAY OFFLINE</p>
-      <h1>Community campaigns</h1>
-      <p>
+      <p class="eyebrow" data-i18n="interface:community.eyebrow">
+        DISCOVER / INSTALL / PLAY OFFLINE
+      </p>
+      <h1 data-i18n="interface:community.heading">Community campaigns</h1>
+      <p data-i18n="interface:community.intro">
         Browse automatically validated creator editions. Each update stays separate, so an older
         campaign and its progress remain available until you choose otherwise.
       </p>
-      <p id="status" role="status" aria-live="polite">Loading the public catalog…</p>
-      <section class="panel controls" aria-label="Catalog filters">
-        <label>Search <input id="search" type="search" placeholder="Title or description" /></label>
+      <p
+        id="status"
+        role="status"
+        aria-live="polite"
+        data-i18n="interface:community.loadingCatalog"
+      >
+        Loading the public catalog…
+      </p>
+      <section
+        class="panel controls"
+        aria-label="Catalog filters"
+        data-i18n-aria-label="interface:community.catalogFilters"
+      >
         <label
-          >Show
+          ><span data-i18n="interface:community.search">Search</span>
+          <input
+            id="search"
+            type="search"
+            placeholder="Title or description"
+            data-i18n-placeholder="interface:community.titleOrDescription"
+        /></label>
+        <label
+          ><span data-i18n="interface:community.show">Show</span>
           <select id="filter">
-            <option value="all">All campaigns</option>
-            <option value="installed">Installed</option>
-            <option value="available">Available to install</option>
+            <option value="all" data-i18n="interface:community.allCampaigns">All campaigns</option>
+            <option value="installed" data-i18n="common:status.installed">Installed</option>
+            <option value="available" data-i18n="interface:community.availableToInstall">
+              Available to install
+            </option>
           </select></label
         >
-        <button id="refresh" type="button">Refresh</button>
+        <button id="refresh" type="button" data-i18n="interface:community.refresh">Refresh</button>
       </section>
-      <section id="catalog" class="catalog" aria-label="Community catalog"></section>
+      <section
+        id="catalog"
+        class="catalog"
+        aria-label="Community catalog"
+        data-i18n-aria-label="interface:community.catalog"
+      ></section>
       <p class="pager">
-        <button id="more" type="button" hidden>Load more campaigns</button>
+        <button id="more" type="button" hidden data-i18n="interface:community.loadMore">
+          Load more campaigns
+        </button>
       </p>
       <section class="panel" aria-labelledby="account-heading">
-        <h2 id="account-heading">Creator account</h2>
-        <p>
+        <h2 id="account-heading" data-i18n="interface:community.creatorAccount">Creator account</h2>
+        <p data-i18n="interface:community.accountIntro">
           Creation, downloads, and public browsing stay account-free. Sign in only to publish or
           manage your own editions.
         </p>
         <div id="account-signed-out">
           <div class="account-fields">
-            <label>Name <input id="account-name" autocomplete="name" maxlength="160" /></label>
             <label
-              >Email <input id="account-email" type="email" autocomplete="email" maxlength="320"
+              ><span data-i18n="interface:community.name">Name</span>
+              <input id="account-name" autocomplete="name" maxlength="160"
             /></label>
             <label
-              >Password
+              ><span data-i18n="interface:community.email">Email</span>
+              <input id="account-email" type="email" autocomplete="email" maxlength="320"
+            /></label>
+            <label
+              ><span data-i18n="interface:community.password">Password</span>
               <input
                 id="account-password"
                 type="password"
@@ -60,34 +99,77 @@
             </label>
           </div>
           <div class="actions">
-            <button id="account-sign-in" type="button">Sign in</button>
-            <button id="account-sign-up" class="secondary" type="button">Create account</button>
+            <button id="account-sign-in" type="button" data-i18n="interface:community.signIn">
+              Sign in
+            </button>
+            <button
+              id="account-sign-up"
+              class="secondary"
+              type="button"
+              data-i18n="interface:community.createAccount"
+            >
+              Create account
+            </button>
           </div>
         </div>
         <div id="account-signed-in" class="actions" hidden>
           <p id="account-identity"></p>
-          <button id="account-sign-out" class="secondary" type="button">Sign out</button>
+          <button
+            id="account-sign-out"
+            class="secondary"
+            type="button"
+            data-i18n="interface:community.signOut"
+          >
+            Sign out
+          </button>
         </div>
         <p id="account-status" class="muted" role="status" aria-live="polite">
-          Checking creator session…
+          <span data-i18n="interface:community.checkingSession">Checking creator session…</span>
         </p>
       </section>
       <details class="panel" id="publish-panel">
-        <summary>Publish an approved pack</summary>
-        <p>
+        <summary data-i18n="interface:community.publishApprovedPack">
+          Publish an approved pack
+        </summary>
+        <p data-i18n="interface:community.publishIntro">
           Choose an already approved .rlpack. The resumable upload can continue from the server’s
           confirmed offset after an interrupted connection.
         </p>
-        <label>Approved pack <input id="publish-file" type="file" accept=".rlpack" /></label>
-        <label>Title <input id="publish-title" maxlength="120" /></label>
-        <label>Slug <input id="publish-slug" maxlength="64" /></label>
-        <label>Version <input id="publish-version" value="1.0.0" maxlength="64" /></label>
         <label
-          >Description
+          ><span data-i18n="interface:community.approvedPack">Approved pack</span>
+          <input id="publish-file" type="file" accept=".rlpack"
+        /></label>
+        <label
+          ><span data-i18n="interface:community.title">Title</span>
+          <input id="publish-title" maxlength="120"
+        /></label>
+        <label
+          ><span data-i18n="interface:community.slug">Slug</span>
+          <input id="publish-slug" maxlength="64"
+        /></label>
+        <label
+          ><span data-i18n="interface:community.version">Version</span>
+          <input id="publish-version" value="1.0.0" maxlength="64"
+        /></label>
+        <label
+          ><span data-i18n="interface:community.description">Description</span>
           <textarea id="publish-description" maxlength="2000"></textarea>
         </label>
-        <button id="publish" type="button" disabled>Upload for automatic validation</button>
-        <button id="publish-unlist" class="secondary" type="button" hidden>
+        <button
+          id="publish"
+          type="button"
+          disabled
+          data-i18n="interface:community.uploadForValidation"
+        >
+          Upload for automatic validation
+        </button>
+        <button
+          id="publish-unlist"
+          class="secondary"
+          type="button"
+          hidden
+          data-i18n="interface:community.unlistPublication"
+        >
           Unlist this publication
         </button>
         <p id="publish-status" role="status" aria-live="polite"></p>
