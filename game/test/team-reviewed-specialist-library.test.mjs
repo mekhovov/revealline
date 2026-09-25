@@ -112,7 +112,10 @@ test('the explicit reviewed route owns a separate profile and leaves ordinary Te
       'owned-trail-impact-1',
     );
     assert.equal(isMissionLibrarySourceJourney(TEAM_COMPLETE_SPECIALIST_PROFILE_KEY, 'team'), true);
-    assert.equal(isMissionLibrarySourceJourney(TEAM_COMPLETE_SPECIALIST_PROFILE_KEY, 'solo'), false);
+    assert.equal(
+      isMissionLibrarySourceJourney(TEAM_COMPLETE_SPECIALIST_PROFILE_KEY, 'solo'),
+      false,
+    );
   } finally {
     reviewed.candidateProgress.dispose();
     reviewed.candidatePreferences.dispose();
@@ -136,7 +139,9 @@ test('the reviewed selector lists twelve exact missions and launches its selecte
     }),
   ]);
   assert.equal(library.missions.length, 12);
-  assert(library.missions.every(({ editionId }) => editionId === TEAM_COMPLETE_SPECIALIST_PROFILE_KEY));
+  assert(
+    library.missions.every(({ editionId }) => editionId === TEAM_COMPLETE_SPECIALIST_PROFILE_KEY),
+  );
   const mission = journey.catalog.missions.find(({ levelId }) => levelId === 'twin-depots');
   const selected = library.missions.find(({ runtimeId }) => runtimeId === mission.id);
   assert(selected);
@@ -158,10 +163,7 @@ test('the reviewed selector lists twelve exact missions and launches its selecte
     ({ runtimeId }) => runtimeId === originalMission.id,
   );
   assert.notEqual(original.id, selected.id);
-  assert.equal(
-    originalJourney.row(originalMission).level.revision,
-    'owned-trail-impact-1',
-  );
+  assert.equal(originalJourney.row(originalMission).level.revision, 'owned-trail-impact-1');
 });
 
 test('the reviewed first mission owns its exact picture lease', async () => {
