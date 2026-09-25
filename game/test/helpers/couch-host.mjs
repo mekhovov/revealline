@@ -273,7 +273,7 @@ export async function couchPage(
       readError = next;
     },
     tick: () => renders[0].tick,
-    state: () => $('racer-state-0').textContent,
+    state: () => $('racer-state-0').dataset.state,
     checkpoint: () => renders.map((run) => authoritativeCheckpoint(run)),
     focus: (id) => $(id).focus(),
     editors: () => doc.querySelectorAll('.controller-editor'),
