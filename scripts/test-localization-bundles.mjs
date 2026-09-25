@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import vm from 'node:vm';
+import { readFile } from 'node:fs/promises';
 import {
   compactContentRegistry,
   catalogBundle,
@@ -82,4 +83,35 @@ test('compact content registry preserves identity and original-text guards while
   assert.notEqual(result.first, result.different);
   assert.doesNotMatch(source, /source\.json/);
   assert.equal(source.split('Original title').length, 2);
+});
+
+test('the bundled catalog decoder is pinned, synchronous and isolated from host module registries', async () => {
+  assert.equal(
+    await readFile(new URL('../game/vendor/lz-string-1.5.0.min.js', import.meta.url), 'utf8'),
+    await readFile(
+      new URL('../node_modules/lz-string/libs/lz-string.min.js', import.meta.url),
+      'utf8',
+    ),
+  );
+  assert.equal(
+    await readFile(new URL('../game/vendor/LZ-STRING-LICENSE.txt', import.meta.url), 'utf8'),
+    await readFile(new URL('../node_modules/lz-string/LICENSE', import.meta.url), 'utf8'),
+  );
+  const define = () => assert.fail('Catalog loading must not register an AMD module.');
+  define.amd = true;
+  const scope = vm.createContext({
+    module: { exports: 'unchanged' },
+    define,
+    angular: { module: () => assert.fail('Catalog loading must not register an Angular module.') },
+  });
+  const resources = {
+    en: { common: { text: '\u0000 Ґ Є І Ї 🛰️ \ud800 end' } },
+    uk: { common: {} },
+  };
+  const bundle = catalogBundle(resources);
+  vm.runInContext(bundle, scope);
+  assert.deepEqual(JSON.parse(JSON.stringify(scope.RevealLineTranslations)), resources);
+  assert.equal(scope.module.exports, 'unchanged');
+  assert.equal(scope.LZString, undefined);
+  assert.match(bundle, /Copyright \(c\) 2013 pieroxy/);
 });

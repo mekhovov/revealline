@@ -211,5 +211,6 @@
   "page.fontNotices": "Піксельний акцентний шрифт: Tiny5 від Tiny5 Project Authors і дизайнера Stefan Schmidt ([[slot0]]), розміщений локально без змін, із підтримкою кирилиці й українських літер; [[slot1]]. Додатковий акцентний шрифт: Handjet від Handjet Project Authors ([[slot2]]), із насиченістю 600, формою елемента 2 і сіткою елемента 1. Шрифт інтерфейсу: Exo 2 від Exo 2 Project Authors ([[slot3]]), зі збереженими насиченостями 400–600. Числовий шрифт: IBM Plex Mono від IBM Corp. ([[slot4]]), насиченість 500. Допоміжні файли WOFF2 зберігають повну підтримку англійських і українських літер. [[slot5]].",
   "page.fontSource": "запис джерела й контрольної суми",
   "page.supportingFontSources": "Версії джерел допоміжних шрифтів, спосіб збірки й контрольні суми файлів",
-  "page.opening": "Відкриваємо Reveal / Line…"
+  "page.opening": "Відкриваємо Reveal / Line…",
+  "page.catalogCompressionNotice": "Каталоги перекладів використовують lz-string від pieroxy на умовах [[license]]."
 }
