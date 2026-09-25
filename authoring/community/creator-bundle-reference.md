@@ -20,10 +20,17 @@ Generation stores a versioned template, bounded variant, seed, runtime seed, mis
 Generated Team qualification uses a separate cooperative registry and portable
 JSON boundary. It does not change image/video `.rlpack` semantics, and the
 installed Custom player does not adopt the Team artifact. The production Team
-file picker can open and reverify the portable campaign for deliberate play;
-installed-library discovery and Team progress remain separate future work.
+file picker reverifies and installs the exact portable bytes under their SHA-256
+edition identity. A later browser visit discovers every immutable edition and
+replays the complete qualification before deliberate launch. Legal clears are
+partitioned by that edition and shown in the Team library.
 See [Phase 7 generated Team qualification](phase7-team-qualification.md) for
 its two-seat contribution, Retry, continuation and transfer contracts.
+
+Team editions and their completion receipts use a bounded dedicated IndexedDB
+database. Storage failure keeps the verified campaign playable for the current
+visit. This first installed continuation does not yet retain unfinished Team
+attempts, package creator media, or grant a durable picture reward.
 
 The full inventory, immutable manifest reference and payloads are committed in one transaction of the existing managed-media database, using retained generic-byte references. This adds no storage authority or database upgrade beyond the current DB5 capability. Existing still, story and audio history remains intact. The installer makes no cross-store atomicity claim; draft/player operations are separate actions. Future multi-domain operations must add a recovery journal.
 

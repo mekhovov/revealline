@@ -55,7 +55,10 @@ action before launching the first arena.
 This addition does not change image/video `.rlpack` runtime semantics, and the
 installed Custom player does not relabel Team campaigns as Solo content. The
 portable Team artifact has its own explicit API and MIME type and can launch
-through production Couch file intake. Persistent installed-library discovery,
-picture rewards, saved progress and creator media packaging remain integration
-work. Automated feasibility is not human balance, first-attempt success,
+through production Couch file intake. Exact portable bytes install under a
+SHA-256 edition identity. Fresh library visits discover immutable installed
+editions, replay their qualification before launch, and retain legal clear
+receipts within the exact edition. Unfinished-attempt recovery, durable picture
+rewards and creator media packaging remain integration work. Automated
+feasibility is not human balance, first-attempt success,
 physical-controller certification or mobile certification.

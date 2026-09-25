@@ -60,8 +60,10 @@ community service and completing its PostgreSQL/container restart, database/blob
 two-account browser, proxy interruption, TLS/domain/secrets, rate-limit, report-operations, and
 account-recovery acceptance.
 
-Persistent installed Team discovery, Team saves/progress, Team picture rewards, and Team creator
-media packaging remain outside this release. Team direct file launch is the supported path.
+Verified `.rlteamcampaign` bytes install under their SHA-256 edition identity. Fresh Team library
+visits discover each immutable edition, replay its qualification before launch, and retain legal
+clear receipts per edition. Unfinished Team-attempt recovery, durable Team picture rewards, and
+Team creator media packaging remain outside this release.
 
 Audio trimming, WebM physical trimming, broader conversion, resizing, and compression remain
 unsupported. Firefox, Safari, and physical mobile media qualification remain unclaimed.
