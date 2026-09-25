@@ -59,7 +59,15 @@ import { createTeamDepotSpatialCandidates } from '../content-design/team-depot-s
 import { compileContentProject } from '../content-design/project.mjs';
 import { prepareContentPreview } from '../content-design/preview.mjs';
 import { paintContentMap } from '../content-design/map-view.mjs';
-import { studioContentText, bindStudioPreviewCopy, studioGameplayText } from './preview-copy.mjs';
+import { bindStudioPreviewCopy, studioGameplayText } from './preview-copy.mjs';
+import {
+  studioItemCaption,
+  studioStructureSummary,
+  studioStructureOutline,
+  studioRemovalText,
+  studioStructureResult,
+  studioDiagnosticText,
+} from './structure-copy.mjs';
 import { loadPreviewTheme } from '../content-design/preview-loader.mjs';
 import { loadPreviewArtwork } from '../content-design/assets.mjs';
 import { createContentDraftBackend, forkMissionMap } from '../content-design/drafts.mjs';
@@ -433,7 +441,7 @@ function inspectBoard(trailCells = []) {
   $('diagnostics').replaceChildren(
     ...manifest.diagnostics.map((item) => {
       const li = document.createElement('li');
-      li.textContent = `${item.severity}: ${item.code}${item.message ? ` — ${item.message}` : ''}`;
+      localizedText(li, () => studioDiagnosticText(item, manifest));
       return li;
     }),
   );
@@ -441,7 +449,7 @@ function inspectBoard(trailCells = []) {
   $('export-team').hidden = !mission.modes.includes('team');
   $('team-sequence-tools').hidden = !mission.modes.includes('team');
   const selectedTeamCampaign = $('team-test-campaign').value;
-  const teamDraft = session.current();
+  const teamDraft = project;
   const activeTeamIds = new Set(
     teamDraft.missions
       .filter((item) => !item.archived && item.modes.includes('team'))
@@ -449,14 +457,18 @@ function inspectBoard(trailCells = []) {
   );
   $('team-test-campaign').replaceChildren(
     ...[
-      { id: '', name: 'Choose a campaign' },
+      { id: '', name: '' },
       ...teamDraft.campaigns.filter(
         (campaign) => !campaign.archived && campaign.missionIds.some((id) => activeTeamIds.has(id)),
       ),
     ].map((campaign) => {
       const option = document.createElement('option');
       option.value = campaign.id;
-      option.textContent = campaign.name;
+      localizedText(option, () =>
+        campaign.id
+          ? studioItemCaption(project, campaign, { identity: false })
+          : t('tools:studio.structure.chooseCampaign'),
+      );
       return option;
     }),
   );
@@ -480,17 +492,13 @@ function render(selected = $('mission').value) {
       const option = document.createElement('option');
       option.value = m.id;
       localizedText(option, () =>
-        t(m.archived ? 'tools:studio.mission.archivedOption' : 'tools:studio.mission.option', {
-          name: studioContentText(project, m, 'name'),
-          identity: nameCounts.get(m.name) > 1 ? ` · ${m.id}` : '',
-        }),
+        studioItemCaption(project, m, { identity: nameCounts.get(m.name) > 1 }),
       );
       return option;
     }),
   );
   if (project.missions.some((m) => m.id === selected)) $('mission').value = selected;
-  $('structure').textContent =
-    `${project.packs.length} packs / ${project.campaigns.length} campaigns / ${project.missions.length} missions. ${project.campaigns.map((c) => `${c.name}: ${c.missionIds.length}`).join(' · ')}`;
+  localizedText($('structure'), () => studioStructureSummary(project));
   $('source').value = session.export();
   sourceChanged = false;
   inspected = null;
@@ -505,13 +513,12 @@ function render(selected = $('mission').value) {
   );
   $('undo').disabled = !session.canUndo();
   $('redo').disabled = !session.canRedo();
-  $('structure-result').textContent =
-    'Current draft structure is shown below. All edits are local candidates; nothing is published.';
+  localizedText($('structure-result'), localizedMessage('tools:studio.structure.current'));
   syncStructure();
   inspectBoard();
 }
 function syncStructure() {
-  const project = session.current(),
+  const project = freezeDesign(session.current()),
     kind = $('item-kind').value,
     action = $('item-action').value;
   const creating = action === 'create' || action === 'duplicate';
@@ -521,7 +528,7 @@ function syncStructure() {
       ...[...(blank ? [{ id: '', name: blank }] : []), ...rows].map((row) => {
         const option = document.createElement('option');
         option.value = row.id;
-        option.textContent = `${row.name}${row.id ? ` · ${row.id}` : ''}${row.archived ? ' · Archived' : ''}`;
+        localizedText(option, () => (row.id ? studioItemCaption(project, row) : t(blank)));
         return option;
       }),
     );
@@ -531,7 +538,7 @@ function syncStructure() {
   fill(
     'item-parent',
     kind === 'mission' ? project.campaigns : kind === 'campaign' ? project.packs : [],
-    'Unassigned',
+    'tools:studio.structure.unassigned',
   );
   for (const [id, visible] of [
     ['item-target-row', action !== 'create'],
@@ -561,31 +568,8 @@ function syncStructure() {
       ? inspectContentRemoval(project, kind, $('item-target').value)
       : null;
   $('item-dependencies').hidden = action !== 'delete';
-  $('item-dependencies').textContent = removal
-    ? removal.deletable
-      ? `Delete ${removal.name} (${removal.id}) from this draft only. Maps, assets and saved checkpoints stay intact. Type the exact ID to confirm; Undo restores the item.`
-      : `Cannot delete ${removal.name}. Remove memberships first: ${removal.dependencies.map((entry) => `${entry.kind} ${entry.id} (${entry.relation})`).join(', ')}. No automatic cascade.`
-    : 'Choose an item to inspect its dependencies.';
-  $('structure-order').textContent = project.packs
-    .map(
-      (pack, index) =>
-        `${index + 1}. ${pack.name}${pack.archived ? ' [Archived]' : ''}: ${
-          pack.campaignIds
-            .map((id) => {
-              const campaign = project.campaigns.find((entry) => entry.id === id);
-              return `${campaign.name} · band ${campaign.band}${campaign.archived ? ' [Archived]' : ''} [${
-                campaign.missionIds
-                  .map((missionId) => {
-                    const mission = project.missions.find((entry) => entry.id === missionId);
-                    return `${mission.name}${mission.archived ? ' [Archived]' : ''}`;
-                  })
-                  .join(' → ') || 'empty'
-              }]`;
-            })
-            .join(' / ') || 'empty'
-        }`,
-    )
-    .join('\n');
+  localizedText($('item-dependencies'), () => studioRemovalText(project, removal));
+  localizedText($('structure-order'), () => studioStructureOutline(project));
   $('item-apply').disabled =
     (action === 'set-band' && kind !== 'campaign') ||
     (['place', 'detach'].includes(action) && kind === 'pack') ||
@@ -632,8 +616,7 @@ $('structure-form').onsubmit = guarded((event) => {
   $('item-confirm').value = '';
   render(kind === 'mission' ? command.id : $('mission').value);
   $('item-target').value = command.id;
-  $('structure-result').textContent =
-    `${action}: ${kind} ${command.id}. Draft only; Undo restores the previous structure.`;
+  localizedText($('structure-result'), () => studioStructureResult(action, kind, command.id));
   queueSave();
 });
 function inspectSource({ head, selectedRevision } = {}) {
