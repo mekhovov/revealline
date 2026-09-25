@@ -21,7 +21,13 @@ The service suite covers:
 - idempotent queueing, restart-safe expired leases and stale-worker commit rejection;
 - catalog cursor/search behavior, anonymous report deduplication, owner/admin unlisting and removal
   from public discovery;
-- disk blob cleanup after failed writes and the explicit S3 command boundary;
+- PostgreSQL-backed fixed-window admission for authentication, reports, submissions and upload
+  bytes, including replica-shared atomic counters, immutable retry reservations and exact
+  `Retry-After` responses;
+- bounded, privacy-preserving administrator report queues with idempotent audited resolution;
+- atomic PostgreSQL report deduplication under concurrent identical requests;
+- disk blob cleanup after failed writes, same-size corruption repair, exact download-time SHA-256
+  authentication, and the explicit S3 command boundary;
 - an offline recovery snapshot with a PostgreSQL dump, sorted content-addressed blob inventory,
   exact hashes, pre-restore verification, occupied-target refusal and staged blob publication after
   the database restore succeeds. A restore journal resumes the exact snapshot across interruption
@@ -36,6 +42,8 @@ npm test
 npm run lint
 npm run format:check
 ```
+
+The current combined source passes all **33/33** community-service checks.
 
 The maintained tus package is used as documented in its
 [Fastify integration](https://github.com/tus/tus-node-server/blob/main/packages/server/README.md),
@@ -57,6 +65,7 @@ The phase is not accepted as a production launch until an operator selects infra
 passes a two-user browser run, interrupted upload through the deployed proxy, corrupt-package
 rejection, process restart while a job is leased, database/blob backup and restore, and automatic
 catalog listing from restored state. A multi-API deployment also needs a shared tus locker and
-incomplete-upload expiration. Rate limits, report triage, stronger media-worker isolation,
-monitoring, production S3 wiring, domain, TLS and mail remain deployment work. No AWS or restore
-rehearsal is claimed by this source delivery.
+incomplete-upload expiration. Edge timeouts and connection controls, exact trusted-proxy
+deployment, stronger media-worker isolation, monitoring, production S3 wiring, domain, TLS and
+mail/account recovery remain deployment work. No AWS or live PostgreSQL restore rehearsal is
+claimed by this source delivery.
