@@ -204,5 +204,8 @@
   "controls.promptHangar": "{{button}}: ангар.",
   "controls.promptMissions": "{{button}}: місії.",
   "controls.promptBoost": "{{button}}: прискорення.",
-  "actions.playback": "Відтворити"
+  "actions.playback": "Відтворити",
+  "export.requested": "Завантаження запитано. Перевір завантаження або вікно збереження; JSON залишається тут доступним для копіювання.",
+  "export.shared": "Передано до обраного застосунку. Перевір файл у місці призначення.",
+  "export.cancelled": "Передавання закрито без підтвердженого місця призначення."
 }

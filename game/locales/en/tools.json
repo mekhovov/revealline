@@ -1892,5 +1892,14 @@
   "studio.encounter.removed": "Removed the Sentinel and encounter links from this draft. Objectives, gates and geometry remain; inspect empty-region fill and play before publishing. Undo restores the encounter.",
   "studio.encounter.applied": "Applied the shared Sentinel recipe, actor and shield links atomically. All supported presets and modes compiled. Preview the capture order before publishing; Undo is available.",
   "studio.encounter.confirmRemove": "Confirm remove Sentinel",
-  "studio.encounter.removeAgain": "Activate Remove again to remove the boss and encounter links. Objectives and map geometry remain. This may make a region auto-fill; preview again. Undo remains available."
+  "studio.encounter.removeAgain": "Activate Remove again to remove the boss and encounter links. Objectives and map geometry remain. This may make a region auto-fill; preview again. Undo remains available.",
+  "studio.preview.preparing": "Preparing the exact candidate…",
+  "studio.preview.loading": "Loading {{name}} · {{difficulty}}. Frozen candidate; later edits do not change this run.",
+  "studio.preview.loadFailed": "{{message}} Close preview and retry. Your draft is intact.",
+  "studio.preview.ready": "Engine ready. Practice only; no campaign awards. Close preview to return to your draft.",
+  "studio.preview.failed": "Preview could not start. Check its recovery controls, or close and retry. Your draft is intact.",
+  "studio.preview.slow": "Preview is taking longer than expected. Still checking; you can close and retry. Your draft is intact.",
+  "studio.export.teamMission": "{{message}} Geometry/rules only; Team preview scenery is not authored mission artwork. Your draft is unchanged.",
+  "studio.export.teamCampaign_one": "{{message}} {{count}} ordered Team test mission; use Next after each clear. Geometry/rules only, not authored mission artwork or official progress. Your draft is unchanged.",
+  "studio.export.teamCampaign_other": "{{message}} {{count}} ordered Team test missions; use Next after each clear. Geometry/rules only, not authored mission artwork or official progress. Your draft is unchanged."
 }

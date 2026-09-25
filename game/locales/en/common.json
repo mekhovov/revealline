@@ -188,5 +188,8 @@
   "controls.promptHangar": "{{button}}: hangar.",
   "controls.promptMissions": "{{button}}: missions.",
   "controls.promptBoost": "{{button}}: boost.",
-  "actions.playback": "Play"
+  "actions.playback": "Play",
+  "export.requested": "Download requested. Check your downloads or Save dialog; the JSON remains available here to copy.",
+  "export.shared": "Shared with the selected app. Check the destination for your file.",
+  "export.cancelled": "Sharing closed without a confirmed destination."
 }
