@@ -358,7 +358,7 @@ export function attachVideoPosterWorkshop({
       if (!current.current() || source !== selectedSource) return false;
       trimCapability = capability;
       $('trim-support').textContent = capability.supported
-        ? `${capability.detail || `Physical trim adapter available for ${capability.formats.join(', ')}.`} Output is downloadable only after changed-byte and decoded-output verification.`
+        ? `${capability.detail || `Physical trim adapter available for ${capability.formats.join(', ')}.`} Output is downloadable only after changed-byte, decoded-output and start/end visual verification.`
         : `${capability.reason} Playback range remains available and keeps the complete original.`;
       setStatus(
         capability.supported
@@ -409,9 +409,12 @@ export function attachVideoPosterWorkshop({
       $('trim-evidence').textContent = [
         `Output SHA-256: ${transformed.evidence.outputSha256}`,
         `Decoded output: ${transformed.info.width} × ${transformed.info.height} · ${transformed.info.durationSeconds} s · ${transformed.info.bytes.toLocaleString()} bytes`,
+        `Visual boundaries: start error ${transformed.evidence.visual.start.meanAbsoluteRgbError} · end error ${transformed.evidence.visual.end.meanAbsoluteRgbError} (${transformed.evidence.visual.method}).`,
         `Audio synchronization: ${transformed.evidence.audioSync.status}. ${transformed.evidence.audioSync.note}`,
       ].join('\n');
-      setStatus('Physical trim produced different bytes and passed decoded output verification.');
+      setStatus(
+        'Physical trim produced different bytes and passed decoded output and start/end visual verification.',
+      );
       activity?.finish({ message: status.textContent });
       activity = null;
       task = null;
