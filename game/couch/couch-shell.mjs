@@ -65,6 +65,7 @@ export function createCouchShell({
   const libraryLabel = isJourney ? 'Legacy library' : 'New Journey';
   $('race-library-switch').setAttribute('href', libraryHref);
   $('race-library-switch').textContent = onMissions ? 'All missions' : libraryLabel;
+  doc.body.classList.toggle('unified-missions', Boolean(onMissions));
   if (authoredDestinations) {
     $('race-solo-return').setAttribute('href', authoredDestinations.solo);
     $('race-coop').setAttribute('href', authoredDestinations.team);
@@ -502,7 +503,9 @@ export function createCouchShell({
     setText('race-summary', summary);
     setText(
       'race-format-note',
-      `${series ? 'First to two round wins.' : 'One race. Choose First to two in Race setup for a longer match.'} Couch races do not change your solo progress.`,
+      series
+        ? 'First to two · Solo progress stays separate'
+        : 'One race · Longer matches are in Match options · Solo progress stays separate',
     );
     setText(
       'race-format-help',
@@ -526,7 +529,7 @@ export function createCouchShell({
     $('race-pause').disabled = status !== 'running' && screen !== 'review';
     // Do not replace the native click target's content on every flight frame.
     setText('race-pause', screen === 'review' ? 'Results' : 'Pause');
-    $('race-focus').textContent = status === 'ready' ? 'Race setup' : 'New match · setup';
+    $('race-focus').textContent = status === 'ready' ? 'Advanced setup' : 'New match options';
     $('race-class-field').hidden = !equipment[0].action;
     $('race-class').disabled = !equipment[0].action || status !== 'ready';
     for (const id of ['race-level', 'race-theme', 'race-turn', 'race-time', 'race-format'])
