@@ -4,6 +4,7 @@ import { readFile } from 'node:fs/promises';
 import { Document } from './helpers/couch-dom.mjs';
 import { mountCouch } from './helpers/mount-html.mjs';
 import { createCandidateLibrary } from '../studio/candidate-library.mjs';
+import { getLocale, setLocale, t } from '../i18n/index.mjs';
 
 const html = await readFile(new URL('../studio/index.html', import.meta.url), 'utf8');
 const controls = [
@@ -52,6 +53,116 @@ function setup() {
   };
   return { document, $, api, entries, visible, search };
 }
+
+for (const initialLocale of ['en', 'uk'])
+  test(`candidate search includes both catalog languages from ${initialLocale} startup and preserves its controls`, () => {
+    const previous = getLocale();
+    try {
+      setLocale(initialLocale, { persist: false });
+      const { document, $, visible, search, entries } = setup();
+      for (const [query, id] of [
+        ['внутрішнього приймача', 'sentinel-spatial'],
+        ['inner receiver', 'sentinel-spatial'],
+        ['Культурні з’єднання Горизонту', 'whole-variety'],
+        ['whole-spatial-v11', 'whole-variety'],
+      ]) {
+        search(query);
+        assert.equal(visible().length, 1, query);
+        assert(visible()[0].querySelector('#' + id), query);
+      }
+      const accepted = visible()[0];
+      const options = [...$('whole-variety-edition').options];
+      $('whole-variety-edition').value = 'horizon-cultural-joins-1';
+      $('source').value = '{"unapplied":"Україна"}';
+      $('project-id').value = 'custom-project';
+      $('checkpoint').value = '7';
+      $('apply').disabled = true;
+      $('candidate-search').focus();
+      $('candidate-search').selectionStart = 1;
+      $('candidate-search').selectionEnd = 3;
+      $('candidate-library').scrollTop = 47;
+      for (const locale of ['uk', 'en', 'uk', 'en']) {
+        setLocale(locale, { persist: false });
+        assert.equal(visible()[0], accepted);
+        assert.equal(visible().length, 1);
+        assert.deepEqual(
+          [...$('candidate-library').querySelectorAll('[data-library-entry]')],
+          entries,
+        );
+        assert.equal(
+          $('candidate-count').textContent,
+          locale === 'uk'
+            ? 'Показано 1 запис із 31. Деякі записи мають спільні елементи вибору версії.'
+            : '1 of 31 entries shown. Some entries share edition controls.',
+        );
+        assert.equal($('candidate-search').value, 'whole-spatial-v11');
+        assert.equal($('source').value, '{"unapplied":"Україна"}');
+        assert.equal($('project-id').value, 'custom-project');
+        assert.equal($('checkpoint').value, '7');
+        assert.equal($('apply').disabled, true);
+        assert.equal(document.activeElement, $('candidate-search'));
+        assert.equal($('candidate-search').selectionStart, 1);
+        assert.equal($('candidate-search').selectionEnd, 3);
+        assert.equal($('candidate-library').scrollTop, 47);
+        assert.equal($('whole-variety-edition').value, 'horizon-cultural-joins-1');
+        assert.deepEqual([...$('whole-variety-edition').options], options);
+      }
+    } finally {
+      setLocale(previous, { persist: false });
+    }
+  });
+
+test('translated inspection feedback retains authored names and cannot revive a cleared inspection', () => {
+  const previous = getLocale();
+  const { $, api } = setup();
+  try {
+    api.reportInspection(() =>
+      t('tools:studio.library.inspected', { name: '<my draft>', count: 2 }),
+    );
+    setLocale('uk', { persist: false });
+    assert.equal(
+      $('candidate-inspection-status').textContent,
+      '<my draft>: перевірено 2 місії. Застосовану чернетку не змінено. Переглянь джерело перед застосуванням.',
+    );
+    assert.equal($('candidate-inspection-status').children.length, 0);
+    setLocale('en', { persist: false });
+    assert.match($('candidate-inspection-status').textContent, /^<my draft>: 2 missions inspected/);
+    api.clearInspection();
+    setLocale('uk', { persist: false });
+    assert.equal($('candidate-inspection-status').textContent, '');
+    assert.equal($('candidate-inspection').hidden, true);
+  } finally {
+    setLocale(previous, { persist: false });
+  }
+});
+
+test('Ukrainian candidate and inspection counters use the correct plural forms', () => {
+  const previous = getLocale();
+  try {
+    setLocale('uk', { persist: false });
+    for (const [count, display, entry, mission] of [
+      [0, '0', 'записів', 'місій'],
+      [1, '1', 'запис', 'місію'],
+      [2, '2', 'записи', 'місії'],
+      [5, '5', 'записів', 'місій'],
+      [11, '11', 'записів', 'місій'],
+      [21, '21', 'запис', 'місію'],
+      [22, '22', 'записи', 'місії'],
+      [1.5, '1,5', 'запису', 'місії'],
+    ]) {
+      assert.equal(
+        t('tools:studio.library.matches', { count, total: 31 }),
+        `Показано ${display} ${entry} із 31. Деякі записи мають спільні елементи вибору версії.`,
+      );
+      assert.equal(
+        t('tools:studio.library.inspected', { count, name: 'Тест' }),
+        `Тест: перевірено ${display} ${mission}. Застосовану чернетку не змінено. Переглянь джерело перед застосуванням.`,
+      );
+    }
+  } finally {
+    setLocale(previous, { persist: false });
+  }
+});
 
 test('closed library preserves every static Inspect action, paired edition controls and workbench actions', () => {
   const { document, $, entries } = setup();
