@@ -7,6 +7,7 @@ import {
   prepareCreatorTeamCampaign,
 } from '../creator/team.mjs';
 import { createInstalledTeamCampaignStore } from '../creator/team-installed.mjs';
+import { getLocale, setLocale } from '../i18n/index.mjs';
 import { page } from './helpers/coop-host.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
 import { activateMissionCard, openMissionLibrary } from './helpers/library-selection.mjs';
@@ -45,6 +46,11 @@ test('production Team import installs the exact creator edition while keeping St
       nativeFocus: true,
       nativeVisibility: true,
       beforeImport: browserFixture(memory),
+      presentation: {
+        load: ({ snapshot }) => {
+          snapshot.resolved.theme.revision = 79;
+        },
+      },
     });
   f.$('coop-pack-file').closest('details').open = true;
   f.$('coop-pack-file').files = [portable];
@@ -75,6 +81,9 @@ test('production Team import installs the exact creator edition while keeping St
 });
 
 test('a fresh Team host discovers and launches one exact installed edition', async (t) => {
+  const originalLocale = getLocale();
+  t.after(() => setLocale(originalLocale, { persist: false }));
+  setLocale('en', { persist: false });
   const memory = managedIndexedDB(),
     prepared = await campaign('team-host-reopen', 22),
     installer = createInstalledTeamCampaignStore({
@@ -86,6 +95,11 @@ test('a fresh Team host discovers and launches one exact installed edition', asy
     nativeFocus: true,
     nativeVisibility: true,
     beforeImport: browserFixture(memory),
+    presentation: {
+      load: ({ snapshot }) => {
+        snapshot.resolved.theme.revision = 79;
+      },
+    },
   });
   await openMissionLibrary(f, 'coop-discovery-open');
   const installed = [...f.$('journey-cards').children].filter((card) => {
@@ -94,6 +108,15 @@ test('a fresh Team host discovers and launches one exact installed edition', asy
   });
   assert.equal(installed.length, prepared.pack.levels.length);
   assert.match(installed[0].textContent, /Not cleared in this edition/);
+  installed[0].focus();
+  const selectedId = installed[0].dataset.missionId;
+  setLocale('uk', { persist: false });
+  assert.equal(f.doc.activeElement, installed[0]);
+  assert.equal(installed[0].dataset.missionId, selectedId);
+  assert.match(installed[0].textContent, /У цьому виданні не пройдено/);
+  assert.match(installed[0].textContent, new RegExp(editionId.slice(0, 12)));
+  assert.match(installed[0].textContent, /Campaign 22/);
+  assert.equal(installed[0].querySelector('.journey-card-action').textContent, 'Грати');
   await activateMissionCard(installed[0]);
   assert.equal(f.$('journey-chooser').open, false);
   assert.equal(f.$('coop-menu').hidden, true);
@@ -113,6 +136,11 @@ test('storage denial keeps a verified Team campaign playable for the current vis
         install('crypto', { value: webcrypto });
         install('indexedDB', { value: undefined });
         install('localStorage', { value: storage() });
+      },
+      presentation: {
+        load: ({ snapshot }) => {
+          snapshot.resolved.theme.revision = 79;
+        },
       },
     });
   f.$('coop-pack-file').closest('details').open = true;
