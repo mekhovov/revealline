@@ -104,8 +104,10 @@ Balanced or Compact resize/compression profiles and exact output verification. A
 codecs outside each browser's successful decode probe, and broader conversion remain unsupported.
 Firefox, Safari, Balanced portrait and physical mobile media qualification remain unclaimed.
 
-PR #465 is merged. Ten later hardening commits plus this exact-head compatibility update are rebased onto current protected `main` and
-require a separate exact-head review. They preserve the current `0.131.0` source identity; the
-release owner assigns the next version only after validation and review. Publication still requires
+PR #465 is merged. Ten later hardening commits plus this exact-head compatibility update are rebased onto current
+protected `main` in draft PR #564. Hosted preflight passed, while the release-ready gate correctly
+placed the PR on `release-train-hold`: v0.132.0–v0.138.0 are already reserved and this product change
+has no immutable slot. The branch preserves the current `0.131.0` source identity; the release owner
+assigns the next version only after queue and dependency review. Publication still requires
 an immutable freeze, artifact hashes, public online/offline verification, and a separately reviewed
 Pages selector update where applicable.
