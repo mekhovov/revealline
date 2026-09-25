@@ -137,8 +137,14 @@ class AdapterTests(unittest.TestCase):
     def test_previous_successful_pr_build_generation_is_retained_truthfully(self):
         jobs = copy.deepcopy(self.pr_jobs)
         jobs['jobs'][0]['steps'] = [self.step(n, i + 1) for i, n in enumerate([
-            'Verify exact tracked source before commands', 'Build pull-request artifact',
+            'Verify exact tracked source before commands', 'Validate release-critical source',
+            'Build pull-request artifact',
             'Verify tracked source after build'])]
+        for name in ('Defer full artifact build to merged-source qualification',
+                     'Verify tracked source after fast release gate'):
+            skipped = self.step(name, len(jobs['jobs'][0]['steps']) + 1)
+            skipped['conclusion'] = 'skipped'
+            jobs['jobs'][0]['steps'].append(skipped)
         Path(self.config['pr']['jobs']).write_bytes(adapter.encoded(jobs))
         output = self.root / 'out'
         adapter.assemble(self.config, output)
@@ -148,12 +154,31 @@ class AdapterTests(unittest.TestCase):
         self.assertEqual(qualification['ordinaryBuildCorroboration']['step']['name'],
                          'Build pull-request artifact')
 
-    def test_pr_verifier_generations_cannot_be_mixed(self):
+    def test_current_fast_generation_allows_skipped_historical_steps(self):
         jobs = copy.deepcopy(self.pr_jobs)
-        jobs['jobs'][0]['steps'].append(self.step('Verify tracked source after build', 99))
+        for name in ('Build pull-request artifact', 'Verify tracked source after build'):
+            skipped = self.step(name, len(jobs['jobs'][0]['steps']) + 1)
+            skipped['conclusion'] = 'skipped'
+            jobs['jobs'][0]['steps'].append(skipped)
         Path(self.config['pr']['jobs']).write_bytes(adapter.encoded(jobs))
-        with self.assertRaisesRegex(ValueError, 'Exactly one PR source verifier generation required'):
-            adapter.assemble(self.config, self.root / 'out')
+        output = self.root / 'out'
+        adapter.assemble(self.config, output)
+        qualification = json.loads((output / 'source-qualification.json').read_bytes())
+        self.assertNotIn('ordinaryBuildCorroboration', qualification)
+        self.assertEqual(qualification['preMergeValidationCorroboration']['command'], 'npm run validate')
+
+    def test_pr_build_modes_cannot_be_partial_or_both_successful(self):
+        jobs = copy.deepcopy(self.pr_jobs)
+        jobs['jobs'][0]['steps'].append(self.step('Build pull-request artifact', 99))
+        Path(self.config['pr']['jobs']).write_bytes(adapter.encoded(jobs))
+        with self.assertRaisesRegex(ValueError, 'Incomplete historical PR build corroboration'):
+            adapter.assemble(self.config, self.root / 'out-partial')
+        jobs = copy.deepcopy(self.pr_jobs)
+        jobs['jobs'][0]['steps'].extend([self.step('Build pull-request artifact', 98),
+                                        self.step('Verify tracked source after build', 99)])
+        Path(self.config['pr']['jobs']).write_bytes(adapter.encoded(jobs))
+        with self.assertRaisesRegex(ValueError, 'Exactly one successful PR build corroboration mode required'):
+            adapter.assemble(self.config, self.root / 'out-both')
 
     def test_missing_failed_cancelled_or_success_instead_of_skipped_test_refused(self):
         for conclusion in ('failure', 'cancelled', 'success'):
