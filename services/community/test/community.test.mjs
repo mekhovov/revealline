@@ -9,6 +9,7 @@ import pngjs from 'pngjs';
 import { memoryAdapter } from '@better-auth/memory-adapter';
 import { MemoryLocker } from '@tus/server';
 import { buildCommunityApp } from '../src/app.mjs';
+import { MemoryAccountMailDelivery } from '../src/account-mail.mjs';
 import { createSessionAuthenticator, createTokenAuthenticator } from '../src/auth.mjs';
 import { DiskBlobStore, MemoryBlobStore, S3CompatibleBlobStore } from '../src/blob-store.mjs';
 import { readConfig } from '../src/config.mjs';
@@ -158,6 +159,7 @@ test('submission validation bounds plain text, semantic versions, hashes, and pa
 
 test('executable configuration refuses implicit development authentication', () => {
   assert.throws(() => readConfig({}), /BETTER_AUTH_SECRET/u);
+  assert.equal(readConfig({}, { requireAuth: false }).betterAuth, null);
   const config = readConfig({
     COMMUNITY_ALLOW_DEV_AUTH: 'true',
     COMMUNITY_DEV_TOKENS: '{"token":"creator"}',
@@ -232,10 +234,12 @@ test('session authentication accepts Better Auth-shaped sessions without trustin
 });
 
 test('browser account session owns, publishes, observes and unlists its community submission', async (t) => {
+  const accountMail = new MemoryAccountMailDelivery();
   const auth = createCommunityBetterAuth({
     database: memoryAdapter({ user: [], session: [], account: [], verification: [] }),
-    baseURL: 'http://community.test',
+    baseURL: 'https://community.test',
     secret: 'test-secret-that-is-longer-than-thirty-two-characters',
+    mailDelivery: accountMail,
   });
   const authenticator = createSessionAuthenticator({ getSession: auth.api.getSession });
   const repository = new MemoryCommunityRepository();
@@ -279,19 +283,32 @@ test('browser account session owns, publishes, observes and unlists its communit
     });
   };
   const account = createCommunityAccountClient({
-    baseURL: 'http://community.test/',
-    origin: 'http://community.test',
+    baseURL: 'https://community.test/',
+    origin: 'https://community.test',
     fetchImpl: browserFetch,
   });
-  const signedUp = await account.signUp({
-    name: 'Creator One',
+  assert.equal(
+    await account.signUp({
+      name: 'Creator One',
+      email: 'creator@example.test',
+      password: 'correct horse battery staple',
+    }),
+    null,
+  );
+  const verification = new URL(accountMail.messages()[0].actionURL);
+  const verified = await app.inject({
+    method: 'GET',
+    url: `${verification.pathname}${verification.search}`,
+  });
+  assert.equal(verified.statusCode, 302, verified.body);
+  const signedUp = await account.signIn({
     email: 'creator@example.test',
     password: 'correct horse battery staple',
   });
   assert.ok(signedUp?.user.id);
   assert.match(cookie, /better-auth/u);
   const client = createCommunityClient({
-    baseURL: 'http://community.test/',
+    baseURL: 'https://community.test/',
     fetchImpl: browserFetch,
     authHeaders: account.headers,
   });
