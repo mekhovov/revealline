@@ -1,4 +1,5 @@
 import { createVictoryStoryPresentation } from '../ui/victory-story.mjs';
+import { localizedText, t } from '../i18n/index.mjs';
 
 /**
  * Mount an already authenticated creator story after a legal win. This host has
@@ -12,7 +13,7 @@ export function createCreatorVictoryStoryHost({
   presentationOptions = {},
 } = {}) {
   if (!document?.createElement || !nodes?.surface || !nodes?.stage || !nodes?.status)
-    throw new TypeError('Creator victory story needs its document and presentation nodes.');
+    throw new TypeError(t('errors:creator.victoryStoryNodes'));
   let presentation = null,
     poster = null,
     state = 'idle',
@@ -21,13 +22,16 @@ export function createCreatorVictoryStoryHost({
   const report = (snapshot) => {
     state = snapshot.state;
     reason = snapshot.reason ?? null;
-    nodes.status.textContent =
+    localizedText(nodes.status, () =>
       snapshot.reason ||
-      (snapshot.state === 'playing'
-        ? 'Victory story playing. Next remains available.'
-        : snapshot.state === 'paused'
-          ? 'Victory story paused. Resume, replay, skip, or continue to Next.'
-          : 'Your earned picture is saved. The victory story is optional.');
+      t(
+        snapshot.state === 'playing'
+          ? 'interface:creator.victoryStoryPlaying'
+          : snapshot.state === 'paused'
+            ? 'interface:creator.victoryStoryPaused'
+            : 'interface:creator.victoryStoryOptional',
+      ),
+    );
     nodes.status.classList.toggle('error', ['error', 'blocked'].includes(snapshot.state));
     if (nodes.retry) nodes.retry.hidden = snapshot.state !== 'error';
   };
@@ -41,7 +45,7 @@ export function createCreatorVictoryStoryHost({
     }
     nodes.surface.hidden = true;
     nodes.status.classList.remove('error');
-    nodes.status.textContent = '';
+    localizedText(nodes.status, '');
     if (nodes.retry) nodes.retry.hidden = true;
     state = 'idle';
     reason = null;
@@ -54,8 +58,7 @@ export function createCreatorVictoryStoryHost({
     nodes.stage.replaceChildren(posterElement);
     nodes.status.classList.remove('error');
     if (nodes.retry) nodes.retry.hidden = true;
-    nodes.status.textContent =
-      'Your earned picture is saved. Play the optional victory story, skip it, or continue to Next.';
+    localizedText(nodes.status, () => t('interface:creator.victoryStoryAvailable'));
     try {
       presentation = createPresentation({
         container: nodes.stage,
@@ -72,7 +75,9 @@ export function createCreatorVictoryStoryHost({
       posterElement.hidden = false;
       state = 'error';
       reason = error instanceof Error ? error.message : String(error);
-      nodes.status.textContent = `Victory video is unavailable. Your earned picture and Next remain available. ${reason}`;
+      localizedText(nodes.status, () =>
+        t('interface:creator.victoryVideoUnavailable', { error: reason }),
+      );
       nodes.status.classList.add('error');
       if (nodes.retry) nodes.retry.hidden = false;
     }

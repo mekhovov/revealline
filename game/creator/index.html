@@ -2,105 +2,156 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
+    <link rel="stylesheet" href="../i18n/style.css" />
+    <script src="../vendor/i18next-26.4.2.min.js"></script>
+    <script src="../i18n/catalogs.mjs"></script>
+    <script src="../i18n/bootstrap.mjs"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Create a picture campaign · RevealLine</title>
+    <title data-i18n="interface:creator.pageTitle">Create a picture campaign · RevealLine</title>
     <link rel="stylesheet" href="./creator.css" />
     <script type="module" src="./studio.mjs"></script>
   </head>
   <body>
+    <div data-language-control></div>
     <header>
-      <a href="../">← RevealLine</a><a href="../studio/">Content Studio</a
-      ><a href="#installed">My installed creations</a
-      ><a href="../community/">Community campaigns</a>
+      <a href="../" data-i18n="interface:creator.backToRevealLine">← RevealLine</a
+      ><a href="../studio/" data-i18n="tools:contentStudio">Content Studio</a
+      ><a href="#installed" data-i18n="interface:creator.myInstalledCreations"
+        >My installed creations</a
+      ><a href="../community/" data-i18n="interface:creator.communityCampaigns"
+        >Community campaigns</a
+      >
     </header>
     <main>
-      <p class="eyebrow">CREATE / REVIEW / PLAY</p>
-      <h1>Turn pictures and videos into playable levels.</h1>
-      <p>
+      <p class="eyebrow" data-i18n="interface:creator.createReviewPlay">
+        CREATE / REVIEW / PLAY
+      </p>
+      <h1 data-i18n="interface:creator.turnMediaIntoLevels">
+        Turn pictures and videos into playable levels.
+      </h1>
+      <p data-i18n="interface:creator.introduction">
         Choose pictures or videos, review their generated levels, then play or share a portable
         campaign. Creation and video inspection stay on your device.
       </p>
-      <p id="status" role="status" aria-live="polite">
+      <p
+        id="status"
+        role="status"
+        aria-live="polite"
+        data-i18n="interface:creator.chooseOnePicture"
+      >
         Choose one PNG, JPEG or WebP picture to begin.
       </p>
       <p id="save-status" role="status"></p>
       <section class="panel" aria-labelledby="choose-title">
-        <h2 id="choose-title">1. Choose your picture</h2>
+        <h2 id="choose-title" data-i18n="interface:creator.choosePictureHeading">
+          1. Choose your picture
+        </h2>
         <div id="drop" class="drop">
           <label
-            >Media files
+            ><span data-i18n="interface:creator.mediaFiles">Media files</span>
             <input
               id="image"
               type="file"
               accept="image/png,image/jpeg,image/webp,video/mp4,video/webm"
           /></label>
-          <p id="intake-help" class="muted">
+          <p id="intake-help" class="muted" data-i18n="interface:creator.dropPictureHelp">
             Or drop one image here. Up to 4 MiB and 16 megapixels.
           </p>
         </div>
         <label
-          >Collection name <input id="name" maxlength="160" value="My picture campaign"
+          ><span data-i18n="interface:creator.collectionName">Collection name</span>
+          <input id="name" maxlength="160" value="My picture campaign"
         /></label>
         <label
-          >Level title <input id="mission-title" maxlength="160" value="First picture"
+          ><span data-i18n="interface:creator.levelTitle">Level title</span>
+          <input id="mission-title" maxlength="160" value="First picture"
         /></label>
         <label
-          >Picture description <input id="description" maxlength="512" value="My reveal picture"
+          ><span data-i18n="interface:pictureDescription">Picture description</span>
+          <input id="description" maxlength="512" value="My reveal picture"
         /></label>
         <label
-          >Picture fitting
+          ><span data-i18n="interface:creator.pictureFitting">Picture fitting</span>
           <select id="fit">
-            <option value="contain">Fit whole picture</option>
-            <option value="cover">Fill board (crop edges)</option>
+            <option value="contain" data-i18n="interface:creator.fitWholePicture">
+              Fit whole picture
+            </option>
+            <option value="cover" data-i18n="interface:creator.fillBoardCropEdges">
+              Fill board (crop edges)
+            </option>
           </select></label
         >
         <div id="batch-options" class="batch-options" hidden>
           <label
-            >Campaign pacing
+            ><span data-i18n="interface:creator.campaignPacing">Campaign pacing</span>
             <select id="pacing">
-              <option value="balanced">Balanced variety</option>
-              <option value="gentle-first">Gentle start</option>
-              <option value="steady">Steady difficulty</option>
-              <option value="surprise">Surprise me</option>
+              <option value="balanced" data-i18n="interface:creator.pacingBalanced">
+                Balanced variety
+              </option>
+              <option value="gentle-first" data-i18n="interface:creator.pacingGentle">
+                Gentle start
+              </option>
+              <option value="steady" data-i18n="interface:creator.pacingSteady">
+                Steady difficulty
+              </option>
+              <option value="surprise" data-i18n="interface:creator.pacingSurprise">
+                Surprise me
+              </option>
             </select></label
           >
-          <p class="muted">
+          <p class="muted" data-i18n="interface:creator.pacingHelp">
             Pacing guides deterministic template selection. The review order is the play order.
           </p>
         </div>
         <details>
-          <summary>Credits and sharing information</summary>
+          <summary data-i18n="interface:creator.creditsAndSharing">
+            Credits and sharing information
+          </summary>
           <label
-            >Creator <input id="creator-credit" maxlength="512" value="Anonymous creator"
+            ><span data-i18n="tools:creator">Creator</span>
+            <input id="creator-credit" maxlength="512" value="Anonymous creator"
           /></label>
           <label
-            >Picture credit
+            ><span data-i18n="interface:creator.pictureCredit">Picture credit</span>
             <input id="picture-credit" maxlength="512" value="Creator supplied picture"
           /></label>
           <label
-            >License or sharing terms
+            ><span data-i18n="interface:creator.licenseTerms">License or sharing terms</span>
             <input id="license" maxlength="512" value="No additional license granted"
           /></label>
         </details>
         <div class="actions">
-          <button id="generate" disabled>Generate and review</button
-          ><button id="cancel" class="secondary" hidden>Cancel</button
-          ><a href="./">Start a new draft</a>
+          <button id="generate" disabled data-i18n="interface:creator.generateAndReview">
+            Generate and review</button
+          ><button id="cancel" class="secondary" hidden data-i18n="common:actions.cancel">
+            Cancel</button
+          ><a href="./" data-i18n="interface:creator.startNewDraft">Start a new draft</a>
         </div>
       </section>
       <section id="media-review" class="panel" hidden aria-labelledby="media-review-title">
-        <h2 id="media-review-title">2. Review video posters and celebrations</h2>
+        <h2 id="media-review-title" data-i18n="interface:creator.reviewMediaHeading">
+          2. Review video posters and celebrations
+        </h2>
         <p id="media-status" role="status" aria-live="polite"></p>
         <div id="media-list"></div>
         <div class="actions">
-          <button id="media-apply">Inspect media</button>
-          <button id="media-cancel" class="secondary" hidden>Cancel media inspection</button>
+          <button id="media-apply" data-i18n="interface:creator.inspectMedia">Inspect media</button>
+          <button
+            id="media-cancel"
+            class="secondary"
+            hidden
+            data-i18n="interface:creator.cancelMediaInspection"
+          >
+            Cancel media inspection
+          </button>
         </div>
       </section>
       <section id="batch-review" class="panel" hidden aria-labelledby="batch-review-title">
         <div class="batch-heading">
           <div>
-            <h2 id="batch-review-title">2. Review campaign order</h2>
+            <h2 id="batch-review-title" data-i18n="interface:creator.reviewOrderHeading">
+              2. Review campaign order
+            </h2>
             <p id="batch-progress-label" role="status" aria-live="polite"></p>
           </div>
           <progress id="batch-progress" hidden value="0" max="1"></progress>
@@ -110,74 +161,142 @@
         <p id="batch-capacity" class="muted"></p>
         <div id="batch-split-results" class="batch-split-results" hidden></div>
         <div class="actions">
-          <button id="batch-generate">Generate included levels</button>
-          <button id="batch-cancel" class="secondary" hidden>Cancel preparation</button>
-          <button id="batch-remove-excluded" class="secondary" hidden>Remove excluded items</button>
-          <button id="batch-split" class="secondary" hidden>Split into smaller packs</button>
-          <button id="batch-approve" disabled>Approve included campaign</button>
+          <button id="batch-generate" data-i18n="interface:creator.generateIncludedLevels">
+            Generate included levels
+          </button>
+          <button
+            id="batch-cancel"
+            class="secondary"
+            hidden
+            data-i18n="common:actions.cancelPreparation"
+          >
+            Cancel preparation
+          </button>
+          <button
+            id="batch-remove-excluded"
+            class="secondary"
+            hidden
+            data-i18n="interface:creator.removeExcludedItems"
+          >
+            Remove excluded items
+          </button>
+          <button
+            id="batch-split"
+            class="secondary"
+            hidden
+            data-i18n="interface:creator.splitSmallerPacks"
+          >
+            Split into smaller packs
+          </button>
+          <button id="batch-approve" disabled data-i18n="interface:creator.approveCampaign">
+            Approve included campaign
+          </button>
         </div>
       </section>
       <section id="review" class="panel" hidden aria-labelledby="review-title">
-        <h2 id="review-title">2. Review your picture and level</h2>
+        <h2 id="review-title" data-i18n="interface:creator.reviewPictureHeading">
+          2. Review your picture and level
+        </h2>
         <div class="review-grid">
           <div>
             <img id="picture" alt="" />
             <p id="picture-caption"></p>
           </div>
           <div>
-            <canvas id="map" width="720" height="360" aria-label="Generated level map"></canvas>
+            <canvas
+              id="map"
+              width="720"
+              height="360"
+              aria-label="Generated level map"
+              data-i18n-aria-label="interface:creator.generatedLevelMap"
+            ></canvas>
             <p id="map-caption"></p>
           </div>
         </div>
         <p id="validation"></p>
         <p id="package-size" class="muted"></p>
-        <button id="approve" disabled>Approve this picture and level</button>
+        <button id="approve" disabled data-i18n="interface:creator.approvePictureLevel">
+          Approve this picture and level
+        </button>
       </section>
       <details id="edits" class="panel" hidden>
-        <summary>Optional edits</summary>
-        <p>
+        <summary data-i18n="interface:creator.optionalEdits">Optional edits</summary>
+        <p data-i18n="interface:creator.optionalEditsHelp">
           Change the title, picture fitting or credits above and generate again. Advanced Studio
           opens an editable copy; save there, then load its edits here. Gameplay changes need a new
           valid completion route before approval.
         </p>
-        <button id="advanced" class="secondary">Open advanced editor</button
-        ><button id="load-advanced" class="secondary">Load saved Studio edits</button
-        ><button id="regenerate" class="secondary">Regenerate template gameplay</button>
+        <button id="advanced" class="secondary" data-i18n="interface:creator.openAdvancedEditor">
+          Open advanced editor</button
+        ><button
+          id="load-advanced"
+          class="secondary"
+          data-i18n="interface:creator.loadStudioEdits"
+        >
+          Load saved Studio edits</button
+        ><button
+          id="regenerate"
+          class="secondary"
+          data-i18n="interface:creator.regenerateGameplay"
+        >
+          Regenerate template gameplay
+        </button>
       </details>
       <section id="approved" class="panel" hidden aria-labelledby="approved-title">
-        <h2 id="approved-title">3. Install or share</h2>
-        <p>
+        <h2 id="approved-title" data-i18n="interface:creator.installShareHeading">
+          3. Install or share
+        </h2>
+        <p data-i18n="interface:creator.approvedEditionHelp">
           This approved edition contains generated gameplay, reviewed poster pictures, optional
           complete victory videos, credits and verified route evidence.
         </p>
         <p id="storage-review"></p>
         <div class="actions">
-          <button id="install" disabled>Install campaign</button
-          ><button id="download">Download .rlpack</button>
+          <button id="install" disabled data-i18n="interface:creator.installCampaign">
+            Install campaign</button
+          ><button id="download" data-i18n="interface:creator.downloadPack">
+            Download .rlpack
+          </button>
         </div>
-        <a id="play" hidden>Play installed campaign →</a>
+        <a id="play" hidden data-i18n="interface:creator.playInstalledCampaign"
+          >Play installed campaign →</a
+        >
       </section>
       <details class="panel">
-        <summary>Open a pack, restore a draft, or back up your source</summary>
+        <summary data-i18n="interface:creator.openRestoreBackup">
+          Open a pack, restore a draft, or back up your source
+        </summary>
         <label
-          >Portable campaign or private source backup
+          ><span data-i18n="interface:creator.portableOrSourceBackup"
+            >Portable campaign or private source backup</span
+          >
           <input id="import" type="file" accept=".rlpack,.rlsource"
         /></label>
-        <p>
+        <p data-i18n="interface:creator.backupExplanation">
           A .rlpack includes reviewed runtime posters and its selected complete victory videos. An
           image-only private .rlsource backup also includes retained originals, if available, and
           editing information. Neither includes player progress or unrelated library items.
         </p>
-        <button id="backup" disabled>Back up source project</button
-        ><button id="save" class="secondary" disabled>Retry saving checkpoint</button>
-        <p class="muted">
+        <button id="backup" disabled data-i18n="interface:creator.backupSourceProject">
+          Back up source project</button
+        ><button
+          id="save"
+          class="secondary"
+          disabled
+          data-i18n="interface:creator.retrySavingCheckpoint"
+        >
+          Retry saving checkpoint
+        </button>
+        <p class="muted" data-i18n="interface:creator.draftRetentionHelp">
           Drafts keep up to 50 immutable checkpoints within the existing shared media budget.
           Download backups before browser cleanup.
         </p>
       </details>
       <section id="installed" class="panel">
-        <h2>My installed creations</h2>
-        <div id="installed-list">Reading your local library…</div>
+        <h2 data-i18n="interface:creator.myInstalledCreations">My installed creations</h2>
+        <div id="installed-list" data-i18n="interface:creator.readingLocalLibrary">
+          Reading your local library…
+        </div>
       </section>
     </main>
   </body>

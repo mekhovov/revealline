@@ -2,6 +2,7 @@ import { boundedJSON, canonicalJSON, exactKeys, required, stableId } from '../da
 import { freezeDesign } from '../content-design/catalogs.mjs';
 import { hydrateStoredStillMedia, prepareRetainedStillBytes } from '../media-storage-record.mjs';
 import { creatorAbort, creatorSHA256, ownCreatorBlob } from './bytes.mjs';
+import { t } from '../i18n/index.mjs';
 
 const FORMAT = 'revealline-creator-source.v1',
   MAGIC = new TextEncoder().encode('RLCSB1\r\n');
@@ -49,7 +50,7 @@ export function requireCreatorEditableProject(project) {
           typeof asset.alt === 'string' &&
           asset.alt.length <= 512,
       ),
-    'This creator draft needs one pack, campaign, mission and picture, or a bounded batch of them. Keep other structures in Advanced Studio.',
+    t('errors:creator.draftStructure'),
   );
 }
 const originalHashes = (source) =>
@@ -59,50 +60,61 @@ function document(source) {
   exactKeys(
     value,
     ['format', 'draftId', 'content', 'editing', 'originalSha256', 'assets'],
-    'creator source',
+    t('interface:creator.label.creatorSource'),
   );
-  required(value.format === FORMAT && draftId(value.draftId), 'Invalid creator draft identity.');
+  required(
+    value.format === FORMAT && draftId(value.draftId),
+    t('errors:creator.invalidDraftIdentity'),
+  );
   exactKeys(
     value.content,
     ['project', 'packId', 'themes', 'provenance', 'credits'],
-    'creator draft content',
+    t('interface:creator.label.draftContent'),
   );
   requireCreatorEditableProject(value.content.project);
   const missionCount = value.content.project.missions.length;
   required(
     (missionCount === 1 && !Array.isArray(value.content.provenance)) ||
       (Array.isArray(value.content.provenance) && value.content.provenance.length === missionCount),
-    'Source backup needs one generation record for every mission.',
+    t('errors:creator.generationRecordRequired'),
   );
-  exactKeys(value.content.credits, ['creator', 'picture', 'license'], 'source credits');
+  exactKeys(
+    value.content.credits,
+    ['creator', 'picture', 'license'],
+    t('interface:creator.label.sourceCredits'),
+  );
   required(
     ['creator', 'picture', 'license'].every(
       (key) =>
         typeof value.content.credits[key] === 'string' && value.content.credits[key].length <= 512,
     ),
-    'Source credits need bounded text.',
+    t('errors:creator.sourceCreditsBounded'),
   );
-  exactKeys(value.editing, ['fit'], 'creator editing information');
+  exactKeys(
+    value.editing,
+    ['fit'],
+    t('interface:creator.label.editingInformation'),
+  );
   required(
     ['contain', 'cover'].includes(value.editing.fit) &&
       originalHashes(value.originalSha256).length <= 50 &&
       originalHashes(value.originalSha256).every(hashValid),
-    'Invalid source picture or fitting information.',
+    t('errors:creator.invalidSourcePicture'),
   );
   required(
     Array.isArray(value.assets) && value.assets.length >= 1 && value.assets.length <= MAX_ASSETS,
-    'Source backup needs its runtime pictures and optional originals.',
+    t('errors:creator.sourcePicturesRequired'),
   );
   let previous = '';
   for (const item of value.assets) {
-    exactKeys(item, ['sha256', 'bytes'], 'source asset');
+    exactKeys(item, ['sha256', 'bytes'], t('interface:creator.label.sourceAsset'));
     required(
       hashValid(item.sha256) &&
         item.sha256 > previous &&
         Number.isSafeInteger(item.bytes) &&
         item.bytes > 0 &&
         item.bytes <= MAX_ASSET_BYTES,
-      'Invalid source asset inventory.',
+      t('errors:creator.invalidSourceAssetInventory'),
     );
     previous = item.sha256;
   }
@@ -112,7 +124,7 @@ function document(source) {
   ]);
   required(
     wanted.size === value.assets.length && value.assets.every((a) => wanted.has(a.sha256)),
-    'Source backup contains missing or unrelated assets.',
+    t('errors:creator.sourceAssetsMismatch'),
   );
   return freezeDesign(value);
 }
@@ -124,11 +136,18 @@ export async function prepareCreatorSource(
   creatorAbort(signal);
   required(
     Array.isArray(assets) && assets.length >= 1 && assets.length <= MAX_ASSETS,
-    'Provide only this source project’s pictures.',
+    t('errors:creator.onlySourcePictures'),
   );
   const owned = assets
     .map(({ sha256, blob }) =>
-      Object.freeze({ sha256, blob: ownCreatorBlob(blob, MAX_ASSET_BYTES, 'Source picture') }),
+      Object.freeze({
+        sha256,
+        blob: ownCreatorBlob(
+          blob,
+          MAX_ASSET_BYTES,
+          t('interface:creator.label.sourcePicture'),
+        ),
+      }),
     )
     .sort((a, b) => a.sha256.localeCompare(b.sha256));
   const record = document({
@@ -142,7 +161,7 @@ export async function prepareCreatorSource(
   for (const asset of owned) {
     required(
       (await creatorSHA256(await asset.blob.arrayBuffer())) === asset.sha256,
-      'Source picture hash differs from its bytes.',
+      t('errors:creator.sourcePictureHashMismatch'),
     );
     creatorAbort(signal);
   }
@@ -151,7 +170,7 @@ export async function prepareCreatorSource(
   return result;
 }
 export function exportCreatorSource(source) {
-  required(prepared.has(source), 'Prepare this source backup before downloading it.');
+  required(prepared.has(source), t('errors:creator.prepareSourceBeforeDownload'));
   const metadata = new TextEncoder().encode(canonicalJSON(source.document));
   const header = new Uint8Array(12);
   header.set(MAGIC);
@@ -162,29 +181,36 @@ export function exportCreatorSource(source) {
 }
 export async function importCreatorSource(file, { signal } = {}) {
   creatorAbort(signal);
-  const blob = ownCreatorBlob(file, MAX_BYTES, 'Source backup');
-  required(blob.size >= 12, 'Truncated source backup.');
+  const blob = ownCreatorBlob(
+    file,
+    MAX_BYTES,
+    t('interface:creator.label.sourceBackup'),
+  );
+  required(blob.size >= 12, t('errors:creator.truncatedSourceBackup'));
   const header = new Uint8Array(await blob.slice(0, 12).arrayBuffer());
   required(
     MAGIC.every((b, i) => b === header[i]),
-    'Choose a creator .rlsource backup.',
+    t('errors:creator.chooseSourceBackup'),
   );
   const size = new DataView(header.buffer).getUint32(8, false);
   required(
     size > 0 && size <= MAX_MANIFEST && size + 12 <= blob.size,
-    'Invalid source metadata length.',
+    t('errors:creator.invalidSourceMetadataLength'),
   );
   const record = document(
     new TextDecoder('utf-8', { fatal: true }).decode(await blob.slice(12, 12 + size).arrayBuffer()),
   );
   let offset = size + 12;
   const assets = record.assets.map((a) => {
-    required(offset + a.bytes <= blob.size, 'Source backup is missing picture bytes.');
+    required(
+      offset + a.bytes <= blob.size,
+      t('errors:creator.sourcePictureBytesMissing'),
+    );
     const result = { sha256: a.sha256, blob: blob.slice(offset, offset + a.bytes) };
     offset += a.bytes;
     return result;
   });
-  required(offset === blob.size, 'Source backup contains trailing bytes.');
+  required(offset === blob.size, t('errors:creator.sourceTrailingBytes'));
   return prepareCreatorSource(record, assets, { signal });
 }
 
@@ -196,7 +222,7 @@ function references(snapshot, id) {
       const revision = Number(r.id.slice(prefix.length));
       required(
         Number.isSafeInteger(revision) && revision >= 1 && revision <= 50,
-        'Invalid draft checkpoint revision.',
+        t('errors:creator.invalidCheckpointRevision'),
       );
       return { ...r, revision };
     })
@@ -208,19 +234,19 @@ function references(snapshot, id) {
 export function createCreatorDraftBackend(store) {
   return Object.freeze({
     async read(id, { signal } = {}) {
-      required(draftId(id), 'Invalid creator draft ID.');
+      required(draftId(id), t('errors:creator.invalidDraftId'));
       const snapshot = await store.readDomainMetadata('media', { signal });
       const current = references(snapshot, id)[0];
       if (!current) return null;
       const blob = await store.readSelectedBlob(current.sha256, { signal, maxBytes: MAX_MANIFEST });
-      required(blob, 'Draft checkpoint metadata is missing. Restore a source backup.');
+      required(blob, t('errors:creator.checkpointMetadataMissing'));
       const bytes = await blob.arrayBuffer();
       required(
         (await creatorSHA256(bytes)) === current.sha256,
-        'Draft checkpoint metadata failed its integrity check.',
+        t('errors:creator.checkpointIntegrityFailed'),
       );
       const record = document(new TextDecoder('utf-8', { fatal: true }).decode(bytes));
-      required(record.draftId === id, 'Draft checkpoint belongs to another project.');
+      required(record.draftId === id, t('errors:creator.checkpointWrongProject'));
       const assets = [];
       for (const asset of record.assets)
         assets.push({
@@ -233,18 +259,18 @@ export function createCreatorDraftBackend(store) {
       };
     },
     async save(source, expectedRevision, { signal } = {}) {
-      required(prepared.has(source), 'Prepare the exact source checkpoint first.');
+      required(prepared.has(source), t('errors:creator.prepareExactCheckpoint'));
       const snapshot = await store.readDomain('media', { signal });
       const previous = references(snapshot, source.document.draftId)[0]?.revision ?? null;
       if (previous !== expectedRevision) {
-        const error = new Error('A newer draft exists. Reload it or save a separate project copy.');
+        const error = new Error(t('errors:creator.newerDraftExists'));
         error.code = 'draft-conflict';
         throw error;
       }
       const revision = (previous ?? 0) + 1;
       required(
         revision <= 50,
-        'This draft has 50 retained checkpoints. Download a source backup and start a new draft copy.',
+        t('errors:creator.checkpointLimitReached'),
       );
       const blob = new Blob([canonicalJSON(source.document)], { type: 'application/json' });
       const sha256 = await creatorSHA256(await blob.arrayBuffer());
