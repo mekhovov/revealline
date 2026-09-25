@@ -39,6 +39,8 @@ const golden = {
   'whole-spatial-v9': [257778, '80d2406bece474a0dc169e9d8ea31b473d04d68144e8df6dd4eff41c7850e27a'],
   'whole-spatial-v10': [258783, '04b2c25e1e6bbbf8890b89a6661ec80fadac53f280ae2ae2caf77fd3de3ed4fc'],
   'whole-spatial-v11': [259575, '3d7b5b67d5d78a3f25a8108468385f9a6f1b2520fc12b275bcc3bf952ae0d978'],
+  'whole-ornament-v1': [260665, '3b29bc220cdb06a33fedefabb6adec9527bd10902a9dd44899270e885ddfc4ad'],
+  'whole-ornament-v2': [266314, '3f0116efe9cb9b2e134fb60dd252ac5bfbd44758a993e18a56abb2131ca10a1b'],
 };
 
 test('all supported routes are covered by pinned edition snapshots', () => {
@@ -149,6 +151,17 @@ test('Horizon successor imports only its bounded successor chain', () => {
   assert(!has(result, 'horizon-candidates.mjs'));
 });
 
+test('ornament editions import only their bounded opt-in source chain', () => {
+  const study = routeProbe('whole-ornament-v1');
+  assert.deepEqual(study.output, { id: 'whole-ornament-v1' });
+  assert(has(study, 'ukrainian-ornament-candidates.mjs'));
+  assert(!has(study, 'ukrainian-ornament-atlas.mjs'));
+  const atlas = routeProbe('whole-ornament-v2');
+  assert.deepEqual(atlas.output, { id: 'whole-ornament-v2' });
+  assert(has(atlas, 'ukrainian-ornament-atlas.mjs'));
+  assert(has(atlas, 'ukrainian-ornament-candidates.mjs'));
+});
+
 test('historical originals still use their composer, without downloading the spatial snapshot', () => {
   const result = routeProbe('whole-originals-v4');
   assert.deepEqual(result.output, { id: 'whole-originals-v4' });
@@ -189,6 +202,8 @@ test('all literal lazy imports and shared modules are in the actual game build i
   const source = await readFile(new URL(loaderURL), 'utf8');
   const imports = [...source.matchAll(/import\('(.+?)'\)/g)].map((m) => m[1]);
   assert.deepEqual(imports, [
+    './ukrainian-ornament-atlas.mjs',
+    './ukrainian-ornament-candidates.mjs',
     './horizon-next-batch-candidates.mjs',
     './spatial-next-batch-candidates.mjs',
     './whole-spatial-candidates.mjs',

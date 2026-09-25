@@ -1,4 +1,8 @@
 import { WHOLE_JOURNEY_REMIX_PACK_IDS } from '../content-design/whole-journey-order.mjs';
+import {
+  UKRAINIAN_ORNAMENT_ATLAS_REVISION,
+  UKRAINIAN_ORNAMENT_ATLAS_IDS,
+} from '../content-design/ukrainian-ornament-atlas-registry.mjs';
 
 const UKRAINIAN_CULTURAL_SPATIAL_REVISION = 'cultural-spatial-triptych-1';
 const UKRAINIAN_HORIZON_JOINS_REVISION = 'horizon-cultural-joins-1';
@@ -30,7 +34,12 @@ export function authoredJourneyMissionTags(mission, manifest) {
   if (['journey-arcade-v2', 'journey-trail-impact-v3'].includes(manifest.policyId))
     tags.push('Arcade');
   if (WHOLE_JOURNEY_REMIX_PACK_IDS.includes(mission.packId)) tags.push('Remix');
-  if (mission.packId === 'ornament-crossings-study' && mission.campaignId === 'ornament-crossings')
+  if (
+    (mission.packId === 'ornament-crossings-study' &&
+      mission.campaignId === 'ornament-crossings') ||
+    (manifest.level?.revision === UKRAINIAN_ORNAMENT_ATLAS_REVISION &&
+      UKRAINIAN_ORNAMENT_ATLAS_IDS.includes(mission.levelId))
+  )
     tags.push('Ukrainian');
   if (
     [UKRAINIAN_CULTURAL_SPATIAL_REVISION, UKRAINIAN_HORIZON_JOINS_REVISION].includes(
