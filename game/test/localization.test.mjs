@@ -5,6 +5,7 @@ import vm from 'node:vm';
 import { contentText } from '../i18n/content.mjs';
 import { setLocale } from '../i18n/index.mjs';
 import { dataIdentity } from '../data-json.mjs';
+import { createMissionLibrary, libraryMissionId } from '../mission-library/library.mjs';
 
 const scripts = await Promise.all(
   ['../vendor/i18next-26.4.2.min.js', '../i18n/catalogs.mjs', '../i18n/bootstrap.mjs'].map((file) =>
@@ -205,6 +206,42 @@ test('content uses exact identity and field; edited imports retain authored text
       'shallow freezing must not hide a nested custom edit',
     );
     assert.equal(dataIdentity(campaign), before);
+  } finally {
+    setLocale('en', { persist: false });
+  }
+});
+
+test('mission library validation errors follow the active locale without changing source identity', () => {
+  setLocale('en', { persist: false });
+  try {
+    assert.throws(() => libraryMissionId({}), /Mission library needs an owner\./);
+    const authored = Object.freeze({
+      id: 'authored-mission',
+      campaignKey: 'authored-campaign',
+      campaignTitle: 'My authored campaign',
+      name: 'My authored mission',
+      levelIndex: 0,
+      modes: Object.freeze(['solo']),
+    });
+    const library = createMissionLibrary([
+      {
+        id: 'authored-source',
+        editionId: 'authored-edition',
+        edition: 'My authored edition',
+        collection: 'Custom',
+        entries: [authored],
+        describe: (entry) => entry,
+        availability: () => ({ state: 'ready' }),
+        launch: () => true,
+      },
+    ]);
+    const row = library.missions[0];
+    setLocale('uk', { persist: false });
+    assert.throws(() => libraryMissionId({}), /Для бібліотеки місій потрібне поле «власник»\./);
+    assert.throws(() => library.forMode('online'), /Невідомий режим бібліотеки\./);
+    library.remove('authored-source');
+    assert.throws(() => library.availability(row), /Цей вибір місії застарів\./);
+    assert.equal(authored.name, 'My authored mission');
   } finally {
     setLocale('en', { persist: false });
   }
