@@ -54,7 +54,7 @@ function completion(overrides = {}) {
     picture,
   };
 }
-function store(disk, key = 'journey-current') {
+function store(disk, key = 'journey-whole-spatial-v5') {
   const backend = createJourneyBackend({ ...disk, profileKey: key });
   return { backend, profile: createJourneyProfileStore({ backend }) };
 }
@@ -74,7 +74,7 @@ test('strict historical profile receipts remain unchanged; exact picture descrip
   assert.deepEqual(saved.pictures.records, [completion().picture]);
   assert.deepEqual(
     new Set(disk.allPuts.map(([, key]) => key)),
-    new Set(['journey-current', 'journey-current:pictures.v1']),
+    new Set(['journey-whole-spatial-v5', 'journey-whole-spatial-v5:pictures.v1']),
   );
   const fresh = store(disk).profile;
   await fresh.load();
@@ -234,7 +234,53 @@ test('backup references round-trip; foreign scopes and conflicting originals rej
   );
 });
 
-test('legacy backups preserve companion originals and unsupported backends report session-only safely', async () => {
+test('restore rejects orphan, cross-edition and mismatched picture completion references', async () => {
+  const source = store(managedIndexedDB()).profile,
+    target = store(managedIndexedDB()).profile;
+  await Promise.all([source.load(), target.load()]);
+  source.record(completion());
+  await source.flush();
+  const valid = JSON.parse(source.export()),
+    invalid = [];
+  const orphan = structuredClone(valid);
+  delete orphan.profile.clears.solo[completion().missionId];
+  invalid.push(orphan);
+  for (const patch of [
+    { editionId: 'whole-spatial-v4' },
+    { mode: 'team' },
+    { runId: 'another-run' },
+    { gameplayId: 'another-gameplay' },
+    { difficulty: 'expert' },
+  ]) {
+    const backup = structuredClone(valid);
+    Object.assign(backup.pictures.records[0], patch);
+    invalid.push(backup);
+  }
+  for (const backup of invalid) {
+    assert.throws(() => target.inspectBackup(backup), /picture/i);
+    assert.throws(() => target.restore(backup), /picture/i);
+    assert.deepEqual(target.snapshot(), emptyJourneyProfile());
+    assert.deepEqual(target.pictures(), emptyJourneyPictures());
+    assert.equal(target.status().pending, 0);
+  }
+  target.record({
+    type: 'complete',
+    mode: 'solo',
+    missionId: completion().missionId,
+    runId: 'current-run',
+    gameplayId: 'current-gameplay',
+    difficulty: 'expert',
+  });
+  await target.flush();
+  const current = target.snapshot();
+  assert.throws(() => target.inspectBackup(valid), /picture.*completion/i);
+  assert.throws(() => target.restore(valid), /picture.*completion/i);
+  assert.deepEqual(target.snapshot(), current);
+  assert.deepEqual(target.pictures(), emptyJourneyPictures());
+  assert.equal(target.status().pending, 0);
+});
+
+test('v1 and v2 backups preserve companion originals and unsupported backends report session-only safely', async () => {
   const disk = managedIndexedDB(),
     { profile } = store(disk);
   await profile.load();
@@ -243,11 +289,20 @@ test('legacy backups preserve companion originals and unsupported backends repor
   const original = profile.pictures();
   profile.restore({
     format: 'revealline-journey-backup.v2',
-    profileKey: 'journey-current',
+    profileKey: 'journey-whole-spatial-v5',
     profile: emptyJourneyProfile(),
   });
   await profile.flush();
   assert.deepEqual(profile.pictures(), original);
+  const legacyDisk = managedIndexedDB(),
+    legacy = store(legacyDisk, 'journey').profile;
+  await legacy.load();
+  legacy.record(completion({ editionId: 'historical-edition' }));
+  await legacy.flush();
+  const legacyOriginal = legacy.pictures();
+  legacy.restore({ format: 'revealline-journey-backup.v1', profile: emptyJourneyProfile() });
+  await legacy.flush();
+  assert.deepEqual(legacy.pictures(), legacyOriginal);
   let writes = 0;
   const oldBackend = createJourneyProfileStore({
     backend: {
