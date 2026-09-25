@@ -341,6 +341,7 @@
           if (streaming && (request.buildId !== CONFIG.buildId || request.scope !== scope.href)) {
             subscriber.send('terminal', {
               status: 'not-ready',
+              messageCode: 'differentBuild',
               message: 'Offline worker belongs to a different build. Reopen this version online.',
             });
             return;
@@ -352,7 +353,12 @@
           if (subscriber) subscriber.send('terminal', report);
           else port.postMessage(report);
         } catch (error) {
-          const report = { status: 'error', message: error.message, buildId: CONFIG.buildId };
+          const report = {
+            status: 'error',
+            messageCode: 'downloadFailed',
+            message: error.message,
+            buildId: CONFIG.buildId,
+          };
           if (subscriber) subscriber.send('terminal', report);
           else port.postMessage(report);
         } finally {
