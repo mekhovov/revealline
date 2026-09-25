@@ -87,6 +87,7 @@ async function setup(t, { themeId = 'fpv', lives = 1, classic = false, reduced =
   await settle(() => surface.frame.painter.image !== null);
   page.$('reduced-effects').checked = reduced;
   page.$('start-button').click();
+  await settle(() => page.doc.body.dataset.flightState === 'running');
   page.key('ArrowDown');
   for (let i = 0; i < (classic ? 292 : 30); i++) page.frame();
   page.key('ArrowDown', false);
@@ -204,11 +205,13 @@ test('controller skip cannot carry held Confirm into Retry', async (t) => {
   assert.equal(page.$('game-overlay').dataset.kind, 'lost');
   await settle(() => {
     page.frame(0);
-    return page.doc.body.dataset.flightState === 'running';
+    return page.$('game-overlay').dataset.kind === 'retry-ready';
   });
   const retried = page.rendered.run;
   assert.notEqual(retried, run);
   assert.equal(retried.tick, 0);
+  for (let frame = 0; frame < 6; frame++) page.frame(100);
+  assert.equal(page.doc.body.dataset.flightState, 'running');
   assert.equal(page.$('game-overlay').hidden, true);
   assert.equal(page.doc.activeElement.id, 'game-canvas');
   for (let i = 0; i < 4; i++) page.frame(0);
