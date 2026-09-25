@@ -1170,5 +1170,10 @@
   "journey.horizonJoins.longWayHome.route": "Join through the upper shoulder group for the shorter first return, or descend to the offset gathered group for a longer line that approaches the far shoulder?",
   "journey.horizonJoins.longWayHome.mastery": "Reach both offset joins from the west shoulder without losing a life.",
   "journey.horizonJoins.horizonRemix.route": "Secure the upper petal from the central spiral shoulder, or connect the western dot first and build an outside return before separating the three keepers?",
-  "journey.horizonJoins.horizonRemix.mastery": "Complete both the central-petal and dot-first approaches without losing a life."
+  "journey.horizonJoins.horizonRemix.mastery": "Complete both the central-petal and dot-first approaches without losing a life.",
+  "studio.myJourney": "My Journey",
+  "studio.islandWithinReach": "An island within reach",
+  "studio.returnDecision": "Return to the island or continue to the far boundary?",
+  "studio.connectIsland": "Connect the island in one cut.",
+  "studio.opening": "Opening"
 }
