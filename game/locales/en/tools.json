@@ -1639,5 +1639,20 @@
   "studio.capture.gates_one": "Would-open gates: {{ids}}. {{count}} reserved gate cell never counts toward earned coverage.",
   "studio.difficulty.solo_other": "{{name}} · {{count}} lives · enemy speed ×{{speed}}",
   "studio.difficulty.shared_other": "{{name}} · {{count}} shared lives · enemy speed ×{{speed}}",
-  "studio.capture.gates_other": "Would-open gates: {{ids}}. {{count}} reserved gate cells never count toward earned coverage."
+  "studio.capture.gates_other": "Would-open gates: {{ids}}. {{count}} reserved gate cells never count toward earned coverage.",
+  "studio.storage.sessionOnly": "Session only: {{message}} Your edits remain here. Export a backup, then retry or inspect the newer saved draft.",
+  "studio.storage.saving": "Saving an immutable checkpoint…",
+  "studio.storage.unsaved": "Unsaved edits are in this session. Saving shortly…",
+  "studio.storage.saved": "Saved locally · checkpoint {{revision}}. This is a candidate, not published content.",
+  "studio.storage.recovery": "Session only: {{message}} Export your work; Save checkpoint retries storage.",
+  "studio.storage.openFailed": "Studio could not open: {{message}}. Saved checkpoints were not changed.",
+  "studio.source.discard": "Discard unapplied JSON edits? The applied draft is unchanged.",
+  "studio.source.current": "Current draft: {{maps}} map revisions, {{missions}} missions. Source edits require a new inspection before applying.",
+  "studio.source.inspected": "{{name}}: {{maps}} map revisions, {{missions}} missions compile. Human playtesting and publication remain pending. Apply to replace the workbench draft.",
+  "studio.source.checkpointInspected": "{{name}}: {{maps}} map revisions, {{missions}} missions compile. Inspected checkpoint {{selectedRevision}} (latest {{latestRevision}}). Older versions restore as a new checkpoint. Human playtesting and publication remain pending. Apply to replace the workbench draft.",
+  "studio.source.unapplied": "Unapplied JSON edits. Inspect, then apply. These edits are not autosaved.",
+  "studio.library.matches_one": "{{count}} of {{total}} entries shown. Some entries share edition controls.",
+  "studio.library.inspected_one": "{{name}}: {{count}} mission inspected. The applied draft is unchanged. Review the source before Apply.",
+  "studio.library.matches_other": "{{count}} of {{total}} entries shown. Some entries share edition controls.",
+  "studio.library.inspected_other": "{{name}}: {{count}} missions inspected. The applied draft is unchanged. Review the source before Apply."
 }
