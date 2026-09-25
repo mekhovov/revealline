@@ -1,3 +1,6 @@
+import { localizedMessage, localizedText, t } from '../i18n/index.mjs';
+import { editorMessageError, showEditorFailure } from './editor-copy.mjs';
+import { studioSurfaceName } from './preview-copy.mjs';
 import { dataIdentity } from '../data-json.mjs';
 import { editContentGeometry } from '../content-design/geometry-edit.mjs';
 import { missionEditContext } from './edit-context.mjs';
@@ -17,7 +20,7 @@ export function createGeometryEditor({ document, getSource, getMission, apply })
   const context = () => missionEditContext(getSource(), getMission());
   function disarm() {
     armed = false;
-    $('remove').textContent = 'Remove selected rectangle';
+    localizedText($('remove'), localizedMessage('tools:studio.rectangle.remove'));
   }
   function select() {
     disarm();
@@ -26,9 +29,12 @@ export function createGeometryEditor({ document, getSource, getMission, apply })
     $('kind-row').hidden = row?.surface !== 'terrain';
     $('kind').value = row?.rectangle.kind ?? 'slow';
     $('submit').disabled = $('remove').disabled = !row;
-    $('result').textContent = row
-      ? 'Changes affect only this mission through a new map revision. Spawn and enemy-domain checks still apply.'
-      : 'No authored rectangles on this map. Add geometry above; the permanent outer border is not removable.';
+    localizedText(
+      $('result'),
+      row
+        ? localizedMessage('tools:studio.rectangle.help')
+        : localizedMessage('tools:studio.rectangle.empty'),
+    );
   }
   function sync() {
     const map = mapFor();
@@ -50,7 +56,18 @@ export function createGeometryEditor({ document, getSource, getMission, apply })
         const option = document.createElement('option');
         option.value = row.value;
         const { x, y, w, h } = row.rectangle;
-        option.textContent = `${row.surface === 'terrain' ? row.rectangle.kind : row.surface} ${row.index + 1} · (${x}, ${y}) ${w}×${h}`;
+        localizedText(option, () =>
+          t('tools:studio.rectangle.option', {
+            surface: studioSurfaceName(
+              row.surface === 'terrain' ? row.rectangle.kind : row.surface,
+            ),
+            index: row.index + 1,
+            x,
+            y,
+            width: w,
+            height: h,
+          }),
+        );
         return option;
       }),
     );
@@ -60,15 +77,13 @@ export function createGeometryEditor({ document, getSource, getMission, apply })
     const row = rows.find((entry) => entry.value === $('select').value);
     if (!row) return;
     try {
-      if (key !== context())
-        throw new Error(
-          'The map or mission changed. Refresh the rectangle selection before editing.',
-        );
+      if (key !== context()) throw editorMessageError('errors:studio.rectangle.contextChanged');
       const command = { action, surface: row.surface, index: row.index, expectedMap };
       if (action === 'replace') {
         command.rectangle = Object.fromEntries(
           ['x', 'y', 'w', 'h'].map((axis) => {
-            if (!$(axis).value.trim()) throw new Error('Enter all four rectangle coordinates.');
+            if (!$(axis).value.trim())
+              throw editorMessageError('errors:studio.rectangleCoordinates');
             return [axis, Number($(axis).value)];
           }),
         );
@@ -78,10 +93,9 @@ export function createGeometryEditor({ document, getSource, getMission, apply })
       if (apply(candidate) === false) return;
       key = null;
       sync();
-      $('result').textContent =
-        'Applied to a new local map revision. Other missions are unchanged. Undo is available; test the changed route.';
+      localizedText($('result'), localizedMessage('tools:studio.rectangle.applied'));
     } catch (error) {
-      $('result').textContent = `Not applied: ${error.message}`;
+      showEditorFailure($('result'), error);
     }
   }
   $('select').onchange = select;
@@ -94,9 +108,8 @@ export function createGeometryEditor({ document, getSource, getMission, apply })
   $('remove').onclick = () => {
     if (!armed) {
       armed = true;
-      $('remove').textContent = 'Confirm remove rectangle';
-      $('result').textContent =
-        'Activate Remove again. The compiler will reject removal that invalidates a spawn or actor.';
+      localizedText($('remove'), localizedMessage('tools:studio.rectangle.confirmRemove'));
+      localizedText($('result'), localizedMessage('tools:studio.rectangle.removeAgain'));
       return;
     }
     disarm();

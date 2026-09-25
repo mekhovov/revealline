@@ -28,6 +28,17 @@ const directionKeys = {
   right: 'tools:studio.geometry.right',
 };
 const terrainKeys = { slow: 'interface:slowField', lethal: 'interface:lethalField' };
+const surfaceKeys = {
+  ...terrainKeys,
+  foundations: 'interface:foundation',
+  walls: 'interface:wall2',
+};
+export function studioDirectionName(direction) {
+  return directionKeys[direction] ? t(directionKeys[direction]) : direction;
+}
+export function studioSurfaceName(surface) {
+  return surfaceKeys[surface] ? t(surfaceKeys[surface]) : surface;
+}
 
 /** The accepted project owns its child copy. A custom project cannot translate
  * an unchanged child just by retaining a shipped mission's name or identifier. */
@@ -224,9 +235,7 @@ export function studioGeometryText(mission, preview) {
               manifest.level.directionalFields.zones.map((zone) =>
                 t('tools:studio.geometry.field', {
                   id: zone.id,
-                  direction: directionKeys[zone.direction]
-                    ? t(directionKeys[zone.direction])
-                    : zone.direction,
+                  direction: studioDirectionName(zone.direction),
                   x: zone.x,
                   y: zone.y,
                   width: zone.w,

@@ -804,3 +804,26 @@ bonus checkpoint (7,836 messages / 6,265 references); the new actor catalog chec
 Log: `/tmp/rl-i18n/rebase/v1141-validation.log`. This does not replace the remaining full-suite,
 final-build/native and route-coverage work. Remaining direct Studio copy sites were inventoried
 in `/tmp/rl-i18n/rebase/v1141-studio-remaining-copy.txt` for continued migration.
+
+## Studio schedules, combat, objectives and map editors
+
+The branch remains based on main `cdefaef72` (v0.114.1); the latest fetch found no newer main
+commits. Timed bonus, combat, objective, directional-field, relay-gate and rectangle editors now
+translate their live options, guidance, action/confirmation labels and primary validation.
+Direction, surface and bonus names reuse existing shared keys. The coordinate-required message
+is shared with the contact-bonus editor. Canonical content models retain English TypeErrors and
+attach hidden, immutable translation descriptors, including the objective-to-gate dependency.
+No canonical source fields or identity inputs were translated.
+
+All 57 surrounding model/editor/preview tests and 7 new locale tests pass. The new tests switch
+both ways with unsaved inputs, focus/cursors, selections, option nodes, scroll position and pending
+removal intact; switching makes no draft reads or writes. Existing failures update immediately.
+Combat state describes the accepted edition while retaining an unapplied checkbox. Invalid model
+commands preserve source data and canonical English diagnostics. Changed-file lint and formatting
+pass. Source/key/plural validation reports 8,013 messages / 6,444 references. The preceding actor
+checkpoint also passed the complete generated-catalog/content-registry check (7,903 / 6,334).
+
+The browser provider now reports no available browsers; both inventory and opening a fresh local
+Studio tab were attempted. Browser verification of this batch is outstanding, alongside the
+remaining Studio host/encounter copy, deeper shared compiler errors and whole-project release
+checks. This focused checkpoint is not a claim of full coverage or merge readiness.
