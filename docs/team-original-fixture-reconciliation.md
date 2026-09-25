@@ -1,7 +1,7 @@
 # Team original-picture fixture reconciliation
 
 This test-only correction was prepared on exact production source
-`1fd63337ba1d1635d117877bf16c3e95d83a4167`. It changes no runtime,
+`f6fea50063b1824d5e7f12b826697975194a171d`. It changes no runtime,
 presentation asset, gameplay rule, version or published release.
 
 ## Reproduced fixture failure
@@ -28,27 +28,23 @@ mission and hides Next. The corrected expectation verifies that exact ending
 copy and that the accepted picture remains retained. It does not make legacy
 content unavailable through its existing browser entry.
 
-## Separate inherited lifecycle failures
+## Integrated lifecycle correction
 
-The untouched `game/test/coop-host.test.mjs` still reports three failures on
-this exact base, all at its existing assertion on line 1532:
+The first combined UX2 inventory reproduced three separate already-paused Team
+lifecycle failures after blur, hidden, and persisted pagehide. The game correctly
+retired Help and stale controller intent, but the controller echo window also
+consumed the first fresh keyboard Confirm after the held controller was released.
 
-- already-paused Team retires Help and controller intent on **blur**;
-- the same lifecycle contract on **hidden**;
-- the same lifecycle contract on persisted **pagehide**.
+The shared guard now exposes an explicit lifecycle-neutral boundary. A held
+controller remains blocked after return; once a neutral frame is sampled, a fresh
+keyboard action is accepted immediately. The ordinary delayed Steam keyboard and
+trusted-click echo window remains unchanged. The guard suite passes 18/18 and the
+complete Team host passes 77/77, including all three lifecycle paths.
 
-The complete file produced 77 cases: 74 passed and those three failed. All
-three observed `coop-resume.disabled === false` where the test expects `true`
-after returning to the foreground. They reproduce without the Team-original
-fixture correction, share no changed file or actor-picture request path, and
-remain a separate lifecycle investigation. No assertion or runtime behavior
-for them is changed here.
-
-The final serial run of the three corrected original-picture host files passed
-all 17 reported tests with zero failures, skips or cancellations. The focused
-changing-return case also passed independently. Repository lint, formatting,
-native formatting, validation and `git diff --check` passed. These checks used
-the repository's existing v0.112.0 metadata unchanged.
+The integrated original-picture cases passed in the serial changed-test inventory.
+Repository lint, repository/native formatting, validation, motion syntax and
+`git diff --check` are rerun on the final reconciled source. The existing v0.112.0
+metadata remains unchanged.
 
 ## Evidence boundaries
 
