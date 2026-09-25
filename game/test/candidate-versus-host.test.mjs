@@ -103,8 +103,9 @@ for (const difficulty of ['gentle', 'standard', 'expert'])
     assert.equal(p.renders[0].classId, 'scout');
     assert.equal(p.renders[0].level.rules.timeLimitSeconds, 0);
     assert.equal(p.$('race-time-field').hidden, true);
-    assert.equal(p.$('race-clock').textContent, 'No countdown');
-    assert.equal(p.$('race-clock').dataset.compact, '∞');
+    assert.equal(p.$('race-clock-label').textContent, 'ELAPSED');
+    assert.equal(p.$('race-clock').textContent, '0:00');
+    assert.equal(p.$('race-clock').dataset.compact, '0:00');
     assert.match(p.$('race-summary').textContent, /No race countdown/);
     assert.match(p.$('race-format-help').textContent, /No race countdown/);
     assert.doesNotMatch(p.$('race-format-help').textContent, /At the time limit/);
@@ -324,8 +325,9 @@ test('authored races ignore the Legacy timer and do not mint an idle clear after
   });
   p.frames(451, 200);
   assert(p.renders.every((run) => run.status === 'running' && run.time > 90));
-  assert.equal(p.$('race-clock').textContent, 'No countdown');
-  assert.equal(p.$('race-clock').dataset.compact, '∞');
+  assert.equal(p.$('race-clock-label').textContent, 'ELAPSED');
+  assert.equal(p.$('race-clock').textContent, '1:30');
+  assert.equal(p.$('race-clock').dataset.compact, '1:30');
   assert.doesNotMatch(p.$('race-message').textContent, /Time/);
   assert.equal(p.$('race-journey-next').hidden, true);
   await openMissions(p);
