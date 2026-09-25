@@ -49,16 +49,6 @@
             ><span>Loading Relay Rescue.</span>
           </p>
           <script src="team-entry.js"></script>
-          <div class="setup coop-arena-choice">
-            <label
-              >Arena<select id="coop-level">
-                <option value="first-connection" selected>
-                  First Connection · territory challenge
-                </option>
-                <option value="relay-yard">Relay Yard · stronghold challenge</option>
-              </select></label
-            >
-          </div>
           <p id="coop-selection-status" class="setup-note" role="status" hidden></p>
           <div class="coop-launch-grid">
             <figure id="coop-picture-preview" class="coop-picture-preview" data-state="preparing">
@@ -88,7 +78,17 @@
             </div>
           </div>
           <details id="coop-optional-setup" class="optional-setup">
-            <summary id="coop-optional-setup-toggle">Team options</summary>
+            <summary id="coop-optional-setup-toggle">Arena &amp; team options</summary>
+            <div class="setup coop-arena-choice">
+              <label
+                >Arena<select id="coop-level">
+                  <option value="first-connection" selected>
+                    First Connection · territory challenge
+                  </option>
+                  <option value="relay-yard">Relay Yard · stronghold challenge</option>
+                </select></label
+              >
+            </div>
             <p id="coop-advanced-note" class="setup-note"></p>
             <div class="setup">
               <label
