@@ -55,10 +55,18 @@ exact merged base reproduces those same three failures. They remain inherited ev
 not reported as quick-control passes. This feature changes no Team recipe input or generated
 presentation output.
 
-Revision 5 of the fingerprint audit compares every declared Field Kit source group on the exact
-stack base and candidate. UI, screens, motion, effects, Team and audio fingerprints are byte-for-byte
-unchanged, so no production-ledger write or approval inheritance is justified. The audit records
-the quick-control host, module and CSS as runtime paths outside the current declared recipe groups.
+Revision 5 of the fingerprint audit is preserved as the record that exposed nine quick-control
+runtime paths outside the then-current Field Kit dependency graph. The follow-up closes that gap:
+all nine paths now bind the UI and screen recipes, while the five JavaScript paths that own playback
+also bind the audio recipes. Independent mutation tests prove that each path changes exactly those
+consumer groups and that every missing path is rejected.
+
+The corrected closure appends Field Kit revision 78. Its UI, screen and audio recipes are explicitly
+back at `source`; none inherits revision 77's approval or review evidence. Motion, effects and Team
+retain their unchanged historical fingerprints. The revision-6 audit pins the source files, new
+group fingerprints, generated outputs and focused **14/14** dependency/history and **40/40**
+quick-control/host results. A test-only correction also advances the controller echo clock through
+the current 1,250 ms guard window before asserting native keyboard ownership.
 
 Independent final review, hosted source gates, actual browser layout, physical keyboard, touch and
 controller checks, frozen-build inspection and public release acceptance remain pending. PR #333
