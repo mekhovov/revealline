@@ -4281,5 +4281,9 @@
   "quickMusic.play": "Відтворити музику",
   "quickMusic.toggle": "Відтворити або призупинити музику",
   "quickMusic.toggleShortcut": "Відтворити або призупинити музику (B)",
-  "quickMusic.nextShortcut": "Наступна композиція (N)"
+  "quickMusic.nextShortcut": "Наступна композиція (N)",
+  "soundtrack.coreRecordingIncluded_one": "{{count}} основний запис включено до гри й він не дублюється в бюджеті медіафайлів.",
+  "soundtrack.coreRecordingIncluded_few": "{{count}} основні записи включено до гри й вони не дублюються в бюджеті медіафайлів.",
+  "soundtrack.coreRecordingIncluded_many": "{{count}} основних записів включено до гри й вони не дублюються в бюджеті медіафайлів.",
+  "soundtrack.coreRecordingIncluded_other": "{{count}} основного запису включено до гри й він не дублюється в бюджеті медіафайлів."
 }

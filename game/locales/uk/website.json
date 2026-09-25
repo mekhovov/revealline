@@ -212,5 +212,9 @@
   "page.fontSource": "запис джерела й контрольної суми",
   "page.supportingFontSources": "Версії джерел допоміжних шрифтів, спосіб збірки й контрольні суми файлів",
   "page.opening": "Відкриваємо Reveal / Line…",
-  "page.catalogCompressionNotice": "Каталоги перекладів використовують lz-string від pieroxy на умовах [[license]]."
+  "page.catalogCompressionNotice": "Каталоги перекладів використовують lz-string від pieroxy на умовах [[license]].",
+  "page.mediabunnyNotice": "Додатковий локальний обрізувач відео використовує закріплену версію Mediabunny 1.59.1 на умовах [[license]]; до збірки включено [[source]].",
+  "page.mplLicense": "ліцензії MPL-2.0",
+  "page.sourceChecksumRecord": "запис джерела й контрольної суми",
+  "page.openingThemeNotice": "Музика початкової теми: [[title]] від [[creator]] на умовах [[license]]. Це сучасна метал-адаптація мелодії Миколи Леонтовича [[shchedryk]]; вона не претендує на відтворення традиційного українського інструментарію."
 }
