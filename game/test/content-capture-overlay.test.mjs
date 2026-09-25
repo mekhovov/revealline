@@ -227,5 +227,13 @@ test('the Studio locale hook repaints the accepted map without inspecting or ren
   assert.match(callback, /if \(paintedPreview\) draw\(paintedPreview\)/);
   assert.doesNotMatch(callback, /inspectBoard|render\(|session|prepareContentPreview|queueSave/);
   assert.match(host, /if \(!mission\) \{\s*paintedPreview = null;/);
-  assert.match(host, /if \(!event\.persisted\) \{\s*stopMapLocale\(\);\s*paintedPreview = null;/);
+  const disposal = host.slice(host.indexOf("window.addEventListener('pagehide'"));
+  assert.match(
+    disposal,
+    /if \(!event\.persisted\) \{[^}]*stopMapLocale\(\);[^}]*paintedPreview = null;/,
+  );
+  assert.match(
+    disposal,
+    /if \(!event\.persisted\) \{[^}]*stopGameplayTuning\(\);[^}]*gameplayTuning\.dispose\(\);/,
+  );
 });
