@@ -354,7 +354,10 @@ export function createControllerRouter({
             JOIN_BUTTONS.some((i) => pad.buttons.has(i) && !candidate.previousJoin.has(i));
         candidate.previousJoin = new Set(pad.buttons);
         if (join) {
-          menuConfirmActive = false;
+          // Joining consumes the edge, but Steam Input can still emit its native
+          // Enter/mouse echo after release. Expose held Confirm to the host guard
+          // without turning this same press into a menu activation.
+          menuConfirmActive = confirms(pad.buttons);
           assigned = candidate;
           clear();
           if (autoJoin) blocked = false;
