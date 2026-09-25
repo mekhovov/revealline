@@ -12,9 +12,9 @@ export function readingInputPrompt({
       : t('interface:scrollToRead');
   const exit =
     modality === 'controller'
-      ? `${controls.confirm} or ${controls.back}`
+      ? t('common:controls.either', { confirm: controls.confirm, back: controls.back })
       : modality === 'keyboard'
         ? t('interface:enterSpaceOrEscape')
         : t('interface:doneReading');
-  return `${scroll} · ${exit} returns`;
+  return t('common:reading.prompt', { scroll, exit });
 }
