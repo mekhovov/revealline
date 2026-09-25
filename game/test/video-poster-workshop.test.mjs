@@ -40,7 +40,7 @@ async function setup(t, options = {}) {
   doc.body.append(main);
   const map = new Map([[main.id, main]]);
   for (const [, tag, attrs, id, rest] of html.matchAll(
-    /<(a|p|fieldset|input|button|section|img|h2)\b([^>]*?)id="([^"]+)"([^>]*)>/g,
+    /<(a|p|fieldset|input|select|button|section|img|h2)\b([^>]*?)id="([^"]+)"([^>]*)>/g,
   )) {
     const el = doc.createElement(tag);
     el.id = id;
@@ -69,6 +69,7 @@ async function setup(t, options = {}) {
   for (const id of ['image', 'download', 'evidence', 'preview-title'])
     map.get('video-poster-preview').append(map.get(`video-poster-${id}`));
   map.get('video-poster-controls').disabled = false; // Successful classic launcher default.
+  map.get('video-poster-transform').value = 'source';
   mountToolReturnLinks({
     document: doc,
     href: 'https://example.test/authoring/video-poster/?journey=opening',
@@ -133,8 +134,8 @@ async function setup(t, options = {}) {
         original: file,
         info: {
           mime: 'video/mp4',
-          width: 1,
-          height: 1,
+          width: 640,
+          height: 360,
           bytes: 100,
           durationSeconds: 6,
           sha256: 'a'.repeat(64),
@@ -313,6 +314,10 @@ test('verified optional trim publishes the adapter output URL and explicit audio
               end: { meanAbsoluteRgbError: 0.003 },
             },
             audioSync: { status: 'unverified', note: 'No audio decoder evidence.' },
+            transform: {
+              targetVideoBitrate: null,
+              observedContainerBitsPerSecond: 1234,
+            },
           },
         };
       },
@@ -326,12 +331,65 @@ test('verified optional trim publishes the adapter output URL and explicit audio
   assert.equal(h.$('trim').disabled, false);
   assert.equal(await h.host.trimVideo(), true);
   assert.equal(h.$('trim-download').hidden, false);
-  assert.equal(h.$('trim-download').download, 'RevealLine-trimmed.mp4');
+  assert.equal(h.$('trim-download').download, 'RevealLine-transformed.mp4');
   assert.match(h.$('trim-evidence').textContent, /Visual boundaries: start error 0\.002/);
   assert.match(h.$('trim-evidence').textContent, /Audio synchronization: unverified/);
   assert.deepEqual(await h.urls.values().next().value.text(), 'trimmed');
   h.host.clear();
   assert.equal(h.urls.size, 0);
+});
+
+test('bounded resize/compression plan supports whole-video conversion and invalidates stale support', async (t) => {
+  const output = new Blob(['resized'], { type: 'video/mp4' });
+  let supportProfile = null,
+    trimProfile = null;
+  const h = await setup(t, {
+    physicalTrim: {
+      support: async (_info, options) => {
+        supportProfile = options.transform;
+        return { supported: true, formats: ['video/mp4'], reason: '' };
+      },
+      trim: async (_original, _info, range, options) => {
+        trimProfile = options.transform;
+        assert.deepEqual([range.startSeconds, range.endSeconds], [0, 6]);
+        return {
+          blob: output,
+          info: {
+            mime: 'video/mp4',
+            width: 1,
+            height: 1,
+            durationSeconds: 6,
+            bytes: output.size,
+          },
+          evidence: {
+            outputSha256: 'd'.repeat(64),
+            visual: {
+              method: 'fresh-presented-frame-decoded-png-rgb-grid.v1',
+              start: { meanAbsoluteRgbError: 0.001 },
+              end: { meanAbsoluteRgbError: 0.001 },
+            },
+            audioSync: { status: 'not-present', note: 'No tracks.' },
+            transform: {
+              targetVideoBitrate: 900_000,
+              observedContainerBitsPerSecond: 800_000,
+            },
+          },
+        };
+      },
+    },
+  });
+  await h.inspect();
+  assert.equal(h.$('trim').disabled, true, 'Source-size full-range rewrite is not offered.');
+  h.$('transform').value = 'compact';
+  h.$('transform').onchange();
+  assert.match(h.$('transform-plan').textContent, /0\.9 Mbit\/s.*Upscaling is disabled/);
+  assert.match(h.$('trim-support').textContent, /Output plan changed/);
+  assert.equal(await h.host.checkPhysicalTrim(), true);
+  assert.equal(supportProfile, 'compact');
+  assert.equal(h.$('trim').disabled, false);
+  assert.equal(await h.host.trimVideo(), true);
+  assert.equal(trimProfile, 'compact');
+  assert.match(h.$('trim-evidence').textContent, /0\.9 Mbit\/s target.*800,000 bit\/s/);
 });
 
 test('invalid numeric times do not clamp, allocate or disturb an existing poster', async (t) => {

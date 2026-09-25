@@ -175,15 +175,35 @@
         </p>
       </fieldset>
       <fieldset>
-        <legend data-i18n="tools:videoPoster.optionalPhysicalTrim">Optional physical trim</legend>
+        <legend data-i18n="tools:videoPoster.optionalPhysicalTrim">
+          Optional physical trim, resize and compression
+        </legend>
         <p data-i18n="tools:videoPoster.physicalTrimHelp">
-          Physical trim must create different video bytes. RevealLine checks the exported hash,
-          decoded duration, picture orientation, and fresh start/end frame comparisons before
+          Choose a bounded output plan. RevealLine checks the exported hash, decoded duration, exact
+          output dimensions and codec, audio tracks, and fresh start/end frame comparisons before
           offering a download.
+        </p>
+        <label for="video-poster-transform" data-i18n="tools:videoPoster.outputSizeCompression"
+          >Output size and compression</label
+        >
+        <select id="video-poster-transform" disabled>
+          <option value="source" data-i18n="tools:videoPoster.transformSource">
+            Keep source size · encoder default
+          </option>
+          <option value="balanced" data-i18n="tools:videoPoster.transformBalanced">
+            Fit within 1280 × 720 · 2.5 Mbit/s AVC target
+          </option>
+          <option value="compact" data-i18n="tools:videoPoster.transformCompact">
+            Fit within 640 × 360 · 0.9 Mbit/s AVC target
+          </option>
+        </select>
+        <p id="video-poster-transform-plan" data-i18n="tools:videoPoster.chooseVideoFirst">
+          Choose and inspect a video first.
         </p>
         <p id="video-poster-trim-support" data-i18n="tools:videoPoster.trimSupportUnchecked">
           Converter support has not been checked. The pinned converter loads only after you ask; the
-          first supported slice is silent AVC/H.264 MP4.
+          supported slice is one silent browser-decodable MP4 or WebM video track, exported as
+          AVC/H.264 MP4.
         </p>
         <div class="actions">
           <button
@@ -192,7 +212,7 @@
             disabled
             data-i18n="tools:videoPoster.checkTrimSupport"
           >
-            Check physical trim support
+            Check trim/conversion support
           </button>
           <button
             id="video-poster-trim"
@@ -200,14 +220,14 @@
             disabled
             data-i18n="tools:videoPoster.trimVideo"
           >
-            Physically trim video
+            Transform video
           </button>
         </div>
         <p id="video-poster-trim-evidence" data-i18n="tools:videoPoster.noPhysicalTrim">
-          No physical trim has been produced. Playback range keeps the complete original video.
+          No transformed video has been produced. Playback range keeps the complete original video.
         </p>
         <a id="video-poster-trim-download" hidden data-i18n="tools:videoPoster.downloadPhysicalTrim"
-          >Download verified physical trim</a
+          >Download verified transformed video</a
         >
       </fieldset>
       <section id="video-poster-preview" hidden aria-labelledby="video-poster-preview-title">
