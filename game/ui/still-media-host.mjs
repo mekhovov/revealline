@@ -1,3 +1,4 @@
+import { t } from '../i18n/index.mjs';
 import { createOperationStatus } from './operation-status.mjs';
 import { createManagedMediaStore } from '../managed-media-store.mjs';
 import { createStillMediaStore } from '../media-store.mjs';
@@ -16,7 +17,7 @@ import { attachControllerNavigation } from './controller-navigation.mjs';
 
 export async function readStillWorkshopChannel({ signal, fetchImpl = globalThis.fetch } = {}) {
   const check = () => {
-    if (signal?.aborted) throw new DOMException('Workshop channel load cancelled.', 'AbortError');
+    if (signal?.aborted) throw new DOMException(t("interface:workshopChannelLoadCancelled"), 'AbortError');
   };
   check();
   const response = await fetchImpl(new URL('../build-info.json', import.meta.url), { signal });
@@ -24,12 +25,12 @@ export async function readStillWorkshopChannel({ signal, fetchImpl = globalThis.
   if (response.status === 404) return 'dev';
   if (!response.ok)
     throw new Error(
-      'Workshop build information could not load. Retry the complete edition; no game channel was selected.',
+      t("interface:workshopBuildInformationCouldNotLoadRetryTheCompleteEdition"),
     );
   const info = await response.json();
   check();
   if (!info || typeof info.version !== 'string')
-    throw new Error('Workshop build version is invalid; no game channel was selected.');
+    throw new Error(t("interface:workshopBuildVersionIsInvalidNoGameChannelWasSelected"));
   const channel = `release-${info.version}`;
   stillAuthoringKeys(channel);
   return channel;
@@ -38,7 +39,7 @@ async function readSource({ signal } = {}) {
   const get = async (path) => {
     const response = await fetch(new URL(path, import.meta.url), { signal });
     if (!response.ok)
-      throw new Error('Source game content could not load. Serve this repository over HTTP.');
+      throw new Error(t("interface:sourceGameContentCouldNotLoadServeThisRepositoryOver"));
     return response.json();
   };
   const [campaign, themes, classes, presets, channel] = await Promise.all([
@@ -111,7 +112,7 @@ export function attachStillMediaHost({
     else feedback.begin({ message }).finish({ message, state });
   }
   setStatus(
-    'Choose Open local media to read this edition’s pictures and stories. No media database has been opened.',
+    t("interface:chooseOpenLocalMediaToReadThisEditionSPictures"),
   );
   const router = createControllerRouter({ eventTarget: win, ...(readPads ? { readPads } : {}) });
   const navigation = attachControllerNavigation({
@@ -130,7 +131,7 @@ export function attachStillMediaHost({
     `Real local media opened for ${channel ?? sourceChannel}. Picture assignments are ready for fresh flights in this edition.`;
   const explain = (error) =>
     error?.name === 'VersionError'
-      ? 'This database needs a newer compatible media workshop. Open that version to recover/export it. No downgrade or deletion was attempted.'
+      ? t("interface:thisDatabaseNeedsANewerCompatibleMediaWorkshopOpenThat")
       : error instanceof Error
         ? error.message
         : String(error);
@@ -173,7 +174,7 @@ export function attachStillMediaHost({
   async function open() {
     if (disposed || opening) return false;
     if (!['http:', 'https:'].includes(win.location.protocol)) {
-      setStatus('Use localhost or HTTPS. File URLs cannot safely open this same-origin workshop.');
+      setStatus(t("interface:useLocalhostOrHttpsFileUrlsCannotSafelyOpenThis"));
       return false;
     }
     const returnFocus = doc.activeElement;
@@ -182,7 +183,7 @@ export function attachStillMediaHost({
     const ticket = ++openSerial;
     openController = new AbortController();
     const lease = feedback.begin({
-      message: 'Opening the picture workshop and installed map catalogue…',
+      message: t("interface:openingThePictureWorkshopAndInstalledMapCatalogue"),
       stage: 'reading',
       isCurrent: () => !disposed && ticket === openSerial,
     });
@@ -231,7 +232,7 @@ export function attachStillMediaHost({
         $('still-host-export-audio').disabled = false;
       }
       lease.update({
-        message: 'Opening and verifying local picture and story originals…',
+        message: t("interface:openingAndVerifyingLocalPictureAndStoryOriginals"),
         stage: 'verifying',
       });
       const result = await panel.open({ returnFocus });
@@ -241,7 +242,7 @@ export function attachStillMediaHost({
         setStatus(
           result
             ? readyMessage()
-            : 'Workshop open failed. Read its error; saved data was not replaced. Audio recovery can be attempted after closing the dialog.',
+            : t("interface:workshopOpenFailedReadItsErrorSavedDataWasNot"),
         );
         failedOpening = result ? null : lease;
       }
@@ -268,7 +269,7 @@ export function attachStillMediaHost({
     audioTask = own;
     $('still-host-export-audio').disabled = true;
     const lease = feedback.begin({
-      message: 'Reading saved music and checking backup permissions…',
+      message: t("interface:readingSavedMusicAndCheckingBackupPermissions"),
       stage: 'reading',
       isCurrent: () => !disposed && audioTask === own,
     });
@@ -289,7 +290,7 @@ export function attachStillMediaHost({
         .filter(Boolean)
         .join(' ');
       lease.update({
-        message: ['Preparing the verified soundtrack backup…', notice].filter(Boolean).join(' '),
+        message: [t("interface:preparingTheVerifiedSoundtrackBackup"), notice].filter(Boolean).join(' '),
         stage: 'exporting',
       });
       const available = new Set(saved.assets.map((asset) => asset.sha256));
@@ -337,7 +338,7 @@ export function attachStillMediaHost({
   $('still-host-download-audio').onclick = () => {
     setStatus(
       [
-        'Download requested. Confirm the destination in your browser; the prepared copy remains available to retry.',
+        t("interface:downloadRequestedConfirmTheDestinationInYourBrowserThePrepared"),
         audioNotice,
       ]
         .filter(Boolean)
@@ -347,7 +348,7 @@ export function attachStillMediaHost({
   $('still-host-close').onclick = () => {
     closeStorage();
     setStatus(
-      'Local connections closed. Saved originals remain; the database version was not downgraded.',
+      t("interface:localConnectionsClosedSavedOriginalsRemainTheDatabaseVersionWas"),
     );
     $('still-host-open').focus();
   };

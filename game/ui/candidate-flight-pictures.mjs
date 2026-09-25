@@ -1,3 +1,4 @@
+import { t } from '../i18n/index.mjs';
 import { required } from '../data-json.mjs';
 import { compileAssetRevision } from '../content-design/assets.mjs';
 import {
@@ -8,7 +9,7 @@ import {
 } from '../content-design/picture.mjs';
 import { pictureDisplayContext } from './presentation-image.mjs';
 
-const cancelled = () => new DOMException('Candidate picture preparation cancelled.', 'AbortError');
+const cancelled = () => new DOMException(t("interface:candidatePicturePreparationCancelled"), 'AbortError');
 
 /** One candidate attempt, one authored theme and one immutable original. Uses
  * the same readiness/display interface as flight-pictures without pretending to
@@ -23,14 +24,14 @@ export function createCandidateFlightPictures({
 }) {
   const ownContext = pictureDisplayContext(context),
     asset = compileAssetRevision(source);
-  required(typeof acquire === 'function', 'Candidate picture acquisition is required.');
+  required(typeof acquire === 'function', t("interface:candidatePictureAcquisitionIsRequired"));
   required(
     Number.isFinite(timeoutMs) && timeoutMs > 0 && timeoutMs <= 20000,
-    'Invalid candidate picture deadline.',
+    t("interface:invalidCandidatePictureDeadline"),
   );
   required(
     picture === null || isCandidatePictureFor(asset, picture),
-    'Prepared picture does not match this exact original.',
+    t("interface:preparedPictureDoesNotMatchThisExactOriginal"),
   );
   let binding = picture ? claimCandidatePicture(asset, picture) : null,
     pending = null,
@@ -43,8 +44,8 @@ export function createCandidateFlightPictures({
     old?.abort();
   };
   async function ensure(themeId = ownContext.themeId, { signal, onStatus = () => {} } = {}) {
-    required(!disposed, 'Candidate picture attempt is disposed.');
-    required(themeId === ownContext.themeId, 'This candidate keeps its authored theme.');
+    required(!disposed, t("interface:candidatePictureAttemptIsDisposed"));
+    required(themeId === ownContext.themeId, t("interface:thisCandidateKeepsItsAuthoredTheme"));
     if (signal?.aborted) throw cancelled();
     const ticket = generation + 1;
     cancel();
@@ -84,7 +85,7 @@ export function createCandidateFlightPictures({
         () =>
           stop(
             new Error(
-              'The candidate picture did not become ready in time. Keep this flight and retry.',
+              t("interface:theCandidatePictureDidNotBecomeReadyInTimeKeep"),
             ),
           ),
         timeoutMs,
@@ -94,7 +95,7 @@ export function createCandidateFlightPictures({
       candidate = await Promise.race([
         stopped,
         Promise.resolve().then(async () => {
-          report('preparing', 'Verifying and opening this mission’s original picture…');
+          report('preparing', t("interface:verifyingAndOpeningThisMissionSOriginalPicture"));
           const result = await acquire(asset, { signal: controller.signal });
           try {
             claimCandidatePicture(asset, result);
@@ -112,10 +113,10 @@ export function createCandidateFlightPictures({
       check();
       required(
         isCandidatePictureFor(asset, candidate),
-        'Candidate picture was not verified for this original.',
+        t("interface:candidatePictureWasNotVerifiedForThisOriginal"),
       );
       // Observers may close the host or start newer work. Do not publish first.
-      report('ready', 'This mission’s original picture is ready.');
+      report('ready', t("interface:thisMissionSOriginalPictureIsReady"));
       binding = candidate;
       candidate = null;
       return true;

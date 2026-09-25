@@ -1,3 +1,4 @@
+import { t, localizedText } from '../../game/i18n/index.mjs';
 import { createDisplayPreferences } from '../../game/display-preferences.mjs';
 
 /** One page-owned view of the shared policy. This module cannot refresh a
@@ -20,7 +21,7 @@ export function mountInterfacePreferences({
   let disposed = false;
   const warning = (message) => {
     if (disposed) return;
-    notice.textContent = message;
+    localizedText(notice, () =>message);
     notice.hidden = !message;
   };
   const preferences = createDisplayPreferences({
@@ -37,9 +38,9 @@ export function mountInterfacePreferences({
     size.value = state.textSize;
     reduced.checked = state.reducedEffects;
     const systemCap = state.effectiveReducedEffects && !state.reducedEffects;
-    cap.textContent = systemCap
-      ? 'Your system requests reduced motion. Preview effects remain reduced.'
-      : '';
+    localizedText(cap, () =>systemCap
+      ? t("tools:yourSystemRequestsReducedMotionPreviewEffectsRemainReduced")
+      : '');
     cap.hidden = !systemCap;
   };
   const stopView = preferences.subscribe(render);
