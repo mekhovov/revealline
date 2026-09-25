@@ -1,6 +1,29 @@
 {
   "baselineRevision": "5d6c0ec3e6995cd0485fe5065ff5ea2bf82e0cdc",
   "nodeVersion": "20.19.5",
+  "rebasedVerification": {
+    "baselineRevision": "0e678f42579c957eb66de0d4bb842e56e324842e",
+    "targetRelease": "v0.132.0",
+    "focused": {
+      "tests": 271,
+      "pass": 271,
+      "fail": 0,
+      "concurrency": 1
+    },
+    "gates": {
+      "validate": "passed",
+      "lint": "passed",
+      "formatCheck": "passed",
+      "productionReproduction": "passed at revision 83",
+      "ordinaryBuild": "passed"
+    },
+    "baselineFailuresConfirmed": [
+      "Team picture fixture cannot settle",
+      "Versus menu transport timeout",
+      "stale reviewed-screen fingerprint expectation"
+    ],
+    "note": "Each listed failure was reproduced in the unchanged 0e678f42 worktree. Historical runs below remain evidence from the initial v0.116 implementation cycle."
+  },
   "fullSuite": {
     "command": "npm test (node scripts/game-cli.mjs test)",
     "outcome": "Test runner exited 1; CLI reported Tests failed with exit 1. The shell wrapper subsequently printed a tail and returned 0.",

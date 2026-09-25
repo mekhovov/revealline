@@ -125,11 +125,11 @@ const REVIEWED_RECIPE_INPUTS = {
     ],
   },
   audio: {
-    sha256: '1c4cd15dfa9638b62726881cd765b247966595063a2d7f20a076d8c6ab851f30',
+    sha256: 'a78ed382b88ab15068943f1774f782a47f2f6360c4d9059351a90437d939fbee',
     evidence: [
-      'Scoped live archive reconciliation: docs/verification/online-soundtrack-reconciliation-2026-09-25/source-review.json sha256:55198d5d74044c8a272f50b32fb01240245dea1843869d22f7dab21d0c310e42. Nineteen ordered audio inputs sha256:1c4cd15dfa9638b62726881cd765b247966595063a2d7f20a076d8c6ab851f30 preserve the bounded catalogue trust boundary, bind selection to resolver-owned policy and accept only the explicit default=false marker used by the 24 post-baseline auditions. The post-review changes outside the reviewed soundtrack implementation are the repository-standard Prettier rewrite of game/soundtrack.mjs and the controller-only Steam Deck Confirm transaction repair documented at docs/v0.130.0-steamdeck-confirm-transaction.md sha256:19fb9af5b7715c1e7187294413df8dc65026e25be4237bd6dfbe86875cc3e89d; soundtrack behavior and exports are unchanged.',
-      'All8 selected roles remain the same procedural recipes with no new audio files. Focused tests cover bounded decode, exact immutable paths, rejection of default=true and forged Recording-mode policy, clicked-first streaming, style mixing, shuffle and ordered queues, repeat all/one/off, remote two-deck transitions, sequential fallback, failure and cancellation.',
-      'No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, cold-offline, frozen-build or public game approval. Archive previews remain outside trusted Automatic and built-in playlists; historical records and original payloads are immutable.',
+      'Scoped offline ownership continuation: docs/offline-pwa/audio-source-review.json sha256:8d0772dc20dcba66727607a536a03ce1800b8e3f7e8ce9d0ec269e8c157c35ed. Twenty-five ordered audio inputs sha256:a78ed382b88ab15068943f1774f782a47f2f6360c4d9059351a90437d939fbee bind installed playback to imported or verified official bytes and keep recorded music outside the required gameplay cache.',
+      'All 8 selected roles remain the same procedural recipes. Focused tests cover local-only selection, explicit download, resumable ownership, removal, fallback, rights, cancellation and imported-media preservation.',
+      'No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, current frozen-build or public game approval. Historical records and original payloads remain immutable.',
     ],
   },
   motion: {

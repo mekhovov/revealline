@@ -16,8 +16,21 @@ export async function buildOfflineContent(entries, excluded, version) {
     chapterPaths.add(chapter.pack.path);
     chapterPaths.add(chapter.media.path);
   }
+  const recordings = SOUNDTRACK_CATALOGUE.tracks.filter(
+    (track) =>
+      soundtrackRights(track, { catalogue: SOUNDTRACK_CATALOGUE }).offlineCache === 'allowed',
+  );
+  const recordingPaths = new Set(recordings.map((track) => track.path));
+  for (const track of recordings) {
+    const entry = byPath.get(track.path);
+    if (
+      entry &&
+      (entry.bytes.length !== track.asset.bytes || digest(entry.bytes) !== track.asset.sha256)
+    )
+      throw new Error(`Shipped soundtrack differs from its catalogue: ${track.id}`);
+  }
   const files = entries
-    .filter((entry) => excluded.has(entry.name))
+    .filter((entry) => excluded.has(entry.name) && !recordingPaths.has(entry.name))
     .map((entry) => ({
       path: entry.name,
       bytes: entry.bytes.length,
@@ -58,10 +71,6 @@ export async function buildOfflineContent(entries, excluded, version) {
     }
   }
   groups.push(...chapterGroups.values());
-  const recordings = SOUNDTRACK_CATALOGUE.tracks.filter(
-    (track) =>
-      soundtrackRights(track, { catalogue: SOUNDTRACK_CATALOGUE }).offlineCache === 'allowed',
-  );
   for (const track of recordings)
     files.push({
       ...track.asset,
@@ -166,21 +175,32 @@ export async function buildOfflineContent(entries, excluded, version) {
 /** Publication evidence, generated after the worker to avoid a recursive content hash. */
 export function buildOfflineInventory(entries, catalogue, core) {
   const corePaths = new Set(core.map((file) => file.path));
+  const recordingByPath = new Map(
+    SOUNDTRACK_CATALOGUE.tracks.map((track) => [track.path, track.asset.sha256]),
+  );
   const files = entries.map((entry) => ({
     path: entry.name,
     bytes: entry.bytes.length,
     sha256: digest(entry.bytes),
-    kind:
-      /(^|\/)(authoring|tools)\//.test(entry.name) || entry.name === '_headers'
+    kind: recordingByPath.has(entry.name)
+      ? 'soundtrack'
+      : /(^|\/)(authoring|tools)\//.test(entry.name) || entry.name === '_headers'
         ? 'tooling'
         : 'gameplay',
-    delivery: corePaths.has(entry.name)
-      ? 'core'
-      : catalogue.files.some((file) => file.path === entry.name)
-        ? 'download'
-        : 'installation-metadata',
+    delivery: recordingByPath.has(entry.name)
+      ? 'optional-recording'
+      : corePaths.has(entry.name)
+        ? 'core'
+        : catalogue.files.some((file) => file.path === entry.name)
+          ? 'download'
+          : 'installation-metadata',
   }));
   const recordings = catalogue.files.filter((file) => file.kind === 'soundtrack');
+  const shippedRecordingHashes = new Set(
+    entries
+      .filter((entry) => recordingByPath.has(entry.name))
+      .map((entry) => recordingByPath.get(entry.name)),
+  );
   const required = [...core, ...catalogue.files.filter((file) => file.kind === 'gameplay')];
   const unique = [...new Map(required.map((file) => [file.sha256, file])).values()];
   const gameplayBytes = unique.reduce((sum, file) => sum + file.bytes, 0);
@@ -198,7 +218,12 @@ export function buildOfflineInventory(entries, catalogue, core) {
   return {
     format: 'revealline-offline-inventory.v1',
     version: catalogue.version,
-    files: [...files, ...recordings.map((file) => ({ ...file, delivery: 'optional-recording' }))],
+    files: [
+      ...files,
+      ...recordings
+        .filter((file) => !shippedRecordingHashes.has(file.sha256))
+        .map((file) => ({ ...file, delivery: 'optional-recording' })),
+    ],
     missions: catalogue.missions.map((mission) => ({ ...mission, requiresCore: true })),
     groups: catalogue.groups,
     sizes: {
