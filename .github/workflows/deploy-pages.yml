@@ -5,13 +5,6 @@ on:
     types: [published]
   pull_request:
     branches: [main]
-    paths-ignore:
-      - 'publishing/pages-controller/**'
-      - '.github/workflows/publish-frozen-pages.yml'
-      - '.github/workflows/deploy-pages.yml'
-      - '.cursor/skills/deploy-release-pages/**'
-      - 'docs/deployment.md'
-      - 'docs/fast-release-mode.md'
   workflow_dispatch:
     inputs:
       release_tag:
@@ -27,6 +20,10 @@ concurrency:
   # Superseded PR heads cannot qualify the current source; do not queue behind them.
   # Release routing and manual runs keep their existing serialization.
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+# `release-ready` is the single required status on protected `main`. Do not add
+# pull-request path filters above: a filtered workflow leaves a required check
+# pending forever. Maintenance is classified in preflight and exits quickly.
 
 jobs:
   release_gate:

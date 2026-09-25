@@ -14,6 +14,11 @@ RevealLine keeps development parallel and publishing serial.
 - Documentation, test-only evidence under `game/test/`, Pages-controller, and
   workflow-only maintenance remain eligible without consuming a product
   version. A PR that also changes runtime remains product work.
+- Protected `main` requires the aggregate `release-ready` check in strict
+  up-to-date mode, with administrator enforcement. Every PR reports that
+  context. When `main` advances, an already-green PR must update and rerun its
+  checks before merge; per-PR workflow concurrency alone does not serialize
+  merges.
 - A promoted release PR may aggregate several independently reviewed roots when
   their dependency order is explicit. Review every merge delta, build the exact
   aggregate once, and preserve each source PR and its focused evidence.
