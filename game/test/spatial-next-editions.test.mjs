@@ -19,6 +19,7 @@ const originalThemes = JSON.parse(
   await readFile(new URL('../content-design/themes.json', import.meta.url), 'utf8'),
 ).themes;
 const revised = ['stepping-stones', 'return-pocket', 'neutral-ground'];
+const revisedHorizon = ['island-outpost', 'long-way-home', 'horizon-remix'];
 const sourceId = (row) => row.runtimeId.split('/').at(-1);
 
 test('prior-edition qualification is bounded to the three preserved mission owners', async () => {
@@ -48,6 +49,153 @@ test('bounded prior projection preserves exact v9 manifests across modes and pre
         assert.deepEqual(actual.background, expected.background);
         assert.deepEqual(actual.design, expected.design);
       }
+});
+
+test('bounded Horizon projection preserves exact v10 manifests across modes and presets', async () => {
+  const route = await loadAuthoredJourneyRoute('whole-spatial-v10');
+  const full = compileContentProject(route.source);
+  const projection = spatialNextPriorEditionProjection(route.source, revisedHorizon);
+  const projected = compileContentProject(projection);
+  assert.deepEqual(
+    projection.missions.map((mission) => mission.id).toSorted(),
+    revisedHorizon.toSorted(),
+  );
+  assert.equal(projected.source.maps.length, 3);
+  for (const id of revisedHorizon)
+    for (const mode of ['solo', 'versus'])
+      for (const difficulty of ['gentle', 'standard', 'expert']) {
+        const expected = resolveMission(full, id, { mode, difficulty });
+        const actual = resolveMission(projected, id, { mode, difficulty });
+        assert.equal(actual.simulationIdentity, expected.simulationIdentity);
+        assert.deepEqual(actual.level, expected.level);
+        assert.deepEqual(actual.presentation, expected.presentation);
+        assert.deepEqual(actual.background, expected.background);
+        assert.deepEqual(actual.design, expected.design);
+      }
+});
+
+test('v11 selector exposes three v10 Horizon cards while retaining three v9 cards', async (t) => {
+  const launches = [];
+  const started = performance.now();
+  const owner = await createSpatialNextEditionSources({
+    activeRouteId: 'whole-spatial-v11',
+    originalThemes,
+    launch: (context) => {
+      launches.push(context);
+      return true;
+    },
+  });
+  assert(
+    performance.now() - started < 2500,
+    'Six prior cards must use two bounded three-mission projections.',
+  );
+  t.after(owner.dispose);
+  const library = createMissionLibrary(owner.sources);
+  assert.equal(library.missions.length, 6);
+  assert.equal(library.forMode('solo').length, 6);
+  assert.equal(library.forMode('versus').length, 6);
+  assert.equal(library.forMode('team').length, 0);
+  assert.deepEqual(
+    library.missions
+      .filter((row) => row.editionId === 'whole-spatial-v10')
+      .map(sourceId)
+      .toSorted(),
+    revisedHorizon.toSorted(),
+  );
+  assert.deepEqual(
+    library.missions
+      .filter((row) => row.editionId === 'whole-spatial-v9')
+      .map(sourceId)
+      .toSorted(),
+    revised.toSorted(),
+  );
+  for (const row of library.missions) {
+    assert.equal(row.automaticContinuation, false);
+    assert.match(row.edition, /^Previous Journey · v(?:9|10)$/);
+    assert.equal(await library.launch(row, { mode: 'solo' }), true);
+    assert.equal(launches.at(-1).libraryMissionId, row.id);
+    assert.equal(launches.at(-1).mode, 'solo');
+    const target = new URL(
+      missionLibraryHref({
+        baseURL: 'https://example.test/releases/current/site/game/',
+        currentMode: 'versus',
+        mode: 'solo',
+        journey: row.editionId,
+        missionId: row.id,
+        sourceJourney: 'whole-spatial-v11',
+      }),
+    );
+    assert.equal(target.searchParams.get('journey'), row.editionId);
+    assert.equal(readMissionLibraryHandoff(target.searchParams), row.id);
+  }
+});
+
+test('v11 active Horizon and exact v10 cards stay distinct and never cross edition on Next', async (t) => {
+  const activeRoute = await loadAuthoredJourneyRoute('whole-spatial-v11');
+  const priorRoute = await loadAuthoredJourneyRoute('whole-spatial-v10');
+  const themes = journeyActorThemeCandidates(originalThemes, { includeOriginals: true });
+  const activeHost = createCandidateVersusHost(activeRoute.source, {
+    themes,
+    corePackIds: activeRoute.corePackIds,
+    optionalCampaignIds: activeRoute.optionalCampaignIds,
+  });
+  const priorHost = createCandidateVersusHost(priorRoute.source, {
+    themes,
+    corePackIds: priorRoute.corePackIds,
+    optionalCampaignIds: priorRoute.optionalCampaignIds,
+  });
+  let selected;
+  const owner = await createSpatialNextEditionSources({
+    activeRouteId: activeRoute.id,
+    originalThemes,
+    launch: (context) => {
+      selected = context;
+      return true;
+    },
+  });
+  t.after(owner.dispose);
+  const library = createMissionLibrary([
+    journeyLibrarySource({
+      editionId: activeRoute.id,
+      edition: 'New Journey',
+      catalog: activeHost.catalog,
+      tags: (mission) => authoredJourneyMissionTags(mission, activeHost.manifest(mission)),
+      launch: () => true,
+    }),
+    ...owner.sources,
+  ]);
+  assert.equal(library.missions.length, activeHost.catalog.missions.length + 6);
+  const activeRows = library
+    .forMode('versus')
+    .filter((row) => row.editionId === 'whole-spatial-v11');
+  const boundary = activeRows.findIndex(
+    (row, index) => activeRows[index + 1] && row.campaignKey !== activeRows[index + 1].campaignKey,
+  );
+  assert(boundary >= 0);
+  assert.equal(librarySuccessor(library, activeRows[boundary], 'versus'), activeRows[boundary + 1]);
+  assert.equal(
+    librarySuccessor(library, activeRows.at(-1), 'versus'),
+    null,
+    'The final current card skips both manual prior-edition sources.',
+  );
+  for (const id of revisedHorizon) {
+    const runtimeId = activeHost.catalog.missions.find((mission) => mission.levelId === id).id;
+    const editions = library.missions.filter((row) => row.runtimeId === runtimeId);
+    assert.equal(editions.length, 2);
+    assert.deepEqual(
+      new Set(editions.map((row) => row.editionId)),
+      new Set(['whole-spatial-v10', 'whole-spatial-v11']),
+    );
+    const prior = editions.find((row) => row.editionId === 'whole-spatial-v10');
+    const active = editions.find((row) => row.editionId === 'whole-spatial-v11');
+    assert(active.tags.includes('Ukrainian'));
+    assert(!prior.tags.includes('Ukrainian'));
+    assert.equal(await library.launch(prior, { mode: 'versus' }), true);
+    assert.equal(selected.libraryMissionId, prior.id);
+    assert.equal(selected.mode, 'versus');
+    assert.equal(priorHost.catalog.find(prior.runtimeId)?.levelId, id);
+    assert.equal(librarySuccessor(library, prior, 'versus'), null);
+  }
 });
 
 test('v10 selector exposes exactly three separately qualified v9 cards in Solo and Versus', async (t) => {
