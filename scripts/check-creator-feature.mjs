@@ -73,5 +73,9 @@ if (!options.has('--service-only')) {
 }
 if (!options.has('--runtime-only')) {
   console.log('Running the self-hosted community service acceptance suite.');
-  await run('npm', ['test'], path.join(root, 'services', 'community'));
+  await run(
+    process.platform === 'win32' ? 'npm.cmd' : 'npm',
+    ['test'],
+    path.join(root, 'services', 'community'),
+  );
 }
