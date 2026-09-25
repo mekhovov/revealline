@@ -117,16 +117,18 @@ const REVIEWED_RECIPE_INPUTS = {
     ],
   },
   ui: {
-    sha256: '4b7db79dd3f6931dd72c0ae702f15a5a5d8ff2b7044aca5a2e02886e8e61636a',
+    sha256: 'c7ebea5695fe1fbd7c17eafdd0035dcd4d1651b5d3ec91893c6575334da38d3a',
     evidence: [
+      'v0.131 English/Ukrainian presentation continuation: docs/verification/v0.131.0-localization-presentation-continuation/review.json sha256:92c63ed7f4eb6f79502cae2089836de1fbdabcb1cacd76b55e22596e49492445; exact UI fingerprint sha256:c7ebea5695fe1fbd7c17eafdd0035dcd4d1651b5d3ec91893c6575334da38d3a. Maintained copy and operation status are locale-bound while the24 UI recipes, Field Kit tokens and DOM ownership contracts remain unchanged.',
       'Scoped actor-only UI functional continuation: docs/verification/actor-only-ui-continuation-2026-09-24/review.json sha256:dbde124fb9d24cb26dd901b51f58cf59fc7bfb4df212e47419cdb15581155b73; seven ordered UI inputs sha256:4b7db79dd3f6931dd72c0ae702f15a5a5d8ff2b7044aca5a2e02886e8e61636a. Only presentation host changes after the prior exact review; all24 UI recipe payloads, tokens and DOM ownership contracts remain unchanged.',
       'The actor-only profile uses a fixed registered image-slot set, creates no CSS URLs and refuses page apply, audio and picture operations. Full remains the default profile. Lease, cancellation, retained-runtime and exact source-binding tests cover the functional separation; fresh-origin Team screens retain the full-profile UI while FPV actors use the independent lease.',
       'UI functional continuation only. Complete navigation, forced-colour, screen-reader, every-viewport, physical-device, audio, offline, public and release acceptance remain separate. Prior UI reviews and immutable originals remain preserved; any UI input change reopens this group.',
     ],
   },
   audio: {
-    sha256: '1c4cd15dfa9638b62726881cd765b247966595063a2d7f20a076d8c6ab851f30',
+    sha256: 'b8ae27935bdab268874c79aafcea7848f823c2838ecdf99e52f8d9c64e06e831',
     evidence: [
+      'v0.131 English/Ukrainian presentation continuation: docs/verification/v0.131.0-localization-presentation-continuation/review.json sha256:92c63ed7f4eb6f79502cae2089836de1fbdabcb1cacd76b55e22596e49492445; exact audio fingerprint sha256:b8ae27935bdab268874c79aafcea7848f823c2838ecdf99e52f8d9c64e06e831. Locale-bound controls, credits, diagnostics and live flight announcements preserve playback state, volume values, rights metadata, soundtrack bytes and procedural recipes.',
       'Scoped live archive reconciliation: docs/verification/online-soundtrack-reconciliation-2026-09-25/source-review.json sha256:55198d5d74044c8a272f50b32fb01240245dea1843869d22f7dab21d0c310e42. Nineteen ordered audio inputs sha256:1c4cd15dfa9638b62726881cd765b247966595063a2d7f20a076d8c6ab851f30 preserve the bounded catalogue trust boundary, bind selection to resolver-owned policy and accept only the explicit default=false marker used by the 24 post-baseline auditions. The post-review changes outside the reviewed soundtrack implementation are the repository-standard Prettier rewrite of game/soundtrack.mjs and the controller-only Steam Deck Confirm transaction repair documented at docs/v0.130.0-steamdeck-confirm-transaction.md sha256:19fb9af5b7715c1e7187294413df8dc65026e25be4237bd6dfbe86875cc3e89d; soundtrack behavior and exports are unchanged.',
       'All8 selected roles remain the same procedural recipes with no new audio files. Focused tests cover bounded decode, exact immutable paths, rejection of default=true and forged Recording-mode policy, clicked-first streaming, style mixing, shuffle and ordered queues, repeat all/one/off, remote two-deck transitions, sequential fallback, failure and cancellation.',
       'No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, cold-offline, frozen-build or public game approval. Archive previews remain outside trusted Automatic and built-in playlists; historical records and original payloads are immutable.',
@@ -141,8 +143,9 @@ const REVIEWED_RECIPE_INPUTS = {
     ],
   },
   effects: {
-    sha256: 'e23e228b4bf4ee68bb7cbbd231aaebe66d6e3da8965fbeae9b2c4acc90f9e053',
+    sha256: 'b33868fdd4f6aa898a885043116b939509f4d5b14d4412adb7d71e6e90ed6bbe',
     evidence: [
+      'v0.131 English/Ukrainian presentation continuation: docs/verification/v0.131.0-localization-presentation-continuation/review.json sha256:92c63ed7f4eb6f79502cae2089836de1fbdabcb1cacd76b55e22596e49492445; exact effects fingerprint sha256:b33868fdd4f6aa898a885043116b939509f4d5b14d4412adb7d71e6e90ed6bbe. Locale-bound descriptions and mechanically formatted renderers preserve actor geometry, trail cells, collision footprints, sprite construction and effect recipe IDs.',
       'Scoped trail, impact and wreck continuation: docs/verification/couch-craft-v01120/review.json sha256:fa2120613abf06bc578ba8388ba33af415392583e19e83c2297638af8010c305; ten ordered effects inputs sha256:e23e228b4bf4ee68bb7cbbd231aaebe66d6e3da8965fbeae9b2c4acc90f9e053. The active cutting head and authoritative travelling fronts gain bounded readable shapes, prepared player bodies suppress duplicate blades, and FPV failure debris uses compact solid fragments.',
       'The exact candidate passed 202 focused actor, renderer, trail, controller, Couch and picture-parity checks. Reduced effects keeps essential state markers; collision footprints, impact coordinates, role identities, mission state and authoritative clocks remain unchanged.',
       'Functional and bounded visual continuation only. Historical reviews and original payloads remain immutable. Team recipes remain source-stage; complete art, final-byte physical-device, human pacing, frozen/public and release acceptance remain separate. Any effects input or review-byte change reopens this group.',
