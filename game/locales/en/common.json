@@ -147,5 +147,7 @@
   "music.status.suspended": "suspended",
   "music.status.disposed": "disposed",
   "status.paused": "paused",
-  "units.secondsShort": "{{seconds}}s"
+  "units.secondsShort": "{{seconds}}s",
+  "reading.prompt": "{{scroll}} · {{exit}} returns",
+  "controls.either": "{{confirm}} or {{back}}"
 }

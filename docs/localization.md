@@ -98,7 +98,7 @@ practice teardown storage-listener assertion. The First Flight
 handoff timeout is intermittent here and remains unresolved; do not dismiss it as a
 baseline failure.
 
-At this checkpoint, catalog validation passes **7,044 messages and 5,666 referenced keys**.
+At this checkpoint, catalog validation covers **7,133 messages** in both languages.
 The current interface, content, and tools catalogs are fully translated. This is not full
 coverage: the source audit still finds dynamic messages, Classic library metadata, tool
 JavaScript, and user-facing errors outside the catalogs. Do not declare completion from
@@ -130,7 +130,7 @@ include optional chapter/music originals and require the updated 768 MiB / 4,096
 native bounds; per-file integrity and 64 MiB bounds remain enforced. iPhone staging found
 one source review page without an explicit head/body; its markup is now explicit.
 
-The branch is rebased onto main eca4e32ba, including the new couch optional-setup flow,
+The branch is rebased onto main f02e94c9f, retaining the v0.112 publication and plan updates plus the new couch optional-setup flow,
 controller confirmation guard, and character presentation changes. The relocated controls
 retain their native behavior and translated labels. Repeated fetches still show no missing
 main commits. Continue checking before each translation checkpoint.
@@ -182,3 +182,29 @@ releases without catalogs retain their previous behavior.
 - [i18next plural forms](https://www.i18next.com/translation-function/plurals)
 - [i18next translation best practices](https://www.i18next.com/principles/best-practices)
 - [Ordered browser language preferences](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/languages)
+
+## Team and active-reader checkpoint
+
+Team instructions, goal/HUD projections, reserves, shield/crawl states, recovery feedback,
+and timed-bonus windows now resolve complete messages at presentation time. Safe-ground
+and reclaimed-ground sentences use context variants for Ukrainian case agreement.
+Starter Team pack/arena names are registered by exact identity; custom edits stay authored.
+Accepted bonus projections retain their original clocks and data while rendering the new
+language, and current artwork-status messages retain their translation producer.
+
+Language refresh now brackets controller reading ownership. A reader must be current before
+translation starts and retain its exact region, scope, focus, and lifecycle afterward.
+Unrelated text changes before the refresh still invalidate it, even if translation restores
+the old caption. This prevents the next controller frame from moving focus to Resume solely
+because the translated reading text changed. Reading prompts and labels translate live.
+
+The focused localization/controller suite passed 238 checks before the final artwork-status
+additions; a broader final checkpoint run is in progress. The Team regression run passed
+104 of 107 checks. Three existing lifecycle-resume cases fail at the final Resume assertion;
+they are not yet classified against main and must remain in the failure investigation.
+The original full suite is still running and has advanced beyond its long v3 host scenarios.
+Those scenarios reported timeouts; do not discard them as baseline failures without evidence.
+A browser cross-tab language switch retained Team reading focus, the active reader, the 0:03
+paused clock, and HUD state in both directions. The built More menu also now shows the
+correct translated All missions link without raw slot markers. Rebuild and native refresh
+are still required for this Team checkpoint.

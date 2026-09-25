@@ -7,6 +7,7 @@ import { CLASSES } from '../game/core/registry.mjs';
 import { normalizedLevel } from '../game/core/level.mjs';
 import { FIRST_FLIGHT_LESSONS } from '../game/first-flight.mjs';
 import { ENEMY_CATALOG } from '../game/enemy-catalog.mjs';
+import { COOP_STARTER_PACK } from '../game/coop/library.mjs';
 
 // Explicit presentation fields. Attribution, authors, legal notices, IDs, paths,
 // recordings and user-authored files are deliberately not extraction inputs.
@@ -181,6 +182,7 @@ export async function contentSources(root) {
     }
   }
   sources.push({ source: 'game/core/registry.mjs#CLASSES', data: CLASSES });
+  sources.push({ source: 'game/coop/library.mjs#COOP_STARTER_PACK', data: COOP_STARTER_PACK });
   sources.push(...(await currentJourneySources(root)));
   return sources;
 }
