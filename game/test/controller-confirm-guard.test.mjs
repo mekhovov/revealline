@@ -123,6 +123,49 @@ for (const order of ['native-first', 'gamepad-first'])
     assert.equal(h.emit('click', mouse), false);
   });
 
+for (const source of [
+  {
+    name: 'touch pointer',
+    event: { button: 0, pointerId: 7, pointerType: 'touch', isPrimary: true, detail: 1 },
+  },
+  {
+    name: 'pen pointer',
+    event: { button: 0, pointerId: 9, pointerType: 'pen', isPrimary: true, detail: 1 },
+  },
+  {
+    name: 'touch-derived compatibility pointer',
+    event: {
+      button: 0,
+      pointerId: 11,
+      pointerType: 'mouse',
+      isPrimary: true,
+      detail: 1,
+      sourceCapabilities: { firesTouchEvents: true },
+    },
+  },
+])
+  for (const order of ['native-first', 'gamepad-first'])
+    test(`A owns its ${source.name} echo ${order}`, (t) => {
+      const h = setup(t),
+        trusted = { ...source.event, isTrusted: true };
+      h.pad.buttons[0].pressed = true;
+      if (order === 'gamepad-first') assert.equal(h.sample().ui.confirm, true);
+      assert.equal(h.emit('pointerdown', trusted), true);
+      assert.equal(h.emit('mousedown', trusted), true);
+      if (order === 'native-first') assert.equal(h.sample().ui.confirm, true);
+      assert.equal(
+        h.emit('click', { button: 0, detail: 0 }),
+        false,
+        'the intended controller click remains usable',
+      );
+      h.pad.buttons[0].pressed = false;
+      h.sample();
+      assert.equal(h.emit('pointerup', trusted), true);
+      assert.equal(h.emit('mouseup', trusted), true);
+      assert.equal(h.emit('click', trusted), true);
+      assert.equal(h.nativeEvents, 1, 'only the intended controller activation reaches the page');
+    });
+
 test('menu confirm survives resume and its native tail cannot pause the new flight', (t) => {
   const h = setup(t);
   h.pad.buttons[0].pressed = true;
@@ -194,6 +237,89 @@ test('a trusted click-only Steam echo is consumed while controller click() remai
   );
 });
 
+test('an incomplete primary-pointer echo expires without swallowing the next native click', (t) => {
+  let time = 100;
+  const h = setup(t, { guardNow: () => time });
+  h.pad.buttons[0].pressed = true;
+  assert.equal(h.sample().ui.confirm, true);
+  h.guard.observe(true);
+  assert.equal(
+    h.emit('pointerdown', {
+      button: 0,
+      pointerId: 7,
+      pointerType: 'touch',
+      isPrimary: true,
+      isTrusted: true,
+    }),
+    true,
+  );
+  h.pad.buttons[0].pressed = false;
+  h.sample();
+  h.guard.observe(false);
+
+  time = 1351;
+  assert.equal(
+    h.emit('click', {
+      button: 0,
+      pointerId: 7,
+      pointerType: 'touch',
+      isPrimary: true,
+      detail: 1,
+      isTrusted: true,
+    }),
+    false,
+  );
+});
+
+test('a fresh direct touchscreen gesture takes ownership as soon as A is released', (t) => {
+  let time = 100;
+  const h = setup(t, { guardNow: () => time });
+  h.pad.buttons[0].pressed = true;
+  assert.equal(h.sample().ui.confirm, true);
+  h.guard.observe(true);
+  h.pad.buttons[0].pressed = false;
+  h.sample();
+  h.guard.observe(false);
+
+  time = 116;
+  const touch = {
+    button: 0,
+    pointerId: 7,
+    pointerType: 'touch',
+    isPrimary: true,
+    detail: 1,
+    isTrusted: true,
+  };
+  assert.equal(h.emit('pointerdown', touch), false);
+  assert.equal(h.emit('pointerup', touch), false);
+  assert.equal(h.emit('click', touch), false);
+});
+
+test('a touch-derived compatibility gesture remains owned after A is released', (t) => {
+  let time = 100;
+  const h = setup(t, { guardNow: () => time });
+  h.pad.buttons[0].pressed = true;
+  assert.equal(h.sample().ui.confirm, true);
+  h.guard.observe(true);
+  h.pad.buttons[0].pressed = false;
+  h.sample();
+  h.guard.observe(false);
+
+  time = 116;
+  const compatibility = {
+    button: 0,
+    pointerId: 7,
+    pointerType: 'mouse',
+    isPrimary: true,
+    detail: 1,
+    isTrusted: true,
+    sourceCapabilities: { firesTouchEvents: true },
+  };
+  assert.equal(h.emit('pointerdown', compatibility), true);
+  assert.equal(h.emit('pointerup', compatibility), true);
+  assert.equal(h.emit('click', compatibility), true);
+});
+
 test('a trusted Steam click arriving before the next gamepad frame is consumed', (t) => {
   const h = setup(t);
   h.pad.buttons[0].pressed = true;
@@ -236,6 +362,43 @@ test('a native click that wins the first frame suppresses the matching controlle
   );
   assert.equal(h.nativeEvents, 1, 'exactly one activation reaches the control');
 });
+
+for (const source of [
+  {
+    name: 'touch pointer',
+    event: { button: 0, pointerId: 7, pointerType: 'touch', detail: 1, isTrusted: true },
+  },
+  {
+    name: 'touch-derived compatibility click',
+    event: {
+      button: 0,
+      pointerType: 'mouse',
+      detail: 1,
+      isTrusted: true,
+      sourceCapabilities: { firesTouchEvents: true },
+    },
+  },
+])
+  test(`a ${source.name} activation can win before the Gamepad frame`, (t) => {
+    let time = 100;
+    const h = setup(t, { guardNow: () => time });
+
+    assert.equal(
+      h.emit('click', source.event),
+      false,
+      'standalone native activation reaches the page',
+    );
+    h.pad.buttons[0].pressed = true;
+    assert.equal(h.sample().ui.confirm, true);
+    h.guard.observe(true);
+    time = 116;
+    assert.equal(
+      h.emit('click', { button: 0, detail: 0 }),
+      true,
+      'the later controller click cannot repeat the touch-classified activation',
+    );
+    assert.equal(h.nativeEvents, 1);
+  });
 
 test('a long-held A owns its keyboard and non-pointer release without a polling deadline', (t) => {
   let time = 100;
@@ -325,14 +488,13 @@ test('a lifecycle boundary blocks stale Confirm until a neutral frame, then rest
   assert.equal(h.emit('keydown', { key: 'Enter' }), false, 'fresh keyboard works after neutral');
 });
 
-test('idle controllers do not suppress keyboard, mouse, touch, pen, text, or shortcuts', (t) => {
+test('a neutral controller does not suppress keyboard, mouse, touch, pen, text, or shortcuts', (t) => {
   const h = setup(t);
   for (const key of ['Enter', ' ', 'x', 'ArrowDown'])
     assert.equal(h.emit('keydown', { key }), false);
   assert.equal(h.emit('pointerdown', { button: 0, pointerType: 'mouse' }), false);
-  h.pad.buttons[0].pressed = true;
   for (const pointerType of ['touch', 'pen']) {
-    const event = { button: 0, pointerType, detail: 1 };
+    const event = { button: 0, pointerType, detail: 1, isTrusted: true };
     for (const type of ['pointerdown', 'pointerup', 'click'])
       assert.equal(h.emit(type, event), false);
   }
@@ -396,11 +558,14 @@ test('blur and disposal retire incomplete native gestures', (t) => {
   assert.equal(h.emit('keydown', { key: 'Enter' }), false);
 });
 
-test('a canceled mouse gesture cannot suppress a later click', (t) => {
+test('a canceled controller-owned pointer cannot suppress a later independent click', (t) => {
   const h = setup(t);
   h.pad.buttons[0].pressed = true;
-  assert.equal(h.emit('pointerdown', { button: 0, pointerType: 'mouse' }), true);
-  h.emit('pointercancel', { button: -1, pointerType: 'mouse' });
+  assert.equal(h.emit('pointerdown', { button: 0, pointerId: 7, pointerType: 'touch' }), true);
+  assert.equal(h.emit('pointercancel', { button: -1, pointerId: 7, pointerType: 'touch' }), true);
   h.pad.buttons[0].pressed = false;
-  assert.equal(h.emit('click', { button: 0, pointerType: 'mouse', detail: 1 }), false);
+  assert.equal(
+    h.emit('click', { button: 0, pointerType: 'touch', detail: 1, isTrusted: true }),
+    false,
+  );
 });
