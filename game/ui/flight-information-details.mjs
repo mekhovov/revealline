@@ -1,17 +1,18 @@
+import { t, localizedText, localizedMessage } from '../i18n/index.mjs';
 import { enemyCatalogRecord } from '../enemy-catalog.mjs';
 
-const roleName = (type) => enemyCatalogRecord(type)?.label || 'Unfamiliar enemy';
+const roleName = (type) => enemyCatalogRecord(type)?.label || t("interface:unfamiliarEnemy");
 const sentence = (text) => (/[.!?]$/.test(text) ? text : `${text}.`);
 const encounterClock = (phase) =>
   ({
-    delay: 'Next lane warning',
-    rest: 'Next lane warning',
-    transition: 'Next vertical lane warning',
-    warning: 'Lane warning ends',
-    active: 'Active lane ends',
-    open: 'Core opening closes',
-  })[phase] || 'Current encounter phase';
-const seconds = (n) => (Number.isFinite(n) ? `${n.toFixed(1)}s remaining` : 'Timing unavailable');
+    delay: t("interface:nextLaneWarning"),
+    rest: t("interface:nextLaneWarning"),
+    transition: t("interface:nextVerticalLaneWarning"),
+    warning: t("interface:laneWarningEnds"),
+    active: t("interface:activeLaneEnds"),
+    open: t("interface:coreOpeningCloses"),
+  })[phase] || t("interface:currentEncounterPhase");
+const seconds = (n) => (Number.isFinite(n) ? `${n.toFixed(1)}s remaining` : t("interface:timingUnavailable"));
 const section = (id, title, lines) => Object.freeze({ id, title, lines: Object.freeze(lines) });
 const group = (lines) => {
   const counts = new Map();
@@ -22,18 +23,18 @@ const enemyState = (enemy, snapshot) => {
   if (enemy.type === 'relay-sentinel')
     return snapshot.encounterLane?.id === enemy.id && snapshot.encounter
       ? snapshot.encounter.instruction
-      : 'encounter guidance is unavailable; watch its visible shield and lane cues';
+      : t("interface:encounterGuidanceIsUnavailableWatchItsVisibleShieldAndLane");
   if (enemy.type === 'contour-patrol') {
     const state =
       {
-        patrolling: 'patrolling the changing frontier between unclaimed field and reclaimed ground',
-        rejoining: 'rejoining the changing frontier along reclaimed ground',
-        idle: 'holding position; captures may leave it inside reclaimed ground, away from the changing frontier',
+        patrolling: t("interface:patrollingTheChangingFrontierBetweenUnclaimedFieldAndReclaimedGround"),
+        rejoining: t("interface:rejoiningTheChangingFrontierAlongReclaimedGround"),
+        idle: t("interface:holdingPositionCapturesMayLeaveItInsideReclaimedGroundAway"),
       }[enemy.mode] || 'watch the changing frontier';
-    return `${state}. A capture can change its route; check your next return before departing. ${enemy.frozen ? 'When freeze ends, contact with your craft or unfinished line becomes dangerous again' : 'Contact with your craft or unfinished line is still dangerous'}`;
+    return `${state}. A capture can change its route; check your next return before departing. ${enemy.frozen ? t("interface:whenFreezeEndsContactWithYourCraftOrUnfinishedLine") : t("interface:contactWithYourCraftOrUnfinishedLineIsStillDangerous")}`;
   }
   if (enemy.impactCarrier)
-    return 'trail contact sends visible fronts along your unfinished line; close before they reach you. Body contact and a hit at your live endpoint are immediate dangers';
+    return t("interface:trailContactSendsVisibleFrontsAlongYourUnfinishedLineClose");
   if (enemy.pressure)
     return (
       {
@@ -41,22 +42,22 @@ const enemyState = (enemy, snapshot) => {
         warning: `preparing a charge · ${seconds(enemy.pressure.seconds)}`,
         committed: `charging toward its marked target · ${seconds(enemy.pressure.seconds)}`,
         cooldown: `recovering from its last charge · ${seconds(enemy.pressure.seconds)}`,
-      }[enemy.pressure.phase] || 'Watch its movement in the field'
+      }[enemy.pressure.phase] || t("interface:watchItsMovementInTheField")
     );
   return (
     {
-      dormant: 'waiting; revealing its position can wake it',
-      warning: `${enemy.type === 'eroder' ? 'preparing to reopen marked ground' : 'preparing to move across revealed ground'} · ${seconds(enemy.seconds)}`,
+      dormant: t("interface:waitingRevealingItsPositionCanWakeIt"),
+      warning: `${enemy.type === 'eroder' ? 'preparing to reopen marked ground' : t("interface:preparingToMoveAcrossRevealedGround")} · ${seconds(enemy.seconds)}`,
       active: 'moving across revealed ground',
     }[enemy.mode] ||
     {
-      bouncer: 'threatens you and your unfinished line in hidden territory',
-      'border-patrol': `patrols the fixed outer perimeter, even after captures; leave before it reaches your craft. ${enemy.frozen ? 'When freeze ends, reclaimed ground does not protect you from contact' : 'Reclaimed ground does not protect you from contact'}`,
+      bouncer: t("interface:threatensYouAndYourUnfinishedLineInHiddenTerritory"),
+      'border-patrol': `patrols the fixed outer perimeter, even after captures; leave before it reaches your craft. ${enemy.frozen ? t("interface:whenFreezeEndsReclaimedGroundDoesNotProtectYouFrom") : t("interface:reclaimedGroundDoesNotProtectYouFromContact")}`,
       'lane-boss':
-        'stationary field anchor; watch the locked lane and secure any unfinished trail before it fires. Reclaimed ground shelters your craft from the lane, but enclosure does not disable this emitter',
+        t("interface:stationaryFieldAnchorWatchTheLockedLaneAndSecureAny"),
       eroder: 'can reopen captured ground',
     }[enemy.type] ||
-    'Watch its movement in the field'
+    t("interface:watchItsMovementInTheField")
   );
 };
 const laneState = (value) => {
@@ -66,7 +67,7 @@ const laneState = (value) => {
       warning: `Leave the highlighted ${direction} lane before the attack · ${seconds(value.seconds)}.`,
       active: `Stay outside the highlighted ${direction} lane · ${seconds(value.seconds)}.`,
       idle: `Waiting for its next lane attack · ${seconds(value.seconds)}.`,
-    }[value.phase] || 'Watch the highlighted lane.'
+    }[value.phase] || t("interface:watchTheHighlightedLane")
   );
 };
 /** Full paused player information. Typed diagnostic details remain in the read-only source. */
@@ -77,65 +78,65 @@ export function flightDetailsModel(information, context) {
   if (!s)
     return Object.freeze([
       ...parts,
-      section('unavailable', 'Field information unavailable', [
-        'The existing field cues remain available. Close this view to return to Pause.',
+      section('unavailable', localizedMessage("interface:fieldInformationUnavailable"), [
+        t("interface:theExistingFieldCuesRemainAvailableCloseThisViewTo"),
       ]),
     ]);
   parts.push(
-    section('state', 'Flight state', [
-      `${s.status === 'respawning' ? 'Recovering' : s.paused ? 'Paused' : { running: 'In flight', won: 'Mission complete', lost: 'Flight ended' }[s.status] || 'State unavailable'}. ${s.player.cutting === true ? 'Your unfinished line remains exposed.' : s.player.cutting === false ? 'No unfinished line.' : 'Line state is unavailable.'}`,
+    section('state', localizedMessage("interface:flightState"), [
+      `${s.status === 'respawning' ? t("interface:recovering2") : s.paused ? t("interface:paused") : { running: t("interface:inFlight"), won: t("interface:missionComplete"), lost: t("interface:flightEnded") }[s.status] || t("interface:stateUnavailable")}. ${s.player.cutting === true ? t("interface:yourUnfinishedLineRemainsExposed") : s.player.cutting === false ? t("interface:noUnfinishedLine") : t("interface:lineStateIsUnavailable")}`,
       ...(s.objectives
         ? s.objectives.total > 0
           ? [
               `${context.objectiveLabel}: ${s.objectives.done} / ${s.objectives.total} required objectives.`,
             ]
           : []
-        : ['Required objective progress is unavailable.']),
+        : [t("interface:requiredObjectiveProgressIsUnavailable")]),
     ]),
   );
   if (information.lastWarning)
-    parts.push(section('current-notice', 'Current message', [information.lastWarning.fullText]));
+    parts.push(section('current-notice', localizedMessage("interface:currentMessage"), [information.lastWarning.fullText]));
   const issues = [...(s.issues || []), ...(information.issue ? [information.issue] : [])];
   if (issues.length)
     parts.push(
-      section('issues', 'Some guidance is unavailable', [
-        'Some field effects cannot be described here. Keep watching the visible field cues; missing information does not mean the field is safe.',
+      section('issues', localizedMessage("interface:someGuidanceIsUnavailable"), [
+        t("interface:someFieldEffectsCannotBeDescribedHereKeepWatchingThe"),
       ]),
     );
   const classic = s.classic;
   if (classic) {
     parts.push(
-      section('field', 'Field and terrain', [classic.summary || 'No classic field summary.']),
+      section('field', localizedMessage("interface:fieldAndTerrain"), [classic.summary || t("interface:noClassicFieldSummary")]),
     );
     const threats = [];
     for (const front of classic.lineImpacts)
       threats.push(
         front.direction === 1
-          ? 'Impact travelling toward your craft. Close the cut on revealed ground before it catches you.'
-          : 'Impact travelling toward the starting point of your unfinished line.',
+          ? t("interface:impactTravellingTowardYourCraftCloseTheCutOnRevealed")
+          : t("interface:impactTravellingTowardTheStartingPointOfYourUnfinishedLine"),
       );
     if (classic.lineImpacts.length)
-      threats.push('Enemy freeze does not stop travelling line impacts.');
+      threats.push(t("interface:enemyFreezeDoesNotStopTravellingLineImpacts"));
     for (const enemy of classic.enemies) {
       const effect = enemy.frozen
-        ? ' Frozen: movement and attack countdowns are held.'
+        ? (" " + t("interface:frozenMovementAndAttackCountdownsAreHeld") + "")
         : enemy.stunned
-          ? ' Temporarily stunned; attack countdowns can continue.'
+          ? (" " + t("interface:temporarilyStunnedAttackCountdownsCanContinue") + "")
           : enemy.slowed
-            ? ' Movement slowed.'
+            ? (" " + t("interface:movementSlowed") + "")
             : '';
       threats.push(
-        `${enemy.impactCarrier ? 'Trail-impact carrier' : enemy.pressure?.mode === 'trail-pursuit' ? 'Trail pursuer' : enemy.pressure?.mode === 'head-intercept' ? 'Heading interceptor' : roleName(enemy.type)}: ${sentence(enemyState(enemy, s))}${effect}`,
+        `${enemy.impactCarrier ? t("interface:trailImpactCarrier") : enemy.pressure?.mode === 'trail-pursuit' ? t("interface:trailPursuer") : enemy.pressure?.mode === 'head-intercept' ? t("interface:headingInterceptor") : roleName(enemy.type)}: ${sentence(enemyState(enemy, s))}${effect}`,
       );
     }
     for (const mark of classic.erosion)
       threats.push(`Marked ground can reopen · ${seconds(mark.seconds)}.`);
-    if (threats.length) parts.push(section('threats', 'Actors and line danger', group(threats)));
+    if (threats.length) parts.push(section('threats', localizedMessage("interface:actorsAndLineDanger"), group(threats)));
     if (classic.effects.length)
       parts.push(
         section(
           'effects',
-          'Bonuses',
+          localizedMessage("interface:bonuses"),
           classic.effects.map(
             (e) =>
               `${e.label}: ${e.phase === 'active' ? 'active' : 'activates shortly'} · ${seconds(e.seconds)}.`,
@@ -146,7 +147,7 @@ export function flightDetailsModel(information, context) {
       parts.push(
         section(
           'pickups',
-          'Contact pickups',
+          localizedMessage("interface:contactPickups"),
           group(
             classic.powerups.map((p) =>
               p.timed
@@ -161,7 +162,7 @@ export function flightDetailsModel(information, context) {
       parts.push(
         section(
           'timed-pickups',
-          'Upcoming optional pickups',
+          localizedMessage("interface:upcomingOptionalPickups"),
           upcoming.map(
             (p) =>
               `${p.label}: solid symbol appears in ${seconds(p.seconds)}. Hollow symbols cannot be collected.`,
@@ -172,7 +173,7 @@ export function flightDetailsModel(information, context) {
     parts.push(
       section(
         'field',
-        'Field actors',
+        localizedMessage("interface:fieldActors"),
         context.actorRoles.map((r) => `${r.count} × ${roleName(r.type)}`),
       ),
     );
@@ -180,10 +181,10 @@ export function flightDetailsModel(information, context) {
     parts.push(
       section(
         'lanes',
-        'Lane attacks',
+        localizedMessage("interface:laneAttacks"),
         s.laneBosses.map(
           (p) =>
-            `${laneState(p)}${p.clockFrozen ? ' Enemy freeze holds this countdown.' : p.stunned ? ' Temporarily stunned; the countdown continues.' : ''}`,
+            `${laneState(p)}${p.clockFrozen ? (" " + t("interface:enemyFreezeHoldsThisCountdown") + "") : p.stunned ? (" " + t("interface:temporarilyStunnedTheCountdownContinues") + "") : ''}`,
         ),
       ),
     );
@@ -191,15 +192,15 @@ export function flightDetailsModel(information, context) {
     const e = s.encounter,
       stage =
         s.status === 'lost'
-          ? 'Flight ended'
+          ? t("interface:flightEnded")
           : e.phase === 'defeated'
-            ? 'Core released'
+            ? t("interface:coreReleased2")
             : e.stage === 'shielded'
               ? e.shields?.total > 1
-                ? 'Capture all remaining shield relays'
-                : 'Capture the shield relay'
-              : { transition: 'Shield opening', exposed: 'Release the core' }[e.stage] ||
-                'Encounter in progress',
+                ? t("interface:captureAllRemainingShieldRelays")
+                : t("interface:captureTheShieldRelay2")
+              : { transition: t("interface:shieldOpening2"), exposed: t("interface:releaseTheCore") }[e.stage] ||
+                t("interface:encounterInProgress"),
       lines = [
         e.instruction,
         `${stage}.`,
@@ -207,36 +208,36 @@ export function flightDetailsModel(information, context) {
           ? []
           : [`${encounterClock(e.phase)} · ${seconds(e.seconds)}.`]),
         `Current cut: ${e.cutCells} / ${e.min} required cells. ${e.remaining} unrevealed cells remain on the board.`,
-        ...(e.isolated ? ['Core isolated.'] : []),
-        ...(e.suppressed ? ['The lane attack is temporarily suppressed.'] : []),
+        ...(e.isolated ? [t("interface:coreIsolated")] : []),
+        ...(e.suppressed ? [t("interface:theLaneAttackIsTemporarilySuppressed")] : []),
       ];
     if (s.encounterLane?.marked)
       lines.push(
-        `Watch the highlighted ${s.encounterLane.axis === 'horizontal' ? 'horizontal' : 'vertical'} lane.${s.encounterLane.clockFrozen ? ' Enemy freeze holds its attack countdown.' : ''}`,
+        `Watch the highlighted ${s.encounterLane.axis === 'horizontal' ? 'horizontal' : 'vertical'} lane.${s.encounterLane.clockFrozen ? (" " + t("interface:enemyFreezeHoldsItsAttackCountdown") + "") : ''}`,
       );
     parts.push(section('encounter', e.title, lines));
   }
   parts.push(
     section(
       'actions',
-      'Controls after Resume',
+      localizedMessage("interface:controlsAfterResume"),
       context.actions.length
         ? context.actions.map((a) => `${a.label}: ${a.detail}`)
-        : ['No manual equipment actions. Bonuses activate through play.'],
+        : [t("interface:noManualEquipmentActionsBonusesActivateThroughPlay")],
     ),
   );
   if ((information.recentBatches || []).some((b) => b.unknownEvents.length))
     parts.push(
-      section('unknown', 'Additional field effects', [
-        'Some recent effects are not described here. Their visible field cues remain available.',
+      section('unknown', localizedMessage("interface:additionalFieldEffects"), [
+        t("interface:someRecentEffectsAreNotDescribedHereTheirVisibleField"),
       ]),
     );
   const history = [...(information.recentNotices || [])].reverse().map((n) => n.fullText);
   if (information.omittedNotices || information.omittedBatches)
     history.push(
-      'Earlier messages are no longer shown. This is recent context, not a complete flight history.',
+      t("interface:earlierMessagesAreNoLongerShownThisIsRecentContext"),
     );
-  if (history.length) parts.push(section('history', 'Recent messages — newest first', history));
+  if (history.length) parts.push(section('history', localizedMessage("interface:recentMessagesNewestFirst"), history));
   return Object.freeze(parts);
 }
 
@@ -291,11 +292,11 @@ export function attachFlightDetails({
     content.replaceChildren();
     for (const part of flightDetailsModel(information, getContext())) {
       const heading = doc.createElement('h3');
-      heading.textContent = part.title;
+      localizedText(heading, () =>part.title);
       content.append(heading);
       for (const line of part.lines) {
         const p = doc.createElement('p');
-        p.textContent = line;
+        localizedText(p, () =>line);
         content.append(p);
       }
     }

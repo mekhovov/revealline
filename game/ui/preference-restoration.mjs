@@ -1,3 +1,4 @@
+import { t } from '../i18n/index.mjs';
 /** Repair browser-restored form values from their existing preference owner.
  * Attach after that owner's lifecycle listeners. This view-only adapter neither
  * adopts form values nor changes storage, focus, playback or preference intent. */
@@ -7,7 +8,7 @@ export function attachPreferenceRestoration({
   render,
 } = {}) {
   if (typeof getSnapshot !== 'function' || typeof render !== 'function')
-    throw new TypeError('Preference restoration needs a snapshot reader and renderer.');
+    throw new TypeError(t("interface:preferenceRestorationNeedsASnapshotReaderAndRenderer"));
   const defer = host.setTimeout?.bind(host) ?? globalThis.setTimeout,
     cancelDeferred = host.clearTimeout?.bind(host) ?? globalThis.clearTimeout;
   let disposed = false,
