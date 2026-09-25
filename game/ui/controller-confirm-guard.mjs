@@ -1,6 +1,7 @@
 /** Steam Input can expose one press as both a gamepad button and a native
- * Enter/Space or mouse click. Let the gamepad own that gesture, including its
- * release after a menu transition. Touch and standalone native input stay native.
+ * Enter/Space or primary-pointer click. Let the gamepad own that gesture,
+ * including its release after a menu transition. Standalone native input stays
+ * native when no controller Confirm lifecycle owns it.
  */
 export function attachControllerConfirmGuard({
   document: doc = globalThis.document,
@@ -11,7 +12,7 @@ export function attachControllerConfirmGuard({
 } = {}) {
   const keys = new Set(),
     listeners = [];
-  let mouse = false,
+  let primaryPointer = null,
     controllerHeld = false,
     suppressUntil = -Infinity,
     nativeActivationAt = -Infinity,
@@ -32,12 +33,21 @@ export function attachControllerConfirmGuard({
     !event.altKey &&
     !event.metaKey &&
     !event.shiftKey;
-  const isMouse = (event) =>
-    event.button === 0 &&
-    (!event.pointerType || event.pointerType === 'mouse') &&
-    !event.sourceCapabilities?.firesTouchEvents;
-  const touchOrPen = (event) =>
-    event.sourceCapabilities?.firesTouchEvents || ['touch', 'pen'].includes(event.pointerType);
+  const isPrimaryActivation = (event) =>
+    (event.button == null || event.button === 0) && event.isPrimary !== false;
+  const isDirectTouch = (event) =>
+    ['touch', 'pen'].includes(event.pointerType) && !event.sourceCapabilities?.firesTouchEvents;
+  const pointerId = (event) =>
+    Number.isInteger(event.pointerId) && event.pointerId >= 0 ? event.pointerId : null;
+  const hasActivePointer = () => {
+    if (primaryPointer !== null && now() > primaryPointer.expiresAt) primaryPointer = null;
+    return primaryPointer !== null;
+  };
+  const ownsPointer = (event) =>
+    hasActivePointer() &&
+    (primaryPointer.id === null ||
+      pointerId(event) === null ||
+      primaryPointer.id === pointerId(event));
   const consumeConfirmKey = (event) => {
     if (!confirmKey(event)) return;
     if (!keys.has(event.key) && !controllerOwnsGesture()) return;
@@ -51,13 +61,31 @@ export function attachControllerConfirmGuard({
     if (owned || (confirmKey(event) && controllerOwnsGesture())) consume(event);
   });
   listen('pointerdown', (event) => {
-    if (!isMouse(event)) return;
-    mouse = controllerOwnsGesture();
-    if (mouse) consume(event);
+    if (!isPrimaryActivation(event)) return;
+    // A real touchscreen/pen gesture that starts after A is physically up owns
+    // the new interaction. Steam's compatibility stream remains guarded: it
+    // identifies itself through firesTouchEvents (and is normally mouse-like).
+    if (isDirectTouch(event) && !neutralAfterLifecycle && !controllerHeld && !confirmPressed()) {
+      primaryPointer = null;
+      suppressUntil = -Infinity;
+      return;
+    }
+    if (!controllerOwnsGesture()) {
+      primaryPointer = null;
+      return;
+    }
+    primaryPointer = { id: pointerId(event), expiresAt: Infinity };
+    consume(event);
   });
-  for (const type of ['pointerup', 'mousedown', 'mouseup'])
+  listen('pointerup', (event) => {
+    if (!isPrimaryActivation(event) || (!ownsPointer(event) && !controllerOwnsGesture())) return;
+    primaryPointer = { id: pointerId(event), expiresAt: now() + echoWindowMs };
+    consume(event);
+  });
+  for (const type of ['mousedown', 'mouseup'])
     listen(type, (event) => {
-      if (mouse && isMouse(event)) consume(event);
+      if (isPrimaryActivation(event) && (hasActivePointer() || controllerOwnsGesture()))
+        consume(event);
     });
   listen('click', (event) => {
     // HTMLElement.click() is untrusted in browsers and is the controller
@@ -75,23 +103,25 @@ export function attachControllerConfirmGuard({
       }
       return;
     }
-    // Keyboard and accessibility activation can be a trusted PointerEvent
-    // with no pointer (pointerId -1 / empty pointerType / button -1). Do not
-    // require mouse button 0 for a controller-owned release echo.
-    if (touchOrPen(event)) return;
-    if (mouse || (event.isTrusted === true && controllerOwnsGesture())) {
-      mouse = false;
+    // A trusted release can be mouse, touch, pen, touch-derived compatibility
+    // input, or a keyboard/accessibility PointerEvent with no pointer. Steam's
+    // duplicate must not escape merely because Chrome classifies its source as
+    // touch-capable.
+    if (event.isTrusted === true && (hasActivePointer() || controllerOwnsGesture())) {
+      primaryPointer = null;
       consume(event);
       return;
     }
     if (event.isTrusted === true) nativeActivationAt = now();
   });
   listen('pointercancel', (event) => {
-    if (!event.pointerType || event.pointerType === 'mouse') mouse = false;
+    if (!ownsPointer(event)) return;
+    primaryPointer = null;
+    consume(event);
   });
   const reset = () => {
     keys.clear();
-    mouse = false;
+    primaryPointer = null;
     controllerHeld = false;
     suppressUntil = -Infinity;
     nativeActivationAt = -Infinity;
@@ -118,11 +148,12 @@ export function attachControllerConfirmGuard({
       } else if (controllerHeld) {
         controllerHeld = false;
         suppressUntil = now() + echoWindowMs;
+        if (primaryPointer !== null) primaryPointer.expiresAt = suppressUntil;
       }
     },
     requireNeutral() {
       keys.clear();
-      mouse = false;
+      primaryPointer = null;
       controllerHeld = false;
       suppressUntil = Infinity;
       neutralAfterLifecycle = true;
