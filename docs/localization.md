@@ -451,7 +451,32 @@ and switching still works afterwards. No controller preferences were applied in 
 Full validation, lint and formatting pass at this checkpoint; the final editor changes
 also pass their targeted lint/format checks. Catalog checks pass with 7,320 messages / 5,887 referenced keys. The broader
 equipment/device regression passes 44 of 47 cases; three craft-switch cases time out
-waiting five seconds for initial picture loading. Their isolated rerun is still running. Generic host/validation diagnostic details
+waiting five seconds for initial picture loading. All three pass in an isolated rerun (four unrelated cases skipped). Generic host/validation diagnostic details
 still require presentation review; this is not a claim that every controller error is
 translated. Distribution/native artifacts above predate the Collection and controller
 batches. A fresh fetch remains zero commits behind main `7c6f84a47`.
+
+
+## Design Atlas studies and scroll continuity
+
+The Design Atlas now translates every preview template, study/state descriptor, palette,
+coverage row and illustrative asset brief. Action routing uses stable intents rather than
+English button labels. Dynamic text binds to explicit DOM slots; translated values are
+never parsed as markup. The independent English/Ukrainian font specimen retains its
+chosen language when the page locale changes, with matching `lang` attributes.
+
+Browser checks cover all 18 study states in each language, including picture-preview and
+asset-brief actions. No empty text slots or exposed translation keys appeared. Cross-tab
+switches preserve the selected study/state/width and focused width control. The check
+exposed browser scroll anchoring fighting the existing position restoration. Locale
+refresh now suppresses anchoring for its synchronous layout update and restores each
+prior CSS declaration afterwards. A fresh browser page holds its exact 1,442.5-pixel
+scroll position through English → Ukrainian → English; the font specimen also retains
+its independent selection and the illustrative brief translates fully.
+
+Catalog checks pass with 7,396 messages / 5,957 referenced keys. Targeted lint and
+formatting pass. All 47 focused locale, controller-editor, paused-flight and operation-status
+tests pass.
+The scroll regression covers translated layout, retained offsets, original CSS priority,
+and cleanup when an observer throws. The full-game suite and remaining owned-copy audit
+remain open; prior distribution/native artifacts predate this batch.
