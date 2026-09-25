@@ -70,6 +70,35 @@ test('search covers edition, campaign, tags and rules; filters are mode-aware', 
   assert.throws(() => library.search('', { mode: 'online' }));
 });
 
+test('translated presentation is searchable without changing row identity or launch content', () => {
+  const original = Object.freeze(entry());
+  let language = 'en',
+    launched;
+  const library = createMissionLibrary([
+    source({
+      entries: [original],
+      presentation: () =>
+        language === 'uk' ? { name: 'Спільна назва', campaignTitle: 'Початкова кампанія' } : {},
+      launch: (value) => {
+        launched = value;
+        return true;
+      },
+    }),
+  ]);
+  const row = library.missions[0];
+  const before = JSON.stringify(row);
+  language = 'uk';
+  assert.equal(library.presentation(row).name, 'Спільна назва');
+  assert.deepEqual(library.search('спільна початкова'), [row]);
+  assert.deepEqual(library.search('Shared name'), [row]);
+  assert.equal(library.launch(row), true);
+  assert.equal(launched, original);
+  assert.equal(JSON.stringify(row), before);
+  language = 'en';
+  assert.equal(library.presentation(row).name, original.name);
+  assert.equal(library.missions[0], row);
+});
+
 test('late mission launches exact original object without inventing clears or modifying it', () => {
   const original = Object.freeze(entry());
   let launched;
