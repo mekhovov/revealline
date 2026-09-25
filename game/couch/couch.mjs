@@ -93,7 +93,11 @@ import { createCharacterPresentations } from '../character-presentations.mjs';
 import { emptyProgress, unlockedBodies } from '../progress.mjs';
 import { createOperationStatus } from '../ui/operation-status.mjs';
 import { foundationReturnCaption } from '../ui/foundation-feedback.mjs';
+import { releaseExplorerHref } from '../release-explorer.mjs';
 const $ = (id) => document.getElementById(id);
+$('race-release-explorer').href = releaseExplorerHref(
+  globalThis.location?.href ?? document.baseURI ?? 'http://localhost/game/couch/',
+);
 const unclaimedFocus = (element) =>
   !element || element === document.body || element === document.documentElement;
 // Capture before attached() can hide a deliberately chosen loader recovery link.
@@ -392,7 +396,7 @@ try {
     $('race-journey-note').hidden = false;
     $('race-journey-note').textContent =
       authoredRoute.id === DEFAULT_JOURNEY_ROUTES.versus
-        ? `New Journey / ${candidateJourney.catalog.missions.length} missions. Original pictures need a connection; core offline preparation does not save them.`
+        ? `New Journey · ${candidateJourney.catalog.missions.length} missions`
         : `${authoredRoute.label.toUpperCase()} / UNVALIDATED VERSUS TEST BUILD. Web previews need a connection for original pictures; core offline preparation does not save them.`;
     $('race-journey-difficulty-field').hidden = false;
     $('race-journey-difficulty').replaceChildren(
@@ -1136,7 +1140,7 @@ try {
         $('race-message').textContent = [
           staticEntry ? featuredStatus : '',
           image?.notice,
-          'Both boards use the same map, class, seed and prepared picture. Start when you are ready.',
+          'Ready. First clear wins.',
         ]
           .filter(Boolean)
           .join(' ');
@@ -1416,7 +1420,7 @@ try {
     }
     updateMenu();
   }
-  async function startRace(destination = null, { rulesEdition } = {}) {
+  async function startRace(destination = null, { rulesEdition, focusOrigin = null } = {}) {
     if (
       disposed ||
       contentBusy ||
@@ -1471,7 +1475,9 @@ try {
       // An exact library destination prepares its own picture. A failed unused
       // opener must not gate it; use an enabled, visible action as the focus
       // origin until the new attempt makes Start available again.
-      const start = destination && !contentReady ? $('race-library-switch') : $('race-start'),
+      const start =
+          focusOrigin ||
+          (destination && !contentReady ? $('race-library-switch') : $('race-start')),
         previousRun = match,
         previousGeneration = generation,
         previousController = contentController;
@@ -1928,6 +1934,10 @@ try {
       won = [0, 0];
       prepare();
       contentScope = 'setup';
+    },
+    onRetry: () => {
+      if (match?.status !== 'paused' || disposed) return;
+      void startRace(roundRecipe.entry, { focusOrigin: $('race-retry') });
     },
   });
 
@@ -3168,17 +3178,13 @@ try {
     // lease, including an update reentered from prior-image cleanup.
     const focusTransition = match !== preparedFocusMatch;
     preparedFocusMatch = null;
-    const themeName =
-      authoredRoute?.id === DEFAULT_JOURNEY_ROUTES.versus
-        ? theme.name.replace(/ · material review$/, '')
-        : theme.name;
     shell?.update({
       match,
       won,
       format: roundRecipe.format,
       contentBusy,
       focusTransition,
-      summary: `${roundRecipe.tuning.adminOverride ? 'ADMIN PLAYTEST · ' : ''}${roundRecipe.format === 'first-to-two' ? 'First to two' : 'One race'} · ${entry.chapter} · ${entry.level.name} · ${mode(entry.level)} · ${themeName} · ${roundRecipe.turnPolicy === 'grid-center' ? 'Grid-center turns' : 'Immediate turns'} · ${roundRecipe.seconds === 0 ? 'No race countdown' : `${roundRecipe.seconds} seconds`}`,
+      summary: `${roundRecipe.tuning.adminOverride ? 'ADMIN PLAYTEST · ' : ''}${roundRecipe.format === 'first-to-two' ? 'First to two' : 'One race'} · ${entry.level.name}`,
     });
     $('race-time-field').hidden = !!candidateJourney;
     // Reconcile deliberate layout transitions immediately, including browsers
@@ -3197,6 +3203,7 @@ try {
   const menuIds = new Set([
     'race-coop',
     'race-start',
+    'race-retry',
     'race-optional-setup-toggle',
     'race-chapters',
     'race-journey-next',
@@ -3222,6 +3229,12 @@ try {
     'race-data-reading-done',
     'race-data-reading',
     'race-help',
+    'race-home',
+    'race-more-toggle',
+    'race-optional-setup-toggle',
+    'race-more-home',
+    'race-more-about',
+    'race-release-explorer',
     'race-solo-return',
     'race-library-switch',
     'race-level',
@@ -3354,7 +3367,9 @@ try {
     // Clear before sampling so that this frame cannot claim a new menu owner.
     if (assignmentsChanged || pendingPadLoss) menuRouter.clear();
     const result = menuRouter.sample({ scope, timeMs: now });
-    controllerConfirmGuard.observe(result.confirmHeld);
+    // Joining consumes the controller edge as assignment, but Steam may still
+    // mirror that same physical press as a delayed native Enter/click.
+    controllerConfirmGuard.observe(result.confirmHeld || result.status.code === 'joined');
     if (result.status.code === 'joined' || Object.values(result.ui).some(Boolean))
       setReadingModality('controller');
     const released = !menuOwner && result.disconnected;

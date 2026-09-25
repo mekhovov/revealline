@@ -58,12 +58,9 @@ test(
     const p = await page(t, '', { nativeKeyboard: true, pads: [pad()] });
     assert.equal(p.doc.body.classList.contains('candidate-journey'), true);
     assert.equal(p.$('race-level').children.length, 91);
-    assert.equal(
-      p.$('race-journey-note').textContent,
-      'New Journey / 91 missions. Original pictures need a connection; core offline preparation does not save them.',
-    );
+    assert.equal(p.$('race-journey-note').textContent, 'New Journey · 91 missions');
     assert.doesNotMatch(p.$('race-journey-note').textContent, /unvalidated|test build/i);
-    assert.match(p.$('race-summary').textContent, /Horizon School/);
+    assert.equal(p.$('race-summary').textContent, 'One race · First return');
     assert.doesNotMatch(p.$('race-summary').textContent, /material review/);
     assert.equal(
       p.$('race-installed-status').textContent,
