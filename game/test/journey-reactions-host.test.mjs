@@ -21,6 +21,7 @@ import { compileContentProject, resolveMission } from '../content-design/project
 import { applyGameplayTuning, resolveGameplayTuning } from '../gameplay-tuning.mjs';
 import { createRun, stepRun, FIXED_DT } from '../core/index.mjs';
 import { JOURNEY_REACTION_PREFERENCES_KEY as preferenceKey } from '../journey/reaction-preferences.mjs';
+import { getLocale, setLocale } from '../i18n/index.mjs';
 
 const fetchResponse = async (path) =>
   String(path).includes('/content-design/assets/') ? new Response(await readFile(path)) : undefined;
@@ -192,6 +193,9 @@ test('actual authored equal Versus completion uses Rival without changing race r
 });
 
 test('real authored Team victory uses Engineer and does not replace completion facts or Next', async (t) => {
+  const locale = getLocale();
+  t.after(() => setLocale(locale, { persist: false }));
+  setLocale('en', { persist: false });
   const storage = memoryStorage();
   const f = await teamPage(t, {
     href: 'http://localhost/game/couch/relay-rescue.html?journey=team-greybox',
@@ -209,16 +213,25 @@ test('real authored Team victory uses Engineer and does not replace completion f
     if (f.$('coop-overlay').hidden) assert.equal(f.$('coop-journey-reactions').hidden, true);
   });
   assert.equal(f.$('coop-overlay-kicker').textContent, 'A WORLD YOU REVEALED TOGETHER');
-  assert.match(f.$('coop-overlay-copy').textContent, /Joint Cuts.*rescues/);
+  assert.match(f.$('coop-overlay-copy').textContent, /Joint Cuts.*Rescues/);
   assert.match(f.$('coop-journey-reactions').textContent, /^Engineer — /);
   assert.equal(f.$('coop-journey-reactions').hidden, false);
   assert.equal(f.$('coop-next').hidden, false);
   const result = f.$('coop-overlay-copy').textContent;
+  f.$('coop-next').focus();
+  setLocale('uk', { persist: false });
+  assert.match(f.$('coop-overlay-copy').textContent, /Разом ви відкрили/);
+  assert.match(f.$('coop-overlay-copy').textContent, /Спільні контури/);
+  assert.match(f.$('coop-overlay-copy').textContent, /Порятунки/);
+  assert.match(f.$('coop-next').textContent, /^Далі:/);
+  assert.equal(f.doc.activeElement.id, 'coop-next');
+  setLocale('en', { persist: false });
+  assert.equal(f.$('coop-overlay-copy').textContent, result);
+  assert.equal(f.doc.activeElement.id, 'coop-next');
   f.$('coop-journey-reactions-enabled').checked = false;
   f.$('coop-journey-reactions-enabled').emit('change');
   assert.equal(f.$('coop-journey-reactions').hidden, true);
   assert.equal(f.$('coop-overlay-copy').textContent, result);
-  f.$('coop-next').focus();
   f.tap('Enter');
   await settle(() => f.$('coop-overlay').hidden);
   assert.equal(f.$('coop-journey-reactions').hidden, true);

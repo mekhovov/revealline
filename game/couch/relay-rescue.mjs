@@ -1145,9 +1145,10 @@ export function bootCoop({
       context.imageSmoothingEnabled = false;
       context.drawImage(owner.picture.binding.image, 0, 0, 1152, 576);
       if (!earnedCurrent(owner)) return;
-      localizedText(
-        $('coop-earned-picture-title'),
-        () => `${run.level.name} · Your shared picture`,
+      localizedText($('coop-earned-picture-title'), () =>
+        t('interface:team.sharedPictureTitle', {
+          mission: contentText(attemptLevel || run.level, 'name'),
+        }),
       );
       navigation.clear();
       router.clear();
@@ -1252,7 +1253,11 @@ export function bootCoop({
     const destination = won && !loopStopped ? teamDestination() : null;
     $('coop-next').hidden = !destination?.next && !destination?.error;
     localizedText($('coop-next'), () =>
-      destination?.next ? `Next: ${destination.next.name}` : t('interface:nextArena'),
+      destination?.next
+        ? t('interface:team.nextMission', {
+            mission: contentText(destination.next, 'name'),
+          })
+        : t('interface:nextArena'),
     );
     localizedText($('coop-lobby'), () => t('interface:changeSetup'));
     $('coop-resume').hidden = won || lost;
@@ -1278,7 +1283,29 @@ export function bootCoop({
         : t('interface:endOfThisPackBrowseTeamArenasToChooseYour');
     localizedText($('coop-overlay-copy'), () =>
       won
-        ? `${(run.coverage * 100).toFixed(1)}% revealed together in ${clock(run.time)}. ${run.team.jointCuts} Joint Cuts, ${run.team.rescues} rescues and ${run.team.interceptions} intercepted sparks. ${destination?.next ? `Next arena: ${destination.next.name}.` : destination?.error ? t('interface:theNextMissionIsUnavailableYourResultAndPictureAre') : destination?.final ? completionCopy : t('interface:browseTeamArenasOrRetryThisChallenge')}`
+        ? [
+            t('interface:team.resultCoverage', {
+              coverage: formatNumber(run.coverage * 100, {
+                minimumFractionDigits: 1,
+                maximumFractionDigits: 1,
+              }),
+              time: clock(run.time),
+            }),
+            t('interface:team.resultJointCuts', { count: formatNumber(run.team.jointCuts) }),
+            t('interface:team.resultRescues', { count: formatNumber(run.team.rescues) }),
+            t('interface:team.resultInterceptions', {
+              count: formatNumber(run.team.interceptions),
+            }),
+            destination?.next
+              ? t('interface:team.nextArenaResult', {
+                  mission: contentText(destination.next, 'name'),
+                })
+              : destination?.error
+                ? t('interface:theNextMissionIsUnavailableYourResultAndPictureAre')
+                : destination?.final
+                  ? completionCopy
+                  : t('interface:browseTeamArenasOrRetryThisChallenge'),
+          ].join(' ')
         : lost
           ? coopRetryFeedback(run, knockdowns.filter(Boolean))
           : t('interface:releaseYourControlsThenChooseResumeTogether'),
@@ -2456,10 +2483,10 @@ export function bootCoop({
       return;
     journeySkip = { run, generation, picture: acceptedPicture, row: destination.row };
     localizedText($('coop-journey-skip-confirm'), () => t('interface:confirmSkip'));
-    localizedText(
-      $('coop-overlay-copy'),
-      () =>
-        `Skip to ${destination.next.name}? No clear is awarded. You can return through Browse Team arenas.`,
+    localizedText($('coop-overlay-copy'), () =>
+      t('interface:team.skipConfirm', {
+        mission: contentText(destination.next, 'name'),
+      }),
     );
     $('coop-journey-skip-confirm').focus({ preventScroll: true });
   }
@@ -2813,7 +2840,11 @@ export function bootCoop({
     };
     try {
       check();
-      onStatus(`Preparing ${row.title}… Your current arena stays available.`);
+      onStatus(
+        t('interface:team.preparingArena', {
+          mission: contentText(row, 'title'),
+        }),
+      );
       check();
       await presentationPage.ready;
       check();
@@ -2823,7 +2854,7 @@ export function bootCoop({
         onStatus: (status) => {
           if (!current()) return;
           const text = picturePreparationText(status);
-          if (text) onStatus(`${text} Your current arena stays available.`);
+          if (text) onStatus(t('interface:team.currentArenaAvailable', { status: text }));
         },
       });
       check();
@@ -2845,10 +2876,10 @@ export function bootCoop({
           };
           departure = ticket;
           localizedText($('coop-discard-title'), () => t('interface:startAnotherTeamArena'));
-          localizedText(
-            $('coop-discard-copy'),
-            () =>
-              `Stay keeps this attempt and its picture. Replace & play starts ${row.title} together. This unfinished attempt is not saved; replacing it loses its current territory, not previously recorded mission clears.`,
+          localizedText($('coop-discard-copy'), () =>
+            t('interface:team.replaceAttempt', {
+              mission: contentText(row, 'title'),
+            }),
           );
           localizedText($('coop-discard-confirm'), () => t('interface:replacePlay'));
           try {
@@ -3227,15 +3258,20 @@ export function bootCoop({
           resolve,
         };
         departure = ticket;
-        localizedText(
-          $('coop-discard-title'),
-          () =>
-            `Open ${context.mode === 'team' ? t('interface:team') : context.mode === 'solo' ? t('interface:solo2') : t('interface:versus2')} mission?`,
+        localizedText($('coop-discard-title'), () =>
+          t('interface:team.openModeMission', {
+            mode:
+              context.mode === 'team'
+                ? t('interface:team')
+                : context.mode === 'solo'
+                  ? t('interface:solo2')
+                  : t('interface:versus2'),
+          }),
         );
-        localizedText(
-          $('coop-discard-copy'),
-          () =>
-            `Stay keeps this attempt and its picture. Replace & play opens ${row.name} in its original mode and edition. This unfinished attempt is not saved.`,
+        localizedText($('coop-discard-copy'), () =>
+          t('interface:team.openOriginalAttempt', {
+            mission: contentText(row, 'name'),
+          }),
         );
         localizedText($('coop-discard-confirm'), () => t('interface:replacePlay'));
         departureDialog.showModal();
@@ -3566,9 +3602,8 @@ export function bootCoop({
         );
       } catch (error) {
         if (libraryOtherModesOpening === opening && opening.current() && dialog.open) {
-          localizedText(
-            remoteStatus,
-            () => `Other modes unavailable: ${error.message}. Your Team attempt is kept.`,
+          localizedText(remoteStatus, () =>
+            t('interface:team.otherModesUnavailable', { error: error.message }),
           );
           remoteRetry.hidden = false;
           remoteRetry.removeAttribute('aria-disabled');
@@ -3631,9 +3666,8 @@ export function bootCoop({
         void libraryOtherModesLoad();
       } catch (error) {
         if (opening.current() && !disposed)
-          localizedText(
-            $('coop-discovery-status'),
-            () => `Mission library unavailable: ${error.message}. Your current attempt is kept.`,
+          localizedText($('coop-discovery-status'), () =>
+            t('interface:team.libraryUnavailable', { error: error.message }),
           );
       } finally {
         opening.dispose();
@@ -3857,8 +3891,8 @@ export function bootCoop({
     );
     if (focus && !document.hidden && document.hasFocus?.() !== false)
       primary().focus({ preventScroll: true });
-    localizedText($('coop-boot'), () => `Arena stopped: ${error.message}`);
-    message(`Arena stopped: ${error.message}. Choose Retry or Change setup.`);
+    localizedText($('coop-boot'), () => t('interface:team.arenaStopped', { error: error.message }));
+    message(t('interface:team.arenaStoppedAction', { error: error.message }));
     console.error(error);
   }
   function resume() {
@@ -4073,7 +4107,7 @@ export function bootCoop({
     localizedText(
       $('coop-discard-copy'),
       () =>
-        `This unfinished attempt is not saved; discarding it loses its current territory, not previously recorded mission clears. ${
+        `${t('interface:thisUnfinishedAttemptIsNotSavedDiscardingItLosesIts')} ${
           loopStopped
             ? t('interface:stayKeepsThisStoppedAttemptOnScreenItCannotResume')
             : t('interface:stayKeepsBothPlayersPausedResumeTogetherRemainsASeparate')
@@ -4094,7 +4128,12 @@ export function bootCoop({
     } catch (error) {
       closeDeparture(ticket);
       message(
-        `Could not open the confirmation. The Team attempt stays ${loopStopped ? 'stopped' : 'paused'}: ${error.message}`,
+        t(
+          loopStopped
+            ? 'interface:team.confirmationUnavailableStopped'
+            : 'interface:team.confirmationUnavailablePaused',
+          { error: error.message },
+        ),
       );
     }
   }
@@ -4135,12 +4174,10 @@ export function bootCoop({
       else if (ticket.kind === 'retry') start(ticket.recipe, prepared);
       else location.assign(destination);
     } catch (error) {
-      message(`The Team attempt could not be replaced: ${error.message}`);
+      message(t('interface:team.replaceFailed', { error: error.message }));
       if (departure === ticket)
-        localizedText(
-          $('coop-discard-copy'),
-          () =>
-            `The Team attempt is still here and is not saved. ${error.message} Stay keeps it on screen.`,
+        localizedText($('coop-discard-copy'), () =>
+          t('interface:team.attemptStillHere', { error: error.message }),
         );
       else primary().focus({ preventScroll: true });
     }
@@ -4666,7 +4703,10 @@ export function bootCoop({
                 display.update({
                   message:
                     stage === 'checking-picture'
-                      ? `Checking local artwork ${index + 1} of ${total}…`
+                      ? t('interface:team.checkingLocalArtwork', {
+                          index: index + 1,
+                          total,
+                        })
                       : stage === 'ready'
                         ? t('interface:localArtworkValidatedPreparingTheSelectedArena')
                         : t('interface:checkingTeamArenasAndArtwork'),
@@ -4744,7 +4784,7 @@ export function bootCoop({
           const text = picturePreparationText(status);
           if (text)
             display.update({
-              message: `${text} The selected pack is unchanged.`,
+              message: t('interface:team.selectedPackUnchanged', { status: text }),
               stage: 'preparing',
             });
         },
@@ -4882,7 +4922,9 @@ export function bootCoop({
       const detail = String(error.message).trim();
       packStatus.begin({ message: t('interface:teamPackUnavailable') }).finish({
         state: 'error',
-        message: `Pack unchanged: ${detail}${/[.!?]$/.test(detail) ? '' : '.'} Retry pack or choose another file.`,
+        message: t('interface:team.packUnchanged', {
+          error: `${detail}${/[.!?]$/.test(detail) ? '' : '.'}`,
+        }),
       });
       $('coop-pack-cancel').hidden = true;
       $('coop-pack-retry').hidden = false;
@@ -5188,7 +5230,7 @@ export function bootCoop({
       if (visibleAction(target)) target.focus();
     },
   });
-  function attachJourneyRecovery(owner, prefix, label, filename) {
+  function attachJourneyRecovery(owner, prefix, labelKey, filename) {
     let exportSequence = 0;
     owner?.subscribe(({ ready = true, durable, error }) => {
       if (disposed) return;
@@ -5201,7 +5243,7 @@ export function bootCoop({
       notice.hidden = !ready || durable || !error;
       if (disposed) return;
       localizedText($(`${prefix}-message`), () =>
-        error ? `${label} is session-only. Retry saving or export before closing. ${error}` : '',
+        error ? t('interface:team.sessionOnly', { label: t(labelKey), error }) : '',
       );
       if (
         ownedFocus &&
@@ -5229,15 +5271,16 @@ export function bootCoop({
       try {
         const result = await exportJSONFile(JSON.parse(owner.export()), filename);
         if (!disposed && ticket === exportSequence && !$(prefix).hidden)
-          localizedText(
-            $(`${prefix}-message`),
-            () => `${label} is session-only. ${result.message}`,
+          localizedText($(`${prefix}-message`), () =>
+            t('interface:team.sessionOnlyResult', {
+              label: t(labelKey),
+              result: renderMessage(result.message),
+            }),
           );
       } catch (error) {
         if (!disposed && ticket === exportSequence && !$(prefix).hidden)
-          localizedText(
-            $(`${prefix}-message`),
-            () => `Export failed: ${error.message}. Your session choice or progress is still here.`,
+          localizedText($(`${prefix}-message`), () =>
+            t('interface:team.exportFailed', { error: error.message }),
           );
       }
     };
@@ -5245,13 +5288,13 @@ export function bootCoop({
   attachJourneyRecovery(
     candidateProgress,
     'coop-journey-save',
-    t('interface:teamJourneyProgress'),
+    'interface:teamJourneyProgress',
     candidateProgress?.backupFilename ?? 'revealline-journey-progress.json',
   );
   attachJourneyRecovery(
     candidatePreferences,
     'coop-journey-preferences',
-    t('interface:journeyDifficulty'),
+    'interface:journeyDifficulty',
     'revealline-journey-difficulty.json',
   );
   candidatePreferenceRestoration = candidatePreferences
@@ -5384,7 +5427,10 @@ try {
   bootCoop(candidateEntry);
 } catch (error) {
   document.documentElement.dataset.toolState = 'error';
-  bootDisplay.finish({ state: 'error', message: `Could not start Relay Rescue: ${error.message}` });
+  bootDisplay.finish({
+    state: 'error',
+    message: localizedMessage('interface:team.startFailed', { error: error.message }),
+  });
   console.error(error);
 } finally {
   initialFocusPending = false;
