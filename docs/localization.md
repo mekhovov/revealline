@@ -89,7 +89,7 @@ and missing Ukrainian remains detectable. Complete these before marking the task
   session-v6 output and the old 201-mission expectation against 279 available missions.
 
 The active checkout's temporary sparse exclusions have been removed. The full suite
-is running, with failures still under investigation. A clean main checkout reproduces
+finished with failures still under investigation. A clean main checkout reproduces
 the Team Studio initial-state hash mismatch, Custom-pack chooser timeout, Team artwork
 registration failure, combat study's missing `player-locator.mjs` dependency, controller
 snapshot-key mismatch, Team terrain missing-exception assertion, continuous-host
@@ -98,7 +98,7 @@ practice teardown storage-listener assertion. The First Flight
 handoff timeout is intermittent here and remains unresolved; do not dismiss it as a
 baseline failure.
 
-At this checkpoint, catalog validation covers **7,133 messages** in both languages.
+At this checkpoint, catalog validation covers **7,191 messages** in both languages.
 The current interface, content, and tools catalogs are fully translated. This is not full
 coverage: the source audit still finds dynamic messages, Classic library metadata, tool
 JavaScript, and user-facing errors outside the catalogs. Do not declare completion from
@@ -108,7 +108,7 @@ The latest focused suite passes 99 locale, paused-flight, couch navigation, musi
 controller-confirmation, and compact-bundle tests. Earlier source-audit and generated-page
 checks pass as recorded in the preceding checkpoint. Native staging/resource tests pass
 23 cases; markup integration checks pass 58 cases. Validation, lint, and the full formatting check pass.
-The full suite remains active; its older failures require focused reruns after fixes and
+The completed full suite's failures require focused reruns after fixes and
 comparison against main. A localization-aware HTML assertion must still verify its
 original labels, associations, and actions instead of dropping the behavior check.
 
@@ -162,7 +162,7 @@ navigation. A built-browser check exposed an old rich-text subscription reclaimi
 host-owned link; the binding now relinquishes ownership without restoring removed slots
 or displaying slot placeholders. Regression tests cover both directions of switching.
 
-The full suite remains active in its original process. One old VM fixture omitted the
+The original full suite has completed. One old VM fixture omitted the
 translator and spun forever waiting for admission; only that proven-stuck child was
 terminated after the corrected fixture passed all three cases. Its bounded wait now
 fails explicitly if admission never begins. The canvas renderer's local animation clock
@@ -203,8 +203,9 @@ passed 266 checks; the additional accepted-status producer regression passed fiv
 104 of 107 checks. Three lifecycle-resume cases fail at the final Resume assertion; a separate current-main
 checkout reproduces all three at the same assertion. Sampled Team pressure, timed-bonus,
 and partner-return golden checkpoints also reproduce the exact observed hash mismatch on main.
-The original full suite is still running and has advanced beyond its long v3 host scenarios.
-Those scenarios reported timeouts; do not discard them as baseline failures without evidence.
+The original full suite finished: 13,138 tests, 11,776 passed and 1,362 failed.
+It began before the latest fixes and rebases, so those totals describe that run rather than
+the current checkpoint. Long v3/v4 host scenarios reported timeouts; do not discard them as baseline failures without evidence.
 A browser cross-tab language switch retained Team reading focus, the active reader, the 0:03
 paused clock, and HUD state in both directions. The built More menu also now shows the
 correct translated All missions link without raw slot markers. The refreshed web distribution and both native stages pass for this Team checkpoint:
@@ -221,3 +222,65 @@ optional artwork. This is not a successful offline flight check. The optional-ar
 phase/verification messages and picture-fetch failure still contain uncatalogued English and
 must be localized. The preview server was restored after the check; no external service was
 changed. Full downloaded/native distributions contain the originals.
+
+
+## v0.113.0 rebase and offline presentation
+
+Rebased all localization commits onto main `0395ddbda` (v0.113.0), preserving the new
+spatial-edition disposal paths and v10 entry selection. The current cultural triptych's
+route/mastery text and Studio links are translated. The three manually selectable prior
+v9 missions now have exact registry coverage for both their bounded selector records and
+full launch records. Their edition labels resolve live while canonical IDs and owners stay
+unchanged. The previous native/build figures above are v0.112.0 checkpoints and must be
+refreshed before release.
+
+Offline availability and worker reports expose semantic message codes. The panel translates
+these codes and older workers' structured outcomes without matching rendered English.
+Measured files/tracks/chapters/ticks have shared plural-aware progress messages, including
+localized accessible progress labels. Completion, detach, failure and unavailable-state
+messages update in place. Original diagnostic reports remain intact in the details view.
+Exact release metadata identifies first-party optional pack names. The optional artwork
+limitation is now visible above the verification details, before a player prepares the cache.
+
+The focused offline/core-worker, operation-status and current/prior-edition suite passes all
+54 tests, including language changes during an active observation, unchanged progress/focus,
+terminal diagnostic retention and unchanged mission identities. This does not establish
+complete offline flight coverage; original Journey pictures are still excluded from the
+browser's core cache, as described above.
+
+
+The broader localization/controller/build-page regression run passes 254 tests. The final
+picture/offline/progress/edition subset passes 33 tests, and the real failed-picture host
+regression passes after switching both ways, retaining focus and the authoritative paused
+checkpoint, and retrying the decoder exactly once. Phase reports carry translation keys
+without changing their canonical string diagnostics; the host resolves accepted phases live.
+Picture-load recovery notices are translated and keep the existing retry action.
+
+Optional release metadata now includes the pack's SHA-256. Catalog registration requires
+that complete metadata, so a changed payload with the same path, ID and title keeps its
+authored name. The build fixture verifies exact source/ZIP bytes and this digest. UI-skin
+assertions now parse the native label/select/options and verify their translation markers;
+map-diagnostic assertions check Ukrainian coordinates and mechanics. The minimal Solo DOM's
+Option label/text properties now reflect its text like a browser, restoring the chapter
+installation assertion. A remaining native-summary controller test fails at line 205 on
+both this branch and baseline main `f02e94c9f`; it is not being hidden by a weakened assertion.
+
+Full validation, lint, formatting and catalog checks pass at this checkpoint. The completed
+full-suite log is retained at `/tmp/rl-i18n/rebase/full-tests.log`; the completed failure
+inventory is `/tmp/rl-i18n/rebase/full-suite-completed-failures.tsv`. Unclassified failures
+and the remaining owned-text audit still prevent a completion or merge-readiness claim.
+
+The completed v0.113.0 rebuild passes: 1,166 files / 598,984,442 bytes; archive SHA-256
+`8a9e9f8468291a2e2de81f34ac23ca579de493646d04b5f775d5f98f5507dcbb`.
+Desktop staging verifies the same inventory; iPhone staging verifies 1,171 files /
+599,064,721 bytes, including its bridge and diagnostics. Runtime/catalog assets match
+source bytes (21 on desktop; 22 including the runtime license on iPhone). The offline
+inventory verifies 997 files / 67,106,838 bytes, only 2,026 bytes below the existing cap.
+Disposable native stages were removed after verification.
+
+Storage-retention results and Playground map descriptions now keep live translation
+bindings. Fourteen focused retention/host/diagnostic checks pass, including no repeated
+storage calls, unchanged draft bytes and retained diagnostic rows. A source-browser check
+confirms English → Ukrainian → English storage status in the same Settings category,
+with focus retained. Extraction reports no missing registered content. This does not
+resolve the uncatalogued source audit or the unclassified full-suite failures.
