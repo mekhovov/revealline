@@ -13,12 +13,9 @@ on:
     branches: [main]
     paths:
       - 'publishing/pages-controller/**'
-      - 'publishing/test-policy.*'
       - '.github/workflows/publish-frozen-pages.yml'
-      - '.github/workflows/deploy-pages.yml'
-      - '.cursor/skills/deploy-release-pages/**'
-      - 'docs/deployment.md'
-      - 'docs/fast-release-mode.md'
+      - 'scripts/pages-archive.mjs'
+      - 'scripts/pages-current-entry.mjs'
   workflow_dispatch:
     inputs:
       release_tag:

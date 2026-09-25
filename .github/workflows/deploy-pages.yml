@@ -66,6 +66,7 @@ jobs:
     outputs:
       runTests: ${{ steps.test_policy.outputs.runTests }}
       testMode: ${{ steps.test_policy.outputs.mode }}
+      admission: ${{ steps.admission.outputs.mode }}
     runs-on: ubuntu-latest
     steps:
       - name: Check out the workflow's test policy
@@ -89,6 +90,37 @@ jobs:
         id: test_policy
         run: node .source-gate-automation/publishing/test-policy.mjs
 
+      - name: Classify the pull request for the release train
+        id: admission
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          PR_TITLE: ${{ github.event.pull_request.title }}
+        run: |
+          set -euo pipefail
+          # A product change consumes an immutable version slot only when an
+          # owner explicitly promotes it with a stable release title. Until
+          # then, retain it (and any stacked children) without spending a
+          # runner on a build that cannot safely merge into the active train.
+          if [[ "$PR_TITLE" =~ ^Release\ v[0-9]+\.[0-9]+\.[0-9]+ ]]; then
+            echo 'mode=release' >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          mapfile -t paths < <(gh api --paginate \
+            "repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER/files?per_page=100" \
+            --jq '.[].filename')
+          if [ "${#paths[@]}" -gt 0 ] && printf '%s\n' "${paths[@]}" | \
+            grep -Ev '^(docs/|publishing/|\.github/workflows/|game/test/)' >/dev/null; then
+            echo 'mode=hold' >> "$GITHUB_OUTPUT"
+          else
+            # Documentation, test-only evidence, and release-controller
+            # maintenance are bounded non-product work; they do not allocate a
+            # product release slot. Any accompanying runtime path still holds
+            # the whole PR in the product lane.
+            echo 'mode=maintenance' >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Record temporary fast-release policy
         env:
           FULL_CI: ${{ vars.REVEALLINE_FULL_CI || 'false' }}
@@ -107,6 +139,7 @@ jobs:
   test:
     if: >-
       github.event_name == 'pull_request' &&
+      needs.preflight.outputs.admission == 'release' &&
       vars.REVEALLINE_FULL_CI == 'true' &&
       needs.preflight.outputs.runTests == 'true'
     env:
@@ -169,7 +202,7 @@ jobs:
           node ../automation/scripts/check-source-identity.mjs --root .
 
   build:
-    if: github.event_name == 'pull_request'
+    if: github.event_name == 'pull_request' && needs.preflight.outputs.admission == 'release'
     env:
       EXPECTED_SOURCE: ${{ github.event.pull_request.head.sha }}
     # Preflight selects the test policy. This is the sole PR source checkout,
@@ -240,12 +273,21 @@ jobs:
     steps:
       - name: Apply the selected PR gate policy
         env:
+          ADMISSION: ${{ needs.preflight.outputs.admission }}
           BUILD_RESULT: ${{ needs.build.result }}
           FULL_CI: ${{ vars.REVEALLINE_FULL_CI || 'false' }}
           PREFLIGHT_RESULT: ${{ needs.preflight.result }}
           TEST_RESULT: ${{ needs.test.result }}
         run: |
           test "$PREFLIGHT_RESULT" = success
+          if [ "$ADMISSION" = maintenance ]; then
+            echo 'Bounded documentation/controller maintenance: product build not required.'
+            exit 0
+          fi
+          if [ "$ADMISSION" != release ]; then
+            echo '::error::This product PR is not assigned an immutable release slot. Keep it draft/stacked, or promote one reviewed root by titling it Release vX.Y.Z.'
+            exit 1
+          fi
           test "$BUILD_RESULT" = success
           if [ "$FULL_CI" = true ]; then
             test "$TEST_RESULT" = success
