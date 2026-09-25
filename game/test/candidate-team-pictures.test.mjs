@@ -18,13 +18,16 @@ const source = createTeamJourneyCandidates({ artwork: true });
 const host = createCandidateTeamHost(source, { corePackIds: source.packs.map((p) => p.id) });
 const row = host.rows[0],
   asset = row.background;
+const compiled = JSON.parse(
+  await readFile(new URL('../presentation/compiled/runtime.json', import.meta.url)),
+);
 const bytes = await readFile(new URL('../' + asset.path, import.meta.url));
 const media = await loadPreviewArtwork(asset, {
   fetchAsset: async () => new Response(bytes),
   digest: (body) => webcrypto.subtle.digest('SHA-256', body),
 });
 const snapshot = Object.freeze({
-  resolved: { theme: { id: 'fpv', revision: 1 } },
+  resolved: { theme: structuredClone(compiled.resolved.theme), collection: null },
   canvas: {
     palette: {
       ink: '#f6f3e8',
@@ -120,6 +123,8 @@ test('Team candidate verifies exact source and owns original-size draw until dis
   assert.equal(owner.confirm(request()), binding);
   assert.equal(await owner.select(request()), binding);
   assert.equal(binding.choice.officialProgressEligible, false);
+  assert.equal(binding.snapshot, snapshot);
+  assert.equal(binding.snapshot.resolved.theme.revision, 82);
   assert.equal(candidateTeamPictureFrame(binding, row.level, snapshot).sha256, asset.sha256);
   assert.equal(candidateTeamPictureFrame({ ...binding }, row.level, snapshot), null);
   const calls = [],
