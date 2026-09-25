@@ -19,13 +19,13 @@ export function naturalFileOrder(files) {
 }
 
 function titleFor(file) {
-  return file.name.replace(/\.[^.]+$/, '').slice(0, 160) || 'Untitled picture';
+  return file.name.replace(/\.[^.]+$/, '').slice(0, 160) || t('interface:creator.untitledPicture');
 }
 
 function messageFor(error) {
   return error?.name === 'AbortError'
-    ? 'Preparation cancelled. Generate again when you are ready.'
-    : error?.message || 'This picture could not be prepared.';
+    ? t('interface:creator.preparationCancelled')
+    : error?.message || t('interface:creator.picturePreparationFailed');
 }
 
 function defaultCapacity(items) {
@@ -53,13 +53,18 @@ function defaultCapacity(items) {
 }
 
 function mib(bytes) {
-  return `${(bytes / 1048576).toFixed(2)} MiB`;
+  return t('common:format.mebibytes', {
+    value: formatNumber(bytes / 1048576, {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    }),
+  });
 }
 
 function button(document, label, className = '') {
   const control = document.createElement('button');
   control.type = 'button';
-  control.textContent = label;
+  localizedText(control, label);
   control.className = className;
   return control;
 }
@@ -82,7 +87,8 @@ export function createBatchCreatorController({
   revokeObjectURL = (url) => URL.revokeObjectURL(url),
   maxItems = DEFAULT_MAX_ITEMS,
 }) {
-  if (typeof prepareItem !== 'function') throw new TypeError('prepareItem must be a function.');
+  if (typeof prepareItem !== 'function')
+    throw new TypeError(t('errors:creator.prepareItemFunction'));
   let items = [],
     running = null,
     controller = null,
@@ -141,15 +147,19 @@ export function createBatchCreatorController({
       image.alt = item.result.alt || '';
       media.append(image);
     } else {
-      media.textContent = item.status === 'error' ? 'Needs attention' : `${index + 1}`;
+      localizedText(media, () =>
+        item.status === 'error' ? t('interface:creator.needsAttention') : formatNumber(index + 1),
+      );
     }
 
     const body = document.createElement('div');
     body.className = 'batch-card-body';
     const heading = document.createElement('h3');
-    heading.textContent = `${index + 1}. ${item.title}`;
+    localizedText(heading, () =>
+      t('interface:creator.numberedTitle', { number: index + 1, title: item.title }),
+    );
     const titleLabel = document.createElement('label');
-    titleLabel.textContent = 'Level title';
+    localizedText(titleLabel, () => t('interface:creator.levelTitle'));
     const title = document.createElement('input');
     title.value = item.title;
     title.maxLength = 160;
@@ -164,33 +174,34 @@ export function createBatchCreatorController({
     const result = document.createElement('p');
     result.className = item.status === 'error' ? 'error' : 'batch-result';
     result.setAttribute('role', 'status');
-    result.textContent =
+    localizedText(result, () =>
       item.status === 'ready'
         ? item.result.validation
         : item.status === 'preparing'
-          ? 'Preparing image and verifying level…'
+          ? t('interface:creator.preparingImageLevel')
           : item.status === 'error'
             ? item.error
             : item.status === 'cancelled'
-              ? 'Cancelled. This item remains in the draft.'
+              ? t('interface:creator.itemCancelled')
               : item.included
-                ? 'Waiting to generate.'
-                : 'Excluded from approval.';
+                ? t('interface:creator.waitingToGenerate')
+                : t('interface:creator.excludedFromApproval'),
+    );
     body.append(heading, titleLabel, filename, result);
 
     if (item.result?.templateLabel) {
       const template = document.createElement('p');
       template.className = 'muted';
-      template.textContent = item.result.templateLabel;
+      localizedText(template, item.result.templateLabel);
       body.append(template);
     }
 
     const actions = document.createElement('div');
     actions.className = 'batch-card-actions';
-    const up = button(document, 'Move up', 'secondary');
-    const down = button(document, 'Move down', 'secondary');
-    const regenerate = button(document, 'Regenerate', 'secondary');
-    const remove = button(document, 'Remove', 'secondary');
+    const up = button(document, localizedMessage('common:controls.moveUp'), 'secondary');
+    const down = button(document, localizedMessage('common:controls.moveDown'), 'secondary');
+    const regenerate = button(document, localizedMessage('common:actions.regenerate'), 'secondary');
+    const remove = button(document, localizedMessage('common:actions.remove'), 'secondary');
     const includeLabel = document.createElement('label');
     includeLabel.className = 'batch-include';
     const include = document.createElement('input');
@@ -199,7 +210,7 @@ export function createBatchCreatorController({
     include.disabled = !!running;
     includeLabel.append(include);
     const includeText = document.createElement('span');
-    includeText.textContent = 'Include in campaign';
+    localizedText(includeText, () => t('interface:creator.includeInCampaign'));
     includeLabel.append(includeText);
     up.disabled = !!running || index === 0;
     down.disabled = !!running || index === items.length - 1;
@@ -240,25 +251,43 @@ export function createBatchCreatorController({
     nodes.progress.max = Math.max(1, progress.total);
     nodes.progress.value = progress.complete;
     nodes.progress.hidden = !running;
-    nodes.progressLabel.textContent = running
-      ? `Preparing ${Math.min(progress.complete + 1, progress.total)} of ${progress.total}.`
-      : items.length
-        ? `${items.length} pictures selected; ${included().length} included.`
-        : 'No pictures selected.';
+    localizedText(nodes.progressLabel, () =>
+      running
+        ? t('interface:creator.preparingProgress', {
+            current: Math.min(progress.complete + 1, progress.total),
+            total: progress.total,
+          })
+        : items.length
+          ? t('interface:creator.picturesSelected', {
+              count: items.length,
+              included: included().length,
+            })
+          : t('interface:creator.noPicturesSelected'),
+    );
     const failed = included().filter((item) => item.status === 'error').length;
     const waiting = included().filter((item) => item.status !== 'ready').length;
     capacity = capacityFor(included());
-    nodes.readiness.textContent = ready()
-      ? `${included().length} levels passed preparation and are ready for one approval.`
-      : failed
-        ? `${failed} included item${failed === 1 ? '' : 's'} need attention. Regenerate or exclude them before approval.`
-        : `${waiting} included item${waiting === 1 ? '' : 's'} still need generation.`;
+    localizedText(nodes.readiness, () =>
+      ready()
+        ? t('interface:creator.levelsReady', { count: included().length })
+        : failed
+          ? t('interface:creator.includedNeedAttention', { count: failed })
+          : t('interface:creator.includedNeedGeneration', { count: waiting }),
+    );
     nodes.approve.disabled = !!running || !ready() || !capacity.fits || !approveBatch;
-    nodes.approve.title = approveBatch
+    const approvalTitle = approveBatch
       ? capacity.fits
         ? ''
-        : 'Review and accept an explicit package split before approval.'
-      : 'The batch compiler will enable approval after it assembles the reviewed items.';
+        : t('interface:creator.acceptSplitBeforeApproval')
+      : t('interface:creator.compilerEnablesApproval');
+    localizedAttribute(nodes.approve, 'title', () =>
+      approveBatch
+        ? capacity.fits
+          ? ''
+          : t('interface:creator.acceptSplitBeforeApproval')
+        : t('interface:creator.compilerEnablesApproval'),
+    );
+    nodes.approve.title = approvalTitle;
     nodes.cancel.hidden = !running;
     nodes.generate.disabled =
       !!running || !items.some((item) => item.included && item.status !== 'ready');
@@ -275,9 +304,21 @@ export function createBatchCreatorController({
       ])
         if (control) control.disabled = !!running;
 
-    nodes.capacity.textContent = capacity.fits
-      ? `Estimated pack ${mib(capacity.estimatedBytes)} of ${mib(capacity.packageLimitBytes ?? capacity.limitBytes)}; staging needs about ${mib(capacity.stagingBytes)} of ${mib(capacity.limitBytes)} available managed storage.`
-      : `This selection estimates ${mib(capacity.estimatedBytes)} for a ${mib(capacity.packageLimitBytes ?? capacity.limitBytes)} pack limit and ${mib(capacity.stagingBytes)} of ${mib(capacity.limitBytes)} managed staging space. Split the campaign or remove pictures before approval.`;
+    localizedText(nodes.capacity, () =>
+      capacity.fits
+        ? t('interface:creator.capacityFits', {
+            estimate: mib(capacity.estimatedBytes),
+            packageLimit: mib(capacity.packageLimitBytes ?? capacity.limitBytes),
+            staging: mib(capacity.stagingBytes),
+            storageLimit: mib(capacity.limitBytes),
+          })
+        : t('interface:creator.capacityExceeded', {
+            estimate: mib(capacity.estimatedBytes),
+            packageLimit: mib(capacity.packageLimitBytes ?? capacity.limitBytes),
+            staging: mib(capacity.stagingBytes),
+            storageLimit: mib(capacity.limitBytes),
+          }),
+    );
     nodes.capacity.classList.toggle('error', !capacity.fits);
     nodes.split.hidden = capacity.fits || included().length < 2;
     nodes.split.disabled = !!running || !ready();
@@ -307,7 +348,14 @@ export function createBatchCreatorController({
     progress = { complete: 0, total: items.length };
     render();
     if (ordered.length > maxItems)
-      nodes.progressLabel.textContent = `${items.length} pictures added. ${ordered.length - maxItems} exceeded the ${maxItems}-item batch limit and were not added.`;
+      localizedText(
+        nodes.progressLabel,
+        localizedMessage('interface:creator.batchLimitExceeded', {
+          added: items.length,
+          omitted: ordered.length - maxItems,
+          limit: maxItems,
+        }),
+      );
     return snapshot();
   }
 
@@ -475,3 +523,10 @@ export function createBatchCreatorController({
     },
   });
 }
+import {
+  formatNumber,
+  localizedAttribute,
+  localizedMessage,
+  localizedText,
+  t,
+} from '../i18n/index.mjs';

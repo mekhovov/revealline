@@ -2,83 +2,144 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
+    <link rel="stylesheet" href="../i18n/style.css" />
+    <script src="../vendor/i18next-26.4.2.min.js"></script>
+    <script src="../i18n/catalogs.mjs"></script>
+    <script src="../i18n/bootstrap.mjs"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Custom campaign · RevealLine</title>
+    <title data-i18n="interface:creator.playerPageTitle">Custom campaign · RevealLine</title>
     <link rel="stylesheet" href="./creator.css" />
     <script type="module" src="./player.mjs"></script>
   </head>
   <body>
+    <div data-language-control></div>
     <header>
-      <a href="./">← My creations</a><a href="../">RevealLine</a><span>Custom campaign</span>
+      <a href="./" data-i18n="interface:creator.backToMyCreations">← My creations</a
+      ><a href="../" data-i18n="interface:revealLine">RevealLine</a
+      ><span data-i18n="interface:creator.customCampaign">Custom campaign</span>
     </header>
     <main>
-      <p class="eyebrow">YOUR PICTURES, YOUR CAMPAIGN</p>
-      <h1 id="title">Opening campaign…</h1>
-      <p id="status" role="status" aria-live="polite">
+      <p class="eyebrow" data-i18n="interface:creator.yourPicturesCampaign">
+        YOUR PICTURES, YOUR CAMPAIGN
+      </p>
+      <h1 id="title" data-i18n="interface:creator.openingCampaign">Opening campaign…</h1>
+      <p
+        id="status"
+        role="status"
+        aria-live="polite"
+        data-i18n="interface:creator.checkingInstalledEdition"
+      >
         Checking the installed edition and its picture.
       </p>
       <p id="save-status" role="status"></p>
-      <section class="panel controls" aria-label="Mission controls">
+      <section
+        class="panel controls"
+        aria-label="Mission controls"
+        data-i18n-aria-label="interface:creator.missionControls"
+      >
         <label
-          >Difficulty
+          ><span data-i18n="interface:difficulty">Difficulty</span>
           <select id="difficulty">
-            <option value="gentle">Gentle</option>
-            <option value="standard" selected>Standard</option>
-            <option value="expert">Expert</option>
+            <option value="gentle" data-i18n="interface:gentle">Gentle</option>
+            <option value="standard" selected data-i18n="interface:standard">Standard</option>
+            <option value="expert" data-i18n="interface:expert">Expert</option>
           </select></label
         >
         <label
-          >Steering
+          ><span data-i18n="interface:steering">Steering</span>
           <select id="steering">
-            <option value="immediate">Immediate</option>
-            <option value="grid-center">Grid center</option>
+            <option value="immediate" data-i18n="interface:immediate">Immediate</option>
+            <option value="grid-center" data-i18n="interface:creator.gridCenter">
+              Grid center
+            </option>
           </select></label
         >
-        <button id="start" disabled>Start mission</button>
-        <button id="resume" hidden>Resume saved attempt</button>
-        <button id="pause" disabled>Pause</button>
-        <button id="retry" disabled>Retry</button>
-        <button id="next" hidden>Next</button>
+        <button id="start" disabled data-i18n="interface:startMission">Start mission</button>
+        <button id="resume" hidden data-i18n="interface:creator.resumeSavedAttempt">
+          Resume saved attempt
+        </button>
+        <button id="pause" disabled data-i18n="common:actions.pause">Pause</button>
+        <button id="retry" disabled data-i18n="common:actions.retry">Retry</button>
+        <button id="next" hidden data-i18n="common:actions.next">Next</button>
       </section>
-      <p id="hud">
+      <p id="hud" data-i18n="interface:creator.playerHelp">
         Move with arrow keys or WASD. Close a line on safe ground to reveal your picture.
       </p>
       <div
         id="arena"
         tabindex="0"
         aria-label="Game board. Arrow keys or WASD to move; Escape to pause."
+        data-i18n-aria-label="interface:creator.gameBoardHelp"
       >
-        <canvas id="board" width="1296" height="648" aria-label="Territory capture board"></canvas>
+        <canvas
+          id="board"
+          width="1296"
+          height="648"
+          aria-label="Territory capture board"
+          data-i18n-aria-label="interface:creator.territoryCaptureBoard"
+        ></canvas>
       </div>
-      <div class="touch-controls" aria-label="Direction controls">
-        <button data-move="up" aria-label="Move up">↑</button
-        ><button data-move="left" aria-label="Move left">←</button
-        ><button data-move="down" aria-label="Move down">↓</button
-        ><button data-move="right" aria-label="Move right">→</button>
+      <div
+        class="touch-controls"
+        aria-label="Direction controls"
+        data-i18n-aria-label="interface:directionControls"
+      >
+        <button data-move="up" aria-label="Move up" data-i18n-aria-label="common:controls.moveUp">
+          ↑</button
+        ><button
+          data-move="left"
+          aria-label="Move left"
+          data-i18n-aria-label="common:controls.moveLeft"
+        >
+          ←</button
+        ><button
+          data-move="down"
+          aria-label="Move down"
+          data-i18n-aria-label="common:controls.moveDown"
+        >
+          ↓</button
+        ><button
+          data-move="right"
+          aria-label="Move right"
+          data-i18n-aria-label="common:controls.moveRight"
+        >
+          →
+        </button>
       </div>
       <section id="earned" class="panel" hidden>
-        <h2>Your earned picture</h2>
+        <h2 data-i18n="interface:creator.yourEarnedPicture">Your earned picture</h2>
         <div id="creator-story-stage" class="creator-story-stage">
           <img id="earned-picture" alt="" />
         </div>
         <p id="earned-caption"></p>
         <p id="creator-story-status" role="status" aria-live="polite"></p>
-        <button id="creator-story-retry" type="button" hidden>Try victory video again</button>
+        <button
+          id="creator-story-retry"
+          type="button"
+          hidden
+          data-i18n="interface:creator.retryVictoryVideo"
+        >
+          Try victory video again
+        </button>
       </section>
       <details class="panel">
-        <summary>Saves and recovery</summary>
-        <p>
+        <summary data-i18n="interface:creator.savesRecovery">Saves and recovery</summary>
+        <p data-i18n="interface:creator.editionProgressHelp">
           Attempts and earned pictures belong to this exact installed edition. A new edition keeps
           its own progress.
         </p>
-        <button id="export-attempt" disabled>Download unfinished attempt</button>
+        <button id="export-attempt" disabled data-i18n="interface:creator.downloadAttempt">
+          Download unfinished attempt
+        </button>
         <label
-          >Restore an attempt
+          ><span data-i18n="interface:creator.restoreAttempt">Restore an attempt</span>
           <input id="import-attempt" type="file" accept=".json,application/json" disabled
         /></label>
-        <button id="export-progress" disabled>Back up campaign progress</button>
+        <button id="export-progress" disabled data-i18n="interface:creator.backupProgress">
+          Back up campaign progress
+        </button>
         <label
-          >Restore campaign progress
+          ><span data-i18n="interface:creator.restoreProgress">Restore campaign progress</span>
           <input id="import-progress" type="file" accept=".json,application/json" disabled
         /></label>
       </details>

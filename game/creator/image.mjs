@@ -2,6 +2,7 @@ import { boundedJSON, exactKeys, required } from '../data-json.mjs';
 import { inspectImageDataUrl } from '../content.mjs';
 import { compileAssetRevision } from '../content-design/assets.mjs';
 import { creatorAbort, creatorSHA256, imageDataURL, ownCreatorBlob } from './bytes.mjs';
+import { t } from '../i18n/index.mjs';
 
 export const CREATOR_IMAGE_LIMITS = Object.freeze({
   sourceBytes: 4 * 1024 * 1024,
@@ -19,7 +20,8 @@ function imageHeader(bytes) {
 const canvasBlob = (canvas) =>
   new Promise((resolve, reject) => {
     canvas.toBlob(
-      (blob) => (blob ? resolve(blob) : reject(new Error('Picture conversion failed.'))),
+      (blob) =>
+        blob ? resolve(blob) : reject(new Error(t('errors:creator.pictureConversionFailed'))),
       'image/png',
     );
   });
@@ -42,14 +44,21 @@ export async function prepareCreatorImage(
   exactKeys(settings, ['alt', 'fit'], 'picture options');
   required(
     typeof settings.alt === 'string' && settings.alt.trim() && settings.alt.length <= 512,
-    'Describe your picture for its review and collection.',
+    t('errors:creator.describePicture'),
   );
-  required(['contain', 'cover'].includes(settings.fit), 'Choose Fit whole picture or Fill board.');
+  required(
+    ['contain', 'cover'].includes(settings.fit),
+    t('errors:creator.choosePictureFitting'),
+  );
   required(
     Number.isFinite(timeoutMs) && timeoutMs > 0 && timeoutMs <= 20000,
-    'Invalid picture timeout.',
+    t('errors:creator.invalidPictureTimeout'),
   );
-  const original = ownCreatorBlob(source, CREATOR_IMAGE_LIMITS.sourceBytes, 'Picture');
+  const original = ownCreatorBlob(
+    source,
+    CREATOR_IMAGE_LIMITS.sourceBytes,
+    t('interface:picture'),
+  );
   let stopped = false,
     timer,
     cancel,
@@ -57,18 +66,20 @@ export async function prepareCreatorImage(
   const canvases = [];
   const check = () => {
     creatorAbort(signal);
-    required(!stopped, 'Picture preparation expired.');
+    required(!stopped, t('errors:creator.picturePreparationExpired'));
   };
   const stop = new Promise((_, reject) => {
     cancel = () => {
       stopped = true;
-      reject(new DOMException('Picture preparation cancelled.', 'AbortError'));
+      reject(
+        new DOMException(t('errors:creator.picturePreparationCancelled'), 'AbortError'),
+      );
     };
     signal?.addEventListener('abort', cancel, { once: true });
     if (signal?.aborted) cancel();
     timer = setTimeout(() => {
       stopped = true;
-      reject(new Error('Picture preparation timed out. Try a smaller picture.'));
+      reject(new Error(t('errors:creator.picturePreparationTimedOut')));
     }, timeoutMs);
   });
   try {
@@ -93,7 +104,7 @@ export async function prepareCreatorImage(
         required(
           (width === header.width && height === header.height) ||
             (width === header.height && height === header.width),
-          'Decoded dimensions differ from the picture header.',
+          t('errors:creator.decodedDimensionsDiffer'),
         );
         const render = async (w, h) => {
           check();
@@ -102,7 +113,7 @@ export async function prepareCreatorImage(
           canvas.width = w;
           canvas.height = h;
           const context = canvas.getContext('2d');
-          required(context, 'Picture preparation requires a 2D canvas.');
+          required(context, t('errors:creator.canvasRequired'));
           context.fillStyle = '#101923';
           context.fillRect(0, 0, w, h);
           const scale =
@@ -119,7 +130,7 @@ export async function prepareCreatorImage(
           const blob = ownCreatorBlob(
             await canvasBlob(canvas),
             CREATOR_IMAGE_LIMITS.sourceBytes,
-            'Prepared picture',
+            t('interface:creator.preparedPicture'),
           );
           check();
           const outputBytes = new Uint8Array(await blob.arrayBuffer());
@@ -127,7 +138,7 @@ export async function prepareCreatorImage(
           const output = imageHeader(outputBytes);
           required(
             output.mime === 'image/png' && output.width === w && output.height === h,
-            'Prepared picture has an unexpected encoding or size.',
+            t('errors:creator.preparedPictureEncoding'),
           );
           return {
             blob: new Blob([blob], { type: 'image/png' }),
