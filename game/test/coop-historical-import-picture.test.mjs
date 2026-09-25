@@ -38,7 +38,12 @@ function fixture() {
   const pack = structuredClone(imported);
   const snapshot = { resolved: structuredClone(compiled.resolved) };
   const asset = snapshot.resolved.assets[approved.slot];
-  const request = { pack, levelId: pack.levels[0].id, themeId: 'fpv', attemptId: 'import-1' };
+  const request = {
+    pack,
+    levelId: pack.levels[0].id,
+    themeId: 'fpv',
+    attemptId: 'import-1',
+  };
   const calls = { reads: [], images: [], releases: [] };
   let currentSnapshot = snapshot;
   const readPicture = async (slot, options) => {
@@ -83,7 +88,7 @@ test('the versioned historical policy names only the exact reviewed FPV wide sce
     'revealline-team-historical-import-picture.v1',
   );
   assert.equal(COOP_HISTORICAL_IMPORT_PICTURE_POLICY.themeId, 'fpv');
-  assert.equal(COOP_HISTORICAL_IMPORT_PICTURE_POLICY.themeRevision, 73);
+  assert.equal(COOP_HISTORICAL_IMPORT_PICTURE_POLICY.themeRevision, 74);
   assert.equal(
     COOP_HISTORICAL_IMPORT_PICTURE_POLICY.themeRevision,
     compiled.resolved.theme.revision,
@@ -116,7 +121,7 @@ test('valid coverage and multi-core imports bind their complete content to the a
       levelRevision: level.revision,
       levelSha256: sha(canonicalJSON(level)),
       themeId: 'fpv',
-      themeRevision: 73,
+      themeRevision: 74,
       collection: null,
       picture: approved,
       kind: 'image',
@@ -150,7 +155,11 @@ test('historical revision values retain their original type and full pack owners
     changed.levels[1].name = 'Another arena revised';
     await assert.rejects(lease.select({ ...f.request, pack: changed }), /Retry must retain/);
     assert.equal(lease.current(), first);
-    const second = await lease.select({ ...f.request, pack: changed, attemptId: 'import-2' });
+    const second = await lease.select({
+      ...f.request,
+      pack: changed,
+      attemptId: 'import-2',
+    });
     assert.equal(second.choice.levelSha256, first.choice.levelSha256);
     assert.notEqual(second.choice.packSha256, first.choice.packSha256);
     lease.dispose();
@@ -244,7 +253,11 @@ test('the policy remains opt-in and malformed policy or historical input cannot 
 test('the starter namespace stays strict even with no exact rows; known custom namespaces cannot borrow generic approval', async () => {
   const f = fixture();
   const starter = structuredClone(COOP_STARTER_PACK);
-  const request = { ...f.request, pack: starter, levelId: starter.levels[0].id };
+  const request = {
+    ...f.request,
+    pack: starter,
+    levelId: starter.levels[0].id,
+  };
   const exact = f.create();
   assert.deepEqual((await exact.select(request)).choice, {
     ...COOP_PICTURE_BINDINGS[0],
@@ -269,7 +282,10 @@ test('the starter namespace stays strict even with no exact rows; known custom n
     levelSha256: sha(canonicalJSON(f.pack.levels[0])),
   };
   const known = f.create({ bindings: [customRow] });
-  assert.deepEqual((await known.select(f.request)).choice, { ...customRow, kind: 'image' });
+  assert.deepEqual((await known.select(f.request)).choice, {
+    ...customRow,
+    kind: 'image',
+  });
   known.dispose();
   for (const mutate of [
     (pack) => {
@@ -360,7 +376,10 @@ test('generic read, original hash and decode errors never become procedural and 
       },
     });
     await assert.rejects(
-      lease.select({ ...f.request, onStatus: (status) => statuses.push(status) }),
+      lease.select({
+        ...f.request,
+        onStatus: (status) => statuses.push(status),
+      }),
     );
     assert.equal(lease.current(), null);
     assert.equal(statuses.at(-1).status, 'error');
@@ -422,7 +441,10 @@ test('generic Cancel and Retry release a late decoded image once without changin
   const image = { width: 1152, height: 576 };
   completion[1].resolve({ image, release: () => released[1]++ });
   const current = await retry;
-  completion[0].resolve({ image: { width: 1152, height: 576 }, release: () => released[0]++ });
+  completion[0].resolve({
+    image: { width: 1152, height: 576 },
+    release: () => released[0]++,
+  });
   await rejected;
   assert.equal(lease.current(), current);
   assert.equal(lease.confirm(f.request).image, image);
@@ -443,7 +465,11 @@ test('failed generic replacement and snapshot drift preserve the old image and r
   });
   const first = await lease.select(f.request);
   fail = true;
-  const next = { ...f.request, levelId: f.pack.levels[1].id, attemptId: 'import-2' };
+  const next = {
+    ...f.request,
+    levelId: f.pack.levels[1].id,
+    attemptId: 'import-2',
+  };
   await assert.rejects(lease.select(next), /Replacement unavailable/);
   assert.equal(lease.current(), first);
   assert.equal(f.calls.releases.length, 0);

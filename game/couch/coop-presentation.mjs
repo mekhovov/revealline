@@ -39,7 +39,7 @@ function pictureIdentity(picture) {
 }
 function historicalPolicy(source) {
   if (source === null || source === undefined) return null;
-  const policy = boundedJSON(source, { maxBytes: 4096, maxArray: 16 });
+  const policy = boundedJSON(source, { maxBytes: 4096, maxArray: 17 });
   fields(
     policy,
     'version themeId themeRevision collection picture',
@@ -62,9 +62,9 @@ function historicalPolicy(source) {
 function historicalPolicies(source) {
   if (source === null || source === undefined) return [];
   const entries = Array.isArray(source)
-    ? // Current73 plus the fifteen explicitly preserved58–72 policies.
+    ? // Current74 plus the sixteen explicitly preserved58–73 policies.
       // Another supported edition must deliberately revisit this finite bound.
-      boundedJSON(source, { maxBytes: 20 * 1024, maxArray: 16 })
+      boundedJSON(source, { maxBytes: 20 * 1024, maxArray: 17 })
     : [source];
   const seen = new Set();
   return freezePresentation(
@@ -125,7 +125,10 @@ function requestIdentity(request) {
     identifier(levelId) && stableId(themeId) && stableId(attemptId),
     'Invalid Team request identity.',
   );
-  const pack = boundedJSON(request.pack, { maxBytes: COOP_PACK_MAX_BYTES, maxArray: 4096 });
+  const pack = boundedJSON(request.pack, {
+    maxBytes: COOP_PACK_MAX_BYTES,
+    maxArray: 4096,
+  });
   const validation = validateCoopPack(pack);
   required(validation.valid, `Invalid Team pack: ${validation.errors.join('; ')}`);
   const level = pack.levels.find((entry) => entry.id === levelId);
@@ -456,7 +459,9 @@ export function createCoopPresentation({
         );
         report(operation, 'decoding', 'Preparing the complete Team picture…');
         operationCurrent(operation);
-        const lease = await decodeImage(blob, { signal: operation.controller.signal });
+        const lease = await decodeImage(blob, {
+          signal: operation.controller.signal,
+        });
         let released = false;
         decoded = {
           image: lease?.image,
@@ -483,7 +488,10 @@ export function createCoopPresentation({
       const binding = Object.freeze({
         snapshot: state.snapshot,
         image: decoded?.image ?? null,
-        choice: freezePresentation({ ...row, kind: row.picture ? 'image' : 'procedural' }),
+        choice: freezePresentation({
+          ...row,
+          kind: row.picture ? 'image' : 'procedural',
+        }),
         fit: 'contain',
         sampling: 'nearest',
       });
@@ -545,7 +553,9 @@ export function createCoopPresentation({
         onStatus: request.onStatus ?? (() => {}),
       };
       operation.abort = () => controller.abort();
-      operation.signal?.addEventListener('abort', operation.abort, { once: true });
+      operation.signal?.addEventListener('abort', operation.abort, {
+        once: true,
+      });
       if (operation.signal?.aborted) operation.abort();
       pending = operation;
       // Assign promise ownership before any injected reader/status can reenter.
