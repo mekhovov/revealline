@@ -162,5 +162,8 @@
   "counts.lives_other": "{{count}} lives",
   "counts.enemies_one": "{{count}} enemy",
   "counts.enemies_other": "{{count}} enemies",
-  "units.cellsPerSecond": "{{speed}} cells/s"
+  "units.cellsPerSecond": "{{speed}} cells/s",
+  "preferences.displaySessionOnly": "Display changes apply only to this session; saving is disabled here.",
+  "preferences.displaySaveFailed": "Display changed for this session, but could not be saved for another page.",
+  "preferences.applyFailed": "The preference could not be applied: {{error}}"
 }
