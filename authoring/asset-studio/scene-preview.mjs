@@ -1,3 +1,4 @@
+import { t, localizedText } from '../../game/i18n/index.mjs';
 import { startPreviewMotion } from './preview-motion.mjs';
 import { createOperationStatus } from '../../game/ui/operation-status.mjs';
 import { createRun } from '../../game/core/index.mjs';
@@ -18,7 +19,7 @@ import { CURRENT_ART_SOURCES } from '../../game/presentation/current-art-sources
 import { crossModeContextPreview, stageBoardPreviewEffect } from './cross-mode-preview.mjs';
 const text = (tag, value, className = '', hostRole = null) => {
   const node = document.createElement(tag);
-  node.textContent = value;
+  localizedText(node, () =>value);
   node.className = className;
   if (hostRole) node.dataset.studioHost = hostRole;
   return node;
@@ -73,7 +74,7 @@ export function createStudioFixtureLoader({ readJSON = read } = {}) {
     async context(slotId, pictureOwner = null) {
       if (pictureOwner && (!pictureOwner.level || !pictureOwner.theme))
         throw new Error(
-          'Exact picture owner metadata is unavailable; no substitute board is shown.',
+          t("tools:exactPictureOwnerMetadataIsUnavailableNoSubstituteBoardIs"),
         );
       const preset = await presets();
       if (pictureOwner)
@@ -145,7 +146,7 @@ export function createStudioContextPresentation(resolved, decoded, selectedPlaye
 
 async function croppedImage(asset, blobs, options) {
   const blob = blobs.get(asset.file.sha256);
-  if (!blob) throw new Error('Preview media is missing.');
+  if (!blob) throw new Error(t("tools:previewMediaIsMissing"));
   const bitmap = await createImageBitmap(blob),
     f = asset.geometry.frame,
     canvas = document.createElement('canvas');
@@ -302,10 +303,10 @@ export async function boardContextPreview(surface, slot, asset, resolved, blobs,
     canvas = document.createElement('canvas');
   canvas.width = size.width;
   canvas.height = size.height;
-  canvas.setAttribute('aria-label', 'Actual board renderer in an isolated mission fixture');
+  canvas.setAttribute('aria-label', t("tools:actualBoardRendererInAnIsolatedMissionFixture"));
   const frame = text('div', '', 'board-context-frame'),
     hud = text('div', '', 'context-hud', 'secondary');
-  hud.append(text('span', 'FLIGHT / STUDIO'), text('span', 'III  00:00  0%', '', 'count'));
+  hud.append(text('span', t("tools:flightStudio")), text('span', t("tools:iii00000"), '', 'count'));
   frame.append(hud, canvas);
   surface.append(
     frame,
@@ -344,11 +345,11 @@ export async function boardContextPreview(surface, slot, asset, resolved, blobs,
       });
   };
   if (slot.group === 'pictures') {
-    const toggle = text('button', 'Show picture viewer', '', 'control');
+    const toggle = text('button', t("tools:showPictureViewer"), '', 'control');
     toggle.type = 'button';
     toggle.onclick = () => {
       gallery = !gallery;
-      toggle.textContent = gallery ? 'Show concealed field' : 'Show picture viewer';
+      localizedText(toggle, () =>gallery ? t("tools:showConcealedField") : t("tools:showPictureViewer"));
       render(0, true);
     };
     surface.append(toggle);
@@ -360,14 +361,14 @@ export function audioRecipePreview(surface, slot, own, { audioMaster = null } = 
     box = text('div', '', 'recipe-sample'),
     play = text(
       'button',
-      slot.id === 'audio.music' ? 'Audition 4 seconds' : 'Audition cue',
+      slot.id === 'audio.music' ? t("tools:audition4Seconds") : t("tools:auditionCue"),
       '',
       'control',
     ),
-    stop = text('button', 'Stop', '', 'control'),
+    stop = text('button', t("tools:stop"), '', 'control'),
     result = text(
       'p',
-      'Sound starts only from this button. Local audition volume: 35%.',
+      t("tools:soundStartsOnlyFromThisButtonLocalAuditionVolume35"),
       '',
       'control',
     );
@@ -377,8 +378,8 @@ export function audioRecipePreview(surface, slot, own, { audioMaster = null } = 
   surface.append(box);
   const auditionStatus = createOperationStatus(result);
   auditionStatus
-    .begin({ message: 'Sound starts only from this button. Local audition volume: 35%.' })
-    .finish({ message: 'Sound starts only from this button. Local audition volume: 35%.' });
+    .begin({ message: t("tools:soundStartsOnlyFromThisButtonLocalAuditionVolume35") })
+    .finish({ message: t("tools:soundStartsOnlyFromThisButtonLocalAuditionVolume35") });
   let audition = 0;
   let frame,
     alive = true,
@@ -386,10 +387,10 @@ export function audioRecipePreview(surface, slot, own, { audioMaster = null } = 
   const playbackCaption = () => {
     const master = audioMaster?.snapshot();
     return master?.muted
-      ? 'Audition playing · master sound is muted.'
+      ? t("tools:auditionPlayingMasterSoundIsMuted")
       : master?.volume === 0
-        ? 'Audition playing · master sound volume is zero.'
-        : 'Playing the registered Soundscape recipe.';
+        ? t("tools:auditionPlayingMasterSoundVolumeIsZero")
+        : t("tools:playingTheRegisteredSoundscapeRecipe");
   };
   // Rendering master output never starts a preview or replaces pending/error/Stop feedback.
   const stopMasterView = audioMaster?.subscribe(() => {
@@ -412,18 +413,18 @@ export function audioRecipePreview(surface, slot, own, { audioMaster = null } = 
   play.onclick = async () => {
     playbackLease = null;
     const request = ++audition;
-    const lease = auditionStatus.begin({ message: 'Preparing the sound audition…' });
+    const lease = auditionStatus.begin({ message: t("tools:preparingTheSoundAudition") });
     try {
       player.configure({ master: 0.35, music: 0.5, sfx: 0.7 });
       if (slot.id === 'audio.music') {
         const ready = await player.preview({ seconds: 4 });
         if (!alive || request !== audition) return;
-        if (!ready) throw new Error('Audio is unavailable.');
+        if (!ready) throw new Error(t("tools:audioIsUnavailable"));
         tick();
       } else {
         const enabled = await player.enable();
         if (!alive || request !== audition) return;
-        if (!enabled) throw new Error('Audio is unavailable.');
+        if (!enabled) throw new Error(t("tools:audioIsUnavailable"));
         const cue = slot.id.slice(6);
         const event = {
           capture: 'cells.claimed',
@@ -448,8 +449,8 @@ export function audioRecipePreview(surface, slot, own, { audioMaster = null } = 
     player.disable();
     cancelAnimationFrame(frame);
     auditionStatus
-      .begin({ message: 'Audition stopped.' })
-      .finish({ message: 'Audition stopped.', state: 'cancelled' });
+      .begin({ message: t("tools:auditionStopped") })
+      .finish({ message: t("tools:auditionStopped"), state: 'cancelled' });
   };
 }
 export function effectRecipePreview(surface, slot, resolved, options, own) {
@@ -462,7 +463,7 @@ export function effectRecipePreview(surface, slot, resolved, options, own) {
     canvas,
     text(
       'small',
-      'Actual game effect helper · isolated event fixture',
+      t("tools:actualGameEffectHelperIsolatedEventFixture"),
       'bounded-label',
       'secondary',
     ),

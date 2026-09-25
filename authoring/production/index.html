@@ -2,8 +2,13 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../game/i18n/style.css" />
+    <script src="../../game/vendor/i18next-26.4.2.min.js"></script>
+    <script src="../../game/i18n/catalogs.mjs"></script>
+    <script src="../../game/i18n/bootstrap.mjs"></script>
+
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>RevealLine — production register</title>
+    <title data-i18n="tools:reveallineProductionRegister">RevealLine — production register</title>
     <script type="module" src="../shared/host-display-entry.mjs"></script>
     <link rel="stylesheet" href="../../game/ui/pixel-theme.css" />
     <link rel="stylesheet" href="./panel.css" />
@@ -15,30 +20,32 @@
     <link rel="stylesheet" href="../../game/ui/operation-status.css" />
   </head>
   <body class="field-kit field-kit-support" data-authoring-host="production">
+<div data-language-control></div>
+
     <header>
-      <a href="../">Authoring library</a>
-      <h1 class="field-kit-display">Content production</h1>
-      <p>Find the next missing picture, presentation, story or track.</p>
-      <p class="muted">
+      <a href="../" data-i18n="tools:authoringLibrary">Authoring library</a>
+      <h1 class="field-kit-display" data-i18n="tools:contentProduction">Content production</h1>
+      <p data-i18n="tools:findTheNextMissingPicturePresentationStoryOrTrack">Find the next missing picture, presentation, story or track.</p>
+      <p class="muted" data-i18n="tools:readOnlySourceRegisterViewingAFileDoesNotApprove">
         Read-only source register. Viewing a file does not approve it or change the game.
       </p>
-      <nav aria-label="Production snapshots">
-        <a id="snapshot-baseline" href="./">Baseline · revision 1</a>
+      <nav aria-label="Production snapshots" data-i18n-aria-label="tools:productionSnapshots">
+        <a id="snapshot-baseline" href="./" data-i18n="tools:baselineRevision1">Baseline · revision 1</a>
         <span aria-hidden="true"> · </span>
         <a id="snapshot-sentinel" href="./?snapshot=sentinel-themes"
-          >Sentinel themes · revision 2</a
+           data-i18n="tools:sentinelThemesRevision2">Sentinel themes · revision 2</a
         >
       </nav>
     </header>
-    <main id="production-panel" aria-label="Production register">
+    <main id="production-panel" aria-label="Production register" data-i18n-aria-label="tools:productionRegister">
       <p class="operation-status" data-state="busy">
         <span class="operation-status-signal" aria-hidden="true"><i></i><i></i><i></i></span
-        ><span class="operation-status-label" role="status">Loading the register…</span>
+        ><span class="operation-status-label" role="status" data-i18n="tools:loadingTheRegister">Loading the register…</span>
       </p>
     </main>
     <footer>
-      <a href="./README.md">Register and CLI guide</a>
-      <a href="../prompts/production-intake.md">Asset intake workflow</a>
+      <a href="./README.md" data-i18n="tools:registerAndCliGuide">Register and CLI guide</a>
+      <a href="../prompts/production-intake.md" data-i18n="tools:assetIntakeWorkflow">Asset intake workflow</a>
     </footer>
     <noscript
       >Serve this repository on localhost and enable JavaScript to inspect the register.</noscript
