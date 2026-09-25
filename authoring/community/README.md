@@ -6,6 +6,11 @@ The [combined creator feature acceptance record](combined-release-acceptance.md)
 source and release authority for the consolidated implementation. Individual phase records remain
 supporting evidence and do not imply separate releases.
 
+Maintainers can rerun the creator, media, installed-play, community-client and self-hosted service
+cohort with `npm run test:creator-feature`. The command discovers the owned test families, requires
+the cross-boundary acceptance files and fails if either the browser/runtime cohort or service suite
+fails.
+
 The [video campaign review guide](video-campaign-guide.md) documents the Phase 3 mixed-media review contract, exact pairing corrections, poster choices, playback ranges and optional post-win story behavior. The main creator flow now persists those exact dependencies before approval; the [Phase 3 acceptance record](phase3-acceptance.md) separates completed browser evidence from the remaining player-story and release gates.
 
 The account, resumable upload, exact validation, automatic catalog publication, report and
