@@ -1,0 +1,21 @@
+{
+  "format": "revealline-archive-public-http-audit.v1",
+  "status": "PASS",
+  "archiveId": "archive-84",
+  "version": "v0.115.1",
+  "base": "https://mekhovov.github.io/revealline-archive-84/",
+  "inventorySha256": "5e693c0dd50019984d650a1170be55a0da4edf625c5528baa9bf54f5ce9c606e",
+  "files": 1149,
+  "expectedBytes": 595699929,
+  "verifiedBytes": 595699929,
+  "attempts": 1149,
+  "failedFiles": 0,
+  "failedAttempts": 0,
+  "retriedFiles": 0,
+  "skipped": [],
+  "allFinalURLsExact": true,
+  "startedAt": "2026-09-25T17:21:44.900830+00:00",
+  "verifiedAt": "2026-09-25T17:22:54.957797+00:00",
+  "failures": [],
+  "scope": "Complete public Archive84 inventory: exact 200 response, final URL, identity encoding, byte count, and SHA-256 for every pinned row. Browser acceptance is separate."
+}
