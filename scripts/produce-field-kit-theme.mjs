@@ -133,18 +133,18 @@ const REVIEWED_RECIPE_INPUTS = {
     ],
   },
   motion: {
-    sha256: 'c35fcf823a0923f27f1193afa247e2d0c93b6fc4161976a5d6a2b67a5bc143a9',
+    sha256: '9a30d7a07cd5aad3249204547946eeea5250087de714e8002b1c824779039efb',
     evidence: [
-      'Scoped visible-actor motion continuation: docs/verification/integrated-fpv-presentation-2026-09-24/review.json sha256:5743669fa1b230c486bf92435e2922a8a775b86a3de10fd42f84c2e51a85ca51; three ordered motion inputs sha256:c35fcf823a0923f27f1193afa247e2d0c93b6fc4161976a5d6a2b67a5bc143a9. Only actor-presentation.mjs changes to fit prepared visible bounds and rotor sweep to the requested display size.',
-      'Focused actor and renderer checks cover rectangular and transparent frames, compact/desktop minima, rotor sweep, reduced motion, fallback and unchanged simulation footprints. Positions, collision radii, authoritative clocks and role identities are unchanged.',
+      'Scoped active-trail readability continuation: docs/verification/trail-impact-readability-2026-09-25/review.json sha256:bada8b4be1aff3163bc18cf4810e47f85fb2493f5eb50beb2b51cacaa3ac7a3f; three ordered motion inputs sha256:9a30d7a07cd5aad3249204547946eeea5250087de714e8002b1c824779039efb. Actor presentation adds only bounded cut-head and travelling-front geometry.',
+      'Focused renderer checks cover compact/desktop sizes, light/dark accents, both impact directions, reduced effects and unchanged authoritative coordinates. Movement, collision footprints, capture state and clocks remain unchanged.',
       'Functional source/geometry continuation only, not subjective art, every-state native/device, human balance, frozen/public or release approval. Historical reviews and original payloads remain immutable; changed motion inputs reopen this group.',
     ],
   },
   effects: {
-    sha256: '654fed2ce5b5e9b5e0c6bb79a6d7095093a4ed8128877b1a7f0658d830c275e7',
+    sha256: '60b67750b0e65abd8139c9c45fdec24f2702deca11b839c11bcb367fe4cb627d',
     evidence: [
-      'Scoped enemy surface-motion continuation: docs/verification/enemy-surface-motion-continuation-2026-09-24/review.json sha256:f8dcdc60d973447bd6b482045c96f1a4059cfca899528dd7de7cacb95854684c; ten ordered effects inputs sha256:654fed2ce5b5e9b5e0c6bb79a6d7095093a4ed8128877b1a7f0658d830c275e7. Prepared enemy bodies now consume existing bounded catalog motion records without acquiring duplicate images.',
-      'The active-trail, secured-contour, travelling-impact, capture, failure, victory, pickup, shield, respawn and pressure painters remain unchanged. Focused actor, asset and motion checks preserve reduced effects, collision footprints, role identities and authoritative state.',
+      'Scoped travelling-impact readability continuation: docs/verification/trail-impact-readability-2026-09-25/review.json sha256:bada8b4be1aff3163bc18cf4810e47f85fb2493f5eb50beb2b51cacaa3ac7a3f; ten ordered effects inputs sha256:60b67750b0e65abd8139c9c45fdec24f2702deca11b839c11bcb367fe4cb627d. Classic rendering delegates existing fronts to the shape-distinct shared painter.',
+      'Focused checks preserve front positions, direction semantics, reduced-effects meaning, pause clocks and run immutability. Front speed, arrival, closure ties, damage, collision footprints and role identities remain authoritative elsewhere.',
       'Functional and bounded visual continuation only. Historical reviews and original payloads remain immutable. Team recipes remain source-stage; complete art, final-byte physical-device, human pacing, frozen/public and release acceptance remain separate. Any effects input or review-byte change reopens this group.',
     ],
   },
