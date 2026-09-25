@@ -132,3 +132,17 @@ test('Recording mode excludes the registered core theme and exposes its eligibil
   assert(!selected.playlist.trackIds.includes(OPENING_THEME_TRACK_ID));
   assert.match(selected.notice, /Recording mode excludes/);
 });
+
+test('Installed only includes the bundled opening theme without claiming downloaded ownership', () => {
+  const fresh = setCatalogueTracks(emptySoundtrackLibrary(), SOUNDTRACK_CATALOGUE.tracks);
+  const selected = resolveSoundtrackSelection(
+    {
+      ...fresh,
+      listening: { ...fresh.listening, installedOnly: true },
+    },
+    { scene: 'menu', bundledTrackIds: [OPENING_THEME_TRACK_ID] },
+    { catalogue: SOUNDTRACK_CATALOGUE },
+  );
+  assert(selected.playlist.trackIds.includes(OPENING_THEME_TRACK_ID));
+  assert.deepEqual(fresh.installedTrackIds, []);
+});
