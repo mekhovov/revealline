@@ -13,6 +13,7 @@ import {
 import { attachJourneyChooser } from '../ui/journey-chooser.mjs';
 import { createMissionLibrarySessionState } from '../mission-library/handoff.mjs';
 import { attachControllerNavigation } from '../ui/controller-navigation.mjs';
+import { getLocale, setLocale } from '../i18n/index.mjs';
 
 const tick = () => new Promise((resolve) => setImmediate(resolve));
 
@@ -630,6 +631,56 @@ test('download stays in picker, preserves search/focus/scroll, and requires a de
   assert.equal(doc.activeElement, card);
   assert.equal($('journey-cards').scrollTop, 123);
   chooser.destroy();
+});
+
+test('download labels and accepted completion translate without another preparation or loss of picker state', async (context) => {
+  const locale = getLocale();
+  context.after(() => setLocale(locale, { persist: false }));
+  setLocale('en', { persist: false });
+  let finish,
+    ready = false,
+    preparations = 0;
+  const { doc, $, chooser } = setup([
+    owner({
+      presentation: () => ({ name: getLocale() === 'uk' ? 'Назва місії' : 'Mission title' }),
+      availability: () => (ready ? { state: 'ready' } : { state: 'download', bytes: 1572864 }),
+      prepare: () => {
+        preparations++;
+        return new Promise((resolve) => {
+          finish = () => {
+            ready = true;
+            resolve();
+          };
+        });
+      },
+    }),
+  ]);
+  context.after(() => chooser.destroy());
+  const card = $('journey-cards').children[0];
+  $('journey-search').value = 'earlier';
+  $('journey-search').emit('input');
+  $('journey-cards').scrollTop = 97;
+  card.focus();
+  setLocale('uk', { persist: false });
+  assert.match(card.textContent, /Завантажити · 1,5 MiB/);
+  assert.equal(preparations, 0);
+  card.click();
+  await tick();
+  setLocale('en', { persist: false });
+  assert.match(card.textContent, /Preparing · Cancel/);
+  assert.equal(preparations, 1);
+  finish();
+  await tick();
+  assert.match($('journey-chooser-status').textContent, /Mission title is ready/);
+  setLocale('uk', { persist: false });
+  assert.match($('journey-chooser-status').textContent, /Місію «Назва місії» підготовлено/);
+  assert.equal($('journey-cards').children[0], card);
+  assert.equal(doc.activeElement, card);
+  assert.equal($('journey-cards').scrollTop, 97);
+  assert.equal($('journey-search').value, 'earlier');
+  assert.equal(preparations, 1);
+  setLocale('en', { persist: false });
+  assert.match($('journey-chooser-status').textContent, /Mission title is ready/);
 });
 
 test('cancel and failed download Retry remain inline without losing the selected collection', async () => {

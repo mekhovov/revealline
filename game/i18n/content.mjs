@@ -12,11 +12,8 @@ function deeplyFrozen(value, visited = new WeakSet()) {
   visited.add(value);
   return Object.values(value).every((child) => deeplyFrozen(child, visited));
 }
-export function contentText(record, field) {
-  if (record == null) return undefined;
-  const original = field.split('.').reduce((value, key) => value?.[key], record);
-  if (typeof original !== 'string' || typeof record !== 'object') return original;
-  if (getLocale() === 'en') return original;
+function registeredRecord(record) {
+  if (!record || typeof record !== 'object') return null;
   let cached = records.get(record);
   if (!cached?.immutable) {
     try {
@@ -33,10 +30,24 @@ export function contentText(record, field) {
         records.set(record, cached);
       }
     } catch {
-      return original;
+      return null;
     }
   }
-  const registered = cached.entry?.fields[field];
+  return cached.entry;
+}
+
+/** Presentation-only identity check for structured labels derived from a
+ * shipped record. This never grants installation, artwork or launch authority. */
+export function isRegisteredContent(record) {
+  return Boolean(registeredRecord(record));
+}
+
+export function contentText(record, field) {
+  if (record == null) return undefined;
+  const original = field.split('.').reduce((value, key) => value?.[key], record);
+  if (typeof original !== 'string' || typeof record !== 'object') return original;
+  if (getLocale() === 'en') return original;
+  const registered = registeredRecord(record)?.fields[field];
   return registered?.source === original ? t(registered.key) : original;
 }
 export function contentList(record, field) {
