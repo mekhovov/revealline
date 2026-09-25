@@ -29,11 +29,18 @@ test('same-origin account client sends bounded JSON with cookie credentials and 
       signedIn = false;
       return Response.json({ success: true });
     }
+    if (
+      new URL(url).pathname.endsWith('/send-verification-email') ||
+      new URL(url).pathname.endsWith('/request-password-reset') ||
+      new URL(url).pathname.endsWith('/reset-password')
+    )
+      return Response.json({ status: true });
     throw new Error(`Unexpected account request ${url}`);
   };
   const account = createCommunityAccountClient({
     baseURL: 'https://game.example.test/',
     origin: 'https://game.example.test',
+    accountPageURL: 'https://game.example.test/game/community/',
     fetchImpl,
   });
   const session = await account.signUp({
@@ -48,6 +55,7 @@ test('same-origin account client sends bounded JSON with cookie credentials and 
     name: 'One',
     email: 'one@example.test',
     password: 'password-for-test',
+    callbackURL: 'https://game.example.test/game/community/?account=verified',
   });
   assert.deepEqual(await account.headers(), {});
   assert.equal(await account.signOut(), null);
@@ -61,6 +69,28 @@ test('same-origin account client sends bounded JSON with cookie credentials and 
     ).user.id,
     'creator-1',
   );
+  await account.requestEmailVerification({ email: 'one@example.test' });
+  assert.deepEqual(JSON.parse(calls.at(-1).init.body), {
+    email: 'one@example.test',
+    callbackURL: 'https://game.example.test/game/community/?account=verified',
+  });
+  await account.requestPasswordReset({ email: 'one@example.test' });
+  assert.deepEqual(JSON.parse(calls.at(-1).init.body), {
+    email: 'one@example.test',
+    redirectTo: 'https://game.example.test/game/community/?account=reset',
+  });
+  await account.resetPassword({
+    token: 'bounded-reset-token',
+    newPassword: 'new-password-for-test',
+  });
+  assert.deepEqual(JSON.parse(calls.at(-1).init.body), {
+    token: 'bounded-reset-token',
+    newPassword: 'new-password-for-test',
+  });
+  await assert.rejects(
+    account.resetPassword({ token: 'x'.repeat(4_097), newPassword: 'new-password-for-test' }),
+    /token is invalid/u,
+  );
   assert.throws(
     () =>
       createCommunityAccountClient({
@@ -68,6 +98,15 @@ test('same-origin account client sends bounded JSON with cookie credentials and 
         origin: 'https://game.example.test',
       }),
     /same-origin/u,
+  );
+  assert.throws(
+    () =>
+      createCommunityAccountClient({
+        baseURL: 'https://game.example.test/',
+        origin: 'https://game.example.test',
+        accountPageURL: 'https://name:password@game.example.test/community/',
+      }),
+    /bounded same-origin/u,
   );
 });
 
