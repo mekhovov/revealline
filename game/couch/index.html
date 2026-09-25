@@ -48,11 +48,13 @@
       ></p>
       <div id="race-hud" class="race-hud" hidden>
         <button id="race-pause" type="button" disabled>Pause</button>
-        <span class="race-score"
-          ><span class="sun">SUNFLOWER</span> <strong id="series-score">0 : 0</strong>
-          <span class="sky">SKYLINE</span></span
+        <span id="race-match-score" class="race-score" aria-label="Match score"
+          ><span class="race-hud-label">MATCH</span><span class="sun">SUNFLOWER</span>
+          <strong id="series-score">0 : 0</strong> <span class="sky">SKYLINE</span></span
         >
-        <strong id="race-clock">1:30</strong>
+        <span class="race-clock"
+          ><span id="race-clock-label">TIME LEFT</span><strong id="race-clock">1:30</strong></span
+        >
         <div
           id="race-music-now-playing"
           class="couch-music-credit"

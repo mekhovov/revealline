@@ -268,13 +268,24 @@ body.candidate-journey .race-shell {
 .race-score {
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 10px;
   font-size: 16px;
+}
+.race-hud-label,
+#race-clock-label {
+  color: #8ea8c8;
+  font: 11px/1 var(--fk-font-mono, monospace);
+  letter-spacing: 0.08em;
 }
 #series-score {
   color: #e9f2ff;
   font-size: 28px;
   white-space: nowrap;
+}
+.race-clock {
+  display: grid;
+  justify-items: end;
+  gap: 2px;
 }
 #race-clock {
   min-width: 64px;
@@ -314,7 +325,12 @@ body.candidate-journey .race-shell {
   color: inherit;
 }
 .racer-heading span {
-  font-size: 15px;
+  padding: 2px 7px;
+  border: 1px solid color-mix(in srgb, var(--seat-color) 55%, transparent);
+  color: #d7eaff;
+  background: #101f37;
+  font-size: 13px;
+  line-height: 1.35;
 }
 .race-arena {
   position: relative;
@@ -345,7 +361,8 @@ body.candidate-journey .race-shell {
 }
 .racer-stats {
   text-align: center;
-  font-size: 17px;
+  color: #d7eaff;
+  font: 14px/1.35 var(--fk-font-mono, monospace);
   margin: 6px 0;
 }
 .racer-input {
@@ -458,7 +475,7 @@ body.candidate-journey .race-shell {
     font-size: 19px;
   }
   .racer-stats {
-    font-size: 15px;
+    font-size: 12px;
     margin: 3px 0;
   }
   .racer-input {
@@ -490,6 +507,26 @@ body.candidate-journey .race-shell {
   }
   .racer-input {
     display: none;
+  }
+  .race-hud-label,
+  .race-score > .sun,
+  .race-score > .sky {
+    display: none;
+  }
+  .race-clock {
+    grid-auto-flow: column;
+    align-items: baseline;
+    gap: 7px;
+  }
+  .racer-heading h2 {
+    font-size: 17px;
+  }
+  .racer-heading span {
+    font-size: 11px;
+  }
+  .racer-stats {
+    font-size: 11px;
+    white-space: nowrap;
   }
   .racer:has(.race-pad:not([hidden])) {
     grid-template-columns: minmax(0, 1fr) 144px;

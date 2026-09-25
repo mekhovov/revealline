@@ -61,6 +61,7 @@ for (const turnPolicy of ['immediate', 'grid-center'])
     assert.equal(ready.lives, 1);
     assert.equal(ready.level.goal.coverage, 0.45);
     assert.equal(page.$('target').textContent, 'TARGET 45%');
+    assert.equal(page.$('time-label').textContent, 'ELAPSED');
     assert.equal(page.$('difficulty-select').disabled, true);
     page.$('start-button').click();
     page.key('ArrowDown');
@@ -92,6 +93,7 @@ for (const turnPolicy of ['immediate', 'grid-center'])
     assert.equal(fresh.rules.stopOnCapture, true);
     assert.deepEqual(fresh.classic.lineImpact.fronts, []);
     assert.equal(page.$('target').textContent, 'TARGET 45%');
+    assert.equal(page.$('time-label').textContent, 'ELAPSED');
     assert.match(page.$('mode-caption').textContent, /PRACTICE/);
     assert.deepEqual(authoritativeCheckpoint(lost), terminal);
     // Browser download cleanup keeps its real delay, but must not hold this
