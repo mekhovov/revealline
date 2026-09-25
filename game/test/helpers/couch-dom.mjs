@@ -196,6 +196,9 @@ export class Element extends Events {
     this.attributes.set(name, String(value));
     if (name === 'id') this.id = String(value);
     if (name === 'tabindex') this.tabIndex = Number(value);
+    if (name.startsWith('data-'))
+      this.dataset[name.slice(5).replace(/-([a-z])/g, (_match, letter) => letter.toUpperCase())] =
+        String(value);
   }
   getAttribute(name) {
     if (name === 'id') return this.id || null;
@@ -207,6 +210,10 @@ export class Element extends Events {
   }
   removeAttribute(name) {
     this.attributes.delete(name);
+    if (name.startsWith('data-'))
+      delete this.dataset[
+        name.slice(5).replace(/-([a-z])/g, (_match, letter) => letter.toUpperCase())
+      ];
   }
   matches(selector) {
     return selector.split(',').some((part) => {
