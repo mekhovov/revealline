@@ -8246,6 +8246,10 @@ try {
       if (assigned && scope !== 'flight') controllerNavigation.engage();
     }
     if (status.code === 'joined' && scope !== 'flight') controllerNavigation.engage();
+    // End controller ownership even when this sample reports loss. A held
+    // Confirm owns its release, but a disconnected pad must not leave native
+    // keyboard activation suppressed indefinitely.
+    controllerConfirmGuard.observe(controllerFrame.confirmHeld);
     if (disconnected) {
       clearInput();
       pause(true);
@@ -8253,7 +8257,6 @@ try {
         'Controller disconnected. Your flight is paused. Release controls and press a face button to join again.',
       );
     } else {
-      controllerConfirmGuard.observe(controllerFrame.confirmHeld);
       controllerNavigation.handle(controllerFrame.ui);
       const flight = controllerFrame?.flight ?? {};
       const capabilities = arcadeActionCapabilities(run?.level);
@@ -9753,11 +9756,17 @@ try {
     cancelUnifiedOpening = cancel;
     try {
       const host = await getUnifiedMissionLibrary();
+      // The installed-card refresh may move focus while it reconciles an owned
+      // catalogue. Claim the still-current opener before that internal work;
+      // newer input still retires the claim while the state/revision checks
+      // below also reject replaced navigation and game state.
+      if (!opening.claim()) return;
       await host.refreshInstalled();
+      const openingCurrent = opening.current();
       opening.dispose();
       if (
         revision !== unifiedOpenRevision ||
-        !opening.current() ||
+        !openingCurrent ||
         unifiedDisposed ||
         document.hidden ||
         document.hasFocus?.() === false ||
