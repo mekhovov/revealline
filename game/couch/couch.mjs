@@ -93,7 +93,11 @@ import { createCharacterPresentations } from '../character-presentations.mjs';
 import { emptyProgress, unlockedBodies } from '../progress.mjs';
 import { createOperationStatus } from '../ui/operation-status.mjs';
 import { foundationReturnCaption } from '../ui/foundation-feedback.mjs';
+import { releaseExplorerHref } from '../release-explorer.mjs';
 const $ = (id) => document.getElementById(id);
+$('race-release-explorer').href = releaseExplorerHref(
+  globalThis.location?.href ?? document.baseURI ?? 'http://localhost/game/couch/',
+);
 const unclaimedFocus = (element) =>
   !element || element === document.body || element === document.documentElement;
 // Capture before attached() can hide a deliberately chosen loader recovery link.
@@ -392,7 +396,7 @@ try {
     $('race-journey-note').hidden = false;
     $('race-journey-note').textContent =
       authoredRoute.id === DEFAULT_JOURNEY_ROUTES.versus
-        ? `New Journey / ${candidateJourney.catalog.missions.length} missions. Original pictures need a connection; core offline preparation does not save them.`
+        ? `New Journey · ${candidateJourney.catalog.missions.length} missions`
         : `${authoredRoute.label.toUpperCase()} / UNVALIDATED VERSUS TEST BUILD. Web previews need a connection for original pictures; core offline preparation does not save them.`;
     $('race-journey-difficulty-field').hidden = false;
     $('race-journey-difficulty').replaceChildren(
@@ -1136,7 +1140,7 @@ try {
         $('race-message').textContent = [
           staticEntry ? featuredStatus : '',
           image?.notice,
-          'Both boards use the same map, class, seed and prepared picture. Start when you are ready.',
+          'Ready. First clear wins.',
         ]
           .filter(Boolean)
           .join(' ');
@@ -3168,17 +3172,13 @@ try {
     // lease, including an update reentered from prior-image cleanup.
     const focusTransition = match !== preparedFocusMatch;
     preparedFocusMatch = null;
-    const themeName =
-      authoredRoute?.id === DEFAULT_JOURNEY_ROUTES.versus
-        ? theme.name.replace(/ · material review$/, '')
-        : theme.name;
     shell?.update({
       match,
       won,
       format: roundRecipe.format,
       contentBusy,
       focusTransition,
-      summary: `${roundRecipe.tuning.adminOverride ? 'ADMIN PLAYTEST · ' : ''}${roundRecipe.format === 'first-to-two' ? 'First to two' : 'One race'} · ${entry.chapter} · ${entry.level.name} · ${mode(entry.level)} · ${themeName} · ${roundRecipe.turnPolicy === 'grid-center' ? 'Grid-center turns' : 'Immediate turns'} · ${roundRecipe.seconds === 0 ? 'No race countdown' : `${roundRecipe.seconds} seconds`}`,
+      summary: `${roundRecipe.tuning.adminOverride ? 'ADMIN PLAYTEST · ' : ''}${roundRecipe.format === 'first-to-two' ? 'First to two' : 'One race'} · ${entry.level.name}`,
     });
     $('race-time-field').hidden = !!candidateJourney;
     // Reconcile deliberate layout transitions immediately, including browsers
@@ -3222,6 +3222,9 @@ try {
     'race-data-reading-done',
     'race-data-reading',
     'race-help',
+    'race-more-home',
+    'race-more-about',
+    'race-release-explorer',
     'race-solo-return',
     'race-library-switch',
     'race-level',

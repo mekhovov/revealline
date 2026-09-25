@@ -85,7 +85,7 @@ test('twelve pressure originals play across all five campaigns; failed Next keep
   const f = await pressurePage(t, { memory, failures });
   assert.equal(f.$('coop-level').value, 'twin-landings');
   assert.match(
-    f.$('coop-boot').textContent,
+    f.$('coop-advanced-note').textContent,
     /pressure edition.*enemy speed Gentle ×1 \/ Standard ×1.4 \/ Expert ×1.75.*human validation pending/,
   );
   enter(f, f.$('coop-start'));
@@ -232,7 +232,7 @@ test('changing-return edition crosses into both revised maps and exits to the un
     href: 'http://localhost/game/couch/relay-rescue.html?journey=team-spatial-originals-1',
   });
   assert.equal(f.$('coop-level').value, 'weaver-crossing');
-  assert.match(f.$('coop-boot').textContent, /changing-return pressure edition/);
+  assert.match(f.$('coop-advanced-note').textContent, /changing-return pressure edition/);
   enter(f, f.$('coop-start'));
   for (let index = 7; index < 12; index++) {
     const mission = spatial.missions[index];
