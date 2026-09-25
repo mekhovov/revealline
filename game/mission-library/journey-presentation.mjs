@@ -54,7 +54,7 @@ export function authoredJourneyMissionTags(mission, manifest) {
     tags.push('Ukrainian');
   if (
     [UKRAINIAN_CULTURAL_SPATIAL_REVISION, UKRAINIAN_HORIZON_JOINS_REVISION].includes(
-      manifest.level.revision,
+      manifest.level?.revision,
     )
   )
     tags.push('Ukrainian');
