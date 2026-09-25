@@ -1988,6 +1988,7 @@ test('public archive searches and plays any published recording through the shar
     order: 'shuffle',
     repeat: 'all',
     startTrackId: `online.${'3'.repeat(64)}`,
+    mixWithLibrary: true,
   });
   assert(!app.doc.nativeDownloads.length, 'Playing in the game must not navigate to the archive.');
 
@@ -2008,7 +2009,15 @@ test('public archive searches and plays any published recording through the shar
     mixed[1].map((track) => track.title),
     ['Night Circuit', 'Dnipro Bells'],
   );
-  assert.deepEqual(mixed[2], { order: 'ordered', repeat: 'off', startTrackId: null });
+  assert.deepEqual(mixed[2], {
+    order: 'ordered',
+    repeat: 'off',
+    startTrackId: null,
+    mixWithLibrary: true,
+  });
+  app.node('online-mix-library').checked = false;
+  await app.click('online-play-all');
+  assert.equal(app.calls.findLast(([name]) => name === 'remote')[2].mixWithLibrary, false);
 
   await app.click('online-styles-all');
   assert.equal(app.node('online-results').children.length, 6);

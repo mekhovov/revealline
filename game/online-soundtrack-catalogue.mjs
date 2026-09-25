@@ -12,6 +12,30 @@ const LICENSES = new Set([
   'https://creativecommons.org/publicdomain/zero/1.0/',
   'https://creativecommons.org/licenses/by/3.0/',
   'https://creativecommons.org/licenses/by/4.0/',
+  'https://creativecommons.org/licenses/by-sa/3.0/',
+  'https://creativecommons.org/licenses/by-sa/4.0/',
+]);
+const LICENSE_IDENTITIES = new Map([
+  [
+    'https://creativecommons.org/publicdomain/zero/1.0/',
+    { id: 'CC0', version: '1.0', shareAlike: false },
+  ],
+  [
+    'https://creativecommons.org/licenses/by/3.0/',
+    { id: 'CC-BY', version: '3.0', shareAlike: false },
+  ],
+  [
+    'https://creativecommons.org/licenses/by/4.0/',
+    { id: 'CC-BY', version: '4.0', shareAlike: false },
+  ],
+  [
+    'https://creativecommons.org/licenses/by-sa/3.0/',
+    { id: 'CC-BY-SA', version: '3.0', shareAlike: true },
+  ],
+  [
+    'https://creativecommons.org/licenses/by-sa/4.0/',
+    { id: 'CC-BY-SA', version: '4.0', shareAlike: true },
+  ],
 ]);
 const AUDIO_PATH = /^(?:objects|batches\/[a-z0-9][a-z0-9-]{0,63}\/objects)\/[a-f0-9]{64}\.mp3$/;
 const RESOLVED_TRACKS = new WeakSet();
@@ -65,6 +89,65 @@ function text(value, label, maximum = 2048) {
   return value;
 }
 
+function structuredRights(value, legacy, id) {
+  if (value === undefined) return null;
+  exactKeys(
+    value,
+    [
+      'licenseId',
+      'licenseVersion',
+      'licenseURL',
+      'rightsEvidenceURL',
+      'attribution',
+      'derivativeChangeNotice',
+      'shareAlike',
+    ],
+    'online soundtrack rights',
+  );
+  const identity = LICENSE_IDENTITIES.get(legacy.licenseURL);
+  required(identity, `Online soundtrack rights licence is unsupported: ${id}.`);
+  required(
+    value.licenseId === identity.id &&
+      value.licenseVersion === identity.version &&
+      value.licenseURL === legacy.licenseURL &&
+      value.rightsEvidenceURL === legacy.source &&
+      value.attribution === legacy.credit &&
+      secureURL(value.rightsEvidenceURL),
+    `Online soundtrack rights differ from the trusted recording metadata: ${id}.`,
+  );
+  const derivativeChangeNotice = text(
+    value.derivativeChangeNotice,
+    'derivative change notice',
+    2048,
+  );
+  exactKeys(
+    value.shareAlike,
+    ['required', 'deliveryLicenseId', 'deliveryLicenseVersion', 'deliveryLicenseURL'],
+    'online soundtrack share-alike rights',
+  );
+  const shareAlike = value.shareAlike;
+  required(
+    shareAlike.required === identity.shareAlike &&
+      (identity.shareAlike
+        ? shareAlike.deliveryLicenseId === identity.id &&
+          shareAlike.deliveryLicenseVersion === identity.version &&
+          shareAlike.deliveryLicenseURL === legacy.licenseURL
+        : shareAlike.deliveryLicenseId === null &&
+          shareAlike.deliveryLicenseVersion === null &&
+          shareAlike.deliveryLicenseURL === null),
+    `Online soundtrack share-alike rights are invalid: ${id}.`,
+  );
+  return Object.freeze({
+    licenseId: identity.id,
+    licenseVersion: identity.version,
+    licenseURL: legacy.licenseURL,
+    evidence: value.rightsEvidenceURL,
+    attribution: legacy.credit,
+    derivativeChangeNotice,
+    shareAlike: Object.freeze({ ...shareAlike }),
+  });
+}
+
 function track(value, ids, hashes) {
   exactKeys(
     value,
@@ -89,6 +172,7 @@ function track(value, ids, hashes) {
       'default',
       'audio',
       'aliases',
+      'rights',
     ],
     'online soundtrack track',
   );
@@ -146,6 +230,12 @@ function track(value, ids, hashes) {
     Array.isArray(value.aliases) && value.aliases.length <= 16,
     `Online aliases are invalid: ${id}.`,
   );
+  const credit = text(value.credit, 'credit');
+  const rightsEvidence = structuredRights(
+    value.rights,
+    { licenseURL: value.licenseURL, source: value.source, credit },
+    id,
+  );
   const resolved = Object.freeze({
     id: `online.${value.audio.sha256}`,
     archiveTrackId: id,
@@ -167,9 +257,10 @@ function track(value, ids, hashes) {
     ]),
     rights: Object.freeze({
       kind: 'licensed',
-      credit: text(value.credit, 'credit'),
+      credit,
       license: value.license,
       source: value.source,
+      evidence: rightsEvidence,
     }),
   });
   RESOLVED_TRACKS.add(resolved);
