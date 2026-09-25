@@ -82,5 +82,12 @@
   "controls.keyNumpadDecimal": "Цифровий .",
   "controls.keyNumpadComma": "Цифровий ,",
   "controls.keyNumpadEqual": "Цифровий =",
-  "navigation.menu": "МЕНЮ"
+  "navigation.menu": "МЕНЮ",
+  "counts.missions_one": "{{count}} місія",
+  "counts.missions_few": "{{count}} місії",
+  "counts.missions_many": "{{count}} місій",
+  "counts.missions_other": "{{count}} місії",
+  "collections.journey": "Подорож",
+  "collections.classic": "Класика",
+  "collections.custom": "Власні"
 }

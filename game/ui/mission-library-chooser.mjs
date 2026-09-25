@@ -1,10 +1,23 @@
 import { createJourneyArtworkView } from './journey-artwork.mjs';
-import { t, localizedText, localizedMessage } from '../i18n/index.mjs';
+import { t, localizedText, localizedMessage, localizedAttribute } from '../i18n/index.mjs';
 import { LIBRARY_COLLECTIONS, LIBRARY_MODES } from '../mission-library/library.mjs';
 import { paintMissionThumbnail } from '../content-design/mission-card.mjs';
 import { trackMissionLibraryOpening } from '../mission-library/opening-intent.mjs';
 
-const modeLabel = (mode) => ({ solo: t("interface:solo2"), versus: t("interface:versus2"), team: t("interface:team") })[mode];
+const LIBRARY_TAG_KEYS = Object.freeze({
+  Journey: 'common:collections.journey',
+  Classic: 'common:collections.classic',
+  Custom: 'common:collections.custom',
+  Remix: 'interface:missionLibrary.tag.Remix',
+  Ukrainian: 'interface:missionLibrary.tag.Ukrainian',
+  FPV: 'interface:missionLibrary.tag.FPV',
+  Arcade: 'interface:missionLibrary.tag.Arcade',
+  Tactical: 'interface:missionLibrary.tag.Tactical',
+  Practice: 'interface:missionLibrary.tag.Practice',
+});
+
+const modeLabel = (mode) =>
+  ({ solo: t('interface:solo2'), versus: t('interface:versus2'), team: t('interface:team') })[mode];
 const sizeLabel = (bytes) =>
   bytes < 1024 * 1024
     ? `${Math.ceil(bytes / 1024)} KiB`
@@ -23,21 +36,25 @@ export function attachMissionLibraryChooser({
   launchContext = () => ({}),
   getCurrentId = () => null,
 }) {
-  if (!LIBRARY_MODES.includes(mode)) throw new TypeError(t("interface:unknownMissionLibraryMode"));
+  if (!LIBRARY_MODES.includes(mode)) throw new TypeError(t('interface:unknownMissionLibraryMode'));
   const node = (tag, id, text) => {
     const result = doc.createElement(tag);
     if (id) result.id = id;
-    if (text !== undefined) localizedText(result, () =>text);
+    if (text !== undefined) localizedText(result, () => text);
     return result;
   };
   const dialog = node('dialog', 'journey-chooser');
   dialog.className = 'journey-chooser mission-library-chooser';
   dialog.setAttribute('aria-labelledby', 'journey-chooser-title');
-  const heading = node('h2', 'journey-chooser-title', localizedMessage("interface:findYourNextLine"));
+  const heading = node(
+    'h2',
+    'journey-chooser-title',
+    localizedMessage('interface:findYourNextLine'),
+  );
   const copy = node(
     'p',
     null,
-    localizedMessage("interface:allMissionsOneLibraryJourneyClassicAndCustomKeepTheir"),
+    localizedMessage('interface:allMissionsOneLibraryJourneyClassicAndCustomKeepTheir'),
   );
   copy.className = 'journey-library-copy';
   const filters = node('div');
@@ -51,13 +68,17 @@ export function attachMissionLibraryChooser({
     parent.append(label);
     return control;
   }
-  const search = field(t("interface:searchAllMissions"), 'journey-search', 'input');
+  const search = field(localizedMessage('interface:searchAllMissions'), 'journey-search', 'input');
   search.parentElement.className = 'journey-search-field';
   search.type = 'search';
-  search.placeholder = t("interface:missionCampaignEditionOrTag");
+  localizedAttribute(search, 'placeholder', () => t('interface:missionCampaignEditionOrTag'));
   const searchControls = node('div');
   searchControls.className = 'journey-search-controls';
-  const clearSearch = node('button', 'journey-search-clear', localizedMessage("interface:clearSearch"));
+  const clearSearch = node(
+    'button',
+    'journey-search-clear',
+    localizedMessage('interface:clearSearch'),
+  );
   clearSearch.type = 'button';
   clearSearch.className = 'button secondary';
   clearSearch.setAttribute('aria-controls', 'journey-cards');
@@ -65,19 +86,41 @@ export function attachMissionLibraryChooser({
   searchControls.append(search.parentElement, clearSearch);
   const filterDetails = node('details', 'journey-filter-details');
   filterDetails.className = 'journey-filter-details';
-  const filterSummary = node('summary', 'journey-filter-summary', localizedMessage("interface:filters"));
+  const filterSummary = node(
+    'summary',
+    'journey-filter-summary',
+    localizedMessage('interface:filters'),
+  );
   const filterOptions = node('div');
   filterOptions.className = 'journey-filter-options';
   filterDetails.append(filterSummary, filterOptions);
   filters.append(filterDetails);
-  const collection = field(t("interface:collection"), 'journey-collection', 'select', filterOptions);
-  const campaign = field(t("interface:campaign"), 'journey-campaign', 'select', filterOptions);
-  const modeFilter = field(t("interface:mode"), 'journey-mode', 'select', filterOptions);
+  const collection = field(
+    localizedMessage('interface:collection'),
+    'journey-collection',
+    'select',
+    filterOptions,
+  );
+  const campaign = field(
+    localizedMessage('interface:campaign'),
+    'journey-campaign',
+    'select',
+    filterOptions,
+  );
+  const modeFilter = field(
+    localizedMessage('interface:mode'),
+    'journey-mode',
+    'select',
+    filterOptions,
+  );
   const detailLabel = node('label');
   detailLabel.className = 'journey-card-detail-control';
   const detailedCards = node('input', 'journey-detailed-cards');
   detailedCards.type = 'checkbox';
-  detailLabel.append(detailedCards, node('span', null, localizedMessage("interface:detailedMissionCards")));
+  detailLabel.append(
+    detailedCards,
+    node('span', null, localizedMessage('interface:detailedMissionCards')),
+  );
   filterOptions.append(detailLabel);
   const view = doc.defaultView ?? globalThis;
   const media = view.matchMedia?.('(max-width: 600px), (max-height: 720px)');
@@ -88,9 +131,12 @@ export function attachMissionLibraryChooser({
     result.value = value;
     return result;
   };
-  collection.append(option(t("interface:all"), ''), ...LIBRARY_COLLECTIONS.map((value) => option(value, value)));
+  collection.append(
+    option(localizedMessage('interface:all'), ''),
+    ...LIBRARY_COLLECTIONS.map((value) => option(() => t(LIBRARY_TAG_KEYS[value]), value)),
+  );
   collection.value = '';
-  modeFilter.append(...LIBRARY_MODES.map((value) => option(modeLabel(value), value)));
+  modeFilter.append(...LIBRARY_MODES.map((value) => option(() => modeLabel(value), value)));
   modeFilter.value = mode;
   const status = node('p', 'journey-chooser-status');
   status.setAttribute('role', 'status');
@@ -101,7 +147,7 @@ export function attachMissionLibraryChooser({
   list.className = 'journey-cards';
   const footer = node('div');
   footer.className = 'journey-footer';
-  const back = node('button', 'journey-back', localizedMessage("common:navigation.backToGame"));
+  const back = node('button', 'journey-back', localizedMessage('common:navigation.backToGame'));
   back.type = 'button';
   back.className = 'button secondary';
   footer.append(back);
@@ -168,9 +214,12 @@ export function attachMissionLibraryChooser({
     const choices = new Map();
     for (const row of library.forMode(modeFilter.value))
       if (!collection.value || row.collection === collection.value)
-        choices.set(row.campaignKey, `${row.campaignTitle} · ${row.edition}`);
+        choices.set(row.campaignKey, () => {
+          const display = library.presentation?.(row) ?? row;
+          return `${display.campaignTitle} · ${display.edition}`;
+        });
     campaign.replaceChildren(
-      option(t("interface:allCampaigns"), ''),
+      option(localizedMessage('interface:allCampaigns'), ''),
       ...[...choices].map(([key, title]) => option(title, key)),
     );
     campaign.value = choices.has(requested) ? requested : '';
@@ -314,7 +363,7 @@ export function attachMissionLibraryChooser({
         if (current)
           message =
             result.state === 'cancelled'
-              ? t("interface:downloadCancelledYourCurrentGameIsKept")
+              ? t('interface:downloadCancelledYourCurrentGameIsKept')
               : result.state === 'ready'
                 ? `${row.name} is ready. Starting…`
                 : '';
@@ -394,7 +443,7 @@ export function attachMissionLibraryChooser({
         mode: activeMode,
       });
       if (accepted === false && mayRestore()) {
-        message = t("interface:missionNotOpenedYourCurrentGameIsKept");
+        message = t('interface:missionNotOpenedYourCurrentGameIsKept');
         open(opener, { returnLabel: back.textContent });
       }
     } catch (error) {
@@ -411,12 +460,15 @@ export function attachMissionLibraryChooser({
     button.dataset.missionId = row.id;
     const number = node('span', null, String(row.levelIndex + 1).padStart(2, '0'));
     number.className = 'journey-card-number';
-    const name = node('strong', null, row.name);
-    const campaignName = node('span', null, row.campaignTitle);
+    const display = () => library.presentation?.(row) ?? row;
+    const name = node('strong', null, () => display().name);
+    const campaignName = node('span', null, () => display().campaignTitle);
     campaignName.className = 'journey-card-campaign';
-    const edition = node('span', null, row.edition);
+    const edition = node('span', null, () => display().edition);
     edition.className = 'journey-card-edition';
-    const tags = node('span', null, row.tags.join(' · '));
+    const tags = node('span', null, () =>
+      row.tags.map((tag) => t(LIBRARY_TAG_KEYS[tag])).join(' · '),
+    );
     tags.className = 'journey-card-tags';
     const progress = node('span');
     progress.className = 'journey-card-progress';
@@ -475,7 +527,7 @@ export function attachMissionLibraryChooser({
     localizedText(
       status,
       () =>
-        `${matches.length} mission${matches.length === 1 ? '' : 's'} · ${modeLabel(modeFilter.value)}${message ? ` · ${message}` : ''}`,
+        `${t('common:counts.missions', { count: matches.length })} · ${modeLabel(modeFilter.value)}${message ? ` · ${message}` : ''}`,
     );
     const filtersActive = !!collection.value || !!campaign.value || modeFilter.value !== mode;
     localizedText(filterSummary, () =>
@@ -531,11 +583,16 @@ export function attachMissionLibraryChooser({
       }
       const availability = library.availability(row, modeFilter.value);
       const details = library.details(row, modeFilter.value);
-      localizedText(card.rules, () =>details.challenge);
+      localizedText(card.rules, () => library.details(row, modeFilter.value).challenge);
       card.rules.hidden = !details.challenge;
-      localizedText(card.route, () =>details.route);
+      localizedText(card.route, () => library.details(row, modeFilter.value).route);
       card.route.hidden = !details.route;
-      localizedText(card.mastery, () =>details.mastery ? `Optional challenge: ${details.mastery}` : '');
+      localizedText(card.mastery, () => {
+        const mastery = library.details(row, modeFilter.value).mastery;
+        return mastery
+          ? t('interface:missionLibrary.optionalChallenge', { challenge: mastery })
+          : '';
+      });
       card.mastery.hidden = !details.mastery;
       card.completion = library.completion(row, modeFilter.value);
       card.button.dataset.campaignKey = row.campaignKey;
@@ -552,8 +609,9 @@ export function attachMissionLibraryChooser({
           : library.progress(row, modeFilter.value),
       );
       card.progress.hidden = !card.progress.textContent;
-      localizedText(card.action, () =>availability.state === 'ready'
-          ? t("common:actions.play")
+      localizedText(card.action, () =>
+        availability.state === 'ready'
+          ? t('common:actions.play')
           : availability.state === 'download'
             ? `Download & play · ${sizeLabel(availability.bytes)}`
             : availability.state === 'preparing'
@@ -742,13 +800,16 @@ export function attachMissionLibraryChooser({
     if (onReturn) onReturn(opener);
     else if (opener?.isConnected) opener.focus({ preventScroll: true });
   }
-  function open(origin = doc.activeElement, { returnLabel = t("common:navigation.backToGame") } = {}) {
+  function open(
+    origin = doc.activeElement,
+    { returnLabel = t('common:navigation.backToGame') } = {},
+  ) {
     if (destroyed) return;
     retirePendingSelection();
     cancelResizeScroll();
     ++visit;
     opener = origin;
-    localizedText(back, () =>returnLabel);
+    localizedText(back, () => returnLabel);
     onPause?.();
     invalidateDiagrams();
     rebuildCampaigns();

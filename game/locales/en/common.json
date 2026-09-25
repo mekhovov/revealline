@@ -82,5 +82,12 @@
   "controls.keyNumpadDecimal": "Numpad .",
   "controls.keyNumpadComma": "Numpad ,",
   "controls.keyNumpadEqual": "Numpad =",
-  "navigation.menu": "MENU"
+  "navigation.menu": "MENU",
+  "counts.missions_one": "{{count}} mission",
+  "counts.missions_few": "{{count}} missions",
+  "counts.missions_many": "{{count}} missions",
+  "counts.missions_other": "{{count}} missions",
+  "collections.journey": "Journey",
+  "collections.classic": "Classic",
+  "collections.custom": "Custom"
 }

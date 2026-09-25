@@ -12,13 +12,13 @@ const scripts = await Promise.all(
   ),
 );
 const key = 'revealline.locale.v1';
-function runtime({ saved, languages, language, blocked = false } = {}) {
+function runtime({ saved, languages, language, blocked = false, weakRef = WeakRef } = {}) {
   const values = new Map(saved === undefined ? [] : [[key, saved]]);
   const events = new Map();
   const context = vm.createContext({
     Intl,
     console,
-    WeakRef,
+    WeakRef: weakRef,
     navigator: { languages, language },
     localStorage: {
       getItem: (name) => {
@@ -152,7 +152,19 @@ test('content uses exact identity and field; edited imports retain authored text
 });
 
 test('caption bindings preserve appended controls and accept a direct Text node', () => {
-  const { api } = runtime();
+  let collectRemovedText = false;
+  const { api } = runtime({
+    weakRef: class {
+      constructor(value) {
+        this.value = value;
+      }
+      deref() {
+        return collectRemovedText && this.value.nodeType === 3 && !this.value.parentNode
+          ? undefined
+          : this.value;
+      }
+    },
+  });
   const document = {
     createTextNode(value) {
       return { nodeType: 3, textContent: value, parentNode: null, ownerDocument: document };
@@ -186,4 +198,24 @@ test('caption bindings preserve appended controls and accept a direct Text node'
   assert.equal(select.selectedIndex, 2);
   assert.equal(select.scrollTop, 30);
   assert.equal(text.textContent, 'Назад');
+  // A presentation owner can replace a static caption with structured controls.
+  // Once the old Text node is collected, a locale change must not resurrect it.
+  label.textContent = '';
+  label.append(select);
+  collectRemovedText = true;
+  api.setLocale('en');
+  assert.deepEqual(label.childNodes, [select]);
+});
+
+test('locale changes do not call retired detached control producers', () => {
+  const { api } = runtime();
+  const node = { textContent: '', isConnected: true };
+  let retired = false;
+  api.localizedText(node, () => {
+    assert.equal(retired, false, 'a retired library row cannot be read');
+    return api.t('common:actions.play');
+  });
+  node.isConnected = false;
+  retired = true;
+  assert.doesNotThrow(() => api.setLocale('uk'));
 });
