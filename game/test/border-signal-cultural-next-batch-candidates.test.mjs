@@ -10,9 +10,18 @@ import { createBorderCulturalNextBatchCandidates } from '../content-design/borde
 import { compileContentProject, resolveMission } from '../content-design/project.mjs';
 import { inspectMissionTopology } from '../content-design/diagnostics.mjs';
 import { createRun, stepRun, FIXED_DT } from '../core/index.mjs';
+import {
+  authoritativeCheckpoint,
+  createRecorder,
+  exportReplay,
+  recordInput,
+  verifyReplay,
+} from '../replay.mjs';
+import { createDuel, resumeDuel, stepDuel, UNTIMED_DUEL_PROTOCOL } from '../multiplayer.mjs';
 
 const IDS = BORDER_SIGNAL_CULTURAL_NEXT_BATCH_SELECTIONS.map((item) => item.id);
 const PRESETS = ['gentle', 'standard', 'expert'];
+const CONTROLS = ['immediate', 'grid-center'];
 const beforeSource = createBorderCulturalNextBatchCandidates({ artwork: true });
 const source = createBorderSignalCulturalNextBatchCandidates({ artwork: true });
 const beforeProject = compileContentProject(beforeSource);
@@ -147,6 +156,75 @@ test('all non-geometry gameplay behavior remains exact across modes and presets'
     }
 });
 
+function stepUntil(run, direction, predicate, sidecars = {}, maxTicks = 7000) {
+  for (let tick = 0; tick < maxTicks; tick++) {
+    if (sidecars.recorder) recordInput(sidecars.recorder, { direction });
+    stepRun(run, { direction }, FIXED_DT);
+    if (sidecars.duel) stepDuel(sidecars.duel, [{ direction }, { direction }]);
+    assert.equal(run.status, 'running');
+    assert.equal(run.classic.livesLost, 0);
+    if (predicate(run)) return;
+  }
+  assert.fail(`route did not reach its authored decision within ${maxTicks} ticks`);
+}
+
+function closeRoute(run, id, approach, sidecars = {}) {
+  const position = (direction, predicate) => stepUntil(run, direction, predicate, sidecars);
+  const close = (direction) =>
+    stepUntil(
+      run,
+      direction,
+      (state) => state.events.some((event) => event.type === 'cut.closed'),
+      sidecars,
+    );
+  if (id === 'border-remix' && approach === 'central-stem-first') close('right');
+  else if (id === 'border-remix' && approach === 'far-leaf-first') {
+    position('up', (state) => state.player.y <= 6.6);
+    position('right', (state) => state.player.x >= 50.4);
+    close('down');
+  } else if (id === 'dry-spine' && approach === 'upper-shoulder-first') {
+    position('up', (state) => state.player.y <= 11.6);
+    position('left', (state) => state.player.x <= 27.6);
+    position('up', (state) => state.player.y <= 8.6);
+    close('right');
+  } else if (id === 'dry-spine' && approach === 'lower-shoulder-first') {
+    position('down', (state) => state.player.y >= 23.4);
+    position('right', (state) => state.player.x >= 40.4);
+    position('down', (state) => state.player.y >= 26.4);
+    position('left', (state) => state.player.x <= 36.6);
+    close('up');
+  } else if (id === 'wide-approach' && approach === 'west-hook-first') close('down');
+  else if (id === 'wide-approach' && approach === 'east-hook-first') {
+    position('right', (state) => state.player.x >= 52.4);
+    close('down');
+  } else throw new TypeError(`Unknown authored route ${id}/${approach}`);
+}
+
+const EXPECTED_CLAIMS = Object.freeze({
+  'central-stem-first': 9,
+  'far-leaf-first': 51,
+  'upper-shoulder-first': 14,
+  'lower-shoulder-first': 10,
+  'west-hook-first': 14,
+  'east-hook-first': 9,
+});
+
+for (const selection of BORDER_SIGNAL_CULTURAL_NEXT_BATCH_SELECTIONS)
+  for (const difficulty of PRESETS)
+    for (const turnPolicy of CONTROLS)
+      test(`${selection.id} executes both approaches on ${difficulty}/${turnPolicy} across seeds`, () => {
+        for (const approach of selection.approaches)
+          for (const seed of [1, 2]) {
+            const manifest = resolveMission(project, selection.id, { difficulty });
+            const run = createRun(manifest.level, { seed, classId: 'scout', turnPolicy });
+            closeRoute(run, selection.id, approach);
+            assert.equal(run.claimedCount, EXPECTED_CLAIMS[approach]);
+            assert.equal(run.player.cutting, false);
+            assert.equal(run.player.speed, 0);
+            assert.equal(run.events.filter((event) => event.type === 'cut.closed').length, 1);
+          }
+      });
+
 for (const id of IDS)
   for (const difficulty of PRESETS)
     test(`${id} has a safe idle opening on ${difficulty} across seeds`, () => {
@@ -158,4 +236,26 @@ for (const id of IDS)
         assert.equal(run.classic.livesLost, 0);
         assert.equal(run.claimedCount, 0);
       }
+    });
+
+for (const selection of BORDER_SIGNAL_CULTURAL_NEXT_BATCH_SELECTIONS)
+  for (const approach of selection.approaches)
+    test(`${selection.id}/${approach} is replay-stable and equal on both Versus boards`, () => {
+      const manifest = resolveMission(project, selection.id, { difficulty: 'standard' });
+      const options = { seed: 1, classId: 'scout', turnPolicy: 'grid-center' };
+      const run = createRun(manifest.level, options);
+      const recorder = createRecorder(manifest.level, options);
+      const duel = createDuel(manifest.level, options, {
+        protocol: UNTIMED_DUEL_PROTOCOL,
+        seconds: 0,
+      });
+      resumeDuel(duel);
+      closeRoute(run, selection.id, approach, { recorder, duel });
+      assert.equal(verifyReplay(exportReplay(recorder, run)).match, true);
+      assert(duel.runs.every((candidate) => candidate.classic.livesLost === 0));
+      assert.deepEqual(
+        authoritativeCheckpoint(duel.runs[0]),
+        authoritativeCheckpoint(duel.runs[1]),
+      );
+      assert.deepEqual(authoritativeCheckpoint(run), authoritativeCheckpoint(duel.runs[0]));
     });
