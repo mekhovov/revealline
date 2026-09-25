@@ -730,3 +730,25 @@ selection. Temporary JSON text was restored without applying or saving a draft c
 This is a source checkpoint, not a full-coverage or merge-ready claim. Dynamic structure/editor
 copy, remaining owned errors and wider migration validation are outstanding. The earlier
 v0.114.0 build/native receipts do not certify these post-build changes.
+
+## Studio structure and diagnostics
+
+The v0.114.1 board checkpoint passed the full generated-catalog/content-registry check before
+this follow-up. Studio structure summaries, ordered pack/campaign/mission outlines, selector
+captions, removal dependency guidance and action feedback now use live translations. One item
+caption helper serves all three content kinds. Exact built-in owners translate; custom names
+and stable IDs remain literal. Diagnostics translate their structured meaning and numeric
+coverage facts while retaining the canonical machine code and untouched compiler report.
+The outline and manual-geometry queue also have localized accessible names.
+
+The surrounding run passed 53 of 54 tests. Its only failure was a new expectation using a
+synonym for the existing Ukrainian archived label; the corrected focused suite passes 6/6.
+All 54 cases are covered by those runs, including real structure deletion guards, remote
+chamber/relay diagnostics and unchanged authored/source identities. Changed-file lint and
+formatting pass. Source/key/plural checks pass with 7,816 messages / 6,245 references.
+
+In-browser cross-tab switching updates summaries, outlines and diagnostics in both directions
+while retaining a typed Ukrainian name, its cursor/focus and the chosen parent campaign. Test
+fields were restored without applying changes; the saved checkpoint remains 1. The final
+reload confirms both accessible names in Ukrainian and no captured console warnings/errors.
+Remaining dynamic subeditor text and final whole-project validation are still outstanding.
