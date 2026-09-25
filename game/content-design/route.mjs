@@ -14,6 +14,8 @@ import {
 import { createWholeJourneyCandidates } from './whole-journey-candidates.mjs';
 import { createSpatialNextBatchCandidates } from './spatial-next-batch-candidates.mjs';
 import { createHorizonNextBatchCandidates } from './horizon-next-batch-candidates.mjs';
+import { createUkrainianOrnamentJourney } from './ukrainian-ornament-candidates.mjs';
+import { createUkrainianOrnamentAtlasJourney } from './ukrainian-ornament-atlas.mjs';
 
 import { createAuthoredJourneyRouteDefinition } from './route-definition.mjs';
 export { createCandidateSequence } from './sequence.mjs';
@@ -36,5 +38,7 @@ export function createAuthoredJourneyRoute(id) {
     createWholeErosionReviewCandidates,
     createSpatialNextBatchCandidates,
     createHorizonNextBatchCandidates,
+    createUkrainianOrnamentJourney,
+    createUkrainianOrnamentAtlasJourney,
   });
 }

@@ -43,6 +43,8 @@ import {
 } from '../content-design/whole-spatial-candidates.mjs';
 import { createSpatialNextBatchCandidates } from '../content-design/spatial-next-batch-candidates.mjs';
 import { createHorizonNextBatchCandidates } from '../content-design/horizon-next-batch-candidates.mjs';
+import { createUkrainianOrnamentJourney } from '../content-design/ukrainian-ornament-candidates.mjs';
+import { createUkrainianOrnamentAtlasJourney } from '../content-design/ukrainian-ornament-atlas.mjs';
 import { withCampaignPresentation } from '../content-design/campaign-presentation.mjs';
 import { createTeamSignalCandidates } from '../content-design/team-signal-candidates.mjs';
 import { createTeamJourneyCandidates } from '../content-design/team-journey-candidates.mjs';
@@ -1013,6 +1015,8 @@ $('whole-variety').onclick = guarded(() => {
       'erosion-counterplay-1': createWholeErosionReviewCandidates,
       'cultural-spatial-triptych-1': createSpatialNextBatchCandidates,
       'horizon-cultural-joins-1': createHorizonNextBatchCandidates,
+      'ukrainian-ornament-study-1': createUkrainianOrnamentJourney,
+      'ukrainian-ornament-atlas-1': createUkrainianOrnamentAtlasJourney,
     }[$('whole-variety-edition').value] ?? createWholeVarietyCandidates;
   $('source').value = JSON.stringify(create({ artwork: true }), null, 2);
   sourceChanged = true;
