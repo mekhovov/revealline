@@ -31,7 +31,7 @@ v0.103.0 correction removes that overlay from current Journey rendering while
 retaining the approved body assets, animated rotors, contact-radius ring, shield
 cue and simulation geometry. The public v0.104.0 source inherits that correction.
 
-The v0.113.0 player-craft correction also suppresses separate runtime rotor
+The v0.112.0 player-craft correction also suppresses separate runtime rotor
 blades for player bodies whose approved sprite already contains readable motor
 hubs. This removes the remaining detached white corner shapes from Solo and Team
 players while preserving enemy rotor recipes, pivots, contact geometry, movement
