@@ -5,7 +5,8 @@ export function trackMissionLibraryOpening({ document: doc = globalThis.document
   const origin = doc.activeElement;
   let retired = false,
     disposed = false,
-    armed = false;
+    armed = false,
+    claimed = false;
   const inputs = ['keydown', 'pointerdown', 'click'];
   function dispose() {
     disposed = true;
@@ -21,17 +22,24 @@ export function trackMissionLibraryOpening({ document: doc = globalThis.document
     onRetire?.();
   }
   function focusChanged() {
-    if (doc.activeElement !== origin) retire();
+    if (!claimed && doc.activeElement !== origin) retire();
   }
   queueMicrotask(() => {
     if (disposed) return;
     armed = true;
-    doc.addEventListener('focusin', focusChanged, true);
+    if (!claimed) doc.addEventListener('focusin', focusChanged, true);
     for (const type of inputs) doc.addEventListener(type, retire, true);
     focusChanged();
   });
+  const current = () => !retired && (claimed || doc.activeElement === origin);
   return {
-    current: () => !retired && doc.activeElement === origin,
+    current,
+    claim: () => {
+      if (!current()) return false;
+      claimed = true;
+      if (armed) doc.removeEventListener('focusin', focusChanged, true);
+      return true;
+    },
     dispose,
   };
 }
