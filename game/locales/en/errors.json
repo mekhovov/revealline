@@ -472,5 +472,6 @@
   "productionSources.conflictingOriginalIdentity": "Conflicting original identity at {{path}}",
   "productionSources.byteCountDiffers": "Byte count differs",
   "productionSources.fileGrew": "File grew while reading",
-  "productionSources.originalHashDiffers": "Original hash differs"
+  "productionSources.originalHashDiffers": "Original hash differs",
+  "studio.operationCancelled": "Studio operation cancelled."
 }
