@@ -236,6 +236,7 @@
       localizedText(caption, () => t('common:language.label'));
       const select = doc.createElement('select');
       select.setAttribute('data-language-select', '');
+      if (mount.id) select.id = `${mount.id}-select`;
       for (const [value, name] of [
         ['en', 'English'],
         ['uk', 'Українська'],

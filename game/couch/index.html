@@ -29,7 +29,7 @@
     <link rel="stylesheet" href="../ui/journey-save-cue.css" />
   </head>
   <body class="field-kit field-kit-support" data-field-kit-page="couch">
-    <div data-language-control></div>
+    <div data-language-control data-language-launch></div>
 
     <p id="boot-status" class="operation-status" data-state="busy" role="status">
       <span aria-hidden="true" style="display: inline-flex; gap: 3px; color: #78dce8"
@@ -484,6 +484,7 @@
               >New Journey</a
             >
           </div>
+          <div id="race-language" data-language-control></div>
           <p
             id="race-format-note"
             class="race-footnote"
@@ -740,6 +741,7 @@
             aria-labelledby="race-settings-tab-display"
           >
             <h2 data-i18n="interface:appearanceAccessibility">Appearance &amp; accessibility</h2>
+            <div id="race-settings-language" data-language-control></div>
             <label class="field-kit-page-text"
               ><span data-i18n="interface:textStyle">Text style</span
               ><select id="race-text-face">
