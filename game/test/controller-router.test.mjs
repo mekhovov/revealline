@@ -14,7 +14,7 @@ const pad = (index = 0, id = `Controller ${index}`) => ({
   axes: [0, 0, 0, 0],
   buttons: Array.from({ length: 17 }, () => ({ pressed: false, value: 0 })),
 });
-function fixture() {
+function fixture(options = {}) {
   const first = pad(),
     listeners = new Map();
   let pads = [first],
@@ -31,6 +31,7 @@ function fixture() {
       return pads;
     },
     eventTarget,
+    ...options,
   });
   const sample = (scope = 'ready', timeMs = 0) => router.sample({ scope, timeMs });
   const join = (selected = first, scope = 'ready') => {
@@ -188,6 +189,21 @@ test('UI activation/back/menu never repeat and suppress same-sample direction ch
   f.sample('ready', 40);
   f.first.buttons[1].pressed = true;
   assert.equal(f.sample('ready', 50).ui.back, true);
+});
+
+test('overlapping South and West aliases form one menu Confirm gesture', () => {
+  const f = fixture({ navigationAliases: true });
+  f.join();
+  f.first.buttons[0].pressed = true;
+  assert.equal(f.sample().ui.confirm, true);
+  f.first.buttons[2].pressed = true;
+  assert.equal(f.sample().ui.confirm, false, 'the second alias cannot emit a second edge');
+  f.first.buttons[0].pressed = false;
+  assert.equal(f.sample().ui.confirm, false, 'holding either alias keeps one gesture active');
+  f.first.buttons[2].pressed = false;
+  f.sample();
+  f.first.buttons[2].pressed = true;
+  assert.equal(f.sample().ui.confirm, true, 'a new neutral-to-pressed gesture remains usable');
 });
 
 test('UI repeat uses elapsed time, resets on reversal, and produces no catch-up burst', () => {
