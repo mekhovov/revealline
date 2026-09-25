@@ -55,6 +55,7 @@ services:
     volumes:
       - community-blobs:/data/blobs
       - community-tus:/data/tus
+      - community-recovery:/data/recovery
 
   worker:
     build:
@@ -79,3 +80,4 @@ volumes:
   community-postgres:
   community-blobs:
   community-tus:
+  community-recovery:
