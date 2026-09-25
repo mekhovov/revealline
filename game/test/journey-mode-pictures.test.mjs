@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { Document } from './helpers/couch-dom.mjs';
 import { attachJourneyModePictures } from '../ui/journey-mode-pictures.mjs';
+import { attachControllerNavigation } from '../ui/controller-navigation.mjs';
 
 const asset = Object.freeze({
   format: 'AssetRevisionV1',
@@ -31,6 +32,15 @@ const record = (mode, editionId, missionId) => ({
   themeId: 'fpv',
   asset,
 });
+
+function deferred() {
+  let resolve, reject;
+  const promise = new Promise((accept, deny) => {
+    resolve = accept;
+    reject = deny;
+  });
+  return { promise, resolve, reject };
+}
 
 test('mode picture surface admits only its exact mode/edition and restores its opener', async () => {
   const document = new Document(),
@@ -90,3 +100,77 @@ test('mode picture surface admits only its exact mode/edition and restores its o
   assert.deepEqual(reads, { profile: 1, pictures: 1 });
   view.dispose();
 });
+
+for (const mode of ['versus', 'team'])
+  for (const input of ['keyboard', 'controller'])
+    test(`${mode} ${input} retry moves focus before hiding and ignores stale picture completion`, async (t) => {
+      const document = new Document(),
+        opener = document.createElement('button'),
+        mission = { id: `${mode}-one`, name: `${mode} one`, campaignTitle: 'Shared route' },
+        earned = record(mode, `${mode}-edition`, mission.id),
+        loads = [];
+      document.body.append(opener);
+      const view = attachJourneyModePictures({
+        document,
+        button: opener,
+        mode,
+        editionId: `${mode}-edition`,
+        catalog: { forMode: () => [mission] },
+        profile: {
+          snapshot: () => ({ clears: { [mode]: { [mission.id]: {} } } }),
+          pictures: () => ({ records: [earned] }),
+        },
+        acquire(_asset, { signal }) {
+          const load = { signal, ...deferred() };
+          loads.push(load);
+          return load.promise;
+        },
+      });
+      opener.click();
+      await Promise.resolve();
+      const dialog = view.root(),
+        picture = dialog.querySelector('.journey-mode-picture-card').querySelector('button'),
+        viewer = dialog.querySelector('.journey-mode-picture-viewer'),
+        [retry, back] = viewer.querySelectorAll('button'),
+        navigation = attachControllerNavigation({
+          document,
+          getScope: () => `${mode}:journey-pictures`,
+          getRoot: () => dialog,
+          getDefaultFocus: () => back,
+        });
+      t.after(() => {
+        navigation.destroy();
+        view.dispose();
+      });
+
+      picture.click();
+      loads[0].reject(new Error('Original offline'));
+      await new Promise((resolve) => setImmediate(resolve));
+      assert.equal(retry.hidden, false);
+
+      retry.focus();
+      if (input === 'controller') navigation.handle({ confirm: true });
+      else retry.click(); // The browser's native Enter/Space default activates the focused button.
+
+      assert.equal(retry.hidden, true);
+      assert.equal(document.activeElement, back);
+      assert.equal(back.getClientRects().length, 1);
+      assert.equal(loads.length, 2);
+
+      back.click();
+      const gridFocus = document.activeElement;
+      assert.equal(gridFocus.getClientRects().length, 1);
+      assert.notEqual(gridFocus, retry);
+      let released = 0;
+      loads[1].resolve({
+        image: {},
+        release() {
+          released++;
+        },
+      });
+      await new Promise((resolve) => setImmediate(resolve));
+      assert.equal(loads[1].signal.aborted, true);
+      assert.equal(released, 1);
+      assert.equal(document.activeElement, gridFocus);
+      assert.equal(retry.hidden, true);
+    });
