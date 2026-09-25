@@ -223,7 +223,6 @@ phase/verification messages and picture-fetch failure still contain uncatalogued
 must be localized. The preview server was restored after the check; no external service was
 changed. Full downloaded/native distributions contain the originals.
 
-
 ## v0.113.0 rebase and offline presentation
 
 Rebased all localization commits onto main `0395ddbda` (v0.113.0), preserving the new
@@ -247,7 +246,6 @@ The focused offline/core-worker, operation-status and current/prior-edition suit
 terminal diagnostic retention and unchanged mission identities. This does not establish
 complete offline flight coverage; original Journey pictures are still excluded from the
 browser's core cache, as described above.
-
 
 The broader localization/controller/build-page regression run passes 254 tests. The final
 picture/offline/progress/edition subset passes 33 tests, and the real failed-picture host
@@ -314,3 +312,24 @@ SHA-256 is `624c9ef9d598d73926a4410bdf34e24004c8269bcfcdf3e5c5377fc3c43fdf17`.
 The offline inventory has 998 files / 67046281 bytes, leaving 62583
 bytes under the unchanged limit. Native figures above predate the Classic adapters and
 need refreshing after the remaining browser fixes.
+
+## Live display notices and compact search
+
+Display preference diagnostics now carry semantic keys while preserving their canonical
+English service messages. Solo, Couch, Replay Theater, practice tools, Asset Studio and
+Motion Lab render accepted warnings live. The ordinary shared-tool notice also resolves
+the current locale. Catalog coverage is 7,218 messages / 5,801 referenced keys.
+
+The mission search now occupies the full compact row. Browser checks at Large Ukrainian
+text measure a 343-pixel input at a 375-pixel viewport and a 288-pixel input at 320 pixels;
+the dialog has no horizontal overflow. The session-only Settings notice switches both
+ways with focus and the Large selection retained.
+
+Both real paused-Solo localization tests pass, including the session-only notice. Sequential
+host tests exposed a locale observer surviving terminal page teardown; it is now removed,
+while persisted pages retain it. The minimal Solo document fixture disconnects its retired
+root before restoring globals. Sixty-one non-Solo display/tool tests pass. Full validation,
+lint and formatting pass; the final two teardown files also pass the targeted formatting
+check. A broader host regression has 38 passes and six failures; baseline comparison is
+still running, so these failures are not yet classified. The web/native artifacts above
+predate this batch and must be refreshed.

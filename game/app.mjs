@@ -639,6 +639,7 @@ try {
       throw new Error(t('interface:externalChapterBackupTransferIsNotSupportedInThisSource'));
   }
   let persistenceReady = writer.writable;
+  let stopLocaleView = () => {};
   let handlePageHide = () => writer.release();
   window.addEventListener('pagehide', (event) => handlePageHide(event));
   const journalKey = `${libraryKey}.backup-journal`;
@@ -971,8 +972,8 @@ try {
     legacyPreferences: library.preferences,
     writable: () =>
       !practice && !courseSession && !courseEntry && persistenceReady && writer.writable,
-    onWarning: (message) => {
-      localizedText($('display-preferences-status'), () => message);
+    onWarning: (message, key) => {
+      localizedText($('display-preferences-status'), () => (key ? t(key) : message));
     },
   });
   const stopDisplayView = displayPreferences.subscribe(applyDisplayPreferences);
@@ -2609,6 +2610,7 @@ try {
     persistenceReady = false;
     controllerPreview?.clear();
     if (!event.persisted) {
+      stopLocaleView();
       touchPreferences.destroy();
       flightDetails.dispose();
       flightInformation.dispose();
@@ -6656,9 +6658,10 @@ try {
       textSize: state.textSize,
       reducedEffects: state.reducedEffects,
     });
-    localizedText(
-      $('display-preferences-status'),
-      () => displayPreferences.getWarning() || saved.warning || '',
+    localizedText($('display-preferences-status'), () =>
+      displayPreferences.getWarningKey()
+        ? t(displayPreferences.getWarningKey())
+        : displayPreferences.getWarning() || saved.warning || '',
     );
   }
   $('settings-grid').onchange = () => preferences({ showGrid: $('settings-grid').checked });
@@ -9718,7 +9721,7 @@ try {
       );
     }
   }
-  onLocaleChange(() => {
+  stopLocaleView = onLocaleChange(() => {
     refreshKeyPrompts();
     refreshControllerPrompts();
     refreshMissionBrief();
