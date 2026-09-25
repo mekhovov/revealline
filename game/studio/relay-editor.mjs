@@ -1,3 +1,5 @@
+import { localizedMessage, localizedText, t } from '../i18n/index.mjs';
+import { editorMessageError, showEditorFailure } from './editor-copy.mjs';
 import { dataIdentity } from '../data-json.mjs';
 import { editContentRelay } from '../content-design/relays.mjs';
 import { missionEditContext } from './edit-context.mjs';
@@ -18,14 +20,14 @@ export function createRelayEditor({ document, getSource, getMission, apply }) {
       ...rows.map(([value, text]) => {
         const option = document.createElement('option');
         option.value = value;
-        option.textContent = text;
+        localizedText(option, text);
         return option;
       }),
     );
   }
   function disarm() {
     armed = false;
-    $('remove').textContent = 'Remove selected gate';
+    localizedText($('remove'), localizedMessage('tools:studio.relay.remove'));
   }
   function select() {
     disarm();
@@ -36,9 +38,13 @@ export function createRelayEditor({ document, getSource, getMission, apply }) {
     const link = getMission()?.relayLinks?.find((item) => item.gateId === gate?.id);
     $('objective').value = link?.objectiveId ?? getMission()?.objectives[0]?.id ?? '';
     $('remove').disabled = !gate;
-    $('submit').textContent = gate ? 'Validate & replace gate' : 'Validate & add gate';
-    $('result').textContent =
-      'Gate geometry and its capture link apply together to this mission only. Old map revisions remain unchanged; Undo is available.';
+    localizedText(
+      $('submit'),
+      gate
+        ? localizedMessage('tools:studio.relay.replace')
+        : localizedMessage('tools:studio.relay.add'),
+    );
+    localizedText($('result'), localizedMessage('tools:studio.relay.help'));
   }
   function sync() {
     const mission = getMission(),
@@ -50,11 +56,14 @@ export function createRelayEditor({ document, getSource, getMission, apply }) {
     $('enable').disabled = !qualified || enabled;
     $('tools').disabled = !qualified || !enabled;
     $('submit').disabled = !mission?.objectives.length;
-    $('qualification').textContent = !qualified
-      ? 'Relay editing needs a Solo or Versus mission. Team relay behavior is not yet qualified.'
-      : enabled
-        ? 'Relay edition: capture a linked objective to open permanent reclaimed ground. Create an objective above before adding a gate.'
-        : 'Opt in explicitly to a new relay edition. This forks only the selected mission’s map; other missions and historical editions stay unchanged.';
+    localizedText(
+      $('qualification'),
+      !qualified
+        ? localizedMessage('tools:studio.relay.unavailable')
+        : enabled
+          ? localizedMessage('tools:studio.relay.enabled')
+          : localizedMessage('tools:studio.relay.enableHelp'),
+    );
     const next = context();
     if (key === next) return;
     key = next;
@@ -62,14 +71,20 @@ export function createRelayEditor({ document, getSource, getMission, apply }) {
     expectedMission = mission ? dataIdentity(mission) : null;
     const selected = $('select').value;
     options($('select'), [
-      ['', '+ New gate'],
+      ['', localizedMessage('tools:studio.relay.new')],
       ...(map?.gates ?? []).map((gate) => [gate.id, gate.id]),
     ]);
     options(
       $('objective'),
       (mission?.objectives ?? []).map((objective) => [
         objective.id,
-        `${objective.id} · ${objective.required ? 'required' : 'optional'}`,
+        () =>
+          t(
+            objective.required
+              ? 'tools:studio.relay.requiredOption'
+              : 'tools:studio.relay.optionalOption',
+            { id: objective.id },
+          ),
       ]),
     );
     if (map?.gates?.some((gate) => gate.id === selected)) $('select').value = selected;
@@ -77,15 +92,14 @@ export function createRelayEditor({ document, getSource, getMission, apply }) {
   }
   function commit(action) {
     try {
-      if (key !== context())
-        throw new Error('The draft context changed. Refresh the relay selection.');
+      if (key !== context()) throw editorMessageError('errors:studio.relay.contextChanged');
       const command = { action, expectedMap, expectedMission };
       if (action !== 'enable') command.id = $('id').value.trim();
       if (['add', 'replace'].includes(action)) {
         command.gate = Object.fromEntries(
           ['x', 'y', 'w', 'h'].map((axis) => {
             if (!$(axis).value.trim())
-              throw new Error('Enter all four whole-cell rectangle coordinates.');
+              throw editorMessageError('errors:studio.wholeRectangleCoordinates');
             return [axis, Number($(axis).value)];
           }),
         );
@@ -97,10 +111,9 @@ export function createRelayEditor({ document, getSource, getMission, apply }) {
       sync();
       $('select').value = ['enable', 'remove'].includes(action) ? '' : command.id;
       select();
-      $('result').textContent =
-        'Applied to the local draft after shared preset/mode validation. Undo is available. Inspect capture outcomes and play the new route before publishing.';
+      localizedText($('result'), localizedMessage('tools:studio.relay.applied'));
     } catch (error) {
-      $('result').textContent = `Not applied: ${error.message}`;
+      showEditorFailure($('result'), error);
     }
   }
   $('enable').onclick = () => {
@@ -118,9 +131,8 @@ export function createRelayEditor({ document, getSource, getMission, apply }) {
     if (!$('select').value) return;
     if (!armed) {
       armed = true;
-      $('remove').textContent = 'Confirm remove gate';
-      $('result').textContent =
-        'Activate Remove again to remove this gate and its link, not the objective. Its cells become field in this new draft. Undo remains available.';
+      localizedText($('remove'), localizedMessage('tools:studio.relay.confirmRemove'));
+      localizedText($('result'), localizedMessage('tools:studio.relay.removeAgain'));
       return;
     }
     disarm();
