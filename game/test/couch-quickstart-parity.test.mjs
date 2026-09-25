@@ -32,8 +32,9 @@ function nativeConfirm(target) {
 }
 
 test('Versus and Team keep tuning and imports in closed optional setup surfaces', async () => {
-  const [versus, team] = await Promise.all([
+  const [versus, versusCss, team] = await Promise.all([
     readFile(new URL('../couch/index.html', import.meta.url), 'utf8'),
+    readFile(new URL('../couch/couch.css', import.meta.url), 'utf8'),
     readFile(new URL('../couch/relay-rescue.html', import.meta.url), 'utf8'),
   ]);
   assert.match(
@@ -46,6 +47,11 @@ test('Versus and Team keep tuning and imports in closed optional setup surfaces'
   );
   assert.match(versus, /id="race-start"[^>]*>Start race/);
   assert.match(team, /id="coop-start"[^>]*>[\s\S]*Preparing arena/);
+  assert.match(
+    versusCss,
+    /body:not\(\.race-focus\) #race-journey-controls\s*{\s*display: none !important;/,
+    'the lobby and Pause keep Missions in one owned action stack',
+  );
 });
 
 test('prepared Versus defaults need one assigned-controller Confirm and never route it to Cancel', async (t) => {
