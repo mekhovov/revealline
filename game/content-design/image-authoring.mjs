@@ -1,3 +1,4 @@
+import { requireAuthoring, describeAuthoringError } from './authoring-error.mjs';
 import { boundedJSON, exactKeys, required, dataIdentity } from '../data-json.mjs';
 import { inspectImageDataUrl } from '../content.mjs';
 import { compileContentProject, resolveMission } from './project.mjs';
@@ -9,17 +10,20 @@ export async function loadMapReference(
   file,
   { createImage = () => new Image(), timeoutMs = 10000 } = {},
 ) {
-  required(
+  requireAuthoring(
     file && ['image/png', 'image/jpeg', 'image/webp'].includes(file.type),
     'Choose a static PNG, JPEG or WebP reference.',
+    'errors:studio.image.format',
   );
-  required(
+  requireAuthoring(
     Number.isInteger(file.size) && file.size > 0 && file.size <= 4 * 1024 * 1024,
     'Reference pictures must be no larger than 4 MiB.',
+    'errors:studio.image.size',
   );
-  required(
+  requireAuthoring(
     Number.isFinite(timeoutMs) && timeoutMs > 0 && timeoutMs <= 10000,
     'Invalid reference loading timeout.',
+    'errors:studio.image.timeoutValue',
   );
   let timer,
     image,
@@ -36,8 +40,12 @@ export async function loadMapReference(
     return await Promise.race([
       (async () => {
         const bytes = new Uint8Array(await file.arrayBuffer());
-        required(!closed, 'Reference loading expired.');
-        required(bytes.length === file.size, 'Reference byte length changed during loading.');
+        requireAuthoring(!closed, 'Reference loading expired.', 'errors:studio.image.expired');
+        requireAuthoring(
+          bytes.length === file.size,
+          'Reference byte length changed during loading.',
+          'errors:studio.image.byteLength',
+        );
         let binary = '';
         for (let offset = 0; offset < bytes.length; offset += 8192)
           binary += String.fromCharCode(...bytes.subarray(offset, offset + 8192));
@@ -46,14 +54,25 @@ export async function loadMapReference(
         required(header.valid, header.errors.join(' '));
         image = createImage();
         await new Promise((resolve, reject) => {
-          image.onerror = () => reject(new Error('This reference picture could not decode.'));
+          image.onerror = () =>
+            reject(
+              describeAuthoringError(
+                new Error('This reference picture could not decode.'),
+                'errors:studio.image.decode',
+              ),
+            );
           image.onload = async () => {
             try {
               await image.decode?.();
-              required(!closed, 'Reference loading expired.');
-              required(
+              requireAuthoring(
+                !closed,
+                'Reference loading expired.',
+                'errors:studio.image.expired',
+              );
+              requireAuthoring(
                 image.naturalWidth === header.width && image.naturalHeight === header.height,
                 'Decoded reference dimensions differ from its header.',
+                'errors:studio.image.headerDimensions',
               );
               resolve();
             } catch (error) {
@@ -80,7 +99,13 @@ export async function loadMapReference(
       })(),
       new Promise((_, reject) => {
         timer = setTimeout(
-          () => reject(new Error('Reference loading timed out. Retry another picture.')),
+          () =>
+            reject(
+              describeAuthoringError(
+                new Error('Reference loading timed out. Retry another picture.'),
+                'errors:studio.image.timeout',
+              ),
+            ),
           timeoutMs,
         );
       }),
@@ -97,11 +122,12 @@ export async function loadMapReference(
 export function validateReferenceCrop(source, width, height) {
   const crop = boundedJSON(source, { maxBytes: 512, maxNodes: 8, maxDepth: 1 });
   exactKeys(crop, ['x', 'y', 'w', 'h'], 'reference crop');
-  required(
+  requireAuthoring(
     [width, height].every((n) => Number.isInteger(n) && n > 0 && n <= 8192),
     'Invalid reference dimensions.',
+    'errors:studio.image.dimensions',
   );
-  required(
+  requireAuthoring(
     Object.values(crop).length === 4 &&
       Object.values(crop).every(Number.isInteger) &&
       crop.x >= 0 &&
@@ -111,6 +137,7 @@ export function validateReferenceCrop(source, width, height) {
       crop.x + crop.w <= width &&
       crop.y + crop.h <= height,
     'Crop must be a whole-pixel rectangle inside the reference picture.',
+    'errors:studio.image.crop',
   );
   return Object.freeze(crop);
 }
@@ -120,9 +147,17 @@ export function validateReferenceCrop(source, width, height) {
 export function inspectManualImageMap(source, missionId, rectangles) {
   const project = compileContentProject(source).source;
   const mission = project.missions.find((entry) => entry.id === missionId);
-  required(mission, 'Choose a mission before tracing a map.');
+  requireAuthoring(
+    mission,
+    'Choose a mission before tracing a map.',
+    'errors:studio.image.mission',
+  );
   const rows = boundedJSON(rectangles, { maxBytes: 16000, maxNodes: 1000, maxArray: 128 });
-  required(Array.isArray(rows) && rows.length > 0, 'Queue at least one manual rectangle.');
+  requireAuthoring(
+    Array.isArray(rows) && rows.length > 0,
+    'Queue at least one manual rectangle.',
+    'errors:studio.image.emptyQueue',
+  );
   const original = project.maps.find(
     (map) => map.id === mission.map.id && map.revision === mission.map.revision,
   );
@@ -133,9 +168,10 @@ export function inspectManualImageMap(source, missionId, rectangles) {
   });
   rows.forEach((row, index) => {
     exactKeys(row, ['surface', 'x', 'y', 'w', 'h'], 'manual rectangle');
-    required(
+    requireAuthoring(
       ['foundations', 'walls', 'slow', 'lethal'].includes(row.surface),
       'Select a foundation, wall, slow or lethal surface.',
+      'errors:studio.image.surface',
     );
     const { x, y, w, h } = row;
     if (row.surface === 'slow' || row.surface === 'lethal') {
@@ -152,9 +188,10 @@ export function inspectManualImageMap(source, missionId, rectangles) {
       const manifest = resolveMission(compiled, missionId, { difficulty, mode });
       diagnostics.push(...manifest.diagnostics.map((row) => ({ ...row, difficulty, mode })));
     }
-  required(
+  requireAuthoring(
     !diagnostics.some((row) => row.severity === 'error'),
     'The proposed map has blocking runtime diagnostics. Revise the queued geometry.',
+    'errors:studio.image.blockingDiagnostics',
   );
   return { candidate, diagnostics };
 }
