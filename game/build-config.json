@@ -85,7 +85,7 @@
     "game/content/packs/fpv-arcade-r4.json",
     "game/content/packs/fpv-pressure-frontier.json",
     "game/content/packs/fpv-arcade-r5.json",
-    "game/content/packs/equipment-workshop.json"
+    "game/content/packs/homeward-skies.json"
   ],
   "optionalChapters": {
     "format": "revealline-optional-distribution.v1",
