@@ -1,9 +1,15 @@
 import { journeyLibrarySource } from './journey-source.mjs';
 import { journeyMissionDetails, authoredJourneyMissionTags } from './journey-presentation.mjs';
 import { COOP_STARTER_PACK } from '../coop/library.mjs';
+import { t } from '../i18n/index.mjs';
 
 export const TEAM_LIBRARY_JOURNEY_EDITION = 'team-trail-impact-originals-1';
 export const TEAM_LIBRARY_CLASSIC_SOURCE = 'team-classic:relay-rescue-starter';
+const difficultyKeys = Object.freeze({
+  gentle: 'interface:missionLibrary.team.difficulty.gentle',
+  standard: 'interface:missionLibrary.team.difficulty.standard',
+  expert: 'interface:missionLibrary.team.difficulty.expert',
+});
 
 /** Team's runtime rows and opaque imported-art owner remain outside display
  * identities. Presets resolve at activation; they are not extra missions. */
@@ -21,13 +27,16 @@ export function teamJourneyLibrarySource({
   const source = journeyLibrarySource({
     editionId,
     edition,
+    editionLabel: () =>
+      edition === 'Team Journey' ? t('interface:missionLibrary.team.journeyEdition') : edition,
     catalog: journey.catalog,
     profile: progress ?? { snapshot: () => ({ clears: {}, skipped: {} }) },
     tags: (mission) => authoredJourneyMissionTags(mission, journey.manifest(mission, difficulty())),
     card: (mission) => journey.card(mission, difficulty()),
     launch(mission, context) {
       const row = journey.row(mission, difficulty());
-      if (!row || !journey.owns(row)) throw new Error('This Team mission is no longer available.');
+      if (!row || !journey.owns(row))
+        throw new Error(t('errors:missionLibrary.teamMissionUnavailable'));
       return launch(row, context);
     },
   });
@@ -39,15 +48,23 @@ export function teamJourneyLibrarySource({
       const profile = progress.snapshot(),
         receipt = profile.clears.team?.[mission.id];
       if (!receipt)
-        return profile.skipped.team?.includes(mission.id) ? 'Skipped · try again' : 'Not cleared';
+        return profile.skipped.team?.includes(mission.id)
+          ? t('interface:skippedTryAgain')
+          : t('interface:missionLibrary.team.notCleared');
       const cleared = journey.row(mission, receipt.difficulty);
       const exact = Boolean(cleared && receipt.gameplayId === gameplayIdentity(cleared));
-      return (
-        `${exact ? 'Cleared' : 'Earlier edition cleared'} on ${receipt.difficulty}` +
-        (exact && receipt.difficulty === difficulty()
-          ? ' · selected edition'
-          : ' · no clear recorded for this selected edition')
-      );
+      return t('interface:missionLibrary.team.clearStatus', {
+        state: exact
+          ? t('interface:cleared')
+          : t('interface:missionLibrary.team.earlierEditionCleared'),
+        difficulty: difficultyKeys[receipt.difficulty]
+          ? t(difficultyKeys[receipt.difficulty])
+          : receipt.difficulty,
+        edition:
+          exact && receipt.difficulty === difficulty()
+            ? t('interface:missionLibrary.team.selectedEdition')
+            : t('interface:missionLibrary.team.noSelectedEditionClear'),
+      });
     },
   };
 }
@@ -64,12 +81,13 @@ export function teamArenaLibrarySource({
   progress = () => '',
   launch,
 }) {
-  if (!['Classic', 'Custom'].includes(collection)) throw new TypeError('Unknown Team collection.');
+  if (!['Classic', 'Custom'].includes(collection))
+    throw new TypeError(t('errors:missionLibrary.unknownTeamCollection'));
   if (
     sourceId === TEAM_LIBRARY_CLASSIC_SOURCE &&
     (collection !== 'Classic' || rows.some((row) => row.pack !== COOP_STARTER_PACK))
   )
-    throw new TypeError('Classic Team identity requires the exact built-in pack owner.');
+    throw new TypeError(t('errors:missionLibrary.classicTeamOwnerRequired'));
   const bindings = new Map(
     rows.map((row) => [
       row,
@@ -117,10 +135,13 @@ export function teamArenaLibrarySource({
     availability: (row) =>
       current(row)
         ? { state: 'ready' }
-        : { state: 'unavailable', reason: 'This Team pack is no longer available in this visit.' },
+        : {
+            state: 'unavailable',
+            reason: t('interface:missionLibrary.team.packUnavailableThisVisit'),
+          },
     progress: (row) => (current(row) ? progress(row) : ''),
     launch(row, context) {
-      if (!current(row)) throw new Error('This Team pack selection has changed.');
+      if (!current(row)) throw new Error(t('errors:missionLibrary.teamPackSelectionChanged'));
       return launch(row, context);
     },
   };
