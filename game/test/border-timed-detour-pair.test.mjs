@@ -70,9 +70,9 @@ function collectionRoute(id, difficulty) {
       ];
 }
 
-test('two optional successors preserve v9 geometry, actors, goals, pictures, order and untouched introduction', () => {
+test('two optional successors preserve current geometry, actors, goals, pictures, order and untouched introduction', () => {
   const before = createWholeErosionReviewCandidates();
-  assert.equal(DEFAULT_JOURNEY_ROUTES.solo, 'whole-spatial-v9');
+  assert.equal(DEFAULT_JOURNEY_ROUTES.solo, 'whole-spatial-v11');
   assert.deepEqual(source.maps, before.maps);
   assert.deepEqual(source.assets, before.assets);
   assert.equal(source.policyId, before.policyId);
