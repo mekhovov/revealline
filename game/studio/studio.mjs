@@ -49,6 +49,7 @@ import { createSpatialNextBatchCandidates } from '../content-design/spatial-next
 import { createHorizonNextBatchCandidates } from '../content-design/horizon-next-batch-candidates.mjs';
 import { createBorderCulturalNextBatchCandidates } from '../content-design/border-cultural-next-batch-candidates.mjs';
 import { createBorderSignalCulturalNextBatchCandidates } from '../content-design/border-signal-cultural-next-batch-candidates.mjs';
+import { createEarlyCulturalRoutesCandidates } from '../content-design/early-cultural-routes-candidates.mjs';
 import { createUkrainianOrnamentJourney } from '../content-design/ukrainian-ornament-candidates.mjs';
 import { createUkrainianOrnamentAtlasJourney } from '../content-design/ukrainian-ornament-atlas.mjs';
 import { withCampaignPresentation } from '../content-design/campaign-presentation.mjs';
@@ -1006,6 +1007,7 @@ $('whole-variety').onclick = guarded(() => {
       'horizon-cultural-joins-1': createHorizonNextBatchCandidates,
       'border-cultural-routes-1': createBorderCulturalNextBatchCandidates,
       'border-signal-cultural-routes-1': createBorderSignalCulturalNextBatchCandidates,
+      'early-cultural-routes-1': createEarlyCulturalRoutesCandidates,
       'ukrainian-ornament-study-1': createUkrainianOrnamentJourney,
       'ukrainian-ornament-atlas-1': createUkrainianOrnamentAtlasJourney,
     }[$('whole-variety-edition').value] ?? createWholeVarietyCandidates;
