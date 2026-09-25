@@ -902,3 +902,25 @@ source reads during language changes, and switching during an outstanding file r
 lint/format and full catalog/content-registry checks pass: 8,138 messages / 6,567 references.
 Logs: `/tmp/rl-i18n/rebase/v1141-inspection-{tests,final-tests,locale-tests,catalog-check}.log`.
 Browser verification and broader unresolved coverage/release checks remain outstanding.
+
+## Manual image tracing and recovery
+
+Manual tracing now translates loaded-image/crop guidance, queued surfaces and rectangles,
+inspection status, recovery choices, imports/exports and primary tracing/model/storage errors.
+The accepted preview is repainted by its live presentation binding; locale changes do not inspect
+geometry again, alter the crop/queue, apply a candidate, play a run or touch storage. Recovery
+messages use the shared platform export outcome keys. Rectangle counts have all four Ukrainian
+plural categories. Error metadata now also supports existing Error instances, preserving their
+constructors and conflict codes as well as canonical English messages. Dynamic low-level image
+header and generic JSON-parser diagnostics still need their shared error migration.
+
+The initial surrounding run passes 43/44; its only failure expects injected export prose instead
+of the newly shared platform `requested` outcome. Updating that presentation expectation keeps
+all restoration/export/Apply assertions intact. The final tracing/locale run passes 19/19 (15
+existing and 4 new), covering all 48 unique cases across these runs. New checks verify unchanged
+accepted candidate and source, pending coordinates, focus/cursor/scroll, translated queue and
+canvas refresh, no model reads or writes during switching, pending recovery reads, saved/conflict
+choice/export state, original Error/TypeError constructors and Ukrainian counts
+0/1/2/5/11/21/22/1.5. Changed-file lint/format and source/key/plural checks pass at 8,223 messages /
+6,648 references. Full catalog checking is recorded separately in
+`/tmp/rl-i18n/rebase/v1141-image-trace-catalog-check.log`.
