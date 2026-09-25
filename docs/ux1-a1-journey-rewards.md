@@ -1,8 +1,9 @@
 # UX1-A1: exact Solo Journey pictures
 
-Status: reconciled implementation draft against main
-`fb703070ea4d4a48fa73ba23a8819bb2053aea6f`. It remains unversioned and does not
-merge, tag, deploy or change a published release, game rules or content.
+Status: v0.116.0 release candidate reconciled onto accepted v0.115.0 corrective
+main `902da32de72d5f2772f11d2a6575f334d56c7cb8`. This local candidate is not
+merged, tagged, deployed or publicly accepted and does not change game rules or
+content.
 
 ## Implemented slice
 
@@ -56,6 +57,9 @@ mission IDs stay in backups and appear as unavailable earlier missions.
 
 ## Focused evidence
 
+The following evidence belongs to the exact pre-integration draft and must be
+rerun on the final v0.116.0 candidate after the accepted v0.115.0 merge:
+
 - Reconciled reward, storage, exact-artwork, current Team picture-authority and
   Legacy Team entry suites pass 117/117 with no skips on current-main source.
 - Real Solo host: queryless current Journey Home → direct Start → legal keyboard
@@ -66,9 +70,9 @@ mission IDs stay in backups and appear as unavailable earlier missions.
 - The two changed all-campaign Versus journeys pass 2/2; eleven unrelated cases are
   explicitly unselected by the focused name filter. Both boards keep equal
   checkpoints and every retained original remains Versus-only.
-- A complete current-main Versus file also exposes an inherited catalogue fixture:
-  one unchanged controller test expects 120 cards while the current catalogue
-  renders 198. This draft does not hide that failure or change catalogue scope.
+- The v0.116.0 integration keeps the accepted 198-card catalogue assertion and
+  adds the exact current-route inventory comparison. Its final focused result is
+  recorded separately rather than relabeling the earlier draft run.
 
 These are automated source checks, not visual approval, physical-device checks,
 full offline readiness, every mission playthrough, full source gates or public
@@ -76,12 +80,12 @@ release acceptance.
 
 ## Remaining before acceptance
 
-1. Independent source review; exact final draft-head focused checks and full PR
+1. Independent source review; exact final candidate-head focused checks and PR
    gates. Qualify persistence across a real browser reload, cross-campaign Next,
    failed preparation, accessible viewer focus and the agreed viewports.
-2. Versioned source release, exact-source qualification, immutable freeze, Pages
-   deployment and public win → Collection → mission-card verification, coordinated
-   after the currently publishing feature. No release is performed by this draft.
+2. Exact-source qualification, immutable freeze, Pages deployment and public win →
+   Collection → mission-card verification. This local candidate performs no merge,
+   tag, publication or deployment.
 3. **UX1-A2:** actual Versus and Team completion admission and presentation records
    are included in [the reconciled A2 draft](ux1-a2-cross-mode-rewards.md). Its
    focused host evidence and mode-local picture access do not qualify reload/Retry/Next,
