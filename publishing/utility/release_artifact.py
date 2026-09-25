@@ -374,8 +374,23 @@ def waiver_qualification_check(q, binding):
                 item in q['evidencePins'], 'Waiver original pin missing')
     require(policy['policyEvidence']['path'] == POLICY_PATH, 'Waiver policy must use its canonical evidence path')
     require(policy['policyEvidence']['bytes'] <= 16384, 'Waiver policy exceeds its 16 KiB bound')
-    require(successful(q['ordinaryBuildCorroboration']['step']) and
-            q['ordinaryBuildCorroboration']['command'] == 'npm run build', 'Actual successful ordinary build missing')
+    premerge = q.get('preMergeValidationCorroboration')
+    legacy_build = q.get('ordinaryBuildCorroboration')
+    require((premerge is None) != (legacy_build is None) and
+            ((isinstance(premerge, dict) and set(premerge) == {'runId', 'jobId', 'command', 'step',
+              'sourceRevision', 'sourceTree', 'artifactBuild', 'scope'} and
+              positive(premerge.get('runId'), 10**14) and positive(premerge.get('jobId'), 10**14) and
+              premerge.get('command') == 'npm run validate' and
+              successful(premerge.get('step', {})) and
+              isinstance(premerge.get('sourceRevision'), str) and COMMIT.fullmatch(premerge['sourceRevision']) and
+              isinstance(premerge.get('sourceTree'), str) and COMMIT.fullmatch(premerge['sourceTree']) and
+              isinstance(premerge.get('scope'), str) and premerge['scope'].strip() and
+              set(premerge.get('artifactBuild', {})) == {'status', 'step'} and
+              premerge['artifactBuild'].get('status') == 'deferred-to-frozen-source' and
+              successful(premerge['artifactBuild'].get('step', {}))) or
+             (isinstance(legacy_build, dict) and legacy_build.get('command') == 'npm run build' and
+              successful(legacy_build.get('step', {})))),
+            'Actual successful PR validation and explicit artifact deferral missing')
     frozen = q['frozenArtifactCorroboration']
     require(frozen['artifactId'] == binding['artifact']['id'] and
             all(frozen.get(k) is True for k in ['wholeOriginalArtifactVerifiedBeforeQualification',
@@ -445,6 +460,43 @@ def verify_evidence(body, qualification, source, policy_body=None):
                 require(gate.get('jobId') == qualify['id'] and len(matched) == 1 and
                         all(gate['step'].get(k) == matched[0].get(k) for k in ['name', 'number', 'status', 'conclusion']) and
                         successful(matched[0]), 'Waiver mandatory gate lacks its actual job/step original')
+            premerge = qualification.get('preMergeValidationCorroboration')
+            if premerge is not None:
+                pr_run = parse(archive.read('runs/pr/run.json'))
+                pr_jobs = parse(archive.read('runs/pr/jobs.json'))
+                equivalence = parse(archive.read('preparation/source-equivalence.json'))
+                require(pr_run.get('id') == premerge['runId'] and pr_run.get('event') == 'pull_request' and
+                        pr_run.get('path') == '.github/workflows/deploy-pages.yml' and
+                        pr_run.get('head_sha') == premerge['sourceRevision'] and successful(pr_run),
+                        'PR validation original run identity/result differs')
+                pr_rows = pr_jobs.get('jobs')
+                require(isinstance(pr_rows, list) and 0 < len(pr_rows) <= 1000 and
+                        pr_jobs.get('total_count') == len(pr_rows) and
+                        all(j.get('run_id') == pr_run['id'] and positive(j.get('id'), 10**14) for j in pr_rows) and
+                        len({j['id'] for j in pr_rows}) == len(pr_rows),
+                        'PR validation original jobs incomplete or borrowed')
+                builds = [j for j in pr_rows if j.get('name') == 'build']
+                require(len(builds) == 1 and builds[0]['id'] == premerge['jobId'] and successful(builds[0]) and
+                        builds[0].get('head_sha') == premerge['sourceRevision'],
+                        'PR validation build job identity/result differs')
+                build_steps = builds[0].get('steps', [])
+                for retained, name in [(premerge['step'], 'Validate release-critical source'),
+                                       (premerge['artifactBuild']['step'],
+                                        'Defer full artifact build to merged-source qualification')]:
+                    matched = [s for s in build_steps if s.get('name') == name]
+                    require(len(matched) == 1 and all(retained.get(k) == matched[0].get(k)
+                            for k in ['name', 'number', 'status', 'conclusion']) and successful(matched[0]),
+                            'PR validation step lacks its actual job original')
+                for name in ['Verify exact tracked source before commands',
+                             'Verify tracked source after fast release gate']:
+                    matched = [s for s in build_steps if s.get('name') == name]
+                    require(len(matched) == 1 and successful(matched[0]),
+                            'PR validation source identity step missing')
+                pr_equivalence, frozen_equivalence = equivalence.get('prSource', {}), equivalence.get('frozenSource', {})
+                require(all(pr_equivalence.get(k) == v for k, v in
+                            [('commit', premerge['sourceRevision']), ('tree', premerge['sourceTree'])]) and
+                        all(frozen_equivalence.get(k) == source[k] for k in ['commit', 'tree']),
+                        'PR validation/source equivalence identity differs')
         return {'files': len(rows), 'originalBytes': sum(r['bytes'] for r in rows),
                 'manifestSha256': sha(manifest_body), 'everyMemberCRCAndHashVerified': True,
                 'allQualificationPinsResolved': True}
