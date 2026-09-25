@@ -1221,7 +1221,7 @@ test('Motion real scan reveals and expires DOM note text on the rendering frame 
   assert.equal(h.doc.body.textContent.includes(secret), false);
   h.key('KeyE');
   assert.ok(row.textContent.includes(secret));
-  assert.match(h.$('ability-readout').textContent, /0 markers updated · 1 notes visible/);
+  assert.match(h.$('ability-readout').textContent, /0 markers updated · 1 note visible/);
   h.tick(100);
   h.tick(200);
   assert.ok(row.textContent.includes(secret));
@@ -1234,7 +1234,7 @@ test('Motion real scan reveals and expires DOM note text on the rendering frame 
   assert.equal(row.getAttribute('aria-label'), null);
   assert.match(
     h.$('ability-readout').textContent,
-    /1 notes visible/,
+    /1 note visible/,
     'The general readout deliberately has not refreshed in these 34 ms.',
   );
   const painted = h
@@ -1689,6 +1689,7 @@ test('Motion locale changes preserve paused movement, live controls and image ow
     h.tick(0);
     h.tick(100);
     h.$('play-pause').click();
+    h.$('ability-action').click();
     h.change('character-scale', '1.25', 'input');
     h.change('cruise-speed', '11', 'input');
     const focused = h.$('character-scale');
@@ -1726,6 +1727,12 @@ test('Motion locale changes preserve paused movement, live controls and image ow
       assert.equal(h.$('play-pause').textContent, locale === 'uk' ? 'Відтворити' : 'Play');
       assert.equal(h.$('scale-output').textContent, locale === 'uk' ? '1,25×' : '1.25×');
       assert.match(h.$('motion-event').textContent, locale === 'uk' ? /Пауза/ : /Paused/);
+      assert.match(h.$('ability-message').textContent, locale === 'uk' ? /Пауза/ : /Paused/);
+      assert.equal(
+        h.$('ability-class').children.find((option) => option.value === 'scout').textContent,
+        locale === 'uk' ? 'Розвідник' : 'Scout',
+      );
+      assert.match(h.$('ability-description').textContent, locale === 'uk' ? /^Імпульс/ : /^Pulse/);
     }
     gate.resolve(await (await backgroundFile('static-default.png')).arrayBuffer());
     await waitFor(() => h.objectURLs.length === 1);
@@ -1746,6 +1753,49 @@ test('Motion locale changes preserve paused movement, live controls and image ow
     assert.equal(h.frames.size, 0);
     assert.equal(h.writes.length, writes);
     assert.equal(h.doc.activeElement, focused);
+  } finally {
+    setLocale(previous, { persist: false });
+  }
+});
+
+test('Motion locked collection groups preserve authored alternatives and focused selection across locales', async (t) => {
+  const { setLocale } = await import('../i18n/index.mjs');
+  const previous = getLocale();
+  setLocale('en', { persist: false });
+  const h = await harness(t);
+  try {
+    await h.ready();
+    h.$('play-pause').click();
+    h.change('character', 'fpv-night');
+    const control = h.$('character');
+    control.focus();
+    const conditionList = h.$('unlock-conditions');
+    const rows = [...conditionList.querySelectorAll('li')];
+    const options = [...control.children];
+    const before = freezeView(h);
+    const writes = h.writes.length;
+    assert.equal(rows.length, 5, 'Two progress rows and two separately grouped alternatives.');
+    for (const locale of ['uk', 'en', 'uk']) {
+      setLocale(locale, { persist: false });
+      assert.equal(h.doc.activeElement, control);
+      assert.equal(control.value, 'fpv-night');
+      assert.deepEqual(control.children, options);
+      assert.deepEqual(conditionList.querySelectorAll('li'), rows);
+      assert.match(
+        conditionList.textContent,
+        locale === 'uk' ? /будь-якої однієї групи/ : /any one group/,
+      );
+      assert.doesNotMatch(conditionList.textContent, /or Or|або Або/);
+      assert.match(
+        h.$('character-status').textContent,
+        locale === 'uk' ? /Концепція нічного корпусу/ : /Earned night body concept/,
+      );
+      assert.equal(h.$('equip-character').disabled, true);
+      assert.equal(h.writes.length, writes);
+      assert.equal(h.frames.size, 0);
+    }
+    setLocale('en', { persist: false });
+    assert.deepEqual(freezeView(h), before);
   } finally {
     setLocale(previous, { persist: false });
   }
