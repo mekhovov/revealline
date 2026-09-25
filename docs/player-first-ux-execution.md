@@ -66,6 +66,17 @@ the v0.110.1 base; this quick-start successor does not reinterpret those binding
 Publication, responsive browser review and physical controller/touch evidence remain
 release gates rather than claims of this source checkpoint.
 
+The next isolated v0.112.0 draft adds a bounded dark plate, bright core and
+directional nose to the active cut head, plus shape-distinct player-bound and
+departure-bound travelling-impact markers. It preserves simulation coordinates,
+collision footprints and historical emitter rendering. Because the shared Journey
+and Team painters are Field Kit production inputs, this successor explicitly
+records presentation revision 75, retains Team picture authority for revisions
+58–74 and raises the finite historical-policy bound to 18. The seven required
+motion and ten required effects recipes have exact scoped functional evidence;
+the 37 optional Team recipes remain truthfully source-stage. Merge, immutable
+release, Pages and public/device verification remain pending.
+
 The successor reconciliation joins the real staged replacement in the broad Couch
 tests instead of assuming synchronous picture or actor preparation. Back from setup
 now proves that the pending replacement aborts while the accepted boards, picture and
