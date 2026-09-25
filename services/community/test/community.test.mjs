@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
-import { mkdtemp, readFile, rm } from 'node:fs/promises';
+import { mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
@@ -753,16 +753,56 @@ test('disk blob writes verify identity and do not retain failed partial files', 
     /do not match/u,
   );
   assert.equal(await store.stat(key), null);
-  await store.putVerified({
-    key,
-    body: bytes,
-    expectedSha256: sha256,
-    expectedSize: bytes.length,
-    maxBytes: 1024,
-  });
+  const target = path.join(root, key);
+  await mkdir(path.dirname(target), { recursive: true });
+  await writeFile(target, Buffer.alloc(bytes.length, 0x78));
+  await Promise.all(
+    [0, 1].map(() =>
+      store.putVerified({
+        key,
+        body: bytes,
+        expectedSha256: sha256,
+        expectedSize: bytes.length,
+        maxBytes: 1024,
+      }),
+    ),
+  );
   const opened = await store.open(key);
   assert.equal(opened.size, bytes.length);
-  assert.deepEqual(await readFile(path.join(root, key)), bytes);
+  assert.equal(opened.sha256, sha256);
+  const openedChunks = [];
+  for await (const chunk of opened.body) openedChunks.push(chunk);
+  assert.deepEqual(Buffer.concat(openedChunks), bytes);
+  assert.deepEqual(await readFile(target), bytes);
+});
+
+test('catalog download fails closed when exact disk bytes change after publication', async (t) => {
+  const root = await mkdtemp(path.join(os.tmpdir(), 'revealline-community-download-'));
+  t.after(() => rm(root, { recursive: true, force: true }));
+  const blobStore = new DiskBlobStore({ root });
+  const { app, repository } = await fixture({ blobStore });
+  t.after(() => app.close());
+  const { created } = await createAndUpload(app);
+  await app.inject({
+    method: 'POST',
+    url: `/v1/submissions/${created.submission.id}/submit`,
+    headers: bearer(),
+  });
+  await processNextValidationJob({
+    repository,
+    blobStore,
+    workerId: 'disk-worker',
+    validatePackage: async () => ({ accepted: true, report: { replay: 'passed' } }),
+  });
+  const href = `/v1/catalog/${created.submission.editionId}/download`;
+  const exact = await app.inject({ method: 'GET', url: href });
+  assert.equal(exact.statusCode, 200, exact.body);
+  assert.deepEqual(exact.rawPayload, bytes);
+  await writeFile(path.join(root, packageBlobKey(sha256)), Buffer.alloc(bytes.length, 0x78));
+  const corrupt = await app.inject({ method: 'GET', url: href });
+  assert.equal(corrupt.statusCode, 503, corrupt.body);
+  assert.equal(corrupt.json().error.code, 'package_unavailable');
+  assert.equal(corrupt.headers.etag, undefined);
 });
 
 test('upload transport boundary distinguishes direct development and future tus behavior', () => {
