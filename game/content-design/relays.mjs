@@ -1,4 +1,5 @@
-import { boundedJSON, exactKeys, required, stableId, dataIdentity } from '../data-json.mjs';
+import { requireAuthoring as required } from './authoring-error.mjs';
+import { boundedJSON, exactKeys, stableId, dataIdentity } from '../data-json.mjs';
 import { compileContentProject } from './project.mjs';
 import { forkMissionMap } from './drafts.mjs';
 
@@ -10,6 +11,7 @@ export function editContentRelay(source, missionId, input) {
   required(
     ['enable', 'add', 'replace', 'remove'].includes(command.action),
     'Choose a relay operation.',
+    'errors:studio.relay.operation',
   );
   exactKeys(
     command,
@@ -23,18 +25,27 @@ export function editContentRelay(source, missionId, input) {
     'relay command',
   );
   let mission = project.missions.find((entry) => entry.id === missionId);
-  required(mission, 'Choose an existing mission.');
-  required(!mission.modes.includes('team'), 'Relay gates are not qualified for Team.');
+  required(mission, 'Choose an existing mission.', 'errors:studio.existingMission');
+  required(
+    !mission.modes.includes('team'),
+    'Relay gates are not qualified for Team.',
+    'errors:studio.relay.teamUnavailable',
+  );
   const map = project.maps.find(
     (entry) => entry.id === mission.map.id && entry.revision === mission.map.revision,
   );
   required(
     command.expectedMap === dataIdentity(map) && command.expectedMission === dataIdentity(mission),
     'The map or mission changed. Refresh the relay selection before editing.',
+    'errors:studio.relay.sourceChanged',
   );
   let gates;
   if (command.action === 'enable') {
-    required(mission.format === 'MissionDesignV1', 'This mission already uses the relay edition.');
+    required(
+      mission.format === 'MissionDesignV1',
+      'This mission already uses the relay edition.',
+      'errors:studio.relay.alreadyEnabled',
+    );
     mission.format = 'MissionDesignV2';
     mission.relayLinks = [];
     gates = [];
@@ -42,13 +53,15 @@ export function editContentRelay(source, missionId, input) {
     required(
       ['MissionDesignV2', 'MissionDesignV3', 'MissionDesignV4'].includes(mission.format),
       'Explicitly enable the relay edition first.',
+      'errors:studio.relay.enableFirst',
     );
-    required(stableId(command.id), 'Give the gate a stable ID.');
+    required(stableId(command.id), 'Give the gate a stable ID.', 'errors:studio.relay.stableId');
     gates = structuredClone(map.gates);
     const index = gates.findIndex((gate) => gate.id === command.id);
     required(
       command.action === 'add' ? index === -1 : index !== -1,
       command.action === 'add' ? 'That gate ID already exists.' : 'Choose an existing gate.',
+      command.action === 'add' ? 'errors:studio.relay.duplicateId' : 'errors:studio.relay.existing',
     );
     if (command.action === 'remove') {
       gates.splice(index, 1);
@@ -59,6 +72,7 @@ export function editContentRelay(source, missionId, input) {
       required(
         stableId(objectiveId) && mission.objectives.some((item) => item.id === objectiveId),
         'Choose an existing capture objective.',
+        'errors:studio.relay.captureObjective',
       );
       const gate = { id: command.id, ...rectangle },
         link = { gateId: command.id, objectiveId };
