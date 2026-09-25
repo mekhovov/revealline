@@ -394,7 +394,13 @@ export function createSoundtrackPlayer({
     deck.remoteProgress = Number.isFinite(deck.media.currentTime) ? deck.media.currentTime : 0;
     deck.remoteWatchdog = setTimeout(() => {
       deck.remoteWatchdog = null;
-      if (!valid() || !desired || suspended || status !== 'playing' || current?.id !== track.id)
+      if (
+        !valid() ||
+        !desired ||
+        suspended ||
+        !['loading', 'playing'].includes(status) ||
+        current?.id !== track.id
+      )
         return;
       const at = Number.isFinite(deck.media.currentTime) ? deck.media.currentTime : 0;
       if (!deck.media.paused && at > deck.remoteProgress + 0.01) {
@@ -781,6 +787,7 @@ export function createSoundtrackPlayer({
               (!(await enabled) || token !== generation || disposed || !desired)
             )
               return false;
+            watchCurrentRemote();
             await activeDeck.media.play();
             await enabled;
             if (token !== generation || disposed || !desired) return false;
@@ -952,9 +959,14 @@ export function createSoundtrackPlayer({
     library = next;
     if (remoteSelection && next.listening?.recordingMode) {
       const allowed = remoteTracks.filter(onlineSoundtrackRecordingAllowed),
+        remoteIds = new Set(remoteTracks.map((track) => track.id)),
+        allowedIds = new Set(allowed.map((track) => track.id)),
+        retainedTrackIds = remoteSelection.playlist.trackIds.filter(
+          (id) => !remoteIds.has(id) || allowedIds.has(id),
+        ),
         currentAllowed =
           current?.kind !== 'remote' || allowed.some((track) => track.id === current.id);
-      if (!allowed.length || !currentAllowed) {
+      if (!currentAllowed || !retainedTrackIds.length) {
         remoteSelection = null;
         remoteTracks = [];
         if (current?.kind === 'remote') {
@@ -970,7 +982,7 @@ export function createSoundtrackPlayer({
           ...remoteSelection,
           playlist: {
             ...remoteSelection.playlist,
-            trackIds: allowed.map((track) => track.id),
+            trackIds: retainedTrackIds,
           },
         };
       }

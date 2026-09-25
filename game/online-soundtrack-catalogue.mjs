@@ -18,23 +18,23 @@ const LICENSES = new Set([
 const LICENSE_IDENTITIES = new Map([
   [
     'https://creativecommons.org/publicdomain/zero/1.0/',
-    { id: 'CC0', version: '1.0', shareAlike: false },
+    { id: 'CC0', version: '1.0', label: 'CC0 1.0 Universal', shareAlike: false },
   ],
   [
     'https://creativecommons.org/licenses/by/3.0/',
-    { id: 'CC-BY', version: '3.0', shareAlike: false },
+    { id: 'CC-BY', version: '3.0', label: 'CC BY 3.0 Unported', shareAlike: false },
   ],
   [
     'https://creativecommons.org/licenses/by/4.0/',
-    { id: 'CC-BY', version: '4.0', shareAlike: false },
+    { id: 'CC-BY', version: '4.0', label: 'CC BY 4.0 International', shareAlike: false },
   ],
   [
     'https://creativecommons.org/licenses/by-sa/3.0/',
-    { id: 'CC-BY-SA', version: '3.0', shareAlike: true },
+    { id: 'CC-BY-SA', version: '3.0', label: 'CC BY-SA 3.0 Unported', shareAlike: true },
   ],
   [
     'https://creativecommons.org/licenses/by-sa/4.0/',
-    { id: 'CC-BY-SA', version: '4.0', shareAlike: true },
+    { id: 'CC-BY-SA', version: '4.0', label: 'CC BY-SA 4.0 International', shareAlike: true },
   ],
 ]);
 const AUDIO_PATH = /^(?:objects|batches\/[a-z0-9][a-z0-9-]{0,63}\/objects)\/[a-f0-9]{64}\.mp3$/;
@@ -90,7 +90,12 @@ function text(value, label, maximum = 2048) {
 }
 
 function structuredRights(value, legacy, id) {
-  if (value === undefined) return null;
+  const identity = LICENSE_IDENTITIES.get(legacy.licenseURL);
+  required(identity, `Online soundtrack rights licence is unsupported: ${id}.`);
+  if (value === undefined) {
+    required(!identity.shareAlike, `Online soundtrack ShareAlike rights are required: ${id}.`);
+    return null;
+  }
   exactKeys(
     value,
     [
@@ -104,8 +109,6 @@ function structuredRights(value, legacy, id) {
     ],
     'online soundtrack rights',
   );
-  const identity = LICENSE_IDENTITIES.get(legacy.licenseURL);
-  required(identity, `Online soundtrack rights licence is unsupported: ${id}.`);
   required(
     value.licenseId === identity.id &&
       value.licenseVersion === identity.version &&
@@ -194,10 +197,8 @@ function track(value, ids, hashes) {
   );
   required(secureURL(value.source), `Online soundtrack source is invalid: ${id}.`);
   required(LICENSES.has(value.licenseURL), `Online soundtrack licence is unsupported: ${id}.`);
-  required(
-    value.license === null || typeof value.license === 'string',
-    `Online soundtrack licence is invalid: ${id}.`,
-  );
+  const licenseIdentity = LICENSE_IDENTITIES.get(value.licenseURL);
+  required(value.license === licenseIdentity.label, `Online soundtrack licence is invalid: ${id}.`);
   required(
     value.gameCatalogueAdmission === false &&
       typeof value.status === 'string' &&

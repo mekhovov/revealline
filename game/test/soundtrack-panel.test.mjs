@@ -375,7 +375,7 @@ function onlineCatalogueFixture() {
     durationSeconds: 180 + index,
     tags,
     source: `https://artists.example/${index + 1}`,
-    license: 'CC BY 4.0',
+    license: 'CC BY 4.0 International',
     licenseURL: 'https://creativecommons.org/licenses/by/4.0/',
     credit: `${title} by ${artist}`,
     fileName: `${title}.mp3`,

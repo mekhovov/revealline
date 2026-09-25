@@ -101,6 +101,7 @@ test('online catalogue accepts legacy entries and validates mirrored structured 
 
 test('online catalogue requires compatible delivery terms for share-alike recordings', () => {
   const licenseURL = 'https://creativecommons.org/licenses/by-sa/4.0/',
+    license = 'CC BY-SA 4.0 International',
     credit = 'Song by Creator, CC BY-SA 4.0.',
     rights = {
       licenseId: 'CC-BY-SA',
@@ -119,8 +120,24 @@ test('online catalogue requires compatible delivery terms for share-alike record
   assert.doesNotThrow(() =>
     resolveOnlineSoundtrackCatalogue({
       ...catalogue,
-      tracks: [{ ...track, license: 'CC BY-SA 4.0', licenseURL, credit, rights }],
+      tracks: [{ ...track, license, licenseURL, credit, rights }],
     }),
+  );
+  assert.throws(
+    () =>
+      resolveOnlineSoundtrackCatalogue({
+        ...catalogue,
+        tracks: [{ ...track, license, licenseURL, credit }],
+      }),
+    /ShareAlike rights are required/,
+  );
+  assert.throws(
+    () =>
+      resolveOnlineSoundtrackCatalogue({
+        ...catalogue,
+        tracks: [{ ...track, license: 'CC0 (forged label)', licenseURL, credit, rights }],
+      }),
+    /licence is invalid/,
   );
   assert.throws(() =>
     resolveOnlineSoundtrackCatalogue({
@@ -128,7 +145,7 @@ test('online catalogue requires compatible delivery terms for share-alike record
       tracks: [
         {
           ...track,
-          license: 'CC BY-SA 4.0',
+          license,
           licenseURL,
           credit,
           rights: {
