@@ -3872,6 +3872,7 @@
   "missionLibrary.classic.difficultySettings": "Налаштування складності: {{difficulties}}",
   "missionLibrary.downloadSize": "Завантажити · {{size}}",
   "missionLibrary.downloadAndPlaySize": "Завантажити й грати · {{size}}",
+  "missionLibrary.campaignShortcuts": "Швидкий перехід між кампаніями",
   "missionLibrary.unavailableReason": "Недоступно · {{reason}}",
   "missionLibrary.unavailableRetry": "Недоступно · {{reason}} · Спробувати ще раз",
   "missionLibrary.prepared": "Місію «{{name}}» підготовлено. Вибери «Грати», коли захочеш почати.",

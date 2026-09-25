@@ -149,7 +149,11 @@ export function attachMissionLibraryChooser({
   status.setAttribute('role', 'status');
   const campaignRail = node('nav', 'journey-campaign-rail');
   campaignRail.className = 'journey-campaign-rail';
-  campaignRail.setAttribute('aria-label', 'Campaign shortcuts');
+  localizedAttribute(
+    campaignRail,
+    'aria-label',
+    localizedMessage('interface:missionLibrary.campaignShortcuts'),
+  );
   const list = node('div', 'journey-cards');
   list.className = 'journey-cards';
   const footer = node('div');
@@ -374,8 +378,7 @@ export function attachMissionLibraryChooser({
             result.state === 'cancelled'
               ? localizedMessage('interface:downloadCancelledYourCurrentGameIsKept')
               : result.state === 'ready'
-                ? () =>
-                    t('interface:missionLibrary.preparedStarting', { name: displayName(row) })
+                ? () => t('interface:missionLibrary.preparedStarting', { name: displayName(row) })
                 : '';
         if (current && result.state === 'ready') {
           preparations.delete(row.id);
@@ -553,19 +556,22 @@ export function attachMissionLibraryChooser({
       filtersActive ? t('interface:filtersActive') : t('interface:filters'),
     );
     const campaignChoices = new Map();
-    for (const row of railRows)
-      if (!campaignChoices.has(row.campaignKey))
+    for (const row of railRows) {
+      if (!campaignChoices.has(row.campaignKey)) {
+        const display = library.presentation?.(row) ?? row;
         campaignChoices.set(row.campaignKey, {
-          title: row.campaignTitle,
-          edition: row.edition,
+          title: display.campaignTitle,
+          edition: display.edition,
           count: 0,
         });
+      }
+    }
     for (const row of railRows) campaignChoices.get(row.campaignKey).count++;
     const shortcuts = [...campaignChoices].map(([key, info]) => {
       const shortcut = node(
         'button',
         null,
-        `${info.title} · ${info.count} mission${info.count === 1 ? '' : 's'}`,
+        () => `${info.title} · ${t('common:counts.missions', { count: info.count })}`,
       );
       shortcut.type = 'button';
       shortcut.className = 'journey-campaign-shortcut';

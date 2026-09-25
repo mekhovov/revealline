@@ -3858,6 +3858,7 @@
   "missionLibrary.classic.difficultySettings": "Difficulty settings: {{difficulties}}",
   "missionLibrary.downloadSize": "Download · {{size}}",
   "missionLibrary.downloadAndPlaySize": "Download & play · {{size}}",
+  "missionLibrary.campaignShortcuts": "Campaign shortcuts",
   "missionLibrary.unavailableReason": "Unavailable · {{reason}}",
   "missionLibrary.unavailableRetry": "Unavailable · {{reason}} · Retry",
   "missionLibrary.prepared": "{{name}} is ready. Choose Play when you want to start.",
