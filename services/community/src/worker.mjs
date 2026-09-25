@@ -32,11 +32,16 @@ export async function processNextValidationJob({
       await discardBody(blob?.body);
       throw new Error('Staged package is missing or has a different exact identity.');
     }
-    const outcome = await validatePackage({
-      body: blob.body,
-      submission: claimed.submission,
-      validatorVersion: claimed.job.validatorVersion,
-    });
+    let outcome;
+    try {
+      outcome = await validatePackage({
+        body: blob.body,
+        submission: claimed.submission,
+        validatorVersion: claimed.job.validatorVersion,
+      });
+    } finally {
+      await discardBody(blob.body);
+    }
     if (!outcome || typeof outcome.accepted !== 'boolean')
       throw new Error('Validator returned an invalid result.');
     const report = boundedReport(outcome.report ?? {});
