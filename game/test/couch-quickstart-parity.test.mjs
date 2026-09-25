@@ -158,15 +158,15 @@ test('Steam Deck Confirm opens Team optional setup and starts exactly once despi
   assert.equal(f.$('coop-play').hidden, false, 'native echo must not trigger another start action');
 });
 
-test('passive Team preparation keeps stable lobby focus without exposing a Cancel trap', async (t) => {
+test('passive Team preparation exposes Cancel without focusing or activating it', async (t) => {
   const gate = deferred();
   const f = await teamPage(t, {
     nativeFocus: true,
     waitPicture: false,
     presentation: { read: () => gate.promise },
   });
-  assert.equal(f.doc.activeElement.id, 'coop-level');
-  assert.equal(f.$('coop-picture-cancel').hidden, true);
+  assert.equal(f.doc.activeElement, f.doc.body);
+  assert.equal(f.$('coop-picture-cancel').hidden, false);
   f.tap('Enter');
   assert.equal(f.$('coop-picture-status').dataset.state, 'preparing');
   gate.resolve();
@@ -178,7 +178,7 @@ test('passive Team preparation keeps stable lobby focus without exposing a Cance
   assert.equal(f.$('coop-play').hidden, false);
 });
 
-test('Steam Deck Confirm echo cannot expose or activate Cancel during initial Team preparation', async (t) => {
+test('Steam Deck Confirm echo cannot activate Cancel during initial Team picture preparation', async (t) => {
   let time = 1000;
   t.mock.method(performance, 'now', () => time);
   const gate = deferred();
@@ -194,7 +194,7 @@ test('Steam Deck Confirm echo cannot expose or activate Cancel during initial Te
   time += 120;
   assert.equal(nativeConfirm(f.doc.activeElement).defaultPrevented, true);
   assert.equal(f.$('coop-picture-status').dataset.state, 'preparing');
-  assert.equal(f.$('coop-picture-cancel').hidden, true);
+  assert.equal(f.$('coop-picture-cancel').hidden, false);
   gate.resolve();
   await waitFor(() => f.$('coop-picture-status').dataset.state === 'ready');
 });
