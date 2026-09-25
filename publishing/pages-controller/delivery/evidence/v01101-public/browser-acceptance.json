@@ -1,0 +1,22 @@
+{
+  "format": "revealline-public-browser-acceptance.v1",
+  "observedAt": "2026-09-25T02:29:30Z",
+  "baseUrl": "https://mekhovov.github.io/revealline/",
+  "resolvedVersionUrl": "https://mekhovov.github.io/revealline/releases/v0.110.1/site/game/",
+  "version": "v0.110.1",
+  "gameSourceRevision": "f54a6ecbdf329c7fd175d90ec258537d035c72e7",
+  "controllerCommit": "2935527e36955eb55d4afe76383824ac4804e6bd",
+  "observations": [
+    "Root redirected to the immutable v0.110.1 game route.",
+    "Home exposed New Journey with 91 missions and focused Continue.",
+    "Solo Continue prepared release artwork and entered the live territory board.",
+    "Versus exposed 91 missions, prepared the shared picture, enabled Start race, and entered two live boards.",
+    "Team exposed 12 missions, prepared the exact Twin landings Team picture without a binding error, enabled Start together, and entered the shared arena.",
+    "Browser console contained no warning or error entries during the observed journey."
+  ],
+  "limitations": [
+    "Native in-app desktop browser interaction; not physical touch or physical controller certification.",
+    "No comprehensive offline or campaign-balance qualification.",
+    "Automated long suites remained waived by the committed temporary release policy and are not claimed as passed."
+  ]
+}
