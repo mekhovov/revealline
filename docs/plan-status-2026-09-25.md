@@ -1,155 +1,148 @@
-# Reveal Line — current delivery status and remaining plan
+# Reveal Line — delivery status and remaining plan
 
-Status checked **25 September 2026**. This document supersedes the execution
-status in `plan-status-2026-09-23.md`; it does not replace gameplay contracts,
-research evidence, release receipts, or the player-feedback register.
+Status checked **25 September 2026** after the public acceptance of v0.112.0.
+This is the authoritative delivery summary. Detailed gameplay contracts, immutable
+release receipts, research evidence, and historical reports remain authoritative
+for their own scopes.
 
-Effort ranges are engineering estimates from the moment an item becomes the sole
-release candidate. Hosted queues, failed reruns, archive preservation, and human
-or physical-device availability can extend them. A prepared branch, reviewed PR,
-immutable GitHub release, Pages selection, and public acceptance are separate
-states. Skipped suites are never counted as passes.
+Effort ranges are engineering estimates from the moment an item becomes the only
+release candidate. They include reconciliation, focused verification, review,
+versioning, immutable release, archive preservation, Pages selection, and public
+acceptance. They exclude unavailable physical-device or human-review time.
+Skipped suites are never counted as passes.
 
-## 1. Current release state
+## Public baseline — complete
 
-- **Public Pages selects v0.111.1.** Public Home, the 91-mission New Journey
-  gallery, prepared Solo play, Versus play, and the 12-mission Team Journey were
-  checked through the ordinary release URLs.
-- **v0.111.0 and v0.111.1 are immutable published releases.** v0.111.1 fixes
-  Steam Deck/Chrome confirmation echoes and is now the public Pages default.
-- **Archive76 now preserves v0.111.0.** Its public deployment passed an exact audit
-  of 1,146 files and 595,553,722 bytes with zero failures. Fresh browser checks
-  launched the 91-mission Solo and Versus Journeys and the 12-mission Team Journey.
-- **PR476 is merged and Pages workflow run 36095346816 passed.** Its exact archive
-  preview covered 76 admitted releases with zero observations; focused evidence
-  included 63 controller tests and five archive-extraction tests.
-- Protected main continues to advance through reviewed maintenance and status
-  corrections. Release qualification must therefore fetch and record fresh
-  protected-main authority rather than treating a dated commit as permanently
-  current. Publication remains serialized through one publisher.
+**v0.112.0 — Player Quick Start** is the current public release:
 
-## 2. Completed and publicly delivered
+- Play: <https://mekhovov.github.io/revealline/releases/v0.112.0/site/game/>
+- Source PR: [#482](https://github.com/mekhovov/revealline/pull/482)
+- Release: <https://github.com/mekhovov/revealline/releases/tag/v0.112.0>
+- Pages selector PR: [#488](https://github.com/mekhovov/revealline/pull/488)
+- Pages run: [36105363167](https://github.com/mekhovov/revealline/actions/runs/36105363167)
 
-| Area                  | Public result                                                                                                     | Boundary                                                 |
-| --------------------- | ----------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------- |
-| Default content       | New Journey is the normal Solo/Versus/Team entry; Classic, installed, Custom, and legacy content remain reachable | v0.83.0 onward                                           |
-| Content selection     | Unified owner-aware mission library and direct compatible launches                                                | v0.84.0 onward                                           |
-| Difficulty            | Gentle, Standard, and Expert influence authored pressure, speed, counts, and lives                                | v0.86.0 onward; whole-game balance remains open          |
-| Progression           | Next crosses campaign, pack, and collection boundaries in all three modes                                         | v0.90.0 onward                                           |
-| Movement              | Field actors travel straight between physical impacts; route changes happen at collisions                         | v0.91.0 onward                                           |
-| Player input          | Shared keyboard/controller navigation foundations and initial player-first input corrections                      | v0.98.0                                                  |
-| Classic compatibility | Compatible Classic missions can launch with current rules while Original editions remain available                | v0.101.0/v0.104.0                                        |
-| Main actor            | Corner-bracket visual clutter was removed and the readable FPV craft restored                                     | v0.103.0                                                 |
-| Home and Pause        | Compact Home, global More menu, focused Pause hierarchy, and controller menu repairs                              | v0.105.0–v0.108.0; cross-mode consolidation remains open |
-| Team presentation     | Original pictures, readable actors, and corrected picture authority                                               | v0.109.0/v0.110.1                                        |
-| Release safety        | Immutable releases, protected main, exact-source qualification, archives, and reviewed selector                   | v0.111.1 publicly selected; discipline remains active    |
+The release provides one-action valid-default entry, controller-confirm protection
+during preparation, the reviewed FPV craft silhouette, and reconciled
+trail/impact presentation. Closing a cut stops the craft until fresh directional
+input while movement during a cut remains continuous.
 
-The Xposed-led programme is not complete. Public releases provide the foundation,
-but consistent cross-mode player flows, rewards, gallery behavior, failure/retry,
-HUD qualification, theme coverage, campaign production, and final device testing
-remain open.
+Exact source `eca4e32baf190b2cf9184466a45b1627746c00ea`, tree
+`03f11f09495c37202de795d5d9af10c9f908840e`, was qualified and preserved by
+the immutable tag and nine release assets. Focused player cohorts passed
+207/207, the original Team cohort 84/84, presentation 46/46, transfer 6/6,
+and exact replay 38/38. Validation, lint, format, production reproduction,
+readiness, frozen-artifact inspection, and release-asset reconciliation passed.
+The long source shards were **waived by the committed fast-release policy** and
+are recorded as skipped.
 
-## 3. Prepared work that is not public
+Archive77 preserves v0.111.1:
 
-| Candidate                      | Current evidence                                                                                                                                                                   | Required before release                                                                                                                        |
-| ------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
-| Complete creator framework     | PR465 is a large, unversioned creator/admin draft, 52 commits behind the reviewed player baseline and without a qualified release head                                             | Preserve it as provenance, then rebuild and qualify it after the player-first releases for v0.123.0 or the next unused post-player slot        |
-| Couch quick start              | PR482 is the assigned v0.112.0 player aggregate on current main; PR478 is its superseded component evidence                                                                        | Finish fresh exact-head focused/static/build and independent review, then hosted gates, immutable release and public verification              |
-| Character trail/impact cleanup | PR482 contains the canonical PR447/PR403 trail patch plus reviewed craft-silhouette cleanup; PR447 and PR403 must not merge separately                                             | Verify the exact final aggregate preserves the clean craft silhouette, then qualify and release                                                |
-| Shared Home/lobbies/Pause      | Clean unversioned candidate covers compact Home, collapsed Couch setup, More/Releases, Sound and shared Pause; reconciliation is active                                            | Reconcile on the accepted release, fix its remaining lifecycle failures, finish keyboard/controller/touch and responsive review, then release  |
-| Gameplay HUD/layout            | Clean 15-path candidate; 324/324 responsive/controller/touch checks passed                                                                                                         | Rebase on accepted release source, production build, visual/browser checks, release                                                            |
-| Deliberate terminal failure    | Clean 17-path candidate; 51 focused terminal/recovery/Team checks passed                                                                                                           | Rebase, build, browser checks, release; no automatic terminal restart may return                                                               |
-| Settings/Help return           | Clean candidate; 30 focused and 102 history checks passed                                                                                                                          | Rebase, cross-mode opener/focus review, release                                                                                                |
-| Journey rewards                | Solo and Couch exact-picture candidates exist with focused evidence                                                                                                                | Consolidate mode-scoped completion, exact artwork retention, Collection visibility, migration/history checks, release                          |
-| Compact mission gallery        | Earlier UX1-B candidate exists                                                                                                                                                     | Restack after rewards; finish complete-gallery selection, previews, one-action play, lazy resource handling, and responsive spatial navigation |
-| Reviewed Team library          | PR475 exposes 12 opt-in specialist candidates                                                                                                                                      | Reconcile dependency stack, clear production-ledger debt, human balance, device checks, and explicit adoption decision                         |
-| Appearance/theme surfaces      | Current main already ships global Appearance/Audio settings, FPV palette, ornaments, quick Sound and return ownership. Old PRs add a small resolver plus supporting/admin surfaces | Defer creator/admin parts; release only a visually reviewed core resolver after menus and rewards, then continue full-theme restoration later  |
+- Archive PR: [Archive77 #1](https://github.com/mekhovov/revealline-archive-77/pull/1)
+- Infrastructure: `22865e8c736ef25f611ceed09fcd06e5e80a4730`
+- Deployment: `6655347572`
+- Complete audit: **1,146 files / 595,553,898 bytes**, zero failures or retries
 
-Candidate tests prove deterministic behavior in the tested scope. They do not prove
-physical controller/touch behavior, offline readiness, whole-campaign balance, or
-that a level is enjoyable.
+The v0.112.0 Pages graph passed a second complete public audit of **4,650 files /
+629,309,314 bytes**, with zero failures or retries. Fresh browser acceptance
+opened Home, the 279-card Solo library, a prepared mission, live play, keyboard
+Pause, and explicit keyboard Resume. These checks do not claim physical hardware,
+offline, or campaign-balance acceptance.
 
-## 4. Updated release order and ETA
+## Completed foundations
 
-Release publication remains sequential. Implementation, review, and focused tests
-continue in parallel so the next feature is ready when the publisher becomes free.
+| Area              | Delivered result                                                                                                                  | Remaining boundary                                   |
+| ----------------- | --------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------- |
+| Release safety    | Protected source PR, exact-source qualification, immutable release assets, per-release archive, reviewed selector, rollback route | Repeat for every release                             |
+| Main entry        | Native title, Solo/Versus/Team routes, compact Home and direct player entry                                                       | Cross-mode shell consolidation in v0.114             |
+| Mission discovery | One owner-aware library; 91 New Journey missions plus compatible Classic/custom entries                                           | Compact grouped gallery in v0.117                    |
+| Movement          | Continuous directional steering during cuts; capture-stop after closure; explicit Pause/Resume                                    | Physical-device acceptance                           |
+| Input             | Shared keyboard/controller foundations, confirm-echo guards, contextual touch controls                                            | Complete all-screen physical controller/touch matrix |
+| Difficulty        | Gentle, Standard and Expert authored pressure foundations                                                                         | Human fairness and replay-value tuning               |
+| Progression       | Cross-campaign Next, saves, scores, Collection and backup foundations                                                             | Exact cross-mode rewards and recovery closure        |
+| Presentation      | Dark pixel shell, readable FPV craft, Team picture authority, trail/impact foundations                                            | Whole-game actor/effect parity                       |
+| Content framework | Versioned rules, packs, optional chapters, media/playlist and Studio foundations                                                  | End-to-end creator acceptance and bulk production    |
 
-| Order     | Deliverable                                                                 |   ETA after its release slot opens | Blocking acceptance                                                                                                                           |
-| --------- | --------------------------------------------------------------------------- | ---------------------------------: | --------------------------------------------------------------------------------------------------------------------------------------------- |
-| **R0**    | Preserve v0.111.0 and make v0.111.1 the public Pages default                |                       **Complete** | PR476 merged; archive exact-byte audit passed; Pages deployed; public marker and ordinary Solo/Versus/Team entry passed                       |
-| **R1**    | **v0.112.0** — PR482 Couch quick start plus trail/impact/craft cleanup      |                      **4–8 hours** | One Start with valid defaults, Cancel cannot steal controller Confirm, clean actor silhouette, exact-head hosted gates and public proof       |
-| **R2**    | **v0.113.0** — Shared Home, lobbies, Pause, More, Settings, Help, and Sound |                     **8–16 hours** | Same player-facing structure in Solo/Versus/Team; direct Start/Continue; optional setup collapsed; exact opener restoration                   |
-| **R3**    | **v0.114.0** — Journey rewards and working Collection                       |                     **8–16 hours** | Mode-scoped completion, exact earned pictures, Retry retention, correct Collection entries and return focus                                   |
-| **R4**    | **v0.115.0** — Bounded core appearance resolver                             |                      **4–8 hours** | Use current global settings, avoid UX2/reward overlap, prove visual/accessibility value and exact restoration                                 |
-| **R5**    | **v0.116.0** — Reviewed Team specialist library                             |               **1–2 working days** | All 12 entries explicitly reachable, Original editions preserved, picture/Next/Continue correctness, human cooperative review                 |
-| **UX1-B** | **v0.117.0** — Compact complete mission gallery                             |               **1–2 working days** | Complete campaign-grouped gallery, current selection restoration, one-action ready/download-and-play, keyboard/D-pad/touch spatial navigation |
-| **UX3**   | **v0.118.0** — Gameplay HUD, touch layout, and contextual teaching          |                     **8–16 hours** | Whole boards, critical HUD, and controls fit desktop, handheld, portrait, and short landscape; reduced-effects parity                         |
-| **UX4**   | **v0.119.0** — Countdown, deliberate failure/Retry, named continuation      |                     **6–12 hours** | No pre-Go simulation, automatic terminal restart, accidental held-input Retry, duplicate award, or stale successor launch                     |
-| **UX5**   | **v0.120.0** — Settings, difficulty, Help, replay and recovery closure      |                     **6–12 hours** | Complete focus/input/loading coverage; ordinary play never needs Workshop or a file picker                                                    |
-| **UX6**   | **v0.121.0** — Whole player-experience qualification                        | **2–4 working days** after UX1–UX5 | Required end-to-end journeys pass; physical-device and offline limits recorded separately                                                     |
-| **P08-A** | **v0.122.0** — Existing map/presentation parity closure                     |               **1–3 working days** | Built-in Versus, Team, installed and imported paths use complete reviewed artwork and role bindings                                           |
-| **Post**  | **v0.123.0 or next unused** — PR465 creator framework                       |               **2–4 working days** | Fresh reconciliation, creator/build/source/provenance gates and separately stated hosted-service limits                                       |
+The game is playable and publicly testable, but the complete original programme
+is not finished. “Public baseline complete” means the v0.112.0 scope is accepted;
+it does not mean every campaign, asset, soundtrack, device, or native-store goal
+is complete.
 
-All future version numbers are tentative until each aggregate is rebuilt on the
-accepted public source and the next unused version is rechecked.
+## Active release queue
 
-## 5. Remaining original programme after player-first UX
+Only one feature aggregate owns a release slot. Component/study PRs remain
+provenance and must not merge independently when an aggregate supersedes them.
 
-These items continue after the player-critical sequence unless they can be safely
-prepared without delaying it.
+| Priority | Release / owner                                        | Current state                                                                               | Work and acceptance remaining                                                                                                                                                                    |                         ETA |
+| -------: | ------------------------------------------------------ | ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------: |
+|        1 | **v0.113.0 — Ukrainian spatial triptych, PR486**       | Draft; 73/73 focused tests on its old head; mergeable but 26 main commits behind            | Rebase/reconcile on v0.112, preserve exactly three prior v9 cards, bump version, rebuild production assets, rerun focused gates, cultural/visual browser review, qualify/release/archive/publish |            **0.5–1.5 days** |
+|        2 | **v0.114.0 — shared Home/lobbies/Pause, PR487**        | Draft; focused navigation/input cohorts passed; currently conflicting and 26 commits behind | Reconcile after v0.113, preserve direct Start/Continue and exact opener focus, responsive keyboard/controller/touch review, release pipeline                                                     |                **1–2 days** |
+|        3 | **v0.115.0 — exact Journey rewards, PR485**            | Draft; 117/117 scoped reward tests; conflicting and 29 commits behind                       | Reconcile after shell work, replace stale card-count expectation, browser reload/Retry/Next/missing-original checks, release pipeline                                                            |                **1–2 days** |
+|        4 | **v0.116.0 — reviewed Team specialist library, PR475** | Draft foundation                                                                            | Reconcile dependency stack, expose all 12 entries, preserve Original editions, verify pictures/Next/Continue, human cooperative review and devices                                               |                **2–3 days** |
+|        5 | **v0.117.0 — compact mission gallery**                 | Prepared concepts/components                                                                | Group all campaigns, restore selection, support ready/download-and-play, lazy media, keyboard/D-pad/touch spatial navigation                                                                     |                **1–2 days** |
+|        6 | **v0.118.0 — small-screen HUD and touch parity**       | Partial; responsive candidates exist                                                        | One-row short-landscape HUD, consistent Solo/Versus/Team touch controls, full arena priority, iPhone browser lifecycle and Steam Deck controller journeys                                        |  **1–2 days** plus hardware |
+|        7 | **v0.119.0 — deliberate failure/recovery**             | Partial candidates                                                                          | Countdown/Go, travelling impact, clear loss animation, no automatic terminal restart, guarded Retry, deterministic recovery                                                                      |              **1–1.5 days** |
+|        8 | **v0.120.0 — settings/help/replay closure**            | Partial candidates                                                                          | Complete focus restoration, difficulty/help/replay/loading/recovery journeys without Workshop or mouse-only steps                                                                                |              **1–1.5 days** |
+|        9 | **v0.121.0 — player-experience qualification**         | Not started as a final aggregate                                                            | End-to-end regression, accessibility, performance, storage, offline, controller/touch and public acceptance matrix                                                                               |  **2–4 days** plus hardware |
+|       10 | **v0.122.0 — presentation parity**                     | Partial actor/map foundations                                                               | Reviewed pictures, role silhouettes, headings, warnings and animation across Solo/Versus/Team/imported content                                                                                   |                **2–4 days** |
+|       11 | **v0.123.0 — complete music experience**               | Infrastructure exists                                                                       | Shared master authority in every mode, owned MP3 round-trip, mixed playlists, offline playback, auditioned synth/chiptune/rock/metal set                                                         | **3–5 days** plus listening |
+|       12 | **v0.124.0 — creator framework, PR465 rebuilt**        | Large stale draft; 52+ commits behind its original base                                     | Rebuild on accepted player baseline, prove upload/edit/export/import/play/recover from a fresh workspace, update skills/prompts, qualify separately                                              |                **4–7 days** |
 
-| Programme                         | Remaining scope                                                                                                           |                                                               Planning range |
-| --------------------------------- | ------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------: |
-| P08-A map/presentation parity     | All built-in Versus maps, Team arenas, installed and imported paths, complete objective roles                             |                                                                     1–3 days |
-| P04/P05 Studio and themes         | Exact theme restoration, cross-mode previews, uploads/edit/history/export/import, FPV and Ukrainian benchmark collections |                                                                     2–5 days |
-| P06/P07 catalogue/offline journey | Campaign-specific downloads, repair/cancel behavior, offline dependencies, endings and continuation                       |                                                                     2–4 days |
-| P08-B/P02-B motion/audio          | Countdown, loss, capture, rescue, results, reduced-effects variants, soundtrack parity and listening checks               |                                        1–3 days plus listening/device access |
-| P09/P10 encounters/difficulty     | Deterministic optional encounters, Gentle/Standard/Hard fairness, Team encounter matrix                                   |                                                                     3–6 days |
-| P11–P15 campaign production       | FPV, DroneAid, Living Atlas, Retro, and Coupa campaigns                                                                   | 3–7 days per accepted campaign slice; full programme spans multiple releases |
-| P16 supporting workflows          | Records, learning, replay, recovery, legacy curation, remaining supporting pages                                          |                                                                     2–4 days |
-| P17 community guide               | Independently reproduced create/install/play/recover workflow                                                             |                                                                     1–2 days |
-| P18 final qualification           | Accessibility, performance, storage, offline, recovery, physical devices, and public regression                           |                                        3–5 days after feature blockers close |
+Version numbers remain tentative until the preceding public release is accepted
+and the next unused semantic version is rechecked.
 
-Online multiplayer, Deathmatch, full Ukrainian translation, hosted administration,
-and persistent co-op saves remain deferred.
+## Remaining original programme
 
-## 6. Blockers and concerns
+| Phase               | Remaining work                                                                                                       |                                          Planning range |
+| ------------------- | -------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------: |
+| P01/P03/P05         | Finish native cross-mode loading, navigation, typography, Ukrainian palettes, zoom and reduced-effects parity        |                         Covered mainly by v0.114–v0.121 |
+| P02-A/B             | One audio authority, custom MP3s everywhere, reliable playlist/offline/backup behavior, 24 auditioned tracks         |                                                3–5 days |
+| P04/P17             | Creator Studio, registries, history, prompts, skills, CLI and independent reproducibility proof                      |                                                4–7 days |
+| P06/P16             | Content install/replace/remove/recover, Collection, scores, learning, replay and legacy curation                     |                                                2–4 days |
+| P07/P08             | Full-picture rewards/stories, exact art identity, actor animation, capture/loss/bonus/rescue feedback                |                                3–6 days across releases |
+| P09/P10             | Smarter/fair enemies, classic roles/powerups, Tactical interactions, richer Team encounters and deterministic bosses |                                 4–8 days plus playtests |
+| P11–P15             | FPV, DroneAid, Ukrainian culture, retro and spend-management campaign production                                     | **Several weeks**; 3–7 days per accepted campaign slice |
+| P18                 | Browser/device performance, accessibility, storage, offline and recovery certification                               |       3–5 days after feature closure plus device access |
+| Native stores       | iPhone/macOS/Steam/Steam Deck packaging, signing, lifecycle and store gates                                          |               Separate project after browser acceptance |
+| Network multiplayer | Authoritative sessions, reconnect and failure handling                                                               |                                      Deferred follow-on |
 
-1. **Serialized publishing:** only one task may merge, tag, archive, or deploy a
-   release. Parallel work shortens preparation time but cannot make publication
-   concurrent.
-2. **Moving main:** publisher order is resolved: PR482 owns v0.112.0 and PR465
-   moves behind the player releases. Every candidate must still reconcile the
-   latest accepted predecessor before its earlier evidence can qualify the final
-   head. PR478, PR447, and PR403 are superseded component branches, not
-   independent release candidates.
-3. **Temporary suite waiver:** long automated suites are skipped by committed
-   policy. Focused tests, lint/format/validation, build/provenance, exact hashes,
-   archives, and public checks remain mandatory. Skipped suites are not passes.
-4. **Hardware evidence:** modeled controller tests and browser clicks are not
-   physical Steam Deck/controller or touch certification. Those remain explicit
-   acceptance limits.
-5. **Disk and worktree pressure:** parallel hydrated worktrees filled the shared
-   volume, and one focused Couch run lost its temporary worktree during execution.
-   Release evidence requires a clean, coordinated, retained worktree and a
-   maintained disk reserve.
-6. **Large draft queue:** many open PRs are stacked studies or superseded
-   candidates. Terminal aggregates must be rebuilt and predecessors closed only
-   after public acceptance; merging every draft independently would duplicate or
-   regress behavior.
-7. **Human quality:** deterministic tests cannot establish fun, fairness,
-   understandable failure, or willingness to retry. Campaign and Team adoption
-   require human play review.
-8. **Reference limits:** Xposed screenshots prove visible structure and art cues,
-   not hidden timing, collision, or enemy rules. Reveal Line adaptations remain
-   original and governed by explicit contracts.
+The 132-new-Solo-mission campaign goal, complete 116-picture library, twelve
+victory stories, 56 animated presentation sets, and finished 24-track collection
+must be re-audited against accepted release inventories before claiming their
+remaining numeric counts. Source artwork or draft records alone do not count as
+installed, playable, accepted content.
 
-## 7. Advancement rule
+## Blockers and concerns
 
-Every player-facing feature follows:
+1. **Physical hardware:** automated controller models and resized browser
+   viewports cannot certify an iPhone, DualSense, or Steam Deck. Hardware
+   availability is the only external blocker for final device acceptance.
+2. **Human quality:** fun, fairness, cultural quality, soundtrack quality, and
+   willingness to replay need human review. Deterministic tests cannot close
+   these gates.
+3. **Fast-release waiver:** long suites are temporarily skipped by explicit
+   policy. Focused tests and all immutable release/publication guards remain
+   mandatory. Restore full shards before the final public-release claim.
+4. **Candidate drift:** PR486/487/485 are behind v0.112.0; their earlier passing
+   tests do not qualify a reconciled head. Each must be rebuilt sequentially.
+5. **Storage and publication cost:** each current release is roughly 596 MiB and
+   needs a new historical archive plus a complete public audit. Disk/worktree
+   pressure and hosted transfer time are material operational risks.
+6. **Large draft queue:** many open PRs are component studies or superseded
+   branches. Merging them independently risks duplicate content, version
+   collisions, and regressions.
+7. **Reference evidence:** XPOSED material supports visible structure and
+   presentation comparisons; undocumented timing, collision, and AI behavior
+   remain explicit Reveal Line design choices.
 
-**Implement → review → focused test/fix → version → PR checks → protected merge →
-exact-source qualification → immutable release → archive admission → Pages deploy
-→ public version/bytes/play verification → next feature.**
+## Advancement rule
 
-A prepared branch, merged PR, or published tag alone is not public completion.
+Every player-facing item follows:
+
+**reconcile accepted predecessor → implement/review → focused test and browser
+proof → versioned PR → protected merge → exact-source qualification → immutable
+release → predecessor archive → Pages selector PR → production deployment →
+complete public-byte and scoped play verification → plan update.**
+
+A prepared branch, green component test, merged source PR, tag, or uploaded
+artifact is an intermediate state. A release is Complete only after the public
+verification boundary.
