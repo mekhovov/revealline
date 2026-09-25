@@ -171,5 +171,21 @@
   "storage.writerInvalidKey": "A valid profile writer key is required. Progress is session-only.",
   "storage.writerReleased": "The saving lease was released. Reload this tab to save again; export remains available.",
   "rewards.firstClear": "First clear",
-  "rewards.chapterExplorer": "Chapter explorer"
+  "rewards.chapterExplorer": "Chapter explorer",
+  "controls.unknownButton": "Unknown button",
+  "controls.buttonsOnly": "Buttons only",
+  "controls.leftStick": "Left stick",
+  "controls.rightStick": "Right stick",
+  "controls.axes": "Axes {{x}}/{{y}}",
+  "controls.stickBothInverted": "{{stick}} (horizontal inverted, vertical inverted)",
+  "controls.stickHorizontalInverted": "{{stick}} (horizontal inverted)",
+  "controls.stickVerticalInverted": "{{stick}} (vertical inverted)",
+  "controls.defaultMenuShortcuts": "Shoulders / triggers: previous / next · West: confirm · North: back.",
+  "controls.promptAbility": "{{button}}: ability.",
+  "controls.promptPause": "{{button}}: pause.",
+  "controls.promptSupply": "{{button}}: supply.",
+  "controls.promptFieldGuide": "{{button}}: field guide.",
+  "controls.promptHangar": "{{button}}: hangar.",
+  "controls.promptMissions": "{{button}}: missions.",
+  "controls.promptBoost": "{{button}}: boost."
 }

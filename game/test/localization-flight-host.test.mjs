@@ -96,6 +96,21 @@ test('switching a paused flight updates accepted notices without advancing the r
     const focused = page.doc.activeElement;
     for (const locale of ['uk', 'en', 'uk']) {
       setLocale(locale);
+      assert.match(
+        page.$('controller-help').textContent,
+        locale === 'uk' ? /Під’єднай контролер/ : /Connect a controller/,
+      );
+      if (locale === 'uk') {
+        assert.match(page.$('controller-help').textContent, /Лівий стік/);
+        assert.doesNotMatch(
+          page.$('controller-help').textContent,
+          /Shoulders|North:|Up |Stick \/|Lift the stick/,
+        );
+        assert.doesNotMatch(
+          page.$('controller-navigation-help').textContent,
+          /Confirm a select|Shoulders/,
+        );
+      }
       for (let i = 0; i < 5; i++) page.frame();
       assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
       assert.equal(readFlightInformation(page.$('run-message')).snapshot.paused, true);
