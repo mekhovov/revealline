@@ -510,6 +510,43 @@ coordinates, focused scale slider and 3,172.5-pixel panel scroll.
 All 163 playback/soundtrack/replay checks pass. All 37 final story UI checks also pass,
 including Ukrainian-first creation, playing/paused/error text updates and unchanged media
 ownership. Catalog checks pass with 7,465 messages / 6,026 referenced keys; targeted lint
-and formatting pass. Full validation/lint/formatting are running. Motion collection and
+and formatting pass. Full validation, lint and formatting pass for this playback checkpoint. Motion collection and
 ability metadata/messages still need translation; this batch does not certify whole-tool
 coverage. Distribution/native artifacts still predate these batches.
+
+
+## Motion source identities and localized study data
+
+Registered all three supplied Motion definition files and 107 additional presentation
+fields, including vocabulary maps and original-source provenance. A definition root is
+registered even when it contains no display fields of its own: this lets a modified
+custom file retain all authored child labels. Validated definitions are frozen inside
+the lab; selections, overrides and simulation records remain separate and mutable.
+The registry caches verified immutable identities instead of hashing definitions per frame.
+
+Menus, character descriptions, source notices, unlock requirements and canvas/DOM stage
+labels resolve from those records. Hidden notes remain concealed before either renderer
+receives their text. Unlock alternatives have separate groups, avoiding a repeated “or”
+when an authored criterion already begins with it. Ability counters use all four Ukrainian
+plural categories and locale-aware decimals; accepted ability feedback keeps live keys.
+
+All 18 content/canvas checks pass, including byte-equivalent serialized definitions and
+state, custom-file ownership, concealed text, and counts 0, 1, 2, 5, 11, 21, 22 and 1.5.
+The two live-host cases retain paused coordinates, options, requirement rows, focus,
+unsaved values, pending/accepted images and write counts. The real scan case passes after
+updating its obsolete English “1 notes” expectation to singular “1 note.” The final combined Motion run passes 67 of 70 checks, with only the three documented
+baseline lifecycle failures remaining. Source/key/interpolation and classic-bundle checks pass with 7,637 messages /
+6,087 referenced keys; the unchanged content registry passed the preceding full catalog
+check. Targeted lint and formatting pass.
+
+The browser shows translated class/link vocabularies for all four families, collection
+metadata, source provenance and stage labels. Locked-character selection and requirement
+groups survive both language directions. Remaining collection mutation notices and generic
+validator details are still outside this completed batch. This is not whole-tool coverage.
+
+Rebased onto documentation main `d8910d416` after recovering from a full disk. Only the
+older task-owned, manifest-verified distribution was removed; verification receipts remain
+under `/tmp/rl-i18n/rebase`, and its two temporary servers/tabs were closed. No original
+checkout or historical release was removed. Main now contains v0.114.0 `10190539b`; the next
+rebase must register its v11 defaults and newly curated v10 predecessors before validation.
+Current distributions and native stages need to be regenerated.
