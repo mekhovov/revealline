@@ -263,12 +263,9 @@ test('delivery-only push is excluded after the controller glob while PR review a
   assert.ok(!pullRequest.includes(negative));
   assert.match(push, /branches: \[main\]/);
   for (const previewOnlyPath of [
-    'publishing/test-policy.*',
     '.github/workflows/publish-frozen-pages.yml',
-    '.github/workflows/deploy-pages.yml',
-    '.cursor/skills/deploy-release-pages/**',
-    'docs/deployment.md',
-    'docs/fast-release-mode.md',
+    'scripts/pages-archive.mjs',
+    'scripts/pages-current-entry.mjs',
   ]) {
     assert.ok(!push.includes(previewOnlyPath));
     assert.ok(pullRequest.includes(previewOnlyPath));
