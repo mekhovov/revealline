@@ -127,7 +127,14 @@ test('accepted Team bonus windows refresh their language without advancing their
 
 test('Team language changes preserve paused play, help focus, and a custom arena name', async (context) => {
   locales(context);
-  const f = await page(context, { capturePaint: true });
+  const f = await page(context, {
+    capturePaint: true,
+    presentation: {
+      load: ({ snapshot }) => {
+        snapshot.resolved.theme.revision = 79;
+      },
+    },
+  });
   const pack = structuredClone(COOP_STARTER_PACK);
   pack.id = 'locale-custom-pack';
   pack.name = 'My authored pack';
