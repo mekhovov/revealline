@@ -249,6 +249,7 @@ export async function restoreRecoverySnapshot({ databaseUrl, blobRoot, source, r
     throw new Error('databaseUrl, blobRoot, source, and runCommand are required.');
   const manifest = await verifyRecoverySnapshot({ source });
   const target = path.resolve(blobRoot);
+  const databaseTargetHash = sha256(Buffer.from(databaseUrl, 'utf8'));
   const journalFile = `${target}.restore-journal.json`;
   let journal = await readOptionalJson(journalFile);
   if (journal) {
@@ -257,6 +258,7 @@ export async function restoreRecoverySnapshot({ databaseUrl, blobRoot, source, r
       journal.format !== RESTORE_JOURNAL_FORMAT ||
       journal.snapshotId !== manifest.snapshotId ||
       journal.blobRoot !== target ||
+      journal.databaseTargetHash !== databaseTargetHash ||
       typeof journal.stagedRoot !== 'string' ||
       path.dirname(journal.stagedRoot) !== path.dirname(target) ||
       !path.basename(journal.stagedRoot).startsWith(expectedPrefix) ||
@@ -278,6 +280,7 @@ export async function restoreRecoverySnapshot({ databaseUrl, blobRoot, source, r
       format: RESTORE_JOURNAL_FORMAT,
       snapshotId: manifest.snapshotId,
       blobRoot: target,
+      databaseTargetHash,
       stagedRoot,
       state: 'staging',
     };
