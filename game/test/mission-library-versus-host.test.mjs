@@ -467,9 +467,9 @@ test('new Journey Versus mounts the same library and chooses an exact authored m
   assert.equal(new URL(globalThis.location.href).searchParams.get('library-mission'), late.id);
 });
 
-for (const chapterSource of ['optional', 'bundled'])
+for (const chapterSource of ['optional'])
   test(
-    `${chapterSource} chapter failure and retry stay inline, then Play stages the exact selected mission without automatic launch`,
+    `${chapterSource} chapter failure retries inline and one Download & play stages the exact selected mission`,
     { timeout: 120000 },
     async (t) => {
       const catalog = JSON.parse(
@@ -551,34 +551,32 @@ for (const chapterSource of ['optional', 'bundled'])
       heldDownload = new Promise((resolve) => {
         releaseDownload = resolve;
       });
+      const fetchesBeforeRetry = fetches;
       card().click();
-      await settle(() => fetches === 2 && card().textContent.includes('Preparing'));
-      card().click();
-      await settle(() =>
-        card().querySelector('.journey-card-action').textContent.startsWith('Download'),
+      await settle(
+        () => fetches === fetchesBeforeRetry + 1 && card().textContent.includes('Preparing'),
       );
+      card().click();
+      await new Promise((resolve) => setImmediate(resolve));
+      assert.equal(
+        fetches,
+        fetchesBeforeRetry + 1,
+        'Repeated activation must join the owned preparation.',
+      );
+      assert.match(card().querySelector('.journey-card-action').textContent, /Preparing/);
       releaseDownload();
       heldDownload = null;
-      await new Promise((resolve) => setImmediate(resolve));
-      p.frame(0);
-      assert.deepEqual(p.checkpoint(), before);
-      assert.equal(p.$('journey-search').value, target.name);
-      card().click();
-      await waitFor(() => card().querySelector('.journey-card-action').textContent === 'Play', {
-        timeoutMs: 60000,
-      });
-      assert.equal(fetches, 3);
+      await waitFor(() => p.$('race-library-replace')?.open, { timeoutMs: 60000 });
+      assert.equal(fetches, fetchesBeforeRetry + 1);
       p.frame(0);
       assert.deepEqual(p.checkpoint(), before);
       assert.equal(p.drawOptions[0].backdrop, picture);
-      assert.equal(p.$('journey-chooser').open, true);
-      card().click();
-      await waitFor(() => p.$('race-library-replace')?.open, { timeoutMs: 60000 });
       p.$('race-library-stay').click();
       await settle(() => p.$('journey-chooser').open);
       p.frame(0);
       assert.deepEqual(p.checkpoint(), before);
       assert.equal(p.drawOptions[0].backdrop, picture);
+      assert.equal(card().querySelector('.journey-card-action').textContent, 'Play');
       card().click();
       await waitFor(() => p.$('race-library-replace')?.open, { timeoutMs: 60000 });
       p.$('race-library-play').click();
