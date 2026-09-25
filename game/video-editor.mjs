@@ -2,6 +2,7 @@ import { required } from './data-json.mjs';
 import { openVideoPosterSource, VIDEO_POSTER_LIMITS } from './video-poster.mjs';
 
 export const VIDEO_EDIT_FORMAT = 'revealline-video-edit.v1';
+export const AUDIO_TRACK_INSPECTION_FORMAT = 'revealline-audio-track-inspection.v1';
 const fail = (message) => new TypeError(message);
 const finite = (value) => typeof value === 'number' && Number.isFinite(value);
 const sha = async (blob) =>
@@ -115,11 +116,36 @@ async function authenticateSource(original, info) {
   );
 }
 
+async function inspectAuthenticatedAudio(blob, expectedSha256, inspectAudio, { signal, label }) {
+  required(
+    typeof inspectAudio === 'function',
+    'Physical trim needs a separate exact-byte audio-track inspector before it can publish bytes.',
+  );
+  if (signal?.aborted) throw new DOMException('Physical trim cancelled.', 'AbortError');
+  const result = await inspectAudio(blob, { signal });
+  required(
+    result?.format === AUDIO_TRACK_INSPECTION_FORMAT &&
+      result.bytes === blob.size &&
+      result.sha256 === expectedSha256 &&
+      Number.isInteger(result.audioTrackCount) &&
+      result.audioTrackCount >= 0 &&
+      Array.isArray(result.codecs) &&
+      result.codecs.length === result.audioTrackCount &&
+      result.codecs.every((codec) => typeof codec === 'string' && codec.length > 0),
+    `Physical trim ${label} audio inspection did not authenticate the exact bytes.`,
+  );
+  return result;
+}
+
 /**
  * Lazy boundary for an optional maintained converter. The boundary owns output
  * verification; adapter claims alone never make bytes downloadable.
  */
-export function createOptionalPhysicalTrimBoundary({ loadAdapter, inspectVideo } = {}) {
+export function createOptionalPhysicalTrimBoundary({
+  loadAdapter,
+  inspectVideo,
+  inspectAudio,
+} = {}) {
   let adapterPromise = null;
   const adapter = async () => {
     if (!loadAdapter) return null;
@@ -136,8 +162,24 @@ export function createOptionalPhysicalTrimBoundary({ loadAdapter, inspectVideo }
     videoFacts(info);
     const loaded = await adapter();
     if (!loaded) return unsupported();
-    if (original !== undefined) await authenticateSource(original, info);
+    if (!(original instanceof Blob))
+      return unsupported(
+        'Choose the owned source again so its audio tracks can be inspected from the exact bytes.',
+      );
+    if (typeof inspectAudio !== 'function')
+      return unsupported(
+        'This build has no separate exact-byte audio-track inspector. Physical trim stays unavailable.',
+      );
+    await authenticateSource(original, info);
     if (signal?.aborted) throw new DOMException('Physical trim cancelled.', 'AbortError');
+    const sourceAudio = await inspectAuthenticatedAudio(original, info.sha256, inspectAudio, {
+      signal,
+      label: 'source',
+    });
+    if (sourceAudio.audioTrackCount > 0)
+      return unsupported(
+        'This source contains audio. Physical trimming stays unavailable until decoded audio timing and synchronization can be independently verified.',
+      );
     const playback = range ? preparePlaybackRange(info, range) : null;
     const result = await loaded.support(original, info, playback, { signal });
     if (!result?.supported)
@@ -197,6 +239,16 @@ export function createOptionalPhysicalTrimBoundary({ loadAdapter, inspectVideo }
         Math.abs(output.info.durationSeconds - expectedDuration) <= tolerance,
         'Decoded trim duration differs from the requested physical range.',
       );
+      const outputAudio = await inspectAuthenticatedAudio(
+        transformed.blob,
+        outputSha256,
+        inspectAudio,
+        { signal, label: 'output' },
+      );
+      required(
+        outputAudio.audioTrackCount === 0,
+        'Physical trim output contains audio without decoded timing and synchronization evidence.',
+      );
       return Object.freeze({
         blob: transformed.blob,
         info: output.info,
@@ -213,21 +265,9 @@ export function createOptionalPhysicalTrimBoundary({ loadAdapter, inspectVideo }
           decodedWidth: output.info.width,
           decodedHeight: output.info.height,
           audioSync: Object.freeze({
-            status: ['verified', 'not-present'].includes(transformed.audioSync?.status)
-              ? transformed.audioSync.status === 'verified'
-                ? 'adapter-verified'
-                : 'not-present'
-              : 'unverified',
-            note:
-              transformed.audioSync?.status === 'verified'
-                ? String(
-                    transformed.audioSync.note || 'Verified by the optional converter adapter.',
-                  )
-                : transformed.audioSync?.status === 'not-present'
-                  ? String(
-                      transformed.audioSync.note || 'The verified source contains no audio track.',
-                    )
-                  : 'This browser boundary did not independently decode and compare audio timestamps.',
+            status: 'not-present',
+            verification: 'authenticated-container-track-inventory',
+            note: 'Separate exact-byte inspections found zero audio tracks in the source and output. No audio synchronization claim applies.',
           }),
         }),
       });

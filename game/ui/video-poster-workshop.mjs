@@ -17,6 +17,8 @@ export function attachVideoPosterWorkshop({
   physicalTrim = createOptionalPhysicalTrimBoundary({
     loadAdapter: async () =>
       (await import('../mediabunny-trim-adapter.mjs')).createMediabunnyTrimAdapter(),
+    inspectAudio: async (blob, options) =>
+      (await import('../mediabunny-trim-adapter.mjs')).inspectMediabunnyAudioTracks(blob, options),
   }),
   URLImpl = globalThis.URL,
   readPads,

@@ -4,6 +4,7 @@ import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
 import {
   createMediabunnyTrimAdapter,
+  inspectMediabunnyAudioTracks,
   MEDIABUNNY_TRIM_VERSION,
 } from '../mediabunny-trim-adapter.mjs';
 
@@ -104,6 +105,33 @@ test('Mediabunny adapter remains lazy until physical trim capability is requeste
   assert.match(supported.detail, /Mediabunny 1\.59\.1.*silent AVC MP4/);
   assert.equal(fake.state.canceled, 1, 'Capability probing cancels its unexecuted output.');
   assert.equal(fake.state.disposed, 1);
+});
+
+test('audio inventory authenticates exact bytes and reports container tracks without sync claims', async () => {
+  const silent = fakeLibrary();
+  const silentResult = await inspectMediabunnyAudioTracks(original, {
+    loadLibrary: async () => silent.library,
+  });
+  assert.equal(silentResult.format, 'revealline-audio-track-inspection.v1');
+  assert.equal(silentResult.bytes, original.size);
+  assert.equal(
+    silentResult.sha256,
+    createHash('sha256')
+      .update(Buffer.from(await original.arrayBuffer()))
+      .digest('hex'),
+  );
+  assert.equal(silentResult.audioTrackCount, 0);
+  assert.deepEqual(silentResult.codecs, []);
+  assert.equal(silent.state.disposed, 1);
+
+  const withAudio = fakeLibrary({ audio: true });
+  const audioResult = await inspectMediabunnyAudioTracks(original, {
+    loadLibrary: async () => withAudio.library,
+  });
+  assert.equal(audioResult.audioTrackCount, 1);
+  assert.deepEqual(audioResult.codecs, ['aac']);
+  assert.equal(withAudio.state.disposed, 1);
+  assert.equal('synchronization' in audioResult, false);
 });
 
 test('Mediabunny adapter physically re-encodes only the selected range and reports absent audio', async () => {
