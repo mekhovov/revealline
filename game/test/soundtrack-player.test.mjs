@@ -935,8 +935,12 @@ test('remote no-progress recovery falls back to included music and remains switc
   assert.equal(h.player.snapshot().playing, true);
   assert.equal(h.player.snapshot().desired, true);
   assert.equal(second.plays, 0);
+  assert.equal(await h.player.playRemotePlaylist([remote]), true);
+  assert.equal(h.player.snapshot().source, 'remote');
+  assert.equal(h.media.src, remote.url);
   assert.equal(await h.player.selectPlaylist('builtin.all'), true);
   assert.equal(h.player.snapshot().track.kind, 'synth');
+  assert.equal(h.player.snapshot().playing, true);
 });
 
 test('a remote play promise which never settles cannot leave the transport loading forever', async (t) => {
