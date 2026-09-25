@@ -14,12 +14,11 @@ public-acceptance gates. Only an explicitly reviewed `Release vX.Y.Z …` title
 uses the existing release admission path.
 
 The `Stage unallocated pull requests` workflow mirrors the explicit version
-milestone into the title. It preserves an existing `input` role, and the
-`release-aggregate-input` label makes that role durable when the title or
-milestone changes. Removing the label removes `input`; removing the version
-milestone removes the whole Target prefix. The workflow never chooses or
-increments a version. Assign the milestone first, then add the input label only
-when the PR is deliberately one part of a future aggregate.
+milestone into the title. The `release-aggregate-input` label is the sole
+authority for the `input` role. Removing the label removes `input`; removing the
+version milestone removes the whole Target prefix. The workflow never chooses
+or increments a version. Assign the milestone first, then add the input label
+only when the PR is deliberately one part of a future aggregate.
 
 PRs without a version milestone remain unprefixed. Their status comment must
 classify them as one of:
