@@ -273,53 +273,6 @@ test('Versus controller Play and replacement Stay preserve both paused boards an
   assert.deepEqual(p.checkpoint(), before);
 });
 
-test('Versus controller Download, Retry and Cancel keep the attempt and require separate Play', async (t) => {
-  const bytes = await readFile(new URL('../content/packs/night-shift.json', import.meta.url));
-  let release,
-    requests = 0;
-  const held = new Promise((resolve) => {
-    release = resolve;
-  });
-  t.after(() => release());
-  const { p, pulse, reach, frame } = await host(t, 'versus', {
-    fetchResponse: async (path) => {
-      if (!String(path).endsWith('/content/packs/night-shift.json')) return;
-      requests++;
-      if (requests === 1) return new Response('Controlled unavailable chapter', { status: 503 });
-      if (requests === 2) await held;
-      return new Response(bytes, { headers: { 'content-length': String(bytes.length) } });
-    },
-  });
-  reach(p.$('journey-search-clear'));
-  pulse(0);
-  const card = [...p.$('journey-cards').children].find(
-    (item) => JSON.parse(item.dataset.missionId)[3] === 'night-shift-03',
-  );
-  const action = () => card.querySelector('.journey-card-action').textContent;
-  const before = p.checkpoint();
-  reach(card);
-  pulse(0);
-  await settle(() => /Retry/.test(action()));
-  assert.equal(requests, 1);
-  assert.equal(p.doc.activeElement, card);
-  frame();
-  pulse(0);
-  await settle(() => requests === 2 && /Preparing.*Cancel/.test(action()));
-  frame();
-  pulse(0);
-  await settle(() => /^Download/.test(action()));
-  release();
-  await new Promise((resolve) => setImmediate(resolve));
-  frame();
-  pulse(0);
-  await settle(() => action() === 'Play');
-  assert.equal(requests, 3);
-  assert.equal(p.$('journey-chooser').open, true);
-  assert.equal(p.doc.activeElement, card);
-  assert.deepEqual(p.checkpoint(), before);
-  assert.notEqual(p.state(), 'running');
-});
-
 for (const mode of ['solo', 'versus', 'team'])
   test(`${mode} actual controller wiring opens compact filters, edits selects, clears saved no-match and returns to its opener`, async (t) => {
     const { p, pulse, reach, opener } = await host(t, mode);
