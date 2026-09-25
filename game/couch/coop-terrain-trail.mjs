@@ -101,7 +101,7 @@ export function prepareCoopWall(snapshot) {
     !pivot ||
     ![pivot.x, pivot.y].every((value) => Number.isFinite(value) && value >= 0 && value <= 1)
   )
-    throw new TypeError(t("interface:teamTerrainNeedsItsPreparedImageAndNormalizedPivot"));
+    throw new TypeError(t('interface:teamTerrainNeedsItsPreparedImageAndNormalizedPivot'));
   return tile;
 }
 

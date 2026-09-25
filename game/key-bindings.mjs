@@ -15,16 +15,36 @@ export const KEY_BINDING_ACTIONS = Object.freeze([
   'stop',
 ]);
 export const KEY_ACTION_LABELS = Object.freeze({
-  get up() { return t('common:controls.moveUp'); },
-  get down() { return t('common:controls.moveDown'); },
-  get left() { return t('common:controls.moveLeft'); },
-  get right() { return t('common:controls.moveRight'); },
-  get ability() { return t('common:controls.useAbility'); },
-  get pickup() { return t('common:controls.pickUpSupply'); },
-  get boost() { return t('common:controls.boost'); },
-  get hangar() { return t('common:controls.openHangar'); },
-  get pause() { return t('common:controls.pauseResume'); },
-  get stop() { return t('common:controls.stopMovement'); },
+  get up() {
+    return t('common:controls.moveUp');
+  },
+  get down() {
+    return t('common:controls.moveDown');
+  },
+  get left() {
+    return t('common:controls.moveLeft');
+  },
+  get right() {
+    return t('common:controls.moveRight');
+  },
+  get ability() {
+    return t('common:controls.useAbility');
+  },
+  get pickup() {
+    return t('common:controls.pickUpSupply');
+  },
+  get boost() {
+    return t('common:controls.boost');
+  },
+  get hangar() {
+    return t('common:controls.openHangar');
+  },
+  get pause() {
+    return t('common:controls.pauseResume');
+  },
+  get stop() {
+    return t('common:controls.stopMovement');
+  },
 });
 const freezeConfig = (bindings) =>
   Object.freeze({
@@ -74,9 +94,15 @@ export const KEY_BINDING_PRESETS = Object.freeze({
   }),
 });
 export const KEY_BINDING_PRESET_LABELS = Object.freeze({
-  get default() { return t('common:controls.arrowsWasd'); },
-  get 'left-hand'() { return t('common:controls.leftHandWasd'); },
-  get 'right-hand'() { return t('common:controls.rightHandIjkl'); },
+  get default() {
+    return t('common:controls.arrowsWasd');
+  },
+  get 'left-hand'() {
+    return t('common:controls.leftHandWasd');
+  },
+  get 'right-hand'() {
+    return t('common:controls.rightHandIjkl');
+  },
 });
 const DIRECTION_ACTIONS = new Set(['up', 'down', 'left', 'right']);
 const IMPULSE_ACTIONS = ['ability', 'pickup', 'hangar', 'pause', 'stop'];
@@ -232,13 +258,21 @@ const KEY_LABELS = Object.freeze({
   ArrowDown: '↓',
   ArrowLeft: '←',
   ArrowRight: '→',
-  get ShiftLeft() { return t('common:controls.leftShift'); },
-  get ShiftRight() { return t('common:controls.rightShift'); },
+  get ShiftLeft() {
+    return t('common:controls.leftShift');
+  },
+  get ShiftRight() {
+    return t('common:controls.rightShift');
+  },
   Escape: 'Esc',
-  get Space() { return t('common:controls.space'); },
+  get Space() {
+    return t('common:controls.space');
+  },
   Tab: 'Tab',
   Enter: 'Enter',
-  get NumpadEnter() { return t('common:controls.numpadEnter'); },
+  get NumpadEnter() {
+    return t('common:controls.numpadEnter');
+  },
   Backquote: '`',
   Minus: '−',
   Equal: '=',
@@ -253,13 +287,27 @@ const KEY_LABELS = Object.freeze({
   PageUp: 'Page Up',
   PageDown: 'Page Down',
   Backspace: 'Backspace',
-  get NumpadAdd() { return t('common:controls.keyNumpadAdd'); },
-  get NumpadSubtract() { return t('common:controls.keyNumpadSubtract'); },
-  get NumpadMultiply() { return t('common:controls.keyNumpadMultiply'); },
-  get NumpadDivide() { return t('common:controls.keyNumpadDivide'); },
-  get NumpadDecimal() { return t('common:controls.keyNumpadDecimal'); },
-  get NumpadComma() { return t('common:controls.keyNumpadComma'); },
-  get NumpadEqual() { return t('common:controls.keyNumpadEqual'); },
+  get NumpadAdd() {
+    return t('common:controls.keyNumpadAdd');
+  },
+  get NumpadSubtract() {
+    return t('common:controls.keyNumpadSubtract');
+  },
+  get NumpadMultiply() {
+    return t('common:controls.keyNumpadMultiply');
+  },
+  get NumpadDivide() {
+    return t('common:controls.keyNumpadDivide');
+  },
+  get NumpadDecimal() {
+    return t('common:controls.keyNumpadDecimal');
+  },
+  get NumpadComma() {
+    return t('common:controls.keyNumpadComma');
+  },
+  get NumpadEqual() {
+    return t('common:controls.keyNumpadEqual');
+  },
   IntlBackslash: 'Intl \\',
   IntlRo: 'Intl Ro',
   IntlYen: 'Intl ¥',

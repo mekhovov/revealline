@@ -21,13 +21,13 @@ export function masteryFor(actualCampaignKey, levelId, catalog) {
 
 const friendly = (id) =>
   ({
-    'west-supply': t("interface:westPad"),
-    'south-supply': t("interface:southPad"),
-    'west-emitter': t("interface:westSignalRegion"),
-    'south-emitter': t("interface:southSignalRegion"),
+    'west-supply': t('interface:westPad'),
+    'south-supply': t('interface:southPad'),
+    'west-emitter': t('interface:westSignalRegion'),
+    'south-emitter': t('interface:southSignalRegion'),
     'south-hangar': 'south hangar',
     'cable-cutter': 'cable cutter',
-    carrier: t("interface:heavyCarrier"),
+    carrier: t('interface:heavyCarrier'),
   })[id] || id.replaceAll('-', ' ');
 const mark = (satisfied) => (satisfied ? '✓' : '○');
 function equipmentLines(definition, preview) {
@@ -51,32 +51,49 @@ function equipmentLines(definition, preview) {
         const banked = value?.bestClosedCells ?? 0;
         const pending = value?.pendingCells ?? 0;
         lines.push(
-          t("gameplay:suppressedCellsInOneClosedCut", { value1: mark(banked >= region.minCells), value2: friendly(region.zoneId), value3: Math.min(banked, region.minCells), value4: region.minCells, value5: pending > banked ? t("gameplay:onYourOpenLineReturnToBankThem", { value1: pending }) : '' }),
+          t('gameplay:suppressedCellsInOneClosedCut', {
+            value1: mark(banked >= region.minCells),
+            value2: friendly(region.zoneId),
+            value3: Math.min(banked, region.minCells),
+            value4: region.minCells,
+            value5:
+              pending > banked
+                ? t('gameplay:onYourOpenLineReturnToBankThem', { value1: pending })
+                : '',
+          }),
         );
       }
     else if (predicate.type === 'hangar-switch')
       lines.push(
-        t("gameplay:toAtThe", { value1: mark(current?.satisfied), value2: current?.satisfied ? t("interface:switched") : t("interface:switch"), value3: friendly(predicate.classId), value4: friendly(predicate.hangarId) }),
+        t('gameplay:toAtThe', {
+          value1: mark(current?.satisfied),
+          value2: current?.satisfied ? t('interface:switched') : t('interface:switch'),
+          value3: friendly(predicate.classId),
+          value4: friendly(predicate.hangarId),
+        }),
       );
     else if (predicate.type === 'live-cut-impact') {
       const phase = current?.phase ?? 'not-started';
       lines.push(
         `${mark(phase === 'returned')} ${
           phase === 'returned'
-            ? t("interface:qualifyingPulseCompleteCraftReturnedSafely")
+            ? t('interface:qualifyingPulseCompleteCraftReturnedSafely')
             : phase === 'awaiting-return'
-              ? t("interface:qualifyingPulseLandedWaitForTheCraftToReturn")
-              : t("gameplay:duringACutOfCellsPulseTheAndReturnSafely", { value1: predicate.minTrailCells, value2: friendly(predicate.actorId) })
+              ? t('interface:qualifyingPulseLandedWaitForTheCraftToReturn')
+              : t('gameplay:duringACutOfCellsPulseTheAndReturnSafely', {
+                  value1: predicate.minTrailCells,
+                  value2: friendly(predicate.actorId),
+                })
         }`,
       );
     } else if (predicate.type === 'clean-win')
       lines.push(
-        `${mark(current?.satisfied)} ${preview?.cleanSoFar === false ? t("interface:lifeLostRetryForThisSeal") : current?.satisfied ? t("interface:finishedWithoutLosingALife") : t("interface:finishWithoutLosingALife")}`,
+        `${mark(current?.satisfied)} ${preview?.cleanSoFar === false ? t('interface:lifeLostRetryForThisSeal') : current?.satisfied ? t('interface:finishedWithoutLosingALife') : t('interface:finishWithoutLosingALife')}`,
       );
   }
   if (!definition.all.some((predicate) => predicate.type === 'clean-win'))
     lines.push(
-      `${mark(preview?.status === 'won')} ${preview?.status === 'won' ? t("interface:missionComplete") : t("interface:finishTheMissionToEarnTheSeal")}`,
+      `${mark(preview?.status === 'won')} ${preview?.status === 'won' ? t('interface:missionComplete') : t('interface:finishTheMissionToEarnTheSeal')}`,
     );
   return lines;
 }
@@ -101,19 +118,36 @@ export function masteryText(
       const pickups = definition.all.find((item) => item.type === 'supply-pickups');
       const lines = pickups
         ? [
-            t("gameplay:pads", { value1: find('supply-pickups')?.collectedPadIds?.length ?? 0, value2: pickups.padIds.length }),
-            t("gameplay:closedSignalRegions", { value1: find('suppressed-region-crossings')?.regions?.filter((item) => item.satisfied).length ?? 0, value2: definition.all.find((item) => item.type === 'suppressed-region-crossings').regions.length }),
-            t("gameplay:equipmentSwitch", { value1: find('hangar-switch')?.satisfied ? 'complete' : 'pending' }),
+            t('gameplay:pads', {
+              value1: find('supply-pickups')?.collectedPadIds?.length ?? 0,
+              value2: pickups.padIds.length,
+            }),
+            t('gameplay:closedSignalRegions', {
+              value1:
+                find('suppressed-region-crossings')?.regions?.filter((item) => item.satisfied)
+                  .length ?? 0,
+              value2: definition.all.find((item) => item.type === 'suppressed-region-crossings')
+                .regions.length,
+            }),
+            t('gameplay:equipmentSwitch', {
+              value1: find('hangar-switch')?.satisfied ? 'complete' : 'pending',
+            }),
           ]
         : [
             {
-              'not-started': t("interface:pulseDuringALiveCutThenReturnSafely"),
-              'awaiting-return': t("interface:qualifyingPulseLandedCraftReturning"),
-              returned: t("interface:qualifyingPulseAndReturnComplete"),
+              'not-started': t('interface:pulseDuringALiveCutThenReturnSafely'),
+              'awaiting-return': t('interface:qualifyingPulseLandedCraftReturning'),
+              returned: t('interface:qualifyingPulseAndReturnComplete'),
             }[find('live-cut-impact')?.phase ?? 'not-started'],
-            preview?.cleanSoFar === false ? t("interface:lifeLostRetryForTheSeal") : 'no lives lost',
+            preview?.cleanSoFar === false
+              ? t('interface:lifeLostRetryForTheSeal')
+              : 'no lives lost',
           ];
-      return t("gameplay:pauseForTheFullChecklist", { value1: practice ? t("interface:practiceGoal") : t("interface:optionalSeal"), value2: contentText(definition, 'name'), value3: lines.join(' · ') });
+      return t('gameplay:pauseForTheFullChecklist', {
+        value1: practice ? t('interface:practiceGoal') : t('interface:optionalSeal'),
+        value2: contentText(definition, 'name'),
+        value3: lines.join(' · '),
+      });
     }
     return [
       `${practice ? 'Practice goal' : 'Optional seal'} · ${contentText(definition, 'name')}`,
@@ -127,9 +161,12 @@ export function masteryText(
   const pending = preview?.pendingCutCells ?? 0;
   const clean = preview?.cleanSoFar !== false;
   const route = preview?.qualified
-    ? t("interface:routeComplete")
-    : t("gameplay:interferenceCellsInOneClosedCut", { value1: Math.min(committed, required), value2: required });
-  return `${practice ? t("interface:practiceGoal") : t("interface:optionalSeal")} · ${contentText(definition, 'name')}: ${route}${pending > committed ? t("gameplay:onYourOpenLineReturnToSafetyToBankThem", { value1: pending }) : ''} · ${clean ? 'no lives lost' : t("interface:lifeLostRetryForTheSeal")}.`;
+    ? t('interface:routeComplete')
+    : t('gameplay:interferenceCellsInOneClosedCut', {
+        value1: Math.min(committed, required),
+        value2: required,
+      });
+  return `${practice ? t('interface:practiceGoal') : t('interface:optionalSeal')} · ${contentText(definition, 'name')}: ${route}${pending > committed ? t('gameplay:onYourOpenLineReturnToSafetyToBankThem', { value1: pending }) : ''} · ${clean ? 'no lives lost' : t('interface:lifeLostRetryForTheSeal')}.`;
 }
 
 export function pictureMasteries(records, item, definition, recipes = [], catalog) {
@@ -150,11 +187,14 @@ export function pictureMasteries(records, item, definition, recipes = [], catalo
       record.setup.rosterHash === registration.rosterHash &&
       record.setup.ruleset === registration.ruleset
         ? definition.name
-        : t("gameplay:archivedSeal", { value1: record.definitionId }),
+        : t('gameplay:archivedSeal', { value1: record.definitionId }),
     route: record.setup.classHistory
       .map((entry) => recipes.find((recipe) => recipe.id === entry.classId)?.label || entry.classId)
       .join(' → '),
-    steering: record.setup.turnPolicy === 'grid-center' ? t("interface:gridBuffer") : t("interface:immediate"),
+    steering:
+      record.setup.turnPolicy === 'grid-center'
+        ? t('interface:gridBuffer')
+        : t('interface:immediate'),
     seed: record.setup.seed,
     earnedAt: record.earnedAt,
   }));

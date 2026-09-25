@@ -48,14 +48,14 @@ const seconds = (value = 0) =>
   `${Math.floor(value / 60)}:${String(Math.floor(value % 60)).padStart(2, '0')}`;
 const bytes = (value) => `${(value / 1024 / 1024).toFixed(1)} MiB`;
 const ONLINE_STYLE_CHOICES = Object.freeze([
-  ['synth', t("interface:synthElectronic")],
-  ['metal', t("interface:metal")],
-  ['ukrainian', t("interface:ukrainian")],
-  ['chiptune', t("interface:chiptune8Bit")],
-  ['rock', t("interface:rock")],
-  ['ambient', t("interface:ambient")],
-  ['fusion', t("interface:fusion")],
-  ['other', t("interface:otherStyles")],
+  ['synth', t('interface:synthElectronic')],
+  ['metal', t('interface:metal')],
+  ['ukrainian', t('interface:ukrainian')],
+  ['chiptune', t('interface:chiptune8Bit')],
+  ['rock', t('interface:rock')],
+  ['ambient', t('interface:ambient')],
+  ['fusion', t('interface:fusion')],
+  ['other', t('interface:otherStyles')],
 ]);
 
 /** Local music authoring. Draft changes become authoritative only after one verified store commit. */
@@ -90,14 +90,14 @@ export function attachSoundtrackPanel({
   readAsset,
 } = {}) {
   if (!doc?.body || !store?.read || !store?.commit || !player?.snapshot)
-    throw new Error(t("interface:soundtrackPanelRequiresADocumentStoreAndPlayer"));
+    throw new Error(t('interface:soundtrackPanelRequiresADocumentStoreAndPlayer'));
   if (adoptLibrary !== null && typeof adoptLibrary !== 'function')
     throw new TypeError('Soundtrack library adoption must be a host function.');
   if (
     musicSession &&
     (typeof musicSession.play !== 'function' || typeof musicSession.pause !== 'function')
   )
-    throw new TypeError(t("interface:soundtrackMusicSessionRequiresPlayAndPauseControls"));
+    throw new TypeError(t('interface:soundtrackMusicSessionRequiresPlayAndPauseControls'));
   catalogue = catalogue ? resolveSoundtrackCatalogue(catalogue) : null;
   const bundledTrackIds = new Set(bundled.map((entry) => entry.id));
   const bindings = [];
@@ -128,9 +128,10 @@ export function attachSoundtrackPanel({
     if (id) {
       element.id = `soundtrack-${id}`;
     }
-    if (text !== undefined && text !== null) localizedText(element, () =>text);
+    if (text !== undefined && text !== null) localizedText(element, () => text);
     for (const [key, value] of Object.entries(attrs)) {
-      if (['aria-label', 'title', 'placeholder', 'alt'].includes(key)) localizedAttribute(element, key, value);
+      if (['aria-label', 'title', 'placeholder', 'alt'].includes(key))
+        localizedAttribute(element, key, value);
       else element.setAttribute(key, value);
     }
     return element;
@@ -201,11 +202,16 @@ export function attachSoundtrackPanel({
     class: 'soundtrack-dialog',
     'aria-labelledby': 'soundtrack-title',
   });
-  const heading = node('h2', 'title', localizedMessage("interface:musicPlayer"));
-  const status = node('p', 'status', localizedMessage("interface:openTheStudioToLoadYourLocalMusic"), {
-    role: 'status',
-    'aria-live': 'polite',
-  });
+  const heading = node('h2', 'title', localizedMessage('interface:musicPlayer'));
+  const status = node(
+    'p',
+    'status',
+    localizedMessage('interface:openTheStudioToLoadYourLocalMusic'),
+    {
+      role: 'status',
+      'aria-live': 'polite',
+    },
+  );
 
   const initialStatus = status.textContent;
   const feedback = createOperationStatus(status);
@@ -218,48 +224,60 @@ export function attachSoundtrackPanel({
   const availability = node(
     'p',
     'availability',
-    localizedMessage("interface:customMusicStaysInThisBrowserExportARlsoundFile"),
+    localizedMessage('interface:customMusicStaysInThisBrowserExportARlsoundFile'),
     { class: 'micro-note' },
   );
-  const closeButton = button('close', localizedMessage("interface:closeStudio"), () => close());
-  const cancelButton = button('cancel', localizedMessage("interface:cancelOperation"), () => {
+  const closeButton = button('close', localizedMessage('interface:closeStudio'), () => close());
+  const cancelButton = button('cancel', localizedMessage('interface:cancelOperation'), () => {
     controller?.abort();
-    setStatus(t("interface:cancellationRequested"));
+    setStatus(t('interface:cancellationRequested'));
   });
   cancelButton.hidden = true;
-  const saveButton = button('save', localizedMessage("interface:saveAllChanges"), () =>
-    task(t("interface:verifyingAndSavingTheMusicLibrary"), (signal) => commitDraft(signal)),
+  const saveButton = button('save', localizedMessage('interface:saveAllChanges'), () =>
+    task(t('interface:verifyingAndSavingTheMusicLibrary'), (signal) => commitDraft(signal)),
   );
-  const undoButton = button('undo', localizedMessage("interface:undoUnsavedChanges"), () => {
+  const undoButton = button('undo', localizedMessage('interface:undoUnsavedChanges'), () => {
     if (!saved || busy) return;
     invalidateBackup();
     draft = adopt(saved.library);
     assets = [...saved.assets];
     dirty = false;
     render();
-    setStatus(t("interface:restoredTheSavedLibraryPlaybackIsUnchanged"));
+    setStatus(t('interface:restoredTheSavedLibraryPlaybackIsUnchanged'));
   });
-  const reloadButton = button('reload', localizedMessage("interface:reloadLatestSaved"), () => reload());
+  const reloadButton = button('reload', localizedMessage('interface:reloadLatestSaved'), () =>
+    reload(),
+  );
   const stateLine = node('p', 'draft-state', '', { class: 'micro-note' });
-  const now = node('p', 'now', localizedMessage("interface:musicIsReady"), { role: 'status', 'aria-live': 'off' });
+  const now = node('p', 'now', localizedMessage('interface:musicIsReady'), {
+    role: 'status',
+    'aria-live': 'off',
+  });
   const nowSources = node('div', 'now-sources');
   const transportStatus = node('p', 'loading');
   const transportFeedback = createOperationStatus(transportStatus);
   let transportActivity = null,
     auditionActivity = null;
-  const seek = input('seek', localizedMessage("interface:trackPosition"), { type: 'range', min: '0', max: '0', step: '0.1' });
-  const volume = input('volume', localizedMessage("interface:musicVolume"), {
+  const seek = input('seek', localizedMessage('interface:trackPosition'), {
+    type: 'range',
+    min: '0',
+    max: '0',
+    step: '0.1',
+  });
+  const volume = input('volume', localizedMessage('interface:musicVolume'), {
     type: 'range',
     min: '0',
     max: '1',
     step: '0.01',
   });
-  const selection = input('selection', localizedMessage("interface:playbackPlaylist"), { tag: 'select' });
+  const selection = input('selection', localizedMessage('interface:playbackPlaylist'), {
+    tag: 'select',
+  });
   const masterStatus = node('p', 'master-status', '', { role: 'status', 'aria-live': 'polite' });
-  const masterToggle = button('master-mute', localizedMessage("interface:unmuteMasterSound"), () =>
+  const masterToggle = button('master-mute', localizedMessage('interface:unmuteMasterSound'), () =>
     changeMaster('muted', !audioMaster.snapshot().muted),
   );
-  const masterVolume = input('master-volume', localizedMessage("interface:masterSoundVolume"), {
+  const masterVolume = input('master-volume', localizedMessage('interface:masterSoundVolume'), {
     type: 'range',
     min: '0',
     max: '1',
@@ -267,8 +285,8 @@ export function attachSoundtrackPanel({
   });
   const masterControls = advancedSection(
     'sound',
-    t("interface:soundControls"),
-    t("interface:masterVolumeAndMute"),
+    t('interface:soundControls'),
+    t('interface:masterVolumeAndMute'),
     row(masterToggle),
     masterVolume.field,
     masterStatus,
@@ -277,11 +295,15 @@ export function attachSoundtrackPanel({
   function updateMaster() {
     if (!audioMaster || disposed) return;
     const state = audioMaster.snapshot();
-    localizedText(masterToggle, () =>state.muted ? t("interface:unmuteMasterSound") : t("interface:muteMasterSound"));
+    localizedText(masterToggle, () =>
+      state.muted ? t('interface:unmuteMasterSound') : t('interface:muteMasterSound'),
+    );
     masterVolume.element.value = String(state.volume);
-    localizedText(masterStatus, () =>state.muted || state.volume === 0
-        ? t("interface:masterSoundIsMutedPlayAndAuditionKeepTheirOwn")
-        : t("interface:masterSoundAppliesToMusicEffectsAndAuditionsPlaybackControls"));
+    localizedText(masterStatus, () =>
+      state.muted || state.volume === 0
+        ? t('interface:masterSoundIsMutedPlayAndAuditionKeepTheirOwn')
+        : t('interface:masterSoundAppliesToMusicEffectsAndAuditionsPlaybackControls'),
+    );
   }
   function changeMaster(kind, value) {
     if (!audioMaster || disposed) return;
@@ -294,7 +316,7 @@ export function attachSoundtrackPanel({
           : audioMaster.setVolume(value);
       updateMaster();
       if (result?.ok === false)
-        masterStatus.textContent += ` ${result.warning || t("interface:theSettingIsActiveForThisSessionButCouldNot")}`;
+        masterStatus.textContent += ` ${result.warning || t('interface:theSettingIsActiveForThisSessionButCouldNot')}`;
     } catch (error) {
       updateMaster();
       report(error);
@@ -305,7 +327,7 @@ export function attachSoundtrackPanel({
     changeMaster('volume', Number(masterVolume.element.value));
   if (audioMaster) bindings.push(audioMaster.subscribe(updateMaster));
   function usePlaylist(chosen, { start = false } = {}) {
-    return task(t("interface:savingYourPlaylistChoice"), async (signal) => {
+    return task(t('interface:savingYourPlaylistChoice'), async (signal) => {
       edit((value) => {
         value.selection.playlistId = chosen;
       });
@@ -318,36 +340,44 @@ export function attachSoundtrackPanel({
       await notifyPlayback();
       setStatus(
         committed.warning ||
-          (start ? t("interface:playlistSelectedAndPlaying") : t("interface:playlistSelectedPlaybackIsUnchanged")),
+          (start
+            ? t('interface:playlistSelectedAndPlaying')
+            : t('interface:playlistSelectedPlaybackIsUnchanged')),
       );
     });
   }
-  const useSelection = button('use-selection', localizedMessage("interface:playThisPlaylist"), () =>
+  const useSelection = button('use-selection', localizedMessage('interface:playThisPlaylist'), () =>
     usePlaylist(selection.element.value || null, { start: true }),
   );
   const genreNames = Object.entries(SOUNDTRACK_GENRE_LABELS);
-  const listeningMode = input('listening-mode', localizedMessage("interface:musicSelection"), { tag: 'select' });
+  const listeningMode = input('listening-mode', localizedMessage('interface:musicSelection'), {
+    tag: 'select',
+  });
   options(listeningMode.element, [
-    ['auto', t("interface:automaticMatchThisWorld")],
+    ['auto', t('interface:automaticMatchThisWorld')],
     ...genreNames,
-    ['fusion', t("interface:fusion")],
-    ['mix', t("interface:myMix")],
+    ['fusion', t('interface:fusion')],
+    ['mix', t('interface:myMix')],
   ]);
   const mixGenres = genreNames.map(([id, label]) => ({
     id,
     ...input(`mix-${id}`, label, { type: 'checkbox' }),
   }));
-  const installedOnly = input('installed-only', localizedMessage("interface:installedOnlyUseDownloadedMusic"), {
-    type: 'checkbox',
-  });
+  const installedOnly = input(
+    'installed-only',
+    localizedMessage('interface:installedOnlyUseDownloadedMusic'),
+    {
+      type: 'checkbox',
+    },
+  );
   const recordingMode = input(
     'recording-mode',
-    localizedMessage("interface:recordingModeVerifiedGameplayVideoPermissions"),
+    localizedMessage('interface:recordingModeVerifiedGameplayVideoPermissions'),
     { type: 'checkbox' },
   );
   const recordingStatus = node('p', 'recording-status', '', { class: 'micro-note' });
   const useListening = (chosen, { start = false } = {}) => {
-    return task(t("interface:savingYourMusicSelection"), async (signal) => {
+    return task(t('interface:savingYourMusicSelection'), async (signal) => {
       edit((value) => {
         value.selection.playlistId = null;
         value.listening = chosen;
@@ -363,24 +393,28 @@ export function attachSoundtrackPanel({
       setStatus(
         committed.warning ||
           (start
-            ? t("interface:musicSelectionSavedAndPlayingUnavailableStylesRemainSilent")
-            : t("interface:musicSelectionSavedPlaybackIsUnchangedUnavailableStylesRemainSilent")),
+            ? t('interface:musicSelectionSavedAndPlayingUnavailableStylesRemainSilent')
+            : t('interface:musicSelectionSavedPlaybackIsUnchangedUnavailableStylesRemainSilent')),
       );
     });
   };
-  const applyListening = button('apply-listening', localizedMessage("interface:saveListeningPreferences"), () => {
-    const chosen = {
-      mode: listeningMode.element.value,
-      genres: mixGenres.filter(({ element }) => element.checked).map(({ id }) => id),
-      installedOnly: installedOnly.element.checked,
-      recordingMode: recordingMode.element.checked,
-    };
-    return useListening(chosen);
-  });
+  const applyListening = button(
+    'apply-listening',
+    localizedMessage('interface:saveListeningPreferences'),
+    () => {
+      const chosen = {
+        mode: listeningMode.element.value,
+        genres: mixGenres.filter(({ element }) => element.checked).map(({ id }) => id),
+        installedOnly: installedOnly.element.checked,
+        recordingMode: recordingMode.element.checked,
+      };
+      return useListening(chosen);
+    },
+  );
   const listeningSection = advancedSection(
     'listening',
-    t("interface:filtersCustomMix"),
-    t("interface:installedMusicRecordingModeAndGenreCombinations"),
+    t('interface:filtersCustomMix'),
+    t('interface:installedMusicRecordingModeAndGenreCombinations'),
     listeningMode.field,
     row(...mixGenres.map(({ field }) => field)),
     installedOnly.field,
@@ -389,19 +423,21 @@ export function attachSoundtrackPanel({
     applyListening,
   );
   listeningSection.hidden = !catalogue;
-  const quickStyle = input('quick-style', localizedMessage("interface:musicStyle"), { tag: 'select' });
+  const quickStyle = input('quick-style', localizedMessage('interface:musicStyle'), {
+    tag: 'select',
+  });
   options(quickStyle.element, [
     ...genreNames,
-    ['fusion', t("interface:fusion")],
-    ['auto', t("interface:automaticMatchThisWorld")],
-    ['mix', t("interface:myMix")],
+    ['fusion', t('interface:fusion')],
+    ['auto', t('interface:automaticMatchThisWorld')],
+    ['mix', t('interface:myMix')],
   ]);
   const quickStatus = node('p', 'quick-status', '', {
     class: 'soundtrack-quick-status',
     role: 'status',
     'aria-live': 'polite',
   });
-  const playAll = button('play-all', localizedMessage("interface:shuffleAllMusic"), () =>
+  const playAll = button('play-all', localizedMessage('interface:shuffleAllMusic'), () =>
     useListening(
       {
         ...draft.listening,
@@ -412,7 +448,7 @@ export function attachSoundtrackPanel({
     ),
   );
   playAll.classList.add('soundtrack-primary-action');
-  const playStyle = button('play-style', localizedMessage("interface:playThisStyle"), () =>
+  const playStyle = button('play-style', localizedMessage('interface:playThisStyle'), () =>
     useListening(
       {
         ...draft.listening,
@@ -423,8 +459,8 @@ export function attachSoundtrackPanel({
   );
   const quickGrid = node('div', 'quick-grid', null, { class: 'soundtrack-quick-grid' });
   const quickListen = section(
-    t("interface:pickTheMusic"),
-    node('p', null, localizedMessage("interface:startEverySongOnShuffleChooseAStyleOrJump"), {
+    t('interface:pickTheMusic'),
+    node('p', null, localizedMessage('interface:startEverySongOnShuffleChooseAStyleOrJump'), {
       class: 'soundtrack-lede',
     }),
     quickStatus,
@@ -434,33 +470,41 @@ export function attachSoundtrackPanel({
   quickListen.hidden = !catalogue;
   const allCard = node('div', null, null, { class: 'soundtrack-choice soundtrack-choice-all' });
   allCard.append(
-    node('span', null, localizedMessage("interface:allTracks"), { class: 'soundtrack-choice-kicker' }),
-    node('strong', null, localizedMessage("interface:everythingShuffled")),
-    node('p', null, localizedMessage("interface:aNoRepeatMixAcrossEveryAvailableStyle")),
+    node('span', null, localizedMessage('interface:allTracks'), {
+      class: 'soundtrack-choice-kicker',
+    }),
+    node('strong', null, localizedMessage('interface:everythingShuffled')),
+    node('p', null, localizedMessage('interface:aNoRepeatMixAcrossEveryAvailableStyle')),
     playAll,
   );
   const styleCard = node('div', null, null, { class: 'soundtrack-choice' });
   styleCard.append(
-    node('span', null, localizedMessage("interface:style"), { class: 'soundtrack-choice-kicker' }),
+    node('span', null, localizedMessage('interface:style'), { class: 'soundtrack-choice-kicker' }),
     quickStyle.field,
     playStyle,
   );
   const playlistCard = node('div', null, null, { class: 'soundtrack-choice' });
   playlistCard.append(
-    node('span', null, localizedMessage("interface:playlist"), { class: 'soundtrack-choice-kicker' }),
+    node('span', null, localizedMessage('interface:playlist'), {
+      class: 'soundtrack-choice-kicker',
+    }),
     selection.field,
     useSelection,
   );
   quickGrid.append(allCard, styleCard, playlistCard);
-  const onlineSearch = input('online-search', localizedMessage("interface:searchThePublicArchive"), {
-    type: 'search',
-    placeholder: t("interface:titleArtistCollectionOrStyle"),
-    autocomplete: 'off',
-  });
+  const onlineSearch = input(
+    'online-search',
+    localizedMessage('interface:searchThePublicArchive'),
+    {
+      type: 'search',
+      placeholder: t('interface:titleArtistCollectionOrStyle'),
+      autocomplete: 'off',
+    },
+  );
   const onlineStyles = node('fieldset', 'online-styles', null, {
     class: 'soundtrack-online-styles',
   });
-  onlineStyles.append(node('legend', null, localizedMessage("interface:musicStylesChooseAnyMix")));
+  onlineStyles.append(node('legend', null, localizedMessage('interface:musicStylesChooseAnyMix')));
   const onlineStyleInputs = new Map();
   for (const [value, label] of ONLINE_STYLE_CHOICES) {
     const checkbox = node('input', `online-style-${value}`, null, {
@@ -473,25 +517,35 @@ export function attachSoundtrackPanel({
     onlineStyles.append(choice);
     onlineStyleInputs.set(value, checkbox);
   }
-  const selectAllOnlineStyles = button('online-styles-all', localizedMessage("interface:allStyles"), () => {
-    for (const checkbox of onlineStyleInputs.values()) checkbox.checked = true;
-    renderOnlineCatalogue();
-  });
-  const clearOnlineStyles = button('online-styles-none', localizedMessage("interface:clear"), () => {
-    for (const checkbox of onlineStyleInputs.values()) checkbox.checked = false;
-    renderOnlineCatalogue();
-  });
+  const selectAllOnlineStyles = button(
+    'online-styles-all',
+    localizedMessage('interface:allStyles'),
+    () => {
+      for (const checkbox of onlineStyleInputs.values()) checkbox.checked = true;
+      renderOnlineCatalogue();
+    },
+  );
+  const clearOnlineStyles = button(
+    'online-styles-none',
+    localizedMessage('interface:clear'),
+    () => {
+      for (const checkbox of onlineStyleInputs.values()) checkbox.checked = false;
+      renderOnlineCatalogue();
+    },
+  );
   onlineStyles.append(row(selectAllOnlineStyles, clearOnlineStyles));
-  const onlineOrder = input('online-order', localizedMessage("interface:order"), { tag: 'select' });
+  const onlineOrder = input('online-order', localizedMessage('interface:order'), { tag: 'select' });
   options(onlineOrder.element, [
-    ['shuffle', t("interface:shuffle")],
-    ['ordered', t("interface:oneAfterAnother")],
+    ['shuffle', t('interface:shuffle')],
+    ['ordered', t('interface:oneAfterAnother')],
   ]);
-  const onlineRepeat = input('online-repeat', localizedMessage("interface:repeat"), { tag: 'select' });
+  const onlineRepeat = input('online-repeat', localizedMessage('interface:repeat'), {
+    tag: 'select',
+  });
   options(onlineRepeat.element, [
-    ['all', t("interface:allSelectedSongs")],
-    ['one', t("interface:currentSong")],
-    ['off', t("interface:stopAtTheEnd")],
+    ['all', t('interface:allSelectedSongs')],
+    ['one', t('interface:currentSong')],
+    ['off', t('interface:stopAtTheEnd')],
   ]);
   const onlineCollection = input('online-collection', localizedMessage('interface:collection'), {
     tag: 'select',
@@ -513,7 +567,7 @@ export function attachSoundtrackPanel({
   const onlineStatus = node(
     'p',
     'online-status',
-    localizedMessage("interface:thePublicCatalogueLoadsWhenTheMusicPlayerOpens"),
+    localizedMessage('interface:thePublicCatalogueLoadsWhenTheMusicPlayerOpens'),
     { class: 'soundtrack-online-status', role: 'status', 'aria-live': 'polite' },
   );
   const onlineResults = node('div', 'online-results', null, {
@@ -525,22 +579,29 @@ export function attachSoundtrackPanel({
     startTrackId,
     mixWithLibrary: onlineMixLibrary.checked,
   });
-  const playOnlineResults = button('online-play-all', localizedMessage("interface:playSelectedSongs"), () => {
-    const matches = onlineMatches();
-    if (matches.length)
-      return controlMusic(() => player.playRemotePlaylist(matches, onlinePlaybackOptions()), true);
-  });
+  const playOnlineResults = button(
+    'online-play-all',
+    localizedMessage('interface:playSelectedSongs'),
+    () => {
+      const matches = onlineMatches();
+      if (matches.length)
+        return controlMusic(
+          () => player.playRemotePlaylist(matches, onlinePlaybackOptions()),
+          true,
+        );
+    },
+  );
   playOnlineResults.classList.add('soundtrack-primary-action');
   playOnlineResults.disabled = true;
-  const reloadOnline = button('online-reload', localizedMessage("interface:refreshCatalogue"), () =>
+  const reloadOnline = button('online-reload', localizedMessage('interface:refreshCatalogue'), () =>
     loadOnlineCatalogue(true),
   );
   const onlineArchive = section(
-    t("interface:playThePublicSoundtrackArchive"),
+    t('interface:playThePublicSoundtrackArchive'),
     node(
       'p',
       null,
-      localizedMessage("interface:searchEveryPublishedRecordingAndPlayItHereSongsStream"),
+      localizedMessage('interface:searchEveryPublishedRecordingAndPlayItHereSongsStream'),
       { class: 'soundtrack-lede' },
     ),
     row(onlineSearch.field, onlineCollection.field),
@@ -553,25 +614,29 @@ export function attachSoundtrackPanel({
     node(
       'p',
       null,
-      localizedMessage("interface:archiveAvailabilityAndAPublishedLicenceDoNotMeanA"),
+      localizedMessage('interface:archiveAvailabilityAndAPublishedLicenceDoNotMeanA'),
       { class: 'micro-note' },
     ),
   );
   onlineArchive.classList.add('soundtrack-online-card');
   const transport = section(
-    localizedMessage("interface:nowPlaying"),
+    localizedMessage('interface:nowPlaying'),
     now,
     nowSources,
     transportStatus,
     row(
-      button('previous', localizedMessage("common:actions.previous"), () => controlMusic(() => player.previous())),
-      button('play', localizedMessage("interface:playMusic2"), () =>
+      button('previous', localizedMessage('common:actions.previous'), () =>
+        controlMusic(() => player.previous()),
+      ),
+      button('play', localizedMessage('interface:playMusic2'), () =>
         controlMusic(() => (musicSession ? musicSession.play() : player.play()), true),
       ),
-      button('pause', localizedMessage("interface:pauseMusic"), () =>
+      button('pause', localizedMessage('interface:pauseMusic'), () =>
         controlMusic(() => (musicSession ? musicSession.pause() : player.pause())),
       ),
-      button('next', localizedMessage("common:actions.next"), () => controlMusic(() => player.next())),
+      button('next', localizedMessage('common:actions.next'), () =>
+        controlMusic(() => player.next()),
+      ),
     ),
     seek.field,
     volume.field,
@@ -579,47 +644,68 @@ export function attachSoundtrackPanel({
   transport.classList.add('soundtrack-now-card');
   // Hosts without the catalogue still expose built-in and imported playlists.
   if (!catalogue) transport.append(selection.field, useSelection);
-  const tracksSelect = input('tracks', localizedMessage("interface:tracks"), { tag: 'select', size: '7' });
-  const fileInput = input('mp3-files', localizedMessage("interface:addMp3Files"), {
+  const tracksSelect = input('tracks', localizedMessage('interface:tracks'), {
+    tag: 'select',
+    size: '7',
+  });
+  const fileInput = input('mp3-files', localizedMessage('interface:addMp3Files'), {
     type: 'file',
     accept: '.mp3,audio/mpeg',
     multiple: '',
   });
-  const importButton = button('import-mp3', localizedMessage("interface:importSelectedMp3s"), () => importMP3Files());
-  const trackTitle = input('track-title', localizedMessage("interface:trackTitle"), { maxlength: '120' });
-  const trackArtist = input('track-artist', localizedMessage("interface:artist"), { maxlength: '160' });
-  const rightsKind = input('rights-kind', localizedMessage("interface:sourceDeclaration"), { tag: 'select' });
+  const importButton = button('import-mp3', localizedMessage('interface:importSelectedMp3s'), () =>
+    importMP3Files(),
+  );
+  const trackTitle = input('track-title', localizedMessage('interface:trackTitle'), {
+    maxlength: '120',
+  });
+  const trackArtist = input('track-artist', localizedMessage('interface:artist'), {
+    maxlength: '160',
+  });
+  const rightsKind = input('rights-kind', localizedMessage('interface:sourceDeclaration'), {
+    tag: 'select',
+  });
   options(rightsKind.element, [
-    ['personal', t("interface:personalLocalUpload")],
-    ['original', t("interface:originalWork")],
-    ['licensed', t("interface:licensedWork")],
+    ['personal', t('interface:personalLocalUpload')],
+    ['original', t('interface:originalWork')],
+    ['licensed', t('interface:licensedWork')],
   ]);
-  const rightsCredit = input('rights-credit', localizedMessage("interface:credit"), { maxlength: '280' });
-  const rightsLicense = input('rights-license', localizedMessage("interface:licensePermission"), { maxlength: '280' });
-  const rightsSource = input('rights-source', localizedMessage("interface:sourceProvenance"), { maxlength: '1024' });
-  const trackGenre = input('track-genre', localizedMessage("interface:primaryMusicFamily"), { tag: 'select' });
-  const trackFusion = input('track-fusion', localizedMessage("interface:fusionWith"), { tag: 'select' });
-  options(trackGenre.element, [['', t("interface:unclassified")], ...genreNames]);
-  options(trackFusion.element, [['', t("interface:noSecondFamily")], ...genreNames]);
-  const trackRole = input('track-role', localizedMessage("interface:useIn"), { tag: 'select' });
+  const rightsCredit = input('rights-credit', localizedMessage('interface:credit'), {
+    maxlength: '280',
+  });
+  const rightsLicense = input('rights-license', localizedMessage('interface:licensePermission'), {
+    maxlength: '280',
+  });
+  const rightsSource = input('rights-source', localizedMessage('interface:sourceProvenance'), {
+    maxlength: '1024',
+  });
+  const trackGenre = input('track-genre', localizedMessage('interface:primaryMusicFamily'), {
+    tag: 'select',
+  });
+  const trackFusion = input('track-fusion', localizedMessage('interface:fusionWith'), {
+    tag: 'select',
+  });
+  options(trackGenre.element, [['', t('interface:unclassified')], ...genreNames]);
+  options(trackFusion.element, [['', t('interface:noSecondFamily')], ...genreNames]);
+  const trackRole = input('track-role', localizedMessage('interface:useIn'), { tag: 'select' });
   options(trackRole.element, [
-    ['any', t("interface:anyScene")],
-    ['menu', t("interface:menus")],
-    ['gameplay', t("interface:gameplay")],
-    ['intense', t("interface:finalesHighIntensity")],
+    ['any', t('interface:anyScene')],
+    ['menu', t('interface:menus')],
+    ['gameplay', t('interface:gameplay')],
+    ['intense', t('interface:finalesHighIntensity')],
   ]);
-  const trackEnergy = input('track-energy', localizedMessage("interface:energy1Calm5Intense"), {
+  const trackEnergy = input('track-energy', localizedMessage('interface:energy1Calm5Intense'), {
     type: 'number',
     min: '1',
     max: '5',
   });
   const trackThemes = input(
     'track-themes',
-    localizedMessage("interface:worldsCommaSeparatedRetroFpvUkraineCoupa"),
+    localizedMessage('interface:worldsCommaSeparatedRetroFpvUkraineCoupa'),
     { maxlength: '160' },
   );
   const tagFields = section(
-    t("interface:musicalCharacter"),
+    t('interface:musicalCharacter'),
     trackGenre.field,
     trackFusion.field,
     trackRole.field,
@@ -629,105 +715,115 @@ export function attachSoundtrackPanel({
   tagFields.hidden = !catalogue;
   const trackInfo = node('p', 'track-info', '', { class: 'micro-note' });
   const trackSources = node('div', 'track-sources');
-  const downloadTrack = button('download-track', localizedMessage("interface:prepareOriginalMp3Download"), () =>
-    task(t("interface:verifyingOriginalMp3ForDownload"), async (signal) => {
-      const track = tracks().find((item) => item.id === tracksSelect.element.value);
-      if (
-        track?.kind !== 'mp3' ||
-        soundtrackRights(track, { catalogue: catalogue ?? undefined }).redistribute !== 'allowed'
-      )
-        throw new Error(
-          t("interface:thisRecordingIsAvailableForInGamePlaybackOnlyStandalone"),
-        );
-      const blob =
-        assets.find((asset) => asset.sha256 === track.asset.sha256)?.blob ??
-        (await readAsset?.(track.asset.sha256, { signal, purpose: 'export' }));
-      if (!blob) throw new Error(t("interface:theOriginalRecordingIsUnavailableRestoreItOrGoOnline"));
-      const actual = await inspectMP3(blob, { signal });
-      if (actual.sha256 !== track.asset.sha256 || actual.bytes !== track.asset.bytes)
-        throw new Error(t("interface:theRecordingDiffersFromItsCatalogue"));
-      throwIfSoundtrackAborted(signal);
-      invalidateBackup();
-      preparedBackup = {
-        blob,
-        recording: true,
-        filename:
-          track.fileName ??
-          `${track.title.replace(/[^a-z0-9 -]/gi, '').trim() || 'soundtrack'}.mp3`,
-        url: typeof download === 'function' ? null : URLImpl.createObjectURL(blob),
-      };
-      setStatus(t("interface:originalMp3VerifiedChooseDownloadPreparedMp3BelowToSave"));
-    }),
+  const downloadTrack = button(
+    'download-track',
+    localizedMessage('interface:prepareOriginalMp3Download'),
+    () =>
+      task(t('interface:verifyingOriginalMp3ForDownload'), async (signal) => {
+        const track = tracks().find((item) => item.id === tracksSelect.element.value);
+        if (
+          track?.kind !== 'mp3' ||
+          soundtrackRights(track, { catalogue: catalogue ?? undefined }).redistribute !== 'allowed'
+        )
+          throw new Error(t('interface:thisRecordingIsAvailableForInGamePlaybackOnlyStandalone'));
+        const blob =
+          assets.find((asset) => asset.sha256 === track.asset.sha256)?.blob ??
+          (await readAsset?.(track.asset.sha256, { signal, purpose: 'export' }));
+        if (!blob)
+          throw new Error(t('interface:theOriginalRecordingIsUnavailableRestoreItOrGoOnline'));
+        const actual = await inspectMP3(blob, { signal });
+        if (actual.sha256 !== track.asset.sha256 || actual.bytes !== track.asset.bytes)
+          throw new Error(t('interface:theRecordingDiffersFromItsCatalogue'));
+        throwIfSoundtrackAborted(signal);
+        invalidateBackup();
+        preparedBackup = {
+          blob,
+          recording: true,
+          filename:
+            track.fileName ??
+            `${track.title.replace(/[^a-z0-9 -]/gi, '').trim() || 'soundtrack'}.mp3`,
+          url: typeof download === 'function' ? null : URLImpl.createObjectURL(blob),
+        };
+        setStatus(t('interface:originalMp3VerifiedChooseDownloadPreparedMp3BelowToSave'));
+      }),
   );
-  const applyTrack = button('apply-track', localizedMessage("interface:applyTrackDetailsToDraft"), () =>
-    attempt(() => {
-      const id = tracksSelect.element.value;
-      edit((value) => {
-        const track = value.tracks.find((item) => item.id === id);
-        if (!track) throw new Error(t("interface:builtInTracksCannotBeEdited"));
-        Object.assign(track, {
-          title: trackTitle.element.value,
-          artist: trackArtist.element.value,
-          rights: {
-            kind: rightsKind.element.value,
-            credit: rightsCredit.element.value,
-            license: rightsLicense.element.value,
-            source: rightsSource.element.value,
-          },
+  const applyTrack = button(
+    'apply-track',
+    localizedMessage('interface:applyTrackDetailsToDraft'),
+    () =>
+      attempt(() => {
+        const id = tracksSelect.element.value;
+        edit((value) => {
+          const track = value.tracks.find((item) => item.id === id);
+          if (!track) throw new Error(t('interface:builtInTracksCannotBeEdited'));
+          Object.assign(track, {
+            title: trackTitle.element.value,
+            artist: trackArtist.element.value,
+            rights: {
+              kind: rightsKind.element.value,
+              credit: rightsCredit.element.value,
+              license: rightsLicense.element.value,
+              source: rightsSource.element.value,
+            },
+          });
+          if (catalogue) {
+            const genres = [
+              ...new Set([trackGenre.element.value, trackFusion.element.value].filter(Boolean)),
+            ];
+            value.tags[id] = {
+              genres,
+              role: trackRole.element.value,
+              energy: Number(trackEnergy.element.value),
+              themes: [
+                ...new Set(
+                  trackThemes.element.value
+                    .split(',')
+                    .map((part) => part.trim())
+                    .filter(Boolean),
+                ),
+              ],
+            };
+          }
         });
-        if (catalogue) {
-          const genres = [
-            ...new Set([trackGenre.element.value, trackFusion.element.value].filter(Boolean)),
-          ];
-          value.tags[id] = {
-            genres,
-            role: trackRole.element.value,
-            energy: Number(trackEnergy.element.value),
-            themes: [
-              ...new Set(
-                trackThemes.element.value
-                  .split(',')
-                  .map((part) => part.trim())
-                  .filter(Boolean),
-              ),
-            ],
-          };
-        }
-      });
-      render();
-      setStatus(t("interface:trackDetailsAddedToTheDraftSaveAllChangesTo"));
-    }),
+        render();
+        setStatus(t('interface:trackDetailsAddedToTheDraftSaveAllChangesTo'));
+      }),
   );
-  const deleteTrack = button('delete-track', localizedMessage("interface:removeTrackFromDraft"), () =>
-    attempt(() => {
-      const id = tracksSelect.element.value;
-      edit((value) => {
-        if (!value.tracks.some((item) => item.id === id))
-          throw new Error(t("interface:builtInTracksAreRetained"));
-        const references = value.playlists.filter((item) => item.trackIds.includes(id));
-        if (references.length)
-          throw new Error(
-            t("gameplay:removeThisTrackFromItsPlaylistsFirst", { value1: references.map((item) => contentText(item, 'title')).join(', ') }),
-          );
-        value.tracks = value.tracks.filter((item) => item.id !== id);
-        if (value.tags) delete value.tags[id];
-        if (value.bonusAlbums)
-          value.bonusAlbums = value.bonusAlbums
-            .map((album) => ({
-              ...album,
-              trackIds: album.trackIds.filter((trackId) => trackId !== id),
-            }))
-            .filter((album) => album.trackIds.length);
-      });
-      pruneAssets();
-      render();
-      setStatus(t("interface:trackRemovedFromTheDraftTheSavedLibraryIsUnchanged"));
-    }),
+  const deleteTrack = button(
+    'delete-track',
+    localizedMessage('interface:removeTrackFromDraft'),
+    () =>
+      attempt(() => {
+        const id = tracksSelect.element.value;
+        edit((value) => {
+          if (!value.tracks.some((item) => item.id === id))
+            throw new Error(t('interface:builtInTracksAreRetained'));
+          const references = value.playlists.filter((item) => item.trackIds.includes(id));
+          if (references.length)
+            throw new Error(
+              t('gameplay:removeThisTrackFromItsPlaylistsFirst', {
+                value1: references.map((item) => contentText(item, 'title')).join(', '),
+              }),
+            );
+          value.tracks = value.tracks.filter((item) => item.id !== id);
+          if (value.tags) delete value.tags[id];
+          if (value.bonusAlbums)
+            value.bonusAlbums = value.bonusAlbums
+              .map((album) => ({
+                ...album,
+                trackIds: album.trackIds.filter((trackId) => trackId !== id),
+              }))
+              .filter((album) => album.trackIds.length);
+        });
+        pruneAssets();
+        render();
+        setStatus(t('interface:trackRemovedFromTheDraftTheSavedLibraryIsUnchanged'));
+      }),
   );
   const audition = node('audio', 'audition', null, {
     controls: '',
     preload: 'metadata',
-    'aria-label': localizedMessage("interface:importedTrackAudition"),
+    'aria-label': localizedMessage('interface:importedTrackAudition'),
   });
   let auditionLocalVolume = 1;
   const auditionMaster = audioMaster
@@ -739,57 +835,62 @@ export function attachSoundtrackPanel({
       })
     : null;
   audition.hidden = true;
-  const auditionButton = button('audition-track', localizedMessage("interface:auditionMp3"), () =>
+  const auditionButton = button('audition-track', localizedMessage('interface:auditionMp3'), () =>
     playback(() => startAudition()),
   );
-  const stopAuditionButton = button('stop-audition', localizedMessage("interface:finishAudition"), () =>
-    playback(() => stopAudition(true)),
+  const stopAuditionButton = button(
+    'stop-audition',
+    localizedMessage('interface:finishAudition'),
+    () => playback(() => stopAudition(true)),
   );
-  const auditionSeek = input('audition-seek', localizedMessage("interface:auditionPosition"), {
+  const auditionSeek = input('audition-seek', localizedMessage('interface:auditionPosition'), {
     type: 'range',
     min: '0',
     max: '0',
     step: '0.5',
   });
-  const auditionVolume = input('audition-volume', localizedMessage("interface:auditionVolume"), {
+  const auditionVolume = input('audition-volume', localizedMessage('interface:auditionVolume'), {
     type: 'range',
     min: '0',
     max: '1',
     step: '0.05',
   });
-  const toggleAudition = button('toggle-audition', localizedMessage("interface:pauseAudition"), () =>
-    playback(async () => {
-      if (!auditionURL || disposed || busy) return;
-      const token = auditionToken;
-      if (!audition.paused) {
-        auditionActivity?.clear();
-        auditionActivity = null;
-        audition.pause();
-        auditionMaster?.setLocal({ muted: true });
-      } else {
-        wakeAudio();
-        if (disposed || token !== auditionToken || !auditionURL) return;
-        const lease = auditionFeedback.begin({
-          message: t("interface:resumingAudition"),
-          stage: 'playing',
-          isCurrent: () => !disposed && dialog.open && token === auditionToken,
-        });
-        auditionActivity = lease;
-        try {
-          auditionMaster?.setLocal({ muted: false });
-          await audition.play();
-          lease.finish({ message: t("interface:auditionPlaying") });
-        } catch (error) {
-          lease.finish({ message: message(error), state: 'error' });
-          if (token === auditionToken) throw error;
+  const toggleAudition = button(
+    'toggle-audition',
+    localizedMessage('interface:pauseAudition'),
+    () =>
+      playback(async () => {
+        if (!auditionURL || disposed || busy) return;
+        const token = auditionToken;
+        if (!audition.paused) {
+          auditionActivity?.clear();
+          auditionActivity = null;
+          audition.pause();
+          auditionMaster?.setLocal({ muted: true });
+        } else {
+          wakeAudio();
+          if (disposed || token !== auditionToken || !auditionURL) return;
+          const lease = auditionFeedback.begin({
+            message: t('interface:resumingAudition'),
+            stage: 'playing',
+            isCurrent: () => !disposed && dialog.open && token === auditionToken,
+          });
+          auditionActivity = lease;
+          try {
+            auditionMaster?.setLocal({ muted: false });
+            await audition.play();
+            lease.finish({ message: t('interface:auditionPlaying') });
+          } catch (error) {
+            lease.finish({ message: message(error), state: 'error' });
+            if (token === auditionToken) throw error;
+          }
         }
-      }
-    }),
+      }),
   );
   const auditionStatus = node('p', 'audition-status');
   const auditionFeedback = createOperationStatus(auditionStatus);
   const auditionControls = section(
-    localizedMessage("interface:auditionControls"),
+    localizedMessage('interface:auditionControls'),
     row(toggleAudition),
     auditionSeek.field,
     auditionVolume.field,
@@ -797,14 +898,11 @@ export function attachSoundtrackPanel({
   auditionControls.hidden = true;
   const tracksSection = advancedSection(
     'library',
-    t("interface:addEditMusic"),
-    t("interface:uploadMp3sEditCreditsAndAuditionTracks"),
-    node(
-      'p',
-      null,
-      localizedMessage("interface:batchImportKeepsOriginalMp3BytesEachFileMustBe"),
-      { class: 'micro-note' },
-    ),
+    t('interface:addEditMusic'),
+    t('interface:uploadMp3sEditCreditsAndAuditionTracks'),
+    node('p', null, localizedMessage('interface:batchImportKeepsOriginalMp3BytesEachFileMustBe'), {
+      class: 'micro-note',
+    }),
     fileInput.field,
     importButton,
     tracksSelect.field,
@@ -824,64 +922,83 @@ export function attachSoundtrackPanel({
     audition,
     auditionControls,
   );
-  const playlistsSelect = input('playlists', localizedMessage("interface:playlists"), { tag: 'select', size: '5' });
-  const playlistTitle = input('playlist-title', localizedMessage("interface:playlistTitle"), { maxlength: '120' });
-  const order = input('order', localizedMessage("interface:playbackOrder"), { tag: 'select' });
+  const playlistsSelect = input('playlists', localizedMessage('interface:playlists'), {
+    tag: 'select',
+    size: '5',
+  });
+  const playlistTitle = input('playlist-title', localizedMessage('interface:playlistTitle'), {
+    maxlength: '120',
+  });
+  const order = input('order', localizedMessage('interface:playbackOrder'), { tag: 'select' });
   options(order.element, [
-    ['ordered', t("interface:inOrder")],
-    ['shuffle', t("interface:shuffleWithoutRepeatsUntilEveryEntryPlayed")],
+    ['ordered', t('interface:inOrder')],
+    ['shuffle', t('interface:shuffleWithoutRepeatsUntilEveryEntryPlayed')],
   ]);
-  const repeat = input('repeat', localizedMessage("interface:repeat"), { tag: 'select' });
+  const repeat = input('repeat', localizedMessage('interface:repeat'), { tag: 'select' });
   options(repeat.element, [
-    ['all', t("interface:repeatAll")],
-    ['one', t("interface:repeatOne")],
-    ['off', t("interface:stopAtTheEnd")],
+    ['all', t('interface:repeatAll')],
+    ['one', t('interface:repeatOne')],
+    ['off', t('interface:stopAtTheEnd')],
   ]);
-  const entries = input('entries', localizedMessage("interface:playlistEntries"), { tag: 'select', size: '7' });
-  const addTrack = input('add-track', localizedMessage("interface:trackToAdd"), { tag: 'select' });
-  const createPlaylist = button('create-playlist', localizedMessage("interface:newPlaylistWithSelectedTrack"), () =>
-    attempt(() => {
-      const id = makeId('playlist');
-      edit((value) =>
-        value.playlists.push({
-          id,
-          title: t("interface:newPlaylist"),
-          trackIds: [tracksSelect.element.value],
-          order: 'ordered',
-          repeat: 'all',
-        }),
-      );
-      render({ playlistId: id });
-      setStatus(t("interface:newPlaylistAddedToTheDraftEditItsTitleOrder"));
-    }),
+  const entries = input('entries', localizedMessage('interface:playlistEntries'), {
+    tag: 'select',
+    size: '7',
+  });
+  const addTrack = input('add-track', localizedMessage('interface:trackToAdd'), { tag: 'select' });
+  const createPlaylist = button(
+    'create-playlist',
+    localizedMessage('interface:newPlaylistWithSelectedTrack'),
+    () =>
+      attempt(() => {
+        const id = makeId('playlist');
+        edit((value) =>
+          value.playlists.push({
+            id,
+            title: t('interface:newPlaylist'),
+            trackIds: [tracksSelect.element.value],
+            order: 'ordered',
+            repeat: 'all',
+          }),
+        );
+        render({ playlistId: id });
+        setStatus(t('interface:newPlaylistAddedToTheDraftEditItsTitleOrder'));
+      }),
   );
-  const clonePlaylist = button('clone-playlist', localizedMessage("interface:cloneSelectedPlaylist"), () =>
-    attempt(() => {
-      const source = playlists().find((item) => item.id === playlistsSelect.element.value);
-      const id = makeId('playlist');
-      edit((value) =>
-        value.playlists.push({ ...copy(source), id, title: t("gameplay:copy", { value1: contentText(source, 'title').slice(0, 113) }) }),
-      );
-      render({ playlistId: id });
-      setStatus(t("interface:playlistClonedTheDraftCopyIsEditable"));
-    }),
+  const clonePlaylist = button(
+    'clone-playlist',
+    localizedMessage('interface:cloneSelectedPlaylist'),
+    () =>
+      attempt(() => {
+        const source = playlists().find((item) => item.id === playlistsSelect.element.value);
+        const id = makeId('playlist');
+        edit((value) =>
+          value.playlists.push({
+            ...copy(source),
+            id,
+            title: t('gameplay:copy', { value1: contentText(source, 'title').slice(0, 113) }),
+          }),
+        );
+        render({ playlistId: id });
+        setStatus(t('interface:playlistClonedTheDraftCopyIsEditable'));
+      }),
   );
-  const applyPlaylist = button('apply-playlist', localizedMessage("interface:applyPlaylistDetailsToDraft"), () =>
-    attempt(() => {
-      changePlaylist((item) =>
-        Object.assign(item, {
-          title: playlistTitle.element.value,
-          order: order.element.value,
-          repeat: repeat.element.value,
-        }),
-      );
-      render();
-      setStatus(
-        t("interface:playlistDetailsAddedToTheDraftTheCurrentSongWill"),
-      );
-    }),
+  const applyPlaylist = button(
+    'apply-playlist',
+    localizedMessage('interface:applyPlaylistDetailsToDraft'),
+    () =>
+      attempt(() => {
+        changePlaylist((item) =>
+          Object.assign(item, {
+            title: playlistTitle.element.value,
+            order: order.element.value,
+            repeat: repeat.element.value,
+          }),
+        );
+        render();
+        setStatus(t('interface:playlistDetailsAddedToTheDraftTheCurrentSongWill'));
+      }),
   );
-  const appendEntry = button('add-entry', localizedMessage("interface:addSelectedTrack"), () =>
+  const appendEntry = button('add-entry', localizedMessage('interface:addSelectedTrack'), () =>
     attempt(() => {
       changePlaylist((item) => item.trackIds.push(addTrack.element.value));
       renderPlaylist();
@@ -893,7 +1010,7 @@ export function attachSoundtrackPanel({
       const at = Number(entries.element.value);
       changePlaylist((item) => {
         if (!Number.isInteger(at) || at < 0 || at + delta < 0 || at + delta >= item.trackIds.length)
-          throw new Error(t("interface:chooseAnEntryThatCanMoveInThatDirection"));
+          throw new Error(t('interface:chooseAnEntryThatCanMoveInThatDirection'));
         [item.trackIds[at], item.trackIds[at + delta]] = [
           item.trackIds[at + delta],
           item.trackIds[at],
@@ -902,45 +1019,53 @@ export function attachSoundtrackPanel({
       renderPlaylist(String(at + delta));
       dirtyState();
     });
-  const up = button('entry-up', localizedMessage("interface:moveEntryUp"), () => moveEntry(-1));
-  const down = button('entry-down', localizedMessage("interface:moveEntryDown"), () => moveEntry(1));
-  const removeEntry = button('remove-entry', localizedMessage("interface:removeSelectedEntry"), () =>
-    attempt(() => {
-      const at = Number(entries.element.value);
-      changePlaylist((item) => {
-        if (item.trackIds.length === 1)
-          throw new Error(t("interface:aPlaylistNeedsAtLeastOneTrackRemoveThePlaylist"));
-        if (!Number.isInteger(at) || at < 0 || at >= item.trackIds.length)
-          throw new Error(t("interface:selectAPlaylistEntry"));
-        item.trackIds.splice(at, 1);
-      });
-      renderPlaylist();
-      dirtyState();
-    }),
+  const up = button('entry-up', localizedMessage('interface:moveEntryUp'), () => moveEntry(-1));
+  const down = button('entry-down', localizedMessage('interface:moveEntryDown'), () =>
+    moveEntry(1),
   );
-  const deletePlaylist = button('delete-playlist', localizedMessage("interface:removePlaylistFromDraft"), () =>
-    attempt(() => {
-      const id = playlistsSelect.element.value;
-      edit((value) => {
-        if (!value.playlists.some((item) => item.id === id))
-          throw new Error(t("interface:cloneBuiltInPlaylistsToEditThem"));
-        if (
-          value.selection.playlistId === id ||
-          value.assignments.some((item) => item.playlistId === id)
-        )
-          throw new Error(
-            t("interface:chooseAnotherPlaybackPlaylistAndRemoveAssignmentsBeforeDeletingThis"),
-          );
-        value.playlists = value.playlists.filter((item) => item.id !== id);
-      });
-      render();
-      setStatus(t("interface:playlistRemovedFromTheDraft"));
-    }),
+  const removeEntry = button(
+    'remove-entry',
+    localizedMessage('interface:removeSelectedEntry'),
+    () =>
+      attempt(() => {
+        const at = Number(entries.element.value);
+        changePlaylist((item) => {
+          if (item.trackIds.length === 1)
+            throw new Error(t('interface:aPlaylistNeedsAtLeastOneTrackRemoveThePlaylist'));
+          if (!Number.isInteger(at) || at < 0 || at >= item.trackIds.length)
+            throw new Error(t('interface:selectAPlaylistEntry'));
+          item.trackIds.splice(at, 1);
+        });
+        renderPlaylist();
+        dirtyState();
+      }),
+  );
+  const deletePlaylist = button(
+    'delete-playlist',
+    localizedMessage('interface:removePlaylistFromDraft'),
+    () =>
+      attempt(() => {
+        const id = playlistsSelect.element.value;
+        edit((value) => {
+          if (!value.playlists.some((item) => item.id === id))
+            throw new Error(t('interface:cloneBuiltInPlaylistsToEditThem'));
+          if (
+            value.selection.playlistId === id ||
+            value.assignments.some((item) => item.playlistId === id)
+          )
+            throw new Error(
+              t('interface:chooseAnotherPlaybackPlaylistAndRemoveAssignmentsBeforeDeletingThis'),
+            );
+          value.playlists = value.playlists.filter((item) => item.id !== id);
+        });
+        render();
+        setStatus(t('interface:playlistRemovedFromTheDraft'));
+      }),
   );
   const playlistSection = advancedSection(
     'playlists',
-    t("interface:createPlaylists"),
-    t("interface:orderShuffleAndRepeatYourOwnSelections"),
+    t('interface:createPlaylists'),
+    t('interface:orderShuffleAndRepeatYourOwnSelections'),
     playlistsSelect.field,
     row(createPlaylist, clonePlaylist),
     playlistTitle.field,
@@ -953,19 +1078,21 @@ export function attachSoundtrackPanel({
     appendEntry,
     deletePlaylist,
   );
-  const scope = input('scope', localizedMessage("interface:assignSelectedPlaylistTo"), { tag: 'select' });
+  const scope = input('scope', localizedMessage('interface:assignSelectedPlaylistTo'), {
+    tag: 'select',
+  });
   options(scope.element, [
-    ['global', t("interface:wholeGame")],
-    ['theme', t("interface:currentTheme")],
-    ['campaign', t("interface:currentCampaignEdition")],
-    ['map', t("interface:currentMapEdition")],
+    ['global', t('interface:wholeGame')],
+    ['theme', t('interface:currentTheme')],
+    ['campaign', t('interface:currentCampaignEdition')],
+    ['map', t('interface:currentMapEdition')],
   ]);
   const key = node('p', 'context-key', '', { class: 'micro-note' });
-  const assignments = input('assignments', localizedMessage("interface:savedDraftedAssignments"), {
+  const assignments = input('assignments', localizedMessage('interface:savedDraftedAssignments'), {
     tag: 'select',
     size: '4',
   });
-  const assign = button('assign', localizedMessage("interface:assignPlaylistToThisContext"), () =>
+  const assign = button('assign', localizedMessage('interface:assignPlaylistToThisContext'), () =>
     attempt(() => {
       const current = assignmentContext();
       edit((value) => {
@@ -976,17 +1103,15 @@ export function attachSoundtrackPanel({
       });
       renderAssignments();
       dirtyState();
-      setStatus(
-        t("interface:assignmentAddedToTheDraftAutomaticPlaybackUsesMapCampaign"),
-      );
+      setStatus(t('interface:assignmentAddedToTheDraftAutomaticPlaybackUsesMapCampaign'));
     }),
   );
-  const unassign = button('unassign', localizedMessage("interface:removeSelectedAssignment"), () =>
+  const unassign = button('unassign', localizedMessage('interface:removeSelectedAssignment'), () =>
     attempt(() => {
       const at = Number(assignments.element.value);
       edit((value) => {
         if (!Number.isInteger(at) || at < 0 || at >= value.assignments.length)
-          throw new Error(t("interface:selectAnAssignmentToRemove"));
+          throw new Error(t('interface:selectAnAssignmentToRemove'));
         value.assignments.splice(at, 1);
       });
       renderAssignments();
@@ -995,12 +1120,12 @@ export function attachSoundtrackPanel({
   );
   const assignmentSection = advancedSection(
     'assignments',
-    t("interface:matchMusicToWorlds"),
-    t("interface:mapCampaignAndThemeAssignments"),
+    t('interface:matchMusicToWorlds'),
+    t('interface:mapCampaignAndThemeAssignments'),
     node(
       'p',
       null,
-      localizedMessage("interface:theseExactEditionKeysComeFromTheGameChooseAutomatic"),
+      localizedMessage('interface:theseExactEditionKeysComeFromTheGameChooseAutomatic'),
       { class: 'micro-note' },
     ),
     scope.field,
@@ -1009,42 +1134,49 @@ export function attachSoundtrackPanel({
     assignments.field,
     unassign,
   );
-  const bundleInput = input('bundle-file', localizedMessage("interface:soundtrackRecoveryOrAlbumFileRlsound"), {
-    type: 'file',
-    accept: '.rlsound,application/octet-stream',
-  });
-  const bundleImport = button('import-bundle', localizedMessage("interface:reviewBackupAsReplacementDraft"), () =>
-    task(t("interface:checkingSoundtrackBackupAndOriginalAudio"), async (signal) => {
-      const source = bundleInput.element.files?.[0];
-      if (!source) throw new Error(t("interface:chooseARlsoundBackupFirst"));
-      const prepared = await importSoundtrackBundle(source, {
-        signal,
-        probeMedia,
-        catalogue: catalogue ?? undefined,
-      });
-      throwIfSoundtrackAborted(signal);
-      invalidateBackup();
-      draft = adopt(prepared.library);
-      assets = [...prepared.assets];
-      dirty = true;
-      render();
-      setStatus(
-        `Backup verified: ${draft.tracks.length} custom tracks, ${draft.playlists.length} custom playlists. ${recoveryNotice(draft)} Save all changes replaces the local library; Undo keeps the saved library.`,
-      );
-      bundleInput.element.value = '';
-    }),
+  const bundleInput = input(
+    'bundle-file',
+    localizedMessage('interface:soundtrackRecoveryOrAlbumFileRlsound'),
+    {
+      type: 'file',
+      accept: '.rlsound,application/octet-stream',
+    },
+  );
+  const bundleImport = button(
+    'import-bundle',
+    localizedMessage('interface:reviewBackupAsReplacementDraft'),
+    () =>
+      task(t('interface:checkingSoundtrackBackupAndOriginalAudio'), async (signal) => {
+        const source = bundleInput.element.files?.[0];
+        if (!source) throw new Error(t('interface:chooseARlsoundBackupFirst'));
+        const prepared = await importSoundtrackBundle(source, {
+          signal,
+          probeMedia,
+          catalogue: catalogue ?? undefined,
+        });
+        throwIfSoundtrackAborted(signal);
+        invalidateBackup();
+        draft = adopt(prepared.library);
+        assets = [...prepared.assets];
+        dirty = true;
+        render();
+        setStatus(
+          `Backup verified: ${draft.tracks.length} custom tracks, ${draft.playlists.length} custom playlists. ${recoveryNotice(draft)} Save all changes replaces the local library; Undo keeps the saved library.`,
+        );
+        bundleInput.element.value = '';
+      }),
   );
   const bundleExport = button(
     'export-bundle',
-    localizedMessage("interface:prepareSavedLibraryBackupRlsound"),
+    localizedMessage('interface:prepareSavedLibraryBackupRlsound'),
     async () => {
       const complete = await task(
-        t("interface:verifyingSoundtrackRecoveryDataAndPermittedOriginals"),
+        t('interface:verifyingSoundtrackRecoveryDataAndPermittedOriginals'),
         async (signal) => {
-          if (!saved) throw new Error(t("interface:loadTheSavedMusicLibraryFirst"));
+          if (!saved) throw new Error(t('interface:loadTheSavedMusicLibraryFirst'));
           invalidateBackup();
           activity?.update({
-            message: t("interface:verifyingAndPackingSoundtrackOriginals"),
+            message: t('interface:verifyingAndPackingSoundtrackOriginals'),
             stage: 'exporting',
           });
           const completeAssets = await originalsFor(saved.library, saved.assets, signal);
@@ -1070,10 +1202,10 @@ export function attachSoundtrackPanel({
       return complete;
     },
   );
-  const shareImport = button('add-share', localizedMessage("interface:addAlbumFileToDraft"), () =>
-    task(t("interface:checkingAndAddingTheSharedAlbum"), async (signal) => {
+  const shareImport = button('add-share', localizedMessage('interface:addAlbumFileToDraft'), () =>
+    task(t('interface:checkingAndAddingTheSharedAlbum'), async (signal) => {
       const source = bundleInput.element.files?.[0];
-      if (!source) throw new Error(t("interface:chooseAnAlbumRlsoundFileFirst"));
+      if (!source) throw new Error(t('interface:chooseAnAlbumRlsoundFileFirst'));
       const incoming = await importSoundtrackBundle(source, {
         signal,
         probeMedia,
@@ -1085,43 +1217,44 @@ export function attachSoundtrackPanel({
       draft = adopt(merged.library);
       assets = merged.assets;
       dirty = true;
-      setStatus(
-        t("interface:albumAddedToTheDraftYourSelectedMusicAndAssignments"),
-      );
+      setStatus(t('interface:albumAddedToTheDraftYourSelectedMusicAndAssignments'));
     }),
   );
-  const shareExport = button('export-share', localizedMessage("interface:prepareSelectedPlaylistAsAlbum"), () =>
-    task(t("interface:preparingAShareableAlbum"), async (signal) => {
-      const playlist = draft.playlists.find((item) => item.id === playlistsSelect.element.value);
-      const library = soundtrackPlaylistShare(draft, playlist, {
-        catalogue: catalogue ?? undefined,
-      });
-      const completeAssets = await originalsFor(
-        library,
-        assets,
-        signal,
-        SOUNDTRACK_LIMITS.optionalBundleTargetBytes,
-      );
-      const blob = await exportSoundtrackBundle(library, completeAssets, {
-        signal,
-        catalogue: catalogue ?? undefined,
-      });
-      if (blob.size > SOUNDTRACK_LIMITS.optionalBundleTargetBytes)
-        throw new Error(t("interface:thisAlbumExceeds64MibSplitItsPlaylistIntoSmaller"));
-      throwIfSoundtrackAborted(signal);
-      invalidateBackup();
-      preparedBackup = {
-        blob,
-        filename: 'RevealLine-album.rlsound',
-        generation: saved.generation,
-        share: true,
-        recoveryNotice: recoveryNotice(library),
-        url: typeof download === 'function' ? null : URLImpl.createObjectURL(blob),
-      };
-      setStatus(
-        `Album prepared from the current playlist draft. ${preparedBackup.recoveryNotice} Use Download prepared file to save it. Your library is unchanged.`,
-      );
-    }),
+  const shareExport = button(
+    'export-share',
+    localizedMessage('interface:prepareSelectedPlaylistAsAlbum'),
+    () =>
+      task(t('interface:preparingAShareableAlbum'), async (signal) => {
+        const playlist = draft.playlists.find((item) => item.id === playlistsSelect.element.value);
+        const library = soundtrackPlaylistShare(draft, playlist, {
+          catalogue: catalogue ?? undefined,
+        });
+        const completeAssets = await originalsFor(
+          library,
+          assets,
+          signal,
+          SOUNDTRACK_LIMITS.optionalBundleTargetBytes,
+        );
+        const blob = await exportSoundtrackBundle(library, completeAssets, {
+          signal,
+          catalogue: catalogue ?? undefined,
+        });
+        if (blob.size > SOUNDTRACK_LIMITS.optionalBundleTargetBytes)
+          throw new Error(t('interface:thisAlbumExceeds64MibSplitItsPlaylistIntoSmaller'));
+        throwIfSoundtrackAborted(signal);
+        invalidateBackup();
+        preparedBackup = {
+          blob,
+          filename: 'RevealLine-album.rlsound',
+          generation: saved.generation,
+          share: true,
+          recoveryNotice: recoveryNotice(library),
+          url: typeof download === 'function' ? null : URLImpl.createObjectURL(blob),
+        };
+        setStatus(
+          `Album prepared from the current playlist draft. ${preparedBackup.recoveryNotice} Use Download prepared file to save it. Your library is unchanged.`,
+        );
+      }),
   );
   shareImport.hidden = !catalogue;
   shareExport.hidden = !catalogue;
@@ -1130,7 +1263,7 @@ export function attachSoundtrackPanel({
   const bundleDownload = node(
     typeof download === 'function' ? 'button' : 'a',
     'download-prepared',
-    localizedMessage("interface:downloadPreparedBackup"),
+    localizedMessage('interface:downloadPreparedBackup'),
     { class: 'button secondary', ...(typeof download === 'function' ? { type: 'button' } : {}) },
   );
   bundleDownload.onclick = (event) => {
@@ -1141,39 +1274,42 @@ export function attachSoundtrackPanel({
     }
     if (typeof download === 'function') {
       event?.preventDefault();
-      return task(t("interface:requestingThePreparedBackupFromTheDownloadAdapter"), async (signal) => {
-        await download(prepared.blob, prepared.filename, { signal });
-        if (!disposed && preparedBackup === prepared)
-          setStatus(
-            t("interface:downloadRequestHandedToTheHostConfirmTheDestinationThere"),
-          );
-      });
+      return task(
+        t('interface:requestingThePreparedBackupFromTheDownloadAdapter'),
+        async (signal) => {
+          await download(prepared.blob, prepared.filename, { signal });
+          if (!disposed && preparedBackup === prepared)
+            setStatus(t('interface:downloadRequestHandedToTheHostConfirmTheDestinationThere'));
+        },
+      );
     }
-    setStatus(
-      t("interface:downloadRequestedConfirmItInYourBrowserIfNoFile"),
-    );
+    setStatus(t('interface:downloadRequestedConfirmItInYourBrowserIfNoFile'));
     // No async work, synthetic click or automatic navigation here. The visible
     // anchor's default action uses the already prepared, retained Blob URL.
     return true;
   };
-  const discardBackup = button('discard-backup', localizedMessage("interface:discardPreparedCopy"), () => {
-    if (busy || disposed) return;
-    invalidateBackup();
-    setStatus(
-      t("interface:preparedCopyDiscardedSavedMusicIsUnchangedTheBrowserControls"),
-    );
-  });
+  const discardBackup = button(
+    'discard-backup',
+    localizedMessage('interface:discardPreparedCopy'),
+    () => {
+      if (busy || disposed) return;
+      invalidateBackup();
+      setStatus(t('interface:preparedCopyDiscardedSavedMusicIsUnchangedTheBrowserControls'));
+    },
+  );
   const backupInfo = node('p', 'backup-info', '', { class: 'micro-note' });
   const backupReady = node('div', 'backup-ready', null, { class: 'soundtrack-backup-ready' });
   backupReady.append(backupInfo, row(bundleDownload, discardBackup));
   const transferSection = advancedSection(
     'backup',
-    t("interface:backupsAlbumFiles"),
-    t("interface:importExportAndRestoreRlsoundFiles"),
+    t('interface:backupsAlbumFiles'),
+    t('interface:importExportAndRestoreRlsoundFiles'),
     node(
       'p',
       null,
-      localizedMessage("interface:thisSeparateSoundtrackFileContainsPermittedPersonalInstalledAndExplicitly"),
+      localizedMessage(
+        'interface:thisSeparateSoundtrackFileContainsPermittedPersonalInstalledAndExplicitly',
+      ),
       { class: 'micro-note' },
     ),
     row(bundleExport),
@@ -1184,30 +1320,30 @@ export function attachSoundtrackPanel({
     shareExport,
   );
   const albumList = node('div', 'album-list');
-  const albumBrowse = button('browse-albums', localizedMessage("interface:browseOptionalAlbums"), () =>
-    albumTask(albumBrowse, t("interface:loadingAlbumDescriptions"), async (signal) => {
-      const catalog = await fetchSoundtrackAlbumCatalog({ ...albumDownload, signal });
-      throwIfSoundtrackAborted(signal);
-      albumCatalog = catalog;
-      renderAlbums();
-      setStatus(
-        catalog.albums.length
-          ? `${catalog.albums.length} optional albums. Review an addition before saving; your current song and draft are kept.`
-          : t("interface:noOptionalAlbumsArePublishedForInstallationInThisEdition"),
-      );
-    }),
+  const albumBrowse = button(
+    'browse-albums',
+    localizedMessage('interface:browseOptionalAlbums'),
+    () =>
+      albumTask(albumBrowse, t('interface:loadingAlbumDescriptions'), async (signal) => {
+        const catalog = await fetchSoundtrackAlbumCatalog({ ...albumDownload, signal });
+        throwIfSoundtrackAborted(signal);
+        albumCatalog = catalog;
+        renderAlbums();
+        setStatus(
+          catalog.albums.length
+            ? `${catalog.albums.length} optional albums. Review an addition before saving; your current song and draft are kept.`
+            : t('interface:noOptionalAlbumsArePublishedForInstallationInThisEdition'),
+        );
+      }),
   );
   const albumSection = advancedSection(
     'community',
-    t("interface:communityDownloads"),
-    t("interface:creatorAlbumsCreditsAndOptionalOfflineCopies"),
-    node(
-      'p',
-      null,
-      localizedMessage("interface:browseAlbumsAndCreditsThenAddToDraftToDownload"),
-      { class: 'micro-note' },
-    ),
-    node('a', 'licensed-previews', localizedMessage("interface:openThePublicArchiveWebsite"), {
+    t('interface:communityDownloads'),
+    t('interface:creatorAlbumsCreditsAndOptionalOfflineCopies'),
+    node('p', null, localizedMessage('interface:browseAlbumsAndCreditsThenAddToDraftToDownload'), {
+      class: 'micro-note',
+    }),
+    node('a', 'licensed-previews', localizedMessage('interface:openThePublicArchiveWebsite'), {
       href: 'https://mekhovov.github.io/revealline-soundtracks-01/',
       target: '_blank',
       rel: 'noopener noreferrer',
@@ -1217,8 +1353,8 @@ export function attachSoundtrackPanel({
       'p',
       'licensed-previews-info',
       catalogue?.tracks.some((track) => track.archiveId)
-        ? t("interface:theArchiveWebsiteProvidesCreditsLicenceEvidenceAndMp3Downloads")
-        : t("interface:theArchiveWebsiteProvidesCreditsLicenceEvidenceAndMp3Downloads2"),
+        ? t('interface:theArchiveWebsiteProvidesCreditsLicenceEvidenceAndMp3Downloads')
+        : t('interface:theArchiveWebsiteProvidesCreditsLicenceEvidenceAndMp3Downloads2'),
       { class: 'micro-note' },
     ),
     albumBrowse,
@@ -1227,14 +1363,14 @@ export function attachSoundtrackPanel({
   const originalAlbums = node('div', 'original-albums');
   const originalSection = advancedSection(
     'offline',
-    t("interface:offlineAlbumDownloads"),
-    t("interface:installOrRemoveVerifiedRecordingsForOfflinePlay"),
+    t('interface:offlineAlbumDownloads'),
+    t('interface:installOrRemoveVerifiedRecordingsForOfflinePlay'),
     node(
       'p',
       'original-status',
       catalogue?.tracks.length
         ? `${catalogue.tracks.length} recordings available. Choose an album or music style, then Play music. Songs are downloaded and checked individually before playback; offline downloads are optional.`
-        : t("interface:noOnlineRecordingsArePublishedInThisEditionImportMp3s"),
+        : t('interface:noOnlineRecordingsArePublishedInThisEditionImportMp3s'),
       { class: 'micro-note' },
     ),
     originalAlbums,
@@ -1286,68 +1422,70 @@ export function attachSoundtrackPanel({
     const ids = new Set(offlineTracks.map((track) => track.id));
     const availability = node('p', `availability-${volume.id}`, '', { class: 'micro-note' });
     const select = volume.playlistId
-      ? button(`select-${volume.id}`, localizedMessage("interface:saveUseAlbum"), () => usePlaylist(volume.playlistId))
+      ? button(`select-${volume.id}`, localizedMessage('interface:saveUseAlbum'), () =>
+          usePlaylist(volume.playlistId),
+        )
       : null;
-    const install = button(`download-${volume.id}`, localizedMessage("interface:downloadForOffline"), () =>
-      task(t("interface:downloadingRecordingsIntoTheDraft"), async (signal) => {
-        if (!readAsset) throw new Error(t("interface:recordingDownloadsAreUnavailable"));
-        if (
-          offlineTracks.reduce((sum, track) => sum + track.asset.bytes, 0) >
-          SOUNDTRACK_LIMITS.optionalBundleTargetBytes
-        )
-          throw new Error(
-            t("interface:thisVolumeExceedsThe64MibDownloadBudgetItsPublisher"),
-          );
-        const additions = new Map(assets.map((asset) => [asset.sha256, asset]));
-        const expected = new Map(assets.map((asset) => [asset.sha256, asset.blob.size]));
-        for (const track of offlineTracks) expected.set(track.asset.sha256, track.asset.bytes);
-        if (
-          [...expected.values()].reduce((sum, size) => sum + size, 0) >
-          SOUNDTRACK_LIMITS.managedBytes
-        )
-          throw new Error(
-            t("interface:thisDownloadExceedsThe256MibAudioBudgetRemoveAn"),
-          );
-        for (const track of offlineTracks) {
-          if (!additions.has(track.asset.sha256))
-            additions.set(track.asset.sha256, {
-              sha256: track.asset.sha256,
-              blob: await readAsset(track.asset.sha256, {
-                signal,
-                download: true,
-                purpose: 'offline',
-              }),
-            });
-          throwIfSoundtrackAborted(signal);
-        }
-        const next = copy(draft);
-        next.installedTrackIds = [...new Set([...next.installedTrackIds, ...ids])];
-        // A recovery bundle omitted these recordings for redistribution only.
-        // A separately permitted offline fetch now supplies actual owned bytes.
-        next.referenceOnlyTrackIds = next.referenceOnlyTrackIds.filter((id) => !ids.has(id));
-        const prepared = await prepareSoundtrackLibrary(next, [...additions.values()], {
-          signal,
-          probeMedia,
-          catalogue: catalogue ?? undefined,
-        });
-        invalidateBackup();
-        draft = prepared.library;
-        assets = [...prepared.assets];
-        dirty = true;
-        setStatus(t("interface:volumeDownloadedAndCheckedSaveAllChangesToInstallIt"));
-      }),
+    const install = button(
+      `download-${volume.id}`,
+      localizedMessage('interface:downloadForOffline'),
+      () =>
+        task(t('interface:downloadingRecordingsIntoTheDraft'), async (signal) => {
+          if (!readAsset) throw new Error(t('interface:recordingDownloadsAreUnavailable'));
+          if (
+            offlineTracks.reduce((sum, track) => sum + track.asset.bytes, 0) >
+            SOUNDTRACK_LIMITS.optionalBundleTargetBytes
+          )
+            throw new Error(t('interface:thisVolumeExceedsThe64MibDownloadBudgetItsPublisher'));
+          const additions = new Map(assets.map((asset) => [asset.sha256, asset]));
+          const expected = new Map(assets.map((asset) => [asset.sha256, asset.blob.size]));
+          for (const track of offlineTracks) expected.set(track.asset.sha256, track.asset.bytes);
+          if (
+            [...expected.values()].reduce((sum, size) => sum + size, 0) >
+            SOUNDTRACK_LIMITS.managedBytes
+          )
+            throw new Error(t('interface:thisDownloadExceedsThe256MibAudioBudgetRemoveAn'));
+          for (const track of offlineTracks) {
+            if (!additions.has(track.asset.sha256))
+              additions.set(track.asset.sha256, {
+                sha256: track.asset.sha256,
+                blob: await readAsset(track.asset.sha256, {
+                  signal,
+                  download: true,
+                  purpose: 'offline',
+                }),
+              });
+            throwIfSoundtrackAborted(signal);
+          }
+          const next = copy(draft);
+          next.installedTrackIds = [...new Set([...next.installedTrackIds, ...ids])];
+          // A recovery bundle omitted these recordings for redistribution only.
+          // A separately permitted offline fetch now supplies actual owned bytes.
+          next.referenceOnlyTrackIds = next.referenceOnlyTrackIds.filter((id) => !ids.has(id));
+          const prepared = await prepareSoundtrackLibrary(next, [...additions.values()], {
+            signal,
+            probeMedia,
+            catalogue: catalogue ?? undefined,
+          });
+          invalidateBackup();
+          draft = prepared.library;
+          assets = [...prepared.assets];
+          dirty = true;
+          setStatus(t('interface:volumeDownloadedAndCheckedSaveAllChangesToInstallIt'));
+        }),
     );
-    const remove = button(`offload-${volume.id}`, localizedMessage("interface:removeOfflineDownload"), () =>
-      attempt(() => {
-        edit((value) => {
-          value.installedTrackIds = value.installedTrackIds.filter((id) => !ids.has(id));
-        });
-        pruneAssets();
-        render();
-        setStatus(
-          t("interface:offlineCopiesRemovedFromTheDraftPlaylistsAreRetainedSave"),
-        );
-      }),
+    const remove = button(
+      `offload-${volume.id}`,
+      localizedMessage('interface:removeOfflineDownload'),
+      () =>
+        attempt(() => {
+          edit((value) => {
+            value.installedTrackIds = value.installedTrackIds.filter((id) => !ids.has(id));
+          });
+          pruneAssets();
+          render();
+          setStatus(t('interface:offlineCopiesRemovedFromTheDraftPlaylistsAreRetainedSave'));
+        }),
     );
     originalAlbums.append(
       section(
@@ -1363,7 +1501,7 @@ export function attachSoundtrackPanel({
               node(
                 'p',
                 null,
-                localizedMessage("interface:albumSelectionSavesYourDraftAndKeepsPausedMusicPaused"),
+                localizedMessage('interface:albumSelectionSavesYourDraftAndKeepsPausedMusicPaused'),
                 { class: 'micro-note' },
               ),
             ]
@@ -1488,12 +1626,16 @@ export function attachSoundtrackPanel({
     playOnlineResults.disabled = !matches.length;
     onlineResults.replaceChildren(
       ...matches.map((track) => {
-        const play = button(`online-play-${track.sha256}`, localizedMessage("common:actions.play"), () => {
-          return controlMusic(
-            () => player.playRemotePlaylist(matches, onlinePlaybackOptions(track.id)),
-            true,
-          );
-        });
+        const play = button(
+          `online-play-${track.sha256}`,
+          localizedMessage('common:actions.play'),
+          () => {
+            return controlMusic(
+              () => player.playRemotePlaylist(matches, onlinePlaybackOptions(track.id)),
+              true,
+            );
+          },
+        );
         play.setAttribute('aria-label', `Play ${track.title} by ${track.artist}`);
         const details = node('div', null, null, { class: 'soundtrack-online-details' });
         details.append(
@@ -1501,7 +1643,7 @@ export function attachSoundtrackPanel({
           node('span', null, track.artist),
           node('small', null, `${track.collection} · ${track.tags.join(' · ')}`),
         );
-        const source = node('a', null, localizedMessage("interface:source"), {
+        const source = node('a', null, localizedMessage('interface:source'), {
           href: track.websites[0].url,
           target: '_blank',
           rel: 'noopener noreferrer',
@@ -1513,7 +1655,11 @@ export function attachSoundtrackPanel({
       }),
     );
     if (onlineCatalogue)
-      localizedText(onlineStatus, () =>`${matches.length} of ${onlineCatalogue.tracks.length} published recordings shown.${excluded ? ` Recording mode excludes ${excluded} without verified gameplay-video and Content ID clearance.` : ''} Play one song or start every current result with the selected order and repeat setting.`);
+      localizedText(
+        onlineStatus,
+        () =>
+          `${matches.length} of ${onlineCatalogue.tracks.length} published recordings shown.${excluded ? ` Recording mode excludes ${excluded} without verified gameplay-video and Content ID clearance.` : ''} Play one song or start every current result with the selected order and repeat setting.`,
+      );
   }
   async function loadOnlineCatalogue(force = false) {
     if (disposed || (onlineCatalogueController && !force)) return;
@@ -1522,7 +1668,7 @@ export function attachSoundtrackPanel({
       current = new AbortController();
     onlineCatalogueController = current;
     reloadOnline.disabled = true;
-    localizedText(onlineStatus, () =>t("interface:loadingThePublicSoundtrackCatalogue"));
+    localizedText(onlineStatus, () => t('interface:loadingThePublicSoundtrackCatalogue'));
     try {
       const loaded = await fetchOnlineSoundtrackCatalogue({
         ...onlineCatalogueDownload,
@@ -1531,7 +1677,7 @@ export function attachSoundtrackPanel({
       if (disposed || !dialog.open || generation !== onlineCatalogueGeneration) return;
       onlineCatalogue = loaded;
       options(onlineCollection.element, [
-        ['', t("interface:allCollections")],
+        ['', t('interface:allCollections')],
         ...[...new Set(loaded.tracks.map((track) => track.collection))]
           .sort((a, b) => a.localeCompare(b))
           .map((collection) => [collection, collection]),
@@ -1539,7 +1685,11 @@ export function attachSoundtrackPanel({
       renderOnlineCatalogue();
     } catch (error) {
       if (error?.name !== 'AbortError' && !disposed && generation === onlineCatalogueGeneration) {
-        localizedText(onlineStatus, () =>`The public archive is unavailable: ${message(error)} Built-in, installed and uploaded music still works.`);
+        localizedText(
+          onlineStatus,
+          () =>
+            `The public archive is unavailable: ${message(error)} Built-in, installed and uploaded music still works.`,
+        );
         onlineResults.replaceChildren();
         playOnlineResults.disabled = true;
       }
@@ -1555,7 +1705,7 @@ export function attachSoundtrackPanel({
     albumControls.clear();
     albumList.replaceChildren(
       ...albumCatalog.albums.map((album) => {
-        const add = button(`album-add-${album.id}`, localizedMessage("interface:addToDraft"), () =>
+        const add = button(`album-add-${album.id}`, localizedMessage('interface:addToDraft'), () =>
           albumTask(
             add,
             `Downloading and checking ${album.title}…`,
@@ -1587,9 +1737,7 @@ export function attachSoundtrackPanel({
                 saved.generation !== generation ||
                 draft !== currentDraft
               )
-                throw new Error(
-                  t("interface:theMusicDraftChangedWhileCheckingThisAlbumReviewIt"),
-                );
+                throw new Error(t('interface:theMusicDraftChangedWhileCheckingThisAlbumReviewIt'));
               invalidateBackup();
               draft = prepared.library;
               assets = [...prepared.assets];
@@ -1603,28 +1751,31 @@ export function attachSoundtrackPanel({
             () => saveButton,
           ),
         );
-        const remove = button(`album-offload-${album.id}`, localizedMessage("interface:removeOfflineDownload"), () =>
-          albumTask(
-            remove,
-            `Removing ${album.title} offline copies from the draft…`,
-            async (signal) => {
-              const removed = offloadSoundtrackAlbum(draft, assets, album);
-              const prepared = await prepareSoundtrackLibrary(removed.library, removed.assets, {
-                signal,
-                probeMedia,
-                catalogue: catalogue ?? undefined,
-              });
-              throwIfSoundtrackAborted(signal);
-              invalidateBackup();
-              draft = prepared.library;
-              assets = [...prepared.assets];
-              dirty = true;
-              setStatus(
-                `${album.title}: ${bytes(removed.removedBytes)} removed from the draft. Track details, credits and playlist references are kept. ${removed.retainedSharedBytes ? `${bytes(removed.retainedSharedBytes)} shared with other installed tracks is retained. ` : ''}Save all changes confirms removal; Undo restores the saved library.`,
-              );
-            },
-            () => saveButton,
-          ),
+        const remove = button(
+          `album-offload-${album.id}`,
+          localizedMessage('interface:removeOfflineDownload'),
+          () =>
+            albumTask(
+              remove,
+              `Removing ${album.title} offline copies from the draft…`,
+              async (signal) => {
+                const removed = offloadSoundtrackAlbum(draft, assets, album);
+                const prepared = await prepareSoundtrackLibrary(removed.library, removed.assets, {
+                  signal,
+                  probeMedia,
+                  catalogue: catalogue ?? undefined,
+                });
+                throwIfSoundtrackAborted(signal);
+                invalidateBackup();
+                draft = prepared.library;
+                assets = [...prepared.assets];
+                dirty = true;
+                setStatus(
+                  `${album.title}: ${bytes(removed.removedBytes)} removed from the draft. Track details, credits and playlist references are kept. ${removed.retainedSharedBytes ? `${bytes(removed.retainedSharedBytes)} shared with other installed tracks is retained. ` : ''}Save all changes confirms removal; Undo restores the saved library.`,
+                );
+              },
+              () => saveButton,
+            ),
         );
         const availability = node('p', `album-status-${album.id}`, '', { class: 'micro-note' });
         albumControls.set(album.id, { album, add, remove, availability });
@@ -1637,7 +1788,7 @@ export function attachSoundtrackPanel({
               `${track.title} · ${track.artist} · ${seconds(track.asset.durationSeconds)}`,
             ),
           );
-        const source = node('a', null, localizedMessage("interface:creatorAndLicenseSource"), {
+        const source = node('a', null, localizedMessage('interface:creatorAndLicenseSource'), {
           href: album.source,
           target: '_blank',
           rel: 'noopener noreferrer',
@@ -1685,18 +1836,22 @@ export function attachSoundtrackPanel({
   function refreshAlbumControls() {
     for (const { album, add, remove, availability } of albumControls.values()) {
       const state = albumState(album);
-      localizedText(add, () =>state.known ? t("interface:downloadAgain") : t("interface:addToDraft"));
+      localizedText(add, () =>
+        state.known ? t('interface:downloadAgain') : t('interface:addToDraft'),
+      );
       add.disabled = busy || !saved;
       remove.disabled = busy || !saved || !state.known || state.offloaded;
-      localizedText(availability, () =>!state.known
-        ? t("interface:notAddedToThisLibrary")
-        : state.offloaded
-          ? `Offline album removed${dirty ? ' in the draft' : ''}. Track details and playlists are retained. Choose Download again to restore its audio.${state.localCount ? (" " + t("interface:sharedAudioRequiredByOtherInstalledTracksIsStillAvailable") + "") : ''}`
-          : state.downloaded
-            ? `Audio available offline${dirty ? ' in the draft' : ''}.`
-            : state.localCount
-              ? `${state.localCount} of ${state.retainedCount} recordings available offline${dirty ? ' in the draft' : ''}. Choose Download again to restore the missing audio, or Remove offline download to remove the remaining copies.`
-              : t("interface:localAudioIsUnavailableChooseDownloadAgainToRestoreThis"));
+      localizedText(availability, () =>
+        !state.known
+          ? t('interface:notAddedToThisLibrary')
+          : state.offloaded
+            ? `Offline album removed${dirty ? ' in the draft' : ''}. Track details and playlists are retained. Choose Download again to restore its audio.${state.localCount ? ' ' + t('interface:sharedAudioRequiredByOtherInstalledTracksIsStillAvailable') + '' : ''}`
+            : state.downloaded
+              ? `Audio available offline${dirty ? ' in the draft' : ''}.`
+              : state.localCount
+                ? `${state.localCount} of ${state.retainedCount} recordings available offline${dirty ? ' in the draft' : ''}. Choose Download again to restore the missing audio, or Remove offline download to remove the remaining copies.`
+                : t('interface:localAudioIsUnavailableChooseDownloadAgainToRestoreThis'),
+      );
     }
   }
   async function albumTask(opener, label, work, destination = () => opener) {
@@ -1763,7 +1918,7 @@ export function attachSoundtrackPanel({
   function report(error) {
     setStatus(
       error?.name === 'AbortError'
-        ? t("interface:operationCancelledTheSavedLibraryWasNotChangedByThis")
+        ? t('interface:operationCancelledTheSavedLibraryWasNotChangedByThis')
         : message(error),
     );
     if (error?.name !== 'AbortError') {
@@ -1790,7 +1945,7 @@ export function attachSoundtrackPanel({
   function changePlaylist(work) {
     edit((value) => {
       const item = value.playlists.find((entry) => entry.id === playlistsSelect.element.value);
-      if (!item) throw new Error(t("interface:cloneThisBuiltInPlaylistBeforeEditingIt"));
+      if (!item) throw new Error(t('interface:cloneThisBuiltInPlaylistBeforeEditingIt'));
       work(item);
     });
   }
@@ -1808,9 +1963,7 @@ export function attachSoundtrackPanel({
     const originals = new Map(available.map((asset) => [asset.sha256, asset.blob]));
     const offloaded = new Set(soundtrackOffloadedBonusTrackIds(library));
     if (tracks.some((track) => offloaded.has(track.id) && !originals.has(track.asset.sha256)))
-      throw new Error(
-        t("interface:anAlbumWasRemovedFromOfflineStorageChooseDownloadAgain"),
-      );
+      throw new Error(t('interface:anAlbumWasRemovedFromOfflineStorageChooseDownloadAgain'));
     const result = new Map();
     let total = 0;
     for (const track of tracks) {
@@ -1825,17 +1978,23 @@ export function attachSoundtrackPanel({
       throwIfSoundtrackAborted(signal);
       total += blob.size;
       if (blob.size !== track.asset.bytes || total > limit)
-        throw new Error(
-          t("interface:theRecordingSizeDiffersFromItsCatalogueOrExceedsThe"),
-        );
+        throw new Error(t('interface:theRecordingSizeDiffersFromItsCatalogueOrExceedsThe'));
       result.set(hash, { sha256: hash, blob });
     }
     return [...result.values()];
   }
   function dirtyState() {
-    localizedText(stateLine, () =>saved
-      ? t("gameplay:generationCustomTracksCustomPlaylistsOriginalAudio", { value1: dirty ? t("interface:unsavedDraft") : t("interface:saved"), value2: saved.generation, value3: draft.tracks.length, value4: draft.playlists.length, value5: bytes(assets.reduce((total, asset) => total + asset.blob.size, 0)) })
-      : t("interface:localLibraryIsUnavailableBuiltInPlaybackRemainsSeparate"));
+    localizedText(stateLine, () =>
+      saved
+        ? t('gameplay:generationCustomTracksCustomPlaylistsOriginalAudio', {
+            value1: dirty ? t('interface:unsavedDraft') : t('interface:saved'),
+            value2: saved.generation,
+            value3: draft.tracks.length,
+            value4: draft.playlists.length,
+            value5: bytes(assets.reduce((total, asset) => total + asset.blob.size, 0)),
+          })
+        : t('interface:localLibraryIsUnavailableBuiltInPlaybackRemainsSeparate'),
+    );
     saveButton.disabled = busy || !saved || !dirty;
     undoButton.disabled = busy || !saved || !dirty;
   }
@@ -1852,7 +2011,7 @@ export function attachSoundtrackPanel({
     const plan = soundtrackPortableRecoveryPlan(library, { catalogue: catalogue ?? undefined });
     if (!plan.referenceOnlyTrackIds.length)
       return [
-        t("interface:containsEveryPermittedPersonalInstalledAndExplicitlyReferencedRecording"),
+        t('interface:containsEveryPermittedPersonalInstalledAndExplicitlyReferencedRecording'),
         plan.notice,
       ]
         .filter(Boolean)
@@ -1866,16 +2025,20 @@ export function attachSoundtrackPanel({
     bundleDownload.setAttribute('aria-disabled', String(bundleDownload.disabled));
     discardBackup.disabled = busy || !preparedBackup;
     if (!preparedBackup) return;
-    localizedText(backupInfo, () =>preparedBackup.recording
-      ? `${bytes(preparedBackup.blob.size)} · exact original MP3 bytes, verified against the recording hash.`
-      : preparedBackup.share
-        ? `${bytes(preparedBackup.blob.size)} · selected draft playlist and every permitted referenced recording. ${preparedBackup.recoveryNotice ?? ''} Preparing an album does not save your library or write a file.`
-        : `${bytes(preparedBackup.blob.size)} · saved generation ${preparedBackup.generation} · metadata and every permitted referenced recording. ${preparedBackup.recoveryNotice ?? ''} Unsaved draft edits are excluded. Preparation does not save a file to disk.`);
-    localizedText(bundleDownload, () =>preparedBackup.recording
-      ? t("interface:downloadPreparedMp3")
-      : preparedBackup.share
-        ? t("interface:downloadPreparedFile")
-        : t("interface:downloadPreparedBackup"));
+    localizedText(backupInfo, () =>
+      preparedBackup.recording
+        ? `${bytes(preparedBackup.blob.size)} · exact original MP3 bytes, verified against the recording hash.`
+        : preparedBackup.share
+          ? `${bytes(preparedBackup.blob.size)} · selected draft playlist and every permitted referenced recording. ${preparedBackup.recoveryNotice ?? ''} Preparing an album does not save your library or write a file.`
+          : `${bytes(preparedBackup.blob.size)} · saved generation ${preparedBackup.generation} · metadata and every permitted referenced recording. ${preparedBackup.recoveryNotice ?? ''} Unsaved draft edits are excluded. Preparation does not save a file to disk.`,
+    );
+    localizedText(bundleDownload, () =>
+      preparedBackup.recording
+        ? t('interface:downloadPreparedMp3')
+        : preparedBackup.share
+          ? t('interface:downloadPreparedFile')
+          : t('interface:downloadPreparedBackup'),
+    );
     if (preparedBackup.url) {
       if (busy) bundleDownload.removeAttribute('href');
       else bundleDownload.setAttribute('href', preparedBackup.url);
@@ -1929,17 +2092,19 @@ export function attachSoundtrackPanel({
     sourceLinks(trackSources, track);
     const online = catalogue?.tracks.some((item) => item.id === track?.id);
     const offloaded = soundtrackOffloadedBonusTrackIds(draft).includes(track?.id);
-    localizedText(trackInfo, () =>track?.kind === 'mp3'
-        ? `${seconds(track.asset.durationSeconds)} · ${bytes(track.asset.bytes)} · ${track.asset.sampleRate} Hz · original bytes ${assets.some((asset) => asset.sha256 === track.asset.sha256) ? 'present locally' : offloaded ? t("interface:removedOfflineChooseDownloadAgainInCommunitySoundtracks") : online ? 'available online · not downloaded' : t("interface:missingRestoreACompleteBackup")}`
-        : t("interface:builtInProceduralSynthRecipeUseThePlaybackPlaylistTo"));
+    localizedText(trackInfo, () =>
+      track?.kind === 'mp3'
+        ? `${seconds(track.asset.durationSeconds)} · ${bytes(track.asset.bytes)} · ${track.asset.sampleRate} Hz · original bytes ${assets.some((asset) => asset.sha256 === track.asset.sha256) ? 'present locally' : offloaded ? t('interface:removedOfflineChooseDownloadAgainInCommunitySoundtracks') : online ? 'available online · not downloaded' : t('interface:missingRestoreACompleteBackup')}`
+        : t('interface:builtInProceduralSynthRecipeUseThePlaybackPlaylistTo'),
+    );
     if (track?.fileName) trackInfo.textContent += ` · File: ${track.fileName}`;
     if (policy && policy.redistribute !== 'allowed')
-      trackInfo.textContent += (" " + t("interface:standaloneDownloadIsNotPermitted") + "");
+      trackInfo.textContent += ' ' + t('interface:standaloneDownloadIsNotPermitted') + '';
     if (policy && policy.offlineCache !== 'allowed')
-      trackInfo.textContent += (" " + t("interface:offlineInstallationIsNotPermitted") + "");
+      trackInfo.textContent += ' ' + t('interface:offlineInstallationIsNotPermitted') + '';
     if (policy && draft.listening?.recordingMode && !recordingAllowed(track))
       trackInfo.textContent +=
-        (" " + t("interface:recordingModeExcludesThisAuditionGameplayVideoPermissionOrContent") + "");
+        ' ' + t('interface:recordingModeExcludesThisAuditionGameplayVideoPermissionOrContent') + '';
   }
   function renderPlaylist(entryIndex) {
     const item = playlists().find((entry) => entry.id === playlistsSelect.element.value);
@@ -1977,7 +2142,7 @@ export function attachSoundtrackPanel({
         ? null
         : context[{ theme: 'themeId', campaign: 'campaignKey', map: 'mapKey' }[selectedScope]];
     if (contextKey === undefined || (selectedScope !== 'global' && !contextKey))
-      throw new Error(t("gameplay:chooseAGameBeforeAssigningItsMusic", { value1: selectedScope }));
+      throw new Error(t('gameplay:chooseAGameBeforeAssigningItsMusic', { value1: selectedScope }));
     return { scope: selectedScope, key: contextKey };
   }
   function renderAssignments() {
@@ -1991,10 +2156,10 @@ export function attachSoundtrackPanel({
     );
     try {
       const context = assignmentContext();
-      localizedText(key, () =>context.key ?? t("interface:globalFallbackForTheWholeGame"));
+      localizedText(key, () => context.key ?? t('interface:globalFallbackForTheWholeGame'));
       assign.disabled = busy || !saved;
     } catch (error) {
-      localizedText(key, () =>message(error));
+      localizedText(key, () => message(error));
       assign.disabled = true;
     }
     unassign.disabled = busy || !saved || !draft.assignments.length;
@@ -2004,7 +2169,7 @@ export function attachSoundtrackPanel({
       tracksSelect.element,
       tracks().map((item) => [
         item.id,
-        `${item.kind === 'synth' ? ("" + t("interface:builtIn") + " ") : ''}${contentText(item, 'title')}`,
+        `${item.kind === 'synth' ? '' + t('interface:builtIn') + ' ' : ''}${contentText(item, 'title')}`,
       ]),
       trackId ?? tracksSelect.element.value,
     );
@@ -2016,14 +2181,19 @@ export function attachSoundtrackPanel({
       playlistsSelect.element,
       playlists().map((item) => [
         item.id,
-        `${item.id.startsWith('builtin.') ? ("" + t("interface:builtIn") + " ") : ''}${contentText(item, 'title')}`,
+        `${item.id.startsWith('builtin.') ? '' + t('interface:builtIn') + ' ' : ''}${contentText(item, 'title')}`,
       ]),
       playlistId ?? playlistsSelect.element.value,
     );
     options(
       selection.element,
       [
-        ['', catalogue ? t("interface:useSelectedStyle") : t("interface:automaticFollowMapCampaignTheme")],
+        [
+          '',
+          catalogue
+            ? t('interface:useSelectedStyle')
+            : t('interface:automaticFollowMapCampaignTheme'),
+        ],
         ...playlists().map((item) => [item.id, item.title]),
       ],
       draft.selection.playlistId ?? '',
@@ -2037,9 +2207,11 @@ export function attachSoundtrackPanel({
       installedOnly.element.checked = draft.listening.installedOnly;
       recordingMode.element.checked = draft.listening.recordingMode;
       const excluded = (catalogue.tracks ?? []).filter((track) => !recordingAllowed(track)).length;
-      localizedText(recordingStatus, () =>draft.listening.recordingMode
-        ? `Recording mode is on. ${excluded} catalogue recording${excluded === 1 ? '' : 's'} excluded until gameplay-video permission and unregistered Content ID are verified. The same filter applies to auditions.`
-        : t("interface:recordingModeAlsoFiltersAuditionsUnknownGameplayVideoOrContent"));
+      localizedText(recordingStatus, () =>
+        draft.listening.recordingMode
+          ? `Recording mode is on. ${excluded} catalogue recording${excluded === 1 ? '' : 's'} excluded until gameplay-video permission and unregistered Content ID are verified. The same filter applies to auditions.`
+          : t('interface:recordingModeAlsoFiltersAuditionsUnknownGameplayVideoOrContent'),
+      );
       for (const { id, element } of mixGenres)
         element.checked = draft.listening.genres.includes(id);
       for (const control of listeningSection.querySelectorAll('button,input,select'))
@@ -2048,12 +2220,17 @@ export function attachSoundtrackPanel({
         control.disabled = busy || !saved;
       const explicitPlaylist = playlists().find((item) => item.id === draft.selection.playlistId);
       const modeLabel =
-        [['fusion', t("interface:fusion")], ['mix', t("interface:allStyles")], ['auto', t("interface:automatic")], ...genreNames].find(
-          ([id]) => id === draft.listening.mode,
-        )?.[1] ?? t("interface:music");
-      localizedText(quickStatus, () =>explicitPlaylist
-        ? `Selected playlist: ${explicitPlaylist.title}`
-        : `Selected style: ${modeLabel} · shuffle · repeat all`);
+        [
+          ['fusion', t('interface:fusion')],
+          ['mix', t('interface:allStyles')],
+          ['auto', t('interface:automatic')],
+          ...genreNames,
+        ].find(([id]) => id === draft.listening.mode)?.[1] ?? t('interface:music');
+      localizedText(quickStatus, () =>
+        explicitPlaylist
+          ? `Selected playlist: ${explicitPlaylist.title}`
+          : `Selected style: ${modeLabel} · shuffle · repeat all`,
+      );
     }
     cancelButton.hidden = !busy;
     closeButton.disabled = busy;
@@ -2144,7 +2321,7 @@ export function attachSoundtrackPanel({
     return `Library is saved, but the game refresh failed: ${message(error)}. Reload the studio to refresh it.`;
   }
   async function reload() {
-    return task(t("interface:loadingSavedMusicAndLocalAudio"), async (signal) => {
+    return task(t('interface:loadingSavedMusicAndLocalAudio'), async (signal) => {
       invalidateBackup();
       const value = await store.read({ signal });
       throwIfSoundtrackAborted(signal);
@@ -2155,9 +2332,7 @@ export function attachSoundtrackPanel({
       assets = [...value.assets];
       dirty = false;
       const warning = await notifyLibrary(value);
-      setStatus(
-        warning || t("interface:savedLibraryLoadedImportsAndEditsRemainDraftsUntilSave"),
-      );
+      setStatus(warning || t('interface:savedLibraryLoadedImportsAndEditsRemainDraftsUntilSave'));
     });
   }
   async function notifyLibrary(value) {
@@ -2169,10 +2344,13 @@ export function attachSoundtrackPanel({
     }
   }
   async function commitDraft(signal) {
-    if (!saved) throw new Error(t("interface:loadTheLocalLibraryBeforeSaving"));
+    if (!saved) throw new Error(t('interface:loadTheLocalLibraryBeforeSaving'));
     invalidateBackup();
     pruneAssets();
-    activity?.update({ message: t("interface:decodingAndVerifyingTheMusicLibrary"), stage: 'verifying' });
+    activity?.update({
+      message: t('interface:decodingAndVerifyingTheMusicLibrary'),
+      stage: 'verifying',
+    });
     const prepared = await prepareSoundtrackLibrary(draft, assets, {
       signal,
       probeMedia,
@@ -2180,7 +2358,7 @@ export function attachSoundtrackPanel({
     });
     const usage =
       typeof otherManagedBytes === 'function' ? await otherManagedBytes() : otherManagedBytes;
-    activity?.update({ message: t("interface:savingTheVerifiedMusicLibrary"), stage: 'saving' });
+    activity?.update({ message: t('interface:savingTheVerifiedMusicLibrary'), stage: 'saving' });
     const result = await store.commit(prepared, {
       signal,
       expectedGeneration: saved.generation,
@@ -2195,7 +2373,7 @@ export function attachSoundtrackPanel({
       return {
         ...saved,
         adopted: false,
-        warning: t("interface:librarySavedThePanelClosedBeforeRefresh"),
+        warning: t('interface:librarySavedThePanelClosedBeforeRefresh'),
       };
     let adopted = false,
       warning;
@@ -2207,30 +2385,27 @@ export function attachSoundtrackPanel({
     }
     if (adopted && !disposed) warning = await notifyLibrary(saved);
     setStatus(
-      warning ||
-        t("interface:musicLibrarySavedAtomicallyTheCurrentSongContinuesEditedQueues"),
+      warning || t('interface:musicLibrarySavedAtomicallyTheCurrentSongContinuesEditedQueues'),
     );
     return { ...saved, warning, adopted };
   }
   async function importMP3Files() {
-    return task(t("interface:inspectingSelectedMp3Files"), async (signal, progress) => {
-      if (!saved) throw new Error(t("interface:loadTheLocalLibraryBeforeImporting"));
+    return task(t('interface:inspectingSelectedMp3Files'), async (signal, progress) => {
+      if (!saved) throw new Error(t('interface:loadTheLocalLibraryBeforeImporting'));
       const files = [...(fileInput.element.files ?? [])];
-      if (!files.length) throw new Error(t("interface:chooseOneOrMoreMp3FilesFirst"));
+      if (!files.length) throw new Error(t('interface:chooseOneOrMoreMp3FilesFirst'));
       if (
         files.length + draft.tracks.length + BUILTIN_SOUNDTRACK_TRACKS.length >
         SOUNDTRACK_LIMITS.tracks
       )
-        throw new Error(
-          t("interface:thisBatchWouldExceedThe128TrackLibraryLimitIncluding"),
-        );
+        throw new Error(t('interface:thisBatchWouldExceedThe128TrackLibraryLimitIncluding'));
       const next = copy(draft),
         added = new Map(assets.map((asset) => [asset.sha256, asset.blob]));
       let latest;
       for (let index = 0; index < files.length; index++) {
         const file = files[index];
         progress.update({
-          message: `Inspecting ${file.name || t("interface:mp3Audio")}…`,
+          message: `Inspecting ${file.name || t('interface:mp3Audio')}…`,
           stage: 'verifying',
           progress: { completed: index, total: files.length, unit: 'tracks' },
         });
@@ -2240,11 +2415,12 @@ export function attachSoundtrackPanel({
             id: makeId('track'),
             ...(next.format === 'revealline-soundtrack.v3' ? { fileName: file.name } : {}),
             title:
-              (file.name || 'Imported MP3').replace(/\.mp3$/i, '').slice(0, 120) || t("interface:importedMp3"),
+              (file.name || 'Imported MP3').replace(/\.mp3$/i, '').slice(0, 120) ||
+              t('interface:importedMp3'),
             artist: '',
             rights: {
               kind: 'personal',
-              credit: t("interface:personalLocalUpload"),
+              credit: t('interface:personalLocalUpload'),
               license: '',
               source: (file.name || '').slice(0, 1024),
             },
@@ -2257,7 +2433,7 @@ export function attachSoundtrackPanel({
           [...added.values()].reduce((total, blob) => total + blob.size, 0) >
           SOUNDTRACK_LIMITS.managedBytes
         )
-          throw new Error(t("interface:thisDraftExceedsThe256MibAudioBudgetImportFewer"));
+          throw new Error(t('interface:thisDraftExceedsThe256MibAudioBudgetImportFewer'));
         latest = imported.track.id;
         resolveSoundtrackLibrary(next);
         throwIfSoundtrackAborted(signal);
@@ -2299,15 +2475,15 @@ export function attachSoundtrackPanel({
   }
   async function startAudition() {
     const track = tracks().find((item) => item.id === tracksSelect.element.value);
-    if (track?.kind !== 'mp3') throw new Error(t("interface:chooseAnMp3ToAudition"));
+    if (track?.kind !== 'mp3') throw new Error(t('interface:chooseAnMp3ToAudition'));
     if (draft.listening?.recordingMode && !recordingAllowed(track))
       throw new Error(
-        t("interface:recordingModeExcludesThisAuditionUntilGameplayVideoPermissionAnd"),
+        t('interface:recordingModeExcludesThisAuditionUntilGameplayVideoPermissionAnd'),
       );
     if (soundtrackRights(track, { catalogue: catalogue ?? undefined }).webPlayback !== 'allowed')
-      throw new Error(t("interface:thisRecordingIsNotApprovedForPlaybackInThisEdition"));
+      throw new Error(t('interface:thisRecordingIsNotApprovedForPlaybackInThisEdition'));
     if (soundtrackOffloadedBonusTrackIds(draft).includes(track.id))
-      throw new Error(t("interface:chooseDownloadAgainInCommunitySoundtracksToAuditionThisAlbum"));
+      throw new Error(t('interface:chooseDownloadAgainInCommunitySoundtracksToAuditionThisAlbum'));
     const state = player.snapshot();
     const previous = restoreMusic || (state.desired ?? state.playing);
     const stopping = stopAudition(false);
@@ -2330,10 +2506,7 @@ export function attachSoundtrackPanel({
         (await readAsset?.(track.asset.sha256, { signal }));
       throwIfSoundtrackAborted(signal);
       if (disposed || token !== auditionToken) return;
-      if (!blob)
-        throw new Error(
-          t("interface:thisMp3IsUnavailableDownloadItsAlbumOrRestoreA"),
-        );
+      if (!blob) throw new Error(t('interface:thisMp3IsUnavailableDownloadItsAlbumOrRestoreA'));
       auditionURL = URLImpl.createObjectURL(blob);
       audition.src = auditionURL;
       audition.hidden = false;
@@ -2396,7 +2569,9 @@ export function attachSoundtrackPanel({
     const available = auditionURL !== null && !disposed;
     auditionControls.hidden = !available;
     toggleAudition.disabled = !available || busy;
-    localizedText(toggleAudition, () =>audition.paused ? t("interface:resumeAudition") : t("interface:pauseAudition"));
+    localizedText(toggleAudition, () =>
+      audition.paused ? t('interface:resumeAudition') : t('interface:pauseAudition'),
+    );
     const duration =
       Number.isFinite(audition.duration) && audition.duration > 0 ? audition.duration : 0;
     auditionSeek.element.max = String(duration);
@@ -2419,7 +2594,7 @@ export function attachSoundtrackPanel({
   function sourceLinks(container, track) {
     const sites = [...(track?.websites ?? [])];
     if (!sites.length && track?.rights?.source)
-      sites.push({ label: t("interface:sourceWebsite"), url: track.rights.source });
+      sites.push({ label: t('interface:sourceWebsite'), url: track.rights.source });
     const signature = JSON.stringify(sites);
     if (sourceSignatures.get(container) === signature) return;
     sourceSignatures.set(container, signature);
@@ -2433,7 +2608,7 @@ export function attachSoundtrackPanel({
       }
       if (!['http:', 'https:'].includes(url.protocol) || url.username || url.password) continue;
       const link = doc.createElement('a');
-      localizedText(link, () =>site.label || t("interface:sourceWebsite"));
+      localizedText(link, () => site.label || t('interface:sourceWebsite'));
       link.href = url.href;
       link.target = '_blank';
       link.rel = 'noopener noreferrer';
@@ -2442,7 +2617,11 @@ export function attachSoundtrackPanel({
   }
   function update(snapshot = player.snapshot()) {
     if (disposed) return;
-    localizedText(now, () =>`${snapshot.track?.title ?? t("interface:noTrackSelected")}${snapshot.track?.artist ? ` · ${snapshot.track.artist}` : ''} · ${snapshot.status} · ${seconds(snapshot.positionSeconds)} / ${seconds(snapshot.durationSeconds)}${snapshot.pendingPlaylistId ? ' · playlist update queued' : ''}${snapshot.notice ? ` · ${snapshot.notice}` : ''}${snapshot.error ? ` · ${snapshot.error}` : ''}`);
+    localizedText(
+      now,
+      () =>
+        `${snapshot.track?.title ?? t('interface:noTrackSelected')}${snapshot.track?.artist ? ` · ${snapshot.track.artist}` : ''} · ${snapshot.status} · ${seconds(snapshot.positionSeconds)} / ${seconds(snapshot.durationSeconds)}${snapshot.pendingPlaylistId ? ' · playlist update queued' : ''}${snapshot.notice ? ` · ${snapshot.notice}` : ''}${snapshot.error ? ` · ${snapshot.error}` : ''}`,
+    );
     sourceLinks(nowSources, snapshot.track);
     if (snapshot.track?.fileName) now.textContent += ` · File: ${snapshot.track.fileName}`;
     if (snapshot.preparation) {
@@ -2507,10 +2686,10 @@ export function attachSoundtrackPanel({
       render();
       setStatus(
         preparedBackup
-          ? t("interface:yourPreparedSavedLibraryBackupIsStillAvailableToDownload")
+          ? t('interface:yourPreparedSavedLibraryBackupIsStillAvailableToDownload')
           : dirty
-            ? t("interface:yourUnsavedDraftIsStillHere")
-            : t("interface:musicLibraryReady"),
+            ? t('interface:yourUnsavedDraftIsStillHere')
+            : t('interface:musicLibraryReady'),
       );
     }
   }
@@ -2538,7 +2717,7 @@ export function attachSoundtrackPanel({
     event.preventDefault();
     if (busy) {
       controller?.abort();
-      setStatus(t("interface:cancellationRequestedWaitForTheOperationToFinishBeforeLeaving"));
+      setStatus(t('interface:cancellationRequestedWaitForTheOperationToFinishBeforeLeaving'));
     } else close();
   });
   listen(dialog, 'keydown', (event) => {
@@ -2623,9 +2802,7 @@ export function attachSoundtrackPanel({
     if (!auditionURL) return;
     void playback(async () => {
       await stopAudition(true);
-      throw new Error(
-        t("interface:theAuditionCouldNotDecodeThisTrackRestoreOrReplace"),
-      );
+      throw new Error(t('interface:theAuditionCouldNotDecodeThisTrackRestoreOrReplace'));
     });
   });
   listen(doc, 'visibilitychange', () => {

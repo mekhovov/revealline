@@ -10,7 +10,11 @@ export function attachControllerNavigation({
   getScope = () => 'ui',
   getRoot = () => doc,
   getDefaultFocus = () => null,
-  getControlLabels = () => ({ directions: 'D-pad', confirm: t("common:controls.south"), back: t("common:controls.east") }),
+  getControlLabels = () => ({
+    directions: 'D-pad',
+    confirm: t('common:controls.south'),
+    back: t('common:controls.east'),
+  }),
   getReadingPrompt = null,
   accept = () => true,
   onBack = () => {},
@@ -126,13 +130,16 @@ export function attachControllerNavigation({
     return true;
   }
   function endReading({ restoreFocus = true } = {}) {
-    return cancelReading({ restoreFocus, message: t("interface:readingEndedChooseAnActionWhenReady") });
+    return cancelReading({
+      restoreFocus,
+      message: t('interface:readingEndedChooseAnActionWhenReady'),
+    });
   }
   function readingHint() {
     const scrollable = !!readingMetrics(reading.region)?.max;
     if (getReadingPrompt) return `${reading.label}: ${getReadingPrompt({ scrollable })}`;
     const labels = getControlLabels();
-    return `${reading.label}: ${scrollable ? t("interface:upDownScroll") : t("interface:allTextIsVisible")} · ${labels.confirm} or ${labels.back} returns`;
+    return `${reading.label}: ${scrollable ? t('interface:upDownScroll') : t('interface:allTextIsVisible')} · ${labels.confirm} or ${labels.back} returns`;
   }
   function readingCurrent(owner = reading) {
     return (
@@ -229,7 +236,7 @@ export function attachControllerNavigation({
     return !!reading;
   }
   function relinquish() {
-    cancelEdit(t("interface:controllerEditCancelled"));
+    cancelEdit(t('interface:controllerEditCancelled'));
     cancelReading({ invalidated: true });
     engaged = false;
     mark(null);
@@ -352,7 +359,7 @@ export function attachControllerNavigation({
     if ((reading || editing) && event.key === 'Escape' && !event.defaultPrevented) {
       event.preventDefault();
       if (reading) endReading();
-      else cancelEdit(t("interface:choiceCancelled"));
+      else cancelEdit(t('interface:choiceCancelled'));
     } else relinquish();
     onNativeInput(event);
   });
@@ -363,8 +370,9 @@ export function attachControllerNavigation({
       event.target !== reading.region &&
       !(event.target === reading.exit && readingCurrent())
     )
-      cancelReading({ invalidated: true, message: t("interface:readingEnded") });
-    if (editing && event.target !== editing.element) cancelEdit(t("interface:controllerEditCancelled"));
+      cancelReading({ invalidated: true, message: t('interface:readingEnded') });
+    if (editing && event.target !== editing.element)
+      cancelEdit(t('interface:controllerEditCancelled'));
     if (engaged) mark(visible(event.target) ? event.target : null);
   });
   const selectOptions = (element) =>
@@ -398,7 +406,7 @@ export function attachControllerNavigation({
     }
     if (reading && !readingCurrent()) {
       invalidated = true;
-      cancelReading({ message: t("interface:theReadingRegionChangedChooseItAgainToRead") });
+      cancelReading({ message: t('interface:theReadingRegionChangedChooseItAgainToRead') });
     }
     if (reading) {
       const max = readingMetrics(reading.region).max;
@@ -413,7 +421,7 @@ export function attachControllerNavigation({
         signature(editing.element) !== editing.signature)
     ) {
       invalidated = true;
-      cancelEdit(t("interface:theControlChangedChooseItAgainToEdit"));
+      cancelEdit(t('interface:theControlChangedChooseItAgainToEdit'));
     }
     if (scope === 'flight') {
       cancelEdit();
@@ -437,13 +445,21 @@ export function attachControllerNavigation({
       .join('')
       .trim() ||
     element.id ||
-    t("interface:value");
+    t('interface:value');
   function paintEdit() {
     if (!editing) return;
     const value =
       editing.kind === 'select' ? editing.options[editing.index].label : String(editing.draft);
     const controls = getControlLabels();
-    localizedText(editing.preview, () =>t("gameplay:changesConfirmsCancels", { value1: contentText(editing, 'label'), value2: value, value3: controls.directions, value4: controls.confirm, value5: controls.back }));
+    localizedText(editing.preview, () =>
+      t('gameplay:changesConfirmsCancels', {
+        value1: contentText(editing, 'label'),
+        value2: value,
+        value3: controls.directions,
+        value4: controls.confirm,
+        value5: controls.back,
+      }),
+    );
     hint(editing.preview.textContent);
   }
   function beginEdit(element) {
@@ -451,7 +467,7 @@ export function attachControllerNavigation({
     let state;
     if (kind === 'select') {
       const options = selectOptions(element);
-      if (!options.length) return hint(t("interface:noEnabledChoicesAreAvailable"));
+      if (!options.length) return hint(t('interface:noEnabledChoicesAreAvailable'));
       state = {
         options,
         index: Math.max(
@@ -465,7 +481,7 @@ export function attachControllerNavigation({
         step = Number(element.step || 1),
         draft = Number(element.value);
       if (![min, max, step, draft].every(Number.isFinite) || max < min || step <= 0)
-        return hint(t("interface:useKeyboardOrTouchForThisValue"));
+        return hint(t('interface:useKeyboardOrTouchForThisValue'));
       state = { min, max, step, draft: Math.max(min, Math.min(max, draft)) };
     }
     const preview = doc.createElement('div');
@@ -507,7 +523,7 @@ export function attachControllerNavigation({
         edit.element.dispatchEvent(new EventType('input', { bubbles: true }));
       edit.element.dispatchEvent(new EventType('change', { bubbles: true }));
     }
-    hint(t("interface:choiceApplied"));
+    hint(t('interface:choiceApplied'));
   }
   function move(direction) {
     const items = controls(),
@@ -583,9 +599,7 @@ export function attachControllerNavigation({
       (element.tagName === 'INPUT' &&
         !['checkbox', 'radio', 'button', 'submit'].includes(element.type))
     )
-      return hint(
-        t("interface:useKeyboardOrTouchForTextDatesAndFilePickers"),
-      );
+      return hint(t('interface:useKeyboardOrTouchForTextDatesAndFilePickers'));
     activateControl(element);
   }
   function readDirection(direction) {
@@ -609,7 +623,7 @@ export function attachControllerNavigation({
     const boundary = max === 0 ? 'all' : top === 0 ? 'start' : top === max ? 'end' : null;
     if (boundary && reading.boundary !== boundary)
       readingMessage(
-        `${boundary === 'all' ? t("interface:allTextIsVisible2") : boundary === 'start' ? t("interface:startOfDetails") : t("interface:endOfDetails")} ${readingHint()}`,
+        `${boundary === 'all' ? t('interface:allTextIsVisible2') : boundary === 'start' ? t('interface:startOfDetails') : t('interface:endOfDetails')} ${readingHint()}`,
         owner,
       );
     reading.boundary = boundary;
@@ -730,7 +744,7 @@ export function attachControllerNavigation({
     }
     if (editing && event.key === 'Escape') {
       event.preventDefault();
-      cancelEdit(t("interface:choiceCancelled"));
+      cancelEdit(t('interface:choiceCancelled'));
       return true;
     }
     if (event.key === 'Escape') {
@@ -822,10 +836,10 @@ export function attachControllerNavigation({
     }
     const element = ensureFocus();
     if (command.back) {
-      if (editing) cancelEdit(t("interface:choiceCancelled"));
+      if (editing) cancelEdit(t('interface:choiceCancelled'));
       else onBack();
     } else if (command.menu) {
-      if (editing) cancelEdit(t("interface:choiceCancelled"));
+      if (editing) cancelEdit(t('interface:choiceCancelled'));
       else onMenu();
     } else if (command.confirm) {
       if (editing) commitEdit();

@@ -6,7 +6,8 @@ import { createCandidateCouchPictures } from './candidate-pictures.mjs';
 import { journeyActorThemeMaterial } from '../presentation/journey-actor-materials.mjs';
 
 const bindings = new WeakMap();
-const cancelled = () => new DOMException(t("interface:candidateTeamPictureCancelled"), 'AbortError');
+const cancelled = () =>
+  new DOMException(t('interface:candidateTeamPictureCancelled'), 'AbortError');
 
 /** Defensive renderer admission, not a substitute for the host's exact request
  * checks. Only a live authenticated candidate display owner can vary dimensions. */
@@ -43,10 +44,10 @@ export function candidateTeamActorMaterial(binding, level, snapshot) {
  * their 1152×576 contract. Each host selection owns this lease independently,
  * so failed Next/preview preparation never retires the previous playing picture. */
 export function createCandidateTeamPictures({ row, owns, getSnapshot, acquire } = {}) {
-  required(typeof owns === 'function' && owns(row), t("interface:chooseAnOwnedTeamCandidateRow"));
-  required(typeof getSnapshot === 'function', t("interface:aPreparedTeamSnapshotReaderIsRequired"));
+  required(typeof owns === 'function' && owns(row), t('interface:chooseAnOwnedTeamCandidateRow'));
+  required(typeof getSnapshot === 'function', t('interface:aPreparedTeamSnapshotReaderIsRequired'));
   const asset = compileAssetRevision(row.background);
-  required(asset.width === asset.height * 2, t("interface:teamCandidateOriginalsMustHaveA21Frame"));
+  required(asset.width === asset.height * 2, t('interface:teamCandidateOriginalsMustHaveA21Frame'));
   const packJSON = canonicalJSON(row.pack);
   const pictureRow = Object.freeze({ asset, defaultThemeId: 'fpv' });
   const pictures = createCandidateCouchPictures({ owns: (value) => value === pictureRow, acquire });
@@ -65,26 +66,26 @@ export function createCandidateTeamPictures({ row, owns, getSnapshot, acquire } 
         request.levelId === row.level.id &&
         canonicalJSON(request.pack) === packJSON &&
         !request.artworkSource,
-      t("interface:candidateTeamPictureRequiresItsExactOwnedPackLevelAnd"),
+      t('interface:candidateTeamPictureRequiresItsExactOwnedPackLevelAnd'),
     );
     required(
       !attemptId || attemptId === request.attemptId,
-      t("interface:keepTheExactCandidateTeamAttempt"),
+      t('interface:keepTheExactCandidateTeamAttempt'),
     );
     const current = getSnapshot();
     const theme = current?.resolved?.theme;
     required(
       theme?.id === 'fpv' && Number.isSafeInteger(theme.revision) && theme.revision > 0,
-      t("interface:prepareTheMatchingTeamThemeFirst"),
+      t('interface:prepareTheMatchingTeamThemeFirst'),
     );
     const identity = canonicalJSON([theme.id, theme.revision, current.resolved.collection ?? null]);
     required(
       !snapshot || snapshot === current,
-      t("interface:teamPresentationChangedPrepareANewAttempt"),
+      t('interface:teamPresentationChangedPrepareANewAttempt'),
     );
     required(
       !themeJSON || themeJSON === identity,
-      t("interface:teamThemeIdentityChangedDuringPreparation"),
+      t('interface:teamThemeIdentityChangedDuringPreparation'),
     );
     if (closed || request.signal?.aborted) throw cancelled();
     return current;
@@ -102,7 +103,7 @@ export function createCandidateTeamPictures({ row, owns, getSnapshot, acquire } 
       if (accepted) {
         required(
           candidateTeamPictureFrame(accepted, row.level, snapshot),
-          t("interface:teamOriginalIsUnavailable"),
+          t('interface:teamOriginalIsUnavailable'),
         );
         return accepted;
       }
@@ -119,7 +120,7 @@ export function createCandidateTeamPictures({ row, owns, getSnapshot, acquire } 
           current();
           request.onStatus?.({
             ...status,
-            message: t("interface:verifyingThisTeamMissionSOriginalPicture"),
+            message: t('interface:verifyingThisTeamMissionSOriginalPicture'),
           });
           current();
         },
@@ -146,7 +147,7 @@ export function createCandidateTeamPictures({ row, owns, getSnapshot, acquire } 
           status: 'ready',
           stage: 'ready',
           progress: null,
-          message: t("interface:teamOriginalReadyStartRemainsASeparateAction"),
+          message: t('interface:teamOriginalReadyStartRemainsASeparateAction'),
         });
         current();
         const retire = staged.commit();
@@ -162,7 +163,7 @@ export function createCandidateTeamPictures({ row, owns, getSnapshot, acquire } 
       check(request);
       required(
         accepted && candidateTeamPictureFrame(accepted, row.level, snapshot),
-        t("interface:theExactTeamCandidatePictureIsNotReady"),
+        t('interface:theExactTeamCandidatePictureIsNotReady'),
       );
       return accepted;
     },

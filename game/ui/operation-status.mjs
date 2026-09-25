@@ -13,7 +13,7 @@ function checkedProgress(value) {
     typeof unit !== 'string' ||
     !unit.trim()
   )
-    throw new TypeError(t("interface:operationProgressNeedsAMeasuredCompletedTotalCountAndUnit"));
+    throw new TypeError(t('interface:operationProgressNeedsAMeasuredCompletedTotalCountAndUnit'));
   return { completed, total, unit };
 }
 
@@ -46,8 +46,8 @@ export function createOperationStatus(target, { isCurrent: hostCurrent = () => t
   let disposed = false;
   const reset = () => {
     target.hidden = true;
-    localizedText(label, () =>'');
-    localizedText(count, () =>'');
+    localizedText(label, () => '');
+    localizedText(count, () => '');
     meter.hidden = count.hidden = true;
     delete target.dataset.state;
     delete target.dataset.stage;
@@ -63,17 +63,17 @@ export function createOperationStatus(target, { isCurrent: hostCurrent = () => t
         ? checkedProgress(options.progress)
         : undefined;
       if (options.message !== undefined && label.textContent !== String(options.message))
-        localizedText(label, () =>String(options.message));
+        localizedText(label, () => String(options.message));
       if (options.stage !== undefined) target.dataset.stage = String(options.stage);
       if (next !== undefined) {
         meter.hidden = count.hidden = next === null;
-        if (!next) localizedText(count, () =>'');
+        if (!next) localizedText(count, () => '');
         if (next) {
           meter.max = next.total;
           meter.value = next.completed;
           const text = `${next.completed} / ${next.total} ${next.unit}`;
           meter.setAttribute('aria-label', text);
-          localizedText(count, () =>text);
+          localizedText(count, () => text);
         }
       }
       target.hidden = false;
@@ -87,7 +87,7 @@ export function createOperationStatus(target, { isCurrent: hostCurrent = () => t
       update,
       finish({ message = '', state = 'ready' } = {}) {
         if (!current()) return false;
-        if (!terminalStates.has(state)) throw new TypeError(t("interface:unknownOperationOutcome"));
+        if (!terminalStates.has(state)) throw new TypeError(t('interface:unknownOperationOutcome'));
         update({ message, progress: null });
         target.dataset.state = state;
         target.hidden = !message;

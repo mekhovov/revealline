@@ -32,7 +32,7 @@ export function attachReplayNavigation({
   };
   function hint(message) {
     const node = $('navigation-status');
-    if (node && node.textContent !== message) localizedText(node, () =>message);
+    if (node && node.textContent !== message) localizedText(node, () => message);
   }
   const preferred = () =>
     pending()
@@ -98,7 +98,7 @@ export function attachReplayNavigation({
       pause();
       focus($('return-game'));
       hint(
-        `Playback paused. ${$('return-game').textContent.trim() || t("interface:return")} is focused; activate it to leave.`,
+        `Playback paused. ${$('return-game').textContent.trim() || t('interface:return')} is focused; activate it to leave.`,
       );
     }
     router.clear();
@@ -138,7 +138,7 @@ export function attachReplayNavigation({
         pause();
         focus(preferred());
         router.clear();
-        hint(t("interface:playbackPausedChoosePlayWhenReady"));
+        hint(t('interface:playbackPausedChoosePlayWhenReady'));
       }
     },
     onNativeInput: () => router.clear(),
@@ -193,7 +193,7 @@ export function attachReplayNavigation({
         status = frame.status.code;
         hint(
           status === 'connected'
-            ? t("interface:dPadMovesFocusSouthConfirmsEastGoesBackMenu")
+            ? t('interface:dPadMovesFocusSouthConfirmsEastGoesBackMenu')
             : frame.status.message,
         );
       }

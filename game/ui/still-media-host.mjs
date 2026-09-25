@@ -17,20 +17,19 @@ import { attachControllerNavigation } from './controller-navigation.mjs';
 
 export async function readStillWorkshopChannel({ signal, fetchImpl = globalThis.fetch } = {}) {
   const check = () => {
-    if (signal?.aborted) throw new DOMException(t("interface:workshopChannelLoadCancelled"), 'AbortError');
+    if (signal?.aborted)
+      throw new DOMException(t('interface:workshopChannelLoadCancelled'), 'AbortError');
   };
   check();
   const response = await fetchImpl(new URL('../build-info.json', import.meta.url), { signal });
   check();
   if (response.status === 404) return 'dev';
   if (!response.ok)
-    throw new Error(
-      t("interface:workshopBuildInformationCouldNotLoadRetryTheCompleteEdition"),
-    );
+    throw new Error(t('interface:workshopBuildInformationCouldNotLoadRetryTheCompleteEdition'));
   const info = await response.json();
   check();
   if (!info || typeof info.version !== 'string')
-    throw new Error(t("interface:workshopBuildVersionIsInvalidNoGameChannelWasSelected"));
+    throw new Error(t('interface:workshopBuildVersionIsInvalidNoGameChannelWasSelected'));
   const channel = `release-${info.version}`;
   stillAuthoringKeys(channel);
   return channel;
@@ -39,7 +38,7 @@ async function readSource({ signal } = {}) {
   const get = async (path) => {
     const response = await fetch(new URL(path, import.meta.url), { signal });
     if (!response.ok)
-      throw new Error(t("interface:sourceGameContentCouldNotLoadServeThisRepositoryOver"));
+      throw new Error(t('interface:sourceGameContentCouldNotLoadServeThisRepositoryOver'));
     return response.json();
   };
   const [campaign, themes, classes, presets, channel] = await Promise.all([
@@ -111,9 +110,7 @@ export function attachStillMediaHost({
     if (activity) activity.update({ message, progress: null });
     else feedback.begin({ message }).finish({ message, state });
   }
-  setStatus(
-    t("interface:chooseOpenLocalMediaToReadThisEditionSPictures"),
-  );
+  setStatus(t('interface:chooseOpenLocalMediaToReadThisEditionSPictures'));
   const router = createControllerRouter({ eventTarget: win, ...(readPads ? { readPads } : {}) });
   const navigation = attachControllerNavigation({
     document: doc,
@@ -131,7 +128,7 @@ export function attachStillMediaHost({
     `Real local media opened for ${channel ?? sourceChannel}. Picture assignments are ready for fresh flights in this edition.`;
   const explain = (error) =>
     error?.name === 'VersionError'
-      ? t("interface:thisDatabaseNeedsANewerCompatibleMediaWorkshopOpenThat")
+      ? t('interface:thisDatabaseNeedsANewerCompatibleMediaWorkshopOpenThat')
       : error instanceof Error
         ? error.message
         : String(error);
@@ -174,7 +171,7 @@ export function attachStillMediaHost({
   async function open() {
     if (disposed || opening) return false;
     if (!['http:', 'https:'].includes(win.location.protocol)) {
-      setStatus(t("interface:useLocalhostOrHttpsFileUrlsCannotSafelyOpenThis"));
+      setStatus(t('interface:useLocalhostOrHttpsFileUrlsCannotSafelyOpenThis'));
       return false;
     }
     const returnFocus = doc.activeElement;
@@ -183,7 +180,7 @@ export function attachStillMediaHost({
     const ticket = ++openSerial;
     openController = new AbortController();
     const lease = feedback.begin({
-      message: t("interface:openingThePictureWorkshopAndInstalledMapCatalogue"),
+      message: t('interface:openingThePictureWorkshopAndInstalledMapCatalogue'),
       stage: 'reading',
       isCurrent: () => !disposed && ticket === openSerial,
     });
@@ -232,7 +229,7 @@ export function attachStillMediaHost({
         $('still-host-export-audio').disabled = false;
       }
       lease.update({
-        message: t("interface:openingAndVerifyingLocalPictureAndStoryOriginals"),
+        message: t('interface:openingAndVerifyingLocalPictureAndStoryOriginals'),
         stage: 'verifying',
       });
       const result = await panel.open({ returnFocus });
@@ -240,9 +237,7 @@ export function attachStillMediaHost({
         router.clear();
         navigation.sync();
         setStatus(
-          result
-            ? readyMessage()
-            : t("interface:workshopOpenFailedReadItsErrorSavedDataWasNot"),
+          result ? readyMessage() : t('interface:workshopOpenFailedReadItsErrorSavedDataWasNot'),
         );
         failedOpening = result ? null : lease;
       }
@@ -269,7 +264,7 @@ export function attachStillMediaHost({
     audioTask = own;
     $('still-host-export-audio').disabled = true;
     const lease = feedback.begin({
-      message: t("interface:readingSavedMusicAndCheckingBackupPermissions"),
+      message: t('interface:readingSavedMusicAndCheckingBackupPermissions'),
       stage: 'reading',
       isCurrent: () => !disposed && audioTask === own,
     });
@@ -290,7 +285,9 @@ export function attachStillMediaHost({
         .filter(Boolean)
         .join(' ');
       lease.update({
-        message: [t("interface:preparingTheVerifiedSoundtrackBackup"), notice].filter(Boolean).join(' '),
+        message: [t('interface:preparingTheVerifiedSoundtrackBackup'), notice]
+          .filter(Boolean)
+          .join(' '),
         stage: 'exporting',
       });
       const available = new Set(saved.assets.map((asset) => asset.sha256));
@@ -337,19 +334,14 @@ export function attachStillMediaHost({
   $('still-host-export-audio').disabled = true;
   $('still-host-download-audio').onclick = () => {
     setStatus(
-      [
-        t("interface:downloadRequestedConfirmTheDestinationInYourBrowserThePrepared"),
-        audioNotice,
-      ]
+      [t('interface:downloadRequestedConfirmTheDestinationInYourBrowserThePrepared'), audioNotice]
         .filter(Boolean)
         .join(' '),
     );
   };
   $('still-host-close').onclick = () => {
     closeStorage();
-    setStatus(
-      t("interface:localConnectionsClosedSavedOriginalsRemainTheDatabaseVersionWas"),
-    );
+    setStatus(t('interface:localConnectionsClosedSavedOriginalsRemainTheDatabaseVersionWas'));
     $('still-host-open').focus();
   };
   function poll(now) {

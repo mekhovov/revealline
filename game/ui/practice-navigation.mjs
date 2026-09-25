@@ -13,7 +13,7 @@ export function attachPracticeNavigation({
     typeof doc?.removeEventListener !== 'function' ||
     typeof onBlocked !== 'function'
   )
-    throw new TypeError(t("interface:practiceNavigationNeedsADocumentAndNoticeCallback"));
+    throw new TypeError(t('interface:practiceNavigationNeedsADocumentAndNoticeCallback'));
   let destroyed = false;
   function sameDocumentFragment(href) {
     if (typeof href !== 'string' || !href.includes('#')) return false;

@@ -8,7 +8,7 @@ const navigation = attachAboutNavigation();
 const root = document.documentElement;
 const currentVersion = root.dataset.currentVersion;
 const currentLabel = currentVersion.startsWith('__')
-  ? t("website:dev")
+  ? t('website:dev')
   : currentVersion.startsWith('v')
     ? currentVersion
     : `v${currentVersion}`;
@@ -28,9 +28,9 @@ historyLink.href = historyHref;
 historyLink.hidden = false;
 
 for (const label of document.querySelectorAll('[data-current-label]')) {
-  localizedText(label, () =>currentLabel);
+  localizedText(label, () => currentLabel);
 }
-localizedText(picker.options[0], () =>`${currentLabel} · current`);
+localizedText(picker.options[0], () => `${currentLabel} · current`);
 
 const savedClears = (campaign) => {
   try {
@@ -55,7 +55,7 @@ const savedClears = (campaign) => {
 function addOption(label, href) {
   const option = document.createElement('option');
   option.value = href;
-  localizedText(option, () =>label);
+  localizedText(option, () => label);
   picker.append(option);
 }
 
@@ -86,10 +86,18 @@ async function loadCatalogs() {
       addOption(`${record.version} · preserved`, href);
       available++;
     }
-    localizedText(status, () =>`${available} preserved build${available === 1 ? '' : 's'} · ${currentLabel} remains the default.`);
+    localizedText(
+      status,
+      () =>
+        `${available} preserved build${available === 1 ? '' : 's'} · ${currentLabel} remains the default.`,
+    );
   } catch {
     if (!navigation.current()) return;
-    localizedText(status, () =>`The current build is ready. Preserved builds will appear when the archive is available.`);
+    localizedText(
+      status,
+      () =>
+        `The current build is ready. Preserved builds will appear when the archive is available.`,
+    );
   }
 
   if (!navigation.current()) return;
@@ -130,7 +138,11 @@ async function loadCatalogs() {
         levelId: level.value,
         play: true,
       });
-      localizedText(packStatus, () =>`${pack.name} · ${level.textContent.replace(/^\d+ · /, '')} ready to install and play.`);
+      localizedText(
+        packStatus,
+        () =>
+          `${pack.name} · ${level.textContent.replace(/^\d+ · /, '')} ready to install and play.`,
+      );
     };
 
     packSelect.replaceChildren(
@@ -149,7 +161,7 @@ async function loadCatalogs() {
     if (!navigation.current()) return;
     packSelect.disabled = true;
     levelSelect.disabled = true;
-    localizedText(packStatus, () =>t("website:quickSelectorUnavailableUseAnyPackCardBelow"));
+    localizedText(packStatus, () => t('website:quickSelectorUnavailableUseAnyPackCardBelow'));
   }
 }
 await loadCatalogs();

@@ -24,7 +24,7 @@ const pixel = (ctx, color, x, y, w, h) => {
 /** Original16px mechanical silhouettes; native coordinates, no runtime state. */
 export function drawCombatPixelBody(ctx, { role, pose = 0 }, palette = {}) {
   if (!['scout', 'sentry'].includes(role) || ![0, 1, 2].includes(pose))
-    throw new TypeError(t("interface:chooseARegisteredCombatRoleAndPixelPose"));
+    throw new TypeError(t('interface:chooseARegisteredCombatRoleAndPixelPose'));
   const c = colors(palette);
   ctx.save();
   // Separate open brackets identify removable bodies rather than round keepers.
@@ -73,7 +73,7 @@ export function createCombatPresentation({
       const canvas = createCanvas();
       canvas.width = canvas.height = 16;
       const ctx = canvas.getContext('2d');
-      if (!ctx) throw new Error(t("interface:combatPixelPresentationRequiresA2dCanvas"));
+      if (!ctx) throw new Error(t('interface:combatPixelPresentationRequiresA2dCanvas'));
       drawCombatPixelBody(ctx, { role, pose }, palette);
       sprites.set(id, canvas);
     }

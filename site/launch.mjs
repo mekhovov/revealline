@@ -2,7 +2,11 @@
 // modules are blocked. Only the current origin's game is entered automatically.
 (() => {
   const host = globalThis;
-  const fallback = {"errors:thisIsADownloadedCopyChoosePlayOnlineOrStart": "This is a downloaded copy. Choose Play online, or start a local server to play this copy.", "errors:openYourArcade": "Open your arcade."};
+  const fallback = {
+    'errors:thisIsADownloadedCopyChoosePlayOnlineOrStart':
+      'This is a downloaded copy. Choose Play online, or start a local server to play this copy.',
+    'errors:openYourArcade': 'Open your arcade.',
+  };
   const t = (key) => host.RevealLineI18n?.t(key) || fallback[key];
   const doc = host.document;
   const scriptURL = doc.currentScript.src;
@@ -14,9 +18,10 @@
   game.href = target.href;
   if (current.protocol === 'file:') {
     game.hidden = true;
-    doc.getElementById('boot-title').textContent = t("errors:openYourArcade");
-    doc.getElementById('boot-status').textContent =
-      t("errors:thisIsADownloadedCopyChoosePlayOnlineOrStart");
+    doc.getElementById('boot-title').textContent = t('errors:openYourArcade');
+    doc.getElementById('boot-status').textContent = t(
+      'errors:thisIsADownloadedCopyChoosePlayOnlineOrStart',
+    );
     doc.getElementById('boot-local').open = true;
     return;
   }
