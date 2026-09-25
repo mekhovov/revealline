@@ -1,0 +1,96 @@
+- main:
+  - link "← Back to game":
+    - /url: ./
+  - heading "Take the game with you" [level=1]
+  - paragraph: Download once, then play without an internet connection. Recorded music is optional; game sounds and the procedural score are included.
+  - region "Install Reveal Line":
+    - heading "Install Reveal Line" [level=2]
+    - link "Open the app launcher":
+      - /url: http://127.0.0.1:8779/revealline/app/
+    - paragraph: Install from the launcher for one icon that keeps opening your selected edition. Installing the icon does not download the game.
+    - paragraph: On iPhone or iPad, use Safari’s Share → Add to Home Screen, then prepare downloads inside the installed app. To move browser progress, export a complete backup in Game data and import it inside the app.
+  - region "Game for offline play":
+    - heading "Game for offline play" [level=2]
+    - status: Game ready offline
+    - checkbox "All shipped gameplay (recommended)" [checked]
+    - text: All shipped gameplay (recommended)
+    - generic "Choose a smaller set of chapters"
+    - paragraph: "566.3 MiB download, including the shared runtime and original artwork; up to 568.1 MiB stored on this device. Up to 0.0 MiB remain. Allow 0.0 MiB additional storage while keeping an existing edition. Estimated free: 10240.0 MiB."
+    - button "Download game for offline play"
+    - button "Verify game files"
+    - button "Remove chosen chapter downloads"
+    - button "Pause download" [disabled]
+    - button "Cancel remaining download" [disabled]
+    - status: Download complete. Verified files are saved on this device.
+    - button "Keep downloads on this device"
+    - paragraph: Device storage can be cleared by the browser or the operating system. Keep a portable backup of your progress.
+    - paragraph: Removing chapters keeps the shared game, original reward artwork, imported files and saves. Restore a backup containing official chapter references after preparing the matching game downloads.
+    - button "Use this edition in the installed app" [active]
+    - status: This edition will open from the app icon at the next launch. Your previous edition and its progress are kept.
+  - region "Optional soundtracks":
+    - heading "Optional soundtracks" [level=2]
+    - status: "Soundtracks: 0 downloaded of 70."
+    - paragraph: Downloads are saved one recording at a time. Pause or close this page at any time; Resume reuses completed files. Downloads pause when this page is backgrounded. Audio settings keeps your playlists, assignments and mute preferences.
+    - paragraph: "338.5 MiB for all soundtracks · 338.5 MiB remaining · allow 350.0 MiB additional space. Estimated free: 10240.0 MiB."
+    - button "Download all soundtracks"
+    - heading "Holizna — Retro Wave 1" [level=3]
+    - paragraph: 50.1 MiB · 50.1 MiB remaining · allow 58.6 MiB free space
+    - button "Download / resume"
+    - button "Remove download"
+    - heading "Holizna — Retro Wave 2" [level=3]
+    - paragraph: 39.6 MiB · 39.6 MiB remaining · allow 48.1 MiB free space
+    - button "Download / resume"
+    - button "Remove download"
+    - heading "Rock & Metal" [level=3]
+    - paragraph: 23.0 MiB · 23.0 MiB remaining · allow 31.2 MiB free space
+    - button "Download / resume"
+    - button "Remove download"
+    - heading "3xBlast — Pop-Punk Chiptune" [level=3]
+    - paragraph: 25.9 MiB · 25.9 MiB remaining · allow 33.1 MiB free space
+    - button "Download / resume"
+    - button "Remove download"
+    - heading "Tracker & FM Arcade" [level=3]
+    - paragraph: 17.9 MiB · 17.9 MiB remaining · allow 24.3 MiB free space
+    - button "Download / resume"
+    - button "Remove download"
+    - heading "Metal — Extra Battles" [level=3]
+    - paragraph: 6.8 MiB · 6.8 MiB remaining · allow 10.5 MiB free space
+    - button "Download / resume"
+    - button "Remove download"
+    - heading "Metal & Synth-Metal — Preview" [level=3]
+    - paragraph: 37.9 MiB · 37.9 MiB remaining · allow 47.3 MiB free space
+    - button "Download / resume"
+    - button "Remove download"
+    - heading "Instrumental Rock — Preview" [level=3]
+    - paragraph: 24.8 MiB · 24.8 MiB remaining · allow 35.7 MiB free space
+    - button "Download / resume"
+    - button "Remove download"
+    - heading "Electronic & Dance — Preview" [level=3]
+    - paragraph: 49.9 MiB · 49.9 MiB remaining · allow 58.5 MiB free space
+    - button "Download / resume"
+    - button "Remove download"
+    - heading "90s Synth & FM — Preview" [level=3]
+    - paragraph: 26.9 MiB · 26.9 MiB remaining · allow 38.4 MiB free space
+    - button "Download / resume"
+    - button "Remove download"
+    - heading "90s Synth & FM — Short Cues — Preview" [level=3]
+    - paragraph: 7.0 MiB · 7.0 MiB remaining · allow 9.3 MiB free space
+    - button "Download / resume"
+    - button "Remove download"
+    - heading "Fakebit & Chiptune — Short Cues — Preview" [level=3]
+    - paragraph: 11.0 MiB · 11.0 MiB remaining · allow 13.1 MiB free space
+    - button "Download / resume"
+    - button "Remove download"
+    - heading "Fakebit & Chiptune — Preview" [level=3]
+    - paragraph: 12.7 MiB · 12.7 MiB remaining · allow 16.8 MiB free space
+    - button "Download / resume"
+    - button "Remove download"
+    - heading "Ambient — Short Cues — Preview" [level=3]
+    - paragraph: 2.7 MiB · 2.7 MiB remaining · allow 5.5 MiB free space
+    - button "Download / resume"
+    - button "Remove download"
+    - heading "Electronic & Dance — Short Cues — Preview" [level=3]
+    - paragraph: 2.5 MiB · 2.5 MiB remaining · allow 4.9 MiB free space
+    - button "Download / resume"
+    - button "Remove download"
+  - generic "Verification details"

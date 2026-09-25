@@ -36,7 +36,7 @@ async function files(directory, prefix = '') {
 }
 async function fixture(t) {
   const root = await fs.mkdtemp(path.join(os.tmpdir(), 'revealline-pages-'));
-  t.after(() => fs.rm(root, { recursive: true, force: true }));
+  t.after(() => fs.rm(root, { recursive: true, force: true, maxRetries: 5, retryDelay: 50 }));
   const git = (...args) => {
     const result = spawnSync('git', args, { cwd: root, encoding: 'utf8' });
     assert.equal(result.status, 0, result.stderr);

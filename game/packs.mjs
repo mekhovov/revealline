@@ -1,3 +1,4 @@
+import { createOfficialDownloads, pinOfficialFile } from './official-downloads.mjs';
 import {
   LEGACY_VERSIONS,
   ENCOUNTER_VERSIONS,
@@ -48,6 +49,9 @@ export const RELAY_PACK_VERSION = 'xonix-pack.v7';
 export const DIRECTIONAL_PACK_VERSION = 'xonix-pack.v8';
 export const SENTINEL_PACK_VERSION = 'xonix-pack.v9';
 export const PACK_LIBRARY_VERSION = 'xonix-pack-library.v1';
+export const OFFICIAL_PACK_LIBRARY_VERSION = 'revealline-pack-references.v1';
+const officialReferences = new WeakMap();
+export const isOfficialPack = (pack) => officialReferences.has(pack);
 export const PACK_LIBRARY_METADATA_VERSION = 'revealline-pack-library-metadata.v1';
 export const PACK_LIMITS = Object.freeze({
   maxBytes: 24 * 1024 * 1024,
@@ -552,11 +556,23 @@ function dependenciesValid(packs) {
   for (const id of byId.keys()) visit(id);
 }
 function libraryChecks(packs) {
-  required(packs.length <= PACK_LIMITS.installed, 'At most 12 expansion packs can be installed.');
+  const imported = packs.filter((pack) => !isOfficialPack(pack));
+  required(
+    imported.length <= PACK_LIMITS.installed,
+    'At most 12 expansion packs can be installed.',
+  );
+  required(
+    packs.length - imported.length <= 66 &&
+      packs
+        .filter(isOfficialPack)
+        .reduce((sum, pack) => sum + officialReferences.get(pack).bytes, 0) <=
+        52 * 1024 * 1024,
+    'Mounted official chapters exceed their memory budget.',
+  );
   dependenciesValid(packs);
   const library = { format: PACK_LIBRARY_VERSION, packs };
   // Includes byte budgets across every installed asset, before adoption/storage.
-  boundedPack(library, true);
+  boundedPack({ format: PACK_LIBRARY_VERSION, packs: imported }, true);
   createMasteryCatalog(catalogEntries(packs));
   return library;
 }
@@ -574,7 +590,20 @@ export function installPack(library, pack) {
     preparedLibraries.has(library) && preparedPacks.has(pack),
     'Install only a prepared pack into a prepared library.',
   );
-  return registeredLibrary([...library.packs.filter((p) => p.id !== pack.id), pack]);
+  let kept = library.packs.filter((p) => p.id !== pack.id);
+  if (isOfficialPack(pack)) {
+    const mounted = kept.filter(
+      (p) => isOfficialPack(p) && officialReferences.get(p).bytes > 65536,
+    );
+    kept = kept.filter(
+      (p) =>
+        !isOfficialPack(p) ||
+        officialReferences.get(p).bytes <= 65536 ||
+        officialReferences.get(pack).bytes <= 65536 ||
+        p === mounted.at(-1),
+    );
+  }
+  return registeredLibrary([...kept, pack]);
 }
 export function removePack(library, id) {
   required(preparedLibraries.has(library), 'Remove from a prepared pack library.');
@@ -583,7 +612,71 @@ export function removePack(library, id) {
 }
 export function exportPackLibrary(library) {
   required(preparedLibraries.has(library), 'Export a prepared pack library.');
-  return JSON.stringify(library);
+  return JSON.stringify(packLibrarySnapshot(library));
+}
+/** Small official references are independent of the imported-pack byte/slot budget. */
+export function packLibrarySnapshot(library) {
+  if (!preparedLibraries.has(library) || !library.packs.some(isOfficialPack)) return library;
+  return {
+    format: OFFICIAL_PACK_LIBRARY_VERSION,
+    packs: library.packs.filter((pack) => !isOfficialPack(pack)),
+    official: library.packs.filter(isOfficialPack).map((pack) => officialReferences.get(pack)),
+  };
+}
+async function checkedOfficial(
+  reference,
+  readOfficial = (hash) => createOfficialDownloads().read(hash),
+) {
+  exactKeys(reference, ['id', 'version', 'sha256', 'bytes'], 'official chapter');
+  required(
+    stableId(reference.id) &&
+      semver(reference.version) &&
+      /^[a-f0-9]{64}$/.test(reference.sha256) &&
+      Number.isSafeInteger(reference.bytes) &&
+      reference.bytes > 0 &&
+      reference.bytes <= PACK_LIMITS.maxBytes,
+    'Invalid official chapter reference.',
+  );
+  const blob = await readOfficial(reference.sha256);
+  required(
+    blob && blob.size === reference.bytes,
+    'This saved chapter needs its verified official game download. Prepare the matching chapter before restoring this save; existing data is kept.',
+  );
+  const checked = packChecks(JSON.parse(await blob.text()));
+  required(
+    checked.pack.id === reference.id && checked.pack.version === reference.version,
+    'Official chapter identity differs.',
+  );
+  await pinOfficialFile(reference.sha256, `chapter:${reference.sha256}`);
+  officialReferences.set(checked.pack, freeze({ ...reference }));
+  return checked;
+}
+export async function prepareOfficialPack(
+  reference,
+  { decodeImage = browserDecodeImage, readOfficial } = {},
+) {
+  return decodeCheckedPack(await checkedOfficial(reference, readOfficial), decodeImage);
+}
+function checkedStoredLibrary(candidate) {
+  const value = boundedPack(packLibrarySnapshot(candidate), true);
+  if (value.format !== OFFICIAL_PACK_LIBRARY_VERSION) return checkedLibrary(value);
+  exactKeys(value, ['format', 'packs', 'official'], 'official chapter library');
+  required(
+    Array.isArray(value.official) &&
+      value.official.length <= 66 &&
+      value.official.reduce(
+        (sum, ref) => sum + (Number.isSafeInteger(ref?.bytes) ? ref.bytes : Infinity),
+        0,
+      ) <=
+        52 * 1024 * 1024,
+    'Invalid mounted chapter count or byte budget.',
+  );
+  const checked = checkedLibrary({ format: PACK_LIBRARY_VERSION, packs: value.packs });
+  return (async () => {
+    for (const reference of value.official) checked.push(await checkedOfficial(reference));
+    libraryChecks(checked.map((entry) => entry.pack));
+    return checked;
+  })();
 }
 function checkedLibrary(candidate) {
   const value = boundedPack(candidate, true);
@@ -600,7 +693,8 @@ function checkedLibrary(candidate) {
   return checked;
 }
 export async function importPackLibrary(candidate, { decodeImage = browserDecodeImage } = {}) {
-  const checked = checkedLibrary(candidate);
+  const pending = checkedStoredLibrary(candidate);
+  const checked = Array.isArray(pending) ? pending : await pending;
   const packs = [];
   for (const candidate of checked)
     packs.push((await decodeCheckedPack(candidate, decodeImage)).pack);
@@ -614,7 +708,8 @@ export async function importPackLibrary(candidate, { decodeImage = browserDecode
  * must still re-resolve and prepare the exact installed edition independently.
  */
 export async function inspectPackLibraryMetadata(candidate) {
-  const checked = checkedLibrary(candidate);
+  const pending = checkedStoredLibrary(candidate);
+  const checked = Array.isArray(pending) ? pending : await pending;
   const packs = [];
   for (const { pack } of checked) {
     const bytes = new TextEncoder().encode(canonicalJSON(pack));
