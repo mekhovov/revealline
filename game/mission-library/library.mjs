@@ -184,6 +184,14 @@ export function createMissionLibrary(sources = []) {
       });
     return readiness(owner.availability(entry, mode));
   }
+  function presentation(row) {
+    const { owner, entry } = requireRow(row);
+    const value = owner.presentation?.(entry);
+    const translated = {};
+    for (const field of ['name', 'campaignTitle', 'edition', 'hook'])
+      translated[field] = typeof value?.[field] === 'string' ? value[field] : row[field];
+    return Object.freeze(translated);
+  }
   for (const source of sources) register(source);
   return Object.freeze({
     get missions() {
@@ -218,20 +226,23 @@ export function createMissionLibrary(sources = []) {
         .trim()
         .split(/\s+/u)
         .filter(Boolean);
-      return rows.filter(
-        (row) =>
+      return rows.filter((row) => {
+        const display = words.length ? presentation(row) : row;
+        return (
           row.modes.includes(mode) &&
           (!collection || row.collection === collection) &&
           (!campaign || row.campaignKey === campaign) &&
           (!tag || row.tags.includes(tag)) &&
           words.every((word) =>
-            `${row.name} ${row.campaignTitle} ${row.edition} ${row.tags.join(' ')} ${row.rules} ${row.hook}`
+            `${display.name} ${display.campaignTitle} ${display.edition} ${display.hook} ${row.name} ${row.campaignTitle} ${row.edition} ${row.tags.join(' ')} ${row.rules} ${row.hook}`
               .normalize('NFKC')
               .toLocaleLowerCase()
               .includes(word),
-          ),
-      );
+          )
+        );
+      });
     },
+    presentation,
     availability,
     progress(row, mode) {
       const { owner, entry } = requireRow(row, mode);

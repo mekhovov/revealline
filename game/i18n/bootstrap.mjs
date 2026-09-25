@@ -93,8 +93,8 @@
       // A label may acquire a select, icon or input after its caption is bound.
       // Language changes update the owned text node, preserving those controls.
       const owned = textNodes.get(element)?.deref();
-      if (!assigning && owned) {
-        if (owned.parentNode === element) owned.textContent = text;
+      if (!assigning && textNodes.has(element)) {
+        if (owned?.parentNode === element) owned.textContent = text;
       } else if (element.ownerDocument?.createTextNode && typeof element.append === 'function') {
         element.textContent = '';
         const node = element.ownerDocument.createTextNode(text);
@@ -180,6 +180,9 @@
         elements.delete(ref);
         continue;
       }
+      // Retired cards may still be retained by an asynchronous owner. Their
+      // producers must not read a stale library or revive detached controls.
+      if (element.isConnected === false) continue;
       for (const [field, value] of bindings.get(element) || []) apply(element, field, value);
     }
     for (const callback of listeners) callback(getLocale());
