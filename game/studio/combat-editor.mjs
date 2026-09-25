@@ -1,3 +1,5 @@
+import { localizedMessage, localizedText } from '../i18n/index.mjs';
+import { editorMessageError, showEditorFailure } from './editor-copy.mjs';
 import {
   prepareCombatAuthoring,
   setMissionCombatEnabled,
@@ -23,36 +25,41 @@ export function createCombatEditor({ document, getSource, getMission, apply }) {
     $('enabled').disabled = !prepared || !!team;
     $('apply').disabled = !prepared || !!team;
     $('enabled').checked = mission?.combat?.enabled ?? false;
-    $('state').textContent = team
-      ? 'Optional combat is not qualified for Team, including disabled descriptors.'
-      : prepared
-        ? `Combat ${mission.combat.enabled ? 'enabled' : 'disabled'} in this draft edition. Actors are ${mission.combat.enabled ? 'active' : 'authored but inactive'}.`
-        : 'Combat authoring is not prepared for this mission. Prepare a local catalogue-v8 edition first; no actors are inserted.';
-    $('result').textContent =
-      'Apply changes explicitly. Undo is available; nothing is published. Enabled gameplay preview awaits qualified actor/projectile presentation.';
+    localizedText(
+      $('state'),
+      team
+        ? localizedMessage('tools:studio.combat.teamUnavailable')
+        : prepared
+          ? localizedMessage(
+              mission.combat.enabled
+                ? 'tools:studio.combat.enabled'
+                : 'tools:studio.combat.disabled',
+            )
+          : localizedMessage('tools:studio.combat.notPrepared'),
+    );
+    localizedText($('result'), localizedMessage('tools:studio.combat.applyFirst'));
   }
   function commit(prepare) {
     try {
-      if (revision !== context())
-        throw new Error('The draft context changed. Refresh before applying combat fields.');
+      if (revision !== context()) throw editorMessageError('errors:studio.combat.contextChanged');
       const mission = getMission();
-      if (!mission || mission.modes.includes('team')) throw new Error('Choose a non-Team mission.');
+      if (!mission || mission.modes.includes('team'))
+        throw editorMessageError('errors:studio.combat.nonTeam');
       const next = prepare
         ? prepareCombatAuthoring(getSource(), mission.id)
         : setMissionCombatEnabled(getSource(), mission.id, $('enabled').checked);
       if (apply(next) === false) return;
       revision = null;
       sync();
-      $('result').textContent =
-        'Combat edition applied to the local draft. All supported modes and presets compiled. Undo is available; no publication.';
+      localizedText($('result'), localizedMessage('tools:studio.combat.applied'));
     } catch (error) {
-      $('result').textContent = `Not applied: ${error.message}`;
+      showEditorFailure($('result'), error);
     }
   }
   $('prepare').onclick = () => commit(true);
   $('apply').onclick = () => commit(false);
   $('enabled').onchange = () => {
-    $('result').textContent = 'Unapplied combat selection. Apply to create a new draft edition.';
+    localizedText($('result'), localizedMessage('tools:studio.combat.unapplied'));
   };
   return { sync };
 }
