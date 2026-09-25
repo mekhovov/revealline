@@ -1,3 +1,8 @@
+import {
+  gameplayTuningDescription,
+  gameplayDifficultyLabel,
+  journeyPresetDescription,
+} from '../ui/gameplay-copy.mjs';
 import { contentText } from '../i18n/content.mjs';
 import { t, localizedText, localizedOption } from '../i18n/index.mjs';
 import { attachCouchTouch } from '../ui/couch-touch.mjs';
@@ -18,11 +23,7 @@ import { loadAuthoredJourneyRoute } from '../content-design/route-loader.mjs';
 import { DEFAULT_JOURNEY_ROUTES, resolveJourneyRequest } from '../content-design/default-entry.mjs';
 import { authoredJourneyUsesActorMaterials } from '../content-design/mode-href.mjs';
 import { createJourneyPreferences } from '../journey/preferences.mjs';
-import {
-  createGameplayTuningController,
-  applyGameplayTuning,
-  gameplayTuningDescription,
-} from '../gameplay-tuning.mjs';
+import { createGameplayTuningController, applyGameplayTuning } from '../gameplay-tuning.mjs';
 import { mountGameplayTuning } from '../ui/gameplay-tuning.mjs';
 import { journeyDifficultyCatalog, journeyPreset } from '../content-design/catalogs.mjs';
 import { createJourneyProfileStore } from '../journey/profile.mjs';
@@ -127,7 +128,7 @@ const audioPreferences = createAudioPreferences({
 });
 const renderMasterPreferences = ({ muted, volume }) => {
   localizedText($('race-audio'), () =>
-    muted ? t('interface:unmuteSound') : t('interface:muteSound'),
+    muted ? t('common:audio.unmute') : t('interface:muteSound'),
   );
   localizedText($('race-quick-sound'), () =>
     muted ? t('interface:soundOff') : t('interface:soundOn'),
@@ -1772,17 +1773,14 @@ try {
     const tuning = gameplayTuning.snapshot(difficulty);
     const preset =
       candidateJourney && journeyPreset(difficulty, authoredRoute.source.difficultyCatalogId);
-    const rules = preset
-      ? ['gameplay-pressure.v2', 'gameplay-pressure.v3', 'gameplay-pressure.v4'].includes(
-          tuning.version,
-        )
-        ? `${preset.lives} mission lives; ${preset.failingDeadline ? t('interface:deadlinesOnlyOnAuthoredTimedMissions') : 'no failing countdown'}.`
-        : preset.description
-      : t('interface:authoredLivesAndObjectivesStayUnchanged');
-    localizedText(
-      $('race-journey-difficulty-note'),
-      () =>
-        `Next fresh race: ${difficulty}. ${gameplayTuningDescription(tuning)} ${rules} Both current boards keep their rules.`,
+    localizedText($('race-journey-difficulty-note'), () =>
+      t('gameplay:tuning.raceNote', {
+        difficulty: gameplayDifficultyLabel(difficulty),
+        description: gameplayTuningDescription(tuning),
+        rules: preset
+          ? journeyPresetDescription(preset, tuning.version)
+          : t('interface:authoredLivesAndObjectivesStayUnchanged'),
+      }),
     );
   }
   if (candidateJourney) {

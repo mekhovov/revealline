@@ -133,10 +133,10 @@
       <div class="toolbar" aria-label="Draft actions" data-i18n-aria-label="interface:draftActions">
         <button id="undo" disabled data-i18n="interface:undo">Undo</button>
         <button id="redo" disabled data-i18n="interface:redo">Redo</button>
-        <button id="save" data-i18n="interface:saveCheckpointRetry">Save checkpoint / retry</button>
-        <button id="export" data-i18n="interface:exportBackup">Export backup</button>
+        <button id="save" data-i18n="common:editor.saveCheckpoint">Save checkpoint / retry</button>
+        <button id="export" data-i18n="common:actions.exportBackup">Export backup</button>
         <label class="file-button"
-          ><span data-i18n="interface:inspectImport">Inspect import</span
+          ><span data-i18n="common:editor.inspectImport">Inspect import</span
           ><input id="import" type="file" accept="application/json,.json"
         /></label>
         <a class="workbench-jump" href="#map-workbench" data-i18n="interface:jumpToMap"
@@ -1126,7 +1126,7 @@
         >
           <p class="eyebrow" data-i18n="interface:project">PROJECT</p>
           <label
-            ><span data-i18n="interface:localProjectId">Local project ID</span
+            ><span data-i18n="common:editor.localProjectId">Local project ID</span
             ><input id="project-id" value="my-journey" maxlength="80"
           /></label>
           <label
@@ -1141,7 +1141,7 @@
           /></label>
           <div class="pair">
             <button id="load" data-i18n="interface:inspectSaved">Inspect saved</button
-            ><button id="new" data-i18n="interface:newProject">New project</button>
+            ><button id="new" data-i18n="common:editor.newProject">New project</button>
           </div>
           <p
             class="note"
@@ -2344,7 +2344,7 @@
             </details>
           </details>
           <details id="structure-editor">
-            <summary data-i18n="interface:organizeMissionsCampaignsPacks">
+            <summary data-i18n="common:editor.organizeContent">
               Organize missions, campaigns & packs
             </summary>
             <p class="note" data-i18n="interface:chooseAnUntestedSoloVersusIslandOrATwoSeat">
@@ -2445,7 +2445,7 @@
                   >Type the exact item ID to delete</span
                 ><input id="item-confirm" maxlength="80" autocomplete="off" spellcheck="false"
               /></label>
-              <button id="item-apply" type="submit" data-i18n="interface:validateApplyStructure">
+              <button id="item-apply" type="submit" data-i18n="common:editor.applyStructure">
                 Validate & apply structure
               </button>
             </form>
@@ -2470,7 +2470,7 @@
           ><textarea id="source" spellcheck="false" rows="22"></textarea>
           <div class="pair">
             <button id="validate" data-i18n="interface:inspectSource">Inspect source</button
-            ><button id="apply" disabled data-i18n="interface:applyInspectedSource">
+            ><button id="apply" disabled data-i18n="common:editor.applyInspectedSource">
               Apply inspected source
             </button>
           </div>
