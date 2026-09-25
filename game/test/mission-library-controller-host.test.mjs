@@ -373,14 +373,24 @@ for (const mode of ['solo', 'versus', 'team'])
       assert.equal(p.renders[0].level.id, 'first-return');
       assert.equal(p.renders[1].level.id, 'first-return');
     } else assert.equal(p.$('coop-level').value, 'twin-landings');
-    const edition = mode === 'team' ? 'team-trail-impact-originals-1' : 'whole-spatial-v10';
+    const edition = mode === 'team' ? 'team-trail-impact-originals-1' : 'whole-spatial-v11';
     const card = [...p.$('journey-cards').children].find((row) => {
       const identity = JSON.parse(row.dataset.missionId);
       return identity[0] === `journey:${edition}` && identity[1] === edition;
     });
     assert(card, 'The normal host offers its current, not Classic, mission edition.');
     if (mode !== 'team') {
-      const prior = [...p.$('journey-cards').children].filter((row) => {
+      const priorV10 = [...p.$('journey-cards').children].filter((row) => {
+        const identity = JSON.parse(row.dataset.missionId);
+        return (
+          identity[0] === 'journey:whole-spatial-v10' &&
+          identity[1] === 'whole-spatial-v10' &&
+          ['island-outpost', 'long-way-home', 'horizon-remix'].includes(
+            identity[3].split('/').at(-1),
+          )
+        );
+      });
+      const priorV9 = [...p.$('journey-cards').children].filter((row) => {
         const identity = JSON.parse(row.dataset.missionId);
         return (
           identity[0] === 'journey:whole-spatial-v9' &&
@@ -390,7 +400,12 @@ for (const mode of ['solo', 'versus', 'team'])
           )
         );
       });
-      assert.equal(prior.length, 3, 'The normal selector exposes exactly three prior v9 cards.');
+      assert.equal(
+        priorV10.length,
+        3,
+        'The normal selector exposes exactly three prior v10 cards.',
+      );
+      assert.equal(priorV9.length, 3, 'The normal selector retains the three prior v9 cards.');
     }
     assert.equal(card.querySelector('.journey-card-action').textContent, 'Play');
     assert.equal(card.disabled, false);

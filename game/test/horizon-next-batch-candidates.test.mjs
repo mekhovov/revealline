@@ -2,12 +2,12 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import {
-  createSpatialNextBatchCandidates,
-  SPATIAL_NEXT_BATCH_REVISION,
-  SPATIAL_NEXT_BATCH_SELECTIONS,
-  SPATIAL_NEXT_BATCH_SOURCES,
-} from '../content-design/spatial-next-batch-candidates.mjs';
-import { createWholeErosionReviewCandidates } from '../content-design/whole-spatial-candidates.mjs';
+  createHorizonNextBatchCandidates,
+  HORIZON_NEXT_BATCH_REVISION,
+  HORIZON_NEXT_BATCH_SELECTIONS,
+  HORIZON_NEXT_BATCH_SOURCES,
+} from '../content-design/horizon-next-batch-candidates.mjs';
+import { createSpatialNextBatchCandidates } from '../content-design/spatial-next-batch-candidates.mjs';
 import { compileContentProject, resolveMission } from '../content-design/project.mjs';
 import { inspectMissionTopology } from '../content-design/diagnostics.mjs';
 import { createAuthoredJourneyRoute } from '../content-design/route.mjs';
@@ -28,49 +28,12 @@ import {
 } from '../replay.mjs';
 import { createDuel, resumeDuel, stepDuel, UNTIMED_DUEL_PROTOCOL } from '../multiplayer.mjs';
 
-const IDS = SPATIAL_NEXT_BATCH_SELECTIONS.map((item) => item.id);
+const IDS = HORIZON_NEXT_BATCH_SELECTIONS.map((item) => item.id);
 const PRESETS = ['gentle', 'standard', 'expert'];
 const CONTROLS = ['immediate', 'grid-center'];
-const RESERVED_BY_OPEN_SPATIAL_PRS = new Set([
-  'two-bays',
-  'neon-remix',
-  'broken-yard',
-  'read-the-arrows',
-  'twin-receivers',
-  'crossing-complete',
-  'cross-stitch-crossings',
-  'rushnyk-bands',
-  'pysanka-sections',
-  'four-motor-landings',
-  'circuit-lanes',
-  'twin-lens-chambers',
-  'toolbench-weave',
-  'dnipro-crossings',
-  'two-districts',
-  'two-ways-home',
-  'second-approach',
-  'windbreak-weave',
-  'garden-refuges',
-  'four-quarters',
-  'survey-markers',
-  'split-berths',
-  'stepped-return',
-  'dogleg-return',
-  'staggered-circuit',
-  'bank-the-crossing',
-  'five-anchors',
-  'dogleg-transfer',
-  'first-link',
-  'three-compounds',
-  'spiral-stores',
-  'nested-relays',
-  'watchpost-exchange',
-  'compass-array',
-  'outer-loop',
-]);
-const oldSource = createWholeErosionReviewCandidates({ artwork: true });
-const source = createSpatialNextBatchCandidates({ artwork: true });
-const oldProject = compileContentProject(oldSource);
+const beforeSource = createSpatialNextBatchCandidates({ artwork: true });
+const source = createHorizonNextBatchCandidates({ artwork: true });
+const beforeProject = compileContentProject(beforeSource);
 const project = compileContentProject(source);
 
 const mission = (compiled, id) => compiled.missions.find((item) => item.id === id);
@@ -81,42 +44,44 @@ const map = (compiled, id) => {
   );
 };
 
-test('selection is exactly three existing, culturally separated, unclaimed identities', () => {
-  assert.deepEqual(IDS, ['stepping-stones', 'return-pocket', 'neutral-ground']);
+test('selection is exactly three attributed Horizon identities with distinct construction studies', () => {
+  assert.deepEqual(IDS, ['island-outpost', 'long-way-home', 'horizon-remix']);
   assert.equal(new Set(IDS).size, 3);
-  assert(IDS.every((id) => oldSource.missions.some((item) => item.id === id)));
-  assert(IDS.every((id) => !RESERVED_BY_OPEN_SPATIAL_PRS.has(id)));
-  for (const selection of SPATIAL_NEXT_BATCH_SELECTIONS) {
+  for (const selection of HORIZON_NEXT_BATCH_SELECTIONS) {
+    assert(beforeSource.missions.some((item) => item.id === selection.id));
     assert.equal(selection.approaches.length, 2);
     assert.equal(new Set(selection.approaches).size, 2);
     assert(selection.pressurePoints.length >= 3 && selection.pressurePoints.length <= 5);
-    assert(selection.sourceIds.every((id) => SPATIAL_NEXT_BATCH_SOURCES[id]));
+    assert(selection.sourceIds.every((id) => HORIZON_NEXT_BATCH_SOURCES[id]));
   }
   assert.deepEqual(
-    SPATIAL_NEXT_BATCH_SELECTIONS.map((item) => item.sourceIds),
-    [
-      ['lemkoPysanka', 'pysankaTradition'],
-      ['podilliaWovenRushnyk', 'podilliaEmbroideredRushnyk'],
-      ['petrykivka'],
-    ],
+    HORIZON_NEXT_BATCH_SELECTIONS.map((item) => item.sourceIds),
+    [['vyzhenkaJoiningShirt'], ['verkhovynaShoulderShirt'], ['lemkoFloralPysanka']],
   );
-  assert(!JSON.stringify(SPATIAL_NEXT_BATCH_SOURCES).toLowerCase().includes('vyshyvanka'));
-  for (const item of Object.values(SPATIAL_NEXT_BATCH_SOURCES)) {
-    assert.match(item.url, /^https:\/\/(honchar\.org\.ua|ich\.unesco\.org)\//);
-    assert.match(
-      item.adaptationBoundary,
-      /(no |does not |do not |not a ).*(cop|reproduc|transcrib)/i,
-    );
+  const vyzhenka = HORIZON_NEXT_BATCH_SOURCES.vyzhenkaJoiningShirt;
+  const verkhovyna = HORIZON_NEXT_BATCH_SOURCES.verkhovynaShoulderShirt;
+  assert.notEqual(vyzhenka.registrationNumber, verkhovyna.registrationNumber);
+  assert(vyzhenka.observedConstruction.includes('double-prutyk seam along joined panels'));
+  assert(
+    verkhovyna.observedConstruction.includes(
+      'embroidered detail applied over the shoulder-to-sleeve join',
+    ),
+  );
+  assert(!JSON.stringify(vyzhenka).includes('gathered collar and cuffs'));
+  assert(!JSON.stringify(verkhovyna).includes('double-prutyk'));
+  for (const item of Object.values(HORIZON_NEXT_BATCH_SOURCES)) {
+    assert.match(item.url, /^https:\/\/honchar\.org\.ua\//);
+    assert.match(item.adaptationBoundary, /no .*cop/i);
   }
 });
 
 for (const artwork of [false, true])
-  test(`copy-on-write changes only three missions and their owning dependency records: artwork=${artwork}`, () => {
-    const before = createWholeErosionReviewCandidates({ artwork });
+  test(`copy-on-write changes only three missions and two owning campaign/pack records: artwork=${artwork}`, () => {
+    const before = createSpatialNextBatchCandidates({ artwork });
     const snapshot = structuredClone(before);
-    const revised = createSpatialNextBatchCandidates({ artwork });
-    assert.deepEqual(createWholeErosionReviewCandidates({ artwork }), snapshot);
-    assert.equal(revised.revision, SPATIAL_NEXT_BATCH_REVISION);
+    const revised = createHorizonNextBatchCandidates({ artwork });
+    assert.deepEqual(createSpatialNextBatchCandidates({ artwork }), snapshot);
+    assert.equal(revised.revision, HORIZON_NEXT_BATCH_REVISION);
     assert.equal(revised.policyId, before.policyId);
     assert.equal(revised.actorCatalogId, before.actorCatalogId);
     assert.equal(revised.difficultyCatalogId, before.difficultyCatalogId);
@@ -131,7 +96,7 @@ for (const artwork of [false, true])
       const previous = before.missions.find((item) => item.id === current.id);
       if (!IDS.includes(current.id)) assert.deepEqual(current, previous);
       else {
-        assert.equal(current.revision, SPATIAL_NEXT_BATCH_REVISION);
+        assert.equal(current.revision, HORIZON_NEXT_BATCH_REVISION);
         for (const key of [
           'id',
           'name',
@@ -147,51 +112,53 @@ for (const artwork of [false, true])
         ])
           assert.deepEqual(current[key], previous[key], `${current.id}/${key}`);
         assert.deepEqual(current.design.difficulty, previous.design.difficulty);
+        assert.deepEqual(current.design.introduces, previous.design.introduces);
+        assert.deepEqual(current.design.practices, previous.design.practices);
+        assert.deepEqual(current.design.combines, previous.design.combines);
       }
     }
 
-    const owningCampaigns = new Set(['horizon-school', 'border-bloom', 'signal-gardens']);
-    const owningPacks = new Set(['journey-opening', 'journey-border', 'journey-signal']);
+    const owningCampaigns = new Set(['horizon-school', 'horizon-remixes']);
+    const owningPacks = new Set(['journey-opening', 'opening-remixes']);
     for (const current of revised.campaigns) {
       const previous = before.campaigns.find((item) => item.id === current.id);
       if (owningCampaigns.has(current.id)) {
-        assert.equal(current.revision, SPATIAL_NEXT_BATCH_REVISION);
+        assert.equal(current.revision, HORIZON_NEXT_BATCH_REVISION);
         assert.deepEqual(current.missionIds, previous.missionIds);
       } else assert.deepEqual(current, previous);
     }
     for (const current of revised.packs) {
       const previous = before.packs.find((item) => item.id === current.id);
       if (owningPacks.has(current.id)) {
-        assert.equal(current.revision, SPATIAL_NEXT_BATCH_REVISION);
+        assert.equal(current.revision, HORIZON_NEXT_BATCH_REVISION);
         assert.deepEqual(current.campaignIds, previous.campaignIds);
       } else assert.deepEqual(current, previous);
     }
   });
 
-test('topology has one reachable field and no single-exit component', () => {
-  const expectedWalls = { 'stepping-stones': 0, 'return-pocket': 0, 'neutral-ground': 0 };
+test('early-Horizon topology stays foundation-only, connected and no easier by permanent area', () => {
   const expectedBudgets = {
-    'stepping-stones': {
-      oldFoundations: 64,
-      newFoundations: 62,
-      oldEligible: 2316,
-      newEligible: 2318,
+    'island-outpost': {
+      oldFoundations: 25,
+      newFoundations: 24,
+      oldEligible: 2355,
+      newEligible: 2356,
     },
-    'return-pocket': {
-      oldFoundations: 165,
-      newFoundations: 154,
-      oldEligible: 2215,
-      newEligible: 2226,
+    'long-way-home': {
+      oldFoundations: 124,
+      newFoundations: 122,
+      oldEligible: 2256,
+      newEligible: 2258,
     },
-    'neutral-ground': {
-      oldFoundations: 145,
-      newFoundations: 140,
-      oldEligible: 2235,
-      newEligible: 2240,
+    'horizon-remix': {
+      oldFoundations: 140,
+      newFoundations: 136,
+      oldEligible: 2240,
+      newEligible: 2244,
     },
   };
   for (const id of IDS) {
-    const previous = map(oldProject, id);
+    const previous = map(beforeProject, id);
     const current = map(project, id);
     assert.notEqual(current.geometryIdentity, previous.geometryIdentity);
     assert.deepEqual(
@@ -208,16 +175,9 @@ test('topology has one reachable field and no single-exit component', () => {
       Math.ceil(current.geometry.eligibleCount * coverage) >=
         Math.ceil(previous.geometry.eligibleCount * coverage),
     );
-    assert.equal(current.source.walls.length, expectedWalls[id]);
-    assert.deepEqual(current.source.terrain, previous.source.terrain);
-    assert.deepEqual(current.source.speedZones, previous.source.speedZones);
-    assert.deepEqual(
-      current.geometry.terrain.map((kind, index) => (current.geometry.eligible[index] ? kind : 0)),
-      previous.geometry.terrain.map((kind, index) =>
-        previous.geometry.eligible[index] ? kind : 0,
-      ),
-      `${id}/effective terrain`,
-    );
+    assert.deepEqual(current.source.walls, []);
+    assert.deepEqual(current.source.terrain, []);
+    assert.deepEqual(current.source.speedZones, undefined);
     assert.equal(current.geometry.fieldComponents.length, 1);
     assert(current.geometry.safeComponents.every((component) => component.departures.length >= 4));
     assert.deepEqual(
@@ -231,14 +191,13 @@ test('topology has one reachable field and no single-exit component', () => {
   }
 });
 
-test('current collision actors, scaling, bonuses and movement rules are exact', () => {
-  const roles = new Set(['field-keeper', 'frontier-patrol', 'perimeter-patrol']);
+test('movement rules, collision enemies, counts, scaling and non-geometry content remain exact', () => {
   for (const id of IDS)
     for (const difficulty of PRESETS) {
-      const before = resolveMission(oldProject, id, { difficulty, mode: 'solo' });
+      const before = resolveMission(beforeProject, id, { difficulty, mode: 'solo' });
       const solo = resolveMission(project, id, { difficulty, mode: 'solo' });
       const versus = resolveMission(project, id, { difficulty, mode: 'versus' });
-      assert(mission(project, id).actors.every((actor) => roles.has(actor.role)));
+      assert(mission(project, id).actors.every((actor) => actor.role === 'field-keeper'));
       assert.deepEqual(solo.level.enemies, before.level.enemies);
       assert.deepEqual(solo.level.rules, before.level.rules);
       assert.deepEqual(solo.level.terrain, before.level.terrain);
@@ -271,45 +230,36 @@ function closeRoute(run, id, approach, sidecars = {}) {
       (state) => state.events.some((event) => event.type === 'cut.closed'),
       sidecars,
     );
-  if (id === 'stepping-stones' && approach === 'near-spikelet-first') close('down');
-  else if (id === 'stepping-stones' && approach === 'sun-landing-first') {
-    position('right', (state) => state.player.x >= 35.4);
-    close('down');
-  } else if (id === 'return-pocket' && approach === 'upper-band-first') {
-    position('up', (state) => state.player.y <= 11.6);
-    position('right', (state) => state.player.x >= 40.4);
-    close('up');
-  } else if (id === 'return-pocket' && approach === 'lower-band-first') {
-    position('down', (state) => state.player.y >= 24.4);
-    position('right', (state) => state.player.x >= 40.4);
-    close('down');
-  } else if (id === 'neutral-ground' && approach === 'slow-bed-first') {
-    // Readable counterplay: commit once the west keeper is above and travelling
-    // away from the horizontal trail, rather than relying on a fixed delay.
-    position(null, (state) => {
-      const keeper = state.enemies.find((enemy) => enemy.id === 'west');
-      return keeper.y <= 14 && keeper.vy < 0;
-    });
-    close('left');
-  } else if (id === 'neutral-ground' && approach === 'upper-branch-first') {
-    position('up', (state) => state.player.y <= 8.6);
+  if (id === 'island-outpost' && approach === 'west-join-first') close('left');
+  else if (id === 'island-outpost' && approach === 'east-double-prutyk-first') {
+    position('up', (state) => state.player.y <= 12.6);
     close('right');
-  } else throw new TypeError(`Unknown authored route ${id}/${approach}`);
+  } else if (id === 'long-way-home' && approach === 'upper-shoulder-first') {
+    position('up', (state) => state.player.y <= 14.6);
+    close('right');
+  } else if (id === 'long-way-home' && approach === 'lower-gather-first') {
+    position('down', (state) => state.player.y >= 26.4);
+    close('right');
+  } else if (id === 'horizon-remix' && approach === 'spiral-shoulder-first') {
+    position('right', (state) => state.player.x >= 37.4);
+    close('up');
+  } else if (id === 'horizon-remix' && approach === 'outer-petal-first') close('left');
+  else throw new TypeError(`Unknown authored route ${id}/${approach}`);
 }
 
 const EXPECTED_CLAIMS = Object.freeze({
-  'near-spikelet-first': 8,
-  'sun-landing-first': 14,
-  'upper-band-first': 9,
-  'lower-band-first': 9,
-  'slow-bed-first': 24,
-  'upper-branch-first': 31,
+  'west-join-first': 16,
+  'east-double-prutyk-first': 11,
+  'upper-shoulder-first': 13,
+  'lower-gather-first': 27,
+  'spiral-shoulder-first': 6,
+  'outer-petal-first': 17,
 });
 
-for (const selection of SPATIAL_NEXT_BATCH_SELECTIONS)
+for (const selection of HORIZON_NEXT_BATCH_SELECTIONS)
   for (const difficulty of PRESETS)
     for (const turnPolicy of CONTROLS)
-      test(`${selection.id} executes both documented approaches on ${difficulty}/${turnPolicy} across seeds`, () => {
+      test(`${selection.id} executes both approaches on ${difficulty}/${turnPolicy} across seeds`, () => {
         for (const approach of selection.approaches)
           for (const seed of [1, 2]) {
             const manifest = resolveMission(project, selection.id, { difficulty });
@@ -335,7 +285,7 @@ for (const id of IDS)
       }
     });
 
-for (const selection of SPATIAL_NEXT_BATCH_SELECTIONS)
+for (const selection of HORIZON_NEXT_BATCH_SELECTIONS)
   for (const approach of selection.approaches)
     test(`${selection.id}/${approach} is replay-stable and equal on both Versus boards`, () => {
       const manifest = resolveMission(project, selection.id, { difficulty: 'standard' });
@@ -357,15 +307,15 @@ for (const selection of SPATIAL_NEXT_BATCH_SELECTIONS)
       assert.deepEqual(authoritativeCheckpoint(run), authoritativeCheckpoint(duel.runs[0]));
     });
 
-test('registered successor preserves v9, authored Next order and same-edition navigation', async () => {
-  const current = createAuthoredJourneyRoute('whole-spatial-v10');
-  const previous = createAuthoredJourneyRoute('whole-spatial-v9');
+test('registered v11 successor preserves v10 and authored order with isolated profile/session keys', async () => {
+  const current = createAuthoredJourneyRoute('whole-spatial-v11');
+  const previous = createAuthoredJourneyRoute('whole-spatial-v10');
   assert.deepEqual(await loadAuthoredJourneyRoute(current.id), current);
-  assert.equal(current.profileKey, 'journey-whole-spatial-v10');
-  assert.equal(current.sessionKey, 'revealline.suspended.journey-whole-spatial.v10');
+  assert.equal(current.profileKey, 'journey-whole-spatial-v11');
+  assert.equal(current.sessionKey, 'revealline.suspended.journey-whole-spatial.v11');
   assert.notEqual(current.profileKey, previous.profileKey);
   assert.notEqual(current.sessionKey, previous.sessionKey);
-  assert.deepEqual(previous.source, createWholeErosionReviewCandidates({ artwork: true }));
+  assert.deepEqual(previous.source, beforeSource);
   assert.deepEqual(current.source, source);
   assert.deepEqual(current.corePackIds, previous.corePackIds);
   assert.deepEqual(current.optionalCampaignIds, previous.optionalCampaignIds);
@@ -376,12 +326,11 @@ test('registered successor preserves v9, authored Next order and same-edition na
     versus: 'whole-spatial-v11',
     team: 'team-trail-impact-originals-1',
   });
-  assert.equal(authoredJourneyModeHref(current.id, 'solo'), '../?journey=whole-spatial-v10');
+  assert.equal(authoredJourneyModeHref(current.id, 'solo'), '../?journey=whole-spatial-v11');
   assert.equal(
     authoredJourneyModeHref(current.id, 'versus'),
-    'couch/?journey=whole-spatial-v10&return=solo',
+    'couch/?journey=whole-spatial-v11&return=solo',
   );
-
   for (const key of ['campaigns', 'packs'])
     assert.deepEqual(
       current.source[key].map((item) =>
@@ -393,11 +342,11 @@ test('registered successor preserves v9, authored Next order and same-edition na
     );
 });
 
-test('Studio retains separate v9 and v10 editions after the default advances', async () => {
+test('Studio exposes v10 and v11 separately and defaults its selector to v11', async () => {
   const html = await readFile(new URL('../studio/index.html', import.meta.url), 'utf8');
   const script = await readFile(new URL('../studio/studio.mjs', import.meta.url), 'utf8');
-  assert.match(html, /value="erosion-counterplay-1">Erosion counterplay · v9/);
-  assert.match(html, /value="cultural-spatial-triptych-1">[\s\S]*?spatial triptych · v10/i);
-  assert.match(html, /journey=whole-spatial-v10/);
-  assert.match(script, /'cultural-spatial-triptych-1': createSpatialNextBatchCandidates/);
+  assert.match(html, /value="cultural-spatial-triptych-1">/);
+  assert.match(html, /value="horizon-cultural-joins-1" selected/);
+  assert.match(html, /journey=whole-spatial-v11/);
+  assert.match(script, /'horizon-cultural-joins-1': createHorizonNextBatchCandidates/);
 });
