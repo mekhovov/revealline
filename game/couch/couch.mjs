@@ -1327,7 +1327,11 @@ try {
       match === attempt.previous &&
       generation === attempt.previousGeneration;
     const display = preparationStatus.begin({
-      message: `Preparing ${continuationAction().toLowerCase()}: ${attempt.recipe.entry.level.name}. Your current race is kept until its picture and actors are ready…`,
+      message: () =>
+        t('interface:couch.preparingContinuation', {
+          action: continuationAction().toLowerCase(),
+          mission: contentText(attempt.recipe.entry.level, 'name'),
+        }),
       stage: 'verifying',
       isCurrent: () =>
         current() ||
@@ -2122,7 +2126,8 @@ try {
       }
       const targetId = next.id;
       display.update({
-        message: `Preparing next mission: ${next.name}. Results are kept…`,
+        message: () =>
+          t('interface:couch.preparingNextMission', { mission: contentText(next, 'name') }),
         stage: 'verifying',
       });
       const prepared = await library.prepare(next, {
@@ -2431,9 +2436,12 @@ try {
       libraryContinuation === operation &&
       !operation.controller.signal.aborted &&
       context.isCurrent();
-    const name = missionLibrary.library.find(context.libraryMissionId)?.name || 'selected mission';
+    const selected = missionLibrary.library.find(context.libraryMissionId);
     const display = preparationStatus.begin({
-      message: `Preparing ${name}. Your current race and picture are kept…`,
+      message: () =>
+        t('interface:couch.preparingSelectedMission', {
+          mission: selected ? contentText(selected, 'name') : t('interface:selectedMission'),
+        }),
       stage: 'verifying',
       isCurrent: current,
     });
