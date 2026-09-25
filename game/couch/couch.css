@@ -372,6 +372,7 @@ body.unified-missions #race-library-switch {
   font-size: 28px;
 }
 .race-boards {
+  position: relative;
   display: grid;
   min-height: 0;
   grid-template-rows: minmax(0, 1fr);
@@ -379,6 +380,30 @@ body.unified-missions #race-library-switch {
   gap: 16px;
   padding: 12px max(12px, env(safe-area-inset-right)) max(12px, env(safe-area-inset-bottom))
     max(12px, env(safe-area-inset-left));
+}
+.race-start-cue {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+  background: rgb(3 8 18 / 42%);
+}
+.race-start-cue strong {
+  min-width: 2.4ch;
+  padding: 0.15em 0.3em;
+  color: #ffd15c;
+  background: #07101f;
+  border: 3px solid #78dfff;
+  box-shadow: 8px 8px 0 rgb(0 0 0 / 45%);
+  font-family: var(--fk-font-display);
+  font-size: clamp(4rem, 16vmin, 9rem);
+  line-height: 1;
+  text-align: center;
+}
+body[data-effects='reduced'] .race-start-cue strong {
+  box-shadow: none;
 }
 .racer {
   min-width: 0;
