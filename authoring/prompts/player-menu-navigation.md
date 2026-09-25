@@ -74,3 +74,24 @@ and match the full source/edition/campaign/runtime identity. Preserve historical
 routes while independently resolving the fresh host's approved tuning. A route
 fixture must use legal host inputs, never neutral braking or injected outcomes.
 Use decoded background identity, not the last actor draw call, for picture checks.
+
+For UX1 rewards, follow `docs/ux1-a1-journey-rewards.md`. Preserve the historical
+Journey progress reader and the companion ledger's atomic commit. A real accepted
+win may retain its exact decoded original; viewing, filtering or opening Details
+must never create a reward. Test actual mode-specific wins, receipt identity,
+storage rollback, missing-byte Retry, late decode cancellation and exact return
+focus. Do not turn an ambiguous older clear into today's picture. Keep backup
+reference scope explicit and qualify Versus/Team admission separately from Solo.
+
+For UX1-A2, complete a real authored Versus race and a real Team mission through
+their public host inputs. Admit a picture only when the current terminal owner can
+authenticate its live accepted decoded original against the exact owned recipe.
+Assert exact mode, edition, mission, campaign execution, level revision, run,
+gameplay identity, difficulty, theme and asset descriptor. Prove that Versus never
+mints Solo/Team rewards and Team never mints Solo/Versus rewards. Reject imported,
+procedural, unowned, stale and invalid presentation without erasing a legal clear.
+Do not add persistent Team session state. Open each mode's Journey Pictures surface
+with keyboard and modeled controller, verify exact-edition filtering and missing-art
+recovery, close to the exact opener, and prove viewing/Retry/Next cannot award or
+replace a board. Record physical device, reload, offline and public Pages evidence
+separately from focused source tests.

@@ -540,6 +540,31 @@ for (const route of ['opening', 'authored'])
     }
     assert.equal(new Set(receipts.map(([, receipt]) => receipt.runId)).size, rows.length);
     assert.deepEqual(persisted.skipped.versus, []);
+    const retained = (await p.journeyBackend.readState()).pictures.records;
+    assert.equal(retained.length, rows.length);
+    assert(retained.every((record) => record.mode === 'versus'));
+    assert(retained.every((record) => record.editionId === route));
+    assert.equal(
+      retained.some((record) => record.mode === 'solo' || record.mode === 'team'),
+      false,
+      'Paired-board wins never infer Solo or Team rewards.',
+    );
+    for (const record of retained) {
+      const mission = resolveMission(project, record.levelId);
+      assert.deepEqual(record.asset, mission.background);
+    }
+    p.$('race-journey-pictures').focus();
+    p.$('race-journey-pictures').click();
+    await waitFor(
+      () =>
+        p.$('versus-journey-pictures')?.open &&
+        p.$('versus-journey-pictures').querySelectorAll('.journey-mode-picture-card').length ===
+          rows.length,
+    );
+    assert.match(p.$('versus-journey-pictures').textContent, /earned Versus originals/);
+    assert.doesNotMatch(p.$('versus-journey-pictures').textContent, /earned Solo|earned Team/);
+    p.$('versus-journey-pictures').querySelector('header').querySelector('button').click();
+    assert.equal(p.doc.activeElement, p.$('race-journey-pictures'));
     const previous = [...p.renders],
       pictures = p.drawOptions.map((options) => options.backdrop),
       checks = p.checkpoint();
