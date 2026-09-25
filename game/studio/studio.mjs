@@ -59,7 +59,7 @@ import { createTeamDepotSpatialCandidates } from '../content-design/team-depot-s
 import { compileContentProject } from '../content-design/project.mjs';
 import { prepareContentPreview } from '../content-design/preview.mjs';
 import { paintContentMap } from '../content-design/map-view.mjs';
-import { contentActorDescription } from '../content-design/actor-marker.mjs';
+import { studioContentText, bindStudioPreviewCopy, studioGameplayText } from './preview-copy.mjs';
 import { loadPreviewTheme } from '../content-design/preview-loader.mjs';
 import { loadPreviewArtwork } from '../content-design/assets.mjs';
 import { createContentDraftBackend, forkMissionMap } from '../content-design/drafts.mjs';
@@ -75,7 +75,7 @@ import { setBoardAvailability } from './board-state.mjs';
 import { tuneContentMission } from '../content-design/tuning.mjs';
 import { createImageWorkbench } from './image-workbench.mjs';
 import { createTraceRecovery } from './trace-recovery.mjs';
-import { journeyPreset } from '../content-design/catalogs.mjs';
+import { freezeDesign } from '../content-design/catalogs.mjs';
 import { syncStudioDifficulty } from './difficulty-view.mjs';
 import { createTeamTestPack, createTeamCampaignTestPack } from '../content-design/team-export.mjs';
 import { createActorEditor } from './actor-editor.mjs';
@@ -340,8 +340,9 @@ function draw(preview) {
   canvas.setAttribute('aria-describedby', 'geometry capture-summary');
 }
 function inspectBoard(trailCells = []) {
-  const mission = currentMission();
-  syncStudioDifficulty($('difficulty'), session.current().difficultyCatalogId, {
+  const project = freezeDesign(session.current());
+  const mission = project.missions.find((entry) => entry.id === $('mission').value);
+  syncStudioDifficulty($('difficulty'), project.difficultyCatalogId, {
     team: !!mission && !mission.modes.includes('solo') && mission.modes[0] === 'team',
   });
   acceptanceInspector.sync();
@@ -366,8 +367,9 @@ function inspectBoard(trailCells = []) {
     tuningRevision = null;
     return;
   }
-  const project = compileContentProject(session.current());
-  const preview = prepareContentPreview(project, mission.id, {
+
+  const compiledProject = compileContentProject(project);
+  const preview = prepareContentPreview(compiledProject, mission.id, {
     mode: mission.modes.includes('solo') ? 'solo' : mission.modes[0],
     difficulty: $('difficulty').value,
     trailCells,
@@ -375,7 +377,7 @@ function inspectBoard(trailCells = []) {
   inspectedTrail = [...trailCells];
   $('trail').value = inspectedTrail.join(', ');
   draw(preview);
-  const { geometry, manifest, capture, authoredTerrain } = preview;
+  const { manifest, capture, authoredTerrain } = preview;
   const tuningKey = JSON.stringify([mission.id, mission.revision]);
   if (tuningRevision !== tuningKey) {
     $('target-coverage').value = Number((mission.coverage * 100).toFixed(8));
@@ -384,38 +386,14 @@ function inspectBoard(trailCells = []) {
       $(`rating-${facet}`).value = rating;
     tuningRevision = tuningKey;
   }
-  $('map-name').textContent = mission.name;
-  $('lesson').textContent = mission.design.routeDecision;
-  const preset = journeyPreset(manifest.difficulty, session.current().difficultyCatalogId);
   const tuningStatus = gameplayTuning.status();
-  const effectiveGameplay = inspectEffectiveGameplay(project, mission.id, {
+  const effectiveGameplay = inspectEffectiveGameplay(compiledProject, mission.id, {
     mode: manifest.mode,
     difficulty: manifest.difficulty,
     overrides: tuningStatus.overrides,
   });
-  $('rules').textContent =
-    `Authored preview: ${manifest.level.rules.lives ?? preset.lives} ${manifest.mode === 'team' ? 'shared team lives' : 'lives'} · ${manifest.level.rules.moveSpeed} cells/s · ${Math.round(mission.coverage * 100)}% earned coverage · ${mission.timeLimitSeconds ? 'Authored countdown (non-failing on Gentle)' : 'No countdown'} · ${session.current().difficultyCatalogId}: ${preset.description} Player handling and attack warning lengths are unchanged between presets.`;
-  $('current-gameplay').textContent =
-    `${effectiveGameplay.label}: craft ${Number(effectiveGameplay.playerSpeed.toFixed(3))} cells/s; ${effectiveGameplay.population.actualEnemies} enemies (${effectiveGameplay.population.addedKeepers} added keepers). ${effectiveGameplay.actors
-      .filter((actor) => actor.enabled)
-      .map((actor) => `${actor.id}: ${Number(actor.speed.toFixed(3))} cells/s, ${actor.domain}`)
-      .join(
-        '; ',
-      )}. ${effectiveGameplay.recipe.adminOverride ? 'Current browser admin overrides apply.' : 'Normal global settings.'} ${effectiveGameplay.warnings.map((warning) => warning.message).join(' ')}${tuningStatus.error ? ` ${tuningStatus.error}` : ''}`;
-  $('geometry').textContent =
-    `${geometry.foundationCount} interior foundation cells excluded from score and coverage. ${geometry.eligibleCount} earnable cells; ${geometry.safeComponents.length} reclaimed components. ${(preview.markers.spawns ?? [manifest.level.spawn]).map((spawn, index) => `Spawn ${index + 1} (${spawn.x}, ${spawn.y})`).join('; ')}. ${preview.markers.actors.map((actor) => `${actor.id}: ${contentActorDescription(manifest.level, actor)} at (${actor.x}, ${actor.y})`).join('; ')}. Contact bonuses: ${mission.bonuses.map((bonus) => `${bonus.id}: ${bonus.kind} at (${bonus.x}, ${bonus.y})`).join('; ') || 'none'}.`;
-  $('geometry').textContent +=
-    ` Timed optional pickups: ${(mission.timedBonuses?.schedules ?? []).map((schedule) => `${schedule.id}: ${schedule.anchors.length} possible anchors, ${schedule.announcementTicks / 120}s announcement / ${schedule.availableTicks / 120}s available / ${schedule.cooldownTicks / 120}s cooldown, at most ${schedule.maxCollections} collections`).join('; ') || 'none'}.`;
-  $('geometry').textContent +=
-    ` Capture objectives: ${mission.objectives.map((objective) => `${objective.id}: ${objective.required ? 'required' : 'optional'}, ${objective.hidden ? 'hidden initially' : 'visible'}, at (${objective.x}, ${objective.y})`).join('; ') || 'none'}.`;
-  if (mission.relayLinks)
-    $('geometry').textContent +=
-      ` Relay gates: ${preview.markers.gates.map((gate) => `${gate.label}: ${gate.id} opens permanently after capturing ${gate.objectiveId}`).join('; ') || 'none'}. Matching numbers show links, not a required order. Closed gates block movement; opened connectors do not earn coverage.`;
-  $('geometry').textContent +=
-    ` Authored terrain: ${authoredTerrain.map((area) => `${area.kind} at (${area.x}, ${area.y}), ${area.w} × ${area.h}`).join('; ') || 'none'}. Terrain is active only on unclaimed field.`;
-  if (manifest.level.directionalFields)
-    $('geometry').textContent +=
-      ` Directional fields: ${manifest.level.directionalFields.zones.map((zone) => `${zone.id}: ${zone.direction}, (${zone.x}, ${zone.y}), ${zone.w} × ${zone.h}`).join('; ') || 'none'}. Craft speed ×1.25 with the arrow, ×0.8 against, ×1 across; no drift or enemy effect. Capture removes the effect; erosion restores it.`;
+  bindStudioPreviewCopy(document, project, mission, preview);
+  localizedText($('current-gameplay'), () => studioGameplayText(effectiveGameplay, tuningStatus));
   $('effective').textContent = JSON.stringify(
     {
       policy: manifest.policyId,
@@ -485,20 +463,15 @@ function inspectBoard(trailCells = []) {
   if ([...$('team-test-campaign').options].some((option) => option.value === selectedTeamCampaign))
     $('team-test-campaign').value = selectedTeamCampaign;
   $('team-test-help').hidden = !mission.modes.includes('team');
-  $('play').title = mission.combat?.enabled
-    ? 'Enabled combat preview awaits qualified actor/projectile presentation. Static inspection remains available.'
-    : mission.modes.includes('solo')
-      ? ''
-      : 'This candidate has no Solo adapter. Team and paired-race gameplay remain separate.';
 }
 function render(selected = $('mission').value) {
   inspections.invalidate();
   pacingInspector.sync();
   tuningRevision = null;
-  const project = session.current();
+  const project = freezeDesign(session.current());
   $('pressure-edition').disabled = project.difficultyCatalogId === 'journey-difficulty-v2';
   $('project-id').value = project.id;
-  $('project-name').textContent = project.name;
+  localizedText($('project-name'), () => contentText(project, 'name'));
   const nameCounts = new Map();
   for (const mission of project.missions)
     nameCounts.set(mission.name, (nameCounts.get(mission.name) ?? 0) + 1);
@@ -506,7 +479,12 @@ function render(selected = $('mission').value) {
     ...project.missions.map((m) => {
       const option = document.createElement('option');
       option.value = m.id;
-      option.textContent = `${m.name}${nameCounts.get(m.name) > 1 ? ` · ${m.id}` : ''}${m.archived ? ' · Archived' : ''}`;
+      localizedText(option, () =>
+        t(m.archived ? 'tools:studio.mission.archivedOption' : 'tools:studio.mission.option', {
+          name: studioContentText(project, m, 'name'),
+          identity: nameCounts.get(m.name) > 1 ? ` · ${m.id}` : '',
+        }),
+      );
       return option;
     }),
   );

@@ -57,10 +57,7 @@ test('applied board refresh owns labels and links the actual rule explanation ac
     host.indexOf('function inspectBoard('),
     host.indexOf('function render('),
   );
-  assert.match(
-    inspect,
-    /syncStudioDifficulty\(\$\('difficulty'\), session\.current\(\)\.difficultyCatalogId/,
-  );
+  assert.match(inspect, /syncStudioDifficulty\(\$\('difficulty'\), project\.difficultyCatalogId/);
   assert(inspect.indexOf('syncStudioDifficulty') < inspect.indexOf('if (!mission)'));
   assert.match(inspect, /!mission\.modes\.includes\('solo'\) && mission\.modes\[0\] === 'team'/);
   assert(html.includes('id="difficulty" aria-describedby="difficulty-help rules"'));
