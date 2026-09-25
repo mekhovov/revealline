@@ -195,14 +195,14 @@ test('support-skin CSS owns chrome tokens but never canvas, board geometry or hi
   assert.doesNotMatch(skin, /\bcanvas\b|display:\s*none|visibility:\s*hidden|pointer-events/);
 });
 
-test('surface copy has stable English fallback keys and preserves native controls', () => {
+test('surface copy supports regional locales and preserves native controls', () => {
   assert.equal(fieldKitCopy('settings.display', 'en-GB'), 'Appearance & accessibility');
-  assert.equal(fieldKitCopy('settings.display', 'uk-UA'), 'Appearance & accessibility');
+  assert.equal(fieldKitCopy('settings.display', 'uk-UA'), 'Оформлення й доступність');
   assert.equal(fieldKitCopy('future.missing'), null);
   assert.equal(fieldKitCopy('__proto__'), null);
   assert.equal(
     fieldKitCopy('title.continueDestination', 'uk-UA', { destination: 'Ґанок · Їжак' }),
-    'Continue · Ґанок · Їжак',
+    'Продовжити · Ґанок · Їжак',
   );
   assert.equal(
     fieldKitCopy('title.continueDestination', 'en', { destination: '<b>Flight</b>' }),
@@ -216,7 +216,7 @@ test('surface copy has stable English fallback keys and preserves native control
   input.value = 'large';
   label.append(text, input);
   doc.body.append(label);
-  applyFieldKitCopy(doc, 'uk');
+  applyFieldKitCopy(doc);
   assert.equal(text.textContent, 'Text size');
   assert.equal(label.children[1], input);
   assert.equal(input.value, 'large');

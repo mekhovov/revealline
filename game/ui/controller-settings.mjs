@@ -11,11 +11,24 @@ import {
 } from '../controller-bindings.mjs';
 
 const FAMILY_LABELS = {
-  get generic() { return t("interface:automaticPositionLabels"); },
-  get xbox() { return t("interface:xboxLabels"); },
-  get playstation() { return t("interface:playstationLabels"); },
+  get generic() {
+    return t('interface:automaticPositionLabels');
+  },
+  get xbox() {
+    return t('interface:xboxLabels');
+  },
+  get playstation() {
+    return t('interface:playstationLabels');
+  },
 };
-const CONTEXT_LABELS = { get flight() { return t("interface:flight"); }, get menu() { return t("interface:menus"); } };
+const CONTEXT_LABELS = {
+  get flight() {
+    return t('interface:flight');
+  },
+  get menu() {
+    return t('interface:menus');
+  },
+};
 
 /** A complete draft editor. The host owns adoption/persistence and input reset.
  * Async hosts must check signal/isCurrent before committing side effects.
@@ -36,7 +49,9 @@ export function attachControllerSettings({
     typeof onApply !== 'function' ||
     typeof onBeforeEdit !== 'function'
   )
-    throw new TypeError(t("interface:controllerSettingsRequireAContainerDocumentAndBindingCallbacks"));
+    throw new TypeError(
+      t('interface:controllerSettingsRequireAContainerDocumentAndBindingCallbacks'),
+    );
   const listeners = [],
     controls = new Map(),
     buttonSelects = [],
@@ -51,7 +66,7 @@ export function attachControllerSettings({
   const prefix = container.id || 'controller-settings';
   const node = (tag, text, className) => {
     const element = doc.createElement(tag);
-    if (text !== undefined) localizedText(element, () =>text);
+    if (text !== undefined) localizedText(element, () => text);
     if (className) element.className = className;
     return element;
   };
@@ -65,21 +80,25 @@ export function attachControllerSettings({
     element.dataset.controllerSettingsAction = action;
     return element;
   };
-  const heading = node('h3', localizedMessage("interface:controllerControls"), 'controller-settings-heading'),
+  const heading = node(
+      'h3',
+      localizedMessage('interface:controllerControls'),
+      'controller-settings-heading',
+    ),
     summary = node('p', '', 'controller-settings-summary'),
     note = node(
       'p',
-      localizedMessage("interface:useACompleteDraftToSwapButtonsYourCurrentController"),
+      localizedMessage('interface:useACompleteDraftToSwapButtonsYourCurrentController'),
       'controller-settings-note',
     ),
-    edit = button(localizedMessage("interface:editControllerSettings"), 'edit'),
+    edit = button(localizedMessage('interface:editControllerSettings'), 'edit'),
     editor = node('div', undefined, 'controller-settings-editor'),
     status = node('p', '', 'controller-settings-status'),
     errors = node('ul', undefined, 'controller-settings-errors'),
     actions = node('div', undefined, 'controller-settings-actions'),
-    apply = button(localizedMessage("interface:applyControllerSettings"), 'apply'),
-    cancel = button(localizedMessage("interface:cancelDraft"), 'cancel'),
-    defaults = button(localizedMessage("interface:restoreDefaultsInDraft"), 'defaults');
+    apply = button(localizedMessage('interface:applyControllerSettings'), 'apply'),
+    cancel = button(localizedMessage('interface:cancelDraft'), 'cancel'),
+    defaults = button(localizedMessage('interface:restoreDefaultsInDraft'), 'defaults');
   editor.hidden = true;
   status.id = `${prefix}-status`;
   status.setAttribute('role', 'status');
@@ -107,10 +126,18 @@ export function attachControllerSettings({
     try {
       const value = currentSource();
       sourceValid = true;
-      localizedText(summary, () =>t("gameplay:flightMenusDeadZone", { value1: FAMILY_LABELS[value.glyphFamily], value2: controllerStickLabel(value, 'flight'), value3: controllerStickLabel(value, 'menu'), value4: value.deadZone.press.toFixed(2), value5: value.deadZone.release.toFixed(2) }));
+      localizedText(summary, () =>
+        t('gameplay:flightMenusDeadZone', {
+          value1: FAMILY_LABELS[value.glyphFamily],
+          value2: controllerStickLabel(value, 'flight'),
+          value3: controllerStickLabel(value, 'menu'),
+          value4: value.deadZone.press.toFixed(2),
+          value5: value.deadZone.release.toFixed(2),
+        }),
+      );
     } catch (error) {
       sourceValid = false;
-      localizedText(summary, () =>t("interface:currentControllerSettingsCouldNotBeRead"));
+      localizedText(summary, () => t('interface:currentControllerSettingsCouldNotBeRead'));
       announce(error.message);
     }
   }
@@ -138,11 +165,9 @@ export function attachControllerSettings({
     if (!draft || destroyed || busy) return false;
     try {
       if (signature(getBindings()) === baseline) return true;
-      invalidate(
-        t("interface:controllerSettingsChangedElsewhereYourOldDraftWasDiscardedChoose"),
-      );
+      invalidate(t('interface:controllerSettingsChangedElsewhereYourOldDraftWasDiscardedChoose'));
     } catch (error) {
-      invalidate(t("gameplay:draftDiscarded", { value1: error.message }));
+      invalidate(t('gameplay:draftDiscarded', { value1: error.message }));
     }
     return false;
   }
@@ -153,16 +178,16 @@ export function attachControllerSettings({
       last = keys.pop();
     keys.reduce((object, key) => object[key], draft)[last] = value;
     clearErrors();
-    announce(t("interface:draftChangedCurrentControlsAreUnchangedUntilApply"));
+    announce(t('interface:draftChangedCurrentControlsAreUnchangedUntilApply'));
     if (path === 'glyphFamily') updateButtonLabels();
-    if (outputs.has(path)) localizedText(outputs.get(path), () =>Number(value).toFixed(2));
+    if (outputs.has(path)) localizedText(outputs.get(path), () => Number(value).toFixed(2));
   }
   function field(parent, path, labelText, { type = 'select', choices = [], min, max, step } = {}) {
     const label = node('label', undefined, 'controller-settings-field'),
       caption = node('span', labelText),
       control = node(type === 'select' ? 'select' : 'input');
     control.id = `${prefix}-${path.replaceAll('.', '-')}`;
-    localizedAttribute(control, "aria-label", () => labelText);
+    localizedAttribute(control, 'aria-label', () => labelText);
     control.dataset.controllerSetting = path;
     if (type !== 'select') control.type = type;
     if (min !== undefined) control.min = String(min);
@@ -205,26 +230,33 @@ export function attachControllerSettings({
     editor.append(details);
     return body;
   }
-  field(editor, 'glyphFamily', localizedMessage("interface:buttonLabelFamily"), {
+  field(editor, 'glyphFamily', localizedMessage('interface:buttonLabelFamily'), {
     choices: CONTROLLER_GLYPH_FAMILIES.map((family) => [family, FAMILY_LABELS[family]]),
   });
   editor.append(
     node(
       'p',
-      localizedMessage("interface:automaticUsesDetectedXboxOrPlaystationNamesOtherwiseButtonPositions"),
+      localizedMessage(
+        'interface:automaticUsesDetectedXboxOrPlaystationNamesOtherwiseButtonPositions',
+      ),
       'controller-settings-note',
     ),
   );
   for (const context of ['flight', 'menu']) {
     const body = section(
-      localizedMessage("gameplay:buttonMap", { value1: CONTEXT_LABELS[context] }),
-      localizedMessage("interface:chooseOneButtonPerActionAButtonMayBeReused"),
+      localizedMessage('gameplay:buttonMap', { value1: CONTEXT_LABELS[context] }),
+      localizedMessage('interface:chooseOneButtonPerActionAButtonMayBeReused'),
     );
     for (const action of CONTROLLER_BINDING_ACTIONS[context]) {
       const select = field(
         body,
         `${context}.buttons.${action}`,
-        localizedMessage("gameplay:button", { value1: continuousSteering && context === 'flight' && action === 'stop' ? t("interface:pauseBack") : CONTROLLER_ACTION_LABELS[context][action] }),
+        localizedMessage('gameplay:button', {
+          value1:
+            continuousSteering && context === 'flight' && action === 'stop'
+              ? t('interface:pauseBack')
+              : CONTROLLER_ACTION_LABELS[context][action],
+        }),
         {
           choices: Array.from({ length: 16 }, (_, index) => [
             index,
@@ -236,35 +268,49 @@ export function attachControllerSettings({
     }
   }
   const sticks = section(
-    localizedMessage("interface:stickControls"),
-    localizedMessage("interface:flightAndMenusCanUseDifferentAxisPairsOrButtons"),
+    localizedMessage('interface:stickControls'),
+    localizedMessage('interface:flightAndMenusCanUseDifferentAxisPairsOrButtons'),
   );
   for (const context of ['flight', 'menu']) {
     const group = node('fieldset');
-    group.append(node('legend', localizedMessage("gameplay:stick", { value1: CONTEXT_LABELS[context] })));
-    field(group, `${context}.stick.enabled`, localizedMessage("interface:enableStickInput"), { type: 'checkbox' });
+    group.append(
+      node('legend', localizedMessage('gameplay:stick', { value1: CONTEXT_LABELS[context] })),
+    );
+    field(group, `${context}.stick.enabled`, localizedMessage('interface:enableStickInput'), {
+      type: 'checkbox',
+    });
     for (const [key, label] of [
-      ['xAxis', t("interface:horizontalAxis")],
-      ['yAxis', t("interface:verticalAxis")],
+      ['xAxis', t('interface:horizontalAxis')],
+      ['yAxis', t('interface:verticalAxis')],
     ])
       field(group, `${context}.stick.${key}`, label, {
-        choices: Array.from({ length: 4 }, (_, i) => [i, t("gameplay:axis", { value1: i })]),
+        choices: Array.from({ length: 4 }, (_, i) => [i, t('gameplay:axis', { value1: i })]),
       });
-    field(group, `${context}.stick.invertX`, localizedMessage("interface:invertHorizontalDirection"), { type: 'checkbox' });
-    field(group, `${context}.stick.invertY`, localizedMessage("interface:invertVerticalDirection"), { type: 'checkbox' });
+    field(
+      group,
+      `${context}.stick.invertX`,
+      localizedMessage('interface:invertHorizontalDirection'),
+      { type: 'checkbox' },
+    );
+    field(
+      group,
+      `${context}.stick.invertY`,
+      localizedMessage('interface:invertVerticalDirection'),
+      { type: 'checkbox' },
+    );
     sticks.append(group);
   }
   const thresholds = section(
-    localizedMessage("interface:deadZoneAndRelease"),
-    localizedMessage("interface:pressStartsStickMovementReleaseKeepsItActiveAboveThis"),
+    localizedMessage('interface:deadZoneAndRelease'),
+    localizedMessage('interface:pressStartsStickMovementReleaseKeepsItActiveAboveThis'),
   );
-  field(thresholds, 'deadZone.press', localizedMessage("interface:pressThreshold"), {
+  field(thresholds, 'deadZone.press', localizedMessage('interface:pressThreshold'), {
     type: 'range',
     min: 0.1,
     max: 0.6,
     step: 0.01,
   });
-  field(thresholds, 'deadZone.release', localizedMessage("interface:releaseThreshold"), {
+  field(thresholds, 'deadZone.release', localizedMessage('interface:releaseThreshold'), {
     type: 'range',
     min: 0.02,
     max: 0.6,
@@ -275,7 +321,10 @@ export function attachControllerSettings({
   function updateButtonLabels() {
     for (const select of buttonSelects)
       [...select.options].forEach((option, index) => {
-        localizedText(option, () =>`${controllerButtonLabel(index, draft.glyphFamily)} · ${index}`);
+        localizedText(
+          option,
+          () => `${controllerButtonLabel(index, draft.glyphFamily)} · ${index}`,
+        );
       });
   }
   function renderDraft() {
@@ -283,7 +332,7 @@ export function attachControllerSettings({
       const value = read(path);
       if (control.type === 'checkbox') control.checked = value;
       else control.value = String(value);
-      if (outputs.has(path)) localizedText(outputs.get(path), () =>value.toFixed(2));
+      if (outputs.has(path)) localizedText(outputs.get(path), () => value.toFixed(2));
     }
     updateButtonLabels();
     syncBusy();
@@ -299,17 +348,15 @@ export function attachControllerSettings({
       editor.hidden = false;
       edit.hidden = true;
       renderDraft();
-      announce(
-        t("interface:editingADraftApplyValidatesAllControlsTogetherCancelKeeps"),
-      );
+      announce(t('interface:editingADraftApplyValidatesAllControlsTogetherCancelKeeps'));
       controls.get('glyphFamily').focus({ preventScroll: true });
     } catch (error) {
-      invalidate(t("gameplay:controllerSettingsCouldNotBeEdited", { value1: error.message }));
+      invalidate(t('gameplay:controllerSettingsCouldNotBeEdited', { value1: error.message }));
     }
   });
   listen(cancel, 'click', () => {
     if (destroyed || busy || !draft) return;
-    invalidate(t("interface:draftCancelledCurrentControllerSettingsAreUnchanged"));
+    invalidate(t('interface:draftCancelledCurrentControllerSettingsAreUnchanged'));
     edit.focus({ preventScroll: true });
   });
   listen(defaults, 'click', () => {
@@ -317,9 +364,7 @@ export function attachControllerSettings({
     draft = resolveControllerBindings(null);
     renderDraft();
     clearErrors();
-    announce(
-      t("interface:defaultsAreInTheDraftApplyToUseThemOr"),
-    );
+    announce(t('interface:defaultsAreInTheDraftApplyToUseThemOr'));
   });
   listen(apply, 'click', async () => {
     if (!checkSource()) return;
@@ -327,7 +372,9 @@ export function attachControllerSettings({
     if (!validation.valid) {
       showErrors(validation.errors);
       announce(
-        t("gameplay:controllerSettingsWereNotAppliedReviewTheDraftAndApply", { value1: validation.errors[0] }),
+        t('gameplay:controllerSettingsWereNotAppliedReviewTheDraftAndApply', {
+          value1: validation.errors[0],
+        }),
       );
       return;
     }
@@ -362,7 +409,7 @@ export function attachControllerSettings({
     pending = abort;
     busy = true;
     syncBusy();
-    announce(t("interface:applyingControllerSettings"), 'busy');
+    announce(t('interface:applyingControllerSettings'), 'busy');
     const isCurrent = () => {
       if (destroyed || abort.signal.aborted || generation !== ticket) return false;
       try {
@@ -376,9 +423,7 @@ export function attachControllerSettings({
       const result = await onApply(candidate, { signal: abort.signal, isCurrent });
       if (destroyed || generation !== ticket || abort.signal.aborted) return;
       if (signature(getBindings()) !== expected) {
-        invalidate(
-          t("interface:theCurrentControllerSettingsChangedBeforeThisDraftWasAdopted"),
-        );
+        invalidate(t('interface:theCurrentControllerSettingsChangedBeforeThisDraftWasAdopted'));
         return;
       }
       draft = null;
@@ -388,7 +433,12 @@ export function attachControllerSettings({
       clearErrors();
       syncSummary();
       announce(
-        t("gameplay:controllerSettingsApplied", { value1: result?.ok === false ? ` ${result.warning || t("interface:theNewMapAppliesToThisSessionOnlyItCould")}` : '' }),
+        t('gameplay:controllerSettingsApplied', {
+          value1:
+            result?.ok === false
+              ? ` ${result.warning || t('interface:theNewMapAppliesToThisSessionOnlyItCould')}`
+              : '',
+        }),
       );
       focusAfterApply = true;
     } catch (error) {
@@ -399,7 +449,7 @@ export function attachControllerSettings({
         } catch {}
         if (!unchanged)
           invalidate(
-            t("interface:controllerSettingsChangedDuringThisOperationReviewTheCurrentSettings"),
+            t('interface:controllerSettingsChangedDuringThisOperationReviewTheCurrentSettings'),
           );
         else announce(`Controller settings were not applied. ${error.message}`, 'error');
       }
@@ -426,7 +476,7 @@ export function attachControllerSettings({
   });
   function refresh() {
     if (destroyed) return;
-    invalidate(t("interface:currentControllerSettingsLoadedChooseEditToMakeADraft"));
+    invalidate(t('interface:currentControllerSettingsLoadedChooseEditToMakeADraft'));
   }
   refresh();
   return {
