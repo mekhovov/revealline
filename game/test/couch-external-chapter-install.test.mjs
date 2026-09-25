@@ -7,6 +7,10 @@ import { createManagedMediaStore } from '../managed-media-store.mjs';
 import { createStillMediaStore } from '../media-store.mjs';
 import { inspectImageDataUrl } from '../content.mjs';
 import { emptyPackLibrary, exportPackLibrary, installPack, preparePack } from '../packs.mjs';
+import {
+  CLASSIC_RULES_CURRENT,
+  CLASSIC_RULES_ORIGINAL,
+} from '../mission-library/classic-current-rules.mjs';
 import { buildRouteWorld } from '../../authoring/library/route-worlds/build.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
 import { deferred } from './helpers/media-fixtures.mjs';
@@ -189,6 +193,22 @@ test('exact absent paired metadata never claims ready or opens media/downloads',
     false,
   );
   assert.deepEqual(h.assets.allPuts, []);
+});
+
+test('external installer accepts only the two known Classic rules projections', async (t) => {
+  const h = await setup(t);
+  await assert.rejects(
+    h.service.inspectExternal({ ...row, rulesEdition: 'untrusted-rules' }),
+    /supported Classic rules edition/,
+  );
+  for (const rulesEdition of [CLASSIC_RULES_ORIGINAL, CLASSIC_RULES_CURRENT]) {
+    const result = await h.service.inspectExternal({ ...row, rulesEdition });
+    assert.equal(result.status, 'absent');
+    assert.equal(result.ready, false);
+  }
+  assert.deepEqual(h.requests, []);
+  assert.deepEqual(h.assets.allPuts, []);
+  await h.settled();
 });
 
 test('trusted pair publishes with existing journal, checks real originals and reuses without writes', async (t) => {
