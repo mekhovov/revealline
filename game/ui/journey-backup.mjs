@@ -11,32 +11,48 @@ export function attachJourneyBackup({
 }) {
   const element = (tag, text, id) => {
     const node = doc.createElement(tag);
-    if (text) localizedText(node, () =>text);
+    if (text) localizedText(node, () => text);
     if (id) node.id = id;
     return node;
   };
   const dialog = element('dialog', '', 'journey-backup');
   dialog.className = 'journey-backup';
   dialog.setAttribute('aria-labelledby', 'journey-backup-title');
-  const title = element('h2', localizedMessage("interface:keepYourJourney"), 'journey-backup-title');
+  const title = element(
+    'h2',
+    localizedMessage('interface:keepYourJourney'),
+    'journey-backup-title',
+  );
   const copy = element(
     'p',
-    localizedMessage("interface:exportALocalBackupOrInspectOneBeforeRestoringRestore"),
+    localizedMessage('interface:exportALocalBackupOrInspectOneBeforeRestoringRestore'),
   );
-  const exportButton = element('button', localizedMessage("interface:exportProgress"), 'journey-backup-export');
-  const label = element('label', localizedMessage("interface:inspectJourneyBackup"));
+  const exportButton = element(
+    'button',
+    localizedMessage('interface:exportProgress'),
+    'journey-backup-export',
+  );
+  const label = element('label', localizedMessage('interface:inspectJourneyBackup'));
   const input = element('input', '', 'journey-backup-file');
   input.type = 'file';
   input.accept = 'application/json,.json';
   label.append(input);
   const status = element(
     'p',
-    localizedMessage("interface:chooseABackupToInspectNothingIsRestoredAutomatically"),
+    localizedMessage('interface:chooseABackupToInspectNothingIsRestoredAutomatically'),
     'journey-backup-status',
   );
   status.setAttribute('role', 'status');
-  const apply = element('button', localizedMessage("interface:restoreInspectedProgress"), 'journey-backup-apply');
-  const back = element('button', localizedMessage("interface:backToMissions"), 'journey-backup-back');
+  const apply = element(
+    'button',
+    localizedMessage('interface:restoreInspectedProgress'),
+    'journey-backup-apply',
+  );
+  const back = element(
+    'button',
+    localizedMessage('interface:backToMissions'),
+    'journey-backup-back',
+  );
   for (const button of [exportButton, apply, back]) {
     button.type = 'button';
     button.className = 'button secondary';
@@ -70,12 +86,13 @@ export function attachJourneyBackup({
     inspected = null;
     apply.disabled = true;
     if (!file) {
-      localizedText(status, () =>t("interface:noBackupSelectedProgressIsUnchanged"));
+      localizedText(status, () => t('interface:noBackupSelectedProgressIsUnchanged'));
       return;
     }
     try {
-      if (file.size > 8 * 1024 * 1024) throw new Error(t("interface:backupExceedsThe8MibFileLimit"));
-      localizedText(status, () =>t("interface:inspectingTheLocalBackup"));
+      if (file.size > 8 * 1024 * 1024)
+        throw new Error(t('interface:backupExceedsThe8MibFileLimit'));
+      localizedText(status, () => t('interface:inspectingTheLocalBackup'));
       const { backup, merged } = profile.inspectBackup(await file.text());
       if (ticket !== revision) return;
       const current = profile.snapshot();
@@ -94,10 +111,14 @@ export function attachJourneyBackup({
       });
       inspected = backup;
       apply.disabled = false;
-      localizedText(status, () =>`${counts.join('. ')}. Existing Continue positions are kept; an empty position may be restored. Unknown mission IDs are retained for other editions. Restore is still required.`);
+      localizedText(
+        status,
+        () =>
+          `${counts.join('. ')}. Existing Continue positions are kept; an empty position may be restored. Unknown mission IDs are retained for other editions. Restore is still required.`,
+      );
     } catch (error) {
       if (ticket === revision)
-        localizedText(status, () =>`Cannot inspect: ${error.message} Progress is unchanged.`);
+        localizedText(status, () => `Cannot inspect: ${error.message} Progress is unchanged.`);
     }
   };
   apply.onclick = async () => {
@@ -114,22 +135,30 @@ export function attachJourneyBackup({
       onRestore();
       const durable = await profile.flush();
       if (ticket !== revision) return;
-      localizedText(status, () =>durable
-        ? t("interface:mergedAndSavedLocallyCurrentAttemptAndExistingProgressAre")
-        : t("interface:mergedInThisSessionOnlyStorageFailedExportNowOr"));
+      localizedText(status, () =>
+        durable
+          ? t('interface:mergedAndSavedLocallyCurrentAttemptAndExistingProgressAre')
+          : t('interface:mergedInThisSessionOnlyStorageFailedExportNowOr'),
+      );
     } catch (error) {
       if (ticket === revision)
-        localizedText(status, () =>`Restore failed: ${error.message}. Existing progress is retained.`);
+        localizedText(
+          status,
+          () => `Restore failed: ${error.message}. Existing progress is retained.`,
+        );
     }
   };
   exportButton.onclick = async () => {
     const ticket = revision;
     try {
       const result = await exportFile(JSON.parse(profile.export()), profile.backupFilename);
-      if (ticket === revision) localizedText(status, () =>result.message);
+      if (ticket === revision) localizedText(status, () => result.message);
     } catch (error) {
       if (ticket === revision)
-        localizedText(status, () =>`Export failed: ${error.message}. Your progress remains in this session.`);
+        localizedText(
+          status,
+          () => `Export failed: ${error.message}. Your progress remains in this session.`,
+        );
     }
   };
   back.onclick = close;
@@ -143,7 +172,9 @@ export function attachJourneyBackup({
     open(origin = doc.activeElement) {
       reset();
       opener = origin;
-      localizedText(status, () =>t("interface:chooseABackupToInspectNothingIsRestoredAutomatically"));
+      localizedText(status, () =>
+        t('interface:chooseABackupToInspectNothingIsRestoredAutomatically'),
+      );
       dialog.showModal();
       exportButton.focus({ preventScroll: true });
     },

@@ -35,10 +35,10 @@ export function attachFullscreen(button, doc = globalThis.document) {
     button.setAttribute(
       'aria-label',
       offersInstallHelp
-        ? t("interface:useFullScreenOnIphoneOrIpad")
+        ? t('interface:useFullScreenOnIphoneOrIpad')
         : doc.fullscreenElement
-          ? t("interface:exitFullscreen")
-          : t("interface:enterFullscreen"),
+          ? t('interface:exitFullscreen')
+          : t('interface:enterFullscreen'),
     );
     if (offersInstallHelp) button.removeAttribute('aria-pressed');
     else button.setAttribute('aria-pressed', String(!!doc.fullscreenElement));
@@ -73,9 +73,7 @@ export function attachFullscreen(button, doc = globalThis.document) {
       else await doc.documentElement.requestFullscreen({ navigationUI: 'hide' });
       if (active) button.title = '';
     } catch {
-      if (active)
-        button.title =
-          t("interface:fullscreenIsUnavailableInThisBrowserTheBoardFitsThe");
+      if (active) button.title = t('interface:fullscreenIsUnavailableInThisBrowserTheBoardFitsThe');
     } finally {
       pending = false;
     }

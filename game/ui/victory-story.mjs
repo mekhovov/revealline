@@ -9,12 +9,15 @@ import { requirePreparedVictoryStory, VICTORY_STORY_LIMITS } from '../victory-st
  * applyGain must target a dedicated session-mixer factor, not a saved preference.
  */
 export function createStoryMusicDucker(applyGain) {
-  required(typeof applyGain === 'function', t("interface:aTemporaryMusicGainAdapterIsRequired"));
+  required(typeof applyGain === 'function', t('interface:aTemporaryMusicGainAdapterIsRequired'));
   const leases = new Map();
   const apply = () => applyGain(Math.min(1, ...leases.values()));
   return Object.freeze({
     acquire(gain = 0.2) {
-      required(Number.isFinite(gain) && gain >= 0 && gain <= 1, t("interface:invalidMusicDuckFactor"));
+      required(
+        Number.isFinite(gain) && gain >= 0 && gain <= 1,
+        t('interface:invalidMusicDuckFactor'),
+      );
       const token = {};
       leases.set(token, gain);
       try {
@@ -66,66 +69,71 @@ export function createVictoryStoryPresentation({
   const story = requirePreparedVictoryStory(prepared, picturePin).descriptor;
   required(
     container?.append && posterElement && document?.createElement,
-    t("interface:aNativePosterPresentationContainerIsRequired"),
+    t('interface:aNativePosterPresentationContainerIsRequired'),
   );
   required(
     container.contains(posterElement),
-    t("interface:theExactPosterMustAlreadyBelongToThisContainer"),
+    t('interface:theExactPosterMustAlreadyBelongToThisContainer'),
   );
   required(
     typeof onChange === 'function' &&
       typeof createVideo === 'function' &&
       typeof URLImpl?.createObjectURL === 'function' &&
       typeof URLImpl?.revokeObjectURL === 'function',
-    t("interface:storyPresentationAdaptersAreUnavailable"),
+    t('interface:storyPresentationAdaptersAreUnavailable'),
   );
   required(
     !musicDucker || typeof musicDucker.acquire === 'function',
-    t("interface:invalidTemporaryMusicDuckAdapter"),
+    t('interface:invalidTemporaryMusicDuckAdapter'),
   );
   required(
     Number.isFinite(timeoutMs) && timeoutMs > 0 && timeoutMs <= 60000,
-    t("interface:invalidStoryTimeout"),
+    t('interface:invalidStoryTimeout'),
   );
   const preferences = (v, reduced) =>
     required(
       Number.isFinite(v) && v >= 0 && v <= 1 && typeof reduced === 'boolean',
-      t("interface:invalidCinematicVolumeOrReducedMotionPreference"),
+      t('interface:invalidCinematicVolumeOrReducedMotionPreference'),
     );
   const masterPreferences = (value, silent) =>
     required(
       Number.isFinite(value) && value >= 0 && value <= 1 && typeof silent === 'boolean',
-      t("interface:invalidCinematicMasterVolumeOrMute"),
+      t('interface:invalidCinematicMasterVolumeOrMute'),
     );
   masterPreferences(masterVolume, muted);
   preferences(volume, reducedMotion);
   const element = document.createElement('section');
   element.className = 'victory-story';
-  localizedAttribute(element, "aria-label", () => t("interface:optionalVictoryStory"));
+  localizedAttribute(element, 'aria-label', () => t('interface:optionalVictoryStory'));
   const description = document.createElement('p');
-  localizedText(description, () =>contentText(story, 'description'));
+  localizedText(description, () => contentText(story, 'description'));
   const notice = document.createElement('p');
   const feedback = createOperationStatus(notice);
   let activity = null;
   notice.tabIndex = -1;
   const controls = document.createElement('div');
   const buttons = {};
-  for (const label of [t("common:actions.play"), t("common:actions.pause"), t("interface:skip"), t("interface:replay")]) {
+  for (const label of [
+    t('common:actions.play'),
+    t('common:actions.pause'),
+    t('interface:skip'),
+    t('interface:replay'),
+  ]) {
     const button = document.createElement('button');
     button.type = 'button';
-    localizedText(button, () =>label);
+    localizedText(button, () => label);
     controls.append(button);
     buttons[label.toLowerCase()] = button;
   }
   const volumeLabel = document.createElement('label');
-  localizedText(volumeLabel, () =>t("interface:cinematicVolume"));
+  localizedText(volumeLabel, () => t('interface:cinematicVolume'));
   const volumeInput = document.createElement('input');
   volumeInput.type = 'range';
   volumeInput.min = '0';
   volumeInput.max = '1';
   volumeInput.step = '0.05';
   volumeInput.value = String(volume);
-  localizedAttribute(volumeInput, "aria-label", () => t("interface:cinematicVolume"));
+  localizedAttribute(volumeInput, 'aria-label', () => t('interface:cinematicVolume'));
   volumeLabel.append(volumeInput);
   controls.append(volumeLabel);
   element.append(description, notice, controls);
@@ -189,7 +197,9 @@ export function createVictoryStoryPresentation({
     posterElement.hidden = showing;
     if (media) media.hidden = !showing;
     buttons.play.hidden = hasPlayed && state === 'poster';
-    localizedText(buttons.play, () =>state === 'paused' ? t("interface:resumeStory") : t("common:actions.play"));
+    localizedText(buttons.play, () =>
+      state === 'paused' ? t('interface:resumeStory') : t('common:actions.play'),
+    );
     buttons.play.disabled = !ready || ['playing', 'starting', 'preparing', 'error'].includes(state);
     buttons.pause.hidden = !['playing', 'starting'].includes(state);
     buttons.skip.hidden = state === 'poster' || state === 'error';
@@ -197,19 +207,19 @@ export function createVictoryStoryPresentation({
     let message =
       reason ||
       (state === 'preparing'
-        ? t("interface:preparingOptionalStoryYourPictureIsUnchanged")
+        ? t('interface:preparingOptionalStoryYourPictureIsUnchanged')
         : state === 'starting'
-          ? t("interface:startingStoryPlayback")
+          ? t('interface:startingStoryPlayback')
           : state === 'playing'
-            ? t("interface:storyPlaying")
+            ? t('interface:storyPlaying')
             : state === 'paused'
-              ? t("interface:storyPausedResumeExplicitly")
+              ? t('interface:storyPausedResumeExplicitly')
               : reducedMotion
-                ? t("interface:reducedMotionTheEarnedPictureStaysAvailablePlayIsOptional")
-                : t("interface:yourPictureStoryPlaybackIsOptional"));
+                ? t('interface:reducedMotionTheEarnedPictureStaysAvailablePlayIsOptional')
+                : t('interface:yourPictureStoryPlaybackIsOptional'));
     const master = audioMaster?.snapshot();
     if (master ? master.muted || master.volume === 0 : muted || masterVolume === 0)
-      message += (" " + t("interface:masterSoundIsMutedCinematicVolumeDoesNotUnmuteIt") + "");
+      message += ' ' + t('interface:masterSoundIsMutedCinematicVolumeDoesNotUnmuteIt') + '';
     if (audioWarning) message += ` ${audioWarning}`;
     if (state === 'preparing' || state === 'starting') {
       activity ??= feedback.begin({ message, isCurrent: () => !disposed });
@@ -248,7 +258,7 @@ export function createVictoryStoryPresentation({
     try {
       release?.();
     } catch {
-      audioWarning = t("interface:musicGainCouldNotBeRestoredCheckTheMusicControls");
+      audioWarning = t('interface:musicGainCouldNotBeRestoredCheckTheMusicControls');
     }
   };
   const unduck = () => {
@@ -298,8 +308,8 @@ export function createVictoryStoryPresentation({
     if (inFlight) {
       keepPoster = !ready;
       state = ready && hasPlayed ? 'paused' : 'poster';
-      reason = t("interface:storyPausedPlayAgainExplicitly");
-      if (!ready) armDeadline(t("interface:storyPreparationTimedOutYourPictureIsUnchanged"));
+      reason = t('interface:storyPausedPlayAgainExplicitly');
+      if (!ready) armDeadline(t('interface:storyPreparationTimedOutYourPictureIsUnchanged'));
       render();
     }
     return inFlight;
@@ -307,9 +317,9 @@ export function createVictoryStoryPresentation({
   function skip() {
     if (disposed) return false;
     keepPoster = true;
-    finish(t("interface:storySkippedYourExactPictureIsUnchanged"));
+    finish(t('interface:storySkippedYourExactPictureIsUnchanged'));
     if (disposed) return false;
-    if (!ready) armDeadline(t("interface:storyPreparationTimedOutYourPictureIsUnchanged"));
+    if (!ready) armDeadline(t('interface:storyPreparationTimedOutYourPictureIsUnchanged'));
     return true;
   }
   function observe() {
@@ -324,16 +334,17 @@ export function createVictoryStoryPresentation({
       media.videoHeight !== story.source.height ||
       media.duration !== story.source.durationSeconds
     ) {
-      fail(t("interface:playbackMetadataChangedYourPictureIsUnchanged"));
+      fail(t('interface:playbackMetadataChangedYourPictureIsUnchanged'));
       return;
     }
     if (!Number.isFinite(time) || time < story.segment.startSeconds - 0.001) {
-      fail(t("interface:storyLeftItsSelectedSegment"));
+      fail(t('interface:storyLeftItsSelectedSegment'));
       return;
     }
-    if (time >= story.segment.endSeconds) finish(t("interface:storyEndedYourExactPictureIsUnchanged"));
+    if (time >= story.segment.endSeconds)
+      finish(t('interface:storyEndedYourExactPictureIsUnchanged'));
     else if (media.ended)
-      fail(t("interface:theVideoEndedBeforeTheSelectedSegmentFinishedYourPicture"));
+      fail(t('interface:theVideoEndedBeforeTheSelectedSegmentFinishedYourPicture'));
   }
   function scheduleFrames(token) {
     if (typeof media?.requestVideoFrameCallback !== 'function') return;
@@ -371,7 +382,7 @@ export function createVictoryStoryPresentation({
       }
       releaseDuck = allocatedDuck;
       applyAudio();
-      armDeadline(t("interface:storyPlaybackDidNotBeginSkipOrCloseTheStory"));
+      armDeadline(t('interface:storyPlaybackDidNotBeginSkipOrCloseTheStory'));
       // Invoke play within this call, before any await, preserving native user activation.
       const started = video.play();
       render();
@@ -398,8 +409,8 @@ export function createVictoryStoryPresentation({
           state = error?.name === 'NotAllowedError' ? 'blocked' : 'error';
           reason =
             state === 'blocked'
-              ? t("interface:yourBrowserBlockedPlaybackUsePlayAgainOrKeepThe")
-              : t("interface:thisVideoCouldNotPlayYourPictureRemainsAvailable");
+              ? t('interface:yourBrowserBlockedPlaybackUsePlayAgainOrKeepThe')
+              : t('interface:thisVideoCouldNotPlayYourPictureRemainsAvailable');
           render();
           return false;
         },
@@ -411,8 +422,8 @@ export function createVictoryStoryPresentation({
       state = error?.name === 'NotAllowedError' ? 'blocked' : 'error';
       reason =
         state === 'blocked'
-          ? t("interface:yourBrowserNeedsAnExplicitPlayAction")
-          : t("interface:storyPlaybackIsUnavailableYourPictureRemainsAvailable");
+          ? t('interface:yourBrowserNeedsAnExplicitPlayAction')
+          : t('interface:storyPlaybackIsUnavailableYourPictureRemainsAvailable');
       render();
       return Promise.resolve(false);
     }
@@ -425,7 +436,7 @@ export function createVictoryStoryPresentation({
     desired = autoplay;
     state = keepPoster ? 'poster' : 'preparing';
     if (!keepPoster) reason = null;
-    armDeadline(t("interface:theSelectedStoryStartCouldNotBeReachedYourPicture"));
+    armDeadline(t('interface:theSelectedStoryStartCouldNotBeReachedYourPicture'));
     try {
       media.currentTime = story.segment.startSeconds;
       render();
@@ -433,7 +444,7 @@ export function createVictoryStoryPresentation({
       if (!media.seeking && Math.abs(media.currentTime - story.segment.startSeconds) <= 0.001)
         finishSeek();
     } catch {
-      fail(t("interface:theSelectedStoryStartCouldNotBeReached"));
+      fail(t('interface:theSelectedStoryStartCouldNotBeReached'));
     }
   }
   function finishSeek() {
@@ -447,7 +458,7 @@ export function createVictoryStoryPresentation({
     )
       return;
     if (Math.abs(media.currentTime - story.segment.startSeconds) > 0.001) {
-      fail(t("interface:theRequestedStorySeekWasNotHonored"));
+      fail(t('interface:theRequestedStorySeekWasNotHonored'));
       return;
     }
     const autoplay = desired;
@@ -545,7 +556,7 @@ export function createVictoryStoryPresentation({
     }
     required(
       allocatedVideo?.addEventListener && allocatedVideo?.play && allocatedVideo?.pause,
-      t("interface:nativeVideoPlaybackIsUnavailable"),
+      t('interface:nativeVideoPlaybackIsUnavailable'),
     );
     media = allocatedVideo;
     media.controls = false;
@@ -583,7 +594,7 @@ export function createVictoryStoryPresentation({
           video.videoHeight !== expected.height ||
           video.duration !== expected.durationSeconds
         ) {
-          fail(t("interface:playbackMetadataDiffersFromTheVerifiedOriginal"));
+          fail(t('interface:playbackMetadataDiffersFromTheVerifiedOriginal'));
           return;
         }
         seekStart(false);
@@ -607,15 +618,14 @@ export function createVictoryStoryPresentation({
       current(() => {
         if (!desired) return;
         if (video.currentTime >= story.segment.endSeconds)
-          finish(t("interface:storyEndedYourExactPictureIsUnchanged"));
-        else
-          fail(t("interface:theVideoEndedBeforeTheSelectedSegmentFinishedYourPicture"));
+          finish(t('interface:storyEndedYourExactPictureIsUnchanged'));
+        else fail(t('interface:theVideoEndedBeforeTheSelectedSegmentFinishedYourPicture'));
       }),
     );
     listen(
       video,
       'error',
-      current(() => fail(t("interface:videoDecodingFailedYourPictureRemainsAvailable"))),
+      current(() => fail(t('interface:videoDecodingFailedYourPictureRemainsAvailable'))),
     );
     const allocatedURL = URLImpl.createObjectURL(prepared.original);
     if (disposed || signal?.aborted) {
@@ -625,7 +635,7 @@ export function createVictoryStoryPresentation({
     }
     url = allocatedURL;
     media.src = url;
-    armDeadline(t("interface:videoLoadingTimedOutYourPictureRemainsAvailable"));
+    armDeadline(t('interface:videoLoadingTimedOutYourPictureRemainsAvailable'));
     media.load();
     render();
     if (audioMaster && !disposed) {
@@ -635,7 +645,7 @@ export function createVictoryStoryPresentation({
     }
     if (signal?.aborted) dispose();
   } catch {
-    if (!disposed) fail(t("interface:nativeVideoPlaybackIsUnavailableYourPictureRemainsAvailable"));
+    if (!disposed) fail(t('interface:nativeVideoPlaybackIsUnavailableYourPictureRemainsAvailable'));
   }
   return api;
 }

@@ -32,20 +32,20 @@ export function attachCouchCatalogue({
   modal.setAttribute('aria-labelledby', 'race-chapter-replace-title');
   const heading = doc.createElement('h2');
   heading.id = 'race-chapter-replace-title';
-  localizedText(heading, () =>t("interface:startAnotherChapter"));
+  localizedText(heading, () => t('interface:startAnotherChapter'));
   const description = doc.createElement('p');
-  localizedText(description, () =>t("interface:bothBoardsArePausedStayKeepsThisRaceAndSeries"));
+  localizedText(description, () => t('interface:bothBoardsArePausedStayKeepsThisRaceAndSeries'));
   const actions = doc.createElement('div');
   actions.className = 'race-menu-actions';
   const stay = doc.createElement('button');
   stay.id = 'race-chapter-stay';
   stay.type = 'button';
-  localizedText(stay, () =>t("interface:stay"));
+  localizedText(stay, () => t('interface:stay'));
   const replace = doc.createElement('button');
   replace.id = 'race-chapter-play';
   replace.type = 'button';
   replace.className = 'field-kit-primary';
-  localizedText(replace, () =>t("interface:replacePlay"));
+  localizedText(replace, () => t('interface:replacePlay'));
   actions.append(stay, replace);
   modal.append(heading, description, actions);
   doc.body.append(modal);
@@ -134,10 +134,10 @@ export function attachCouchCatalogue({
     if (doc.activeElement !== launch.opener && !ownsCancel) {
       try {
         if (!current(intent) || !dialog?.open)
-          throw new DOMException(t("interface:chapterActivationIsNoLongerCurrent"), 'AbortError');
+          throw new DOMException(t('interface:chapterActivationIsNoLongerCurrent'), 'AbortError');
         dialog.focus({ preventScroll: true });
         if (!current(intent) || doc.activeElement !== dialog)
-          throw new DOMException(t("interface:chapterActivationIsNoLongerCurrent"), 'AbortError');
+          throw new DOMException(t('interface:chapterActivationIsNoLongerCurrent'), 'AbortError');
       } catch (error) {
         releaseIntent(intent);
         throw error;
@@ -149,7 +149,7 @@ export function attachCouchCatalogue({
     const check = () => {
       if (!intent || !current(intent))
         throw new DOMException(
-          t("interface:chapterPreparationCancelledTheCurrentRaceIsKept"),
+          t('interface:chapterPreparationCancelledTheCurrentRaceIsKept'),
           'AbortError',
         );
     };
@@ -180,7 +180,7 @@ export function attachCouchCatalogue({
       const adopted = candidate.adopt(() => current(intent));
       if (!adopted)
         throw new DOMException(
-          t("interface:chapterPreparationCancelledTheCurrentRaceIsKept"),
+          t('interface:chapterPreparationCancelledTheCurrentRaceIsKept'),
           'AbortError',
         );
       // The new attempt owns its pictures before panel close aborts pending work.
@@ -198,8 +198,8 @@ export function attachCouchCatalogue({
   }
   const panel = attachOptionalChaptersPanel({
     document: doc,
-    heading: t("interface:chaptersCouchVersus"),
-    backLabel: t("interface:backToVersus"),
+    heading: t('interface:chaptersCouchVersus'),
+    backLabel: t('interface:backToVersus'),
     attemptLabel: 'race',
     showManage: false,
     getLibrary: () => inventory.library,
@@ -215,7 +215,7 @@ export function attachCouchCatalogue({
     },
     play(item, options) {
       const pack = inventory.library.packs.find((entry) => entry.id === item.id);
-      if (!pack) throw new Error(t("interface:refreshChaptersBeforePlayingThisEdition"));
+      if (!pack) throw new Error(t('interface:refreshChaptersBeforePlayingThisEdition'));
       return playPack(pack, options);
     },
     playInstalled: playPack,

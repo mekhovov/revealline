@@ -16,7 +16,7 @@ import {
 import { acquireCouchReleasePicture } from './couch-release-picture.mjs';
 
 const cancelled = () =>
-  new DOMException(t("interface:installedCouchChapterLoadingCancelled"), 'AbortError');
+  new DOMException(t('interface:installedCouchChapterLoadingCancelled'), 'AbortError');
 const requireValue = (value, message) => {
   if (!value) throw new Error(message);
 };
@@ -59,7 +59,10 @@ export function createCouchInstalledChapters({
   };
   function decode(source, signal) {
     check(signal);
-    requireValue(typeof ImageClass === 'function', t("interface:browserPictureDecodingIsUnavailable"));
+    requireValue(
+      typeof ImageClass === 'function',
+      t('interface:browserPictureDecodingIsUnavailable'),
+    );
     return new Promise((resolve, reject) => {
       const image = new ImageClass();
       let settled = false;
@@ -76,16 +79,17 @@ export function createCouchInstalledChapters({
       };
       const abort = () => finish(cancelled());
       const timer = setTimeout(
-        () => finish(new Error(t("interface:installedCouchPictureDecodeTimedOut"))),
+        () => finish(new Error(t('interface:installedCouchPictureDecodeTimedOut'))),
         15000,
       );
       signal?.addEventListener('abort', abort, { once: true });
-      image.onerror = () => finish(new Error(t("interface:theInstalledCouchPictureCouldNotDecode")));
+      image.onerror = () =>
+        finish(new Error(t('interface:theInstalledCouchPictureCouldNotDecode')));
       image.onload = async () => {
         try {
           requireValue(
             typeof image.decode === 'function',
-            t("interface:completePictureDecodingIsUnavailable"),
+            t('interface:completePictureDecodingIsUnavailable'),
           );
           await image.decode();
           check(signal);
@@ -109,7 +113,7 @@ export function createCouchInstalledChapters({
       image = null;
     try {
       check(signal);
-      executingStatus?.('decoding', t("interface:checkingInstalledPictureDecoding"));
+      executingStatus?.('decoding', t('interface:checkingInstalledPictureDecoding'));
       if (typeof source !== 'string') {
         url = URLImpl.createObjectURL(source);
         source = url;
@@ -157,7 +161,7 @@ export function createCouchInstalledChapters({
     if (pictureRequest?.raceId === raceId) {
       requireValue(
         pictureRequest.source === row && pictureRequest.themeId === themeId,
-        t("interface:changedSetupRequiresANewRaceIdentity"),
+        t('interface:changedSetupRequiresANewRaceIdentity'),
       );
       return pictureRequest;
     }
@@ -211,12 +215,15 @@ export function createCouchInstalledChapters({
     try {
       if (state.background) {
         const header = inspectImageDataUrl(state.background.dataUrl);
-        requireValue(header.valid, t("interface:theInstalledEmbeddedOriginalIsInvalid"));
-        report('decoding', t("interface:checkingTheInstalledOriginalBeforeChoosingItsPresentation"));
+        requireValue(header.valid, t('interface:theInstalledEmbeddedOriginalIsInvalid'));
+        report(
+          'decoding',
+          t('interface:checkingTheInstalledOriginalBeforeChoosingItsPresentation'),
+        );
         original = await decode(state.background.dataUrl, signal);
         requireValue(
           original.naturalWidth === header.width && original.naturalHeight === header.height,
-          t("interface:theInstalledOriginalDecodedToDifferentDimensions"),
+          t('interface:theInstalledOriginalDecodedToDifferentDimensions'),
         );
         request.backdrop.image = original;
       }
@@ -243,7 +250,7 @@ export function createCouchInstalledChapters({
     if (request?.raceId === raceId) {
       requireValue(
         request.row === row && request.state === state && request.themeId === themeId,
-        t("interface:changedSetupRequiresANewRaceIdentity"),
+        t('interface:changedSetupRequiresANewRaceIdentity'),
       );
     } else {
       const identityCatalog = createMediaIdentityCatalog(state.snapshot.executionCatalog);
@@ -270,7 +277,7 @@ export function createCouchInstalledChapters({
     }
     requireValue(
       canonicalJSON(request.original) === canonicalJSON(proof.pin),
-      t("interface:theInstalledOriginalChangedChooseSetupAgain"),
+      t('interface:theInstalledOriginalChangedChooseSetupAgain'),
     );
     if (!request.kind) {
       let page;
@@ -284,7 +291,7 @@ export function createCouchInstalledChapters({
       check(signal);
       requireValue(
         (page ?? null) === (presentationPage?.current?.() ?? null),
-        t("interface:theReleaseArtworkChangedChooseSetupAgain"),
+        t('interface:theReleaseArtworkChangedChooseSetupAgain'),
       );
       request.snapshot = page ?? null;
       if (page && (await matchesReleasePictureBaseline(request.pin.identity, null, { signal }))) {
@@ -292,7 +299,8 @@ export function createCouchInstalledChapters({
         request.release = releasePictureForIdentity(page, request.pin.identity);
       }
       request.kind = request.release ? 'release' : 'authored';
-      if (!page) request.notice = t("interface:releaseArtworkIsUnavailableTheAuthoredPictureIsKept");
+      if (!page)
+        request.notice = t('interface:releaseArtworkIsUnavailableTheAuthoredPictureIsKept');
     }
     check(signal);
     let picture;
@@ -308,7 +316,7 @@ export function createCouchInstalledChapters({
         URLImpl,
       });
     } else {
-      report('decoding', t("interface:openingTheSelectedPictureForBothBoards"));
+      report('decoding', t('interface:openingTheSelectedPictureForBothBoards'));
       picture = await acquirePresentationImage(
         {
           pin: request.kind === 'still' ? request.pin : request.original,
@@ -318,7 +326,7 @@ export function createCouchInstalledChapters({
         { signal, ImageClass, URLImpl },
       );
     }
-    requireValue(picture?.image, t("interface:theSelectedInstalledPictureIsUnavailable"));
+    requireValue(picture?.image, t('interface:theSelectedInstalledPictureIsUnavailable'));
     return {
       request,
       picture: Object.freeze({
@@ -371,7 +379,7 @@ export function createCouchInstalledChapters({
     signal,
     work,
     onStatus = () => {},
-    message = t("interface:checkingInstalledChaptersAndPictures"),
+    message = t('interface:checkingInstalledChaptersAndPictures'),
   ) {
     check(signal);
     const ticket = ++generation,
@@ -394,7 +402,7 @@ export function createCouchInstalledChapters({
         // Join cancelled authority work before entering its single-operation lock.
         if (previous) await previous.promise.catch(() => {});
         check(controller.signal);
-        requireValue(ticket === generation, t("interface:theSelectedCouchChapterChanged"));
+        requireValue(ticket === generation, t('interface:theSelectedCouchChapterChanged'));
         // Legacy pack preparation receives no signal argument from its decoder
         // caller. Bind that decoder to the work actually executing, never to a
         // newer queued operation that is still waiting for this one to unwind.
@@ -405,13 +413,13 @@ export function createCouchInstalledChapters({
             controller.signal,
             () => {
               check(controller.signal);
-              requireValue(ticket === generation, t("interface:theSelectedCouchChapterChanged"));
+              requireValue(ticket === generation, t('interface:theSelectedCouchChapterChanged'));
             },
             report,
           );
-          report('ready', t("interface:installedContentIsReady"), 'ready');
+          report('ready', t('interface:installedContentIsReady'), 'ready');
           check(controller.signal);
-          requireValue(ticket === generation, t("interface:theSelectedCouchChapterChanged"));
+          requireValue(ticket === generation, t('interface:theSelectedCouchChapterChanged'));
           return result;
         } catch (error) {
           if (error.name !== 'AbortError') report('error', error.message, 'error');
@@ -444,13 +452,13 @@ export function createCouchInstalledChapters({
         current();
         requireValue(
           next.status === 'checked',
-          t("interface:installedChaptersNeedRecoveryInSoloMoreWorldsBeforeRacing"),
+          t('interface:installedChaptersNeedRecoveryInSoloMoreWorldsBeforeRacing'),
         );
         if (expectedPack) {
           const actual = next.packs.packs.find((pack) => pack.id === expectedPack.id);
           requireValue(
             actual && canonicalJSON(actual) === canonicalJSON(expectedPack),
-            t("interface:theSelectedChapterChangedRefreshChaptersBeforePlaying"),
+            t('interface:theSelectedChapterChangedRefreshChaptersBeforePlaying'),
           );
         }
         const rows = [];
@@ -495,10 +503,13 @@ export function createCouchInstalledChapters({
   }
   function stateFor(row, themeId) {
     const state = choices.get(row);
-    requireValue(state && state.snapshot === snapshot, t("interface:selectACurrentInstalledCouchChapter"));
+    requireValue(
+      state && state.snapshot === snapshot,
+      t('interface:selectACurrentInstalledCouchChapter'),
+    );
     requireValue(
       row.themes.some((theme) => theme.id === themeId),
-      t("interface:thisWorldDoesNotBelongToTheSelectedChapter"),
+      t('interface:thisWorldDoesNotBelongToTheSelectedChapter'),
     );
     return state;
   }
@@ -510,7 +521,7 @@ export function createCouchInstalledChapters({
           const latest = await proof.store.readPresentationMetadata({ signal });
           requireValue(
             latest.metadata.generation === proof.metadata.generation,
-            t("interface:installedOriginalsChangedReloadThisChapterBeforeStarting"),
+            t('interface:installedOriginalsChangedReloadThisChapterBeforeStarting'),
           );
         }
         if (presentation) {
@@ -522,7 +533,7 @@ export function createCouchInstalledChapters({
         if (external && external.kind !== 'still')
           requireValue(
             external.snapshot === (presentationPage?.current?.() ?? null),
-            t("interface:theReleaseArtworkChangedChooseSetupAgain"),
+            t('interface:theReleaseArtworkChangedChooseSetupAgain'),
           );
         check(signal);
       },
@@ -535,7 +546,10 @@ export function createCouchInstalledChapters({
     stage = null,
   ) {
     const state = stateFor(row, themeId);
-    requireValue(Number.isSafeInteger(raceId) && raceId >= 0, t("interface:useANewInMemoryRaceIdentity"));
+    requireValue(
+      Number.isSafeInteger(raceId) && raceId >= 0,
+      t('interface:useANewInMemoryRaceIdentity'),
+    );
     if (!stage) {
       staged?.cancel();
       // A cancelled successor may own the latest request while Results still
@@ -584,10 +598,13 @@ export function createCouchInstalledChapters({
             presentation = prepared.presentation;
           }
           current();
-          report('verifying', t("interface:confirmingTheSelectedChapterAndPicture"));
+          report('verifying', t('interface:confirmingTheSelectedChapterAndPicture'));
           await verifyCurrent(state, proof, s, presentation, external);
           current();
-          requireValue(state === stateFor(row, themeId), t("interface:theSelectedInstalledOwnerChanged"));
+          requireValue(
+            state === stateFor(row, themeId),
+            t('interface:theSelectedInstalledOwnerChanged'),
+          );
           const selected = { row, themeId, raceId, state, proof, presentation, external };
           if (stage) {
             stage.current();
@@ -608,7 +625,7 @@ export function createCouchInstalledChapters({
         }
       },
       onStatus,
-      t("interface:checkingTheSelectedChapterSExactPicture"),
+      t('interface:checkingTheSelectedChapterSExactPicture'),
     );
   }
   // The accepted Results image remains live throughout candidate verification.
@@ -623,7 +640,7 @@ export function createCouchInstalledChapters({
       confirmed: false,
       current() {
         check(controller.signal);
-        requireValue(live && staged === item, t("interface:theNextInstalledChapterChanged"));
+        requireValue(live && staged === item, t('interface:theNextInstalledChapterChanged'));
       },
       cancel() {
         if (!live) return;
@@ -663,19 +680,22 @@ export function createCouchInstalledChapters({
               current();
               requireValue(
                 selected.state === stateFor(row, selected.themeId),
-                t("interface:theSelectedInstalledOwnerChanged"),
+                t('interface:theSelectedInstalledOwnerChanged'),
               );
               item.current();
               item.confirmed = true;
             },
             onStatus,
-            t("interface:confirmingTheNextChapterBeforeAdoptingIt"),
+            t('interface:confirmingTheNextChapterBeforeAdoptingIt'),
           );
           item.current();
         },
         commit() {
           item.current();
-          requireValue(item.confirmed && !pending, t("interface:confirmTheNextChapterBeforeAdoptingIt"));
+          requireValue(
+            item.confirmed && !pending,
+            t('interface:confirmTheNextChapterBeforeAdoptingIt'),
+          );
           const previous = binding,
             presentation = item.selection.presentation,
             retirePicture = presentation?.lease.commit();
@@ -708,7 +728,7 @@ export function createCouchInstalledChapters({
     const selected = selection;
     requireValue(
       selected?.row === row && selected.raceId === raceId,
-      t("interface:loadTheSelectedOriginalBeforeStarting"),
+      t('interface:loadTheSelectedOriginalBeforeStarting'),
     );
     return operation(
       signal,
@@ -721,11 +741,11 @@ export function createCouchInstalledChapters({
           selected.external,
         );
         current();
-        requireValue(selection === selected, t("interface:thePreparedRaceChanged"));
+        requireValue(selection === selected, t('interface:thePreparedRaceChanged'));
         return binding;
       },
       onStatus,
-      t("interface:confirmingThePreparedPictureBeforeStarting"),
+      t('interface:confirmingThePreparedPictureBeforeStarting'),
     );
   }
   function dispose() {
