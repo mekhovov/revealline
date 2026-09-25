@@ -798,8 +798,12 @@ export function bootCoop({
     onPads: (count, slots) => {
       assignedSlots = slots;
       showTouch();
-      const text = `${count} controller${count === 1 ? '' : 's'} connected${menuHint ? ` · ${menuHint}` : ''}`;
-      if ($('coop-pads').textContent !== text) localizedText($('coop-pads'), () => text);
+      const text = () =>
+        t('interface:team.controllersConnected', {
+          count,
+          hint: menuHint ? ` · ${menuHint}` : '',
+        });
+      if ($('coop-pads').textContent !== text()) localizedText($('coop-pads'), text);
     },
   });
   const router = createControllerRouter({ readPads: () => framePads });
@@ -1863,7 +1867,9 @@ export function bootCoop({
             return context;
           },
           (error) => {
-            selection.musicError = `Exact mission music assignments: ${error.message}. Global and theme playlists remain available.`;
+            selection.musicError = localizedMessage('interface:team.musicAssignmentsUnavailable', {
+              error: error.message,
+            });
             return null;
           },
         );
@@ -2190,8 +2196,13 @@ export function bootCoop({
     document.addEventListener('focusin', focusChanged);
     operation.detach = () => document.removeEventListener('focusin', focusChanged);
     try {
-      nextStatus(
-        `Preparing ${destination.name}… Your ${skipRow ? 'attempt' : 'result'} stays available.`,
+      nextStatus(() =>
+        t(
+          skipRow
+            ? 'interface:team.preparingAttemptDestination'
+            : 'interface:team.preparingResultDestination',
+          { mission: contentText(destination, 'name') },
+        ),
       );
       if (!current()) return;
       $('coop-next-cancel').focus({ preventScroll: true });
@@ -2330,7 +2341,11 @@ export function bootCoop({
         picture: earnedTeamPicture(selection, selection.binding),
       });
       if (!adopted(candidate)) return;
-      message(`${destination.name}. Choose fresh directions when you are ready.`);
+      message(() =>
+        t('interface:team.arenaReadyDirections', {
+          mission: contentText(destination, 'name'),
+        }),
+      );
       input.focus();
     } catch (error) {
       const failed = nextOperation === operation;
@@ -2369,8 +2384,13 @@ export function bootCoop({
         acceptedPicture === operation.picture &&
         !nextOperation
       ) {
-        nextStatus(
-          `Could not start ${destination.name}. Your ${skipRow ? 'attempt' : 'result'} is unchanged. ${skipRow ? t('interface:chooseSkipAgainWhenReady') : t('interface:tryNextAgain')}`,
+        nextStatus(() =>
+          t(
+            skipRow
+              ? 'interface:team.startAttemptDestinationFailed'
+              : 'interface:team.startResultDestinationFailed',
+            { mission: contentText(destination, 'name') },
+          ),
         );
         try {
           render();
@@ -2910,7 +2930,9 @@ export function bootCoop({
         if (!accepted())
           throw new DOMException(t('interface:arenaActivationChanged'), 'AbortError');
         setupNote({ level: attemptLevel, experiment: candidate.config });
-        message(`${row.title}. Choose fresh directions when you are ready.`);
+        message(() =>
+          t('interface:team.arenaReadyDirections', { mission: contentText(row.level, 'name') }),
+        );
         if (!accepted())
           throw new DOMException(t('interface:arenaActivationChanged'), 'AbortError');
       } catch (error) {
@@ -3074,7 +3096,13 @@ export function bootCoop({
         owner.detach();
         libraryLaunch = null;
         cancel.hidden = true;
-        libraryStatus(`${row.title} ready. Playing together.`);
+        libraryStatus(
+          () =>
+            t('interface:team.arenaPlayingTogether', {
+              mission: contentText(row.level, 'name'),
+            }),
+          'ready',
+        );
         finishLibraryStart(started);
       } else if (libraryLaunch === owner && context.isCurrent())
         libraryStatus(t('interface:yourTeamAttemptIsKeptChoosePlayWhenReady'));
@@ -3082,7 +3110,10 @@ export function bootCoop({
     } catch (error) {
       if (context.isCurrent())
         libraryStatus(
-          `Could not prepare ${row.title}. Your current attempt is unchanged. Try Play again.`,
+          () =>
+            t('interface:team.arenaPreparationFailed', {
+              mission: contentText(row.level, 'name'),
+            }),
           'error',
         );
       throw error;
@@ -4194,15 +4225,21 @@ export function bootCoop({
       if (event.type === 'cut.joint')
         announce(
           captureTeaching
-            ? `Joint Cut! ${captureTeaching}`
+            ? t('interface:team.jointCutTeaching', { teaching: captureTeaching })
             : t('interface:jointCutBothLinesAreBankedChooseYourNextRoute'),
         );
       if (event.type === 'player.downed') {
         knockdowns[event.player] = event;
         input.clearPlayer(event.player);
         batch.release(event.player);
-        announce(
-          `${coopFailureFeedback(run, event).cause} ${names()[event.player]} needs a rescue. Hold Support nearby${run.config.advancedCooperation ? ' ' + t('interface:orCapture2NewTerritory') + '' : ''}.`,
+        announce(() =>
+          t('interface:team.playerNeedsRescue', {
+            cause: coopFailureFeedback(run, event).cause,
+            player: names()[event.player],
+            alternative: run.config.advancedCooperation
+              ? ' ' + t('interface:orCapture2NewTerritory')
+              : '',
+          }),
         );
       }
       if (event.type === 'player.revived') {
@@ -4213,15 +4250,17 @@ export function bootCoop({
         knockdowns[event.player] = null;
         input.clearPlayer(event.player);
         batch.release(event.player);
-        announce(
-          `${cause ? `${cause} ` : ''}${names()[event.player]} is back.${event.reason === 'reserve' ? ' ' + t('interface:oneTeamReserveUsed') + '' : ''} Choose a fresh direction.`,
+        announce(() =>
+          t('interface:team.playerBack', {
+            cause: cause ? `${cause} ` : '',
+            player: names()[event.player],
+            reserve: event.reason === 'reserve' ? ' ' + t('interface:oneTeamReserveUsed') : '',
+          }),
         );
       }
       if (event.type === 'team.recovery') {
         const cause = coopRecoveryCause(run, recoveryFailures);
-        announce(
-          `${cause ? `${cause} ` : ''}Both craft are back. One team reserve used. Choose fresh directions together.`,
-        );
+        announce(() => t('interface:team.bothCraftBack', { cause: cause ? `${cause} ` : '' }));
       }
       if (event.type === 'shield.disabled')
         announce(t('interface:bothAnchorsSecuredNowCaptureTheExposedCoreInA'));
@@ -4229,16 +4268,14 @@ export function bootCoop({
         announce(t('interface:strongholdDefeatedItsEmitterAndTravellingSparksAreGone'));
       if (event.type === 'support.pulse') {
         if (event.interceptedImpacts?.length)
-          announce(`${names()[event.player]} intercepted a travelling spark.`);
+          announce(() => t('interface:team.sparkIntercepted', { player: names()[event.player] }));
         else if (event.slowedEnemies?.length)
-          announce(`${names()[event.player]} slowed the pressure. There is room to finish a cut.`);
+          announce(() => t('interface:team.pressureSlowed', { player: names()[event.player] }));
       }
       if (event.type === 'rescue.completed') {
         input.clearPlayer(event.player);
         batch.release(event.player);
-        announce(
-          `${names()[event.player]} rescued their partner. Both craft are ready for a fresh direction.`,
-        );
+        announce(() => t('interface:team.partnerRescued', { player: names()[event.player] }));
       }
       if (event.type === 'rescue.cancelled' && event.requiresFreshSteering) {
         input.clearPlayer(event.player);
@@ -4306,7 +4343,7 @@ export function bootCoop({
           cancelAutomaticRetry();
           start(currentRecipe());
           if (run !== ticket.run && running())
-            message(`${ticket.cause} New attempt; choose fresh directions together.`);
+            message(() => t('interface:team.newAttemptDirections', { cause: ticket.cause }));
         }
       }
       const elapsed = last === null ? 0 : (now - last) / 1000;
@@ -4428,7 +4465,21 @@ export function bootCoop({
   }
   function showPackStatus() {
     const candidate = candidateJourney?.rows.find((row) => row.pack === pack);
-    const label = `${pack.name} · ${pack.levels.length} levels${packArtworkSource ? ' · Local artwork' : ''}${candidate ? (defaultJourney ? ' · Original artwork' : ` · ${candidate.background ? t('interface:originalArtCandidate') : t('interface:geometryTest')} · not human validated`) : ''}`;
+    const label = () =>
+      t('interface:team.packStatus', {
+        pack: contentText(pack, 'name'),
+        count: pack.levels.length,
+        artwork: packArtworkSource ? ` · ${t('interface:team.localArtwork')}` : '',
+        validation: candidate
+          ? defaultJourney
+            ? ` · ${t('interface:team.originalArtwork')}`
+            : ` · ${
+                candidate.background
+                  ? t('interface:originalArtCandidate')
+                  : t('interface:geometryTest')
+              } · ${t('interface:team.notHumanValidated')}`
+          : '',
+      });
     packStatus.begin({ message: label }).finish({ message: label });
   }
   function showPack(next, preferred = next.levels[0].id, isCurrent = () => true) {
