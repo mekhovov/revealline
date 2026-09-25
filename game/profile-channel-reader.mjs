@@ -7,6 +7,7 @@ import { createProfileSharedMediaReader } from './profile-shared-media.mjs';
 import { createExternalRecoveryCatalog } from './external-recovery-catalog.mjs';
 import { createProfileChannelAssets } from './profile-channel-assets.mjs';
 import { ownProfileJSON, freezeProfileData } from './profile-channel-json.mjs';
+import { t } from './i18n/index.mjs';
 import {
   originalRecoveryOptions,
   reviewOriginalMetadata,
@@ -24,7 +25,8 @@ export const PROFILE_READER_LIMITS = Object.freeze({
   maxTimeoutMs: 300000,
 });
 const check = (signal) => {
-  if (signal.aborted) throw signal.reason ?? new DOMException('Cancelled.', 'AbortError');
+  if (signal.aborted)
+    throw signal.reason ?? new DOMException(t('errors:profileReader.cancelled'), 'AbortError');
 };
 // Web Locks forbids signal together with ifAvailable. Stop awaiting on cancellation,
 // and keep the eventual callback guarded so it releases any late lease without reads.
@@ -71,13 +73,13 @@ export function createProfileChannelReader({
 } = {}) {
   targetVersion(currentVersion);
   if (decodeStillImage !== undefined && typeof decodeStillImage !== 'function')
-    throw new TypeError('Expected a trusted still image decoder.');
+    throw new TypeError(t('errors:profileReader.trustedDecoder'));
   if (
     !Number.isInteger(timeoutMs) ||
     timeoutMs < 1 ||
     timeoutMs > PROFILE_READER_LIMITS.maxTimeoutMs
   )
-    throw new TypeError('Invalid profile review deadline.');
+    throw new TypeError(t('errors:profileReader.invalidDeadline'));
   const assets = createProfileChannelAssets({ indexedDB, timeoutMs: Math.min(timeoutMs, 15000) });
   const reviews = new WeakMap(),
     catalogs = new Map();
@@ -89,15 +91,13 @@ export function createProfileChannelReader({
     verifiedOriginals = new WeakMap();
   }
   if (!Array.isArray(recoveryCatalogs) || recoveryCatalogs.length > PROFILE_READER_LIMITS.channels)
-    throw new TypeError('Provide a finite trusted exact-channel recovery registry.');
+    throw new TypeError(t('errors:profileReader.trustedRegistry'));
   for (const entry of recoveryCatalogs) {
     const channel = recoveryChannel(entry?.channelId, currentVersion);
     if (!channel || channel.support === 'protected-unknown' || catalogs.has(channel.id))
-      throw new TypeError('Unsupported or duplicate recovery registry channel.');
+      throw new TypeError(t('errors:profileReader.unsupportedRegistryChannel'));
     if (!Array.isArray(entry.registeredEntries) || !Array.isArray(entry.knownDescriptors))
-      throw new TypeError(
-        'Register historical campaigns and trusted external descriptors explicitly.',
-      );
+      throw new TypeError(t('errors:profileReader.explicitHistoricalDescriptors'));
     catalogs.set(
       channel.id,
       createExternalRecoveryCatalog({
@@ -112,14 +112,17 @@ export function createProfileChannelReader({
     closed = false,
     active = null;
   function task(signal, body) {
-    if (closed) return Promise.reject(new Error('Profile recovery is closed.'));
-    if (active) return Promise.reject(new Error('Finish or cancel the current profile check.'));
+    if (closed) return Promise.reject(new Error(t('errors:profileReader.closed')));
+    if (active) return Promise.reject(new Error(t('errors:profileReader.finishCurrentCheck')));
     const controller = new AbortController();
     const cancel = () =>
-      controller.abort(new DOMException('Profile review cancelled.', 'AbortError'));
+      controller.abort(new DOMException(t('errors:profileReader.reviewCancelled'), 'AbortError'));
     signal?.addEventListener('abort', cancel, { once: true });
     const timer = setTimeout(
-      () => controller.abort(new DOMException('Profile review timed out.', 'TimeoutError')),
+      () =>
+        controller.abort(
+          new DOMException(t('errors:profileReader.reviewTimedOut'), 'TimeoutError'),
+        ),
       timeoutMs,
     );
     if (signal?.aborted) cancel();
@@ -140,15 +143,14 @@ export function createProfileChannelReader({
     return operation.promise;
   }
   async function locked(channel, signal, body) {
-    if (!known.has(channel)) throw new TypeError('Choose a profile from this recovery screen.');
+    if (!known.has(channel)) throw new TypeError(t('errors:profileReader.chooseProfile'));
     if (typeof lockManager?.request !== 'function')
-      throw new Error('Safe profile review requires Web Locks. Stored data is unchanged.');
+      throw new Error(t('errors:profileReader.webLocksRequired'));
     const hold = (key, next) =>
       untilCancelled(signal, () =>
         lockManager.request(key, { mode: 'exclusive', ifAvailable: true }, async (lock) => {
           check(signal);
-          if (!lock)
-            throw new Error('This profile is busy. Close its game tab before reviewing it.');
+          if (!lock) throw new Error(t('errors:profileReader.profileBusy'));
           return next();
         }),
       );
@@ -157,13 +159,12 @@ export function createProfileChannelReader({
   function local(key, limit) {
     try {
       if (typeof storage?.getItem !== 'function')
-        throw new Error('Local profile storage is unavailable.');
+        throw new Error(t('errors:profileReader.storageUnavailable'));
       const value = storage.getItem(key);
       if (value === null) return { state: 'absent' };
-      if (typeof value !== 'string')
-        throw new Error('Profile storage returned an unreadable value.');
+      if (typeof value !== 'string') throw new Error(t('errors:profileReader.unreadableValue'));
       if (value.length > limit || bytes(value) > limit)
-        throw new Error('Stored value exceeds this reader’s byte bound.');
+        throw new Error(t('errors:profileReader.valueByteBound'));
       return { state: 'present', value };
     } catch (error) {
       return { state: 'unreadable', message: error.message };
@@ -216,8 +217,9 @@ export function createProfileChannelReader({
   async function fingerprint(raw) {
     const text = canonicalJSON(raw);
     if (bytes(text) > PROFILE_READER_LIMITS.snapshotBytes)
-      throw new Error('The profile snapshot exceeds its export bound.');
-    if (!globalThis.crypto?.subtle) throw new Error('Secure snapshot hashing is unavailable.');
+      throw new Error(t('errors:profileReader.snapshotExportBound'));
+    if (!globalThis.crypto?.subtle)
+      throw new Error(t('errors:profileReader.secureHashingUnavailable'));
     const hash = new Uint8Array(
       await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text)),
     );
@@ -254,7 +256,7 @@ export function createProfileChannelReader({
       try {
         const parsed = JSON.parse(raw.session.value);
         if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed))
-          throw new Error('Saved-flight JSON is not an object.');
+          throw new Error(t('errors:profileReader.savedFlightObject'));
         saved = { status: 'stored-unverified', inspected: false };
       } catch (error) {
         saved = { status: 'malformed-or-unsupported', inspected: false };
@@ -266,12 +268,7 @@ export function createProfileChannelReader({
       !clearJournal(raw.assets.backup) ||
       !clearJournal(raw.assets.external);
     if (recoveryPending)
-      diagnostics.push(
-        problem(
-          'recovery',
-          'A pending or unreadable recovery state is preserved; this screen cannot repair it.',
-        ),
-      );
+      diagnostics.push(problem('recovery', t('errors:profileReader.pendingRecoveryPreserved')));
     const complete = [...Object.values(raw.assets), raw.profile, raw.session, raw.backupLock].every(
       (entry) => entry.state === 'present' || entry.state === 'absent',
     );
@@ -284,8 +281,7 @@ export function createProfileChannelReader({
       sharedMedia: 'not-inspected',
       originalAvailability: 'not-inspected',
       savedFlightInspection: 'unavailable',
-      limits:
-        'Profile structure only. Historical execution and first-earned owner authority have not been verified.',
+      limits: t('errors:profileReader.structureOnlyLimit'),
     });
   }
   async function readStable(channel, signal) {
@@ -295,22 +291,20 @@ export function createProfileChannelReader({
     check(signal);
     const after = await snapshot(channel, signal);
     if (canonicalJSON(before) !== canonicalJSON(after))
-      throw new Error('The stored profile changed during review. Check it again.');
+      throw new Error(t('errors:profileReader.changedDuringReview'));
     return { raw: before, overview, fingerprint: digest };
   }
   function priorReview(review) {
     const prior = reviews.get(review);
-    if (!prior) throw new TypeError('Review this exact profile before checking recovery files.');
+    if (!prior) throw new TypeError(t('errors:profileReader.reviewBeforeRecovery'));
     return prior;
   }
   async function unchangedReview(prior, signal) {
     const fresh = await readStable(prior.channel, signal);
     if (fresh.fingerprint !== prior.fingerprint)
-      throw new Error('The stored profile changed after review. Check it again.');
+      throw new Error(t('errors:profileReader.changedAfterReview'));
     if (!fresh.overview.completeStoredSnapshot || fresh.overview.recoveryPending)
-      throw new Error(
-        'Pending or unreadable recovery records prevent a media snapshot; raw diagnostics remain available.',
-      );
+      throw new Error(t('errors:profileReader.pendingRecordsPreventSnapshot'));
     return fresh;
   }
   async function sharedSnapshot(signal, selected = false) {
@@ -322,15 +316,14 @@ export function createProfileChannelReader({
       selected ? sharedMedia.originalSnapshot({ signal }) : sharedMedia.snapshot({ signal }),
     );
     check(signal);
-    if (captured.state !== 'present')
-      throw new Error('Shared media is absent; raw profile diagnostics remain available.');
+    if (captured.state !== 'present') throw new Error(t('errors:profileReader.sharedMediaAbsent'));
     return captured.value;
   }
   async function revalidateShared(prior, captured, signal) {
     const current = await sharedSnapshot(signal);
     await unchangedReview(prior, signal);
     if (canonicalJSON(current.marker) !== canonicalJSON(captured.marker))
-      throw new Error('Shared media changed during recovery review. Check it again.');
+      throw new Error(t('errors:profileReader.sharedMediaChangedDuringReview'));
     check(signal);
   }
   const generations = (captured) => ({
@@ -342,7 +335,7 @@ export function createProfileChannelReader({
     await unchangedReview(owned.prior, signal);
     const captured = await sharedSnapshot(signal, true);
     if (canonicalJSON(captured.marker) !== canonicalJSON(owned.captured.marker))
-      throw new Error('Shared media changed after original review. Check it again.');
+      throw new Error(t('errors:profileReader.sharedMediaChangedAfterReview'));
     await unchangedReview(owned.prior, signal);
     check(signal);
     return captured;
@@ -378,30 +371,32 @@ export function createProfileChannelReader({
           diagnostics = [];
         const add = (key) => {
           if (typeof key !== 'string' || key.length > 1024) {
-            diagnostics.push(problem('discovery', 'An unsupported storage key was not inspected.'));
+            diagnostics.push(problem('discovery', t('errors:profileReader.unsupportedStorageKey')));
             return;
           }
           const channel = channelFromStorageKey(key, currentVersion);
           if (channel) {
             byId.set(channel.id, channel);
             if (byId.size > PROFILE_READER_LIMITS.channels)
-              throw new Error('Too many exact profile channels to review safely.');
+              throw new Error(t('errors:profileReader.tooManyChannels'));
           } else if (key.startsWith('revealline.'))
             diagnostics.push(
-              problem('discovery', `Unrecognized key namespace: ${key.slice(0, 160)}`),
+              problem(
+                'discovery',
+                t('errors:profileReader.unrecognizedNamespace', { key: key.slice(0, 160) }),
+              ),
             );
         };
         try {
           const length = storage?.length;
           if (!Number.isInteger(length) || length < 0 || length > PROFILE_READER_LIMITS.keys)
-            throw new Error('Local profile keys are unavailable or exceed the discovery bound.');
+            throw new Error(t('errors:profileReader.keysUnavailable'));
           for (let i = 0; i < length; i++) {
             check(inner);
             const key = storage.key(i);
             if (key !== null) add(key);
           }
-          if (storage.length !== length)
-            throw new Error('Local profile keys changed during discovery.');
+          if (storage.length !== length) throw new Error(t('errors:profileReader.keysChanged'));
         } catch (error) {
           check(inner);
           if (byId.size > PROFILE_READER_LIMITS.channels) throw error;
@@ -447,10 +442,7 @@ export function createProfileChannelReader({
       return task(signal, (inner) => {
         const prior = priorReview(review),
           catalog = catalogs.get(prior.channel.id);
-        if (!catalog)
-          throw new Error(
-            'This exact historical channel has no registered recovery catalog. Raw diagnostics remain available.',
-          );
+        if (!catalog) throw new Error(t('errors:profileReader.recoveryCatalogMissing'));
         return locked(prior.channel, inner, async () => {
           const fresh = await unchangedReview(prior, inner);
           const captured = await sharedSnapshot(inner);
@@ -494,7 +486,7 @@ export function createProfileChannelReader({
     revalidateRecoverySnapshot(snapshot, { signal } = {}) {
       return task(signal, (inner) => {
         const owned = recoverySnapshots.get(snapshot);
-        if (!owned) throw new TypeError('Use this reader’s owned recovery snapshot.');
+        if (!owned) throw new TypeError(t('errors:profileReader.ownedSnapshot'));
         return locked(owned.prior.channel, inner, async () => {
           await revalidateShared(owned.prior, owned.captured, inner);
           return snapshot;
@@ -507,10 +499,7 @@ export function createProfileChannelReader({
         clearOriginals();
         const prior = priorReview(review),
           catalog = catalogs.get(prior.channel.id);
-        if (!catalog)
-          throw new Error(
-            'This exact historical channel has no registered recovery catalog. Raw diagnostics remain available.',
-          );
+        if (!catalog) throw new Error(t('errors:profileReader.recoveryCatalogMissing'));
         return locked(prior.channel, inner, async () => {
           const fresh = await unchangedReview(prior, inner);
           const captured = await sharedSnapshot(inner, true);
@@ -551,7 +540,7 @@ export function createProfileChannelReader({
       return task(signal, (inner) => {
         verifiedOriginals = new WeakMap();
         const owned = originalChoices.get(choice);
-        if (!owned) throw new TypeError('Choose this reader’s owned original.');
+        if (!owned) throw new TypeError(t('errors:profileReader.ownedOriginal'));
         return locked(owned.prior.channel, inner, async () => {
           await checkedOriginal(owned, inner);
           const result = freezeProfileData(originalIdentity(owned));
@@ -564,7 +553,7 @@ export function createProfileChannelReader({
       const { signal, component } = originalRecoveryOptions(options, true);
       return task(signal, (inner) => {
         const owned = verifiedOriginals.get(verified);
-        if (!owned) throw new TypeError('Use this reader’s verified original.');
+        if (!owned) throw new TypeError(t('errors:profileReader.verifiedOriginal'));
         return locked(owned.prior.channel, inner, async () => {
           // A generation marker is not byte integrity: hash a fresh selected handle again.
           const prepared = await checkedOriginal(owned, inner);
@@ -583,13 +572,11 @@ export function createProfileChannelReader({
     exportStoredData(review, { signal } = {}) {
       return task(signal, async (inner) => {
         const prior = reviews.get(review);
-        if (!prior) throw new TypeError('Review this profile before exporting its stored values.');
+        if (!prior) throw new TypeError(t('errors:profileReader.reviewBeforeExport'));
         return locked(prior.channel, inner, async () => {
           const fresh = await readStable(prior.channel, inner);
           if (fresh.fingerprint !== prior.fingerprint)
-            throw new Error(
-              'The stored profile changed after review. Check it again before export.',
-            );
+            throw new Error(t('errors:profileReader.changedBeforeExport'));
           const document = {
             format: 'revealline-stored-profile-snapshot.v1',
             channel: prior.channel,
@@ -599,12 +586,11 @@ export function createProfileChannelReader({
             raw: fresh.raw,
             diagnostics: fresh.overview.diagnostics,
             sharedMedia: 'not-inspected',
-            limits:
-              'Diagnostic stored values only; no original media, verified full backup, replay or automatic import authority.',
+            limits: t('errors:profileReader.diagnosticExportLimit'),
           };
           const text = JSON.stringify(document, null, 2);
           if (bytes(text) > PROFILE_READER_LIMITS.snapshotBytes)
-            throw new Error('The stored-data export exceeds its byte bound.');
+            throw new Error(t('errors:profileReader.storedExportByteBound'));
           check(inner);
           return Object.freeze({
             blob: new Blob([text], { type: 'application/json' }),
@@ -616,7 +602,9 @@ export function createProfileChannelReader({
     },
     async close() {
       closed = true;
-      active?.controller.abort(new DOMException('Profile recovery closed.', 'AbortError'));
+      active?.controller.abort(
+        new DOMException(t('errors:profileReader.recoveryClosed'), 'AbortError'),
+      );
       assets.close();
       sharedMedia?.close();
       recoverySnapshots = new WeakMap();
