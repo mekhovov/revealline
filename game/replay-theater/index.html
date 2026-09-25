@@ -47,7 +47,7 @@
         data-workshop-return="workshop"
         inert
         aria-disabled="true"
-        data-i18n="interface:returnToWorkshop2"
+        data-i18n="common:navigation.returnToWorkshop"
         >Return to Workshop</a
       >
       <a id="replay-game-home" data-workshop-return="game" href="../" data-i18n="interface:gameHome"
@@ -66,19 +66,21 @@
         Read-only playback · No rewards, scores or player progress are saved.
       </p>
       <details class="replay-interface">
-        <summary data-i18n="interface:interface">Interface</summary>
+        <summary data-i18n="common:interface.label">Interface</summary>
         <div class="replay-interface-fields">
           <label for="replay-text-face"
             ><span data-i18n="interface:textStyle">Text style</span>
             <select id="replay-text-face" disabled>
               <option value="pixel" data-i18n="interface:theme">Theme</option>
-              <option value="plain" data-i18n="interface:plain">Plain</option>
+              <option value="plain" data-i18n="common:text.plain">Plain</option>
             </select></label
           >
           <label for="replay-text-size"
             ><span data-i18n="interface:textSize">Text size</span>
             <select id="replay-text-size" disabled>
-              <option value="standard" data-i18n="interface:standard">Standard</option>
+              <option value="standard" data-i18n="interface:display.textSize.standard">
+                Standard
+              </option>
               <option value="large" data-i18n="interface:large">Large</option>
             </select></label
           >
