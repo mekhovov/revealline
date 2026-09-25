@@ -195,7 +195,7 @@ export function createSoundtrackPlayer({
   ];
   const selectionContext = (value = context) => ({
     ...value,
-    ...(bundledIds.length ? { bundledTrackIds: bundledIds } : {}),
+    ...(!localPlayback && bundledIds.length ? { bundledTrackIds: bundledIds } : {}),
     ...(localPlayback
       ? {
           installedTrackIds: [
@@ -471,7 +471,7 @@ export function createSoundtrackPlayer({
         : await readAsset(track.asset.sha256, {
             signal,
             purpose: 'playback',
-            localOnly: localOnly || (localPlayback && !bundledIds.includes(track.id)),
+            localOnly: localOnly || localPlayback,
           });
     throwIfSoundtrackAborted(signal);
     if (localOnly && original == null) return false;
@@ -1035,9 +1035,7 @@ export function createSoundtrackPlayer({
       Array.isArray(ids) &&
         ids.length <= 256 &&
         new Set(ids).size === ids.length &&
-        ids.every(
-          (id) => typeof id === 'string' && /^[a-z0-9][a-z0-9._-]{0,127}$/.test(id),
-        ),
+        ids.every((id) => typeof id === 'string' && /^[a-z0-9][a-z0-9._-]{0,127}$/.test(id)),
       'Invalid local soundtrack identities.',
     );
     localRecordingIds = [...ids];

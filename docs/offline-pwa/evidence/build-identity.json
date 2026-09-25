@@ -1,10 +1,14 @@
 {
-  "baseline": "5d6c0ec3e6995cd0485fe5065ff5ea2bf82e0cdc",
-  "version": "0.116.0",
+  "baseline": "0e678f42579c957eb66de0d4bb842e56e324842e",
+  "sourceVersion": "0.130.0",
+  "targetRelease": "v0.132.0",
   "sourceRevision": null,
-  "files": 1167,
-  "zipSHA256": "c952ea74472dbf37df32dd82cb66298d110c0a7e7b3dc1078eba8d7c073ed98c",
-  "scope": "Uncommitted local implementation build; not a frozen or published release",
+  "buildId": "8f956f7478645d666dd9fab40c6fbb6b2592dbee749eb4d75a7c580f8d8d921a",
+  "files": 1256,
+  "distributionBytes": 607091220,
+  "zipBytes": 607529258,
+  "zipSHA256": "fa789382e8b5bccdefd68335caffc77a81824971127e9f138c979da3ad2a9a0f",
+  "scope": "Rebased local candidate build; not a frozen or published release",
   "macOS": "26.6.2 (25G83)",
   "node": "20.19.5"
 }

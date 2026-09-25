@@ -504,7 +504,7 @@ test('shared-host UI and audio bind only their reviewed current inputs', async (
       );
       assert.ok(
         asset.provenance.source.endsWith(
-          'sha256:0e133a2f5282644855ac48e26084578eb58285599363fd6378fbc935c3f556bc',
+          'sha256:a78ed382b88ab15068943f1774f782a47f2f6360c4d9059351a90437d939fbee',
         ),
         slot.id,
       );

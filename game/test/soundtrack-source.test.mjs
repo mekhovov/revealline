@@ -222,12 +222,13 @@ const coreRegistration = {
   path: `game/audio/soundtracks/${coreTrack.asset.sha256}.mp3`,
 };
 
-test('code-owned core audio honors local-only preparation and Installed only playback', async () => {
+test('a shipped recording remains local-only in installed play but can be explicitly downloaded', async () => {
   const urls = [];
   let local = null;
   const source = createSoundtrackSource({
     catalogue: coreCatalogue,
     bundled: [coreRegistration],
+    localPlayback: () => true,
     readLocal: () => local,
     installedOnly: () => true,
     baseURL: 'https://example.test/releases/v1/',
@@ -242,11 +243,13 @@ test('code-owned core audio honors local-only preparation and Installed only pla
   assert.equal(await source.readAsset(coreTrack.asset.sha256, { localOnly: true }), body);
   assert.equal(urls.length, 0);
   local = null;
-  for (const options of [{}, { purpose: 'offline' }, { purpose: 'export' }]) {
+  assert.equal(await source.readAsset(coreTrack.asset.sha256), null);
+  assert.equal(urls.length, 0);
+  for (const options of [{ purpose: 'offline' }, { purpose: 'export' }]) {
     const found = await source.readAsset(coreTrack.asset.sha256, options);
     assert.deepEqual(Buffer.from(await found.arrayBuffer()), Buffer.from(await body.arrayBuffer()));
   }
-  assert.equal(urls.length, 3);
+  assert.equal(urls.length, 2);
   assert.ok(
     urls.every((url) => url === `https://example.test/releases/v1/${coreRegistration.path}`),
   );
