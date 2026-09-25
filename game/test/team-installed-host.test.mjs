@@ -169,6 +169,13 @@ test('a fresh Team host labels and resumes an exactly replayed installed checkpo
     nativeFocus: true,
     nativeVisibility: true,
     beforeImport: browserFixture(memory),
+    presentation: {
+      load: ({ snapshot }) => {
+        // Exercise the retained historical-import picture policy used by the
+        // generated non-media campaign, matching the fresh-launch fixture.
+        snapshot.resolved.theme.revision = 79;
+      },
+    },
   });
   await openMissionLibrary(f, 'coop-discovery-open');
   const card = [...f.$('journey-cards').children].find((candidate) => {
