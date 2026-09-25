@@ -773,3 +773,34 @@ switches that existing message to English and back from another tab. Typed coord
 cursor/focus remain unchanged; draft bonuses remain empty and checkpoint 1 is unchanged. Test
 fields were cleared afterwards. Full repository validation is running at this checkpoint;
 final builds, native staging and full coverage are not implied by the focused checks.
+
+## Studio actor editor and validation checkpoint
+
+Actor placement now translates pinned role names, tiers, effective speed/cadence descriptions,
+placement help, damage/retention facts and counterplay. Role labels reuse existing shared copy;
+actor domains reuse the pressure inspector's labels. Message producers capture accepted catalog
+and timing facts when the editor is synchronized. Locale changes do not repeat synchronization,
+inspect a draft, replace option nodes, reset fields or disarm removal. Primary actor authoring
+errors use the same explicit metadata path as contact bonuses; canonical API messages stay intact.
+
+All 30 existing actor/encounter/combat-authoring tests pass. The new catalog matrix verifies the
+English counterplay against every pinned catalog role, both difficulty editions, all presets and
+both optional-combat states. Ukrainian output has no unresolved keys or invalid numbers. The
+initial new UI removal test exposed the minimal DOM fixture's non-browser default selection of
+its first nonempty option; explicitly choosing New actor fixes the fixture. All 3 new actor
+locale tests pass, with the 13 unchanged board-copy tests also passing. Changed-file lint and
+formatting pass; source checks report 7,903 messages / 6,334 references.
+
+A browser verified Ukrainian roles, counterplay, placement instructions and speed tiers. An
+unapplied frontier patrol with the brisk tier retains its ID, coordinates, focus and cursor when
+another tab selects English. The subsequent Ukrainian validation/reset interaction timed out in
+the browser tool; its outcome is not counted as verified. Follow-up inventory and reconnect
+calls also timed out. The request contained an invalid ID, so it could not apply a valid actor
+change. Browser verification must resume with a fresh state observation, not assumed success.
+
+`npm run validate` completed successfully during this checkpoint: canonical content/assets and
+presentation metadata validation pass. Its initial localization phase covered the committed
+bonus checkpoint (7,836 messages / 6,265 references); the new actor catalog check is separate.
+Log: `/tmp/rl-i18n/rebase/v1141-validation.log`. This does not replace the remaining full-suite,
+final-build/native and route-coverage work. Remaining direct Studio copy sites were inventoried
+in `/tmp/rl-i18n/rebase/v1141-studio-remaining-copy.txt` for continued migration.
