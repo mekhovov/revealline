@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Custom campaign · RevealLine</title>
+    <link rel="stylesheet" href="./creator.css" />
+    <script type="module" src="./player.mjs"></script>
+  </head>
+  <body>
+    <header>
+      <a href="./">← My creations</a><a href="../">RevealLine</a><span>Custom campaign</span>
+    </header>
+    <main>
+      <p class="eyebrow">YOUR PICTURES, YOUR CAMPAIGN</p>
+      <h1 id="title">Opening campaign…</h1>
+      <p id="status" role="status" aria-live="polite">
+        Checking the installed edition and its picture.
+      </p>
+      <p id="save-status" role="status"></p>
+      <section class="panel controls" aria-label="Mission controls">
+        <label
+          >Difficulty
+          <select id="difficulty">
+            <option value="gentle">Gentle</option>
+            <option value="standard" selected>Standard</option>
+            <option value="expert">Expert</option>
+          </select></label
+        >
+        <label
+          >Steering
+          <select id="steering">
+            <option value="immediate">Immediate</option>
+            <option value="grid-center">Grid center</option>
+          </select></label
+        >
+        <button id="start" disabled>Start mission</button>
+        <button id="resume" hidden>Resume saved attempt</button>
+        <button id="pause" disabled>Pause</button>
+        <button id="retry" disabled>Retry</button>
+        <button id="next" hidden>Next</button>
+      </section>
+      <p id="hud">
+        Move with arrow keys or WASD. Close a line on safe ground to reveal your picture.
+      </p>
+      <div
+        id="arena"
+        tabindex="0"
+        aria-label="Game board. Arrow keys or WASD to move; Escape to pause."
+      >
+        <canvas id="board" width="1296" height="648" aria-label="Territory capture board"></canvas>
+      </div>
+      <div class="touch-controls" aria-label="Direction controls">
+        <button data-move="up" aria-label="Move up">↑</button
+        ><button data-move="left" aria-label="Move left">←</button
+        ><button data-move="down" aria-label="Move down">↓</button
+        ><button data-move="right" aria-label="Move right">→</button>
+      </div>
+      <section id="earned" class="panel" hidden>
+        <h2>Your earned picture</h2>
+        <div id="creator-story-stage" class="creator-story-stage">
+          <img id="earned-picture" alt="" />
+        </div>
+        <p id="earned-caption"></p>
+        <p id="creator-story-status" role="status" aria-live="polite"></p>
+        <button id="creator-story-retry" type="button" hidden>Try victory video again</button>
+      </section>
+      <details class="panel">
+        <summary>Saves and recovery</summary>
+        <p>
+          Attempts and earned pictures belong to this exact installed edition. A new edition keeps
+          its own progress.
+        </p>
+        <button id="export-attempt" disabled>Download unfinished attempt</button>
+        <label
+          >Restore an attempt
+          <input id="import-attempt" type="file" accept=".json,application/json" disabled
+        /></label>
+        <button id="export-progress" disabled>Back up campaign progress</button>
+        <label
+          >Restore campaign progress
+          <input id="import-progress" type="file" accept=".json,application/json" disabled
+        /></label>
+      </details>
+    </main>
+  </body>
+</html>

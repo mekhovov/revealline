@@ -2,7 +2,7 @@
 
 Start with the [browser guide](index.html), [Playground](../../game/playground/), or [Content Studio](../../game/studio/). Creation stays on your device. You do not need an account or a terminal for the single-map workflow below.
 
-This guide describes the framework shipped before automatic media campaigns. **A Studio project is editable source; a Playground expansion is currently the file you can install for ordinary Solo play.** Selecting an image in Studio's reference workbench does not generate a level or bind its reveal reward. The planned `.rlpack` creator is tracked in the [delivery plan](delivery-plan.md).
+This page preserves the manual framework workflow. For automatic generation from one image, use the [picture campaign walkthrough](image-campaign-guide.md), with its separate [implementation/release acceptance](phase1-acceptance.md). **An arbitrary Studio project remains editable source; a Playground expansion can be installed for ordinary Solo play.** Selecting an image in Studio's reference workbench does not itself generate a level or bind its reveal reward. The new creator prepares verified project-backed `.rlpack` editions through its own review and installation flow.
 
 ## Map → mission → campaign → pack
 

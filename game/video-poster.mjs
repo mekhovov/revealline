@@ -278,6 +278,7 @@ function observeFrame(scope, video, requestedTime, env, inspected) {
   let targetSet = false,
     finished = false,
     handle,
+    fallbackHandle,
     epoch = 0;
   let resolve;
   const promise = new Promise((r) => {
@@ -302,7 +303,8 @@ function observeFrame(scope, video, requestedTime, env, inspected) {
     );
     let observedMediaTime = null,
       decodedFrame = null;
-    if (hasFrameCallback) {
+    const hasPresentedFrame = hasFrameCallback && metadata != null;
+    if (hasPresentedFrame) {
       observedMediaTime = metadata?.mediaTime;
       required(
         Number.isFinite(observedMediaTime) &&
@@ -327,7 +329,7 @@ function observeFrame(scope, video, requestedTime, env, inspected) {
       playheadTime,
       observedMediaTime,
       decodedFrame,
-      timingEvidence: hasFrameCallback ? 'presented-frame' : 'playhead-estimate',
+      timingEvidence: hasPresentedFrame ? 'presented-frame' : 'playhead-estimate',
     });
     return true;
   };
@@ -347,6 +349,25 @@ function observeFrame(scope, video, requestedTime, env, inspected) {
   if (hasFrameCallback) {
     requestFrame();
     scope.use(() => video.cancelVideoFrameCallback(handle));
+    const fallback = () => {
+      const firedHandle = fallbackHandle;
+      fallbackHandle = undefined;
+      if (firedHandle !== undefined) env.timers.clearTimeout(firedHandle);
+      try {
+        if (!capture(null) && !finished) scheduleFallback();
+      } catch (error) {
+        scope.fail(error);
+      }
+    };
+    const scheduleFallback = () => {
+      if (finished || fallbackHandle !== undefined) return;
+      fallbackHandle = env.timers.setTimeout(fallback, 250);
+    };
+    for (const name of ['loadeddata', 'seeked', 'canplay'])
+      scope.listen(video, name, scheduleFallback);
+    scope.use(() => {
+      if (fallbackHandle !== undefined) env.timers.clearTimeout(fallbackHandle);
+    });
   } else {
     for (const name of ['loadeddata', 'seeked', 'canplay'])
       scope.listen(video, name, () => capture(null));
@@ -423,7 +444,7 @@ export async function openVideoPosterSource(
     'Browser video capture is unavailable.',
   );
   const raw = ownVideo(source),
-    env = { createVideo, createCanvas, URLImpl };
+    env = { createVideo, createCanvas, URLImpl, timers };
   const result = await operation(signal, timeoutMs, timers, async (scope) => {
     const prefix = new Uint8Array(await Blob.prototype.slice.call(raw, 0, 65536).arrayBuffer());
     scope.guard();
