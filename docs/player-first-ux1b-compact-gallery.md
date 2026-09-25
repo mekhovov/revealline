@@ -1,6 +1,6 @@
-# UX1-B compact mission gallery candidate
+# UX1-B compact mission gallery — v0.133.0
 
-This unversioned candidate is reconciled onto the v0.130 product source and keeps the complete mode-compatible mission catalogue visible while reducing the work needed to find and start a mission. It does not change publishing, release history, progression identity, simulation rules, or the underlying pack formats.
+This v0.133.0 candidate is reconciled onto the v0.130 product source and keeps the complete mode-compatible mission catalogue visible while reducing the work needed to find and start a mission. Versions v0.131.0 and v0.132.0 were already reserved by separate draft features when this release was allocated. It does not change publishing, release history, progression identity, simulation rules, or the underlying pack formats.
 
 ## Player contract
 
@@ -37,4 +37,4 @@ The candidate adds or updates focused coverage for:
 
 ## Evidence limits
 
-This is a draft, not a release. Browser screenshots, physical touch hardware, and a physical controller are not qualified here. The inherited broad Solo, Versus, and Team host cohorts contain pre-existing catalogue-count/revision or presentation-fixture expectations from an earlier Journey inventory; this candidate does not weaken those assertions. Focused current-source checks qualify the changed gallery and controller paths while broader fixture reconciliation remains separate release work. The candidate does not redesign mission Details, results, Pause, HUD, Collection records, or gameplay teaching; those remain in UX2-UX5.
+This is a release candidate, not a public release. Browser screenshots, physical touch hardware, and a physical controller are not qualified here. The repository's committed temporary fast-release policy waives the long automated suites; it does not turn them into passing evidence. Focused current-source checks qualify the changed gallery and controller paths. The candidate does not redesign mission Details, results, Pause, HUD, Collection records, or gameplay teaching; those remain in UX2-UX5.
