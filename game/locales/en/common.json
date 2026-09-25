@@ -187,5 +187,6 @@
   "controls.promptFieldGuide": "{{button}}: field guide.",
   "controls.promptHangar": "{{button}}: hangar.",
   "controls.promptMissions": "{{button}}: missions.",
-  "controls.promptBoost": "{{button}}: boost."
+  "controls.promptBoost": "{{button}}: boost.",
+  "actions.playback": "Play"
 }

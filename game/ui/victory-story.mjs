@@ -1,5 +1,11 @@
 import { contentText } from '../i18n/content.mjs';
-import { t, localizedText, localizedAttribute } from '../i18n/index.mjs';
+import {
+  t,
+  localizedText,
+  localizedAttribute,
+  localizedMessage,
+  render as renderMessage,
+} from '../i18n/index.mjs';
 import { createOperationStatus } from './operation-status.mjs';
 import { bindAudioMasterMedia } from './audio-master.mjs';
 import { required } from '../data-json.mjs';
@@ -113,17 +119,17 @@ export function createVictoryStoryPresentation({
   notice.tabIndex = -1;
   const controls = document.createElement('div');
   const buttons = {};
-  for (const label of [
-    t('common:actions.play'),
-    t('common:actions.pause'),
-    t('interface:skip'),
-    t('interface:replay'),
+  for (const [id, key] of [
+    ['play', 'common:actions.playback'],
+    ['pause', 'common:actions.pause'],
+    ['skip', 'interface:skip'],
+    ['replay', 'interface:replay'],
   ]) {
     const button = document.createElement('button');
     button.type = 'button';
-    localizedText(button, () => label);
+    localizedText(button, () => t(key));
     controls.append(button);
-    buttons[label.toLowerCase()] = button;
+    buttons[id] = button;
   }
   const volumeLabel = document.createElement('label');
   localizedText(volumeLabel, () => t('interface:cinematicVolume'));
@@ -177,8 +183,8 @@ export function createVictoryStoryPresentation({
   const snapshot = () =>
     Object.freeze({
       state,
-      reason,
-      audioWarning,
+      reason: reason === null ? null : renderMessage(reason),
+      audioWarning: audioWarning === null ? null : renderMessage(audioWarning),
       volume,
       reducedMotion,
       startSeconds: story.segment.startSeconds,
@@ -198,29 +204,32 @@ export function createVictoryStoryPresentation({
     if (media) media.hidden = !showing;
     buttons.play.hidden = hasPlayed && state === 'poster';
     localizedText(buttons.play, () =>
-      state === 'paused' ? t('interface:resumeStory') : t('common:actions.play'),
+      state === 'paused' ? t('interface:resumeStory') : t('common:actions.playback'),
     );
     buttons.play.disabled = !ready || ['playing', 'starting', 'preparing', 'error'].includes(state);
     buttons.pause.hidden = !['playing', 'starting'].includes(state);
     buttons.skip.hidden = state === 'poster' || state === 'error';
     buttons.replay.hidden = !hasPlayed || !['poster', 'blocked', 'paused'].includes(state);
-    let message =
-      reason ||
-      (state === 'preparing'
-        ? t('interface:preparingOptionalStoryYourPictureIsUnchanged')
-        : state === 'starting'
-          ? t('interface:startingStoryPlayback')
-          : state === 'playing'
-            ? t('interface:storyPlaying')
-            : state === 'paused'
-              ? t('interface:storyPausedResumeExplicitly')
-              : reducedMotion
-                ? t('interface:reducedMotionTheEarnedPictureStaysAvailablePlayIsOptional')
-                : t('interface:yourPictureStoryPlaybackIsOptional'));
-    const master = audioMaster?.snapshot();
-    if (master ? master.muted || master.volume === 0 : muted || masterVolume === 0)
-      message += ' ' + t('interface:masterSoundIsMutedCinematicVolumeDoesNotUnmuteIt') + '';
-    if (audioWarning) message += ` ${audioWarning}`;
+    const message = () => {
+      let message =
+        renderMessage(reason) ||
+        (state === 'preparing'
+          ? t('interface:preparingOptionalStoryYourPictureIsUnchanged')
+          : state === 'starting'
+            ? t('interface:startingStoryPlayback')
+            : state === 'playing'
+              ? t('interface:storyPlaying')
+              : state === 'paused'
+                ? t('interface:storyPausedResumeExplicitly')
+                : reducedMotion
+                  ? t('interface:reducedMotionTheEarnedPictureStaysAvailablePlayIsOptional')
+                  : t('interface:yourPictureStoryPlaybackIsOptional'));
+      const master = audioMaster?.snapshot();
+      if (master ? master.muted || master.volume === 0 : muted || masterVolume === 0)
+        message += ' ' + t('interface:masterSoundIsMutedCinematicVolumeDoesNotUnmuteIt') + '';
+      if (audioWarning) message += ` ${renderMessage(audioWarning)}`;
+      return message;
+    };
     if (state === 'preparing' || state === 'starting') {
       activity ??= feedback.begin({ message, isCurrent: () => !disposed });
       activity.update({ message, stage: state === 'starting' ? 'playing' : 'decoding' });
@@ -258,7 +267,7 @@ export function createVictoryStoryPresentation({
     try {
       release?.();
     } catch {
-      audioWarning = t('interface:musicGainCouldNotBeRestoredCheckTheMusicControls');
+      audioWarning = localizedMessage('interface:musicGainCouldNotBeRestoredCheckTheMusicControls');
     }
   };
   const unduck = () => {
@@ -308,8 +317,9 @@ export function createVictoryStoryPresentation({
     if (inFlight) {
       keepPoster = !ready;
       state = ready && hasPlayed ? 'paused' : 'poster';
-      reason = t('interface:storyPausedPlayAgainExplicitly');
-      if (!ready) armDeadline(t('interface:storyPreparationTimedOutYourPictureIsUnchanged'));
+      reason = localizedMessage('interface:storyPausedPlayAgainExplicitly');
+      if (!ready)
+        armDeadline(localizedMessage('interface:storyPreparationTimedOutYourPictureIsUnchanged'));
       render();
     }
     return inFlight;
@@ -317,9 +327,10 @@ export function createVictoryStoryPresentation({
   function skip() {
     if (disposed) return false;
     keepPoster = true;
-    finish(t('interface:storySkippedYourExactPictureIsUnchanged'));
+    finish(localizedMessage('interface:storySkippedYourExactPictureIsUnchanged'));
     if (disposed) return false;
-    if (!ready) armDeadline(t('interface:storyPreparationTimedOutYourPictureIsUnchanged'));
+    if (!ready)
+      armDeadline(localizedMessage('interface:storyPreparationTimedOutYourPictureIsUnchanged'));
     return true;
   }
   function observe() {
@@ -334,17 +345,17 @@ export function createVictoryStoryPresentation({
       media.videoHeight !== story.source.height ||
       media.duration !== story.source.durationSeconds
     ) {
-      fail(t('interface:playbackMetadataChangedYourPictureIsUnchanged'));
+      fail(localizedMessage('interface:playbackMetadataChangedYourPictureIsUnchanged'));
       return;
     }
     if (!Number.isFinite(time) || time < story.segment.startSeconds - 0.001) {
-      fail(t('interface:storyLeftItsSelectedSegment'));
+      fail(localizedMessage('interface:storyLeftItsSelectedSegment'));
       return;
     }
     if (time >= story.segment.endSeconds)
-      finish(t('interface:storyEndedYourExactPictureIsUnchanged'));
+      finish(localizedMessage('interface:storyEndedYourExactPictureIsUnchanged'));
     else if (media.ended)
-      fail(t('interface:theVideoEndedBeforeTheSelectedSegmentFinishedYourPicture'));
+      fail(localizedMessage('interface:theVideoEndedBeforeTheSelectedSegmentFinishedYourPicture'));
   }
   function scheduleFrames(token) {
     if (typeof media?.requestVideoFrameCallback !== 'function') return;
@@ -382,7 +393,7 @@ export function createVictoryStoryPresentation({
       }
       releaseDuck = allocatedDuck;
       applyAudio();
-      armDeadline(t('interface:storyPlaybackDidNotBeginSkipOrCloseTheStory'));
+      armDeadline(localizedMessage('interface:storyPlaybackDidNotBeginSkipOrCloseTheStory'));
       // Invoke play within this call, before any await, preserving native user activation.
       const started = video.play();
       render();
@@ -409,8 +420,8 @@ export function createVictoryStoryPresentation({
           state = error?.name === 'NotAllowedError' ? 'blocked' : 'error';
           reason =
             state === 'blocked'
-              ? t('interface:yourBrowserBlockedPlaybackUsePlayAgainOrKeepThe')
-              : t('interface:thisVideoCouldNotPlayYourPictureRemainsAvailable');
+              ? localizedMessage('interface:yourBrowserBlockedPlaybackUsePlayAgainOrKeepThe')
+              : localizedMessage('interface:thisVideoCouldNotPlayYourPictureRemainsAvailable');
           render();
           return false;
         },
@@ -422,8 +433,8 @@ export function createVictoryStoryPresentation({
       state = error?.name === 'NotAllowedError' ? 'blocked' : 'error';
       reason =
         state === 'blocked'
-          ? t('interface:yourBrowserNeedsAnExplicitPlayAction')
-          : t('interface:storyPlaybackIsUnavailableYourPictureRemainsAvailable');
+          ? localizedMessage('interface:yourBrowserNeedsAnExplicitPlayAction')
+          : localizedMessage('interface:storyPlaybackIsUnavailableYourPictureRemainsAvailable');
       render();
       return Promise.resolve(false);
     }
@@ -436,7 +447,7 @@ export function createVictoryStoryPresentation({
     desired = autoplay;
     state = keepPoster ? 'poster' : 'preparing';
     if (!keepPoster) reason = null;
-    armDeadline(t('interface:theSelectedStoryStartCouldNotBeReachedYourPicture'));
+    armDeadline(localizedMessage('interface:theSelectedStoryStartCouldNotBeReachedYourPicture'));
     try {
       media.currentTime = story.segment.startSeconds;
       render();
@@ -444,7 +455,7 @@ export function createVictoryStoryPresentation({
       if (!media.seeking && Math.abs(media.currentTime - story.segment.startSeconds) <= 0.001)
         finishSeek();
     } catch {
-      fail(t('interface:theSelectedStoryStartCouldNotBeReached'));
+      fail(localizedMessage('interface:theSelectedStoryStartCouldNotBeReached'));
     }
   }
   function finishSeek() {
@@ -458,7 +469,7 @@ export function createVictoryStoryPresentation({
     )
       return;
     if (Math.abs(media.currentTime - story.segment.startSeconds) > 0.001) {
-      fail(t('interface:theRequestedStorySeekWasNotHonored'));
+      fail(localizedMessage('interface:theRequestedStorySeekWasNotHonored'));
       return;
     }
     const autoplay = desired;
@@ -594,7 +605,7 @@ export function createVictoryStoryPresentation({
           video.videoHeight !== expected.height ||
           video.duration !== expected.durationSeconds
         ) {
-          fail(t('interface:playbackMetadataDiffersFromTheVerifiedOriginal'));
+          fail(localizedMessage('interface:playbackMetadataDiffersFromTheVerifiedOriginal'));
           return;
         }
         seekStart(false);
@@ -618,14 +629,19 @@ export function createVictoryStoryPresentation({
       current(() => {
         if (!desired) return;
         if (video.currentTime >= story.segment.endSeconds)
-          finish(t('interface:storyEndedYourExactPictureIsUnchanged'));
-        else fail(t('interface:theVideoEndedBeforeTheSelectedSegmentFinishedYourPicture'));
+          finish(localizedMessage('interface:storyEndedYourExactPictureIsUnchanged'));
+        else
+          fail(
+            localizedMessage('interface:theVideoEndedBeforeTheSelectedSegmentFinishedYourPicture'),
+          );
       }),
     );
     listen(
       video,
       'error',
-      current(() => fail(t('interface:videoDecodingFailedYourPictureRemainsAvailable'))),
+      current(() =>
+        fail(localizedMessage('interface:videoDecodingFailedYourPictureRemainsAvailable')),
+      ),
     );
     const allocatedURL = URLImpl.createObjectURL(prepared.original);
     if (disposed || signal?.aborted) {
@@ -635,7 +651,7 @@ export function createVictoryStoryPresentation({
     }
     url = allocatedURL;
     media.src = url;
-    armDeadline(t('interface:videoLoadingTimedOutYourPictureRemainsAvailable'));
+    armDeadline(localizedMessage('interface:videoLoadingTimedOutYourPictureRemainsAvailable'));
     media.load();
     render();
     if (audioMaster && !disposed) {
@@ -645,7 +661,10 @@ export function createVictoryStoryPresentation({
     }
     if (signal?.aborted) dispose();
   } catch {
-    if (!disposed) fail(t('interface:nativeVideoPlaybackIsUnavailableYourPictureRemainsAvailable'));
+    if (!disposed)
+      fail(
+        localizedMessage('interface:nativeVideoPlaybackIsUnavailableYourPictureRemainsAvailable'),
+      );
   }
   return api;
 }
