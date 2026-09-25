@@ -61,8 +61,9 @@ their own next-unused version, PR, exact-source qualification, immutable release
 Pages deployment and public-play check. The earlier UX1 rewards/gallery work then
 resumes, followed by UX3–UX6. New bulk content stays outside this critical path.
 
-M3 implementation is isolated on `codex/couch-quickstart-parity` without a release
-version reservation. Versus keeps Start and Browse missions visible while actor,
+The earlier M3 checkpoint was isolated on `codex/couch-quickstart-parity`. Its
+accepted changes are now part of the v0.112.0 PR482 aggregate on
+`codex/couch-character-v113-candidate`. Versus keeps Start and Browse missions visible while actor,
 difficulty and advanced match setup live under Optional setup. Team keeps Arena,
 Start and Browse Team arenas visible while teamwork, difficulty, actors and created
 pack import live under Optional setup. Initial Team picture preparation exposes an
@@ -82,7 +83,7 @@ authoring path named by `game/build-config.json`; after those paths were hydrate
 repository validator passed. Their earlier absence was a checkout limitation, not a
 missing production asset.
 
-The final unversioned test correction keeps focus on Start while its initial picture
+The final v0.112.0 test correction keeps focus on Start while its initial picture
 confirmation is pending, so a held or repeated controller Confirm cannot activate
 the secondary Cancel action. Cancelling a later staged replacement retains the
 already accepted playable boards. The complete affected installed-content file passes
