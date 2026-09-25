@@ -6561,8 +6561,18 @@ try {
     show('game-overlay', false);
     show('show-result', true);
   };
+  function focusPauseToolReturn(id) {
+    const target = $(id);
+    if (controllerScope() === 'paused' && availableFocusTarget(target))
+      target.focus({ preventScroll: true });
+  }
   $('settings-button').onclick = () => {
     pause(true);
+    // The persistent shell can open Settings while flight is running. Pausing
+    // installs the Pause menu, so make its matching command the modal origin;
+    // closing Settings then returns keyboard/controller focus to the surface
+    // that now owns the attempt rather than the shell toolbar above it.
+    focusPauseToolReturn('overlay-settings');
     syncAssistControls();
     controllerSettings.refresh();
     controllerBoostSettings.refresh();
@@ -9589,6 +9599,7 @@ try {
   }
   $('help-button').onclick = () => {
     pause(true);
+    focusPauseToolReturn('overlay-help');
     $('help-dialog').showModal();
   };
   let collectionContextKey = null,
