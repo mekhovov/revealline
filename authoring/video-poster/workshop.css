@@ -111,6 +111,16 @@ input::file-selector-button {
   display: grid;
   gap: 8px;
 }
+.range-grid {
+  display: grid;
+  grid-template-columns: minmax(12rem, 1fr) minmax(8rem, 1fr);
+  gap: 10px 16px;
+  align-items: center;
+  margin-bottom: 16px;
+}
+.range-grid label {
+  margin: 0;
+}
 button:disabled,
 input:disabled {
   opacity: 0.5;
@@ -126,7 +136,10 @@ input:disabled {
   overflow-wrap: anywhere;
 }
 #video-poster-metadata,
-#video-poster-evidence {
+#video-poster-evidence,
+#video-poster-playback-evidence,
+#video-poster-trim-support,
+#video-poster-trim-evidence {
   white-space: pre-wrap;
   overflow-wrap: anywhere;
 }
@@ -157,6 +170,9 @@ input:disabled {
   }
   .actions {
     display: grid;
+  }
+  .range-grid {
+    grid-template-columns: 1fr;
   }
   button {
     width: 100%;

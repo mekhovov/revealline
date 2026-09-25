@@ -326,3 +326,39 @@ export async function prepareStoredStillMedia(
 export function isPreparedStoredStillMedia(value) {
   return prepared.has(value);
 }
+
+/** Append content-addressed retained files without changing image assignments,
+ * historical owners or any other domain. The caller's final transaction still
+ * checks the real previous row and generation before making the index visible. */
+export async function prepareRetainedStillBytes(
+  previous,
+  references,
+  assets,
+  { signal, decodeImage } = {},
+) {
+  abort(signal);
+  const old = hydrateStoredStillMedia(previous);
+  const additions = validateGenericMediaLibrary({
+    format: 'revealline-managed-bytes.v1',
+    items: references,
+  });
+  const merged = new Map(old.legacy.items.map((item) => [item.id, item]));
+  for (const item of additions.items) {
+    const existing = merged.get(item.id);
+    required(
+      !existing || existing.sha256 === item.sha256,
+      'An immutable retained file cannot change.',
+    );
+    merged.set(item.id, item);
+  }
+  const document = validateStoredStillMedia({
+    ...old,
+    legacy: { ...old.legacy, items: [...merged.values()] },
+  });
+  assertStoredStillTransition(old, document);
+  const owned = await verifyStoredStillAssets(document, assets, { signal, decodeImage });
+  abort(signal);
+  const result = Object.freeze({ library: document, assets: owned });
+  prepared.add(result);
+  return result;
+}
