@@ -4,6 +4,7 @@ import { createTeamMissionCardPresenter } from '../content-design/team-mission-c
 import { createTeamJourneyCandidates } from '../content-design/team-journey-candidates.mjs';
 import { createCandidateTeamHost } from '../content-design/team-host.mjs';
 import { emptyJourneyProfile } from '../journey/profile.mjs';
+import { setLocale } from '../i18n/index.mjs';
 import { Document, Element } from './helpers/couch-dom.mjs';
 
 const source = createTeamJourneyCandidates(),
@@ -102,6 +103,25 @@ test('completion labels separate skipped, exact-preset, other-preset and histori
     label(),
     'Earlier edition cleared on Standard · no clear recorded for this selected edition',
   );
+});
+
+test('rendered Team card copy and verified authored fields switch locale in place', (t) => {
+  t.after(() => setLocale('en', { persist: false }));
+  const f = fixture(),
+    row = journey.rows[0],
+    { card } = f.render(row);
+  f.document.body.append(card);
+  setLocale('uk', { persist: false });
+  assert.match(card.querySelector('.team-mission-difficulty').textContent, /Рівень випробування/);
+  assert.equal(card.querySelector('summary').textContent, 'Додаткова ціль · не відстежується');
+  assert.equal(
+    card.querySelector('.team-mission-route').textContent,
+    'З’єднати острови між собою чи спершу прокласти протилежні шляхи повернення?',
+  );
+  assert.match(card.querySelector('.team-mission-mastery').textContent, /обидва апарати/);
+  assert.match(card.querySelector('figcaption').textContent, /Початкова карта/);
+  setLocale('en', { persist: false });
+  assert.equal(card.querySelector('summary').textContent, 'Optional goal · not tracked');
 });
 
 for (const options of [{ context: false }, { failPaint: true }])
