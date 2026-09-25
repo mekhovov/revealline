@@ -7,7 +7,7 @@ release claims.
 
 ## Candidate identity
 
-- Accepted base: `2935527e36955eb55d4afe76383824ac4804e6bd` (`v0.110.1` Pages admission)
+- Accepted base: `4f0f5120597f1b781c84e369896405e4cd4f0eaa` (`v0.110.1` release-train base)
 - Integrated implementation checkpoint before this acceptance record:
   `7ffcdaf44fde40537073ffa94f5cb4b6baf2de19`
 - Implementation tree: `65ca9dd28088b2781aaa64ec84f3b95e57853779`
