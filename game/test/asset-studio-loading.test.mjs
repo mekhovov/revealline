@@ -6,6 +6,7 @@ import { drawAssetPreview } from '../../authoring/asset-studio/preview.mjs';
 import { createDefaultThemeBundle } from '../presentation/catalog.mjs';
 import { resolvePresentation } from '../presentation/model.mjs';
 import { exportThemeBundle, importThemeBundle } from '../presentation/bundle.mjs';
+import { setLocale } from '../i18n/index.mjs';
 
 const deferred = () => {
   let resolve, reject;
@@ -108,6 +109,22 @@ test('delayed failure keeps its error; a cached retry completes without a minimu
   await owner.run('Reading cached bundle…', () => owner.message('Cached bundle ready.'));
   assert.equal(label(target), 'Cached bundle ready.');
   assert.equal(owner.busy, false);
+});
+
+test('Studio operation controls and owned outcomes switch locale in place', async (t) => {
+  t.after(() => setLocale('en', { persist: false }));
+  const { owner, target, cancelButton } = operations(),
+    pending = deferred(),
+    running = owner.run('Preparing local revision…', async (task) => {
+      task.commit();
+      await pending.promise;
+    });
+  setLocale('uk', { persist: false });
+  assert.equal(cancelButton.textContent, 'Припинити очікування');
+  cancelButton.onclick();
+  assert.match(label(target), /Локальне збереження ще триває/);
+  pending.resolve();
+  await running;
 });
 
 test('a cancelled real bundle import preserves the current document and exact original transfer bytes', async () => {

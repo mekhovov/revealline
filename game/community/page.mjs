@@ -6,10 +6,18 @@ import { createCommunityLibrary } from './library.mjs';
 import { createCommunityPublisher } from './publisher.mjs';
 import { createCommunityStateStore } from './state.mjs';
 import { createTusBrowserUpload } from './tus-upload.mjs';
+import {
+  formatDate,
+  formatNumber,
+  localizedAttribute,
+  localizedMessage,
+  localizedText,
+  t,
+} from '../i18n/index.mjs';
 
 const $ = (id) => document.getElementById(id);
 const status = (message, error = false) => {
-  $('status').textContent = message;
+  localizedText($('status'), message);
   $('status').classList.toggle('error', error);
 };
 const apiBase = document.documentElement.dataset.communityApi;
@@ -36,25 +44,30 @@ let rows = [];
 let nextCursor = null;
 let submissionId = null;
 let submissionTimer = null;
-let accountSession = injectedAuth ? { user: { name: 'Configured creator' } } : null;
+let accountSession = injectedAuth ? { user: {}, configured: true } : null;
 const previewURLs = new Set();
 const canPublish = () => Boolean(accountSession && auth?.headers);
 const renderAccount = () => {
   $('account-signed-out').hidden = Boolean(accountSession);
   $('account-signed-in').hidden = !accountSession;
   if (accountSession)
-    $('account-identity').textContent =
-      `Signed in as ${accountSession.user.name || accountSession.user.email}.`;
+    localizedText($('account-identity'), () =>
+      accountSession.configured
+        ? t('interface:community.configuredCreator')
+        : t('interface:community.signedInAs', {
+            identity: accountSession.user.name || accountSession.user.email,
+          }),
+    );
   $('publish').disabled = !publisher.current() || !canPublish();
 };
 const setAccountStatus = (message, error = false) => {
-  $('account-status').textContent = message;
+  localizedText($('account-status'), message);
   $('account-status').classList.toggle('error', error);
 };
 
 const text = (tag, value, className) => {
   const node = document.createElement(tag);
-  node.textContent = value;
+  localizedText(node, value);
   if (className) node.className = className;
   return node;
 };
@@ -77,30 +90,45 @@ function render() {
   for (const url of previewURLs) URL.revokeObjectURL(url);
   previewURLs.clear();
   $('catalog').replaceChildren();
-  if (!rows.length) $('catalog').append(text('p', 'No campaigns match these filters.', 'muted'));
+  if (!rows.length)
+    $('catalog').append(
+      text('p', localizedMessage('interface:community.noCampaignsMatch'), 'muted'),
+    );
   for (const edition of rows) {
     const card = document.createElement('article');
     card.className = 'edition';
     card.append(text('h2', edition.title));
-    card.append(text('p', edition.description || 'No creator description.'));
+    card.append(
+      text(
+        'p',
+        edition.description || localizedMessage('interface:community.noCreatorDescription'),
+      ),
+    );
     const flags = document.createElement('p');
-    if (edition.installed) flags.append(text('span', 'Installed', 'badge'));
-    if (edition.packageRetained) flags.append(text('span', 'Offline copy', 'badge'));
-    if (edition.updateAvailable) flags.append(text('span', 'Update available', 'badge'));
+    if (edition.installed)
+      flags.append(text('span', localizedMessage('common:status.installed'), 'badge'));
+    if (edition.packageRetained)
+      flags.append(text('span', localizedMessage('interface:community.offlineCopy'), 'badge'));
+    if (edition.updateAvailable)
+      flags.append(text('span', localizedMessage('interface:community.updateAvailable'), 'badge'));
     card.append(flags);
     const preview = document.createElement('figure');
     preview.className = 'preview';
     if (edition.previewAvailable)
       preview.append(
         action(
-          'Load preview',
+          localizedMessage('interface:community.loadPreview'),
           async () => {
             const blob = await library.preview(edition);
             const url = URL.createObjectURL(blob);
             previewURLs.add(url);
             const image = document.createElement('img');
             image.src = url;
-            image.alt = `${edition.title} catalog preview`;
+            localizedAttribute(
+              image,
+              'alt',
+              localizedMessage('interface:community.catalogPreview', { title: edition.title }),
+            );
             preview.replaceChildren(image);
           },
           'secondary',
@@ -110,26 +138,32 @@ function render() {
     card.append(
       text(
         'p',
-        `Version ${edition.version} · ${(edition.packageSize / 1024 / 1024).toFixed(1)} MiB · published ${new Date(edition.publishedAt).toLocaleDateString()}`,
+        () =>
+          t('interface:community.editionMetadata', {
+            version: edition.version,
+            size: formatNumber(edition.packageSize / 1024 / 1024, {
+              minimumFractionDigits: 1,
+              maximumFractionDigits: 1,
+            }),
+            date: formatDate(new Date(edition.publishedAt)),
+          }),
         'meta',
       ),
     );
     const actions = document.createElement('div');
     actions.className = 'actions';
     if (edition.installed) {
-      const play = text('a', 'Play offline');
+      const play = text('a', localizedMessage('interface:community.playOffline'));
       play.href = edition.playHref;
       actions.append(play);
       if (edition.packageRetained)
         actions.append(
           action(
-            'Remove recovery download',
+            localizedMessage('interface:community.removeRecoveryDownload'),
             async () => {
               const review = await library.reviewDownloadRemoval(edition);
               await library.removeDownload(edition, review);
-              status(
-                'Recovery download removed. Installed play, saves and earned pictures remain.',
-              );
+              status(localizedMessage('interface:community.recoveryDownloadRemoved'));
               await refresh({ reset: true });
             },
             'secondary',
@@ -138,10 +172,10 @@ function render() {
       else
         actions.append(
           action(
-            'Keep recovery download',
+            localizedMessage('interface:community.keepRecoveryDownload'),
             async () => {
               await library.retainFromInstalled(edition);
-              status('Exact recovery package retained for offline reinstall.');
+              status(localizedMessage('interface:community.recoveryPackageRetained'));
               await refresh({ reset: true });
             },
             'secondary',
@@ -149,36 +183,49 @@ function render() {
         );
     } else
       actions.append(
-        action(edition.updateAvailable ? 'Download update' : 'Download and install', async () => {
-          status(`Downloading ${edition.title}…`);
-          await library.install(edition, { offline: false });
-          status(`${edition.title} installed. It can now play offline.`);
-          await refresh({ reset: true });
-        }),
+        action(
+          localizedMessage(
+            edition.updateAvailable
+              ? 'interface:community.downloadUpdate'
+              : 'interface:community.downloadAndInstall',
+          ),
+          async () => {
+            status(localizedMessage('interface:community.downloading', { title: edition.title }));
+            await library.install(edition, { offline: false });
+            status(
+              localizedMessage('interface:community.installedOffline', { title: edition.title }),
+            );
+            await refresh({ reset: true });
+          },
+        ),
       );
     const reportReason = document.createElement('select');
-    reportReason.setAttribute('aria-label', `Report reason for ${edition.title}`);
-    for (const [value, label] of [
-      ['broken', 'Broken content'],
-      ['copyright', 'Copyright concern'],
-      ['unsafe', 'Unsafe content'],
-      ['misleading', 'Misleading listing'],
-      ['other', 'Other concern'],
+    localizedAttribute(
+      reportReason,
+      'aria-label',
+      localizedMessage('interface:community.reportReasonFor', { title: edition.title }),
+    );
+    for (const [value, key] of [
+      ['broken', 'brokenContent'],
+      ['copyright', 'copyrightConcern'],
+      ['unsafe', 'unsafeContent'],
+      ['misleading', 'misleadingListing'],
+      ['other', 'otherConcern'],
     ]) {
       const option = document.createElement('option');
       option.value = value;
-      option.textContent = label;
+      localizedText(option, localizedMessage(`interface:community.${key}`));
       reportReason.append(option);
     }
     actions.append(
       reportReason,
       action(
-        'Report',
+        localizedMessage('interface:community.report'),
         async () => {
           await library.report(edition.editionId, {
             reason: reportReason.value,
           });
-          status('Report received for moderator review.');
+          status(localizedMessage('interface:community.reportReceived'));
         },
         'secondary',
       ),
@@ -206,10 +253,10 @@ async function refresh({ reset = true } = {}) {
     nextCursor = result.nextCursor;
     $('more').hidden = !nextCursor;
     render();
-    status(`${rows.length} community edition${rows.length === 1 ? '' : 's'} shown.`);
+    status(localizedMessage('interface:community.editionsShown', { count: rows.length }));
   } catch (error) {
     status(
-      `Community catalog unavailable: ${error.message} Installed campaigns still play from My creations.`,
+      localizedMessage('interface:community.catalogUnavailable', { error: error.message }),
       true,
     );
   }
@@ -226,12 +273,17 @@ $('publish-file').onchange = async () => {
     $('publish-title').value = selected.suggestedTitle;
     $('publish-slug').value = selected.suggestedSlug;
     $('publish').disabled = !canPublish();
-    $('publish-status').textContent = canPublish()
-      ? 'Approved package verified locally. Ready to upload.'
-      : 'Approved package verified. Sign in to upload it.';
+    localizedText(
+      $('publish-status'),
+      localizedMessage(
+        canPublish()
+          ? 'interface:community.packageReadyToUpload'
+          : 'interface:community.packageNeedsSignIn',
+      ),
+    );
   } catch (error) {
     $('publish').disabled = true;
-    $('publish-status').textContent = error.message;
+    localizedText($('publish-status'), error.message);
   }
 };
 $('publish').onclick = async () => {
@@ -243,15 +295,22 @@ $('publish').onclick = async () => {
       version: $('publish-version').value,
       description: $('publish-description').value,
       onProgress: ({ uploaded, total }) => {
-        $('publish-status').textContent = `Uploaded ${Math.round((uploaded / total) * 100)}%.`;
+        localizedText(
+          $('publish-status'),
+          localizedMessage('interface:community.uploadedPercent', {
+            percent: formatNumber(Math.round((uploaded / total) * 100)),
+          }),
+        );
       },
     });
     submissionId = result.id;
-    $('publish-status').textContent =
-      `Submission ${result.status}. Automatic validation decides when it becomes public.`;
+    localizedText(
+      $('publish-status'),
+      localizedMessage('interface:community.submissionStatus', { status: result.status }),
+    );
     if (['queued', 'validating'].includes(result.status)) scheduleSubmissionCheck();
   } catch (error) {
-    $('publish-status').textContent = error.message;
+    localizedText($('publish-status'), error.message);
   } finally {
     $('publish').disabled = !publisher.current() || !canPublish();
   }
@@ -260,27 +319,39 @@ async function checkSubmission() {
   if (!submissionId) return;
   try {
     const current = await publisher.status(submissionId);
-    $('publish-status').textContent =
-      current.status === 'published'
-        ? 'Published. The immutable edition is now in the public catalog.'
-        : current.status === 'rejected'
-          ? `Rejected${current.rejectionCode ? `: ${current.rejectionCode}` : '.'}`
-          : `Submission ${current.status}. Validation is still running.`;
+    localizedText(
+      $('publish-status'),
+      localizedMessage(
+        current.status === 'published'
+          ? 'interface:community.published'
+          : current.status === 'rejected'
+            ? current.rejectionCode
+              ? 'interface:community.rejectedWithCode'
+              : 'interface:community.rejected'
+            : 'interface:community.validationRunning',
+        { code: current.rejectionCode, status: current.status },
+      ),
+    );
     $('publish-unlist').hidden = current.status !== 'published';
     if (['queued', 'validating'].includes(current.status)) scheduleSubmissionCheck();
   } catch (error) {
-    $('publish-status').textContent = `Could not refresh submission status: ${error.message}`;
+    localizedText(
+      $('publish-status'),
+      localizedMessage('interface:community.submissionRefreshFailed', { error: error.message }),
+    );
   }
 }
 $('publish-unlist').onclick = async () => {
   $('publish-unlist').disabled = true;
   try {
     const current = await publisher.unlist();
-    $('publish-status').textContent =
-      `Edition ${current.status}. Existing installed copies remain playable.`;
+    localizedText(
+      $('publish-status'),
+      localizedMessage('interface:community.editionStatus', { status: current.status }),
+    );
     $('publish-unlist').hidden = true;
   } catch (error) {
-    $('publish-status').textContent = error.message;
+    localizedText($('publish-status'), error.message);
   } finally {
     $('publish-unlist').disabled = false;
   }
@@ -299,7 +370,7 @@ $('account-sign-up').onclick = async () => {
       password: $('account-password').value,
     });
     $('account-password').value = '';
-    setAccountStatus('Creator account created. Publishing is available.');
+    setAccountStatus(localizedMessage('interface:community.accountCreated'));
     renderAccount();
   } catch (error) {
     setAccountStatus(error.message, true);
@@ -316,7 +387,7 @@ $('account-sign-in').onclick = async () => {
       password: $('account-password').value,
     });
     $('account-password').value = '';
-    setAccountStatus('Signed in. Publishing is available.');
+    setAccountStatus(localizedMessage('interface:community.signedInPublishingAvailable'));
     renderAccount();
   } catch (error) {
     setAccountStatus(error.message, true);
@@ -332,7 +403,7 @@ $('account-sign-out').onclick = async () => {
     accountSession = null;
     submissionId = null;
     clearTimeout(submissionTimer);
-    setAccountStatus('Signed out. Public browsing remains available.');
+    setAccountStatus(localizedMessage('interface:community.signedOutBrowsingAvailable'));
     renderAccount();
   } catch (error) {
     setAccountStatus(error.message, true);
@@ -352,9 +423,20 @@ if (account)
     .then((session) => {
       accountSession = session;
       setAccountStatus(
-        session ? 'Creator session restored.' : 'Sign in only when you want to publish.',
+        localizedMessage(
+          session
+            ? 'interface:community.sessionRestored'
+            : 'interface:community.signInOnlyToPublish',
+        ),
       );
       renderAccount();
     })
-    .catch((error) => setAccountStatus(`Account service unavailable: ${error.message}`, true));
+    .catch((error) =>
+      setAccountStatus(
+        localizedMessage('interface:community.accountServiceUnavailable', {
+          error: error.message,
+        }),
+        true,
+      ),
+    );
 void refresh();
