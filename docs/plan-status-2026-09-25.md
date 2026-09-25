@@ -55,8 +55,8 @@ remain open.
 | Candidate                      | Current evidence                                                                                                                                 | Required before release                                                                                                                        |
 | ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------- |
 | Complete creator framework     | PR465 is the reserved v0.112.0 aggregate; its release owner is still reconciling the exact terminal head and it is not yet a qualified candidate | Finish the aggregate, reconcile protected main, set all version identities, complete focused/build/visual review, release, and verify publicly |
-| Couch quick start              | Draft PR478 is the reserved v0.113.0 aggregate and is behind protected main; an earlier candidate's extended Couch suite passed 201/201          | Reconcile the exact aggregate on accepted v0.112.0, then finish focused/static/build and visual review, release, and verify publicly           |
-| Character trail/impact cleanup | Allocated to the same v0.113.0 aggregate; removes distracting corner-like artifacts and sharpens readable impact feedback                        | Verify the exact final aggregate preserves the clean craft silhouette, then qualify and release                                                |
+| Couch quick start              | PR482 is the reserved v0.113.0 aggregate; PR478 is its superseded quick-start component evidence rather than a separately mergeable release      | Reconcile the exact aggregate on accepted v0.112.0, then finish exact-head hosted gates, release, and verify publicly                          |
+| Character trail/impact cleanup | PR482 contains the canonical PR447/PR403 trail patch plus reviewed craft-silhouette cleanup; PR447 and PR403 must not merge separately           | Verify the exact final aggregate preserves the clean craft silhouette, then qualify and release                                                |
 | Shared Home/lobbies/Pause      | Clean unversioned candidate covers compact Home, collapsed Couch setup, More/Releases, Sound and shared Pause; final focused cohorts are running | Reconcile on the accepted release, finish keyboard/controller/touch and responsive review, then release                                        |
 | Gameplay HUD/layout            | Clean 15-path candidate; 324/324 responsive/controller/touch checks passed                                                                       | Rebase on accepted release source, production build, visual/browser checks, release                                                            |
 | Deliberate terminal failure    | Clean 17-path candidate; 51 focused terminal/recovery/Team checks passed                                                                         | Rebase, build, browser checks, release; no automatic terminal restart may return                                                               |
@@ -79,7 +79,7 @@ continue in parallel so the next feature is ready when the publisher becomes fre
 | --------- | ----------------------------------------------------------------------------- | ---------------------------------: | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **R0**    | Preserve v0.111.0 and make v0.111.1 the public Pages default                  |                       **Complete** | PR476 merged; archive exact-byte audit passed; Pages deployed; public marker and ordinary Solo/Versus/Team entry passed                                          |
 | **R1**    | Complete creator campaign framework; reserved v0.112.0                        |              **owner in progress** | One terminal aggregate, current-main ancestry, all version identities, focused/build/visual review, immutable release and public proof                           |
-| **R2**    | Couch quick start plus canonical trail/impact cleanup; reserved v0.113.0      |                     **6–12 hours** | Reconcile on accepted v0.112.0; one Start with valid defaults, Cancel cannot steal controller Confirm, clean actor silhouette, responsive evidence, public proof |
+| **R2**    | PR482: Couch quick start plus canonical trail/impact cleanup; v0.113.0        |                     **6–12 hours** | Reconcile on accepted v0.112.0; one Start with valid defaults, Cancel cannot steal controller Confirm, clean actor silhouette, responsive evidence, public proof |
 | **R3**    | Shared appearance surfaces; tentative v0.114.0                                |                     **8–16 hours** | Exact aggregate on accepted main, accessibility/contrast/reduced-effects checks, no presentation-history regression, public evidence                             |
 | **R4**    | Reviewed Team specialist library; tentative v0.115.0                          |               **1–2 working days** | All 12 entries explicitly reachable, Original editions preserved, picture/Next/Continue correctness, human cooperative review                                    |
 | **R5**    | Journey rewards and working Collection; tentative v0.116.0                    |                     **8–16 hours** | Mode-scoped completion, exact earned pictures, Retry retention, correct Collection entries and return focus                                                      |
@@ -118,10 +118,10 @@ and persistent co-op saves remain deferred.
 1. **Serialized publishing:** only one task may merge, tag, archive, or deploy a
    release. Parallel work shortens preparation time but cannot make publication
    concurrent.
-2. **Moving main:** both reserved release aggregates are still draft work. PR465
-   must become the exact v0.112.0 candidate first; PR478 is behind protected main
-   and must later be rebuilt on accepted v0.112.0 before its required checks can
-   count.
+2. **Moving main:** PR465 must become the exact v0.112.0 candidate first. PR482
+   is the reserved v0.113.0 aggregate and must later be rebuilt on accepted
+   v0.112.0 before its required checks can count. PR478, PR447, and PR403 are
+   superseded component branches, not independent release candidates.
 3. **Temporary suite waiver:** long automated suites are skipped by committed
    policy. Focused tests, lint/format/validation, build/provenance, exact hashes,
    archives, and public checks remain mandatory. Skipped suites are not passes.
