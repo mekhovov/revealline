@@ -53437,6 +53437,206 @@
         },
         "recipe": { "id": "audio.music.v1" },
         "revision": 32
+      },
+      {
+        "description": "focus audio cue: existing bounded component with Field Kit tokens and state styling.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "audio.focus.field-kit",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored runtime recipe",
+          "parent": { "id": "audio.focus.field-kit", "revision": 32 },
+          "prompt": 137,
+          "source": 465
+        },
+        "quality": {
+          "evidence": [
+            "Scoped live archive reconciliation: docs/verification/online-soundtrack-reconciliation-2026-09-25/source-review.json sha256:55198d5d74044c8a272f50b32fb01240245dea1843869d22f7dab21d0c310e42. Nineteen ordered audio inputs sha256:300d11a20fce6f3058393b9797fac6dee07c1084c2674d4858ebbde510398137 preserve the bounded catalogue trust boundary, bind selection to resolver-owned policy and accept only the explicit default=false marker used by the 24 post-baseline auditions. The only post-review change to the existing soundtrack source is a repository-standard Prettier rewrite of game/soundtrack.mjs; behavior and exports are unchanged.",
+            "All8 selected roles remain the same procedural recipes with no new audio files. Focused tests cover bounded decode, exact immutable paths, rejection of default=true and forged Recording-mode policy, clicked-first streaming, style mixing, shuffle and ordered queues, repeat all/one/off, remote two-deck transitions, sequential fallback, failure and cancellation.",
+            "No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, cold-offline, frozen-build or public game approval. Archive previews remain outside trusted Automatic and built-in playlists; historical records and original payloads are immutable."
+          ],
+          "stage": "reviewed"
+        },
+        "recipe": { "id": "audio.ui.v1" },
+        "revision": 33
+      },
+      {
+        "description": "confirm audio cue: existing bounded component with Field Kit tokens and state styling.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "audio.confirm.field-kit",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored runtime recipe",
+          "parent": { "id": "audio.confirm.field-kit", "revision": 32 },
+          "prompt": 51,
+          "source": 465
+        },
+        "quality": {
+          "evidence": [
+            "Scoped live archive reconciliation: docs/verification/online-soundtrack-reconciliation-2026-09-25/source-review.json sha256:55198d5d74044c8a272f50b32fb01240245dea1843869d22f7dab21d0c310e42. Nineteen ordered audio inputs sha256:300d11a20fce6f3058393b9797fac6dee07c1084c2674d4858ebbde510398137 preserve the bounded catalogue trust boundary, bind selection to resolver-owned policy and accept only the explicit default=false marker used by the 24 post-baseline auditions. The only post-review change to the existing soundtrack source is a repository-standard Prettier rewrite of game/soundtrack.mjs; behavior and exports are unchanged.",
+            "All8 selected roles remain the same procedural recipes with no new audio files. Focused tests cover bounded decode, exact immutable paths, rejection of default=true and forged Recording-mode policy, clicked-first streaming, style mixing, shuffle and ordered queues, repeat all/one/off, remote two-deck transitions, sequential fallback, failure and cancellation.",
+            "No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, cold-offline, frozen-build or public game approval. Archive previews remain outside trusted Automatic and built-in playlists; historical records and original payloads are immutable."
+          ],
+          "stage": "reviewed"
+        },
+        "recipe": { "id": "audio.ui.v1" },
+        "revision": 33
+      },
+      {
+        "description": "cancel audio cue: existing bounded component with Field Kit tokens and state styling.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "audio.cancel.field-kit",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored runtime recipe",
+          "parent": { "id": "audio.cancel.field-kit", "revision": 32 },
+          "prompt": 34,
+          "source": 465
+        },
+        "quality": {
+          "evidence": [
+            "Scoped live archive reconciliation: docs/verification/online-soundtrack-reconciliation-2026-09-25/source-review.json sha256:55198d5d74044c8a272f50b32fb01240245dea1843869d22f7dab21d0c310e42. Nineteen ordered audio inputs sha256:300d11a20fce6f3058393b9797fac6dee07c1084c2674d4858ebbde510398137 preserve the bounded catalogue trust boundary, bind selection to resolver-owned policy and accept only the explicit default=false marker used by the 24 post-baseline auditions. The only post-review change to the existing soundtrack source is a repository-standard Prettier rewrite of game/soundtrack.mjs; behavior and exports are unchanged.",
+            "All8 selected roles remain the same procedural recipes with no new audio files. Focused tests cover bounded decode, exact immutable paths, rejection of default=true and forged Recording-mode policy, clicked-first streaming, style mixing, shuffle and ordered queues, repeat all/one/off, remote two-deck transitions, sequential fallback, failure and cancellation.",
+            "No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, cold-offline, frozen-build or public game approval. Archive previews remain outside trusted Automatic and built-in playlists; historical records and original payloads are immutable."
+          ],
+          "stage": "reviewed"
+        },
+        "recipe": { "id": "audio.ui.v1" },
+        "revision": 33
+      },
+      {
+        "description": "capture audio cue: existing bounded component with Field Kit tokens and state styling.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "audio.capture.field-kit",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored runtime recipe",
+          "parent": { "id": "audio.capture.field-kit", "revision": 32 },
+          "prompt": 36,
+          "source": 465
+        },
+        "quality": {
+          "evidence": [
+            "Scoped live archive reconciliation: docs/verification/online-soundtrack-reconciliation-2026-09-25/source-review.json sha256:55198d5d74044c8a272f50b32fb01240245dea1843869d22f7dab21d0c310e42. Nineteen ordered audio inputs sha256:300d11a20fce6f3058393b9797fac6dee07c1084c2674d4858ebbde510398137 preserve the bounded catalogue trust boundary, bind selection to resolver-owned policy and accept only the explicit default=false marker used by the 24 post-baseline auditions. The only post-review change to the existing soundtrack source is a repository-standard Prettier rewrite of game/soundtrack.mjs; behavior and exports are unchanged.",
+            "All8 selected roles remain the same procedural recipes with no new audio files. Focused tests cover bounded decode, exact immutable paths, rejection of default=true and forged Recording-mode policy, clicked-first streaming, style mixing, shuffle and ordered queues, repeat all/one/off, remote two-deck transitions, sequential fallback, failure and cancellation.",
+            "No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, cold-offline, frozen-build or public game approval. Archive previews remain outside trusted Automatic and built-in playlists; historical records and original payloads are immutable."
+          ],
+          "stage": "reviewed"
+        },
+        "recipe": { "id": "audio.ui.v1" },
+        "revision": 33
+      },
+      {
+        "description": "failure audio cue: existing bounded component with Field Kit tokens and state styling.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "audio.failure.field-kit",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored runtime recipe",
+          "parent": { "id": "audio.failure.field-kit", "revision": 32 },
+          "prompt": 78,
+          "source": 465
+        },
+        "quality": {
+          "evidence": [
+            "Scoped live archive reconciliation: docs/verification/online-soundtrack-reconciliation-2026-09-25/source-review.json sha256:55198d5d74044c8a272f50b32fb01240245dea1843869d22f7dab21d0c310e42. Nineteen ordered audio inputs sha256:300d11a20fce6f3058393b9797fac6dee07c1084c2674d4858ebbde510398137 preserve the bounded catalogue trust boundary, bind selection to resolver-owned policy and accept only the explicit default=false marker used by the 24 post-baseline auditions. The only post-review change to the existing soundtrack source is a repository-standard Prettier rewrite of game/soundtrack.mjs; behavior and exports are unchanged.",
+            "All8 selected roles remain the same procedural recipes with no new audio files. Focused tests cover bounded decode, exact immutable paths, rejection of default=true and forged Recording-mode policy, clicked-first streaming, style mixing, shuffle and ordered queues, repeat all/one/off, remote two-deck transitions, sequential fallback, failure and cancellation.",
+            "No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, cold-offline, frozen-build or public game approval. Archive previews remain outside trusted Automatic and built-in playlists; historical records and original payloads are immutable."
+          ],
+          "stage": "reviewed"
+        },
+        "recipe": { "id": "audio.ui.v1" },
+        "revision": 33
+      },
+      {
+        "description": "victory audio cue: existing bounded component with Field Kit tokens and state styling.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "audio.victory.field-kit",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored runtime recipe",
+          "parent": { "id": "audio.victory.field-kit", "revision": 32 },
+          "prompt": 355,
+          "source": 465
+        },
+        "quality": {
+          "evidence": [
+            "Scoped live archive reconciliation: docs/verification/online-soundtrack-reconciliation-2026-09-25/source-review.json sha256:55198d5d74044c8a272f50b32fb01240245dea1843869d22f7dab21d0c310e42. Nineteen ordered audio inputs sha256:300d11a20fce6f3058393b9797fac6dee07c1084c2674d4858ebbde510398137 preserve the bounded catalogue trust boundary, bind selection to resolver-owned policy and accept only the explicit default=false marker used by the 24 post-baseline auditions. The only post-review change to the existing soundtrack source is a repository-standard Prettier rewrite of game/soundtrack.mjs; behavior and exports are unchanged.",
+            "All8 selected roles remain the same procedural recipes with no new audio files. Focused tests cover bounded decode, exact immutable paths, rejection of default=true and forged Recording-mode policy, clicked-first streaming, style mixing, shuffle and ordered queues, repeat all/one/off, remote two-deck transitions, sequential fallback, failure and cancellation.",
+            "No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, cold-offline, frozen-build or public game approval. Archive previews remain outside trusted Automatic and built-in playlists; historical records and original payloads are immutable."
+          ],
+          "stage": "reviewed"
+        },
+        "recipe": { "id": "audio.ui.v1" },
+        "revision": 33
+      },
+      {
+        "description": "pickup audio cue: existing bounded component with Field Kit tokens and state styling.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "audio.pickup.field-kit",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored runtime recipe",
+          "parent": { "id": "audio.pickup.field-kit", "revision": 32 },
+          "prompt": 225,
+          "source": 465
+        },
+        "quality": {
+          "evidence": [
+            "Scoped live archive reconciliation: docs/verification/online-soundtrack-reconciliation-2026-09-25/source-review.json sha256:55198d5d74044c8a272f50b32fb01240245dea1843869d22f7dab21d0c310e42. Nineteen ordered audio inputs sha256:300d11a20fce6f3058393b9797fac6dee07c1084c2674d4858ebbde510398137 preserve the bounded catalogue trust boundary, bind selection to resolver-owned policy and accept only the explicit default=false marker used by the 24 post-baseline auditions. The only post-review change to the existing soundtrack source is a repository-standard Prettier rewrite of game/soundtrack.mjs; behavior and exports are unchanged.",
+            "All8 selected roles remain the same procedural recipes with no new audio files. Focused tests cover bounded decode, exact immutable paths, rejection of default=true and forged Recording-mode policy, clicked-first streaming, style mixing, shuffle and ordered queues, repeat all/one/off, remote two-deck transitions, sequential fallback, failure and cancellation.",
+            "No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, cold-offline, frozen-build or public game approval. Archive previews remain outside trusted Automatic and built-in playlists; historical records and original payloads are immutable."
+          ],
+          "stage": "reviewed"
+        },
+        "recipe": { "id": "audio.ui.v1" },
+        "revision": 33
+      },
+      {
+        "description": "Theme music: existing bounded component with Field Kit tokens and state styling.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "audio.music.field-kit",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored runtime recipe",
+          "parent": { "id": "audio.music.field-kit", "revision": 32 },
+          "prompt": 323,
+          "source": 465
+        },
+        "quality": {
+          "evidence": [
+            "Scoped live archive reconciliation: docs/verification/online-soundtrack-reconciliation-2026-09-25/source-review.json sha256:55198d5d74044c8a272f50b32fb01240245dea1843869d22f7dab21d0c310e42. Nineteen ordered audio inputs sha256:300d11a20fce6f3058393b9797fac6dee07c1084c2674d4858ebbde510398137 preserve the bounded catalogue trust boundary, bind selection to resolver-owned policy and accept only the explicit default=false marker used by the 24 post-baseline auditions. The only post-review change to the existing soundtrack source is a repository-standard Prettier rewrite of game/soundtrack.mjs; behavior and exports are unchanged.",
+            "All8 selected roles remain the same procedural recipes with no new audio files. Focused tests cover bounded decode, exact immutable paths, rejection of default=true and forged Recording-mode policy, clicked-first streaming, style mixing, shuffle and ordered queues, repeat all/one/off, remote two-deck transitions, sequential fallback, failure and cancellation.",
+            "No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, cold-offline, frozen-build or public game approval. Archive previews remain outside trusted Automatic and built-in playlists; historical records and original payloads are immutable."
+          ],
+          "stage": "reviewed"
+        },
+        "recipe": { "id": "audio.music.v1" },
+        "revision": 33
       }
     ],
     "collections": [
@@ -54415,11 +54615,11 @@
     ],
     "format": "revealline-theme-bundle.v1",
     "id": "field-kit",
-    "revision": 80,
+    "revision": 81,
     "selection": {
       "base": { "id": "base", "revision": 1 },
       "collection": null,
-      "theme": { "id": "fpv", "revision": 80 }
+      "theme": { "id": "fpv", "revision": 81 }
     },
     "slots": [
       {
@@ -76277,6 +76477,24 @@
         "name": "FPV Field Kit",
         "parent": { "id": "fpv", "revision": 79 },
         "revision": 80,
+        "tokens": {}
+      },
+      {
+        "bindings": {
+          "audio.cancel": { "id": "audio.cancel.field-kit", "revision": 33 },
+          "audio.capture": { "id": "audio.capture.field-kit", "revision": 33 },
+          "audio.confirm": { "id": "audio.confirm.field-kit", "revision": 33 },
+          "audio.failure": { "id": "audio.failure.field-kit", "revision": 33 },
+          "audio.focus": { "id": "audio.focus.field-kit", "revision": 33 },
+          "audio.music": { "id": "audio.music.field-kit", "revision": 33 },
+          "audio.pickup": { "id": "audio.pickup.field-kit", "revision": 33 },
+          "audio.victory": { "id": "audio.victory.field-kit", "revision": 33 }
+        },
+        "format": "revealline-presentation-theme.v1",
+        "id": "fpv",
+        "name": "FPV Field Kit",
+        "parent": { "id": "fpv", "revision": 80 },
+        "revision": 81,
         "tokens": {}
       }
     ]
