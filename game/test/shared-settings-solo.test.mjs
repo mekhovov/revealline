@@ -99,6 +99,28 @@ test('Solo Settings opens Appearance by default, returns to its Home opener and 
   heldAtTitle(page, run);
 });
 
+test('pointer-style Home and More children return to the exact Settings and Help commands', async (t) => {
+  const page = await soloPage(t, { titleScreen: true }),
+    run = page.rendered.run;
+  page.doc.body.focus();
+  page.$('shell-options').click();
+  assert.equal(page.$('settings-dialog').open, true);
+  page.$('settings-dialog').querySelector('[data-close]').click();
+  await Promise.resolve();
+  assert.equal(page.doc.activeElement, page.$('shell-options'));
+
+  page.doc.body.focus();
+  page.$('shell-workshop').click();
+  assert.equal(page.$('shell-workshop-dialog').open, true);
+  page.doc.body.focus();
+  page.$('shell-help').click();
+  assert.equal(page.$('help-dialog').open, true);
+  page.$('help-dialog').querySelector('[data-close]').click();
+  await Promise.resolve();
+  assert.equal(page.doc.activeElement, page.$('shell-help'));
+  heldAtTitle(page, run);
+});
+
 test('category arrows, Home and End cross the real document adapter exactly once without a game command', async (t) => {
   const page = await soloPage(t, { titleScreen: true }),
     run = page.rendered.run,

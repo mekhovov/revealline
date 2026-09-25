@@ -126,3 +126,40 @@ test('Pause owns Sound, Missions, Help and Settings and each child restores its 
   assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
   assert.deepEqual(page.errors, []);
 });
+
+test('direct gameplay Settings and Help return to their Pause actions and keep Resume explicit', async (t) => {
+  const page = await soloPage(t);
+  page.$('start-button').click();
+  await settle(() => page.doc.body.dataset.flightState === 'running');
+  page.key('ArrowDown');
+  frames(page, 12);
+  page.key('ArrowDown', false);
+  const run = page.rendered.run,
+    checkpoint = authoritativeCheckpoint(run);
+
+  for (const [entry, pauseAction, dialog] of [
+    ['settings-button', 'overlay-settings', 'settings-dialog'],
+    ['help-button', 'overlay-help', 'help-dialog'],
+  ]) {
+    page.$(entry).click();
+    assert.equal(page.$(dialog).open, true);
+    page.frame(0);
+    assert.equal(page.rendered.paused, true);
+    assert.equal(page.$('game-overlay').dataset.kind, 'pause');
+    page.$(dialog).querySelector('[data-close]').click();
+    await Promise.resolve();
+    assert.equal(page.$(dialog).open, false);
+    assert.equal(page.doc.activeElement, page.$(pauseAction));
+    assert.equal(page.$('game-overlay').hidden, false);
+    assert.equal(page.$('start-button').textContent, 'Resume →');
+    assert.strictEqual(page.rendered.run, run);
+    assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
+    frames(page, 4);
+    assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
+  }
+
+  page.$('start-button').click();
+  await settle(() => page.doc.body.dataset.flightState === 'running');
+  assert.strictEqual(page.rendered.run, run);
+  assert.deepEqual(page.errors, []);
+});

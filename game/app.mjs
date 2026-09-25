@@ -6179,15 +6179,35 @@ try {
     show('game-overlay', false);
     show('show-result', true);
   };
-  $('settings-button').onclick = () => {
+  function dialogReturnTarget(opener, pauseAction) {
+    const pauseTarget = $(pauseAction);
+    const ownedParent = opener?.closest?.('dialog[open]');
+    return !ownedParent &&
+      $('game-overlay').dataset.kind === 'pause' &&
+      availableFocusTarget(pauseTarget)
+      ? pauseTarget
+      : availableFocusTarget(opener)
+        ? opener
+        : null;
+  }
+  function openSettings(opener = document.activeElement) {
     pause(true);
+    const returnTarget = dialogReturnTarget(opener, 'overlay-settings');
+    // Modal navigation records the focused element when showModal runs. The
+    // pause transition may otherwise make Resume the recorded origin.
+    returnTarget?.focus({ preventScroll: true });
     syncAssistControls();
     controllerSettings.refresh();
     controllerBoostSettings.refresh();
     $('settings-dialog').showModal();
     profileRecovery.refresh();
     void storageRetention.refresh();
-  };
+  }
+  const activatedDialogOpener = (event) =>
+    document.activeElement !== document.body && availableFocusTarget(document.activeElement)
+      ? document.activeElement
+      : event.currentTarget;
+  $('settings-button').onclick = (event) => openSettings(activatedDialogOpener(event));
   profileRecovery = attachProfileRecoveryDialog({
     currentVersion: buildVersion,
     packaged: isRelease,
@@ -8896,10 +8916,12 @@ try {
       syncAssistControls();
     };
   }
-  $('help-button').onclick = () => {
+  function openHelp(opener = document.activeElement) {
     pause(true);
+    dialogReturnTarget(opener, 'overlay-help')?.focus({ preventScroll: true });
     $('help-dialog').showModal();
-  };
+  }
+  $('help-button').onclick = (event) => openHelp(activatedDialogOpener(event));
   let collectionContextKey = null,
     collectionContexts = new Map();
   const collectionContextLabel = (entry) =>
