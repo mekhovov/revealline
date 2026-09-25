@@ -10,6 +10,7 @@
   "scripts": {
     "dev": "node scripts/game-cli.mjs serve --port 8768",
     "test": "node scripts/game-cli.mjs test",
+    "test:creator-feature": "node scripts/check-creator-feature.mjs",
     "validate": "node scripts/game-cli.mjs validate && node scripts/check-presentation-metadata.mjs",
     "lint": "eslint \"game/**/*.mjs\" \"scripts/**/*.mjs\" \"site/**/*.mjs\" \"platforms/**/*.{mjs,js}\" eslint.config.mjs --max-warnings 0",
     "build": "node scripts/game-cli.mjs build",
