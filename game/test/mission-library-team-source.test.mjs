@@ -105,6 +105,28 @@ test('Team imports retain exact pack, level and opaque artwork owner without ali
   );
 });
 
+test('installed Team source exposes progress only while its exact edition rows remain current', () => {
+  const pack = structuredClone(COOP_STARTER_PACK),
+    localRows = rows(pack);
+  let live = true;
+  const library = createMissionLibrary([
+    teamArenaLibrarySource({
+      rows: localRows,
+      sourceId: 'team-installed:' + 'a'.repeat(64),
+      editionId: 'a'.repeat(64),
+      edition: 'Exact installed edition',
+      collection: 'Custom',
+      isCurrent: () => live,
+      progress: (row) => (row === localRows[0] ? 'Cleared on Standard · Full teamwork' : ''),
+      launch: () => true,
+    }),
+  ]);
+  const selected = library.missions[0];
+  assert.equal(library.progress(selected, 'team'), 'Cleared on Standard · Full teamwork');
+  live = false;
+  assert.equal(library.progress(selected, 'team'), '');
+});
+
 test('Team card receipts distinguish the selected preset from an earlier or different edition', () => {
   const mission = journey.catalog.missions[0];
   let difficulty = 'expert';
