@@ -726,6 +726,29 @@ test('Download & play is one owned action, ignores repeated Confirm and retains 
   chooser.destroy();
 });
 
+test('latest Download & play and campaign shortcut labels switch locale without preparing content', (context) => {
+  const locale = getLocale();
+  context.after(() => setLocale(locale, { persist: false }));
+  setLocale('en', { persist: false });
+  let preparations = 0;
+  const { $, chooser } = setup([
+    owner({
+      availability: () => ({ state: 'download', bytes: 1572864 }),
+      prepare: () => preparations++,
+    }),
+  ]);
+  context.after(() => chooser.destroy());
+  const card = $('journey-cards').children[0],
+    rail = $('journey-campaign-rail');
+  assert.match(card.textContent, /Download & play · 1.5 MiB/);
+  assert.equal(rail.getAttribute('aria-label'), 'Campaign shortcuts');
+
+  setLocale('uk', { persist: false });
+  assert.match(card.textContent, /Завантажити й грати · 1,5 MiB/);
+  assert.equal(rail.getAttribute('aria-label'), 'Швидкий перехід між кампаніями');
+  assert.equal(preparations, 0);
+});
+
 test('failed Download & play retries inline and launches once without losing the selected collection', async () => {
   let attempt = 0,
     ready = false,
