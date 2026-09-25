@@ -7,14 +7,13 @@ release claims.
 
 ## Candidate identity
 
-- Accepted base: `fb703070ea4d4a48fa73ba23a8819bb2053aea6f` (latest protected `main`
-  reconciled during local qualification after public `v0.111.1` acceptance)
-- Integrated implementation checkpoint before this acceptance record:
-  `48c4f3fee542774370b9bea6f619cc89f57c3a1b`
-- Implementation tree at that checkpoint: `53b8dc880e34b534f0a08bf2e2b5581e26446480`
-- Release version: unassigned; the authoritative queue provisionally places this aggregate at
-  `v0.123.0` or the next unused post-player slot. Local `0.112.0` identities are unpushed rehearsal
-  evidence and are not a release claim.
+- Merged framework source: PR #465, merged 25 September 2026.
+- Rebased hardening base: `e11bf150fa7b6201a17ca6e4e51a0623b4eb88b4` (`main`, source version
+  `0.131.0`).
+- Hardening checkpoint before this acceptance refresh:
+  `93c82eff2e2367803b943c9256f0477de21f1c97`.
+- Release version: unassigned. The follow-up preserves `0.131.0` while under review and must not
+  create or downgrade a release identity.
 
 The candidate contains no uploaded creator image or video fixtures and no generated distribution
 output. Its largest new source asset is the pinned, licensed Mediabunny browser module.
@@ -61,14 +60,14 @@ output. Its largest new source asset is the pinned, licensed Mediabunny browser 
   media contract passes its own **7/7** package, install, intake and picture-lease cases.
 - Rotated-orientation and physical-transform focused cohort: **50/50 passed**, with **114/114**
   across the expanded video/editor/intake/bundle group.
-- `npm run validate`: passed for 1,150 files; exact whole-spatial snapshot SHA-256
+- `npm run validate`: passed for 1,229 files; exact whole-spatial snapshot SHA-256
   `e62ef45089df1bbaea04cceb932949fbe8d29377a4eeefcac8280125006495b3`.
 - Root and community-service ESLint and Prettier checks: passed.
 - Native formatting, Motion Lab syntax, Field Kit producer check, and Field Kit readiness: passed.
 - Root and community dependency audits: zero reported vulnerabilities.
-- The local rehearsal `npm run build` passed for 1,198 files at version `0.112.0`; distribution
-  SHA-256 `7c3a0c707408aaddd99be6b857a7e7fd58e12d1b007bd39e6882dd3d12f76e41`. It must be rebuilt
-  under the later assigned version and accepted predecessor before publication.
+- `npm run build`: passed for **1,277 files** at source version `0.131.0`; distribution SHA-256
+  `e8b7eee0805d85c4f2198fa29d5f44f7ab42dcaa84a09a78b9f59e43ffb3e608`.
+  Publication still requires an assigned release identity and a fresh immutable freeze.
 - Built-in-browser evidence in the phase records covers single-image completion, 12- and 50-image
   batches, cancel/resume and splitting, video-only victory playback, and verified silent-AVC trim.
   On the current combined source, a fresh picture generated a visible moving enemy and two collision
@@ -81,10 +80,6 @@ output. Its largest new source asset is the pinned, licensed Mediabunny browser 
   edition `1ba2f4b1430e3a1f27118ccf71c4ad3d1433a7cdaee9d56e1e98b0fb9c948a52`, ordinary Custom play
   started successfully, wrote an unfinished-attempt checkpoint, and emitted no browser warnings or
   errors.
-- Two unrelated Couch wording suites contain seven stale text expectations. A detached comparison
-  at pre-Team checkpoint `f1695492ea9d2ff62d74eca59e8c17def2993911` and the combined branch
-  produced the same **40/47 passed, 7 failed** result. They are excluded from the creator-specific
-  command and are not reported as passing.
 
 ## Publication boundary
 
@@ -109,9 +104,8 @@ Balanced or Compact resize/compression profiles and exact output verification. A
 codecs outside each browser's successful decode probe, and broader conversion remain unsupported.
 Firefox, Safari, Balanced portrait and physical mobile media qualification remain unclaimed.
 
-The implementation is parked locally at its terminal Team-media scope. The release owner reassigned
-v0.112–v0.116 to the approved player-first programme, so the local v0.112 identities must not be
-pushed or published. When the post-player creator slot opens, this source must merge its accepted
-predecessor, receive the assigned version, rerun exact-head hosted review and publisher freeze,
-publish immutable release assets, update the Pages selector in a separate reviewed publication
-change, and pass public online/offline byte verification.
+PR #465 is merged. Ten later hardening commits plus this exact-head compatibility update are rebased onto current protected `main` and
+require a separate exact-head review. They preserve the current `0.131.0` source identity; the
+release owner assigns the next version only after validation and review. Publication still requires
+an immutable freeze, artifact hashes, public online/offline verification, and a separately reviewed
+Pages selector update where applicable.
