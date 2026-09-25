@@ -12,6 +12,11 @@ import { waitFor } from './helpers/wait-for.mjs';
 import { audioHarness, settleUntil } from './helpers/soundtrack-audio.mjs';
 import { Soundscape } from '../ui/audio.mjs';
 import { AUDIO_PREFERENCES_KEY } from '../audio-preferences.mjs';
+import { SOUNDTRACK_CATALOGUE } from '../content/soundtrack-catalogue.mjs';
+import { prepareSoundtrackLibrary } from '../soundtrack-bundle.mjs';
+import { createSoundtrackStore } from '../soundtrack-store.mjs';
+import { emptySoundtrackLibrary, setCatalogueTracks } from '../soundtrack.mjs';
+import { structuralProbe } from './helpers/soundtrack-fixtures.mjs';
 
 const compiled = JSON.parse(
   await readFile(new URL('../presentation/compiled/runtime.json', import.meta.url), 'utf8'),
@@ -125,12 +130,29 @@ async function fixture(
     failDecode = false,
     audio,
     storage,
+    musicMode,
     pads = [],
   } = {},
 ) {
   const media = mediaBoundary(),
     memory = managedIndexedDB(),
     reads = [];
+  if (musicMode) {
+    const store = createSoundtrackStore({
+      indexedDB: memory.indexedDB,
+      soundtrackCatalogue: true,
+    });
+    const base = setCatalogueTracks(emptySoundtrackLibrary(), SOUNDTRACK_CATALOGUE.tracks);
+    const prepared = await prepareSoundtrackLibrary(
+      { ...base, listening: { ...base.listening, mode: musicMode } },
+      [],
+      { catalogue: SOUNDTRACK_CATALOGUE, probeMedia: structuralProbe },
+    );
+    await store.commit(prepared, { expectedGeneration: 0 });
+    store.close();
+    memory.puts.length = 0;
+    memory.allPuts.length = 0;
+  }
   const snapshot = { resolved: compiled.resolved, images: new Map(), canvas: {} };
   if (failDecode) media.fail();
   let lease,
@@ -1099,7 +1121,7 @@ test('confirmed new setup owns a fresh race after a cancelled Next decoder settl
 
 for (const outcome of ['cancel', 'decode refusal'])
   test(`muted music and completed Results survive Next ${outcome}, Help reading and a fresh retry`, async (t) => {
-    // Keep the fresh 90s Synth queue deterministic. The exact transport state,
+    // Keep the persisted 90s Synth queue deterministic. The exact transport state,
     // cursor and enable count below expose any second owner even when the
     // map-authored track is also the first retro selection.
     t.mock.method(Math, 'random', () => 0);
@@ -1145,6 +1167,7 @@ for (const outcome of ['cancel', 'decode refusal'])
             saved.set(name, value);
           },
         },
+        musicMode: 'synth90s',
       }),
       p = f.page;
     const key = (value) => {
@@ -1174,7 +1197,7 @@ for (const outcome of ['cancel', 'decode refusal'])
     assert.equal(
       sound.musicState().track.id,
       'signal-afterglow',
-      'Fresh v3 libraries start with the map-compatible 90s Synth selection.',
+      'A persisted 90s Synth choice remains map-compatible after the opening-theme default changes.',
     );
     p.frames(151, 200);
     const result = completedResult(p);
