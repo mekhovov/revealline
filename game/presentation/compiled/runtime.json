@@ -12,20 +12,16 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "audio.cancel.field-kit", "revision": 30 },
+          "parent": { "id": "audio.cancel.field-kit", "revision": 31 },
           "prompt": "Create one original FPV Field Kit cancel audio cue for slot audio.cancel. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/ui/soundtrack-panel.mjs; game/ui/soundtrack-panel.css; game/soundtrack-albums.mjs; game/soundtrack-portable.mjs; game/content/soundtrack-catalogue.mjs; game/online-soundtrack-catalogue.mjs sha256:6b9b58a0d51a1b15d533e76b531cb4db09662274c8b5cad3988b06f01e7327c4"
+          "source": "game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/ui/soundtrack-panel.mjs; game/ui/soundtrack-panel.css; game/soundtrack-albums.mjs; game/soundtrack-portable.mjs; game/content/soundtrack-catalogue.mjs; game/online-soundtrack-catalogue.mjs; game/ui/quick-music-controls.mjs; game/app.mjs; game/couch/couch-music-host.mjs; game/couch/couch.mjs; game/couch/relay-rescue.mjs sha256:a2d51da1238e8a30bd4a6a8083477121de2ba7420b67e79bd5806ce60315ce9f"
         },
         "quality": {
-          "evidence": [
-            "Scoped live archive reconciliation: docs/verification/online-soundtrack-reconciliation-2026-09-25/source-review.json sha256:55198d5d74044c8a272f50b32fb01240245dea1843869d22f7dab21d0c310e42. Fifteen ordered audio inputs sha256:6b9b58a0d51a1b15d533e76b531cb4db09662274c8b5cad3988b06f01e7327c4 preserve the bounded catalogue trust boundary, bind selection to resolver-owned policy and accept only the explicit default=false marker used by the 24 post-baseline auditions.",
-            "All8 selected roles remain the same procedural recipes with no new audio files. Focused tests cover bounded decode, exact immutable paths, rejection of default=true and forged Recording-mode policy, clicked-first streaming, style mixing, shuffle and ordered queues, repeat all/one/off, remote two-deck transitions, sequential fallback, failure and cancellation.",
-            "No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, cold-offline, frozen-build or public game approval. Archive previews remain outside trusted Automatic and built-in playlists; historical records and original payloads are immutable."
-          ],
-          "stage": "reviewed"
+          "evidence": ["Connected runtime recipe; screen and state review remains required."],
+          "stage": "source"
         },
         "recipe": { "id": "audio.ui.v1" },
-        "revision": 31
+        "revision": 32
       },
       "audio.capture": {
         "description": "capture audio cue: existing bounded component with Field Kit tokens and state styling.",
@@ -37,20 +33,16 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "audio.capture.field-kit", "revision": 30 },
+          "parent": { "id": "audio.capture.field-kit", "revision": 31 },
           "prompt": "Create one original FPV Field Kit capture audio cue for slot audio.capture. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/ui/soundtrack-panel.mjs; game/ui/soundtrack-panel.css; game/soundtrack-albums.mjs; game/soundtrack-portable.mjs; game/content/soundtrack-catalogue.mjs; game/online-soundtrack-catalogue.mjs sha256:6b9b58a0d51a1b15d533e76b531cb4db09662274c8b5cad3988b06f01e7327c4"
+          "source": "game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/ui/soundtrack-panel.mjs; game/ui/soundtrack-panel.css; game/soundtrack-albums.mjs; game/soundtrack-portable.mjs; game/content/soundtrack-catalogue.mjs; game/online-soundtrack-catalogue.mjs; game/ui/quick-music-controls.mjs; game/app.mjs; game/couch/couch-music-host.mjs; game/couch/couch.mjs; game/couch/relay-rescue.mjs sha256:a2d51da1238e8a30bd4a6a8083477121de2ba7420b67e79bd5806ce60315ce9f"
         },
         "quality": {
-          "evidence": [
-            "Scoped live archive reconciliation: docs/verification/online-soundtrack-reconciliation-2026-09-25/source-review.json sha256:55198d5d74044c8a272f50b32fb01240245dea1843869d22f7dab21d0c310e42. Fifteen ordered audio inputs sha256:6b9b58a0d51a1b15d533e76b531cb4db09662274c8b5cad3988b06f01e7327c4 preserve the bounded catalogue trust boundary, bind selection to resolver-owned policy and accept only the explicit default=false marker used by the 24 post-baseline auditions.",
-            "All8 selected roles remain the same procedural recipes with no new audio files. Focused tests cover bounded decode, exact immutable paths, rejection of default=true and forged Recording-mode policy, clicked-first streaming, style mixing, shuffle and ordered queues, repeat all/one/off, remote two-deck transitions, sequential fallback, failure and cancellation.",
-            "No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, cold-offline, frozen-build or public game approval. Archive previews remain outside trusted Automatic and built-in playlists; historical records and original payloads are immutable."
-          ],
-          "stage": "reviewed"
+          "evidence": ["Connected runtime recipe; screen and state review remains required."],
+          "stage": "source"
         },
         "recipe": { "id": "audio.ui.v1" },
-        "revision": 31
+        "revision": 32
       },
       "audio.confirm": {
         "description": "confirm audio cue: existing bounded component with Field Kit tokens and state styling.",
@@ -62,20 +54,16 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "audio.confirm.field-kit", "revision": 30 },
+          "parent": { "id": "audio.confirm.field-kit", "revision": 31 },
           "prompt": "Create one original FPV Field Kit confirm audio cue for slot audio.confirm. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/ui/soundtrack-panel.mjs; game/ui/soundtrack-panel.css; game/soundtrack-albums.mjs; game/soundtrack-portable.mjs; game/content/soundtrack-catalogue.mjs; game/online-soundtrack-catalogue.mjs sha256:6b9b58a0d51a1b15d533e76b531cb4db09662274c8b5cad3988b06f01e7327c4"
+          "source": "game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/ui/soundtrack-panel.mjs; game/ui/soundtrack-panel.css; game/soundtrack-albums.mjs; game/soundtrack-portable.mjs; game/content/soundtrack-catalogue.mjs; game/online-soundtrack-catalogue.mjs; game/ui/quick-music-controls.mjs; game/app.mjs; game/couch/couch-music-host.mjs; game/couch/couch.mjs; game/couch/relay-rescue.mjs sha256:a2d51da1238e8a30bd4a6a8083477121de2ba7420b67e79bd5806ce60315ce9f"
         },
         "quality": {
-          "evidence": [
-            "Scoped live archive reconciliation: docs/verification/online-soundtrack-reconciliation-2026-09-25/source-review.json sha256:55198d5d74044c8a272f50b32fb01240245dea1843869d22f7dab21d0c310e42. Fifteen ordered audio inputs sha256:6b9b58a0d51a1b15d533e76b531cb4db09662274c8b5cad3988b06f01e7327c4 preserve the bounded catalogue trust boundary, bind selection to resolver-owned policy and accept only the explicit default=false marker used by the 24 post-baseline auditions.",
-            "All8 selected roles remain the same procedural recipes with no new audio files. Focused tests cover bounded decode, exact immutable paths, rejection of default=true and forged Recording-mode policy, clicked-first streaming, style mixing, shuffle and ordered queues, repeat all/one/off, remote two-deck transitions, sequential fallback, failure and cancellation.",
-            "No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, cold-offline, frozen-build or public game approval. Archive previews remain outside trusted Automatic and built-in playlists; historical records and original payloads are immutable."
-          ],
-          "stage": "reviewed"
+          "evidence": ["Connected runtime recipe; screen and state review remains required."],
+          "stage": "source"
         },
         "recipe": { "id": "audio.ui.v1" },
-        "revision": 31
+        "revision": 32
       },
       "audio.failure": {
         "description": "failure audio cue: existing bounded component with Field Kit tokens and state styling.",
@@ -87,20 +75,16 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "audio.failure.field-kit", "revision": 30 },
+          "parent": { "id": "audio.failure.field-kit", "revision": 31 },
           "prompt": "Create one original FPV Field Kit failure audio cue for slot audio.failure. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/ui/soundtrack-panel.mjs; game/ui/soundtrack-panel.css; game/soundtrack-albums.mjs; game/soundtrack-portable.mjs; game/content/soundtrack-catalogue.mjs; game/online-soundtrack-catalogue.mjs sha256:6b9b58a0d51a1b15d533e76b531cb4db09662274c8b5cad3988b06f01e7327c4"
+          "source": "game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/ui/soundtrack-panel.mjs; game/ui/soundtrack-panel.css; game/soundtrack-albums.mjs; game/soundtrack-portable.mjs; game/content/soundtrack-catalogue.mjs; game/online-soundtrack-catalogue.mjs; game/ui/quick-music-controls.mjs; game/app.mjs; game/couch/couch-music-host.mjs; game/couch/couch.mjs; game/couch/relay-rescue.mjs sha256:a2d51da1238e8a30bd4a6a8083477121de2ba7420b67e79bd5806ce60315ce9f"
         },
         "quality": {
-          "evidence": [
-            "Scoped live archive reconciliation: docs/verification/online-soundtrack-reconciliation-2026-09-25/source-review.json sha256:55198d5d74044c8a272f50b32fb01240245dea1843869d22f7dab21d0c310e42. Fifteen ordered audio inputs sha256:6b9b58a0d51a1b15d533e76b531cb4db09662274c8b5cad3988b06f01e7327c4 preserve the bounded catalogue trust boundary, bind selection to resolver-owned policy and accept only the explicit default=false marker used by the 24 post-baseline auditions.",
-            "All8 selected roles remain the same procedural recipes with no new audio files. Focused tests cover bounded decode, exact immutable paths, rejection of default=true and forged Recording-mode policy, clicked-first streaming, style mixing, shuffle and ordered queues, repeat all/one/off, remote two-deck transitions, sequential fallback, failure and cancellation.",
-            "No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, cold-offline, frozen-build or public game approval. Archive previews remain outside trusted Automatic and built-in playlists; historical records and original payloads are immutable."
-          ],
-          "stage": "reviewed"
+          "evidence": ["Connected runtime recipe; screen and state review remains required."],
+          "stage": "source"
         },
         "recipe": { "id": "audio.ui.v1" },
-        "revision": 31
+        "revision": 32
       },
       "audio.focus": {
         "description": "focus audio cue: existing bounded component with Field Kit tokens and state styling.",
@@ -112,20 +96,16 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "audio.focus.field-kit", "revision": 30 },
+          "parent": { "id": "audio.focus.field-kit", "revision": 31 },
           "prompt": "Create one original FPV Field Kit focus audio cue for slot audio.focus. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/ui/soundtrack-panel.mjs; game/ui/soundtrack-panel.css; game/soundtrack-albums.mjs; game/soundtrack-portable.mjs; game/content/soundtrack-catalogue.mjs; game/online-soundtrack-catalogue.mjs sha256:6b9b58a0d51a1b15d533e76b531cb4db09662274c8b5cad3988b06f01e7327c4"
+          "source": "game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/ui/soundtrack-panel.mjs; game/ui/soundtrack-panel.css; game/soundtrack-albums.mjs; game/soundtrack-portable.mjs; game/content/soundtrack-catalogue.mjs; game/online-soundtrack-catalogue.mjs; game/ui/quick-music-controls.mjs; game/app.mjs; game/couch/couch-music-host.mjs; game/couch/couch.mjs; game/couch/relay-rescue.mjs sha256:a2d51da1238e8a30bd4a6a8083477121de2ba7420b67e79bd5806ce60315ce9f"
         },
         "quality": {
-          "evidence": [
-            "Scoped live archive reconciliation: docs/verification/online-soundtrack-reconciliation-2026-09-25/source-review.json sha256:55198d5d74044c8a272f50b32fb01240245dea1843869d22f7dab21d0c310e42. Fifteen ordered audio inputs sha256:6b9b58a0d51a1b15d533e76b531cb4db09662274c8b5cad3988b06f01e7327c4 preserve the bounded catalogue trust boundary, bind selection to resolver-owned policy and accept only the explicit default=false marker used by the 24 post-baseline auditions.",
-            "All8 selected roles remain the same procedural recipes with no new audio files. Focused tests cover bounded decode, exact immutable paths, rejection of default=true and forged Recording-mode policy, clicked-first streaming, style mixing, shuffle and ordered queues, repeat all/one/off, remote two-deck transitions, sequential fallback, failure and cancellation.",
-            "No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, cold-offline, frozen-build or public game approval. Archive previews remain outside trusted Automatic and built-in playlists; historical records and original payloads are immutable."
-          ],
-          "stage": "reviewed"
+          "evidence": ["Connected runtime recipe; screen and state review remains required."],
+          "stage": "source"
         },
         "recipe": { "id": "audio.ui.v1" },
-        "revision": 31
+        "revision": 32
       },
       "audio.music": {
         "description": "Theme music: existing bounded component with Field Kit tokens and state styling.",
@@ -137,20 +117,16 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "audio.music.field-kit", "revision": 30 },
+          "parent": { "id": "audio.music.field-kit", "revision": 31 },
           "prompt": "Create one original FPV Field Kit theme music for slot audio.music. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/ui/soundtrack-panel.mjs; game/ui/soundtrack-panel.css; game/soundtrack-albums.mjs; game/soundtrack-portable.mjs; game/content/soundtrack-catalogue.mjs; game/online-soundtrack-catalogue.mjs sha256:6b9b58a0d51a1b15d533e76b531cb4db09662274c8b5cad3988b06f01e7327c4"
+          "source": "game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/ui/soundtrack-panel.mjs; game/ui/soundtrack-panel.css; game/soundtrack-albums.mjs; game/soundtrack-portable.mjs; game/content/soundtrack-catalogue.mjs; game/online-soundtrack-catalogue.mjs; game/ui/quick-music-controls.mjs; game/app.mjs; game/couch/couch-music-host.mjs; game/couch/couch.mjs; game/couch/relay-rescue.mjs sha256:a2d51da1238e8a30bd4a6a8083477121de2ba7420b67e79bd5806ce60315ce9f"
         },
         "quality": {
-          "evidence": [
-            "Scoped live archive reconciliation: docs/verification/online-soundtrack-reconciliation-2026-09-25/source-review.json sha256:55198d5d74044c8a272f50b32fb01240245dea1843869d22f7dab21d0c310e42. Fifteen ordered audio inputs sha256:6b9b58a0d51a1b15d533e76b531cb4db09662274c8b5cad3988b06f01e7327c4 preserve the bounded catalogue trust boundary, bind selection to resolver-owned policy and accept only the explicit default=false marker used by the 24 post-baseline auditions.",
-            "All8 selected roles remain the same procedural recipes with no new audio files. Focused tests cover bounded decode, exact immutable paths, rejection of default=true and forged Recording-mode policy, clicked-first streaming, style mixing, shuffle and ordered queues, repeat all/one/off, remote two-deck transitions, sequential fallback, failure and cancellation.",
-            "No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, cold-offline, frozen-build or public game approval. Archive previews remain outside trusted Automatic and built-in playlists; historical records and original payloads are immutable."
-          ],
-          "stage": "reviewed"
+          "evidence": ["Connected runtime recipe; screen and state review remains required."],
+          "stage": "source"
         },
         "recipe": { "id": "audio.music.v1" },
-        "revision": 31
+        "revision": 32
       },
       "audio.pickup": {
         "description": "pickup audio cue: existing bounded component with Field Kit tokens and state styling.",
@@ -162,20 +138,16 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "audio.pickup.field-kit", "revision": 30 },
+          "parent": { "id": "audio.pickup.field-kit", "revision": 31 },
           "prompt": "Create one original FPV Field Kit pickup audio cue for slot audio.pickup. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/ui/soundtrack-panel.mjs; game/ui/soundtrack-panel.css; game/soundtrack-albums.mjs; game/soundtrack-portable.mjs; game/content/soundtrack-catalogue.mjs; game/online-soundtrack-catalogue.mjs sha256:6b9b58a0d51a1b15d533e76b531cb4db09662274c8b5cad3988b06f01e7327c4"
+          "source": "game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/ui/soundtrack-panel.mjs; game/ui/soundtrack-panel.css; game/soundtrack-albums.mjs; game/soundtrack-portable.mjs; game/content/soundtrack-catalogue.mjs; game/online-soundtrack-catalogue.mjs; game/ui/quick-music-controls.mjs; game/app.mjs; game/couch/couch-music-host.mjs; game/couch/couch.mjs; game/couch/relay-rescue.mjs sha256:a2d51da1238e8a30bd4a6a8083477121de2ba7420b67e79bd5806ce60315ce9f"
         },
         "quality": {
-          "evidence": [
-            "Scoped live archive reconciliation: docs/verification/online-soundtrack-reconciliation-2026-09-25/source-review.json sha256:55198d5d74044c8a272f50b32fb01240245dea1843869d22f7dab21d0c310e42. Fifteen ordered audio inputs sha256:6b9b58a0d51a1b15d533e76b531cb4db09662274c8b5cad3988b06f01e7327c4 preserve the bounded catalogue trust boundary, bind selection to resolver-owned policy and accept only the explicit default=false marker used by the 24 post-baseline auditions.",
-            "All8 selected roles remain the same procedural recipes with no new audio files. Focused tests cover bounded decode, exact immutable paths, rejection of default=true and forged Recording-mode policy, clicked-first streaming, style mixing, shuffle and ordered queues, repeat all/one/off, remote two-deck transitions, sequential fallback, failure and cancellation.",
-            "No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, cold-offline, frozen-build or public game approval. Archive previews remain outside trusted Automatic and built-in playlists; historical records and original payloads are immutable."
-          ],
-          "stage": "reviewed"
+          "evidence": ["Connected runtime recipe; screen and state review remains required."],
+          "stage": "source"
         },
         "recipe": { "id": "audio.ui.v1" },
-        "revision": 31
+        "revision": 32
       },
       "audio.victory": {
         "description": "victory audio cue: existing bounded component with Field Kit tokens and state styling.",
@@ -187,20 +159,16 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "audio.victory.field-kit", "revision": 30 },
+          "parent": { "id": "audio.victory.field-kit", "revision": 31 },
           "prompt": "Create one original FPV Field Kit victory audio cue for slot audio.victory. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/ui/soundtrack-panel.mjs; game/ui/soundtrack-panel.css; game/soundtrack-albums.mjs; game/soundtrack-portable.mjs; game/content/soundtrack-catalogue.mjs; game/online-soundtrack-catalogue.mjs sha256:6b9b58a0d51a1b15d533e76b531cb4db09662274c8b5cad3988b06f01e7327c4"
+          "source": "game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/ui/soundtrack-panel.mjs; game/ui/soundtrack-panel.css; game/soundtrack-albums.mjs; game/soundtrack-portable.mjs; game/content/soundtrack-catalogue.mjs; game/online-soundtrack-catalogue.mjs; game/ui/quick-music-controls.mjs; game/app.mjs; game/couch/couch-music-host.mjs; game/couch/couch.mjs; game/couch/relay-rescue.mjs sha256:a2d51da1238e8a30bd4a6a8083477121de2ba7420b67e79bd5806ce60315ce9f"
         },
         "quality": {
-          "evidence": [
-            "Scoped live archive reconciliation: docs/verification/online-soundtrack-reconciliation-2026-09-25/source-review.json sha256:55198d5d74044c8a272f50b32fb01240245dea1843869d22f7dab21d0c310e42. Fifteen ordered audio inputs sha256:6b9b58a0d51a1b15d533e76b531cb4db09662274c8b5cad3988b06f01e7327c4 preserve the bounded catalogue trust boundary, bind selection to resolver-owned policy and accept only the explicit default=false marker used by the 24 post-baseline auditions.",
-            "All8 selected roles remain the same procedural recipes with no new audio files. Focused tests cover bounded decode, exact immutable paths, rejection of default=true and forged Recording-mode policy, clicked-first streaming, style mixing, shuffle and ordered queues, repeat all/one/off, remote two-deck transitions, sequential fallback, failure and cancellation.",
-            "No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, cold-offline, frozen-build or public game approval. Archive previews remain outside trusted Automatic and built-in playlists; historical records and original payloads are immutable."
-          ],
-          "stage": "reviewed"
+          "evidence": ["Connected runtime recipe; screen and state review remains required."],
+          "stage": "source"
         },
         "recipe": { "id": "audio.ui.v1" },
-        "revision": 31
+        "revision": 32
       },
       "control.ability": {
         "description": "Brackets around an active diamond: class ability binding.",
@@ -8101,20 +8069,16 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "screen.collection.background.field-kit", "revision": 22 },
+          "parent": { "id": "screen.collection.background.field-kit", "revision": 23 },
           "prompt": "Create one original FPV Field Kit collection backdrop for slot screen.collection.background. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 960 by 540 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css sha256:acf6426f5cd47f21a85ec5ae9da9549ed58fbe330b097c979dc85b87afe2d68a"
+          "source": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css; game/ui/quick-music-controls.mjs; game/ui/quick-music-controls.css; game/app.mjs; game/couch/couch-music-host.mjs; game/couch/couch.mjs; game/couch/relay-rescue.mjs; game/index.html; game/couch/index.html; game/couch/relay-rescue.html sha256:4ea3022b565172e8c50ff248a1198a03f117c7a8d64c5ad2335fbe713de87c73"
         },
         "quality": {
-          "evidence": [
-            "Scoped compact-Home screen continuation: docs/verification/compact-home-screen-continuation-2026-09-24/review.json sha256:96ae6b8c3b05239cf16ab3801dec2b7ef057aa188ffcab466fb2fc22ea17dd1b; four ordered screen inputs sha256:acf6426f5cd47f21a85ec5ae9da9549ed58fbe330b097c979dc85b87afe2d68a. Only field-kit-flow.css changes after the prior exact review, compacting Home and adding the More-menu surface with existing Field Kit tokens.",
-            "Focused flow and focus-restoration checks plus a source-native 1280 by 720 review cover the compact Home and More surfaces. Board geometry, simulation, mission content, payloads and data ownership remain unchanged.",
-            "Bounded functional source continuation only. Complete navigation, forced-colour, screen-reader, every viewport, physical device, frozen/public and human acceptance remain separate. Historical reviews and payloads remain immutable."
-          ],
-          "stage": "reviewed"
+          "evidence": ["Connected runtime recipe; screen and state review remains required."],
+          "stage": "source"
         },
         "recipe": { "id": "scene.menu.v1" },
-        "revision": 23
+        "revision": 24
       },
       "screen.couch.background": {
         "description": "couch backdrop: existing bounded component with Field Kit tokens and state styling.",
@@ -8126,20 +8090,16 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "screen.couch.background.field-kit", "revision": 22 },
+          "parent": { "id": "screen.couch.background.field-kit", "revision": 23 },
           "prompt": "Create one original FPV Field Kit couch backdrop for slot screen.couch.background. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 960 by 540 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css sha256:acf6426f5cd47f21a85ec5ae9da9549ed58fbe330b097c979dc85b87afe2d68a"
+          "source": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css; game/ui/quick-music-controls.mjs; game/ui/quick-music-controls.css; game/app.mjs; game/couch/couch-music-host.mjs; game/couch/couch.mjs; game/couch/relay-rescue.mjs; game/index.html; game/couch/index.html; game/couch/relay-rescue.html sha256:4ea3022b565172e8c50ff248a1198a03f117c7a8d64c5ad2335fbe713de87c73"
         },
         "quality": {
-          "evidence": [
-            "Scoped compact-Home screen continuation: docs/verification/compact-home-screen-continuation-2026-09-24/review.json sha256:96ae6b8c3b05239cf16ab3801dec2b7ef057aa188ffcab466fb2fc22ea17dd1b; four ordered screen inputs sha256:acf6426f5cd47f21a85ec5ae9da9549ed58fbe330b097c979dc85b87afe2d68a. Only field-kit-flow.css changes after the prior exact review, compacting Home and adding the More-menu surface with existing Field Kit tokens.",
-            "Focused flow and focus-restoration checks plus a source-native 1280 by 720 review cover the compact Home and More surfaces. Board geometry, simulation, mission content, payloads and data ownership remain unchanged.",
-            "Bounded functional source continuation only. Complete navigation, forced-colour, screen-reader, every viewport, physical device, frozen/public and human acceptance remain separate. Historical reviews and payloads remain immutable."
-          ],
-          "stage": "reviewed"
+          "evidence": ["Connected runtime recipe; screen and state review remains required."],
+          "stage": "source"
         },
         "recipe": { "id": "scene.menu.v1" },
-        "revision": 23
+        "revision": 24
       },
       "screen.hangar.background": {
         "description": "hangar backdrop: existing bounded component with Field Kit tokens and state styling.",
@@ -8151,20 +8111,16 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "screen.hangar.background.field-kit", "revision": 22 },
+          "parent": { "id": "screen.hangar.background.field-kit", "revision": 23 },
           "prompt": "Create one original FPV Field Kit hangar backdrop for slot screen.hangar.background. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 960 by 540 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css sha256:acf6426f5cd47f21a85ec5ae9da9549ed58fbe330b097c979dc85b87afe2d68a"
+          "source": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css; game/ui/quick-music-controls.mjs; game/ui/quick-music-controls.css; game/app.mjs; game/couch/couch-music-host.mjs; game/couch/couch.mjs; game/couch/relay-rescue.mjs; game/index.html; game/couch/index.html; game/couch/relay-rescue.html sha256:4ea3022b565172e8c50ff248a1198a03f117c7a8d64c5ad2335fbe713de87c73"
         },
         "quality": {
-          "evidence": [
-            "Scoped compact-Home screen continuation: docs/verification/compact-home-screen-continuation-2026-09-24/review.json sha256:96ae6b8c3b05239cf16ab3801dec2b7ef057aa188ffcab466fb2fc22ea17dd1b; four ordered screen inputs sha256:acf6426f5cd47f21a85ec5ae9da9549ed58fbe330b097c979dc85b87afe2d68a. Only field-kit-flow.css changes after the prior exact review, compacting Home and adding the More-menu surface with existing Field Kit tokens.",
-            "Focused flow and focus-restoration checks plus a source-native 1280 by 720 review cover the compact Home and More surfaces. Board geometry, simulation, mission content, payloads and data ownership remain unchanged.",
-            "Bounded functional source continuation only. Complete navigation, forced-colour, screen-reader, every viewport, physical device, frozen/public and human acceptance remain separate. Historical reviews and payloads remain immutable."
-          ],
-          "stage": "reviewed"
+          "evidence": ["Connected runtime recipe; screen and state review remains required."],
+          "stage": "source"
         },
         "recipe": { "id": "scene.menu.v1" },
-        "revision": 23
+        "revision": 24
       },
       "screen.missions.background": {
         "description": "missions backdrop: existing bounded component with Field Kit tokens and state styling.",
@@ -8176,20 +8132,16 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "screen.missions.background.field-kit", "revision": 22 },
+          "parent": { "id": "screen.missions.background.field-kit", "revision": 23 },
           "prompt": "Create one original FPV Field Kit missions backdrop for slot screen.missions.background. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 960 by 540 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css sha256:acf6426f5cd47f21a85ec5ae9da9549ed58fbe330b097c979dc85b87afe2d68a"
+          "source": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css; game/ui/quick-music-controls.mjs; game/ui/quick-music-controls.css; game/app.mjs; game/couch/couch-music-host.mjs; game/couch/couch.mjs; game/couch/relay-rescue.mjs; game/index.html; game/couch/index.html; game/couch/relay-rescue.html sha256:4ea3022b565172e8c50ff248a1198a03f117c7a8d64c5ad2335fbe713de87c73"
         },
         "quality": {
-          "evidence": [
-            "Scoped compact-Home screen continuation: docs/verification/compact-home-screen-continuation-2026-09-24/review.json sha256:96ae6b8c3b05239cf16ab3801dec2b7ef057aa188ffcab466fb2fc22ea17dd1b; four ordered screen inputs sha256:acf6426f5cd47f21a85ec5ae9da9549ed58fbe330b097c979dc85b87afe2d68a. Only field-kit-flow.css changes after the prior exact review, compacting Home and adding the More-menu surface with existing Field Kit tokens.",
-            "Focused flow and focus-restoration checks plus a source-native 1280 by 720 review cover the compact Home and More surfaces. Board geometry, simulation, mission content, payloads and data ownership remain unchanged.",
-            "Bounded functional source continuation only. Complete navigation, forced-colour, screen-reader, every viewport, physical device, frozen/public and human acceptance remain separate. Historical reviews and payloads remain immutable."
-          ],
-          "stage": "reviewed"
+          "evidence": ["Connected runtime recipe; screen and state review remains required."],
+          "stage": "source"
         },
         "recipe": { "id": "scene.menu.v1" },
-        "revision": 23
+        "revision": 24
       },
       "screen.results.background": {
         "description": "results backdrop: existing bounded component with Field Kit tokens and state styling.",
@@ -8201,20 +8153,16 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "screen.results.background.field-kit", "revision": 22 },
+          "parent": { "id": "screen.results.background.field-kit", "revision": 23 },
           "prompt": "Create one original FPV Field Kit results backdrop for slot screen.results.background. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 960 by 540 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css sha256:acf6426f5cd47f21a85ec5ae9da9549ed58fbe330b097c979dc85b87afe2d68a"
+          "source": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css; game/ui/quick-music-controls.mjs; game/ui/quick-music-controls.css; game/app.mjs; game/couch/couch-music-host.mjs; game/couch/couch.mjs; game/couch/relay-rescue.mjs; game/index.html; game/couch/index.html; game/couch/relay-rescue.html sha256:4ea3022b565172e8c50ff248a1198a03f117c7a8d64c5ad2335fbe713de87c73"
         },
         "quality": {
-          "evidence": [
-            "Scoped compact-Home screen continuation: docs/verification/compact-home-screen-continuation-2026-09-24/review.json sha256:96ae6b8c3b05239cf16ab3801dec2b7ef057aa188ffcab466fb2fc22ea17dd1b; four ordered screen inputs sha256:acf6426f5cd47f21a85ec5ae9da9549ed58fbe330b097c979dc85b87afe2d68a. Only field-kit-flow.css changes after the prior exact review, compacting Home and adding the More-menu surface with existing Field Kit tokens.",
-            "Focused flow and focus-restoration checks plus a source-native 1280 by 720 review cover the compact Home and More surfaces. Board geometry, simulation, mission content, payloads and data ownership remain unchanged.",
-            "Bounded functional source continuation only. Complete navigation, forced-colour, screen-reader, every viewport, physical device, frozen/public and human acceptance remain separate. Historical reviews and payloads remain immutable."
-          ],
-          "stage": "reviewed"
+          "evidence": ["Connected runtime recipe; screen and state review remains required."],
+          "stage": "source"
         },
         "recipe": { "id": "scene.menu.v1" },
-        "revision": 23
+        "revision": 24
       },
       "screen.settings.background": {
         "description": "settings backdrop: existing bounded component with Field Kit tokens and state styling.",
@@ -8226,20 +8174,16 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "screen.settings.background.field-kit", "revision": 22 },
+          "parent": { "id": "screen.settings.background.field-kit", "revision": 23 },
           "prompt": "Create one original FPV Field Kit settings backdrop for slot screen.settings.background. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 960 by 540 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css sha256:acf6426f5cd47f21a85ec5ae9da9549ed58fbe330b097c979dc85b87afe2d68a"
+          "source": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css; game/ui/quick-music-controls.mjs; game/ui/quick-music-controls.css; game/app.mjs; game/couch/couch-music-host.mjs; game/couch/couch.mjs; game/couch/relay-rescue.mjs; game/index.html; game/couch/index.html; game/couch/relay-rescue.html sha256:4ea3022b565172e8c50ff248a1198a03f117c7a8d64c5ad2335fbe713de87c73"
         },
         "quality": {
-          "evidence": [
-            "Scoped compact-Home screen continuation: docs/verification/compact-home-screen-continuation-2026-09-24/review.json sha256:96ae6b8c3b05239cf16ab3801dec2b7ef057aa188ffcab466fb2fc22ea17dd1b; four ordered screen inputs sha256:acf6426f5cd47f21a85ec5ae9da9549ed58fbe330b097c979dc85b87afe2d68a. Only field-kit-flow.css changes after the prior exact review, compacting Home and adding the More-menu surface with existing Field Kit tokens.",
-            "Focused flow and focus-restoration checks plus a source-native 1280 by 720 review cover the compact Home and More surfaces. Board geometry, simulation, mission content, payloads and data ownership remain unchanged.",
-            "Bounded functional source continuation only. Complete navigation, forced-colour, screen-reader, every viewport, physical device, frozen/public and human acceptance remain separate. Historical reviews and payloads remain immutable."
-          ],
-          "stage": "reviewed"
+          "evidence": ["Connected runtime recipe; screen and state review remains required."],
+          "stage": "source"
         },
         "recipe": { "id": "scene.menu.v1" },
-        "revision": 23
+        "revision": 24
       },
       "screen.studio.background": {
         "description": "studio backdrop: existing bounded component with Field Kit tokens and state styling.",
@@ -8251,20 +8195,16 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "screen.studio.background.field-kit", "revision": 22 },
+          "parent": { "id": "screen.studio.background.field-kit", "revision": 23 },
           "prompt": "Create one original FPV Field Kit studio backdrop for slot screen.studio.background. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 960 by 540 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css sha256:acf6426f5cd47f21a85ec5ae9da9549ed58fbe330b097c979dc85b87afe2d68a"
+          "source": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css; game/ui/quick-music-controls.mjs; game/ui/quick-music-controls.css; game/app.mjs; game/couch/couch-music-host.mjs; game/couch/couch.mjs; game/couch/relay-rescue.mjs; game/index.html; game/couch/index.html; game/couch/relay-rescue.html sha256:4ea3022b565172e8c50ff248a1198a03f117c7a8d64c5ad2335fbe713de87c73"
         },
         "quality": {
-          "evidence": [
-            "Scoped compact-Home screen continuation: docs/verification/compact-home-screen-continuation-2026-09-24/review.json sha256:96ae6b8c3b05239cf16ab3801dec2b7ef057aa188ffcab466fb2fc22ea17dd1b; four ordered screen inputs sha256:acf6426f5cd47f21a85ec5ae9da9549ed58fbe330b097c979dc85b87afe2d68a. Only field-kit-flow.css changes after the prior exact review, compacting Home and adding the More-menu surface with existing Field Kit tokens.",
-            "Focused flow and focus-restoration checks plus a source-native 1280 by 720 review cover the compact Home and More surfaces. Board geometry, simulation, mission content, payloads and data ownership remain unchanged.",
-            "Bounded functional source continuation only. Complete navigation, forced-colour, screen-reader, every viewport, physical device, frozen/public and human acceptance remain separate. Historical reviews and payloads remain immutable."
-          ],
-          "stage": "reviewed"
+          "evidence": ["Connected runtime recipe; screen and state review remains required."],
+          "stage": "source"
         },
         "recipe": { "id": "scene.menu.v1" },
-        "revision": 23
+        "revision": 24
       },
       "screen.title.background": {
         "description": "title backdrop",
@@ -9598,20 +9538,16 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "ui.button.chip.field-kit", "revision": 18 },
+          "parent": { "id": "ui.button.chip.field-kit", "revision": 19 },
           "prompt": "Create one original FPV Field Kit chip button for slot ui.button.chip. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/presentation/team-runtime-slots.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs; game/presentation/dom-ownership.mjs sha256:4b7db79dd3f6931dd72c0ae702f15a5a5d8ff2b7044aca5a2e02886e8e61636a"
+          "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/presentation/team-runtime-slots.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs; game/presentation/dom-ownership.mjs; game/ui/quick-music-controls.mjs; game/ui/quick-music-controls.css; game/app.mjs; game/couch/couch-music-host.mjs; game/couch/couch.mjs; game/couch/relay-rescue.mjs; game/index.html; game/couch/index.html; game/couch/relay-rescue.html sha256:5751c6563166f7f6037e79c4b2e27a4a933f4f8dbac70c4a4aac68964844ec79"
         },
         "quality": {
-          "evidence": [
-            "Scoped actor-only UI functional continuation: docs/verification/actor-only-ui-continuation-2026-09-24/review.json sha256:dbde124fb9d24cb26dd901b51f58cf59fc7bfb4df212e47419cdb15581155b73; seven ordered UI inputs sha256:4b7db79dd3f6931dd72c0ae702f15a5a5d8ff2b7044aca5a2e02886e8e61636a. Only presentation host changes after the prior exact review; all24 UI recipe payloads, tokens and DOM ownership contracts remain unchanged.",
-            "The actor-only profile uses a fixed registered image-slot set, creates no CSS URLs and refuses page apply, audio and picture operations. Full remains the default profile. Lease, cancellation, retained-runtime and exact source-binding tests cover the functional separation; fresh-origin Team screens retain the full-profile UI while FPV actors use the independent lease.",
-            "UI functional continuation only. Complete navigation, forced-colour, screen-reader, every-viewport, physical-device, audio, offline, public and release acceptance remain separate. Prior UI reviews and immutable originals remain preserved; any UI input change reopens this group."
-          ],
-          "stage": "reviewed"
+          "evidence": ["Connected runtime recipe; screen and state review remains required."],
+          "stage": "source"
         },
         "recipe": { "id": "ui.button.v1" },
-        "revision": 19
+        "revision": 20
       },
       "ui.button.danger": {
         "description": "danger button: existing bounded component with Field Kit tokens and state styling.",
@@ -9623,20 +9559,16 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "ui.button.danger.field-kit", "revision": 18 },
+          "parent": { "id": "ui.button.danger.field-kit", "revision": 19 },
           "prompt": "Create one original FPV Field Kit danger button for slot ui.button.danger. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/presentation/team-runtime-slots.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs; game/presentation/dom-ownership.mjs sha256:4b7db79dd3f6931dd72c0ae702f15a5a5d8ff2b7044aca5a2e02886e8e61636a"
+          "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/presentation/team-runtime-slots.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs; game/presentation/dom-ownership.mjs; game/ui/quick-music-controls.mjs; game/ui/quick-music-controls.css; game/app.mjs; game/couch/couch-music-host.mjs; game/couch/couch.mjs; game/couch/relay-rescue.mjs; game/index.html; game/couch/index.html; game/couch/relay-rescue.html sha256:5751c6563166f7f6037e79c4b2e27a4a933f4f8dbac70c4a4aac68964844ec79"
         },
         "quality": {
-          "evidence": [
-            "Scoped actor-only UI functional continuation: docs/verification/actor-only-ui-continuation-2026-09-24/review.json sha256:dbde124fb9d24cb26dd901b51f58cf59fc7bfb4df212e47419cdb15581155b73; seven ordered UI inputs sha256:4b7db79dd3f6931dd72c0ae702f15a5a5d8ff2b7044aca5a2e02886e8e61636a. Only presentation host changes after the prior exact review; all24 UI recipe payloads, tokens and DOM ownership contracts remain unchanged.",
-            "The actor-only profile uses a fixed registered image-slot set, creates no CSS URLs and refuses page apply, audio and picture operations. Full remains the default profile. Lease, cancellation, retained-runtime and exact source-binding tests cover the functional separation; fresh-origin Team screens retain the full-profile UI while FPV actors use the independent lease.",
-            "UI functional continuation only. Complete navigation, forced-colour, screen-reader, every-viewport, physical-device, audio, offline, public and release acceptance remain separate. Prior UI reviews and immutable originals remain preserved; any UI input change reopens this group."
-          ],
-          "stage": "reviewed"
+          "evidence": ["Connected runtime recipe; screen and state review remains required."],
+          "stage": "source"
         },
         "recipe": { "id": "ui.button.v1" },
-        "revision": 19
+        "revision": 20
       },
       "ui.button.icon": {
         "description": "icon button: existing bounded component with Field Kit tokens and state styling.",
@@ -9648,20 +9580,16 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "ui.button.icon.field-kit", "revision": 18 },
+          "parent": { "id": "ui.button.icon.field-kit", "revision": 19 },
           "prompt": "Create one original FPV Field Kit icon button for slot ui.button.icon. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/presentation/team-runtime-slots.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs; game/presentation/dom-ownership.mjs sha256:4b7db79dd3f6931dd72c0ae702f15a5a5d8ff2b7044aca5a2e02886e8e61636a"
+          "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/presentation/team-runtime-slots.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs; game/presentation/dom-ownership.mjs; game/ui/quick-music-controls.mjs; game/ui/quick-music-controls.css; game/app.mjs; game/couch/couch-music-host.mjs; game/couch/couch.mjs; game/couch/relay-rescue.mjs; game/index.html; game/couch/index.html; game/couch/relay-rescue.html sha256:5751c6563166f7f6037e79c4b2e27a4a933f4f8dbac70c4a4aac68964844ec79"
         },
         "quality": {
-          "evidence": [
-            "Scoped actor-only UI functional continuation: docs/verification/actor-only-ui-continuation-2026-09-24/review.json sha256:dbde124fb9d24cb26dd901b51f58cf59fc7bfb4df212e47419cdb15581155b73; seven ordered UI inputs sha256:4b7db79dd3f6931dd72c0ae702f15a5a5d8ff2b7044aca5a2e02886e8e61636a. Only presentation host changes after the prior exact review; all24 UI recipe payloads, tokens and DOM ownership contracts remain unchanged.",
-            "The actor-only profile uses a fixed registered image-slot set, creates no CSS URLs and refuses page apply, audio and picture operations. Full remains the default profile. Lease, cancellation, retained-runtime and exact source-binding tests cover the functional separation; fresh-origin Team screens retain the full-profile UI while FPV actors use the independent lease.",
-            "UI functional continuation only. Complete navigation, forced-colour, screen-reader, every-viewport, physical-device, audio, offline, public and release acceptance remain separate. Prior UI reviews and immutable originals remain preserved; any UI input change reopens this group."
-          ],
-          "stage": "reviewed"
+          "evidence": ["Connected runtime recipe; screen and state review remains required."],
+          "stage": "source"
         },
         "recipe": { "id": "ui.button.v1" },
-        "revision": 19
+        "revision": 20
       },
       "ui.button.primary": {
         "description": "primary button: existing bounded component with Field Kit tokens and state styling.",
@@ -9673,20 +9601,16 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "ui.button.primary.field-kit", "revision": 18 },
+          "parent": { "id": "ui.button.primary.field-kit", "revision": 19 },
           "prompt": "Create one original FPV Field Kit primary button for slot ui.button.primary. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/presentation/team-runtime-slots.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs; game/presentation/dom-ownership.mjs sha256:4b7db79dd3f6931dd72c0ae702f15a5a5d8ff2b7044aca5a2e02886e8e61636a"
+          "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/presentation/team-runtime-slots.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs; game/presentation/dom-ownership.mjs; game/ui/quick-music-controls.mjs; game/ui/quick-music-controls.css; game/app.mjs; game/couch/couch-music-host.mjs; game/couch/couch.mjs; game/couch/relay-rescue.mjs; game/index.html; game/couch/index.html; game/couch/relay-rescue.html sha256:5751c6563166f7f6037e79c4b2e27a4a933f4f8dbac70c4a4aac68964844ec79"
         },
         "quality": {
-          "evidence": [
-            "Scoped actor-only UI functional continuation: docs/verification/actor-only-ui-continuation-2026-09-24/review.json sha256:dbde124fb9d24cb26dd901b51f58cf59fc7bfb4df212e47419cdb15581155b73; seven ordered UI inputs sha256:4b7db79dd3f6931dd72c0ae702f15a5a5d8ff2b7044aca5a2e02886e8e61636a. Only presentation host changes after the prior exact review; all24 UI recipe payloads, tokens and DOM ownership contracts remain unchanged.",
-            "The actor-only profile uses a fixed registered image-slot set, creates no CSS URLs and refuses page apply, audio and picture operations. Full remains the default profile. Lease, cancellation, retained-runtime and exact source-binding tests cover the functional separation; fresh-origin Team screens retain the full-profile UI while FPV actors use the independent lease.",
-            "UI functional continuation only. Complete navigation, forced-colour, screen-reader, every-viewport, physical-device, audio, offline, public and release acceptance remain separate. Prior UI reviews and immutable originals remain preserved; any UI input change reopens this group."
-          ],
-          "stage": "reviewed"
+          "evidence": ["Connected runtime recipe; screen and state review remains required."],
+          "stage": "source"
         },
         "recipe": { "id": "ui.button.v1" },
-        "revision": 19
+        "revision": 20
       },
       "ui.button.secondary": {
         "description": "secondary button: existing bounded component with Field Kit tokens and state styling.",
@@ -9698,20 +9622,16 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "ui.button.secondary.field-kit", "revision": 18 },
+          "parent": { "id": "ui.button.secondary.field-kit", "revision": 19 },
           "prompt": "Create one original FPV Field Kit secondary button for slot ui.button.secondary. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/presentation/team-runtime-slots.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs; game/presentation/dom-ownership.mjs sha256:4b7db79dd3f6931dd72c0ae702f15a5a5d8ff2b7044aca5a2e02886e8e61636a"
+          "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/presentation/team-runtime-slots.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs; game/presentation/dom-ownership.mjs; game/ui/quick-music-controls.mjs; game/ui/quick-music-controls.css; game/app.mjs; game/couch/couch-music-host.mjs; game/couch/couch.mjs; game/couch/relay-rescue.mjs; game/index.html; game/couch/index.html; game/couch/relay-rescue.html sha256:5751c6563166f7f6037e79c4b2e27a4a933f4f8dbac70c4a4aac68964844ec79"
         },
         "quality": {
-          "evidence": [
-            "Scoped actor-only UI functional continuation: docs/verification/actor-only-ui-continuation-2026-09-24/review.json sha256:dbde124fb9d24cb26dd901b51f58cf59fc7bfb4df212e47419cdb15581155b73; seven ordered UI inputs sha256:4b7db79dd3f6931dd72c0ae702f15a5a5d8ff2b7044aca5a2e02886e8e61636a. Only presentation host changes after the prior exact review; all24 UI recipe payloads, tokens and DOM ownership contracts remain unchanged.",
-            "The actor-only profile uses a fixed registered image-slot set, creates no CSS URLs and refuses page apply, audio and picture operations. Full remains the default profile. Lease, cancellation, retained-runtime and exact source-binding tests cover the functional separation; fresh-origin Team screens retain the full-profile UI while FPV actors use the independent lease.",
-            "UI functional continuation only. Complete navigation, forced-colour, screen-reader, every-viewport, physical-device, audio, offline, public and release acceptance remain separate. Prior UI reviews and immutable originals remain preserved; any UI input change reopens this group."
-          ],
-          "stage": "reviewed"
+          "evidence": ["Connected runtime recipe; screen and state review remains required."],
+          "stage": "source"
         },
         "recipe": { "id": "ui.button.v1" },
-        "revision": 19
+        "revision": 20
       },
       "ui.button.tab": {
         "description": "tab button: existing bounded component with Field Kit tokens and state styling.",
@@ -9723,20 +9643,16 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "ui.button.tab.field-kit", "revision": 18 },
+          "parent": { "id": "ui.button.tab.field-kit", "revision": 19 },
           "prompt": "Create one original FPV Field Kit tab button for slot ui.button.tab. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/presentation/team-runtime-slots.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs; game/presentation/dom-ownership.mjs sha256:4b7db79dd3f6931dd72c0ae702f15a5a5d8ff2b7044aca5a2e02886e8e61636a"
+          "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/presentation/team-runtime-slots.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs; game/presentation/dom-ownership.mjs; game/ui/quick-music-controls.mjs; game/ui/quick-music-controls.css; game/app.mjs; game/couch/couch-music-host.mjs; game/couch/couch.mjs; game/couch/relay-rescue.mjs; game/index.html; game/couch/index.html; game/couch/relay-rescue.html sha256:5751c6563166f7f6037e79c4b2e27a4a933f4f8dbac70c4a4aac68964844ec79"
         },
         "quality": {
-          "evidence": [
-            "Scoped actor-only UI functional continuation: docs/verification/actor-only-ui-continuation-2026-09-24/review.json sha256:dbde124fb9d24cb26dd901b51f58cf59fc7bfb4df212e47419cdb15581155b73; seven ordered UI inputs sha256:4b7db79dd3f6931dd72c0ae702f15a5a5d8ff2b7044aca5a2e02886e8e61636a. Only presentation host changes after the prior exact review; all24 UI recipe payloads, tokens and DOM ownership contracts remain unchanged.",
-            "The actor-only profile uses a fixed registered image-slot set, creates no CSS URLs and refuses page apply, audio and picture operations. Full remains the default profile. Lease, cancellation, retained-runtime and exact source-binding tests cover the functional separation; fresh-origin Team screens retain the full-profile UI while FPV actors use the independent lease.",
-            "UI functional continuation only. Complete navigation, forced-colour, screen-reader, every-viewport, physical-device, audio, offline, public and release acceptance remain separate. Prior UI reviews and immutable originals remain preserved; any UI input change reopens this group."
-          ],
-          "stage": "reviewed"
+          "evidence": ["Connected runtime recipe; screen and state review remains required."],
+          "stage": "source"
         },
         "recipe": { "id": "ui.button.v1" },
-        "revision": 19
+        "revision": 20
       },
       "ui.cursor": {
         "description": "Selection cursor: existing bounded component with Field Kit tokens and state styling.",
@@ -9748,20 +9664,16 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "ui.cursor.field-kit", "revision": 18 },
+          "parent": { "id": "ui.cursor.field-kit", "revision": 19 },
           "prompt": "Create one original FPV Field Kit selection cursor for slot ui.cursor. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 16 by 16 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/presentation/team-runtime-slots.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs; game/presentation/dom-ownership.mjs sha256:4b7db79dd3f6931dd72c0ae702f15a5a5d8ff2b7044aca5a2e02886e8e61636a"
+          "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/presentation/team-runtime-slots.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs; game/presentation/dom-ownership.mjs; game/ui/quick-music-controls.mjs; game/ui/quick-music-controls.css; game/app.mjs; game/couch/couch-music-host.mjs; game/couch/couch.mjs; game/couch/relay-rescue.mjs; game/index.html; game/couch/index.html; game/couch/relay-rescue.html sha256:5751c6563166f7f6037e79c4b2e27a4a933f4f8dbac70c4a4aac68964844ec79"
         },
         "quality": {
-          "evidence": [
-            "Scoped actor-only UI functional continuation: docs/verification/actor-only-ui-continuation-2026-09-24/review.json sha256:dbde124fb9d24cb26dd901b51f58cf59fc7bfb4df212e47419cdb15581155b73; seven ordered UI inputs sha256:4b7db79dd3f6931dd72c0ae702f15a5a5d8ff2b7044aca5a2e02886e8e61636a. Only presentation host changes after the prior exact review; all24 UI recipe payloads, tokens and DOM ownership contracts remain unchanged.",
-            "The actor-only profile uses a fixed registered image-slot set, creates no CSS URLs and refuses page apply, audio and picture operations. Full remains the default profile. Lease, cancellation, retained-runtime and exact source-binding tests cover the functional separation; fresh-origin Team screens retain the full-profile UI while FPV actors use the independent lease.",
-            "UI functional continuation only. Complete navigation, forced-colour, screen-reader, every-viewport, physical-device, audio, offline, public and release acceptance remain separate. Prior UI reviews and immutable originals remain preserved; any UI input change reopens this group."
-          ],
-          "stage": "reviewed"
+          "evidence": ["Connected runtime recipe; screen and state review remains required."],
+          "stage": "source"
         },
         "recipe": { "id": "ui.cursor.v1" },
-        "revision": 19
+        "revision": 20
       },
       "ui.dialog": {
         "description": "Dialog frame: existing bounded component with Field Kit tokens and state styling.",
@@ -9773,20 +9685,16 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "ui.dialog.field-kit", "revision": 18 },
+          "parent": { "id": "ui.dialog.field-kit", "revision": 19 },
           "prompt": "Create one original FPV Field Kit dialog frame for slot ui.dialog. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/presentation/team-runtime-slots.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs; game/presentation/dom-ownership.mjs sha256:4b7db79dd3f6931dd72c0ae702f15a5a5d8ff2b7044aca5a2e02886e8e61636a"
+          "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/presentation/team-runtime-slots.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs; game/presentation/dom-ownership.mjs; game/ui/quick-music-controls.mjs; game/ui/quick-music-controls.css; game/app.mjs; game/couch/couch-music-host.mjs; game/couch/couch.mjs; game/couch/relay-rescue.mjs; game/index.html; game/couch/index.html; game/couch/relay-rescue.html sha256:5751c6563166f7f6037e79c4b2e27a4a933f4f8dbac70c4a4aac68964844ec79"
         },
         "quality": {
-          "evidence": [
-            "Scoped actor-only UI functional continuation: docs/verification/actor-only-ui-continuation-2026-09-24/review.json sha256:dbde124fb9d24cb26dd901b51f58cf59fc7bfb4df212e47419cdb15581155b73; seven ordered UI inputs sha256:4b7db79dd3f6931dd72c0ae702f15a5a5d8ff2b7044aca5a2e02886e8e61636a. Only presentation host changes after the prior exact review; all24 UI recipe payloads, tokens and DOM ownership contracts remain unchanged.",
-            "The actor-only profile uses a fixed registered image-slot set, creates no CSS URLs and refuses page apply, audio and picture operations. Full remains the default profile. Lease, cancellation, retained-runtime and exact source-binding tests cover the functional separation; fresh-origin Team screens retain the full-profile UI while FPV actors use the independent lease.",
-            "UI functional continuation only. Complete navigation, forced-colour, screen-reader, every-viewport, physical-device, audio, offline, public and release acceptance remain separate. Prior UI reviews and immutable originals remain preserved; any UI input change reopens this group."
-          ],
-          "stage": "reviewed"
+          "evidence": ["Connected runtime recipe; screen and state review remains required."],
+          "stage": "source"
         },
         "recipe": { "id": "ui.panel.v1" },
-        "revision": 19
+        "revision": 20
       },
       "ui.focus": {
         "description": "Focus brackets: existing bounded component with Field Kit tokens and state styling.",
@@ -9798,20 +9706,16 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "ui.focus.field-kit", "revision": 18 },
+          "parent": { "id": "ui.focus.field-kit", "revision": 19 },
           "prompt": "Create one original FPV Field Kit focus brackets for slot ui.focus. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/presentation/team-runtime-slots.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs; game/presentation/dom-ownership.mjs sha256:4b7db79dd3f6931dd72c0ae702f15a5a5d8ff2b7044aca5a2e02886e8e61636a"
+          "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/presentation/team-runtime-slots.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs; game/presentation/dom-ownership.mjs; game/ui/quick-music-controls.mjs; game/ui/quick-music-controls.css; game/app.mjs; game/couch/couch-music-host.mjs; game/couch/couch.mjs; game/couch/relay-rescue.mjs; game/index.html; game/couch/index.html; game/couch/relay-rescue.html sha256:5751c6563166f7f6037e79c4b2e27a4a933f4f8dbac70c4a4aac68964844ec79"
         },
         "quality": {
-          "evidence": [
-            "Scoped actor-only UI functional continuation: docs/verification/actor-only-ui-continuation-2026-09-24/review.json sha256:dbde124fb9d24cb26dd901b51f58cf59fc7bfb4df212e47419cdb15581155b73; seven ordered UI inputs sha256:4b7db79dd3f6931dd72c0ae702f15a5a5d8ff2b7044aca5a2e02886e8e61636a. Only presentation host changes after the prior exact review; all24 UI recipe payloads, tokens and DOM ownership contracts remain unchanged.",
-            "The actor-only profile uses a fixed registered image-slot set, creates no CSS URLs and refuses page apply, audio and picture operations. Full remains the default profile. Lease, cancellation, retained-runtime and exact source-binding tests cover the functional separation; fresh-origin Team screens retain the full-profile UI while FPV actors use the independent lease.",
-            "UI functional continuation only. Complete navigation, forced-colour, screen-reader, every-viewport, physical-device, audio, offline, public and release acceptance remain separate. Prior UI reviews and immutable originals remain preserved; any UI input change reopens this group."
-          ],
-          "stage": "reviewed"
+          "evidence": ["Connected runtime recipe; screen and state review remains required."],
+          "stage": "source"
         },
         "recipe": { "id": "ui.focus.v1" },
-        "revision": 19
+        "revision": 20
       },
       "ui.input.checkbox": {
         "description": "checkbox control: existing bounded component with Field Kit tokens and state styling.",
@@ -9823,20 +9727,16 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "ui.input.checkbox.field-kit", "revision": 18 },
+          "parent": { "id": "ui.input.checkbox.field-kit", "revision": 19 },
           "prompt": "Create one original FPV Field Kit checkbox control for slot ui.input.checkbox. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/presentation/team-runtime-slots.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs; game/presentation/dom-ownership.mjs sha256:4b7db79dd3f6931dd72c0ae702f15a5a5d8ff2b7044aca5a2e02886e8e61636a"
+          "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/presentation/team-runtime-slots.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs; game/presentation/dom-ownership.mjs; game/ui/quick-music-controls.mjs; game/ui/quick-music-controls.css; game/app.mjs; game/couch/couch-music-host.mjs; game/couch/couch.mjs; game/couch/relay-rescue.mjs; game/index.html; game/couch/index.html; game/couch/relay-rescue.html sha256:5751c6563166f7f6037e79c4b2e27a4a933f4f8dbac70c4a4aac68964844ec79"
         },
         "quality": {
-          "evidence": [
-            "Scoped actor-only UI functional continuation: docs/verification/actor-only-ui-continuation-2026-09-24/review.json sha256:dbde124fb9d24cb26dd901b51f58cf59fc7bfb4df212e47419cdb15581155b73; seven ordered UI inputs sha256:4b7db79dd3f6931dd72c0ae702f15a5a5d8ff2b7044aca5a2e02886e8e61636a. Only presentation host changes after the prior exact review; all24 UI recipe payloads, tokens and DOM ownership contracts remain unchanged.",
-            "The actor-only profile uses a fixed registered image-slot set, creates no CSS URLs and refuses page apply, audio and picture operations. Full remains the default profile. Lease, cancellation, retained-runtime and exact source-binding tests cover the functional separation; fresh-origin Team screens retain the full-profile UI while FPV actors use the independent lease.",
-            "UI functional continuation only. Complete navigation, forced-colour, screen-reader, every-viewport, physical-device, audio, offline, public and release acceptance remain separate. Prior UI reviews and immutable originals remain preserved; any UI input change reopens this group."
-          ],
-          "stage": "reviewed"
+          "evidence": ["Connected runtime recipe; screen and state review remains required."],
+          "stage": "source"
         },
         "recipe": { "id": "ui.input.v1" },
-        "revision": 19
+        "revision": 20
       },
       "ui.input.radio": {
         "description": "radio control: existing bounded component with Field Kit tokens and state styling.",
@@ -9848,20 +9748,16 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "ui.input.radio.field-kit", "revision": 18 },
+          "parent": { "id": "ui.input.radio.field-kit", "revision": 19 },
           "prompt": "Create one original FPV Field Kit radio control for slot ui.input.radio. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/presentation/team-runtime-slots.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs; game/presentation/dom-ownership.mjs sha256:4b7db79dd3f6931dd72c0ae702f15a5a5d8ff2b7044aca5a2e02886e8e61636a"
+          "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/presentation/team-runtime-slots.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs; game/presentation/dom-ownership.mjs; game/ui/quick-music-controls.mjs; game/ui/quick-music-controls.css; game/app.mjs; game/couch/couch-music-host.mjs; game/couch/couch.mjs; game/couch/relay-rescue.mjs; game/index.html; game/couch/index.html; game/couch/relay-rescue.html sha256:5751c6563166f7f6037e79c4b2e27a4a933f4f8dbac70c4a4aac68964844ec79"
         },
         "quality": {
-          "evidence": [
-            "Scoped actor-only UI functional continuation: docs/verification/actor-only-ui-continuation-2026-09-24/review.json sha256:dbde124fb9d24cb26dd901b51f58cf59fc7bfb4df212e47419cdb15581155b73; seven ordered UI inputs sha256:4b7db79dd3f6931dd72c0ae702f15a5a5d8ff2b7044aca5a2e02886e8e61636a. Only presentation host changes after the prior exact review; all24 UI recipe payloads, tokens and DOM ownership contracts remain unchanged.",
-            "The actor-only profile uses a fixed registered image-slot set, creates no CSS URLs and refuses page apply, audio and picture operations. Full remains the default profile. Lease, cancellation, retained-runtime and exact source-binding tests cover the functional separation; fresh-origin Team screens retain the full-profile UI while FPV actors use the independent lease.",
-            "UI functional continuation only. Complete navigation, forced-colour, screen-reader, every-viewport, physical-device, audio, offline, public and release acceptance remain separate. Prior UI reviews and immutable originals remain preserved; any UI input change reopens this group."
-          ],
-          "stage": "reviewed"
+          "evidence": ["Connected runtime recipe; screen and state review remains required."],
+          "stage": "source"
         },
         "recipe": { "id": "ui.input.v1" },
-        "revision": 19
+        "revision": 20
       },
       "ui.input.scrollbar": {
         "description": "scrollbar control: existing bounded component with Field Kit tokens and state styling.",
@@ -9873,20 +9769,16 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "ui.input.scrollbar.field-kit", "revision": 18 },
+          "parent": { "id": "ui.input.scrollbar.field-kit", "revision": 19 },
           "prompt": "Create one original FPV Field Kit scrollbar control for slot ui.input.scrollbar. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/presentation/team-runtime-slots.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs; game/presentation/dom-ownership.mjs sha256:4b7db79dd3f6931dd72c0ae702f15a5a5d8ff2b7044aca5a2e02886e8e61636a"
+          "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/presentation/team-runtime-slots.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs; game/presentation/dom-ownership.mjs; game/ui/quick-music-controls.mjs; game/ui/quick-music-controls.css; game/app.mjs; game/couch/couch-music-host.mjs; game/couch/couch.mjs; game/couch/relay-rescue.mjs; game/index.html; game/couch/index.html; game/couch/relay-rescue.html sha256:5751c6563166f7f6037e79c4b2e27a4a933f4f8dbac70c4a4aac68964844ec79"
         },
         "quality": {
-          "evidence": [
-            "Scoped actor-only UI functional continuation: docs/verification/actor-only-ui-continuation-2026-09-24/review.json sha256:dbde124fb9d24cb26dd901b51f58cf59fc7bfb4df212e47419cdb15581155b73; seven ordered UI inputs sha256:4b7db79dd3f6931dd72c0ae702f15a5a5d8ff2b7044aca5a2e02886e8e61636a. Only presentation host changes after the prior exact review; all24 UI recipe payloads, tokens and DOM ownership contracts remain unchanged.",
-            "The actor-only profile uses a fixed registered image-slot set, creates no CSS URLs and refuses page apply, audio and picture operations. Full remains the default profile. Lease, cancellation, retained-runtime and exact source-binding tests cover the functional separation; fresh-origin Team screens retain the full-profile UI while FPV actors use the independent lease.",
-            "UI functional continuation only. Complete navigation, forced-colour, screen-reader, every-viewport, physical-device, audio, offline, public and release acceptance remain separate. Prior UI reviews and immutable originals remain preserved; any UI input change reopens this group."
-          ],
-          "stage": "reviewed"
+          "evidence": ["Connected runtime recipe; screen and state review remains required."],
+          "stage": "source"
         },
         "recipe": { "id": "ui.input.v1" },
-        "revision": 19
+        "revision": 20
       },
       "ui.input.select": {
         "description": "select control: existing bounded component with Field Kit tokens and state styling.",
@@ -9898,20 +9790,16 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "ui.input.select.field-kit", "revision": 18 },
+          "parent": { "id": "ui.input.select.field-kit", "revision": 19 },
           "prompt": "Create one original FPV Field Kit select control for slot ui.input.select. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/presentation/team-runtime-slots.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs; game/presentation/dom-ownership.mjs sha256:4b7db79dd3f6931dd72c0ae702f15a5a5d8ff2b7044aca5a2e02886e8e61636a"
+          "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/presentation/team-runtime-slots.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs; game/presentation/dom-ownership.mjs; game/ui/quick-music-controls.mjs; game/ui/quick-music-controls.css; game/app.mjs; game/couch/couch-music-host.mjs; game/couch/couch.mjs; game/couch/relay-rescue.mjs; game/index.html; game/couch/index.html; game/couch/relay-rescue.html sha256:5751c6563166f7f6037e79c4b2e27a4a933f4f8dbac70c4a4aac68964844ec79"
         },
         "quality": {
-          "evidence": [
-            "Scoped actor-only UI functional continuation: docs/verification/actor-only-ui-continuation-2026-09-24/review.json sha256:dbde124fb9d24cb26dd901b51f58cf59fc7bfb4df212e47419cdb15581155b73; seven ordered UI inputs sha256:4b7db79dd3f6931dd72c0ae702f15a5a5d8ff2b7044aca5a2e02886e8e61636a. Only presentation host changes after the prior exact review; all24 UI recipe payloads, tokens and DOM ownership contracts remain unchanged.",
-            "The actor-only profile uses a fixed registered image-slot set, creates no CSS URLs and refuses page apply, audio and picture operations. Full remains the default profile. Lease, cancellation, retained-runtime and exact source-binding tests cover the functional separation; fresh-origin Team screens retain the full-profile UI while FPV actors use the independent lease.",
-            "UI functional continuation only. Complete navigation, forced-colour, screen-reader, every-viewport, physical-device, audio, offline, public and release acceptance remain separate. Prior UI reviews and immutable originals remain preserved; any UI input change reopens this group."
-          ],
-          "stage": "reviewed"
+          "evidence": ["Connected runtime recipe; screen and state review remains required."],
+          "stage": "source"
         },
         "recipe": { "id": "ui.input.v1" },
-        "revision": 19
+        "revision": 20
       },
       "ui.input.slider": {
         "description": "slider control: existing bounded component with Field Kit tokens and state styling.",
@@ -9923,20 +9811,16 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "ui.input.slider.field-kit", "revision": 18 },
+          "parent": { "id": "ui.input.slider.field-kit", "revision": 19 },
           "prompt": "Create one original FPV Field Kit slider control for slot ui.input.slider. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/presentation/team-runtime-slots.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs; game/presentation/dom-ownership.mjs sha256:4b7db79dd3f6931dd72c0ae702f15a5a5d8ff2b7044aca5a2e02886e8e61636a"
+          "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/presentation/team-runtime-slots.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs; game/presentation/dom-ownership.mjs; game/ui/quick-music-controls.mjs; game/ui/quick-music-controls.css; game/app.mjs; game/couch/couch-music-host.mjs; game/couch/couch.mjs; game/couch/relay-rescue.mjs; game/index.html; game/couch/index.html; game/couch/relay-rescue.html sha256:5751c6563166f7f6037e79c4b2e27a4a933f4f8dbac70c4a4aac68964844ec79"
         },
         "quality": {
-          "evidence": [
-            "Scoped actor-only UI functional continuation: docs/verification/actor-only-ui-continuation-2026-09-24/review.json sha256:dbde124fb9d24cb26dd901b51f58cf59fc7bfb4df212e47419cdb15581155b73; seven ordered UI inputs sha256:4b7db79dd3f6931dd72c0ae702f15a5a5d8ff2b7044aca5a2e02886e8e61636a. Only presentation host changes after the prior exact review; all24 UI recipe payloads, tokens and DOM ownership contracts remain unchanged.",
-            "The actor-only profile uses a fixed registered image-slot set, creates no CSS URLs and refuses page apply, audio and picture operations. Full remains the default profile. Lease, cancellation, retained-runtime and exact source-binding tests cover the functional separation; fresh-origin Team screens retain the full-profile UI while FPV actors use the independent lease.",
-            "UI functional continuation only. Complete navigation, forced-colour, screen-reader, every-viewport, physical-device, audio, offline, public and release acceptance remain separate. Prior UI reviews and immutable originals remain preserved; any UI input change reopens this group."
-          ],
-          "stage": "reviewed"
+          "evidence": ["Connected runtime recipe; screen and state review remains required."],
+          "stage": "source"
         },
         "recipe": { "id": "ui.input.v1" },
-        "revision": 19
+        "revision": 20
       },
       "ui.input.text": {
         "description": "text control: existing bounded component with Field Kit tokens and state styling.",
@@ -9948,20 +9832,16 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "ui.input.text.field-kit", "revision": 18 },
+          "parent": { "id": "ui.input.text.field-kit", "revision": 19 },
           "prompt": "Create one original FPV Field Kit text control for slot ui.input.text. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/presentation/team-runtime-slots.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs; game/presentation/dom-ownership.mjs sha256:4b7db79dd3f6931dd72c0ae702f15a5a5d8ff2b7044aca5a2e02886e8e61636a"
+          "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/presentation/team-runtime-slots.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs; game/presentation/dom-ownership.mjs; game/ui/quick-music-controls.mjs; game/ui/quick-music-controls.css; game/app.mjs; game/couch/couch-music-host.mjs; game/couch/couch.mjs; game/couch/relay-rescue.mjs; game/index.html; game/couch/index.html; game/couch/relay-rescue.html sha256:5751c6563166f7f6037e79c4b2e27a4a933f4f8dbac70c4a4aac68964844ec79"
         },
         "quality": {
-          "evidence": [
-            "Scoped actor-only UI functional continuation: docs/verification/actor-only-ui-continuation-2026-09-24/review.json sha256:dbde124fb9d24cb26dd901b51f58cf59fc7bfb4df212e47419cdb15581155b73; seven ordered UI inputs sha256:4b7db79dd3f6931dd72c0ae702f15a5a5d8ff2b7044aca5a2e02886e8e61636a. Only presentation host changes after the prior exact review; all24 UI recipe payloads, tokens and DOM ownership contracts remain unchanged.",
-            "The actor-only profile uses a fixed registered image-slot set, creates no CSS URLs and refuses page apply, audio and picture operations. Full remains the default profile. Lease, cancellation, retained-runtime and exact source-binding tests cover the functional separation; fresh-origin Team screens retain the full-profile UI while FPV actors use the independent lease.",
-            "UI functional continuation only. Complete navigation, forced-colour, screen-reader, every-viewport, physical-device, audio, offline, public and release acceptance remain separate. Prior UI reviews and immutable originals remain preserved; any UI input change reopens this group."
-          ],
-          "stage": "reviewed"
+          "evidence": ["Connected runtime recipe; screen and state review remains required."],
+          "stage": "source"
         },
         "recipe": { "id": "ui.input.v1" },
-        "revision": 19
+        "revision": 20
       },
       "ui.input.toggle": {
         "description": "toggle control: existing bounded component with Field Kit tokens and state styling.",
@@ -9973,20 +9853,16 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "ui.input.toggle.field-kit", "revision": 18 },
+          "parent": { "id": "ui.input.toggle.field-kit", "revision": 19 },
           "prompt": "Create one original FPV Field Kit toggle control for slot ui.input.toggle. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/presentation/team-runtime-slots.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs; game/presentation/dom-ownership.mjs sha256:4b7db79dd3f6931dd72c0ae702f15a5a5d8ff2b7044aca5a2e02886e8e61636a"
+          "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/presentation/team-runtime-slots.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs; game/presentation/dom-ownership.mjs; game/ui/quick-music-controls.mjs; game/ui/quick-music-controls.css; game/app.mjs; game/couch/couch-music-host.mjs; game/couch/couch.mjs; game/couch/relay-rescue.mjs; game/index.html; game/couch/index.html; game/couch/relay-rescue.html sha256:5751c6563166f7f6037e79c4b2e27a4a933f4f8dbac70c4a4aac68964844ec79"
         },
         "quality": {
-          "evidence": [
-            "Scoped actor-only UI functional continuation: docs/verification/actor-only-ui-continuation-2026-09-24/review.json sha256:dbde124fb9d24cb26dd901b51f58cf59fc7bfb4df212e47419cdb15581155b73; seven ordered UI inputs sha256:4b7db79dd3f6931dd72c0ae702f15a5a5d8ff2b7044aca5a2e02886e8e61636a. Only presentation host changes after the prior exact review; all24 UI recipe payloads, tokens and DOM ownership contracts remain unchanged.",
-            "The actor-only profile uses a fixed registered image-slot set, creates no CSS URLs and refuses page apply, audio and picture operations. Full remains the default profile. Lease, cancellation, retained-runtime and exact source-binding tests cover the functional separation; fresh-origin Team screens retain the full-profile UI while FPV actors use the independent lease.",
-            "UI functional continuation only. Complete navigation, forced-colour, screen-reader, every-viewport, physical-device, audio, offline, public and release acceptance remain separate. Prior UI reviews and immutable originals remain preserved; any UI input change reopens this group."
-          ],
-          "stage": "reviewed"
+          "evidence": ["Connected runtime recipe; screen and state review remains required."],
+          "stage": "source"
         },
         "recipe": { "id": "ui.input.v1" },
-        "revision": 19
+        "revision": 20
       },
       "ui.meter.ability": {
         "description": "ability meter: existing bounded component with Field Kit tokens and state styling.",
@@ -9998,20 +9874,16 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "ui.meter.ability.field-kit", "revision": 18 },
+          "parent": { "id": "ui.meter.ability.field-kit", "revision": 19 },
           "prompt": "Create one original FPV Field Kit ability meter for slot ui.meter.ability. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/presentation/team-runtime-slots.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs; game/presentation/dom-ownership.mjs sha256:4b7db79dd3f6931dd72c0ae702f15a5a5d8ff2b7044aca5a2e02886e8e61636a"
+          "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/presentation/team-runtime-slots.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs; game/presentation/dom-ownership.mjs; game/ui/quick-music-controls.mjs; game/ui/quick-music-controls.css; game/app.mjs; game/couch/couch-music-host.mjs; game/couch/couch.mjs; game/couch/relay-rescue.mjs; game/index.html; game/couch/index.html; game/couch/relay-rescue.html sha256:5751c6563166f7f6037e79c4b2e27a4a933f4f8dbac70c4a4aac68964844ec79"
         },
         "quality": {
-          "evidence": [
-            "Scoped actor-only UI functional continuation: docs/verification/actor-only-ui-continuation-2026-09-24/review.json sha256:dbde124fb9d24cb26dd901b51f58cf59fc7bfb4df212e47419cdb15581155b73; seven ordered UI inputs sha256:4b7db79dd3f6931dd72c0ae702f15a5a5d8ff2b7044aca5a2e02886e8e61636a. Only presentation host changes after the prior exact review; all24 UI recipe payloads, tokens and DOM ownership contracts remain unchanged.",
-            "The actor-only profile uses a fixed registered image-slot set, creates no CSS URLs and refuses page apply, audio and picture operations. Full remains the default profile. Lease, cancellation, retained-runtime and exact source-binding tests cover the functional separation; fresh-origin Team screens retain the full-profile UI while FPV actors use the independent lease.",
-            "UI functional continuation only. Complete navigation, forced-colour, screen-reader, every-viewport, physical-device, audio, offline, public and release acceptance remain separate. Prior UI reviews and immutable originals remain preserved; any UI input change reopens this group."
-          ],
-          "stage": "reviewed"
+          "evidence": ["Connected runtime recipe; screen and state review remains required."],
+          "stage": "source"
         },
         "recipe": { "id": "ui.meter.v1" },
-        "revision": 19
+        "revision": 20
       },
       "ui.meter.coverage": {
         "description": "coverage meter: existing bounded component with Field Kit tokens and state styling.",
@@ -10023,20 +9895,16 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "ui.meter.coverage.field-kit", "revision": 18 },
+          "parent": { "id": "ui.meter.coverage.field-kit", "revision": 19 },
           "prompt": "Create one original FPV Field Kit coverage meter for slot ui.meter.coverage. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/presentation/team-runtime-slots.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs; game/presentation/dom-ownership.mjs sha256:4b7db79dd3f6931dd72c0ae702f15a5a5d8ff2b7044aca5a2e02886e8e61636a"
+          "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/presentation/team-runtime-slots.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs; game/presentation/dom-ownership.mjs; game/ui/quick-music-controls.mjs; game/ui/quick-music-controls.css; game/app.mjs; game/couch/couch-music-host.mjs; game/couch/couch.mjs; game/couch/relay-rescue.mjs; game/index.html; game/couch/index.html; game/couch/relay-rescue.html sha256:5751c6563166f7f6037e79c4b2e27a4a933f4f8dbac70c4a4aac68964844ec79"
         },
         "quality": {
-          "evidence": [
-            "Scoped actor-only UI functional continuation: docs/verification/actor-only-ui-continuation-2026-09-24/review.json sha256:dbde124fb9d24cb26dd901b51f58cf59fc7bfb4df212e47419cdb15581155b73; seven ordered UI inputs sha256:4b7db79dd3f6931dd72c0ae702f15a5a5d8ff2b7044aca5a2e02886e8e61636a. Only presentation host changes after the prior exact review; all24 UI recipe payloads, tokens and DOM ownership contracts remain unchanged.",
-            "The actor-only profile uses a fixed registered image-slot set, creates no CSS URLs and refuses page apply, audio and picture operations. Full remains the default profile. Lease, cancellation, retained-runtime and exact source-binding tests cover the functional separation; fresh-origin Team screens retain the full-profile UI while FPV actors use the independent lease.",
-            "UI functional continuation only. Complete navigation, forced-colour, screen-reader, every-viewport, physical-device, audio, offline, public and release acceptance remain separate. Prior UI reviews and immutable originals remain preserved; any UI input change reopens this group."
-          ],
-          "stage": "reviewed"
+          "evidence": ["Connected runtime recipe; screen and state review remains required."],
+          "stage": "source"
         },
         "recipe": { "id": "ui.meter.v1" },
-        "revision": 19
+        "revision": 20
       },
       "ui.meter.progress": {
         "description": "progress meter: existing bounded component with Field Kit tokens and state styling.",
@@ -10048,20 +9916,16 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "ui.meter.progress.field-kit", "revision": 18 },
+          "parent": { "id": "ui.meter.progress.field-kit", "revision": 19 },
           "prompt": "Create one original FPV Field Kit progress meter for slot ui.meter.progress. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/presentation/team-runtime-slots.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs; game/presentation/dom-ownership.mjs sha256:4b7db79dd3f6931dd72c0ae702f15a5a5d8ff2b7044aca5a2e02886e8e61636a"
+          "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/presentation/team-runtime-slots.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs; game/presentation/dom-ownership.mjs; game/ui/quick-music-controls.mjs; game/ui/quick-music-controls.css; game/app.mjs; game/couch/couch-music-host.mjs; game/couch/couch.mjs; game/couch/relay-rescue.mjs; game/index.html; game/couch/index.html; game/couch/relay-rescue.html sha256:5751c6563166f7f6037e79c4b2e27a4a933f4f8dbac70c4a4aac68964844ec79"
         },
         "quality": {
-          "evidence": [
-            "Scoped actor-only UI functional continuation: docs/verification/actor-only-ui-continuation-2026-09-24/review.json sha256:dbde124fb9d24cb26dd901b51f58cf59fc7bfb4df212e47419cdb15581155b73; seven ordered UI inputs sha256:4b7db79dd3f6931dd72c0ae702f15a5a5d8ff2b7044aca5a2e02886e8e61636a. Only presentation host changes after the prior exact review; all24 UI recipe payloads, tokens and DOM ownership contracts remain unchanged.",
-            "The actor-only profile uses a fixed registered image-slot set, creates no CSS URLs and refuses page apply, audio and picture operations. Full remains the default profile. Lease, cancellation, retained-runtime and exact source-binding tests cover the functional separation; fresh-origin Team screens retain the full-profile UI while FPV actors use the independent lease.",
-            "UI functional continuation only. Complete navigation, forced-colour, screen-reader, every-viewport, physical-device, audio, offline, public and release acceptance remain separate. Prior UI reviews and immutable originals remain preserved; any UI input change reopens this group."
-          ],
-          "stage": "reviewed"
+          "evidence": ["Connected runtime recipe; screen and state review remains required."],
+          "stage": "source"
         },
         "recipe": { "id": "ui.meter.v1" },
-        "revision": 19
+        "revision": 20
       },
       "ui.meter.time": {
         "description": "time meter: existing bounded component with Field Kit tokens and state styling.",
@@ -10073,20 +9937,16 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "ui.meter.time.field-kit", "revision": 18 },
+          "parent": { "id": "ui.meter.time.field-kit", "revision": 19 },
           "prompt": "Create one original FPV Field Kit time meter for slot ui.meter.time. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/presentation/team-runtime-slots.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs; game/presentation/dom-ownership.mjs sha256:4b7db79dd3f6931dd72c0ae702f15a5a5d8ff2b7044aca5a2e02886e8e61636a"
+          "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/presentation/team-runtime-slots.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs; game/presentation/dom-ownership.mjs; game/ui/quick-music-controls.mjs; game/ui/quick-music-controls.css; game/app.mjs; game/couch/couch-music-host.mjs; game/couch/couch.mjs; game/couch/relay-rescue.mjs; game/index.html; game/couch/index.html; game/couch/relay-rescue.html sha256:5751c6563166f7f6037e79c4b2e27a4a933f4f8dbac70c4a4aac68964844ec79"
         },
         "quality": {
-          "evidence": [
-            "Scoped actor-only UI functional continuation: docs/verification/actor-only-ui-continuation-2026-09-24/review.json sha256:dbde124fb9d24cb26dd901b51f58cf59fc7bfb4df212e47419cdb15581155b73; seven ordered UI inputs sha256:4b7db79dd3f6931dd72c0ae702f15a5a5d8ff2b7044aca5a2e02886e8e61636a. Only presentation host changes after the prior exact review; all24 UI recipe payloads, tokens and DOM ownership contracts remain unchanged.",
-            "The actor-only profile uses a fixed registered image-slot set, creates no CSS URLs and refuses page apply, audio and picture operations. Full remains the default profile. Lease, cancellation, retained-runtime and exact source-binding tests cover the functional separation; fresh-origin Team screens retain the full-profile UI while FPV actors use the independent lease.",
-            "UI functional continuation only. Complete navigation, forced-colour, screen-reader, every-viewport, physical-device, audio, offline, public and release acceptance remain separate. Prior UI reviews and immutable originals remain preserved; any UI input change reopens this group."
-          ],
-          "stage": "reviewed"
+          "evidence": ["Connected runtime recipe; screen and state review remains required."],
+          "stage": "source"
         },
         "recipe": { "id": "ui.meter.v1" },
-        "revision": 19
+        "revision": 20
       },
       "ui.meter.volume": {
         "description": "volume meter: existing bounded component with Field Kit tokens and state styling.",
@@ -10098,20 +9958,16 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "ui.meter.volume.field-kit", "revision": 18 },
+          "parent": { "id": "ui.meter.volume.field-kit", "revision": 19 },
           "prompt": "Create one original FPV Field Kit volume meter for slot ui.meter.volume. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/presentation/team-runtime-slots.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs; game/presentation/dom-ownership.mjs sha256:4b7db79dd3f6931dd72c0ae702f15a5a5d8ff2b7044aca5a2e02886e8e61636a"
+          "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/presentation/team-runtime-slots.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs; game/presentation/dom-ownership.mjs; game/ui/quick-music-controls.mjs; game/ui/quick-music-controls.css; game/app.mjs; game/couch/couch-music-host.mjs; game/couch/couch.mjs; game/couch/relay-rescue.mjs; game/index.html; game/couch/index.html; game/couch/relay-rescue.html sha256:5751c6563166f7f6037e79c4b2e27a4a933f4f8dbac70c4a4aac68964844ec79"
         },
         "quality": {
-          "evidence": [
-            "Scoped actor-only UI functional continuation: docs/verification/actor-only-ui-continuation-2026-09-24/review.json sha256:dbde124fb9d24cb26dd901b51f58cf59fc7bfb4df212e47419cdb15581155b73; seven ordered UI inputs sha256:4b7db79dd3f6931dd72c0ae702f15a5a5d8ff2b7044aca5a2e02886e8e61636a. Only presentation host changes after the prior exact review; all24 UI recipe payloads, tokens and DOM ownership contracts remain unchanged.",
-            "The actor-only profile uses a fixed registered image-slot set, creates no CSS URLs and refuses page apply, audio and picture operations. Full remains the default profile. Lease, cancellation, retained-runtime and exact source-binding tests cover the functional separation; fresh-origin Team screens retain the full-profile UI while FPV actors use the independent lease.",
-            "UI functional continuation only. Complete navigation, forced-colour, screen-reader, every-viewport, physical-device, audio, offline, public and release acceptance remain separate. Prior UI reviews and immutable originals remain preserved; any UI input change reopens this group."
-          ],
-          "stage": "reviewed"
+          "evidence": ["Connected runtime recipe; screen and state review remains required."],
+          "stage": "source"
         },
         "recipe": { "id": "ui.meter.v1" },
-        "revision": 19
+        "revision": 20
       },
       "ui.panel": {
         "description": "Panel frame: existing bounded component with Field Kit tokens and state styling.",
@@ -10123,20 +9979,16 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "ui.panel.field-kit", "revision": 18 },
+          "parent": { "id": "ui.panel.field-kit", "revision": 19 },
           "prompt": "Create one original FPV Field Kit panel frame for slot ui.panel. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/presentation/team-runtime-slots.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs; game/presentation/dom-ownership.mjs sha256:4b7db79dd3f6931dd72c0ae702f15a5a5d8ff2b7044aca5a2e02886e8e61636a"
+          "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/presentation/team-runtime-slots.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs; game/presentation/dom-ownership.mjs; game/ui/quick-music-controls.mjs; game/ui/quick-music-controls.css; game/app.mjs; game/couch/couch-music-host.mjs; game/couch/couch.mjs; game/couch/relay-rescue.mjs; game/index.html; game/couch/index.html; game/couch/relay-rescue.html sha256:5751c6563166f7f6037e79c4b2e27a4a933f4f8dbac70c4a4aac68964844ec79"
         },
         "quality": {
-          "evidence": [
-            "Scoped actor-only UI functional continuation: docs/verification/actor-only-ui-continuation-2026-09-24/review.json sha256:dbde124fb9d24cb26dd901b51f58cf59fc7bfb4df212e47419cdb15581155b73; seven ordered UI inputs sha256:4b7db79dd3f6931dd72c0ae702f15a5a5d8ff2b7044aca5a2e02886e8e61636a. Only presentation host changes after the prior exact review; all24 UI recipe payloads, tokens and DOM ownership contracts remain unchanged.",
-            "The actor-only profile uses a fixed registered image-slot set, creates no CSS URLs and refuses page apply, audio and picture operations. Full remains the default profile. Lease, cancellation, retained-runtime and exact source-binding tests cover the functional separation; fresh-origin Team screens retain the full-profile UI while FPV actors use the independent lease.",
-            "UI functional continuation only. Complete navigation, forced-colour, screen-reader, every-viewport, physical-device, audio, offline, public and release acceptance remain separate. Prior UI reviews and immutable originals remain preserved; any UI input change reopens this group."
-          ],
-          "stage": "reviewed"
+          "evidence": ["Connected runtime recipe; screen and state review remains required."],
+          "stage": "source"
         },
         "recipe": { "id": "ui.panel.v1" },
-        "revision": 19
+        "revision": 20
       },
       "ui.toast": {
         "description": "Status message frame: existing bounded component with Field Kit tokens and state styling.",
@@ -10148,20 +10000,16 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "ui.toast.field-kit", "revision": 18 },
+          "parent": { "id": "ui.toast.field-kit", "revision": 19 },
           "prompt": "Create one original FPV Field Kit status message frame for slot ui.toast. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/presentation/team-runtime-slots.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs; game/presentation/dom-ownership.mjs sha256:4b7db79dd3f6931dd72c0ae702f15a5a5d8ff2b7044aca5a2e02886e8e61636a"
+          "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/presentation/team-runtime-slots.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs; game/presentation/dom-ownership.mjs; game/ui/quick-music-controls.mjs; game/ui/quick-music-controls.css; game/app.mjs; game/couch/couch-music-host.mjs; game/couch/couch.mjs; game/couch/relay-rescue.mjs; game/index.html; game/couch/index.html; game/couch/relay-rescue.html sha256:5751c6563166f7f6037e79c4b2e27a4a933f4f8dbac70c4a4aac68964844ec79"
         },
         "quality": {
-          "evidence": [
-            "Scoped actor-only UI functional continuation: docs/verification/actor-only-ui-continuation-2026-09-24/review.json sha256:dbde124fb9d24cb26dd901b51f58cf59fc7bfb4df212e47419cdb15581155b73; seven ordered UI inputs sha256:4b7db79dd3f6931dd72c0ae702f15a5a5d8ff2b7044aca5a2e02886e8e61636a. Only presentation host changes after the prior exact review; all24 UI recipe payloads, tokens and DOM ownership contracts remain unchanged.",
-            "The actor-only profile uses a fixed registered image-slot set, creates no CSS URLs and refuses page apply, audio and picture operations. Full remains the default profile. Lease, cancellation, retained-runtime and exact source-binding tests cover the functional separation; fresh-origin Team screens retain the full-profile UI while FPV actors use the independent lease.",
-            "UI functional continuation only. Complete navigation, forced-colour, screen-reader, every-viewport, physical-device, audio, offline, public and release acceptance remain separate. Prior UI reviews and immutable originals remain preserved; any UI input change reopens this group."
-          ],
-          "stage": "reviewed"
+          "evidence": ["Connected runtime recipe; screen and state review remains required."],
+          "stage": "source"
         },
         "recipe": { "id": "ui.panel.v1" },
-        "revision": 19
+        "revision": 20
       },
       "ui.tooltip": {
         "description": "Tooltip frame: existing bounded component with Field Kit tokens and state styling.",
@@ -10173,31 +10021,27 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "ui.tooltip.field-kit", "revision": 18 },
+          "parent": { "id": "ui.tooltip.field-kit", "revision": 19 },
           "prompt": "Create one original FPV Field Kit tooltip frame for slot ui.tooltip. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/presentation/team-runtime-slots.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs; game/presentation/dom-ownership.mjs sha256:4b7db79dd3f6931dd72c0ae702f15a5a5d8ff2b7044aca5a2e02886e8e61636a"
+          "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/presentation/team-runtime-slots.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs; game/presentation/dom-ownership.mjs; game/ui/quick-music-controls.mjs; game/ui/quick-music-controls.css; game/app.mjs; game/couch/couch-music-host.mjs; game/couch/couch.mjs; game/couch/relay-rescue.mjs; game/index.html; game/couch/index.html; game/couch/relay-rescue.html sha256:5751c6563166f7f6037e79c4b2e27a4a933f4f8dbac70c4a4aac68964844ec79"
         },
         "quality": {
-          "evidence": [
-            "Scoped actor-only UI functional continuation: docs/verification/actor-only-ui-continuation-2026-09-24/review.json sha256:dbde124fb9d24cb26dd901b51f58cf59fc7bfb4df212e47419cdb15581155b73; seven ordered UI inputs sha256:4b7db79dd3f6931dd72c0ae702f15a5a5d8ff2b7044aca5a2e02886e8e61636a. Only presentation host changes after the prior exact review; all24 UI recipe payloads, tokens and DOM ownership contracts remain unchanged.",
-            "The actor-only profile uses a fixed registered image-slot set, creates no CSS URLs and refuses page apply, audio and picture operations. Full remains the default profile. Lease, cancellation, retained-runtime and exact source-binding tests cover the functional separation; fresh-origin Team screens retain the full-profile UI while FPV actors use the independent lease.",
-            "UI functional continuation only. Complete navigation, forced-colour, screen-reader, every-viewport, physical-device, audio, offline, public and release acceptance remain separate. Prior UI reviews and immutable originals remain preserved; any UI input change reopens this group."
-          ],
-          "stage": "reviewed"
+          "evidence": ["Connected runtime recipe; screen and state review remains required."],
+          "stage": "source"
         },
         "recipe": { "id": "ui.panel.v1" },
-        "revision": 19
+        "revision": 20
       }
     },
     "bindings": {
-      "audio.cancel": { "id": "audio.cancel.field-kit", "revision": 31 },
-      "audio.capture": { "id": "audio.capture.field-kit", "revision": 31 },
-      "audio.confirm": { "id": "audio.confirm.field-kit", "revision": 31 },
-      "audio.failure": { "id": "audio.failure.field-kit", "revision": 31 },
-      "audio.focus": { "id": "audio.focus.field-kit", "revision": 31 },
-      "audio.music": { "id": "audio.music.field-kit", "revision": 31 },
-      "audio.pickup": { "id": "audio.pickup.field-kit", "revision": 31 },
-      "audio.victory": { "id": "audio.victory.field-kit", "revision": 31 },
+      "audio.cancel": { "id": "audio.cancel.field-kit", "revision": 32 },
+      "audio.capture": { "id": "audio.capture.field-kit", "revision": 32 },
+      "audio.confirm": { "id": "audio.confirm.field-kit", "revision": 32 },
+      "audio.failure": { "id": "audio.failure.field-kit", "revision": 32 },
+      "audio.focus": { "id": "audio.focus.field-kit", "revision": 32 },
+      "audio.music": { "id": "audio.music.field-kit", "revision": 32 },
+      "audio.pickup": { "id": "audio.pickup.field-kit", "revision": 32 },
+      "audio.victory": { "id": "audio.victory.field-kit", "revision": 32 },
       "control.ability": { "id": "control.ability.field-kit", "revision": 2 },
       "control.boost": { "id": "control.boost.field-kit", "revision": 2 },
       "control.cancel": { "id": "control.cancel.field-kit", "revision": 2 },
@@ -10914,20 +10758,20 @@
       "scene.reveal.wide": { "id": "scene.reveal.wide.field-kit", "revision": 2 },
       "screen.collection.background": {
         "id": "screen.collection.background.field-kit",
-        "revision": 23
+        "revision": 24
       },
-      "screen.couch.background": { "id": "screen.couch.background.field-kit", "revision": 23 },
-      "screen.hangar.background": { "id": "screen.hangar.background.field-kit", "revision": 23 },
+      "screen.couch.background": { "id": "screen.couch.background.field-kit", "revision": 24 },
+      "screen.hangar.background": { "id": "screen.hangar.background.field-kit", "revision": 24 },
       "screen.missions.background": {
         "id": "screen.missions.background.field-kit",
-        "revision": 23
+        "revision": 24
       },
-      "screen.results.background": { "id": "screen.results.background.field-kit", "revision": 23 },
+      "screen.results.background": { "id": "screen.results.background.field-kit", "revision": 24 },
       "screen.settings.background": {
         "id": "screen.settings.background.field-kit",
-        "revision": 23
+        "revision": 24
       },
-      "screen.studio.background": { "id": "screen.studio.background.field-kit", "revision": 23 },
+      "screen.studio.background": { "id": "screen.studio.background.field-kit", "revision": 24 },
       "screen.title.background": { "id": "screen.title.background.field-kit-scene", "revision": 3 },
       "screen.title.portrait": { "id": "screen.title.portrait.field-kit-scene", "revision": 3 },
       "team.anchor.available": { "id": "team.anchor.available.field-kit", "revision": 3 },
@@ -11050,33 +10894,33 @@
       "trail.active": { "id": "trail.active.field-kit", "revision": 15 },
       "trail.head": { "id": "trail.head.field-kit", "revision": 15 },
       "trail.secured": { "id": "trail.secured.field-kit", "revision": 15 },
-      "ui.button.chip": { "id": "ui.button.chip.field-kit", "revision": 19 },
-      "ui.button.danger": { "id": "ui.button.danger.field-kit", "revision": 19 },
-      "ui.button.icon": { "id": "ui.button.icon.field-kit", "revision": 19 },
-      "ui.button.primary": { "id": "ui.button.primary.field-kit", "revision": 19 },
-      "ui.button.secondary": { "id": "ui.button.secondary.field-kit", "revision": 19 },
-      "ui.button.tab": { "id": "ui.button.tab.field-kit", "revision": 19 },
-      "ui.cursor": { "id": "ui.cursor.field-kit", "revision": 19 },
-      "ui.dialog": { "id": "ui.dialog.field-kit", "revision": 19 },
-      "ui.focus": { "id": "ui.focus.field-kit", "revision": 19 },
-      "ui.input.checkbox": { "id": "ui.input.checkbox.field-kit", "revision": 19 },
-      "ui.input.radio": { "id": "ui.input.radio.field-kit", "revision": 19 },
-      "ui.input.scrollbar": { "id": "ui.input.scrollbar.field-kit", "revision": 19 },
-      "ui.input.select": { "id": "ui.input.select.field-kit", "revision": 19 },
-      "ui.input.slider": { "id": "ui.input.slider.field-kit", "revision": 19 },
-      "ui.input.text": { "id": "ui.input.text.field-kit", "revision": 19 },
-      "ui.input.toggle": { "id": "ui.input.toggle.field-kit", "revision": 19 },
-      "ui.meter.ability": { "id": "ui.meter.ability.field-kit", "revision": 19 },
-      "ui.meter.coverage": { "id": "ui.meter.coverage.field-kit", "revision": 19 },
-      "ui.meter.progress": { "id": "ui.meter.progress.field-kit", "revision": 19 },
-      "ui.meter.time": { "id": "ui.meter.time.field-kit", "revision": 19 },
-      "ui.meter.volume": { "id": "ui.meter.volume.field-kit", "revision": 19 },
-      "ui.panel": { "id": "ui.panel.field-kit", "revision": 19 },
-      "ui.toast": { "id": "ui.toast.field-kit", "revision": 19 },
-      "ui.tooltip": { "id": "ui.tooltip.field-kit", "revision": 19 }
+      "ui.button.chip": { "id": "ui.button.chip.field-kit", "revision": 20 },
+      "ui.button.danger": { "id": "ui.button.danger.field-kit", "revision": 20 },
+      "ui.button.icon": { "id": "ui.button.icon.field-kit", "revision": 20 },
+      "ui.button.primary": { "id": "ui.button.primary.field-kit", "revision": 20 },
+      "ui.button.secondary": { "id": "ui.button.secondary.field-kit", "revision": 20 },
+      "ui.button.tab": { "id": "ui.button.tab.field-kit", "revision": 20 },
+      "ui.cursor": { "id": "ui.cursor.field-kit", "revision": 20 },
+      "ui.dialog": { "id": "ui.dialog.field-kit", "revision": 20 },
+      "ui.focus": { "id": "ui.focus.field-kit", "revision": 20 },
+      "ui.input.checkbox": { "id": "ui.input.checkbox.field-kit", "revision": 20 },
+      "ui.input.radio": { "id": "ui.input.radio.field-kit", "revision": 20 },
+      "ui.input.scrollbar": { "id": "ui.input.scrollbar.field-kit", "revision": 20 },
+      "ui.input.select": { "id": "ui.input.select.field-kit", "revision": 20 },
+      "ui.input.slider": { "id": "ui.input.slider.field-kit", "revision": 20 },
+      "ui.input.text": { "id": "ui.input.text.field-kit", "revision": 20 },
+      "ui.input.toggle": { "id": "ui.input.toggle.field-kit", "revision": 20 },
+      "ui.meter.ability": { "id": "ui.meter.ability.field-kit", "revision": 20 },
+      "ui.meter.coverage": { "id": "ui.meter.coverage.field-kit", "revision": 20 },
+      "ui.meter.progress": { "id": "ui.meter.progress.field-kit", "revision": 20 },
+      "ui.meter.time": { "id": "ui.meter.time.field-kit", "revision": 20 },
+      "ui.meter.volume": { "id": "ui.meter.volume.field-kit", "revision": 20 },
+      "ui.panel": { "id": "ui.panel.field-kit", "revision": 20 },
+      "ui.toast": { "id": "ui.toast.field-kit", "revision": 20 },
+      "ui.tooltip": { "id": "ui.tooltip.field-kit", "revision": 20 }
     },
     "collection": null,
-    "theme": { "id": "fpv", "name": "FPV Field Kit", "revision": 77 },
+    "theme": { "id": "fpv", "name": "FPV Field Kit", "revision": 78 },
     "tokens": {
       "amber": "#f4bf62",
       "borderWidth": 2,
@@ -11104,7 +10948,7 @@
       "textSize": 18
     }
   },
-  "source": { "id": "field-kit", "revision": 77 },
+  "source": { "id": "field-kit", "revision": 78 },
   "urls": {
     "009d14748f943002091255caebd32e4df1c886569575f512ab0d55d7a3ff637a": "./assets/009d14748f943002091255caebd32e4df1c886569575f512ab0d55d7a3ff637a.png",
     "00b0f847cd1f80495615e3ada13899df67c6df05bf1f6d846ffc46cb3cc3fc5f": "./assets/00b0f847cd1f80495615e3ada13899df67c6df05bf1f6d846ffc46cb3cc3fc5f.png",

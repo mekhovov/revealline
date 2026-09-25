@@ -39,6 +39,15 @@ test('every declared helper invalidates all sharing groups and leaves nonconsume
     ['game/soundtrack-portable.mjs', ['audio']],
     ['game/content/soundtrack-catalogue.mjs', ['audio']],
     ['game/online-soundtrack-catalogue.mjs', ['audio']],
+    ['game/ui/quick-music-controls.mjs', ['audio', 'screens', 'ui']],
+    ['game/ui/quick-music-controls.css', ['screens', 'ui']],
+    ['game/app.mjs', ['audio', 'screens', 'ui']],
+    ['game/couch/couch-music-host.mjs', ['audio', 'screens', 'ui']],
+    ['game/couch/couch.mjs', ['audio', 'screens', 'ui']],
+    ['game/couch/relay-rescue.mjs', ['audio', 'screens', 'ui']],
+    ['game/index.html', ['screens', 'ui']],
+    ['game/couch/index.html', ['screens', 'ui']],
+    ['game/couch/relay-rescue.html', ['screens', 'ui']],
   ])
     assert.deepEqual([...(consumers.get(name) ?? [])].sort(), groups, name);
   assert.equal(consumers.size, inputs.size, 'Every read belongs to a declared group');
@@ -53,11 +62,23 @@ test('every declared helper invalidates all sharing groups and leaves nonconsume
 });
 
 test('missing helper bytes cannot produce a supposedly valid fingerprint', async () => {
-  await assert.rejects(
-    fieldKitRecipeSources(async (file) => {
-      if (file === 'game/ui/lane-presentation.mjs') throw new Error('Missing required helper');
-      return Buffer.from(file);
-    }),
-    /Missing required helper/,
-  );
+  for (const missing of [
+    'game/ui/lane-presentation.mjs',
+    'game/ui/quick-music-controls.mjs',
+    'game/ui/quick-music-controls.css',
+    'game/app.mjs',
+    'game/couch/couch-music-host.mjs',
+    'game/couch/couch.mjs',
+    'game/couch/relay-rescue.mjs',
+    'game/index.html',
+    'game/couch/index.html',
+    'game/couch/relay-rescue.html',
+  ])
+    await assert.rejects(
+      fieldKitRecipeSources(async (file) => {
+        if (file === missing) throw new Error(`Missing required helper: ${missing}`);
+        return Buffer.from(file);
+      }),
+      new RegExp(`Missing required helper: ${missing.replaceAll('.', '\\.')}`),
+    );
 });
