@@ -78,7 +78,7 @@ export function createBonusEditor({ document, getSource, getMission, apply }) {
         command = { action, id };
       if (action !== 'remove') {
         if (!$('x').value.trim() || !$('y').value.trim())
-          throw editorMessageError('errors:studio.bonus.coordinates');
+          throw editorMessageError('errors:studio.cellCentreCoordinates');
         command.bonus = {
           id,
           kind: $('kind').value,
