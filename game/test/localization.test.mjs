@@ -137,6 +137,14 @@ test('content uses exact identity and field; edited imports retain authored text
     assert.equal(contentText(edited, 'name'), 'Relay Orchard');
     edited.name = 'My own map';
     assert.equal(contentText(edited, 'name'), 'My own map');
+    const shallow = Object.freeze(structuredClone(campaign.levels[1]));
+    assert.equal(contentText(shallow, 'name'), 'Сад ретрансляторів');
+    shallow.rules.lives += 1;
+    assert.equal(
+      contentText(shallow, 'name'),
+      'Relay Orchard',
+      'shallow freezing must not hide a nested custom edit',
+    );
     assert.equal(dataIdentity(campaign), before);
   } finally {
     setLocale('en', { persist: false });
