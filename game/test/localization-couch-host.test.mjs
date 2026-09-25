@@ -72,6 +72,7 @@ test('controller edits the lobby and Settings language selectors without startin
   assert.equal(lobby.value, 'uk');
   assert.equal(settings.value, 'uk');
   assert.deepEqual(f.checkpoint(), checkpoint);
+  f.frames(151, 1000 / 120);
   f.$('race-options').click();
   f.$('race-settings-tab-display').click();
   f.frame(0);

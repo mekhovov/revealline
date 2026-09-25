@@ -7,7 +7,17 @@ test('Team controller can change language in the lobby and Settings without star
   const locale = getLocale();
   context.after(() => setLocale(locale, { persist: false }));
   setLocale('en', { persist: false });
-  const f = await page(context);
+  let guardNow = 0;
+  const f = await page(context, {
+    beforeImport: ({ install }) => {
+      install('performance', { value: { now: () => guardNow } });
+    },
+    presentation: {
+      load: ({ snapshot }) => {
+        snapshot.resolved.theme.revision = 79;
+      },
+    },
+  });
   attachLanguageControls(f.doc);
   const lobby = f.$('coop-language-select');
   const settings = f.$('coop-settings-language-select');
@@ -40,6 +50,7 @@ test('Team controller can change language in the lobby and Settings without star
   assert.equal(settings.value, 'uk');
   assert.equal(f.$('coop-menu').hidden, false);
   assert.equal(f.$('coop-overlay').hidden, true);
+  guardNow = 2000;
   f.$('coop-settings-open').click();
   f.$('coop-settings-tab-display').click();
   f.tick();
