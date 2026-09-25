@@ -15,6 +15,9 @@ bundles and the focused release-build fixture.
 The bounded resize/compression follow-up passed 48/48 focused adapter, editor-boundary and workshop
 tests, then 112/112 across those boundaries plus video inspection, mixed-media intake/review,
 portable video bundles and the focused release-build fixture.
+The orientation follow-up passed 50/50 focused cases and 114/114 across that expanded set. It adds
+an exact rotated-display policy check at the adapter and outer verification boundaries plus the
+guarded temporary-fixture generator route below.
 
 - Playback ranges validate positive in-bounds timing and retain the complete original.
 - Directional decoded-frame stepping requires browser presented-frame evidence and rejects an estimate-only
@@ -119,6 +122,39 @@ The built-in browser also completed the bounded resize/compression path using a 
 - result: the transformed-video download appeared, and the browser console had no warning or
   error.
 
+## Portrait-orientation browser inspection
+
+The guarded generator produced a temporary silent AVC MP4 under
+`.cache/video-poster/portrait-rotation-20260925-1/`; no fixture bytes are committed:
+
+- generator script SHA-256:
+  `b6656cae2476fb9733f080308a2bb44bd7cb6e2a7c9320dd0d60493d9a9f42f6`;
+- source: 223,097 bytes, SHA-256
+  `e6cee0779e441e6dd71b6b0c14eec2ba00eacebc0e915c6c3af4e6f53f865e08`, 4 seconds and zero
+  audio tracks;
+- native FFprobe 9.0.2 evidence: one AVC stream encoded at 640 × 360 with a 90-degree display
+  matrix;
+- expected browser display: 360 × 640 portrait;
+- expected Compact plan: 202 × 358 AVC at a 0.9 Mbit/s target.
+
+The generator recorded both FFmpeg commands, tool versions, exact source identity, authored facts
+and native matrix inspection in `fixture.json`. The built-in browser then completed the exact
+workshop flow:
+
+- browser inspection reported 360 × 640 portrait, 4 seconds and zero audio for the exact source;
+- Compact review derived 202 × 358 at a 0.9 Mbit/s target;
+- output: 159,517-byte AVC MP4, SHA-256
+  `1d2a620c2ae711cd775b2c08a14972540f57f51c012f7c8540f9fa05705e3f2b`, freshly decoded as 202 ×
+  358 and 4 seconds with zero audio;
+- observed whole-container average: 319,034 bit/s;
+- decoded visual boundary error: start `0.017472`, end `0.019686`;
+- result: the verified transformed-video download appeared and the browser warning/error log was
+  empty.
+
+This qualifies display-matrix input and physically portrait Compact output in the built-in browser.
+The exact source/output dimensions, authenticated AVC/zero-audio inventory and visual edges all
+passed independently; the native probe alone was not treated as browser evidence.
+
 ## Build note
 
 The focused release-build fixture passed 5/5 cases and authenticated the exact vendored module,
@@ -136,10 +172,10 @@ gate. That full-tree snapshot gate remains open; it must not be reported as a su
   probe and require their own recorded fixtures before any compatibility claim.
 - Add an independent decoded-audio timestamp and synchronization verifier before enabling audio;
   the current same-parser track inventory proves track absence only.
-- Verify orientation metadata, audio synchronization and target-browser playback on transformed
-  files.
-- Qualify the Balanced and Compact profiles with recorded landscape and portrait fixtures in every
-  supported browser; the automated boundary currently proves the policy and fail-closed checks.
+- Verify audio synchronization and target-browser playback on transformed files.
+- Repeat the rotated portrait Compact fixture in Firefox and Safari, and qualify Balanced with
+  recorded landscape and portrait fixtures in every supported browser. The built-in browser now
+  has recorded landscape and portrait Compact evidence.
 
 The broader phase remains incomplete while audio and cross-browser/orientation acceptance are open.
 Playback range and poster capture do not count as physical trimming, conversion, resize or
