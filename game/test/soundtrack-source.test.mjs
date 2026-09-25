@@ -170,3 +170,149 @@ test('the catalogue loader validates bounded version-local metadata and rejects 
     /direct HTTP/,
   );
 });
+
+const coreTrack = resolveCatalogueTrack({
+  ...track,
+  archiveId: 'qa.core-preview',
+  path: `objects/${track.asset.sha256}.mp3`,
+  policy: {
+    id: track.id,
+    sha256: track.asset.sha256,
+    webPlayback: 'allowed',
+    offlineCache: 'allowed',
+    redistribute: 'allowed',
+    modify: 'allowed',
+    gameplayVideo: 'allowed',
+    contentId: 'registered',
+  },
+});
+const coreCatalogue = {
+  ...catalogue,
+  format: 'revealline-soundtrack-catalogue.v2',
+  tracks: [coreTrack],
+};
+const coreRegistration = {
+  id: coreTrack.id,
+  sha256: coreTrack.asset.sha256,
+  bytes: coreTrack.asset.bytes,
+  path: `game/audio/soundtracks/${coreTrack.asset.sha256}.mp3`,
+};
+
+test('code-owned core audio honors local-only preparation and Installed only playback', async () => {
+  const urls = [];
+  let local = null;
+  const source = createSoundtrackSource({
+    catalogue: coreCatalogue,
+    bundled: [coreRegistration],
+    readLocal: () => local,
+    installedOnly: () => true,
+    baseURL: 'https://example.test/releases/v1/',
+    fetch: async (url) => {
+      urls.push(url);
+      return responseFor(body, url);
+    },
+  });
+  assert.equal(await source.readAsset(coreTrack.asset.sha256, { localOnly: true }), null);
+  assert.equal(urls.length, 0);
+  local = body;
+  assert.equal(await source.readAsset(coreTrack.asset.sha256, { localOnly: true }), body);
+  assert.equal(urls.length, 0);
+  local = null;
+  for (const options of [{}, { purpose: 'offline' }, { purpose: 'export' }]) {
+    const found = await source.readAsset(coreTrack.asset.sha256, options);
+    assert.deepEqual(Buffer.from(await found.arrayBuffer()), Buffer.from(await body.arrayBuffer()));
+  }
+  assert.equal(urls.length, 3);
+  assert.ok(
+    urls.every((url) => url === `https://example.test/releases/v1/${coreRegistration.path}`),
+  );
+});
+
+test('bundled registrations cannot redirect, rename, change bytes, duplicate or grant missing permissions', () => {
+  for (const changed of [
+    { id: 'builtin.catalog.renamed' },
+    { sha256: '0'.repeat(64) },
+    { bytes: coreRegistration.bytes + 1 },
+    { path: 'https://elsewhere.test/audio.mp3' },
+    { path: 'game/audio/soundtracks/../audio.mp3' },
+  ]) {
+    assert.throws(
+      () =>
+        createSoundtrackSource({
+          catalogue: coreCatalogue,
+          bundled: [{ ...coreRegistration, ...changed }],
+        }),
+      /bundled soundtrack|Bundled soundtrack/,
+    );
+  }
+  assert.throws(
+    () =>
+      createSoundtrackSource({
+        catalogue: coreCatalogue,
+        bundled: [coreRegistration, coreRegistration],
+      }),
+    /duplicate bundled/,
+  );
+  for (const permission of ['webPlayback', 'offlineCache', 'redistribute']) {
+    for (const value of ['denied', 'unknown'])
+      assert.throws(
+        () =>
+          createSoundtrackSource({
+            catalogue: {
+              ...coreCatalogue,
+              tracks: [{ ...coreTrack, policy: { ...coreTrack.policy, [permission]: value } }],
+            },
+            bundled: [coreRegistration],
+          }),
+        /offline and redistribution permission/,
+      );
+  }
+});
+
+test('bundled assets retain full-byte validation and cancellation', async () => {
+  const source = createSoundtrackSource({
+    catalogue: coreCatalogue,
+    bundled: [coreRegistration],
+    fetch: async (url) => responseFor(new Blob([new Uint8Array(body.size)]), url),
+  });
+  await assert.rejects(source.readAsset(coreTrack.asset.sha256));
+  let requests = 0;
+  const abortSource = createSoundtrackSource({
+    catalogue: coreCatalogue,
+    bundled: [coreRegistration],
+    fetch: async () => {
+      requests++;
+      throw new Error('Unexpected request');
+    },
+  });
+  const abort = new AbortController();
+  abort.abort();
+  await assert.rejects(abortSource.readAsset(coreTrack.asset.sha256, { signal: abort.signal }), {
+    name: 'AbortError',
+  });
+  assert.equal(requests, 0);
+});
+
+test('same-recording catalogue aliases cannot widen bundled playback, storage or redistribution permission', () => {
+  for (const permission of ['webPlayback', 'offlineCache', 'redistribute']) {
+    for (const value of ['denied', 'unknown']) {
+      const alias = {
+        ...coreTrack,
+        id: 'builtin.catalog.restricted-alias',
+        policy: {
+          ...coreTrack.policy,
+          id: 'builtin.catalog.restricted-alias',
+          [permission]: value,
+        },
+      };
+      assert.throws(
+        () =>
+          createSoundtrackSource({
+            catalogue: { ...coreCatalogue, tracks: [coreTrack, alias] },
+            bundled: [coreRegistration],
+          }),
+        /offline and redistribution permission/,
+      );
+    }
+  }
+});
