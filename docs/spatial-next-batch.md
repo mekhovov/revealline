@@ -1,6 +1,6 @@
 # Ukrainian cultural spatial triptych
 
-Status: source-ready authored Solo/Versus successor; human cultural and balance review pending. No package version, production asset, tag, deployment or release metadata changes are included.
+Status: v0.113.0 release candidate on accepted main `4e9022ca0892185b17cf527f646886730ec68c22`; human cultural and balance review pending. The candidate changes authored mission geometry and version metadata, while final tag, release assets and Pages evidence remain publisher gates.
 
 This bounded batch changes exactly three existing mission identities: **Stepping stones**, **Return pocket** and **Neutral ground**. The registered `whole-spatial-v10` route has its own session and profile keys, while `whole-spatial-v9` remains available as the unchanged historical edition. Mission, campaign and pack order stay authored; only the three owning campaigns and their packs receive the new source revision.
 
@@ -35,6 +35,8 @@ Those PRs remain candidate-only and allocate no authored route/profile registry 
 Focused checks cover copy-on-write preservation, exact three-identity mutation, owning dependency revisions, cultural metadata/source URLs, collision-only actor parity, unchanged terrain and speed rules, topology, idle safety over multiple seeds, two documented first-closure routes across Gentle/Standard/Expert and both controls over multiple seeds, Solo/Versus equality, replay determinism, route/profile isolation, lazy loading, Studio edition selection and authored/default navigation.
 
 Automation does not establish cultural appropriateness, visual resemblance at play scale, enjoyment, final coverage pacing, complete mission clears, physical keyboard/controller/touch feel, or compact-display legibility. A Ukrainian cultural reviewer and human playtesters should review those before publisher release qualification.
+
+The release reconciliation preserves v0.112.0 Couch quick start and FPV presentation changes. Its focused gate reruns the spatial source, selector, Studio/default-route, Solo/Versus adapters, Couch navigation and quick-start, controller routing and Team-host compatibility checks. Long repository-wide suites remain explicitly waived under the temporary fast-release policy; a waiver is not a passing result.
 
 ## Follow-on disposition (outside this PR)
 

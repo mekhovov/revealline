@@ -234,7 +234,7 @@ test('switching from a running default Journey to Legacy has an explicit Stay or
   assert.equal(target.origin + target.pathname, 'http://localhost/game/');
   assert.equal(target.searchParams.get('journey'), 'legacy');
   assert.equal(target.searchParams.get('library-mission'), card.dataset.missionId);
-  assert(storage.getItem('revealline.suspended.journey-whole-spatial.v9'));
+  assert(storage.getItem('revealline.suspended.journey-whole-spatial.v10'));
   assert.deepEqual(p.errors, []);
 });
 
