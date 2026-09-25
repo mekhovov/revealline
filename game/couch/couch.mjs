@@ -974,7 +974,9 @@ try {
     contentBusy = false;
     contentReady = retainedResult;
     contentError = retainedResult
-      ? `${continuationAction()} picture loading cancelled. Results are kept. Choose ${continuationAction()} when you are ready.`
+      ? t('interface:couch.continuationPictureLoadingCancelled', {
+          action: continuationAction(),
+        })
       : t('interface:pictureLoadingCancelledRetryWhenYouAreReady');
     if (installedStatus === 'Checking installed chapters…')
       installedStatus = t('interface:installedChapterCheckCancelledRefreshWhenReady');

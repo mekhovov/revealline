@@ -10,6 +10,8 @@
   associations. Revisions 82 and 83 join the retained 58–81 history.
 - The historical-import policy remains finite at 27 exact revisions: current 84
   plus retained 58–83.
+- The maintained Couch continuation cancellation status now uses the release's
+  English and Ukrainian catalogs instead of an uncatalogued English sentence.
 
 ## Resulting behavior
 
@@ -30,3 +32,4 @@ and sampling remain unchanged.
   checks on a temporary composition of that branch with this correction: 3
   passed.
 - Scoped ESLint, Prettier, and `git diff --check` passed.
+- Direct localization and retained-result cancellation contracts passed.
