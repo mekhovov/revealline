@@ -8,6 +8,7 @@ import { contentText } from './i18n/content.mjs';
 import { flightPictureFailure, flightPictureStatus } from './ui/flight-picture-copy.mjs';
 import { profileWriterMessage } from './ui/profile-writer-copy.mjs';
 import { milestoneName, achievementName, achievementDescription } from './ui/reward-copy.mjs';
+import { soloControllerFlightHint } from './ui/controller-flight-copy.mjs';
 import {
   t,
   localizedText,
@@ -2152,7 +2153,7 @@ try {
       value3: b.menu,
       value4: library.preferences.controllerBindings
         ? ''
-        : ' Shoulders / triggers: previous / next · West: confirm · North: back.',
+        : ' ' + t('common:controls.defaultMenuShortcuts'),
     });
   }
   function manualSupplyAvailable() {
@@ -2174,9 +2175,12 @@ try {
     );
   }
   function controllerFlightHint() {
-    const b = controllerLabels.flight;
-    const actions = arcadeActionCapabilities(run?.level);
-    return `Stick / D-pad: steer · ${b.ability}: ${actions.manualAbility ? 'ability' : 'pause'} · ${actions.manualPickup ? (manualSupplyAvailable() ? `${b.pickup}: supply · ` : '') : `${b.pickup}: field guide · `}${b.hangar}: ${craftSwitchAvailable() ? 'hangar' : 'missions'} · ${b.stop}: pause · ${actions.manualBoost ? `${b.boost}: boost · ` : ''}${b.pause}: pause. Lift the stick to keep flying.`;
+    return soloControllerFlightHint({
+      labels: controllerLabels.flight,
+      actions: arcadeActionCapabilities(run?.level),
+      manualSupply: manualSupplyAvailable(),
+      craftSwitch: craftSwitchAvailable(),
+    });
   }
   function refreshControllerPrompts() {
     controllerDeviceId = controllerFrame?.assigned?.id ?? controllerDeviceId;
@@ -2184,17 +2188,22 @@ try {
       library.preferences.controllerBindings,
       controllerDeviceId,
     );
-    const b = controllerLabels.flight;
-    const directions = `Up ${b.up}, down ${b.down}, left ${b.left}, right ${b.right}; ${controllerStickLabel(library.preferences.controllerBindings, 'flight')}.`;
-    localizedText(
-      $('controller-help'),
-      () =>
-        `Connect a controller and release its controls once. Both sticks work with the default layout. ${directions} ${controllerFlightHint()} ${controllerMenuHint()} Confirm a select or slider to edit; confirm again to apply or go back to cancel. Change your layout in Settings → Controller controls. Steam Deck: use a Gamepad layout for your browser in Steam Input. The system/Home button belongs to your device.`,
-    );
-    localizedText(
-      $('controller-navigation-help'),
-      () =>
-        `${controllerMenuHint()} Confirm a select or slider to edit; confirm again to apply or go back to cancel.`,
+    localizedText($('controller-help'), () => {
+      const b = controllerLabels.flight;
+      return t('gameplay:connectAControllerAndReleaseItsControlsOnceBothSticks', {
+        value1: t('gameplay:upDownLeftRight', {
+          value1: b.up,
+          value2: b.down,
+          value3: b.left,
+          value4: b.right,
+          value5: controllerStickLabel(library.preferences.controllerBindings, 'flight'),
+        }),
+        value2: controllerFlightHint(),
+        value3: controllerMenuHint(),
+      });
+    });
+    localizedText($('controller-navigation-help'), () =>
+      t('gameplay:controller.menuEditingHelp', { navigation: controllerMenuHint() }),
     );
     localizedText($('controller-ui-hint'), () =>
       controllerScope() === 'flight' ? controllerFlightHint() : controllerMenuHint(),

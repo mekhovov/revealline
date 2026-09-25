@@ -430,3 +430,28 @@ stack when their container is narrow, and appearance pictures stack above text b
 304-pixel dialog with matching scroll width; the reading controls no longer split labels
 inside words. The viewport override was reset. The distribution/native figures above
 predate this Collection batch.
+
+## Controller instructions and retained drafts
+
+Solo controller help now resolves complete action instructions for the current Arcade or
+Tactical capabilities, including menu shortcuts and navigation help. Shared button/stick
+presentation covers unknown buttons, custom axis pairs and inversion labels while keeping
+physical mappings and sampling unchanged. Controller editor captions, choices, summaries,
+threshold formatting and accepted status messages update in place. Option producers retain
+the accepted glyph family after Apply/Cancel instead of dereferencing a discarded draft.
+The status presenter owns its label without an obsolete empty parent-text binding.
+
+All 53 focused binding, editor, presentation and real paused-Solo tests pass, including
+28 editor cases. Unsaved field values, option nodes, focus and pending Apply ownership
+survive switches; hidden fields remain safe after Cancel and Apply. Browser checks confirm
+both directions in open help and an unsaved PlayStation/axes 2–3 draft, retaining the
+expanded stick section and focused vertical-axis selector. The test draft was cancelled,
+and switching still works afterwards. No controller preferences were applied in the browser.
+
+Full validation, lint and formatting pass at this checkpoint; the final editor changes
+also pass their targeted lint/format checks. Catalog checks pass with 7,320 messages / 5,887 referenced keys. The broader
+equipment/device regression passes 44 of 47 cases; three craft-switch cases time out
+waiting five seconds for initial picture loading. Their isolated rerun is still running. Generic host/validation diagnostic details
+still require presentation review; this is not a claim that every controller error is
+translated. Distribution/native artifacts above predate the Collection and controller
+batches. A fresh fetch remains zero commits behind main `7c6f84a47`.
