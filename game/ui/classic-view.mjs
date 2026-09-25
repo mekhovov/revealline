@@ -1,6 +1,11 @@
 import { CELL, FIXED_DT } from '../core/registry.mjs';
 import { TIMED_BONUS_VERSIONS } from '../core/timed-bonuses.mjs';
-import { drawPresentedActor, PRESENTATION_INK, PRESENTATION_PLATE } from './actor-presentation.mjs';
+import {
+  drawPresentedActor,
+  drawTrailImpactFront,
+  PRESENTATION_INK,
+  PRESENTATION_PLATE,
+} from './actor-presentation.mjs';
 import { drawPresentationImage } from './presentation-draw-image.mjs';
 import { traceContentActor } from '../content-design/actor-marker.mjs';
 import { enemyCatalogRecord } from '../enemy-catalog.mjs';
@@ -803,22 +808,8 @@ export function drawEnemyPressure(
 }
 
 /** Front locations belong to the core. No interpolation, extrapolation or cosmetic hazard radius. */
-export function drawLineImpacts(ctx, view, { screenScale = 1 } = {}) {
+export function drawLineImpacts(ctx, view, { screenScale = 1, time = 0, reduced = false } = {}) {
   if (!view?.lineImpacts?.length) return;
-  const unit = Math.min(2.2, Math.max(1, 0.9 / Math.max(0.1, screenScale)));
-  ctx.save();
-  for (const front of view.lineImpacts) {
-    ctx.save();
-    ctx.translate(front.x * 16, front.y * 16);
-    ctx.scale(unit, unit);
-    ctx.fillStyle = '#101320';
-    ctx.fillRect(-4, -4, 8, 8);
-    ctx.fillStyle = front.direction === 1 ? '#ff815c' : '#ffc56d';
-    ctx.fillRect(-3, -1, 6, 2);
-    ctx.fillRect(-1, -3, 2, 6);
-    ctx.fillStyle = '#fff3c4';
-    ctx.fillRect(-1, -1, 2, 2);
-    ctx.restore();
-  }
-  ctx.restore();
+  for (const front of view.lineImpacts)
+    drawTrailImpactFront(ctx, front, { screenScale, time, reduced });
 }

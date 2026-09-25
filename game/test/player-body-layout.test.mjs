@@ -157,6 +157,21 @@ function poseFor(
   };
 }
 
+test('gameplay player bodies can suppress detached procedural rotor overlays', () => {
+  const pose = poseFor(390, { width: 64, height: 64 }),
+    withRotors = surface(),
+    cleanBody = surface();
+  paintCharacter(withRotors.ctx, { ...pose, x: 12, y: 8 });
+  paintCharacter(cleanBody.ctx, { ...pose, x: 12, y: 8, showRotors: false });
+  assert.ok(withRotors.calls.some((call) => call.op === 'arc'));
+  assert.equal(
+    cleanBody.calls.some((call) => call.op === 'arc'),
+    false,
+    'the approved body remains without external corner-blade circles',
+  );
+  assert.equal(cleanBody.calls.filter((call) => call.op === 'drawImage').length, 1);
+});
+
 for (const width of [240, 320, 240, 514])
   for (const [treatment, image] of [
     ['compact', { width: 64, height: 48 }],

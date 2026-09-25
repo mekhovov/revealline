@@ -1,0 +1,70 @@
+{
+  "format": "revealline-archive-public-audit-package.v1",
+  "archiveId": "archive-77",
+  "version": "v0.111.1",
+  "mergeCommit": "22865e8c736ef25f611ceed09fcd06e5e80a4730",
+  "exactMainRun": 36104542612,
+  "deploymentId": 6655347572,
+  "files": [
+    {
+      "name": "acceptance-summary.json",
+      "bytes": 3101,
+      "sha256": "e705ccee79eb08d465263910c415adf864e2a9c8835406055497df4a1c380e02"
+    },
+    {
+      "name": "expected-inventory.json",
+      "bytes": 235084,
+      "sha256": "f8978b264ee075e402c42a7bae8b17a8827c70c1deb6e345a4104e1df459ddd7"
+    },
+    {
+      "name": "input-authority.json",
+      "bytes": 3325,
+      "sha256": "8c4439fbb1cc928323cfc7be9dcc27abdec1a6a89afdcba4b1f1290f5b121781"
+    },
+    {
+      "name": "preserved-release-original.json",
+      "bytes": 17124,
+      "sha256": "5685260974b4c4ec5116b4e8b2eec55aa03ab293201b7911229debc069a02bd1"
+    },
+    {
+      "name": "preserved-source-commit-original.json",
+      "bytes": 2686,
+      "sha256": "36322f16b6dce0e166d532b3439564b2377cec82bff308b6ff1034fa4656dd7a"
+    },
+    {
+      "name": "preserved-tag-original.json",
+      "bytes": 726,
+      "sha256": "e9d92990df420c341d8325f5a83281b7bac0617f43e9dd999e77016fef535e67"
+    },
+    {
+      "name": "preserved-tag-ref-original.json",
+      "bytes": 340,
+      "sha256": "afbc78b2c2240f0225da1c260002606aa94eaeb1d67270338cef58d1e094e288"
+    },
+    {
+      "name": "public-http-audit.json",
+      "bytes": 823,
+      "sha256": "b33e75541959d9b5f9fde5b2e0d1b3e2a8c404305996586992fe5135e0d43513"
+    },
+    {
+      "name": "receipt.json",
+      "bytes": 1093,
+      "sha256": "4170aa574ef7179e77a6b91f5e1414f133e8982c29e4a0b1d8ae2381a687da39"
+    },
+    {
+      "name": "reviewed-release-descriptors.json",
+      "bytes": 1690,
+      "sha256": "80dbf587554a0bf7ca9b9e8111cdf04d2c32da9c4f64b25b9739389850db8897"
+    },
+    {
+      "name": "source-lock.json",
+      "bytes": 1629,
+      "sha256": "3b5f7a307d34ac2a5fbf3c2a9f63400553156374bf7df7b93ce0a19f6c6ad561"
+    },
+    {
+      "name": "zip-receipt-v0.111.1.json",
+      "bytes": 410,
+      "sha256": "5c98b0c408f919066d8a103654838f63ad63a2e130333fda7e5fc6efe0e61ab9"
+    }
+  ]
+}

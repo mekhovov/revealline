@@ -253,7 +253,11 @@ for (const interruption of ['Tab to Help', 'pointer to Help', 'Help then BODY'])
     page.$('race-start').focus();
     const starting = action(page.$('race-start'));
     await settle(held.entered, 'Initial installed confirmation must enter its real lock.');
-    assert.equal(page.doc.activeElement === page.$('race-picture-cancel'), true);
+    assert.equal(
+      page.doc.activeElement === page.$('race-start'),
+      true,
+      'Initial preparation keeps focus on Start so a held Confirm cannot become Cancel.',
+    );
     const help = page.$('race-help');
     if (interruption === 'Tab to Help') {
       // Exercise the host's actual Tab routing, without selecting its target for it.
@@ -401,7 +405,11 @@ test('interrupted async Start confirmation stays ready after blur and return unt
   page.$('race-start').focus();
   const starting = action(page.$('race-start'));
   await entered.promise;
-  assert.equal(page.doc.activeElement === page.$('race-picture-cancel'), true);
+  assert.equal(
+    page.doc.activeElement === page.$('race-start'),
+    true,
+    'Initial preparation keeps focus on Start until another deliberate action owns it.',
+  );
   page.doc.focused = false;
   page.win.emit('blur');
   page.doc.body.focus();
@@ -467,7 +475,8 @@ test('cancelled Start confirmation cannot overwrite Retry for the same untouched
   const starting = action(page.$('race-start'));
   await oldEntered.promise;
   assert.equal(page.$('race-picture-cancel').hidden, false);
-  assert.equal(page.doc.activeElement === page.$('race-picture-cancel'), true);
+  assert.equal(page.doc.activeElement === page.$('race-start'), true);
+  page.$('race-picture-cancel').focus();
   page.$('race-picture-cancel').click();
   assert.equal(page.doc.activeElement === page.$('race-chapter-retry'), true);
   f.model.onDecode = async () => {
@@ -858,8 +867,9 @@ test('actual Couch selection shares the exact installed image, keeps separate mo
   await action(refresh);
   assert.equal(page.doc.activeElement, refresh);
   assert.equal(page.$('race-start').disabled, false);
-  // A real decode is left pending; Back must cancel, preserve a disabled Start,
-  // and a later Retry must return focus without auto-starting the race.
+  // A real replacement decode is left pending. Back must cancel it while the
+  // previously accepted boards remain playable; Retry may still re-check that
+  // accepted picture without auto-starting the race.
   let finish;
   f.model.onDecode = async () => {
     if (!finish)
@@ -876,7 +886,7 @@ test('actual Couch selection shares the exact installed image, keeps separate mo
   assert.equal(page.$('race-preparation').closest('[inert]'), null);
   assert.equal(page.$('race-setup-back').disabled, false);
   page.$('race-setup-back').click();
-  assert.equal(page.$('race-start').disabled, true);
+  assert.equal(page.$('race-start').disabled, false);
   assert.match(page.$('race-message').textContent, /cancelled/);
   assert.equal(page.$('race-preparation').hidden, true);
   finish();
@@ -979,6 +989,23 @@ test('main-lobby Back cancels an explicitly pending Retry and never enables Star
   const installed = page
     .$('race-level')
     .options.find((option) => option.value.startsWith('installed/'));
+  page.$('race-focus').click();
+  page.$('race-level').value = installed.value;
+  await action(page.$('race-level'), 'change');
+  page.$('race-setup-back').click();
+  await settle(() => !page.$('race-start').disabled, 'installed setup did not become ready');
+  // Establish a real Retry state without invalidating the accepted installed
+  // row: cancel its confirmation while the installed authority lock is held.
+  const held = holdInitialConfirmation(t, f);
+  page.$('race-start').focus();
+  const starting = action(page.$('race-start'));
+  await settle(held.entered, 'installed Start confirmation did not request its authority lock');
+  page.$('race-picture-cancel').focus();
+  page.$('race-picture-cancel').click();
+  held.gate.resolve();
+  await starting;
+  assert.equal(page.$('race-chapter-retry').hidden, false);
+  assert.equal(page.$('race-start').disabled, true);
   let finish;
   f.model.onDecode = async () => {
     if (!finish)
@@ -986,14 +1013,6 @@ test('main-lobby Back cancels an explicitly pending Retry and never enables Star
         finish = resolve;
       });
   };
-  page.$('race-focus').click();
-  page.$('race-level').value = installed.value;
-  await action(page.$('race-level'), 'change');
-  await settle(() => finish, 'setup decode did not start');
-  page.$('race-setup-back').click();
-  finish();
-  assert.equal(page.$('race-chapter-retry').hidden, false);
-  finish = null;
   page.$('race-chapter-retry').focus();
   const retry = action(page.$('race-chapter-retry'));
   await settle(() => finish, 'lobby Retry decode did not start');
@@ -1230,7 +1249,7 @@ for (const format of ['single', 'first-to-two']) {
     assert.equal(page.$('race-start').disabled, false);
     assert.equal(
       page.$('race-message').textContent,
-      `The ${continuation.toLowerCase()} picture could not be prepared. Results are kept. Choose ${continuation} to retry.`,
+      `The ${continuation.toLowerCase()} picture or actors could not be prepared. Both boards are kept. Choose ${continuation} to retry.`,
     );
     assert.equal(diagnostics.length, 1);
     assert.equal(diagnostics[0][0], 'Next picture preparation failed.');
@@ -1285,7 +1304,7 @@ for (const format of ['single', 'first-to-two']) {
     assert.equal(page.$('race-start').disabled, false);
     assert.equal(
       page.$('race-message').textContent,
-      `The ${continuation.toLowerCase()} picture could not be prepared. Results are kept. Choose ${continuation} to retry.`,
+      `The ${continuation.toLowerCase()} picture or actors could not be prepared. Both boards are kept. Choose ${continuation} to retry.`,
     );
     assert.equal(diagnostics.length, 1);
     assert.equal(diagnostics[0][0], 'Next picture preparation failed.');
