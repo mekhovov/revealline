@@ -157,5 +157,10 @@
   "progress.chapters_one": "{{completed}} / {{total}} chapter",
   "progress.chapters_other": "{{completed}} / {{total}} chapters",
   "progress.ticks_one": "{{completed}} / {{total}} tick",
-  "progress.ticks_other": "{{completed}} / {{total}} ticks"
+  "progress.ticks_other": "{{completed}} / {{total}} ticks",
+  "counts.lives_one": "{{count}} life",
+  "counts.lives_other": "{{count}} lives",
+  "counts.enemies_one": "{{count}} enemy",
+  "counts.enemies_other": "{{count}} enemies",
+  "units.cellsPerSecond": "{{speed}} cells/s"
 }
