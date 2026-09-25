@@ -52,12 +52,14 @@ jobs:
             }
 
   stage:
-    # A release title allocates a product slot. Bounded maintenance paths are
-    # admitted without spending that slot; the label remains an explicit
-    # escape hatch for an independently reviewed exceptional change.
+    # A release title or an explicit version milestone allocates a product
+    # slot. Bounded maintenance paths are admitted without spending that slot;
+    # the label remains an explicit escape hatch for an independently reviewed
+    # exceptional change.
     if: >-
       !github.event.pull_request.draft &&
       !startsWith(github.event.pull_request.title, 'Release v') &&
+      github.event.pull_request.milestone == null &&
       !contains(github.event.pull_request.labels.*.name, 'release-train-approved')
     runs-on: ubuntu-latest
     steps:
