@@ -25,7 +25,7 @@
     <link rel="stylesheet" href="../ui/quick-music-controls.css" />
   </head>
   <body class="field-kit field-kit-support" data-field-kit-page="relay-rescue">
-    <div data-language-control></div>
+    <div data-language-control data-language-launch></div>
 
     <main id="coop-app">
       <header class="masthead">
@@ -139,6 +139,7 @@
               </button>
             </div>
           </div>
+          <div id="coop-language" data-language-control></div>
           <details id="coop-optional-setup" class="optional-setup">
             <summary id="coop-optional-setup-toggle">Team options</summary>
             <p id="coop-advanced-note" class="setup-note"></p>
@@ -1078,6 +1079,7 @@
           aria-labelledby="coop-settings-tab-display"
         >
           <h3 data-i18n="interface:appearanceAccessibility">Appearance &amp; accessibility</h3>
+          <div id="coop-settings-language" data-language-control></div>
           <label for="coop-text-face" data-i18n="interface:textStyle">Text style</label>
           <select id="coop-text-face">
             <option value="pixel" data-i18n="interface:themeFont">Theme font</option>
