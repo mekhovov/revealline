@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { Document } from './helpers/couch-dom.mjs';
 import { createOperationStatus } from '../ui/operation-status.mjs';
+import { getLocale, setLocale, localizedMessage, t } from '../i18n/index.mjs';
 
 function boundary(options) {
   const doc = new Document();
@@ -11,6 +12,31 @@ function boundary(options) {
   const presenter = createOperationStatus(target, options);
   return { doc, target, presenter, label: target.querySelector('.operation-status-label') };
 }
+
+test('accepted status producers translate live while obsolete leases stay fenced', (context) => {
+  const locale = getLocale();
+  context.after(() => setLocale(locale, { persist: false }));
+  setLocale('en', { persist: false });
+  const { presenter, target, label, doc } = boundary();
+  context.after(() => presenter.dispose());
+  const old = presenter.begin({
+    message: localizedMessage('interface:teamPictureReadyStartRemainsASeparateAction'),
+  });
+  const current = presenter.begin({
+    message: () => t('interface:teamPictureIsReadyForThisAttempt'),
+  });
+  const english = label.textContent;
+  setLocale('uk', { persist: false });
+  assert.notEqual(label.textContent, english);
+  assert.equal(label.textContent, t('interface:teamPictureIsReadyForThisAttempt'));
+  assert.equal(old.finish({ message: 'Obsolete completion' }), false);
+  assert.equal(target.dataset.state, 'busy');
+  assert.equal(doc.activeElement, doc.body);
+  current.finish({ message: localizedMessage('interface:teamPictureReady') });
+  setLocale('en', { persist: false });
+  assert.equal(label.textContent, t('interface:teamPictureReady'));
+  assert.equal(target.dataset.state, 'ready');
+});
 
 test('a newer operation retains its status when an older completion or finally arrives', () => {
   const { presenter, target, label, doc } = boundary();

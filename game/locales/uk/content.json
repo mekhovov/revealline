@@ -1043,5 +1043,8 @@
   "journey.twoLivesEnemies10FasterPlayerHandlingIsUnchanged": "Два життя, вороги на 10% швидші. Керування апаратом не змінюється.",
   "journey.fiveLivesBaseEnemySpeed25LongerAttackRestsNoFailingCountdown": "П’ять життів, базова швидкість ворогів, перерви між атаками на 25% довші, без поразки через завершення відліку.",
   "journey.threeLivesEnemies40FasterThanBase15ShorterAttackRests": "Три життя, вороги на 40% швидші за базову швидкість, перерви між атаками на 15% коротші.",
-  "journey.twoLivesEnemies75FasterThanBase35ShorterAttackRests": "Два життя, вороги на 75% швидші за базову швидкість, перерви між атаками на 35% коротші."
+  "journey.twoLivesEnemies75FasterThanBase35ShorterAttackRests": "Два життя, вороги на 75% швидші за базову швидкість, перерви між атаками на 35% коротші.",
+  "team.starter.name": "Рятувальний ретранслятор",
+  "team.firstConnection.name": "Перше з’єднання",
+  "team.relayYard.name": "Двір ретрансляторів"
 }
