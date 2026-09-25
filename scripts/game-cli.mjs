@@ -619,7 +619,7 @@ async function addOfflineEntries(
     .filter((entry) => optional.has(entry.name))
     .map((entry) => {
       const pack = JSON.parse(entry.bytes);
-      return { path: entry.name, id: pack.id, name: pack.name };
+      return { path: entry.name, id: pack.id, name: pack.name, sha256: sha256(entry.bytes) };
     });
   const manifest = {
     id: './',

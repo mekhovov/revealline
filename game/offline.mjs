@@ -14,8 +14,8 @@ function optionalNote(config) {
     : '';
   return packNote + artNote;
 }
-function withOptionalNote(config, summary) {
-  return { summary, message: summary + optionalNote(config) };
+function withOptionalNote(config, summary, messageCode) {
+  return { summary, message: summary + optionalNote(config), messageCode };
 }
 function configFromPage(documentRef = globalThis.document, locationRef = globalThis.location) {
   const marker = documentRef?.querySelector(MARKER)?.content;
@@ -75,6 +75,7 @@ export function offlineAvailability({
     return {
       available: false,
       bundled: true,
+      messageCode: 'bundled',
       reason:
         'This app includes its game files for offline play. No additional download is needed. Export a complete backup to protect your saved collection.',
     };
@@ -82,12 +83,14 @@ export function offlineAvailability({
   if (!config)
     return {
       available: false,
+      messageCode: 'development',
       reason:
         'Offline preparation is available in a packaged release. The live development page keeps using fresh files.',
     };
   if (!secure || !navigatorRef?.serviceWorker)
     return {
       available: false,
+      messageCode: 'unsupported',
       reason: 'Offline play needs a browser with service workers on HTTPS or localhost.',
     };
   return {
@@ -95,6 +98,8 @@ export function offlineAvailability({
     version: config.version,
     buildId: config.buildId,
     scope: config.scope,
+    optionalPacks: config.optionalPacks ?? [],
+    optionalArtwork: config.optionalArtwork ?? null,
     ...(optionalNote(config) ? { note: optionalNote(config).trim() } : {}),
   };
 }
@@ -107,6 +112,9 @@ const phaseMessages = {
   saving: 'Saving verified core files on this device…',
   verifying: 'Verifying every saved core file…',
 };
+function offlineError(code, message) {
+  return Object.assign(new Error(message), { offlineCode: code });
+}
 function abortError() {
   return new DOMException(
     'Stopped waiting. Shared offline preparation can continue.',
@@ -141,6 +149,7 @@ function unfinished(worker, latest) {
   const running = worker.state === 'installing';
   return {
     status: running ? 'still-running' : 'unconfirmed',
+    messageCode: running ? 'stillRunning' : 'unconfirmed',
     stage: latest?.stage ?? 'connecting',
     progress: latest?.progress ?? null,
     message: running
@@ -198,12 +207,18 @@ function requestReport(worker, registration, config, options) {
       if (worker.state === 'redundant')
         finish(
           null,
-          new Error('Offline download failed or the browser could not save every file.'),
+          offlineError(
+            'downloadFailed',
+            'Offline download failed or the browser could not save every file.',
+          ),
         );
       else if (!workerMatches(worker, registration, config))
         finish(
           null,
-          new Error('Offline worker changed. Reopen this version online and try again.'),
+          offlineError(
+            'workerChanged',
+            'Offline worker changed. Reopen this version online and try again.',
+          ),
         );
       else if (terminal && worker.state !== 'installing') finish(terminal);
     };
@@ -221,7 +236,10 @@ function requestReport(worker, registration, config, options) {
       if (!workerMatches(worker, registration, config)) {
         finish(
           null,
-          new Error('Offline worker changed. Reopen this version online and try again.'),
+          offlineError(
+            'workerChanged',
+            'Offline worker changed. Reopen this version online and try again.',
+          ),
         );
         return;
       }
@@ -231,6 +249,7 @@ function requestReport(worker, registration, config, options) {
       ) {
         finish({
           status: 'not-ready',
+          messageCode: 'differentBuild',
           message:
             'Cached worker belongs to a different build. Reconnect and prepare this version again.',
         });
@@ -254,7 +273,7 @@ function requestReport(worker, registration, config, options) {
           ...report,
           status: preparing ? 'preparing' : 'checking',
           progress,
-          ...withOptionalNote(config, phaseMessages[report.stage]),
+          ...withOptionalNote(config, phaseMessages[report.stage], report.stage),
         };
         // Duplicate snapshots cannot keep a dead operation alive indefinitely.
         const advanced =
@@ -270,7 +289,11 @@ function requestReport(worker, registration, config, options) {
       if (streaming && report.kind !== 'terminal') return;
       if (!['ready', 'not-ready', 'error'].includes(report.status)) return;
       if (report.status === 'ready' && report.buildId !== config.buildId) {
-        finish({ status: 'not-ready', message: 'Offline report could not confirm this build.' });
+        finish({
+          status: 'not-ready',
+          messageCode: 'unconfirmedBuild',
+          message: 'Offline report could not confirm this build.',
+        });
         return;
       }
       if (report.status === 'ready' && worker.state === 'installing') {
@@ -316,7 +339,7 @@ function environment(options) {
 }
 function requireConfig(env) {
   const available = offlineAvailability(env);
-  if (!available.available) throw new Error(available.reason);
+  if (!available.available) throw offlineError(available.messageCode, available.reason);
   return configFromPage(env.documentRef, env.locationRef);
 }
 /** The caller must connect this function to a deliberate player action. No startup side effects.
@@ -331,7 +354,7 @@ export async function prepareOffline(options = {}) {
     status: 'preparing',
     stage: 'connecting',
     progress: null,
-    ...withOptionalNote(config, phaseMessages.connecting),
+    ...withOptionalNote(config, phaseMessages.connecting, 'connecting'),
   });
   const registration = await observePromise(
     env.navigatorRef.serviceWorker.register(config.worker, {
@@ -343,7 +366,10 @@ export async function prepareOffline(options = {}) {
   throwIfAborted(options.signal);
   const worker = selectedWorker(registration);
   if (!worker || !workerMatches(worker, registration, config))
-    throw new Error('Offline worker does not match this version. Reopen it online and try again.');
+    throw offlineError(
+      'workerMismatch',
+      'Offline worker does not match this version. Reopen it online and try again.',
+    );
   const report = await requestReport(worker, registration, config, {
     ...options,
     onStatus: status,
@@ -355,7 +381,8 @@ export async function prepareOffline(options = {}) {
     return report;
   }
   if (report.status !== 'ready' || report.buildId !== config.buildId)
-    throw new Error(
+    throw offlineError(
+      report.messageCode ?? 'verificationFailed',
       report.message ?? 'Offline files could not be verified. Reconnect and try again.',
     );
   const waiting = registration.waiting === worker || worker.state === 'installed';
@@ -367,6 +394,7 @@ export async function prepareOffline(options = {}) {
       waiting
         ? 'Update saved. Close all tabs of this version to use it; your current game continues unchanged.'
         : 'Offline files verified. This version can open without a connection while the browser retains its storage.',
+      waiting ? 'waiting' : 'ready',
     ),
   };
   status(result);
@@ -383,17 +411,26 @@ export async function checkOffline(options = {}) {
     stage: 'verifying',
     progress: null,
     message: phaseMessages.verifying,
+    messageCode: 'verifying',
   });
   const registration = await observePromise(registered(config, env.navigatorRef), options.signal);
   throwIfAborted(options.signal);
   const worker = selectedWorker(registration);
   if (!worker) {
-    const result = { status: 'not-ready', message: 'Prepare offline play first.', verified: 0 };
+    const result = {
+      status: 'not-ready',
+      messageCode: 'prepareFirst',
+      message: 'Prepare offline play first.',
+      verified: 0,
+    };
     status(result);
     return result;
   }
   if (!workerMatches(worker, registration, config))
-    throw new Error('Offline worker does not match this version. Reopen it online and try again.');
+    throw offlineError(
+      'workerMismatch',
+      'Offline worker does not match this version. Reopen it online and try again.',
+    );
   const report = await requestReport(worker, registration, config, {
     ...options,
     onStatus: status,
@@ -412,6 +449,7 @@ export async function checkOffline(options = {}) {
             waiting
               ? 'Update saved. Close all tabs of this version to use it; your current game continues unchanged.'
               : report.message || 'Core offline files verified.',
+            waiting ? 'waiting' : 'coreVerified',
           ),
         }
       : {}),

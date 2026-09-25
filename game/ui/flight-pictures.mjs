@@ -1,4 +1,5 @@
 import { t } from '../i18n/index.mjs';
+import { flightPictureFailure } from './flight-picture-copy.mjs';
 import {
   createPresentationPins,
   snapshotPresentationPins,
@@ -109,7 +110,11 @@ export function createFlightPictures({
       }
       let media;
       if (!pins) {
-        report({ stage: 'reading', message: t('interface:readingThisFlightSPictureChoices') });
+        report({
+          stage: 'reading',
+          message: t('interface:readingThisFlightSPictureChoices'),
+          messageKey: 'interface:readingThisFlightSPictureChoices',
+        });
         media = await readMedia({ signal: controller.signal });
         check();
         let selection = {
@@ -124,6 +129,7 @@ export function createFlightPictures({
           report({
             stage: 'preparing',
             message: t('interface:preparingThisFlightSOriginalPicture'),
+            messageKey: 'interface:preparingThisFlightSOriginalPicture',
           });
           const prepared = await prepareSelection({
             media,
@@ -144,6 +150,7 @@ export function createFlightPictures({
         report({
           stage: 'verifying',
           message: t('interface:checkingThisFlightSExactPictureBinding'),
+          messageKey: 'interface:checkingThisFlightSExactPictureBinding',
         });
         const selected = selectPins
           ? await selectPins({ media, selection, explicitLegacy, signal: controller.signal })
@@ -172,7 +179,11 @@ export function createFlightPictures({
       );
       if (!pin) throw new Error(t('interface:thisSavedAttemptHasNoPictureChoiceForThatWorld'));
       if (pin.kind === 'still') {
-        report({ stage: 'reading', message: t('interface:readingTheSavedPictureOriginal') });
+        report({
+          stage: 'reading',
+          message: t('interface:readingTheSavedPictureOriginal'),
+          messageKey: 'interface:readingTheSavedPictureOriginal',
+        });
         media ??= await readMedia({ signal: controller.signal });
         check();
         const acquireSelected = selectionStage?.has(pin)
@@ -183,13 +194,21 @@ export function createFlightPictures({
         );
         const next = { ...ownContext, themeId };
         candidate.setContext(next);
-        report({ stage: 'decoding', message: t('interface:openingThisFlightSOriginalPicture') });
+        report({
+          stage: 'decoding',
+          message: t('interface:openingThisFlightSOriginalPicture'),
+          messageKey: 'interface:openingThisFlightSOriginalPicture',
+        });
         await candidate.load(
           { pin, metadata: media.metadata, store: media.store },
           { context: next, signal: controller.signal },
         );
       } else if (acquireLegacy) {
-        report({ stage: 'decoding', message: t('interface:openingThisFlightSAuthoredPicture') });
+        report({
+          stage: 'decoding',
+          message: t('interface:openingThisFlightSAuthoredPicture'),
+          messageKey: 'interface:openingThisFlightSAuthoredPicture',
+        });
         check();
         const handle = await acquireLegacy({ pin, themeId }, { signal: controller.signal });
         // Install the disposal owner before checking cancellation: an injected
@@ -212,6 +231,7 @@ export function createFlightPictures({
         status: 'ready',
         stage: 'ready',
         message: t('interface:thisFlightSPictureIsReady'),
+        messageKey: 'interface:thisFlightSPictureIsReady',
       });
       return true;
     } catch (error) {
@@ -220,7 +240,12 @@ export function createFlightPictures({
         report({
           status: 'error',
           stage: 'error',
-          message: `Picture unavailable: ${error.message}`,
+          message: flightPictureFailure(error),
+          messageKey:
+            error?.name === 'ReleasePictureWriteRequiredError'
+              ? 'errors:picture.writeRequired'
+              : 'errors:picture.unavailable',
+          diagnostic: error.message,
         });
       throw error;
     } finally {

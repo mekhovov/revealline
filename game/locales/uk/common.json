@@ -153,5 +153,21 @@
   "status.paused": "на паузі",
   "units.secondsShort": "{{seconds}} с",
   "reading.prompt": "{{scroll}} · повернутися: {{exit}}",
-  "controls.either": "{{confirm}} або {{back}}"
+  "controls.either": "{{confirm}} або {{back}}",
+  "progress.files_one": "{{completed}} із {{total}} файла",
+  "progress.files_few": "{{completed}} із {{total}} файлів",
+  "progress.files_many": "{{completed}} із {{total}} файлів",
+  "progress.files_other": "{{completed}} із {{total}} файла",
+  "progress.tracks_one": "{{completed}} із {{total}} композиції",
+  "progress.tracks_few": "{{completed}} із {{total}} композицій",
+  "progress.tracks_many": "{{completed}} із {{total}} композицій",
+  "progress.tracks_other": "{{completed}} із {{total}} композиції",
+  "progress.chapters_one": "{{completed}} із {{total}} розділу",
+  "progress.chapters_few": "{{completed}} із {{total}} розділів",
+  "progress.chapters_many": "{{completed}} із {{total}} розділів",
+  "progress.chapters_other": "{{completed}} із {{total}} розділу",
+  "progress.ticks_one": "{{completed}} із {{total}} такту",
+  "progress.ticks_few": "{{completed}} із {{total}} тактів",
+  "progress.ticks_many": "{{completed}} із {{total}} тактів",
+  "progress.ticks_other": "{{completed}} із {{total}} такту"
 }
