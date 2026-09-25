@@ -806,7 +806,7 @@ kbd {
 }
 .reading-actions {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 10rem), 1fr));
   gap: 6px;
 }
 .reading-actions button {
@@ -1828,6 +1828,11 @@ dialog textarea {
 }
 .appearance-reward .reward-detail {
   opacity: 0.8;
+}
+@media (max-width: 480px) {
+  .appearance-reward {
+    grid-template-columns: 1fr;
+  }
 }
 /* Existing dialog owners keep their original status and escape controls together. */
 #library-operation-rail,
