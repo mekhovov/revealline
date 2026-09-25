@@ -5,6 +5,63 @@ export const SOUNDTRACK_CATALOGUE = {
   tracks: [
     {
       format: 'revealline-audio-track.v1',
+      id: 'builtin.catalog.alexander-nakarada.carol-of-the-bells-metal-version',
+      kind: 'mp3',
+      title: 'Carol of the Bells (Metal Version)',
+      artist: 'Alexander Nakarada',
+      asset: {
+        sha256: 'd4147214e221be28f19d6c6c38afc8d3cf0289a0dc6ac579b26574a0c571bc58',
+        bytes: 8641768,
+        mime: 'audio/mpeg',
+        mpegVersion: '1',
+        sampleRate: 44100,
+        channels: 2,
+        frames: 10338,
+        durationSeconds: 270.05387755102043,
+      },
+      rights: {
+        kind: 'licensed',
+        credit:
+          'Music: Carol of the Bells (Metal Version) by Alexander Nakarada (CreatorChords). Licensed under Creative Commons Attribution 4.0 International.',
+        license: 'CC BY 4.0 International',
+        source: 'https://creatorchords.com/music/carol-of-the-bells-metal-version/',
+      },
+      edition: 'originals-1',
+      path: 'game/audio/soundtracks/d4147214e221be28f19d6c6c38afc8d3cf0289a0dc6ac579b26574a0c571bc58.mp3',
+      tags: {
+        genres: ['ukrainian', 'metal'],
+        role: 'any',
+        energy: 5,
+        themes: ['ukraine', 'shchedryk'],
+      },
+      policy: {
+        id: 'builtin.catalog.alexander-nakarada.carol-of-the-bells-metal-version',
+        sha256: 'd4147214e221be28f19d6c6c38afc8d3cf0289a0dc6ac579b26574a0c571bc58',
+        webPlayback: 'allowed',
+        offlineCache: 'allowed',
+        redistribute: 'allowed',
+        modify: 'allowed',
+        gameplayVideo: 'allowed',
+        contentId: 'registered',
+      },
+      fileName: 'Carol of the Bells (Metal Version).mp3',
+      websites: [
+        {
+          label: 'Creator source',
+          url: 'https://creatorchords.com/music/carol-of-the-bells-metal-version/',
+        },
+        {
+          label: 'CC BY 4.0 International',
+          url: 'https://creativecommons.org/licenses/by/4.0/',
+        },
+        {
+          label: 'Shchedryk provenance',
+          url: 'https://ui.org.ua/wp-content/uploads/2022/12/programme_notes-from-ukraine.pdf',
+        },
+      ],
+    },
+    {
+      format: 'revealline-audio-track.v1',
       id: 'builtin.catalog.holizna.drama',
       kind: 'mp3',
       title: 'Drama',
@@ -4040,5 +4097,23 @@ export const SOUNDTRACK_COLLECTIONS = [
     trackIds: ['builtin.catalog.tricks-and-traps.electric-stream'],
     order: 'shuffle',
     repeat: 'all',
+  },
+  {
+    id: 'builtin.album.ukrainian.shchedryk-opening',
+    title: 'Ukrainian opening & action',
+    description:
+      'Starts with the approved Shchedryk metal adaptation, then continues through admitted Ukrainian recordings.',
+    genre: 'ukrainian',
+    trackIds: ['builtin.catalog.alexander-nakarada.carol-of-the-bells-metal-version'],
+    order: 'ordered',
+    repeat: 'all',
+  },
+];
+export const SOUNDTRACK_BUNDLED_ASSETS = [
+  {
+    id: 'builtin.catalog.alexander-nakarada.carol-of-the-bells-metal-version',
+    sha256: 'd4147214e221be28f19d6c6c38afc8d3cf0289a0dc6ac579b26574a0c571bc58',
+    bytes: 8641768,
+    path: 'game/audio/soundtracks/d4147214e221be28f19d6c6c38afc8d3cf0289a0dc6ac579b26574a0c571bc58.mp3',
   },
 ];
