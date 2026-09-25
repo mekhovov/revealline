@@ -8644,17 +8644,31 @@ try {
           if (event.type === 'class.switched') {
             updateLoadout();
             setTheme();
-            warning(`Now flying ${run.classRecipe.label}. Charges and cooldowns are preserved.`);
+            warning(
+              t('gameplay:nowFlyingChargesAndCooldownsArePreserved', {
+                value1: run.classRecipe.label,
+              }),
+            );
           }
           if (event.type === 'class.rejected')
-            warning(`Cannot switch craft: ${event.reason}. Return to safe hangar ground.`);
+            warning(
+              t('gameplay:cannotSwitchCraftReturnToSafeHangarGround', {
+                value1: event.reason,
+              }),
+            );
           if (event.type === 'cells.claimed') {
             if (teachingCapture)
               warning([captureTeaching(), captureTerrain].filter(Boolean).join(' '), 'secured');
             else
               warning(
                 [
-                  `Line secured. ${(run.coverage * 100).toFixed(1)}% revealed${event.indices?.length < 50 ? ' ' + t('interface:bothSidesMayStillContainAnEnemy') + '' : '.'}`,
+                  t('gameplay:lineSecuredRevealed', {
+                    value1: (run.coverage * 100).toFixed(1),
+                    value2:
+                      event.indices?.length < 50
+                        ? ` ${t('interface:bothSidesMayStillContainAnEnemy')}`
+                        : '.',
+                  }),
                   captureTerrain,
                 ]
                   .filter(Boolean)
@@ -8669,7 +8683,13 @@ try {
             run.player.cutting
           )
             warning(
-              `Live line exposed. Reach ${['xonix-core.v6', 'xonix-core.v7', 'xonix-core.v8', 'xonix-core.v9'].includes(run.ruleset) ? 'reclaimed' : 'safe'} ground to secure it.`,
+              t(
+                ['xonix-core.v6', 'xonix-core.v7', 'xonix-core.v8', 'xonix-core.v9'].includes(
+                  run.ruleset,
+                )
+                  ? 'gameplay:liveLineExposedReachReclaimedGroundToSecureIt'
+                  : 'gameplay:liveLineExposedReachSafeGroundToSecureIt',
+              ),
             );
           if (event.type === 'player.failed')
             warning(
@@ -8684,7 +8704,13 @@ try {
             );
           if (event.type === 'lineImpact.seeded')
             warning(
-              `Line struck! Reach ${['xonix-core.v6', 'xonix-core.v7', 'xonix-core.v8', 'xonix-core.v9'].includes(run.ruleset) ? 'reclaimed' : 'safe'} ground before the travelling spark catches you.`,
+              t(
+                ['xonix-core.v6', 'xonix-core.v7', 'xonix-core.v8', 'xonix-core.v9'].includes(
+                  run.ruleset,
+                )
+                  ? 'gameplay:lineStruckReachReclaimedGroundBeforeTheTravellingSparkCatches'
+                  : 'interface:lineStruckReachSafeGroundBeforeTheTravellingSparkCatches',
+              ),
             );
           if (event.type === 'lineImpact.arrived')
             warning(localizedMessage('interface:theTravellingImpactReachedYourCraftOneLifeLost'));
@@ -8708,7 +8734,10 @@ try {
                 'stun-field': t('interface:stunFieldPlacedNearbyMovingFieldEnemiesAreBrieflyHeld'),
                 'slow-field': t('interface:slowFieldPlacedNearbyFieldEnemiesMoveAtQuarterSpeed'),
                 shield: t('interface:shieldActiveOneEnemyContactCanCancelYourLineSafely'),
-              }[event.primitive] || `${theme.labels.ability} active.`,
+              }[event.primitive] ||
+                t('gameplay:active', {
+                  value1: theme.labels.ability,
+                }),
             );
           if (event.type === 'pickup.collected')
             warning(localizedMessage('interface:suppliesReadyChooseYourNextOpportunity'));
@@ -8717,7 +8746,10 @@ try {
               [
                 teachingCapture
                   ? captureTeaching()
-                  : `Line secured. ${(run.coverage * 100).toFixed(1)}% revealed.`,
+                  : t('gameplay:lineSecuredRevealed', {
+                      value1: (run.coverage * 100).toFixed(1),
+                      value2: '.',
+                    }),
                 captureTerrain,
                 t('interface:tapADirectionToFlyAgain'),
               ]
