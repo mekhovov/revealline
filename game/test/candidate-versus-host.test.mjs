@@ -526,12 +526,40 @@ for (const route of ['opening', 'authored'])
       );
       assert.equal(p.$('journey-chooser')?.open ?? false, false);
       if (id !== rows.at(-1)[0]) {
-        const previous = p.renders[0];
-        p.$('race-journey-next').click();
-        await waitFor(() => {
-          p.frame(0);
-          return p.renders[0] !== previous && !p.$('race-pause').disabled;
-        });
+        const previous = p.renders[0],
+          next = p.$('race-journey-next'),
+          handler = next.onclick;
+        let operation, timer;
+        next.onclick = function (...args) {
+          operation = handler.apply(this, args);
+          return operation;
+        };
+        try {
+          next.click();
+        } finally {
+          next.onclick = handler;
+        }
+        assert.equal(
+          typeof operation?.then,
+          'function',
+          `${id} activates the real owned continuation operation.`,
+        );
+        try {
+          await Promise.race([
+            operation,
+            new Promise((_, reject) => {
+              timer = setTimeout(
+                () => reject(new Error(`${id} continuation did not settle.`)),
+                120000,
+              );
+            }),
+          ]);
+        } finally {
+          clearTimeout(timer);
+        }
+        p.frame(0);
+        assert.notEqual(p.renders[0], previous, `${id} advances to its exact successor.`);
+        assert.equal(p.$('race-pause').disabled, false, `${id} successor starts immediately.`);
       }
     }
     assert.equal(p.$('race-journey-next').hidden, false);
