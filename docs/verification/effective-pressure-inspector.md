@@ -5,6 +5,14 @@
 Release allocation: **v0.114.1**, the maintenance patch immediately following
 the publicly accepted v0.114.0 Horizon source and selector.
 
+The predecessor acceptance gate is closed: selector merge
+`dce04f9ea2c994c045662d1c37eee82b3581d1a4` / tree
+`f3539c326eec3b5615c4c0bf6ea417957fb2e535` deployed in production run
+`36124529032` as deployment `6658843556` with successful status `18830002040`.
+The public byte audit matched 4,740/4,740 files and 630,036,640 bytes in one
+attempt with zero failures, retries or skips; title, Start, live mission, Pause,
+explicit Resume and a clean browser console passed the bounded native check.
+
 This standalone correction was originally based on accepted main
 `b13089b702391c275f2505d1a76c87eebb9dcce0` and is reconciled by merge with the
 accepted v0.114.0 selector main `dce04f9ea2c994c045662d1c37eee82b3581d1a4`.
