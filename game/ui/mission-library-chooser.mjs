@@ -1,3 +1,4 @@
+import { createJourneyArtworkView } from './journey-artwork.mjs';
 import { LIBRARY_COLLECTIONS, LIBRARY_MODES } from '../mission-library/library.mjs';
 import { paintMissionThumbnail } from '../content-design/mission-card.mjs';
 import { trackMissionLibraryOpening } from '../mission-library/opening-intent.mjs';
@@ -397,7 +398,18 @@ export function attachMissionLibraryChooser({
     button.addEventListener('focusin', () => {
       selectedId = row.id;
     });
-    return { row, button, progress, rules, route, mastery, action, diagram: null };
+    return {
+      row,
+      button,
+      progress,
+      rules,
+      route,
+      mastery,
+      action,
+      diagram: null,
+      artwork: null,
+      completion: null,
+    };
   }
   function render() {
     if (destroyed) return;
@@ -428,6 +440,10 @@ export function attachMissionLibraryChooser({
       card.mastery.textContent = details.mastery ? `Optional challenge: ${details.mastery}` : '';
       card.mastery.hidden = !details.mastery;
       card.progress.textContent = library.progress(row, modeFilter.value);
+      card.completion = library.completion(row, modeFilter.value);
+      card.button.dataset.pictureState = card.completion?.state ?? 'unfinished';
+      if (card.completion?.state === 'unavailable')
+        card.progress.textContent = card.completion.reason;
       card.progress.hidden = !card.progress.textContent;
       card.action.textContent =
         availability.state === 'ready'
@@ -462,55 +478,85 @@ export function attachMissionLibraryChooser({
     restorePendingSelection();
     observeDiagrams();
   }
-  // Only visible starting-map diagrams are built. Never request/decode reward
-  // pictures for browsing. The fallback is text cards, not eager canvas work.
+  // Decode only near the viewport. An earned picture owns the same exact
+  // descriptor as Collection; release its decoded bytes when it leaves view.
+  function hidePreview(card) {
+    card.artwork?.release();
+    card.artwork = null;
+    card.diagram = null;
+    card.button.querySelector('.journey-card-map')?.remove();
+    card.button.querySelector('.journey-card-picture-status')?.remove();
+  }
+  function showPreview(card) {
+    if (card.diagram || !dialog.open || !list.contains(card.button)) return;
+    if (compact && !detailedCards.checked) return;
+    card.diagram = true;
+    try {
+      const canvas = node('canvas');
+      canvas.className = 'journey-card-map';
+      canvas.width = 288;
+      canvas.setAttribute('aria-hidden', 'true');
+      if (card.completion?.state === 'earned') {
+        const pictureStatus = node('span');
+        pictureStatus.className = 'journey-card-picture-status';
+        card.button.append(canvas, pictureStatus);
+        card.artwork = createJourneyArtworkView({ canvas, status: pictureStatus });
+        void card.artwork.show(card.completion.record);
+      } else {
+        const diagram = library.card(card.row, modeFilter.value);
+        if (!diagram) return;
+        canvas.height = (288 * diagram.height) / diagram.width;
+        paintMissionThumbnail(canvas.getContext('2d'), diagram, canvas.width);
+        card.button.append(canvas);
+      }
+    } catch {
+      /* Optional previews cannot prevent a mission launch. */
+    }
+  }
   const Observer = doc.defaultView?.IntersectionObserver ?? globalThis.IntersectionObserver;
   const observer =
     typeof Observer === 'function'
       ? new Observer(
           (entries) => {
-            for (const entry of entries)
-              if (entry.isIntersecting) {
-                const card = cards.get(entry.target.dataset.missionId);
-                observer.unobserve(entry.target);
-                if (
-                  !card ||
-                  card.diagram ||
-                  !dialog.open ||
-                  !list.contains(card.button) ||
-                  library.find(card.row.id) !== card.row
-                )
-                  continue;
-                card.diagram = true;
-                try {
-                  const diagram = library.card(card.row, modeFilter.value);
-                  if (!diagram) continue;
-                  const canvas = node('canvas');
-                  canvas.className = 'journey-card-map';
-                  canvas.width = 288;
-                  canvas.height = (288 * diagram.height) / diagram.width;
-                  canvas.setAttribute('aria-hidden', 'true');
-                  paintMissionThumbnail(canvas.getContext('2d'), diagram, canvas.width);
-                  card.button.append(canvas);
-                } catch {
-                  /* An optional diagram cannot block a launch. */
-                }
-              }
+            for (const entry of entries) {
+              const card = cards.get(entry.target.dataset.missionId);
+              if (!card || library.find(card.row.id) !== card.row) continue;
+              if (entry.isIntersecting) showPreview(card);
+              else hidePreview(card);
+            }
           },
           { root: list, rootMargin: '120px' },
         )
       : null;
-  function observeDiagrams() {
-    if (compact && !detailedCards.checked) return;
-    for (const button of list.children)
-      if (!cards.get(button.dataset.missionId).diagram) observer?.observe(button);
+  function fallbackPreviews() {
+    if (observer || !dialog.open) return;
+    const bounds = list.getBoundingClientRect();
+    let shown = 0;
+    for (const button of list.children) {
+      const card = cards.get(button.dataset.missionId),
+        rect = button.getBoundingClientRect();
+      const near = rect.bottom >= bounds.top - 120 && rect.top <= bounds.bottom + 120;
+      // A bounded fallback also works in hosts without layout observation.
+      if (near && card.completion?.state === 'earned' && shown < 12) {
+        showPreview(card);
+        shown++;
+      } else hidePreview(card);
+    }
   }
+  function observeDiagrams() {
+    for (const card of cards.values())
+      if (!list.contains(card.button)) {
+        observer?.unobserve(card.button);
+        hidePreview(card);
+      }
+    if (compact && !detailedCards.checked) return;
+    for (const button of list.children) observer?.observe(button);
+    fallbackPreviews();
+  }
+  list.addEventListener('scroll', fallbackPreviews);
   function invalidateDiagrams() {
     observer?.disconnect();
-    for (const card of cards.values()) {
-      card.diagram = null;
-      card.button.querySelector('.journey-card-map')?.remove();
-    }
+    for (const card of cards.values()) hidePreview(card);
   }
   function cancelResizeScroll() {
     if (resizeFrame !== null) view.cancelAnimationFrame?.(resizeFrame);
@@ -554,14 +600,14 @@ export function attachMissionLibraryChooser({
       else if (!compact && (focused === filterSummary || detailLabel.contains(focused)))
         collection.focus({ preventScroll: true });
     }
-    if (compact && !detailedCards.checked) observer?.disconnect();
+    if (compact && !detailedCards.checked) invalidateDiagrams();
     else if (dialog.open) observeDiagrams();
     keepFocusedCardVisible();
   }
   media?.addEventListener?.('change', resizeFilters);
   detailedCards.addEventListener('change', () => {
     dialog.classList.toggle('mission-library-detailed', detailedCards.checked);
-    if (compact && !detailedCards.checked) observer?.disconnect();
+    if (compact && !detailedCards.checked) invalidateDiagrams();
     else if (dialog.open) observeDiagrams();
   });
   dialog.addEventListener('focusin', (event) => {
@@ -603,6 +649,7 @@ export function attachMissionLibraryChooser({
     render();
     if (!dialog.open) nativeReturnFocus = doc.activeElement;
     dialog.showModal();
+    observeDiagrams();
     restoreSelection();
   }
   search.addEventListener('input', () => {
@@ -655,7 +702,10 @@ export function attachMissionLibraryChooser({
       remember();
     });
   back.onclick = close;
-  dialog.addEventListener('close', retirePendingSelection);
+  dialog.addEventListener('close', () => {
+    retirePendingSelection();
+    invalidateDiagrams();
+  });
   dialog.addEventListener('cancel', (event) => {
     if (event.target === dialog) {
       event.preventDefault();
