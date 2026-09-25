@@ -1,0 +1,71 @@
+{
+  "format": "revealline-scoped-trail-impact-readability-review.v1",
+  "status": "bounded functional source review; frozen, public, physical-device and human acceptance pending",
+  "candidateBase": "84d2c66af75e8c449b03ad6cd5e7923a774535ba",
+  "scope": "Continue the seven required motion and ten required effects recipes after adding a bounded active-cut head, shape-distinct travelling impact fronts and reduced-effects parity. Record the related Team renderer change without extending the existing whole-Team recipe approval.",
+  "groups": {
+    "motion": {
+      "priorFingerprintSHA256": "c35fcf823a0923f27f1193afa247e2d0c93b6fc4161976a5d6a2b67a5bc143a9",
+      "currentFingerprintSHA256": "9a30d7a07cd5aad3249204547946eeea5250087de714e8002b1c824779039efb",
+      "changedInput": {
+        "path": "game/ui/actor-presentation.mjs",
+        "priorSHA256": "8ed0b1a7335b15c05e76f6230b78ebeea18c232c2bb76ea560f9ecab4be9ef23",
+        "currentSHA256": "ab9d992656c97b6bad8e6d9110e3adbf33221497c9f09a2958dc24a56e042eb2",
+        "assessment": "Adds only presentation geometry for the active cut head, packet and travelling fronts. Authoritative coordinates, movement, collision footprints, capture state and clocks remain owned by the simulation."
+      },
+      "continuedSlots": 7
+    },
+    "effects": {
+      "priorFingerprintSHA256": "654fed2ce5b5e9b5e0c6bb79a6d7095093a4ed8128877b1a7f0658d830c275e7",
+      "currentFingerprintSHA256": "60b67750b0e65abd8139c9c45fdec24f2702deca11b839c11bcb367fe4cb627d",
+      "changedInputs": [
+        {
+          "path": "game/ui/classic-view.mjs",
+          "priorSHA256": "34f8c536e837fdcc86a32a7df3878421229bb63d33f234baa493a182cfda4f60",
+          "currentSHA256": "18cbb7f0fef160337efeb732564321b0a821b03ef18c5b316017b8b185ffbf86",
+          "assessment": "Delegates both existing travelling-front directions to the shared shape-distinct painter without changing the validated front projection."
+        },
+        {
+          "path": "game/ui/render.mjs",
+          "priorSHA256": "29d0eae640925cd0d670f60341ee4eb657533880b1c8a3cd0359aa58a8d3ef58",
+          "currentSHA256": "ec041a3820d2808a87ac6e87b9a838fb74d03bce0f0aa50daa32a4236dd80dd5",
+          "assessment": "Passes the already-owned presentation clock and reduced-effects preference to the travelling-front painter. It does not alter front speed, arrival, closure ties or damage."
+        }
+      ],
+      "continuedSlots": 10
+    }
+  },
+  "team": {
+    "priorFingerprintSHA256": "af9b229c4a1d0aa5a5c44516e8def34255f03d9e510f7e780e797b58f79d2210",
+    "currentFingerprintSHA256": "f86b44dac3c54c197d911c1af56f582c50b1f00edff3ee7dbad2b836a78cb334",
+    "changedInput": {
+      "path": "game/couch/coop-view.mjs",
+      "priorSHA256": "5ba48835eb510def31fb3bce4584c28e77d60b2e1e8e6c667eb20db19532a355",
+      "currentSHA256": "a7117a43c026ae5730233f5bf6df05728880d2b6a3aa6fe0403bc43aac3d25e1",
+      "assessment": "Versioned Team line-impact fronts use the shared marker at their existing owned coordinates. Historical emitter rendering, cut ownership, knockdown, rescue and simulation state remain unchanged."
+    },
+    "decision": "Keep the 37 optional Team recipe records at source stage. The focused shared-front evidence does not silently approve unrelated intervening Team renderer changes."
+  },
+  "qualification": {
+    "focusedAutomated": [
+      "One hundred twenty-five focused renderer, actor, emitter, Classic line-impact and Team impact authority checks passed on the exact reconciled feature composition.",
+      "Shape tests cover compact and desktop scales, light and dark accents, both front directions, reduced effects, a bounded pulse and unchanged authoritative coordinates.",
+      "Team presentation tests verify versioned fronts use shape-distinct markers, historical emitters remain unchanged and painting cannot mutate the run."
+    ],
+    "longSuite": "Waived under the active user exception and not represented as passed."
+  },
+  "preservation": [
+    "No image, audio or font payload bytes are added or replaced.",
+    "Historical presentation revisions and original Team emitter rendering remain retained.",
+    "The presentation change does not alter movement, collision, mission identities, progress, uploaded media or custom content."
+  ],
+  "excluded": [
+    "No subjective visual-quality, balance, difficulty, enjoyment or retry claim.",
+    "No complete keyboard, controller, touch, screen-reader, forced-colour or physical-device qualification.",
+    "No whole-Team recipe or Team equipment-image approval and no complete two-player mission qualification.",
+    "No frozen-build, offline, public Pages or release acceptance.",
+    "No human validation; automated checks are technical evidence only.",
+    "Two broader baseline checks outside the changed trail behavior remain failing and are not represented as passes: default enemy-body request expectations and a missing Team wall-reader exception expectation."
+  ],
+  "decision": "Continue only the seven required motion and ten required effects recipes when their exact fingerprints and this review record match. Any reviewed input or review-byte change reopens the affected group."
+}
