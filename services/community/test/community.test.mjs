@@ -715,6 +715,15 @@ test('worker infrastructure errors requeue the job instead of publishing or reje
   let time = new Date('2026-09-24T12:00:00.000Z');
   const repository = new MemoryCommunityRepository({ clock: () => time });
   const blobStore = new MemoryBlobStore();
+  const openBlob = blobStore.open.bind(blobStore);
+  let closed = false;
+  blobStore.open = async (...args) => {
+    const opened = await openBlob(...args);
+    opened.body.once('close', () => {
+      closed = true;
+    });
+    return opened;
+  };
   const { app } = await fixture({ repository, blobStore });
   const { created } = await createAndUpload(app);
   await app.inject({
@@ -735,6 +744,7 @@ test('worker infrastructure errors requeue the job instead of publishing or reje
     /temporary decoder outage/u,
   );
   const status = await repository.getOwnerSubmission(created.submission.id, 'creator/alice');
+  assert.equal(closed, true);
   assert.equal(status.status, 'queued');
   assert.equal(await repository.claimValidationJob({ workerId: 'too-early' }), null);
   time = new Date('2026-09-24T12:00:31.000Z');
