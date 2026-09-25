@@ -66,36 +66,54 @@ The original checkout was over 1,700 commits behind main. The rebase retains mai
 Journey, Team, soundtrack, and editor changes. New English keys are explicitly present
 and missing Ukrainian remains detectable. Complete these before marking the task done:
 
-- Translate the remaining new interface/tool catalogs and all new dynamic sentences.
+- Translate the remaining tools catalog and all uncatalogued dynamic sentences.
   Inspect `game/studio`, classic `.js` tools, generated current-version pages, and
   user-facing errors; extraction of existing keys alone is not a raw-text coverage audit.
 - The registry now includes the current default authored Journey and Team sources,
-  compiled executions, navigation records, cards and manifest design fields. Finish
-  their translations and presentation adapters; add maintained nondefault editions,
+  compiled executions, navigation records, cards and manifest design fields. These
+  catalog entries are translated. Finish their presentation adapters; add maintained nondefault editions,
   optional first-party packs and derived Classic metadata. Preserve hashes.
 - Finish live bindings for derived labels, statuses, canvas text, dropdown options, and
   presentation adapters. Check unsaved editor data, selections, focus, and scroll.
-- Reconcile generated public-page locale assets with current `publicPage` arguments,
-  root launch asset rewriting, offline inventories, and native staging.
+- Verify offline inventories and native staging after the remaining catalogs pass.
+  Generated privacy/credits pages and current-entry aliases now load the same local
+  runtime, use translated messages and retained attribution links, and rewrite root
+  asset paths. Historical frozen releases stay unchanged.
 - Review shared keys and Ukrainian grammar, especially reused nouns/adjectives.
 - Run full validation, lint, formatting, tests, builds, native staging, and route checks.
-  Two continuous-host assertions expected legacy session v4 but received v6 and need
-  baseline investigation before reporting test status.
+  Current-main baseline checks reproduce the legacy session-v4 expectations against
+  session-v6 output and the old 201-mission expectation against 279 available missions.
 
 The active checkout's temporary sparse exclusions have been removed. The full suite
 is running, with failures still under investigation. A clean main checkout reproduces
 the Team Studio initial-state hash mismatch, Custom-pack chooser timeout, Team artwork
 registration failure, combat study's missing `player-locator.mjs` dependency, controller
-snapshot-key mismatch, and Team terrain missing-exception assertion. The First Flight
+snapshot-key mismatch, Team terrain missing-exception assertion, continuous-host
+session-version mismatch, default-entry mission-count mismatch, and the Controller
+practice teardown storage-listener assertion. The First Flight
 handoff timeout is intermittent here and remains unresolved; do not dismiss it as a
 baseline failure.
 
-The current focused localization/library suite passes 97 tests, and lint passes for the
-runtime, extractor and library files changed in this checkpoint. Browser checks confirm
-Ukrainian Journey-name search, retained mode controls, restart persistence and cross-tab
-refresh of an open mission card without clearing its typed search. Catalog validation
-still deliberately fails for 1,642 missing Ukrainian messages: 526 interface, 732 tools,
-and 384 content entries. These counts do not include unextracted raw dynamic text.
+The focused localization/library/startup/generated-page suite passes 118 tests. A further
+29 boot/briefing checks pass (46 with locale and generated-page checks after formatting),
+including live Ukrainian rule-derived briefing text while
+preserving custom-authored text. Full lint and the full formatting check pass.
+Browser checks confirm Ukrainian Journey-name search, retained mode controls, restart
+persistence, cross-tab refresh without clearing typed search, translated current Journey
+route/mastery text, live menu counts and destination labels, and Ukrainian startup status.
+The main branch was fetched again and remains fully included (524c989c2).
+
+Catalog validation deliberately fails for **724 missing Ukrainian tool messages**. The
+current interface and registered content catalogs are fully translated. This is not yet
+full game coverage: the browser still exposes raw current-Journey difficulty prose,
+Classic library metadata, and an unregistered theme currency label. Other dynamic/tool
+surfaces need auditing. Do not declare completion from catalog coverage alone.
+
+Startup locale assets now follow the inline dark-screen guard; the locale stylesheet
+uses the same deferred, monitored loading as other game styles. The failure/launch
+screen has its own language selector. Build validation rejects missing translations and
+stale bundles for current localized distributions, while small fixtures and historical
+releases without catalogs retain their previous behavior.
 
 ## Design references
 
