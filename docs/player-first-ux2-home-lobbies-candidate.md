@@ -2,7 +2,8 @@
 
 ## Scope and base
 
-- Accepted predecessor source: `10190539b243c9edc78eeef9dba174041409aaf2`.
+- Accepted predecessor source: `cdefaef72e5770334dba5eb12d60f9d8587aa1a1` (`v0.114.1`).
+- Accepted predecessor selector main: `2c32a08b9d047bc4dd38d4494298f384526dacd1`.
 - Release branch: `codex/ux2-shell-current-main`.
 - This is the versioned v0.115.0 source candidate. It is not accepted until the
   protected merge, immutable release, Pages deployment, public-byte audit and
@@ -39,9 +40,9 @@ The reconciled UX2 patch was checked across Home, Solo, Versus, and Team in loca
 
 ## Reconciliation and limitations
 
-- The v0.115.0 release is reconciled onto the accepted v0.114.0 source. Its menu patch preserves the reviewed predecessor, newer Horizon content, production assets, and publication history. The integrated Team-original fixture correction updates test transport only. The additional controller lifecycle gate preserves the ordinary Steam echo window, blocks a held Confirm across background return, and restores fresh keyboard control after a sampled neutral frame. Quick-start preparation/cancellation ownership and operation leases remain unchanged.
+- The v0.115.0 release is reconciled onto the accepted v0.114.1 source and its accepted selector main. Its menu patch preserves the reviewed predecessor, newer Horizon content, production assets, and publication history. The integrated Team-original fixture correction updates test transport only. The additional controller lifecycle gate preserves the ordinary Steam echo window, blocks a held Confirm across background return, and restores fresh keyboard control after a sampled neutral frame. Quick-start preparation/cancellation ownership and operation leases remain unchanged.
 - The exact base already includes the released Solo Pause hierarchy, so the obsolete standalone Pause candidate was not replayed.
 - Collection remains a Solo/global destination because Couch still has no safe deep link that opens Collection without changing the Solo shell or gallery owner. Therefore this checkpoint completes the compact Solo Home, Couch lobby/options, Pause retention, and nested Home/About/Releases work, but it does not yet complete a cross-mode Collection entry.
 - The release links and shared Pause hierarchy were browser/source tested. Public
   and frozen-release verification remains part of the v0.115.0 acceptance gate.
-- Physical controller, Steam Deck hardware, browser touch, 200% zoom, and full production suites remain release qualification work.
+- Physical controller, Steam Deck hardware, browser touch, 200% zoom, and the full production suites remain explicitly deferred under the temporary fast-release policy; they are not represented as passing. Exact source identity, the release-critical build, immutable release assets, archive preservation, deployment and bounded public acceptance remain required.
