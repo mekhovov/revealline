@@ -1,4 +1,5 @@
 import { acquireCandidatePicture, isCandidatePictureFor } from '../content-design/picture.mjs';
+import { t, localizedText } from '../i18n/index.mjs';
 
 /** A bounded display lease. Closing/filtering releases decoded originals; a late
  * fetch cannot paint a new screen or change focus. No display action awards art. */
@@ -21,7 +22,7 @@ export function createJourneyArtworkView({ canvas, status, acquire = acquireCand
       const ticket = generation,
         owner = new AbortController();
       controller = owner;
-      status.textContent = 'Opening earned original…';
+      localizedText(status, () => t('interface:journeyPictures.openingOriginal'));
       let picture;
       try {
         picture = await acquire(record.asset, { signal: owner.signal });
@@ -30,7 +31,7 @@ export function createJourneyArtworkView({ canvas, status, acquire = acquireCand
           return false;
         }
         if (!isCandidatePictureFor(record.asset, picture))
-          throw new Error('Original identity does not match.');
+          throw new Error(t('interface:journeyPictures.identityMismatch'));
         const context = canvas.getContext('2d');
         const width = canvas.width,
           height = (width * record.asset.height) / record.asset.width;
@@ -39,12 +40,14 @@ export function createJourneyArtworkView({ canvas, status, acquire = acquireCand
         binding = picture;
         picture = null;
         canvas.hidden = false;
-        status.textContent = 'Earned original';
+        localizedText(status, () => t('interface:journeyPictures.earnedOriginal'));
         return true;
       } catch (error) {
         picture?.release();
         if (ticket === generation && !owner.signal.aborted)
-          status.textContent = `Original unavailable. Restore this edition’s exact artwork or retry download. ${error.message}`;
+          localizedText(status, () =>
+            t('interface:journeyPictures.originalUnavailable', { error: error.message }),
+          );
         return false;
       } finally {
         if (controller === owner) controller = null;
