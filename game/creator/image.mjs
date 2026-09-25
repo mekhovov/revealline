@@ -46,19 +46,12 @@ export async function prepareCreatorImage(
     typeof settings.alt === 'string' && settings.alt.trim() && settings.alt.length <= 512,
     t('errors:creator.describePicture'),
   );
-  required(
-    ['contain', 'cover'].includes(settings.fit),
-    t('errors:creator.choosePictureFitting'),
-  );
+  required(['contain', 'cover'].includes(settings.fit), t('errors:creator.choosePictureFitting'));
   required(
     Number.isFinite(timeoutMs) && timeoutMs > 0 && timeoutMs <= 20000,
     t('errors:creator.invalidPictureTimeout'),
   );
-  const original = ownCreatorBlob(
-    source,
-    CREATOR_IMAGE_LIMITS.sourceBytes,
-    t('interface:picture'),
-  );
+  const original = ownCreatorBlob(source, CREATOR_IMAGE_LIMITS.sourceBytes, t('interface:picture'));
   let stopped = false,
     timer,
     cancel,
@@ -71,9 +64,7 @@ export async function prepareCreatorImage(
   const stop = new Promise((_, reject) => {
     cancel = () => {
       stopped = true;
-      reject(
-        new DOMException(t('errors:creator.picturePreparationCancelled'), 'AbortError'),
-      );
+      reject(new DOMException(t('errors:creator.picturePreparationCancelled'), 'AbortError'));
     };
     signal?.addEventListener('abort', cancel, { once: true });
     if (signal?.aborted) cancel();

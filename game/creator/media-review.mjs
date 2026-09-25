@@ -221,8 +221,7 @@ export function createCreatorMediaReviewController({
             duration: seconds(item.video.video.durationSeconds),
           })
         : t('interface:creator.videoIdentity', {
-            identity:
-              item.assetSha256?.slice(0, 12) ?? t('interface:creator.identityUnavailable'),
+            identity: item.assetSha256?.slice(0, 12) ?? t('interface:creator.identityUnavailable'),
           }),
     );
     const pairLabel = document.createElement('label');
@@ -230,15 +229,9 @@ export function createCreatorMediaReviewController({
     const pair = document.createElement('select');
     const unresolved = item.pairing?.status === 'ambiguous' && !pairing.has(item.assetSha256);
     if (unresolved)
-      pair.append(
-        option(document, '', localizedMessage('interface:creator.chooseMatchingImage')),
-      );
+      pair.append(option(document, '', localizedMessage('interface:creator.chooseMatchingImage')));
     pair.append(
-      option(
-        document,
-        '__frame__',
-        localizedMessage('interface:creator.captureFrameFromVideo'),
-      ),
+      option(document, '__frame__', localizedMessage('interface:creator.captureFrameFromVideo')),
     );
     for (const image of images) pair.append(option(document, image.assetSha256, imageLabel(image)));
     const currentPair = pairing.has(item.assetSha256)
@@ -301,11 +294,7 @@ export function createCreatorMediaReviewController({
     if (nodes.apply) {
       nodes.apply.disabled = !!running || !sources.length || (!dirty && !!prepared);
       localizedText(nodes.apply, () =>
-        t(
-          prepared
-            ? 'interface:creator.applyMediaChoices'
-            : 'interface:creator.inspectMedia',
-        ),
+        t(prepared ? 'interface:creator.applyMediaChoices' : 'interface:creator.inspectMedia'),
       );
     }
     if (nodes.cancel) nodes.cancel.hidden = !running;
