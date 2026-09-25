@@ -21,7 +21,7 @@ function languages(context) {
 
 test('compact Versus pause captions switch without changing either board or its accepted setup', async (context) => {
   languages(context);
-  const f = await couchPage(context, { beforeImport: ({ doc }) => captions(doc) });
+  const f = await couchPage(context, { beforeImport: ({ document }) => captions(document) });
   const details = f.$('race-optional-setup');
   details.open = true;
   f.$('race-focus').focus();
