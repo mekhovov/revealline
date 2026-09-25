@@ -236,14 +236,14 @@ test('historical policy capacity remains exactly twenty and duplicate identities
     () =>
       create([
         ...COOP_HISTORICAL_IMPORT_PICTURE_POLICIES,
-        { ...COOP_HISTORICAL_IMPORT_PICTURE_POLICIES[0], themeRevision: 75 },
+        { ...COOP_HISTORICAL_IMPORT_PICTURE_POLICIES[0], themeRevision: 78 },
       ]),
     /array exceeds/,
   );
   assert.throws(
     () =>
       create([
-        ...COOP_HISTORICAL_IMPORT_PICTURE_POLICIES.slice(0, 16),
+        ...COOP_HISTORICAL_IMPORT_PICTURE_POLICIES.slice(0, 19),
         COOP_HISTORICAL_IMPORT_PICTURE_POLICIES[0],
       ]),
     /Duplicate Team historical picture identity/,
