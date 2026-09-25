@@ -191,12 +191,10 @@ export async function contentSources(root) {
       },
     });
   }
-  sources.push({
-    source: 'authoring/motion-lab/presets.json',
-    data: JSON.parse(
-      await fs.readFile(path.join(root, 'authoring/motion-lab/presets.json'), 'utf8'),
-    ),
-  });
+  for (const name of ['presets', 'collection-presets', 'ability-presets']) {
+    const source = `authoring/motion-lab/${name}.json`;
+    sources.push({ source, data: JSON.parse(await fs.readFile(path.join(root, source), 'utf8')) });
+  }
   sources.push({
     source: 'game/first-flight.mjs#FIRST_FLIGHT_LESSONS',
     data: FIRST_FLIGHT_LESSONS,
@@ -262,7 +260,24 @@ export async function extractContent(root, register) {
     for (const [key, child] of Object.entries(value)) {
       // Animation descriptors contain technical property names and colors.
       // Only an authored prose motion description is translatable.
-      if (CONTENT_FIELDS.has(key) && (key !== 'motion' || typeof child === 'string'))
+      const motionPreset = source.startsWith('authoring/motion-lab/');
+      // Motion outcomes are execution enums. Vocabulary and source provenance
+      // are presentation fields, scoped to these explicitly registered files.
+      const motionPresentation =
+        motionPreset &&
+        [
+          'sourceStatus',
+          'classLabels',
+          'equipmentLabels',
+          'supplyLabel',
+          'hazeLabel',
+          'budgetLabel',
+        ].includes(key);
+      if (
+        (CONTENT_FIELDS.has(key) || motionPresentation) &&
+        !(motionPreset && key === 'outcome') &&
+        (key !== 'motion' || typeof child === 'string')
+      )
         leaves(child, key);
       if (key === 'metadata' && child?.description)
         leaves(child.description, 'metadata.description');
@@ -272,7 +287,10 @@ export async function extractContent(root, register) {
     }
     if (source === 'game/content/mission-library-index.json' && typeof value.edition === 'string')
       leaves(value.edition, 'edition');
-    if (Object.keys(fields).length) {
+    // A Motion definition root can own only technical/container fields. Retain
+    // its verified identity so custom files cannot translate matching children.
+    const motionOwner = source.startsWith('authoring/motion-lab/') && pointer === '';
+    if (Object.keys(fields).length || motionOwner) {
       const identity = dataIdentity(value);
       registry[identity] = { fields, source, pointer };
       if (/^xonix-level\.v/.test(value.version || '')) {
