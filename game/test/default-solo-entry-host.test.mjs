@@ -7,6 +7,7 @@ import { createJourneyBackend } from '../journey/profile.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
 import { workshopReturnLinks } from '../ui/workshop-return.mjs';
 import { openMissionLibrary } from './helpers/library-selection.mjs';
+import { waitFor } from './helpers/wait-for.mjs';
 
 // Browser decoder boundary only. The host still reads, hashes and verifies the
 // registered originals; these dimensions match the two real fixture families
@@ -65,10 +66,16 @@ async function page(t, options = {}) {
   });
 }
 async function running(p, levelId) {
-  await settle(() => {
-    p.frame(0);
-    return p.doc.body.dataset.flightState === 'running' && p.rendered.run.levelId === levelId;
-  });
+  // A cold authored route verifies and compiles all 91 active mission records
+  // before the selected flight becomes observable. Keep this integration
+  // boundary longer than the ordinary five-second DOM-action wait.
+  await waitFor(
+    () => {
+      p.frame(0);
+      return p.doc.body.dataset.flightState === 'running' && p.rendered.run.levelId === levelId;
+    },
+    { message: 'Selected Solo mission did not start.', timeoutMs: 15000 },
+  );
 }
 async function missions(p, opener = 'shell-play') {
   if (opener === 'shell-catalogue' && !p.$('shell-workshop-dialog').open)

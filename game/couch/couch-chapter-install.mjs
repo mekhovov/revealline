@@ -7,6 +7,10 @@ import { createManagedMediaStore } from '../managed-media-store.mjs';
 import { installPack, preparePack, PACK_LIMITS } from '../packs.mjs';
 import { prepareMissionLibraryIndex } from '../mission-library/classic-source.mjs';
 import { verifyIndexedInstalledPack } from '../mission-library/pack-identity.mjs';
+import {
+  CLASSIC_RULES_CURRENT,
+  CLASSIC_RULES_ORIGINAL,
+} from '../mission-library/classic-current-rules.mjs';
 import { externalChapterHash } from '../external-chapter.mjs';
 import {
   OPTIONAL_CATALOG_FORMAT,
@@ -16,6 +20,17 @@ import {
 } from '../optional-chapters.mjs';
 
 const cancelled = () => new DOMException('Chapter installation cancelled.', 'AbortError');
+
+function indexedSourceRow(row) {
+  const { rulesEdition, ...source } = row ?? {};
+  required(
+    rulesEdition === undefined ||
+      rulesEdition === CLASSIC_RULES_ORIGINAL ||
+      rulesEdition === CLASSIC_RULES_CURRENT,
+    'Choose a supported Classic rules edition.',
+  );
+  return source;
+}
 
 /** Explicit chapter installation only. Browsing and racing retain their
  * separate read-only owner; this service never writes Solo progress or silently
@@ -326,7 +341,7 @@ export function createCouchChapterInstaller({
     // Neither an index nor an uploaded descriptor can add paired authority.
     const supplied = prepareMissionLibraryIndex({
       format: 'revealline-mission-library-index.v1',
-      missions: [row],
+      missions: [indexedSourceRow(row)],
     }).missions[0];
     const checked = indexedMissions?.missions.find((item) => item.id === supplied.id);
     required(
@@ -529,7 +544,7 @@ export function createCouchChapterInstaller({
       // Capture and compare before any asynchronous boundary.
       const supplied = prepareMissionLibraryIndex({
         format: 'revealline-mission-library-index.v1',
-        missions: [row],
+        missions: [indexedSourceRow(row)],
       }).missions[0];
       const checked = indexedMissions?.missions.find((item) => item.id === supplied.id);
       required(
