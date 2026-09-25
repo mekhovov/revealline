@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import { publishOfflineLauncher } from '../publishing/pages-controller/launcher.mjs';
 /** Publish the exact latest tag; keep playable history, put redundant ZIPs on Releases. */
 import * as fs from 'node:fs/promises';
 import path from 'node:path';
@@ -183,6 +184,7 @@ export async function buildPages({
     } else {
       await fs.writeFile(path.join(dist, 'release.json'), JSON.stringify(latest, null, 2) + '\n');
       await writeCurrentEntries(currentEntries, dist);
+      await publishOfflineLauncher(path.join(releasesRoot, version, 'site'), dist, version);
     }
     if (archivePlan)
       await fs.writeFile(

@@ -88,6 +88,39 @@ const list = (ids, repeat = 'all') => ({
   ],
   selection: { playlistId: 'test.queue' },
 });
+
+test('local gameplay skips uninstalled catalogue recordings without changing saved listening preferences', async (t) => {
+  const track = {
+    ...original.track,
+    id: 'builtin.catalog.local-test',
+    edition: 'test-1',
+    path: 'objects/test.mp3',
+    tags: { genres: ['ukrainian'], role: 'any', energy: 3, themes: [] },
+  };
+  const base = setCatalogueTracks(emptySoundtrackLibrary(), [track]);
+  const library = {
+    ...base,
+    listening: { ...base.listening, mode: 'ukrainian', installedOnly: false },
+  };
+  let reads = 0;
+  const h = setup({
+    library,
+    localPlayback: true,
+    readAsset: async (hash, options) => {
+      reads++;
+      assert.equal(options.localOnly, true);
+      return original.blob;
+    },
+  });
+  t.after(() => h.player.dispose());
+  assert.equal(await h.player.play(), false);
+  assert.equal(reads, 0);
+  assert.equal(library.listening.installedOnly, false);
+  h.player.setLocalRecordingIds([track.id]);
+  await h.player.play();
+  assert.equal(h.player.snapshot().track.id, track.id);
+  assert.equal(reads, 1);
+});
 async function finishSynth(h) {
   const duration = h.soundscape.musicPosition().durationSeconds;
   h.player.seek(duration);

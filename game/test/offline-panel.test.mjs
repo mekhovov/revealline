@@ -242,7 +242,7 @@ test('inactivity offers a check, real verification failure offers preparation an
   await page.button.onclick();
   assert.equal(writes, 1, 'Checking existing work never starts another installation');
   assert.equal(page.status.dataset.state, 'error');
-  assert.equal(page.button.textContent, 'Prepare offline play');
+  assert.equal(page.button.textContent, 'Prepare shared runtime');
   result = { status: 'ready', message: 'Core verified.', verified: 600 };
   const pending = page.button.onclick();
   assert.equal(page.status.dataset.state, 'busy');
