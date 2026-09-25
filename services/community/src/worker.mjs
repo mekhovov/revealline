@@ -5,6 +5,13 @@ const boundedReport = (value) => {
   return report;
 };
 
+const discardBody = async (body) => {
+  if (!body?.destroy || body.closed) return;
+  const closed = new Promise((resolve) => body.once('close', resolve));
+  body.destroy();
+  await closed;
+};
+
 export async function processNextValidationJob({
   repository,
   blobStore,
@@ -17,8 +24,14 @@ export async function processNextValidationJob({
   if (!claimed) return null;
   try {
     const blob = await blobStore.open(claimed.submission.blobKey);
-    if (!blob || blob.size !== claimed.submission.actualSize)
-      throw new Error('Staged package is missing or has a different size.');
+    if (
+      !blob ||
+      blob.size !== claimed.submission.actualSize ||
+      blob.sha256 !== claimed.submission.packageSha256
+    ) {
+      await discardBody(blob?.body);
+      throw new Error('Staged package is missing or has a different exact identity.');
+    }
     const outcome = await validatePackage({
       body: blob.body,
       submission: claimed.submission,
