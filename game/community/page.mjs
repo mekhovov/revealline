@@ -45,6 +45,8 @@ let nextCursor = null;
 let submissionId = null;
 let submissionTimer = null;
 let accountSession = injectedAuth ? { user: {}, configured: true } : null;
+const accountParameters = new URL(globalThis.location.href).searchParams;
+const passwordResetToken = accountParameters.get('token');
 const previewURLs = new Set();
 const canPublish = () => Boolean(accountSession && auth?.headers);
 const renderAccount = () => {
@@ -63,6 +65,31 @@ const renderAccount = () => {
 const setAccountStatus = (message, error = false) => {
   localizedText($('account-status'), message);
   $('account-status').classList.toggle('error', error);
+};
+const clearAccountAction = () => {
+  const url = new URL(globalThis.location.href);
+  url.searchParams.delete('account');
+  url.searchParams.delete('token');
+  url.searchParams.delete('error');
+  globalThis.history.replaceState(null, '', url);
+};
+const renderAccountAction = () => {
+  if (accountParameters.get('account') === 'reset' && passwordResetToken) {
+    $('account-reset').hidden = false;
+    setAccountStatus(localizedMessage('interface:community.enterNewPassword'));
+    return true;
+  }
+  if (accountParameters.get('account') === 'verified') {
+    setAccountStatus(localizedMessage('interface:community.emailVerified'));
+    clearAccountAction();
+    return true;
+  }
+  if (accountParameters.get('error')) {
+    setAccountStatus(localizedMessage('interface:community.accountLinkInvalid'), true);
+    clearAccountAction();
+    return true;
+  }
+  return false;
 };
 
 const text = (tag, value, className) => {
@@ -370,12 +397,54 @@ $('account-sign-up').onclick = async () => {
       password: $('account-password').value,
     });
     $('account-password').value = '';
-    setAccountStatus(localizedMessage('interface:community.accountCreated'));
+    setAccountStatus(localizedMessage('interface:community.accountCreatedVerify'));
     renderAccount();
   } catch (error) {
     setAccountStatus(error.message, true);
   } finally {
     $('account-sign-up').disabled = false;
+  }
+};
+$('account-verify').onclick = async () => {
+  if (!account) return;
+  $('account-verify').disabled = true;
+  try {
+    await account.requestEmailVerification({ email: $('account-email').value });
+    setAccountStatus(localizedMessage('interface:community.verificationSent'));
+  } catch (error) {
+    setAccountStatus(error.message, true);
+  } finally {
+    $('account-verify').disabled = false;
+  }
+};
+$('account-forgot').onclick = async () => {
+  if (!account) return;
+  $('account-forgot').disabled = true;
+  try {
+    await account.requestPasswordReset({ email: $('account-email').value });
+    setAccountStatus(localizedMessage('interface:community.passwordResetSent'));
+  } catch (error) {
+    setAccountStatus(error.message, true);
+  } finally {
+    $('account-forgot').disabled = false;
+  }
+};
+$('account-reset').onclick = async () => {
+  if (!account || !passwordResetToken) return;
+  $('account-reset').disabled = true;
+  try {
+    await account.resetPassword({
+      token: passwordResetToken,
+      newPassword: $('account-password').value,
+    });
+    $('account-password').value = '';
+    clearAccountAction();
+    $('account-reset').hidden = true;
+    setAccountStatus(localizedMessage('interface:community.passwordChanged'));
+  } catch (error) {
+    setAccountStatus(error.message, true);
+  } finally {
+    $('account-reset').disabled = false;
   }
 };
 $('account-sign-in').onclick = async () => {
@@ -422,13 +491,9 @@ if (account)
     .session()
     .then((session) => {
       accountSession = session;
-      setAccountStatus(
-        localizedMessage(
-          session
-            ? 'interface:community.sessionRestored'
-            : 'interface:community.signInOnlyToPublish',
-        ),
-      );
+      if (session) setAccountStatus(localizedMessage('interface:community.sessionRestored'));
+      else if (!renderAccountAction())
+        setAccountStatus(localizedMessage('interface:community.signInOnlyToPublish'));
       renderAccount();
     })
     .catch((error) =>
