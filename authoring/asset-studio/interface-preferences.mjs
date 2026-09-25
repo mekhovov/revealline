@@ -1,4 +1,4 @@
-import { t, localizedText } from '../../game/i18n/index.mjs';
+import { t, localizedText, localizedMessage } from '../../game/i18n/index.mjs';
 import { createDisplayPreferences } from '../../game/display-preferences.mjs';
 
 /** One page-owned view of the shared policy. This module cannot refresh a
@@ -19,9 +19,9 @@ export function mountInterfacePreferences({
     cap = control('studio-interface-cap'),
     notice = control('studio-interface-status');
   let disposed = false;
-  const warning = (message) => {
+  const warning = (message, key) => {
     if (disposed) return;
-    localizedText(notice, () =>message);
+    localizedText(notice, () => (key ? t(key) : message));
     notice.hidden = !message;
   };
   const preferences = createDisplayPreferences({
@@ -38,20 +38,24 @@ export function mountInterfacePreferences({
     size.value = state.textSize;
     reduced.checked = state.reducedEffects;
     const systemCap = state.effectiveReducedEffects && !state.reducedEffects;
-    localizedText(cap, () =>systemCap
-      ? t("tools:yourSystemRequestsReducedMotionPreviewEffectsRemainReduced")
-      : '');
+    localizedText(cap, () =>
+      systemCap ? t('tools:yourSystemRequestsReducedMotionPreviewEffectsRemainReduced') : '',
+    );
     cap.hidden = !systemCap;
   };
   const stopView = preferences.subscribe(render);
-  warning(preferences.getWarning());
+  warning(preferences.getWarning(), preferences.getWarningKey());
   const change = (patch) => {
     if (disposed) return;
     try {
       preferences.set(patch);
     } catch (error) {
       render(preferences.snapshot());
-      warning(`The interface preference could not be applied: ${error.message || error}`);
+      warning(
+        localizedMessage('common:preferences.applyFailed', {
+          error: error.message || String(error),
+        }),
+      );
     }
   };
   const bindings = [
