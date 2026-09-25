@@ -59,7 +59,10 @@ test('explicit Team Journey earns twelve consecutive clears across all five camp
   const f = await journeyPage(t);
   assert.equal(f.$('coop-level').value, 'twin-landings');
   assert.match(f.$('coop-pack-status').textContent, /Geometry test.*not human validated/);
-  assert.match(f.$('coop-boot').textContent, /human validation and original artwork pending/);
+  assert.match(
+    f.$('coop-advanced-note').textContent,
+    /human validation and original artwork pending/,
+  );
   assert.match(f.$('coop-journey-preferences-message').textContent, /only to this session/);
   assert.equal(f.$('coop-journey-save').hidden, false);
   assert.equal(f.$('coop-pause').dataset.journeyUnsaved, 'true');
