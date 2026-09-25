@@ -1,0 +1,21 @@
+{
+  "format": "revealline-archive-browser-admission.v1",
+  "status": "PASS",
+  "archiveId": "archive-76",
+  "infrastructureCommit": "d1c19658d55dca7d3e1d13499673512923a623e0",
+  "deploymentId": 6653723980,
+  "versions": [
+    "v0.111.0"
+  ],
+  "scope": "Historical online preservation: complete exact-byte public audit plus fresh Home, Solo gallery/launch, Versus launch and Team launch through the archived native UI. This does not claim physical-device/controller, comprehensive offline, or balance acceptance.",
+  "evidence": [
+    {
+      "path": "evidence/archive-76-v01110/public-acceptance.json",
+      "sha256": "b08af007d9d7aae44b09f10fbb88a42545815fa3fb5c22b7c6a4aa972cb6480a"
+    }
+  ],
+  "limitations": [
+    "No renewed physical touch/controller or comprehensive offline acceptance is claimed.",
+    "This admission preserves v0.111.0; v0.111.1 remains the separate immutable release selected by this controller change."
+  ]
+}
