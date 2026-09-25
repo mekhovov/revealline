@@ -368,3 +368,20 @@ server were closed; the viewport override was reset.
 A new audit finding remains: Solo's profile-writer warning about another saving tab is
 still English. Also, the full-suite failure inventory and uncatalogued owned text remain
 open; this is not a merge-readiness claim. Build/native artifacts above predate this batch.
+
+## v0.113.1 and saving-tab notices
+
+Rebased onto main `7c6f84a47`, retaining the Classic installer projection fix and its
+new regression cases. The new unsupported-Classic-rules error is translated. Profile
+writer leases now expose stable reason codes beside unchanged canonical diagnostics.
+Solo resolves these codes at presentation time, including accepted save warnings;
+locale changes never acquire a lease or write player data.
+
+All ten focused lease/real-Solo localization tests pass. Targeted lint and formatting
+pass. The actual source browser switches the occupied-writer warning Ukrainian → English
+→ Ukrainian across tabs, retaining focused Learn by playing, three lives, zero score and
+the 0:00 ready state. The broader v0.113.1 installer/host regression and rebuilt web
+distribution are still running; their results and native staging remain to be recorded.
+The old task-owned v0.113.0 distribution was hash-verified and removed to make room for
+the replacement; its manifest and archive identity are retained under the verification
+log directory. No user checkout or historical published artifact was removed.
