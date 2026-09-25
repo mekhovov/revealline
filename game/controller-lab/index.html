@@ -2,8 +2,15 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
+    <link rel="stylesheet" href="../i18n/style.css" />
+    <script src="../vendor/i18next-26.4.2.min.js"></script>
+    <script src="../i18n/catalogs.mjs"></script>
+    <script src="../i18n/bootstrap.mjs"></script>
+
     <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-    <title>Reveal / Line — Controller practice</title>
+    <title data-i18n="interface:revealLineControllerPractice">
+      Reveal / Line — Controller practice
+    </title>
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="../ui/pixel-theme.css" />
     <link rel="stylesheet" href="../ui/field-kit-fonts.css" />
@@ -23,90 +30,152 @@
     class="field-kit field-kit-support"
     data-field-kit-page="controller"
   >
+    <div data-language-control></div>
+
     <header>
-      <a href="../" data-workshop-return="game">◩ REVEAL / LINE</a>
+      <a href="../" data-workshop-return="game" data-i18n="interface:revealLine">◩ REVEAL / LINE</a>
       <a
         data-workshop-return="workshop"
         inert
         aria-disabled="true"
         href="../?workshop=controller-lab"
+        data-i18n="common:navigation.returnToWorkshop"
         >Return to Workshop</a
       >
-      <span>CONTROLLER PRACTICE</span>
-      <a href="../playground/" data-workshop-tool="playground">Open Playground ↗</a>
+      <span data-i18n="interface:controllerPractice">CONTROLLER PRACTICE</span>
+      <a href="../playground/" data-workshop-tool="playground" data-i18n="interface:openPlayground"
+        >Open Playground ↗</a
+      >
     </header>
     <main>
       <p id="load-status" class="operation-status notice" data-state="busy">
         <span class="operation-status-signal" aria-hidden="true"><i></i><i></i><i></i></span
-        ><span class="operation-status-label" role="status">Loading validated game content…</span>
+        ><span
+          class="operation-status-label"
+          role="status"
+          data-i18n="interface:loadingValidatedGameContent"
+          >Loading validated game content…</span
+        >
       </p>
       <section class="intro">
-        <p class="eyebrow">REAL GAME UI · SIMULATED CONTROLLER</p>
-        <h1 class="field-kit-display">Try the whole journey.</h1>
-        <p>
+        <p class="eyebrow" data-i18n="interface:realGameUiSimulatedController">
+          REAL GAME UI · SIMULATED CONTROLLER
+        </p>
+        <h1 class="field-kit-display" data-i18n="interface:tryTheWholeJourney">
+          Try the whole journey.
+        </h1>
+        <p data-i18n="interface:thisVirtualPadControlsTheActualGameBelowPracticeAwards">
           This virtual pad controls the actual game below. Practice awards no campaign progress,
           scores or unlocks. The three First Flight choices teach the capture loop with Scout and
           leave your Playground configuration intact. This lab does not verify physical controller
           support.
         </p>
       </section>
-      <p id="host-display-notice" class="notice" role="status">
+      <p
+        id="host-display-notice"
+        class="notice"
+        role="status"
+        data-i18n="interface:textSizeIsSharedWithTheGameSSettingsAppearance"
+      >
         Text size is shared with the game's Settings → Appearance &amp; accessibility. Plain text
         and reduced effects follow those settings too.
       </p>
-      <section class="setup" aria-label="Practice setup">
+      <section
+        class="setup"
+        aria-label="Practice setup"
+        data-i18n-aria-label="interface:practiceSetup"
+      >
         <label class="field-kit-page-text"
-          ><span data-field-kit-copy="display.textSize">Text size</span
+          ><span data-field-kit-copy="display.textSize" data-i18n="interface:textSize"
+            >Text size</span
           ><select id="host-text-size" data-tool-text-size aria-describedby="host-display-notice">
-            <option value="standard" data-field-kit-copy="display.standard">Standard</option>
-            <option value="large" data-field-kit-copy="display.large">Large</option>
+            <option
+              value="standard"
+              data-field-kit-copy="display.standard"
+              data-i18n="interface:display.textSize.standard"
+            >
+              Standard
+            </option>
+            <option value="large" data-field-kit-copy="display.large" data-i18n="interface:large">
+              Large
+            </option>
           </select></label
         >
-        <label>Mission<select id="mission" disabled></select></label>
-        <label>Starting class<select id="craft" disabled></select></label>
         <label
-          >Steering<select id="steering">
-            <option value="immediate">Immediate</option>
-            <option value="grid-center">Grid + buffer</option>
+          ><span data-i18n="interface:mission">Mission</span
+          ><select id="mission" disabled></select
+        ></label>
+        <label
+          ><span data-i18n="interface:startingClass">Starting class</span
+          ><select id="craft" disabled></select
+        ></label>
+        <label
+          ><span data-i18n="interface:steering">Steering</span
+          ><select id="steering">
+            <option value="immediate" data-i18n="interface:immediate">Immediate</option>
+            <option value="grid-center" data-i18n="interface:gridBuffer">Grid + buffer</option>
           </select></label
         >
         <label
-          >Game viewport<select id="viewport">
-            <option value="1280x720">Desktop · 1280 × 720</option>
-            <option value="390x844">Phone · 390 × 844</option>
-            <option value="320x640">Compact · 320 × 640</option>
-            <option value="844x390">Landscape · 844 × 390</option>
-            <option value="844x501">Short window · 844 × 501</option>
+          ><span data-i18n="interface:gameViewport">Game viewport</span
+          ><select id="viewport">
+            <option value="1280x720" data-i18n="interface:desktop1280720">
+              Desktop · 1280 × 720
+            </option>
+            <option value="390x844" data-i18n="interface:phone390844">Phone · 390 × 844</option>
+            <option value="320x640" data-i18n="interface:compact320640">Compact · 320 × 640</option>
+            <option value="844x390" data-i18n="interface:landscape844390">
+              Landscape · 844 × 390
+            </option>
+            <option value="844x501" data-i18n="interface:shortWindow844501">
+              Short window · 844 × 501
+            </option>
           </select></label
         >
-        <button id="load" disabled>Load practice</button>
+        <button id="load" disabled data-i18n="interface:loadPractice">Load practice</button>
       </section>
       <div class="lab-grid">
-        <aside aria-label="Virtual controller">
+        <aside aria-label="Virtual controller" data-i18n-aria-label="interface:virtualController">
           <div class="connection">
-            <button id="connect" disabled>Connect virtual pad</button>
-            <button id="disconnect" disabled>Disconnect</button>
+            <button id="connect" disabled data-i18n="interface:connectVirtualPad">
+              Connect virtual pad
+            </button>
+            <button id="disconnect" disabled data-i18n="interface:disconnect">Disconnect</button>
           </div>
-          <p id="connection-status">Virtual pad disconnected.</p>
-          <p class="guide">
+          <p id="connection-status" data-i18n="interface:virtualPadDisconnected">
+            Virtual pad disconnected.
+          </p>
+          <p class="guide" data-i18n-rich="interface:connectAndReleaseAllControlsOnceTheSoloGameIs">
             Connect and release all controls once. The solo game is ready immediately;
-            <strong>South / 0</strong> confirms, <strong>East / 1</strong> goes back. Both sticks
-            and the D-pad steer. Shoulders and triggers navigate menus. With a custom layout, use
-            your configured menu Confirm button.
+            <strong data-i18n="interface:south0" data-i18n-slot="slot0">South / 0</strong> confirms,
+            <strong data-i18n="interface:east1" data-i18n-slot="slot1">East / 1</strong> goes back.
+            Both sticks and the D-pad steer. Shoulders and triggers navigate menus. With a custom
+            layout, use your configured menu Confirm button.
           </p>
           <label
-            >Button gesture<select id="gesture">
-              <option value="pulse">Pulse · release after 200 ms</option>
-              <option value="hold">Hold · press again to release</option>
+            ><span data-i18n="interface:buttonGesture">Button gesture</span
+            ><select id="gesture">
+              <option value="pulse" data-i18n="interface:pulseReleaseAfter200Ms">
+                Pulse · release after 200 ms
+              </option>
+              <option value="hold" data-i18n="interface:holdPressAgainToRelease">
+                Hold · press again to release
+              </option>
             </select></label
           >
-          <div class="dpad" role="group" aria-label="Virtual directional pad">
+          <div
+            class="dpad"
+            role="group"
+            aria-label="Virtual directional pad"
+            data-i18n-aria-label="interface:virtualDirectionalPad"
+          >
             <button
               data-pad="12"
               class="up"
               disabled
               aria-pressed="false"
               aria-label="Button 12: D-pad up"
+              data-i18n-aria-label="interface:button12DPadUp"
             >
               <b>↑</b><span>12</span>
             </button>
@@ -116,6 +185,7 @@
               disabled
               aria-pressed="false"
               aria-label="Button 14: D-pad left"
+              data-i18n-aria-label="interface:button14DPadLeft"
             >
               <b>←</b><span>14</span>
             </button>
@@ -125,6 +195,7 @@
               disabled
               aria-pressed="false"
               aria-label="Button 13: D-pad down"
+              data-i18n-aria-label="interface:button13DPadDown"
             >
               <b>↓</b><span>13</span>
             </button>
@@ -134,6 +205,7 @@
               disabled
               aria-pressed="false"
               aria-label="Button 15: D-pad right"
+              data-i18n-aria-label="interface:button15DPadRight"
             >
               <b>→</b><span>15</span>
             </button>
@@ -142,108 +214,193 @@
             class="face-buttons"
             role="group"
             aria-label="Physical virtual-pad buttons 0 through 11"
+            data-i18n-aria-label="interface:physicalVirtualPadButtons0Through11"
           >
-            <button data-pad="0" disabled aria-pressed="false" aria-label="Button 0: south face">
-              <b>South</b><span>Button 0</span>
+            <button
+              data-pad="0"
+              disabled
+              aria-pressed="false"
+              aria-label="Button 0: south face"
+              data-i18n-aria-label="interface:button0SouthFace"
+            >
+              <b data-i18n="interface:south">South</b
+              ><span data-i18n="interface:button0">Button 0</span>
             </button>
-            <button data-pad="1" disabled aria-pressed="false" aria-label="Button 1: east face">
-              <b>East</b><span>Button 1</span>
+            <button
+              data-pad="1"
+              disabled
+              aria-pressed="false"
+              aria-label="Button 1: east face"
+              data-i18n-aria-label="interface:button1EastFace"
+            >
+              <b data-i18n="interface:east">East</b
+              ><span data-i18n="interface:button1">Button 1</span>
             </button>
-            <button data-pad="2" disabled aria-pressed="false" aria-label="Button 2: west face">
-              <b>West</b><span>Button 2</span>
+            <button
+              data-pad="2"
+              disabled
+              aria-pressed="false"
+              aria-label="Button 2: west face"
+              data-i18n-aria-label="interface:button2WestFace"
+            >
+              <b data-i18n="interface:west">West</b
+              ><span data-i18n="interface:button2">Button 2</span>
             </button>
-            <button data-pad="3" disabled aria-pressed="false" aria-label="Button 3: north face">
-              <b>North</b><span>Button 3</span>
+            <button
+              data-pad="3"
+              disabled
+              aria-pressed="false"
+              aria-label="Button 3: north face"
+              data-i18n-aria-label="interface:button3NorthFace"
+            >
+              <b data-i18n="interface:north">North</b
+              ><span data-i18n="interface:button3">Button 3</span>
             </button>
-            <button data-pad="4" disabled aria-pressed="false" aria-label="Button 4: left shoulder">
-              <b>L shoulder</b><span>Button 4</span>
+            <button
+              data-pad="4"
+              disabled
+              aria-pressed="false"
+              aria-label="Button 4: left shoulder"
+              data-i18n-aria-label="interface:button4LeftShoulder"
+            >
+              <b data-i18n="interface:lShoulder">L shoulder</b
+              ><span data-i18n="interface:button4">Button 4</span>
             </button>
             <button
               data-pad="5"
               disabled
               aria-pressed="false"
               aria-label="Button 5: right shoulder"
+              data-i18n-aria-label="interface:button5RightShoulder"
             >
-              <b>R shoulder</b><span>Button 5</span>
+              <b data-i18n="interface:rShoulder">R shoulder</b
+              ><span data-i18n="interface:button5">Button 5</span>
             </button>
-            <button data-pad="6" disabled aria-pressed="false" aria-label="Button 6: left trigger">
-              <b>L trigger</b><span>Button 6</span>
+            <button
+              data-pad="6"
+              disabled
+              aria-pressed="false"
+              aria-label="Button 6: left trigger"
+              data-i18n-aria-label="interface:button6LeftTrigger"
+            >
+              <b data-i18n="interface:lTrigger">L trigger</b
+              ><span data-i18n="interface:button6">Button 6</span>
             </button>
-            <button data-pad="7" disabled aria-pressed="false" aria-label="Button 7: right trigger">
-              <b>R trigger</b><span>Button 7</span>
+            <button
+              data-pad="7"
+              disabled
+              aria-pressed="false"
+              aria-label="Button 7: right trigger"
+              data-i18n-aria-label="interface:button7RightTrigger"
+            >
+              <b data-i18n="interface:rTrigger">R trigger</b
+              ><span data-i18n="interface:button7">Button 7</span>
             </button>
             <button
               data-pad="8"
               disabled
               aria-pressed="false"
               aria-label="Button 8: view or select"
+              data-i18n-aria-label="interface:button8ViewOrSelect"
             >
-              <b>View / select</b><span>Button 8</span>
+              <b data-i18n="interface:viewSelect">View / select</b
+              ><span data-i18n="interface:button8">Button 8</span>
             </button>
-            <button data-pad="9" disabled aria-pressed="false" aria-label="Button 9: menu or start">
-              <b>Menu / start</b><span>Button 9</span>
+            <button
+              data-pad="9"
+              disabled
+              aria-pressed="false"
+              aria-label="Button 9: menu or start"
+              data-i18n-aria-label="interface:button9MenuOrStart"
+            >
+              <b data-i18n="interface:menuStart">Menu / start</b
+              ><span data-i18n="interface:button9">Button 9</span>
             </button>
             <button
               data-pad="10"
               disabled
               aria-pressed="false"
               aria-label="Button 10: left stick press"
+              data-i18n-aria-label="interface:button10LeftStickPress"
             >
-              <b>L stick press</b><span>Button 10</span>
+              <b data-i18n="interface:lStickPress">L stick press</b
+              ><span data-i18n="interface:button10">Button 10</span>
             </button>
             <button
               data-pad="11"
               disabled
               aria-pressed="false"
               aria-label="Button 11: right stick press"
+              data-i18n-aria-label="interface:button11RightStickPress"
             >
-              <b>R stick press</b><span>Button 11</span>
+              <b data-i18n="interface:rStickPress">R stick press</b
+              ><span data-i18n="interface:button11">Button 11</span>
             </button>
           </div>
           <fieldset class="sticks">
-            <legend>Both sticks · draft values</legend>
+            <legend data-i18n="interface:bothSticksDraftValues">Both sticks · draft values</legend>
             <div class="axis-label">
-              <label for="axis-0">Left horizontal · axis 0</label
+              <label for="axis-0" data-i18n="interface:leftHorizontalAxis0"
+                >Left horizontal · axis 0</label
               ><output id="axis-0-value" for="axis-0" aria-hidden="true">0.00</output>
             </div>
             <input id="axis-0" type="range" min="-1" max="1" step="0.05" value="0" disabled />
             <div class="axis-label">
-              <label for="axis-1">Left vertical · axis 1</label
+              <label for="axis-1" data-i18n="interface:leftVerticalAxis1"
+                >Left vertical · axis 1</label
               ><output id="axis-1-value" for="axis-1" aria-hidden="true">0.00</output>
             </div>
             <input id="axis-1" type="range" min="-1" max="1" step="0.05" value="0" disabled />
             <div class="axis-label">
-              <label for="axis-2">Right horizontal · axis 2</label
+              <label for="axis-2" data-i18n="interface:rightHorizontalAxis2"
+                >Right horizontal · axis 2</label
               ><output id="axis-2-value" for="axis-2" aria-hidden="true">0.00</output>
             </div>
             <input id="axis-2" type="range" min="-1" max="1" step="0.05" value="0" disabled />
             <div class="axis-label">
-              <label for="axis-3">Right vertical · axis 3</label
+              <label for="axis-3" data-i18n="interface:rightVerticalAxis3"
+                >Right vertical · axis 3</label
               ><output id="axis-3-value" for="axis-3" aria-hidden="true">0.00</output>
             </div>
             <input id="axis-3" type="range" min="-1" max="1" step="0.05" value="0" disabled />
-            <p class="guide">
+            <p
+              class="guide"
+              data-i18n="interface:negativeLeftUpPositiveRightDownEditingReleasesTheVirtual"
+            >
               Negative = left/up. Positive = right/down. Editing releases the virtual pad; values
               stay draft until applied.
             </p>
-            <p class="guide">
+            <p class="guide" data-i18n="interface:editingMayPauseAFlightResumeExplicitlyInTheGame">
               Editing may pause a flight. Resume explicitly in the game using your configured
               controls, then Apply again to test flight movement. Apply never resumes for you.
             </p>
-            <button id="apply-stick" class="wide" disabled>Apply stick values</button>
-            <p id="axis-status" class="guide" role="status">Both sticks centered.</p>
+            <button id="apply-stick" class="wide" disabled data-i18n="interface:applyStickValues">
+              Apply stick values
+            </button>
+            <p
+              id="axis-status"
+              class="guide"
+              role="status"
+              data-i18n="interface:bothSticksCentered"
+            >
+              Both sticks centered.
+            </p>
           </fieldset>
-          <button id="release" class="wide" disabled>Release all · buttons + sticks</button>
-          <button id="focus-game" class="wide" disabled>Focus game</button>
+          <button id="release" class="wide" disabled data-i18n="interface:releaseAllButtonsSticks">
+            Release all · buttons + sticks
+          </button>
+          <button id="focus-game" class="wide" disabled data-i18n="interface:focusGame">
+            Focus game
+          </button>
           <dl class="feedback" aria-live="polite" aria-atomic="true">
-            <dt>Game scope</dt>
-            <dd id="scope">Waiting for practice</dd>
-            <dt>Focused control</dt>
+            <dt data-i18n="interface:gameScope">Game scope</dt>
+            <dd id="scope" data-i18n="interface:waitingForPractice">Waiting for practice</dd>
+            <dt data-i18n="interface:focusedControl">Focused control</dt>
             <dd id="focused">—</dd>
-            <dt>Controller</dt>
-            <dd id="pad-status">Not joined</dd>
+            <dt data-i18n="interface:controller">Controller</dt>
+            <dd id="pad-status" data-i18n="interface:notJoined">Not joined</dd>
           </dl>
-          <p class="guide">
+          <p class="guide" data-i18n="interface:holdModeKeepsAPhysicalButtonPressedWhenYouActivate">
             Hold mode keeps a physical button pressed when you activate another. Release all before
             a new menu gesture. In flight, a direction press selects continuous movement; releasing
             buttons or sticks does not stop it. Use Pause, then explicit Resume to continue. Moving
@@ -251,16 +408,28 @@
             game first. At either end of a game menu, Tab returns to Mission setup and Shift+Tab
             returns to Focus game in this panel. Close any game dialog first.
           </p>
-          <p class="guide default-hints">
-            <strong>Default layout only:</strong> 0 confirms / uses ability (or pauses in Arcade); 1
-            goes back / pauses; 2 picks up supply (or opens the field guide); 3 opens Hangar (or
-            missions); 5 boosts when available; 8 / 9 pause. Both sticks steer. Remap controls in
-            the game's Settings; this panel sends the physical positions and indices shown.
+          <p
+            class="guide default-hints"
+            data-i18n-rich="interface:0ConfirmsUsesAbilityOrPausesInArcade1Goes"
+          >
+            <strong data-i18n="interface:defaultLayoutOnly" data-i18n-slot="slot0"
+              >Default layout only:</strong
+            >
+            0 confirms / uses ability (or pauses in Arcade); 1 goes back / pauses; 2 picks up supply
+            (or opens the field guide); 3 opens Hangar (or missions); 5 boosts when available; 8 / 9
+            pause. Both sticks steer. Remap controls in the game's Settings; this panel sends the
+            physical positions and indices shown.
           </p>
         </aside>
-        <section class="stage" aria-label="Actual practice game">
+        <section
+          class="stage"
+          aria-label="Actual practice game"
+          data-i18n-aria-label="interface:actualPracticeGame"
+        >
           <div class="stage-heading">
-            <span id="viewport-readout">1280 × 720 · scaled to fit</span><span>LIVE PRACTICE</span>
+            <span id="viewport-readout" data-i18n="interface:1280720ScaledToFit"
+              >1280 × 720 · scaled to fit</span
+            ><span data-i18n="interface:livePractice">LIVE PRACTICE</span>
           </div>
           <div id="frame-space">
             <iframe
@@ -270,11 +439,15 @@
               tabindex="0"
               allow="gamepad; fullscreen"
               allowfullscreen
+              data-i18n-title="interface:revealLinePracticeGameControlledByTheVirtualPad"
             ></iframe>
           </div>
         </section>
       </div>
-      <p class="footer-note">
+      <p
+        class="footer-note"
+        data-i18n="interface:menuFocusFeedbackContainsOnlyShortLabelsAndControllerStatus"
+      >
         Menu focus feedback contains only short labels and controller status. Audio, fullscreen and
         file dialogs can still require a direct click or touch in the game. Keyboard and touch
         remain available there.

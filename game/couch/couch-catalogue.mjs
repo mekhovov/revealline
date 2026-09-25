@@ -1,3 +1,4 @@
+import { t, localizedText, localizedMessage } from '../i18n/index.mjs';
 import { attachOptionalChaptersPanel } from '../ui/optional-chapters-panel.mjs';
 import { loadOptionalCatalog } from '../optional-chapters.mjs';
 import { emptyPackLibrary } from '../packs.mjs';
@@ -31,21 +32,20 @@ export function attachCouchCatalogue({
   modal.setAttribute('aria-labelledby', 'race-chapter-replace-title');
   const heading = doc.createElement('h2');
   heading.id = 'race-chapter-replace-title';
-  heading.textContent = 'Start another chapter?';
+  localizedText(heading, () => t('interface:startAnotherChapter'));
   const description = doc.createElement('p');
-  description.textContent =
-    'Both boards are paused. Stay keeps this race and series. Replace & play starts the prepared chapter with a new series.';
+  localizedText(description, () => t('interface:bothBoardsArePausedStayKeepsThisRaceAndSeries'));
   const actions = doc.createElement('div');
   actions.className = 'race-menu-actions';
   const stay = doc.createElement('button');
   stay.id = 'race-chapter-stay';
   stay.type = 'button';
-  stay.textContent = 'Stay';
+  localizedText(stay, () => t('interface:stay'));
   const replace = doc.createElement('button');
   replace.id = 'race-chapter-play';
   replace.type = 'button';
   replace.className = 'field-kit-primary';
-  replace.textContent = 'Replace & play';
+  localizedText(replace, () => t('interface:replacePlay'));
   actions.append(stay, replace);
   modal.append(heading, description, actions);
   doc.body.append(modal);
@@ -134,10 +134,10 @@ export function attachCouchCatalogue({
     if (doc.activeElement !== launch.opener && !ownsCancel) {
       try {
         if (!current(intent) || !dialog?.open)
-          throw new DOMException('Chapter activation is no longer current.', 'AbortError');
+          throw new DOMException(t('interface:chapterActivationIsNoLongerCurrent'), 'AbortError');
         dialog.focus({ preventScroll: true });
         if (!current(intent) || doc.activeElement !== dialog)
-          throw new DOMException('Chapter activation is no longer current.', 'AbortError');
+          throw new DOMException(t('interface:chapterActivationIsNoLongerCurrent'), 'AbortError');
       } catch (error) {
         releaseIntent(intent);
         throw error;
@@ -149,7 +149,7 @@ export function attachCouchCatalogue({
     const check = () => {
       if (!intent || !current(intent))
         throw new DOMException(
-          'Chapter preparation cancelled; the current race is kept.',
+          t('interface:chapterPreparationCancelledTheCurrentRaceIsKept'),
           'AbortError',
         );
     };
@@ -180,7 +180,7 @@ export function attachCouchCatalogue({
       const adopted = candidate.adopt(() => current(intent));
       if (!adopted)
         throw new DOMException(
-          'Chapter preparation cancelled; the current race is kept.',
+          t('interface:chapterPreparationCancelledTheCurrentRaceIsKept'),
           'AbortError',
         );
       // The new attempt owns its pictures before panel close aborts pending work.
@@ -198,8 +198,8 @@ export function attachCouchCatalogue({
   }
   const panel = attachOptionalChaptersPanel({
     document: doc,
-    heading: 'Chapters · Couch Versus',
-    backLabel: 'Back to Versus',
+    heading: localizedMessage('interface:chaptersCouchVersus'),
+    backLabel: localizedMessage('interface:backToVersus'),
     attemptLabel: 'race',
     showManage: false,
     getLibrary: () => inventory.library,
@@ -215,7 +215,7 @@ export function attachCouchCatalogue({
     },
     play(item, options) {
       const pack = inventory.library.packs.find((entry) => entry.id === item.id);
-      if (!pack) throw new Error('Refresh chapters before playing this edition.');
+      if (!pack) throw new Error(t('interface:refreshChaptersBeforePlayingThisEdition'));
       return playPack(pack, options);
     },
     playInstalled: playPack,

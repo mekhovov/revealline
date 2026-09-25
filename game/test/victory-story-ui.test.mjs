@@ -911,3 +911,75 @@ test('actual story controls keep modal Tab at Close and Cinematic volume without
   assert.equal(h.video.playCalls, 0);
   assert.deepEqual(h.player.snapshot(), before);
 });
+
+test('Ukrainian-first story controls and accepted notices switch without changing playback ownership', async (t) => {
+  const { setLocale, getLocale } = await import('../i18n/index.mjs');
+  const previous = getLocale();
+  setLocale('uk', { persist: false });
+  try {
+    const h = await setup(t);
+    h.ready();
+    const play = h.button('Відтворити');
+    assert.ok(play, 'Playback controls have stable action identities when created in Ukrainian.');
+    assert.equal(play.disabled, false);
+    play.click();
+    await microtasks();
+    assert.equal(h.player.snapshot().state, 'playing');
+    const pause = h.button('Пауза');
+    pause.focus();
+    const video = h.video;
+    const playing = {
+      snapshot: h.player.snapshot(),
+      playCalls: video.playCalls,
+      pauseCalls: video.pauseCalls,
+      changes: h.changes.length,
+      urls: [...h.urls.keys()],
+      revoked: [...h.revoked],
+      timers: [...h.timeouts.keys()],
+      intervals: [...h.intervals.keys()],
+      frames: [...video.frames.keys()],
+    };
+    setLocale('en', { persist: false });
+    assert.equal(h.button('Pause'), pause);
+    assert.equal(h.doc.activeElement, pause);
+    assert.deepEqual(h.player.snapshot(), playing.snapshot);
+    assert.equal(video.playCalls, playing.playCalls);
+    assert.equal(video.pauseCalls, playing.pauseCalls);
+    assert.equal(h.changes.length, playing.changes);
+    assert.deepEqual([...h.urls.keys()], playing.urls);
+    assert.deepEqual(h.revoked, playing.revoked);
+    assert.deepEqual([...h.timeouts.keys()], playing.timers);
+    assert.deepEqual([...h.intervals.keys()], playing.intervals);
+    assert.deepEqual([...video.frames.keys()], playing.frames);
+    assert.match(h.player.element.querySelector('.operation-status').textContent, /Story playing/);
+    pause.click();
+    assert.equal(h.player.snapshot().state, 'paused');
+    const resume = h.button('Resume story');
+    resume.focus();
+    const paused = { time: video.currentTime, calls: video.playCalls, changes: h.changes.length };
+    setLocale('uk', { persist: false });
+    assert.equal(h.doc.activeElement, resume);
+    assert.equal(h.player.snapshot().state, 'paused');
+    assert.equal(video.currentTime, paused.time);
+    assert.equal(video.playCalls, paused.calls);
+    assert.equal(h.changes.length, paused.changes);
+    assert.match(
+      h.player.element.querySelector('.operation-status').textContent,
+      /Історію призупинено/,
+    );
+    h.video.emit('error');
+    const failed = h.player.snapshot();
+    assert.equal(failed.state, 'error');
+    assert.match(h.player.element.querySelector('.operation-status').textContent, /[Вв]ідео/);
+    setLocale('en', { persist: false });
+    assert.equal(h.player.snapshot().state, failed.state);
+    assert.equal(h.player.snapshot().positionSeconds, failed.positionSeconds);
+    assert.match(
+      h.player.element.querySelector('.operation-status').textContent,
+      /Video decoding failed/,
+    );
+    h.player.dispose();
+  } finally {
+    setLocale(previous, { persist: false });
+  }
+});

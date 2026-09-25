@@ -1,3 +1,5 @@
+import { t } from '../game/i18n/index.mjs';
+import { localizedText } from '../game/i18n/index.mjs';
 import { attachAboutNavigation } from './about-navigation.mjs';
 import { preparePackCatalog, packLaunchHref } from '../game/content-launch.mjs';
 import { archivedPlayHrefFromCatalog, releaseHistoryHref } from './release-links.mjs';
@@ -6,7 +8,7 @@ const navigation = attachAboutNavigation();
 const root = document.documentElement;
 const currentVersion = root.dataset.currentVersion;
 const currentLabel = currentVersion.startsWith('__')
-  ? 'DEV'
+  ? t('website:dev')
   : currentVersion.startsWith('v')
     ? currentVersion
     : `v${currentVersion}`;
@@ -26,9 +28,9 @@ historyLink.href = historyHref;
 historyLink.hidden = false;
 
 for (const label of document.querySelectorAll('[data-current-label]')) {
-  label.textContent = currentLabel;
+  localizedText(label, () => currentLabel);
 }
-picker.options[0].textContent = `${currentLabel} · current`;
+localizedText(picker.options[0], () => `${currentLabel} · current`);
 
 const savedClears = (campaign) => {
   try {
@@ -53,7 +55,7 @@ const savedClears = (campaign) => {
 function addOption(label, href) {
   const option = document.createElement('option');
   option.value = href;
-  option.textContent = label;
+  localizedText(option, () => label);
   picker.append(option);
 }
 
@@ -84,10 +86,18 @@ async function loadCatalogs() {
       addOption(`${record.version} · preserved`, href);
       available++;
     }
-    status.textContent = `${available} preserved build${available === 1 ? '' : 's'} · ${currentLabel} remains the default.`;
+    localizedText(
+      status,
+      () =>
+        `${available} preserved build${available === 1 ? '' : 's'} · ${currentLabel} remains the default.`,
+    );
   } catch {
     if (!navigation.current()) return;
-    status.textContent = `The current build is ready. Preserved builds will appear when the archive is available.`;
+    localizedText(
+      status,
+      () =>
+        `The current build is ready. Preserved builds will appear when the archive is available.`,
+    );
   }
 
   if (!navigation.current()) return;
@@ -128,7 +138,11 @@ async function loadCatalogs() {
         levelId: level.value,
         play: true,
       });
-      packStatus.textContent = `${pack.name} · ${level.textContent.replace(/^\d+ · /, '')} ready to install and play.`;
+      localizedText(
+        packStatus,
+        () =>
+          `${pack.name} · ${level.textContent.replace(/^\d+ · /, '')} ready to install and play.`,
+      );
     };
 
     packSelect.replaceChildren(
@@ -147,7 +161,7 @@ async function loadCatalogs() {
     if (!navigation.current()) return;
     packSelect.disabled = true;
     levelSelect.disabled = true;
-    packStatus.textContent = 'Quick selector unavailable. Use any pack card below.';
+    localizedText(packStatus, () => t('website:quickSelectorUnavailableUseAnyPackCardBelow'));
   }
 }
 await loadCatalogs();

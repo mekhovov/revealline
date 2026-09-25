@@ -2,9 +2,14 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../game/i18n/style.css" />
+    <script src="../../game/vendor/i18next-26.4.2.min.js"></script>
+    <script src="../../game/i18n/catalogs.mjs"></script>
+    <script src="../../game/i18n/bootstrap.mjs"></script>
+
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="color-scheme" content="dark" />
-    <title>RevealLine — Asset Studio</title>
+    <title data-i18n="tools:reveallineAssetStudio">RevealLine — Asset Studio</title>
     <script type="module" src="../../game/ui/workshop-return-entry.mjs"></script>
     <link rel="stylesheet" href="../../game/ui/workshop-return.css" />
     <link rel="stylesheet" href="../../game/ui/field-kit-fonts.css" />
@@ -19,7 +24,15 @@
     data-text-face="pixel"
     data-text-size="standard"
   >
-    <a data-studio-host="control" class="skip-link" href="#inspector">Skip inventory</a>
+    <div data-language-control></div>
+
+    <a
+      data-studio-host="control"
+      class="skip-link"
+      href="#inspector"
+      data-i18n="tools:skipInventory"
+      >Skip inventory</a
+    >
     <div class="studio-operation">
       <p
         data-studio-host="control"
@@ -28,11 +41,21 @@
         data-state="busy"
       >
         <span class="operation-status-signal" aria-hidden="true"><i></i><i></i><i></i></span>
-        <span class="operation-status-label" role="status" aria-live="polite"
+        <span
+          class="operation-status-label"
+          role="status"
+          aria-live="polite"
+          data-i18n="tools:loadingTheStudioWorkspaceAndPresentationRegistry"
           >Loading the Studio workspace and presentation registry…</span
         >
       </p>
-      <button data-studio-host="control" id="cancel-studio-operation" type="button" hidden>
+      <button
+        data-studio-host="control"
+        id="cancel-studio-operation"
+        type="button"
+        hidden
+        data-i18n="common:actions.cancel"
+      >
         Cancel
       </button>
     </div>
@@ -45,9 +68,10 @@
           aria-disabled="true"
           data-studio-host="control"
           href="../../game/?workshop=asset-studio"
+          data-i18n="common:navigation.returnToWorkshop"
           >Return to Workshop</a
         >
-        <h1 data-studio-host="title">Asset Studio</h1>
+        <h1 data-studio-host="title" data-i18n="tools:assetStudio">Asset Studio</h1>
       </div>
       <div class="workspace-actions">
         <button
@@ -58,6 +82,7 @@
           data-studio-startup-disabled
           disabled
           class="primary"
+          data-i18n="tools:saveLocalRevision"
         >
           Save local revision</button
         ><button
@@ -67,10 +92,12 @@
           data-tool-control
           data-studio-startup-disabled
           disabled
+          data-i18n="tools:exportRltheme"
         >
           Export .rltheme</button
         ><label data-studio-host="control" class="file-button"
-          >Import collection<input
+          ><span data-i18n="tools:importCollection">Import collection</span
+          ><input
             data-studio-host="control"
             id="import-workspace"
             data-tool-control
@@ -81,31 +108,36 @@
         /></label>
       </div>
       <details class="studio-interface">
-        <summary data-studio-host="control">Interface</summary>
-        <p data-studio-host="body">Interface preferences do not change the exported theme.</p>
+        <summary data-studio-host="control" data-i18n="common:interface.label">Interface</summary>
+        <p
+          data-studio-host="body"
+          data-i18n="tools:interfacePreferencesDoNotChangeTheExportedTheme"
+        >
+          Interface preferences do not change the exported theme.
+        </p>
         <div class="studio-interface-controls">
           <label data-studio-host="control" for="studio-interface-font"
-            >Interface font
+            ><span data-i18n="tools:interfaceFont">Interface font</span>
             <select
               data-studio-host="control"
               id="studio-interface-font"
               data-studio-startup-disabled
               disabled
             >
-              <option value="pixel">Theme</option>
-              <option value="plain">Plain</option>
+              <option value="pixel" data-i18n="tools:theme">Theme</option>
+              <option value="plain" data-i18n="common:text.plain">Plain</option>
             </select>
           </label>
           <label data-studio-host="control" for="studio-interface-size"
-            >Text size
+            ><span data-i18n="tools:textSize">Text size</span>
             <select
               data-studio-host="control"
               id="studio-interface-size"
               data-studio-startup-disabled
               disabled
             >
-              <option value="standard">Standard</option>
-              <option value="large">Large</option>
+              <option value="standard" data-i18n="tools:standard">Standard</option>
+              <option value="large" data-i18n="tools:large">Large</option>
             </select>
           </label>
           <label data-studio-host="control" class="inline-check" for="studio-interface-reduced">
@@ -117,7 +149,7 @@
               type="checkbox"
               aria-describedby="studio-interface-cap"
             />
-            Reduced effects
+            <span data-i18n="tools:reducedEffects">Reduced effects</span>
           </label>
         </div>
         <p data-studio-host="body" id="studio-interface-cap" hidden></p>
@@ -130,86 +162,158 @@
         ></p>
       </details>
       <details id="studio-guide" class="studio-guide">
-        <summary id="studio-guide-open" data-studio-host="control">Studio guide</summary>
+        <summary id="studio-guide-open" data-studio-host="control" data-i18n="tools:studioGuide">
+          Studio guide
+        </summary>
         <div class="studio-guide-copy">
-          <h2 data-studio-host="heading">From an idea to a reusable asset</h2>
-          <p data-studio-host="body">
+          <h2 data-studio-host="heading" data-i18n="tools:fromAnIdeaToAReusableAsset">
+            From an idea to a reusable asset
+          </h2>
+          <p data-studio-host="body" data-i18n="tools:thisGuideStaysInYourWorkspaceYouCanReadIt">
             This guide stays in your workspace. You can read it while an asset is preparing without
             losing your crop, pixel edits or staged changes.
           </p>
           <ol>
-            <li data-studio-host="body">
-              <strong>Select and inspect a slot.</strong> Use the inventory filters, then read its
-              dimensions, palette, transparency, geometry and usage requirements. Compare the
-              current asset with your draft. Copy an AI brief when you need a starting point.
+            <li
+              data-studio-host="body"
+              data-i18n-rich="tools:useTheInventoryFiltersThenReadItsDimensionsPaletteTransparency"
+            >
+              <strong data-i18n="tools:selectAndInspectASlot" data-i18n-slot="slot0"
+                >Select and inspect a slot.</strong
+              >
+              Use the inventory filters, then read its dimensions, palette, transparency, geometry
+              and usage requirements. Compare the current asset with your draft. Copy an AI brief
+              when you need a starting point.
             </li>
-            <li data-studio-host="body">
-              <strong>Choose and prepare your replacement.</strong> Upload a supported image, font
-              or sound. For images, adjust the crop and choose Prepare derivative; the original
-              stays intact. For small sprites, edit pixels and choose Prepare edited sprite.
-              Recipe-only slots use supported theme tokens or reviewed source changes instead of
-              uploaded images.
+            <li
+              data-studio-host="body"
+              data-i18n-rich="tools:uploadASupportedImageFontOrSoundForImagesAdjust"
+            >
+              <strong data-i18n="tools:chooseAndPrepareYourReplacement" data-i18n-slot="slot0"
+                >Choose and prepare your replacement.</strong
+              >
+              Upload a supported image, font or sound. For images, adjust the crop and choose
+              Prepare derivative; the original stays intact. For small sprites, edit pixels and
+              choose Prepare edited sprite. Recipe-only slots use supported theme tokens or reviewed
+              source changes instead of uploaded images.
             </li>
-            <li data-studio-host="body">
-              <strong>Record provenance.</strong> Enter the actual creator, source, rights or
-              license, and the effective prompt when one was used. An upload or AI result does not
-              establish permission to use it. Inspect the pivot, rotor anchors or frame regions when
-              the slot needs them.
+            <li
+              data-studio-host="body"
+              data-i18n-rich="tools:enterTheActualCreatorSourceRightsOrLicenseAndThe"
+            >
+              <strong data-i18n="tools:recordProvenance" data-i18n-slot="slot0"
+                >Record provenance.</strong
+              >
+              Enter the actual creator, source, rights or license, and the effective prompt when one
+              was used. An upload or AI result does not establish permission to use it. Inspect the
+              pivot, rotor anchors or frame regions when the slot needs them.
             </li>
-            <li data-studio-host="body">
-              <strong>Validate and stage.</strong> Choose Validate and stage replacement. Fix any
-              reported requirement and try again. Preparation alone has not added the replacement to
-              your workspace; staging creates the draft revision.
+            <li
+              data-studio-host="body"
+              data-i18n-rich="tools:chooseValidateAndStageReplacementFixAnyReportedRequirementAnd"
+            >
+              <strong data-i18n="tools:validateAndStage" data-i18n-slot="slot0"
+                >Validate and stage.</strong
+              >
+              Choose Validate and stage replacement. Fix any reported requirement and try again.
+              Preparation alone has not added the replacement to your workspace; staging creates the
+              draft revision.
             </li>
-            <li data-studio-host="body">
-              <strong>Inspect, save and export.</strong> Check the comparison and applicable
-              previews. Save local revision keeps the workspace on this device. Export .rltheme
-              transfers the staged collection, original files and revision history for review and
-              release adoption. Neither action publishes the public game or changes player saves.
+            <li
+              data-studio-host="body"
+              data-i18n-rich="tools:checkTheComparisonAndApplicablePreviewsSaveLocalRevisionKeeps"
+            >
+              <strong data-i18n="tools:inspectSaveAndExport" data-i18n-slot="slot0"
+                >Inspect, save and export.</strong
+              >
+              Check the comparison and applicable previews. Save local revision keeps the workspace
+              on this device. Export .rltheme transfers the staged collection, original files and
+              revision history for review and release adoption. Neither action publishes the public
+              game or changes player saves.
             </li>
           </ol>
-          <h3 data-studio-host="heading">Keep your work</h3>
-          <p data-studio-host="body">
+          <h3 data-studio-host="heading" data-i18n="tools:keepYourWork">Keep your work</h3>
+          <p
+            data-studio-host="body"
+            data-i18n="tools:pixelUndoAndRedoAffectTheSpriteEditorUndoDraft"
+          >
             Pixel Undo and Redo affect the sprite editor. Undo draft and Redo draft affect staged,
             unsaved workspace revisions. A successful Save local revision clears the draft undo
             stack. Prepare and stage an unfinished sprite or upload, or explicitly discard it,
             before saving, exporting or switching assets.
           </p>
-          <p data-studio-host="body">
+          <p
+            data-studio-host="body"
+            data-i18n="tools:ifLocalSavingIsUnavailableFinishAndStageAnyPending"
+          >
             If local saving is unavailable, finish and stage any pending edit, then export your
             workspace. Keep that export before Reset to saved, which discards staged unsaved
             changes. Reload saved requires you to resolve unfinished edits and staged changes first.
             A stale save from another tab also needs this recovery path.
           </p>
-          <p data-studio-host="body">
+          <p
+            data-studio-host="body"
+            data-i18n="tools:importCollectionValidatesARlthemeBundleAndStagesItsAssets"
+          >
             Import collection validates a .rltheme bundle and stages its assets for inspection. It
             does not save or publish them. Use Undo draft to reverse the import before saving, or
             Save local revision when you want to keep it on this device.
           </p>
-          <h3 data-studio-host="heading">Review what the preview can show</h3>
-          <p data-studio-host="body">
+          <h3 data-studio-host="heading" data-i18n="tools:reviewWhatThePreviewCanShow">
+            Review what the preview can show
+          </h3>
+          <p
+            data-studio-host="body"
+            data-i18n="tools:nativePixelsEnlargedPixelsTransparencyAndFieldContextHelpInspect"
+          >
             Native pixels, enlarged pixels, transparency and field context help inspect an asset. In
             Field context, choose Game mode. Team arena and Team scene select a bounded Team
             fixture; State remains the selected asset's own state. These are bounded previews, not a
             complete playthrough of every mode or screen. Technical validation does not approve the
             art: record the checks you actually performed before marking a revision reviewed.
           </p>
-          <p data-studio-host="body">
+          <p
+            data-studio-host="body"
+            data-i18n="tools:interfaceChangesTextFaceSizeAndReducedEffectsForThe"
+          >
             Interface changes text face, size and reduced effects for the tools without staging a
             theme change. Opening or closing this guide leaves preview playback as you chose it.
             Press Escape while reading here to close the guide. Holding it will not cancel
             preparation; release it before pressing Escape again to use the normal operation or
             editor action.
           </p>
-          <button id="studio-guide-close" data-studio-host="control" type="button" hidden>
+          <button
+            id="studio-guide-close"
+            data-studio-host="control"
+            type="button"
+            hidden
+            data-i18n="common:actions.closeGuide"
+          >
             Close guide
           </button>
         </div>
       </details>
     </header>
-    <div class="studio-audio" role="group" aria-label="Shared sound settings">
-      <button data-studio-host="control" id="studio-audio-mute" type="button">Unmute sound</button>
-      <label data-studio-host="control" for="studio-master-volume">Master sound volume</label>
+    <div
+      class="studio-audio"
+      role="group"
+      aria-label="Shared sound settings"
+      data-i18n-aria-label="tools:sharedSoundSettings"
+    >
+      <button
+        data-studio-host="control"
+        id="studio-audio-mute"
+        type="button"
+        data-i18n="common:audio.unmute"
+      >
+        Unmute sound
+      </button>
+      <label
+        data-studio-host="control"
+        for="studio-master-volume"
+        data-i18n="common:audio.masterVolume"
+        >Master sound volume</label
+      >
       <input
         data-studio-host="control"
         id="studio-master-volume"
@@ -222,12 +326,37 @@
       <span data-studio-host="control" id="studio-audio-status" role="status"></span>
     </div>
     <div class="workspace-state">
-      <p data-studio-host="technical" id="workspace-summary">Loading the presentation registry…</p>
+      <p
+        data-studio-host="technical"
+        id="workspace-summary"
+        data-i18n="tools:loadingThePresentationRegistry"
+      >
+        Loading the presentation registry…
+      </p>
       <div>
-        <button data-studio-host="control" type="button" id="undo-draft" disabled>Undo draft</button
-        ><button data-studio-host="control" type="button" id="redo-draft" disabled>
+        <button
+          data-studio-host="control"
+          type="button"
+          id="undo-draft"
+          disabled
+          data-i18n="tools:undoDraft"
+        >
+          Undo draft</button
+        ><button
+          data-studio-host="control"
+          type="button"
+          id="redo-draft"
+          disabled
+          data-i18n="tools:redoDraft"
+        >
           Redo draft</button
-        ><button data-studio-host="control" type="button" id="reset-draft" disabled>
+        ><button
+          data-studio-host="control"
+          type="button"
+          id="reset-draft"
+          disabled
+          data-i18n="tools:resetToSaved"
+        >
           Reset to saved</button
         ><button
           data-studio-host="control"
@@ -236,6 +365,7 @@
           data-tool-control
           data-studio-startup-disabled
           disabled
+          data-i18n="tools:reloadSaved"
         >
           Reload saved</button
         ><button
@@ -245,6 +375,7 @@
           data-tool-control
           data-studio-startup-disabled
           disabled
+          data-i18n="tools:loadReleaseCollection"
         >
           Load release collection
         </button>
@@ -255,6 +386,7 @@
           data-tool-control
           data-studio-startup-disabled
           disabled
+          data-i18n="tools:addTeamPresentationSlots"
         >
           Add Team presentation slots
         </button>
@@ -264,85 +396,135 @@
     <main class="studio-layout">
       <aside class="inventory" aria-labelledby="inventory-title">
         <div class="inventory-heading">
-          <h2 data-studio-host="heading" id="inventory-title">Asset inventory</h2>
+          <h2 data-studio-host="heading" id="inventory-title" data-i18n="tools:assetInventory">
+            Asset inventory
+          </h2>
           <span data-studio-host="count" id="slot-count"></span>
         </div>
         <div class="filter-grid">
           <label data-studio-host="control" class="wide"
-            >Search<input
+            ><span data-i18n="tools:search">Search</span
+            ><input
               data-studio-host="control"
               id="filter-search"
               type="search"
               placeholder="Slot, label or requirement"
+              data-i18n-placeholder="tools:slotLabelOrRequirement"
           /></label>
           <label data-studio-host="control"
-            >Theme<select data-studio-host="control" id="filter-theme"></select
+            ><span data-i18n="tools:theme">Theme</span
+            ><select data-studio-host="control" id="filter-theme"></select
           ></label>
           <label data-studio-host="control"
-            >Screen<select data-studio-host="control" id="filter-screen">
-              <option value="">All screens</option>
+            ><span data-i18n="tools:screen">Screen</span
+            ><select data-studio-host="control" id="filter-screen">
+              <option value="" data-i18n="tools:allScreens">All screens</option>
             </select></label
           >
           <label data-studio-host="control"
-            >State<select data-studio-host="control" id="filter-state">
-              <option value="">All states</option>
+            ><span data-i18n="tools:state">State</span
+            ><select data-studio-host="control" id="filter-state">
+              <option value="" data-i18n="tools:allStates">All states</option>
             </select></label
           >
           <label data-studio-host="control"
-            >Kind<select data-studio-host="control" id="filter-kind">
-              <option value="">All kinds</option>
-              <option>image</option>
-              <option>recipe</option>
-              <option>font</option>
-              <option>audio</option>
+            ><span data-i18n="tools:kind">Kind</span
+            ><select data-studio-host="control" id="filter-kind">
+              <option value="" data-i18n="tools:allKinds">All kinds</option>
+              <option data-i18n="tools:image">image</option>
+              <option data-i18n="tools:recipe">recipe</option>
+              <option data-i18n="tools:font">font</option>
+              <option data-i18n="tools:audio">audio</option>
             </select></label
           >
           <label data-studio-host="control" class="wide"
-            >Readiness<select data-studio-host="control" id="filter-quality">
-              <option value="">Every stage</option>
-              <option value="unfinished">Needs production or review</option>
-              <option value="missing">Missing binding</option>
-              <option value="source">Source recipe</option>
-              <option value="produced">Produced</option>
-              <option value="reviewed">Reviewed</option>
+            ><span data-i18n="tools:readiness">Readiness</span
+            ><select data-studio-host="control" id="filter-quality">
+              <option value="" data-i18n="tools:everyStage">Every stage</option>
+              <option value="unfinished" data-i18n="tools:needsProductionOrReview">
+                Needs production or review
+              </option>
+              <option value="missing" data-i18n="tools:missingBinding">Missing binding</option>
+              <option value="source" data-i18n="tools:sourceRecipe">Source recipe</option>
+              <option value="produced" data-i18n="tools:produced">Produced</option>
+              <option value="reviewed" data-i18n="tools:reviewed">Reviewed</option>
             </select></label
           >
         </div>
         <p data-studio-host="secondary" id="coverage-summary" class="support-copy"></p>
-        <div id="asset-list" class="asset-list" role="list" aria-label="Presentation slots"></div>
-        <p data-studio-host="body" id="empty-inventory" class="support-copy" hidden>
+        <div
+          id="asset-list"
+          class="asset-list"
+          role="list"
+          aria-label="Presentation slots"
+          data-i18n-aria-label="tools:presentationSlots"
+        ></div>
+        <p
+          data-studio-host="body"
+          id="empty-inventory"
+          class="support-copy"
+          hidden
+          data-i18n="tools:noMatchingSlotsClearAFilterToSeeMore"
+        >
           No matching slots. Clear a filter to see more.
         </p>
         <details class="collection-builder">
-          <summary data-studio-host="control">Build a coordinated collection</summary>
-          <p data-studio-host="body">
+          <summary data-studio-host="control" data-i18n="tools:buildACoordinatedCollection">
+            Build a coordinated collection
+          </summary>
+          <p
+            data-studio-host="body"
+            data-i18n="tools:selectSlotsWithTheCheckboxesInTheInventoryTheirCurrent"
+          >
             Select slots with the checkboxes in the inventory. Their current draft bindings become
             one atomic collection.
           </p>
           <label data-studio-host="control"
-            >Collection ID<input
+            ><span data-i18n="tools:collectionId">Collection ID</span
+            ><input
               data-studio-host="control"
               id="collection-id"
               value="my-field-kit"
               maxlength="80" /></label
           ><label data-studio-host="control"
-            >Name<input
+            ><span data-i18n="tools:name">Name</span
+            ><input
               data-studio-host="control"
               id="collection-name"
               value="My Field Kit collection"
               maxlength="120"
           /></label>
           <div class="button-row">
-            <button data-studio-host="control" type="button" id="select-required">
+            <button
+              data-studio-host="control"
+              type="button"
+              id="select-required"
+              data-i18n="tools:selectRequired"
+            >
               Select required</button
-            ><button data-studio-host="control" type="button" id="clear-collection">
+            ><button
+              data-studio-host="control"
+              type="button"
+              id="clear-collection"
+              data-i18n="tools:clearSelection"
+            >
               Clear selection
             </button>
           </div>
-          <button data-studio-host="control" type="button" id="stage-collection">
+          <button
+            data-studio-host="control"
+            type="button"
+            id="stage-collection"
+            data-i18n="tools:stageSelectedCollection"
+          >
             Stage selected collection
           </button>
-          <p data-studio-host="count" id="collection-count" class="support-copy">
+          <p
+            data-studio-host="count"
+            id="collection-count"
+            class="support-copy"
+            data-i18n="tools:0SlotsSelected"
+          >
             0 slots selected
           </p>
         </details>
@@ -352,124 +534,200 @@
         <div class="slot-heading">
           <div>
             <p data-studio-host="technical" id="slot-id" class="eyebrow"></p>
-            <h2 data-studio-host="title" id="slot-title">Choose an asset</h2>
+            <h2 data-studio-host="title" id="slot-title" data-i18n="tools:chooseAnAsset">
+              Choose an asset
+            </h2>
           </div>
           <span data-studio-host="secondary" id="slot-quality" class="quality-tag"></span>
         </div>
         <p data-studio-host="body" id="slot-description"></p>
         <div class="preview-controls">
           <label data-studio-host="control"
-            >Preview<select data-studio-host="control" id="preview-mode">
-              <option value="pixel">Pixel enlarged</option>
-              <option value="native">Native size</option>
-              <option value="alpha">Transparency</option>
-              <option value="context">Field context</option>
+            ><span data-i18n="tools:preview">Preview</span
+            ><select data-studio-host="control" id="preview-mode">
+              <option value="pixel" data-i18n="tools:pixelEnlarged">Pixel enlarged</option>
+              <option value="native" data-i18n="tools:nativeSize">Native size</option>
+              <option value="alpha" data-i18n="tools:transparency">Transparency</option>
+              <option value="context" data-i18n="tools:fieldContext">Field context</option>
             </select></label
           ><label data-studio-host="control"
-            >Game mode<select data-studio-host="control" id="preview-field-mode" disabled>
-              <option value="solo">Solo</option>
-              <option value="versus">Couch Versus</option>
-              <option value="team">Couch Team</option>
+            ><span data-i18n="common:game.mode">Game mode</span
+            ><select data-studio-host="control" id="preview-field-mode" disabled>
+              <option value="solo" data-i18n="tools:solo">Solo</option>
+              <option value="versus" data-i18n="common:game.couchVersus">Couch Versus</option>
+              <option value="team" data-i18n="common:game.couchTeam">Couch Team</option>
             </select></label
           ><label data-studio-host="control"
-            >Team arena<select data-studio-host="control" id="preview-team-arena" disabled>
-              <option value="first-connection">First Connection</option>
-              <option value="relay-yard">Relay Yard</option>
+            ><span data-i18n="tools:teamArena">Team arena</span
+            ><select data-studio-host="control" id="preview-team-arena" disabled>
+              <option value="first-connection" data-i18n="tools:firstConnection">
+                First Connection
+              </option>
+              <option value="relay-yard" data-i18n="tools:relayYard">Relay Yard</option>
             </select></label
           ><label data-studio-host="control"
-            >Team scene<select data-studio-host="control" id="preview-team-scenario" disabled>
-              <option value="initial">Initial field</option>
-              <option value="cutting">Active cuts</option>
-              <option value="warning">Hunter warning</option>
-              <option value="charge">Hunter charge</option>
-              <option value="hunter-recovery">Hunter recovery</option>
-              <option value="capture">Joint capture</option>
-              <option value="team-recovery">Team reserve recovery</option>
-              <option value="support">Support pulse</option>
-              <option value="emitter-warning">Emitter warning</option>
-              <option value="emitter-spark">Travelling spark</option>
-              <option value="anchors" disabled>Anchors captured</option>
-              <option value="core" disabled>Relay core exposed</option>
-              <option value="secured" disabled>Secured core · two-relay specimen</option>
-              <option value="victory">Completed field</option>
-              <option value="downed-p1" disabled>Player 1 downed</option>
-              <option value="crawling-p1" disabled>Player 1 crawling</option>
-              <option value="rescue-p1" disabled>Rescuing Player 1</option>
-              <option value="recovered-p1" disabled>Player 1 recovered</option>
-              <option value="downed-p2" disabled>Player 2 downed</option>
-              <option value="crawling-p2" disabled>Player 2 crawling</option>
-              <option value="rescue-p2" disabled>Rescuing Player 2</option>
-              <option value="recovered-p2" disabled>Player 2 recovered</option>
+            ><span data-i18n="tools:teamScene">Team scene</span
+            ><select data-studio-host="control" id="preview-team-scenario" disabled>
+              <option value="initial" data-i18n="tools:initialField">Initial field</option>
+              <option value="cutting" data-i18n="tools:activeCuts">Active cuts</option>
+              <option value="warning" data-i18n="tools:hunterWarning">Hunter warning</option>
+              <option value="charge" data-i18n="tools:hunterCharge">Hunter charge</option>
+              <option value="hunter-recovery" data-i18n="tools:hunterRecovery">
+                Hunter recovery
+              </option>
+              <option value="capture" data-i18n="tools:jointCapture">Joint capture</option>
+              <option value="team-recovery" data-i18n="tools:teamReserveRecovery">
+                Team reserve recovery
+              </option>
+              <option value="support" data-i18n="tools:supportPulse">Support pulse</option>
+              <option value="emitter-warning" data-i18n="tools:emitterWarning">
+                Emitter warning
+              </option>
+              <option value="emitter-spark" data-i18n="tools:travellingSpark">
+                Travelling spark
+              </option>
+              <option value="anchors" disabled data-i18n="tools:anchorsCaptured">
+                Anchors captured
+              </option>
+              <option value="core" disabled data-i18n="tools:relayCoreExposed">
+                Relay core exposed
+              </option>
+              <option value="secured" disabled data-i18n="tools:securedCoreTwoRelaySpecimen">
+                Secured core · two-relay specimen
+              </option>
+              <option value="victory" data-i18n="tools:completedField">Completed field</option>
+              <option value="downed-p1" disabled data-i18n="tools:player1Downed">
+                Player 1 downed
+              </option>
+              <option value="crawling-p1" disabled data-i18n="tools:player1Crawling">
+                Player 1 crawling
+              </option>
+              <option value="rescue-p1" disabled data-i18n="tools:rescuingPlayer1">
+                Rescuing Player 1
+              </option>
+              <option value="recovered-p1" disabled data-i18n="tools:player1Recovered">
+                Player 1 recovered
+              </option>
+              <option value="downed-p2" disabled data-i18n="tools:player2Downed">
+                Player 2 downed
+              </option>
+              <option value="crawling-p2" disabled data-i18n="tools:player2Crawling">
+                Player 2 crawling
+              </option>
+              <option value="rescue-p2" disabled data-i18n="tools:rescuingPlayer2">
+                Rescuing Player 2
+              </option>
+              <option value="recovered-p2" disabled data-i18n="tools:player2Recovered">
+                Player 2 recovered
+              </option>
             </select></label
           ><label data-studio-host="control"
-            >Backdrop<select data-studio-host="control" id="preview-background">
-              <option value="checker">Checkerboard</option>
-              <option value="dark">Dark</option>
-              <option value="light">Light</option>
+            ><span data-i18n="tools:backdrop">Backdrop</span
+            ><select data-studio-host="control" id="preview-background">
+              <option value="checker" data-i18n="tools:checkerboard">Checkerboard</option>
+              <option value="dark" data-i18n="tools:dark">Dark</option>
+              <option value="light" data-i18n="tools:light">Light</option>
             </select></label
           ><label data-studio-host="control"
-            >State<select data-studio-host="control" id="preview-state">
-              <option>default</option>
+            ><span data-i18n="tools:state">State</span
+            ><select data-studio-host="control" id="preview-state">
+              <option data-i18n="tools:default">default</option>
             </select></label
           >
           <label data-studio-host="control"
-            >Motion<select data-studio-host="control" id="preview-motion">
-              <option value="paused">Paused</option>
-              <option value="playing">Play preview</option>
-              <option value="reduced">Reduced effects</option>
+            ><span data-i18n="tools:motion">Motion</span
+            ><select data-studio-host="control" id="preview-motion">
+              <option value="paused" data-i18n="tools:paused">Paused</option>
+              <option value="playing" data-i18n="tools:playPreview">Play preview</option>
+              <option value="reduced" data-i18n="tools:reducedEffects">Reduced effects</option>
             </select></label
           >
           <label data-studio-host="control" class="inline-check"
             ><input data-studio-host="control" id="preview-geometry" type="checkbox" checked />
-            Geometry overlay</label
+            <span data-i18n="tools:geometryOverlay">Geometry overlay</span></label
           >
         </div>
         <div class="compare-grid">
           <figure>
-            <figcaption data-studio-host="secondary">Saved / current</figcaption>
+            <figcaption data-studio-host="secondary" data-i18n="tools:savedCurrent">
+              Saved / current
+            </figcaption>
             <div class="preview-operation">
               <p data-studio-host="control" id="current-preview-status" role="status"></p>
-              <button data-studio-host="control" id="current-preview-cancel" type="button" hidden>
+              <button
+                data-studio-host="control"
+                id="current-preview-cancel"
+                type="button"
+                hidden
+                data-i18n="common:actions.stopWaiting"
+              >
                 Stop waiting
               </button>
             </div>
             <div class="preview-surface" id="current-preview"></div>
           </figure>
           <figure>
-            <figcaption data-studio-host="secondary">Working draft</figcaption>
+            <figcaption data-studio-host="secondary" data-i18n="tools:workingDraft">
+              Working draft
+            </figcaption>
             <div class="preview-operation">
               <p data-studio-host="control" id="draft-preview-status" role="status"></p>
-              <button data-studio-host="control" id="draft-preview-cancel" type="button" hidden>
+              <button
+                data-studio-host="control"
+                id="draft-preview-cancel"
+                type="button"
+                hidden
+                data-i18n="common:actions.stopWaiting"
+              >
                 Stop waiting
               </button>
             </div>
             <div class="preview-surface" id="draft-preview"></div>
           </figure>
         </div>
-        <p data-studio-host="body" id="preview-description" class="support-copy">
+        <p
+          data-studio-host="body"
+          id="preview-description"
+          class="support-copy"
+          data-i18n="tools:boundedAssetPreviewItDoesNotSimulateACompleteGame"
+        >
           Bounded asset preview. It does not simulate a complete game or establish production
           readiness.
         </p>
         <dl id="slot-facts" class="slot-facts"></dl>
         <details open>
-          <summary data-studio-host="control">Usage and exact requirements</summary>
+          <summary data-studio-host="control" data-i18n="tools:usageAndExactRequirements">
+            Usage and exact requirements
+          </summary>
           <div id="slot-usage"></div>
           <ul data-studio-host="body" id="slot-requirements"></ul>
           <pre data-studio-host="technical" id="slot-contract" class="code-block"></pre>
         </details>
 
         <details id="replacement-panel" open>
-          <summary data-studio-host="control">Upload, crop and geometry</summary>
-          <p data-studio-host="body" class="support-copy">
+          <summary data-studio-host="control" data-i18n="tools:uploadCropAndGeometry">
+            Upload, crop and geometry
+          </summary>
+          <p
+            data-studio-host="body"
+            class="support-copy"
+            data-i18n="tools:originalFileBytesAreRetainedForImagesCroppingCreatesA"
+          >
             Original file bytes are retained. For images, cropping creates a separate PNG derivative
             at the slot’s frame size. Fonts and audio keep their file formats; pixel cropping does
             not apply. Check the selected slot’s accepted formats and requirements before choosing a
             replacement.
           </p>
           <label data-studio-host="control" id="asset-upload-label" class="file-button"
-            >Choose replacement file<input data-studio-host="control" id="asset-upload" type="file"
+            ><span data-i18n="tools:chooseReplacementFile">Choose replacement file</span
+            ><input data-studio-host="control" id="asset-upload" type="file"
           /></label>
-          <p data-studio-host="secondary" id="upload-summary" class="support-copy">
+          <p
+            data-studio-host="secondary"
+            id="upload-summary"
+            class="support-copy"
+            data-i18n="tools:noReplacementSelected"
+          >
             No replacement selected.
           </p>
           <div id="image-preparation" hidden>
@@ -477,45 +735,60 @@
               <canvas
                 id="source-image"
                 aria-label="Original image with selected crop area"
+                data-i18n-aria-label="tools:originalImageWithSelectedCropArea"
               ></canvas>
             </div>
             <div class="field-grid">
               <label data-studio-host="control"
-                >Crop X<input
+                ><span data-i18n="tools:cropX">Crop X</span
+                ><input
                   data-studio-host="control"
                   id="crop-x"
                   type="number"
                   min="0"
                   step="1" /></label
               ><label data-studio-host="control"
-                >Crop Y<input
+                ><span data-i18n="tools:cropY">Crop Y</span
+                ><input
                   data-studio-host="control"
                   id="crop-y"
                   type="number"
                   min="0"
                   step="1" /></label
               ><label data-studio-host="control"
-                >Crop width<input
+                ><span data-i18n="tools:cropWidth">Crop width</span
+                ><input
                   data-studio-host="control"
                   id="crop-width"
                   type="number"
                   min="1"
                   step="1" /></label
               ><label data-studio-host="control"
-                >Crop height<input
-                  data-studio-host="control"
-                  id="crop-height"
-                  type="number"
-                  min="1"
-                  step="1"
+                ><span data-i18n="tools:cropHeight">Crop height</span
+                ><input data-studio-host="control" id="crop-height" type="number" min="1" step="1"
               /></label>
             </div>
             <div class="button-row">
-              <button data-studio-host="control" type="button" id="fit-crop">
+              <button
+                data-studio-host="control"
+                type="button"
+                id="fit-crop"
+                data-i18n="tools:centerCropToSlot"
+              >
                 Center crop to slot</button
-              ><button data-studio-host="control" type="button" id="prepare-crop">
+              ><button
+                data-studio-host="control"
+                type="button"
+                id="prepare-crop"
+                data-i18n="tools:prepareDerivative"
+              >
                 Prepare derivative</button
-              ><button data-studio-host="control" type="button" id="download-original">
+              ><button
+                data-studio-host="control"
+                type="button"
+                id="download-original"
+                data-i18n="tools:downloadOriginal"
+              >
                 Download original
               </button>
             </div>
@@ -524,7 +797,8 @@
             <p data-studio-host="body" id="geometry-usage" class="hint"></p>
             <div class="field-grid">
               <label data-studio-host="control"
-                >Pivot X (0–1)<input
+                ><span data-i18n="tools:pivotX01">Pivot X (0–1)</span
+                ><input
                   data-studio-host="control"
                   id="pivot-x"
                   type="number"
@@ -532,7 +806,8 @@
                   max="1"
                   step="0.01" /></label
               ><label data-studio-host="control"
-                >Pivot Y (0–1)<input
+                ><span data-i18n="tools:pivotY01">Pivot Y (0–1)</span
+                ><input
                   data-studio-host="control"
                   id="pivot-y"
                   type="number"
@@ -542,56 +817,75 @@
               /></label>
             </div>
             <label data-studio-host="control"
-              >Rotor anchors (normalized JSON)<textarea
+              ><span data-i18n="tools:rotorAnchorsNormalizedJson"
+                >Rotor anchors (normalized JSON)</span
+              ><textarea
                 data-studio-host="control"
                 id="rotor-anchors"
                 rows="4"
                 spellcheck="false"
               ></textarea></label
             ><label data-studio-host="control"
-              >Nine-slice borders (JSON or null)<textarea
+              ><span data-i18n="tools:nineSliceBordersJsonOrNull"
+                >Nine-slice borders (JSON or null)</span
+              ><textarea
                 data-studio-host="control"
                 id="nine-slice"
                 rows="2"
                 spellcheck="false"
               ></textarea>
             </label>
-            <p data-studio-host="body" class="support-copy">
+            <p
+              data-studio-host="body"
+              class="support-copy"
+              data-i18n="tools:occupiedBoundsAreMeasuredFromNontransparentPixelsRequiredMotorCount"
+            >
               Occupied bounds are measured from nontransparent pixels. Required motor count and slot
               frame remain locked. Metadata changes do not change gameplay collisions.
             </p>
-            <button data-studio-host="control" type="button" id="apply-geometry">
+            <button
+              data-studio-host="control"
+              type="button"
+              id="apply-geometry"
+              data-i18n="tools:applyGeometryToPreview"
+            >
               Apply geometry to preview
             </button>
           </div>
           <div class="field-grid provenance-fields">
             <label data-studio-host="control"
-              >Description<input
-                data-studio-host="control"
-                id="asset-description"
-                maxlength="2048" /></label
+              ><span data-i18n="tools:description">Description</span
+              ><input data-studio-host="control" id="asset-description" maxlength="2048" /></label
             ><label data-studio-host="control"
-              >Creator<input
+              ><span data-i18n="tools:creator">Creator</span
+              ><input
                 data-studio-host="control"
                 id="asset-creator"
                 maxlength="2048"
-                placeholder="Your name or creator" /></label
+                placeholder="Your name or creator"
+                data-i18n-placeholder="tools:yourNameOrCreator" /></label
             ><label data-studio-host="control"
-              >Source<input
+              ><span data-i18n="tools:source">Source</span
+              ><input
                 data-studio-host="control"
                 id="asset-source"
                 maxlength="2048"
-                placeholder="Original file / source reference" /></label
+                placeholder="Original file / source reference"
+                data-i18n-placeholder="tools:originalFileSourceReference" /></label
             ><label data-studio-host="control"
-              >License / rights<input
+              ><span data-i18n="tools:licenseRights">License / rights</span
+              ><input
                 data-studio-host="control"
                 id="asset-license"
                 maxlength="2048"
                 placeholder="Your actual rights statement"
+                data-i18n-placeholder="tools:yourActualRightsStatement"
             /></label>
           </div>
           <label data-studio-host="control"
-            >Effective generation/edit prompt<textarea
+            ><span data-i18n="tools:effectiveGenerationEditPrompt"
+              >Effective generation/edit prompt</span
+            ><textarea
               data-studio-host="control"
               id="asset-prompt"
               rows="3"
@@ -605,48 +899,79 @@
               id="stage-asset"
               class="primary"
               disabled
+              data-i18n="tools:validateAndStageReplacement"
             >
               Validate and stage replacement</button
-            ><button data-studio-host="control" type="button" id="discard-asset" disabled>
+            ><button
+              data-studio-host="control"
+              type="button"
+              id="discard-asset"
+              disabled
+              data-i18n="tools:discardSlotDraft"
+            >
               Discard slot draft
             </button>
           </div>
         </details>
 
         <details id="sprite-panel">
-          <summary data-studio-host="control">Pixel editor · single layer, up to 128 × 128</summary>
-          <p data-studio-host="body" id="sprite-description" class="support-copy">
+          <summary data-studio-host="control" data-i18n="tools:pixelEditorSingleLayerUpTo128128">
+            Pixel editor · single layer, up to 128 × 128
+          </summary>
+          <p
+            data-studio-host="body"
+            id="sprite-description"
+            class="support-copy"
+            data-i18n="tools:chooseASupportedSpriteSlotThenCreateABlankFrame"
+          >
             Choose a supported sprite slot, then create a blank frame or edit the current raster.
             Larger artwork uses crop and metadata controls above.
           </p>
           <div class="button-row">
-            <button data-studio-host="control" type="button" id="new-sprite">
+            <button
+              data-studio-host="control"
+              type="button"
+              id="new-sprite"
+              data-i18n="tools:newBlankSprite"
+            >
               New blank sprite</button
-            ><button data-studio-host="control" type="button" id="edit-current">
+            ><button
+              data-studio-host="control"
+              type="button"
+              id="edit-current"
+              data-i18n="tools:editCurrentRaster"
+            >
               Edit current raster
             </button>
           </div>
           <div id="sprite-workbench" hidden>
             <div class="sprite-toolbar">
               <label data-studio-host="control"
-                >Tool<select data-studio-host="control" id="sprite-tool">
-                  <option value="pencil">Pencil</option>
-                  <option value="eraser">Eraser</option>
-                  <option value="fill">Flood fill</option>
-                  <option value="line">Line</option>
-                  <option value="rectangle">Rectangle outline</option>
-                  <option value="filled-rectangle">Filled rectangle</option>
-                  <option value="picker">Color picker</option>
-                  <option value="selection">Select / move</option>
+                ><span data-i18n="tools:tool">Tool</span
+                ><select data-studio-host="control" id="sprite-tool">
+                  <option value="pencil" data-i18n="tools:pencil">Pencil</option>
+                  <option value="eraser" data-i18n="tools:eraser">Eraser</option>
+                  <option value="fill" data-i18n="tools:floodFill">Flood fill</option>
+                  <option value="line" data-i18n="tools:line">Line</option>
+                  <option value="rectangle" data-i18n="tools:rectangleOutline">
+                    Rectangle outline
+                  </option>
+                  <option value="filled-rectangle" data-i18n="tools:filledRectangle">
+                    Filled rectangle
+                  </option>
+                  <option value="picker" data-i18n="tools:colorPicker">Color picker</option>
+                  <option value="selection" data-i18n="tools:selectMove">Select / move</option>
                 </select></label
               ><label data-studio-host="control"
-                >Color<input
+                ><span data-i18n="tools:color">Color</span
+                ><input
                   data-studio-host="control"
                   id="sprite-color"
                   type="color"
                   value="#f4bf62" /></label
               ><label data-studio-host="control"
-                >Opacity<input
+                ><span data-i18n="tools:opacity">Opacity</span
+                ><input
                   data-studio-host="control"
                   id="sprite-alpha"
                   type="range"
@@ -654,7 +979,8 @@
                   max="255"
                   value="255" /></label
               ><label data-studio-host="control"
-                >Zoom<select data-studio-host="control" id="sprite-zoom">
+                ><span data-i18n="tools:zoom">Zoom</span
+                ><select data-studio-host="control" id="sprite-zoom">
                   <option value="4">4×</option>
                   <option value="8" selected>8×</option>
                   <option value="12">12×</option>
@@ -668,32 +994,67 @@
                 tabindex="0"
                 aria-label="Pixel editor. Pointer draws; arrows move the keyboard cursor; Space applies the selected tool."
                 role="application"
+                data-i18n-aria-label="tools:pixelEditorPointerDrawsArrowsMoveTheKeyboardCursorSpace"
               ></canvas>
             </div>
             <p data-studio-host="control" id="sprite-cursor" class="support-copy"></p>
             <div id="sprite-palette" class="sprite-palette"></div>
             <div class="button-row">
-              <button data-studio-host="control" type="button" id="sprite-undo">Undo pixels</button
-              ><button data-studio-host="control" type="button" id="sprite-redo">Redo pixels</button
-              ><button data-studio-host="control" type="button" data-transform="flip-x">
+              <button
+                data-studio-host="control"
+                type="button"
+                id="sprite-undo"
+                data-i18n="tools:undoPixels"
+              >
+                Undo pixels</button
+              ><button
+                data-studio-host="control"
+                type="button"
+                id="sprite-redo"
+                data-i18n="tools:redoPixels"
+              >
+                Redo pixels</button
+              ><button
+                data-studio-host="control"
+                type="button"
+                data-transform="flip-x"
+                data-i18n="tools:flipHorizontally"
+              >
                 Flip horizontally</button
-              ><button data-studio-host="control" type="button" data-transform="flip-y">
+              ><button
+                data-studio-host="control"
+                type="button"
+                data-transform="flip-y"
+                data-i18n="tools:flipVertically"
+              >
                 Flip vertically</button
-              ><button data-studio-host="control" type="button" data-transform="rotate">
+              ><button
+                data-studio-host="control"
+                type="button"
+                data-transform="rotate"
+                data-i18n="tools:rotate90"
+              >
                 Rotate 90°
               </button>
             </div>
             <div class="field-grid">
               <label data-studio-host="control"
-                >Replace color<input
+                ><span data-i18n="tools:replaceColor">Replace color</span
+                ><input
                   data-studio-host="control"
                   id="replace-color"
                   type="color"
                   value="#070b12" /></label
-              ><button data-studio-host="control" type="button" id="replace-palette-color">
+              ><button
+                data-studio-host="control"
+                type="button"
+                id="replace-palette-color"
+                data-i18n="tools:replaceWithChosenColor"
+              >
                 Replace with chosen color</button
               ><label data-studio-host="control"
-                >Move selection X<input
+                ><span data-i18n="tools:moveSelectionX">Move selection X</span
+                ><input
                   data-studio-host="control"
                   id="selection-dx"
                   type="number"
@@ -701,7 +1062,8 @@
                   min="-128"
                   max="128" /></label
               ><label data-studio-host="control"
-                >Move selection Y<input
+                ><span data-i18n="tools:moveSelectionY">Move selection Y</span
+                ><input
                   data-studio-host="control"
                   id="selection-dy"
                   type="number"
@@ -711,9 +1073,20 @@
               /></label>
             </div>
             <div class="button-row">
-              <button data-studio-host="control" type="button" id="move-selection">
+              <button
+                data-studio-host="control"
+                type="button"
+                id="move-selection"
+                data-i18n="tools:moveSelectedPixels"
+              >
                 Move selected pixels</button
-              ><button data-studio-host="control" type="button" id="use-sprite" class="primary">
+              ><button
+                data-studio-host="control"
+                type="button"
+                id="use-sprite"
+                class="primary"
+                data-i18n="tools:prepareEditedSprite"
+              >
                 Prepare edited sprite
               </button>
             </div>
@@ -721,59 +1094,107 @@
         </details>
 
         <details>
-          <summary data-studio-host="control">Theme tokens</summary>
-          <p data-studio-host="body" class="support-copy">
+          <summary data-studio-host="control" data-i18n="tools:themeTokens">Theme tokens</summary>
+          <p
+            data-studio-host="body"
+            class="support-copy"
+            data-i18n="tools:tokensUpdateThisStudioSPreviewsSaveExportIsSeparate"
+          >
             Tokens update this studio’s previews. Save/export is separate; player settings and
             gameplay rules are not modified.
           </p>
           <form id="token-form">
             <div id="token-fields" class="token-grid"></div>
-            <button data-studio-host="control" type="submit" class="primary">
+            <button
+              data-studio-host="control"
+              type="submit"
+              class="primary"
+              data-i18n="tools:validateAndStageTokens"
+            >
               Validate and stage tokens
             </button>
           </form>
         </details>
         <details>
-          <summary data-studio-host="control">AI prompts</summary>
+          <summary data-studio-host="control" data-i18n="tools:aiPrompts">AI prompts</summary>
           <div class="button-row">
-            <button data-studio-host="control" type="button" data-prompt-action="variation">
+            <button
+              data-studio-host="control"
+              type="button"
+              data-prompt-action="variation"
+              data-i18n="tools:newVariation"
+            >
               New variation</button
-            ><button data-studio-host="control" type="button" data-prompt-action="edit">
+            ><button
+              data-studio-host="control"
+              type="button"
+              data-prompt-action="edit"
+              data-i18n="tools:editExisting"
+            >
               Edit existing</button
-            ><button data-studio-host="control" type="button" data-prompt-action="collection">
+            ><button
+              data-studio-host="control"
+              type="button"
+              data-prompt-action="collection"
+              data-i18n="tools:replaceCollection"
+            >
               Replace collection
             </button>
           </div>
           <label data-studio-host="control"
-            >Complete copyable brief<textarea
+            ><span data-i18n="tools:completeCopyableBrief">Complete copyable brief</span
+            ><textarea
               data-studio-host="control"
               id="generated-prompt"
               rows="12"
               readonly
             ></textarea></label
-          ><button data-studio-host="control" type="button" id="copy-generated-prompt">
+          ><button
+            data-studio-host="control"
+            type="button"
+            id="copy-generated-prompt"
+            data-i18n="tools:copyPrompt"
+          >
             Copy prompt
           </button>
           <p data-studio-host="control" id="prompt-status" class="support-copy" role="status"></p>
         </details>
         <details id="review-panel">
-          <summary data-studio-host="control">Asset revision history</summary>
-          <p data-studio-host="body" class="support-copy">
+          <summary data-studio-host="control" data-i18n="tools:assetRevisionHistory">
+            Asset revision history
+          </summary>
+          <p
+            data-studio-host="body"
+            class="support-copy"
+            data-i18n="tools:revertingBindsAnEarlierImmutableAssetInANewTheme"
+          >
             Reverting binds an earlier immutable asset in a new theme revision. It never overwrites
             the original record.
           </p>
           <label data-studio-host="control"
-            >Review evidence (one concrete check per line)<textarea
+            ><span data-i18n="tools:reviewEvidenceOneConcreteCheckPerLine"
+              >Review evidence (one concrete check per line)</span
+            ><textarea
               data-studio-host="control"
               id="review-evidence"
               rows="4"
               placeholder="Describe the actual native-size, contrast, Ukrainian glyph, anchor and affected-screen checks you performed."
+              data-i18n-placeholder="tools:describeTheActualNativeSizeContrastUkrainianGlyphAnchorAnd"
             ></textarea>
           </label>
-          <button data-studio-host="control" type="button" id="record-review">
+          <button
+            data-studio-host="control"
+            type="button"
+            id="record-review"
+            data-i18n="tools:recordReviewedRevision"
+          >
             Record reviewed revision
           </button>
-          <p data-studio-host="body" class="support-copy">
+          <p
+            data-studio-host="body"
+            class="support-copy"
+            data-i18n="tools:thisRecordsYourEvidenceInANewImmutableRevisionA"
+          >
             This records your evidence in a new immutable revision. A successful import or prompt is
             not review evidence.
           </p>
@@ -782,15 +1203,22 @@
       </section>
     </main>
     <footer class="studio-footer">
-      <a data-studio-host="control" href="../design-atlas/" data-workshop-tool="design-atlas"
+      <a
+        data-studio-host="control"
+        href="../design-atlas/"
+        data-workshop-tool="design-atlas"
+        data-i18n="tools:designAtlas"
         >Design atlas</a
       ><a
         id="studio-game-return"
         data-workshop-return="game"
         data-studio-host="control"
         href="../../game/"
+        data-i18n="tools:returnToGame"
         >Return to game</a
-      ><span data-studio-host="secondary"
+      ><span
+        data-studio-host="secondary"
+        data-i18n="tools:localAuthoringWorkspacePlayerSavesStaySeparate"
         >Local authoring workspace · player saves stay separate</span
       >
     </footer>

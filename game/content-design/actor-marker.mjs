@@ -1,3 +1,5 @@
+import { t } from '../i18n/index.mjs';
+
 /** Shared color-independent silhouettes for Studio and mission diagrams.
  * Adds a path only; the caller owns ink, fill and frozen capture overlays.
  */
@@ -81,20 +83,59 @@ export function contentCombatMarkers(level) {
 }
 
 /** Initial authoring facts come from the resolved descriptor, not map-marker guesses. */
+const actorTypeKeys = {
+  bouncer: 'tools:studio.actor.bouncer',
+  drifter: 'tools:studio.actor.drifter',
+  'border-patrol': 'tools:studio.actor.borderPatrol',
+  'contour-patrol': 'tools:studio.actor.contourPatrol',
+  'claimed-rover': 'tools:studio.actor.claimedRover',
+  eroder: 'tools:studio.actor.eroder',
+  'relay-sentinel': 'tools:studio.actor.relaySentinel',
+};
 export function contentActorDescription(level, actor) {
   if (['optional-scout', 'optional-sentry'].includes(actor.type)) {
     const recipe = level.classic.combatPatrols.actors.find((entry) => entry.id === actor.id);
-    return `${level.classic.combatPatrols.enabled ? 'active' : 'inactive authored'} optional ${recipe.role}, ${recipe.speed} cells/s, removed by contact/capture, never retains field${recipe.role === 'sentry' ? `; ${recipe.openingTicks / 120}s opening / ${recipe.warningTicks / 120}s locked warning / ${recipe.recoveryTicks / 120}s recovery / ${recipe.restTicks / 120}s rest; only projectile harms` : '; no contact damage'}`;
+    const active = level.classic.combatPatrols.enabled;
+    const key =
+      recipe.role === 'sentry'
+        ? active
+          ? 'tools:studio.actor.sentryActive'
+          : 'tools:studio.actor.sentryInactive'
+        : active
+          ? 'tools:studio.actor.scoutActive'
+          : 'tools:studio.actor.scoutInactive';
+    return t(key, {
+      speed: recipe.speed,
+      opening: recipe.openingTicks / 120,
+      warning: recipe.warningTicks / 120,
+      recovery: recipe.recoveryTicks / 120,
+      rest: recipe.restTicks / 120,
+    });
   }
   if (actor.type === 'relay-sentinel' && level.encounter?.version === 'xonix-encounter.v2') {
     const recipe = level.encounter;
-    return `stationary Sentinel, ${recipe.shieldObjectiveIds.length} shield relay${recipe.shieldObjectiveIds.length === 1 ? '' : 's'}; ${recipe.shielded.warningTicks / 120}s lane warning; close ${recipe.minReleaseCutCells} new trail cells during CORE OPEN or isolate the core`;
+    return t('tools:studio.actor.sentinel', {
+      count: recipe.shieldObjectiveIds.length,
+      warning: recipe.shielded.warningTicks / 120,
+      cells: recipe.minReleaseCutCells,
+    });
   }
   if (actor.type === 'lane-boss') {
     const recipe = level.enemies.find((entry) => entry.id === actor.id);
-    return `stationary lane emitter, ${recipe.axis} lane, ${recipe.warningSeconds}s warning / ${recipe.activeSeconds}s active / ${recipe.period}s cycle`;
+    return t('tools:studio.actor.emitter', {
+      axis: t(
+        recipe.axis === 'horizontal'
+          ? 'tools:studio.actor.horizontal'
+          : 'tools:studio.actor.vertical',
+      ),
+      warning: recipe.warningSeconds,
+      active: recipe.activeSeconds,
+      period: recipe.period,
+    });
   }
   return contentActorMarkerType(level, actor) === 'impact-carrier'
-    ? 'trail-impact carrier'
-    : actor.type;
+    ? t('tools:studio.actor.impactCarrier')
+    : actorTypeKeys[actor.type]
+      ? t(actorTypeKeys[actor.type])
+      : actor.type;
 }

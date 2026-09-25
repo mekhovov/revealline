@@ -2,8 +2,15 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../game/i18n/style.css" />
+    <script src="../../game/vendor/i18next-26.4.2.min.js"></script>
+    <script src="../../game/i18n/catalogs.mjs"></script>
+    <script src="../../game/i18n/bootstrap.mjs"></script>
+
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>RevealLine — video poster workshop</title>
+    <title data-i18n="tools:reveallineVideoPosterWorkshop">
+      RevealLine — video poster workshop
+    </title>
     <link rel="stylesheet" href="./workshop.css" />
     <link rel="stylesheet" href="../../game/ui/operation-status.css" />
     <link rel="stylesheet" href="../../game/ui/field-kit-fonts.css" />
@@ -15,6 +22,8 @@
     <link rel="stylesheet" href="../../game/ui/workshop-return.css" />
   </head>
   <body data-workshop-tool="video-poster" class="field-kit field-kit-support">
+    <div data-language-control></div>
+
     <main id="video-poster-main">
       <nav>
         <a
@@ -23,19 +32,27 @@
           data-workshop-return="workshop"
           inert
           aria-disabled="true"
+          data-i18n="common:navigation.returnToWorkshop"
           >Return to Workshop</a
         >
-        <a data-workshop-return="game" href="../../game/">Return to game</a>
+        <a data-workshop-return="game" href="../../game/" data-i18n="tools:returnToGame"
+          >Return to game</a
+        >
       </nav>
-      <p>
+      <p data-i18n-rich="tools:afterDownloadingAPngImportItInThisEditionS">
         After downloading a PNG, import it in this edition’s
-        <a id="video-poster-still" href="../still-media/" data-workshop-tool="still-media"
+        <a
+          id="video-poster-still"
+          href="../still-media/"
+          data-workshop-tool="still-media"
+          data-i18n="tools:pictureWorkshop"
+          data-i18n-slot="slot0"
           >Picture workshop</a
         >
         to assign it to a map and world. Keep the original video separately; this preview does not
         store it.
       </p>
-      <h1 class="field-kit-display">VIDEO POSTER WORKSHOP</h1>
+      <h1 class="field-kit-display" data-i18n="tools:videoPosterWorkshop">VIDEO POSTER WORKSHOP</h1>
       <p
         id="video-poster-status"
         role="status"
@@ -44,23 +61,27 @@
         data-state="busy"
       >
         <span class="operation-status-signal" aria-hidden="true"><i></i><i></i><i></i></span>
-        <span>Loading the video poster workshop…</span>
+        <span data-i18n="tools:loadingTheVideoPosterWorkshop"
+          >Loading the video poster workshop…</span
+        >
       </p>
-      <p>
+      <p data-i18n="tools:inspectYourOwnVideoChooseATimeAndCaptureIts">
         Inspect your own video, choose a time and capture its picture. This preview does not save
         assignments, stories or game data.
       </p>
       <fieldset id="video-poster-controls" disabled>
-        <legend>Local source</legend>
-        <label for="video-poster-file">Choose MP4 or WebM</label>
+        <legend data-i18n="tools:localSource">Local source</legend>
+        <label for="video-poster-file" data-i18n="tools:chooseMp4OrWebm">Choose MP4 or WebM</label>
         <input id="video-poster-file" type="file" accept="video/mp4,video/webm,.mp4,.webm" />
-        <p>
+        <p data-i18n="tools:upTo64Mib120SecondsAnd19201080Larger">
           Up to 64 MiB, 120 seconds and 1920 × 1080. Larger sources need deliberate preparation
           elsewhere. Video stays muted and is never played here.
         </p>
-        <p id="video-poster-metadata">No video inspected.</p>
+        <p id="video-poster-metadata" data-i18n="tools:noVideoInspected">No video inspected.</p>
         <div class="time-controls">
-          <label for="video-poster-time">Requested time in seconds</label>
+          <label for="video-poster-time" data-i18n="tools:requestedTimeInSeconds"
+            >Requested time in seconds</label
+          >
           <input
             id="video-poster-time"
             type="number"
@@ -70,7 +91,7 @@
             value="0"
             disabled
           />
-          <label for="video-poster-range">Select time</label>
+          <label for="video-poster-range" data-i18n="tools:selectTime">Select time</label>
           <input
             id="video-poster-range"
             type="range"
@@ -82,25 +103,43 @@
           />
         </div>
         <div class="actions">
-          <button id="video-poster-capture" type="button" disabled>Capture poster</button>
-          <button id="video-poster-step-back" type="button" disabled>
+          <button id="video-poster-capture" type="button" disabled data-i18n="tools:capturePoster">
+            Capture poster
+          </button>
+          <button
+            id="video-poster-step-back"
+            type="button"
+            disabled
+            data-i18n="tools:videoPoster.stepEarlier"
+          >
             Step toward earlier frame
           </button>
-          <button id="video-poster-step-forward" type="button" disabled>
+          <button
+            id="video-poster-step-forward"
+            type="button"
+            disabled
+            data-i18n="tools:videoPoster.stepLater"
+          >
             Step toward later frame
           </button>
-          <button id="video-poster-cancel" type="button" disabled>Cancel</button>
-          <button id="video-poster-clear" type="button" disabled>Clear source</button>
+          <button id="video-poster-cancel" type="button" disabled data-i18n="common:actions.cancel">
+            Cancel
+          </button>
+          <button id="video-poster-clear" type="button" disabled data-i18n="tools:clearSource">
+            Clear source
+          </button>
         </div>
       </fieldset>
       <fieldset>
-        <legend>Playback range</legend>
-        <p>
+        <legend data-i18n="tools:videoPoster.playbackRange">Playback range</legend>
+        <p data-i18n="tools:videoPoster.playbackRangeHelp">
           This chooses when a victory story starts and stops. It keeps the complete original video
           and does not reduce the package bytes.
         </p>
         <div class="range-grid">
-          <label for="video-poster-playback-start">Playback starts (seconds)</label>
+          <label for="video-poster-playback-start" data-i18n="tools:videoPoster.playbackStarts"
+            >Playback starts (seconds)</label
+          >
           <input
             id="video-poster-playback-start"
             type="number"
@@ -110,7 +149,9 @@
             value="0"
             disabled
           />
-          <label for="video-poster-playback-end">Playback ends (seconds)</label>
+          <label for="video-poster-playback-end" data-i18n="tools:videoPoster.playbackEnds"
+            >Playback ends (seconds)</label
+          >
           <input
             id="video-poster-playback-end"
             type="number"
@@ -121,51 +162,76 @@
             disabled
           />
         </div>
-        <button id="video-poster-apply-range" type="button" disabled>Apply playback range</button>
-        <p id="video-poster-playback-evidence">Choose and inspect a video first.</p>
+        <button
+          id="video-poster-apply-range"
+          type="button"
+          disabled
+          data-i18n="tools:videoPoster.applyPlaybackRange"
+        >
+          Apply playback range
+        </button>
+        <p id="video-poster-playback-evidence" data-i18n="tools:videoPoster.chooseVideoFirst">
+          Choose and inspect a video first.
+        </p>
       </fieldset>
       <fieldset>
-        <legend>Optional physical trim</legend>
-        <p>
+        <legend data-i18n="tools:videoPoster.optionalPhysicalTrim">Optional physical trim</legend>
+        <p data-i18n="tools:videoPoster.physicalTrimHelp">
           Physical trim must create different video bytes. RevealLine checks the exported hash,
           decoded duration, picture orientation, and fresh start/end frame comparisons before
           offering a download.
         </p>
-        <p id="video-poster-trim-support">
+        <p id="video-poster-trim-support" data-i18n="tools:videoPoster.trimSupportUnchecked">
           Converter support has not been checked. The pinned converter loads only after you ask; the
           first supported slice is silent AVC/H.264 MP4.
         </p>
         <div class="actions">
-          <button id="video-poster-check-trim" type="button" disabled>
+          <button
+            id="video-poster-check-trim"
+            type="button"
+            disabled
+            data-i18n="tools:videoPoster.checkTrimSupport"
+          >
             Check physical trim support
           </button>
-          <button id="video-poster-trim" type="button" disabled>Physically trim video</button>
+          <button
+            id="video-poster-trim"
+            type="button"
+            disabled
+            data-i18n="tools:videoPoster.trimVideo"
+          >
+            Physically trim video
+          </button>
         </div>
-        <p id="video-poster-trim-evidence">
+        <p id="video-poster-trim-evidence" data-i18n="tools:videoPoster.noPhysicalTrim">
           No physical trim has been produced. Playback range keeps the complete original video.
         </p>
-        <a id="video-poster-trim-download" hidden>Download verified physical trim</a>
+        <a id="video-poster-trim-download" hidden data-i18n="tools:videoPoster.downloadPhysicalTrim"
+          >Download verified physical trim</a
+        >
       </fieldset>
       <section id="video-poster-preview" hidden aria-labelledby="video-poster-preview-title">
-        <h2 id="video-poster-preview-title">Captured PNG</h2>
-        <img id="video-poster-image" alt="Captured poster" />
+        <h2 id="video-poster-preview-title" data-i18n="tools:capturedPng">Captured PNG</h2>
+        <img id="video-poster-image" alt="Captured poster" data-i18n-alt="tools:capturedPoster" />
         <p id="video-poster-evidence"></p>
-        <a id="video-poster-download" hidden>Download exact PNG</a>
+        <a id="video-poster-download" hidden data-i18n="tools:downloadExactPng"
+          >Download exact PNG</a
+        >
       </section>
-      <p id="video-poster-hint">
+      <p id="video-poster-hint" data-i18n="tools:tabArrowsAndEnterNavigateUseTheTimeSliderWith">
         Tab/arrows and Enter navigate. Use the time slider with controller South, then D-pad; South
         confirms and East cancels. File picking/text entry use browser or OS controls. Escape
         cancels work or returns to Workshop.
       </p>
       <details>
-        <summary>What the timestamps mean</summary>
-        <p>
+        <summary data-i18n="tools:whatTheTimestampsMean">What the timestamps mean</summary>
+        <p data-i18n="tools:theRequestedTimeAsksTheBrowserToSeekAnObserved">
           The requested time asks the browser to seek. An observed frame timestamp comes from its
           decoded-frame callback and can differ. Without that callback, the preview labels an
           approximate playhead and unavailable frame timestamp. Neither value promises arbitrary
           frame-number accuracy. Downloaded PNG bytes are the actual captured picture.
         </p>
-        <p>
+        <p data-i18n="tools:videoPoster.frameSteppingHelp">
           Frame stepping appears only after the browser reports a presented-frame timestamp. The
           tool repeats bounded seeks until that timestamp changes; it never invents a frame rate. A
           browser may skip more than one frame, so review the observed timestamp and PNG. Browsers

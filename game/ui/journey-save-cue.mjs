@@ -1,3 +1,4 @@
+import { t, localizedText } from '../i18n/index.mjs';
 /** Presentation only: never owns saving, pausing, progression or input. */
 export function attachJourneySaveCue({ target, action, announcement, onOpen, document: doc }) {
   let unsaved = false;
@@ -15,13 +16,15 @@ export function attachJourneySaveCue({ target, action, announcement, onOpen, doc
       } else if (description) target.setAttribute('aria-describedby', description);
       else target.removeAttribute('aria-describedby');
       action.hidden = !unsaved && doc.activeElement !== action;
-      action.textContent = unsaved
-        ? 'Progress not saved · Save options'
-        : ready && durable
-          ? 'Progress saved · Return to controls'
-          : 'Save options';
-      const message = unsaved ? 'Journey progress is not saved. Pause for Save options.' : '';
-      if (announcement.textContent !== message) announcement.textContent = message;
+      localizedText(action, () =>
+        unsaved
+          ? t('interface:progressNotSavedSaveOptions')
+          : ready && durable
+            ? t('interface:progressSavedReturnToControls')
+            : t('interface:saveOptions'),
+      );
+      const message = unsaved ? t('interface:journeyProgressIsNotSavedPauseForSaveOptions') : '';
+      if (announcement.textContent !== message) localizedText(announcement, () => message);
       return unsaved;
     },
   };

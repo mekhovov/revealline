@@ -1,5 +1,5 @@
 {
-  "version": "0.130.0",
+  "version": "0.131.0",
   "entry": "game/index.html",
   "include": [
     "game",
@@ -26,6 +26,7 @@
     "authoring/motion-lab/ability-presets.json",
     "authoring/motion-lab/render-ability.mjs",
     "authoring/motion-lab/ability-labels.mjs",
+    "authoring/motion-lab/copy.mjs",
     "authoring/motion-lab/png-preview.mjs",
     "authoring/enemy-catalog",
     "authoring/still-media",

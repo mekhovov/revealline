@@ -1,3 +1,4 @@
+import { t, formatNumber } from './i18n/index.mjs';
 import { difficultyAccess } from './difficulty-access.mjs';
 import { campaignSelection } from './continuation.mjs';
 import { canPlay, appearanceMilestones, unlockedBodies, achievements } from './progress.mjs';
@@ -65,7 +66,11 @@ export function createDifficultyNavigation() {
 }
 
 export const difficultyLabel = (entry) =>
-  entry?.difficulty === 'gentle' ? 'Gentle' : entry?.difficulty === 'standard' ? 'Standard' : '';
+  entry?.difficulty === 'gentle'
+    ? t('interface:gentle')
+    : entry?.difficulty === 'standard'
+      ? t('interface:standard')
+      : '';
 
 /** Preference changes choose the next attempt; they never convert a live run. */
 export function difficultyCue({ entry, nextMode, started, recovering = false, practice = false }) {
@@ -75,21 +80,36 @@ export function difficultyCue({ entry, nextMode, started, recovering = false, pr
     return Object.freeze({
       available: false,
       current: '',
-      copy: 'Difficulty applies to authored campaigns. This activity keeps its own rules.',
+      copy: t('gameplay:brief.difficultyAppliesToAuthoredCampaignsThisActivityKeepsItsOwn'),
       retry: '',
     });
-  const next = nextMode === 'gentle' ? 'Gentle' : 'Standard';
+  const next = nextMode === 'gentle' ? t('interface:gentle') : t('interface:standard');
   const pending = current !== next && (started || recovering);
   return Object.freeze({
     available: true,
     current,
     copy: pending
-      ? `This flight stays ${current}. ${next} starts on your next fresh attempt. Resume and Load keep the saved flight’s difficulty.`
+      ? t('gameplay:thisFlightStaysStartsOnYourNextFreshAttemptResume', {
+          value1: current,
+          value2: next,
+        })
       : current !== next
-        ? `This prepared flight starts on ${current}. Your saved choice for later fresh attempts is ${next}. Changing this setting replaces the prepared attempt.`
-        : `${current}: ${current === 'Gentle' ? 'at least five lives, slower moving enemies and no mission or cut deadline' : 'the authored lives, hazards and deadlines'}. Both difficulties unlock the same pictures, missions and appearances; scores and medals stay separate. Equipment seals require Standard.`,
+        ? t('gameplay:thisPreparedFlightStartsOnYourSavedChoiceForLater', {
+            value1: current,
+            value2: next,
+          })
+        : t('gameplay:bothDifficultiesUnlockTheSamePicturesMissionsAndAppearancesScores', {
+            value1: current,
+            value2:
+              entry.difficulty === 'gentle'
+                ? t('gameplay:difficulty.gentleRules')
+                : t('gameplay:difficulty.standardRules'),
+          }),
     retry: pending
-      ? `Retry starts this map from the beginning on ${next}. Your current flight remains ${current} until then.`
+      ? t('gameplay:retryStartsThisMapFromTheBeginningOnYourCurrent', {
+          value1: next,
+          value2: current,
+        })
       : '',
   });
 }
@@ -98,13 +118,32 @@ export function difficultyCue({ entry, nextMode, started, recovering = false, pr
 export function difficultyRuleComparison(standardLevel, gentleLevel) {
   const standard = normalizedLevel(standardLevel),
     gentle = normalizedLevel(gentleLevel);
-  const seconds = (value) => `${Number(value.toFixed(2))}s`;
-  const limit = (value) => (value ? seconds(value) : 'none');
+  const seconds = (value) =>
+    t('common:units.secondsShort', {
+      seconds: formatNumber(value, { maximumFractionDigits: 2 }),
+    });
+  const limit = (value) => (value ? seconds(value) : t('gameplay:difficulty.noLimit'));
   const rows = [
-    `Starting lives: Standard ${standard.rules.lives} · Gentle ${gentle.rules.lives}.`,
-    `Mission deadline: Standard ${limit(standard.rules.timeLimitSeconds)} · Gentle ${limit(gentle.rules.timeLimitSeconds)}.`,
-    `Cut deadline: Standard ${limit(standard.rules.cutTimeLimitSeconds)} · Gentle ${limit(gentle.rules.cutTimeLimitSeconds)}.`,
-    `Maximum line: Standard ${standard.rules.maxTrailCells ? `${standard.rules.maxTrailCells} cells` : 'unlimited'} · Gentle ${gentle.rules.maxTrailCells ? `${gentle.rules.maxTrailCells} cells` : 'unlimited'}.`,
+    t('gameplay:startingLivesStandardGentle', {
+      value1: standard.rules.lives,
+      value2: gentle.rules.lives,
+    }),
+    t('gameplay:missionDeadlineStandardGentle', {
+      value1: limit(standard.rules.timeLimitSeconds),
+      value2: limit(gentle.rules.timeLimitSeconds),
+    }),
+    t('gameplay:cutDeadlineStandardGentle', {
+      value1: limit(standard.rules.cutTimeLimitSeconds),
+      value2: limit(gentle.rules.cutTimeLimitSeconds),
+    }),
+    t('gameplay:maximumLineStandardGentle', {
+      value1: standard.rules.maxTrailCells
+        ? t('gameplay:cells', { value1: standard.rules.maxTrailCells })
+        : t('gameplay:difficulty.unlimited'),
+      value2: gentle.rules.maxTrailCells
+        ? t('gameplay:cells', { value1: gentle.rules.maxTrailCells })
+        : t('gameplay:difficulty.unlimited'),
+    }),
   ];
   if (
     standard.enemies.some(
@@ -113,26 +152,33 @@ export function difficultyRuleComparison(standardLevel, gentleLevel) {
         (enemy.type === 'bouncer' && (enemy.vx !== 0 || enemy.vy !== 0)),
     )
   )
-    rows.push('Moving field enemies and border patrols travel 40% slower on Gentle.');
+    rows.push(t('gameplay:brief.movingFieldEnemiesAndBorderPatrolsTravel40SlowerOn'));
   for (const enemy of standard.enemies.filter((enemy) => enemy.type === 'lane-boss')) {
     const changed = gentle.enemies.find((candidate) => candidate.id === enemy.id);
     rows.push(
-      `Lane warning: Standard ${seconds(enemy.warningSeconds ?? 1.5)} · Gentle ${seconds(changed.warningSeconds)}. Lane cycle: Standard ${seconds(enemy.period ?? 6)} · Gentle ${seconds(changed.period)}.`,
+      t('gameplay:laneWarningStandardGentleLaneCycleStandardGentle', {
+        value1: seconds(enemy.warningSeconds ?? 1.5),
+        value2: seconds(changed.warningSeconds),
+        value3: seconds(enemy.period ?? 6),
+        value4: seconds(changed.period),
+      }),
     );
   }
   if (standard.encounter && gentle.encounter) {
     for (const [stage, key, label] of [
-      ['shielded', 'warningTicks', 'Sentinel lane warning'],
-      ['shielded', 'restTicks', 'Sentinel rest'],
-      ['exposed', 'warningTicks', 'Sentinel opening warning'],
-      ['exposed', 'openTicks', 'Sentinel opening'],
+      ['shielded', 'warningTicks', t('gameplay:brief.sentinelLaneWarning')],
+      ['shielded', 'restTicks', t('gameplay:brief.sentinelRest')],
+      ['exposed', 'warningTicks', t('gameplay:brief.sentinelOpeningWarning')],
+      ['exposed', 'openTicks', t('gameplay:brief.sentinelOpening')],
     ])
       rows.push(
-        `${label}: Standard ${seconds(standard.encounter[stage][key] * FIXED_DT)} · Gentle ${seconds(gentle.encounter[stage][key] * FIXED_DT)}.`,
+        t('gameplay:standardGentle', {
+          value1: label,
+          value2: seconds(standard.encounter[stage][key] * FIXED_DT),
+          value3: seconds(gentle.encounter[stage][key] * FIXED_DT),
+        }),
       );
   }
-  rows.push(
-    'The picture, coverage target, required objectives, craft speed and equipment abilities stay the same. Contact can still cost a life.',
-  );
+  rows.push(t('gameplay:brief.thePictureCoverageTargetRequiredObjectivesCraftSpeedAndEquipment'));
   return Object.freeze(rows);
 }

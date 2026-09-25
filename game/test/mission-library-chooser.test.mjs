@@ -13,6 +13,7 @@ import {
 import { attachJourneyChooser } from '../ui/journey-chooser.mjs';
 import { createMissionLibrarySessionState } from '../mission-library/handoff.mjs';
 import { attachControllerNavigation } from '../ui/controller-navigation.mjs';
+import { getLocale, setLocale } from '../i18n/index.mjs';
 
 const tick = () => new Promise((resolve) => setImmediate(resolve));
 
@@ -630,6 +631,26 @@ test('download stays in picker, preserves search/focus/scroll, and requires a de
   assert.equal(doc.activeElement, card);
   assert.equal($('journey-cards').scrollTop, 123);
   chooser.destroy();
+});
+
+test('download label switches locale without preparing content', (context) => {
+  const locale = getLocale();
+  context.after(() => setLocale(locale, { persist: false }));
+  setLocale('en', { persist: false });
+  let preparations = 0;
+  const { $, chooser } = setup([
+    owner({
+      availability: () => ({ state: 'download', bytes: 1572864 }),
+      prepare: () => preparations++,
+    }),
+  ]);
+  context.after(() => chooser.destroy());
+  const card = $('journey-cards').children[0];
+  assert.match(card.textContent, /Download · 1.5 MiB/);
+
+  setLocale('uk', { persist: false });
+  assert.match(card.textContent, /Завантажити · 1,5 MiB/);
+  assert.equal(preparations, 0);
 });
 
 test('cancel and failed download Retry remain inline without losing the selected collection', async () => {

@@ -1,3 +1,4 @@
+import { t } from '../i18n/index.mjs';
 import {
   resolveControllerBindings,
   CONTROLLER_DIRECTION_PRIORITY,
@@ -33,7 +34,7 @@ const pressed = (button) =>
   (Number.isFinite(button?.value) && button.value >= 0.5 && button.value <= 1);
 const defaultRead = () => {
   if (typeof globalThis.navigator?.getGamepads !== 'function')
-    throw new Error('Gamepad API unavailable');
+    throw new Error(t('interface:gamepadApiUnavailable'));
   return globalThis.navigator.getGamepads();
 };
 
@@ -82,7 +83,7 @@ export function createControllerRouter({
   navigationAliases = false,
 } = {}) {
   if (typeof readPads !== 'function' || typeof now !== 'function')
-    throw new TypeError('Controller readers must be functions.');
+    throw new TypeError(t('interface:controllerReadersMustBeFunctions'));
   if (
     !Number.isFinite(deadZone) ||
     deadZone < 0.1 ||
@@ -94,7 +95,7 @@ export function createControllerRouter({
     repeatIntervalMs < 50 ||
     repeatIntervalMs > 1000
   )
-    throw new RangeError('Controller thresholds or repeat timing are out of bounds.');
+    throw new RangeError(t('interface:controllerThresholdsOrRepeatTimingAreOutOfBounds'));
   const initial = resolveControllerBindings(bindings);
   // Constructor compatibility: an explicit document owns its thresholds.
   // Legacy callers without one retain their equal press/release deadZone.
@@ -152,7 +153,7 @@ export function createControllerRouter({
     }
   }
   function setBindings(value) {
-    if (destroyed) throw new Error('Controller input is stopped.');
+    if (destroyed) throw new Error(t('interface:controllerInputIsStopped'));
     const config = resolveControllerBindings(value);
     const next = compileBindings(config);
     // Validation and compilation must finish before any live state is cleared.
@@ -161,7 +162,7 @@ export function createControllerRouter({
     clear();
   }
   function setBoostMode(value) {
-    if (destroyed) throw new Error('Controller input is stopped.');
+    if (destroyed) throw new Error(t('interface:controllerInputIsStopped'));
     const next = resolveControllerBoostMode(value);
     mode = next;
     clear();
@@ -278,11 +279,11 @@ export function createControllerRouter({
   });
 
   function sample({ scope, timeMs, toggleBoostEligible = true } = {}) {
-    if (destroyed) return result('disposed', 'Controller input is stopped.');
+    if (destroyed) return result('disposed', t('interface:controllerInputIsStopped'));
     if (typeof scope !== 'string' || !scope || scope.length > 160)
-      throw new TypeError('Controller scope must be a stable nonempty string.');
+      throw new TypeError(t('interface:controllerScopeMustBeAStableNonemptyString'));
     if (typeof toggleBoostEligible !== 'boolean')
-      throw new TypeError('Controller Boost eligibility must be boolean.');
+      throw new TypeError(t('interface:controllerBoostEligibilityMustBeBoolean'));
     const clock = timeMs ?? now();
     const time = Number.isFinite(clock) ? Math.max(lastTime, clock) : lastTime;
     lastTime = time;
@@ -300,7 +301,7 @@ export function createControllerRouter({
       pendingDisconnect = false;
       return result(
         'unavailable',
-        'Controller access is unavailable. Keyboard and touch remain available.',
+        t('interface:controllerAccessIsUnavailableKeyboardAndTouchRemainAvailable'),
         undefined,
         undefined,
         disconnected,
@@ -339,7 +340,7 @@ export function createControllerRouter({
       clear();
       return result(
         'disconnected',
-        'Controller disconnected. Release controls, then press a face button to join again.',
+        t('interface:controllerDisconnectedReleaseControlsThenPressAFaceButtonTo'),
         undefined,
         undefined,
         true,
@@ -363,7 +364,9 @@ export function createControllerRouter({
           if (autoJoin) blocked = false;
           return result(
             'joined',
-            autoJoin ? 'Controller ready.' : 'Controller joined. Release controls to continue.',
+            autoJoin
+              ? t('interface:controllerReady')
+              : t('interface:controllerJoinedReleaseControlsToContinue'),
           );
         }
       }
@@ -371,15 +374,12 @@ export function createControllerRouter({
         return connected
           ? result(
               'unsupported',
-              'This controller has no standard mapping. Keyboard and touch remain available.',
+              t('interface:thisControllerHasNoStandardMappingKeyboardAndTouchRemain'),
             )
-          : result(
-              'waiting-controller',
-              'Connect a controller and use it while this page is visible.',
-            );
+          : result('waiting-controller', t('interface:connectAControllerAndUseItWhileThisPageIs'));
       return [...seen.values()].some((candidate) => candidate.armed)
-        ? result('ready-to-join', 'Press a face button or Menu to join.')
-        : result('waiting-neutral', 'Release the controller buttons and movement stick.');
+        ? result('ready-to-join', t('interface:pressAFaceButtonOrMenuToJoin'))
+        : result('waiting-neutral', t('interface:releaseTheControllerButtonsAndMovementStick'));
     }
     const pad = pads.get(assigned.index);
     // An assigned pad always has a corresponding seen entry until loss handling.
@@ -397,7 +397,9 @@ export function createControllerRouter({
       previousButtons = new Set(pad.buttons);
       return result(
         blocked ? 'waiting-neutral' : 'connected',
-        blocked ? 'Release the controller buttons and movement stick.' : 'Controller ready.',
+        blocked
+          ? t('interface:releaseTheControllerButtonsAndMovementStick')
+          : t('interface:controllerReady'),
       );
     }
     const edge = (i) => pad.buttons.has(i) && !previousButtons.has(i);
@@ -452,15 +454,15 @@ export function createControllerRouter({
       repeatDirection = direction;
     }
     previousButtons = new Set(pad.buttons);
-    return result('connected', 'Controller ready.', flight, ui);
+    return result('connected', t('interface:controllerReady'), flight, ui);
   }
   function sampleLoss() {
     pendingDisconnect = false;
     return result(
       'disconnected',
       autoJoin
-        ? 'Controller disconnected. Reconnect and release controls to continue.'
-        : 'Controller disconnected. Release controls, then press a face button to join again.',
+        ? t('interface:controllerDisconnectedReconnectAndReleaseControlsToContinue')
+        : t('interface:controllerDisconnectedReleaseControlsThenPressAFaceButtonTo'),
       undefined,
       undefined,
       true,

@@ -1,3 +1,4 @@
+import { t } from '../i18n/index.mjs';
 import { EPS } from '../core/geometry.mjs';
 import { isClassicRuleset } from '../core/versions.mjs';
 import { classicEffectActive } from '../core/classic-state.mjs';
@@ -84,8 +85,11 @@ export function flightEventKind(type) {
  * No DOM, wall clock, simulation mutation, arbitration or layout qualification.
  */
 export function flightInformationSnapshot(run, { started, paused }) {
-  check(run && typeof run === 'object', 'An accepted run is required.');
-  check(typeof started === 'boolean' && typeof paused === 'boolean', 'Host state is required.');
+  check(run && typeof run === 'object', t('interface:anAcceptedRunIsRequired'));
+  check(
+    typeof started === 'boolean' && typeof paused === 'boolean',
+    t('interface:hostStateIsRequired'),
+  );
   const issues = [];
   const classicExpected = isClassicRuleset(run.ruleset);
   const encounterExpected = Boolean(run.level?.encounter);
@@ -217,10 +221,13 @@ export function flightInformationSnapshot(run, { started, paused }) {
 export function flightInformationBatch({ owner, sequence, events, messages }) {
   check(
     typeof owner?.attempt === 'string' && owner.attempt.length > 0 && integer(owner.generation),
-    'An accepted attempt and presentation generation are required.',
+    t('interface:anAcceptedAttemptAndPresentationGenerationAreRequired'),
   );
-  check(integer(sequence), 'A host feedback sequence is required.');
-  check(Array.isArray(events) && Array.isArray(messages), 'A complete event batch is required.');
+  check(integer(sequence), t('interface:aHostFeedbackSequenceIsRequired'));
+  check(
+    Array.isArray(events) && Array.isArray(messages),
+    t('interface:aCompleteEventBatchIsRequired'),
+  );
   const facts = events.map((event, index) => {
     check(
       event &&
@@ -228,7 +235,7 @@ export function flightInformationBatch({ owner, sequence, events, messages }) {
         event.type.length > 0 &&
         integer(event.tick) &&
         finite(event.time),
-      'Typed engine event identity and clock are required.',
+      t('interface:typedEngineEventIdentityAndClockAreRequired'),
     );
     return {
       index,
@@ -251,13 +258,13 @@ export function flightInformationBatch({ owner, sequence, events, messages }) {
       integer(message.eventIndex) &&
         message.eventIndex < facts.length &&
         message.eventIndex >= previous,
-      'Warning observations must follow their source event order.',
+      t('interface:warningObservationsMustFollowTheirSourceEventOrder'),
     );
     check(
       typeof message.fullText === 'string' &&
         (message.cue === null || typeof message.cue === 'string') &&
         finite(message.expiresAt),
-      'Retain the complete warning text, cue and simulation expiry.',
+      t('interface:retainTheCompleteWarningTextCueAndSimulationExpiry'),
     );
     previous = message.eventIndex;
     const fact = facts[message.eventIndex];

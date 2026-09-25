@@ -275,7 +275,19 @@ export async function soloPage(
     matchMedia: () => ({ matches: false }),
     Option: class extends SoloElement {
       constructor(label, value) {
-        super(doc, 'option', { label, text: label, textContent: label, value });
+        super(doc, 'option', { textContent: label, value });
+      }
+      get label() {
+        return this.getAttribute('label') ?? this.textContent;
+      }
+      set label(value) {
+        this.setAttribute('label', value);
+      }
+      get text() {
+        return this.textContent;
+      }
+      set text(value) {
+        this.textContent = value;
       }
     },
     fetch: async (path, options) => {
@@ -459,6 +471,9 @@ export async function soloPage(
     win.emit('pagehide', { persisted: false });
     await new Promise((resolve) => setImmediate(resolve));
     db.close();
+    // Model the retired page, not a still-connected document in the next host's
+    // JavaScript realm. Live locale bindings must not refresh detached controls.
+    doc.documentElement.remove();
     console.error = originalError;
     for (const [key, value] of originals)
       value ? Object.defineProperty(globalThis, key, value) : delete globalThis[key];

@@ -1,3 +1,4 @@
+import { t, localizedText } from '../../game/i18n/index.mjs';
 import {
   TEAM_OUTCOME_SLOTS,
   drawTeamOutcomeBadge,
@@ -37,7 +38,7 @@ import { drawClassicTerrain, drawPickupIcon } from '../../game/ui/classic-view.m
 const fonts = new Map();
 const text = (tag, value, className = '', hostRole = null) => {
   const node = document.createElement(tag);
-  node.textContent = value;
+  localizedText(node, () => value);
   node.className = className;
   if (hostRole) node.dataset.studioHost = hostRole;
   return node;
@@ -54,7 +55,7 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
     state = 'default',
     statusTarget,
     cancelButton,
-    label = 'Asset preview',
+    label = t('tools:assetPreview'),
     isCurrent: hostCurrent = () => true,
     audioMaster = null,
     motionPreferences = null,
@@ -114,27 +115,27 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
   };
   if (cancelButton) {
     cancelButton.hidden = false;
-    cancelButton.textContent = 'Stop waiting';
+    localizedText(cancelButton, () => t('common:actions.stopWaiting'));
     cancelButton.onclick = () => {
       if (!isCurrent()) return;
       lease?.finish({ message: `${label}: stopped waiting.`, state: 'detached' });
       // A decoder or shared fixture fetch may finish, but cannot draw after this fence.
       surface.previewCleanup(true);
-      cancelButton.textContent = 'Retry preview';
+      localizedText(cancelButton, () => t('common:preview.retry'));
       cancelButton.onclick = () =>
         drawAssetPreview(surface, slot, asset, resolved, blobs, settings);
     };
   }
   try {
     if (!asset) {
-      surface.append(text('p', 'No binding. Upload a candidate for this slot.', '', 'body'));
+      surface.append(text('p', t('tools:noBindingUploadACandidateForThisSlot'), '', 'body'));
       return;
     }
     if (mode === 'context' && !fieldSlot)
       surface.append(
         text(
           'small',
-          'Game mode applies to field previews. This slot uses its own font, audio or component specimen.',
+          t('tools:gameModeAppliesToFieldPreviewsThisSlotUsesIts'),
           'bounded-label',
           'secondary',
         ),
@@ -151,9 +152,7 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
     }
     if (TEAM_OUTCOME_SLOTS.includes(slot.id)) {
       if (mode === 'context' && fieldMode !== 'team')
-        throw new Error(
-          'Team outcomes use Couch Team context. Choose its actual event scene or Native size.',
-        );
+        throw new Error(t('tools:teamOutcomesUseCouchTeamContextChooseItsActualEvent'));
       if (asset.kind === 'recipe' && mode !== 'context') {
         const canvas = document.createElement('canvas');
         canvas.width = canvas.height = 32;
@@ -174,7 +173,7 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
           canvas,
           text(
             'small',
-            'Isolated two-player badge recipe. Choose the actual Joint capture or Team reserve recovery scene to inspect timing and game-owned labels.',
+            t('tools:isolatedTwoPlayerBadgeRecipeChooseTheActualJointCapture'),
             'bounded-label',
             'secondary',
           ),
@@ -184,9 +183,7 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
     }
     if (TEAM_ENEMY_SLOTS.includes(slot.id)) {
       if (mode === 'context' && fieldMode !== 'team')
-        throw new Error(
-          'Team enemy-state bodies use Couch Team context. Choose Couch Team or Native size.',
-        );
+        throw new Error(t('tools:teamEnemyStateBodiesUseCouchTeamContextChooseCouch'));
       if (asset.kind === 'recipe' && mode !== 'context') {
         const inherited = teamEnemyInheritance(slot.id);
         asset = resolved.assets[inherited];
@@ -206,9 +203,7 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
     }
     if (slot.id.startsWith('team.pilot.')) {
       if (mode === 'context' && fieldMode !== 'team')
-        throw new Error(
-          'Team player-state bodies use Couch Team context. Choose Couch Team or Native size.',
-        );
+        throw new Error(t('tools:teamPlayerStateBodiesUseCouchTeamContextChooseCouch'));
       if (asset.kind === 'recipe' && mode !== 'context') {
         const inherited = `player.scout.${slot.id.split('.').at(-1)}`;
         asset = resolved.assets[inherited];
@@ -228,7 +223,7 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
     }
     const blob = asset.file && blobs.get(asset.file.sha256);
     if (asset.file && !blob) {
-      throw new Error('File bytes are unavailable. Re-import the complete bundle.');
+      throw new Error(t('tools:fileBytesAreUnavailableReImportTheCompleteBundle'));
     }
     if (asset.kind === 'audio') {
       phase('loading audio metadata…', 'decoding');
@@ -242,7 +237,7 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
       audio.controls = true;
       audio.preload = 'metadata';
       if (audioBinding) {
-        const label = text('label', 'Audition volume', '', 'control'),
+        const label = text('label', t('tools:auditionVolume'), '', 'control'),
           fader = document.createElement('input');
         fader.type = 'range';
         fader.min = '0';
@@ -253,12 +248,7 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
         label.append(fader);
         surface.append(
           label,
-          text(
-            'small',
-            'Use Audition volume for this preview. Master sound applies to both previews.',
-            '',
-            'body',
-          ),
+          text('small', t('tools:useAuditionVolumeForThisPreviewMasterSoundAppliesTo'), '', 'body'),
         );
       }
       await new Promise((resolve, reject) => {
@@ -272,14 +262,14 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
         };
         const error = () => {
           clear();
-          reject(new Error('Audio metadata could not be decoded.'));
+          reject(new Error(t('tools:audioMetadataCouldNotBeDecoded')));
         };
         own(() => {
           clear();
           audio.pause();
           audio.removeAttribute('src');
           audio.load();
-          reject(new DOMException('Audio preview closed.', 'AbortError'));
+          reject(new DOMException(t('tools:audioPreviewClosed'), 'AbortError'));
         });
         audio.addEventListener('loadedmetadata', ready);
         audio.addEventListener('error', error);
@@ -323,13 +313,9 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
       mode === 'context' &&
       fieldMode !== 'team'
     )
-      throw new Error(
-        'Relay objectives belong to Team. Choose Team / Relay Yard or inspect Native size.',
-      );
+      throw new Error(t('tools:relayObjectivesBelongToTeamChooseTeamRelayYardOr'));
     if (TEAM_EMITTER_SLOTS.includes(slot.id) && mode === 'context' && fieldMode !== 'team')
-      throw new Error(
-        'Emitter hazards belong to Team. Choose Couch Team / Relay Yard or inspect Native size.',
-      );
+      throw new Error(t('tools:emitterHazardsBelongToTeamChooseCouchTeamRelayYard'));
     if (TEAM_EMITTER_SLOTS.includes(slot.id) && asset.kind === 'recipe' && mode !== 'context') {
       const warning = slot.id.endsWith('warning'),
         size = warning ? 24 : 16,
@@ -363,7 +349,7 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
         canvas,
         text(
           'small',
-          'Native glyph demonstration. Relay Yard Emitter warning and Travelling spark scenes show actual targets, positions and timing.',
+          t('tools:nativeGlyphDemonstrationRelayYardEmitterWarningAndTravellingSpark'),
           'bounded-label',
           'secondary',
         ),
@@ -371,9 +357,7 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
       return;
     }
     if (TEAM_SUPPORT_SLOTS.includes(slot.id) && mode === 'context' && fieldMode !== 'team')
-      throw new Error(
-        'Support belongs to Team. Choose Couch Team / Support pulse or inspect Native size.',
-      );
+      throw new Error(t('tools:supportBelongsToTeamChooseCouchTeamSupportPulseOr'));
     if (TEAM_SUPPORT_SLOTS.includes(slot.id) && asset.kind === 'recipe' && mode !== 'context') {
       const pulse = slot.id === 'team.support.pulse',
         size = pulse ? 64 : 24;
@@ -414,7 +398,7 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
         canvas,
         text(
           'small',
-          'Fixed functional recipe. Uploads add bounded decoration; Team / Support pulse shows both players and actual effect timers.',
+          t('tools:fixedFunctionalRecipeUploadsAddBoundedDecorationTeamSupportPulse'),
           'bounded-label',
           'secondary',
         ),
@@ -452,7 +436,7 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
         canvas,
         text(
           'small',
-          'Decoration only. Anchor identity and captured checkmark stay visible in the Team context preview.',
+          t('tools:decorationOnlyAnchorIdentityAndCapturedCheckmarkStayVisibleIn'),
           'bounded-label',
           'secondary',
         ),
@@ -497,7 +481,7 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
         canvas,
         text(
           'small',
-          'State-overlay recipe. Team context keeps the shared relay body; an uploaded image replaces the body while functional cues remain visible.',
+          t('tools:stateOverlayRecipeTeamContextKeepsTheSharedRelayBody'),
           'bounded-label',
           'secondary',
         ),
@@ -506,9 +490,7 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
     }
     if (mode === 'context' && fieldMode === 'team' && fieldSlot) {
       if (asset.kind === 'recipe' && slot.group === 'pictures')
-        throw new Error(
-          'This picture recipe has no Team field preview. Choose Solo or inspect its original pixels; no substitute picture is shown.',
-        );
+        throw new Error(t('tools:thisPictureRecipeHasNoTeamFieldPreviewChooseSolo'));
       // Team owns its arena/artwork applicability check. A bound Team picture
       // can also have a Solo owner, which must not redirect this inspection.
       await boardContextPreview(surface, slot, asset, resolved, blobs, options, own);
@@ -704,9 +686,9 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
     if (slot.group === 'fonts') {
       const sample = text('div', '', 'recipe-sample');
       sample.append(
-        text('p', 'Flight ready · Політ готовий', `font-${slot.id.split('.')[1]}`),
+        text('p', t('tools:flightReady'), `font-${slot.id.split('.')[1]}`),
         text('p', 'Ґґ Єє Іі Її · 0123456789 ₴'),
-        text('small', 'Bundled production font / source recipe', 'bounded-label', 'secondary'),
+        text('small', t('tools:bundledProductionFontSourceRecipe'), 'bounded-label', 'secondary'),
       );
       surface.append(sample);
       return;
@@ -759,7 +741,12 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
       }
       surface.append(
         canvas,
-        text('small', 'Bounded sample · actual game drawing helper', 'bounded-label', 'secondary'),
+        text(
+          'small',
+          t('tools:boundedSampleActualGameDrawingHelper'),
+          'bounded-label',
+          'secondary',
+        ),
       );
       return;
     }
@@ -770,7 +757,7 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
     lease?.finish({ message: `${label}: ${error.message || error}`, state: 'error' });
     surface.replaceChildren(text('p', error.message || String(error), '', 'body'));
     if (cancelButton) {
-      cancelButton.textContent = 'Retry preview';
+      localizedText(cancelButton, () => t('common:preview.retry'));
       cancelButton.onclick = () =>
         drawAssetPreview(surface, slot, asset, resolved, blobs, settings);
     }
@@ -778,7 +765,7 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
     if (isCurrent()) {
       surface.setAttribute('aria-busy', 'false');
       if (!failed) {
-        lease?.finish({ message: `${label}: ${asset ? 'ready.' : 'no asset bound.'}` });
+        lease?.finish({ message: `${label}: ${asset ? 'ready.' : t('tools:noAssetBound')}` });
         if (cancelButton) cancelButton.hidden = true;
       }
     }

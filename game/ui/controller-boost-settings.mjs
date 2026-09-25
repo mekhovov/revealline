@@ -1,3 +1,4 @@
+import { localizedText, t } from '../i18n/index.mjs';
 import { resolveControllerBoostMode } from '../controller-boost.mjs';
 
 /** This select is an independent preference, outside the button-map draft.
@@ -8,7 +9,11 @@ export function attachControllerBoostSettings({ select, status, getMode, applyMo
     if (destroyed) return;
     const mode = resolveControllerBoostMode(getMode());
     select.value = mode;
-    status.textContent = `Controller Boost: ${mode === 'hold' ? 'Hold' : 'Toggle'}.`;
+    localizedText(status, () =>
+      t('gameplay:controllerBoost', {
+        value1: mode === 'hold' ? t('interface:hold') : t('interface:toggle'),
+      }),
+    );
   };
   const changed = () => {
     if (destroyed) return;
@@ -16,11 +21,15 @@ export function attachControllerBoostSettings({ select, status, getMode, applyMo
       const result = applyMode(resolveControllerBoostMode(select.value));
       refresh();
       status.textContent += result?.ok
-        ? ' Saved on this device.'
-        : ` Session only. ${result?.warning || 'Export your player library to keep this preference.'}`;
+        ? ' ' + t('interface:savedOnThisDevice') + ''
+        : t('gameplay:sessionOnly', {
+            value1: result?.warning || t('interface:exportYourPlayerLibraryToKeepThisPreference'),
+          });
     } catch (error) {
       refresh();
-      status.textContent = `Controller Boost unchanged. ${error.message}`;
+      localizedText(status, () =>
+        t('gameplay:controllerBoostUnchanged', { value1: error.message }),
+      );
     }
   };
   select.addEventListener('change', changed);
@@ -39,7 +48,12 @@ export function renderControllerBoostCue(element, state, buttonLabel, canToggle 
   const hidden = state.mode !== 'toggle';
   const text = hidden
     ? ''
-    : `Controller Boost ${state.latched ? 'on' : 'off'}${canToggle ? ` · ${buttonLabel} to turn ${state.latched ? 'off' : 'on'}` : ''}`;
+    : t('gameplay:controllerBoost2', {
+        value1: state.latched ? 'on' : 'off',
+        value2: canToggle
+          ? t('gameplay:toTurn', { value1: buttonLabel, value2: state.latched ? 'off' : 'on' })
+          : '',
+      });
   if (element.hidden !== hidden) element.hidden = hidden;
-  if (element.textContent !== text) element.textContent = text;
+  if (element.textContent !== text) localizedText(element, () => text);
 }

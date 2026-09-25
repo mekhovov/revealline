@@ -1,3 +1,4 @@
+import { t, localizedText } from '../i18n/index.mjs';
 import { createMenuStylePreferences } from '../menu-style-preferences.mjs';
 import { createMenuAppearance } from './menu-appearance.mjs';
 import { attachPreferenceRestoration } from './preference-restoration.mjs';
@@ -14,14 +15,15 @@ export function attachMenuStyleControls({
   const palette = doc.getElementById(`${prefix}menu-palette`),
     ornaments = doc.getElementById(`${prefix}menu-ornaments`),
     status = doc.getElementById(`${prefix}menu-style-status`);
-  if (!palette || !ornaments || !status) throw new TypeError('Menu style controls are missing.');
+  if (!palette || !ornaments || !status)
+    throw new TypeError(t('interface:menuStyleControlsAreMissing'));
   const appearance = createMenuAppearance({ document: doc });
   const preferences = createMenuStylePreferences({
     window: win,
     getStorage,
     writable,
     onWarning: (message) => {
-      status.textContent = message;
+      localizedText(status, () => message);
     },
   });
   const render = (state) => {

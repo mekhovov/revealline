@@ -1,3 +1,4 @@
+import { t } from '../i18n/index.mjs';
 import { menuStyleVariables, resolveMenuStyle } from '../presentation/menu-styles.mjs';
 import { stableId } from '../data-json.mjs';
 
@@ -26,7 +27,8 @@ const ornamentRoots = [
  * ownership. Presentation snapshots are validated but never choose the UI skin. */
 export function createMenuAppearance({ document: doc = globalThis.document } = {}) {
   const body = doc?.body;
-  if (!body?.style || !doc.createElement) throw new TypeError('Menu appearance needs a document.');
+  if (!body?.style || !doc.createElement)
+    throw new TypeError(t('interface:menuAppearanceNeedsADocument'));
   owners.get(body)?.dispose();
   let disposed = false,
     choice = { palette: 'auto', ornaments: 'subtle' };
@@ -65,7 +67,7 @@ export function createMenuAppearance({ document: doc = globalThis.document } = {
       if (disposed) return;
       const id = snapshot?.resolved?.theme?.id;
       if (snapshot !== null && !stableId(id))
-        throw new TypeError('Menu appearance needs an accepted theme identity.');
+        throw new TypeError(t('interface:menuAppearanceNeedsAnAcceptedThemeIdentity'));
       // Null is the existing declared fallback. UI skin intent stays separate
       // from accepted campaign/canvas presentation.
       apply();

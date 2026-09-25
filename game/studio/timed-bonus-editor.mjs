@@ -1,3 +1,6 @@
+import { localizedMessage, localizedText, t } from '../i18n/index.mjs';
+import { editorMessageError, showEditorFailure } from './editor-copy.mjs';
+import { studioBonusName } from './preview-copy.mjs';
 import { attachFormFocus } from './form-focus.mjs';
 import { BONUS_CHOICES } from '../content-design/bonuses.mjs';
 import { editTimedBonus } from '../content-design/timed-bonuses.mjs';
@@ -27,14 +30,17 @@ export function createTimedBonusEditor({ document, getSource, getMission, apply 
       ...rows.map(([value, text]) => {
         const option = document.createElement('option');
         option.value = value;
-        option.textContent = text;
+        localizedText(option, text);
         return option;
       }),
     );
-  options($('kind'), BONUS_CHOICES);
+  options(
+    $('kind'),
+    BONUS_CHOICES.map(([kind]) => [kind, () => studioBonusName(kind)]),
+  );
   function disarm() {
     armed = false;
-    $('remove').textContent = 'Remove selected schedule';
+    localizedText($('remove'), localizedMessage('tools:studio.timed.remove'));
   }
   function select() {
     disarm();
@@ -50,10 +56,18 @@ export function createTimedBonusEditor({ document, getSource, getMission, apply 
     $('appearances').value = schedule?.maxAppearances ?? 3;
     $('collections').value = schedule?.maxCollections ?? 1;
     $('remove').disabled = !schedule;
-    $('submit').textContent = schedule ? 'Validate & replace schedule' : 'Validate & add schedule';
-    $('result').textContent = getMission()?.modes.includes('team')
-      ? 'Optional Team pickups. Apply creates a new Team bonus edition for this mission only; earlier editions stay unchanged. One shared pickup/grant; speed affects its collector, enemy effects and reserves are shared. Missed pickups may reappear at a different eligible field anchor, within the appearance limit. Test both pilots and pickup-free routes.'
-      : 'Optional only. Applying upgrades this mission’s timed schedules to a trail-aware v2 revision; earlier editions stay unchanged. Contact before expiry. Missed pickups may reappear at a different eligible field anchor, within the appearance limit. Preview does not guarantee live availability.';
+    localizedText(
+      $('submit'),
+      schedule
+        ? localizedMessage('tools:studio.timed.replace')
+        : localizedMessage('tools:studio.timed.add'),
+    );
+    localizedText(
+      $('result'),
+      getMission()?.modes.includes('team')
+        ? localizedMessage('tools:studio.timed.teamHelp')
+        : localizedMessage('tools:studio.timed.soloHelp'),
+    );
   }
   function sync() {
     const mission = getMission();
@@ -63,8 +77,12 @@ export function createTimedBonusEditor({ document, getSource, getMission, apply 
     key = next;
     const selected = $('select').value;
     options($('select'), [
-      ['', '+ New timed schedule'],
-      ...(mission?.timedBonuses?.schedules ?? []).map((s) => [s.id, `${s.kind} · ${s.id}`]),
+      ['', localizedMessage('tools:studio.timed.new')],
+      ...(mission?.timedBonuses?.schedules ?? []).map((s) => [
+        s.id,
+        () =>
+          t('tools:studio.item.option', { name: studioBonusName(s.kind), identity: ` · ${s.id}` }),
+      ]),
     ]);
     if (mission?.timedBonuses?.schedules.some((s) => s.id === selected))
       $('select').value = selected;
@@ -72,8 +90,7 @@ export function createTimedBonusEditor({ document, getSource, getMission, apply 
   }
   function commit(action) {
     try {
-      if (key !== context())
-        throw new Error('The draft changed. Refresh the timed schedule before applying.');
+      if (key !== context()) throw editorMessageError('errors:studio.timed.contextChanged');
       const id = $('id').value.trim(),
         command = { action, id };
       if (action !== 'remove') {
@@ -82,7 +99,7 @@ export function createTimedBonusEditor({ document, getSource, getMission, apply 
           .map((pair) => {
             const parts = pair.trim().split(',');
             if (parts.length !== 2 || parts.some((p) => !p.trim()))
-              throw new Error('Enter 2..16 X,Y pairs separated by semicolons.');
+              throw editorMessageError('errors:studio.timed.anchors');
             return { x: Number(parts[0]), y: Number(parts[1]) };
           });
         command.schedule = {
@@ -93,10 +110,9 @@ export function createTimedBonusEditor({ document, getSource, getMission, apply 
           maxCollections: Number($('collections').value),
         };
         for (const [field, property] of Object.entries(timeFields)) {
-          if (!$(field).value.trim()) throw new Error('Enter every schedule duration.');
+          if (!$(field).value.trim()) throw editorMessageError('errors:studio.timed.durations');
           const ticks = Number($(field).value) / FIXED_DT;
-          if (!Number.isInteger(ticks))
-            throw new Error('Schedule durations must resolve to whole simulation ticks.');
+          if (!Number.isInteger(ticks)) throw editorMessageError('errors:studio.timed.wholeTicks');
           command.schedule[property] = ticks;
         }
       }
@@ -106,10 +122,9 @@ export function createTimedBonusEditor({ document, getSource, getMission, apply 
       sync();
       $('select').value = action === 'remove' ? '' : id;
       select();
-      $('result').textContent =
-        'Applied to the local draft; all presets and modes validated. Undo is available. Test with every bonus missed before publishing.';
+      localizedText($('result'), localizedMessage('tools:studio.timed.applied'));
     } catch (error) {
-      $('result').textContent = `Not applied: ${error.message}`;
+      showEditorFailure($('result'), error);
     }
   }
   $('select').onchange = select;
@@ -123,7 +138,7 @@ export function createTimedBonusEditor({ document, getSource, getMission, apply 
     if (!$('select').value) return;
     if (!armed) {
       armed = true;
-      $('remove').textContent = 'Confirm remove schedule';
+      localizedText($('remove'), localizedMessage('tools:studio.timed.confirmRemove'));
       return;
     }
     disarm();

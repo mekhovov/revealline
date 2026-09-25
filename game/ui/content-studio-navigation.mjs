@@ -1,3 +1,4 @@
+import { t } from '../i18n/index.mjs';
 import { studioReturnLinks } from './asset-studio-return.mjs';
 import { workshopToolHref } from './workshop-return.mjs';
 
@@ -8,7 +9,7 @@ import { workshopToolHref } from './workshop-return.mjs';
 export function contentStudioLinks(href) {
   const page = new URL(href);
   if (!/\/game\/(?:studio|playground)\/(?:index\.html)?$/.test(page.pathname))
-    throw new TypeError('Use the fixed Content Studio or Playground page.');
+    throw new TypeError(t('interface:useTheFixedContentStudioOrPlaygroundPage'));
   const { game } = studioReturnLinks(href);
   const studio = new URL('studio/', game);
   studio.search = new URL(game).search;

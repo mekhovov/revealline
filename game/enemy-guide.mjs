@@ -1,40 +1,42 @@
+import { t } from './i18n/index.mjs';
+import { contentText } from './i18n/content.mjs';
 import { ENEMY_CATALOG, ENEMY_THEMES, emptyEnemyCatalogDraft } from './enemy-catalog.mjs';
 import { createEnemyCatalogScenario } from './enemy-catalog-scenarios.mjs';
 import { validateScenario } from './content.mjs';
 
-const advice = {
+const advice = () => ({
   bouncer: [
-    'Watch its direction before leaving the border.',
-    'Close a short cut while it is moving away.',
+    t('errors:watchItsDirectionBeforeLeavingTheBorder'),
+    t('errors:closeAShortCutWhileItIsMovingAway'),
   ],
   'border-patrol': [
-    'It follows the outside edge, including your starting ground.',
-    'Leave its path before it reaches you. Secured ground is not invulnerability.',
+    t('errors:itFollowsTheOutsideEdgeIncludingYourStartingGround'),
+    t('errors:leaveItsPathBeforeItReachesYouSecuredGroundIs'),
   ],
   'contour-patrol': [
-    'Look for the corner badge on the changing frontier.',
-    'After a capture, check the new boundary before choosing your next direction.',
+    t('errors:lookForTheCornerBadgeOnTheChangingFrontier'),
+    t('errors:afterACaptureCheckTheNewBoundaryBeforeChoosingYour'),
   ],
   'claimed-rover': [
-    'Its sleeping outline means it cannot move yet.',
-    'Watch for the wake-up warning when its whole footprint becomes secured.',
+    t('errors:itsSleepingOutlineMeansItCannotMoveYet'),
+    t('errors:watchForTheWakeUpWarningWhenItsWholeFootprint'),
   ],
   eroder: [
-    'A bite-shaped badge marks a threat to captured ground.',
-    'Watch the warning at a secured edge; reopened cells become dangerous again.',
+    t('errors:aBiteShapedBadgeMarksAThreatToCapturedGround'),
+    t('errors:watchTheWarningAtASecuredEdgeReopenedCellsBecome'),
   ],
   'lane-boss': [
-    'The marked lane warns before the attack becomes active.',
-    'Cross during the gap. Do not wait inside a warned lane.',
+    t('errors:theMarkedLaneWarnsBeforeTheAttackBecomesActive'),
+    t('errors:crossDuringTheGapDoNotWaitInsideAWarned'),
   ],
   'relay-sentinel': [
     'The lock marks a core protected by linked shield relays.',
     'Capture every linked shield relay. During CORE OPEN, close a sufficient new cut—or, if the core is isolated, return to reclaimed ground with no unfinished line.',
   ],
-};
+});
 export const ENEMY_GUIDE_TOPICS = Object.freeze([
   ...ENEMY_CATALOG.map(({ type, label }) => Object.freeze({ id: type, label })),
-  Object.freeze({ id: 'line-impact', label: 'Race the impact' }),
+  Object.freeze({ id: 'line-impact', label: t('errors:raceTheImpact') }),
 ]);
 
 /** Short player copy, separate from authoring controls and runtime authority. */
@@ -43,32 +45,33 @@ export function enemyGuideEntry(topic, themeId = 'fpv') {
   if (topic === 'line-impact')
     return Object.freeze({
       id: topic,
-      label: 'Race the impact',
-      form: 'Two sparks on your unfinished line',
-      spot: 'A line strike sends one spark back to the start and another toward you.',
-      risk: 'The pursuing spark costs a life if it reaches you. Direct enemy contact still hurts immediately.',
-      try: 'Close the cut before the spark catches you. Closing safely clears both sparks.',
-      note: 'This rule is active in First Light R3 and this lesson. Older editions can use immediate line-hit damage.',
+      label: t('errors:raceTheImpact'),
+      form: t('errors:twoSparksOnYourUnfinishedLine'),
+      spot: t('errors:aLineStrikeSendsOneSparkBackToTheStart'),
+      risk: t('errors:thePursuingSparkCostsALifeIfItReachesYou'),
+      try: t('errors:closeTheCutBeforeTheSparkCatchesYouClosingSafely'),
+      note: t('errors:thisRuleIsActiveInFirstLightR3AndThis'),
     });
   const record = ENEMY_CATALOG.find(({ type }) => type === topic);
-  if (!record) throw new TypeError('Choose a registered enemy lesson.');
+  if (!record) throw new TypeError(t('errors:chooseARegisteredEnemyLesson'));
   return Object.freeze({
     id: topic,
-    label: record.label,
-    form: record.forms[ENEMY_THEMES.indexOf(theme)],
-    spot: `${record.domain}. ${advice[topic][0]}`,
-    risk: record.risk,
-    try: advice[topic][1],
-    note: 'The small center marks contact; the larger animated body helps you recognize the role.',
+    label: contentText(record, 'label'),
+    form: contentText(record, `forms.${ENEMY_THEMES.indexOf(theme)}`),
+    spot: `${contentText(record, 'domain')}. ${advice()[topic][0]}`,
+    risk: contentText(record, 'risk'),
+    try: advice()[topic][1],
+    note: t('errors:theSmallCenterMarksContactTheLargerAnimatedBodyHelps'),
   });
 }
 
 export function enemyGuidePracticeInstructions(topic, exercise = 'observe') {
   if (topic === 'line-impact') {
-    if (!['observe', 'escape'].includes(exercise)) throw new TypeError('Unknown impact exercise.');
+    if (!['observe', 'escape'].includes(exercise))
+      throw new TypeError(t('errors:unknownImpactExercise'));
     return exercise === 'observe'
-      ? 'First, leave Boost off and tap Down. Watch the hit split into two sparks and the forward spark catch you. Then Retry or return here to try Escape.'
-      : 'Enable Boost before tapping Down: hold your Boost button, or switch it on if Toggle is selected. Keep flying to the far safe border to clear the sparks. No ability is needed.';
+      ? t('errors:firstLeaveBoostOffAndTapDownWatchTheHit')
+      : t('errors:enableBoostBeforeTappingDownHoldYourBoostButtonOr');
   }
   return `${enemyGuideEntry(topic).try} Move with direction taps; Pause when you want to inspect. Closing a cut stops your craft; tap a fresh direction to fly again. Retry starts the same lesson.`;
 }
@@ -83,20 +86,20 @@ export function createEnemyGuideScenario({
 }) {
   enemyGuideEntry(topic, themeId);
   if (!['immediate', 'grid-center'].includes(turnPolicy))
-    throw new TypeError('Unknown turning mode.');
+    throw new TypeError(t('errors:unknownTurningMode'));
   const selected = ENEMY_THEMES.includes(themeId) ? themeId : 'fpv',
     theme = themes?.find((entry) => entry.id === selected);
-  if (!theme) throw new Error('This lesson theme is unavailable.');
+  if (!theme) throw new Error(t('errors:thisLessonThemeIsUnavailable'));
   let scenario;
   if (topic === 'line-impact') {
     if (impactScenario?.level?.id !== 'line-impact-demo')
-      throw new Error('The impact lesson could not load.');
+      throw new Error(t('errors:theImpactLessonCouldNotLoad'));
     scenario = structuredClone(impactScenario);
     scenario.theme = structuredClone(theme);
   } else {
     scenario = createEnemyCatalogScenario(topic, emptyEnemyCatalogDraft(selected), themes);
     scenario.level.id = `guide-${topic}`;
-    scenario.level.name = `Field guide: ${enemyGuideEntry(topic).label}`;
+    scenario.level.name = `Field guide: ${ENEMY_CATALOG.find((record) => record.type === topic).label}`;
     scenario.level.rules = { ...scenario.level.rules, stopOnCapture: true };
   }
   scenario.settings.turnPolicy = turnPolicy;

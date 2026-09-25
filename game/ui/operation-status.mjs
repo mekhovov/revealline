@@ -1,4 +1,11 @@
+import { t, localizedText, localizedAttribute, formatNumber } from '../i18n/index.mjs';
 const terminalStates = new Set(['ready', 'error', 'cancelled', 'detached']);
+const progressMessages = Object.freeze({
+  files: 'common:progress.files',
+  tracks: 'common:progress.tracks',
+  chapters: 'common:progress.chapters',
+  ticks: 'common:progress.ticks',
+});
 
 function checkedProgress(value) {
   if (value == null) return null;
@@ -12,7 +19,7 @@ function checkedProgress(value) {
     typeof unit !== 'string' ||
     !unit.trim()
   )
-    throw new TypeError('Operation progress needs a measured completed/total count and unit.');
+    throw new TypeError(t('interface:operationProgressNeedsAMeasuredCompletedTotalCountAndUnit'));
   return { completed, total, unit };
 }
 
@@ -45,8 +52,8 @@ export function createOperationStatus(target, { isCurrent: hostCurrent = () => t
   let disposed = false;
   const reset = () => {
     target.hidden = true;
-    label.textContent = '';
-    count.textContent = '';
+    localizedText(label, () => '');
+    localizedText(count, () => '');
     meter.hidden = count.hidden = true;
     delete target.dataset.state;
     delete target.dataset.stage;
@@ -61,18 +68,24 @@ export function createOperationStatus(target, { isCurrent: hostCurrent = () => t
       const next = Object.hasOwn(options, 'progress')
         ? checkedProgress(options.progress)
         : undefined;
-      if (options.message !== undefined && label.textContent !== String(options.message))
-        label.textContent = String(options.message);
+      if (options.message !== undefined) localizedText(label, options.message);
       if (options.stage !== undefined) target.dataset.stage = String(options.stage);
       if (next !== undefined) {
         meter.hidden = count.hidden = next === null;
-        if (!next) count.textContent = '';
+        if (!next) localizedText(count, () => '');
         if (next) {
           meter.max = next.total;
           meter.value = next.completed;
-          const text = `${next.completed} / ${next.total} ${next.unit}`;
-          meter.setAttribute('aria-label', text);
-          count.textContent = text;
+          const text = () =>
+            progressMessages[next.unit]
+              ? t(progressMessages[next.unit], {
+                  count: next.total,
+                  completed: formatNumber(next.completed),
+                  total: formatNumber(next.total),
+                })
+              : `${formatNumber(next.completed)} / ${formatNumber(next.total)} ${next.unit}`;
+          localizedAttribute(meter, 'aria-label', text);
+          localizedText(count, text);
         }
       }
       target.hidden = false;
@@ -86,7 +99,7 @@ export function createOperationStatus(target, { isCurrent: hostCurrent = () => t
       update,
       finish({ message = '', state = 'ready' } = {}) {
         if (!current()) return false;
-        if (!terminalStates.has(state)) throw new TypeError('Unknown operation outcome.');
+        if (!terminalStates.has(state)) throw new TypeError(t('interface:unknownOperationOutcome'));
         update({ message, progress: null });
         target.dataset.state = state;
         target.hidden = !message;

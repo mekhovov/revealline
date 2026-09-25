@@ -1,3 +1,5 @@
+import { contentText } from '../i18n/content.mjs';
+import { localizedMessage, localizedText, t, localizedAttribute } from '../i18n/index.mjs';
 import {
   ENEMY_GUIDE_TOPICS,
   enemyGuideEntry,
@@ -28,7 +30,7 @@ export function attachEnemyGuide({
       new URL('../content/scenarios/line-impact-demo.json', import.meta.url),
     );
     if (!response.ok)
-      throw new Error('The impact lesson is unavailable. Try again when its content is available.');
+      throw new Error(t('interface:theImpactLessonIsUnavailableTryAgainWhenItsContent'));
     return response.json();
   },
   onPractice = () => {},
@@ -54,7 +56,7 @@ export function attachEnemyGuide({
   const node = (tag, id, text = '') => {
     const el = doc.createElement(tag);
     if (id) el.id = `enemy-guide-${id}`;
-    if (text) el.textContent = text;
+    if (text) localizedText(el, () => text);
     return el;
   };
   const button = (id, label, fn) => {
@@ -78,17 +80,17 @@ export function attachEnemyGuide({
   const dialog = node('dialog', 'dialog');
   dialog.className = 'enemy-guide-dialog';
   dialog.setAttribute('aria-labelledby', 'enemy-guide-title');
-  const title = node('h2', 'title', 'Field guide'),
+  const title = node('h2', 'title', localizedMessage('interface:fieldGuide')),
     content = node('div', 'content'),
     status = node('p', 'status'),
     topic = select(
       'topic',
-      'Learn about',
+      t('interface:learnAbout'),
       ENEMY_GUIDE_TOPICS.map(({ id, label }) => [id, label]),
     ),
     appearance = select(
       'theme',
-      'Appearance',
+      t('interface:appearance'),
       ENEMY_THEMES.map((id) => [id, themes?.find((item) => item.id === id)?.name ?? id]),
     ),
     choices = node('div'),
@@ -106,27 +108,28 @@ export function attachEnemyGuide({
   choices.append(topic.wrap, appearance.wrap);
   canvas.width = 192;
   canvas.height = 112;
-  canvas.setAttribute(
-    'aria-label',
-    'Illustrated role preview; the practice lesson uses actual game timing.',
+  localizedAttribute(canvas, 'aria-label', () =>
+    t('interface:illustratedRolePreviewThePracticeLessonUsesActualGameTiming'),
   );
   summary.tabIndex = 0;
   summary.setAttribute('role', 'region');
-  summary.setAttribute('aria-label', 'Enemy recognition and practice instructions');
-  summary.setAttribute('data-game-reading', '');
-  const read = button('read', 'Read guide', () =>
-    onRead({ region: summary, origin: read, label: 'Field guide' }),
+  localizedAttribute(summary, 'aria-label', () =>
+    t('interface:enemyRecognitionAndPracticeInstructions'),
   );
-  const exercise = select('exercise', 'Impact exercise', [
+  summary.setAttribute('data-game-reading', '');
+  const read = button('read', localizedMessage('interface:readGuide'), () =>
+    onRead({ region: summary, origin: read, label: t('interface:fieldGuide') }),
+  );
+  const exercise = select('exercise', t('interface:impactExercise'), [
     ['observe', '1 · Observe the strike'],
     ['escape', '2 · Escape with Boost'],
   ]);
   const instructions = node('p', 'instructions');
   summary.append(heading, form, spot, risk, action, note, instructions);
   const previous = button('previous', '← Previous', () => changeTopic(-1)),
-    next = button('next', 'Next →', () => changeTopic(1)),
-    play = button('play', 'Play practice', launch),
-    back = button('back', 'Close guide', close),
+    next = button('next', localizedMessage('interface:next'), () => changeTopic(1)),
+    play = button('play', localizedMessage('interface:playPractice'), launch),
+    back = button('back', localizedMessage('common:actions.closeGuide'), close),
     actions = node('div');
   actions.className = 'enemy-guide-actions';
   actions.append(previous, next, play, back);
@@ -147,10 +150,14 @@ export function attachEnemyGuide({
   const practice = node('div', 'practice'),
     practiceHint = node('p', 'practice-hint'),
     frame = node('iframe', 'frame'),
-    returnButton = button('return', 'Return to field guide', returnFromPractice);
+    returnButton = button(
+      'return',
+      localizedMessage('interface:returnToFieldGuide'),
+      returnFromPractice,
+    );
   practice.hidden = true;
   frame.hidden = true;
-  frame.title = 'Reward-free field guide practice';
+  localizedAttribute(frame, 'title', () => t('interface:rewardFreeFieldGuidePractice'));
   frame.setAttribute('allow', 'gamepad; autoplay');
   practice.append(practiceHint, frame, returnButton);
   status.setAttribute('role', 'status');
@@ -171,22 +178,25 @@ export function attachEnemyGuide({
   }
   function refresh() {
     const record = entry();
-    previewNote.textContent =
+    localizedText(previewNote, () =>
       record.id === 'line-impact'
-        ? 'Line-impact diagram · practice uses actual timing.'
-        : 'Enlarged illustration · center dot marks contact.';
+        ? t('interface:lineImpactDiagramPracticeUsesActualTiming')
+        : t('interface:enlargedIllustrationCenterDotMarksContact'),
+    );
     canvas.setAttribute('aria-label', previewNote.textContent);
-    heading.textContent = record.label;
-    form.textContent = record.form;
-    spot.textContent = `Spot: ${record.spot}`;
-    risk.textContent = `Risk: ${record.risk}`;
-    action.textContent = `Try: ${record.try}`;
-    note.textContent = record.note;
+    localizedText(heading, () => record.label);
+    localizedText(form, () => record.form);
+    localizedText(spot, () => `Spot: ${record.spot}`);
+    localizedText(risk, () => `Risk: ${record.risk}`);
+    localizedText(action, () => `Try: ${record.try}`);
+    localizedText(note, () => record.note);
     exercise.wrap.hidden = record.id !== 'line-impact';
-    instructions.textContent = enemyGuidePracticeInstructions(record.id, exercise.el.value);
+    localizedText(instructions, () => enemyGuidePracticeInstructions(record.id, exercise.el.value));
     for (const el of [topic.el, appearance.el, exercise.el, previous, next, play])
       el.disabled = busy;
-    play.textContent = busy ? 'Preparing practice…' : 'Play practice';
+    localizedText(play, () =>
+      busy ? t('interface:preparingPractice') : t('interface:playPractice'),
+    );
     update(0, previewSettings);
   }
   function changeTopic(delta) {
@@ -223,7 +233,7 @@ export function attachEnemyGuide({
           else host.sessionStorage.setItem(HANDOFF, previousHandoff);
         }
       } catch {
-        failure = 'Practice ended; its temporary handoff could not be restored.';
+        failure = t('interface:practiceEndedItsTemporaryHandoffCouldNotBeRestored');
       }
     }
     ownedHandoff = null;
@@ -248,8 +258,10 @@ export function attachEnemyGuide({
     if (disposed || !active) return;
     generation++;
     const failure = stopPractice();
-    status.textContent =
-      failure ?? 'Practice ended. Your campaign remains paused; no progress was awarded.';
+    localizedText(
+      status,
+      () => failure ?? t('interface:practiceEndedYourCampaignRemainsPausedNoProgressWasAwarded'),
+    );
     play.focus({ preventScroll: true });
     refresh();
   }
@@ -262,7 +274,7 @@ export function attachEnemyGuide({
     const controller = new AbortController();
     launchController = controller;
     busy = true;
-    status.textContent = 'Preparing an isolated lesson…';
+    localizedText(status, () => t('interface:preparingAnIsolatedLesson'));
     refresh();
     const current = () => !disposed && dialog.open && ticket === generation;
     try {
@@ -292,16 +304,22 @@ export function attachEnemyGuide({
       active = true;
       content.hidden = true;
       practice.hidden = false;
-      practiceHint.textContent = `${enemyGuidePracticeInstructions(selected, exercise.el.value)} Pause to Restart or Return to field guide.`;
+      localizedText(practiceHint, () =>
+        t('gameplay:pauseToRestartOrReturnToFieldGuide', {
+          value1: enemyGuidePracticeInstructions(selected, exercise.el.value),
+        }),
+      );
       frame.src = url;
       frame.hidden = false;
       frame.focus();
-      status.textContent = 'Practice only · campaign progress and saved flights are unchanged.';
+      localizedText(status, () =>
+        t('interface:practiceOnlyCampaignProgressAndSavedFlightsAreUnchanged'),
+      );
       return true;
     } catch (error) {
       if (current()) {
         stopPractice();
-        status.textContent = `Practice did not open: ${error.message}`;
+        localizedText(status, () => t('gameplay:practiceDidNotOpen', { value1: error.message }));
       }
       return false;
     } finally {
@@ -329,7 +347,7 @@ export function attachEnemyGuide({
   function releasePreview() {
     bodyAssets.clear();
     previewPose = null;
-    artworkStatus.textContent = '';
+    localizedText(artworkStatus, () => '');
     artworkStatus.hidden = true;
   }
   function compiledPreview() {
@@ -381,7 +399,7 @@ export function attachEnemyGuide({
       compiled?.geometry,
       compiled ? null : body?.record,
     );
-    artworkStatus.textContent = compiled ? '' : bodyAssets.status();
+    localizedText(artworkStatus, () => (compiled ? '' : bodyAssets.status()));
     artworkStatus.hidden = !artworkStatus.textContent;
   }
   function update(dt = 0, { paused = false, reduced = false } = {}) {
@@ -445,8 +463,9 @@ export function attachEnemyGuide({
       origin = doc.activeElement;
       dialog.showModal();
     }
-    status.textContent =
-      'Recognize a threat, then try it. Practice never awards campaign progress.';
+    localizedText(status, () =>
+      t('interface:recognizeAThreatThenTryItPracticeNeverAwardsCampaign'),
+    );
     refresh();
     topic.el.focus({ preventScroll: true });
     return true;

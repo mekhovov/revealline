@@ -1,3 +1,10 @@
+import {
+  formatNumber,
+  localizedAttribute,
+  localizedMessage,
+  localizedText,
+  t,
+} from '../i18n/index.mjs';
 import { createOperationStatus } from './operation-status.mjs';
 import { openVideoPosterSource } from '../video-poster.mjs';
 import {
@@ -43,7 +50,7 @@ export function attachVideoPosterWorkshop({
     if (activity) activity.update({ message, progress: null });
     else feedback.begin({ message }).finish({ message, state });
   }
-  setStatus('Choose a local video to inspect. No game or media storage is opened by this page.');
+  setStatus(localizedMessage('interface:chooseALocalVideoToInspectNoGameOrMedia'));
   const router = createControllerRouter({ eventTarget: win, ...(readPads ? { readPads } : {}) });
   const navigation = attachControllerNavigation({
     document: doc,
@@ -57,7 +64,7 @@ export function attachVideoPosterWorkshop({
       else $('back').click();
     },
     onHint: (text) => {
-      hint.textContent = text;
+      localizedText(hint, () => text);
     },
   });
   const message = (error) => (error instanceof Error ? error.message : String(error));
@@ -87,15 +94,14 @@ export function attachVideoPosterWorkshop({
     if (previewURL) URLImpl.revokeObjectURL(previewURL);
     previewURL = null;
     result = null;
-    $('evidence').textContent = '';
+    localizedText($('evidence'), () => '');
   }
   function discardTrim() {
     $('trim-download').hidden = true;
     $('trim-download').removeAttribute('href');
     if (trimURL) URLImpl.revokeObjectURL(trimURL);
     trimURL = null;
-    $('trim-evidence').textContent =
-      'No physical trim has been produced. Playback range keeps the complete original video.';
+    localizedText($('trim-evidence'), () => t('tools:videoPoster.noPhysicalTrim'));
   }
   function stopTask() {
     feedback.clear();
@@ -110,8 +116,8 @@ export function attachVideoPosterWorkshop({
     stopTask();
     setStatus(
       source
-        ? 'Capture cancelled. The inspected source and any previous poster remain available.'
-        : 'Inspection cancelled. Choose the source again when ready.',
+        ? localizedMessage('interface:captureCancelledTheInspectedSourceAndAnyPreviousPosterRemain')
+        : localizedMessage('interface:inspectionCancelledChooseTheSourceAgainWhenReady'),
       'cancelled',
     );
     controls();
@@ -127,11 +133,11 @@ export function attachVideoPosterWorkshop({
     playbackRange = null;
     trimCapability = null;
     $('file').value = '';
-    $('metadata').textContent = 'No video inspected.';
+    localizedText($('metadata'), () => t('interface:noVideoInspected'));
     $('time').value = $('range').value = '0';
     $('playback-start').value = '0';
     $('playback-end').value = '0';
-    setStatus('Source and preview cleared. No game data or media storage was changed.');
+    setStatus(localizedMessage('interface:sourceAndPreviewClearedNoGameDataOrMediaStorage'));
     controls();
     if (focus && !disposed) $('file').focus();
   }
@@ -160,8 +166,10 @@ export function attachVideoPosterWorkshop({
     discardTrim();
     playbackRange = null;
     trimCapability = null;
-    $('metadata').textContent = 'Inspecting a local video…';
-    const current = begin('Inspecting video metadata. The source is muted and never played.');
+    localizedText($('metadata'), () => t('interface:inspectingALocalVideo'));
+    const current = begin(
+      localizedMessage('interface:inspectingVideoMetadataTheSourceIsMutedAndNeverPlayed'),
+    );
     let staged = null;
     try {
       staged = await openSource(file, { signal: current.controller.signal });
@@ -172,8 +180,16 @@ export function attachVideoPosterWorkshop({
       source = staged;
       staged = null;
       const info = source.info;
-      $('metadata').textContent =
-        `${info.mime} · ${info.width} × ${info.height} · ${info.durationSeconds} s · ${info.bytes.toLocaleString()} bytes\nOriginal SHA-256: ${info.sha256}`;
+      localizedText($('metadata'), () =>
+        t('gameplay:sBytesOriginalSha256', {
+          value1: info.mime,
+          value2: info.width,
+          value3: info.height,
+          value4: info.durationSeconds,
+          value5: info.bytes.toLocaleString(),
+          value6: info.sha256,
+        }),
+      );
       $('time').min = $('range').min = '0';
       $('time').max = $('range').max = String(info.durationSeconds);
       $('time').value = $('range').value = '0';
@@ -186,14 +202,18 @@ export function attachVideoPosterWorkshop({
         endSeconds: info.durationSeconds,
       });
       trimCapability = null;
-      $('playback-evidence').textContent =
-        `Playback range: 0–${info.durationSeconds} s. The complete ${info.bytes.toLocaleString()}-byte original remains the export source.`;
-      $('trim-support').textContent =
-        'Physical trim support has not been checked. This does not change the selected video.';
-      setStatus(
-        'Video inspected. Choose a time, then Capture poster. Nothing is saved to the game.',
+      localizedText($('playback-evidence'), () =>
+        t('tools:videoPoster.completePlaybackRangeEvidence', {
+          duration: formatNumber(info.durationSeconds),
+          bytes: formatNumber(info.bytes),
+        }),
       );
-      activity?.finish({ message: status.textContent });
+      localizedText($('trim-support'), () => t('tools:videoPoster.trimSupportUnchecked'));
+      const completed = localizedMessage(
+        'interface:videoInspectedChooseATimeThenCapturePosterNothingIs',
+      );
+      setStatus(completed);
+      activity?.finish({ message: completed });
       activity = null;
       task = null;
       controls();
@@ -202,7 +222,7 @@ export function attachVideoPosterWorkshop({
     } catch (error) {
       staged?.dispose();
       if (!current.current()) return false;
-      $('metadata').textContent = 'Video could not be inspected.';
+      localizedText($('metadata'), () => t('interface:videoCouldNotBeInspected'));
       activity?.finish({ message: message(error), state: 'error' });
       activity = null;
       task = null;
@@ -215,8 +235,8 @@ export function attachVideoPosterWorkshop({
     id: 'video-poster-preview',
     provenance: {
       kind: 'original',
-      credit: 'Local video owner',
-      source: 'Local authoring preview; exact source hash and time evidence accompany the PNG.',
+      credit: t('interface:localVideoOwner'),
+      source: t('interface:localAuthoringPreviewExactSourceHashAndTimeEvidenceAccompany'),
     },
   });
   function publishPoster(candidate, requested) {
@@ -225,22 +245,42 @@ export function attachVideoPosterWorkshop({
     previewURL = url;
     result = candidate;
     $('image').src = previewURL;
-    $('image').alt =
-      `Captured video poster requested at ${candidate.capture.requestedTime} seconds`;
+    localizedAttribute($('image'), 'alt', () =>
+      t('tools:videoPoster.capturedPosterAt', {
+        seconds: formatNumber(candidate.capture.requestedTime),
+      }),
+    );
     const observed = candidate.capture.observedMediaTime;
-    $('evidence').textContent = [
-      `Requested seek: ${candidate.capture.requestedTime} s`,
-      observed === null
-        ? `Frame timestamp unavailable. Approximate playhead: ${candidate.capture.playheadTime} s.`
-        : `Observed frame timestamp: ${observed} s · playhead: ${candidate.capture.playheadTime} s.`,
-      candidate.capture.timingEvidence === 'presented-frame'
-        ? 'Decoded-frame stepping is available because the browser reported a presented frame.'
-        : 'Decoded-frame stepping is unavailable because this browser did not report a presented-frame timestamp.',
-      'The requested decimal is not a frame-accuracy guarantee.',
-      `PNG: ${candidate.asset.width} × ${candidate.asset.height} · ${candidate.asset.bytes.toLocaleString()} bytes`,
-      `PNG SHA-256: ${candidate.asset.sha256}`,
-      `Original SHA-256: ${candidate.capture.sourceSha256}`,
-    ].join('\n');
+    localizedText($('evidence'), () =>
+      [
+        t('tools:videoPoster.requestedSeekEvidence', {
+          seconds: formatNumber(candidate.capture.requestedTime),
+        }),
+        observed === null
+          ? t('tools:videoPoster.approximateFrameEvidence', {
+              seconds: formatNumber(candidate.capture.playheadTime),
+            })
+          : t('tools:videoPoster.observedFrameEvidence', {
+              observed: formatNumber(observed),
+              playhead: formatNumber(candidate.capture.playheadTime),
+            }),
+        t(
+          candidate.capture.timingEvidence === 'presented-frame'
+            ? 'tools:videoPoster.frameSteppingAvailable'
+            : 'tools:videoPoster.frameSteppingUnavailable',
+        ),
+        t('tools:videoPoster.decimalNotFrameGuarantee'),
+        t('tools:videoPoster.pngEvidence', {
+          width: formatNumber(candidate.asset.width),
+          height: formatNumber(candidate.asset.height),
+          bytes: formatNumber(candidate.asset.bytes),
+        }),
+        t('tools:videoPoster.pngShaEvidence', { sha256: candidate.asset.sha256 }),
+        t('tools:videoPoster.originalShaEvidence', {
+          sha256: candidate.capture.sourceSha256,
+        }),
+      ].join('\n'),
+    );
     $('download').href = previewURL;
     $('download').download = `RevealLine-poster-${String(requested).replace('.', '-')}.png`;
     $('download').hidden = false;
@@ -256,22 +296,23 @@ export function attachVideoPosterWorkshop({
       requested < 0 ||
       requested > source.info.durationSeconds
     ) {
-      setStatus('Enter a time within this video’s duration. Values are never clamped.');
+      setStatus(localizedMessage('interface:enterATimeWithinThisVideoSDurationValuesAre'));
       $('time').focus();
       return false;
     }
     const selectedSource = source,
-      current = begin(`Capturing requested time ${requested} s…`);
+      current = begin(localizedMessage('gameplay:capturingRequestedTimeS', { value1: requested }));
     try {
       const candidate = await selectedSource.capture(requested, posterMetadata(), {
         signal: current.controller.signal,
       });
       if (!current.current() || source !== selectedSource) return false;
       publishPoster(candidate, requested);
-      setStatus(
-        'Poster captured. Inspect it, then explicitly Download PNG. The exact prepared bytes remain available to retry.',
+      const completed = localizedMessage(
+        'interface:posterCapturedInspectItThenExplicitlyDownloadPngTheExact',
       );
-      activity?.finish({ message: status.textContent });
+      setStatus(completed);
+      activity?.finish({ message: completed });
       activity = null;
       task = null;
       controls();
@@ -279,8 +320,12 @@ export function attachVideoPosterWorkshop({
       return true;
     } catch (error) {
       if (!current.current()) return false;
-      setStatus(`${message(error)}${result ? ' The previous captured poster is unchanged.' : ''}`);
-      activity?.finish({ message: status.textContent, state: 'error' });
+      const failed = () =>
+        `${message(error)}${
+          result ? ` ${t('interface:thePreviousCapturedPosterIsUnchanged')}` : ''
+        }`;
+      setStatus(failed);
+      activity?.finish({ message: failed, state: 'error' });
       activity = null;
       task = null;
       controls();
@@ -292,7 +337,11 @@ export function attachVideoPosterWorkshop({
     if (disposed || task || !source || !result) return false;
     const selectedSource = source,
       current = begin(
-        direction < 0 ? 'Seeking the previous decoded frame…' : 'Seeking the next decoded frame…',
+        localizedMessage(
+          direction < 0
+            ? 'tools:videoPoster.seekingPreviousFrame'
+            : 'tools:videoPoster.seekingNextFrame',
+        ),
       );
     try {
       const stepped = await seekDistinctPresentedFrame(
@@ -306,10 +355,12 @@ export function attachVideoPosterWorkshop({
       publishPoster(stepped.candidate, stepped.requested);
       $('time').value = String(stepped.candidate.capture.observedMediaTime);
       $('range').value = $('time').value;
-      setStatus(
-        `Decoded frame moved from ${stepped.fromObservedTime} s to ${stepped.candidate.capture.observedMediaTime} s. Review the actual captured PNG.`,
-      );
-      activity?.finish({ message: status.textContent });
+      const completed = localizedMessage('tools:videoPoster.frameMoved', {
+        from: formatNumber(stepped.fromObservedTime),
+        to: formatNumber(stepped.candidate.capture.observedMediaTime),
+      });
+      setStatus(completed);
+      activity?.finish({ message: completed });
       activity = null;
       task = null;
       controls();
@@ -317,8 +368,12 @@ export function attachVideoPosterWorkshop({
       return true;
     } catch (error) {
       if (!current.current()) return false;
-      setStatus(`${message(error)} The previous captured poster is unchanged.`);
-      activity?.finish({ message: status.textContent, state: 'error' });
+      const failed = () =>
+        t('tools:videoPoster.frameStepFailed', {
+          error: message(error),
+        });
+      setStatus(failed);
+      activity?.finish({ message: failed, state: 'error' });
       activity = null;
       task = null;
       controls();
@@ -333,10 +388,14 @@ export function attachVideoPosterWorkshop({
         endSeconds: Number($('playback-end').value),
       });
       discardTrim();
-      $('playback-evidence').textContent =
-        `Playback range: ${playbackRange.startSeconds}–${playbackRange.endSeconds} s. ` +
-        `The complete ${source.info.bytes.toLocaleString()}-byte original remains unchanged and would stay in a campaign package.`;
-      setStatus('Playback range applied for review. No video bytes were trimmed or rewritten.');
+      localizedText($('playback-evidence'), () =>
+        t('tools:videoPoster.selectedPlaybackRangeEvidence', {
+          start: formatNumber(playbackRange.startSeconds),
+          end: formatNumber(playbackRange.endSeconds),
+          bytes: formatNumber(source.info.bytes),
+        }),
+      );
+      setStatus(localizedMessage('tools:videoPoster.playbackRangeApplied'));
       controls();
       return true;
     } catch (error) {
@@ -348,7 +407,7 @@ export function attachVideoPosterWorkshop({
   async function checkPhysicalTrim() {
     if (!source || task) return false;
     const selectedSource = source,
-      current = begin('Checking the optional physical video converter…');
+      current = begin(localizedMessage('tools:videoPoster.checkingPhysicalConverter'));
     try {
       const capability = await physicalTrim.support(selectedSource.info, {
         original: selectedSource.original,
@@ -357,16 +416,25 @@ export function attachVideoPosterWorkshop({
       });
       if (!current.current() || source !== selectedSource) return false;
       trimCapability = capability;
-      $('trim-support').textContent = capability.supported
-        ? `${capability.detail || `Physical trim adapter available for ${capability.formats.join(', ')}.`} Output is downloadable only after changed-byte, decoded-output and start/end visual verification.`
-        : `${capability.reason} Playback range remains available and keeps the complete original.`;
-      setStatus(
+      localizedText($('trim-support'), () =>
         capability.supported
-          ? 'Physical trim adapter is available for this source.'
-          : 'Physical trim is unavailable in this build. The selected source was not changed.',
+          ? t('tools:videoPoster.trimSupportedEvidence', {
+              detail:
+                capability.detail ||
+                t('tools:videoPoster.trimAdapterAvailableFor', {
+                  formats: capability.formats.join(', '),
+                }),
+            })
+          : t('tools:videoPoster.trimUnsupportedEvidence', { reason: capability.reason }),
       );
+      const completed = localizedMessage(
+        capability.supported
+          ? 'tools:videoPoster.trimAvailable'
+          : 'tools:videoPoster.trimUnavailable',
+      );
+      setStatus(completed);
       activity?.finish({
-        message: status.textContent,
+        message: completed,
         state: capability.supported ? 'ready' : 'cancelled',
       });
       activity = null;
@@ -388,7 +456,7 @@ export function attachVideoPosterWorkshop({
     if (!source || task || !trimCapability?.supported) return false;
     if (!applyPlaybackRange()) return false;
     const selectedSource = source,
-      current = begin('Physically trimming and verifying exported video bytes…');
+      current = begin(localizedMessage('tools:videoPoster.trimmingAndVerifying'));
     try {
       const transformed = await physicalTrim.trim(
         selectedSource.original,
@@ -406,16 +474,31 @@ export function attachVideoPosterWorkshop({
           ? 'RevealLine-trimmed.webm'
           : 'RevealLine-trimmed.mp4';
       $('trim-download').hidden = false;
-      $('trim-evidence').textContent = [
-        `Output SHA-256: ${transformed.evidence.outputSha256}`,
-        `Decoded output: ${transformed.info.width} × ${transformed.info.height} · ${transformed.info.durationSeconds} s · ${transformed.info.bytes.toLocaleString()} bytes`,
-        `Visual boundaries: start error ${transformed.evidence.visual.start.meanAbsoluteRgbError} · end error ${transformed.evidence.visual.end.meanAbsoluteRgbError} (${transformed.evidence.visual.method}).`,
-        `Audio synchronization: ${transformed.evidence.audioSync.status}. ${transformed.evidence.audioSync.note}`,
-      ].join('\n');
-      setStatus(
-        'Physical trim produced different bytes and passed decoded output and start/end visual verification.',
+      localizedText($('trim-evidence'), () =>
+        [
+          t('tools:videoPoster.outputShaEvidence', {
+            sha256: transformed.evidence.outputSha256,
+          }),
+          t('tools:videoPoster.decodedOutputEvidence', {
+            width: formatNumber(transformed.info.width),
+            height: formatNumber(transformed.info.height),
+            duration: formatNumber(transformed.info.durationSeconds),
+            bytes: formatNumber(transformed.info.bytes),
+          }),
+          t('tools:videoPoster.visualBoundariesEvidence', {
+            startError: formatNumber(transformed.evidence.visual.start.meanAbsoluteRgbError),
+            endError: formatNumber(transformed.evidence.visual.end.meanAbsoluteRgbError),
+            method: transformed.evidence.visual.method,
+          }),
+          t('tools:videoPoster.audioSyncEvidence', {
+            status: transformed.evidence.audioSync.status,
+            note: transformed.evidence.audioSync.note,
+          }),
+        ].join('\n'),
       );
-      activity?.finish({ message: status.textContent });
+      const completed = localizedMessage('tools:videoPoster.trimVerified');
+      setStatus(completed);
+      activity?.finish({ message: completed });
       activity = null;
       task = null;
       controls();
@@ -423,8 +506,9 @@ export function attachVideoPosterWorkshop({
       return true;
     } catch (error) {
       if (!current.current()) return false;
-      setStatus(`${message(error)} No trimmed download was published.`);
-      activity?.finish({ message: status.textContent, state: 'error' });
+      const failed = () => t('tools:videoPoster.trimFailed', { error: message(error) });
+      setStatus(failed);
+      activity?.finish({ message: failed, state: 'error' });
       activity = null;
       task = null;
       controls();
@@ -450,13 +534,11 @@ export function attachVideoPosterWorkshop({
   };
   $('download').onclick = () => {
     setStatus(
-      'PNG download requested. Confirm the destination in your browser; the prepared bytes remain available to retry.',
+      localizedMessage('interface:pngDownloadRequestedConfirmTheDestinationInYourBrowserThe'),
     );
   };
   $('trim-download').onclick = () => {
-    setStatus(
-      'Verified physical trim download requested. Confirm the destination in your browser.',
-    );
+    setStatus(localizedMessage('tools:videoPoster.trimDownloadRequested'));
   };
   function poll(now) {
     if (disposed) return;

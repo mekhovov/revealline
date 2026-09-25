@@ -1,3 +1,6 @@
+import { localizedMessage, localizedText, t } from '../i18n/index.mjs';
+import { studioBonusName } from './preview-copy.mjs';
+import { editorMessageError, showEditorFailure } from './editor-copy.mjs';
 import { BONUS_CHOICES, editContentBonus } from '../content-design/bonuses.mjs';
 import { missionEditContext } from './edit-context.mjs';
 
@@ -11,15 +14,18 @@ export function createBonusEditor({ document, getSource, getMission, apply }) {
       ...rows.map(([value, text]) => {
         const option = document.createElement('option');
         option.value = value;
-        option.textContent = text;
+        localizedText(option, text);
         return option;
       }),
     );
   }
-  options($('kind'), BONUS_CHOICES);
+  options(
+    $('kind'),
+    BONUS_CHOICES.map(([kind]) => [kind, () => studioBonusName(kind)]),
+  );
   function disarm() {
     armed = false;
-    $('remove').textContent = 'Remove selected bonus';
+    localizedText($('remove'), localizedMessage('tools:studio.bonus.remove'));
   }
   function select() {
     disarm();
@@ -30,25 +36,36 @@ export function createBonusEditor({ document, getSource, getMission, apply }) {
     $('x').value = bonus?.x ?? '';
     $('y').value = bonus?.y ?? '';
     $('remove').disabled = !bonus;
-    $('submit').textContent = bonus ? 'Validate & replace bonus' : 'Validate & add bonus';
-    $('result').textContent =
-      'Contact collection only; enclosing a pickup does not collect it. Keep required routes completable without bonuses.';
+    localizedText(
+      $('submit'),
+      localizedMessage(bonus ? 'tools:studio.bonus.replace' : 'tools:studio.bonus.add'),
+    );
+    localizedText($('result'), localizedMessage('tools:studio.bonus.contactOnly'));
   }
   function sync() {
     const mission = getMission();
     $('tools').disabled = !mission || mission.modes.includes('team');
-    $('qualification').textContent = mission?.modes.includes('team')
-      ? 'Authored Team bonus behavior is not yet qualified. These controls remain unavailable.'
-      : 'Optional contact bonuses use shared engine effects and expiry. Speed should be an intentional detour, not forced before precision turns.';
+    localizedText(
+      $('qualification'),
+      localizedMessage(
+        mission?.modes.includes('team')
+          ? 'tools:studio.bonus.teamQualification'
+          : 'tools:studio.bonus.qualification',
+      ),
+    );
     const next = context();
     if (next === key) return;
     key = next;
     const selected = $('select').value;
     options($('select'), [
-      ['', '+ New bonus'],
+      ['', localizedMessage('tools:studio.bonus.new')],
       ...(mission?.bonuses ?? []).map((bonus) => [
         bonus.id,
-        `${BONUS_CHOICES.find(([kind]) => kind === bonus.kind)?.[1] ?? bonus.kind} · ${bonus.id}`,
+        () =>
+          t('tools:studio.item.option', {
+            name: studioBonusName(bonus.kind),
+            identity: ` · ${bonus.id}`,
+          }),
       ]),
     ]);
     if (mission?.bonuses.some((bonus) => bonus.id === selected)) $('select').value = selected;
@@ -56,13 +73,12 @@ export function createBonusEditor({ document, getSource, getMission, apply }) {
   }
   function commit(action) {
     try {
-      if (key !== context())
-        throw new Error('The draft context changed. Refresh the bonus selection.');
+      if (key !== context()) throw editorMessageError('errors:studio.bonus.contextChanged');
       const id = $('id').value.trim(),
         command = { action, id };
       if (action !== 'remove') {
         if (!$('x').value.trim() || !$('y').value.trim())
-          throw new Error('Enter both cell-centre coordinates.');
+          throw editorMessageError('errors:studio.cellCentreCoordinates');
         command.bonus = {
           id,
           kind: $('kind').value,
@@ -76,10 +92,9 @@ export function createBonusEditor({ document, getSource, getMission, apply }) {
       sync();
       $('select').value = action === 'remove' ? '' : id;
       select();
-      $('result').textContent =
-        'Applied to the local draft. All supported presets and modes compiled. Undo is available; test the optional detour.';
+      localizedText($('result'), localizedMessage('tools:studio.bonus.applied'));
     } catch (error) {
-      $('result').textContent = `Not applied: ${error.message}`;
+      showEditorFailure($('result'), error);
     }
   }
   $('select').onchange = select;
@@ -93,8 +108,8 @@ export function createBonusEditor({ document, getSource, getMission, apply }) {
     if (!$('select').value) return;
     if (!armed) {
       armed = true;
-      $('remove').textContent = 'Confirm remove bonus';
-      $('result').textContent = 'Activate Remove again. Undo remains available.';
+      localizedText($('remove'), localizedMessage('tools:studio.bonus.confirmRemove'));
+      localizedText($('result'), localizedMessage('tools:studio.editor.confirmRemove'));
       return;
     }
     disarm();

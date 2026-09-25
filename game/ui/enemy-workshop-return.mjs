@@ -1,3 +1,4 @@
+import { localizedText, t } from '../i18n/index.mjs';
 const FORMAT = 'revealline.enemy-workshop-return.v1';
 const PARAM = 'enemy-workshop-session';
 const validToken = (value) => typeof value === 'string' && /^[a-f0-9]{32}$/.test(value);
@@ -24,10 +25,11 @@ export function attachEnemyWorkshopReturnHost({
   returnTo = 'workshop',
 }) {
   const origin = new URL(host.location.href).origin;
-  if (!destinations.includes(returnTo)) throw new TypeError('Unknown practice return destination.');
+  if (!destinations.includes(returnTo))
+    throw new TypeError(t('interface:unknownPracticeReturnDestination'));
   const target = new URL(gameURL ?? '../../game/', host.location.href);
   if (!['http:', 'https:'].includes(target.protocol) || target.origin !== origin)
-    throw new TypeError('Practice must remain on the same origin.');
+    throw new TypeError(t('interface:practiceMustRemainOnTheSameOrigin'));
   let token = null,
     disposed = false;
   const receive = (event) => {
@@ -47,7 +49,7 @@ export function attachEnemyWorkshopReturnHost({
   host.addEventListener('message', receive);
   return {
     launchURL() {
-      if (disposed) throw new Error('The enemy workshop is closed.');
+      if (disposed) throw new Error(t('interface:theEnemyWorkshopIsClosed'));
       const bytes = host.crypto.getRandomValues(new Uint8Array(16));
       token = Array.from(bytes, (byte) => byte.toString(16).padStart(2, '0')).join('');
       const url = new URL(target);
@@ -94,7 +96,11 @@ export function attachEnemyWorkshopReturn({
   button.id = 'enemy-workshop-return';
   button.type = 'button';
   button.className = 'button secondary';
-  button.textContent = returnTo === 'enemy-guide' ? 'Return to field guide' : 'Return to workshop';
+  localizedText(button, () =>
+    returnTo === 'enemy-guide'
+      ? t('interface:returnToFieldGuide')
+      : t('interface:returnToWorkshop'),
+  );
   let disposed = false;
   button.onclick = () => {
     if (disposed || button.disabled) return;

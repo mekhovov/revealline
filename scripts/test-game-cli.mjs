@@ -655,6 +655,14 @@ test('packaged offline builds generate scoped metadata, original icons, complete
     path.join(root, 'game/playground/index.html'),
     '<html><head><title>Nested</title><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"></head><body>Preview</body></html>',
   );
+  // Canonical sources remain in the distribution; the complete runtime catalog
+  // is the sole copy needed by a player preparing offline play.
+  await fs.mkdir(path.join(root, 'game/i18n'));
+  await fs.mkdir(path.join(root, 'game/locales/en'), { recursive: true });
+  const localeSource = '{"language":"Language"}';
+  const localeBundle = 'globalThis.RevealLineTranslations = {en:{common:{language:"Language"}}};';
+  await fs.writeFile(path.join(root, 'game/locales/en/common.json'), localeSource);
+  await fs.writeFile(path.join(root, 'game/i18n/catalogs.mjs'), localeBundle);
   const source = await fs.readFile(path.join(root, 'game/index.html'), 'utf8');
   const first = await buildProject({ root, out });
   const second = await buildProject({ root, out: path.join(directory, 'second') });
@@ -672,6 +680,13 @@ test('packaged offline builds generate scoped metadata, original icons, complete
     assert.equal(hash(bytes), file.sha256);
     assert.equal(bytes.length, file.bytes);
   }
+  assert.ok(cache.files.some((f) => f.path === 'game/i18n/catalogs.mjs'));
+  assert.ok(!cache.files.some((f) => f.path.startsWith('game/locales/')));
+  assert.equal(
+    await fs.readFile(path.join(out, 'game/locales/en/common.json'), 'utf8'),
+    localeSource,
+  );
+  assert.equal(await fs.readFile(path.join(out, 'game/i18n/catalogs.mjs'), 'utf8'), localeBundle);
   assert.ok(cache.files.some((f) => f.path === 'game/playground/index.html'));
   assert.ok(
     !cache.files.some(
@@ -837,7 +852,9 @@ test('optional indexed pack keeps exact shipped and ZIP bytes while core cache e
     false,
   );
   assert.ok(cache.files.some((f) => f.path === 'game/content/packs/index.json'));
-  assert.deepEqual(cache.optionalPacks, [{ path: name, id: 'night-shift', name: 'Night Shift' }]);
+  assert.deepEqual(cache.optionalPacks, [
+    { path: name, id: 'night-shift', name: 'Night Shift', sha256: hash(original) },
+  ]);
   const page = await fs.readFile(path.join(out, 'game/index.html'), 'utf8');
   assert.match(page, /optionalPacks/);
   const zip = await fs.readFile(path.join(out, 'distribution.zip'));

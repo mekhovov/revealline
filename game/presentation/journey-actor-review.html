@@ -2,37 +2,51 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
+    <link rel="stylesheet" href="../i18n/style.css" />
+    <script src="../vendor/i18next-26.4.2.min.js"></script>
+    <script src="../i18n/catalogs.mjs"></script>
+    <script src="../i18n/bootstrap.mjs"></script>
+
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Journey material studies · Reveal Line</title>
+    <title data-i18n="interface:journeyMaterialStudiesRevealLine">
+      Journey material studies · Reveal Line
+    </title>
     <link rel="stylesheet" href="../ui/field-kit-fonts.css" />
     <link rel="stylesheet" href="journey-actor-review.css" />
     <script type="module" src="journey-actor-review.mjs"></script>
   </head>
   <body>
+    <div data-language-control></div>
+
     <header>
-      <a href="../studio/">← Content Studio</a><span>ORIGINAL PIXEL STUDIES / V1</span>
+      <a href="../studio/" data-i18n="interface:contentStudio">← Content Studio</a
+      ><span data-i18n="interface:originalPixelStudiesV1">ORIGINAL PIXEL STUDIES / V1</span>
     </header>
     <main>
-      <p class="eyebrow">TWELVE PLACES. SEVEN RECOGNIZABLE THREATS.</p>
-      <h1>Made of different worlds.</h1>
-      <p class="intro">
+      <p class="eyebrow" data-i18n="interface:twelvePlacesSevenRecognizableThreats">
+        TWELVE PLACES. SEVEN RECOGNIZABLE THREATS.
+      </p>
+      <h1 data-i18n="interface:madeOfDifferentWorlds">Made of different worlds.</h1>
+      <p class="intro" data-i18n="interface:enamelSeedpodsBasaltAndIceEachCampaignHasItsOwn">
         Enamel, seedpods, basalt and ice. Each campaign has its own surface language; each enemy
         keeps its role outline. These are static body-only candidates, not a gameplay preview or
         published theme. Contact rings, role badges and warnings stay separate in the game. No
         project or preference is changed here.
       </p>
       <div class="controls">
-        <label for="body-size">Native body size</label>
+        <label for="body-size" data-i18n="interface:nativeBodySize">Native body size</label>
         <select id="body-size">
-          <option value="16">16 px · phone minimum</option>
-          <option value="24" selected>24 px · desktop minimum</option>
-          <option value="32">32 px · large</option>
+          <option value="16" data-i18n="interface:16PxPhoneMinimum">16 px · phone minimum</option>
+          <option value="24" selected data-i18n="interface:24PxDesktopMinimum">
+            24 px · desktop minimum
+          </option>
+          <option value="32" data-i18n="interface:32PxLarge">32 px · large</option>
         </select>
-        <label for="surface">Review surface</label>
+        <label for="surface" data-i18n="interface:reviewSurface">Review surface</label>
         <select id="surface">
-          <option value="dark">Ink</option>
-          <option value="light">Paper</option>
-          <option value="grey">Neutral grey</option>
+          <option value="dark" data-i18n="interface:ink">Ink</option>
+          <option value="light" data-i18n="interface:paper">Paper</option>
+          <option value="grey" data-i18n="interface:neutralGrey">Neutral grey</option>
         </select>
       </div>
       <p id="review-status" role="status"></p>

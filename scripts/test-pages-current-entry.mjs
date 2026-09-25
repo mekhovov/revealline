@@ -13,7 +13,7 @@ const repository = 'owner/game',
   canonical = scope + 'releases/v0.29.1/site/',
   hash = (bytes) => createHash('sha256').update(bytes).digest('hex');
 
-async function fixture(t) {
+async function fixture(t, { localized = false } = {}) {
   const source = await fs.mkdtemp(path.join(os.tmpdir(), 'pages-current-'));
   t.after(() => fs.rm(source, { recursive: true, force: true }));
   const assets = {
@@ -26,6 +26,14 @@ async function fixture(t) {
     'game/app.mjs': 'export const frozen = true;',
     'service-worker.js': '/* original scoped worker */',
   };
+  if (localized)
+    for (const name of [
+      'i18n/style.css',
+      'vendor/i18next-26.4.2.min.js',
+      'i18n/catalogs.mjs',
+      'i18n/bootstrap.mjs',
+    ])
+      assets[`game/${name}`] = '/* immutable locale fixture */';
   for (const [relative, bytes] of Object.entries(assets)) {
     await fs.mkdir(path.dirname(path.join(source, relative)), { recursive: true });
     await fs.writeFile(path.join(source, relative), bytes);
@@ -67,6 +75,26 @@ function navigate(page, href) {
   return destination;
 }
 
+test('localized aliases resolve locale assets within the same immutable release at every depth', async (t) => {
+  const { plan, source, assets } = await fixture(t, { localized: true });
+  for (const entry of plan.metadata.htmlEntries) {
+    const page = plan.files.get(entry.path);
+    assert.ok(page.includes('data-language-control'));
+    assert.ok(page.includes('data-i18n="website:page.opening"'));
+    assert.ok(page.includes('<noscript><p lang="uk">'));
+    const sources = [...page.matchAll(/(?:src|href)="([^"]*(?:i18n|i18next)[^"]*)"/g)];
+    assert.equal(sources.length, 4);
+    for (const [, relative] of sources)
+      assert.ok(new URL(relative, scope + entry.path).href.startsWith(canonical + 'game/'));
+    assert.equal(
+      navigate(page, scope + entry.path + '?practice=1#cut'),
+      entry.target + '?practice=1#cut',
+    );
+  }
+  for (const [relative, bytes] of Object.entries(assets))
+    assert.equal(await fs.readFile(path.join(source, relative), 'utf8'), bytes);
+});
+
 test('all current HTML aliases preserve queries/fragments with auditable source and output hashes', async (t) => {
   const { source, assets, plan } = await fixture(t);
   assert.equal(plan.metadata.canonicalSite, canonical);
@@ -80,7 +108,7 @@ test('all current HTML aliases preserve queries/fragments with auditable source 
       navigate(page, scope + entry.path + '?pack=old&value=%3C%2Fscript%3E#saved%20cut'),
       entry.target + '?pack=old&value=%3C%2Fscript%3E#saved%20cut',
     );
-    assert.ok(page.includes(`<a href="${entry.relativeTarget}">`));
+    assert.ok(page.includes(`<a href="${entry.relativeTarget}" data-i18n="common:actions.play">`));
     assert.ok(page.includes('>Play</a>'));
     assert.ok(page.includes('Opening Reveal / Line…'));
     assert.doesNotMatch(page, /<(?:script|link)\b[^>]*(?:src=|rel="stylesheet")/);
