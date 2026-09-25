@@ -98,6 +98,33 @@ test('paused Versus keeps both runs and requires explicit Resume after appearanc
   assert.equal(f.state(), 'running');
 });
 
+test('paused Versus Settings and Help restore their actual commands before explicit Resume', async (t) => {
+  const f = await couchPage(t);
+  f.$('race-start').click();
+  f.frame();
+  f.frames(5);
+  f.$('race-pause').click();
+  f.frame(0);
+  const paused = f.checkpoint();
+
+  for (const [opener, panel, back] of [
+    ['race-options', 'race-options-panel', 'race-options-back'],
+    ['race-help', 'race-help-panel', 'race-help-back'],
+  ]) {
+    f.$(opener).focus();
+    f.$(opener).click();
+    assert.equal(f.$(panel).hidden, false);
+    f.$(back).click();
+    assert.equal(f.doc.activeElement.id, opener);
+    assert.equal(f.state(), 'paused');
+    assert.deepEqual(f.checkpoint(), paused);
+  }
+
+  f.$('race-start').click();
+  f.frame();
+  assert.equal(f.state(), 'running');
+});
+
 test('Versus quick sound shares the Settings master without starting or replacing a match', async (t) => {
   const f = await couchPage(t),
     before = f.checkpoint();
