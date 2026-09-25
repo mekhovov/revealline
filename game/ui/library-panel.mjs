@@ -787,7 +787,7 @@ export function attachLibraryPanel(api) {
       prepared.assertCurrent();
       if (!currentAttemptExport(operation)) return;
       operation.phase = 'download';
-      localizedText($('cancel-attempt-export'), () => t('interface:stopWaiting'));
+      localizedText($('cancel-attempt-export'), () => t('common:actions.stopWaiting'));
       $('save-json').value = text;
       status('save-status', t('interface:preparingTheVerifiedAttemptDownload'), 'busy');
       const exported = await downloadJSON(prepared.session, 'revealline-suspended-flight.json');
@@ -1000,7 +1000,7 @@ export function attachLibraryPanel(api) {
         check();
         owner.committing = true;
         status(id, message, 'busy');
-        localizedText(cancel, () => t('interface:stopWaiting'));
+        localizedText(cancel, () => t('common:actions.stopWaiting'));
       },
     };
     try {

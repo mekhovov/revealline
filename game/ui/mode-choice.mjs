@@ -30,6 +30,6 @@ export function mountModeChoices({ root, current, actions, separateTeam = false 
     return element;
   });
   root.classList.add('game-mode-choice');
-  localizedAttribute(root, 'aria-label', () => t('interface:gameMode'));
+  localizedAttribute(root, 'aria-label', () => t('common:game.mode'));
   root.replaceChildren(...choices);
 }

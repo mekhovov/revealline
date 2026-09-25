@@ -129,7 +129,7 @@ export function attachEnemyGuide({
   const previous = button('previous', '← Previous', () => changeTopic(-1)),
     next = button('next', localizedMessage('interface:next'), () => changeTopic(1)),
     play = button('play', localizedMessage('interface:playPractice'), launch),
-    back = button('back', localizedMessage('interface:closeGuide'), close),
+    back = button('back', localizedMessage('common:actions.closeGuide'), close),
     actions = node('div');
   actions.className = 'enemy-guide-actions';
   actions.append(previous, next, play, back);
