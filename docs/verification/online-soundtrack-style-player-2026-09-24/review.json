@@ -1,0 +1,57 @@
+{
+  "format": "revealline-scoped-audio-recipe-review-successor.v1",
+  "status": "bounded source and transport review; merged-source, physical-device and public acceptance pending",
+  "candidateBase": "431fe87ec4509eb668e5dc020def7c2b053b230a",
+  "scope": "Continue the public soundtrack archive transport while adding multi-style selection, explicit shuffle or sequential order, repeat-all/repeat-one/finite queues and a chosen first recording inside the native Music Player.",
+  "priorReview": {
+    "path": "docs/verification/online-soundtrack-archive-2026-09-24/review.json",
+    "sha256": "d7a966af00218daef9a76fa14868bcbd1caeeec437e500399ef744b6304383af",
+    "fingerprintSHA256": "82f403fca97ec49fd0dd1fd7698324bdf120d21918ecd39fa7f44dc475269123"
+  },
+  "fingerprint": {
+    "group": "audio",
+    "paths": "game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/ui/soundtrack-panel.mjs; game/ui/soundtrack-panel.css; game/soundtrack-albums.mjs; game/soundtrack-portable.mjs; game/content/soundtrack-catalogue.mjs; game/online-soundtrack-catalogue.mjs",
+    "sha256": "6a6124afeb891475a882e51289d28df2615fb7ed144b675357c00aa9bd255567",
+    "algorithm": "SHA256 of ordered raw source bytes concatenated, matching fieldKitRecipeSources"
+  },
+  "changedInputs": [
+    {
+      "path": "game/ui/soundtrack-player.mjs",
+      "priorSHA256": "dea075ad2a477818fbfd5a9079a08dbaa7f999234c2fccbadb26d84ffabdc148",
+      "currentSHA256": "9c8119908b84dbb5804fa654bf261b66fdf63dbad91bf11faca308dcb2fea63c",
+      "assessment": "Extends the already bounded remote playlist call with validated order, repeat and start-recording inputs. It rotates the resolved queue so a clicked recording plays first, preserves manual Next behavior under repeat-one, and keeps rejected input atomic."
+    },
+    {
+      "path": "game/ui/soundtrack-panel.mjs",
+      "priorSHA256": "200d85f1a07ac1fbfe8585a9052671a3611a7125f484df13098c6e8fd6d4d3c2",
+      "currentSHA256": "0a6d76a0bbdbcb029aaa891cedd0fd9785aa866011ee27ae94381823176ff53f",
+      "assessment": "Replaces the single-style archive filter with independent Synth/electronic, Metal, Ukrainian, Chiptune, Rock, Ambient, Fusion and Other checkboxes plus All/Clear actions. The taxonomy matches the public archive while Fusion remains available as a cross-family view. The same visible result set drives one-click start, shuffle/sequential order and all/one/off repeat policies through the shared player."
+    },
+    {
+      "path": "game/ui/soundtrack-panel.css",
+      "priorSHA256": "967247830cb3cbd5359a50aa556cef121698a8d93669bb60aab71258d636d640",
+      "currentSHA256": "f2c2f6087b4d9edf3c32c3790acdf03ce539441470f28e14f067af781c64011d",
+      "assessment": "Adds a wrapping fieldset and visible keyboard focus treatment for the style checkboxes without changing gameplay geometry or transport ownership."
+    }
+  ],
+  "qualification": {
+    "focusedAutomated": [
+      "162 online catalogue, player and panel tests passed with zero failures.",
+      "New coverage selects Synth and Ukrainian together, isolates Chiptune, combines Rock and Ambient, starts the exact clicked recording, retains shuffle/order and repeat policies, advances a finite queue to ended, restores all styles and preserves Recording-mode filtering.",
+      "Field Kit source binding and production reproduction passed at revision 75 after this exact review binding."
+    ],
+    "sourceReview": [
+      "No new remote host, path, permission or storage authority is introduced.",
+      "All style matching operates on catalogue tags already bounded by the archive parser.",
+      "The playlist remains capped by the existing 256-recording parser and uses the existing two-deck transport."
+    ]
+  },
+  "unchangedBindings": "The eight selected audio roles retain their procedural recipe IDs and no audio bytes are added. Catalogue trust, Recording mode, uploaded originals, offline albums, IndexedDB and rights enforcement remain unchanged.",
+  "excluded": [
+    "No recording, composition, musical suitability, Ukrainian authenticity, full-track listening or Content ID approval.",
+    "No cold-offline promise for streamed archive recordings.",
+    "No physical iPhone, controller, screen-reader, every-viewport, frozen-build, public game release or human acceptance.",
+    "No admission of archive previews into Automatic or built-in genre playlists."
+  ],
+  "decision": "Approve this bounded functional audio-source successor only while the exact prior review, current fingerprint and this review remain byte-identical. Merged-source qualification and public playback remain separate gates."
+}

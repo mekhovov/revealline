@@ -462,7 +462,8 @@ test('Journey feedback dependencies bind only the reviewed player-craft effects 
 test('shared-host UI and audio bind only their reviewed current inputs', async () => {
   const production = await createFieldKitProduction();
   const resolved = resolvePresentation(production.document);
-  const audioReviewPath = 'docs/verification/fresh-presentation-retention/review.json';
+  const audioReviewPath =
+    'docs/verification/online-soundtrack-reconciliation-2026-09-25/source-review.json';
   const audioReviewHash = createHash('sha256')
     .update(await fs.readFile(new URL(`../../${audioReviewPath}`, import.meta.url)))
     .digest('hex');
@@ -504,7 +505,7 @@ test('shared-host UI and audio bind only their reviewed current inputs', async (
       );
       assert.ok(
         asset.provenance.source.endsWith(
-          'sha256:f8952e5df3886a92e6cb1e7fa174a1ca8c99a83199ebd5ede342fa736962d601',
+          'sha256:6b9b58a0d51a1b15d533e76b531cb4db09662274c8b5cad3988b06f01e7327c4',
         ),
         slot.id,
       );
@@ -512,6 +513,7 @@ test('shared-host UI and audio bind only their reviewed current inputs', async (
       assert.match(asset.provenance.source, /game\/ui\/soundtrack-panel\.css/);
       assert.match(asset.provenance.source, /game\/soundtrack-portable\.mjs/);
       assert.match(asset.provenance.source, /game\/content\/soundtrack-catalogue\.mjs/);
+      assert.match(asset.provenance.source, /game\/online-soundtrack-catalogue\.mjs/);
     }
   }
 });
@@ -585,6 +587,7 @@ test('changed recipe inputs reopen only their own reviewed group', async (t) => 
     'soundtrack-albums.mjs',
     'soundtrack-portable.mjs',
     'content/soundtrack-catalogue.mjs',
+    'online-soundtrack-catalogue.mjs',
     'ui/soundtrack-panel.mjs',
   ];
   const inputs = new Map([

@@ -256,9 +256,18 @@ function waivedQualification(version, policyBytes) {
       { path: 'empty.log', bytes: 0, sha256: '3'.repeat(64) },
       { path: 'large-diff.bin', bytes: 5 * 1024 * 1024, sha256: '4'.repeat(64) },
     ],
-    ordinaryBuildCorroboration: {
-      command: 'npm run build',
-      step: step('Build', 20),
+    preMergeValidationCorroboration: {
+      runId: 41,
+      jobId: 98,
+      command: 'npm run validate',
+      sourceRevision,
+      sourceTree,
+      step: step('Validate release-critical source', 20),
+      artifactBuild: {
+        status: 'deferred-to-frozen-source',
+        step: step('Defer full artifact build to merged-source qualification', 21),
+      },
+      scope: 'Exact PR source validation; artifact deferred to frozen source',
     },
     frozenArtifactCorroboration: {
       artifactId: 99,
@@ -640,7 +649,23 @@ test('v2 refuses forged pass claims, failed mandatory gates, and missing or inva
           sha256: '5'.repeat(64),
         }),
     ],
-    ['failed build', (q) => (q.ordinaryBuildCorroboration.step.conclusion = 'failure')],
+    [
+      'failed PR validation',
+      (q) => (q.preMergeValidationCorroboration.step.conclusion = 'failure'),
+    ],
+    ['missing artifact deferral', (q) => delete q.preMergeValidationCorroboration.artifactBuild],
+    [
+      'malformed PR source identity',
+      (q) => (q.preMergeValidationCorroboration.sourceRevision = 'short'),
+    ],
+    [
+      'ambiguous legacy and deferred PR proof',
+      (q) =>
+        (q.ordinaryBuildCorroboration = {
+          command: 'npm run build',
+          step: { status: 'completed', conclusion: 'success' },
+        }),
+    ],
     [
       'incomplete frozen proof',
       (q) => (q.frozenArtifactCorroboration.allInnerZipManifestBytesVerified = false),

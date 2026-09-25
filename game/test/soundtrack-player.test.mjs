@@ -12,9 +12,56 @@ import {
 } from '../soundtrack.mjs';
 import { fixture } from './helpers/soundtrack-fixtures.mjs';
 import { audioHarness, settleUntil } from './helpers/soundtrack-audio.mjs';
+import { resolveOnlineSoundtrackCatalogue } from '../online-soundtrack-catalogue.mjs';
 
 const original = await fixture(),
   synthIds = BUILTIN_SOUNDTRACK_TRACKS.map((t) => t.id);
+function resolvedRemoteTracks(specifications) {
+  const tracks = specifications.map((specification, index) => {
+    const sha256 = specification.sha256;
+    return {
+      id: `test.remote-${index}`,
+      title: specification.title ?? `Remote ${index + 1}`,
+      artist: 'Creator',
+      durationSeconds: specification.durationSeconds ?? 180,
+      tags: specification.tags ?? ['electronic'],
+      source: `https://creator.example/song-${index}`,
+      license: 'CC0 1.0 Universal',
+      licenseURL: 'https://creativecommons.org/publicdomain/zero/1.0/',
+      credit: `Creator — Remote ${index + 1}`,
+      fileName: `remote-${index + 1}.mp3`,
+      archiveId: `archive.remote-${index}`,
+      collection: specification.collection ?? 'test-collection',
+      status: 'Published audition',
+      listeningApproval: 'Pending',
+      gameCatalogueAdmission: false,
+      contentId: specification.contentId ?? false,
+      recordingModeEligible: specification.recordingModeEligible ?? true,
+      default: false,
+      audio: {
+        path: specification.path ?? `objects/${sha256}.mp3`,
+        bytes: specification.bytes ?? 1234,
+        sha256,
+      },
+      aliases: [],
+    };
+  });
+  return resolveOnlineSoundtrackCatalogue({
+    format: 'revealline-public-soundtrack-catalogue.v1',
+    archive: {
+      id: 'revealline-soundtracks-01',
+      baseURL: 'https://mekhovov.github.io/revealline-soundtracks-01/',
+    },
+    sources: [],
+    counts: {
+      declaredTracks: tracks.length,
+      uniqueRecordings: tracks.length,
+      duplicateAliases: 0,
+      audioBytes: tracks.reduce((sum, track) => sum + track.audio.bytes, 0),
+    },
+    tracks,
+  }).tracks;
+}
 function setup({
   library = original.library,
   readAsset = async () => original.blob,
@@ -64,6 +111,182 @@ test('transport construction/settings/selection stay silent until explicit Play'
   assert.equal(h.media.plays, 0);
   await h.player.play();
   assert.equal(h.player.snapshot().playing, true);
+  h.player.dispose();
+});
+test('online archive playback streams its exact HTTPS object through the shared transport', async () => {
+  let reads = 0;
+  const h = setup({
+      library: emptySoundtrackLibrary(),
+      readAsset: async () => {
+        reads++;
+        throw new Error('Online playback must not read local audio.');
+      },
+    }),
+    sha256 = 'a'.repeat(64),
+    [remote] = resolvedRemoteTracks([
+      {
+        sha256,
+        title: 'Remote song',
+        tags: ['metal'],
+        collection: 'creator-album',
+        path: `batches/creator-album/objects/${sha256}.mp3`,
+      },
+    ]);
+  assert.equal(await h.player.playRemotePlaylist([remote]), true);
+  assert.equal(h.media.src, remote.url);
+  assert.equal(h.player.snapshot().track.title, 'Remote song');
+  assert.equal(h.player.snapshot().source, 'remote');
+  assert.equal(reads, 0);
+  assert.deepEqual(h.revoked, []);
+  h.player.pause();
+  assert.equal(await h.player.play(), true);
+  assert.equal(h.media.src, remote.url);
+  await h.player.selectPlaylist('builtin.all');
+  assert.notEqual(h.player.snapshot().source, 'remote');
+  h.player.dispose();
+  assert.deepEqual(h.revoked, []);
+});
+test('online archive honors shuffle, repeat and an explicitly chosen first song', async () => {
+  const h = setup({ library: emptySoundtrackLibrary(), random: () => 0.25 }),
+    tracks = resolvedRemoteTracks(
+      ['4', '5', '6'].map((digit, index) => ({
+        sha256: digit.repeat(64),
+        title: `Remote ${index + 1}`,
+      })),
+    );
+  assert.equal(
+    await h.player.playRemotePlaylist(tracks, {
+      order: 'shuffle',
+      repeat: 'off',
+      startTrackId: tracks[1].id,
+    }),
+    true,
+  );
+  assert.equal(h.player.snapshot().track.id, tracks[1].id);
+  assert.equal(h.player.snapshot().queue[0], tracks[1].id);
+  assert.equal(h.player.snapshot().order, 'shuffle');
+  assert.equal(h.player.snapshot().repeat, 'off');
+  assert.equal(await h.player.next(), true);
+  assert.equal(await h.player.next(), true);
+  assert.equal(await h.player.next(), false);
+  assert.equal(h.player.snapshot().status, 'ended');
+  h.player.dispose();
+});
+test('online archive playback rejects forged hosts, hashes and duplicate recordings', async () => {
+  const h = setup({ library: emptySoundtrackLibrary() }),
+    sha256 = 'b'.repeat(64),
+    [remote] = resolvedRemoteTracks([{ sha256, title: 'Remote song' }]),
+    before = h.player.snapshot();
+  await assert.rejects(
+    h.player.playRemotePlaylist([{ ...remote, url: `https://example.com/objects/${sha256}.mp3` }]),
+    /resolved project catalogue/,
+  );
+  await assert.rejects(
+    h.player.playRemotePlaylist([
+      {
+        ...remote,
+        url: `https://mekhovov.github.io/unrelated-project/objects/${sha256}.mp3`,
+      },
+    ]),
+    /resolved project catalogue/,
+  );
+  await assert.rejects(
+    h.player.playRemotePlaylist([{ ...remote, url: `${remote.url}?download=1` }]),
+    /resolved project catalogue/,
+  );
+  await assert.rejects(
+    h.player.playRemotePlaylist([{ ...remote, id: `online.${'c'.repeat(64)}` }]),
+    /resolved project catalogue/,
+  );
+  await assert.rejects(h.player.playRemotePlaylist([remote, remote]), /Invalid online soundtrack/);
+  assert.deepEqual(
+    h.player.snapshot(),
+    before,
+    'rejected remote metadata must not change playback',
+  );
+  h.player.dispose();
+});
+
+test('Recording mode excludes online tracks without verified gameplay-video and Content ID clearance', async () => {
+  const library = upgradeSoundtrackLibrary(emptySoundtrackLibrary()),
+    h = setup({
+      library: {
+        ...library,
+        listening: { ...library.listening, recordingMode: true },
+      },
+    }),
+    allowedHash = 'd'.repeat(64),
+    blockedHash = 'e'.repeat(64),
+    [blocked, allowed] = resolvedRemoteTracks([
+      {
+        sha256: blockedHash,
+        contentId: true,
+        recordingModeEligible: false,
+      },
+      {
+        sha256: allowedHash,
+        contentId: false,
+        recordingModeEligible: true,
+      },
+    ]);
+  assert.equal(await h.player.playRemotePlaylist([blocked, allowed]), true);
+  assert.equal(h.media.src.endsWith(`/${allowedHash}.mp3`), true);
+  const beforeRejectedQueue = h.player.snapshot();
+  await assert.rejects(h.player.playRemotePlaylist([blocked]), /Recording mode excludes/);
+  await assert.rejects(
+    h.player.playRemotePlaylist([{ ...blocked, contentId: false, recordingModeEligible: true }]),
+    /resolved project catalogue/,
+  );
+  assert.deepEqual(h.player.snapshot(), beforeRejectedQueue);
+  assert.equal(await h.player.next(), true);
+  assert.equal(h.media.src.endsWith(`/${allowedHash}.mp3`), true);
+  h.player.dispose();
+});
+
+test('enabling Recording mode through a library refresh retires restricted remote playback', async () => {
+  const library = upgradeSoundtrackLibrary(emptySoundtrackLibrary()),
+    h = setup({ library }),
+    sha256 = '9'.repeat(64),
+    [remote] = resolvedRemoteTracks([
+      {
+        sha256,
+        title: 'Content ID remote',
+        contentId: true,
+        recordingModeEligible: false,
+      },
+    ]);
+  assert.equal(await h.player.playRemotePlaylist([remote]), true);
+  assert.equal(h.player.snapshot().source, 'remote');
+  h.player.setLibrary({
+    ...library,
+    listening: { ...library.listening, recordingMode: true },
+  });
+  assert.notEqual(h.player.snapshot().source, 'remote');
+  assert.notEqual(h.player.snapshot().track?.id, remote.id);
+  const plays = h.media.plays;
+  await h.player.next();
+  assert.equal(h.media.plays, plays);
+  h.player.dispose();
+});
+
+test('invalid local selections preserve active online playback', async () => {
+  const h = setup({ library: emptySoundtrackLibrary() }),
+    sha256 = 'f'.repeat(64),
+    [remote] = resolvedRemoteTracks([{ sha256, title: 'Remote song' }]);
+  await h.player.playRemotePlaylist([remote]);
+  const before = h.player.snapshot();
+  await assert.rejects(h.player.selectPlaylist('missing.playlist'));
+  assert.deepEqual(h.player.snapshot(), before);
+  await assert.rejects(
+    h.player.selectListening({ ...emptySoundtrackLibrary().listening, mode: 'invalid' }),
+  );
+  assert.deepEqual(h.player.snapshot(), before);
+  h.player.dispose();
+});
+test('ordinary scene context remains valid beside trusted online selection', () => {
+  const h = setup({ library: emptySoundtrackLibrary() });
+  assert.doesNotThrow(() => h.player.setContext({ scene: 'menu', themeId: 'night-drive' }));
+  assert.equal(h.player.snapshot().source, 'default');
   h.player.dispose();
 });
 test('preparing a local MP3 keeps playback silent, then a gesture wake starts it before context resume settles', async () => {
@@ -631,6 +854,79 @@ function pairSetup({ fadeMs = 80, readAsset, library, ...options } = {}) {
   });
   return { ...h, second, entries, pairLibrary };
 }
+
+function remotePairSetup({ fadeMs = 80 } = {}) {
+  const second = audioHarness().media,
+    entries = resolvedRemoteTracks([
+      { sha256: '1'.repeat(64), title: 'Remote first' },
+      { sha256: '2'.repeat(64), title: 'Remote second' },
+    ]),
+    h = setup({
+      library: emptySoundtrackLibrary(),
+      secondAudioElement: second,
+      fadeMs,
+      readAsset: async () => {
+        throw new Error('Remote playback must not read local audio.');
+      },
+    });
+  return { ...h, second, entries };
+}
+
+test('remote natural boundary preloads and crossfades through the shared two-deck transport', async (t) => {
+  const h = remotePairSetup();
+  t.after(() => h.player.dispose());
+  assert.equal(await h.player.playRemotePlaylist(h.entries, { repeat: 'off' }), true);
+  await settleUntil(() => h.player.snapshot().preloadedTrackId === h.entries[1].id);
+  assert.equal(h.second.src, h.entries[1].url);
+  assert.equal(h.second.plays, 0, 'remote preload does not start the second media clock');
+  h.media.duration = 10;
+  h.media.currentTime = 9.95;
+  h.media.emit('timeupdate');
+  await settleUntil(() => h.player.snapshot().transitioning);
+  assert.equal(h.player.snapshot().track.id, h.entries[1].id);
+  assert.equal(h.media.paused, false);
+  assert.equal(h.second.paused, false);
+  await settleUntil(() => !h.player.snapshot().transitioning);
+  assert.deepEqual(h.created, []);
+  assert.deepEqual(h.revoked, []);
+});
+
+test('pause cancels a remote natural crossfade without acquiring or revoking its archive URL', async (t) => {
+  const h = remotePairSetup();
+  t.after(() => h.player.dispose());
+  await h.player.playRemotePlaylist(h.entries, { repeat: 'off' });
+  await settleUntil(() => h.player.snapshot().preloadedTrackId === h.entries[1].id);
+  h.media.duration = 10;
+  h.second.duration = 10;
+  h.media.currentTime = 9.95;
+  h.media.emit('timeupdate');
+  await settleUntil(() => h.player.snapshot().transitioning);
+  h.second.currentTime = 0.1;
+  h.player.pause();
+  await settleUntil(() => !h.player.snapshot().transitioning);
+  assert.equal(h.media.paused, true);
+  assert.equal(h.second.paused, true);
+  assert.equal(h.player.snapshot().positionSeconds, 0.1);
+  assert.equal(h.player.snapshot().desired, false);
+  assert.deepEqual(h.created, []);
+  assert.deepEqual(h.revoked, []);
+});
+
+test('remote crossfade denial reuses the permitted deck for a sequential boundary', async (t) => {
+  const h = remotePairSetup({ fadeMs: 20 });
+  t.after(() => h.player.dispose());
+  await h.player.playRemotePlaylist(h.entries, { repeat: 'off' });
+  await settleUntil(() => h.player.snapshot().preloadedTrackId === h.entries[1].id);
+  h.second.rejectPlay = new DOMException('This element needs a fresh gesture.', 'NotAllowedError');
+  assert.equal(await h.player.next(), true);
+  assert.equal(h.second.plays, 1);
+  assert.equal(h.media.plays, 2);
+  assert.equal(h.media.src, h.entries[1].url);
+  assert.equal(h.player.snapshot().track.id, h.entries[1].id);
+  assert.equal(h.player.snapshot().transitioning, false);
+  assert.deepEqual(h.created, []);
+  assert.deepEqual(h.revoked, []);
+});
 
 test('two streaming decks preload only the next track and genuinely overlap the audible boundary', async (t) => {
   let reads = 0;
