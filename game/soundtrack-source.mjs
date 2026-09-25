@@ -70,7 +70,7 @@ export function createSoundtrackSource({
       const core = bundledByHash.get(hash);
       // Silent preparation only uses already-owned originals. A core registration
       // cannot authorize requests until the host explicitly allows acquisition.
-      if (localOnly || (purpose === 'playback' && localPlayback() && !core)) return null;
+      if (localOnly || (purpose === 'playback' && localPlayback())) return null;
       required(track, 'This recording is missing locally. Restore its complete soundtrack backup.');
       required(
         purpose !== 'playback' || !installedOnly() || core,

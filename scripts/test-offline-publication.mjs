@@ -46,7 +46,10 @@ test('all official missions have gameplay-only closure and soundtrack groups exa
   );
   const inventory = buildOfflineInventory(entries, catalogue, []);
   assert.equal(inventory.sizes.gameplayBytes, pack.length);
-  assert.equal(inventory.files.filter((file) => file.kind === 'soundtrack').length, 70);
+  assert.equal(
+    inventory.files.filter((file) => file.kind === 'soundtrack').length,
+    catalogue.files.filter((file) => file.kind === 'soundtrack').length,
+  );
   assert.ok(inventory.sizes.soundtrackBytes > 330 * 1048576);
   const broken = entries.map((entry) => ({ ...entry, bytes: Buffer.from(entry.bytes) }));
   broken[0].bytes = Buffer.from('wrong');

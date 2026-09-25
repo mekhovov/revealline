@@ -91,7 +91,6 @@ export function attachSoundtrackPanel({
   albumDownload = {},
   onlineCatalogueDownload = {},
   catalogue = null,
-  bundled = [],
   readAsset,
 } = {}) {
   if (!doc?.body || !store?.read || !store?.commit || !player?.snapshot)
@@ -104,7 +103,6 @@ export function attachSoundtrackPanel({
   )
     throw new TypeError(t('interface:soundtrackMusicSessionRequiresPlayAndPauseControls'));
   catalogue = catalogue ? resolveSoundtrackCatalogue(catalogue) : null;
-  const bundledTrackIds = new Set(bundled.map((entry) => entry.id));
   const bindings = [];
   const adopt = (library) =>
     catalogue ? setCatalogueTracks(upgradeSoundtrackLibrary(library), catalogue.tracks) : library;
@@ -1410,9 +1408,7 @@ export function attachSoundtrackPanel({
   const volumes = soundtrackDownloadVolumes(catalogue, builtInAlbums);
   for (const volume of volumes) {
     const offlineTracks = volume.tracks.filter(
-      (track) =>
-        !bundledTrackIds.has(track.id) &&
-        soundtrackRights(track, { catalogue }).offlineCache === 'allowed',
+      (track) => soundtrackRights(track, { catalogue }).offlineCache === 'allowed',
     );
     const ids = new Set(offlineTracks.map((track) => track.id));
     const availability = node('p', `availability-${volume.id}`, '', { class: 'micro-note' });
@@ -1539,10 +1535,7 @@ export function attachSoundtrackPanel({
   function refreshCatalogueControls() {
     const present = new Set([...assets.map((asset) => asset.sha256), ...officialPresent]);
     for (const { volume, offlineTracks, ids, availability, install, remove } of catalogueControls) {
-      const bundledCount = volume.tracks.filter((track) => bundledTrackIds.has(track.id)).length;
-      const local = volume.tracks.filter(
-        (track) => bundledTrackIds.has(track.id) || present.has(track.asset.sha256),
-      ).length;
+      const local = volume.tracks.filter((track) => present.has(track.asset.sha256)).length;
       localizedText(availability, () => {
         const location = t(
           dirty
@@ -1557,13 +1550,10 @@ export function attachSoundtrackPanel({
               ? t('interface:installedOnlyIsOnOtherRecordingsStaySilentUntilDownloaded')
               : t('interface:downloadMissingRecordingsOrChoosePublicArchiveStream');
         const rights =
-          offlineTracks.length + bundledCount !== volume.tracks.length
+          offlineTracks.length !== volume.tracks.length
             ? ' ' + t('interface:someRecordingsDoNotAllowOfflineStorage')
             : '';
-        const bundled = bundledCount
-          ? ` ${t('interface:soundtrack.coreRecordingIncluded', { count: bundledCount })}`
-          : '';
-        return `${location} ${state}${bundled}${rights}`;
+        return `${location} ${state}${rights}`;
       });
       install.disabled =
         busy ||

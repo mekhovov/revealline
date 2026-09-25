@@ -52,7 +52,7 @@ test('all packaged optional pack names stay in details through real host progres
     ...(await Promise.all(config.optionalOffline.map(readJSON))),
     ...catalog.packs,
   ].map(({ name }) => ({ name }));
-  assert.equal(optionalPacks.length, 11, 'Exercise the full current packaged optional list');
+  assert.equal(optionalPacks.length, 12, 'Exercise the full current packaged optional list');
   const scope = 'https://game.example/releases/v057/site/';
   const marker = {
     format: 'revealline-offline.v1',
