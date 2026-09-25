@@ -1,4 +1,5 @@
-import { boundedJSON, exactKeys, required, stableId } from '../data-json.mjs';
+import { requireAuthoring as required } from './authoring-error.mjs';
+import { boundedJSON, exactKeys, stableId } from '../data-json.mjs';
 import { compileContentProject } from './project.mjs';
 import { resolveContentJourney } from './journey.mjs';
 import { freezeDesign } from './catalogs.mjs';
@@ -18,6 +19,7 @@ export function inspectContentPacing(source, options = {}) {
         (id) => stableId(id) && project.campaigns.some((campaign) => campaign.id === id),
       ),
     'Exclude unique existing campaign IDs.',
+    'errors:studio.pacing.exclusions',
   );
   const journey = resolveContentJourney(project, {
     ...(selection.packIds ? { packIds: selection.packIds } : {}),

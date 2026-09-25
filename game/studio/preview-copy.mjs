@@ -1,3 +1,4 @@
+import { studioDifficultyName } from './difficulty-view.mjs';
 import { editorErrorText } from './editor-copy.mjs';
 import { localizedAttribute, localizedText, t } from '../i18n/index.mjs';
 import { contentText, isRegisteredContent } from '../i18n/content.mjs';
@@ -250,16 +251,11 @@ export function studioGeometryText(mission, preview) {
   ].join(' ');
 }
 
-const difficultyKeys = {
-  gentle: 'interface:missionLibrary.difficulty.gentle',
-  standard: 'interface:missionLibrary.difficulty.standard',
-  expert: 'interface:missionLibrary.difficulty.expert',
-};
 export function studioPreviewLoadingText(project, missionId, difficulty) {
   const mission = project.missions.find((entry) => entry.id === missionId);
   return t('tools:studio.preview.loading', {
     name: studioContentText(project, mission, 'name'),
-    difficulty: difficultyKeys[difficulty] ? t(difficultyKeys[difficulty]) : difficulty,
+    difficulty: studioDifficultyName(difficulty),
   });
 }
 export function studioPreviewFailureText(error) {
