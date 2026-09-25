@@ -1,3 +1,4 @@
+import { describeAuthoringError } from './authoring-error.mjs';
 import { readImageTrace } from './image-trace.mjs';
 
 /** Per-mission recovery with explicit adoption of saved drafts. No project or
@@ -110,7 +111,10 @@ export function createImageTraceSession({ backend, restore, onStatus = () => {} 
       if (!active) return;
       const trace = source === null ? null : readImageTrace(source);
       if (trace && (trace.projectId !== active.projectId || trace.missionId !== active.missionId))
-        throw new Error('Tracing owner changed. Select the matching mission first.');
+        throw describeAuthoringError(
+          new Error('Tracing owner changed. Select the matching mission first.'),
+          'errors:studio.trace.ownerChanged',
+        );
       active.pending = trace;
       active.dirty = true;
       active.version++;
@@ -119,16 +123,30 @@ export function createImageTraceSession({ backend, restore, onStatus = () => {} 
       void flush(active);
     },
     async restore(source = active?.saved) {
-      if (!active || !source) throw new Error('No saved tracing draft is available.');
+      if (!active || !source)
+        throw describeAuthoringError(
+          new Error('No saved tracing draft is available.'),
+          'errors:studio.trace.noSaved',
+        );
       const owner = active,
         version = owner.version;
-      if (owner.saving) throw new Error('Wait for the current tracing save to finish.');
+      if (owner.saving)
+        throw describeAuthoringError(
+          new Error('Wait for the current tracing save to finish.'),
+          'errors:studio.trace.savePending',
+        );
       const trace = readImageTrace(source);
       if (trace.projectId !== owner.projectId || trace.missionId !== owner.missionId)
-        throw new Error('This tracing draft belongs to a different project or mission.');
+        throw describeAuthoringError(
+          new Error('This tracing draft belongs to a different project or mission.'),
+          'errors:studio.trace.differentOwner',
+        );
       await restore(trace);
       if (owner !== active || owner.version !== version)
-        throw new Error('Tracing changed during restore. The newer session was retained.');
+        throw describeAuthoringError(
+          new Error('Tracing changed during restore. The newer session was retained.'),
+          'errors:studio.trace.restoreChanged',
+        );
       const fromSaved = source === owner.saved;
       owner.pending = trace;
       owner.dirty = !fromSaved;
@@ -140,8 +158,15 @@ export function createImageTraceSession({ backend, restore, onStatus = () => {} 
     reload: () => read(active),
     async replace() {
       if (!active?.loaded || active.error || active.saving)
-        throw new Error('Read the saved tracing draft before replacing it.');
-      if (!active.dirty) throw new Error('There is no changed tracing session to save.');
+        throw describeAuthoringError(
+          new Error('Read the saved tracing draft before replacing it.'),
+          'errors:studio.trace.readBeforeReplace',
+        );
+      if (!active.dirty)
+        throw describeAuthoringError(
+          new Error('There is no changed tracing session to save.'),
+          'errors:studio.trace.noChanges',
+        );
       active.authorized = true;
       active.failed = false;
       await flush(active);
