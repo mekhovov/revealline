@@ -35,3 +35,16 @@ html[lang='uk'] .home-actions {
 html[data-tool-state='ready'] [data-language-launch] {
   display: none;
 }
+
+@media (max-width: 480px) {
+  html[lang='uk'] .field-kit .field-kit-settings-panel > label.field-kit-page-text {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    max-width: none;
+    gap: 8px;
+  }
+  html[lang='uk'] .field-kit .field-kit-settings-panel > label.field-kit-page-text > select {
+    width: 100%;
+    min-width: 0;
+  }
+}
