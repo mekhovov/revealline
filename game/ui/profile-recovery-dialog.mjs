@@ -54,15 +54,17 @@ export function attachProfileRecoveryDialog({
   function refresh() {
     const reason = unavailable();
     opener.disabled = !!operation || !!closing || !!reason;
-    localizedText(entryStatus, () =>reason);
+    localizedText(entryStatus, () => reason);
   }
   function close() {
     if (closing) return closing;
     const active = operation;
     if (!active) return Promise.resolve(true);
-    active.controller.abort(new DOMException(t("interface:profileRecoveryClosed"), 'AbortError'));
+    active.controller.abort(new DOMException(t('interface:profileRecoveryClosed'), 'AbortError'));
     active.view?.cancel();
-    const closingLease = presenter.begin({ message: t("interface:closingRecoveryAndReleasingItsReads") });
+    const closingLease = presenter.begin({
+      message: t('interface:closingRecoveryAndReleasingItsReads'),
+    });
     closing = (async () => {
       await active.ready;
       try {
@@ -104,7 +106,7 @@ export function attachProfileRecoveryDialog({
     // Prior view handlers remain closed until a fresh reader is ready.
     back.onclick = close;
     active.lease = presenter.begin({
-      message: t("interface:loadingStoredProfileRecovery"),
+      message: t('interface:loadingStoredProfileRecovery'),
       isCurrent: () => operation === active && !closing,
     });
     dialog.showModal();
@@ -114,18 +116,20 @@ export function attachProfileRecoveryDialog({
       const { signal } = active.controller;
       const timer = setTimeout(
         () =>
-          active.controller.abort(new DOMException(t("interface:recoveryLoadingTimedOut"), t("interface:timeouterror"))),
+          active.controller.abort(
+            new DOMException(t('interface:recoveryLoadingTimedOut'), 'TimeoutError'),
+          ),
         10000,
       );
       try {
         const version = packaged
           ? currentVersion
           : await untilCancelled(signal, resolveSourceVersion);
-        active.lease.update({ message: t("interface:loadingRecoveryTools") });
+        active.lease.update({ message: t('interface:loadingRecoveryTools') });
         const runtime = await untilCancelled(signal, load);
         if (!current(active)) return;
         let recoveryCatalogs = [],
-          catalogIssue = t("interface:openAPackagedReleaseToVerifyHistoricalOriginals");
+          catalogIssue = t('interface:openAPackagedReleaseToVerifyHistoricalOriginals');
         if (packaged) {
           const catalogController = new AbortController();
           const cancelCatalog = () => catalogController.abort(signal.reason);
@@ -133,7 +137,7 @@ export function attachProfileRecoveryDialog({
           const catalogTimer = setTimeout(
             () =>
               catalogController.abort(
-                new DOMException(t("interface:historicalCatalogLoadingTimedOut"), t("interface:timeouterror")),
+                new DOMException(t('interface:historicalCatalogLoadingTimedOut'), 'TimeoutError'),
               ),
             10000,
           );
@@ -141,7 +145,7 @@ export function attachProfileRecoveryDialog({
           clearTimeout(timer);
           try {
             active.lease.update({
-              message: t("interface:loadingTrustedHistoricalCatalogs"),
+              message: t('interface:loadingTrustedHistoricalCatalogs'),
               stage: 'verifying',
             });
             recoveryCatalogs = await untilCancelled(catalogController.signal, () =>
@@ -180,7 +184,10 @@ export function attachProfileRecoveryDialog({
   const cancel = () => {
     if (!operation) return;
     if (operation.view) operation.view.cancel();
-    else operation.controller.abort(new DOMException(t("interface:recoveryLoadingCancelled"), 'AbortError'));
+    else
+      operation.controller.abort(
+        new DOMException(t('interface:recoveryLoadingCancelled'), 'AbortError'),
+      );
   };
   const escape = (event) => {
     event.preventDefault();

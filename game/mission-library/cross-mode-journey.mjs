@@ -1,7 +1,16 @@
 import { boundedJSON, canonicalJSON, exactKeys, required } from '../data-json.mjs';
 import { LIBRARY_MODES, LIBRARY_TAGS, libraryMissionId } from './library.mjs';
 
-const METHODS = ['describe', 'availability', 'prepare', 'progress', 'card', 'details', 'launch'];
+const METHODS = [
+  'describe',
+  'presentation',
+  'availability',
+  'prepare',
+  'progress',
+  'card',
+  'details',
+  'launch',
+];
 const label = (value, maximum = 160) =>
   typeof value === 'string' && value.trim().length > 0 && value.length <= maximum;
 
@@ -185,6 +194,9 @@ export function combineJourneyLibrarySources(qualifiedSources) {
     ...identity,
     entries,
     describe: (entry) => owned(entry).description,
+    // Common display metadata was checked for equality across modes above.
+    // Keep its locale projection delegated to an exact original entry too.
+    presentation: (entry) => delegate(entry, owned(entry).description.modes[0], 'presentation'),
     availability: (entry, mode) => delegate(entry, mode, 'availability'),
     progress: (entry, mode) => delegate(entry, mode, 'progress') ?? '',
     card: (entry, mode) => delegate(entry, mode, 'card') ?? null,
