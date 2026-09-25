@@ -7,12 +7,15 @@
     <link rel="stylesheet" href="../../../ui/field-kit-fonts.css" />
     <link rel="stylesheet" href="../../../ui/field-kit-tokens.css" />
     <link rel="stylesheet" href="../../../ui/field-kit-components.css" />
+    <link rel="stylesheet" href="../../../ui/field-kit-compiled.css" />
+    <link rel="stylesheet" href="../../../ui/field-kit-surfaces.css" />
+    <script type="module" src="../../../ui/field-kit-surfaces.mjs"></script>
     <style>
       body {
         margin: 0;
         padding: clamp(16px, 4vw, 48px);
-        background: #070b12;
-        color: #f3f0db;
+        background: var(--fk-bg, #070b12);
+        color: var(--fk-text, #f3f0db);
       }
       main {
         max-width: 1400px;
@@ -28,7 +31,7 @@
         line-height: 1.6;
       }
       a {
-        color: #78dce8;
+        color: var(--fk-cyan, #78dce8);
       }
       #inventory {
         display: grid;
@@ -37,8 +40,8 @@
       }
       article {
         padding: 18px;
-        background: #101923;
-        border: 1px solid #425563;
+        background: var(--fk-panel, #101923);
+        border: 1px solid var(--fk-line, #425563);
         min-width: 0;
       }
       h2 {
@@ -68,7 +71,7 @@
         flex-shrink: 0;
       }
       .meta {
-        color: #a5b2bb;
+        color: var(--fk-muted, #a5b2bb);
         font:
           500 12px/1.6 'Field Kit Mono',
           monospace;
@@ -87,12 +90,12 @@
           sans-serif;
       }
       .badge {
-        color: #f4bf62;
+        color: var(--fk-amber, #f4bf62);
       }
     </style>
     <script type="module" src="./review.mjs"></script>
   </head>
-  <body class="field-kit">
+  <body class="field-kit field-kit-support" data-field-kit-page="asset-review">
     <main>
       <a href="../../../../authoring/asset-studio/">← Asset Studio</a>
       <p class="badge">ORIGINAL RECIPE CANDIDATES · AWAITING CONTEXT REVIEW</p>
