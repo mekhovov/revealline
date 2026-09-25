@@ -1,4 +1,5 @@
 import { journeyPictureCompletion } from '../journey/pictures.mjs';
+import { t, localizedText, localizedAttribute, formatNumber } from '../i18n/index.mjs';
 import { createJourneyArtworkView } from './journey-artwork.mjs';
 
 /** Solo Journey pictures remain distinct from Legacy medals, recorded replays
@@ -13,23 +14,28 @@ export function attachJourneyCollection({ document: doc = globalThis.document, g
   const parent = doc.getElementById('collection-dialog');
   const section = make('section', '', 'journey-pictures');
   section.setAttribute('aria-labelledby', 'journey-pictures-title');
-  const title = make('h3', 'Journey pictures', 'journey-pictures-title');
+  const title = make('h3', '', 'journey-pictures-title');
+  localizedText(title, () => t('interface:journeyPictures'));
   const status = make('p', '', 'journey-pictures-status');
   status.setAttribute('role', 'status');
   const grid = make('div', '', 'journey-picture-grid');
   grid.className = 'gallery-grid';
-  const previous = make('button', 'Previous pictures'),
-    next = make('button', 'More pictures');
+  const previous = make('button'),
+    next = make('button');
+  localizedText(previous, () => t('interface:journeyPictures.previous'));
+  localizedText(next, () => t('interface:journeyPictures.more'));
   for (const button of [previous, next]) {
     button.type = 'button';
     button.className = 'button secondary';
   }
   const pager = make('nav');
-  pager.setAttribute('aria-label', 'Journey picture pages');
+  localizedAttribute(pager, 'aria-label', () => t('interface:journeyPictures.pages'));
   pager.append(previous, next);
   section.append(title, status, grid, pager);
   doc.getElementById('gallery-load-status').after(section);
-  section.after(make('h3', 'Classic pictures'));
+  const classicTitle = make('h3');
+  localizedText(classicTitle, () => t('interface:journeyPictures.classic'));
+  section.after(classicTitle);
   const search = doc.getElementById('gallery-search');
   const viewer = make('dialog', '', 'journey-picture-viewer');
   viewer.className = 'wide-dialog';
@@ -42,8 +48,10 @@ export function attachJourneyCollection({ document: doc = globalThis.document, g
   canvas.setAttribute('role', 'img');
   const viewStatus = make('p', '', 'journey-picture-status');
   viewStatus.setAttribute('role', 'status');
-  const retry = make('button', 'Retry original download', 'journey-picture-retry');
-  const back = make('button', 'Back to Collection', 'journey-picture-back');
+  const retry = make('button', '', 'journey-picture-retry');
+  const back = make('button', '', 'journey-picture-back');
+  localizedText(retry, () => t('interface:journeyPictures.retryDownload'));
+  localizedText(back, () => t('interface:backToCollection'));
   for (const button of [retry, back]) {
     button.type = 'button';
     button.className = 'button secondary';
@@ -91,15 +99,26 @@ export function attachJourneyCollection({ document: doc = globalThis.document, g
     grid.replaceChildren();
     const query = (search.value || '').trim().toLocaleLowerCase();
     const matches = entries.filter((entry) =>
-      `${entry.name} ${entry.campaignTitle}`.toLocaleLowerCase().includes(query),
+      `${entry.nameKey ? t(entry.nameKey) : entry.name} ${
+        entry.campaignTitleKey ? t(entry.campaignTitleKey) : entry.campaignTitle
+      }`
+        .toLocaleLowerCase()
+        .includes(query),
     );
     for (const entry of matches.slice(page * 12, page * 12 + 12)) {
       const card = make('article');
       card.className = 'gallery-card';
       card.dataset.missionId = entry.missionId;
-      card.append(make('h3', entry.name), make('p', entry.campaignTitle));
+      const entryTitle = make('h3'),
+        entryCampaign = make('p');
+      localizedText(entryTitle, () => (entry.nameKey ? t(entry.nameKey) : entry.name));
+      localizedText(entryCampaign, () =>
+        entry.campaignTitleKey ? t(entry.campaignTitleKey) : entry.campaignTitle,
+      );
+      card.append(entryTitle, entryCampaign);
       if (entry.record) {
-        const button = make('button', 'View earned original');
+        const button = make('button');
+        localizedText(button, () => t('interface:journeyPictures.viewEarned'));
         button.type = 'button';
         button.className = 'button secondary';
         button.onclick = () => {
@@ -112,15 +131,22 @@ export function attachJourneyCollection({ document: doc = globalThis.document, g
           return show();
         };
         card.append(button);
-      } else card.append(make('p', entry.reason));
+      } else {
+        const reason = make('p');
+        localizedText(reason, () => (entry.reasonKey ? t(entry.reasonKey) : entry.reason));
+        card.append(reason);
+      }
       grid.append(card);
     }
     previous.disabled = page === 0;
     next.disabled = (page + 1) * 12 >= matches.length;
     pager.hidden = matches.length <= 12;
-    status.textContent = entries.length
-      ? `${entries.filter((entry) => entry.record).length} earned Solo originals. Earlier editions keep their own artwork. View pictures here; use Missions to play again.`
-      : 'Complete a Solo Journey mission to earn its original picture.';
+    localizedText(status, () => {
+      const count = entries.filter((entry) => entry.record).length;
+      return entries.length
+        ? t('interface:journeyPictures.soloEarned', { count, formatted: formatNumber(count) })
+        : t('interface:journeyPictures.completeSolo');
+    });
   }
   search.addEventListener('input', () => {
     page = 0;
@@ -143,7 +169,7 @@ export function attachJourneyCollection({ document: doc = globalThis.document, g
   return {
     async open() {
       const ticket = ++revision;
-      status.textContent = 'Loading Journey pictures…';
+      localizedText(status, () => t('interface:journeyPictures.loading'));
       try {
         const { profile, catalog, editionId } = await getState();
         if (ticket !== revision || !parent.open) return;
@@ -161,23 +187,29 @@ export function attachJourneyCollection({ document: doc = globalThis.document, g
             missionId: mission.id,
           });
           if (completion.state === 'unavailable')
-            entries.push({ ...mission, missionId: mission.id, reason: completion.reason });
+            entries.push({
+              ...mission,
+              missionId: mission.id,
+              reason: completion.reason,
+              reasonKey: completion.reasonKey,
+            });
         }
         const known = new Set(catalog.forMode('solo').map((mission) => mission.id));
         for (const missionId of Object.keys(state.clears.solo))
           if (!known.has(missionId) && !entries.some((entry) => entry.missionId === missionId))
             entries.push({
               missionId,
-              name: 'Earlier Journey mission',
-              campaignTitle: 'Earlier edition',
-              reason:
-                'Original unavailable. Keep your progress backup and reopen its original game edition.',
+              nameKey: 'interface:journeyPictures.earlierMission',
+              campaignTitleKey: 'interface:journeyPictures.earlierEdition',
+              reasonKey: 'interface:journeyPictures.reopenOriginalEdition',
             });
         page = Math.min(page, Math.max(0, Math.ceil(entries.length / 12) - 1));
         render();
       } catch (error) {
         if (ticket === revision && parent.open)
-          status.textContent = `Journey pictures could not load. Reopen Collection to retry. ${error.message}`;
+          localizedText(status, () =>
+            t('interface:journeyPictures.collectionLoadFailed', { error: error.message }),
+          );
       }
     },
   };

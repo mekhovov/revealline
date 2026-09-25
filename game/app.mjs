@@ -9026,7 +9026,12 @@ try {
               } catch {
                 /* Existing stored data stays intact. */
               }
-              journeyRewardFailure = `Mission complete. Its picture could not be retained: ${error.message} Export your Journey backup before recovery.`;
+              journeyRewardFailure = localizedMessage(
+                'interface:journeyPictures.soloRetainFailed',
+                {
+                  error: error.message,
+                },
+              );
             }
           }
           if (!candidateHost?.owns(activeEntry)) {

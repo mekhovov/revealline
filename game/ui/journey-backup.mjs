@@ -1,4 +1,4 @@
-import { t, localizedText, localizedMessage } from '../i18n/index.mjs';
+import { t, localizedText, localizedMessage, formatNumber } from '../i18n/index.mjs';
 import { JOURNEY_MODES } from '../journey/catalog.mjs';
 import { exportJSONFile } from '../platform.mjs';
 
@@ -92,7 +92,7 @@ export function attachJourneyBackup({
     try {
       if (file.size > 16 * 1024 * 1024)
         throw new Error(t('interface:backupExceedsThe16MibFileLimit'));
-      localizedText(status, () => t("interface:inspectingTheLocalBackup"));
+      localizedText(status, () => t('interface:inspectingTheLocalBackup'));
       const { backup, merged, pictures } = profile.inspectBackup(await file.text());
       const addedPictures = pictures
         ? pictures.records.length - (profile.pictures?.().records.length ?? 0)
@@ -110,18 +110,31 @@ export function attachJourneyBackup({
             Object.hasOwn(current.clears[mode], id) &&
             JSON.stringify(current.clears[mode][id]) !== JSON.stringify(receipt),
         ).length;
-        return `${mode}: ${added} missing clears, ${skips} missing skips, ${conflicts} receipt conflicts kept as current`;
+        return { mode, added, skips, conflicts };
       });
       inspected = backup;
       apply.disabled = false;
-      localizedText(
-        status,
-        () =>
-          `${counts.join('. ')}. ${addedPictures} earned-picture references added; image bytes are not included. Existing Continue positions are kept; an empty position may be restored. Unknown mission IDs are retained for other editions. Restore is still required.`,
+      localizedText(status, () =>
+        t('interface:journeyBackup.inspectionSummary', {
+          counts: counts
+            .map(({ mode, added, skips, conflicts }) =>
+              t('interface:journeyBackup.modeCounts', {
+                mode: t(`interface:journeyBackup.mode.${mode}`),
+                added: formatNumber(added),
+                skips: formatNumber(skips),
+                conflicts: formatNumber(conflicts),
+              }),
+            )
+            .join(' '),
+          count: addedPictures,
+          pictures: formatNumber(addedPictures),
+        }),
       );
     } catch (error) {
       if (ticket === revision)
-        localizedText(status, () => `Cannot inspect: ${error.message} Progress is unchanged.`);
+        localizedText(status, () =>
+          t('interface:journeyBackup.inspectFailed', { error: error.message }),
+        );
     }
   };
   apply.onclick = async () => {
@@ -145,9 +158,8 @@ export function attachJourneyBackup({
       );
     } catch (error) {
       if (ticket === revision)
-        localizedText(
-          status,
-          () => `Restore failed: ${error.message}. Existing progress is retained.`,
+        localizedText(status, () =>
+          t('interface:journeyBackup.restoreFailed', { error: error.message }),
         );
     }
   };
@@ -158,9 +170,8 @@ export function attachJourneyBackup({
       if (ticket === revision) localizedText(status, () => result.message);
     } catch (error) {
       if (ticket === revision)
-        localizedText(
-          status,
-          () => `Export failed: ${error.message}. Your progress remains in this session.`,
+        localizedText(status, () =>
+          t('interface:journeyBackup.exportFailed', { error: error.message }),
         );
     }
   };
