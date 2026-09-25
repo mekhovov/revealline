@@ -3034,7 +3034,8 @@ try {
     }
   }
   const catalogueHref = authoredRoute ? './?journey=legacy' : './';
-  const catalogueLabel = authoredRoute ? t('interface:legacyMissions2') : t('interface:newJourney');
+  const catalogueLabel = () =>
+    authoredRoute ? t('interface:legacyMissions2') : t('interface:newJourney');
   const librarySourceReturn = readMissionLibraryReturn(params, { mode: 'solo' });
   const librarySourceDestination = librarySourceReturn
     ? `${librarySourceReturn.mode === 'team' ? 'couch/relay-rescue.html' : 'couch/'}?${new URLSearchParams({ journey: librarySourceReturn.journey, return: 'solo' })}`
@@ -3060,9 +3061,9 @@ try {
   }
   const modeLabel = (kind) =>
     kind === 'library'
-      ? 'selected mission'
+      ? t('interface:selectedMission')
       : kind === 'catalogue'
-        ? catalogueLabel
+        ? catalogueLabel()
         : kind === 'versus'
           ? t('interface:versus2')
           : t('interface:team');
@@ -3182,32 +3183,49 @@ try {
       canonicalJSON(modeSelection()) !== canonicalJSON(ticket.selection)
     )
       throw new Error(
-        `The flight, selected mission or foreground changed. Stay here and choose ${modeLabel(ticket.kind)} again.`,
+        t('interface:soloDeparture.changed', { destination: modeLabel(ticket.kind) }),
       );
   }
   function modeDepartureMessage(ticket) {
-    const flight = !ticket.unfinished
-      ? t('interface:noUnfinishedFlightIsBeingReplaced')
-      : ticket.savedRaw
-        ? t('interface:yourPausedFlightWasSavedAndVerifiedContinueCanRestore')
-        : t('interface:thisCurrentFlightIsSessionOnlyItRemainsPausedIn');
-    localizedText(
-      $('mode-leave-status'),
-      () =>
-        `${flight} ${
-          ticket.kind === 'library'
-            ? `This opens ${ticket.libraryTarget.name} directly. Its original rules and progression remain separate.${ticket.fallback ? ' ' + t('interface:returnSelectionCouldNotBeSavedBackWillOpenThe') + '' : ''}`
-            : ticket.kind === 'catalogue'
-              ? `This opens ${catalogueLabel}. Its missions and progress stay separate. Returning does not resume a flight automatically.`
-              : ticket.journeyRouteId
-                ? `This opens ${ticket.kind === 'team' ? 'the separate Team arenas' : t('interface:versusWithItsOwnJourneyProgress')}. Returning opens this Solo Journey title; Continue stays explicit.`
-                : ticket.origin === 'solo-title'
-                  ? `Back from ${modeLabel(ticket.kind)} opens Solo’s title; it does not resume a flight.`
-                  : ticket.fallback
-                    ? `Return context is unavailable. Back from ${modeLabel(ticket.kind)} will open Solo’s title.`
-                    : `Back from ${modeLabel(ticket.kind)} returns to this Missions selection; it does not resume a flight.`
-        }`,
-    );
+    localizedText($('mode-leave-status'), () => {
+      const flight = !ticket.unfinished
+        ? t('interface:noUnfinishedFlightIsBeingReplaced')
+        : ticket.savedRaw
+          ? t('interface:yourPausedFlightWasSavedAndVerifiedContinueCanRestore')
+          : t('interface:thisCurrentFlightIsSessionOnlyItRemainsPausedIn');
+      const detail =
+        ticket.kind === 'library'
+          ? t('interface:soloDeparture.libraryDirect', {
+              mission: contentText(ticket.libraryTarget, 'name'),
+              fallback: ticket.fallback
+                ? ' ' + t('interface:returnSelectionCouldNotBeSavedBackWillOpenThe')
+                : '',
+            })
+          : ticket.kind === 'catalogue'
+            ? t('interface:soloDeparture.catalogue', { destination: catalogueLabel() })
+            : ticket.journeyRouteId
+              ? t('interface:soloDeparture.journey', {
+                  destination:
+                    ticket.kind === 'team'
+                      ? t('interface:soloDeparture.teamArenas')
+                      : t('interface:versusWithItsOwnJourneyProgress'),
+                })
+              : ticket.origin === 'solo-title'
+                ? t('interface:soloDeparture.titleReturn', {
+                    destination: modeLabel(ticket.kind),
+                  })
+                : ticket.fallback
+                  ? t('interface:soloDeparture.fallbackReturn', {
+                      destination: modeLabel(ticket.kind),
+                    })
+                  : t('interface:soloDeparture.missionsReturn', {
+                      destination: modeLabel(ticket.kind),
+                    });
+      const failure = ticket.failure
+        ? ' ' + t('interface:soloDeparture.saveUnverified', { error: ticket.failure })
+        : '';
+      return `${flight} ${detail}${failure}`;
+    });
   }
   function unfinishedFlight() {
     return started && ['running', 'respawning'].includes(run?.status);
@@ -3299,7 +3317,11 @@ try {
       pictureThemePending ||
       backupBusy
     ) {
-      warning(`Finish the current operation before choosing ${modeLabel(kind)}.`);
+      warning(
+        localizedMessage('interface:soloDeparture.finishCurrentOperation', {
+          destination: modeLabel(kind),
+        }),
+      );
       return false;
     }
     const ticket = {
@@ -3341,7 +3363,12 @@ try {
         location.href = new URL(modeDestination(ticket), location.href).href;
       } catch (error) {
         cancelModeDeparture({ restore: true });
-        warning(`${modeLabel(kind)} could not open. Your flight remains here. ${error.message}`);
+        warning(
+          localizedMessage('interface:soloDeparture.openFailed', {
+            destination: modeLabel(kind),
+            error: error.message,
+          }),
+        );
       }
       return;
     }
@@ -3368,15 +3395,19 @@ try {
         ? t('interface:checkingTheSavedFlightBeforeLeavingYourCurrentFlightStays')
         : t('interface:checkingTheReturnToMissions'),
     );
-    localizedText($('mode-leave-title'), () => `Open ${modeLabel(kind)}?`);
-    localizedText($('mode-leave-confirm'), () => `Leave for ${modeLabel(kind)}`);
+    localizedText($('mode-leave-title'), () =>
+      t('interface:soloDeparture.openTitle', { destination: modeLabel(kind) }),
+    );
+    localizedText($('mode-leave-confirm'), () =>
+      t('interface:soloDeparture.leaveFor', { destination: modeLabel(kind) }),
+    );
     ticket.dialogShown = true;
     try {
       $('mode-leave-dialog').showModal();
       $('mode-leave-stay').focus({ preventScroll: true });
     } catch (error) {
       cancelModeDeparture({ close: true, restore: true, clearHint: true });
-      warning(`The departure could not open. Your flight remains here. ${error.message}`);
+      warning(localizedMessage('interface:soloDeparture.dialogFailed', { error: error.message }));
       return;
     }
     try {
@@ -3386,10 +3417,11 @@ try {
           () => modeDepartureCurrent(ticket),
           ({ ticks, total }) => {
             if (modeDeparture === ticket)
-              localizedText(
-                $('mode-leave-status'),
-                () =>
-                  `Verifying your saved flight: ${ticks} / ${total} ticks. Stay cancels waiting.`,
+              localizedText($('mode-leave-status'), () =>
+                t('interface:soloDeparture.verifyingSavedFlight', {
+                  ticks,
+                  total,
+                }),
               );
           },
         );
@@ -3404,8 +3436,6 @@ try {
     ticket.pending = false;
     $('mode-leave-confirm').disabled = false;
     modeDepartureMessage(ticket);
-    if (ticket.failure)
-      $('mode-leave-status').textContent += ` Saving was not verified: ${ticket.failure}`;
   }
   $('shell-team').onclick = (event) => requestModeDeparture('team', event, $('shell-team'));
   $('shell-versus').onclick = (event) => requestModeDeparture('versus', event, $('shell-versus'));
@@ -3451,9 +3481,8 @@ try {
       location.href = destination;
     } catch (error) {
       clearModeHint(ticket);
-      localizedText(
-        $('mode-leave-status'),
-        () => `${error.message} Your flight remains paused here.`,
+      localizedText($('mode-leave-status'), () =>
+        t('interface:soloDeparture.pausedError', { error: error.message }),
       );
     }
   };
@@ -4135,21 +4164,43 @@ try {
   }
   function missionReplacementMessage(ticket) {
     const play = ticket.request.kind === 'world-play';
-    const action = isSetupRequest(ticket.request)
-      ? courseSession
-        ? t('interface:prepareFreshLesson')
-        : t('interface:prepareFreshAttempt')
-      : play
-        ? t('interface:replacePlay')
-        : t('interface:replace');
-    localizedText($('mission-replace-status'), () =>
-      ticket.sessionOnly
-        ? `This ${courseSession ? 'lesson' : 'practice attempt'} is session-only and is not saved to campaign progress. Stay keeps it paused; ${action} deliberately discards this attempt ${play ? t('interface:andStartsTheSelectedChapterWhenItIsReady') : 'without starting the next one'}.`
+    const setup = isSetupRequest(ticket.request);
+    const action = () =>
+      isSetupRequest(ticket.request)
+        ? courseSession
+          ? t('interface:prepareFreshLesson')
+          : t('interface:prepareFreshAttempt')
+        : play
+          ? t('interface:replacePlay')
+          : t('interface:replace');
+    localizedText($('mission-replace-status'), () => {
+      const message = ticket.sessionOnly
+        ? t(
+            play
+              ? 'interface:soloRecovery.sessionOnlyPlay'
+              : 'interface:soloRecovery.sessionOnlyReplace',
+            {
+              attempt: courseSession
+                ? t('interface:soloRecovery.lesson')
+                : t('interface:soloRecovery.practiceAttempt'),
+              action: action(),
+            },
+          )
         : ticket.savedRaw
-          ? `Your current flight was saved and verified. ${action} ${play ? t('interface:startsTheSelectedChapterOnceItsPictureIsReady') : isSetupRequest(ticket.request) ? t('interface:usesTheRequestedStartingSetupWithoutStartingIt') : t('interface:selectsTheNewMissionWithoutStartingIt')}. Stay keeps this flight paused.`
-          : `This flight was not verified as safely saved. Replacing it may lose this attempt. Stay keeps it paused in this tab; ${action} deliberately discards it.`,
-    );
-    if (ticket.failure) $('mission-replace-status').textContent += ` ${ticket.failure}`;
+          ? t(
+              play
+                ? 'interface:soloRecovery.savedPlay'
+                : setup
+                  ? 'interface:soloRecovery.savedSetup'
+                  : 'interface:soloRecovery.savedSelection',
+              { action: action() },
+            )
+          : t('interface:soloRecovery.unverified', { action: action() });
+      const failure = ticket.failureKind
+        ? t('interface:soloRecovery.saveChanged', { action: action() })
+        : renderMessage(ticket.failure);
+      return failure ? `${message} ${failure}` : message;
+    });
   }
   async function requestMissionReplacement(request, opener, launch = null) {
     if (candidateHost && request.kind !== 'steering') {
@@ -4270,10 +4321,8 @@ try {
           () => missionReplacementCurrent(ticket),
           ({ ticks, total }) => {
             if (missionReplacement === ticket)
-              localizedText(
-                $('mission-replace-status'),
-                () =>
-                  `Verifying your saved flight: ${ticks} / ${total} ticks. Stay cancels waiting.`,
+              localizedText($('mission-replace-status'), () =>
+                t('interface:soloRecovery.verifyingSavedFlight', { ticks, total }),
               );
           },
         );
@@ -4313,11 +4362,14 @@ try {
             throw new Error(t('interface:savedFlightChanged'));
         } catch {
           ticket.savedRaw = null;
-          ticket.failure = `The saved flight changed or saving became unavailable. Review this warning before choosing ${isSetupRequest(ticket.request) ? t('interface:prepare') : t('interface:replace')} again.`;
+          ticket.failure = null;
+          ticket.failureKind = 'save-changed';
           missionReplacementMessage(ticket);
           return;
         }
       }
+      ticket.failure = null;
+      ticket.failureKind = null;
       ticket.pending = true;
       // Keep the live escape action focused before disabling its opener.
       // Do not reclaim focus after a pointer choice or browser focus change.
@@ -4357,13 +4409,14 @@ try {
       ticket.pending = false;
       if (ticket.launch && ticket.adopting) {
         $('mission-replace-confirm').disabled = true;
-        localizedText(
-          $('mission-replace-status'),
-          () =>
-            `Selection did not finish: ${error.message} The field may have changed; the previous attempt was not restored. Stay returns to your menu.`,
+        localizedText($('mission-replace-status'), () =>
+          t('interface:soloRecovery.selectionFailed', { error: error.message }),
         );
       } else {
-        ticket.failure = `${error.message} Your flight remains paused here.`;
+        ticket.failureKind = null;
+        ticket.failure = localizedMessage('interface:soloRecovery.pausedError', {
+          error: error.message,
+        });
         $('mission-replace-confirm').disabled = false;
         missionReplacementMessage(ticket);
       }
