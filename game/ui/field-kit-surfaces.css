@@ -347,18 +347,8 @@ body.field-kit-support:is([data-menu-palette='neon'], [data-menu-palette='field-
   background-color: var(--fk-amber);
   border-color: var(--fk-amber);
 }
-.field-kit[data-field-kit-page='couch'] #couch-app .race-menu-actions :is(button, a):hover,
-.field-kit[data-field-kit-page='couch'] #couch-app .race-optional-setup > summary:hover {
+.field-kit[data-field-kit-page='couch'] #couch-app .race-menu-actions :is(button, a):hover {
   border-color: var(--fk-cyan);
-}
-.field-kit[data-field-kit-page='couch'] #couch-app .race-optional-setup {
-  border-color: var(--fk-control-line);
-  background: var(--fk-panel);
-}
-.field-kit[data-field-kit-page='couch'] #couch-app .race-optional-setup > summary {
-  min-height: 48px;
-  color: var(--fk-text);
-  font-size: var(--fk-text-body);
 }
 .field-kit[data-field-kit-page='couch']
   #couch-app
