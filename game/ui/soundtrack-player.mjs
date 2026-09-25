@@ -1061,10 +1061,7 @@ export function createSoundtrackPlayer({
       ['all', 'one', 'off'].includes(repeat),
       t('interface:invalidOnlineSoundtrackRepeatMode'),
     );
-    required(
-      typeof mixWithLibrary === 'boolean',
-      t('interface:invalidOnlineSoundtrackMixMode'),
-    );
+    required(typeof mixWithLibrary === 'boolean', t('interface:invalidOnlineSoundtrackMixMode'));
     required(
       startTrackId === null || /^online\.[a-f0-9]{64}$/.test(startTrackId),
       t('interface:invalidOnlineSoundtrackStartRecording'),
