@@ -33,13 +33,14 @@ These sources establish cultural context and broad compositional vocabulary. The
 - Separate v14 profile/session ownership and exact v13 historical cards.
 - Registered lazy loading, default Solo/Versus entry, authored Next, Studio selection, EN/UK catalogues and 294-card unified-library inventory.
 - Repository validation, changed-module lint and formatting.
-- 219/219 current and inherited cultural-route checks; 35/35 route-loader checks; 15/15 edition checks; 13/13 default lifecycle checks; 13/13 default Solo host checks; 3/3 remote-library checks; and 16/16 Studio checks.
+- 199/199 combined current and inherited cultural-route, edition, lifecycle, loader and Studio checks after rebasing onto the latest mainline stack.
+- 26/26 default Solo, remote-library and Versus host checks; 8/8 controller-library checks across Solo, Versus and Team.
 
-The controller-library cohort is not counted as passing. Six controller-open cases also fail on the untouched v13 parent stack after its latest-main rebase, while their keyboard/click and remote-library equivalents pass. The separate Versus default-entry cohort has the same inherited controller-open failure and passes its other nine cases. This must be reconciled independently; it is not attributed to the three geometry changes and is not waived as a pass.
+[PR569](https://github.com/mekhovov/revealline/pull/569) is now merged in the rebased parent, and the formerly blocked controller-library cohort passes. The independent Team remote-host cohort reports 12/13 passing: its blur-interruption case still finds the chooser open after the host's Back activation, while the Escape variant and all other cases pass. That assertion reproduces on the rebased parent, outside the three geometry changes, and is recorded as an inherited regression rather than waived or represented as passing.
 
 ## Remaining gates
 
-- Resolve or formally isolate the inherited controller-open regression on the accepted parent before frozen-build qualification.
 - Review the stacked PR after PR530 and PR558 land; restack if either source head changes.
+- Resolve or separately disposition the inherited Team blur-interruption regression before frozen-build qualification.
 - Allocate a release version only through the sole publisher after earlier queued releases are public.
 - Run bounded frozen/public play checks and human cultural/balance review. Until then the candidate remains **balance pending**.
