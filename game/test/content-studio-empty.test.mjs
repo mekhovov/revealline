@@ -107,6 +107,12 @@ test('empty board clears stale mission facts and canvas, then re-enables authori
         hidden: false,
         textContent: 'Previous mission',
         value: '72, 144',
+        getAttribute(name) {
+          return this[name] ?? null;
+        },
+        setAttribute(name, value) {
+          this[name] = String(value);
+        },
       },
     ]),
   );
