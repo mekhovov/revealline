@@ -1,4 +1,5 @@
-import { boundedJSON, exactKeys, required, stableId, dataIdentity } from '../data-json.mjs';
+import { requireAuthoring as required } from './authoring-error.mjs';
+import { boundedJSON, exactKeys, stableId, dataIdentity } from '../data-json.mjs';
 import { compileContentProject } from './project.mjs';
 import { forkMissionMap } from './drafts.mjs';
 import { journeyActors, SENTINEL_ACTOR_CATALOG, SENTINEL_RECIPE } from './catalogs.mjs';
@@ -8,7 +9,11 @@ import { journeyActors, SENTINEL_ACTOR_CATALOG, SENTINEL_RECIPE } from './catalo
 export function editContentEncounter(source, missionId, input) {
   let project = structuredClone(compileContentProject(source).source);
   const command = boundedJSON(input, { maxBytes: 4096, maxNodes: 32, maxDepth: 3, maxArray: 4 });
-  required(['set', 'remove'].includes(command.action), 'Choose an encounter operation.');
+  required(
+    ['set', 'remove'].includes(command.action),
+    'Choose an encounter operation.',
+    'errors:studio.encounter.operation',
+  );
   exactKeys(
     command,
     [
@@ -20,35 +25,51 @@ export function editContentEncounter(source, missionId, input) {
     'encounter command',
   );
   let mission = project.missions.find((entry) => entry.id === missionId);
-  required(mission, 'Choose an existing mission.');
-  required(!mission.modes.includes('team'), 'Sentinel encounters are not qualified for Team.');
+  required(mission, 'Choose an existing mission.', 'errors:studio.existingMission');
+  required(
+    !mission.modes.includes('team'),
+    'Sentinel encounters are not qualified for Team.',
+    'errors:studio.encounter.teamUnavailable',
+  );
   const map = project.maps.find(
     (entry) => entry.id === mission.map.id && entry.revision === mission.map.revision,
   );
   required(
     command.expectedMap === dataIdentity(map) && command.expectedMission === dataIdentity(mission),
     'The map or mission changed. Refresh the encounter selection before editing.',
+    'errors:studio.encounter.sourceChanged',
   );
   if (command.action === 'remove') {
     required(
       mission.format === 'MissionDesignV4' && mission.encounter,
       'Choose an existing Sentinel encounter.',
+      'errors:studio.encounter.existing',
     );
     mission.actors = mission.actors.filter((actor) => actor.id !== mission.encounter.enemyId);
     mission.encounter = null;
   } else {
-    required(stableId(command.enemyId), 'Give the Sentinel a stable actor ID.');
+    required(
+      stableId(command.enemyId),
+      'Give the Sentinel a stable actor ID.',
+      'errors:studio.encounter.stableId',
+    );
     required(
       !mission.encounter || mission.encounter.enemyId === command.enemyId,
       'Keep the existing Sentinel actor ID when replacing links.',
+      'errors:studio.encounter.identity',
     );
     const previous = mission.actors.find((actor) => actor.id === command.enemyId);
     required(
       !previous || ['field-keeper', 'relay-sentinel'].includes(previous.role),
       'Only an explicitly selected field keeper can become the Sentinel.',
+      'errors:studio.encounter.keeper',
     );
     const core = mission.objectives.find((objective) => objective.id === command.coreObjectiveId);
-    required(core && core.required && !core.hidden, 'Choose a visible required core objective.');
+    required(
+      core && core.required && !core.hidden,
+      'Choose a visible required core objective.',
+      'errors:studio.encounter.core',
+    );
     const actor = {
       id: command.enemyId,
       role: 'relay-sentinel',
