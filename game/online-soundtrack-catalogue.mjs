@@ -81,6 +81,7 @@ function track(value, ids, hashes) {
       'gameCatalogueAdmission',
       'contentId',
       'recordingModeEligible',
+      'default',
       'audio',
       'aliases',
     ],
@@ -119,6 +120,10 @@ function track(value, ids, hashes) {
       typeof value.recordingModeEligible === 'boolean' &&
       (!value.recordingModeEligible || value.contentId === false),
     `Online soundtrack recording policy is invalid: ${id}.`,
+  );
+  required(
+    value.default === undefined || value.default === false,
+    `Online soundtrack default policy is invalid: ${id}.`,
   );
   exactKeys(value.audio, ['path', 'bytes', 'sha256'], 'online soundtrack audio');
   required(
