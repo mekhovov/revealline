@@ -66,6 +66,7 @@ import {
 import { coopGroundName } from './coop-ground.mjs';
 import { terrainTransitionCaption } from '../ui/terrain-feedback.mjs';
 import { createControllerRouter } from '../ui/controller-router.mjs';
+import { attachControllerConfirmGuard } from '../ui/controller-confirm-guard.mjs';
 import { attachControllerNavigation } from '../ui/controller-navigation.mjs';
 import { playgroundTabBoundary } from '../ui/playground-tab-boundary.mjs';
 import { attachControllerReading } from '../ui/controller-reading.mjs';
@@ -637,7 +638,9 @@ export function bootCoop({
                 : importOperation
                   ? $('coop-pack-cancel')
                   : pictureOperation
-                    ? $('coop-picture-cancel')
+                    ? pictureOperation.passive
+                      ? $('coop-level')
+                      : $('coop-picture-cancel')
                     : !run && pictureSelection?.state !== 'ready'
                       ? $('coop-picture-retry')
                       : !run
@@ -718,6 +721,9 @@ export function bootCoop({
     },
   });
   const router = createControllerRouter({ readPads: () => framePads });
+  const controllerConfirmGuard = attachControllerConfirmGuard({
+    confirmPressed: () => router.menuConfirmPressed(),
+  });
   const menuMasthead = $('coop-home').closest('.masthead');
   let compositeMenu = false;
   const navigation = attachControllerNavigation({
@@ -1649,6 +1655,7 @@ export function bootCoop({
     retry = false,
     origin = document.activeElement,
     initial = false,
+    passive = false,
     onPrepared = null,
   } = {}) {
     if (disposed || departure || importDisplay || running()) return Promise.resolve();
@@ -1661,7 +1668,7 @@ export function bootCoop({
       return Promise.resolve().then(() => {
         if (request !== importRequest || pack !== selectedPack || $('coop-level').value !== levelId)
           return;
-        return preparePicture({ retry, origin, initial });
+        return preparePicture({ retry, origin, initial, passive });
       });
     }
     if (!retry || !pictureSelection) {
@@ -1676,9 +1683,17 @@ export function bootCoop({
     }
     const selection = pictureSelection;
     if (pictureOperation) return pictureOperation.promise;
-    const focus = pictureFocus(origin, initial),
+    const passivePreparation = passive || document.documentElement.dataset.toolState !== 'ready',
+      focus = pictureFocus(origin, initial || passivePreparation),
       controller = new AbortController();
-    const operation = { selection, controller, focus, run, generation };
+    const operation = {
+      selection,
+      controller,
+      focus,
+      run,
+      generation,
+      passive: passivePreparation,
+    };
     pictureOperation = operation;
     selection.state = 'preparing';
     const current = () =>
@@ -1689,7 +1704,10 @@ export function bootCoop({
       run === operation.run &&
       generation === operation.generation;
     pictureUI('Preparing the exact Team picture…');
-    focus.pending($('coop-picture-cancel'));
+    // Initial preparation is passive: do not turn the first controller Confirm
+    // into Cancel. Deliberate selector/retry work still exposes and focuses its
+    // owned cancellation action.
+    if (!passivePreparation && origin !== $('coop-start')) focus.pending($('coop-picture-cancel'));
     operation.promise = (async () => {
       try {
         const snapshot = await (retry ? presentationPage.retry() : presentationPage.ready);
@@ -3957,6 +3975,7 @@ export function bootCoop({
       previousPads = signatures;
       input.poll();
       const routed = router.sample({ scope: scope(), timeMs: now });
+      controllerConfirmGuard.observe(routed.confirmHeld);
       if (!running()) {
         if (routed.status.code === 'joined' || Object.values(routed.ui).some(Boolean))
           setReadingModality('controller');
@@ -4604,6 +4623,7 @@ export function bootCoop({
     clear();
     couchTouch.destroy();
     input.destroy();
+    controllerConfirmGuard.destroy();
     router.destroy();
     reading.destroy();
     navigation.destroy();
@@ -4724,6 +4744,7 @@ export function bootCoop({
     handoffGeneration = generation;
   const preparation = preparePicture({
     initial: initialFocusPending,
+    passive: true,
     origin: initialFocusPending ? document.activeElement : null,
     onPrepared(selection) {
       if (
@@ -4754,7 +4775,12 @@ export function bootCoop({
   });
   if (incomingAutoStart) handoffOpening = trackMissionLibraryOpening({ document });
   void preparation.finally(() => handoffOpening?.dispose());
-  if (initialFocusPending && unclaimedFocus(document.activeElement) && foreground())
+  if (
+    initialFocusPending &&
+    !pictureOperation &&
+    unclaimedFocus(document.activeElement) &&
+    foreground()
+  )
     navigation.focusAvailable();
   initialFocusPending = false;
   frame = requestAnimationFrame(update);

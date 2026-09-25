@@ -1428,6 +1428,32 @@ kbd {
   min-width: 0;
   width: 100%;
 }
+#coop-menu .coop-arena-choice {
+  grid-template-columns: minmax(0, 1fr);
+  max-width: 480px;
+}
+#coop-menu .optional-setup {
+  margin-top: 14px;
+  border: 1px solid var(--fk-control-line);
+  background: var(--fk-panel);
+}
+#coop-menu .optional-setup > summary {
+  box-sizing: border-box;
+  min-height: 48px;
+  padding: 12px 14px;
+  cursor: pointer;
+  color: var(--fk-text);
+  font-size: var(--fk-text-body);
+}
+#coop-menu .optional-setup[open] > summary {
+  border-bottom: 1px solid var(--fk-control-line);
+}
+#coop-menu .optional-setup > :not(summary) {
+  margin-inline: 14px;
+}
+#coop-menu .optional-setup > .pack-picker {
+  margin-block: 0 14px;
+}
 .coop-launch-grid {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);

@@ -31,6 +31,13 @@ v0.103.0 correction removes that overlay from current Journey rendering while
 retaining the approved body assets, animated rotors, contact-radius ring, shield
 cue and simulation geometry. The public v0.104.0 source inherits that correction.
 
+The v0.112.0 player-craft correction also suppresses separate runtime rotor
+blades for player bodies whose approved sprite already contains readable motor
+hubs. This removes the remaining detached white corner shapes from Solo and Team
+players while preserving enemy rotor recipes, pivots, contact geometry, movement
+and authored body pixels. FPV defeat debris now uses small solid fragments rather
+than four outlined corner boxes.
+
 ### Priority adjustment: compact native player menus
 
 The next player releases address the reviewed Home, Pause, Solo, Versus and Team
@@ -53,6 +60,38 @@ M1–M4 each receive
 their own next-unused version, PR, exact-source qualification, immutable release,
 Pages deployment and public-play check. The earlier UX1 rewards/gallery work then
 resumes, followed by UX3–UX6. New bulk content stays outside this critical path.
+
+The earlier M3 checkpoint was isolated on `codex/couch-quickstart-parity`. Its
+accepted changes are now part of the v0.112.0 PR482 aggregate on
+`codex/couch-character-v113-candidate`. Versus keeps Start and Browse missions visible while actor,
+difficulty and advanced match setup live under Optional setup. Team keeps Arena,
+Start and Browse Team arenas visible while teamwork, difficulty, actors and created
+pack import live under Optional setup. Initial Team picture preparation exposes an
+explicit secondary Cancel without taking first focus. The current FPV revision 78
+picture authority preserves the same approved picture bytes and identities, while
+retained authority now covers revisions 58–77. Revision 78 advances current
+authority and appends revision 77 to the retained set; this quick-start successor
+does not reinterpret those bindings.
+Publication, responsive browser review and physical controller/touch evidence remain
+release gates rather than claims of this source checkpoint.
+
+The successor reconciliation joins the real staged replacement in the broad Couch
+tests instead of assuming synchronous picture or actor preparation. Back from setup
+now proves that the pending replacement aborts while the accepted boards, picture and
+Start action remain usable. The native DOM fixture models a real `summary` disclosure,
+so assigned-controller coverage reaches Optional setup without exposing its controls
+in the quick-start focus order. A clean sparse checkout must include every tracked
+authoring path named by `game/build-config.json`; after those paths were hydrated, the
+repository validator passed. Their earlier absence was a checkout limitation, not a
+missing production asset.
+
+The final v0.112.0 test correction keeps focus on Start while its initial picture
+confirmation is pending, so a held or repeated controller Confirm cannot activate
+the secondary Cancel action. Cancelling a later staged replacement retains the
+already accepted playable boards. The complete affected installed-content file passes
+27/27; syntax, scoped lint, formatting and diff checks pass. The hosted exact-head
+build remains required because automated long suites are waived by the temporary
+release policy and are not claimed as passed.
 
 Completed publication and scoped source evidence:
 
