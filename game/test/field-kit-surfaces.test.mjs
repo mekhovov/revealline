@@ -32,6 +32,7 @@ test('Workshop destinations ship their actual authoring runtime and return paths
     'preview-loop.mjs',
     'png-preview.mjs',
     'ability-labels.mjs',
+    'copy.mjs',
   ])
     assert.ok(files.includes(`authoring/motion-lab/${name}`), name);
   assert.ok(!files.some((name) => /^authoring\/motion-lab\/test-/.test(name)));

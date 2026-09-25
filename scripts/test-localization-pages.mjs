@@ -27,7 +27,11 @@ function descendants(node) {
 const attribute = (node, name) => node.attrs?.find((value) => value.name === name)?.value;
 
 test('generated public pages use complete messages and retain original attribution links', () => {
-  const entries = [...assets, 'game/ui/fonts/field-kit/provenance.json'].map((name) => entry(name));
+  const entries = [
+    ...assets,
+    'game/vendor/LZ-STRING-LICENSE.txt',
+    'game/ui/fonts/field-kit/provenance.json',
+  ].map((name) => entry(name));
   addPublicEntries(entries, {
     entry: 'game/index.html',
     version: '1.2.3',
@@ -60,6 +64,7 @@ test('generated public pages use complete messages and retain original attributi
   for (const license of [
     'game/vendor/PHASER-LICENSE.md',
     'game/vendor/I18NEXT-LICENSE.txt',
+    'game/vendor/LZ-STRING-LICENSE.txt',
     'game/ui/fonts/OFL.txt',
   ])
     assert.ok(credits.includes(`href="./${license}"`));
