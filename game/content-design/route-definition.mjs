@@ -22,9 +22,21 @@ export function createAuthoredJourneyRouteDefinition(
     createWholeErosionReviewCandidates,
     createSpatialNextBatchCandidates,
     createHorizonNextBatchCandidates,
+    createBorderCulturalNextBatchCandidates,
   },
 ) {
   if (!isAuthoredJourneyRouteId(id)) return null;
+  if (id === 'whole-spatial-v12')
+    return freezeDesign({
+      id,
+      label: 'Whole Journey Border cultural routes · balance pending',
+      sessionKey: 'revealline.suspended.journey-whole-spatial.v12',
+      profileKey: 'journey-whole-spatial-v12',
+      source: createBorderCulturalNextBatchCandidates({ artwork: true }),
+      corePackIds: [...WHOLE_JOURNEY_CORE_PACK_IDS],
+      optionalCampaignIds: ['ornament-crossings', 'workshop-routing'],
+      preserveOriginalThemes: true,
+    });
   if (id === 'whole-spatial-v11')
     return freezeDesign({
       id,

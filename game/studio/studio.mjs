@@ -39,6 +39,7 @@ import {
 } from '../content-design/whole-spatial-candidates.mjs';
 import { createSpatialNextBatchCandidates } from '../content-design/spatial-next-batch-candidates.mjs';
 import { createHorizonNextBatchCandidates } from '../content-design/horizon-next-batch-candidates.mjs';
+import { createBorderCulturalNextBatchCandidates } from '../content-design/border-cultural-next-batch-candidates.mjs';
 import { withCampaignPresentation } from '../content-design/campaign-presentation.mjs';
 import { createTeamSignalCandidates } from '../content-design/team-signal-candidates.mjs';
 import { createTeamJourneyCandidates } from '../content-design/team-journey-candidates.mjs';
@@ -983,6 +984,7 @@ $('whole-variety').onclick = guarded(() => {
       'erosion-counterplay-1': createWholeErosionReviewCandidates,
       'cultural-spatial-triptych-1': createSpatialNextBatchCandidates,
       'horizon-cultural-joins-1': createHorizonNextBatchCandidates,
+      'border-cultural-routes-1': createBorderCulturalNextBatchCandidates,
     }[$('whole-variety-edition').value] ?? createWholeVarietyCandidates;
   $('source').value = JSON.stringify(create({ artwork: true }), null, 2);
   sourceChanged = true;
