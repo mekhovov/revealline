@@ -194,36 +194,56 @@
     const scroll = [...(document?.querySelectorAll('*') || [])]
       .filter((node) => node.scrollTop || node.scrollLeft)
       .map((node) => [node, node.scrollTop, node.scrollLeft]);
-    // A reading controller may pin valid ownership before translated text changes.
-    // Its returned finalizer accepts only that same owner after the whole refresh.
-    const finalize = [...beforeListeners]
-      .map((callback) => callback(getLocale()))
-      .filter((callback) => typeof callback === 'function');
+    // Translating content above the viewport can make the browser's scroll
+    // anchoring counteract the positions restored below. Suppress it only for
+    // this synchronous layout update, then restore each authored declaration.
+    const anchors = scroll
+      .filter(([node]) => typeof node.style?.getPropertyValue === 'function')
+      .map(([node]) => [
+        node.style,
+        node.style.getPropertyValue('overflow-anchor'),
+        node.style.getPropertyPriority?.('overflow-anchor') || '',
+      ]);
+    for (const [style] of anchors) style.setProperty('overflow-anchor', 'none', 'important');
     try {
-      if (host.document) host.document.documentElement.lang = getLocale();
-      for (const ref of elements) {
-        const element = ref.deref();
-        if (!element) {
-          elements.delete(ref);
-          continue;
+      // A reading controller may pin valid ownership before translated text changes.
+      // Its returned finalizer accepts only that same owner after the whole refresh.
+      const finalize = [...beforeListeners]
+        .map((callback) => callback(getLocale()))
+        .filter((callback) => typeof callback === 'function');
+      try {
+        if (host.document) host.document.documentElement.lang = getLocale();
+        for (const ref of elements) {
+          const element = ref.deref();
+          if (!element) {
+            elements.delete(ref);
+            continue;
+          }
+          // Retired cards may still be retained by an asynchronous owner. Their
+          // producers must not read a stale library or revive detached controls.
+          if (element.isConnected === false) continue;
+          for (const [field, value] of bindings.get(element) || []) apply(element, field, value);
         }
-        // Retired cards may still be retained by an asynchronous owner. Their
-        // producers must not read a stale library or revive detached controls.
-        if (element.isConnected === false) continue;
-        for (const [field, value] of bindings.get(element) || []) apply(element, field, value);
+        for (const callback of listeners) callback(getLocale());
+      } finally {
+        for (const callback of finalize) callback();
       }
-      for (const callback of listeners) callback(getLocale());
+      for (const select of host.document?.querySelectorAll('[data-language-select]') || [])
+        select.value = getLocale();
+      if (focus?.isConnected && document.activeElement !== focus)
+        focus.focus({ preventScroll: true });
+      if (selection && focus?.setSelectionRange) focus.setSelectionRange(...selection);
+      // Commit translated geometry while anchoring is disabled.
+      document?.documentElement?.getBoundingClientRect?.();
+      for (const [node, top, left] of scroll) {
+        node.scrollTop = top;
+        node.scrollLeft = left;
+      }
     } finally {
-      for (const callback of finalize) callback();
-    }
-    for (const select of host.document?.querySelectorAll('[data-language-select]') || [])
-      select.value = getLocale();
-    if (focus?.isConnected && document.activeElement !== focus)
-      focus.focus({ preventScroll: true });
-    if (selection && focus?.setSelectionRange) focus.setSelectionRange(...selection);
-    for (const [node, top, left] of scroll) {
-      node.scrollTop = top;
-      node.scrollLeft = left;
+      for (const [style, value, priority] of anchors) {
+        if (value) style.setProperty('overflow-anchor', value, priority);
+        else style.removeProperty('overflow-anchor');
+      }
     }
   }
   function setLocale(locale, { persist = true } = {}) {
