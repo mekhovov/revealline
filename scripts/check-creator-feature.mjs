@@ -21,8 +21,6 @@ Runs the complete browser/runtime creator cohort followed by the community servi
   process.exit(0);
 }
 const exactRootTests = new Set([
-  'coop-custom-artwork-host.test.mjs',
-  'couch-installed-release-parity.test.mjs',
   'flight-media-pins.test.mjs',
   'mediabunny-trim-adapter.test.mjs',
   'mission-library-custom-source.test.mjs',

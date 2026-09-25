@@ -2770,16 +2770,13 @@ export function bootCoop({
         installedTeamProgress.clear();
         for (const edition of inventory.editions) {
           installedTeamProgress.set(edition.editionId, edition.progress);
-          const rows = discoveryRows(
-            edition.pack,
-            null,
-            `installed-${edition.editionId}`,
-          ).map((row) =>
-            Object.freeze({
-              ...row,
-              installedEditionId: edition.editionId,
-              sourceLabel: `Installed Team edition · ${edition.editionId.slice(0, 12)}`,
-            }),
+          const rows = discoveryRows(edition.pack, null, `installed-${edition.editionId}`).map(
+            (row) =>
+              Object.freeze({
+                ...row,
+                installedEditionId: edition.editionId,
+                sourceLabel: `Installed Team edition · ${edition.editionId.slice(0, 12)}`,
+              }),
           );
           installedTeamRows.push(...rows);
           const sourceId = `team-installed:${edition.editionId}`;
@@ -4088,11 +4085,21 @@ export function bootCoop({
         (progress) => {
           installedTeamProgress.set(editionId, progress);
           libraryChooser?.refresh();
-          if (!disposed && run === completedRun && generation === epoch && acceptedPicture === picture)
+          if (
+            !disposed &&
+            run === completedRun &&
+            generation === epoch &&
+            acceptedPicture === picture
+          )
             nextStatus('Installed Team progress saved for this exact edition.');
         },
         (error) => {
-          if (!disposed && run === completedRun && generation === epoch && acceptedPicture === picture)
+          if (
+            !disposed &&
+            run === completedRun &&
+            generation === epoch &&
+            acceptedPicture === picture
+          )
             nextStatus(
               `Result kept for this session; installed Team progress was not saved: ${error.message}`,
             );
