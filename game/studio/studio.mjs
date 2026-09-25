@@ -1,3 +1,5 @@
+import { editorMessageError, editorErrorText } from './editor-copy.mjs';
+import { platformExportText } from '../ui/export-copy.mjs';
 import { localizedMessage, localizedText, onLocaleChange, t } from '../i18n/index.mjs';
 import { contentText } from '../i18n/content.mjs';
 import { createStarterProject } from '../content-design/starter.mjs';
@@ -59,7 +61,12 @@ import { createTeamDepotSpatialCandidates } from '../content-design/team-depot-s
 import { compileContentProject } from '../content-design/project.mjs';
 import { prepareContentPreview } from '../content-design/preview.mjs';
 import { paintContentMap } from '../content-design/map-view.mjs';
-import { bindStudioPreviewCopy, studioGameplayText } from './preview-copy.mjs';
+import {
+  bindStudioPreviewCopy,
+  studioGameplayText,
+  studioPreviewLoadingText,
+  studioPreviewFailureText,
+} from './preview-copy.mjs';
 import {
   studioItemCaption,
   studioStructureSummary,
@@ -280,14 +287,14 @@ function guarded(action) {
       await action(event);
     } catch (error) {
       if (error.name === 'AbortError') return;
-      status(error.message, true);
+      status(() => editorErrorText(error), true);
     }
   };
 }
 function showStorage(state) {
   if (state.error)
     status(
-      localizedMessage('tools:studio.storage.sessionOnly', { message: state.error.message }),
+      () => t('tools:studio.storage.sessionOnly', { message: editorErrorText(state.error) }),
       true,
     );
   else if (state.saving) status(localizedMessage('tools:studio.storage.saving'));
@@ -655,10 +662,9 @@ $('source').addEventListener('input', () => {
 $('validate').onclick = guarded(() => inspectSource());
 $('apply').onclick = guarded(async () => {
   if (!inspected || inspected.text !== $('source').value)
-    throw new Error('Inspect the current source before applying.');
+    throw editorMessageError('errors:studio.source.inspectFirst');
   const pending = inspected;
-  if (session.status().saving)
-    throw new Error('Wait for the current checkpoint save before replacing the project.');
+  if (session.status().saving) throw editorMessageError('errors:studio.source.savePending');
   clearTimeout(saveTimer);
   if (pending.head) {
     setSession(pending.head.project, pending.head.revision);
@@ -691,8 +697,7 @@ $('load').onclick = guarded(async () => {
 $('new').onclick = guarded(() => {
   if (!discardSource()) return;
   const id = $('project-id').value.trim();
-  if (id === session.current().id)
-    throw new Error('Choose a new project ID; this action does not reset an existing project.');
+  if (id === session.current().id) throw editorMessageError('errors:studio.source.newId');
   $('source').value = JSON.stringify(createStarterProject(id), null, 2);
   sourceChanged = true;
   inspectSource();
@@ -1007,7 +1012,7 @@ $('whole-variety').onclick = guarded(() => {
 $('import').onchange = guarded(async () => {
   const file = $('import').files[0];
   if (!file || !discardSource()) return;
-  if (file.size > 4 * 1024 * 1024) throw new Error('Project JSON must be no larger than 4 MiB.');
+  if (file.size > 4 * 1024 * 1024) throw editorMessageError('errors:studio.source.importSize');
   const current = inspections.begin();
   let text;
   try {
@@ -1024,30 +1029,29 @@ $('import').onchange = guarded(async () => {
 });
 $('export').onclick = guarded(async () => {
   const result = await exportJSONFile(session.current(), `${session.current().id}-backup.json`);
-  status(result.message);
+  status(() => platformExportText(result));
 });
 $('export-team').onclick = guarded(async () => {
-  if (sourceChanged)
-    throw new Error('Inspect and apply source edits before exporting the selected mission.');
+  if (sourceChanged) throw editorMessageError('errors:studio.source.exportMission');
   const mission = currentMission();
-  if (!mission) throw new Error('Choose a Team mission.');
+  if (!mission) throw editorMessageError('errors:studio.chooseTeam');
   const difficulty = $('difficulty').value;
   const pack = createTeamTestPack(session.current(), mission.id, difficulty);
   const result = await exportJSONFile(pack, `${mission.id}-${difficulty}-team-test.json`);
-  status(
-    `${result.message} Geometry/rules only; Team preview scenery is not authored mission artwork. Your draft is unchanged.`,
-  );
+  status(() => t('tools:studio.export.teamMission', { message: platformExportText(result) }));
 });
 $('save').onclick = guarded(() => session.save());
 $('export-team-campaign').onclick = guarded(async () => {
-  if (sourceChanged)
-    throw new Error('Inspect and apply source edits before exporting a Team campaign.');
+  if (sourceChanged) throw editorMessageError('errors:studio.source.exportCampaign');
   const campaignId = $('team-test-campaign').value;
   const difficulty = $('difficulty').value;
   const pack = createTeamCampaignTestPack(session.current(), campaignId, difficulty);
   const result = await exportJSONFile(pack, `${campaignId}-${difficulty}-team-test.json`);
-  status(
-    `${result.message} ${pack.levels.length} ordered Team test missions; use Next after each clear. Geometry/rules only, not authored mission artwork or official progress. Your draft is unchanged.`,
+  status(() =>
+    t('tools:studio.export.teamCampaign', {
+      message: platformExportText(result),
+      count: pack.levels.length,
+    }),
   );
 });
 for (const action of ['undo', 'redo'])
@@ -1064,7 +1068,7 @@ $('tuning-form').onsubmit = guarded((event) => {
   event.preventDefault();
   if (!discardSource()) return;
   const mission = currentMission();
-  if (!mission) throw new Error('Choose a mission.');
+  if (!mission) throw editorMessageError('errors:studio.chooseMission');
   const candidate = tuneContentMission(session.current(), mission.id, {
     coverage: Number($('target-coverage').value) / 100,
     timeLimitSeconds: Number($('countdown-seconds').value),
@@ -1084,17 +1088,18 @@ $('geometry-form').onsubmit = guarded((event) => {
   if (!discardSource()) return;
   const project = session.current(),
     mission = currentMission();
-  if (!mission) throw new Error('Choose a mission.');
+  if (!mission) throw editorMessageError('errors:studio.chooseMission');
   const map = project.maps.find(
     (m) => m.id === mission.map.id && m.revision === mission.map.revision,
   );
   const [x, y, w, h] = ['x', 'y', 'w', 'h'].map((id) => Number($(id).value)),
     surface = $('surface').value;
-  if (![x, y, w, h].every(Number.isInteger)) throw new Error('Geometry uses whole cells.');
+  if (![x, y, w, h].every(Number.isInteger))
+    throw editorMessageError('errors:studio.geometry.wholeCells');
   let changes;
   if (surface === 'spawn' || surface === 'spawn-team-two') {
     const spawnId = surface === 'spawn-team-two' ? mission.team?.spawnIds[1] : mission.spawnId;
-    if (!spawnId) throw new Error('Choose a Team mission to move its second starting position.');
+    if (!spawnId) throw editorMessageError('errors:studio.geometry.secondSpawn');
     changes = {
       spawns: map.spawns.map((s) => (s.id === spawnId ? { ...s, x: x + 0.5, y: y + 0.5 } : s)),
     };
@@ -1126,15 +1131,14 @@ $('board').onclick = (event) => {
 };
 $('inspect').onclick = guarded(() => {
   const text = $('trail').value.trim();
-  if (text.length > 16000) throw new Error('Trail input exceeds the board budget.');
+  if (text.length > 16000) throw editorMessageError('errors:studio.trail.inputBudget');
   const cells = text
     ? text.split(',').map((cell) => {
-        if (!/^\s*\d+\s*$/.test(cell))
-          throw new Error('Use comma-separated nonnegative cell indexes.');
+        if (!/^\s*\d+\s*$/.test(cell)) throw editorMessageError('errors:studio.trail.indexes');
         return Number(cell);
       })
     : [];
-  if (cells.length > 2592) throw new Error('Too many trail cells.');
+  if (cells.length > 2592) throw editorMessageError('errors:studio.trail.cellBudget');
   inspectBoard(cells);
 });
 $('play').onclick = guarded(() =>
@@ -1148,12 +1152,13 @@ async function launchPreview(source, missionId, difficulty) {
   stopPreviewReadiness();
   $('preview').src = 'about:blank';
   $('preview-panel').hidden = false;
-  $('preview-status').textContent = 'Preparing the exact candidate…';
-  let result;
+  localizedText($('preview-status'), localizedMessage('tools:studio.preview.preparing'));
+  let result, previewProject;
   try {
     // Own one immutable edition across asynchronous media loading and reuse its
     // validated projections; never compile the whole library twice per launch.
     const project = compileContentProject(source);
+    previewProject = project.source;
     const manifest = prepareContentPreview(project, missionId, { difficulty }).manifest;
     const pin = manifest.background;
     const [theme, artwork] = await Promise.all([
@@ -1172,26 +1177,30 @@ async function launchPreview(source, missionId, difficulty) {
     sessionStorage.setItem('revealline.playground.current', JSON.stringify(result.scenario));
   } catch (error) {
     if (ticket === previewRevision && error.name !== 'AbortError')
-      $('preview-status').textContent =
-        `${error.message} Close preview and retry. Your draft is intact.`;
+      localizedText($('preview-status'), () => studioPreviewFailureText(error));
     return;
   }
   const url = new URL(`../?practice=1&revision=studio-${ticket}`, location.href).href;
   $('preview').src = url;
-  $('preview-status').textContent =
-    `Loading ${result.manifest.level.name} · ${difficulty}. Frozen candidate; later edits do not change this run.`;
+  localizedText($('preview-status'), () =>
+    studioPreviewLoadingText(previewProject, missionId, difficulty),
+  );
   $('preview-panel').scrollIntoView({ block: 'start' });
   stopPreviewReadiness = observePreviewReadiness({
     expectedURL: url,
     readDocument: () => $('preview').contentDocument,
     isCurrent: () => ticket === previewRevision,
     notify: (state) => {
-      $('preview-status').textContent =
-        state === 'ready'
-          ? 'Engine ready. Practice only; no campaign awards. Close preview to return to your draft.'
-          : state === 'failed'
-            ? 'Preview could not start. Check its recovery controls, or close and retry. Your draft is intact.'
-            : 'Preview is taking longer than expected. Still checking; you can close and retry. Your draft is intact.';
+      localizedText(
+        $('preview-status'),
+        localizedMessage(
+          state === 'ready'
+            ? 'tools:studio.preview.ready'
+            : state === 'failed'
+              ? 'tools:studio.preview.failed'
+              : 'tools:studio.preview.slow',
+        ),
+      );
     },
   });
 }
@@ -1241,13 +1250,13 @@ async function boot() {
   render();
   if (storageError)
     status(
-      localizedMessage('tools:studio.storage.recovery', { message: storageError.message }),
+      () => t('tools:studio.storage.recovery', { message: editorErrorText(storageError) }),
       true,
     );
   else if (!saved) queueSave();
   document.documentElement.dataset.toolState = 'ready';
 }
 boot().catch((error) => {
-  status(localizedMessage('tools:studio.storage.openFailed', { message: error.message }), true);
+  status(() => t('tools:studio.storage.openFailed', { message: editorErrorText(error) }), true);
   document.documentElement.dataset.toolState = 'failed';
 });

@@ -125,5 +125,18 @@
   "studio.encounter.stableId": "Задай Вартовому сталий ID ворога.",
   "studio.encounter.identity": "Під час заміни зв’язків збережи наявний ID Вартового.",
   "studio.encounter.keeper": "Вартовим зіткнення може стати лише явно обраний вартовий поля.",
-  "studio.encounter.core": "Обери видиму обов’язкову ціль-ядро."
+  "studio.encounter.core": "Обери видиму обов’язкову ціль-ядро.",
+  "studio.source.inspectFirst": "Перед застосуванням перевір поточний вихідний код.",
+  "studio.source.savePending": "Перш ніж замінити проєкт, дочекайся завершення збереження поточної контрольної точки.",
+  "studio.source.newId": "Обери новий ID проєкту; ця дія не скидає наявний проєкт.",
+  "studio.source.importSize": "Розмір JSON проєкту не має перевищувати 4 МіБ.",
+  "studio.source.exportMission": "Перед експортом обраної місії перевір і застосуй зміни вихідного коду.",
+  "studio.source.exportCampaign": "Перед експортом командної кампанії перевір і застосуй зміни вихідного коду.",
+  "studio.chooseTeam": "Обери командну місію.",
+  "studio.chooseMission": "Обери місію.",
+  "studio.geometry.wholeCells": "Геометрія має складатися з цілих клітин.",
+  "studio.geometry.secondSpawn": "Щоб перемістити другу стартову позицію, обери командну місію.",
+  "studio.trail.inputBudget": "Введений слід перевищує обмеження ігрового поля.",
+  "studio.trail.indexes": "Введи невід’ємні індекси клітин, розділені комами.",
+  "studio.trail.cellBudget": "Забагато клітин сліду."
 }

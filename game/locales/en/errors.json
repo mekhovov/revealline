@@ -125,5 +125,18 @@
   "studio.encounter.stableId": "Give the Sentinel a stable actor ID.",
   "studio.encounter.identity": "Keep the existing Sentinel actor ID when replacing links.",
   "studio.encounter.keeper": "Only an explicitly selected field keeper can become the Sentinel.",
-  "studio.encounter.core": "Choose a visible required core objective."
+  "studio.encounter.core": "Choose a visible required core objective.",
+  "studio.source.inspectFirst": "Inspect the current source before applying.",
+  "studio.source.savePending": "Wait for the current checkpoint save before replacing the project.",
+  "studio.source.newId": "Choose a new project ID; this action does not reset an existing project.",
+  "studio.source.importSize": "Project JSON must be no larger than 4 MiB.",
+  "studio.source.exportMission": "Inspect and apply source edits before exporting the selected mission.",
+  "studio.source.exportCampaign": "Inspect and apply source edits before exporting a Team campaign.",
+  "studio.chooseTeam": "Choose a Team mission.",
+  "studio.chooseMission": "Choose a mission.",
+  "studio.geometry.wholeCells": "Geometry uses whole cells.",
+  "studio.geometry.secondSpawn": "Choose a Team mission to move its second starting position.",
+  "studio.trail.inputBudget": "Trail input exceeds the board budget.",
+  "studio.trail.indexes": "Use comma-separated nonnegative cell indexes.",
+  "studio.trail.cellBudget": "Too many trail cells."
 }
