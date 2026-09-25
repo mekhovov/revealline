@@ -26,7 +26,7 @@ docker compose up --build
 curl http://127.0.0.1:8787/health
 ```
 
-Compose starts PostgreSQL 17, applies `migrations/001_initial.sql`, runs separate API and validation
+Compose starts PostgreSQL 17, applies every numbered SQL migration in order, runs separate API and validation
 worker processes, stores resumable tus uploads and content-addressed packages on named disk
 volumes, and installs `ffprobe` for video validation. Its bearer token is explicitly
 development-only. Copy
@@ -37,7 +37,9 @@ When running outside Compose, apply the checked-in migration to a disposable loc
 starting the API:
 
 ```sh
-psql "$COMMUNITY_DATABASE_URL" --set=ON_ERROR_STOP=1 --file=migrations/001_initial.sql
+for file in migrations/*.sql; do
+  psql "$COMMUNITY_DATABASE_URL" --set=ON_ERROR_STOP=1 --file="$file"
+done
 npm start
 npm run worker
 ```
@@ -66,6 +68,34 @@ when the explicitly enabled development-token adapter is running:
   submission, hash, and validator version.
 - `POST /v1/publications/:editionId/unlist` lets its owner or an administrator remove a published
   edition from discovery and downloads without deleting its immutable record.
+
+Administrator sessions can operate the report queue without receiving the reporter's network
+fingerprint:
+
+- `GET /v1/admin/reports?status=open&limit=20&cursor=...` returns the oldest reports first.
+- `POST /v1/admin/reports/:id/resolve` accepts a bounded plain-text `resolution`. Resolution is
+  idempotent, retains the first decision, and writes an audit record.
+- `POST /v1/admin/catalog/:editionId/unlist` remains the separate audited removal decision.
+
+## Shared admission limits
+
+Account/authentication POSTs, reports, submission declarations, and upload-byte reservations use
+fixed PostgreSQL windows. The atomic upsert is shared by every API replica. Rejected requests return
+HTTP 429 with both a `Retry-After` header and `error.retryAfterSeconds`. Subject and idempotency keys
+are stored only as namespaced SHA-256 digests. Each admission removes at most 64 expired rows, so
+cleanup work remains bounded under request load.
+
+Defaults allow 30 account/auth attempts per five minutes for one network address, six reports per
+hour for one network address, 12 submission declarations per hour for one account,
+and 2 GiB of declared upload bytes per account per day. The corresponding variables are documented
+in `.env.example`. A package upload reserves its full declared size before a direct write or tus
+creation. Its immutable edition identity is the idempotency key, so interrupted tus resumes and
+same-edition retries do not spend the quota twice.
+
+`COMMUNITY_TRUST_PROXY_HOPS` is intentionally unset by default. Set it only to the exact count of
+trusted proxies in front of the API; otherwise Fastify uses the direct peer address. These
+application limits bound admitted work across replicas. The edge proxy still needs connection and
+request-rate controls for traffic that never reaches a valid HTTP request.
 
 Published catalog records include a deterministic `collectionId` plus the latest published edition
 identity and version for that owner-and-slug collection. Clients use those immutable identifiers for
@@ -123,8 +153,9 @@ the worker never trusts an uploaded approval flag.
   stream. A multi-API deployment still needs a shared tus locker and an incomplete-upload expiry
   policy; the current in-memory lock is correct for the single API container in Compose.
 - **Repository:** both PostgreSQL and in-memory test implementations use the same submission/job
-  methods. The memory implementation supports deterministic API and worker tests; it is never used
-  by the executable server.
+  and admission methods. Production admission uses PostgreSQL database time, atomic conditional
+  upserts, and transaction advisory locks for idempotent reservations. The memory implementation
+  supports deterministic API and worker tests; it is never used by the executable server.
 
 ## Offline backup and restore
 
@@ -175,15 +206,15 @@ journal-backed retry.
 ## Limits and operational work still required
 
 The default package ceiling is 256 MiB and catalog pages are capped at 50 entries. A reverse proxy
-still needs request timeouts, connection limits, HTTPS, and distributed rate limits. Public deployment also
-requires production Better Auth secrets, mail/account recovery choices, report triage UI, a shared
-tus locker for multiple API replicas, incomplete-upload cleanup, stronger process/container
+still needs request timeouts, connection limits, and HTTPS. Public deployment also requires
+production Better Auth secrets, mail/account recovery choices, a report triage UI over the bounded
+admin API, a shared tus locker for multiple API replicas, incomplete-upload cleanup, stronger process/container
 isolation for media validation, malware policy, metrics, an off-host backup schedule, a real
 PostgreSQL/blob restore rehearsal, and an explicit infrastructure decision. The S3 adapter is tested
 at its byte boundary but is not wired into the executable deployment. No AWS, mail, domain, or
 production restore claim is made here.
 
 Email/password registration currently confirms an address syntactically and creates the session;
-mail delivery, email verification, password reset, account recovery, abuse throttles, and account
-administration need production policy and infrastructure before public launch. The browser account
-form intentionally does not promise those capabilities.
+mail delivery, email verification, password reset, account recovery, and account administration
+need production policy and infrastructure before public launch. The browser account form
+intentionally does not promise those capabilities.

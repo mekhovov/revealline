@@ -1,5 +1,7 @@
 import { FileStore } from '@tus/file-store';
 import { Server } from '@tus/server';
+import { createAdmissionController } from './admission.mjs';
+import { CommunityError } from './domain.mjs';
 import { completeTusUpload } from './upload-transport.mjs';
 
 const fail = (status_code, body) => {
@@ -11,6 +13,37 @@ const requestHeaders = (request) => {
   return request.headers ?? {};
 };
 
+const decodeCanonicalBase64 = (value) => {
+  if (!/^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/u.test(value))
+    throw new Error('non-canonical base64');
+  const bytes = Buffer.from(value, 'base64');
+  if (bytes.toString('base64') !== value) throw new Error('non-canonical base64');
+  return new TextDecoder('utf-8', { fatal: true }).decode(bytes);
+};
+
+const parseMetadataHeader = (header) => {
+  if (typeof header !== 'string' || Buffer.byteLength(header) > 8 * 1024)
+    throw new CommunityError(
+      400,
+      'invalid_request',
+      'Tus upload metadata is missing or too large.',
+    );
+  const metadata = {};
+  for (const item of header.split(',')) {
+    const [key, encoded, extra] = item.trim().split(' ');
+    if (extra !== undefined || !/^[A-Za-z0-9_-]{1,64}$/u.test(key) || !encoded)
+      throw new CommunityError(400, 'invalid_request', 'Tus upload metadata is invalid.');
+    if (Object.hasOwn(metadata, key))
+      throw new CommunityError(400, 'invalid_request', 'Tus upload metadata is invalid.');
+    try {
+      metadata[key] = decodeCanonicalBase64(encoded);
+    } catch {
+      throw new CommunityError(400, 'invalid_request', 'Tus upload metadata is invalid.');
+    }
+  }
+  return metadata;
+};
+
 export function createCommunityTusServer({
   directory,
   endpoint = '/v1/uploads',
@@ -18,8 +51,12 @@ export function createCommunityTusServer({
   repository,
   blobStore,
   maxPackageBytes,
+  admission = null,
+  admissionPolicies,
 }) {
   const datastore = new FileStore({ directory });
+  const admissionBoundary =
+    admission ?? createAdmissionController({ repository, policies: admissionPolicies });
   const authenticate = async (request) => {
     try {
       const identity = await authenticator.authenticate({ headers: requestHeaders(request) });
@@ -82,7 +119,34 @@ export function createCommunityTusServer({
       return {};
     },
   });
-  return { server, datastore, endpoint };
+  const admitCreate = async (request) => {
+    const identity = await authenticator.authenticate(request);
+    if (!identity?.subject)
+      throw new CommunityError(401, 'authentication_required', 'Authentication required.');
+    const metadata = parseMetadataHeader(request.headers['upload-metadata']);
+    const submission = await repository.getOwnerSubmission(metadata.submissionId, identity.subject);
+    if (!submission) throw new CommunityError(404, 'not_found', 'Submission not found.');
+    const uploadLength = Number(request.headers['upload-length']);
+    if (
+      submission.status !== 'draft' ||
+      metadata.editionId !== submission.editionId ||
+      metadata.packageSha256 !== submission.packageSha256 ||
+      metadata.packageSize !== String(submission.declaredSize) ||
+      uploadLength !== submission.declaredSize
+    )
+      throw new CommunityError(
+        422,
+        'upload_identity_changed',
+        'Upload metadata differs from the immutable submission.',
+      );
+    await admissionBoundary.admit({
+      action: 'uploadBytes',
+      subject: identity.subject,
+      cost: submission.declaredSize,
+      idempotencyKey: submission.editionId,
+    });
+  };
+  return { server, datastore, endpoint, admitCreate };
 }
 
 export function mountCommunityTus(app, tus) {
@@ -90,6 +154,7 @@ export function mountCommunityTus(app, tus) {
     done(null),
   );
   const handle = async (request, reply) => {
+    if (request.method === 'POST') await tus.admitCreate(request);
     reply.hijack();
     await tus.server.handle(request.raw, reply.raw);
   };
