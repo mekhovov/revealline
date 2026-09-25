@@ -1,3 +1,4 @@
+import { t } from '../i18n/index.mjs';
 import { PICKUP_COLORS, drawPickupIcon } from './classic-view.mjs';
 
 const finitePoint = (value) => Number.isFinite(value?.x) && Number.isFinite(value?.y);
@@ -129,16 +130,16 @@ export function drawEventFeedback(
   if (lineHit) return;
   const label = pickup
     ? {
-        'extra-life': event.gain === 0 ? 'LIFE FULL' : '+1 LIFE',
-        'player-speed': 'SPEED +25%',
-        'enemy-slow': 'ENEMIES SLOW',
-        'enemy-freeze': 'ENEMIES FROZEN',
+        'extra-life': event.gain === 0 ? t("interface:lifeFull") : '+1 LIFE',
+        'player-speed': t("interface:speed25"),
+        'enemy-slow': t("interface:enemiesSlow2"),
+        'enemy-freeze': t("interface:enemiesFrozen2"),
       }[event.kind]
     : failed
-      ? `${themeId === 'fpv' ? 'CRAFT LOST' : themeId === 'coupa' ? 'LINK LOST' : 'LIFE LOST'} · -1 LIFE`
+      ? t("gameplay:1Life", { value1: themeId === 'fpv' ? t("interface:craftLost") : themeId === 'coupa' ? t("interface:linkLost") : t("interface:lifeLost") })
       : event.type === 'shield.absorbed'
-        ? 'SHIELD USED'
-        : 'READY';
+        ? t("interface:shieldUsed")
+        : t("interface:ready2");
   const textWidth = Math.min(width - 16, label.length * 8.4 * unit + 12 * unit),
     x = Math.max(8, Math.min(width - textWidth - 8, event.x * 16 - textWidth / 2)),
     y = Math.max(18 * unit, Math.min(height - 18 * unit, event.y * 16 - 24 * unit));
@@ -172,6 +173,6 @@ export function drawRecoveryCue(
   ctx.fillStyle = '#0c1423';
   ctx.fillRect(width / 2 - 106 * unit, 18 * unit, 212 * unit, 26 * unit);
   ctx.fillStyle = palette.accent;
-  ctx.fillText(`RECOVERY ${seconds.toFixed(1)}s`, width / 2, 21 * unit);
+  ctx.fillText(t("gameplay:recoveryS", { value1: seconds.toFixed(1) }), width / 2, 21 * unit);
   ctx.restore();
 }

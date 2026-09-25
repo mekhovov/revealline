@@ -1,3 +1,4 @@
+import { t, localizedText } from '../i18n/index.mjs';
 import { createOperationStatus } from './operation-status.mjs';
 
 /** Standalone read-only controls; the injected reader exposes no write/restore operation. */
@@ -54,7 +55,7 @@ export function attachProfileRecoveryView({
     originals = [];
     $('original').replaceChildren();
     $('original').value = '';
-    $('original-summary').textContent = '';
+    localizedText($('original-summary'), () =>'');
   }
   function refresh() {
     $('find').disabled = !!active || closed;
@@ -82,7 +83,7 @@ export function attachProfileRecoveryView({
     };
     active = operation;
     operation.lease = presenter.begin({
-      message: 'Checking stored profile data…',
+      message: t("interface:checkingStoredProfileData"),
       isCurrent: () => !closed && active === operation,
     });
     if (clearRaw) clearDownload();
@@ -130,7 +131,7 @@ export function attachProfileRecoveryView({
     if (!active) return;
     if (doc.hidden || doc.hasFocus?.() === false) active.returnFocusAllowed = false;
     active.controller.abort();
-    status('Check cancelled. Stored profiles are unchanged.', 'cancelled');
+    status(t("interface:checkCancelledStoredProfilesAreUnchanged"), 'cancelled');
   }
   function showReview(value) {
     const fields = [];
@@ -143,18 +144,18 @@ export function attachProfileRecoveryView({
     fields.push(
       `Saved flight: ${value.saved.status.replaceAll('-', ' ')}. Flight inspection is unavailable here.`,
     );
-    fields.push('Media and original availability have not been inspected.');
+    fields.push(t("interface:mediaAndOriginalAvailabilityHaveNotBeenInspected"));
     if (value.recoveryPending)
-      fields.push('Pending recovery data is preserved. This screen cannot repair it.');
+      fields.push(t("interface:pendingRecoveryDataIsPreservedThisScreenCannotRepairIt"));
     for (const issue of value.diagnostics) fields.push(`${issue.component}: ${issue.message}`);
-    $('summary').textContent = fields.join('\n');
+    localizedText($('summary'), () =>fields.join('\n'));
   }
   $('find').onclick = () =>
     task(
       async (signal, current) => {
         review = null;
         clearOriginals();
-        phase('Finding exact profile channels…');
+        phase(t("interface:findingExactProfileChannels"));
         const result = await reader.discover({ signal });
         if (!current()) return;
         channels = result.channels;
@@ -162,15 +163,15 @@ export function attachProfileRecoveryView({
         for (const [index, channel] of channels.entries()) {
           const option = doc.createElement('option');
           option.value = String(index);
-          option.textContent = `${channel.version ?? 'Development'} · ${channel.id}${channel.support === 'protected-unknown' ? ' · unverified channel' : ''}`;
+          localizedText(option, () =>`${channel.version ?? t("interface:development")} · ${channel.id}${channel.support === 'protected-unknown' ? ' · unverified channel' : ''}`);
           $('channel').append(option);
         }
         $('channel').value = channels.length ? '0' : '';
-        $('summary').textContent = result.diagnostics.map((item) => item.message).join('\n');
+        localizedText($('summary'), () =>result.diagnostics.map((item) => item.message).join('\n'));
         status(
           channels.length
             ? `${channels.length} exact channels found. Choose one and review its stored values.`
-            : 'No supported profile channels found on this origin.',
+            : t("interface:noSupportedProfileChannelsFoundOnThisOrigin"),
         );
       },
       { origin: $('find') },
@@ -180,8 +181,8 @@ export function attachProfileRecoveryView({
     review = null;
     clearOriginals();
     clearDownload();
-    $('summary').textContent = '';
-    status('Choose Review to inspect this channel.');
+    localizedText($('summary'), () =>'');
+    status(t("interface:chooseReviewToInspectThisChannel"));
     refresh();
   };
   $('review').onclick = () =>
@@ -190,14 +191,14 @@ export function attachProfileRecoveryView({
         review = null;
         clearOriginals();
         const selected = channels[Number($('channel').value)];
-        if (!selected) throw new Error('Choose an exact profile channel.');
-        phase('Reviewing stored values…');
+        if (!selected) throw new Error(t("interface:chooseAnExactProfileChannel"));
+        phase(t("interface:reviewingStoredValues"));
         const result = await reader.review(selected, { signal });
         if (!current()) return;
         review = result;
         showReview(result);
         status(
-          'Stored values reviewed. Profile structure is checked separately from media and historical execution.',
+          t("interface:storedValuesReviewedProfileStructureIsCheckedSeparatelyFromMedia"),
         );
       },
       { origin: $('review') },
@@ -205,7 +206,7 @@ export function attachProfileRecoveryView({
   $('export').onclick = () =>
     task(
       async (signal, current) => {
-        phase('Rechecking the reviewed profile before export…');
+        phase(t("interface:recheckingTheReviewedProfileBeforeExport"));
         const result = await reader.exportStoredData(review, { signal });
         if (!current()) return;
         url = createURL(result.blob);
@@ -215,14 +216,14 @@ export function attachProfileRecoveryView({
         }
         $('download').href = url;
         $('download').download = result.filename;
-        $('download').textContent = result.completeStoredSnapshot
-          ? 'Download stored profile snapshot'
-          : 'Download incomplete diagnostic';
+        localizedText($('download'), () =>result.completeStoredSnapshot
+          ? t("interface:downloadStoredProfileSnapshot")
+          : t("interface:downloadIncompleteDiagnostic"));
         $('download').hidden = false;
         status(
           result.completeStoredSnapshot
-            ? 'Snapshot prepared. It contains stored profile data, without original media or verified flight recovery.'
-            : 'Incomplete diagnostic prepared. Unsupported components remain in storage and are not included as values.',
+            ? t("interface:snapshotPreparedItContainsStoredProfileDataWithoutOriginalMedia")
+            : t("interface:incompleteDiagnosticPreparedUnsupportedComponentsRemainInStorageAndAre"),
         );
         if (
           !doc.hidden &&
@@ -237,27 +238,26 @@ export function attachProfileRecoveryView({
     const selected = choice();
     for (const [index, option] of Array.from($('original').children).entries()) {
       const item = originals[index];
-      option.textContent = `${item.asset.id} · ${
+      localizedText(option, () =>`${item.asset.id} · ${
         verified && item === selected
           ? 'verified during review'
           : item.availability.replaceAll('-', ' ')
-      }`;
+      }`);
     }
     if (!selected) {
-      $('original-summary').textContent = '';
+      localizedText($('original-summary'), () =>'');
       return;
     }
     const { asset } = selected;
-    $('original-summary').textContent =
-      `${asset.id} · ${asset.width} × ${asset.height} · ${asset.bytes} bytes\n` +
+    localizedText($('original-summary'), () =>`${asset.id} · ${asset.width} × ${asset.height} · ${asset.bytes} bytes\n` +
       `SHA-256: ${asset.sha256}\n${selected.references.length} stored presentation references. ` +
       (verified
-        ? 'Image bytes and dimensions verified during this review. File preparation rechecks them.'
+        ? t("interface:imageBytesAndDimensionsVerifiedDuringThisReviewFilePreparation")
         : selected.availability === 'available-unverified'
-          ? 'Bytes are available but have not been verified.'
+          ? t("interface:bytesAreAvailableButHaveNotBeenVerified")
           : selected.availability === 'missing'
-            ? 'The original file is missing; verification is unavailable.'
-            : 'Stored length differs; verification is unavailable.');
+            ? t("interface:theOriginalFileIsMissingVerificationIsUnavailable")
+            : t("interface:storedLengthDiffersVerificationIsUnavailable")));
   }
   $('originals-review').onclick = () =>
     task(
@@ -265,16 +265,16 @@ export function attachProfileRecoveryView({
         clearOriginals();
         if (!review || !supported.has(review.channel.id))
           throw new Error(
-            'No trusted catalog is packaged for this exact channel. Raw diagnostics remain available.',
+            t("interface:noTrustedCatalogIsPackagedForThisExactChannelRaw"),
           );
-        phase('Checking shared original metadata and exact channel identity…');
+        phase(t("interface:checkingSharedOriginalMetadataAndExactChannelIdentity"));
         const result = await reader.reviewOriginals(review, { signal });
         if (!current()) return;
         originals = result.originals;
         for (const [index, item] of originals.entries()) {
           const option = doc.createElement('option');
           option.value = String(index);
-          option.textContent = `${item.asset.id} · ${item.availability.replaceAll('-', ' ')}`;
+          localizedText(option, () =>`${item.asset.id} · ${item.availability.replaceAll('-', ' ')}`);
           $('original').append(option);
         }
         $('original').value = originals.length ? '0' : '';
@@ -282,7 +282,7 @@ export function attachProfileRecoveryView({
         status(
           `${originals.length} shared originals listed. These are not proof of pictures earned by this profile.` +
             (originals.length === 0
-              ? ' Built-in pictures come from game files and are not listed here. Only uploaded or restored shared originals appear. An empty list does not mean your earned pictures were lost.'
+              ? (" " + t("interface:builtInPicturesComeFromGameFilesAndAreNot") + "")
               : '') +
             (result.diagnostics.length
               ? ` ${result.diagnostics.length} stored media availability issues remain.`
@@ -303,14 +303,14 @@ export function attachProfileRecoveryView({
         clearVerification();
         const selected = choice();
         if (selected?.availability !== 'available-unverified')
-          throw new Error('Choose an available original file.');
-        phase('Verifying image: decoding dimensions, hashing bytes and rechecking identity…');
+          throw new Error(t("interface:chooseAnAvailableOriginalFile"));
+        phase(t("interface:verifyingImageDecodingDimensionsHashingBytesAndRecheckingIdentity"));
         const result = await reader.verifyOriginal(selected, { signal });
         if (!current()) return;
         verified = result;
         showOriginal();
         status(
-          'Selected image verified. Prepare either file, then activate its download link. This is not a complete backup or earned-picture proof.',
+          t("interface:selectedImageVerifiedPrepareEitherFileThenActivateItsDownload"),
         );
       },
       { clearRaw: false, origin: $('original-verify') },
@@ -319,8 +319,8 @@ export function attachProfileRecoveryView({
     return task(
       async (signal, current) => {
         clearOriginalDownload(id);
-        if (!verified) throw new Error('Verify the selected original before preparing a file.');
-        phase('Rechecking and verifying fresh selected bytes before preparing this file…');
+        if (!verified) throw new Error(t("interface:verifyTheSelectedOriginalBeforePreparingAFile"));
+        phase(t("interface:recheckingAndVerifyingFreshSelectedBytesBeforePreparingThisFile"));
         const result = await reader.exportOriginalComponent(verified, { component, signal });
         if (!current()) return;
         const next = createURL(result.blob);
@@ -333,7 +333,7 @@ export function attachProfileRecoveryView({
         $(id).download = result.filename;
         $(id).hidden = false;
         status(
-          'File prepared. Activate its download link to save it; browser download completion is not checked here.',
+          t("interface:filePreparedActivateItsDownloadLinkToSaveItBrowser"),
         );
         if (
           !doc.hidden &&
@@ -366,7 +366,7 @@ export function attachProfileRecoveryView({
     },
   };
   $('back').onclick = async () => {
-    const lease = presenter.begin({ message: 'Closing recovery and releasing its reads…' });
+    const lease = presenter.begin({ message: t("interface:closingRecoveryAndReleasingItsReads") });
     try {
       await view.close();
       await onBack();
@@ -377,10 +377,10 @@ export function attachProfileRecoveryView({
       });
     }
   };
-  status('Choose Find profiles to inspect stored channel names.');
-  $('catalog-status').textContent = catalogIssue
+  status(t("interface:chooseFindProfilesToInspectStoredChannelNames"));
+  localizedText($('catalog-status'), () =>catalogIssue
     ? `Original verification unavailable: ${catalogIssue} Raw profile diagnostics remain available.`
-    : `Original verification supports ${supportedChannels.join(', ') || 'no channels in this release'}. Other channels retain raw diagnostics only.`;
+    : `Original verification supports ${supportedChannels.join(', ') || 'no channels in this release'}. Other channels retain raw diagnostics only.`);
   refresh();
   return view;
 }

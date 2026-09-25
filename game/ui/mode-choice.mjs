@@ -1,13 +1,14 @@
+import { t, localizedText } from '../i18n/index.mjs';
 const MODES = Object.freeze([
-  ['solo', 'Solo', 'One player'],
-  ['versus', 'Versus', 'Two rival boards'],
-  ['team', 'Team', 'One shared arena'],
+  ['solo', t("interface:solo2"), t("interface:onePlayer")],
+  ['versus', t("interface:versus2"), t("interface:twoRivalBoards")],
+  ['team', t("interface:team"), t("interface:oneSharedArena")],
 ]);
 
 /** Shared presentation only. Existing anchors keep their hrefs and listeners. */
 export function mountModeChoices({ root, current, actions, separateTeam = false }) {
   if (!root || !MODES.some(([id]) => id === current))
-    throw new Error('A game mode and its visible navigation container are required.');
+    throw new Error(t("interface:aGameModeAndItsVisibleNavigationContainerAreRequired"));
   const document = root.ownerDocument;
   for (const [id] of MODES) {
     if (id !== current && actions?.[id]?.tagName !== 'A')
@@ -17,16 +18,16 @@ export function mountModeChoices({ root, current, actions, separateTeam = false 
     const selected = id === current;
     const element = selected ? document.createElement('span') : actions[id];
     const label = document.createElement('strong');
-    label.textContent = title;
+    localizedText(label, () =>title);
     const description = document.createElement('span');
     description.className = 'game-mode-description';
-    description.textContent = separateTeam && id === 'team' ? 'Separate Team arenas' : detail;
+    localizedText(description, () =>separateTeam && id === 'team' ? t("interface:separateTeamArenas") : detail);
     element.replaceChildren(label, description);
     element.dataset.gameMode = id;
     if (selected) element.setAttribute('aria-current', 'page');
     return element;
   });
   root.classList.add('game-mode-choice');
-  root.setAttribute('aria-label', 'Game mode');
+  root.setAttribute('aria-label', t("interface:gameMode"));
   root.replaceChildren(...choices);
 }

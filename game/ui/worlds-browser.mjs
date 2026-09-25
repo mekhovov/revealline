@@ -1,10 +1,11 @@
+import { t } from '../i18n/index.mjs';
 import { required } from '../data-json.mjs';
 
 export const WORLD_THEMES = Object.freeze([
-  ['fpv', 'FPV Front'],
-  ['ukraine', 'Ukraine Atlas'],
+  ['fpv', t("interface:fpvFront")],
+  ['ukraine', t("interface:ukraineAtlas")],
   ['retro', '1994 Forever'],
-  ['coupa', 'Spend Network'],
+  ['coupa', t("interface:spendNetwork")],
 ]);
 const legacyModes = new Map([
   ['original-fpv-pressure', 'Arcade'],
@@ -28,16 +29,16 @@ export function browseWorlds(
   entries,
   { theme = '', mode = '', page = 0, size = 4, pinned = null } = {},
 ) {
-  required(Array.isArray(entries) && entries.length <= 60, 'Too many world choices.');
-  required([2, 4].includes(size), 'World pages contain two or four cards.');
-  required(Number.isSafeInteger(page) && page >= 0, 'Invalid world page.');
+  required(Array.isArray(entries) && entries.length <= 60, t("interface:tooManyWorldChoices"));
+  required([2, 4].includes(size), t("interface:worldPagesContainTwoOrFourCards"));
+  required(Number.isSafeInteger(page) && page >= 0, t("interface:invalidWorldPage"));
   required(
     typeof theme === 'string' && ['', 'Arcade', 'Tactical', 'Other'].includes(mode),
-    'Invalid world filter.',
+    t("interface:invalidWorldFilter"),
   );
   const keys = new Set();
   for (const entry of entries) {
-    required(typeof entry.key === 'string' && !keys.has(entry.key), 'Duplicate world choice.');
+    required(typeof entry.key === 'string' && !keys.has(entry.key), t("interface:duplicateWorldChoice"));
     keys.add(entry.key);
   }
   const held = entries.find((entry) => entry.key === pinned);

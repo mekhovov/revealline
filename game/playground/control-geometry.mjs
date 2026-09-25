@@ -1,3 +1,4 @@
+import { t } from '../i18n/index.mjs';
 const TARGETS = [
   ['move-up', '[data-move="up"]'],
   ['move-left', '[data-move="left"]'],
@@ -77,7 +78,7 @@ export function captureControlGeometry({
 }) {
   const arenaElement = doc?.querySelector('#arena-shell');
   if (!arenaElement || !view)
-    throw new Error('Load a solo practice preview before capturing control geometry.');
+    throw new Error(t("tools:loadASoloPracticePreviewBeforeCapturingControlGeometry"));
   const viewport = {
     width: finite(view.innerWidth),
     height: finite(view.innerHeight),
@@ -181,7 +182,7 @@ export function captureControlGeometry({
   return {
     format: 'revealline-control-geometry.v1',
     capturedAt: text(capturedAt, 40),
-    units: 'Child viewport CSS pixels; outer preview display scale is reported separately.',
+    units: t("tools:childViewportCssPixelsOuterPreviewDisplayScaleIsReported"),
     requested: { width: finite(requested?.width), height: finite(requested?.height) },
     displayScale: finite(displayScale),
     viewport,
@@ -213,11 +214,11 @@ export function captureControlGeometry({
           : null,
     },
     limits: [
-      'Snapshot only. Capture again after resizing, scrolling or preview activity.',
-      'Visibility reflects layout and this element’s computed style; it does not prove absence of covering overlays, ancestor opacity, clipping or pointer occlusion.',
-      'Intersections compare visible border boxes, including offscreen boxes. Edge touching has zero area and is not an overlap.',
-      'Content scroll/client dimensions are approximate overflow indicators, not glyph-level clipping or readability tests.',
-      'Pointer media and viewport data describe this browser. Resizing alone does not emulate coarse input, hardware, safe areas or physical touch comfort.',
+      t("tools:snapshotOnlyCaptureAgainAfterResizingScrollingOrPreviewActivity"),
+      t("tools:visibilityReflectsLayoutAndThisElementSComputedStyleIt"),
+      t("tools:intersectionsCompareVisibleBorderBoxesIncludingOffscreenBoxesEdgeTouching"),
+      t("tools:contentScrollClientDimensionsAreApproximateOverflowIndicatorsNotGlyph"),
+      t("tools:pointerMediaAndViewportDataDescribeThisBrowserResizingAlone"),
     ],
   };
 }

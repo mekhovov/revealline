@@ -1,3 +1,4 @@
+import { t, localizedText, localizedMessage } from '../../game/i18n/index.mjs';
 import { TEAM_OUTCOME_SLOTS } from '../../game/couch/coop-outcome-presentation.mjs';
 import { TEAM_ENEMY_SLOTS } from '../../game/couch/coop-enemy-slots.mjs';
 import { TEAM_PILOT_SLOTS } from '../../game/couch/coop-pilot-slots.mjs';
@@ -27,7 +28,7 @@ const yardRoles = ['enemy.relay-sentinel', 'terrain.wall'];
 const objectiveSlots = [...TEAM_ANCHOR_SLOTS, ...TEAM_CORE_SLOTS];
 const element = (tag, value = '', className = '') => {
   const node = document.createElement(tag);
-  node.textContent = value;
+  localizedText(node, () =>value);
   node.className = className;
   return node;
 };
@@ -44,7 +45,7 @@ const requireImage = (assets, id) => {
 export function teamObjectivePreviewNote(slotId, run) {
   if (!objectiveSlots.includes(slotId)) return null;
   if (run.status === 'won')
-    return 'Completed arena shows the revealed picture. Objective artwork is hidden; use Native size to inspect this asset.';
+    return t("tools:completedArenaShowsTheRevealedPictureObjectiveArtworkIsHidden");
   const state = slotId.split('.').at(-1);
   const count = TEAM_ANCHOR_SLOTS.includes(slotId)
     ? (run.strongholds || [])
@@ -53,12 +54,12 @@ export function teamObjectivePreviewNote(slotId, run) {
     : (run.strongholds || []).filter((item) => teamCoreState(item) === state).length;
   return count
     ? `Showing ${count} ${state} ${TEAM_ANCHOR_SLOTS.includes(slotId) ? (count === 1 ? 'anchor' : 'anchors') : count === 1 ? 'core' : 'cores'} with the selected treatment. Functional status cues and labels stay game-owned.`
-    : 'The selected objective state is inactive in this scene. Choose its matching Team scene or Native size to inspect it.';
+    : t("tools:theSelectedObjectiveStateIsInactiveInThisSceneChoose");
 }
 export function teamEnemyPreviewNote(slotId, painter, run) {
   if (!TEAM_ENEMY_SLOTS.includes(slotId)) return null;
   if (run.status === 'won')
-    return 'Completed Team artwork hides enemy bodies. Choose an active Team scene or Native size.';
+    return t("tools:completedTeamArtworkHidesEnemyBodiesChooseAnActiveTeam");
   const frames = run.enemies
       .filter((e) => e.active !== false)
       .map((e) => painter.actorFrame('enemy', e.id))
@@ -74,7 +75,7 @@ export function teamEnemyPreviewNote(slotId, painter, run) {
 export function teamPilotPreviewNote(slotId, painter, run) {
   if (!TEAM_PILOT_SLOTS.includes(slotId)) return null;
   if (run.status === 'won')
-    return 'Completed arena hides player bodies behind the revealed picture. Inspect Native size.';
+    return t("tools:completedArenaHidesPlayerBodiesBehindTheRevealedPictureInspect");
   const seat = Number(slotId.split('.')[2].slice(1)) - 1,
     frame = painter.actorFrame('pilot', seat);
   if (frame?.sourceSlot === slotId)
@@ -85,7 +86,7 @@ export function teamPilotPreviewNote(slotId, painter, run) {
 }
 export function teamRescuePreviewNote(run) {
   if (run.status === 'won')
-    return 'Completed arena hides rescue and recovery decoration behind the revealed picture.';
+    return t("tools:completedArenaHidesRescueAndRecoveryDecorationBehindTheRevealed");
   const rescues = run.players
     .map((player) => ({ player, rescue: teamRescueProgress(run, player) }))
     .filter((row) => row.rescue);
@@ -99,12 +100,12 @@ export function teamRescuePreviewNote(run) {
             `Player ${player.id + 1} rescuing player ${rescue.target + 1}: ${Math.floor(rescue.progress * 100)}%`,
         )
         .join(' · ')
-    : 'No active contact rescue';
-  return `${progress}. ${recovering.length ? `Recovery grace: player ${recovering.join(', ')}` : 'No recovery grace'}. Decoration is underneath actor bodies and fixed identity cues. Choose Relay Yard rescue/recovered scenes for either player; Paused and Reduced effects hold the real state, Play preview advances actual timers.`;
+    : t("tools:noActiveContactRescue");
+  return `${progress}. ${recovering.length ? `Recovery grace: player ${recovering.join(', ')}` : t("tools:noRecoveryGrace")}. Decoration is underneath actor bodies and fixed identity cues. Choose Relay Yard rescue/recovered scenes for either player; Paused and Reduced effects hold the real state, Play preview advances actual timers.`;
 }
 export function teamEmitterPreviewNote(run) {
   if (run.status === 'won')
-    return 'Completed arena hides emitter effects behind the revealed picture.';
+    return t("tools:completedArenaHidesEmitterEffectsBehindTheRevealedPicture");
   const warnings = (run.strongholds || []).filter(
     (hold) => hold.emitter?.phase === 'warning' && Number.isInteger(hold.emitter.cellIndex),
   ).length;
@@ -113,7 +114,7 @@ export function teamEmitterPreviewNote(run) {
 }
 export function teamSupportPreviewNote(run) {
   if (run.status === 'won')
-    return 'Completed arena hides Support effects behind the revealed picture.';
+    return t("tools:completedArenaHidesSupportEffectsBehindTheRevealedPicture");
   const pulses = (run.supportEffects || []).filter((effect) => effect.until > run.time).length;
   const slowed = run.enemies.filter(
     (enemy) => enemy.active !== false && enemy.speedScale < 1 && enemy.slowUntil > run.time,
@@ -159,9 +160,9 @@ function watchWidths(canvases, redraw, own) {
 /** Inspection compatibility is deliberately narrower than a theme publication claim. */
 export function teamPreviewBinding(slotId, resolved, arena) {
   const binding = COOP_PICTURE_BINDINGS.find((row) => row.levelId === arena);
-  if (!binding) throw new Error('Choose a registered Team preview arena.');
+  if (!binding) throw new Error(t("tools:chooseARegisteredTeamPreviewArena"));
   if (resolved.theme.id !== binding.themeId)
-    throw new Error('This edition has no reviewed Team arena binding yet. Choose the FPV theme.');
+    throw new Error(t("tools:thisEditionHasNoReviewedTeamArenaBindingYetChoose"));
   const roles = [
     ...teamRoles,
     ...(arena === 'relay-yard' ? yardRoles : []),
@@ -202,7 +203,7 @@ export function teamPreviewBinding(slotId, resolved, arena) {
     picture.file.height !== 576
   )
     throw new Error(
-      'Team artwork needs its complete 1152×576 frame; cropped or stretched previews are not supported.',
+      t("tools:teamArtworkNeedsItsComplete1152576FrameCroppedOr"),
     );
   return { binding, roles, picture };
 }
@@ -210,10 +211,10 @@ export function teamPreviewBinding(slotId, resolved, arena) {
 /** A familiar ID is insufficient: the inspected arena must match the approved authored bytes. */
 export async function validateTeamPreviewIdentity(binding, level) {
   if (binding.levelId !== level.id || binding.levelRevision !== level.revision)
-    throw new Error('Team preview arena identity or revision does not match its artwork binding.');
+    throw new Error(t("tools:teamPreviewArenaIdentityOrRevisionDoesNotMatchIts"));
   const hash = await hashPresentationBytes(new TextEncoder().encode(canonicalJSON(level)));
   if (hash !== binding.levelSha256)
-    throw new Error('Team preview arena content does not match its approved artwork binding.');
+    throw new Error(t("tools:teamPreviewArenaContentDoesNotMatchItsApprovedArtwork"));
 }
 
 export function createStudioVersusMatch(level, seed = 42) {
@@ -279,7 +280,7 @@ export async function crossModeContextPreview(
       });
       if (fixture.neutralBackdrop && slot.id === binding.picture.slot)
         throw new Error(
-          'The two-relay specimen uses a neutral backdrop. Choose a normal Team scene to inspect arena picture artwork.',
+          t("tools:theTwoRelaySpecimenUsesANeutralBackdropChooseA"),
         );
       options.onStatus?.('checking Team arena identity…', 'preparing');
       // The authored two-relay specimen has no registered picture identity. Its
@@ -337,13 +338,13 @@ export async function crossModeContextPreview(
         emitter,
         rescue,
         note(
-          `Actual Team painter · ${fixture.level.name} · ${fixture.label} · 72 × 36 cells. ${fixture.neutralBackdrop ? 'No arena picture; authored role-state specimen' : `Picture ${pictureAsset.id}@${pictureAsset.revision}`}; inspected collection, not publication approval. Anchor and core artwork use registered slots when present; functional status cues and labels stay game-owned. Support uses registered slots when present; emitter slots apply to Relay Yard; rescue/recovery slots apply to both arenas, with command-earned inspection scenes in Relay Yard.`,
+          `Actual Team painter · ${fixture.level.name} · ${fixture.label} · 72 × 36 cells. ${fixture.neutralBackdrop ? t("tools:noArenaPictureAuthoredRoleStateSpecimen") : `Picture ${pictureAsset.id}@${pictureAsset.revision}`}; inspected collection, not publication approval. Anchor and core artwork use registered slots when present; functional status cues and labels stay game-owned. Support uses registered slots when present; emitter slots apply to Relay Yard; rescue/recovery slots apply to both arenas, with command-earned inspection scenes in Relay Yard.`,
         ),
       );
       if (fixture.neutralBackdrop)
         surface.append(
           note(
-            'Authored two-relay specimen · neutral backdrop. One core is command-earned SECURED; the second relay remains active. This inspects role states, not canonical Relay Yard picture readability.',
+            t("tools:authoredTwoRelaySpecimenNeutralBackdropOneCoreIsCommand"),
           ),
         );
       let lastReduced = true;
@@ -357,11 +358,11 @@ export async function crossModeContextPreview(
           sampledRun = run;
         }
         painter.paint(run, { reduced, picture, previousRun, feedback: fixture.feedback });
-        if (!rescue.hidden) rescue.textContent = teamRescuePreviewNote(run);
-        if (!emitter.hidden) emitter.textContent = teamEmitterPreviewNote(run);
-        if (!support.hidden) support.textContent = teamSupportPreviewNote(run);
+        if (!rescue.hidden) localizedText(rescue, () =>teamRescuePreviewNote(run));
+        if (!emitter.hidden) localizedText(emitter, () =>teamEmitterPreviewNote(run));
+        if (!support.hidden) localizedText(support, () =>teamSupportPreviewNote(run));
         const objectiveNote = teamObjectivePreviewNote(slot.id, run);
-        if (objectiveNote !== null) treatment.textContent = objectiveNote;
+        if (objectiveNote !== null) localizedText(treatment, () =>objectiveNote);
         const players = run.players.map((player, index) => {
           const progress = teamRescueProgress(run, player);
           const rescue = progress
@@ -369,17 +370,16 @@ export async function crossModeContextPreview(
             : player.status;
           return `P${index + 1} ${rescue}`;
         });
-        hud.textContent = `${players.join(' · ')} · ${Math.round(run.coverage * 100)}% · reserves ${run.team.reserves}`;
+        localizedText(hud, () =>`${players.join(' · ')} · ${Math.round(run.coverage * 100)}% · reserves ${run.team.reserves}`);
         if (objectiveNote === null)
-          treatment.textContent =
-            (TEAM_OUTCOME_SLOTS.includes(slot.id)
+          localizedText(treatment, () =>(TEAM_OUTCOME_SLOTS.includes(slot.id)
               ? fixture.feedback.some((record) => record.slot === slot.id)
-                ? 'Actual Team outcome active. Badge and player numbers use the earned event; no extra reward.'
-                : 'Selected Team outcome is inactive. Choose Joint capture or Team reserve recovery to inspect its actual event.'
+                ? t("tools:actualTeamOutcomeActiveBadgeAndPlayerNumbersUseThe")
+                : t("tools:selectedTeamOutcomeIsInactiveChooseJointCaptureOrTeam")
               : null) ??
             teamEnemyPreviewNote(slot.id, painter, run) ??
             teamPilotPreviewNote(slot.id, painter, run) ??
-            playerTreatmentNote(slot.id, canvas.clientWidth || 1152);
+            playerTreatmentNote(slot.id, canvas.clientWidth || 1152));
         treatment.hidden = !treatment.textContent;
       };
       watchWidths([canvas], () => render(0, lastReduced), localOwn);
@@ -387,7 +387,7 @@ export async function crossModeContextPreview(
       return;
     }
 
-    if (options.fieldMode !== 'versus') throw new Error('Unknown field preview mode.');
+    if (options.fieldMode !== 'versus') throw new Error(t("tools:unknownFieldPreviewMode"));
     options.onStatus?.('loading both Versus board fixtures…', 'downloading');
     const owner = options.pictureOwner || options.sourcePicture;
     const context = await services.context(slot.id, owner);
@@ -461,7 +461,7 @@ export async function crossModeContextPreview(
       if (!current()) return;
       lastReduced = reduced;
       for (const { painter, canvas, treatment, run } of boards) {
-        treatment.textContent = playerTreatmentNote(slot.id, Math.max(1, canvas.clientWidth));
+        localizedText(treatment, () =>playerTreatmentNote(slot.id, Math.max(1, canvas.clientWidth)));
         treatment.hidden = !treatment.textContent;
         if (gallery)
           painter.drawGallery(canvas.getContext('2d'), {
@@ -489,12 +489,12 @@ export async function crossModeContextPreview(
       }
     };
     if (slot.group === 'pictures') {
-      const button = element('button', 'Show both picture viewers');
+      const button = element('button', localizedMessage("tools:showBothPictureViewers"));
       button.type = 'button';
       button.dataset.studioHost = 'control';
       button.onclick = () => {
         gallery = !gallery;
-        button.textContent = gallery ? 'Show concealed boards' : 'Show both picture viewers';
+        localizedText(button, () =>gallery ? t("tools:showConcealedBoards") : t("tools:showBothPictureViewers"));
         render(0, true);
       };
       surface.append(button);

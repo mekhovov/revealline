@@ -1,3 +1,4 @@
+import { t } from '../i18n/index.mjs';
 import { attachTouchSteering } from '../ui/touch-steering.mjs';
 import { gamepadCommand } from '../ui/input.mjs';
 import { neutralCommand } from '../multiplayer.mjs';
@@ -50,9 +51,9 @@ export function attachCouchInput({
     !Array.isArray(heldActions) ||
     heldActions.some((kind) => !['action', 'pickup'].includes(kind))
   )
-    throw new TypeError('Held actions must name supported equipment actions.');
+    throw new TypeError(t("interface:heldActionsMustNameSupportedEquipmentActions"));
   const heldEquipment = new Set(heldActions);
-  if (typeof steeringEdges !== 'boolean') throw new TypeError('Steering edges must be boolean.');
+  if (typeof steeringEdges !== 'boolean') throw new TypeError(t("interface:steeringEdgesMustBeBoolean"));
   if (typeof onAcceptedInput !== 'function')
     throw new TypeError('onAcceptedInput must be a function.');
   if (
@@ -64,7 +65,7 @@ export function attachCouchInput({
     new Set(initialSlots.filter((slot) => slot !== null)).size !==
       initialSlots.filter((slot) => slot !== null).length
   )
-    throw new TypeError('Initial controller seats need two unique bounded indexes or null.');
+    throw new TypeError(t("interface:initialControllerSeatsNeedTwoUniqueBoundedIndexesOrNull"));
   let pendingInitialSlots = [...initialSlots];
   const accepted = (player, source) => {
     // Optional display notification: a broken observer cannot reject an input.
@@ -209,7 +210,7 @@ export function attachCouchInput({
       }
   }
   function requirePlayer(player) {
-    if (player !== 0 && player !== 1) throw new TypeError('Player must be 0 or 1.');
+    if (player !== 0 && player !== 1) throw new TypeError(t("interface:playerMustBe0Or1"));
   }
   function clearPlayer(player) {
     requirePlayer(player);
@@ -227,9 +228,9 @@ export function attachCouchInput({
   function restoreDirection(player, direction) {
     requirePlayer(player);
     if (direction !== null && !directions.includes(direction))
-      throw new TypeError('Saved direction must be a cardinal direction or null.');
+      throw new TypeError(t("interface:savedDirectionMustBeACardinalDirectionOrNull"));
     if (destroyed || !continuous())
-      throw new Error('Restoring direction requires active continuous steering.');
+      throw new Error(t("interface:restoringDirectionRequiresActiveContinuousSteering"));
     resetPlayer(player, true);
     players[player].direction = direction;
     sync();

@@ -1,3 +1,4 @@
+import { t } from '../i18n/index.mjs';
 import { canvasTextFonts } from '../text-face.mjs';
 import { presentationEvent, drawEventFeedback, drawRecoveryCue } from './event-feedback.mjs';
 import { geometryForLevel, geometryForRun } from '../core/geometry.mjs';
@@ -101,7 +102,7 @@ const imageLoad = (src) =>
   new Promise((resolve, reject) => {
     const image = new Image();
     image.onload = () => resolve(image);
-    image.onerror = () => reject(new Error('Artwork could not be loaded.'));
+    image.onerror = () => reject(new Error(t("interface:artworkCouldNotBeLoaded")));
     image.src = src;
   });
 
@@ -178,7 +179,7 @@ export class BoardPainter {
         });
       } catch {}
     };
-    if (requested.length) report('preparing', 'Loading craft and scene artwork…');
+    if (requested.length) report('preparing', t("interface:loadingCraftAndSceneArtwork"));
     const settled = await Promise.allSettled(
       requested.map(async ([role, src]) => [role, await imageLoad(src)]),
     );
@@ -190,9 +191,9 @@ export class BoardPainter {
         if (role === 'player') this.image = img;
       }
     this.lookWarning = [
-      !knownBody ? 'The requested body is not registered; a neutral fallback rig is shown.' : '',
+      !knownBody ? t("interface:theRequestedBodyIsNotRegisteredANeutralFallbackRig") : '',
       settled.some((x) => x.status === 'rejected')
-        ? 'Some artwork is unavailable; a clear fallback is shown.'
+        ? t("interface:someArtworkIsUnavailableAClearFallbackIsShown")
         : '',
     ]
       .filter(Boolean)
@@ -201,7 +202,7 @@ export class BoardPainter {
     // A procedural look also completes any status from the look it superseded.
     report(
       settled.some((item) => item.status === 'rejected') ? 'error' : 'ready',
-      this.lookWarning || 'Craft and scene artwork are ready.',
+      this.lookWarning || t("interface:craftAndSceneArtworkAreReady"),
     );
   }
   reportAssets() {
@@ -323,7 +324,7 @@ export class BoardPainter {
       (!['fpv', 'campaign'].includes(actorAppearance?.style) ||
         (actorAppearance.style === 'fpv' && typeof actorAppearance.snapshot?.image !== 'function'))
     )
-      throw new TypeError('Actor appearance requires a supported style and prepared FPV assets.');
+      throw new TypeError(t("interface:actorAppearanceRequiresASupportedStyleAndPreparedFpvAssets"));
     // The host owns and verifies this separate lease. Its canvas, fonts and
     // theme are deliberately ignored: changing actors must not change a world.
     const fpvActors = actorAppearance?.style === 'fpv';
@@ -416,7 +417,7 @@ export class BoardPainter {
       const sprite = role && actorPresentation.image(`player.${role}.${treatment}`);
       const body = fpvActors ? this.presets.characters[set?.classBodies[role]] : this.body;
       if (fpvActors && (!sprite || !body))
-        throw new TypeError('Actor appearance is missing the prepared player role.');
+        throw new TypeError(t("interface:actorAppearanceIsMissingThePreparedPlayerRole"));
       if (sprite) {
         playerImage = sprite.image;
         playerGeometry = sprite.geometry;

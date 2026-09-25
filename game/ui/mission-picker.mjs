@@ -1,3 +1,5 @@
+import { contentText } from '../i18n/content.mjs';
+import { t, localizedText, localizedAttribute, localizedMessage } from '../i18n/index.mjs';
 import { captureOperationFocus } from './operation-focus.mjs';
 import { attachMissionGallery } from './mission-gallery.mjs';
 import { attachChapterFocusClearance } from './chapter-focus-clearance.mjs';
@@ -28,25 +30,25 @@ export function attachMissionPicker({
     const element = doc.createElement(tag);
     if (id) element.id = id;
     if (className) element.className = className;
-    if (text !== undefined) element.textContent = text;
+    if (text !== undefined) localizedText(element, () =>text);
     return element;
   };
   const stage = node('div', 'mission-picker-stage', 'mission-picker-stage'),
     chapters = node('section', 'mission-picker-chapters', 'mission-picker-chapter-section'),
-    title = node('h3', 'mission-picker-title', '', 'Choose a chapter'),
+    title = node('h3', 'mission-picker-title', '', localizedMessage("interface:chooseAChapter")),
     cards = node('div', 'mission-picker-cards', 'mission-picker-cards'),
     older = node('details', 'mission-picker-older', 'mission-picker-older'),
-    olderSummary = node('summary', 'mission-picker-older-summary', '', 'Older chapters'),
+    olderSummary = node('summary', 'mission-picker-older-summary', '', localizedMessage("interface:olderChapters")),
     olderNote = node(
       'p',
       null,
       'mission-picker-older-note',
-      'Earlier First Light editions keep their original rules and progress.',
+      localizedMessage("interface:earlierFirstLightEditionsKeepTheirOriginalRulesAndProgress"),
     ),
     olderCards = node('div', 'mission-picker-older-cards', 'mission-picker-cards'),
     missionArea = node('section', 'mission-picker-missions', 'mission-picker-missions'),
     setup = node('details', 'mission-picker-setup', 'mission-picker-setup'),
-    summary = node('summary', null, '', 'Flight setup'),
+    summary = node('summary', null, '', localizedMessage("interface:flightSetup")),
     fields = node('div', null, 'mission-picker-setup-fields');
   stage.setAttribute('data-course-hide', '');
   chapters.setAttribute('aria-labelledby', title.id);
@@ -55,7 +57,7 @@ export function attachMissionPicker({
   olderSummary.setAttribute('aria-controls', olderCards.id);
   olderCards.setAttribute('role', 'group');
   olderCards.setAttribute('aria-labelledby', olderSummary.id);
-  missionArea.setAttribute('aria-label', 'Missions in this chapter');
+  localizedAttribute(missionArea, "aria-label", () => t("interface:missionsInThisChapter"));
   older.append(olderSummary, olderNote, olderCards);
   chapters.append(title, cards, older);
   missionArea.append(status);
@@ -152,17 +154,17 @@ export function attachMissionPicker({
       const selected = option.value === pack.value,
         currentActivity = option.value.startsWith('campaign:'),
         label = (option.label || option.textContent || option.value || 'Base game').replace(
-          / · (?:installed|install on select)$/u,
+          new RegExp(' · (?:' + t('common:status.installed') + '|' + t('common:status.installOnSelect') + ')$', 'u'),
           '',
         ),
         message =
           disabled && requested === option.value
-            ? 'Opening chapter…'
+            ? t("interface:openingChapter")
             : selected
-              ? 'Current chapter'
-              : 'Choose chapter';
-      if (row.label.textContent !== label) row.label.textContent = label;
-      if (row.state.textContent !== message) row.state.textContent = message;
+              ? t("interface:currentChapter")
+              : t("interface:chooseChapter");
+      if (row.label.textContent !== label) localizedText(contentText(row, 'label'), () =>label);
+      if (row.state.textContent !== message) localizedText(row.state, () =>message);
       row.button.disabled =
         disabled || option.disabled || !!option.parentElement?.disabled || currentActivity;
       setAttribute(row.button, 'aria-pressed', String(selected));
@@ -191,7 +193,7 @@ export function attachMissionPicker({
     }
     older.hidden = archivedOrder.length === 0;
     const olderLabel = `Older chapters (${archivedOrder.length})`;
-    if (olderSummary.textContent !== olderLabel) olderSummary.textContent = olderLabel;
+    if (olderSummary.textContent !== olderLabel) localizedText(olderSummary, () =>olderLabel);
     if (focusOwner && !disabled) {
       const owner = focusOwner;
       focusOwner = null;
