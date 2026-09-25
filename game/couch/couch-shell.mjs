@@ -43,6 +43,7 @@ export function createCouchShell({
   coarse = false,
   onTransition = () => {},
   onNewMatch = () => {},
+  onRetry = () => {},
   getDepartureState = () => null,
   onLeaveRequest = () => {},
   getSoloReturnToken = () => null,
@@ -262,6 +263,10 @@ export function createCouchShell({
   function setup() {
     show(status === 'ready' ? 'setup' : 'confirm', { remember: $('race-focus') });
   }
+  function retry() {
+    if (status !== 'paused') return;
+    onRetry();
+  }
   const foreground = () => !doc.hidden && doc.hasFocus?.() !== false;
   function soloReturnToken() {
     try {
@@ -400,6 +405,7 @@ export function createCouchShell({
     if (!departureCurrent(ticket)) cancelDeparture();
   }
   listen($('race-focus'), 'click', setup);
+  listen($('race-retry'), 'click', retry);
   listen($('race-review'), 'click', () => {
     if (status === 'finished') show('review', { remember: $('race-review') });
   });
@@ -421,6 +427,7 @@ export function createCouchShell({
   });
   for (const [id, kind] of [
     ['race-solo-return', 'solo'],
+    ['race-home', 'solo'],
     ['race-coop', 'team'],
     ['race-library-switch', 'library'],
   ])
@@ -492,6 +499,7 @@ export function createCouchShell({
       $('race-solo-return').setAttribute('href', soloHref);
     const previous = status;
     status = match.status;
+    doc.body.dataset.couchStatus = status;
     if (departure && !departureCurrent(departure)) cancelDeparture();
     equipment = match.runs.map(couchEquipment);
     if (status !== previous) {
@@ -526,6 +534,12 @@ export function createCouchShell({
             : 'Two boards. One race.',
     );
     $('race-review').hidden = status !== 'finished';
+    const paused = status === 'paused';
+    $('race-retry').hidden = !paused;
+    $('race-retry').disabled = !paused || contentBusy;
+    $('race-home').hidden = !paused;
+    $('race-optional-setup').hidden = paused;
+    setText('race-chapters', paused ? 'Missions' : 'Browse missions');
     $('race-pause').disabled = status !== 'running' && screen !== 'review';
     // Do not replace the native click target's content on every flight frame.
     setText('race-pause', screen === 'review' ? 'Results' : 'Pause');

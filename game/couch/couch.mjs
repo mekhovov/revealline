@@ -1420,7 +1420,7 @@ try {
     }
     updateMenu();
   }
-  async function startRace(destination = null, { rulesEdition } = {}) {
+  async function startRace(destination = null, { rulesEdition, focusOrigin = null } = {}) {
     if (
       disposed ||
       contentBusy ||
@@ -1475,7 +1475,9 @@ try {
       // An exact library destination prepares its own picture. A failed unused
       // opener must not gate it; use an enabled, visible action as the focus
       // origin until the new attempt makes Start available again.
-      const start = destination && !contentReady ? $('race-library-switch') : $('race-start'),
+      const start =
+          focusOrigin ||
+          (destination && !contentReady ? $('race-library-switch') : $('race-start')),
         previousRun = match,
         previousGeneration = generation,
         previousController = contentController;
@@ -1932,6 +1934,10 @@ try {
       won = [0, 0];
       prepare();
       contentScope = 'setup';
+    },
+    onRetry: () => {
+      if (match?.status !== 'paused' || disposed) return;
+      void startRace(roundRecipe.entry, { focusOrigin: $('race-retry') });
     },
   });
 
@@ -3197,6 +3203,7 @@ try {
   const menuIds = new Set([
     'race-coop',
     'race-start',
+    'race-retry',
     'race-optional-setup-toggle',
     'race-chapters',
     'race-journey-next',
@@ -3222,6 +3229,8 @@ try {
     'race-data-reading-done',
     'race-data-reading',
     'race-help',
+    'race-home',
+    'race-more-toggle',
     'race-optional-setup-toggle',
     'race-more-home',
     'race-more-about',

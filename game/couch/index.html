@@ -192,6 +192,7 @@
               >Relay Rescue · team up</a
             >
             <button id="race-start" class="race-primary" type="button">Start race</button>
+            <button id="race-retry" type="button" hidden>Retry race</button>
             <button id="race-journey-save-options" type="button" hidden>
               Progress not saved · Save options
             </button>
@@ -231,7 +232,8 @@
             <button id="race-quick-sound" type="button" class="quick-sound" aria-pressed="false">
               Sound: off
             </button>
-            <button id="race-help" type="button">More</button>
+            <button id="race-help" type="button">How to play</button>
+            <a id="race-home" href="../" hidden>Home</a>
             <button id="race-review" type="button" hidden>View both boards</button>
             <a id="race-solo-return" href="../?journey=legacy">Return to solo</a>
             <a id="race-library-switch" href="?journey=whole-spatial-v11">New Journey</a>
@@ -505,14 +507,8 @@
           hidden
           inert
         >
-          <p class="race-kicker">REVEAL LINE / MENU</p>
-          <h1 id="race-help-title">More</h1>
-          <nav class="race-more-destinations" aria-label="More destinations">
-            <a id="race-more-home" href="../">Home</a>
-            <a id="race-more-about" href="../../site/about.html#versions">About &amp; credits</a>
-            <a id="race-release-explorer">Releases</a>
-          </nav>
-          <h2>How to play</h2>
+          <p class="race-kicker">REVEAL LINE / HOW TO PLAY</p>
+          <h1 id="race-help-title">How to play</h1>
           <div id="race-help-unit">
             <div class="reading-toolbar">
               <button id="race-help-read" type="button">Read controls</button>
@@ -558,6 +554,14 @@
               </p>
             </div>
           </div>
+          <details class="race-secondary-details">
+            <summary id="race-more-toggle">More</summary>
+            <nav class="race-more-destinations" aria-label="More destinations">
+              <a id="race-more-home" href="../">Home</a>
+              <a id="race-more-about" href="../../site/about.html#versions">About &amp; credits</a>
+              <a id="race-release-explorer">Releases</a>
+            </nav>
+          </details>
           <button id="race-help-back" type="button">Back</button>
         </section>
         <section

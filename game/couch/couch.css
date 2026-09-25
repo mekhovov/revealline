@@ -172,6 +172,30 @@ body.candidate-journey .race-shell {
   grid-template-columns: 1fr 1fr;
   gap: 4px 18px;
 }
+body[data-couch-status='paused']
+  #race-main
+  > :is(
+    #race-mode-choices,
+    .race-kicker,
+    #race-journey-note,
+    .race-summary,
+    .race-seats,
+    #race-format-note
+  ) {
+  display: none;
+}
+body[data-couch-status='paused'] #race-main {
+  width: min(34rem, 100%);
+}
+body[data-couch-status='paused'] #race-title {
+  margin-top: 0;
+}
+body[data-couch-status='paused'] .race-menu-actions {
+  gap: 8px;
+}
+body[data-couch-status='paused'] .race-menu-actions > #race-start {
+  grid-column: 1 / -1;
+}
 .race-optional-setup {
   grid-column: 1 / -1;
   min-width: 0;
@@ -249,6 +273,15 @@ body.unified-missions #race-library-switch {
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 8px;
   margin-block: 12px 20px;
+}
+.race-secondary-details {
+  margin-top: 16px;
+  border-top: 1px solid #2b4364;
+}
+.race-secondary-details > summary {
+  min-height: 44px;
+  padding: 12px 0;
+  cursor: pointer;
 }
 #couch-app .race-more-destinations a {
   justify-content: center;
@@ -545,6 +578,19 @@ body.unified-missions #race-library-switch {
   }
 }
 @media (max-height: 500px) and (min-width: 701px) {
+  body[data-couch-status='paused'] .race-shell {
+    padding-block: 12px;
+  }
+  body[data-couch-status='paused'] .race-screen h1 {
+    font-size: 32px;
+    margin-block: 4px;
+  }
+  body[data-couch-status='paused'] #race-message {
+    margin-block: 4px 8px;
+  }
+  body[data-couch-status='paused'] .race-menu-actions > * {
+    min-height: 44px;
+  }
   .race-hud {
     min-height: 50px;
   }

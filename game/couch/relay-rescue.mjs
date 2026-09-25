@@ -563,6 +563,21 @@ export function bootCoop({
     modeChoices.hidden = running();
     const destination = $(paused ? 'coop-pause-tools' : 'coop-lobby-tools');
     if (tools.parentNode !== destination) destination.append(tools);
+    const pauseCore = $('coop-pause-core'),
+      help = $('coop-help'),
+      settings = $('coop-settings-open'),
+      sound = $('coop-quick-sound'),
+      pausedAttempt = paused && run?.status === 'paused';
+    pauseCore.hidden = !pausedAttempt;
+    if (pausedAttempt) {
+      pauseCore.append(help);
+      pauseCore.append(settings);
+      pauseCore.append($('coop-home-paused'));
+    } else {
+      tools.append(help);
+      tools.append(settings);
+      tools.append(sound);
+    }
     tools.hidden = running();
     if (tools.hidden) {
       $('coop-help').open = false;
@@ -602,10 +617,18 @@ export function bootCoop({
       stopWaiting();
       return;
     }
-    const details =
-      document.activeElement?.closest('details') ||
-      (!run ? $('coop-menu').querySelector('details[open]') : tools.querySelector('details[open]'));
-    if (details?.open && (tools.contains(details) || (!run && $('coop-menu').contains(details)))) {
+    const pauseCore = $('coop-pause-core'),
+      details =
+        document.activeElement?.closest('details') ||
+        (!run
+          ? $('coop-menu').querySelector('details[open]')
+          : pauseCore.querySelector('details[open]') || tools.querySelector('details[open]'));
+    if (
+      details?.open &&
+      (pauseCore.contains(details) ||
+        tools.contains(details) ||
+        (!run && $('coop-menu').contains(details)))
+    ) {
       details.open = false;
       details.querySelector('summary')?.focus({ preventScroll: true });
     } else if (run?.status === 'paused') primary().focus({ preventScroll: true });
@@ -4111,6 +4134,7 @@ export function bootCoop({
   $('coop-resume').onclick = resume;
   $('coop-pause').onclick = pause;
   $('coop-lobby').onclick = () => requestDeparture('setup', $('coop-lobby'));
+  $('coop-home-paused').onclick = () => requestDeparture('home', $('coop-home-paused'));
   function supportGuidance(guidance) {
     $('coop-support-help').textContent = guidance.supportText;
     $('coop-help-support').textContent =
@@ -4625,6 +4649,7 @@ export function bootCoop({
     cancelDiscoveryPreparation();
     $('coop-discovery-open').onclick = null;
     $('coop-discovery-paused').onclick = null;
+    $('coop-home-paused').onclick = null;
     automaticRetry = null;
     document.removeEventListener('focusin', retryFocusChanged);
     cancelNext({ announce: false });
