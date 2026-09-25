@@ -856,3 +856,26 @@ accepted/custom loading captions, existing error retranslation, platform outcome
 source/key/plural checks report 8,060 messages / 6,490 references. Browser verification remains
 unavailable. A new fetch found two main publication commits, which add immutable v0.114.1 release
 records but no new game copy; the branch is being rebased onto that publication head.
+
+## Publication-head rebase checkpoint
+
+Rebased all 34 localization commits cleanly onto `2c32a08b9` (v0.114.1 publication head).
+`npm run i18n:check:main` verifies this main ancestry and passes the full generated-catalog and
+content-registry checks: 8,060 messages / 6,490 references. Full lint, full formatting,
+`node scripts/game-cli.mjs validate`, and presentation metadata validation pass on this rebased
+checkpoint. Logs are `/tmp/rl-i18n/rebase/v1141-publication-{localization-check,lint,format,validation,metadata}.log`.
+The metadata hash remains `d4d356ce76616cdb4fa23862e41ed8b23598975715e31a2d4330be3d3007cb36`.
+
+A fresh heuristic source audit is saved at `/tmp/rl-i18n/rebase/v1141-source-audit.json`.
+The narrower review inventory at `/tmp/rl-i18n/rebase/v1141-ui-audit-next.json` lists 457 UI
+candidates in 69 files, including technical/user-text false positives. Concrete next Studio gaps
+are pacing and acceptance inspectors and the empty manual-image queue. Those inspectors must
+translate structured report IDs at presentation time while preserving reports, authored lesson
+labels and imported evidence details. Deeper compiler/platform errors and other game/tool routes
+still require review. The old full-suite failure inventory remains unclassified in part; none of
+these checks imply that all game tests now pass. No PR has been opened or marked merge-ready.
+
+The browser provider still exposes no browser for verification. Available disk space fell to
+about 386 MiB during this checkpoint, insufficient for a fresh distribution and native staging;
+no unrelated work or data was removed. Current source checks pass, but previous build receipts
+remain older than these Studio changes.
