@@ -59,14 +59,15 @@ export function createCandidateFlightPictures({
     const check = () => {
       if (!current()) throw cancelled();
     };
-    const report = (status, message) => {
+    const report = (status, messageKey) => {
       check();
       try {
         onStatus({
           status,
           stage: status === 'ready' ? 'ready' : 'preparing',
           progress: null,
-          message,
+          message: t(messageKey),
+          messageKey,
         });
       } catch {}
       check();
@@ -91,7 +92,7 @@ export function createCandidateFlightPictures({
       candidate = await Promise.race([
         stopped,
         Promise.resolve().then(async () => {
-          report('preparing', t('interface:verifyingAndOpeningThisMissionSOriginalPicture'));
+          report('preparing', 'interface:verifyingAndOpeningThisMissionSOriginalPicture');
           const result = await acquire(asset, { signal: controller.signal });
           try {
             claimCandidatePicture(asset, result);
@@ -112,7 +113,7 @@ export function createCandidateFlightPictures({
         t('interface:candidatePictureWasNotVerifiedForThisOriginal'),
       );
       // Observers may close the host or start newer work. Do not publish first.
-      report('ready', t('interface:thisMissionSOriginalPictureIsReady'));
+      report('ready', 'interface:thisMissionSOriginalPictureIsReady');
       binding = candidate;
       candidate = null;
       return true;
