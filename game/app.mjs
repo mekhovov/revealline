@@ -6057,7 +6057,7 @@ try {
           message:
             error.name === 'AbortError'
               ? t('interface:preparationCancelledYourFlightRemainsPaused')
-              : `Flight unavailable: ${error.message}`,
+              : () => t('interface:solo.flightUnavailable', { error: error.message }),
         });
     } finally {
       ticket.visuals?.release();
@@ -6351,7 +6351,9 @@ try {
             storedStateAdopted = false;
             void packCommits.noteStaleCommit();
             throw new Error(
-              `Game data committed. Reload and restore its exact originals before continuing. ${error.message}`,
+              t('gameplay:gameDataCommittedReloadAndRestoreItsExactOriginalsBefore', {
+                value1: error.message,
+              }),
             );
           }
           throw error;
@@ -6678,8 +6680,8 @@ try {
         (saved.ok
           ? t('interface:steeringHandSaved')
           : resolveTouchControls(library.preferences.touchControls).side === requested
-            ? `Steering hand selected for this session. ${saved.warning}`
-            : `Steering hand unchanged. ${saved.warning}`),
+            ? t('interface:solo.steeringHandSessionSelected', { warning: saved.warning })
+            : t('interface:solo.steeringHandUnchanged', { warning: saved.warning })),
     );
     status.hidden = false;
   };
@@ -7037,7 +7039,7 @@ try {
     localizedText(
       $('campaign-progress'),
       () =>
-        `${String(currentSelection().completed).padStart(2, '0')} / ${String(campaign.levels.length).padStart(2, '0')}${difficultyLabel(activeEntry) ? ` · ${difficultyLabel(activeEntry)} medals` : ''}`,
+        `${String(currentSelection().completed).padStart(2, '0')} / ${String(campaign.levels.length).padStart(2, '0')}${difficultyLabel(activeEntry) ? t('gameplay:medals', { value1: difficultyLabel(activeEntry) }) : ''}`,
     );
     refreshContentSelectors();
   }
@@ -7234,10 +7236,12 @@ try {
       localizedText($('overlay-title'), () =>
         allCleared ? t('interface:everyMissionRevealed') : t('interface:endOfThisCampaign'),
       );
-      localizedText(
-        $('overlay-copy'),
-        () =>
-          `${campaign.title || campaign.name || campaign.id}: ${completion.completed} / ${completion.total} missions complete. Enjoy your collection or find any mission in the shared library. Skipped missions remain available.`,
+      localizedText($('overlay-copy'), () =>
+        t('interface:solo.campaignLibraryComplete', {
+          campaign: contentText(campaign, 'title') || contentText(campaign, 'name') || campaign.id,
+          count: completion.completed,
+          total: completion.total,
+        }),
       );
       localizedText($('next-button'), () => t('interface:viewCollection'));
       localizedText($('overlay-footnote'), () =>
@@ -7252,16 +7256,37 @@ try {
     }
     if (kind === 'won') {
       localizedText($('overlay-title'), () => t('interface:aLittleMoreLight'));
-      localizedText(
-        $('overlay-copy'),
-        () =>
-          `${(run.coverage * 100).toFixed(1)}% captured · ${run.score.toLocaleString()} points · ${timeLabel(run.time)}. ${practice ? t('interface:practiceComplete') : candidateHost?.owns(activeEntry) ? (authoredRoute.id === DEFAULT_JOURNEY_ROUTES.solo ? t('interface:journeyMissionComplete') : t('interface:authoredTestClearRecordedInJourneyProgressNoLegacyCollection')) : completionWarning || (saveSucceeded ? t('interface:fullPictureAddedToYourCollection') : sessionPictures.status().originals ? t('interface:pictureCollectedForThisSessionExportGameDataAndSession') : t('interface:pictureCollectedForThisSessionExportYourLibraryToKeep'))}`,
+      localizedText($('overlay-copy'), () =>
+        t('gameplay:capturedPoints', {
+          value1: formatNumber(run.coverage * 100, {
+            minimumFractionDigits: 1,
+            maximumFractionDigits: 1,
+          }),
+          value2: formatNumber(run.score),
+          value3: timeLabel(run.time),
+          value4: practice
+            ? t('interface:practiceComplete')
+            : candidateHost?.owns(activeEntry)
+              ? authoredRoute.id === DEFAULT_JOURNEY_ROUTES.solo
+                ? t('interface:journeyMissionComplete')
+                : t('interface:authoredTestClearRecordedInJourneyProgressNoLegacyCollection')
+              : completionWarning
+                ? renderMessage(completionWarning)
+                : saveSucceeded
+                  ? t('interface:fullPictureAddedToYourCollection')
+                  : sessionPictures.status().originals
+                    ? t('interface:pictureCollectedForThisSessionExportGameDataAndSession')
+                    : t('interface:pictureCollectedForThisSessionExportYourLibraryToKeep'),
+        }),
       );
       if (recoverGameplayTuning(run.level)?.adminOverride)
-        localizedText(
-          $('overlay-copy'),
-          () =>
-            `${(run.coverage * 100).toFixed(1)}% captured. Admin playtest complete; no clear, medal or mastery awarded. Reset tuning in Settings for normal progression.`,
+        localizedText($('overlay-copy'), () =>
+          t('interface:solo.adminPlaytestResult', {
+            coverage: formatNumber(run.coverage * 100, {
+              minimumFractionDigits: 1,
+              maximumFractionDigits: 1,
+            }),
+          }),
         );
       localizedText($('result-medals'), () =>
         '★'.repeat(run.medal === 'gold' ? 3 : run.medal === 'silver' ? 2 : 1),
@@ -7534,7 +7559,10 @@ try {
       feedback.update({
         status: 'preparing',
         stage: 'preparing',
-        message: `Preparing ${next.name}… Your result is kept.`,
+        message: () =>
+          t('interface:solo.preparingResultMission', {
+            mission: host.library.presentation(next).name,
+          }),
       });
       if (host.library.availability(next, 'solo').state !== 'ready') {
         const ready = await host.library.prepare(next, { mode: 'solo', signal: controller.signal });
@@ -7679,7 +7707,8 @@ try {
       ticket.feedback.update({
         status: 'preparing',
         stage: 'preparing',
-        message: `Preparing ${level.name}…`,
+        message: () =>
+          t('interface:solo.preparingMission', { mission: contentText(level, 'name') }),
       });
       ticket.button.disabled = true;
       if (ownedFocus) $('flight-preparation-cancel').focus({ preventScroll: true });
@@ -8111,7 +8140,9 @@ try {
     localizedText($('campaign-name'), () =>
       courseSession
         ? t('interface:firstFlightLearnByPlaying')
-        : `CAMPAIGN / ${campaign.title || campaign.name || campaign.id}`,
+        : t('gameplay:campaign', {
+            value1: contentText(campaign, 'title') || contentText(campaign, 'name') || campaign.id,
+          }),
     );
     updateLoadout();
     refreshMissionBrief();
@@ -9064,8 +9095,20 @@ try {
                 mediaIdentityCatalog: flightPictures?.identityCatalog,
               });
             } catch (error) {
-              completionWarning = `Your picture is open, but the collection could not be updated. ${recorder ? t('interface:exportThisReplayAndYourLibrary') : t('interface:theReplayRecordingHasEndedExportYourLibrary')} before continuing.`;
-              localizedText($('save-warning'), () => `${completionWarning} ${error.message}`);
+              completionWarning = localizedMessage(
+                'gameplay:yourPictureIsOpenButTheCollectionCouldNotBe',
+                {
+                  value1: localizedMessage(
+                    recorder
+                      ? 'interface:exportThisReplayAndYourLibrary'
+                      : 'interface:theReplayRecordingHasEndedExportYourLibrary',
+                  ),
+                },
+              );
+              localizedText(
+                $('save-warning'),
+                () => `${renderMessage(completionWarning)} ${error.message}`,
+              );
               show('save-warning', true);
             }
             progress = progressFor(library, campaign);
@@ -9088,7 +9131,10 @@ try {
               } catch (error) {
                 masteryAward = {
                   status: 'unavailable',
-                  message: `Your picture is collected; the seal could not be checked. ${error.message}`,
+                  message: localizedMessage(
+                    'gameplay:yourPictureIsCollectedTheSealCouldNotBeChecked',
+                    { value1: error.message },
+                  ),
                 };
               }
             try {
@@ -9248,14 +9294,17 @@ try {
       if (!started && !campaignOverview) overlay('ready');
       preferences({ themeId: theme.id, bodyId });
       rememberSelection();
-      feedback.finish({ message: `${next.name || next.id} artwork ready.` });
+      feedback.finish({
+        message: () =>
+          t('interface:solo.artworkReady', { name: contentText(next, 'name') || next.id }),
+      });
     } catch (error) {
       if (owner === flightPictures && ticket === pictureGeneration && !controller.signal.aborted) {
         feedback.finish({
           message:
             error instanceof ReleasePictureWriteRequiredError
               ? error.message
-              : `World artwork unavailable: ${error.message}`,
+              : () => t('interface:solo.worldArtworkUnavailable', { error: error.message }),
           state: 'error',
         });
         pictureFailure(error, notify);
@@ -9331,9 +9380,8 @@ try {
     if (!restartRequest) return;
     restartRequest.cancelled = true;
     $('restart-confirm').disabled = true;
-    localizedText(
-      $('restart-dialog-copy'),
-      () => `${message} Keep this attempt, then choose Restart again when ready.`,
+    localizedText($('restart-dialog-copy'), () =>
+      t('interface:solo.restartInvalidated', { reason: renderMessage(message) }),
     );
   }
   function requestRestart(opener) {
@@ -9630,7 +9678,7 @@ try {
       run,
       observed: true,
       status: replayFeedback.begin({
-        message: 'Preparing replay download…',
+        message: localizedMessage('interface:solo.preparingReplayDownload'),
         stage: 'downloading',
       }),
     };
@@ -9649,12 +9697,17 @@ try {
         operation.status.finish({ message: exported.message });
         if (operation.run === run)
           notify(
-            `Replay prepared with its exact rules, inputs and final state. ${exported.message}`,
+            t('gameplay:replayPreparedWithItsExactRulesInputsAndFinalState', {
+              value1: exported.message,
+            }),
           );
       }
     } catch (error) {
       if (operation.observed && $('replay-dialog').open)
-        operation.status.finish({ message: `Replay download: ${error.message}`, state: 'error' });
+        operation.status.finish({
+          message: () => t('gameplay:replayDownload', { value1: error.message }),
+          state: 'error',
+        });
     } finally {
       if (replayDownload === operation) {
         replayDownload = null;
@@ -9816,7 +9869,9 @@ try {
         t('gameplay:selected', {
           value1: packLaunchRequest.packName,
           value2: packLaunchRequest.levelName,
-          value3: autoplayPackLaunch ? ' · starting now…' : ' ' + t('interface:andReady') + '',
+          value3: autoplayPackLaunch
+            ? t('interface:solo.startingNow')
+            : ' ' + t('interface:andReady') + '',
         }),
       );
     }
