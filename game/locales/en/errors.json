@@ -38,5 +38,14 @@
   "thisLessonThemeIsUnavailable": "This lesson theme is unavailable.",
   "theImpactLessonCouldNotLoad": "The impact lesson could not load.",
   "loadingGameStyles": "Loading game styles…",
-  "loadingFlightSystems": "Loading flight systems…"
+  "loadingFlightSystems": "Loading flight systems…",
+  "offline.downloadFailed": "Offline download failed or the browser could not save every file. Check the connection and available storage, then try again.",
+  "offline.workerChanged": "Offline worker changed. Reopen this version online and try again.",
+  "offline.workerMismatch": "Offline worker does not match this version. Reopen it online and try again.",
+  "offline.differentBuild": "Cached worker belongs to a different build. Reconnect and prepare this version again.",
+  "offline.unconfirmedBuild": "Offline report could not confirm this build.",
+  "offline.verificationFailed": "Offline files could not be verified. Reconnect and try again.",
+  "picture.writeRequired": "This session cannot save a new picture. Export current game data before reloading to prepare it. Previously saved flights and originals are kept.",
+  "picture.unavailable": "Picture unavailable. Restore access to this flight’s original media and try again.",
+  "picture.unavailablePaused": "Picture unavailable. Your flight remains paused. Restore access to its original media and try again."
 }

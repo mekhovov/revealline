@@ -149,5 +149,13 @@
   "status.paused": "paused",
   "units.secondsShort": "{{seconds}}s",
   "reading.prompt": "{{scroll}} · {{exit}} returns",
-  "controls.either": "{{confirm}} or {{back}}"
+  "controls.either": "{{confirm}} or {{back}}",
+  "progress.files_one": "{{completed}} / {{total}} file",
+  "progress.files_other": "{{completed}} / {{total}} files",
+  "progress.tracks_one": "{{completed}} / {{total}} track",
+  "progress.tracks_other": "{{completed}} / {{total}} tracks",
+  "progress.chapters_one": "{{completed}} / {{total}} chapter",
+  "progress.chapters_other": "{{completed}} / {{total}} chapters",
+  "progress.ticks_one": "{{completed}} / {{total}} tick",
+  "progress.ticks_other": "{{completed}} / {{total}} ticks"
 }

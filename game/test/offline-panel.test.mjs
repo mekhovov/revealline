@@ -1,10 +1,13 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
+import { offlineOptionalText } from '../ui/offline-copy.mjs';
 import { MessageChannel } from 'node:worker_threads';
 import { Document, Events } from './helpers/couch-dom.mjs';
 import { waitFor } from './helpers/wait-for.mjs';
 import { offlineAvailability, prepareOffline, checkOffline } from '../offline.mjs';
+import { getLocale, setLocale } from '../i18n/index.mjs';
 import { attachOfflinePanel } from '../ui/offline-panel.mjs';
 
 function boundary(overrides = {}) {
@@ -292,4 +295,101 @@ test('offline completion restores the focused escape action but never background
   hidden.stop.click();
   assert.equal(hidden.doc.activeElement, hidden.doc.body);
   hidden.panel.destroy();
+});
+
+test('offline locale changes preserve the active observation, progress, focus and terminal diagnostics', async (context) => {
+  const locale = getLocale();
+  context.after(() => setLocale(locale, { persist: false }));
+  setLocale('en', { persist: false });
+  let request, complete;
+  const page = boundary({
+    availability: () => ({
+      available: true,
+      note: 'Journey candidate artwork is not included in offline preparation.',
+      optionalPacks: [],
+      optionalArtwork: { name: 'Journey candidate artwork' },
+    }),
+    prepare: (options) => {
+      request = options;
+      return new Promise((resolve) => {
+        complete = resolve;
+      });
+    },
+  });
+  context.after(() => page.panel.destroy());
+  const pending = page.button.onclick();
+  page.stop.focus();
+  request.onStatus({
+    status: 'preparing',
+    stage: 'downloading',
+    messageCode: 'downloading',
+    progress: { completed: 22, total: 993, unit: 'files' },
+  });
+  const meter = page.status.querySelector('progress');
+  for (const language of ['uk', 'en', 'uk']) {
+    setLocale(language, { persist: false });
+    assert.equal(page.doc.activeElement, page.stop);
+    assert.equal(request.signal.aborted, false);
+    assert.equal(page.button.disabled, true);
+    assert.equal(meter.value, 22);
+    assert.equal(meter.max, 993);
+    if (language === 'uk') {
+      assert.match(page.status.textContent, /Завантажуємо.*22 із 993 файлів/);
+      assert.equal(meter.getAttribute('aria-label'), '22 із 993 файлів');
+      assert.match(page.note.textContent, /не входять до підготовки/);
+      assert.doesNotMatch(page.note.textContent, /Journey|offline/);
+    } else assert.match(page.status.textContent, /Downloading.*22 \/ 993 files/);
+  }
+  complete({ status: 'ready', messageCode: 'ready', verified: 993, buildId: 'unchanged' });
+  await pending;
+  assert.match(page.status.textContent, /Файли.*Перевірено 993 файли/);
+  const diagnostics = page.details.textContent;
+  assert.equal(page.doc.activeElement, page.button);
+  setLocale('en', { persist: false });
+  assert.match(page.status.textContent, /Offline files verified.*993 files verified/);
+  assert.equal(page.details.textContent, diagnostics);
+  assert.equal(page.doc.activeElement, page.button);
+});
+
+test('offline failures and unavailable environments retain live localized explanations', async (context) => {
+  const locale = getLocale();
+  context.after(() => setLocale(locale, { persist: false }));
+  setLocale('en', { persist: false });
+  const unavailable = boundary({
+    availability: () => ({ available: false, messageCode: 'development' }),
+  });
+  context.after(() => unavailable.panel.destroy());
+  const failure = boundary({
+    prepare: async () => {
+      throw Object.assign(new Error('diagnostic transport detail'), {
+        offlineCode: 'workerChanged',
+      });
+    },
+  });
+  context.after(() => failure.panel.destroy());
+  await failure.button.onclick();
+  setLocale('uk', { persist: false });
+  assert.match(unavailable.status.textContent, /готовому випуску/);
+  assert.equal(unavailable.button.hidden, true);
+  assert.match(failure.status.textContent, /Служба автономної роботи змінилася/);
+  assert.equal(failure.status.dataset.state, 'error');
+  assert.equal(JSON.parse(failure.details.textContent).message, 'diagnostic transport detail');
+});
+
+test('only exact first-party optional release metadata translates pack names', async (context) => {
+  const locale = getLocale();
+  context.after(() => setLocale(locale, { persist: false }));
+  const path = 'game/content/packs/fpv-arcade-r3.json';
+  const bytes = await readFile(new URL(`../../${path}`, import.meta.url));
+  const pack = JSON.parse(bytes);
+  const metadata = {
+    path,
+    id: pack.id,
+    name: pack.name,
+    sha256: createHash('sha256').update(bytes).digest('hex'),
+  };
+  setLocale('uk', { persist: false });
+  assert.match(offlineOptionalText({ optionalPacks: [metadata] }), /Перше світло R3/);
+  const changed = { ...metadata, sha256: '0'.repeat(64) };
+  assert.ok(offlineOptionalText({ optionalPacks: [changed] }).startsWith(pack.name));
 });

@@ -1,6 +1,7 @@
 import { t, localizedText } from '../i18n/index.mjs';
 import { offlineAvailability, prepareOffline, checkOffline } from '../offline.mjs';
 import { createOperationStatus } from './operation-status.mjs';
+import { offlineStatusText, offlineOptionalText, offlineErrorText } from './offline-copy.mjs';
 
 /** Observes the release worker; leaving this screen never owns its installation. */
 export function attachOfflinePanel({
@@ -20,13 +21,14 @@ export function attachOfflinePanel({
   const feedback = createOperationStatus($('offline-status'), { isCurrent: () => !disposed });
   const available = availability();
   const note = $('offline-optional-note');
-  localizedText(note, () => available.note ?? '');
+  localizedText(note, () => offlineOptionalText(available));
   note.hidden = !available.note;
   button.hidden = !available.available;
   feedback.begin({ message: '' }).finish({
-    message: available.available
-      ? t('interface:downloadThisReleaseForOfflinePlayOnThisDevice')
-      : available.reason,
+    message: () =>
+      available.available
+        ? t('interface:downloadThisReleaseForOfflinePlayOnThisDevice')
+        : offlineStatusText(available),
   });
   function controls() {
     button.disabled = !!observation;
@@ -47,7 +49,7 @@ export function attachOfflinePanel({
     owned.controller.abort();
     owned.status.finish({
       state: 'detached',
-      message: t('interface:stoppedWaitingOfflinePreparationMayStillBeRunningCheckProgress'),
+      message: () => t('interface:stoppedWaitingOfflinePreparationMayStillBeRunningCheckProgress'),
     });
     action = 'check';
     controls();
@@ -56,10 +58,12 @@ export function attachOfflinePanel({
   }
   async function run() {
     if (disposed || observation || !available.available) return;
+    const preparing = action === 'prepare';
     const owned = {
       controller: new AbortController(),
       status: feedback.begin({
-        message: action === 'prepare' ? 'Preparing offline play…' : 'Checking offline files…',
+        message: () =>
+          preparing ? t('interface:offline.preparing') : t('interface:offline.checkingFiles'),
         stage: action === 'prepare' ? 'connecting' : 'verifying',
       }),
     };
@@ -72,7 +76,7 @@ export function attachOfflinePanel({
         onStatus(status) {
           if (!current() || !['preparing', 'checking'].includes(status.status)) return;
           owned.status.update({
-            message: status.summary ?? status.message,
+            message: () => offlineStatusText(status),
             stage: status.stage,
             progress: status.progress ?? null,
           });
@@ -84,13 +88,23 @@ export function attachOfflinePanel({
       action = ready ? 'verify' : pending ? 'check' : 'prepare';
       owned.status.finish({
         state: ready ? 'ready' : pending ? 'detached' : 'error',
-        message: `${result.summary || result.message || result.status}${result.verified ? ` · ${result.verified} files verified` : ''}`,
+        message: () => offlineStatusText(result),
       });
       localizedText($('offline-details'), () => JSON.stringify(result, null, 2));
     } catch (error) {
       if (!current()) return;
       action = 'prepare';
-      owned.status.finish({ state: 'error', message: error.message });
+      owned.status.finish({ state: 'error', message: () => offlineErrorText(error) });
+      localizedText($('offline-details'), () =>
+        JSON.stringify(
+          {
+            message: error.message,
+            code: error.offlineCode ?? null,
+          },
+          null,
+          2,
+        ),
+      );
     } finally {
       if (current()) {
         const restoreFocus = doc.activeElement === stop;
