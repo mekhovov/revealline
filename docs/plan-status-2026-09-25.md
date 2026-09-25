@@ -1,6 +1,7 @@
 # Reveal Line — accepted baseline and remaining player-first plan
 
-Status checked **25 September 2026 after public acceptance of v0.113.1**.
+Status checked **25 September 2026 while merged v0.114.0 source was undergoing
+exact-source qualification**. v0.113.1 remains the accepted public boundary.
 This is the current execution plan. Historical reports remain authoritative for
 their own immutable releases; candidate branches and source assets do not count
 as shipped gameplay.
@@ -55,6 +56,23 @@ The replaced v0.113.0 site is preserved at
 Archive PR [#1](https://github.com/mekhovov/revealline-archive-79/pull/1), deployment
 `6657384199`, and its **1,148-file / 595,654,470-byte** public audit passed.
 
+## Merged next release candidate
+
+**v0.114.0 — Horizon Ukrainian spatial joins** is allocated to merged source PR
+[#495](https://github.com/mekhovov/revealline/pull/495), not to UX2. Its exact
+merged source is `10190539b243c9edc78eeef9dba174041409aaf2`. At the **25
+September 2026, 11:51 CEST** snapshot, the exact-source qualification/freeze
+[run 36120411263](https://github.com/mekhovov/revealline/actions/runs/36120411263)
+was in progress: the qualification job had passed and the freeze job was still
+running. The source promotes three existing Horizon identities into the default
+v11 Journey route while retaining older editions.
+
+Merge and qualification are intermediate states. v0.114.0 still needs successful
+qualification and freeze, immutable release assets, preservation of the replaced
+public release, a reviewed Pages selector, production deployment, complete public
+byte verification, and scoped public play acceptance before it becomes the public
+baseline.
+
 ## Completed work
 
 | Area                     | Accepted result                                                                                                                                                                        |
@@ -87,15 +105,25 @@ Archive PR [#1](https://github.com/mekhovov/revealline-archive-79/pull/1), deplo
 Only one release owns publication at a time. A feature is Complete only after its
 version is publicly deployed and verified.
 
-The following queue observations are a **25 September 2026 snapshot captured
-immediately before PR #493 merged at 11:32 CEST**, not permanent counts or branch
-identities:
+The following queue observations are time-bounded snapshots, not permanent counts
+or branch identities:
 
-- The repository had **51 open pull requests, all 51 drafts**.
-- UX2 PR [#487](https://github.com/mekhovov/revealline/pull/487) still pointed to
-  exact remote head `655d4515ce7a479053a8e75d3a42fa3f3379cb8a` on an older,
-  conflicting base. A local rebase onto accepted v0.113.1 was in progress; no
-  reconciled remote head or new qualification evidence was available yet.
+- Immediately before PR #493 merged at 11:32 CEST, the repository had **51 open
+  pull requests, all 51 drafts**.
+- At 11:50 CEST, UX2 PR
+  [#487](https://github.com/mekhovov/revealline/pull/487) was reconciled onto the
+  accepted v0.113.1 baseline at exact head
+  `97a368de8083cef93caaf62cc0ec34064d1002d9`, with **24 changed paths**. Exact-head
+  evidence passed quick-start parity **8/8**, controller Confirm guard plus release
+  links **24/24**, queryless Versus entry **1/1**, Couch shell **22/22**, Team
+  default entry **12/12**, Team originals/pressure/timed **17/17**, validation,
+  scoped lint/format/diff checks, native format, and Motion Lab syntax. Long suites
+  remained waived and an earlier resource-limited concurrent run was not counted.
+- UX2 browser review found a **release-blocking cross-mode Pause hierarchy
+  inconsistency**, now being fixed. Other exercised desktop and portrait direct
+  Start, Settings, More, and Pause paths were clean, with zero console errors and
+  zero horizontal overflow. This does not qualify physical controller/touch
+  hardware or the not-yet-fixed Pause hierarchy.
 - UX1-A PR [#485](https://github.com/mekhovov/revealline/pull/485) remained draft
   and unversioned at exact head
   `4ea9ce45548d35dc1563f8e5126d5c970f434a1b`. Its complete real
@@ -106,19 +134,20 @@ identities:
   passed **2/2**. This evidence does not qualify the required post-UX2 rebase or
   the outstanding real-browser reward recovery flows.
 
-| Priority | Delivery                                        | Current state                                                                            | Completion gate                                                                                                                   |                     Engineering range |
-| -------: | ----------------------------------------------- | ---------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------: |
-|        1 | **UX2 — shared Home, lobbies, Pause; PR #487**  | Local v0.113.1 rebase in progress; the remote draft still has the older conflicting head | Finish and review the rebase, preserve direct entry/focus, verify keyboard/controller/touch flows, release and publicly accept    |                          **1–2 days** |
-|        2 | **UX1-A — exact Journey rewards; PR #485**      | Draft head and focused evidence recorded above; reconciliation must follow UX2           | Reconcile after UX2; verify reload, Retry/Next, missing-original recovery, release and publicly accept                            |                          **1–2 days** |
-|        3 | **UX1-B — compact grouped mission gallery**     | Design/component foundations only                                                        | Group campaigns, restore selection/scroll, one-action ready/download-and-play, lazy previews, spatial input                       |                          **1–2 days** |
-|        4 | **UX3 — gameplay HUD, touch and teaching**      | Partial responsive candidates                                                            | One-row short-landscape HUD, maximum arena, shared touch layout, contextual hints, reduced effects, iPhone and Steam Deck checks  |            **1–2 days plus hardware** |
-|        5 | **UX4 — start, failure and continuation**       | Partial countdown/retry/result candidates                                                | Countdown/Go, destruction/life-loss, deliberate Retry, named successor/campaign endings, duplicate-award prevention               |                          **1–2 days** |
-|        6 | **UX5 — remaining player screens**              | Foundations exist                                                                        | Settings, difficulty, Help, Collection/Records/replay and recovery with exact return focus and no Workshop dependency             |                          **1–2 days** |
-|        7 | **UX6 — whole-player qualification**            | No accepted aggregate                                                                    | End-to-end accessibility, performance, storage, offline, recovery, controller and touch matrix                                    |             **2–4 days plus devices** |
-|        8 | **Actor/action parity and enemy tuning**        | Shared assets and mechanics are partial                                                  | Distinct actor catalog, readable scale/heading/warnings, fair pressure, classic roles/powerups, deterministic bosses, Team parity |           **4–8 days plus playtests** |
-|        9 | **Audio and finished music**                    | Runtime, MP3, playlist and authored-track foundations exist                              | One audio authority, every mode, exact backup/offline, audible review, qualified synth/chiptune/rock/metal library                |                          **3–5 days** |
-|       10 | **Studio, packs and reproducible authoring**    | Registries, validators, tools and 13 skills exist                                        | Fresh-workspace upload/edit/export/import/install/play/recover proof with exact original bytes                                    |                          **4–7 days** |
-|       11 | **Campaign slices and final browser programme** | Numerous drafts; accepted inventory requires a new audit                                 | Player-approved benchmark, then FPV/DroneAid/Ukrainian/Retro/Coupa slices and final P18 qualification                             | **Several weeks; 3–7 days per slice** |
+| Priority | Delivery                                        | Current state                                                                                            | Completion gate                                                                                                                   |                     Engineering range |
+| -------: | ----------------------------------------------- | -------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------: |
+|        1 | **v0.114.0 — Horizon spatial joins; PR #495**   | Merged at exact source `10190539b`; qualification passed, freeze in progress; not public                 | Complete freeze, immutable release, archive/selector, production deployment, public bytes and scoped play                         |          **Hours, hosted-gate bound** |
+|        2 | **UX2 — shared Home, lobbies, Pause; PR #487**  | Reconciled 24-path draft at `97a368de8`; focused evidence green; cross-mode Pause hierarchy fix underway | Fix and re-review Pause hierarchy, reconcile on the accepted v0.114.0 boundary, verify input flows, release and publicly accept   |                          **1–2 days** |
+|        3 | **UX1-A — exact Journey rewards; PR #485**      | Draft head and focused evidence recorded above; reconciliation must follow UX2                           | Reconcile after UX2; verify reload, Retry/Next, missing-original recovery, release and publicly accept                            |                          **1–2 days** |
+|        4 | **UX1-B — compact grouped mission gallery**     | Design/component foundations only                                                                        | Group campaigns, restore selection/scroll, one-action ready/download-and-play, lazy previews, spatial input                       |                          **1–2 days** |
+|        5 | **UX3 — gameplay HUD, touch and teaching**      | Partial responsive candidates                                                                            | One-row short-landscape HUD, maximum arena, shared touch layout, contextual hints, reduced effects, iPhone and Steam Deck checks  |            **1–2 days plus hardware** |
+|        6 | **UX4 — start, failure and continuation**       | Partial countdown/retry/result candidates                                                                | Countdown/Go, destruction/life-loss, deliberate Retry, named successor/campaign endings, duplicate-award prevention               |                          **1–2 days** |
+|        7 | **UX5 — remaining player screens**              | Foundations exist                                                                                        | Settings, difficulty, Help, Collection/Records/replay and recovery with exact return focus and no Workshop dependency             |                          **1–2 days** |
+|        8 | **UX6 — whole-player qualification**            | No accepted aggregate                                                                                    | End-to-end accessibility, performance, storage, offline, recovery, controller and touch matrix                                    |             **2–4 days plus devices** |
+|        9 | **Actor/action parity and enemy tuning**        | Shared assets and mechanics are partial                                                                  | Distinct actor catalog, readable scale/heading/warnings, fair pressure, classic roles/powerups, deterministic bosses, Team parity |           **4–8 days plus playtests** |
+|       10 | **Audio and finished music**                    | Runtime, MP3, playlist and authored-track foundations exist                                              | One audio authority, every mode, exact backup/offline, audible review, qualified synth/chiptune/rock/metal library                |                          **3–5 days** |
+|       11 | **Studio, packs and reproducible authoring**    | Registries, validators, tools and 13 skills exist                                                        | Fresh-workspace upload/edit/export/import/install/play/recover proof with exact original bytes                                    |                          **4–7 days** |
+|       12 | **Campaign slices and final browser programme** | Numerous drafts; accepted inventory requires a new audit                                                 | Player-approved benchmark, then FPV/DroneAid/Ukrainian/Retro/Coupa slices and final P18 qualification                             | **Several weeks; 3–7 days per slice** |
 
 ## Original phase register
 
@@ -154,38 +183,47 @@ reserve art are not installed, playable content.
 
 ## Blockers and concerns
 
-1. **Candidate drift:** UX2 PR #487 and rewards PR #485 are based on older main
-   and conflict. Earlier passing evidence does not qualify their reconciled heads.
-2. **Temporary test waiver:** long suites are skipped, increasing regression risk.
+1. **Serialized public boundary:** PR #495 merged and owns v0.114.0, but its
+   exact-source qualification and complete release/publication path are not yet
+   finished. v0.113.1 remains the predecessor for acceptance claims.
+2. **UX2 browser blocker and drift:** PR #487 was reconciled to accepted v0.113.1,
+   but its cross-mode Pause hierarchy is inconsistent and main has since advanced
+   through merged PR #495. Fix the hierarchy, then reconcile and qualify on the
+   accepted v0.114.0 boundary. PR #485 follows UX2.
+3. **Temporary test waiver:** long suites are skipped, increasing regression risk.
    Focused tests, static gates, exact source, immutable assets, archives and public
    checks remain mandatory until the waiver is retired.
-3. **Physical hardware:** browser emulation cannot certify iPhone, tablet,
+4. **Physical hardware:** browser emulation cannot certify iPhone, tablet,
    DualSense, Steam Deck or other controllers. Implementation continues, but final
    support claims wait for real devices.
-4. **Human quality gates:** difficulty fairness, replay value, cultural accuracy,
+5. **Human quality gates:** difficulty fairness, replay value, cultural accuracy,
    actor readability and soundtrack quality require play/listening review.
-5. **Publication cost:** each immutable release is roughly 596 MiB and must be
+6. **Publication cost:** each immutable release is roughly 596 MiB and must be
    preserved in a separate archive, selected serially and audited byte-for-byte.
-6. **Local capacity:** the development volume was below 300 MiB free at this
-   review. Hosted gates are usable, but obsolete clean worktrees must be retired
-   before another local build or reconciliation.
-7. **Large draft queue:** at the timestamped observation above, all 51 open PRs
+7. **Local capacity:** cleanup raised free space to about **5.1 GiB**, with **213
+   worktrees** still registered at the 11:50 CEST snapshot. This is enough for
+   focused work but remains tight for roughly 596 MiB releases, large checkouts,
+   builds, and multiple reconciliations; continue retiring only verified obsolete
+   worktrees.
+8. **Large draft queue:** at the timestamped observation above, all 51 open PRs
    were drafts and many studies or stacked candidates overlapped. Each successor
    must be reconciled by related hunks; bulk merging risks duplicate content,
    stale versions and incompatible identities.
 
 ## Immediate execution order
 
-1. Retire only clean, obsolete v0.113.1 release worktrees after preserving Git and
-   hosted evidence.
-2. Finish the in-progress local UX2 rebase onto accepted v0.113.1, review at hunk
-   level, push and qualify the new exact head, and release it as the next unused
-   minor version.
-3. Reconcile and release UX1-A, then implement/release UX1-B.
-4. Ship UX3–UX6 as separate publicly verified player releases, prioritizing the
+1. Complete v0.114.0 exact-source qualification, immutable release, predecessor
+   archive, Pages selection, deployment, public-byte audit, and scoped public play
+   acceptance before changing the public boundary.
+2. Fix the release-blocking UX2 Pause hierarchy inconsistency and repeat the clean
+   desktop/portrait direct Start, Settings, More, and Pause browser matrix.
+3. After v0.114.0 is accepted publicly, reconcile UX2 onto that exact source,
+   qualify the new head, and release it under the next unused version.
+4. Reconcile and release UX1-A, then implement/release UX1-B.
+5. Ship UX3–UX6 as separate publicly verified player releases, prioritizing the
    one-row mobile HUD, consistent touch controls and controller A/start behavior.
-5. Complete actor/action parity and enemy tuning before bulk campaign production.
-6. Complete shared audio and authoring acceptance, then produce campaign slices.
+6. Complete actor/action parity and enemy tuning before bulk campaign production.
+7. Complete shared audio and authoring acceptance, then produce campaign slices.
 
 ## Advancement rule
 
