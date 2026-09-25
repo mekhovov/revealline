@@ -872,60 +872,133 @@ function remotePairSetup({ fadeMs = 80 } = {}) {
   return { ...h, second, entries };
 }
 
-test('remote natural boundary preloads and crossfades through the shared two-deck transport', async (t) => {
+test('remote natural boundary reuses the permitted deck and never touches the crossfade deck', async (t) => {
   const h = remotePairSetup();
   t.after(() => h.player.dispose());
   assert.equal(await h.player.playRemotePlaylist(h.entries, { repeat: 'off' }), true);
-  await settleUntil(() => h.player.snapshot().preloadedTrackId === h.entries[1].id);
-  assert.equal(h.second.src, h.entries[1].url);
-  assert.equal(h.second.plays, 0, 'remote preload does not start the second media clock');
-  h.media.duration = 10;
-  h.media.currentTime = 9.95;
-  h.media.emit('timeupdate');
-  await settleUntil(() => h.player.snapshot().transitioning);
+  assert.equal(h.player.snapshot().preloadedTrackId, null);
+  assert.equal(h.second.src, undefined);
+  h.media.emit('ended');
+  await settleUntil(() => h.player.snapshot().track.id === h.entries[1].id);
   assert.equal(h.player.snapshot().track.id, h.entries[1].id);
-  assert.equal(h.media.paused, false);
-  assert.equal(h.second.paused, false);
-  await settleUntil(() => !h.player.snapshot().transitioning);
+  assert.equal(h.media.src, h.entries[1].url);
+  assert.equal(h.media.plays, 2);
+  assert.equal(h.second.plays, 0);
+  assert.equal(h.player.snapshot().transitioning, false);
   assert.deepEqual(h.created, []);
   assert.deepEqual(h.revoked, []);
 });
 
-test('pause cancels a remote natural crossfade without acquiring or revoking its archive URL', async (t) => {
+test('Next while a remote queue is paused switches tracks without resuming playback', async (t) => {
   const h = remotePairSetup();
   t.after(() => h.player.dispose());
   await h.player.playRemotePlaylist(h.entries, { repeat: 'off' });
-  await settleUntil(() => h.player.snapshot().preloadedTrackId === h.entries[1].id);
-  h.media.duration = 10;
-  h.second.duration = 10;
-  h.media.currentTime = 9.95;
-  h.media.emit('timeupdate');
-  await settleUntil(() => h.player.snapshot().transitioning);
-  h.second.currentTime = 0.1;
   h.player.pause();
-  await settleUntil(() => !h.player.snapshot().transitioning);
+  assert.equal(await h.player.next(), false);
+  assert.equal(h.player.snapshot().track.id, h.entries[1].id);
+  assert.equal(h.media.src, h.entries[1].url);
   assert.equal(h.media.paused, true);
   assert.equal(h.second.paused, true);
-  assert.equal(h.player.snapshot().positionSeconds, 0.1);
   assert.equal(h.player.snapshot().desired, false);
   assert.deepEqual(h.created, []);
   assert.deepEqual(h.revoked, []);
 });
 
-test('remote crossfade denial reuses the permitted deck for a sequential boundary', async (t) => {
-  const h = remotePairSetup({ fadeMs: 20 });
+test('a remote media error advances on one deck and a stall cannot poison later playback', async (t) => {
+  const h = remotePairSetup();
   t.after(() => h.player.dispose());
   await h.player.playRemotePlaylist(h.entries, { repeat: 'off' });
-  await settleUntil(() => h.player.snapshot().preloadedTrackId === h.entries[1].id);
-  h.second.rejectPlay = new DOMException('This element needs a fresh gesture.', 'NotAllowedError');
-  assert.equal(await h.player.next(), true);
-  assert.equal(h.second.plays, 1);
+  const staleError = [...h.listeners.get('error')][0];
+  h.media.emit('error');
+  await settleUntil(() => h.player.snapshot().track.id === h.entries[1].id);
   assert.equal(h.media.plays, 2);
   assert.equal(h.media.src, h.entries[1].url);
   assert.equal(h.player.snapshot().track.id, h.entries[1].id);
-  assert.equal(h.player.snapshot().transitioning, false);
-  assert.deepEqual(h.created, []);
-  assert.deepEqual(h.revoked, []);
+  staleError();
+  await delay(0);
+  assert.equal(h.player.snapshot().track.id, h.entries[1].id);
+  assert.equal(h.player.snapshot().playing, true);
+  assert.equal(h.second.plays, 0);
+});
+
+test('remote no-progress recovery falls back to included music and remains switchable', async (t) => {
+  const second = audioHarness().media,
+    [remote] = resolvedRemoteTracks([{ sha256: '7'.repeat(64), title: 'Stalling stream' }]),
+    h = setup({
+      library: list([synthIds[0]], 'all'),
+      secondAudioElement: second,
+      remoteStallMs: 15,
+    });
+  t.after(() => h.player.dispose());
+  assert.equal(await h.player.playRemotePlaylist([remote]), true);
+  await settleUntil(() => h.player.snapshot().track?.kind === 'synth');
+  assert.equal(h.player.snapshot().playing, true);
+  assert.equal(h.player.snapshot().desired, true);
+  assert.equal(second.plays, 0);
+  assert.equal(await h.player.selectPlaylist('builtin.all'), true);
+  assert.equal(h.player.snapshot().track.kind, 'synth');
+});
+
+test('a remote play promise which never settles cannot leave the transport loading forever', async (t) => {
+  const [remote] = resolvedRemoteTracks([{ sha256: '9'.repeat(64), title: 'Pending stream' }]),
+    h = setup({ library: list([synthIds[0]], 'all'), remoteStallMs: 15 });
+  t.after(() => h.player.dispose());
+  h.media.play = function () {
+    this.plays++;
+    return new Promise(() => {});
+  };
+  void h.player.playRemotePlaylist([remote]);
+  await settleUntil(() => h.player.snapshot().track?.kind === 'synth');
+  assert.equal(h.player.snapshot().status, 'playing');
+  assert.equal(h.player.snapshot().desired, true);
+  assert.match(h.player.snapshot().notice, /stopped responding/);
+});
+
+test('online and included tracks form one trusted ordered session queue', async (t) => {
+  const second = audioHarness().media,
+    [remote] = resolvedRemoteTracks([{ sha256: '8'.repeat(64), title: 'Mixed stream' }]),
+    library = { ...list([synthIds[0], original.track.id], 'off'), tracks: [original.track] },
+    h = setup({ library, secondAudioElement: second, fadeMs: 0 });
+  t.after(() => h.player.dispose());
+  assert.equal(
+    await h.player.playRemotePlaylist([remote], {
+      order: 'ordered',
+      repeat: 'off',
+      mixWithLibrary: true,
+    }),
+    true,
+  );
+  assert.deepEqual(h.player.snapshot().queue, [remote.id, synthIds[0], original.track.id]);
+  assert.equal(await h.player.next(), true);
+  assert.equal(h.player.snapshot().track.id, synthIds[0]);
+  assert.equal(await h.player.next(), true);
+  assert.equal(h.player.snapshot().track.id, original.track.id);
+  assert.equal(h.media.src.startsWith('blob:'), true);
+  assert.equal(second.plays, 0);
+  assert.equal(await h.player.next(), false);
+  assert.equal(h.player.snapshot().status, 'ended');
+});
+
+test('Recording mode filters restricted remote tracks without dropping included mixed tracks', async (t) => {
+  const library = upgradeSoundtrackLibrary(list([synthIds[0]], 'off')),
+    [allowed, blocked] = resolvedRemoteTracks([
+      { sha256: 'a'.repeat(64), recordingModeEligible: true, contentId: false },
+      { sha256: 'b'.repeat(64), recordingModeEligible: false, contentId: true },
+    ]),
+    h = setup({ library, fadeMs: 0 });
+  t.after(() => h.player.dispose());
+  await h.player.playRemotePlaylist([allowed, blocked], {
+    repeat: 'off',
+    mixWithLibrary: true,
+  });
+  assert.deepEqual(h.player.snapshot().queue, [allowed.id, blocked.id, synthIds[0]]);
+  h.player.setLibrary({
+    ...library,
+    listening: { ...library.listening, recordingMode: true },
+  });
+  assert.equal(await h.player.next(), true);
+  assert.equal(h.player.snapshot().track.id, synthIds[0]);
+  assert.deepEqual(h.player.snapshot().queue, [allowed.id, synthIds[0]]);
 });
 
 test('two streaming decks preload only the next track and genuinely overlap the audible boundary', async (t) => {
