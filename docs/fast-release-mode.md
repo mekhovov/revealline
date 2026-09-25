@@ -59,17 +59,18 @@ need to be re-enabled.
 
 ## What still blocks GitHub Pages
 
-Publication continues to require the reviewed main selector, the highest stable release match,
-bounded ZIP extraction, frozen archive and metadata validation, exact artifact assembly, an
-independent reread of every prepared artifact byte, a final latest-release recheck, and the
+Fast pull-request previews validate the selector, highest stable release match, admitted archives,
+metadata, and bounded extraction rules without assembling the complete Pages artifact. Exact
+artifact assembly and the independent reread of every prepared byte are deferred to the main
+publication, where they remain mandatory together with the final latest-release recheck and the
 main-only `github-pages` deployment environment. These checks prevent publishing the wrong or
-corrupt frozen release and are not performance-only validation.
+corrupt frozen release and are not waived.
 
 The release event only routes an eligible tag to the sole publisher. It does not rebuild historical
-source or rerun the full test suite. Workflow, policy, skill, documentation, evidence-only, and
-controller-test-only merges receive their pull-request preview but do not redeploy unchanged Pages
-bytes after merge. A reviewed selector change or an eligible release event remains the production
-trigger.
+source or rerun the full test suite. Source-qualification consumer changes, workflow, policy, skill,
+documentation, evidence-only, and controller-test-only merges receive their bounded pull-request
+validation but do not redeploy unchanged Pages bytes after merge. A reviewed selector change or an
+eligible release event remains the production trigger.
 
 ## Restore the full pipeline
 
