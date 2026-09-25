@@ -752,3 +752,24 @@ while retaining a typed Ukrainian name, its cursor/focus and the chosen parent c
 fields were restored without applying changes; the saved checkpoint remains 1. The final
 reload confirms both accessible names in Ukrainian and no captured console warnings/errors.
 Remaining dynamic subeditor text and final whole-project validation are still outstanding.
+
+## Studio contact-bonus editor
+
+Bonus selection/options, guidance, qualification, action/confirmation labels and feedback now
+use live translations. The editor reuses board bonus names and the shared item-caption pattern.
+Primary authoring failures carry explicit message descriptors; the API still throws the same
+TypeError with its canonical English message. UI consumers resolve that descriptor on each
+locale refresh. This changes neither valid content records nor serialized errors/identities.
+Deeper shared compiler errors remain part of the remaining error migration.
+
+All 6 existing bonus tests and 3 new locale-behavior tests pass. The new tests verify unchanged
+option nodes, selection, coordinates, focus/cursor, no draft reads/writes on locale changes,
+translated existing failures, unchanged canonical errors, and an armed two-action removal that
+remains armed through switching. Changed-file lint/format and source/key/plural checks pass
+(7,836 messages / 6,265 references).
+
+Browser validation with an invalid bonus ID displays the corresponding Ukrainian error, then
+switches that existing message to English and back from another tab. Typed coordinates, ID and
+cursor/focus remain unchanged; draft bonuses remain empty and checkpoint 1 is unchanged. Test
+fields were cleared afterwards. Full repository validation is running at this checkpoint;
+final builds, native staging and full coverage are not implied by the focused checks.
