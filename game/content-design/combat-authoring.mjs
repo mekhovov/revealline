@@ -1,12 +1,17 @@
-import { dataIdentity, required } from '../data-json.mjs';
+import { requireAuthoring as required } from './authoring-error.mjs';
+import { dataIdentity } from '../data-json.mjs';
 import { compileContentProject } from './project.mjs';
 import { COMBAT_ACTOR_CATALOG } from './catalogs.mjs';
 
 function ownedMission(source, missionId) {
   const project = structuredClone(compileContentProject(source).source);
   const mission = project.missions.find((entry) => entry.id === missionId);
-  required(mission, 'Choose an existing mission.');
-  required(!mission.modes.includes('team'), 'Optional combat authoring is not qualified for Team.');
+  required(mission, 'Choose an existing mission.', 'errors:studio.existingMission');
+  required(
+    !mission.modes.includes('team'),
+    'Optional combat authoring is not qualified for Team.',
+    'errors:studio.combat.teamUnavailable',
+  );
   return { project, mission };
 }
 
@@ -48,8 +53,16 @@ export function prepareCombatAuthoring(source, missionId) {
 /** Explicit on/off editions preserve authored actors and receive fresh ancestry. */
 export function setMissionCombatEnabled(source, missionId, enabled) {
   const { project, mission } = ownedMission(source, missionId);
-  required(typeof enabled === 'boolean', 'Combat enabled must be an explicit boolean.');
-  required(Object.hasOwn(mission, 'combat'), 'Prepare combat authoring for this mission first.');
+  required(
+    typeof enabled === 'boolean',
+    'Combat enabled must be an explicit boolean.',
+    'errors:studio.combat.enabledBoolean',
+  );
+  required(
+    Object.hasOwn(mission, 'combat'),
+    'Prepare combat authoring for this mission first.',
+    'errors:studio.combat.prepareFirst',
+  );
   if (mission.combat.enabled === enabled) return project;
   mission.combat.enabled = enabled;
   return finish(project, mission, { action: 'set-mission-combat-enabled', enabled });
