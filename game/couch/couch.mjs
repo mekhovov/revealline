@@ -3330,7 +3330,6 @@ try {
       confirm: 'South',
       back: 'East',
     }),
-    activateControl: (element) => controllerConfirmGuard.activate(element),
     getReadingPrompt: readingPrompt,
     onNativeInput: (event) => setReadingModality(nextInputModality(readingModality, event)),
     onBack: () =>

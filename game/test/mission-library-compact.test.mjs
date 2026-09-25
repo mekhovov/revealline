@@ -23,7 +23,7 @@ function setup({ compact = true } = {}) {
     },
   };
   doc.defaultView.matchMedia = (query) => {
-    assert.equal(query, '(max-width: 600px), (max-height: 720px)');
+    assert.equal(query, '(max-width: 600px), (max-height: 480px)');
     return media;
   };
   doc.defaultView.IntersectionObserver = class {
@@ -234,10 +234,10 @@ test('compact transition keeps focused filters reachable without resetting mode 
   p.chooser.destroy();
 });
 
-test('compact cards keep image previews while optional details do not rebuild or launch', () => {
+test('detailed compact cards are opt-in without rebuilding buttons or launching missions', () => {
   const p = setup();
   const card = p.$('journey-cards').children[0];
-  assert(p.observations > 0, 'Image-led compact cards observe near-viewport previews.');
+  assert.equal(p.observations, 0, 'Compact browsing does not build hidden diagrams.');
   p.$('journey-filter-details').open = true;
   const control = p.$('journey-detailed-cards');
   control.focus();
@@ -257,38 +257,12 @@ test('compact cards keep image previews while optional details do not rebuild or
 
 test('compact CSS reserves mission space and retains accessible target sizing', async () => {
   const css = await readFile(new URL('../ui/journey.css', import.meta.url), 'utf8');
-  assert.match(css, /@media \(max-width: 600px\), \(max-height: 720px\)/);
-  assert.match(css, /grid-template-rows: auto auto auto auto minmax\(9rem, 1fr\) auto auto/);
-  assert.match(
-    css,
-    /#journey-chooser\.mission-library-chooser\[open\] \{[^}]*grid-template-rows: auto auto auto auto auto minmax\(0, 1fr\) auto auto;[^}]*overflow: hidden;/s,
-    'The setup summary owns an explicit row while the mission grid owns bounded scrolling.',
-  );
-  assert.match(
-    css,
-    /@media \(min-width: 1200px\) and \(max-height: 720px\) \{\s*#journey-chooser\.mission-library-chooser \.journey-cards \{\s*grid-template-columns: repeat\(4, minmax\(0, 1fr\)\);/s,
-    'Short handheld and desktop layouts keep mission names readable instead of forcing six narrow columns.',
-  );
-  assert.match(
-    css,
-    /mission-library-chooser:not\(\.mission-library-detailed\)[^{]*\.journey-card[^{]*:is\([^{]*\.journey-card-campaign/s,
-    'Compact cards do not repeat the campaign title beside the mission name.',
-  );
-  assert.match(
-    css,
-    /mission-library-chooser:not\(\.mission-library-detailed\) \.journey-card > strong \{[^}]*grid-column: 2;[^}]*grid-row: 2;/s,
-    'Compact mission names own the readable content column instead of falling into the number column.',
-  );
+  assert.match(css, /@media \(max-width: 600px\), \(max-height: 480px\)/);
+  assert.match(css, /grid-template-rows: auto auto auto minmax\(9rem, 1fr\) auto/);
   assert.match(css, /journey-filter-details > summary \{[^}]*min-height: 44px/s);
   assert.match(css, /mission-library-setup > summary \{[^}]*min-height: 44px/s);
   assert.match(css, /mission-library-chooser \.journey-filter-options \{[^}]*overflow: auto/s);
-  assert.match(css, /journey-campaign-shortcut \{[^}]*min-height: 44px/s);
-  assert.match(css, /grid-template-columns: repeat\(2, minmax\(0, 1fr\)\)/);
-  assert.doesNotMatch(
-    css,
-    /mission-library-chooser:not\(\.mission-library-detailed\) \.journey-card-map/,
-    'Compact cards keep their map or earned-art preview visible.',
-  );
+  assert.match(css, /mission-library-chooser:not\(\.mission-library-detailed\) \.journey-card-map/);
   assert.match(
     css,
     /\.journey-search-controls \{[^}]*display: flex;[^}]*align-items: end;[^}]*min-width: 0;/s,
@@ -303,7 +277,7 @@ test('compact CSS reserves mission space and retains accessible target sizing', 
 
 test('compact controls override inherited dialog panel spacing without shrinking targets', async () => {
   const css = await readFile(new URL('../ui/journey.css', import.meta.url), 'utf8');
-  const compact = css.slice(css.indexOf('@media (max-width: 600px), (max-height: 720px)'));
+  const compact = css.slice(css.indexOf('@media (max-width: 600px), (max-height: 480px)'));
   assert.match(
     compact,
     /#journey-chooser\.mission-library-chooser \.journey-filter-details,\s*#journey-chooser\.mission-library-chooser \.mission-library-setup \{[^}]*margin: 0;[^}]*padding: 0;[^}]*border: 0;/s,
@@ -334,7 +308,7 @@ test('short landscape setup fields scroll above an unchanged reachable footer', 
   );
   assert.match(
     landscape,
-    /\.mission-library-setup\s+>\s+\.mission-picker-setup-fields \{[^}]*position: absolute;[^}]*bottom: calc\(100% \+ 0\.35rem\);[^}]*max-height: min\(24rem, calc\(100dvh - 8rem\)\);[^}]*overflow: auto;/s,
+    /\.mission-library-setup > \.mission-picker-setup-fields \{[^}]*position: absolute;[^}]*bottom: calc\(100% \+ 0\.35rem\);[^}]*max-height: min\(24rem, calc\(100dvh - 8rem\)\);[^}]*overflow: auto;/s,
     'Opening settings must not grow the footer beyond the short viewport.',
   );
 });
