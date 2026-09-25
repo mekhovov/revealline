@@ -90,6 +90,16 @@
   function apply(element, field, value, assigning = false) {
     const text = render(value);
     if (field === 'textContent') {
+      // Keep native gesture targets intact, but retain the newly accepted producer.
+      // The first DOM binding still establishes ownership before controls are appended.
+      if (
+        assigning &&
+        element.textContent === text &&
+        (textNodes.has(element) ||
+          !element.ownerDocument?.createTextNode ||
+          typeof element.append !== 'function')
+      )
+        return text;
       // A label may acquire a select, icon or input after its caption is bound.
       // Language changes update the owned text node, preserving those controls.
       const owned = textNodes.get(element)?.deref();

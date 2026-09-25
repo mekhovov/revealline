@@ -398,40 +398,80 @@
             >
               Progress not saved · Save options
             </button>
-            <button id="race-chapter-retry" type="button" hidden>Retry picture</button>
-            <button id="race-picture-cancel" type="button" hidden>Cancel picture loading</button>
-            <button id="race-chapters" type="button">Browse missions</button>
+            <button
+              id="race-chapter-retry"
+              type="button"
+              hidden
+              data-i18n="interface:retryPicture2"
+            >
+              Retry picture
+            </button>
+            <button
+              id="race-picture-cancel"
+              type="button"
+              hidden
+              data-i18n="interface:cancelPictureLoading"
+            >
+              Cancel picture loading
+            </button>
+            <button id="race-chapters" type="button" data-i18n="interface:browseMissions">
+              Browse missions
+            </button>
             <details id="race-optional-setup" class="race-optional-setup">
               <summary id="race-optional-setup-toggle">Match options</summary>
               <div class="race-fields">
                 <label
-                  >Actors<select id="race-actor-style" aria-describedby="race-actor-style-status">
-                    <option value="fpv">FPV Field Kit</option>
-                    <option value="campaign">Campaign actors</option>
+                  ><span data-i18n="interface:actors">Actors</span
+                  ><select id="race-actor-style" aria-describedby="race-actor-style-status">
+                    <option value="fpv" data-i18n="interface:fpvFieldKit">FPV Field Kit</option>
+                    <option value="campaign" data-i18n="interface:campaignActors">
+                      Campaign actors
+                    </option>
                   </select></label
                 >
-                <p id="race-actor-style-status" class="race-footnote" role="status">
+                <p
+                  id="race-actor-style-status"
+                  class="race-footnote"
+                  role="status"
+                  data-i18n="interface:couch.actorStyleNextRace"
+                >
                   New races use this actor style. Rematch keeps the accepted style.
                 </p>
                 <label id="race-journey-difficulty-field" hidden
-                  >Difficulty
-                  <select id="race-journey-difficulty"></select>
+                  ><span data-i18n="interface:difficulty">Difficulty</span
+                  ><select id="race-journey-difficulty"></select>
                   <span id="race-journey-difficulty-note" role="status"></span>
                 </label>
                 <div id="race-journey-preferences-recovery" hidden>
                   <p id="race-journey-preferences-message" role="status"></p>
-                  <button id="race-journey-preferences-retry" type="button">
+                  <button
+                    id="race-journey-preferences-retry"
+                    type="button"
+                    data-i18n="interface:retrySavingDifficulty"
+                  >
                     Retry saving difficulty
                   </button>
-                  <button id="race-journey-preferences-export" type="button">
+                  <button
+                    id="race-journey-preferences-export"
+                    type="button"
+                    data-i18n="interface:exportDifficulty"
+                  >
                     Export difficulty
                   </button>
                 </div>
                 <button id="race-focus" type="button">Advanced setup</button>
               </div>
             </details>
-            <button id="race-options" type="button">Settings</button>
-            <button id="race-quick-sound" type="button" class="quick-sound" aria-pressed="false">
+            <button id="race-options" type="button" data-i18n="common:navigation.settings">
+              Settings
+            </button>
+            <button
+              id="race-quick-sound"
+              type="button"
+              class="quick-sound"
+              aria-pressed="false"
+              data-i18n="interface:soundOff"
+            >
               Sound: off
             </button>
             <button id="race-help" type="button" data-i18n="common:navigation.howToPlay">How to play</button>
