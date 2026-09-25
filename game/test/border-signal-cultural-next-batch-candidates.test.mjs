@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
+import { parse } from 'parse5';
 import {
   BORDER_SIGNAL_CULTURAL_NEXT_BATCH_REVISION,
   BORDER_SIGNAL_CULTURAL_NEXT_BATCH_SELECTIONS,
@@ -307,8 +308,25 @@ test('registered v13 successor preserves v12 and authored order with isolated ow
 test('Studio exposes v12 and v13 separately and defaults its selector to v13', async () => {
   const html = await readFile(new URL('../studio/index.html', import.meta.url), 'utf8');
   const script = await readFile(new URL('../studio/studio.mjs', import.meta.url), 'utf8');
-  assert.match(html, /value="border-cultural-routes-1">/);
-  assert.match(html, /value="border-signal-cultural-routes-1" selected/);
+  const nodes = [];
+  const visit = (node) => {
+    nodes.push(node);
+    node.childNodes?.forEach(visit);
+  };
+  visit(parse(html));
+  const attribute = (node, name) => node.attrs?.find((item) => item.name === name)?.value;
+  const selector = nodes.find((node) => attribute(node, 'id') === 'whole-variety-edition');
+  const options = selector.childNodes.filter((node) => node.tagName === 'option');
+  assert.equal(
+    options.filter((node) => attribute(node, 'value') === 'border-cultural-routes-1').length,
+    1,
+  );
+  assert.deepEqual(
+    options
+      .filter((node) => attribute(node, 'selected') !== undefined)
+      .map((node) => attribute(node, 'value')),
+    ['border-signal-cultural-routes-1'],
+  );
   assert.match(html, /journey=whole-spatial-v13/);
   assert.match(
     script,
