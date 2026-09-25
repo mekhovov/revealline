@@ -10378,7 +10378,7 @@ try {
       if (revision === unifiedOpenRevision) {
         failed = true;
         localizedText(feedback, () => t('interface:missionsCouldNotLoadChooseMissionsToRetry'));
-        warning(`Mission library could not open: ${error.message}`);
+        warning(localizedMessage('interface:missionLibrary.openFailed', { error: error.message }));
       }
     } finally {
       opening.dispose();
@@ -10443,7 +10443,9 @@ try {
         journeySkipArmed = runId;
         localizedText($('journey-skip'), () => t('interface:confirmSkip'));
         warning(
-          `Skip to ${next.name}? No clear is awarded. You can return at any time. Activate Confirm skip to continue.`,
+          localizedMessage('interface:journey.skipConfirm', {
+            mission: contentText(next, 'name'),
+          }),
         );
         $('journey-skip').focus({ preventScroll: true });
         return;
@@ -10457,9 +10459,8 @@ try {
       try {
         await downloadJSON(JSON.parse(journeyProfile.export()), journeyProfile.backupFilename);
       } catch (error) {
-        localizedText(
-          $('journey-save-message'),
-          () => `Export failed: ${error.message}. Your session progress is still here.`,
+        localizedText($('journey-save-message'), () =>
+          t('interface:journey.progressExportError', { error: error.message }),
         );
       }
     };
@@ -10501,9 +10502,8 @@ try {
           );
       } catch (error) {
         if (ticket === exportSequence && !$('journey-preferences-recovery').hidden)
-          localizedText(
-            $('journey-preferences-message'),
-            () => `Export failed: ${error.message}. Your session difficulty choice is still here.`,
+          localizedText($('journey-preferences-message'), () =>
+            t('interface:journey.preferenceExportError', { error: error.message }),
           );
       }
     };
@@ -10613,7 +10613,7 @@ try {
       if (!pack) throw new Error(t('interface:installThisWorldBeforeChoosingIt'));
       preparationStatus(
         onStatus,
-        `Verifying ${summary.name}…`,
+        localizedMessage('interface:optionalChapters.verifying', { chapter: summary.name }),
         'verifying',
         () => !signal?.aborted,
       );
@@ -10837,7 +10837,11 @@ try {
         }
       } catch (error) {
         if (revision === unifiedOpenRevision)
-          warning(`Requested mission could not open: ${error.message}`);
+          warning(
+            localizedMessage('interface:missionLibrary.requestedMissionFailed', {
+              error: error.message,
+            }),
+          );
       } finally {
         opening.dispose();
       }
