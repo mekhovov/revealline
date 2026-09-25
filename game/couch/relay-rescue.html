@@ -304,7 +304,7 @@
                   >
                     Progress not saved · Save options
                   </button>
-                  <button id="coop-view-picture" type="button" hidden data-i18n="interface:viewPicture2">View picture</button>
+                  <button id="coop-view-picture" type="button" hidden data-i18n="common:actions.viewPicture">View picture</button>
                   <button id="coop-retry" type="button" data-i18n="interface:retrySameArena">Retry same arena</button>
                   <button id="coop-discovery-paused" type="button" data-i18n="interface:browseTeamArenas">Browse Team arenas</button>
                   <div id="coop-pause-core" class="coop-pause-core" hidden>
@@ -573,7 +573,7 @@
             id="coop-discovery-preview-retry"
             type="button"
             hidden
-            data-i18n="interface:retryPreview"
+            data-i18n="common:preview.retry"
           >
             Retry preview
           </button>
@@ -589,7 +589,7 @@
             id="coop-discovery-cancel"
             type="button"
             hidden
-            data-i18n="interface:cancelPreparation"
+            data-i18n="common:actions.cancelPreparation"
           >
             Cancel preparation
           </button>
@@ -1020,10 +1020,10 @@
           hidden
         >
           <h3 data-i18n="interface:audio">Audio</h3>
-          <button id="coop-audio" type="button" data-i18n="interface:unmuteSound">
+          <button id="coop-audio" type="button" data-i18n="common:audio.unmute">
             Unmute sound
           </button>
-          <label for="coop-master-volume" data-i18n="interface:masterSoundVolume"
+          <label for="coop-master-volume" data-i18n="common:audio.masterVolume"
             >Master sound volume</label
           >
           <input id="coop-master-volume" type="range" min="0" max="1" step="0.01" value="0.65" />
@@ -1047,11 +1047,13 @@
           <label for="coop-text-face" data-i18n="interface:textStyle">Text style</label>
           <select id="coop-text-face">
             <option value="pixel" data-i18n="interface:themeFont">Theme font</option>
-            <option value="plain" data-i18n="interface:plain">Plain</option>
+            <option value="plain" data-i18n="common:text.plain">Plain</option>
           </select>
           <label for="coop-text-size" data-i18n="interface:textSize">Text size</label>
           <select id="coop-text-size">
-            <option value="standard" data-i18n="interface:standard">Standard</option>
+            <option value="standard" data-i18n="interface:display.textSize.standard">
+              Standard
+            </option>
             <option value="large" data-i18n="interface:large">Large</option>
           </select>
           <label class="field-kit-page-text"

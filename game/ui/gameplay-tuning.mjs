@@ -1,5 +1,5 @@
-import { t, localizedText } from '../i18n/index.mjs';
-import { gameplayTuningDescription } from '../gameplay-tuning.mjs';
+import { t, localizedText, localizedAttribute } from '../i18n/index.mjs';
+import { gameplayTuningDescription } from './gameplay-copy.mjs';
 
 /** Browser-wide playtest controls. Hosts own attempt replacement and awards. */
 export function mountGameplayTuning({ root, controller, getDifficulty, onChange = () => {} }) {
@@ -15,23 +15,25 @@ export function mountGameplayTuning({ root, controller, getDifficulty, onChange 
   const values = new Map();
   details.append(summary, help);
   for (const [key, label, min, max] of [
-    ['enemySpeed', t('interface:enemyPaceFactor'), 0.5, 2],
-    ['playerSpeed', t('interface:craftPaceFactor'), 0.75, 1.5],
-    ['enemyDensity', t('interface:enemyCountFactorAuthoredMinimum'), 0, 2],
+    ['enemySpeed', 'interface:enemyPaceFactor', 0.5, 2],
+    ['playerSpeed', 'interface:craftPaceFactor', 0.75, 1.5],
+    ['enemyDensity', 'interface:enemyCountFactorAuthoredMinimum', 0, 2],
   ]) {
     const field = doc.createElement('label');
     field.className = 'field';
     const caption = doc.createElement('span');
-    localizedText(caption, () => label);
+    localizedText(caption, () => t(label));
     const input = doc.createElement('input');
     input.type = 'range';
     input.min = String(min);
     input.max = String(max);
     input.step = '0.05';
-    input.setAttribute('aria-label', label);
+    localizedAttribute(input, 'aria-label', () => t(label));
     input.setAttribute('data-tuning', key);
     const value = doc.createElement('output');
-    value.setAttribute('aria-label', `${label} value`);
+    localizedAttribute(value, 'aria-label', () =>
+      t('gameplay:tuning.valueLabel', { label: t(label) }),
+    );
     input.oninput = () => {
       localizedText(value, () => `×${Number(input.value).toFixed(2)}`);
     };
@@ -58,13 +60,14 @@ export function mountGameplayTuning({ root, controller, getDifficulty, onChange 
       localizedText(values.get(key), () => `×${status.overrides[key].toFixed(2)}`);
     }
     const snapshot = controller.snapshot(getDifficulty());
-    localizedText(
-      note,
-      () =>
-        `${snapshot.adminOverride ? t('interface:playtestOverridesEnabled') : t('interface:normalDifficultyPresets')}. ` +
-        `Next attempt: ${gameplayTuningDescription(snapshot)} ` +
-        'Added counts round up, capped by safe placement in existing occupied regions; authored enemies are never removed. ' +
-        (status.error || t('interface:savedOnThisBrowser')),
+    localizedText(note, () =>
+      t('gameplay:tuning.adminNote', {
+        status: snapshot.adminOverride
+          ? t('interface:playtestOverridesEnabled')
+          : t('interface:normalDifficultyPresets'),
+        description: gameplayTuningDescription(snapshot),
+        saved: status.error || t('interface:savedOnThisBrowser'),
+      }),
     );
   };
   apply.onclick = () => {
