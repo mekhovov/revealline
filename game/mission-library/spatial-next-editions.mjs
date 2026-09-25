@@ -10,6 +10,7 @@ import { journeyLibrarySource } from './journey-source.mjs';
 import { combineJourneyLibrarySources } from './cross-mode-journey.mjs';
 import { authoredJourneyMissionTags, journeyMissionDetails } from './journey-presentation.mjs';
 import { UKRAINIAN_ORNAMENT_ATLAS_IDS } from '../content-design/ukrainian-ornament-atlas-registry.mjs';
+import { t } from '../i18n/index.mjs';
 
 const SPATIAL_V9_MISSIONS = Object.freeze(['stepping-stones', 'return-pocket', 'neutral-ground']);
 const HORIZON_V10_MISSIONS = Object.freeze(['island-outpost', 'long-way-home', 'horizon-remix']);
@@ -188,6 +189,7 @@ export async function createSpatialNextEditionSources({
       const source = journeyLibrarySource({
         editionId: route.id,
         edition: `Previous Journey · v${route.id.split('v').at(-1)}`,
+        editionLabel: () => t('interface:missionLibrary.previousJourney', { version: route.id.split('v').at(-1) }),
         catalog: { missions },
         profile: historyIndex === 0 ? profile : undefined,
         details: (mission) => journeyMissionDetails(manifestFor(mission)),
@@ -207,7 +209,7 @@ export async function createSpatialNextEditionSources({
             disposed
               ? {
                   state: 'unavailable',
-                  reason: 'This mission library is closed. Reopen missions.',
+                  reason: t('interface:missionLibrary.closedReopen'),
                 }
               : { state: 'ready' },
         },
