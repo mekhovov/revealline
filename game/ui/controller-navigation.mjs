@@ -16,6 +16,7 @@ export function attachControllerNavigation({
   onHint = () => {},
   onReadingChange = () => {},
   onNativeInput = () => {},
+  activateControl = (element) => element.click(),
   keyboard = false,
   ownsKeyboardEvent = () => false,
   onTabBoundary = () => false,
@@ -583,7 +584,7 @@ export function attachControllerNavigation({
       return hint(
         'Use keyboard or touch for text, dates and file pickers. Other controls remain available.',
       );
-    element.click();
+    activateControl(element);
   }
   function readDirection(direction) {
     const owner = reading;

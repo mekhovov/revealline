@@ -50,7 +50,6 @@ test('Steam Deck A owns its delayed Chrome activation across quick actions and d
           isPrimary: true,
           detail: 1,
           isTrusted: true,
-          sourceCapabilities: { firesTouchEvents: true },
         };
       assert.equal(target.emit('pointerdown', pointer).defaultPrevented, true);
       assert.equal(target.emit('pointerup', pointer).defaultPrevented, true);
@@ -59,7 +58,7 @@ test('Steam Deck A owns its delayed Chrome activation across quick actions and d
       assert.equal(
         target.emit('click', pointer).defaultPrevented,
         true,
-        'Chrome touch-derived trusted click echo must be consumed',
+        'Chrome trusted touch click echo must be consumed',
       );
       frame();
     };
@@ -85,6 +84,7 @@ test('Steam Deck A owns its delayed Chrome activation across quick actions and d
   );
   echo();
   assert.equal(page.$('settings-dialog').open, true, 'Settings stays open after the native echo');
+  time += 1300;
   page.doc.querySelector('button[data-close="settings-dialog"]').click();
   frame();
   assert.equal(page.$('settings-dialog').open, false);
@@ -94,6 +94,7 @@ test('Steam Deck A owns its delayed Chrome activation across quick actions and d
   assert.equal(page.$('shell-workshop-dialog').open, true);
   echo();
   assert.equal(page.$('shell-workshop-dialog').open, true, 'More stays on its intended menu');
+  time += 1300;
   page.doc.querySelector('button[data-close="shell-workshop-dialog"]').click();
   frame();
   assert.equal(page.$('shell-workshop-dialog').open, false);
@@ -180,6 +181,7 @@ test('Steam Deck trusted click tails cannot undo Start or paused-menu actions', 
   trustedClickEcho();
   assert.equal(page.doc.body.dataset.flightState, 'running', 'Start mission applies exactly once');
 
+  time += 1300;
   page.$('pause-button').click();
   assert.equal(page.$('game-overlay').dataset.kind, 'pause');
   frame();
@@ -209,6 +211,7 @@ test('Steam Deck trusted click tails cannot undo Start or paused-menu actions', 
   assert.equal(page.$('settings-dialog').open, true);
   trustedClickEcho();
   assert.equal(page.$('settings-dialog').open, true, 'paused Settings stays open');
+  time += 1300;
   page.doc.querySelector('button[data-close="settings-dialog"]').click();
   frame();
 

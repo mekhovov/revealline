@@ -53,6 +53,15 @@ function setup(t, options = {}) {
     doc.dispatchEvent(event);
     return event.defaultPrevented;
   };
+  const activate = (properties = { button: 0, detail: 0 }) => {
+    let prevented = null;
+    const accepted = guard.activate({
+      click() {
+        prevented = emit('click', properties);
+      },
+    });
+    return { accepted, prevented };
+  };
   sample();
   t.after(() => {
     guard.destroy();
@@ -65,6 +74,7 @@ function setup(t, options = {}) {
     doc,
     sample,
     emit,
+    activate,
     get nativeEvents() {
       return nativeEvents;
     },
@@ -108,11 +118,7 @@ for (const order of ['native-first', 'gamepad-first'])
     assert.equal(h.emit('pointerdown', mouse), true);
     assert.equal(h.emit('mousedown', mouse), true);
     if (order === 'native-first') assert.equal(h.sample().ui.confirm, true);
-    assert.equal(
-      h.emit('click', { button: 0, detail: 0 }),
-      false,
-      'Programmatic controller click reaches its target',
-    );
+    assert.deepEqual(h.activate(), { accepted: true, prevented: false });
     h.pad.buttons[0].pressed = false;
     h.sample();
     assert.equal(h.emit('pointerup', mouse), true);
@@ -153,11 +159,7 @@ for (const source of [
       assert.equal(h.emit('pointerdown', trusted), true);
       assert.equal(h.emit('mousedown', trusted), true);
       if (order === 'native-first') assert.equal(h.sample().ui.confirm, true);
-      assert.equal(
-        h.emit('click', { button: 0, detail: 0 }),
-        false,
-        'the intended controller click remains usable',
-      );
+      assert.deepEqual(h.activate(), { accepted: true, prevented: false });
       h.pad.buttons[0].pressed = false;
       h.sample();
       assert.equal(h.emit('pointerup', trusted), true);
@@ -214,11 +216,7 @@ test('a trusted click-only Steam echo is consumed while controller click() remai
   h.pad.buttons[0].pressed = true;
   assert.equal(h.sample().ui.confirm, true);
   h.guard.observe(true);
-  assert.equal(
-    h.emit('click', { button: 0, detail: 0 }),
-    false,
-    'the controller adapter programmatic click reaches the chosen control',
-  );
+  assert.deepEqual(h.activate(), { accepted: true, prevented: false });
   h.pad.buttons[0].pressed = false;
   h.sample();
   h.guard.observe(false);
@@ -235,6 +233,51 @@ test('a trusted click-only Steam echo is consumed while controller click() remai
     false,
     'a later independent trusted click remains usable',
   );
+});
+
+test('a controller activation owns untrusted and direct-touch release clicks until grace expires', (t) => {
+  let time = 100,
+    activations = 0;
+  const h = setup(t, { guardNow: () => time });
+  const target = {
+    click() {
+      const prevented = h.emit('click', { button: 0, detail: 0, isTrusted: false });
+      if (!prevented) activations++;
+    },
+  };
+
+  h.pad.buttons[0].pressed = true;
+  assert.equal(h.sample().ui.confirm, true);
+  h.guard.observe(true);
+  assert.equal(h.guard.activate(target), true);
+  assert.equal(activations, 1, 'the controller transaction activates once');
+  assert.equal(
+    h.emit('click', { button: 0, detail: 0, isTrusted: false }),
+    true,
+    'an untrusted compatibility click is not mistaken for the controller transaction',
+  );
+
+  h.pad.buttons[0].pressed = false;
+  h.sample();
+  h.guard.observe(false);
+  time = 116;
+  const directTouch = {
+    button: 0,
+    pointerId: 23,
+    pointerType: 'touch',
+    isPrimary: true,
+    detail: 1,
+    isTrusted: true,
+  };
+  assert.equal(h.emit('pointerdown', directTouch), true);
+  assert.equal(h.emit('pointerup', directTouch), true);
+  assert.equal(h.emit('click', directTouch), true, 'the release click cannot undo the action');
+  assert.equal(activations, 1);
+
+  time = 1351;
+  assert.equal(h.emit('pointerdown', directTouch), false, 'a later touchscreen gesture is usable');
+  assert.equal(h.emit('pointerup', directTouch), false);
+  assert.equal(h.emit('click', directTouch), false);
 });
 
 test('an incomplete primary-pointer echo expires without swallowing the next native click', (t) => {
@@ -329,11 +372,7 @@ test('a trusted Steam click arriving before the next gamepad frame is consumed',
     'the live gamepad probe owns a native-first click',
   );
   assert.equal(h.sample().ui.confirm, true, 'the same press still reaches controller navigation');
-  assert.equal(
-    h.emit('click', { button: 0, detail: 0 }),
-    false,
-    'controller navigation can still invoke the selected control',
-  );
+  assert.deepEqual(h.activate(), { accepted: true, prevented: false });
 });
 
 test('a native click that wins the first frame suppresses the matching controller click', (t) => {
@@ -355,10 +394,10 @@ test('a native click that wins the first frame suppresses the matching controlle
   assert.equal(h.sample().ui.confirm, true);
   h.guard.observe(true);
   time = 116;
-  assert.equal(
-    h.emit('click', { button: 0, detail: 0 }),
-    true,
-    'the later controller .click() cannot apply the same press twice',
+  assert.deepEqual(
+    h.activate(),
+    { accepted: false, prevented: null },
+    'the later controller activation cannot apply the same press twice',
   );
   assert.equal(h.nativeEvents, 1, 'exactly one activation reaches the control');
 });
@@ -392,10 +431,10 @@ for (const source of [
     assert.equal(h.sample().ui.confirm, true);
     h.guard.observe(true);
     time = 116;
-    assert.equal(
-      h.emit('click', { button: 0, detail: 0 }),
-      true,
-      'the later controller click cannot repeat the touch-classified activation',
+    assert.deepEqual(
+      h.activate(),
+      { accepted: false, prevented: null },
+      'the later controller activation cannot repeat the touch-classified activation',
     );
     assert.equal(h.nativeEvents, 1);
   });

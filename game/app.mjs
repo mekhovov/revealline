@@ -2401,6 +2401,7 @@ try {
       setInputModality(nextInputModality(document.body.dataset.inputMode, event));
       if (controllerScope() !== 'flight') controller.clear();
     },
+    activateControl: (element) => controllerConfirmGuard.activate(element),
     onBack: controllerBack,
     onMenu: () => {
       if (
