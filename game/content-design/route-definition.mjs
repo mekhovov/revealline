@@ -22,9 +22,33 @@ export function createAuthoredJourneyRouteDefinition(
     createWholeErosionReviewCandidates,
     createSpatialNextBatchCandidates,
     createHorizonNextBatchCandidates,
+    createUkrainianOrnamentJourney,
+    createUkrainianOrnamentAtlasJourney,
   },
 ) {
   if (!isAuthoredJourneyRouteId(id)) return null;
+  if (id === 'whole-ornament-v2')
+    return freezeDesign({
+      id,
+      label: 'Ukrainian ornament atlas · twelve studies · balance pending',
+      sessionKey: 'revealline.suspended.journey-whole-ornament.v2',
+      profileKey: 'journey-whole-ornament-v2',
+      source: createUkrainianOrnamentAtlasJourney({ artwork: true }),
+      corePackIds: [...WHOLE_JOURNEY_CORE_PACK_IDS],
+      optionalCampaignIds: ['ornament-crossings', 'workshop-routing'],
+      preserveOriginalThemes: true,
+    });
+  if (id === 'whole-ornament-v1')
+    return freezeDesign({
+      id,
+      label: 'Ukrainian ornament spatial review · balance pending',
+      sessionKey: 'revealline.suspended.journey-whole-ornament.v1',
+      profileKey: 'journey-whole-ornament-v1',
+      source: createUkrainianOrnamentJourney({ artwork: true }),
+      corePackIds: [...WHOLE_JOURNEY_CORE_PACK_IDS],
+      optionalCampaignIds: ['ornament-crossings', 'workshop-routing'],
+      preserveOriginalThemes: true,
+    });
   if (id === 'whole-spatial-v11')
     return freezeDesign({
       id,
