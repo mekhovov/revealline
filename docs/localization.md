@@ -333,3 +333,38 @@ lint and formatting pass; the final two teardown files also pass the targeted fo
 check. A broader host regression has 38 passes and six failures; baseline comparison is
 still running, so these failures are not yet classified. The web/native artifacts above
 predate this batch and must be refreshed.
+
+## Optional chapter browser checkpoint
+
+Rebased onto publication main `06308312a`. That update adds v0.113.0 publication
+records; immutable release artifacts were left unchanged. All six display-host failures
+reported above also reproduce on baseline `0395ddbda`, including the Controller storage
+listener assertion; no assertion was weakened.
+
+Optional chapter filters now use canonical Arcade/Tactical/Other values independently
+of their translated labels. Labels, descriptions, page counts, byte sizes, recovery
+instructions, accepted preparation phases, cancellation and picture-review messages
+update in place. Complete flight/race sentences preserve grammatical context. Exact
+source-edition adapters retain the original serializable descriptor and gameplay/picture
+digests separately from host callbacks; edited content keeps its authored text. All 16
+source editions are registered. No content record, gameplay rule or save format changed.
+Catalog coverage is 7,275 messages / 5,846 referenced keys.
+
+The latest panel suite passes 95 of 97 checks; two real Solo tests timed out waiting for
+initial picture loading while other validation work was active. Both pass in the isolated
+four-test description-host rerun. Six new localization tests pass, covering Ukrainian-first
+filters, immutable content identities, retained controls/files/focus/page, pending downloads,
+cancellation, plural categories and live errors/frozen phase reports. Full validation,
+lint and formatting pass for this checkpoint.
+
+The current Solo and Versus menus route to the unified library. An isolated browser
+preview of the actual optional component verifies Ukrainian and English presentation,
+filter/recovery/focus retention and live missing-file errors. At 320 pixels with Large
+text, its dialog measures 286 pixels with matching scroll width (no horizontal overflow).
+This component preview does not certify a real optional-chapter launch. The separate
+full-flight checks above remain the relevant simulation evidence. The preview tab and
+server were closed; the viewport override was reset.
+
+A new audit finding remains: Solo's profile-writer warning about another saving tab is
+still English. Also, the full-suite failure inventory and uncatalogued owned text remain
+open; this is not a merge-readiness claim. Build/native artifacts above predate this batch.
