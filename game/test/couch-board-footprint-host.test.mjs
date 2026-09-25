@@ -557,7 +557,7 @@ test('actual Versus fallback refits wrapping statistics after a normal capture b
             const text = document.getElementById(`racer-stats-${seat}`).textContent;
             // Finite layout boundary: earned points make the real HUD wrap.
             // Neither the fixture nor this getter edits a run or a HUD label.
-            const points = Number(/(\d+) points/.exec(text)?.[1] || 0);
+            const points = Number(/(\d+) pts/.exec(text)?.[1] || 0);
             return points > 0 ? [225, 234][seat] : 300;
           },
         });
@@ -608,7 +608,7 @@ test('actual Versus fallback refits wrapping statistics after a normal capture b
     ],
   );
   for (const paint of capturePaints)
-    assert.ok(paint.points.every((text) => Number(/(\d+) points/.exec(text)?.[1]) > 0));
+    assert.ok(paint.points.every((text) => Number(/(\d+) pts/.exec(text)?.[1]) > 0));
   const checkpoint = page.checkpoint(),
     reads = geometryReads;
   page.frames(3, 0);
