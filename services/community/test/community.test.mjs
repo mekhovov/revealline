@@ -3,9 +3,11 @@ import { createHash } from 'node:crypto';
 import { mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
+import { Readable } from 'node:stream';
 import test from 'node:test';
 import pngjs from 'pngjs';
 import { memoryAdapter } from '@better-auth/memory-adapter';
+import { MemoryLocker } from '@tus/server';
 import { buildCommunityApp } from '../src/app.mjs';
 import { createSessionAuthenticator, createTokenAuthenticator } from '../src/auth.mjs';
 import { DiskBlobStore, MemoryBlobStore, S3CompatibleBlobStore } from '../src/blob-store.mjs';
@@ -164,6 +166,12 @@ test('executable configuration refuses implicit development authentication', () 
   assert.equal(config.maxPackageBytes, 256 * 1024 * 1024);
   assert.deepEqual(config.admissionPolicies.auth, { limit: 30, windowMs: 300_000 });
   assert.equal(config.admissionPolicies.uploadBytes.limit, 2 * 1024 * 1024 * 1024);
+  assert.equal(config.tusExpirationMs, 86_400_000);
+  assert.equal(config.tusCleanupIntervalMs, 300_000);
+  assert.equal(config.tusCleanupBatchSize, 32);
+  assert.equal(config.tusCleanupLeaseMs, 120_000);
+  assert.equal(config.tusLockTimeoutMs, 30_000);
+  assert.equal(config.tusLockPoolSize, 20);
   assert.throws(
     () =>
       readConfig({
@@ -172,6 +180,14 @@ test('executable configuration refuses implicit development authentication', () 
         COMMUNITY_UPLOAD_BYTES_PER_WINDOW: '1000',
       }),
     /allow at least one maximum package/u,
+  );
+  assert.throws(
+    () =>
+      readConfig({
+        COMMUNITY_ALLOW_DEV_AUTH: 'true',
+        COMMUNITY_TUS_CLEANUP_BATCH_SIZE: '257',
+      }),
+    /must not exceed 256/u,
   );
 });
 
@@ -709,6 +725,46 @@ test('worker infrastructure errors requeue the job instead of publishing or reje
   await app.close();
 });
 
+test('worker authenticates staged package bytes and closes a rejected body before validation', async () => {
+  const repository = new MemoryCommunityRepository();
+  const { app } = await fixture({ repository });
+  const { created } = await createAndUpload(app);
+  await app.inject({
+    method: 'POST',
+    url: `/v1/submissions/${created.submission.id}/submit`,
+    headers: bearer(),
+  });
+  let closed = false,
+    validated = false;
+  const body = Readable.from(bytes);
+  body.once('close', () => {
+    closed = true;
+  });
+  await assert.rejects(
+    processNextValidationJob({
+      repository,
+      blobStore: {
+        async open() {
+          return { body, size: bytes.length, sha256: '0'.repeat(64) };
+        },
+      },
+      workerId: 'identity-worker',
+      validatePackage: async () => {
+        validated = true;
+        return { accepted: true };
+      },
+    }),
+    /different exact identity/u,
+  );
+  assert.equal(closed, true);
+  assert.equal(validated, false);
+  assert.equal(
+    (await repository.getOwnerSubmission(created.submission.id, 'creator/alice')).status,
+    'queued',
+  );
+  await app.close();
+});
+
 test('expired worker lease is restart-safe and prevents the old worker from committing', async () => {
   let time = new Date('2026-09-24T13:00:00.000Z');
   const repository = new MemoryCommunityRepository({ clock: () => time });
@@ -878,12 +934,31 @@ test('mounted tus server preserves interrupted offsets, owner isolation, and com
     'alice-token': 'creator/alice',
     'bob-token': 'creator/bob',
   });
+  const registeredUploads = [];
+  const forgottenUploads = [];
+  const uploadRegistry = {
+    async register(input) {
+      registeredUploads.push(input);
+    },
+    async forget(uploadId) {
+      forgottenUploads.push(uploadId);
+    },
+    async claimExpired() {
+      return [];
+    },
+    async completeCleanup() {},
+    async retryCleanup() {},
+  };
   const tus = createCommunityTusServer({
     directory: tusRoot,
     authenticator,
     repository,
     blobStore,
     maxPackageBytes: 1024,
+    locker: new MemoryLocker(),
+    uploadRegistry,
+    expirationMs: 60_000,
+    cleanupIntervalMs: 60_000,
   });
   const app = buildCommunityApp({
     repository,
@@ -923,7 +998,14 @@ test('mounted tus server preserves interrupted offsets, owner isolation, and com
     },
   });
   assert.equal(started.status, 201, await started.text());
+  assert.ok(started.headers.get('upload-expires'));
   const location = new URL(started.headers.get('location'), origin);
+  assert.deepEqual(registeredUploads[0], {
+    uploadId: path.basename(location.pathname),
+    submissionId: submission.id,
+    ownerSubject: 'creator/alice',
+    expirationMs: 60_000,
+  });
   const split = Math.floor(bytes.length / 2);
   const first = await fetch(location, {
     method: 'PATCH',
@@ -962,6 +1044,7 @@ test('mounted tus server preserves interrupted offsets, owner isolation, and com
   const admitted = await repository.getOwnerSubmission(submission.id, 'creator/alice');
   assert.equal(admitted.status, 'uploaded');
   assert.equal(admitted.actualSize, bytes.length);
+  assert.deepEqual(forgottenUploads, [path.basename(location.pathname)]);
 
   const browserCreated = await create(
     app,
@@ -1041,6 +1124,10 @@ test('migration defines immutable editions, bounded states, idempotent jobs, and
     new URL('../migrations/002_abuse_controls.sql', import.meta.url),
     'utf8',
   );
+  const tusSql = await readFile(
+    new URL('../migrations/003_tus_coordination.sql', import.meta.url),
+    'utf8',
+  );
   assert.match(sql, /UNIQUE \(owner_subject, slug, edition_version\)/u);
   assert.match(sql, /collection_id text NOT NULL/u);
   assert.match(sql, /community_catalog_collection_idx/u);
@@ -1057,4 +1144,7 @@ test('migration defines immutable editions, bounded states, idempotent jobs, and
   assert.match(abuseSql, /CREATE TABLE IF NOT EXISTS community_admission_windows/u);
   assert.match(abuseSql, /PRIMARY KEY \(action, subject_hash, idempotency_hash\)/u);
   assert.match(abuseSql, /community_report_triage_idx/u);
+  assert.match(tusSql, /CREATE TABLE IF NOT EXISTS community_tus_uploads/u);
+  assert.match(tusSql, /cleanup_lease_expires_at timestamptz/u);
+  assert.match(tusSql, /community_tus_expiry_idx/u);
 });
