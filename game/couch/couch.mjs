@@ -3294,6 +3294,7 @@ try {
   ]);
   navigation = attachControllerNavigation({
     onTabBoundary: () => playgroundTabBoundary({ window, suspend }),
+    activateControl: (element) => controllerConfirmGuard.activate(element),
     getScope: couchScope,
     getRoot: () =>
       music?.root() ||

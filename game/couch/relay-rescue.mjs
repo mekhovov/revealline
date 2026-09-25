@@ -598,6 +598,7 @@ export function bootCoop({
     if (pausedAttempt) {
       pauseCore.append(help);
       pauseCore.append(settings);
+      pauseCore.append(sound);
       pauseCore.append($('coop-home-paused'));
     } else {
       tools.append(help);
@@ -792,6 +793,7 @@ export function bootCoop({
   let compositeMenu = false;
   const navigation = attachControllerNavigation({
     onTabBoundary: () => playgroundTabBoundary({ window, suspend: () => suspend() }),
+    activateControl: (element) => controllerConfirmGuard.activate(element),
     getScope: scope,
     getRoot: () => {
       const modal =
