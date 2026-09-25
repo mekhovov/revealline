@@ -12,7 +12,7 @@ export function attachJourneySaveNotice({ document: doc = globalThis.document } 
   const menuLabel = menu.getAttribute('aria-label');
   let unsaved = false;
   const text = (node, value) => {
-    if (node.textContent !== value) localizedText(node, () =>value);
+    if (node.textContent !== value) localizedText(node, () => value);
   };
   action.addEventListener('blur', () => {
     if (!unsaved) action.hidden = true;
@@ -34,10 +34,10 @@ export function attachJourneySaveNotice({ document: doc = globalThis.document } 
       text(
         action,
         unsaved
-          ? t("interface:progressNotSavedSaveOptions")
+          ? t('interface:progressNotSavedSaveOptions')
           : ready && durable
-            ? t("interface:progressSavedGameMenu")
-            : t("interface:saveOptionsGameMenu"),
+            ? t('interface:progressSavedGameMenu')
+            : t('interface:saveOptionsGameMenu'),
       );
       menu.dataset.journeyUnsaved = String(unsaved);
       menu.setAttribute(
@@ -46,7 +46,7 @@ export function attachJourneySaveNotice({ document: doc = globalThis.document } 
       );
       text(
         announcement,
-        unsaved ? t("interface:journeyProgressIsNotSavedSaveOptionsAreInGame") : '',
+        unsaved ? t('interface:journeyProgressIsNotSavedSaveOptionsAreInGame') : '',
       );
       // Do not remove the currently focused Retry/Export controls on success.
       // The panel can disappear on the next status update after focus leaves it.
@@ -56,7 +56,7 @@ export function attachJourneySaveNotice({ document: doc = globalThis.document } 
         unsaved
           ? `Journey progress is session-only. Keep playing, retry saving, or export before closing. ${error}`
           : ready && durable
-            ? t("interface:journeyProgressSavedLocallyYouCanContinuePlaying")
+            ? t('interface:journeyProgressSavedLocallyYouCanContinuePlaying')
             : '',
       );
     },

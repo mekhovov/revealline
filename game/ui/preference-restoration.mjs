@@ -8,7 +8,7 @@ export function attachPreferenceRestoration({
   render,
 } = {}) {
   if (typeof getSnapshot !== 'function' || typeof render !== 'function')
-    throw new TypeError(t("interface:preferenceRestorationNeedsASnapshotReaderAndRenderer"));
+    throw new TypeError(t('interface:preferenceRestorationNeedsASnapshotReaderAndRenderer'));
   const defer = host.setTimeout?.bind(host) ?? globalThis.setTimeout,
     cancelDeferred = host.clearTimeout?.bind(host) ?? globalThis.clearTimeout;
   let disposed = false,
