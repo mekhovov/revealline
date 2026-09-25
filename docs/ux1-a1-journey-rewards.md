@@ -1,8 +1,10 @@
 # UX1-A1: exact Solo Journey pictures
 
-Status: implementation draft against main `4755a331bf06be1490d2e41bc4d1a59515a5cd0c`
-(v0.108.0). This feature does not bump the version or change a published release.
-PR404, the v0.108 publication, game rules and content are outside its scope.
+Status: reconciled local implementation candidate on the exact post-soundtrack
+Couch quick-start source `1fd63337ba1d1635d117877bf16c3e95d83a4167`.
+Trail/readability and UX2–UX5 are not stacked into this checkpoint. UX1-A1 does
+not allocate another version, push a branch, change a pull request, or alter a
+published release. Game rules and content remain outside its scope.
 
 ## Implemented slice
 
@@ -56,17 +58,23 @@ mission IDs stay in backups and appear as unavailable earlier missions.
 
 ## Focused evidence
 
-- Modeled storage, cross-mode delegation, original validation, display leases,
-  backups and existing library behavior: 99 tests passed, no skips.
-- Real Solo host: queryless `whole-spatial-v9` Home → direct Start → legal keyboard
-  win with exact independent checkpoint/public
-  replay; accepted original saved; Collection opens it; missing bytes expose Retry;
+- Reconciled reward/Collection coverage for modeled storage, cross-mode delegation,
+  original validation, display leases, backups, existing library behavior and the
+  real Solo host: 113 focused tests passed, no skips.
+- The real Solo host covers queryless `whole-spatial-v9` Home → direct Start → legal
+  keyboard win with exact independent checkpoint/public replay; accepted original
+  saved; Collection opens it; missing bytes expose Retry;
   successful retry draws the decoded original; Back restores the exact opener;
   completed card draws the earned original; fresh Retry retains it without a second
-  reward. One complete host case passed, no skips.
+  reward.
+- Current77 and retained58–76 Team picture/history authority passes 82/82 cases,
+  preserving current production history without importing Team reward admission.
+- ESLint, repository/native formatting, validation, motion syntax and an ordinary
+  1,141-file build pass. The build digest is
+  `96323b9f62bb6de29b611e1b96a9bfa9ab1a5c1d8b58066037f03992267c539f`.
 - Toolchain: Node 20.19.5; ESLint 10.10.0 and Prettier 3.6.2 used read-only from
-  `ux0-reconcile-v100/go_test/node_modules`. This is supported local Node evidence,
-  not a claim that hosted Node 22 or all source gates have passed.
+  the reviewed Couch quick-start worktree. This is supported local evidence, not
+  a claim that hosted Node 22 or all release gates have passed.
 
 These are automated/model evidence, not visual approval, physical-device checks,
 full offline readiness, every mission playthrough or a public release acceptance.
