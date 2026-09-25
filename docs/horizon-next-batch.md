@@ -1,6 +1,6 @@
 # Horizon cultural joins · v11 candidate
 
-Status: v0.114.0 source candidate reconciled onto the merged v0.113.0 route. Focused automated
+Status: v0.114.0 source candidate reconciled onto the merged v0.113.1 route. Focused automated
 qualification is required before publication; human cultural and full-clear balance review remains
 required after technical delivery.
 
