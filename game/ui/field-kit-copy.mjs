@@ -119,7 +119,7 @@ export const FIELD_KIT_KEYS = Object.freeze({
   'navigation.missions': 'interface:missions',
   'navigation.collection': 'interface:collection',
   'navigation.settings': 'common:navigation.settings',
-  'navigation.workshop': 'interface:more',
+  'navigation.workshop': 'common:navigation.more',
   'workshop.motion': 'interface:motionLab',
   'workshop.pictures': 'interface:picturesStories',
   'workshop.poster': 'interface:videoPosterWorkshop',

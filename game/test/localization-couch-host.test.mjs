@@ -16,7 +16,7 @@ test('Couch language changes translate the lobby and paused help without changin
   const before = f.checkpoint();
   setLocale('uk', { persist: false });
   assert.match(f.$('race-summary').textContent, /Одні перегони/);
-  assert.match(f.$('race-format-note').textContent, /не змінюють ваш прогрес одиночної гри/);
+  assert.match(f.$('race-format-note').textContent, /Прогрес одиночної гри зберігається окремо/);
   assert.match(f.$('race-format-help').textContent, /перемагає той/);
   assert.equal(f.$('race-level').value, selected);
   assert.equal(f.$('race-theme').value, selectedTheme);
