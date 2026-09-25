@@ -161,7 +161,7 @@ try {
     const disabled = pending || !player;
     $('play-pause').disabled = disabled || ['complete', 'error'].includes(player?.phase);
     localizedText($('play-pause'), () =>
-      player?.phase === 'playing' ? t('common:actions.pause') : t('common:actions.play'),
+      player?.phase === 'playing' ? t('common:actions.pause') : t('common:actions.playback'),
     );
     $('restart').disabled = disabled;
     $('step').disabled = disabled || ['complete', 'error'].includes(player?.phase);
