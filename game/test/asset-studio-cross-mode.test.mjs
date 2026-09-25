@@ -15,6 +15,7 @@ import { FIXED_DT } from '../coop/core.mjs';
 import { teamRescueProgress } from '../couch/coop-rescue-presentation.mjs';
 import { BoardPainter } from '../ui/render.mjs';
 import { createStudioTeamFixture } from '../../authoring/asset-studio/team-preview-fixture.mjs';
+import { getLocale, setLocale } from '../i18n/index.mjs';
 
 const ids = [
   'player.scout.compact',
@@ -129,6 +130,20 @@ test('responsive player comparisons explicitly identify an inactive selected tre
     /Selected compact artwork is inactive/,
   );
   assert.equal(playerTreatmentNote('enemy.bouncer', 390), '');
+});
+test('cross-mode preview notes switch between English and Ukrainian immediately', (context) => {
+  const locale = getLocale();
+  context.after(() => setLocale(locale, { persist: false }));
+  setLocale('en', { persist: false });
+  assert.equal(
+    playerTreatmentNote('player.scout.compact', 390),
+    'Showing the selected compact body at this width.',
+  );
+  setLocale('uk', { persist: false });
+  assert.equal(
+    playerTreatmentNote('player.scout.compact', 390),
+    'Показано вибраний корпус компактного оформлення для цієї ширини.',
+  );
 });
 test('each Versus painter receives its selected capture and failure effect', () => {
   const level = CURRENT_ART_SOURCES.find((row) => row.owner.themeId === 'fpv' && row.level).level;
