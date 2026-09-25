@@ -1879,5 +1879,18 @@
   "studio.relay.requiredOption": "{{id}} · required",
   "studio.relay.optionalOption": "{{id}} · optional",
   "studio.editor.itemDetail": "{{id}} · {{detail}}",
-  "studio.rectangle.option": "{{surface}} {{index}} · ({{x}}, {{y}}) {{width}}×{{height}}"
+  "studio.rectangle.option": "{{surface}} {{index}} · ({{x}}, {{y}}) {{width}}×{{height}}",
+  "studio.encounter.remove": "Remove Sentinel encounter",
+  "studio.encounter.qualification": "One fixed recipe: 2s warning, 0.7s attack, 3.3s shield rest; 1.5s transition; 4s core opening. Capture all shields, then close 8 new trail cells during CORE OPEN or isolate the core. Presets never shorten the warning.",
+  "studio.encounter.unavailable": "Sentinel encounters need Solo or Versus. Team behavior is not yet qualified.",
+  "studio.encounter.core": "Choose core objective",
+  "studio.encounter.noShield": "No additional shield",
+  "studio.encounter.firstShield": "Choose first shield",
+  "studio.encounter.replace": "Validate & replace shield links",
+  "studio.encounter.create": "Create Sentinel encounter",
+  "studio.encounter.help": "The Sentinel is placed on the chosen core cell. Create visible required objectives above first. Using an existing field-keeper ID explicitly replaces that keeper; no other actor is removed. Old geometry is retained and Undo is available.",
+  "studio.encounter.removed": "Removed the Sentinel and encounter links from this draft. Objectives, gates and geometry remain; inspect empty-region fill and play before publishing. Undo restores the encounter.",
+  "studio.encounter.applied": "Applied the shared Sentinel recipe, actor and shield links atomically. All supported presets and modes compiled. Preview the capture order before publishing; Undo is available.",
+  "studio.encounter.confirmRemove": "Confirm remove Sentinel",
+  "studio.encounter.removeAgain": "Activate Remove again to remove the boss and encounter links. Objectives and map geometry remain. This may make a region auto-fill; preview again. Undo remains available."
 }
