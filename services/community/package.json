@@ -1,0 +1,35 @@
+{
+  "name": "@revealline/community-service",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Self-hosted RevealLine community submission and catalog service scaffold",
+  "engines": {
+    "node": "^20.19.0 || ^22.13.0 || >=24"
+  },
+  "scripts": {
+    "dev": "node --watch src/server.mjs",
+    "start": "node src/server.mjs",
+    "worker": "node src/worker-runner.mjs",
+    "auth:migrate": "node src/auth-migrate.mjs",
+    "recovery": "node src/recovery-runner.mjs",
+    "test": "node --test test/*.test.mjs",
+    "lint": "eslint \"src/**/*.mjs\" \"test/**/*.mjs\" eslint.config.mjs --max-warnings 0",
+    "format": "prettier --write \"**/*.{mjs,json,md,yaml,yml}\"",
+    "format:check": "prettier --check \"**/*.{mjs,json,md,yaml,yml}\""
+  },
+  "dependencies": {
+    "@tus/file-store": "2.1.1",
+    "@tus/server": "2.4.5",
+    "better-auth": "1.7.6",
+    "fastify": "5.12.5",
+    "pg": "8.23.0",
+    "pngjs": "7.0.0"
+  },
+  "devDependencies": {
+    "@better-auth/memory-adapter": "1.7.6",
+    "eslint": "10.10.0",
+    "globals": "17.12.0",
+    "prettier": "3.6.2"
+  }
+}

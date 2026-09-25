@@ -83,9 +83,68 @@
         </div>
         <div class="actions">
           <button id="video-poster-capture" type="button" disabled>Capture poster</button>
+          <button id="video-poster-step-back" type="button" disabled>
+            Step toward earlier frame
+          </button>
+          <button id="video-poster-step-forward" type="button" disabled>
+            Step toward later frame
+          </button>
           <button id="video-poster-cancel" type="button" disabled>Cancel</button>
           <button id="video-poster-clear" type="button" disabled>Clear source</button>
         </div>
+      </fieldset>
+      <fieldset>
+        <legend>Playback range</legend>
+        <p>
+          This chooses when a victory story starts and stops. It keeps the complete original video
+          and does not reduce the package bytes.
+        </p>
+        <div class="range-grid">
+          <label for="video-poster-playback-start">Playback starts (seconds)</label>
+          <input
+            id="video-poster-playback-start"
+            type="number"
+            min="0"
+            max="0"
+            step="0.001"
+            value="0"
+            disabled
+          />
+          <label for="video-poster-playback-end">Playback ends (seconds)</label>
+          <input
+            id="video-poster-playback-end"
+            type="number"
+            min="0"
+            max="0"
+            step="0.001"
+            value="0"
+            disabled
+          />
+        </div>
+        <button id="video-poster-apply-range" type="button" disabled>Apply playback range</button>
+        <p id="video-poster-playback-evidence">Choose and inspect a video first.</p>
+      </fieldset>
+      <fieldset>
+        <legend>Optional physical trim</legend>
+        <p>
+          Physical trim must create different video bytes. RevealLine checks the exported hash,
+          decoded duration, picture orientation, and fresh start/end frame comparisons before
+          offering a download.
+        </p>
+        <p id="video-poster-trim-support">
+          Converter support has not been checked. The pinned converter loads only after you ask; the
+          first supported slice is silent AVC/H.264 MP4.
+        </p>
+        <div class="actions">
+          <button id="video-poster-check-trim" type="button" disabled>
+            Check physical trim support
+          </button>
+          <button id="video-poster-trim" type="button" disabled>Physically trim video</button>
+        </div>
+        <p id="video-poster-trim-evidence">
+          No physical trim has been produced. Playback range keeps the complete original video.
+        </p>
+        <a id="video-poster-trim-download" hidden>Download verified physical trim</a>
       </fieldset>
       <section id="video-poster-preview" hidden aria-labelledby="video-poster-preview-title">
         <h2 id="video-poster-preview-title">Captured PNG</h2>
@@ -105,6 +164,12 @@
           decoded-frame callback and can differ. Without that callback, the preview labels an
           approximate playhead and unavailable frame timestamp. Neither value promises arbitrary
           frame-number accuracy. Downloaded PNG bytes are the actual captured picture.
+        </p>
+        <p>
+          Frame stepping appears only after the browser reports a presented-frame timestamp. The
+          tool repeats bounded seeks until that timestamp changes; it never invents a frame rate. A
+          browser may skip more than one frame, so review the observed timestamp and PNG. Browsers
+          without that callback keep these controls disabled.
         </p>
       </details>
       <noscript
