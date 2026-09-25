@@ -838,3 +838,21 @@ and all 8 editor locale tests pass (15/15), including a new live-switch test pre
 shield links, option nodes, focus, visible model failures and armed removal without draft reads or
 writes. Removing after confirmation preserves objectives and map geometry. Changed-file lint
 and formatting pass; source/key/plural validation reports 8,035 messages / 6,466 references.
+
+## Studio launch, recovery and export copy
+
+Studio host validation, loading/readiness/retry messages and export feedback now switch in
+place. Loading captions use the accepted compiled owner and verify first-party identity before
+translating the mission name; later source edits and custom owners retain their authored text.
+Structured errors use the same live renderer in subeditors, status and preview recovery. Unknown
+host/OS diagnostics are still exposed, so deeper error translation remains an explicit gap.
+Platform export outcomes have shared keys selected by status codes; Team campaign counts include
+all four Ukrainian plural categories. Neither native result objects nor exported data are changed.
+
+All 42 surrounding Studio launch, readiness, preview and editor tests pass. Three new tests cover
+accepted/custom loading captions, existing error retranslation, platform outcomes and counts
+0/1/2/5/11/21/22/1.5. The first run's sole failure was a test expecting title case in the canonical
+`Nearby shore` name; after correcting that expectation, all 3 pass. Changed-file lint/format pass;
+source/key/plural checks report 8,060 messages / 6,490 references. Browser verification remains
+unavailable. A new fetch found two main publication commits, which add immutable v0.114.1 release
+records but no new game copy; the branch is being rebased onto that publication head.
