@@ -73,6 +73,7 @@ import {
 } from './presentation/release-pictures.mjs';
 import { createMissionPictureThumbnails } from './ui/mission-thumbnails.mjs';
 import { drawResultPicture } from './ui/result-picture.mjs';
+import { resultContinuationLabel } from './ui/result-continuation.mjs';
 import { loadExternalCatalog, prepareExternalDownload } from './external-chapter-catalog.mjs';
 import { createExternalChapterHost } from './external-chapter-host.mjs';
 import { createExternalChapterBackup } from './external-chapter-backup.mjs';
@@ -7294,13 +7295,30 @@ try {
       if (recoverGameplayTuning(run.level)?.adminOverride)
         localizedText($('result-medals'), () => '');
       const completedJourneyMission = journeyEnabled && !practice && !scenario && journeyMission();
-      localizedText($('next-button'), () =>
-        practice
-          ? t('interface:tryItYourself')
-          : completedJourneyMission && !nextJourneyMission(completedJourneyMission.id)
-            ? t('interface:browseMissions2')
-            : t('interface:nextMission'),
-      );
+      localizedText($('next-button'), () => {
+        if (practice) return t('interface:tryItYourself');
+        if (completedJourneyMission) {
+          const next = nextJourneyMission(completedJourneyMission.id);
+          return resultContinuationLabel(t, {
+            browse: !next,
+            browseKey: 'interface:browseMissions2',
+            mission: next ? contentText(next, 'name') : '',
+            campaign: next ? contentText(next, 'campaignTitle') : '',
+            crossesCampaign:
+              !!next &&
+              (next.packId !== completedJourneyMission.packId ||
+                next.campaignId !== completedJourneyMission.campaignId),
+          });
+        }
+        if (!scenario && !courseSession) {
+          const successor = authoredMissionSuccessor(activeEntry, levelIndex);
+          if (!successor.atEnd)
+            return resultContinuationLabel(t, {
+              mission: contentText(campaign.levels[successor.levelIndex], 'name'),
+            });
+        }
+        return t('interface:nextMission');
+      });
       localizedText($('overlay-footnote'), () =>
         practice
           ? t('interface:demonstrationsAndImportedMapsDoNotGrantUnlocks')
