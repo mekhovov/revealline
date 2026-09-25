@@ -835,6 +835,8 @@ try {
     defeatActive = false,
     defeatPaused = false,
     defeatRemaining = 0,
+    retryReadyCue = null,
+    retryReadyMenuOwned = false,
     sessionBusy = false,
     restoreController = null,
     themeOverride = !!rememberedSelection?.themeId,
@@ -2111,6 +2113,7 @@ try {
     if (courseBlocked()) return `course:${coursePhase}`;
     if (celebrationActive) return 'celebration';
     if (defeatActive) return 'defeat-presentation';
+    if (retryReadyCue) return 'retry-ready';
     if (run?.status === 'won') return $('show-result').hidden ? 'won' : 'picture';
     if (run?.status === 'lost') return 'lost';
     if (campaignOverview) return `overview:${campaign.id}`;
@@ -2135,6 +2138,7 @@ try {
     }
     const scope = controllerScope();
     if (scope === 'celebration' || scope === 'defeat-presentation') return $('skip-celebration');
+    if (scope === 'retry-ready') return $('game-canvas');
     if (scope === 'picture') return $('show-result');
     if (scope.startsWith('course:')) return $('overlay-read');
     if (courseSession && scope === 'won')
@@ -2235,6 +2239,7 @@ try {
       return;
     }
     if (scope === 'paused') resume();
+    else if (scope === 'retry-ready') clearInput();
     else if (scope === 'celebration' || scope === 'defeat-presentation')
       $('skip-celebration').click();
     else if (scope === 'picture') $('show-result').click();
@@ -6721,9 +6726,12 @@ try {
     show('next-button', kind === 'won' || kind === 'campaign-complete');
     show('choose-mission', kind === 'campaign-complete');
     show('retry-button', kind === 'won' || kind === 'lost');
+    $('retry-button').classList.toggle('primary', kind === 'lost');
+    $('retry-button').classList.toggle('secondary', kind !== 'lost');
+    show('failure-difficulty', kind === 'lost' && !practice && !scenario && !courseSession);
     show('start-button', kind === 'ready' || kind === 'pause');
     show('overlay-restart', kind === 'pause');
-    show('overlay-missions', kind === 'pause');
+    show('overlay-missions', kind === 'pause' || kind === 'lost');
     show('overlay-help', kind === 'pause');
     show('overlay-settings', kind === 'pause');
     show('overlay-sound', kind === 'pause');
@@ -6804,7 +6812,7 @@ try {
     }
     if (kind === 'lost') {
       const explanation = retryExplanation(run, { practice });
-      $('overlay-title').textContent = 'A new line awaits.';
+      $('overlay-title').textContent = 'Mission failed.';
       $('overlay-copy').textContent = [
         explanation?.reason,
         `You revealed ${(run.coverage * 100).toFixed(1)}%.`,
@@ -6812,10 +6820,22 @@ try {
       ]
         .filter(Boolean)
         .join(' ');
-      $('retry-button').textContent = 'Try again ↻';
+      $('retry-button').textContent = 'Retry mission ↻';
       $('retry-consequence').textContent = explanation?.footnote || '';
       show('retry-consequence', !!explanation);
       $('overlay-footnote').textContent = '';
+    }
+    if (kind === 'retry-ready') {
+      $('overlay-eyebrow').textContent = 'RETRY / SAME MISSION';
+      $('overlay-title').textContent = 'Ready.';
+      $('overlay-copy').textContent = 'Fresh line. Same picture and setup.';
+      $('overlay-footnote').textContent = 'Go.';
+      show('pause-mission-info', false);
+      retryReadyMenuOwned = !$('overlay-menu').hidden;
+      if (retryReadyMenuOwned) show('overlay-menu', false);
+    } else if (retryReadyMenuOwned) {
+      retryReadyMenuOwned = false;
+      show('overlay-menu', true);
     }
     if (courseSession) {
       const lesson = getFirstFlightLesson(courseRequest.lessonId);
@@ -7311,6 +7331,10 @@ try {
         document.hasFocus() &&
         !dialogOpen()
       ) {
+        if (kind === 'retry') {
+          beginRetryReadyCue({ run: nextRun, runId: nextRunId, pictures: preparedPictures });
+          return true;
+        }
         resume();
         return started && !paused;
       }
@@ -7355,6 +7379,7 @@ try {
     retainAttemptAppearance = false,
   } = {}) {
     if (courseEntry || (courseSession && ['leaving', 'ended'].includes(coursePhase))) return;
+    retryReadyCue = null;
     if (preparedAttempt) {
       const current = () =>
         preparedAttempt.kind === 'world-play'
@@ -7841,6 +7866,35 @@ try {
     warning('Flight ended. Read the details or try again.');
     if (journeyEnabled && journeyMission() && !practice && !scenario)
       void prepareResultAttempt('retry');
+  }
+  function beginRetryReadyCue(owner) {
+    if (run !== owner.run || runId !== owner.runId || flightPictures !== owner.pictures) return;
+    clearPreparation();
+    clearInput({ resetDirection: true });
+    retryReadyCue = { ...owner, remaining: 0.6 };
+    overlay('retry-ready', { preserveFocus: true });
+    $('game-canvas').focus({ preventScroll: true });
+    refreshHUD();
+  }
+  function advanceRetryReadyCue(dt) {
+    const cue = retryReadyCue;
+    if (!cue || document.hidden || !document.hasFocus() || dialogOpen()) return;
+    if (
+      run !== cue.run ||
+      runId !== cue.runId ||
+      flightPictures !== cue.pictures ||
+      started ||
+      !paused ||
+      run.status !== 'running'
+    ) {
+      retryReadyCue = null;
+      return;
+    }
+    cue.remaining = Math.max(0, cue.remaining - Math.max(0, Math.min(0.1, dt)));
+    if (cue.remaining > 1e-9) return;
+    retryReadyCue = null;
+    clearInput({ resetDirection: true });
+    resume();
   }
   function defeatEffectsRunning() {
     return (
@@ -8814,6 +8868,11 @@ try {
     prepare();
     resume();
   };
+  $('failure-difficulty').onclick = () =>
+    openUnifiedMissions($('failure-difficulty'), {
+      returnLabel: 'Back to result',
+      focusSetup: 'difficulty-select',
+    });
   $('view-picture').onclick = () => {
     if (run.status !== 'won') return;
     cancelResultAttempt();
@@ -9227,6 +9286,7 @@ try {
         defeatEffectsRunning: defeatEffectsRunning(),
       });
       advanceDefeatPresentation(Math.min(dt, 0.1));
+      advanceRetryReadyCue(Math.min(dt, 0.1));
     }
   }
   new Phaser.Game({

@@ -273,7 +273,9 @@ test('real Solo Continue restores an older decoded collection, saves it and reta
   assert.equal(h.rendered.run.status, 'lost');
   const original = h.rendered.run;
   h.$('retry-button').click();
-  await settle(() => h.doc.body.dataset.flightState === 'running');
+  await settle(() => h.$('game-overlay').dataset.kind === 'retry-ready');
+  for (let frame = 0; frame < 6; frame++) h.frame(100);
+  assert.equal(h.doc.body.dataset.flightState, 'running');
   h.frame(0);
   assert.notEqual(h.rendered.run, original);
   assert.equal(restoredImage.closes, 0);
