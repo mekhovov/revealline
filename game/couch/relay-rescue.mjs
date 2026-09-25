@@ -92,6 +92,7 @@ import { createDisplayPreferences } from '../display-preferences.mjs';
 import { attachMenuStyleControls } from '../ui/menu-style-controls.mjs';
 import { attachPreferenceRestoration } from '../ui/preference-restoration.mjs';
 import { attachSettingsPanels, settingsTabOwnsKey } from '../ui/settings-panels.mjs';
+import { createTeamContextualTeaching } from './team-contextual-teaching.mjs';
 
 import { createTeamArenaPreference } from './team-arena-preference.mjs';
 import { createMissionLibrary } from '../mission-library/library.mjs';
@@ -261,6 +262,9 @@ export function bootCoop({
       localizedText($('coop-selection-status'), () => message);
       $('coop-selection-status').hidden = !message;
     },
+  });
+  const contextualTeaching = createTeamContextualTeaching({
+    getStorage: () => localStorage,
   });
   let lastBuiltInArena = arenaPreference.current();
   const audioMaster = createAudioMaster();
@@ -1235,7 +1239,7 @@ export function bootCoop({
   earnedDialog.addEventListener('close', earnedClosed);
   earnedDialog.addEventListener('cancel', earnedCancelled);
   earnedDialog.addEventListener('keydown', settingsKeydown);
-  function message(text, { foundationPlayers = [] } = {}) {
+  function message(text, { foundationPlayers = [], coach = null } = {}) {
     foundationMessage = foundationPlayers.length
       ? {
           run,
@@ -1246,6 +1250,8 @@ export function bootCoop({
           })),
         }
       : null;
+    if (coach) $('coop-message').dataset.coach = coach;
+    else delete $('coop-message').dataset.coach;
     localizedText($('coop-message'), typeof text === 'function' ? text : () => text);
   }
   function overlay({ focus = true } = {}) {
@@ -3905,7 +3911,10 @@ export function bootCoop({
     $('coop-progress').max = level.goal.coverage ? level.goal.coverage * 100 : 100;
     const guidance = () => coopArenaGuidance(next.level, next.config);
     supportGuidance(guidance, level);
-    message(() => guidance().startMessage);
+    const openingCue = contextualTeaching.opening(guidance());
+    message(openingCue?.text ?? (() => guidance().startMessage), {
+      coach: openingCue?.kind,
+    });
     overlay();
     try {
       render();
@@ -4363,8 +4372,12 @@ export function bootCoop({
           : null;
     // The final step still owns its input cleanup, but its live region must
     // not announce instructions for an attempt that has ended.
+    let latestAnnouncement = null;
     const announce = (text, options) => {
-      if (!terminalMessage) message(text, options);
+      if (!terminalMessage) {
+        latestAnnouncement = { text, options };
+        message(text, options);
+      }
     };
     // Only this owned instructional cue expires on movement. A later threat,
     // bonus, rescue or menu message revokes ownership in message() above.
@@ -4469,6 +4482,21 @@ export function bootCoop({
         batch.release(event.player);
         announce(t('interface:rescueInterruptedChooseAFreshDirectionOrHoldSupportNearby'));
       }
+    }
+    const coachCue =
+      !terminalMessage &&
+      contextualTeaching.observe(run.events, coopArenaGuidance(run.level, run.config));
+    if (coachCue) {
+      message(
+        () => {
+          const announcement =
+            typeof latestAnnouncement?.text === 'function'
+              ? latestAnnouncement.text()
+              : latestAnnouncement?.text;
+          return announcement ? `${announcement} ${coachCue.text}` : coachCue.text;
+        },
+        { ...(latestAnnouncement?.options ?? {}), coach: coachCue.kind },
+      );
     }
     if (terminalMessage) message(terminalMessage);
   }
