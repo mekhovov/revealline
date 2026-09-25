@@ -2,11 +2,11 @@ import { t } from '../i18n/index.mjs';
 // Original deterministic composition rules. No imported melody, recording or sample.
 export const MUSIC_STYLES = Object.freeze(
   [
-    { id: 'synthwave', label: "Synthwave" },
-    { id: 'chiptune', label: "Chiptune" },
-    { id: 'rock', label: "Arcade rock" },
-    { id: 'metal', label: "Metal" },
-    { id: 'ambient', label: "Ambient" },
+    { id: 'synthwave', label: 'Synthwave' },
+    { id: 'chiptune', label: 'Chiptune' },
+    { id: 'rock', label: 'Arcade rock' },
+    { id: 'metal', label: 'Metal' },
+    { id: 'ambient', label: 'Ambient' },
   ].map(Object.freeze),
 );
 export const DEFAULT_TRACKS = Object.freeze(
@@ -61,19 +61,20 @@ export function validateTrack(track) {
   const errors = [],
     allowed = ['id', 'name', 'genre', 'tempo', 'root', 'scale'];
   if (!track || typeof track !== 'object' || Array.isArray(track))
-    return { valid: false, errors: [t("interface:trackMustBeADescriptor")] };
+    return { valid: false, errors: [t('interface:trackMustBeADescriptor')] };
   for (const k of Object.keys(track))
-    if (!allowed.includes(k)) errors.push(t("gameplay:unknownTrackField", { value1: k }));
+    if (!allowed.includes(k)) errors.push(t('gameplay:unknownTrackField', { value1: k }));
   if (typeof track.id !== 'string' || !/^[a-zA-Z0-9][a-zA-Z0-9._-]{0,79}$/.test(track.id))
-    errors.push(t("interface:trackIdMustBeStable"));
+    errors.push(t('interface:trackIdMustBeStable'));
   if (typeof track.name !== 'string' || !track.name.trim() || track.name.length > 120)
-    errors.push(t("interface:trackNameMustBe1120Characters"));
-  if (!MUSIC_STYLES.some((s) => s.id === track.genre)) errors.push(t("interface:unknownMusicGenre"));
+    errors.push(t('interface:trackNameMustBe1120Characters'));
+  if (!MUSIC_STYLES.some((s) => s.id === track.genre))
+    errors.push(t('interface:unknownMusicGenre'));
   if (!Number.isFinite(track.tempo) || track.tempo < 60 || track.tempo > 180)
-    errors.push(t("interface:tempoMustBe60180"));
+    errors.push(t('interface:tempoMustBe60180'));
   if (!Number.isInteger(track.root) || track.root < 36 || track.root > 84)
-    errors.push(t("interface:rootMustBeMidi3684"));
-  if (!Object.hasOwn(scales, track.scale)) errors.push(t("interface:unknownMusicalScale"));
+    errors.push(t('interface:rootMustBeMidi3684'));
+  if (!Object.hasOwn(scales, track.scale)) errors.push(t('interface:unknownMusicalScale'));
   return { valid: !errors.length, errors };
 }
 export const midiFrequency = (n) => 440 * 2 ** ((n - 69) / 12);
@@ -153,7 +154,7 @@ export function composeStep(track, index, tension = 0) {
 /** Bounded look-ahead; after a stall start fresh instead of playing missed beats. */
 export function scheduleWindow(cursor, now, tempo, { ahead = 0.12, maxSteps = 4 } = {}) {
   if (!Number.isFinite(now) || !Number.isFinite(tempo) || tempo < 60 || tempo > 180)
-    throw new TypeError(t("interface:invalidSchedulingClockTempo"));
+    throw new TypeError(t('interface:invalidSchedulingClockTempo'));
   if (
     !Number.isFinite(ahead) ||
     ahead <= 0 ||
@@ -162,11 +163,11 @@ export function scheduleWindow(cursor, now, tempo, { ahead = 0.12, maxSteps = 4 
     maxSteps < 1 ||
     maxSteps > 16
   )
-    throw new TypeError(t("interface:invalidSchedulingBounds"));
+    throw new TypeError(t('interface:invalidSchedulingBounds'));
   let index = cursor?.index ?? 0,
     time = cursor?.time ?? now + 0.025;
   if (!Number.isInteger(index) || index < 0 || !Number.isFinite(time))
-    throw new TypeError(t("interface:invalidMusicCursor"));
+    throw new TypeError(t('interface:invalidMusicCursor'));
   if (time < now - 0.05) time = now + 0.025;
   const steps = [];
   while (time < now + ahead && steps.length < maxSteps) {

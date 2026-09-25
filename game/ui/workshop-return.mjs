@@ -19,7 +19,7 @@ const tool = (id) => WORKSHOP_TOOLS.find((entry) => entry.id === id);
 
 export function workshopToolHref(gameHref, id) {
   const entry = tool(id);
-  if (!entry) throw new TypeError(t("interface:unknownWorkshopTool"));
+  if (!entry) throw new TypeError(t('interface:unknownWorkshopTool'));
   const studio = new URL(assetStudioHref(gameHref));
   const target = new URL(`../../${entry.path}`, studio);
   target.search = studio.search;
@@ -27,7 +27,7 @@ export function workshopToolHref(gameHref, id) {
 }
 
 export function workshopReturnLinks(toolHref, id) {
-  if (!tool(id)) throw new TypeError(t("interface:unknownWorkshopTool"));
+  if (!tool(id)) throw new TypeError(t('interface:unknownWorkshopTool'));
   const links = studioReturnLinks(toolHref);
   const workshop = new URL(links.workshop);
   workshop.searchParams.set('workshop', id);

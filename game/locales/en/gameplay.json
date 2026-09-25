@@ -313,5 +313,22 @@
   "maximumLineStandardGentle": "Maximum line: Standard {{value1}} · Gentle {{value2}}.",
   "cells": "{{value1}} cells",
   "laneWarningStandardGentleLaneCycleStandardGentle": "Lane warning: Standard {{value1}} · Gentle {{value2}}. Lane cycle: Standard {{value3}} · Gentle {{value4}}.",
-  "standardGentle": "{{value1}}: Standard {{value2}} · Gentle {{value3}}."
+  "standardGentle": "{{value1}}: Standard {{value2}} · Gentle {{value3}}.",
+  "brief.arrowFields": "Arrow fields: faster with the arrow, slower against it; never forced drift. Capture removes their effect.",
+  "brief.relayGates": "Capture matching-number relays to open permanent return routes. Closed gates block cuts.",
+  "brief.laneFire": "Lanes lock, warn, then fire. Leave the lane and secure exposed trail.",
+  "brief.impactPressure": "AIM locks. Evade HEAD; close before TRAIL catches up.",
+  "brief.timedPickups": "Timed pickups: wait for the solid symbol, then touch before its ring expires. Missed pickups may return elsewhere; enclosure alone does not collect them.",
+  "brief.contourReturns": "Contour crawlers follow new frontiers after captures. Check your return.",
+  "brief.boltSparks": "Only bolts send sparks. Close before one reaches you; other trail hits are instant.",
+  "brief.cancelPursuit": "AIM → CHASE → REST. Close to cancel pursuit; turn away from a heading lock.",
+  "brief.shieldGoal": "Reveal {{coverage}}% · {{shields}} + core.",
+  "brief.shieldRelays_one": "{{count}} shield relay",
+  "brief.shieldRelays_other": "{{count}} shield relays",
+  "brief.shieldGoalObjectives_one": "Reveal {{coverage}}% · {{shields}} + core · {{count}} other required {{objective}}.",
+  "brief.shieldGoalObjectives_other": "Reveal {{coverage}}% · {{shields}} + core · {{count}} other required {{objective}}.",
+  "brief.captureShields_one": "Capture all {{count}} shield relay. Then close {{cells}} new trail cells during CORE OPEN, or isolate the core.",
+  "brief.captureShields_other": "Capture all {{count}} shield relays. Then close {{cells}} new trail cells during CORE OPEN, or isolate the core.",
+  "brief.captureShieldsFirst_one": "Capture all {{count}} shield relay first. Watch the patterned lane before each attack.",
+  "brief.captureShieldsFirst_other": "Capture all {{count}} shield relays first. Watch the patterned lane before each attack."
 }

@@ -167,9 +167,9 @@ export function attachInput({
   const lifecycleClear = () => (continuous() ? clearPhysical() : clear());
   const restoreDirection = (direction) => {
     if (direction !== null && !['up', 'right', 'down', 'left'].includes(direction))
-      throw new TypeError(t("interface:savedDirectionMustBeACardinalDirectionOrNull"));
+      throw new TypeError(t('interface:savedDirectionMustBeACardinalDirectionOrNull'));
     if (destroyed || !continuous())
-      throw new Error(t("interface:restoringDirectionRequiresActiveContinuousSteering"));
+      throw new Error(t('interface:restoringDirectionRequiresActiveContinuousSteering'));
     clearPhysical();
     intentDirection = direction;
     syncPressed();
@@ -449,12 +449,12 @@ export function attachInput({
         padDisconnected = false;
         lifecycleClear();
         onPause(true);
-        onGamepad(t("interface:controllerDisconnectedReleaseControlsBeforeContinuing"));
+        onGamepad(t('interface:controllerDisconnectedReleaseControlsBeforeContinuing'));
         return neutral();
       }
       if (found && !selectedPad) {
         selectedPad = { index: found.index, signature: found.signature };
-        onGamepad(t("interface:standardControllerConnected"));
+        onGamepad(t('interface:standardControllerConnected'));
       }
       cmd = gamepadCommand(found?.pad);
     }
