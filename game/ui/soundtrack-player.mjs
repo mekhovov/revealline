@@ -26,7 +26,7 @@ const wait = (ms, signal) =>
     const cancel = () => {
       clearTimeout(timer);
       signal?.removeEventListener('abort', cancel);
-      reject(new DOMException(t("interface:musicTransitionCancelled"), 'AbortError'));
+      reject(new DOMException(t('interface:musicTransitionCancelled'), 'AbortError'));
     };
     const timer = setTimeout(() => {
       signal?.removeEventListener('abort', cancel);
@@ -61,7 +61,7 @@ export function createSoundtrackPlayer({
         'update',
         'configure',
       ].every((key) => typeof soundscape[key] === 'function'),
-    t("interface:aPersistentSoundscapeWithTransportHooksIsRequired"),
+    t('interface:aPersistentSoundscapeWithTransportHooksIsRequired'),
   );
   required(
     audioElement &&
@@ -70,18 +70,18 @@ export function createSoundtrackPlayer({
       typeof readAsset === 'function' &&
       typeof onChange === 'function' &&
       typeof random === 'function',
-    t("interface:soundtrackPlayerRequiresMediaStorageAndCallbackAdapters"),
+    t('interface:soundtrackPlayerRequiresMediaStorageAndCallbackAdapters'),
   );
   required(
     Number.isInteger(fadeMs) && fadeMs >= 0 && fadeMs <= 10000,
-    t("interface:invalidMusicTransitionDuration"),
+    t('interface:invalidMusicTransitionDuration'),
   );
   required(
     !secondAudioElement ||
       (secondAudioElement !== audioElement &&
         typeof secondAudioElement.play === 'function' &&
         typeof secondAudioElement.addEventListener === 'function'),
-    t("interface:theSecondMusicDeckMustBeASeparateMediaElement"),
+    t('interface:theSecondMusicDeckMustBeASeparateMediaElement'),
   );
   // Validate before acquiring media/master ownership. Only resolver-owned,
   // immutable catalogues may share a selection between reads; raw adapters
@@ -294,13 +294,16 @@ export function createSoundtrackPlayer({
    * Overlapping owners use the lowest factor. Each owner releases only its lease.
    */
   function acquireGain({ factor } = {}) {
-    required(Number.isFinite(factor) && factor >= 0 && factor <= 1, t("interface:musicGainMustBe01"));
-    required(!disposed, t("interface:theSoundtrackPlayerIsDisposed"));
+    required(
+      Number.isFinite(factor) && factor >= 0 && factor <= 1,
+      t('interface:musicGainMustBe01'),
+    );
+    required(!disposed, t('interface:theSoundtrackPlayerIsDisposed'));
     const token = {};
     gainLeases.set(token, factor);
     try {
       gains();
-      required(!disposed, t("interface:theSoundtrackPlayerIsDisposed"));
+      required(!disposed, t('interface:theSoundtrackPlayerIsDisposed'));
     } catch (failure) {
       gainLeases.delete(token);
       try {
@@ -368,7 +371,7 @@ export function createSoundtrackPlayer({
       preparation = {
         generation: token,
         stage: 'reading',
-        message: t("interface:readingTheSelectedAudioOriginal"),
+        message: t('interface:readingTheSelectedAudioOriginal'),
       };
       emit();
     }
@@ -390,25 +393,25 @@ export function createSoundtrackPlayer({
           blob.size > 0 &&
           blob.size <= 4 * 1024 * 1024 &&
           ['audio/wav', 'audio/ogg', 'audio/mpeg'].includes(blob.type),
-        t("interface:publishedAudioIsUnavailable"),
+        t('interface:publishedAudioIsUnavailable'),
       );
     } else {
       if (token !== null && token === generation) {
         preparation = {
           generation: token,
           stage: 'verifying',
-          message: t("interface:verifyingTheAudioOriginal"),
+          message: t('interface:verifyingTheAudioOriginal'),
         };
         emit();
       }
       const actual = await inspectMP3(blob, { signal });
       required(
         canonicalJSON(actual) === canonicalJSON(track.asset),
-        t("interface:storedAudioBytesDoNotMatchThisTrack"),
+        t('interface:storedAudioBytesDoNotMatchThisTrack'),
       );
     }
     throwIfSoundtrackAborted(signal);
-    if (disposed) throw new DOMException(t("interface:musicPlayerDisposed"), 'AbortError');
+    if (disposed) throw new DOMException(t('interface:musicPlayerDisposed'), 'AbortError');
     installDeckURL(deck, track, URLImpl.createObjectURL(blob));
     return true;
   }
@@ -428,10 +431,10 @@ export function createSoundtrackPlayer({
       if (valid() && desired && !suspended) void advance(true);
     });
     bind(deck, 'error', () => {
-      if (valid()) void failedTrack(t("interface:thisTrackCouldNotBePlayed"), generation);
+      if (valid()) void failedTrack(t('interface:thisTrackCouldNotBePlayed'), generation);
       else if (preloaded?.deck === deck) {
         failed.add(track.id);
-        notice = t("interface:theNextTrackCouldNotBePlayed");
+        notice = t('interface:theNextTrackCouldNotBePlayed');
         cancelPreload();
         emit();
       }
@@ -460,7 +463,7 @@ export function createSoundtrackPlayer({
   function transferDeck(from, to, track) {
     const ownedURL = from.url;
     const ownsURL = from.ownedURL;
-    required(ownedURL !== null, t("interface:preparedAudioIsNoLongerAvailable"));
+    required(ownedURL !== null, t('interface:preparedAudioIsNoLongerAvailable'));
     // Keep the object URL while moving playback to an already permitted element.
     from.url = null;
     from.ownedURL = false;
@@ -504,7 +507,7 @@ export function createSoundtrackPlayer({
         preloadOperation = null;
         clearDeck(deck);
         failed.add(track.id);
-        notice = failure?.message || t("interface:theNextTrackIsUnavailable");
+        notice = failure?.message || t('interface:theNextTrackIsUnavailable');
         emit();
         prepareNext();
       });
@@ -585,7 +588,11 @@ export function createSoundtrackPlayer({
     const token = generation,
       controller = new AbortController();
     operation = controller;
-    preparation = { generation: token, stage: 'preparing', message: t("interface:preparingSelectedMusic") };
+    preparation = {
+      generation: token,
+      stage: 'preparing',
+      message: t('interface:preparingSelectedMusic'),
+    };
     emit();
     let incoming =
       (!overlapDisabled && prepared?.deck) ||
@@ -597,7 +604,7 @@ export function createSoundtrackPlayer({
         current = null;
         index = -1;
         status = 'idle';
-        selectionNotice = resolve().notice || t("interface:noTracksAreAvailableForThisSelection");
+        selectionNotice = resolve().notice || t('interface:noTracksAreAvailableForThisSelection');
         emit();
         return false;
       }
@@ -678,7 +685,7 @@ export function createSoundtrackPlayer({
             if (token !== generation || disposed) return false;
             if (!allowed) {
               status = 'blocked';
-              error = t("interface:enableAudioToPlayMusic");
+              error = t('interface:enableAudioToPlayMusic');
               emit();
               return false;
             }
@@ -736,18 +743,18 @@ export function createSoundtrackPlayer({
       if (incoming !== activeDeck) {
         clearDeck(incoming);
         failed.add(nextTrack.id);
-        notice = failure?.message || t("interface:theNextTrackCouldNotBePlayed");
+        notice = failure?.message || t('interface:theNextTrackCouldNotBePlayed');
         emit();
         prepareNext();
         return false;
       }
       if (failure?.name === 'NotAllowedError') {
         status = 'blocked';
-        error = t("interface:yourBrowserNeedsAnAudioPlayAction");
+        error = t('interface:yourBrowserNeedsAnAudioPlayAction');
         emit();
         return false;
       }
-      return failedTrack(failure?.message || t("interface:thisTrackCouldNotBePlayed"), token);
+      return failedTrack(failure?.message || t('interface:thisTrackCouldNotBePlayed'), token);
     } finally {
       if (token === generation) {
         preparation = null;
@@ -830,7 +837,7 @@ export function createSoundtrackPlayer({
         id: 'builtin.authored',
         kind: 'synth',
         title: recipe.name,
-        artist: t("interface:authoredGameSoundtrack"),
+        artist: t('interface:authoredGameSoundtrack'),
         recipe: Object.freeze(recipe),
       });
     }
@@ -854,7 +861,7 @@ export function createSoundtrackPlayer({
           typeof value.title === 'string' &&
           typeof value.readBlob === 'function' &&
           typeof value.allowed === 'function',
-        t("interface:invalidPublishedMusicAdapter"),
+        t('interface:invalidPublishedMusicAdapter'),
       );
     if (!value && current?.kind === 'published') {
       cancel();
@@ -867,7 +874,7 @@ export function createSoundtrackPlayer({
       ? Object.freeze({
           ...value,
           title: value.title.slice(0, 160),
-          artist: t("interface:publishedGameTheme"),
+          artist: t('interface:publishedGameTheme'),
           kind: 'published',
         })
       : null;
@@ -965,13 +972,16 @@ export function createSoundtrackPlayer({
   ) {
     required(
       Array.isArray(value) && value.every(isResolvedOnlineSoundtrackTrack),
-      t("interface:onlineSoundtracksMustComeFromTheResolvedProjectCatalogue"),
+      t('interface:onlineSoundtracksMustComeFromTheResolvedProjectCatalogue'),
     );
-    required(['ordered', 'shuffle'].includes(order), t("interface:invalidOnlineSoundtrackOrder"));
-    required(['all', 'one', 'off'].includes(repeat), t("interface:invalidOnlineSoundtrackRepeatMode"));
+    required(['ordered', 'shuffle'].includes(order), t('interface:invalidOnlineSoundtrackOrder'));
+    required(
+      ['all', 'one', 'off'].includes(repeat),
+      t('interface:invalidOnlineSoundtrackRepeatMode'),
+    );
     required(
       startTrackId === null || /^online\.[a-f0-9]{64}$/.test(startTrackId),
-      t("interface:invalidOnlineSoundtrackStartRecording"),
+      t('interface:invalidOnlineSoundtrackStartRecording'),
     );
     const owned = boundedJSON(value, {
       maxBytes: 512 * 1024,
@@ -980,7 +990,10 @@ export function createSoundtrackPlayer({
       maxArray: 256,
       maxString: 2048,
     });
-    required(Array.isArray(owned) && owned.length >= 1, t("interface:chooseAtLeastOneOnlineSoundtrack"));
+    required(
+      Array.isArray(owned) && owned.length >= 1,
+      t('interface:chooseAtLeastOneOnlineSoundtrack'),
+    );
     const ids = new Set();
     const validated = owned.map((track) => {
       required(
@@ -994,7 +1007,7 @@ export function createSoundtrackPlayer({
           (!track.recordingModeEligible || track.contentId === false) &&
           onlineSoundtrackRecordingURL(track.url, track.sha256) &&
           !ids.has(track.id),
-        t("interface:invalidOnlineSoundtrackRecording"),
+        t('interface:invalidOnlineSoundtrackRecording'),
       );
       ids.add(track.id);
       return Object.freeze({ ...track, websites: Object.freeze(track.websites ?? []) });
@@ -1004,23 +1017,23 @@ export function createSoundtrackPlayer({
       : validated;
     required(
       eligibleTracks.length > 0,
-      t("interface:recordingModeExcludesTheseOnlineSoundtracksUntilGameplayVideoAnd"),
+      t('interface:recordingModeExcludesTheseOnlineSoundtracksUntilGameplayVideoAnd'),
     );
     required(
       startTrackId === null || eligibleTracks.some((track) => track.id === startTrackId),
-      t("interface:theChosenOnlineSoundtrackIsUnavailableInThisPlaybackMode"),
+      t('interface:theChosenOnlineSoundtrackIsUnavailableInThisPlaybackMode'),
     );
     remoteTracks = eligibleTracks;
     remoteSelection = {
       source: 'remote',
       playlist: {
         id: 'online.archive.current',
-        title: t("interface:onlineSoundtrackArchive"),
+        title: t('interface:onlineSoundtrackArchive'),
         trackIds: remoteTracks.map((track) => track.id),
         order,
         repeat,
       },
-      notice: t("interface:streamingFromThePublicReveallineSoundtrackArchive"),
+      notice: t('interface:streamingFromThePublicReveallineSoundtrackArchive'),
     };
     intentionallyPaused = false;
     desired = true;
@@ -1053,7 +1066,7 @@ export function createSoundtrackPlayer({
       const preparing = {
         generation: token,
         stage: 'playing',
-        message: t("interface:startingMusicPlayback"),
+        message: t('interface:startingMusicPlayback'),
       };
       preparation = preparing;
       emit();
@@ -1064,7 +1077,7 @@ export function createSoundtrackPlayer({
           if (token !== generation || disposed || !desired) return false;
           if (!enabled) {
             status = 'blocked';
-            error = t("interface:enableAudioToPlayMusic");
+            error = t('interface:enableAudioToPlayMusic');
             emit();
             return false;
           }
@@ -1095,11 +1108,11 @@ export function createSoundtrackPlayer({
         if (token !== generation) return false;
         if (failure?.name === 'NotAllowedError') {
           status = 'blocked';
-          error = t("interface:yourBrowserNeedsAnAudioPlayAction");
+          error = t('interface:yourBrowserNeedsAnAudioPlayAction');
           emit();
           return false;
         }
-        return failedTrack(failure?.message || t("interface:playbackFailed"), token);
+        return failedTrack(failure?.message || t('interface:playbackFailed'), token);
       } finally {
         if (token === generation && preparation === preparing) {
           preparation = null;
@@ -1117,7 +1130,7 @@ export function createSoundtrackPlayer({
    * preparation and intentionally paused selections use local originals only.
    */
   async function prepare({ allowNetwork = false } = {}) {
-    required(typeof allowNetwork === 'boolean', t("interface:invalidSoundtrackPreparationPolicy"));
+    required(typeof allowNetwork === 'boolean', t('interface:invalidSoundtrackPreparationPolicy'));
     if (disposed || suspended || desired || status === 'playing' || status === 'loading')
       return false;
     if (!playlist || dirty || status === 'ended' || status === 'error') install(resolve());
@@ -1136,11 +1149,11 @@ export function createSoundtrackPlayer({
     return soundscape.enable();
   }
   function setIntent(value) {
-    required(typeof value === 'boolean', t("interface:listeningIntentMustBeABoolean"));
+    required(typeof value === 'boolean', t('interface:listeningIntentMustBeABoolean'));
     if (disposed) return snapshot();
     required(
       status !== 'playing' && status !== 'loading',
-      t("interface:restoreListeningIntentOnlyWhileMusicIsInactive"),
+      t('interface:restoreListeningIntentOnlyWhileMusicIsInactive'),
     );
     desired = value;
     intentionallyPaused = !value;
@@ -1162,7 +1175,7 @@ export function createSoundtrackPlayer({
   function seek(seconds) {
     required(
       Number.isFinite(seconds) && seconds >= 0 && current && seconds <= position().durationSeconds,
-      t("interface:invalidMusicSeekPosition"),
+      t('interface:invalidMusicSeekPosition'),
     );
     cancelPreload();
     gains();
@@ -1172,7 +1185,10 @@ export function createSoundtrackPlayer({
     emit();
   }
   function setVolume(value) {
-    required(Number.isFinite(value) && value >= 0 && value <= 1, t("interface:musicVolumeMustBe01"));
+    required(
+      Number.isFinite(value) && value >= 0 && value <= 1,
+      t('interface:musicVolumeMustBe01'),
+    );
     volume = value;
     gains();
     emit();

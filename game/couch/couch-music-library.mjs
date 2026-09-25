@@ -22,10 +22,13 @@ export function createCouchMusicLibrary({
   estimate,
   catalogue,
 } = {}) {
-  required(typeof player?.setLibrary === 'function', t("interface:couchMusicRequiresASoundtrackPlayer"));
+  required(
+    typeof player?.setLibrary === 'function',
+    t('interface:couchMusicRequiresASoundtrackPlayer'),
+  );
   required(
     !managedStore || managedStore.soundtrackCatalogue === true,
-    t("interface:couchMusicRequiresTheSharedCatalogueDb5MediaStore"),
+    t('interface:couchMusicRequiresTheSharedCatalogueDb5MediaStore'),
   );
   const ownsManager = !managedStore;
   const manager =
@@ -39,7 +42,7 @@ export function createCouchMusicLibrary({
   let closed = false,
     saving = false,
     request = 0;
-  const check = () => required(!closed, t("interface:couchMusicLibraryIsClosed"));
+  const check = () => required(!closed, t('interface:couchMusicLibraryIsClosed'));
   const snapshot = () =>
     Object.freeze({
       status,
@@ -67,14 +70,14 @@ export function createCouchMusicLibrary({
       Number.isSafeInteger(value?.generation) &&
         value.generation >= 0 &&
         value.generation < Number.MAX_SAFE_INTEGER,
-      t("interface:invalidCouchMusicGeneration"),
+      t('interface:invalidCouchMusicGeneration'),
     );
     if (accepted && value.generation < accepted.generation) return false;
     const library = resolveSoundtrackLibrary(value.library);
     if (accepted && value.generation === accepted.generation) {
       required(
         canonicalJSON(library) === canonicalJSON(accepted.library),
-        t("interface:couchMusicGenerationConflictReloadTheSavedLibrary"),
+        t('interface:couchMusicGenerationConflictReloadTheSavedLibrary'),
       );
       // Do not reset an explicit session playlist on a same-generation refresh.
       return false;
@@ -84,24 +87,24 @@ export function createCouchMusicLibrary({
     );
     required(
       Array.isArray(value.assets) && value.assets.length === expected.size,
-      t("interface:couchMusicOriginalsAreMissingOrDuplicatedRestoreTheLibrary"),
+      t('interface:couchMusicOriginalsAreMissingOrDuplicatedRestoreTheLibrary'),
     );
     const next = new Map();
     let bytes = 0;
     for (const asset of value.assets) {
       required(
         expected.has(asset?.sha256) && !next.has(asset.sha256),
-        t("interface:unexpectedOrDuplicateCouchMusicOriginal"),
+        t('interface:unexpectedOrDuplicateCouchMusicOriginal'),
       );
       const blob = ownSoundtrackBlob(asset.blob);
       required(
         blob.size === expected.get(asset.sha256),
-        t("interface:couchMusicOriginalHasTheWrongSizeRestoreTheLibrary"),
+        t('interface:couchMusicOriginalHasTheWrongSizeRestoreTheLibrary'),
       );
       bytes += blob.size;
       required(
         bytes <= SOUNDTRACK_LIMITS.managedBytes,
-        t("interface:couchMusicOriginalsExceedTheSharedMediaBudget"),
+        t('interface:couchMusicOriginalsExceedTheSharedMediaBudget'),
       );
       next.set(asset.sha256, blob);
     }
@@ -112,7 +115,7 @@ export function createCouchMusicLibrary({
     try {
       player.setLibrary(catalogue ? setCatalogueTracks(library, catalogue.tracks) : library);
       if (closed)
-        throw new DOMException(t("interface:couchMusicLibraryClosedDuringAdoption"), 'AbortError');
+        throw new DOMException(t('interface:couchMusicLibraryClosedDuringAdoption'), 'AbortError');
     } catch (cause) {
       if (!closed) assets = previous;
       throw cause;
@@ -125,7 +128,7 @@ export function createCouchMusicLibrary({
   }
   async function load({ signal } = {}) {
     check();
-    required(!saving, t("interface:aMusicLibrarySaveIsInProgress"));
+    required(!saving, t('interface:aMusicLibrarySaveIsInProgress'));
     const op = operation(signal),
       ticket = ++request;
     status = 'loading';
@@ -152,10 +155,10 @@ export function createCouchMusicLibrary({
     { expectedGeneration = accepted?.generation, signal, ...options } = {},
   ) {
     check();
-    required(!saving, t("interface:aMusicLibrarySaveIsInProgress"));
+    required(!saving, t('interface:aMusicLibrarySaveIsInProgress'));
     required(
       accepted && expectedGeneration === accepted.generation,
-      t("interface:theMusicLibraryChangedOrHasNotLoadedReloadBefore"),
+      t('interface:theMusicLibraryChangedOrHasNotLoadedReloadBefore'),
     );
     const op = operation(signal),
       ticket = ++request;
@@ -191,10 +194,10 @@ export function createCouchMusicLibrary({
    */
   function adoptVerifiedSnapshot(value) {
     check();
-    required(!saving, t("interface:aMusicLibrarySaveIsInProgress"));
+    required(!saving, t('interface:aMusicLibrarySaveIsInProgress'));
     required(
       !accepted || value?.generation >= accepted.generation,
-      t("interface:anOlderMusicLibraryCannotReplaceTheAcceptedSelectionReload"),
+      t('interface:anOlderMusicLibraryCannotReplaceTheAcceptedSelectionReload'),
     );
     request++;
     try {
@@ -220,7 +223,7 @@ export function createCouchMusicLibrary({
       throwIfSoundtrackAborted(signal);
       const blob = assets.get(hash);
       if (!blob && allowMissing) return null;
-      required(blob, t("interface:thisMusicOriginalIsUnavailableReloadOrRestoreTheLibrary"));
+      required(blob, t('interface:thisMusicOriginalIsUnavailableReloadOrRestoreTheLibrary'));
       return blob;
     },
     close() {
