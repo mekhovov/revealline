@@ -55,6 +55,109 @@ test('online catalogue creates a bounded immutable remote playback entry', () =>
   assert.equal(resolved.tracks[0].recordingModeEligible, false);
 });
 
+test('online catalogue accepts legacy entries and validates mirrored structured rights', () => {
+  const rights = {
+    licenseId: 'CC-BY',
+    licenseVersion: '4.0',
+    licenseURL: track.licenseURL,
+    rightsEvidenceURL: track.source,
+    attribution: track.credit,
+    derivativeChangeNotice: 'Converted from the native lossless recording to MP3.',
+    shareAlike: {
+      required: false,
+      deliveryLicenseId: null,
+      deliveryLicenseVersion: null,
+      deliveryLicenseURL: null,
+    },
+  };
+  const legacy = resolveOnlineSoundtrackCatalogue(catalogue).tracks[0],
+    resolved = resolveOnlineSoundtrackCatalogue({
+      ...catalogue,
+      tracks: [{ ...track, rights }],
+    }).tracks[0];
+  assert.equal(legacy.rights.evidence, null);
+  assert.deepEqual(resolved.rights.evidence, {
+    licenseId: 'CC-BY',
+    licenseVersion: '4.0',
+    licenseURL: track.licenseURL,
+    evidence: track.source,
+    attribution: track.credit,
+    derivativeChangeNotice: rights.derivativeChangeNotice,
+    shareAlike: rights.shareAlike,
+  });
+  for (const invalid of [
+    { ...rights, attribution: 'Forged credit' },
+    { ...rights, rightsEvidenceURL: 'https://example.com/other' },
+    { ...rights, licenseVersion: '3.0' },
+    { ...rights, shareAlike: { ...rights.shareAlike, required: true } },
+    { ...rights, shareAlike: { ...rights.shareAlike, unexpected: true } },
+  ])
+    assert.throws(
+      () =>
+        resolveOnlineSoundtrackCatalogue({ ...catalogue, tracks: [{ ...track, rights: invalid }] }),
+      /rights|share-alike/i,
+    );
+});
+
+test('online catalogue requires compatible delivery terms for share-alike recordings', () => {
+  const licenseURL = 'https://creativecommons.org/licenses/by-sa/4.0/',
+    license = 'CC BY-SA 4.0 International',
+    credit = 'Song by Creator, CC BY-SA 4.0.',
+    rights = {
+      licenseId: 'CC-BY-SA',
+      licenseVersion: '4.0',
+      licenseURL,
+      rightsEvidenceURL: track.source,
+      attribution: credit,
+      derivativeChangeNotice: 'Native MP3 retained unchanged.',
+      shareAlike: {
+        required: true,
+        deliveryLicenseId: 'CC-BY-SA',
+        deliveryLicenseVersion: '4.0',
+        deliveryLicenseURL: licenseURL,
+      },
+    };
+  assert.doesNotThrow(() =>
+    resolveOnlineSoundtrackCatalogue({
+      ...catalogue,
+      tracks: [{ ...track, license, licenseURL, credit, rights }],
+    }),
+  );
+  assert.throws(
+    () =>
+      resolveOnlineSoundtrackCatalogue({
+        ...catalogue,
+        tracks: [{ ...track, license, licenseURL, credit }],
+      }),
+    /ShareAlike rights are required/,
+  );
+  assert.throws(
+    () =>
+      resolveOnlineSoundtrackCatalogue({
+        ...catalogue,
+        tracks: [{ ...track, license: 'CC0 (forged label)', licenseURL, credit, rights }],
+      }),
+    /licence is invalid/,
+  );
+  assert.throws(() =>
+    resolveOnlineSoundtrackCatalogue({
+      ...catalogue,
+      tracks: [
+        {
+          ...track,
+          license,
+          licenseURL,
+          credit,
+          rights: {
+            ...rights,
+            shareAlike: { ...rights.shareAlike, deliveryLicenseId: 'CC-BY' },
+          },
+        },
+      ],
+    }),
+  );
+});
+
 test('online catalogue cannot grant game admission or escape its hash path', () => {
   for (const changed of [
     { ...track, gameCatalogueAdmission: true },
