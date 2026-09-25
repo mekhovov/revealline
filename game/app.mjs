@@ -1052,7 +1052,9 @@ try {
       localizedText($(`${prefix}-title`), () =>
         track ? `♫ ${track.title}${track.artist ? ` · ${track.artist}` : ''}` : '',
       );
-      playing.title = track?.fileName ? `Original file: ${track.fileName}` : '';
+      localizedAttribute(playing, 'title', () =>
+        track?.fileName ? t('interface:soundtrack.originalFile', { file: track.fileName }) : '',
+      );
       const website = $(`${prefix}-source`);
       website.hidden =
         !source ||
@@ -2703,11 +2705,7 @@ try {
     controller.invalidate();
     clearInput();
     pause(true);
-    localizedText(
-      $('save-warning'),
-      () =>
-        'This tab returned from browser history in session-only mode. Export game data and any session originals from Game data before leaving this tab. Reload opens the latest saved profile; it does not keep session-only progress.',
-    );
+    localizedText($('save-warning'), () => t('interface:solo.sessionHistoryWarning'));
     show('save-warning', true);
     void packCommits.reconcile();
     if ($('settings-dialog').open) void storageRetention.refresh();
@@ -3804,8 +3802,13 @@ try {
       ticket.savedRaw = localStorage.getItem(sessionKey);
       assertOwner();
       assertCurrent();
-      preparationStatus(request.onStatus, `Preparing ${level.name}…`, 'preparing', () =>
-        worldAttemptCurrent(ticket),
+      preparationStatus(
+        request.onStatus,
+        localizedMessage('interface:solo.preparingMission', {
+          mission: contentText(level, 'name'),
+        }),
+        'preparing',
+        () => worldAttemptCurrent(ticket),
       );
       assertCurrent();
       const nextRun = createRun(applyGameplayTuning(level, nextGameplayTuning(entry)), options);
@@ -3866,9 +3869,7 @@ try {
     } catch (error) {
       if (intent.consumed) {
         contentStatus(t('interface:theChapterWasPreparedButCouldNotStartReviewThe'), true);
-        throw new Error(
-          `The field changed during preparation; the previous attempt was not restored. ${error.message}`,
-        );
+        throw new Error(t('errors:solo.preparationChanged', { error: error.message }));
       }
       throw error;
     } finally {
@@ -3949,7 +3950,7 @@ try {
       if (target.same)
         preparationStatus(
           onStatus,
-          `${target.title} is already selected. Your current flight is kept.`,
+          localizedMessage('interface:solo.alreadySelected', { target: target.title }),
           'ready',
           launch.isCurrent,
         );
@@ -4045,7 +4046,9 @@ try {
       };
       return {
         same: false,
-        title: `Replay ${picture.level.name}`,
+        title: t('interface:solo.replayMission', {
+          mission: contentText(picture.level, 'name'),
+        }),
         entry: picture.entry,
         options,
         identity: {
@@ -4066,14 +4069,20 @@ try {
         (item) => item.id === request.id,
       );
       if (courseSession || !recipe) throw new Error(t('interface:thatStartingClassIsUnavailable'));
-      return { same: classId === request.id, title: `Starting class: ${recipe.label}` };
+      return {
+        same: classId === request.id,
+        title: t('interface:solo.startingClass', { class: recipe.label }),
+      };
     }
     if (request.kind === 'steering') {
       if (!['immediate', 'grid-center'].includes(request.id))
         throw new Error(t('interface:thatSteeringPolicyIsUnavailable'));
       return {
         same: turnPolicy === request.id,
-        title: `Steering: ${request.id === 'immediate' ? t('interface:immediate') : t('interface:gridBuffer')}`,
+        title: t('interface:solo.steering', {
+          steering:
+            request.id === 'immediate' ? t('interface:immediate') : t('interface:gridBuffer'),
+        }),
       };
     }
     if (request.kind === 'level' || request.kind === 'card') {
@@ -4123,7 +4132,11 @@ try {
         ticket.adopting = true;
       }
       selectEntry(target.entry, target.options);
-      contentStatus(`${campaign.levels[levelIndex].name} selected. Deploy when ready.`);
+      contentStatus(
+        localizedMessage('interface:solo.missionSelectedDeploy', {
+          mission: contentText(campaign.levels[levelIndex], 'name'),
+        }),
+      );
       return true;
     }
     if (request.kind === 'lesson') {
@@ -4150,14 +4163,18 @@ try {
     }
     if (request.kind === 'campaign') {
       selectEntry(target.entry);
-      contentStatus(`${target.title} selected and ready.`);
+      contentStatus(localizedMessage('interface:solo.selectedReady', { target: target.title }));
     } else if (request.kind === 'level') return selectLevel(request.id);
     else {
       leavePractice();
       levelIndex = campaign.levels.findIndex((level) => level.id === request.id);
       prepare();
       rememberSelection();
-      contentStatus(`${campaign.levels[levelIndex].name} selected. Deploy when ready.`);
+      contentStatus(
+        localizedMessage('interface:solo.missionSelectedDeploy', {
+          mission: contentText(campaign.levels[levelIndex], 'name'),
+        }),
+      );
       if (!ticket) focusMission();
     }
     return true;
@@ -4992,7 +5009,9 @@ try {
         if (restoreFocus) controllerFocus()?.focus({ preventScroll: true });
       };
       owner.feedback = beginPreparation(
-        `Preparing ${mission.name}… Your current flight is kept.`,
+        localizedMessage('interface:solo.preparingNextMission', {
+          mission: contentText(mission, 'name'),
+        }),
         owner.cancel,
         'preparing',
         true,
@@ -5039,10 +5058,12 @@ try {
         runId === owner.runId
       ) {
         owner.feedback?.finish(
-          `Could not prepare ${mission.name}. Try again; your current flight is kept.`,
+          localizedMessage('interface:solo.prepareNextFailed', {
+            mission: contentText(mission, 'name'),
+          }),
           'error',
         );
-        warning(`Could not open the next mission. Your current flight is kept. ${error.message}`);
+        warning(localizedMessage('interface:solo.openNextFailed', { error: error.message }));
       }
       return false;
     } finally {
