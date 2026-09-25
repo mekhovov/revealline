@@ -560,11 +560,7 @@ export function attachSoundtrackPanel({
   });
   onlineMixLibraryChoice.append(
     onlineMixLibrary,
-    node(
-      'span',
-      null,
-      localizedMessage('interface:mixWithCurrentGameAndUploadedMusicSelection'),
-    ),
+    node('span', null, localizedMessage('interface:mixWithCurrentGameAndUploadedMusicSelection')),
   );
   const onlineStatus = node(
     'p',
