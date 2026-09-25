@@ -246,15 +246,9 @@ function nativeDialogs(t) {
   const originalOpen = SoloElement.prototype.showModal,
     originalClose = SoloElement.prototype.close;
   const origins = new WeakMap();
-  const nativeClick = SoloElement.prototype.click;
-  t.mock.method(SoloElement.prototype, 'click', function () {
-    nativeClick.call(this);
-    if (this.tagName === 'SUMMARY') {
-      const details = this.parentElement;
-      details.open = !details.open;
-      details.emit('toggle');
-    }
-  });
+  // SoloElement.click() already models the browser's one native <summary>
+  // toggle. Do not add another local toggle here: keyboard, touch and the
+  // controller adapter all finish through that same default click.
   const originalAttribute = SoloElement.prototype.setAttribute;
   SoloElement.prototype.setAttribute = function (key, value) {
     originalAttribute.call(this, key, value);
@@ -282,6 +276,50 @@ function nativeDialogs(t) {
     SoloElement.prototype.close = originalClose;
   });
 }
+
+for (const activation of ['keyboard', 'touch'])
+  test(`Collection ${activation} disclosure activation toggles exactly once and preserves the paused attempt`, async (t) => {
+    nativeDialogs(t);
+    const h = await soloPage(t, { titleScreen: false, initialReadyTimeoutMs: 15000 });
+    h.$('collection-button').click();
+    const details = h.$('collection-progress'),
+      summary = details.querySelector('summary'),
+      checkpoint = authoritativeCheckpoint(h.rendered.run),
+      storage = [...h.storage.map],
+      writes = h.storage.writes.length;
+    summary.focus();
+    if (activation === 'keyboard') {
+      const key = summary.emit('keydown', { key: 'Enter', code: 'Enter' });
+      assert.equal(key.defaultPrevented, false, 'The browser keeps native summary activation.');
+    } else {
+      const down = summary.emit('pointerdown', {
+        button: 0,
+        isPrimary: true,
+        pointerId: 4,
+        pointerType: 'touch',
+      });
+      summary.emit('pointerup', {
+        button: 0,
+        isPrimary: true,
+        pointerId: 4,
+        pointerType: 'touch',
+      });
+      assert.equal(down.defaultPrevented, false, 'Direct touch keeps the browser activation.');
+    }
+    // The test boundary invokes the browser's click default after its input
+    // event. One activation must open rather than immediately reopen/close.
+    summary.click();
+    assert.equal(details.open, true);
+    assert.equal(h.doc.activeElement, summary);
+    summary.click();
+    assert.equal(details.open, false);
+    assert.equal(h.doc.activeElement, summary);
+    assert.deepEqual(authoritativeCheckpoint(h.rendered.run), checkpoint);
+    assert.deepEqual([...h.storage.map], storage);
+    assert.equal(h.storage.writes.length, writes);
+    assert.equal(h.rendered.paused, true);
+    assert.deepEqual(h.errors, []);
+  });
 
 test(
   'actual title → Missions → Progress backup controller Back closes only the front dialog and never starts flight',
