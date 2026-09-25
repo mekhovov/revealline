@@ -43,7 +43,17 @@ test('compact classic catalogs reconstruct every original namespace and plural w
   assert.deepEqual(JSON.parse(JSON.stringify(scope.RevealLineTranslations)), catalogs);
   assert.ok(Buffer.byteLength(bundle) < Buffer.byteLength(JSON.stringify(catalogs)));
   const incomplete = {
-    en: { common: { plain: '</script>', count_one: 'one', count_other: 'many' } },
+    en: {
+      common: {
+        plain: '</script>',
+        empty: '',
+        glyphs: 'Ґ Є І Ї — 🛰️',
+        samePrefix: 'Ґ Є І Ї — 🚀',
+        escaped: '{{count}}\n"\\',
+        count_one: 'one',
+        count_other: 'many',
+      },
+    },
     uk: {
       common: { count_one: 'один', count_few: 'кілька', count_many: 'багато', count_other: 'інші' },
     },
@@ -52,6 +62,7 @@ test('compact classic catalogs reconstruct every original namespace and plural w
   assert.doesNotMatch(source, /<\/script>/);
   vm.runInContext(source, scope);
   assert.deepEqual(JSON.parse(JSON.stringify(scope.RevealLineTranslations)), incomplete);
+  assert.equal(catalogBundle(incomplete), source, 'encoding is deterministic');
 });
 
 test('compact content registry preserves identity and original-text guards while sharing repeated records', async () => {

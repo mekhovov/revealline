@@ -1054,5 +1054,6 @@
   "journey.culturalSpatial.returnPocket.route": "Leave the pocket through the upper woven band for a short keeper read, or stage on the lower band before sweeping toward the freeze bonus?",
   "journey.culturalSpatial.returnPocket.mastery": "Close once from each band mouth and collect the existing freeze bonus without a loss.",
   "journey.culturalSpatial.neutralGround.route": "Cross the western slow bed directly from the side branch, or climb the safe stem and arc above the eastern hot bed for a faster but longer enclosure?",
-  "journey.culturalSpatial.neutralGround.mastery": "Close from both branch approaches without entering the lethal bed or losing a life."
+  "journey.culturalSpatial.neutralGround.mastery": "Close from both branch approaches without entering the lethal bed or losing a life.",
+  "classicBaseGame": "Base game"
 }

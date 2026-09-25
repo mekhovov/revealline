@@ -5,6 +5,7 @@ import {
   classicRulesCampaignIdentity,
   supportsClassicCurrentRules,
 } from './classic-current-rules.mjs';
+import { classicMissionPresentation, classicMissionDetails } from './classic-presentation.mjs';
 
 const SOURCES = ['base', 'bundled', 'archived', 'optional', 'external'];
 const digest = (value) => typeof value === 'string' && /^[a-f0-9]{64}$/u.test(value);
@@ -84,12 +85,17 @@ export function classicLibrarySources(index, { availability, prepare, launch, pr
   if (typeof availability !== 'function' || typeof launch !== 'function')
     throw new TypeError('Classic browsing needs host-owned availability and launch adapters.');
   const owners = new Map();
-  const entries = checked.missions.flatMap((entry) => [
-    ...(supportsClassicCurrentRules(entry)
-      ? [Object.freeze({ ...entry, rulesEdition: CLASSIC_RULES_CURRENT })]
-      : []),
-    Object.freeze({ ...entry, rulesEdition: CLASSIC_RULES_ORIGINAL }),
-  ]);
+  const originals = new WeakMap();
+  const entries = checked.missions.flatMap((entry) =>
+    [
+      ...(supportsClassicCurrentRules(entry) ? [CLASSIC_RULES_CURRENT] : []),
+      CLASSIC_RULES_ORIGINAL,
+    ].map((rulesEdition) => {
+      const row = Object.freeze({ ...entry, rulesEdition });
+      originals.set(row, entry);
+      return row;
+    }),
+  );
   for (const entry of entries) {
     const current = entry.rulesEdition === CLASSIC_RULES_CURRENT;
     const id = JSON.stringify([
@@ -124,12 +130,8 @@ export function classicLibrarySources(index, { availability, prepare, launch, pr
         launch,
         progress,
         card,
-        details: (row, mode) => ({
-          challenge: `${row.rulesEdition === CLASSIC_RULES_CURRENT ? 'Current rules · travelling trail impacts · authored Standard values' : 'Original authored Standard rules'} · ${row.rules}${mode === 'versus' ? ' · Separate Versus race timer also applies' : ''}`,
-          route: `Difficulty settings: ${row.difficultiesByMode[mode]
-            .map((preset) => `${preset[0].toUpperCase()}${preset.slice(1)}`)
-            .join(', ')}`,
-        }),
+        presentation: (row) => classicMissionPresentation(originals.get(row), row.rulesEdition),
+        details: (row, mode) => classicMissionDetails(originals.get(row), row.rulesEdition, mode),
       };
       owners.set(id, owner);
     }
