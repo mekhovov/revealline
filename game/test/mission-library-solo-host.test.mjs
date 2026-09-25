@@ -266,7 +266,7 @@ test('Journey setup changes next preset and library details without replacing th
   assert.deepEqual(p.errors, []);
 });
 
-test('unified Solo Download becomes Play inline and launches the selected late installed Classic', async (t) => {
+test('unified Solo Download & play launches the selected late installed Classic once', async (t) => {
   const p = await soloPage(t, { titleScreen: true });
   await open(p);
   p.$('journey-collection').value = 'Classic';
@@ -282,18 +282,13 @@ test('unified Solo Download becomes Play inline and launches the selected late i
   assert.match(card.textContent, /Download/);
   card.focus();
   card.click();
-  await settle(() => card.textContent.endsWith('Play'));
-  assert.equal(p.$('journey-chooser').open, true);
-  assert.equal(p.$('journey-search').value, 'night');
-  assert.equal(p.doc.activeElement, card);
-  assert.notEqual(p.doc.body.dataset.flightState, 'running');
-  card.click();
   await running(p, row.runtimeId);
   assert.equal(p.$('journey-chooser').open, false);
+  assert.equal(p.$('journey-search').value, 'night');
   assert.deepEqual(p.errors, []);
 });
 
-test('unified Solo failed Download retries inline and Back restores Missions without replacing the prepared flight', async (t) => {
+test('unified Solo failed Download retries inline and preserves the flight until retry succeeds', async (t) => {
   let available = false,
     requests = 0;
   const p = await soloPage(t, {
@@ -329,16 +324,10 @@ test('unified Solo failed Download retries inline and Back restores Missions wit
   assert.deepEqual(authoritativeCheckpoint(initial), checkpoint);
   available = true;
   card.click();
-  await settle(() => card.textContent.endsWith('Play'));
+  await running(p, row.runtimeId);
   assert.equal(requests, 2);
-  assert.equal(p.doc.activeElement, card);
-  assert.notEqual(p.doc.body.dataset.flightState, 'running');
-  p.$('journey-back').click();
   assert.equal(p.$('journey-chooser').open, false);
-  assert.equal(p.$('shell-home').open, true);
-  assert.equal(p.doc.activeElement.id, 'shell-play');
-  assert.equal(p.rendered.run, initial);
-  assert.deepEqual(authoritativeCheckpoint(initial), checkpoint);
+  assert.notEqual(p.rendered.run, initial);
   await open(p);
   assert.equal(p.$('journey-search').value, 'night');
   assert.equal(p.doc.activeElement, selected());
