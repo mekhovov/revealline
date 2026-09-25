@@ -189,14 +189,9 @@ export async function createRecoverySnapshot({ databaseUrl, blobRoot, destinatio
   try {
     await mkdir(path.join(temporary, BLOB_DIRECTORY), { recursive: true, mode: 0o700 });
     const dump = path.join(temporary, DATABASE_FILE);
-    await runCommand('pg_dump', [
-      '--format=custom',
-      '--no-owner',
-      '--no-acl',
-      '--file',
-      dump,
+    await runCommand('pg_dump', ['--format=custom', '--no-owner', '--no-acl', '--file', dump], {
       databaseUrl,
-    ]);
+    });
     const database = { file: DATABASE_FILE, ...(await digestFile(dump)) };
     if (database.size < 1) throw new Error('pg_dump produced an empty recovery database file.');
     const blobs = await inventoryBlobs(sourceBlobs);
@@ -298,16 +293,18 @@ export async function restoreRecoverySnapshot({ databaseUrl, blobRoot, source, r
     journal = { ...journal, state: 'blobs-staged' };
     await writeJournal(journalFile, journal);
   }
-  await runCommand('pg_restore', [
-    '--clean',
-    '--if-exists',
-    '--no-owner',
-    '--no-acl',
-    '--exit-on-error',
-    '--dbname',
-    databaseUrl,
-    path.join(path.resolve(source), DATABASE_FILE),
-  ]);
+  await runCommand(
+    'pg_restore',
+    [
+      '--clean',
+      '--if-exists',
+      '--no-owner',
+      '--no-acl',
+      '--exit-on-error',
+      path.join(path.resolve(source), DATABASE_FILE),
+    ],
+    { databaseUrl },
+  );
   journal = { ...journal, state: 'database-restored' };
   await writeJournal(journalFile, journal);
   await prepareEmptyTarget(target);

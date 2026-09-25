@@ -5,9 +5,12 @@ import {
   verifyRecoverySnapshot,
 } from './recovery.mjs';
 
-const runCommand = (command, args) =>
+const runCommand = (command, args, { databaseUrl } = {}) =>
   new Promise((resolve, reject) => {
-    const child = spawn(command, args, { stdio: 'inherit' });
+    const child = spawn(command, args, {
+      stdio: 'inherit',
+      env: databaseUrl ? { ...process.env, PGDATABASE: databaseUrl } : process.env,
+    });
     child.once('error', reject);
     child.once('exit', (code, signal) => {
       if (code === 0) resolve();

@@ -25,8 +25,8 @@ const fixture = async (t) => {
   return { root, blobRoot, bytes, sha256, key };
 };
 
-const backupCommand = (databaseBytes, calls) => async (command, args) => {
-  calls.push({ command, args });
+const backupCommand = (databaseBytes, calls) => async (command, args, options) => {
+  calls.push({ command, args, options });
   assert.equal(command, 'pg_dump');
   const output = args[args.indexOf('--file') + 1];
   await writeFile(output, databaseBytes);
@@ -55,7 +55,8 @@ test('offline backup writes a canonical, content-verified database/blob snapshot
     '--file',
   ]);
   assert.match(calls[0].args[4], /snapshot\.partial-[^/]+\/database\.dump$/u);
-  assert.equal(calls[0].args[5], 'postgres://backup.example/revealline');
+  assert.equal(calls[0].args.length, 5);
+  assert.equal(calls[0].options.databaseUrl, 'postgres://backup.example/revealline');
   assert.equal(
     await readFile(path.join(destination, 'blobs', key), 'utf8'),
     bytes.toString('utf8'),
@@ -79,7 +80,7 @@ test('restore verifies all bytes before replacing an empty blob root', async (t)
     databaseUrl: 'postgres://target/revealline',
     blobRoot: restoredBlobs,
     source: snapshot,
-    runCommand: async (command, args) => calls.push({ command, args }),
+    runCommand: async (command, args, options) => calls.push({ command, args, options }),
   });
   assert.equal(restored.format, RECOVERY_FORMAT);
   assert.equal(await readFile(path.join(restoredBlobs, key), 'utf8'), bytes.toString('utf8'));
@@ -92,10 +93,9 @@ test('restore verifies all bytes before replacing an empty blob root', async (t)
         '--no-owner',
         '--no-acl',
         '--exit-on-error',
-        '--dbname',
-        'postgres://target/revealline',
         path.join(snapshot, 'database.dump'),
       ],
+      options: { databaseUrl: 'postgres://target/revealline' },
     },
   ]);
 });
