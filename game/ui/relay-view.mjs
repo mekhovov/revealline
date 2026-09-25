@@ -4,7 +4,7 @@ import { isRelayRuleset } from '../core/versions.mjs';
 
 const own = (value, key) => {
   const descriptor = Object.getOwnPropertyDescriptor(value, key);
-  required(descriptor && Object.hasOwn(descriptor, 'value'), t("interface:expectedOwnVisualData"));
+  required(descriptor && Object.hasOwn(descriptor, 'value'), t('interface:expectedOwnVisualData'));
   return descriptor.value;
 };
 
@@ -28,14 +28,14 @@ export function relayView(run) {
     exactKeys(state, ['version', 'gates'], 'relay visual state');
     required(
       definition.version === 'relay-gates.v1' && state.version === 'relay-state.v1',
-      t("interface:unsupportedRelayView"),
+      t('interface:unsupportedRelayView'),
     );
     required(
       Array.isArray(definition.gates) &&
         Array.isArray(state.gates) &&
         definition.gates.length <= 32 &&
         definition.gates.length === state.gates.length,
-      t("interface:invalidRelayCount"),
+      t('interface:invalidRelayCount'),
     );
     const objectives = boundedJSON(own(run, 'objectives'), {
       maxBytes: 32768,
@@ -43,31 +43,31 @@ export function relayView(run) {
       maxDepth: 4,
       maxArray: 128,
     });
-    required(Array.isArray(objectives), t("interface:expectedRelayObjectives"));
+    required(Array.isArray(objectives), t('interface:expectedRelayObjectives'));
     const links = [...new Set(definition.gates.map((gate) => gate.objectiveId))].sort();
     const ids = new Set();
     const gates = definition.gates.map((gate) => {
       exactKeys(gate, ['id', 'x', 'y', 'w', 'h', 'objectiveId'], 'relay visual gate');
       required(
         stableId(gate.id) && !ids.has(gate.id) && stableId(gate.objectiveId),
-        t("interface:invalidRelayVisualIdentity"),
+        t('interface:invalidRelayVisualIdentity'),
       );
       ids.add(gate.id);
       required(
         ['x', 'y', 'w', 'h'].every((key) => Number.isInteger(gate[key]) && gate[key] >= 1) &&
           gate.x + gate.w <= 71 &&
           gate.y + gate.h <= 35,
-        t("interface:invalidRelayVisualBounds"),
+        t('interface:invalidRelayVisualBounds'),
       );
       const matches = state.gates.filter((entry) => entry.id === gate.id);
-      required(matches.length === 1, t("interface:relayStateMustMatchDefinition"));
+      required(matches.length === 1, t('interface:relayStateMustMatchDefinition'));
       const live = matches[0];
       exactKeys(live, ['id', 'objectiveId', 'cells', 'openedTick'], 'relay visual state gate');
       required(
         live.objectiveId === gate.objectiveId &&
           (live.openedTick === null ||
             (Number.isSafeInteger(live.openedTick) && live.openedTick >= 0)),
-        t("interface:invalidRelayVisualState"),
+        t('interface:invalidRelayVisualState'),
       );
       required(
         Array.isArray(live.cells) &&
@@ -76,7 +76,7 @@ export function relayView(run) {
             (cell, index) =>
               cell === (gate.y + Math.floor(index / gate.w)) * 72 + gate.x + (index % gate.w),
           ),
-        t("interface:relayCellsMustMatchAuthoredGeometry"),
+        t('interface:relayCellsMustMatchAuthoredGeometry'),
       );
       return Object.freeze({
         ...gate,
@@ -86,7 +86,7 @@ export function relayView(run) {
     });
     const triggers = links.map((id, index) => {
       const matches = objectives.filter((objective) => objective.id === id);
-      required(matches.length === 1, t("interface:relayVisualObjectiveMustExistExactlyOnce"));
+      required(matches.length === 1, t('interface:relayVisualObjectiveMustExistExactlyOnce'));
       const objective = matches[0];
       required(
         Number.isFinite(objective.x) &&
@@ -97,7 +97,7 @@ export function relayView(run) {
           objective.y < 36 &&
           typeof objective.captured === 'boolean' &&
           typeof objective.revealed === 'boolean',
-        t("interface:invalidRelayVisualObjective"),
+        t('interface:invalidRelayVisualObjective'),
       );
       return Object.freeze({
         id,

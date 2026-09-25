@@ -42,7 +42,7 @@ export function createTeamArenaPreference({
     revision = 0;
   const read = () => {
     const storage = getStorage();
-    if (!storage) throw new Error(t("interface:storageUnavailable"));
+    if (!storage) throw new Error(t('interface:storageUnavailable'));
     const raw = storage.getItem(TEAM_ARENA_PREFERENCE_KEY);
     return { storage, raw, record: decode(raw) };
   };
@@ -67,8 +67,8 @@ export function createTeamArenaPreference({
   return Object.freeze({
     current: () => levelId,
     choose(value) {
-      if (disposed) throw new Error(t("interface:teamArenaPreferenceIsDisposed"));
-      if (!ids.has(value)) throw new TypeError(t("interface:chooseABuiltInTeamArena"));
+      if (disposed) throw new Error(t('interface:teamArenaPreferenceIsDisposed'));
+      if (!ids.has(value)) throw new TypeError(t('interface:chooseABuiltInTeamArena'));
       levelId = value;
       const owned = ++revision;
       const current = () => !disposed && revision === owned;
@@ -76,13 +76,13 @@ export function createTeamArenaPreference({
         const allowed = writable();
         if (!current()) return levelId;
         if (!allowed) {
-          notice(t("interface:arenaChosenForThisVisitSavingIsDisabledHere"));
+          notice(t('interface:arenaChosenForThisVisitSavingIsDisabledHere'));
           return levelId;
         }
         const { storage, raw, record } = read();
         if (!current()) return levelId;
         if (raw !== null && !record) {
-          notice(t("interface:arenaChosenForThisVisitAnUnrecognizedSavedSelectionWas"));
+          notice(t('interface:arenaChosenForThisVisitAnUnrecognizedSavedSelectionWas'));
           return levelId;
         }
         storage.setItem(
@@ -96,7 +96,7 @@ export function createTeamArenaPreference({
         );
         if (current()) notice('');
       } catch {
-        if (current()) notice(t("interface:arenaChosenForThisVisitButCouldNotBeSaved"));
+        if (current()) notice(t('interface:arenaChosenForThisVisitButCouldNotBeSaved'));
       }
       return levelId;
     },

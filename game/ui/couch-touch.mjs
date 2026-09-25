@@ -17,12 +17,14 @@ export function attachCouchTouch({
       pad.style.setProperty('--touch-opacity', settings.opacity);
       pad.querySelector('.race-cross').hidden = settings.mode !== 'dpad';
       pad.querySelector('.touch-surface').hidden = settings.mode === 'dpad';
-      localizedText(pad.querySelector('.touch-instruction'), () =>settings.mode === 'swipe' ? t("interface:swipeToSteer") : t("interface:dragToSteer"));
+      localizedText(pad.querySelector('.touch-instruction'), () =>
+        settings.mode === 'swipe' ? t('interface:swipeToSteer') : t('interface:dragToSteer'),
+      );
     }
     for (const field of controls.querySelectorAll('[data-touch-setting]'))
       field.value = String(settings[field.dataset.touchSetting]);
     const status = group.querySelector('[role="status"]');
-    if (status) localizedText(status, () =>preferences.warning());
+    if (status) localizedText(status, () => preferences.warning());
   }
   preferences = createTouchPreferences({
     onChange: () => {
@@ -35,7 +37,7 @@ export function attachCouchTouch({
     surface.className = 'touch-surface';
     surface.setAttribute('role', 'group');
     const compass = doc.createElement('span');
-    localizedText(compass, () =>'✥');
+    localizedText(compass, () => '✥');
     compass.setAttribute('aria-hidden', 'true');
     const instruction = doc.createElement('span');
     instruction.className = 'touch-instruction';
@@ -50,32 +52,32 @@ export function attachCouchTouch({
   }
   const group = doc.createElement('fieldset');
   const legend = doc.createElement('legend');
-  localizedText(legend, () =>t("interface:sharedTouchControls"));
+  localizedText(legend, () => t('interface:sharedTouchControls'));
   group.append(legend);
   for (const [key, title, choices] of [
     [
       'mode',
-      t("interface:steering"),
+      t('interface:steering'),
       [
-        ['stick', t("interface:floatingStick")],
-        ['swipe', t("interface:swipe")],
-        ['dpad', t("interface:directionPad")],
+        ['stick', t('interface:floatingStick')],
+        ['swipe', t('interface:swipe')],
+        ['dpad', t('interface:directionPad')],
       ],
     ],
     [
       'size',
-      t("interface:controlSize"),
+      t('interface:controlSize'),
       [
-        ['regular', t("interface:regular")],
-        ['large', t("interface:large")],
+        ['regular', t('interface:regular')],
+        ['large', t('interface:large')],
       ],
     ],
     [
       'opacity',
-      t("interface:visibility"),
+      t('interface:visibility'),
       [
-        ['0.55', t("interface:soft")],
-        ['1', t("interface:solid")],
+        ['0.55', t('interface:soft')],
+        ['1', t('interface:solid')],
       ],
     ],
   ]) {
@@ -87,12 +89,12 @@ export function attachCouchTouch({
       select.max = '1';
       select.step = '0.05';
     }
-    localizedText(label, () =>title);
+    localizedText(label, () => title);
     select.dataset.touchSetting = key;
     for (const [value, text] of key === 'opacity' ? [] : choices) {
       const option = doc.createElement('option');
       option.value = value;
-      localizedText(option, () =>text);
+      localizedText(option, () => text);
       select.append(option);
     }
     select.onchange = () =>

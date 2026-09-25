@@ -1,11 +1,11 @@
 import { t } from '../i18n/index.mjs';
 const volumeValue = (value) => {
   if (!Number.isFinite(value) || value < 0 || value > 1)
-    throw new TypeError(t("interface:audioVolumeMustBeBetweenZeroAndOne"));
+    throw new TypeError(t('interface:audioVolumeMustBeBetweenZeroAndOne'));
   return value;
 };
 const mutedValue = (value) => {
-  if (typeof value !== 'boolean') throw new TypeError(t("interface:audioMuteMustBeABoolean"));
+  if (typeof value !== 'boolean') throw new TypeError(t('interface:audioMuteMustBeABoolean'));
   return value;
 };
 
@@ -27,11 +27,11 @@ export function createAudioMaster({ muted = true, volume = 1 } = {}) {
       }
     }
     if (errors.length)
-      throw new AggregateError(errors, t("interface:audioMasterOutputCouldNotBeApplied"));
+      throw new AggregateError(errors, t('interface:audioMasterOutputCouldNotBeApplied'));
     return state;
   }
   function change(patch) {
-    if (disposed) throw new Error(t("interface:audioMasterIsDisposed"));
+    if (disposed) throw new Error(t('interface:audioMasterIsDisposed'));
     return publish({ ...state, ...patch });
   }
   return Object.freeze({
@@ -39,9 +39,11 @@ export function createAudioMaster({ muted = true, volume = 1 } = {}) {
     setMuted: (value) => change({ muted: mutedValue(value) }),
     setVolume: (value) => change({ volume: volumeValue(value) }),
     subscribe(listener) {
-      if (disposed) throw new Error(t("interface:audioMasterIsDisposed"));
-      if (typeof listener !== 'function') throw new TypeError(t("interface:audioMasterListenerRequired"));
-      if (listeners.has(listener)) throw new Error(t("interface:audioMasterListenerAlreadySubscribed"));
+      if (disposed) throw new Error(t('interface:audioMasterIsDisposed'));
+      if (typeof listener !== 'function')
+        throw new TypeError(t('interface:audioMasterListenerRequired'));
+      if (listeners.has(listener))
+        throw new Error(t('interface:audioMasterListenerAlreadySubscribed'));
       listeners.add(listener);
       try {
         listener(state);
@@ -68,10 +70,11 @@ const mediaOwners = new WeakSet();
  * master or local intent; explicit local controls call setLocal instead. */
 export function bindAudioMasterMedia({ audioMaster, element, volume = 1, muted = false } = {}) {
   if (!audioMaster?.snapshot || !audioMaster?.subscribe)
-    throw new TypeError(t("interface:audioMasterRequired"));
+    throw new TypeError(t('interface:audioMasterRequired'));
   if (!element?.addEventListener || !element?.removeEventListener)
-    throw new TypeError(t("interface:audioMediaElementRequired"));
-  if (mediaOwners.has(element)) throw new Error(t("interface:audioMediaElementAlreadyHasAMasterOwner"));
+    throw new TypeError(t('interface:audioMediaElementRequired'));
+  if (mediaOwners.has(element))
+    throw new Error(t('interface:audioMediaElementAlreadyHasAMasterOwner'));
   let local = { volume: volumeValue(volume), muted: mutedValue(muted) };
   let master = audioMaster.snapshot();
   let disposed = false;
@@ -121,12 +124,12 @@ export function bindAudioMasterMedia({ audioMaster, element, volume = 1, muted =
     setLocal(patch) {
       if (disposed) return;
       if (!patch || typeof patch !== 'object' || Array.isArray(patch))
-        throw new TypeError(t("interface:localAudioSettingsRequired"));
+        throw new TypeError(t('interface:localAudioSettingsRequired'));
       const next = { ...local };
       for (const key of Object.keys(patch)) {
         if (key === 'volume') next.volume = volumeValue(patch.volume);
         else if (key === 'muted') next.muted = mutedValue(patch.muted);
-        else throw new TypeError(t("interface:unknownLocalAudioSetting"));
+        else throw new TypeError(t('interface:unknownLocalAudioSetting'));
       }
       local = next;
       apply();

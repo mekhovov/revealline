@@ -2,7 +2,23 @@
 // downloads must retain the static launch screen and ordinary working links.
 (() => {
   const host = globalThis;
-  const fallback = {"errors:stillPreparingYourArcadeYouCanWaitReloadOrUse": "Still preparing your arcade. You can wait, reload, or use Play online. No flight has started.", "errors:openYourArcade": "Open your arcade.", "errors:theGameRendererDidNotLoad": "The game renderer did not load.", "errors:theGameDidNotConfirmStartupOpenTheCurrentOnline": "The game did not confirm startup. Open the current online edition.", "errors:aGameStylesheetDidNotLoad": "A game stylesheet did not load.", "errors:thisIsADownloadedFileChoosePlayOnlineOrStart": "This is a downloaded file. Choose Play online, or start a local server to play this copy.", "errors:theGameRendererIsUnavailable": "The game renderer is unavailable.", "errors:theGameCouldNotStartReloadToTryAgainOr": "The game could not start. Reload to try again, or open the online game. Your saved progress has not been changed by this launch screen.", "errors:flightOnHold": "Flight on hold."};
+  const fallback = {
+    'errors:stillPreparingYourArcadeYouCanWaitReloadOrUse':
+      'Still preparing your arcade. You can wait, reload, or use Play online. No flight has started.',
+    'errors:openYourArcade': 'Open your arcade.',
+    'errors:theGameRendererDidNotLoad': 'The game renderer did not load.',
+    'errors:theGameDidNotConfirmStartupOpenTheCurrentOnline':
+      'The game did not confirm startup. Open the current online edition.',
+    'errors:aGameStylesheetDidNotLoad': 'A game stylesheet did not load.',
+    'errors:thisIsADownloadedFileChoosePlayOnlineOrStart':
+      'This is a downloaded file. Choose Play online, or start a local server to play this copy.',
+    'errors:theGameRendererIsUnavailable': 'The game renderer is unavailable.',
+    'errors:theGameCouldNotStartReloadToTryAgainOr':
+      'The game could not start. Reload to try again, or open the online game. Your saved progress has not been changed by this launch screen.',
+    'errors:flightOnHold': 'Flight on hold.',
+  };
+  fallback['errors:loadingGameStyles'] = 'Loading game styles…';
+  fallback['errors:loadingFlightSystems'] = 'Loading flight systems…';
   const t = (key) => host.RevealLineI18n?.t(key) || fallback[key];
   const doc = host.document;
   if (!doc || host.RevealLineBoot) return;
@@ -33,11 +49,12 @@
     doc.querySelectorAll('[data-boot-inert]').forEach((element) => {
       element.inert = true;
     });
-    $('boot-title').textContent = state === 'file' ? t("errors:openYourArcade") : t("errors:flightOnHold");
+    $('boot-title').textContent =
+      state === 'file' ? t('errors:openYourArcade') : t('errors:flightOnHold');
     $('boot-status').textContent =
       state === 'file'
-        ? t("errors:thisIsADownloadedFileChoosePlayOnlineOrStart")
-        : t("errors:theGameCouldNotStartReloadToTryAgainOr");
+        ? t('errors:thisIsADownloadedFileChoosePlayOnlineOrStart')
+        : t('errors:theGameCouldNotStartReloadToTryAgainOr');
     $('boot-retry').hidden = state === 'file';
     $('boot-local').open = state === 'file';
     const detail = $('boot-detail');
@@ -77,13 +94,14 @@
   function resourceError(event) {
     if (state !== 'loading') return;
     const target = event.target;
-    if (target?.id === 'boot-phaser') fail(new Error(t("errors:theGameRendererDidNotLoad")));
+    if (target?.id === 'boot-phaser') fail(new Error(t('errors:theGameRendererDidNotLoad')));
     else if (target?.tagName === 'LINK' && target.rel === 'stylesheet')
-      fail(new Error(t("errors:aGameStylesheetDidNotLoad")));
+      fail(new Error(t('errors:aGameStylesheetDidNotLoad')));
   }
   function progress(message) {
     if (state !== 'loading' || !mounted) return false;
-    $('boot-status').textContent = message;
+    if (host.RevealLineI18n) host.RevealLineI18n.localizedText($('boot-status'), message);
+    else $('boot-status').textContent = typeof message === 'function' ? message() : message;
     return true;
   }
   function prepareStyles() {
@@ -195,24 +213,23 @@
       return;
     }
     if (!host.Phaser) {
-      fail(new Error(t("errors:theGameRendererIsUnavailable")));
+      fail(new Error(t('errors:theGameRendererIsUnavailable')));
       return;
     }
     slowTimer = host.setTimeout(() => {
       if (state === 'loading')
-        $('boot-status').textContent =
-          t("errors:stillPreparingYourArcadeYouCanWaitReloadOrUse");
+        progress(() => t('errors:stillPreparingYourArcadeYouCanWaitReloadOrUse'));
     }, 15000);
-    progress('Loading game styles…');
+    progress(() => t('errors:loadingGameStyles'));
     prepareStyles()
       .then(() => {
         if (state !== 'loading') return;
-        progress('Loading flight systems…');
+        progress(() => t('errors:loadingFlightSystems'));
         return import(appURL);
       })
       .then(() => {
         if (state === 'loading')
-          fail(new Error(t("errors:theGameDidNotConfirmStartupOpenTheCurrentOnline")));
+          fail(new Error(t('errors:theGameDidNotConfirmStartupOpenTheCurrentOnline')));
       })
       .catch(fail);
   }

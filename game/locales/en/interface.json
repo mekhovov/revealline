@@ -3542,7 +3542,6 @@
   "yourCurrentAttemptIsUnchangedChooseAnArenaWhenReady": "Your current attempt is unchanged. Choose an arena when ready.",
   "teamArenasAreUnavailable": "Team arenas are unavailable.",
   "teamArenaIdentitiesAreUnavailable": "Team arena identities are unavailable.",
-  "nfkc": "NFKC",
   "chooseAnArenaYourCurrentAttemptStaysAvailableUntilThe": "Choose an arena. Your current attempt stays available until the new arena is ready.",
   "noCompatibleTeamArenasAreAvailableBackKeepsYourCurrent": "No compatible Team arenas are available. Back keeps your current setup.",
   "noMatchingTeamMissionsClearSearchOrChooseAllCampaigns": "No matching Team missions. Clear Search or choose All campaigns and packs. Back keeps your current attempt.",
@@ -3760,11 +3759,6 @@
   "bodyImageLoadingTheNeutralMarkerIsShown": "Body image loading; the neutral marker is shown.",
   "bodyUnavailableTheNeutralMarkerIsShown": "Body unavailable; the neutral marker is shown.",
   "neutralFallbackMarkerThisBodyHasNoImage": "Neutral fallback marker; this body has no image.",
-  "clickToPaintTheBoardUsePaintByCoordinatesFor": "Click to paint the board. Use Paint by coordinates for keyboard editing. Signal and hangar details follow the map.",
-  "signalZonesAndHangars": "Signal zones and hangars",
-  "mapDetailsAppearAfterTheWorkingConfigurationLoads": "Map details appear after the working configuration loads.",
-  "dashedRectanglesMarkSignalZonesDiamondFramedSquaresMarkHangars": "Dashed rectangles mark signal zones; diamond-framed squares mark hangars. Locations use zero-based cell coordinates: x from the left, y from the top. Hangar marker size does not represent its activation radius. Signal effects apply to vulnerable craft; overlapping zones use the lowest speed. Switch within a hangar's radius on safe ground, with no active cut and after the switch cooldown.",
-  "signalSpeedAndOptionalBoostAbilityLocksApplyToVulnerable": "Signal speed and optional boost/ability locks apply to vulnerable classes. Edit each zone's flags in Level JSON. Switch class within a hangar's radius on safe ground, with no active cut and after the switch cooldown. Erase removes a whole zone or object.",
   "noSignalZones": "No signal zones.",
   "signalZoneXYCellsSpeedBoostAbility": "Signal zone {{id}}: x {{x}}, y {{y}}; {{width}} × {{height}} cells; speed {{speed}}%; boost {{boost}}; ability {{ability}}.",
   "blocked": "blocked",
@@ -3784,5 +3778,9 @@
   "missionLibrary.tag.FPV": "FPV",
   "missionLibrary.tag.Arcade": "Arcade",
   "missionLibrary.tag.Tactical": "Tactical",
-  "missionLibrary.tag.Practice": "Practice"
+  "missionLibrary.tag.Practice": "Practice",
+  "journey.menuMissionCount_one": "NEW JOURNEY / {{count}} MISSION",
+  "journey.menuMissionCount_other": "NEW JOURNEY / {{count}} MISSIONS",
+  "journey.testEdition": "{{edition}} / UNVALIDATED TEST BUILD",
+  "journey.startDestination": "Start · {{destination}}"
 }

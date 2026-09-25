@@ -3,18 +3,18 @@ import { t } from '../i18n/index.mjs';
 export function readingInputPrompt({
   modality,
   scrollable,
-  controls = { confirm: t("common:controls.south"), back: t("common:controls.east") },
+  controls = { confirm: t('common:controls.south'), back: t('common:controls.east') },
 } = {}) {
   const scroll = !scrollable
-    ? t("interface:allTextIsVisible")
+    ? t('interface:allTextIsVisible')
     : modality === 'controller' || modality === 'keyboard'
-      ? t("interface:upDownScroll")
-      : t("interface:scrollToRead");
+      ? t('interface:upDownScroll')
+      : t('interface:scrollToRead');
   const exit =
     modality === 'controller'
       ? `${controls.confirm} or ${controls.back}`
       : modality === 'keyboard'
-        ? t("interface:enterSpaceOrEscape")
-        : t("interface:doneReading");
+        ? t('interface:enterSpaceOrEscape')
+        : t('interface:doneReading');
   return `${scroll} · ${exit} returns`;
 }

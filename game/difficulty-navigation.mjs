@@ -66,7 +66,11 @@ export function createDifficultyNavigation() {
 }
 
 export const difficultyLabel = (entry) =>
-  entry?.difficulty === 'gentle' ? t("interface:gentle") : entry?.difficulty === 'standard' ? t("interface:standard") : '';
+  entry?.difficulty === 'gentle'
+    ? t('interface:gentle')
+    : entry?.difficulty === 'standard'
+      ? t('interface:standard')
+      : '';
 
 /** Preference changes choose the next attempt; they never convert a live run. */
 export function difficultyCue({ entry, nextMode, started, recovering = false, practice = false }) {
@@ -76,21 +80,36 @@ export function difficultyCue({ entry, nextMode, started, recovering = false, pr
     return Object.freeze({
       available: false,
       current: '',
-      copy: t("gameplay:brief.difficultyAppliesToAuthoredCampaignsThisActivityKeepsItsOwn"),
+      copy: t('gameplay:brief.difficultyAppliesToAuthoredCampaignsThisActivityKeepsItsOwn'),
       retry: '',
     });
-  const next = nextMode === 'gentle' ? t("interface:gentle") : t("interface:standard");
+  const next = nextMode === 'gentle' ? t('interface:gentle') : t('interface:standard');
   const pending = current !== next && (started || recovering);
   return Object.freeze({
     available: true,
     current,
     copy: pending
-      ? t("gameplay:thisFlightStaysStartsOnYourNextFreshAttemptResume", { value1: current, value2: next })
+      ? t('gameplay:thisFlightStaysStartsOnYourNextFreshAttemptResume', {
+          value1: current,
+          value2: next,
+        })
       : current !== next
-        ? t("gameplay:thisPreparedFlightStartsOnYourSavedChoiceForLater", { value1: current, value2: next })
-        : t("gameplay:bothDifficultiesUnlockTheSamePicturesMissionsAndAppearancesScores", { value1: current, value2: entry.difficulty === 'gentle' ? 'at least five lives, slower moving enemies and no mission or cut deadline' : 'the authored lives, hazards and deadlines' }),
+        ? t('gameplay:thisPreparedFlightStartsOnYourSavedChoiceForLater', {
+            value1: current,
+            value2: next,
+          })
+        : t('gameplay:bothDifficultiesUnlockTheSamePicturesMissionsAndAppearancesScores', {
+            value1: current,
+            value2:
+              entry.difficulty === 'gentle'
+                ? 'at least five lives, slower moving enemies and no mission or cut deadline'
+                : 'the authored lives, hazards and deadlines',
+          }),
     retry: pending
-      ? t("gameplay:retryStartsThisMapFromTheBeginningOnYourCurrent", { value1: next, value2: current })
+      ? t('gameplay:retryStartsThisMapFromTheBeginningOnYourCurrent', {
+          value1: next,
+          value2: current,
+        })
       : '',
   });
 }
@@ -102,10 +121,26 @@ export function difficultyRuleComparison(standardLevel, gentleLevel) {
   const seconds = (value) => `${Number(value.toFixed(2))}s`;
   const limit = (value) => (value ? seconds(value) : 'none');
   const rows = [
-    t("gameplay:startingLivesStandardGentle", { value1: standard.rules.lives, value2: gentle.rules.lives }),
-    t("gameplay:missionDeadlineStandardGentle", { value1: limit(standard.rules.timeLimitSeconds), value2: limit(gentle.rules.timeLimitSeconds) }),
-    t("gameplay:cutDeadlineStandardGentle", { value1: limit(standard.rules.cutTimeLimitSeconds), value2: limit(gentle.rules.cutTimeLimitSeconds) }),
-    t("gameplay:maximumLineStandardGentle", { value1: standard.rules.maxTrailCells ? t("gameplay:cells", { value1: standard.rules.maxTrailCells }) : 'unlimited', value2: gentle.rules.maxTrailCells ? t("gameplay:cells", { value1: gentle.rules.maxTrailCells }) : 'unlimited' }),
+    t('gameplay:startingLivesStandardGentle', {
+      value1: standard.rules.lives,
+      value2: gentle.rules.lives,
+    }),
+    t('gameplay:missionDeadlineStandardGentle', {
+      value1: limit(standard.rules.timeLimitSeconds),
+      value2: limit(gentle.rules.timeLimitSeconds),
+    }),
+    t('gameplay:cutDeadlineStandardGentle', {
+      value1: limit(standard.rules.cutTimeLimitSeconds),
+      value2: limit(gentle.rules.cutTimeLimitSeconds),
+    }),
+    t('gameplay:maximumLineStandardGentle', {
+      value1: standard.rules.maxTrailCells
+        ? t('gameplay:cells', { value1: standard.rules.maxTrailCells })
+        : 'unlimited',
+      value2: gentle.rules.maxTrailCells
+        ? t('gameplay:cells', { value1: gentle.rules.maxTrailCells })
+        : 'unlimited',
+    }),
   ];
   if (
     standard.enemies.some(
@@ -114,26 +149,33 @@ export function difficultyRuleComparison(standardLevel, gentleLevel) {
         (enemy.type === 'bouncer' && (enemy.vx !== 0 || enemy.vy !== 0)),
     )
   )
-    rows.push(t("gameplay:brief.movingFieldEnemiesAndBorderPatrolsTravel40SlowerOn"));
+    rows.push(t('gameplay:brief.movingFieldEnemiesAndBorderPatrolsTravel40SlowerOn'));
   for (const enemy of standard.enemies.filter((enemy) => enemy.type === 'lane-boss')) {
     const changed = gentle.enemies.find((candidate) => candidate.id === enemy.id);
     rows.push(
-      t("gameplay:laneWarningStandardGentleLaneCycleStandardGentle", { value1: seconds(enemy.warningSeconds ?? 1.5), value2: seconds(changed.warningSeconds), value3: seconds(enemy.period ?? 6), value4: seconds(changed.period) }),
+      t('gameplay:laneWarningStandardGentleLaneCycleStandardGentle', {
+        value1: seconds(enemy.warningSeconds ?? 1.5),
+        value2: seconds(changed.warningSeconds),
+        value3: seconds(enemy.period ?? 6),
+        value4: seconds(changed.period),
+      }),
     );
   }
   if (standard.encounter && gentle.encounter) {
     for (const [stage, key, label] of [
-      ['shielded', 'warningTicks', t("gameplay:brief.sentinelLaneWarning")],
-      ['shielded', 'restTicks', t("gameplay:brief.sentinelRest")],
-      ['exposed', 'warningTicks', t("gameplay:brief.sentinelOpeningWarning")],
-      ['exposed', 'openTicks', t("gameplay:brief.sentinelOpening")],
+      ['shielded', 'warningTicks', t('gameplay:brief.sentinelLaneWarning')],
+      ['shielded', 'restTicks', t('gameplay:brief.sentinelRest')],
+      ['exposed', 'warningTicks', t('gameplay:brief.sentinelOpeningWarning')],
+      ['exposed', 'openTicks', t('gameplay:brief.sentinelOpening')],
     ])
       rows.push(
-        t("gameplay:standardGentle", { value1: label, value2: seconds(standard.encounter[stage][key] * FIXED_DT), value3: seconds(gentle.encounter[stage][key] * FIXED_DT) }),
+        t('gameplay:standardGentle', {
+          value1: label,
+          value2: seconds(standard.encounter[stage][key] * FIXED_DT),
+          value3: seconds(gentle.encounter[stage][key] * FIXED_DT),
+        }),
       );
   }
-  rows.push(
-    t("gameplay:brief.thePictureCoverageTargetRequiredObjectivesCraftSpeedAndEquipment"),
-  );
+  rows.push(t('gameplay:brief.thePictureCoverageTargetRequiredObjectivesCraftSpeedAndEquipment'));
   return Object.freeze(rows);
 }

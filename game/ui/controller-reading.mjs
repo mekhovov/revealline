@@ -18,8 +18,13 @@ export function attachControllerReading({
   // An explicit list owns only those surfaces; omitted keeps the Solo defaults
   // and additional surfaces. Entries remain [region, entry, label, unit] tuples.
   const definitions = surfaceDefinitions ?? [
-    ['overlay-reading', 'overlay-read', t("interface:missionDetails"), 'overlay-reading-unit'],
-    ['mission-brief-reading', 'mission-brief-read', t("interface:missionBrief"), 'mission-brief-unit'],
+    ['overlay-reading', 'overlay-read', t('interface:missionDetails'), 'overlay-reading-unit'],
+    [
+      'mission-brief-reading',
+      'mission-brief-read',
+      t('interface:missionBrief'),
+      'mission-brief-unit',
+    ],
     ...additionalSurfaces,
   ];
   const surfaces = definitions.map(([id, entryId, label, unitId]) => {
@@ -33,7 +38,7 @@ export function attachControllerReading({
       unit: doc.getElementById(unitId),
     };
     if (Object.values(surface).some((value) => !value))
-      throw new Error(t("gameplay:missingFirstPartyReadingControls", { value1: id }));
+      throw new Error(t('gameplay:missingFirstPartyReadingControls', { value1: id }));
     return surface;
   });
   let activeId = null,
@@ -54,7 +59,7 @@ export function attachControllerReading({
       return `${getReadingPrompt({ scrollable: !measured || scrollHeight > clientHeight })}.`;
     }
     const labels = getControlLabels();
-    return t("gameplay:upDownScrollOrReturns", { value1: labels.confirm, value2: labels.back });
+    return t('gameplay:upDownScrollOrReturns', { value1: labels.confirm, value2: labels.back });
   };
   function refresh() {
     if (destroyed) return;
@@ -62,9 +67,11 @@ export function attachControllerReading({
       const active = activeId === surface.id;
       surface.done.disabled = !active;
       surface.entry.setAttribute('aria-pressed', String(active));
-      localizedText(surface.hint, () =>active
-        ? `Reading ${surface.label}. ${prompt(surface.region)}`
-        : t("interface:readWithoutStartingOrResuming"));
+      localizedText(surface.hint, () =>
+        active
+          ? `Reading ${surface.label}. ${prompt(surface.region)}`
+          : t('interface:readWithoutStartingOrResuming'),
+      );
       if (surface.id === 'overlay-reading' && (compactOverlay || surface.region.hidden)) {
         const { clientHeight, scrollHeight } = surface.region;
         const measured =
@@ -97,13 +104,15 @@ export function attachControllerReading({
     activeId = surfaces.some((surface) => surface.id === state?.regionId) ? state.regionId : null;
     refresh();
     if (previous && previous !== activeId) {
-      localizedText(surfaces.find((surface) => surface.id === previous).hint, () =>t("interface:readingEndedChooseAnActionWhenReady"));
+      localizedText(surfaces.find((surface) => surface.id === previous).hint, () =>
+        t('interface:readingEndedChooseAnActionWhenReady'),
+      );
     }
     onTransition();
   }
   function hint(message) {
     if (destroyed || !activeId) return;
-    localizedText(surfaces.find((surface) => surface.id === activeId).hint, () =>message);
+    localizedText(surfaces.find((surface) => surface.id === activeId).hint, () => message);
   }
   const view = doc.defaultView;
   function revealResizedReading(event) {

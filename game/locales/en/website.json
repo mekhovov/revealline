@@ -201,5 +201,17 @@
   "findYourLine": "Find your line.",
   "returnToGameSelectedConfirmToLeaveThisPage": "Return to game selected. Confirm to leave this page.",
   "dPadMoveSouthChooseEastBackKeyboardAndTouch": "D-pad: move · South: choose · East: Back · Keyboard and touch also work.",
-  "dev": "DEV"
+  "dev": "DEV",
+  "page.playSolo": "Play solo",
+  "page.couchDuel": "Couch duel",
+  "page.playground": "Playground",
+  "page.tagline": "Clear a path.[[lineBreak]]Reveal a world.",
+  "page.introduction": "Close a line through changing worlds, collect the pictures you uncover and try a new route. Play with keys, touch or a compatible controller.",
+  "page.privacyLink": "Privacy and local storage",
+  "page.savedSource": "Saved source [[revision]]",
+  "page.developmentBuild": "Development distribution — source revision not recorded.",
+  "page.fontNotices": "Pixel display type: Tiny5 by the Tiny5 Project Authors and designer Stefan Schmidt ([[slot0]]), self-hosted and unmodified with Cyrillic and Ukrainian glyph coverage; [[slot1]]. Supporting display type: Handjet by the Handjet Project Authors ([[slot2]]), instantiated at weight 600, element shape 2 and element grid 1. Interface type: Exo 2 by the Exo 2 Project Authors ([[slot3]]), retaining weights 400–600. Numeric type: IBM Plex Mono by IBM Corp. ([[slot4]]), weight 500. The supporting WOFF2 files retain full English and Ukrainian letter coverage. [[slot5]].",
+  "page.fontSource": "source and checksum record",
+  "page.supportingFontSources": "Supporting-font source versions, build recipe and file checksums",
+  "page.opening": "Opening Reveal / Line…"
 }

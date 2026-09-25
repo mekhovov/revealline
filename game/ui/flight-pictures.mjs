@@ -78,8 +78,9 @@ export function createFlightPictures({
     discardSelection();
   }
   async function ensure(themeId = ownContext.themeId, { signal, onStatus = () => {} } = {}) {
-    if (disposed) throw new Error(t("interface:thisPictureAttemptIsClosed"));
-    if (signal?.aborted) throw new DOMException(t("interface:picturePreparationCancelled"), 'AbortError');
+    if (disposed) throw new Error(t('interface:thisPictureAttemptIsClosed'));
+    if (signal?.aborted)
+      throw new DOMException(t('interface:picturePreparationCancelled'), 'AbortError');
     cancel();
     if (readyTheme === themeId) return true;
     const ticket = generation,
@@ -92,7 +93,7 @@ export function createFlightPictures({
       selectionStage = null;
     const check = () => {
       if (disposed || controller.signal.aborted || ticket !== generation)
-        throw new DOMException(t("interface:picturePreparationCancelled"), 'AbortError');
+        throw new DOMException(t('interface:picturePreparationCancelled'), 'AbortError');
     };
     const report = (value) => {
       if (disposed || controller.signal.aborted || ticket !== generation) return;
@@ -108,7 +109,7 @@ export function createFlightPictures({
       }
       let media;
       if (!pins) {
-        report({ stage: 'reading', message: t("interface:readingThisFlightSPictureChoices") });
+        report({ stage: 'reading', message: t('interface:readingThisFlightSPictureChoices') });
         media = await readMedia({ signal: controller.signal });
         check();
         let selection = {
@@ -120,7 +121,10 @@ export function createFlightPictures({
           themeIds: worlds,
         };
         if (prepareSelection && !explicitLegacy) {
-          report({ stage: 'preparing', message: t("interface:preparingThisFlightSOriginalPicture") });
+          report({
+            stage: 'preparing',
+            message: t('interface:preparingThisFlightSOriginalPicture'),
+          });
           const prepared = await prepareSelection({
             media,
             selection,
@@ -137,7 +141,10 @@ export function createFlightPictures({
           media = prepared.media;
           selection = { ...selection, library: prepared.library };
         }
-        report({ stage: 'verifying', message: t("interface:checkingThisFlightSExactPictureBinding") });
+        report({
+          stage: 'verifying',
+          message: t('interface:checkingThisFlightSExactPictureBinding'),
+        });
         const selected = selectPins
           ? await selectPins({ media, selection, explicitLegacy, signal: controller.signal })
           : media.story
@@ -163,9 +170,9 @@ export function createFlightPictures({
       const pin = presentationPicturePins(pins).choices.find(
         (choice) => choice.identity.themeId === themeId,
       );
-      if (!pin) throw new Error(t("interface:thisSavedAttemptHasNoPictureChoiceForThatWorld"));
+      if (!pin) throw new Error(t('interface:thisSavedAttemptHasNoPictureChoiceForThatWorld'));
       if (pin.kind === 'still') {
-        report({ stage: 'reading', message: t("interface:readingTheSavedPictureOriginal") });
+        report({ stage: 'reading', message: t('interface:readingTheSavedPictureOriginal') });
         media ??= await readMedia({ signal: controller.signal });
         check();
         const acquireSelected = selectionStage?.has(pin)
@@ -176,13 +183,13 @@ export function createFlightPictures({
         );
         const next = { ...ownContext, themeId };
         candidate.setContext(next);
-        report({ stage: 'decoding', message: t("interface:openingThisFlightSOriginalPicture") });
+        report({ stage: 'decoding', message: t('interface:openingThisFlightSOriginalPicture') });
         await candidate.load(
           { pin, metadata: media.metadata, store: media.store },
           { context: next, signal: controller.signal },
         );
       } else if (acquireLegacy) {
-        report({ stage: 'decoding', message: t("interface:openingThisFlightSAuthoredPicture") });
+        report({ stage: 'decoding', message: t('interface:openingThisFlightSAuthoredPicture') });
         check();
         const handle = await acquireLegacy({ pin, themeId }, { signal: controller.signal });
         // Install the disposal owner before checking cancellation: an injected
@@ -201,7 +208,11 @@ export function createFlightPictures({
       candidate = null;
       readyTheme = themeId;
       prior?.dispose();
-      report({ status: 'ready', stage: 'ready', message: t("interface:thisFlightSPictureIsReady") });
+      report({
+        status: 'ready',
+        stage: 'ready',
+        message: t('interface:thisFlightSPictureIsReady'),
+      });
       return true;
     } catch (error) {
       discardSelection(selectionStage);

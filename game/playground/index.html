@@ -24,26 +24,40 @@
     <link rel="stylesheet" href="../ui/workshop-return.css" />
   </head>
   <body data-workshop-tool="playground" class="playground-page field-kit field-kit-support">
-<div data-language-control></div>
+    <div data-language-control></div>
 
     <p id="boot-status" class="boot-status operation-status" data-state="busy">
       <span class="operation-status-signal" aria-hidden="true"><i></i><i></i><i></i></span
-      ><span class="operation-status-label" role="status" data-i18n="tools:loadingPlaygroundTools">Loading Playground tools…</span>
+      ><span class="operation-status-label" role="status" data-i18n="tools:loadingPlaygroundTools"
+        >Loading Playground tools…</span
+      >
     </p>
     <header class="masthead">
-      <a class="wordmark" href="../" data-workshop-return="game" data-i18n="tools:revealLine">◩ REVEAL / LINE</a>
+      <a class="wordmark" href="../" data-workshop-return="game" data-i18n="tools:revealLine"
+        >◩ REVEAL / LINE</a
+      >
       <nav>
         <span data-i18n="tools:playground">PLAYGROUND</span
-        ><a href="../studio/" data-content-studio-route="studio" inert aria-disabled="true"
-           data-i18n="tools:contentStudioPreview">Content Studio preview ↗</a
-        ><a href="../controller-lab/" data-workshop-tool="controller-lab" data-i18n="tools:controllerPractice">Controller practice ↗</a
+        ><a
+          href="../studio/"
+          data-content-studio-route="studio"
+          inert
+          aria-disabled="true"
+          data-i18n="tools:contentStudioPreview"
+          >Content Studio preview ↗</a
+        ><a
+          href="../controller-lab/"
+          data-workshop-tool="controller-lab"
+          data-i18n="tools:controllerPractice"
+          >Controller practice ↗</a
         ><a href="../couch/" data-i18n="tools:couchRace">Couch race ↗</a
         ><a
           href="../?workshop=playground"
           data-workshop-return="workshop"
           inert
           aria-disabled="true"
-           data-i18n="tools:returnToWorkshop">Return to Workshop</a
+          data-i18n="tools:returnToWorkshop"
+          >Return to Workshop</a
         >
       </nav>
     </header>
@@ -51,49 +65,98 @@
       <div class="workshop-title">
         <div>
           <p class="eyebrow" data-i18n="tools:authorPreviewRepeat">AUTHOR / PREVIEW / REPEAT</p>
-          <h1 class="field-kit-display" data-i18n="tools:makeYourNextWorld">Make your next world.</h1>
-          <p data-i18n="tools:changeTheDataPlayTheResultInTheSameGame">Change the data. Play the result in the same game engine.</p>
+          <h1 class="field-kit-display" data-i18n="tools:makeYourNextWorld">
+            Make your next world.
+          </h1>
+          <p data-i18n="tools:changeTheDataPlayTheResultInTheSameGame">
+            Change the data. Play the result in the same game engine.
+          </p>
           <p>
-            <a href="../../authoring/community/" data-i18n="tools:creatorGuideMakeInstallAndShareALevel">Creator guide · make, install and share a level</a>
+            <a
+              href="../../authoring/community/"
+              data-i18n="tools:creatorGuideMakeInstallAndShareALevel"
+              >Creator guide · make, install and share a level</a
+            >
           </p>
         </div>
         <div class="workshop-actions">
-          <button id="preview-button" class="button primary" data-i18n="tools:playConfiguration">Play configuration ↗</button
-          ><button id="export-button" class="button" data-i18n="tools:exportScenario">Export scenario</button
+          <button id="preview-button" class="button primary" data-i18n="tools:playConfiguration">
+            Play configuration ↗</button
+          ><button id="export-button" class="button" data-i18n="tools:exportScenario">
+            Export scenario</button
           ><label class="file-button button"
-            ><span data-i18n="tools:importContent">Import content</span><input id="import-file" type="file" accept="application/json,.json"
+            ><span data-i18n="tools:importContent">Import content</span
+            ><input id="import-file" type="file" accept="application/json,.json"
           /></label>
         </div>
       </div>
-      <div id="editor-feedback" class="dialog-operation-rail" aria-label="Playground operation" data-i18n-aria-label="tools:playgroundOperation">
+      <div
+        id="editor-feedback"
+        class="dialog-operation-rail"
+        aria-label="Playground operation"
+        data-i18n-aria-label="tools:playgroundOperation"
+      >
         <div id="editor-messages">
           <p id="preview-load-status" class="editor-status" role="status" tabindex="0" hidden></p>
-          <p id="editor-status" class="editor-status" role="status" tabindex="0" data-i18n="tools:loadingTheAuthoringContract">
+          <p
+            id="editor-status"
+            class="editor-status"
+            role="status"
+            tabindex="0"
+            data-i18n="tools:loadingTheAuthoringContract"
+          >
             Loading the authoring contract…
           </p>
           <p id="replay-status" class="editor-status" role="status" tabindex="0" hidden></p>
         </div>
         <div class="feedback-actions">
-          <button id="cancel-import" class="button secondary" type="button" hidden data-i18n="tools:cancelPreparation">
+          <button
+            id="cancel-import"
+            class="button secondary"
+            type="button"
+            hidden
+            data-i18n="tools:cancelPreparation"
+          >
             Cancel preparation
           </button>
-          <button id="cancel-replay" class="button secondary" type="button" hidden data-i18n="tools:cancelVerification">
+          <button
+            id="cancel-replay"
+            class="button secondary"
+            type="button"
+            hidden
+            data-i18n="tools:cancelVerification"
+          >
             Cancel verification
           </button>
         </div>
       </div>
       <div class="editor-grid">
-        <section class="editor-panel" aria-label="Configuration" data-i18n-aria-label="tools:configuration">
-          <label class="field"><span data-i18n="tools:campaignSource">Campaign source</span><select id="campaign-select"></select></label>
-          <p id="source-readout" class="micro-note" data-i18n="tools:importAScenarioMapExpansionOrExpansionLibrary">
+        <section
+          class="editor-panel"
+          aria-label="Configuration"
+          data-i18n-aria-label="tools:configuration"
+        >
+          <label class="field"
+            ><span data-i18n="tools:campaignSource">Campaign source</span
+            ><select id="campaign-select"></select
+          ></label>
+          <p
+            id="source-readout"
+            class="micro-note"
+            data-i18n="tools:importAScenarioMapExpansionOrExpansionLibrary"
+          >
             Import a scenario, map, expansion or expansion library.
           </p>
           <div
             id="example-packs"
             class="workshop-actions"
             aria-label="Example expansion packs"
-           data-i18n-aria-label="tools:exampleExpansionPacks"></div>
-          <p class="micro-note" data-i18n="tools:tacticalTeachingLoadAScenarioReadItsInstructionsThenPlay">
+            data-i18n-aria-label="tools:exampleExpansionPacks"
+          ></div>
+          <p
+            class="micro-note"
+            data-i18n="tools:tacticalTeachingLoadAScenarioReadItsInstructionsThenPlay"
+          >
             Tactical teaching: load a scenario, read its instructions, then Play configuration.
             These practice lessons use manual equipment and grant no campaign awards.
           </p>
@@ -101,43 +164,64 @@
             id="teaching-examples"
             class="workshop-actions"
             aria-label="Tactical teaching scenarios"
-           data-i18n-aria-label="tools:tacticalTeachingScenarios"></div>
+            data-i18n-aria-label="tools:tacticalTeachingScenarios"
+          ></div>
           <div class="settings-row">
-            <label class="field"><span data-i18n="tools:startFrom">Start from</span><select id="level-select"></select></label
-            ><label class="field"><span data-i18n="tools:world">World</span><select id="theme-select"></select></label>
+            <label class="field"
+              ><span data-i18n="tools:startFrom">Start from</span
+              ><select id="level-select"></select></label
+            ><label class="field"
+              ><span data-i18n="tools:world">World</span
+              ><select id="theme-select"></select
+            ></label>
           </div>
           <div class="settings-row">
-            <label class="field"><span data-i18n="tools:class">Class</span><select id="class-select"></select></label
+            <label class="field"
+              ><span data-i18n="tools:class">Class</span
+              ><select id="class-select"></select></label
             ><label class="field"
-              ><span data-i18n="tools:steering">Steering</span><select id="turn-select">
+              ><span data-i18n="tools:steering">Steering</span
+              ><select id="turn-select">
                 <option value="immediate" data-i18n="tools:immediate">Immediate</option>
                 <option value="grid-center" data-i18n="tools:gridBuffer">Grid + buffer</option>
               </select></label
             >
           </div>
           <div class="section-line">
-            <span data-i18n="tools:tryAnInteraction">TRY AN INTERACTION</span><span data-i18n="tools:safePracticeRecipes">SAFE PRACTICE RECIPES</span>
+            <span data-i18n="tools:tryAnInteraction">TRY AN INTERACTION</span
+            ><span data-i18n="tools:safePracticeRecipes">SAFE PRACTICE RECIPES</span>
           </div>
-          <div class="preset-buttons" role="group" aria-label="Interaction preset" data-i18n-aria-label="tools:interactionPreset">
-            <button class="button" data-preset="fiber" data-i18n="tools:fiberRelay">Fiber relay</button>
-            <button class="button" data-preset="bomber" data-i18n="tools:bomberSupply">Bomber supply</button>
-            <button class="button" data-preset="impact" data-i18n="tools:impactPulse">Impact pulse</button>
+          <div
+            class="preset-buttons"
+            role="group"
+            aria-label="Interaction preset"
+            data-i18n-aria-label="tools:interactionPreset"
+          >
+            <button class="button" data-preset="fiber" data-i18n="tools:fiberRelay">
+              Fiber relay
+            </button>
+            <button class="button" data-preset="bomber" data-i18n="tools:bomberSupply">
+              Bomber supply
+            </button>
+            <button class="button" data-preset="impact" data-i18n="tools:impactPulse">
+              Impact pulse
+            </button>
           </div>
-          <p id="preset-readout" class="micro-note" data-i18n="tools:eachPresetKeepsYourCurrentThemeAndArtworkUndoReturns">
+          <p
+            id="preset-readout"
+            class="micro-note"
+            data-i18n="tools:eachPresetKeepsYourCurrentThemeAndArtworkUndoReturns"
+          >
             Each preset keeps your current theme and artwork. Undo returns to the previous map and
             loadout.
           </p>
           <div class="settings-row three">
             <label class="field"
-              ><span data-i18n="tools:coverageTarget">Coverage target %</span><input
-                id="goal-input"
-                type="number"
-                min="5"
-                max="95"
-                step="1"
-                value="45" /></label
+              ><span data-i18n="tools:coverageTarget">Coverage target %</span
+              ><input id="goal-input" type="number" min="5" max="95" step="1" value="45" /></label
             ><label class="field"
-              ><span data-i18n="tools:speedCellsPerS">Speed / cells per s</span><input
+              ><span data-i18n="tools:speedCellsPerS">Speed / cells per s</span
+              ><input
                 id="speed-input"
                 type="number"
                 min="2"
@@ -145,158 +229,122 @@
                 step="0.5"
                 value="10" /></label
             ><label class="field"
-              ><span data-i18n="tools:lives">Lives</span><input id="lives-input" type="number" min="1" max="9" value="3"
+              ><span data-i18n="tools:lives">Lives</span
+              ><input id="lives-input" type="number" min="1" max="9" value="3"
             /></label>
           </div>
           <details>
             <summary data-i18n="tools:challengeBudgets">Challenge budgets</summary>
-            <p data-i18n="tools:zeroDisablesALimitTimeAndCableLimitsArePart">Zero disables a limit. Time and cable limits are part of the actual game rules.</p>
+            <p data-i18n="tools:zeroDisablesALimitTimeAndCableLimitsArePart">
+              Zero disables a limit. Time and cable limits are part of the actual game rules.
+            </p>
             <div class="settings-row three">
               <label class="field"
-                ><span data-i18n="tools:missionSeconds">Mission seconds</span><input
-                  id="mission-limit"
-                  type="number"
-                  min="0"
-                  max="1800"
-                  step="1"
-                  value="0"
+                ><span data-i18n="tools:missionSeconds">Mission seconds</span
+                ><input id="mission-limit" type="number" min="0" max="1800" step="1" value="0"
               /></label>
               <label class="field"
-                ><span data-i18n="tools:cutSeconds">Cut seconds</span><input
-                  id="cut-limit"
-                  type="number"
-                  min="0"
-                  max="120"
-                  step="0.5"
-                  value="0"
+                ><span data-i18n="tools:cutSeconds">Cut seconds</span
+                ><input id="cut-limit" type="number" min="0" max="120" step="0.5" value="0"
               /></label>
               <label class="field"
-                ><span data-i18n="tools:trailCells">Trail cells</span><input
-                  id="trail-limit"
-                  type="number"
-                  min="0"
-                  max="1564"
-                  step="1"
-                  value="0"
+                ><span data-i18n="tools:trailCells">Trail cells</span
+                ><input id="trail-limit" type="number" min="0" max="1564" step="1" value="0"
               /></label>
             </div>
             <label class="field"
-              ><span data-i18n="tools:equipmentSwitchCooldownSeconds">Equipment switch cooldown / seconds</span><input
-                id="switch-limit"
-                type="number"
-                min="0.1"
-                max="30"
-                step="0.1"
-                value="2"
+              ><span data-i18n="tools:equipmentSwitchCooldownSeconds"
+                >Equipment switch cooldown / seconds</span
+              ><input id="switch-limit" type="number" min="0.1" max="30" step="0.1" value="2"
             /></label>
           </details>
           <details id="encounter-editor">
             <summary data-i18n="tools:stagedEncounter">Staged encounter</summary>
-            <p id="encounter-readout" data-i18n="tools:loadSentinelRelayFromTheExpansionExamplesToEditIts">
+            <p
+              id="encounter-readout"
+              data-i18n="tools:loadSentinelRelayFromTheExpansionExamplesToEditIts"
+            >
               Load Sentinel Relay from the expansion examples to edit its two stages.
             </p>
             <fieldset id="encounter-fields" disabled>
               <legend data-i18n="tools:relayAndCore">Relay and core</legend>
               <div class="settings-row three">
                 <label class="field"
-                  ><span data-i18n="tools:sentinelId">Sentinel ID</span><input id="encounter-enemy" type="text" maxlength="80"
+                  ><span data-i18n="tools:sentinelId">Sentinel ID</span
+                  ><input id="encounter-enemy" type="text" maxlength="80"
                 /></label>
                 <label class="field"
-                  ><span data-i18n="tools:shieldObjectiveId">Shield objective ID</span><input id="encounter-shield" type="text" maxlength="80"
+                  ><span data-i18n="tools:shieldObjectiveId">Shield objective ID</span
+                  ><input id="encounter-shield" type="text" maxlength="80"
                 /></label>
                 <label class="field"
-                  ><span data-i18n="tools:coreObjectiveId">Core objective ID</span><input id="encounter-core" type="text" maxlength="80"
+                  ><span data-i18n="tools:coreObjectiveId">Core objective ID</span
+                  ><input id="encounter-core" type="text" maxlength="80"
                 /></label>
               </div>
               <div class="settings-row three">
                 <label class="field"
-                  ><span data-i18n="tools:newTrailCellsToRelease">New trail cells to release</span><input
-                    id="encounter-cut"
-                    type="number"
-                    min="1"
-                    max="128"
-                    step="1"
+                  ><span data-i18n="tools:newTrailCellsToRelease">New trail cells to release</span
+                  ><input id="encounter-cut" type="number" min="1" max="128" step="1"
                 /></label>
                 <label class="field"
-                  ><span data-i18n="tools:laneWidthCells">Lane width / cells</span><input
-                    id="encounter-width"
-                    type="number"
-                    min="0.25"
-                    max="5"
-                    step="0.05"
+                  ><span data-i18n="tools:laneWidthCells">Lane width / cells</span
+                  ><input id="encounter-width" type="number" min="0.25" max="5" step="0.05"
                 /></label>
                 <label class="field"
-                  ><span data-i18n="tools:initialDelayTicks">Initial delay / ticks</span><input
-                    id="encounter-delay"
-                    type="number"
-                    min="1"
-                    max="7200"
-                    step="1"
+                  ><span data-i18n="tools:initialDelayTicks">Initial delay / ticks</span
+                  ><input id="encounter-delay" type="number" min="1" max="7200" step="1"
                 /></label>
               </div>
-              <p data-i18n="tools:120TicksOneSecondTimingsStayFixedAcrossScreenSizes">120 ticks = one second. Timings stay fixed across screen sizes and frame rates.</p>
+              <p data-i18n="tools:120TicksOneSecondTimingsStayFixedAcrossScreenSizes">
+                120 ticks = one second. Timings stay fixed across screen sizes and frame rates.
+              </p>
               <div class="settings-row three">
                 <label class="field"
-                  ><span data-i18n="tools:shieldWarningTicks">Shield warning / ticks</span><input
-                    id="encounter-shield-warning"
-                    type="number"
-                    min="1"
-                    max="7200"
-                    step="1"
+                  ><span data-i18n="tools:shieldWarningTicks">Shield warning / ticks</span
+                  ><input id="encounter-shield-warning" type="number" min="1" max="7200" step="1"
                 /></label>
                 <label class="field"
-                  ><span data-i18n="tools:shieldAttackTicks">Shield attack / ticks</span><input
-                    id="encounter-shield-active"
-                    type="number"
-                    min="1"
-                    max="7200"
-                    step="1"
+                  ><span data-i18n="tools:shieldAttackTicks">Shield attack / ticks</span
+                  ><input id="encounter-shield-active" type="number" min="1" max="7200" step="1"
                 /></label>
                 <label class="field"
-                  ><span data-i18n="tools:shieldRestTicks">Shield rest / ticks</span><input
-                    id="encounter-shield-rest"
-                    type="number"
-                    min="1"
-                    max="7200"
-                    step="1"
+                  ><span data-i18n="tools:shieldRestTicks">Shield rest / ticks</span
+                  ><input id="encounter-shield-rest" type="number" min="1" max="7200" step="1"
                 /></label>
               </div>
               <label class="field"
-                ><span data-i18n="tools:transitionTicks">Transition / ticks</span><input
-                  id="encounter-transition"
-                  type="number"
-                  min="1"
-                  max="7200"
-                  step="1"
+                ><span data-i18n="tools:transitionTicks">Transition / ticks</span
+                ><input id="encounter-transition" type="number" min="1" max="7200" step="1"
               /></label>
               <div class="settings-row three">
                 <label class="field"
-                  ><span data-i18n="tools:coreWarningTicks">Core warning / ticks</span><input
-                    id="encounter-core-warning"
-                    type="number"
-                    min="1"
-                    max="7200"
-                    step="1"
+                  ><span data-i18n="tools:coreWarningTicks">Core warning / ticks</span
+                  ><input id="encounter-core-warning" type="number" min="1" max="7200" step="1"
                 /></label>
                 <label class="field"
-                  ><span data-i18n="tools:coreAttackTicks">Core attack / ticks</span><input
-                    id="encounter-core-active"
-                    type="number"
-                    min="1"
-                    max="7200"
-                    step="1"
+                  ><span data-i18n="tools:coreAttackTicks">Core attack / ticks</span
+                  ><input id="encounter-core-active" type="number" min="1" max="7200" step="1"
                 /></label>
                 <label class="field"
-                  ><span data-i18n="tools:coreOpeningTicks">Core opening / ticks</span><input
-                    id="encounter-core-open"
-                    type="number"
-                    min="1"
-                    max="7200"
-                    step="1"
+                  ><span data-i18n="tools:coreOpeningTicks">Core opening / ticks</span
+                  ><input id="encounter-core-open" type="number" min="1" max="7200" step="1"
                 /></label>
               </div>
-              <button id="apply-encounter" class="button" type="button" data-i18n="tools:applyEncounter">Apply encounter</button>
-              <button id="remove-encounter" class="button secondary" type="button" data-i18n="tools:convertToOrdinaryMap">
+              <button
+                id="apply-encounter"
+                class="button"
+                type="button"
+                data-i18n="tools:applyEncounter"
+              >
+                Apply encounter
+              </button>
+              <button
+                id="remove-encounter"
+                class="button secondary"
+                type="button"
+                data-i18n="tools:convertToOrdinaryMap"
+              >
                 Convert to ordinary map
               </button>
               <p data-i18n="tools:conversionRemovesTheStagedEnemyAndTimingRulesKeepsBoth">
@@ -308,73 +356,80 @@
           </details>
           <div class="settings-row seed-row">
             <label class="field"
-              ><span data-i18n="tools:generatorSeed">Generator seed</span><input id="seed-input" type="text" value="first-light" /></label
-            ><button id="generate-button" class="button" data-i18n="tools:generateMap">Generate map</button>
+              ><span data-i18n="tools:generatorSeed">Generator seed</span
+              ><input id="seed-input" type="text" value="first-light" /></label
+            ><button id="generate-button" class="button" data-i18n="tools:generateMap">
+              Generate map
+            </button>
           </div>
           <div class="settings-row">
             <label class="field"
-              ><span data-i18n="tools:terrainTreatment">Terrain treatment</span><select id="terrain-style">
+              ><span data-i18n="tools:terrainTreatment">Terrain treatment</span
+              ><select id="terrain-style">
                 <option value="microtile" data-i18n="tools:microtile">Microtile</option>
                 <option value="props" data-i18n="tools:largerProps">Larger props</option>
                 <option value="hybrid" selected data-i18n="tools:hybrid">Hybrid</option>
               </select></label
-            ><label class="field"><span data-i18n="tools:gridOverlay">Grid overlay</span><input id="show-grid" type="checkbox" /></label>
+            ><label class="field"
+              ><span data-i18n="tools:gridOverlay">Grid overlay</span
+              ><input id="show-grid" type="checkbox"
+            /></label>
           </div>
           <div class="section-line">
             <span data-i18n="tools:paintTheBoard">PAINT THE BOARD</span
-            ><button id="undo-button" class="text-button" disabled data-i18n="tools:undo">Undo</button>
+            ><button id="undo-button" class="text-button" disabled data-i18n="tools:undo">
+              Undo
+            </button>
           </div>
-          <div class="brushes" role="group" aria-label="Paint tool" data-i18n-aria-label="tools:paintTool">
+          <div
+            class="brushes"
+            role="group"
+            aria-label="Paint tool"
+            data-i18n-aria-label="tools:paintTool"
+          >
             <button data-brush="wall" aria-pressed="true" data-i18n="tools:wall">Wall</button
             ><button data-brush="enemy" aria-pressed="false" data-i18n="tools:enemy">Enemy</button
-            ><button data-brush="objective" aria-pressed="false" data-i18n="tools:objective">Objective</button
-            ><button data-brush="supply" aria-pressed="false" data-i18n="tools:supply">Supply</button
-            ><button data-brush="signal" aria-pressed="false" data-i18n="tools:signalZone">Signal zone</button
-            ><button data-brush="hangar" aria-pressed="false" data-i18n="tools:hangar">Hangar</button
+            ><button data-brush="objective" aria-pressed="false" data-i18n="tools:objective">
+              Objective</button
+            ><button data-brush="supply" aria-pressed="false" data-i18n="tools:supply">
+              Supply</button
+            ><button data-brush="signal" aria-pressed="false" data-i18n="tools:signalZone">
+              Signal zone</button
+            ><button data-brush="hangar" aria-pressed="false" data-i18n="tools:hangar">
+              Hangar</button
             ><button data-brush="spawn" aria-pressed="false" data-i18n="tools:start">Start</button
             ><button data-brush="erase" aria-pressed="false" data-i18n="tools:erase">Erase</button>
           </div>
           <details>
-            <summary data-i18n="tools:paintByCoordinatesAndTuneSignalBrush">Paint by coordinates and tune signal brush</summary>
+            <summary data-i18n="tools:paintByCoordinatesAndTuneSignalBrush">
+              Paint by coordinates and tune signal brush
+            </summary>
             <div class="settings-row three">
               <label class="field"
-                ><span data-i18n="tools:column">Column</span><input id="paint-x" type="number" min="0" max="47" step="1" value="20"
+                ><span data-i18n="tools:column">Column</span
+                ><input id="paint-x" type="number" min="0" max="47" step="1" value="20"
               /></label>
               <label class="field"
-                ><span data-i18n="tools:row">Row</span><input id="paint-y" type="number" min="0" max="35" step="1" value="6"
+                ><span data-i18n="tools:row">Row</span
+                ><input id="paint-y" type="number" min="0" max="35" step="1" value="6"
               /></label>
               <button id="paint-cell" class="button" data-i18n="tools:applyTool">Apply tool</button>
             </div>
             <div class="settings-row three">
               <label class="field"
-                ><span data-i18n="tools:signalWidth">Signal width</span><input
-                  id="signal-width"
-                  type="number"
-                  min="1"
-                  max="46"
-                  step="1"
-                  value="8"
+                ><span data-i18n="tools:signalWidth">Signal width</span
+                ><input id="signal-width" type="number" min="1" max="46" step="1" value="8"
               /></label>
               <label class="field"
-                ><span data-i18n="tools:signalHeight">Signal height</span><input
-                  id="signal-height"
-                  type="number"
-                  min="1"
-                  max="34"
-                  step="1"
-                  value="6"
+                ><span data-i18n="tools:signalHeight">Signal height</span
+                ><input id="signal-height" type="number" min="1" max="34" step="1" value="6"
               /></label>
               <label class="field"
-                ><span data-i18n="tools:signalSpeed">Signal speed %</span><input
-                  id="signal-speed"
-                  type="number"
-                  min="25"
-                  max="100"
-                  step="5"
-                  value="50"
+                ><span data-i18n="tools:signalSpeed">Signal speed %</span
+                ><input id="signal-speed" type="number" min="25" max="100" step="5" value="50"
               /></label>
             </div>
-            <p data-field-kit-copy="playground.paintHelp" data-i18n="tools:signalSpeedAndOptionalBoostAbilityLocksApplyToVulnerable">
+            <p data-field-kit-copy="playground.paintHelp" data-i18n="common:editor.paintHelp">
               Signal speed and optional boost/ability locks apply to vulnerable classes. Edit each
               zone's flags in Level JSON. Switch class within a hangar's radius on safe ground, with
               no active cut and after the switch cooldown. Erase removes a whole zone or object.
@@ -387,13 +442,27 @@
             aria-label="Click to paint the board. Use Paint by coordinates for keyboard editing. Signal and hangar details follow the map."
             aria-describedby="map-readout map-diagnostics-help"
             data-field-kit-copy-aria-label="playground.mapLabel"
-           data-i18n-aria-label="tools:clickToPaintTheBoardUsePaintByCoordinatesFor"></canvas>
-          <p id="map-readout" class="micro-note" data-i18n="tools:safeBorderGreyWallsCoralEnemiesGoldObjectives">
+            data-i18n-aria-label="common:editor.mapLabel"
+          ></canvas>
+          <p
+            id="map-readout"
+            class="micro-note"
+            data-i18n="tools:safeBorderGreyWallsCoralEnemiesGoldObjectives"
+          >
             Safe border · grey walls · coral enemies · gold objectives
           </p>
           <details id="map-diagnostics" open>
-            <summary data-field-kit-copy="playground.mapDetails" data-i18n="tools:signalZonesAndHangars">Signal zones and hangars</summary>
-            <p id="map-diagnostics-help" data-field-kit-copy="playground.mapDetailsHelp" data-i18n="tools:dashedRectanglesMarkSignalZonesDiamondFramedSquaresMarkHangars">
+            <summary
+              data-field-kit-copy="playground.mapDetails"
+              data-i18n="common:editor.mapDetails"
+            >
+              Signal zones and hangars
+            </summary>
+            <p
+              id="map-diagnostics-help"
+              data-field-kit-copy="playground.mapDetailsHelp"
+              data-i18n="common:editor.mapDetailsHelp"
+            >
               Dashed rectangles mark signal zones; diamond-framed squares mark hangars. Locations
               use zero-based cell coordinates: x from the left, y from the top. Hangar marker size
               does not represent its activation radius. Signal effects apply to vulnerable craft;
@@ -401,42 +470,56 @@
               ground, with no active cut and after the switch cooldown.
             </p>
             <ul id="map-diagnostic-list">
-              <li data-field-kit-copy="playground.mapDetailsLoading" data-i18n="tools:mapDetailsAppearAfterTheWorkingConfigurationLoads">
+              <li
+                data-field-kit-copy="playground.mapDetailsLoading"
+                data-i18n="common:editor.mapDetailsLoading"
+              >
                 Map details appear after the working configuration loads.
               </li>
             </ul>
           </details>
           <div class="section-line">
-            <span data-i18n="tools:replaceOneVisualRole">REPLACE ONE VISUAL ROLE</span><span data-i18n="tools:originalFilesPreserved">ORIGINAL FILES PRESERVED</span>
+            <span data-i18n="tools:replaceOneVisualRole">REPLACE ONE VISUAL ROLE</span
+            ><span data-i18n="tools:originalFilesPreserved">ORIGINAL FILES PRESERVED</span>
           </div>
           <div class="settings-row">
             <label class="field"
-              ><span data-i18n="tools:role">Role</span><select id="asset-role">
-                <option value="background" data-i18n="tools:revealBackground">Reveal background</option>
+              ><span data-i18n="tools:role">Role</span
+              ><select id="asset-role">
+                <option value="background" data-i18n="tools:revealBackground">
+                  Reveal background
+                </option>
                 <option value="player" data-i18n="tools:playerBody">Player body</option>
                 <option value="enemy" data-i18n="tools:fieldEnemy">Field enemy</option>
                 <option value="patrol" data-i18n="tools:borderPatrol">Border patrol</option>
                 <option value="boss" data-i18n="tools:boss">Boss</option>
-                <option value="objective" data-i18n="tools:objectiveSupport">Objective / support</option>
+                <option value="objective" data-i18n="tools:objectiveSupport">
+                  Objective / support
+                </option>
                 <option value="supply" data-i18n="tools:supplyPad">Supply pad</option>
                 <option value="wall" data-i18n="tools:wallTile">Wall tile</option>
               </select></label
             ><label class="field"
-              ><span data-i18n="tools:backgroundFit">Background fit</span><select id="asset-fit">
+              ><span data-i18n="tools:backgroundFit">Background fit</span
+              ><select id="asset-fit">
                 <option value="cover" data-i18n="tools:cover">Cover</option>
-                <option value="contain" data-i18n="tools:containWholeImage">Contain whole image</option>
+                <option value="contain" data-i18n="tools:containWholeImage">
+                  Contain whole image
+                </option>
               </select></label
             >
           </div>
           <div class="asset-actions">
             <label class="file-button button"
-              ><span data-i18n="tools:choosePngJpegWebp">Choose PNG / JPEG / WebP</span><input
-                id="asset-file"
-                type="file"
-                accept="image/png,image/jpeg,image/webp" /></label
+              ><span data-i18n="tools:choosePngJpegWebp">Choose PNG / JPEG / WebP</span
+              ><input id="asset-file" type="file" accept="image/png,image/jpeg,image/webp" /></label
             ><button id="clear-asset" class="button" data-i18n="tools:clearRole">Clear role</button>
           </div>
-          <p id="asset-status" class="micro-note" data-i18n="tools:imagesAreEmbeddedOnlyInYourExportedPackNothingIs">
+          <p
+            id="asset-status"
+            class="micro-note"
+            data-i18n="tools:imagesAreEmbeddedOnlyInYourExportedPackNothingIs"
+          >
             Images are embedded only in your exported pack. Nothing is uploaded or sent to AI.
           </p>
           <div id="asset-list" class="asset-list"></div>
@@ -444,8 +527,12 @@
             <summary data-i18n="tools:optionalEquipmentGoal">Optional equipment goal</summary>
             <p id="mastery-readout" class="micro-note"></p>
             <div class="settings-row">
-              <button id="use-campaign-goal" class="button" data-i18n="tools:copyCampaignGoal">Copy campaign goal</button>
-              <button id="clear-goal" class="button" data-i18n="tools:noOptionalGoal">No optional goal</button>
+              <button id="use-campaign-goal" class="button" data-i18n="tools:copyCampaignGoal">
+                Copy campaign goal
+              </button>
+              <button id="clear-goal" class="button" data-i18n="tools:noOptionalGoal">
+                No optional goal
+              </button>
             </div>
             <label class="field"
               ><span data-i18n="tools:goalDefinitionJson">Goal definition JSON</span>
@@ -454,39 +541,51 @@
                 spellcheck="false"
                 rows="12"
                 placeholder="Paste a Steady Signal, Supply Line or Safe Return definition"
-               data-i18n-placeholder="tools:pasteASteadySignalSupplyLineOrSafeReturnDefinition"></textarea>
+                data-i18n-placeholder="tools:pasteASteadySignalSupplyLineOrSafeReturnDefinition"
+              ></textarea>
             </label>
-            <button id="apply-mastery" class="button" data-i18n="tools:validateAndApplyGoal">Validate and apply goal</button>
-            <p class="micro-note" data-i18n="tools:goalsNeverGateThePictureOrNextMissionPracticeChecks">
+            <button id="apply-mastery" class="button" data-i18n="tools:validateAndApplyGoal">
+              Validate and apply goal
+            </button>
+            <p
+              class="micro-note"
+              data-i18n="tools:goalsNeverGateThePictureOrNextMissionPracticeChecks"
+            >
               Goals never gate the picture or next mission. Practice checks the live checklist
               without awarding progress. Exporting a new one-map expansion retargets the goal to
               that new campaign; original installed packs stay available.
             </p>
           </details>
           <details>
-            <summary data-i18n="tools:advancedLevelThemeAndAbilityJson">Advanced: level, theme and ability JSON</summary>
+            <summary data-i18n="tools:advancedLevelThemeAndAbilityJson">
+              Advanced: level, theme and ability JSON
+            </summary>
             <p data-i18n="tools:unknownMechanicsAreRejectedValidRecipesCanTuneTheRegistered">
               Unknown mechanics are rejected. Valid recipes can tune the registered effects without
               changing core code.
             </p>
             <label class="field"
-              ><span data-i18n="tools:levelJson">Level JSON</span><textarea id="level-json" spellcheck="false" rows="12"></textarea></label
+              ><span data-i18n="tools:levelJson">Level JSON</span
+              ><textarea id="level-json" spellcheck="false" rows="12"></textarea></label
             ><label class="field"
-              ><span data-i18n="tools:themeJson">Theme JSON</span><textarea id="theme-json" spellcheck="false" rows="8"></textarea></label
+              ><span data-i18n="tools:themeJson">Theme JSON</span
+              ><textarea id="theme-json" spellcheck="false" rows="8"></textarea></label
             ><label class="field"
-              ><span data-i18n="tools:classRecipesJson">Class recipes JSON</span><textarea
-                id="classes-json"
-                spellcheck="false"
-                rows="8"
-              ></textarea></label
+              ><span data-i18n="tools:classRecipesJson">Class recipes JSON</span
+              ><textarea id="classes-json" spellcheck="false" rows="8"></textarea></label
             ><label class="field"
-              ><span data-i18n="tools:proceduralMusicJsonOptional">Procedural music JSON (optional)</span><textarea
+              ><span data-i18n="tools:proceduralMusicJsonOptional"
+                >Procedural music JSON (optional)</span
+              ><textarea
                 id="music-json"
                 spellcheck="false"
                 rows="7"
                 placeholder="Leave empty to use game audio defaults"
-               data-i18n-placeholder="tools:leaveEmptyToUseGameAudioDefaults"></textarea></label
-            ><button id="apply-json" class="button" data-i18n="tools:validateAndApplyJson">Validate and apply JSON</button>
+                data-i18n-placeholder="tools:leaveEmptyToUseGameAudioDefaults"
+              ></textarea></label
+            ><button id="apply-json" class="button" data-i18n="tools:validateAndApplyJson">
+              Validate and apply JSON
+            </button>
           </details>
           <details>
             <summary data-i18n="tools:completePackJson">Complete pack JSON</summary>
@@ -501,14 +600,28 @@
               aria-label="Complete pack JSON"
               spellcheck="false"
               placeholder="Paste a scenario, map, runtime expansion or expansion library"
-             data-i18n-placeholder="tools:pasteAScenarioMapRuntimeExpansionOrExpansionLibrary" data-i18n-aria-label="tools:completePackJson"></textarea>
+              data-i18n-placeholder="tools:pasteAScenarioMapRuntimeExpansionOrExpansionLibrary"
+              data-i18n-aria-label="tools:completePackJson"
+            ></textarea>
             <div class="settings-row">
-              <button id="show-pack" class="button" data-i18n="tools:showCurrentPack">Show current pack</button
-              ><button id="apply-pack" class="button" data-i18n="tools:applyContentJson">Apply content JSON</button>
+              <button id="show-pack" class="button" data-i18n="tools:showCurrentPack">
+                Show current pack</button
+              ><button id="apply-pack" class="button" data-i18n="tools:applyContentJson">
+                Apply content JSON
+              </button>
             </div>
             <div class="settings-row">
-              <button id="export-expansion" class="button" data-i18n="tools:exportMapAsExpansion">Export map as expansion</button>
-              <button id="export-catalog" class="button" disabled data-i18n="tools:exportLoadedLibrary">Export loaded library</button>
+              <button id="export-expansion" class="button" data-i18n="tools:exportMapAsExpansion">
+                Export map as expansion
+              </button>
+              <button
+                id="export-catalog"
+                class="button"
+                disabled
+                data-i18n="tools:exportLoadedLibrary"
+              >
+                Export loaded library
+              </button>
             </div>
             <p data-i18n="tools:theMapExpansionIncludesThisEditedMapCurrentClassRecipes">
               The map expansion includes this edited map, current class recipes, theme and images.
@@ -524,49 +637,81 @@
               verification run and grants no campaign rewards.
             </p>
             <p>
-              <a data-workshop-tool="replay-theater" href="../replay-theater/"
-                 data-i18n="tools:openReplayTheaterToWatchPauseAndStepThroughA">Open Replay Theater to watch, pause and step through a recording ↗</a
+              <a
+                data-workshop-tool="replay-theater"
+                href="../replay-theater/"
+                data-i18n="tools:openReplayTheaterToWatchPauseAndStepThroughA"
+                >Open Replay Theater to watch, pause and step through a recording ↗</a
               >
             </p>
 
             <label class="file-button button"
-              ><span data-i18n="tools:verifyReplay">Verify replay</span><input id="replay-file" type="file" accept="application/json,.json"
+              ><span data-i18n="tools:verifyReplay">Verify replay</span
+              ><input id="replay-file" type="file" accept="application/json,.json"
             /></label>
             <label class="field"
-              ><span data-i18n="tools:replayJson">Replay JSON</span><textarea
+              ><span data-i18n="tools:replayJson">Replay JSON</span
+              ><textarea
                 id="replay-paste"
                 spellcheck="false"
                 placeholder="Or paste exported replay JSON here"
-               data-i18n-placeholder="tools:orPasteExportedReplayJsonHere"></textarea></label
-            ><button id="verify-replay-json" class="button" data-i18n="tools:verifyPastedReplay">Verify pasted replay</button>
+                data-i18n-placeholder="tools:orPasteExportedReplayJsonHere"
+              ></textarea></label
+            ><button id="verify-replay-json" class="button" data-i18n="tools:verifyPastedReplay">
+              Verify pasted replay
+            </button>
             <pre id="replay-result"></pre>
           </details>
         </section>
-        <section class="preview-panel" aria-label="Playable preview" data-i18n-aria-label="tools:playablePreview">
+        <section
+          class="preview-panel"
+          aria-label="Playable preview"
+          data-i18n-aria-label="tools:playablePreview"
+        >
           <div class="section-line">
             <span data-i18n="tools:liveEnginePractice">LIVE ENGINE / PRACTICE</span
-            ><a id="open-preview" href="../?practice=1" target="_blank" rel="opener"
-               data-i18n="tools:openFullPreview">Open full preview ↗</a
+            ><a
+              id="open-preview"
+              href="../?practice=1"
+              target="_blank"
+              rel="opener"
+              data-i18n="tools:openFullPreview"
+              >Open full preview ↗</a
             >
           </div>
           <label class="field"
-            ><span data-i18n="tools:previewMode">Preview mode</span><select id="preview-mode">
+            ><span data-i18n="tools:previewMode">Preview mode</span
+            ><select id="preview-mode">
               <option value="solo" data-i18n="tools:soloConfiguration">Solo configuration</option>
-              <option value="course" data-i18n="tools:firstFlightCourse">First Flight course</option>
+              <option value="course" data-i18n="tools:firstFlightCourse">
+                First Flight course
+              </option>
               <option value="couch" data-i18n="tools:couchRace2">Couch race</option>
             </select></label
           >
-          <nav class="viewport-buttons" aria-label="Preview size" data-i18n-aria-label="tools:previewSize">
+          <nav
+            class="viewport-buttons"
+            aria-label="Preview size"
+            data-i18n-aria-label="tools:previewSize"
+          >
             <button data-size="390,844" aria-pressed="true" data-i18n="tools:phone">Phone</button
-            ><button data-size="844,390" aria-pressed="false" data-i18n="tools:landscape">Landscape</button
-            ><button data-size="1024,768" aria-pressed="false" data-i18n="tools:tablet">Tablet</button
-            ><button data-size="1280,720" aria-pressed="false" data-i18n="tools:desktop">Desktop</button
-            ><button data-size="1065,912" aria-pressed="false" data-i18n="tools:window">Window</button>
-            <button data-size="320,640" aria-pressed="false" data-i18n="tools:compact">Compact</button>
+            ><button data-size="844,390" aria-pressed="false" data-i18n="tools:landscape">
+              Landscape</button
+            ><button data-size="1024,768" aria-pressed="false" data-i18n="tools:tablet">
+              Tablet</button
+            ><button data-size="1280,720" aria-pressed="false" data-i18n="tools:desktop">
+              Desktop</button
+            ><button data-size="1065,912" aria-pressed="false" data-i18n="tools:window">
+              Window
+            </button>
+            <button data-size="320,640" aria-pressed="false" data-i18n="tools:compact">
+              Compact
+            </button>
           </nav>
           <form id="preview-size-form" class="preview-size-form" novalidate>
             <label class="field" for="preview-width"
-              ><span data-i18n="tools:widthCssPx">Width · CSS px</span><input
+              ><span data-i18n="tools:widthCssPx">Width · CSS px</span
+              ><input
                 id="preview-width"
                 type="number"
                 min="240"
@@ -577,7 +722,8 @@
                 aria-describedby="preview-size-help preview-size-status"
             /></label>
             <label class="field" for="preview-height"
-              ><span data-i18n="tools:heightCssPx">Height · CSS px</span><input
+              ><span data-i18n="tools:heightCssPx">Height · CSS px</span
+              ><input
                 id="preview-height"
                 type="number"
                 min="240"
@@ -587,9 +733,20 @@
                 required
                 aria-describedby="preview-size-help preview-size-status"
             /></label>
-            <button id="apply-preview-size" class="button" type="submit" data-i18n="tools:applySize">Apply size</button>
+            <button
+              id="apply-preview-size"
+              class="button"
+              type="submit"
+              data-i18n="tools:applySize"
+            >
+              Apply size
+            </button>
           </form>
-          <p id="preview-size-help" class="micro-note" data-i18n="tools:customSize2402560CssPixelsPerSideResizingKeeps2">
+          <p
+            id="preview-size-help"
+            class="micro-note"
+            data-i18n="tools:customSize2402560CssPixelsPerSideResizingKeeps2"
+          >
             Custom size: 240–2560 CSS pixels per side. Resizing keeps the current game. Tab and
             Shift+Tab leave the preview at its first or last control. Returning keeps play paused;
             choose Resume to continue.
@@ -602,28 +759,46 @@
               title="Playable configuration preview"
               width="390"
               height="844"
-             data-i18n-title="tools:playableConfigurationPreview"></iframe>
+              data-i18n-title="tools:playableConfigurationPreview"
+            ></iframe>
           </div>
           <a
             href="../?workshop=playground"
             data-workshop-return="workshop"
             inert
             aria-disabled="true"
-             data-i18n="tools:returnToWorkshop">Return to Workshop</a
+            data-i18n="tools:returnToWorkshop"
+            >Return to Workshop</a
           >
           <p id="viewport-readout" class="micro-note"></p>
-          <p id="control-readout" class="micro-note" data-i18n="tools:controlsAreMeasuredAfterThePreviewLoads">
+          <p
+            id="control-readout"
+            class="micro-note"
+            data-i18n="tools:controlsAreMeasuredAfterThePreviewLoads"
+          >
             Controls are measured after the preview loads.
           </p>
-          <p id="launch-readout" class="micro-note" data-i18n="tools:launchActionsAreMeasuredAfterThePreviewLoads">
+          <p
+            id="launch-readout"
+            class="micro-note"
+            data-i18n="tools:launchActionsAreMeasuredAfterThePreviewLoads"
+          >
             Launch actions are measured after the preview loads.
           </p>
-          <p id="layout-readout" class="micro-note" data-i18n="tools:usePlayConfigurationToLoadTheCurrentData">
+          <p
+            id="layout-readout"
+            class="micro-note"
+            data-i18n="tools:usePlayConfigurationToLoadTheCurrentData"
+          >
             Use Play configuration to load the current data.
           </p>
           <details class="control-geometry">
             <summary data-i18n="tools:controlGeometry">Control geometry</summary>
-            <p class="micro-note" id="geometry-help" data-i18n="tools:captureTheRealSoloPreviewSButtonBoxesAndPointer">
+            <p
+              class="micro-note"
+              id="geometry-help"
+              data-i18n="tools:captureTheRealSoloPreviewSButtonBoxesAndPointer"
+            >
               Capture the real solo preview's button boxes and pointer media in CSS pixels. This is
               a local snapshot, with approximate content-overflow indicators; it is not a hardware
               or accessibility certification. Using parent controls may pause the game through its
@@ -634,15 +809,24 @@
               class="button"
               type="button"
               aria-describedby="geometry-help"
-             data-i18n="tools:captureGeometry">
+              data-i18n="tools:captureGeometry"
+            >
               Capture geometry
             </button>
-            <p id="geometry-status" class="micro-note" role="status" data-i18n="tools:noGeometrySnapshotCaptured">
+            <p
+              id="geometry-status"
+              class="micro-note"
+              role="status"
+              data-i18n="tools:noGeometrySnapshotCaptured"
+            >
               No geometry snapshot captured.
             </p>
             <pre id="geometry-readout" tabindex="0" aria-label="Control geometry snapshot"></pre>
           </details>
-          <p class="micro-note" data-i18n="tools:sizedFramesCheckLayoutTheyDoNotEmulateIphoneHardware">
+          <p
+            class="micro-note"
+            data-i18n="tools:sizedFramesCheckLayoutTheyDoNotEmulateIphoneHardware"
+          >
             Sized frames check layout. They do not emulate iPhone hardware, native touch, Safari or
             controller performance. Open Couch race above for the separate local two-player mode.
           </p>

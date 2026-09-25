@@ -15,12 +15,13 @@ export function createCandidateCouchPictures({ owns, acquire = acquireCandidateP
     accepted = null,
     generation = 0;
   const retirements = new Set();
-  const cancelled = () => new DOMException(t("interface:candidateRacePictureCancelled"), 'AbortError');
+  const cancelled = () =>
+    new DOMException(t('interface:candidateRacePictureCancelled'), 'AbortError');
   const check = (row, { themeId, raceId, signal } = {}) => {
     if (disposed || signal?.aborted) throw cancelled();
     required(
       owns(row) && themeId === row.defaultThemeId && Number.isSafeInteger(raceId) && raceId >= 0,
-      t("interface:chooseAnExactAuthoredRaceMapThemeAndRaceIdentity"),
+      t('interface:chooseAnExactAuthoredRaceMapThemeAndRaceIdentity'),
     );
   };
   async function stage(row, options = {}) {
@@ -58,7 +59,7 @@ export function createCandidateCouchPictures({ owns, acquire = acquireCandidateP
       options.onStatus?.({
         status: 'preparing',
         stage: 'verifying',
-        message: t("interface:checkingTheAuthoredOriginalForBothBoards"),
+        message: t('interface:checkingTheAuthoredOriginalForBothBoards'),
         progress: null,
       });
       current();
@@ -77,7 +78,7 @@ export function createCandidateCouchPictures({ owns, acquire = acquireCandidateP
           current();
           required(
             isCandidatePictureFor(row.asset, picture),
-            t("interface:authoredRacePictureIsUnavailable"),
+            t('interface:authoredRacePictureIsUnavailable'),
           );
           confirmed = true;
         },
@@ -85,7 +86,7 @@ export function createCandidateCouchPictures({ owns, acquire = acquireCandidateP
           current();
           required(
             confirmed && isCandidatePictureFor(row.asset, picture),
-            t("interface:confirmTheAuthoredRacePictureBeforeAdoption"),
+            t('interface:confirmTheAuthoredRacePictureBeforeAdoption'),
           );
           const previous = accepted;
           accepted = { row, raceId: options.raceId, picture };
@@ -124,7 +125,7 @@ export function createCandidateCouchPictures({ owns, acquire = acquireCandidateP
         accepted?.row === row &&
           accepted.raceId === options.raceId &&
           isCandidatePictureFor(row.asset, accepted.picture),
-        t("interface:thisRaceDoesNotOwnThePreparedAuthoredPicture"),
+        t('interface:thisRaceDoesNotOwnThePreparedAuthoredPicture'),
       );
     },
     cancel() {

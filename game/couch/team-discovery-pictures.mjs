@@ -58,7 +58,9 @@ export function attachTeamDiscoveryPictures({
     if (!current(job) || !job.detail) return;
     job.detail.loading = false;
     preview.retry.setAttribute('aria-disabled', 'false');
-    localizedText(preview.retry, () =>successful ? t("interface:reloadPreview") : t("interface:retryPreview"));
+    localizedText(preview.retry, () =>
+      successful ? t('interface:reloadPreview') : t('interface:retryPreview'),
+    );
   }
   function cancelJobs(owner) {
     const pending = queue.filter((job) => job.owner === owner),
@@ -67,7 +69,9 @@ export function attachTeamDiscoveryPictures({
     for (const card of owner?.cards ?? []) {
       if (card.state === 'loading') {
         card.state = 'queued';
-        localizedText(card.message, () =>t("interface:artworkTeaserPausedPreviewPreparesThePicture"));
+        localizedText(card.message, () =>
+          t('interface:artworkTeaserPausedPreviewPreparesThePicture'),
+        );
       }
     }
     for (const job of pending) job.controller.abort();
@@ -83,10 +87,10 @@ export function attachTeamDiscoveryPictures({
       if (!current(job)) return;
       if (job.detail) {
         detailReady(job);
-        describe(job.owner, t("interface:approvedProceduralScenePlayToExploreThisArena"));
+        describe(job.owner, t('interface:approvedProceduralScenePlayToExploreThisArena'));
       } else {
         job.card.state = 'ready';
-        localizedText(job.card.message, () =>t("interface:approvedProceduralScene"));
+        localizedText(job.card.message, () => t('interface:approvedProceduralScene'));
       }
       return;
     }
@@ -96,7 +100,7 @@ export function attachTeamDiscoveryPictures({
     canvas.height = height;
     if (!current(job)) return;
     const context = canvas.getContext('2d');
-    if (!context) throw new Error(t("interface:artworkPreviewIsUnavailable"));
+    if (!context) throw new Error(t('interface:artworkPreviewIsUnavailable'));
     context.imageSmoothingEnabled = false;
     context.globalAlpha = 1;
     context.globalCompositeOperation = 'source-over';
@@ -112,10 +116,10 @@ export function attachTeamDiscoveryPictures({
     canvas.hidden = false;
     if (job.detail) {
       detailReady(job);
-      describe(job.owner, t("interface:lockedPreviewWinToRevealTheFullPicture"));
+      describe(job.owner, t('interface:lockedPreviewWinToRevealTheFullPicture'));
     } else {
       job.card.state = 'ready';
-      localizedText(job.card.message, () =>t("interface:artworkTeaser"));
+      localizedText(job.card.message, () => t('interface:artworkTeaser'));
     }
   }
   function drain() {
@@ -140,7 +144,7 @@ export function attachTeamDiscoveryPictures({
         });
         if (!current(job)) return;
         if (!handle || typeof handle.release !== 'function')
-          throw new Error(t("interface:artworkPreviewHasNoOwner"));
+          throw new Error(t('interface:artworkPreviewHasNoOwner'));
         draw(job, handle);
       } catch (error) {
         if (!current(job)) return;
@@ -153,13 +157,13 @@ export function attachTeamDiscoveryPictures({
           describe(
             job.owner,
             error?.name === 'AbortError'
-              ? t("interface:previewCancelledRetryPreviewWhenReady")
-              : t("interface:picturePreviewUnavailableRetryPreviewOrReturnToTheArenas"),
+              ? t('interface:previewCancelledRetryPreviewWhenReady')
+              : t('interface:picturePreviewUnavailableRetryPreviewOrReturnToTheArenas'),
             error?.name === 'AbortError' ? 'ready' : 'error',
           );
         } else {
           job.card.state = 'error';
-          localizedText(job.card.message, () =>t("interface:teaserUnavailablePreviewCanTryAgain"));
+          localizedText(job.card.message, () => t('interface:teaserUnavailablePreviewCanTryAgain'));
         }
       } finally {
         try {
@@ -177,7 +181,7 @@ export function attachTeamDiscoveryPictures({
     for (const card of owner.cards) {
       if (card.state !== 'queued') continue;
       card.state = 'loading';
-      localizedText(card.message, () =>t("interface:preparingArtworkTeaser"));
+      localizedText(card.message, () => t('interface:preparingArtworkTeaser'));
       queue.push({ owner, card, detail: null, controller: new AbortController() });
     }
     drain();
@@ -190,10 +194,10 @@ export function attachTeamDiscoveryPictures({
     shown.loading = true;
     clearCanvas(preview.canvas);
     preview.retry.setAttribute('aria-disabled', 'true');
-    localizedText(preview.retry, () =>t("interface:preparingPreview"));
+    localizedText(preview.retry, () => t('interface:preparingPreview'));
     describe(
       owner,
-      t("interface:preparingPicturePreviewYourCurrentAttemptStaysAvailable"),
+      t('interface:preparingPicturePreviewYourCurrentAttemptStaysAvailable'),
       'preparing',
     );
     if (detail !== shown || !live(owner)) return;
@@ -212,8 +216,8 @@ export function attachTeamDiscoveryPictures({
     list.hidden = true;
     preview.panel.hidden = false;
     preview.retry.hidden = true;
-    localizedText(preview.title, () =>`${card.row.title} · Locked preview`);
-    localizedText(back, () =>t("interface:backToArenas"));
+    localizedText(preview.title, () => `${card.row.title} · Locked preview`);
+    localizedText(back, () => t('interface:backToArenas'));
     onViewChange();
     if (!live(owner) || detail !== shown) return;
     if (document.activeElement === prior || unclaimed(document.activeElement))
@@ -233,7 +237,7 @@ export function attachTeamDiscoveryPictures({
     preview.retry.hidden = true;
     clearCanvas(preview.canvas);
     list.hidden = false;
-    localizedText(back, () =>t("common:actions.back"));
+    localizedText(back, () => t('common:actions.back'));
     onViewChange();
     if (!live(owner) || detail) return true;
     if (
@@ -260,7 +264,7 @@ export function attachTeamDiscoveryPictures({
       preview.retry.hidden = true;
       clearCanvas(preview.canvas);
       list.hidden = false;
-      localizedText(back, () =>t("common:actions.back"));
+      localizedText(back, () => t('common:actions.back'));
     }
     for (const card of owner?.cards ?? []) {
       card.button.onclick = null;
@@ -293,10 +297,10 @@ export function attachTeamDiscoveryPictures({
         canvas.setAttribute('aria-hidden', 'true');
         canvas.hidden = true;
         message.className = 'team-discovery-teaser-message';
-        localizedText(message, () =>t("interface:preparingArtworkTeaser"));
+        localizedText(message, () => t('interface:preparingArtworkTeaser'));
         button.type = 'button';
         button.className = 'team-discovery-preview-button';
-        localizedText(button, () =>t("interface:previewPicture"));
+        localizedText(button, () => t('interface:previewPicture'));
         button.setAttribute(
           'aria-label',
           `Preview ${source.row.title} · ${source.row.packName} · ${source.row.sourceLabel}`,
@@ -337,8 +341,8 @@ export function attachTeamDiscoveryPictures({
         clearCanvas(preview.canvas);
         preview.retry.hidden = false;
         preview.retry.setAttribute('aria-disabled', 'false');
-        localizedText(preview.retry, () =>t("interface:retryPreview"));
-        describe(owner, t("interface:previewCancelledRetryPreviewWhenReady"));
+        localizedText(preview.retry, () => t('interface:retryPreview'));
+        describe(owner, t('interface:previewCancelledRetryPreviewWhenReady'));
       }
     },
     back: () => returnToCards(),

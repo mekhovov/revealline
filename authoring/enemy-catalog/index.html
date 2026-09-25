@@ -2,10 +2,6 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <link rel="stylesheet" href="../../game/i18n/style.css" />
-    <script src="../../game/vendor/i18next-26.4.2.min.js"></script>
-    <script src="../../game/i18n/catalogs.mjs"></script>
-    <script src="../../game/i18n/bootstrap.mjs"></script>
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title data-i18n="tools:reveallineEnemyWorkshop">RevealLine — enemy workshop</title>
@@ -28,6 +24,11 @@
         }
       }
     </style>
+    <link rel="stylesheet" href="../../game/i18n/style.css" />
+    <script src="../../game/vendor/i18next-26.4.2.min.js"></script>
+    <script src="../../game/i18n/catalogs.mjs"></script>
+    <script src="../../game/i18n/bootstrap.mjs"></script>
+
     <script type="module" src="../../game/ui/workshop-return-entry.mjs"></script>
     <link rel="stylesheet" href="../../game/ui/workshop-return.css" />
   </head>
@@ -36,19 +37,22 @@
     class="field-kit field-kit-support"
     style="padding: 20px"
   >
-<div data-language-control></div>
+    <div data-language-control></div>
 
     <h1 class="field-kit-display" data-i18n="tools:enemyWorkshop">Enemy workshop</h1>
     <p data-i18n="tools:previewEveryRegisteredRolePrepareFutureGeneratorChoicesAndTry">
       Preview every registered role, prepare future generator choices and try a separate practice
       map.
     </p>
-    <button id="open-catalog" disabled type="button" data-i18n="tools:openWorkshop">Open workshop</button>
+    <button id="open-catalog" disabled type="button" data-i18n="tools:openWorkshop">
+      Open workshop
+    </button>
     <a
       href="../../game/playground/"
       style="display: inline-flex; align-items: center; min-height: 44px"
       data-workshop-tool="playground"
-       data-i18n="tools:levelPlayground">Level playground</a
+      data-i18n="tools:levelPlayground"
+      >Level playground</a
     >
     <a
       id="return-game"
@@ -58,12 +62,17 @@
       data-workshop-return="workshop"
       inert
       aria-disabled="true"
-       data-i18n="tools:returnToWorkshop">Return to Workshop</a
+      data-i18n="tools:returnToWorkshop"
+      >Return to Workshop</a
     >
-    <a data-workshop-return="game" href="../../game/" data-i18n="tools:returnToGame">Return to game</a>
+    <a data-workshop-return="game" href="../../game/" data-i18n="tools:returnToGame"
+      >Return to game</a
+    >
     <p id="catalog-host-status" class="operation-status" data-state="busy">
       <span class="operation-status-signal" aria-hidden="true"><i></i><i></i><i></i></span
-      ><span class="operation-status-label" role="status" data-i18n="tools:loadingRegisteredThemes">Loading registered themes…</span>
+      ><span class="operation-status-label" role="status" data-i18n="tools:loadingRegisteredThemes"
+        >Loading registered themes…</span
+      >
     </p>
     <p data-i18n="tools:keyboardTabArrowsAndEnterControllerFaceButtonToJoin">
       Keyboard: Tab/arrows and Enter. Controller: face button to join, D-pad, South to choose, East
@@ -74,7 +83,8 @@
       title="Enemy workshop practice; no campaign rewards"
       style="width: 100%; height: 72dvh; border: 1px solid #516680"
       hidden
-     data-i18n-title="tools:enemyWorkshopPracticeNoCampaignRewards"></iframe>
+      data-i18n-title="tools:enemyWorkshopPracticeNoCampaignRewards"
+    ></iframe>
     <script
       defer
       src="../../game/ui/direct-tool-launch.js"

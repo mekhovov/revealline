@@ -78,7 +78,7 @@ export function captureControlGeometry({
 }) {
   const arenaElement = doc?.querySelector('#arena-shell');
   if (!arenaElement || !view)
-    throw new Error(t("tools:loadASoloPracticePreviewBeforeCapturingControlGeometry"));
+    throw new Error(t('tools:loadASoloPracticePreviewBeforeCapturingControlGeometry'));
   const viewport = {
     width: finite(view.innerWidth),
     height: finite(view.innerHeight),
@@ -182,7 +182,7 @@ export function captureControlGeometry({
   return {
     format: 'revealline-control-geometry.v1',
     capturedAt: text(capturedAt, 40),
-    units: t("tools:childViewportCssPixelsOuterPreviewDisplayScaleIsReported"),
+    units: t('tools:childViewportCssPixelsOuterPreviewDisplayScaleIsReported'),
     requested: { width: finite(requested?.width), height: finite(requested?.height) },
     displayScale: finite(displayScale),
     viewport,
@@ -214,11 +214,11 @@ export function captureControlGeometry({
           : null,
     },
     limits: [
-      t("tools:snapshotOnlyCaptureAgainAfterResizingScrollingOrPreviewActivity"),
-      t("tools:visibilityReflectsLayoutAndThisElementSComputedStyleIt"),
-      t("tools:intersectionsCompareVisibleBorderBoxesIncludingOffscreenBoxesEdgeTouching"),
-      t("tools:contentScrollClientDimensionsAreApproximateOverflowIndicatorsNotGlyph"),
-      t("tools:pointerMediaAndViewportDataDescribeThisBrowserResizingAlone"),
+      t('tools:snapshotOnlyCaptureAgainAfterResizingScrollingOrPreviewActivity'),
+      t('tools:visibilityReflectsLayoutAndThisElementSComputedStyleIt'),
+      t('tools:intersectionsCompareVisibleBorderBoxesIncludingOffscreenBoxesEdgeTouching'),
+      t('tools:contentScrollClientDimensionsAreApproximateOverflowIndicatorsNotGlyph'),
+      t('tools:pointerMediaAndViewportDataDescribeThisBrowserResizingAlone'),
     ],
   };
 }

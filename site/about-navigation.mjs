@@ -26,7 +26,7 @@ export function attachAboutNavigation({
     // Keep the page status for connection, cancellation and navigation hints.
     const editor = doc.querySelector('.controller-editor');
     if (editor?.getAttribute('role') === 'status' && editor.textContent === text) return;
-    if (status.textContent !== text) localizedText(status, () =>text);
+    if (status.textContent !== text) localizedText(status, () => text);
   };
   const router = createControllerRouter({
     readPads: () => nav?.getGamepads?.() ?? [],
@@ -36,7 +36,7 @@ export function attachAboutNavigation({
     if (!foreground()) return;
     returnLink.focus({ preventScroll: true });
     returnLink.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'auto' });
-    hint(t("website:returnToGameSelectedConfirmToLeaveThisPage"));
+    hint(t('website:returnToGameSelectedConfirmToLeaveThisPage'));
   };
   const navigation = attachControllerNavigation({
     document: doc,
@@ -76,7 +76,7 @@ export function attachAboutNavigation({
       lastStatus = sample.status.code;
       hint(
         sample.status.code === 'connected'
-          ? t("website:dPadMoveSouthChooseEastBackKeyboardAndTouch")
+          ? t('website:dPadMoveSouthChooseEastBackKeyboardAndTouch')
           : sample.status.message,
       );
     }

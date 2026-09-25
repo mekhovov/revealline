@@ -16,13 +16,15 @@ export function attachJourneySaveCue({ target, action, announcement, onOpen, doc
       } else if (description) target.setAttribute('aria-describedby', description);
       else target.removeAttribute('aria-describedby');
       action.hidden = !unsaved && doc.activeElement !== action;
-      localizedText(action, () =>unsaved
-        ? t("interface:progressNotSavedSaveOptions")
-        : ready && durable
-          ? t("interface:progressSavedReturnToControls")
-          : t("interface:saveOptions"));
-      const message = unsaved ? t("interface:journeyProgressIsNotSavedPauseForSaveOptions") : '';
-      if (announcement.textContent !== message) localizedText(announcement, () =>message);
+      localizedText(action, () =>
+        unsaved
+          ? t('interface:progressNotSavedSaveOptions')
+          : ready && durable
+            ? t('interface:progressSavedReturnToControls')
+            : t('interface:saveOptions'),
+      );
+      const message = unsaved ? t('interface:journeyProgressIsNotSavedPauseForSaveOptions') : '';
+      if (announcement.textContent !== message) localizedText(announcement, () => message);
       return unsaved;
     },
   };

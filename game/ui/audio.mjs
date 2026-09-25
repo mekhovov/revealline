@@ -112,7 +112,7 @@ export class Soundscape {
     if (handler !== null && typeof handler !== 'function')
       throw new TypeError('Song end handler must be a function or null');
     if (handler !== null && !this.persistentMusic)
-      throw new TypeError(t("interface:aPlaylistRequiresPersistentMusic"));
+      throw new TypeError(t('interface:aPlaylistRequiresPersistentMusic'));
     this.songEndHandler = handler;
   }
   pauseMusic() {
@@ -146,7 +146,7 @@ export class Soundscape {
     const step = 60 / this.track.tempo / 4,
       duration = SYNTH_SONG_STEPS * step;
     if (!Number.isFinite(seconds) || seconds < 0 || seconds > duration)
-      throw new TypeError(t("interface:invalidSynthSeekPosition"));
+      throw new TypeError(t('interface:invalidSynthSeekPosition'));
     if (!this.context) return false;
     this.stopVoices('music');
     const now = this.context.currentTime,
@@ -174,7 +174,7 @@ export class Soundscape {
    */
   async preview({ seconds = 4 } = {}) {
     if (!Number.isFinite(seconds) || seconds < 1 || seconds > 8)
-      throw new TypeError(t("interface:previewDurationMustBe18Seconds"));
+      throw new TypeError(t('interface:previewDurationMustBe18Seconds'));
     const token = ++this.previewTransition;
     const enabled = await this.enable();
     if (
@@ -194,17 +194,18 @@ export class Soundscape {
   configure(options = {}) {
     for (const key of Object.keys(options))
       if (!['style', 'master', 'music', 'sfx'].includes(key))
-        throw new TypeError(t("gameplay:unknownAudioSetting", { value1: key }));
+        throw new TypeError(t('gameplay:unknownAudioSetting', { value1: key }));
     const next = { ...this.settings };
     for (const key of ['master', 'music', 'sfx'])
       if (options[key] !== undefined) {
         if (!Number.isFinite(options[key]) || options[key] < 0 || options[key] > 1)
-          throw new TypeError(t("gameplay:volumeMustBe01", { value1: key }));
+          throw new TypeError(t('gameplay:volumeMustBe01', { value1: key }));
         next[key] = options[key];
       }
     if (options.style !== undefined) {
       const style = options.style === 'arcade-rock' ? 'rock' : options.style;
-      if (!MUSIC_STYLES.some((s) => s.id === style)) throw new TypeError(t("interface:unknownMusicStyle"));
+      if (!MUSIC_STYLES.some((s) => s.id === style))
+        throw new TypeError(t('interface:unknownMusicStyle'));
       next.style = style;
     }
     if (next.style !== this.settings.style) {

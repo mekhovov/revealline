@@ -14,7 +14,7 @@ function context(campaignKey, level, themeId) {
   resolveSoundtrackSelection(emptySoundtrackLibrary(), value);
   required(
     typeof campaignKey === 'string' && typeof themeId === 'string',
-    t("interface:anAcceptedCampaignAndThemeAreRequired"),
+    t('interface:anAcceptedCampaignAndThemeAreRequired'),
   );
   return Object.freeze(value);
 }
@@ -28,7 +28,7 @@ export function soloCompatibleMusicContext({ campaignKey, level, themeId }) {
       typeof level.revision === 'string' &&
       level.revision.trim() &&
       level.revision.length <= 80,
-    t("interface:anAcceptedSoloLevelIdAndRevisionAreRequired"),
+    t('interface:anAcceptedSoloLevelIdAndRevisionAreRequired'),
   );
   return context(campaignKey, level, themeId);
 }
@@ -56,7 +56,7 @@ export async function prepareTeamMusicContext({ pack, level, themeId, signal }) 
   });
   required(
     source.levels.some((candidate) => canonicalJSON(candidate) === canonicalJSON(current)),
-    t("interface:theMusicLevelDoesNotMatchTheAcceptedPack"),
+    t('interface:theMusicLevelDoesNotMatchTheAcceptedPack'),
   );
   const hash = await hashPresentationBytes(new TextEncoder().encode(canonicalJSON(source)));
   throwIfSoundtrackAborted(signal);

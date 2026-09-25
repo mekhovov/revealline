@@ -9,7 +9,7 @@ export function foundationCaptionForCell(rectangles, index, width) {
   const x = index % width,
     y = Math.floor(index / width);
   return rectangles.some((r) => x >= r.x && x < r.x + r.w && y >= r.y && y < r.y + r.h)
-    ? t("interface:foundationReachedCloseFutureCutsHerePermanentReclaimedGroundAdds")
+    ? t('interface:foundationReachedCloseFutureCutsHerePermanentReclaimedGroundAdds')
     : '';
 }
 

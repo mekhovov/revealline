@@ -15,12 +15,13 @@ import {
 import { hashPresentationBytes } from '../presentation/bundle.mjs';
 import { inspectImageDataUrl } from '../content.mjs';
 
-const cancelled = () => new DOMException(t("interface:couchPicturePreparationCancelled"), 'AbortError');
+const cancelled = () =>
+  new DOMException(t('interface:couchPicturePreparationCancelled'), 'AbortError');
 const releaseImage = (image) => {
   image?.removeAttribute?.('src');
   image?.close?.();
 };
-const absentStoreNotice = t("interface:savedPictureChoicesAreUnavailableInThisBrowser");
+const absentStoreNotice = t('interface:savedPictureChoicesAreUnavailableInThisBrowser');
 
 /** One read-only picture choice and decoded lease for both static Versus boards.
  * The established manager may initialize/upgrade its schema, as other readers do;
@@ -73,14 +74,14 @@ export function createCouchStaticPictures({
     });
   }
   function contextFor(row, themeId, raceId) {
-    required(sources.has(row?.pictureEntry), t("interface:selectARegisteredStaticCouchChapter"));
-    required(Number.isSafeInteger(raceId) && raceId >= 0, t("interface:useAnInMemoryRaceIdentity"));
+    required(sources.has(row?.pictureEntry), t('interface:selectARegisteredStaticCouchChapter'));
+    required(Number.isSafeInteger(raceId) && raceId >= 0, t('interface:useAnInMemoryRaceIdentity'));
     const context = createDifficultyContext(row.pictureEntry.campaign),
       entry = catalog.find(context.campaignKey),
       level = entry?.campaign.levels.find((level) => level.id === row.level?.id);
     required(
       level && same(level, row.level),
-      t("interface:theCouchMapDiffersFromItsExactCatalogOwner"),
+      t('interface:theCouchMapDiffersFromItsExactCatalogOwner'),
     );
     const request = {
       executionKey: entry.executionKey,
@@ -89,7 +90,7 @@ export function createCouchStaticPictures({
       themeId,
     };
     const identity = identityCatalog.resolve(request);
-    required(identity, t("interface:thisWorldDoesNotBelongToTheExactCouchMap"));
+    required(identity, t('interface:thisWorldDoesNotBelongToTheExactCouchMap'));
     return {
       row,
       raceId,
@@ -142,7 +143,7 @@ export function createCouchStaticPictures({
   }
   function decode(source, signal) {
     check(signal);
-    required(typeof ImageClass === 'function', t("interface:browserPictureDecodingIsUnavailable"));
+    required(typeof ImageClass === 'function', t('interface:browserPictureDecodingIsUnavailable'));
     return new Promise((resolve, reject) => {
       const image = new ImageClass();
       let settled = false;
@@ -158,12 +159,19 @@ export function createCouchStaticPictures({
         } else resolve(image);
       };
       const abort = () => finish(cancelled());
-      const timer = setTimeout(() => finish(new Error(t("interface:couchPictureDecodeTimedOut"))), 15000);
+      const timer = setTimeout(
+        () => finish(new Error(t('interface:couchPictureDecodeTimedOut'))),
+        15000,
+      );
       signal.addEventListener('abort', abort, { once: true });
-      image.onerror = () => finish(new Error(t("interface:theSelectedCouchOriginalCouldNotDecode")));
+      image.onerror = () =>
+        finish(new Error(t('interface:theSelectedCouchOriginalCouldNotDecode')));
       image.onload = async () => {
         try {
-          required(typeof image.decode === 'function', t("interface:completePictureDecodingIsUnavailable"));
+          required(
+            typeof image.decode === 'function',
+            t('interface:completePictureDecodingIsUnavailable'),
+          );
           await image.decode();
           check(signal);
           finish();
@@ -181,7 +189,7 @@ export function createCouchStaticPictures({
   }
   async function choose(state, signal, current, report) {
     if (state.chosen) return;
-    report('verifying', t("interface:checkingTheExactMapAndSavedPictureChoice"));
+    report('verifying', t('interface:checkingTheExactMapAndSavedPictureChoice'));
     if (!state.mediaCaptured && indexedDB) {
       state.metadata = await mediaStore().readMetadata({ signal });
       current();
@@ -212,7 +220,7 @@ export function createCouchStaticPictures({
     current();
     required(
       (snapshot ?? null) === currentPage(),
-      t("interface:theReleaseArtworkChangedChooseSetupAgain"),
+      t('interface:theReleaseArtworkChangedChooseSetupAgain'),
     );
     state.snapshot = snapshot ?? null;
     if (
@@ -230,22 +238,22 @@ export function createCouchStaticPictures({
       if (!snapshot)
         state.notice = [
           state.notice,
-          t("interface:releaseArtworkIsUnavailableTheAuthoredPictureIsKept"),
+          t('interface:releaseArtworkIsUnavailableTheAuthoredPictureIsKept'),
         ]
           .filter(Boolean)
           .join(' ');
       state.original = null;
       if (state.background) {
-        required(state.backdrop?.image, t("interface:theSelectedAuthoredOriginalIsUnavailable"));
+        required(state.backdrop?.image, t('interface:theSelectedAuthoredOriginalIsUnavailable'));
         const header = inspectImageDataUrl(state.background.dataUrl);
-        required(header.valid, t("interface:theSelectedAuthoredPictureDescriptorIsInvalid"));
+        required(header.valid, t('interface:theSelectedAuthoredPictureDescriptorIsInvalid'));
         const image = state.backdrop.image,
           fit = state.background.fit ?? 'cover';
         required(
           (image.naturalWidth ?? image.width) === header.width &&
             (image.naturalHeight ?? image.height) === header.height &&
             (state.backdrop.fit ?? 'cover') === fit,
-          t("interface:theBorrowedAuthoredPictureDiffersFromItsOriginalDimensionsOr"),
+          t('interface:theBorrowedAuthoredPictureDiffersFromItsOriginalDimensionsOr'),
         );
         const binary = atob(state.background.dataUrl.split(',')[1]);
         const sha256 = await hashPresentationBytes(Uint8Array.from(binary, (c) => c.charCodeAt(0)));
@@ -259,24 +267,27 @@ export function createCouchStaticPictures({
           fit,
         });
       } else
-        required(!state.backdrop?.image, t("interface:aBorrowedPictureNeedsItsExactAuthoredDescriptor"));
+        required(
+          !state.backdrop?.image,
+          t('interface:aBorrowedPictureNeedsItsExactAuthoredDescriptor'),
+        );
     }
     current();
     state.chosen = true;
   }
   function verifyContext(state, signal) {
     check(signal);
-    required(requested === state, t("interface:theSelectedCouchPictureChanged"));
+    required(requested === state, t('interface:theSelectedCouchPictureChanged'));
     const latest = contextFor(state.row, state.themeId, state.raceId);
-    required(same(latest.request, state.request), t("interface:theSelectedCouchOwnerChanged"));
+    required(same(latest.request, state.request), t('interface:theSelectedCouchOwnerChanged'));
     required(
       same(latest.background, state.background) && latest.backdrop === state.backdrop,
-      t("interface:theSelectedAuthoredPictureChangedChooseSetupAgain"),
+      t('interface:theSelectedAuthoredPictureChangedChooseSetupAgain'),
     );
     if (state.kind !== 'still')
       required(
         state.snapshot === currentPage(),
-        t("interface:theReleaseArtworkChangedChooseSetupAgain"),
+        t('interface:theReleaseArtworkChangedChooseSetupAgain'),
       );
   }
   async function verifyMedia(state, signal) {
@@ -285,7 +296,7 @@ export function createCouchStaticPictures({
     check(signal);
     required(
       latest.generation === state.metadata.generation,
-      t("interface:savedPictureChoicesChangedChooseTheMapAgainBeforeStarting"),
+      t('interface:savedPictureChoicesChangedChooseTheMapAgainBeforeStarting'),
     );
   }
   async function acquireRelease(state, signal, report) {
@@ -311,7 +322,7 @@ export function createCouchStaticPictures({
     if (requested?.raceId === raceId)
       required(
         requested.row === row && same(requested.request, context.request),
-        t("interface:changedSetupRequiresANewRaceIdentity"),
+        t('interface:changedSetupRequiresANewRaceIdentity'),
       );
     else requested = { ...context, chosen: false, notice: '' };
     const state = requested;
@@ -321,7 +332,7 @@ export function createCouchStaticPictures({
         await choose(state, s, current, report);
         current();
         if (state.kind === 'still') {
-          report('decoding', t("interface:openingTheSavedOriginalForBothBoards"));
+          report('decoding', t('interface:openingTheSavedOriginalForBothBoards'));
           candidate = await acquirePresentationImage(
             { pin: state.pin, metadata: state.metadata, store: mediaStore() },
             { signal: s, ImageClass, URLImpl },
@@ -360,7 +371,11 @@ export function createCouchStaticPictures({
           candidate = null;
           previous?.release();
         }
-        report('ready', state.notice || t("interface:theExactPictureIsReadyForBothBoards"), 'ready');
+        report(
+          'ready',
+          state.notice || t('interface:theExactPictureIsReadyForBothBoards'),
+          'ready',
+        );
         current();
         return next;
       } finally {
@@ -381,7 +396,7 @@ export function createCouchStaticPictures({
       confirmed: false,
       current() {
         check(controller.signal);
-        required(live && staged === item, t("interface:theNextCouchPictureChanged"));
+        required(live && staged === item, t('interface:theNextCouchPictureChanged'));
       },
       cancel() {
         if (!live) return;
@@ -419,7 +434,10 @@ export function createCouchStaticPictures({
         },
         commit() {
           item.current();
-          required(item.confirmed && !pending, t("interface:confirmTheNextPictureBeforeAdoptingIt"));
+          required(
+            item.confirmed && !pending,
+            t('interface:confirmTheNextPictureBeforeAdoptingIt'),
+          );
           const previous = binding;
           binding = item.picture;
           accepted = item.state;
@@ -451,7 +469,7 @@ export function createCouchStaticPictures({
     const state = accepted;
     required(
       state?.row === row && state.raceId === raceId && state === requested && !pending,
-      t("interface:loadTheSelectedOriginalBeforeStarting"),
+      t('interface:loadTheSelectedOriginalBeforeStarting'),
     );
     verifyContext(state, signal);
     if (!state.metadata) return binding;
@@ -459,7 +477,7 @@ export function createCouchStaticPictures({
       await verifyMedia(state, s);
       current();
       verifyContext(state, s);
-      required(accepted === state, t("interface:thePreparedRaceChanged"));
+      required(accepted === state, t('interface:thePreparedRaceChanged'));
       return binding;
     });
   }
