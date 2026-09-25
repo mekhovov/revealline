@@ -1,5 +1,6 @@
 const VERSION = '1.59.1';
 const OUTPUT_MIME = 'video/mp4';
+const AUDIO_TRACK_INSPECTION_FORMAT = 'revealline-audio-track-inspection.v1';
 const DETAIL = `Mediabunny ${VERSION} can re-encode this silent AVC MP4 as AVC MP4 in this browser.`;
 const unsupported = (reason) => Object.freeze({ supported: false, formats: [], reason });
 const abortError = () => new DOMException('Physical trim cancelled.', 'AbortError');
@@ -10,6 +11,49 @@ function checkAbort(signal) {
 
 async function defaultLibrary() {
   return import('./vendor/mediabunny-1.59.1.min.mjs');
+}
+
+const sha = async (blob) =>
+  Array.from(
+    new Uint8Array(await crypto.subtle.digest('SHA-256', await blob.arrayBuffer())),
+    (value) => value.toString(16).padStart(2, '0'),
+  ).join('');
+
+/**
+ * Reopens exact MP4 bytes and inventories their audio tracks. This qualifies absence only; it
+ * deliberately does not claim decoded timing or synchronization for an audio-bearing file.
+ */
+export async function inspectMediabunnyAudioTracks(
+  blob,
+  { signal, loadLibrary = defaultLibrary } = {},
+) {
+  checkAbort(signal);
+  if (!(blob instanceof Blob) || blob.type !== OUTPUT_MIME)
+    throw new TypeError('Audio-track inspection requires owned MP4 bytes.');
+  const media = await loadLibrary();
+  checkAbort(signal);
+  const input = new media.Input({
+    source: new media.BlobSource(blob),
+    formats: [media.MP4],
+  });
+  try {
+    const [tracks, sha256] = await Promise.all([input.getTracks(), sha(blob)]);
+    checkAbort(signal);
+    const audioTracks = tracks.filter((track) => track.type === 'audio');
+    const codecs = await Promise.all(
+      audioTracks.map(async (track) => String((await track.getCodec()) || 'unknown')),
+    );
+    checkAbort(signal);
+    return Object.freeze({
+      format: AUDIO_TRACK_INSPECTION_FORMAT,
+      bytes: blob.size,
+      sha256,
+      audioTrackCount: audioTracks.length,
+      codecs: Object.freeze(codecs),
+    });
+  } finally {
+    input.dispose();
+  }
 }
 
 function explainDiscarded(discarded) {
