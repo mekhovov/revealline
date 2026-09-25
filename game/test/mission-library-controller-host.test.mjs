@@ -225,9 +225,7 @@ async function host(t, mode, { fetchResponse, defaultEntry = false } = {}) {
   );
   reach(opener);
   pulse(0);
-  await waitFor(() => p.$('journey-chooser')?.open, {
-    timeoutMs: 30000,
-  });
+  await settle(() => p.$('journey-chooser')?.open);
   frame();
   return { p, pulse, reach, frame, opener, before, snapshot };
 }
@@ -273,7 +271,7 @@ test('Versus controller Play and replacement Stay preserve both paused boards an
   assert.deepEqual(p.checkpoint(), before);
 });
 
-test('Versus controller Download & play joins repeated Confirm without exposing Cancel or replacing the ready setup early', async (t) => {
+test('Versus controller Download, Retry and Cancel keep the attempt and require separate Play', async (t) => {
   const bytes = await readFile(new URL('../content/packs/night-shift.json', import.meta.url));
   let release,
     requests = 0;
@@ -303,33 +301,22 @@ test('Versus controller Download & play joins repeated Confirm without exposing 
   await settle(() => /Retry/.test(action()));
   assert.equal(requests, 1);
   assert.equal(p.doc.activeElement, card);
-
-  pulse(0);
-  await settle(() => requests === 2 && /Preparing/.test(action()));
-  assert.doesNotMatch(action(), /Cancel/);
-  assert.deepEqual(p.checkpoint(), before, 'Preparation keeps both paused boards intact.');
   frame();
   pulse(0);
+  await settle(() => requests === 2 && /Preparing.*Cancel/.test(action()));
   frame();
-  assert.equal(requests, 2, 'Repeated controller Confirm joins the owned preparation.');
-  assert.match(action(), /Preparing/);
+  pulse(0);
+  await settle(() => /^Download/.test(action()));
+  release();
+  await new Promise((resolve) => setImmediate(resolve));
+  frame();
+  pulse(0);
+  await settle(() => action() === 'Play');
+  assert.equal(requests, 3);
   assert.equal(p.$('journey-chooser').open, true);
   assert.equal(p.doc.activeElement, card);
-
-  release();
-  await settle(
-    () => !p.$('journey-chooser').open && p.$('race-level').value.endsWith('/night-shift-03'),
-  );
-  frame();
-  assert.equal(requests, 2);
-  assert.equal(p.state(), 'running');
-  assert.equal(p.renders[0].level.id, 'night-shift-03');
-  assert.equal(p.renders[1].level.id, 'night-shift-03');
-  assert.notDeepEqual(
-    p.checkpoint(),
-    before,
-    'The ready setup changes only after the owned preparation succeeds and starts play.',
-  );
+  assert.deepEqual(p.checkpoint(), before);
+  assert.notEqual(p.state(), 'running');
 });
 
 for (const mode of ['solo', 'versus', 'team'])
