@@ -331,8 +331,8 @@ test('registered v12 successor preserves v11 and authored order with isolated ow
   assert(authoredJourneyUsesActorMaterials(current.id));
   assert(AUTHORED_JOURNEY_ROUTE_IDS.includes(current.id));
   assert.deepEqual(DEFAULT_JOURNEY_ROUTES, {
-    solo: 'whole-spatial-v12',
-    versus: 'whole-spatial-v12',
+    solo: 'whole-spatial-v13',
+    versus: 'whole-spatial-v13',
     team: 'team-trail-impact-originals-1',
   });
   assert.equal(authoredJourneyModeHref(current.id, 'solo'), '../?journey=whole-spatial-v12');
@@ -355,7 +355,8 @@ test('Studio exposes v11 and v12 separately and defaults its selector to v12', a
   const html = await readFile(new URL('../studio/index.html', import.meta.url), 'utf8');
   const script = await readFile(new URL('../studio/studio.mjs', import.meta.url), 'utf8');
   assert.match(html, /value="horizon-cultural-joins-1">/);
-  assert.match(html, /value="border-cultural-routes-1" selected/);
+  assert.match(html, /value="border-cultural-routes-1">/);
+  assert.match(html, /value="border-signal-cultural-routes-1" selected/);
   assert.match(html, /journey=whole-spatial-v12/);
   assert.match(script, /'border-cultural-routes-1': createBorderCulturalNextBatchCandidates/);
 });
