@@ -7,6 +7,7 @@ import {
 import { contentText } from './i18n/content.mjs';
 import { flightPictureFailure, flightPictureStatus } from './ui/flight-picture-copy.mjs';
 import { profileWriterMessage } from './ui/profile-writer-copy.mjs';
+import { milestoneName, achievementName, achievementDescription } from './ui/reward-copy.mjs';
 import {
   t,
   localizedText,
@@ -6786,19 +6787,20 @@ try {
         ? t('interface:previewAccessAllAppearancesAreAvailablePracticeGrantsNoCampaign')
         : next
           ? t('gameplay:differentMissionsInThisCampaignSeeCollectionForTheAppearances', {
-              value1: contentText(next, 'name'),
+              value1: milestoneName(next),
               value2: next.count,
               value3: next.target,
             })
           : t('interface:allChapterAppearancesAreAvailableInThisCampaignCosmeticsDo'),
     );
   }
-  const bodyLabels = (ids) => ids.map((id) => presets.characters[id]?.label || id);
+  const bodyLabels = (ids) => ids.map((id) => contentText(presets.characters[id], 'label') || id);
   function paintAppearanceRewards(entry) {
     const selected = entry.campaign;
-    const name = selected.title || selected.name || selected.id;
     localizedText($('appearance-campaign'), () =>
-      t('gameplay:campaignAppearances', { value1: name }),
+      t('gameplay:campaignAppearances', {
+        value1: contentText(selected, 'title') || contentText(selected, 'name') || selected.id,
+      }),
     );
     $('appearance-rewards').replaceChildren();
     for (const tier of difficultyNavigation.milestones(
@@ -6816,16 +6818,14 @@ try {
         thumbnail.src = new URL(`../authoring/motion-lab/${body.src}`, import.meta.url).href;
       const copy = document.createElement('div');
       const title = document.createElement('h4');
-      localizedText(title, () => contentText(tier, 'name'));
+      localizedText(title, () => milestoneName(tier));
       const state = document.createElement('p');
       state.className = 'reward-progress';
       localizedText(state, () =>
-        t('gameplay:different', {
-          value1: tier.earned ? t('interface:available') : t('interface:locked'),
-          value2: Math.min(tier.count, tier.target),
-          value3: tier.target,
-          value4: tier.target === 1 ? 'mission' : 'missions',
-        }),
+        t(
+          tier.earned ? 'interface:rewards.availableProgress' : 'interface:rewards.lockedProgress',
+          { completed: Math.min(tier.count, tier.target), count: tier.target },
+        ),
       );
       const names = document.createElement('p');
       localizedText(names, () => bodyLabels(tier.bodyIds).join(' · '));
@@ -6835,10 +6835,7 @@ try {
       localizedText(detail, () =>
         tier.earned
           ? t('interface:availableInThisCampaign')
-          : t('gameplay:finishMoreInThisCampaign', {
-              value1: remaining,
-              value2: remaining === 1 ? 'mission' : 'missions',
-            }),
+          : t('interface:rewards.remaining', { count: remaining }),
       );
       copy.append(title, state, names, detail);
       row.append(thumbnail, copy);
@@ -6908,7 +6905,12 @@ try {
         !!difficultyNavigation.access(activeEntry, library.campaigns)?.levels[index]?.completed;
       b.dataset.pictureState = earnedPicture ? 'unavailable' : 'concealed';
       thumbnailTargets.push({ button: b, level, earned: earnedPicture });
-      b.setAttribute('aria-label', `${index + 1}. ${level.name}${b.disabled ? ' — locked' : ''}`);
+      localizedAttribute(b, 'aria-label', () =>
+        t(b.disabled ? 'interface:missions.lockedLabel' : 'interface:missions.label', {
+          number: index + 1,
+          name: contentText(level, 'name'),
+        }),
+      );
       const number = document.createElement('span');
       number.className = 'number';
       localizedText(number, () => String(index + 1).padStart(2, '0'));
@@ -9426,24 +9428,24 @@ try {
   const collectionContextLabel = (entry) =>
     `${contentText(entry.campaign, 'title') || contentText(entry.campaign, 'name') || entry.campaign.id} · ${difficultyLabel(entry) || t('interface:challenge')}`;
   function paintCollectionProgress(entry) {
+    const progress = progressFor(library, entry.campaign);
+    const target = difficultyNavigation
+      .milestones(entry, library.campaigns, progress)
+      .find((tier) => tier.id === 'chapter-explorer').target;
     localizedText($('achievement-campaign'), () =>
       t('gameplay:campaignAchievements', { value1: collectionContextLabel(entry) }),
     );
     $('achievements').replaceChildren();
-    for (const a of difficultyNavigation.achievements(
-      entry,
-      library.campaigns,
-      progressFor(library, entry.campaign),
-    )) {
+    for (const a of difficultyNavigation.achievements(entry, library.campaigns, progress)) {
       const row = document.createElement('div');
       row.className = `achievement${a.earned ? ' earned' : ''}`;
       const title = document.createElement('strong');
-      localizedText(title, () => `${a.earned ? '◆' : '◇'} ${contentText(a, 'name')}`);
+      localizedText(title, () => `${a.earned ? '◆' : '◇'} ${achievementName(a)}`);
       const copy = document.createElement('span');
       localizedText(
         copy,
         () =>
-          `${contentText(a, 'description')}${a.scope === 'shared' ? ' ' + t('interface:standardOrGentle') + '' : a.scope ? t('gameplay:results', { value1: difficultyLabel(entry) }) : ''}`,
+          `${achievementDescription(a, target)}${a.scope === 'shared' ? ' ' + t('interface:standardOrGentle') + '' : a.scope ? t('gameplay:results', { value1: difficultyLabel(entry) }) : ''}`,
       );
       row.append(title, copy);
       $('achievements').append(row);
