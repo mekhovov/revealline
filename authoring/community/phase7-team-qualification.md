@@ -74,11 +74,34 @@ loss.
 A verified win retains its exact registered picture identity in the
 edition-scoped completion receipt. A fresh mission-library visit labels the
 clear as **Picture earned**, and prepares that registered original again when
-the mission is played. The Team portable format still contains gameplay and
-qualification evidence only; it does not contain creator image or video
-payloads. Imported local artwork remains visit-scoped, and Team victory videos
-remain unsupported until a portable Team media contract owns their bytes and
-playback binding.
+the mission is played.
+
+The optional `revealline-creator-team-media.v1` wrapper adds a strict binary
+media closure around those unchanged replay-qualified gameplay bytes. Every
+level maps to one completely decoded 1152 × 576 PNG or JPEG original and may
+map to one inspected MP4/WebM victory story with an explicit playback range.
+The manifest includes reviewed creator/media/license credits, a sorted SHA-256
+inventory, and no unreferenced browser-library assets. Images retain the 4 MiB
+per-file limit; videos retain the 64 MiB source limit; the complete package and
+manifest reuse the 256 MiB and 2 MiB managed-media budgets.
+
+`prepareCreatorTeamMediaCampaign` verifies the existing prepared gameplay,
+exact dependency closure, image headers plus full decoding, video inspection,
+and playback ranges. `exportCreatorTeamMediaCampaign` emits the portable file;
+`importCreatorTeamMediaCampaign` replays gameplay qualification and rechecks
+every media byte before returning a runtime owner. Production Team intake also
+recognizes its magic when a browser omits the MIME type. The installed edition
+identity is the SHA-256 of the complete gameplay-and-media file, and legacy
+JSON-only Team packages retain their existing identities and reader.
+
+Installed media launches revalidate the complete package, prepare the exact
+picture through an owned decoder lease, and bind the completion reward back to
+that edition's picture descriptor after the normal terminal replay. A win with
+an optional story shows **Play victory story**, **Skip story**, and **Replay
+victory story** states. Story failure or refusal leaves the earned picture and
+Next action available; playback never records completion. Broad conversion,
+physical video trimming, autoplay, audio-sync qualification, and a creator UI
+for assembling Team media packages remain outside this bounded contract.
 
 Automated feasibility is not human balance, first-attempt success,
 physical-controller certification or mobile certification.
