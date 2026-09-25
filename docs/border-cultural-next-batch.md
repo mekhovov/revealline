@@ -42,11 +42,11 @@ object, chart, painting, palette, stitch pattern, figure, or symbol.
 
 ## Authored route decisions
 
-| Mission | Two viable approaches | Pressure interaction | Permanent-ground budget |
-|---|---|---|---:|
-| `second-landing` | Close the near aperture after the outer patrol passes, or take the longer exposed wrap to the far window. | Two measured keepers plus the measured perimeter patrol; fixed and timed extra-life opportunities remain optional. | 99 → 99 |
-| `long-rail` | Use the central stem for the short closure, or commit to the outer branch for a farther return near the optional bonus route. | Two measured keepers plus the measured perimeter patrol; fixed player-speed and timed enemy-freeze systems remain exact and non-gating. | 116 → 114 |
-| `new-frontier` | Close the near shoulder for a modest contour change, or cross to the far shoulder for a larger frontier reroute. | Two measured keepers plus the measured frontier patrol; the existing frontier lesson remains the only introduced mechanic. | 96 → 96 |
+| Mission          | Two viable approaches                                                                                                         | Pressure interaction                                                                                                                    | Permanent-ground budget |
+| ---------------- | ----------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- | ----------------------: |
+| `second-landing` | Close the near aperture after the outer patrol passes, or take the longer exposed wrap to the far window.                     | Two measured keepers plus the measured perimeter patrol; fixed and timed extra-life opportunities remain optional.                      |                 99 → 99 |
+| `long-rail`      | Use the central stem for the short closure, or commit to the outer branch for a farther return near the optional bonus route. | Two measured keepers plus the measured perimeter patrol; fixed player-speed and timed enemy-freeze systems remain exact and non-gating. |               116 → 114 |
+| `new-frontier`   | Close the near shoulder for a modest contour change, or cross to the far shoulder for a larger frontier reroute.              | Two measured keepers plus the measured frontier patrol; the existing frontier lesson remains the only introduced mechanic.              |                 96 → 96 |
 
 Coverage, actor roster, actor tiers, speeds, rules, bonuses, timed schedules,
 difficulty scaling, modes, presentation, and campaign order are unchanged.
