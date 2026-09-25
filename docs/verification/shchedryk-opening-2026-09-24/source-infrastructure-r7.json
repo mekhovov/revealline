@@ -1,0 +1,94 @@
+{
+  "format": "revealline-source-check.v1",
+  "feature": "M2 bundled soundtrack source infrastructure only",
+  "revision": 7,
+  "checkedAt": "2026-09-25T02:15:16.361Z",
+  "candidateBaseRevision": "7cbf5771f69917dd9b24cc88e9687fec77f2a876",
+  "sourceRevisionBeforeEvidence": "f6471b017e8750f0c52d3c993780b92f3c3bc221",
+  "supersedes": "source-infrastructure-r6.json",
+  "scope": "Reconciled the inactive bundled-source adapter onto the exact live-archive head, explicitly added the adapter module to the audio recipe dependency closure, preserved revision 78 as source-stage and appended reviewed revision 79.",
+  "reviewRecord": {
+    "path": "docs/verification/shchedryk-opening-2026-09-24/audio-source-review-r2.json",
+    "bytes": 5678,
+    "sha256": "99a2bcda11f17c4ad0220daa4aa98c9b5ed8f1008773d2fce9c12b59f1ef804b"
+  },
+  "producer": {
+    "path": "scripts/produce-field-kit-theme.mjs",
+    "bytes": 28978,
+    "sha256": "ec02beeef744124c1010dadfcffa1d1aef02c18277a401d905679b7b703f8bb0"
+  },
+  "audioFingerprintSHA256": "27ad86d9f0e3d84a149627ca3e95f3f2350c7dd7b79146d5cbc4da9320f12e3e",
+  "fieldKit": {
+    "parentRevision": 78,
+    "revision": 79,
+    "bundle": {
+      "path": "authoring/library/fpv-field-kit/production.rltheme",
+      "bytes": 7232174,
+      "sha256": "37a6f9d909db850a85ea963eed2c5ba0c2490baa040e72523d1afc3eeeed9192"
+    },
+    "compiled": [
+      {
+        "path": "game/presentation/compiled/manifest.json",
+        "bytes": 29118,
+        "sha256": "c865058bfb892de7f5ce68d98b6ceeba0eb30361d096694b9f7c9d1876e1f068"
+      },
+      {
+        "path": "game/presentation/compiled/runtime.json",
+        "bytes": 1083661,
+        "sha256": "56f0c9d14aae887eb2ad81ccff4d36ee4fbde781572c9bd74863e702cd59e716"
+      },
+      {
+        "path": "game/presentation/compiled/studio.json",
+        "bytes": 4066250,
+        "sha256": "b4b4028c2bfadf34510817aa6840dc453ff46696cac014d204e4c35c33e2cc98"
+      }
+    ],
+    "result": {
+      "slots": 335,
+      "files": 140,
+      "assetBytes": 4009342,
+      "coverage": {
+        "missing": 0,
+        "source": 136,
+        "produced": 0,
+        "reviewed": 199
+      }
+    },
+    "reviewBoundary": "Source and rights behavior only. No MP3, recording registration, default, listening approval, cultural approval, device acceptance or public release is included."
+  },
+  "checks": {
+    "sourceSuite": {
+      "tests": 11,
+      "pass": 11,
+      "fail": 0,
+      "skip": 0,
+      "outputSha256": "3da30a968b73cb1e9ceff65c82e33fc6eb667da20776eb2ee6ec5ab72adec93f"
+    },
+    "recipeDependencySuite": {
+      "tests": 2,
+      "pass": 2,
+      "fail": 0,
+      "skip": 0,
+      "outputSha256": "7eaa88de14e3caf3aa4ab341ab5ad4a6cf2bcc1514ac886a16480c9a045c5df2"
+    },
+    "productionHistorySuite": {
+      "tests": 12,
+      "pass": 12,
+      "fail": 0,
+      "skip": 0
+    },
+    "focusedEslint": "pass",
+    "focusedPrettier": "pass",
+    "validation": "pass",
+    "productionReproducibility": "pass",
+    "readinessExpectedAfterCommit": true,
+    "hostedQualification": "Pending the stacked live-archive release and a fresh exact-head run."
+  },
+  "admission": {
+    "recordingsAdded": 0,
+    "bundledRegistrationsActivated": 0,
+    "mp3Added": false,
+    "defaultChanged": false,
+    "listeningApprovalClaimed": false
+  }
+}

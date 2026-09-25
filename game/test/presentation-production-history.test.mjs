@@ -463,7 +463,7 @@ test('shared-host UI and audio bind only their reviewed current inputs', async (
   const production = await createFieldKitProduction();
   const resolved = resolvePresentation(production.document);
   const audioReviewPath =
-    'docs/verification/online-soundtrack-reconciliation-2026-09-25/source-review.json';
+    'docs/verification/shchedryk-opening-2026-09-24/audio-source-review-r2.json';
   const audioReviewHash = createHash('sha256')
     .update(await fs.readFile(new URL(`../../${audioReviewPath}`, import.meta.url)))
     .digest('hex');
@@ -505,7 +505,7 @@ test('shared-host UI and audio bind only their reviewed current inputs', async (
       );
       assert.ok(
         asset.provenance.source.endsWith(
-          'sha256:6b9b58a0d51a1b15d533e76b531cb4db09662274c8b5cad3988b06f01e7327c4',
+          'sha256:27ad86d9f0e3d84a149627ca3e95f3f2350c7dd7b79146d5cbc4da9320f12e3e',
         ),
         slot.id,
       );
@@ -514,6 +514,7 @@ test('shared-host UI and audio bind only their reviewed current inputs', async (
       assert.match(asset.provenance.source, /game\/soundtrack-portable\.mjs/);
       assert.match(asset.provenance.source, /game\/content\/soundtrack-catalogue\.mjs/);
       assert.match(asset.provenance.source, /game\/online-soundtrack-catalogue\.mjs/);
+      assert.match(asset.provenance.source, /game\/soundtrack-bundled\.mjs/);
     }
   }
 });
