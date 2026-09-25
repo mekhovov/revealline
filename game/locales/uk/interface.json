@@ -1676,6 +1676,8 @@
   "backToTheGame2": "Назад до гри",
   "missionContinuation": "Продовження місії",
   "nextMission2": "Наступна місія",
+  "nextMissionNamed": "Далі: {{mission}}",
+  "nextCampaignNamed": "Наступна кампанія: {{campaign}}",
   "skipMission": "Пропустити місію",
   "findMissions": "Знайти місії",
   "currentMusic": "Поточна музика",

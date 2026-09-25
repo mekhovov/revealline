@@ -1657,6 +1657,8 @@
   "backToTheGame2": "Back to the game",
   "missionContinuation": "Mission continuation",
   "nextMission2": "Next mission",
+  "nextMissionNamed": "Next: {{mission}}",
+  "nextCampaignNamed": "Next campaign: {{campaign}}",
   "skipMission": "Skip mission",
   "findMissions": "Find missions",
   "currentMusic": "Current music",
