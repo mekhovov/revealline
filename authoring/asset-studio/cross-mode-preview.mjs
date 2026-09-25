@@ -1,4 +1,4 @@
-import { t, localizedText, localizedMessage } from '../../game/i18n/index.mjs';
+import { t, localizedText, localizedMessage, formatNumber } from '../../game/i18n/index.mjs';
 import { TEAM_OUTCOME_SLOTS } from '../../game/couch/coop-outcome-presentation.mjs';
 import { TEAM_ENEMY_SLOTS } from '../../game/couch/coop-enemy-slots.mjs';
 import { TEAM_PILOT_SLOTS } from '../../game/couch/coop-pilot-slots.mjs';
@@ -39,7 +39,7 @@ const note = (value) => {
 };
 const requireImage = (assets, id) => {
   if (assets[id]?.kind !== 'image')
-    throw new Error(`Team preview needs an image revision for ${id}. No substitute was shown.`);
+    throw new Error(t('tools:studio.crossMode.teamPreviewImageRequired', { id }));
   return assets[id];
 };
 export function teamObjectivePreviewNote(slotId, run) {
@@ -53,7 +53,12 @@ export function teamObjectivePreviewNote(slotId, run) {
         .filter((anchor) => anchor.captured === (state === 'captured')).length
     : (run.strongholds || []).filter((item) => teamCoreState(item) === state).length;
   return count
-    ? `Showing ${count} ${state} ${TEAM_ANCHOR_SLOTS.includes(slotId) ? (count === 1 ? 'anchor' : 'anchors') : count === 1 ? 'core' : 'cores'} with the selected treatment. Functional status cues and labels stay game-owned.`
+    ? t(
+        TEAM_ANCHOR_SLOTS.includes(slotId)
+          ? 'tools:studio.crossMode.objectiveAnchorsShown'
+          : 'tools:studio.crossMode.objectiveCoresShown',
+        { count, state: t(`tools:studio.crossMode.state.${state}`) },
+      )
     : t("tools:theSelectedObjectiveStateIsInactiveInThisSceneChoose");
 }
 export function teamEnemyPreviewNote(slotId, painter, run) {
@@ -67,10 +72,17 @@ export function teamEnemyPreviewNote(slotId, painter, run) {
     visible = frames.filter((f) => f.sourceSlot === slotId),
     inherited = frames.filter((f) => f.stateSlot === slotId);
   if (visible.length)
-    return `Showing ${visible.length} active ${slotId} ${visible.length === 1 ? 'body' : 'bodies'}. Contact centers and threat cues remain game-owned.`;
+    return t('tools:studio.crossMode.enemyBodiesShown', {
+      count: visible.length,
+      slotId,
+    });
   if (inherited.length)
-    return `This Team state uses shared body ${inherited[0].sourceSlot}. Upload a body to replace this role/state.`;
-  return `Selected enemy body is inactive. Active roles: ${[...new Set(frames.map((f) => f.stateSlot ?? f.sourceSlot))].join(', ') || 'none'}. Choose the matching Team scene or Native size.`;
+    return t('tools:studio.crossMode.enemySharedBody', { slotId: inherited[0].sourceSlot });
+  return t('tools:studio.crossMode.enemyInactive', {
+    roles:
+      [...new Set(frames.map((f) => f.stateSlot ?? f.sourceSlot))].join(', ') ||
+      t('tools:studio.crossMode.none'),
+  });
 }
 export function teamPilotPreviewNote(slotId, painter, run) {
   if (!TEAM_PILOT_SLOTS.includes(slotId)) return null;
@@ -79,10 +91,19 @@ export function teamPilotPreviewNote(slotId, painter, run) {
   const seat = Number(slotId.split('.')[2].slice(1)) - 1,
     frame = painter.actorFrame('pilot', seat);
   if (frame?.sourceSlot === slotId)
-    return `Showing the selected Player ${seat + 1} ${frame.pilotState} body. Number, shape and contact center stay game-owned.`;
+    return t('tools:studio.crossMode.pilotBodyShown', {
+      player: seat + 1,
+      state: t(`tools:studio.crossMode.state.${frame.pilotState}`),
+    });
   if (frame?.stateSlot === slotId)
-    return `This state uses shared body ${frame.sourceSlot}. Upload a body to replace this seat/state/treatment.`;
-  return `Selected body is inactive. Player ${seat + 1} is ${frame?.pilotState ?? 'unavailable'} using ${frame?.sourceSlot ?? 'no body'}. Choose the matching Team scene and width, or Native size.`;
+    return t('tools:studio.crossMode.pilotSharedBody', { slotId: frame.sourceSlot });
+  return t('tools:studio.crossMode.pilotInactive', {
+    player: seat + 1,
+    state: frame?.pilotState
+      ? t(`tools:studio.crossMode.state.${frame.pilotState}`)
+      : t('tools:studio.crossMode.unavailable'),
+    slotId: frame?.sourceSlot ?? t('tools:studio.crossMode.noBody'),
+  });
 }
 export function teamRescuePreviewNote(run) {
   if (run.status === 'won')
@@ -97,11 +118,18 @@ export function teamRescuePreviewNote(run) {
     ? rescues
         .map(
           ({ player, rescue }) =>
-            `Player ${player.id + 1} rescuing player ${rescue.target + 1}: ${Math.floor(rescue.progress * 100)}%`,
+            t('tools:studio.crossMode.rescueProgress', {
+              player: player.id + 1,
+              target: rescue.target + 1,
+              progress: formatNumber(Math.floor(rescue.progress * 100)),
+            }),
         )
         .join(' · ')
     : t("tools:noActiveContactRescue");
-  return `${progress}. ${recovering.length ? `Recovery grace: player ${recovering.join(', ')}` : t("tools:noRecoveryGrace")}. Decoration is underneath actor bodies and fixed identity cues. Choose Relay Yard rescue/recovered scenes for either player; Paused and Reduced effects hold the real state, Play preview advances actual timers.`;
+  const grace = recovering.length
+    ? t('tools:studio.crossMode.recoveryGrace', { players: recovering.join(', ') })
+    : t('tools:noRecoveryGrace');
+  return t('tools:studio.crossMode.rescueSummary', { progress, grace });
 }
 export function teamEmitterPreviewNote(run) {
   if (run.status === 'won')
@@ -110,7 +138,10 @@ export function teamEmitterPreviewNote(run) {
     (hold) => hold.emitter?.phase === 'warning' && Number.isInteger(hold.emitter.cellIndex),
   ).length;
   const sparks = (run.impacts || []).length;
-  return `${warnings} active emitter ${warnings === 1 ? 'warning' : 'warnings'} · ${sparks} travelling ${sparks === 1 ? 'spark' : 'sparks'}. Warning lines point to exposed trails; sparks move along those trails. Paused and Reduced effects hold the command-earned state; Play preview advances actual timers.`;
+  return t('tools:studio.crossMode.emitterSummary', {
+    warnings: t('tools:studio.crossMode.emitterWarnings', { count: warnings }),
+    sparks: t('tools:studio.crossMode.travellingSparks', { count: sparks }),
+  });
 }
 export function teamSupportPreviewNote(run) {
   if (run.status === 'won')
@@ -119,15 +150,23 @@ export function teamSupportPreviewNote(run) {
   const slowed = run.enemies.filter(
     (enemy) => enemy.active !== false && enemy.speedScale < 1 && enemy.slowUntil > run.time,
   ).length;
-  return `${pulses} active Support ${pulses === 1 ? 'pulse' : 'pulses'} · ${slowed} slowed ${slowed === 1 ? 'enemy' : 'enemies'}. Support is a nearby team assist, not Scan. Paused and Reduced effects hold this command-earned state; Play preview advances its actual timers.`;
+  return t('tools:studio.crossMode.supportSummary', {
+    pulses: t('tools:studio.crossMode.supportPulses', { count: pulses }),
+    enemies: t('tools:studio.crossMode.slowedEnemies', { count: slowed }),
+  });
 }
 export function playerTreatmentNote(slotId, width) {
   const selected = /^player\.[^.]+\.(compact|detailed)$/.exec(slotId)?.[1];
   if (!selected) return '';
   const active = width < 480 ? 'compact' : 'detailed';
   return selected === active
-    ? `Showing the selected ${selected} body at this width.`
-    : `Showing the ${active} body at this width. Selected ${selected} artwork is inactive; resize this view or choose Native size to inspect it.`;
+    ? t('tools:studio.crossMode.playerBodyShown', {
+        treatment: t(`tools:studio.crossMode.treatment.${selected}`),
+      })
+    : t('tools:studio.crossMode.playerBodyInactive', {
+        active: t(`tools:studio.crossMode.treatment.${active}`),
+        selected: t(`tools:studio.crossMode.treatment.${selected}`),
+      });
 }
 export function stageBoardPreviewEffect(painter, slot, run) {
   if (slot.group !== 'effects') return;
