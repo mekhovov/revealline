@@ -32,7 +32,7 @@ export function createPictureIdentityCatalog({ entries = [], metadata } = {}) {
     if (prior)
       required(
         canonicalJSON(identity(prior.campaign)) === canonicalJSON(identity(campaign)),
-        t("interface:pictureOwnersWithTheSameKeyDiffer"),
+        t('interface:pictureOwnersWithTheSameKeyDiffer'),
       );
     const owner = prior ?? { campaign, themes: new Map() };
     for (const theme of themes) owner.themes.set(theme.id, { id: theme.id });
@@ -69,7 +69,7 @@ export function createBackupPictureIdentityResolver({ baseEntries, metadata }) {
     const result = createPictureIdentityCatalog({ entries, metadata });
     // campaigns may include an exact dynamic or Gentle execution. It is deliberately
     // not relabeled as an authored base: result.resolve must reconstruct its owner.
-    required(Array.isArray(campaigns), t("interface:expectedVerifiedBackupExecutionCampaigns"));
+    required(Array.isArray(campaigns), t('interface:expectedVerifiedBackupExecutionCampaigns'));
     return result;
   };
 }

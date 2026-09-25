@@ -59,7 +59,9 @@ export function attachTeamLibraryPreview({
     const selected = selection();
     if (owner && owner.row !== selected?.row) close();
     button.disabled = !selected || Boolean(pending);
-    localizedText(button, () =>selected ? `Preview ${selected.row.title}` : t("interface:selectAMissionToPreview"));
+    localizedText(button, () =>
+      selected ? `Preview ${selected.row.title}` : t('interface:selectAMissionToPreview'),
+    );
   };
   async function show() {
     const selected = selection();
@@ -84,8 +86,10 @@ export function attachTeamLibraryPreview({
       !ticket.controller.signal.aborted &&
       selection()?.row === ticket.row;
     panel.hidden = false;
-    localizedText(title, () =>`${ticket.row.title} · Picture preview`);
-    localizedText(status, () =>t("interface:preparingTheSelectedPictureYourCurrentAttemptIsUnchanged"));
+    localizedText(title, () => `${ticket.row.title} · Picture preview`);
+    localizedText(status, () =>
+      t('interface:preparingTheSelectedPictureYourCurrentAttemptIsUnchanged'),
+    );
     status.dataset.state = 'busy';
     retry.hidden = document.activeElement !== retry;
     retry.setAttribute('aria-disabled', 'true');
@@ -96,7 +100,7 @@ export function attachTeamLibraryPreview({
         signal: ticket.controller.signal,
         isCurrent: current,
         onStatus: (message) => {
-          if (current()) localizedText(status, () =>message);
+          if (current()) localizedText(status, () => message);
         },
       });
       if (!current()) return;
@@ -106,7 +110,7 @@ export function attachTeamLibraryPreview({
         canvas.width = 1152;
         canvas.height = 576;
         const context = canvas.getContext('2d');
-        if (!context) throw new Error(t("interface:previewCanvasUnavailable"));
+        if (!context) throw new Error(t('interface:previewCanvasUnavailable'));
         if (
           !paintTeamPicturePreview(context, image, canvas.width, canvas.height, {
             full: true,
@@ -116,13 +120,15 @@ export function attachTeamLibraryPreview({
           return;
         canvas.hidden = false;
       }
-      localizedText(status, () =>image
-        ? t("interface:fullPicturePreviewViewingDoesNotCompleteAnArenaOr2")
-        : t("interface:approvedProceduralScenePlayToExploreThisArena"));
+      localizedText(status, () =>
+        image
+          ? t('interface:fullPicturePreviewViewingDoesNotCompleteAnArenaOr2')
+          : t('interface:approvedProceduralScenePlayToExploreThisArena'),
+      );
       status.dataset.state = 'ready';
     } catch {
       if (current()) {
-        localizedText(status, () =>t("interface:picturePreviewUnavailableRetryOrChoosePlay"));
+        localizedText(status, () => t('interface:picturePreviewUnavailableRetryOrChoosePlay'));
         status.dataset.state = 'error';
       }
     } finally {

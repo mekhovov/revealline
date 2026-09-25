@@ -22,7 +22,7 @@ export function mountReplayDisplay({
   let disposed = false;
   const warning = (message) => {
     if (disposed) return;
-    localizedText(notice, () =>message);
+    localizedText(notice, () => message);
     notice.hidden = !message;
   };
   const preferences = createDisplayPreferences({
@@ -39,9 +39,9 @@ export function mountReplayDisplay({
     size.value = state.textSize;
     reduced.checked = state.reducedEffects;
     const systemCap = state.effectiveReducedEffects && !state.reducedEffects;
-    localizedText(cap, () =>systemCap
-      ? t("interface:yourSystemRequestsReducedMotionReplayEffectsRemainReducedYour")
-      : '');
+    localizedText(cap, () =>
+      systemCap ? t('interface:yourSystemRequestsReducedMotionReplayEffectsRemainReducedYour') : '',
+    );
     cap.hidden = !systemCap;
   };
   const stopView = preferences.subscribe(render);

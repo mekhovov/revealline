@@ -6,14 +6,17 @@ import { classicDomainHit } from '../core/classic-motion.mjs';
 import { fitsClassicDomain } from '../core/classic-topology.mjs';
 import { COMBAT_RADIUS, COMBAT_SHOT_RADIUS } from '../core/combat-definition.mjs';
 
-const check = (condition, message = t("interface:malformedActiveCombatPresentationData")) => {
+const check = (condition, message = t('interface:malformedActiveCombatPresentationData')) => {
   if (!condition) throw new TypeError(message);
 };
 const own = (value, key) => {
   check(value !== null && typeof value === 'object');
   const descriptor = Object.getOwnPropertyDescriptor(value, key);
   if (!descriptor) return undefined;
-  check(Object.hasOwn(descriptor, 'value'), t("interface:combatPresentationCannotContainAccessors"));
+  check(
+    Object.hasOwn(descriptor, 'value'),
+    t('interface:combatPresentationCannotContainAccessors'),
+  );
   return descriptor.value;
 };
 // Inspect descriptors, including private fields, without reading their values.
@@ -26,7 +29,7 @@ function record(value) {
     const descriptor = Object.getOwnPropertyDescriptor(value, key);
     check(
       typeof key === 'string' && descriptor.enumerable && Object.hasOwn(descriptor, 'value'),
-      t("interface:combatPresentationCannotContainAccessorsOrHiddenFields"),
+      t('interface:combatPresentationCannotContainAccessorsOrHiddenFields'),
     );
   }
   return value;
@@ -38,7 +41,7 @@ function dense(value, max) {
   check(Reflect.ownKeys(value).length === length + 1);
   return Array.from({ length }, (_, i) => {
     const row = own(value, String(i));
-    check(row !== undefined, t("interface:combatPresentationArraysMustBeDense"));
+    check(row !== undefined, t('interface:combatPresentationArraysMustBeDense'));
     return row;
   });
 }
@@ -48,12 +51,15 @@ const integer = (value, min = 0, max = Number.MAX_SAFE_INTEGER) =>
 function point(value) {
   const x = own(value, 'x'),
     y = own(value, 'y');
-  check(finite(x, 0, 72) && finite(y, 0, 36), t("interface:combatPositionMustBeFiniteAndOnTheBoard"));
+  check(
+    finite(x, 0, 72) && finite(y, 0, 36),
+    t('interface:combatPositionMustBeFiniteAndOnTheBoard'),
+  );
   return { x, y };
 }
 function id(value) {
   const result = own(value, 'id');
-  check(stableId(result), t("interface:combatPresentationNeedsStableIds"));
+  check(stableId(result), t('interface:combatPresentationNeedsStableIds'));
   return result;
 }
 function velocity(value, speed) {
@@ -61,7 +67,7 @@ function velocity(value, speed) {
     vy = own(value, 'vy');
   check(
     finite(vx, -12, 12) && finite(vy, -12, 12) && Math.abs(Math.hypot(vx, vy) - speed) < 1e-7,
-    t("interface:invalidCombatVelocity"),
+    t('interface:invalidCombatVelocity'),
   );
   return { vx, vy };
 }
@@ -151,7 +157,7 @@ export function combatView(run) {
       typeof ruleset === 'string' &&
         Object.hasOwn(pairs, ruleset) &&
         pairs[ruleset] === own(level, 'version'),
-      t("interface:unsupportedCombatPresentationSchemaPair"),
+      t('interface:unsupportedCombatPresentationSchemaPair'),
     );
     check(
       own(run, 'width') === 72 &&
@@ -215,7 +221,7 @@ export function combatView(run) {
           const dx = aim.x - position.x,
             dy = aim.y - position.y,
             length = Math.hypot(dx, dy);
-          check(length > EPS, t("interface:combatWarningNeedsADistinctLockedTarget"));
+          check(length > EPS, t('interface:combatWarningNeedsADistinctLockedTarget'));
           const travel = recipe.shotSpeed * recipe.shotLifeTicks * FIXED_DT;
           const end = {
             x: position.x + (dx / length) * travel,
@@ -305,7 +311,8 @@ export function combatView(run) {
   } catch (error) {
     return Object.freeze({
       valid: false,
-      error: error instanceof TypeError ? error.message : t("interface:invalidCombatPresentationData"),
+      error:
+        error instanceof TypeError ? error.message : t('interface:invalidCombatPresentationData'),
     });
   }
 }

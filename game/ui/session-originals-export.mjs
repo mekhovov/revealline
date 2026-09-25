@@ -33,20 +33,24 @@ export function attachSessionOriginalsExport({
       state.bytes < 1048576
         ? `${Math.ceil(state.bytes / 1024)} KiB`
         : `${(state.bytes / 1048576).toFixed(1)} MiB`;
-    localizedText(note, () =>`${state.originals} picture original${state.originals === 1 ? '' : 's'} (${size}) ${state.originals === 1 ? 'exists' : 'exist'} only in this tab. Download these originals and export game data before leaving. Restore the .rlmedia file in Workshop → Pictures & stories before importing game data. A download does not save your progress automatically.`);
+    localizedText(
+      note,
+      () =>
+        `${state.originals} picture original${state.originals === 1 ? '' : 's'} (${size}) ${state.originals === 1 ? 'exists' : 'exist'} only in this tab. Download these originals and export game data before leaving. Restore the .rlmedia file in Workshop → Pictures & stories before importing game data. A download does not save your progress automatically.`,
+    );
   }
   prepare.onclick = () =>
     task(async (operation) => {
-      if (disposed) throw new Error(t("interface:sessionOriginalsExportIsClosed"));
+      if (disposed) throw new Error(t('interface:sessionOriginalsExportIsClosed'));
       invalidate();
       const own = generation,
         revision = registry.status().revision;
-      operation.phase(t("interface:verifyingTheExactSessionOnlyPictureOriginals"));
+      operation.phase(t('interface:verifyingTheExactSessionOnlyPictureOriginals'));
       const blob = await registry.exportBundle({ signal: operation.signal });
       operation.check();
       if (disposed || own !== generation || registry.status().revision !== revision)
         throw new DOMException(
-          t("interface:sessionOriginalsChangedPrepareTheDownloadAgain"),
+          t('interface:sessionOriginalsChangedPrepareTheDownloadAgain'),
           'AbortError',
         );
       let next = URLImpl.createObjectURL(blob);
@@ -54,7 +58,7 @@ export function attachSessionOriginalsExport({
         operation.check();
         if (disposed || own !== generation || registry.status().revision !== revision)
           throw new DOMException(
-            t("interface:sessionOriginalsChangedPrepareTheDownloadAgain"),
+            t('interface:sessionOriginalsChangedPrepareTheDownloadAgain'),
             'AbortError',
           );
         url = next;
@@ -64,7 +68,7 @@ export function attachSessionOriginalsExport({
         download.download = 'RevealLine-session-originals.rlmedia';
         download.hidden = false;
         setStatus(
-          t("interface:sessionOriginalsVerifiedChooseDownloadSessionOriginalsThenExportGame"),
+          t('interface:sessionOriginalsVerifiedChooseDownloadSessionOriginalsThenExportGame'),
         );
       } finally {
         if (next !== null) URLImpl.revokeObjectURL(next);
@@ -74,12 +78,10 @@ export function attachSessionOriginalsExport({
     refresh();
     if (disposed || !url || preparedRevision !== registry.status().revision) {
       event.preventDefault();
-      setStatus(t("interface:prepareTheCurrentSessionOriginalsBeforeDownloading"));
+      setStatus(t('interface:prepareTheCurrentSessionOriginalsBeforeDownloading'));
       return;
     }
-    setStatus(
-      t("interface:sessionOriginalsDownloadRequestedConfirmItInYourBrowserThen"),
-    );
+    setStatus(t('interface:sessionOriginalsDownloadRequestedConfirmItInYourBrowserThen'));
   };
   refresh();
   return Object.freeze({

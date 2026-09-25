@@ -35,7 +35,7 @@ export function attachEnemyCatalogPanel({
   const node = (tag, id, text) => {
     const el = doc.createElement(tag);
     if (id) el.id = `enemy-catalog-${id}`;
-    if (text) localizedText(el, () =>text);
+    if (text) localizedText(el, () => text);
     return el;
   };
   const button = (id, label, action) => {
@@ -58,11 +58,11 @@ export function attachEnemyCatalogPanel({
   const dialog = node('dialog', 'dialog');
   dialog.className = 'enemy-catalog-dialog';
   dialog.setAttribute('aria-labelledby', 'enemy-catalog-title');
-  const title = node('h2', 'title', localizedMessage("interface:enemyWorkshop")),
+  const title = node('h2', 'title', localizedMessage('interface:enemyWorkshop')),
     note = node(
       'p',
       null,
-      localizedMessage("interface:theseChoicesConfigureFutureAuthoringExistingMapsSavesAndRated"),
+      localizedMessage('interface:theseChoicesConfigureFutureAuthoringExistingMapsSavesAndRated'),
     ),
     status = node('p', 'status');
   const presenter = createOperationStatus(status);
@@ -70,27 +70,32 @@ export function attachEnemyCatalogPanel({
     presenter.begin({ message }).finish({ message, state });
   const role = select(
     'role',
-    t("interface:role"),
+    t('interface:role'),
     ENEMY_CATALOG.map((r) => [r.type, r.label]),
   );
   const skin = select(
     'skin',
-    t("interface:presentation"),
+    t('interface:presentation'),
     ENEMY_THEMES.map((theme) => [theme, theme]),
   );
   const style = select(
     'style',
-    t("interface:detailTreatment"),
+    t('interface:detailTreatment'),
     ENEMY_STYLES.map((id) => [id, id]),
   );
-  const enableLabel = node('label', null, localizedMessage("interface:availableToFutureMapGenerators")),
+  const enableLabel = node(
+      'label',
+      null,
+      localizedMessage('interface:availableToFutureMapGenerators'),
+    ),
     enabled = node('input', 'enabled');
   enabled.type = 'checkbox';
   enableLabel.prepend(enabled);
   const preview = node('canvas', 'preview');
   preview.width = 192;
   preview.height = 128;
-  localizedAttribute(preview, "aria-label", () => t("interface:animatedSelectedEnemyPresentationTheSmallCenterMarksTheContact"),
+  localizedAttribute(preview, 'aria-label', () =>
+    t('interface:animatedSelectedEnemyPresentationTheSmallCenterMarksTheContact'),
   );
   const detail = node('p', 'detail'),
     risk = node('p', 'risk'),
@@ -98,11 +103,11 @@ export function attachEnemyCatalogPanel({
   const reading = node('div', 'details');
   reading.tabIndex = 0;
   reading.setAttribute('role', 'region');
-  localizedAttribute(reading, "aria-label", () => t("interface:selectedEnemyRoleDetails"));
+  localizedAttribute(reading, 'aria-label', () => t('interface:selectedEnemyRoleDetails'));
   reading.setAttribute('data-game-reading', '');
   reading.append(form, detail, risk);
-  const read = button('read', localizedMessage("interface:readRoleDetails"), () =>
-    onRead({ region: reading, origin: read, label: t("interface:selectedEnemyRoleDetails") }),
+  const read = button('read', localizedMessage('interface:readRoleDetails'), () =>
+    onRead({ region: reading, origin: read, label: t('interface:selectedEnemyRoleDetails') }),
   );
   const fields = node('div');
   fields.className = 'enemy-catalog-fields';
@@ -117,14 +122,24 @@ export function attachEnemyCatalogPanel({
     skin.el.value = resolveEnemySkin(record.type, entry.skinId);
     style.el.value = draft.style;
     enabled.checked = entry.enabled;
-    localizedText(detail, () =>`${contentText(record, 'label')} · ${contentText(record, 'domain')}. ${contentText(record, 'motion')}`);
-    localizedText(risk, () =>contentText(record, 'risk'));
-    localizedText(form, () =>t("gameplay:artSlotBadge", { value1: record.forms[ENEMY_THEMES.indexOf(skin.el.value)], value2: record.role, value3: record.badge }));
+    localizedText(
+      detail,
+      () =>
+        `${contentText(record, 'label')} · ${contentText(record, 'domain')}. ${contentText(record, 'motion')}`,
+    );
+    localizedText(risk, () => contentText(record, 'risk'));
+    localizedText(form, () =>
+      t('gameplay:artSlotBadge', {
+        value1: record.forms[ENEMY_THEMES.indexOf(skin.el.value)],
+        value2: record.role,
+        value3: record.badge,
+      }),
+    );
     play.disabled = busy || !entry.enabled;
     update(0);
   }
   function changed() {
-    report(t("interface:draftChangedApplySavesOnlyThisAuthoringCatalog"));
+    report(t('interface:draftChangedApplySavesOnlyThisAuthoringCatalog'));
     render();
   }
   role.el.onchange = () => {
@@ -159,7 +174,8 @@ export function attachEnemyCatalogPanel({
       signal: owner.controller.signal,
       isCurrent: () => operation === owner && !disposed && !owner.controller.signal.aborted,
       check() {
-        if (!this.isCurrent()) throw new DOMException(t("interface:catalogOperationCancelled"), 'AbortError');
+        if (!this.isCurrent())
+          throw new DOMException(t('interface:catalogOperationCancelled'), 'AbortError');
       },
     };
     try {
@@ -184,7 +200,7 @@ export function attachEnemyCatalogPanel({
       }
     }
   }
-  const apply = button('apply', localizedMessage("interface:applyAuthoringChoices"), () =>
+  const apply = button('apply', localizedMessage('interface:applyAuthoringChoices'), () =>
     perform(
       async (context) => {
         const next = validateEnemyCatalogDraft(draft);
@@ -193,51 +209,51 @@ export function attachEnemyCatalogPanel({
         saved = next;
         draft = structuredClone(next);
       },
-      t("interface:authoringChoicesSavedExistingGamesRemainUnchanged"),
-      t("interface:savingAuthoringChoices"),
+      t('interface:authoringChoicesSavedExistingGamesRemainUnchanged'),
+      t('interface:savingAuthoringChoices'),
       true,
     ),
   );
-  const undo = button('undo', localizedMessage("interface:reloadSavedChoices"), () => {
+  const undo = button('undo', localizedMessage('interface:reloadSavedChoices'), () => {
     if (!busy) {
       draft = structuredClone(saved);
-      report(t("interface:savedAuthoringChoicesRestored"));
+      report(t('interface:savedAuthoringChoicesRestored'));
       render();
     }
   });
-  const play = button('play', localizedMessage("interface:trySelectedRole"), () =>
+  const play = button('play', localizedMessage('interface:trySelectedRole'), () =>
     perform(
       (context) => onPreview(role.el.value, validateEnemyCatalogDraft(draft), context),
-      t("interface:practicePreparedWithTheSelectedRoleAndThemeTheChild"),
-      t("interface:preparingTheSelectedRoleForPractice"),
+      t('interface:practicePreparedWithTheSelectedRoleAndThemeTheChild'),
+      t('interface:preparingTheSelectedRoleForPractice'),
     ),
   );
-  const exportButton = button('export', localizedMessage("interface:exportCatalogJson"), () =>
+  const exportButton = button('export', localizedMessage('interface:exportCatalogJson'), () =>
     perform(
       (context) => onExport(validateEnemyCatalogDraft(draft), context),
-      t("interface:catalogChoicesPreparedForDownloadThisFileContainsChoicesNot"),
-      t("interface:preparingTheCatalogDownload"),
+      t('interface:catalogChoicesPreparedForDownloadThisFileContainsChoicesNot'),
+      t('interface:preparingTheCatalogDownload'),
       true,
     ),
   );
   const upload = node('input', 'import');
   upload.type = 'file';
   upload.accept = '.json,application/json';
-  localizedAttribute(upload, "aria-label", () => t("interface:importCatalogChoicesJson"));
+  localizedAttribute(upload, 'aria-label', () => t('interface:importCatalogChoicesJson'));
   upload.onchange = () =>
     perform(
       async (context) => {
         const file = upload.files?.[0];
-        if (!file) throw new Error(t("interface:chooseACatalogJsonFile"));
-        if (file.size > 65536) throw new Error(t("interface:catalogChoicesAreLimitedTo64Kib"));
+        if (!file) throw new Error(t('interface:chooseACatalogJsonFile'));
+        if (file.size > 65536) throw new Error(t('interface:catalogChoicesAreLimitedTo64Kib'));
         const candidate = validateEnemyCatalogDraft(JSON.parse(await file.text()));
         context.check();
         draft = structuredClone(candidate);
       },
-      t("interface:importedIntoTheDraftApplyWhenReady"),
-      t("interface:readingAndValidatingCatalogChoices"),
+      t('interface:importedIntoTheDraftApplyWhenReady'),
+      t('interface:readingAndValidatingCatalogChoices'),
     );
-  const back = button('back', localizedMessage("common:actions.back"), close),
+  const back = button('back', localizedMessage('common:actions.back'), close),
     actions = node('div');
   actions.className = 'enemy-catalog-actions';
   actions.append(apply, undo, play, exportButton, upload, back);
@@ -246,11 +262,13 @@ export function attachEnemyCatalogPanel({
   function syncBusy() {
     for (const el of dialog.querySelectorAll('button,input,select'))
       el.disabled = busy && el !== back;
-    localizedText(back, () =>busy
-      ? operation?.committing
-        ? t("interface:stopWaiting")
-        : t("interface:cancelOperation")
-      : t("common:actions.back"));
+    localizedText(back, () =>
+      busy
+        ? operation?.committing
+          ? t('interface:stopWaiting')
+          : t('interface:cancelOperation')
+        : t('common:actions.back'),
+    );
   }
   const cancel = (event) => {
     if (event.target !== dialog) return;
@@ -316,8 +334,7 @@ export function attachEnemyCatalogPanel({
     if (disposed) return false;
     if (operation?.committing) {
       operation.lease.finish({
-        message:
-          t("interface:stoppedWaitingTheAuthoringOperationIsStillFinishingEditingStays"),
+        message: t('interface:stoppedWaitingTheAuthoringOperationIsStillFinishingEditingStays'),
         state: 'detached',
       });
       return true;
@@ -326,7 +343,7 @@ export function attachEnemyCatalogPanel({
       operation.controller.abort();
       operation = null;
       busy = false;
-      report(t("interface:preparationCancelledYourDraftIsUnchanged"), 'cancelled');
+      report(t('interface:preparationCancelledYourDraftIsUnchanged'), 'cancelled');
       syncBusy();
     }
     const previousFocus = doc.activeElement,

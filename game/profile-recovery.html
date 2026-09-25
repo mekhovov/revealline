@@ -17,11 +17,15 @@
     <link rel="stylesheet" href="./ui/field-kit-components.css" />
   </head>
   <body class="field-kit field-kit-support">
-<div data-language-control></div>
+    <div data-language-control></div>
 
     <main id="profile-recovery-root">
-      <button id="profile-recovery-back" type="button" data-i18n="common:navigation.backToGame">Back to game</button>
-      <button id="profile-recovery-reload" type="button" data-i18n="interface:reloadRecovery">Reload recovery</button>
+      <button id="profile-recovery-back" type="button" data-i18n="common:navigation.backToGame">
+        Back to game
+      </button>
+      <button id="profile-recovery-reload" type="button" data-i18n="interface:reloadRecovery">
+        Reload recovery
+      </button>
       <h1 class="field-kit-display" data-i18n="interface:earlierProfiles">Earlier profiles</h1>
       <p data-i18n="interface:reviewStoredProfilesFromThisSiteWithoutChangingThemExact">
         Review stored profiles from this site without changing them. Exact release channels stay
@@ -32,48 +36,107 @@
         migration are unavailable.
       </p>
       <div class="actions">
-        <button id="profile-recovery-find" type="button" disabled data-i18n="interface:findProfiles">Find profiles</button>
-        <button id="profile-recovery-cancel" type="button" hidden data-i18n="interface:cancelCheck">Cancel check</button>
+        <button
+          id="profile-recovery-find"
+          type="button"
+          disabled
+          data-i18n="interface:findProfiles"
+        >
+          Find profiles
+        </button>
+        <button id="profile-recovery-cancel" type="button" hidden data-i18n="interface:cancelCheck">
+          Cancel check
+        </button>
       </div>
-      <label for="profile-recovery-channel" data-i18n="interface:storedProfile">Stored profile</label>
+      <label for="profile-recovery-channel" data-i18n="interface:storedProfile"
+        >Stored profile</label
+      >
       <select id="profile-recovery-channel" disabled></select>
       <div class="actions">
-        <button id="profile-recovery-review" type="button" disabled data-i18n="interface:review">Review</button>
-        <button id="profile-recovery-export" type="button" disabled data-i18n="interface:prepareStoredDataExport">
+        <button id="profile-recovery-review" type="button" disabled data-i18n="interface:review">
+          Review
+        </button>
+        <button
+          id="profile-recovery-export"
+          type="button"
+          disabled
+          data-i18n="interface:prepareStoredDataExport"
+        >
           Prepare stored-data export
         </button>
       </div>
-      <p id="profile-recovery-status" role="status" aria-live="polite" data-i18n="interface:loadingReleaseInformation">
+      <p
+        id="profile-recovery-status"
+        role="status"
+        aria-live="polite"
+        data-i18n="interface:loadingReleaseInformation"
+      >
         Loading release information…
       </p>
       <p id="profile-recovery-summary"></p>
-      <a id="profile-recovery-download" hidden data-i18n="interface:downloadStoredProfileSnapshot">Download stored profile snapshot</a>
+      <a id="profile-recovery-download" hidden data-i18n="interface:downloadStoredProfileSnapshot"
+        >Download stored profile snapshot</a
+      >
       <h2 data-i18n="interface:selectedOriginalImages">Selected original images</h2>
       <p id="profile-recovery-catalog-status" class="note"></p>
       <p class="note" data-i18n="interface:originalFilesAreSharedByProfilesOnThisSiteListing">
         Original files are shared by profiles on this site. Listing or verifying an image does not
         prove that this profile earned it. These separate files are not a complete backup.
       </p>
-      <button id="profile-recovery-originals-review" type="button" disabled data-i18n="interface:reviewOriginals">
+      <button
+        id="profile-recovery-originals-review"
+        type="button"
+        disabled
+        data-i18n="interface:reviewOriginals"
+      >
         Review originals
       </button>
-      <label for="profile-recovery-original" data-i18n="interface:sharedOriginal">Shared original</label>
+      <label for="profile-recovery-original" data-i18n="interface:sharedOriginal"
+        >Shared original</label
+      >
       <select id="profile-recovery-original" disabled></select>
       <p id="profile-recovery-original-summary"></p>
       <div class="actions">
-        <button id="profile-recovery-original-verify" type="button" disabled data-i18n="interface:verifyImage">Verify image</button>
-        <button id="profile-recovery-original-file" type="button" disabled data-i18n="interface:prepareOriginalFile">
+        <button
+          id="profile-recovery-original-verify"
+          type="button"
+          disabled
+          data-i18n="interface:verifyImage"
+        >
+          Verify image
+        </button>
+        <button
+          id="profile-recovery-original-file"
+          type="button"
+          disabled
+          data-i18n="interface:prepareOriginalFile"
+        >
           Prepare original file
         </button>
-        <button id="profile-recovery-original-report" type="button" disabled data-i18n="interface:prepareIdentityReport">
+        <button
+          id="profile-recovery-original-report"
+          type="button"
+          disabled
+          data-i18n="interface:prepareIdentityReport"
+        >
           Prepare identity report
         </button>
       </div>
       <div class="actions">
-        <a id="profile-recovery-original-download" hidden data-i18n="interface:downloadOriginalImage">Download original image</a>
-        <a id="profile-recovery-report-download" hidden data-i18n="interface:downloadIdentityReport">Download identity report</a>
+        <a
+          id="profile-recovery-original-download"
+          hidden
+          data-i18n="interface:downloadOriginalImage"
+          >Download original image</a
+        >
+        <a id="profile-recovery-report-download" hidden data-i18n="interface:downloadIdentityReport"
+          >Download identity report</a
+        >
       </div>
-      <p class="note" data-i18n="interface:storedDataExportsExcludeOriginalFilesSelectedImageDownloadsExclude">
+      <p
+        class="note"
+        data-i18n="interface:storedDataExportsExcludeOriginalFilesSelectedImageDownloadsExclude"
+      >
         Stored-data exports exclude original files. Selected image downloads exclude other images,
         audio and saved flights. Identity reports are diagnostics, not import files. Keep existing
         complete backups.

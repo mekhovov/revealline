@@ -10,7 +10,7 @@ import { authoritativeCheckpoint, exportReplay } from '../replay.mjs';
 import { canonicalJSON } from '../data-json.mjs';
 
 const abort = (signal) => {
-  if (signal?.aborted) throw new DOMException(t("interface:courseEntryWasCancelled"), 'AbortError');
+  if (signal?.aborted) throw new DOMException(t('interface:courseEntryWasCancelled'), 'AbortError');
 };
 
 /** Retain a paused real flight before navigating away. The host freezes input
@@ -51,7 +51,7 @@ export async function retainFlightForFirstFlight({
     typeof assertCurrent !== 'function' ||
     typeof assertWritable !== 'function'
   )
-    throw new TypeError(t("interface:courseEntryNeedsAnUnfinishedFlightAndCheckedStorageAdapters"));
+    throw new TypeError(t('interface:courseEntryNeedsAnUnfinishedFlightAndCheckedStorageAdapters'));
 
   function current() {
     abort(signal);
@@ -68,13 +68,11 @@ export async function retainFlightForFirstFlight({
         typeof previous !== 'string' ||
         new TextEncoder().encode(previous).length > SESSION_STORAGE_BYTES
       )
-        throw new Error(t("interface:theExistingSavedFlightCannotBeReadSafelyItsBytes"));
+        throw new Error(t('interface:theExistingSavedFlightCannotBeReadSafelyItsBytes'));
       try {
         snapshotSession(JSON.parse(previous));
       } catch {
-        throw new Error(
-          t("interface:theExistingSavedFlightIsUnreadableOrUnsupportedItsBytes"),
-        );
+        throw new Error(t('interface:theExistingSavedFlightIsUnreadableOrUnsupportedItsBytes'));
       }
     }
   });
@@ -103,7 +101,7 @@ export async function retainFlightForFirstFlight({
   });
   current();
   if (canonicalJSON(authoritativeCheckpoint(restored.run)) !== checkpoint)
-    throw new Error(t("interface:theSavedFlightDidNotReconstructTheCurrentCheckpoint"));
+    throw new Error(t('interface:theSavedFlightDidNotReconstructTheCurrentCheckpoint'));
 
   await withStorageLock(async () => {
     current();
@@ -113,9 +111,9 @@ export async function retainFlightForFirstFlight({
       canonicalJSON(authoritativeCheckpoint(run)) !== checkpoint ||
       canonicalJSON(exportReplay(recorder, run)) !== recording
     )
-      throw new Error(t("interface:theFlightChangedWhilePreparingTheCourseItRemainsOpen"));
+      throw new Error(t('interface:theFlightChangedWhilePreparingTheCourseItRemainsOpen'));
     if (storage.getItem(sessionKey) !== previous)
-      throw new Error(t("interface:theSavedFlightChangedElsewhereCourseEntryWasCancelled"));
+      throw new Error(t('interface:theSavedFlightChangedElsewhereCourseEntryWasCancelled'));
     const saved = saveSession(storage, sessionKey, session);
     if (!saved.ok) throw new Error(saved.warning);
     current();
@@ -123,10 +121,10 @@ export async function retainFlightForFirstFlight({
     try {
       readback = snapshotSession(JSON.parse(storage.getItem(sessionKey)));
     } catch {
-      throw new Error(t("interface:theNewSavedFlightCouldNotBeReadBackThis"));
+      throw new Error(t('interface:theNewSavedFlightCouldNotBeReadBackThis'));
     }
     if (canonicalJSON(readback) !== canonicalJSON(session))
-      throw new Error(t("interface:theSavedFlightReadbackDidNotMatchThisFlightIs"));
+      throw new Error(t('interface:theSavedFlightReadbackDidNotMatchThisFlightIs'));
   });
   current();
   return { session, checkpoint: authoritativeCheckpoint(restored.run) };

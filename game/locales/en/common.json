@@ -89,5 +89,14 @@
   "counts.missions_other": "{{count}} missions",
   "collections.journey": "Journey",
   "collections.classic": "Classic",
-  "collections.custom": "Custom"
+  "collections.custom": "Custom",
+  "counts.teamMissions_one": "{{count}} Team mission",
+  "counts.teamMissions_other": "{{count}} Team missions",
+  "counts.teamMissionsWithPlayers_one": "{{count}} Team mission · {{players}} players",
+  "counts.teamMissionsWithPlayers_other": "{{count}} Team missions · {{players}} players",
+  "editor.paintHelp": "Signal speed and optional boost/ability locks apply to vulnerable classes. Edit each zone's flags in Level JSON. Switch class within a hangar's radius on safe ground, with no active cut and after the switch cooldown. Erase removes a whole zone or object.",
+  "editor.mapLabel": "Click to paint the board. Use Paint by coordinates for keyboard editing. Signal and hangar details follow the map.",
+  "editor.mapDetails": "Signal zones and hangars",
+  "editor.mapDetailsHelp": "Dashed rectangles mark signal zones; diamond-framed squares mark hangars. Locations use zero-based cell coordinates: x from the left, y from the top. Hangar marker size does not represent its activation radius. Signal effects apply to vulnerable craft; overlapping zones use the lowest speed. Switch within a hangar's radius on safe ground, with no active cut and after the switch cooldown.",
+  "editor.mapDetailsLoading": "Map details appear after the working configuration loads."
 }
