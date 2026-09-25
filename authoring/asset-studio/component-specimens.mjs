@@ -1,8 +1,11 @@
 import { FIELD_KIT_ICON_IDS, iconForSlot } from '../../game/presentation/icons.mjs';
+import { localizedAttribute, localizedText, t } from '../../game/i18n/index.mjs';
 let specimenId = 0;
+const specimenKind = (kind) => t(`tools:studio.componentSpecimen.kind.${kind}`);
+const specimenState = (state) => t(`tools:studio.componentSpecimen.state.${state}`);
 const text = (doc, tag, value, className = '', hostRole = null) => {
   const node = doc.createElement(tag);
-  node.textContent = value;
+  if (value !== '') localizedText(node, value);
   node.className = className;
   if (hostRole) node.dataset.studioHost = hostRole;
   return node;
@@ -27,14 +30,22 @@ export function componentPreview(surface, slot, options, backgroundImage = null)
     target = node('div', '', 'specimen-scrollbar');
     target.tabIndex = 0;
     target.setAttribute('role', 'region');
-    target.setAttribute('aria-label', 'Scrollable component specimen');
-    for (let i = 1; i <= 6; i++) target.append(node('p', `Specimen row ${i}`));
+    localizedAttribute(target, 'aria-label', () =>
+      t('tools:studio.componentSpecimen.scrollableRegion'),
+    );
+    for (let i = 1; i <= 6; i++)
+      target.append(node('p', () => t('tools:studio.componentSpecimen.row', { index: i })));
     box.append(target);
   } else if (inputKind) {
-    const label = node('label', `Preview ${inputKind} · sample control`);
+    const label = node('label', () =>
+      t('tools:studio.componentSpecimen.previewControl', { kind: specimenKind(inputKind) }),
+    );
     target = node(inputKind === 'select' ? 'select' : 'input');
     if (inputKind === 'select') {
-      target.append(node('option', 'Standard'), node('option', 'Large'));
+      target.append(
+        node('option', () => t('interface:display.textSize.standard')),
+        node('option', () => t('interface:large')),
+      );
     } else {
       target.type =
         { checkbox: 'checkbox', radio: 'radio', toggle: 'checkbox', slider: 'range' }[inputKind] ||
@@ -47,10 +58,15 @@ export function componentPreview(surface, slot, options, backgroundImage = null)
         target.min = '0';
         target.max = '100';
         target.value = '62';
-      } else target.placeholder = 'Pilot callsign · Позивний';
+      } else
+        localizedAttribute(target, 'placeholder', () =>
+          t('tools:studio.componentSpecimen.callsignPlaceholder'),
+        );
     }
     target.disabled = state === 'disabled';
-    target.setAttribute('aria-label', `Component specimen ${inputKind}`);
+    localizedAttribute(target, 'aria-label', () =>
+      t('tools:studio.componentSpecimen.inputLabel', { kind: specimenKind(inputKind) }),
+    );
     if (state === 'error') target.setAttribute('aria-invalid', 'true');
     label.append(target);
     box.append(label);
@@ -58,42 +74,62 @@ export function componentPreview(surface, slot, options, backgroundImage = null)
     target = node('progress');
     target.max = 100;
     target.value = 62;
-    target.setAttribute('aria-label', `${slot.label} specimen: 62 of 100`);
-    box.append(target, node('p', 'Sample value 62 / 100 · not live telemetry', '', 'secondary'));
+    localizedAttribute(target, 'aria-label', () =>
+      t('tools:studio.componentSpecimen.meterLabel', { label: slot.label, value: 62, max: 100 }),
+    );
+    box.append(
+      target,
+      node(
+        'p',
+        () => t('tools:studio.componentSpecimen.sampleValue', { value: 62, max: 100 }),
+        '',
+        'secondary',
+      ),
+    );
   } else if (slot.id === 'ui.tooltip') {
-    const trigger = node('button', 'Tooltip specimen');
+    const trigger = node('button', () => t('tools:studio.componentSpecimen.tooltipTrigger'));
     trigger.type = 'button';
-    target = node('span', 'A short explanation stays readable.', 'specimen-tooltip');
+    target = node(
+      'span',
+      () => t('tools:studio.componentSpecimen.tooltipText'),
+      'specimen-tooltip',
+    );
     target.id = `component-tooltip-${++specimenId}`;
     target.setAttribute('role', 'tooltip');
     trigger.setAttribute('aria-describedby', target.id);
     box.append(trigger, target);
   } else if (semantic && /^(hud|reward)\./.test(slot.id)) {
-    target = node('p', `${slot.label} · symbol specimen only`, 'specimen-semantic');
+    target = node(
+      'p',
+      () => t('tools:studio.componentSpecimen.symbolOnly', { label: slot.label }),
+      'specimen-semantic',
+    );
     box.append(target);
   } else {
     const labels = {
-      primary: 'Deploy · Почати',
-      secondary: 'Back · Назад',
-      danger: 'Discard draft · Скасувати',
+      primary: () => t('tools:studio.componentSpecimen.deploy'),
+      secondary: () => t('common:actions.back'),
+      danger: () => t('tools:studio.componentSpecimen.discardDraft'),
       icon: '',
-      tab: 'Controls · Керування',
-      chip: 'Filter chip specimen',
+      tab: () => t('interface:controls'),
+      chip: () => t('tools:studio.componentSpecimen.filterChip'),
     };
     target = node(
       'button',
       state === 'loading'
-        ? 'Loading specimen…'
+        ? () => t('tools:studio.componentSpecimen.loading')
         : semantic
-          ? `${slot.label} specimen`
-          : (labels[buttonKind] ?? 'Component action specimen'),
+          ? () => t('tools:studio.componentSpecimen.semantic', { label: slot.label })
+          : (labels[buttonKind] ?? (() => t('tools:studio.componentSpecimen.action'))),
       `button ${buttonKind === 'icon' ? 'icon-button specimen-icon' : buttonKind || 'secondary'}`,
     );
     target.type = 'button';
     target.disabled = state === 'disabled';
     if (state === 'loading') target.setAttribute('aria-busy', 'true');
     if (buttonKind === 'icon') {
-      target.setAttribute('aria-label', 'Pause specimen');
+      localizedAttribute(target, 'aria-label', () =>
+        t('tools:studio.componentSpecimen.pauseLabel'),
+      );
       const glyph = node('span', 'Ⅱ');
       glyph.setAttribute('aria-hidden', 'true');
       target.append(glyph);
@@ -105,13 +141,17 @@ export function componentPreview(surface, slot, options, backgroundImage = null)
     }
     if (buttonKind === 'tab') {
       const tabs = node('div', '', 'specimen-tabs'),
-        other = node('button', 'Audio · Звук', 'button tab'),
+        other = node('button', () => t('interface:audio'), 'button tab'),
         controls = [target, other],
         panels = controls.map((control, index) => {
           control.id = `component-tab-${++specimenId}`;
           control.type = 'button';
           control.setAttribute('role', 'tab');
-          const panel = node('div', `${index ? 'Audio' : 'Controls'} panel specimen.`);
+          const panel = node('div', () =>
+            t('tools:studio.componentSpecimen.tabPanel', {
+              category: t(index ? 'interface:audio' : 'interface:controls'),
+            }),
+          );
           panel.id = `${control.id}-panel`;
           panel.setAttribute('role', 'tabpanel');
           panel.setAttribute('aria-labelledby', control.id);
@@ -129,7 +169,9 @@ export function componentPreview(surface, slot, options, backgroundImage = null)
           if (focus) control.focus();
         };
       tabs.setAttribute('role', 'tablist');
-      tabs.setAttribute('aria-label', 'Component category specimen');
+      localizedAttribute(tabs, 'aria-label', () =>
+        t('tools:studio.componentSpecimen.tabListLabel'),
+      );
       for (const control of controls) {
         control.onclick = () => choose(control);
         control.onkeydown = (event) => {
@@ -202,8 +244,8 @@ export function componentPreview(surface, slot, options, backgroundImage = null)
     node(
       'p',
       state === 'error'
-        ? 'Sample validation error: review this value.'
-        : 'Interactive sample only; changes are not saved.',
+        ? () => t('tools:studio.componentSpecimen.validationError')
+        : () => t('tools:studio.componentSpecimen.unsavedNotice'),
       '',
       state === 'error' ? null : 'secondary',
     ),
@@ -211,7 +253,7 @@ export function componentPreview(surface, slot, options, backgroundImage = null)
   box.append(
     node(
       'small',
-      `${state} · component library specimen. This is not a live game control, telemetry, earned reward or production review.`,
+      () => t('tools:studio.componentSpecimen.disclaimer', { state: specimenState(state) }),
       'bounded-label',
       'secondary',
     ),
