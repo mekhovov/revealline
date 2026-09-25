@@ -4,6 +4,7 @@ import { emptyLibrary, exportLibrary, LIBRARY_STORAGE_VERSION } from '../library
 import { createProfileChannelReader } from '../profile-channel-reader.mjs';
 import { recoveryChannel } from '../profile-channel.mjs';
 import { ownProfileJSON } from '../profile-channel-json.mjs';
+import { getLocale, setLocale } from '../i18n/index.mjs';
 import { profileAssetFixture } from './helpers/profile-channel-idb.mjs';
 
 class Locks {
@@ -20,6 +21,26 @@ class Locks {
     }
   }
 }
+
+test('profile recovery validation follows the active locale without changing channel rules', (t) => {
+  const locale = getLocale();
+  t.after(() => setLocale(locale, { persist: false }));
+  setLocale('en', { persist: false });
+  assert.throws(
+    () => createProfileChannelReader({ currentVersion: 'v0.40.0', decodeStillImage: true }),
+    /Expected a trusted still image decoder\./,
+  );
+  setLocale('uk', { persist: false });
+  assert.throws(
+    () => createProfileChannelReader({ currentVersion: 'v0.40.0', decodeStillImage: true }),
+    /Потрібен довірений декодер нерухомих зображень\./,
+  );
+  assert.throws(
+    () => createProfileChannelReader({ currentVersion: 'v0.40.0', timeoutMs: 0 }),
+    /Некоректний термін перевірки профілю\./,
+  );
+});
+
 async function fixture(t, { localEntries, assets = [], absent = false } = {}) {
   const source = recoveryChannel('release-v0.39.0', 'v0.40.0');
   const map = new Map(localEntries ?? [[source.profileKey, exportLibrary(emptyLibrary())]]);
