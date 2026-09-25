@@ -6,8 +6,7 @@ requirements. Each independent feature is released before the next is accepted.
 
 ## Current delivery status
 
-Checkpoint on 25 September 2026: **the public selector reports v0.109.0 from
-source `b13089b702391c275f2505d1a76c87eebb9dcce0`. The v0.110.0 actor-size
+Checkpoint on 25 September 2026: **the public selector reports v0.110.1. The v0.110.0 actor-size
 candidate was frozen and inspected, but its final publication preflight found
 that compiled FPV presentation revision 74 was newer than Team's exact picture
 authority at revision 73. The immutable v0.110.0 tag remains preserved and is not
@@ -54,15 +53,17 @@ their own next-unused version, PR, exact-source qualification, immutable release
 Pages deployment and public-play check. The earlier UX1 rewards/gallery work then
 resumes, followed by UX3–UX6. New bulk content stays outside this critical path.
 
-M3 is reconciled onto the published v0.110.1 actor-size successor line and rebased
-after the v0.111.0 soundtrack release as the isolated v0.112.0 release candidate on `codex/couch-quickstart-parity`. Versus keeps Start and
+M3 is reconciled onto the published v0.110.1 actor-size successor line and prepared
+after the v0.111.0 soundtrack candidate as the isolated v0.112.0 release candidate on
+`codex/couch-quickstart-v112-ready`. Versus keeps Start and
 Browse missions visible while actor, difficulty and advanced match setup live
 under Optional setup. Team keeps Arena,
 Start and Browse Team arenas visible while teamwork, difficulty, actors and created
 pack import live under Optional setup. Initial Team picture preparation exposes an
-explicit secondary Cancel without taking first focus. The current FPV revision 74
-picture authority and its retained revisions 58–73 are inherited unchanged from
-the v0.110.1 base; this quick-start successor does not reinterpret those bindings.
+explicit secondary Cancel without taking first focus. The soundtrack candidate advances
+the complete FPV presentation to revision 77, so this successor carries the matching
+current Team picture authority and retains exact revisions 58–76. This preserves the two
+reviewed Team originals without changing gameplay or accepting an unbounded latest alias.
 Publication, responsive browser review and physical controller/touch evidence remain
 release gates rather than claims of this source checkpoint.
 
@@ -78,10 +79,12 @@ missing production asset.
 
 The final v0.112.0 test correction keeps focus on Start while its initial picture
 confirmation is pending, so a held or repeated controller Confirm cannot activate
-the secondary Cancel action. Cancelling a later staged replacement retains the
-already accepted playable boards. The complete affected installed-content file passes
-27/27; syntax, scoped lint, formatting and diff checks pass. The hosted exact-head
-build remains required because automated long suites are waived by the temporary
+the secondary Cancel action. Real touch events remain distinct from a Steam Input
+synthetic mouse echo. Cancelling a later staged replacement retains the already accepted
+playable boards. The complete affected Couch/navigation/controller cohort passes 85/85;
+the revision-77 Team binding/history/production cohort passes 94/94. Lint, formatting,
+native formatting, validation, motion syntax and the ordinary 1,138-file build pass.
+The hosted exact-head build remains required because automated long suites are waived by the temporary
 release policy and are not claimed as passed.
 
 Completed publication and scoped source evidence:
