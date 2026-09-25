@@ -64,6 +64,11 @@ reviewer names, listening approval or device results.
    are public in v0.130.0. Shchedryk full-track/repeated listening, cultural,
    cold-offline and physical-device acceptance remain. M4–M6 research continues in
    parallel.
+4. **M6 full-length metal review:** review seven already-public, exact-source
+   David KBD recordings from Interstellar and Purgatory before shorter pending
+   Reckless auditions. They require no new media download, but remain unadmitted,
+   Content-ID-unknown and Recording-mode-ineligible until full listening, transition,
+   warning-audibility and gameplay review. Reckless PR #22 continues independently.
 
 The latest public/general GitHub release at this checkpoint is **v0.130.0**. Its
 immutable tag resolves to aggregate source `5022108ca458e9355e9567efddfee50fb49af5c1`.
