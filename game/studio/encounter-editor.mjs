@@ -1,3 +1,5 @@
+import { localizedText, localizedMessage } from '../i18n/index.mjs';
+import { editorMessageError, showEditorFailure } from './editor-copy.mjs';
 import { dataIdentity } from '../data-json.mjs';
 import { editContentEncounter } from '../content-design/encounters.mjs';
 import { missionEditContext } from './edit-context.mjs';
@@ -14,21 +16,24 @@ export function createEncounterEditor({ document, getSource, getMission, apply }
       ...rows.map(([value, label]) => {
         const option = document.createElement('option');
         option.value = value;
-        option.textContent = label;
+        localizedText(option, label);
         return option;
       }),
     );
   function disarm() {
     armed = false;
-    $('remove').textContent = 'Remove Sentinel encounter';
+    localizedText($('remove'), localizedMessage('tools:studio.encounter.remove'));
   }
   function sync() {
     const mission = getMission(),
       qualified = !!mission && !mission.modes.includes('team');
     $('tools').disabled = !qualified;
-    $('qualification').textContent = qualified
-      ? 'One fixed recipe: 2s warning, 0.7s attack, 3.3s shield rest; 1.5s transition; 4s core opening. Capture all shields, then close 8 new trail cells during CORE OPEN or isolate the core. Presets never shorten the warning.'
-      : 'Sentinel encounters need Solo or Versus. Team behavior is not yet qualified.';
+    localizedText(
+      $('qualification'),
+      qualified
+        ? localizedMessage('tools:studio.encounter.qualification')
+        : localizedMessage('tools:studio.encounter.unavailable'),
+    );
     if (key === context()) return;
     key = context();
     disarm();
@@ -41,11 +46,16 @@ export function createEncounterEditor({ document, getSource, getMission, apply }
     const choices = (mission?.objectives ?? [])
       .filter((o) => o.required && !o.hidden)
       .map((o) => [o.id, o.id]);
-    options($('core'), [['', 'Choose core objective'], ...choices]);
+    options($('core'), [['', localizedMessage('tools:studio.encounter.core')], ...choices]);
     $('core').value = encounter?.coreObjectiveId ?? '';
     for (let index = 0; index < 4; index++) {
       options($(`shield-${index}`), [
-        ['', index ? 'No additional shield' : 'Choose first shield'],
+        [
+          '',
+          index
+            ? localizedMessage('tools:studio.encounter.noShield')
+            : localizedMessage('tools:studio.encounter.firstShield'),
+        ],
         ...choices,
       ]);
       $(`shield-${index}`).value = encounter?.shieldObjectiveIds[index] ?? '';
@@ -55,17 +65,18 @@ export function createEncounterEditor({ document, getSource, getMission, apply }
       mission?.actors.find((actor) => actor.role === 'field-keeper')?.id ??
       'sentinel';
     $('enemy').disabled = !!encounter;
-    $('submit').textContent = encounter
-      ? 'Validate & replace shield links'
-      : 'Create Sentinel encounter';
+    localizedText(
+      $('submit'),
+      encounter
+        ? localizedMessage('tools:studio.encounter.replace')
+        : localizedMessage('tools:studio.encounter.create'),
+    );
     $('remove').disabled = !encounter;
-    $('result').textContent =
-      'The Sentinel is placed on the chosen core cell. Create visible required objectives above first. Using an existing field-keeper ID explicitly replaces that keeper; no other actor is removed. Old geometry is retained and Undo is available.';
+    localizedText($('result'), localizedMessage('tools:studio.encounter.help'));
   }
   function commit(action) {
     try {
-      if (key !== context())
-        throw new Error('The draft context changed. Refresh the encounter selection.');
+      if (key !== context()) throw editorMessageError('errors:studio.encounter.contextChanged');
       const command = { action, expectedMap, expectedMission };
       if (action === 'set') {
         command.enemyId = $('enemy').value.trim();
@@ -78,12 +89,14 @@ export function createEncounterEditor({ document, getSource, getMission, apply }
       if (apply(next) === false) return;
       key = null;
       sync();
-      $('result').textContent =
+      localizedText(
+        $('result'),
         action === 'remove'
-          ? 'Removed the Sentinel and encounter links from this draft. Objectives, gates and geometry remain; inspect empty-region fill and play before publishing. Undo restores the encounter.'
-          : 'Applied the shared Sentinel recipe, actor and shield links atomically. All supported presets and modes compiled. Preview the capture order before publishing; Undo is available.';
+          ? localizedMessage('tools:studio.encounter.removed')
+          : localizedMessage('tools:studio.encounter.applied'),
+      );
     } catch (error) {
-      $('result').textContent = `Not applied: ${error.message}`;
+      showEditorFailure($('result'), error);
     }
   }
   $('form').oninput = disarm;
@@ -96,9 +109,8 @@ export function createEncounterEditor({ document, getSource, getMission, apply }
     if (!getMission()?.encounter) return;
     if (!armed) {
       armed = true;
-      $('remove').textContent = 'Confirm remove Sentinel';
-      $('result').textContent =
-        'Activate Remove again to remove the boss and encounter links. Objectives and map geometry remain. This may make a region auto-fill; preview again. Undo remains available.';
+      localizedText($('remove'), localizedMessage('tools:studio.encounter.confirmRemove'));
+      localizedText($('result'), localizedMessage('tools:studio.encounter.removeAgain'));
       return;
     }
     disarm();
