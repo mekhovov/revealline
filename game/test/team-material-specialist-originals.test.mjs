@@ -1,16 +1,25 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
+import { webcrypto } from 'node:crypto';
 import {
   createTeamMaterialSpecialistOriginalCandidates,
   TEAM_MATERIAL_PARTNER_MISSIONS,
+  TEAM_MATERIAL_PARTNER_PROFILE_KEY,
 } from '../content-design/team-material-specialist-originals.mjs';
 import { createTeamPartnerSpecialistOriginalCandidates } from '../content-design/team-partner-specialist-originals.mjs';
+import { createTeamGreyboxEntry } from '../content-design/team-entry.mjs';
 import { createCandidateTeamHost } from '../content-design/team-host.mjs';
 import { compileContentProject, resolveMission } from '../content-design/project.mjs';
 import { createTeamTestPack } from '../content-design/team-export.mjs';
+import { acquireCandidatePicture } from '../content-design/picture.mjs';
+import { loadPreviewArtwork } from '../content-design/assets.mjs';
 import { createCoop, FIXED_DT, startCoop, stepCoop } from '../coop/core.mjs';
 import { useSupport } from '../coop/threats.mjs';
+import {
+  candidateTeamPictureFrame,
+  createCandidateTeamPictures,
+} from '../couch/candidate-team-pictures.mjs';
 import { playTeamFoundationRoute } from './helpers/team-foundation-route.mjs';
 import { inspectTeamMaterialGoal } from './helpers/team-material-goal.mjs';
 
@@ -18,10 +27,57 @@ const source = createTeamMaterialSpecialistOriginalCandidates();
 const previous = createTeamPartnerSpecialistOriginalCandidates();
 const project = compileContentProject(source);
 const changed = new Set(TEAM_MATERIAL_PARTNER_MISSIONS);
+const candidateHost = createCandidateTeamHost(source, {
+  corePackIds: source.packs.map(({ id }) => id),
+});
+const previousHost = createCandidateTeamHost(previous, {
+  corePackIds: previous.packs.map(({ id }) => id),
+});
 const materialRoutes = JSON.parse(
   await readFile(new URL('./fixtures/team-material-routes.json', import.meta.url)),
 );
 const neutral = { direction: null, boost: false, support: false };
+const pictureSnapshot = Object.freeze({
+  resolved: { theme: { id: 'fpv', revision: 73 }, collection: null },
+  canvas: {
+    palette: {
+      ink: '#f6f3e8',
+      paper: '#071527',
+      muted: '#a8b8cc',
+      accent: '#ffd64a',
+      safe: '#67aaff',
+      danger: '#ff7169',
+      field: '#10243e',
+      grid: '#182b43',
+      sky: '#233950',
+      land: '#526e67',
+    },
+    motionScale: 1,
+  },
+  fonts: { ui: 'sans-serif', numeric: 'monospace' },
+});
+
+const missionRow = (host, id) =>
+  host.row(
+    host.catalog.missions.find(({ levelId }) => levelId === id),
+    'standard',
+  );
+
+async function candidatePicture(asset) {
+  const bytes = await readFile(new URL('../' + asset.path, import.meta.url));
+  const media = await loadPreviewArtwork(asset, {
+    fetchAsset: async () => new Response(bytes),
+    digest: (body) => webcrypto.subtle.digest('SHA-256', body),
+  });
+  return acquireCandidatePicture(asset, {
+    loadArtwork: async () => media,
+    decodeImage: async () => ({
+      width: asset.width,
+      height: asset.height,
+      removeAttribute() {},
+    }),
+  });
+}
 
 test('the second specialist pair preserves every accepted map, picture and historical edition', () => {
   assert.deepEqual(source.maps, previous.maps);
@@ -39,9 +95,68 @@ test('the second specialist pair preserves every accepted map, picture and histo
       assert.deepEqual(mission.team.supportRoles, ['interceptor', 'disruptor']);
       assert(mission.design.practices.includes('complementary-support-roles'));
       assert(mission.design.combines.includes('complementary-support-roles'));
+    } else if (mission.id === 'twin-depots') {
+      assert.equal(mission.revision, 'partner-actions-1');
+      assert.equal(mission.revision, previous.revision);
+      assert(!mission.design.introduces.includes('complementary-support-roles'));
+      assert(mission.design.practices.includes('complementary-support-roles'));
+      assert.deepEqual(mission, old, 'the truthful Twin depots ledger remains unchanged');
     } else assert.deepEqual(mission, old);
   }
   assert.deepEqual(createTeamPartnerSpecialistOriginalCandidates(), previous);
+});
+
+test('the material candidate remains outside the ordinary and public Team entry', async () => {
+  const ordinary = await createTeamGreyboxEntry();
+  try {
+    for (const id of TEAM_MATERIAL_PARTNER_MISSIONS)
+      assert.notEqual(missionRow(ordinary.candidateJourney, id).level.revision, source.revision);
+    assert.equal(ordinary.candidateProgress.backupFilename, 'revealline-journey-progress.json');
+    const publicHost = await readFile(
+      new URL('../couch/relay-rescue.mjs', import.meta.url),
+      'utf8',
+    );
+    assert.equal(publicHost.includes(TEAM_MATERIAL_PARTNER_PROFILE_KEY), false);
+    assert.equal(publicHost.includes('materialSpecialist:'), false);
+  } finally {
+    ordinary.candidateProgress.dispose();
+    ordinary.candidatePreferences.dispose();
+  }
+});
+
+test('both new material rows acquire their exact picture lease and reject stale rows', async () => {
+  for (const id of TEAM_MATERIAL_PARTNER_MISSIONS) {
+    const row = missionRow(candidateHost, id);
+    const stale = missionRow(previousHost, id);
+    const owner = createCandidateTeamPictures({
+      row,
+      owns: candidateHost.owns,
+      getSnapshot: () => pictureSnapshot,
+      acquire: () => candidatePicture(row.background),
+    });
+    const request = {
+      pack: structuredClone(row.pack),
+      levelId: row.level.id,
+      themeId: 'fpv',
+      attemptId: `material-picture-${id}`,
+    };
+    try {
+      const binding = await owner.select(request);
+      assert.deepEqual(
+        candidateTeamPictureFrame(binding, row.level, pictureSnapshot),
+        row.background,
+      );
+      assert.equal(binding.choice.levelRevision, source.revision);
+      assert.equal(candidateTeamPictureFrame(binding, stale.level, pictureSnapshot), null);
+      assert.equal(owner.confirm(request), binding);
+      await assert.rejects(
+        owner.select({ ...request, pack: structuredClone(stale.pack) }),
+        /exact owned pack, level and theme/,
+      );
+    } finally {
+      owner.dispose();
+    }
+  }
 });
 
 test('the material pair occupies one homogeneous V6 campaign without changing Journey order', () => {
@@ -109,6 +224,49 @@ test('Split orchards keeps a deterministic two-contributor material route after 
       assert.deepEqual(first.mastery.neutralized.sort(), ['east-orchard', 'west-orchard']);
       assert(first.run.coverage > 0.7);
     }
+});
+
+test('Weaver crossing deterministically exercises real Support while retaining its known route gap', () => {
+  const row = materialRoutes.routes.find(
+    ({ missionId, difficulty }) => missionId === 'weaver-crossing' && difficulty === 'gentle',
+  );
+  const level = resolveMission(project, row.missionId, {
+    mode: 'team',
+    difficulty: row.difficulty,
+  }).level;
+  const options = {
+    jointCuts: true,
+    supportTicks: [[20], [2780]],
+    inspectGoal: inspectTeamMaterialGoal,
+  };
+  const first = playTeamFoundationRoute(level, row.log, options);
+  const repeat = playTeamFoundationRoute(level, row.log, options);
+  assert.equal(first.checkpoint, repeat.checkpoint);
+  assert.equal(first.run.status, 'running', 'this is a bounded route, not a full-clear claim');
+  assert.equal(
+    first.evidence.downs,
+    1,
+    'the recorded route still has one recovery and is not accepted as balance-clear evidence',
+  );
+  assert.deepEqual([...first.evidence.closed].sort(), [0, 1]);
+  assert(first.run.coverage > 0.69 && first.run.coverage < level.goal.coverage);
+  assert.deepEqual(
+    first.events
+      .filter(({ type }) => type === 'support.pulse')
+      .map(({ role, slowedEnemies, interceptedImpacts }) => ({
+        role,
+        slowedEnemies,
+        interceptedImpacts,
+      })),
+    [
+      { role: 'interceptor', slowedEnemies: [], interceptedImpacts: [] },
+      { role: 'disruptor', slowedEnemies: ['keeper-3'], interceptedImpacts: [] },
+    ],
+  );
+  assert.deepEqual(
+    first.run.players.map(({ support }) => support.uses),
+    [1, 1],
+  );
 });
 
 for (const missionId of TEAM_MATERIAL_PARTNER_MISSIONS)

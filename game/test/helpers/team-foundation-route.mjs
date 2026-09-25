@@ -17,14 +17,26 @@ export function playTeamFoundationRoute(
     swapped = false,
     delayTicks = 0,
     inspectGoal = inspectTeamFoundationGoal,
+    supportTicks = [[], []],
   } = {},
 ) {
+  if (
+    !Array.isArray(supportTicks) ||
+    supportTicks.length !== 2 ||
+    supportTicks.some(
+      (ticks) =>
+        !Array.isArray(ticks) || ticks.some((tick) => !Number.isSafeInteger(tick) || tick < 0),
+    )
+  )
+    throw new TypeError('Support schedules require two arrays of non-negative whole ticks.');
   const owned = structuredClone(level);
   if (swapped) owned.spawns.reverse();
   const run = startCoop(createCoop(owned, { jointCuts, seed }));
   const evidence = createTeamFoundationEvidence(),
-    events = [];
+    events = [],
+    scheduledSupport = supportTicks.map((ticks) => new Set(ticks));
   let simultaneousTicks = 0;
+  let routeTick = 0;
   observeTeamFoundationGoal(run, evidence);
   const tick = (a, b) => {
     const directions = swapped ? [b, a] : [a, b];
@@ -33,11 +45,16 @@ export function playTeamFoundationRoute(
         throw new Error('A recorded route cannot brake continuous steering between closures.');
     stepCoop(
       run,
-      directions.map((direction) => ({ direction, boost: false, support: false })),
+      directions.map((direction, seat) => ({
+        direction,
+        boost: false,
+        support: scheduledSupport[seat].has(routeTick),
+      })),
     );
     events.push(...structuredClone(run.events));
     observeTeamFoundationGoal(run, evidence);
     if (directions.every(Boolean) && run.players.every((p) => p.cutting)) simultaneousTicks++;
+    routeTick++;
   };
   for (let i = 0; i < delayTicks && run.status === 'running'; i++) tick(null, null);
   for (const segment of segments) {
