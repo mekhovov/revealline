@@ -11,7 +11,8 @@ export function attachControllerConfirmGuard({
   const keys = new Set(),
     listeners = [];
   let mouse = false,
-    suppressUntil = -Infinity;
+    suppressUntil = -Infinity,
+    neutralAfterLifecycle = false;
   const listen = (type, callback) => {
     doc.addEventListener(type, callback, { capture: true });
     listeners.push(() => doc.removeEventListener(type, callback, { capture: true }));
@@ -72,12 +73,27 @@ export function attachControllerConfirmGuard({
     keys.clear();
     mouse = false;
     suppressUntil = -Infinity;
+    neutralAfterLifecycle = false;
   };
   doc.defaultView?.addEventListener?.('blur', reset);
   listen('visibilitychange', reset);
   return {
     observe(pressed) {
+      if (neutralAfterLifecycle) {
+        if (pressed) suppressUntil = Infinity;
+        else {
+          neutralAfterLifecycle = false;
+          suppressUntil = -Infinity;
+        }
+        return;
+      }
       if (pressed) suppressUntil = Math.max(suppressUntil, now() + echoWindowMs);
+    },
+    requireNeutral() {
+      keys.clear();
+      mouse = false;
+      suppressUntil = Infinity;
+      neutralAfterLifecycle = true;
     },
     destroy() {
       reset();

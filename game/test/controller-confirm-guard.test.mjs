@@ -250,6 +250,23 @@ test('the echo window follows a long-held A press through its release', (t) => {
   assert.equal(h.emit('keydown', { key: 'Enter' }), false);
 });
 
+test('a lifecycle boundary blocks stale Confirm until a neutral frame, then restores keyboard', (t) => {
+  let time = 100;
+  const h = setup(t, { guardNow: () => time });
+  h.pad.buttons[0].pressed = true;
+  assert.equal(h.sample().ui.confirm, true);
+  h.guard.observe(true);
+  h.guard.requireNeutral();
+
+  time = 5000;
+  assert.equal(h.emit('keydown', { key: 'Enter' }), true, 'held Confirm remains authoritative');
+  assert.equal(h.emit('keyup', { key: 'Enter' }), true);
+  h.pad.buttons[0].pressed = false;
+  h.sample();
+  h.guard.observe(false);
+  assert.equal(h.emit('keydown', { key: 'Enter' }), false, 'fresh keyboard works after neutral');
+});
+
 test('idle controllers do not suppress keyboard, mouse, touch, pen, text, or shortcuts', (t) => {
   const h = setup(t);
   for (const key of ['Enter', ' ', 'x', 'ArrowDown'])
