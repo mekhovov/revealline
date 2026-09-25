@@ -1,3 +1,4 @@
+import { onLocaleChange } from '../i18n/index.mjs';
 import { createStarterProject } from '../content-design/starter.mjs';
 import { createOpeningCandidates } from '../content-design/horizon-candidates.mjs';
 import { createBorderCandidates } from '../content-design/border-candidates.mjs';
@@ -100,6 +101,7 @@ const acceptanceInspector = createAcceptanceInspector({
 });
 let session,
   inspected = null,
+  paintedPreview = null,
   sourceChanged = false,
   saveTimer,
   stopPreviewReadiness = () => {},
@@ -313,7 +315,13 @@ function discardSource() {
 function currentMission() {
   return session.current().missions.find((m) => m.id === $('mission').value);
 }
+// Locale changes repaint the accepted snapshot only. They never inspect or
+// recompile a draft, reset an editor, write a checkpoint, or launch gameplay.
+const stopMapLocale = onLocaleChange(() => {
+  if (paintedPreview) draw(paintedPreview);
+});
 function draw(preview) {
+  paintedPreview = preview;
   const canvas = $('board');
   const summary = paintContentMap(canvas.getContext('2d'), preview, {
     width: canvas.width,
@@ -343,6 +351,7 @@ function inspectBoard(trailCells = []) {
   traceRecovery.sync();
   setBoardAvailability(document, !!mission);
   if (!mission) {
+    paintedPreview = null;
     $('export-team').hidden = true;
     $('team-sequence-tools').hidden = true;
     $('team-test-help').hidden = true;
@@ -1211,9 +1220,13 @@ window.addEventListener('beforeunload', (event) => {
     event.returnValue = '';
   }
 });
-window.addEventListener('pagehide', () => {
-  stopGameplayTuning();
-  gameplayTuning.dispose();
+window.addEventListener('pagehide', (event) => {
+  if (!event.persisted) {
+    stopGameplayTuning();
+    gameplayTuning.dispose();
+    stopMapLocale();
+    paintedPreview = null;
+  }
   imageWorkbench.dispose();
   previewController?.abort();
   clearTimeout(saveTimer);
