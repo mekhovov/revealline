@@ -3,6 +3,7 @@ import { readFile, lstat, realpath, open } from 'node:fs/promises';
 import path from 'node:path';
 import { createHash } from 'node:crypto';
 import { parse } from 'espree';
+import { t } from '../../game/i18n/index.mjs';
 import { canonical, validateProductionRegister, validateSourcePath } from './model.mjs';
 const sha = (b) => createHash('sha256').update(b).digest('hex');
 const equal = (a, b) => canonical(a) === canonical(b);
@@ -37,9 +38,10 @@ export async function ordinaryPath(root, name) {
   for (const part of name.split('/')) {
     p = path.join(p, part);
     const s = await lstat(p);
-    if (s.isSymbolicLink()) throw new Error(`Symlink source refused: ${name}`);
+    if (s.isSymbolicLink()) throw new Error(t('errors:productionSources.symlinkRefused', { name }));
   }
-  if (!(await lstat(p)).isFile()) throw new Error(`Ordinary source file required: ${name}`);
+  if (!(await lstat(p)).isFile())
+    throw new Error(t('errors:productionSources.ordinaryFileRequired', { name }));
   return p;
 }
 async function boundedRead(root, name, max = 4 * 1024 * 1024) {
@@ -47,10 +49,10 @@ async function boundedRead(root, name, max = 4 * 1024 * 1024) {
   const f = await open(p, 'r');
   try {
     const s = await f.stat();
-    if (s.size > max) throw new Error(`Metadata too large: ${name}`);
+    if (s.size > max) throw new Error(t('errors:productionSources.metadataTooLarge', { name }));
     const b = await f.readFile();
     if (b.length !== s.size || b.length > max)
-      throw new Error(`Source changed while reading: ${name}`);
+      throw new Error(t('errors:productionSources.sourceChangedWhileReading', { name }));
     return b;
   } finally {
     await f.close();
@@ -78,7 +80,7 @@ async function metadataHistory(root) {
     !Array.isArray(index.entries) ||
     index.entries.length > 64
   )
-    throw new Error('Invalid production metadata history index');
+    throw new Error(t('errors:productionSources.invalidMetadataHistoryIndex'));
   const result = new Map();
   for (const pin of index.entries) {
     if (
@@ -96,10 +98,11 @@ async function metadataHistory(root) {
       typeof pin.sha256 !== 'string' ||
       !/^[a-f0-9]{64}$/.test(pin.sha256)
     )
-      throw new Error('Invalid production metadata history entry');
+      throw new Error(t('errors:productionSources.invalidMetadataHistoryEntry'));
     validateSourcePath(pin.path);
     const key = historyKey(pin);
-    if (result.has(key)) throw new Error('Duplicate production metadata history entry');
+    if (result.has(key))
+      throw new Error(t('errors:productionSources.duplicateMetadataHistoryEntry'));
     result.set(key, `${HISTORY_ROOT}/${pin.sha256}${path.posix.extname(pin.path)}`);
   }
   return result;
@@ -126,7 +129,7 @@ async function sourceHistory(root) {
     !Array.isArray(index.entries) ||
     index.entries.length > 64
   )
-    throw new Error('Invalid production source history index');
+    throw new Error(t('errors:productionSources.invalidSourceHistoryIndex'));
   const result = new Map();
   for (const pin of index.entries) {
     if (
@@ -139,9 +142,9 @@ async function sourceHistory(root) {
       typeof pin.sha256 !== 'string' ||
       !/^[a-f0-9]{64}$/.test(pin.sha256)
     )
-      throw new Error('Invalid production source history entry');
+      throw new Error(t('errors:productionSources.invalidSourceHistoryEntry'));
     const key = historyKey(pin);
-    if (result.has(key)) throw new Error('Duplicate production source history entry');
+    if (result.has(key)) throw new Error(t('errors:productionSources.duplicateSourceHistoryEntry'));
     result.set(key, `${HISTORY_ROOT}/${pin.sha256}.source`);
   }
   return result;
@@ -153,11 +156,11 @@ function literal(node) {
     return Object.fromEntries(
       node.properties.map((p) => {
         if (p.type !== 'Property' || p.computed || p.method || p.kind !== 'init')
-          throw new Error('Unsupported recipe literal');
+          throw new Error(t('errors:productionSources.unsupportedRecipeLiteral'));
         return [p.key.name ?? p.key.value, literal(p.value)];
       }),
     );
-  throw new Error('Recipe is not literal data');
+  throw new Error(t('errors:productionSources.recipeNotLiteral'));
 }
 function synthRecipes(bytes) {
   const ast = parse(bytes.toString('utf8'), { ecmaVersion: 2022, sourceType: 'module' });
@@ -175,7 +178,7 @@ function synthRecipes(bytes) {
     n.callee.property?.name !== 'freeze' ||
     n.arguments.length !== 1
   )
-    throw new Error('Unknown synth declaration');
+    throw new Error(t('errors:productionSources.unknownSynthDeclaration'));
   const a = n.arguments[0];
   if (
     a.type !== 'CallExpression' ||
@@ -184,13 +187,13 @@ function synthRecipes(bytes) {
     a.arguments[0].object?.name !== 'Object' ||
     a.arguments[0].property?.name !== 'freeze'
   )
-    throw new Error('Unknown synth recipe wrapper');
+    throw new Error(t('errors:productionSources.unknownSynthRecipeWrapper'));
   return literal(a.callee.object);
 }
 /** Metadata validation always checks pinned authority files. --files additionally hashes originals. */
 export async function verifyProductionSources(input, { root, files = false } = {}) {
   const r = validateProductionRegister(input);
-  if (!root) throw new Error('Explicit source root required');
+  if (!root) throw new Error(t('errors:productionSources.sourceRootRequired'));
   const declared = new Map(
     [
       ...r.authorities,
@@ -212,7 +215,7 @@ export async function verifyProductionSources(input, { root, files = false } = {
   const bytes = async (name) => {
     if (!cache.has(name)) {
       const pin = declared.get(name);
-      if (!pin) throw new Error(`Undeclared or changed authority: ${name}`);
+      if (!pin) throw new Error(t('errors:productionSources.undeclaredAuthority', { name }));
       const sources = history.get(historyKey(pin)) ?? [name];
       cache.set(
         name,
@@ -221,7 +224,7 @@ export async function verifyProductionSources(input, { root, files = false } = {
           for (const source of sources) {
             const b = await boundedRead(root, source);
             if (b.length !== pin.bytes || sha(b) !== pin.sha256)
-              throw new Error(`Undeclared or changed authority: ${name}`);
+              throw new Error(t('errors:productionSources.undeclaredAuthority', { name }));
             verified ??= b;
           }
           return verified;
@@ -234,12 +237,12 @@ export async function verifyProductionSources(input, { root, files = false } = {
   const verifyPin = async (p) => {
     const b = await bytes(p.path);
     if (b.length !== p.bytes || sha(b) !== p.sha256)
-      throw new Error(`Source identity changed: ${p.path}`);
+      throw new Error(t('errors:productionSources.sourceIdentityChanged', { path: p.path }));
   };
   const descriptorRows = async (name) => {
     const d = await json(name);
     if (d.format !== 'revealline-external-chapter.v1')
-      throw new Error(`Unknown descriptor: ${name}`);
+      throw new Error(t('errors:productionSources.unknownDescriptor', { name }));
     return d;
   };
   const catalog = await json(PATHS.pressure),
@@ -258,24 +261,25 @@ export async function verifyProductionSources(input, { root, files = false } = {
       r.basis.themes,
     )
   )
-    throw new Error('Runtime class/theme basis changed');
+    throw new Error(t('errors:productionSources.runtimeBasisChanged'));
   const matchesFile = (w, f) => {
     const actual = w.files.find((x) => x.role === 'original')?.file;
     if (!actual || actual.bytes !== f.bytes || actual.sha256 !== f.sha256)
-      throw new Error(`Original mismatch: ${w.id}`);
+      throw new Error(t('errors:productionSources.originalMismatch', { id: w.id }));
   };
   // These two finite cohorts are data authorities, not executable compiler adapters.
   const fractureCache = new Map();
   const fractureEdition = async (theme) => {
     if (fractureCache.has(theme)) return fractureCache.get(theme);
-    if (!r.basis.themes.includes(theme)) throw new Error('Unknown Fracture theme');
+    if (!r.basis.themes.includes(theme))
+      throw new Error(t('errors:productionSources.unknownFractureTheme'));
     const fpv = theme === 'fpv';
     const cohort = await json(PATHS[fpv ? 'fracture' : 'fracture-world']);
     if (
       cohort.format !==
       (fpv ? 'revealline-fracture-chapter-edition.v1' : 'revealline-fracture-theme-editions.v1')
     )
-      throw new Error('Unknown Fracture cohort');
+      throw new Error(t('errors:productionSources.unknownFractureCohort'));
     const edition = fpv ? cohort : cohort.editions.find((e) => e.themeId === theme);
     const artRoot = `authoring/library/${fpv ? 'fracture-lines' : `fracture-${theme}`}-art`;
     if (
@@ -284,7 +288,7 @@ export async function verifyProductionSources(input, { root, files = false } = {
       edition.images?.length !== 3 ||
       (!fpv && edition.artRoot !== artRoot)
     )
-      throw new Error('Unknown Fracture edition');
+      throw new Error(t('errors:productionSources.unknownFractureEdition'));
     const descriptor = await descriptorRows(
       fpv
         ? 'authoring/library/fracture-lines-chapter/descriptor.json'
@@ -299,7 +303,7 @@ export async function verifyProductionSources(input, { root, files = false } = {
         descriptor.campaignKey,
       )
     )
-      throw new Error('Fracture descriptor owner differs');
+      throw new Error(t('errors:productionSources.fractureDescriptorOwnerDiffers'));
     let provenance;
     if (!fpv) {
       const name = `${artRoot}/provenance.json`;
@@ -309,7 +313,7 @@ export async function verifyProductionSources(input, { root, files = false } = {
         provenance.format !== 'revealline-source-art-provenance.v1' ||
         provenance.images?.length !== 3
       )
-        throw new Error('Fracture provenance differs');
+        throw new Error(t('errors:productionSources.fractureProvenanceDiffers'));
     }
     const originals = [];
     for (const [index, mission] of FRACTURE_MISSIONS.entries()) {
@@ -329,19 +333,19 @@ export async function verifyProductionSources(input, { root, files = false } = {
         original.sha256 !== source.sha256 ||
         source.path !== (fpv ? filename : relative)
       )
-        throw new Error('Fracture source/owner differs');
+        throw new Error(t('errors:productionSources.fractureSourceOwnerDiffers'));
       let image;
       if (fpv) {
         const metadataPath = `${artRoot}/${mission}-fpv.json`;
         if (source.assetId !== assetId || source.metadataPath !== metadataPath)
-          throw new Error('Fracture source metadata differs');
+          throw new Error(t('errors:productionSources.fractureSourceMetadataDiffers'));
         image = await json(metadataPath);
         if (
           image.format !== 'revealline-generated-source-art.v1' ||
           image.assetId !== assetId ||
           image.workspacePath !== relative
         )
-          throw new Error('Fracture original metadata differs');
+          throw new Error(t('errors:productionSources.fractureOriginalMetadataDiffers'));
       } else {
         const cellId = `fracture-lines/${mission}/${theme}`;
         image = provenance.images.find((p) => p.cellId === cellId);
@@ -353,10 +357,11 @@ export async function verifyProductionSources(input, { root, files = false } = {
           image.missionSlot !== mission ||
           image.path !== relative
         )
-          throw new Error('Fracture original provenance differs');
+          throw new Error(t('errors:productionSources.fractureOriginalProvenanceDiffers'));
       }
       for (const k of ['bytes', 'sha256', 'width', 'height'])
-        if (image[k] !== original[k]) throw new Error(`Fracture original ${k} differs`);
+        if (image[k] !== original[k])
+          throw new Error(t('errors:productionSources.fractureOriginalFieldDiffers', { field: k }));
       originals.push({ ...original, path: filename });
     }
     const result = { descriptor, originals };
@@ -377,14 +382,14 @@ export async function verifyProductionSources(input, { root, files = false } = {
         r.basis.themes,
       )
     )
-      throw new Error('Unknown Countercurrent cohort');
+      throw new Error(t('errors:productionSources.unknownCountercurrentCohort'));
     const edition = cohort.editions.find((e) => e.themeId === theme);
     if (
       edition.id !== `countercurrent-${theme}` ||
       edition.artRoot !== COUNTERCURRENT_ART ||
       edition.images?.length !== 3
     )
-      throw new Error('Unknown Countercurrent edition');
+      throw new Error(t('errors:productionSources.unknownCountercurrentEdition'));
     const descriptor = await descriptorRows(
       `authoring/library/countercurrent-chapters/descriptors/${theme}.json`,
     );
@@ -397,7 +402,7 @@ export async function verifyProductionSources(input, { root, files = false } = {
       typeof descriptor.campaignKey !== 'string' ||
       !new RegExp(`^${edition.id}/1/[a-f0-9]{16}$`).test(descriptor.campaignKey)
     )
-      throw new Error('Countercurrent descriptor owner differs');
+      throw new Error(t('errors:productionSources.countercurrentDescriptorOwnerDiffers'));
     const provenancePath = `${COUNTERCURRENT_ART}/provenance.json`;
     const provenance = await json(provenancePath);
     const manifest = await json(`${COUNTERCURRENT_ART}/manifest.json`);
@@ -417,7 +422,7 @@ export async function verifyProductionSources(input, { root, files = false } = {
         cells,
       )
     )
-      throw new Error('Countercurrent provenance differs');
+      throw new Error(t('errors:productionSources.countercurrentProvenanceDiffers'));
     const originals = [];
     for (const [index, mission] of COUNTERCURRENT_MISSIONS.entries()) {
       const source = edition.images[index],
@@ -451,9 +456,12 @@ export async function verifyProductionSources(input, { root, files = false } = {
         image.bytes > 4 * 1024 * 1024 ||
         !Object.entries(listed).every(([key, value]) => equal(image[key], value))
       )
-        throw new Error('Countercurrent source/owner differs');
+        throw new Error(t('errors:productionSources.countercurrentSourceOwnerDiffers'));
       for (const key of ['bytes', 'sha256', 'width', 'height'])
-        if (image[key] !== original[key]) throw new Error(`Countercurrent original ${key} differs`);
+        if (image[key] !== original[key])
+          throw new Error(
+            t('errors:productionSources.countercurrentOriginalFieldDiffers', { field: key }),
+          );
       originals.push({ ...original, path: `${COUNTERCURRENT_ART}/${relative}` });
     }
     const result = { descriptor, originals };
@@ -464,18 +472,19 @@ export async function verifyProductionSources(input, { root, files = false } = {
     await verifyPin(w.source);
     for (const dep of w.dependencies) await verifyPin(dep);
     if (w.adapter !== 'authored' && w.source.path !== PATHS[w.adapter])
-      throw new Error(`Wrong adapter authority: ${w.id}`);
+      throw new Error(t('errors:productionSources.wrongAdapterAuthority', { id: w.id }));
     let owners = [];
     if (w.adapter === 'pressure') {
       const image = catalog.images.find((i) => i.id === w.sourceId);
-      if (!image) throw new Error(`Unknown pressure original: ${w.id}`);
+      if (!image)
+        throw new Error(t('errors:productionSources.unknownPressureOriginal', { id: w.id }));
       matchesFile(w, image);
       if (
         w.files[0].file.path !== image.source ||
         w.files[0].width !== image.width ||
         w.files[0].height !== image.height
       )
-        throw new Error('Pressure original path/dimensions differ');
+        throw new Error(t('errors:productionSources.pressureOriginalPathDimensionsDiffer'));
       for (const p of dist.packs)
         for (const m of p.maps)
           if (m.sourceImageId === image.id) owners.push(own(p, { levelId: m.id }));
@@ -485,13 +494,13 @@ export async function verifyProductionSources(input, { root, files = false } = {
       for (const o of pilot.originals) if (o.sha256 === image.sha256) owners.push(own(pilot, o));
     } else if (w.adapter === 'route') {
       const image = route.maps.find((m) => m.imageId === w.sourceId);
-      if (!image) throw new Error('Unknown route picture');
+      if (!image) throw new Error(t('errors:productionSources.unknownRoutePicture'));
       matchesFile(w, { bytes: image.imageBytes, sha256: image.imageSha256 });
       if (
         w.files[0].file.path !==
         `authoring/library/challenge-chapter-art/originals/${image.imageId}.png`
       )
-        throw new Error('Route source path differs');
+        throw new Error(t('errors:productionSources.routeSourcePathDiffers'));
       const prov = await json('authoring/library/challenge-chapter-art/provenance.json');
       const dimensions = prov.images.find((i) => i.id === image.imageId);
       if (
@@ -499,12 +508,12 @@ export async function verifyProductionSources(input, { root, files = false } = {
         w.files[0].width !== dimensions.width ||
         w.files[0].height !== dimensions.height
       )
-        throw new Error('Route dimensions differ');
+        throw new Error(t('errors:productionSources.routeDimensionsDiffer'));
       owners = [own(route, image)];
     } else if (w.adapter === 'world') {
       const e = editions.editions.find((e) => e.themeId === w.themeId),
         image = e?.images.find((i) => i.id === w.sourceId);
-      if (!image) throw new Error('Unknown world picture');
+      if (!image) throw new Error(t('errors:productionSources.unknownWorldPicture'));
       const d = await descriptorRows(
         `authoring/library/route-worlds/descriptors/${e.themeId}.json`,
       );
@@ -516,12 +525,12 @@ export async function verifyProductionSources(input, { root, files = false } = {
         w.files[0].width !== original.width ||
         w.files[0].height !== original.height
       )
-        throw new Error('World source path/dimensions differ');
+        throw new Error(t('errors:productionSources.worldSourcePathDimensionsDiffer'));
       owners = [own(d, original)];
     } else if (w.adapter === 'sentinel') {
       const d = await descriptorRows(PATHS.sentinel),
         o = d.originals.find((o) => o.assetId === w.sourceId);
-      if (!o) throw new Error('Unknown Sentinel poster');
+      if (!o) throw new Error(t('errors:productionSources.unknownSentinelPoster'));
       matchesFile(w, o);
       const names = ['listening-court', 'switchyard-gates', 'open-the-circuit'];
       if (
@@ -530,7 +539,7 @@ export async function verifyProductionSources(input, { root, files = false } = {
         w.files[0].width !== o.width ||
         w.files[0].height !== o.height
       )
-        throw new Error('Sentinel source path/dimensions differ');
+        throw new Error(t('errors:productionSources.sentinelSourcePathDimensionsDiffer'));
       owners = [own(d, o)];
     } else if (w.adapter === 'sentinel-world') {
       const cohort = await json(PATHS['sentinel-world']);
@@ -541,10 +550,10 @@ export async function verifyProductionSources(input, { root, files = false } = {
           declared.get('authoring/library/sentinel-theme-art/provenance.json')?.sha256 ||
         !['ukraine', 'retro', 'coupa'].includes(w.themeId)
       )
-        throw new Error('Unknown Sentinel theme cohort');
+        throw new Error(t('errors:productionSources.unknownSentinelThemeCohort'));
       const edition = cohort.editions.find((e) => e.themeId === w.themeId);
       if (!edition || edition.id !== `sentinel-circuit-${w.themeId}`)
-        throw new Error('Unknown Sentinel theme edition');
+        throw new Error(t('errors:productionSources.unknownSentinelThemeEdition'));
       const d = await descriptorRows(
         `authoring/library/sentinel-theme-chapters/descriptors/${w.themeId}.json`,
       );
@@ -566,7 +575,7 @@ export async function verifyProductionSources(input, { root, files = false } = {
             .at(-1)
             .replace(/\.png$/, '')}/${w.themeId}`
       )
-        throw new Error('Sentinel theme source/owner differs');
+        throw new Error(t('errors:productionSources.sentinelThemeSourceOwnerDiffers'));
       matchesFile(w, original);
       if (
         w.files.length !== 1 ||
@@ -574,14 +583,14 @@ export async function verifyProductionSources(input, { root, files = false } = {
         w.files[0].width !== original.width ||
         w.files[0].height !== original.height
       )
-        throw new Error('Sentinel theme original path/dimensions differ');
+        throw new Error(t('errors:productionSources.sentinelThemeOriginalPathDimensionsDiffer'));
       owners = [own(d, original)];
     } else if (w.adapter === 'fracture' || w.adapter === 'fracture-world') {
       if ((w.adapter === 'fracture') !== (w.themeId === 'fpv'))
-        throw new Error('Wrong Fracture adapter theme');
+        throw new Error(t('errors:productionSources.wrongFractureAdapterTheme'));
       const { descriptor, originals } = await fractureEdition(w.themeId);
       const original = originals.find((o) => o.assetId === w.sourceId);
-      if (!original) throw new Error('Unknown Fracture original');
+      if (!original) throw new Error(t('errors:productionSources.unknownFractureOriginal'));
       matchesFile(w, original);
       if (
         w.files[0].file.path !== original.path ||
@@ -589,12 +598,12 @@ export async function verifyProductionSources(input, { root, files = false } = {
         w.files[0].height !== original.height ||
         w.files[0].durationSeconds !== null
       )
-        throw new Error('Fracture original path/dimensions differ');
+        throw new Error(t('errors:productionSources.fractureOriginalPathDimensionsDiffer'));
       owners = [own(descriptor, original)];
     } else if (w.adapter === 'countercurrent') {
       const { descriptor, originals } = await countercurrentEdition(w.themeId);
       const original = originals.find((o) => o.assetId === w.sourceId);
-      if (!original) throw new Error('Unknown Countercurrent original');
+      if (!original) throw new Error(t('errors:productionSources.unknownCountercurrentOriginal'));
       matchesFile(w, original);
       if (
         w.files[0].file.path !== original.path ||
@@ -602,12 +611,12 @@ export async function verifyProductionSources(input, { root, files = false } = {
         w.files[0].height !== original.height ||
         w.files[0].durationSeconds !== null
       )
-        throw new Error('Countercurrent original path/dimensions differ');
+        throw new Error(t('errors:productionSources.countercurrentOriginalPathDimensionsDiffer'));
       owners = [own(descriptor, original)];
     } else if (w.adapter === 'dawn') {
       const d = await json(PATHS.dawn);
       if (w.sourceId !== d.story.id || w.revision !== d.story.revision)
-        throw new Error('Dawn story identity differs');
+        throw new Error(t('errors:productionSources.dawnStoryIdentityDiffers'));
       for (const [role, metadata, name] of [
         ['movie', d.movie, 'dawn-signal.mp4'],
         ['poster', d.poster, 'frame-95.png'],
@@ -618,13 +627,13 @@ export async function verifyProductionSources(input, { root, files = false } = {
           f.file.bytes !== metadata.bytes ||
           f.file.path !== `authoring/library/dawn-signal-story/candidate-v1/${name}`
         )
-          throw new Error('Dawn source differs');
+          throw new Error(t('errors:productionSources.dawnSourceDiffers'));
         if (
           f.width !== (metadata.width ?? metadata.naturalWidth) ||
           f.height !== (metadata.height ?? metadata.naturalHeight) ||
           f.durationSeconds !== (role === 'movie' ? metadata.durationSeconds : null)
         )
-          throw new Error('Dawn dimensions/duration differ');
+          throw new Error(t('errors:productionSources.dawnDimensionsDurationDiffer'));
       }
       owners = [d.identity];
     } else if (w.adapter === 'body') {
@@ -633,17 +642,17 @@ export async function verifyProductionSources(input, { root, files = false } = {
         w.files.length !== 1 ||
         !themes.themes.some((t) => Object.values(t.classBodies).includes(w.sourceId))
       )
-        throw new Error('Unknown shared body');
+        throw new Error(t('errors:productionSources.unknownSharedBody'));
       const presets = await json('authoring/motion-lab/presets.json');
       const body = presets.characters[w.sourceId];
       if (!body || w.files[0].file.path !== `authoring/motion-lab/${body.src}`)
-        throw new Error('Body concept source differs');
+        throw new Error(t('errors:productionSources.bodyConceptSourceDiffers'));
       for (const b of r.bindings.filter(
         (b) => b.workId === w.id && b.workRevision === w.revision,
       )) {
         const h = b.handle;
         if (themes.themes.find((t) => t.id === h.themeId)?.classBodies[h.classId] !== h.bodyId)
-          throw new Error('Body does not serve this class/theme');
+          throw new Error(t('errors:productionSources.bodyDoesNotServeClassTheme'));
       }
     } else if (w.adapter === 'synth') {
       if (
@@ -651,7 +660,7 @@ export async function verifyProductionSources(input, { root, files = false } = {
         w.files.length ||
         !synthRecipes(await bytes(PATHS.synth)).some((t) => t.id === w.sourceId)
       )
-        throw new Error('Unknown synth recipe');
+        throw new Error(t('errors:productionSources.unknownSynthRecipe'));
     } else {
       // Existing raster media-tool record: reference it, do not duplicate its storage.
       const m = await json(w.source.path),
@@ -662,7 +671,7 @@ export async function verifyProductionSources(input, { root, files = false } = {
         !['imported', 'reviewed'].includes(a?.status) ||
         !a?.file
       )
-        throw new Error('Produced raster media record required');
+        throw new Error(t('errors:productionSources.rasterMediaRecordRequired'));
       matchesFile(w, a.file);
       const f = w.files[0];
       if (
@@ -670,7 +679,7 @@ export async function verifyProductionSources(input, { root, files = false } = {
         f.width !== a.file.width ||
         f.height !== a.file.height
       )
-        throw new Error('Media-tool file differs');
+        throw new Error(t('errors:productionSources.mediaToolFileDiffers'));
       if (a.kind === 'derivative') {
         const parent =
           w.derivedFrom &&
@@ -682,8 +691,9 @@ export async function verifyProductionSources(input, { root, files = false } = {
           parent.sourceId !== a.provenance?.parentAssetId ||
           parent.files[0].file.sha256 !== a.provenance?.parentSha256
         )
-          throw new Error('Media derivative parent differs');
-      } else if (a.kind !== 'original') throw new Error('Unknown media asset kind');
+          throw new Error(t('errors:productionSources.mediaDerivativeParentDiffers'));
+      } else if (a.kind !== 'original')
+        throw new Error(t('errors:productionSources.unknownMediaAssetKind'));
       owners = w.owners;
     }
     if (
@@ -692,7 +702,7 @@ export async function verifyProductionSources(input, { root, files = false } = {
         [...w.owners].sort((a, b) => canonical(a).localeCompare(canonical(b))),
       )
     )
-      throw new Error(`Authored owners changed: ${w.id}`);
+      throw new Error(t('errors:productionSources.authoredOwnersChanged', { id: w.id }));
   }
   for (const p of r.authorities) await verifyPin(p);
   for (const l of r.layouts) {
@@ -707,13 +717,14 @@ export async function verifyProductionSources(input, { root, files = false } = {
         layouts.format !== 'revealline-countercurrent-layouts.v1' ||
         layouts.levels[index]?.id !== l.id
       )
-        throw new Error('Countercurrent layout source differs');
+        throw new Error(t('errors:productionSources.countercurrentLayoutSourceDiffers'));
       const owners = [];
       for (const theme of r.basis.themes) {
         const { descriptor, originals } = await countercurrentEdition(theme);
         owners.push(own(descriptor, originals[index]));
       }
-      if (!equal(l.owners, owners)) throw new Error('Countercurrent layout owners differ');
+      if (!equal(l.owners, owners))
+        throw new Error(t('errors:productionSources.countercurrentLayoutOwnersDiffer'));
       continue;
     }
     if (!l.id.startsWith('fracture-') && l.source.path !== FRACTURE_LAYOUTS) continue;
@@ -727,13 +738,14 @@ export async function verifyProductionSources(input, { root, files = false } = {
       layouts.format !== 'revealline-fracture-layouts.v1' ||
       layouts.levels[index]?.id !== `fracture-lines-${mission}`
     )
-      throw new Error('Fracture layout source differs');
+      throw new Error(t('errors:productionSources.fractureLayoutSourceDiffers'));
     const owners = [];
     for (const theme of r.basis.themes) {
       const { descriptor, originals } = await fractureEdition(theme);
       owners.push(own(descriptor, originals[index]));
     }
-    if (!equal(l.owners, owners)) throw new Error('Fracture layout owners differ');
+    if (!equal(l.owners, owners))
+      throw new Error(t('errors:productionSources.fractureLayoutOwnersDiffer'));
   }
   for (const e of r.enemies) await verifyPin(e.source);
   for (const a of r.assessments) for (const p of a.evidence) await verifyPin(p);
@@ -743,7 +755,9 @@ export async function verifyProductionSources(input, { root, files = false } = {
     for (const { file } of work.files) {
       const prior = bodies.get(file.path);
       if (prior && (prior.bytes !== file.bytes || prior.sha256 !== file.sha256))
-        throw new Error(`Conflicting original identity at ${file.path}`);
+        throw new Error(
+          t('errors:productionSources.conflictingOriginalIdentity', { path: file.path }),
+        );
       bodies.set(file.path, file);
     }
   }
@@ -756,20 +770,21 @@ export async function verifyProductionSources(input, { root, files = false } = {
     try {
       const filename = await ordinaryPath(root, p.path),
         s = await lstat(filename);
-      if (s.size !== p.bytes) throw new Error('byte count differs');
+      if (s.size !== p.bytes) throw new Error(t('errors:productionSources.byteCountDiffers'));
       const h = createHash('sha256'),
         f = await open(filename, 'r');
       let n = 0;
       try {
         for await (const chunk of f.createReadStream()) {
           n += chunk.length;
-          if (n > p.bytes) throw new Error('file grew');
+          if (n > p.bytes) throw new Error(t('errors:productionSources.fileGrew'));
           h.update(chunk);
         }
       } finally {
         await f.close();
       }
-      if (n !== p.bytes || h.digest('hex') !== p.sha256) throw new Error('original hash differs');
+      if (n !== p.bytes || h.digest('hex') !== p.sha256)
+        throw new Error(t('errors:productionSources.originalHashDiffers'));
       availability.push({ path: p.path, status: 'verified' });
     } catch (error) {
       availability.push({ path: p.path, status: 'unavailable', reason: error.message });
