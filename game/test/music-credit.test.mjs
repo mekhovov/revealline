@@ -76,3 +76,30 @@ test('missing credits, synthesis and unsafe websites have truthful non-link fall
   assert.equal(f.credit.element.querySelector('a').getAttribute('href'), 'https://artist.example/');
   f.credit.dispose();
 });
+
+test('language switches refresh credits and pause captions without touching transport or focus', async (context) => {
+  const { getLocale, setLocale } = await import('../i18n/index.mjs');
+  const locale = getLocale();
+  context.after(() => setLocale(locale, { persist: false }));
+  setLocale('en', { persist: false });
+  const f = setup();
+  const playback = Object.freeze({ track: recording, playing: true, volume: 1 });
+  const master = Object.freeze({ muted: true, volume: 1 });
+  f.credit.render(playback, master);
+  const original = f.credit.element.textContent;
+  setLocale('uk', { persist: false });
+  assert.match(f.credit.element.textContent, /Композиція: Orchard night/);
+  assert.match(f.credit.element.textContent, /Виконавець: Original artist/);
+  assert.match(f.credit.element.textContent, /Файл: original mix 01.mp3/);
+  assert.equal(f.pause.getAttribute('data-track-caption'), 'Звук вимкнено: Orchard night');
+  assert.match(f.pause.getAttribute('aria-description'), /Повні відомості про музику/);
+  assert.equal(f.doc.activeElement, f.pause);
+  assert.equal(f.pause.textContent, 'Pause');
+  assert.equal(f.clicks(), 0);
+  setLocale('en', { persist: false });
+  assert.equal(f.credit.element.textContent, original);
+  f.credit.dispose();
+  setLocale('uk', { persist: false });
+  assert.equal(f.pause.getAttribute('aria-description'), 'Existing instruction');
+  assert.equal(f.pause.getAttribute('data-track-caption'), null);
+});

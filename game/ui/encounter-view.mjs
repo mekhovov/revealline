@@ -1,4 +1,4 @@
-import { t } from '../i18n/index.mjs';
+import { t, formatNumber } from '../i18n/index.mjs';
 import { geometryForRun } from '../core/geometry.mjs';
 import { CELL, FIXED_DT } from '../core/registry.mjs';
 import { encounterCutCells, encounterShieldIds } from '../core/encounter.mjs';
@@ -25,7 +25,6 @@ export function encounterView(state) {
         remainingIds: Object.freeze(remainingShieldIds),
       })
     : null;
-  const ground = multiple ? 'reclaimed ground' : 'safe ground';
   const shieldPlural = multiple && shieldIds.length > 1;
   const min = recipe.minReleaseCutCells;
   const remaining = state.cells.reduce((sum, cell) => sum + Number(cell === CELL.FIELD), 0);
@@ -38,7 +37,9 @@ export function encounterView(state) {
   const suppressed = frozen || (!!enemy && enemy.stunnedUntil > state.time + 1e-8);
   const isolated = remaining <= min;
   const lane = Number.isFinite(e.lane)
-    ? `${e.axis === 'horizontal' ? 'row' : 'column'} ${Math.floor(e.lane)}`
+    ? e.axis === 'horizontal'
+      ? t('gameplay:encounter.row', { number: Math.floor(e.lane) })
+      : t('gameplay:encounter.column', { number: Math.floor(e.lane) })
     : '';
   const phaseName = {
     delay: shieldPlural ? t('interface:shieldRelays') : t('interface:shieldRelay'),
@@ -51,7 +52,7 @@ export function encounterView(state) {
   }[e.phase];
   const title = ended
     ? t('interface:flightEnded2')
-    : `${e.stage === 'shielded' ? '1 / 2' : '2 / 2'} · ${phaseName}${e.defeated ? '' : ` · ${seconds.toFixed(1)}s`}`;
+    : `${e.stage === 'shielded' ? '1 / 2' : '2 / 2'} · ${phaseName}${e.defeated ? '' : ` · ${t('common:units.secondsShort', { seconds: formatNumber(seconds, { minimumFractionDigits: 1, maximumFractionDigits: 1 }) })}`}`;
   let instruction;
   if (ended) instruction = t('interface:restartToTryTheTwoStagesAgain');
   else if (state.status === 'respawning')
@@ -64,16 +65,22 @@ export function encounterView(state) {
         ? t('interface:coreIsolatedThePictureIsYours')
         : t('interface:releaseCutSecuredThePictureIsYours');
   else if (e.stage === 'shielded')
-    instruction = `${multiple ? `Shield relay${shieldPlural ? 's' : ''} ${shields.captured} / ${shields.total}. Capture ${shieldPlural ? 'every' : 'the'} remaining relay.` : t('interface:captureTheShieldRelay')} ${lane ? `Watch ${lane}.` : `Return every line to ${ground}.`}`;
+    instruction = `${multiple ? t('gameplay:encounter.shieldProgress', { count: shields.total, captured: shields.captured }) : t('interface:captureTheShieldRelay')} ${lane ? t('gameplay:encounter.watchLane', { lane }) : multiple ? t('gameplay:encounter.reclaimedReturn') : t('gameplay:encounter.safeReturn')}`;
   else if (e.stage === 'transition')
-    instruction = `${shieldPlural ? t('interface:allShieldRelaysSecured') : t('interface:relaySecured')} A vertical attack comes before the first opening.`;
+    instruction = shieldPlural
+      ? t('gameplay:encounter.multipleTransition')
+      : t('gameplay:encounter.singleTransition');
   else if (isolated)
     instruction =
       e.phase === 'open'
-        ? `Core isolated. Return to ${ground} with no live line to finish.`
-        : `Core isolated. Reach ${ground} and wait for CORE OPEN.`;
+        ? multiple
+          ? t('gameplay:encounter.isolatedReclaimedFinish')
+          : t('gameplay:encounter.isolatedSafeFinish')
+        : multiple
+          ? t('gameplay:encounter.isolatedReclaimedWait')
+          : t('gameplay:encounter.isolatedSafeWait');
   else
-    instruction = `Live line ${cutCells} / ${min} new cells · Close on ${ground} during CORE OPEN.${lane && e.phase !== 'open' ? ` Watch ${lane}.` : ''}`;
+    instruction = `${multiple ? t('gameplay:encounter.reclaimedCut', { cells: cutCells, minimum: min }) : t('gameplay:encounter.safeCut', { cells: cutCells, minimum: min })}${lane && e.phase !== 'open' ? ` ${t('gameplay:encounter.watchLane', { lane })}` : ''}`;
   if (frozen && !ended && !e.defeated && state.status !== 'respawning')
     instruction += ' ' + t('interface:enemyFreezeHoldsTheEncounterClock') + '';
   return Object.freeze({
