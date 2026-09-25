@@ -1,4 +1,4 @@
-import { t, localizedText } from '../i18n/index.mjs';
+import { t, localizedText, localizedMessage } from '../i18n/index.mjs';
 import { attachOptionalChaptersPanel } from '../ui/optional-chapters-panel.mjs';
 import { loadOptionalCatalog } from '../optional-chapters.mjs';
 import { emptyPackLibrary } from '../packs.mjs';
@@ -198,8 +198,8 @@ export function attachCouchCatalogue({
   }
   const panel = attachOptionalChaptersPanel({
     document: doc,
-    heading: t('interface:chaptersCouchVersus'),
-    backLabel: t('interface:backToVersus'),
+    heading: localizedMessage('interface:chaptersCouchVersus'),
+    backLabel: localizedMessage('interface:backToVersus'),
     attemptLabel: 'race',
     showManage: false,
     getLibrary: () => inventory.library,
