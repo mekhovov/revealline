@@ -38,3 +38,28 @@ After this correction, the affected quick-controls, Solo soundtrack-host and Cou
 ### Stronger unmuted regression evidence
 
 The initial revision-2 retry tests inherited a muted fixture, which bypassed automatic lifecycle retry. The final tests explicitly enable sound and assert an unmuted output. Against the original `d34659f95a5a89a9227c17fbd35649e8a4c23521` runtime, keyboard retry requested Play twice and pointer capture started Play before the button. Both tests fail on that source and pass on the corrected runtime. These targeted runs select two tests and intentionally skip the other 19 host tests; they are not a full-suite qualification. Original revision-2 evidence remains retained.
+
+## Current archive-player reconciliation
+
+On 25 September 2026, the reviewed controls were replayed onto the exact public-archive
+integration head `7cbf5771f69917dd9b24cc88e9687fec77f2a876`. The controls keep using that host's
+single transport and live 128-recording catalogue; they do not create another deck, copy the
+catalogue, or change its trust boundary.
+
+The reconciled audio, control, host, panel, player, source and input cohort passes **346/346**
+tests. The complete presentation-production-history file passes **12/12**. The separate Team
+production-history file has the same two pre-existing `team.enemy.drifter` source-stage failures
+on both the exact stack base and this candidate; those failures are retained as a blocker rather
+than reported as passes. This feature changes no Team recipe input or generated presentation
+output. Three broader Couch navigation host assertions also fail identically on the exact stack
+base and candidate; targeted base/candidate runs preserve those upstream failures instead of
+attributing them to the quick controls.
+
+Revision 5 of the fingerprint audit compares every declared Field Kit source group on the exact
+stack base and candidate. UI, screens, motion, effects, Team and audio fingerprints are byte-for-byte
+unchanged, so no production-ledger write or approval inheritance is justified. The audit records
+the quick-control host, module and CSS as runtime paths outside the current declared recipe groups.
+
+Independent final review, hosted source gates, actual browser layout, physical keyboard, touch and
+controller checks, frozen-build inspection and public release acceptance remain pending. PR #333
+stays stacked on PR #370 until the online catalogue integration is merged.
