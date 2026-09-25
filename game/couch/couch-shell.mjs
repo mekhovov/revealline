@@ -61,6 +61,10 @@ export function createCouchShell({
     removers = [],
     settings = attachSettingsPanels({ root: $('race-options-panel'), document: doc });
   const authoredDestinations = authoredModeDestinations('versus', authoredRoute);
+  const secondaryDestinations = Object.freeze({
+    about: $('race-more-about').getAttribute('href'),
+    releases: $('race-release-explorer').href || $('race-release-explorer').getAttribute('href'),
+  });
   const isJourney = isAuthoredJourneyRouteId(authoredRoute);
   const libraryHref = isJourney ? '?journey=legacy' : `?journey=${DEFAULT_JOURNEY_ROUTES.versus}`;
   const libraryLabel = isJourney ? 'Legacy library' : 'New Journey';
@@ -253,6 +257,12 @@ export function createCouchShell({
   function back() {
     departure = null;
     if (screen === 'main') {
+      const more = $('race-more');
+      if (more.open) {
+        more.open = false;
+        $('race-more-toggle').focus({ preventScroll: true });
+        return;
+      }
       onTransition({ from: screen, to: screen, back: true });
       return focus();
     }
@@ -298,6 +308,7 @@ export function createCouchShell({
     (kind === 'solo' && routeId === 'legacy' && '../?journey=legacy') ||
     (kind === 'solo' && authoredJourneyModeHref(routeId, 'solo')) ||
     (kind === 'team' && teamRouteId && `relay-rescue.html?journey=${teamRouteId}&return=versus`) ||
+    secondaryDestinations[kind] ||
     (isJourney && authoredDestinations?.[kind]) ||
     authoredDestinations?.[kind] ||
     DESTINATIONS[kind];
@@ -378,7 +389,11 @@ export function createCouchShell({
         ? `Open ${libraryLabel}?`
         : kind === 'team'
           ? 'Go to Couch Team?'
-          : 'Return to Solo?',
+          : kind === 'about'
+            ? 'Open About & credits?'
+            : kind === 'releases'
+              ? 'Open Releases?'
+              : 'Return to Solo?',
     );
     setText(
       'race-leave-copy',
@@ -395,7 +410,11 @@ export function createCouchShell({
         ? `Discard and open ${libraryLabel}`
         : kind === 'team'
           ? 'Discard and go to Team'
-          : 'Discard and return to Solo',
+          : kind === 'about'
+            ? 'Discard and open About & credits'
+            : kind === 'releases'
+              ? 'Discard and open Releases'
+              : 'Discard and return to Solo',
     );
     $('race-leave').setAttribute(
       'href',
@@ -428,6 +447,9 @@ export function createCouchShell({
   for (const [id, kind] of [
     ['race-solo-return', 'solo'],
     ['race-home', 'solo'],
+    ['race-more-home', 'solo'],
+    ['race-more-about', 'about'],
+    ['race-release-explorer', 'releases'],
     ['race-coop', 'team'],
     ['race-library-switch', 'library'],
   ])
