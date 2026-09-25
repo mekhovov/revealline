@@ -27,6 +27,13 @@ ALTER TABLE community_reports
   ADD COLUMN IF NOT EXISTS resolved_by text,
   ADD COLUMN IF NOT EXISTS resolution text;
 
+UPDATE community_reports
+SET resolved_at = COALESCE(resolved_at, created_at),
+    resolved_by = COALESCE(resolved_by, 'migration/legacy-report'),
+    resolution = COALESCE(resolution, 'Resolved before report triage audit fields were introduced.')
+WHERE status = 'resolved'
+  AND (resolved_at IS NULL OR resolved_by IS NULL OR resolution IS NULL);
+
 ALTER TABLE community_reports
   DROP CONSTRAINT IF EXISTS community_reports_resolution_state;
 ALTER TABLE community_reports
