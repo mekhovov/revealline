@@ -9,7 +9,25 @@ import {
 export { inspectDecodedVisualTrim, VISUAL_TRIM_INSPECTION_FORMAT };
 
 export const VIDEO_EDIT_FORMAT = 'revealline-video-edit.v1';
-export const AUDIO_TRACK_INSPECTION_FORMAT = 'revealline-audio-track-inspection.v1';
+export const MEDIA_TRACK_INSPECTION_FORMAT = 'revealline-media-track-inspection.v1';
+export const AUDIO_TRACK_INSPECTION_FORMAT = MEDIA_TRACK_INSPECTION_FORMAT;
+export const VIDEO_TRANSFORM_PROFILES = Object.freeze({
+  source: Object.freeze({ label: 'Keep source size · encoder default' }),
+  balanced: Object.freeze({
+    label: 'Fit within 1280 × 720 · 2.5 Mbit/s AVC target',
+    maxWidth: 1280,
+    maxHeight: 720,
+    targetVideoBitrate: 2_500_000,
+  }),
+  compact: Object.freeze({
+    label: 'Fit within 640 × 360 · 0.9 Mbit/s AVC target',
+    maxWidth: 640,
+    maxHeight: 360,
+    targetVideoBitrate: 900_000,
+  }),
+});
+const BITRATE_TOLERANCE_FACTOR = 2;
+const BITRATE_TOLERANCE_BITS_PER_SECOND = 256_000;
 const fail = (message) => new TypeError(message);
 const finite = (value) => typeof value === 'number' && Number.isFinite(value);
 const sha = async (blob) =>
@@ -35,6 +53,52 @@ function videoFacts(info) {
     'Video editing needs verified source facts.',
   );
   return info;
+}
+
+const evenFloor = (value) => Math.max(2, Math.floor(value / 2) * 2);
+
+export function prepareVideoTransform(info, profile = 'source') {
+  videoFacts(info);
+  required(
+    typeof profile === 'string' && Object.hasOwn(VIDEO_TRANSFORM_PROFILES, profile),
+    'Choose a supported video size and compression profile.',
+  );
+  const selected = VIDEO_TRANSFORM_PROFILES[profile];
+  let width = info.width,
+    height = info.height;
+  if (selected.maxWidth) {
+    const scale = Math.min(1, selected.maxWidth / info.width, selected.maxHeight / info.height);
+    width = evenFloor(info.width * scale);
+    height = evenFloor((width * info.height) / info.width);
+    if (height > selected.maxHeight) {
+      height = evenFloor(selected.maxHeight);
+      width = evenFloor((height * info.width) / info.height);
+    }
+    required(
+      width <= info.width && height <= info.height,
+      'The selected transform cannot resize this source without upscaling.',
+    );
+    const sourceAspect = info.width / info.height,
+      outputAspect = width / height;
+    required(
+      Math.abs(outputAspect / sourceAspect - 1) <= 0.01 &&
+        Math.sign(info.width - info.height) === Math.sign(width - height),
+      'The selected transform cannot preserve this video’s display aspect and orientation.',
+    );
+  }
+  return Object.freeze({
+    format: VIDEO_EDIT_FORMAT,
+    operation: 'video-transform',
+    profile,
+    sourceSha256: info.sha256,
+    sourceWidth: info.width,
+    sourceHeight: info.height,
+    width,
+    height,
+    fit: 'contain',
+    allowsUpscale: false,
+    targetVideoBitrate: selected.targetVideoBitrate ?? null,
+  });
 }
 
 export function preparePlaybackRange(info, range) {
@@ -138,7 +202,12 @@ async function inspectAuthenticatedAudio(blob, expectedSha256, inspectAudio, { s
       result.audioTrackCount >= 0 &&
       Array.isArray(result.codecs) &&
       result.codecs.length === result.audioTrackCount &&
-      result.codecs.every((codec) => typeof codec === 'string' && codec.length > 0),
+      result.codecs.every((codec) => typeof codec === 'string' && codec.length > 0) &&
+      Number.isInteger(result.videoTrackCount) &&
+      result.videoTrackCount >= 0 &&
+      Array.isArray(result.videoCodecs) &&
+      result.videoCodecs.length === result.videoTrackCount &&
+      result.videoCodecs.every((codec) => typeof codec === 'string' && codec.length > 0),
     `Physical trim ${label} audio inspection did not authenticate the exact bytes.`,
   );
   return result;
@@ -167,8 +236,9 @@ export function createOptionalPhysicalTrimBoundary({
     return loaded;
   };
 
-  async function support(info, { original, range, signal } = {}) {
+  async function support(info, { original, range, transform = 'source', signal } = {}) {
     videoFacts(info);
+    const plannedTransform = prepareVideoTransform(info, transform);
     const loaded = await adapter();
     if (!loaded) return unsupported();
     if (!(original instanceof Blob))
@@ -189,8 +259,15 @@ export function createOptionalPhysicalTrimBoundary({
       return unsupported(
         'This source contains audio. Physical trimming stays unavailable until decoded audio timing and synchronization can be independently verified.',
       );
+    if (sourceAudio.videoTrackCount !== 1)
+      return unsupported(
+        'Physical trim conversion requires exactly one authenticated video track.',
+      );
     const playback = range ? preparePlaybackRange(info, range) : null;
-    const result = await loaded.support(original, info, playback, { signal });
+    const result = await loaded.support(original, info, playback, {
+      signal,
+      transform: plannedTransform,
+    });
     if (!result?.supported)
       return unsupported(result?.reason || 'The optional converter does not support this source.');
     required(
@@ -204,21 +281,26 @@ export function createOptionalPhysicalTrimBoundary({
       formats: Object.freeze([...new Set(result.formats)]),
       reason: '',
       detail: typeof result.detail === 'string' ? result.detail : '',
+      transform: plannedTransform,
     });
   }
 
-  async function trim(original, info, range, { signal } = {}) {
+  async function trim(original, info, range, { transform = 'source', signal } = {}) {
     videoFacts(info);
     const playback = preparePlaybackRange(info, range);
+    const plannedTransform = prepareVideoTransform(info, transform);
     required(
-      !isCompletePlaybackRange(info, range),
-      'Choose a shorter range before physically trimming the video.',
+      !isCompletePlaybackRange(info, range) || plannedTransform.profile !== 'source',
+      'Choose a shorter range or a resize/compression profile before transforming the video.',
     );
-    const capability = await support(info, { original, range, signal });
+    const capability = await support(info, { original, range, transform, signal });
     required(capability.supported, capability.reason);
     if (signal?.aborted) throw new DOMException('Physical trim cancelled.', 'AbortError');
     const loaded = await adapter();
-    const transformed = await loaded.trim(original, playback, { signal });
+    const transformed = await loaded.trim(original, playback, {
+      signal,
+      transform: plannedTransform,
+    });
     required(transformed?.blob instanceof Blob, 'Physical trim adapter returned no video bytes.');
     required(
       transformed.blob.size > 0 &&
@@ -244,13 +326,24 @@ export function createOptionalPhysicalTrimBoundary({
         'Decoded trim identity differs from its exported bytes.',
       );
       required(
-        output.info.width === info.width && output.info.height === info.height,
-        'Physical trim changed decoded picture orientation or dimensions.',
+        output.info.width === plannedTransform.width &&
+          output.info.height === plannedTransform.height,
+        'Physical transform decoded dimensions differ from the reviewed output plan.',
       );
       required(
         Math.abs(output.info.durationSeconds - expectedDuration) <= tolerance,
         'Decoded trim duration differs from the requested physical range.',
       );
+      const observedContainerBitsPerSecond = Math.ceil(
+        (transformed.blob.size * 8) / output.info.durationSeconds,
+      );
+      if (plannedTransform.targetVideoBitrate !== null)
+        required(
+          observedContainerBitsPerSecond <=
+            plannedTransform.targetVideoBitrate * BITRATE_TOLERANCE_FACTOR +
+              BITRATE_TOLERANCE_BITS_PER_SECOND,
+          'Physical transform output exceeds the bounded bitrate review allowance.',
+        );
       const outputAudio = await inspectAuthenticatedAudio(
         transformed.blob,
         outputSha256,
@@ -258,8 +351,12 @@ export function createOptionalPhysicalTrimBoundary({
         { signal, label: 'output' },
       );
       required(
-        outputAudio.audioTrackCount === 0,
-        'Physical trim output contains audio without decoded timing and synchronization evidence.',
+        outputAudio.audioTrackCount === 0 &&
+          outputAudio.videoTrackCount === 1 &&
+          outputAudio.videoCodecs[0] === 'avc',
+        outputAudio.audioTrackCount > 0
+          ? 'Physical trim output contains audio without decoded timing and synchronization evidence.'
+          : 'Physical trim output is not exactly one authenticated AVC/H.264 video track.',
       );
       required(
         source.info.sha256 === info.sha256 &&
@@ -304,10 +401,23 @@ export function createOptionalPhysicalTrimBoundary({
           decodedDurationSeconds: output.info.durationSeconds,
           decodedWidth: output.info.width,
           decodedHeight: output.info.height,
+          transform: Object.freeze({
+            ...plannedTransform,
+            observedContainerBitsPerSecond,
+            bitrateReviewLimit:
+              plannedTransform.targetVideoBitrate === null
+                ? null
+                : plannedTransform.targetVideoBitrate * BITRATE_TOLERANCE_FACTOR +
+                  BITRATE_TOLERANCE_BITS_PER_SECOND,
+          }),
           audioSync: Object.freeze({
             status: 'not-present',
             verification: 'authenticated-container-track-inventory',
             note: 'Separate exact-byte inspections found zero audio tracks in the source and output. No audio synchronization claim applies.',
+          }),
+          videoCodec: Object.freeze({
+            output: outputAudio.videoCodecs[0],
+            verification: 'authenticated-container-track-inventory',
           }),
           visual,
         }),
