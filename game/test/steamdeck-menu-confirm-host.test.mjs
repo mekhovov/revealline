@@ -81,6 +81,27 @@ test('Steam Deck A owns its delayed Chrome activation across quick actions and d
   page.doc.querySelector('button[data-close="shell-workshop-dialog"]').click();
   frame();
   assert.equal(page.$('shell-workshop-dialog').open, false);
+
+  reach('shell-sound');
+  time += 1300;
+  frame();
+  const beforeNativeFirst = page.$('shell-sound').textContent;
+  const nativeFirst = page.doc.activeElement.emit('click', {
+    button: -1,
+    pointerId: -1,
+    pointerType: '',
+    detail: 0,
+    isTrusted: true,
+  });
+  assert.equal(nativeFirst.defaultPrevented, false, 'the leading native activation remains usable');
+  const afterNativeFirst = page.$('shell-sound').textContent;
+  assert.notEqual(afterNativeFirst, beforeNativeFirst);
+  pulse(0);
+  assert.equal(
+    page.$('shell-sound').textContent,
+    afterNativeFirst,
+    'a later Gamepad frame cannot apply the same press twice',
+  );
 });
 
 test('Steam Deck trusted click tails cannot undo Start or paused-menu actions', async (t) => {
@@ -130,10 +151,21 @@ test('Steam Deck trusted click tails cannot undo Start or paused-menu actions', 
   frame();
   page.$('overlay-sound').focus();
   const beforeSound = page.$('overlay-sound').textContent;
-  pulse(0);
+  pad.buttons[0] = { pressed: true, value: 1 };
+  frame();
   const afterSound = page.$('overlay-sound').textContent;
   assert.notEqual(afterSound, beforeSound);
-  trustedClickEcho();
+  time += 5000;
+  pad.buttons[0] = { pressed: false, value: 0 };
+  frame();
+  const heldRelease = page.doc.activeElement.emit('click', {
+    button: -1,
+    pointerId: -1,
+    pointerType: '',
+    detail: 0,
+    isTrusted: true,
+  });
+  assert.equal(heldRelease.defaultPrevented, true, 'long-held A release is consumed');
   assert.equal(page.$('overlay-sound').textContent, afterSound, 'paused Sound changes once');
 
   page.$('overlay-settings').focus();
