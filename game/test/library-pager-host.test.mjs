@@ -13,6 +13,7 @@ import { emptyPackLibrary } from '../packs.mjs';
 import { attachLibraryPanel } from '../ui/library-panel.mjs';
 import { captureOperationFocus } from '../ui/operation-focus.mjs';
 import { BoardPainter } from '../ui/render.mjs';
+import { getLocale, setLocale } from '../i18n/index.mjs';
 
 const campaign = {
   version: 'xonix-campaign.v1',
@@ -302,6 +303,24 @@ for (const kind of ['score', 'gallery']) {
     assert.equal(p.previous.focusCalls + p.next.focusCalls, 0);
   });
 }
+
+test('library pagination changes language without changing page, focus, or records', async (t) => {
+  const locale = getLocale();
+  t.after(() => setLocale(locale, { persist: false }));
+  setLocale('en', { persist: false });
+  const h = await panelHost(t),
+    pager = await h.open('gallery'),
+    before = JSON.stringify(h.state.library);
+  await activate(pager.next);
+  assert.match(pager.label.textContent, /25 entries · page 2 of 3/);
+  setLocale('uk', { persist: false });
+  assert.match(pager.label.textContent, /25 записів · сторінка 2 з 3/);
+  assert.equal(h.doc.activeElement, pager.next);
+  assert.equal(JSON.stringify(h.state.library), before);
+  setLocale('en', { persist: false });
+  assert.match(pager.label.textContent, /25 entries · page 2 of 3/);
+  assert.equal(h.doc.activeElement, pager.next);
+});
 for (const kind of ['score', 'gallery'])
   test(`${kind}: reveals the same persistent pager after page growth and the opposite endpoint`, async (t) => {
     const h = await panelHost(t),
