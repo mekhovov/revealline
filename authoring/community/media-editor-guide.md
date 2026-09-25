@@ -89,6 +89,46 @@ or playback range keeps the transformed bytes private. A visually static picture
 visual equivalence, but cannot prove a unique frame number; creators still review the exported
 clip.
 
+## Qualify portrait display orientation
+
+Maintainers can create a temporary owned MP4 whose encoded samples are landscape but whose display
+matrix presents them as portrait:
+
+```sh
+node authoring/video-poster/generate-fixture.mjs \
+  --out .cache/video-poster/NEW_PORTRAIT_FIXTURE \
+  --kind portrait-rotation
+```
+
+This diagnostic route requires existing `ffmpeg` and `ffprobe` executables. It installs nothing,
+requires a new ordinary directory under this worktree's `.cache`, refuses symlink ancestors and
+never overwrites an earlier fixture. It encodes a silent 640 × 360 test pattern, losslessly remuxes
+it with a 90-degree MP4 display matrix, verifies the matrix through `ffprobe`, and records both
+commands, tool versions, exact bytes and SHA-256 in `fixture.json`. The expected browser display is
+360 × 640. The Compact plan must therefore be 202 × 358 rather than a landscape plan.
+
+Open the workshop, select that MP4, and require all of these results before recording orientation
+qualification:
+
+1. Browser inspection reports 360 × 640 and four seconds, while `fixture.json` retains the native
+   640 × 360 encoded dimensions and 90-degree matrix evidence.
+2. A complete 0–4 second range plus Compact produces a reviewed 202 × 358 / 0.9 Mbit/s plan.
+3. The reopened output reports exactly 202 × 358, one AVC track and zero audio tracks.
+4. Both decoded visual-edge comparisons pass, the download becomes visible, and the asymmetric
+   pattern remains upright portrait artwork on visual review.
+
+The generated file and record are temporary acceptance inputs, not repository fixtures or browser
+evidence by themselves. Repeat this check in every supported browser because display-matrix decode
+behavior can differ by browser and platform.
+
+The built-in browser completed this route on 2026-09-25. It inspected the exact 223,097-byte source
+as 360 × 640, derived the 202 × 358 Compact plan, and exported a 159,517-byte AVC MP4 with SHA-256
+`1d2a620c2ae711cd775b2c08a14972540f57f51c012f7c8540f9fa05705e3f2b`. The fresh output decode
+reported 202 × 358, four seconds and zero audio; its whole-container average was 319,034 bit/s.
+Start/end RGB errors were `0.017472` and `0.019686`, the verified download appeared, and the browser
+reported no warning or error. This is one Chromium-platform qualification; it does not replace the
+per-browser repeat above.
+
 This proves changed bytes, clip duration, decoded display orientation and the absence of audio
 tracks in both authenticated containers. The audio inventory reopens the bytes through the same
 pinned media parser; it is a separate inspection pass, not an independent decoder. Adapter-supplied
