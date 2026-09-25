@@ -50,6 +50,14 @@ test('live HUD plurals and mission summaries cover Ukrainian count categories', 
       t('gameplay:hud.lives', { count }),
       `${new Intl.NumberFormat('uk').format(count)} ${expected}`,
     );
+    assert.match(
+      t('interface:solo.campaignLibraryComplete', {
+        campaign: 'Моя кампанія',
+        count,
+        total: 22,
+      }),
+      count === 1 ? /1 місію/ : [2, 22].includes(count) ? /місії/ : /місій|місії/,
+    );
   }
   const preset = journeyPreset('standard');
   assert.match(journeyPresetDescription(preset, 'gameplay-pressure.v4'), /3 життя в місії/);
