@@ -353,7 +353,7 @@ for (const [width, style, source] of [
           canvasCSSWidth: width,
         }),
       );
-      assert.ok(css >= (width >= 480 ? 24 : 16) - 1e-9);
+      assert.ok(css >= (width >= 480 ? 24 : 20) - 1e-9);
       assert.ok(css <= (core ? 40 : 32) + 1e-9);
     }
     assert.equal(adapter.frame('pilot', 0).radius, run.players[0].radius * 16);
@@ -479,10 +479,17 @@ test('prepared image and pivot geometry are borrowed once; reset and replacement
       assert.equal(draw.args[0], p.images.get(frame.sourceSlot).image);
       assert.equal(draw.state.imageSmoothingEnabled, false);
       const geometry = p.images.get(frame.sourceSlot).geometry;
-      assert.equal(
-        draw.args.at(-1),
-        kind === 'core' ? frame.diameter : actorImagePaintMetrics(frame.diameter, geometry).height,
-      );
+      const paint = actorImagePaintMetrics(frame.diameter, geometry);
+      if (kind === 'core') {
+        assert.equal(draw.args.at(-2), paint.width);
+        assert.equal(draw.args.at(-1), paint.height);
+        const visibleWidth = draw.args.at(-2) * (paint.visible.right - paint.visible.left),
+          visibleHeight = draw.args.at(-1) * (paint.visible.bottom - paint.visible.top);
+        assert.ok(
+          Math.abs(Math.max(visibleWidth, visibleHeight) - frame.diameter) < 1e-9,
+          'stronghold visible body should resolve to its boss cosmetic diameter',
+        );
+      } else assert.equal(draw.args.at(-1), paint.height);
       assert.equal(view.stack.length, 0);
       if (kind === 'core')
         assert.equal(
