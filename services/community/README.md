@@ -126,15 +126,62 @@ the worker never trusts an uploaded approval flag.
   methods. The memory implementation supports deterministic API and worker tests; it is never used
   by the executable server.
 
+## Offline backup and restore
+
+The recovery command binds one PostgreSQL custom-format dump to an exact, sorted inventory of every
+content-addressed package blob. The manifest hashes the database dump and each package, rejects
+symbolic links and unexpected files, and has its own deterministic snapshot identity. Restore
+verifies the complete snapshot before running `pg_restore`, stages package files outside the live
+root, and publishes that root only after the database command succeeds. A bounded restore journal
+records the snapshot, target, staging path, and last completed boundary. Rerunning the exact restore
+reuses verified staged blobs, retries an interrupted database restore, or finishes blob publication
+when the database restore had already completed.
+
+Stop both writers before backup or restore. This is an intentionally offline contract: keeping the
+API or worker active could create a database/blob boundary that no filesystem copy can make atomic.
+On a direct installation, with PostgreSQL client tools on `PATH`:
+
+```sh
+cd services/community
+export COMMUNITY_DATABASE_URL=postgres://revealline:secret@database/revealline
+export COMMUNITY_BLOB_ROOT=/srv/revealline/blobs
+npm run recovery -- backup --directory /srv/revealline/backups/2026-09-25
+npm run recovery -- verify --directory /srv/revealline/backups/2026-09-25
+```
+
+Restore only into the intended database and an absent or empty blob root:
+
+```sh
+npm run recovery -- restore --directory /srv/revealline/backups/2026-09-25
+```
+
+`pg_restore --clean --if-exists` replaces the community schema represented by the dump, so verify
+the target URL before running it. Keep the snapshot outside the blob root and copy it off-host. The
+Compose image includes the PostgreSQL 17 client and mounts `/data/recovery` on its own named volume;
+an operator can run:
+
+```sh
+docker compose stop api worker
+docker compose run --rm api npm run recovery -- backup --directory /data/recovery/snapshot-1
+docker compose run --rm api npm run recovery -- verify --directory /data/recovery/snapshot-1
+docker compose start api worker
+```
+
+Copy the verified snapshot to independent storage. A restore uses the same stopped-writer sequence
+and replaces `backup` with `restore`. The source tests rehearse exact backup, verification,
+successful restore, changed-byte rejection, occupied-target refusal, database-command failure, and
+journal-backed retry.
+
 ## Limits and operational work still required
 
 The default package ceiling is 256 MiB and catalog pages are capped at 50 entries. A reverse proxy
-still needs request timeouts, connection limits, HTTPS, and rate limits. Public deployment also
+still needs request timeouts, connection limits, HTTPS, and distributed rate limits. Public deployment also
 requires production Better Auth secrets, mail/account recovery choices, report triage UI, a shared
 tus locker for multiple API replicas, incomplete-upload cleanup, stronger process/container
-isolation for media validation, malware policy, metrics, backups, restore rehearsal, and an explicit
-infrastructure decision. The S3 adapter is tested at its byte boundary but is not wired into the
-executable deployment. No AWS, mail, domain, or production restore claim is made here.
+isolation for media validation, malware policy, metrics, an off-host backup schedule, a real
+PostgreSQL/blob restore rehearsal, and an explicit infrastructure decision. The S3 adapter is tested
+at its byte boundary but is not wired into the executable deployment. No AWS, mail, domain, or
+production restore claim is made here.
 
 Email/password registration currently confirms an address syntactically and creates the session;
 mail delivery, email verification, password reset, account recovery, abuse throttles, and account
