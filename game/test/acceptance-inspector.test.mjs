@@ -3,6 +3,8 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { runInNewContext } from 'node:vm';
 import { createStarterProject } from '../content-design/starter.mjs';
+import { freezeDesign } from '../content-design/catalogs.mjs';
+import { compileContentProject } from '../content-design/project.mjs';
 import { createTeamOpeningCandidates } from '../content-design/team-candidates.mjs';
 import {
   inspectMissionAcceptance,
@@ -106,7 +108,7 @@ test('local import is explicit, inert and visit-only; failures cannot silently r
     ledger = syntheticLedger(state.source);
   await importFile(JSON.stringify(ledger));
   assert.equal(nodes.report.textContent, '');
-  assert.match(nodes['ledger-status'].textContent, /1 declared records/);
+  assert.match(nodes['ledger-status'].textContent, /1 declared record loaded/);
   const report = nodes.inspect.onclick();
   assert.deepEqual(report.currentEvidenceIds, ['synthetic-inspector-test']);
   assert.equal(report.checks[0].status, 'reported-fail');
@@ -227,7 +229,7 @@ test('Studio owns the inspector and synchronizes it when the applied board selec
         options: ['gentle', 'standard', 'expert'].map((value) => ({ value, textContent: 'stale' })),
       };
       const calls = [],
-        boardNodes = { difficulty: selector },
+        boardNodes = { difficulty: selector, mission: { value: state.missionId } },
         stopAtPreview = new Error('Preview boundary');
       nodes.report.textContent = 'Stale report';
       const context = {
@@ -235,6 +237,8 @@ test('Studio owns the inspector and synchronizes it when the applied board selec
         session: { current: () => source },
         $: (id) => (boardNodes[id] ??= {}),
         syncStudioDifficulty,
+        freezeDesign,
+        compileContentProject,
         acceptanceInspector: {
           sync() {
             assert(selector.options.every((option) => option.textContent !== 'stale'));
@@ -260,7 +264,7 @@ test('Studio owns the inspector and synchronizes it when the applied board selec
         document: {},
         setBoardAvailability: (_document, available) => assert.equal(available, !!mission),
         prepareContentPreview: (applied, id, options) => {
-          assert.equal(applied, source);
+          assert.deepEqual(applied.source, source);
           assert.equal(id, mission.id);
           assert.equal(options.difficulty, 'expert');
           calls.push('preview');
@@ -280,7 +284,7 @@ test('Studio owns the inspector and synchronizes it when the applied board selec
         assert.equal(nodes.selection.textContent, 'Choose an applied mission above.');
         assert.equal(context.inspectedTrail.length, 0);
         assert.equal(context.tuningRevision, null);
-      } else assert(nodes.selection.textContent.includes(`${mission.id} · expert`));
+      } else assert(nodes.selection.textContent.includes(`${mission.id} · Expert`));
     }
   for (const id of [
     'mode',
