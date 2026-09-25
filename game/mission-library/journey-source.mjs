@@ -11,6 +11,24 @@ export function journeyLibrarySource({
   details,
   tags = () => [],
 }) {
+  let cached = null;
+  const stateRevision =
+    typeof profile?.stateRevision === 'function' ? () => profile.stateRevision() : null;
+  function currentState() {
+    const revision = stateRevision?.();
+    if (cached && revision !== undefined && revision === cached.revision) return cached;
+    const snapshot = profile.snapshot(),
+      pictures = profile.pictures?.() ?? emptyJourneyPictures(),
+      earned = new Map();
+    for (const record of pictures.records) {
+      if (record.editionId !== editionId) continue;
+      if (!earned.has(record.mode)) earned.set(record.mode, new Map());
+      earned.get(record.mode).set(record.missionId, record);
+    }
+    const captured = { revision, snapshot, earned };
+    if (revision !== undefined) cached = captured;
+    return captured;
+  }
   return {
     id: `journey:${editionId}`,
     editionId,
@@ -29,21 +47,24 @@ export function journeyLibrarySource({
     }),
     availability: () => ({ state: 'ready' }),
     progress(mission, mode) {
-      const state = profile.snapshot();
-      return Object.hasOwn(state.clears[mode] ?? {}, mission.id)
+      const { snapshot } = currentState();
+      return Object.hasOwn(snapshot.clears[mode] ?? {}, mission.id)
         ? 'Cleared'
-        : state.skipped[mode]?.includes(mission.id)
+        : snapshot.skipped[mode]?.includes(mission.id)
           ? 'Skipped · try again'
           : '';
     },
-    completion: (mission, mode) =>
-      journeyPictureCompletion({
-        profile: profile.snapshot(),
-        pictures: profile.pictures?.() ?? emptyJourneyPictures(),
+    completion(mission, mode) {
+      const { snapshot, earned } = currentState(),
+        record = earned.get(mode)?.get(mission.id);
+      return journeyPictureCompletion({
+        profile: snapshot,
+        pictures: record ? { records: [record] } : emptyJourneyPictures(),
         mode,
         editionId,
         missionId: mission.id,
-      }),
+      });
+    },
     card,
     details,
     launch,

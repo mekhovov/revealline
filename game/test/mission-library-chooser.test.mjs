@@ -5,6 +5,11 @@ import { createMissionLibrary } from '../mission-library/library.mjs';
 import { journeyLibrarySource } from '../mission-library/journey-source.mjs';
 import { createJourneyCatalog } from '../journey/catalog.mjs';
 import { emptyJourneyProfile } from '../journey/profile.mjs';
+import {
+  JOURNEY_PICTURES_LIMIT,
+  JOURNEY_PICTURES_VERSION,
+  validateJourneyPictures,
+} from '../journey/pictures.mjs';
 import { attachJourneyChooser } from '../ui/journey-chooser.mjs';
 import { createMissionLibrarySessionState } from '../mission-library/handoff.mjs';
 import { attachControllerNavigation } from '../ui/controller-navigation.mjs';
@@ -1071,6 +1076,90 @@ test('Journey adapter retains exact runtime objects and independent mode progres
   assert.equal(library.progress(mission, 'versus'), '');
   library.launch(mission, { mode: 'solo' });
   assert.equal(selected, catalog.missions[0]);
+});
+
+test('Journey adapter indexes a maximum picture ledger once per store revision', () => {
+  const catalog = createJourneyCatalog([
+      {
+        id: 'current',
+        title: 'Current campaign',
+        levels: [
+          { id: 'earned', name: 'Earned' },
+          { id: 'earlier', name: 'Earlier' },
+          { id: 'unfinished', name: 'Unfinished' },
+        ],
+      },
+    ]),
+    profile = emptyJourneyProfile(),
+    [earned, earlier, unfinished] = catalog.missions;
+  profile.clears.solo[earlier.id] = {
+    runId: 'old-run',
+    gameplayId: 'old-gameplay',
+    difficulty: 'standard',
+  };
+  let revision = 0,
+    profileReads = 0,
+    pictureReads = 0;
+  const records = Array.from({ length: JOURNEY_PICTURES_LIMIT }, (_, index) => ({
+    mode: 'solo',
+    editionId: index === JOURNEY_PICTURES_LIMIT - 1 ? 'current-v1' : 'historical-v1',
+    missionId: index === JOURNEY_PICTURES_LIMIT - 1 ? earned.id : `historical-${index}`,
+    campaignKey: 'campaign@1',
+    levelId: `level-${index}`,
+    levelRevision: '1',
+    runId: `run-${index}`,
+    gameplayId: `gameplay-${index}`,
+    difficulty: 'standard',
+    name: `Mission ${index}`,
+    campaignTitle: 'Historical campaign',
+    themeId: 'horizon',
+    asset: {
+      format: 'AssetRevisionV1',
+      id: `picture-${index}`,
+      revision: '1',
+      kind: 'reveal-background',
+      path: 'content-design/assets/test/picture.png',
+      sha256: 'a'.repeat(64),
+      bytes: 100,
+      width: 32,
+      height: 16,
+      alt: 'Historical picture',
+      review: 'candidate',
+    },
+  }));
+  assert.equal(
+    validateJourneyPictures({ format: JOURNEY_PICTURES_VERSION, records }).records.length,
+    JOURNEY_PICTURES_LIMIT,
+  );
+  const source = journeyLibrarySource({
+    editionId: 'current-v1',
+    edition: 'Current Journey',
+    catalog,
+    profile: {
+      snapshot: () => {
+        profileReads++;
+        return structuredClone(profile);
+      },
+      pictures: () => {
+        pictureReads++;
+        return { format: JOURNEY_PICTURES_VERSION, records: structuredClone(records) };
+      },
+      stateRevision: () => revision,
+    },
+    launch: () => true,
+  });
+  assert.equal(source.progress(earned, 'solo'), '');
+  assert.equal(source.completion(earned, 'solo').state, 'earned');
+  assert.equal(source.progress(earlier, 'solo'), 'Cleared');
+  assert.equal(source.completion(earlier, 'solo').state, 'unavailable');
+  assert.equal(source.completion(unfinished, 'solo').state, 'unfinished');
+  assert.deepEqual({ profileReads, pictureReads }, { profileReads: 1, pictureReads: 1 });
+
+  records.at(-1).missionId = unfinished.id;
+  revision++;
+  assert.equal(source.completion(earned, 'solo').state, 'unfinished');
+  assert.equal(source.completion(unfinished, 'solo').state, 'earned');
+  assert.deepEqual({ profileReads, pictureReads }, { profileReads: 2, pictureReads: 2 });
 });
 
 test('extending the Journey picker preserves optional progress backup and return focus', () => {

@@ -11,6 +11,7 @@ import { CLASSES } from '../core/index.mjs';
 import { playKeyboardRoute } from './helpers/keyboard-route.mjs';
 import { expectedRouteEvidence } from './helpers/route-evidence.mjs';
 import { createAuthoredJourneyRoute } from '../content-design/route.mjs';
+import { createCandidateVersusHost } from '../content-design/versus-host.mjs';
 import { compileContentProject, resolveMission } from '../content-design/project.mjs';
 import { applyGameplayTuning, resolveGameplayTuning } from '../gameplay-tuning.mjs';
 import { dataIdentity } from '../data-json.mjs';
@@ -295,8 +296,25 @@ test('controller can open and leave the flat chooser without starting or clearin
   await waitFor(() => p.$('journey-chooser')?.open && p.$('journey-collection'));
   p.frame(); // The asynchronously mounted scope observes a neutral controller frame.
   assert.equal(p.$('journey-chooser').open, true);
-  assert.equal(p.$('journey-cards').children.length, 120);
-  const card = p.$('journey-cards').children[0];
+  const cards = [...p.$('journey-cards').children],
+    route = createAuthoredJourneyRoute('opening'),
+    themes = JSON.parse(
+      await readFile(new URL('../content-design/themes.json', import.meta.url)),
+    ).themes,
+    currentInventory = createCandidateVersusHost(route.source, {
+      themes,
+      corePackIds: route.corePackIds,
+      optionalCampaignIds: route.optionalCampaignIds,
+    }).catalog.forMode('versus'),
+    currentCards = cards.filter((card) => {
+      const [ownerId, editionId] = JSON.parse(card.dataset.missionId);
+      return ownerId === 'journey:opening' && editionId === 'opening';
+    });
+  assert.deepEqual(
+    currentCards.map((card) => JSON.parse(card.dataset.missionId)[3]),
+    currentInventory.map((mission) => mission.id),
+  );
+  const card = currentCards[0];
   assert.match(card.textContent, /Band 1\/12.*Standard.*Optional challenge/);
   card.focus();
   const raw = JSON.stringify({ format: 'JourneyPreferencesV1', difficulty: 'expert' });
