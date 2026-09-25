@@ -25,18 +25,30 @@ as passes.
 The release makes Classic missions launched from the unified library retain their
 Classic rules edition in every preparation path. Exact source
 `7c6f84a473b3d2dca8f745c9a3bcc2745437f458` and source tree
-`289b27033863bea1399df03eeb0f02c7ebb3bf01` were qualified. Forty-eight focused
-tests passed before release. Validation, lint, both formatting gates, syntax,
-production reproduction/readiness, deterministic build, frozen-artifact reread,
-release-asset reconciliation, archive admission, selector validation, and Pages
-assembly passed. The long source shards and focused publisher suites were
-**waived by the committed fast-release policy** and are recorded as skipped.
+`289b27033863bea1399df03eeb0f02c7ebb3bf01` were qualified. The immutable
+`distribution.zip` SHA-256 is
+`069ed3088d123cd42e5e9c46ccc7d75fb1a8f7ebec0e932e1d66a46ba4afa78c`.
+Forty-eight focused tests passed before release. Validation, lint, both formatting
+gates, syntax, production reproduction/readiness, deterministic build,
+frozen-artifact reread, release-asset reconciliation, archive admission, selector
+validation, and Pages assembly passed. The long source shards and focused
+publisher suites were **waived by the committed fast-release policy** and are
+recorded as skipped.
 
 The public payload was independently compared with its production receipt:
 **4,710/4,710 files and 629,793,540/629,793,540 bytes matched**, with no failures
-or retries. A public keyboard-only acceptance journey selected Classic from the
-unified library, prepared First Signal with its 45% Classic target, started it
-with Enter, paused with Escape, and resumed with Enter.
+or retries. A bounded public browser check on 25 September 2026 used the Codex
+in-app browser at 1422 × 800. Continue launched the current New Journey, Missions
+opened the unified library, the Classic filter exposed 188 Solo records, and First
+Signal prepared with its 45% Classic target. Enter started the mission, Arrow Down
+supplied directional input, Escape paused, and Enter resumed. No browser console
+warnings or errors were captured.
+
+That browser check was session-only because another game tab held the save lease.
+It did not qualify persistence or reload, complete a mission, or cover touch,
+physical controllers, responsive/mobile layouts, other browsers, offline use,
+storage durability, download completion, or audio listening. Those remain
+separate acceptance work.
 
 The replaced v0.113.0 site is preserved at
 <https://mekhovov.github.io/revealline-archive-79/releases/v0.113.0/site/game/>.
@@ -75,19 +87,38 @@ Archive PR [#1](https://github.com/mekhovov/revealline-archive-79/pull/1), deplo
 Only one release owns publication at a time. A feature is Complete only after its
 version is publicly deployed and verified.
 
-| Priority | Delivery                                        | Current state                                                                                    | Completion gate                                                                                                                   |                     Engineering range |
-| -------: | ----------------------------------------------- | ------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------: |
-|        1 | **UX2 — shared Home, lobbies, Pause; PR #487**  | Draft on an older base; prior candidate evidence exists but the current merge is conflicting     | Reconcile on v0.113.1, preserve direct entry/focus, verify keyboard/controller/touch flows, release and publicly accept           |                          **1–2 days** |
-|        2 | **UX1-A — exact Journey rewards; PR #485**      | Draft; exact pictures, restore validation, focus recovery, and revision-safe caching implemented | Reconcile after UX2; verify reload, Retry/Next, missing-original recovery, release and publicly accept                            |                          **1–2 days** |
-|        3 | **UX1-B — compact grouped mission gallery**     | Design/component foundations only                                                                | Group campaigns, restore selection/scroll, one-action ready/download-and-play, lazy previews, spatial input                       |                          **1–2 days** |
-|        4 | **UX3 — gameplay HUD, touch and teaching**      | Partial responsive candidates                                                                    | One-row short-landscape HUD, maximum arena, shared touch layout, contextual hints, reduced effects, iPhone and Steam Deck checks  |            **1–2 days plus hardware** |
-|        5 | **UX4 — start, failure and continuation**       | Partial countdown/retry/result candidates                                                        | Countdown/Go, destruction/life-loss, deliberate Retry, named successor/campaign endings, duplicate-award prevention               |                          **1–2 days** |
-|        6 | **UX5 — remaining player screens**              | Foundations exist                                                                                | Settings, difficulty, Help, Collection/Records/replay and recovery with exact return focus and no Workshop dependency             |                          **1–2 days** |
-|        7 | **UX6 — whole-player qualification**            | No accepted aggregate                                                                            | End-to-end accessibility, performance, storage, offline, recovery, controller and touch matrix                                    |             **2–4 days plus devices** |
-|        8 | **Actor/action parity and enemy tuning**        | Shared assets and mechanics are partial                                                          | Distinct actor catalog, readable scale/heading/warnings, fair pressure, classic roles/powerups, deterministic bosses, Team parity |           **4–8 days plus playtests** |
-|        9 | **Audio and finished music**                    | Runtime, MP3, playlist and authored-track foundations exist                                      | One audio authority, every mode, exact backup/offline, audible review, qualified synth/chiptune/rock/metal library                |                          **3–5 days** |
-|       10 | **Studio, packs and reproducible authoring**    | Registries, validators, tools and 13 skills exist                                                | Fresh-workspace upload/edit/export/import/install/play/recover proof with exact original bytes                                    |                          **4–7 days** |
-|       11 | **Campaign slices and final browser programme** | Numerous drafts; accepted inventory requires a new audit                                         | Player-approved benchmark, then FPV/DroneAid/Ukrainian/Retro/Coupa slices and final P18 qualification                             | **Several weeks; 3–7 days per slice** |
+The following queue observations are a **25 September 2026 snapshot captured
+immediately before PR #493 merged at 11:32 CEST**, not permanent counts or branch
+identities:
+
+- The repository had **51 open pull requests, all 51 drafts**.
+- UX2 PR [#487](https://github.com/mekhovov/revealline/pull/487) still pointed to
+  exact remote head `655d4515ce7a479053a8e75d3a42fa3f3379cb8a` on an older,
+  conflicting base. A local rebase onto accepted v0.113.1 was in progress; no
+  reconciled remote head or new qualification evidence was available yet.
+- UX1-A PR [#485](https://github.com/mekhovov/revealline/pull/485) remained draft
+  and unversioned at exact head
+  `4ea9ce45548d35dc1563f8e5126d5c970f434a1b`. Its complete real
+  `candidate-versus-host` file passed **13/13** with zero skips in 286.8 seconds;
+  lint, both format checks, validation, motion-lab syntax, and `git diff --check`
+  passed. Its reward/storage/artwork/current-authority/Legacy Team/real Solo and
+  Team cohort passed **117/117**, and the changed all-campaign Versus reward paths
+  passed **2/2**. This evidence does not qualify the required post-UX2 rebase or
+  the outstanding real-browser reward recovery flows.
+
+| Priority | Delivery                                        | Current state                                                                            | Completion gate                                                                                                                   |                     Engineering range |
+| -------: | ----------------------------------------------- | ---------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------: |
+|        1 | **UX2 — shared Home, lobbies, Pause; PR #487**  | Local v0.113.1 rebase in progress; the remote draft still has the older conflicting head | Finish and review the rebase, preserve direct entry/focus, verify keyboard/controller/touch flows, release and publicly accept    |                          **1–2 days** |
+|        2 | **UX1-A — exact Journey rewards; PR #485**      | Draft head and focused evidence recorded above; reconciliation must follow UX2           | Reconcile after UX2; verify reload, Retry/Next, missing-original recovery, release and publicly accept                            |                          **1–2 days** |
+|        3 | **UX1-B — compact grouped mission gallery**     | Design/component foundations only                                                        | Group campaigns, restore selection/scroll, one-action ready/download-and-play, lazy previews, spatial input                       |                          **1–2 days** |
+|        4 | **UX3 — gameplay HUD, touch and teaching**      | Partial responsive candidates                                                            | One-row short-landscape HUD, maximum arena, shared touch layout, contextual hints, reduced effects, iPhone and Steam Deck checks  |            **1–2 days plus hardware** |
+|        5 | **UX4 — start, failure and continuation**       | Partial countdown/retry/result candidates                                                | Countdown/Go, destruction/life-loss, deliberate Retry, named successor/campaign endings, duplicate-award prevention               |                          **1–2 days** |
+|        6 | **UX5 — remaining player screens**              | Foundations exist                                                                        | Settings, difficulty, Help, Collection/Records/replay and recovery with exact return focus and no Workshop dependency             |                          **1–2 days** |
+|        7 | **UX6 — whole-player qualification**            | No accepted aggregate                                                                    | End-to-end accessibility, performance, storage, offline, recovery, controller and touch matrix                                    |             **2–4 days plus devices** |
+|        8 | **Actor/action parity and enemy tuning**        | Shared assets and mechanics are partial                                                  | Distinct actor catalog, readable scale/heading/warnings, fair pressure, classic roles/powerups, deterministic bosses, Team parity |           **4–8 days plus playtests** |
+|        9 | **Audio and finished music**                    | Runtime, MP3, playlist and authored-track foundations exist                              | One audio authority, every mode, exact backup/offline, audible review, qualified synth/chiptune/rock/metal library                |                          **3–5 days** |
+|       10 | **Studio, packs and reproducible authoring**    | Registries, validators, tools and 13 skills exist                                        | Fresh-workspace upload/edit/export/import/install/play/recover proof with exact original bytes                                    |                          **4–7 days** |
+|       11 | **Campaign slices and final browser programme** | Numerous drafts; accepted inventory requires a new audit                                 | Player-approved benchmark, then FPV/DroneAid/Ukrainian/Retro/Coupa slices and final P18 qualification                             | **Several weeks; 3–7 days per slice** |
 
 ## Original phase register
 
@@ -138,7 +169,8 @@ reserve art are not installed, playable content.
 6. **Local capacity:** the development volume was below 300 MiB free at this
    review. Hosted gates are usable, but obsolete clean worktrees must be retired
    before another local build or reconciliation.
-7. **Large draft queue:** studies and stacked candidates overlap. Each successor
+7. **Large draft queue:** at the timestamped observation above, all 51 open PRs
+   were drafts and many studies or stacked candidates overlapped. Each successor
    must be reconciled by related hunks; bulk merging risks duplicate content,
    stale versions and incompatible identities.
 
@@ -146,8 +178,9 @@ reserve art are not installed, playable content.
 
 1. Retire only clean, obsolete v0.113.1 release worktrees after preserving Git and
    hosted evidence.
-2. Reconcile UX2 PR #487 onto accepted v0.113.1, review at hunk level, qualify the
-   new exact head, and release it as the next unused minor version.
+2. Finish the in-progress local UX2 rebase onto accepted v0.113.1, review at hunk
+   level, push and qualify the new exact head, and release it as the next unused
+   minor version.
 3. Reconcile and release UX1-A, then implement/release UX1-B.
 4. Ship UX3–UX6 as separate publicly verified player releases, prioritizing the
    one-row mobile HUD, consistent touch controls and controller A/start behavior.
