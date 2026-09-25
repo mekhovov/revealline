@@ -99,14 +99,20 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
           PR_TITLE: ${{ github.event.pull_request.title }}
+          PR_MILESTONE: ${{ github.event.pull_request.milestone.title || '' }}
         run: |
           set -euo pipefail
           # A product change consumes an immutable version slot only when an
-          # owner explicitly promotes it with a stable release title. Until
-          # then, retain it (and any stacked children) without spending a
-          # runner on a build that cannot safely merge into the active train.
+          # owner explicitly promotes it with a stable release title. A
+          # milestone is an explicit source-only schedule: it may merge into
+          # the accumulating train, while the one promoted release remains the
+          # only PR that builds and publishes a versioned artifact.
           if [[ "$PR_TITLE" =~ ^Release\ v[0-9]+\.[0-9]+\.[0-9]+ ]]; then
             echo 'mode=release' >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          if [[ "$PR_MILESTONE" =~ ^v[0-9]+\.[0-9]+\.[0-9]+ ]]; then
+            echo 'mode=scheduled' >> "$GITHUB_OUTPUT"
             exit 0
           fi
 
@@ -322,6 +328,10 @@ jobs:
           test "$PREFLIGHT_RESULT" = success
           if [ "$ADMISSION" = maintenance ]; then
             echo 'Bounded documentation/controller maintenance: product build not required.'
+            exit 0
+          fi
+          if [ "$ADMISSION" = scheduled ]; then
+            echo 'Explicit milestone schedule: source-only merge admitted; the promoted release is the sole artifact build and publication gate.'
             exit 0
           fi
           if [ "$ADMISSION" != release ]; then
