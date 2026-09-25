@@ -852,7 +852,9 @@ test('optional indexed pack keeps exact shipped and ZIP bytes while core cache e
     false,
   );
   assert.ok(cache.files.some((f) => f.path === 'game/content/packs/index.json'));
-  assert.deepEqual(cache.optionalPacks, [{ path: name, id: 'night-shift', name: 'Night Shift' }]);
+  assert.deepEqual(cache.optionalPacks, [
+    { path: name, id: 'night-shift', name: 'Night Shift', sha256: hash(original) },
+  ]);
   const page = await fs.readFile(path.join(out, 'game/index.html'), 'utf8');
   assert.match(page, /optionalPacks/);
   const zip = await fs.readFile(path.join(out, 'distribution.zip'));

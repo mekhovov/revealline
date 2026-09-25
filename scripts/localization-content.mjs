@@ -1,6 +1,7 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
+import { createHash } from 'node:crypto';
 import { dataIdentity } from '../game/data-json.mjs';
 import { createDifficultyContext } from '../game/campaign-difficulty.mjs';
 import { CLASSES } from '../game/core/registry.mjs';
@@ -89,6 +90,26 @@ async function currentJourneySources(root) {
     registerExecution(`game/content-design/route-definition.mjs#${id}`, route.source, 'solo');
     registerExecution(`game/content-design/route-definition.mjs#${id}`, route.source, 'versus');
   }
+  // The current mission library also exposes three manually selectable v9
+  // missions. Register its exact bounded navigation projection and full launch
+  // records, which have different indices but retain their authored identities.
+  const { spatialNextPriorEditionProjection } = await moduleAt(
+    'mission-library/spatial-next-editions.mjs',
+  );
+  const prior = await loadAuthoredJourneyRoute('whole-spatial-v9');
+  add('game/content-design/route-definition.mjs#whole-spatial-v9', prior);
+  for (const mode of ['solo', 'versus']) {
+    registerExecution(
+      'game/content-design/route-definition.mjs#whole-spatial-v9',
+      prior.source,
+      mode,
+    );
+    registerExecution(
+      'game/mission-library/spatial-next-editions.mjs#prior',
+      spatialNextPriorEditionProjection(prior.source),
+      mode,
+    );
+  }
   const themes = JSON.parse(
     await fs.readFile(path.join(root, 'game/content-design/themes.json'), 'utf8'),
   );
@@ -146,6 +167,29 @@ export async function contentSources(root) {
     }
   }
   await walk('game/content');
+  const build = JSON.parse(await fs.readFile(path.join(root, 'game/build-config.json'), 'utf8'));
+  const optionalCatalog = build.optionalChapters?.catalog
+    ? JSON.parse(await fs.readFile(path.join(root, build.optionalChapters.catalog), 'utf8'))
+    : { packs: [] };
+  const optionalPaths = new Set([
+    ...(build.optionalOffline ?? []),
+    ...optionalCatalog.packs.map((pack) => pack.path),
+  ]);
+  // Match the exact immutable metadata emitted into the release's offline
+  // marker. Merely naming an imported pack like a shipped one does not qualify.
+  for (const file of optionalPaths) {
+    const bytes = await fs.readFile(path.join(root, file));
+    const pack = JSON.parse(bytes);
+    sources.push({
+      source: `${file}#offline`,
+      data: {
+        path: file,
+        id: pack.id,
+        name: pack.name,
+        sha256: createHash('sha256').update(bytes).digest('hex'),
+      },
+    });
+  }
   sources.push({
     source: 'authoring/motion-lab/presets.json',
     data: JSON.parse(

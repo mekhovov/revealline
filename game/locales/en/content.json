@@ -1046,5 +1046,13 @@
   "journey.twoLivesEnemies75FasterThanBase35ShorterAttackRests": "Two lives, enemies 75% faster than base, 35% shorter attack rests.",
   "team.starter.name": "Relay Rescue",
   "team.firstConnection.name": "First Connection",
-  "team.relayYard.name": "Relay Yard"
+  "team.relayYard.name": "Relay Yard",
+  "journey.culturalSpatial.routeLabel": "Whole Journey Ukrainian cultural spatial triptych · balance pending",
+  "journey.culturalSpatial.name": "Whole Journey · Ukrainian cultural spatial triptych",
+  "journey.culturalSpatial.steppingStones.route": "Use the near seed landing to build a short spikelet chain, or bypass it for the broader central sun landing before choosing an upper or lower return?",
+  "journey.culturalSpatial.steppingStones.mastery": "Use both the near-spikelet and central-sun approaches without losing a life.",
+  "journey.culturalSpatial.returnPocket.route": "Leave the pocket through the upper woven band for a short keeper read, or stage on the lower band before sweeping toward the freeze bonus?",
+  "journey.culturalSpatial.returnPocket.mastery": "Close once from each band mouth and collect the existing freeze bonus without a loss.",
+  "journey.culturalSpatial.neutralGround.route": "Cross the western slow bed directly from the side branch, or climb the safe stem and arc above the eastern hot bed for a faster but longer enclosure?",
+  "journey.culturalSpatial.neutralGround.mastery": "Close from both branch approaches without entering the lethal bed or losing a life."
 }
