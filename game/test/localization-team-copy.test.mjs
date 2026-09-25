@@ -132,7 +132,10 @@ test('Team language changes preserve paused play, help focus, and a custom arena
   pack.id = 'locale-custom-pack';
   pack.name = 'My authored pack';
   pack.levels = [{ ...pack.levels[0], id: 'locale-custom-arena', name: 'My authored arena' }];
-  await f.selectFile(JSON.stringify(pack));
+  const source = JSON.stringify(pack);
+  f.$('coop-pack-file').closest('details').open = true;
+  f.$('coop-pack-file').files = [new Blob([source], { type: 'application/json' })];
+  await f.$('coop-pack-file').onchange();
   const englishAdvice = f.$('coop-help-support').textContent;
   setLocale('uk', { persist: false });
   assert.match(f.$('coop-help-support').textContent, /безпечній території/);
