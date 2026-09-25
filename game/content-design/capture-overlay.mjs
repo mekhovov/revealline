@@ -1,3 +1,5 @@
+import { t } from '../i18n/index.mjs';
+
 /** Visual/accessible projection of the engine's frozen capture result. This is
  * not a second flood algorithm, a legal-trail validator, or a live prediction. */
 export function captureOverlay(preview) {
@@ -19,17 +21,37 @@ export function captureOverlay(preview) {
       ...objective,
       affected: affected.has(objective.id),
     })),
-    summary:
-      `Frozen snapshot: ${retained} retained regions, ${capture.components.length - retained} would-fill regions, ` +
-      `${capture.filledCells.length} would-fill cells and ${capture.securedTrail.length} hypothetical trail cells. ` +
-      `Field anchors: ${[...anchors].join(', ') || 'none'}. ` +
-      `Affected objectives: ${[...affected].join(', ') || 'none'}. ` +
-      (capture.affectedGateIds
-        ? `Would-open gates: ${capture.affectedGateIds.join(', ') || 'none'}. ${capture.reservedGateCells.length} reserved gate cells never count toward earned coverage. `
-        : '') +
-      (capture.affectedCombatIds
-        ? `Would-remove optional actors: ${capture.affectedCombatIds.join(', ') || 'none'}. `
-        : '') +
-      capture.assumption,
+    // Project known engine fields at the view boundary; the capture record and
+    // its canonical assumption remain untouched for inspection/export consumers.
+    summary: [
+      t('tools:studio.capture.snapshot', {
+        retained,
+        filledRegions: capture.components.length - retained,
+        filledCells: capture.filledCells.length,
+        trailCells: capture.securedTrail.length,
+      }),
+      t('tools:studio.capture.anchors', {
+        ids: [...anchors].join(', ') || t('tools:studio.capture.none'),
+      }),
+      t('tools:studio.capture.objectives', {
+        ids: [...affected].join(', ') || t('tools:studio.capture.none'),
+      }),
+      ...(capture.affectedGateIds
+        ? [
+            t('tools:studio.capture.gates', {
+              ids: capture.affectedGateIds.join(', ') || t('tools:studio.capture.none'),
+              count: capture.reservedGateCells.length,
+            }),
+          ]
+        : []),
+      ...(capture.affectedCombatIds
+        ? [
+            t('tools:studio.capture.combat', {
+              ids: capture.affectedCombatIds.join(', ') || t('tools:studio.capture.none'),
+            }),
+          ]
+        : []),
+      t('tools:studio.capture.assumption'),
+    ].join(' '),
   };
 }
