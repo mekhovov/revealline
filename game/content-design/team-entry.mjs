@@ -27,6 +27,10 @@ import {
   createTeamPartnerSpecialistOriginalCandidates,
   TEAM_PARTNER_SPECIALIST_PROFILE_KEY,
 } from './team-partner-specialist-originals.mjs';
+import {
+  createTeamCompleteSpecialistOriginalCandidates,
+  TEAM_COMPLETE_SPECIALIST_PROFILE_KEY,
+} from './team-complete-specialist-originals.mjs';
 
 /** Prepare the exact Team edition selected by the host's entry policy.
  * Player-facing copy does not grant official awards, artwork qualification
@@ -39,11 +43,14 @@ export async function createTeamGreyboxEntry({
   impact = false,
   specialist = false,
   partnerSpecialist = false,
+  reviewedSpecialists = false,
   reviewCopy = true,
 } = {}) {
-  const source = partnerSpecialist
-    ? createTeamPartnerSpecialistOriginalCandidates()
-    : specialist
+  const source = reviewedSpecialists
+    ? createTeamCompleteSpecialistOriginalCandidates()
+    : partnerSpecialist
+      ? createTeamPartnerSpecialistOriginalCandidates()
+      : specialist
       ? createTeamSpecialistOriginalCandidates()
       : impact
         ? createTeamImpactOriginalCandidates()
@@ -59,9 +66,11 @@ export async function createTeamGreyboxEntry({
   });
   const candidateProgress = createTeamJourneyProgress(
     candidateJourney,
-    partnerSpecialist
-      ? { profileKey: TEAM_PARTNER_SPECIALIST_PROFILE_KEY }
-      : specialist
+    reviewedSpecialists
+      ? { profileKey: TEAM_COMPLETE_SPECIALIST_PROFILE_KEY }
+      : partnerSpecialist
+        ? { profileKey: TEAM_PARTNER_SPECIALIST_PROFILE_KEY }
+        : specialist
         ? { profileKey: TEAM_SPECIALIST_PROFILE_KEY }
         : impact
           ? { profileKey: TEAM_IMPACT_PROFILE_KEY }
@@ -85,8 +94,8 @@ export async function createTeamGreyboxEntry({
     ),
     candidateDifficulty: snapshot.difficulty,
     candidateEditionLabel:
-      pressure || spatial || impact || specialist || partnerSpecialist
-        ? `${partnerSpecialist ? 'partner-action specialist edition' : specialist ? 'complementary specialist edition' : impact ? 'owned trail-impact edition' : spatial ? 'changing-return pressure edition' : 'pressure edition'} · enemy speed Gentle ×1 / Standard ×1.4 / Expert ×1.75 · shared reserves 4 / 2 / 1`
+      pressure || spatial || impact || specialist || partnerSpecialist || reviewedSpecialists
+        ? `${reviewedSpecialists ? 'reviewed specialist library' : partnerSpecialist ? 'partner-action specialist edition' : specialist ? 'complementary specialist edition' : impact ? 'owned trail-impact edition' : spatial ? 'changing-return pressure edition' : 'pressure edition'} · enemy speed Gentle ×1 / Standard ×1.4 / Expert ×1.75 · shared reserves 4 / 2 / 1`
         : '',
     candidateNotice: snapshot.durable ? '' : snapshot.error,
   });
