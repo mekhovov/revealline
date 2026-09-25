@@ -83,6 +83,7 @@ test('empty board clears stale mission facts and canvas, then re-enables authori
     'effective',
     'capture',
     'capture-summary',
+    'current-gameplay',
     'diagnostics',
     'capture-legend',
     'play',
@@ -134,7 +135,14 @@ test('empty board clears stale mission facts and canvas, then re-enables authori
   assert.equal(nodes['rating-band'].value, '');
   assert.equal(nodes.play.disabled, true);
   assert.equal(nodes.trail.value, '');
-  for (const id of ['lesson', 'rules', 'effective', 'capture', 'capture-summary'])
+  for (const id of [
+    'lesson',
+    'rules',
+    'current-gameplay',
+    'effective',
+    'capture',
+    'capture-summary',
+  ])
     assert.equal(nodes[id].textContent, '');
   assert.deepEqual(nodes.diagnostics.children, []);
   assert.match(nodes.geometry.textContent, /No mission selected/);

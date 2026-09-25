@@ -4,8 +4,8 @@ import { freezePresentation } from '../presentation/model.mjs';
  * The injected lease verifies these identities before reading or decoding; other
  * imports/themes have no implicit procedural or wider FPV-picture fallback.
  * Lease output retains the complete frame with contain fit and nearest sampling.
- * Current fpv77 adds reviewed soundtrack metadata while these two picture
- * originals remain byte-identical. Exact retained58–76 attempts
+ * Current fpv79 adds the reviewed shared-screen continuation while these two picture
+ * originals remain byte-identical. Exact retained58–78 attempts
  * remain admitted; the separately archived alternate fpv55–57 lineage is not a
  * runtime fallback. This finite association grants no additional artwork or
  * physical-play approval.
@@ -19,7 +19,7 @@ export const COOP_PICTURE_BINDINGS = freezePresentation([
     levelRevision: 2,
     levelSha256: '31041ad693f59418fb34e91f6f7bdae4d46fb6294b5e4ba49f8035aab4e79246',
     themeId: 'fpv',
-    themeRevision: 77,
+    themeRevision: 79,
     collection: null,
     picture: {
       slot: 'scene.reveal.wide',
@@ -40,7 +40,7 @@ export const COOP_PICTURE_BINDINGS = freezePresentation([
     levelRevision: 2,
     levelSha256: 'fcb1014f8b2c60047a2d10e4c0558b9ca03dcfe50c23ad48a5d2dabf9852c2a7',
     themeId: 'fpv',
-    themeRevision: 77,
+    themeRevision: 79,
     collection: null,
     picture: {
       slot: 'picture.fpv.adf5c9eea274ba7f',
@@ -62,7 +62,7 @@ export const COOP_PICTURE_BINDINGS = freezePresentation([
 export const COOP_HISTORICAL_IMPORT_PICTURE_POLICY = freezePresentation({
   version: 'revealline-team-historical-import-picture.v1',
   themeId: 'fpv',
-  themeRevision: 77,
+  themeRevision: 79,
   collection: null,
   picture: {
     slot: 'scene.reveal.wide',
@@ -77,10 +77,10 @@ export const COOP_HISTORICAL_IMPORT_PICTURE_POLICY = freezePresentation({
 });
 
 /** Retained attempts use the same immutable content/picture identities under the
- * explicitly preserved58–76 themes. Current-only callers keep the two-row exports.
+ * explicitly preserved58–78 themes. Current-only callers keep the two-row exports.
  */
 const COOP_RETAINED_THEME_REVISIONS = Object.freeze([
-  58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76,
+  58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78,
 ]);
 export const COOP_RETAINED_PICTURE_BINDINGS = freezePresentation(
   COOP_RETAINED_THEME_REVISIONS.flatMap((themeRevision) =>

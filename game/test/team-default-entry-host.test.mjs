@@ -117,10 +117,10 @@ test('queryless Team offers all twelve original missions across five campaigns a
   assert.equal(source.missions.length, 12);
   assert.equal(source.campaigns.length, 5);
   assert.equal(f.$('coop-level').value, source.missions[0].id);
-  assert.match(f.$('coop-boot').textContent, /Team Journey.*12 missions.*original artwork/);
+  assert.equal(f.$('coop-boot').textContent, 'Team Journey · 12 missions');
   assert.match(
-    f.$('coop-boot').textContent,
-    /Pictures need a connection; core offline preparation does not save them/,
+    f.$('coop-advanced-note').textContent,
+    /Original pictures need a connection; core offline preparation does not save them/,
   );
   assert.doesNotMatch(f.$('coop-boot').textContent, /test|candidate|validation pending/);
   assert.doesNotMatch(f.$('coop-pack-status').textContent, /test|candidate|validated/);
@@ -187,7 +187,7 @@ test('explicit legacy retains both arenas and provides a deliberate New journey 
 test('explicit spatial review entry retains its original review labels and exact first artwork', async (t) => {
   const f = await fresh(t, base + '?journey=team-spatial-originals-1');
   assert.match(
-    f.$('coop-boot').textContent,
+    f.$('coop-advanced-note').textContent,
     /changing-return pressure edition.*human validation pending/,
   );
   assert.match(f.$('coop-pack-status').textContent, /Original-art candidate.*not human validated/);

@@ -96,6 +96,11 @@ export function createMissionLibrary(sources = []) {
     text(source.editionId, 'an edition ID');
     text(source.edition, 'an edition name', 160);
     if (
+      source.automaticContinuation !== undefined &&
+      typeof source.automaticContinuation !== 'boolean'
+    )
+      throw new TypeError('Mission source automatic continuation must be a boolean.');
+    if (
       !LIBRARY_COLLECTIONS.includes(source.collection) ||
       !Array.isArray(source.entries) ||
       source.entries.length > 4096 ||
@@ -143,6 +148,7 @@ export function createMissionLibrary(sources = []) {
         editionId: source.editionId,
         edition: source.edition,
         collection: source.collection,
+        automaticContinuation: source.automaticContinuation !== false,
         campaignKey: JSON.stringify([source.id, source.editionId, info.campaignKey]),
         campaignTitle: text(info.campaignTitle, 'a campaign title', 160),
         name: text(info.name, 'a mission name', 160),

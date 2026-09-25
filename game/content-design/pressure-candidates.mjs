@@ -1,6 +1,111 @@
 import { dataIdentity } from '../data-json.mjs';
 import { compileContentProject, resolveMission } from './project.mjs';
 import { PRESSURE_DIFFICULTY_CATALOG, freezeDesign } from './catalogs.mjs';
+import {
+  applyGameplayTuning,
+  resolveGameplayTuning,
+  gameplayTuningDescription,
+} from '../gameplay-tuning.mjs';
+
+/** Read-only projection through the same adapter used for fresh Solo, Versus and
+ * Team attempts. Authored previews and historical replay recipes stay separate. */
+export function inspectEffectiveGameplay(
+  source,
+  missionId,
+  { difficulty = 'standard', mode = 'solo', overrides = {} } = {},
+) {
+  const project = compileContentProject(source);
+  const manifest = resolveMission(project, missionId, { difficulty, mode });
+  const mission = project.missions.find((item) => item.id === missionId);
+  const recipe = resolveGameplayTuning(difficulty, overrides);
+  const level = applyGameplayTuning(manifest.level, recipe);
+  const keeperType = mode === 'team' ? 'drifter' : 'bouncer';
+  const authoredIds = new Set(mission.actors.map((actor) => actor.id));
+  const authoredKeepers = manifest.level.enemies.filter(
+    (actor) => actor.type === keeperType && Math.hypot(actor.vx, actor.vy) > 0,
+  ).length;
+  const additions = level.enemies.filter((actor) => !authoredIds.has(actor.id));
+  const requestedAdditions = Math.ceil(authoredKeepers * recipe.enemyDensity);
+  const combat = level.classic?.combatPatrols;
+  const actors = [...level.enemies, ...(combat?.actors ?? [])].map((actor) => {
+    const authored = mission.actors.find((item) => item.id === actor.id);
+    const role =
+      authored?.role ??
+      (level.classic?.lineImpact?.actorIds?.includes(actor.id) ? 'impact-carrier' : 'field-keeper');
+    const definition = project.actors.roles[role];
+    const optional = combat?.actors.some((item) => item.id === actor.id) ?? false;
+    const speed = actor.speed ?? Math.hypot(actor.vx ?? 0, actor.vy ?? 0);
+    return {
+      id: actor.id,
+      role,
+      authoredTier: authored?.tier ?? null,
+      origin: authored ? 'authored' : 'density-addition',
+      domain: definition.domain,
+      retainsField: definition.retainsField,
+      enabled: optional ? combat.enabled : true,
+      speed,
+      speedRelativeToCraft: speed / level.rules.moveSpeed,
+      ...(optional ? { activeSpeed: combat.enabled ? speed : 0 } : {}),
+      runtime: actor,
+    };
+  });
+  const warnings = [
+    {
+      code: 'projection-not-balance-evidence',
+      message:
+        'Fresh-attempt values before temporary bonuses, terrain and actor activation. This is not a playtest or a prediction of capture outcomes. Studio Play retains its authored preview rules.',
+    },
+  ];
+  if (recipe.adminOverride)
+    warnings.push({
+      code: 'admin-playtest-no-awards',
+      message: 'Non-default admin settings describe a playtest and earn no normal awards.',
+    });
+  if (additions.length < requestedAdditions)
+    warnings.push({
+      code: 'density-target-not-reached',
+      message: `Added ${additions.length} of ${requestedAdditions} requested field keepers. Runtime population limits, spawn clearance and retained-region restrictions still apply.`,
+    });
+  if (mode !== 'team' && level.encounter && recipe.enemyDensity > 0)
+    warnings.push({
+      code: 'encounter-roster-preserved',
+      message:
+        'The boss encounter preserves its authored field-retention contract; density adds no enemies.',
+    });
+  return freezeDesign({
+    format: 'EffectiveJourneyGameplayV1',
+    label: 'Current gameplay · fresh attempt',
+    sourceSimulationIdentity: manifest.simulationIdentity,
+    identityScope: 'fresh-attempt-level-input-not-live-state',
+    runtimeLevelIdentity: dataIdentity(level),
+    runtimeVersion: level.version,
+    runtimeRevision: level.revision,
+    mode,
+    difficulty,
+    recipe,
+    description: gameplayTuningDescription(recipe),
+    speedUnits: 'cells-per-second-before-temporary-effects',
+    playerSpeed: level.rules.moveSpeed,
+    lives: level.rules.lives ?? project.difficulty.presets[difficulty].lives,
+    rules: level.rules,
+    actors,
+    population: {
+      authoredEnemies: manifest.level.enemies.length,
+      actualEnemies: level.enemies.length,
+      fieldKeepers: level.enemies.filter((actor) => actor.type === keeperType).length,
+      requestedAdditionalKeepers: requestedAdditions,
+      addedKeepers: additions.length,
+      authoredOptionalActors: combat?.actors.length ?? 0,
+      enabledOptionalActors: combat?.enabled ? combat.actors.length : 0,
+    },
+    encounter: level.encounter ?? null,
+    lineImpact: (mode === 'team' ? level.lineImpact : level.classic?.lineImpact) ?? null,
+    supportRoles: level.supportRoles ?? null,
+    enemyPressure: level.classic?.enemyPressure ?? null,
+    warnings,
+    validation: 'runtime-projection-not-balance-qualified',
+  });
+}
 
 /** Copy-on-write pressure edition. No enrollment, migration or implied balance
  * approval. Stable content IDs preserve navigation; revised execution identities
@@ -22,7 +127,7 @@ export function withPressureDifficulty(source) {
 
 /** Exact authored/compiled facts, not a prediction of moving capture outcomes or
  * a measured human difficulty rating. Used by tools without alternate physics. */
-export function inspectPressureDifficulty(source) {
+export function inspectPressureDifficulty(source, { overrides = {} } = {}) {
   const project = compileContentProject(source);
   const rows = [];
   for (const mission of project.missions)
@@ -98,6 +203,11 @@ export function inspectPressureDifficulty(source) {
           encounter: level.encounter ?? null,
           topologyDiagnostics: manifest.topology.diagnostics,
           validation: 'compiled-candidate-not-balance-qualified',
+          effectiveGameplay: inspectEffectiveGameplay(project, mission.id, {
+            mode,
+            difficulty,
+            overrides,
+          }),
         });
       }
   return freezeDesign({

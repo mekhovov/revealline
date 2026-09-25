@@ -5,6 +5,7 @@ import { couchPage } from './helpers/couch-host.mjs';
 import { couchEquipment } from '../couch/couch-shell.mjs';
 import { createRun } from '../core/index.mjs';
 import { retryFixture } from './fixtures/retry-scenarios.mjs';
+import { waitFor } from './helpers/wait-for.mjs';
 
 const pad = (index) => ({
   index,
@@ -114,15 +115,9 @@ test('lobby, setup and children use reachable native controls and Back restores 
   assert.equal(currentMode.getAttribute('tabindex'), null);
   assert.equal(currentMode.getAttribute('href'), null);
   assert.equal(f.doc.activeElement.id, 'race-start');
-  // This storage-less host exposes difficulty recovery between the mode
-  // choices and Start. Its visible actions participate in native Tab order.
-  for (const id of [
-    'race-journey-preferences-export',
-    'race-journey-preferences-retry',
-    'race-journey-difficulty',
-    'race-coop',
-    'race-solo-return',
-  ]) {
+  // Optional tuning stays out of the quick-start path while the disclosure is
+  // closed. Mode links and Start retain a short native Tab order.
+  for (const id of ['race-coop', 'race-solo-return']) {
     press(f, 'Tab', f.doc.activeElement, { shiftKey: true });
     assert.equal(f.doc.activeElement.id, id);
   }
@@ -133,18 +128,24 @@ test('lobby, setup and children use reachable native controls and Back restores 
     f.doc.activeElement.getAttribute('href'),
     'relay-rescue.html?journey=legacy&return=versus',
   );
+  press(f, 'Tab');
+  assert.equal(f.doc.activeElement.id, 'race-start');
+  press(f, 'Tab');
+  assert.equal(f.doc.activeElement.id, 'race-chapters');
+  press(f, 'Tab');
+  assert.equal(f.doc.activeElement.id, 'race-optional-setup-toggle');
+  f.doc.activeElement.click();
+  assert.equal(f.$('race-optional-setup').open, true);
   for (const id of [
+    'race-actor-style',
     'race-journey-difficulty',
     'race-journey-preferences-retry',
     'race-journey-preferences-export',
-    'race-start',
+    'race-focus',
   ]) {
     press(f, 'Tab');
     assert.equal(f.doc.activeElement.id, id);
   }
-  press(f, 'Tab');
-  assert.equal(f.doc.activeElement.id, 'race-chapters');
-  press(f, 'Tab');
   assert.equal(f.doc.activeElement.id, 'race-focus');
   f.doc.activeElement.click();
   assert.equal(f.doc.activeElement.id, 'race-level');
@@ -237,6 +238,13 @@ test('pause children and cancelled new match preserve two different continuation
   assert.equal(f.$('race-confirm').hidden, false);
   f.$('race-confirm-reset').click();
   f.frame();
+  await waitFor(
+    () => {
+      f.frame(0);
+      return f.state() === 'ready';
+    },
+    { message: 'The explicit new-match replacement did not finish staging.' },
+  );
   assert.equal(f.state(), 'ready');
   assert.notEqual(f.renders[0], oldRuns[0]);
   assert.equal(f.$('race-setup').hidden, false);

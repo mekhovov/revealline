@@ -9515,6 +9515,15 @@ try {
         launch: departLibraryMission,
         difficulty: () => browsingJourneyPreferences.snapshot().difficulty,
       });
+      const { createSpatialNextEditionSources } = await import(
+        './mission-library/spatial-next-editions.mjs'
+      );
+      const spatialEditions = await createSpatialNextEditionSources({
+        activeRouteId: route.id,
+        originalThemes,
+        difficulty: () => browsingJourneyPreferences.snapshot().difficulty,
+        launch: departLibraryMission,
+      });
       const classicProjectionCache = new WeakMap();
       const classicRuntimeEntry = (row) => {
         const pack =
@@ -9547,6 +9556,7 @@ try {
             { mode: 'solo', source },
             { mode: 'versus', source: versusSource },
           ]),
+          ...spatialEditions.sources,
           ...teamSources,
         ],
         getPacks: () => packs,
@@ -9623,10 +9633,12 @@ try {
       });
       if (unifiedDisposed) {
         result.library.dispose();
+        spatialEditions.dispose();
         if (!candidateHost) host.preparer.dispose();
         throw new DOMException('Mission library closed.', 'AbortError');
       }
       disposeUnifiedPreview = () => {
+        spatialEditions.dispose();
         if (!candidateHost) host.preparer.dispose();
       };
       const state = createMissionLibrarySessionState({ mode: 'solo' });

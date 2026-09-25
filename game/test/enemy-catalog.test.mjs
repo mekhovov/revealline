@@ -188,6 +188,12 @@ test('failure feedback stays at the failed tick, never later respawn; reduced ef
     const { ctx, calls } = canvas();
     drawEventFeedback(ctx, f, themes[0].palette, { themeId, reduced: true });
     shapes.push(JSON.stringify(calls.filter((c) => c.op === 'fillRect').map((c) => c.args)));
+    if (themeId === 'fpv')
+      assert.equal(
+        calls.filter((c) => c.op === 'strokeRect').length,
+        0,
+        'FPV debris uses solid rotor fragments without corner frames',
+      );
     assert.ok(
       calls.some(
         (c) =>

@@ -133,6 +133,8 @@ test('all review routes keep explicit external-tab safety and distinct accessibl
     (link) => link.getAttribute('target') === '_blank',
   );
   const journeys = [
+    'whole-spatial-v11',
+    'whole-spatial-v10',
     'whole-spatial-v9',
     'whole-spatial-v8',
     'whole-spatial-v7',

@@ -1,0 +1,55 @@
+{
+  "format": "revealline-scoped-screen-continuation-review.v1",
+  "status": "bounded UX2 functional screen continuation; public, physical-device and full human acceptance pending",
+  "candidate": "784787e859a0b77c2163d61e1681de91837492c9",
+  "candidateTree": "4692aaa945fa3b2ee8bcdba5897a4c46f77fc3d5",
+  "scope": "Continue the seven required shared screen-background recipes after the v0.115.0 compact Home action-grid change. This decision covers the exact shared screen-style fingerprint and does not approve the separate Couch CSS, subjective artwork, every player journey or physical hardware.",
+  "screens": {
+    "priorFingerprintSHA256": "acf6426f5cd47f21a85ec5ae9da9549ed58fbe330b097c979dc85b87afe2d68a",
+    "currentFingerprintSHA256": "251d09ba8aa8710a134694874bd7ae87f2e76af0000825f9ad2b97da024d1dbd",
+    "orderedInputs": [
+      {
+        "path": "game/ui/field-kit-flow.css",
+        "sha256": "a42e8704530b3a23f25d0420b1a5c157d6fae7c7ee83e396cda39a1c34b4429b"
+      },
+      {
+        "path": "game/ui/field-kit-surfaces.css",
+        "sha256": "1f8a5e4fd5ecc24d797dbdb0c1b8b1f952e4b49505af3485e85483c312b28814"
+      },
+      {
+        "path": "game/ui/field-kit-compiled.css",
+        "sha256": "9a9c6e0ab846b623c73fa811f43df1d39a0ba43bbdc567e93f3d5d30d70cc731"
+      },
+      {
+        "path": "site/release-catalog.css",
+        "sha256": "18736359cd160a144d09a157719e22519819923f1072079586f05debb0852640"
+      }
+    ],
+    "changedInput": {
+      "path": "game/ui/field-kit-flow.css",
+      "priorSHA256": "afd79d33a7be7622d5f6f17f496af9e5ddeeff5fed7859db078ab3bf0b95862b",
+      "currentSHA256": "a42e8704530b3a23f25d0420b1a5c157d6fae7c7ee83e396cda39a1c34b4429b",
+      "assessment": "Keeps Start and Continue full-width while arranging Missions, Collection, Settings, More and Sound as compact peer actions, and adds bounded destination spacing. Tokens, focus treatment, control semantics, board geometry, simulation, mission identity, payloads and data ownership remain unchanged."
+    },
+    "continuedSlots": 7
+  },
+  "qualification": {
+    "automated": [
+      "Exact candidate source passed lint, repository and native formatting, validation, presentation metadata validation and Motion Lab syntax.",
+      "The controller Confirm guard passed 18 of 18 exact-head checks; the opening cross-campaign Versus continuation passed its isolated exact-head route after the observation budget was scoped to media preparation.",
+      "The retained UX2 evidence document passed hunk review and is pinned at sha256:7b77af244f3565eebf8b1a6e462e59b856873a7857597aa042382c347205cb7e."
+    ],
+    "visual": "The retained candidate review covers Home, Solo, Versus and Team at 1440 by 900, 390 by 844 and 844 by 390 in local Chromium. Start was the initial ready-lobby focus; Settings and More returned to their openers; direct starts reached play. Short-landscape Versus and Team Pause actions remained inside the viewport. This is source-browser evidence, not physical touch/controller or public Pages certification."
+  },
+  "preservation": [
+    "All seven screen entries remain CSS-backed recipes; no image, audio or font bytes are replaced.",
+    "Historical revisions and their review records remain immutable and selectable.",
+    "The continuation does not alter collision, scoring, mission progress, saved attempts, custom content or earned picture identity."
+  ],
+  "excluded": [
+    "The waived repository-wide and long Team-original stress suites are not represented as passing.",
+    "No screen-reader, forced-colour, 200 percent zoom, physical iPhone, DualSense or Steam Deck certification.",
+    "No subjective art, cultural, difficulty, frozen-build, offline or public deployment acceptance."
+  ],
+  "decision": "Continue only the seven required shared screen recipes when this exact four-input fingerprint and review record match. Any input or review-byte change reopens the group."
+}

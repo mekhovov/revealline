@@ -89,10 +89,16 @@ function mode(f, value) {
 }
 const loaded = async (f) => {
   await f.remoteReady();
-  assert.equal(cards(f).length, 201, f.$('coop-library-remote-status').textContent);
+  const rows = cards(f);
+  assert.equal(rows.length, 285, f.$('coop-library-remote-status').textContent);
+  const identities = rows.map((row) => JSON.parse(row.dataset.missionId));
+  assert.equal(identities.filter((identity) => identity[1] === 'whole-spatial-v11').length, 91);
+  assert.equal(identities.filter((identity) => identity[1] === 'whole-spatial-v10').length, 3);
+  assert.equal(identities.filter((identity) => identity[1] === 'whole-spatial-v9').length, 3);
+  assert.equal(identities.filter((identity) => identity[0].startsWith('["classic",')).length, 188);
 };
 
-test('Team loads all201 Solo/Versus metadata rows only after selecting another mode and never decodes rewards', async (t) => {
+test('Team loads all 285 Solo/Versus metadata rows only after selecting another mode and never decodes rewards', async (t) => {
   const f = await fixture(t);
   await open(f);
   assert.equal(cards(f).length, 14);
@@ -110,9 +116,9 @@ test('Team loads all201 Solo/Versus metadata rows only after selecting another m
   assert.equal(f.doc.activeElement.id, 'journey-mode');
   assert(f.$('coop-library-remote-status').textContent.length < 80);
   assert.equal(f.artwork.calls.reads.length, pictureReads);
-  assert.equal(cards(f).filter((row) => row.textContent.includes('Unavailable')).length, 98);
+  assert.equal(cards(f).filter((row) => row.textContent.includes('Unavailable')).length, 176);
   mode(f, 'versus');
-  assert.equal(cards(f).length, 201);
+  assert.equal(cards(f).length, 285);
   assert.equal(f.reads.length, 4);
   mode(f, 'team');
   assert.equal(cards(f).length, 14);
@@ -148,7 +154,7 @@ test('Team exact nonfirst Versus handoff keeps its attempt on Stay and only depa
   await waitFor(() => f.visits.length === 1);
   const destination = new URL(f.visits[0]);
   assert.equal(destination.pathname, '/game/couch/');
-  assert.equal(destination.searchParams.get('journey'), 'whole-spatial-v9');
+  assert.equal(destination.searchParams.get('journey'), 'whole-spatial-v11');
   assert.equal(destination.searchParams.get('library-mission'), exactId);
   assert.equal(destination.searchParams.get('return'), 'team');
   assert.equal(destination.searchParams.get('journey-return'), 'legacy');
