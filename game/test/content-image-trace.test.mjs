@@ -367,7 +367,10 @@ test('recovery UI separates backup inspection, explicit restoration, export and 
   await $('trace-export').onclick();
   assert.deepEqual(exported[0].draft, trace());
   assert.match(exported[0].name, /tracing-test-nearby-shore-tracing.json/);
-  assert.match($('trace-status').textContent, /not verified as saved/);
+  assert.match(
+    $('trace-status').textContent,
+    /Download requested\. Check your downloads or Save dialog/,
+  );
   await $('trace-export-saved').onclick();
   assert.deepEqual(exported[1].draft, trace());
 });
