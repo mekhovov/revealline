@@ -63,6 +63,10 @@ import {
   createInstalledTeamAttemptSnapshot,
   createInstalledTeamCampaignStore,
 } from '../creator/team-installed.mjs';
+import {
+  createCreatorTeamMediaPictureLease,
+  creatorTeamMediaForLevel,
+} from '../creator/team-media.mjs';
 import { COOP_PRESENTATION_MIME } from '../coop/presentation-envelope.mjs';
 import {
   coopFailureFeedback,
@@ -386,6 +390,71 @@ export function bootCoop({
   const earnedDialog = $('coop-earned-picture');
   const earnedCanvas = $('coop-earned-picture-canvas');
   let earnedOwner = null;
+  const teamStoryVideo = $('coop-victory-story-video');
+  let teamStoryOwner = null;
+  function releaseTeamStory() {
+    const owner = teamStoryOwner;
+    teamStoryOwner = null;
+    try {
+      teamStoryVideo.pause?.();
+    } catch {}
+    teamStoryVideo.removeAttribute?.('src');
+    teamStoryVideo.hidden = true;
+    if (owner?.url) URL.revokeObjectURL(owner.url);
+    $('coop-victory-story').hidden = true;
+  }
+  function currentTeamStory() {
+    if (run?.status !== 'won' || !acceptedPicture?.teamMedia) return null;
+    return creatorTeamMediaForLevel(acceptedPicture.teamMedia, run.level.id).story;
+  }
+  async function playTeamStory() {
+    const story = currentTeamStory();
+    if (!story) return;
+    if (
+      !teamStoryOwner ||
+      teamStoryOwner.run !== run ||
+      teamStoryOwner.generation !== generation ||
+      teamStoryOwner.story !== story
+    ) {
+      releaseTeamStory();
+      const url = URL.createObjectURL(story.blob);
+      teamStoryOwner = { run, generation, story, url };
+      teamStoryVideo.src = url;
+      teamStoryVideo.hidden = false;
+      $('coop-victory-story').hidden = false;
+    }
+    const owner = teamStoryOwner;
+    localizedText($('coop-victory-story-status'), () => t('interface:team.victoryStoryStarting'));
+    try {
+      teamStoryVideo.currentTime = story.descriptor.startSeconds;
+      await teamStoryVideo.play();
+      if (teamStoryOwner !== owner) return;
+      localizedText($('coop-victory-story-play'), () => t('interface:team.replayVictoryStory'));
+      localizedText($('coop-victory-story-status'), () => t('interface:team.victoryStoryPlaying'));
+    } catch {
+      if (teamStoryOwner === owner)
+        localizedText($('coop-victory-story-status'), () =>
+          t('interface:team.victoryStoryPlaybackRefused'),
+        );
+    }
+  }
+  function skipTeamStory(messageText = () => t('interface:team.victoryStorySkipped')) {
+    const story = currentTeamStory();
+    try {
+      teamStoryVideo.pause?.();
+      if (story) teamStoryVideo.currentTime = story.descriptor.startSeconds;
+    } catch {}
+    localizedText($('coop-victory-story-play'), () => t('interface:team.replayVictoryStory'));
+    localizedText($('coop-victory-story-status'), messageText);
+  }
+  teamStoryVideo.ontimeupdate = () => {
+    const owner = teamStoryOwner;
+    if (!owner || teamStoryVideo.currentTime < owner.story.descriptor.endSeconds) return;
+    skipTeamStory(() => t('interface:team.victoryStoryComplete'));
+  };
+  teamStoryVideo.onerror = () => skipTeamStory(() => t('interface:team.victoryStoryUnavailable'));
+  $('coop-victory-story-play').onclick = () => void playTeamStory();
+  $('coop-victory-story-skip').onclick = () => skipTeamStory();
   let music = null,
     musicPublished = null,
     musicSelection = null;
@@ -470,7 +539,7 @@ export function bootCoop({
     installedTeamLoading = null;
   const librarySession = createMissionLibrarySessionState({ mode: 'team' });
   const libraryVisit = crypto.randomUUID();
-  const discoveryRows = (sourcePack, artworkSource, prefix) =>
+  const discoveryRows = (sourcePack, artworkSource, prefix, teamMedia = null) =>
     sourcePack.levels.map((level) =>
       Object.freeze({
         key: `${prefix}/${level.id}`,
@@ -492,6 +561,7 @@ export function bootCoop({
         level,
         pack: sourcePack,
         artworkSource,
+        teamMedia,
       }),
     );
   const starterDiscoveryRows = discoveryRows(COOP_STARTER_PACK, null, 'starter');
@@ -1297,6 +1367,30 @@ export function bootCoop({
     localizedText($('coop-lobby'), () => t('interface:changeSetup'));
     $('coop-resume').hidden = won || lost;
     $('coop-view-picture').hidden = !won || loopStopped || !acceptedPicture?.binding?.image;
+    let story = null;
+    try {
+      story = won && !loopStopped ? currentTeamStory() : null;
+    } catch {
+      story = null;
+    }
+    if (
+      !story ||
+      (teamStoryOwner &&
+        (teamStoryOwner.run !== run ||
+          teamStoryOwner.generation !== generation ||
+          teamStoryOwner.story !== story))
+    )
+      releaseTeamStory();
+    $('coop-victory-story').hidden = !story;
+    if (story) {
+      localizedText($('coop-victory-story-description'), () => story.descriptor.description);
+      if (!teamStoryOwner) {
+        localizedText($('coop-victory-story-play'), () => t('interface:team.playVictoryStory'));
+        localizedText($('coop-victory-story-status'), () =>
+          t('interface:team.victoryStoryOptional'),
+        );
+      }
+    }
     localizedText($('coop-overlay-kicker'), () =>
       won
         ? t('interface:aWorldYouRevealedTogether')
@@ -1764,6 +1858,7 @@ export function bootCoop({
     pinnedPack = sourcePack,
     artworkSource = null,
     installedEditionId = null,
+    teamMedia = null,
   ) {
     // Only code-owned exact recipes join this route. An imported pack with the
     // same IDs (or even the same bytes) keeps its independent local ordering.
@@ -1779,6 +1874,7 @@ export function bootCoop({
       journeyRow,
       artworkSource,
       installedEditionId,
+      teamMedia,
       pack: structuredClone(pinnedPack),
       levelId: recipe.level.id,
       request: {
@@ -1788,8 +1884,9 @@ export function bootCoop({
         attemptId: `team-${++pictureSequence}`,
         ...(artworkSource ? { artworkSource } : {}),
       },
-      lease:
-        journeyRow?.background && !artworkSource
+      lease: teamMedia
+        ? createCreatorTeamMediaPictureLease(teamMedia, { decodeImage: decodeCoopPicture })
+        : journeyRow?.background && !artworkSource
           ? createCandidateTeamPictures({
               row: journeyRow,
               owns: candidateJourney.owns,
@@ -2721,7 +2818,10 @@ export function bootCoop({
       throw error;
     }
   }
-  async function activateDiscovery(row, { signal, isCurrent, onStatus, opener, restored = null }) {
+  async function activateDiscovery(
+    row,
+    { signal, isCurrent, onStatus, opener, restored = null, teamMedia = null },
+  ) {
     if (!canOpenDiscovery() || !currentDiscoveryRows().includes(row))
       throw new DOMException(t('interface:arenaSelectionIsNoLongerCurrent'), 'AbortError');
     const recipe = freshRecipe(structuredClone(row.level), {
@@ -2741,6 +2841,7 @@ export function bootCoop({
       row.pack,
       row.artworkSource,
       row.installedEditionId ?? null,
+      teamMedia ?? row.teamMedia ?? null,
     );
     const previous = {
       run,
@@ -3135,7 +3236,7 @@ export function bootCoop({
           })
         : null;
     if (!context.isCurrent()) return false;
-    return launchTeamLibraryRow(row, { ...context, restored });
+    return launchTeamLibraryRow(row, { ...context, restored, teamMedia: loaded.media });
   }
   async function includeInstalledTeamCampaigns() {
     if (!installedTeamStore) return;
@@ -5035,8 +5136,6 @@ export function bootCoop({
           draft.artworkSource = source;
           draft.pack = source.pack;
         } else {
-          if (draft.file.size > COOP_PACK_MAX_BYTES)
-            throw new TypeError(t('interface:chooseACoOpPackSmallerThan1Mib'));
           display.update({
             message: t('interface:checkingTeamArenasAndRules'),
             stage: 'verifying',
@@ -5048,15 +5147,19 @@ export function bootCoop({
           if (!current()) return;
           draft.pack = playable.pack;
           draft.creatorCampaign = playable.prepared;
+          draft.teamMedia = playable.media ?? null;
           if (playable.prepared && installedTeamStore) {
             display.update({
               message: t('interface:missionLibrary.team.installingVerifiedEdition'),
               stage: 'verifying',
             });
             try {
-              const installed = await installedTeamStore.install(playable.prepared, {
-                signal: controller.signal,
-              });
+              const installed = await installedTeamStore.install(
+                playable.media ?? playable.prepared,
+                {
+                  signal: controller.signal,
+                },
+              );
               if (!current()) return;
               draft.installedEditionId = installed.editionId;
               installedTeamGeneration = -1;
@@ -5076,6 +5179,7 @@ export function bootCoop({
           draft.pack,
           draft.artworkSource,
           draft.installedEditionId,
+          draft.teamMedia,
         );
       }
       display.update({
@@ -5185,14 +5289,17 @@ export function bootCoop({
           pack: draft.pack,
           artworkSource: draft.artworkSource,
           installedEditionId: draft.installedEditionId ?? null,
+          teamMedia: draft.teamMedia ?? null,
           rows: discoveryRows(
             draft.pack,
             draft.artworkSource,
             `local-${++localDiscoveryRevision}`,
+            draft.teamMedia ?? null,
           ).map((row) =>
             Object.freeze({
               ...row,
               installedEditionId: draft.installedEditionId ?? null,
+              teamMedia: draft.teamMedia ?? null,
             }),
           ),
         };
@@ -5473,6 +5580,7 @@ export function bootCoop({
     earnedDialog.removeEventListener('cancel', earnedCancelled);
     earnedDialog.removeEventListener('keydown', settingsKeydown);
     if (earnedDialog.open) earnedDialog.close();
+    releaseTeamStory();
     earnedCanvas.width = earnedCanvas.height = 0;
     $('coop-settings-open').onclick = null;
     $('coop-settings-close').onclick = null;
