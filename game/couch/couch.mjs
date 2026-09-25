@@ -436,7 +436,7 @@ try {
     $('race-journey-note').hidden = false;
     localizedText($('race-journey-note'), () =>
       authoredRoute.id === DEFAULT_JOURNEY_ROUTES.versus
-        ? `New Journey · ${candidateJourney.catalog.missions.length} missions`
+        ? t('interface:couch.journeyNotice', { count: candidateJourney.catalog.missions.length })
         : t('interface:couch.journeyTestNotice', { route: authoredRoute.label.toUpperCase() }),
     );
     $('race-journey-difficulty-field').hidden = false;
@@ -1205,13 +1205,11 @@ try {
         contentReady = true;
         retireActors();
         showActorNotice(roundRecipe);
-        localizedText($('race-message'), () =>[
-          staticEntry ? featuredStatus : '',
-          image?.notice,
-          'Ready. First clear wins.',
-        ]
-          .filter(Boolean)
-          .join(' '));
+        localizedText($('race-message'), () =>
+          [staticEntry ? featuredStatus : '', image?.notice, t('interface:couch.readyFirstClear')]
+            .filter(Boolean)
+            .join(' '),
+        );
         display.finish({ message: '' });
         return true;
       } catch (error) {
@@ -3286,7 +3284,8 @@ try {
       format: roundRecipe.format,
       contentBusy,
       focusTransition,
-      summary: () => `${roundRecipe.tuning.adminOverride ? (t('interface:adminPlaytest') + ' ') : ''}${roundRecipe.format === 'first-to-two' ? t('interface:firstToTwo') : t('interface:oneRace')} · ${contentText(entry.level, 'name')}`,
+      summary: () =>
+        `${roundRecipe.tuning.adminOverride ? t('interface:adminPlaytest') + ' ' : ''}${roundRecipe.format === 'first-to-two' ? t('interface:firstToTwo') : t('interface:oneRace')} · ${contentText(entry.level, 'name')}`,
     });
     $('race-time-field').hidden = !!candidateJourney;
     // Reconcile deliberate layout transitions immediately, including browsers

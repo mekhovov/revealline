@@ -1,3 +1,4 @@
+import { localizedMessage } from '../i18n/index.mjs';
 import {
   createTeamJourneyCandidates,
   TEAM_JOURNEY_LEARNING_ARCS,
@@ -95,7 +96,19 @@ export async function createTeamGreyboxEntry({
     candidateDifficulty: snapshot.difficulty,
     candidateEditionLabel:
       pressure || spatial || impact || specialist || partnerSpecialist || reviewedSpecialists
-        ? `${reviewedSpecialists ? 'reviewed specialist library' : partnerSpecialist ? 'partner-action specialist edition' : specialist ? 'complementary specialist edition' : impact ? 'owned trail-impact edition' : spatial ? 'changing-return pressure edition' : 'pressure edition'} · enemy speed Gentle ×1 / Standard ×1.4 / Expert ×1.75 · shared reserves 4 / 2 / 1`
+        ? localizedMessage(
+            reviewedSpecialists
+              ? 'interface:couch.teamEdition_reviewedSpecialists'
+              : partnerSpecialist
+                ? 'interface:couch.teamEdition_partnerSpecialist'
+                : specialist
+                  ? 'interface:couch.teamEdition_specialist'
+                  : impact
+                    ? 'interface:couch.teamEdition_impact'
+                    : spatial
+                      ? 'interface:couch.teamEdition_spatial'
+                      : 'interface:couch.teamEdition_pressure',
+          )
         : '',
     candidateNotice: snapshot.durable ? '' : snapshot.error,
   });
