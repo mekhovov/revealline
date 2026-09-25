@@ -14,6 +14,11 @@ const LICENSES = new Set([
   'https://creativecommons.org/licenses/by/4.0/',
 ]);
 const AUDIO_PATH = /^(?:objects|batches\/[a-z0-9][a-z0-9-]{0,63}\/objects)\/[a-f0-9]{64}\.mp3$/;
+const RESOLVED_TRACKS = new WeakSet();
+
+export function isResolvedOnlineSoundtrackTrack(value) {
+  return typeof value === 'object' && value !== null && RESOLVED_TRACKS.has(value);
+}
 
 export function onlineSoundtrackRecordingAllowed(value) {
   return value?.recordingModeEligible === true && value?.contentId === false;
@@ -81,6 +86,7 @@ function track(value, ids, hashes) {
       'gameCatalogueAdmission',
       'contentId',
       'recordingModeEligible',
+      'default',
       'audio',
       'aliases',
     ],
@@ -120,6 +126,10 @@ function track(value, ids, hashes) {
       (!value.recordingModeEligible || value.contentId === false),
     `Online soundtrack recording policy is invalid: ${id}.`,
   );
+  required(
+    value.default === undefined || value.default === false,
+    `Online soundtrack default policy is invalid: ${id}.`,
+  );
   exactKeys(value.audio, ['path', 'bytes', 'sha256'], 'online soundtrack audio');
   required(
     HASH.test(value.audio.sha256) &&
@@ -136,7 +146,7 @@ function track(value, ids, hashes) {
     Array.isArray(value.aliases) && value.aliases.length <= 16,
     `Online aliases are invalid: ${id}.`,
   );
-  return Object.freeze({
+  const resolved = Object.freeze({
     id: `online.${value.audio.sha256}`,
     archiveTrackId: id,
     kind: 'remote',
@@ -162,6 +172,8 @@ function track(value, ids, hashes) {
       source: value.source,
     }),
   });
+  RESOLVED_TRACKS.add(resolved);
+  return resolved;
 }
 
 export function resolveOnlineSoundtrackCatalogue(source) {
