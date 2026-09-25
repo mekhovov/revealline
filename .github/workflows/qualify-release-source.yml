@@ -1,8 +1,6 @@
 name: Qualify release source
 
 on:
-  push:
-    branches: ['codex/fpv-redesign-phase*']
   workflow_dispatch:
     inputs:
       operation:
@@ -48,9 +46,14 @@ jobs:
         env:
           EVENT_NAME: ${{ github.event_name }}
           OPERATION: ${{ inputs.operation || 'qualify' }}
+          SOURCE_REF: ${{ github.ref }}
           GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
+          if [ "$OPERATION" = qualify ] && [ "$SOURCE_REF" != refs/heads/main ]; then
+            echo "::error::Release qualification is reserved for merged main; received $SOURCE_REF."
+            exit 1
+          fi
           if [ "$EVENT_NAME" != workflow_dispatch ] || [ "$OPERATION" != qualify ]; then
             echo 'should_qualify=true' >> "$GITHUB_OUTPUT"
             exit 0
