@@ -47,5 +47,6 @@
   "offline.verificationFailed": "Offline files could not be verified. Reconnect and try again.",
   "picture.writeRequired": "This session cannot save a new picture. Export current game data before reloading to prepare it. Previously saved flights and originals are kept.",
   "picture.unavailable": "Picture unavailable. Restore access to this flight’s original media and try again.",
-  "picture.unavailablePaused": "Picture unavailable. Your flight remains paused. Restore access to its original media and try again."
+  "picture.unavailablePaused": "Picture unavailable. Your flight remains paused. Restore access to its original media and try again.",
+  "chapters.unsupportedClassicRules": "Choose a supported Classic rules edition."
 }
