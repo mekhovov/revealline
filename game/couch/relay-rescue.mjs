@@ -214,9 +214,13 @@ export function bootCoop({
     catalogueParams.set('return', returns[0]);
   const catalogueHref = `relay-rescue.html${catalogueParams.size ? `?${catalogueParams}` : ''}`;
   $('coop-catalogue').setAttribute('href', catalogueHref);
-  localizedText($('coop-catalogue'), () =>candidateJourney ? t("interface:legacyArenas") : t("interface:newJourney2"));
+  localizedText($('coop-catalogue'), () =>
+    candidateJourney ? t('interface:legacyArenas') : t('interface:newJourney2'),
+  );
   $('coop-more-catalogue').setAttribute('href', catalogueHref);
-  localizedText($('coop-more-catalogue'), () =>candidateJourney ? t("interface:legacyArenas") : t("interface:newJourney2"));
+  localizedText($('coop-more-catalogue'), () =>
+    candidateJourney ? t('interface:legacyArenas') : t('interface:newJourney2'),
+  );
   const returnHref = () => {
     // Mission identity and source navigation are independent. A checked Solo
     // return ticket remains stronger than the finite edition-navigation hint.
@@ -1605,10 +1609,11 @@ export function bootCoop({
       name = contentText(level, 'name');
     localizedText($('coop-preview-caption'), () =>
       level?.journeyDifficulty && !selection.artworkSource && !selection.journeyRow?.background
-        ? `${contentText(level, 'name')} · Preview scenery is not authored mission artwork or collision geometry.`
+        ? t('gameplay:team.previewGeometry', { name: contentText(level, 'name') })
         : name
-          ? `${contentText(level, 'name')} teaser · preview only · scenery is not collision geometry.`
-          : 'Arena teaser · preview only · scenery is not collision geometry.');
+          ? t('gameplay:team.previewTeaser', { name: contentText(level, 'name') })
+          : t('gameplay:team.previewUnnamed'),
+    );
     if (binding && previewBinding === binding && !retry) return;
     const cleared = clearPicturePreview();
     message.hidden = false;
@@ -5259,19 +5264,29 @@ export function bootCoop({
       })
     : null;
   $('coop-start').disabled = false;
-  localizedText($('coop-start'), () =>t("interface:startTogether"));
-  const advancedEditionNote = defaultJourney
-    ? `Original pictures need a connection; core offline preparation does not save them.`
-    : candidateJourney
-      ? `Team Journey ${candidateEditionLabel ? `${candidateEditionLabel} · ` : ''}${candidateJourney.rows.some((row) => row.background) ? `original-art test · ${candidateJourney.catalog.missions.length} missions · human validation pending.` : `geometry test · ${candidateJourney.catalog.missions.length} missions · human validation and original artwork pending.`} ${candidatePreferences ? '' : candidateNotice}`.trim()
-      : '';
-  $('coop-advanced-note').textContent = advancedEditionNote;
+  localizedText($('coop-start'), () => t('interface:startTogether'));
+  localizedText($('coop-advanced-note'), () => {
+    if (defaultJourney) return t('interface:couch.originalPicturesConnection');
+    if (!candidateJourney) return '';
+    const edition = renderMessage(candidateEditionLabel);
+    return t(
+      candidateJourney.rows.some((row) => row.background)
+        ? 'interface:couch.teamArtTest'
+        : 'interface:couch.teamGeometryTest',
+      {
+        count: candidateJourney.catalog.missions.length,
+        edition: edition ? `${edition} · ` : '',
+        notice: candidatePreferences ? '' : renderMessage(candidateNotice),
+      },
+    ).trim();
+  });
   bootDisplay.finish({
-    message: defaultJourney
-      ? `Team Journey · ${candidateJourney.catalog.missions.length} missions`
-      : candidateJourney
-        ? `Team Journey · ${candidateJourney.catalog.missions.length} missions`
-        : t("interface:twoPlayersOneScreenASharedVictory"),
+    message: () =>
+      candidateJourney
+        ? t('interface:couch.teamJourneyNotice', {
+            count: candidateJourney.catalog.missions.length,
+          })
+        : t('interface:twoPlayersOneScreenASharedVictory'),
   });
   document.documentElement.dataset.toolState = 'ready';
   startPermitted = !$('coop-start').disabled;
