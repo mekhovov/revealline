@@ -255,8 +255,8 @@
       </div>
       <div class="game-layout">
         <section class="arena-panel" aria-label="Game">
-          <div class="telemetry">
-            <div class="coverage">
+          <div class="telemetry" role="group" aria-label="Mission status">
+            <div class="coverage telemetry-primary">
               <span>REVEALED</span
               ><strong
                 id="coverage"
@@ -271,9 +271,18 @@
               <div class="meter"><i id="coverage-bar"></i><b id="goal-marker"></b></div>
               <em id="target">TARGET 45%</em>
             </div>
-            <div><span>LIVES</span><strong id="lives" aria-label="3 lives">◆ ◆ ◆</strong></div>
-            <div><span>TIME</span><strong id="time">0:00</strong></div>
-            <div><span id="score-label">SCORE</span><strong id="score">00000</strong></div>
+            <div class="telemetry-stat telemetry-lives">
+              <span>LIVES</span><strong id="lives" aria-label="3 lives">◆ ◆ ◆</strong>
+            </div>
+            <div class="telemetry-stat telemetry-time">
+              <span id="time-label">ELAPSED</span><strong id="time">0:00</strong>
+            </div>
+            <div class="telemetry-stat telemetry-score">
+              <span id="score-label">SCORE</span><strong id="score">00000</strong>
+            </div>
+            <div class="telemetry-stat telemetry-equipment">
+              <span>EQUIPMENT</span><strong id="ability-state">Ready</strong>
+            </div>
           </div>
           <p id="first-flight-task" class="first-flight-task" role="status"></p>
           <div id="arena-shell" class="arena-shell">
@@ -481,7 +490,6 @@
               >
                 Boost <kbd>Shift</kbd>
               </button>
-              <span id="ability-state">Ready</span>
             </div>
           </div>
           <p id="game-now-playing" class="game-now-playing micro-note" hidden>

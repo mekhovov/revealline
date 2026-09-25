@@ -137,7 +137,7 @@
 
       <section id="coop-play" aria-label="Shared Relay Rescue arena" hidden>
         <div class="hud">
-          <div class="identity sunflower">
+          <div id="coop-identity-0" class="identity sunflower">
             <span class="player-number">1</span><strong>SUNFLOWER</strong
             ><span id="coop-state-0">Ready</span>
             <span id="coop-charge-0" class="charge-state">Support ready</span>
@@ -147,13 +147,16 @@
             ><span id="coop-reserves">3 reserves</span
             ><progress id="coop-progress" max="65" value="0" aria-label="Team territory"></progress>
           </div>
-          <div class="identity skyline">
+          <div id="coop-identity-1" class="identity skyline">
             <span class="player-number">2</span><strong>SKYLINE</strong
             ><span id="coop-state-1">Ready</span>
             <span id="coop-charge-1" class="charge-state">Support ready</span>
           </div>
         </div>
-        <p id="coop-objective" class="live-objective">Reveal 65% together</p>
+        <p class="live-objective">
+          <span aria-hidden="true">OBJECTIVE</span
+          ><strong id="coop-objective">Reveal 65% together</strong>
+        </p>
         <p id="coop-bonus-live" class="micro-note" hidden></p>
         <div class="coop-board-slot">
           <div class="arena-wrap">
