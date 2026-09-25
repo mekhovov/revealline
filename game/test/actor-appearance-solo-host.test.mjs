@@ -264,8 +264,10 @@ test('failed fresh Next keeps the result, Retry keeps FPV, and successful Next a
   page.$('retry-button').click();
   await settle(() => {
     page.frame(0);
-    return page.doc.body.dataset.flightState === 'running' && page.rendered.run !== result;
+    return page.$('game-overlay').dataset.kind === 'retry-ready' && page.rendered.run !== result;
   });
+  for (let frame = 0; frame < 6; frame++) page.frame(100);
+  assert.equal(page.doc.body.dataset.flightState, 'running');
   assert.deepEqual(save(page, legacyKey).actorAppearancePin, pin);
   await win();
   page.$('next-button').click();
