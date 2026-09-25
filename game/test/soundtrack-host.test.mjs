@@ -570,7 +570,7 @@ test('actual Studio prepares without downloading; controller, keyboard and touch
   );
   link.emit('keyup', { code: 'Enter', key: 'Enter' });
   assert.equal(requested, 1, 'The controller-owned native echo cannot request a duplicate.');
-  time += 501;
+  time += 1251;
   const enter = link.emit('keydown', { code: 'Enter', key: 'Enter', repeat: false });
   assert.equal(
     enter.defaultPrevented,
