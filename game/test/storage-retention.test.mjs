@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { getLocale, setLocale } from '../i18n/index.mjs';
 import { attachStorageRetention } from '../ui/storage-retention.mjs';
 
 const deferred = () => {
@@ -228,4 +229,40 @@ test('late rejection after close and late grant after destroy cannot publish or 
   g.click();
   assert.equal(g.status.textContent, stopped);
   assert.equal(requests, 2);
+});
+
+test('retention notices translate live without requesting or rechecking browser permission', async (context) => {
+  const locale = getLocale();
+  context.after(() => setLocale(locale, { persist: false }));
+  setLocale('en', { persist: false });
+  let checks = 0,
+    requests = 0;
+  const gate = deferred();
+  const page = setup(context, {
+    persisted: async () => {
+      checks++;
+      return false;
+    },
+    persist: () => {
+      requests++;
+      return gate.promise;
+    },
+  });
+  await page.open();
+  setLocale('uk', { persist: false });
+  assert.match(page.status.textContent, /Захист не ввімкнено/);
+  assert.equal(checks, 1);
+  assert.equal(requests, 0);
+  page.click();
+  assert.equal(requests, 1);
+  setLocale('en', { persist: false });
+  assert.match(page.status.textContent, /Asking the browser/);
+  assert.equal(page.button.attributes.get('aria-busy'), 'true');
+  assert.equal(checks, 1);
+  assert.equal(requests, 1);
+  gate.resolve(true);
+  await flush();
+  setLocale('uk', { persist: false });
+  assert.match(page.status.textContent, /Захист збереження надано/);
+  assert.equal(page.button.attributes.get('aria-busy'), 'false');
 });
