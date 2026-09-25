@@ -150,15 +150,18 @@ main {
   margin: 0 auto;
 }
 .telemetry {
-  height: 68px;
+  min-height: 68px;
   display: grid;
-  grid-template-columns: 1.65fr 1fr 1fr 1fr;
-  gap: 16px;
-  align-items: start;
+  grid-template-columns: minmax(150px, 1.75fr) repeat(4, minmax(72px, 1fr));
+  gap: 12px;
+  align-items: stretch;
+  padding: 8px 10px;
+  border: 1px solid color-mix(in srgb, var(--line) 72%, transparent);
+  background: color-mix(in srgb, var(--paper) 94%, var(--safe));
 }
 .telemetry > div {
   border-left: 1px solid var(--line);
-  padding-left: 14px;
+  padding-left: 12px;
 }
 .telemetry > div:first-child {
   border: 0;
@@ -217,6 +220,19 @@ main {
   font: 8px var(--fk-font-mono, monospace);
   color: var(--muted);
   margin-top: 1px;
+}
+.telemetry-primary,
+.telemetry-stat {
+  min-width: 0;
+}
+#ability-state {
+  color: var(--ink);
+  font-size: 13px;
+  letter-spacing: 0;
+  overflow-wrap: anywhere;
+}
+.game-shell .telemetry #ability-state {
+  display: block;
 }
 .arena-shell {
   position: relative;
@@ -2325,4 +2341,30 @@ dialog input[type='search'] {
   display: inline-flex;
   align-items: center;
   min-height: 44px;
+}
+
+/* Player HUD: keep the mission goal dominant and equipment readable without
+   borrowing space from the board. These late rules intentionally win over
+   legacy breakpoint declarations while preserving the board's 4:3 box. */
+@media (max-width: 680px) {
+  .arena-panel > .telemetry {
+    min-height: 58px;
+    height: auto;
+    grid-template-columns: minmax(94px, 1.45fr) repeat(4, minmax(48px, 1fr));
+    gap: 5px;
+    padding: 6px;
+  }
+  .telemetry #ability-state {
+    font-size: 10px;
+  }
+}
+@media (min-width: 681px) and (max-height: 500px) {
+  .arena-panel > .telemetry {
+    min-height: 40px;
+    height: auto;
+    padding: 4px 7px;
+  }
+  .telemetry #ability-state {
+    font-size: 9px;
+  }
 }

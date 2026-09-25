@@ -1182,6 +1182,10 @@ export function bootCoop({
       ? ` / ${Math.round(run.level.goal.coverage * 100)}%`
       : '';
     $('coop-progress').value = coverage;
+    $('coop-progress').setAttribute(
+      'aria-valuetext',
+      `${coverage.toFixed(1)} percent revealed; target ${Math.round(run.level.goal.coverage * 100)} percent`,
+    );
     $('coop-reserves').textContent =
       `${run.team.reserves} reserve${run.team.reserves === 1 ? '' : 's'}`;
     $('coop-clock').textContent = clock(run.time);
@@ -1196,6 +1200,8 @@ export function bootCoop({
     const finished = run.status === 'won' || run.status === 'lost';
     const groundName = coopGroundName(run.level);
     for (const player of run.players) {
+      const identity = $('coop-identity-' + player.id);
+      identity.dataset.state = finished ? run.status : player.status;
       $('coop-state-' + player.id).textContent = finished
         ? run.status === 'won'
           ? 'Objective complete'
@@ -1264,6 +1270,10 @@ export function bootCoop({
                 : player.supportRole === 'disruptor'
                   ? 'Disruptor ready · tap near moving enemies; hold nearby to rescue'
                   : 'Support ready · tap to cover, hold nearby to rescue';
+      identity.setAttribute(
+        'aria-label',
+        `${names[player.id]}. ${$('coop-state-' + player.id).textContent}. ${$('coop-charge-' + player.id).textContent}.`,
+      );
     }
   }
   // This focus lifetime is local to one picture action. Native disabling may

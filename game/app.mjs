@@ -6616,7 +6616,7 @@ try {
     show('boost-button', actions.manualBoost);
     show('screen-boost-setting', actions.manualBoost);
     show('controller-boost-setting', actions.manualBoost);
-    show('ability-state', actions.manualAbility);
+    show('ability-state', true);
     $('equipment-help').textContent = actions.manualAbility
       ? 'This edition uses manual equipment. Scout Scan reveals nearby objectives and briefly shows enemy direction hints. Supply refills charge-based craft at supply pads. Boost increases speed without making you invulnerable. Field bonuses activate on contact.'
       : 'Arcade: steer and close lines. The map sets your craft and flight speed; bonuses activate on contact. There is no manual Scan, Supply or Boost. Completing missions unlocks the next challenge and picture.';
@@ -7958,6 +7958,7 @@ try {
       run.lives > 3 ? `◆ ×${run.lives}` : '◆ '.repeat(run.lives).trim() || '—';
     $('lives').setAttribute('aria-label', `${run.lives} lives`);
     $('lives').dataset.compactValue = `♥ ${run.lives}`;
+    $('time-label').textContent = run.rules.timeLimitSeconds ? 'TIME LEFT' : 'ELAPSED';
     $('time').textContent = timeLabel(run.time);
     $('score').textContent = String(run.score).padStart(5, '0');
     const required = run.objectives.filter((o) => o.required),
@@ -7994,8 +7995,9 @@ try {
                     : 'Safe ground';
     $('status-dot').style.background = run.player.cutting ? 'var(--danger)' : 'var(--safe)';
     const left = Math.max(0, run.ability.cooldownUntil - run.time);
-    $('ability-state').textContent =
-      `${left > 0 ? left.toFixed(1) + 's cooldown' : run.ability.capacity && run.ability.ammo === 0 ? 'Empty — refill at supply' : 'Ready'}${run.ability.capacity ? ' · ' + run.ability.ammo + '/' + run.ability.capacity + ' charges' : ''}`;
+    $('ability-state').textContent = arcadeActionCapabilities(run.level).manualAbility
+      ? `${left > 0 ? left.toFixed(1) + 's cooldown' : run.ability.capacity && run.ability.ammo === 0 ? 'Empty — refill at supply' : 'Ready'}${run.ability.capacity ? ' · ' + run.ability.ammo + '/' + run.ability.capacity + ' charges' : ''}`
+      : 'Auto bonuses';
     const canSwitchCraft = craftSwitchAvailable();
     $('hangar-button').disabled = !canSwitchCraft;
     show('hangar-button', canSwitchCraft);
