@@ -11,8 +11,11 @@ export function resolvePreviewSize(width, height) {
       value < PREVIEW_SIZE_LIMITS.min ||
       value > PREVIEW_SIZE_LIMITS.max
     )
-      throw new Error(t("tools:mustBeAWholeNumberFrom240To2560Css", { value1: name }));
+      throw new Error(t('tools:mustBeAWholeNumberFrom240To2560Css', { value1: name }));
     return value;
   };
-  return { width: dimension(width, t("tools:width")), height: dimension(height, t("tools:height")) };
+  return {
+    width: dimension(width, t('tools:width')),
+    height: dimension(height, t('tools:height')),
+  };
 }

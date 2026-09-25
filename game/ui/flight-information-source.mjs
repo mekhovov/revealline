@@ -85,8 +85,11 @@ export function flightEventKind(type) {
  * No DOM, wall clock, simulation mutation, arbitration or layout qualification.
  */
 export function flightInformationSnapshot(run, { started, paused }) {
-  check(run && typeof run === 'object', t("interface:anAcceptedRunIsRequired"));
-  check(typeof started === 'boolean' && typeof paused === 'boolean', t("interface:hostStateIsRequired"));
+  check(run && typeof run === 'object', t('interface:anAcceptedRunIsRequired'));
+  check(
+    typeof started === 'boolean' && typeof paused === 'boolean',
+    t('interface:hostStateIsRequired'),
+  );
   const issues = [];
   const classicExpected = isClassicRuleset(run.ruleset);
   const encounterExpected = Boolean(run.level?.encounter);
@@ -218,10 +221,13 @@ export function flightInformationSnapshot(run, { started, paused }) {
 export function flightInformationBatch({ owner, sequence, events, messages }) {
   check(
     typeof owner?.attempt === 'string' && owner.attempt.length > 0 && integer(owner.generation),
-    t("interface:anAcceptedAttemptAndPresentationGenerationAreRequired"),
+    t('interface:anAcceptedAttemptAndPresentationGenerationAreRequired'),
   );
-  check(integer(sequence), t("interface:aHostFeedbackSequenceIsRequired"));
-  check(Array.isArray(events) && Array.isArray(messages), t("interface:aCompleteEventBatchIsRequired"));
+  check(integer(sequence), t('interface:aHostFeedbackSequenceIsRequired'));
+  check(
+    Array.isArray(events) && Array.isArray(messages),
+    t('interface:aCompleteEventBatchIsRequired'),
+  );
   const facts = events.map((event, index) => {
     check(
       event &&
@@ -229,7 +235,7 @@ export function flightInformationBatch({ owner, sequence, events, messages }) {
         event.type.length > 0 &&
         integer(event.tick) &&
         finite(event.time),
-      t("interface:typedEngineEventIdentityAndClockAreRequired"),
+      t('interface:typedEngineEventIdentityAndClockAreRequired'),
     );
     return {
       index,
@@ -252,13 +258,13 @@ export function flightInformationBatch({ owner, sequence, events, messages }) {
       integer(message.eventIndex) &&
         message.eventIndex < facts.length &&
         message.eventIndex >= previous,
-      t("interface:warningObservationsMustFollowTheirSourceEventOrder"),
+      t('interface:warningObservationsMustFollowTheirSourceEventOrder'),
     );
     check(
       typeof message.fullText === 'string' &&
         (message.cue === null || typeof message.cue === 'string') &&
         finite(message.expiresAt),
-      t("interface:retainTheCompleteWarningTextCueAndSimulationExpiry"),
+      t('interface:retainTheCompleteWarningTextCueAndSimulationExpiry'),
     );
     previous = message.eventIndex;
     const fact = facts[message.eventIndex];
