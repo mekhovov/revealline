@@ -1,0 +1,10 @@
+{
+  "distributionSha256": "61dc150364418e0fad8e2b53440a3866fc08ffe5b4a2a075053f3e22eb11cb33",
+  "manifestSha256": "7de7243d8d459c8ae3d033757fecdde74c4a0433b4677122bbedd443792b39e5",
+  "gameSourceRevision": "4755a331bf06be1490d2e41bc4d1a59515a5cd0c",
+  "version": "v0.108.0",
+  "membersVerified": 1138,
+  "manifestFilesVerified": 1137,
+  "uncompressedBytesVerified": 595422802,
+  "crcAndHashesVerified": true
+}
