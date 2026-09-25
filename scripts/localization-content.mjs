@@ -265,6 +265,8 @@ export async function extractContent(root, register) {
         for (const field of ['routeDecision', 'mastery'])
           if (typeof child[field] === 'string') leaves(child[field], `design.${field}`);
     }
+    if (source === 'game/content/mission-library-index.json' && typeof value.edition === 'string')
+      leaves(value.edition, 'edition');
     if (Object.keys(fields).length) {
       const identity = dataIdentity(value);
       registry[identity] = { fields, source, pointer };
