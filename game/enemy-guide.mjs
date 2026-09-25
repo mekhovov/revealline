@@ -6,28 +6,28 @@ import { validateScenario } from './content.mjs';
 
 const advice = () => ({
   bouncer: [
-    t("errors:watchItsDirectionBeforeLeavingTheBorder"),
-    t("errors:closeAShortCutWhileItIsMovingAway"),
+    t('errors:watchItsDirectionBeforeLeavingTheBorder'),
+    t('errors:closeAShortCutWhileItIsMovingAway'),
   ],
   'border-patrol': [
-    t("errors:itFollowsTheOutsideEdgeIncludingYourStartingGround"),
-    t("errors:leaveItsPathBeforeItReachesYouSecuredGroundIs"),
+    t('errors:itFollowsTheOutsideEdgeIncludingYourStartingGround'),
+    t('errors:leaveItsPathBeforeItReachesYouSecuredGroundIs'),
   ],
   'contour-patrol': [
-    t("errors:lookForTheCornerBadgeOnTheChangingFrontier"),
-    t("errors:afterACaptureCheckTheNewBoundaryBeforeChoosingYour"),
+    t('errors:lookForTheCornerBadgeOnTheChangingFrontier'),
+    t('errors:afterACaptureCheckTheNewBoundaryBeforeChoosingYour'),
   ],
   'claimed-rover': [
-    t("errors:itsSleepingOutlineMeansItCannotMoveYet"),
-    t("errors:watchForTheWakeUpWarningWhenItsWholeFootprint"),
+    t('errors:itsSleepingOutlineMeansItCannotMoveYet'),
+    t('errors:watchForTheWakeUpWarningWhenItsWholeFootprint'),
   ],
   eroder: [
-    t("errors:aBiteShapedBadgeMarksAThreatToCapturedGround"),
-    t("errors:watchTheWarningAtASecuredEdgeReopenedCellsBecome"),
+    t('errors:aBiteShapedBadgeMarksAThreatToCapturedGround'),
+    t('errors:watchTheWarningAtASecuredEdgeReopenedCellsBecome'),
   ],
   'lane-boss': [
-    t("errors:theMarkedLaneWarnsBeforeTheAttackBecomesActive"),
-    t("errors:crossDuringTheGapDoNotWaitInsideAWarned"),
+    t('errors:theMarkedLaneWarnsBeforeTheAttackBecomesActive'),
+    t('errors:crossDuringTheGapDoNotWaitInsideAWarned'),
   ],
   'relay-sentinel': [
     'The lock marks a core protected by linked shield relays.',
@@ -36,7 +36,7 @@ const advice = () => ({
 });
 export const ENEMY_GUIDE_TOPICS = Object.freeze([
   ...ENEMY_CATALOG.map(({ type, label }) => Object.freeze({ id: type, label })),
-  Object.freeze({ id: 'line-impact', label: t("errors:raceTheImpact") }),
+  Object.freeze({ id: 'line-impact', label: t('errors:raceTheImpact') }),
 ]);
 
 /** Short player copy, separate from authoring controls and runtime authority. */
@@ -45,15 +45,15 @@ export function enemyGuideEntry(topic, themeId = 'fpv') {
   if (topic === 'line-impact')
     return Object.freeze({
       id: topic,
-      label: t("errors:raceTheImpact"),
-      form: t("errors:twoSparksOnYourUnfinishedLine"),
-      spot: t("errors:aLineStrikeSendsOneSparkBackToTheStart"),
-      risk: t("errors:thePursuingSparkCostsALifeIfItReachesYou"),
-      try: t("errors:closeTheCutBeforeTheSparkCatchesYouClosingSafely"),
-      note: t("errors:thisRuleIsActiveInFirstLightR3AndThis"),
+      label: t('errors:raceTheImpact'),
+      form: t('errors:twoSparksOnYourUnfinishedLine'),
+      spot: t('errors:aLineStrikeSendsOneSparkBackToTheStart'),
+      risk: t('errors:thePursuingSparkCostsALifeIfItReachesYou'),
+      try: t('errors:closeTheCutBeforeTheSparkCatchesYouClosingSafely'),
+      note: t('errors:thisRuleIsActiveInFirstLightR3AndThis'),
     });
   const record = ENEMY_CATALOG.find(({ type }) => type === topic);
-  if (!record) throw new TypeError(t("errors:chooseARegisteredEnemyLesson"));
+  if (!record) throw new TypeError(t('errors:chooseARegisteredEnemyLesson'));
   return Object.freeze({
     id: topic,
     label: contentText(record, 'label'),
@@ -61,16 +61,17 @@ export function enemyGuideEntry(topic, themeId = 'fpv') {
     spot: `${contentText(record, 'domain')}. ${advice()[topic][0]}`,
     risk: contentText(record, 'risk'),
     try: advice()[topic][1],
-    note: t("errors:theSmallCenterMarksContactTheLargerAnimatedBodyHelps"),
+    note: t('errors:theSmallCenterMarksContactTheLargerAnimatedBodyHelps'),
   });
 }
 
 export function enemyGuidePracticeInstructions(topic, exercise = 'observe') {
   if (topic === 'line-impact') {
-    if (!['observe', 'escape'].includes(exercise)) throw new TypeError(t("errors:unknownImpactExercise"));
+    if (!['observe', 'escape'].includes(exercise))
+      throw new TypeError(t('errors:unknownImpactExercise'));
     return exercise === 'observe'
-      ? t("errors:firstLeaveBoostOffAndTapDownWatchTheHit")
-      : t("errors:enableBoostBeforeTappingDownHoldYourBoostButtonOr");
+      ? t('errors:firstLeaveBoostOffAndTapDownWatchTheHit')
+      : t('errors:enableBoostBeforeTappingDownHoldYourBoostButtonOr');
   }
   return `${enemyGuideEntry(topic).try} Move with direction taps; Pause when you want to inspect. Closing a cut stops your craft; tap a fresh direction to fly again. Retry starts the same lesson.`;
 }
@@ -85,20 +86,20 @@ export function createEnemyGuideScenario({
 }) {
   enemyGuideEntry(topic, themeId);
   if (!['immediate', 'grid-center'].includes(turnPolicy))
-    throw new TypeError(t("errors:unknownTurningMode"));
+    throw new TypeError(t('errors:unknownTurningMode'));
   const selected = ENEMY_THEMES.includes(themeId) ? themeId : 'fpv',
     theme = themes?.find((entry) => entry.id === selected);
-  if (!theme) throw new Error(t("errors:thisLessonThemeIsUnavailable"));
+  if (!theme) throw new Error(t('errors:thisLessonThemeIsUnavailable'));
   let scenario;
   if (topic === 'line-impact') {
     if (impactScenario?.level?.id !== 'line-impact-demo')
-      throw new Error(t("errors:theImpactLessonCouldNotLoad"));
+      throw new Error(t('errors:theImpactLessonCouldNotLoad'));
     scenario = structuredClone(impactScenario);
     scenario.theme = structuredClone(theme);
   } else {
     scenario = createEnemyCatalogScenario(topic, emptyEnemyCatalogDraft(selected), themes);
     scenario.level.id = `guide-${topic}`;
-    scenario.level.name = `Field guide: ${ENEMY_CATALOG.find(record => record.type === topic).label}`;
+    scenario.level.name = `Field guide: ${ENEMY_CATALOG.find((record) => record.type === topic).label}`;
     scenario.level.rules = { ...scenario.level.rules, stopOnCapture: true };
   }
   scenario.settings.turnPolicy = turnPolicy;

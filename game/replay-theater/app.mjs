@@ -22,7 +22,10 @@ let theaterDisposed = false;
 let disposeRecording = () => {};
 const replayDisplay = mountReplayDisplay();
 const bootStatus = createOperationStatus($('boot-status'));
-const bootDisplay = bootStatus.begin({ message: t("interface:preparingTheTheater"), stage: 'reading' });
+const bootDisplay = bootStatus.begin({
+  message: t('interface:preparingTheTheater'),
+  stage: 'reading',
+});
 const presentationFeedback = createOperationStatus($('presentation-status'));
 let presentationOperation = null;
 const presentationPage = mountPresentationPage({
@@ -35,7 +38,7 @@ const presentationPage = mountPresentationPage({
         state: status.status === 'error' ? 'error' : 'ready',
         message:
           status.status === 'error'
-            ? t("interface:releaseArtworkIsUnavailableTheCurrentLookIsKept")
+            ? t('interface:releaseArtworkIsUnavailableTheCurrentLookIsKept')
             : '',
       });
       presentationOperation = null;
@@ -56,19 +59,27 @@ window.addEventListener('pagehide', closeTheater);
 const examples = {
   'fieldcraft-01': {
     file: './data/fieldcraft-01.replay.json',
-    get brief() { return t("interface:immediateTurnsAFiberCraftCrossesTheInterferenceBandAt"); },
+    get brief() {
+      return t('interface:immediateTurnsAFiberCraftCrossesTheInterferenceBandAt');
+    },
   },
   'fieldcraft-02': {
     file: './data/fieldcraft-02.replay.json',
-    get brief() { return t("interface:gridCenterTurnsCollectSuppliesPlaceTwoSupportFieldsAnd"); },
+    get brief() {
+      return t('interface:gridCenterTurnsCollectSuppliesPlaceTwoSupportFieldsAnd');
+    },
   },
   'fieldcraft-03': {
     file: './data/fieldcraft-03.replay.json',
-    get brief() { return t("interface:immediateTurnsAPulseAbandonsAThreatenedLiveCutThe"); },
+    get brief() {
+      return t('interface:immediateTurnsAPulseAbandonsAThreatenedLiveCutThe');
+    },
   },
   'fieldcraft-04': {
     file: './data/fieldcraft-04.replay.json',
-    get brief() { return t("interface:gridCenterTurnsPickUpANetAndSlowThe"); },
+    get brief() {
+      return t('interface:gridCenterTurnsPickUpANetAndSlowThe');
+    },
   },
 };
 const clipped = (value, length = 160) => String(value).slice(0, length);
@@ -80,7 +91,7 @@ function readRecording(source) {
     source.length > MAX_REPLAY_PRESENTATION_BYTES ||
     encoder.encode(source).byteLength > MAX_REPLAY_PRESENTATION_BYTES
   )
-    throw new Error(t("interface:recordingExceedsTheReplayPlusAppearanceMetadataLimit"));
+    throw new Error(t('interface:recordingExceedsTheReplayPlusAppearanceMetadataLimit'));
   const document = JSON.parse(source);
   // Raw recordings keep their original parser and byte budget, including source
   // whitespace. A declared wrapper must pass its closed, independently bounded
@@ -97,17 +108,17 @@ try {
     fetch('../content/themes.json'),
     fetch('../../authoring/motion-lab/presets.json'),
   ]);
-  if (theaterDisposed) throw new DOMException(t("interface:theTheaterIsClosed"), 'AbortError');
+  if (theaterDisposed) throw new DOMException(t('interface:theTheaterIsClosed'), 'AbortError');
   if (!themeResponse.ok || !presetResponse.ok)
-    throw new Error(t("interface:presentationAssetsCouldNotLoad"));
+    throw new Error(t('interface:presentationAssetsCouldNotLoad'));
   const [{ themes }, presets] = await Promise.all([themeResponse.json(), presetResponse.json()]);
-  if (theaterDisposed) throw new DOMException(t("interface:theTheaterIsClosed"), 'AbortError');
+  if (theaterDisposed) throw new DOMException(t('interface:theTheaterIsClosed'), 'AbortError');
   const context = $('board').getContext('2d');
-  if (!context) throw new Error(t("interface:thisBrowserCouldNotCreateA2dCanvas"));
+  if (!context) throw new Error(t('interface:thisBrowserCouldNotCreateA2dCanvas'));
   for (const theme of themes) {
     const option = document.createElement('option');
     option.value = theme.id;
-    localizedText(option, () =>contentText(theme, 'name'));
+    localizedText(option, () => contentText(theme, 'name'));
     $('theme').append(option);
   }
   let player = null,
@@ -149,13 +160,17 @@ try {
       [$('play-pause'), $('step')].includes(previousFocus);
     const disabled = pending || !player;
     $('play-pause').disabled = disabled || ['complete', 'error'].includes(player?.phase);
-    localizedText($('play-pause'), () =>player?.phase === 'playing' ? t("common:actions.pause") : t("common:actions.play"));
+    localizedText($('play-pause'), () =>
+      player?.phase === 'playing' ? t('common:actions.pause') : t('common:actions.play'),
+    );
     $('restart').disabled = disabled;
     $('step').disabled = disabled || ['complete', 'error'].includes(player?.phase);
     $('speed').disabled = disabled;
     $('theme').disabled = pending;
     $('cancel-load').hidden = !pending;
-    localizedText($('playback-phase'), () =>pending ? t("interface:verifying") : player?.phase || t("interface:empty"));
+    localizedText($('playback-phase'), () =>
+      pending ? t('interface:verifying') : player?.phase || t('interface:empty'),
+    );
     // Native disabling can move Play/Step focus to BODY. Keep this completed
     // transport journey local without moving focus out of another editor.
     if (
@@ -172,34 +187,66 @@ try {
     const { state, info } = player;
     const encounter = encounterView(state);
     $('encounter-cue').hidden = !encounter;
-    localizedText($('encounter-title'), () =>contentText(encounter, 'title') ?? '');
-    localizedText($('encounter-instruction'), () =>encounter
-      ? t("gameplay:recordedRoute", { value1: contentText(encounter, 'instruction') })
-      : '');
+    localizedText($('encounter-title'), () => contentText(encounter, 'title') ?? '');
+    localizedText($('encounter-instruction'), () =>
+      encounter
+        ? t('gameplay:recordedRoute', { value1: contentText(encounter, 'instruction') })
+        : '',
+    );
     $('timeline').max = Math.max(1, info.totalTicks);
     $('timeline').value = state.tick;
-    localizedText($('tick-readout'), () =>t("gameplay:tick", { value1: state.tick, value2: info.totalTicks }));
-    localizedText($('time-readout'), () =>`${state.time.toFixed(2)} / ${info.durationSeconds.toFixed(2)} s`);
-    localizedText($('run-readout'), () =>t("gameplay:cellsCoveredLivesRecordedPoints", { value1: state.width, value2: state.height, value3: info.turnPolicy, value4: clipped(state.activeClassId), value5: (state.coverage * 100).toFixed(1), value6: state.lives, value7: state.score }));
-    localizedText($('checkpoint'), () =>player.finalCheckpoint
-      ? t("gameplay:finalCheckpointMatchesNoProgressAwarded", { value1: player.finalCheckpoint.hash })
-      : player.phase === 'error'
-        ? player.error
-        : t("gameplay:sourceVerifiedExactInputTicksFinalCheckpointCheckedAgainAt", { value1: info.totalTicks }));
+    localizedText($('tick-readout'), () =>
+      t('gameplay:tick', { value1: state.tick, value2: info.totalTicks }),
+    );
+    localizedText(
+      $('time-readout'),
+      () => `${state.time.toFixed(2)} / ${info.durationSeconds.toFixed(2)} s`,
+    );
+    localizedText($('run-readout'), () =>
+      t('gameplay:cellsCoveredLivesRecordedPoints', {
+        value1: state.width,
+        value2: state.height,
+        value3: info.turnPolicy,
+        value4: clipped(state.activeClassId),
+        value5: (state.coverage * 100).toFixed(1),
+        value6: state.lives,
+        value7: state.score,
+      }),
+    );
+    localizedText($('checkpoint'), () =>
+      player.finalCheckpoint
+        ? t('gameplay:finalCheckpointMatchesNoProgressAwarded', {
+            value1: player.finalCheckpoint.hash,
+          })
+        : player.phase === 'error'
+          ? player.error
+          : t('gameplay:sourceVerifiedExactInputTicksFinalCheckpointCheckedAgainAt', {
+              value1: info.totalTicks,
+            }),
+    );
   }
   function displayEvents(events) {
     if (events.length) {
       eventLines.push(
-        ...events.map(
-          (event) =>
-            t("gameplay:tick2", { value1: event.tick ?? player.state.tick, value2: clipped(event.type, 80), value3: event.classId ? ` · ${clipped(event.classId, 80)}` : '', value4: event.primitive ? ` · ${clipped(event.primitive, 80)}` : '', value5: event.type === 'signal.changed' && event.resistant && event.zoneIds.length ? ' · interference resisted' : '', value6: event.reason ? ` · ${clipped(event.reason, 80)}` : '' }),
+        ...events.map((event) =>
+          t('gameplay:tick2', {
+            value1: event.tick ?? player.state.tick,
+            value2: clipped(event.type, 80),
+            value3: event.classId ? ` · ${clipped(event.classId, 80)}` : '',
+            value4: event.primitive ? ` · ${clipped(event.primitive, 80)}` : '',
+            value5:
+              event.type === 'signal.changed' && event.resistant && event.zoneIds.length
+                ? ' · interference resisted'
+                : '',
+            value6: event.reason ? ` · ${clipped(event.reason, 80)}` : '',
+          }),
         ),
       );
       eventLines = eventLines.slice(-12);
     }
-    const items = (eventLines.length ? eventLines : [t("interface:noEventsYet")]).map((text) => {
+    const items = (eventLines.length ? eventLines : [t('interface:noEventsYet')]).map((text) => {
       const item = document.createElement('li');
-      localizedText(item, () =>text);
+      localizedText(item, () => text);
       return item;
     });
     $('events').replaceChildren(...items);
@@ -213,9 +260,13 @@ try {
       void painter.setLook(theme, bodyFor(theme, player.state));
     }
     if (result.reason === 'frame-gap')
-      localizedText($('transport-status'), () =>t("interface:pausedAfterALongFrameGapChoosePlayToContinue"));
+      localizedText($('transport-status'), () =>
+        t('interface:pausedAfterALongFrameGapChoosePlayToContinue'),
+      );
     else if (result.phase === 'complete')
-      localizedText($('transport-status'), () =>t("interface:recordingCompleteTheFinalStateMatchesRestartToWatchAgain"));
+      localizedText($('transport-status'), () =>
+        t('interface:recordingCompleteTheFinalStateMatchesRestartToWatchAgain'),
+      );
     updateControls();
     readouts();
   }
@@ -223,7 +274,7 @@ try {
     if (!pending) return;
     importDisplay?.finish({
       state: 'cancelled',
-      message: t("interface:loadCancelledThePreviousRecordingIsUnchanged"),
+      message: t('interface:loadCancelledThePreviousRecordingIsUnchanged'),
     });
     importDisplay = null;
     controller?.abort();
@@ -261,7 +312,7 @@ try {
       if (!current()) return;
       const { envelope, replay } = readRecording(source);
       display.update({
-        message: t("interface:verifyingTheRecordingSExactInputTicks"),
+        message: t('interface:verifyingTheRecordingSExactInputTicks'),
         stage: 'verifying',
       });
       const nextPlayer = await prepareReplayPlayer(replay, {
@@ -275,7 +326,7 @@ try {
       if (!current()) return;
       if (envelope) {
         display.update({
-          message: t("interface:checkingTheRecordedMissionOwnerAndExactFpvActors"),
+          message: t('interface:checkingTheRecordedMissionOwnerAndExactFpvActors'),
           stage: 'verifying',
           progress: null,
         });
@@ -298,13 +349,13 @@ try {
       const nextPainter = new BoardPainter(presets, {
         onAsset: (message) => {
           assetMessage = message;
-          if (!disposed && painter === nextPainter) localizedText($('asset-status'), () =>message);
+          if (!disposed && painter === nextPainter) localizedText($('asset-status'), () => message);
         },
       });
       nextPainter.setLevel(nextPlayer.state.level, { seed: nextPlayer.info.seed });
       const theme = chosenTheme();
       display.update({
-        message: t("interface:preparingTheRecordingSArtwork"),
+        message: t('interface:preparingTheRecordingSArtwork'),
         stage: 'decoding',
         progress: null,
       });
@@ -330,15 +381,19 @@ try {
       lastFrame = 0;
       eventLines = [];
       displayEvents([]);
-      localizedText($('recording-name'), () =>player.info.levelName);
-      localizedText($('asset-status'), () =>assetMessage);
-      localizedText($('recorded-appearance'), () =>actorLease
-        ? t("interface:recordedFpvActorsExactActorReleaseRestoredPictureMusicAnd")
-        : t("interface:rawReplayPreviewActorsAndSceneNoRecordedAppearanceIs"));
+      localizedText($('recording-name'), () => player.info.levelName);
+      localizedText($('asset-status'), () => assetMessage);
+      localizedText($('recorded-appearance'), () =>
+        actorLease
+          ? t('interface:recordedFpvActorsExactActorReleaseRestoredPictureMusicAnd')
+          : t('interface:rawReplayPreviewActorsAndSceneNoRecordedAppearanceIs'),
+      );
       display.finish({ message: `${clipped(label)} verified and loaded. Ready to watch.` });
-      localizedText($('transport-status'), () =>player.phase === 'complete'
-          ? t("interface:thisRecordingContainsNoInputTicksItsFinalCheckpointMatches")
-          : t("interface:choosePlayOrStepOneRecordedTickAtATime"));
+      localizedText($('transport-status'), () =>
+        player.phase === 'complete'
+          ? t('interface:thisRecordingContainsNoInputTicksItsFinalCheckpointMatches')
+          : t('interface:choosePlayOrStepOneRecordedTickAtATime'),
+      );
       readouts();
     } catch (error) {
       if (current())
@@ -359,21 +414,23 @@ try {
   async function fetchExample(signal) {
     const example = examples[$('example').value];
     const response = await fetch(example.file, { signal });
-    if (!response.ok) throw new Error(t("interface:theExampleFileCouldNotLoad"));
+    if (!response.ok) throw new Error(t('interface:theExampleFileCouldNotLoad'));
     if (Number(response.headers.get('content-length')) > MAX_REPLAY_BYTES)
-      throw new Error(t("interface:replayExceedsThe32MibLimit"));
+      throw new Error(t('interface:replayExceedsThe32MibLimit'));
     return response.text();
   }
   function exampleBrief() {
-    localizedText($('example-brief'), () =>examples[$('example').value].brief);
+    localizedText($('example-brief'), () => examples[$('example').value].brief);
   }
   function togglePlay() {
     if (!player || pending || ['complete', 'error'].includes(player.phase)) return;
     consume(player.phase === 'playing' ? player.pause() : player.play());
     lastFrame = 0;
-    localizedText($('transport-status'), () =>player.phase === 'playing'
-        ? t("interface:playingTheVerifiedRecording")
-        : t("interface:pausedTheNextRecordedInputIsPreserved"));
+    localizedText($('transport-status'), () =>
+      player.phase === 'playing'
+        ? t('interface:playingTheVerifiedRecording')
+        : t('interface:pausedTheNextRecordedInputIsPreserved'),
+    );
   }
   function safely(action) {
     if (disposed) return;
@@ -381,24 +438,27 @@ try {
       action();
     } catch (error) {
       player?.pause();
-      localizedText($('transport-status'), () =>clipped(error.message, 300));
+      localizedText($('transport-status'), () => clipped(error.message, 300));
       updateControls();
       readouts();
     }
   }
-  $('load-example').addEventListener('click', () => void load(fetchExample, t("interface:fieldcraftExample")));
+  $('load-example').addEventListener(
+    'click',
+    () => void load(fetchExample, t('interface:fieldcraftExample')),
+  );
   $('example').addEventListener('change', exampleBrief);
   $('cancel-load').addEventListener('click', cancelLoad);
   $('load-text').addEventListener('click', () => {
     const text = $('replay-text').value;
-    void load(async () => text, t("interface:pastedReplay"));
+    void load(async () => text, t('interface:pastedReplay'));
   });
   $('replay-file').addEventListener('change', () => {
     const file = $('replay-file').files?.[0];
     if (!file) return;
     void load(async () => {
       if (file.size > MAX_REPLAY_PRESENTATION_BYTES)
-        throw new Error(t("interface:recordingExceedsTheReplayPlusAppearanceMetadataLimit"));
+        throw new Error(t('interface:recordingExceedsTheReplayPlusAppearanceMetadataLimit'));
       return file.text();
     }, file.name);
     $('replay-file').value = '';
@@ -413,14 +473,18 @@ try {
       displayEvents([]);
       lastFrame = 0;
       consume(player.pause());
-      localizedText($('transport-status'), () =>t("interface:restartedAtTickZeroChoosePlayWhenReady"));
+      localizedText($('transport-status'), () =>
+        t('interface:restartedAtTickZeroChoosePlayWhenReady'),
+      );
     }),
   );
   const step = () => {
     if (!player || pending) return;
     consume(player.step());
     if (player.phase !== 'complete')
-      localizedText($('transport-status'), () =>t("gameplay:pausedAtTick", { value1: player.state.tick }));
+      localizedText($('transport-status'), () =>
+        t('gameplay:pausedAtTick', { value1: player.state.tick }),
+      );
   };
   $('step').addEventListener('click', () => safely(step));
   $('speed').addEventListener('change', () =>
@@ -434,9 +498,11 @@ try {
       consume(player.pause());
       const theme = chosenTheme();
       void painter.setLook(theme, bodyFor(theme, player.state));
-      localizedText($('transport-status'), () =>actorLease
-        ? t("interface:previewSceneChangedRecordedFpvActorsAndThePausedTick")
-        : t("interface:presentationChangedTheRecordingRemainsPausedAtTheSameTick"));
+      localizedText($('transport-status'), () =>
+        actorLease
+          ? t('interface:previewSceneChangedRecordedFpvActorsAndThePausedTick')
+          : t('interface:presentationChangedTheRecordingRemainsPausedAtTheSameTick'),
+      );
     }),
   );
   const navigation = attachReplayNavigation({
@@ -450,7 +516,7 @@ try {
     step: () => safely(step),
     onInactive: () => {
       lastFrame = 0;
-      localizedText($('transport-status'), () =>t("interface:playbackPausedChoosePlayToContinue"));
+      localizedText($('transport-status'), () => t('interface:playbackPausedChoosePlayToContinue'));
     },
     onDispose: () => {
       disposeRecording();
@@ -464,7 +530,9 @@ try {
     })
     .catch((error) => {
       if (!disposed)
-        localizedText($('transport-status'), () =>t("gameplay:appLifecycleAdapterUnavailable", { value1: error.message }));
+        localizedText($('transport-status'), () =>
+          t('gameplay:appLifecycleAdapterUnavailable', { value1: error.message }),
+        );
     });
   function frame(now) {
     if (disposed) return;
@@ -493,7 +561,7 @@ try {
   document.querySelector('main').removeAttribute('aria-busy');
   bootDisplay.clear();
   frameId = requestAnimationFrame(frame);
-  void load(fetchExample, t("interface:copperCrossingExample"));
+  void load(fetchExample, t('interface:copperCrossingExample'));
 } catch (error) {
   if (!theaterDisposed)
     bootDisplay.finish({

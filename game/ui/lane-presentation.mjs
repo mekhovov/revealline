@@ -3,13 +3,13 @@ import { PRESENTATION_INK, PRESENTATION_PLATE } from './actor-presentation.mjs';
 import { isFoundationRuleset } from '../core/versions.mjs';
 
 /** Keep authored actor roles distinct while preserving historical theme labels. */
-export function laneWarningCaption(run, event, legacyLabel = t("interface:laneEmitter")) {
+export function laneWarningCaption(run, event, legacyLabel = t('interface:laneEmitter')) {
   if (
     event?.type !== 'boss.warning' ||
     !run.enemies.some((enemy) => enemy.id === event.id && enemy.type === 'lane-boss')
   )
     return '';
-  const label = isFoundationRuleset(run.ruleset) ? t("interface:laneEmitter") : legacyLabel;
+  const label = isFoundationRuleset(run.ruleset) ? t('interface:laneEmitter') : legacyLabel;
   return `${label}: the marked lane will activate shortly.`;
 }
 

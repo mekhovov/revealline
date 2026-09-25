@@ -51,9 +51,10 @@ export function attachCouchInput({
     !Array.isArray(heldActions) ||
     heldActions.some((kind) => !['action', 'pickup'].includes(kind))
   )
-    throw new TypeError(t("interface:heldActionsMustNameSupportedEquipmentActions"));
+    throw new TypeError(t('interface:heldActionsMustNameSupportedEquipmentActions'));
   const heldEquipment = new Set(heldActions);
-  if (typeof steeringEdges !== 'boolean') throw new TypeError(t("interface:steeringEdgesMustBeBoolean"));
+  if (typeof steeringEdges !== 'boolean')
+    throw new TypeError(t('interface:steeringEdgesMustBeBoolean'));
   if (typeof onAcceptedInput !== 'function')
     throw new TypeError('onAcceptedInput must be a function.');
   if (
@@ -65,7 +66,7 @@ export function attachCouchInput({
     new Set(initialSlots.filter((slot) => slot !== null)).size !==
       initialSlots.filter((slot) => slot !== null).length
   )
-    throw new TypeError(t("interface:initialControllerSeatsNeedTwoUniqueBoundedIndexesOrNull"));
+    throw new TypeError(t('interface:initialControllerSeatsNeedTwoUniqueBoundedIndexesOrNull'));
   let pendingInitialSlots = [...initialSlots];
   const accepted = (player, source) => {
     // Optional display notification: a broken observer cannot reject an input.
@@ -210,7 +211,7 @@ export function attachCouchInput({
       }
   }
   function requirePlayer(player) {
-    if (player !== 0 && player !== 1) throw new TypeError(t("interface:playerMustBe0Or1"));
+    if (player !== 0 && player !== 1) throw new TypeError(t('interface:playerMustBe0Or1'));
   }
   function clearPlayer(player) {
     requirePlayer(player);
@@ -228,9 +229,9 @@ export function attachCouchInput({
   function restoreDirection(player, direction) {
     requirePlayer(player);
     if (direction !== null && !directions.includes(direction))
-      throw new TypeError(t("interface:savedDirectionMustBeACardinalDirectionOrNull"));
+      throw new TypeError(t('interface:savedDirectionMustBeACardinalDirectionOrNull'));
     if (destroyed || !continuous())
-      throw new Error(t("interface:restoringDirectionRequiresActiveContinuousSteering"));
+      throw new Error(t('interface:restoringDirectionRequiresActiveContinuousSteering'));
     resetPlayer(player, true);
     players[player].direction = direction;
     sync();
