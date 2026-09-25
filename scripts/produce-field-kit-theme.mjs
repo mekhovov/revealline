@@ -125,9 +125,9 @@ const REVIEWED_RECIPE_INPUTS = {
     ],
   },
   audio: {
-    sha256: '6b9b58a0d51a1b15d533e76b531cb4db09662274c8b5cad3988b06f01e7327c4',
+    sha256: '300d11a20fce6f3058393b9797fac6dee07c1084c2674d4858ebbde510398137',
     evidence: [
-      'Scoped live archive reconciliation: docs/verification/online-soundtrack-reconciliation-2026-09-25/source-review.json sha256:55198d5d74044c8a272f50b32fb01240245dea1843869d22f7dab21d0c310e42. Fifteen ordered audio inputs sha256:6b9b58a0d51a1b15d533e76b531cb4db09662274c8b5cad3988b06f01e7327c4 preserve the bounded catalogue trust boundary, bind selection to resolver-owned policy and accept only the explicit default=false marker used by the 24 post-baseline auditions.',
+      'Scoped live archive reconciliation: docs/verification/online-soundtrack-reconciliation-2026-09-25/source-review.json sha256:55198d5d74044c8a272f50b32fb01240245dea1843869d22f7dab21d0c310e42. Nineteen ordered audio inputs sha256:300d11a20fce6f3058393b9797fac6dee07c1084c2674d4858ebbde510398137 preserve the bounded catalogue trust boundary, bind selection to resolver-owned policy and accept only the explicit default=false marker used by the 24 post-baseline auditions. The only post-review change to the existing soundtrack source is a repository-standard Prettier rewrite of game/soundtrack.mjs; behavior and exports are unchanged.',
       'All8 selected roles remain the same procedural recipes with no new audio files. Focused tests cover bounded decode, exact immutable paths, rejection of default=true and forged Recording-mode policy, clicked-first streaming, style mixing, shuffle and ordered queues, repeat all/one/off, remote two-deck transitions, sequential fallback, failure and cancellation.',
       'No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, cold-offline, frozen-build or public game approval. Archive previews remain outside trusted Automatic and built-in playlists; historical records and original payloads are immutable.',
     ],
