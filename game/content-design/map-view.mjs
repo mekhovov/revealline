@@ -1,4 +1,5 @@
 import { CELL } from '../core/registry.mjs';
+import { t } from '../i18n/index.mjs';
 import { captureOverlay } from './capture-overlay.mjs';
 import { paintMaterialMarker } from './material-markers.mjs';
 import { traceContentActor, contentActorMarkerType } from './actor-marker.mjs';
@@ -117,7 +118,7 @@ export function paintContentMap(
       ctx.lineTo(x + radius, y - radius);
       ctx.stroke();
       ctx.font = `bold ${Math.max(9, size * 0.65)}px monospace`;
-      ctx.fillText('OFF', x + radius, y - radius);
+      ctx.fillText(t('tools:studio.capture.inactive'), x + radius, y - radius);
     }
     if (showCapture && actor.anchor) {
       ctx.strokeStyle = '#fff0ad';
