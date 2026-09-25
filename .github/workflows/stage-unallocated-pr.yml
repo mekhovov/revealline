@@ -27,7 +27,9 @@ jobs:
             const milestone = pull.milestone?.title ?? '';
             const version = milestone.match(/^v(\d+\.\d+\.\d+)(?:\b|\s|—|-)/)?.[1] ?? null;
             const baseTitle = pull.title.replace(targetPrefix, '').trim();
-            const input = inputPrefix.test(pull.title);
+            const input =
+              inputPrefix.test(pull.title) ||
+              pull.labels.some(({ name }) => name === 'release-aggregate-input');
             const expectedTitle = releasePrefix.test(pull.title)
               ? pull.title
               : version
