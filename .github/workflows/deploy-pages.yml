@@ -99,7 +99,6 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
           PR_TITLE: ${{ github.event.pull_request.title }}
-          PR_MILESTONE: ${{ github.event.pull_request.milestone.title || '' }}
         run: |
           set -euo pipefail
           # A product change consumes an immutable version slot only when an
@@ -111,7 +110,8 @@ jobs:
             echo 'mode=release' >> "$GITHUB_OUTPUT"
             exit 0
           fi
-          if [[ "$PR_MILESTONE" =~ ^v[0-9]+\.[0-9]+\.[0-9]+ ]]; then
+          milestone="$(gh api "repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER" --jq '.milestone.title // ""')"
+          if [[ "$milestone" =~ ^v[0-9]+\.[0-9]+\.[0-9]+ ]]; then
             echo 'mode=scheduled' >> "$GITHUB_OUTPUT"
             exit 0
           fi
