@@ -1,19 +1,20 @@
+import { t } from '../i18n/index.mjs';
 /** Text only: callers own input modality, bindings and reading behavior. */
 export function readingInputPrompt({
   modality,
   scrollable,
-  controls = { confirm: 'South', back: 'East' },
+  controls = { confirm: t("common:controls.south"), back: t("common:controls.east") },
 } = {}) {
   const scroll = !scrollable
-    ? 'All text is visible'
+    ? t("interface:allTextIsVisible")
     : modality === 'controller' || modality === 'keyboard'
-      ? 'Up/Down scroll'
-      : 'Scroll to read';
+      ? t("interface:upDownScroll")
+      : t("interface:scrollToRead");
   const exit =
     modality === 'controller'
       ? `${controls.confirm} or ${controls.back}`
       : modality === 'keyboard'
-        ? 'Enter, Space or Escape'
-        : 'Done reading';
+        ? t("interface:enterSpaceOrEscape")
+        : t("interface:doneReading");
   return `${scroll} · ${exit} returns`;
 }

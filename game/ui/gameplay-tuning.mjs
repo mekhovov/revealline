@@ -1,3 +1,4 @@
+import { t, localizedText } from '../i18n/index.mjs';
 import { gameplayTuningDescription } from '../gameplay-tuning.mjs';
 
 /** Browser-wide playtest controls. Hosts own attempt replacement and awards. */
@@ -6,23 +7,22 @@ export function mountGameplayTuning({ root, controller, getDifficulty, onChange 
   const doc = root.ownerDocument;
   const details = doc.createElement('details');
   const summary = doc.createElement('summary');
-  summary.textContent = 'Admin · playtest tuning';
+  localizedText(summary, () =>t("interface:adminPlaytestTuning"));
   const help = doc.createElement('p');
   help.className = 'micro-note';
-  help.textContent =
-    'Global on this browser for Solo, Versus and Team. Applies to fresh attempts only; Resume keeps its rules. Custom tuning is a playtest and does not earn normal clears or awards.';
+  localizedText(help, () =>t("interface:globalOnThisBrowserForSoloVersusAndTeamApplies"));
   const fields = new Map();
   const values = new Map();
   details.append(summary, help);
   for (const [key, label, min, max] of [
-    ['enemySpeed', 'Enemy pace factor', 0.5, 2],
-    ['playerSpeed', 'Craft pace factor', 0.75, 1.5],
-    ['enemyDensity', 'Enemy count factor (authored minimum)', 0, 2],
+    ['enemySpeed', t("interface:enemyPaceFactor"), 0.5, 2],
+    ['playerSpeed', t("interface:craftPaceFactor"), 0.75, 1.5],
+    ['enemyDensity', t("interface:enemyCountFactorAuthoredMinimum"), 0, 2],
   ]) {
     const field = doc.createElement('label');
     field.className = 'field';
     const caption = doc.createElement('span');
-    caption.textContent = label;
+    localizedText(caption, () =>label);
     const input = doc.createElement('input');
     input.type = 'range';
     input.min = String(min);
@@ -33,7 +33,7 @@ export function mountGameplayTuning({ root, controller, getDifficulty, onChange 
     const value = doc.createElement('output');
     value.setAttribute('aria-label', `${label} value`);
     input.oninput = () => {
-      value.textContent = `×${Number(input.value).toFixed(2)}`;
+      localizedText(value, () =>`×${Number(input.value).toFixed(2)}`);
     };
     field.append(caption, input, value);
     fields.set(key, input);
@@ -42,10 +42,10 @@ export function mountGameplayTuning({ root, controller, getDifficulty, onChange 
   }
   const apply = doc.createElement('button');
   apply.type = 'button';
-  apply.textContent = 'Apply to next attempt';
+  localizedText(apply, () =>t("interface:applyToNextAttempt"));
   const reset = doc.createElement('button');
   reset.type = 'button';
-  reset.textContent = 'Reset tuning';
+  localizedText(reset, () =>t("interface:resetTuning"));
   const note = doc.createElement('p');
   note.className = 'micro-note';
   note.setAttribute('role', 'status');
@@ -55,20 +55,19 @@ export function mountGameplayTuning({ root, controller, getDifficulty, onChange 
     const status = controller.status();
     for (const [key, input] of fields) {
       input.value = String(status.overrides[key]);
-      values.get(key).textContent = `×${status.overrides[key].toFixed(2)}`;
+      localizedText(values.get(key), () =>`×${status.overrides[key].toFixed(2)}`);
     }
     const snapshot = controller.snapshot(getDifficulty());
-    note.textContent =
-      `${snapshot.adminOverride ? 'Playtest overrides enabled' : 'Normal difficulty presets'}. ` +
+    localizedText(note, () =>`${snapshot.adminOverride ? t("interface:playtestOverridesEnabled") : t("interface:normalDifficultyPresets")}. ` +
       `Next attempt: ${gameplayTuningDescription(snapshot)} ` +
       'Added counts round up, capped by safe placement in existing occupied regions; authored enemies are never removed. ' +
-      (status.error || 'Saved on this browser.');
+      (status.error || t("interface:savedOnThisBrowser")));
   };
   apply.onclick = () => {
     try {
       const overrides = Object.fromEntries(
         [...fields].map(([key, input]) => {
-          if (input.value.trim() === '') throw new Error('Enter a value for every multiplier.');
+          if (input.value.trim() === '') throw new Error(t("interface:enterAValueForEveryMultiplier"));
           return [key, Number(input.value)];
         }),
       );
@@ -76,7 +75,7 @@ export function mountGameplayTuning({ root, controller, getDifficulty, onChange 
       onChange();
       refresh();
     } catch (error) {
-      note.textContent = `Tuning not applied. ${error.message}`;
+      localizedText(note, () =>`Tuning not applied. ${error.message}`);
     }
   };
   reset.onclick = () => {

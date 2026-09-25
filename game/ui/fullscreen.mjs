@@ -1,3 +1,4 @@
+import { t } from '../i18n/index.mjs';
 function iosBrowser(navigator) {
   if (!navigator) return false;
   const platform = navigator.platform ?? '';
@@ -34,10 +35,10 @@ export function attachFullscreen(button, doc = globalThis.document) {
     button.setAttribute(
       'aria-label',
       offersInstallHelp
-        ? 'Use full screen on iPhone or iPad'
+        ? t("interface:useFullScreenOnIphoneOrIpad")
         : doc.fullscreenElement
-          ? 'Exit fullscreen'
-          : 'Enter fullscreen',
+          ? t("interface:exitFullscreen")
+          : t("interface:enterFullscreen"),
     );
     if (offersInstallHelp) button.removeAttribute('aria-pressed');
     else button.setAttribute('aria-pressed', String(!!doc.fullscreenElement));
@@ -74,7 +75,7 @@ export function attachFullscreen(button, doc = globalThis.document) {
     } catch {
       if (active)
         button.title =
-          'Fullscreen is unavailable in this browser. The board fits the visible window.';
+          t("interface:fullscreenIsUnavailableInThisBrowserTheBoardFitsThe");
     } finally {
       pending = false;
     }

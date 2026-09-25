@@ -1,4 +1,5 @@
-const TAB_KEYS = new Set(['ArrowLeft', 'ArrowRight', 'Home', 'End']);
+import { t } from '../i18n/index.mjs';
+const TAB_KEYS = new Set(['ArrowLeft', 'ArrowRight', t("interface:home"), t("interface:end")]);
 const owns = (root, doc, list, { tab, panel }) =>
   root?.ownerDocument === doc &&
   doc?.contains(root) &&
