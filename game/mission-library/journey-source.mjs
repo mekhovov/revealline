@@ -36,14 +36,16 @@ export function journeyLibrarySource({
           ? 'Skipped · try again'
           : '';
     },
-    completion: (mission, mode) =>
-      journeyPictureCompletion({
-        profile: profile.snapshot(),
-        pictures: profile.pictures?.() ?? emptyJourneyPictures(),
-        mode,
-        editionId,
-        missionId: mission.id,
-      }),
+    completion: profile
+      ? (mission, mode) =>
+          journeyPictureCompletion({
+            profile: profile.snapshot(),
+            pictures: profile.pictures?.() ?? emptyJourneyPictures(),
+            mode,
+            editionId,
+            missionId: mission.id,
+          })
+      : () => null,
     card,
     details,
     launch,

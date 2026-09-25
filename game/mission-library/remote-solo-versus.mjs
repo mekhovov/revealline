@@ -221,6 +221,7 @@ async function installedSources({
           ready: false,
           reason: error || 'Installed chapter metadata has not been checked.',
         });
+  const indexedRow = ({ rulesEdition: _rulesEdition, ...row }) => row;
   async function refresh({ signal: operationSignal = signal } = {}) {
     check(operationSignal);
     const ticket = ++refreshEpoch;
@@ -278,7 +279,9 @@ async function installedSources({
     check(context.signal);
     if (context.isCurrent?.() === false) return false;
     if (row?.source === 'external') {
-      const ready = await getInstaller().inspectExternal(row, { signal: context.signal });
+      const ready = await getInstaller().inspectExternal(indexedRow(row), {
+        signal: context.signal,
+      });
       check(context.signal);
       if (!ready.ready) throw new Error(ready.reason || 'Original pictures need preparation.');
       await inventory.confirm(context.inventory, { signal: context.signal });
@@ -351,7 +354,9 @@ async function installedSources({
         await inventory.confirm(before, { signal: context.signal });
         let result;
         if (['bundled', 'archived'].includes(row.source))
-          result = await getInstaller().installIndexed(row, { signal: context.signal });
+          result = await getInstaller().installIndexed(indexedRow(row), {
+            signal: context.signal,
+          });
         else if (row.source === 'optional') {
           const catalog = await loadOptionalCatalog({
             baseURL,
@@ -363,8 +368,8 @@ async function installedSources({
           result = await getInstaller().install(summary, { signal: context.signal });
         } else if (row.source === 'external')
           result = before.packs.some((pack) => pack.id === row.packId)
-            ? await getInstaller().inspectExternal(row, { signal: context.signal })
-            : await getInstaller().installExternal(row, { signal: context.signal });
+            ? await getInstaller().inspectExternal(indexedRow(row), { signal: context.signal })
+            : await getInstaller().installExternal(indexedRow(row), { signal: context.signal });
         else throw new Error('This mission does not need installation.');
         // A durable commit can outlive cancellation. Refresh metadata using this
         // owner's lifetime, but never launch or manufacture a cancelled proof.

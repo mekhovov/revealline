@@ -103,10 +103,11 @@ async function open(f, paused = false) {
   f.$(paused ? 'coop-discovery-paused' : 'coop-discovery-open').focus();
   f.tap('Enter');
   await settle(() => f.$('journey-chooser')?.open);
+  await settle(() => cards(f).length > 0);
   f.$('journey-mode').focus();
   f.$('journey-mode').value = 'solo';
   f.$('journey-mode').emit('change');
-  await settle(() => cards(f).length >= 201);
+  await settle(() => cards(f).length > 12);
 }
 function collection(f, value) {
   f.$('journey-collection').value = value;
@@ -118,7 +119,7 @@ test('actual Team library browses same-ID Custom artwork with no decodes and han
   const f = await fixture(t, [custom]);
   const before = await f.pointer.snapshot();
   await open(f);
-  assert.equal(cards(f).length, 204);
+  assert.equal(cards(f).length, 282);
   assert.match(f.$('coop-library-remote-status').textContent, /All missions loaded/);
   const rows = collection(f, 'Custom');
   assert.equal(rows.length, 3);
