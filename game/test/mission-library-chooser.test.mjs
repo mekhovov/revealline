@@ -13,6 +13,7 @@ import {
 import { attachJourneyChooser } from '../ui/journey-chooser.mjs';
 import { createMissionLibrarySessionState } from '../mission-library/handoff.mjs';
 import { attachControllerNavigation } from '../ui/controller-navigation.mjs';
+import { getLocale, setLocale } from '../i18n/index.mjs';
 
 const tick = () => new Promise((resolve) => setImmediate(resolve));
 

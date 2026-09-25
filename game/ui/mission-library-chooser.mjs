@@ -1,5 +1,12 @@
 import { createJourneyArtworkView } from './journey-artwork.mjs';
-import { t, localizedText, localizedMessage, localizedAttribute } from '../i18n/index.mjs';
+import {
+  t,
+  localizedText,
+  localizedMessage,
+  localizedAttribute,
+  formatNumber,
+  render as renderMessage,
+} from '../i18n/index.mjs';
 import { LIBRARY_COLLECTIONS, LIBRARY_MODES } from '../mission-library/library.mjs';
 import { paintMissionThumbnail } from '../content-design/mission-card.mjs';
 import { trackMissionLibraryOpening } from '../mission-library/opening-intent.mjs';
@@ -20,8 +27,8 @@ const modeLabel = (mode) =>
   ({ solo: t('interface:solo2'), versus: t('interface:versus2'), team: t('interface:team') })[mode];
 const sizeLabel = (bytes) =>
   bytes < 1024 * 1024
-    ? `${Math.ceil(bytes / 1024)} KiB`
-    : `${(bytes / (1024 * 1024)).toFixed(1)} MiB`;
+    ? `${formatNumber(Math.ceil(bytes / 1024))} KiB`
+    : `${formatNumber(bytes / (1024 * 1024), { minimumFractionDigits: 1, maximumFractionDigits: 1 })} MiB`;
 
 /** Same flat mission surface across hosts. Owner adapters, not this UI, validate
  * launches, prepare pictures, award progress and decide the next mission. */
@@ -304,6 +311,8 @@ export function attachMissionLibraryChooser({
       cancelResizeScroll();
     }
   }
+  const displayName = (row) =>
+    library.find(row.id) === row ? library.presentation(row).name : row.name;
   doc.addEventListener('visibilitychange', selectionVisibilityChanged);
   view.addEventListener?.('blur', retirePendingSelection);
   view.addEventListener?.('blur', cancelResizeScroll);
@@ -363,9 +372,10 @@ export function attachMissionLibraryChooser({
         if (current)
           message =
             result.state === 'cancelled'
-              ? t('interface:downloadCancelledYourCurrentGameIsKept')
+              ? localizedMessage('interface:downloadCancelledYourCurrentGameIsKept')
               : result.state === 'ready'
-                ? `${row.name} is ready. Starting…`
+                ? () =>
+                    t('interface:missionLibrary.preparedStarting', { name: displayName(row) })
                 : '';
         if (current && result.state === 'ready') {
           preparations.delete(row.id);
@@ -375,7 +385,12 @@ export function attachMissionLibraryChooser({
           if (readyRow && readyButton) return activate(readyRow, readyButton);
         }
       } catch (error) {
-        if (ticket === visit) message = `Could not prepare ${row.name}: ${error.message}`;
+        if (ticket === visit)
+          message = () =>
+            t('interface:missionLibrary.prepareFailed', {
+              name: displayName(row),
+              error: error.message,
+            });
       } finally {
         if (preparations.get(row.id) === preparation) preparations.delete(row.id);
         if (dialog.open && ticket === visit) render();
@@ -443,12 +458,16 @@ export function attachMissionLibraryChooser({
         mode: activeMode,
       });
       if (accepted === false && mayRestore()) {
-        message = t('interface:missionNotOpenedYourCurrentGameIsKept');
+        message = localizedMessage('interface:missionNotOpenedYourCurrentGameIsKept');
         open(opener, { returnLabel: back.textContent });
       }
     } catch (error) {
       if (mayRestore()) {
-        message = `Could not open ${row.name}: ${error.message}`;
+        message = () =>
+          t('interface:missionLibrary.launchFailed', {
+            name: displayName(row),
+            error: error.message,
+          });
         open(opener, { returnLabel: back.textContent });
       }
     }
@@ -527,7 +546,7 @@ export function attachMissionLibraryChooser({
     localizedText(
       status,
       () =>
-        `${t('common:counts.missions', { count: matches.length })} · ${modeLabel(modeFilter.value)}${message ? ` · ${message}` : ''}`,
+        `${t('common:counts.missions', { count: matches.length })} · ${modeLabel(modeFilter.value)}${message ? ` · ${renderMessage(message)}` : ''}`,
     );
     const filtersActive = !!collection.value || !!campaign.value || modeFilter.value !== mode;
     localizedText(filterSummary, () =>
@@ -613,10 +632,18 @@ export function attachMissionLibraryChooser({
         availability.state === 'ready'
           ? t('common:actions.play')
           : availability.state === 'download'
-            ? `Download & play · ${sizeLabel(availability.bytes)}`
+            ? t('interface:missionLibrary.downloadAndPlaySize', {
+                size: sizeLabel(availability.bytes),
+              })
             : availability.state === 'preparing'
               ? t('interface:preparing2')
-              : `Unavailable · ${availability.reason}${availability.retry ? ' · Retry' : ''}`);
+              : t(
+                  availability.retry
+                    ? 'interface:missionLibrary.unavailableRetry'
+                    : 'interface:missionLibrary.unavailableReason',
+                  { reason: availability.reason },
+                ),
+      );
       card.button.disabled = availability.state === 'unavailable' && !availability.retry;
       card.button.setAttribute('aria-busy', String(availability.state === 'preparing'));
       return card.button;
