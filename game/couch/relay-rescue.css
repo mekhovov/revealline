@@ -35,9 +35,21 @@
   max-width: 100%;
 }
 .live-objective {
-  margin: 0 0 12px;
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin: 0 0 10px;
+  color: var(--muted);
+  font: var(--fk-text-secondary) / 1.35 var(--fk-font-ui);
+}
+.live-objective > span {
+  flex: none;
+  font: 0.68rem/1 var(--fk-font-mono);
+  letter-spacing: 0.1em;
+}
+.live-objective > strong {
   color: var(--sun);
-  font-size: 0.85rem;
+  font-weight: 650;
 }
 .control-card .support-status {
   color: inherit;
@@ -617,6 +629,15 @@ h1 em {
   grid-column: 2;
   font-size: 0.7rem;
 }
+.identity[data-state='downed'] {
+  color: var(--fk-danger, #ff8066);
+}
+.identity[data-state='downed'] .charge-state {
+  color: var(--ink);
+}
+.identity[data-state='won'] {
+  color: var(--fk-safe, #8ed8a6);
+}
 .player-number {
   display: inline-grid;
   place-items: center;
@@ -718,7 +739,7 @@ canvas {
 }
 .board-footer button {
   padding: 0.5rem 0.8rem;
-  min-height: 36px;
+  min-height: var(--fk-target-size, 44px);
 }
 .overlay {
   position: fixed;

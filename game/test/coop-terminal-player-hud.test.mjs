@@ -113,6 +113,9 @@ test('legal shared loss ends both full and compact player instructions until an 
     initial = players(f),
     image = teamImage(f),
     messages = recordMessages(t, f);
+  assert.match(f.$('coop-identity-0').getAttribute('aria-label'), /Sunflower.*Support ready/);
+  assert.match(f.$('coop-identity-1').getAttribute('aria-label'), /Skyline.*Support ready/);
+  assert.match(f.$('coop-progress').getAttribute('aria-valuetext'), /target 65 percent/);
   selfCross(f);
   assert.equal(f.$('coop-reserves').textContent, '0 reserves');
   assert.equal(f.$('coop-overlay').hidden, true);
