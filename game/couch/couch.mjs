@@ -122,12 +122,16 @@ const audioPreferences = createAudioPreferences({
   window,
   getStorage: () => localStorage,
   onWarning: (message) => {
-    localizedText($('race-audio-status'), () =>message);
+    localizedText($('race-audio-status'), () => message);
   },
 });
 const renderMasterPreferences = ({ muted, volume }) => {
-  localizedText($('race-audio'), () =>muted ? t("interface:unmuteSound") : t("interface:muteSound"));
-  localizedText($('race-quick-sound'), () =>muted ? t("interface:soundOff") : t("interface:soundOn"));
+  localizedText($('race-audio'), () =>
+    muted ? t('interface:unmuteSound') : t('interface:muteSound'),
+  );
+  localizedText($('race-quick-sound'), () =>
+    muted ? t('interface:soundOff') : t('interface:soundOn'),
+  );
   $('race-quick-sound').setAttribute('aria-pressed', String(!muted));
   $('race-master-volume').value = volume;
 };
@@ -146,7 +150,7 @@ const displayPreferences = createDisplayPreferences({
   matchMedia,
   getStorage: () => localStorage,
   onWarning: (message) => {
-    localizedText($('race-display-status'), () =>message);
+    localizedText($('race-display-status'), () => message);
   },
 });
 const renderDisplayPreferences = (state) => {
@@ -156,9 +160,11 @@ const renderDisplayPreferences = (state) => {
   $('race-text-face').value = state.textFace;
   $('race-text-size').value = state.textSize;
   $('race-reduced').checked = state.reducedEffects;
-  localizedText($('race-system-reduction'), () =>state.effectiveReducedEffects && !state.reducedEffects
-      ? t("interface:systemReducedMotionIsActiveYourSavedReducedEffectsChoice")
-      : '');
+  localizedText($('race-system-reduction'), () =>
+    state.effectiveReducedEffects && !state.reducedEffects
+      ? t('interface:systemReducedMotionIsActiveYourSavedReducedEffectsChoice')
+      : '',
+  );
 };
 const stopDisplayView = displayPreferences.subscribe(renderDisplayPreferences);
 const displayRestoration = attachPreferenceRestoration({
@@ -176,7 +182,7 @@ const actorPreferences = createActorStylePreferences({
   window,
   getStorage: () => localStorage,
   onWarning: (message) => {
-    localizedText($('race-actor-style-status'), () =>message);
+    localizedText($('race-actor-style-status'), () => message);
   },
 });
 const stopActorView = actorPreferences.subscribe(({ actorStyle }) => {
@@ -194,7 +200,7 @@ globalThis.RevealLineToolLaunch?.attached();
 document.documentElement.dataset.toolState = 'loading';
 const bootStatus = createOperationStatus($('boot-status'));
 const bootDisplay = bootStatus.begin({
-  message: t("interface:preparingBothBoards"),
+  message: t('interface:preparingBothBoards'),
   stage: 'reading',
 });
 let bootFailed = false;
@@ -225,7 +231,7 @@ const presentationPage = mountPresentationPage({
         state: status.status === 'error' ? 'error' : 'ready',
         message:
           status.status === 'error'
-            ? t("interface:releaseArtworkIsUnavailableTheCurrentLookIsKept")
+            ? t('interface:releaseArtworkIsUnavailableTheCurrentLookIsKept')
             : '',
       });
       presentationOperation = null;
@@ -282,7 +288,7 @@ const releaseArtwork = (event) => {
 window.addEventListener('pagehide', releaseArtwork);
 const json = async (url) => {
   const r = await fetch(url, { signal: artworkLifetime.signal });
-  if (!r.ok) throw new Error(t("gameplay:couldNotLoad", { value1: url }));
+  if (!r.ok) throw new Error(t('gameplay:couldNotLoad', { value1: url }));
   return r.json();
 };
 try {
@@ -317,7 +323,8 @@ try {
   if (libraryHandoff) {
     const values = new URL(location.href).searchParams.getAll('versus-next');
     if (values.length) {
-      if (values.length !== 1) throw new TypeError(t("interface:duplicateVersusContinuationSettings"));
+      if (values.length !== 1)
+        throw new TypeError(t('interface:duplicateVersusContinuationSettings'));
       const value = boundedJSON(values[0], {
         maxBytes: 4096,
         maxNodes: 24,
@@ -326,7 +333,7 @@ try {
       exactKeys(
         value,
         ['mission', 'format', 'turnPolicy', 'seconds', 'difficulty', 'tap', 'slots'],
-        t("interface:versusContinuation"),
+        t('interface:versusContinuation'),
       );
       if (
         value?.mission === libraryHandoff &&
@@ -343,7 +350,7 @@ try {
         (value.slots[0] === null || value.slots[0] !== value.slots[1])
       )
         incomingContinuation = value;
-      else throw new TypeError(t("interface:versusContinuationSettingsDoNotMatchThisExactMission"));
+      else throw new TypeError(t('interface:versusContinuationSettingsDoNotMatchThisExactMission'));
     }
   }
   if (incomingContinuation) {
@@ -416,11 +423,13 @@ try {
         const unsaved = journeySaveCue.update({ ready, durable, error });
         const notice = $('race-journey-save');
         notice.hidden = !unsaved && !notice.contains(document.activeElement);
-        localizedText($('race-journey-save-message'), () =>error
-          ? `Journey race progress is session-only. Retry saving or export before closing. ${error}`
-          : ready && durable
-            ? t("interface:journeyRaceProgressSavedLocallyYouCanContinuePlaying")
-            : '');
+        localizedText($('race-journey-save-message'), () =>
+          error
+            ? `Journey race progress is session-only. Retry saving or export before closing. ${error}`
+            : ready && durable
+              ? t('interface:journeyRaceProgressSavedLocallyYouCanContinuePlaying')
+              : '',
+        );
       },
     });
     await journeyProfile.load();
@@ -454,18 +463,19 @@ try {
   if (!candidateJourney)
     try {
       bootDisplay.update({
-        message: t("interface:loadingTheFeaturedChapter"),
+        message: t('interface:loadingTheFeaturedChapter'),
         stage: 'downloading',
       });
       featuredSource = await json('../content/packs/fpv-arcade-r5.json');
     } catch (error) {
       if (artworkLifetime.signal.aborted || error.name === 'AbortError') throw error;
-      featuredStatus =
-        t("interface:featuredPressureLinesDownloadUnavailableBaseMapsAndCheckedInstalled");
+      featuredStatus = t(
+        'interface:featuredPressureLinesDownloadUnavailableBaseMapsAndCheckedInstalled',
+      );
     }
   if (featuredSource !== undefined) {
     bootDisplay.update({
-      message: t("interface:checkingFeaturedMapsAndOriginalPictures"),
+      message: t('interface:checkingFeaturedMapsAndOriginalPictures'),
       stage: 'verifying',
     });
     featured = await prepareCouchChapter(featuredSource, {
@@ -512,9 +522,9 @@ try {
       });
   let installedStatus = candidateJourney
       ? authoredRoute.id === DEFAULT_JOURNEY_ROUTES.versus
-        ? t("interface:openAllMissionsForJourneyEarlierMissionsAndInstalledChapters")
+        ? t('interface:openAllMissionsForJourneyEarlierMissionsAndInstalledChapters')
         : `${authoredRoute.label} test route; Legacy chapters stay in the ordinary race.`
-      : t("interface:installedChaptersHaveNotBeenChecked"),
+      : t('interface:installedChaptersHaveNotBeenChecked'),
     contentChannel = null;
   try {
     const channel = document.querySelector('meta[name="revealline-offline"]')
@@ -528,7 +538,7 @@ try {
         presentationPage,
       });
       bootDisplay.update({
-        message: t("interface:checkingInstalledChaptersAndPictures"),
+        message: t('interface:checkingInstalledChaptersAndPictures'),
         stage: 'verifying',
       });
       const rows = await installed.refresh({
@@ -538,14 +548,15 @@ try {
       maps.push(...rows);
       installedStatus = rows.length
         ? `${rows.length} installed maps available. Choose a map to check its original.`
-        : t("interface:openAllMissionsToDownloadCompatibleChaptersThenChoosePlay");
+        : t('interface:openAllMissionsToDownloadCompatibleChaptersThenChoosePlay');
     }
   } catch (error) {
-    installedStatus = t("gameplay:installedChaptersUnavailable", { value1: error.message });
+    installedStatus = t('gameplay:installedChaptersUnavailable', { value1: error.message });
   }
   if (artworkLifetime.signal.aborted)
-    throw new DOMException(t("interface:couchArtworkLoadingCancelled"), 'AbortError');
-  const mode = (level) => (arcadeActionCapabilities(level).manualAbility ? t("interface:tactical") : t("interface:arcade"));
+    throw new DOMException(t('interface:couchArtworkLoadingCancelled'), 'AbortError');
+  const mode = (level) =>
+    arcadeActionCapabilities(level).manualAbility ? t('interface:tactical') : t('interface:arcade');
   function showMaps() {
     $('race-level').replaceChildren(
       ...maps
@@ -658,8 +669,7 @@ try {
     menuOwner = null,
     menuHint = '',
     menuGate = '',
-    menuStatus =
-      t("interface:releaseControlsThenPressAFaceButtonOrMenuTo"),
+    menuStatus = t('interface:releaseControlsThenPressAFaceButtonOrMenuTo'),
     menuScope = null,
     inactive = false,
     disposed = false,
@@ -680,9 +690,13 @@ try {
         throw error;
       }));
   function showActorNotice(recipe) {
-    localizedText($('race-actor-style-status'), () =>actorPreferences.getWarning() ||
-      recipe.actorNotice ||
-      t("interface:appliesToANewRaceOrNextMissionResumeAnd"));
+    localizedText(
+      $('race-actor-style-status'),
+      () =>
+        actorPreferences.getWarning() ||
+        recipe.actorNotice ||
+        t('interface:appliesToANewRaceOrNextMissionResumeAnd'),
+    );
   }
   const actorExecutionOwners = new WeakMap();
   async function prepareActors(recipe, { signal, onStatus, reader = installed } = {}) {
@@ -735,8 +749,7 @@ try {
           // Missing optional authority never grants FPV ownership. A fresh
           // unknown pack remains playable through its validated authored path.
           // Accepted FPV pins and later actor asset/hash failures stay strict.
-          recipe.actorNotice =
-            t("interface:fpvEligibilityCouldNotBeCheckedForThisChapterIts");
+          recipe.actorNotice = t('interface:fpvEligibilityCouldNotBeCheckedForThisChapterIts');
           return null;
         }
         const original = index.missions.find(
@@ -801,7 +814,7 @@ try {
     readingInputPrompt({
       modality: readingModality,
       scrollable,
-      controls: { confirm: t("common:controls.south"), back: t("common:controls.east") },
+      controls: { confirm: t('common:controls.south'), back: t('common:controls.east') },
     });
   function setReadingModality(modality) {
     if (readingModality === modality) return;
@@ -895,9 +908,11 @@ try {
         contentBusy = false;
         preparationDisplay?.finish({ state: 'cancelled', message: '' });
         preparationDisplay = null;
-        localizedText($('race-message'), () =>selected
-          ? t("interface:missionSelectionCancelledYourCurrentRaceAndPictureAreKept")
-          : t("interface:nextMissionCancelledResultsAreKeptChooseNextMissionTo"));
+        localizedText($('race-message'), () =>
+          selected
+            ? t('interface:missionSelectionCancelledYourCurrentRaceAndPictureAreKept')
+            : t('interface:nextMissionCancelledResultsAreKeptChooseNextMissionTo'),
+        );
         updateMenu();
         return;
       }
@@ -920,10 +935,10 @@ try {
     contentReady = retainedResult;
     contentError = retainedResult
       ? `${continuationAction()} picture loading cancelled. Results are kept. Choose ${continuationAction()} when you are ready.`
-      : t("interface:pictureLoadingCancelledRetryWhenYouAreReady");
+      : t('interface:pictureLoadingCancelledRetryWhenYouAreReady');
     if (installedStatus === 'Checking installed chapters…')
-      installedStatus = t("interface:installedChapterCheckCancelledRefreshWhenReady");
-    localizedText($('race-message'), () =>contentError);
+      installedStatus = t('interface:installedChapterCheckCancelledRefreshWhenReady');
+    localizedText($('race-message'), () => contentError);
     updateMenu();
   }
   $('race-picture-cancel').onclick = () => {
@@ -1010,7 +1025,9 @@ try {
     selectedMapKey = entry.key;
     backdrop = entry.backdrop || null;
     theme = entry.themes.find((t) => t.id === themeId) || entry.themes[0];
-    $('race-theme').replaceChildren(...entry.themes.map((t) => localizedOption(() => t.name, t.id)));
+    $('race-theme').replaceChildren(
+      ...entry.themes.map((t) => localizedOption(() => t.name, t.id)),
+    );
     $('race-theme').value = theme.id;
     roundRecipe = {
       entry,
@@ -1034,7 +1051,9 @@ try {
       });
     paintRound(roundRecipe);
     finished = false;
-    localizedText($('race-start'), () =>roundRecipe.format === 'single' ? t("interface:startRace2") : t("interface:startRound2"));
+    localizedText($('race-start'), () =>
+      roundRecipe.format === 'single' ? t('interface:startRace2') : t('interface:startRound2'),
+    );
     return loadPreparedPicture(entry);
   }
   function createRound(recipe) {
@@ -1091,9 +1110,7 @@ try {
       else {
         music.contextPending(theme.id);
         music.report(
-          new Error(
-            t("interface:missionMusicAssignmentIsUnavailableUntilThisContentIdentityIs"),
-          ),
+          new Error(t('interface:missionMusicAssignmentIsUnavailableUntilThisContentIdentityIs')),
         );
       }
     }
@@ -1110,9 +1127,9 @@ try {
     const staticEntry = shippedMaps.includes(entry),
       owner = staticEntry ? staticPictures : installed,
       message = staticEntry
-        ? t("interface:checkingThisMapAndPreparingTheSamePictureForBoth")
-        : t("interface:checkingThisChapterAndLoadingItsOriginalPicture");
-    localizedText($('race-message'), () =>message);
+        ? t('interface:checkingThisMapAndPreparingTheSamePictureForBoth')
+        : t('interface:checkingThisChapterAndLoadingItsOriginalPicture');
+    localizedText($('race-message'), () => message);
     updateMenu();
     const selectedRun = match,
       ticket = generation,
@@ -1161,7 +1178,7 @@ try {
         if (disposed || controller.signal.aborted || match !== selectedRun || ticket !== generation)
           return false;
         contentError = `This ${staticEntry ? 'map picture or actor appearance' : 'chapter'} could not load: ${error.message}`;
-        localizedText($('race-message'), () =>contentError);
+        localizedText($('race-message'), () => contentError);
         display.finish({ state: 'error', message: '' });
         return false;
       } finally {
@@ -1179,8 +1196,10 @@ try {
       nextAttempt?.recipe.entry.mission !== undefined &&
       nextAttempt.recipe.entry.mission !== roundRecipe.entry.mission
     )
-      return t("interface:nextMission2");
-    return roundRecipe.format === 'single' || won.some((n) => n >= 2) ? t("interface:rematch") : t("interface:nextRound2");
+      return t('interface:nextMission2');
+    return roundRecipe.format === 'single' || won.some((n) => n >= 2)
+      ? t('interface:rematch')
+      : t('interface:nextRound2');
   }
   async function prepareNext(
     destination = null,
@@ -1365,13 +1384,14 @@ try {
           mode: 'versus',
           missionId: attempt.recipe.entry.mission.id,
         });
-      localizedText($('race-start'), () =>roundRecipe.format === 'single' ? t("interface:startRace2") : t("interface:startRound2"));
-      localizedText($('race-message'), () =>[
-        lease.picture?.notice,
-        t("interface:bothBoardsUseThePreparedNextPictureStartWhenYou"),
-      ]
-        .filter(Boolean)
-        .join(' '));
+      localizedText($('race-start'), () =>
+        roundRecipe.format === 'single' ? t('interface:startRace2') : t('interface:startRound2'),
+      );
+      localizedText($('race-message'), () =>
+        [lease.picture?.notice, t('interface:bothBoardsUseThePreparedNextPictureStartWhenYou')]
+          .filter(Boolean)
+          .join(' '),
+      );
       contentReady = true;
       display.finish({ message: '' });
       prepared = {
@@ -1384,9 +1404,9 @@ try {
     } catch (error) {
       if (current()) {
         contentError = `The ${continuationAction().toLowerCase()} picture or actors could not be prepared. Both boards are kept. Choose ${continuationAction()} to retry.`;
-        localizedText($('race-message'), () =>contentError);
+        localizedText($('race-message'), () => contentError);
         display.finish({ state: 'error', message: '' });
-        console.warn(t("interface:nextPicturePreparationFailed"), error);
+        console.warn(t('interface:nextPicturePreparationFailed'), error);
       }
       return null;
     } finally {
@@ -1402,9 +1422,8 @@ try {
         ) {
           preparationStatus.clear();
           preparationDisplay = null;
-          contentError =
-            t("interface:actorChoiceChangedBothPreviousBoardsAreKeptChooseStart");
-          localizedText($('race-message'), () =>contentError);
+          contentError = t('interface:actorChoiceChangedBothPreviousBoardsAreKeptChooseStart');
+          localizedText($('race-message'), () => contentError);
         }
         contentBusy = false;
         updateMenu();
@@ -1424,8 +1443,12 @@ try {
     pauseDuel(match, { preserveContinuation: true });
     clear();
     if (match.status === 'paused') {
-      localizedText($('race-start'), () =>roundRecipe.format === 'single' ? t("interface:resumeRace") : t("interface:resumeRound"));
-      localizedText($('race-message'), () =>t("interface:bothPlayersArePausedResumeWhenEveryoneIsReady"));
+      localizedText($('race-start'), () =>
+        roundRecipe.format === 'single' ? t('interface:resumeRace') : t('interface:resumeRound'),
+      );
+      localizedText($('race-message'), () =>
+        t('interface:bothPlayersArePausedResumeWhenEveryoneIsReady'),
+      );
     }
     updateMenu();
   }
@@ -1540,7 +1563,7 @@ try {
           match.status === 'ready' &&
           shell.scope() === 'main';
       const display = preparationStatus.begin({
-        message: t("interface:confirmingThePreparedPictureBeforeStarting"),
+        message: t('interface:confirmingThePreparedPictureBeforeStarting'),
         stage: 'verifying',
         isCurrent: () =>
           !disposed &&
@@ -1584,7 +1607,7 @@ try {
           contentError = shippedMaps.includes(entry)
             ? `The prepared picture could not be confirmed. Retry or choose a new setup: ${error.message}`
             : `Refresh installed chapters in Race setup before starting: ${error.message}`;
-          localizedText($('race-message'), () =>contentError);
+          localizedText($('race-message'), () => contentError);
           display.finish({ state: 'error', message: '' });
         }
         return;
@@ -1621,7 +1644,7 @@ try {
       // Race effects are independent of the music transport and its readiness.
       void sound.enable();
       if (music) void music.start();
-      localizedText($('race-message'), () =>t("interface:makeYourLineCountFirstClearWins"));
+      localizedText($('race-message'), () => t('interface:makeYourLineCountFirstClearWins'));
       updateMenu();
       input.focus();
     } finally {
@@ -1674,7 +1697,7 @@ try {
     contentReady = false;
     contentScope = shell.scope();
     if (!shippedMaps.includes(oldEntry)) backdrop = null;
-    installedStatus = t("interface:checkingInstalledChapters");
+    installedStatus = t('interface:checkingInstalledChapters');
     const display = preparationStatus.begin({
       message: installedStatus,
       stage: 'verifying',
@@ -1695,15 +1718,15 @@ try {
       $('race-level').value = oldKey;
       installedStatus = rows.length
         ? `${rows.length} installed maps available.`
-        : t("interface:openAllMissionsToDownloadCompatibleChaptersThenChoosePlay");
+        : t('interface:openAllMissionsToDownloadCompatibleChaptersThenChoosePlay');
       const ready = prepare();
       focusController = contentController;
       await ready;
     } catch (error) {
       if (disposed || controller.signal.aborted || controller !== contentController) return;
-      contentError = t("gameplay:installedChaptersUnavailable", { value1: error.message });
+      contentError = t('gameplay:installedChaptersUnavailable', { value1: error.message });
       installedStatus = contentError;
-      localizedText($('race-message'), () =>contentError);
+      localizedText($('race-message'), () => contentError);
       display.finish({ state: 'error', message: '' });
     } finally {
       if (!disposed && controller === contentController && !controller.signal.aborted) {
@@ -1727,7 +1750,9 @@ try {
     })
     .catch((error) => {
       if (!disposed)
-        localizedText($('race-message'), () =>t("gameplay:appLifecycleAdapterUnavailable", { value1: error.message }));
+        localizedText($('race-message'), () =>
+          t('gameplay:appLifecycleAdapterUnavailable', { value1: error.message }),
+        );
     });
   for (const id of ['race-level', 'race-class', 'race-turn', 'race-time', 'race-format'])
     $(id).onchange = () => {
@@ -1749,10 +1774,14 @@ try {
       ? ['gameplay-pressure.v2', 'gameplay-pressure.v3', 'gameplay-pressure.v4'].includes(
           tuning.version,
         )
-        ? `${preset.lives} mission lives; ${preset.failingDeadline ? t("interface:deadlinesOnlyOnAuthoredTimedMissions") : 'no failing countdown'}.`
+        ? `${preset.lives} mission lives; ${preset.failingDeadline ? t('interface:deadlinesOnlyOnAuthoredTimedMissions') : 'no failing countdown'}.`
         : preset.description
-      : t("interface:authoredLivesAndObjectivesStayUnchanged");
-    localizedText($('race-journey-difficulty-note'), () =>`Next fresh race: ${difficulty}. ${gameplayTuningDescription(tuning)} ${rules} Both current boards keep their rules.`);
+      : t('interface:authoredLivesAndObjectivesStayUnchanged');
+    localizedText(
+      $('race-journey-difficulty-note'),
+      () =>
+        `Next fresh race: ${difficulty}. ${gameplayTuningDescription(tuning)} ${rules} Both current boards keep their rules.`,
+    );
   }
   if (candidateJourney) {
     let preferenceRevision = journeyPreferences.snapshot().revision,
@@ -1770,7 +1799,7 @@ try {
       gameplayTuningPanel?.refresh();
       preferenceExportSequence++;
       $('race-journey-preferences-recovery').hidden = snapshot.durable;
-      localizedText($('race-journey-preferences-message'), () =>snapshot.error);
+      localizedText($('race-journey-preferences-message'), () => snapshot.error);
       journeyChooser?.refresh();
       showMaps();
       $('race-level').value = candidateJourney.row(
@@ -1792,10 +1821,16 @@ try {
           'revealline-journey-difficulty.json',
         );
         if (ticket === preferenceExportSequence && !$('race-journey-preferences-recovery').hidden)
-          localizedText($('race-journey-preferences-message'), () =>`${journeyPreferences.snapshot().error} ${result.message}`);
+          localizedText(
+            $('race-journey-preferences-message'),
+            () => `${journeyPreferences.snapshot().error} ${result.message}`,
+          );
       } catch (error) {
         if (ticket === preferenceExportSequence && !$('race-journey-preferences-recovery').hidden)
-          localizedText($('race-journey-preferences-message'), () =>`Export failed: ${error.message}. Your session difficulty choice is still here.`);
+          localizedText(
+            $('race-journey-preferences-message'),
+            () => `Export failed: ${error.message}. Your session difficulty choice is still here.`,
+          );
       }
     };
     $('race-journey-difficulty').onchange = () => {
@@ -1829,8 +1864,11 @@ try {
       if (journeySkipArmed !== match) {
         pause();
         journeySkipArmed = match;
-        localizedText($('race-journey-skip'), () =>t("interface:confirmSkip"));
-        localizedText($('race-message'), () =>`Skip to ${next.name}? No clear is awarded. Confirm skip to continue.`);
+        localizedText($('race-journey-skip'), () => t('interface:confirmSkip'));
+        localizedText(
+          $('race-message'),
+          () => `Skip to ${next.name}? No clear is awarded. Confirm skip to continue.`,
+        );
         return;
       }
       journeySkipArmed = null;
@@ -1841,7 +1879,10 @@ try {
       try {
         await downloadJSON(JSON.parse(journeyProfile.export()), journeyProfile.backupFilename);
       } catch (error) {
-        localizedText($('race-journey-save-message'), () =>`Export failed: ${error.message}. Your session progress is still here.`);
+        localizedText(
+          $('race-journey-save-message'),
+          () => `Export failed: ${error.message}. Your session progress is still here.`,
+        );
       }
     };
   }
@@ -1858,7 +1899,7 @@ try {
       $('race-journey-difficulty').value = snapshot.difficulty;
       refreshGameplayTuningNote();
       $('race-journey-preferences-recovery').hidden = snapshot.durable;
-      localizedText($('race-journey-preferences-message'), () =>snapshot.error);
+      localizedText($('race-journey-preferences-message'), () => snapshot.error);
       gameplayTuningPanel?.refresh();
     });
     $('race-journey-difficulty').onchange = () =>
@@ -1896,7 +1937,8 @@ try {
       assignmentsChanged = nextSlots.some((slot, i) => slot !== slots[i]);
       slots = [...nextSlots];
       const message = `${count} standard controller${count === 1 ? '' : 's'} assigned · ${slots.map((slot, i) => `Player ${i + 1}: ${slot === null ? 'keyboard/touch' : `pad slot ${slot}`}`).join(' · ')}. Keyboard and touch remain available. Esc / P pauses both boards.`;
-      if ($('race-pad-status').textContent !== message) localizedText($('race-pad-status'), () =>message);
+      if ($('race-pad-status').textContent !== message)
+        localizedText($('race-pad-status'), () => message);
     },
   });
   let soloReturnStorage;
@@ -2012,7 +2054,7 @@ try {
     libraryContinuation = operation;
     contentBusy = true;
     const display = preparationStatus.begin({
-      message: t("interface:preparingNextMissionYourResultAndPictureAreKept"),
+      message: t('interface:preparingNextMissionYourResultAndPictureAreKept'),
       stage: 'reading',
       isCurrent: current,
     });
@@ -2039,11 +2081,13 @@ try {
                 campaignKey: entry.musicCampaignKey,
                 sourcePackId: entry.sourcePackId ?? entry.pictureEntry?.sourcePackId ?? null,
               });
-      if (!row) throw new Error(t("interface:theExactCurrentMissionEditionIsUnavailable"));
+      if (!row) throw new Error(t('interface:theExactCurrentMissionEditionIsUnavailable'));
       let next = librarySuccessor(library, row, 'versus');
       if (!next) {
         libraryCompleteMatch = match;
-        localizedText($('race-message'), () =>t("interface:versusLibraryCompleteRematchOrChooseAllMissionsWheneverYou"));
+        localizedText($('race-message'), () =>
+          t('interface:versusLibraryCompleteRematchOrChooseAllMissionsWheneverYou'),
+        );
         return;
       }
       const targetId = next.id;
@@ -2059,7 +2103,7 @@ try {
       // Installation may rebuild rows. Re-resolve only this exact qualified edition.
       next = library.find(targetId);
       if (!next || library.availability(next, 'versus').state !== 'ready')
-        throw new Error(t("interface:theExactNextMissionIsNotReady"));
+        throw new Error(t('interface:theExactNextMissionIsNotReady'));
       contentBusy = false;
       display.finish({ message: '' });
       updateMenu();
@@ -2071,10 +2115,14 @@ try {
         continuousNext: true,
       });
       if (started === false && context.isCurrent() && !operation.controller.signal.aborted)
-        throw new Error(t("interface:theNextMissionCouldNotStart"));
+        throw new Error(t('interface:theNextMissionCouldNotStart'));
     } catch (error) {
       if (context.isCurrent() && !operation.controller.signal.aborted)
-        localizedText($('race-message'), () =>`Next mission could not open: ${error.message} Results are kept. Choose Next mission to retry.`);
+        localizedText(
+          $('race-message'),
+          () =>
+            `Next mission could not open: ${error.message} Results are kept. Choose Next mission to retry.`,
+        );
     } finally {
       display.finish({ message: '' });
       if (preparationDisplay === display) preparationDisplay = null;
@@ -2106,16 +2154,16 @@ try {
     const heading = document.createElement('h2');
     heading.id = 'race-library-replace-title';
     dialog.setAttribute('aria-labelledby', heading.id);
-    localizedText(heading, () =>title);
+    localizedText(heading, () => title);
     const copy = document.createElement('p');
-    localizedText(copy, () =>t("interface:stayKeepsBothPausedBoardsAndThisSeriesReplacePlay"));
+    localizedText(copy, () => t('interface:stayKeepsBothPausedBoardsAndThisSeriesReplacePlay'));
     const stay = document.createElement('button'),
       replace = document.createElement('button');
     stay.id = 'race-library-stay';
-    localizedText(stay, () =>t("interface:stay"));
+    localizedText(stay, () => t('interface:stay'));
     stay.type = 'button';
     replace.id = 'race-library-play';
-    localizedText(replace, () =>t("interface:replacePlay"));
+    localizedText(replace, () => t('interface:replacePlay'));
     replace.type = 'button';
     dialog.append(heading, copy, stay, replace);
     document.body.append(dialog);
@@ -2145,7 +2193,7 @@ try {
     if (!context.isCurrent()) return false;
     const row = missionLibrary.library.find(context.libraryMissionId);
     if (!row || !row.modes.includes(context.mode))
-      throw new Error(t("interface:theSelectedMissionChangedRefreshTheLibrary"));
+      throw new Error(t('interface:theSelectedMissionChangedRefreshTheLibrary'));
     let href = missionLibraryHref({
       baseURL: location.href,
       currentMode: 'versus',
@@ -2190,7 +2238,7 @@ try {
           row.level.id === selection.levelId &&
           String(row.level.revision) === String(selection.levelRevision),
       );
-      if (!entry) throw new Error(t("interface:thisExactBaseMissionIsUnavailable"));
+      if (!entry) throw new Error(t('interface:thisExactBaseMissionIsUnavailable'));
       if (!(await confirmLibraryReplacement(context, `Play ${entry.level.name}?`))) return false;
       if (!context.isCurrent()) return false;
       await startRace(entry, { rulesEdition: selection.rulesEdition });
@@ -2221,7 +2269,7 @@ try {
         attempt: context.attempt,
         isCurrent: current,
         onStatus: (status) => {
-          if (context.isCurrent()) localizedText($('race-message'), () =>status.message);
+          if (context.isCurrent()) localizedText($('race-message'), () => status.message);
         },
       });
       if (!current()) return false;
@@ -2265,7 +2313,7 @@ try {
     const onStatus = (status) => {
       if (current()) {
         context.preparationFeedback?.update(status);
-        localizedText($('race-message'), () =>status.message);
+        localizedText($('race-message'), () => status.message);
       }
     };
     let owner = null,
@@ -2292,7 +2340,7 @@ try {
             String(level.revision) === String(selection.levelRevision),
         );
         if (!level || campaignKey(baseEntry.campaign) !== selection.campaignKey)
-          throw new Error(t("interface:thisExactBaseMissionIsUnavailable"));
+          throw new Error(t('interface:thisExactBaseMissionIsUnavailable'));
         const theme =
           baseEntry.themes.find(
             (item) => item.id === (level.themeId || baseEntry.campaign.themeId),
@@ -2454,7 +2502,8 @@ try {
   }
   function refreshLibraryWarning() {
     const notice = $('race-library-inventory-status');
-    if (notice) localizedText(notice, () =>libraryInventory?.state().reason || libraryInventoryNotice);
+    if (notice)
+      localizedText(notice, () => libraryInventory?.state().reason || libraryInventoryNotice);
   }
   function missionInstaller() {
     return (libraryInstaller ??= libraryInstallerFactory());
@@ -2531,7 +2580,7 @@ try {
       if (disposed || artworkLifetime.signal.aborted) {
         libraryInventory.close();
         spatialEditionOwner.dispose();
-        throw new DOMException(t("interface:missionLibraryClosed"), 'AbortError');
+        throw new DOMException(t('interface:missionLibraryClosed'), 'AbortError');
       }
       await refreshLibraryInventory();
       const result = await createMetadataInstalledMissionLibrary({
@@ -2655,8 +2704,9 @@ try {
               : {
                   state: 'unavailable',
                   retry: true,
-                  reason:
-                    t("interface:installedOriginalsNeedCheckingRetryVerifiesThemWithoutDownloading"),
+                  reason: t(
+                    'interface:installedOriginalsNeedCheckingRetryVerifiesThemWithoutDownloading',
+                  ),
                 };
           }
           return pack
@@ -2683,14 +2733,15 @@ try {
               signal,
             });
           else {
-            if (row.source !== 'optional') throw new Error(t("interface:thisChapterHasNoTrustedDownload"));
+            if (row.source !== 'optional')
+              throw new Error(t('interface:thisChapterHasNoTrustedDownload'));
             const catalog = await loadOptionalCatalog({
               signal,
               baseURL: new URL('../../', location.href),
             });
             const summary = catalog.packs.find((item) => item.id === row.packId);
             if (!summary)
-              throw new Error(t("interface:thisExactChapterIsUnavailableInThePublishedCatalogue"));
+              throw new Error(t('interface:thisExactChapterIsUnavailableInThePublishedCatalogue'));
             installed = await missionInstaller().install(summary, { signal });
           }
           // A durable commit remains real after cancellation. Read-only refresh
@@ -2726,7 +2777,7 @@ try {
       if (disposed || artworkLifetime.signal.aborted) {
         result.library.dispose();
         spatialEditionOwner.dispose();
-        throw new DOMException(t("interface:missionLibraryClosed"), 'AbortError');
+        throw new DOMException(t('interface:missionLibraryClosed'), 'AbortError');
       }
       const state = createMissionLibrarySessionState({ mode: 'versus' });
       journeyChooser = attachJourneyChooser({
@@ -2805,13 +2856,13 @@ try {
     pause();
     const context = libraryContext();
     const previousMessage = $('race-message').textContent;
-    const preparingMessage = t("interface:preparingMissionsYourCurrentRaceIsKept");
-    localizedText($('race-message'), () =>preparingMessage);
+    const preparingMessage = t('interface:preparingMissionsYourCurrentRaceIsKept');
+    localizedText($('race-message'), () => preparingMessage);
     const opening = trackMissionLibraryOpening({
       onRetire: () => {
         if (visit === libraryOpenEpoch) ++libraryOpenEpoch;
         if ($('race-message').textContent === preparingMessage)
-          localizedText($('race-message'), () =>previousMessage);
+          localizedText($('race-message'), () => previousMessage);
       },
     });
     try {
@@ -2830,11 +2881,11 @@ try {
       journeyChooser.open(opener, { returnLabel: 'Back to race' });
     } catch (error) {
       if (visit === libraryOpenEpoch && context.isCurrent())
-        localizedText($('race-message'), () =>`Mission library unavailable: ${error.message}`);
+        localizedText($('race-message'), () => `Mission library unavailable: ${error.message}`);
     } finally {
       opening.dispose();
       if ($('race-message').textContent === preparingMessage)
-        localizedText($('race-message'), () =>previousMessage);
+        localizedText($('race-message'), () => previousMessage);
     }
   }
   async function refreshLibraryInventory({ signal = artworkLifetime.signal } = {}) {
@@ -2871,7 +2922,7 @@ try {
         actorPreferences.snapshot().revision !== actorPreference.revision
       )
         throw new DOMException(
-          t("interface:chapterPreparationCancelledTheCurrentRaceIsKept"),
+          t('interface:chapterPreparationCancelledTheCurrentRaceIsKept'),
           'AbortError',
         );
     };
@@ -2898,7 +2949,7 @@ try {
               row.level.id === selection.levelId &&
               String(row.level.revision) === String(selection.levelRevision))),
       );
-      if (!entry) throw new Error(t("interface:thisChapterHasNoCompatibleVersusMissions"));
+      if (!entry) throw new Error(t('interface:thisChapterHasNoCompatibleVersusMissions'));
       const classId = entry.classes.some((item) => item.id === attempt.recipe.classId)
         ? attempt.recipe.classId
         : entry.classes[0].id;
@@ -3000,11 +3051,17 @@ try {
             );
             $('race-theme').value = nextTheme.id;
             paintRound(recipe);
-            localizedText($('race-start'), () =>recipe.format === 'single' ? t("interface:startRace2") : t("interface:startRound2"));
-            localizedText($('race-message'), () =>entry.chapter +
-              ': ' +
-              entry.level.name +
-              '. The same picture is prepared for both boards.');
+            localizedText($('race-start'), () =>
+              recipe.format === 'single' ? t('interface:startRace2') : t('interface:startRound2'),
+            );
+            localizedText(
+              $('race-message'),
+              () =>
+                entry.chapter +
+                ': ' +
+                entry.level.name +
+                '. The same picture is prepared for both boards.',
+            );
             installedStatus = rows.length + ' installed maps available.';
             updateMenu();
           }
@@ -3018,7 +3075,9 @@ try {
               neutralResumeTick = true;
               void sound.enable();
               if (music) void music.start();
-              localizedText($('race-message'), () =>t("interface:makeYourLineCountFirstClearWins"));
+              localizedText($('race-message'), () =>
+                t('interface:makeYourLineCountFirstClearWins'),
+              );
               updateMenu();
               input.focus();
               return match === nextMatch && match.status === 'running';
@@ -3057,12 +3116,13 @@ try {
     framePads = [];
     frameReadError = null;
     try {
-      if (typeof navigator.getGamepads !== 'function') throw new Error(t("interface:gamepadApiUnavailable"));
+      if (typeof navigator.getGamepads !== 'function')
+        throw new Error(t('interface:gamepadApiUnavailable'));
       const pads = navigator.getGamepads();
       const count = Number.isInteger(pads?.length) ? Math.max(0, Math.min(32, pads.length)) : 0;
       framePads = Array.from({ length: count }, (_, i) => pads[i] || null);
     } catch (error) {
-      frameReadError = error || new Error(t("interface:controllerReadFailed"));
+      frameReadError = error || new Error(t('interface:controllerReadFailed'));
     }
     const next = new Map();
     for (const pad of framePads) {
@@ -3097,7 +3157,7 @@ try {
     if (!match || match.status === 'running' || disposed) return;
     shell.focus();
     navigation.engage();
-    menuHint = t("interface:chooseThePrimaryActionWithSouthWhenEveryoneIsReady");
+    menuHint = t('interface:chooseThePrimaryActionWithSouthWhenEveryoneIsReady');
     updateMenu();
   }
   function refreshBoardLayout() {
@@ -3150,15 +3210,19 @@ try {
     $('race-journey-controls').hidden = !!shell && shell.scope() !== 'main' && !running;
     $('race-journey-next').hidden = match.status !== 'finished' || libraryCompleteMatch === match;
     $('race-journey-next').disabled = contentBusy || !!libraryContinuation;
-    localizedText($('race-journey-next'), () =>candidateJourney && !candidateJourney.next(roundRecipe.entry.mission.id)
-        ? t("interface:browseMissions")
-        : t("interface:nextMission2"));
+    localizedText($('race-journey-next'), () =>
+      candidateJourney && !candidateJourney.next(roundRecipe.entry.mission.id)
+        ? t('interface:browseMissions')
+        : t('interface:nextMission2'),
+    );
     $('race-journey-skip').hidden = !candidateJourney || match.status === 'finished';
     $('race-journey-find').disabled = contentBusy || !!libraryContinuation;
     if (candidateJourney) {
       $('race-journey-skip').hidden = match.status === 'finished';
       $('race-journey-skip').disabled = contentBusy;
-      localizedText($('race-journey-skip'), () =>journeySkipArmed === match ? t("interface:confirmSkip") : t("interface:skipMission"));
+      localizedText($('race-journey-skip'), () =>
+        journeySkipArmed === match ? t('interface:confirmSkip') : t('interface:skipMission'),
+      );
       $('race-journey-find').disabled = contentBusy;
     }
     $('race-message').hidden = contentBusy;
@@ -3169,9 +3233,9 @@ try {
     $('race-chapter-retry').disabled = contentBusy;
     $('race-picture-cancel').hidden = !contentBusy && !libraryContinuation;
     $('race-installed-refresh').disabled = match.status !== 'ready' || contentBusy || !installed;
-    localizedText($('race-installed-status'), () =>[featuredStatus, installedStatus]
-      .filter(Boolean)
-      .join(' '));
+    localizedText($('race-installed-status'), () =>
+      [featuredStatus, installedStatus].filter(Boolean).join(' '),
+    );
     $('race-pause').disabled = !running;
     $('race-menu-release').hidden = running || !menuOwner;
     $('race-menu-release').disabled = running || !menuOwner;
@@ -3195,8 +3259,18 @@ try {
     const owner = menuOwner ? slots.indexOf(menuOwner.index) : -1;
     const text = running
       ? shell.controllerHint()
-      : t("gameplay:keyboardAndTouchRemainAvailable", { value1: owner >= 0 ? t("gameplay:playerControllerHasTheMenuSouthSelectsEastCancelsMenu", { value1: owner + 1 }) : menuStatus, value2: menuGate ? ` ${menuGate}` : '', value3: menuHint ? ` ${menuHint}` : '' });
-    if ($('race-menu-status').textContent !== text) localizedText($('race-menu-status'), () =>text);
+      : t('gameplay:keyboardAndTouchRemainAvailable', {
+          value1:
+            owner >= 0
+              ? t('gameplay:playerControllerHasTheMenuSouthSelectsEastCancelsMenu', {
+                  value1: owner + 1,
+                })
+              : menuStatus,
+          value2: menuGate ? ` ${menuGate}` : '',
+          value3: menuHint ? ` ${menuHint}` : '',
+        });
+    if ($('race-menu-status').textContent !== text)
+      localizedText($('race-menu-status'), () => text);
   }
   menuRouter = createControllerRouter({ readPads: readAssignedMenuPads });
   const controllerConfirmGuard = attachControllerConfirmGuard({
@@ -3309,9 +3383,9 @@ try {
         '#journey-chooser, #journey-backup, #race-gameplay-tuning, [data-journey-mode-pictures]',
       ),
     getControlLabels: () => ({
-      directions: t("interface:dPadLeftStick"),
-      confirm: t("common:controls.south"),
-      back: t("common:controls.east"),
+      directions: t('interface:dPadLeftStick'),
+      confirm: t('common:controls.south'),
+      back: t('common:controls.east'),
     }),
     getReadingPrompt: readingPrompt,
     onNativeInput: (event) => setReadingModality(nextInputModality(readingModality, event)),
@@ -3346,7 +3420,7 @@ try {
       ) {
         menuHint = '';
         const hint = $(`${context.regionId}-hint`);
-        if (hint.textContent !== message) localizedText(hint, () =>message);
+        if (hint.textContent !== message) localizedText(hint, () => message);
       } else menuHint = message;
       updateMenu();
     },
@@ -3358,8 +3432,8 @@ try {
     getReadingPrompt: readingPrompt,
     revealOnResize: true,
     surfaceDefinitions: [
-      ['race-help-reading', 'race-help-read', t("interface:couchControls"), 'race-help-unit'],
-      ['race-data-reading', 'race-data-read', t("interface:versusGameData"), 'race-data-unit'],
+      ['race-help-reading', 'race-help-read', t('interface:couchControls'), 'race-help-unit'],
+      ['race-data-reading', 'race-data-read', t('interface:versusGameData'), 'race-data-unit'],
     ],
   });
   $('race-menu-release').onclick = () => {
@@ -3367,8 +3441,7 @@ try {
     menuRouter.invalidate();
     menuOwner = null;
     clear();
-    menuStatus =
-      t("interface:menuControllerReleasedReleaseControlsThenPressAFaceButton");
+    menuStatus = t('interface:menuControllerReleasedReleaseControlsThenPressAFaceButton');
     updateMenu();
     shell.focus();
   };
@@ -3387,7 +3460,7 @@ try {
     menuOwner = result.assigned;
     menuGate =
       menuOwner && ['joined', 'waiting-neutral'].includes(result.status.code)
-        ? t("interface:releaseControllerButtonsAndTheMovementStickToContinue")
+        ? t('interface:releaseControllerButtonsAndTheMovementStickToContinue')
         : '';
     if (result.disconnected) {
       shell.cancelDeparture();
@@ -3397,10 +3470,10 @@ try {
       return;
     }
     menuStatus = frameReadError
-      ? t("interface:controllerAccessIsUnavailable")
+      ? t('interface:controllerAccessIsUnavailable')
       : !framePads.some((pad) => pad?.connected && pad.mapping === 'standard') &&
           framePads.some((pad) => pad?.connected)
-        ? t("interface:thisControllerHasNoStandardMapping")
+        ? t('interface:thisControllerHasNoStandardMapping')
         : result.status.message;
     if (assignmentsChanged || pendingPadLoss) {
       shell.cancelDeparture();
@@ -3613,7 +3686,11 @@ try {
         }
       }
       const name =
-        match.winner === 0 ? t("interface:sunflower2") : match.winner === 1 ? t("interface:skyline2") : t("interface:bothPlayers");
+        match.winner === 0
+          ? t('interface:sunflower2')
+          : match.winner === 1
+            ? t('interface:skyline2')
+            : t('interface:bothPlayers');
       const series = roundRecipe.format === 'first-to-two';
       localizedText($('race-message'), () => {
         const outcome = `${
@@ -3648,23 +3725,31 @@ try {
           });
       });
     }
-    localizedText($('series-score'), () =>`${won[0]} : ${won[1]}`);
+    localizedText($('series-score'), () => `${won[0]} : ${won[1]}`);
     const left =
       match.limitTicks === null
         ? null
         : Math.max(0, Math.ceil((match.limitTicks - match.tick) / 120));
-    localizedText($('race-clock'), () =>left === null
-        ? t("interface:noCountdown")
-        : `${Math.floor(left / 60)}:${String(left % 60).padStart(2, '0')}`);
+    localizedText($('race-clock'), () =>
+      left === null
+        ? t('interface:noCountdown')
+        : `${Math.floor(left / 60)}:${String(left % 60).padStart(2, '0')}`,
+    );
     $('race-clock').dataset.compact = left === null ? '∞' : $('race-clock').textContent;
     for (let i = 0; i < 2; i++) {
       const run = match.runs[i];
       const returnCaption = foundationCaptions.get(run) || '',
         returnRegion = $(`racer-capture-${i}`);
-      if (returnRegion.textContent !== returnCaption) localizedText(returnRegion, () =>returnCaption);
+      if (returnRegion.textContent !== returnCaption)
+        localizedText(returnRegion, () => returnCaption);
       returnRegion.hidden = !returnCaption || match.status === 'finished';
-      localizedText($(`racer-stats-${i}`), () =>`${(run.coverage * 100).toFixed(1)}% · ${run.lives} lives · ${run.score} points`);
-      localizedText($(`racer-state-${i}`), () =>match.status === 'running' ? run.status : match.status);
+      localizedText(
+        $(`racer-stats-${i}`),
+        () => `${(run.coverage * 100).toFixed(1)}% · ${run.lives} lives · ${run.score} points`,
+      );
+      localizedText($(`racer-state-${i}`), () =>
+        match.status === 'running' ? run.status : match.status,
+      );
       const cue = encounterView(run),
         group = $(`racer-encounter-${i}`),
         title = $(`racer-encounter-title-${i}`),
@@ -3673,11 +3758,11 @@ try {
       if (cue) {
         const context =
           match.status === 'paused'
-            ? ("" + t("interface:paused2") + " ")
+            ? '' + t('interface:paused2') + ' '
             : match.status === 'ready'
-              ? ("" + t("interface:ready") + " ")
+              ? '' + t('interface:ready') + ' '
               : match.status === 'finished'
-                ? `${roundRecipe.format === 'single' ? t("interface:race") : t("interface:round")} ENDED · `
+                ? `${roundRecipe.format === 'single' ? t('interface:race') : t('interface:round')} ENDED · `
                 : '';
         const heading = `${context}${contentText(cue, 'title')}`;
         const copy =
@@ -3685,12 +3770,12 @@ try {
             ? `Frozen at ${roundRecipe.format === 'single' ? 'race' : 'round'} end. Live line ${cue.cutCells} / ${cue.min} new cells.`
             : cue.instruction;
         // The run owns this clock. Keep paused/finished cues and avoid rewriting unchanged text.
-        if (title.textContent !== heading) localizedText(title, () =>heading);
-        if (instruction.textContent !== copy) localizedText(instruction, () =>copy);
+        if (title.textContent !== heading) localizedText(title, () => heading);
+        if (instruction.textContent !== copy) localizedText(instruction, () => copy);
         group.dataset.phase = cue.phase;
       } else {
-        localizedText(title, () =>'');
-        localizedText(instruction, () =>'');
+        localizedText(title, () => '');
+        localizedText(instruction, () => '');
         delete group.dataset.phase;
       }
     }
@@ -3747,13 +3832,9 @@ try {
       if (epoch === libraryOpenEpoch && opening.current() && context.isCurrent()) {
         const row = owner.library.find(libraryHandoff);
         if (!row || !row.modes.includes('versus'))
-          throw new Error(
-            t("interface:thisExactMissionEditionIsUnavailableInVersusNoDifferent"),
-          );
+          throw new Error(t('interface:thisExactMissionEditionIsUnavailableInVersusNoDifferent'));
         if ((row.collection === 'Journey') !== !!candidateJourney)
-          throw new Error(
-            t("interface:thisMissionBelongsToADifferentGameplayHostChooseIt"),
-          );
+          throw new Error(t('interface:thisMissionBelongsToADifferentGameplayHostChooseIt'));
         const paired = libraryExternalSelections.get(row.id);
         if (
           paired &&
@@ -3767,7 +3848,7 @@ try {
             signal: incomingController.signal,
           });
           if (epoch !== libraryOpenEpoch || !opening.current() || !context.isCurrent())
-            throw new DOMException(t("interface:requestedMissionCancelled"), 'AbortError');
+            throw new DOMException(t('interface:requestedMissionCancelled'), 'AbortError');
         }
         // The metadata request relinquishes input before the exact launch or
         // chooser adopts focus. Later staged work owns its own cancellation.
@@ -3788,7 +3869,10 @@ try {
       }
     } catch (error) {
       if (epoch === libraryOpenEpoch && context.isCurrent())
-        localizedText($('race-message'), () =>`Requested mission could not open: ${error.message}`);
+        localizedText(
+          $('race-message'),
+          () => `Requested mission could not open: ${error.message}`,
+        );
     } finally {
       opening.dispose();
       if (libraryIncomingController === incomingController) libraryIncomingController = null;
@@ -3826,7 +3910,9 @@ try {
   });
   releaseArtwork({ persisted: false });
   $('race-start').disabled = true;
-  localizedText($('race-message'), () =>t("gameplay:theRaceCouldNotLoad", { value1: error.message }));
+  localizedText($('race-message'), () =>
+    t('gameplay:theRaceCouldNotLoad', { value1: error.message }),
+  );
 } finally {
   initialFocusPending = false;
   document.removeEventListener('focusin', initialFocusChoice, true);
