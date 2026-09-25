@@ -2,10 +2,10 @@ import { t } from '../i18n/index.mjs';
 import { required } from '../data-json.mjs';
 
 export const WORLD_THEMES = Object.freeze([
-  ['fpv', t('interface:fpvFront')],
-  ['ukraine', t('interface:ukraineAtlas')],
+  ['fpv', 'FPV Front'],
+  ['ukraine', 'Ukraine Atlas'],
   ['retro', '1994 Forever'],
-  ['coupa', t('interface:spendNetwork')],
+  ['coupa', 'Spend Network'],
 ]);
 const legacyModes = new Map([
   ['original-fpv-pressure', 'Arcade'],
