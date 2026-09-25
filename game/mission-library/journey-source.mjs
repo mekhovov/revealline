@@ -47,6 +47,7 @@ export function journeyLibrarySource({
     }),
     availability: () => ({ state: 'ready' }),
     progress(mission, mode) {
+      if (!profile) return '';
       const { snapshot } = currentState();
       return Object.hasOwn(snapshot.clears[mode] ?? {}, mission.id)
         ? 'Cleared'
@@ -55,6 +56,7 @@ export function journeyLibrarySource({
           : '';
     },
     completion(mission, mode) {
+      if (!profile) return null;
       const { snapshot, earned } = currentState(),
         record = earned.get(mode)?.get(mission.id);
       return journeyPictureCompletion({
