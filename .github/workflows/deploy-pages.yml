@@ -5,6 +5,7 @@ on:
     types: [published]
   pull_request:
     branches: [main]
+    types: [opened, synchronize, reopened, edited]
   workflow_dispatch:
     inputs:
       release_tag:
