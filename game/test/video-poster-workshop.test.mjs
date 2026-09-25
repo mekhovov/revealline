@@ -307,6 +307,11 @@ test('verified optional trim publishes the adapter output URL and explicit audio
           },
           evidence: {
             outputSha256: 'c'.repeat(64),
+            visual: {
+              method: 'fresh-presented-frame-decoded-png-rgb-grid.v1',
+              start: { meanAbsoluteRgbError: 0.002 },
+              end: { meanAbsoluteRgbError: 0.003 },
+            },
             audioSync: { status: 'unverified', note: 'No audio decoder evidence.' },
           },
         };
@@ -322,6 +327,7 @@ test('verified optional trim publishes the adapter output URL and explicit audio
   assert.equal(await h.host.trimVideo(), true);
   assert.equal(h.$('trim-download').hidden, false);
   assert.equal(h.$('trim-download').download, 'RevealLine-trimmed.mp4');
+  assert.match(h.$('trim-evidence').textContent, /Visual boundaries: start error 0\.002/);
   assert.match(h.$('trim-evidence').textContent, /Audio synchronization: unverified/);
   assert.deepEqual(await h.urls.values().next().value.text(), 'trimmed');
   h.host.clear();

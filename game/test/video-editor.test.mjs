@@ -4,10 +4,12 @@ import { createHash } from 'node:crypto';
 import {
   AUDIO_TRACK_INSPECTION_FORMAT,
   createOptionalPhysicalTrimBoundary,
+  inspectDecodedVisualTrim,
   isCompletePlaybackRange,
   preparePlaybackRange,
   seekDistinctPresentedFrame,
   VIDEO_EDIT_FORMAT,
+  VISUAL_TRIM_INSPECTION_FORMAT,
 } from '../video-editor.mjs';
 
 const digest = (bytes) => createHash('sha256').update(bytes).digest('hex');
@@ -29,6 +31,33 @@ const exactAudioInspection =
     audioTrackCount,
     codecs,
   });
+const exactVisualInspection = async ({ sourceInfo, outputInfo, range }) => ({
+  format: VISUAL_TRIM_INSPECTION_FORMAT,
+  sourceSha256: sourceInfo.sha256,
+  outputSha256: outputInfo.sha256,
+  sourceRange: { startSeconds: range.startSeconds, endSeconds: range.endSeconds },
+  decodedOutputDurationSeconds: outputInfo.durationSeconds,
+  method: 'fresh-presented-frame-decoded-png-rgb-grid.v1',
+  sampleWidth: 24,
+  sampleHeight: 14,
+  meanAbsoluteRgbLimit: 0.08,
+  highErrorPixelFractionLimit: 0.15,
+  ...Object.fromEntries(
+    ['start', 'end'].map((edge, index) => [
+      edge,
+      {
+        sourceRequestedTime: index ? range.endSeconds - 0.001 : range.startSeconds + 0.001,
+        sourceObservedTime: index ? range.endSeconds - 0.001 : range.startSeconds + 0.001,
+        sourcePosterSha256: String(index + 1).repeat(64),
+        outputRequestedTime: index ? outputInfo.durationSeconds - 0.001 : 0.001,
+        outputObservedTime: index ? outputInfo.durationSeconds - 0.001 : 0.001,
+        outputPosterSha256: String(index + 3).repeat(64),
+        meanAbsoluteRgbError: 0.003,
+        highErrorPixelFraction: 0,
+      },
+    ]),
+  ),
+});
 
 test('playback range retains complete original and rejects clamping or empty ranges', () => {
   const range = preparePlaybackRange(info, { startSeconds: 1.25, endSeconds: 5 });
@@ -94,6 +123,98 @@ test('decoded-frame step is explicit when native presented-frame evidence is una
   );
 });
 
+function visualSource(sourceInfo, { changedEnd = false, estimateOnly = false } = {}) {
+  return {
+    info: sourceInfo,
+    async capture(time, metadata) {
+      const end = metadata.id.endsWith('end');
+      const color = end ? (changedEnd ? [18, 30, 220] : [24, 170, 72]) : [190, 42, 28];
+      const bytes = Buffer.from(JSON.stringify(color));
+      const posterSha256 = digest(bytes);
+      return {
+        blob: new Blob([bytes], { type: 'image/png' }),
+        asset: {
+          width: 640,
+          height: 360,
+          bytes: bytes.length,
+          sha256: posterSha256,
+        },
+        capture: {
+          sourceSha256: sourceInfo.sha256,
+          requestedTime: time,
+          observedMediaTime: estimateOnly ? null : time,
+          timingEvidence: estimateOnly ? 'playhead-estimate' : 'presented-frame',
+          width: 640,
+          height: 360,
+          sha256: posterSha256,
+        },
+      };
+    },
+  };
+}
+
+async function decodeColorPoster(blob) {
+  const color = JSON.parse(await blob.text()),
+    pixels = new Uint8ClampedArray(24 * 14 * 4);
+  for (let at = 0; at < pixels.length; at += 4) pixels.set([...color, 255], at);
+  return { width: 24, height: 14, pixels };
+}
+
+test('decoded visual trim evidence binds aligned start and end pictures to exact videos', async () => {
+  const outputBytes = Buffer.from('visual output video');
+  const outputInfo = {
+    ...info,
+    durationSeconds: 4,
+    bytes: outputBytes.length,
+    sha256: digest(outputBytes),
+  };
+  const result = await inspectDecodedVisualTrim(
+    {
+      source: visualSource(info),
+      output: visualSource(outputInfo),
+      sourceInfo: info,
+      outputInfo,
+      range: { startSeconds: 1, endSeconds: 5 },
+    },
+    { decodePoster: decodeColorPoster },
+  );
+  assert.equal(result.format, VISUAL_TRIM_INSPECTION_FORMAT);
+  assert.equal(result.sourceSha256, info.sha256);
+  assert.equal(result.outputSha256, outputInfo.sha256);
+  assert.equal(result.start.sourceObservedTime, 1.001);
+  assert.equal(result.start.outputObservedTime, 0.001);
+  assert.equal(result.end.sourceObservedTime, 4.999);
+  assert.equal(result.end.outputObservedTime, 3.999);
+  assert.equal(result.start.meanAbsoluteRgbError, 0);
+  assert.equal(result.end.meanAbsoluteRgbError, 0);
+});
+
+test('decoded visual trim evidence fails closed for changed or estimate-only boundary pictures', async () => {
+  const outputBytes = Buffer.from('visual mismatch output');
+  const outputInfo = {
+    ...info,
+    durationSeconds: 4,
+    bytes: outputBytes.length,
+    sha256: digest(outputBytes),
+  };
+  const inspect = (output) =>
+    inspectDecodedVisualTrim(
+      {
+        source: visualSource(info),
+        output,
+        sourceInfo: info,
+        outputInfo,
+        range: { startSeconds: 1, endSeconds: 5 },
+      },
+      { decodePoster: decodeColorPoster },
+    );
+  await assert.rejects(inspect(visualSource(outputInfo, { changedEnd: true })), /boundary picture/);
+  await assert.rejects(
+    inspect(visualSource(outputInfo, { estimateOnly: true })),
+    /authenticate a presented frame/,
+  );
+});
+
 test('physical trim boundary stays lazy and explicitly unsupported without an adapter', async () => {
   const boundary = createOptionalPhysicalTrimBoundary();
   assert.deepEqual(await boundary.support(info), {
@@ -143,12 +264,13 @@ test('optional physical trim verifies changed bytes and decoded duration/orienta
     async inspectVideo(blob) {
       inspections++;
       const bytes = Buffer.from(await blob.arrayBuffer());
+      const isSource = bytes.equals(sourceBytes);
       return {
         info: Object.freeze({
           mime: blob.type,
           width: 640,
           height: 360,
-          durationSeconds: 4,
+          durationSeconds: isSource ? 6 : 4,
           bytes: bytes.length,
           sha256: digest(bytes),
         }),
@@ -161,6 +283,7 @@ test('optional physical trim verifies changed bytes and decoded duration/orienta
       audioInspections++;
       return exactAudioInspection()(blob);
     },
+    inspectVisual: exactVisualInspection,
   });
   assert.equal(loads, 0);
   const original = new Blob([sourceBytes], { type: 'video/mp4' });
@@ -180,9 +303,9 @@ test('optional physical trim verifies changed bytes and decoded duration/orienta
   });
   assert.equal(loads, 1, 'The lazy adapter is loaded once.');
   assert.equal(trims, 1);
-  assert.equal(inspections, 1);
+  assert.equal(inspections, 2, 'Exact source and output bytes are independently reopened.');
   assert.equal(audioInspections, 3, 'Support and trim re-authenticate source and output audio.');
-  assert.equal(disposed, 1);
+  assert.equal(disposed, 2);
   assert.equal(result.info.sha256, digest(outputBytes));
   assert.equal(result.evidence.outputSha256, digest(outputBytes));
   assert.equal(result.evidence.decodedDurationSeconds, 4);
@@ -193,6 +316,8 @@ test('optional physical trim verifies changed bytes and decoded duration/orienta
   assert.equal(result.evidence.audioSync.status, 'not-present');
   assert.equal(result.evidence.audioSync.verification, 'authenticated-container-track-inventory');
   assert.doesNotMatch(result.evidence.audioSync.note, /Fixture timestamps matched/);
+  assert.equal(result.evidence.visual.format, VISUAL_TRIM_INSPECTION_FORMAT);
+  assert.equal(result.evidence.visual.start.meanAbsoluteRgbError, 0.003);
 });
 
 test('physical trim rejects unchanged bytes, decoded timing drift and orientation changes', async () => {
@@ -205,15 +330,18 @@ test('physical trim rejects unchanged bytes, decoded timing drift and orientatio
       inspectVideo: async (blob) => ({
         info: {
           mime: 'video/mp4',
-          width,
-          height,
-          durationSeconds,
+          width: Buffer.from(await blob.arrayBuffer()).equals(sourceBytes) ? 640 : width,
+          height: Buffer.from(await blob.arrayBuffer()).equals(sourceBytes) ? 360 : height,
+          durationSeconds: Buffer.from(await blob.arrayBuffer()).equals(sourceBytes)
+            ? 6
+            : durationSeconds,
           bytes: blob.size,
           sha256: digest(Buffer.from(await blob.arrayBuffer())),
         },
         dispose() {},
       }),
       inspectAudio: exactAudioInspection(),
+      inspectVisual: exactVisualInspection,
     });
     return boundary.trim(new Blob([sourceBytes], { type: 'video/mp4' }), info, {
       startSeconds: 1,
@@ -228,6 +356,48 @@ test('physical trim rejects unchanged bytes, decoded timing drift and orientatio
   await assert.rejects(
     rejects({ output: Buffer.from('different'), width: 360, height: 640 }),
     /orientation/,
+  );
+});
+
+test('physical trim withholds output when visual evidence is absent or stale', async () => {
+  const outputBytes = Buffer.from('visual-boundary-output');
+  const opened = async (blob) => {
+    const bytes = Buffer.from(await blob.arrayBuffer()),
+      source = bytes.equals(sourceBytes);
+    return {
+      info: {
+        mime: 'video/mp4',
+        width: 640,
+        height: 360,
+        durationSeconds: source ? 6 : 4,
+        bytes: bytes.length,
+        sha256: digest(bytes),
+      },
+      dispose() {},
+    };
+  };
+  const boundary = (inspectVisual) =>
+    createOptionalPhysicalTrimBoundary({
+      loadAdapter: async () => ({
+        support: async () => ({ supported: true, formats: ['video/mp4'] }),
+        trim: async () => ({ blob: new Blob([outputBytes], { type: 'video/mp4' }) }),
+      }),
+      inspectVideo: opened,
+      inspectAudio: exactAudioInspection(),
+      inspectVisual,
+    });
+  const original = new Blob([sourceBytes], { type: 'video/mp4' }),
+    range = { startSeconds: 1, endSeconds: 5 };
+  await assert.rejects(
+    boundary(null).trim(original, info, range),
+    /needs decoded start\/end visual inspection/,
+  );
+  await assert.rejects(
+    boundary(async (input) => ({
+      ...(await exactVisualInspection(input)),
+      outputSha256: '0'.repeat(64),
+    })).trim(original, info, range),
+    /missing or stale/,
   );
 });
 
