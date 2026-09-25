@@ -1,3 +1,8 @@
+import { localizedMessage, localizedText, t } from '../i18n/index.mjs';
+import { editorMessageError, editorErrorText } from './editor-copy.mjs';
+import { studioSurfaceName } from './preview-copy.mjs';
+import { studioDifficultyName } from './difficulty-view.mjs';
+import { studioModeName } from './inspection-copy.mjs';
 import {
   loadMapReference,
   validateReferenceCrop,
@@ -42,9 +47,9 @@ export function createImageWorkbench({
     onChange();
   };
   const message = (text) => {
-    $('reference-status').textContent = text;
+    localizedText($('reference-status'), text);
   };
-  function invalidate(text = 'Inspect the queued geometry before previewing or applying.') {
+  function invalidate(text = localizedMessage('tools:studio.image.inspectFirst')) {
     inspected = null;
     $('reference-apply').disabled = true;
     $('reference-play').disabled = true;
@@ -52,11 +57,23 @@ export function createImageWorkbench({
     message(text);
   }
   function list() {
-    $('reference-queue').textContent = rows.length
-      ? rows
-          .map((row, i) => `${i + 1}. ${row.surface}: (${row.x}, ${row.y}), ${row.w} × ${row.h}`)
-          .join('\n')
-      : 'No geometry queued. Uploading does not change the map.';
+    const queued = rows.map((row) => ({ ...row }));
+    localizedText($('reference-queue'), () =>
+      queued.length
+        ? queued
+            .map((row, index) =>
+              t('tools:studio.image.queueRow', {
+                index: index + 1,
+                surface: studioSurfaceName(row.surface),
+                x: row.x,
+                y: row.y,
+                width: row.w,
+                height: row.h,
+              }),
+            )
+            .join('\n')
+        : t('tools:studio.image.emptyQueue'),
+    );
   }
   function dispose() {
     loading++;
@@ -68,15 +85,13 @@ export function createImageWorkbench({
     $('reference-show').checked = false;
     $('reference-tools').disabled = true;
     list();
-    invalidate(
-      'No reference loaded. Tracing recovery is separate from project checkpoints and published maps.',
-    );
+    invalidate(localizedMessage('tools:studio.image.noReference'));
   }
   const guard = (action) => async (event) => {
     try {
       await action(event);
     } catch (error) {
-      message(error.message);
+      message(() => editorErrorText(error));
     }
   };
   function underlay(ctx, width, height) {
@@ -88,7 +103,7 @@ export function createImageWorkbench({
     if (!file) return;
     const ticket = ++loading,
       initialOwner = owner;
-    invalidate('Inspecting and decoding the local picture…');
+    invalidate(localizedMessage('tools:studio.image.loading'));
     $('reference-tools').disabled = true;
     let next;
     try {
@@ -115,27 +130,31 @@ export function createImageWorkbench({
     $('reference-tools').disabled = false;
     $('reference-show').checked = true;
     invalidate(
-      `${file.name}: ${next.width} × ${next.height}. Local reference only; the crop stretches to the 2:1 board. No geometry has been inferred.`,
+      localizedMessage('tools:studio.image.loaded', {
+        name: file.name,
+        width: next.width,
+        height: next.height,
+      }),
     );
     redraw();
     changed();
   });
   $('reference-crop').onclick = guard(() => {
-    if (!reference) throw new Error('Upload a reference picture first.');
+    if (!reference) throw editorMessageError('errors:studio.image.uploadFirst');
     const next = validateReferenceCrop(
       Object.fromEntries(['x', 'y', 'w', 'h'].map((key) => [key, Number($(`crop-${key}`).value)])),
       reference.width,
       reference.height,
     );
     crop = next;
-    invalidate('Crop updated. Reinspect before applying geometry. A 2:1 crop avoids stretching.');
+    invalidate(localizedMessage('tools:studio.image.cropUpdated'));
     redraw();
     changed();
   });
   for (const key of ['x', 'y', 'w', 'h'])
     $(`crop-${key}`).oninput = () => {
       loading++;
-      invalidate('Crop fields changed. Use Preview crop, then inspect the geometry again.');
+      invalidate(localizedMessage('tools:studio.image.cropChanged'));
     };
   $('reference-show').onchange = () => {
     redraw();
@@ -147,13 +166,10 @@ export function createImageWorkbench({
     changed();
   };
   $('reference-queue-add').onclick = guard(() => {
-    if (!reference || !getMission())
-      throw new Error('Upload a reference and choose a mission first.');
+    if (!reference || !getMission()) throw editorMessageError('errors:studio.image.chooseMission');
     const surface = $('surface').value;
     if (!['foundations', 'walls', 'slow', 'lethal'].includes(surface))
-      throw new Error(
-        'Manual tracing queues rectangles. Use the separate spawn editor after applying.',
-      );
+      throw editorMessageError('errors:studio.image.rectanglesOnly');
     const [x, y, w, h] = ['x', 'y', 'w', 'h'].map((key) => Number($(key).value));
     if (
       ![x, y, w, h].every(Number.isInteger) ||
@@ -164,8 +180,8 @@ export function createImageWorkbench({
       x + w > 71 ||
       y + h > 35
     )
-      throw new Error('Use a whole-cell rectangle inside the outer border.');
-    if (rows.length >= 128) throw new Error('The tracing queue supports at most 128 rectangles.');
+      throw editorMessageError('errors:studio.image.insideBorder');
+    if (rows.length >= 128) throw editorMessageError('errors:studio.image.queueLimit');
     rows.push({ surface, x, y, w, h });
     invalidate();
     list();
@@ -179,32 +195,45 @@ export function createImageWorkbench({
   };
   $('reference-inspect').onclick = guard(() => {
     invalidate();
-    if (!reference || !getMission())
-      throw new Error('Upload a reference and choose a mission first.');
+    if (!reference || !getMission()) throw editorMessageError('errors:studio.image.chooseMission');
     if (['x', 'y', 'w', 'h'].some((key) => Number($(`crop-${key}`).value) !== crop[key]))
-      throw new Error('Preview the edited crop before inspecting geometry.');
+      throw editorMessageError('errors:studio.image.previewCrop');
     const result = inspectManualImageMap(getSource(), getMission().id, rows);
     const preview = prepareContentPreview(result.candidate, getMission().id, {
       difficulty: getDifficulty(),
       mode: getMission().modes[0],
     });
     const canvas = $('reference-preview');
-    const summary = paintContentMap(canvas.getContext('2d'), preview, {
-      width: canvas.width,
-      underlay,
-    });
+    const rectangleCount = rows.length;
     canvas.hidden = false;
     inspected = { ...result, before: identity(), missionId: getMission().id };
     $('reference-apply').disabled = false;
     $('reference-play').disabled = !getMission().modes.includes('solo');
-    message(
-      `Inspected ${rows.length} rectangle(s) across all supported modes and presets. ${preview.geometry.foundationCount} foundation cells; ${preview.geometry.eligibleCount} earnable cells. ${summary} ${result.diagnostics.map((row) => `${row.difficulty}/${row.mode}: ${row.code}`).join('; ')} Frozen spawn inspection only, not a prediction during play. Apply is still required.`,
+    message(() =>
+      t('tools:studio.image.inspected', {
+        count: rectangleCount,
+        foundations: preview.geometry.foundationCount,
+        eligible: preview.geometry.eligibleCount,
+        summary: paintContentMap(canvas.getContext('2d'), preview, {
+          width: canvas.width,
+          underlay,
+        }),
+        diagnostics: result.diagnostics
+          .map((row) =>
+            t('tools:studio.image.diagnostic', {
+              difficulty: studioDifficultyName(row.difficulty),
+              mode: studioModeName(row.mode),
+              code: row.code,
+            }),
+          )
+          .join('; '),
+      }),
     );
   });
   function currentInspection() {
     if (!inspected || inspected.before !== identity()) {
       invalidate();
-      throw new Error('The draft or tracing selection changed. Inspect again before applying.');
+      throw editorMessageError('errors:studio.image.selectionChanged');
     }
     return inspected;
   }
@@ -217,13 +246,11 @@ export function createImageWorkbench({
     // Compile again at the mutation boundary, not merely at inspection time.
     const fresh = inspectManualImageMap(getSource(), result.missionId, rows);
     if (JSON.stringify(fresh.candidate) !== JSON.stringify(result.candidate))
-      throw new Error('The inspected candidate changed. Inspect again.');
+      throw editorMessageError('errors:studio.image.candidateChanged');
     if (!apply(fresh.candidate)) return;
     rows = [];
     list();
-    invalidate(
-      'Applied as a private map revision. Undo restores the original. Reference pixels remain separate from maps and are never published.',
-    );
+    invalidate(localizedMessage('tools:studio.image.applied'));
     changed();
   });
   dispose();
@@ -247,9 +274,7 @@ export function createImageWorkbench({
       const next = await decodeReference(trace);
       if (ticket !== loading || initialDraft !== draftIdentity()) {
         next.dispose();
-        throw new Error(
-          'The draft or reference changed during restore. Your newer work is intact.',
-        );
+        throw editorMessageError('errors:studio.image.restoreChanged');
       }
       reference?.dispose();
       reference = next;
@@ -259,7 +284,7 @@ export function createImageWorkbench({
       $('reference-tools').disabled = false;
       $('reference-show').checked = trace.visible;
       list();
-      invalidate('Tracing restored. Inspect the proposed geometry again before Play or Apply.');
+      invalidate(localizedMessage('tools:studio.image.restored'));
       redraw();
     },
     underlay: () => (reference && crop && $('reference-show').checked ? underlay : null),
@@ -272,8 +297,8 @@ export function createImageWorkbench({
       } else if (nextDraft !== observedDraft)
         invalidate(
           rows.length
-            ? 'Draft or difficulty changed. Reinspect the queued geometry before applying.'
-            : 'Draft or difficulty changed. No geometry is queued; tracing recovery is separate from project checkpoints.',
+            ? localizedMessage('tools:studio.image.draftChanged')
+            : localizedMessage('tools:studio.image.draftChangedEmpty'),
         );
       observedDraft = nextDraft;
       $('reference-file').disabled = !getMission();
