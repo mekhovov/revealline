@@ -60,4 +60,15 @@ export function attachFieldKitSurfaces({
 
 // Supporting tools opt in explicitly. The game calls this from its shell so
 // teardown remains part of the existing host lifecycle.
-if (globalThis.document?.body?.dataset.fieldKitPage) attachFieldKitSurfaces();
+if (globalThis.document?.body?.dataset.fieldKitPage) {
+  const win = globalThis.window;
+  const owner = attachFieldKitSurfaces();
+  const pagehide = (event) => {
+    // A cached document keeps its page-owned chrome and shared preferences.
+    // Terminal departure releases this auto-mount just as game shells do.
+    if (event.persisted) return;
+    win?.removeEventListener('pagehide', pagehide);
+    owner.destroy();
+  };
+  win?.addEventListener('pagehide', pagehide);
+}
