@@ -21,7 +21,11 @@ The service suite covers:
 - idempotent queueing, restart-safe expired leases and stale-worker commit rejection;
 - catalog cursor/search behavior, anonymous report deduplication, owner/admin unlisting and removal
   from public discovery;
-- disk blob cleanup after failed writes and the explicit S3 command boundary.
+- disk blob cleanup after failed writes and the explicit S3 command boundary;
+- an offline recovery snapshot with a PostgreSQL dump, sorted content-addressed blob inventory,
+  exact hashes, pre-restore verification, occupied-target refusal and staged blob publication after
+  the database restore succeeds. A restore journal resumes the exact snapshot across interruption
+  without claiming cross-store atomicity.
 
 Run it with:
 
@@ -44,6 +48,10 @@ Docker Compose is the local single-server shape: one PostgreSQL database, one AP
 worker, and named volumes for tus staging and immutable packages. `ffprobe` is installed in the
 service image for video packages. Production Better Auth requires a 32+ character secret, public
 base URL, trusted origins, its migration command, and deliberate mail/recovery configuration.
+
+Source now includes `npm run recovery -- backup|verify|restore --directory <path>` and focused
+failure rehearsal. This is executable recovery tooling, not evidence that a production database or
+remote blob store has been restored.
 
 The phase is not accepted as a production launch until an operator selects infrastructure and
 passes a two-user browser run, interrupted upload through the deployed proxy, corrupt-package
