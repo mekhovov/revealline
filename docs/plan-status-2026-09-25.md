@@ -50,15 +50,15 @@ and final human/device qualification remain open.
 
 ## 3. Implemented or source-ready, not yet delivered
 
-| Work                               | Current evidence                                                                                                          | Remaining gate                                                                                                                                |
-| ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
-| v0.111.0 soundtrack archive        | Release and nine immutable assets published                                                                               | Admit as retained Pages archive and verify the frozen route                                                                                   |
-| v0.111.1 Steam confirmation repair | PR470 merged; exact source qualified; release and assets published                                                        | Correct selector PR, Pages deployment, public marker/route/native verification                                                                |
-| Couch quick start                  | Reconciled feature branch on protected-main lineage; focused product paths pass; stale touch fixture corrected            | Merge newest protected main, rerun focused/authority/no-producer checks, reviewed PR and release                                              |
-| Trail/impact readability           | Canonical six-file feature patch audited; provisional focused cohort 125/125                                              | Apply after final Couch head, generate Field Kit rev78, Team current78/retained58–77 authority, producer/history checks, visual/public review |
-| Team specialist candidates         | PR428, PR435, PR438, and PR440 rebuilt as unversioned drafts; focused cohorts culminate at 110/110                        | Restack on the accepted release chain; resolve inherited production-ledger debt; no default/public adoption yet                               |
-| Reviewed Team library              | PR475 exposes an opt-in reviewed-specialist library without changing the ordinary Team route; initial focused checks pass | Complete validation and route/picture/Next/Continue evidence, then restack and release                                                        |
-| Ukrainian/FPV spatial studies      | Ornament and workshop source studies exist with original imagery and retained identities                                  | Campaign placement, current-speed balance, cultural/readability review, Team adaptation, public release                                       |
+| Work                               | Current evidence                                                                                                              | Remaining gate                                                                                                                                |
+| ---------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| v0.111.0 soundtrack archive        | Release and nine immutable assets published                                                                                   | Admit as retained Pages archive and verify the frozen route                                                                                   |
+| v0.111.1 Steam confirmation repair | PR470 merged; exact source qualified; release and assets published                                                            | Correct selector PR, Pages deployment, public marker/route/native verification                                                                |
+| Couch quick start                  | Reconciled feature branch on protected-main lineage; focused product paths pass; stale touch fixture corrected                | Merge newest protected main, rerun focused/authority/no-producer checks, reviewed PR and release                                              |
+| Trail/impact readability           | Canonical six-file feature patch audited; provisional focused cohort 125/125                                                  | Apply after final Couch head, generate Field Kit rev78, Team current78/retained58–77 authority, producer/history checks, visual/public review |
+| Team specialist candidates         | PR428, PR435, PR438, and PR440 rebuilt as unversioned drafts; focused cohorts culminate at 110/110                            | Restack on the accepted release chain; resolve inherited production-ledger debt; no default/public adoption yet                               |
+| Reviewed Team library              | PR475 exposes an opt-in reviewed-specialist library without changing the ordinary Team route; its focused cohort passes 67/67 | Restack its PR428→435→438→440 dependency chain on the accepted release lineage, then build/public/device/human qualification                  |
+| Ukrainian/FPV spatial studies      | Ornament and workshop source studies exist with original imagery and retained identities                                      | Campaign placement, current-speed balance, cultural/readability review, Team adaptation, public release                                       |
 
 The Team candidate tests are deterministic source evidence, not proof of human
 balance or fun. Their inherited `Stale production revision ledger` failure remains
@@ -82,6 +82,41 @@ inherited equipment-review caveat: no new whole-Team/equipment approval is claim
 R4–R8 may be prepared in parallel, but release publication remains serialized.
 Spatial content should continue in small playable batches rather than waiting for
 an entire campaign rewrite.
+
+### Tentative post-v0.111.1 consolidation train
+
+The publisher's full open-PR audit proposes the following consolidation after
+v0.111.1 is publicly accepted. These versions are tentative until their aggregate
+heads are rebuilt on protected main and pass their own gates.
+
+| Tentative release | Aggregate scope                                                                             | Reconciliation still required                                                                                      |
+| ----------------- | ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| v0.120            | Journey spatial library, terminal PR463; incorporates PR421/429/441/443/446/450/452/458/460 | Aggregate route/profile/registry adoption, balance, device and public gates; do not merge candidate heads directly |
+| v0.121            | Pressure and Border detours, terminal PR464; incorporates PR455/459/461                     | Reconcile PR449, then aggregate gameplay and public qualification                                                  |
+| v0.122            | Spatial/ornament studies from selective PR332/323 rebuilds                                  | Avoid duplicating superseded mission identities; include PR445 Studio inspector only after overlap review          |
+
+Couch quick start, trail rev78, Team reviewed-library adoption and the new
+three-mission spatial batch must be reconciled with this train before release
+versions are assigned. Their current draft/source heads do not reserve a version.
+
+### Local-source reconciliation snapshot
+
+- The root `codex/fpv-redesign` worktree has a large mixed dirty tree (about 130
+  status entries) containing user media, generated assets and parallel feature
+  work. It has no upstream and must **not** be bulk-committed or released.
+- The Couch successor has one clean current-main merge commit still local; it
+  should be pushed only after its post-merge focused and static checks complete.
+- The trail-readability branch has a clean provisional six-file commit only. It
+  must first consume the final Couch head and generate/verify rev78 and Team
+  authority before it is pushed as a candidate.
+- The new spatial batch currently has a clean detached baseline and no changes;
+  it does not yet need a push or release.
+- PR428/435/438/440, PR475 and PR477 are already pushed. They require restacking
+  and acceptance, not another copy of the same local changes.
+- Numerous older `.cache/worktrees` remain dirty or divergent. They are historical
+  or parallel task state, not automatically independent releases. Reconcile each
+  against its owner PR or terminal successor before deciding whether to push,
+  archive or clean it.
 
 ## 5. Blockers and concerns
 
