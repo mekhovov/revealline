@@ -212,5 +212,9 @@
   "page.fontSource": "source and checksum record",
   "page.supportingFontSources": "Supporting-font source versions, build recipe and file checksums",
   "page.opening": "Opening Reveal / Line…",
-  "page.catalogCompressionNotice": "Translation catalogs use lz-string by pieroxy under its [[license]]."
+  "page.catalogCompressionNotice": "Translation catalogs use lz-string by pieroxy under its [[license]].",
+  "page.mediabunnyNotice": "The optional local video trimmer uses pinned Mediabunny 1.59.1 under its [[license]]; its [[source]] is included.",
+  "page.mplLicense": "MPL-2.0 license",
+  "page.sourceChecksumRecord": "source and checksum record",
+  "page.openingThemeNotice": "Opening-theme music: [[title]] by [[creator]], licensed under [[license]]. This is a modern metal adaptation of the melody associated with Mykola Leontovych’s [[shchedryk]]; it does not claim traditional Ukrainian instrumentation."
 }
