@@ -1,6 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { claimProfileWriter } from '../profile-writer.mjs';
+import { profileWriterMessage } from '../ui/profile-writer-copy.mjs';
+import { getLocale, setLocale } from '../i18n/index.mjs';
 class Locks {
   held = new Set();
   calls = [];
@@ -21,7 +23,9 @@ test('one tab receives a lifetime exclusive lease while a second stays session-o
     first = await claimProfileWriter(locks, 'profile'),
     second = await claimProfileWriter(locks, 'profile');
   assert.equal(first.writable, true);
+  assert.equal(first.reasonCode, null);
   assert.equal(second.writable, false);
+  assert.equal(second.reasonCode, 'occupied');
   assert.match(second.reason, /close the other game tab/);
   assert.deepEqual(locks.calls[0], {
     key: 'profile',
@@ -32,6 +36,7 @@ test('one tab receives a lifetime exclusive lease while a second stays session-o
   assert.equal(first.writable, true);
   first.release();
   assert.equal(first.writable, false);
+  assert.equal(first.reasonCode, 'released');
   await turn();
   assert.equal(locks.held.size, 0);
 });
@@ -76,6 +81,7 @@ test('missing Web Locks and synchronous or asynchronous denial never pretend per
   ]) {
     const lease = await claimProfileWriter(manager, 'profile');
     assert.equal(lease.writable, false);
+    assert.equal(lease.reasonCode, 'unavailable');
     assert.match(lease.reason, /session-only/);
     lease.release();
   }
@@ -101,5 +107,37 @@ test('unexpected lock request rejection revokes an already returned lease', asyn
   reject(new Error('lost document'));
   await turn();
   assert.equal(lease.writable, false);
+  assert.equal(lease.reasonCode, 'unavailable');
   lease.release();
+});
+
+test('writer notices translate semantic reasons without changing diagnostics or lock ownership', async (context) => {
+  const locale = getLocale();
+  context.after(() => setLocale(locale, { persist: false }));
+  const locks = new Locks();
+  const owner = await claimProfileWriter(locks, 'profile');
+  const leases = [
+    await claimProfileWriter(locks, 'profile'),
+    await claimProfileWriter(undefined, 'profile'),
+    await claimProfileWriter(locks, ''),
+  ];
+  const reasons = leases.map((lease) => lease.reason);
+  const calls = locks.calls.length;
+  for (const language of ['uk', 'en', 'uk']) {
+    setLocale(language, { persist: false });
+    for (const [index, lease] of leases.entries()) {
+      assert.equal(lease.reason, reasons[index]);
+      assert.equal(lease.writable, false);
+      if (language === 'uk') assert.match(profileWriterMessage(lease), /[А-Яа-яІіЇїЄєҐґ]/);
+      else assert.equal(profileWriterMessage(lease), lease.reason);
+    }
+    assert.equal(owner.writable, true);
+    assert.equal(locks.calls.length, calls);
+    assert.equal(locks.held.size, 1);
+  }
+  assert.equal(profileWriterMessage({ reason: 'Custom diagnostic' }), 'Custom diagnostic');
+  owner.release();
+  assert.match(profileWriterMessage(owner), /Право на збереження звільнено/);
+  await turn();
+  assert.equal(locks.held.size, 0);
 });
