@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Create a picture campaign · RevealLine</title>
+    <link rel="stylesheet" href="./creator.css" />
+    <script type="module" src="./studio.mjs"></script>
+  </head>
+  <body>
+    <header>
+      <a href="../">← RevealLine</a><a href="../studio/">Content Studio</a
+      ><a href="#installed">My installed creations</a
+      ><a href="../community/">Community campaigns</a>
+    </header>
+    <main>
+      <p class="eyebrow">CREATE / REVIEW / PLAY</p>
+      <h1>Turn pictures and videos into playable levels.</h1>
+      <p>
+        Choose pictures or videos, review their generated levels, then play or share a portable
+        campaign. Creation and video inspection stay on your device.
+      </p>
+      <p id="status" role="status" aria-live="polite">
+        Choose one PNG, JPEG or WebP picture to begin.
+      </p>
+      <p id="save-status" role="status"></p>
+      <section class="panel" aria-labelledby="choose-title">
+        <h2 id="choose-title">1. Choose your picture</h2>
+        <div id="drop" class="drop">
+          <label
+            >Media files
+            <input
+              id="image"
+              type="file"
+              accept="image/png,image/jpeg,image/webp,video/mp4,video/webm"
+          /></label>
+          <p id="intake-help" class="muted">
+            Or drop one image here. Up to 4 MiB and 16 megapixels.
+          </p>
+        </div>
+        <label
+          >Collection name <input id="name" maxlength="160" value="My picture campaign"
+        /></label>
+        <label
+          >Level title <input id="mission-title" maxlength="160" value="First picture"
+        /></label>
+        <label
+          >Picture description <input id="description" maxlength="512" value="My reveal picture"
+        /></label>
+        <label
+          >Picture fitting
+          <select id="fit">
+            <option value="contain">Fit whole picture</option>
+            <option value="cover">Fill board (crop edges)</option>
+          </select></label
+        >
+        <div id="batch-options" class="batch-options" hidden>
+          <label
+            >Campaign pacing
+            <select id="pacing">
+              <option value="balanced">Balanced variety</option>
+              <option value="gentle-first">Gentle start</option>
+              <option value="steady">Steady difficulty</option>
+              <option value="surprise">Surprise me</option>
+            </select></label
+          >
+          <p class="muted">
+            Pacing guides deterministic template selection. The review order is the play order.
+          </p>
+        </div>
+        <details>
+          <summary>Credits and sharing information</summary>
+          <label
+            >Creator <input id="creator-credit" maxlength="512" value="Anonymous creator"
+          /></label>
+          <label
+            >Picture credit
+            <input id="picture-credit" maxlength="512" value="Creator supplied picture"
+          /></label>
+          <label
+            >License or sharing terms
+            <input id="license" maxlength="512" value="No additional license granted"
+          /></label>
+        </details>
+        <div class="actions">
+          <button id="generate" disabled>Generate and review</button
+          ><button id="cancel" class="secondary" hidden>Cancel</button
+          ><a href="./">Start a new draft</a>
+        </div>
+      </section>
+      <section id="media-review" class="panel" hidden aria-labelledby="media-review-title">
+        <h2 id="media-review-title">2. Review video posters and celebrations</h2>
+        <p id="media-status" role="status" aria-live="polite"></p>
+        <div id="media-list"></div>
+        <div class="actions">
+          <button id="media-apply">Inspect media</button>
+          <button id="media-cancel" class="secondary" hidden>Cancel media inspection</button>
+        </div>
+      </section>
+      <section id="batch-review" class="panel" hidden aria-labelledby="batch-review-title">
+        <div class="batch-heading">
+          <div>
+            <h2 id="batch-review-title">2. Review campaign order</h2>
+            <p id="batch-progress-label" role="status" aria-live="polite"></p>
+          </div>
+          <progress id="batch-progress" hidden value="0" max="1"></progress>
+        </div>
+        <div id="batch-list" class="batch-list"></div>
+        <p id="batch-readiness" role="status" aria-live="polite"></p>
+        <p id="batch-capacity" class="muted"></p>
+        <div id="batch-split-results" class="batch-split-results" hidden></div>
+        <div class="actions">
+          <button id="batch-generate">Generate included levels</button>
+          <button id="batch-cancel" class="secondary" hidden>Cancel preparation</button>
+          <button id="batch-remove-excluded" class="secondary" hidden>Remove excluded items</button>
+          <button id="batch-split" class="secondary" hidden>Split into smaller packs</button>
+          <button id="batch-approve" disabled>Approve included campaign</button>
+        </div>
+      </section>
+      <section id="review" class="panel" hidden aria-labelledby="review-title">
+        <h2 id="review-title">2. Review your picture and level</h2>
+        <div class="review-grid">
+          <div>
+            <img id="picture" alt="" />
+            <p id="picture-caption"></p>
+          </div>
+          <div>
+            <canvas id="map" width="720" height="360" aria-label="Generated level map"></canvas>
+            <p id="map-caption"></p>
+          </div>
+        </div>
+        <p id="validation"></p>
+        <p id="package-size" class="muted"></p>
+        <button id="approve" disabled>Approve this picture and level</button>
+      </section>
+      <details id="edits" class="panel" hidden>
+        <summary>Optional edits</summary>
+        <p>
+          Change the title, picture fitting or credits above and generate again. Advanced Studio
+          opens an editable copy; save there, then load its edits here. Gameplay changes need a new
+          valid completion route before approval.
+        </p>
+        <button id="advanced" class="secondary">Open advanced editor</button
+        ><button id="load-advanced" class="secondary">Load saved Studio edits</button
+        ><button id="regenerate" class="secondary">Regenerate template gameplay</button>
+      </details>
+      <section id="approved" class="panel" hidden aria-labelledby="approved-title">
+        <h2 id="approved-title">3. Install or share</h2>
+        <p>
+          This approved edition contains generated gameplay, reviewed poster pictures, optional
+          complete victory videos, credits and verified route evidence.
+        </p>
+        <p id="storage-review"></p>
+        <div class="actions">
+          <button id="install" disabled>Install campaign</button
+          ><button id="download">Download .rlpack</button>
+        </div>
+        <a id="play" hidden>Play installed campaign →</a>
+      </section>
+      <details class="panel">
+        <summary>Open a pack, restore a draft, or back up your source</summary>
+        <label
+          >Portable campaign or private source backup
+          <input id="import" type="file" accept=".rlpack,.rlsource"
+        /></label>
+        <p>
+          A .rlpack includes reviewed runtime posters and its selected complete victory videos. An
+          image-only private .rlsource backup also includes retained originals, if available, and
+          editing information. Neither includes player progress or unrelated library items.
+        </p>
+        <button id="backup" disabled>Back up source project</button
+        ><button id="save" class="secondary" disabled>Retry saving checkpoint</button>
+        <p class="muted">
+          Drafts keep up to 50 immutable checkpoints within the existing shared media budget.
+          Download backups before browser cleanup.
+        </p>
+      </details>
+      <section id="installed" class="panel">
+        <h2>My installed creations</h2>
+        <div id="installed-list">Reading your local library…</div>
+      </section>
+    </main>
+  </body>
+</html>
