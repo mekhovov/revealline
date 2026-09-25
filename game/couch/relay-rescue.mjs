@@ -463,13 +463,20 @@ export function bootCoop({
     sourcePack.levels.map((level) =>
       Object.freeze({
         key: `${prefix}/${level.id}`,
-        title: level.name,
-        packName: sourcePack.name,
-        sourceLabel:
-          sourcePack === COOP_STARTER_PACK
+        get title() {
+          return contentText(level, 'name');
+        },
+        get packName() {
+          return contentText(sourcePack, 'name');
+        },
+        get sourceLabel() {
+          return sourcePack === COOP_STARTER_PACK
             ? t('interface:starterArena')
-            : t('interface:localPackThisVisit'),
-        goal: coopGoalLabel(level),
+            : t('interface:localPackThisVisit');
+        },
+        get goal() {
+          return coopGoalLabel(level);
+        },
         levelId: level.id,
         level,
         pack: sourcePack,
@@ -481,12 +488,24 @@ export function bootCoop({
     candidateJourney?.rows.map((row) =>
       Object.freeze({
         key: row.key,
-        title: row.level.name,
-        packName: row.pack.name,
-        sourceLabel: defaultJourney
-          ? t('interface:teamJourneyOriginalArtwork')
-          : `Team Journey · ${row.background ? 'original-art candidate' : 'geometry test'} · not human validated`,
-        goal: coopGoalLabel(row.level),
+        get title() {
+          return contentText(row.level, 'name');
+        },
+        get packName() {
+          return contentText(row.pack, 'name');
+        },
+        get sourceLabel() {
+          return defaultJourney
+            ? t('interface:teamJourneyOriginalArtwork')
+            : t('interface:team.candidateJourneySource', {
+                state: row.background
+                  ? t('interface:originalArtCandidate')
+                  : t('interface:geometryTest'),
+              });
+        },
+        get goal() {
+          return coopGoalLabel(row.level);
+        },
         levelId: row.level.id,
         level: row.level,
         pack: row.pack,
@@ -3025,14 +3044,21 @@ export function bootCoop({
     rows.forEach((row, index) => libraryRuntimeRows.set(row, () => resolve(source.entries[index])));
   }
   const installedDifficultyLabel = (value) =>
-    ({ gentle: 'Gentle', standard: 'Standard', expert: 'Expert' })[value] ?? value;
+    ({
+      gentle: t('interface:gentle'),
+      standard: t('interface:standard'),
+      expert: t('interface:expert'),
+    })[value] ?? value;
   const installedPresetLabel = (value) =>
-    value === 'full' ? 'Full teamwork' : 'Joint cuts and ordinary cover';
+    value === 'full' ? t('interface:fullTeamwork') : t('interface:jointCutsOrdinaryCover');
   function installedProgressText(row) {
     const receipt = installedTeamProgress.get(row.installedEditionId)?.clears?.[row.levelId];
     return receipt
-      ? `Cleared on ${installedDifficultyLabel(receipt.difficulty)} · ${installedPresetLabel(receipt.presetId)}`
-      : 'Not cleared in this edition';
+      ? t('interface:missionLibrary.team.installedClear', {
+          difficulty: installedDifficultyLabel(receipt.difficulty),
+          preset: installedPresetLabel(receipt.presetId),
+        })
+      : t('interface:missionLibrary.team.notClearedInstalledEdition');
   }
   async function launchInstalledTeamRow(edition, row, context) {
     if (
@@ -3041,7 +3067,11 @@ export function bootCoop({
       !context.isCurrent()
     )
       return false;
-    context.onStatus(`Verifying installed edition ${edition.editionId.slice(0, 12)}…`);
+    context.onStatus(
+      t('interface:missionLibrary.team.verifyingInstalledEdition', {
+        edition: edition.editionId.slice(0, 12),
+      }),
+    );
     const loaded = await installedTeamStore.load(edition.editionId, {
       signal: context.signal,
     });
@@ -3050,7 +3080,7 @@ export function bootCoop({
       installedTeamEditions.get(edition.editionId) !== edition ||
       canonicalJSON(loaded.prepared.pack) !== canonicalJSON(edition.pack)
     )
-      throw new Error('Installed Team edition changed. Reopen the mission library.');
+      throw new Error(t('interface:missionLibrary.team.installedEditionChanged'));
     return launchTeamLibraryRow(row, context);
   }
   async function includeInstalledTeamCampaigns() {
@@ -3075,7 +3105,11 @@ export function bootCoop({
               Object.freeze({
                 ...row,
                 installedEditionId: edition.editionId,
-                sourceLabel: `Installed Team edition · ${edition.editionId.slice(0, 12)}`,
+                get sourceLabel() {
+                  return t('interface:missionLibrary.team.installedEdition', {
+                    edition: edition.editionId.slice(0, 12),
+                  });
+                },
               }),
           );
           installedTeamRows.push(...rows);
@@ -3086,7 +3120,11 @@ export function bootCoop({
               rows,
               sourceId,
               editionId: edition.editionId,
-              edition: `${edition.pack.name} · ${edition.editionId.slice(0, 12)}`,
+              edition: () =>
+                t('interface:missionLibrary.team.editionLabel', {
+                  campaign: edition.pack.name,
+                  edition: edition.editionId.slice(0, 12),
+                }),
               collection: 'Custom',
               isCurrent: (row) =>
                 installedTeamEditions.get(edition.editionId) === edition && rows.includes(row),
@@ -3365,7 +3403,8 @@ export function bootCoop({
               rows: owner.rows,
               sourceId: owner.librarySourceId,
               editionId: `${owner.pack.id}@${owner.pack.revision}`,
-              edition: `${owner.pack.name} · this visit`,
+              edition: () =>
+                t('interface:missionLibrary.team.visitEdition', { campaign: owner.pack.name }),
               collection: 'Custom',
               isCurrent: (row) => localDiscoveryPack === owner && owner.rows.includes(row),
               launch: launchTeamLibraryRow,
@@ -3692,7 +3731,10 @@ export function bootCoop({
         libraryPreview.refresh();
         if (installedTeamStorageError)
           libraryStatus(
-            `Installed Team campaigns could not be checked: ${installedTeamStorageError.message}. This visit's arenas are still available.`,
+            () =>
+              t('interface:missionLibrary.team.installedCampaignsUnavailable', {
+                error: installedTeamStorageError.message,
+              }),
             'error',
           );
         void libraryOtherModesLoad();
@@ -4458,7 +4500,7 @@ export function bootCoop({
             generation === epoch &&
             acceptedPicture === picture
           )
-            nextStatus('Installed Team progress saved for this exact edition.');
+            nextStatus(t('interface:missionLibrary.team.progressSaved'));
         },
         (error) => {
           if (
@@ -4468,7 +4510,7 @@ export function bootCoop({
             acceptedPicture === picture
           )
             nextStatus(
-              `Result kept for this session; installed Team progress was not saved: ${error.message}`,
+              t('interface:missionLibrary.team.progressSaveFailed', { error: error.message }),
             );
         },
       );
@@ -4790,7 +4832,7 @@ export function bootCoop({
           draft.creatorCampaign = playable.prepared;
           if (playable.prepared && installedTeamStore) {
             display.update({
-              message: 'Installing the exact verified Team edition…',
+              message: t('interface:missionLibrary.team.installingVerifiedEdition'),
               stage: 'verifying',
             });
             try {
@@ -4900,12 +4942,16 @@ export function bootCoop({
         selection.state = 'ready';
         pictureUI(() =>
           draft.artworkSource
-            ? 'Local artwork ready. Start remains a separate action.'
+            ? t('interface:localArtworkReadyStartRemainsASeparateAction')
             : draft.installedEditionId
-              ? 'Team campaign installed. Start remains a separate action.'
+              ? t('interface:missionLibrary.team.campaignInstalled')
               : draft.creatorCampaign
-                ? `Team campaign ready for this visit. Installation unavailable: ${(draft.installError ?? installedTeamStorageError)?.message ?? 'storage is unavailable'}.`
-                : 'Imported Team picture ready. Start remains a separate action.',
+                ? t('interface:missionLibrary.team.campaignSessionOnly', {
+                    error:
+                      (draft.installError ?? installedTeamStorageError)?.message ??
+                      t('interface:missionLibrary.team.storageUnavailable'),
+                  })
+                : t('interface:importedTeamPictureReadyStartRemainsASeparateAction'),
         );
         if (!current()) {
           rollback();
