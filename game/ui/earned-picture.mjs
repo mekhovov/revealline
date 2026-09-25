@@ -1,3 +1,4 @@
+import { t } from '../i18n/index.mjs';
 import { canonicalJSON, required } from '../data-json.mjs';
 import { createMediaIdentityCatalog } from '../media-library.mjs';
 import { createStoredStillIdentityCatalog } from '../media-storage-record.mjs';
@@ -13,7 +14,7 @@ import { acquirePresentationImage } from './presentation-image.mjs';
 export function resolveEarnedPicture({ item, receipt, metadata, entries }) {
   const installed = createGalleryDifficultyResolver(entries).picture(item);
   if (!receipt) return installed ? Object.freeze({ ...installed, receipt: null }) : null;
-  required(receipt.galleryKey === item.key, 'This earned picture belongs to another gallery row.');
+  required(receipt.galleryKey === item.key, t("interface:thisEarnedPictureBelongsToAnotherGalleryRow"));
   if (receipt.presentationPin?.kind === 'legacy') {
     // Legacy pictures retain their authored-pack behavior. A receipt does not
     // preserve that pack's original embedded art if the pack is removed.
@@ -37,7 +38,7 @@ export function resolveEarnedPicture({ item, receipt, metadata, entries }) {
     ]);
     return contexts.entries.some((entry) => entry.executionKey === item.campaignKey);
   });
-  required(owner, 'The earned picture owner is missing. Restore its original media bundle.');
+  required(owner, t("interface:theEarnedPictureOwnerIsMissingRestoreItsOriginalMedia"));
   const contexts = createExecutionCatalog([
     {
       campaign: owner.campaign,
@@ -48,13 +49,13 @@ export function resolveEarnedPicture({ item, receipt, metadata, entries }) {
     },
   ]);
   const retained = createGalleryDifficultyResolver(contexts.entries).picture(item);
-  required(retained, 'The earned picture no longer matches its retained map and world.');
+  required(retained, t("interface:theEarnedPictureNoLongerMatchesItsRetainedMapAnd"));
   required(
     retained.level.revision === item.levelRevision &&
       (!installed ||
         canonicalJSON(normalizedLevel(installed.level)) ===
           canonicalJSON(normalizedLevel(retained.level))),
-    'Earned picture geometry differs from its recorded completion.',
+    t("interface:earnedPictureGeometryDiffersFromItsRecordedCompletion"),
   );
   return Object.freeze({
     ...(installed ?? retained),

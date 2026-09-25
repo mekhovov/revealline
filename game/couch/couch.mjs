@@ -1,3 +1,5 @@
+import { contentText } from '../i18n/content.mjs';
+import { t, localizedText, localizedOption } from '../i18n/index.mjs';
 import { attachCouchTouch } from '../ui/couch-touch.mjs';
 import { mountPresentationPage } from '../presentation/page.mjs';
 import { createCouchShell } from './couch-shell.mjs';
@@ -120,12 +122,12 @@ const audioPreferences = createAudioPreferences({
   window,
   getStorage: () => localStorage,
   onWarning: (message) => {
-    $('race-audio-status').textContent = message;
+    localizedText($('race-audio-status'), () =>message);
   },
 });
 const renderMasterPreferences = ({ muted, volume }) => {
-  $('race-audio').textContent = muted ? 'Unmute sound' : 'Mute sound';
-  $('race-quick-sound').textContent = muted ? 'Sound: off' : 'Sound: on';
+  localizedText($('race-audio'), () =>muted ? t("interface:unmuteSound") : t("interface:muteSound"));
+  localizedText($('race-quick-sound'), () =>muted ? t("interface:soundOff") : t("interface:soundOn"));
   $('race-quick-sound').setAttribute('aria-pressed', String(!muted));
   $('race-master-volume').value = volume;
 };
@@ -144,7 +146,7 @@ const displayPreferences = createDisplayPreferences({
   matchMedia,
   getStorage: () => localStorage,
   onWarning: (message) => {
-    $('race-display-status').textContent = message;
+    localizedText($('race-display-status'), () =>message);
   },
 });
 const renderDisplayPreferences = (state) => {
@@ -154,10 +156,9 @@ const renderDisplayPreferences = (state) => {
   $('race-text-face').value = state.textFace;
   $('race-text-size').value = state.textSize;
   $('race-reduced').checked = state.reducedEffects;
-  $('race-system-reduction').textContent =
-    state.effectiveReducedEffects && !state.reducedEffects
-      ? 'System reduced motion is active. Your saved Reduced effects choice is unchanged.'
-      : '';
+  localizedText($('race-system-reduction'), () =>state.effectiveReducedEffects && !state.reducedEffects
+      ? t("interface:systemReducedMotionIsActiveYourSavedReducedEffectsChoice")
+      : '');
 };
 const stopDisplayView = displayPreferences.subscribe(renderDisplayPreferences);
 const displayRestoration = attachPreferenceRestoration({
@@ -175,7 +176,7 @@ const actorPreferences = createActorStylePreferences({
   window,
   getStorage: () => localStorage,
   onWarning: (message) => {
-    $('race-actor-style-status').textContent = message;
+    localizedText($('race-actor-style-status'), () =>message);
   },
 });
 const stopActorView = actorPreferences.subscribe(({ actorStyle }) => {
@@ -193,7 +194,7 @@ globalThis.RevealLineToolLaunch?.attached();
 document.documentElement.dataset.toolState = 'loading';
 const bootStatus = createOperationStatus($('boot-status'));
 const bootDisplay = bootStatus.begin({
-  message: 'Preparing both boards…',
+  message: t("interface:preparingBothBoards"),
   stage: 'reading',
 });
 let bootFailed = false;
@@ -224,7 +225,7 @@ const presentationPage = mountPresentationPage({
         state: status.status === 'error' ? 'error' : 'ready',
         message:
           status.status === 'error'
-            ? 'Release artwork is unavailable; the current look is kept.'
+            ? t("interface:releaseArtworkIsUnavailableTheCurrentLookIsKept")
             : '',
       });
       presentationOperation = null;
@@ -281,7 +282,7 @@ const releaseArtwork = (event) => {
 window.addEventListener('pagehide', releaseArtwork);
 const json = async (url) => {
   const r = await fetch(url, { signal: artworkLifetime.signal });
-  if (!r.ok) throw new Error(`Could not load ${url}`);
+  if (!r.ok) throw new Error(t("gameplay:couldNotLoad", { value1: url }));
   return r.json();
 };
 try {
@@ -316,7 +317,7 @@ try {
   if (libraryHandoff) {
     const values = new URL(location.href).searchParams.getAll('versus-next');
     if (values.length) {
-      if (values.length !== 1) throw new TypeError('Duplicate Versus continuation settings.');
+      if (values.length !== 1) throw new TypeError(t("interface:duplicateVersusContinuationSettings"));
       const value = boundedJSON(values[0], {
         maxBytes: 4096,
         maxNodes: 24,
@@ -325,7 +326,7 @@ try {
       exactKeys(
         value,
         ['mission', 'format', 'turnPolicy', 'seconds', 'difficulty', 'tap', 'slots'],
-        'Versus continuation',
+        t("interface:versusContinuation"),
       );
       if (
         value?.mission === libraryHandoff &&
@@ -342,7 +343,7 @@ try {
         (value.slots[0] === null || value.slots[0] !== value.slots[1])
       )
         incomingContinuation = value;
-      else throw new TypeError('Versus continuation settings do not match this exact mission.');
+      else throw new TypeError(t("interface:versusContinuationSettingsDoNotMatchThisExactMission"));
     }
   }
   if (incomingContinuation) {
@@ -398,10 +399,10 @@ try {
     journeyPreferences = createJourneyPreferences({ window });
     if (incomingContinuation) journeyPreferences.choose(incomingContinuation.difficulty);
     $('race-journey-note').hidden = false;
-    $('race-journey-note').textContent =
+    localizedText($('race-journey-note'), () =>
       authoredRoute.id === DEFAULT_JOURNEY_ROUTES.versus
         ? `New Journey · ${candidateJourney.catalog.missions.length} missions`
-        : `${authoredRoute.label.toUpperCase()} / UNVALIDATED VERSUS TEST BUILD. Web previews need a connection for original pictures; core offline preparation does not save them.`;
+        : `${authoredRoute.label.toUpperCase()} / UNVALIDATED VERSUS TEST BUILD. Web previews need a connection for original pictures; core offline preparation does not save them.`);
     $('race-journey-difficulty-field').hidden = false;
     $('race-journey-difficulty').replaceChildren(
       ...Object.keys(
@@ -415,11 +416,11 @@ try {
         const unsaved = journeySaveCue.update({ ready, durable, error });
         const notice = $('race-journey-save');
         notice.hidden = !unsaved && !notice.contains(document.activeElement);
-        $('race-journey-save-message').textContent = error
+        localizedText($('race-journey-save-message'), () =>error
           ? `Journey race progress is session-only. Retry saving or export before closing. ${error}`
           : ready && durable
-            ? 'Journey race progress saved locally. You can continue playing.'
-            : '';
+            ? t("interface:journeyRaceProgressSavedLocallyYouCanContinuePlaying")
+            : '');
       },
     });
     await journeyProfile.load();
@@ -453,18 +454,18 @@ try {
   if (!candidateJourney)
     try {
       bootDisplay.update({
-        message: 'Loading the featured chapter…',
+        message: t("interface:loadingTheFeaturedChapter"),
         stage: 'downloading',
       });
       featuredSource = await json('../content/packs/fpv-arcade-r5.json');
     } catch (error) {
       if (artworkLifetime.signal.aborted || error.name === 'AbortError') throw error;
       featuredStatus =
-        'Featured Pressure Lines download unavailable. Base maps and checked installed maps remain available.';
+        t("interface:featuredPressureLinesDownloadUnavailableBaseMapsAndCheckedInstalled");
     }
   if (featuredSource !== undefined) {
     bootDisplay.update({
-      message: 'Checking featured maps and original pictures…',
+      message: t("interface:checkingFeaturedMapsAndOriginalPictures"),
       stage: 'verifying',
     });
     featured = await prepareCouchChapter(featuredSource, {
@@ -511,9 +512,9 @@ try {
       });
   let installedStatus = candidateJourney
       ? authoredRoute.id === DEFAULT_JOURNEY_ROUTES.versus
-        ? 'Open All missions for Journey, earlier missions and installed chapters.'
+        ? t("interface:openAllMissionsForJourneyEarlierMissionsAndInstalledChapters")
         : `${authoredRoute.label} test route; Legacy chapters stay in the ordinary race.`
-      : 'Installed chapters have not been checked.',
+      : t("interface:installedChaptersHaveNotBeenChecked"),
     contentChannel = null;
   try {
     const channel = document.querySelector('meta[name="revealline-offline"]')
@@ -527,7 +528,7 @@ try {
         presentationPage,
       });
       bootDisplay.update({
-        message: 'Checking installed chapters and pictures…',
+        message: t("interface:checkingInstalledChaptersAndPictures"),
         stage: 'verifying',
       });
       const rows = await installed.refresh({
@@ -537,14 +538,14 @@ try {
       maps.push(...rows);
       installedStatus = rows.length
         ? `${rows.length} installed maps available. Choose a map to check its original.`
-        : 'Open All missions to download compatible chapters, then choose Play.';
+        : t("interface:openAllMissionsToDownloadCompatibleChaptersThenChoosePlay");
     }
   } catch (error) {
-    installedStatus = `Installed chapters unavailable: ${error.message}`;
+    installedStatus = t("gameplay:installedChaptersUnavailable", { value1: error.message });
   }
   if (artworkLifetime.signal.aborted)
-    throw new DOMException('Couch artwork loading cancelled.', 'AbortError');
-  const mode = (level) => (arcadeActionCapabilities(level).manualAbility ? 'Tactical' : 'Arcade');
+    throw new DOMException(t("interface:couchArtworkLoadingCancelled"), 'AbortError');
+  const mode = (level) => (arcadeActionCapabilities(level).manualAbility ? t("interface:tactical") : t("interface:arcade"));
   function showMaps() {
     $('race-level').replaceChildren(
       ...maps
@@ -660,7 +661,7 @@ try {
     menuHint = '',
     menuGate = '',
     menuStatus =
-      'Release controls, then press a face button or Menu to choose the menu controller.',
+      t("interface:releaseControlsThenPressAFaceButtonOrMenuTo"),
     menuScope = null,
     inactive = false,
     disposed = false,
@@ -681,10 +682,9 @@ try {
         throw error;
       }));
   function showActorNotice(recipe) {
-    $('race-actor-style-status').textContent =
-      actorPreferences.getWarning() ||
+    localizedText($('race-actor-style-status'), () =>actorPreferences.getWarning() ||
       recipe.actorNotice ||
-      'Applies to a new race or Next mission. Resume and Rematch keep their accepted actors. Custom chapters keep authored actors.';
+      t("interface:appliesToANewRaceOrNextMissionResumeAnd"));
   }
   const actorExecutionOwners = new WeakMap();
   async function prepareActors(recipe, { signal, onStatus, reader = installed } = {}) {
@@ -738,7 +738,7 @@ try {
           // unknown pack remains playable through its validated authored path.
           // Accepted FPV pins and later actor asset/hash failures stay strict.
           recipe.actorNotice =
-            'FPV eligibility could not be checked for this chapter. Its authored actors are kept; try a fresh race when the mission index is available.';
+            t("interface:fpvEligibilityCouldNotBeCheckedForThisChapterIts");
           return null;
         }
         const original = index.missions.find(
@@ -803,7 +803,7 @@ try {
     readingInputPrompt({
       modality: readingModality,
       scrollable,
-      controls: { confirm: 'South', back: 'East' },
+      controls: { confirm: t("common:controls.south"), back: t("common:controls.east") },
     });
   function setReadingModality(modality) {
     if (readingModality === modality) return;
@@ -897,9 +897,9 @@ try {
         contentBusy = false;
         preparationDisplay?.finish({ state: 'cancelled', message: '' });
         preparationDisplay = null;
-        $('race-message').textContent = selected
-          ? 'Mission selection cancelled. Your current race and picture are kept.'
-          : 'Next mission cancelled. Results are kept. Choose Next mission to retry.';
+        localizedText($('race-message'), () =>selected
+          ? t("interface:missionSelectionCancelledYourCurrentRaceAndPictureAreKept")
+          : t("interface:nextMissionCancelledResultsAreKeptChooseNextMissionTo"));
         updateMenu();
         return;
       }
@@ -922,10 +922,10 @@ try {
     contentReady = retainedResult;
     contentError = retainedResult
       ? `${continuationAction()} picture loading cancelled. Results are kept. Choose ${continuationAction()} when you are ready.`
-      : 'Picture loading cancelled. Retry when you are ready.';
+      : t("interface:pictureLoadingCancelledRetryWhenYouAreReady");
     if (installedStatus === 'Checking installed chapters…')
-      installedStatus = 'Installed chapter check cancelled. Refresh when ready.';
-    $('race-message').textContent = contentError;
+      installedStatus = t("interface:installedChapterCheckCancelledRefreshWhenReady");
+    localizedText($('race-message'), () =>contentError);
     updateMenu();
   }
   $('race-picture-cancel').onclick = () => {
@@ -1012,7 +1012,7 @@ try {
     selectedMapKey = entry.key;
     backdrop = entry.backdrop || null;
     theme = entry.themes.find((t) => t.id === themeId) || entry.themes[0];
-    $('race-theme').replaceChildren(...entry.themes.map((t) => new Option(t.name, t.id)));
+    $('race-theme').replaceChildren(...entry.themes.map((t) => localizedOption(() => t.name, t.id)));
     $('race-theme').value = theme.id;
     roundRecipe = {
       entry,
@@ -1036,8 +1036,7 @@ try {
       });
     paintRound(roundRecipe);
     finished = false;
-    $('race-start').textContent =
-      roundRecipe.format === 'single' ? 'Start race ↗' : 'Start round ↗';
+    localizedText($('race-start'), () =>roundRecipe.format === 'single' ? t("interface:startRace2") : t("interface:startRound2"));
     return loadPreparedPicture(entry);
   }
   function createRound(recipe) {
@@ -1095,7 +1094,7 @@ try {
         music.contextPending(theme.id);
         music.report(
           new Error(
-            'Mission music assignment is unavailable until this content identity is resolved.',
+            t("interface:missionMusicAssignmentIsUnavailableUntilThisContentIdentityIs"),
           ),
         );
       }
@@ -1113,9 +1112,9 @@ try {
     const staticEntry = shippedMaps.includes(entry),
       owner = staticEntry ? staticPictures : installed,
       message = staticEntry
-        ? 'Checking this map and preparing the same picture for both boards…'
-        : 'Checking this chapter and loading its original picture…';
-    $('race-message').textContent = message;
+        ? t("interface:checkingThisMapAndPreparingTheSamePictureForBoth")
+        : t("interface:checkingThisChapterAndLoadingItsOriginalPicture");
+    localizedText($('race-message'), () =>message);
     updateMenu();
     const selectedRun = match,
       ticket = generation,
@@ -1151,20 +1150,20 @@ try {
         contentReady = true;
         retireActors();
         showActorNotice(roundRecipe);
-        $('race-message').textContent = [
+        localizedText($('race-message'), () =>[
           staticEntry ? featuredStatus : '',
           image?.notice,
           'Ready. First clear wins.',
         ]
           .filter(Boolean)
-          .join(' ');
+          .join(' '));
         display.finish({ message: '' });
         return true;
       } catch (error) {
         if (disposed || controller.signal.aborted || match !== selectedRun || ticket !== generation)
           return false;
         contentError = `This ${staticEntry ? 'map picture or actor appearance' : 'chapter'} could not load: ${error.message}`;
-        $('race-message').textContent = contentError;
+        localizedText($('race-message'), () =>contentError);
         display.finish({ state: 'error', message: '' });
         return false;
       } finally {
@@ -1182,8 +1181,8 @@ try {
       nextAttempt?.recipe.entry.mission !== undefined &&
       nextAttempt.recipe.entry.mission !== roundRecipe.entry.mission
     )
-      return 'Next mission';
-    return roundRecipe.format === 'single' || won.some((n) => n >= 2) ? 'Rematch' : 'Next round';
+      return t("interface:nextMission2");
+    return roundRecipe.format === 'single' || won.some((n) => n >= 2) ? t("interface:rematch") : t("interface:nextRound2");
   }
   async function prepareNext(
     destination = null,
@@ -1368,14 +1367,13 @@ try {
           mode: 'versus',
           missionId: attempt.recipe.entry.mission.id,
         });
-      $('race-start').textContent =
-        roundRecipe.format === 'single' ? 'Start race ↗' : 'Start round ↗';
-      $('race-message').textContent = [
+      localizedText($('race-start'), () =>roundRecipe.format === 'single' ? t("interface:startRace2") : t("interface:startRound2"));
+      localizedText($('race-message'), () =>[
         lease.picture?.notice,
-        'Both boards use the prepared next picture. Start when you are ready.',
+        t("interface:bothBoardsUseThePreparedNextPictureStartWhenYou"),
       ]
         .filter(Boolean)
-        .join(' ');
+        .join(' '));
       contentReady = true;
       display.finish({ message: '' });
       prepared = {
@@ -1388,9 +1386,9 @@ try {
     } catch (error) {
       if (current()) {
         contentError = `The ${continuationAction().toLowerCase()} picture or actors could not be prepared. Both boards are kept. Choose ${continuationAction()} to retry.`;
-        $('race-message').textContent = contentError;
+        localizedText($('race-message'), () =>contentError);
         display.finish({ state: 'error', message: '' });
-        console.warn('Next picture preparation failed.', error);
+        console.warn(t("interface:nextPicturePreparationFailed"), error);
       }
       return null;
     } finally {
@@ -1407,8 +1405,8 @@ try {
           preparationStatus.clear();
           preparationDisplay = null;
           contentError =
-            'Actor choice changed. Both previous boards are kept. Choose Start or Next to use the new choice.';
-          $('race-message').textContent = contentError;
+            t("interface:actorChoiceChangedBothPreviousBoardsAreKeptChooseStart");
+          localizedText($('race-message'), () =>contentError);
         }
         contentBusy = false;
         updateMenu();
@@ -1428,9 +1426,8 @@ try {
     pauseDuel(match, { preserveContinuation: true });
     clear();
     if (match.status === 'paused') {
-      $('race-start').textContent =
-        roundRecipe.format === 'single' ? 'Resume race →' : 'Resume round →';
-      $('race-message').textContent = 'Both players are paused. Resume when everyone is ready.';
+      localizedText($('race-start'), () =>roundRecipe.format === 'single' ? t("interface:resumeRace") : t("interface:resumeRound"));
+      localizedText($('race-message'), () =>t("interface:bothPlayersArePausedResumeWhenEveryoneIsReady"));
     }
     updateMenu();
   }
@@ -1545,7 +1542,7 @@ try {
           match.status === 'ready' &&
           shell.scope() === 'main';
       const display = preparationStatus.begin({
-        message: 'Confirming the prepared picture before starting…',
+        message: t("interface:confirmingThePreparedPictureBeforeStarting"),
         stage: 'verifying',
         isCurrent: () =>
           !disposed &&
@@ -1589,7 +1586,7 @@ try {
           contentError = shippedMaps.includes(entry)
             ? `The prepared picture could not be confirmed. Retry or choose a new setup: ${error.message}`
             : `Refresh installed chapters in Race setup before starting: ${error.message}`;
-          $('race-message').textContent = contentError;
+          localizedText($('race-message'), () =>contentError);
           display.finish({ state: 'error', message: '' });
         }
         return;
@@ -1626,7 +1623,7 @@ try {
       // Race effects are independent of the music transport and its readiness.
       void sound.enable();
       if (music) void music.start();
-      $('race-message').textContent = 'Make your line count. First clear wins.';
+      localizedText($('race-message'), () =>t("interface:makeYourLineCountFirstClearWins"));
       updateMenu();
       input.focus();
     } finally {
@@ -1679,7 +1676,7 @@ try {
     contentReady = false;
     contentScope = shell.scope();
     if (!shippedMaps.includes(oldEntry)) backdrop = null;
-    installedStatus = 'Checking installed chapters…';
+    installedStatus = t("interface:checkingInstalledChapters");
     const display = preparationStatus.begin({
       message: installedStatus,
       stage: 'verifying',
@@ -1700,15 +1697,15 @@ try {
       $('race-level').value = oldKey;
       installedStatus = rows.length
         ? `${rows.length} installed maps available.`
-        : 'Open All missions to download compatible chapters, then choose Play.';
+        : t("interface:openAllMissionsToDownloadCompatibleChaptersThenChoosePlay");
       const ready = prepare();
       focusController = contentController;
       await ready;
     } catch (error) {
       if (disposed || controller.signal.aborted || controller !== contentController) return;
-      contentError = `Installed chapters unavailable: ${error.message}`;
+      contentError = t("gameplay:installedChaptersUnavailable", { value1: error.message });
       installedStatus = contentError;
-      $('race-message').textContent = contentError;
+      localizedText($('race-message'), () =>contentError);
       display.finish({ state: 'error', message: '' });
     } finally {
       if (!disposed && controller === contentController && !controller.signal.aborted) {
@@ -1732,7 +1729,7 @@ try {
     })
     .catch((error) => {
       if (!disposed)
-        $('race-message').textContent = `App lifecycle adapter unavailable: ${error.message}`;
+        localizedText($('race-message'), () =>t("gameplay:appLifecycleAdapterUnavailable", { value1: error.message }));
     });
   for (const id of ['race-level', 'race-class', 'race-turn', 'race-time', 'race-format'])
     $(id).onchange = () => {
@@ -1754,11 +1751,10 @@ try {
       ? ['gameplay-pressure.v2', 'gameplay-pressure.v3', 'gameplay-pressure.v4'].includes(
           tuning.version,
         )
-        ? `${preset.lives} mission lives; ${preset.failingDeadline ? 'deadlines only on authored timed missions' : 'no failing countdown'}.`
+        ? `${preset.lives} mission lives; ${preset.failingDeadline ? t("interface:deadlinesOnlyOnAuthoredTimedMissions") : 'no failing countdown'}.`
         : preset.description
-      : 'Authored lives and objectives stay unchanged.';
-    $('race-journey-difficulty-note').textContent =
-      `Next fresh race: ${difficulty}. ${gameplayTuningDescription(tuning)} ${rules} Both current boards keep their rules.`;
+      : t("interface:authoredLivesAndObjectivesStayUnchanged");
+    localizedText($('race-journey-difficulty-note'), () =>`Next fresh race: ${difficulty}. ${gameplayTuningDescription(tuning)} ${rules} Both current boards keep their rules.`);
   }
   if (candidateJourney) {
     let preferenceRevision = journeyPreferences.snapshot().revision,
@@ -1776,7 +1772,7 @@ try {
       gameplayTuningPanel?.refresh();
       preferenceExportSequence++;
       $('race-journey-preferences-recovery').hidden = snapshot.durable;
-      $('race-journey-preferences-message').textContent = snapshot.error;
+      localizedText($('race-journey-preferences-message'), () =>snapshot.error);
       journeyChooser?.refresh();
       showMaps();
       $('race-level').value = candidateJourney.row(
@@ -1798,12 +1794,10 @@ try {
           'revealline-journey-difficulty.json',
         );
         if (ticket === preferenceExportSequence && !$('race-journey-preferences-recovery').hidden)
-          $('race-journey-preferences-message').textContent =
-            `${journeyPreferences.snapshot().error} ${result.message}`;
+          localizedText($('race-journey-preferences-message'), () =>`${journeyPreferences.snapshot().error} ${result.message}`);
       } catch (error) {
         if (ticket === preferenceExportSequence && !$('race-journey-preferences-recovery').hidden)
-          $('race-journey-preferences-message').textContent =
-            `Export failed: ${error.message}. Your session difficulty choice is still here.`;
+          localizedText($('race-journey-preferences-message'), () =>`Export failed: ${error.message}. Your session difficulty choice is still here.`);
       }
     };
     $('race-journey-difficulty').onchange = () => {
@@ -1837,9 +1831,8 @@ try {
       if (journeySkipArmed !== match) {
         pause();
         journeySkipArmed = match;
-        $('race-journey-skip').textContent = 'Confirm skip';
-        $('race-message').textContent =
-          `Skip to ${next.name}? No clear is awarded. Confirm skip to continue.`;
+        localizedText($('race-journey-skip'), () =>t("interface:confirmSkip"));
+        localizedText($('race-message'), () =>`Skip to ${next.name}? No clear is awarded. Confirm skip to continue.`);
         return;
       }
       journeySkipArmed = null;
@@ -1850,8 +1843,7 @@ try {
       try {
         await downloadJSON(JSON.parse(journeyProfile.export()), journeyProfile.backupFilename);
       } catch (error) {
-        $('race-journey-save-message').textContent =
-          `Export failed: ${error.message}. Your session progress is still here.`;
+        localizedText($('race-journey-save-message'), () =>`Export failed: ${error.message}. Your session progress is still here.`);
       }
     };
   }
@@ -1868,7 +1860,7 @@ try {
       $('race-journey-difficulty').value = snapshot.difficulty;
       refreshGameplayTuningNote();
       $('race-journey-preferences-recovery').hidden = snapshot.durable;
-      $('race-journey-preferences-message').textContent = snapshot.error;
+      localizedText($('race-journey-preferences-message'), () =>snapshot.error);
       gameplayTuningPanel?.refresh();
     });
     $('race-journey-difficulty').onchange = () =>
@@ -1906,7 +1898,7 @@ try {
       assignmentsChanged = nextSlots.some((slot, i) => slot !== slots[i]);
       slots = [...nextSlots];
       const message = `${count} standard controller${count === 1 ? '' : 's'} assigned · ${slots.map((slot, i) => `Player ${i + 1}: ${slot === null ? 'keyboard/touch' : `pad slot ${slot}`}`).join(' · ')}. Keyboard and touch remain available. Esc / P pauses both boards.`;
-      if ($('race-pad-status').textContent !== message) $('race-pad-status').textContent = message;
+      if ($('race-pad-status').textContent !== message) localizedText($('race-pad-status'), () =>message);
     },
   });
   let soloReturnStorage;
@@ -2022,7 +2014,7 @@ try {
     libraryContinuation = operation;
     contentBusy = true;
     const display = preparationStatus.begin({
-      message: 'Preparing next mission. Your result and picture are kept…',
+      message: t("interface:preparingNextMissionYourResultAndPictureAreKept"),
       stage: 'reading',
       isCurrent: current,
     });
@@ -2049,12 +2041,11 @@ try {
                 campaignKey: entry.musicCampaignKey,
                 sourcePackId: entry.sourcePackId ?? entry.pictureEntry?.sourcePackId ?? null,
               });
-      if (!row) throw new Error('The exact current mission edition is unavailable.');
+      if (!row) throw new Error(t("interface:theExactCurrentMissionEditionIsUnavailable"));
       let next = librarySuccessor(library, row, 'versus');
       if (!next) {
         libraryCompleteMatch = match;
-        $('race-message').textContent =
-          'Versus library complete. Rematch or choose All missions whenever you like.';
+        localizedText($('race-message'), () =>t("interface:versusLibraryCompleteRematchOrChooseAllMissionsWheneverYou"));
         return;
       }
       const targetId = next.id;
@@ -2070,7 +2061,7 @@ try {
       // Installation may rebuild rows. Re-resolve only this exact qualified edition.
       next = library.find(targetId);
       if (!next || library.availability(next, 'versus').state !== 'ready')
-        throw new Error('The exact next mission is not ready.');
+        throw new Error(t("interface:theExactNextMissionIsNotReady"));
       contentBusy = false;
       display.finish({ message: '' });
       updateMenu();
@@ -2082,11 +2073,10 @@ try {
         continuousNext: true,
       });
       if (started === false && context.isCurrent() && !operation.controller.signal.aborted)
-        throw new Error('The next mission could not start.');
+        throw new Error(t("interface:theNextMissionCouldNotStart"));
     } catch (error) {
       if (context.isCurrent() && !operation.controller.signal.aborted)
-        $('race-message').textContent =
-          `Next mission could not open: ${error.message} Results are kept. Choose Next mission to retry.`;
+        localizedText($('race-message'), () =>`Next mission could not open: ${error.message} Results are kept. Choose Next mission to retry.`);
     } finally {
       display.finish({ message: '' });
       if (preparationDisplay === display) preparationDisplay = null;
@@ -2118,17 +2108,16 @@ try {
     const heading = document.createElement('h2');
     heading.id = 'race-library-replace-title';
     dialog.setAttribute('aria-labelledby', heading.id);
-    heading.textContent = title;
+    localizedText(heading, () =>title);
     const copy = document.createElement('p');
-    copy.textContent =
-      'Stay keeps both paused boards and this series. Replace & play discards this attempt and opens the exact selected mission.';
+    localizedText(copy, () =>t("interface:stayKeepsBothPausedBoardsAndThisSeriesReplacePlay"));
     const stay = document.createElement('button'),
       replace = document.createElement('button');
     stay.id = 'race-library-stay';
-    stay.textContent = 'Stay';
+    localizedText(stay, () =>t("interface:stay"));
     stay.type = 'button';
     replace.id = 'race-library-play';
-    replace.textContent = 'Replace & play';
+    localizedText(replace, () =>t("interface:replacePlay"));
     replace.type = 'button';
     dialog.append(heading, copy, stay, replace);
     document.body.append(dialog);
@@ -2158,7 +2147,7 @@ try {
     if (!context.isCurrent()) return false;
     const row = missionLibrary.library.find(context.libraryMissionId);
     if (!row || !row.modes.includes(context.mode))
-      throw new Error('The selected mission changed. Refresh the library.');
+      throw new Error(t("interface:theSelectedMissionChangedRefreshTheLibrary"));
     let href = missionLibraryHref({
       baseURL: location.href,
       currentMode: 'versus',
@@ -2203,7 +2192,7 @@ try {
           row.level.id === selection.levelId &&
           String(row.level.revision) === String(selection.levelRevision),
       );
-      if (!entry) throw new Error('This exact Base mission is unavailable.');
+      if (!entry) throw new Error(t("interface:thisExactBaseMissionIsUnavailable"));
       if (!(await confirmLibraryReplacement(context, `Play ${entry.level.name}?`))) return false;
       if (!context.isCurrent()) return false;
       await startRace(entry, { rulesEdition: selection.rulesEdition });
@@ -2234,7 +2223,7 @@ try {
         attempt: context.attempt,
         isCurrent: current,
         onStatus: (status) => {
-          if (context.isCurrent()) $('race-message').textContent = status.message;
+          if (context.isCurrent()) localizedText($('race-message'), () =>status.message);
         },
       });
       if (!current()) return false;
@@ -2278,7 +2267,7 @@ try {
     const onStatus = (status) => {
       if (current()) {
         context.preparationFeedback?.update(status);
-        $('race-message').textContent = status.message;
+        localizedText($('race-message'), () =>status.message);
       }
     };
     let owner = null,
@@ -2305,7 +2294,7 @@ try {
             String(level.revision) === String(selection.levelRevision),
         );
         if (!level || campaignKey(baseEntry.campaign) !== selection.campaignKey)
-          throw new Error('This exact Base mission is unavailable.');
+          throw new Error(t("interface:thisExactBaseMissionIsUnavailable"));
         const theme =
           baseEntry.themes.find(
             (item) => item.id === (level.themeId || baseEntry.campaign.themeId),
@@ -2467,7 +2456,7 @@ try {
   }
   function refreshLibraryWarning() {
     const notice = $('race-library-inventory-status');
-    if (notice) notice.textContent = libraryInventory?.state().reason || libraryInventoryNotice;
+    if (notice) localizedText(notice, () =>libraryInventory?.state().reason || libraryInventoryNotice);
   }
   function missionInstaller() {
     return (libraryInstaller ??= libraryInstallerFactory());
@@ -2544,7 +2533,7 @@ try {
       if (disposed || artworkLifetime.signal.aborted) {
         libraryInventory.close();
         spatialEditionOwner.dispose();
-        throw new DOMException('Mission library closed.', 'AbortError');
+        throw new DOMException(t("interface:missionLibraryClosed"), 'AbortError');
       }
       await refreshLibraryInventory();
       const result = await createMetadataInstalledMissionLibrary({
@@ -2669,7 +2658,7 @@ try {
                   state: 'unavailable',
                   retry: true,
                   reason:
-                    'Installed originals need checking. Retry verifies them without downloading.',
+                    t("interface:installedOriginalsNeedCheckingRetryVerifiesThemWithoutDownloading"),
                 };
           }
           return pack
@@ -2696,14 +2685,14 @@ try {
               signal,
             });
           else {
-            if (row.source !== 'optional') throw new Error('This chapter has no trusted download.');
+            if (row.source !== 'optional') throw new Error(t("interface:thisChapterHasNoTrustedDownload"));
             const catalog = await loadOptionalCatalog({
               signal,
               baseURL: new URL('../../', location.href),
             });
             const summary = catalog.packs.find((item) => item.id === row.packId);
             if (!summary)
-              throw new Error('This exact chapter is unavailable in the published catalogue.');
+              throw new Error(t("interface:thisExactChapterIsUnavailableInThePublishedCatalogue"));
             installed = await missionInstaller().install(summary, { signal });
           }
           // A durable commit remains real after cancellation. Read-only refresh
@@ -2739,7 +2728,7 @@ try {
       if (disposed || artworkLifetime.signal.aborted) {
         result.library.dispose();
         spatialEditionOwner.dispose();
-        throw new DOMException('Mission library closed.', 'AbortError');
+        throw new DOMException(t("interface:missionLibraryClosed"), 'AbortError');
       }
       const state = createMissionLibrarySessionState({ mode: 'versus' });
       journeyChooser = attachJourneyChooser({
@@ -2818,13 +2807,13 @@ try {
     pause();
     const context = libraryContext();
     const previousMessage = $('race-message').textContent;
-    const preparingMessage = 'Preparing missions… Your current race is kept.';
-    $('race-message').textContent = preparingMessage;
+    const preparingMessage = t("interface:preparingMissionsYourCurrentRaceIsKept");
+    localizedText($('race-message'), () =>preparingMessage);
     const opening = trackMissionLibraryOpening({
       onRetire: () => {
         if (visit === libraryOpenEpoch) ++libraryOpenEpoch;
         if ($('race-message').textContent === preparingMessage)
-          $('race-message').textContent = previousMessage;
+          localizedText($('race-message'), () =>previousMessage);
       },
     });
     try {
@@ -2843,11 +2832,11 @@ try {
       journeyChooser.open(opener, { returnLabel: 'Back to race' });
     } catch (error) {
       if (visit === libraryOpenEpoch && context.isCurrent())
-        $('race-message').textContent = `Mission library unavailable: ${error.message}`;
+        localizedText($('race-message'), () =>`Mission library unavailable: ${error.message}`);
     } finally {
       opening.dispose();
       if ($('race-message').textContent === preparingMessage)
-        $('race-message').textContent = previousMessage;
+        localizedText($('race-message'), () =>previousMessage);
     }
   }
   async function refreshLibraryInventory({ signal = artworkLifetime.signal } = {}) {
@@ -2884,7 +2873,7 @@ try {
         actorPreferences.snapshot().revision !== actorPreference.revision
       )
         throw new DOMException(
-          'Chapter preparation cancelled; the current race is kept.',
+          t("interface:chapterPreparationCancelledTheCurrentRaceIsKept"),
           'AbortError',
         );
     };
@@ -2911,7 +2900,7 @@ try {
               row.level.id === selection.levelId &&
               String(row.level.revision) === String(selection.levelRevision))),
       );
-      if (!entry) throw new Error('This chapter has no compatible Versus missions.');
+      if (!entry) throw new Error(t("interface:thisChapterHasNoCompatibleVersusMissions"));
       const classId = entry.classes.some((item) => item.id === attempt.recipe.classId)
         ? attempt.recipe.classId
         : entry.classes[0].id;
@@ -3013,13 +3002,11 @@ try {
             );
             $('race-theme').value = nextTheme.id;
             paintRound(recipe);
-            $('race-start').textContent =
-              recipe.format === 'single' ? 'Start race ↗' : 'Start round ↗';
-            $('race-message').textContent =
-              entry.chapter +
+            localizedText($('race-start'), () =>recipe.format === 'single' ? t("interface:startRace2") : t("interface:startRound2"));
+            localizedText($('race-message'), () =>entry.chapter +
               ': ' +
               entry.level.name +
-              '. The same picture is prepared for both boards.';
+              '. The same picture is prepared for both boards.');
             installedStatus = rows.length + ' installed maps available.';
             updateMenu();
           }
@@ -3033,7 +3020,7 @@ try {
               neutralResumeTick = true;
               void sound.enable();
               if (music) void music.start();
-              $('race-message').textContent = 'Make your line count. First clear wins.';
+              localizedText($('race-message'), () =>t("interface:makeYourLineCountFirstClearWins"));
               updateMenu();
               input.focus();
               return match === nextMatch && match.status === 'running';
@@ -3072,12 +3059,12 @@ try {
     framePads = [];
     frameReadError = null;
     try {
-      if (typeof navigator.getGamepads !== 'function') throw new Error('Gamepad API unavailable');
+      if (typeof navigator.getGamepads !== 'function') throw new Error(t("interface:gamepadApiUnavailable"));
       const pads = navigator.getGamepads();
       const count = Number.isInteger(pads?.length) ? Math.max(0, Math.min(32, pads.length)) : 0;
       framePads = Array.from({ length: count }, (_, i) => pads[i] || null);
     } catch (error) {
-      frameReadError = error || new Error('Controller read failed');
+      frameReadError = error || new Error(t("interface:controllerReadFailed"));
     }
     const next = new Map();
     for (const pad of framePads) {
@@ -3112,7 +3099,7 @@ try {
     if (!match || match.status === 'running' || disposed) return;
     shell.focus();
     navigation.engage();
-    menuHint = 'Choose the primary action with South when everyone is ready.';
+    menuHint = t("interface:chooseThePrimaryActionWithSouthWhenEveryoneIsReady");
     updateMenu();
   }
   function refreshBoardLayout() {
@@ -3165,17 +3152,15 @@ try {
     $('race-journey-controls').hidden = !!shell && shell.scope() !== 'main' && !running;
     $('race-journey-next').hidden = match.status !== 'finished' || libraryCompleteMatch === match;
     $('race-journey-next').disabled = contentBusy || !!libraryContinuation;
-    $('race-journey-next').textContent =
-      candidateJourney && !candidateJourney.next(roundRecipe.entry.mission.id)
-        ? 'Browse missions'
-        : 'Next mission';
+    localizedText($('race-journey-next'), () =>candidateJourney && !candidateJourney.next(roundRecipe.entry.mission.id)
+        ? t("interface:browseMissions")
+        : t("interface:nextMission2"));
     $('race-journey-skip').hidden = !candidateJourney || match.status === 'finished';
     $('race-journey-find').disabled = contentBusy || !!libraryContinuation;
     if (candidateJourney) {
       $('race-journey-skip').hidden = match.status === 'finished';
       $('race-journey-skip').disabled = contentBusy;
-      $('race-journey-skip').textContent =
-        journeySkipArmed === match ? 'Confirm skip' : 'Skip mission';
+      localizedText($('race-journey-skip'), () =>journeySkipArmed === match ? t("interface:confirmSkip") : t("interface:skipMission"));
       $('race-journey-find').disabled = contentBusy;
     }
     $('race-message').hidden = contentBusy;
@@ -3186,9 +3171,9 @@ try {
     $('race-chapter-retry').disabled = contentBusy;
     $('race-picture-cancel').hidden = !contentBusy && !libraryContinuation;
     $('race-installed-refresh').disabled = match.status !== 'ready' || contentBusy || !installed;
-    $('race-installed-status').textContent = [featuredStatus, installedStatus]
+    localizedText($('race-installed-status'), () =>[featuredStatus, installedStatus]
       .filter(Boolean)
-      .join(' ');
+      .join(' '));
     $('race-pause').disabled = !running;
     $('race-menu-release').hidden = running || !menuOwner;
     $('race-menu-release').disabled = running || !menuOwner;
@@ -3203,7 +3188,7 @@ try {
       format: roundRecipe.format,
       contentBusy,
       focusTransition,
-      summary: `${roundRecipe.tuning.adminOverride ? 'ADMIN PLAYTEST · ' : ''}${roundRecipe.format === 'first-to-two' ? 'First to two' : 'One race'} · ${entry.level.name}`,
+      summary: `${roundRecipe.tuning.adminOverride ? (t('interface:adminPlaytest') + ' ') : ''}${roundRecipe.format === 'first-to-two' ? t('interface:firstToTwo') : t('interface:oneRace')} · ${entry.level.name}`,
     });
     $('race-time-field').hidden = !!candidateJourney;
     // Reconcile deliberate layout transitions immediately, including browsers
@@ -3212,8 +3197,8 @@ try {
     const owner = menuOwner ? slots.indexOf(menuOwner.index) : -1;
     const text = running
       ? shell.controllerHint()
-      : `${owner >= 0 ? `Player ${owner + 1} controller has the menu. South selects; East cancels; Menu goes back.` : menuStatus}${menuGate ? ` ${menuGate}` : ''}${menuHint ? ` ${menuHint}` : ''} Keyboard and touch remain available.`;
-    if ($('race-menu-status').textContent !== text) $('race-menu-status').textContent = text;
+      : t("gameplay:keyboardAndTouchRemainAvailable", { value1: owner >= 0 ? t("gameplay:playerControllerHasTheMenuSouthSelectsEastCancelsMenu", { value1: owner + 1 }) : menuStatus, value2: menuGate ? ` ${menuGate}` : '', value3: menuHint ? ` ${menuHint}` : '' });
+    if ($('race-menu-status').textContent !== text) localizedText($('race-menu-status'), () =>text);
   }
   menuRouter = createControllerRouter({ readPads: readAssignedMenuPads });
   const controllerConfirmGuard = attachControllerConfirmGuard({
@@ -3326,9 +3311,9 @@ try {
         '#journey-chooser, #journey-backup, #race-gameplay-tuning, [data-journey-mode-pictures]',
       ),
     getControlLabels: () => ({
-      directions: 'D-pad / left stick',
-      confirm: 'South',
-      back: 'East',
+      directions: t("interface:dPadLeftStick"),
+      confirm: t("common:controls.south"),
+      back: t("common:controls.east"),
     }),
     getReadingPrompt: readingPrompt,
     onNativeInput: (event) => setReadingModality(nextInputModality(readingModality, event)),
@@ -3363,7 +3348,7 @@ try {
       ) {
         menuHint = '';
         const hint = $(`${context.regionId}-hint`);
-        if (hint.textContent !== message) hint.textContent = message;
+        if (hint.textContent !== message) localizedText(hint, () =>message);
       } else menuHint = message;
       updateMenu();
     },
@@ -3375,8 +3360,8 @@ try {
     getReadingPrompt: readingPrompt,
     revealOnResize: true,
     surfaceDefinitions: [
-      ['race-help-reading', 'race-help-read', 'Couch controls', 'race-help-unit'],
-      ['race-data-reading', 'race-data-read', 'Versus game data', 'race-data-unit'],
+      ['race-help-reading', 'race-help-read', t("interface:couchControls"), 'race-help-unit'],
+      ['race-data-reading', 'race-data-read', t("interface:versusGameData"), 'race-data-unit'],
     ],
   });
   $('race-menu-release').onclick = () => {
@@ -3385,7 +3370,7 @@ try {
     menuOwner = null;
     clear();
     menuStatus =
-      'Menu controller released. Release controls, then press a face button or Menu to join.';
+      t("interface:menuControllerReleasedReleaseControlsThenPressAFaceButton");
     updateMenu();
     shell.focus();
   };
@@ -3404,7 +3389,7 @@ try {
     menuOwner = result.assigned;
     menuGate =
       menuOwner && ['joined', 'waiting-neutral'].includes(result.status.code)
-        ? 'Release controller buttons and the movement stick to continue.'
+        ? t("interface:releaseControllerButtonsAndTheMovementStickToContinue")
         : '';
     if (result.disconnected) {
       shell.cancelDeparture();
@@ -3414,10 +3399,10 @@ try {
       return;
     }
     menuStatus = frameReadError
-      ? 'Controller access is unavailable.'
+      ? t("interface:controllerAccessIsUnavailable")
       : !framePads.some((pad) => pad?.connected && pad.mapping === 'standard') &&
           framePads.some((pad) => pad?.connected)
-        ? 'This controller has no standard mapping.'
+        ? t("interface:thisControllerHasNoStandardMapping")
         : result.status.message;
     if (assignmentsChanged || pendingPadLoss) {
       shell.cancelDeparture();
@@ -3630,18 +3615,32 @@ try {
         }
       }
       const name =
-        match.winner === 0 ? 'Sunflower' : match.winner === 1 ? 'Skyline' : 'Both players';
+        match.winner === 0 ? t("interface:sunflower2") : match.winner === 1 ? t("interface:skyline2") : t("interface:bothPlayers");
       const series = roundRecipe.format === 'first-to-two';
-      $('race-message').textContent =
-        `${match.winner === null ? 'Draw' : `${name} wins the ${series ? 'round' : 'race'}`}. ${match.reason}.${series && won.some((n) => n >= 2) ? ` ${name} wins the match!` : ''}`;
-      $('race-message').textContent +=
-        candidateJourney && !candidateJourney.next(roundRecipe.entry.mission.id)
-          ? series && !won.some((n) => n >= 2)
-            ? ' Continue with Next round, or Browse missions.'
-            : ` ${candidateJourney.isCore(roundRecipe.entry.mission.id) ? 'End of the main Journey.' : 'End of this optional sequence.'} Browse missions or Rematch whenever you like.`
-          : ' Choose Next mission to continue, or keep playing this mission.';
-      if (journeyRewardFailure) $('race-message').textContent += ` ${journeyRewardFailure}`;
-      $('race-start').textContent = `${continuationAction()}: ${roundRecipe.entry.level.name}`;
+      localizedText($('race-message'), () => {
+        const outcome = `${
+          match.winner === null
+            ? t("interface:draw")
+            : `${name} wins the ${series ? 'round' : 'race'}`
+        }. ${match.reason}.${
+          series && won.some((n) => n >= 2) ? ` ${name} wins the match!` : ''
+        }`;
+        const continuation =
+          candidateJourney && !candidateJourney.next(roundRecipe.entry.mission.id)
+            ? series && !won.some((n) => n >= 2)
+              ? " " + t("interface:continueWithNextRoundOrBrowseMissions")
+              : ` ${
+                  candidateJourney.isCore(roundRecipe.entry.mission.id)
+                    ? t("interface:endOfTheMainJourney")
+                    : t("interface:endOfThisOptionalSequence")
+                } Browse missions or Rematch whenever you like.`
+            : " " + t("interface:chooseNextMissionToContinueOrKeepPlayingThisMission");
+        return `${outcome}${continuation}${journeyRewardFailure ? ` ${journeyRewardFailure}` : ''}`;
+      });
+      localizedText(
+        $('race-start'),
+        () => `${continuationAction()}: ${roundRecipe.entry.level.name}`,
+      );
       painters.forEach((p, i) => {
         if (match.runs[i].status === 'won')
           p.startCelebration?.({
@@ -3651,25 +3650,23 @@ try {
           });
       });
     }
-    $('series-score').textContent = `${won[0]} : ${won[1]}`;
+    localizedText($('series-score'), () =>`${won[0]} : ${won[1]}`);
     const left =
       match.limitTicks === null
         ? null
         : Math.max(0, Math.ceil((match.limitTicks - match.tick) / 120));
-    $('race-clock').textContent =
-      left === null
-        ? 'No countdown'
-        : `${Math.floor(left / 60)}:${String(left % 60).padStart(2, '0')}`;
+    localizedText($('race-clock'), () =>left === null
+        ? t("interface:noCountdown")
+        : `${Math.floor(left / 60)}:${String(left % 60).padStart(2, '0')}`);
     $('race-clock').dataset.compact = left === null ? '∞' : $('race-clock').textContent;
     for (let i = 0; i < 2; i++) {
       const run = match.runs[i];
       const returnCaption = foundationCaptions.get(run) || '',
         returnRegion = $(`racer-capture-${i}`);
-      if (returnRegion.textContent !== returnCaption) returnRegion.textContent = returnCaption;
+      if (returnRegion.textContent !== returnCaption) localizedText(returnRegion, () =>returnCaption);
       returnRegion.hidden = !returnCaption || match.status === 'finished';
-      $(`racer-stats-${i}`).textContent =
-        `${(run.coverage * 100).toFixed(1)}% · ${run.lives} lives · ${run.score} points`;
-      $(`racer-state-${i}`).textContent = match.status === 'running' ? run.status : match.status;
+      localizedText($(`racer-stats-${i}`), () =>`${(run.coverage * 100).toFixed(1)}% · ${run.lives} lives · ${run.score} points`);
+      localizedText($(`racer-state-${i}`), () =>match.status === 'running' ? run.status : match.status);
       const cue = encounterView(run),
         group = $(`racer-encounter-${i}`),
         title = $(`racer-encounter-title-${i}`),
@@ -3678,24 +3675,24 @@ try {
       if (cue) {
         const context =
           match.status === 'paused'
-            ? 'PAUSED · '
+            ? ("" + t("interface:paused2") + " ")
             : match.status === 'ready'
-              ? 'READY · '
+              ? ("" + t("interface:ready") + " ")
               : match.status === 'finished'
-                ? `${roundRecipe.format === 'single' ? 'RACE' : 'ROUND'} ENDED · `
+                ? `${roundRecipe.format === 'single' ? t("interface:race") : t("interface:round")} ENDED · `
                 : '';
-        const heading = `${context}${cue.title}`;
+        const heading = `${context}${contentText(cue, 'title')}`;
         const copy =
           match.status === 'finished' && !['won', 'lost'].includes(run.status)
             ? `Frozen at ${roundRecipe.format === 'single' ? 'race' : 'round'} end. Live line ${cue.cutCells} / ${cue.min} new cells.`
             : cue.instruction;
         // The run owns this clock. Keep paused/finished cues and avoid rewriting unchanged text.
-        if (title.textContent !== heading) title.textContent = heading;
-        if (instruction.textContent !== copy) instruction.textContent = copy;
+        if (title.textContent !== heading) localizedText(title, () =>heading);
+        if (instruction.textContent !== copy) localizedText(instruction, () =>copy);
         group.dataset.phase = cue.phase;
       } else {
-        title.textContent = '';
-        instruction.textContent = '';
+        localizedText(title, () =>'');
+        localizedText(instruction, () =>'');
         delete group.dataset.phase;
       }
     }
@@ -3753,11 +3750,11 @@ try {
         const row = owner.library.find(libraryHandoff);
         if (!row || !row.modes.includes('versus'))
           throw new Error(
-            'This exact mission edition is unavailable in Versus. No different mission was started.',
+            t("interface:thisExactMissionEditionIsUnavailableInVersusNoDifferent"),
           );
         if ((row.collection === 'Journey') !== !!candidateJourney)
           throw new Error(
-            'This mission belongs to a different gameplay host. Choose it from All missions.',
+            t("interface:thisMissionBelongsToADifferentGameplayHostChooseIt"),
           );
         const paired = libraryExternalSelections.get(row.id);
         if (
@@ -3772,7 +3769,7 @@ try {
             signal: incomingController.signal,
           });
           if (epoch !== libraryOpenEpoch || !opening.current() || !context.isCurrent())
-            throw new DOMException('Requested mission cancelled.', 'AbortError');
+            throw new DOMException(t("interface:requestedMissionCancelled"), 'AbortError');
         }
         // The metadata request relinquishes input before the exact launch or
         // chooser adopts focus. Later staged work owns its own cancellation.
@@ -3793,7 +3790,7 @@ try {
       }
     } catch (error) {
       if (epoch === libraryOpenEpoch && context.isCurrent())
-        $('race-message').textContent = `Requested mission could not open: ${error.message}`;
+        localizedText($('race-message'), () =>`Requested mission could not open: ${error.message}`);
     } finally {
       opening.dispose();
       if (libraryIncomingController === incomingController) libraryIncomingController = null;
@@ -3831,7 +3828,7 @@ try {
   });
   releaseArtwork({ persisted: false });
   $('race-start').disabled = true;
-  $('race-message').textContent = `The race could not load: ${error.message}`;
+  localizedText($('race-message'), () =>t("gameplay:theRaceCouldNotLoad", { value1: error.message }));
 } finally {
   initialFocusPending = false;
   document.removeEventListener('focusin', initialFocusChoice, true);
