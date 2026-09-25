@@ -27,7 +27,7 @@ reviewer names, listening approval or device results.
 | Native archive streaming | PR #523 is released in immutable v0.130.0; the public desktop game loaded 136/136 archive recordings and completed remote → included → remote playback without audio loss | Physical iPhone/controller and cold-offline acceptance remain separate |
 | New archive previews | 136 public archive recordings across 14 collections; the immutable 104-recording baseline and its later 32 additions retain separate publication evidence | Full listening, taste approval and game admission remain; zero new game admissions |
 | Retro previews | Seven earlier rejections and six rejected DOS-88/escp previews are retained; four third-direction synth auditions are public and listening-unapproved | Review the new four against the Electric Dreams/night-drive direction; runner2088 remains draft |
-| Metal previews | Six older backups, four Eternity recordings, four industrial/thrash previews, four nonduplicate YannZ-centered groove auditions and four Purgatory auditions are public alongside the earlier Nakarada pair | Complete the seven-track Interstellar/Purgatory review; Reckless is current-base and technically repaired but remains a listening-unapproved draft |
+| Metal previews | Six older backups, four Eternity recordings, four industrial/thrash previews, four nonduplicate YannZ-centered groove auditions and four Purgatory auditions are public alongside the earlier Nakarada pair | Complete the seven-track Interstellar/Purgatory review; Reckless source intake is merged and technically inspected, with public audition publication and listening still pending |
 | Nakarada Shchedryk | User approved the direction; exact MP3 admission is public in v0.130.0 and played from the bundled source during desktop transition verification | Full-track/repeated-session, physical-device and Ukrainian cultural acceptance |
 | UA-FPV | Four private import packs preserve 80 filenames / 77 unique recordings | Recording-specific public permission and game admission |
 | Quick controls | Replacement PR #516 is included in public v0.130.0; historical PR #333 is closed | B/N plus touch/controller physical-device acceptance |
@@ -282,25 +282,26 @@ originals approved. No deadline is assigned to unresolved rights or paused music
   `recordingModeEligible: false`. Their public availability is an audition and
   transport milestone, not musical approval, game admission or a default-playlist
   change.
-- Archive draft [PR #22](https://github.com/mekhovov/revealline-soundtracks-01/pull/22)
-  (Reckless punk-metal) is reconciled onto archive main
-  `824e34e4957ab29b7ef841115f631a579f741fc4` at head
-  `fec06dd45eacea56d00acbd470a43999b2f22710`. Independent review found that
-  generated intake evidence omitted transitive pin-file dependencies and described
-  loop endpoints as full durations. The repaired head binds every loaded pin file,
-  regression-checks binding coverage and labels loop-end metadata accurately. Local
-  bounded verification passed binding 2/2, Reckless 9/9, complete intake 146/146,
-  manifest and diff checks. Fresh exact-head verify, Reckless prepare and all four
+- Archive [PR #22](https://github.com/mekhovov/revealline-soundtracks-01/pull/22)
+  (Reckless punk-metal source intake) merged as
+  `4f9ac1c1179d768bb851b63dd8cee6a604897fc5` after independent review found and
+  repaired omitted transitive pin-file bindings and mislabeled loop-end metadata.
+  Local bounded verification passed binding 2/2, Reckless 9/9, complete intake
+  146/146, manifest and diff checks. Exact-head verify, Reckless prepare and all four
   transitive source checks passed in runs 36193952164, 36193952191, 36193952156,
   36193952174, 36193952176 and 36193952177; event-inapplicable publication jobs
-  were skipped and are not passes. Hosted artifact 10889860079 is 20,781,317 bytes
-  with ZIP SHA-256 `00211751f1701748948ca922c589120ad15db47b512b7bab15ca691a082bbc72`;
-  it remains undownloaded and uninspected under the disk policy. Draft
+  were skipped and are not passes. Artifact 10889860079 is 20,781,317 bytes with
+  ZIP SHA-256 `00211751f1701748948ca922c589120ad15db47b512b7bab15ca691a082bbc72`.
+  Independent in-memory inspection matched all 17 members, exact native/delivery
+  sizes and hashes; ffmpeg completely decoded all four OGG originals and four MP3
+  derivatives, each at −16.00 LUFS and ≤−6.18 dBTP. No bytes were written locally.
+  The merge adds reproducible intake only: no public audio, catalogue row, listening
+  approval, game admission, default or Recording-mode eligibility changed. Draft
   [PR #23](https://github.com/mekhovov/revealline-soundtracks-01/pull/23)
   (runner2088 retrowave) is conflicting at
-  `e6e746a83f08708b4b24cf1a2522a4924624001a`. Neither is published by the
-  current archive main. Allow about half a working day per draft for rebase/
-  conflict resolution and fresh applicable checks before independent review;
+  `e6e746a83f08708b4b24cf1a2522a4924624001a`. PR #23 is not published by the current archive main. Its rebase/conflict
+  resolution and fresh checks remain about half a working day before independent
+  review. Reckless now needs a separate public-audition assembly/review step;
   publication and listening time remain additional. Purgatory vol. 3 source preparation merged through
   [PR #21](https://github.com/mekhovov/revealline-soundtracks-01/pull/21) as
   `41ea4448cf9602960ada28cd2c7c9a4cd5cb6b38`; its four-track exact artifact is
@@ -635,7 +636,7 @@ version is allocated without the release owner's confirmation.
 | M3 | Quick controls are public | Physical keyboard/touch/controller access | Verify B/N plus touch/controller Play/Pause and Next on physical targets | About 0.5 day hands-on, excluding device access | Historical #333; merged replacement [PR #516](https://github.com/mekhovov/revealline/pull/516) at 7ccbb6d3 | v0.130.0 public; device acceptance pending |
 | M4 | Active research; parallel | Exact published rights and musical/cultural review | Target six additional distinct Ukrainian compositions; publish cleared subsets | 1–2 days per research round; rights/review date unknown | Candidate/hold register below | Unreleased |
 | M5 | Four third-direction synth auditions are public; runner2088 remains draft; Electric Dreams remains the closest reference | Musical fit, full listening and exact admission review; public-archive holds remain | Review 90s Racer Techno, Neon Pulse, Prismatic Light and Future Travel; keep PR #23 draft until independently reconciled; admit only a musically accepted subset | Several hours per comparison round; 1–2 days integration/verification after approval; CI/review waits excluded | Archive [PR #25](https://github.com/mekhovov/revealline-soundtracks-01/pull/25), Pages run 36147468099 and M5.a feedback below; draft [PR #23](https://github.com/mekhovov/revealline-soundtracks-01/pull/23) | Unreleased in game |
-| M6 | Purgatory PR #26 is public; Reckless #22 is current-base at fec06dd4 with the independently found transitive-binding defect repaired and exact-head checks green; groove-first direction retained | Artifact inspection, full listening, transitions, warnings, Content ID and gameplay acceptance | Finish #22 bounded artifact/listening review; publish only as listening-unapproved auditions, then admit only a musically accepted subset | Several hours per listening round; 1–2 days integration after approval; CI waits excluded | Merged publication [PR #26](https://github.com/mekhovov/revealline-soundtracks-01/pull/26), 824e34e4 and Pages run 36160861165; repaired draft [PR #22](https://github.com/mekhovov/revealline-soundtracks-01/pull/22), local binding 2/2, Reckless 9/9 and intake 146/146 | Purgatory auditions public; Reckless pending; unreleased in game |
+| M6 | Purgatory PR #26 is public; Reckless intake PR #22 is merged at 4f9ac1c1 with binding fixes, exact-head checks and independent in-memory artifact inspection complete; groove-first direction retained | Public audition assembly, full listening, transitions, warnings, Content ID and gameplay acceptance | Publish Reckless only as listening-unapproved auditions after separate assembly review; then admit only a musically accepted subset | Several hours per listening round; 1–2 days integration after approval; CI waits excluded | Merged Purgatory publication [PR #26](https://github.com/mekhovov/revealline-soundtracks-01/pull/26), 824e34e4 and Pages run 36160861165; merged Reckless intake [PR #22](https://github.com/mekhovov/revealline-soundtracks-01/pull/22), 4f9ac1c1; artifact 10889860079 inspected | Purgatory auditions public; Reckless source ready but unpublished; unreleased in game |
 | M7 | Blocked public rights; scope retained | Recording-specific public redistribution and applicable artwork evidence | Include all 77 recordings / 80 filenames; publish cleared entries; maintain private pack route | About 1 day integration after clearance; clearance date unknown | UA-FPV manifests/private packs/guide | Public collection unreleased |
 | M8 | Public desktop compatibility/stall repair complete; real-player recovery regression merged | Physical device access and the accepted offline-app runtime | Keep the 136/136 parser, persistent remote deck, watchdog and mixed queues green; coordinate cold-restart browser acceptance with draft offline-app [PR #536](https://github.com/mekhovov/revealline/pull/536), then finish iPhone/controller checks | About 0.5 day after the offline runtime is accepted, plus device access | PR #370, v0.111.0, Archive76; merged repair [PR #523](https://github.com/mekhovov/revealline/pull/523); merged regression [PR #555](https://github.com/mekhovov/revealline/pull/555); 177/177 prior focused tests; v0.130 qualification, inspection, selector and public-browser evidence above | v0.130.0 public; desktop accepted; cold offline pending |
 | M9 | Later | Core style releases | Review existing 70 selectively; add trusted ID/hash curation overlay preserving saved pins | 1–2 days per selected batch plus listening | Curation PR pending | Unreleased |
