@@ -103,7 +103,7 @@ test('the final successor changes only Twin landings and preserves every histori
   assert.deepEqual(createTeamChamberSpecialistOriginalCandidates(), previous);
 });
 
-test('the complete specialist candidate remains outside ordinary and public Team entry', async () => {
+test('the complete specialist candidate remains outside ordinary Team entry and requires its explicit route', async () => {
   const ordinary = await createTeamGreyboxEntry();
   try {
     assert.notEqual(
@@ -115,7 +115,12 @@ test('the complete specialist candidate remains outside ordinary and public Team
       new URL('../couch/relay-rescue.mjs', import.meta.url),
       'utf8',
     );
-    assert.equal(publicHost.includes(TEAM_COMPLETE_SPECIALIST_PROFILE_KEY), false);
+    assert.equal(publicHost.includes(TEAM_COMPLETE_SPECIALIST_PROFILE_KEY), true);
+    assert.equal(
+      publicHost.includes("journeyRequest === 'team-complete-specialist-originals-1'"),
+      true,
+    );
+    assert.equal(publicHost.includes('reviewedSpecialists:'), true);
     assert.equal(publicHost.includes('completeSpecialist:'), false);
   } finally {
     ordinary.candidateProgress.dispose();
