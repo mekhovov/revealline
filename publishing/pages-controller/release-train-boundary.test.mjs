@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {
   verifyNextReleaseTitle,
+  verifyPublishedBase,
   verifyPublicBoundary,
   verifySourceVersion,
 } from './release-train-boundary.mjs';
@@ -86,4 +87,13 @@ test('a release title must allocate a version newer than the accepted stable rel
     () => verifyNextReleaseTitle('Release v0.110.9 — rollback', 'v0.111.0'),
     /must be newer/,
   );
+});
+
+test('another product root waits until the main source version is publicly accepted', () => {
+  assert.equal(verifyPublishedBase('0.115.0', 'v0.115.0'), 'v0.115.0');
+  assert.throws(
+    () => verifyPublishedBase('0.115.1', 'v0.115.0'),
+    /Finish its immutable release and Pages acceptance/,
+  );
+  assert.throws(() => verifyPublishedBase('next', 'v0.115.0'), /stable numeric version/);
 });

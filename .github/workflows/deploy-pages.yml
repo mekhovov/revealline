@@ -128,8 +128,14 @@ jobs:
         if: steps.admission.outputs.mode == 'release'
         env:
           GH_TOKEN: ${{ github.token }}
+          PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
           PR_TITLE: ${{ github.event.pull_request.title }}
-        run: node .source-gate-automation/publishing/pages-controller/release-train-boundary.mjs public
+        run: |
+          set -euo pipefail
+          base_version="$(gh api "repos/$GITHUB_REPOSITORY/contents/package.json?ref=$PR_BASE_SHA" \
+            --jq .content | base64 --decode | jq -r .version)"
+          PR_BASE_VERSION="$base_version" \
+            node .source-gate-automation/publishing/pages-controller/release-train-boundary.mjs public
 
       - name: Record temporary fast-release policy
         env:
