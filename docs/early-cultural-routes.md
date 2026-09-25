@@ -35,11 +35,11 @@ These sources establish cultural context and broad compositional vocabulary. The
 - Repository validation, changed-module lint and formatting.
 - 219/219 current and inherited cultural-route checks; 35/35 route-loader checks; 15/15 edition checks; 13/13 default lifecycle checks; 13/13 default Solo host checks; 3/3 remote-library checks; and 16/16 Studio checks.
 
-The controller-library cohort is not counted as passing. Six controller-open cases also fail on the untouched v13 parent stack after its latest-main rebase, while their keyboard/click and remote-library equivalents pass. The separate Versus default-entry cohort has the same inherited controller-open failure and passes its other nine cases. This must be reconciled independently; it is not attributed to the three geometry changes and is not waived as a pass.
+The controller-library cohort is not counted as passing on this stack. Six controller-open cases also fail on the untouched v13 parent after its latest-main rebase, while their keyboard/click and remote-library equivalents pass. The separate Versus default-entry cohort has the same inherited controller-open failure and passes its other nine cases. [PR569](https://github.com/mekhovov/revealline/pull/569) contains the independent two-host activation fix; after it lands, this stack must rebase and rerun the affected checks. The current failure is not attributed to the three geometry changes and is not waived as a pass.
 
 ## Remaining gates
 
-- Resolve or formally isolate the inherited controller-open regression on the accepted parent before frozen-build qualification.
+- Land PR569, rebase the cultural stack, and rerun the controller-library cohorts before frozen-build qualification.
 - Review the stacked PR after PR530 and PR558 land; restack if either source head changes.
 - Allocate a release version only through the sole publisher after earlier queued releases are public.
 - Run bounded frozen/public play checks and human cultural/balance review. Until then the candidate remains **balance pending**.
