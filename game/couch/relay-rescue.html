@@ -129,7 +129,14 @@
               >
                 Preparing arena…
               </button>
-              <button id="coop-discovery-open" type="button" disabled>Browse Team arenas</button>
+              <button
+                id="coop-discovery-open"
+                type="button"
+                disabled
+                data-i18n="interface:browseTeamArenas"
+              >
+                Browse Team arenas
+              </button>
             </div>
           </div>
           <details id="coop-optional-setup" class="optional-setup">
@@ -137,39 +144,66 @@
             <p id="coop-advanced-note" class="setup-note"></p>
             <div class="setup">
               <label
-                >Play style<select id="coop-experiment">
-                  <option value="full">Full teamwork</option>
-                  <option value="joint">Joint Cuts + ordinary cover</option>
-                  <option value="independent">Individual cuts + ordinary cover</option>
+                ><span data-i18n="interface:playStyle">Play style</span
+                ><select id="coop-experiment">
+                  <option value="full" data-i18n="interface:fullTeamwork">Full teamwork</option>
+                  <option value="joint" data-i18n="interface:jointCutsOrdinaryCover">
+                    Joint Cuts + ordinary cover
+                  </option>
+                  <option value="independent" data-i18n="interface:individualCutsOrdinaryCover">
+                    Individual cuts + ordinary cover
+                  </option>
                 </select></label
               >
               <label
-                >Difficulty<select id="coop-difficulty">
-                  <option value="gentle">Gentle</option>
-                  <option value="standard" selected>Standard</option>
-                  <option value="expert">Expert</option>
+                ><span data-i18n="interface:difficulty">Difficulty</span
+                ><select id="coop-difficulty">
+                  <option value="gentle" data-i18n="interface:gentle">Gentle</option>
+                  <option value="standard" selected data-i18n="interface:standard">Standard</option>
+                  <option value="expert" data-i18n="interface:expert">Expert</option>
                 </select></label
               >
               <label
-                >Actors<select id="coop-actor-style" aria-describedby="coop-actor-style-note">
+                ><span data-i18n="interface:actors">Actors</span
+                ><select id="coop-actor-style" aria-describedby="coop-actor-style-note">
                   <option value="fpv" selected>FPV</option>
-                  <option value="campaign">Campaign</option>
+                  <option value="campaign" data-i18n="interface:campaign">Campaign</option>
                 </select></label
               >
             </div>
             <p id="coop-actor-style-note" class="setup-note" role="status"></p>
             <details class="pack-picker">
               <summary>Created Team packs</summary>
-              <label for="coop-pack-file">Open a Team pack or artwork bundle</label>
+              <label for="coop-pack-file" data-i18n="interface:openATeamPackOrArtworkBundle"
+                >Open a Team pack or artwork bundle</label
+              >
               <input
                 id="coop-pack-file"
                 type="file"
                 accept=".json,.rlteam,.rlteamcampaign,application/json,application/vnd.revealline.team+json,application/vnd.revealline.team-presentation"
               />
-              <button id="coop-pack-cancel" type="button" hidden>Stop waiting</button>
-              <button id="coop-pack-retry" type="button" hidden>Retry pack</button>
-              <p id="coop-pack-status" role="status">Relay Rescue · 2 levels</p>
-              <button id="coop-pack-reset" type="button" hidden>Return to Relay Rescue</button>
+              <button
+                id="coop-pack-cancel"
+                type="button"
+                hidden
+                data-i18n="common:actions.stopWaiting"
+              >
+                Stop waiting
+              </button>
+              <button id="coop-pack-retry" type="button" hidden data-i18n="interface:retryPack">
+                Retry pack
+              </button>
+              <p id="coop-pack-status" role="status" data-i18n="interface:relayRescue2Levels">
+                Relay Rescue · 2 levels
+              </p>
+              <button
+                id="coop-pack-reset"
+                type="button"
+                hidden
+                data-i18n="interface:returnToRelayRescue"
+              >
+                Return to Relay Rescue
+              </button>
             </details>
           </details>
           <div id="coop-lobby-tools"></div>
