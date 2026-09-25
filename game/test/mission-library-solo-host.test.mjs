@@ -476,10 +476,10 @@ test('unknown incoming identity reports failure and never starts a different mis
   assert.deepEqual(p.errors, []);
 });
 
-test('default Journey mounts201 missions and hands the exact Classic selection to its own host', async (t) => {
+test('default Journey mounts279 missions and hands the exact Classic selection to its own host', async (t) => {
   const p = await journeyPage(t);
   await open(p);
-  assert.equal(p.$('journey-cards').children.length, 201);
+  assert.equal(p.$('journey-cards').children.length, 279);
   [...p.$('journey-cards').children].find((card) => card.dataset.missionId === lateBase.id).click();
   await settle(() => globalThis.location.href.includes('library-mission='));
   const destination = new URL(globalThis.location.href);
@@ -497,7 +497,7 @@ test('Classic hands a Journey card directly to its new-edition host', async (t) 
   card.click();
   await settle(() => globalThis.location.href.includes('library-mission='));
   const destination = new URL(globalThis.location.href);
-  assert.equal(destination.searchParams.get('journey'), 'whole-spatial-v5');
+  assert.equal(destination.searchParams.get('journey'), 'whole-spatial-v9');
   assert.equal(destination.searchParams.get('library-mission'), id);
   assert.deepEqual(p.errors, []);
 });
@@ -513,14 +513,14 @@ test('Solo mode filter exposes the same qualified Journey identities in Versus w
     cards.map((card) => card.dataset.missionId),
     original,
   );
-  assert.equal(new Set(original).size, 201);
+  assert.equal(new Set(original).size, 279);
   const target = cards[1];
   assert.match(target.textContent, /Journey.*Band 1\/12.*Play/);
   target.click();
   await settle(() => globalThis.location.href.includes('library-mission='));
   const destination = new URL(globalThis.location.href);
   assert.equal(destination.pathname, '/game/couch/');
-  assert.equal(destination.searchParams.get('journey'), 'whole-spatial-v5');
+  assert.equal(destination.searchParams.get('journey'), 'whole-spatial-v9');
   assert.equal(destination.searchParams.get('library-mission'), target.dataset.missionId);
   assert.deepEqual(p.errors, []);
 });

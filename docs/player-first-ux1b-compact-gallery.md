@@ -34,4 +34,10 @@ The candidate adds or updates focused coverage for:
 
 ## Evidence limits
 
-This is a stacked draft, not a release. Browser screenshots, physical touch hardware, and a physical controller are not qualified here. The inherited broad Solo and Team host fixtures contain pre-existing catalogue-count/revision expectations from an earlier Journey inventory; this candidate does not weaken those assertions. Full host-suite reconciliation belongs to the release branch after UX1-A2 is accepted. The candidate does not redesign mission Details, results, Pause, HUD, Collection records, or gameplay teaching; those remain in UX2-UX5.
+This is a stacked draft, not a release. Browser screenshots, physical touch hardware, and a physical controller are not qualified here. The candidate does not redesign mission Details, results, Pause, HUD, Collection records, or gameplay teaching; those remain in UX2-UX5.
+
+## v0.110.1 stack reconciliation
+
+The local release candidate now stacks UX1-A1, UX1-A2, and this gallery on the exact accepted v0.110.1 source. It retains the current `whole-spatial-v9` catalogue, the 279-row Solo/Versus inventory, and current Team revision-74 picture authority.
+
+Two cross-layer corrections were required. Read-only remote Journey sources now report no completion when they intentionally have no progress profile, while real profile-backed sources still resolve exact earned originals. Classic cards also remove their UI-only rules-edition marker before the immutable release-index installer verifies the source record. The complete focused rewards group passes 35/35 and the reconciled gallery/remote-host group passes 159/159; lint, formatting, native formatting, validation, presentation metadata checks, motion-lab syntax, and an ordinary build pass. Physical-device, comprehensive offline, and full long-suite qualification remain release-stage evidence.
