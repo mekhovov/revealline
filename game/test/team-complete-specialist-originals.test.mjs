@@ -1,21 +1,36 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
+import { webcrypto } from 'node:crypto';
 import {
   createTeamCompleteSpecialistOriginalCandidates,
+  TEAM_COMPLETE_SPECIALIST_PROFILE_KEY,
   TEAM_SPECIALIST_DISPOSITIONS,
 } from '../content-design/team-complete-specialist-originals.mjs';
 import { createTeamChamberSpecialistOriginalCandidates } from '../content-design/team-chamber-specialist-originals.mjs';
+import { createTeamGreyboxEntry } from '../content-design/team-entry.mjs';
 import { createCandidateTeamHost } from '../content-design/team-host.mjs';
 import { compileContentProject, resolveMission } from '../content-design/project.mjs';
 import { createTeamTestPack } from '../content-design/team-export.mjs';
+import { acquireCandidatePicture } from '../content-design/picture.mjs';
+import { loadPreviewArtwork } from '../content-design/assets.mjs';
 import { createCoop, FIXED_DT, SAFE, startCoop, stepCoop } from '../coop/core.mjs';
+import {
+  candidateTeamPictureFrame,
+  createCandidateTeamPictures,
+} from '../couch/candidate-team-pictures.mjs';
 import { playTeamFoundationRoute } from './helpers/team-foundation-route.mjs';
 import { measureTeamPartnerReturns } from './helpers/team-partner-return.mjs';
 
 const source = createTeamCompleteSpecialistOriginalCandidates();
 const previous = createTeamChamberSpecialistOriginalCandidates();
 const project = compileContentProject(source);
+const candidateHost = createCandidateTeamHost(source, {
+  corePackIds: source.packs.map(({ id }) => id),
+});
+const previousHost = createCandidateTeamHost(previous, {
+  corePackIds: previous.packs.map(({ id }) => id),
+});
 const pressureRoutes = JSON.parse(
   await readFile(new URL('./fixtures/team-pressure-opening-routes.json', import.meta.url)),
 );
@@ -23,6 +38,47 @@ const openingRoutes = JSON.parse(
   await readFile(new URL('./fixtures/team-opening-routes.json', import.meta.url)),
 );
 const command = (direction) => ({ direction, boost: false, support: false });
+const pictureSnapshot = Object.freeze({
+  resolved: { theme: { id: 'fpv', revision: 73 }, collection: null },
+  canvas: {
+    palette: {
+      ink: '#f6f3e8',
+      paper: '#071527',
+      muted: '#a8b8cc',
+      accent: '#ffd64a',
+      safe: '#67aaff',
+      danger: '#ff7169',
+      field: '#10243e',
+      grid: '#182b43',
+      sky: '#233950',
+      land: '#526e67',
+    },
+    motionScale: 1,
+  },
+  fonts: { ui: 'sans-serif', numeric: 'monospace' },
+});
+
+const missionRow = (host, id) =>
+  host.row(
+    host.catalog.missions.find(({ levelId }) => levelId === id),
+    'standard',
+  );
+
+async function candidatePicture(asset) {
+  const bytes = await readFile(new URL('../' + asset.path, import.meta.url));
+  const media = await loadPreviewArtwork(asset, {
+    fetchAsset: async () => new Response(bytes),
+    digest: (body) => webcrypto.subtle.digest('SHA-256', body),
+  });
+  return acquireCandidatePicture(asset, {
+    loadArtwork: async () => media,
+    decodeImage: async () => ({
+      width: asset.width,
+      height: asset.height,
+      removeAttribute() {},
+    }),
+  });
+}
 
 test('the final successor changes only Twin landings and preserves every historical source', () => {
   assert.deepEqual(source.maps, previous.maps);
@@ -45,6 +101,59 @@ test('the final successor changes only Twin landings and preserves every histori
     } else assert.deepEqual(mission, old);
   }
   assert.deepEqual(createTeamChamberSpecialistOriginalCandidates(), previous);
+});
+
+test('the complete specialist candidate remains outside ordinary and public Team entry', async () => {
+  const ordinary = await createTeamGreyboxEntry();
+  try {
+    assert.notEqual(
+      missionRow(ordinary.candidateJourney, 'twin-landings').level.revision,
+      source.revision,
+    );
+    assert.equal(ordinary.candidateProgress.backupFilename, 'revealline-journey-progress.json');
+    const publicHost = await readFile(
+      new URL('../couch/relay-rescue.mjs', import.meta.url),
+      'utf8',
+    );
+    assert.equal(publicHost.includes(TEAM_COMPLETE_SPECIALIST_PROFILE_KEY), false);
+    assert.equal(publicHost.includes('completeSpecialist:'), false);
+  } finally {
+    ordinary.candidateProgress.dispose();
+    ordinary.candidatePreferences.dispose();
+  }
+});
+
+test('Twin landings acquires its exact successor picture lease and rejects the stale row', async () => {
+  const row = missionRow(candidateHost, 'twin-landings');
+  const stale = missionRow(previousHost, 'twin-landings');
+  const owner = createCandidateTeamPictures({
+    row,
+    owns: candidateHost.owns,
+    getSnapshot: () => pictureSnapshot,
+    acquire: () => candidatePicture(row.background),
+  });
+  const request = {
+    pack: structuredClone(row.pack),
+    levelId: row.level.id,
+    themeId: 'fpv',
+    attemptId: 'complete-picture-twin-landings',
+  };
+  try {
+    const binding = await owner.select(request);
+    assert.deepEqual(
+      candidateTeamPictureFrame(binding, row.level, pictureSnapshot),
+      row.background,
+    );
+    assert.equal(binding.choice.levelRevision, source.revision);
+    assert.equal(candidateTeamPictureFrame(binding, stale.level, pictureSnapshot), null);
+    assert.equal(owner.confirm(request), binding);
+    await assert.rejects(
+      owner.select({ ...request, pack: structuredClone(stale.pack) }),
+      /exact owned pack, level and theme/,
+    );
+  } finally {
+    owner.dispose();
+  }
 });
 
 test('the disposition audit covers every Team mission exactly once at its effective revision', () => {
@@ -116,7 +225,8 @@ test('Twin landings retains deterministic no-Support full clears on recorded pre
       mode: 'team',
       difficulty: row.difficulty,
     }).level;
-    for (const { jointCuts, swapped } of row.outcomes.slice(0, 4)) {
+    for (const expected of row.outcomes.slice(0, 4)) {
+      const { jointCuts, swapped } = expected;
       const options = {
         jointCuts,
         swapped,
@@ -134,6 +244,15 @@ test('Twin landings retains deterministic no-Support full clears on recorded pre
         false,
       );
       assert(first.run.players.every(({ support }) => support.uses === 0));
+      assert.deepEqual(
+        [0, 1].map(
+          (seat) =>
+            first.events.filter(({ type, player }) => type === 'cut.closed' && player === seat)
+              .length,
+        ),
+        expected.closures,
+      );
+      assert.equal(first.simultaneousTicks, expected.simultaneousTicks);
     }
   }
 });
@@ -152,7 +271,17 @@ test('the recorded opening still establishes a real partner-owned return', () =>
       const returns = result.returns.filter(({ partnerReturn }) => partnerReturn);
       assert.equal(returns.length, 1);
       assert.equal(returns[0].previousOwner, 1 - returns[0].player);
-      assert(returns[0].acquiredTick < returns[0].tick);
+      assert.deepEqual(
+        {
+          tick: returns[0].tick,
+          cell: returns[0].cell,
+          cells: returns[0].cells,
+          acquiredTick: returns[0].acquiredTick,
+        },
+        { tick: 3477, cell: 2120, cells: 22, acquiredTick: 1231 },
+        'the bounded opening retains the same acquired return without claiming a clear',
+      );
+      assert.equal(result.coverage, 0.384549356223176);
     }
 });
 
