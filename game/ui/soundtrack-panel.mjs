@@ -35,12 +35,26 @@ import {
   fetchSoundtrackAlbum,
   fetchSoundtrackAlbumCatalog,
 } from '../soundtrack-album-download.mjs';
+import {
+  fetchOnlineSoundtrackCatalogue,
+  onlineSoundtrackRecordingAllowed,
+} from '../online-soundtrack-catalogue.mjs';
 
 const copy = (value) => structuredClone(value);
 const message = (error) => error?.message || String(error);
 const seconds = (value = 0) =>
   `${Math.floor(value / 60)}:${String(Math.floor(value % 60)).padStart(2, '0')}`;
 const bytes = (value) => `${(value / 1024 / 1024).toFixed(1)} MiB`;
+const ONLINE_STYLE_CHOICES = Object.freeze([
+  ['synth', 'Synth & electronic'],
+  ['metal', 'Metal'],
+  ['ukrainian', 'Ukrainian'],
+  ['chiptune', 'Chiptune & 8-bit'],
+  ['rock', 'Rock'],
+  ['ambient', 'Ambient'],
+  ['fusion', 'Fusion'],
+  ['other', 'Other styles'],
+]);
 
 /** Local music authoring. Draft changes become authoritative only after one verified store commit. */
 export function attachSoundtrackPanel({
@@ -68,6 +82,7 @@ export function attachSoundtrackPanel({
   onMasterVolume = null,
   beforeAudio = async () => {},
   albumDownload = {},
+  onlineCatalogueDownload = {},
   catalogue = null,
   readAsset,
 } = {}) {
@@ -100,6 +115,9 @@ export function attachSoundtrackPanel({
   let albumCatalog = null,
     albumEditors = null,
     albumGeneration = 0;
+  let onlineCatalogue = null,
+    onlineCatalogueController = null,
+    onlineCatalogueGeneration = 0;
   const albumControls = new Map();
   const node = (tag, id, text, attrs = {}) => {
     const element = doc.createElement(tag);
@@ -334,6 +352,7 @@ export function attachSoundtrackPanel({
       wakeAudio();
       await player.selectListening(draft.listening);
       if (start) await (musicSession ? musicSession.play() : player.play());
+      if (onlineCatalogue) renderOnlineCatalogue();
       await notifyPlayback();
       setStatus(
         committed.warning ||
@@ -427,6 +446,95 @@ export function attachSoundtrackPanel({
     useSelection,
   );
   quickGrid.append(allCard, styleCard, playlistCard);
+  const onlineSearch = input('online-search', 'Search the public archive', {
+    type: 'search',
+    placeholder: 'Title, artist, collection or style',
+    autocomplete: 'off',
+  });
+  const onlineStyles = node('fieldset', 'online-styles', null, {
+    class: 'soundtrack-online-styles',
+  });
+  onlineStyles.append(node('legend', null, 'Music styles — choose any mix'));
+  const onlineStyleInputs = new Map();
+  for (const [value, label] of ONLINE_STYLE_CHOICES) {
+    const checkbox = node('input', `online-style-${value}`, null, {
+      type: 'checkbox',
+      value,
+    });
+    checkbox.checked = true;
+    const choice = node('label', null, null, { class: 'soundtrack-online-style' });
+    choice.append(checkbox, node('span', null, label));
+    onlineStyles.append(choice);
+    onlineStyleInputs.set(value, checkbox);
+  }
+  const selectAllOnlineStyles = button('online-styles-all', 'All styles', () => {
+    for (const checkbox of onlineStyleInputs.values()) checkbox.checked = true;
+    renderOnlineCatalogue();
+  });
+  const clearOnlineStyles = button('online-styles-none', 'Clear', () => {
+    for (const checkbox of onlineStyleInputs.values()) checkbox.checked = false;
+    renderOnlineCatalogue();
+  });
+  onlineStyles.append(row(selectAllOnlineStyles, clearOnlineStyles));
+  const onlineOrder = input('online-order', 'Order', { tag: 'select' });
+  options(onlineOrder.element, [
+    ['shuffle', 'Shuffle'],
+    ['ordered', 'One after another'],
+  ]);
+  const onlineRepeat = input('online-repeat', 'Repeat', { tag: 'select' });
+  options(onlineRepeat.element, [
+    ['all', 'All selected songs'],
+    ['one', 'Current song'],
+    ['off', 'Stop at the end'],
+  ]);
+  const onlineCollection = input('online-collection', 'Collection', { tag: 'select' });
+  options(onlineCollection.element, [['', 'All collections']]);
+  const onlineStatus = node(
+    'p',
+    'online-status',
+    'The public catalogue loads when the music player opens.',
+    { class: 'soundtrack-online-status', role: 'status', 'aria-live': 'polite' },
+  );
+  const onlineResults = node('div', 'online-results', null, {
+    class: 'soundtrack-online-results',
+  });
+  const onlinePlaybackOptions = (startTrackId = null) => ({
+    order: onlineOrder.element.value,
+    repeat: onlineRepeat.element.value,
+    startTrackId,
+  });
+  const playOnlineResults = button('online-play-all', 'Play selected songs', () => {
+    const matches = onlineMatches();
+    if (matches.length)
+      return controlMusic(() => player.playRemotePlaylist(matches, onlinePlaybackOptions()), true);
+  });
+  playOnlineResults.classList.add('soundtrack-primary-action');
+  playOnlineResults.disabled = true;
+  const reloadOnline = button('online-reload', 'Refresh catalogue', () =>
+    loadOnlineCatalogue(true),
+  );
+  const onlineArchive = section(
+    'Play the public soundtrack archive',
+    node(
+      'p',
+      null,
+      'Search every published recording and play it here. Songs stream through the game music player; nothing opens in another tab and no full album is downloaded.',
+      { class: 'soundtrack-lede' },
+    ),
+    row(onlineSearch.field, onlineCollection.field),
+    onlineStyles,
+    row(onlineOrder.field, onlineRepeat.field),
+    row(playOnlineResults, reloadOnline),
+    onlineStatus,
+    onlineResults,
+    node(
+      'p',
+      null,
+      'Archive availability and a published licence do not mean a recording has passed the standard game-playlist listening review. Use Community downloads for offline albums and creator credits.',
+      { class: 'micro-note' },
+    ),
+  );
+  onlineArchive.classList.add('soundtrack-online-card');
   const transport = section(
     'Now playing',
     now,
@@ -1076,7 +1184,7 @@ export function attachSoundtrackPanel({
       'Browse albums and credits, then Add to draft to download and preview individual tracks. Remove offline download keeps track details and playlists; Download again restores the album. Save all changes confirms the draft. Your current playlist stays selected.',
       { class: 'micro-note' },
     ),
-    node('a', 'licensed-previews', 'Browse licensed MP3 previews (opens a new tab)', {
+    node('a', 'licensed-previews', 'Open the public archive website', {
       href: 'https://mekhovov.github.io/revealline-soundtracks-01/',
       target: '_blank',
       rel: 'noopener noreferrer',
@@ -1086,8 +1194,8 @@ export function attachSoundtrackPanel({
       'p',
       'licensed-previews-info',
       catalogue?.tracks.some((track) => track.archiveId)
-        ? 'The separate archive hosts these licensed recordings and their creator credits. Choose a built-in album or music style here to listen online. MP3 and album-file downloads remain available for manual import. Full musical suitability review is still pending.'
-        : 'The separate archive has 70 creator-licensed previews with credits and license notices. Download selected MP3s, then import them through Add MP3 files. They are not installed automatically; musical suitability has not been reviewed.',
+        ? 'The archive website provides credits, licence evidence and MP3 downloads. The searchable public archive above plays every published recording directly inside the game.'
+        : 'The archive website provides credits, licence evidence and MP3 downloads. Use the searchable public archive above to stream published recordings directly inside the game.',
       { class: 'micro-note' },
     ),
     albumBrowse,
@@ -1272,6 +1380,7 @@ export function attachSoundtrackPanel({
     operationRow,
     transport,
     quickListen,
+    onlineArchive,
     masterControls,
     columns,
     node('div', null, null, { class: 'soundtrack-footer' }),
@@ -1285,6 +1394,129 @@ export function attachSoundtrackPanel({
 
   function tracks() {
     return soundtrackTracks(draft);
+  }
+  function matchesOnlineStyle(track, style) {
+    const tags = track.tags.map((tag) => tag.toLowerCase()),
+      has = (...values) => values.some((value) => tags.some((tag) => tag.includes(value)));
+    if (style === 'ukrainian') return has('ukrain');
+    if (style === 'metal') return has('metal');
+    if (style === 'synth') return has('synth', 'electro', 'tracker', 'fm', 'dance', 'techno');
+    if (style === 'chiptune') return has('chiptune', '8-bit', 'fakebit');
+    if (style === 'rock') return has('rock', 'punk');
+    if (style === 'ambient') return has('ambient', 'atmospher');
+    if (style === 'fusion') {
+      const families = [
+        has('ukrain'),
+        has('metal'),
+        has('synth', 'electro', 'tracker', 'fm', 'dance', 'techno'),
+        has('chiptune', '8-bit', 'fakebit'),
+        has('rock', 'punk'),
+        has('ambient', 'atmospher'),
+      ];
+      return has('fusion') || families.filter(Boolean).length > 1;
+    }
+    return !['ukrainian', 'metal', 'synth', 'chiptune', 'rock', 'ambient', 'fusion'].some(
+      (family) => matchesOnlineStyle(track, family),
+    );
+  }
+  function selectedOnlineStyles() {
+    return new Set(
+      [...onlineStyleInputs].filter(([, checkbox]) => checkbox.checked).map(([style]) => style),
+    );
+  }
+  function onlineMatches() {
+    const query = onlineSearch.element.value.trim().toLowerCase(),
+      collection = onlineCollection.element.value,
+      styles = selectedOnlineStyles();
+    return (onlineCatalogue?.tracks ?? []).filter((track) => {
+      const searchable = [
+        track.title,
+        track.artist,
+        track.collection,
+        track.fileName,
+        ...track.tags,
+      ]
+        .join(' ')
+        .toLowerCase();
+      return (
+        (!draft.listening?.recordingMode || onlineSoundtrackRecordingAllowed(track)) &&
+        (!query || searchable.includes(query)) &&
+        (!collection || track.collection === collection) &&
+        [...styles].some((style) => matchesOnlineStyle(track, style))
+      );
+    });
+  }
+  function renderOnlineCatalogue() {
+    const matches = onlineMatches(),
+      excluded = draft.listening?.recordingMode
+        ? (onlineCatalogue?.tracks ?? []).filter(
+            (track) => !onlineSoundtrackRecordingAllowed(track),
+          ).length
+        : 0;
+    playOnlineResults.disabled = !matches.length;
+    onlineResults.replaceChildren(
+      ...matches.map((track) => {
+        const play = button(`online-play-${track.sha256}`, 'Play', () => {
+          return controlMusic(
+            () => player.playRemotePlaylist(matches, onlinePlaybackOptions(track.id)),
+            true,
+          );
+        });
+        play.setAttribute('aria-label', `Play ${track.title} by ${track.artist}`);
+        const details = node('div', null, null, { class: 'soundtrack-online-details' });
+        details.append(
+          node('strong', null, track.title),
+          node('span', null, track.artist),
+          node('small', null, `${track.collection} · ${track.tags.join(' · ')}`),
+        );
+        const source = node('a', null, 'Source', {
+          href: track.websites[0].url,
+          target: '_blank',
+          rel: 'noopener noreferrer',
+          class: 'soundtrack-online-source',
+        });
+        const item = node('article', null, null, { class: 'soundtrack-online-track' });
+        item.append(play, details, source);
+        return item;
+      }),
+    );
+    if (onlineCatalogue)
+      onlineStatus.textContent = `${matches.length} of ${onlineCatalogue.tracks.length} published recordings shown.${excluded ? ` Recording mode excludes ${excluded} without verified gameplay-video and Content ID clearance.` : ''} Play one song or start every current result with the selected order and repeat setting.`;
+  }
+  async function loadOnlineCatalogue(force = false) {
+    if (disposed || (onlineCatalogueController && !force)) return;
+    onlineCatalogueController?.abort();
+    const generation = ++onlineCatalogueGeneration,
+      current = new AbortController();
+    onlineCatalogueController = current;
+    reloadOnline.disabled = true;
+    onlineStatus.textContent = 'Loading the public soundtrack catalogue…';
+    try {
+      const loaded = await fetchOnlineSoundtrackCatalogue({
+        ...onlineCatalogueDownload,
+        signal: current.signal,
+      });
+      if (disposed || !dialog.open || generation !== onlineCatalogueGeneration) return;
+      onlineCatalogue = loaded;
+      options(onlineCollection.element, [
+        ['', 'All collections'],
+        ...[...new Set(loaded.tracks.map((track) => track.collection))]
+          .sort((a, b) => a.localeCompare(b))
+          .map((collection) => [collection, collection]),
+      ]);
+      renderOnlineCatalogue();
+    } catch (error) {
+      if (error?.name !== 'AbortError' && !disposed && generation === onlineCatalogueGeneration) {
+        onlineStatus.textContent = `The public archive is unavailable: ${message(error)} Built-in, installed and uploaded music still works.`;
+        onlineResults.replaceChildren();
+        playOnlineResults.disabled = true;
+      }
+    } finally {
+      if (generation === onlineCatalogueGeneration) {
+        onlineCatalogueController = null;
+        reloadOnline.disabled = disposed;
+      }
+    }
   }
   function renderAlbums() {
     if (!albumCatalog) return;
@@ -1800,6 +2032,7 @@ export function attachSoundtrackPanel({
     renderAssignments();
     refreshAlbumControls();
     refreshCatalogueControls();
+    if (onlineCatalogue) renderOnlineCatalogue();
     renderBackup();
     dirtyState();
     update();
@@ -2201,6 +2434,7 @@ export function attachSoundtrackPanel({
     onOpen();
     returnFocus = doc.activeElement;
     if (!dialog.open) dialog.showModal();
+    if (!onlineCatalogue && !onlineCatalogueController) void loadOnlineCatalogue();
     closeButton.focus();
     if (!saved) {
       const focusIsEmpty = () => doc.activeElement === doc.body || doc.activeElement === dialog;
@@ -2251,6 +2485,9 @@ export function attachSoundtrackPanel({
   }
   function close({ restoreFocus = true, restoreMusic = true } = {}) {
     if (busy || disposed || !dialog.open) return false;
+    onlineCatalogueController?.abort();
+    onlineCatalogueController = null;
+    onlineCatalogueGeneration++;
     void playback(() => stopAudition(restoreMusic));
     dialog.close();
     if (
@@ -2298,6 +2535,10 @@ export function attachSoundtrackPanel({
   tracksSelect.element.onchange = () => renderTrack();
   playlistsSelect.element.onchange = () => renderPlaylist();
   scope.element.onchange = () => renderAssignments();
+  onlineSearch.element.oninput = () => renderOnlineCatalogue();
+  for (const checkbox of onlineStyleInputs.values())
+    checkbox.onchange = () => renderOnlineCatalogue();
+  onlineCollection.element.onchange = () => renderOnlineCatalogue();
   seek.element.onchange = () => playback(() => player.seek(Number(seek.element.value)));
   volume.element.oninput = () =>
     playback(async () => {
@@ -2370,6 +2611,9 @@ export function attachSoundtrackPanel({
   function dispose() {
     if (disposed) return;
     controller?.abort();
+    onlineCatalogueController?.abort();
+    onlineCatalogueController = null;
+    onlineCatalogueGeneration++;
     disposed = true;
     feedback.dispose();
     transportFeedback.dispose();
