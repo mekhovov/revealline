@@ -114,34 +114,9 @@ test('lobby, setup and children use reachable native controls and Back restores 
   assert.equal(currentMode.getAttribute('tabindex'), null);
   assert.equal(currentMode.getAttribute('href'), null);
   assert.equal(f.doc.activeElement.id, 'race-start');
-  // This storage-less host exposes difficulty recovery between the mode
-  // choices and Start. Its visible actions participate in native Tab order.
-  for (const id of [
-    'race-journey-preferences-export',
-    'race-journey-preferences-retry',
-    'race-journey-difficulty',
-    'race-coop',
-    'race-solo-return',
-  ]) {
-    press(f, 'Tab', f.doc.activeElement, { shiftKey: true });
-    assert.equal(f.doc.activeElement.id, id);
-  }
-  assert.equal(f.doc.activeElement.getAttribute('href'), '../?journey=legacy');
-  press(f, 'Tab');
-  assert.equal(f.doc.activeElement.id, 'race-coop');
-  assert.equal(
-    f.doc.activeElement.getAttribute('href'),
-    'relay-rescue.html?journey=legacy&return=versus',
-  );
-  for (const id of [
-    'race-journey-difficulty',
-    'race-journey-preferences-retry',
-    'race-journey-preferences-export',
-    'race-start',
-  ]) {
-    press(f, 'Tab');
-    assert.equal(f.doc.activeElement.id, id);
-  }
+  // Optional difficulty and actor tuning stays out of the lobby's primary
+  // navigation until the player deliberately opens Match options.
+  assert.equal(f.$('race-setup').inert, true);
   press(f, 'Tab');
   assert.equal(f.doc.activeElement.id, 'race-chapters');
   press(f, 'Tab');
@@ -149,6 +124,21 @@ test('lobby, setup and children use reachable native controls and Back restores 
   f.doc.activeElement.click();
   assert.equal(f.doc.activeElement.id, 'race-level');
   assert.equal(f.$('race-main').inert, true);
+  for (const id of [
+    'race-format',
+    'race-theme',
+    'race-class',
+    'race-turn',
+    'race-time',
+    'race-actor-style',
+    'race-journey-difficulty',
+    'race-journey-preferences-retry',
+    'race-journey-preferences-export',
+  ]) {
+    press(f, 'Tab');
+    assert.equal(f.doc.activeElement.id, id);
+  }
+  f.$('race-level').focus();
   const before = f.renders[0];
   press(f, 'ArrowDown');
   assert.equal(f.doc.activeElement.id, 'race-level', 'native select keeps native editing');
