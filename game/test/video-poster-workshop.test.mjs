@@ -482,6 +482,14 @@ test('fixture generator explains usage and refuses output outside its exclusive 
   const help = spawnSync(process.execPath, [script, '--help'], { encoding: 'utf8' });
   assert.equal(help.status, 0);
   assert.match(help.stdout, /NEW_FIXTURE_DIRECTORY/);
+  assert.match(help.stdout, /--kind portrait-rotation/);
+  const unknown = spawnSync(
+    process.execPath,
+    [script, '--out', '.cache/unused-orientation-fixture', '--kind', 'sideways'],
+    { encoding: 'utf8' },
+  );
+  assert.equal(unknown.status, 2);
+  assert.match(unknown.stdout, /portrait-rotation/);
   const refused = spawnSync(process.execPath, [script, '--out', 'game/test'], { encoding: 'utf8' });
   assert.equal(refused.status, 1);
   assert.match(refused.stderr, /new directory under.*cache/);
