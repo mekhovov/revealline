@@ -8,6 +8,10 @@ import { safeRelative, safeVersion, PUBLIC_SECURITY_HEADERS } from './game-cli.m
 
 export const NATIVE_MARKER = '.revealline-native.json';
 const FORMAT = 'revealline-native-site.v1';
+// The complete current distribution includes optional chapter and soundtrack
+// originals. Match the desktop resource reader's bounded full-site inventory.
+export const MAX_NATIVE_FILES = 4096;
+export const MAX_NATIVE_SITE_BYTES = 768 * 1024 * 1024;
 const hash = (bytes) => createHash('sha256').update(bytes).digest('hex');
 const json = (value) => `${JSON.stringify(value, null, 2)}\n`;
 const within = (root, target) => target === root || target.startsWith(`${root}${path.sep}`);
@@ -188,7 +192,11 @@ export async function verifySite(site, { native = false } = {}) {
   if (manifest.formatVersion !== 1 || manifest.entry !== 'game/index.html')
     fail('Expected a Reveal Line web distribution');
   safeVersion(manifest.version);
-  if (!Array.isArray(manifest.files) || !manifest.files.length || manifest.files.length > 1024)
+  if (
+    !Array.isArray(manifest.files) ||
+    !manifest.files.length ||
+    manifest.files.length > MAX_NATIVE_FILES
+  )
     fail('Invalid native file inventory');
   const entries = [],
     names = new Set();
@@ -206,7 +214,7 @@ export async function verifySite(site, { native = false } = {}) {
     )
       fail(`Invalid native inventory record: ${item.path}`);
     total += item.bytes;
-    if (total > 128 * 1024 * 1024) fail('Native site exceeds 128 MiB');
+    if (total > MAX_NATIVE_SITE_BYTES) fail('Native site exceeds 768 MiB');
     const target = await noLinks(site, item.path);
     const content = await boundedFile(target, 64 * 1024 * 1024, item.bytes);
     if (content.length !== item.bytes || hash(content) !== item.sha256)

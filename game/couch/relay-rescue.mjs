@@ -1,3 +1,4 @@
+import { gameplayTuningDescription } from '../ui/gameplay-copy.mjs';
 import { t, localizedText } from '../i18n/index.mjs';
 import { attachCouchTouch } from '../ui/couch-touch.mjs';
 import { attachJourneyReactions } from '../ui/journey-reactions.mjs';
@@ -7,7 +8,6 @@ import {
   createGameplayTuningController,
   applyGameplayTuning,
   resolveGameplayTuning,
-  gameplayTuningDescription,
 } from '../gameplay-tuning.mjs';
 import { mountGameplayTuning } from '../ui/gameplay-tuning.mjs';
 import { createJourneyPreferences } from '../journey/preferences.mjs';
@@ -258,7 +258,7 @@ export function bootCoop({
   });
   const renderMasterPreferences = ({ muted, volume }) => {
     localizedText($('coop-audio'), () =>
-      muted ? t('interface:unmuteSound') : t('interface:muteSound'),
+      muted ? t('common:audio.unmute') : t('interface:muteSound'),
     );
     localizedText($('coop-quick-sound'), () =>
       muted ? t('interface:soundOff') : t('interface:soundOn'),
@@ -1607,7 +1607,7 @@ export function bootCoop({
     $('coop-picture-cancel').hidden = !busy;
     $('coop-picture-retry').hidden = busy || (ready && !retryPreview);
     localizedText($('coop-picture-retry'), () =>
-      retryPreview ? t('interface:retryPreview') : t('interface:retryPicture2'),
+      retryPreview ? t('common:preview.retry') : t('interface:retryPicture2'),
     );
     $('coop-picture-status').dataset.state = busy
       ? 'preparing'
@@ -3338,7 +3338,7 @@ export function bootCoop({
     const remoteRetry = document.createElement('button');
     remoteRetry.id = 'coop-library-remote-retry';
     remoteRetry.type = 'button';
-    localizedText(remoteRetry, () => t('interface:retry'));
+    localizedText(remoteRetry, () => t('common:actions.retry'));
     remoteRetry.setAttribute('aria-label', t('interface:retrySoloAndVersusMissionLoading'));
     remoteRetry.hidden = true;
     remoteFeedback.append(remoteStatus, remoteRetry);
@@ -3419,7 +3419,7 @@ export function bootCoop({
         remoteRetry.hidden = libraryChooser.state().mode === 'team';
       });
       libraryOtherModesOpening = opening;
-      localizedText(remoteRetry, () => t('interface:retry'));
+      localizedText(remoteRetry, () => t('common:actions.retry'));
       localizedText(remoteStatus, () => t('interface:loadingSoloAndVersusMissionMetadata'));
       try {
         libraryOtherModesPending ??= import('../mission-library/remote-solo-versus.mjs')
@@ -3501,7 +3501,7 @@ export function bootCoop({
         remoteRetry.hidden = owner.state().ready;
         if (!owner.state().ready) remoteRetry.removeAttribute('aria-disabled');
         localizedText(remoteRetry, () =>
-          owner.state().ready ? t('interface:loaded') : t('interface:retry'),
+          owner.state().ready ? t('interface:loaded') : t('common:actions.retry'),
         );
       } catch (error) {
         if (libraryOtherModesOpening === opening && opening.current() && dialog.open) {
@@ -4510,10 +4510,11 @@ export function bootCoop({
     experiment = selectedConfiguration(),
   ) {
     const difficulty = level.journeyDifficulty ?? gameplayPreferences.snapshot().difficulty;
-    localizedText(
-      $('coop-level-note'),
-      () =>
-        `${coopArenaGuidance(level, experiment).levelNote} Next fresh attempt: ${gameplayTuningDescription(gameplayTuning.snapshot(difficulty))} Resume keeps its rules.`,
+    localizedText($('coop-level-note'), () =>
+      t('gameplay:tuning.teamNote', {
+        guidance: coopArenaGuidance(level, experiment).levelNote,
+        description: gameplayTuningDescription(gameplayTuning.snapshot(difficulty)),
+      }),
     );
   }
   function showPackStatus() {
@@ -4866,7 +4867,7 @@ export function bootCoop({
     };
     importDraft = draft;
     localizedText($('coop-pack-cancel'), () =>
-      kind === 'artwork' ? t('interface:cancelImport') : t('interface:stopWaiting'),
+      kind === 'artwork' ? t('interface:cancelImport') : t('common:actions.stopWaiting'),
     );
     return importAdopting
       ? Promise.resolve().then(() => prepareImport(draft))
