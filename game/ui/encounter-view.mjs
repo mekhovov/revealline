@@ -1,3 +1,4 @@
+import { t } from '../i18n/index.mjs';
 import { geometryForRun } from '../core/geometry.mjs';
 import { CELL, FIXED_DT } from '../core/registry.mjs';
 import { encounterCutCells, encounterShieldIds } from '../core/encounter.mjs';
@@ -40,32 +41,32 @@ export function encounterView(state) {
     ? `${e.axis === 'horizontal' ? 'row' : 'column'} ${Math.floor(e.lane)}`
     : '';
   const phaseName = {
-    delay: shieldPlural ? 'SHIELD RELAYS' : 'SHIELD RELAY',
-    warning: 'LANE WARNING',
-    active: suppressed ? 'LANE SUPPRESSED' : 'LANE ACTIVE',
-    rest: shieldPlural ? 'SHIELD RELAYS' : 'SHIELD RELAY',
-    transition: 'SHIELD OPENING',
-    open: 'CORE OPEN',
-    defeated: 'CORE RELEASED',
+    delay: shieldPlural ? t("interface:shieldRelays") : t("interface:shieldRelay"),
+    warning: t("interface:laneWarning"),
+    active: suppressed ? t("interface:laneSuppressed") : t("interface:laneActive"),
+    rest: shieldPlural ? t("interface:shieldRelays") : t("interface:shieldRelay"),
+    transition: t("interface:shieldOpening"),
+    open: t("interface:coreOpen"),
+    defeated: t("interface:coreReleased"),
   }[e.phase];
   const title = ended
-    ? 'FLIGHT ENDED'
+    ? t("interface:flightEnded2")
     : `${e.stage === 'shielded' ? '1 / 2' : '2 / 2'} · ${phaseName}${e.defeated ? '' : ` · ${seconds.toFixed(1)}s`}`;
   let instruction;
-  if (ended) instruction = 'Restart to try the two stages again.';
+  if (ended) instruction = t("interface:restartToTryTheTwoStagesAgain");
   else if (state.status === 'respawning')
     instruction = frozen
-      ? 'Recovering at home. Enemy freeze holds the encounter clock; wait for control to return.'
-      : 'Recovering at home. The encounter clock continues; wait for control to return.';
+      ? t("interface:recoveringAtHomeEnemyFreezeHoldsTheEncounterClockWait")
+      : t("interface:recoveringAtHomeTheEncounterClockContinuesWaitForControl");
   else if (e.defeated)
     instruction =
       e.defeatCause === 'isolated'
-        ? 'Core isolated. The picture is yours.'
-        : 'Release cut secured. The picture is yours.';
+        ? t("interface:coreIsolatedThePictureIsYours")
+        : t("interface:releaseCutSecuredThePictureIsYours");
   else if (e.stage === 'shielded')
-    instruction = `${multiple ? `Shield relay${shieldPlural ? 's' : ''} ${shields.captured} / ${shields.total}. Capture ${shieldPlural ? 'every' : 'the'} remaining relay.` : 'Capture the shield relay.'} ${lane ? `Watch ${lane}.` : `Return every line to ${ground}.`}`;
+    instruction = `${multiple ? `Shield relay${shieldPlural ? 's' : ''} ${shields.captured} / ${shields.total}. Capture ${shieldPlural ? 'every' : 'the'} remaining relay.` : t("interface:captureTheShieldRelay")} ${lane ? `Watch ${lane}.` : `Return every line to ${ground}.`}`;
   else if (e.stage === 'transition')
-    instruction = `${shieldPlural ? 'All shield relays secured.' : 'Relay secured.'} A vertical attack comes before the first opening.`;
+    instruction = `${shieldPlural ? t("interface:allShieldRelaysSecured") : t("interface:relaySecured")} A vertical attack comes before the first opening.`;
   else if (isolated)
     instruction =
       e.phase === 'open'
@@ -74,7 +75,7 @@ export function encounterView(state) {
   else
     instruction = `Live line ${cutCells} / ${min} new cells · Close on ${ground} during CORE OPEN.${lane && e.phase !== 'open' ? ` Watch ${lane}.` : ''}`;
   if (frozen && !ended && !e.defeated && state.status !== 'respawning')
-    instruction += ' Enemy freeze holds the encounter clock.';
+    instruction += (" " + t("interface:enemyFreezeHoldsTheEncounterClock") + "");
   return Object.freeze({
     title,
     instruction,

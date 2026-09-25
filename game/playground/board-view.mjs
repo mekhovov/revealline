@@ -1,3 +1,4 @@
+import { t } from '../i18n/index.mjs';
 import { geometryForLevel } from '../core/geometry.mjs';
 import { boardPaintSizeForLevel } from '../ui/render.mjs';
 import { createRun } from '../core/index.mjs';

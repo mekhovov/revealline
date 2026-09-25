@@ -1,3 +1,4 @@
+import { t, localizedText } from '../i18n/index.mjs';
 import { createOperationStatus } from './operation-status.mjs';
 import { openVideoPosterSource } from '../video-poster.mjs';
 import { attachControllerNavigation } from './controller-navigation.mjs';
@@ -28,7 +29,7 @@ export function attachVideoPosterWorkshop({
     if (activity) activity.update({ message, progress: null });
     else feedback.begin({ message }).finish({ message, state });
   }
-  setStatus('Choose a local video to inspect. No game or media storage is opened by this page.');
+  setStatus(t("interface:chooseALocalVideoToInspectNoGameOrMedia"));
   const router = createControllerRouter({ eventTarget: win, ...(readPads ? { readPads } : {}) });
   const navigation = attachControllerNavigation({
     document: doc,
@@ -42,7 +43,7 @@ export function attachVideoPosterWorkshop({
       else $('back').click();
     },
     onHint: (text) => {
-      hint.textContent = text;
+      localizedText(hint, () =>text);
     },
   });
   const message = (error) => (error instanceof Error ? error.message : String(error));
@@ -61,7 +62,7 @@ export function attachVideoPosterWorkshop({
     if (previewURL) URLImpl.revokeObjectURL(previewURL);
     previewURL = null;
     result = null;
-    $('evidence').textContent = '';
+    localizedText($('evidence'), () =>'');
   }
   function stopTask() {
     feedback.clear();
@@ -76,8 +77,8 @@ export function attachVideoPosterWorkshop({
     stopTask();
     setStatus(
       source
-        ? 'Capture cancelled. The inspected source and any previous poster remain available.'
-        : 'Inspection cancelled. Choose the source again when ready.',
+        ? t("interface:captureCancelledTheInspectedSourceAndAnyPreviousPosterRemain")
+        : t("interface:inspectionCancelledChooseTheSourceAgainWhenReady"),
       'cancelled',
     );
     controls();
@@ -90,9 +91,9 @@ export function attachVideoPosterWorkshop({
     source = null;
     discardPreview();
     $('file').value = '';
-    $('metadata').textContent = 'No video inspected.';
+    localizedText($('metadata'), () =>t("interface:noVideoInspected"));
     $('time').value = $('range').value = '0';
-    setStatus('Source and preview cleared. No game data or media storage was changed.');
+    setStatus(t("interface:sourceAndPreviewClearedNoGameDataOrMediaStorage"));
     controls();
     if (focus && !disposed) $('file').focus();
   }
@@ -118,8 +119,8 @@ export function attachVideoPosterWorkshop({
     source?.dispose();
     source = null;
     discardPreview();
-    $('metadata').textContent = 'Inspecting a local video…';
-    const current = begin('Inspecting video metadata. The source is muted and never played.');
+    localizedText($('metadata'), () =>t("interface:inspectingALocalVideo"));
+    const current = begin(t("interface:inspectingVideoMetadataTheSourceIsMutedAndNeverPlayed"));
     let staged = null;
     try {
       staged = await openSource(file, { signal: current.controller.signal });
@@ -130,13 +131,12 @@ export function attachVideoPosterWorkshop({
       source = staged;
       staged = null;
       const info = source.info;
-      $('metadata').textContent =
-        `${info.mime} · ${info.width} × ${info.height} · ${info.durationSeconds} s · ${info.bytes.toLocaleString()} bytes\nOriginal SHA-256: ${info.sha256}`;
+      localizedText($('metadata'), () =>t("gameplay:sBytesOriginalSha256", { value1: info.mime, value2: info.width, value3: info.height, value4: info.durationSeconds, value5: info.bytes.toLocaleString(), value6: info.sha256 }));
       $('time').min = $('range').min = '0';
       $('time').max = $('range').max = String(info.durationSeconds);
       $('time').value = $('range').value = '0';
       setStatus(
-        'Video inspected. Choose a time, then Capture poster. Nothing is saved to the game.',
+        t("interface:videoInspectedChooseATimeThenCapturePosterNothingIs"),
       );
       activity?.finish({ message: status.textContent });
       activity = null;
@@ -147,7 +147,7 @@ export function attachVideoPosterWorkshop({
     } catch (error) {
       staged?.dispose();
       if (!current.current()) return false;
-      $('metadata').textContent = 'Video could not be inspected.';
+      localizedText($('metadata'), () =>t("interface:videoCouldNotBeInspected"));
       activity?.finish({ message: message(error), state: 'error' });
       activity = null;
       task = null;
@@ -166,12 +166,12 @@ export function attachVideoPosterWorkshop({
       requested < 0 ||
       requested > source.info.durationSeconds
     ) {
-      setStatus('Enter a time within this video’s duration. Values are never clamped.');
+      setStatus(t("interface:enterATimeWithinThisVideoSDurationValuesAre"));
       $('time').focus();
       return false;
     }
     const selectedSource = source,
-      current = begin(`Capturing requested time ${requested} s…`);
+      current = begin(t("gameplay:capturingRequestedTimeS", { value1: requested }));
     let url = null;
     try {
       const candidate = await selectedSource.capture(
@@ -180,9 +180,9 @@ export function attachVideoPosterWorkshop({
           id: 'video-poster-preview',
           provenance: {
             kind: 'original',
-            credit: 'Local video owner',
+            credit: t("interface:localVideoOwner"),
             source:
-              'Local authoring preview; exact source hash and time evidence accompany the PNG.',
+              t("interface:localAuthoringPreviewExactSourceHashAndTimeEvidenceAccompany"),
           },
         },
         { signal: current.controller.signal },
@@ -199,24 +199,24 @@ export function attachVideoPosterWorkshop({
       result = candidate;
       $('image').src = previewURL;
       $('image').alt =
-        `Captured video poster requested at ${candidate.capture.requestedTime} seconds`;
+        t("gameplay:capturedVideoPosterRequestedAtSeconds", { value1: candidate.capture.requestedTime });
       const observed = candidate.capture.observedMediaTime;
-      $('evidence').textContent = [
-        `Requested seek: ${candidate.capture.requestedTime} s`,
+      localizedText($('evidence'), () =>[
+        t("gameplay:requestedSeekS", { value1: candidate.capture.requestedTime }),
         observed === null
-          ? `Frame timestamp unavailable. Approximate playhead: ${candidate.capture.playheadTime} s.`
-          : `Observed frame timestamp: ${observed} s · playhead: ${candidate.capture.playheadTime} s.`,
+          ? t("gameplay:frameTimestampUnavailableApproximatePlayheadS", { value1: candidate.capture.playheadTime })
+          : t("gameplay:observedFrameTimestampSPlayheadS", { value1: observed, value2: candidate.capture.playheadTime }),
         'The requested decimal is not a frame-accuracy guarantee.',
-        `PNG: ${candidate.asset.width} × ${candidate.asset.height} · ${candidate.asset.bytes.toLocaleString()} bytes`,
-        `PNG SHA-256: ${candidate.asset.sha256}`,
-        `Original SHA-256: ${candidate.capture.sourceSha256}`,
-      ].join('\n');
+        t("gameplay:pngBytes", { value1: candidate.asset.width, value2: candidate.asset.height, value3: candidate.asset.bytes.toLocaleString() }),
+        t("gameplay:pngSha256", { value1: candidate.asset.sha256 }),
+        t("gameplay:originalSha256", { value1: candidate.capture.sourceSha256 }),
+      ].join('\n'));
       $('download').href = previewURL;
       $('download').download = `RevealLine-poster-${String(requested).replace('.', '-')}.png`;
       $('download').hidden = false;
       $('preview').hidden = false;
       setStatus(
-        'Poster captured. Inspect it, then explicitly Download PNG. The exact prepared bytes remain available to retry.',
+        t("interface:posterCapturedInspectItThenExplicitlyDownloadPngTheExact"),
       );
       activity?.finish({ message: status.textContent });
       activity = null;
@@ -227,7 +227,7 @@ export function attachVideoPosterWorkshop({
     } catch (error) {
       if (url) URLImpl.revokeObjectURL(url);
       if (!current.current()) return false;
-      setStatus(`${message(error)}${result ? ' The previous captured poster is unchanged.' : ''}`);
+      setStatus(`${message(error)}${result ? (" " + t("interface:thePreviousCapturedPosterIsUnchanged") + "") : ''}`);
       activity?.finish({ message: status.textContent, state: 'error' });
       activity = null;
       task = null;
@@ -250,7 +250,7 @@ export function attachVideoPosterWorkshop({
   };
   $('download').onclick = () => {
     setStatus(
-      'PNG download requested. Confirm the destination in your browser; the prepared bytes remain available to retry.',
+      t("interface:pngDownloadRequestedConfirmTheDestinationInYourBrowserThe"),
     );
   };
   function poll(now) {
