@@ -3,6 +3,7 @@ import { JOURNEY_MODES } from './catalog.mjs';
 import {
   emptyJourneyPictures,
   validateJourneyPictures,
+  validateJourneyPictureCompletions,
   applyJourneyPictureEvent,
 } from './pictures.mjs';
 
@@ -19,6 +20,11 @@ function validateProfileKey(key) {
     throw new TypeError('Journey storage needs a stable profile key.');
 }
 
+function pictureEditionId(profileKey) {
+  if (profileKey === 'journey') return null;
+  return profileKey.startsWith('journey-') ? profileKey.slice('journey-'.length) : profileKey;
+}
+
 function inspectProfileBackup(source, profileKey) {
   const candidate = boundedJSON(source, { maxBytes: 16 * 1024 * 1024, maxNodes: 200020 });
   if (candidate?.format === JOURNEY_PICTURE_BACKUP_VERSION) {
@@ -28,7 +34,9 @@ function inspectProfileBackup(source, profileKey) {
         'This backup belongs to a different Journey edition. Progress is unchanged.',
       );
     const profile = validateJourneyProfile(candidate.profile),
-      pictures = validateJourneyPictures(candidate.pictures);
+      pictures = validateJourneyPictureCompletions(profile, candidate.pictures, {
+        editionId: pictureEditionId(profileKey),
+      });
     return {
       backup: { ...candidate, profile, pictures },
       normalized: { format: JOURNEY_BACKUP_VERSION, profile },
@@ -251,7 +259,8 @@ export function createJourneyBackend({
                 ? emptyJourneyPictures()
                 : validateJourneyPictures(pictureRead.result),
           };
-          for (const event of events) next = applyStateEvent(next, event);
+          for (const event of events)
+            next = applyStateEvent(next, event, pictureEditionId(profileKey));
           if (events.length) store.put(next.profile, profileKey);
           if (events.some((event) => event.picture !== undefined || event.pictures !== undefined))
             store.put(next.pictures, `${profileKey}:pictures.v1`);
@@ -274,12 +283,12 @@ export function createJourneyBackend({
     commitState: transaction,
   };
 }
-function applyStateEvent(state, event) {
+function applyStateEvent(state, event, editionId = null) {
   const { pictures, ...profileEvent } = event;
-  return {
-    profile: applyJourneyEvent(state.profile, profileEvent),
-    pictures: applyJourneyPictureEvent(state.pictures, event),
-  };
+  const profile = applyJourneyEvent(state.profile, profileEvent);
+  if (event.type === 'restore' && pictures !== undefined)
+    validateJourneyPictureCompletions(profile, pictures, { editionId });
+  return { profile, pictures: applyJourneyPictureEvent(state.pictures, event) };
 }
 function validateState(state) {
   return {
@@ -322,6 +331,8 @@ export function createJourneyProfileStore({
     ready = false,
     durable = false,
     error = null;
+  const editionId = pictureEditionId(profileKey),
+    applyEvent = (state, event) => applyStateEvent(state, event, editionId);
   const status = () => {
     const value = { ready, durable, pending: pending.length, error: error?.message ?? null };
     try {
@@ -358,12 +369,12 @@ export function createJourneyProfileStore({
         // Loading and saving share one queue. An older read must never replace
         // a newly committed clear, including when play starts before load ends.
         const latest = await bounded(readState);
-        adopt(pending.reduce(applyStateEvent, latest));
+        adopt(pending.reduce(applyEvent, latest));
         while (pending.length) {
           const batch = [...pending];
           const saved = await bounded(() => commitState(batch));
           pending = pending.slice(batch.length);
-          adopt(pending.reduce(applyStateEvent, saved));
+          adopt(pending.reduce(applyEvent, saved));
         }
         durable = true;
         error = null;
@@ -385,7 +396,7 @@ export function createJourneyProfileStore({
     const owned = structuredClone(events);
     // Validate the whole transition before publishing either its cursor or skip.
     // One status notification cannot expose a partially applied transition.
-    const next = owned.reduce(applyStateEvent, { profile, pictures });
+    const next = owned.reduce(applyEvent, { profile, pictures });
     adopt(next);
     pending.push(...owned);
     durable = false;
@@ -408,7 +419,7 @@ export function createJourneyProfileStore({
         : `revealline-${profileKey}-progress.json`,
     inspectBackup(source) {
       const { backup, normalized, pictures: restored } = inspectProfileBackup(source, profileKey);
-      const merged = applyStateEvent(
+      const merged = applyEvent(
         { profile, pictures },
         { type: 'restore', backup: normalized, ...(restored ? { pictures: restored } : {}) },
       );

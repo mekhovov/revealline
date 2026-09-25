@@ -76,6 +76,25 @@ export function validateJourneyPictures(source) {
   });
   return ledger;
 }
+
+/** Portable picture references only become earned originals when the same
+ * scoped profile carries the exact completion that admitted them. */
+export function validateJourneyPictureCompletions(profile, source, { editionId = null } = {}) {
+  const ledger = validateJourneyPictures(source);
+  for (const record of ledger.records) {
+    if (editionId !== null)
+      required(record.editionId === editionId, 'Journey picture belongs to a different edition.');
+    const receipt = profile.clears?.[record.mode]?.[record.missionId];
+    required(receipt, 'Journey picture has no matching completion receipt.');
+    required(
+      receipt.runId === record.runId &&
+        receipt.gameplayId === record.gameplayId &&
+        receipt.difficulty === record.difficulty,
+      'Journey picture and completion receipt must agree.',
+    );
+  }
+  return ledger;
+}
 function addPicture(ledger, source) {
   const record = validateJourneyPicture(source);
   const sameRun = ledger.records.find(
