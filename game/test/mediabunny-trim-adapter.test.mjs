@@ -233,6 +233,35 @@ test('bounded resize/compression plan is passed to the encoder and capability pr
   assert.equal(fake.state.options.video.allowTransformationMetadata, false);
 });
 
+test('rotated source display dimensions drive an exact portrait transform plan', async () => {
+  const fake = fakeLibrary({ width: 360, height: 640 });
+  const adapter = createMediabunnyTrimAdapter({ loadLibrary: async () => fake.library });
+  const mismatched = await adapter.support(original, info, range);
+  assert.equal(mismatched.supported, false);
+  assert.match(mismatched.reason, /display dimensions differ/);
+  const portraitInfo = { ...info, width: 360, height: 640 };
+  const transform = {
+    profile: 'compact',
+    width: 202,
+    height: 358,
+    targetVideoBitrate: 900_000,
+  };
+  const supported = await adapter.support(original, portraitInfo, range, { transform });
+  assert.equal(supported.supported, true);
+  assert.match(supported.detail, /202 × 358.*0\.9 Mbit\/s target/);
+  assert.deepEqual(fake.state.encodeProbes[0], {
+    width: 202,
+    height: 358,
+    bitrate: 900_000,
+  });
+
+  await adapter.trim(original, range, { transform });
+  assert.equal(fake.state.options.video.width, 202);
+  assert.equal(fake.state.options.video.height, 358);
+  assert.equal(fake.state.options.video.fit, 'contain');
+  assert.equal(fake.state.options.video.allowTransformationMetadata, false);
+});
+
 test('resize/compression plans cannot upscale, change orientation/aspect, or escape bitrate bounds', async () => {
   for (const transform of [
     { profile: 'compact', width: 1280, height: 720, targetVideoBitrate: 900_000 },
