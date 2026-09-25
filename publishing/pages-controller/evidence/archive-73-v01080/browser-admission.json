@@ -1,0 +1,22 @@
+{
+  "format": "revealline-archive-browser-admission.v1",
+  "status": "PASS",
+  "archiveId": "archive-73",
+  "infrastructureCommit": "988d20ea6f09d478003033774aa839409489b04c",
+  "deploymentId": 6650793363,
+  "versions": [
+    "v0.108.0"
+  ],
+  "scope": "Historical online preservation: complete exact-byte public audit plus fresh menu, saved Journey Continue to Solo gameplay, Pause/Resume, Versus and Team menu readiness, and clean cache-busted navigation. This does not claim physical-device/controller or cold-server-offline acceptance.",
+  "evidence": [
+    {
+      "path": "evidence/archive-73-v01080/public-acceptance.json",
+      "sha256": "37d20b716282114a686b4d6cc5c2c68e0103345496987dd4b82eb40d00e8eec0"
+    }
+  ],
+  "limitations": [
+    "The first browser navigation started during deployment propagation and saw one transient app.mjs import failure; immediate reload and a later clean navigation passed. The transient remains recorded.",
+    "No renewed physical iPhone/controller or cold-server-offline acceptance is claimed.",
+    "This admission preserves v0.108.0 and does not qualify or publish v0.109.0."
+  ]
+}
