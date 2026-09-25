@@ -7,7 +7,11 @@ import { createAuthoredJourneyRouteDefinition } from './route-definition.mjs';
 export async function loadAuthoredJourneyRoute(id) {
   if (!isAuthoredJourneyRouteId(id)) return null;
   let factories;
-  if (id.startsWith('whole-spatial-')) {
+  if (id === 'whole-spatial-v11') {
+    factories = await import('./horizon-next-batch-candidates.mjs');
+  } else if (id === 'whole-spatial-v10') {
+    factories = await import('./spatial-next-batch-candidates.mjs');
+  } else if (id.startsWith('whole-spatial-')) {
     factories = await import('./whole-spatial-candidates.mjs');
   } else if (id.startsWith('whole-originals')) {
     factories = await import('./whole-journey-candidates.mjs');

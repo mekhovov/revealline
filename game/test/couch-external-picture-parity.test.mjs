@@ -872,7 +872,7 @@ test('external host Start and one-action Rematch share the Solo-selected still w
   assert.equal(page.doc.activeElement.id, 'race-start');
   assert.equal(
     page.$('race-message').textContent,
-    'The rematch picture could not be prepared. Results are kept. Choose Rematch to retry.',
+    'The rematch picture or actors could not be prepared. Both boards are kept. Choose Rematch to retry.',
   );
   assert.equal(diagnostics.length, 1);
   assert.equal(diagnostics[0][0], 'Next picture preparation failed.');

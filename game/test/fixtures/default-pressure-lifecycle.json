@@ -1,0 +1,124 @@
+{
+  "format": "DefaultPressureLifecycleV1",
+  "sourceCommit": "b13089b702391c275f2505d1a76c87eebb9dcce0",
+  "route": "whole-spatial-v11",
+  "tuning": "gameplay-pressure.v4",
+  "seed": 1,
+  "scope": "Public fixed-tick commands on the current tuned default. These are deterministic engine and shared navigation checks, not native host, device, human balance or release acceptance.",
+  "lifecycle": [
+    {
+      "id": "return-in-reserve",
+      "turnPolicy": "immediate",
+      "segments": [
+        [null, 240],
+        ["up", 100],
+        ["right", 20],
+        ["down", 80]
+      ],
+      "warningTick": 265,
+      "commitTick": 355,
+      "captureTick": 440,
+      "turnsAfterWarning": true,
+      "idleFrontierLossTick": null
+    },
+    {
+      "id": "return-in-reserve",
+      "turnPolicy": "grid-center",
+      "segments": [
+        ["right", 100],
+        ["up", 206]
+      ],
+      "warningTick": 145,
+      "commitTick": 235,
+      "captureTick": 306,
+      "turnsAfterWarning": false,
+      "idleFrontierLossTick": null
+    },
+    {
+      "id": "crossed-bands",
+      "turnPolicy": "immediate",
+      "segments": [
+        [null, 240],
+        ["up", 100],
+        ["right", 20],
+        ["down", 53]
+      ],
+      "warningTick": 289,
+      "commitTick": 379,
+      "captureTick": 413,
+      "turnsAfterWarning": true,
+      "idleFrontierLossTick": 708
+    },
+    {
+      "id": "crossed-bands",
+      "turnPolicy": "grid-center",
+      "segments": [
+        [null, 240],
+        ["up", 100],
+        ["right", 20],
+        ["down", 64]
+      ],
+      "warningTick": 289,
+      "commitTick": 379,
+      "captureTick": 424,
+      "turnsAfterWarning": true,
+      "idleFrontierLossTick": null
+    }
+  ],
+  "clears": [
+    {
+      "id": "return-in-reserve",
+      "next": "two-ways-home",
+      "simulationIdentity": "1ec7c8900652a220",
+      "turnPolicy": "immediate",
+      "ticks": 1716,
+      "captures": 2,
+      "segments": [
+        ["up", 13],
+        ["left", 326],
+        ["up", 184],
+        [null, 120],
+        ["down", 7],
+        ["right", 611],
+        ["down", 455]
+      ]
+    },
+    {
+      "id": "crossed-bands",
+      "next": "pressure-ladder",
+      "simulationIdentity": "3964a7a5dada959d",
+      "turnPolicy": "immediate",
+      "ticks": 4135,
+      "captures": 7,
+      "segments": [
+        ["down", 245],
+        ["up", 285],
+        ["right", 54],
+        ["up", 184],
+        ["down", 7],
+        ["up", 14],
+        ["left", 81],
+        ["down", 184],
+        [null, 120],
+        ["down", 7],
+        ["right", 27],
+        ["down", 285],
+        ["left", 353],
+        ["up", 469],
+        ["down", 7],
+        ["up", 14],
+        ["right", 326],
+        ["down", 285],
+        ["left", 41],
+        ["down", 191],
+        ["up", 108],
+        ["left", 319],
+        [null, 120],
+        ["right", 7],
+        ["left", 14],
+        ["up", 68],
+        ["right", 320]
+      ]
+    }
+  ]
+}

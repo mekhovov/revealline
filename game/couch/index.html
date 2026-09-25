@@ -173,30 +173,6 @@
           </p>
           <p id="race-message" role="status">Both boards use the same map, class and seed.</p>
           <p id="race-summary" class="race-summary"></p>
-          <div class="race-fields">
-            <label
-              >Actors<select id="race-actor-style" aria-describedby="race-actor-style-status">
-                <option value="fpv">FPV Field Kit</option>
-                <option value="campaign">Campaign actors</option>
-              </select></label
-            >
-            <p id="race-actor-style-status" class="race-footnote" role="status">
-              Applies to a new race or Next mission. Resume and Rematch keep their accepted actors.
-              Custom chapters keep authored actors.
-            </p>
-            <label id="race-journey-difficulty-field" hidden
-              >Next fresh race difficulty
-              <select id="race-journey-difficulty"></select>
-              <span id="race-journey-difficulty-note" role="status"></span>
-            </label>
-            <div id="race-journey-preferences-recovery" hidden>
-              <p id="race-journey-preferences-message" role="status"></p>
-              <button id="race-journey-preferences-retry" type="button">
-                Retry saving difficulty
-              </button>
-              <button id="race-journey-preferences-export" type="button">Export difficulty</button>
-            </div>
-          </div>
           <div class="race-seats">
             <article class="seat sun">
               <span>PLAYER 1</span>
@@ -221,8 +197,36 @@
             </button>
             <button id="race-chapter-retry" type="button" hidden>Retry picture</button>
             <button id="race-picture-cancel" type="button" hidden>Cancel picture loading</button>
-            <button id="race-chapters" type="button">All missions</button>
-            <button id="race-focus" type="button">Race setup</button>
+            <button id="race-chapters" type="button">Browse missions</button>
+            <details id="race-optional-setup" class="race-optional-setup">
+              <summary id="race-optional-setup-toggle">Optional setup</summary>
+              <div class="race-fields">
+                <label
+                  >Actors<select id="race-actor-style" aria-describedby="race-actor-style-status">
+                    <option value="fpv">FPV Field Kit</option>
+                    <option value="campaign">Campaign actors</option>
+                  </select></label
+                >
+                <p id="race-actor-style-status" class="race-footnote" role="status">
+                  New races use this actor style. Rematch keeps the accepted style.
+                </p>
+                <label id="race-journey-difficulty-field" hidden
+                  >Difficulty
+                  <select id="race-journey-difficulty"></select>
+                  <span id="race-journey-difficulty-note" role="status"></span>
+                </label>
+                <div id="race-journey-preferences-recovery" hidden>
+                  <p id="race-journey-preferences-message" role="status"></p>
+                  <button id="race-journey-preferences-retry" type="button">
+                    Retry saving difficulty
+                  </button>
+                  <button id="race-journey-preferences-export" type="button">
+                    Export difficulty
+                  </button>
+                </div>
+                <button id="race-focus" type="button">Advanced race setup</button>
+              </div>
+            </details>
             <button id="race-options" type="button">Settings</button>
             <button id="race-quick-sound" type="button" class="quick-sound" aria-pressed="false">
               Sound: off
@@ -230,11 +234,10 @@
             <button id="race-help" type="button">How to play</button>
             <button id="race-review" type="button" hidden>View both boards</button>
             <a id="race-solo-return" href="../?journey=legacy">Return to solo</a>
-            <a id="race-library-switch" href="?journey=whole-spatial-v9">New Journey</a>
+            <a id="race-library-switch" href="?journey=whole-spatial-v11">New Journey</a>
           </div>
           <p id="race-format-note" class="race-footnote">
-            One race. Choose First to two in Race setup for a longer match. Couch races do not
-            change your solo progress.
+            One race by default. Longer matches are in Optional setup.
           </p>
           <aside
             id="race-journey-save"

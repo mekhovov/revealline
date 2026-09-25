@@ -5,6 +5,7 @@ import { createControllerRouter } from '../ui/controller-router.mjs';
 import { resolveControllerBindings } from '../controller-bindings.mjs';
 
 function setup(t, options = {}) {
+  const { guardNow, ...routerOptions } = options;
   const pad = {
     index: 0,
     id: 'Steam Deck',
@@ -24,16 +25,18 @@ function setup(t, options = {}) {
       if (unavailable) throw new Error('Unavailable');
       return pads;
     },
-    ...options,
+    ...routerOptions,
   });
   const doc = new EventTarget();
   doc.defaultView = new EventTarget();
   const guard = attachControllerConfirmGuard({
     document: doc,
     confirmPressed: router.menuConfirmPressed,
+    ...(guardNow ? { now: guardNow } : {}),
   });
   for (const type of [
     'keydown',
+    'keypress',
     'keyup',
     'pointerdown',
     'pointerup',
@@ -99,7 +102,7 @@ for (const key of ['Enter', ' '])
 for (const order of ['native-first', 'gamepad-first'])
   test(`A plus a desktop mouse click is consumed ${order}, while controller .click() runs`, (t) => {
     const h = setup(t);
-    const mouse = { button: 0, pointerType: 'mouse', detail: 1 };
+    const mouse = { button: 0, pointerType: 'mouse', detail: 1, isTrusted: true };
     h.pad.buttons[0].pressed = true;
     if (order === 'gamepad-first') assert.equal(h.sample().ui.confirm, true);
     assert.equal(h.emit('pointerdown', mouse), true);
@@ -136,6 +139,115 @@ test('menu confirm survives resume and its native tail cannot pause the new flig
     false,
     'A new flight gesture is not a menu confirm',
   );
+});
+
+test('a sampled Confirm owns delayed keyboard and mouse echoes after A is released', (t) => {
+  let time = 100;
+  const h = setup(t, { guardNow: () => time });
+  h.pad.buttons[0].pressed = true;
+  assert.equal(h.sample().ui.confirm, true);
+  h.guard.observe(true);
+  h.pad.buttons[0].pressed = false;
+  h.sample();
+
+  time = 350;
+  assert.equal(h.emit('keydown', { key: 'Enter' }), true);
+  assert.equal(h.emit('keypress', { key: 'Enter' }), true);
+  assert.equal(h.emit('keyup', { key: 'Enter' }), true);
+  const mouse = { button: 0, pointerType: 'mouse', detail: 1, isTrusted: true };
+  assert.equal(h.emit('pointerdown', mouse), true);
+  assert.equal(h.emit('pointerup', mouse), true);
+  assert.equal(h.emit('click', mouse), true);
+
+  time = 1351;
+  assert.equal(h.emit('keydown', { key: 'Enter' }), false);
+  assert.equal(h.emit('pointerdown', mouse), false);
+});
+
+test('a trusted click-only Steam echo is consumed while controller click() remains usable', (t) => {
+  let time = 100;
+  const h = setup(t, { guardNow: () => time });
+  h.pad.buttons[0].pressed = true;
+  assert.equal(h.sample().ui.confirm, true);
+  h.guard.observe(true);
+  assert.equal(
+    h.emit('click', { button: 0, detail: 0 }),
+    false,
+    'the controller adapter programmatic click reaches the chosen control',
+  );
+  h.pad.buttons[0].pressed = false;
+  h.sample();
+
+  time = 1100;
+  assert.equal(
+    h.emit('click', { button: 0, detail: 0, isTrusted: true }),
+    true,
+    'a release-activated trusted Chrome click cannot apply the action twice',
+  );
+  time = 1351;
+  assert.equal(
+    h.emit('click', { button: 0, detail: 0, isTrusted: true }),
+    false,
+    'a later independent trusted click remains usable',
+  );
+});
+
+test('a trusted Steam click arriving before the next gamepad frame is consumed', (t) => {
+  const h = setup(t);
+  h.pad.buttons[0].pressed = true;
+  assert.equal(
+    h.emit('click', { button: 0, detail: 0, isTrusted: true }),
+    true,
+    'the live gamepad probe owns a native-first click',
+  );
+  assert.equal(h.sample().ui.confirm, true, 'the same press still reaches controller navigation');
+  assert.equal(
+    h.emit('click', { button: 0, detail: 0 }),
+    false,
+    'controller navigation can still invoke the selected control',
+  );
+});
+
+test('a delayed native tail cannot activate the first control after paused Home opens', (t) => {
+  let time = 100,
+    homeOpen = false,
+    resumed = false;
+  const h = setup(t, { guardNow: () => time });
+  h.pad.buttons[0].pressed = true;
+  assert.equal(h.sample().ui.confirm, true);
+  h.guard.observe(true);
+  homeOpen = true;
+  h.pad.buttons[0].pressed = false;
+  h.sample();
+
+  time = 260;
+  const prevented = h.emit('keydown', { key: 'Enter' });
+  if (!prevented) {
+    homeOpen = false;
+    resumed = true;
+  }
+  h.emit('keyup', { key: 'Enter' });
+  assert.equal(prevented, true);
+  assert.equal(homeOpen, true);
+  assert.equal(resumed, false);
+});
+
+test('the echo window follows a long-held A press through its release', (t) => {
+  let time = 100;
+  const h = setup(t, { guardNow: () => time });
+  h.pad.buttons[0].pressed = true;
+  assert.equal(h.sample().ui.confirm, true);
+  h.guard.observe(true);
+  time = 1200;
+  h.guard.observe(true);
+  h.pad.buttons[0].pressed = false;
+  h.sample();
+
+  time = 1600;
+  assert.equal(h.emit('keydown', { key: 'Enter' }), true);
+  assert.equal(h.emit('keyup', { key: 'Enter' }), true);
+  time = 2451;
+  assert.equal(h.emit('keydown', { key: 'Enter' }), false);
 });
 
 test('idle controllers do not suppress keyboard, mouse, touch, pen, text, or shortcuts', (t) => {

@@ -20,9 +20,33 @@ export function createAuthoredJourneyRouteDefinition(
     createWholePressureCandidates,
     createWholeCulturalPressureCandidates,
     createWholeErosionReviewCandidates,
+    createSpatialNextBatchCandidates,
+    createHorizonNextBatchCandidates,
   },
 ) {
   if (!isAuthoredJourneyRouteId(id)) return null;
+  if (id === 'whole-spatial-v11')
+    return freezeDesign({
+      id,
+      label: 'Whole Journey Horizon cultural joins · balance pending',
+      sessionKey: 'revealline.suspended.journey-whole-spatial.v11',
+      profileKey: 'journey-whole-spatial-v11',
+      source: createHorizonNextBatchCandidates({ artwork: true }),
+      corePackIds: [...WHOLE_JOURNEY_CORE_PACK_IDS],
+      optionalCampaignIds: ['ornament-crossings', 'workshop-routing'],
+      preserveOriginalThemes: true,
+    });
+  if (id === 'whole-spatial-v10')
+    return freezeDesign({
+      id,
+      label: 'Whole Journey Ukrainian cultural spatial triptych · balance pending',
+      sessionKey: 'revealline.suspended.journey-whole-spatial.v10',
+      profileKey: 'journey-whole-spatial-v10',
+      source: createSpatialNextBatchCandidates({ artwork: true }),
+      corePackIds: [...WHOLE_JOURNEY_CORE_PACK_IDS],
+      optionalCampaignIds: ['ornament-crossings', 'workshop-routing'],
+      preserveOriginalThemes: true,
+    });
   if (id === 'whole-spatial-v9')
     return freezeDesign({
       id,
