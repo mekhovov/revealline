@@ -10,6 +10,7 @@ import { createControllerRouter, neutralControllerFlight } from '../ui/controlle
 import { resolveControllerBindings } from '../controller-bindings.mjs';
 import { attachControllerReading } from '../ui/controller-reading.mjs';
 import { attachControllerBoostSettings } from '../ui/controller-boost-settings.mjs';
+import { getLocale, setLocale, localizedText, t as translate } from '../i18n/index.mjs';
 
 function readingSurface(h, options = {}) {
   const origin = h.control('button', { id: 'read-details', textContent: 'Read details' });
@@ -348,6 +349,34 @@ function setup(t, overrides = {}) {
     editors: () => document.querySelectorAll('.controller-editor'),
   };
 }
+
+test('locale refresh retains the exact active reader and scroll without renewing replaced content', (context) => {
+  const locale = getLocale();
+  context.after(() => setLocale(locale, { persist: false }));
+  setLocale('en', { persist: false });
+  const h = setup(context);
+  const reader = readingSurface(h);
+  localizedText(reader.region, () =>
+    translate('interface:releaseYourControlsThenChooseResumeTogether'),
+  );
+  assert.equal(reader.begin(), true);
+  reader.region.scrollTop = 75;
+  setLocale('uk', { persist: false });
+  h.api.sync();
+  assert.equal(h.api.readingState().regionId, reader.region.id);
+  assert.equal(h.document.activeElement, reader.region);
+  assert.equal(reader.region.scrollTop, 75);
+  assert.match(reader.region.textContent, /[А-Яа-яІіЇїЄєҐґ]/u);
+  setLocale('en', { persist: false });
+  h.api.sync();
+  assert.equal(h.api.readingState().regionId, reader.region.id);
+  reader.region.textContent = 'An unrelated replacement before translation';
+  // Even restoring the same English message must not renew a stale reading lease.
+  setLocale('en', { persist: false });
+  h.api.sync();
+  assert.equal(h.api.readingState(), null);
+  assert.equal(h.calls.back + h.calls.menu, 0);
+});
 
 test('Boost preference previews cancel without writes and commit once through the native setting', (t) => {
   const h = setup(t),
