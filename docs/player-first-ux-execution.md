@@ -67,9 +67,11 @@ accepted changes are now part of the v0.112.0 PR482 aggregate on
 difficulty and advanced match setup live under Optional setup. Team keeps Arena,
 Start and Browse Team arenas visible while teamwork, difficulty, actors and created
 pack import live under Optional setup. Initial Team picture preparation exposes an
-explicit secondary Cancel without taking first focus. The current FPV revision 77
-picture authority and its retained revisions 58–76 are inherited unchanged from
-the merged source; this quick-start successor does not reinterpret those bindings.
+explicit secondary Cancel without taking first focus. The current FPV revision 78
+picture authority preserves the same approved picture bytes and identities, while
+retained authority now covers revisions 58–77. Revision 78 advances current
+authority and appends revision 77 to the retained set; this quick-start successor
+does not reinterpret those bindings.
 Publication, responsive browser review and physical controller/touch evidence remain
 release gates rather than claims of this source checkpoint.
 
