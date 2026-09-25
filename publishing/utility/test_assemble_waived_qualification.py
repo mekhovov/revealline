@@ -134,6 +134,27 @@ class AdapterTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'Fresh ordinary output'):
             adapter.assemble(self.config, output)
 
+    def test_previous_successful_pr_build_generation_is_retained_truthfully(self):
+        jobs = copy.deepcopy(self.pr_jobs)
+        jobs['jobs'][0]['steps'] = [self.step(n, i + 1) for i, n in enumerate([
+            'Verify exact tracked source before commands', 'Build pull-request artifact',
+            'Verify tracked source after build'])]
+        Path(self.config['pr']['jobs']).write_bytes(adapter.encoded(jobs))
+        output = self.root / 'out'
+        adapter.assemble(self.config, output)
+        qualification = json.loads((output / 'source-qualification.json').read_bytes())
+        self.assertNotIn('preMergeValidationCorroboration', qualification)
+        self.assertEqual(qualification['ordinaryBuildCorroboration']['command'], 'npm run build')
+        self.assertEqual(qualification['ordinaryBuildCorroboration']['step']['name'],
+                         'Build pull-request artifact')
+
+    def test_pr_verifier_generations_cannot_be_mixed(self):
+        jobs = copy.deepcopy(self.pr_jobs)
+        jobs['jobs'][0]['steps'].append(self.step('Verify tracked source after build', 99))
+        Path(self.config['pr']['jobs']).write_bytes(adapter.encoded(jobs))
+        with self.assertRaisesRegex(ValueError, 'Exactly one PR source verifier generation required'):
+            adapter.assemble(self.config, self.root / 'out')
+
     def test_missing_failed_cancelled_or_success_instead_of_skipped_test_refused(self):
         for conclusion in ('failure', 'cancelled', 'success'):
             jobs = copy.deepcopy(self.jobs)
