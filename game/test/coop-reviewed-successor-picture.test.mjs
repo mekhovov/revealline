@@ -33,7 +33,7 @@ function snapshot(revision) {
   return { resolved: structuredClone(resolvePresentation(document)) };
 }
 function fixture(
-  revision = 82,
+  revision = 84,
   pack = COOP_STARTER_PACK,
   levelId = 'first-connection',
   policy = COOP_HISTORICAL_IMPORT_PICTURE_POLICIES,
@@ -71,14 +71,15 @@ function fixture(
   return { current, calls, request, presentation };
 }
 
-test('integrated82 retains complete58–81 picture and actor records and original bytes', async () => {
+test('integrated84 retains complete58–83 picture and actor records and original bytes', async () => {
   const retained = [
     58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81,
+    82, 83,
   ];
-  assert.equal(bundle.document.selection.theme.revision, 82);
+  assert.equal(bundle.document.selection.theme.revision, 84);
   assert.deepEqual(
     COOP_SUPPORTED_PICTURE_BINDINGS.map((row) => row.themeRevision),
-    [82, 82, ...retained.flatMap((revision) => [revision, revision])],
+    [84, 84, ...retained.flatMap((revision) => [revision, revision])],
   );
   assert.deepEqual(
     COOP_RETAINED_PICTURE_BINDINGS,
@@ -93,7 +94,7 @@ test('integrated82 retains complete58–81 picture and actor records and origina
       row.collection,
     ]),
     [
-      ['fpv', 82, null],
+      ['fpv', 84, null],
       ['fpv', 58, null],
       ['fpv', 59, null],
       ['fpv', 60, null],
@@ -118,6 +119,8 @@ test('integrated82 retains complete58–81 picture and actor records and origina
       ['fpv', 79, null],
       ['fpv', 80, null],
       ['fpv', 81, null],
+      ['fpv', 82, null],
+      ['fpv', 83, null],
     ],
   );
   const slots = [
@@ -131,7 +134,7 @@ test('integrated82 retains complete58–81 picture and actor records and origina
   ];
   assert.equal(slots.length, 8);
   const old = snapshot(58),
-    current = snapshot(82);
+    current = snapshot(84);
   for (const slot of slots) {
     const asset = current.resolved.assets[slot];
     assert.deepEqual(asset, old.resolved.assets[slot], slot);
@@ -157,6 +160,7 @@ test('integrated82 retains complete58–81 picture and actor records and origina
 
 for (const revision of [
   58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81,
+  82, 83,
 ]) {
   test(`exact${revision} built-in and historical-import attempts retain their own verified lease`, async () => {
     for (const [pack, levelId, picture] of [
@@ -218,7 +222,7 @@ for (const revision of [
   });
 }
 
-test('finite host authority rejects54,57,83, other themes and collections before reads', async () => {
+test('finite host authority rejects54,57,85, other themes and collections before reads', async () => {
   for (const pack of [COOP_STARTER_PACK, imported]) {
     for (const change of [
       (s) => {
@@ -228,7 +232,7 @@ test('finite host authority rejects54,57,83, other themes and collections before
         s.resolved.theme.revision = 57;
       },
       (s) => {
-        s.resolved.theme.revision = 83;
+        s.resolved.theme.revision = 85;
       },
       (s) => {
         s.resolved.theme.id = 'other';
@@ -280,13 +284,13 @@ test('legacy singular policy retains exact59 support and malformed finite lists 
   }
 });
 
-test('historical picture authority remains bounded to twenty-five exact distinct revisions', () => {
+test('historical picture authority remains bounded to twenty-seven exact distinct revisions', () => {
   const policies = [
     58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81,
-    82, 83,
+    82, 83, 84, 85,
   ].map((themeRevision) => ({
     ...COOP_RETAINED_HISTORICAL_IMPORT_PICTURE_POLICY,
     themeRevision,
   }));
-  assert.throws(() => fixture(82, imported, imported.levels[0].id, policies), /item budget/);
+  assert.throws(() => fixture(84, imported, imported.levels[0].id, policies), /item budget/);
 });
