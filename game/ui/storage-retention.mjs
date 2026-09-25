@@ -1,4 +1,4 @@
-import { localizedText, t } from '../i18n/index.mjs';
+import { localizedText, t, localizedMessage } from '../i18n/index.mjs';
 /** Browser-origin retention only. This does not install or verify downloads. */
 export function attachStorageRetention({
   button,
@@ -17,9 +17,13 @@ export function attachStorageRetention({
     // Keep the focused action and ordinary Back available while the browser decides.
     button.setAttribute('aria-busy', String(busy));
   };
-  const granted = t('interface:retentionGrantedKeepBackupsYouCanStillClearSiteData');
-  const unsupported = t('interface:thisBrowserCannotRequestDownloadRetentionKeepBackups');
-  const requesting = t('interface:askingTheBrowserYouCanCloseSettingsWhileItDecides');
+  const granted = localizedMessage('interface:retentionGrantedKeepBackupsYouCanStillClearSiteData');
+  const unsupported = localizedMessage(
+    'interface:thisBrowserCannotRequestDownloadRetentionKeepBackups',
+  );
+  const requesting = localizedMessage(
+    'interface:askingTheBrowserYouCanCloseSettingsWhileItDecides',
+  );
   async function refresh() {
     if (destroyed || !isOpen()) return;
     active = true;
@@ -29,14 +33,14 @@ export function attachStorageRetention({
       await pending.done;
       if (!current(version)) return;
     }
-    show(version, t('interface:checkingDownloadRetention'));
+    show(version, localizedMessage('interface:checkingDownloadRetention'));
     try {
       const storage = browser?.storage;
       if (typeof storage?.persisted !== 'function') {
         show(
           version,
           typeof storage?.persist === 'function'
-            ? t('interface:retentionStatusIsUnavailableYouCanStillAskThisBrowser')
+            ? localizedMessage('interface:retentionStatusIsUnavailableYouCanStillAskThisBrowser')
             : unsupported,
         );
         return;
@@ -48,11 +52,11 @@ export function attachStorageRetention({
         retained
           ? granted
           : typeof storage.persist === 'function'
-            ? t('interface:retentionIsNotEnabledDownloadsMayBeRemovedByThe')
+            ? localizedMessage('interface:retentionIsNotEnabledDownloadsMayBeRemovedByThe')
             : unsupported,
       );
     } catch {
-      show(version, t('interface:couldNotCheckRetentionKeepBackups'));
+      show(version, localizedMessage('interface:couldNotCheckRetentionKeepBackups'));
     }
   }
   function request() {
@@ -73,10 +77,15 @@ export function attachStorageRetention({
         if (typeof retained !== 'boolean') throw new Error(t('interface:invalidRetentionResult'));
         show(
           version,
-          retained ? granted : t('interface:notGrantedByThisBrowserDownloadsMayBeRemovedKeep'),
+          retained
+            ? granted
+            : localizedMessage('interface:notGrantedByThisBrowserDownloadsMayBeRemovedKeep'),
         );
       } catch {
-        show(version, t('interface:couldNotRequestRetentionYouCanTryAgainKeepBackups'));
+        show(
+          version,
+          localizedMessage('interface:couldNotRequestRetentionYouCanTryAgainKeepBackups'),
+        );
       } finally {
         if (pending === token) pending = null;
       }
