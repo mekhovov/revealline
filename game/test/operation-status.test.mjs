@@ -120,3 +120,28 @@ test('measured progress is accessible without repeating the live phase announcem
   assert.equal(announcements, 2);
   assert.equal(meter.hidden, true);
 });
+
+test('measured file counts translate with locale-aware numbers without changing the meter', (context) => {
+  const locale = getLocale();
+  context.after(() => setLocale(locale, { persist: false }));
+  const { presenter, target } = boundary();
+  context.after(() => presenter.dispose());
+  const lease = presenter.begin({ message: 'Files' });
+  const meter = target.querySelector('progress');
+  for (const total of [1, 2, 5, 11, 21, 22, 1.5, 1200]) {
+    lease.update({ progress: { completed: 0, total, unit: 'files' } });
+    for (const locale of ['uk', 'en']) {
+      setLocale(locale, { persist: false });
+      assert.equal(
+        meter.getAttribute('aria-label'),
+        t('common:progress.files', {
+          count: total,
+          completed: new Intl.NumberFormat(locale).format(0),
+          total: new Intl.NumberFormat(locale).format(total),
+        }),
+      );
+      assert.equal(meter.max, total);
+      assert.equal(meter.value, 0);
+    }
+  }
+});
