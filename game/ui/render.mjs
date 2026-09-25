@@ -355,7 +355,7 @@ export class BoardPainter {
     const finale = fullReveal ? celebrationFrame(this.celebration) : null;
     const revealAlpha = fullReveal ? 1 - finale.reveal : 1;
     const p = presentation?.canvas.palette || this.theme.palette,
-      t = state.time;
+      time = state.time;
     const classic = fullReveal ? null : classicView(state);
     const canvasCSSWidth =
       Number.isFinite(displayCSSWidth) && displayCSSWidth > 0
@@ -610,7 +610,7 @@ export class BoardPainter {
     }
     if (!fullReveal) {
       for (const zone of state.signalZones || []) {
-        const suppressed = zone.suppressedUntil > t,
+        const suppressed = zone.suppressedUntil > time,
           xx = zone.x * CELL,
           yy = zone.y * CELL,
           ww = zone.w * CELL,
@@ -715,7 +715,7 @@ export class BoardPainter {
           ctx.strokeStyle = p.accent;
           ctx.globalAlpha = 0.2;
           ctx.beginPath();
-          ctx.arc(x, y, 12 + Math.sin(t * 3) * 3, 0, TAU);
+          ctx.arc(x, y, 12 + Math.sin(time * 3) * 3, 0, TAU);
           ctx.stroke();
           ctx.globalAlpha = 1;
         }
@@ -733,7 +733,7 @@ export class BoardPainter {
         if (f.kind === 'impact-pulse' && !reduced) {
           const phase = Math.max(
             0,
-            Math.min(1, 1 - (f.until - t) / (state.classRecipe?.duration || 1)),
+            Math.min(1, 1 - (f.until - time) / (state.classRecipe?.duration || 1)),
           );
           ctx.beginPath();
           ctx.arc(f.x * CELL, f.y * CELL, (f.radius || 3) * CELL * phase, 0, TAU);
@@ -745,7 +745,7 @@ export class BoardPainter {
       // gets a compact marker in the ordinary actor pass afterward.
       for (const e of state.enemies) {
         if (e.type !== 'relay-sentinel' || state.encounter?.defeated) continue;
-        const stunned = (e.stunnedUntil || 0) > t;
+        const stunned = (e.stunnedUntil || 0) > time;
         ctx.globalAlpha = stunned ? 0.4 : 1;
         const body = this.enemyBody(actorFrames.get(e.id), enemySprites[e.type]);
         drawPresentedActor(
@@ -801,8 +801,8 @@ export class BoardPainter {
           }
           continue;
         }
-        const stunned = (e.stunnedUntil || 0) > t,
-          slowed = (e.slowUntil || 0) > t;
+        const stunned = (e.stunnedUntil || 0) > time,
+          slowed = (e.slowUntil || 0) > time;
         ctx.globalAlpha = stunned ? 0.4 : 1;
         const body = this.enemyBody(actorFrames.get(e.id), enemySprites[e.type]);
         drawPresentedActor(
@@ -814,7 +814,7 @@ export class BoardPainter {
           body?.record,
         );
         ctx.globalAlpha = 1;
-        if ((state.ability.scanUntil || 0) > t && e.type === 'bouncer' && !stunned) {
+        if ((state.ability.scanUntil || 0) > time && e.type === 'bouncer' && !stunned) {
           ctx.strokeStyle = p.accent;
           ctx.setLineDash([3, 5]);
           ctx.beginPath();
@@ -928,7 +928,7 @@ export class BoardPainter {
       ctx.lineWidth = 1;
       ctx.stroke();
       ctx.restore();
-      if ((state.ability.shieldUntil || 0) > t || state.player.graceUntil > t) {
+      if ((state.ability.shieldUntil || 0) > time || state.player.graceUntil > time) {
         ctx.strokeStyle = p.safe;
         ctx.lineWidth = 2;
         ctx.beginPath();
