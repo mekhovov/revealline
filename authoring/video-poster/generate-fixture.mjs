@@ -45,8 +45,16 @@ if ((await fs.realpath(out)) !== path.join(realCache, path.relative(cache, out))
   throw new Error('Fixture output changed location before generation.');
 const clip = path.join(out, 'owned-poster-fixture.mp4');
 const ffmpeg = spawnSync('ffmpeg', ['-version'], { encoding: 'utf8' });
+const ffmpegFilters =
+  ffmpeg.status === 0
+    ? spawnSync('ffmpeg', ['-hide_banner', '-filters'], { encoding: 'utf8' })
+    : { status: null, stdout: '', stderr: '' };
 let command, engine, generator;
-if (ffmpeg.status === 0) {
+if (
+  ffmpeg.status === 0 &&
+  ffmpegFilters.status === 0 &&
+  /\bdrawtext\b/.test(`${ffmpegFilters.stdout}\n${ffmpegFilters.stderr}`)
+) {
   const font = path
     .join(root, 'game/ui/fonts/field-kit/ibm-plex-mono-500.woff2')
     .replace(/([\\':])/g, '\\$1');
@@ -69,7 +77,7 @@ if (ffmpeg.status === 0) {
     '+faststart',
     clip,
   ];
-  engine = ffmpeg.stdout;
+  engine = `${ffmpeg.stdout}\n${ffmpegFilters.stdout}`;
   generator = 'ffmpeg testsrc2 + burned frame number; no audio';
 } else {
   if (process.platform !== 'darwin')
@@ -152,6 +160,13 @@ const record = {
   scriptSha256: hash(await fs.readFile(fileURLToPath(import.meta.url))),
   clip: { path: clip, bytes: bytes.length, sha256: hash(bytes), mime: 'video/mp4' },
   authored: { width: 640, height: 360, fps: 10, frames: 60, durationSeconds: 6, audio: false },
+  visualTrimQualification: {
+    sourceRange: { startSeconds: 1, endSeconds: 4 },
+    expectedStartFrame: 10,
+    expectedLastFrame: 39,
+    evidence:
+      'The burned frame/time label and per-second visual sequence make a shifted start or end visible. Production qualification still requires fresh browser-presented timestamps and decoded RGB evidence from the exact generated and exported hashes.',
+  },
   limits:
     'Generated diagnostic fixture, not artwork or browser decode evidence. Native export may vary by SDK/encoder; actual file hash is recorded. No audible-track qualification is possible with this silent clip.',
 };

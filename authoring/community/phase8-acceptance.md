@@ -7,7 +7,8 @@ audio conversion remains open**.
 
 The original final scoped run passed 100/100 tests across the adapter, editor boundary, poster
 capture/workshop, mixed-media intake/review and release-build graph. The follow-up exact-byte audio
-gate passed 36/36 focused adapter, editor-boundary and workshop tests.
+gate passed 36/36 focused adapter, editor-boundary and workshop tests. The visual-boundary
+follow-up passed 44/44 focused editor, adapter, workshop and release-build tests.
 
 - Playback ranges validate positive in-bounds timing and retain the complete original.
 - Directional decoded-frame stepping requires browser presented-frame evidence and rejects an estimate-only
@@ -20,6 +21,9 @@ gate passed 36/36 focused adapter, editor-boundary and workshop tests.
   audio-bearing outputs stay private even when an adapter claims verified synchronization.
 - Modeled transformed output is withheld unless its bytes differ and a fresh decoder confirms its
   hash, byte count, duration, MIME, width and height.
+- Exact source and output bytes are reopened for four fresh presented-frame captures. Authenticated
+  start/end PNGs must have aligned observed timestamps and pass bounded 24 × 14 decoded RGB
+  comparisons. Missing, changed or stale visual evidence withholds the download.
 - Unchanged bytes, duration drift and changed orientation are rejected by the outer boundary.
 - Workshop tests cover frame-step enablement, estimate-only disablement, playback/trim wording,
   unsupported conversion, verified output URL lifetime and explicit zero-audio provenance.
@@ -43,22 +47,24 @@ cross-check rather than a portable repository fixture.
 
 On 2026-09-25 the built-in browser loaded the local Video poster workshop from the production
 server path. It exposed separate Local source, Playback range and Optional physical trim sections;
-all media-dependent controls began disabled, and no module-startup error appeared. The real
-silent-AVC fixture then passed this production path:
+all media-dependent controls began disabled, and no module-startup error appeared. The owned
+macOS AVAssetWriter fixture has six one-second color cards, burned frame/time labels and a moving
+bar. The generator selected that route after detecting that local FFmpeg lacked `drawtext`; it
+recorded its exact command and script hash without committing video bytes. That real silent-AVC
+fixture then passed the production path:
 
 - source: MP4, AVC/H.264, no audio, 640 × 360, 6 seconds, 75,767 bytes, SHA-256
-  `5abb074b8a740a3305b1d8c6b84466e46eb51d853e2faacad592182999b2c1ea`;
+  `f0f4e54d2154572f1b32f5ad2b9d35db6a112ec8d944a5a0f12214d4bb22c06f`;
 - requested physical range: 1–4 seconds;
 - capability: the lazy Mediabunny load confirmed browser AVC decode and encode support;
 - output: MP4, 640 × 360, 3 seconds, 33,756 bytes, SHA-256
-  `91c71caa885c4a505fe2721d2e73deff1894930f37fdad2a02f3a5b78574e2fc`;
-- result: changed bytes passed fresh browser reinspection, the download appeared as
-  `RevealLine-trimmed.mp4`, audio was labeled `not-present`, and the browser console had no warning
-  or error.
-
-That browser run predates the follow-up exact-byte audio inventory. Its transform evidence remains
-valid for the earlier boundary, while the new source/output track-inventory path has automated
-evidence only until the browser acceptance is repeated.
+  `6f788a87022a8d120482bd89c62dfae611d9bbe7b633b00c290468de4bdf4674`;
+- decoded visual boundary error: start `0.000284`, end `0.000533`, both below the recorded `0.08`
+  mean RGB limit and with presented-frame timestamps bound to the exact hashes and 1–4 second
+  range;
+- result: changed bytes, decoded output, exact-byte zero-audio inventories and both visual edges
+  passed. The download appeared as `RevealLine-trimmed.mp4`, audio was labeled `not-present`, and
+  the browser console had no warning or error.
 
 ## Build note
 
@@ -75,7 +81,6 @@ gate. That full-tree snapshot gate remains open; it must not be reported as a su
 - Qualify silent AVC input/output in Firefox and Safari as well as the built-in Chromium browser.
 - Add an independent decoded-audio timestamp and synchronization verifier before enabling audio;
   the current same-parser track inventory proves track absence only.
-- Verify physical trim start/end frames with a dedicated visual timestamp fixture.
 - Verify orientation metadata, audio synchronization and target-browser playback on transformed
   files.
 - Add resizing, compression and broader conversion only after their decoded output checks exist.

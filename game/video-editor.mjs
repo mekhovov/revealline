@@ -1,5 +1,12 @@
 import { required } from './data-json.mjs';
 import { openVideoPosterSource, VIDEO_POSTER_LIMITS } from './video-poster.mjs';
+import {
+  authenticateVisualTrimInspection,
+  inspectDecodedVisualTrim,
+  VISUAL_TRIM_INSPECTION_FORMAT,
+} from './video-trim-visual.mjs';
+
+export { inspectDecodedVisualTrim, VISUAL_TRIM_INSPECTION_FORMAT };
 
 export const VIDEO_EDIT_FORMAT = 'revealline-video-edit.v1';
 export const AUDIO_TRACK_INSPECTION_FORMAT = 'revealline-audio-track-inspection.v1';
@@ -145,6 +152,8 @@ export function createOptionalPhysicalTrimBoundary({
   loadAdapter,
   inspectVideo,
   inspectAudio,
+  inspectVisual = inspectDecodedVisualTrim,
+  decodePoster,
 } = {}) {
   let adapterPromise = null;
   const adapter = async () => {
@@ -221,8 +230,11 @@ export function createOptionalPhysicalTrimBoundary({
     required(outputSha256 !== info.sha256, 'Physical trim did not produce different output bytes.');
 
     const inspect = inspectVideo ?? openVideoPosterSource;
-    const output = await inspect(transformed.blob, { signal });
+    let source = null,
+      output = null;
     try {
+      source = await inspect(original, { signal });
+      output = await inspect(transformed.blob, { signal });
       const expectedDuration = playback.endSeconds - playback.startSeconds;
       const tolerance = Math.min(0.25, Math.max(0.05, expectedDuration * 0.02));
       required(
@@ -249,6 +261,34 @@ export function createOptionalPhysicalTrimBoundary({
         outputAudio.audioTrackCount === 0,
         'Physical trim output contains audio without decoded timing and synchronization evidence.',
       );
+      required(
+        source.info.sha256 === info.sha256 &&
+          source.info.bytes === original.size &&
+          source.info.mime === info.mime &&
+          source.info.width === info.width &&
+          source.info.height === info.height &&
+          source.info.durationSeconds === info.durationSeconds,
+        'Reopened physical trim source differs from the inspected source facts.',
+      );
+      required(
+        typeof inspectVisual === 'function',
+        'Physical trim needs decoded start/end visual inspection before it can publish bytes.',
+      );
+      const visual = authenticateVisualTrimInspection(
+        await inspectVisual(
+          {
+            source,
+            output,
+            sourceInfo: source.info,
+            outputInfo: output.info,
+            range: playback,
+          },
+          { signal, ...(decodePoster ? { decodePoster } : {}) },
+        ),
+        source.info,
+        output.info,
+        playback,
+      );
       return Object.freeze({
         blob: transformed.blob,
         info: output.info,
@@ -269,10 +309,12 @@ export function createOptionalPhysicalTrimBoundary({
             verification: 'authenticated-container-track-inventory',
             note: 'Separate exact-byte inspections found zero audio tracks in the source and output. No audio synchronization claim applies.',
           }),
+          visual,
         }),
       });
     } finally {
-      output.dispose();
+      source?.dispose();
+      output?.dispose();
     }
   }
 
