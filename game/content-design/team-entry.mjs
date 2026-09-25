@@ -51,14 +51,14 @@ export async function createTeamGreyboxEntry({
     : partnerSpecialist
       ? createTeamPartnerSpecialistOriginalCandidates()
       : specialist
-      ? createTeamSpecialistOriginalCandidates()
-      : impact
-        ? createTeamImpactOriginalCandidates()
-        : spatial
-          ? createTeamSpatialOriginalCandidates()
-          : pressure
-            ? createTeamPressureOriginalCandidates()
-            : createTeamJourneyCandidates({ artwork });
+        ? createTeamSpecialistOriginalCandidates()
+        : impact
+          ? createTeamImpactOriginalCandidates()
+          : spatial
+            ? createTeamSpatialOriginalCandidates()
+            : pressure
+              ? createTeamPressureOriginalCandidates()
+              : createTeamJourneyCandidates({ artwork });
   const preferences = createJourneyPreferences({ window: globalThis.window ?? globalThis });
   const snapshot = preferences.snapshot();
   const candidateJourney = createCandidateTeamHost(source, {
@@ -71,14 +71,14 @@ export async function createTeamGreyboxEntry({
       : partnerSpecialist
         ? { profileKey: TEAM_PARTNER_SPECIALIST_PROFILE_KEY }
         : specialist
-        ? { profileKey: TEAM_SPECIALIST_PROFILE_KEY }
-        : impact
-          ? { profileKey: TEAM_IMPACT_PROFILE_KEY }
-          : spatial
-            ? { profileKey: TEAM_SPATIAL_PROFILE_KEY }
-            : pressure
-              ? { profileKey: TEAM_PRESSURE_PROFILE_KEY }
-              : {},
+          ? { profileKey: TEAM_SPECIALIST_PROFILE_KEY }
+          : impact
+            ? { profileKey: TEAM_IMPACT_PROFILE_KEY }
+            : spatial
+              ? { profileKey: TEAM_SPATIAL_PROFILE_KEY }
+              : pressure
+                ? { profileKey: TEAM_PRESSURE_PROFILE_KEY }
+                : {},
   );
   await candidateProgress.load();
   return Object.freeze({
