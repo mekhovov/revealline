@@ -1,7 +1,8 @@
 import { journeyPictureCompletion } from '../journey/pictures.mjs';
+import { t, localizedText, formatNumber } from '../i18n/index.mjs';
 import { createJourneyArtworkView } from './journey-artwork.mjs';
 
-const labels = Object.freeze({ versus: 'Versus', team: 'Team' });
+const labels = Object.freeze({ versus: 'interface:versus2', team: 'interface:team' });
 
 /** A mode-local view of authenticated Journey originals. It reads the shared
  * presentation ledger but cannot award, replay or launch a mission. */
@@ -27,12 +28,15 @@ export function attachJourneyModePictures({
   dialog.dataset.journeyModePictures = mode;
   dialog.setAttribute('aria-labelledby', `${dialog.id}-title`);
   const heading = make('header');
-  const title = make('h2', `${labels[mode]} Journey pictures`);
+  const title = make('h2');
+  localizedText(title, () => t('interface:journeyPictures.modeTitle', { mode: t(labels[mode]) }));
   title.id = `${dialog.id}-title`;
-  const close = make('button', 'Back');
+  const close = make('button');
+  localizedText(close, () => t('common:actions.back'));
   close.type = 'button';
   heading.append(title, close);
-  const status = make('p', 'Loading Journey pictures…');
+  const status = make('p');
+  localizedText(status, () => t('interface:journeyPictures.loading'));
   status.setAttribute('role', 'status');
   status.setAttribute('aria-live', 'polite');
   const grid = make('div');
@@ -46,9 +50,11 @@ export function attachJourneyModePictures({
   canvas.setAttribute('role', 'img');
   const viewStatus = make('p');
   viewStatus.setAttribute('role', 'status');
-  const retry = make('button', 'Retry original download');
+  const retry = make('button');
+  localizedText(retry, () => t('interface:journeyPictures.retryDownload'));
   retry.type = 'button';
-  const back = make('button', 'Back to pictures');
+  const back = make('button');
+  localizedText(back, () => t('interface:journeyPictures.backToPictures'));
   back.type = 'button';
   viewer.append(viewTitle, canvas, viewStatus, retry, back);
   dialog.append(heading, status, grid, viewer);
@@ -116,42 +122,63 @@ export function attachJourneyModePictures({
         missionId: mission.id,
       });
       if (completion.state === 'unavailable')
-        entries.push({ ...mission, missionId: mission.id, reason: completion.reason });
+        entries.push({
+          ...mission,
+          missionId: mission.id,
+          reason: completion.reason,
+          reasonKey: completion.reasonKey,
+        });
     }
     for (const missionId of Object.keys(state.clears[mode] ?? {}))
       if (!known.has(missionId) && !entries.some((entry) => entry.missionId === missionId))
         entries.push({
           missionId,
-          name: 'Earlier Journey mission',
-          campaignTitle: 'Earlier edition',
-          reason:
-            'Original unavailable. Keep your progress backup and reopen its original game edition.',
+          nameKey: 'interface:journeyPictures.earlierMission',
+          campaignTitleKey: 'interface:journeyPictures.earlierEdition',
+          reasonKey: 'interface:journeyPictures.reopenOriginalEdition',
         });
     grid.replaceChildren();
     for (const [index, entry] of entries.entries()) {
       const card = make('article');
       card.className = 'journey-mode-picture-card';
       card.dataset.missionId = entry.missionId;
-      card.append(make('h3', entry.name), make('p', entry.campaignTitle));
+      const entryTitle = make('h3'),
+        entryCampaign = make('p');
+      localizedText(entryTitle, () => (entry.nameKey ? t(entry.nameKey) : entry.name));
+      localizedText(entryCampaign, () =>
+        entry.campaignTitleKey ? t(entry.campaignTitleKey) : entry.campaignTitle,
+      );
+      card.append(entryTitle, entryCampaign);
       if (entry.record) {
-        const view = make('button', 'View earned original');
+        const view = make('button');
+        localizedText(view, () => t('interface:journeyPictures.viewEarned'));
         view.type = 'button';
         view.dataset.pictureId = `${index}`;
         view.onclick = () => showRecord(entry.record, view);
         card.append(view);
-      } else card.append(make('p', entry.reason));
+      } else {
+        const reason = make('p');
+        localizedText(reason, () => (entry.reasonKey ? t(entry.reasonKey) : entry.reason));
+        card.append(reason);
+      }
       grid.append(card);
     }
     const earned = entries.filter((entry) => entry.record).length;
-    status.textContent = entries.length
-      ? `${earned} earned ${labels[mode]} original${earned === 1 ? '' : 's'}. This view does not award progress or start a mission.`
-      : `Complete a ${labels[mode]} Journey mission to earn its original picture.`;
+    localizedText(status, () =>
+      entries.length
+        ? t('interface:journeyPictures.modeEarned', {
+            count: earned,
+            formatted: formatNumber(earned),
+            mode: t(labels[mode]),
+          })
+        : t('interface:journeyPictures.completeMode', { mode: t(labels[mode]) }),
+    );
   }
   async function open(origin = button) {
     if (disposed || dialog.open) return false;
     const ticket = ++revision;
     opener = origin;
-    status.textContent = 'Loading Journey pictures…';
+    localizedText(status, () => t('interface:journeyPictures.loading'));
     grid.replaceChildren();
     viewer.hidden = true;
     grid.hidden = false;
@@ -162,7 +189,9 @@ export function attachJourneyModePictures({
     try {
       render();
     } catch (error) {
-      status.textContent = `Journey pictures could not load. Close and reopen to retry. ${error.message}`;
+      localizedText(status, () =>
+        t('interface:journeyPictures.modeLoadFailed', { error: error.message }),
+      );
     }
     return true;
   }
