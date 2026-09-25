@@ -91,25 +91,27 @@ async function currentJourneySources(root) {
     registerExecution(`game/content-design/route-definition.mjs#${id}`, route.source, 'solo');
     registerExecution(`game/content-design/route-definition.mjs#${id}`, route.source, 'versus');
   }
-  // The current mission library also exposes three manually selectable v9
-  // missions. Register its exact bounded navigation projection and full launch
-  // records, which have different indices but retain their authored identities.
-  const { spatialNextPriorEditionProjection } = await moduleAt(
+  // Read the same curated history as the runtime so a new default edition
+  // cannot silently leave its historical cards or full launch records unregistered.
+  const { spatialNextPriorEditionProjection, spatialNextPriorEditions } = await moduleAt(
     'mission-library/spatial-next-editions.mjs',
   );
-  const prior = await loadAuthoredJourneyRoute('whole-spatial-v9');
-  add('game/content-design/route-definition.mjs#whole-spatial-v9', prior);
-  for (const mode of ['solo', 'versus']) {
-    registerExecution(
-      'game/content-design/route-definition.mjs#whole-spatial-v9',
-      prior.source,
-      mode,
-    );
-    registerExecution(
-      'game/mission-library/spatial-next-editions.mjs#prior',
-      spatialNextPriorEditionProjection(prior.source),
-      mode,
-    );
+  const history = new Map(
+    [DEFAULT_JOURNEY_ROUTES.solo, DEFAULT_JOURNEY_ROUTES.versus]
+      .flatMap(spatialNextPriorEditions)
+      .map((edition) => [edition.routeId, edition]),
+  );
+  for (const { routeId, missionIds } of history.values()) {
+    const prior = await loadAuthoredJourneyRoute(routeId);
+    add(`game/content-design/route-definition.mjs#${routeId}`, prior);
+    for (const mode of ['solo', 'versus']) {
+      registerExecution(`game/content-design/route-definition.mjs#${routeId}`, prior.source, mode);
+      registerExecution(
+        `game/mission-library/spatial-next-editions.mjs#${routeId}`,
+        spatialNextPriorEditionProjection(prior.source, missionIds),
+        mode,
+      );
+    }
   }
   const themes = JSON.parse(
     await fs.readFile(path.join(root, 'game/content-design/themes.json'), 'utf8'),
