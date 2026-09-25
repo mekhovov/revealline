@@ -509,9 +509,7 @@ function showReview(pack) {
     t('interface:creator.packageSummary', {
       size: mib(pack.bytes),
       derivatives: t('common:counts.pngDerivatives', { count: project.assets.length }),
-      videos: storyCount
-        ? t('interface:creator.withVictoryVideos', { count: storyCount })
-        : '',
+      videos: storyCount ? t('interface:creator.withVictoryVideos', { count: storyCount }) : '',
     }),
   );
   $('review').hidden = false;
@@ -558,8 +556,7 @@ function choose(file) {
   defaultOwned.delete('mission-title');
   invalidate();
   $('mission-title').value =
-    file.name.replace(/\.[^.]+$/, '').slice(0, 160) ||
-    t('interface:creator.defaultLevelTitle');
+    file.name.replace(/\.[^.]+$/, '').slice(0, 160) || t('interface:creator.defaultLevelTitle');
   $('fit').disabled = false;
   status(
     localizedMessage('interface:creator.fileSelected', {
@@ -602,10 +599,7 @@ function chooseFiles(files) {
   mediaMode = false;
   mediaSource = null;
   if (selected.length > 1 && !batchEnabled)
-    return status(
-      localizedMessage('interface:creator.batchUnavailable'),
-      true,
-    );
+    return status(localizedMessage('interface:creator.batchUnavailable'), true);
   if (selected.length === 1) {
     batch.setFiles([]);
     $('batch-options').hidden = true;
@@ -746,8 +740,7 @@ async function listInstalled() {
   list.replaceChildren();
   try {
     const manifests = await installedCreatorManifests(store);
-    if (!manifests.length)
-      localizedText(list, () => t('interface:creator.noCampaignsInstalled'));
+    if (!manifests.length) localizedText(list, () => t('interface:creator.noCampaignsInstalled'));
     for (const manifest of manifests) {
       const row = document.createElement('div');
       row.className = 'installed-item';
@@ -809,10 +802,7 @@ for (const key of [
     readLabels();
     if (content) {
       clearTimeout(saveTimer);
-      localizedText(
-        $('save-status'),
-        localizedMessage('interface:creator.savingDraftChanges'),
-      );
+      localizedText($('save-status'), localizedMessage('interface:creator.savingDraftChanges'));
       saveTimer = setTimeout(() => {
         void saveDraft().catch(fail);
       }, 500);

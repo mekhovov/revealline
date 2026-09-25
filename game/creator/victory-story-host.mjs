@@ -22,15 +22,17 @@ export function createCreatorVictoryStoryHost({
   const report = (snapshot) => {
     state = snapshot.state;
     reason = snapshot.reason ?? null;
-    localizedText(nodes.status, () =>
-      snapshot.reason ||
-      t(
-        snapshot.state === 'playing'
-          ? 'interface:creator.victoryStoryPlaying'
-          : snapshot.state === 'paused'
-            ? 'interface:creator.victoryStoryPaused'
-            : 'interface:creator.victoryStoryOptional',
-      ),
+    localizedText(
+      nodes.status,
+      () =>
+        snapshot.reason ||
+        t(
+          snapshot.state === 'playing'
+            ? 'interface:creator.victoryStoryPlaying'
+            : snapshot.state === 'paused'
+              ? 'interface:creator.victoryStoryPaused'
+              : 'interface:creator.victoryStoryOptional',
+        ),
     );
     nodes.status.classList.toggle('error', ['error', 'blocked'].includes(snapshot.state));
     if (nodes.retry) nodes.retry.hidden = snapshot.state !== 'error';

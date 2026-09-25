@@ -90,11 +90,7 @@ function document(source) {
     ),
     t('errors:creator.sourceCreditsBounded'),
   );
-  exactKeys(
-    value.editing,
-    ['fit'],
-    t('interface:creator.label.editingInformation'),
-  );
+  exactKeys(value.editing, ['fit'], t('interface:creator.label.editingInformation'));
   required(
     ['contain', 'cover'].includes(value.editing.fit) &&
       originalHashes(value.originalSha256).length <= 50 &&
@@ -142,11 +138,7 @@ export async function prepareCreatorSource(
     .map(({ sha256, blob }) =>
       Object.freeze({
         sha256,
-        blob: ownCreatorBlob(
-          blob,
-          MAX_ASSET_BYTES,
-          t('interface:creator.label.sourcePicture'),
-        ),
+        blob: ownCreatorBlob(blob, MAX_ASSET_BYTES, t('interface:creator.label.sourcePicture')),
       }),
     )
     .sort((a, b) => a.sha256.localeCompare(b.sha256));
@@ -181,11 +173,7 @@ export function exportCreatorSource(source) {
 }
 export async function importCreatorSource(file, { signal } = {}) {
   creatorAbort(signal);
-  const blob = ownCreatorBlob(
-    file,
-    MAX_BYTES,
-    t('interface:creator.label.sourceBackup'),
-  );
+  const blob = ownCreatorBlob(file, MAX_BYTES, t('interface:creator.label.sourceBackup'));
   required(blob.size >= 12, t('errors:creator.truncatedSourceBackup'));
   const header = new Uint8Array(await blob.slice(0, 12).arrayBuffer());
   required(
@@ -202,10 +190,7 @@ export async function importCreatorSource(file, { signal } = {}) {
   );
   let offset = size + 12;
   const assets = record.assets.map((a) => {
-    required(
-      offset + a.bytes <= blob.size,
-      t('errors:creator.sourcePictureBytesMissing'),
-    );
+    required(offset + a.bytes <= blob.size, t('errors:creator.sourcePictureBytesMissing'));
     const result = { sha256: a.sha256, blob: blob.slice(offset, offset + a.bytes) };
     offset += a.bytes;
     return result;
@@ -268,10 +253,7 @@ export function createCreatorDraftBackend(store) {
         throw error;
       }
       const revision = (previous ?? 0) + 1;
-      required(
-        revision <= 50,
-        t('errors:creator.checkpointLimitReached'),
-      );
+      required(revision <= 50, t('errors:creator.checkpointLimitReached'));
       const blob = new Blob([canonicalJSON(source.document)], { type: 'application/json' });
       const sha256 = await creatorSHA256(await blob.arrayBuffer());
       const additions = [
