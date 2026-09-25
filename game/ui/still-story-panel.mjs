@@ -1,3 +1,5 @@
+import { contentText } from '../i18n/content.mjs';
+import { t, localizedText, localizedAttribute, localizedMessage } from '../i18n/index.mjs';
 import { createOperationStatus } from './operation-status.mjs';
 import { canonicalJSON, required } from '../data-json.mjs';
 import { openVideoPosterSource } from '../video-poster.mjs';
@@ -37,24 +39,24 @@ export function createStillStoryPanel({
   ])
     required(
       typeof storyStore?.[method] === 'function',
-      'Story authoring needs a compatible shared story store.',
+      t("interface:storyAuthoringNeedsACompatibleSharedStoryStore"),
     );
   const node = (tag, id, text = '') => {
       const n = doc.createElement(tag);
       n.id = `still-media-story-${id}`;
-      n.textContent = text;
+      localizedText(n, () =>text);
       return n;
     },
     section = node('section', 'section'),
-    title = node('h3', 'title', 'Optional story'),
+    title = node('h3', 'title', localizedMessage("interface:optionalStory")),
     note = node(
       'p',
       'note',
-      'Choose a saved picture revision before preparing its story. Saved flights and earned pictures are unchanged.',
+      localizedMessage("interface:chooseASavedPictureRevisionBeforePreparingItsStorySaved"),
     ),
     selected = node('p', 'selected'),
     binding = node('p', 'binding'),
-    status = node('p', 'status', 'Reload to read story originals.'),
+    status = node('p', 'status', localizedMessage("interface:reloadToReadStoryOriginals")),
     fields = node('div', 'fields'),
     actions = node('div', 'actions');
   status.setAttribute('role', 'status');
@@ -70,7 +72,10 @@ export function createStillStoryPanel({
   const control = (tag, id, label, attrs = {}, parent = fields) => {
       const wrapper = node('label', `${id}-label`, label),
         n = node(tag, id);
-      for (const [k, v] of Object.entries(attrs)) n.setAttribute(k, v);
+      for (const [k, v] of Object.entries(attrs)) {
+        if (['aria-label', 'title', 'placeholder', 'alt'].includes(k)) localizedAttribute(n, k, v);
+        else n.setAttribute(k, v);
+      }
       wrapper.append(n);
       parent.append(wrapper);
       return n;
@@ -82,75 +87,75 @@ export function createStillStoryPanel({
       parent.append(n);
       return n;
     };
-  const videoFile = control('input', 'file', 'Owned video (MP4 or WebM, 64 MiB maximum)', {
+  const videoFile = control('input', 'file', t("interface:ownedVideoMp4OrWebm64MibMaximum"), {
       type: 'file',
       accept: 'video/mp4,video/webm',
     }),
-    start = control('input', 'start', 'Story starts at (seconds)', {
+    start = control('input', 'start', t("interface:storyStartsAtSeconds"), {
       type: 'number',
       min: '0',
       step: '0.01',
     }),
-    end = control('input', 'end', 'Story ends at (seconds)', {
+    end = control('input', 'end', t("interface:storyEndsAtSeconds"), {
       type: 'number',
       min: '0',
       step: '0.01',
     }),
-    frameTime = control('input', 'frame-time', 'Poster frame at (seconds)', {
+    frameTime = control('input', 'frame-time', t("interface:posterFrameAtSeconds"), {
       type: 'number',
       min: '0',
       step: '0.01',
     }),
-    description = control('input', 'description', 'Story description', {
+    description = control('input', 'description', t("interface:storyDescription"), {
       type: 'text',
       maxlength: '2048',
     }),
-    history = control('select', 'history', 'Saved story for this picture');
+    history = control('select', 'history', t("interface:savedStoryForThisPicture"));
   const timeRanges = [start, end, frameTime].map((numberField) => {
     const range = node('input', `${numberField.id.slice('still-media-story-'.length)}-range`);
     range.setAttribute('type', 'range');
     range.setAttribute('min', '0');
     range.setAttribute('max', '120');
     range.setAttribute('step', '0.01');
-    range.setAttribute('aria-label', `${numberField.closest('label').textContent} slider`);
+    localizedAttribute(range, "aria-label", () => t("gameplay:slider", { value1: numberField.closest('label').textContent }));
     numberField.closest('label').append(range);
     return { numberField, range };
   });
-  const inspectButton = button('inspect', 'Inspect chosen video', () => inspectVideo()),
-    captureButton = button('capture', 'Capture picture draft', () => capture()),
-    prepareButton = button('prepare', 'Prepare new story', () => prepare(false)),
-    prepareSaved = button('prepare-saved', 'Prepare saved story', () => prepare(true)),
-    saveButton = button('save', 'Save prepared story', () => save()),
-    clearButton = button('clear', 'Clear story binding', () => clear());
+  const inspectButton = button('inspect', localizedMessage("interface:inspectChosenVideo"), () => inspectVideo()),
+    captureButton = button('capture', localizedMessage("interface:capturePictureDraft"), () => capture()),
+    prepareButton = button('prepare', localizedMessage("interface:prepareNewStory"), () => prepare(false)),
+    prepareSaved = button('prepare-saved', localizedMessage("interface:prepareSavedStory"), () => prepare(true)),
+    saveButton = button('save', localizedMessage("interface:savePreparedStory"), () => save()),
+    clearButton = button('clear', localizedMessage("interface:clearStoryBinding"), () => clear());
   const sourceFacts = node('p', 'source-facts'),
     frameFacts = node('p', 'frame-facts'),
     image = node('img', 'frame');
   image.hidden = true;
-  image.alt = 'Captured picture draft; not a saved assignment';
+  image.alt = t("interface:capturedPictureDraftNotASavedAssignment");
   const bundleSection = node('section', 'bundle'),
-    bundleTitle = node('h4', 'bundle-title', 'Story originals'),
+    bundleTitle = node('h4', 'bundle-title', localizedMessage("interface:storyOriginals")),
     bundleNote = node(
       'p',
       'bundle-note',
-      'Restore picture originals separately with .rlmedia. This file contains story history and video originals; no progress or audio.',
+      localizedMessage("interface:restorePictureOriginalsSeparatelyWithRlmediaThisFileContainsStory"),
     ),
     bundleFields = node('div', 'bundle-fields'),
     bundleActions = node('div', 'bundle-actions'),
     bundleFile = control(
       'input',
       'bundle-file',
-      'Story originals (.rlstory, 256 MiB maximum)',
+      t("interface:storyOriginalsRlstory256MibMaximum"),
       { type: 'file', accept: '.rlstory,application/vnd.revealline.story' },
       bundleFields,
     ),
-    mode = control('select', 'bundle-mode', 'Story binding restore policy', {}, bundleFields),
-    reviewText = node('p', 'bundle-review', 'No story backup reviewed.');
+    mode = control('select', 'bundle-mode', t("interface:storyBindingRestorePolicy"), {}, bundleFields),
+    reviewText = node('p', 'bundle-review', localizedMessage("interface:noStoryBackupReviewed"));
   const options = (select, values, value) => {
     select.replaceChildren(
       ...values.map(([id, text]) => {
         const n = doc.createElement('option');
         n.value = id;
-        n.textContent = text;
+        localizedText(n, () =>text);
         return n;
       }),
     );
@@ -159,29 +164,29 @@ export function createStillStoryPanel({
   options(
     mode,
     [
-      ['keep', 'Keep current bindings'],
-      ['restore', 'Restore incoming bindings'],
+      ['keep', t("interface:keepCurrentBindings")],
+      ['restore', t("interface:restoreIncomingBindings")],
     ],
     'keep',
   );
   const downloadPrepare = button(
       'prepare-download',
-      'Prepare story download',
+      localizedMessage("interface:prepareStoryDownload"),
       () => prepareDownload(),
       bundleActions,
     ),
-    download = node('a', 'download', 'Download story originals');
+    download = node('a', 'download', localizedMessage("interface:downloadStoryOriginals"));
   download.hidden = true;
   bundleActions.append(download);
   const bundleReview = button(
       'review',
-      'Review chosen story backup',
+      localizedMessage("interface:reviewChosenStoryBackup"),
       () => reviewBundle(),
       bundleActions,
     ),
     bundleRestore = button(
       'restore',
-      'Restore reviewed stories',
+      localizedMessage("interface:restoreReviewedStories"),
       () => restoreBundle(),
       bundleActions,
     );
@@ -228,7 +233,7 @@ export function createStillStoryPanel({
     const old = reviewed;
     reviewed = null;
     if (old) void cancelStoryBundleRestore(old.review).catch(() => {});
-    reviewText.textContent = 'No story backup reviewed.';
+    localizedText(reviewText, () =>t("interface:noStoryBackupReviewed"));
   }
   function releaseDownload() {
     if (downloadURL !== null) URLImpl.revokeObjectURL(downloadURL);
@@ -251,7 +256,7 @@ export function createStillStoryPanel({
     capturedURL = null;
     image.removeAttribute('src');
     image.hidden = true;
-    frameFacts.textContent = '';
+    localizedText(frameFacts, () =>'');
   }
   function sync(state = { ready, busy }) {
     ready = state.ready;
@@ -267,9 +272,9 @@ export function createStillStoryPanel({
       activeSelection = key;
       invalidate();
     }
-    selected.textContent = s?.pin
+    localizedText(selected, () =>s?.pin
       ? `${s.caption} · ${s.assigned ? 'current assignment' : 'historical revision'}`
-      : 'Save or select an exact picture revision to attach a story.';
+      : t("interface:saveOrSelectAnExactPictureRevisionToAttachA"));
     const bound =
         s?.pin &&
         metadata?.document.bindings?.find(
@@ -285,16 +290,16 @@ export function createStillStoryPanel({
             (p) => canonicalJSON(p.picturePin) === canonicalJSON(s.pin),
           ) ?? [])
         : [];
-    binding.textContent = current
-      ? `Selected story: ${current.description} · revision ${current.revision}${metadata.document.originals.includes(current.source.sha256) ? '' : ' · original unavailable'}`
-      : 'Selected story: none.';
+    localizedText(binding, () =>current
+      ? t("gameplay:selectedStoryRevision", { value1: contentText(current, 'description'), value2: current.revision, value3: metadata.document.originals.includes(current.source.sha256) ? '' : ' · original unavailable' })
+      : t("interface:selectedStoryNone"));
     options(
       history,
       [
-        ['', 'Choose a saved story…'],
+        ['', t("interface:chooseASavedStory")],
         ...rows.map((r) => [
           JSON.stringify([r.id, r.revision]),
-          `${r.description} · revision ${r.revision}`,
+          t("gameplay:revision", { value1: contentText(r, 'description'), value2: r.revision }),
         ]),
       ],
       history.value,
@@ -328,13 +333,13 @@ export function createStillStoryPanel({
         const check = () => {
           parentCheck();
           if (disposed || id !== serial || key !== selectionKey(getSelection()))
-            throw new DOMException('Story work cancelled.', 'AbortError');
+            throw new DOMException(t("interface:storyWorkCancelled"), 'AbortError');
         };
         check.adoptCapturedDraft = (selection) => {
           parentCheck();
           const next = selectionKey(selection);
           if (disposed || id !== serial || next !== selectionKey(getSelection()))
-            throw new DOMException('Story work cancelled.', 'AbortError');
+            throw new DOMException(t("interface:storyWorkCancelled"), 'AbortError');
           key = activeSelection = next;
         };
         try {
@@ -358,7 +363,7 @@ export function createStillStoryPanel({
       const next = await storyStore.readMetadata({ signal });
       check();
       metadata = next;
-      setStatus('Story history loaded. Preparation does not save a binding.');
+      setStatus(t("interface:storyHistoryLoadedPreparationDoesNotSaveABinding"));
     } catch (error) {
       check();
       metadata = null;
@@ -370,7 +375,7 @@ export function createStillStoryPanel({
     if (disposed || busy || !ready || !videoFile.files?.[0]) return false;
     invalidate();
     const file = videoFile.files[0];
-    return guarded('Inspecting video silently…', async (signal, check) => {
+    return guarded(t("interface:inspectingVideoSilently"), async (signal, check) => {
       let next = null;
       try {
         next = await openVideoPosterSource(file, { ...inspection, URLImpl, signal });
@@ -387,17 +392,17 @@ export function createStillStoryPanel({
           range.max = String(video.info.durationSeconds);
           range.value = numberField.value;
         }
-        sourceFacts.textContent = `${video.info.width} × ${video.info.height} · ${video.info.durationSeconds} seconds · ${video.info.bytes} original bytes`;
-        setStatus('Video inspected. Choose a segment and prepare an optional story.');
+        localizedText(sourceFacts, () =>`${video.info.width} × ${video.info.height} · ${video.info.durationSeconds} seconds · ${video.info.bytes} original bytes`);
+        setStatus(t("interface:videoInspectedChooseASegmentAndPrepareAnOptionalStory"));
       } finally {
         next?.dispose();
       }
     });
   }
   function number(input) {
-    required(input.value.trim() !== '', 'Enter an explicit time in seconds.');
+    required(input.value.trim() !== '', t("interface:enterAnExplicitTimeInSeconds"));
     const value = Number(input.value);
-    required(Number.isFinite(value), 'Enter a finite time in seconds.');
+    required(Number.isFinite(value), t("interface:enterAFiniteTimeInSeconds"));
     return value;
   }
   async function capture() {
@@ -405,7 +410,7 @@ export function createStillStoryPanel({
     invalidate();
     const owned = video,
       s = getSelection();
-    return guarded('Capturing the requested frame silently…', async (signal, check) => {
+    return guarded(t("interface:capturingTheRequestedFrameSilently"), async (signal, check) => {
       const captured = await owned.capture(
         number(frameTime),
         { id: makeId(), provenance: s.provenance },
@@ -425,9 +430,9 @@ export function createStillStoryPanel({
         image.src = capturedURL;
         image.hidden = false;
         const facts = captured.capture;
-        frameFacts.textContent = `Requested ${facts.requestedTime}s · ${facts.observedMediaTime === null ? 'observed timestamp unavailable' : `observed ${facts.observedMediaTime}s`} · playhead ${facts.playheadTime}s (${facts.timingEvidence}).`;
+        localizedText(frameFacts, () =>`Requested ${facts.requestedTime}s · ${facts.observedMediaTime === null ? 'observed timestamp unavailable' : `observed ${facts.observedMediaTime}s`} · playhead ${facts.playheadTime}s (${facts.timingEvidence}).`);
         setStatus(
-          'Captured picture draft. Save its assignment, then prepare its story. The original video is retained in this workshop.',
+          t("interface:capturedPictureDraftSaveItsAssignmentThenPrepareItsStory"),
         );
       } finally {
         if (url !== null) URLImpl.revokeObjectURL(url);
@@ -443,7 +448,7 @@ export function createStillStoryPanel({
       owned = video,
       caption = description.value,
       selectedHistory = history.value;
-    return guarded('Preparing the exact story and binding…', async (signal, check) => {
+    return guarded(t("interface:preparingTheExactStoryAndBinding"), async (signal, check) => {
       let review = null;
       try {
         if (existing) {
@@ -452,13 +457,13 @@ export function createStillStoryPanel({
               JSON.stringify([p.id, p.revision]) === selectedHistory &&
               canonicalJSON(p.picturePin) === canonicalJSON(s.pin),
           );
-          required(chosen, 'Choose an exact saved story.');
+          required(chosen, t("interface:chooseAnExactSavedStory"));
           review = await storyStore.stageBinding(
             { picturePin: s.pin, story: { id: chosen.id, revision: chosen.revision } },
             { ...inspection, expectedGeneration: baseline.generation, signal },
           );
         } else {
-          required(owned, 'Inspect a video first.');
+          required(owned, t("interface:inspectAVideoFirst"));
           const descriptor = {
             format: VICTORY_STORY_FORMAT,
             id: makeId(),
@@ -487,7 +492,7 @@ export function createStillStoryPanel({
         check();
         required(
           review.expectedGeneration === baseline.generation,
-          'Story history changed. Reload and prepare again.',
+          t("interface:storyHistoryChangedReloadAndPrepareAgain"),
         );
         prepared = { review, selection: selectionKey(s), ticket: s.ticket };
         review = null;
@@ -502,7 +507,7 @@ export function createStillStoryPanel({
   async function notified(result, check) {
     check();
     metadata = result;
-    setStatus('Story binding saved. Existing flights and earned pictures are unchanged.');
+    setStatus(t("interface:storyBindingSavedExistingFlightsAndEarnedPicturesAreUnchanged"));
     try {
       await onSaved(result);
     } catch (error) {
@@ -514,11 +519,11 @@ export function createStillStoryPanel({
     if (disposed || busy || !ready || !prepared) return false;
     const chosen = prepared;
     prepared = null;
-    return guarded('Saving the reviewed story binding…', async (signal, check) => {
+    return guarded(t("interface:savingTheReviewedStoryBinding"), async (signal, check) => {
       try {
         required(
           chosen.selection === selectionKey(getSelection()),
-          'Picture selection changed. Prepare again.',
+          t("interface:pictureSelectionChangedPrepareAgain"),
         );
         const result = await catalog.withCurrent(
           chosen.ticket,
@@ -538,7 +543,7 @@ export function createStillStoryPanel({
     const s = getSelection();
     if (!s?.pin || !metadata) return false;
     const generation = metadata.generation;
-    return guarded('Clearing this optional story binding…', async (signal, check) => {
+    return guarded(t("interface:clearingThisOptionalStoryBinding"), async (signal, check) => {
       let review = null;
       try {
         review = await storyStore.stageBinding(
@@ -561,11 +566,11 @@ export function createStillStoryPanel({
   async function prepareDownload() {
     if (disposed || busy || !ready || !metadata) return false;
     invalidate();
-    return guarded('Verifying story originals for download…', async (signal, check) => {
+    return guarded(t("interface:verifyingStoryOriginalsForDownload"), async (signal, check) => {
       const inventory = await storyStore.exportInventory({ signal }),
         still = await store.readMetadata({ signal });
       check();
-      activity?.update({ message: 'Verifying and packing story originals…', stage: 'exporting' });
+      activity?.update({ message: t("interface:verifyingAndPackingStoryOriginals"), stage: 'exporting' });
       const blob = await exportStoryBundle(inventory.document, inventory.assets, {
         still: still.document,
         signal,
@@ -594,7 +599,7 @@ export function createStillStoryPanel({
       return false;
     }
     setStatus(
-      'Download requested. Check your browser destination; this copy stays available to retry.',
+      t("interface:downloadRequestedCheckYourBrowserDestinationThisCopyStaysAvailable"),
     );
     if (requestDownload) {
       event?.preventDefault();
@@ -616,7 +621,7 @@ export function createStillStoryPanel({
     const file = bundleFile.files[0],
       restore = mode.value === 'restore',
       ticket = getSelection()?.ticket;
-    return guarded('Reviewing complete story originals…', async (signal, check) => {
+    return guarded(t("interface:reviewingCompleteStoryOriginals"), async (signal, check) => {
       let review = null;
       try {
         const imported = await importStoryBundle(file, { ...inspection, signal });
@@ -630,10 +635,10 @@ export function createStillStoryPanel({
         check();
         reviewed = { review, file, restore, ticket };
         review = null;
-        reviewText.textContent = `${reviewed.review.originals} available originals · ${reviewed.review.document.stories.length} retained stories. ${restore ? 'Incoming bindings will be restored.' : 'Current bindings will be kept.'} Nothing restored yet.`;
+        localizedText(reviewText, () =>t("gameplay:availableOriginalsRetainedStoriesNothingRestoredYet", { value1: reviewed.review.originals, value2: reviewed.review.document.stories.length, value3: restore ? t("interface:incomingBindingsWillBeRestored") : t("interface:currentBindingsWillBeKept") }));
         bundleRestore.disabled = false;
         bundleRestore.focus();
-        setStatus('Review complete. Restore explicitly to save this generation and policy.');
+        setStatus(t("interface:reviewCompleteRestoreExplicitlyToSaveThisGenerationAndPolicy"));
       } finally {
         if (review) await cancelStoryBundleRestore(review);
       }
@@ -644,12 +649,12 @@ export function createStillStoryPanel({
     const chosen = reviewed;
     reviewed = null;
     return guarded(
-      'Restoring reviewed story originals…',
+      t("interface:restoringReviewedStoryOriginals"),
       async (signal, check) => {
         try {
           required(
             chosen.file === bundleFile.files?.[0] && chosen.restore === (mode.value === 'restore'),
-            'File or policy changed. Review again.',
+            t("interface:fileOrPolicyChangedReviewAgain"),
           );
           const result = await catalog.withCurrent(
             chosen.ticket,
@@ -657,8 +662,7 @@ export function createStillStoryPanel({
             { signal },
           );
           await notified(result, check);
-          reviewText.textContent =
-            'Story originals restored. Picture originals, audio and game data use separate files.';
+          localizedText(reviewText, () =>t("interface:storyOriginalsRestoredPictureOriginalsAudioAndGameDataUse"));
         } finally {
           await cancelStoryBundleRestore(chosen.review);
         }
@@ -679,7 +683,7 @@ export function createStillStoryPanel({
     video?.dispose();
     video = null;
     releaseFrame();
-    sourceFacts.textContent = '';
+    localizedText(sourceFacts, () =>'');
     sync();
   };
   for (const field of [start, end, frameTime, description, history, bundleFile, mode])

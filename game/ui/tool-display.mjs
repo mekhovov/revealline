@@ -1,3 +1,4 @@
+import { t, localizedText } from '../i18n/index.mjs';
 import { createDisplayPreferences } from '../display-preferences.mjs';
 import { applyFieldKitCopy, fieldKitCopy } from './field-kit-copy.mjs';
 
@@ -8,7 +9,7 @@ export function mountToolDisplay({
   window: host = doc?.defaultView ?? globalThis,
   getStorage = () => host.localStorage,
 } = {}) {
-  if (!doc?.body) throw new Error('The display host needs a document body.');
+  if (!doc?.body) throw new Error(t("interface:theDisplayHostNeedsADocumentBody"));
   applyFieldKitCopy(doc);
   const controls = [...doc.querySelectorAll('[data-tool-text-size]')];
   const notice = doc.getElementById('host-display-notice');
@@ -18,7 +19,7 @@ export function mountToolDisplay({
   );
   // This live notice has one owner. Later cosmetic copy mounting must not erase
   // a failed-save message from an early interaction.
-  if (notice) notice.textContent = ordinaryNotice;
+  if (notice) localizedText(notice, () =>ordinaryNotice);
   let disposed = false,
     restoreTimer = null;
   const defer = host.setTimeout?.bind(host) ?? globalThis.setTimeout;
@@ -27,7 +28,7 @@ export function mountToolDisplay({
     window: host,
     getStorage,
     onWarning(message) {
-      if (!disposed && notice) notice.textContent = message || ordinaryNotice;
+      if (!disposed && notice) localizedText(notice, () =>message || ordinaryNotice);
     },
   });
   const render = (state) => {

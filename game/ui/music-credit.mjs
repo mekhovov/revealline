@@ -1,9 +1,10 @@
+import { t, localizedText } from '../i18n/index.mjs';
 /** Passive presentation only: transport, pause and navigation remain host-owned. */
 export function attachMusicCredit({ document: doc, root, pauseButton, prefix }) {
   const details = doc.createElement('section');
   details.id = `${prefix}-music-details`;
   details.className = 'music-credit-details';
-  details.setAttribute('aria-label', 'Current soundtrack details');
+  details.setAttribute('aria-label', t("interface:currentSoundtrackDetails"));
   const title = doc.createElement('p'),
     artist = doc.createElement('p'),
     file = doc.createElement('p'),
@@ -39,16 +40,16 @@ export function attachMusicCredit({ document: doc, root, pauseButton, prefix }) 
   function render(playback = {}, master = {}) {
     if (disposed) return;
     const track = playback.track,
-      name = text(track?.title, 'No track selected'),
-      performer = text(track?.artist, 'Artist not recorded'),
+      name = text(track?.title, t("interface:noTrackSelected")),
+      performer = text(track?.artist, t("interface:artistNotRecorded")),
       filename = text(
         track?.fileName,
-        track?.kind === 'synth' ? 'Built-in synthesized music' : 'Original filename not recorded',
+        track?.kind === 'synth' ? t("interface:builtInSynthesizedMusic") : t("interface:originalFilenameNotRecorded"),
       ),
       url = website(track),
       muted = master.muted || master.volume === 0 || playback.volume === 0,
       caption = !track
-        ? 'Music off'
+        ? t("interface:musicOff")
         : muted
           ? `Muted: ${name}`
           : playback.playing
@@ -57,10 +58,10 @@ export function attachMusicCredit({ document: doc, root, pauseButton, prefix }) 
       key = JSON.stringify([name, performer, filename, url?.href, caption]);
     if (key === identity) return;
     identity = key;
-    title.textContent = `Track: ${name}`;
-    artist.textContent = `Artist: ${performer}`;
-    file.textContent = `File: ${filename}`;
-    link.textContent = url ? `Source: ${url.hostname}` : 'Source website not recorded';
+    localizedText(title, () =>`Track: ${name}`);
+    localizedText(artist, () =>`Artist: ${performer}`);
+    localizedText(file, () =>`File: ${filename}`);
+    localizedText(link, () =>url ? `Source: ${url.hostname}` : t("interface:sourceWebsiteNotRecorded"));
     if (url) link.setAttribute('href', url.href);
     else link.removeAttribute('href');
     if (pauseButton) {

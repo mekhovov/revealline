@@ -1,3 +1,5 @@
+import { localizedText } from '../../game/i18n/index.mjs';
+import { t, localizedOption } from '../../game/i18n/index.mjs';
 globalThis.RevealLineToolLaunch?.attached();
 import { createOperationStatus } from '../../game/ui/operation-status.mjs';
 // Original review mockups only. This module never imports the game or writes player storage.
@@ -25,52 +27,52 @@ document.querySelectorAll('[data-drone]').forEach((element) => {
 
 const commands = (back = 'title') =>
   `<div class="mock-command"><button type="button" data-screen="${back}">← Back</button><span class="desktop-hints"><kbd>↑↓</kbd> Move <kbd>Enter</kbd> Choose</span><span>LAYOUT STUDY</span></div>`;
-const top = (title, detail = 'FPV / FIRST LIGHT') =>
+const top = (title, detail = t("tools:fpvFirstLight")) =>
   `<div class="mock-topline"><strong>${title}</strong><span>${detail}</span></div>`;
 const action = (label, screen, primary = false) =>
   `<button type="button" class="action${primary ? ' primary' : ''}" data-screen="${screen}">${label}</button>`;
 
 const missionNames = [
-  'First light',
-  'River crossing',
-  'Open field',
-  'Quiet woodland',
-  'Relay district',
-  'Homeward',
+  t("tools:firstLight"),
+  t("tools:riverCrossing"),
+  t("tools:openField"),
+  t("tools:quietWoodland"),
+  t("tools:relayDistrict"),
+  t("tools:homeward"),
 ];
 function missionCards(count = 6, unknown = false) {
   return `<div class="mission-grid">${missionNames
     .slice(0, count)
     .map((name, i) => {
       const mystery = unknown && i > 0;
-      return `<article class="mission-card${i === 0 ? ' selected' : ''}"><div class="mission-art terrain-${i}${mystery ? ' unknown' : ''}"><span class="mission-number">0${i + 1}</span>${mystery ? '<span class="unknown-mark">?</span>' : ''}<span class="medals" aria-label="${i === 0 ? 'Three' : 'One'} of three illustrative medals">${mystery ? '☆☆☆' : i === 0 ? '★★★' : '★☆☆'}</span></div><div class="mission-label"><span>${name}</span><span>${mystery ? 'UNREVEALED' : i === 0 ? '11,450' : '2,380'}</span></div></article>`;
+      return `<article class="mission-card${i === 0 ? ' selected' : ''}"><div class="mission-art terrain-${i}${mystery ? ' unknown' : ''}"><span class="mission-number">0${i + 1}</span>${mystery ? '<span class="unknown-mark">?</span>' : ''}<span class="medals" aria-label="${i === 0 ? t("tools:three") : t("tools:one")} of three illustrative medals">${mystery ? '☆☆☆' : i === 0 ? '★★★' : '★☆☆'}</span></div><div class="mission-label"><span>${name}</span><span>${mystery ? t("tools:unrevealed") : i === 0 ? '11,450' : '2,380'}</span></div></article>`;
     })
     .join('')}</div>`;
 }
 
 function titleScreen(state) {
   const first = state === 'first-visit';
-  return `<div class="mock-screen">${top('REVEALLINE', 'SOLO / FIELD KIT')}
+  return `<div class="mock-screen">${top('REVEALLINE', t("tools:soloFieldKit"))}
     <div class="mock-title-content"><div><p class="mock-logo">REVEAL<br /><span>LINE</span></p><p class="mock-subtitle">MAKE A PATH. REVEAL A WORLD.</p>
-    <div class="mock-menu"><button type="button" class="menu-focus" data-screen="${first ? 'missions' : 'briefing'}">${first ? 'Deploy' : 'Continue'}</button><button type="button" data-screen="missions">Missions</button><button type="button" data-screen="collection">Collection</button><button type="button" data-screen="settings">Settings</button><button type="button" data-screen="workshop">Workshop</button></div>
-    <p class="menu-destination">${first ? 'Your first route is waiting.' : 'First Light · River crossing · Scout'}</p></div><div class="title-art">${drone}</div></div>
+    <div class="mock-menu"><button type="button" class="menu-focus" data-screen="${first ? 'missions' : 'briefing'}">${first ? t("tools:deploy") : t("tools:continue")}</button><button type="button" data-screen="missions">Missions</button><button type="button" data-screen="collection">Collection</button><button type="button" data-screen="settings">Settings</button><button type="button" data-screen="workshop">Workshop</button></div>
+    <p class="menu-destination">${first ? t("tools:yourFirstRouteIsWaiting") : t("tools:firstLightRiverCrossingScout")}</p></div><div class="title-art">${drone}</div></div>
     <div class="mock-command"><span>Original FPV world</span><span class="desktop-hints"><kbd>↑↓</kbd> Move <kbd>Enter</kbd> Choose</span><span>PROPOSED TITLE</span></div></div>`;
 }
 
 function missionsScreen(state) {
   const mystery = state === 'unrevealed';
-  return `<div class="mock-screen">${top('MISSIONS', 'COLLECTION / 08 STARS')}
+  return `<div class="mock-screen">${top(t("tools:missions"), t("tools:collection08Stars"))}
     <div class="mock-gallery-head"><div><h3>First Light</h3><p>Six routes into a new day · 01–06 of 12</p></div><div class="pack-tabs" aria-label="Illustrative pack tabs"><span>First Light</span><span>More worlds</span></div></div>
     ${missionCards(6, mystery)}
-    <div class="mission-choice"><div><strong>01 / First light</strong><p>Scout · Standard <span aria-hidden="true">/</span> ${mystery ? 'Artwork reveals through play' : 'Three medals earned'}</p></div><div class="mock-actions">${action('Preview', 'collection')}${action('Deploy →', 'briefing', true)}</div></div>${commands()}</div>`;
+    <div class="mission-choice"><div><strong>01 / First light</strong><p>Scout · Standard <span aria-hidden="true">/</span> ${mystery ? t("tools:artworkRevealsThroughPlay") : t("tools:threeMedalsEarned")}</p></div><div class="mock-actions">${action(t("tools:preview"), 'collection')}${action(t("tools:deploy2"), 'briefing', true)}</div></div>${commands()}</div>`;
 }
 
 function briefingScreen(state) {
   const gentle = state === 'gentle';
-  return `<div class="mock-screen">${top('MISSION BRIEF / 01', 'FIRST LIGHT')}<h3>Choose your route.</h3>
-    <div class="brief-grid"><div class="mission-art terrain-0 brief-art"><span class="mission-number">FIRST LIGHT / ORIGINAL LAYOUT STUDY</span></div><dl class="brief-conditions"><div><dt>Craft</dt><dd>Scout / change</dd></div><div><dt>Difficulty</dt><dd>${gentle ? 'Gentle' : 'Standard'} / change</dd></div><div><dt>Coverage target</dt><dd>80%</dd></div><div><dt>Medal opportunity</dt><dd>Finish in 60 seconds</dd></div></dl></div>
+  return `<div class="mock-screen">${top(t("tools:missionBrief01"), t("tools:firstLight2"))}<h3>Choose your route.</h3>
+    <div class="brief-grid"><div class="mission-art terrain-0 brief-art"><span class="mission-number">FIRST LIGHT / ORIGINAL LAYOUT STUDY</span></div><dl class="brief-conditions"><div><dt>Craft</dt><dd>Scout / change</dd></div><div><dt>Difficulty</dt><dd>${gentle ? t("tools:gentle") : t("tools:standard")} / change</dd></div><div><dt>Coverage target</dt><dd>80%</dd></div><div><dt>Medal opportunity</dt><dd>Finish in 60 seconds</dd></div></dl></div>
     <p class="mock-description">Reconnect your unfinished line to claim the enclosed ground. Keep an eye on moving threats as the frontier changes.</p>
-    <div class="mock-actions">${action('Deploy →', 'flight', true)}${action('Field guide', 'settings')}</div><p class="small-note">Proposed preparation screen. Retry reuses your setup without reopening this step.</p>${commands('missions')}</div>`;
+    <div class="mock-actions">${action(t("tools:deploy2"), 'flight', true)}${action(t("tools:fieldGuide"), 'settings')}</div><p class="small-note">Proposed preparation screen. Retry reuses your setup without reopening this step.</p>${commands('missions')}</div>`;
 }
 
 function arenaMarkup(state) {
@@ -87,7 +89,7 @@ function flightScreen(state, paused = false) {
   if (paused)
     return `<div class="mock-screen"><div class="pause-overlay"><p class="eyebrow">FIRST LIGHT / SCOUT</p><h3>Flight paused</h3><div class="mock-menu"><button type="button" class="menu-focus" data-screen="flight">Resume</button><button type="button" data-screen="flight">Retry mission</button><button type="button" data-screen="settings">Settings</button><button type="button" data-screen="missions">Missions</button></div><p class="small-note">Opaque cover. Resume is the primary action.</p></div></div>`;
   return `<div class="mock-screen mock-flight"><div class="flight-hud"><div class="hud-item"><span>SCOUT / LIVES</span><strong>${state === 'life-loss' ? '02' : '03'}</strong></div><div class="hud-item hud-coverage"><span>COVERAGE / TARGET</span><strong>56 / 80</strong><div class="coverage-track"><span></span></div></div><div class="hud-item"><span>SCORE</span><strong>2,380</strong></div><div class="hud-item"><span>MEDAL TIME</span><strong>00:42</strong></div></div>
-    ${arenaMarkup(state)}<div class="flight-bottom"><span class="flight-state">${state === 'life-loss' ? 'RETURNING TO FRONTIER' : 'LIVE LINE / FIND A TURN'}</span><span class="flight-ability">PULSE / READY</span></div>
+    ${arenaMarkup(state)}<div class="flight-bottom"><span class="flight-state">${state === 'life-loss' ? t("tools:returningToFrontier") : t("tools:liveLineFindATurn")}</span><span class="flight-ability">PULSE / READY</span></div>
     <div class="touch-controls" aria-label="Illustrative touch layout; controls are not connected"><div class="touch-dpad" aria-hidden="true"><span>↑</span><span>←</span><span>↓</span><span>→</span></div><span class="touch-action">PULSE</span></div>
     <div class="mock-command"><button type="button" data-screen="pause">Ⅱ Pause</button><span class="desktop-hints">Critical paths stay above artwork</span><span>NO LIVE SIMULATION</span></div>
     ${paused ? `<div class="pause-overlay"><p class="eyebrow">FIRST LIGHT / SCOUT</p><h3>Flight paused</h3><div class="mock-menu"><button type="button" class="menu-focus" data-screen="flight">Resume</button><button type="button" data-screen="flight">Retry mission</button><button type="button" data-screen="settings">Settings</button><button type="button" data-screen="missions">Missions</button></div><p class="small-note">Focus returns to Resume.</p></div>` : ''}</div>`;
@@ -95,116 +97,116 @@ function flightScreen(state, paused = false) {
 
 function resultsScreen(state) {
   const failed = state === 'defeat';
-  return `<div class="mock-screen">${top('MISSION / 01', 'FIRST LIGHT')}
-    <div class="results-content"><p class="eyebrow">${failed ? 'RETRY THE ROUTE' : 'WORLD REVEALED'}</p><h3>${failed ? 'Signal lost.' : 'First light, found.'}</h3>
+  return `<div class="mock-screen">${top(t("tools:mission01"), t("tools:firstLight2"))}
+    <div class="results-content"><p class="eyebrow">${failed ? t("tools:retryTheRoute") : t("tools:worldRevealed")}</p><h3>${failed ? t("tools:signalLost") : t("tools:firstLightFound")}</h3>
     <div class="result-emblem${failed ? ' failure' : ''}" aria-hidden="true">${failed ? '×' : '★ ★ ★'}</div>
     ${failed ? '<p class="mock-description">A threat reached your unfinished line.<br />Try a shorter cut on your next flight.</p>' : '<div class="result-goals"><span><b>★</b>Mission complete</span><span><b>★</b>All lives saved</span><span><b>★</b>Within medal time</span></div><p class="result-score">11,450</p><p class="result-highscore">NEW HIGH SCORE</p>'}
-    <div class="mock-actions">${action(failed ? 'Retry →' : 'Next mission →', 'flight', true)}${action(failed ? 'Missions' : 'View picture', failed ? 'missions' : 'collection')}${failed ? '' : action('Retry', 'flight')}</div></div>${commands('missions')}</div>`;
+    <div class="mock-actions">${action(failed ? t("tools:retry2") : t("tools:nextMission"), 'flight', true)}${action(failed ? t("tools:missions2") : t("tools:viewPicture"), failed ? 'missions' : 'collection')}${failed ? '' : action(t("tools:retry"), 'flight')}</div></div>${commands('missions')}</div>`;
 }
 
 function settingsScreen(state) {
   const large = state === 'large-text';
-  return `<div class="mock-screen">${top('SETTINGS')}<h3>Make it yours.</h3><div class="settings-layout"><div class="settings-tabs" aria-label="Illustrative settings categories"><span class="selected">Display</span><span>Audio</span><span>Controls</span><span>Language</span><span>Saves</span></div><div class="settings-list"><div class="setting-row"><span>Text size<small>Comfortable at a glance</small></span><span class="setting-value">${large ? 'LARGE' : 'STANDARD'}</span></div><div class="setting-row"><span>Reduced effects</span><span class="setting-value">ON</span></div><div class="setting-row"><span>Background brightness</span><span class="mini-range" aria-hidden="true"></span></div><div class="setting-row"><span>High contrast paths</span><span class="setting-value">ON</span></div><div class="settings-preview"><strong style="font-size:${large ? '25' : '20'}px">56 / 80 · 00:42</strong>Live preview uses the same HUD type and colors. Full input behavior belongs to the game implementation.</div></div></div>${commands()}</div>`;
+  return `<div class="mock-screen">${top(t("tools:settings"))}<h3>Make it yours.</h3><div class="settings-layout"><div class="settings-tabs" aria-label="Illustrative settings categories"><span class="selected">Display</span><span>Audio</span><span>Controls</span><span>Language</span><span>Saves</span></div><div class="settings-list"><div class="setting-row"><span>Text size<small>Comfortable at a glance</small></span><span class="setting-value">${large ? t("tools:large2") : t("tools:standard2")}</span></div><div class="setting-row"><span>Reduced effects</span><span class="setting-value">ON</span></div><div class="setting-row"><span>Background brightness</span><span class="mini-range" aria-hidden="true"></span></div><div class="setting-row"><span>High contrast paths</span><span class="setting-value">ON</span></div><div class="settings-preview"><strong style="font-size:${large ? '25' : '20'}px">56 / 80 · 00:42</strong>Live preview uses the same HUD type and colors. Full input behavior belongs to the game implementation.</div></div></div>${commands()}</div>`;
 }
 
 function collectionScreen(state) {
   const picture = state === 'picture';
-  return `<div class="mock-screen">${top('COLLECTION', 'FIRST LIGHT / 03 OF 12')}<h3>${picture ? 'A world worth finding.' : 'Your revealed worlds.'}</h3>${picture ? '<div class="mission-art terrain-0 brief-art" style="min-height:300px;margin-bottom:20px" aria-label="Original abstract field illustration"><span class="mission-number">ILLUSTRATIVE ART / NOT A PRODUCTION BACKGROUND</span></div>' : missionCards(6, true)}<p class="mock-description">${picture ? 'A quiet picture view, separate from achieved coverage. Return to the same selection when you close it.' : 'Collected artwork, earned medals and memorable routes. Unrevealed images remain distinct from mission access.'}</p><div class="mock-actions">${action(picture ? 'Return to collection' : 'View picture', 'collection', true)}${action('Replay mission', 'briefing')}</div>${commands()}</div>`;
+  return `<div class="mock-screen">${top(t("tools:collection"), t("tools:firstLight03Of12"))}<h3>${picture ? t("tools:aWorldWorthFinding") : t("tools:yourRevealedWorlds")}</h3>${picture ? '<div class="mission-art terrain-0 brief-art" style="min-height:300px;margin-bottom:20px" aria-label="Original abstract field illustration"><span class="mission-number">ILLUSTRATIVE ART / NOT A PRODUCTION BACKGROUND</span></div>' : missionCards(6, true)}<p class="mock-description">${picture ? t("tools:aQuietPictureViewSeparateFromAchievedCoverageReturnTo") : t("tools:collectedArtworkEarnedMedalsAndMemorableRoutesUnrevealedImagesRemain")}</p><div class="mock-actions">${action(picture ? t("tools:returnToCollection") : t("tools:viewPicture"), 'collection', true)}${action(t("tools:replayMission"), 'briefing')}</div>${commands()}</div>`;
 }
 
 function workshopScreen(state) {
   const error = state === 'validation';
-  return `<div class="mock-screen">${top('WORKSHOP / ASSET STUDIO', 'LOCAL DRAFT')}<h3>Every detail, in your hands.</h3><div class="workshop-layout"><div class="slot-nav"><span class="selected">Player</span><span>Threats</span><span>Terrain</span><span>Interface</span><span>Pictures</span><span>Audio</span></div><div class="slot-art">${drone}</div><div class="slot-meta"><span class="badge ${error ? 'proposed' : 'implemented'}">${error ? 'Draft needs review' : 'Illustrative preview'}</span><h4>FPV / scout body</h4><p>${error ? 'This draft does not match the selected slot. Resolve dimensions and required states before applying.' : 'Inspect at native size, replace an image, or edit a compact sprite. Preserve the original and its slot contract.'}</p><dl class="slot-contract"><dt>Role</dt><dd>Player body</dd><dt>Theme</dt><dd>FPV Field Kit</dd><dt>Bounds</dt><dd>From registry</dd><dt>Source</dt><dd>Original artwork</dd></dl><div class="mock-actions">${action('Preview in field', 'flight')}${action('Asset brief ↓', 'workshop', true)}</div></div></div><p class="mock-description">Single assets and coordinated collections share the same review flow. Applying a collection succeeds only when every required member is valid.</p>${commands()}</div>`;
+  return `<div class="mock-screen">${top(t("tools:workshopAssetStudio"), t("tools:localDraft"))}<h3>Every detail, in your hands.</h3><div class="workshop-layout"><div class="slot-nav"><span class="selected">Player</span><span>Threats</span><span>Terrain</span><span>Interface</span><span>Pictures</span><span>Audio</span></div><div class="slot-art">${drone}</div><div class="slot-meta"><span class="badge ${error ? 'proposed' : 'implemented'}">${error ? t("tools:draftNeedsReview") : t("tools:illustrativePreview")}</span><h4>FPV / scout body</h4><p>${error ? t("tools:thisDraftDoesNotMatchTheSelectedSlotResolveDimensions") : t("tools:inspectAtNativeSizeReplaceAnImageOrEditA")}</p><dl class="slot-contract"><dt>Role</dt><dd>Player body</dd><dt>Theme</dt><dd>FPV Field Kit</dd><dt>Bounds</dt><dd>From registry</dd><dt>Source</dt><dd>Original artwork</dd></dl><div class="mock-actions">${action(t("tools:previewInField"), 'flight')}${action(t("tools:assetBrief"), 'workshop', true)}</div></div></div><p class="mock-description">Single assets and coordinated collections share the same review flow. Applying a collection succeeds only when every required member is valid.</p>${commands()}</div>`;
 }
 
 const screens = {
   title: {
-    label: 'Title / landing',
+    label: t("tools:titleLanding"),
     states: [
-      ['returning', 'Returning player'],
-      ['first-visit', 'First visit'],
+      ['returning', t("tools:returningPlayer")],
+      ['first-visit', t("tools:firstVisit")],
     ],
     render: titleScreen,
-    purpose: 'One obvious first action',
-    rule: 'Continue names the saved destination. Supporting links stay in the game’s visual language; the title never becomes a website navigation page.',
+    purpose: t("tools:oneObviousFirstAction"),
+    rule: t("tools:continueNamesTheSavedDestinationSupportingLinksStayInThe"),
   },
   missions: {
-    label: 'Mission gallery',
+    label: t("tools:missionGallery"),
     states: [
-      ['progress', 'With progress'],
-      ['unrevealed', 'Unrevealed artwork'],
+      ['progress', t("tools:withProgress")],
+      ['unrevealed', t("tools:unrevealedArtwork")],
     ],
     render: missionsScreen,
-    purpose: 'Artwork makes the campaign tangible',
-    rule: 'Three columns on desktop, two on tablet, one on phone. The number of visible cards is a viewport choice; remaining missions stay reachable in production.',
+    purpose: t("tools:artworkMakesTheCampaignTangible"),
+    rule: t("tools:threeColumnsOnDesktopTwoOnTabletOneOnPhone"),
   },
   briefing: {
-    label: 'Mission preparation',
+    label: t("tools:missionPreparation"),
     states: [
-      ['standard', 'Standard'],
-      ['gentle', 'Gentle'],
+      ['standard', t("tools:standard")],
+      ['gentle', t("tools:gentle")],
     ],
     render: briefingScreen,
-    purpose: 'Know the mission before committing',
-    rule: 'Show class, difficulty and actual objectives. Retry preserves the setup. A speed-medal opportunity must never masquerade as a failure deadline.',
+    purpose: t("tools:knowTheMissionBeforeCommitting"),
+    rule: t("tools:showClassDifficultyAndActualObjectivesRetryPreservesTheSetup"),
   },
   flight: {
-    label: 'Live arena',
+    label: t("tools:liveArena"),
     states: [
-      ['running', 'Running'],
-      ['warning', 'Exposed-line message'],
-      ['life-loss', 'Life lost'],
+      ['running', t("tools:running")],
+      ['warning', t("tools:exposedLineMessage")],
+      ['life-loss', t("tools:lifeLost")],
     ],
     render: flightScreen,
-    purpose: 'The player and live route lead',
-    rule: 'The grid and simulation stay fixed across viewport changes. This diagram demonstrates hierarchy, not tested gameplay density. Touch controls stay outside the board.',
+    purpose: t("tools:thePlayerAndLiveRouteLead"),
+    rule: t("tools:theGridAndSimulationStayFixedAcrossViewportChangesThis"),
   },
   pause: {
-    label: 'Contextual pause',
-    states: [['paused', 'Paused']],
+    label: t("tools:contextualPause"),
+    states: [['paused', t("tools:paused")]],
     render: (state) => flightScreen(state, true),
-    purpose: 'Keep the player’s place',
-    rule: 'Conceal the arena, artwork and actors with an opaque pause surface; pause simulation, default to Resume and restore focus when closing. Settings and the Field Guide return to the paused context.',
+    purpose: t("tools:keepThePlayerSPlace"),
+    rule: t("tools:concealTheArenaArtworkAndActorsWithAnOpaquePause"),
   },
   results: {
-    label: 'Results / retry',
+    label: t("tools:resultsRetry"),
     states: [
-      ['victory', 'Victory'],
-      ['defeat', 'Defeat'],
+      ['victory', t("tools:victory")],
+      ['defeat', t("tools:defeat")],
     ],
     render: resultsScreen,
-    purpose: 'Celebrate clearly, recover quickly',
-    rule: 'Separate artwork, medals and score. Make Next and Retry directly reachable. Finishing an animation must not also start the next attempt.',
+    purpose: t("tools:celebrateClearlyRecoverQuickly"),
+    rule: t("tools:separateArtworkMedalsAndScoreMakeNextAndRetryDirectly"),
   },
   settings: {
-    label: 'Settings',
+    label: t("common:navigation.settings"),
     states: [
-      ['standard', 'Standard text'],
-      ['large-text', 'Large text specimen'],
+      ['standard', t("tools:standardText")],
+      ['large-text', t("tools:largeTextSpecimen")],
     ],
     render: settingsScreen,
-    purpose: 'Comfort belongs inside the game',
-    rule: 'Use the same focus, text and controls. Preview relevant changes in context. Language readiness includes Ukrainian glyphs and expansion, not only a language selector.',
+    purpose: t("tools:comfortBelongsInsideTheGame"),
+    rule: t("tools:useTheSameFocusTextAndControlsPreviewRelevantChanges"),
   },
   collection: {
-    label: 'Collection / picture',
+    label: t("tools:collectionPicture"),
     states: [
-      ['gallery', 'Gallery'],
-      ['picture', 'Picture view'],
+      ['gallery', t("tools:gallery")],
+      ['picture', t("tools:pictureView")],
     ],
     render: collectionScreen,
-    purpose: 'Let the revealed artwork breathe',
-    rule: 'Offer a quiet full-picture view and an explicit return. Remember the selected image. An unrevealed picture is not a mission lock.',
+    purpose: t("tools:letTheRevealedArtworkBreathe"),
+    rule: t("tools:offerAQuietFullPictureViewAndAnExplicitReturn"),
   },
   workshop: {
-    label: 'Asset Studio concept',
+    label: t("tools:assetStudioConcept"),
     states: [
-      ['draft', 'Inspect a slot'],
-      ['validation', 'Invalid replacement'],
+      ['draft', t("tools:inspectASlot")],
+      ['validation', t("tools:invalidReplacement")],
     ],
     render: workshopScreen,
-    purpose: 'A complete replacement workflow',
-    rule: 'This is a proposed layout only. The framework must provide slot contracts, native/context previews, prompts, validation, drafts and atomic collection application.',
+    purpose: t("tools:aCompleteReplacementWorkflow"),
+    rule: t("tools:thisIsAProposedLayoutOnlyTheFrameworkMustProvide"),
   },
 };
 
@@ -216,9 +218,8 @@ function renderScreen() {
   $('#screen-preview').innerHTML = screen.render(currentState);
   $('#study-purpose').innerHTML =
     `<strong>${screen.purpose}</strong>${screen.label} / ${screen.states.find(([id]) => id === currentState)[1]}`;
-  $('#study-rule').textContent = screen.rule;
-  $('#review-status').textContent =
-    `${screen.label}, ${screen.states.find(([id]) => id === currentState)[1]} study shown.`;
+  localizedText($('#study-rule'), () =>screen.rule);
+  localizedText($('#review-status'), () =>t("tools:studyShown", { value1: screen.label, value2: screen.states.find(([id]) => id === currentState)[1] }));
 }
 
 function chooseScreen(name, state) {
@@ -229,14 +230,14 @@ function chooseScreen(name, state) {
     : screens[name].states[0][0];
   $('#screen-select').value = name;
   $('#state-select').replaceChildren(
-    ...screens[name].states.map(([value, label]) => new Option(label, value)),
+    ...screens[name].states.map(([value, label]) => localizedOption(() => label, value)),
   );
   $('#state-select').value = currentState;
   renderScreen();
 }
 
 $('#screen-select').replaceChildren(
-  ...Object.entries(screens).map(([value, { label }]) => new Option(label, value)),
+  ...Object.entries(screens).map(([value, { label }]) => localizedOption(() => label, value)),
 );
 $('#screen-select').addEventListener('change', (event) => chooseScreen(event.target.value));
 $('#state-select').addEventListener('change', (event) => {
@@ -265,14 +266,13 @@ document.querySelectorAll('[data-viewport]').forEach((button) => {
     document
       .querySelectorAll('button[data-viewport]')
       .forEach((other) => other.setAttribute('aria-pressed', String(other === button)));
-    $('#viewport-label').textContent = {
+    localizedText($('#viewport-label'), () => ({
       desktop: 'Fluid desktop / up to 1120 px',
       tablet: 'Tablet / up to 768 px',
       phone: 'Phone / up to 390 px',
       landscape: 'Short landscape / up to 740 × 370 px',
-    }[view];
-    $('#review-status').textContent =
-      `${view} preview selected. Width is limited by the available window.`;
+    }[view]));
+    localizedText($('#review-status'), () =>t("tools:previewSelectedWidthIsLimitedByTheAvailableWindow", { value1: view }));
   });
 });
 
@@ -282,26 +282,26 @@ document.querySelectorAll('[data-language]').forEach((button) => {
     document
       .querySelectorAll('[data-language]')
       .forEach((other) => other.setAttribute('aria-pressed', String(other === button)));
-    $('#display-specimen').textContent = ukrainian
+    localizedText($('#display-specimen'), () =>ukrainian
       ? 'Обери свій маршрут.'
-      : 'Find your next route.';
-    $('#ui-specimen').textContent = ukrainian
+      : 'Find your next route.');
+    localizedText($('#ui-specimen'), () =>ukrainian
       ? 'Обери місію. Замкни лінію. Відкрий світ.'
-      : 'Choose a mission. Close the line. Reveal the world.';
+      : 'Choose a mission. Close the line. Reveal the world.');
     $('#display-specimen').lang = ukrainian ? 'uk' : 'en';
     $('#ui-specimen').lang = ukrainian ? 'uk' : 'en';
   });
 });
 
 const palette = [
-  ['Stage', '#070B12'],
-  ['Panel', '#101923'],
-  ['Text', '#F3F0DB'],
-  ['Navigation', '#78DCE8'],
-  ['Player / reward', '#F4BF62'],
-  ['Threat', '#F07879'],
-  ['Success', '#9DBB7A'],
-  ['Secondary', '#A5B2BB'],
+  [t("tools:stage"), '#070B12'],
+  [t("tools:panel"), '#101923'],
+  [t("tools:text"), '#F3F0DB'],
+  [t("tools:navigation"), '#78DCE8'],
+  [t("tools:playerReward"), '#F4BF62'],
+  [t("tools:threat"), '#F07879'],
+  [t("tools:success"), '#9DBB7A'],
+  [t("tools:secondary"), '#A5B2BB'],
 ];
 $('#palette').innerHTML = palette
   .map(
@@ -313,227 +313,227 @@ $('#palette').innerHTML = palette
 const inventory = [
   [
     'player',
-    'Launch / landing',
-    'First visit; loading; enter; resume destination; startup error',
-    'One title shell; one primary action; real loading feedback',
-    'Study',
+    t("tools:launchLanding"),
+    t("tools:firstVisitLoadingEnterResumeDestinationStartupError"),
+    t("tools:oneTitleShellOnePrimaryActionRealLoadingFeedback"),
+    t("tools:study"),
   ],
   [
     'player',
-    'Home menu',
-    'Returning player; no progress; keyboard, pointer and controller focus',
-    'Continue / Deploy, Missions, Collection, Settings; Workshop secondary',
-    'Study',
+    t("tools:homeMenu"),
+    t("tools:returningPlayerNoProgressKeyboardPointerAndControllerFocus"),
+    t("tools:continueDeployMissionsCollectionSettingsWorkshopSecondary"),
+    t("tools:study"),
   ],
   [
     'player',
-    'Missions / pack picker',
-    'Current pack; pagination; selected; earned; unrevealed; locked; empty',
-    'Image-led gallery; visible unlock reason; remembered selection',
-    'Study',
+    t("tools:missionsPackPicker"),
+    t("tools:currentPackPaginationSelectedEarnedUnrevealedLockedEmpty"),
+    t("tools:imageLedGalleryVisibleUnlockReasonRememberedSelection"),
+    t("tools:study"),
   ],
   [
     'player',
-    'Mission brief / loadout',
-    'Class; ability; difficulty; objectives; compatible next mission',
-    'Compact setup summary; optional detailed preparation; direct deployment',
-    'Study',
+    t("tools:missionBriefLoadout"),
+    t("tools:classAbilityDifficultyObjectivesCompatibleNextMission"),
+    t("tools:compactSetupSummaryOptionalDetailedPreparationDirectDeployment"),
+    t("tools:study"),
   ],
   [
     'player',
-    'First Flight / tutorial',
-    'Before start; step active; success; retry; skip; already completed',
-    'Teach one action in the actual arena; optional help remains reachable',
-    'Planned',
+    t("tools:firstFlightTutorial"),
+    t("tools:beforeStartStepActiveSuccessRetrySkipAlreadyCompleted"),
+    t("tools:teachOneActionInTheActualArenaOptionalHelpRemains"),
+    t("tools:planned"),
   ],
   [
     'player',
-    'Arena / HUD',
-    'Ready; countdown; safe; cutting; stationary exposed line; warning',
-    'Stable coverage/lives/score/timer order; class-specific ability state',
-    'Study',
+    t("tools:arenaHud"),
+    t("tools:readyCountdownSafeCuttingStationaryExposedLineWarning"),
+    t("tools:stableCoverageLivesScoreTimerOrderClassSpecificAbilityState"),
+    t("tools:study"),
   ],
   [
     'player',
-    'Arena events',
-    'Capture; life loss; respawn; slowdown; ability; boss warning/open',
-    'Semantic cues; visible footprint; preserved geometry; reduced effects',
-    'Study',
+    t("tools:arenaEvents"),
+    t("tools:captureLifeLossRespawnSlowdownAbilityBossWarningOpen"),
+    t("tools:semanticCuesVisibleFootprintPreservedGeometryReducedEffects"),
+    t("tools:study"),
   ],
   [
     'player',
-    'Pause / restart / leave',
-    'Resume; settings return; retry confirmation; leave; focus restore',
-    'Opaque cover; Resume first; no accidental destructive activation',
-    'Study',
+    t("tools:pauseRestartLeave"),
+    t("tools:resumeSettingsReturnRetryConfirmationLeaveFocusRestore"),
+    t("tools:opaqueCoverResumeFirstNoAccidentalDestructiveActivation"),
+    t("tools:study"),
   ],
   [
     'player',
-    'Victory / defeat',
-    'Artwork reveal; medals; score; no medal; record; retry; next; final level',
-    'Separate presentation from score state; skip safely; direct repeat',
-    'Study',
+    t("tools:victoryDefeat"),
+    t("tools:artworkRevealMedalsScoreNoMedalRecordRetryNextFinal"),
+    t("tools:separatePresentationFromScoreStateSkipSafelyDirectRepeat"),
+    t("tools:study"),
   ],
   [
     'player',
-    'Collection / full picture',
-    'Earned; unknown; selection; preview; close; artwork failure',
-    'Calm image viewer; earned progress and mission access remain distinct',
-    'Study',
+    t("tools:collectionFullPicture"),
+    t("tools:earnedUnknownSelectionPreviewCloseArtworkFailure"),
+    t("tools:calmImageViewerEarnedProgressAndMissionAccessRemainDistinct"),
+    t("tools:study"),
   ],
   [
     'support',
-    'Hangar / equipment',
-    'Class selection; ability; appearance; requirements; disabled choice',
-    'Shared slot preview, readable stats and confirmed equipped state',
-    'Planned',
+    t("tools:hangarEquipment"),
+    t("tools:classSelectionAbilityAppearanceRequirementsDisabledChoice"),
+    t("tools:sharedSlotPreviewReadableStatsAndConfirmedEquippedState"),
+    t("tools:planned"),
   ],
   [
     'support',
-    'Field Guide / help',
-    'Controls; terrain; threats; abilities; reading mode; return',
-    'Short first layer; illustrated role entries; preserve paused context',
-    'Planned',
+    t("tools:fieldGuideHelp"),
+    t("tools:controlsTerrainThreatsAbilitiesReadingModeReturn"),
+    t("tools:shortFirstLayerIllustratedRoleEntriesPreservePausedContext"),
+    t("tools:planned"),
   ],
   [
     'support',
-    'Settings / accessibility',
-    'Audio; display; text size; motion; input; remapping; language',
-    'Category navigation; real preview; Standard/Large; no faux system UI',
-    'Study',
+    t("tools:settingsAccessibility"),
+    t("tools:audioDisplayTextSizeMotionInputRemappingLanguage"),
+    t("tools:categoryNavigationRealPreviewStandardLargeNoFauxSystemUi"),
+    t("tools:study"),
   ],
   [
     'support',
-    'Story / chapter dialogue',
-    'Before mission; after result; next; skip; replay; long copy',
-    'Readable dialogue frame; portraits remain subordinate to text',
-    'Planned',
+    t("tools:storyChapterDialogue"),
+    t("tools:beforeMissionAfterResultNextSkipReplayLongCopy"),
+    t("tools:readableDialogueFramePortraitsRemainSubordinateToText"),
+    t("tools:planned"),
   ],
   [
     'support',
-    'Scores / achievements',
-    'None earned; personal best; filters; earned goals; unlocked cosmetics',
-    'Shared gallery/list vocabulary; conditions and progress stated clearly',
-    'Planned',
+    t("tools:scoresAchievements"),
+    t("tools:noneEarnedPersonalBestFiltersEarnedGoalsUnlockedCosmetics"),
+    t("tools:sharedGalleryListVocabularyConditionsAndProgressStatedClearly"),
+    t("tools:planned"),
   ],
   [
     'support',
-    'Saves / import / export',
-    'Empty; local; backup; import preview; conflict; corrupt; restore',
-    'Settings / Saves; explicit file feedback and reversibility',
-    'Planned',
+    t("tools:savesImportExport"),
+    t("tools:emptyLocalBackupImportPreviewConflictCorruptRestore"),
+    t("tools:settingsSavesExplicitFileFeedbackAndReversibility"),
+    t("tools:planned"),
   ],
   [
     'support',
-    'Optional worlds / downloads',
-    'Installed; available; fetching; ready; offline; failed; removal',
-    'Missions / More worlds; compact art cards with honest availability',
-    'Planned',
+    t("tools:optionalWorldsDownloads"),
+    t("tools:installedAvailableFetchingReadyOfflineFailedRemoval"),
+    t("tools:missionsMoreWorldsCompactArtCardsWithHonestAvailability"),
+    t("tools:planned"),
   ],
   [
     'support',
-    'Challenges / mastery',
-    'Available; active; progress; earned; practice-only; incompatibility',
-    'Reuse mission cards and result conditions; avoid reward ambiguity',
-    'Planned',
+    t("tools:challengesMastery"),
+    t("tools:availableActiveProgressEarnedPracticeOnlyIncompatibility"),
+    t("tools:reuseMissionCardsAndResultConditionsAvoidRewardAmbiguity"),
+    t("tools:planned"),
   ],
   [
     'support',
-    'Replay Theater / attempt export',
-    'No recording; loaded; play; pause; seek; invalid; incompatible',
-    'Same game frame and transport controls; keep read-only review clear',
-    'Planned',
+    t("tools:replayTheaterAttemptExport"),
+    t("tools:noRecordingLoadedPlayPauseSeekInvalidIncompatible"),
+    t("tools:sameGameFrameAndTransportControlsKeepReadOnlyReview"),
+    t("tools:planned"),
   ],
   [
     'support',
-    'Controller practice',
-    'Join; mapping; reconnect; confirm; cancel; scrolling/reading',
-    'Settings / Controls; real active-device prompts and focus continuity',
-    'Planned',
+    t("tools:controllerPractice2"),
+    t("tools:joinMappingReconnectConfirmCancelScrollingReading"),
+    t("tools:settingsControlsRealActiveDevicePromptsAndFocusContinuity"),
+    t("tools:planned"),
   ],
   [
     'support',
-    'Couch race',
-    'Mode entry; join; setup; two boards; pause; results; rematch; leave',
-    'Missions / Play mode; mirrored HUDs, player identity by shape and text',
-    'Planned',
+    t("tools:couchRace2"),
+    t("tools:modeEntryJoinSetupTwoBoardsPauseResultsRematchLeave"),
+    t("tools:missionsPlayModeMirroredHudsPlayerIdentityByShapeAnd"),
+    t("tools:planned"),
   ],
   [
     'system',
-    'Boot / offline / update',
-    'Preparing; usable offline; stale; new release; verify; repair; failure',
-    'Same shell with honest progress and readable recovery actions',
-    'Planned',
+    t("tools:bootOfflineUpdate"),
+    t("tools:preparingUsableOfflineStaleNewReleaseVerifyRepairFailure"),
+    t("tools:sameShellWithHonestProgressAndReadableRecoveryActions"),
+    t("tools:planned"),
   ],
   [
     'system',
-    'Browser / native edges',
-    'Portrait; short landscape; safe areas; resize; gamepad loss; focus loss',
-    'Fixed simulation grid; reflow controls; no hidden reachable actions',
-    'Planned',
+    t("tools:browserNativeEdges"),
+    t("tools:portraitShortLandscapeSafeAreasResizeGamepadLossFocusLoss"),
+    t("tools:fixedSimulationGridReflowControlsNoHiddenReachableActions"),
+    t("tools:planned"),
   ],
   [
     'system',
-    'Generic UI states',
-    'Default; hover; focus; pressed; selected; disabled; busy; empty; error',
-    'Shared component contract with shape + contrast, real labels and status',
-    'Planned',
+    t("tools:genericUiStates"),
+    t("tools:defaultHoverFocusPressedSelectedDisabledBusyEmptyError"),
+    t("tools:sharedComponentContractWithShapeContrastRealLabelsAndStatus"),
+    t("tools:planned"),
   ],
   [
     'system',
-    'About / credits / privacy / archive',
-    'Current version; notices; source attribution; older releases',
-    'Settings / About; game frame, readable document surfaces',
-    'Planned',
+    t("tools:aboutCreditsPrivacyArchive"),
+    t("tools:currentVersionNoticesSourceAttributionOlderReleases"),
+    t("tools:settingsAboutGameFrameReadableDocumentSurfaces"),
+    t("tools:planned"),
   ],
   [
     'authoring',
-    'Asset Studio / registry',
-    'Browse; filter; inspect; native/context preview; slot requirements',
-    'Workshop; complete asset categories and exact copyable briefs',
-    'Study',
+    t("tools:assetStudioRegistry"),
+    t("tools:browseFilterInspectNativeContextPreviewSlotRequirements"),
+    t("tools:workshopCompleteAssetCategoriesAndExactCopyableBriefs"),
+    t("tools:study"),
   ],
   [
     'authoring',
-    'Asset replacement / collection',
-    'Upload; crop; original; draft; validation; apply; revert; export',
+    t("tools:assetReplacementCollection"),
+    t("tools:uploadCropOriginalDraftValidationApplyRevertExport"),
     'Original preserved; <=128 single-layer sprite editing; atomic collections',
-    'Planned',
+    t("tools:planned"),
   ],
   [
     'authoring',
-    'Sprite / rig / animation',
-    'Idle; poses; pivot; rig part; frame; timing; playback; constraints',
-    'Metadata and rig tooling separate from gameplay footprint',
-    'Planned',
+    t("tools:spriteRigAnimation"),
+    t("tools:idlePosesPivotRigPartFrameTimingPlaybackConstraints"),
+    t("tools:metadataAndRigToolingSeparateFromGameplayFootprint"),
+    t("tools:planned"),
   ],
   [
     'authoring',
-    'Level Playground / enemy catalog',
-    'Inspect; generate; edit; invalid; test; export; role-specific practice',
-    'Workshop / levels and threats; actual arena preview and consistent controls',
-    'Planned',
+    t("tools:levelPlaygroundEnemyCatalog"),
+    t("tools:inspectGenerateEditInvalidTestExportRoleSpecificPractice"),
+    t("tools:workshopLevelsAndThreatsActualArenaPreviewAndConsistentControls"),
+    t("tools:planned"),
   ],
   [
     'authoring',
-    'Picture / video poster tools',
-    'Original; imported; crop; poster; media validation; source metadata',
-    'Workshop / artwork; full picture preview and preserved source',
-    'Planned',
+    t("tools:pictureVideoPosterTools"),
+    t("tools:originalImportedCropPosterMediaValidationSourceMetadata"),
+    t("tools:workshopArtworkFullPicturePreviewAndPreservedSource"),
+    t("tools:planned"),
   ],
   [
     'authoring',
-    'Motion / viewport labs',
-    'Preset; preview; timeline; phone; landscape; reduced effects',
-    'Workshop / review; retain tools, share frame and type roles',
-    'Planned',
+    t("tools:motionViewportLabs"),
+    t("tools:presetPreviewTimelinePhoneLandscapeReducedEffects"),
+    t("tools:workshopReviewRetainToolsShareFrameAndTypeRoles"),
+    t("tools:planned"),
   ],
   [
     'authoring',
-    'Production / library / prompt tools',
-    'Coverage; missing; accepted; previous; prompt copied; theme readiness',
-    'Workshop / production; distinguish evidence, draft and shipped content',
-    'Planned',
+    t("tools:productionLibraryPromptTools"),
+    t("tools:coverageMissingAcceptedPreviousPromptCopiedThemeReadiness"),
+    t("tools:workshopProductionDistinguishEvidenceDraftAndShippedContent"),
+    t("tools:planned"),
   ],
 ];
 
@@ -543,10 +543,10 @@ function renderInventory() {
   $('#screen-matrix-body').innerHTML = rows
     .map(
       ([group, name, states, treatment, status]) =>
-        `<tr><td>${name}<small>${group === 'system' ? 'System state' : group === 'authoring' ? 'Authoring' : group === 'support' ? 'Supporting flow' : 'Player journey'}</small></td><td>${states}</td><td>${treatment}</td><td><span class="badge proposed">${status}</span></td></tr>`,
+        `<tr><td>${name}<small>${group === 'system' ? t("tools:systemState") : group === 'authoring' ? t("tools:authoring") : group === 'support' ? t("tools:supportingFlow") : t("tools:playerJourney")}</small></td><td>${states}</td><td>${treatment}</td><td><span class="badge proposed">${status}</span></td></tr>`,
     )
     .join('');
-  $('#inventory-count').textContent = `${rows.length} / ${inventory.length} surfaces`;
+  localizedText($('#inventory-count'), () =>t("tools:surfaces", { value1: rows.length, value2: inventory.length }));
 }
 $('#inventory-filter').addEventListener('change', renderInventory);
 
@@ -557,12 +557,12 @@ let copyGeneration = 0;
 $('#copy-prompt').addEventListener('click', async () => {
   const generation = ++copyGeneration,
     lease = copyPresenter.begin({
-      message: 'Copying the example brief…',
+      message: t("tools:copyingTheExampleBrief"),
       isCurrent: () => generation === copyGeneration,
     });
   try {
     await navigator.clipboard.writeText($('#prompt-example-text').textContent);
-    lease.finish({ message: 'Example brief copied.' });
+    lease.finish({ message: t("tools:exampleBriefCopied") });
   } catch {
     if (generation !== copyGeneration) return;
     if (
@@ -575,22 +575,22 @@ $('#copy-prompt').addEventListener('click', async () => {
       range.selectNodeContents($('#prompt-example-text'));
       selection.removeAllRanges();
       selection.addRange(range);
-      lease.finish({ message: 'Brief selected. Use your device’s Copy action.', state: 'error' });
+      lease.finish({ message: t("tools:briefSelectedUseYourDeviceSCopyAction"), state: 'error' });
     } else
       lease.finish({
         message:
-          'Copy was unavailable. Select the example brief and use your device’s Copy action.',
+          t("tools:copyWasUnavailableSelectTheExampleBriefAndUseYour"),
         state: 'error',
       });
   }
 });
 
 async function checkFonts() {
-  const lease = fontPresenter.begin({ message: 'Loading the three local font roles…' });
+  const lease = fontPresenter.begin({ message: t("tools:loadingTheThreeLocalFontRoles") });
   const required = [
-    ['Field Kit Display', 600],
-    ['Field Kit UI', 400],
-    ['Field Kit Mono', 500],
+    [t("tools:fieldKitDisplay"), 600],
+    [t("tools:fieldKitUi"), 400],
+    [t("tools:fieldKitMono"), 500],
   ];
   const results = await Promise.allSettled(
     required.map(([family, weight]) =>
@@ -603,8 +603,8 @@ async function checkFonts() {
   lease.finish({
     state: ready ? 'ready' : 'error',
     message: ready
-      ? 'All three local font roles loaded. Glyph coverage is independently documented in the typography specification.'
-      : 'One or more local font files are unavailable here. Fallback text is visible; do not approve typography from this rendering. Reload to retry.',
+      ? t("tools:allThreeLocalFontRolesLoadedGlyphCoverageIsIndependently")
+      : t("tools:oneOrMoreLocalFontFilesAreUnavailableHereFallback"),
   });
 }
 
@@ -613,11 +613,11 @@ async function revealLocalReferences() {
   if (!['localhost', '127.0.0.1', '[::1]'].includes(location.hostname)) {
     referencePresenter.begin({ message: '' }).finish({
       message:
-        'Source screenshots are available only in the local research folder. Review the official source links below.',
+        t("tools:sourceScreenshotsAreAvailableOnlyInTheLocalResearchFolder"),
     });
     return;
   }
-  const lease = referencePresenter.begin({ message: 'Checking available local reference files…' });
+  const lease = referencePresenter.begin({ message: t("tools:checkingAvailableLocalReferenceFiles") });
   const links = [...document.querySelectorAll('[data-local-reference]')];
   const results = await Promise.allSettled(
     links.map(async (link) => {
@@ -640,7 +640,7 @@ async function revealLocalReferences() {
   lease.finish({
     message: count
       ? `${count} local screenshot previews available from the source research folder. These images are reference evidence, not production assets.`
-      : 'Source screenshots are not present in this local build. Review the observations here and the official source links below.',
+      : t("tools:sourceScreenshotsAreNotPresentInThisLocalBuildReview"),
   });
 }
 

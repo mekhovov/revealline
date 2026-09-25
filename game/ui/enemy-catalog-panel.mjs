@@ -1,3 +1,5 @@
+import { contentText } from '../i18n/content.mjs';
+import { t, localizedText, localizedAttribute, localizedMessage } from '../i18n/index.mjs';
 import { createOperationStatus } from './operation-status.mjs';
 import {
   ENEMY_CATALOG,
@@ -33,7 +35,7 @@ export function attachEnemyCatalogPanel({
   const node = (tag, id, text) => {
     const el = doc.createElement(tag);
     if (id) el.id = `enemy-catalog-${id}`;
-    if (text) el.textContent = text;
+    if (text) localizedText(el, () =>text);
     return el;
   };
   const button = (id, label, action) => {
@@ -56,11 +58,11 @@ export function attachEnemyCatalogPanel({
   const dialog = node('dialog', 'dialog');
   dialog.className = 'enemy-catalog-dialog';
   dialog.setAttribute('aria-labelledby', 'enemy-catalog-title');
-  const title = node('h2', 'title', 'Enemy workshop'),
+  const title = node('h2', 'title', localizedMessage("interface:enemyWorkshop")),
     note = node(
       'p',
       null,
-      'These choices configure future authoring. Existing maps, saves and rated runs are never changed.',
+      localizedMessage("interface:theseChoicesConfigureFutureAuthoringExistingMapsSavesAndRated"),
     ),
     status = node('p', 'status');
   const presenter = createOperationStatus(status);
@@ -68,29 +70,27 @@ export function attachEnemyCatalogPanel({
     presenter.begin({ message }).finish({ message, state });
   const role = select(
     'role',
-    'Role',
+    t("interface:role"),
     ENEMY_CATALOG.map((r) => [r.type, r.label]),
   );
   const skin = select(
     'skin',
-    'Presentation',
+    t("interface:presentation"),
     ENEMY_THEMES.map((theme) => [theme, theme]),
   );
   const style = select(
     'style',
-    'Detail treatment',
+    t("interface:detailTreatment"),
     ENEMY_STYLES.map((id) => [id, id]),
   );
-  const enableLabel = node('label', null, 'Available to future map generators'),
+  const enableLabel = node('label', null, localizedMessage("interface:availableToFutureMapGenerators")),
     enabled = node('input', 'enabled');
   enabled.type = 'checkbox';
   enableLabel.prepend(enabled);
   const preview = node('canvas', 'preview');
   preview.width = 192;
   preview.height = 128;
-  preview.setAttribute(
-    'aria-label',
-    'Animated selected enemy presentation; the small center marks the contact footprint.',
+  localizedAttribute(preview, "aria-label", () => t("interface:animatedSelectedEnemyPresentationTheSmallCenterMarksTheContact"),
   );
   const detail = node('p', 'detail'),
     risk = node('p', 'risk'),
@@ -98,11 +98,11 @@ export function attachEnemyCatalogPanel({
   const reading = node('div', 'details');
   reading.tabIndex = 0;
   reading.setAttribute('role', 'region');
-  reading.setAttribute('aria-label', 'Selected enemy role details');
+  localizedAttribute(reading, "aria-label", () => t("interface:selectedEnemyRoleDetails"));
   reading.setAttribute('data-game-reading', '');
   reading.append(form, detail, risk);
-  const read = button('read', 'Read role details', () =>
-    onRead({ region: reading, origin: read, label: 'Selected enemy role details' }),
+  const read = button('read', localizedMessage("interface:readRoleDetails"), () =>
+    onRead({ region: reading, origin: read, label: t("interface:selectedEnemyRoleDetails") }),
   );
   const fields = node('div');
   fields.className = 'enemy-catalog-fields';
@@ -117,14 +117,14 @@ export function attachEnemyCatalogPanel({
     skin.el.value = resolveEnemySkin(record.type, entry.skinId);
     style.el.value = draft.style;
     enabled.checked = entry.enabled;
-    detail.textContent = `${record.label} · ${record.domain}. ${record.motion}`;
-    risk.textContent = record.risk;
-    form.textContent = `${record.forms[ENEMY_THEMES.indexOf(skin.el.value)]} · art slot: ${record.role} · badge: ${record.badge}`;
+    localizedText(detail, () =>`${contentText(record, 'label')} · ${contentText(record, 'domain')}. ${contentText(record, 'motion')}`);
+    localizedText(risk, () =>contentText(record, 'risk'));
+    localizedText(form, () =>t("gameplay:artSlotBadge", { value1: record.forms[ENEMY_THEMES.indexOf(skin.el.value)], value2: record.role, value3: record.badge }));
     play.disabled = busy || !entry.enabled;
     update(0);
   }
   function changed() {
-    report('Draft changed. Apply saves only this authoring catalog.');
+    report(t("interface:draftChangedApplySavesOnlyThisAuthoringCatalog"));
     render();
   }
   role.el.onchange = () => {
@@ -159,7 +159,7 @@ export function attachEnemyCatalogPanel({
       signal: owner.controller.signal,
       isCurrent: () => operation === owner && !disposed && !owner.controller.signal.aborted,
       check() {
-        if (!this.isCurrent()) throw new DOMException('Catalog operation cancelled.', 'AbortError');
+        if (!this.isCurrent()) throw new DOMException(t("interface:catalogOperationCancelled"), 'AbortError');
       },
     };
     try {
@@ -184,7 +184,7 @@ export function attachEnemyCatalogPanel({
       }
     }
   }
-  const apply = button('apply', 'Apply authoring choices', () =>
+  const apply = button('apply', localizedMessage("interface:applyAuthoringChoices"), () =>
     perform(
       async (context) => {
         const next = validateEnemyCatalogDraft(draft);
@@ -193,51 +193,51 @@ export function attachEnemyCatalogPanel({
         saved = next;
         draft = structuredClone(next);
       },
-      'Authoring choices saved. Existing games remain unchanged.',
-      'Saving authoring choices…',
+      t("interface:authoringChoicesSavedExistingGamesRemainUnchanged"),
+      t("interface:savingAuthoringChoices"),
       true,
     ),
   );
-  const undo = button('undo', 'Reload saved choices', () => {
+  const undo = button('undo', localizedMessage("interface:reloadSavedChoices"), () => {
     if (!busy) {
       draft = structuredClone(saved);
-      report('Saved authoring choices restored.');
+      report(t("interface:savedAuthoringChoicesRestored"));
       render();
     }
   });
-  const play = button('play', 'Try selected role', () =>
+  const play = button('play', localizedMessage("interface:trySelectedRole"), () =>
     perform(
       (context) => onPreview(role.el.value, validateEnemyCatalogDraft(draft), context),
-      'Practice prepared with the selected role and theme. The child game will report its own loading state.',
-      'Preparing the selected role for practice…',
+      t("interface:practicePreparedWithTheSelectedRoleAndThemeTheChild"),
+      t("interface:preparingTheSelectedRoleForPractice"),
     ),
   );
-  const exportButton = button('export', 'Export catalog JSON', () =>
+  const exportButton = button('export', localizedMessage("interface:exportCatalogJson"), () =>
     perform(
       (context) => onExport(validateEnemyCatalogDraft(draft), context),
-      'Catalog choices prepared for download. This file contains choices, not custom image bytes.',
-      'Preparing the catalog download…',
+      t("interface:catalogChoicesPreparedForDownloadThisFileContainsChoicesNot"),
+      t("interface:preparingTheCatalogDownload"),
       true,
     ),
   );
   const upload = node('input', 'import');
   upload.type = 'file';
   upload.accept = '.json,application/json';
-  upload.setAttribute('aria-label', 'Import catalog choices JSON');
+  localizedAttribute(upload, "aria-label", () => t("interface:importCatalogChoicesJson"));
   upload.onchange = () =>
     perform(
       async (context) => {
         const file = upload.files?.[0];
-        if (!file) throw new Error('Choose a catalog JSON file.');
-        if (file.size > 65536) throw new Error('Catalog choices are limited to 64 KiB.');
+        if (!file) throw new Error(t("interface:chooseACatalogJsonFile"));
+        if (file.size > 65536) throw new Error(t("interface:catalogChoicesAreLimitedTo64Kib"));
         const candidate = validateEnemyCatalogDraft(JSON.parse(await file.text()));
         context.check();
         draft = structuredClone(candidate);
       },
-      'Imported into the draft. Apply when ready.',
-      'Reading and validating catalog choices…',
+      t("interface:importedIntoTheDraftApplyWhenReady"),
+      t("interface:readingAndValidatingCatalogChoices"),
     );
-  const back = button('back', 'Back', close),
+  const back = button('back', localizedMessage("common:actions.back"), close),
     actions = node('div');
   actions.className = 'enemy-catalog-actions';
   actions.append(apply, undo, play, exportButton, upload, back);
@@ -246,11 +246,11 @@ export function attachEnemyCatalogPanel({
   function syncBusy() {
     for (const el of dialog.querySelectorAll('button,input,select'))
       el.disabled = busy && el !== back;
-    back.textContent = busy
+    localizedText(back, () =>busy
       ? operation?.committing
-        ? 'Stop waiting'
-        : 'Cancel operation'
-      : 'Back';
+        ? t("interface:stopWaiting")
+        : t("interface:cancelOperation")
+      : t("common:actions.back"));
   }
   const cancel = (event) => {
     if (event.target !== dialog) return;
@@ -317,7 +317,7 @@ export function attachEnemyCatalogPanel({
     if (operation?.committing) {
       operation.lease.finish({
         message:
-          'Stopped waiting. The authoring operation is still finishing; editing stays locked until its result is known.',
+          t("interface:stoppedWaitingTheAuthoringOperationIsStillFinishingEditingStays"),
         state: 'detached',
       });
       return true;
@@ -326,7 +326,7 @@ export function attachEnemyCatalogPanel({
       operation.controller.abort();
       operation = null;
       busy = false;
-      report('Preparation cancelled. Your draft is unchanged.', 'cancelled');
+      report(t("interface:preparationCancelledYourDraftIsUnchanged"), 'cancelled');
       syncBusy();
     }
     const previousFocus = doc.activeElement,

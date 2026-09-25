@@ -1,3 +1,4 @@
+import { t, localizedText } from '../i18n/index.mjs';
 /** Presentation only. The Journey store and existing recovery handlers keep
  * ownership of saving/export; a warning never pauses, focuses or starts play. */
 export function attachJourneySaveNotice({ document: doc = globalThis.document } = {}) {
@@ -11,7 +12,7 @@ export function attachJourneySaveNotice({ document: doc = globalThis.document } 
   const menuLabel = menu.getAttribute('aria-label');
   let unsaved = false;
   const text = (node, value) => {
-    if (node.textContent !== value) node.textContent = value;
+    if (node.textContent !== value) localizedText(node, () =>value);
   };
   action.addEventListener('blur', () => {
     if (!unsaved) action.hidden = true;
@@ -33,10 +34,10 @@ export function attachJourneySaveNotice({ document: doc = globalThis.document } 
       text(
         action,
         unsaved
-          ? 'Progress not saved · Save options'
+          ? t("interface:progressNotSavedSaveOptions")
           : ready && durable
-            ? 'Progress saved · Game menu'
-            : 'Save options · Game menu',
+            ? t("interface:progressSavedGameMenu")
+            : t("interface:saveOptionsGameMenu"),
       );
       menu.dataset.journeyUnsaved = String(unsaved);
       menu.setAttribute(
@@ -45,7 +46,7 @@ export function attachJourneySaveNotice({ document: doc = globalThis.document } 
       );
       text(
         announcement,
-        unsaved ? 'Journey progress is not saved. Save options are in Game menu.' : '',
+        unsaved ? t("interface:journeyProgressIsNotSavedSaveOptionsAreInGame") : '',
       );
       // Do not remove the currently focused Retry/Export controls on success.
       // The panel can disappear on the next status update after focus leaves it.
@@ -55,7 +56,7 @@ export function attachJourneySaveNotice({ document: doc = globalThis.document } 
         unsaved
           ? `Journey progress is session-only. Keep playing, retry saving, or export before closing. ${error}`
           : ready && durable
-            ? 'Journey progress saved locally. You can continue playing.'
+            ? t("interface:journeyProgressSavedLocallyYouCanContinuePlaying")
             : '',
       );
     },

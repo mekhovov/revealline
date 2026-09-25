@@ -1,3 +1,4 @@
+import { t, localizedText, localizedAttribute, localizedMessage } from '../i18n/index.mjs';
 import { createOperationStatus } from './operation-status.mjs';
 import {
   CONTROLLER_BINDING_ACTIONS,
@@ -10,11 +11,11 @@ import {
 } from '../controller-bindings.mjs';
 
 const FAMILY_LABELS = {
-  generic: 'Automatic / position labels',
-  xbox: 'Xbox labels',
-  playstation: 'PlayStation labels',
+  get generic() { return t("interface:automaticPositionLabels"); },
+  get xbox() { return t("interface:xboxLabels"); },
+  get playstation() { return t("interface:playstationLabels"); },
 };
-const CONTEXT_LABELS = { flight: 'Flight', menu: 'Menus' };
+const CONTEXT_LABELS = { get flight() { return t("interface:flight"); }, get menu() { return t("interface:menus"); } };
 
 /** A complete draft editor. The host owns adoption/persistence and input reset.
  * Async hosts must check signal/isCurrent before committing side effects.
@@ -35,7 +36,7 @@ export function attachControllerSettings({
     typeof onApply !== 'function' ||
     typeof onBeforeEdit !== 'function'
   )
-    throw new TypeError('Controller settings require a container, document and binding callbacks.');
+    throw new TypeError(t("interface:controllerSettingsRequireAContainerDocumentAndBindingCallbacks"));
   const listeners = [],
     controls = new Map(),
     buttonSelects = [],
@@ -50,7 +51,7 @@ export function attachControllerSettings({
   const prefix = container.id || 'controller-settings';
   const node = (tag, text, className) => {
     const element = doc.createElement(tag);
-    if (text !== undefined) element.textContent = text;
+    if (text !== undefined) localizedText(element, () =>text);
     if (className) element.className = className;
     return element;
   };
@@ -64,21 +65,21 @@ export function attachControllerSettings({
     element.dataset.controllerSettingsAction = action;
     return element;
   };
-  const heading = node('h3', 'Controller controls', 'controller-settings-heading'),
+  const heading = node('h3', localizedMessage("interface:controllerControls"), 'controller-settings-heading'),
     summary = node('p', '', 'controller-settings-summary'),
     note = node(
       'p',
-      'Use a complete draft to swap buttons. Your current controller remains active until Apply. Keyboard and touch remain available.',
+      localizedMessage("interface:useACompleteDraftToSwapButtonsYourCurrentController"),
       'controller-settings-note',
     ),
-    edit = button('Edit controller settings', 'edit'),
+    edit = button(localizedMessage("interface:editControllerSettings"), 'edit'),
     editor = node('div', undefined, 'controller-settings-editor'),
     status = node('p', '', 'controller-settings-status'),
     errors = node('ul', undefined, 'controller-settings-errors'),
     actions = node('div', undefined, 'controller-settings-actions'),
-    apply = button('Apply controller settings', 'apply'),
-    cancel = button('Cancel draft', 'cancel'),
-    defaults = button('Restore defaults in draft', 'defaults');
+    apply = button(localizedMessage("interface:applyControllerSettings"), 'apply'),
+    cancel = button(localizedMessage("interface:cancelDraft"), 'cancel'),
+    defaults = button(localizedMessage("interface:restoreDefaultsInDraft"), 'defaults');
   editor.hidden = true;
   status.id = `${prefix}-status`;
   status.setAttribute('role', 'status');
@@ -106,10 +107,10 @@ export function attachControllerSettings({
     try {
       const value = currentSource();
       sourceValid = true;
-      summary.textContent = `${FAMILY_LABELS[value.glyphFamily]} · Flight: ${controllerStickLabel(value, 'flight')} · Menus: ${controllerStickLabel(value, 'menu')} · Dead zone ${value.deadZone.press.toFixed(2)} / ${value.deadZone.release.toFixed(2)}.`;
+      localizedText(summary, () =>t("gameplay:flightMenusDeadZone", { value1: FAMILY_LABELS[value.glyphFamily], value2: controllerStickLabel(value, 'flight'), value3: controllerStickLabel(value, 'menu'), value4: value.deadZone.press.toFixed(2), value5: value.deadZone.release.toFixed(2) }));
     } catch (error) {
       sourceValid = false;
-      summary.textContent = 'Current controller settings could not be read.';
+      localizedText(summary, () =>t("interface:currentControllerSettingsCouldNotBeRead"));
       announce(error.message);
     }
   }
@@ -138,10 +139,10 @@ export function attachControllerSettings({
     try {
       if (signature(getBindings()) === baseline) return true;
       invalidate(
-        'Controller settings changed elsewhere. Your old draft was discarded; choose Edit to start from the current settings.',
+        t("interface:controllerSettingsChangedElsewhereYourOldDraftWasDiscardedChoose"),
       );
     } catch (error) {
-      invalidate(`Draft discarded: ${error.message}`);
+      invalidate(t("gameplay:draftDiscarded", { value1: error.message }));
     }
     return false;
   }
@@ -152,16 +153,16 @@ export function attachControllerSettings({
       last = keys.pop();
     keys.reduce((object, key) => object[key], draft)[last] = value;
     clearErrors();
-    announce('Draft changed. Current controls are unchanged until Apply.');
+    announce(t("interface:draftChangedCurrentControlsAreUnchangedUntilApply"));
     if (path === 'glyphFamily') updateButtonLabels();
-    if (outputs.has(path)) outputs.get(path).textContent = Number(value).toFixed(2);
+    if (outputs.has(path)) localizedText(outputs.get(path), () =>Number(value).toFixed(2));
   }
   function field(parent, path, labelText, { type = 'select', choices = [], min, max, step } = {}) {
     const label = node('label', undefined, 'controller-settings-field'),
       caption = node('span', labelText),
       control = node(type === 'select' ? 'select' : 'input');
     control.id = `${prefix}-${path.replaceAll('.', '-')}`;
-    control.setAttribute('aria-label', labelText);
+    localizedAttribute(control, "aria-label", () => labelText);
     control.dataset.controllerSetting = path;
     if (type !== 'select') control.type = type;
     if (min !== undefined) control.min = String(min);
@@ -204,26 +205,26 @@ export function attachControllerSettings({
     editor.append(details);
     return body;
   }
-  field(editor, 'glyphFamily', 'Button label family', {
+  field(editor, 'glyphFamily', localizedMessage("interface:buttonLabelFamily"), {
     choices: CONTROLLER_GLYPH_FAMILIES.map((family) => [family, FAMILY_LABELS[family]]),
   });
   editor.append(
     node(
       'p',
-      'Automatic uses detected Xbox or PlayStation names, otherwise button positions. Choosing names does not change the physical mapping. Standard controllers only; system/home remains owned by your device.',
+      localizedMessage("interface:automaticUsesDetectedXboxOrPlaystationNamesOtherwiseButtonPositions"),
       'controller-settings-note',
     ),
   );
   for (const context of ['flight', 'menu']) {
     const body = section(
-      `${CONTEXT_LABELS[context]} button map`,
-      'Choose one button per action. A button may be reused in the other context. Temporary conflicts are allowed in the draft, but Apply requires a complete valid map.',
+      localizedMessage("gameplay:buttonMap", { value1: CONTEXT_LABELS[context] }),
+      localizedMessage("interface:chooseOneButtonPerActionAButtonMayBeReused"),
     );
     for (const action of CONTROLLER_BINDING_ACTIONS[context]) {
       const select = field(
         body,
         `${context}.buttons.${action}`,
-        `${continuousSteering && context === 'flight' && action === 'stop' ? 'Pause / back' : CONTROLLER_ACTION_LABELS[context][action]} button`,
+        localizedMessage("gameplay:button", { value1: continuousSteering && context === 'flight' && action === 'stop' ? t("interface:pauseBack") : CONTROLLER_ACTION_LABELS[context][action] }),
         {
           choices: Array.from({ length: 16 }, (_, index) => [
             index,
@@ -235,35 +236,35 @@ export function attachControllerSettings({
     }
   }
   const sticks = section(
-    'Stick controls',
-    'Flight and menus can use different axis pairs or buttons only. Standard left stick is axes 0/1; right stick is 2/3. Axis changes are settings, not live hardware calibration.',
+    localizedMessage("interface:stickControls"),
+    localizedMessage("interface:flightAndMenusCanUseDifferentAxisPairsOrButtons"),
   );
   for (const context of ['flight', 'menu']) {
     const group = node('fieldset');
-    group.append(node('legend', `${CONTEXT_LABELS[context]} stick`));
-    field(group, `${context}.stick.enabled`, 'Enable stick input', { type: 'checkbox' });
+    group.append(node('legend', localizedMessage("gameplay:stick", { value1: CONTEXT_LABELS[context] })));
+    field(group, `${context}.stick.enabled`, localizedMessage("interface:enableStickInput"), { type: 'checkbox' });
     for (const [key, label] of [
-      ['xAxis', 'Horizontal axis'],
-      ['yAxis', 'Vertical axis'],
+      ['xAxis', t("interface:horizontalAxis")],
+      ['yAxis', t("interface:verticalAxis")],
     ])
       field(group, `${context}.stick.${key}`, label, {
-        choices: Array.from({ length: 4 }, (_, i) => [i, `Axis ${i}`]),
+        choices: Array.from({ length: 4 }, (_, i) => [i, t("gameplay:axis", { value1: i })]),
       });
-    field(group, `${context}.stick.invertX`, 'Invert horizontal direction', { type: 'checkbox' });
-    field(group, `${context}.stick.invertY`, 'Invert vertical direction', { type: 'checkbox' });
+    field(group, `${context}.stick.invertX`, localizedMessage("interface:invertHorizontalDirection"), { type: 'checkbox' });
+    field(group, `${context}.stick.invertY`, localizedMessage("interface:invertVerticalDirection"), { type: 'checkbox' });
     sticks.append(group);
   }
   const thresholds = section(
-    'Dead zone and release',
-    'Press starts stick movement. Release keeps it active above this lower threshold, reducing jitter. Release must not exceed Press. Equal values preserve a single threshold. These values affect both contexts.',
+    localizedMessage("interface:deadZoneAndRelease"),
+    localizedMessage("interface:pressStartsStickMovementReleaseKeepsItActiveAboveThis"),
   );
-  field(thresholds, 'deadZone.press', 'Press threshold', {
+  field(thresholds, 'deadZone.press', localizedMessage("interface:pressThreshold"), {
     type: 'range',
     min: 0.1,
     max: 0.6,
     step: 0.01,
   });
-  field(thresholds, 'deadZone.release', 'Release threshold', {
+  field(thresholds, 'deadZone.release', localizedMessage("interface:releaseThreshold"), {
     type: 'range',
     min: 0.02,
     max: 0.6,
@@ -274,7 +275,7 @@ export function attachControllerSettings({
   function updateButtonLabels() {
     for (const select of buttonSelects)
       [...select.options].forEach((option, index) => {
-        option.textContent = `${controllerButtonLabel(index, draft.glyphFamily)} · ${index}`;
+        localizedText(option, () =>`${controllerButtonLabel(index, draft.glyphFamily)} · ${index}`);
       });
   }
   function renderDraft() {
@@ -282,7 +283,7 @@ export function attachControllerSettings({
       const value = read(path);
       if (control.type === 'checkbox') control.checked = value;
       else control.value = String(value);
-      if (outputs.has(path)) outputs.get(path).textContent = value.toFixed(2);
+      if (outputs.has(path)) localizedText(outputs.get(path), () =>value.toFixed(2));
     }
     updateButtonLabels();
     syncBusy();
@@ -299,16 +300,16 @@ export function attachControllerSettings({
       edit.hidden = true;
       renderDraft();
       announce(
-        'Editing a draft. Apply validates all controls together; Cancel keeps the current map.',
+        t("interface:editingADraftApplyValidatesAllControlsTogetherCancelKeeps"),
       );
       controls.get('glyphFamily').focus({ preventScroll: true });
     } catch (error) {
-      invalidate(`Controller settings could not be edited: ${error.message}`);
+      invalidate(t("gameplay:controllerSettingsCouldNotBeEdited", { value1: error.message }));
     }
   });
   listen(cancel, 'click', () => {
     if (destroyed || busy || !draft) return;
-    invalidate('Draft cancelled. Current controller settings are unchanged.');
+    invalidate(t("interface:draftCancelledCurrentControllerSettingsAreUnchanged"));
     edit.focus({ preventScroll: true });
   });
   listen(defaults, 'click', () => {
@@ -317,7 +318,7 @@ export function attachControllerSettings({
     renderDraft();
     clearErrors();
     announce(
-      'Defaults are in the draft. Apply to use them, or Cancel to keep your current settings.',
+      t("interface:defaultsAreInTheDraftApplyToUseThemOr"),
     );
   });
   listen(apply, 'click', async () => {
@@ -326,7 +327,7 @@ export function attachControllerSettings({
     if (!validation.valid) {
       showErrors(validation.errors);
       announce(
-        `Controller settings were not applied. ${validation.errors[0]} Review the draft and apply again.`,
+        t("gameplay:controllerSettingsWereNotAppliedReviewTheDraftAndApply", { value1: validation.errors[0] }),
       );
       return;
     }
@@ -361,7 +362,7 @@ export function attachControllerSettings({
     pending = abort;
     busy = true;
     syncBusy();
-    announce('Applying controller settings…', 'busy');
+    announce(t("interface:applyingControllerSettings"), 'busy');
     const isCurrent = () => {
       if (destroyed || abort.signal.aborted || generation !== ticket) return false;
       try {
@@ -376,7 +377,7 @@ export function attachControllerSettings({
       if (destroyed || generation !== ticket || abort.signal.aborted) return;
       if (signature(getBindings()) !== expected) {
         invalidate(
-          'The current controller settings changed before this draft was adopted. Review the current settings and edit again.',
+          t("interface:theCurrentControllerSettingsChangedBeforeThisDraftWasAdopted"),
         );
         return;
       }
@@ -387,7 +388,7 @@ export function attachControllerSettings({
       clearErrors();
       syncSummary();
       announce(
-        `Controller settings applied.${result?.ok === false ? ` ${result.warning || 'The new map applies to this session only; it could not be saved.'}` : ''}`,
+        t("gameplay:controllerSettingsApplied", { value1: result?.ok === false ? ` ${result.warning || t("interface:theNewMapAppliesToThisSessionOnlyItCould")}` : '' }),
       );
       focusAfterApply = true;
     } catch (error) {
@@ -398,7 +399,7 @@ export function attachControllerSettings({
         } catch {}
         if (!unchanged)
           invalidate(
-            'Controller settings changed during this operation. Review the current settings before editing again.',
+            t("interface:controllerSettingsChangedDuringThisOperationReviewTheCurrentSettings"),
           );
         else announce(`Controller settings were not applied. ${error.message}`, 'error');
       }
@@ -425,7 +426,7 @@ export function attachControllerSettings({
   });
   function refresh() {
     if (destroyed) return;
-    invalidate('Current controller settings loaded. Choose Edit to make a draft.');
+    invalidate(t("interface:currentControllerSettingsLoadedChooseEditToMakeADraft"));
   }
   refresh();
   return {
