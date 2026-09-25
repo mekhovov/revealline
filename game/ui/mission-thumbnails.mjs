@@ -1,10 +1,12 @@
+import { t } from '../i18n/index.mjs';
 import { canonicalJSON } from '../data-json.mjs';
 import { campaignKey } from '../library.mjs';
 import { createPictureIdentityCatalog } from './picture-identity.mjs';
 import { acquireEarnedPicture } from './earned-picture.mjs';
 
 const cancelled = (signal) => {
-  if (signal.aborted) throw new DOMException('Mission thumbnails cancelled.', 'AbortError');
+  if (signal.aborted)
+    throw new DOMException(t('interface:missionThumbnailsCancelled'), 'AbortError');
 };
 
 /** The collection's exact earned resolver owns thumbnails too. No fresh default,
@@ -96,7 +98,7 @@ export function createMissionPictureThumbnails({
             cancelled(signal);
             if (active !== controller || !job.button.isConnected) continue;
             if (!/^data:image\/(?:png|jpeg|webp);base64,/u.test(image ?? ''))
-              throw new Error('A mission thumbnail needs an owned image.');
+              throw new Error(t('interface:aMissionThumbnailNeedsAnOwnedImage'));
             job.button.dataset.missionArtwork = image;
             job.button.dataset.pictureState = 'earned';
             onUpdate();

@@ -1,3 +1,5 @@
+import { localizedMessage, localizedText, t } from '../i18n/index.mjs';
+import { editorMessageError, showEditorFailure } from './editor-copy.mjs';
 import { editContentObjective } from '../content-design/objectives.mjs';
 import { missionEditContext } from './edit-context.mjs';
 
@@ -11,14 +13,14 @@ export function createObjectiveEditor({ document, getSource, getMission, apply }
       ...rows.map(([value, text]) => {
         const option = document.createElement('option');
         option.value = value;
-        option.textContent = text;
+        localizedText(option, text);
         return option;
       }),
     );
   }
   function disarm() {
     armed = false;
-    $('remove').textContent = 'Remove selected objective';
+    localizedText($('remove'), localizedMessage('tools:studio.objective.remove'));
   }
   function select() {
     disarm();
@@ -30,27 +32,38 @@ export function createObjectiveEditor({ document, getSource, getMission, apply }
     $('x').value = objective?.x ?? '';
     $('y').value = objective?.y ?? '';
     $('remove').disabled = !objective;
-    $('submit').textContent = objective
-      ? 'Validate & replace objective'
-      : 'Validate & add objective';
-    $('result').textContent =
-      'Capturing the marker cell earns the objective. Required markers and territory quota both gate completion; avoid low-risk cleanup.';
+    localizedText(
+      $('submit'),
+      objective
+        ? localizedMessage('tools:studio.objective.replace')
+        : localizedMessage('tools:studio.objective.add'),
+    );
+    localizedText($('result'), localizedMessage('tools:studio.objective.help'));
   }
   function sync() {
     const mission = getMission();
     $('tools').disabled = !mission || mission.modes.includes('team');
-    $('qualification').textContent = mission?.modes.includes('team')
-      ? 'Authored Team objective behavior is not yet qualified. These controls remain unavailable.'
-      : 'Capture objectives use the shared engine. Preview retained chambers and required markers before testing a route.';
+    localizedText(
+      $('qualification'),
+      mission?.modes.includes('team')
+        ? localizedMessage('tools:studio.objective.teamUnavailable')
+        : localizedMessage('tools:studio.objective.qualification'),
+    );
     const next = context();
     if (next === key) return;
     key = next;
     const selected = $('select').value;
     options($('select'), [
-      ['', '+ New objective'],
+      ['', localizedMessage('tools:studio.objective.new')],
       ...(mission?.objectives ?? []).map((objective) => [
         objective.id,
-        `${objective.required ? 'Required' : 'Optional'} · ${objective.id}`,
+        () =>
+          t(
+            objective.required
+              ? 'tools:studio.objective.requiredOption'
+              : 'tools:studio.objective.optionalOption',
+            { id: objective.id },
+          ),
       ]),
     ]);
     if (mission?.objectives.some((objective) => objective.id === selected))
@@ -59,13 +72,12 @@ export function createObjectiveEditor({ document, getSource, getMission, apply }
   }
   function commit(action) {
     try {
-      if (key !== context())
-        throw new Error('The draft context changed. Refresh the objective selection.');
+      if (key !== context()) throw editorMessageError('errors:studio.objective.contextChanged');
       const id = $('id').value.trim(),
         command = { action, id };
       if (action !== 'remove') {
         if (!$('x').value.trim() || !$('y').value.trim())
-          throw new Error('Enter both cell-centre coordinates.');
+          throw editorMessageError('errors:studio.cellCentreCoordinates');
         command.objective = {
           id,
           required: $('required').checked,
@@ -80,10 +92,9 @@ export function createObjectiveEditor({ document, getSource, getMission, apply }
       sync();
       $('select').value = action === 'remove' ? '' : id;
       select();
-      $('result').textContent =
-        'Applied to the local draft. All supported presets and modes compiled. Undo is available; test completion and quota cleanup.';
+      localizedText($('result'), localizedMessage('tools:studio.objective.applied'));
     } catch (error) {
-      $('result').textContent = `Not applied: ${error.message}`;
+      showEditorFailure($('result'), error);
     }
   }
   $('select').onchange = select;
@@ -97,8 +108,8 @@ export function createObjectiveEditor({ document, getSource, getMission, apply }
     if (!$('select').value) return;
     if (!armed) {
       armed = true;
-      $('remove').textContent = 'Confirm remove objective';
-      $('result').textContent = 'Activate Remove again. Undo remains available.';
+      localizedText($('remove'), localizedMessage('tools:studio.objective.confirmRemove'));
+      localizedText($('result'), localizedMessage('tools:studio.editor.confirmRemove'));
       return;
     }
     disarm();

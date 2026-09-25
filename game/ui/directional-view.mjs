@@ -1,3 +1,4 @@
+import { t } from '../i18n/index.mjs';
 import { boundedJSON, exactKeys, required } from '../data-json.mjs';
 import { CELL, DIRECTIONS } from '../core/registry.mjs';
 import { isDirectionalRuleset } from '../core/versions.mjs';
@@ -7,7 +8,7 @@ const own = (value, key) => {
   const descriptor = Object.getOwnPropertyDescriptor(value, key);
   required(
     descriptor && Object.hasOwn(descriptor, 'value'),
-    'Expected own directional visual data.',
+    t('interface:expectedOwnDirectionalVisualData'),
   );
   return descriptor.value;
 };
@@ -28,7 +29,7 @@ export function directionalView(run) {
     if (!isDirectionalRuleset(own(run, 'ruleset'))) return null;
     required(
       own(run, 'width') === 72 && own(run, 'height') === 36,
-      'Unsupported directional board.',
+      t('interface:unsupportedDirectionalBoard'),
     );
     const definition = boundedJSON(own(own(run, 'level'), 'directionalFields'), {
       maxBytes: 16384,
@@ -39,20 +40,20 @@ export function directionalView(run) {
     exactKeys(definition, ['version', 'zones'], 'directional visual definition');
     required(
       definition.version === DIRECTIONAL_FIELD_RULES.version,
-      'Unsupported directional recipe.',
+      t('interface:unsupportedDirectionalRecipe'),
     );
     const zones = compileDirectionalZones(definition.zones, visualBounds),
       cells = own(run, 'cells');
     required(
       Object.getPrototypeOf(cells) === Uint8Array.prototype && typedLength.call(cells) === 2592,
-      'Expected owned board cells.',
+      t('interface:expectedOwnedBoardCells'),
     );
     const visible = [],
       fields = [];
     for (const zone of zones) {
       let activeCells = 0;
       for (const index of zone.cells) {
-        required(cells[index] <= CELL.WALL, 'Invalid ownership.');
+        required(cells[index] <= CELL.WALL, t('interface:invalidOwnership'));
         if (cells[index] !== CELL.FIELD) continue;
         activeCells++;
         visible.push(

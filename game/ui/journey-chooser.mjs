@@ -1,3 +1,4 @@
+import { t, localizedText } from '../i18n/index.mjs';
 import { attachJourneyBackup } from './journey-backup.mjs';
 import { paintMissionThumbnail } from '../content-design/mission-card.mjs';
 import { attachMissionLibraryChooser } from './mission-library-chooser.mjs';
@@ -35,7 +36,7 @@ export function attachJourneyChooser({
       button.id = 'journey-backup-open';
       button.type = 'button';
       button.className = 'button secondary';
-      button.textContent = 'Progress backup';
+      localizedText(button, () => t('interface:progressBackup'));
       const backup = attachJourneyBackup({
         document: doc,
         profile,
@@ -60,27 +61,27 @@ export function attachJourneyChooser({
   dialog.setAttribute('aria-labelledby', 'journey-chooser-title');
   const heading = doc.createElement('h2');
   heading.id = 'journey-chooser-title';
-  heading.textContent = 'Find your next line';
+  localizedText(heading, () => t('interface:findYourNextLine'));
   const copy = doc.createElement('p');
-  copy.textContent =
-    'Every mission in this test route is selectable. Choose one to play; your clears stay with you.';
+  localizedText(copy, () => t('interface:everyMissionInThisTestRouteIsSelectableChooseOne'));
   if (getCard)
-    copy.textContent =
-      'Choose any mission. Starting maps: light ground closes cuts; cross = launch; shapes = threats. No capture prediction.';
+    localizedText(copy, () =>
+      t('interface:chooseAnyMissionStartingMapsLightGroundClosesCutsCross'),
+    );
   const label = doc.createElement('label');
-  label.textContent = 'Search all missions';
+  localizedText(label, () => t('interface:searchAllMissions'));
   const search = doc.createElement('input');
   search.id = 'journey-search';
   search.type = 'search';
-  search.placeholder = 'Mission or campaign';
+  search.placeholder = t('interface:missionOrCampaign');
   label.append(search);
   const filterLabel = doc.createElement('label');
-  filterLabel.textContent = 'Campaign';
+  localizedText(filterLabel, () => t('interface:campaign'));
   const filter = doc.createElement('select');
   filter.id = 'journey-campaign';
   const option = (text, value) => {
     const node = doc.createElement('option');
-    node.textContent = text;
+    localizedText(node, () => text);
     node.value = value;
     return node;
   };
@@ -91,7 +92,7 @@ export function attachJourneyChooser({
       `${mission.source}/${mission.packId ?? '_base'}/${mission.campaignId}`,
       mission.campaignTitle,
     );
-  filter.append(option('All campaigns', ''));
+  filter.append(option(t('interface:allCampaigns'), ''));
   filter.append(...[...campaigns].map(([key, title]) => option(title, key)));
   filter.value = '';
   filterLabel.append(filter);
@@ -108,14 +109,14 @@ export function attachJourneyChooser({
   back.type = 'button';
   back.id = 'journey-back';
   back.className = 'button secondary';
-  back.textContent = 'Back to game';
+  localizedText(back, () => t('common:navigation.backToGame'));
   const footer = doc.createElement('div');
   footer.className = 'journey-footer';
   const backupButton = doc.createElement('button');
   backupButton.id = 'journey-backup-open';
   backupButton.type = 'button';
   backupButton.className = 'button secondary';
-  backupButton.textContent = 'Progress backup';
+  localizedText(backupButton, () => t('interface:progressBackup'));
   footer.append(back, backupButton);
   dialog.append(heading, copy, filters, status, list, footer);
   doc.body.append(dialog);
@@ -142,7 +143,11 @@ export function attachJourneyChooser({
           !filter.value ||
           `${mission.source}/${mission.packId ?? '_base'}/${mission.campaignId}` === filter.value,
       );
-    status.textContent = `${matches.length} mission${matches.length === 1 ? '' : 's'} · ${mode === 'solo' ? 'Solo' : mode}`;
+    localizedText(
+      status,
+      () =>
+        `${matches.length} mission${matches.length === 1 ? '' : 's'} · ${mode === 'solo' ? t('interface:solo2') : mode}`,
+    );
     list.replaceChildren(
       ...matches.map((mission) => {
         const button = doc.createElement('button');
@@ -154,18 +159,20 @@ export function attachJourneyChooser({
         });
         const number = doc.createElement('span');
         number.className = 'journey-card-number';
-        number.textContent = String(mission.levelIndex + 1).padStart(2, '0');
+        localizedText(number, () => String(mission.levelIndex + 1).padStart(2, '0'));
         const name = doc.createElement('strong');
-        name.textContent = mission.name;
+        localizedText(name, () => mission.name);
         const campaign = doc.createElement('span');
-        campaign.textContent = mission.campaignTitle;
+        localizedText(campaign, () => mission.campaignTitle);
         const progress = doc.createElement('span');
         progress.className = 'journey-card-progress';
-        progress.textContent = Object.hasOwn(state.clears[mode], mission.id)
-          ? 'Cleared'
-          : state.skipped[mode].includes(mission.id)
-            ? 'Skipped · try again'
-            : 'Ready to play';
+        localizedText(progress, () =>
+          Object.hasOwn(state.clears[mode], mission.id)
+            ? t('interface:cleared')
+            : state.skipped[mode].includes(mission.id)
+              ? t('interface:skippedTryAgain')
+              : t('interface:readyToPlay'),
+        );
         button.append(number, name, campaign, progress);
         const card = getCard?.(mission);
         if (card) {
@@ -185,13 +192,16 @@ export function attachJourneyChooser({
           }
           const challenge = doc.createElement('span');
           challenge.className = 'journey-card-challenge';
-          challenge.textContent = `Band ${card.band}/12 · ${card.preset[0].toUpperCase()}${card.preset.slice(1)}`;
+          localizedText(
+            challenge,
+            () => `Band ${card.band}/12 · ${card.preset[0].toUpperCase()}${card.preset.slice(1)}`,
+          );
           const route = doc.createElement('span');
           route.className = 'journey-card-route';
-          route.textContent = card.route;
+          localizedText(route, () => card.route);
           const mastery = doc.createElement('span');
           mastery.className = 'journey-card-mastery';
-          mastery.textContent = `Optional challenge: ${card.mastery}`;
+          localizedText(mastery, () => `Optional challenge: ${card.mastery}`);
           button.append(preview, challenge, route, mastery);
         }
         button.onclick = () => {
@@ -224,9 +234,9 @@ export function attachJourneyChooser({
       render();
       if (missionId) primary().focus({ preventScroll: true });
     },
-    open(origin = doc.activeElement, { returnLabel = 'Back to game' } = {}) {
+    open(origin = doc.activeElement, { returnLabel = t('common:navigation.backToGame') } = {}) {
       opener = origin;
-      back.textContent = returnLabel;
+      localizedText(back, () => returnLabel);
       onPause?.();
       render();
       dialog.showModal();

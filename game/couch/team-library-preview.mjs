@@ -1,3 +1,4 @@
+import { t, localizedText } from '../i18n/index.mjs';
 /** Read-only copies of authenticated Team artwork. Passive surfaces retain a
  * broad concealed teaser; the explicit library action may show the full
  * original without granting gameplay ownership. */
@@ -58,7 +59,9 @@ export function attachTeamLibraryPreview({
     const selected = selection();
     if (owner && owner.row !== selected?.row) close();
     button.disabled = !selected || Boolean(pending);
-    button.textContent = selected ? `Preview ${selected.row.title}` : 'Select a mission to preview';
+    localizedText(button, () =>
+      selected ? `Preview ${selected.row.title}` : t('interface:selectAMissionToPreview'),
+    );
   };
   async function show() {
     const selected = selection();
@@ -83,8 +86,10 @@ export function attachTeamLibraryPreview({
       !ticket.controller.signal.aborted &&
       selection()?.row === ticket.row;
     panel.hidden = false;
-    title.textContent = `${ticket.row.title} · Picture preview`;
-    status.textContent = 'Preparing the selected picture… Your current attempt is unchanged.';
+    localizedText(title, () => `${ticket.row.title} · Picture preview`);
+    localizedText(status, () =>
+      t('interface:preparingTheSelectedPictureYourCurrentAttemptIsUnchanged'),
+    );
     status.dataset.state = 'busy';
     retry.hidden = document.activeElement !== retry;
     retry.setAttribute('aria-disabled', 'true');
@@ -95,7 +100,7 @@ export function attachTeamLibraryPreview({
         signal: ticket.controller.signal,
         isCurrent: current,
         onStatus: (message) => {
-          if (current()) status.textContent = message;
+          if (current()) localizedText(status, () => message);
         },
       });
       if (!current()) return;
@@ -105,7 +110,7 @@ export function attachTeamLibraryPreview({
         canvas.width = 1152;
         canvas.height = 576;
         const context = canvas.getContext('2d');
-        if (!context) throw new Error('Preview canvas unavailable.');
+        if (!context) throw new Error(t('interface:previewCanvasUnavailable'));
         if (
           !paintTeamPicturePreview(context, image, canvas.width, canvas.height, {
             full: true,
@@ -115,13 +120,15 @@ export function attachTeamLibraryPreview({
           return;
         canvas.hidden = false;
       }
-      status.textContent = image
-        ? 'Full picture preview. Viewing does not complete an arena or earn a picture.'
-        : 'Approved procedural scene. Play to explore this arena.';
+      localizedText(status, () =>
+        image
+          ? t('interface:fullPicturePreviewViewingDoesNotCompleteAnArenaOr2')
+          : t('interface:approvedProceduralScenePlayToExploreThisArena'),
+      );
       status.dataset.state = 'ready';
     } catch {
       if (current()) {
-        status.textContent = 'Picture preview unavailable. Retry or choose Play.';
+        localizedText(status, () => t('interface:picturePreviewUnavailableRetryOrChoosePlay'));
         status.dataset.state = 'error';
       }
     } finally {

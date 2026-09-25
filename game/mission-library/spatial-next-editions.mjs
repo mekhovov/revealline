@@ -10,6 +10,7 @@ import { journeyLibrarySource } from './journey-source.mjs';
 import { combineJourneyLibrarySources } from './cross-mode-journey.mjs';
 import { authoredJourneyMissionTags, journeyMissionDetails } from './journey-presentation.mjs';
 import { UKRAINIAN_ORNAMENT_ATLAS_IDS } from '../content-design/ukrainian-ornament-atlas-registry.mjs';
+import { t } from '../i18n/index.mjs';
 
 const SPATIAL_V9_MISSIONS = Object.freeze(['stepping-stones', 'return-pocket', 'neutral-ground']);
 const HORIZON_V10_MISSIONS = Object.freeze(['island-outpost', 'long-way-home', 'horizon-remix']);
@@ -34,6 +35,11 @@ const EDITION_HISTORY = Object.freeze({
     Object.freeze({ routeId: 'whole-spatial-v11', missionIds: ORNAMENT_V1_MISSIONS }),
   ]),
 });
+
+/** Shared registration for the prior cards the current route actually exposes. */
+export function spatialNextPriorEditions(activeRouteId) {
+  return EDITION_HISTORY[activeRouteId] || Object.freeze([]);
+}
 
 /** Bound the display projection before compilation. compileContentProject
  * resolves every mission/preset/mode it receives, so filtering only after an
@@ -110,8 +116,8 @@ export async function createSpatialNextEditionSources({
   launch,
   profile,
 } = {}) {
-  const history = EDITION_HISTORY[activeRouteId];
-  if (!history) return Object.freeze({ sources: Object.freeze([]), dispose() {} });
+  const history = spatialNextPriorEditions(activeRouteId);
+  if (!history.length) return Object.freeze({ sources: Object.freeze([]), dispose() {} });
   required(typeof launch === 'function', 'Spatial editions need an exact mission handoff.');
   required(typeof difficulty === 'function', 'Spatial editions need the selected preset.');
   required(
@@ -188,6 +194,8 @@ export async function createSpatialNextEditionSources({
       const source = journeyLibrarySource({
         editionId: route.id,
         edition: `Previous Journey · v${route.id.split('v').at(-1)}`,
+        editionLabel: () =>
+          t('interface:missionLibrary.previousJourney', { version: route.id.split('v').at(-1) }),
         catalog: { missions },
         profile: historyIndex === 0 ? profile : undefined,
         details: (mission) => journeyMissionDetails(manifestFor(mission)),
@@ -207,7 +215,7 @@ export async function createSpatialNextEditionSources({
             disposed
               ? {
                   state: 'unavailable',
-                  reason: 'This mission library is closed. Reopen missions.',
+                  reason: t('interface:missionLibrary.closedReopen'),
                 }
               : { state: 'ready' },
         },

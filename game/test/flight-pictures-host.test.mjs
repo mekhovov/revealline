@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
+import { getLocale, setLocale } from '../i18n/index.mjs';
 import { soloPage, settle } from './helpers/solo-dom.mjs';
 import { memoryIndexedDB } from './helpers/soundtrack-fixtures.mjs';
 import {
@@ -214,6 +215,9 @@ test('pending decoded original blocks every fixed tick; background return never 
 });
 
 test('a failed picture prewarm can be retried without reusing its rejected promise', async (t) => {
+  const locale = getLocale();
+  t.after(() => setLocale(locale, { persist: false }));
+  setLocale('en', { persist: false });
   const f = await setup(t),
     gate = deferred();
   let decoding = 0;
@@ -229,7 +233,21 @@ test('a failed picture prewarm can be retried without reusing its rejected promi
   const before = authoritativeCheckpoint(p.rendered.run);
   gate.reject(new Error('Decoder temporarily unavailable'));
   await settle(() => p.$('flight-preparation-status').dataset.state === 'error');
-  assert.match(p.$('flight-preparation-status').textContent, /Decoder temporarily unavailable/);
+  assert.match(p.$('flight-preparation-status').textContent, /Picture unavailable.*original media/);
+  p.$('start-button').focus();
+  for (const language of ['uk', 'en']) {
+    setLocale(language, { persist: false });
+    ticks(p, 3);
+    assert.equal(p.doc.activeElement, p.$('start-button'));
+    assert.equal(decoding, 1, 'Changing locale must not retry the failed decode');
+    assert.deepEqual(authoritativeCheckpoint(p.rendered.run), before);
+    assert.match(
+      p.$('flight-preparation-status').textContent,
+      language === 'uk'
+        ? /Зображення недоступне.*оригінальних медіафайлів/
+        : /Picture unavailable.*original media/,
+    );
+  }
   ticks(p, 10);
   assert.deepEqual(authoritativeCheckpoint(p.rendered.run), before);
   p.$('start-button').click();

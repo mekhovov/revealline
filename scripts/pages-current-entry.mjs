@@ -14,8 +14,16 @@ const html = (value) =>
     (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[char],
   );
 
-export function currentEntryRedirect({ canonicalTarget, relativeTarget, indexDirectory }) {
-  return `<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width"><meta name="color-scheme" content="dark"><title>Reveal / Line</title><link rel="canonical" href="${html(canonicalTarget)}"><style>body{margin:0;min-height:100svh;display:grid;place-items:center;background:#091324;color:#edf2e8;font:18px/1.5 ui-monospace,monospace}main{padding:24px}h1{font-size:clamp(24px,5vw,40px)}a{display:inline-block;box-sizing:border-box;min-height:44px;padding:10px 24px;border:1px solid #7fdbeb;border-radius:0;color:#7fdbeb;text-decoration:none}a:focus-visible{outline:3px solid #edf2e8;outline-offset:4px}</style><body><main><h1>Opening Reveal / Line…</h1><a href="${html(relativeTarget)}">Play</a></main><script>const current = new URL(location.href); const directory = ${literal(indexDirectory)}; if (directory && current.pathname.endsWith('/' + directory)) current.pathname += '/'; const target = new URL(${literal(relativeTarget)}, current); target.search = location.search; target.hash = location.hash; document.querySelector('a').href = target.href; location.replace(target.href);</script></html>\n`;
+export function currentEntryRedirect({
+  canonicalTarget,
+  relativeTarget,
+  indexDirectory,
+  localizationRoot = null,
+}) {
+  const localization = localizationRoot
+    ? `<link rel="stylesheet" href="${html(localizationRoot)}i18n/style.css"><script src="${html(localizationRoot)}vendor/i18next-26.4.2.min.js"></script><script src="${html(localizationRoot)}i18n/catalogs.mjs"></script><script src="${html(localizationRoot)}i18n/bootstrap.mjs"></script>`
+    : '';
+  return `<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width"><meta name="color-scheme" content="dark"><title>Reveal / Line</title><link rel="canonical" href="${html(canonicalTarget)}"><style>body{margin:0;min-height:100svh;display:grid;place-items:center;background:#091324;color:#edf2e8;font:18px/1.5 ui-monospace,monospace}main{padding:24px}h1{font-size:clamp(24px,5vw,40px)}a{display:inline-block;box-sizing:border-box;min-height:44px;padding:10px 24px;border:1px solid #7fdbeb;border-radius:0;color:#7fdbeb;text-decoration:none}a:focus-visible{outline:3px solid #edf2e8;outline-offset:4px}</style>${localization}<body><main>${localizationRoot ? '<div data-language-control></div>' : ''}<h1 data-i18n="website:page.opening">Opening Reveal / Line…</h1><a href="${html(relativeTarget)}" data-i18n="common:actions.play">Play</a><noscript><p lang="uk">Відкриваємо Reveal / Line… <a href="${html(relativeTarget)}">Грати</a></p></noscript></main><script>const current = new URL(location.href); const directory = ${literal(indexDirectory)}; if (directory && current.pathname.endsWith('/' + directory)) current.pathname += '/'; const target = new URL(${literal(relativeTarget)}, current); target.search = location.search; target.hash = location.hash; document.querySelector('a').href = target.href; location.replace(target.href);</script></html>\n`;
 }
 
 function retirementWorker(version, routes) {
@@ -75,6 +83,14 @@ export async function planCurrentEntries({ source, repository, record }) {
   };
   await walk(source);
   if (!originals.has('index.html')) throw new Error('Current Pages entry needs index.html.');
+  const manifest = JSON.parse(await fs.readFile(path.join(source, 'manifest.json'), 'utf8'));
+  const shipped = new Set(manifest.files.map((entry) => entry.path));
+  const localized = [
+    'i18n/style.css',
+    'vendor/i18next-26.4.2.min.js',
+    'i18n/catalogs.mjs',
+    'i18n/bootstrap.mjs',
+  ].every((asset) => shipped.has('game/' + asset));
   const files = new Map(),
     entries = [],
     routes = [];
@@ -95,7 +111,14 @@ export async function planCurrentEntries({ source, repository, record }) {
     }
     files.set(
       relative,
-      currentEntryRedirect({ canonicalTarget: target, relativeTarget, indexDirectory }),
+      currentEntryRedirect({
+        canonicalTarget: target,
+        relativeTarget,
+        indexDirectory,
+        localizationRoot: localized
+          ? `${'../'.repeat(relative.split('/').length - 1)}releases/${record.version}/site/game/`
+          : null,
+      }),
     );
   }
   if (originals.has('service-worker.js'))

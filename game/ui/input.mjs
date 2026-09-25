@@ -1,3 +1,4 @@
+import { t } from '../i18n/index.mjs';
 import { actionForKey, keyCodeForEvent, resolveKeyBindings } from '../key-bindings.mjs';
 import { attachTouchSteering } from './touch-steering.mjs';
 const neutral = () => ({ direction: null, boost: false, action: false, pickup: false });
@@ -166,9 +167,9 @@ export function attachInput({
   const lifecycleClear = () => (continuous() ? clearPhysical() : clear());
   const restoreDirection = (direction) => {
     if (direction !== null && !['up', 'right', 'down', 'left'].includes(direction))
-      throw new TypeError('Saved direction must be a cardinal direction or null.');
+      throw new TypeError(t('interface:savedDirectionMustBeACardinalDirectionOrNull'));
     if (destroyed || !continuous())
-      throw new Error('Restoring direction requires active continuous steering.');
+      throw new Error(t('interface:restoringDirectionRequiresActiveContinuousSteering'));
     clearPhysical();
     intentDirection = direction;
     syncPressed();
@@ -448,12 +449,12 @@ export function attachInput({
         padDisconnected = false;
         lifecycleClear();
         onPause(true);
-        onGamepad('Controller disconnected. Release controls before continuing.');
+        onGamepad(t('interface:controllerDisconnectedReleaseControlsBeforeContinuing'));
         return neutral();
       }
       if (found && !selectedPad) {
         selectedPad = { index: found.index, signature: found.signature };
-        onGamepad('Standard controller connected');
+        onGamepad(t('interface:standardControllerConnected'));
       }
       cmd = gamepadCommand(found?.pad);
     }

@@ -1,3 +1,4 @@
+import { t } from '../i18n/index.mjs';
 import { CLASSES, validateLevel } from '../core/index.mjs';
 import { geometryForLevel } from '../core/geometry.mjs';
 import { versionsForLevel } from '../core/versions.mjs';
@@ -144,7 +145,7 @@ export function withScenarioEncounter(current, descriptor) {
 }
 /** Explicit conversion keeps the picture/objectives but removes the staged enemy. */
 export function withoutScenarioEncounter(current) {
-  required(current.level.encounter, 'This map has no staged encounter.');
+  required(current.level.encounter, t('tools:thisMapHasNoStagedEncounter'));
   const level = structuredClone(current.level);
   level.enemies = level.enemies.filter((enemy) => enemy.id !== level.encounter.enemyId);
   const wide = [
@@ -195,7 +196,7 @@ export function entryScenario(
   presentation,
 ) {
   const level = entry.campaign.levels.find((item) => item.id === levelId);
-  required(level, 'Choose a map from this campaign.');
+  required(level, t('tools:chooseAMapFromThisCampaign'));
   const classRecipes = entry.classRecipes ?? entry.campaign.classRecipes ?? CLASSES;
   const theme =
     entry.themes.find((item) => item.id === (level.themeId ?? entry.campaign.themeId)) ??
@@ -277,7 +278,7 @@ export async function prepareDocument(candidate, { current, packLibrary, decodeI
   });
   required(
     value && typeof value === 'object' && !Array.isArray(value),
-    'Choose a scenario, map, expansion or library JSON object.',
+    t('tools:chooseAScenarioMapExpansionOrLibraryJsonObject'),
   );
   if (
     [
@@ -307,7 +308,7 @@ export async function prepareDocument(candidate, { current, packLibrary, decodeI
     } else {
       nextLibrary = await importPackLibrary(value, { ...(decodeImage ? { decodeImage } : {}) });
       selectedId = nextLibrary.packs[0]?.id;
-      required(selectedId, 'The expansion library has no campaigns to edit.');
+      required(selectedId, t('tools:theExpansionLibraryHasNoCampaignsToEdit'));
     }
     const entries = expansionEntries(nextLibrary),
       entry = entries.find((item) => item.sourcePackId === selectedId);
@@ -410,7 +411,7 @@ export function paintLevel(
   const { width, height } = geometryForLevel(source);
   required(
     Number.isInteger(x) && x >= 0 && x < width && Number.isInteger(y) && y >= 0 && y < height,
-    'Paint coordinates must lie on the board.',
+    t('tools:paintCoordinatesMustLieOnTheBoard'),
   );
   const level = structuredClone(source),
     inside = x > 0 && x < width - 1 && y > 0 && y < height - 1;
@@ -476,10 +477,7 @@ export function paintLevel(
     const hangars = level.hangars ?? normalizedLevel(source).hangars;
     if (hangars.some((o) => Math.floor(o.x) === x && Math.floor(o.y) === y))
       level.hangars = hangars.filter((o) => Math.floor(o.x) !== x || Math.floor(o.y) !== y);
-  } else
-    throw new Error(
-      'Place this tool in its valid area: walls, signals and enemies inside; Start on the safe border.',
-    );
+  } else throw new Error(t('tools:placeThisToolInItsValidAreaWallsSignalsAnd'));
   const check = validateLevel(level);
   required(check.valid, check.errors.join('; '));
   return level;
@@ -493,10 +491,10 @@ export const PRESET_HELP = Object.freeze({
     'Fly down about one cell, then use Ability. The close pulse stuns the nearby enemy and cancels your cut before redeploying at home. Lives stay intact; territory is not awarded for the pulse.',
 });
 export function interactionPreset(kind, current, classRecipes = CLASSES) {
-  required(Object.hasOwn(PRESET_HELP, kind), 'Unknown interaction preset.');
+  required(Object.hasOwn(PRESET_HELP, kind), t('tools:unknownInteractionPreset'));
   required(
     classRecipes.some((c) => c.id === kind),
-    'This registered class is unavailable.',
+    t('tools:thisRegisteredClassIsUnavailable'),
   );
   const scenario = structuredClone(current),
     close = kind !== 'fiber';

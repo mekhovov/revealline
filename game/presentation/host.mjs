@@ -1,3 +1,4 @@
+import { localizedMessage } from '../i18n/index.mjs';
 import {
   isTeamRuntimeImageSlot,
   TEAM_PILOT_SLOTS,
@@ -431,14 +432,14 @@ export function createPresentationHost({
         } catch {}
       };
       try {
-        report('downloading', 'Downloading the published picture original…');
+        report('downloading', localizedMessage('interface:presentation.downloadingOriginal'));
         const bytes = await bytesAt(
           `./assets/${file.sha256}.${extensions[file.mime]}`,
           file.bytes,
           controller.signal,
           file.bytes,
         );
-        report('verifying', 'Verifying the published picture original…');
+        report('verifying', localizedMessage('interface:presentation.verifyingOriginal'));
         required(
           (await hashPresentationBytes(bytes)) === file.sha256,
           'Picture original hash mismatch.',
@@ -500,9 +501,9 @@ export function createPresentationHost({
       };
       controller.signal.addEventListener('abort', dispose, { once: true });
       try {
-        report('reading', 'Loading release artwork and fonts…');
+        report('reading', localizedMessage('interface:presentation.loadingRelease'));
         const bytes = await bytesAt(manifestPath, LIMITS.manifestBytes, controller.signal);
-        report('verifying', 'Checking the release artwork manifest…');
+        report('verifying', localizedMessage('interface:presentation.checkingManifest'));
         const manifestSha256 = await hashPresentationBytes(bytes);
         cancelled(controller.signal);
         required(
@@ -540,14 +541,14 @@ export function createPresentationHost({
             hash = file.sha256;
           let blob = sourceBlobs.get(hash);
           if (!blob) {
-            report('downloading', 'Loading release artwork and fonts…');
+            report('downloading', localizedMessage('interface:presentation.loadingRelease'));
             const content = await bytesAt(
               manifest.urls[hash],
               file.bytes,
               controller.signal,
               file.bytes,
             );
-            report('verifying', 'Verifying release artwork and fonts…');
+            report('verifying', localizedMessage('interface:presentation.verifyingRelease'));
             required(
               (await hashPresentationBytes(content)) === hash,
               'Presentation asset hash mismatch.',
@@ -558,7 +559,7 @@ export function createPresentationHost({
           }
           if (asset.kind === 'font') {
             if (fonts.some((entry) => entry.family === `RLAsset-${hash}`)) continue;
-            report('decoding', 'Opening release fonts…');
+            report('decoding', localizedMessage('interface:presentation.openingFonts'));
             const face = fontFactory(
               `RLAsset-${hash}`,
               await blob.arrayBuffer(),
@@ -571,7 +572,7 @@ export function createPresentationHost({
           }
           let original = decoded.get(hash);
           if (!original) {
-            report('decoding', 'Opening release artwork…');
+            report('decoding', localizedMessage('interface:presentation.openingArtwork'));
             const header = inspectImageDataUrl(
               dataURL(new Uint8Array(await blob.arrayBuffer()), file.mime),
             );
@@ -593,7 +594,7 @@ export function createPresentationHost({
           let image = original,
             visualBlob = blob;
           if (frame.x || frame.y || frame.width !== file.width || frame.height !== file.height) {
-            report('decoding', 'Preparing release artwork frames…');
+            report('decoding', localizedMessage('interface:presentation.preparingFrames'));
             image = await cropImage(original, frame, { signal: controller.signal });
             own(() => image.close?.());
             cancelled(controller.signal);
@@ -633,11 +634,15 @@ export function createPresentationHost({
         audioBlobs.clear();
         current = { snapshot, dispose, images, cssImages };
         prior?.dispose();
-        report('ready', 'Release artwork and fonts are ready.', 'ready');
+        report('ready', localizedMessage('interface:presentation.releaseReady'), 'ready');
         return snapshot;
       } catch (error) {
         if (error.name !== 'AbortError')
-          report('error', `Release artwork unavailable: ${error.message}`, 'error');
+          report(
+            'error',
+            localizedMessage('interface:presentation.releaseUnavailable', { error: error.message }),
+            'error',
+          );
         dispose();
         throw error;
       } finally {

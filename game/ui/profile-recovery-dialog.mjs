@@ -1,3 +1,4 @@
+import { t, localizedText } from '../i18n/index.mjs';
 import { createOperationStatus } from './operation-status.mjs';
 
 // The ordinary host keeps its existing modal stack and controller/input loop.
@@ -53,15 +54,17 @@ export function attachProfileRecoveryDialog({
   function refresh() {
     const reason = unavailable();
     opener.disabled = !!operation || !!closing || !!reason;
-    entryStatus.textContent = reason;
+    localizedText(entryStatus, () => reason);
   }
   function close() {
     if (closing) return closing;
     const active = operation;
     if (!active) return Promise.resolve(true);
-    active.controller.abort(new DOMException('Profile recovery closed.', 'AbortError'));
+    active.controller.abort(new DOMException(t('interface:profileRecoveryClosed'), 'AbortError'));
     active.view?.cancel();
-    const closingLease = presenter.begin({ message: 'Closing recovery and releasing its reads…' });
+    const closingLease = presenter.begin({
+      message: t('interface:closingRecoveryAndReleasingItsReads'),
+    });
     closing = (async () => {
       await active.ready;
       try {
@@ -103,7 +106,7 @@ export function attachProfileRecoveryDialog({
     // Prior view handlers remain closed until a fresh reader is ready.
     back.onclick = close;
     active.lease = presenter.begin({
-      message: 'Loading stored profile recovery…',
+      message: t('interface:loadingStoredProfileRecovery'),
       isCurrent: () => operation === active && !closing,
     });
     dialog.showModal();
@@ -113,18 +116,20 @@ export function attachProfileRecoveryDialog({
       const { signal } = active.controller;
       const timer = setTimeout(
         () =>
-          active.controller.abort(new DOMException('Recovery loading timed out.', 'TimeoutError')),
+          active.controller.abort(
+            new DOMException(t('interface:recoveryLoadingTimedOut'), 'TimeoutError'),
+          ),
         10000,
       );
       try {
         const version = packaged
           ? currentVersion
           : await untilCancelled(signal, resolveSourceVersion);
-        active.lease.update({ message: 'Loading recovery tools…' });
+        active.lease.update({ message: t('interface:loadingRecoveryTools') });
         const runtime = await untilCancelled(signal, load);
         if (!current(active)) return;
         let recoveryCatalogs = [],
-          catalogIssue = 'Open a packaged release to verify historical originals.';
+          catalogIssue = t('interface:openAPackagedReleaseToVerifyHistoricalOriginals');
         if (packaged) {
           const catalogController = new AbortController();
           const cancelCatalog = () => catalogController.abort(signal.reason);
@@ -132,7 +137,7 @@ export function attachProfileRecoveryDialog({
           const catalogTimer = setTimeout(
             () =>
               catalogController.abort(
-                new DOMException('Historical catalog loading timed out.', 'TimeoutError'),
+                new DOMException(t('interface:historicalCatalogLoadingTimedOut'), 'TimeoutError'),
               ),
             10000,
           );
@@ -140,7 +145,7 @@ export function attachProfileRecoveryDialog({
           clearTimeout(timer);
           try {
             active.lease.update({
-              message: 'Loading trusted historical catalogs…',
+              message: t('interface:loadingTrustedHistoricalCatalogs'),
               stage: 'verifying',
             });
             recoveryCatalogs = await untilCancelled(catalogController.signal, () =>
@@ -179,7 +184,10 @@ export function attachProfileRecoveryDialog({
   const cancel = () => {
     if (!operation) return;
     if (operation.view) operation.view.cancel();
-    else operation.controller.abort(new DOMException('Recovery loading cancelled.', 'AbortError'));
+    else
+      operation.controller.abort(
+        new DOMException(t('interface:recoveryLoadingCancelled'), 'AbortError'),
+      );
   };
   const escape = (event) => {
     event.preventDefault();

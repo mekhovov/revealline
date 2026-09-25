@@ -30,6 +30,7 @@ function setup({ compact = true } = {}) {
     observe() {
       observations++;
     }
+    unobserve() {}
     disconnect() {}
   };
   const library = createMissionLibrary([

@@ -1,4 +1,24 @@
 import {
+  optionalChapterText as contentText,
+  worldModeLabel,
+  worldThemeLabel,
+} from './optional-chapter-presentation.mjs';
+import {
+  localizedMessage,
+  localizedText,
+  t,
+  localizedAttribute,
+  render as renderMessage,
+  formatNumber,
+} from '../i18n/index.mjs';
+import { chapterMessage } from './optional-chapter-copy.mjs';
+
+function requireChapter(condition, key) {
+  if (condition) return;
+  const message = () => t(key);
+  throw Object.assign(new Error(message()), { localizedMessage: message });
+}
+import {
   loadOptionalCatalog,
   prepareOptionalCatalog,
   verifyOptionalInstalled,
@@ -18,8 +38,8 @@ import {
 /** Native optional content browser. The host alone owns installation and attempt selection. */
 export function attachOptionalChaptersPanel({
   document: doc = globalThis.document,
-  heading = 'More worlds',
-  backLabel = 'Back to main menu',
+  heading = null,
+  backLabel = localizedMessage('interface:backToMainMenu'),
   attemptLabel = 'flight',
   showManage = true,
   getLibrary,
@@ -44,7 +64,7 @@ export function attachOptionalChaptersPanel({
   required(
     Array.isArray(sourceChapters) &&
       sourceChapters.length <= EXTERNAL_CHAPTER_LIMITS.catalogChoices,
-    'Too many trusted world choices.',
+    t('interface:tooManyTrustedWorldChoices'),
   );
   let catalog = null,
     disposed = false,
@@ -56,11 +76,16 @@ export function attachOptionalChaptersPanel({
     busy = false,
     page = 0,
     pinned = null;
+  const defaultHeading = heading === null;
+  heading ??= localizedMessage('interface:moreWorlds');
+  const copy = (key, values) => chapterMessage(key, attemptLabel, values);
+  const size = (bytes) =>
+    formatNumber(bytes / 1048576, { minimumFractionDigits: 1, maximumFractionDigits: 1 });
   const compact = matchMedia?.('(max-width: 900px), (max-aspect-ratio: 3/2)');
   const node = (tag, id, text = '') => {
     const el = doc.createElement(tag);
     if (id) el.id = `optional-worlds-${id}`;
-    el.textContent = text;
+    localizedText(el, () => text);
     return el;
   };
   const action = (id, label, fn) => {
@@ -77,7 +102,7 @@ export function attachOptionalChaptersPanel({
     summary = node(
       'p',
       'summary',
-      'Browse original-picture chapters by theme and mode. Arcade uses continuous steering and contact pickups; Tactical chapters use equipment and route choices.',
+      localizedMessage('interface:browseOriginalPictureChaptersByThemeAndModeArcadeUses'),
     ),
     capacity = node('p', 'capacity'),
     cards = node('div', 'cards'),
@@ -85,31 +110,37 @@ export function attachOptionalChaptersPanel({
   summary.tabIndex = 0;
   summary.setAttribute('data-game-reading', '');
   summary.setAttribute('role', 'region');
-  summary.setAttribute(
-    'aria-label',
-    heading === 'More worlds' ? 'About optional worlds' : `About ${heading}`,
+  localizedAttribute(summary, 'aria-label', () =>
+    defaultHeading
+      ? t('interface:aboutOptionalWorlds')
+      : t('interface:chapters.aboutHeading', { heading: renderMessage(heading) }),
   );
   cards.className = 'optional-worlds-cards';
   status.setAttribute('role', 'status');
   status.setAttribute('aria-live', 'polite');
   const presentation = createOperationStatus(status, { isCurrent: () => !disposed && dialog.open });
-  const reload = action('reload', 'Refresh available worlds', () => reloadCatalog()),
-    manage = action('manage', 'Manage packs & backups', () => {
+  const reload = action('reload', localizedMessage('interface:refreshAvailableWorlds'), () =>
+      reloadCatalog(),
+    ),
+    manage = action('manage', localizedMessage('interface:managePacksBackups'), () => {
       close(false);
       onManage();
     }),
     read = action(
       'read',
-      heading === 'More worlds' ? 'Read about worlds' : `Read about ${heading}`,
-      () => onRead({ region: summary, origin: read, label: heading }),
+      () =>
+        defaultHeading
+          ? t('interface:readAboutWorlds')
+          : t('interface:chapters.readHeading', { heading: renderMessage(heading) }),
+      () => onRead({ region: summary, origin: read, label: renderMessage(heading) }),
     ),
-    cancel = action('cancel', 'Cancel operation', cancelPending),
+    cancel = action('cancel', localizedMessage('interface:cancelOperation'), cancelPending),
     back = action('back', backLabel, () => close()),
-    topBack = action('top-back', 'Back', () => close()),
+    topBack = action('top-back', localizedMessage('common:actions.back'), () => close()),
     top = node('div'),
     actions = node('div');
   top.className = 'optional-worlds-top';
-  topBack.setAttribute('aria-label', backLabel);
+  localizedAttribute(topBack, 'aria-label', backLabel);
   top.append(title, topBack);
   actions.className = 'optional-worlds-actions';
   actions.append(read, reload, ...(showManage ? [manage] : []), back);
@@ -136,21 +167,21 @@ export function attachOptionalChaptersPanel({
     filters.append(wrapper);
     return control;
   };
-  const themeFilter = select('theme', 'Theme', [
-      ['', 'All themes'],
-      ...WORLD_THEMES,
-      ['other', 'Other themes'],
+  const themeFilter = select('theme', localizedMessage('interface:theme'), [
+      ['', localizedMessage('interface:allThemes')],
+      ...WORLD_THEMES.map(([id]) => [id, () => worldThemeLabel(id)]),
+      ['other', localizedMessage('interface:otherThemes')],
     ]),
-    modeFilter = select('mode', 'Mode', [
-      ['', 'All modes'],
-      ['Arcade', 'Arcade'],
-      ['Tactical', 'Tactical'],
-      ['Other', 'Other / mixed'],
+    modeFilter = select('mode', localizedMessage('interface:mode'), [
+      ['', localizedMessage('interface:allModes')],
+      ['Arcade', localizedMessage('interface:arcade')],
+      ['Tactical', localizedMessage('interface:tactical')],
+      ['Other', localizedMessage('interface:otherMixed')],
     ]),
-    previous = action('previous', 'Previous', () => movePage(-1)),
-    nextPage = action('next', 'Next', () => movePage(1));
-  previous.setAttribute('aria-label', 'Previous page');
-  nextPage.setAttribute('aria-label', 'Next page');
+    previous = action('previous', localizedMessage('common:actions.previous'), () => movePage(-1)),
+    nextPage = action('next', localizedMessage('common:actions.next'), () => movePage(1));
+  localizedAttribute(previous, 'aria-label', () => t('interface:previousPage'));
+  localizedAttribute(nextPage, 'aria-label', () => t('interface:nextPage'));
   pageStatus.setAttribute('role', 'status');
   pageStatus.setAttribute('aria-live', 'polite');
   pager.append(previous, pageStatus, nextPage);
@@ -235,7 +266,7 @@ export function attachOptionalChaptersPanel({
           !doc.hidden &&
           doc.hasFocus?.() !== false;
         if (playing && returned()) {
-          const message = `Your ${attemptLabel} is kept paused. Choose Play when ready to change chapters.`;
+          const message = copy('keptPaused');
           presentation.begin({ message, stage: 'ready', isCurrent: returned }).finish({ message });
         }
         if (
@@ -267,23 +298,39 @@ export function attachOptionalChaptersPanel({
       chapter.controlId || (chapter === sourceChapter ? 'source' : `source-${chapter.id}`);
     const card = node('section', prefix === 'source' ? 'source-pilot' : `${prefix}-card`);
     card.className = `optional-world-card world-${chapter.themeId || 'other'}`;
-    const heading = node('h3', null, chapter.name);
+    const heading = node('h3', null, () => contentText(chapter, 'name'));
     const detail = node(
       'p',
       null,
-      chapter.description || 'Three maps with original reward pictures.',
+      () =>
+        contentText(chapter, 'description') || t('interface:threeMapsWithOriginalRewardPictures'),
     );
-    const metadata = node(
-      'p',
-      null,
-      `${chapter.mode || 'Optional chapter'} · ${chapter.levels ?? 3} original pictures`,
+    const metadata = node('p', null, () =>
+      t('gameplay:originalPictures', {
+        value1: chapter.mode ? worldModeLabel(chapter.mode) : t('interface:optionalChapter'),
+        value2: chapter.levels ?? 3,
+      }),
     );
     const recovery = node('details', `${prefix}-recovery`),
-      recoverySummary = node('summary', `${prefix}-recovery-summary`, 'Restore from files'),
-      recoveryNote = node(
-        'p',
-        `${prefix}-recovery-note`,
-        `${chapter.sourceOnly === false ? 'Restore this chapter’s matching gameplay and original picture files.' : 'Source candidate: choose its generated pack.json and media.rlmedia pair.'} ${chapter.backupSupported ? 'Game-data backup keeps its descriptor; keep .rlmedia originals separately. Removal is not supported yet.' : 'Backups and removal are not supported yet.'} This does not migrate another edition. Installation keeps your current ${attemptLabel}; ${chapter.play ? 'Play prepares and starts the chapter' : 'Choose changes the mission'}.`,
+      recoverySummary = node(
+        'summary',
+        `${prefix}-recovery-summary`,
+        localizedMessage('interface:restoreFromFiles'),
+      ),
+      recoveryNote = node('p', `${prefix}-recovery-note`, () =>
+        [
+          t(
+            chapter.sourceOnly === false
+              ? 'interface:restoreThisChapterSMatchingGameplayAndOriginalPictureFiles'
+              : 'interface:sourceCandidateChooseItsGeneratedPackJsonAndMediaRlmedia',
+          ),
+          t(
+            chapter.backupSupported
+              ? 'interface:gameDataBackupKeepsItsDescriptorKeepRlmediaOriginalsSeparately'
+              : 'interface:backupsAndRemovalAreNotSupportedYet',
+          ),
+          renderMessage(copy(chapter.play ? 'recoveryPlay' : 'recoveryChoose')),
+        ].join(' '),
       );
     recovery.className = 'optional-world-recovery';
     recovery.append(recoverySummary);
@@ -308,10 +355,14 @@ export function attachOptionalChaptersPanel({
       return input;
     };
     card.append(heading, metadata, detail);
-    const pack = file('pack', 'Gameplay file (.json)', '.json,application/json');
+    const pack = file(
+      'pack',
+      localizedMessage('interface:gameplayFileJson'),
+      '.json,application/json',
+    );
     const media = file(
       'media',
-      'Exact picture originals (.rlmedia)',
+      localizedMessage('interface:exactPictureOriginalsRlmedia'),
       '.rlmedia,application/octet-stream',
     );
     const state = node('p', `${prefix}-state`);
@@ -324,65 +375,82 @@ export function attachOptionalChaptersPanel({
       state,
       result: { status: 'checking' },
     };
-    row.install = action(`${prefix}-install`, 'Install / recover exact pair', () =>
-      run(
-        async (signal, current, report) => {
-          const packFile = pack.files?.[0],
-            mediaFile = media.files?.[0];
-          if (!packFile || !mediaFile)
-            throw new Error('Choose both exact chapter files before installing.');
-          report('Checking gameplay and original pictures…', 'verifying');
-          await chapter.install({ pack: packFile, media: mediaFile }, { signal, onStatus: report });
-          if (!current()) return;
-          report('Checking the installed original pair…', 'verifying');
-          const next = await chapter.inspect({ signal });
-          if (current()) {
-            row.result = next;
-            report(
-              `Exact original pair committed. Your paused ${attemptLabel} is kept. ${chapter.play ? 'Use Play when ready' : 'Choose the chapter separately'}; reload after recovery to restore the saved profile.`,
+    row.install = action(
+      `${prefix}-install`,
+      localizedMessage('interface:installRecoverExactPair'),
+      () =>
+        run(
+          async (signal, current, report) => {
+            const packFile = pack.files?.[0],
+              mediaFile = media.files?.[0];
+            requireChapter(
+              packFile && mediaFile,
+              'interface:chooseBothExactChapterFilesBeforeInstalling',
             );
-          }
-        },
-        { origin: row.install, next: row.choose, fallback: recoverySummary },
-      ),
+            report(() => t('interface:checkingGameplayAndOriginalPictures'), 'verifying');
+            await chapter.install(
+              { pack: packFile, media: mediaFile },
+              { signal, onStatus: report },
+            );
+            if (!current()) return;
+            report(() => t('interface:checkingTheInstalledOriginalPair'), 'verifying');
+            const next = await chapter.inspect({ signal });
+            if (current()) {
+              row.result = next;
+              report(copy(chapter.play ? 'restoredPlay' : 'restoredChoose'));
+            }
+          },
+          { origin: row.install, next: row.choose, fallback: recoverySummary },
+        ),
     );
     const canPlay = typeof chapter.play === 'function';
     if (canPlay && chapter.download) {
-      row.download = row.choose = action(`${prefix}-download`, 'Download & play', () =>
-        playSource(row, recoverySummary),
+      row.download = row.choose = action(
+        `${prefix}-download`,
+        localizedMessage('interface:downloadPlay'),
+        () => playSource(row, recoverySummary),
       );
       card.append(row.download);
     } else {
-      row.choose = action(`${prefix}-choose`, canPlay ? 'Play' : 'Choose chapter', () =>
-        canPlay
-          ? playSource(row, recoverySummary)
-          : run(
-              async (signal, current, report) => {
-                report(`Preparing ${chapter.name}…`, 'preparing');
-                const launch = choiceLaunch(row.choose, current);
-                const selected = await chapter.choose({ signal, onStatus: report, launch });
-                if (selected !== false) launch.onSelected();
-              },
-              { origin: row.choose, fallback: recoverySummary },
-            ),
+      row.choose = action(
+        `${prefix}-choose`,
+        () => (canPlay ? t('common:actions.play') : t('interface:chooseChapter')),
+        () =>
+          canPlay
+            ? playSource(row, recoverySummary)
+            : run(
+                async (signal, current, report) => {
+                  report(
+                    () =>
+                      t('interface:chapters.preparing', { chapter: contentText(chapter, 'name') }),
+                    'preparing',
+                  );
+                  const launch = choiceLaunch(row.choose, current);
+                  const selected = await chapter.choose({ signal, onStatus: report, launch });
+                  if (selected !== false) launch.onSelected();
+                },
+                { origin: row.choose, fallback: recoverySummary },
+              ),
       );
       if (chapter.download) {
         row.download = action(
           `${prefix}-download`,
-          `Download & install · ${(chapter.bytes / 1048576).toFixed(1)} MiB`,
+          () => t('interface:chapters.downloadInstall', { size: size(chapter.bytes) }),
           () =>
             run(
               async (signal, current, report) => {
-                report(`Downloading and checking ${chapter.name}…`, 'downloading');
+                report(
+                  () =>
+                    t('interface:chapters.downloading', { chapter: contentText(chapter, 'name') }),
+                  'downloading',
+                );
                 await chapter.download({ signal, onStatus: report });
                 if (!current()) return;
-                report('Checking the installed original pair…', 'verifying');
+                report(() => t('interface:checkingTheInstalledOriginalPair'), 'verifying');
                 const next = await chapter.inspect({ signal });
                 if (current()) {
                   row.result = next;
-                  report(
-                    `Exact original pair committed. Your paused ${attemptLabel} is kept. Choose the chapter separately.`,
-                  );
+                  report(copy('installedPair'));
                 }
               },
               { origin: row.download, next: row.choose, fallback: recoverySummary },
@@ -395,48 +463,56 @@ export function attachOptionalChaptersPanel({
     row.review = node('div', `${prefix}-picture-review`);
     row.review.hidden = true;
     row.review.setAttribute('role', 'group');
-    row.review.setAttribute('aria-label', 'Keep existing picture choices');
+    localizedAttribute(row.review, 'aria-label', () => t('interface:keepExistingPictureChoices'));
     row.reviewText = node('p', `${prefix}-picture-review-text`);
-    row.confirm = action(`${prefix}-picture-confirm`, 'Install originals; keep my pictures', () => {
-      const choice = row.pictureReview;
-      if (!choice || busy) return;
-      return run(
-        async (signal, current, report) => {
-          report('Installing originals while keeping your picture choices…', 'saving');
-          if (choice.files)
-            await chapter.install(choice.files, {
-              signal,
-              onStatus: report,
-              pictureReview: choice.error,
-            });
-          else await chapter.download({ signal, onStatus: report, pictureReview: choice.error });
-          if (!current()) return;
-          report('Originals installed; checking chapter readiness…', 'verifying');
-          try {
-            const next = await chapter.inspect({ signal });
-            if (!current()) return;
-            row.result = next;
-          } catch (error) {
-            throw new Error(
-              `The originals were installed and your picture choices kept. Refresh before playing. ${error.message}`,
-            );
-          }
-          if (current())
+    row.confirm = action(
+      `${prefix}-picture-confirm`,
+      localizedMessage('interface:installOriginalsKeepMyPictures'),
+      () => {
+        const choice = row.pictureReview;
+        if (!choice || busy) return;
+        return run(
+          async (signal, current, report) => {
             report(
-              `Originals installed. Your picture choices and paused ${attemptLabel} are kept. ${chapter.play ? 'Use Play' : 'Choose the chapter separately'} when ready.`,
+              () => t('interface:installingOriginalsWhileKeepingYourPictureChoices'),
+              'saving',
             );
-        },
-        { origin: row.confirm, next: row.choose, fallback: recoverySummary },
-      );
-    });
-    row.dismiss = action(`${prefix}-picture-cancel`, 'Cancel picture review', () => {
-      const origin = row.pictureReview?.origin;
-      discardPictureReviews();
-      refresh();
-      const message = `Installation cancelled. Your pictures and paused ${attemptLabel} are unchanged.`;
-      presentation.begin({ message }).finish({ message, state: 'cancelled' });
-      if (dialog.open) (origin && !origin.disabled ? origin : row.choose).focus();
-    });
+            if (choice.files)
+              await chapter.install(choice.files, {
+                signal,
+                onStatus: report,
+                pictureReview: choice.error,
+              });
+            else await chapter.download({ signal, onStatus: report, pictureReview: choice.error });
+            if (!current()) return;
+            report(() => t('interface:originalsInstalledCheckingChapterReadiness'), 'verifying');
+            try {
+              const next = await chapter.inspect({ signal });
+              if (!current()) return;
+              row.result = next;
+            } catch (error) {
+              const message = () =>
+                t('interface:chapters.installedButUnavailable', { error: error.message });
+              throw Object.assign(new Error(message()), { localizedMessage: message });
+            }
+            if (current()) report(copy(chapter.play ? 'picturesPlay' : 'picturesChoose'));
+          },
+          { origin: row.confirm, next: row.choose, fallback: recoverySummary },
+        );
+      },
+    );
+    row.dismiss = action(
+      `${prefix}-picture-cancel`,
+      localizedMessage('interface:cancelPictureReview'),
+      () => {
+        const origin = row.pictureReview?.origin;
+        discardPictureReviews();
+        refresh();
+        const message = copy('picturesCancelled');
+        presentation.begin({ message }).finish({ message, state: 'cancelled' });
+        if (dialog.open) (origin && !origin.disabled ? origin : row.choose).focus();
+      },
+    );
     row.review.append(row.reviewText, row.confirm, row.dismiss);
     card.append(row.review);
     recovery.append(row.install, recoveryNote);
@@ -446,7 +522,7 @@ export function attachOptionalChaptersPanel({
   async function inspectSource(signal, current, report) {
     if (!sourceRows.length) return;
     let completed = 0;
-    report('Checking installed pictures…', 'verifying', {
+    report(() => t('interface:checkingInstalledPictures'), 'verifying', {
       completed,
       total: sourceRows.length,
       unit: 'chapters',
@@ -462,7 +538,7 @@ export function attachOptionalChaptersPanel({
       }
       if (current()) {
         row.result = next;
-        report('Checking installed pictures…', 'verifying', {
+        report(() => t('interface:checkingInstalledPictures'), 'verifying', {
           completed: ++completed,
           total: sourceRows.length,
           unit: 'chapters',
@@ -498,31 +574,43 @@ export function attachOptionalChaptersPanel({
     }
     const usage = getUsage();
     const bytes = usage ? usage.packBytes + usage.indexBytes : measuredBytes;
-    capacity.textContent = `Installed packs: ${(bytes / 1048576).toFixed(1)} / ${PACK_LIMITS.libraryBytes / 1048576} MiB · ${library.packs.length} / ${PACK_LIMITS.installed} packs. Space is shared with your other chapters. Nothing is removed automatically.`;
+    localizedText(capacity, () =>
+      t('gameplay:installedPacksMibPacksSpaceIsSharedWithYourOther', {
+        value1: size(bytes),
+        value2: PACK_LIMITS.libraryBytes / 1048576,
+        value3: library.packs.length,
+        value4: PACK_LIMITS.installed,
+      }),
+    );
     for (const [id, row] of rows) {
       const item = catalog?.packs.find((entry) => entry.id === id),
         available = installed(item);
       const existing = library.packs.find((pack) => pack.id === id);
       const conflict = existing && matches.get(existing)?.get(item.normalizedSha256) === false;
       row.install.disabled = busy || (!!existing && !(play && available));
-      row.install.textContent =
+      localizedText(row.install, () =>
         play && available
-          ? 'Play'
+          ? t('common:actions.play')
           : available
-            ? 'Installed on this device'
+            ? t('interface:installedOnThisDevice')
             : conflict
-              ? 'Different edition installed'
+              ? t('interface:differentEditionInstalled')
               : existing
-                ? 'Checking installed edition…'
-                : `${play ? 'Download & play' : 'Install'} · ${(item.bytes / 1048576).toFixed(1)} MiB`;
+                ? t('interface:checkingInstalledEdition')
+                : t(play ? 'interface:chapters.downloadPlay' : 'interface:chapters.installSize', {
+                    size: size(item.bytes),
+                  }),
+      );
       if (!play) row.choose.disabled = busy || !available;
-      row.state.textContent = available
-        ? 'Installed · available without another download'
-        : conflict
-          ? showManage
-            ? 'This ID contains different artwork/content. Use Manage packs & backups before installing this original.'
-            : 'This ID contains different artwork/content. Keep the installed edition or choose another chapter.'
-          : `Optional download · choose ${play ? 'Download & play' : 'Install'} when connected`;
+      localizedText(row.state, () =>
+        available
+          ? t('interface:installedAvailableWithoutAnotherDownload')
+          : conflict
+            ? showManage
+              ? t('interface:thisIdContainsDifferentArtworkContentUseManagePacksBackups')
+              : t('interface:thisIdContainsDifferentArtworkContentKeepTheInstalledEdition')
+            : t(play ? 'interface:chapters.optionalPlay' : 'interface:chapters.optionalInstall'),
+      );
     }
     for (const row of sourceRows) {
       const sourceState = row.result;
@@ -531,24 +619,32 @@ export function attachOptionalChaptersPanel({
       row.install.disabled = busy || sourceState.status === 'installed';
       if (row.chapter.play) {
         row.choose.disabled = busy || (sourceState.status !== 'installed' && !row.download);
-        row.choose.textContent =
+        localizedText(row.choose, () =>
           sourceState.status === 'installed'
-            ? 'Play'
+            ? t('common:actions.play')
             : row.download
-              ? `Download & play · ${(row.chapter.bytes / 1048576).toFixed(1)} MiB`
-              : 'Play';
+              ? t('interface:chapters.downloadPlay', { size: size(row.chapter.bytes) })
+              : t('common:actions.play'),
+        );
       } else {
         if (row.download) row.download.disabled = row.install.disabled;
         row.choose.disabled = busy || sourceState.status !== 'installed';
       }
       row.pack.disabled = row.media.disabled = busy;
-      row.state.textContent =
+      localizedText(row.state, () =>
         sourceState.status === 'installed'
-          ? `Installed · ready to ${row.chapter.play ? 'play' : 'choose'}`
+          ? t(
+              row.chapter.play
+                ? 'interface:chapters.readyToPlay'
+                : 'interface:chapters.readyToChoose',
+            )
           : sourceState.status === 'absent'
-            ? 'Not installed'
+            ? t('interface:notInstalled')
             : sourceState.message ||
-              `Stored state: ${sourceState.status}. Recover the exact files before choosing.`;
+              t('gameplay:storedStateRecoverTheExactFilesBeforeChoosing', {
+                value1: sourceState.status,
+              }),
+      );
     }
     for (const row of installedRows.values())
       row.choose.disabled = busy || !library.packs.includes(row.pack);
@@ -592,14 +688,20 @@ export function attachOptionalChaptersPanel({
       row.card.hidden = !view.visible.includes(row.key);
       row.card.classList.toggle('optional-world-current', row.key === view.pinned);
     }
-    pageStatus.textContent = `Page ${view.page + 1} of ${view.pages} · ${view.total} ${view.total === 1 ? 'chapter' : 'chapters'}`;
+    localizedText(pageStatus, () =>
+      t('interface:chapters.page', { page: view.page + 1, pages: view.pages, count: view.total }),
+    );
     previous.disabled = view.page === 0;
     nextPage.disabled = view.page === view.pages - 1;
     const held = entries.find((entry) => entry.key === view.pinned);
     operationStatus.hidden = !held;
-    operationStatus.textContent = held
-      ? `${busy ? 'Working on' : 'Chapter in view'}: ${held.chapter?.name ?? held.item?.name ?? held.pack.name}. Kept visible while you browse.`
-      : '';
+    localizedText(operationStatus, () =>
+      held
+        ? t(busy ? 'interface:chapters.workingOn' : 'interface:chapters.keptInView', {
+            chapter: contentText(held.chapter ?? held.item ?? held.pack, 'name'),
+          })
+        : '',
+    );
   }
   function movePage(delta) {
     ++launchGeneration;
@@ -637,28 +739,33 @@ export function attachOptionalChaptersPanel({
       if (!row) {
         const card = node('section');
         card.className = `optional-world-card world-${item.themeId}`;
-        const heading = node('h3', null, item.name),
-          detail = node(
-            'p',
-            null,
-            `${legacyWorldMode(item.id)} · ${item.levels} original pictures`,
+        const heading = node('h3', null, () => contentText(item, 'name')),
+          detail = node('p', null, () =>
+            t('gameplay:originalPictures', {
+              value1: worldModeLabel(legacyWorldMode(item.id)),
+              value2: item.levels,
+            }),
           ),
-          description = node('p', `description-${item.id}`, item.description),
+          description = node('p', `description-${item.id}`, () => contentText(item, 'description')),
           state = node('p');
         row = { key: `legacy:${item.id}`, item, card, heading, detail, description, state };
-        row.install = action(`install-${item.id}`, play ? 'Download & play' : 'Install', () =>
-          play ? playItem(row.item, row.install) : installItem(row.item),
+        row.install = action(
+          `install-${item.id}`,
+          () => (play ? t('interface:downloadPlay') : t('interface:install')),
+          () => (play ? playItem(row.item, row.install) : installItem(row.item)),
         );
         row.choose = play
           ? row.install
-          : action(`choose-${item.id}`, 'Choose chapter', () => chooseItem(row.item));
+          : action(`choose-${item.id}`, localizedMessage('interface:chooseChapter'), () =>
+              chooseItem(row.item),
+            );
         card.append(heading, detail, description, state, row.install);
         if (!play) card.append(row.choose);
         rows.set(item.id, row);
       }
       row.item = item;
-      row.heading.textContent = item.name;
-      row.description.textContent = item.description;
+      localizedText(row.heading, () => contentText(item, 'name'));
+      localizedText(row.description, () => contentText(item, 'description'));
       cards.append(row.card);
     }
     for (const row of sourceRows) cards.append(row.card);
@@ -681,18 +788,21 @@ export function attachOptionalChaptersPanel({
         row = { key: `installed:${pack.id}`, pack, card };
         row.choose = action(
           `installed-choose-${pack.id}`,
-          playInstalled ? 'Play' : 'Choose installed chapter',
+          () => (playInstalled ? t('common:actions.play') : t('interface:chooseInstalledChapter')),
           () =>
             run(
               async (signal, current, report) => {
-                report(`Preparing ${pack.name}…`, 'preparing');
+                report(
+                  () => t('interface:chapters.preparing', { chapter: contentText(pack, 'name') }),
+                  'preparing',
+                );
                 const launch = playInstalled
                   ? playLaunch(row.choose, current, signal)
                   : choiceLaunch(row.choose, current);
                 if (!launch.isCurrent()) return;
-                required(
+                requireChapter(
                   getLibrary().packs.includes(pack),
-                  'This installed chapter has changed. Refresh before playing.',
+                  'interface:thisInstalledChapterHasChangedRefreshBeforePlaying',
                 );
                 const selected = await (playInstalled || chooseInstalled)(pack, {
                   signal,
@@ -705,11 +815,11 @@ export function attachOptionalChaptersPanel({
             ),
         );
         card.append(
-          node('h3', null, pack.name),
-          node(
-            'p',
-            null,
-            `${installedWorldMode(pack)} · installed on this device. Open the Mission brief for its rules and equipment.`,
+          node('h3', null, () => contentText(pack, 'name')),
+          node('p', null, () =>
+            t('gameplay:installedOnThisDeviceOpenTheMissionBriefForIts', {
+              value1: worldModeLabel(installedWorldMode(pack)),
+            }),
           ),
           row.choose,
         );
@@ -764,7 +874,7 @@ export function attachOptionalChaptersPanel({
     if (wasBusy)
       pendingStatus?.finish({
         state: 'cancelled',
-        message: `Cancellation requested. Completed installs remain available; your ${attemptLabel} is kept.`,
+        message: copy('cancellationRequested'),
       });
     pendingStatus = null;
     ++generation;
@@ -785,7 +895,7 @@ export function attachOptionalChaptersPanel({
         ? { origin, next, fallback, moved: false }
         : null;
     let succeeded = false,
-      finalMessage = 'Checking the selected chapter…',
+      finalMessage = () => t('interface:checkingTheSelectedChapter'),
       outcome = 'ready';
     pendingFocus = focusPlan;
     pending = controller;
@@ -819,7 +929,11 @@ export function attachOptionalChaptersPanel({
     pendingStatus = display;
     const report = (value, stage = 'checking', progress = null) => {
       if (!current()) return;
-      const update = typeof value === 'string' ? { message: value, stage, progress } : value;
+      const update =
+        typeof value === 'string' || typeof value === 'function'
+          ? { message: value, stage, progress }
+          : { ...value };
+      if (update.messageKey) update.message = () => t(update.messageKey, update.messageValues);
       finalMessage = update.message ?? finalMessage;
       display.update(update);
     };
@@ -847,25 +961,45 @@ export function attachOptionalChaptersPanel({
                 ? { pack: sourceRow.pack.files?.[0], media: sourceRow.media.files?.[0] }
                 : (reviewFiles ?? null),
           };
-          sourceRow.reviewText.textContent =
-            `${sourceRow.chapter.name}: ${error.conflicts.length} existing picture choice${error.conflicts.length === 1 ? '' : 's'} will be kept. The chapter uses its authored originals; your saved and earned pictures stay unchanged. ` +
-            error.conflicts
-              .map(
-                (entry) =>
-                  `${entry.levelName ?? entry.identity.levelId.replaceAll('-', ' ').replace(/^./, (letter) => letter.toUpperCase())}: ${entry.retained ? 'your selected picture' : 'your default picture'}`,
-              )
-              .join('; ');
+          localizedText(sourceRow.reviewText, () =>
+            t('interface:chapters.pictureReview', {
+              chapter: contentText(sourceRow.chapter, 'name'),
+              count: error.conflicts.length,
+              choices: error.conflicts
+                .map((entry) =>
+                  t(
+                    entry.retained
+                      ? 'interface:chapters.selectedPicture'
+                      : 'interface:chapters.defaultPicture',
+                    {
+                      level:
+                        entry.levelName ??
+                        entry.identity.levelId
+                          .replaceAll('-', ' ')
+                          .replace(/^./, (letter) => letter.toUpperCase()),
+                    },
+                  ),
+                )
+                .join('; '),
+            }),
+          );
           if (focusPlan) focusPlan.next = sourceRow.dismiss;
           succeeded = true;
-          report(
-            'Review your existing picture choices. Confirm installation or Cancel; your current flight is kept.',
+          report(() =>
+            t('interface:reviewYourExistingPictureChoicesConfirmInstallationOrCancelYour'),
           );
         } else {
           outcome = error?.name === 'AbortError' ? 'cancelled' : 'error';
           report(
             error?.name === 'AbortError'
-              ? `Operation cancelled. Completed installs remain available; your ${attemptLabel} is kept.`
-              : `${error.message || error} Completed installs remain available. ${play || playInstalled || sourceRows.some((row) => row.chapter.play) ? 'Use Play or Refresh to retry.' : 'Use Refresh or Install to retry.'}`,
+              ? copy('operationCancelled')
+              : () =>
+                  t(
+                    play || playInstalled || sourceRows.some((row) => row.chapter.play)
+                      ? 'interface:chapters.failedPlay'
+                      : 'interface:chapters.failedInstall',
+                    { error: renderMessage(error.localizedMessage ?? error.message ?? error) },
+                  ),
           );
         }
       }
@@ -883,7 +1017,7 @@ export function attachOptionalChaptersPanel({
   }
   async function reloadCatalog() {
     return run(async (signal, current, report) => {
-      report('Checking installed chapters…', 'verifying');
+      report(() => t('interface:checkingInstalledChapters'), 'verifying');
       if (refreshLibrary) {
         await refreshLibrary({ signal, onStatus: report });
         if (!current()) return;
@@ -892,7 +1026,7 @@ export function attachOptionalChaptersPanel({
       await inspectSource(signal, current, report);
       if (!current()) return;
       refresh();
-      report('Reading the optional chapter list…', 'reading');
+      report(() => t('interface:readingTheOptionalChapterList'), 'reading');
       let next = catalog,
         failure = null;
       try {
@@ -903,7 +1037,7 @@ export function attachOptionalChaptersPanel({
       }
       if (!current()) return;
       if (next) {
-        report('Checking installed chapters…', 'verifying');
+        report(() => t('interface:checkingInstalledChapters'), 'verifying');
         await inspectInstalled(signal, next);
       }
       if (!current()) return;
@@ -911,10 +1045,11 @@ export function attachOptionalChaptersPanel({
       render();
       report(
         failure
-          ? `Online list unavailable: ${failure.message || failure}. Installed and previously loaded chapters remain available. Refresh to retry.`
+          ? () =>
+              t('interface:chapters.onlineListUnavailable', { error: failure.message || failure })
           : play || playInstalled || sourceRows.some((row) => row.chapter.play)
-            ? `Play prepares your selected chapter. You can cancel and keep your current ${attemptLabel}.`
-            : `Installation keeps your current ${attemptLabel}. Choose chapter changes the selected mission.`,
+            ? copy('playInstructions')
+            : copy('installInstructions'),
       );
     });
   }
@@ -925,29 +1060,33 @@ export function attachOptionalChaptersPanel({
         const launch = playLaunch(row.choose, current, signal);
         if (!launch.isCurrent()) return;
         if (row.result.status !== 'installed') {
-          required(
+          requireChapter(
             typeof chapter.download === 'function',
-            'Restore the exact chapter files before playing.',
+            'interface:restoreTheExactChapterFilesBeforePlaying',
           );
-          report(`Downloading and checking ${chapter.name}…`, 'downloading');
+          report(
+            () => t('interface:chapters.downloading', { chapter: contentText(chapter, 'name') }),
+            'downloading',
+          );
           await chapter.download({ signal, onStatus: report });
           if (!current()) return;
         }
-        report('Checking the installed original pair…', 'verifying');
+        report(() => t('interface:checkingTheInstalledOriginalPair'), 'verifying');
         const next = await chapter.inspect({ signal });
         if (!current()) return;
         row.result = next;
-        required(
-          next.status === 'installed',
-          next.message || 'The chapter needs repair before playing.',
-        );
+        if (next.status !== 'installed') {
+          if (next.message) throw new Error(next.message);
+          requireChapter(false, 'interface:theChapterNeedsRepairBeforePlaying');
+        }
         if (!launch.isCurrent()) {
-          report(
-            `${chapter.name} installed. Choose Play when ready; your ${attemptLabel} is kept.`,
-          );
+          report(copy('installedPlay', () => ({ chapter: contentText(chapter, 'name') })));
           return;
         }
-        report(`Preparing ${chapter.name}…`, 'preparing');
+        report(
+          () => t('interface:chapters.preparing', { chapter: contentText(chapter, 'name') }),
+          'preparing',
+        );
         await chapter.play({ signal, onStatus: report, launch });
       },
       { origin: row.choose, fallback },
@@ -959,32 +1098,38 @@ export function attachOptionalChaptersPanel({
         const launch = playLaunch(opener, current, signal);
         if (!launch.isCurrent()) return;
         if (!installed(item)) {
-          required(
+          requireChapter(
             !getLibrary().packs.some((pack) => pack.id === item.id),
             showManage
-              ? 'A different edition is installed. Manage it before downloading this original.'
-              : 'A different edition is installed. Keep it or choose another chapter.',
+              ? 'interface:aDifferentEditionIsInstalledManageItBeforeDownloadingThis'
+              : 'interface:aDifferentEditionIsInstalledKeepItOrChooseAnother',
           );
-          report(`Downloading and checking ${item.name}…`, 'downloading');
+          report(
+            () => t('interface:chapters.downloading', { chapter: contentText(item, 'name') }),
+            'downloading',
+          );
           await install(item, { signal, onStatus: report });
           if (!current()) return;
         }
-        report('Checking the installed chapter…', 'verifying');
+        report(() => t('interface:checkingTheInstalledChapter'), 'verifying');
         const pack = getLibrary().packs.find((candidate) => candidate.id === item.id);
-        required(pack, 'The chapter is not installed. Download it before playing.');
+        requireChapter(pack, 'interface:theChapterIsNotInstalledDownloadItBeforePlaying');
         await verifyOptionalInstalled(pack, item, { signal });
         if (!current()) return;
-        required(
+        requireChapter(
           getLibrary().packs.includes(pack),
-          'This installed chapter has changed. Refresh before playing.',
+          'interface:thisInstalledChapterHasChangedRefreshBeforePlaying',
         );
         if (!matches.has(pack)) matches.set(pack, new Map());
         matches.get(pack).set(item.normalizedSha256, true);
         if (!launch.isCurrent()) {
-          report(`${item.name} installed. Choose Play when ready; your ${attemptLabel} is kept.`);
+          report(copy('installedPlay', () => ({ chapter: contentText(item, 'name') })));
           return;
         }
-        report(`Preparing ${item.name}…`, 'preparing');
+        report(
+          () => t('interface:chapters.preparing', { chapter: contentText(item, 'name') }),
+          'preparing',
+        );
         await play(item, { signal, onStatus: report, launch });
       },
       { origin: opener },
@@ -993,15 +1138,16 @@ export function attachOptionalChaptersPanel({
   async function installItem(item) {
     await run(
       async (signal, current, report) => {
-        report(`Downloading and checking ${item.name}…`, 'downloading');
+        report(
+          () => t('interface:chapters.downloading', { chapter: contentText(item, 'name') }),
+          'downloading',
+        );
         await install(item, { signal, onStatus: report });
-        report('Checking the installed chapter…', 'verifying');
+        report(() => t('interface:checkingTheInstalledChapter'), 'verifying');
         await inspectInstalled(signal);
         if (current()) {
           refresh();
-          report(
-            `${item.name} installed. Your paused ${attemptLabel} is kept. Choose chapter when ready to change missions.`,
-          );
+          report(copy('installedChoose', () => ({ chapter: contentText(item, 'name') })));
         }
       },
       { origin: rows.get(item.id)?.install, next: rows.get(item.id)?.choose },
@@ -1011,7 +1157,10 @@ export function attachOptionalChaptersPanel({
     if (busy || disposed || !installed(item)) return;
     await run(
       async (signal, current, report) => {
-        report(`Preparing ${item.name}…`, 'preparing');
+        report(
+          () => t('interface:chapters.preparing', { chapter: contentText(item, 'name') }),
+          'preparing',
+        );
         const launch = choiceLaunch(rows.get(item.id).choose, current);
         const result = await choose(item, { signal, onStatus: report, launch });
         if (result !== false) launch.onSelected();
@@ -1028,7 +1177,7 @@ export function attachOptionalChaptersPanel({
     if (!catalog) await reloadCatalog();
     else
       await run(async (signal, current, report) => {
-        report('Checking installed chapters and pictures…', 'verifying');
+        report(() => t('interface:checkingInstalledChaptersAndPictures'), 'verifying');
         if (refreshLibrary) {
           await refreshLibrary({ signal, onStatus: report });
           if (!current()) return;
@@ -1039,8 +1188,8 @@ export function attachOptionalChaptersPanel({
         refresh();
         report(
           play || playInstalled || sourceRows.some((row) => row.chapter.play)
-            ? `Choose Play or Download & play. You can cancel preparation and keep your current ${attemptLabel}.`
-            : `Choose a world to install. Installation keeps your current ${attemptLabel}; Choose chapter changes the selected mission.`,
+            ? copy('reopenPlay')
+            : copy('reopenInstall'),
         );
       });
   }

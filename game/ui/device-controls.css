@@ -331,7 +331,7 @@ body.field-kit.game-shell:is([data-flight-state='running'], [data-flight-state='
     --touch-gutter: 196px;
   }
   .game-shell #shell-menu::after {
-    content: ' MENU';
+    content: ' ' attr(data-menu-label);
     font-size: 17px;
     letter-spacing: 1px;
   }

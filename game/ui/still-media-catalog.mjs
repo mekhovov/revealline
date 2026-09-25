@@ -1,3 +1,4 @@
+import { t } from '../i18n/index.mjs';
 import { createExternalChapterHost } from '../external-chapter-host.mjs';
 import { SOURCE_EXTERNAL_CHAPTERS } from '../external-chapter-source.mjs';
 import { canonicalJSON } from '../data-json.mjs';
@@ -15,7 +16,7 @@ export function stillAuthoringKeys(channel = 'dev') {
     typeof channel === 'string' &&
       (channel === 'dev' ||
         /^release-v?(0|[1-9]\d{0,4})\.(0|[1-9]\d{0,4})\.(0|[1-9]\d{0,4})$/.test(channel)),
-    'Unsupported still workshop game channel.',
+    t('interface:unsupportedStillWorkshopGameChannel'),
   );
   const profile = `revealline.library.${channel}.v1`;
   return Object.freeze({
@@ -27,7 +28,7 @@ export function stillAuthoringKeys(channel = 'dev') {
 }
 export const STILL_AUTHORING_KEYS = stillAuthoringKeys();
 const check = (signal) => {
-  if (signal?.aborted) throw new DOMException('Catalog check cancelled.', 'AbortError');
+  if (signal?.aborted) throw new DOMException(t('interface:catalogCheckCancelled'), 'AbortError');
 };
 
 /** Read only the explicit game channel (source dev by default). Hold its existing locks
@@ -49,16 +50,11 @@ export function createStillAuthoringCatalog({
   async function locked(work, signal) {
     check(signal);
     if (!lockManager?.request)
-      throw new Error(
-        'Safe catalog access needs Web Locks. Use a supported browser on localhost or HTTPS.',
-      );
+      throw new Error(t('interface:safeCatalogAccessNeedsWebLocksUseASupportedBrowser'));
     const lock = (name, next) =>
       lockManager.request(name, { ifAvailable: true }, async (held) => {
         check(signal);
-        if (!held)
-          throw new Error(
-            'Close the source game and finish its pack or backup operation, then retry.',
-          );
+        if (!held) throw new Error(t('interface:closeTheSourceGameAndFinishItsPackOrBackup'));
         return next();
       });
     return lock(keys.writer, async () => {
@@ -79,7 +75,9 @@ export function createStillAuthoringCatalog({
           const snapshot = await host.inspect({ signal });
           if (snapshot.status !== 'checked')
             throw new Error(
-              `The game needs ${snapshot.reason}. Recover its exact files before editing media.`,
+              t('gameplay:theGameNeedsRecoverItsExactFilesBeforeEditingMedia', {
+                value1: snapshot.reason,
+              }),
             );
           return await host.withCurrent(
             snapshot,
@@ -92,23 +90,19 @@ export function createStillAuthoringCatalog({
       }
       return lock(keys.lock, async () => {
         if (storage.getItem(keys.lock) !== null || (await readAsset(keys.journal)) !== null)
-          throw new Error(
-            'The source game has a pending backup recovery. Recover it before editing media.',
-          );
+          throw new Error(t('interface:theSourceGameHasAPendingBackupRecoveryRecoverIt'));
         const profile = keys.writer.slice(0, -'.writer'.length);
         if (
           (await readAsset(`${profile}.external-chapter-index.v1`)) !== null ||
           (await readAsset(`${profile}.external-chapter-journal.v1`)) !== null
         )
           throw new Error(
-            'External chapters need the compatible shared-media Workshop before editing.',
+            t('interface:externalChaptersNeedTheCompatibleSharedMediaWorkshopBeforeEditing'),
           );
         const raw = await readAsset(keys.packs);
         check(signal);
         if (raw !== null && typeof raw !== 'string')
-          throw new Error(
-            'The installed pack library is unreadable. No empty replacement was made.',
-          );
+          throw new Error(t('interface:theInstalledPackLibraryIsUnreadableNoEmptyReplacementWas'));
         return work(raw);
       });
     });
@@ -140,14 +134,15 @@ export function createStillAuthoringCatalog({
       }, signal);
     },
     async withCurrent(snapshot, work, { signal } = {}) {
-      if (!snapshots.has(snapshot)) throw new Error('Reload the installed catalog before saving.');
+      if (!snapshots.has(snapshot))
+        throw new Error(t('interface:reloadTheInstalledCatalogBeforeSaving'));
       return locked(async (raw, external) => {
         if (
           snapshot.raw !== raw ||
           snapshot.external !== (external ? canonicalJSON(external.index) : null)
         )
           throw new Error(
-            'Installed packs changed. Reload the catalog and review the assignment before saving.',
+            t('interface:installedPacksChangedReloadTheCatalogAndReviewTheAssignment'),
           );
         check(signal);
         return work();

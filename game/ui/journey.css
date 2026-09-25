@@ -96,6 +96,25 @@
   grid-column: 1 / -1;
   overflow-wrap: anywhere;
 }
+@media (max-width: 600px) {
+  /* Give search its own row. Long translated actions must never collapse the
+     editable field; the controls retain their native DOM and keyboard order. */
+  #journey-chooser.mission-library-chooser .journey-search-controls {
+    display: contents;
+  }
+  #journey-chooser.mission-library-chooser .journey-search-field {
+    grid-column: 1 / -1;
+  }
+  #journey-chooser.mission-library-chooser #journey-search-clear {
+    grid-column: 1;
+    min-width: 0;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+  #journey-chooser.mission-library-chooser .journey-filter-details {
+    grid-column: 2;
+  }
+}
 .journey-card-edition {
   color: #bacdc0;
   font-size: 0.85rem;

@@ -1,5 +1,11 @@
-/** New surface copy has stable keys. Add a Ukrainian catalog here when translated;
- * language variants fall back to English without changing game state or saves. */
+import {
+  t,
+  getLocale,
+  normalizeLocale,
+  localizedText,
+  localizedAttribute,
+} from '../i18n/index.mjs';
+/** English contract retained for integrations; shared catalogs own translated copy. */
 export const FIELD_KIT_ENGLISH = Object.freeze({
   'navigation.continue': 'Continue',
   'navigation.start': 'Start',
@@ -105,30 +111,115 @@ export const FIELD_KIT_ENGLISH = Object.freeze({
   'about.eyebrow': 'FIELD KIT / GAME GUIDE',
 });
 
-const catalogs = new Map([['en', FIELD_KIT_ENGLISH]]);
+// Compatibility adapter for existing presentation keys; catalogs are canonical.
+export const FIELD_KIT_KEYS = Object.freeze({
+  'navigation.continue': 'common:actions.continue',
+  'navigation.start': 'interface:start',
+  'navigation.deploy': 'common:actions.deploy',
+  'navigation.missions': 'interface:missions',
+  'navigation.collection': 'interface:collection',
+  'navigation.settings': 'common:navigation.settings',
+  'navigation.workshop': 'common:navigation.more',
+  'workshop.motion': 'interface:motionLab',
+  'workshop.pictures': 'interface:picturesStories',
+  'workshop.poster': 'interface:videoPosterWorkshop',
+  'workshop.atlas': 'interface:designAtlas',
+  'navigation.back': 'common:actions.back',
+  'navigation.singlePlayer': 'interface:singlePlayer',
+  'navigation.couch': 'interface:couchPlay',
+  'navigation.previousPage': 'interface:previous',
+  'navigation.nextPage': 'interface:next',
+  'missions.pages': 'interface:missionPages',
+  'missions.chooseAvailable': 'interface:chooseAnAvailableMission',
+  'missions.locked': 'interface:locked',
+  'missions.earned': 'interface:pictureEarned',
+  'missions.unavailable': 'interface:previewUnavailable',
+  'missions.concealed': 'interface:pictureConcealed',
+  'missions.loading': 'interface:loadingPicture',
+  'missions.brief': 'interface:missionBrief',
+  'missions.briefContext': 'interface:missionBrief2',
+  'missions.currentFlight': 'interface:currentFlight',
+  'title.trainingDestination': 'interface:trainingYourCurrentLesson',
+  'title.continueDestination': 'interface:continue2',
+  'title.deployDestination': 'interface:deployPressureLinesArcade',
+  'title.preparing': 'interface:preparing2',
+  'settings.categories': 'interface:settingsCategories',
+  'settings.title': 'common:navigation.settings',
+  'settings.couchTitle': 'common:navigation.settings',
+  'settings.controls': 'interface:controls',
+  'settings.audio': 'interface:audio',
+  'settings.display': 'interface:appearanceAccessibility',
+  'settings.data': 'interface:gameData',
+  'settings.controlsDescription': 'interface:keyboardControllerAndTouch',
+  'settings.audioDescription': 'interface:musicEffectsAndYourSoundtrackLibrary',
+  'settings.displayDescription': 'interface:readableTextTerrainAndComfortableMotion',
+  'settings.dataDescription': 'interface:savesRecoveryInstalledChaptersAndOfflinePlay',
+  'settings.touchHeading': 'interface:touchOnScreenSteering',
+  'settings.saves': 'interface:savesRecovery',
+  'settings.packs': 'interface:installedChapters',
+  'settings.libraryDescription':
+    'interface:manageSavedFlightsGameDataBackupsAndInstalledChaptersIn',
+  'results.picture': 'interface:thePictureRevealedInThisFlight',
+  'collection.title': 'interface:yourCollection',
+  'collection.records': 'interface:flightRecords',
+  'library.title': 'interface:flightLibrary',
+  'library.records': 'interface:records',
+  'display.textSize': 'interface:textSize',
+  'display.standard': 'interface:display.textSize.standard',
+  'display.large': 'interface:large',
+  'motion.stageLabels': 'common:preview.stageLabels',
+  'motion.stageLabelsHint': 'common:preview.stageLabelsHelp',
+  'motion.stageRolesHint': 'common:preview.hazeHelp',
+  'motion.stageKind.haze': 'interface:haze',
+  'motion.stageKind.pad': 'interface:supplyPad',
+  'motion.stageKind.ground': 'interface:groundMarker',
+  'motion.stageKind.air': 'interface:airMarker',
+  'motion.stageKind.delivery': 'interface:deliveryMarker',
+  'motion.stageKind.relay': 'interface:relayMarker',
+  'motion.stageKind.note': 'interface:note',
+  'motion.concealedNote': 'common:preview.concealedNote',
+  'motion.noteVisible': 'interface:visibleWhileTheScanLasts',
+  'motion.markerReady': 'common:status.ready',
+  'motion.markerUpdated': 'interface:updated',
+  'motion.sharedReading': 'interface:textSizeIsSharedWithTheGameThemeOrPlain',
+  'motion.effectsCapped': 'interface:sharedOrSystemReducedEffectsAreActiveTheLocalPreview',
+  'motion.effectsLocal':
+    'interface:localReducedMotionFreezesAttachmentDetailAndRemovesParticlesMovement',
+  'motion.effectsFull': 'interface:fullPreviewEffectsAreAvailableWindowBlurOrAHidden',
+  'motion.inspectionLoading': 'interface:bodyImageLoadingTheNeutralMarkerIsShown',
+  'motion.inspectionUnavailable': 'interface:bodyUnavailableTheNeutralMarkerIsShown',
+  'motion.inspectionNeutral': 'interface:neutralFallbackMarkerThisBodyHasNoImage',
+  'display.sharedToolNotice': 'interface:textSizeIsSharedWithTheGameSSettingsAppearance',
+  'playground.mapLabel': 'common:editor.mapLabel',
+  'playground.mapDetails': 'common:editor.mapDetails',
+  'playground.mapDetailsLoading': 'common:editor.mapDetailsLoading',
+  'playground.mapDetailsHelp': 'common:editor.mapDetailsHelp',
+  'playground.paintHelp': 'common:editor.paintHelp',
+  'playground.noSignalZones': 'interface:noSignalZones',
+  'playground.signalZone': 'interface:signalZoneXYCellsSpeedBoostAbility',
+  'playground.boostBlocked': 'interface:blocked',
+  'playground.boostAllowed': 'interface:allowed',
+  'playground.abilityLocked': 'common:status.locked',
+  'playground.abilityAllowed': 'interface:allowed',
+  'playground.defaultHangar': 'interface:defaultStartHangarXYRadius2Cells',
+  'playground.hangar': 'interface:hangarXYRadiusCells',
+  'playground.noHangars': 'interface:noHangarsClassSwitchingIsDisabled',
+  'about.eyebrow': 'interface:fieldKitGameGuide',
+});
 
-export function fieldKitCopy(key, locale = 'en', values = {}) {
-  const language = String(locale).toLowerCase().split('-')[0];
-  const catalog = catalogs.get(language) ?? FIELD_KIT_ENGLISH;
-  const copy = Object.hasOwn(catalog, key)
-    ? catalog[key]
-    : Object.hasOwn(FIELD_KIT_ENGLISH, key)
-      ? FIELD_KIT_ENGLISH[key]
-      : null;
-  return (
-    copy?.replace(/\{([a-zA-Z][a-zA-Z0-9]*)\}/g, (match, name) =>
-      Object.hasOwn(values, name) ? String(values[name]) : match,
-    ) ?? null
-  );
+export function fieldKitCopy(key, locale = getLocale(), values = {}) {
+  return Object.hasOwn(FIELD_KIT_KEYS, key)
+    ? t(FIELD_KIT_KEYS[key], { ...values, lng: normalizeLocale(locale) || 'en' })
+    : null;
 }
-
-export function applyFieldKitCopy(doc, locale = doc.documentElement?.lang || 'en') {
+export function applyFieldKitCopy(doc) {
   for (const element of doc.querySelectorAll('[data-field-kit-copy]')) {
-    const copy = fieldKitCopy(element.getAttribute('data-field-kit-copy'), locale);
-    if (copy !== null) element.textContent = copy;
+    const key = element.getAttribute('data-field-kit-copy');
+    if (Object.hasOwn(FIELD_KIT_KEYS, key)) localizedText(element, () => fieldKitCopy(key));
   }
   for (const element of doc.querySelectorAll('[data-field-kit-copy-aria-label]')) {
-    const copy = fieldKitCopy(element.getAttribute('data-field-kit-copy-aria-label'), locale);
-    if (copy !== null) element.setAttribute('aria-label', copy);
+    const key = element.getAttribute('data-field-kit-copy-aria-label');
+    if (Object.hasOwn(FIELD_KIT_KEYS, key))
+      localizedAttribute(element, 'aria-label', () => fieldKitCopy(key));
   }
 }

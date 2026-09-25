@@ -163,9 +163,10 @@ test('Studio labels both rule contexts and inspects the selected browser setting
     host.indexOf('function inspectBoard('),
     host.indexOf('function render('),
   );
-  assert.match(board, /inspectEffectiveGameplay\(project, mission\.id/);
+  assert.match(board, /inspectEffectiveGameplay\(compiledProject, mission\.id/);
   assert.match(board, /overrides: tuningStatus\.overrides/);
-  assert.match(board, /Authored preview:/);
+  assert.match(board, /bindStudioPreviewCopy\(document, project, mission, preview\)/);
+  assert.match(board, /studioGameplayText\(effectiveGameplay, tuningStatus\)/);
   assert.match(board, /effectiveGameplay,/);
   assert.doesNotMatch(board, /applyGameplayTuning\(/);
 });

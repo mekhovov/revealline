@@ -1,5 +1,6 @@
 #!/usr/bin/env node
-/** Local browser-game tooling. Node built-ins only; no package install needed. */
+import { validateLocalization } from './localization.mjs';
+/** Local browser-game tooling, including catalog validation for localized builds. */
 import { createHash } from 'node:crypto';
 import { deflateSync } from 'node:zlib';
 import { createServer } from 'node:http';
@@ -396,7 +397,15 @@ async function assertOutput(root, out, inputs) {
   }
 }
 
-function publicPage(title, body, fieldKit = false, compiled = false) {
+function publicPage(title, body, fieldKit = false, compiled = false, localized = false) {
+  const titles = {
+    Play: 'website:page.playTitle',
+    'Privacy and local storage': 'website:page.privacyTitle',
+    'Credits and notices': 'website:page.creditsTitle',
+  };
+  const localization = localized
+    ? '<link rel="stylesheet" href="./game/i18n/style.css"><script src="./game/vendor/i18next-26.4.2.min.js"></script><script src="./game/i18n/catalogs.mjs"></script><script src="./game/i18n/bootstrap.mjs"></script>'
+    : '';
   const styles = fieldKit
     ? ['fonts', 'tokens', 'components', 'surfaces']
         .map((part) => `<link rel="stylesheet" href="./game/ui/field-kit-${part}.css">`)
@@ -405,10 +414,10 @@ function publicPage(title, body, fieldKit = false, compiled = false) {
   const presentation = compiled
     ? '<link rel="stylesheet" href="./game/ui/field-kit-compiled.css"><script type="module" src="./game/presentation/page-entry.mjs"></script>'
     : '';
-  const content = fieldKit ? body.replaceAll('<h1>', '<h1 class="field-kit-display">') : body;
-  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="dark"><title>${html(title)} · Reveal Line</title><style>body{margin:0;background:#091324;color:#edf2e8;font:17px/1.7 system-ui}main{max-width:760px;margin:8vh auto;padding:24px}a{color:#7fdbeb}h1{font-size:clamp(32px,6vw,58px);line-height:1.1}nav{display:flex;gap:16px;flex-wrap:wrap;margin:32px 0}nav a{padding:10px 16px;border:1px solid #456071;border-radius:8px;text-decoration:none}small{color:#adc1ca}code{overflow-wrap:anywhere}li{margin:12px 0}</style>${styles}${presentation}</head><body${fieldKit ? ' class="field-kit field-kit-support"' : ''}><main>${content}</main></body></html>\n`;
+  const content = fieldKit ? body.replaceAll('<h1', '<h1 class="field-kit-display"') : body;
+  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="dark"><title data-i18n="${titles[title]}">${html(title)} · Reveal Line</title><style>body{margin:0;background:#091324;color:#edf2e8;font:17px/1.7 system-ui}main{max-width:760px;margin:8vh auto;padding:24px}a{color:#7fdbeb}h1{font-size:clamp(32px,6vw,58px);line-height:1.1}nav{display:flex;gap:16px;flex-wrap:wrap;margin:32px 0}nav a{padding:10px 16px;border:1px solid #456071;border-radius:8px;text-decoration:none}small{color:#adc1ca}code{overflow-wrap:anywhere}li{margin:12px 0}</style>${localization}${styles}${presentation}</head><body${fieldKit ? ' class="field-kit field-kit-support"' : ''}><main>${localized ? '<div data-language-control></div><noscript><p lang="en">Enable JavaScript to switch languages.</p><p lang="uk">Увімкніть JavaScript, щоб змінити мову.</p></noscript>' : ''}${content}</main></body></html>\n`;
 }
-function addPublicEntries(entries, info) {
+export function addPublicEntries(entries, info) {
   const displayVersion = info.version.startsWith('v') ? info.version : `v${info.version}`;
   const has = (name) => entries.some((e) => e.name === name);
   const fieldKit = ['fonts', 'tokens', 'components', 'surfaces'].every((part) =>
@@ -416,13 +425,24 @@ function addPublicEntries(entries, info) {
   );
   const compiled =
     fieldKit && has('game/ui/field-kit-compiled.css') && has('game/presentation/page-entry.mjs');
+  const localized = [
+    'game/vendor/i18next-26.4.2.min.js',
+    'game/i18n/catalogs.mjs',
+    'game/i18n/bootstrap.mjs',
+    'game/i18n/style.css',
+  ].every(has);
+  const makePage = (title, body) => publicPage(title, body, fieldKit, compiled, localized);
   const links = [
-    `<a href="./${html(info.entry)}">Play solo</a>`,
-    ...(has('game/couch/index.html') ? ['<a href="./game/couch/">Couch duel</a>'] : []),
-    ...(has('game/replay-theater/index.html')
-      ? ['<a href="./game/replay-theater/">Replay Theater</a>']
+    `<a href="./${html(info.entry)}" data-i18n="website:page.playSolo">Play solo</a>`,
+    ...(has('game/couch/index.html')
+      ? ['<a href="./game/couch/" data-i18n="website:page.couchDuel">Couch duel</a>']
       : []),
-    ...(has('game/playground/index.html') ? ['<a href="./game/playground/">Playground</a>'] : []),
+    ...(has('game/replay-theater/index.html')
+      ? ['<a href="./game/replay-theater/" data-i18n="website:replayTheater">Replay Theater</a>']
+      : []),
+    ...(has('game/playground/index.html')
+      ? ['<a href="./game/playground/" data-i18n="website:page.playground">Playground</a>']
+      : []),
   ];
   const landing = entries.find((e) => e.name === 'site/index.html');
   if (landing) {
@@ -432,9 +452,8 @@ function addPublicEntries(entries, info) {
       .replaceAll('href="./landing.css"', 'href="./site/landing.css"')
       .replaceAll('src="./landing.mjs"', 'src="./site/landing.mjs"')
       .replaceAll('src="./launch.mjs"', 'src="./site/launch.mjs"')
-      .replaceAll('href="../game/boot.css"', 'href="./game/boot.css"')
-      .replaceAll('href="../game/ui/field-kit-', 'href="./game/ui/field-kit-')
-      .replaceAll('href="../game/"', 'href="./game/"');
+      .replaceAll('href="../game/', 'href="./game/')
+      .replaceAll('src="../game/', 'src="./game/');
     entries.splice(entries.indexOf(landing), 1);
     entries.push({ name: 'index.html', bytes: Buffer.from(rendered) });
     const about = entries.find((entry) => entry.name === 'site/about.html');
@@ -446,9 +465,9 @@ function addPublicEntries(entries, info) {
     entries.push({
       name: 'index.html',
       bytes: Buffer.from(
-        publicPage(
+        makePage(
           'Play',
-          `<small>REVEAL LINE · ${html(info.version)}</small><h1>Clear a path.<br>Reveal a world.</h1><p>Close a line through changing worlds, collect the pictures you uncover and try a new route. Play with keys, touch or a compatible controller.</p><nav>${links.join('')}</nav><p><a href="./privacy.html">Privacy and local storage</a> · <a href="./credits.html">Credits and notices</a></p><small>${info.sourceRevision ? `Saved source <code>${html(info.sourceRevision)}</code>` : 'Development distribution — source revision not recorded.'}</small>`,
+          `<small>REVEAL LINE · ${html(info.version)}</small><h1 data-i18n-rich="website:page.tagline">Clear a path.<br data-i18n-slot="lineBreak">Reveal a world.</h1><p data-i18n="website:page.introduction">Close a line through changing worlds, collect the pictures you uncover and try a new route. Play with keys, touch or a compatible controller.</p><nav>${links.join('')}</nav><p><a href="./privacy.html" data-i18n="website:page.privacyLink">Privacy and local storage</a> · <a href="./credits.html" data-i18n="website:creditsAndNotices">Credits and notices</a></p>${info.sourceRevision ? `<small data-i18n-rich="website:page.savedSource">Saved source <code data-i18n-slot="revision">${html(info.sourceRevision)}</code></small>` : '<small data-i18n="website:page.developmentBuild">Development distribution — source revision not recorded.</small>'}`,
           fieldKit,
           compiled,
         ),
@@ -462,9 +481,9 @@ function addPublicEntries(entries, info) {
   entries.push({
     name: 'privacy.html',
     bytes: Buffer.from(
-      publicPage(
+      makePage(
         'Privacy and local storage',
-        '<p><a href="./">← Game home</a></p><h1>Your game stays here.</h1><p>This build has no account system, analytics SDK, advertising tracker, cloud scoreboard or multiplayer server. The game code does not upload your pictures, imported packs, replay files or player library.</p><p>The browser stores preferences, achievements, local scores and a suspended flight locally. Imported image packs and uploaded MP3 libraries use IndexedDB. Custom soundtrack backups contain the original audio bytes; the player-library JSON alone is not a complete media backup. The playground uses session storage to pass its configuration to the preview. If you explicitly prepare offline play, the service worker saves this version’s shipped files in the browser cache.</p><p>Export the player library, packs and suspended flight when you want a portable backup. Clearing site data removes local data; private browsing, storage limits or browser cleanup can also remove it. There is no server backup or cross-device sync.</p><p>A public hosting provider receives ordinary page and asset requests and may keep access logs. This game cannot promise the host keeps no logs. The publisher is responsible for disclosing any hosting-specific collection or additional services it adds.</p><p>Imported content is treated as bounded data and media. Installed packs cannot provide executable game scripts or contacts with remote services. Local scores are editable local records, not authenticated competitive results.</p>',
+        '<p><a href="./" data-i18n="website:gameHome">← Game home</a></p><h1 data-i18n="website:yourGameStaysHere">Your game stays here.</h1><p data-i18n="website:thisBuildHasNoAccountSystemAnalyticsSdkAdvertisingTracker">This build has no account system, analytics SDK, advertising tracker, cloud scoreboard or multiplayer server. The game code does not upload your pictures, imported packs, replay files or player library.</p><p data-i18n="website:theBrowserStoresPreferencesAchievementsLocalScoresAndASuspended">The browser stores preferences, achievements, local scores and a suspended flight locally. Imported image packs and uploaded MP3 libraries use IndexedDB. Custom soundtrack backups contain the original audio bytes; the player-library JSON alone is not a complete media backup. The playground uses session storage to pass its configuration to the preview. If you explicitly prepare offline play, the service worker saves this version’s shipped files in the browser cache.</p><p data-i18n="website:exportThePlayerLibraryPacksAndSuspendedFlightWhenYou">Export the player library, packs and suspended flight when you want a portable backup. Clearing site data removes local data; private browsing, storage limits or browser cleanup can also remove it. There is no server backup or cross-device sync.</p><p data-i18n="website:aPublicHostingProviderReceivesOrdinaryPageAndAssetRequests">A public hosting provider receives ordinary page and asset requests and may keep access logs. This game cannot promise the host keeps no logs. The publisher is responsible for disclosing any hosting-specific collection or additional services it adds.</p><p data-i18n="website:importedContentIsTreatedAsBoundedDataAndMediaInstalled">Imported content is treated as bounded data and media. Installed packs cannot provide executable game scripts or contacts with remote services. Local scores are editable local records, not authenticated competitive results.</p>',
         fieldKit,
         compiled,
       ),
@@ -473,20 +492,25 @@ function addPublicEntries(entries, info) {
   entries.push({
     name: 'credits.html',
     bytes: Buffer.from(
-      publicPage(
+      makePage(
         'Credits and notices',
-        '<p><a href="./">← Game home</a></p><h1>Credits and notices</h1><p>Reveal Line is an original territory-capture game inspired by the Xonix/Qix tradition. Reference games informed design research; their proprietary music, pictures, code and logos are not bundled as game assets.</p><p>The included Phaser engine retains its <a href="./game/vendor/PHASER-LICENSE.md">MIT license and copyright notice</a>.' +
+        '<p><a href="./" data-i18n="website:gameHome">← Game home</a></p><h1 data-i18n="website:creditsAndNotices">Credits and notices</h1><p data-i18n="website:revealLineIsAnOriginalTerritoryCaptureGameInspiredBy">Reveal Line is an original territory-capture game inspired by the Xonix/Qix tradition. Reference games informed design research; their proprietary music, pictures, code and logos are not bundled as game assets.</p><p data-i18n-rich="website:theIncludedPhaserEngineRetainsItsSlot0BuiltInMusic">The included Phaser engine retains its <a data-i18n-slot="slot0" href="./game/vendor/PHASER-LICENSE.md" data-i18n="website:mitLicenseAndCopyrightNotice">MIT license and copyright notice</a>. Built-in music uses original procedural score recipes. Uploaded MP3s retain their author-supplied metadata and source records.</p><p data-i18n="website:theWorldsBackgroundsAndCharacterRigsAreChangeableFpvGameplay">The worlds, backgrounds and character rigs are changeable. FPV gameplay is a fictional arcade abstraction. The business-spend theme is a design concept and does not claim endorsement or actual business-product functionality.</p><p data-i18n="website:theTelegramEmojiCollectionResearchedForInspirationIsNotIncluded">The Telegram emoji collection researched for inspiration is not included as imported artwork. A pack author must supply appropriate attribution and rights for every asset they distribute; importing a file is not a redistribution license.</p>' +
           (has('game/vendor/MEDIABUNNY-LICENSE.txt') && has('game/vendor/mediabunny-1.59.1.json')
-            ? ' The optional local video trimmer uses pinned Mediabunny 1.59.1 under its <a href="./game/vendor/MEDIABUNNY-LICENSE.txt">MPL-2.0 license</a>; its <a href="./game/vendor/mediabunny-1.59.1.json">source and checksum record</a> is included.'
+            ? '<p data-i18n-rich="website:page.mediabunnyNotice">The optional local video trimmer uses pinned Mediabunny 1.59.1 under its <a data-i18n-slot="license" data-i18n="website:page.mplLicense" href="./game/vendor/MEDIABUNNY-LICENSE.txt">MPL-2.0 license</a>; its <a data-i18n-slot="source" data-i18n="website:page.sourceChecksumRecord" href="./game/vendor/mediabunny-1.59.1.json">source and checksum record</a> is included.</p>'
             : '') +
-          ' Built-in music uses original procedural score recipes. Uploaded MP3s retain their author-supplied metadata and source records.</p><p>The worlds, backgrounds and character rigs are changeable. FPV gameplay is a fictional arcade abstraction. The business-spend theme is a design concept and does not claim endorsement or actual business-product functionality.</p><p>The Telegram emoji collection researched for inspiration is not included as imported artwork. A pack author must supply appropriate attribution and rights for every asset they distribute; importing a file is not a redistribution license.</p>' +
+          (localized
+            ? '<p data-i18n-rich="website:page.i18nextNotice">Localization uses i18next under its <a href="./game/vendor/I18NEXT-LICENSE.txt" data-i18n-slot="slot0" data-i18n="website:page.license">MIT license</a>.</p>'
+            : '') +
           (has(
             'game/audio/soundtracks/d4147214e221be28f19d6c6c38afc8d3cf0289a0dc6ac579b26574a0c571bc58.mp3',
           )
-            ? '<p>Opening-theme music: <cite>Carol of the Bells (Metal Version)</cite> by <a href="https://creatorchords.com/music/carol-of-the-bells-metal-version/">Alexander Nakarada (CreatorChords)</a>, licensed under <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International</a>. This is a modern metal adaptation of the melody associated with Mykola Leontovych’s <cite>Shchedryk</cite>; it does not claim traditional Ukrainian instrumentation.</p>'
+            ? '<p data-i18n-rich="website:page.openingThemeNotice">Opening-theme music: <cite data-i18n-slot="title">Carol of the Bells (Metal Version)</cite> by <a data-i18n-slot="creator" href="https://creatorchords.com/music/carol-of-the-bells-metal-version/">Alexander Nakarada (CreatorChords)</a>, licensed under <a data-i18n-slot="license" href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International</a>. This is a modern metal adaptation of the melody associated with Mykola Leontovych’s <cite data-i18n-slot="shchedryk">Shchedryk</cite>; it does not claim traditional Ukrainian instrumentation.</p>'
+            : '') +
+          (localized && has('game/vendor/LZ-STRING-LICENSE.txt')
+            ? '<p data-i18n-rich="website:page.catalogCompressionNotice">Translation catalogs use lz-string by pieroxy under its <a href="./game/vendor/LZ-STRING-LICENSE.txt" data-i18n-slot="license" data-i18n="website:page.license">MIT license</a>.</p>'
             : '') +
           (has('game/ui/fonts/field-kit/provenance.json')
-            ? '<p>Pixel display type: Tiny5 by the Tiny5 Project Authors and designer Stefan Schmidt (<a href="./game/ui/fonts/OFL.txt">OFL 1.1</a>), self-hosted and unmodified with Cyrillic and Ukrainian glyph coverage; <a href="./game/ui/fonts/provenance.json">source and checksum record</a>. Supporting display type: Handjet by the Handjet Project Authors (<a href="./game/ui/fonts/field-kit/Handjet-OFL.txt">OFL 1.1</a>), instantiated at weight 600, element shape 2 and element grid 1. Interface type: Exo 2 by the Exo 2 Project Authors (<a href="./game/ui/fonts/field-kit/Exo2-OFL.txt">OFL 1.1</a>), retaining weights 400–600. Numeric type: IBM Plex Mono by IBM Corp. (<a href="./game/ui/fonts/field-kit/IBMPlexMono-OFL.txt">OFL 1.1</a>), weight 500. The supporting WOFF2 files retain full English and Ukrainian letter coverage. <a href="./game/ui/fonts/field-kit/provenance.json">Supporting-font source versions, build recipe and file checksums</a>.</p>'
+            ? '<p data-i18n-rich="website:page.fontNotices">Pixel display type: Tiny5 by the Tiny5 Project Authors and designer Stefan Schmidt (<a data-i18n-slot="slot0" href="./game/ui/fonts/OFL.txt">OFL 1.1</a>), self-hosted and unmodified with Cyrillic and Ukrainian glyph coverage; <a data-i18n-slot="slot1" href="./game/ui/fonts/provenance.json" data-i18n="website:page.fontSource">source and checksum record</a>. Supporting display type: Handjet by the Handjet Project Authors (<a data-i18n-slot="slot2" href="./game/ui/fonts/field-kit/Handjet-OFL.txt">OFL 1.1</a>), instantiated at weight 600, element shape 2 and element grid 1. Interface type: Exo 2 by the Exo 2 Project Authors (<a data-i18n-slot="slot3" href="./game/ui/fonts/field-kit/Exo2-OFL.txt">OFL 1.1</a>), retaining weights 400–600. Numeric type: IBM Plex Mono by IBM Corp. (<a data-i18n-slot="slot4" href="./game/ui/fonts/field-kit/IBMPlexMono-OFL.txt">OFL 1.1</a>), weight 500. The supporting WOFF2 files retain full English and Ukrainian letter coverage. <a data-i18n-slot="slot5" href="./game/ui/fonts/field-kit/provenance.json" data-i18n="website:page.supportingFontSources">Supporting-font source versions, build recipe and file checksums</a>.</p>'
             : ''),
         fieldKit,
         compiled,
@@ -598,7 +622,7 @@ async function addOfflineEntries(
     .filter((entry) => optional.has(entry.name))
     .map((entry) => {
       const pack = JSON.parse(entry.bytes);
-      return { path: entry.name, id: pack.id, name: pack.name };
+      return { path: entry.name, id: pack.id, name: pack.name, sha256: sha256(entry.bytes) };
     });
   const manifest = {
     id: './',
@@ -669,11 +693,22 @@ async function addOfflineEntries(
     ...(optionalArtwork?.files.map((file) => file.path) ?? []),
   ]);
   const files = [...entries]
-    .filter((entry) => entry.name !== '_headers' && !excluded.has(entry.name))
+    // The complete generated catalog is cached. Canonical JSON sources are also
+    // distributed for contributors, but duplicating them in the offline cache
+    // would charge every player twice for the same translations.
+    .filter(
+      (entry) =>
+        entry.name !== '_headers' &&
+        !entry.name.startsWith('game/locales/') &&
+        !excluded.has(entry.name),
+    )
     .sort((a, b) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0))
     .map((e) => ({ path: e.name, bytes: e.bytes.length, sha256: sha256(e.bytes) }));
-  if (files.length > 2000 || files.reduce((n, f) => n + f.bytes, 0) > 64 * 1024 * 1024)
-    fail('Offline distribution exceeds 2000 files or 64 MiB; split optional content into packs');
+  const totalBytes = files.reduce((n, f) => n + f.bytes, 0);
+  if (files.length > 2000 || totalBytes > 64 * 1024 * 1024)
+    fail(
+      `Offline distribution exceeds 2000 files or 64 MiB (${files.length} files / ${totalBytes} bytes); split optional content into packs`,
+    );
   const config = {
     format: 'revealline-offline.v1',
     version: info.version,
@@ -702,6 +737,9 @@ export async function buildProject({
   if (sourceRevision !== null && !/^[0-9a-f]{40,64}$/.test(sourceRevision))
     fail('Source revision must be a full commit hash or null');
   const files = await collectBuildFiles(root, config);
+  // Historical releases and minimal build fixtures predate localization. Current
+  // localized distributions must reject missing translations and stale bundles.
+  if (files.includes('game/locales/en/website.json')) await validateLocalization(root);
   const optionalArtwork =
     config.optionalArtwork === undefined
       ? null

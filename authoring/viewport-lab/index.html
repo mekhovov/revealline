@@ -2,8 +2,13 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../game/i18n/style.css" />
+    <script src="../../game/vendor/i18next-26.4.2.min.js"></script>
+    <script src="../../game/i18n/catalogs.mjs"></script>
+    <script src="../../game/i18n/bootstrap.mjs"></script>
+
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Viewport lab · Xonix authoring</title>
+    <title data-i18n="tools:viewportLabXonixAuthoring">Viewport lab · Xonix authoring</title>
     <script type="module" src="../shared/host-display-entry.mjs"></script>
     <link rel="stylesheet" href="lab.css" />
     <link rel="stylesheet" href="../../game/ui/operation-status.css" />
@@ -14,55 +19,57 @@
     <script type="module" src="../../game/presentation/page-entry.mjs"></script>
   </head>
   <body class="field-kit field-kit-support" data-authoring-host="viewport">
+<div data-language-control></div>
+
     <main>
       <header class="lab-header">
         <div>
-          <p class="eyebrow">Xonix / Authoring tools</p>
-          <h1 class="field-kit-display">Viewport lab</h1>
-          <p class="intro">One running game. Five window sizes. Inspect the whole layout.</p>
+          <p class="eyebrow" data-i18n="tools:xonixAuthoringTools">Xonix / Authoring tools</p>
+          <h1 class="field-kit-display" data-i18n="tools:viewportLab">Viewport lab</h1>
+          <p class="intro" data-i18n="tools:oneRunningGameFiveWindowSizesInspectTheWholeLayout">One running game. Five window sizes. Inspect the whole layout.</p>
         </div>
-        <a class="guide-link" href="README.md">Lab guide ↗</a>
+        <a class="guide-link" href="README.md" data-i18n="tools:labGuide">Lab guide ↗</a>
       </header>
 
       <p id="viewport-load-status" class="operation-status" data-state="busy">
         <span class="operation-status-signal" aria-hidden="true"><i></i><i></i><i></i></span>
         <span class="operation-status-label" role="status"
-          >Preparing preview controls… You can open the game directly below.</span
+           data-i18n="tools:preparingPreviewControlsYouCanOpenTheGameDirectlyBelow">Preparing preview controls… You can open the game directly below.</span
         >
       </p>
-      <section class="controls" aria-label="Preview controls">
+      <section class="controls" aria-label="Preview controls" data-i18n-aria-label="tools:previewControls">
         <form id="target-form" class="target-controls">
-          <label for="target">Game</label>
+          <label for="target" data-i18n="tools:game">Game</label>
           <select id="target" name="target" data-tool-control disabled>
-            <option value="couch">Couch · two players</option>
-            <option value="solo">Solo</option>
+            <option value="couch" data-i18n="tools:couchTwoPlayers">Couch · two players</option>
+            <option value="solo" data-i18n="tools:solo">Solo</option>
           </select>
-          <button id="load-target" type="submit" data-tool-control disabled>
+          <button id="load-target" type="submit" data-tool-control disabled data-i18n="tools:loadSelectedGame">
             Load selected game
           </button>
         </form>
         <div class="size-controls">
-          <label for="preset">Viewport size · CSS pixels</label>
+          <label for="preset" data-i18n="tools:viewportSizeCssPixels">Viewport size · CSS pixels</label>
           <select id="preset" data-tool-control disabled>
-            <option value="390x844">390 × 844 · portrait</option>
-            <option value="844x390">844 × 390 · landscape</option>
-            <option value="768x1024">768 × 1024 · portrait</option>
-            <option value="1280x720" selected>1280 × 720 · landscape</option>
-            <option value="1280x800">1280 × 800 · landscape</option>
+            <option value="390x844" data-i18n="tools:390844Portrait">390 × 844 · portrait</option>
+            <option value="844x390" data-i18n="tools:844390Landscape">844 × 390 · landscape</option>
+            <option value="768x1024" data-i18n="tools:7681024Portrait">768 × 1024 · portrait</option>
+            <option value="1280x720" selected data-i18n="tools:1280720Landscape">1280 × 720 · landscape</option>
+            <option value="1280x800" data-i18n="tools:1280800Landscape">1280 × 800 · landscape</option>
           </select>
         </div>
       </section>
 
       <div class="preview-heading">
         <p>
-          <strong id="loaded-target">No game loaded</strong> <span class="separator">/</span>
-          <output id="dimensions" for="preset">1280 × 720 CSS px</output>
+          <strong id="loaded-target" data-i18n="tools:noGameLoaded">No game loaded</strong> <span class="separator">/</span>
+          <output id="dimensions" for="preset" data-i18n="tools:1280720CssPx">1280 × 720 CSS px</output>
         </p>
         <a id="direct-open" href="../../game/couch/" target="_blank" rel="noopener"
-          >Open Couch directly ↗</a
+           data-i18n="tools:openCouchDirectly">Open Couch directly ↗</a
         >
       </div>
-      <p id="status" class="status" role="status">
+      <p id="status" class="status" role="status" data-i18n="tools:chooseAGameThenLoadItSizeChangesKeepThe">
         Choose a game, then load it. Size changes keep the current game running.
       </p>
 
@@ -72,12 +79,12 @@
         aria-label="Full-size viewport preview, scroll to inspect every edge"
         tabindex="0"
         aria-describedby="stage-help"
-      >
+       data-i18n-aria-label="tools:fullSizeViewportPreviewScrollToInspectEveryEdge">
         <div id="viewport" class="viewport">
           <div id="empty-preview" class="empty-preview">
             <span class="window-mark" aria-hidden="true">↔</span>
-            <h2>Your game appears here</h2>
-            <p>Load Solo or Couch using the controls above.</p>
+            <h2 data-i18n="tools:yourGameAppearsHere">Your game appears here</h2>
+            <p data-i18n="tools:loadSoloOrCouchUsingTheControlsAbove">Load Solo or Couch using the controls above.</p>
           </div>
           <iframe
             id="game-frame"
@@ -85,21 +92,21 @@
             width="1280"
             height="720"
             hidden
-          ></iframe>
+           data-i18n-title="tools:gameViewportPreview"></iframe>
         </div>
       </section>
 
-      <aside class="notes" aria-label="How to inspect">
-        <p id="stage-help">
-          <strong>Full size, with scrolling.</strong> The preview is never scaled to fit. Scroll
+      <aside class="notes" aria-label="How to inspect" data-i18n-aria-label="tools:howToInspect">
+        <p id="stage-help" data-i18n-rich="tools:thePreviewIsNeverScaledToFitScrollThisStage">
+          <strong data-i18n="tools:fullSizeWithScrolling" data-i18n-slot="slot0">Full size, with scrolling.</strong> The preview is never scaled to fit. Scroll
           this stage to inspect the far and lower edges.
         </p>
-        <p>
-          <strong>Viewport preview only.</strong> This does not emulate a physical device, touch
-          input or a controller. To inspect touch controls, select <strong>Always</strong> in the
+        <p data-i18n-rich="tools:thisDoesNotEmulateAPhysicalDeviceTouchInputOr">
+          <strong data-i18n="tools:viewportPreviewOnly" data-i18n-slot="slot0">Viewport preview only.</strong> This does not emulate a physical device, touch
+          input or a controller. To inspect touch controls, select <strong data-i18n="tools:always" data-i18n-slot="slot1">Always</strong> in the
           game’s control options.
         </p>
-        <p>
+        <p data-i18n="tools:changingSizePreservesTheIframeLoadingAnotherGameReplacesIt">
           Changing size preserves the iframe. Loading another game replaces it; use the game’s own
           save and pause controls first. Returning to these controls may pause play—resume
           explicitly inside the game.

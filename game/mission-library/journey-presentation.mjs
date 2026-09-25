@@ -3,6 +3,14 @@ import {
   UKRAINIAN_ORNAMENT_ATLAS_REVISION,
   UKRAINIAN_ORNAMENT_ATLAS_IDS,
 } from '../content-design/ukrainian-ornament-atlas-registry.mjs';
+import { contentText } from '../i18n/content.mjs';
+import { t } from '../i18n/index.mjs';
+
+const DIFFICULTY_KEYS = Object.freeze({
+  gentle: 'interface:missionLibrary.difficulty.gentle',
+  standard: 'interface:missionLibrary.difficulty.standard',
+  expert: 'interface:missionLibrary.difficulty.expert',
+});
 
 const UKRAINIAN_CULTURAL_SPATIAL_REVISION = 'cultural-spatial-triptych-1';
 const UKRAINIAN_HORIZON_JOINS_REVISION = 'horizon-cultural-joins-1';
@@ -21,9 +29,12 @@ export function journeyMissionDetails(manifest) {
   )
     throw new TypeError('Journey cards need an actual resolved band and preset.');
   return Object.freeze({
-    challenge: `Band ${band}/12 · ${preset[0].toUpperCase()}${preset.slice(1)}`,
-    route: manifest.design.routeDecision,
-    mastery: manifest.design.mastery,
+    challenge: t('interface:missionLibrary.challenge', {
+      band,
+      difficulty: t(DIFFICULTY_KEYS[preset]),
+    }),
+    route: contentText(manifest, 'design.routeDecision'),
+    mastery: contentText(manifest, 'design.mastery'),
   });
 }
 
@@ -43,7 +54,7 @@ export function authoredJourneyMissionTags(mission, manifest) {
     tags.push('Ukrainian');
   if (
     [UKRAINIAN_CULTURAL_SPATIAL_REVISION, UKRAINIAN_HORIZON_JOINS_REVISION].includes(
-      manifest.level.revision,
+      manifest.level?.revision,
     )
   )
     tags.push('Ukrainian');

@@ -2,8 +2,15 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../game/i18n/style.css" />
+    <script src="../../../game/vendor/i18next-26.4.2.min.js"></script>
+    <script src="../../../game/i18n/catalogs.mjs"></script>
+    <script src="../../../game/i18n/bootstrap.mjs"></script>
+
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Ukraine Atlas wider body comparison</title>
+    <title data-i18n="tools:ukraineRoleReview.wide.title">
+      Ukraine Atlas wider body comparison
+    </title>
     <style>
       :root {
         color-scheme: dark;
@@ -70,58 +77,94 @@
     <script type="module" src="../../../game/ui/field-kit-surfaces.mjs"></script>
   </head>
   <body class="field-kit field-kit-support" data-field-kit-page="ukraine-role-review">
-    <h1 class="field-kit-display">Ukraine Atlas: three wider body candidates</h1>
-    <p>
+    <div data-language-control></div>
+    <h1 class="field-kit-display" data-i18n="tools:ukraineRoleReview.wide.heading">
+      Ukraine Atlas: three wider body candidates
+    </h1>
+    <p data-i18n="tools:ukraineRoleReview.wide.intro">
       Preserved v1 beside new v3 originals, using the same body painter and procedural wings. Each
       row shows 128px inspection and fixed 20px/32px frames at 1× CSS size. Source comparison only:
       no gameplay, collider, ability, unlock or runtime binding changes.
     </p>
     <div class="controls">
-      <button id="play">Play</button>
+      <button id="play" data-i18n="common:actions.play">Play</button>
       <label
-        >Heading
+        ><span data-i18n="tools:ukraineRoleReview.heading">Heading</span>
         <select id="heading">
-          <option value="0">North</option>
-          <option value="90">East</option>
-          <option value="180">South</option>
-          <option value="270">West</option>
+          <option value="0" data-i18n="interface:north">North</option>
+          <option value="90" data-i18n="interface:east">East</option>
+          <option value="180" data-i18n="interface:south">South</option>
+          <option value="270" data-i18n="interface:west">West</option>
         </select></label
       >
       <label
-        >Background
+        ><span data-i18n="tools:ukraineRoleReview.background">Background</span>
         <select id="background">
-          <option value="dark">Dark</option>
-          <option value="light">Light</option>
+          <option value="dark" data-i18n="tools:dark">Dark</option>
+          <option value="light" data-i18n="tools:light">Light</option>
         </select></label
       >
       <label
-        >Held wing phase
+        ><span data-i18n="tools:ukraineRoleReview.heldWingPhase">Held wing phase</span>
         <select id="phase">
-          <option value="0">Open</option>
-          <option value="1">Fold positive</option>
-          <option value="2">Open return</option>
-          <option value="3">Fold negative</option>
+          <option value="0" data-i18n="tools:ukraineRoleReview.phase.open">Open</option>
+          <option value="1" data-i18n="tools:ukraineRoleReview.phase.foldPositive">
+            Fold positive
+          </option>
+          <option value="2" data-i18n="tools:ukraineRoleReview.phase.openReturn">
+            Open return
+          </option>
+          <option value="3" data-i18n="tools:ukraineRoleReview.phase.foldNegative">
+            Fold negative
+          </option>
         </select></label
       >
       <label
-        >Speed
+        ><span data-i18n="interface:speed">Speed</span>
         <select id="speed">
-          <option value="0">Idle</option>
-          <option value="1" selected>Moving</option>
+          <option value="0" data-i18n="tools:ukraineRoleReview.idle">Idle</option>
+          <option value="1" selected data-i18n="tools:ukraineRoleReview.moving">Moving</option>
         </select></label
       >
-      <label><input id="wings" type="checkbox" checked />Wings</label>
-      <label><input id="guides" type="checkbox" />Pivot / sockets</label>
-      <label><input id="reduced" type="checkbox" />Reduced motion</label>
+      <label
+        ><input id="wings" type="checkbox" checked /><span data-i18n="tools:ukraineRoleReview.wings"
+          >Wings</span
+        ></label
+      >
+      <label
+        ><input id="guides" type="checkbox" /><span data-i18n="tools:ukraineRoleReview.pivotSockets"
+          >Pivot / sockets</span
+        ></label
+      >
+      <label
+        ><input id="reduced" type="checkbox" /><span data-i18n="tools:reducedMotion"
+          >Reduced motion</span
+        ></label
+      >
     </div>
-    <p id="status" role="status">Loading three preserved and three new originals…</p>
-    <section id="rows" aria-label="Three role comparisons"></section>
-    <p>
-      <a href="README.md">Lineage and limits</a> · <a href="variants.json">Candidate records</a>.
-      Canvas rows scroll horizontally on narrow viewports to preserve their labeled 1× sizes. Pink
-      source frames and green roots are inspection guides, not collision geometry.
+    <p id="status" role="status" data-i18n="tools:ukraineRoleReview.wide.loading">
+      Loading three preserved and three new originals…
+    </p>
+    <section
+      id="rows"
+      aria-label="Three role comparisons"
+      data-i18n-aria-label="tools:ukraineRoleReview.wide.comparisonsLabel"
+    ></section>
+    <p data-i18n-rich="tools:ukraineRoleReview.wide.footer">
+      <a href="README.md" data-i18n-slot="lineage" data-i18n="tools:ukraineRoleReview.lineageLimits"
+        >Lineage and limits</a
+      >
+      ·
+      <a
+        href="variants.json"
+        data-i18n-slot="records"
+        data-i18n="tools:ukraineRoleReview.candidateRecords"
+        >Candidate records</a
+      >. Canvas rows scroll horizontally on narrow viewports to preserve their labeled 1× sizes.
+      Pink source frames and green roots are inspection guides, not collision geometry.
     </p>
     <script type="module">
+      import { localizedAttribute, localizedText, t } from '../../../game/i18n/index.mjs';
       import { validateVariants } from './model.mjs';
       import { validatePresentations } from '../ukraine-role-presentations/model.mjs';
       import { paintRole } from '../ukraine-role-presentations/preview.mjs';
@@ -137,9 +180,15 @@
         frame = null,
         previous = null;
       const rows = [];
+      const reviewError = (key, values = {}) => Object.assign(new Error(key), { key, values });
+      const updatePlayLabel = () =>
+        localizedText(controls.play, () =>
+          t(playing ? 'common:actions.pause' : 'common:actions.play'),
+        );
+      const setStatus = (key, values = {}) => localizedText(byId('status'), () => t(key, values));
       function held() {
         playing = false;
-        controls.play.textContent = 'Play';
+        updatePlayLabel();
         for (const row of rows)
           for (const item of row.items)
             item.state = {
@@ -204,7 +253,7 @@
       );
       controls.play.addEventListener('click', () => {
         playing = !playing;
-        controls.play.textContent = playing ? 'Pause' : 'Play';
+        updatePlayLabel();
         previous = null;
       });
       controls.phase.addEventListener('change', held);
@@ -214,8 +263,9 @@
           image.onload = () =>
             image.naturalWidth === role.width && image.naturalHeight === role.height
               ? resolve(image)
-              : reject(new Error('Original dimensions differ'));
-          image.onerror = () => reject(new Error('Original load failed'));
+              : reject(reviewError('tools:ukraineRoleReview.error.dimensionsDiffer'));
+          image.onerror = () =>
+            reject(reviewError('tools:ukraineRoleReview.error.originalLoadFailed'));
           image.src = new URL(role.body.src, base).href;
         });
       try {
@@ -224,7 +274,7 @@
           fetch('../ukraine-role-presentations/presentations.json'),
         ]);
         if (responses.some((response) => !response.ok))
-          throw new Error('Source records unavailable');
+          throw reviewError('tools:ukraineRoleReview.error.recordsUnavailable');
         const [newText, oldText] = await Promise.all(responses.map((response) => response.text()));
         const newer = validateVariants(newText),
           older = validatePresentations(oldText);
@@ -244,22 +294,30 @@
           const article = document.createElement('article'),
             title = document.createElement('h2'),
             canvas = document.createElement('canvas');
-          title.textContent = `${role.classId} · preserved v1 / fresh v3`;
+          localizedText(title, () =>
+            t('tools:ukraineRoleReview.wide.cardTitle', { classId: role.classId }),
+          );
           canvas.width = 780;
           canvas.height = 215;
-          canvas.setAttribute('aria-label', `${role.title}: v1 and v3 body comparison`);
+          localizedAttribute(canvas, 'aria-label', () =>
+            t('tools:ukraineRoleReview.wide.canvasLabel', { title: role.title }),
+          );
           article.append(title, canvas);
           byId('rows').append(article);
           rows.push({ canvas, items });
         }
         if (!disposed) {
           held();
-          byId('status').textContent =
-            'Six originals loaded. Four held flap phases and animated speed samples are available; source verification and visual qualification remain separate.';
+          setStatus('tools:ukraineRoleReview.wide.loaded');
           frame = requestAnimationFrame(tick);
         }
       } catch (error) {
-        if (!disposed) byId('status').textContent = `Preview unavailable: ${error.message}`;
+        if (!disposed)
+          localizedText(byId('status'), () =>
+            t('tools:ukraineRoleReview.previewUnavailable', {
+              error: error.key ? t(error.key, error.values) : error.message,
+            }),
+          );
       }
     </script>
   </body>

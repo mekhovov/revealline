@@ -1,3 +1,5 @@
+import { contentText } from '../i18n/content.mjs';
+import { t } from '../i18n/index.mjs';
 import {
   MASTERY_DEFINITION_VERSION,
   EQUIPMENT_MASTERY_DEFINITION_VERSION,
@@ -19,13 +21,13 @@ export function masteryFor(actualCampaignKey, levelId, catalog) {
 
 const friendly = (id) =>
   ({
-    'west-supply': 'West pad',
-    'south-supply': 'South pad',
-    'west-emitter': 'West signal region',
-    'south-emitter': 'South signal region',
+    'west-supply': t('interface:westPad'),
+    'south-supply': t('interface:southPad'),
+    'west-emitter': t('interface:westSignalRegion'),
+    'south-emitter': t('interface:southSignalRegion'),
     'south-hangar': 'south hangar',
     'cable-cutter': 'cable cutter',
-    carrier: 'Heavy carrier',
+    carrier: t('interface:heavyCarrier'),
   })[id] || id.replaceAll('-', ' ');
 const mark = (satisfied) => (satisfied ? '✓' : '○');
 function equipmentLines(definition, preview) {
@@ -49,32 +51,49 @@ function equipmentLines(definition, preview) {
         const banked = value?.bestClosedCells ?? 0;
         const pending = value?.pendingCells ?? 0;
         lines.push(
-          `${mark(banked >= region.minCells)} ${friendly(region.zoneId)}: ${Math.min(banked, region.minCells)} / ${region.minCells} suppressed cells in one closed cut${pending > banked ? `; ${pending} on your open line — return to bank them` : ''}`,
+          t('gameplay:suppressedCellsInOneClosedCut', {
+            value1: mark(banked >= region.minCells),
+            value2: friendly(region.zoneId),
+            value3: Math.min(banked, region.minCells),
+            value4: region.minCells,
+            value5:
+              pending > banked
+                ? t('gameplay:onYourOpenLineReturnToBankThem', { value1: pending })
+                : '',
+          }),
         );
       }
     else if (predicate.type === 'hangar-switch')
       lines.push(
-        `${mark(current?.satisfied)} ${current?.satisfied ? 'Switched' : 'Switch'} to ${friendly(predicate.classId)} at the ${friendly(predicate.hangarId)}`,
+        t('gameplay:toAtThe', {
+          value1: mark(current?.satisfied),
+          value2: current?.satisfied ? t('interface:switched') : t('interface:switch'),
+          value3: friendly(predicate.classId),
+          value4: friendly(predicate.hangarId),
+        }),
       );
     else if (predicate.type === 'live-cut-impact') {
       const phase = current?.phase ?? 'not-started';
       lines.push(
         `${mark(phase === 'returned')} ${
           phase === 'returned'
-            ? 'Qualifying pulse complete; craft returned safely'
+            ? t('interface:qualifyingPulseCompleteCraftReturnedSafely')
             : phase === 'awaiting-return'
-              ? 'Qualifying pulse landed; wait for the craft to return'
-              : `During a cut of ${predicate.minTrailCells}+ cells, pulse the ${friendly(predicate.actorId)} and return safely`
+              ? t('interface:qualifyingPulseLandedWaitForTheCraftToReturn')
+              : t('gameplay:duringACutOfCellsPulseTheAndReturnSafely', {
+                  value1: predicate.minTrailCells,
+                  value2: friendly(predicate.actorId),
+                })
         }`,
       );
     } else if (predicate.type === 'clean-win')
       lines.push(
-        `${mark(current?.satisfied)} ${preview?.cleanSoFar === false ? 'Life lost; retry for this seal' : current?.satisfied ? 'Finished without losing a life' : 'Finish without losing a life'}`,
+        `${mark(current?.satisfied)} ${preview?.cleanSoFar === false ? t('interface:lifeLostRetryForThisSeal') : current?.satisfied ? t('interface:finishedWithoutLosingALife') : t('interface:finishWithoutLosingALife')}`,
       );
   }
   if (!definition.all.some((predicate) => predicate.type === 'clean-win'))
     lines.push(
-      `${mark(preview?.status === 'won')} ${preview?.status === 'won' ? 'Mission complete' : 'Finish the mission to earn the seal'}`,
+      `${mark(preview?.status === 'won')} ${preview?.status === 'won' ? t('interface:missionComplete') : t('interface:finishTheMissionToEarnTheSeal')}`,
     );
   return lines;
 }
@@ -92,29 +111,46 @@ export function masteryText(
   if (award?.message && !unearnedDetails)
     return ['earned', 'session'].includes(award.status)
       ? award.message
-      : `${definition.name} · ${award.message}`;
+      : `${contentText(definition, 'name')} · ${award.message}`;
   if (definition.version === EQUIPMENT_MASTERY_DEFINITION_VERSION) {
     if (compact) {
       const find = (type) => preview?.predicates?.find((item) => item.type === type);
       const pickups = definition.all.find((item) => item.type === 'supply-pickups');
       const lines = pickups
         ? [
-            `Pads ${find('supply-pickups')?.collectedPadIds?.length ?? 0} / ${pickups.padIds.length}`,
-            `closed signal regions ${find('suppressed-region-crossings')?.regions?.filter((item) => item.satisfied).length ?? 0} / ${definition.all.find((item) => item.type === 'suppressed-region-crossings').regions.length}`,
-            `equipment switch ${find('hangar-switch')?.satisfied ? 'complete' : 'pending'}`,
+            t('gameplay:pads', {
+              value1: find('supply-pickups')?.collectedPadIds?.length ?? 0,
+              value2: pickups.padIds.length,
+            }),
+            t('gameplay:closedSignalRegions', {
+              value1:
+                find('suppressed-region-crossings')?.regions?.filter((item) => item.satisfied)
+                  .length ?? 0,
+              value2: definition.all.find((item) => item.type === 'suppressed-region-crossings')
+                .regions.length,
+            }),
+            t('gameplay:equipmentSwitch', {
+              value1: find('hangar-switch')?.satisfied ? 'complete' : 'pending',
+            }),
           ]
         : [
             {
-              'not-started': 'Pulse during a live cut, then return safely',
-              'awaiting-return': 'Qualifying pulse landed; craft returning',
-              returned: 'Qualifying pulse and return complete',
+              'not-started': t('interface:pulseDuringALiveCutThenReturnSafely'),
+              'awaiting-return': t('interface:qualifyingPulseLandedCraftReturning'),
+              returned: t('interface:qualifyingPulseAndReturnComplete'),
             }[find('live-cut-impact')?.phase ?? 'not-started'],
-            preview?.cleanSoFar === false ? 'life lost; retry for the seal' : 'no lives lost',
+            preview?.cleanSoFar === false
+              ? t('interface:lifeLostRetryForTheSeal')
+              : 'no lives lost',
           ];
-      return `${practice ? 'Practice goal' : 'Optional seal'} · ${definition.name}: ${lines.join(' · ')}. Pause for the full checklist.`;
+      return t('gameplay:pauseForTheFullChecklist', {
+        value1: practice ? t('interface:practiceGoal') : t('interface:optionalSeal'),
+        value2: contentText(definition, 'name'),
+        value3: lines.join(' · '),
+      });
     }
     return [
-      `${practice ? 'Practice goal' : 'Optional seal'} · ${definition.name}`,
+      `${practice ? 'Practice goal' : 'Optional seal'} · ${contentText(definition, 'name')}`,
       ...(unearnedDetails ? [award.message] : []),
       ...equipmentLines(definition, preview),
     ].join('\n');
@@ -125,9 +161,12 @@ export function masteryText(
   const pending = preview?.pendingCutCells ?? 0;
   const clean = preview?.cleanSoFar !== false;
   const route = preview?.qualified
-    ? 'Route complete'
-    : `${Math.min(committed, required)} / ${required} interference cells in one closed cut`;
-  return `${practice ? 'Practice goal' : 'Optional seal'} · ${definition.name}: ${route}${pending > committed ? ` · ${pending} on your open line; return to safety to bank them` : ''} · ${clean ? 'no lives lost' : 'life lost; retry for the seal'}.`;
+    ? t('interface:routeComplete')
+    : t('gameplay:interferenceCellsInOneClosedCut', {
+        value1: Math.min(committed, required),
+        value2: required,
+      });
+  return `${practice ? t('interface:practiceGoal') : t('interface:optionalSeal')} · ${contentText(definition, 'name')}: ${route}${pending > committed ? t('gameplay:onYourOpenLineReturnToSafetyToBankThem', { value1: pending }) : ''} · ${clean ? 'no lives lost' : t('interface:lifeLostRetryForTheSeal')}.`;
 }
 
 export function pictureMasteries(records, item, definition, recipes = [], catalog) {
@@ -148,11 +187,14 @@ export function pictureMasteries(records, item, definition, recipes = [], catalo
       record.setup.rosterHash === registration.rosterHash &&
       record.setup.ruleset === registration.ruleset
         ? definition.name
-        : `Archived seal: ${record.definitionId}`,
+        : t('gameplay:archivedSeal', { value1: record.definitionId }),
     route: record.setup.classHistory
       .map((entry) => recipes.find((recipe) => recipe.id === entry.classId)?.label || entry.classId)
       .join(' → '),
-    steering: record.setup.turnPolicy === 'grid-center' ? 'Grid + buffer' : 'Immediate',
+    steering:
+      record.setup.turnPolicy === 'grid-center'
+        ? t('interface:gridBuffer')
+        : t('interface:immediate'),
     seed: record.setup.seed,
     earnedAt: record.earnedAt,
   }));

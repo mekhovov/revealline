@@ -2,8 +2,15 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../game/i18n/style.css" />
+    <script src="../../../game/vendor/i18next-26.4.2.min.js"></script>
+    <script src="../../../game/i18n/catalogs.mjs"></script>
+    <script src="../../../game/i18n/bootstrap.mjs"></script>
+
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Seven Ukraine Atlas role presentations · source preview</title>
+    <title data-i18n="tools:ukraineRoleReview.roles.title">
+      Seven Ukraine Atlas role presentations · source preview
+    </title>
     <style>
       :root {
         color-scheme: dark;
@@ -89,8 +96,9 @@
   <!-- This authored comparison body preserves exact specimen markup. -->
   <!-- prettier-ignore -->
   <body class="field-kit field-kit-support" data-field-kit-page="ukraine-role-review">
-  <h1 class="field-kit-display">Seven Ukraine Atlas role presentations</h1>
-  <p>
+  <div data-language-control></div>
+  <h1 class="field-kit-display" data-i18n="tools:ukraineRoleReview.roles.heading">Seven Ukraine Atlas role presentations</h1>
+  <p data-i18n="tools:ukraineRoleReview.roles.intro">
     Original bodies with the existing procedural wing renderer. These are independently replaceable
     authoring candidates. Uses the existing compact 20px policy with unchanged source pixels. Fixed
     20px/32px samples and the selected viewport output are at 1× CSS size; the left sample is 128px
@@ -98,22 +106,22 @@
     speed samples; class abilities are not activated here.
   </p>
   <div class="controls">
-    <button id="pause" type="button">Pause</button>
+    <button id="pause" type="button" data-i18n="common:actions.pause">Pause</button>
     <label
-      >Role
+      ><span data-i18n="tools:role">Role</span>
       <select id="role">
-        <option value="all">All seven</option>
+        <option value="all" data-i18n="tools:ukraineRoleReview.roles.allSeven">All seven</option>
       </select></label
     >
     <label
-      >Board columns
+      ><span data-i18n="tools:ukraineRoleReview.boardColumns">Board columns</span>
       <select id="board">
         <option>72</option>
         <option>48</option>
       </select></label
     >
     <label
-      >Arena width
+      ><span data-i18n="tools:ukraineRoleReview.arenaWidth">Arena width</span>
       <select id="width">
         <option>294</option>
         <option>390</option>
@@ -122,42 +130,41 @@
       </select></label
     >
     <label
-      >Heading
+      ><span data-i18n="tools:ukraineRoleReview.heading">Heading</span>
       <select id="heading">
-        <option value="0">North</option>
-        <option value="90">East</option>
-        <option value="180">South</option>
-        <option value="270">West</option>
+        <option value="0" data-i18n="interface:north">North</option>
+        <option value="90" data-i18n="interface:east">East</option>
+        <option value="180" data-i18n="interface:south">South</option>
+        <option value="270" data-i18n="interface:west">West</option>
       </select></label
     >
     <label
-      >Motion
+      ><span data-i18n="tools:motion">Motion</span>
       <select id="speed">
-        <option value="0">Idle</option>
-        <option value="1" selected>Moving</option>
+        <option value="0" data-i18n="tools:ukraineRoleReview.idle">Idle</option>
+        <option value="1" selected data-i18n="tools:ukraineRoleReview.moving">Moving</option>
       </select></label
     >
     <label
-      >Background
+      ><span data-i18n="tools:ukraineRoleReview.background">Background</span>
       <select id="background">
-        <option value="dark">Dark</option>
-        <option value="light">Light</option>
-        <option value="checker">Checker</option>
+        <option value="dark" data-i18n="tools:dark">Dark</option>
+        <option value="light" data-i18n="tools:light">Light</option>
+        <option value="checker" data-i18n="tools:ukraineRoleReview.checker">Checker</option>
       </select></label
     >
-    <label><input id="wings" type="checkbox" checked />Wings</label>
-    <label><input id="guides" type="checkbox" />Pivot / sockets</label>
-    <label><input id="reduced" type="checkbox" />Reduced motion</label>
+    <label><input id="wings" type="checkbox" checked /><span data-i18n="tools:ukraineRoleReview.wings">Wings</span></label>
+    <label><input id="guides" type="checkbox" /><span data-i18n="tools:ukraineRoleReview.pivotSockets">Pivot / sockets</span></label>
+    <label><input id="reduced" type="checkbox" /><span data-i18n="tools:reducedMotion">Reduced motion</span></label>
   </div>
-  <p id="status" role="status">Loading exact source originals…</p>
-  <section id="cards" aria-label="Seven role previews"></section>
-  <p>
-    <a href="README.md">Replacement guide</a> · <a href="presentations.json">Candidate records</a> ·
-    <a href="PROMPTS.md">Prompt and rig contract</a>. Pink cross: source center; green circles:
-    authored shoulder sockets. Guides are an inspection overlay, not a hit area. Browser zoom can
-    change physical display size.
+  <p id="status" role="status" data-i18n="tools:ukraineRoleReview.roles.loading">Loading exact source originals…</p>
+  <section id="cards" aria-label="Seven role previews" data-i18n-aria-label="tools:ukraineRoleReview.roles.previewsLabel"></section>
+  <p data-i18n-rich="tools:ukraineRoleReview.roles.footer">
+    <a href="README.md" data-i18n-slot="guide" data-i18n="tools:ukraineRoleReview.replacementGuide">Replacement guide</a> · <a href="presentations.json" data-i18n-slot="records" data-i18n="tools:ukraineRoleReview.candidateRecords">Candidate records</a> ·
+    <a href="PROMPTS.md" data-i18n-slot="contract" data-i18n="tools:ukraineRoleReview.promptRigContract">Prompt and rig contract</a>. Pink cross: source center; green circles: authored shoulder sockets. Guides are an inspection overlay, not a hit area. Browser zoom can change physical display size.
   </p>
   <script type="module">
+    import { localizedAttribute, localizedText, t } from '../../../game/i18n/index.mjs';
     import { validatePresentations, BODY_IDS } from './model.mjs';
     import { paintRole } from './preview.mjs';
     import { createAnimationState, advanceAnimation } from '../../motion-lab/animation.mjs';
@@ -166,6 +173,12 @@
     let paused = false,
       stopped = false,
       frameId = 0;
+    const reviewError = (key, values = {}) => Object.assign(new Error(key), { key, values });
+    const updatePauseLabel = () =>
+      localizedText(byId('pause'), () =>
+        t(paused ? 'common:actions.play' : 'common:actions.pause'),
+      );
+    const setStatus = (key, values = {}) => localizedText(status, () => t(key, values));
     window.addEventListener(
       'pagehide',
       () => {
@@ -176,12 +189,15 @@
     );
     byId('pause').onclick = () => {
       paused = !paused;
-      byId('pause').textContent = paused ? 'Play' : 'Pause';
+      updatePauseLabel();
     };
     byId('reduced').checked = matchMedia('(prefers-reduced-motion: reduce)').matches;
     try {
       const response = await fetch('./presentations.json');
-      if (!response.ok) throw new Error(`Manifest HTTP ${response.status}`);
+      if (!response.ok)
+        throw reviewError('tools:ukraineRoleReview.error.manifestHttp', {
+          status: response.status,
+        });
       const data = validatePresentations(await response.text());
       const cards = await Promise.all(
         data.roles.map(async (role, i) => {
@@ -189,21 +205,29 @@
           image.src = role.body.src;
           await image.decode();
           if (image.naturalWidth !== role.width || image.naturalHeight !== role.height)
-            throw new Error('Original dimensions differ.');
+            throw reviewError('tools:ukraineRoleReview.error.dimensionsDiffer');
           const article = document.createElement('article'),
             title = document.createElement('h2'),
             detail = document.createElement('small'),
             canvas = document.createElement('canvas');
-          title.textContent = role.title;
-          detail.textContent = `${role.classId} · ${BODY_IDS[i]} · ${role.recipe.components[0].frequencyHz} Hz base wingbeat`;
+          localizedText(title, () => role.title);
+          localizedText(detail, () =>
+            t('tools:ukraineRoleReview.roles.cardDetail', {
+              classId: role.classId,
+              bodyId: BODY_IDS[i],
+              frequency: role.recipe.components[0].frequencyHz,
+            }),
+          );
           canvas.width = 600;
           canvas.height = 190;
-          canvas.setAttribute('aria-label', `${role.title}: inspection and actual-size preview`);
+          localizedAttribute(canvas, 'aria-label', () =>
+            t('tools:ukraineRoleReview.roles.canvasLabel', { title: role.title }),
+          );
           article.append(title, detail, canvas);
           return { role, image, canvas, article, state: createAnimationState() };
         }),
       );
-      if (stopped) throw new Error('Preview closed before images finished loading.');
+      if (stopped) throw reviewError('tools:ukraineRoleReview.error.closedDuringLoad');
       byId('cards').append(...cards.map((card) => card.article));
       for (const card of cards) byId('role').add(new Option(card.role.title, card.role.classId));
       byId('role').onchange = () => {
@@ -213,8 +237,7 @@
             byId('role').value !== 'all' && byId('role').value !== card.role.classId;
         }
       };
-      status.textContent =
-        'Seven source originals loaded. Full file hashes and alpha/CRC checks use verify.mjs.';
+      setStatus('tools:ukraineRoleReview.roles.loaded');
       let previous = performance.now();
       function frame(now) {
         if (stopped) return;
@@ -269,16 +292,26 @@
           const actual = paintRole(g, card.role, card.image, card.state, { ...options, x: 508 });
           g.fillStyle = background === 'dark' ? '#d7e7f0' : '#102030';
           g.font = '13px monospace';
-          g.fillText('128px inspection', 18, 178);
-          g.fillText('1x · fixed20px', 184, 178);
-          g.fillText('1x · fixed32px', 313, 178);
-          g.fillText(`viewport ${actual.imageBoxCSS.toFixed(1)}px`, 451, 178);
+          g.fillText(t('tools:ukraineRoleReview.canvas.inspection128'), 18, 178);
+          g.fillText(t('tools:ukraineRoleReview.canvas.fixed20'), 184, 178);
+          g.fillText(t('tools:ukraineRoleReview.canvas.fixed32'), 313, 178);
+          g.fillText(
+            t('tools:ukraineRoleReview.canvas.viewport', {
+              size: actual.imageBoxCSS.toFixed(1),
+            }),
+            451,
+            178,
+          );
         }
         frameId = requestAnimationFrame(frame);
       }
       frameId = requestAnimationFrame(frame);
     } catch (error) {
-      status.textContent = `Preview unavailable: ${error.message}`;
+      localizedText(status, () =>
+        t('tools:ukraineRoleReview.previewUnavailable', {
+          error: error.key ? t(error.key, error.values) : error.message,
+        }),
+      );
     }
   </script>
   </body>

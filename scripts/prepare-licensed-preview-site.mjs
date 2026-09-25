@@ -33,6 +33,14 @@ export async function prepareLicensedPreviewSite(outputDirectory) {
   await write('index.html', renderPreviewSite(catalogue));
   for (const name of ['style.css', 'player.mjs', 'verify.mjs'])
     await write(name, await readFile(path.join(templates, name)));
+  await mkdir(path.join(output, 'i18n'));
+  for (const [name, source] of [
+    ['i18next-26.4.2.min.js', 'game/vendor/i18next-26.4.2.min.js'],
+    ['catalogs.mjs', 'game/i18n/catalogs.mjs'],
+    ['bootstrap.mjs', 'game/i18n/bootstrap.mjs'],
+    ['style.css', 'game/i18n/style.css'],
+  ])
+    await write(`i18n/${name}`, await readFile(path.join(root, source)));
   await write('.nojekyll', '');
   const credits = catalogue.tracks
     .flatMap((track) => [

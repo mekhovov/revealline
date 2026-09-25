@@ -1,3 +1,4 @@
+import { t } from '../i18n/index.mjs';
 export const TEAM_ARENA_PREFERENCE_KEY = 'revealline.team-arena.v1';
 const version = 'revealline-team-arena.v1';
 const fields = ['version', 'packId', 'packRevision', 'levelId'];
@@ -41,7 +42,7 @@ export function createTeamArenaPreference({
     revision = 0;
   const read = () => {
     const storage = getStorage();
-    if (!storage) throw new Error('Storage unavailable.');
+    if (!storage) throw new Error(t('interface:storageUnavailable'));
     const raw = storage.getItem(TEAM_ARENA_PREFERENCE_KEY);
     return { storage, raw, record: decode(raw) };
   };
@@ -66,8 +67,8 @@ export function createTeamArenaPreference({
   return Object.freeze({
     current: () => levelId,
     choose(value) {
-      if (disposed) throw new Error('Team arena preference is disposed.');
-      if (!ids.has(value)) throw new TypeError('Choose a built-in Team arena.');
+      if (disposed) throw new Error(t('interface:teamArenaPreferenceIsDisposed'));
+      if (!ids.has(value)) throw new TypeError(t('interface:chooseABuiltInTeamArena'));
       levelId = value;
       const owned = ++revision;
       const current = () => !disposed && revision === owned;
@@ -75,13 +76,13 @@ export function createTeamArenaPreference({
         const allowed = writable();
         if (!current()) return levelId;
         if (!allowed) {
-          notice('Arena chosen for this visit; saving is disabled here.');
+          notice(t('interface:arenaChosenForThisVisitSavingIsDisabledHere'));
           return levelId;
         }
         const { storage, raw, record } = read();
         if (!current()) return levelId;
         if (raw !== null && !record) {
-          notice('Arena chosen for this visit; an unrecognized saved selection was preserved.');
+          notice(t('interface:arenaChosenForThisVisitAnUnrecognizedSavedSelectionWas'));
           return levelId;
         }
         storage.setItem(
@@ -95,7 +96,7 @@ export function createTeamArenaPreference({
         );
         if (current()) notice('');
       } catch {
-        if (current()) notice('Arena chosen for this visit, but could not be saved for next time.');
+        if (current()) notice(t('interface:arenaChosenForThisVisitButCouldNotBeSaved'));
       }
       return levelId;
     },

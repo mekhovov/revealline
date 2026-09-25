@@ -1,9 +1,12 @@
 import { emptyJourneyPictures, journeyPictureCompletion } from '../journey/pictures.mjs';
+import { contentText } from '../i18n/content.mjs';
+import { t } from '../i18n/index.mjs';
 /** Adapt one exact Journey edition without replacing its runtime mission objects,
  * profile scope, difficulty rules, or Next sequence. */
 export function journeyLibrarySource({
   editionId,
   edition,
+  editionLabel = () => edition,
   catalog,
   profile,
   launch,
@@ -46,13 +49,19 @@ export function journeyLibrarySource({
       tags: tags(mission),
     }),
     availability: () => ({ state: 'ready' }),
+    presentation: (mission) => ({
+      edition: editionLabel(),
+      name: contentText(mission, 'name'),
+      campaignTitle: contentText(mission, 'campaignTitle'),
+      hook: contentText(mission, 'hook'),
+    }),
     progress(mission, mode) {
       if (!profile) return '';
       const { snapshot } = currentState();
       return Object.hasOwn(snapshot.clears[mode] ?? {}, mission.id)
-        ? 'Cleared'
+        ? t('interface:cleared')
         : snapshot.skipped[mode]?.includes(mission.id)
-          ? 'Skipped · try again'
+          ? t('interface:skippedTryAgain')
           : '';
     },
     completion(mission, mode) {

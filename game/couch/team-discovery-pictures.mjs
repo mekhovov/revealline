@@ -1,3 +1,4 @@
+import { t, localizedText, localizedAttribute } from '../i18n/index.mjs';
 import { createOperationStatus } from '../ui/operation-status.mjs';
 
 /** Gallery-owned copies only. One underlying preparation remains in flight until
@@ -57,7 +58,9 @@ export function attachTeamDiscoveryPictures({
     if (!current(job) || !job.detail) return;
     job.detail.loading = false;
     preview.retry.setAttribute('aria-disabled', 'false');
-    preview.retry.textContent = successful ? 'Reload preview' : 'Retry preview';
+    localizedText(preview.retry, () =>
+      successful ? t('interface:reloadPreview') : t('common:preview.retry'),
+    );
   }
   function cancelJobs(owner) {
     const pending = queue.filter((job) => job.owner === owner),
@@ -66,7 +69,9 @@ export function attachTeamDiscoveryPictures({
     for (const card of owner?.cards ?? []) {
       if (card.state === 'loading') {
         card.state = 'queued';
-        card.message.textContent = 'Artwork teaser paused. Preview prepares the picture.';
+        localizedText(card.message, () =>
+          t('interface:artworkTeaserPausedPreviewPreparesThePicture'),
+        );
       }
     }
     for (const job of pending) job.controller.abort();
@@ -82,10 +87,10 @@ export function attachTeamDiscoveryPictures({
       if (!current(job)) return;
       if (job.detail) {
         detailReady(job);
-        describe(job.owner, 'Approved procedural scene. Play to explore this arena.');
+        describe(job.owner, t('interface:approvedProceduralScenePlayToExploreThisArena'));
       } else {
         job.card.state = 'ready';
-        job.card.message.textContent = 'Approved procedural scene';
+        localizedText(job.card.message, () => t('interface:approvedProceduralScene'));
       }
       return;
     }
@@ -95,7 +100,7 @@ export function attachTeamDiscoveryPictures({
     canvas.height = height;
     if (!current(job)) return;
     const context = canvas.getContext('2d');
-    if (!context) throw new Error('Artwork preview is unavailable.');
+    if (!context) throw new Error(t('interface:artworkPreviewIsUnavailable'));
     context.imageSmoothingEnabled = false;
     context.globalAlpha = 1;
     context.globalCompositeOperation = 'source-over';
@@ -111,10 +116,10 @@ export function attachTeamDiscoveryPictures({
     canvas.hidden = false;
     if (job.detail) {
       detailReady(job);
-      describe(job.owner, 'Locked preview. Win to reveal the full picture.');
+      describe(job.owner, t('interface:lockedPreviewWinToRevealTheFullPicture'));
     } else {
       job.card.state = 'ready';
-      job.card.message.textContent = 'Artwork teaser';
+      localizedText(job.card.message, () => t('interface:artworkTeaser'));
     }
   }
   function drain() {
@@ -139,7 +144,7 @@ export function attachTeamDiscoveryPictures({
         });
         if (!current(job)) return;
         if (!handle || typeof handle.release !== 'function')
-          throw new Error('Artwork preview has no owner.');
+          throw new Error(t('interface:artworkPreviewHasNoOwner'));
         draw(job, handle);
       } catch (error) {
         if (!current(job)) return;
@@ -152,13 +157,13 @@ export function attachTeamDiscoveryPictures({
           describe(
             job.owner,
             error?.name === 'AbortError'
-              ? 'Preview cancelled. Retry preview when ready.'
-              : 'Picture preview unavailable. Retry preview or return to the arenas.',
+              ? t('interface:previewCancelledRetryPreviewWhenReady')
+              : t('interface:picturePreviewUnavailableRetryPreviewOrReturnToTheArenas'),
             error?.name === 'AbortError' ? 'ready' : 'error',
           );
         } else {
           job.card.state = 'error';
-          job.card.message.textContent = 'Teaser unavailable. Preview can try again.';
+          localizedText(job.card.message, () => t('interface:teaserUnavailablePreviewCanTryAgain'));
         }
       } finally {
         try {
@@ -176,7 +181,7 @@ export function attachTeamDiscoveryPictures({
     for (const card of owner.cards) {
       if (card.state !== 'queued') continue;
       card.state = 'loading';
-      card.message.textContent = 'Preparing artwork teaser…';
+      localizedText(card.message, () => t('interface:preparingArtworkTeaser'));
       queue.push({ owner, card, detail: null, controller: new AbortController() });
     }
     drain();
@@ -189,10 +194,10 @@ export function attachTeamDiscoveryPictures({
     shown.loading = true;
     clearCanvas(preview.canvas);
     preview.retry.setAttribute('aria-disabled', 'true');
-    preview.retry.textContent = 'Preparing preview…';
+    localizedText(preview.retry, () => t('interface:preparingPreview'));
     describe(
       owner,
-      'Preparing picture preview… Your current attempt stays available.',
+      t('interface:preparingPicturePreviewYourCurrentAttemptStaysAvailable'),
       'preparing',
     );
     if (detail !== shown || !live(owner)) return;
@@ -211,8 +216,10 @@ export function attachTeamDiscoveryPictures({
     list.hidden = true;
     preview.panel.hidden = false;
     preview.retry.hidden = true;
-    preview.title.textContent = `${card.row.title} · Locked preview`;
-    back.textContent = 'Back to arenas';
+    localizedText(preview.title, () =>
+      t('interface:team.lockedPreviewTitle', { mission: card.row.title }),
+    );
+    localizedText(back, () => t('interface:backToArenas'));
     onViewChange();
     if (!live(owner) || detail !== shown) return;
     if (document.activeElement === prior || unclaimed(document.activeElement))
@@ -232,7 +239,7 @@ export function attachTeamDiscoveryPictures({
     preview.retry.hidden = true;
     clearCanvas(preview.canvas);
     list.hidden = false;
-    back.textContent = 'Back';
+    localizedText(back, () => t('common:actions.back'));
     onViewChange();
     if (!live(owner) || detail) return true;
     if (
@@ -259,7 +266,7 @@ export function attachTeamDiscoveryPictures({
       preview.retry.hidden = true;
       clearCanvas(preview.canvas);
       list.hidden = false;
-      back.textContent = 'Back';
+      localizedText(back, () => t('common:actions.back'));
     }
     for (const card of owner?.cards ?? []) {
       card.button.onclick = null;
@@ -292,13 +299,16 @@ export function attachTeamDiscoveryPictures({
         canvas.setAttribute('aria-hidden', 'true');
         canvas.hidden = true;
         message.className = 'team-discovery-teaser-message';
-        message.textContent = 'Preparing artwork teaser…';
+        localizedText(message, () => t('interface:preparingArtworkTeaser'));
         button.type = 'button';
         button.className = 'team-discovery-preview-button';
-        button.textContent = 'Preview picture';
-        button.setAttribute(
-          'aria-label',
-          `Preview ${source.row.title} · ${source.row.packName} · ${source.row.sourceLabel}`,
+        localizedText(button, () => t('interface:previewPicture'));
+        localizedAttribute(button, 'aria-label', () =>
+          t('interface:team.previewMissionLabel', {
+            mission: source.row.title,
+            campaign: source.row.packName,
+            source: source.row.sourceLabel,
+          }),
         );
         frame.append(canvas);
         figure.append(frame, message);
@@ -336,8 +346,8 @@ export function attachTeamDiscoveryPictures({
         clearCanvas(preview.canvas);
         preview.retry.hidden = false;
         preview.retry.setAttribute('aria-disabled', 'false');
-        preview.retry.textContent = 'Retry preview';
-        describe(owner, 'Preview cancelled. Retry preview when ready.');
+        localizedText(preview.retry, () => t('common:preview.retry'));
+        describe(owner, t('interface:previewCancelledRetryPreviewWhenReady'));
       }
     },
     back: () => returnToCards(),
