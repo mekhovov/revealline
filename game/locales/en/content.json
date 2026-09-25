@@ -1187,5 +1187,8 @@
   "studio.actor.counterplay.trailPursuer": "Close before the committed approach reaches your trail. The marked target locks before the attack; walls and reclaimed ground block sensing.",
   "studio.actor.counterplay.headingInterceptor": "Turn after the heading target locks and take another return. It predicts only your observed direction, not your next turn; close to cancel the attack.",
   "studio.actor.counterplay.scout": "Choose direct contact or enclose the scout. It never retains a field region and awards no extra score. Ordinary keepers still damage body and trail.",
-  "studio.actor.counterplay.sentry": "Change route after aim locks, return to ground, or remove the sentry by contact or enclosure. Only its shot harms the craft; ordinary keepers remain dangerous."
+  "studio.actor.counterplay.sentry": "Change route after aim locks, return to ground, or remove the sentry by contact or enclosure. Only its shot harms the craft; ordinary keepers remain dangerous.",
+  "soundtrack.carolOfTheBellsMetalVersion": "Carol of the Bells (Metal Version)",
+  "soundtrack.creatorSource": "Creator source",
+  "soundtrack.shchedrykProvenance": "Shchedryk provenance"
 }
