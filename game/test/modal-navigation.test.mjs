@@ -633,6 +633,11 @@ test('opening Settings during a flight keeps its paused-flight return instead of
   assert.equal(h.$('settings-dialog').open, false);
   assert.equal(h.$('shell-home').open, false);
   assert.equal(h.$('flight-state').textContent, 'Paused');
+  assert.equal(
+    h.doc.activeElement,
+    h.$('overlay-settings'),
+    'controller Back returns to the Settings command in the Pause menu',
+  );
   assert.equal(h.rendered.run.tick, tick);
   assert.deepEqual(h.errors, []);
 });
