@@ -3777,5 +3777,6 @@
   "defaultStartHangarXYRadius2Cells": "Default start hangar: x {{x}}, y {{y}}; radius 2 cells.",
   "hangarXYRadiusCells": "Hangar {{id}}: x {{x}}, y {{y}}; radius {{radius}} cells.",
   "noHangarsClassSwitchingIsDisabled": "No hangars; class switching is disabled.",
-  "fieldKitGameGuide": "FIELD KIT / GAME GUIDE"
+  "fieldKitGameGuide": "FIELD KIT / GAME GUIDE",
+  "display.textSize.standard": "Standard"
 }
