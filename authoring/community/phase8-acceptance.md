@@ -1,0 +1,59 @@
+# Phase 8 acceptance record
+
+Status: **bounded silent-AVC browser conversion implemented; audio conversion remains open**.
+
+## Automated evidence
+
+The final scoped run passed 100/100 tests across the adapter, editor boundary, poster capture/workshop,
+mixed-media intake/review and release-build graph.
+
+- Playback ranges validate positive in-bounds timing and retain the complete original.
+- Directional decoded-frame stepping requires browser presented-frame evidence and rejects an estimate-only
+  capture before allocating another result.
+- Pinned Mediabunny 1.59.1 loads lazily only after a physical-trim support check.
+- The production adapter accepts exactly one silent AVC/H.264 MP4 when browser WebCodecs decode and
+  encode probes pass. Audio, WebM, non-AVC, multi-video and unavailable-codec cases are explicit.
+- Modeled transformed output is withheld unless its bytes differ and a fresh decoder confirms its
+  hash, byte count, duration, MIME, width and height.
+- Unchanged bytes, duration drift and changed orientation are rejected by the outer boundary.
+- Workshop tests cover frame-step enablement, estimate-only disablement, playback/trim wording,
+  unsupported conversion, verified output URL lifetime and explicit audio provenance.
+
+## Browser inspection
+
+On 2026-09-25 the built-in browser loaded the local Video poster workshop from the production
+server path. It exposed separate Local source, Playback range and Optional physical trim sections;
+all media-dependent controls began disabled, and no module-startup error appeared. The real
+silent-AVC fixture then passed this production path:
+
+- source: MP4, AVC/H.264, no audio, 640 × 360, 6 seconds, 75,767 bytes, SHA-256
+  `5abb074b8a740a3305b1d8c6b84466e46eb51d853e2faacad592182999b2c1ea`;
+- requested physical range: 1–4 seconds;
+- capability: the lazy Mediabunny load confirmed browser AVC decode and encode support;
+- output: MP4, 640 × 360, 3 seconds, 33,756 bytes, SHA-256
+  `91c71caa885c4a505fe2721d2e73deff1894930f37fdad2a02f3a5b78574e2fc`;
+- result: changed bytes passed fresh browser reinspection, the download appeared as
+  `RevealLine-trimmed.mp4`, audio was labeled `not-present`, and the browser console had no warning
+  or error.
+
+## Build note
+
+The focused release-build fixture passed 5/5 cases and authenticated the exact vendored module,
+license and provenance bytes in the loose distribution, ZIP, offline inventory and generated
+credits. A full source-tree build was stopped after five minutes before it created output. Stage
+instrumentation excluded this adapter from the delay: config parsing took 91 ms, build collection
+took 493 ms, and reference validation took 1.697 seconds. The run remained CPU-bound for more than
+60 seconds in the repository's existing `generateWholeSpatial({ write: false })` content-snapshot
+gate. That full-tree snapshot gate remains open; it must not be reported as a successful build.
+
+## Open release gates
+
+- Qualify silent AVC input/output in Firefox and Safari as well as the built-in Chromium browser.
+- Add an independent decoded-audio timestamp and synchronization verifier before enabling audio.
+- Verify physical trim start/end frames with a dedicated visual timestamp fixture.
+- Verify orientation metadata, audio synchronization and target-browser playback on transformed
+  files.
+- Add resizing, compression and broader conversion only after their decoded output checks exist.
+
+The broader phase remains incomplete while audio, resize, compression and cross-browser acceptance
+are open. Playback range and poster capture do not count as physical trimming.
