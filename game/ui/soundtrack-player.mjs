@@ -15,6 +15,7 @@ import { validateTrack } from './music.mjs';
 import { inspectMP3, ownSoundtrackBlob, throwIfSoundtrackAborted } from '../mp3.mjs';
 import { bindAudioMasterMedia } from './audio-master.mjs';
 import {
+  isResolvedOnlineSoundtrackTrack,
   onlineSoundtrackRecordingAllowed,
   onlineSoundtrackRecordingURL,
 } from '../online-soundtrack-catalogue.mjs';
@@ -33,6 +34,7 @@ const wait = (ms, signal) =>
     signal?.addEventListener('abort', cancel, { once: true });
     if (signal?.aborted) cancel();
   });
+const overlapTrack = (track) => ['mp3', 'remote'].includes(track?.kind);
 /** Session transport only. The host owns gestures, page lifecycle, settings persistence and SFX. */
 export function createSoundtrackPlayer({
   soundscape,
@@ -472,7 +474,7 @@ export function createSoundtrackPlayer({
       !desired ||
       audioMaster?.snapshot().muted ||
       status !== 'playing' ||
-      current?.kind !== 'mp3' ||
+      !overlapTrack(current) ||
       decks.length < 2 ||
       dirty ||
       pending ||
@@ -483,7 +485,7 @@ export function createSoundtrackPlayer({
       return;
     const at = playableIndex(nextIndex(true));
     const track = tracks().find((t) => t.id === queue[at]);
-    if (!track || track.kind !== 'mp3') return;
+    if (!overlapTrack(track)) return;
     const deck = decks.find((d) => d !== activeDeck),
       controller = new AbortController();
     preloadOperation = controller;
@@ -513,7 +515,7 @@ export function createSoundtrackPlayer({
       !desired ||
       suspended ||
       status !== 'playing' ||
-      current?.kind !== 'mp3' ||
+      !overlapTrack(current) ||
       dirty ||
       pending ||
       fadeMs === 0 ||
@@ -576,8 +578,8 @@ export function createSoundtrackPlayer({
       decks.length === 2 &&
       desired &&
       status === 'playing' &&
-      current?.kind === 'mp3' &&
-      nextTrack?.kind === 'mp3';
+      overlapTrack(current) &&
+      overlapTrack(nextTrack);
     cancel(prepared?.deck);
     const token = generation,
       controller = new AbortController();
@@ -960,6 +962,10 @@ export function createSoundtrackPlayer({
     value,
     { order = 'ordered', repeat = 'all', startTrackId = null } = {},
   ) {
+    required(
+      Array.isArray(value) && value.every(isResolvedOnlineSoundtrackTrack),
+      'Online soundtracks must come from the resolved project catalogue.',
+    );
     required(['ordered', 'shuffle'].includes(order), 'Invalid online soundtrack order.');
     required(['all', 'one', 'off'].includes(repeat), 'Invalid online soundtrack repeat mode.');
     required(
