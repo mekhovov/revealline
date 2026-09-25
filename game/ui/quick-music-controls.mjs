@@ -1,3 +1,5 @@
+import { t, localizedText, localizedAttribute, onLocaleChange } from '../i18n/index.mjs';
+
 export const MUSIC_SHORTCUTS_KEY = 'revealline.music-shortcuts.v1';
 
 // Character shortcuts are optional and yield to editing and the host's game bindings.
@@ -65,13 +67,13 @@ export function attachQuickMusicControls({
     root.id = `${prefix}-quick-music-${index}`;
     root.className = 'quick-music-controls';
     root.setAttribute('role', 'group');
-    root.setAttribute('aria-label', 'Music controls');
+    localizedAttribute(root, 'aria-label', () => t('interface:quickMusic.controls'));
     title.className = 'quick-music-title';
     toggle.id = `${root.id}-toggle`;
     toggle.type = skip.type = 'button';
     toggle.className = skip.className = 'button secondary';
     skip.id = `${root.id}-next`;
-    skip.textContent = 'Next song';
+    localizedText(skip, () => t('interface:quickMusic.next'));
     toggle.onclick = () => run('toggle');
     skip.onclick = () => run('next');
     root.append(title, toggle, skip);
@@ -86,29 +88,28 @@ export function attachQuickMusicControls({
     details.className = 'quick-music-settings';
     const summary = doc.createElement('summary'),
       label = doc.createElement('label');
-    summary.textContent = 'Music shortcuts';
+    localizedText(summary, () => t('interface:quickMusic.shortcuts'));
     checkbox = doc.createElement('input');
     checkbox.type = 'checkbox';
     checkbox.id = `${prefix}-music-shortcuts`;
     checkbox.checked = enabled;
     label.setAttribute('for', checkbox.id);
     const copy = doc.createElement('span');
-    copy.textContent = ' B: play / pause music · N: next song';
+    localizedText(copy, () => t('interface:quickMusic.shortcutHelp'));
     label.append(checkbox, copy);
     preferenceNotice = doc.createElement('p');
     preferenceNotice.className = 'micro-note';
     preferenceNotice.setAttribute('role', 'status');
-    preferenceNotice.textContent = 'Game bindings and typing take priority.';
+    localizedText(preferenceNotice, () => t('interface:quickMusic.priority'));
     checkbox.onchange = () => {
       enabled = checkbox.checked;
       try {
         const storage = getStorage();
-        if (!storage) throw new Error('Storage unavailable.');
+        if (!storage) throw new Error(t('interface:quickMusic.storageUnavailable'));
         storage.setItem(MUSIC_SHORTCUTS_KEY, String(enabled));
-        preferenceNotice.textContent = 'Game bindings and typing take priority.';
+        localizedText(preferenceNotice, () => t('interface:quickMusic.priority'));
       } catch {
-        preferenceNotice.textContent =
-          'Shortcut preference changed for this visit; saving is unavailable.';
+        localizedText(preferenceNotice, () => t('interface:quickMusic.sessionOnly'));
       }
       render();
     };
@@ -124,26 +125,34 @@ export function attachQuickMusicControls({
     const status =
       warning ||
       (state?.status === 'blocked'
-        ? 'Choose Play music to retry'
+        ? t('interface:quickMusic.retry')
         : state?.status === 'loading'
-          ? 'Loading music…'
+          ? t('interface:quickMusic.loading')
           : muted
-            ? 'Sound muted'
+            ? t('interface:quickMusic.muted')
             : state?.playing
-              ? 'Playing'
-              : 'Paused');
+              ? t('interface:quickMusic.playing')
+              : t('interface:quickMusic.paused'));
     const song = state?.track
       ? `${state.track.title}${state.track.artist ? ` · ${state.track.artist}` : ''}`
-      : 'Selected soundtrack';
+      : t('interface:selectedSoundtrack');
     for (const row of rows) {
       const title = `${song} · ${status}`;
       if (row.title.textContent !== title) row.title.textContent = title;
       row.title.setAttribute('title', title);
-      row.toggle.textContent = pausable ? 'Pause music' : 'Play music';
+      row.toggle.textContent = pausable
+        ? t('interface:quickMusic.pause')
+        : t('interface:quickMusic.play');
       row.toggle.disabled = !state;
       row.skip.disabled = !state?.queue?.length;
-      row.toggle.setAttribute('title', enabled ? 'Play / pause music (B)' : 'Play / pause music');
-      row.skip.setAttribute('title', enabled ? 'Next song (N)' : 'Next song');
+      row.toggle.setAttribute(
+        'title',
+        enabled ? t('interface:quickMusic.toggleShortcut') : t('interface:quickMusic.toggle'),
+      );
+      row.skip.setAttribute(
+        'title',
+        enabled ? t('interface:quickMusic.nextShortcut') : t('interface:quickMusic.next'),
+      );
       if (enabled) {
         row.toggle.setAttribute('aria-keyshortcuts', 'B');
         row.skip.setAttribute('aria-keyshortcuts', 'N');
@@ -209,6 +218,7 @@ export function attachQuickMusicControls({
   };
   doc.addEventListener('keydown', keydown);
   win?.addEventListener?.('storage', storage);
+  const unsubscribeLocale = onLocaleChange(render);
   render();
   return Object.freeze({
     render,
@@ -220,6 +230,7 @@ export function attachQuickMusicControls({
       operation++;
       doc.removeEventListener('keydown', keydown);
       win?.removeEventListener?.('storage', storage);
+      unsubscribeLocale();
       for (const row of rows) row.root.remove();
       details?.remove();
     },
