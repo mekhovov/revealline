@@ -191,5 +191,12 @@
   "actions.playback": "Play",
   "export.requested": "Download requested. Check your downloads or Save dialog; the JSON remains available here to copy.",
   "export.shared": "Shared with the selected app. Check the destination for your file.",
-  "export.cancelled": "Sharing closed without a confirmed destination."
+  "export.cancelled": "Sharing closed without a confirmed destination.",
+  "navigation.home": "Home",
+  "navigation.more": "More",
+  "navigation.moreDestinations": "More destinations",
+  "actions.done": "Done",
+  "navigation.aboutCredits": "About & credits",
+  "navigation.releases": "Releases",
+  "game.chooseMode": "Choose play mode"
 }

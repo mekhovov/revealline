@@ -207,5 +207,12 @@
   "actions.playback": "Відтворити",
   "export.requested": "Завантаження запитано. Перевір завантаження або вікно збереження; JSON залишається тут доступним для копіювання.",
   "export.shared": "Передано до обраного застосунку. Перевір файл у місці призначення.",
-  "export.cancelled": "Передавання закрито без підтвердженого місця призначення."
+  "export.cancelled": "Передавання закрито без підтвердженого місця призначення.",
+  "navigation.home": "Головна",
+  "navigation.more": "Більше",
+  "navigation.moreDestinations": "Інші розділи",
+  "actions.done": "Готово",
+  "navigation.aboutCredits": "Про гру й авторів",
+  "navigation.releases": "Версії",
+  "game.chooseMode": "Виберіть режим гри"
 }
