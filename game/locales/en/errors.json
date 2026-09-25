@@ -36,5 +36,7 @@
   "enableBoostBeforeTappingDownHoldYourBoostButtonOr": "Enable Boost before tapping Down: hold your Boost button, or switch it on if Toggle is selected. Keep flying to the far safe border to clear the sparks. No ability is needed.",
   "unknownTurningMode": "Unknown turning mode.",
   "thisLessonThemeIsUnavailable": "This lesson theme is unavailable.",
-  "theImpactLessonCouldNotLoad": "The impact lesson could not load."
+  "theImpactLessonCouldNotLoad": "The impact lesson could not load.",
+  "loadingGameStyles": "Loading game styles…",
+  "loadingFlightSystems": "Loading flight systems…"
 }

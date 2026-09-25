@@ -2,12 +2,43 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import { missionBriefing } from '../mission-brief.mjs';
+import { getLocale, setLocale } from '../i18n/index.mjs';
 
 const json = (path) => JSON.parse(fs.readFileSync(new URL(path, import.meta.url)));
 const classes = json('../content/classes.json');
 const campaign = json('../content/campaign.json');
 const homeward = json('../content/packs/homeward-skies.json');
 const classicLab = json('../content/packs/classic-lab.json');
+
+test('Ukrainian briefing updates rule-derived guidance without changing authored imports or rules', (t) => {
+  const locale = getLocale();
+  t.after(() => setLocale(locale));
+  const level = structuredClone(classicLab.campaigns[0].levels[0]);
+  level.name = 'My custom title';
+  level.metadata.description = 'My custom route instructions.';
+  level.classic.lineImpact = { version: 'line-impact.v2' };
+  const before = structuredClone(level);
+  setLocale('uk');
+  const card = missionBriefing(level);
+  assert.match(card.goal, /^Відкрий /);
+  assert.match(card.copy, /Лише розряди пускають іскри/);
+  assert.match(card.status, /Вибери маршрут/);
+  assert.equal(card.fullTitle, level.name);
+  assert.equal(card.fullBrief, level.metadata.description);
+  assert.deepEqual(level, before);
+  for (const count of [1, 2, 5, 11, 21, 22]) {
+    const withObjectives = {
+      ...level,
+      objectives: Array.from({ length: count }, () => ({ required: true })),
+    };
+    const brief = missionBriefing(withObjectives, { objectiveLabel: 'Маяк' });
+    assert.match(brief.goal, new RegExp(`«маяк»: ${count}\\.`));
+    assert.doesNotMatch(brief.goal, /маякs/);
+  }
+  setLocale('en');
+  assert.match(missionBriefing(level).copy, /Only bolts send sparks/);
+  assert.deepEqual(level, before);
+});
 
 test('classic ready cards name contact pickups, material hazards and claimed-ground threats', () => {
   const levels = classicLab.campaigns[0].levels;

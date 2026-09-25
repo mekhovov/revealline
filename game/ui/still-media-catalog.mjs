@@ -16,7 +16,7 @@ export function stillAuthoringKeys(channel = 'dev') {
     typeof channel === 'string' &&
       (channel === 'dev' ||
         /^release-v?(0|[1-9]\d{0,4})\.(0|[1-9]\d{0,4})\.(0|[1-9]\d{0,4})$/.test(channel)),
-    t("interface:unsupportedStillWorkshopGameChannel"),
+    t('interface:unsupportedStillWorkshopGameChannel'),
   );
   const profile = `revealline.library.${channel}.v1`;
   return Object.freeze({
@@ -28,7 +28,7 @@ export function stillAuthoringKeys(channel = 'dev') {
 }
 export const STILL_AUTHORING_KEYS = stillAuthoringKeys();
 const check = (signal) => {
-  if (signal?.aborted) throw new DOMException(t("interface:catalogCheckCancelled"), 'AbortError');
+  if (signal?.aborted) throw new DOMException(t('interface:catalogCheckCancelled'), 'AbortError');
 };
 
 /** Read only the explicit game channel (source dev by default). Hold its existing locks
@@ -50,16 +50,11 @@ export function createStillAuthoringCatalog({
   async function locked(work, signal) {
     check(signal);
     if (!lockManager?.request)
-      throw new Error(
-        t("interface:safeCatalogAccessNeedsWebLocksUseASupportedBrowser"),
-      );
+      throw new Error(t('interface:safeCatalogAccessNeedsWebLocksUseASupportedBrowser'));
     const lock = (name, next) =>
       lockManager.request(name, { ifAvailable: true }, async (held) => {
         check(signal);
-        if (!held)
-          throw new Error(
-            t("interface:closeTheSourceGameAndFinishItsPackOrBackup"),
-          );
+        if (!held) throw new Error(t('interface:closeTheSourceGameAndFinishItsPackOrBackup'));
         return next();
       });
     return lock(keys.writer, async () => {
@@ -80,7 +75,9 @@ export function createStillAuthoringCatalog({
           const snapshot = await host.inspect({ signal });
           if (snapshot.status !== 'checked')
             throw new Error(
-              t("gameplay:theGameNeedsRecoverItsExactFilesBeforeEditingMedia", { value1: snapshot.reason }),
+              t('gameplay:theGameNeedsRecoverItsExactFilesBeforeEditingMedia', {
+                value1: snapshot.reason,
+              }),
             );
           return await host.withCurrent(
             snapshot,
@@ -93,23 +90,19 @@ export function createStillAuthoringCatalog({
       }
       return lock(keys.lock, async () => {
         if (storage.getItem(keys.lock) !== null || (await readAsset(keys.journal)) !== null)
-          throw new Error(
-            t("interface:theSourceGameHasAPendingBackupRecoveryRecoverIt"),
-          );
+          throw new Error(t('interface:theSourceGameHasAPendingBackupRecoveryRecoverIt'));
         const profile = keys.writer.slice(0, -'.writer'.length);
         if (
           (await readAsset(`${profile}.external-chapter-index.v1`)) !== null ||
           (await readAsset(`${profile}.external-chapter-journal.v1`)) !== null
         )
           throw new Error(
-            t("interface:externalChaptersNeedTheCompatibleSharedMediaWorkshopBeforeEditing"),
+            t('interface:externalChaptersNeedTheCompatibleSharedMediaWorkshopBeforeEditing'),
           );
         const raw = await readAsset(keys.packs);
         check(signal);
         if (raw !== null && typeof raw !== 'string')
-          throw new Error(
-            t("interface:theInstalledPackLibraryIsUnreadableNoEmptyReplacementWas"),
-          );
+          throw new Error(t('interface:theInstalledPackLibraryIsUnreadableNoEmptyReplacementWas'));
         return work(raw);
       });
     });
@@ -141,14 +134,15 @@ export function createStillAuthoringCatalog({
       }, signal);
     },
     async withCurrent(snapshot, work, { signal } = {}) {
-      if (!snapshots.has(snapshot)) throw new Error(t("interface:reloadTheInstalledCatalogBeforeSaving"));
+      if (!snapshots.has(snapshot))
+        throw new Error(t('interface:reloadTheInstalledCatalogBeforeSaving'));
       return locked(async (raw, external) => {
         if (
           snapshot.raw !== raw ||
           snapshot.external !== (external ? canonicalJSON(external.index) : null)
         )
           throw new Error(
-            t("interface:installedPacksChangedReloadTheCatalogAndReviewTheAssignment"),
+            t('interface:installedPacksChangedReloadTheCatalogAndReviewTheAssignment'),
           );
         check(signal);
         return work();
