@@ -48,6 +48,12 @@ body.candidate-journey #race-journey-controls {
 body.race-focus.candidate-journey #race-journey-controls {
   position: static;
 }
+/* The lobby and Pause already expose Missions in their owned action stack.
+   Keep continuation shortcuts with the boards/results surface so one action
+   never appears in two competing menu regions. */
+body:not(.race-focus) #race-journey-controls {
+  display: none !important;
+}
 body.candidate-journey #race-journey-save {
   margin: 0;
   padding: 8px 14px;
@@ -114,9 +120,9 @@ body.candidate-journey .race-shell {
   background: #070b18;
 }
 .race-screen h1 {
-  font-size: clamp(38px, 6.6vw, 78px);
+  font-size: clamp(36px, 5vw, 64px);
   line-height: 0.98;
-  margin: 18px 0;
+  margin: 12px 0;
   max-width: 720px;
   text-shadow: 3px 3px #203657;
 }
@@ -132,14 +138,15 @@ body.candidate-journey .race-shell {
 }
 .race-summary {
   color: #a2c7e6;
-  padding-block: 10px;
+  padding-block: 8px;
+  margin-block: 8px;
   border-block: 1px solid #2b4364;
 }
 .race-seats {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 12px;
-  margin: 20px 0;
+  margin: 12px 0;
 }
 .seat {
   padding: 12px 18px;
@@ -177,7 +184,7 @@ body.candidate-journey .race-shell {
   padding: 12px 14px;
   cursor: pointer;
   color: #9deeff;
-  font-size: 24px;
+  font-size: 18px;
   list-style-position: inside;
 }
 .race-optional-setup > summary:hover {
@@ -193,6 +200,9 @@ body.candidate-journey .race-shell {
 }
 .race-optional-setup #race-focus {
   min-height: 48px;
+}
+body.unified-missions #race-library-switch {
+  display: none;
 }
 #couch-app .race-menu-actions button,
 #couch-app .race-menu-actions a {
@@ -228,6 +238,23 @@ body.candidate-journey .race-shell {
   grid-template-columns: 1fr 1fr;
   gap: 20px;
   margin: 24px 0;
+}
+#race-setup #race-actor-style-status,
+#race-setup #race-journey-preferences-recovery {
+  grid-column: 1 / -1;
+  margin: 0;
+}
+.race-more-destinations {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin-block: 12px 20px;
+}
+#couch-app .race-more-destinations a {
+  justify-content: center;
+  border: 1px solid #537ca0;
+  background: #142641;
+  text-align: center;
 }
 .race-fields label {
   display: grid;
@@ -502,6 +529,9 @@ body.candidate-journey .race-shell {
     gap: 14px;
   }
   .race-menu-actions {
+    grid-template-columns: 1fr;
+  }
+  .race-more-destinations {
     grid-template-columns: 1fr;
   }
   .race-seats {

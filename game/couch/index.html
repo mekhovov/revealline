@@ -199,7 +199,7 @@
             <button id="race-picture-cancel" type="button" hidden>Cancel picture loading</button>
             <button id="race-chapters" type="button">Browse missions</button>
             <details id="race-optional-setup" class="race-optional-setup">
-              <summary id="race-optional-setup-toggle">Optional setup</summary>
+              <summary id="race-optional-setup-toggle">Match options</summary>
               <div class="race-fields">
                 <label
                   >Actors<select id="race-actor-style" aria-describedby="race-actor-style-status">
@@ -224,20 +224,20 @@
                     Export difficulty
                   </button>
                 </div>
-                <button id="race-focus" type="button">Advanced race setup</button>
+                <button id="race-focus" type="button">Advanced setup</button>
               </div>
             </details>
             <button id="race-options" type="button">Settings</button>
             <button id="race-quick-sound" type="button" class="quick-sound" aria-pressed="false">
               Sound: off
             </button>
-            <button id="race-help" type="button">How to play</button>
+            <button id="race-help" type="button">More</button>
             <button id="race-review" type="button" hidden>View both boards</button>
             <a id="race-solo-return" href="../?journey=legacy">Return to solo</a>
             <a id="race-library-switch" href="?journey=whole-spatial-v10">New Journey</a>
           </div>
           <p id="race-format-note" class="race-footnote">
-            One race by default. Longer matches are in Optional setup.
+            One race · Match options includes First to two · Solo progress stays separate
           </p>
           <aside
             id="race-journey-save"
@@ -266,7 +266,7 @@
         >
           <p class="race-kicker">SAME CONDITIONS / TWO ROUTES</p>
           <h1 id="race-setup-title">Race setup</h1>
-          <p>Choose together. Each player starts with the same map, craft and time.</p>
+          <p>Optional match changes. Both players always receive the same conditions.</p>
           <div class="race-fields">
             <label>Map<select id="race-level"></select></label>
             <label
@@ -294,7 +294,7 @@
           <p id="race-loadout" class="race-summary"></p>
           <p id="race-installed-status" role="status"></p>
           <button id="race-installed-refresh" type="button">Refresh installed chapters</button>
-          <button id="race-setup-back" type="button">Done · back to lobby</button>
+          <button id="race-setup-back" type="button">Done</button>
         </section>
         <section
           id="race-options-panel"
@@ -505,8 +505,14 @@
           hidden
           inert
         >
-          <p class="race-kicker">FIND YOUR OWN LINE</p>
-          <h1 id="race-help-title">How to play</h1>
+          <p class="race-kicker">REVEAL LINE / MENU</p>
+          <h1 id="race-help-title">More</h1>
+          <nav class="race-more-destinations" aria-label="More destinations">
+            <a id="race-more-home" href="../">Home</a>
+            <a id="race-more-about" href="../../site/about.html#versions">About &amp; credits</a>
+            <a id="race-release-explorer">Releases</a>
+          </nav>
+          <h2>How to play</h2>
           <div id="race-help-unit">
             <div class="reading-toolbar">
               <button id="race-help-read" type="button">Read controls</button>
