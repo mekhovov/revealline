@@ -462,7 +462,8 @@ test('Journey feedback dependencies bind only the reviewed player-craft effects 
 test('shared-host UI and audio bind only their reviewed current inputs', async () => {
   const production = await createFieldKitProduction();
   const resolved = resolvePresentation(production.document);
-  const audioReviewPath = 'docs/verification/online-soundtrack-archive-2026-09-24/review.json';
+  const audioReviewPath =
+    'docs/verification/online-soundtrack-reconciliation-2026-09-25/source-review.json';
   const audioReviewHash = createHash('sha256')
     .update(await fs.readFile(new URL(`../../${audioReviewPath}`, import.meta.url)))
     .digest('hex');
@@ -504,7 +505,7 @@ test('shared-host UI and audio bind only their reviewed current inputs', async (
       );
       assert.ok(
         asset.provenance.source.endsWith(
-          'sha256:6a6124afeb891475a882e51289d28df2615fb7ed144b675357c00aa9bd255567',
+          'sha256:a2612099406de7d0a88daae9909068c7d9ffda1f0ef33f2a58b49cc13726784a',
         ),
         slot.id,
       );
