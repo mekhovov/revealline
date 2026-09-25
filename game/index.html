@@ -471,7 +471,7 @@
                     id="flight-preparation-cancel"
                     class="button secondary"
                     hidden
-                    data-i18n="interface:cancelPreparation"
+                    data-i18n="common:actions.cancelPreparation"
                   >
                     Cancel preparation
                   </button>
@@ -1808,7 +1808,7 @@
           id="settings-master-mute"
           class="button secondary"
           type="button"
-          data-i18n="interface:unmuteSound"
+          data-i18n="common:audio.unmute"
         >
           Unmute sound
         </button>
@@ -1856,13 +1856,15 @@
           ><span data-i18n="interface:textStyle">Text style</span
           ><select id="text-face">
             <option value="pixel" data-i18n="interface:themeFont">Theme font</option>
-            <option value="plain" data-i18n="interface:plain">Plain</option>
+            <option value="plain" data-i18n="common:text.plain">Plain</option>
           </select></label
         >
         <label class="field"
           ><span data-i18n="interface:textSize">Text size</span
           ><select id="text-size">
-            <option value="standard" data-i18n="interface:standard">Standard</option>
+            <option value="standard" data-i18n="interface:display.textSize.standard">
+              Standard
+            </option>
             <option value="large" data-i18n="interface:large">Large</option>
           </select></label
         >
@@ -2045,7 +2047,12 @@
         >
           Prepare offline play
         </button>
-        <button id="offline-stop" class="button secondary" hidden data-i18n="interface:stopWaiting">
+        <button
+          id="offline-stop"
+          class="button secondary"
+          hidden
+          data-i18n="common:actions.stopWaiting"
+        >
           Stop waiting
         </button>
         <details>
@@ -2668,18 +2675,14 @@
           REVEAL<span data-i18n="interface:line" data-i18n-slot="slot0">/ LINE</span>
         </h1>
         <p class="home-copy" data-i18n="interface:findYourLine">Find your line.</p>
-        <nav
-          id="shell-title-modes"
-          aria-label="Game mode"
-          data-i18n-aria-label="interface:gameMode"
-        >
-          <a id="shell-title-versus" href="couch/?return=solo" data-i18n="interface:couchVersus"
+        <nav id="shell-title-modes" aria-label="Game mode" data-i18n-aria-label="common:game.mode">
+          <a id="shell-title-versus" href="couch/?return=solo" data-i18n="common:game.couchVersus"
             >Couch Versus</a
           >
           <a
             id="shell-title-team"
             href="couch/relay-rescue.html?return=solo"
-            data-i18n="interface:couchTeam"
+            data-i18n="common:game.couchTeam"
             >Couch Team</a
           >
         </nav>
@@ -2715,7 +2718,7 @@
             <span aria-hidden="true">→</span>
           </button>
           <button id="shell-continue" type="button" class="button primary" hidden>
-            <span data-field-kit-copy="navigation.continue" data-i18n="interface:continue"
+            <span data-field-kit-copy="navigation.continue" data-i18n="common:actions.continue"
               >Continue</span
             >
             <span aria-hidden="true">→</span>
@@ -3098,7 +3101,7 @@
       </div>
       <details id="shell-mode-choice" class="shell-mode-choice">
         <summary data-i18n="interface:modeSoloFlight">Mode · Solo flight</summary>
-        <nav aria-label="Game mode" data-i18n-aria-label="interface:gameMode">
+        <nav aria-label="Game mode" data-i18n-aria-label="common:game.mode">
           <span class="field-kit-secondary" data-i18n="interface:soloFlightSelected"
             >Solo flight selected</span
           >
@@ -3145,7 +3148,7 @@
             id="shell-deploy"
             type="button"
             class="button primary"
-            data-i18n="interface:deploy"
+            data-i18n="common:actions.deployArrow"
           >
             Deploy →
           </button>
