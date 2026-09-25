@@ -15,6 +15,7 @@ const DIFFICULTY_KEYS = Object.freeze({
 const UKRAINIAN_CULTURAL_SPATIAL_REVISION = 'cultural-spatial-triptych-1';
 const UKRAINIAN_HORIZON_JOINS_REVISION = 'horizon-cultural-joins-1';
 const UKRAINIAN_BORDER_ROUTES_REVISION = 'border-cultural-routes-1';
+const UKRAINIAN_BORDER_SIGNAL_ROUTES_REVISION = 'border-signal-cultural-routes-1';
 
 /** Text-only projection of an already resolved manifest. No engine, geometry,
  * image fetching or decoding is needed to describe a mission at its preset. */
@@ -58,6 +59,7 @@ export function authoredJourneyMissionTags(mission, manifest) {
       UKRAINIAN_CULTURAL_SPATIAL_REVISION,
       UKRAINIAN_HORIZON_JOINS_REVISION,
       UKRAINIAN_BORDER_ROUTES_REVISION,
+      UKRAINIAN_BORDER_SIGNAL_ROUTES_REVISION,
     ].includes(manifest.level?.revision)
   )
     tags.push('Ukrainian');
