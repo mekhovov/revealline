@@ -1,7 +1,7 @@
 {
   "format": "DefaultPressureLifecycleV1",
   "sourceCommit": "b13089b702391c275f2505d1a76c87eebb9dcce0",
-  "route": "whole-spatial-v9",
+  "route": "whole-spatial-v11",
   "tuning": "gameplay-pressure.v4",
   "seed": 1,
   "scope": "Public fixed-tick commands on the current tuned default. These are deterministic engine and shared navigation checks, not native host, device, human balance or release acceptance.",
