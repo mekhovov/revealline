@@ -1,3 +1,4 @@
+import { t } from '../i18n/index.mjs';
 import {
   createTeamOutcomeFeedback,
   prepareTeamOutcomes,
@@ -41,7 +42,7 @@ import {
 } from '../presentation/team-runtime-slots.mjs';
 
 const THEME_FONTS = Object.freeze({
-  ui: '"Field Kit UI", "Field Kit Mono", system-ui, sans-serif',
+  ui: t("interface:fieldKitUiFieldKitMonoSystemUiSansSerif"),
   numeric: '"Field Kit Mono", ui-monospace, monospace',
 });
 const COLORS = ['#ffda77', '#8be0ed'];
@@ -65,7 +66,7 @@ export const TEAM_ACTOR_APPEARANCE_SLOTS = Object.freeze([
  * data before painting; never borrow its palette, fonts, terrain or picture. */
 function prepareActorAppearance(snapshot) {
   if (typeof snapshot?.image !== 'function')
-    throw new TypeError('Team actor appearance needs a prepared FPV snapshot.');
+    throw new TypeError(t("interface:teamActorAppearanceNeedsAPreparedFpvSnapshot"));
   for (const slot of TEAM_ACTOR_APPEARANCE_SLOTS)
     if (!(snapshot.resolved?.assets?.[slot] ?? snapshot.canvas?.assets?.[slot]))
       throw new TypeError(`Team actor appearance is missing ${slot}.`);
@@ -112,7 +113,7 @@ function prepareActorAppearance(snapshot) {
 /** Draw the authoritative board once. Rendering never advances game state. */
 export function createCoopPainter(canvas) {
   const ctx = canvas.getContext('2d');
-  if (!ctx) throw new Error('Relay Rescue needs a browser with Canvas 2D support.');
+  if (!ctx) throw new Error(t("interface:relayRescueNeedsABrowserWithCanvas2dSupport"));
   let actors = createCoopActorPresentation(),
     actorPresentation = null,
     actorAppearanceStyle = null;
@@ -145,17 +146,17 @@ export function createCoopPainter(canvas) {
       ]) {
         const value = snapshot.canvas?.palette?.[key];
         if (typeof value !== 'string' || !/^#[a-f0-9]{6}$/i.test(value))
-          throw new TypeError('Team presentation needs a validated canvas palette.');
+          throw new TypeError(t("interface:teamPresentationNeedsAValidatedCanvasPalette"));
         palette[key] = value;
       }
       const motionScale = snapshot.canvas?.motionScale;
       if (!Number.isFinite(motionScale) || motionScale < 0 || motionScale > 1)
-        throw new TypeError('Team presentation needs a bounded motion scale.');
+        throw new TypeError(t("interface:teamPresentationNeedsABoundedMotionScale"));
       const fonts = {};
       for (const key of ['ui', 'numeric']) {
         const value = snapshot.fonts?.[key];
         if (typeof value !== 'string' || !value.length || value.length > 512)
-          throw new TypeError('Team presentation needs its prepared font roles.');
+          throw new TypeError(t("interface:teamPresentationNeedsItsPreparedFontRoles"));
         fonts[key] = value;
       }
       next = { palette, motionScale, fonts };
@@ -196,7 +197,7 @@ export function createCoopPainter(canvas) {
     } = {},
   ) {
     if (actorAppearance !== null && !['fpv', 'campaign'].includes(actorAppearance?.style))
-      throw new TypeError('Team actor appearance needs a supported style.');
+      throw new TypeError(t("interface:teamActorAppearanceNeedsASupportedStyle"));
     const selectedActors =
       actorAppearance?.style === 'fpv' ? actorAppearance.snapshot : presentation;
     let nextActors = actors;
@@ -223,10 +224,10 @@ export function createCoopPainter(canvas) {
         pictureLevel.width !== run.width ||
         pictureLevel.height !== run.height
       )
-        throw new TypeError('Team picture source does not match this arena.');
+        throw new TypeError(t("interface:teamPictureSourceDoesNotMatchThisArena"));
       if (picture.choice?.sourceKind === 'candidate-original') {
         const frame = candidateTeamPictureFrame(picture, pictureLevel, presentation);
-        if (!frame) throw new TypeError('Team candidate picture has no live verified owner.');
+        if (!frame) throw new TypeError(t("interface:teamCandidatePictureHasNoLiveVerifiedOwner"));
         pictureWidth = frame.width;
         pictureHeight = frame.height;
       }
@@ -242,7 +243,7 @@ export function createCoopPainter(canvas) {
         !['image', 'procedural'].includes(picture.choice.kind) ||
         (picture.choice.kind === 'procedural' ? picture.image !== null : !picture.image)
       )
-        throw new TypeError('Team picture does not match this prepared arena presentation.');
+        throw new TypeError(t("interface:teamPictureDoesNotMatchThisPreparedArenaPresentation"));
       if (
         picture.image &&
         ((picture.image.naturalWidth ?? picture.image.width) !== pictureWidth ||
@@ -529,7 +530,7 @@ export function createCoopPainter(canvas) {
         const core = stronghold.core;
         const coreColor = drawTeamCoreCue(ctx, coreFrames, stronghold, palette);
         cue(
-          `${relayLabel ? `${relayLabel} ` : ''}${stronghold.defeated ? 'SECURED' : stronghold.shielded ? 'SHIELD' : 'CAPTURE'}`,
+          `${relayLabel ? `${relayLabel} ` : ''}${stronghold.defeated ? t("interface:secured") : stronghold.shielded ? t("interface:shield2") : t("interface:capture")}`,
           core.x,
           Math.max(0.6, core.y - clearance('core', stronghold.id, 1.75)),
           0.64,
@@ -704,7 +705,7 @@ export function createCoopPainter(canvas) {
           ctx.textAlign = 'center';
           ctx.restore();
           cue(
-            enemy.phase === 'commit' ? 'CHARGE' : enemy.phase === 'recovery' ? 'RECOVER' : 'HUNTER',
+            enemy.phase === 'commit' ? t("interface:charge") : enemy.phase === 'recovery' ? t("interface:recover") : t("interface:hunter"),
             enemy.x,
             Math.max(0.6, enemy.y - clearance('enemy', enemy.id, 1.05)),
             0.57,
@@ -719,10 +720,10 @@ export function createCoopPainter(canvas) {
           ctx.restore();
           cue(
             enemy.rover?.mode === 'warning'
-              ? 'WAKING'
+              ? t("interface:waking")
               : enemy.rover?.mode === 'active'
-                ? 'ROAMER'
-                : 'DORMANT',
+                ? t("interface:roamer")
+                : t("interface:dormant"),
             enemy.x,
             Math.max(0.6, enemy.y - clearance('enemy', enemy.id, 1.05)),
             0.57,
@@ -738,7 +739,7 @@ export function createCoopPainter(canvas) {
           const slowedColor = drawTeamSlowed(ctx, supportFrames, palette);
           ctx.restore();
           cue(
-            'SLOWED',
+            t("interface:slowed"),
             enemy.x,
             Math.min(run.height - 0.6, enemy.y + clearance('enemy', enemy.id, 1.25)),
             0.6,

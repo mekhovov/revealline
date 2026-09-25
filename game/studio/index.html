@@ -2,77 +2,84 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
+    <link rel="stylesheet" href="../i18n/style.css" />
+    <script src="../vendor/i18next-26.4.2.min.js"></script>
+    <script src="../i18n/catalogs.mjs"></script>
+    <script src="../i18n/bootstrap.mjs"></script>
+
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Content Studio · Reveal Line</title>
+    <title data-i18n="interface:contentStudioRevealLine">Content Studio · Reveal Line</title>
     <link rel="stylesheet" href="../ui/field-kit-fonts.css" />
     <link rel="stylesheet" href="studio.css" />
     <script type="module" src="../ui/content-studio-navigation-entry.mjs"></script>
     <script type="module" src="studio.mjs"></script>
   </head>
   <body>
+<div data-language-control></div>
+
     <header>
-      <a href="../" data-content-studio-route="game" inert aria-disabled="true">◩ REVEAL / LINE</a
-      ><span>CONTENT STUDIO / LOCAL DRAFTS</span
+      <a href="../" data-content-studio-route="game" inert aria-disabled="true" data-i18n="interface:revealLine">◩ REVEAL / LINE</a
+      ><span data-i18n="interface:contentStudioLocalDrafts">CONTENT STUDIO / LOCAL DRAFTS</span
       ><a href="../playground/" data-content-studio-route="playground" inert aria-disabled="true"
-        >Back to Playground ↗</a
+         data-i18n="interface:backToPlayground">Back to Playground ↗</a
       >
     </header>
     <main>
       <div class="title-row">
         <div>
-          <p class="eyebrow">01 / AUTHORING WORKBENCH</p>
-          <h1>Shape the next challenge.</h1>
+          <p class="eyebrow" data-i18n="interface:01AuthoringWorkbench">01 / AUTHORING WORKBENCH</p>
+          <h1 data-i18n="interface:shapeTheNextChallenge">Shape the next challenge.</h1>
         </div>
-        <p class="edition">LOCAL CONTENT STUDIO<br />Drafts, not published editions</p>
+        <p class="edition" data-i18n-rich="interface:localContentStudioDraftsNotPublishedEditions">LOCAL CONTENT STUDIO<br / data-i18n-slot="slot0">Drafts, not published editions</p>
       </div>
-      <p id="status" role="status">Opening your local workbench…</p>
+      <p id="status" role="status" data-i18n="interface:openingYourLocalWorkbench">Opening your local workbench…</p>
       <noscript>This editor needs JavaScript. No project has been changed.</noscript>
       <p><a href="../creator/">Create a playable campaign from a picture →</a></p>
       <details class="community-guide">
-        <summary>Create a community game · step-by-step guide</summary>
+        <summary data-i18n="interface:createACommunityGameStepByStepGuide">Create a community game · step-by-step guide</summary>
         <div class="community-guide-copy">
-          <p>
+          <p data-i18n-rich="interface:itExplainsMapMissionCampaignAndPackPlusTodayS">
             <a href="../../authoring/community/"
-              >Open the beginner creator guide and downloadable examples</a
+               data-i18n="interface:openTheBeginnerCreatorGuideAndDownloadableExamples" data-i18n-slot="slot0">Open the beginner creator guide and downloadable examples</a
             >. It explains map, mission, campaign and pack, plus today's manual installation and
             sharing path.
           </p>
-          <p>
+          <p data-i18n="interface:startWithOnePlayableMissionThenBuildItsCommunityIdentity">
             Start with one playable mission, then build its community identity. This workbench saves
             local drafts. Publishing and ordinary player installation are separate steps. Authoring
             uses a keyboard or pointer and a file chooser; keep downloaded backups.
           </p>
-          <h2>1. Create or inspect a project</h2>
-          <p>
+          <h2 data-i18n="interface:1CreateOrInspectAProject">1. Create or inspect a project</h2>
+          <p data-i18n="interface:chooseAUniqueLocalProjectIdAndNewProjectOr">
             Choose a unique Local project ID and New project, or use Inspect import for a
             ContentProjectV1 backup. Review the inspected source before Apply inspected source.
             Inspection does not replace your accepted draft. Export existing work before reusing its
             identity. Use Organize missions, campaigns &amp; packs to name and order the journey.
           </p>
-          <h2>2. Make one clear challenge</h2>
-          <p>
+          <h2 data-i18n="interface:2MakeOneClearChallenge">2. Make one clear challenge</h2>
+          <p data-i18n="interface:defineTheLessonRouteDecisionThreatAndCounterplayAddOne">
             Define the lesson, route decision, threat and counterplay. Add one meaningful change at
             a time. Target territory and countdown change the objective; challenge ratings describe
             your design and do not change enemy speed. Gentle, Standard and Expert use the shared
             presets. A picture does not define walls or collision.
           </p>
-          <h2>3. Play and revise</h2>
-          <p>
+          <h2 data-i18n="interface:3PlayAndRevise">3. Play and revise</h2>
+          <p data-i18n="interface:usePlayExactSoloPreviewThenStartMissionTestA">
             Use Play exact Solo preview, then Start mission. Test a legal capture, loss, Retry and a
             complete clear. Pause stays explicit. Close preview returns to your workbench. Check
             each supported difficulty and mode separately. Practice does not award player progress;
             a compiled mission or an authored rating is not a playtest.
           </p>
-          <h2>4. Save and recover</h2>
-          <p>
+          <h2 data-i18n="interface:4SaveAndRecover">4. Save and recover</h2>
+          <p data-i18n="interface:saveCheckpointRetryCreatesLocalHistoryInspectSavedLetsYou">
             Save checkpoint / retry creates local history. Inspect saved lets you review an earlier
             checkpoint; applying and saving it creates a newer checkpoint without deleting the
             intermediate ones. Export backup downloads the current project JSON, not every
             checkpoint or all artwork and audio. Verify the actual download. In a clean workbench,
             Inspect import, Apply inspected source, save and reload to test recovery.
           </p>
-          <h2>5. Prepare the community presentation</h2>
-          <p>
+          <h2 data-i18n="interface:5PrepareTheCommunityPresentation">5. Prepare the community presentation</h2>
+          <p data-i18n="interface:inAssetStudioSelectASlotAndReadItsDimensions">
             In Asset Studio, select a slot and read its dimensions, palette, transparency, anchors
             and affected screens. Preserve authorized originals and record creator, source, rights
             and generation/edit prompts. Prepare replacements before staging; a changed crop must be
@@ -81,8 +88,8 @@
             does not complete actors, terrain, HUD, effects, objectives, reveal pictures and audio.
             Keep this project backup with its media originals.
           </p>
-          <h2>6. Test Team deliberately</h2>
-          <p>
+          <h2 data-i18n="interface:6TestTeamDeliberately">6. Test Team deliberately</h2>
+          <p data-i18n="interface:aSoloMissionIsNotAutomaticallyATeamMissionInspect">
             A Solo mission is not automatically a Team mission. Inspect Team Signal greybox provides
             a compatible starting point. For each selected preset, Export exact Team test mission
             and open that download in the Team test player. These exports contain geometry and
@@ -90,8 +97,8 @@
             Pause and Retry. The exported preset is fixed: change it here and export again to test
             another difficulty.
           </p>
-          <h2>7. Qualify before publishing</h2>
-          <p>
+          <h2 data-i18n="interface:7QualifyBeforePublishing">7. Qualify before publishing</h2>
+          <p data-i18n="interface:finishEveryRequiredAssetAndReviewTheActualGameAt">
             Finish every required asset and review the actual game at play scale. Verify clear
             progression, all advertised modes, keyboard, touch and physical controllers, small
             portrait and landscape screens, readable text and reduced effects. Keep saved and earned
@@ -101,54 +108,54 @@
           </p>
         </div>
       </details>
-      <div class="toolbar" aria-label="Draft actions">
-        <button id="undo" disabled>Undo</button>
-        <button id="redo" disabled>Redo</button>
-        <button id="save">Save checkpoint / retry</button>
-        <button id="export">Export backup</button>
+      <div class="toolbar" aria-label="Draft actions" data-i18n-aria-label="interface:draftActions">
+        <button id="undo" disabled data-i18n="interface:undo">Undo</button>
+        <button id="redo" disabled data-i18n="interface:redo">Redo</button>
+        <button id="save" data-i18n="interface:saveCheckpointRetry">Save checkpoint / retry</button>
+        <button id="export" data-i18n="interface:exportBackup">Export backup</button>
         <label class="file-button"
-          >Inspect import<input id="import" type="file" accept="application/json,.json"
+          ><span data-i18n="interface:inspectImport">Inspect import</span><input id="import" type="file" accept="application/json,.json"
         /></label>
-        <a class="workbench-jump" href="#map-workbench">Jump to map ↓</a>
+        <a class="workbench-jump" href="#map-workbench" data-i18n="interface:jumpToMap">Jump to map ↓</a>
       </div>
       <details class="candidate-library" id="candidate-library">
-        <summary>
+        <summary data-i18n-rich="interface:browseBundledCandidates">
           Browse bundled candidates
-          <span class="library-summary-note">Whole Journey, chapters, mechanics and Team</span>
+          <span class="library-summary-note" data-i18n="interface:wholeJourneyChaptersMechanicsAndTeam" data-i18n-slot="slot0">Whole Journey, chapters, mechanics and Team</span>
         </summary>
-        <p id="candidate-library-help" class="note">
+        <p id="candidate-library-help" class="note" data-i18n="interface:yourAppliedDraftStaysUnchangedWhileYouBrowseOrInspect">
           Your applied draft stays unchanged while you browse or inspect. Inspect a source, review
           it, then explicitly Apply. Test players open separately and never include unpublished
           draft edits. All bundled studies remain unvalidated candidates.
         </p>
         <div class="library-filters">
           <label
-            >Search every bundled entry<input
+            ><span data-i18n="interface:searchEveryBundledEntry">Search every bundled entry</span><input
               id="candidate-search"
               type="search"
               maxlength="160"
               placeholder="Try freeze, ornament, Team or a chapter name"
               aria-describedby="candidate-library-help"
-          /></label>
+           data-i18n-placeholder="interface:tryFreezeOrnamentTeamOrAChapterName"/></label>
           <label
-            >Category<select id="candidate-category">
-              <option value="all">All categories</option>
-              <option value="journey">Whole Journey editions</option>
-              <option value="chapters">Chapters</option>
-              <option value="mechanics">Mechanics and spatial studies</option>
-              <option value="team">Team studies</option>
-              <option value="players">Early Journey test players</option>
+            ><span data-i18n="interface:category">Category</span><select id="candidate-category">
+              <option value="all" data-i18n="interface:allCategories">All categories</option>
+              <option value="journey" data-i18n="interface:wholeJourneyEditions">Whole Journey editions</option>
+              <option value="chapters" data-i18n="interface:chapters">Chapters</option>
+              <option value="mechanics" data-i18n="interface:mechanicsAndSpatialStudies">Mechanics and spatial studies</option>
+              <option value="team" data-i18n="interface:teamStudies">Team studies</option>
+              <option value="players" data-i18n="interface:earlyJourneyTestPlayers">Early Journey test players</option>
             </select></label
           >
-          <button id="candidate-reset" type="button">Clear filters</button>
+          <button id="candidate-reset" type="button" data-i18n="interface:clearFilters">Clear filters</button>
         </div>
         <p id="candidate-count" role="status" aria-live="polite" class="note"></p>
         <div id="candidate-inspection" class="library-inspection" hidden>
-          <p class="eyebrow">CURRENT SOURCE INSPECTION</p>
+          <p class="eyebrow" data-i18n="interface:currentSourceInspection">CURRENT SOURCE INSPECTION</p>
           <p id="candidate-inspection-status"></p>
-          <a href="#source" id="candidate-review">Review inspected source ↓</a>
+          <a href="#source" id="candidate-review" data-i18n="interface:reviewInspectedSource">Review inspected source ↓</a>
         </div>
-        <p id="candidate-empty" class="note" hidden>
+        <p id="candidate-empty" class="note" hidden data-i18n="interface:noEntriesMatchClearFiltersToBrowseAllBundledSources">
           No entries match. Clear filters to browse all bundled sources.
         </p>
         <section
@@ -156,18 +163,18 @@
           data-library-group="journey"
           aria-labelledby="candidate-group-journey"
         >
-          <h2 id="candidate-group-journey">Whole Journey editions</h2>
+          <h2 id="candidate-group-journey" data-i18n="interface:wholeJourneyEditions">Whole Journey editions</h2>
           <div class="candidate-grid">
             <div class="candidate-entry" data-library-entry>
               <label
-                >Combined Journey edition
+                ><span data-i18n="interface:combinedJourneyEdition">Combined Journey edition</span>
                 <select id="whole-variety-edition">
-                  <option value="variety-1">Ornament and workshop · v4</option>
-                  <option value="sorting-lanes-1">Contested sorting lanes · v5</option>
-                  <option value="global-impact-1">Travelling trail impacts · v6</option>
-                  <option value="pressure-arcs-1">Readable pressure arcs · v7</option>
-                  <option value="cultural-pressure-1">Ukrainian + FPV pressure · v8</option>
-                  <option value="erosion-counterplay-1">Erosion counterplay · v9</option>
+                  <option value="variety-1" data-i18n="interface:ornamentAndWorkshopV4">Ornament and workshop · v4</option>
+                  <option value="sorting-lanes-1" data-i18n="interface:contestedSortingLanesV5">Contested sorting lanes · v5</option>
+                  <option value="global-impact-1" data-i18n="interface:travellingTrailImpactsV6">Travelling trail impacts · v6</option>
+                  <option value="pressure-arcs-1" data-i18n="interface:readablePressureArcsV7">Readable pressure arcs · v7</option>
+                  <option value="cultural-pressure-1" data-i18n="interface:ukrainianFpvPressureV8">Ukrainian + FPV pressure · v8</option>
+                  <option value="erosion-counterplay-1" data-i18n="interface:erosionCounterplayV9">Erosion counterplay · v9</option>
                   <option value="cultural-spatial-triptych-1">
                     Ukrainian cultural spatial triptych · v10
                   </option>
@@ -182,17 +189,17 @@
                   </option>
                 </select>
               </label>
-              <button id="whole-variety">
+              <button id="whole-variety" data-i18n="interface:inspectSelectedCombinedJourneyEditionBalancePending">
                 Inspect selected combined Journey edition · balance pending
               </button>
-              <p class="note">
+              <p class="note" data-i18n-rich="interface:ornamentAndWorkshopSuccessorEightOriginalPictureMissionsInTwo">
                 Ornament and workshop successor:
                 <a
                   href="../?journey=whole-spatial-v4"
                   target="_blank"
                   rel="noopener"
                   aria-label="Solo · whole-spatial-v4 (new tab)"
-                  >Solo ↗</a
+                   data-i18n="interface:solo" data-i18n-aria-label="interface:soloWholeSpatialV4NewTab" data-i18n-slot="slot0">Solo ↗</a
                 >
                 ·
                 <a
@@ -200,20 +207,20 @@
                   target="_blank"
                   rel="noopener"
                   aria-label="Versus · whole-spatial-v4 (new tab)"
-                  >Versus ↗</a
+                   data-i18n="interface:versus" data-i18n-aria-label="interface:versusWholeSpatialV4NewTab" data-i18n-slot="slot1">Versus ↗</a
                 >. Eight original-picture missions in two optional four-mission sequences. Find them
                 in the global chooser; Next stays inside the chosen sequence. The 71-mission core
                 and 12 Remixes are unchanged. Separate review progress; human balance, cultural and
                 device review pending.
               </p>
-              <p class="note">
+              <p class="note" data-i18n-rich="interface:contestedSortingSuccessorRevisesSortingYardSBafflesOccupiedPockets">
                 Contested sorting successor:
                 <a
                   href="../?journey=whole-spatial-v5"
                   target="_blank"
                   rel="noopener"
                   aria-label="Solo · whole-spatial-v5 (new tab)"
-                  >Solo ↗</a
+                   data-i18n="interface:solo" data-i18n-aria-label="interface:soloWholeSpatialV5NewTab" data-i18n-slot="slot0">Solo ↗</a
                 >
                 ·
                 <a
@@ -221,19 +228,19 @@
                   target="_blank"
                   rel="noopener"
                   aria-label="Versus · whole-spatial-v5 (new tab)"
-                  >Versus ↗</a
+                   data-i18n="interface:versus" data-i18n-aria-label="interface:versusWholeSpatialV5NewTab" data-i18n-slot="slot1">Versus ↗</a
                 >. Revises Sorting Yard's baffles, occupied pockets and roamer return lanes only.
                 Other missions and pictures unchanged. Separate review progress; human balance
                 pending.
               </p>
-              <p class="note">
+              <p class="note" data-i18n-rich="interface:travellingTrailImpactSuccessorUsesThePressureLinesTravellingImpact">
                 Travelling trail-impact successor:
                 <a
                   href="../?journey=whole-spatial-v6"
                   target="_blank"
                   rel="noopener"
                   aria-label="Solo · whole-spatial-v6 (new tab)"
-                  >Solo ↗</a
+                   data-i18n="interface:solo" data-i18n-aria-label="interface:soloWholeSpatialV6NewTab" data-i18n-slot="slot0">Solo ↗</a
                 >
                 ·
                 <a
@@ -241,19 +248,19 @@
                   target="_blank"
                   rel="noopener"
                   aria-label="Versus · whole-spatial-v6 (new tab)"
-                  >Versus ↗</a
+                   data-i18n="interface:versus" data-i18n-aria-label="interface:versusWholeSpatialV6NewTab" data-i18n-slot="slot1">Versus ↗</a
                 >. Uses the Pressure Lines travelling-impact contract for every eligible enemy and
                 active lane. Geometry, objectives, pictures, actor movement and v5 remain unchanged.
                 Separate review progress; human balance pending.
               </p>
-              <p class="note">
+              <p class="note" data-i18n-rich="interface:readablePressureArcSuccessorReplacesOneOrdinaryKeeperInEach">
                 Readable pressure-arc successor:
                 <a
                   href="../?journey=whole-spatial-v7"
                   target="_blank"
                   rel="noopener"
                   aria-label="Solo · whole-spatial-v7 (new tab)"
-                  >Solo ↗</a
+                   data-i18n="interface:solo" data-i18n-aria-label="interface:soloWholeSpatialV7NewTab" data-i18n-slot="slot0">Solo ↗</a
                 >
                 ·
                 <a
@@ -261,19 +268,19 @@
                   target="_blank"
                   rel="noopener"
                   aria-label="Versus · whole-spatial-v7 (new tab)"
-                  >Versus ↗</a
+                   data-i18n="interface:versus" data-i18n-aria-label="interface:versusWholeSpatialV7NewTab" data-i18n-slot="slot1">Versus ↗</a
                 >. Replaces one ordinary keeper in each of six Phaseworks missions with a visibly
                 warned, finite pursuer or interceptor. No actors are added; geometry, pictures and
                 the v6 edition remain unchanged. Separate review progress; human balance pending.
               </p>
-              <p class="note">
+              <p class="note" data-i18n-rich="interface:ukrainianAndFpvPressureSuccessorAdaptsSixExistingOrnamentAnd">
                 Ukrainian and FPV pressure successor:
                 <a
                   href="../?journey=whole-spatial-v8"
                   target="_blank"
                   rel="noopener"
                   aria-label="Solo · whole-spatial-v8 (new tab)"
-                  >Solo ↗</a
+                   data-i18n="interface:solo" data-i18n-aria-label="interface:soloWholeSpatialV8NewTab" data-i18n-slot="slot0">Solo ↗</a
                 >
                 ·
                 <a
@@ -281,7 +288,7 @@
                   target="_blank"
                   rel="noopener"
                   aria-label="Versus · whole-spatial-v8 (new tab)"
-                  >Versus ↗</a
+                   data-i18n="interface:versus" data-i18n-aria-label="interface:versusWholeSpatialV8NewTab" data-i18n-slot="slot1">Versus ↗</a
                 >. Adapts six existing ornament and FPV workshop missions in place with the same
                 finite pursuit/interception contract. No duplicate missions, extra actors, geometry
                 or picture changes. Separate review progress; human balance and cultural review
@@ -364,14 +371,17 @@
                 >. Both routes are opt-in editions on the accepted v11 lineage with separate
                 progress ownership. The v11 default remains unchanged.
               </p>
-              <p class="note">
+              <p
+                class="note"
+                data-i18n-rich="interface:erosionCounterplaySuccessorRecordsRepairVersusEscapeCounterplayForEvery"
+              >
                 Erosion counterplay successor:
                 <a
                   href="../?journey=whole-spatial-v9"
                   target="_blank"
                   rel="noopener"
                   aria-label="Solo · whole-spatial-v9 (new tab)"
-                  >Solo ↗</a
+                   data-i18n="interface:solo" data-i18n-aria-label="interface:soloWholeSpatialV9NewTab" data-i18n-slot="slot0">Solo ↗</a
                 >
                 ·
                 <a
@@ -379,7 +389,7 @@
                   target="_blank"
                   rel="noopener"
                   aria-label="Versus · whole-spatial-v9 (new tab)"
-                  >Versus ↗</a
+                   data-i18n="interface:versus" data-i18n-aria-label="interface:versusWholeSpatialV9NewTab" data-i18n-slot="slot1">Versus ↗</a
                 >. Records repair-versus-escape counterplay for every erosion mission and corrects
                 the four late practice ledgers. Runtime rules, coverage, actors, maps, objectives
                 and pictures stay exact. Separate review progress; human route/balance review
@@ -387,17 +397,17 @@
               </p>
             </div>
             <div class="candidate-entry" data-library-entry>
-              <button id="whole-timed">
+              <button id="whole-timed" data-i18n="interface:inspectCombinedJourneyWithTimedBonusesBalancePending">
                 Inspect combined Journey with timed bonuses · balance pending
               </button>
-              <p class="note">
+              <p class="note" data-i18n-rich="interface:timedBonusSuccessorTheFieldFinaleJourneyWithThreeOptional">
                 Timed-bonus successor:
                 <a
                   href="../?journey=whole-spatial-v3"
                   target="_blank"
                   rel="noopener"
                   aria-label="Solo · whole-spatial-v3 (new tab)"
-                  >Solo ↗</a
+                   data-i18n="interface:solo" data-i18n-aria-label="interface:soloWholeSpatialV3NewTab" data-i18n-slot="slot0">Solo ↗</a
                 >
                 ·
                 <a
@@ -405,7 +415,7 @@
                   target="_blank"
                   rel="noopener"
                   aria-label="Versus · whole-spatial-v3 (new tab)"
-                  >Versus ↗</a
+                   data-i18n="interface:versus" data-i18n-aria-label="interface:versusWholeSpatialV3NewTab" data-i18n-slot="slot1">Versus ↗</a
                 >. The field-finale Journey with three optional Border Bloom pickups that announce,
                 expire and relocate. Contact collects them; enclosure does not. Separate review
                 progress; balance and device testing pending. Other missions and pictures are
@@ -413,17 +423,17 @@
               </p>
             </div>
             <div class="candidate-entry" data-library-entry>
-              <button id="whole-field">
+              <button id="whole-field" data-i18n="interface:inspectCombinedJourneyWithFieldFinaleBalancePending">
                 Inspect combined Journey with field finale · balance pending
               </button>
-              <p class="note">
+              <p class="note" data-i18n-rich="interface:fieldFinaleSuccessorTheSameJourneyWithHomeSignalS">
                 Field-finale successor:
                 <a
                   href="../?journey=whole-spatial-v2"
                   target="_blank"
                   rel="noopener"
                   aria-label="Solo · whole-spatial-v2 (new tab)"
-                  >Solo ↗</a
+                   data-i18n="interface:solo" data-i18n-aria-label="interface:soloWholeSpatialV2NewTab" data-i18n-slot="slot0">Solo ↗</a
                 >
                 ·
                 <a
@@ -431,7 +441,7 @@
                   target="_blank"
                   rel="noopener"
                   aria-label="Versus · whole-spatial-v2 (new tab)"
-                  >Versus ↗</a
+                   data-i18n="interface:versus" data-i18n-aria-label="interface:versusWholeSpatialV2NewTab" data-i18n-slot="slot1">Versus ↗</a
                 >. The same Journey with Home Signal's ordinary-capture finale instead of its boss.
                 Balance pending; separate review progress, unchanged pictures and other missions.
                 The previous spatial edition remains available in this library. Draft edits are not
@@ -439,15 +449,15 @@
               </p>
             </div>
             <div class="candidate-entry" data-library-entry>
-              <button id="whole-spatial">Inspect combined spatial + pressure review</button>
-              <p class="note">
+              <button id="whole-spatial" data-i18n="interface:inspectCombinedSpatialPressureReview">Inspect combined spatial + pressure review</button>
+              <p class="note" data-i18n-rich="interface:combinedSpatialPressureReviewNineRevisedEncountersInThe71">
                 Combined spatial + pressure review:
                 <a
                   href="../?journey=whole-spatial-v1"
                   target="_blank"
                   rel="noopener"
                   aria-label="Solo · whole-spatial-v1 (new tab)"
-                  >Solo ↗</a
+                   data-i18n="interface:solo" data-i18n-aria-label="interface:soloWholeSpatialV1NewTab" data-i18n-slot="slot0">Solo ↗</a
                 >
                 ·
                 <a
@@ -455,7 +465,7 @@
                   target="_blank"
                   rel="noopener"
                   aria-label="Versus · whole-spatial-v1 (new tab)"
-                  >Versus ↗</a
+                   data-i18n="interface:versus" data-i18n-aria-label="interface:versusWholeSpatialV1NewTab" data-i18n-slot="slot1">Versus ↗</a
                 >. Nine revised encounters in the 71-mission core plus 12 optional Remixes; shared
                 pressure presets, campaign pictures and actor materials. Unvalidated candidates with
                 separate review progress. Human balance and device testing remain pending. Draft
@@ -463,15 +473,15 @@
               </p>
             </div>
             <div class="candidate-entry" data-library-entry>
-              <button id="whole-journey-actors">Inspect actor-material successor</button>
-              <p class="note">
+              <button id="whole-journey-actors" data-i18n="interface:inspectActorMaterialSuccessor">Inspect actor-material successor</button>
+              <p class="note" data-i18n-rich="interface:optionalActorMaterialSuccessorSameAuthoredChallengesExplicitNewPresentation">
                 Optional actor-material successor:
                 <a
                   href="../presentation/journey-actor-review.html"
                   target="_blank"
                   rel="noopener"
                   aria-label="Body studies · actor-material body studies (new tab)"
-                  >Body studies ↗</a
+                   data-i18n="interface:bodyStudies" data-i18n-aria-label="interface:bodyStudiesActorMaterialBodyStudiesNewTab" data-i18n-slot="slot0">Body studies ↗</a
                 >
                 ·
                 <a
@@ -479,7 +489,7 @@
                   target="_blank"
                   rel="noopener"
                   aria-label="Solo · whole-originals-v4 (new tab)"
-                  >Solo ↗</a
+                   data-i18n="interface:solo" data-i18n-aria-label="interface:soloWholeOriginalsV4NewTab" data-i18n-slot="slot1">Solo ↗</a
                 >
                 ·
                 <a
@@ -487,21 +497,21 @@
                   target="_blank"
                   rel="noopener"
                   aria-label="Versus · whole-originals-v4 (new tab)"
-                  >Versus ↗</a
+                   data-i18n="interface:versus" data-i18n-aria-label="interface:versusWholeOriginalsV4NewTab" data-i18n-slot="slot2">Versus ↗</a
                 >. Same authored challenges, explicit new presentation edition. Live readability and
                 human validation pending.
               </p>
             </div>
             <div class="candidate-entry" data-library-entry>
-              <button id="whole-journey">Inspect whole Journey picture candidates</button>
-              <p class="note">
+              <button id="whole-journey" data-i18n="interface:inspectWholeJourneyPictureCandidates">Inspect whole Journey picture candidates</button>
+              <p class="note" data-i18n-rich="interface:wholeJourneyOriginalPictureReview71CoreMissionsAnd12">
                 Whole Journey original-picture review:
                 <a
                   href="../?journey=whole-originals-v3"
                   target="_blank"
                   rel="noopener"
                   aria-label="Solo · whole-originals-v3 (new tab)"
-                  >Solo ↗</a
+                   data-i18n="interface:solo" data-i18n-aria-label="interface:soloWholeOriginalsV3NewTab" data-i18n-slot="slot0">Solo ↗</a
                 >
                 ·
                 <a
@@ -509,7 +519,7 @@
                   target="_blank"
                   rel="noopener"
                   aria-label="Versus · whole-originals-v3 (new tab)"
-                  >Versus ↗</a
+                   data-i18n="interface:versus" data-i18n-aria-label="interface:versusWholeOriginalsV3NewTab" data-i18n-slot="slot1">Versus ↗</a
                 >. 71 core missions and 12 optional Remixes. Human validation pending; original
                 pictures require a connection. These bundled candidates do not include your draft
                 edits.
@@ -522,55 +532,55 @@
           data-library-group="chapters"
           aria-labelledby="candidate-group-chapters"
         >
-          <h2 id="candidate-group-chapters">Individual chapters</h2>
+          <h2 id="candidate-group-chapters" data-i18n="interface:individualChapters">Individual chapters</h2>
           <div class="candidate-grid">
             <div class="candidate-entry" data-library-entry>
-              <button id="opening">Inspect opening candidates</button>
+              <button id="opening" data-i18n="interface:inspectOpeningCandidates">Inspect opening candidates</button>
             </div>
             <div class="candidate-entry" data-library-entry>
-              <button id="border">Inspect Border Bloom candidates</button>
+              <button id="border" data-i18n="interface:inspectBorderBloomCandidates">Inspect Border Bloom candidates</button>
             </div>
             <div class="candidate-entry" data-library-entry>
-              <button id="signal">Inspect Signal Gardens greyboxes</button>
+              <button id="signal" data-i18n="interface:inspectSignalGardensGreyboxes">Inspect Signal Gardens greyboxes</button>
             </div>
             <div class="candidate-entry" data-library-entry>
-              <button id="neon">Inspect Neon Contours picture candidates</button>
+              <button id="neon" data-i18n="interface:inspectNeonContoursPictureCandidates">Inspect Neon Contours picture candidates</button>
             </div>
             <div class="candidate-entry" data-library-entry>
               <label
-                >Rover study edition
+                ><span data-i18n="interface:roverStudyEdition">Rover study edition</span>
                 <select id="rover-edition">
-                  <option value="teaching-1">First-capture teaching</option>
-                  <option value="sorting-spatial-1">Contested sorting lanes · pressure-v2</option>
+                  <option value="teaching-1" data-i18n="interface:firstCaptureTeaching">First-capture teaching</option>
+                  <option value="sorting-spatial-1" data-i18n="interface:contestedSortingLanesPressureV2">Contested sorting lanes · pressure-v2</option>
                 </select>
               </label>
-              <button id="rover">Inspect Rover Yard picture candidates</button>
-              <p class="note">
+              <button id="rover" data-i18n="interface:inspectRoverYardPictureCandidates">Inspect Rover Yard picture candidates</button>
+              <p class="note" data-i18n="interface:sortingLanesIsASpatialBalanceCandidateTwoOccupiedPockets">
                 Sorting lanes is a spatial balance candidate: two occupied pockets per chamber and
                 active return-stub roamers. Human balance pending; earlier editions remain
                 unchanged.
               </p>
             </div>
             <div class="candidate-entry" data-library-entry>
-              <button id="fracture">Inspect Fractured Grid picture candidates</button>
+              <button id="fracture" data-i18n="interface:inspectFracturedGridPictureCandidates">Inspect Fractured Grid picture candidates</button>
             </div>
             <div class="candidate-entry" data-library-entry>
-              <button id="phase">Inspect Phaseworks picture candidates</button>
+              <button id="phase" data-i18n="interface:inspectPhaseworksPictureCandidates">Inspect Phaseworks picture candidates</button>
             </div>
             <div class="candidate-entry" data-library-entry>
-              <button id="livewire">Inspect Livewire Foundry picture candidates</button>
+              <button id="livewire" data-i18n="interface:inspectLivewireFoundryPictureCandidates">Inspect Livewire Foundry picture candidates</button>
             </div>
             <div class="candidate-entry" data-library-entry>
-              <button id="relay">Inspect Relay Labyrinth picture candidates</button>
+              <button id="relay" data-i18n="interface:inspectRelayLabyrinthPictureCandidates">Inspect Relay Labyrinth picture candidates</button>
             </div>
             <div class="candidate-entry" data-library-entry>
-              <button id="crosswind">Inspect Crosswind Array picture candidates</button>
+              <button id="crosswind" data-i18n="interface:inspectCrosswindArrayPictureCandidates">Inspect Crosswind Array picture candidates</button>
             </div>
             <div class="candidate-entry" data-library-entry>
-              <button id="sentinel">Inspect Sentinel Crown picture candidates</button>
+              <button id="sentinel" data-i18n="interface:inspectSentinelCrownPictureCandidates">Inspect Sentinel Crown picture candidates</button>
             </div>
             <div class="candidate-entry" data-library-entry>
-              <button id="apex">Inspect Apex Aurora picture candidates</button>
+              <button id="apex" data-i18n="interface:inspectApexAuroraPictureCandidates">Inspect Apex Aurora picture candidates</button>
             </div>
           </div>
         </section>
@@ -579,7 +589,7 @@
           data-library-group="mechanics"
           aria-labelledby="candidate-group-mechanics"
         >
-          <h2 id="candidate-group-mechanics">Mechanics and spatial studies</h2>
+          <h2 id="candidate-group-mechanics" data-i18n="interface:mechanicsAndSpatialStudies">Mechanics and spatial studies</h2>
           <div class="candidate-grid">
             <div
               class="candidate-entry"
@@ -587,41 +597,41 @@
               data-library-keywords="ukrainian vyshyvanka vyshivanka fpv drone pressure"
             >
               <label
-                >Ornament / workshop and pursuit study edition
+                ><span data-i18n="interface:ornamentWorkshopAndPursuitStudyEdition">Ornament / workshop and pursuit study edition</span>
                 <select id="spatial-edition">
-                  <option value="original">Original greyboxes</option>
-                  <option value="spatial-2">Spatial revision 2 — pacing study</option>
+                  <option value="original" data-i18n="interface:originalGreyboxes">Original greyboxes</option>
+                  <option value="spatial-2" data-i18n="interface:spatialRevision2PacingStudy">Spatial revision 2 — pacing study</option>
                 </select> </label
-              ><button id="cultural-workshop">Inspect ornament + workshop greyboxes</button
-              ><button id="pursuit-intercept">Inspect pursuit + interception study</button>
+              ><button id="cultural-workshop" data-i18n="interface:inspectOrnamentWorkshopGreyboxes">Inspect ornament + workshop greyboxes</button
+              ><button id="pursuit-intercept" data-i18n="interface:inspectPursuitInterceptionStudy">Inspect pursuit + interception study</button>
             </div>
             <div class="candidate-entry" data-library-entry>
-              <button id="timed-border">Inspect timed bonus study</button>
+              <button id="timed-border" data-i18n="interface:inspectTimedBonusStudy">Inspect timed bonus study</button>
             </div>
             <div class="candidate-entry" data-library-entry>
-              <button id="combat-study">Inspect optional robot greyboxes</button>
+              <button id="combat-study" data-i18n="interface:inspectOptionalRobotGreyboxes">Inspect optional robot greyboxes</button>
             </div>
             <div class="candidate-entry" data-library-entry>
-              <button id="fracture-spatial">Inspect Two Districts greybox successor</button>
+              <button id="fracture-spatial" data-i18n="interface:inspectTwoDistrictsGreyboxSuccessor">Inspect Two Districts greybox successor</button>
             </div>
             <div class="candidate-entry" data-library-entry>
-              <button id="phase-spatial">Inspect Reserve landing greybox successor</button>
+              <button id="phase-spatial" data-i18n="interface:inspectReserveLandingGreyboxSuccessor">Inspect Reserve landing greybox successor</button>
             </div>
             <div class="candidate-entry" data-library-entry>
               <label
-                >Sentinel receiver study edition
+                ><span data-i18n="interface:sentinelReceiverStudyEdition">Sentinel receiver study edition</span>
                 <select id="sentinel-spatial-edition">
-                  <option value="original">Original receiver galleries</option>
-                  <option value="inner">Inner receiver approach · balance pending</option>
+                  <option value="original" data-i18n="interface:originalReceiverGalleries">Original receiver galleries</option>
+                  <option value="inner" data-i18n="interface:innerReceiverApproachBalancePending">Inner receiver approach · balance pending</option>
                 </select>
               </label>
-              <button id="sentinel-spatial">Inspect Sentinel receiver greybox successor</button>
+              <button id="sentinel-spatial" data-i18n="interface:inspectSentinelReceiverGreyboxSuccessor">Inspect Sentinel receiver greybox successor</button>
             </div>
             <div class="candidate-entry" data-library-entry>
-              <button id="apex-spatial">Inspect Home Signal contested-return study</button>
+              <button id="apex-spatial" data-i18n="interface:inspectHomeSignalContestedReturnStudy">Inspect Home Signal contested-return study</button>
             </div>
             <div class="candidate-entry" data-library-entry>
-              <button id="apex-field">
+              <button id="apex-field" data-i18n="interface:inspectHomeSignalFieldFinaleStudyBalancePending">
                 Inspect Home Signal field-finale study · balance pending
               </button>
             </div>
@@ -632,7 +642,7 @@
           data-library-group="team"
           aria-labelledby="candidate-group-team"
         >
-          <h2 id="candidate-group-team">Team studies</h2>
+          <h2 id="candidate-group-team" data-i18n="interface:teamStudies">Team studies</h2>
           <div class="candidate-grid">
             <div
               class="candidate-entry"
@@ -640,17 +650,17 @@
               data-library-keywords="freeze slow speed bonus depot coolant window"
             >
               <label
-                >Shared windows edition
+                ><span data-i18n="interface:sharedWindowsEdition">Shared windows edition</span>
                 <select id="team-window-edition">
-                  <option value="originals-1">Original placements</option>
-                  <option value="window-spatial-1">Contested outer pockets · pressure-v2</option>
-                  <option value="depot-spatial-1">
+                  <option value="originals-1" data-i18n="interface:originalPlacements">Original placements</option>
+                  <option value="window-spatial-1" data-i18n="interface:contestedOuterPocketsPressureV2">Contested outer pockets · pressure-v2</option>
+                  <option value="depot-spatial-1" data-i18n="interface:contestedPocketsDepotLanesPressureV2">
                     Contested pockets + depot lanes · pressure-v2
                   </option>
                 </select>
               </label>
-              <button id="team-timed-originals">Inspect Shared windows originals</button>
-              <p class="note">
+              <button id="team-timed-originals" data-i18n="interface:inspectSharedWindowsOriginals">Inspect Shared windows originals</button>
+              <p class="note" data-i18n="interface:threeOriginalPictureMissionsWithOptionalSharedPickupWindowsHuman">
                 Three original-picture missions with optional shared pickup windows. Human and
                 device validation pending. Outer pockets changes two Window Exchange keepers; Depot
                 lanes also keeps two inner keepers on vertical routes. Geometry, speeds and bonus
@@ -661,34 +671,34 @@
                 target="_blank"
                 rel="noopener"
                 aria-label="Play bundled Shared windows test (does not include draft edits) · team-timed-originals (new tab)"
-                >Play bundled Shared windows test (does not include draft edits)</a
+                 data-i18n="interface:playBundledSharedWindowsTestDoesNotIncludeDraftEdits2" data-i18n-aria-label="interface:playBundledSharedWindowsTestDoesNotIncludeDraftEdits">Play bundled Shared windows test (does not include draft edits)</a
               >
               <a
                 href="../couch/relay-rescue.html?journey=team-window-spatial-1"
                 target="_blank"
                 rel="noopener"
                 aria-label="Play bundled outer-pocket test (does not include draft edits) · team-window-spatial-1 (new tab)"
-                >Play bundled outer-pocket test (does not include draft edits)</a
+                 data-i18n="interface:playBundledOuterPocketTestDoesNotIncludeDraftEdits2" data-i18n-aria-label="interface:playBundledOuterPocketTestDoesNotIncludeDraftEdits">Play bundled outer-pocket test (does not include draft edits)</a
               >
               <a
                 href="../couch/relay-rescue.html?journey=team-depot-spatial-1"
                 target="_blank"
                 rel="noopener"
                 aria-label="Play bundled depot-lane test (does not include draft edits) · team-depot-spatial-1 (new tab)"
-                >Play bundled depot-lane test (does not include draft edits)</a
+                 data-i18n="interface:playBundledDepotLaneTestDoesNotIncludeDraftEdits2" data-i18n-aria-label="interface:playBundledDepotLaneTestDoesNotIncludeDraftEdits">Play bundled depot-lane test (does not include draft edits)</a
               >
             </div>
             <div class="candidate-entry" data-library-entry>
-              <label for="team-journey-edition">Team Journey edition</label>
+              <label for="team-journey-edition" data-i18n="interface:teamJourneyEdition">Team Journey edition</label>
               <select id="team-journey-edition">
-                <option value="originals">Original pictures · historical difficulty</option>
-                <option value="pressure-originals-1">Pressure presets · original pictures</option>
-                <option value="spatial-originals-1">
+                <option value="originals" data-i18n="interface:originalPicturesHistoricalDifficulty">Original pictures · historical difficulty</option>
+                <option value="pressure-originals-1" data-i18n="interface:pressurePresetsOriginalPictures">Pressure presets · original pictures</option>
+                <option value="spatial-originals-1" data-i18n="interface:changingReturnsPressureOriginalPictures">
                   Changing returns + pressure · original pictures
                 </option>
               </select>
-              <button id="team-journey">Inspect Team Journey picture candidates</button>
-              <p class="note">
+              <button id="team-journey" data-i18n="interface:inspectTeamJourneyPictureCandidates">Inspect Team Journey picture candidates</button>
+              <p class="note" data-i18n="interface:twelveAuthoredTeamCandidatesWithOriginalPicturesHumanValidationPending">
                 Twelve authored Team candidates with original pictures. Human validation pending.
                 Pressure uses enemy speed ×1 / ×1.4 / ×1.75 and shared reserves 4 / 2 / 1. Handling
                 and warnings stay consistent. Inspect before Apply. Changing returns revises Shared
@@ -700,35 +710,35 @@
                 target="_blank"
                 rel="noopener"
                 aria-label="Play bundled Team pressure test (does not include draft edits) · team-pressure-originals-1 (new tab)"
-                >Play bundled Team pressure test (does not include draft edits)</a
+                 data-i18n="interface:playBundledTeamPressureTestDoesNotIncludeDraftEdits2" data-i18n-aria-label="interface:playBundledTeamPressureTestDoesNotIncludeDraftEdits">Play bundled Team pressure test (does not include draft edits)</a
               >
               <a
                 href="../couch/relay-rescue.html?journey=team-spatial-originals-1"
                 target="_blank"
                 rel="noopener"
                 aria-label="Play bundled Team changing-return test (does not include draft edits) · team-spatial-originals-1 (new tab)"
-                >Play bundled Team changing-return test (does not include draft edits)</a
+                 data-i18n="interface:playBundledTeamChangingReturnTestDoesNotIncludeDraft2" data-i18n-aria-label="interface:playBundledTeamChangingReturnTestDoesNotIncludeDraft">Play bundled Team changing-return test (does not include draft edits)</a
               >
               <a
                 href="../couch/relay-rescue.html?journey=team-trail-impact-originals-1"
                 target="_blank"
                 rel="noopener"
                 aria-label="Play bundled Team travelling-impact test (does not include draft edits) · team-trail-impact-originals-1 (new tab)"
-                >Play bundled Team travelling-impact test (does not include draft edits)</a
+                 data-i18n="interface:playBundledTeamTravellingImpactTestDoesNotIncludeDraft2" data-i18n-aria-label="interface:playBundledTeamTravellingImpactTestDoesNotIncludeDraft">Play bundled Team travelling-impact test (does not include draft edits)</a
               >
               <a
                 href="../couch/relay-rescue.html?journey=team-specialist-originals-1"
                 target="_blank"
                 rel="noopener"
                 aria-label="Play bundled Team specialist test (does not include draft edits) · team-specialist-originals-1 (new tab)"
-                >Play bundled Team specialist test (does not include draft edits)</a
+                 data-i18n="interface:playBundledTeamSpecialistTestDoesNotIncludeDraftEdits2" data-i18n-aria-label="interface:playBundledTeamSpecialistTestDoesNotIncludeDraftEdits">Play bundled Team specialist test (does not include draft edits)</a
               >
             </div>
             <div class="candidate-entry" data-library-entry>
-              <button id="team-timed">Inspect Team timed-route greyboxes</button>
+              <button id="team-timed" data-i18n="interface:inspectTeamTimedRouteGreyboxes">Inspect Team timed-route greyboxes</button>
             </div>
             <div class="candidate-entry" data-library-entry>
-              <button id="team-signal">Inspect Team Signal greybox</button>
+              <button id="team-signal" data-i18n="interface:inspectTeamSignalGreybox">Inspect Team Signal greybox</button>
             </div>
           </div>
         </section>
@@ -737,17 +747,17 @@
           data-library-group="players"
           aria-labelledby="candidate-group-players"
         >
-          <h2 id="candidate-group-players">Early Journey test players</h2>
+          <h2 id="candidate-group-players" data-i18n="interface:earlyJourneyTestPlayers">Early Journey test players</h2>
           <div class="candidate-grid">
             <div class="candidate-entry" data-library-entry>
-              <p class="note">
+              <p class="note" data-i18n-rich="interface:testTheBundledHorizonBorderJourneyTheseUnvalidatedTestBuilds">
                 Test the bundled Horizon → Border Journey:
                 <a
                   href="../?journey=authored"
                   target="_blank"
                   rel="noopener"
                   aria-label="Solo · authored (new tab)"
-                  >Solo ↗</a
+                   data-i18n="interface:solo" data-i18n-aria-label="interface:soloAuthoredNewTab" data-i18n-slot="slot0">Solo ↗</a
                 >
                 ·
                 <a
@@ -755,7 +765,7 @@
                   target="_blank"
                   rel="noopener"
                   aria-label="Versus · authored (new tab)"
-                  >Versus ↗</a
+                   data-i18n="interface:versus" data-i18n-aria-label="interface:versusAuthoredNewTab" data-i18n-slot="slot1">Versus ↗</a
                 >. These unvalidated test builds do not include your unpublished edits.
               </p>
             </div>
@@ -763,41 +773,41 @@
         </section>
       </details>
       <details class="difficulty-edition">
-        <summary>Change this draft's difficulty edition</summary>
-        <button id="pressure-edition" aria-describedby="pressure-edition-help">
+        <summary data-i18n="interface:changeThisDraftSDifficultyEdition">Change this draft's difficulty edition</summary>
+        <button id="pressure-edition" aria-describedby="pressure-edition-help" data-i18n="interface:inspectPressureV2CopyOfCurrentDraft">
           Inspect pressure-v2 copy of current draft
         </button>
-        <p id="pressure-edition-help" class="note">
+        <p id="pressure-edition-help" class="note" data-i18n="interface:pressureV2ChangesEnemySpeedAndAttackRestsForAll">
           Pressure-v2 changes enemy speed and attack rests for all missions in the current draft.
           Player handling, warnings, maps and pictures stay unchanged. Inspect, then Apply; nothing
           is published. Disabled when this draft already uses pressure-v2.
         </p>
       </details>
       <div class="workspace">
-        <aside aria-label="Project and missions">
-          <p class="eyebrow">PROJECT</p>
-          <label>Local project ID<input id="project-id" value="my-journey" maxlength="80" /></label>
+        <aside aria-label="Project and missions" data-i18n-aria-label="interface:projectAndMissions">
+          <p class="eyebrow" data-i18n="interface:project">PROJECT</p>
+          <label><span data-i18n="interface:localProjectId">Local project ID</span><input id="project-id" value="my-journey" maxlength="80" /></label>
           <label
-            >Checkpoint<input id="checkpoint" type="number" min="1" step="1" placeholder="Latest"
-          /></label>
+            ><span data-i18n="interface:checkpoint">Checkpoint</span><input id="checkpoint" type="number" min="1" step="1" placeholder="Latest"
+           data-i18n-placeholder="interface:latest"/></label>
           <div class="pair">
-            <button id="load">Inspect saved</button><button id="new">New project</button>
+            <button id="load" data-i18n="interface:inspectSaved">Inspect saved</button><button id="new" data-i18n="interface:newProject">New project</button>
           </div>
-          <p class="note">
+          <p class="note" data-i18n="interface:inspectAnySavedCheckpointBeforeApplyingItRestoringCreatesA">
             Inspect any saved checkpoint before applying it. Restoring creates a new checkpoint;
             newer history stays available.
           </p>
           <p id="project-name"></p>
-          <label>Mission<select id="mission"></select></label>
+          <label><span data-i18n="interface:mission">Mission</span><select id="mission"></select></label>
           <p id="structure" class="note"></p>
           <label
-            >Difficulty<select id="difficulty" aria-describedby="difficulty-help rules">
-              <option value="gentle">Gentle</option>
-              <option value="standard" selected>Standard</option>
-              <option value="expert">Expert</option>
+            ><span data-i18n="interface:difficulty">Difficulty</span><select id="difficulty" aria-describedby="difficulty-help rules">
+              <option value="gentle" data-i18n="interface:gentle">Gentle</option>
+              <option value="standard" selected data-i18n="interface:standard">Standard</option>
+              <option value="expert" data-i18n="interface:expert">Expert</option>
             </select></label
           >
-          <p id="difficulty-help" class="note">
+          <p id="difficulty-help" class="note" data-i18n="interface:enemySpeedIsRelativeToEachMovingActorSAuthored">
             Enemy speed is relative to each moving actor's authored tier. The selected rules below
             describe attack rests and countdowns. Player handling and warning lengths stay
             unchanged. These are the authored Studio preview values. The separate current gameplay
@@ -807,17 +817,17 @@
           <p id="rules" class="note"></p>
           <p id="current-gameplay" class="note" aria-live="polite"></p>
           <details>
-            <summary>Tune mission challenge</summary>
-            <p class="note">
+            <summary data-i18n="interface:tuneMissionChallenge">Tune mission challenge</summary>
+            <p class="note" data-i18n="interface:ratingsDescribeTheIntendedChallengeTheyDoNotChangeEnemy">
               Ratings describe the intended challenge; they do not change enemy speed. Lives and
               handling come from the shared policy. Gentle never has a failing countdown. Apply
               these fields before switching missions or editing other parts of the draft.
             </p>
             <form id="tuning-form">
               <fieldset id="tuning-tools">
-                <legend>Mission settings</legend>
+                <legend data-i18n="interface:missionSettings">Mission settings</legend>
                 <label
-                  >Target territory %<input
+                  ><span data-i18n="interface:targetTerritory">Target territory %</span><input
                     id="target-coverage"
                     type="number"
                     min="1"
@@ -826,7 +836,7 @@
                     required
                 /></label>
                 <label
-                  >Countdown seconds · 0 means none<input
+                  ><span data-i18n="interface:countdownSeconds0MeansNone">Countdown seconds · 0 means none</span><input
                     id="countdown-seconds"
                     type="number"
                     min="0"
@@ -835,7 +845,7 @@
                     required
                 /></label>
                 <label
-                  >Challenge band<input
+                  ><span data-i18n="interface:challengeBand">Challenge band</span><input
                     id="rating-band"
                     type="number"
                     min="1"
@@ -844,7 +854,7 @@
                     required
                 /></label>
                 <label
-                  >Planning<input
+                  ><span data-i18n="interface:planning">Planning</span><input
                     id="rating-planning"
                     type="number"
                     min="0"
@@ -853,7 +863,7 @@
                     required
                 /></label>
                 <label
-                  >Execution<input
+                  ><span data-i18n="interface:execution">Execution</span><input
                     id="rating-execution"
                     type="number"
                     min="0"
@@ -862,7 +872,7 @@
                     required
                 /></label>
                 <label
-                  >Threat density<input
+                  ><span data-i18n="interface:threatDensity">Threat density</span><input
                     id="rating-threatDensity"
                     type="number"
                     min="0"
@@ -871,7 +881,7 @@
                     required
                 /></label>
                 <label
-                  >Time pressure<input
+                  ><span data-i18n="interface:timePressure">Time pressure</span><input
                     id="rating-timePressure"
                     type="number"
                     min="0"
@@ -880,7 +890,7 @@
                     required
                 /></label>
                 <label
-                  >Mechanic load<input
+                  ><span data-i18n="interface:mechanicLoad">Mechanic load</span><input
                     id="rating-mechanicLoad"
                     type="number"
                     min="0"
@@ -889,7 +899,7 @@
                     required
                 /></label>
                 <label
-                  >Coordination<input
+                  ><span data-i18n="interface:coordination">Coordination</span><input
                     id="rating-coordination"
                     type="number"
                     min="0"
@@ -897,18 +907,18 @@
                     step="1"
                     required
                 /></label>
-                <button type="submit">Validate & apply challenge</button>
+                <button type="submit" data-i18n="interface:validateApplyChallenge">Validate & apply challenge</button>
               </fieldset>
             </form>
           </details>
           <details>
-            <summary>Authored preview and current gameplay rules</summary>
+            <summary data-i18n="interface:effectiveRulesAndIdentity">Authored preview and current gameplay rules</summary>
             <pre id="effective"></pre>
           </details>
         </aside>
-        <section class="board-panel" id="map-workbench" tabindex="-1" aria-label="Map workbench">
+        <section class="board-panel" id="map-workbench" tabindex="-1" aria-label="Map workbench" data-i18n-aria-label="interface:mapWorkbench">
           <div class="section-heading">
-            <h2 id="map-name">Map</h2>
+            <h2 id="map-name" data-i18n="interface:map">Map</h2>
             <span>72 × 36</span>
           </div>
           <canvas
@@ -917,183 +927,183 @@
             height="504"
             role="img"
             aria-label="Map geometry; the same information is listed below. Click to choose edit coordinates."
-          ></canvas>
+           data-i18n-aria-label="interface:mapGeometryTheSameInformationIsListedBelowClickTo"></canvas>
           <div id="empty-board" hidden>
-            <p class="eyebrow">A BLANK START / YOUR NEXT CHALLENGE</p>
-            <p>
+            <p class="eyebrow" data-i18n="interface:aBlankStartYourNextChallenge">A BLANK START / YOUR NEXT CHALLENGE</p>
+            <p data-i18n="interface:yourProjectIsReadyCreateAMissionNowOrOrganize">
               Your project is ready. Create a mission now, or organize empty campaigns and packs
               first. No map or gameplay rules are applied until a mission exists.
             </p>
-            <button id="create-first-mission" class="primary">Create first mission</button>
+            <button id="create-first-mission" class="primary" data-i18n="interface:createFirstMission">Create first mission</button>
           </div>
           <p id="board-legend" class="legend">
-            <span>■ Reclaimed foundation</span><span>▧ Wall</span><span>● Field keeper</span
-            ><span>◇ Perimeter patrol</span><span>▲ Frontier patrol</span
-            ><span>Tracked square: reclaimed-ground roamer</span
-            ><span>Toothed blade: territory eroder</span><span>Bolt: trail-impact carrier</span
-            ><span>Twin posts: stationary lane emitter</span
-            ><span>Crown: shield-relay Sentinel</span><span>✚ Spawn</span>
-            <span>Framed pickups: + Life · &gt; Speed · v Slow · * Freeze</span>
-            <span>Capture markers: ! Required · o Optional · ? Hidden</span>
-            <span>Relay numbers match triggers to connectors, not a required order.</span>
-            <span>Slow field: paired dashes · Lethal field: framed ×</span>
+            <span data-i18n="interface:reclaimedFoundation">■ Reclaimed foundation</span><span data-i18n="interface:wall">▧ Wall</span><span data-i18n="interface:fieldKeeper">● Field keeper</span
+            ><span data-i18n="interface:perimeterPatrol">◇ Perimeter patrol</span><span data-i18n="interface:frontierPatrol">▲ Frontier patrol</span
+            ><span data-i18n="interface:trackedSquareReclaimedGroundRoamer">Tracked square: reclaimed-ground roamer</span
+            ><span data-i18n="interface:toothedBladeTerritoryEroder">Toothed blade: territory eroder</span><span data-i18n="interface:boltTrailImpactCarrier">Bolt: trail-impact carrier</span
+            ><span data-i18n="interface:twinPostsStationaryLaneEmitter">Twin posts: stationary lane emitter</span
+            ><span data-i18n="interface:crownShieldRelaySentinel">Crown: shield-relay Sentinel</span><span data-i18n="interface:spawn">✚ Spawn</span>
+            <span data-i18n="interface:framedPickupsLifeSpeedVSlowFreeze">Framed pickups: + Life · &gt; Speed · v Slow · * Freeze</span>
+            <span data-i18n="interface:captureMarkersRequiredOOptionalHidden">Capture markers: ! Required · o Optional · ? Hidden</span>
+            <span data-i18n="interface:relayNumbersMatchTriggersToConnectorsNotARequiredOrder">Relay numbers match triggers to connectors, not a required order.</span>
+            <span data-i18n="interface:slowFieldPairedDashesLethalFieldFramed">Slow field: paired dashes · Lethal field: framed ×</span>
             <span
-              >Arrow field: faster with, slower against, unchanged across; never forced drift.</span
+               data-i18n="interface:arrowFieldFasterWithSlowerAgainstUnchangedAcrossNeverForced">Arrow field: faster with, slower against, unchanged across; never forced drift.</span
             >
-            <span>Capturing field neutralizes its terrain; walls never close cuts.</span>
+            <span data-i18n="interface:capturingFieldNeutralizesItsTerrainWallsNeverCloseCuts">Capturing field neutralizes its terrain; walls never close cuts.</span>
           </p>
           <p id="geometry" class="note"></p>
           <label class="toggle"
-            ><input id="show-capture" type="checkbox" checked />Show frozen capture overlay</label
+            ><input id="show-capture" type="checkbox" checked /><span data-i18n="interface:showFrozenCaptureOverlay">Show frozen capture overlay</span></label
           >
           <p id="capture-legend" class="legend">
-            <span>· Retained field</span><span>╱ Would fill</span><span>□ Hypothetical trail</span
-            ><span>◎ Field anchor</span><span>▣ Affected objective</span>
+            <span data-i18n="interface:retainedField">· Retained field</span><span data-i18n="interface:wouldFill">╱ Would fill</span><span data-i18n="interface:hypotheticalTrail">□ Hypothetical trail</span
+            ><span data-i18n="interface:fieldAnchor">◎ Field anchor</span><span data-i18n="interface:affectedObjective">▣ Affected objective</span>
           </p>
           <p id="capture-summary" class="note" role="status"></p>
           <form id="geometry-form">
             <fieldset id="geometry-tools">
-              <legend>Add geometry · makes a new map revision</legend>
+              <legend data-i18n="interface:addGeometryMakesANewMapRevision">Add geometry · makes a new map revision</legend>
               <label
-                >Surface<select id="surface">
-                  <option value="foundations">Foundation</option>
-                  <option value="walls">Wall</option>
-                  <option value="slow">Slow field</option>
-                  <option value="lethal">Lethal field</option>
-                  <option value="spawn">Move mission spawn / Team seat 1</option>
-                  <option value="spawn-team-two">Move Team seat 2</option>
+                ><span data-i18n="interface:surface">Surface</span><select id="surface">
+                  <option value="foundations" data-i18n="interface:foundation">Foundation</option>
+                  <option value="walls" data-i18n="interface:wall2">Wall</option>
+                  <option value="slow" data-i18n="interface:slowField">Slow field</option>
+                  <option value="lethal" data-i18n="interface:lethalField">Lethal field</option>
+                  <option value="spawn" data-i18n="interface:moveMissionSpawnTeamSeat1">Move mission spawn / Team seat 1</option>
+                  <option value="spawn-team-two" data-i18n="interface:moveTeamSeat2">Move Team seat 2</option>
                 </select></label
               >
               <div class="coordinates">
-                <label>X<input id="x" type="number" min="0" max="71" value="20" required /></label
-                ><label>Y<input id="y" type="number" min="0" max="35" value="12" required /></label
+                <label><span data-i18n="interface:x">X</span><input id="x" type="number" min="0" max="71" value="20" required /></label
+                ><label><span data-i18n="interface:y">Y</span><input id="y" type="number" min="0" max="35" value="12" required /></label
                 ><label
-                  >Width<input id="w" type="number" min="1" max="70" value="5" required /></label
+                  ><span data-i18n="interface:width">Width</span><input id="w" type="number" min="1" max="70" value="5" required /></label
                 ><label
-                  >Height<input id="h" type="number" min="1" max="34" value="5" required
+                  ><span data-i18n="interface:height">Height</span><input id="h" type="number" min="1" max="34" value="5" required
                 /></label>
               </div>
-              <button type="submit">Validate & apply geometry</button>
+              <button type="submit" data-i18n="interface:validateApplyGeometry">Validate & apply geometry</button>
             </fieldset>
           </form>
           <details id="geometry-edit-panel">
-            <summary>Reshape existing geometry</summary>
+            <summary data-i18n="interface:reshapeExistingGeometry">Reshape existing geometry</summary>
             <form id="geometry-edit-form">
               <fieldset id="geometry-edit-tools">
-                <legend>Copy-on-write rectangle edit</legend>
-                <label>Existing rectangle<select id="geometry-edit-select"></select></label>
+                <legend data-i18n="interface:copyOnWriteRectangleEdit">Copy-on-write rectangle edit</legend>
+                <label><span data-i18n="interface:existingRectangle">Existing rectangle</span><select id="geometry-edit-select"></select></label>
                 <div class="coordinates">
                   <label
-                    >X<input id="geometry-edit-x" type="number" min="1" max="70" required
+                    ><span data-i18n="interface:x">X</span><input id="geometry-edit-x" type="number" min="1" max="70" required
                   /></label>
                   <label
-                    >Y<input id="geometry-edit-y" type="number" min="1" max="34" required
+                    ><span data-i18n="interface:y">Y</span><input id="geometry-edit-y" type="number" min="1" max="34" required
                   /></label>
                   <label
-                    >Width<input id="geometry-edit-w" type="number" min="1" max="70" required
+                    ><span data-i18n="interface:width">Width</span><input id="geometry-edit-w" type="number" min="1" max="70" required
                   /></label>
                   <label
-                    >Height<input id="geometry-edit-h" type="number" min="1" max="34" required
+                    ><span data-i18n="interface:height">Height</span><input id="geometry-edit-h" type="number" min="1" max="34" required
                   /></label>
                 </div>
                 <label id="geometry-edit-kind-row"
-                  >Terrain material<select id="geometry-edit-kind">
-                    <option value="slow">Slow field</option>
-                    <option value="lethal">Lethal field</option>
+                  ><span data-i18n="interface:terrainMaterial">Terrain material</span><select id="geometry-edit-kind">
+                    <option value="slow" data-i18n="interface:slowField">Slow field</option>
+                    <option value="lethal" data-i18n="interface:lethalField">Lethal field</option>
                   </select></label
                 >
-                <button id="geometry-edit-submit" type="submit">
+                <button id="geometry-edit-submit" type="submit" data-i18n="interface:validateReplaceRectangle">
                   Validate & replace rectangle
                 </button>
-                <button id="geometry-edit-remove" type="button">Remove selected rectangle</button>
+                <button id="geometry-edit-remove" type="button" data-i18n="interface:removeSelectedRectangle">Remove selected rectangle</button>
                 <p id="geometry-edit-result" class="note" role="status"></p>
               </fieldset>
             </form>
           </details>
           <details id="actor-panel">
-            <summary>Place enemies</summary>
-            <p class="note">
+            <summary data-i18n="interface:placeEnemies">Place enemies</summary>
+            <p class="note" data-i18n="interface:sharedCatalogRolesAndSpeedTiersKeepRulesConsistentPositions">
               Shared catalog roles and speed tiers keep rules consistent. Positions are checked in
               every supported mode and preset before applying.
             </p>
             <fieldset id="combat-tools">
-              <legend>Optional combat · candidate edition</legend>
+              <legend data-i18n="interface:optionalCombatCandidateEdition">Optional combat · candidate edition</legend>
               <p id="combat-state" class="note"></p>
-              <button id="combat-prepare" type="button">Prepare optional combat authoring</button>
+              <button id="combat-prepare" type="button" data-i18n="interface:prepareOptionalCombatAuthoring">Prepare optional combat authoring</button>
               <label
-                ><input id="combat-enabled" type="checkbox" /> Enable authored scouts and
-                sentries</label
+                ><input id="combat-enabled" type="checkbox" /> <span data-i18n="interface:enableAuthoredScoutsAndSentries">Enable authored scouts and
+                sentries</span></label
               >
-              <button id="combat-apply" type="button">Validate & apply combat setting</button>
+              <button id="combat-apply" type="button" data-i18n="interface:validateApplyCombatSetting">Validate & apply combat setting</button>
               <p id="combat-result" class="note" role="status"></p>
             </fieldset>
             <form id="actor-form">
               <fieldset id="actor-tools">
-                <legend>Mission actors</legend>
-                <label>Actor<select id="actor-select"></select></label>
-                <label>Stable actor ID<input id="actor-id" maxlength="80" required /></label>
-                <label>Role<select id="actor-role"></select></label>
+                <legend data-i18n="interface:missionActors">Mission actors</legend>
+                <label><span data-i18n="interface:actor">Actor</span><select id="actor-select"></select></label>
+                <label><span data-i18n="interface:stableActorId">Stable actor ID</span><input id="actor-id" maxlength="80" required /></label>
+                <label><span data-i18n="interface:role">Role</span><select id="actor-role"></select></label>
                 <label
-                  ><span id="actor-tier-label">Speed tier · selected difficulty</span
+                  ><span id="actor-tier-label" data-i18n="interface:speedTierSelectedDifficulty">Speed tier · selected difficulty</span
                   ><select id="actor-tier"></select
                 ></label>
                 <p id="actor-description" class="note"></p>
                 <div class="pair">
                   <label
-                    >X<input id="actor-x" type="number" min="0" max="71.5" step="0.5" required
+                    ><span data-i18n="interface:x">X</span><input id="actor-x" type="number" min="0" max="71.5" step="0.5" required
                   /></label>
                   <label
-                    >Y<input id="actor-y" type="number" min="0" max="35.5" step="0.5" required
+                    ><span data-i18n="interface:y">Y</span><input id="actor-y" type="number" min="0" max="35.5" step="0.5" required
                   /></label>
                 </div>
                 <p id="actor-position-help" class="note"></p>
                 <label id="actor-heading-row"
-                  >Starting direction<select id="actor-heading">
-                    <option value="0,-1">Up</option>
-                    <option value="1,-1">Up-right</option>
-                    <option value="1,0">Right</option>
-                    <option value="1,1">Down-right</option>
-                    <option value="0,1">Down</option>
-                    <option value="-1,1">Down-left</option>
-                    <option value="-1,0">Left</option>
-                    <option value="-1,-1">Up-left</option>
+                  ><span data-i18n="interface:startingDirection">Starting direction</span><select id="actor-heading">
+                    <option value="0,-1" data-i18n="interface:up">Up</option>
+                    <option value="1,-1" data-i18n="interface:upRight">Up-right</option>
+                    <option value="1,0" data-i18n="interface:right">Right</option>
+                    <option value="1,1" data-i18n="interface:downRight">Down-right</option>
+                    <option value="0,1" data-i18n="interface:down">Down</option>
+                    <option value="-1,1" data-i18n="interface:downLeft">Down-left</option>
+                    <option value="-1,0" data-i18n="interface:left">Left</option>
+                    <option value="-1,-1" data-i18n="interface:upLeft">Up-left</option>
                   </select></label
                 >
                 <label id="actor-edge-row"
-                  >Side facing reclaimed ground<select id="actor-edge">
-                    <option value="north">North</option>
-                    <option value="east">East</option>
-                    <option value="south">South</option>
-                    <option value="west">West</option>
+                  ><span data-i18n="interface:sideFacingReclaimedGround">Side facing reclaimed ground</span><select id="actor-edge">
+                    <option value="north" data-i18n="common:controls.north">North</option>
+                    <option value="east" data-i18n="common:controls.east">East</option>
+                    <option value="south" data-i18n="common:controls.south">South</option>
+                    <option value="west" data-i18n="common:controls.west">West</option>
                   </select></label
                 >
                 <label id="actor-clockwise-row"
-                  ><input id="actor-clockwise" type="checkbox" checked /> Clockwise patrol</label
+                  ><input id="actor-clockwise" type="checkbox" checked /> <span data-i18n="interface:clockwisePatrol">Clockwise patrol</span></label
                 >
                 <label id="actor-axis-row" hidden
-                  >Locked lane axis<select id="actor-axis">
-                    <option value="horizontal">Horizontal row</option>
-                    <option value="vertical">Vertical column</option>
+                  ><span data-i18n="interface:lockedLaneAxis">Locked lane axis</span><select id="actor-axis">
+                    <option value="horizontal" data-i18n="interface:horizontalRow">Horizontal row</option>
+                    <option value="vertical" data-i18n="interface:verticalColumn">Vertical column</option>
                   </select></label
                 >
-                <button id="actor-submit" type="submit">Validate & add actor</button>
-                <button id="actor-remove" type="button" disabled>Remove selected actor</button>
+                <button id="actor-submit" type="submit" data-i18n="interface:validateAddActor">Validate & add actor</button>
+                <button id="actor-remove" type="button" disabled data-i18n="interface:removeSelectedActor">Remove selected actor</button>
                 <p id="actor-result" class="note" role="status"></p>
               </fieldset>
             </form>
           </details>
           <details id="bonus-panel">
-            <summary>Place optional bonuses</summary>
+            <summary data-i18n="interface:placeOptionalBonuses">Place optional bonuses</summary>
             <p id="bonus-qualification" class="note"></p>
             <form id="bonus-form">
               <fieldset id="bonus-tools">
-                <legend>Contact pickups · shared effects</legend>
-                <label>Bonus<select id="bonus-select"></select></label>
-                <label>Stable bonus ID<input id="bonus-id" maxlength="80" required /></label>
-                <label>Effect<select id="bonus-kind"></select></label>
+                <legend data-i18n="interface:contactPickupsSharedEffects">Contact pickups · shared effects</legend>
+                <label><span data-i18n="interface:bonus">Bonus</span><select id="bonus-select"></select></label>
+                <label><span data-i18n="interface:stableBonusId">Stable bonus ID</span><input id="bonus-id" maxlength="80" required /></label>
+                <label><span data-i18n="interface:effect">Effect</span><select id="bonus-kind"></select></label>
                 <div class="pair">
                   <label
-                    >X · cell centre<input
+                    ><span data-i18n="interface:xCellCentre">X · cell centre</span><input
                       id="bonus-x"
                       type="number"
                       min="0.5"
@@ -1102,7 +1112,7 @@
                       required
                   /></label>
                   <label
-                    >Y · cell centre<input
+                    ><span data-i18n="interface:yCellCentre">Y · cell centre</span><input
                       id="bonus-y"
                       type="number"
                       min="0.5"
@@ -1111,28 +1121,28 @@
                       required
                   /></label>
                 </div>
-                <button id="bonus-submit" type="submit">Validate & add bonus</button>
-                <button id="bonus-remove" type="button" disabled>Remove selected bonus</button>
+                <button id="bonus-submit" type="submit" data-i18n="interface:validateAddBonus">Validate & add bonus</button>
+                <button id="bonus-remove" type="button" disabled data-i18n="interface:removeSelectedBonus">Remove selected bonus</button>
                 <p id="bonus-result" class="note" role="status"></p>
               </fieldset>
             </form>
           </details>
           <details id="timed-bonus-panel">
-            <summary>Schedule optional timed bonuses</summary>
-            <p class="note">
+            <summary data-i18n="interface:scheduleOptionalTimedBonuses">Schedule optional timed bonuses</summary>
+            <p class="note" data-i18n="interface:numberedAnchorsArePossibleLocationsNotALivePredictionMissed">
               Numbered anchors are possible locations, not a live prediction. Missed pickups return
               at a different eligible anchor. All required routes must work without them.
             </p>
             <form id="timed-bonus-form">
               <fieldset id="timed-bonus-tools">
-                <legend>Timed contact pickups · finite rewards</legend>
-                <label>Schedule<select id="timed-bonus-select"></select></label>
+                <legend data-i18n="interface:timedContactPickupsFiniteRewards">Timed contact pickups · finite rewards</legend>
+                <label><span data-i18n="interface:schedule">Schedule</span><select id="timed-bonus-select"></select></label>
                 <label
-                  >Stable schedule ID<input id="timed-bonus-id" maxlength="80" required
+                  ><span data-i18n="interface:stableScheduleId">Stable schedule ID</span><input id="timed-bonus-id" maxlength="80" required
                 /></label>
-                <label>Effect<select id="timed-bonus-kind"></select></label>
+                <label><span data-i18n="interface:effect">Effect</span><select id="timed-bonus-kind"></select></label>
                 <label
-                  >Anchors · X,Y pairs separated by semicolons<textarea
+                  ><span data-i18n="interface:anchorsXYPairsSeparatedBySemicolons">Anchors · X,Y pairs separated by semicolons</span><textarea
                     id="timed-bonus-anchors"
                     rows="3"
                     maxlength="1024"
@@ -1142,7 +1152,7 @@
                 </label>
                 <div class="pair">
                   <label
-                    >Initial delay · seconds<input
+                    ><span data-i18n="interface:initialDelaySeconds">Initial delay · seconds</span><input
                       id="timed-bonus-delay"
                       type="number"
                       min="0"
@@ -1151,7 +1161,7 @@
                       required
                   /></label>
                   <label
-                    >Announcement · seconds<input
+                    ><span data-i18n="interface:announcementSeconds">Announcement · seconds</span><input
                       id="timed-bonus-announce"
                       type="number"
                       min="1"
@@ -1162,7 +1172,7 @@
                 </div>
                 <div class="pair">
                   <label
-                    >Available · seconds<input
+                    ><span data-i18n="interface:availableSeconds">Available · seconds</span><input
                       id="timed-bonus-available"
                       type="number"
                       min="2"
@@ -1171,7 +1181,7 @@
                       required
                   /></label>
                   <label
-                    >Cooldown · seconds<input
+                    ><span data-i18n="interface:cooldownSeconds">Cooldown · seconds</span><input
                       id="timed-bonus-cooldown"
                       type="number"
                       min="2"
@@ -1182,7 +1192,7 @@
                 </div>
                 <div class="pair">
                   <label
-                    >Maximum appearances<input
+                    ><span data-i18n="interface:maximumAppearances">Maximum appearances</span><input
                       id="timed-bonus-appearances"
                       type="number"
                       min="1"
@@ -1191,7 +1201,7 @@
                       required
                   /></label>
                   <label
-                    >Maximum collections · life limit 1<input
+                    ><span data-i18n="interface:maximumCollectionsLifeLimit1">Maximum collections · life limit 1</span><input
                       id="timed-bonus-collections"
                       type="number"
                       min="1"
@@ -1200,8 +1210,8 @@
                       required
                   /></label>
                 </div>
-                <button id="timed-bonus-submit" type="submit">Validate & add schedule</button>
-                <button id="timed-bonus-remove" type="button" disabled>
+                <button id="timed-bonus-submit" type="submit" data-i18n="interface:validateAddSchedule">Validate & add schedule</button>
+                <button id="timed-bonus-remove" type="button" disabled data-i18n="interface:removeSelectedSchedule">
                   Remove selected schedule
                 </button>
                 <p id="timed-bonus-result" class="note" role="status"></p>
@@ -1209,17 +1219,17 @@
             </form>
           </details>
           <details id="objective-panel">
-            <summary>Place capture objectives</summary>
+            <summary data-i18n="interface:placeCaptureObjectives">Place capture objectives</summary>
             <p id="objective-qualification" class="note"></p>
             <form id="objective-form">
               <fieldset id="objective-tools">
-                <legend>Capture markers · optional or required</legend>
-                <label>Objective<select id="objective-select"></select></label>
+                <legend data-i18n="interface:captureMarkersOptionalOrRequired">Capture markers · optional or required</legend>
+                <label><span data-i18n="interface:objective">Objective</span><select id="objective-select"></select></label>
                 <label
-                  >Stable objective ID<input id="objective-id" maxlength="80" required
+                  ><span data-i18n="interface:stableObjectiveId">Stable objective ID</span><input id="objective-id" maxlength="80" required
                 /></label>
                 <label
-                  >X · cell centre<input
+                  ><span data-i18n="interface:xCellCentre">X · cell centre</span><input
                     id="objective-x"
                     type="number"
                     min="1.5"
@@ -1228,7 +1238,7 @@
                     required
                 /></label>
                 <label
-                  >Y · cell centre<input
+                  ><span data-i18n="interface:yCellCentre">Y · cell centre</span><input
                     id="objective-y"
                     type="number"
                     min="1.5"
@@ -1236,16 +1246,16 @@
                     step="1"
                     required
                 /></label>
-                <label><input id="objective-required" type="checkbox" />Required to clear</label>
-                <label><input id="objective-hidden" type="checkbox" />Hidden until revealed</label>
-                <p class="note">
+                <label><input id="objective-required" type="checkbox" /><span data-i18n="interface:requiredToClear">Required to clear</span></label>
+                <label><input id="objective-hidden" type="checkbox" /><span data-i18n="interface:hiddenUntilRevealed">Hidden until revealed</span></label>
+                <p class="note" data-i18n="interface:studioShowsAllMarkersRequiredOOptionalInitiallyHiddenHidden">
                   Studio shows all markers: ! required, o optional, ? initially hidden. Hidden
                   requirements need deliberate teaching. Capturing a marker does not open a gate
                   unless the relay editor below explicitly links it. Relink or remove dependent
                   gates before removing their objective.
                 </p>
-                <button id="objective-submit" type="submit">Validate & add objective</button>
-                <button id="objective-remove" type="button" disabled>
+                <button id="objective-submit" type="submit" data-i18n="interface:validateAddObjective">Validate & add objective</button>
+                <button id="objective-remove" type="button" disabled data-i18n="interface:removeSelectedObjective">
                   Remove selected objective
                 </button>
                 <p id="objective-result" class="note" role="status"></p>
@@ -1253,17 +1263,17 @@
             </form>
           </details>
           <details id="relay-panel">
-            <summary>Link permanent relay gates</summary>
+            <summary data-i18n="interface:linkPermanentRelayGates">Link permanent relay gates</summary>
             <p id="relay-qualification" class="note"></p>
-            <button id="relay-enable" type="button">Enable relay edition for this mission</button>
+            <button id="relay-enable" type="button" data-i18n="interface:enableRelayEditionForThisMission">Enable relay edition for this mission</button>
             <form id="relay-form">
               <fieldset id="relay-tools" disabled>
-                <legend>Closed wall → permanent reclaimed connector</legend>
-                <label>Gate<select id="relay-select"></select></label>
-                <label>Stable gate ID<input id="relay-id" maxlength="80" required /></label>
-                <label>Capture objective<select id="relay-objective" required></select></label>
+                <legend data-i18n="interface:closedWallPermanentReclaimedConnector">Closed wall → permanent reclaimed connector</legend>
+                <label><span data-i18n="interface:gate">Gate</span><select id="relay-select"></select></label>
+                <label><span data-i18n="interface:stableGateId">Stable gate ID</span><input id="relay-id" maxlength="80" required /></label>
+                <label><span data-i18n="interface:captureObjective">Capture objective</span><select id="relay-objective" required></select></label>
                 <label
-                  >X · whole cell<input
+                  ><span data-i18n="interface:xWholeCell">X · whole cell</span><input
                     id="relay-x"
                     type="number"
                     min="1"
@@ -1272,7 +1282,7 @@
                     required
                 /></label>
                 <label
-                  >Y · whole cell<input
+                  ><span data-i18n="interface:yWholeCell">Y · whole cell</span><input
                     id="relay-y"
                     type="number"
                     min="1"
@@ -1281,7 +1291,7 @@
                     required
                 /></label>
                 <label
-                  >Width · cells<input
+                  ><span data-i18n="interface:widthCells">Width · cells</span><input
                     id="relay-w"
                     type="number"
                     min="1"
@@ -1290,7 +1300,7 @@
                     required
                 /></label>
                 <label
-                  >Height · cells<input
+                  ><span data-i18n="interface:heightCells">Height · cells</span><input
                     id="relay-h"
                     type="number"
                     min="1"
@@ -1298,38 +1308,38 @@
                     step="1"
                     required
                 /></label>
-                <p class="note">
+                <p class="note" data-i18n="interface:crossbarsMarkAClosedGateCornerBracketsRemainWhenOpen">
                   Crossbars mark a closed gate; corner brackets remain when open. Gates never earn
                   score or coverage. Opening does not connect field-enemy regions. Preview remote
                   fill and avoid locking an objective behind its own gate.
                 </p>
-                <button id="relay-submit" type="submit">Validate & add gate</button>
-                <button id="relay-remove" type="button" disabled>Remove selected gate</button>
+                <button id="relay-submit" type="submit" data-i18n="interface:validateAddGate">Validate & add gate</button>
+                <button id="relay-remove" type="button" disabled data-i18n="interface:removeSelectedGate">Remove selected gate</button>
               </fieldset>
               <p id="relay-result" class="note" role="status"></p>
             </form>
           </details>
           <details id="directional-panel">
-            <summary>Mark directional speed fields</summary>
+            <summary data-i18n="interface:markDirectionalSpeedFields">Mark directional speed fields</summary>
             <p id="directional-qualification" class="note"></p>
-            <button id="directional-enable" type="button">
+            <button id="directional-enable" type="button" data-i18n="interface:enableDirectionalEditionForThisMission">
               Enable directional edition for this mission
             </button>
             <form id="directional-form">
               <fieldset id="directional-tools" disabled>
-                <legend>Marked speed, never forced drift</legend>
-                <label>Field<select id="directional-select"></select></label>
-                <label>Stable field ID<input id="directional-id" maxlength="80" required /></label>
+                <legend data-i18n="interface:markedSpeedNeverForcedDrift">Marked speed, never forced drift</legend>
+                <label><span data-i18n="interface:field">Field</span><select id="directional-select"></select></label>
+                <label><span data-i18n="interface:stableFieldId">Stable field ID</span><input id="directional-id" maxlength="80" required /></label>
                 <label
-                  >Arrow direction<select id="directional-direction">
-                    <option value="right">Right →</option>
-                    <option value="down">Down ↓</option>
-                    <option value="left">Left ←</option>
-                    <option value="up">Up ↑</option>
+                  ><span data-i18n="interface:arrowDirection">Arrow direction</span><select id="directional-direction">
+                    <option value="right" data-i18n="interface:right2">Right →</option>
+                    <option value="down" data-i18n="interface:down2">Down ↓</option>
+                    <option value="left" data-i18n="interface:left2">Left ←</option>
+                    <option value="up" data-i18n="interface:up2">Up ↑</option>
                   </select></label
                 >
                 <label
-                  >X · whole cell<input
+                  ><span data-i18n="interface:xWholeCell">X · whole cell</span><input
                     id="directional-x"
                     type="number"
                     min="1"
@@ -1338,7 +1348,7 @@
                     required
                 /></label>
                 <label
-                  >Y · whole cell<input
+                  ><span data-i18n="interface:yWholeCell">Y · whole cell</span><input
                     id="directional-y"
                     type="number"
                     min="1"
@@ -1347,7 +1357,7 @@
                     required
                 /></label>
                 <label
-                  >Width · cells<input
+                  ><span data-i18n="interface:widthCells">Width · cells</span><input
                     id="directional-w"
                     type="number"
                     min="1"
@@ -1356,7 +1366,7 @@
                     required
                 /></label>
                 <label
-                  >Height · cells<input
+                  ><span data-i18n="interface:heightCells">Height · cells</span><input
                     id="directional-h"
                     type="number"
                     min="1"
@@ -1364,13 +1374,13 @@
                     step="1"
                     required
                 /></label>
-                <p class="note">
+                <p class="note" data-i18n="interface:arrowsAffectOnlyUnclaimedFieldFieldsCannotOverlapWallsFoundations">
                   Arrows affect only unclaimed field. Fields cannot overlap walls, foundations,
                   gates, other fields or slow/lethal terrain. Strength is shared across every map;
                   it is not a per-level setting.
                 </p>
-                <button id="directional-submit" type="submit">Validate & add field</button>
-                <button id="directional-remove" type="button" disabled>
+                <button id="directional-submit" type="submit" data-i18n="interface:validateAddField">Validate & add field</button>
+                <button id="directional-remove" type="button" disabled data-i18n="interface:removeSelectedField">
                   Remove selected field
                 </button>
               </fieldset>
@@ -1378,26 +1388,26 @@
             </form>
           </details>
           <details id="sentinel-panel">
-            <summary>Stage a Sentinel encounter</summary>
+            <summary data-i18n="interface:stageASentinelEncounter">Stage a Sentinel encounter</summary>
             <p id="sentinel-qualification" class="note"></p>
             <form id="sentinel-form">
               <fieldset id="sentinel-tools">
-                <legend>Boss and shield relays · apply together</legend>
+                <legend data-i18n="interface:bossAndShieldRelaysApplyTogether">Boss and shield relays · apply together</legend>
                 <label
-                  >Sentinel actor ID<input id="sentinel-enemy" maxlength="80" required
+                  ><span data-i18n="interface:sentinelActorId">Sentinel actor ID</span><input id="sentinel-enemy" maxlength="80" required
                 /></label>
-                <label>Core objective<select id="sentinel-core" required></select></label>
-                <label>Shield relay 1<select id="sentinel-shield-0" required></select></label>
-                <label>Shield relay 2<select id="sentinel-shield-1"></select></label>
-                <label>Shield relay 3<select id="sentinel-shield-2"></select></label>
-                <label>Shield relay 4<select id="sentinel-shield-3"></select></label>
-                <p class="note">
+                <label><span data-i18n="interface:coreObjective">Core objective</span><select id="sentinel-core" required></select></label>
+                <label><span data-i18n="interface:shieldRelay1">Shield relay 1</span><select id="sentinel-shield-0" required></select></label>
+                <label><span data-i18n="interface:shieldRelay2">Shield relay 2</span><select id="sentinel-shield-1"></select></label>
+                <label><span data-i18n="interface:shieldRelay3">Shield relay 3</span><select id="sentinel-shield-2"></select></label>
+                <label><span data-i18n="interface:shieldRelay4">Shield relay 4</span><select id="sentinel-shield-3"></select></label>
+                <p class="note" data-i18n="interface:chooseDistinctVisibleRequiredObjectivesTheCorePlacesTheBoss">
                   Choose distinct visible required objectives. The core places the boss at that cell
                   centre. All shield relays must be captured, in any order. The shared recipe
                   controls timing; there are no per-level speed or warning overrides.
                 </p>
-                <button id="sentinel-submit" type="submit">Create Sentinel encounter</button>
-                <button id="sentinel-remove" type="button" disabled>
+                <button id="sentinel-submit" type="submit" data-i18n="interface:createSentinelEncounter">Create Sentinel encounter</button>
+                <button id="sentinel-remove" type="button" disabled data-i18n="interface:removeSentinelEncounter">
                   Remove Sentinel encounter
                 </button>
               </fieldset>
@@ -1405,8 +1415,8 @@
             </form>
           </details>
           <details id="image-authoring">
-            <summary>Build from a reference picture</summary>
-            <p class="note">
+            <summary data-i18n="interface:buildFromAReferencePicture">Build from a reference picture</summary>
+            <p class="note" data-i18n="interface:uploadCropQueueManualRectanglesInspectPlayApplyYourPicture">
               Upload → crop → queue manual rectangles → inspect → play → apply. Your picture stays
               on this device and is never converted automatically into collision or published as
               artwork. References, accepted crops and queues save locally in separate tracing
@@ -1415,35 +1425,35 @@
               original picture.
             </p>
             <label
-              >Local reference picture
+              ><span data-i18n="interface:localReferencePicture">Local reference picture</span>
               <input id="reference-file" type="file" accept="image/png,image/jpeg,image/webp" />
             </label>
             <fieldset id="reference-tools" disabled>
-              <legend>Crop & manual trace · original image pixels</legend>
+              <legend data-i18n="interface:cropManualTraceOriginalImagePixels">Crop & manual trace · original image pixels</legend>
               <div class="coordinates">
-                <label>Crop X<input id="crop-x" type="number" min="0" step="1" value="0" /></label>
-                <label>Crop Y<input id="crop-y" type="number" min="0" step="1" value="0" /></label>
-                <label>Width<input id="crop-w" type="number" min="1" step="1" value="1" /></label>
-                <label>Height<input id="crop-h" type="number" min="1" step="1" value="1" /></label>
+                <label><span data-i18n="interface:cropX">Crop X</span><input id="crop-x" type="number" min="0" step="1" value="0" /></label>
+                <label><span data-i18n="interface:cropY">Crop Y</span><input id="crop-y" type="number" min="0" step="1" value="0" /></label>
+                <label><span data-i18n="interface:width">Width</span><input id="crop-w" type="number" min="1" step="1" value="1" /></label>
+                <label><span data-i18n="interface:height">Height</span><input id="crop-h" type="number" min="1" step="1" value="1" /></label>
               </div>
               <div class="pair">
-                <button id="reference-crop" type="button">Preview crop</button>
-                <button id="reference-clear" type="button">Clear reference & queue</button>
+                <button id="reference-crop" type="button" data-i18n="interface:previewCrop">Preview crop</button>
+                <button id="reference-clear" type="button" data-i18n="interface:clearReferenceQueue">Clear reference & queue</button>
               </div>
               <label class="toggle"
-                ><input id="reference-show" type="checkbox" />Show reference under map</label
+                ><input id="reference-show" type="checkbox" /><span data-i18n="interface:showReferenceUnderMap">Show reference under map</span></label
               >
-              <p class="note">
+              <p class="note" data-i18n="interface:clickTheBoardToChooseACellThenSetSurface">
                 Click the board to choose a cell, then set Surface, X, Y, Width and Height above.
                 Queue rectangles here instead of applying them directly. Gameplay symbols stay above
                 the reference.
               </p>
               <div class="pair">
-                <button id="reference-queue-add" type="button">Queue selected rectangle</button>
-                <button id="reference-queue-undo" type="button">Undo last queued rectangle</button>
+                <button id="reference-queue-add" type="button" data-i18n="interface:queueSelectedRectangle">Queue selected rectangle</button>
+                <button id="reference-queue-undo" type="button" data-i18n="interface:undoLastQueuedRectangle">Undo last queued rectangle</button>
               </div>
               <pre id="reference-queue" aria-label="Queued manual geometry"></pre>
-              <button id="reference-inspect" type="button">Inspect proposed map</button>
+              <button id="reference-inspect" type="button" data-i18n="interface:inspectProposedMap">Inspect proposed map</button>
               <canvas
                 id="reference-preview"
                 width="1008"
@@ -1452,128 +1462,128 @@
                 aria-label="Inspected candidate map, not yet applied"
                 aria-describedby="reference-status reference-queue"
                 hidden
-              ></canvas>
+               data-i18n-aria-label="interface:inspectedCandidateMapNotYetApplied"></canvas>
               <div class="pair">
-                <button id="reference-play" type="button" disabled>
+                <button id="reference-play" type="button" disabled data-i18n="interface:playInspectedSoloMap">
                   Play inspected Solo map ↗
                 </button>
-                <button id="reference-apply" type="button" disabled>
+                <button id="reference-apply" type="button" disabled data-i18n="interface:applyInspectedGeometry">
                   Apply inspected geometry
                 </button>
               </div>
             </fieldset>
             <p id="reference-status" class="note" role="status"></p>
             <fieldset>
-              <legend>Local tracing recovery · never published</legend>
+              <legend data-i18n="interface:localTracingRecoveryNeverPublished">Local tracing recovery · never published</legend>
               <p id="trace-status" class="note" role="status"></p>
               <div class="pair">
-                <button id="trace-read" type="button">Read saved tracing / retry</button>
-                <button id="trace-restore" type="button" disabled>Restore saved tracing</button>
-                <button id="trace-session-restore" type="button" disabled>
+                <button id="trace-read" type="button" data-i18n="interface:readSavedTracingRetry">Read saved tracing / retry</button>
+                <button id="trace-restore" type="button" disabled data-i18n="interface:restoreSavedTracing">Restore saved tracing</button>
+                <button id="trace-session-restore" type="button" disabled data-i18n="interface:restoreUnsavedSessionTracing">
                   Restore unsaved session tracing
                 </button>
-                <button id="trace-replace" type="button" disabled>
+                <button id="trace-replace" type="button" disabled data-i18n="interface:replaceSavedWithCurrent">
                   Replace saved with current
                 </button>
               </div>
               <div class="pair">
-                <button id="trace-export" type="button">Export current tracing backup</button>
-                <button id="trace-export-saved" type="button" disabled>
+                <button id="trace-export" type="button" data-i18n="interface:exportCurrentTracingBackup">Export current tracing backup</button>
+                <button id="trace-export-saved" type="button" disabled data-i18n="interface:exportSavedTracingBackup">
                   Export saved tracing backup
                 </button>
               </div>
               <label
-                >Inspect tracing backup
+                ><span data-i18n="interface:inspectTracingBackup">Inspect tracing backup</span>
                 <input id="trace-import" type="file" accept="application/json,.json" />
               </label>
-              <button id="trace-import-restore" type="button" disabled>
+              <button id="trace-import-restore" type="button" disabled data-i18n="interface:restoreBackupTracing">
                 Restore backup tracing
               </button>
             </fieldset>
           </details>
           <details>
-            <summary>Frozen capture inspection</summary>
-            <p class="note">
+            <summary data-i18n="interface:frozenCaptureInspection">Frozen capture inspection</summary>
+            <p class="note" data-i18n="interface:hypotheticalSecuredCellsNotALegalRouteValidatorEnemiesAre">
               Hypothetical secured cells, not a legal-route validator. Enemies are frozen at spawn;
               moving enemies can change the outcome.
             </p>
             <label
-              >Cell indexes, separated by commas<input
+              ><span data-i18n="interface:cellIndexesSeparatedByCommas">Cell indexes, separated by commas</span><input
                 id="trail"
                 placeholder="32, 104, 176…" /></label
-            ><button id="inspect">Inspect components</button
-            ><button id="clear-inspection">Clear hypothetical trail</button>
+            ><button id="inspect" data-i18n="interface:inspectComponents">Inspect components</button
+            ><button id="clear-inspection" data-i18n="interface:clearHypotheticalTrail">Clear hypothetical trail</button>
             <pre id="capture"></pre>
           </details>
           <div class="preview-actions">
-            <button id="play" class="primary">Play exact Solo preview ↗</button
-            ><span>Practice only · no awards · candidate presentation</span>
-            <button id="export-team" hidden>Export exact Team test mission</button>
+            <button id="play" class="primary" data-i18n="interface:playExactSoloPreview">Play exact Solo preview ↗</button
+            ><span data-i18n="interface:practiceOnlyNoAwardsCandidatePresentation">Practice only · no awards · candidate presentation</span>
+            <button id="export-team" hidden data-i18n="interface:exportExactTeamTestMission">Export exact Team test mission</button>
             <fieldset id="team-sequence-tools" hidden>
-              <legend>Team sequence test</legend>
-              <label>Team campaign<select id="team-test-campaign"></select></label>
-              <button id="export-team-campaign">Export exact Team test campaign</button>
-              <p class="note">
+              <legend data-i18n="interface:teamSequenceTest">Team sequence test</legend>
+              <label><span data-i18n="interface:teamCampaign">Team campaign</span><select id="team-test-campaign"></select></label>
+              <button id="export-team-campaign" data-i18n="interface:exportExactTeamTestCampaign">Export exact Team test campaign</button>
+              <p class="note" data-i18n="interface:preservesTheAuthoredOrderForNextInTheTeamHost">
                 Preserves the authored order for Next in the Team host. Geometry and rules only; no
                 original artwork or official progress.
               </p>
             </fieldset>
           </div>
-          <p id="team-test-help" class="note" hidden>
+          <p id="team-test-help" class="note" hidden data-i18n-rich="interface:geometryAndRulesOnlyImportThisFileInTheIts">
             Geometry and rules only. Import this file in the
             <a
               href="../couch/relay-rescue.html"
               target="_blank"
               rel="noopener"
               aria-label="Team test player (new tab)"
-              >Team test player ↗</a
+               data-i18n="interface:teamTestPlayer" data-i18n-aria-label="interface:teamTestPlayerNewTab" data-i18n-slot="slot0">Team test player ↗</a
             >. Its preview scenery is not this mission's authored picture. No Journey awards or
             publication.
           </p>
         </section>
-        <section class="source-panel" aria-label="Project source and validation">
+        <section class="source-panel" aria-label="Project source and validation" data-i18n-aria-label="interface:projectSourceAndValidation">
           <details id="pacing-panel">
-            <summary>Review campaign progression</summary>
-            <p class="note">
+            <summary data-i18n="interface:reviewCampaignProgression">Review campaign progression</summary>
+            <p class="note" data-i18n="interface:inspectTheAppliedDraftInGameplayOrderRatingsAndDuration">
               Inspect the applied draft in gameplay order. Ratings and duration estimates are
               authored hypotheses, not measured difficulty. Findings never change a map or block
               publication. Exclude optional finales explicitly when reviewing core-content countdown
               frequency.
             </p>
             <label
-              >Review mode<select id="pacing-mode">
-                <option value="solo">Solo</option>
-                <option value="versus">Versus</option>
-                <option value="team">Team</option>
+              ><span data-i18n="interface:reviewMode">Review mode</span><select id="pacing-mode">
+                <option value="solo" data-i18n="interface:solo2">Solo</option>
+                <option value="versus" data-i18n="interface:versus2">Versus</option>
+                <option value="team" data-i18n="interface:team">Team</option>
               </select></label
             >
             <label
-              >Exclude optional campaigns (leave unselected for all)<select
+              ><span data-i18n="interface:excludeOptionalCampaignsLeaveUnselectedForAll">Exclude optional campaigns (leave unselected for all)</span><select
                 id="pacing-exclude"
                 multiple
                 size="4"
               ></select
             ></label>
-            <button id="pacing-inspect" type="button">Inspect applied sequence</button>
+            <button id="pacing-inspect" type="button" data-i18n="interface:inspectAppliedSequence">Inspect applied sequence</button>
             <p id="pacing-summary" class="note" role="status"></p>
-            <ul id="pacing-warnings" aria-label="Advisory progression findings"></ul>
+            <ul id="pacing-warnings" aria-label="Advisory progression findings" data-i18n-aria-label="interface:advisoryProgressionFindings"></ul>
             <details>
-              <summary>Ordered challenge ratings</summary>
+              <summary data-i18n="interface:orderedChallengeRatings">Ordered challenge ratings</summary>
               <ol id="pacing-sequence"></ol>
             </details>
           </details>
           <details id="acceptance-panel">
-            <summary>Review mission acceptance evidence</summary>
-            <p class="note">
+            <summary data-i18n="interface:reviewMissionAcceptanceEvidence">Review mission acceptance evidence</summary>
+            <p class="note" data-i18n="interface:readOnlyReviewOfTheAppliedMissionAutomatedNativeBrowser">
               Read-only review of the applied mission. Automated, native-browser and genuine human
               observations remain separate. Imported records are unverified claims, not proof of
               testing. No report publishes content or approves a release. Whole-Journey flow,
               performance, storage rollback and deployment need separate qualification.
             </p>
             <p id="acceptance-selection" class="note"></p>
-            <label>Review mode<select id="acceptance-mode"></select></label>
+            <label><span data-i18n="interface:reviewMode">Review mode</span><select id="acceptance-mode"></select></label>
             <label
-              >Exact tested source commit
+              ><span data-i18n="interface:exactTestedSourceCommit">Exact tested source commit</span>
               <input
                 id="acceptance-commit"
                 type="text"
@@ -1581,30 +1591,30 @@
                 spellcheck="false"
                 autocomplete="off"
                 placeholder="40-character lowercase Git commit"
-              />
+               data-i18n-placeholder="interface:40CharacterLowercaseGitCommit"/>
             </label>
-            <p class="note">
+            <p class="note" data-i18n="interface:supplyTheActualTestedCommitNotABranchNameStudio">
               Supply the actual tested commit, not a branch name. Studio cannot verify that this
               draft or the served build belongs to that commit. Simulation and presentation pins
               partition records; they are not security signatures.
             </p>
             <label
-              >Optional local evidence ledger (JSON, at most 8 MiB)
+              ><span data-i18n="interface:optionalLocalEvidenceLedgerJsonAtMost8Mib">Optional local evidence ledger (JSON, at most 8 MiB)</span>
               <input id="acceptance-file" type="file" accept="application/json,.json" />
             </label>
             <p id="acceptance-ledger-status" class="note" role="status"></p>
-            <button id="acceptance-clear" type="button">Clear session evidence</button>
-            <button id="acceptance-inspect" type="button">Inspect applied mission evidence</button>
+            <button id="acceptance-clear" type="button" data-i18n="interface:clearSessionEvidence">Clear session evidence</button>
+            <button id="acceptance-inspect" type="button" data-i18n="interface:inspectAppliedMissionEvidence">Inspect applied mission evidence</button>
             <p id="acceptance-summary" class="note" role="status"></p>
-            <ul id="acceptance-checks" aria-label="Mission evidence checks"></ul>
+            <ul id="acceptance-checks" aria-label="Mission evidence checks" data-i18n-aria-label="interface:missionEvidenceChecks"></ul>
             <details>
-              <summary>Exact target, observations and limitations</summary>
+              <summary data-i18n="interface:exactTargetObservationsAndLimitations">Exact target, observations and limitations</summary>
               <pre id="acceptance-report"></pre>
             </details>
           </details>
           <details id="structure-editor">
-            <summary>Organize missions, campaigns & packs</summary>
-            <p class="note">
+            <summary data-i18n="interface:organizeMissionsCampaignsPacks">Organize missions, campaigns & packs</summary>
+            <p class="note" data-i18n="interface:chooseAnUntestedSoloVersusIslandOrATwoSeat">
               Choose an untested Solo / Versus island or a two-seat Team island template. Duplicate
               copies missions and whole campaign/pack contents with independent IDs; maps and
               artwork remain shared immutable pins. Editing geometry creates a private revision.
@@ -1617,41 +1627,41 @@
             </p>
             <form id="structure-form">
               <label
-                >Item type<select id="item-kind">
-                  <option value="mission">Mission</option>
-                  <option value="campaign">Campaign</option>
-                  <option value="pack">Pack</option>
+                ><span data-i18n="interface:itemType">Item type</span><select id="item-kind">
+                  <option value="mission" data-i18n="interface:mission">Mission</option>
+                  <option value="campaign" data-i18n="interface:campaign">Campaign</option>
+                  <option value="pack" data-i18n="interface:pack">Pack</option>
                 </select></label
               >
               <label
-                >Action<select id="item-action">
-                  <option value="create">Create</option>
-                  <option value="duplicate">Duplicate item & contents</option>
-                  <option value="rename">Rename</option>
-                  <option value="set-band">Change campaign band</option>
-                  <option value="place">Add to parent</option>
-                  <option value="detach">Remove from parent</option>
-                  <option value="earlier">Move earlier in parent</option>
-                  <option value="later">Move later in parent</option>
-                  <option value="delete">Delete unreferenced item</option>
-                  <option value="archive">Archive item</option>
-                  <option value="restore">Restore archived item</option>
+                ><span data-i18n="interface:action">Action</span><select id="item-action">
+                  <option value="create" data-i18n="interface:create">Create</option>
+                  <option value="duplicate" data-i18n="interface:duplicateItemContents">Duplicate item & contents</option>
+                  <option value="rename" data-i18n="interface:rename">Rename</option>
+                  <option value="set-band" data-i18n="interface:changeCampaignBand">Change campaign band</option>
+                  <option value="place" data-i18n="interface:addToParent">Add to parent</option>
+                  <option value="detach" data-i18n="interface:removeFromParent">Remove from parent</option>
+                  <option value="earlier" data-i18n="interface:moveEarlierInParent">Move earlier in parent</option>
+                  <option value="later" data-i18n="interface:moveLaterInParent">Move later in parent</option>
+                  <option value="delete" data-i18n="interface:deleteUnreferencedItem">Delete unreferenced item</option>
+                  <option value="archive" data-i18n="interface:archiveItem">Archive item</option>
+                  <option value="restore" data-i18n="interface:restoreArchivedItem">Restore archived item</option>
                 </select></label
               >
-              <label id="item-target-row">Existing item<select id="item-target"></select></label>
+              <label id="item-target-row"><span data-i18n="interface:existingItem">Existing item</span><select id="item-target"></select></label>
               <label id="item-id-row"
-                >New stable ID<input id="item-id" maxlength="80" placeholder="my-new-mission"
-              /></label>
-              <label id="item-name-row">Display name<input id="item-name" maxlength="160" /></label>
+                ><span data-i18n="interface:newStableId">New stable ID</span><input id="item-id" maxlength="80" placeholder="my-new-mission"
+               data-i18n-placeholder="interface:myNewMission"/></label>
+              <label id="item-name-row"><span data-i18n="interface:displayName">Display name</span><input id="item-name" maxlength="160" /></label>
               <label id="item-template-row"
-                >Mission template<select id="item-template">
-                  <option value="solo-island">Solo / Versus · island</option>
-                  <option value="team-islands">Team · twin islands (greybox)</option>
-                  <option value="team-materials">Team · material-ready islands (greybox)</option>
+                ><span data-i18n="interface:missionTemplate">Mission template</span><select id="item-template">
+                  <option value="solo-island" data-i18n="interface:soloVersusIsland">Solo / Versus · island</option>
+                  <option value="team-islands" data-i18n="interface:teamTwinIslandsGreybox">Team · twin islands (greybox)</option>
+                  <option value="team-materials" data-i18n="interface:teamMaterialReadyIslandsGreybox">Team · material-ready islands (greybox)</option>
                 </select></label
               >
               <label id="item-band-row"
-                >Campaign band<input
+                ><span data-i18n="interface:campaignBand">Campaign band</span><input
                   id="item-band"
                   type="number"
                   min="1"
@@ -1660,42 +1670,42 @@
                   value="1"
               /></label>
               <label id="item-parent-row"
-                >Parent for membership / order<select id="item-parent"></select
+                ><span data-i18n="interface:parentForMembershipOrder">Parent for membership / order</span><select id="item-parent"></select
               ></label>
               <p id="item-dependencies" class="note" role="status" hidden></p>
               <label id="item-confirm-row" hidden
-                >Type the exact item ID to delete<input
+                ><span data-i18n="interface:typeTheExactItemIdToDelete">Type the exact item ID to delete</span><input
                   id="item-confirm"
                   maxlength="80"
                   autocomplete="off"
                   spellcheck="false"
               /></label>
-              <button id="item-apply" type="submit">Validate & apply structure</button>
+              <button id="item-apply" type="submit" data-i18n="interface:validateApplyStructure">Validate & apply structure</button>
             </form>
-            <p id="structure-result" class="note" role="status">
+            <p id="structure-result" class="note" role="status" data-i18n="interface:allEditsAreLocalCandidatesNoPublicationOrPlayerProgress">
               All edits are local candidates. No publication or player progress changes.
             </p>
             <pre id="structure-order" aria-label="Pack, campaign and mission order"></pre>
           </details>
-          <p class="eyebrow">SOURCE / ALL MAPS & CAMPAIGNS</p>
-          <p class="note">
+          <p class="eyebrow" data-i18n="interface:sourceAllMapsCampaigns">SOURCE / ALL MAPS & CAMPAIGNS</p>
+          <p class="note" data-i18n="interface:editNamesOrderActorsAndDesignNotesHereInspectFirst">
             Edit names, order, actors and design notes here. Inspect first; applying is explicit.
             Published editions are never overwritten.
           </p>
-          <label for="source">Project JSON</label
+          <label for="source" data-i18n="interface:projectJson">Project JSON</label
           ><textarea id="source" spellcheck="false" rows="22"></textarea>
           <div class="pair">
-            <button id="validate">Inspect source</button
-            ><button id="apply" disabled>Apply inspected source</button>
+            <button id="validate" data-i18n="interface:inspectSource">Inspect source</button
+            ><button id="apply" disabled data-i18n="interface:applyInspectedSource">Apply inspected source</button>
           </div>
-          <p id="validation" role="status">No source changes inspected.</p>
+          <p id="validation" role="status" data-i18n="interface:noSourceChangesInspected">No source changes inspected.</p>
           <ul id="diagnostics"></ul>
         </section>
       </div>
       <section id="preview-panel" hidden>
         <div class="section-heading">
-          <h2>Engine preview</h2>
-          <button id="close-preview">Close preview</button>
+          <h2 data-i18n="interface:enginePreview">Engine preview</h2>
+          <button id="close-preview" data-i18n="interface:closePreview">Close preview</button>
         </div>
         <p id="preview-status" role="status"></p>
         <iframe
@@ -1703,14 +1713,14 @@
           name="revealline-content-studio-preview"
           title="Exact candidate Solo practice preview"
           allow="gamepad"
-        ></iframe>
-        <button id="preview-return">Return to draft</button>
-        <p class="note">
+         data-i18n-title="interface:exactCandidateSoloPracticePreview"></iframe>
+        <button id="preview-return" data-i18n="interface:returnToDraft">Return to draft</button>
+        <p class="note" data-i18n="interface:tabPastEitherEndOfThePreviewControlsToReturn">
           Tab past either end of the preview controls to return here. Re-entering a paused preview
           never resumes it automatically.
         </p>
       </section>
-      <footer>
+      <footer data-i18n="interface:localFirstDraftsImmutableCheckpointsSharedCompilerHumanPlaytestingStill">
         Local-first drafts · immutable checkpoints · shared compiler · human playtesting still
         required
       </footer>

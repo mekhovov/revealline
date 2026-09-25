@@ -1,3 +1,4 @@
+import { t, localizedText } from '../game/i18n/index.mjs';
 import { attachControllerNavigation } from '../game/ui/controller-navigation.mjs';
 import { createControllerRouter } from '../game/ui/controller-router.mjs';
 
@@ -25,7 +26,7 @@ export function attachAboutNavigation({
     // Keep the page status for connection, cancellation and navigation hints.
     const editor = doc.querySelector('.controller-editor');
     if (editor?.getAttribute('role') === 'status' && editor.textContent === text) return;
-    if (status.textContent !== text) status.textContent = text;
+    if (status.textContent !== text) localizedText(status, () =>text);
   };
   const router = createControllerRouter({
     readPads: () => nav?.getGamepads?.() ?? [],
@@ -35,7 +36,7 @@ export function attachAboutNavigation({
     if (!foreground()) return;
     returnLink.focus({ preventScroll: true });
     returnLink.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'auto' });
-    hint('Return to game selected. Confirm to leave this page.');
+    hint(t("website:returnToGameSelectedConfirmToLeaveThisPage"));
   };
   const navigation = attachControllerNavigation({
     document: doc,
@@ -75,7 +76,7 @@ export function attachAboutNavigation({
       lastStatus = sample.status.code;
       hint(
         sample.status.code === 'connected'
-          ? 'D-pad: move · South: choose · East: Back · Keyboard and touch also work.'
+          ? t("website:dPadMoveSouthChooseEastBackKeyboardAndTouch")
           : sample.status.message,
       );
     }
