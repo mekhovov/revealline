@@ -113,9 +113,9 @@ export const FIELD_KIT_ENGLISH = Object.freeze({
 
 // Compatibility adapter for existing presentation keys; catalogs are canonical.
 export const FIELD_KIT_KEYS = Object.freeze({
-  'navigation.continue': 'interface:continue',
+  'navigation.continue': 'common:actions.continue',
   'navigation.start': 'interface:start',
-  'navigation.deploy': 'interface:deploy2',
+  'navigation.deploy': 'common:actions.deploy',
   'navigation.missions': 'interface:missions',
   'navigation.collection': 'interface:collection',
   'navigation.settings': 'common:navigation.settings',
@@ -167,9 +167,9 @@ export const FIELD_KIT_KEYS = Object.freeze({
   'display.textSize': 'interface:textSize',
   'display.standard': 'interface:display.textSize.standard',
   'display.large': 'interface:large',
-  'motion.stageLabels': 'interface:stageLabels',
-  'motion.stageLabelsHint': 'interface:fullTextForTheToyMarkersCanvasCaptionsMayShorten',
-  'motion.stageRolesHint': 'interface:hazeAffectsTheDisplayedSignalOnlyEnterASupplyPad',
+  'motion.stageLabels': 'common:preview.stageLabels',
+  'motion.stageLabelsHint': 'common:preview.stageLabelsHelp',
+  'motion.stageRolesHint': 'common:preview.hazeHelp',
   'motion.stageKind.haze': 'interface:haze',
   'motion.stageKind.pad': 'interface:supplyPad',
   'motion.stageKind.ground': 'interface:groundMarker',
@@ -177,7 +177,7 @@ export const FIELD_KIT_KEYS = Object.freeze({
   'motion.stageKind.delivery': 'interface:deliveryMarker',
   'motion.stageKind.relay': 'interface:relayMarker',
   'motion.stageKind.note': 'interface:note',
-  'motion.concealedNote': 'interface:concealedNote',
+  'motion.concealedNote': 'common:preview.concealedNote',
   'motion.noteVisible': 'interface:visibleWhileTheScanLasts',
   'motion.markerReady': 'common:status.ready',
   'motion.markerUpdated': 'interface:updated',

@@ -47,7 +47,7 @@ import { createStudioViewMemory, resolveStudioView } from './view-memory.mjs';
 const $ = (id) => document.getElementById(id);
 const node = (tag, value = '', className = '', hostRole = null) => {
   const el = document.createElement(tag);
-  localizedText(el, () =>value);
+  localizedText(el, () => value);
   el.className = className;
   if (hostRole) el.dataset.studioHost = hostRole;
   return el;
@@ -143,11 +143,13 @@ const audioPreferences = createAudioPreferences({
   window,
   getStorage: () => localStorage,
   onWarning: (message) => {
-    localizedText($('studio-audio-status'), () =>message);
+    localizedText($('studio-audio-status'), () => message);
   },
 });
 const renderMasterPreferences = ({ muted, volume }) => {
-  localizedText($('studio-audio-mute'), () =>muted ? t("tools:unmuteSound") : t("tools:muteSound"));
+  localizedText($('studio-audio-mute'), () =>
+    muted ? t('common:audio.unmute') : t('tools:muteSound'),
+  );
   $('studio-master-volume').value = volume;
 };
 const stopMasterView = audioMaster.subscribe(renderMasterPreferences);
@@ -174,18 +176,13 @@ window.addEventListener('keydown', (event) => {
 });
 function requireSettled(allowPixels = false) {
   if (!allowPixels && sprite.hasEdits())
-    throw new Error(
-      t("tools:prepareTheEditedSpriteOrDiscardPixelEditsBeforeChanging"),
-    );
-  if (pending)
-    throw new Error(
-      t("tools:validateAndStageThePreparedSlotOrDiscardItBefore"),
-    );
+    throw new Error(t('tools:prepareTheEditedSpriteOrDiscardPixelEditsBeforeChanging'));
+  if (pending) throw new Error(t('tools:validateAndStageThePreparedSlotOrDiscardItBefore'));
 }
 function stage(
   document,
   assets = working.assets,
-  message = t("tools:changeStagedSaveALocalRevisionOrExportToKeep"),
+  message = t('tools:changeStagedSaveALocalRevisionOrExportToKeep'),
 ) {
   undo.push(working);
   if (undo.length > 40) undo.shift();
@@ -198,7 +195,7 @@ function discardPreparation() {
   pending?.bitmap?.close();
   pending = null;
   $('asset-upload').value = '';
-  localizedText($('upload-summary'), () =>t("tools:noReplacementSelected"));
+  localizedText($('upload-summary'), () => t('tools:noReplacementSelected'));
   $('image-preparation').hidden = true;
   $('geometry-panel').hidden = true;
   $('stage-asset').disabled = true;
@@ -223,9 +220,13 @@ function filters() {
 function refreshInventory() {
   const view = resolved(),
     rows = matchingSlots(working.document.slots, view, filters());
-  localizedText($('slot-count'), () =>`${rows.length} / ${working.document.slots.length}`);
+  localizedText($('slot-count'), () => `${rows.length} / ${working.document.slots.length}`);
   const coverage = presentationCoverage(working.document);
-  localizedText($('coverage-summary'), () =>`${coverage.counts.missing} missing · ${coverage.counts.source} source · ${coverage.counts.produced} produced · ${coverage.counts.reviewed} reviewed. Readiness is evidence based.`);
+  localizedText(
+    $('coverage-summary'),
+    () =>
+      `${coverage.counts.missing} missing · ${coverage.counts.source} source · ${coverage.counts.produced} produced · ${coverage.counts.reviewed} reviewed. Readiness is evidence based.`,
+  );
   const list = document.createDocumentFragment();
   for (const slot of rows) {
     const asset = view.assets[slot.id],
@@ -269,7 +270,7 @@ function refreshInventory() {
   $('empty-inventory').hidden = rows.length !== 0;
 }
 function updateCollectionCount() {
-  localizedText($('collection-count'), () =>`${collectionSlots.size} slots selected`);
+  localizedText($('collection-count'), () => `${collectionSlots.size} slots selected`);
 }
 function refresh() {
   if (!working.document.slots.some((slot) => slot.id === selected))
@@ -285,7 +286,11 @@ function refresh() {
     }),
   );
   $('filter-theme').value = view.theme.id;
-  localizedText($('workspace-summary'), () =>`Theme ${view.theme.name} · document r${working.document.revision} · local save ${generation || 'none'}${working !== saved ? ' · unsaved changes' : ''}${view.collection ? ` · ${view.collection.id}` : ''}`);
+  localizedText(
+    $('workspace-summary'),
+    () =>
+      `Theme ${view.theme.name} · document r${working.document.revision} · local save ${generation || 'none'}${working !== saved ? ' · unsaved changes' : ''}${view.collection ? ` · ${view.collection.id}` : ''}`,
+  );
   $('undo-draft').disabled = !undo.length;
   $('redo-draft').disabled = !redo.length;
   $('reset-draft').disabled = working === saved;
@@ -298,9 +303,9 @@ function refreshInspector() {
   const slot = currentSlot(),
     view = resolved(),
     asset = view.assets[slot.id];
-  localizedText($('slot-id'), () =>slot.id);
-  localizedText($('slot-title'), () =>slot.label);
-  localizedText($('slot-quality'), () =>asset?.quality.stage || 'missing');
+  localizedText($('slot-id'), () => slot.id);
+  localizedText($('slot-title'), () => slot.label);
+  localizedText($('slot-quality'), () => asset?.quality.stage || 'missing');
   const priorState = $('preview-state').value;
   $('preview-state').replaceChildren(
     ...slot.states.map((state) => {
@@ -310,19 +315,22 @@ function refreshInspector() {
     }),
   );
   if (slot.states.includes(priorState)) $('preview-state').value = priorState;
-  localizedText($('slot-description'), () =>asset?.description || t("tools:noAssetBoundToThisSlot"));
+  localizedText(
+    $('slot-description'),
+    () => asset?.description || t('tools:noAssetBoundToThisSlot'),
+  );
   const facts = [
     [
-      t("tools:frame"),
+      t('tools:frame'),
       slot.dimensions
         ? `${slot.dimensions.width} × ${slot.dimensions.height} px`
-        : t("tools:scalableMedia"),
+        : t('tools:scalableMedia'),
     ],
-    [t("tools:accepted"), slot.kinds.join(', ')],
-    [t("tools:budget"), `${Math.round(slot.budget.maxBytes / 1024)} KiB`],
-    [t("tools:alpha"), slot.alpha],
-    [t("tools:sampling"), slot.sampling],
-    [t("tools:required"), slot.required ? t("tools:yes") : t("tools:optionalThemeOwner")],
+    [t('tools:accepted'), slot.kinds.join(', ')],
+    [t('tools:budget'), `${Math.round(slot.budget.maxBytes / 1024)} KiB`],
+    [t('tools:alpha'), slot.alpha],
+    [t('tools:sampling'), slot.sampling],
+    [t('tools:required'), slot.required ? t('tools:yes') : t('tools:optionalThemeOwner')],
   ];
   $('slot-facts').replaceChildren(
     ...facts.map(([key, value]) => {
@@ -338,11 +346,13 @@ function refreshInspector() {
   $('slot-requirements').replaceChildren(
     ...slot.requirements.map((requirement) => node('li', requirement, '', 'body')),
   );
-  localizedText($('slot-contract'), () =>JSON.stringify(
-    { ...slot, currentAsset: asset ? `${asset.id}@${asset.revision}` : null },
-    null,
-    2,
-  ));
+  localizedText($('slot-contract'), () =>
+    JSON.stringify(
+      { ...slot, currentAsset: asset ? `${asset.id}@${asset.revision}` : null },
+      null,
+      2,
+    ),
+  );
   const editable =
     slot.kinds.includes('image') &&
     slot.dimensions &&
@@ -415,7 +425,7 @@ async function refreshPreviews() {
         ...options,
         statusTarget: $(`${id}-preview-status`),
         cancelButton: $(`${id}-preview-cancel`),
-        label: id === 'current' ? t("tools:savedPreview") : t("tools:draftPreview"),
+        label: id === 'current' ? t('tools:savedPreview') : t('tools:draftPreview'),
         isCurrent: () => requestedPreview === previewGeneration,
       }),
     ),
@@ -470,7 +480,12 @@ function refreshHistory() {
       );
       row.append(copy);
       if (item.file) {
-        const downloadButton = node('button', localizedMessage("tools:downloadFile"), '', 'control');
+        const downloadButton = node(
+          'button',
+          localizedMessage('tools:downloadFile'),
+          '',
+          'control',
+        );
         downloadButton.type = 'button';
         downloadButton.onclick = () =>
           download(
@@ -481,20 +496,25 @@ function refreshHistory() {
       }
       if (!bindable) {
         row.append(
-          node('p', localizedMessage("tools:sourceOriginalPrepareItBeforeBindingToThisSlot"), '', 'secondary'),
+          node(
+            'p',
+            localizedMessage('tools:sourceOriginalPrepareItBeforeBindingToThisSlot'),
+            '',
+            'secondary',
+          ),
         );
         return row;
       }
-      const button = node('button', localizedMessage("tools:bindThisRevision"), '', 'control');
+      const button = node('button', localizedMessage('tools:bindThisRevision'), '', 'control');
       button.type = 'button';
       button.disabled = item.id === asset?.id && item.revision === asset?.revision;
       button.onclick = () =>
-        operation(t("tools:preparingWorkspaceChange"), () => {
+        operation(t('tools:preparingWorkspaceChange'), () => {
           requireSettled();
           stage(
             reviseStudioTheme(working.document, { bindings: { [selected]: ref(item) } }),
             working.assets,
-            t("tools:earlierAssetBoundInANewImmutableThemeRevision"),
+            t('tools:earlierAssetBoundInANewImmutableThemeRevision'),
           );
         });
       row.append(button);
@@ -563,7 +583,7 @@ function fileMime(file) {
 const preparedDownload = createStudioDownload({ document, target: $('prepared-download') });
 function download(blob, filename) {
   if (!blob) {
-    report(new Error(t("tools:fileBytesAreUnavailable")));
+    report(new Error(t('tools:fileBytesAreUnavailable')));
     return;
   }
   preparedDownload.offer(blob, filename);
@@ -573,9 +593,9 @@ window.addEventListener('pagehide', (event) => {
 });
 
 async function fileMetadata(blob, dimensions, task) {
-  task.update(t("tools:readingAssetBytesForVerification"), 'reading');
+  task.update(t('tools:readingAssetBytesForVerification'), 'reading');
   const bytes = new Uint8Array(await blob.arrayBuffer());
-  task.update(t("tools:hashingTheOriginalAssetBytes"), 'verifying');
+  task.update(t('tools:hashingTheOriginalAssetBytes'), 'verifying');
   const sha256 = await hashPresentationBytes(bytes);
   task.check();
   return {
@@ -587,14 +607,14 @@ async function fileMetadata(blob, dimensions, task) {
   };
 }
 async function decodeImage(blob, task) {
-  task.update(t("tools:readingTheImageHeader"), 'reading');
+  task.update(t('tools:readingTheImageHeader'), 'reading');
   const dataURL = await new Promise((resolve, reject) => {
     const reader = new FileReader();
     const cleanup = () => task.signal.removeEventListener('abort', cancel);
     const cancel = () => {
       reader.abort();
       cleanup();
-      reject(new DOMException(t("tools:imageReadCancelled"), 'AbortError'));
+      reject(new DOMException(t('tools:imageReadCancelled'), 'AbortError'));
     };
     reader.onload = () => {
       cleanup();
@@ -607,7 +627,7 @@ async function decodeImage(blob, task) {
     task.signal.addEventListener('abort', cancel, { once: true });
     reader.readAsDataURL(blob);
   });
-  task.update(t("tools:validatingImageDimensions"), 'verifying');
+  task.update(t('tools:validatingImageDimensions'), 'verifying');
   const info = inspectImageDataUrl(dataURL);
   if (!info.valid) throw new Error(info.errors.join(' '));
   if (
@@ -618,12 +638,12 @@ async function decodeImage(blob, task) {
     throw new Error(
       `Studio images must fit ${LIMITS.imageSide} px per side and ${LIMITS.imagePixels.toLocaleString()} total pixels. Resize externally, retaining your original.`,
     );
-  task.update(t("tools:decodingTheOriginalImage"), 'decoding');
+  task.update(t('tools:decodingTheOriginalImage'), 'decoding');
   const bitmap = await createImageBitmap(blob);
   try {
     task.check();
     if (bitmap.width !== info.width || bitmap.height !== info.height)
-      throw new Error(t("tools:decodedImageDimensionsDoNotMatchItsHeader"));
+      throw new Error(t('tools:decodedImageDimensionsDoNotMatchItsHeader'));
     return bitmap;
   } catch (error) {
     bitmap.close();
@@ -657,7 +677,7 @@ async function startUpload(file, fromSprite = false, task) {
   if (!slot.kinds.includes(kind))
     throw new Error(`This slot accepts ${slot.kinds.join(', ')}. Choose an appropriate file.`);
   if (file.size > LIMITS.assetBytes)
-    throw new Error(t("tools:theOriginalExceedsThe4MibAssetBudget"));
+    throw new Error(t('tools:theOriginalExceedsThe4MibAssetBudget'));
   const blob = new Blob([file], { type: mime });
   const revision = nextAssetRevision(working.document, slot.id);
   const record = {
@@ -666,9 +686,9 @@ async function startUpload(file, fromSprite = false, task) {
     kind,
     description: slot.label,
     provenance: {
-      creator: t("tools:pendingCreator"),
+      creator: t('tools:pendingCreator'),
       source: file.name || 'Local pixel editor',
-      license: t("tools:pendingRightsDeclaration"),
+      license: t('tools:pendingRightsDeclaration'),
       prompt: '',
       parent: null,
     },
@@ -707,17 +727,19 @@ async function startUpload(file, fromSprite = false, task) {
     adopted = true;
     if (fromSprite) sprite.acceptSnapshot();
     $('discard-asset').disabled = false;
-    $('asset-source').value = file.name || t("tools:localPixelEditor");
+    $('asset-source').value = file.name || t('tools:localPixelEditor');
     $('asset-description').value = slot.label;
-    localizedText($('upload-summary'), () =>`${file.name || t("tools:localSprite")} · ${Math.ceil(blob.size / 1024)} KiB${bitmap ? ` · ${bitmap.width} × ${bitmap.height} px original` : ''}`);
+    localizedText(
+      $('upload-summary'),
+      () =>
+        `${file.name || t('tools:localSprite')} · ${Math.ceil(blob.size / 1024)} KiB${bitmap ? ` · ${bitmap.width} × ${bitmap.height} px original` : ''}`,
+    );
     $('image-preparation').hidden = !bitmap;
     if (crop) setCrop(crop);
     populateGeometry();
     $('stage-asset').disabled = false;
     refreshPreviews();
-    status(
-      t("tools:replacementPreparedCheckGeometryAndEnterActualCreatorSourceAnd"),
-    );
+    status(t('tools:replacementPreparedCheckGeometryAndEnterActualCreatorSourceAnd'));
   } finally {
     if (!adopted) bitmap?.close();
   }
@@ -754,7 +776,7 @@ function drawSource() {
   }
 }
 async function cropCandidate(preparation, slot, crop, task) {
-  task.update(t("tools:encodingTheCropAtTheSlotFrameSize"), 'encoding');
+  task.update(t('tools:encodingTheCropAtTheSlotFrameSize'), 'encoding');
   const canvas = document.createElement('canvas');
   canvas.width = slot.dimensions.width;
   canvas.height = slot.dimensions.height;
@@ -773,7 +795,7 @@ async function cropCandidate(preparation, slot, crop, task) {
   );
   const blob = await new Promise((resolve) => canvas.toBlob(resolve, 'image/png'));
   task.check();
-  if (!blob) throw new Error(t("tools:theBrowserCouldNotEncodeThisCrop"));
+  if (!blob) throw new Error(t('tools:theBrowserCouldNotEncodeThisCrop'));
   const asset = structuredClone(preparation.template);
   asset.file = await fileMetadata(blob, canvas, task);
   asset.geometry = imageGeometry(canvas, slot);
@@ -781,7 +803,7 @@ async function cropCandidate(preparation, slot, crop, task) {
   return { candidate: asset, candidateBlob: blob, preparedCrop: { ...crop } };
 }
 async function prepareCrop(task) {
-  if (!pending?.bitmap) throw new Error(t("tools:chooseAnImageFirst"));
+  if (!pending?.bitmap) throw new Error(t('tools:chooseAnImageFirst'));
   const preparation = pending;
   const candidate = await cropCandidate(preparation, currentSlot(), getCrop(), task);
   task.check();
@@ -790,9 +812,7 @@ async function prepareCrop(task) {
   $('stage-asset').disabled = false;
   drawSource();
   refreshPreviews();
-  status(
-    t("tools:derivativePreparedCheckGeometryAndEnterActualCreatorSourceAnd"),
-  );
+  status(t('tools:derivativePreparedCheckGeometryAndEnterActualCreatorSourceAnd'));
 }
 
 function populateGeometry() {
@@ -803,9 +823,11 @@ function populateGeometry() {
   $('pivot-x').disabled = $('pivot-y').disabled = !controls.pivot;
   $('rotor-anchors').disabled = !controls.rotors;
   $('nine-slice').disabled = !controls.nineSlice;
-  localizedText($('geometry-usage'), () =>controls.pivot
-    ? t("tools:thePivotPlacesThisArtworkAroundItsUnchangedGameplayCenter")
-    : t("tools:thisInterfaceOrPictureSlotUsesCenteredPlacementCropThe"));
+  localizedText($('geometry-usage'), () =>
+    controls.pivot
+      ? t('tools:thePivotPlacesThisArtworkAroundItsUnchangedGameplayCenter')
+      : t('tools:thisInterfaceOrPictureSlotUsesCenteredPlacementCropThe'),
+  );
   $('pivot-x').value = geometry.pivot.x;
   $('pivot-y').value = geometry.pivot.y;
   $('rotor-anchors').value = JSON.stringify(geometry.rotorAnchors, null, 2);
@@ -821,13 +843,11 @@ function editedGeometry() {
   };
 }
 async function validatePending(geometryOnly = false, task) {
-  if (!pending?.candidate) throw new Error(t("tools:prepareAnImageCropOrChooseMediaFirst"));
+  if (!pending?.candidate) throw new Error(t('tools:prepareAnImageCropOrChooseMediaFirst'));
   if (pending.bitmap) {
     const crop = getCrop();
     if (Object.keys(crop).some((key) => crop[key] !== pending.preparedCrop?.[key]))
-      throw new Error(
-        t("tools:theCropHasChangedPrepareDerivativeBeforeApplyingGeometryOr"),
-      );
+      throw new Error(t('tools:theCropHasChangedPrepareDerivativeBeforeApplyingGeometryOr'));
   }
   const asset = structuredClone(pending.candidate);
   if (asset.geometry) asset.geometry = editedGeometry();
@@ -835,7 +855,7 @@ async function validatePending(geometryOnly = false, task) {
     for (const id of ['asset-creator', 'asset-source', 'asset-license'])
       if (!$(id).value.trim()) {
         $(id).focus();
-        throw new Error(t("tools:enterTheActualCreatorSourceAndLicenseRightsStatement"));
+        throw new Error(t('tools:enterTheActualCreatorSourceAndLicenseRightsStatement'));
       }
     asset.description = $('asset-description').value.trim() || currentSlot().label;
     asset.provenance = {
@@ -860,11 +880,11 @@ async function validatePending(geometryOnly = false, task) {
   if (geometryOnly) {
     pending.candidate = asset;
     refreshPreviews();
-    status(t("tools:geometryCheckedAndAppliedToTheDraftPreview"));
+    status(t('tools:geometryCheckedAndAppliedToTheDraftPreview'));
     return;
   }
   if (asset.kind === 'image') {
-    task.update(t("tools:decodingAndCheckingTransparency"), 'decoding');
+    task.update(t('tools:decodingAndCheckingTransparency'), 'decoding');
     const bitmap = await createImageBitmap(pending.candidateBlob),
       frame = asset.geometry.frame,
       canvas = document.createElement('canvas');
@@ -890,37 +910,42 @@ async function validatePending(geometryOnly = false, task) {
     const measured = pixelBounds(context.getImageData(0, 0, frame.width, frame.height));
     bitmap.close();
     if (currentSlot().alpha === 'required' && !measured.transparent)
-      throw new Error(t("tools:thisSlotRequiresTransparencyTheCandidateIsFullyOpaque"));
+      throw new Error(t('tools:thisSlotRequiresTransparencyTheCandidateIsFullyOpaque'));
     if (currentSlot().alpha === 'opaque' && measured.transparent)
-      throw new Error(t("tools:thisSlotRequiresAFullyOpaqueImage"));
+      throw new Error(t('tools:thisSlotRequiresAFullyOpaqueImage'));
     if (!measured.occupiedBounds)
-      throw new Error(t("tools:theCandidateIsEntirelyTransparentPaintOrImportAVisible"));
+      throw new Error(t('tools:theCandidateIsEntirelyTransparentPaintOrImportAVisible'));
   }
   if (asset.kind === 'font') {
-    task.update(t("tools:readingAndDecodingTheCandidateFont"), 'decoding');
+    task.update(t('tools:readingAndDecodingTheCandidateFont'), 'decoding');
     const fontBytes = await pending.candidateBlob.arrayBuffer();
     task.check();
-    await new FontFace(t("tools:rlstudiovalidation"), fontBytes).load();
+    await new FontFace('RLStudioValidation', fontBytes).load();
   }
-  task.update(t("tools:verifyingOriginalBytesAndReplacementHistory"), 'verifying');
+  task.update(t('tools:verifyingOriginalBytesAndReplacementHistory'), 'verifying');
   const verified = await verifyThemeAssets(next, bytes, { signal: task.signal });
   task.check();
   discardPreparation();
   stage(
     next,
     verified,
-    t("tools:replacementValidatedAndStagedTheOriginalSourceAndEarlierRevisions"),
+    t('tools:replacementValidatedAndStagedTheOriginalSourceAndEarlierRevisions'),
   );
 }
-const editGeometry = node('button', localizedMessage("tools:editCurrentRasterMetadata"), '', 'control');
+const editGeometry = node(
+  'button',
+  localizedMessage('tools:editCurrentRasterMetadata'),
+  '',
+  'control',
+);
 editGeometry.type = 'button';
 editGeometry.id = 'edit-geometry';
 $('asset-upload-label').after(editGeometry);
 editGeometry.onclick = () =>
-  operation(t("tools:preparingWorkspaceChange"), () => {
+  operation(t('tools:preparingWorkspaceChange'), () => {
     requireSettled();
     const asset = resolved().assets[selected];
-    if (asset.kind !== 'image') throw new Error(t("tools:chooseARasterAssetFirst"));
+    if (asset.kind !== 'image') throw new Error(t('tools:chooseARasterAssetFirst'));
     const candidate = {
       ...structuredClone(asset),
       ...nextAssetRevision(working.document, selected),
@@ -941,7 +966,9 @@ editGeometry.onclick = () =>
     populateGeometry();
     $('discard-asset').disabled = false;
     $('stage-asset').disabled = false;
-    localizedText($('upload-summary'), () =>t("tools:editingMetadataExistingBytesRemainUnchanged"));
+    localizedText($('upload-summary'), () =>
+      t('tools:editingMetadataExistingBytesRemainUnchanged'),
+    );
   });
 const sprite = mountSpritePanel({
   onError: report,
@@ -949,12 +976,12 @@ const sprite = mountSpritePanel({
   onPrepare: (blob, task) =>
     startUpload(new File([blob], 'local-sprite.png', { type: 'image/png' }), true, task),
 });
-const discardPixels = node('button', localizedMessage("tools:discardPixelEdits"), '', 'control');
+const discardPixels = node('button', localizedMessage('tools:discardPixelEdits'), '', 'control');
 discardPixels.type = 'button';
 $('edit-current').after(discardPixels);
 discardPixels.onclick = () => {
   sprite.reset();
-  status(t("tools:pixelEditorClearedPreparedAndStagedAssetsAreUnchanged"));
+  status(t('tools:pixelEditorClearedPreparedAndStagedAssetsAreUnchanged'));
 };
 $('new-sprite').onclick = () => {
   try {
@@ -966,7 +993,7 @@ $('new-sprite').onclick = () => {
   }
 };
 $('edit-current').onclick = () =>
-  operation(t("tools:decodingTheCurrentSprite"), async (task) => {
+  operation(t('tools:decodingTheCurrentSprite'), async (task) => {
     requireSettled();
     const asset = resolved().assets[selected],
       bitmap = await createImageBitmap(working.assets.get(asset.file.sha256)),
@@ -993,13 +1020,13 @@ $('edit-current').onclick = () =>
     );
     bitmap.close();
     sprite.open(frame.width, frame.height, ctx.getImageData(0, 0, frame.width, frame.height).data);
-    status(t("tools:currentRasterLoadedInThePixelEditor"));
+    status(t('tools:currentRasterLoadedInThePixelEditor'));
   });
 $('asset-upload').onchange = () => {
   const file = $('asset-upload').files[0];
-  if (file) operation(t("tools:readingReplacementFile"), (task) => startUpload(file, false, task));
+  if (file) operation(t('tools:readingReplacementFile'), (task) => startUpload(file, false, task));
 };
-$('prepare-crop').onclick = () => operation(t("tools:preparingCropDerivative"), prepareCrop);
+$('prepare-crop').onclick = () => operation(t('tools:preparingCropDerivative'), prepareCrop);
 $('fit-crop').onclick = () => {
   if (pending?.bitmap)
     setCrop(
@@ -1015,17 +1042,17 @@ $('fit-crop').onclick = () => {
 $('download-original').onclick = () =>
   download(pending?.blob, `original-${selected}.${extension(pending?.blob?.type)}`);
 $('apply-geometry').onclick = () =>
-  operation(t("tools:checkingPreviewGeometry"), (task) => validatePending(true, task));
+  operation(t('tools:checkingPreviewGeometry'), (task) => validatePending(true, task));
 $('stage-asset').onclick = () =>
-  operation(t("tools:validatingReplacement"), (task) => validatePending(false, task));
+  operation(t('tools:validatingReplacement'), (task) => validatePending(false, task));
 $('discard-asset').onclick = () => {
   discardPreparation();
   refreshInspector();
-  status(t("tools:preparedSlotDiscardedStagedWorkspaceRevisionsAreUnchanged"));
+  status(t('tools:preparedSlotDiscardedStagedWorkspaceRevisionsAreUnchanged'));
 };
 $('token-form').onsubmit = (event) => {
   event.preventDefault();
-  operation(t("tools:preparingWorkspaceChange"), () => {
+  operation(t('tools:preparingWorkspaceChange'), () => {
     requireSettled();
     const tokens = Object.fromEntries(
       [...new FormData(event.currentTarget)].map(([key, value]) => [
@@ -1043,7 +1070,7 @@ $('token-form').onsubmit = (event) => {
   }),
 );
 $('filter-theme').onchange = () =>
-  operation(t("tools:preparingWorkspaceChange"), () => {
+  operation(t('tools:preparingWorkspaceChange'), () => {
     try {
       requireSettled();
       const previous = working.document,
@@ -1082,9 +1109,9 @@ $('clear-collection').onclick = () => {
   refreshPrompt();
 };
 $('stage-collection').onclick = () =>
-  operation(t("tools:preparingWorkspaceChange"), () => {
+  operation(t('tools:preparingWorkspaceChange'), () => {
     requireSettled();
-    if (!collectionSlots.size) throw new Error(t("tools:selectAtLeastOneSlotToBuildACollection"));
+    if (!collectionSlots.size) throw new Error(t('tools:selectAtLeastOneSlotToBuildACollection'));
     const view = resolved(),
       requiredSlots = [...collectionSlots];
     const bindings = Object.fromEntries(
@@ -1101,7 +1128,7 @@ $('stage-collection').onclick = () =>
         bindings,
       }),
       working.assets,
-      t("tools:collectionStagedAtomicallyEverySelectedSlotHasAValidBinding"),
+      t('tools:collectionStagedAtomicallyEverySelectedSlotHasAValidBinding'),
     );
   });
 for (const button of document.querySelectorAll('[data-prompt-action]'))
@@ -1117,10 +1144,10 @@ let copyRequest = 0;
 $('copy-generated-prompt').onclick = async () => {
   const request = ++copyRequest;
   const button = $('copy-generated-prompt');
-  const lease = promptStatus.begin({ message: t("tools:copyingTheCompletePrompt") });
+  const lease = promptStatus.begin({ message: t('tools:copyingTheCompletePrompt') });
   try {
     await navigator.clipboard.writeText($('generated-prompt').value);
-    lease.finish({ message: t("tools:completePromptCopied") });
+    lease.finish({ message: t('tools:completePromptCopied') });
   } catch {
     if (request !== copyRequest) return;
     if (document.hasFocus() && document.activeElement === button) {
@@ -1128,50 +1155,50 @@ $('copy-generated-prompt').onclick = async () => {
       $('generated-prompt').select();
     }
     lease.finish({
-      message: t("tools:clipboardUnavailableSelectTheFullPromptAndPressCtrlCmd"),
+      message: t('tools:clipboardUnavailableSelectTheFullPromptAndPressCtrlCmd'),
       state: 'error',
     });
   }
 };
 $('add-team-anchors').onclick = () =>
-  operation(t("tools:addingEditableTeamPresentation"), () => {
+  operation(t('tools:addingEditableTeamPresentation'), () => {
     requireSettled();
     stage(
       addTeamPresentationSlots(working.document),
       working.assets,
-      t("tools:teamPresentationSlotsAddedToThisDraftChooseCouchTeam"),
+      t('tools:teamPresentationSlotsAddedToThisDraftChooseCouchTeam'),
     );
   });
 $('undo-draft').onclick = () =>
-  operation(t("tools:preparingWorkspaceChange"), () => {
+  operation(t('tools:preparingWorkspaceChange'), () => {
     requireSettled();
     if (!undo.length) return;
     redo.push(working);
     working = undo.pop();
     refresh();
-    status(t("tools:draftChangeUndoneSavedHistoryIsIntact"));
+    status(t('tools:draftChangeUndoneSavedHistoryIsIntact'));
   });
 $('redo-draft').onclick = () =>
-  operation(t("tools:preparingWorkspaceChange"), () => {
+  operation(t('tools:preparingWorkspaceChange'), () => {
     requireSettled();
     if (!redo.length) return;
     undo.push(working);
     working = redo.pop();
     refresh();
-    status(t("tools:draftChangeRestored"));
+    status(t('tools:draftChangeRestored'));
   });
 $('reset-draft').onclick = () =>
-  operation(t("tools:preparingWorkspaceChange"), () => {
+  operation(t('tools:preparingWorkspaceChange'), () => {
     requireSettled();
     working = saved;
     undo = [];
     redo = [];
     sprite.reset();
     refresh();
-    status(t("tools:returnedToTheLastSavedWorkspace"));
+    status(t('tools:returnedToTheLastSavedWorkspace'));
   });
 $('record-review').onclick = () =>
-  operation(t("tools:preparingWorkspaceChange"), () => {
+  operation(t('tools:preparingWorkspaceChange'), () => {
     requireSettled();
     const evidence = [
       ...new Set(
@@ -1182,9 +1209,9 @@ $('record-review').onclick = () =>
       ),
     ];
     if (!evidence.length)
-      throw new Error(t("tools:recordTheConcreteReviewChecksBeforeMarkingThisAssetReviewed"));
+      throw new Error(t('tools:recordTheConcreteReviewChecksBeforeMarkingThisAssetReviewed'));
     const current = resolved().assets[selected];
-    if (!current) throw new Error(t("tools:bindAnAssetBeforeReviewingIt"));
+    if (!current) throw new Error(t('tools:bindAnAssetBeforeReviewingIt'));
     const asset = {
       ...structuredClone(current),
       ...nextAssetRevision(working.document, selected),
@@ -1197,17 +1224,15 @@ $('record-review').onclick = () =>
         bindings: { [selected]: ref(asset) },
       }),
       working.assets,
-      t("tools:reviewEvidenceRecordedInANewImmutableRevision"),
+      t('tools:reviewEvidenceRecordedInANewImmutableRevision'),
     );
     $('review-evidence').value = '';
   });
 $('save-workspace').onclick = () =>
-  operation(t("tools:preparingALocalRevision"), async (task) => {
+  operation(t('tools:preparingALocalRevision'), async (task) => {
     requireSettled();
     if (!storageReady)
-      throw new Error(
-        t("tools:localStorageHasNotLoadedSuccessfullyExportYourWorkThen"),
-      );
+      throw new Error(t('tools:localStorageHasNotLoadedSuccessfullyExportYourWorkThen'));
     task.commit();
     const result = await store.save(working.document, working.assets, {
       expectedGeneration: generation,
@@ -1219,26 +1244,26 @@ $('save-workspace').onclick = () =>
     undo = [];
     redo = [];
     refresh();
-    status(t("tools:localRevisionSavedAtomicallyPlayerSavesAreUntouched"), 'success');
+    status(t('tools:localRevisionSavedAtomicallyPlayerSavesAreUntouched'), 'success');
   });
 $('export-workspace').onclick = () =>
-  operation(t("tools:verifyingOriginalBytesForExport"), async (task) => {
+  operation(t('tools:verifyingOriginalBytesForExport'), async (task) => {
     requireSettled();
     const bundle = await exportThemeBundle(working.document, working.assets, {
       signal: task.signal,
     });
     task.check();
     download(bundle, `revealline-${resolved().theme.id}-r${working.document.revision}.rltheme`);
-    status(t("tools:themeDownloadRequestedWithAllSourceFilesAndImmutableRevisions"), 'success');
+    status(t('tools:themeDownloadRequestedWithAllSourceFilesAndImmutableRevisions'), 'success');
   });
 $('import-workspace').onchange = () => {
   const file = $('import-workspace').files[0];
   if (!file) return;
   $('import-workspace').value = '';
-  operation(t("tools:readingAndValidatingTheImportedBundle"), async (task) => {
+  operation(t('tools:readingAndValidatingTheImportedBundle'), async (task) => {
     requireSettled();
     const incoming = await importThemeBundle(file, { signal: task.signal });
-    task.update(t("tools:verifyingMergedAssetsAndImmutableRevisions"), 'verifying');
+    task.update(t('tools:verifyingMergedAssetsAndImmutableRevisions'), 'verifying');
     const next = adoptStudioBundle(working.document, incoming.document),
       merged = new Map([...working.assets, ...incoming.assets]);
     const bytes = await verifyThemeAssets(next, merged, { signal: task.signal });
@@ -1246,17 +1271,17 @@ $('import-workspace').onchange = () => {
     stage(
       next,
       bytes,
-      t("tools:verifiedCollectionStagedAtomicallyCurrentAndImportedSourceFilesAre"),
+      t('tools:verifiedCollectionStagedAtomicallyCurrentAndImportedSourceFilesAre'),
     );
   });
 };
 async function loadWorkspace(task) {
   requireSettled();
-  if (working !== saved)
-    throw new Error(t("tools:exportOrSaveTheStagedWorkspaceOrResetToSaved"));
+  if (working !== saved) throw new Error(t('tools:exportOrSaveTheStagedWorkspaceOrResetToSaved'));
   const result = await store.load();
   task.check();
-  if (!result) task.update(t("tools:loadingAndVerifyingTheCurrentReleaseCollection"), 'downloading');
+  if (!result)
+    task.update(t('tools:loadingAndVerifyingTheCurrentReleaseCollection'), 'downloading');
   const published = result ? null : await loadPublishedStudio({ signal: task.signal });
   task.check();
   storageReady = true;
@@ -1274,19 +1299,20 @@ async function loadWorkspace(task) {
   refresh();
   status(
     result
-      ? t("tools:savedStudioWorkspaceLoaded")
+      ? t('tools:savedStudioWorkspaceLoaded')
       : published
-        ? t("tools:currentReleaseAssetsLoadedChangesStayInThisLocalStudio")
-        : t("tools:sourceRegistryLoadedACompiledReleaseCollectionIsNotPresent"),
+        ? t('tools:currentReleaseAssetsLoadedChangesStayInThisLocalStudio')
+        : t('tools:sourceRegistryLoadedACompiledReleaseCollectionIsNotPresent'),
   );
 }
-$('reload-workspace').onclick = () => operation(t("tools:loadingSavedStudioWorkspace"), loadWorkspace);
+$('reload-workspace').onclick = () =>
+  operation(t('tools:loadingSavedStudioWorkspace'), loadWorkspace);
 $('load-release').onclick = () =>
-  operation(t("tools:loadingAndVerifyingTheReleaseCollection"), async (task) => {
+  operation(t('tools:loadingAndVerifyingTheReleaseCollection'), async (task) => {
     requireSettled();
     const published = await loadPublishedStudio({ signal: task.signal });
-    task.update(t("tools:verifyingMergedReleaseAssets"), 'verifying');
-    if (!published) throw new Error(t("tools:thisSourceCheckoutHasNoCompiledReleaseCollection"));
+    task.update(t('tools:verifyingMergedReleaseAssets'), 'verifying');
+    if (!published) throw new Error(t('tools:thisSourceCheckoutHasNoCompiledReleaseCollection'));
     const next = adoptStudioBundle(working.document, published.document);
     const assets = await verifyThemeAssets(
       next,
@@ -1294,11 +1320,7 @@ $('load-release').onclick = () =>
       { signal: task.signal },
     );
     task.check();
-    stage(
-      next,
-      assets,
-      t("tools:releaseCollectionStagedExistingLocalHistoryIsRetainedSaveOr"),
-    );
+    stage(next, assets, t('tools:releaseCollectionStagedExistingLocalHistoryIsRetainedSaveOr'));
   });
 window.addEventListener('pagehide', (event) => {
   rememberView();
@@ -1343,7 +1365,7 @@ for (const [id, values] of [
     }),
   );
 refresh();
-operation(t("tools:loadingSavedStudioWorkspace"), loadWorkspace).then(() => {
+operation(t('tools:loadingSavedStudioWorkspace'), loadWorkspace).then(() => {
   initialWorkspaceLoad = false;
   if (
     restoredView &&
