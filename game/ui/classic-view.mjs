@@ -15,10 +15,18 @@ import { enemyCatalogRecord } from '../enemy-catalog.mjs';
 const SIZE = 16;
 const KINDS = ['extra-life', 'player-speed', 'enemy-slow', 'enemy-freeze'];
 const LABELS = {
-  get 'extra-life'() { return t("interface:life"); },
-  get 'player-speed'() { return t("interface:speed"); },
-  get 'enemy-slow'() { return t("interface:enemiesSlow"); },
-  get 'enemy-freeze'() { return t("interface:enemiesFrozen"); },
+  get 'extra-life'() {
+    return t('interface:life');
+  },
+  get 'player-speed'() {
+    return t('interface:speed');
+  },
+  get 'enemy-slow'() {
+    return t('interface:enemiesSlow');
+  },
+  get 'enemy-freeze'() {
+    return t('interface:enemiesFrozen');
+  },
 };
 const TYPES = [
   'bouncer',
@@ -30,15 +38,16 @@ const TYPES = [
   'eroder',
 ];
 const own = (value, key) => {
-  if (!value || typeof value !== 'object') throw new TypeError(t("interface:expectedPresentationData"));
+  if (!value || typeof value !== 'object')
+    throw new TypeError(t('interface:expectedPresentationData'));
   const field = Object.getOwnPropertyDescriptor(value, key);
   if (!field) return undefined;
   if (!Object.hasOwn(field, 'value'))
-    throw new TypeError(t("interface:presentationDataCannotContainGetters"));
+    throw new TypeError(t('interface:presentationDataCannotContainGetters'));
   return field.value;
 };
 const check = (condition) => {
-  if (!condition) throw new TypeError(t("interface:invalidClassicPresentation"));
+  if (!condition) throw new TypeError(t('interface:invalidClassicPresentation'));
 };
 const integer = (value) => Number.isSafeInteger(value) && value >= 0;
 const typedLength = Object.getOwnPropertyDescriptor(
@@ -332,7 +341,12 @@ export function classicView(run) {
         ...(terrain.some((cell) => cell.kind === 'slow') ? ['Slow ground active'] : []),
         ...(terrain.some((cell) => cell.kind === 'lethal') ? ['Lethal ground active'] : []),
         ...(powerups.length
-          ? [t("gameplay:contactPickup", { value1: powerups.length, value2: powerups.length === 1 ? '' : 's' })]
+          ? [
+              t('gameplay:contactPickup', {
+                value1: powerups.length,
+                value2: powerups.length === 1 ? '' : 's',
+              }),
+            ]
           : []),
         ...timedBonuses.map(
           (item) =>
@@ -340,9 +354,12 @@ export function classicView(run) {
         ),
         ...enemies
           .filter((enemy) => enemy.mode === 'warning')
-          .map(
-            (enemy) =>
-              t("gameplay:inS", { value1: enemy.type === 'eroder' ? t("interface:groundReopens") : t("interface:roverWakes"), value2: enemy.seconds.toFixed(1) }),
+          .map((enemy) =>
+            t('gameplay:inS', {
+              value1:
+                enemy.type === 'eroder' ? t('interface:groundReopens') : t('interface:roverWakes'),
+              value2: enemy.seconds.toFixed(1),
+            }),
           ),
         ...effects.map(
           (effect) =>
@@ -716,11 +733,15 @@ export function drawClassicStatus(
     ctx.scale(0.65, 0.65);
     icon(ctx, effect.kind);
     ctx.restore();
-    ctx.font = `500 14px ${fonts?.ui || '"Field Kit UI", "Field Kit Mono", sans-serif' }`;
+    ctx.font = `500 14px ${fonts?.ui || '"Field Kit UI", "Field Kit Mono", sans-serif'}`;
     ctx.textBaseline = 'middle';
     ctx.textAlign = 'left';
     const label = compact
-      ? { 'player-speed': t("interface:speed2"), 'enemy-slow': t("interface:slow"), 'enemy-freeze': t("interface:freeze") }[effect.kind]
+      ? {
+          'player-speed': t('interface:speed2'),
+          'enemy-slow': t('interface:slow'),
+          'enemy-freeze': t('interface:freeze'),
+        }[effect.kind]
       : effect.label;
     ctx.fillText(
       `${label} ${effect.phase === 'pending' ? 'next' : `${effect.seconds.toFixed(1)}s`}`,
@@ -787,11 +808,11 @@ export function drawEnemyPressure(
           ],
         ]);
     }
-    const role = pressure.mode === 'trail-pursuit' ? t("interface:trail") : t("interface:head");
+    const role = pressure.mode === 'trail-pursuit' ? t('interface:trail') : t('interface:head');
     const label =
         pressure.phase === 'patrol'
           ? role
-          : `${cooldown ? t("interface:rest") : warning ? t("interface:aim") : t("interface:chase")} ${role}`,
+          : `${cooldown ? t('interface:rest') : warning ? t('interface:aim') : t('interface:chase')} ${role}`,
       textWidth = (label.length * 8.4 + 8) * unit,
       x = Math.max(0, Math.min(1152 - textWidth, enemy.x * SIZE - textWidth / 2)),
       y = Math.max(
