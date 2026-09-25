@@ -2043,19 +2043,35 @@ test('public archive searches and plays any published recording through the shar
   assert.match(app.node('online-status').textContent, /Recording mode excludes 6/);
 });
 
-test('public archive failure and cancellation preserve built-in music controls', async (t) => {
+test('public archive failure, refresh and cancellation preserve every music source', async (t) => {
+  let attempts = 0;
   const failed = await setup(t, {
     callbacks: {
-      onlineCatalogueDownload: { fetch: async () => new Response('no', { status: 503 }) },
+      onlineCatalogueDownload: {
+        fetch: async () =>
+          ++attempts === 1
+            ? new Response('no', { status: 503 })
+            : onlineCatalogueResponse(onlineCatalogueFixture()),
+      },
     },
   });
   await settleOnlineCatalogue();
+  assert.equal(attempts, 1);
   assert.match(
     failed.node('online-status').textContent,
     /Built-in, installed and uploaded music still works/,
   );
   await failed.click('play');
   assert(failed.calls.some(([name]) => name === 'play'));
+
+  await failed.click('online-reload');
+  await settleOnlineCatalogue();
+  assert.equal(attempts, 2);
+  assert.match(failed.node('online-status').textContent, /6 of 6 published recordings/);
+  await failed.click(`online-play-${'1'.repeat(64)}`);
+  const recovered = failed.calls.findLast(([name]) => name === 'remote');
+  assert.equal(recovered[1][0].title, 'Night Circuit');
+  assert.equal(recovered[2].mixWithLibrary, true);
 
   let aborted = false;
   const pending = await setup(t, {
