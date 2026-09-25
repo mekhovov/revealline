@@ -480,3 +480,36 @@ tests pass.
 The scroll regression covers translated layout, retained offsets, original CSS priority,
 and cleanup when an observer throws. The full-game suite and remaining owned-copy audit
 remain open; prior distribution/native artifacts predate this batch.
+
+## Motion playback and story controls
+
+After rebasing cleanly onto publication main `a7084aafa`, Motion Lab playback events,
+paused/running readouts, numeric slider descriptions, startup states and accepted image
+import notices now resolve live translations. Locale changes re-render presentation without
+resetting the preview clock, input, selected controls, image ownership or test collection.
+Ukrainian coordinate pairs use semicolons to distinguish them from decimal commas.
+`common:actions.playback` separates media playback («Відтворити») from starting a game
+(«Грати»); Replay Theater, soundtrack preview and victory stories share that meaning.
+
+A Ukrainian-first story test exposed translated labels being used as button IDs. Story
+controls now retain canonical action IDs, and accepted status/error reasons retain message
+keys. Locale refresh only changes their bound text; it does not call play, seek, pause,
+restart timers, allocate URLs or emit a new presentation-state event. Snapshot reason
+fields remain rendered strings, preserving the existing API shape.
+
+The Motion regression passes 84 of 87 checks. All three remaining failures (two terminal
+listener assertions and a shared-preference-read assertion) reproduce on baseline main
+`0395ddbda`; the involved Motion and shared-surface files are unchanged from that baseline
+through `d8910d416`. Two obsolete English-only fixture expectations were resolved by making
+the modeled document language match the real bootstrap locale. The added real-host case
+preserves paused coordinates, edited values, option nodes, focus, request/write counts and
+a pending PNG import across repeated switches, then verifies the same accepted image URL.
+The browser confirms Ukrainian → English → Ukrainian at scale 1.05, with unchanged paused
+coordinates, focused scale slider and 3,172.5-pixel panel scroll.
+
+All 163 playback/soundtrack/replay checks pass. All 37 final story UI checks also pass,
+including Ukrainian-first creation, playing/paused/error text updates and unchanged media
+ownership. Catalog checks pass with 7,465 messages / 6,026 referenced keys; targeted lint
+and formatting pass. Full validation/lint/formatting are running. Motion collection and
+ability metadata/messages still need translation; this batch does not certify whole-tool
+coverage. Distribution/native artifacts still predate these batches.
