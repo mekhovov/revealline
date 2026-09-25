@@ -48,5 +48,14 @@
   "picture.writeRequired": "This session cannot save a new picture. Export current game data before reloading to prepare it. Previously saved flights and originals are kept.",
   "picture.unavailable": "Picture unavailable. Restore access to this flight’s original media and try again.",
   "picture.unavailablePaused": "Picture unavailable. Your flight remains paused. Restore access to its original media and try again.",
-  "chapters.unsupportedClassicRules": "Choose a supported Classic rules edition."
+  "chapters.unsupportedClassicRules": "Choose a supported Classic rules edition.",
+  "studio.bonus.operation": "Choose a bonus operation.",
+  "studio.bonus.stableId": "Give the bonus a stable ID.",
+  "studio.existingMission": "Choose an existing mission.",
+  "studio.bonus.teamUnavailable": "Contact bonuses are not yet qualified for authored Team missions.",
+  "studio.bonus.duplicateId": "That bonus ID already exists.",
+  "studio.bonus.existing": "Choose an existing bonus.",
+  "studio.bonus.identity": "Bonus identity must match the command.",
+  "studio.bonus.contextChanged": "The draft context changed. Refresh the bonus selection.",
+  "studio.bonus.coordinates": "Enter both cell-centre coordinates."
 }
