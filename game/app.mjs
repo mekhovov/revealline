@@ -8251,6 +8251,7 @@ try {
         'Controller disconnected. Your flight is paused. Release controls and press a face button to join again.',
       );
     } else {
+      controllerConfirmGuard.observe(controllerFrame.confirmHeld);
       controllerNavigation.handle(controllerFrame.ui);
       const flight = controllerFrame?.flight ?? {};
       const capabilities = arcadeActionCapabilities(run?.level);
