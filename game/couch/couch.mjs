@@ -105,6 +105,7 @@ import { createOperationStatus } from '../ui/operation-status.mjs';
 import { foundationReturnCaption } from '../ui/foundation-feedback.mjs';
 import { isCandidatePictureFor } from '../content-design/picture.mjs';
 import { releaseExplorerHref } from '../release-explorer.mjs';
+import { resultContinuationLabel } from '../ui/result-continuation.mjs';
 const $ = (id) => document.getElementById(id);
 $('race-release-explorer').href = releaseExplorerHref(
   globalThis.location?.href ?? document.baseURI ?? 'http://localhost/game/couch/',
@@ -3252,11 +3253,18 @@ try {
     $('race-journey-controls').hidden = !!shell && shell.scope() !== 'main' && !running;
     $('race-journey-next').hidden = match.status !== 'finished' || libraryCompleteMatch === match;
     $('race-journey-next').disabled = contentBusy || !!libraryContinuation;
-    localizedText($('race-journey-next'), () =>
-      candidateJourney && !candidateJourney.next(roundRecipe.entry.mission.id)
-        ? t('interface:browseMissions')
-        : t('interface:nextMission2'),
-    );
+    localizedText($('race-journey-next'), () => {
+      if (!candidateJourney) return t('interface:nextMission2');
+      const current = roundRecipe.entry.mission,
+        next = candidateJourney.next(current.id);
+      return resultContinuationLabel(t, {
+        browse: !next,
+        mission: next ? contentText(next, 'name') : '',
+        campaign: next ? contentText(next, 'campaignTitle') : '',
+        crossesCampaign:
+          !!next && (next.packId !== current.packId || next.campaignId !== current.campaignId),
+      });
+    });
     $('race-journey-skip').hidden = !candidateJourney || match.status === 'finished';
     $('race-journey-find').disabled = contentBusy || !!libraryContinuation;
     if (candidateJourney) {
