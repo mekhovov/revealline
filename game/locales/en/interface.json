@@ -4219,5 +4219,7 @@
   "quickMusic.play": "Play music",
   "quickMusic.toggle": "Play / pause music",
   "quickMusic.toggleShortcut": "Play / pause music (B)",
-  "quickMusic.nextShortcut": "Next song (N)"
+  "quickMusic.nextShortcut": "Next song (N)",
+  "soundtrack.coreRecordingIncluded_one": "{{count}} core recording is included with the game and never duplicated in the media budget.",
+  "soundtrack.coreRecordingIncluded_other": "{{count}} core recordings are included with the game and never duplicated in the media budget."
 }
