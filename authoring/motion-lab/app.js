@@ -8,7 +8,7 @@ import {
   getLocale,
 } from '../../game/i18n/index.mjs';
 import { getMotionDisplay } from './display.mjs';
-import { freezeMotionPresets, motionText } from './copy.mjs';
+import { freezeMotionPresets, motionText, motionCollectionReason } from './copy.mjs';
 import { createPreviewLoop } from './preview-loop.mjs';
 import { canvasTextFonts } from '../../game/text-face.mjs';
 import { fieldKitCopy } from '../../game/ui/field-kit-copy.mjs';
@@ -573,11 +573,16 @@ function mountMotionLab() {
         profile = result.profile;
         inspectedCharacter = bodyId;
         refreshCollection();
-        $('ability-message').textContent =
-          `Class appearance applied. ${saveProfile()} Ability statistics are unchanged.`;
+        const saved = saveProfile();
+        localizedText($('ability-message'), () =>
+          t('tools:motionLab.appearanceApplied', { storage: String(saved) }),
+        );
       } else
-        $('ability-message').textContent =
-          `Preferred appearance is unavailable in this collection context (${result.reason}). Ability class is unchanged.`;
+        localizedText($('ability-message'), () =>
+          t('tools:motionLab.appearanceUnavailable', {
+            reason: motionCollectionReason(result.reason),
+          }),
+        );
       readouts();
       render();
     });
@@ -608,10 +613,9 @@ function mountMotionLab() {
       }
       localStorage.setItem(storageKey, serializeProfile(profile));
       storageWarning = '';
-      return 'Saved in this browser’s separate test collection.';
+      return localizedMessage('tools:motionLab.collectionSaved');
     } catch {
-      storageWarning =
-        'Browser storage unavailable; changes remain in this session only. Any prior save is retained.';
+      storageWarning = localizedMessage('tools:motionLab.collectionSaveUnavailable');
       return storageWarning;
     }
   }
@@ -827,12 +831,22 @@ function mountMotionLab() {
       if (result.accepted) profile = result.profile;
       if (result.accepted) {
         const resolved = resolveCharacter(collection, profile, context);
-        const resultText =
+        const key =
           resolved.characterId === inspectedCharacter
-            ? 'Equipped.'
-            : `Preference saved, but this context still uses ${presets.characters[resolved.characterId].label} because a more-specific choice applies. Choose “This context” to replace it.`;
-        $('collection-message').textContent = `${resultText} ${saveProfile()}`;
-      } else $('collection-message').textContent = `Could not equip: ${result.reason}.`;
+            ? 'tools:motionLab.equippedSaved'
+            : 'tools:motionLab.moreSpecificAppearance';
+        const character = presets.characters[resolved.characterId];
+        const saved = saveProfile();
+        localizedText($('collection-message'), () =>
+          t(key, {
+            name: motionText(presets, character, 'label'),
+            storage: String(saved),
+          }),
+        );
+      } else
+        localizedText($('collection-message'), () =>
+          t('tools:motionLab.equipFailed', { reason: motionCollectionReason(result.reason) }),
+        );
       refreshCollection();
       render();
       readouts();
@@ -840,16 +854,25 @@ function mountMotionLab() {
     listen($('apply-fixture'), 'click', () => {
       const result = applyFixture(collection, profile, $('reward-fixture').value);
       if (result.accepted) profile = result.profile;
-      $('collection-message').textContent = result.accepted
-        ? `Simulated test result applied. ${saveProfile()} This is not a real game win.`
-        : `Test result not applied: ${result.reason}. A fixture cannot be counted twice.`;
+      if (result.accepted) {
+        const saved = saveProfile();
+        localizedText($('collection-message'), () =>
+          t('tools:motionLab.fixtureApplied', { storage: String(saved) }),
+        );
+      } else
+        localizedText($('collection-message'), () =>
+          t('tools:motionLab.fixtureRejected', { reason: motionCollectionReason(result.reason) }),
+        );
       refreshCollection();
       render();
       readouts();
     });
     listen($('reset-collection'), 'click', () => {
       profile = createProfile(profileOptions);
-      $('collection-message').textContent = `Test collection reset to starters. ${saveProfile()}`;
+      const saved = saveProfile();
+      localizedText($('collection-message'), () =>
+        t('tools:motionLab.collectionReset', { storage: String(saved) }),
+      );
       refreshCollection({ followEquipped: true });
       render();
       readouts();
@@ -897,7 +920,7 @@ function mountMotionLab() {
       eventNote(localizedMessage('tools:motionLab.familyApplied'));
     });
     refreshCollection();
-    if (storageWarning) $('collection-message').textContent = storageWarning;
+    if (storageWarning) localizedText($('collection-message'), storageWarning);
   }
 
   function setupBackground() {
@@ -2031,7 +2054,7 @@ function mountMotionLab() {
         if (restored.warning && raw !== null) recoveryRaw = raw;
       } catch {
         profile = createProfile(profileOptions);
-        storageWarning = 'Browser storage unavailable; this test collection is session-only.';
+        storageWarning = localizedMessage('tools:motionLab.collectionReadUnavailable');
       }
       contextId = collection.contexts[0].id;
       inspectedCharacter = resolveCharacter(collection, profile, currentContext()).characterId;

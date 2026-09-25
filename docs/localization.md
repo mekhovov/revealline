@@ -20,7 +20,9 @@ staged and untracked work and must remain intact.
 Pinned i18next 26.4.2 is vendored under `game/vendor`. Canonical JSON catalogs live in
 `game/locales/en` and `game/locales/uk`. `npm run i18n:build` generates the classic-script
 catalog bundle and the first-party content registry. The same initialized instance is
-available to ES modules through `game/i18n/index.mjs`.
+available to ES modules through `game/i18n/index.mjs`. The catalog bundle uses pinned,
+locally vendored lz-string 1.5.0 to restore exact JSON synchronously before initialization.
+Its original MIT notice ships both in the generated script and in public credits.
 
 Use semantic `namespace:key` names. Reuse `common` keys for the same meaning, but keep
 separate messages when grammar differs: Standard difficulty and Standard text size need
@@ -580,3 +582,41 @@ selector/description/link labels, and distinct translated v10 prior cards. Cross
 Ukrainian → English → Ukrainian preserves the selected prior campaign and focused card.
 Studio still has older untranslated dynamic authoring diagnostics; this checkpoint does
 not certify whole-tool coverage. No gameplay was started or progress exported in this check.
+
+
+## Offline catalog packaging and Motion mutation feedback
+
+The first v0.114.0 build rejected the existing 64 MiB offline limit. Catalogs now use the
+pinned [lz-string 1.5.0 runtime](https://github.com/pieroxy/lz-string/releases/tag/1.5.0)
+for lossless packaging. The generated classic script contains its local decoder and full
+original MIT notice; it does not use a network fetch, asynchronous initialization or eval.
+Canonical JSON, semantic shared keys and exact content identities stay unchanged. The
+catalog is 708,679 bytes before the final Ukrainian credit wording adjustment, compared
+with 1,348,893 bytes before compression and the new feedback messages. The existing offline
+file/byte cap remains unchanged. Build failures now report actual file and byte counts.
+
+All 20 catalog, generated-page, preference and Motion-content checks pass, including
+exact reconstruction of every namespace/plural, unsupported/missing values, Ukrainian
+letters, astral characters, a lone surrogate, original decoder/license bytes and isolation
+from host CommonJS/AMD/Angular registries. Source/key/plural checks pass with 7,675 messages /
+6,117 referenced keys. Full lint/format and final changed-file checks pass. A new browser
+page starts immediately in Ukrainian and switches live after synchronous decoding.
+
+Motion equip, class-appearance, fixture, reset and storage-failure notices now retain live
+message keys. The real-host regression exercises accepted and rejected test results,
+more-specific appearance choices and failed writes. Four language changes per notice
+leave stored profile bytes, write/read/request counts, paused coordinates and focused
+controls unchanged. The model's reason codes and test-profile format stay canonical.
+Corrupt-profile recovery details and other model validation prose remain to be translated.
+
+The previously reproduced three baseline Motion failures are resolved. Auto-mounted shared
+tool chrome now destroys its appearance/preferences owner on terminal page departure and
+retains it for bfcache. Strict zero-listener terminal assertions remain intact. The harness
+now models the separate menu-style preference read performed by that real shared owner;
+failed application loading still cannot read or write a collection/game profile. All 74
+Motion/collection/content checks and all 49 shared-surface/appearance/preference checks pass.
+
+The complete game validation and presentation-metadata check passed after adding Motion's
+copy helper to the distribution inventory. The long Ukrainian v11 card has no horizontal
+overflow at a 390-pixel viewport. A new distribution build and native staging are pending;
+this remains an incomplete migration, not merge-ready certification.
