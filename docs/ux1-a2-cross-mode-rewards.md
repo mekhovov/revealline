@@ -1,7 +1,7 @@
 # UX1-A2: exact Versus and Team Journey pictures
 
-Status: stacked implementation draft on UX1-A1 head
-`b1de1b564b5e1dfb7a7646279e96823d92b9a1a6`. It does not bump a version, merge,
+Status: locally reconciled implementation draft on UX1-A1 head
+`9def2a0a7f822719a892eadc5542c4fe1cf5ecc6`. It does not bump a version, merge,
 tag, deploy or change an immutable release.
 
 ## Implemented slice
@@ -51,28 +51,32 @@ Collection information architecture and artwork-first gallery remain UX1-B/UX5.
 
 ## Focused evidence
 
-- Journey ledger and Team progress files: 16/16 tests passed, with no skips. This
-  covers historical reader preservation, atomic storage, cross-mode isolation,
-  invalid presentation fallback and store recreation.
-- The shared mode-local picture surface passed its focused exact-mode/edition,
-  historical-unavailable and opener-restoration test (1/1, no skips).
-- Real Team host: a current spatial-edition attempt prepared its decoded original,
-  won through legal Team input, retained exactly one Team record, exposed it in the
-  Team picture dialog and restored the exact opener. Solo and Versus clears and
-  pictures remained absent. One selected case passed; twelve unrelated cases were
-  unselected by the test-name filter.
-- Real Versus host: all nine opening-sequence missions complete across every campaign on both boards,
-  compares equal authoritative checkpoints, retains an exact original for every
-  completed mission, exposes only Versus originals in the mode dialog and restores
-  its opener. One selected case passed; twelve unrelated cases were unselected by
-  the test-name filter.
+- The combined Journey ledger, Solo reward host, Team progress and mode-local
+  picture-surface run passes 18/18 with no skips. It covers historical reader
+  preservation, atomic storage, cross-mode isolation, exact-mode filtering,
+  opener restoration, invalid-presentation fallback and store recreation.
+- The complete Team default-entry host file passes 13/13 with no skips. It covers
+  the exact current Team reward as well as queryless, explicit Legacy, ambiguous
+  entry, return-token and modeled-controller paths.
+- The complete Versus host file passes 13/13 with no skips. Both Journey routes
+  continue across every campaign with equal authoritative checkpoints, retain an
+  exact original for each completed mission and expose only Versus originals. Its
+  controller gallery case uses the reconciled 198-card catalogue fixture.
+- The exact Team picture authority suite passes 82/82 with no skips across current
+  revision 77, retained revisions 58–76, both reviewed starter pictures and
+  historical imports. A focused post-format binding rerun passes 27/27.
+- Repository lint, game and native formatting checks, validation and the ordinary
+  1,142-file production build pass on this local candidate. These checks do not
+  replace hosted exact-head gates or public acceptance.
+- Inherited Couch quick-start behavior passes 7/7, including Steam Deck Confirm
+  echo and passive Cancel focus. Trail/impact readability and Team emitter
+  presentation pass 36/36, confirming this stack does not regress those layers.
 
-The complete Team default-entry host file was also attempted. Four current-edition
-cases passed and nine Legacy-entry cases failed before their assertions because the
-fixture could not prepare an exact Legacy Team picture binding. The changed current
-spatial-edition reward case passes independently. Those nine failures are retained
-as a qualification limitation; they are not relabelled as passes or evidence for
-this feature.
+The historical A2 stack exposed a real compatibility defect after reconciliation:
+its compiled FPV presentation was revision 77 while its closed Team picture
+authority stopped at revision 74. This candidate advances that authority to 77,
+retains exact revisions 58–76 and expands only the matching finite policy bound.
+Both approved picture descriptors and bytes remain unchanged.
 
 Focused source evidence is not release acceptance. Visual review, actual reload,
 Retry and Next recovery with missing bytes, physical controller/touch checks,
