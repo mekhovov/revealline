@@ -36,7 +36,7 @@ const pressureMissions = [
 ];
 
 test('all twelve current pressure adaptations report exact tuned attacks and global trail impacts', () => {
-  assert.equal(route.id, 'whole-spatial-v9');
+  assert.equal(route.id, 'whole-spatial-v11');
   for (const id of pressureMissions)
     for (const difficulty of ['gentle', 'standard', 'expert'])
       for (const mode of ['solo', 'versus']) {

@@ -2,11 +2,15 @@
 
 ## Scope and provenance
 
-This standalone correction is based on accepted main
-`b13089b702391c275f2505d1a76c87eebb9dcce0`. It reconciles only the effective
-pressure-inspector and Studio presentation changes from PR #323,
-`e8888844e398d9850bc833ca1a070f00e6cad5ea`. It does not adopt that PR's map,
-campaign, default-route, asset, or version changes.
+Release allocation: **v0.114.1**, the maintenance patch immediately following
+the publicly accepted v0.114.0 Horizon source and selector.
+
+This standalone correction was originally based on accepted main
+`b13089b702391c275f2505d1a76c87eebb9dcce0` and is reconciled by merge with the
+accepted v0.114.0 selector main `dce04f9ea2c994c045662d1c37eee82b3581d1a4`.
+It retains only the effective pressure-inspector and Studio presentation changes
+from PR #323, `e8888844e398d9850bc833ca1a070f00e6cad5ea`. It does not adopt that PR's
+map, campaign, default-route, asset, or version changes.
 
 The prior inspector exposed authored compilation facts while fresh gameplay also
 applies global tuning, selected difficulty, and browser admin overrides. Those
@@ -39,7 +43,7 @@ editions, progress, replay formats, default routes, or release versions change.
 ## Focused verification
 
 Node 20.19.5, four focused files, final coherent run: **14 passed, 0 failed,
-0 skipped**, approximately 8.93 seconds:
+0 skipped**, approximately 29.87 seconds on the accepted v0.114.0 base:
 
 ```sh
 node --test game/test/effective-pressure-inspection.test.mjs \
@@ -50,7 +54,7 @@ node --test game/test/effective-pressure-inspection.test.mjs \
 
 Coverage includes:
 
-- All twelve current `whole-spatial-v9` pursuit/interception adaptations, three
+- All twelve current `whole-spatial-v11` pursuit/interception adaptations, three
   presets, Solo and Versus: actual prepared rates/counts, warning/commit/recovery
   descriptors, retaining roles and global travelling trail-impact settings.
 - Actual Solo attempt preparation for Return in Reserve and Crossed Bands, with
