@@ -1331,8 +1331,12 @@ export function attachSoundtrackPanel({
         renderAlbums();
         setStatus(
           catalog.albums.length
-            ? `${catalog.albums.length} optional albums. Review an addition before saving; your current song and draft are kept.`
-            : t('interface:noOptionalAlbumsArePublishedForInstallationInThisEdition'),
+            ? localizedMessage('interface:soundtrack.optionalAlbums', {
+                count: catalog.albums.length,
+              })
+            : localizedMessage(
+                'interface:noOptionalAlbumsArePublishedForInstallationInThisEdition',
+              ),
         );
       }),
   );
@@ -1369,8 +1373,10 @@ export function attachSoundtrackPanel({
       'p',
       'original-status',
       catalogue?.tracks.length
-        ? `${catalogue.tracks.length} recordings available. Choose an album or music style, then Play music. Songs are downloaded and checked individually before playback; offline downloads are optional.`
-        : t('interface:noOnlineRecordingsArePublishedInThisEditionImportMp3s'),
+        ? localizedMessage('interface:soundtrack.recordingsAvailable', {
+            count: catalogue.tracks.length,
+          })
+        : localizedMessage('interface:noOnlineRecordingsArePublishedInThisEditionImportMp3s'),
       { class: 'micro-note' },
     ),
     originalAlbums,
@@ -1493,7 +1499,10 @@ export function attachSoundtrackPanel({
         node(
           'p',
           null,
-          `${volume.tracks.length} tracks · ${bytes(volume.tracks.reduce((sum, track) => sum + track.asset.bytes, 0))}`,
+          localizedMessage('interface:soundtrack.trackSize', {
+            count: volume.tracks.length,
+            size: bytes(volume.tracks.reduce((sum, track) => sum + track.asset.bytes, 0)),
+          }),
         ),
         availability,
         ...(select
@@ -1518,11 +1527,28 @@ export function attachSoundtrackPanel({
       const local = volume.tracks.filter(
         (track) => bundledTrackIds.has(track.id) || present.has(track.asset.sha256),
       ).length;
-      localizedText(
-        availability,
-        () =>
-          `${local} of ${volume.tracks.length} recordings available locally${dirty ? ' in the draft' : ''}. ${local === volume.tracks.length ? t("interface:readyForOfflineListening") : draft.listening.installedOnly ? t("interface:installedOnlyIsOnOtherRecordingsStaySilentUntilDownloaded") : t("interface:otherRecordingsAreAvailableOnlineWithoutInstallingThisAlbum")}${bundledCount ? ` ${bundledCount} core recording${bundledCount === 1 ? ' is' : 's are'} included with the game and never duplicated in the media budget.` : ''}${offlineTracks.length + bundledCount !== volume.tracks.length ? ` ${t("interface:someRecordingsDoNotAllowOfflineStorage")}` : ''}`,
-      );
+      localizedText(availability, () => {
+        const location = t(
+          dirty
+            ? 'interface:soundtrack.localAvailabilityDraft'
+            : 'interface:soundtrack.localAvailability',
+          { available: local, total: volume.tracks.length },
+        );
+        const state =
+          local === volume.tracks.length
+            ? t('interface:readyForOfflineListening')
+            : draft.listening.installedOnly
+              ? t('interface:installedOnlyIsOnOtherRecordingsStaySilentUntilDownloaded')
+              : t('interface:otherRecordingsAreAvailableOnlineWithoutInstallingThisAlbum');
+        const rights =
+          offlineTracks.length + bundledCount !== volume.tracks.length
+            ? ' ' + t('interface:someRecordingsDoNotAllowOfflineStorage')
+            : '';
+        const bundled = bundledCount
+          ? ` ${bundledCount} core recording${bundledCount === 1 ? ' is' : 's are'} included with the game and never duplicated in the media budget.`
+          : '';
+        return `${location} ${state}${bundled}${rights}`;
+      });
       install.disabled =
         busy ||
         !saved ||
@@ -1636,7 +1662,12 @@ export function attachSoundtrackPanel({
             );
           },
         );
-        play.setAttribute('aria-label', `Play ${track.title} by ${track.artist}`);
+        localizedAttribute(play, 'aria-label', () =>
+          t('interface:soundtrack.playRecording', {
+            title: track.title,
+            artist: track.artist,
+          }),
+        );
         const details = node('div', null, null, { class: 'soundtrack-online-details' });
         details.append(
           node('strong', null, track.title),
@@ -1655,11 +1686,16 @@ export function attachSoundtrackPanel({
       }),
     );
     if (onlineCatalogue)
-      localizedText(
-        onlineStatus,
-        () =>
-          `${matches.length} of ${onlineCatalogue.tracks.length} published recordings shown.${excluded ? ` Recording mode excludes ${excluded} without verified gameplay-video and Content ID clearance.` : ''} Play one song or start every current result with the selected order and repeat setting.`,
-      );
+      localizedText(onlineStatus, () => {
+        const shown = t('interface:soundtrack.publishedShown', {
+          count: matches.length,
+          total: onlineCatalogue.tracks.length,
+        });
+        const recording = excluded
+          ? ' ' + t('interface:soundtrack.recordingModeExcluded', { count: excluded })
+          : '';
+        return `${shown}${recording} ${t('interface:soundtrack.publicPlaybackHint')}`;
+      });
   }
   async function loadOnlineCatalogue(force = false) {
     if (disposed || (onlineCatalogueController && !force)) return;
@@ -1685,10 +1721,8 @@ export function attachSoundtrackPanel({
       renderOnlineCatalogue();
     } catch (error) {
       if (error?.name !== 'AbortError' && !disposed && generation === onlineCatalogueGeneration) {
-        localizedText(
-          onlineStatus,
-          () =>
-            `The public archive is unavailable: ${message(error)} Built-in, installed and uploaded music still works.`,
+        localizedText(onlineStatus, () =>
+          t('interface:soundtrack.publicUnavailable', { error: message(error) }),
         );
         onlineResults.replaceChildren();
         playOnlineResults.disabled = true;
@@ -1708,7 +1742,7 @@ export function attachSoundtrackPanel({
         const add = button(`album-add-${album.id}`, localizedMessage('interface:addToDraft'), () =>
           albumTask(
             add,
-            `Downloading and checking ${album.title}…`,
+            localizedMessage('interface:soundtrack.downloadingAlbum', { album: album.title }),
             async (signal) => {
               // Applied draft edits and its generation are captured before download.
               const currentDraft = draft,
@@ -1757,7 +1791,7 @@ export function attachSoundtrackPanel({
           () =>
             albumTask(
               remove,
-              `Removing ${album.title} offline copies from the draft…`,
+              localizedMessage('interface:soundtrack.removingAlbum', { album: album.title }),
               async (signal) => {
                 const removed = offloadSoundtrackAlbum(draft, assets, album);
                 const prepared = await prepareSoundtrackLibrary(removed.library, removed.assets, {
@@ -1845,11 +1879,24 @@ export function attachSoundtrackPanel({
         !state.known
           ? t('interface:notAddedToThisLibrary')
           : state.offloaded
-            ? `Offline album removed${dirty ? ' in the draft' : ''}. Track details and playlists are retained. Choose Download again to restore its audio.${state.localCount ? ' ' + t('interface:sharedAudioRequiredByOtherInstalledTracksIsStillAvailable') + '' : ''}`
+            ? `${t(
+                dirty
+                  ? 'interface:soundtrack.offlineAlbumRemovedDraft'
+                  : 'interface:soundtrack.offlineAlbumRemoved',
+              )}${state.localCount ? ' ' + t('interface:sharedAudioRequiredByOtherInstalledTracksIsStillAvailable') : ''}`
             : state.downloaded
-              ? `Audio available offline${dirty ? ' in the draft' : ''}.`
+              ? t(
+                  dirty
+                    ? 'interface:soundtrack.audioOfflineDraft'
+                    : 'interface:soundtrack.audioOffline',
+                )
               : state.localCount
-                ? `${state.localCount} of ${state.retainedCount} recordings available offline${dirty ? ' in the draft' : ''}. Choose Download again to restore the missing audio, or Remove offline download to remove the remaining copies.`
+                ? t(
+                    dirty
+                      ? 'interface:soundtrack.partialOfflineDraft'
+                      : 'interface:soundtrack.partialOffline',
+                    { available: state.localCount, total: state.retainedCount },
+                  )
                 : t('interface:localAudioIsUnavailableChooseDownloadAgainToRestoreThis'),
       );
     }
