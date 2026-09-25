@@ -275,7 +275,19 @@ export async function soloPage(
     matchMedia: () => ({ matches: false }),
     Option: class extends SoloElement {
       constructor(label, value) {
-        super(doc, 'option', { label, text: label, textContent: label, value });
+        super(doc, 'option', { textContent: label, value });
+      }
+      get label() {
+        return this.getAttribute('label') ?? this.textContent;
+      }
+      set label(value) {
+        this.setAttribute('label', value);
+      }
+      get text() {
+        return this.textContent;
+      }
+      set text(value) {
+        this.textContent = value;
       }
     },
     fetch: async (path, options) => {

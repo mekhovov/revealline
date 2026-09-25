@@ -1,5 +1,11 @@
-import { t, localizedText } from '../i18n/index.mjs';
+import { t, localizedText, localizedAttribute, formatNumber } from '../i18n/index.mjs';
 const terminalStates = new Set(['ready', 'error', 'cancelled', 'detached']);
+const progressMessages = Object.freeze({
+  files: 'common:progress.files',
+  tracks: 'common:progress.tracks',
+  chapters: 'common:progress.chapters',
+  ticks: 'common:progress.ticks',
+});
 
 function checkedProgress(value) {
   if (value == null) return null;
@@ -70,9 +76,16 @@ export function createOperationStatus(target, { isCurrent: hostCurrent = () => t
         if (next) {
           meter.max = next.total;
           meter.value = next.completed;
-          const text = `${next.completed} / ${next.total} ${next.unit}`;
-          meter.setAttribute('aria-label', text);
-          localizedText(count, () => text);
+          const text = () =>
+            progressMessages[next.unit]
+              ? t(progressMessages[next.unit], {
+                  count: next.total,
+                  completed: formatNumber(next.completed),
+                  total: formatNumber(next.total),
+                })
+              : `${formatNumber(next.completed)} / ${formatNumber(next.total)} ${next.unit}`;
+          localizedAttribute(meter, 'aria-label', text);
+          localizedText(count, text);
         }
       }
       target.hidden = false;
