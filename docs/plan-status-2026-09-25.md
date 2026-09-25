@@ -90,7 +90,7 @@ continue in parallel so the next feature is ready when the publisher becomes fre
 | **UX5**   | Settings, difficulty, Help, replay/Collection navigation, and recovery states |                     **6–12 hours** | Complete focus/input/loading coverage; ordinary play never needs Workshop or a file picker                                                                       |
 | **UX6**   | Whole player-experience qualification                                         | **2–4 working days** after UX1–UX5 | Required end-to-end journeys pass; physical-device and offline limits recorded separately                                                                        |
 
-The R1–R4 version numbers are tentative until each aggregate is rebuilt on the
+The R3–R5 version numbers are tentative until each aggregate is rebuilt on the
 accepted public source and the next unused version is rechecked.
 
 ## 5. Remaining original programme after player-first UX
