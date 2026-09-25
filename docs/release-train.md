@@ -16,6 +16,9 @@ RevealLine keeps development parallel and publishing serial.
 - A promoted release PR may aggregate several independently reviewed roots when
   their dependency order is explicit. Review every merge delta, build the exact
   aggregate once, and preserve each source PR and its focused evidence.
+- Frozen Pages previews run only when selector/controller code, its workflow, or
+  an artifact-building helper changes. Ordinary product-build policy and docs
+  changes do not rebuild the multi-gigabyte historical site.
 - After the promoted root merges, qualify/freeze/release it once, complete the
   separate Pages selector and public acceptance, then promote the next root.
 
