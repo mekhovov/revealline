@@ -7,10 +7,11 @@ release claims.
 
 ## Candidate identity
 
-- Accepted base: `4f0f5120597f1b781c84e369896405e4cd4f0eaa` (`v0.110.1` release-train base)
+- Accepted base: `cd9565357add4d1521faae76e6d029446b6d8503` (current reviewed `main`,
+  `v0.111.1`)
 - Integrated implementation checkpoint before this acceptance record:
-  `7ffcdaf44fde40537073ffa94f5cb4b6baf2de19`
-- Implementation tree: `65ca9dd28088b2781aaa64ec84f3b95e57853779`
+  `a67fe32a45d340f0bf2f6cfb72814fc3089dd43a`
+- Implementation tree: `69dd23120157b4ca6dfe520d42e023605df48026`
 - Release version: unassigned until the sole publisher completes the preceding release queue
 
 The candidate contains no uploaded creator image or video fixtures and no generated distribution
@@ -29,36 +30,52 @@ output. Its largest new source asset is the pinned, licensed Mediabunny browser 
   exact updates, and recovery-package removal preserve edition identity.
 - Account sessions, tus upload, isolated validation, catalog publication, browsing, reporting,
   unlisting, download, update, and offline recovery are implemented across the static client and
-  self-hosted community service.
+  self-hosted community service. PostgreSQL-backed admission limits work across API replicas;
+  concurrent duplicate reports resolve idempotently; report triage is paged and audited. Exact
+  blob hashes are authenticated again at download, and database/blob snapshots support verify and
+  journal-backed restore.
 - All current generated layouts are qualified for equal-board Versus. Purpose-built Team layouts
-  support direct verified Couch file launch.
+  support direct verified Couch file launch, immutable SHA-256 installation, fresh-session library
+  discovery, replay-verified launch, and edition-scoped legal-clear progress.
 - Playback ranges and decoded-frame stepping stay separate from physical editing. Physical trim is
   enabled only for a single silent AVC/H.264 MP4 track and re-verifies changed bytes, duration,
-  dimensions, MIME, hash, and browser decode.
+  dimensions, MIME, hash, zero-audio inventories, and aligned decoded start/end pictures.
 
 ## Integrated evidence
 
-- Creator, store, media, Solo, Versus, Team, Couch, and release-fixture cohort: **176/176 passed**.
-- Community Fastify, Better Auth, tus, validation-worker, storage, and store-client cohort:
-  **22/22 passed**.
-- `npm run validate`: passed for 1,145 files; exact whole-spatial snapshot SHA-256
+- `npm run test:creator-feature`: **496/496** creator/runtime checks and **33/33** community-service
+  checks passed from the current combined source.
+- Community Fastify, Better Auth, tus, validation-worker, storage, admission, moderation, recovery,
+  report-race, exact-blob, and store-client coverage is included in that **33/33** service result.
+- Installed Team focused integration cohort: **19/19 passed**. The new exact store/host cases also
+  pass independently **7/7**.
+- Physical-trim audio and visual boundary cohort: **44/44 passed**.
+- `npm run validate`: passed for 1,149 files; exact whole-spatial snapshot SHA-256
   `e62ef45089df1bbaea04cceb932949fbe8d29377a4eeefcac8280125006495b3`.
 - Root and community-service ESLint and Prettier checks: passed.
 - Native formatting, Motion Lab syntax, Field Kit producer check, and Field Kit readiness: passed.
 - Root and community dependency audits: zero reported vulnerabilities.
-- `npm run build`: passed for 1,193 files; distribution SHA-256
-  `90a13abe6cebe88caff99ebc29b8e21b7850e2fce5866f0cc18afb7c8d5e7864`.
+- `npm run build`: passed for 1,197 files; distribution SHA-256
+  `5fade71498f9f9d3b94f76c97f8107f785f2071e07af1b7523dcb46b973028a7`.
 - Built-in-browser evidence in the phase records covers single-image completion, 12- and 50-image
   batches, cancel/resume and splitting, video-only victory playback, and verified silent-AVC trim.
+  On the current combined source, a fresh picture generated a visible moving enemy and two collision
+  walls, installed under its immutable edition, launched through ordinary Custom play, and exposed
+  the saved-attempt Resume action after reload.
+- Two unrelated Couch wording suites contain seven stale text expectations. A detached comparison
+  at pre-Team checkpoint `f1695492ea9d2ff62d74eca59e8c17def2993911` and the combined branch
+  produced the same **40/47 passed, 7 failed** result. They are excluded from the creator-specific
+  command and are not reported as passing.
 
 ## Publication boundary
 
 The static release can ship local creation, portable packages, installed Custom play, offline
 behavior, and the community client. GitHub Pages cannot run Fastify or PostgreSQL. Accounts,
 uploads, validation jobs, and the public catalog become live only after deploying the included
-community service and completing its PostgreSQL/container restart, database/blob restore,
-two-account browser, proxy interruption, TLS/domain/secrets, rate-limit, report-operations, and
-account-recovery acceptance.
+community service and completing its PostgreSQL/container restart, real database/blob restore,
+two-account browser, proxy interruption, TLS/domain/secrets, exact trusted-proxy configuration,
+Better Auth mail and account recovery, shared tus locking/cleanup, and isolated media-worker
+acceptance.
 
 Verified `.rlteamcampaign` bytes install under their SHA-256 edition identity. Fresh Team library
 visits discover each immutable edition, replay its qualification before launch, and retain legal
