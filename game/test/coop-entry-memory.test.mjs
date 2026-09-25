@@ -53,8 +53,8 @@ test('the blocking intent tracker follows visible loading feedback and precedes 
     html,
     /id="coop-boot"[\s\S]*<script src="team-entry\.js"><\/script>[\s\S]*id="coop-level"/,
   );
-  assert.match(html, /<option value="first-connection" selected>/);
-  assert.doesNotMatch(html, /<option value="relay-yard" selected>/);
+  assert.match(html, /<option[^>]*value="first-connection"[^>]*selected[^>]*>/);
+  assert.doesNotMatch(html, /<option[^>]*value="relay-yard"[^>]*selected[^>]*>/);
 });
 
 test('a fresh first visit shows and starts the exact First Connection without creating a bookmark', async (t) => {

@@ -109,7 +109,7 @@ test('Studio preview has an exact owner and nearby returns while intentional new
   assert.match(playground, /data-content-studio-route="studio"/);
   assert.match(
     studio,
-    /<iframe[\s\S]*?<\/iframe>\s*<button id="preview-return">Return to draft<\/button>/,
+    /<iframe[\s\S]*?<\/iframe>\s*<button\b[^>]*\bid="preview-return"[^>]*>\s*Return to draft\s*<\/button>/,
   );
   for (const html of [studio, playground])
     assert.match(html, /content-studio-navigation-entry\.mjs/);

@@ -37,7 +37,7 @@ export function attachBackupSetPanel({
     cancelButton = node(
       'button',
       'cancel-backup-set',
-      localizedMessage('interface:cancelPreparation'),
+      localizedMessage('common:actions.cancelPreparation'),
     ),
     status = node(
       'p',
