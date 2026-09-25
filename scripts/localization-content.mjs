@@ -9,6 +9,7 @@ import { normalizedLevel } from '../game/core/level.mjs';
 import { FIRST_FLIGHT_LESSONS } from '../game/first-flight.mjs';
 import { ENEMY_CATALOG } from '../game/enemy-catalog.mjs';
 import { COOP_STARTER_PACK } from '../game/coop/library.mjs';
+import { SOURCE_EXTERNAL_EDITIONS } from '../game/external-chapter-source.mjs';
 
 // Explicit presentation fields. Attribution, authors, legal notices, IDs, paths,
 // recordings and user-authored files are deliberately not extraction inputs.
@@ -201,6 +202,10 @@ export async function contentSources(root) {
     data: FIRST_FLIGHT_LESSONS,
   });
   sources.push({ source: 'game/enemy-catalog.mjs#ENEMY_CATALOG', data: ENEMY_CATALOG });
+  sources.push({
+    source: 'game/external-chapter-source.mjs#SOURCE_EXTERNAL_EDITIONS',
+    data: SOURCE_EXTERNAL_EDITIONS,
+  });
   const classes = JSON.parse(
     await fs.readFile(path.join(root, 'game/content/classes.json'), 'utf8'),
   );
