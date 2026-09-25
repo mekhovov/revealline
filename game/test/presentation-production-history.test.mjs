@@ -459,7 +459,7 @@ test('Journey feedback dependencies bind only the reviewed player-craft effects 
   }
 });
 
-test('shared-host UI and audio bind only their reviewed current inputs', async () => {
+test('quick controls reopen shared-host UI and audio without inheriting prior review', async () => {
   const production = await createFieldKitProduction();
   const resolved = resolvePresentation(production.document);
   const audioReviewPath =
@@ -471,15 +471,22 @@ test('shared-host UI and audio bind only their reviewed current inputs', async (
   const uiReviewHash = createHash('sha256')
     .update(await fs.readFile(new URL(`../../${uiReviewPath}`, import.meta.url)))
     .digest('hex');
-  const reviewed = production.document.slots.filter((slot) => ['ui', 'audio'].includes(slot.group));
-  assert.equal(reviewed.length, 32);
-  for (const slot of reviewed) {
+  const reopened = production.document.slots.filter((slot) => ['ui', 'audio'].includes(slot.group));
+  assert.equal(reopened.length, 32);
+  for (const slot of reopened) {
     const asset = resolved.assets[slot.id];
+    assert.equal(asset.quality.stage, 'source', slot.id);
+    assert.equal(
+      asset.quality.evidence.some(
+        (entry) => entry.includes(uiReviewPath) || entry.includes(audioReviewPath),
+      ),
+      false,
+      slot.id,
+    );
     if (slot.group === 'ui') {
-      assert.equal(asset.quality.stage, 'reviewed', slot.id);
       assert.ok(
         asset.provenance.source.endsWith(
-          'sha256:4b7db79dd3f6931dd72c0ae702f15a5a5d8ff2b7044aca5a2e02886e8e61636a',
+          'sha256:5751c6563166f7f6037e79c4b2e27a4a933f4f8dbac70c4a4aac68964844ec79',
         ),
         slot.id,
       );
@@ -487,25 +494,12 @@ test('shared-host UI and audio bind only their reviewed current inputs', async (
       assert.match(asset.provenance.source, /game\/ui\/operation-status\.mjs/);
       assert.match(asset.provenance.source, /game\/presentation\/dom-ownership\.mjs/);
       assert.match(asset.provenance.source, /game\/presentation\/team-runtime-slots\.mjs/);
-      assert.equal(
-        asset.quality.evidence.some(
-          (entry) =>
-            entry.includes('Scoped actor-only UI functional continuation') &&
-            entry.includes(`${uiReviewPath} sha256:${uiReviewHash}`),
-        ),
-        true,
-      );
+      assert.match(asset.provenance.source, /game\/ui\/quick-music-controls\.css/);
+      assert.match(asset.provenance.source, /game\/couch\/relay-rescue\.html/);
     } else {
-      assert.equal(asset.quality.stage, 'reviewed', slot.id);
-      assert.ok(
-        asset.quality.evidence.some((entry) =>
-          entry.includes(`${audioReviewPath} sha256:${audioReviewHash}`),
-        ),
-        slot.id,
-      );
       assert.ok(
         asset.provenance.source.endsWith(
-          'sha256:6b9b58a0d51a1b15d533e76b531cb4db09662274c8b5cad3988b06f01e7327c4',
+          'sha256:a2d51da1238e8a30bd4a6a8083477121de2ba7420b67e79bd5806ce60315ce9f',
         ),
         slot.id,
       );
@@ -514,11 +508,15 @@ test('shared-host UI and audio bind only their reviewed current inputs', async (
       assert.match(asset.provenance.source, /game\/soundtrack-portable\.mjs/);
       assert.match(asset.provenance.source, /game\/content\/soundtrack-catalogue\.mjs/);
       assert.match(asset.provenance.source, /game\/online-soundtrack-catalogue\.mjs/);
+      assert.match(asset.provenance.source, /game\/ui\/quick-music-controls\.mjs/);
+      assert.match(asset.provenance.source, /game\/couch\/couch-music-host\.mjs/);
     }
   }
+  assert.equal(uiReviewHash, 'dbde124fb9d24cb26dd901b51f58cf59fc7bfb4df212e47419cdb15581155b73');
+  assert.equal(audioReviewHash, '55198d5d74044c8a272f50b32fb01240245dea1843869d22f7dab21d0c310e42');
 });
 
-test('soundtrack screen and Journey motion reviews bind only the inspected current inputs', async () => {
+test('quick-control screens reopen while Journey motion retains its inspected inputs', async () => {
   const production = await createFieldKitProduction();
   const resolved = resolvePresentation(production.document);
   const screenReviewPath =
@@ -531,27 +529,37 @@ test('soundtrack screen and Journey motion reviews bind only the inspected curre
     '96ae6b8c3b05239cf16ab3801dec2b7ef057aa188ffcab466fb2fc22ea17dd1b',
   );
   const fingerprints = {
-    screens: 'acf6426f5cd47f21a85ec5ae9da9549ed58fbe330b097c979dc85b87afe2d68a',
+    screens: '4ea3022b565172e8c50ff248a1198a03f117c7a8d64c5ad2335fbe713de87c73',
     motion: 'c35fcf823a0923f27f1193afa247e2d0c93b6fc4161976a5d6a2b67a5bc143a9',
   };
-  const reviewed = production.document.slots.filter(
+  const inspected = production.document.slots.filter(
     (slot) => slot.group in fingerprints && resolved.assets[slot.id].kind === 'recipe',
   );
-  assert.equal(reviewed.length, 14);
-  for (const slot of reviewed) {
+  assert.equal(inspected.length, 14);
+  for (const slot of inspected) {
     const asset = resolved.assets[slot.id];
-    assert.equal(asset.quality.stage, 'reviewed', slot.id);
+    assert.equal(asset.quality.stage, slot.group === 'motion' ? 'reviewed' : 'source', slot.id);
     assert.ok(asset.provenance.source.endsWith(`sha256:${fingerprints[slot.group]}`), slot.id);
-    assert.ok(
-      asset.quality.evidence.some((entry) =>
-        entry.includes(
-          slot.group === 'motion'
-            ? 'Scoped visible-actor motion continuation'
-            : `Scoped compact-Home screen continuation: ${screenReviewPath} sha256:${screenReviewHash}`,
+    if (slot.group === 'motion')
+      assert.ok(
+        asset.quality.evidence.some((entry) =>
+          entry.includes('Scoped visible-actor motion continuation'),
         ),
-      ),
-      slot.id,
-    );
+        slot.id,
+      );
+    else {
+      assert.match(asset.provenance.source, /game\/ui\/quick-music-controls\.css/);
+      assert.match(asset.provenance.source, /game\/couch\/index\.html/);
+      assert.equal(
+        asset.quality.evidence.some((entry) =>
+          entry.includes(
+            `Scoped compact-Home screen continuation: ${screenReviewPath} sha256:${screenReviewHash}`,
+          ),
+        ),
+        false,
+        slot.id,
+      );
+    }
   }
 });
 
@@ -590,31 +598,52 @@ test('changed recipe inputs reopen only their own reviewed group', async (t) => 
     'online-soundtrack-catalogue.mjs',
     'ui/soundtrack-panel.mjs',
   ];
+  const quickControlInputs = [
+    'ui/quick-music-controls.mjs',
+    'ui/quick-music-controls.css',
+    'app.mjs',
+    'couch/couch-music-host.mjs',
+    'couch/couch.mjs',
+    'couch/relay-rescue.mjs',
+    'index.html',
+    'couch/index.html',
+    'couch/relay-rescue.html',
+  ];
   const inputs = new Map([
-    ['ui/operation-status.css', 'ui'],
-    ['ui/operation-status.mjs', 'ui'],
-    ['ui/soundtrack-player.mjs', 'audio'],
-    ['ui/audio-master.mjs', 'audio'],
-    ...recoveryInputs.map((input) => [input, 'audio']),
-    ['ui/field-kit-surfaces.css', 'screens'],
-    ['ui/actor-presentation.mjs', 'motion'],
+    ['ui/operation-status.css', ['ui']],
+    ['ui/operation-status.mjs', ['ui']],
+    ['ui/soundtrack-player.mjs', ['audio']],
+    ['ui/audio-master.mjs', ['audio']],
+    ...recoveryInputs.map((input) => [input, ['audio']]),
+    ['ui/field-kit-surfaces.css', ['screens']],
+    ['ui/actor-presentation.mjs', ['motion']],
+    ['ui/quick-music-controls.mjs', ['audio', 'screens', 'ui']],
+    ['ui/quick-music-controls.css', ['screens', 'ui']],
+    ['app.mjs', ['audio', 'screens', 'ui']],
+    ['couch/couch-music-host.mjs', ['audio', 'screens', 'ui']],
+    ['couch/couch.mjs', ['audio', 'screens', 'ui']],
+    ['couch/relay-rescue.mjs', ['audio', 'screens', 'ui']],
+    ['index.html', ['screens', 'ui']],
+    ['couch/index.html', ['screens', 'ui']],
+    ['couch/relay-rescue.html', ['screens', 'ui']],
   ]);
   // Game-relative keys cover both model and UI helpers. Only copied ordinary
   // fixture files may be changed; links to the real project are read-only inputs.
   await fs.mkdir(path.join(fixture, 'game', 'ui'), { recursive: true });
   await fs.mkdir(path.join(fixture, 'game', 'content'), { recursive: true });
+  await fs.mkdir(path.join(fixture, 'game', 'couch'), { recursive: true });
   for (const entry of ['authoring', 'site', 'scripts', 'docs'])
     await fs.symlink(path.join(root, entry), path.join(fixture, entry));
-  for (const directory of ['', 'ui', 'content'])
+  for (const directory of ['', 'ui', 'content', 'couch'])
     for (const entry of await fs.readdir(path.join(root, 'game', directory))) {
-      if (!directory && ['ui', 'content'].includes(entry)) continue;
+      if (!directory && ['ui', 'content', 'couch'].includes(entry)) continue;
       const input = directory ? `${directory}/${entry}` : entry;
       const source = path.join(root, 'game', input);
       const target = path.join(fixture, 'game', input);
       if (inputs.has(input)) await fs.copyFile(source, target);
       else await fs.symlink(source, target);
     }
-  for (const [input, group] of inputs) {
+  for (const [input, groups] of inputs) {
     const target = path.join(fixture, 'game', input);
     const stat = await fs.lstat(target);
     assert(stat.isFile() && !stat.isSymbolicLink(), `Writable copy required: ${input}`);
@@ -626,7 +655,7 @@ test('changed recipe inputs reopen only their own reviewed group', async (t) => 
       validateThemeBundle(next, { previous: prior });
       const assets = resolvePresentation(next).assets;
       for (const slot of reviewed) {
-        const affected = slot.group === group && assets[slot.id].kind === 'recipe';
+        const affected = groups.includes(slot.group) && assets[slot.id].kind === 'recipe';
         assert.equal(assets[slot.id].quality.stage, affected ? 'source' : 'reviewed', slot.id);
         if (affected) {
           assert.notEqual(
@@ -641,7 +670,7 @@ test('changed recipe inputs reopen only their own reviewed group', async (t) => 
       await fs.writeFile(target, original);
       assert.deepEqual(await fs.readFile(path.join(root, 'game', input)), original);
     }
-    if (recoveryInputs.includes(input)) {
+    if (recoveryInputs.includes(input) || quickControlInputs.includes(input)) {
       const retained = `${target}.missing-fixture`;
       await fs.rename(target, retained);
       try {
