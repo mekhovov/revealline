@@ -385,6 +385,7 @@
   "creator.teamTransactionFailed": "Installed Team transaction failed.",
   "creator.teamClockInvalid": "Installed Team clock is invalid.",
   "creator.removeTeamCampaignFirst": "Remove an installed Team campaign before adding another.",
+  "creator.teamMediaBudgetExceeded": "Installed Team campaigns exceed the managed-media storage budget.",
   "creator.teamInstallFailed": "Team installation failed.",
   "creator.teamEditionIdentityConflict": "Installed Team edition identity is already bound to different bytes.",
   "creator.teamInventoryDamaged": "Installed Team inventory is damaged.",
