@@ -37,12 +37,45 @@ export function readConfig(environment = process.env) {
   );
   if (uploadByteLimit < maxPackageBytes)
     throw new Error('COMMUNITY_UPLOAD_BYTES_PER_WINDOW must allow at least one maximum package.');
+  const tusCleanupBatchSize = integer(
+    environment.COMMUNITY_TUS_CLEANUP_BATCH_SIZE,
+    32,
+    'COMMUNITY_TUS_CLEANUP_BATCH_SIZE',
+  );
+  if (tusCleanupBatchSize > 256)
+    throw new Error('COMMUNITY_TUS_CLEANUP_BATCH_SIZE must not exceed 256.');
   return Object.freeze({
     host: environment.COMMUNITY_HOST ?? '127.0.0.1',
     port: integer(environment.COMMUNITY_PORT, 8787, 'COMMUNITY_PORT'),
     databaseUrl: environment.COMMUNITY_DATABASE_URL,
     blobRoot: environment.COMMUNITY_BLOB_ROOT ?? './var/blobs',
     tusRoot: environment.COMMUNITY_TUS_ROOT ?? './var/tus',
+    tusExpirationMs: seconds(
+      environment.COMMUNITY_TUS_EXPIRATION_SECONDS,
+      86_400,
+      'COMMUNITY_TUS_EXPIRATION_SECONDS',
+    ),
+    tusCleanupIntervalMs: seconds(
+      environment.COMMUNITY_TUS_CLEANUP_INTERVAL_SECONDS,
+      300,
+      'COMMUNITY_TUS_CLEANUP_INTERVAL_SECONDS',
+    ),
+    tusCleanupBatchSize,
+    tusCleanupLeaseMs: seconds(
+      environment.COMMUNITY_TUS_CLEANUP_LEASE_SECONDS,
+      120,
+      'COMMUNITY_TUS_CLEANUP_LEASE_SECONDS',
+    ),
+    tusLockTimeoutMs: seconds(
+      environment.COMMUNITY_TUS_LOCK_TIMEOUT_SECONDS,
+      30,
+      'COMMUNITY_TUS_LOCK_TIMEOUT_SECONDS',
+    ),
+    tusLockPoolSize: integer(
+      environment.COMMUNITY_TUS_LOCK_POOL_SIZE,
+      20,
+      'COMMUNITY_TUS_LOCK_POOL_SIZE',
+    ),
     maxPackageBytes,
     validatorVersion: environment.COMMUNITY_VALIDATOR_VERSION ?? 'creator-bundle-v1',
     workerPollMs: integer(environment.COMMUNITY_WORKER_POLL_MS, 1_000, 'COMMUNITY_WORKER_POLL_MS'),
