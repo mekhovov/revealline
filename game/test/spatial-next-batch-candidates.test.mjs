@@ -372,8 +372,8 @@ test('registered successor preserves v9, authored Next order and same-edition na
   assert(authoredJourneyUsesActorMaterials(current.id));
   assert(AUTHORED_JOURNEY_ROUTE_IDS.includes(current.id));
   assert.deepEqual(DEFAULT_JOURNEY_ROUTES, {
-    solo: 'whole-spatial-v10',
-    versus: 'whole-spatial-v10',
+    solo: 'whole-spatial-v11',
+    versus: 'whole-spatial-v11',
     team: 'team-trail-impact-originals-1',
   });
   assert.equal(authoredJourneyModeHref(current.id, 'solo'), '../?journey=whole-spatial-v10');
@@ -393,11 +393,11 @@ test('registered successor preserves v9, authored Next order and same-edition na
     );
 });
 
-test('Studio exposes separate v9 and v10 editions and defaults its selector to v10', async () => {
+test('Studio retains separate v9 and v10 editions after the default advances', async () => {
   const html = await readFile(new URL('../studio/index.html', import.meta.url), 'utf8');
   const script = await readFile(new URL('../studio/studio.mjs', import.meta.url), 'utf8');
   assert.match(html, /value="erosion-counterplay-1">Erosion counterplay · v9/);
-  assert.match(html, /value="cultural-spatial-triptych-1" selected/);
+  assert.match(html, /value="cultural-spatial-triptych-1">[\s\S]*?spatial triptych · v10/i);
   assert.match(html, /journey=whole-spatial-v10/);
   assert.match(script, /'cultural-spatial-triptych-1': createSpatialNextBatchCandidates/);
 });
