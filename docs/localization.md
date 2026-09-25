@@ -879,3 +879,26 @@ The browser provider still exposes no browser for verification. Available disk s
 about 386 MiB during this checkpoint, insufficient for a fresh distribution and native staging;
 no unrelated work or data was removed. Current source checks pass, but previous build receipts
 remain older than these Studio changes.
+
+## Pacing and acceptance inspectors
+
+Both Studio inspectors now bind translated presentation to the accepted source/report without
+re-running inspection on a locale change. Pacing warnings use diagnostic codes and exact row
+occurrences, preserving repeated memberships and canonical reports. Acceptance labels cover all
+18 registered checks, every evidence kind and status; imported notes, artifact references,
+source commits and report JSON remain authored data. Exact lesson/facet identifiers remain
+technical identifiers. Difficulty names reuse one shared helper. Primary pacing/ledger validation
+errors carry immutable localization metadata while preserving canonical English API errors.
+
+The surrounding run passed 50/52 tests. The two failures were the intentional English singular
+`1 declared record` change and an old VM fixture missing the accepted-source freeze/compile and
+mission-selector dependencies added earlier. Updating that fixture to exercise the actual
+compiler and source fixes it without changing production behavior. A new diagnostic-matrix
+fixture initially violated campaign-band constraints; assigning matching campaign bands fixes
+that fixture. The final affected run passes 10/10 (6 existing, 4 new); all 56 cases are covered.
+The new tests exercise all seven pacing diagnostic codes, all acceptance labels/statuses, both
+languages, unchanged serialized reports, option nodes, exclusions, scroll/focus/cursors, no
+source reads during language changes, and switching during an outstanding file read. Changed-file
+lint/format and full catalog/content-registry checks pass: 8,138 messages / 6,567 references.
+Logs: `/tmp/rl-i18n/rebase/v1141-inspection-{tests,final-tests,locale-tests,catalog-check}.log`.
+Browser verification and broader unresolved coverage/release checks remain outstanding.
