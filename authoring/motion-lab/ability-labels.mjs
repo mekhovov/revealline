@@ -41,7 +41,7 @@ export function describeAbilityLabels(state, config, family) {
           : target.kind === 'ground'
             ? target.label.replace('Tile ', '')
             : target.label,
-        text: concealed ? t("tools:concealedNote") : target.label,
+        text: concealed ? t('common:preview.concealedNote') : target.label,
         concealed,
         status: target.status,
       };

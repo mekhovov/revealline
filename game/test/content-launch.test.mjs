@@ -135,7 +135,11 @@ test('separate extras and game expose wired pack and level selectors with exact 
     const encoded = `pack=${pack.id}&amp;campaign=${campaign.id}&amp;level=${level.id}&amp;play=1`;
     const matching = cards.filter((card) => card.includes(`href="../game/?${encoded}"`));
     assert.equal(matching.length, 1, `${pack.name} must have one real first-mission launch card`);
-    assert.ok(matching[0].includes(`<h3>${pack.name}</h3>`));
+    assert.equal(
+      matching[0].match(/<h3\b[^>]*>([\s\S]*?)<\/h3>/)?.[1].trim(),
+      pack.name,
+      'The original title is retained beside its translation marker.',
+    );
     const route = resolvePackLaunch(new URLSearchParams(encoded.replaceAll('&amp;', '&')), {
       ...catalog,
       packs: allPacks,

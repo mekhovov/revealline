@@ -265,7 +265,7 @@ export function attachEnemyCatalogPanel({
     localizedText(back, () =>
       busy
         ? operation?.committing
-          ? t('interface:stopWaiting')
+          ? t('common:actions.stopWaiting')
           : t('interface:cancelOperation')
         : t('common:actions.back'),
     );

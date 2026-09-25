@@ -59,7 +59,7 @@ export function attachTeamDiscoveryPictures({
     job.detail.loading = false;
     preview.retry.setAttribute('aria-disabled', 'false');
     localizedText(preview.retry, () =>
-      successful ? t('interface:reloadPreview') : t('interface:retryPreview'),
+      successful ? t('interface:reloadPreview') : t('common:preview.retry'),
     );
   }
   function cancelJobs(owner) {
@@ -341,7 +341,7 @@ export function attachTeamDiscoveryPictures({
         clearCanvas(preview.canvas);
         preview.retry.hidden = false;
         preview.retry.setAttribute('aria-disabled', 'false');
-        localizedText(preview.retry, () => t('interface:retryPreview'));
+        localizedText(preview.retry, () => t('common:preview.retry'));
         describe(owner, t('interface:previewCancelledRetryPreviewWhenReady'));
       }
     },

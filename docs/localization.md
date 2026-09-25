@@ -52,6 +52,9 @@ share explicit choices between same-origin tabs without writing game progress.
 
 - `npm run i18n:extract` reports references, explicitly registered content fields, missing
   content messages, and duplicate candidates for shared keys.
+- `npm run i18n:audit` inventories possible raw DOM, canvas, attribute, error, and metadata
+  text with source locations and matching existing keys. Review candidates: technical values,
+  authored imports, legal notices, and bilingual specimens are not automatically translated.
 - `npm run i18n:build` regenerates bundles after catalog/source changes.
 - `npm run i18n:check` verifies references, language coverage, interpolation, plural forms,
   and generated artifacts. Missing Ukrainian is an error even when English fallback works.
@@ -66,16 +69,17 @@ The original checkout was over 1,700 commits behind main. The rebase retains mai
 Journey, Team, soundtrack, and editor changes. New English keys are explicitly present
 and missing Ukrainian remains detectable. Complete these before marking the task done:
 
-- Translate the remaining tools catalog and all uncatalogued dynamic sentences.
+- Translate all uncatalogued dynamic sentences. The existing tools catalog is complete.
   Inspect `game/studio`, classic `.js` tools, generated current-version pages, and
   user-facing errors; extraction of existing keys alone is not a raw-text coverage audit.
 - The registry now includes the current default authored Journey and Team sources,
-  compiled executions, navigation records, cards and manifest design fields. These
+  compiled Solo/Versus executions, navigation records, cards, manifest design fields,
+  current theme/actor-theme labels, and difficulty presets. These
   catalog entries are translated. Finish their presentation adapters; add maintained nondefault editions,
   optional first-party packs and derived Classic metadata. Preserve hashes.
 - Finish live bindings for derived labels, statuses, canvas text, dropdown options, and
   presentation adapters. Check unsaved editor data, selections, focus, and scroll.
-- Verify offline inventories and native staging after the remaining catalogs pass.
+- Finish native staging and route checks against the latest rebased build.
   Generated privacy/credits pages and current-entry aliases now load the same local
   runtime, use translated messages and retained attribution links, and rewrite root
   asset paths. Historical frozen releases stay unchanged.
@@ -94,20 +98,39 @@ practice teardown storage-listener assertion. The First Flight
 handoff timeout is intermittent here and remains unresolved; do not dismiss it as a
 baseline failure.
 
-The focused localization/library/startup/generated-page suite passes 118 tests. A further
-29 boot/briefing checks pass (46 with locale and generated-page checks after formatting),
-including live Ukrainian rule-derived briefing text while
-preserving custom-authored text. Full lint and the full formatting check pass.
-Browser checks confirm Ukrainian Journey-name search, retained mode controls, restart
-persistence, cross-tab refresh without clearing typed search, translated current Journey
-route/mastery text, live menu counts and destination labels, and Ukrainian startup status.
-The main branch was fetched again and remains fully included (524c989c2).
+At this checkpoint, catalog validation passes **6,954 messages and 5,598 referenced keys**.
+The current interface, content, and tools catalogs are fully translated. This is not full
+coverage: the source audit still finds dynamic messages, Classic library metadata, tool
+JavaScript, and user-facing errors outside the catalogs. Do not declare completion from
+catalog coverage alone. Twenty-nine reviewed repeated meanings now use common keys.
 
-Catalog validation deliberately fails for **724 missing Ukrainian tool messages**. The
-current interface and registered content catalogs are fully translated. This is not yet
-full game coverage: the browser still exposes raw current-Journey difficulty prose,
-Classic library metadata, and an unregistered theme currency label. Other dynamic/tool
-surfaces need auditing. Do not declare completion from catalog coverage alone.
+The latest focused suite passes 59 locale, paused-flight, presentation, source-audit,
+registry, and generated-page tests. Native staging/resource tests pass 23 cases; markup
+integration checks pass 58 cases. Validation, lint, and the full formatting check pass.
+The full suite remains active; its older failures require focused reruns after fixes and
+comparison against main. A localization-aware HTML assertion must still verify its
+original labels, associations, and actions instead of dropping the behavior check.
+
+Browser checks confirm Ukrainian Journey-name search, restart persistence, cross-tab
+refresh without clearing typed search, current Journey guidance, menu counts, and startup
+status. Switching a paused flight Ukrainian → English → Ukrainian retained the 0:11 clock,
+HUD values, settings tab, and language-selector focus. The browser exposed a previously
+captured status sentence; accepted warning bindings now preserve the message producer.
+A real host test confirms unchanged simulation checkpoints, flight ownership, raw saved
+slot bytes, pause state, and control focus across language changes.
+
+The web build passes the existing 64 MiB offline limit. Canonical JSON sources remain in
+the full distribution; offline play caches their complete generated bundle once. The
+content registry shares identical fields across exact identities, reducing its runtime
+size from about 1 MiB to 240 KiB. Source references remain in extraction reports.
+Desktop staging and resource reads verified all 1,161 files / 598,917,869 bytes in the
+first passing build, including every localization asset. Current full distributions
+include optional chapter/music originals and require the updated 768 MiB / 4,096-file
+native bounds; per-file integrity and 64 MiB bounds remain enforced. iPhone staging found
+one source review page without an explicit head/body; its markup is now explicit.
+
+Main advanced by 24 commits to eca4e32ba during this checkpoint. Rebase this saved work
+before continuing translation, regenerate catalogs, and rerun affected checks.
 
 Startup locale assets now follow the inline dark-screen guard; the locale stylesheet
 uses the same deferred, monitored loading as other game styles. The failure/launch
