@@ -27,6 +27,9 @@ RevealLine keeps development parallel and publishing serial.
   changes do not rebuild the multi-gigabyte historical site.
 - After the promoted root merges, qualify/freeze/release it once, complete the
   separate Pages selector and public acceptance, then promote the next root.
+- The next product root remains blocked until the package version already on
+  `main` is the version accepted on public Pages. This prevents a second source
+  merge from invalidating an in-flight qualification or sharing its version.
 - Expensive source qualification is accepted only from merged `main`. Candidate
   and stacked branches keep their focused review evidence but cannot consume the
   freeze lane before their exact source is merged.

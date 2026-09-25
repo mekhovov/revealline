@@ -2830,9 +2830,14 @@ try {
       if (visit !== libraryOpenEpoch || !opening.current() || !context.isCurrent()) return;
       await refreshLibraryInventory();
       if (visit !== libraryOpenEpoch || !opening.current() || !context.isCurrent()) return;
+      // Installed-card reconciliation may move focus as part of this owned
+      // request. Claim the opener before that internal refresh; newer input
+      // still retires the claim while visit/context checks reject replaced state.
+      if (!opening.claim()) return;
       if (libraryInventory.state().ready) await owner.refreshInstalled();
+      const openingCurrent = opening.current();
       opening.dispose();
-      if (visit !== libraryOpenEpoch || !opening.current() || !context.isCurrent()) return;
+      if (visit !== libraryOpenEpoch || !openingCurrent || !context.isCurrent()) return;
       journeyChooser.open(opener, { returnLabel: 'Back to race' });
     } catch (error) {
       if (visit === libraryOpenEpoch && context.isCurrent())
