@@ -112,6 +112,26 @@ test('prepared Team defaults need one assigned-controller Confirm and optional s
   assert.equal(f.doc.activeElement.id, 'coop-canvas');
 });
 
+test('prepared Team Start remains visible after short-landscape layout settles', async (t) => {
+  const f = await teamPage(t, {
+    nativeFocus: true,
+    beforeImport({ $, doc, win }) {
+      Object.assign(win, { innerWidth: 844, innerHeight: 390 });
+      doc.documentElement.clientWidth = 844;
+      doc.documentElement.clientHeight = 390;
+      $('coop-start')._rect = { x: 118, y: 457, width: 300, height: 44 };
+    },
+  });
+  const start = f.$('coop-start');
+  assert.equal(f.doc.activeElement, start);
+  await waitFor(
+    () => start.scrolled > 0,
+    () => 'focused Start was not revealed',
+  );
+  assert.ok(start.scrolled > 0, 'settled preparation must reveal the focused primary action');
+  assert.equal(f.doc.activeElement, start);
+});
+
 test('Steam Deck Confirm opens Team optional setup and starts exactly once despite its native echo', async (t) => {
   let time = 1000;
   t.mock.method(performance, 'now', () => time);

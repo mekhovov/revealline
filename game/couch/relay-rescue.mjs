@@ -1391,6 +1391,42 @@ export function bootCoop({
       },
     };
   }
+  function focusPreparedStart(selection, epoch) {
+    const target = $('coop-start'),
+      visit = settingsVisit,
+      beforeScope = scope();
+    if (!visibleAction(target)) return;
+    target.focus({ preventScroll: true });
+    const owns = () =>
+      !disposed &&
+      !inactive &&
+      foreground() &&
+      !run &&
+      pictureSelection === selection &&
+      generation === epoch &&
+      settingsVisit === visit &&
+      scope() === beforeScope &&
+      document.activeElement === target &&
+      visibleAction(target);
+    const reveal = () => {
+      if (!owns()) return;
+      const rect = target.getBoundingClientRect(),
+        width = document.documentElement.clientWidth || window.innerWidth,
+        height = document.documentElement.clientHeight || window.innerHeight;
+      if (
+        ![rect.left, rect.top, rect.right, rect.bottom, width, height].every(Number.isFinite) ||
+        rect.width <= 0 ||
+        rect.height <= 0 ||
+        width <= 16 ||
+        height <= 16 ||
+        (rect.left >= 8 && rect.top >= 8 && rect.right <= width - 8 && rect.bottom <= height - 8)
+      )
+        return;
+      if (owns())
+        target.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'instant' });
+    };
+    setTimeout(reveal, 0);
+  }
   let previewBinding = null,
     previewState = 'preparing',
     pictureMessage = '';
@@ -1741,7 +1777,18 @@ export function bootCoop({
           return;
         }
         pictureUI('Team picture ready. Start remains a separate action.');
-        focus.finish(run ? $('coop-retry') : () => navigation.focusAvailable());
+        focus.finish(
+          run
+            ? $('coop-retry')
+            : () => {
+                if (visibleAction($('coop-start'))) focusPreparedStart(selection, generation);
+                else {
+                  const fallback = $('coop-app').querySelector('a[href]');
+                  if (visibleAction(fallback)) fallback.focus({ preventScroll: true });
+                  else navigation.focusAvailable();
+                }
+              },
+        );
       } catch (error) {
         if (!current()) return;
         try {
