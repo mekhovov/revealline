@@ -434,18 +434,21 @@ export class PostgresCommunityRepository {
         [editionId],
       );
       if (!edition.rows[0]) return null;
+      const inserted = await client.query(
+        `INSERT INTO community_reports (
+           id, edition_id, reporter_subject, reason, details, status, created_at
+         ) VALUES ($1,$2,$3,$4,$5,'open',$6)
+         ON CONFLICT (edition_id, reporter_subject) DO NOTHING
+         RETURNING *`,
+        [randomUUID(), editionId, reporterSubject, reason, details, this.clock()],
+      );
+      if (inserted.rows[0]) return { report: mapReport(inserted.rows[0]), reused: false };
       const existing = await client.query(
         `SELECT * FROM community_reports WHERE edition_id=$1 AND reporter_subject=$2`,
         [editionId, reporterSubject],
       );
       if (existing.rows[0]) return { report: mapReport(existing.rows[0]), reused: true };
-      const inserted = await client.query(
-        `INSERT INTO community_reports (
-           id, edition_id, reporter_subject, reason, details, status, created_at
-         ) VALUES ($1,$2,$3,$4,$5,'open',$6) RETURNING *`,
-        [randomUUID(), editionId, reporterSubject, reason, details, this.clock()],
-      );
-      return { report: mapReport(inserted.rows[0]), reused: false };
+      throw new Error('Concurrent community report disappeared after conflict resolution.');
     });
   }
 

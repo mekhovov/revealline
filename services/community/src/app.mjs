@@ -113,8 +113,16 @@ export function buildCommunityApp({
     const row = await repository.getPublishedEdition(request.params.editionId);
     if (!row) throw notFound();
     const blob = await blobStore.open(row.blobKey);
-    if (!blob || blob.size !== row.actualSize)
+    if (!blob || blob.size !== row.actualSize || blob.sha256 !== row.packageSha256) {
+      if (blob?.body?.destroy) {
+        const closed = blob.body.closed
+          ? Promise.resolve()
+          : new Promise((resolve) => blob.body.once('close', resolve));
+        blob.body.destroy();
+        await closed;
+      }
       throw new CommunityError(503, 'package_unavailable', 'The immutable package is unavailable.');
+    }
     return reply
       .header('content-type', PACKAGE_MEDIA_TYPE)
       .header('content-length', blob.size)

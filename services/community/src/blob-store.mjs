@@ -1,5 +1,4 @@
 import { createHash, randomUUID } from 'node:crypto';
-import { createReadStream } from 'node:fs';
 import { mkdir, open, rename, rm, stat } from 'node:fs/promises';
 import path from 'node:path';
 import { Readable } from 'node:stream';
@@ -9,6 +8,12 @@ const validatedKey = (key) => {
   if (typeof key !== 'string' || !/^[a-z0-9][a-z0-9./_-]*$/u.test(key) || key.includes('..'))
     throw new Error('Blob key is invalid.');
   return key;
+};
+
+const validateContentAddress = (key, expectedSha256) => {
+  const match = /^packages\/sha256\/([a-f0-9]{2})\/([a-f0-9]{64})\.rlpack$/u.exec(key);
+  if (match && (match[1] !== match[2].slice(0, 2) || match[2] !== expectedSha256))
+    throw new Error('Content-addressed blob key differs from the expected SHA-256.');
 };
 
 const chunks = async function* (body) {
@@ -29,6 +34,7 @@ export class DiskBlobStore {
   }
 
   async putVerified({ key, body, expectedSha256, expectedSize, maxBytes }) {
+    validateContentAddress(key, expectedSha256);
     const target = this.#path(key);
     await mkdir(path.dirname(target), { recursive: true });
     const temporary = `${target}.${randomUUID()}.partial`;
@@ -65,16 +71,14 @@ export class DiskBlobStore {
         'Uploaded bytes do not match the declared size and SHA-256.',
       );
     }
+    // Publishing by atomic rename repairs a corrupt pre-existing target. Every
+    // concurrent writer reaching this boundary has already authenticated the
+    // same expected digest, so replacing the path cannot expose partial bytes.
     try {
-      const existing = await stat(target);
-      if (existing.size !== size) throw new Error('Existing immutable blob has a different size.');
-      await rm(temporary, { force: true });
+      await rename(temporary, target);
     } catch (error) {
-      if (error?.code === 'ENOENT') await rename(temporary, target);
-      else {
-        await rm(temporary, { force: true });
-        if (error.message === 'Existing immutable blob has a different size.') throw error;
-      }
+      await rm(temporary, { force: true });
+      throw error;
     }
     return { key, sha256: actualSha256, size };
   }
@@ -90,9 +94,34 @@ export class DiskBlobStore {
   }
 
   async open(key) {
-    const metadata = await this.stat(key);
-    if (!metadata) return null;
-    return { ...metadata, body: createReadStream(this.#path(key)) };
+    const checkedKey = validatedKey(key);
+    let handle;
+    try {
+      handle = await open(this.#path(checkedKey), 'r');
+    } catch (error) {
+      if (error?.code === 'ENOENT') return null;
+      throw error;
+    }
+    try {
+      const digest = createHash('sha256');
+      const buffer = Buffer.allocUnsafe(64 * 1024);
+      let position = 0;
+      while (true) {
+        const { bytesRead } = await handle.read(buffer, 0, buffer.length, position);
+        if (bytesRead === 0) break;
+        digest.update(buffer.subarray(0, bytesRead));
+        position += bytesRead;
+      }
+      return {
+        key: checkedKey,
+        size: position,
+        sha256: digest.digest('hex'),
+        body: handle.createReadStream({ autoClose: true, start: 0 }),
+      };
+    } catch (error) {
+      await handle.close();
+      throw error;
+    }
   }
 
   async openRange(key, start, end) {
@@ -152,7 +181,14 @@ export class MemoryBlobStore {
 
   async open(key) {
     const bytes = this.#items.get(validatedKey(key));
-    return bytes ? { key, size: bytes.length, body: Readable.from(bytes) } : null;
+    return bytes
+      ? {
+          key,
+          size: bytes.length,
+          sha256: createHash('sha256').update(bytes).digest('hex'),
+          body: Readable.from(bytes),
+        }
+      : null;
   }
 
   async openRange(key, start, end) {
@@ -219,7 +255,12 @@ export class S3CompatibleBlobStore {
       const result = await this.client.send(
         this.commands.get({ Bucket: this.bucket, Key: validatedKey(key) }),
       );
-      return { key, size: Number(result.ContentLength), body: result.Body };
+      return {
+        key,
+        size: Number(result.ContentLength),
+        sha256: result.Metadata?.sha256 ?? null,
+        body: result.Body,
+      };
     } catch (error) {
       if (error?.name === 'NoSuchKey' || error?.$metadata?.httpStatusCode === 404) return null;
       throw error;
