@@ -1,0 +1,16 @@
+{
+  "from": "0.116.0",
+  "to": "0.116.1",
+  "requests": 117,
+  "distinctPaths": 109,
+  "mp3Requests": 0,
+  "chapterOrArtworkRequests": 0,
+  "activationDeferredUntilCopy": true,
+  "verifiedCopiedPacks": 1,
+  "verifiedCopiedSuspendedFlights": 1,
+  "coldLaunchAfterServerStopped": true,
+  "restoredFlight": "Midnight Channel, paused at 2:18, three lives, zero coverage",
+  "rollbackOffline": "Launcher active edition returned to 0.116.0",
+  "recordingsInstalled": 0,
+  "note": "First opening the new download UI fetches its bootstrap modules before its worker controls it. Runtime installation reuses verified unchanged hashes; large chapter/artwork downloads are reused completely. Music failure was caused by the preview CSP blocking external hosts."
+}

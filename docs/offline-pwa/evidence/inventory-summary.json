@@ -1,0 +1,14 @@
+{
+  "version": "0.116.0",
+  "missions": 1515,
+  "groups": 50,
+  "sizes": {
+    "gameplayBytes": 593828499,
+    "coreBytes": 43236608,
+    "gameplayStorageBytes": 595664450,
+    "soundtrackBytes": 354986122,
+    "largestFileBytes": 12358446,
+    "firstDownloadPeakBytes": 608022896,
+    "worstCaseTwoEditionPeakBytes": 1203687346
+  }
+}

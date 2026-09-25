@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#091324" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="apple-touch-icon" href="icon-180.png" />
+    <link rel="stylesheet" href="app.css" />
+    <script type="module" src="app.mjs"></script>
+    <title>Reveal Line</title>
+  </head>
+  <body>
+    <main>
+      <h1>Reveal Line</h1>
+      <p id="status" role="status">Opening your installed game…</p>
+      <div class="actions">
+        <a id="play" hidden>Play installed game</a><button id="install" hidden>Install app</button
+        ><button id="updates">Check for a new edition</button
+        ><button id="previous" hidden>Restore previous edition</button>
+      </div>
+      <p id="edition"></p>
+      <a id="prepare" hidden>Prepare offline game</a>
+      <p>
+        Install from your browser’s app menu. On iPhone and iPad, use Share → Add to Home Screen. On
+        macOS Safari, use File → Add to Dock. The icon and game downloads are separate.
+      </p>
+      <p>
+        On Apple devices, prepare downloads inside the installed app. To bring browser progress, use
+        Game data’s complete backup and import controls.
+      </p>
+    </main>
+  </body>
+</html>

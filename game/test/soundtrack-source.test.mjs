@@ -20,6 +20,30 @@ const catalogue = {
 };
 const body = original.assets[0].blob;
 
+test('local gameplay never consults a live catalogue or soundtrack server even when the browser reports online', async () => {
+  let requests = 0;
+  const source = createSoundtrackSource({
+    catalogue,
+    localPlayback: () => true,
+    readOfficial: async () => null,
+    fetch: async () => {
+      requests++;
+      throw new Error('Network blocked');
+    },
+  });
+  assert.equal(await source.readAsset(track.asset.sha256), null);
+  assert.equal(requests, 0);
+  const local = createSoundtrackSource({
+    catalogue,
+    localPlayback: () => true,
+    readOfficial: async () => body,
+    fetch: async () => {
+      throw new Error('Network must not be used');
+    },
+  });
+  assert.equal(await local.readAsset(track.asset.sha256), body);
+});
+
 test('catalogue streaming trusts only shipped hashes and checks the entire original without saving it', async () => {
   const calls = [];
   const source = createSoundtrackSource({

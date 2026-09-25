@@ -24,7 +24,7 @@ export function attachOfflinePanel({
   button.hidden = !available.available;
   feedback.begin({ message: '' }).finish({
     message: available.available
-      ? 'Download this release for offline play on this device.'
+      ? 'Prepare the shared runtime here. Use Game and soundtrack downloads for complete offline gameplay.'
       : available.reason,
   });
   function controls() {
@@ -35,7 +35,7 @@ export function attachOfflinePanel({
         ? 'Verify offline files'
         : action === 'check'
           ? 'Check progress'
-          : 'Prepare offline play';
+          : 'Prepare shared runtime';
   }
   function detach({ focus = false } = {}) {
     if (!observation) return;
