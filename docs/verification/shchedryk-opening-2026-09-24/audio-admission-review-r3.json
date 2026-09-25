@@ -1,0 +1,51 @@
+{
+  "format": "revealline-audio-admission-review.v1",
+  "feature": "M2 exact Shchedryk opening-theme game admission",
+  "revision": 3,
+  "checkedAt": "2026-09-25T00:00:00.000Z",
+  "candidateBaseRevision": "b1ae8bcafd371840916e18ec5b90a68ec666a8e5",
+  "orderedAudioInputs": "game/app.mjs; game/couch/couch-music-host.mjs; game/opening-soundtrack.mjs; game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/soundtrack-bundled.mjs; game/ui/soundtrack-panel.mjs; game/ui/soundtrack-panel.css; game/soundtrack-albums.mjs; game/soundtrack-portable.mjs; game/content/soundtrack-catalogue.mjs; game/online-soundtrack-catalogue.mjs",
+  "audioFingerprintSHA256": "5251ea0d06ea56068e783ef8d5bb42eb145e087b09e96cafb1825d7eb20c0ccd",
+  "recording": {
+    "title": "Carol of the Bells (Metal Version)",
+    "artist": "Alexander Nakarada",
+    "bytes": 8641768,
+    "sha256": "d4147214e221be28f19d6c6c38afc8d3cf0289a0dc6ac579b26574a0c571bc58",
+    "path": "game/audio/soundtracks/d4147214e221be28f19d6c6c38afc8d3cf0289a0dc6ac579b26574a0c571bc58.mp3",
+    "license": "CC BY 4.0 International",
+    "contentId": "registered",
+    "provenance": "A modern metal adaptation of the melody associated with Mykola Leontovych's Shchedryk; no traditional-instrumentation claim is made."
+  },
+  "review": {
+    "decision": "approved-for-scoped-source-continuation",
+    "scope": "The exact authorized recording is admitted once as a bounded code-owned source. A fresh generation-zero profile prepares the ordered opening collection without playing; the first eligible browser gesture remains the playback boundary. Persisted choices, mute, volume, intentional music pause and session continuity keep their existing owners.",
+    "verified": [
+      "The exact MP3 identity, complete frame structure, catalogue identity and CC BY policy are pinned before generation.",
+      "The opening collection begins with the exact recording, then lists admitted Ukrainian recordings once; Ukrainian and Metal tags produce Fusion eligibility without duplicating the recording.",
+      "Only a fresh generation-zero default adopts the opening collection. Persisted Ukrainian, Metal, other style, playlist, Installed-only and Recording-mode choices are not replaced; bundled core bytes remain eligible when Installed-only is selected.",
+      "The registered Content ID policy excludes the recording from Recording mode.",
+      "The core registration is below 64 MiB, is treated as locally available and is excluded from installed-media copies and removal controls.",
+      "Main and Couch hosts reuse the existing transport, browser-gesture, interruption and intentional-pause owners."
+    ],
+    "limitations": [
+      "The project owner's prior direction approval is not a complete-track or repeated-session listening review.",
+      "Warning audibility, transition quality, cold-offline behavior, physical desktop, iPhone and controller checks remain release qualification work.",
+      "A Ukrainian musical and cultural review remains required before final acceptance.",
+      "This record does not publish, merge or release the candidate and does not approve any other audition recording."
+    ]
+  },
+  "tests": {
+    "command": "node --test game/test/opening-soundtrack.test.mjs game/test/couch-menu-music.test.mjs game/test/soundtrack-source.test.mjs game/test/soundtrack-catalogue.test.mjs game/test/soundtrack-portable.test.mjs game/test/soundtrack-panel.test.mjs game/test/soundtrack-player.test.mjs scripts/test-core-soundtrack-publication.mjs scripts/test-hosted-soundtrack-publication.mjs scripts/test-soundtrack-distribution.mjs",
+    "node": "20.19.5",
+    "tests": 245,
+    "pass": 245,
+    "fail": 0,
+    "skip": 0,
+    "outputSha256": "89dc29cc056579a5443be7c610ce0e1d6c9d56364d75c49f77f94829e306234a"
+  },
+  "fieldKit": {
+    "sourceRevision": 80,
+    "expectedReviewedRevision": 81,
+    "reviewBoundary": "Runtime source, exact-byte identity, rights enforcement, fresh-profile selection and duplicate-storage prevention only. Listening, cultural, device, frozen-build and public release acceptance remain open."
+  }
+}

@@ -463,7 +463,7 @@ test('shared-host UI and audio bind only their reviewed current inputs', async (
   const production = await createFieldKitProduction();
   const resolved = resolvePresentation(production.document);
   const audioReviewPath =
-    'docs/verification/shchedryk-opening-2026-09-24/audio-source-review-r2.json';
+    'docs/verification/shchedryk-opening-2026-09-24/audio-admission-review-r3.json';
   const audioReviewHash = createHash('sha256')
     .update(await fs.readFile(new URL(`../../${audioReviewPath}`, import.meta.url)))
     .digest('hex');
@@ -505,7 +505,7 @@ test('shared-host UI and audio bind only their reviewed current inputs', async (
       );
       assert.ok(
         asset.provenance.source.endsWith(
-          'sha256:27ad86d9f0e3d84a149627ca3e95f3f2350c7dd7b79146d5cbc4da9320f12e3e',
+          'sha256:5251ea0d06ea56068e783ef8d5bb42eb145e087b09e96cafb1825d7eb20c0ccd',
         ),
         slot.id,
       );

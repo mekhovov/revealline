@@ -353,7 +353,7 @@ test('actual host omits unused trusted online pins from an importable backup wit
   assert.deepEqual(restored.assets, []);
   assert.match(
     h.$('still-host-status').textContent,
-    /70 unused online catalogue recordings are not included/,
+    /71 unused online catalogue recordings are not included/,
   );
   h.$('still-host-download-audio').onclick();
   assert.match(h.$('still-host-status').textContent, /their audio is not saved in this backup/);

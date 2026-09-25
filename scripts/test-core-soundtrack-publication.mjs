@@ -48,3 +48,29 @@ test('core publication rejects changed audio and invented completion evidence', 
   await writeFile(audioPath, body);
   await assert.rejects(compileCoreSoundtrack(fixture, 'test'), /bytes differ/);
 });
+
+test('core publication rejects unrecognized authorization and qualification claims', async (t) => {
+  const fixture = await mkdtemp(path.join(os.tmpdir(), 'shchedryk-core-schema-'));
+  t.after(() => rm(fixture, { recursive: true, force: true }));
+  for (const relative of [
+    'authoring/library/licensed-audio/core-publication.json',
+    'game/audio/soundtracks/d4147214e221be28f19d6c6c38afc8d3cf0289a0dc6ac579b26574a0c571bc58.mp3',
+  ]) {
+    const target = path.join(fixture, relative);
+    await mkdir(path.dirname(target), { recursive: true });
+    await cp(path.join(root, relative), target, { recursive: true });
+  }
+  const manifestPath = path.join(fixture, 'authoring/library/licensed-audio/core-publication.json');
+  const manifest = JSON.parse(await readFile(manifestPath));
+  manifest.review.browser = true;
+  await writeFile(manifestPath, JSON.stringify(manifest));
+  await assert.rejects(compileCoreSoundtrack(fixture, 'test'), /review\.browser is not supported/);
+
+  delete manifest.review.browser;
+  manifest.authorization.releaseApproved = true;
+  await writeFile(manifestPath, JSON.stringify(manifest));
+  await assert.rejects(
+    compileCoreSoundtrack(fixture, 'test'),
+    /authorization\.releaseApproved is not supported/,
+  );
+});

@@ -55,12 +55,29 @@ export async function compileCoreSoundtrack(root, edition) {
     ],
     'core soundtrack publication',
   );
+  exactKeys(publication.authorization, ['kind', 'scope', 'basis'], 'core soundtrack authorization');
+  exactKeys(
+    publication.review,
+    [
+      'userMusicalDirection',
+      'fullTrack',
+      'repeatedSession',
+      'inGameTransition',
+      'device',
+      'cultural',
+    ],
+    'core soundtrack review',
+  );
   required(
     publication.format === 'revealline-core-soundtrack-publication.v1' &&
       publication.status === 'user-direction-approved-qualification-pending' &&
       publication.gameCatalogueAdmission === true &&
       publication.openingTheme === true &&
       publication.authorization?.kind === 'explicit-project-owner-request' &&
+      typeof publication.authorization.scope === 'string' &&
+      publication.authorization.scope.length > 0 &&
+      typeof publication.authorization.basis === 'string' &&
+      publication.authorization.basis.length > 0 &&
       publication.review?.userMusicalDirection === true &&
       ['fullTrack', 'repeatedSession', 'inGameTransition', 'device', 'cultural'].every(
         (key) => publication.review[key] === false,
