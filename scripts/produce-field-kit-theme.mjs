@@ -125,10 +125,10 @@ const REVIEWED_RECIPE_INPUTS = {
     ],
   },
   audio: {
-    sha256: '6a6124afeb891475a882e51289d28df2615fb7ed144b675357c00aa9bd255567',
+    sha256: 'a2612099406de7d0a88daae9909068c7d9ffda1f0ef33f2a58b49cc13726784a',
     evidence: [
-      'Scoped multi-style archive-player source review: docs/verification/online-soundtrack-style-player-2026-09-24/review.json sha256:020e038464eb3768bfaa6107c41d70affed7e0f1901e63e0335a8f8027b7ce5d. Fifteen ordered audio inputs sha256:6a6124afeb891475a882e51289d28df2615fb7ed144b675357c00aa9bd255567 preserve the bounded catalogue trust boundary while adding combined styles, queue order and repeat controls.',
-      'All8 selected roles remain the same procedural recipes with no new audio files. Focused tests cover bounded decode, exact immutable paths, clicked-first streaming, distinct Synth/electronic, Metal, Ukrainian, Chiptune, Rock and Ambient filters, Fusion/Other grouping, shuffle and ordered queues, repeat all/one/off, Recording-mode transitions, failure and cancellation.',
+      'Scoped live archive reconciliation: docs/verification/online-soundtrack-reconciliation-2026-09-25/source-review.json sha256:517dfdb4a319c84032a788bc03620badcc051eb850d9fb7946d9a071900c366c. Fifteen ordered audio inputs sha256:a2612099406de7d0a88daae9909068c7d9ffda1f0ef33f2a58b49cc13726784a preserve the bounded catalogue trust boundary and accept only the explicit default=false marker used by the 24 post-baseline auditions.',
+      'All8 selected roles remain the same procedural recipes with no new audio files. Focused tests cover bounded decode, exact immutable paths, rejection of default=true, clicked-first streaming, style mixing, shuffle and ordered queues, repeat all/one/off, Recording-mode transitions, failure and cancellation.',
       'No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, cold-offline, frozen-build or public game approval. Archive previews remain outside trusted Automatic and built-in playlists; historical records and original payloads are immutable.',
     ],
   },
