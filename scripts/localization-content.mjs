@@ -86,7 +86,26 @@ async function currentJourneySources(root) {
     if (!route) throw new Error(`Unregistered default Journey route: ${id}`);
     add(`game/content-design/route-definition.mjs#${id}`, route);
     registerExecution(`game/content-design/route-definition.mjs#${id}`, route.source, 'solo');
+    registerExecution(`game/content-design/route-definition.mjs#${id}`, route.source, 'versus');
   }
+  const themes = JSON.parse(
+    await fs.readFile(path.join(root, 'game/content-design/themes.json'), 'utf8'),
+  );
+  const { journeyActorThemeCandidates } = await moduleAt(
+    'presentation/journey-actor-materials.mjs',
+  );
+  add('game/content-design/themes.json', themes);
+  add(
+    'game/presentation/journey-actor-materials.mjs#themes',
+    journeyActorThemeCandidates(themes.themes),
+  );
+  const { DIFFICULTY_CATALOG, PRESSURE_DIFFICULTY_CATALOG } = await moduleAt(
+    'content-design/catalogs.mjs',
+  );
+  add('game/content-design/catalogs.mjs#difficulty', [
+    DIFFICULTY_CATALOG,
+    PRESSURE_DIFFICULTY_CATALOG,
+  ]);
   const teamFactories = {
     'team-trail-impact-originals-1': [
       'team-impact-originals.mjs',
