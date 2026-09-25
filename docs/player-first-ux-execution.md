@@ -75,6 +75,14 @@ authoring path named by `game/build-config.json`; after those paths were hydrate
 repository validator passed. Their earlier absence was a checkout limitation, not a
 missing production asset.
 
+The final v0.111.0 test correction keeps focus on Start while its initial picture
+confirmation is pending, so a held or repeated controller Confirm cannot activate
+the secondary Cancel action. Cancelling a later staged replacement retains the
+already accepted playable boards. The complete affected installed-content file passes
+27/27; syntax, scoped lint, formatting and diff checks pass. The hosted exact-head
+build remains required because automated long suites are waived by the temporary
+release policy and are not claimed as passed.
+
 Completed publication and scoped source evidence:
 
 - The v0.97 selector PR341 deployed source
