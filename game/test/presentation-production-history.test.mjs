@@ -414,18 +414,18 @@ test('production refuses silent slot contract mutation and can explicitly return
 test('Journey feedback dependencies bind only the reviewed player-craft effects inputs', async () => {
   const production = await createFieldKitProduction();
   const resolved = resolvePresentation(production.document);
-  const reviewPath = 'docs/verification/enemy-surface-motion-continuation-2026-09-24/review.json';
+  const reviewPath = 'docs/verification/trail-impact-readability-2026-09-25/review.json';
   const reviewBytes = await fs.readFile(new URL(`../../${reviewPath}`, import.meta.url));
   const reviewHash = createHash('sha256').update(reviewBytes).digest('hex');
   const review = JSON.parse(reviewBytes);
-  assert.equal(reviewHash, 'f8dcdc60d973447bd6b482045c96f1a4059cfca899528dd7de7cacb95854684c');
+  assert.equal(reviewHash, 'c2a4c05874b3f3040a79347836a9ff94b9337d28acaa99968fc5b07f5bad420c');
   assert.equal(
-    review.effects.priorFingerprintSHA256,
-    'abd3aeef12041b55e76be3b026b52180f11df0f5b7a7f2a25ea560dacab0fdf1',
+    review.groups.effects.priorFingerprintSHA256,
+    '654fed2ce5b5e9b5e0c6bb79a6d7095093a4ed8128877b1a7f0658d830c275e7',
   );
   assert.equal(
-    review.effects.currentFingerprintSHA256,
-    '654fed2ce5b5e9b5e0c6bb79a6d7095093a4ed8128877b1a7f0658d830c275e7',
+    review.groups.effects.currentFingerprintSHA256,
+    '60b67750b0e65abd8139c9c45fdec24f2702deca11b839c11bcb367fe4cb627d',
   );
   for (const slotId of [
     'trail.active',
@@ -443,7 +443,7 @@ test('Journey feedback dependencies bind only the reviewed player-craft effects 
     assert.equal(asset.quality.stage, 'reviewed', slotId);
     assert.ok(
       asset.provenance.source.endsWith(
-        'sha256:654fed2ce5b5e9b5e0c6bb79a6d7095093a4ed8128877b1a7f0658d830c275e7',
+        'sha256:60b67750b0e65abd8139c9c45fdec24f2702deca11b839c11bcb367fe4cb627d',
       ),
     );
     assert.match(asset.provenance.source, /game\/ui\/lane-presentation\.mjs/);
@@ -452,7 +452,7 @@ test('Journey feedback dependencies bind only the reviewed player-craft effects 
     assert.match(asset.provenance.source, /game\/ui\/enemy-body-motion\.mjs/);
     assert.equal(
       asset.quality.evidence.some((entry) =>
-        entry.includes(`Scoped enemy surface-motion continuation: ${reviewPath}`),
+        entry.includes(`Scoped travelling-impact readability continuation: ${reviewPath}`),
       ),
       true,
     );
@@ -530,7 +530,7 @@ test('soundtrack screen and Journey motion reviews bind only the inspected curre
   );
   const fingerprints = {
     screens: 'acf6426f5cd47f21a85ec5ae9da9549ed58fbe330b097c979dc85b87afe2d68a',
-    motion: 'c35fcf823a0923f27f1193afa247e2d0c93b6fc4161976a5d6a2b67a5bc143a9',
+    motion: '9a30d7a07cd5aad3249204547946eeea5250087de714e8002b1c824779039efb',
   };
   const reviewed = production.document.slots.filter(
     (slot) => slot.group in fingerprints && resolved.assets[slot.id].kind === 'recipe',
@@ -544,7 +544,7 @@ test('soundtrack screen and Journey motion reviews bind only the inspected curre
       asset.quality.evidence.some((entry) =>
         entry.includes(
           slot.group === 'motion'
-            ? 'Scoped visible-actor motion continuation'
+            ? 'Scoped active-trail readability continuation'
             : `Scoped compact-Home screen continuation: ${screenReviewPath} sha256:${screenReviewHash}`,
         ),
       ),
