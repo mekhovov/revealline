@@ -1,6 +1,6 @@
 # Reveal Line — accepted baseline and remaining player-first plan
 
-Status checked **25 September 2026 after public acceptance of v0.113.1**.
+Status checked **25 September 2026 after public acceptance of v0.114.0**.
 This is the current execution plan. Historical reports remain authoritative for
 their own immutable releases; candidate branches and source assets do not count
 as shipped gameplay.
@@ -14,34 +14,36 @@ as passes.
 
 ## Accepted public baseline
 
-**v0.113.1 — Classic preparation correction** is the latest accepted release:
+**v0.114.0 — Horizon spatial joins** is the latest accepted release:
 
-- Play: <https://mekhovov.github.io/revealline/releases/v0.113.1/site/game/>
-- Source PR: [#490](https://github.com/mekhovov/revealline/pull/490)
-- Release: <https://github.com/mekhovov/revealline/releases/tag/v0.113.1>
-- Pages selector PR: [#494](https://github.com/mekhovov/revealline/pull/494)
-- Production workflow: [run 36117653770](https://github.com/mekhovov/revealline/actions/runs/36117653770)
+- Play: <https://mekhovov.github.io/revealline/releases/v0.114.0/site/game/>
+- Source PR: [#495](https://github.com/mekhovov/revealline/pull/495)
+- Release: <https://github.com/mekhovov/revealline/releases/tag/v0.114.0>
+- Pages selector PR: [#497](https://github.com/mekhovov/revealline/pull/497)
+- Production workflow: [run 36124529032](https://github.com/mekhovov/revealline/actions/runs/36124529032)
 
-The release makes Classic missions launched from the unified library retain their
-Classic rules edition in every preparation path. Exact source
-`7c6f84a473b3d2dca8f745c9a3bcc2745437f458` and source tree
-`289b27033863bea1399df03eeb0f02c7ebb3bf01` were qualified. Forty-eight focused
-tests passed before release. Validation, lint, both formatting gates, syntax,
-production reproduction/readiness, deterministic build, frozen-artifact reread,
-release-asset reconciliation, archive admission, selector validation, and Pages
-assembly passed. The long source shards and focused publisher suites were
+The release adds three authored Horizon cultural spatial identities — Island
+outpost, Long way home and the Horizon remix route — through
+`whole-spatial-v11`. Exact game source
+`10190539b243c9edc78eeef9dba174041409aaf2` and selector merge
+`dce04f9ea2c994c045662d1c37eee82b3581d1a4` were qualified. Validation, lint,
+both formatting gates, syntax, production reproduction/readiness, deterministic
+build, frozen-artifact reread, release-asset reconciliation, archive admission,
+selector validation, and Pages assembly passed. Sixty-three focused Node tests
+and five focused Python controller tests passed. The long source suites remain
 **waived by the committed fast-release policy** and are recorded as skipped.
 
 The public payload was independently compared with its production receipt:
-**4,710/4,710 files and 629,793,540/629,793,540 bytes matched**, with no failures
-or retries. A public keyboard-only acceptance journey selected Classic from the
-unified library, prepared First Signal with its 45% Classic target, started it
-with Enter, paused with Escape, and resumed with Enter.
+**4,740/4,740 files and 630,036,640/630,036,640 bytes matched**, with no failures.
+A public keyboard-only acceptance journey found the new Horizon Remix mission,
+launched the New Journey version at its 78% target, paused with Escape, and
+resumed with Enter. This proves technical delivery and navigation; cultural
+review, full-clear balance and replay-value review remain human gates.
 
-The replaced v0.113.0 site is preserved at
-<https://mekhovov.github.io/revealline-archive-79/releases/v0.113.0/site/game/>.
-Archive PR [#1](https://github.com/mekhovov/revealline-archive-79/pull/1), deployment
-`6657384199`, and its **1,148-file / 595,654,470-byte** public audit passed.
+The replaced v0.113.1 site is preserved at
+<https://mekhovov.github.io/revealline-archive-80/releases/v0.113.1/site/game/>.
+Archive PR [#1](https://github.com/mekhovov/revealline-archive-80/pull/1), deployment
+`6658568593`, and its **1,148-file / 595,654,918-byte** public audit passed.
 
 ## Completed work
 
@@ -56,6 +58,7 @@ Archive PR [#1](https://github.com/mekhovov/revealline-archive-79/pull/1), deplo
 | Progression foundations  | Saves, scores, backups, Collection, cross-campaign continuation, exact mission identity, and release-safe restore foundations.                                                         |
 | Presentation foundations | Dark pixel shell, cleaned FPV silhouette, direction-aware actors, Team picture authority, trail/impact feedback, readable text options, and Ukrainian-inspired spatial missions.       |
 | Content framework        | Versioned rules, packs, optional chapters, media/playlists, asset registries, validators, Studio foundations, and AI authoring skills.                                                 |
+| Horizon spatial slice    | Three `whole-spatial-v11` identities are publicly shipped and technically verified in v0.114.0; human cultural and balance review remains.                                            |
 
 ## Player feedback status
 
@@ -77,7 +80,7 @@ version is publicly deployed and verified.
 
 | Priority | Delivery                                        | Current state                                                                                    | Completion gate                                                                                                                   |                     Engineering range |
 | -------: | ----------------------------------------------- | ------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------: |
-|        1 | **UX2 — shared Home, lobbies, Pause; PR #487**  | Draft on an older base; prior candidate evidence exists but the current merge is conflicting     | Reconcile on v0.113.1, preserve direct entry/focus, verify keyboard/controller/touch flows, release and publicly accept           |                          **1–2 days** |
+|        1 | **UX2 — shared Home, lobbies, Pause; PR #487**  | Reconciled candidate exists on the v0.114 game-source line; it remains unversioned and must be requalified after its final related-hunk review | Preserve direct entry/focus, verify keyboard/controller/touch flows, release as v0.115.0 and publicly accept                      |                          **1–2 days** |
 |        2 | **UX1-A — exact Journey rewards; PR #485**      | Draft; exact pictures, restore validation, focus recovery, and revision-safe caching implemented | Reconcile after UX2; verify reload, Retry/Next, missing-original recovery, release and publicly accept                            |                          **1–2 days** |
 |        3 | **UX1-B — compact grouped mission gallery**     | Design/component foundations only                                                                | Group campaigns, restore selection/scroll, one-action ready/download-and-play, lazy previews, spatial input                       |                          **1–2 days** |
 |        4 | **UX3 — gameplay HUD, touch and teaching**      | Partial responsive candidates                                                                    | One-row short-landscape HUD, maximum arena, shared touch layout, contextual hints, reduced effects, iPhone and Steam Deck checks  |            **1–2 days plus hardware** |
@@ -123,8 +126,9 @@ reserve art are not installed, playable content.
 
 ## Blockers and concerns
 
-1. **Candidate drift:** UX2 PR #487 and rewards PR #485 are based on older main
-   and conflict. Earlier passing evidence does not qualify their reconciled heads.
+1. **Candidate drift:** UX2 has a reconciled candidate, while rewards PR #485 is
+   still based on older main. Earlier passing evidence does not qualify a new
+   versioned or further-reconciled head.
 2. **Temporary test waiver:** long suites are skipped, increasing regression risk.
    Focused tests, static gates, exact source, immutable assets, archives and public
    checks remain mandatory until the waiver is retired.
@@ -135,19 +139,23 @@ reserve art are not installed, playable content.
    actor readability and soundtrack quality require play/listening review.
 5. **Publication cost:** each immutable release is roughly 596 MiB and must be
    preserved in a separate archive, selected serially and audited byte-for-byte.
-6. **Local capacity:** the development volume was below 300 MiB free at this
-   review. Hosted gates are usable, but obsolete clean worktrees must be retired
-   before another local build or reconciliation.
-7. **Large draft queue:** studies and stacked candidates overlap. Each successor
+6. **Local capacity:** the development volume reached 1.2 GiB free and blocked a
+   clean plan worktree checkout during this review. Retiring the merged v0.114
+   selector worktree restored enough capacity, but every release still needs
+   active disk management before build and archive work.
+7. **Actions runner migration:** Node 20 deprecation and `ubuntu-latest` image
+   migration warnings are not blocking current releases, but the workflows need
+   a scheduled compatibility update before GitHub enforces the changes.
+8. **Large draft queue:** studies and stacked candidates overlap. Each successor
    must be reconciled by related hunks; bulk merging risks duplicate content,
    stale versions and incompatible identities.
 
 ## Immediate execution order
 
-1. Retire only clean, obsolete v0.113.1 release worktrees after preserving Git and
-   hosted evidence.
-2. Reconcile UX2 PR #487 onto accepted v0.113.1, review at hunk level, qualify the
-   new exact head, and release it as the next unused minor version.
+1. Review the reconciled UX2 PR #487 at hunk level against the accepted v0.114.0
+   game source, close stale selector-only conflicts, and version it as v0.115.0.
+2. Qualify, merge, archive v0.114.0, release v0.115.0, publish it through the
+   selector PR, and complete the public-byte and scoped player journey checks.
 3. Reconcile and release UX1-A, then implement/release UX1-B.
 4. Ship UX3–UX6 as separate publicly verified player releases, prioritizing the
    one-row mobile HUD, consistent touch controls and controller A/start behavior.
