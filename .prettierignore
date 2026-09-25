@@ -7,3 +7,7 @@ authoring/library/fpv-field-kit/retained/runtime.*.json
 # Generated metadata uses exact formatting plus a bounded canonical fallback.
 # npm run validate authenticates its format, schema and inventory bytes.
 game/presentation/compiled/studio.json
+
+# Generated translation bundles
+game/i18n/catalogs.mjs
+game/i18n/content-registry.mjs

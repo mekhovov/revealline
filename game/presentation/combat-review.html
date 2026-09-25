@@ -2,56 +2,63 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
+    <link rel="stylesheet" href="../i18n/style.css" />
+    <script src="../vendor/i18next-26.4.2.min.js"></script>
+    <script src="../i18n/catalogs.mjs"></script>
+    <script src="../i18n/bootstrap.mjs"></script>
+
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Optional robots · Reveal Line presentation study</title>
+    <title data-i18n="interface:optionalRobotsRevealLinePresentationStudy">Optional robots · Reveal Line presentation study</title>
     <link rel="stylesheet" href="../ui/field-kit-fonts.css" />
     <link rel="stylesheet" href="journey-actor-review.css" />
     <link rel="stylesheet" href="combat-review.css" />
     <script type="module" src="combat-review.mjs"></script>
   </head>
   <body>
+<div data-language-control></div>
+
     <header>
-      <a href="../studio/">← Content Studio</a><span>OPTIONAL ROBOTS / UNPUBLISHED STUDY</span>
+      <a href="../studio/" data-i18n="interface:contentStudio">← Content Studio</a><span data-i18n="interface:optionalRobotsUnpublishedStudy">OPTIONAL ROBOTS / UNPUBLISHED STUDY</span>
     </header>
     <main>
-      <p class="eyebrow">REMOVE THE ROBOT. READ THE SHOT. KEEP THE CUT.</p>
-      <h1>Small bodies.<br />Clear intentions.</h1>
-      <p class="intro">
+      <p class="eyebrow" data-i18n="interface:removeTheRobotReadTheShotKeepTheCut">REMOVE THE ROBOT. READ THE SHOT. KEEP THE CUT.</p>
+      <h1 data-i18n-rich="interface:smallBodiesClearIntentions">Small bodies.<br / data-i18n-slot="slot0">Clear intentions.</h1>
+      <p class="intro" data-i18n="interface:bracketedRobotsCanBeRemovedByCraftContactOrEnclosure">
         Bracketed robots can be removed by craft contact or enclosure. Round keepers still threaten
         body and trail and retain territory. Sentries lock one point before firing; shots threaten
         the exposed craft, not its trail.
       </p>
-      <p class="intro">
+      <p class="intro" data-i18n="interface:staticSilentPresentationSpecimensNotGameplayFinishedLevelsOrA">
         Static, silent presentation specimens—not gameplay, finished levels or a human readability
         test. No project, setting or saved game changes here.
       </p>
       <div class="controls">
-        <label for="body-size">Body size</label>
+        <label for="body-size" data-i18n="interface:bodySize">Body size</label>
         <select id="body-size">
-          <option value="16">16 px · phone</option>
-          <option value="24" selected>24 px · desktop</option>
-          <option value="32">32 px · large</option>
+          <option value="16" data-i18n="interface:16PxPhone">16 px · phone</option>
+          <option value="24" selected data-i18n="interface:24PxDesktop">24 px · desktop</option>
+          <option value="32" data-i18n="interface:32PxLarge">32 px · large</option>
         </select>
-        <label for="surface">Surface</label>
+        <label for="surface" data-i18n="interface:surface">Surface</label>
         <select id="surface">
-          <option value="dark">Ink</option>
-          <option value="light">Paper</option>
-          <option value="grey">Neutral grey</option>
+          <option value="dark" data-i18n="interface:ink">Ink</option>
+          <option value="light" data-i18n="interface:paper">Paper</option>
+          <option value="grey" data-i18n="interface:neutralGrey">Neutral grey</option>
         </select>
-        <label for="effects">Effects</label>
+        <label for="effects" data-i18n="interface:effects">Effects</label>
         <select id="effects">
-          <option value="normal">Normal · static samples</option>
-          <option value="reduced">Reduced effects</option>
+          <option value="normal" data-i18n="interface:normalStaticSamples">Normal · static samples</option>
+          <option value="reduced" data-i18n="interface:reducedEffects">Reduced effects</option>
         </select>
-        <label for="colour">Colour</label>
+        <label for="colour" data-i18n="interface:colour">Colour</label>
         <select id="colour">
-          <option value="colour">Workshop accents</option>
-          <option value="mono">Monochrome</option>
+          <option value="colour" data-i18n="interface:workshopAccents">Workshop accents</option>
+          <option value="mono" data-i18n="interface:monochrome">Monochrome</option>
         </select>
       </div>
       <p id="review-status" role="status"></p>
       <div id="studies" class="studies"></div>
-      <p class="intro">
+      <p class="intro" data-i18n="interface:liveCuesRemainInReducedEffectsAndMonochromeDecorativeScrap">
         Live cues remain in reduced effects and monochrome. Decorative scrap is below gameplay
         layers; the full game preview remains blocked pending host integration and validation.
       </p>

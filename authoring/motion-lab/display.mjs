@@ -1,3 +1,4 @@
+import { localizedText } from '../../game/i18n/index.mjs';
 import { createDisplayPreferences } from '../../game/display-preferences.mjs';
 import { applyFieldKitCopy, fieldKitCopy } from '../../game/ui/field-kit-copy.mjs';
 
@@ -138,12 +139,12 @@ export function getMotionDisplay(
       render(preferences.snapshot());
     }, 0);
   };
-  if (notice) notice.textContent = ordinaryNotice;
+  if (notice) localizedText(notice, () =>ordinaryNotice);
   const preferences = createDisplayPreferences({
     window: host,
     getStorage: () => host.localStorage,
     onWarning(message) {
-      if (!disposed && notice) notice.textContent = message || ordinaryNotice;
+      if (!disposed && notice) localizedText(notice, () =>message || ordinaryNotice);
     },
   });
   const render = (value) => {

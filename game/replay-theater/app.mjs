@@ -1,3 +1,5 @@
+import { contentText } from '../i18n/content.mjs';
+import { t, localizedText } from '../i18n/index.mjs';
 import { mountPresentationPage } from '../presentation/page.mjs';
 import { onNativeInactive } from '../platform.mjs';
 import { prepareReplayPlayer } from '../replay-player.mjs';
@@ -20,7 +22,7 @@ let theaterDisposed = false;
 let disposeRecording = () => {};
 const replayDisplay = mountReplayDisplay();
 const bootStatus = createOperationStatus($('boot-status'));
-const bootDisplay = bootStatus.begin({ message: 'Preparing the theater…', stage: 'reading' });
+const bootDisplay = bootStatus.begin({ message: t("interface:preparingTheTheater"), stage: 'reading' });
 const presentationFeedback = createOperationStatus($('presentation-status'));
 let presentationOperation = null;
 const presentationPage = mountPresentationPage({
@@ -33,7 +35,7 @@ const presentationPage = mountPresentationPage({
         state: status.status === 'error' ? 'error' : 'ready',
         message:
           status.status === 'error'
-            ? 'Release artwork is unavailable; the current look is kept.'
+            ? t("interface:releaseArtworkIsUnavailableTheCurrentLookIsKept")
             : '',
       });
       presentationOperation = null;
@@ -54,23 +56,19 @@ window.addEventListener('pagehide', closeTheater);
 const examples = {
   'fieldcraft-01': {
     file: './data/fieldcraft-01.replay.json',
-    brief:
-      'Immediate turns · A fiber craft crosses the interference band at full speed. Its exposed cable still needs a safe route home.',
+    get brief() { return t("interface:immediateTurnsAFiberCraftCrossesTheInterferenceBandAt"); },
   },
   'fieldcraft-02': {
     file: './data/fieldcraft-02.replay.json',
-    brief:
-      'Grid-center turns · Collect supplies, place two support fields and change from light to heavy carrier at the south hangar.',
+    get brief() { return t("interface:gridCenterTurnsCollectSuppliesPlaceTwoSupportFieldsAnd"); },
   },
   'fieldcraft-03': {
     file: './data/fieldcraft-03.replay.json',
-    brief:
-      'Immediate turns · A pulse abandons a threatened live cut. The craft redeploys and takes a safer line to finish.',
+    get brief() { return t("interface:immediateTurnsAPulseAbandonsAThreatenedLiveCutThe"); },
   },
   'fieldcraft-04': {
     file: './data/fieldcraft-04.replay.json',
-    brief:
-      'Grid-center turns · Pick up a net and slow the approaching actor while the exposed cable closes.',
+    get brief() { return t("interface:gridCenterTurnsPickUpANetAndSlowThe"); },
   },
 };
 const clipped = (value, length = 160) => String(value).slice(0, length);
@@ -82,7 +80,7 @@ function readRecording(source) {
     source.length > MAX_REPLAY_PRESENTATION_BYTES ||
     encoder.encode(source).byteLength > MAX_REPLAY_PRESENTATION_BYTES
   )
-    throw new Error('Recording exceeds the replay plus appearance metadata limit.');
+    throw new Error(t("interface:recordingExceedsTheReplayPlusAppearanceMetadataLimit"));
   const document = JSON.parse(source);
   // Raw recordings keep their original parser and byte budget, including source
   // whitespace. A declared wrapper must pass its closed, independently bounded
@@ -99,17 +97,17 @@ try {
     fetch('../content/themes.json'),
     fetch('../../authoring/motion-lab/presets.json'),
   ]);
-  if (theaterDisposed) throw new DOMException('The theater is closed.', 'AbortError');
+  if (theaterDisposed) throw new DOMException(t("interface:theTheaterIsClosed"), 'AbortError');
   if (!themeResponse.ok || !presetResponse.ok)
-    throw new Error('Presentation assets could not load.');
+    throw new Error(t("interface:presentationAssetsCouldNotLoad"));
   const [{ themes }, presets] = await Promise.all([themeResponse.json(), presetResponse.json()]);
-  if (theaterDisposed) throw new DOMException('The theater is closed.', 'AbortError');
+  if (theaterDisposed) throw new DOMException(t("interface:theTheaterIsClosed"), 'AbortError');
   const context = $('board').getContext('2d');
-  if (!context) throw new Error('This browser could not create a 2D canvas.');
+  if (!context) throw new Error(t("interface:thisBrowserCouldNotCreateA2dCanvas"));
   for (const theme of themes) {
     const option = document.createElement('option');
     option.value = theme.id;
-    option.textContent = theme.name;
+    localizedText(option, () =>contentText(theme, 'name'));
     $('theme').append(option);
   }
   let player = null,
@@ -151,13 +149,13 @@ try {
       [$('play-pause'), $('step')].includes(previousFocus);
     const disabled = pending || !player;
     $('play-pause').disabled = disabled || ['complete', 'error'].includes(player?.phase);
-    $('play-pause').textContent = player?.phase === 'playing' ? 'Pause' : 'Play';
+    localizedText($('play-pause'), () =>player?.phase === 'playing' ? t("common:actions.pause") : t("common:actions.play"));
     $('restart').disabled = disabled;
     $('step').disabled = disabled || ['complete', 'error'].includes(player?.phase);
     $('speed').disabled = disabled;
     $('theme').disabled = pending;
     $('cancel-load').hidden = !pending;
-    $('playback-phase').textContent = pending ? 'Verifying' : player?.phase || 'Empty';
+    localizedText($('playback-phase'), () =>pending ? t("interface:verifying") : player?.phase || t("interface:empty"));
     // Native disabling can move Play/Step focus to BODY. Keep this completed
     // transport journey local without moving focus out of another editor.
     if (
@@ -174,36 +172,34 @@ try {
     const { state, info } = player;
     const encounter = encounterView(state);
     $('encounter-cue').hidden = !encounter;
-    $('encounter-title').textContent = encounter?.title ?? '';
-    $('encounter-instruction').textContent = encounter
-      ? `Recorded route: ${encounter.instruction}`
-      : '';
+    localizedText($('encounter-title'), () =>contentText(encounter, 'title') ?? '');
+    localizedText($('encounter-instruction'), () =>encounter
+      ? t("gameplay:recordedRoute", { value1: contentText(encounter, 'instruction') })
+      : '');
     $('timeline').max = Math.max(1, info.totalTicks);
     $('timeline').value = state.tick;
-    $('tick-readout').textContent = `Tick ${state.tick} / ${info.totalTicks}`;
-    $('time-readout').textContent =
-      `${state.time.toFixed(2)} / ${info.durationSeconds.toFixed(2)} s`;
-    $('run-readout').textContent =
-      `${state.width} × ${state.height} cells · ${info.turnPolicy} · ${clipped(state.activeClassId)} · ${(state.coverage * 100).toFixed(1)}% covered · ${state.lives} lives · ${state.score} recorded points`;
-    $('checkpoint').textContent = player.finalCheckpoint
-      ? `Final checkpoint matches · ${player.finalCheckpoint.hash} · No progress awarded.`
+    localizedText($('tick-readout'), () =>t("gameplay:tick", { value1: state.tick, value2: info.totalTicks }));
+    localizedText($('time-readout'), () =>`${state.time.toFixed(2)} / ${info.durationSeconds.toFixed(2)} s`);
+    localizedText($('run-readout'), () =>t("gameplay:cellsCoveredLivesRecordedPoints", { value1: state.width, value2: state.height, value3: info.turnPolicy, value4: clipped(state.activeClassId), value5: (state.coverage * 100).toFixed(1), value6: state.lives, value7: state.score }));
+    localizedText($('checkpoint'), () =>player.finalCheckpoint
+      ? t("gameplay:finalCheckpointMatchesNoProgressAwarded", { value1: player.finalCheckpoint.hash })
       : player.phase === 'error'
         ? player.error
-        : `Source verified · ${info.totalTicks} exact input ticks · Final checkpoint checked again at the end.`;
+        : t("gameplay:sourceVerifiedExactInputTicksFinalCheckpointCheckedAgainAt", { value1: info.totalTicks }));
   }
   function displayEvents(events) {
     if (events.length) {
       eventLines.push(
         ...events.map(
           (event) =>
-            `Tick ${event.tick ?? player.state.tick} · ${clipped(event.type, 80)}${event.classId ? ` · ${clipped(event.classId, 80)}` : ''}${event.primitive ? ` · ${clipped(event.primitive, 80)}` : ''}${event.type === 'signal.changed' && event.resistant && event.zoneIds.length ? ' · interference resisted' : ''}${event.reason ? ` · ${clipped(event.reason, 80)}` : ''}`,
+            t("gameplay:tick2", { value1: event.tick ?? player.state.tick, value2: clipped(event.type, 80), value3: event.classId ? ` · ${clipped(event.classId, 80)}` : '', value4: event.primitive ? ` · ${clipped(event.primitive, 80)}` : '', value5: event.type === 'signal.changed' && event.resistant && event.zoneIds.length ? ' · interference resisted' : '', value6: event.reason ? ` · ${clipped(event.reason, 80)}` : '' }),
         ),
       );
       eventLines = eventLines.slice(-12);
     }
-    const items = (eventLines.length ? eventLines : ['No events yet.']).map((text) => {
+    const items = (eventLines.length ? eventLines : [t("interface:noEventsYet")]).map((text) => {
       const item = document.createElement('li');
-      item.textContent = text;
+      localizedText(item, () =>text);
       return item;
     });
     $('events').replaceChildren(...items);
@@ -217,11 +213,9 @@ try {
       void painter.setLook(theme, bodyFor(theme, player.state));
     }
     if (result.reason === 'frame-gap')
-      $('transport-status').textContent =
-        'Paused after a long frame gap. Choose Play to continue the exact recording.';
+      localizedText($('transport-status'), () =>t("interface:pausedAfterALongFrameGapChoosePlayToContinue"));
     else if (result.phase === 'complete')
-      $('transport-status').textContent =
-        'Recording complete. The final state matches. Restart to watch again.';
+      localizedText($('transport-status'), () =>t("interface:recordingCompleteTheFinalStateMatchesRestartToWatchAgain"));
     updateControls();
     readouts();
   }
@@ -229,7 +223,7 @@ try {
     if (!pending) return;
     importDisplay?.finish({
       state: 'cancelled',
-      message: 'Load cancelled. The previous recording is unchanged.',
+      message: t("interface:loadCancelledThePreviousRecordingIsUnchanged"),
     });
     importDisplay = null;
     controller?.abort();
@@ -267,7 +261,7 @@ try {
       if (!current()) return;
       const { envelope, replay } = readRecording(source);
       display.update({
-        message: 'Verifying the recording’s exact input ticks…',
+        message: t("interface:verifyingTheRecordingSExactInputTicks"),
         stage: 'verifying',
       });
       const nextPlayer = await prepareReplayPlayer(replay, {
@@ -281,7 +275,7 @@ try {
       if (!current()) return;
       if (envelope) {
         display.update({
-          message: 'Checking the recorded mission owner and exact FPV actors…',
+          message: t("interface:checkingTheRecordedMissionOwnerAndExactFpvActors"),
           stage: 'verifying',
           progress: null,
         });
@@ -304,13 +298,13 @@ try {
       const nextPainter = new BoardPainter(presets, {
         onAsset: (message) => {
           assetMessage = message;
-          if (!disposed && painter === nextPainter) $('asset-status').textContent = message;
+          if (!disposed && painter === nextPainter) localizedText($('asset-status'), () =>message);
         },
       });
       nextPainter.setLevel(nextPlayer.state.level, { seed: nextPlayer.info.seed });
       const theme = chosenTheme();
       display.update({
-        message: 'Preparing the recording’s artwork…',
+        message: t("interface:preparingTheRecordingSArtwork"),
         stage: 'decoding',
         progress: null,
       });
@@ -336,16 +330,15 @@ try {
       lastFrame = 0;
       eventLines = [];
       displayEvents([]);
-      $('recording-name').textContent = player.info.levelName;
-      $('asset-status').textContent = assetMessage;
-      $('recorded-appearance').textContent = actorLease
-        ? 'Recorded FPV actors · Exact actor release restored. Picture, music and interface are not recorded; this theater is silent.'
-        : 'Raw replay · Preview actors and scene. No recorded appearance is claimed; this theater is silent.';
+      localizedText($('recording-name'), () =>player.info.levelName);
+      localizedText($('asset-status'), () =>assetMessage);
+      localizedText($('recorded-appearance'), () =>actorLease
+        ? t("interface:recordedFpvActorsExactActorReleaseRestoredPictureMusicAnd")
+        : t("interface:rawReplayPreviewActorsAndSceneNoRecordedAppearanceIs"));
       display.finish({ message: `${clipped(label)} verified and loaded. Ready to watch.` });
-      $('transport-status').textContent =
-        player.phase === 'complete'
-          ? 'This recording contains no input ticks. Its final checkpoint matches.'
-          : 'Choose Play, or step one recorded tick at a time.';
+      localizedText($('transport-status'), () =>player.phase === 'complete'
+          ? t("interface:thisRecordingContainsNoInputTicksItsFinalCheckpointMatches")
+          : t("interface:choosePlayOrStepOneRecordedTickAtATime"));
       readouts();
     } catch (error) {
       if (current())
@@ -366,22 +359,21 @@ try {
   async function fetchExample(signal) {
     const example = examples[$('example').value];
     const response = await fetch(example.file, { signal });
-    if (!response.ok) throw new Error('The example file could not load.');
+    if (!response.ok) throw new Error(t("interface:theExampleFileCouldNotLoad"));
     if (Number(response.headers.get('content-length')) > MAX_REPLAY_BYTES)
-      throw new Error('Replay exceeds the 32 MiB limit.');
+      throw new Error(t("interface:replayExceedsThe32MibLimit"));
     return response.text();
   }
   function exampleBrief() {
-    $('example-brief').textContent = examples[$('example').value].brief;
+    localizedText($('example-brief'), () =>examples[$('example').value].brief);
   }
   function togglePlay() {
     if (!player || pending || ['complete', 'error'].includes(player.phase)) return;
     consume(player.phase === 'playing' ? player.pause() : player.play());
     lastFrame = 0;
-    $('transport-status').textContent =
-      player.phase === 'playing'
-        ? 'Playing the verified recording.'
-        : 'Paused. The next recorded input is preserved.';
+    localizedText($('transport-status'), () =>player.phase === 'playing'
+        ? t("interface:playingTheVerifiedRecording")
+        : t("interface:pausedTheNextRecordedInputIsPreserved"));
   }
   function safely(action) {
     if (disposed) return;
@@ -389,24 +381,24 @@ try {
       action();
     } catch (error) {
       player?.pause();
-      $('transport-status').textContent = clipped(error.message, 300);
+      localizedText($('transport-status'), () =>clipped(error.message, 300));
       updateControls();
       readouts();
     }
   }
-  $('load-example').addEventListener('click', () => void load(fetchExample, 'Fieldcraft example'));
+  $('load-example').addEventListener('click', () => void load(fetchExample, t("interface:fieldcraftExample")));
   $('example').addEventListener('change', exampleBrief);
   $('cancel-load').addEventListener('click', cancelLoad);
   $('load-text').addEventListener('click', () => {
     const text = $('replay-text').value;
-    void load(async () => text, 'Pasted replay');
+    void load(async () => text, t("interface:pastedReplay"));
   });
   $('replay-file').addEventListener('change', () => {
     const file = $('replay-file').files?.[0];
     if (!file) return;
     void load(async () => {
       if (file.size > MAX_REPLAY_PRESENTATION_BYTES)
-        throw new Error('Recording exceeds the replay plus appearance metadata limit.');
+        throw new Error(t("interface:recordingExceedsTheReplayPlusAppearanceMetadataLimit"));
       return file.text();
     }, file.name);
     $('replay-file').value = '';
@@ -421,14 +413,14 @@ try {
       displayEvents([]);
       lastFrame = 0;
       consume(player.pause());
-      $('transport-status').textContent = 'Restarted at tick zero. Choose Play when ready.';
+      localizedText($('transport-status'), () =>t("interface:restartedAtTickZeroChoosePlayWhenReady"));
     }),
   );
   const step = () => {
     if (!player || pending) return;
     consume(player.step());
     if (player.phase !== 'complete')
-      $('transport-status').textContent = `Paused at tick ${player.state.tick}.`;
+      localizedText($('transport-status'), () =>t("gameplay:pausedAtTick", { value1: player.state.tick }));
   };
   $('step').addEventListener('click', () => safely(step));
   $('speed').addEventListener('change', () =>
@@ -442,9 +434,9 @@ try {
       consume(player.pause());
       const theme = chosenTheme();
       void painter.setLook(theme, bodyFor(theme, player.state));
-      $('transport-status').textContent = actorLease
-        ? 'Preview scene changed. Recorded FPV actors and the paused tick are unchanged.'
-        : 'Presentation changed. The recording remains paused at the same tick.';
+      localizedText($('transport-status'), () =>actorLease
+        ? t("interface:previewSceneChangedRecordedFpvActorsAndThePausedTick")
+        : t("interface:presentationChangedTheRecordingRemainsPausedAtTheSameTick"));
     }),
   );
   const navigation = attachReplayNavigation({
@@ -458,7 +450,7 @@ try {
     step: () => safely(step),
     onInactive: () => {
       lastFrame = 0;
-      $('transport-status').textContent = 'Playback paused. Choose Play to continue.';
+      localizedText($('transport-status'), () =>t("interface:playbackPausedChoosePlayToContinue"));
     },
     onDispose: () => {
       disposeRecording();
@@ -472,7 +464,7 @@ try {
     })
     .catch((error) => {
       if (!disposed)
-        $('transport-status').textContent = `App lifecycle adapter unavailable: ${error.message}`;
+        localizedText($('transport-status'), () =>t("gameplay:appLifecycleAdapterUnavailable", { value1: error.message }));
     });
   function frame(now) {
     if (disposed) return;
@@ -501,7 +493,7 @@ try {
   document.querySelector('main').removeAttribute('aria-busy');
   bootDisplay.clear();
   frameId = requestAnimationFrame(frame);
-  void load(fetchExample, 'Copper Crossing example');
+  void load(fetchExample, t("interface:copperCrossingExample"));
 } catch (error) {
   if (!theaterDisposed)
     bootDisplay.finish({

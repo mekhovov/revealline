@@ -2,8 +2,13 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../game/i18n/style.css" />
+    <script src="../../game/vendor/i18next-26.4.2.min.js"></script>
+    <script src="../../game/i18n/catalogs.mjs"></script>
+    <script src="../../game/i18n/bootstrap.mjs"></script>
+
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Motion lab — FPV study</title>
+    <title data-i18n="tools:motionLabFpvStudy">Motion lab — FPV study</title>
     <script type="module" src="./display-entry.mjs"></script>
     <link rel="stylesheet" href="styles.css" />
     <link rel="stylesheet" href="../../game/ui/field-kit-fonts.css" />
@@ -22,24 +27,26 @@
     class="field-kit field-kit-support"
     data-field-kit-page="motion-lab"
   >
+<div data-language-control></div>
+
     <main class="workspace">
       <header class="page-header">
         <div>
-          <p class="eyebrow">Field notes / motion & ability study</p>
-          <h1 class="field-kit-display">Small craft. More character.</h1>
+          <p class="eyebrow" data-i18n="tools:fieldNotesMotionAbilityStudy">Field notes / motion & ability study</p>
+          <h1 class="field-kit-display" data-i18n="tools:smallCraftMoreCharacter">Small craft. More character.</h1>
         </div>
-        <p class="scope-note">
-          <span class="status-dot"></span>Design sandbox<span>Fixed arena · toy abilities</span>
+        <p class="scope-note" data-i18n-rich="tools:designSandbox">
+          <span class="status-dot" data-i18n-slot="slot0"></span>Design sandbox<span data-i18n="tools:fixedArenaToyAbilities" data-i18n-slot="slot1">Fixed arena · toy abilities</span>
         </p>
         <label class="field-kit-page-text"
-          ><span data-field-kit-copy="display.textSize">Text size</span
+          ><span data-field-kit-copy="display.textSize" data-i18n="tools:textSize">Text size</span
           ><select
             id="motion-text-size"
             data-motion-text-size
             aria-describedby="motion-display-notice"
           >
-            <option value="standard" data-field-kit-copy="display.standard">Standard</option>
-            <option value="large" data-field-kit-copy="display.large">Large</option>
+            <option value="standard" data-field-kit-copy="display.standard" data-i18n="tools:standard">Standard</option>
+            <option value="large" data-field-kit-copy="display.large" data-i18n="tools:large">Large</option>
           </select></label
         >
       </header>
@@ -47,10 +54,10 @@
 
       <p id="motion-load-status" class="operation-status" data-state="busy">
         <span class="operation-status-signal" aria-hidden="true"><i></i><i></i><i></i></span
-        ><span class="operation-status-label" role="status">Loading the motion study…</span>
+        ><span class="operation-status-label" role="status" data-i18n="tools:loadingTheMotionStudy">Loading the motion study…</span>
       </p>
       <div id="load-error" class="load-error" hidden role="alert"></div>
-      <a data-workshop-tool="motion-lab" id="motion-retry" href="./" hidden>Retry loading study</a>
+      <a data-workshop-tool="motion-lab" id="motion-retry" href="./" hidden data-i18n="tools:retryLoadingStudy">Retry loading study</a>
 
       <fieldset
         id="motion-study"
@@ -59,17 +66,17 @@
         aria-describedby="motion-load-status"
         data-tool-control
         disabled
-      >
-        <section class="lab-grid" aria-label="Motion and material study">
+       data-i18n-aria-label="tools:motionStudyControls">
+        <section class="lab-grid" aria-label="Motion and material study" data-i18n-aria-label="tools:motionAndMaterialStudy">
           <div class="preview-column">
             <div class="arena-heading">
-              <span id="palette-name">FPV Front</span
+              <span id="palette-name" data-i18n="tools:fpvFront">FPV Front</span
               ><label class="movement-selector"
-                >Turn policy<select id="turn-policy" aria-describedby="turn-policy-note">
-                  <option value="immediate">Immediate</option>
-                  <option value="grid-center">Grid center + buffer</option>
+                ><span data-i18n="tools:turnPolicy">Turn policy</span><select id="turn-policy" aria-describedby="turn-policy-note">
+                  <option value="immediate" data-i18n="tools:immediate">Immediate</option>
+                  <option value="grid-center" data-i18n="tools:gridCenterBuffer">Grid center + buffer</option>
                 </select></label
-              ><span>48 × 36 <span class="muted">cells</span></span>
+              ><span>48 × 36 <span class="muted" data-i18n="tools:cells">cells</span></span>
             </div>
             <div class="arena-shell">
               <canvas
@@ -81,16 +88,16 @@
                 inert
                 aria-label="Motion and toy ability preview. Arrow keys or W A S D move, Shift boosts, Space slows, E uses ability, R picks up at a pad, Escape pauses. Terrain is visual only."
                 aria-describedby="control-hint"
-              ></canvas>
+               data-i18n-aria-label="tools:motionAndToyAbilityPreviewArrowKeysOrWA"></canvas>
               <div class="arena-caption">
-                <span id="state-label">Loading study…</span
-                ><span id="mode-label">Autoplay route</span>
+                <span id="state-label" data-i18n="tools:loadingStudy">Loading study…</span
+                ><span id="mode-label" data-i18n="tools:autoplayRoute">Autoplay route</span>
               </div>
             </div>
-            <div class="telemetry" aria-label="Motion readouts">
+            <div class="telemetry" aria-label="Motion readouts" data-i18n-aria-label="tools:motionReadouts">
               <div class="telemetry-cell">
-                <span class="readout-label">Travel</span
-                ><strong><span id="speed-value">0.0</span><small>cells / s</small></strong>
+                <span class="readout-label" data-i18n="tools:travel">Travel</span
+                ><strong><span id="speed-value">0.0</span><small data-i18n="tools:cellsS">cells / s</small></strong>
                 <div class="speed-track"><i id="speed-fill"></i></div>
               </div>
               <div class="telemetry-cell direction-cell">
@@ -98,87 +105,87 @@
                   ><i id="heading-arrow">↑</i></span
                 >
                 <div>
-                  <span class="readout-label">Facing</span
-                  ><strong id="heading-value">N · 000°</strong>
+                  <span class="readout-label" data-i18n="tools:facing">Facing</span
+                  ><strong id="heading-value" data-i18n="tools:n000">N · 000°</strong>
                 </div>
               </div>
               <div class="telemetry-cell">
-                <span class="readout-label">Body on screen</span><strong id="body-size">—</strong
-                ><span id="rotor-state" class="detail-note">Rotors idle</span>
+                <span class="readout-label" data-i18n="tools:bodyOnScreen">Body on screen</span><strong id="body-size">—</strong
+                ><span id="rotor-state" class="detail-note" data-i18n="tools:rotorsIdle">Rotors idle</span>
               </div>
             </div>
-            <p class="turn-queue-readout" id="turn-queue" aria-live="polite">
+            <p class="turn-queue-readout" id="turn-queue" aria-live="polite" data-i18n="tools:immediateNoQueuedTurn">
               Immediate · no queued turn
             </p>
             <div class="ability-transport">
-              <button id="ability-action" class="button button-primary" type="button">
+              <button id="ability-action" class="button button-primary" type="button" data-i18n="tools:actionE">
                 Action · E</button
-              ><button id="ability-pickup" class="button" type="button">Pick up · R</button
-              ><button id="ability-reset" class="button" type="button">Reset ability test</button>
+              ><button id="ability-pickup" class="button" type="button" data-i18n="tools:pickUpR">Pick up · R</button
+              ><button id="ability-reset" class="button" type="button" data-i18n="tools:resetAbilityTest">Reset ability test</button>
             </div>
-            <p id="ability-readout" class="ability-readout">Loading toy ability study…</p>
-            <p id="ability-message" class="setting-note" aria-live="polite">
+            <p id="ability-readout" class="ability-readout" data-i18n="tools:loadingToyAbilityStudy">Loading toy ability study…</p>
+            <p id="ability-message" class="setting-note" aria-live="polite" data-i18n="tools:abstractMarkersAndChargesNoTerritoryRulesOrRealOpponents">
               Abstract markers and charges. No territory rules or real opponents.
             </p>
-            <div class="material-legend" aria-label="Terrain visual roles">
-              <span><i class="swatch wall"></i>Wall</span
-              ><span><i class="swatch slow"></i>Slow</span
-              ><span><i class="swatch danger"></i>Danger</span
-              ><em>Visual layers only; the craft passes through.</em>
+            <div class="material-legend" aria-label="Terrain visual roles" data-i18n-aria-label="tools:terrainVisualRoles">
+              <span data-i18n-rich="tools:wall2"><i class="swatch wall" data-i18n-slot="slot0"></i>Wall</span
+              ><span data-i18n-rich="tools:slow"><i class="swatch slow" data-i18n-slot="slot0"></i>Slow</span
+              ><span data-i18n-rich="tools:danger"><i class="swatch danger" data-i18n-slot="slot0"></i>Danger</span
+              ><em data-i18n="tools:visualLayersOnlyTheCraftPassesThrough">Visual layers only; the craft passes through.</em>
             </div>
             <div class="transport">
               <div class="transport-actions">
-                <button id="play-pause" class="button button-primary" type="button">Pause</button
-                ><button id="reset" class="button" type="button">Reset</button
+                <button id="play-pause" class="button button-primary" type="button" data-i18n="common:actions.pause">Pause</button
+                ><button id="reset" class="button" type="button" data-i18n="common:actions.reset">Reset</button
                 ><label class="check"
-                  ><input id="autoplay" type="checkbox" checked />Autoplay</label
+                  ><input id="autoplay" type="checkbox" checked /><span data-i18n="tools:autoplay">Autoplay</span></label
                 >
               </div>
-              <div class="touch-controls" aria-label="Movement controls">
+              <div class="touch-controls" aria-label="Movement controls" data-i18n-aria-label="tools:movementControls">
                 <div class="dpad">
-                  <button data-direction="up" class="dpad-up" aria-label="Move up">↑</button
-                  ><button data-direction="left" class="dpad-left" aria-label="Move left">←</button
-                  ><button data-direction="down" class="dpad-down" aria-label="Move down">↓</button
-                  ><button data-direction="right" class="dpad-right" aria-label="Move right">
+                  <button data-direction="up" class="dpad-up" aria-label="Move up" data-i18n-aria-label="common:controls.moveUp">↑</button
+                  ><button data-direction="left" class="dpad-left" aria-label="Move left" data-i18n-aria-label="common:controls.moveLeft">←</button
+                  ><button data-direction="down" class="dpad-down" aria-label="Move down" data-i18n-aria-label="common:controls.moveDown">↓</button
+                  ><button data-direction="right" class="dpad-right" aria-label="Move right" data-i18n-aria-label="common:controls.moveRight">
                     →
                   </button>
                 </div>
                 <button id="boost" class="hold-button" type="button" aria-pressed="false">
-                  Hold boost<small>Shift</small></button
+                  <span data-i18n="tools:holdBoost">Hold boost</span><small data-i18n="tools:shift">Shift</small></button
                 ><button id="slow" class="hold-button" type="button" aria-pressed="false">
-                  Hold slow<small>Space</small>
+                  <span data-i18n="tools:holdSlow">Hold slow</span><small data-i18n="common:controls.space">Space</small>
                 </button>
               </div>
             </div>
-            <p id="control-hint" class="control-hint">
-              Focus the arena, then use <kbd>↑</kbd><kbd>←</kbd><kbd>↓</kbd><kbd>→</kbd> or
-              <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd>. <kbd>Esc</kbd> pauses. Manual input
+            <p id="control-hint" class="control-hint" data-i18n-rich="tools:focusTheArenaThenUseOrPausesManualInputTakes">
+              Focus the arena, then use <kbd data-i18n-slot="slot0">↑</kbd><kbd data-i18n-slot="slot1">←</kbd><kbd data-i18n-slot="slot2">↓</kbd><kbd data-i18n-slot="slot3">→</kbd> or
+              <kbd data-i18n="tools:w" data-i18n-slot="slot4">W</kbd><kbd data-i18n="tools:a" data-i18n-slot="slot5">A</kbd><kbd data-i18n="tools:s" data-i18n-slot="slot6">S</kbd><kbd data-i18n="tools:d" data-i18n-slot="slot7">D</kbd>. <kbd data-i18n="tools:esc" data-i18n-slot="slot8">Esc</kbd> pauses. Manual input
               takes over the route.
             </p>
-            <p id="turn-policy-note" class="setting-note">
+            <p id="turn-policy-note" class="setting-note" data-i18n="tools:changingTurnPolicyResetsAndPausesAtItsRouteStart">
               Changing turn policy resets and pauses at its route start. Press a direction once to
               keep moving after release; another direction changes the request. Pause freezes
               movement and the queued turn. Play continues the saved direction.
             </p>
-            <p id="asset-status" class="asset-status">Loading configurable visual layers…</p>
+            <p id="asset-status" class="asset-status" data-i18n="tools:loadingConfigurableVisualLayers">Loading configurable visual layers…</p>
           </div>
 
-          <aside class="controls" aria-label="Study settings">
+          <aside class="controls" aria-label="Study settings" data-i18n-aria-label="tools:studySettings">
             <section class="control-section ability-controls">
-              <p class="section-index full-width">00 / Ability study</p>
+              <p class="section-index full-width" data-i18n="tools:00AbilityStudy">00 / Ability study</p>
               <label class="check full-width"
-                ><input id="ability-enabled" type="checkbox" checked />Show toy ability study</label
+                ><input id="ability-enabled" type="checkbox" checked /><span data-i18n="tools:showToyAbilityStudy">Show toy ability study</span></label
               >
               <label class="field full-width"
-                >Class / loadout<select id="ability-class"></select
+                ><span data-i18n="tools:classLoadout">Class / loadout</span><select id="ability-class"></select
               ></label>
               <label class="field full-width"
-                >Communication module<select id="ability-equipment"></select
+                ><span data-i18n="tools:communicationModule">Communication module</span><select id="ability-equipment"></select
               ></label>
               <div class="ability-preset-actions full-width">
-                <button id="ability-recommended-link" class="button" type="button">
+                <button id="ability-recommended-link" class="button" type="button" data-i18n="tools:useRecommendedLink">
                   Use recommended link</button
-                ><button id="apply-class-appearance" class="button" type="button">
+                ><button id="apply-class-appearance" class="button" type="button" data-i18n="tools:applyClassAppearance">
                   Apply class appearance
                 </button>
               </div>
@@ -190,51 +197,51 @@
                 aria-labelledby="ability-stage-heading"
                 hidden
               >
-                <h2 id="ability-stage-heading" data-field-kit-copy="motion.stageLabels">
+                <h2 id="ability-stage-heading" data-field-kit-copy="motion.stageLabels" data-i18n="tools:stageLabels">
                   Stage labels
                 </h2>
-                <p class="setting-note" data-field-kit-copy="motion.stageLabelsHint">
+                <p class="setting-note" data-field-kit-copy="motion.stageLabelsHint" data-i18n="tools:fullTextForTheToyMarkersCanvasCaptionsMayShorten">
                   Full text for the toy markers. Canvas captions may shorten to fit; hidden notes
                   appear only while revealed.
                 </p>
-                <p class="setting-note" data-field-kit-copy="motion.stageRolesHint">
+                <p class="setting-note" data-field-kit-copy="motion.stageRolesHint" data-i18n="tools:hazeAffectsTheDisplayedSignalOnlyEnterASupplyPad">
                   Haze affects the displayed signal only. Enter a supply pad and press R to refill.
                 </p>
                 <ul id="ability-stage-labels"></ul>
               </section>
-              <p class="setting-note full-width">
+              <p class="setting-note full-width" data-i18n="tools:classLinkChangesResetThisToyTestAppearanceStaysSeparate">
                 Class/link changes reset this toy test. Appearance stays separate; the appearance
                 button applies an available cosmetic for the collection context.
               </p>
             </section>
             <section class="control-section">
-              <p class="section-index full-width">01 / Character collection</p>
+              <p class="section-index full-width" data-i18n="tools:01CharacterCollection">01 / Character collection</p>
               <label class="field full-width"
-                >Preview context<select id="collection-context"></select
+                ><span data-i18n="tools:previewContext">Preview context</span><select id="collection-context"></select
               ></label>
               <label class="field full-width"
-                >Character to inspect<select id="character"></select
+                ><span data-i18n="tools:characterToInspect">Character to inspect</span><select id="character"></select
               ></label>
               <div class="equip-row full-width">
-                <button id="equip-character" class="button button-primary" type="button">
+                <button id="equip-character" class="button button-primary" type="button" data-i18n="tools:equip">
                   Equip</button
                 ><label class="field"
-                  >Save choice for<select id="equip-scope">
-                    <option value="context">This context</option>
-                    <option value="theme">This theme</option>
-                    <option value="global">Every context</option>
+                  ><span data-i18n="tools:saveChoiceFor">Save choice for</span><select id="equip-scope">
+                    <option value="context" data-i18n="tools:thisContext">This context</option>
+                    <option value="theme" data-i18n="tools:thisTheme">This theme</option>
+                    <option value="global" data-i18n="tools:everyContext">Every context</option>
                   </select></label
                 >
               </div>
-              <p id="character-status" class="collection-status full-width" aria-live="polite">
+              <p id="character-status" class="collection-status full-width" aria-live="polite" data-i18n="tools:loadingCollection">
                 Loading collection…
               </p>
               <ul id="unlock-conditions" class="unlock-conditions full-width"></ul>
-              <p id="equipped-readout" class="setting-note full-width">On board: FPV body</p>
+              <p id="equipped-readout" class="setting-note full-width" data-i18n="tools:onBoardFpvBody">On board: FPV body</p>
               <div class="inspection-card full-width">
                 <div class="inspection-heading">
-                  <span>North-up inspection</span
-                  ><span id="inspection-blade-label">3 blades / rotor</span>
+                  <span data-i18n="tools:northUpInspection">North-up inspection</span
+                  ><span id="inspection-blade-label" data-i18n="tools:3BladesRotor">3 blades / rotor</span>
                 </div>
                 <canvas
                   aria-describedby="inspection-status"
@@ -242,34 +249,34 @@
                   width="400"
                   height="320"
                   aria-label="Enlarged inspection of the selected character and its cosmetic animation; the board avatar stays small."
-                ></canvas>
+                 data-i18n-aria-label="tools:enlargedInspectionOfTheSelectedCharacterAndItsCosmeticAnimation"></canvas>
                 <p id="inspection-status" class="setting-note" role="status" hidden></p>
                 <label class="check"
-                  ><input id="inspection-slow" type="checkbox" checked />Slow inspection
-                  motion</label
+                  ><input id="inspection-slow" type="checkbox" checked /><span data-i18n="tools:slowInspectionMotion">Slow inspection
+                  motion</span></label
                 >
               </div>
               <label class="field full-width"
-                >Animation recipe<select id="animation-recipe"></select
+                ><span data-i18n="tools:animationRecipe">Animation recipe</span><select id="animation-recipe"></select
               ></label>
               <div id="rotor-controls" class="rotor-controls full-width">
                 <label class="field"
-                  >Blades<select id="blade-count">
-                    <option value="2">2 blades</option>
-                    <option value="3" selected>3 blades</option>
-                    <option value="4">4 blades</option>
+                  ><span data-i18n="tools:blades">Blades</span><select id="blade-count">
+                    <option value="2" data-i18n="tools:2Blades">2 blades</option>
+                    <option value="3" selected data-i18n="tools:3Blades">3 blades</option>
+                    <option value="4" data-i18n="tools:4Blades">4 blades</option>
                   </select></label
                 ><label class="field"
-                  >Shape<select id="blade-shape">
-                    <option value="swept">Swept</option>
-                    <option value="tapered">Tapered</option>
-                    <option value="paddle">Paddle</option>
+                  ><span data-i18n="tools:shape">Shape</span><select id="blade-shape">
+                    <option value="swept" data-i18n="tools:swept">Swept</option>
+                    <option value="tapered" data-i18n="tools:tapered">Tapered</option>
+                    <option value="paddle" data-i18n="tools:paddle">Paddle</option>
                   </select></label
                 >
                 <div class="range-field full-width">
                   <span
-                    ><label id="rotor-radius-label" for="rotor-radius">Rotor radius</label
-                    ><output aria-hidden="true" id="rotor-radius-output">16% of body</output></span
+                    ><label id="rotor-radius-label" for="rotor-radius" data-i18n="tools:rotorRadius">Rotor radius</label
+                    ><output aria-hidden="true" id="rotor-radius-output" data-i18n="tools:16OfBody">16% of body</output></span
                   ><input
                     id="rotor-radius"
                     aria-labelledby="rotor-radius-label"
@@ -282,36 +289,36 @@
                   />
                 </div>
               </div>
-              <p id="animation-status" class="setting-note full-width">Cosmetic effects only.</p>
+              <p id="animation-status" class="setting-note full-width" data-i18n="tools:cosmeticEffectsOnly">Cosmetic effects only.</p>
             </section>
             <section class="control-section">
-              <p class="section-index">02 / Palette & scene</p>
-              <label class="field">Palette<select id="theme"></select></label>
-              <button id="apply-family-look" class="button family-button" type="button">
+              <p class="section-index" data-i18n="tools:02PaletteScene">02 / Palette & scene</p>
+              <label class="field"><span data-i18n="tools:palette">Palette</span><select id="theme"></select></label>
+              <button id="apply-family-look" class="button family-button" type="button" data-i18n="tools:applyFamilyLook">
                 Apply family look
               </button>
-              <label class="field">Terrain objects<select id="terrain-layer"></select></label>
+              <label class="field"><span data-i18n="tools:terrainObjects">Terrain objects</span><select id="terrain-layer"></select></label>
               <fieldset class="style-field">
-                <legend>Terrain treatment</legend>
+                <legend data-i18n="tools:terrainTreatment">Terrain treatment</legend>
                 <div class="segmented" id="terrain-styles">
                   <label
                     ><input type="radio" name="terrain-style" value="microtile" /><span
-                      >Microtile</span
+                       data-i18n="tools:microtile">Microtile</span
                     ></label
                   ><label
                     ><input type="radio" name="terrain-style" value="props" /><span
-                      >Props</span
+                       data-i18n="tools:props">Props</span
                     ></label
                   ><label
                     ><input type="radio" name="terrain-style" value="hybrid" checked /><span
-                      >Hybrid</span
+                       data-i18n="tools:hybrid">Hybrid</span
                     ></label
                   >
                 </div>
               </fieldset>
               <div class="range-field">
                 <span
-                  ><label id="character-scale-label" for="character-scale">Character scale</label
+                  ><label id="character-scale-label" for="character-scale" data-i18n="tools:characterScale">Character scale</label
                   ><output aria-hidden="true" id="scale-output">1.00×</output></span
                 ><input
                   id="character-scale"
@@ -324,25 +331,25 @@
                   value="1"
                 />
               </div>
-              <p class="setting-note">Same footprints. Independently selected artwork.</p>
+              <p class="setting-note" data-i18n="tools:sameFootprintsIndependentlySelectedArtwork">Same footprints. Independently selected artwork.</p>
               <label class="field background-field"
-                >Local background<input
+                ><span data-i18n="tools:localBackground">Local background</span><input
                   id="background-file"
                   type="file"
                   accept="image/png,image/jpeg,image/webp,image/gif"
               /></label>
               <div class="background-row">
                 <label class="field"
-                  >Display fit<select id="background-fit">
-                    <option value="contain">Contain whole image</option>
-                    <option value="cover">Cover / display crop</option>
+                  ><span data-i18n="tools:displayFit">Display fit</span><select id="background-fit">
+                    <option value="contain" data-i18n="tools:containWholeImage">Contain whole image</option>
+                    <option value="cover" data-i18n="tools:coverDisplayCrop">Cover / display crop</option>
                   </select></label
-                ><button id="clear-background" class="button" type="button" disabled>Clear</button>
+                ><button id="clear-background" class="button" type="button" disabled data-i18n="tools:clear">Clear</button>
               </div>
               <div class="range-field">
                 <span
                   ><label id="background-opacity-label" for="background-opacity"
-                    >Background opacity</label
+                     data-i18n="tools:backgroundOpacity">Background opacity</label
                   ><output aria-hidden="true" id="background-opacity-output">28%</output></span
                 ><input
                   id="background-opacity"
@@ -355,27 +362,27 @@
                   value="0.28"
                 />
               </div>
-              <p id="background-status" class="setting-note">
+              <p id="background-status" class="setting-note" data-i18n="tools:localPreviewOnlyTheOriginalIsUnchangedNoUploadOr">
                 Local preview only. The original is unchanged; no upload or AI call.
               </p>
             </section>
             <section class="control-section">
-              <p class="section-index">03 / Test progression</p>
-              <label class="field">Simulated result<select id="reward-fixture"></select></label>
-              <button id="apply-fixture" class="button" type="button">Apply test reward</button>
-              <button id="reset-collection" class="button quiet-button" type="button">
+              <p class="section-index" data-i18n="tools:03TestProgression">03 / Test progression</p>
+              <label class="field"><span data-i18n="tools:simulatedResult">Simulated result</span><select id="reward-fixture"></select></label>
+              <button id="apply-fixture" class="button" type="button" data-i18n="tools:applyTestReward">Apply test reward</button>
+              <button id="reset-collection" class="button quiet-button" type="button" data-i18n="tools:resetTestCollection">
                 Reset test collection
               </button>
-              <p id="collection-message" class="setting-note" aria-live="polite">
+              <p id="collection-message" class="setting-note" aria-live="polite" data-i18n="tools:theseFixturesDemonstrateUnlocksTheyAreNotRealGameWins">
                 These fixtures demonstrate unlocks; they are not real game wins.
               </p>
             </section>
             <section class="control-section">
-              <p class="section-index">04 / Response</p>
+              <p class="section-index" data-i18n="tools:04Response">04 / Response</p>
               <div class="range-field">
                 <span
-                  ><label id="cruise-speed-label" for="cruise-speed">Cruise speed</label
-                  ><output aria-hidden="true" id="speed-output">9 cells/s</output></span
+                  ><label id="cruise-speed-label" for="cruise-speed" data-i18n="tools:cruiseSpeed">Cruise speed</label
+                  ><output aria-hidden="true" id="speed-output" data-i18n="tools:9CellsS">9 cells/s</output></span
                 ><input
                   id="cruise-speed"
                   aria-labelledby="cruise-speed-label"
@@ -389,8 +396,8 @@
               </div>
               <div class="range-field">
                 <span
-                  ><label id="turn-rate-label" for="turn-rate">Body turn response</label
-                  ><output aria-hidden="true" id="turn-output">360°/s</output></span
+                  ><label id="turn-rate-label" for="turn-rate" data-i18n="tools:bodyTurnResponse">Body turn response</label
+                  ><output aria-hidden="true" id="turn-output" data-i18n="tools:360S">360°/s</output></span
                 ><input
                   id="turn-rate"
                   aria-labelledby="turn-rate-label"
@@ -402,28 +409,28 @@
                   value="360"
                 />
               </div>
-              <p class="setting-note">
+              <p class="setting-note" data-i18n="tools:turnPolicyAboveTheArenaControlsTravelBodyRotationRemains">
                 Turn policy above the arena controls travel. Body rotation remains visual; it cannot
                 slow or steer the craft.
               </p>
-              <p id="motion-event" class="motion-event" aria-live="polite">
+              <p id="motion-event" class="motion-event" aria-live="polite" data-i18n="tools:readyToCompareResponse">
                 Ready to compare response.
               </p>
             </section>
             <section class="control-section">
-              <p class="section-index">05 / Layers & comfort</p>
+              <p class="section-index" data-i18n="tools:05LayersComfort">05 / Layers & comfort</p>
               <div class="layer-checks">
-                <label class="check"><input id="show-grid" type="checkbox" checked />Grid</label
+                <label class="check"><input id="show-grid" type="checkbox" checked /><span data-i18n="tools:grid">Grid</span></label
                 ><label class="check"
-                  ><input id="show-rotors" type="checkbox" checked />Rotors</label
+                  ><input id="show-rotors" type="checkbox" checked /><span data-i18n="tools:rotors">Rotors</span></label
                 ><label class="check"
-                  ><input id="show-particles" type="checkbox" checked />Motion particles</label
+                  ><input id="show-particles" type="checkbox" checked /><span data-i18n="tools:motionParticles">Motion particles</span></label
                 ><label class="check"
                   ><input
                     id="reduced-motion"
                     type="checkbox"
                     aria-describedby="motion-effects-notice"
-                  />Reduced motion</label
+                  /><span data-i18n="tools:reducedMotion">Reduced motion</span></label
                 >
               </div>
               <p id="motion-effects-notice" class="setting-note" role="status"></p>
@@ -432,19 +439,19 @@
         </section>
       </fieldset>
       <footer class="page-footer">
-        <span>Motion & ability study · independent preview</span
+        <span data-i18n="tools:motionAbilityStudyIndependentPreview">Motion & ability study · independent preview</span
         ><span
           ><a
             href="../../game/?workshop=motion-lab"
             data-workshop-return="workshop"
             inert
             aria-disabled="true"
-            >Return to Workshop</a
+             data-i18n="tools:returnToWorkshop">Return to Workshop</a
           >
-          <a data-workshop-return="game" href="../../game/">Return to game</a>
-          · <a href="../design-atlas/" data-workshop-tool="design-atlas">Design atlas</a> ·
-          <a href="presets.json">Visual presets</a> ·
-          <a href="ability-presets.json">Ability presets</a></span
+          <a data-workshop-return="game" href="../../game/" data-i18n="tools:returnToGame">Return to game</a>
+          · <a href="../design-atlas/" data-workshop-tool="design-atlas" data-i18n="tools:designAtlas">Design atlas</a> ·
+          <a href="presets.json" data-i18n="tools:visualPresets">Visual presets</a> ·
+          <a href="ability-presets.json" data-i18n="tools:abilityPresets">Ability presets</a></span
         >
       </footer>
     </main>

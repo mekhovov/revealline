@@ -1,3 +1,4 @@
+import { t, localizedText, localizedMessage } from '../i18n/index.mjs';
 import { createOperationStatus } from '../ui/operation-status.mjs';
 import { attachTeamDiscoveryPictures } from './team-discovery-pictures.mjs';
 
@@ -89,7 +90,7 @@ export function attachTeamDiscovery({
     if (!live(pending.owner) || operation) return true;
     controls(pending.owner, false);
     if (announce && live(pending.owner) && !operation)
-      describe(pending.owner, 'Preparation cancelled. Your current attempt is unchanged.');
+      describe(pending.owner, t("interface:preparationCancelledYourCurrentAttemptIsUnchanged"));
     if (restore) restoreCard(pending.owner, pending.button);
     return true;
   }
@@ -129,7 +130,7 @@ export function attachTeamDiscovery({
         close({ restore: false });
       } else {
         controls(owner, false);
-        describe(owner, 'Your current attempt is unchanged. Choose an arena when ready.');
+        describe(owner, t("interface:yourCurrentAttemptIsUnchangedChooseAnArenaWhenReady"));
         restoreCard(owner, button);
       }
     } catch (error) {
@@ -139,7 +140,7 @@ export function attachTeamDiscovery({
       describe(
         owner,
         error?.name === 'AbortError'
-          ? 'Preparation cancelled. Your current attempt is unchanged.'
+          ? t("interface:preparationCancelledYourCurrentAttemptIsUnchanged")
           : `Could not prepare ${row.title}. Your current attempt is unchanged. Try Play again.`,
         error?.name === 'AbortError' ? 'ready' : 'error',
       );
@@ -148,25 +149,25 @@ export function attachTeamDiscovery({
   }
   function populate(owner) {
     const rows = getEntries();
-    if (!Array.isArray(rows)) throw new TypeError('Team arenas are unavailable.');
+    if (!Array.isArray(rows)) throw new TypeError(t("interface:teamArenasAreUnavailable"));
     const keys = new Set(),
       packs = [];
     const cards = rows.map((row) => {
       if (!row || typeof row.key !== 'string' || keys.has(row.key))
-        throw new TypeError('Team arena identities are unavailable.');
+        throw new TypeError(t("interface:teamArenaIdentitiesAreUnavailable"));
       keys.add(row.key);
       const card = document.createElement('article');
       card.className = 'team-discovery-card field-kit-panel';
       const pack = document.createElement('p');
       pack.className = 'eyebrow';
-      pack.textContent = `${row.packName} · ${row.sourceLabel}`;
+      localizedText(pack, () =>`${row.packName} · ${row.sourceLabel}`);
       const title = document.createElement('h3');
-      title.textContent = row.title;
+      localizedText(title, () =>row.title);
       const goal = document.createElement('p');
-      goal.textContent = row.goal;
+      localizedText(goal, () =>row.goal);
       const button = document.createElement('button');
       button.type = 'button';
-      button.textContent = `Play ${row.title}`;
+      localizedText(button, () =>`Play ${row.title}`);
       button.setAttribute('aria-label', `Play ${row.title} · ${row.packName} · ${row.sourceLabel}`);
       button.className = 'field-kit-primary team-discovery-play';
       button.onclick = () => play(owner, row, button);
@@ -181,7 +182,7 @@ export function attachTeamDiscovery({
         card,
         hasDiagram,
         group: String(group),
-        searchText: `${row.levelId} ${card.textContent}`.normalize('NFKC').toLocaleLowerCase(),
+        searchText: `${row.levelId} ${card.textContent}`.normalize(t("interface:nfkc")).toLocaleLowerCase(),
       };
     });
     if (!owns(owner)) return;
@@ -192,11 +193,11 @@ export function attachTeamDiscovery({
       const option = (value, label) => {
         const item = document.createElement('option');
         item.value = value;
-        item.textContent = label;
+        localizedText(item, () =>label);
         return item;
       };
       campaign.replaceChildren(
-        option('', 'All campaigns and packs'),
+        option('', localizedMessage("interface:allCampaignsAndPacks")),
         ...packs.map((pack, index) => {
           const row = cards.find((card) => card.row.pack === pack).row;
           return option(String(index), `${row.packName} · ${row.sourceLabel}`);
@@ -212,8 +213,8 @@ export function attachTeamDiscovery({
     describe(
       owner,
       cards.length
-        ? 'Choose an arena. Your current attempt stays available until the new arena is ready.'
-        : 'No compatible Team arenas are available. Back keeps your current setup.',
+        ? t("interface:chooseAnArenaYourCurrentAttemptStaysAvailableUntilThe")
+        : t("interface:noCompatibleTeamArenasAreAvailableBackKeepsYourCurrent"),
     );
     controls(owner, false);
   }
@@ -228,7 +229,7 @@ export function attachTeamDiscovery({
     owner.query = (search?.value ?? '').slice(0, 160);
     owner.group = campaign?.value ?? '';
     const words = owner.query
-      .normalize('NFKC')
+      .normalize(t("interface:nfkc"))
       .toLocaleLowerCase()
       .trim()
       .split(/\s+/u)
@@ -246,7 +247,7 @@ export function attachTeamDiscovery({
       owner,
       count
         ? `${count} of ${owner.cards.length} Team missions. Play directly; your current attempt stays available.`
-        : 'No matching Team missions. Clear Search or choose All campaigns and packs. Back keeps your current attempt.',
+        : t("interface:noMatchingTeamMissionsClearSearchOrChooseAllCampaigns"),
     );
     onViewChange();
   }
@@ -297,7 +298,7 @@ export function attachTeamDiscovery({
       } catch {
         if (!owns(owner)) return false;
         list.replaceChildren();
-        describe(owner, 'Team arenas are unavailable. Back keeps your current attempt.', 'error');
+        describe(owner, t("interface:teamArenasAreUnavailableBackKeepsYourCurrentAttempt"), 'error');
         controls(owner, false);
       }
       if (!owns(owner)) return false;

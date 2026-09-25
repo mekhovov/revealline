@@ -1,3 +1,4 @@
+import { localizedText, t } from '../i18n/index.mjs';
 import { attachModalNavigation } from './modal-navigation.mjs';
 import { attachFieldKitSurfaces } from './field-kit-surfaces.mjs';
 import { fieldKitCopy } from './field-kit-copy.mjs';
@@ -98,8 +99,7 @@ export function attachGameShell({
     if ($('shell-deploy'))
       $('shell-deploy').disabled = !available || start.hidden || start.disabled;
     if ($('shell-prepared-mission'))
-      $('shell-prepared-mission').textContent =
-        selected?.querySelector('.name')?.textContent || copy('missions.chooseAvailable');
+      localizedText($('shell-prepared-mission'), () =>selected?.querySelector('.name')?.textContent || copy('missions.chooseAvailable'));
   };
   let briefing = null;
   const restoreMissionView = () => {
@@ -115,8 +115,8 @@ export function attachGameShell({
     if ($('shell-deploy-bar')) $('shell-deploy-bar').hidden = false;
     if ($('shell-mode-choice')) $('shell-mode-choice').hidden = isolated;
     if ($('shell-worlds')) $('shell-worlds').hidden = isolated || !onWorlds;
-    $('shell-missions-title').textContent = title;
-    if ($('shell-missions-context')) $('shell-missions-context').textContent = context;
+    localizedText($('shell-missions-title'), () =>title);
+    if ($('shell-missions-context')) localizedText($('shell-missions-context'), () =>context);
     delete missions.dataset.view;
   };
   const closedMissions = () => {
@@ -228,7 +228,7 @@ export function attachGameShell({
     $('shell-continue').hidden = !continued;
     if ($('shell-featured')) $('shell-featured').hidden = isolated || continued;
     if ($('shell-destination'))
-      $('shell-destination').textContent = isolated
+      localizedText($('shell-destination'), () =>isolated
         ? copy('title.trainingDestination')
         : continued
           ? copy('title.continueDestination', {
@@ -236,7 +236,7 @@ export function attachGameShell({
                 ? $('continue-saved').title
                 : titleContinueDestination?.() || $('mission-brief-title').textContent,
             })
-          : titleDestination?.() || copy('title.deployDestination');
+          : titleDestination?.() || copy('title.deployDestination'));
     if (!home.open) {
       // A prior successful chapter selection is not the next title action.
       // Keep errors visible; fresh operation feedback still arrives normally.
@@ -420,12 +420,11 @@ export function attachGameShell({
       if ($('shell-mode-choice')) $('shell-mode-choice').hidden = true;
       if ($('shell-worlds')) $('shell-worlds').hidden = true;
       missions.dataset.view = 'brief';
-      $('shell-missions-title').textContent =
-        $('mission-brief-title').textContent || copy('missions.brief');
+      localizedText($('shell-missions-title'), () =>$('mission-brief-title').textContent || copy('missions.brief'));
       if ($('shell-missions-context'))
-        $('shell-missions-context').textContent = copy('missions.briefContext', {
+        localizedText($('shell-missions-context'), () =>copy('missions.briefContext', {
           edition: $('shell-edition')?.textContent || copy('missions.currentFlight'),
-        });
+        }));
       missions.scrollTop = 0;
       $('mission-brief-reading').scrollTop = 0;
     }
@@ -464,7 +463,7 @@ export function attachGameShell({
     button.removeAttribute('aria-disabled');
     button.removeAttribute('aria-busy');
     delete button.dataset.busy;
-    labelNode.textContent = label;
+    localizedText(labelNode, () =>label);
   };
   const titleCancel = $('shell-flight-cancel');
   const cancelTitleAndRestore = (operation) => {
@@ -504,7 +503,7 @@ export function attachGameShell({
     button.setAttribute('aria-disabled', 'true');
     button.setAttribute('aria-busy', 'true');
     button.dataset.busy = 'true';
-    labelNode.textContent = copy('title.preparing');
+    localizedText(labelNode, () =>copy('title.preparing'));
     try {
       const pending = callback({
         isCurrent: () =>
@@ -584,7 +583,7 @@ export function attachGameShell({
       const label = labelNode.textContent;
       pause(true);
       featured.disabled = true;
-      labelNode.textContent = copy('title.preparing');
+      localizedText(labelNode, () =>copy('title.preparing'));
       try {
         if ((await onFeatured()) && !destroyed && homeVisit === visit && topDialog() === home) {
           openMissions();
@@ -592,7 +591,7 @@ export function attachGameShell({
       } finally {
         if (!destroyed) {
           featured.disabled = false;
-          labelNode.textContent = label;
+          localizedText(labelNode, () =>label);
         }
       }
     };

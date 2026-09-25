@@ -1,3 +1,5 @@
+import { t, getLocale } from './i18n/index.mjs';
+import { contentText } from './i18n/content.mjs';
 const compact = (value, limit) => {
   const text = typeof value === 'string' ? value.trim().replace(/\s+/g, ' ') : '';
   return text.length <= limit ? text : `${text.slice(0, limit - 1).trimEnd()}…`;
@@ -8,11 +10,12 @@ const compact = (value, limit) => {
  */
 export function missionBriefing(
   level,
-  { brief, objectiveLabel = 'Objective', classes = [], intro = false } = {},
+  { brief, objectiveLabel = t("gameplay:brief.objective"), classes = [], intro = false } = {},
 ) {
-  const authored =
+  const originalBrief =
     typeof brief === 'string' && brief.trim() ? brief : level.metadata?.description || '';
-  const fullTitle = level.name;
+  const authored = brief || contentText(level, 'metadata.description') || '';
+  const fullTitle = contentText(level, 'name');
   const title = compact(fullTitle, 44);
   const coverage = Number((level.goal.coverage * 100).toFixed(6));
   const required = (level.objectives || []).filter((item) => item.required).length;
@@ -28,24 +31,24 @@ export function missionBriefing(
     : `Reveal ${coverage}%${required ? ` · ${required} required ${required === 1 ? label : plural}` : ''}.`;
   const rules = level.rules || {};
   const limits = [
-    rules.timeLimitSeconds > 0 ? `Deadline ${rules.timeLimitSeconds}s` : '',
-    rules.cutTimeLimitSeconds > 0 ? `Cut ≤ ${rules.cutTimeLimitSeconds}s` : '',
-    rules.maxTrailCells > 0 ? `Cable ≤ ${rules.maxTrailCells} cells` : '',
+    rules.timeLimitSeconds > 0 ? t("gameplay:deadlineS", { value1: rules.timeLimitSeconds }) : '',
+    rules.cutTimeLimitSeconds > 0 ? t("gameplay:cutS", { value1: rules.cutTimeLimitSeconds }) : '',
+    rules.maxTrailCells > 0 ? t("gameplay:cableCells", { value1: rules.maxTrailCells }) : '',
   ]
     .filter(Boolean)
     .join(' · ');
   // Existing pack briefs use this explicit prefix. Only known class labels
   // become a compact recommendation; the full prose is always available.
-  const suggested = /^\s*Recommended:\s*([^.!?]+)/i.exec(authored)?.[1] || '';
+  const suggested = /^\s*Recommended:\s*([^.!?]+)/i.exec(originalBrief)?.[1] || '';
   const recommendations = classes
     .filter(
       (recipe) =>
         typeof recipe.label === 'string' &&
         suggested.toLowerCase().includes(recipe.label.toLowerCase()),
     )
-    .map((recipe) => recipe.label);
+    .map((recipe) => contentText(recipe, 'label'));
   const recommendation = recommendations.length
-    ? `Recommended: ${compact(recommendations.join(' / '), 68)}.`
+    ? t("gameplay:recommended", { value1: compact(recommendations.join(' / '), 68) })
     : '';
   const encounterGoal = encounter
     ? `Capture ${multiShield && shieldCount > 1 ? `all ${shieldLabel}` : 'the shield relay'}. Then close ${encounter.minReleaseCutCells} new trail cells during CORE OPEN, or isolate the core.`
@@ -107,7 +110,7 @@ export function missionBriefing(
     : '';
   const captureHint =
     rules.stopOnCapture === true
-      ? 'Closing a cut stops your craft. Tap a fresh direction to fly again.'
+      ? t("gameplay:brief.closingACutStopsYourCraftTapAFreshDirection")
       : '';
   const impactHint = level.classic?.lineImpact
     ? level.classic.lineImpact.version === 'line-impact.v2'
@@ -121,15 +124,15 @@ export function missionBriefing(
     goal,
     facts,
     copy: intro
-      ? `Leave safe ground, draw a line and return.\nReveal ${coverage}% by enclosing regions without a field enemy.`
+      ? t("gameplay:leaveSafeGroundDrawALineAndReturnRevealBy", { value1: coverage })
       : [facts, captureHint, impactHint, classicHint].filter(Boolean).join('\n'),
     fullBrief:
       authored ||
-      'Return to safe ground to secure each line. Regions without a field enemy are revealed.',
+      t("gameplay:brief.returnToSafeGroundToSecureEachLineRegionsWithout"),
     status: encounter
       ? `Capture ${multiShield && shieldCount > 1 ? `all ${shieldLabel}` : 'the shield relay'} first. Watch the patterned lane before each attack.`
       : intro
-        ? 'Your first route: fly down from the marked start to the opposite border.'
+        ? t("interface:yourFirstRouteFlyDownFromTheMarkedStartTo")
         : level.classic?.enemyPressure?.actors?.length
           ? 'AIM → CHASE → REST. Close to cancel pursuit; turn away from a heading lock.'
           : 'Choose your route. Open Missions → Mission brief for guidance.',

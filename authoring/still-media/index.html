@@ -2,8 +2,13 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../game/i18n/style.css" />
+    <script src="../../game/vendor/i18next-26.4.2.min.js"></script>
+    <script src="../../game/i18n/catalogs.mjs"></script>
+    <script src="../../game/i18n/bootstrap.mjs"></script>
+
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>RevealLine — still picture workshop</title>
+    <title data-i18n="tools:reveallineStillPictureWorkshop">RevealLine — still picture workshop</title>
     <link rel="stylesheet" href="../../game/ui/still-media-panel.css" />
     <link rel="stylesheet" href="../../game/ui/operation-status.css" />
     <link rel="stylesheet" href="../../game/ui/field-kit-fonts.css" />
@@ -16,11 +21,13 @@
     <link rel="stylesheet" href="../../game/ui/workshop-return.css" />
   </head>
   <body data-workshop-tool="still-media" class="still-media-host field-kit field-kit-support">
+<div data-language-control></div>
+
     <main>
-      <h1 class="field-kit-display">Still picture workshop</h1>
+      <h1 class="field-kit-display" data-i18n="tools:stillPictureWorkshop">Still picture workshop</h1>
       <p id="still-host-status" role="status" class="operation-status" data-state="busy">
         <span class="operation-status-signal" aria-hidden="true"><i></i><i></i><i></i></span>
-        <span>Loading the picture workshop… No local media has been opened.</span>
+        <span data-i18n="tools:loadingThePictureWorkshopNoLocalMediaHasBeenOpened">Loading the picture workshop… No local media has been opened.</span>
       </p>
       <nav class="still-host-navigation">
         <a
@@ -28,59 +35,59 @@
           data-workshop-return="workshop"
           inert
           aria-disabled="true"
-          >Return to Workshop</a
+           data-i18n="tools:returnToWorkshop">Return to Workshop</a
         >
-        <a data-workshop-return="game" href="../../game/">Return to game</a>
+        <a data-workshop-return="game" href="../../game/" data-i18n="tools:returnToGame">Return to game</a>
       </nav>
-      <p>
+      <p data-i18n="tools:uploadAnOriginalChooseAnExactMapAndWorldThen">
         Upload an original, choose an exact map and world, then save and preview its assignment.
       </p>
-      <p>
+      <p data-i18n-rich="tools:thisWorkshopReadsTheInstalledPacksForThisExactGame">
         This workshop reads the installed packs for this exact game edition, or the
-        <strong>dev</strong> channel when served from source. Close that game before editing. Fresh
+        <strong data-i18n="tools:dev" data-i18n-slot="slot0">dev</strong> channel when served from source. Close that game before editing. Fresh
         flights use the assigned revision. Saved flights and earned Collection pictures keep their
         original choice; changing an assignment does not replace them.
       </p>
-      <p>
-        <strong>Real local storage:</strong> Open local media upgrades this address’s shared
+      <p data-i18n-rich="tools:openLocalMediaUpgradesThisAddressSSharedImageStory2">
+        <strong data-i18n="tools:realLocalStorage" data-i18n-slot="slot0">Real local storage:</strong> Open local media upgrades this address’s shared
         image/story/music database to version 5. It is not a sandbox. Older game audio readers
         cannot reopen it. Export your music in the old game first if needed, then close old tabs.
         Original MP3 and image bytes are retained; no downgrade or automatic deletion is provided.
       </p>
       <div class="still-host-actions">
-        <button id="still-host-open" type="button" disabled>Open local media</button>
-        <button id="still-host-close" type="button">Close local connections</button>
+        <button id="still-host-open" type="button" disabled data-i18n="tools:openLocalMedia">Open local media</button>
+        <button id="still-host-close" type="button" data-i18n="tools:closeLocalConnections">Close local connections</button>
       </div>
-      <h2>Try Dawn Signal</h2>
-      <p>
+      <h2 data-i18n="tools:tryDawnSignal">Try Dawn Signal</h2>
+      <p data-i18n="tools:anOptionalEightSecondSilentStoryForTheBaseGame">
         An optional eight-second silent story for the base game’s First Signal mission in FPV Front.
         Download both example files, then use Open local media to review and restore them. Nothing
         is installed until you explicitly restore it.
       </p>
       <div class="still-host-actions">
         <a href="./examples/dawn-signal/Dawn-Signal-originals.rlmedia" download
-          >Download Dawn Signal picture</a
+           data-i18n="tools:downloadDawnSignalPicture">Download Dawn Signal picture</a
         >
         <a href="./examples/dawn-signal/Dawn-Signal-stories.rlstory" download
-          >Download Dawn Signal story</a
+           data-i18n="tools:downloadDawnSignalStory">Download Dawn Signal story</a
         >
-        <a href="./examples/dawn-signal/manifest.json" download>Example identity and hashes</a>
+        <a href="./examples/dawn-signal/manifest.json" download data-i18n="tools:exampleIdentityAndHashes">Example identity and hashes</a>
       </div>
       <ol>
-        <li>
+        <li data-i18n-rich="tools:restoreThePictureFileFirstPreserveCurrentAssignmentsUnlessYou">
           Restore the picture file first. Preserve current assignments unless you intend to replace
-          them. Then choose <strong>Reload saved media and installed maps</strong>; the other
+          them. Then choose <strong data-i18n="tools:reloadSavedMediaAndInstalledMaps" data-i18n-slot="slot0">Reload saved media and installed maps</strong>; the other
           editing tools remain disabled until this reload.
         </li>
-        <li>Restore the story file with <strong>Restore incoming bindings</strong>.</li>
-        <li>
+        <li data-i18n-rich="tools:restoreTheStoryFileWith">Restore the story file with <strong data-i18n="tools:restoreIncomingBindings" data-i18n-slot="slot0">Restore incoming bindings</strong>.</li>
+        <li data-i18n="tools:returnToThisEditionSGameChooseBaseGameFirst">
           Return to this edition’s game, choose base-game First Signal and FPV Front, then win a
           fresh attempt. Choose Victory story to Play or Skip. Saved flights and previously earned
           pictures retain their earlier choices.
         </li>
       </ol>
-      <h2>Soundtrack recovery</h2>
-      <p>
+      <h2 data-i18n="tools:soundtrackRecovery">Soundtrack recovery</h2>
+      <p data-i18n="tools:theCompatibleAudioAdapterSharesTheSameVersion5Manager">
         The compatible audio adapter shares the same version 5 manager. Prepare a verified .rlsound
         backup of permitted personal, installed and explicitly referenced music. Restricted
         recordings retain their names and credits without audio and need an approved online source
@@ -89,9 +96,9 @@
         retrying. Still pictures are not included. Corrupt metadata can require a separate recovery
         tool; it is never replaced with an empty library here.
       </p>
-      <button id="still-host-export-audio" type="button" disabled>Prepare soundtrack backup</button>
-      <a id="still-host-download-audio" hidden>Download soundtrack</a>
-      <p>
+      <button id="still-host-export-audio" type="button" disabled data-i18n="tools:prepareSoundtrackBackup">Prepare soundtrack backup</button>
+      <a id="still-host-download-audio" hidden data-i18n="tools:downloadSoundtrack">Download soundtrack</a>
+      <p data-i18n="tools:keepOriginalImageFilesOutsideBrowserStorageInsideTheWorkshop">
         Keep original image files outside browser storage. Inside the workshop, Prepare originals
         download creates a verified .rlmedia backup; use its separate Download originals link. To
         restore, choose a file and assignment policy, review it, then explicitly Restore. Game
@@ -99,7 +106,7 @@
         workshop can bind an optional story to an exact saved picture. Keep video originals in a
         separate .rlstory backup. Authoring and previews do not award pictures.
       </p>
-      <p>
+      <p data-i18n="tools:keyboardTabArrowsAndEnterEscapeToCloseControllerJoin">
         Keyboard: Tab/arrows and Enter, Escape to close. Controller: join, D-pad to move, South to
         choose, East to return. File picking and text entry use the browser/OS controls; no
         controller virtual keyboard is supplied.

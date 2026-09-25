@@ -1,3 +1,4 @@
+import { t } from '../../game/i18n/index.mjs';
 globalThis.RevealLineToolLaunch?.attached();
 import { createOperationStatus } from '../../game/ui/operation-status.mjs';
 import {
@@ -183,10 +184,10 @@ export function attachProductionPanel({ root, rootURL, loadRegister, loadPreview
         tr.append(make('td', value, { 'data-label': name }));
       body.append(tr);
     }
-    matches.textContent = `${filtered.length} matching slots${missing.checked ? ' without a bound work' : ''}.`;
+    matches.textContent = t("tools:matchingSlots", { value1: filtered.length, value2: missing.checked ? ' without a bound work' : '' });
     previous.disabled = page === 0;
     next.disabled = (page + 1) * 20 >= filtered.length;
-    pageLabel.textContent = `Page ${page + 1} of ${Math.max(1, Math.ceil(filtered.length / 20))}`;
+    pageLabel.textContent = t("tools:pageOf", { value1: page + 1, value2: Math.max(1, Math.ceil(filtered.length / 20)) });
   }
   function turnPage(delta) {
     hideDetail();
@@ -216,7 +217,7 @@ export function attachProductionPanel({ root, rootURL, loadRegister, loadPreview
       make(
         'p',
         row.binding
-          ? `Binding revision ${row.binding.revision} · work ${row.work.id} revision ${row.work.revision}`
+          ? t("tools:bindingRevisionWorkRevision", { value1: row.binding.revision, value2: row.work.id, value3: row.work.revision })
           : 'This slot has no bound work. Its production checks remain open.',
       ),
     );
@@ -252,7 +253,7 @@ export function attachProductionPanel({ root, rootURL, loadRegister, loadPreview
             target: '_blank',
             rel: 'noopener noreferrer',
           }),
-          make('p', `${pin.bytes} bytes · SHA-256 ${pin.sha256}`),
+          make('p', t("tools:bytesSha256", { value1: pin.bytes, value2: pin.sha256 })),
         );
       detail.append(provenance);
       const entry = row.work.files.find(
@@ -279,7 +280,7 @@ export function attachProductionPanel({ root, rootURL, loadRegister, loadPreview
         const output = previewStatus,
           container = imageHost;
         preview.append(
-          button(`Preview ${entry.role}`, () => void previewEntry(entry, output, container)),
+          button(t("tools:preview2", { value1: entry.role }), () => void previewEntry(entry, output, container)),
           button('Clear preview', () => {
             cancelPreview();
             report(output, 'Preview cleared.', 'cancelled');
@@ -365,12 +366,12 @@ export function attachProductionPanel({ root, rootURL, loadRegister, loadPreview
         const card = make('article');
         card.append(
           make('strong', `${counts.bound} / ${counts.target}`),
-          make('span', `${names[kind]} bound`),
+          make('span', t("tools:bound", { value1: names[kind] })),
           make(
             'p',
             kind === 'reserve'
-              ? `${counts.missing} unbound · ${counts.stages.inspected} inspected`
-              : `${counts.missing} unbound · ${counts.stages.released} fully qualified`,
+              ? t("tools:unboundInspected", { value1: counts.missing, value2: counts.stages.inspected })
+              : t("tools:unboundFullyQualified", { value1: counts.missing, value2: counts.stages.released }),
           ),
         );
         coverage.append(card);

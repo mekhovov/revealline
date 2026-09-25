@@ -2,13 +2,18 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
+    <link rel="stylesheet" href="../i18n/style.css" />
+    <script src="../vendor/i18next-26.4.2.min.js"></script>
+    <script src="../i18n/catalogs.mjs"></script>
+    <script src="../i18n/bootstrap.mjs"></script>
+
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="theme-color" content="#112d35" />
     <meta
       name="description"
       content="Watch verified Reveal Line recordings without changing your progress."
-    />
-    <title>Replay Theater · Reveal Line</title>
+     data-i18n-content="interface:watchVerifiedRevealLineRecordingsWithoutChangingYourProgress"/>
+    <title data-i18n="interface:replayTheaterRevealLine">Replay Theater · Reveal Line</title>
     <link rel="stylesheet" href="./theater.css" />
     <script
       defer
@@ -32,6 +37,8 @@
     class="field-kit field-kit-support"
     data-field-kit-page="replay"
   >
+<div data-language-control></div>
+
     <header class="page-head">
       <a
         id="return-game"
@@ -39,42 +46,42 @@
         data-workshop-return="workshop"
         inert
         aria-disabled="true"
-        >Return to Workshop</a
+         data-i18n="interface:returnToWorkshop2">Return to Workshop</a
       >
-      <a id="replay-game-home" data-workshop-return="game" href="../">Game home</a>
-      <span class="eyebrow">Reveal Line / Replay Theater</span>
-      <h1 class="field-kit-display">Watch the route unfold.</h1>
-      <p>Pause at a turning point. Follow the cable. See what each craft changes.</p>
-      <p class="notice">Read-only playback · No rewards, scores or player progress are saved.</p>
+      <a id="replay-game-home" data-workshop-return="game" href="../" data-i18n="interface:gameHome">Game home</a>
+      <span class="eyebrow" data-i18n="interface:revealLineReplayTheater">Reveal Line / Replay Theater</span>
+      <h1 class="field-kit-display" data-i18n="interface:watchTheRouteUnfold">Watch the route unfold.</h1>
+      <p data-i18n="interface:pauseAtATurningPointFollowTheCableSeeWhat">Pause at a turning point. Follow the cable. See what each craft changes.</p>
+      <p class="notice" data-i18n="interface:readOnlyPlaybackNoRewardsScoresOrPlayerProgressAre">Read-only playback · No rewards, scores or player progress are saved.</p>
       <details class="replay-interface">
-        <summary>Interface</summary>
+        <summary data-i18n="interface:interface">Interface</summary>
         <div class="replay-interface-fields">
           <label for="replay-text-face"
-            >Text style
+            ><span data-i18n="interface:textStyle">Text style</span>
             <select id="replay-text-face" disabled>
-              <option value="pixel">Theme</option>
-              <option value="plain">Plain</option>
+              <option value="pixel" data-i18n="interface:theme">Theme</option>
+              <option value="plain" data-i18n="interface:plain">Plain</option>
             </select></label
           >
           <label for="replay-text-size"
-            >Text size
+            ><span data-i18n="interface:textSize">Text size</span>
             <select id="replay-text-size" disabled>
-              <option value="standard">Standard</option>
-              <option value="large">Large</option>
+              <option value="standard" data-i18n="interface:standard">Standard</option>
+              <option value="large" data-i18n="interface:large">Large</option>
             </select></label
           >
           <label class="check"
-            ><input id="reduced" type="checkbox" disabled /> Reduced effects</label
+            ><input id="reduced" type="checkbox" disabled /> <span data-i18n="interface:reducedEffects">Reduced effects</span></label
           >
         </div>
-        <p class="replay-interface-note">
+        <p class="replay-interface-note" data-i18n="interface:sharedWithTheGameTheseChoicesChangeTheInterfaceAnd">
           Shared with the game. These choices change the interface and replay effects; the recording
           and its playback position stay unchanged.
         </p>
         <p id="replay-system-reduction" class="replay-interface-note" role="status" hidden></p>
         <p id="replay-display-status" class="replay-interface-note" role="status" hidden></p>
       </details>
-      <a id="jump-playback" href="#playback">Jump to playback ↓</a>
+      <a id="jump-playback" href="#playback" data-i18n="interface:jumpToPlayback">Jump to playback ↓</a>
     </header>
     <p id="boot-status" class="operation-status" data-state="busy" role="status">
       <span aria-hidden="true" style="display: inline-flex; gap: 3px; color: #78dce8"
@@ -83,21 +90,21 @@
         ><i
           style="display: inline-block; width: 4px; height: 8px; background: currentColor"
         ></i></span
-      ><span>Preparing the theater…</span>
+      ><span data-i18n="interface:preparingTheTheater">Preparing the theater…</span>
     </p>
     <div class="load-status">
       <p id="import-status" role="status" aria-live="polite" hidden></p>
-      <button id="cancel-load" type="button" hidden>Cancel load</button>
+      <button id="cancel-load" type="button" hidden data-i18n="interface:cancelLoad">Cancel load</button>
       <p id="presentation-status" hidden></p>
     </div>
     <main inert aria-busy="true" data-boot-inert>
       <section id="playback" class="watch" aria-labelledby="recording-name">
         <div class="recording-head">
           <div>
-            <span class="eyebrow">Verified recording</span>
-            <h2 id="recording-name">Choose a recording</h2>
+            <span class="eyebrow" data-i18n="interface:verifiedRecording">Verified recording</span>
+            <h2 id="recording-name" data-i18n="interface:chooseARecording">Choose a recording</h2>
           </div>
-          <span id="playback-phase" class="badge">Empty</span>
+          <span id="playback-phase" class="badge" data-i18n="interface:empty">Empty</span>
         </div>
         <div class="stage">
           <canvas
@@ -106,7 +113,7 @@
             height="576"
             tabindex="0"
             aria-label="Recorded territory-capture game. Space plays or pauses; right arrow steps one tick."
-          ></canvas>
+           data-i18n-aria-label="interface:recordedTerritoryCaptureGameSpacePlaysOrPausesRightArrow"></canvas>
         </div>
         <div
           id="encounter-cue"
@@ -114,16 +121,16 @@
           role="group"
           aria-label="Recorded encounter"
           hidden
-        >
+         data-i18n-aria-label="interface:recordedEncounter">
           <strong id="encounter-title"></strong>
           <p id="encounter-instruction"></p>
         </div>
-        <div class="transport" aria-label="Playback controls">
-          <button id="play-pause" type="button" disabled>Play</button>
-          <button id="restart" type="button" disabled>Restart</button>
-          <button id="step" type="button" disabled>Step 1 tick</button>
+        <div class="transport" aria-label="Playback controls" data-i18n-aria-label="interface:playbackControls">
+          <button id="play-pause" type="button" disabled data-i18n="common:actions.play">Play</button>
+          <button id="restart" type="button" disabled data-i18n="interface:restart">Restart</button>
+          <button id="step" type="button" disabled data-i18n="interface:step1Tick">Step 1 tick</button>
           <label
-            >Speed
+            ><span data-i18n="interface:speed">Speed</span>
             <select id="speed" disabled>
               <option value="0.5">0.5×</option>
               <option value="1" selected>1×</option>
@@ -136,48 +143,48 @@
           value="0"
           max="1"
           aria-label="Recording playback progress"
-        ></progress>
+         data-i18n-aria-label="interface:recordingPlaybackProgress"></progress>
         <div class="readouts">
-          <span id="tick-readout">Tick 0 / 0</span><span id="time-readout">0.00 / 0.00 s</span>
+          <span id="tick-readout" data-i18n="interface:tick00">Tick 0 / 0</span><span id="time-readout" data-i18n="interface:000000S">0.00 / 0.00 s</span>
         </div>
-        <p id="run-readout">The original rules and controller inputs determine every tick.</p>
-        <p id="checkpoint" class="checkpoint">A recording is verified before it appears here.</p>
-        <p id="transport-status" role="status" aria-live="polite">
+        <p id="run-readout" data-i18n="interface:theOriginalRulesAndControllerInputsDetermineEveryTick">The original rules and controller inputs determine every tick.</p>
+        <p id="checkpoint" class="checkpoint" data-i18n="interface:aRecordingIsVerifiedBeforeItAppearsHere">A recording is verified before it appears here.</p>
+        <p id="transport-status" role="status" aria-live="polite" data-i18n="interface:playbackStartsOnlyWhenYouChoosePlay">
           Playback starts only when you choose Play.
         </p>
         <p id="asset-status" class="quiet" role="status" aria-live="polite" aria-atomic="true"></p>
-        <p id="recorded-appearance" class="quiet" role="status" aria-live="polite">
+        <p id="recorded-appearance" class="quiet" role="status" aria-live="polite" data-i18n="interface:rawReplayPreviewsDoNotClaimRecordedArtwork">
           Raw replay previews do not claim recorded artwork.
         </p>
-        <p id="navigation-status" class="quiet" role="status" aria-live="polite">
+        <p id="navigation-status" class="quiet" role="status" aria-live="polite" data-i18n="interface:arrowKeysMoveFocusEnterActivatesEscapePausesAndFocuses2">
           Arrow keys move focus · Enter activates · Escape pauses and focuses Return to Workshop.
           Controller: release controls, then press a face button to join.
         </p>
         <details>
-          <summary>Recorded events</summary>
+          <summary data-i18n="interface:recordedEvents">Recorded events</summary>
           <ol id="events" class="event-list">
-            <li>No events yet.</li>
+            <li data-i18n="interface:noEventsYet">No events yet.</li>
           </ol>
         </details>
       </section>
       <aside>
         <section class="panel" aria-labelledby="load-heading">
-          <span class="eyebrow">Fieldcraft collection</span>
-          <h2 id="load-heading">Four ways through.</h2>
-          <label for="example">Watch an equipment example</label>
+          <span class="eyebrow" data-i18n="interface:fieldcraftCollection">Fieldcraft collection</span>
+          <h2 id="load-heading" data-i18n="interface:fourWaysThrough">Four ways through.</h2>
+          <label for="example" data-i18n="interface:watchAnEquipmentExample">Watch an equipment example</label>
           <select id="example">
-            <option value="fieldcraft-01">Copper Crossing · Fiber</option>
-            <option value="fieldcraft-02">Switchyard Circuit · Carrier</option>
-            <option value="fieldcraft-03">Pulse Recall · Impact</option>
-            <option value="fieldcraft-04">Net Loom · Trapper</option>
+            <option value="fieldcraft-01" data-i18n="interface:copperCrossingFiber">Copper Crossing · Fiber</option>
+            <option value="fieldcraft-02" data-i18n="interface:switchyardCircuitCarrier">Switchyard Circuit · Carrier</option>
+            <option value="fieldcraft-03" data-i18n="interface:pulseRecallImpact">Pulse Recall · Impact</option>
+            <option value="fieldcraft-04" data-i18n="interface:netLoomTrapper">Net Loom · Trapper</option>
           </select>
           <p id="example-brief" class="quiet"></p>
-          <button id="load-example" type="button">Load example</button>
+          <button id="load-example" type="button" data-i18n="interface:loadExample">Load example</button>
           <details class="import-panel">
-            <summary>Import your own replay</summary>
-            <p>
-              Choose a <code>xonix-replay.v3</code>, <code>xonix-replay.v4</code> or
-              <code>xonix-replay.v5</code> or <code>xonix-replay.v6</code> JSON file, or paste one
+            <summary data-i18n="interface:importYourOwnReplay">Import your own replay</summary>
+            <p data-i18n-rich="interface:chooseAOrOrJsonFileOrPasteOneBelow">
+              Choose a <code data-i18n-slot="slot0">xonix-replay.v3</code>, <code data-i18n-slot="slot1">xonix-replay.v4</code> or
+              <code data-i18n-slot="slot2">xonix-replay.v5</code> or <code data-i18n-slot="slot3">xonix-replay.v6</code> JSON file, or paste one
               below. Version 4 supports staged encounters; version 5 supports 72 × 36 boards with
               optional encounters; version 6 supports Classic rules. Versions 7–10 retain
               foundations, relays, directional fields and Sentinel encounters. A
@@ -186,31 +193,31 @@
               KiB of appearance metadata. Verified inputs demonstrate reproducibility, not player
               identity or an authentic performance.
             </p>
-            <label for="replay-file">Replay file</label>
+            <label for="replay-file" data-i18n="interface:replayFile">Replay file</label>
             <input id="replay-file" type="file" accept=".json,application/json" />
-            <label for="replay-text">Or paste replay JSON</label>
+            <label for="replay-text" data-i18n="interface:orPasteReplayJson">Or paste replay JSON</label>
             <textarea
               id="replay-text"
               rows="6"
               maxlength="33566720"
               spellcheck="false"
               placeholder='{"version":"xonix-replay.v3", …}'
-            ></textarea>
-            <button id="load-text" type="button">Verify and load JSON</button>
+             data-i18n-placeholder="interface:versionXonixReplayV3"></textarea>
+            <button id="load-text" type="button" data-i18n="interface:verifyAndLoadJson">Verify and load JSON</button>
           </details>
         </section>
         <section class="panel" aria-labelledby="look-heading">
-          <h2 id="look-heading">A different atmosphere.</h2>
-          <label for="theme">Preview theme</label>
+          <h2 id="look-heading" data-i18n="interface:aDifferentAtmosphere">A different atmosphere.</h2>
+          <label for="theme" data-i18n="interface:previewTheme">Preview theme</label>
           <select id="theme"></select>
-          <label class="check"><input id="grid" type="checkbox" /> Show grid</label>
-          <p class="quiet">
+          <label class="check"><input id="grid" type="checkbox" /> <span data-i18n="interface:showGrid">Show grid</span></label>
+          <p class="quiet" data-i18n="interface:themesChangeThePreviewSceneAndRawReplayActorsRecorded">
             Themes change the preview scene and raw replay actors. Recorded FPV actors stay pinned.
             The imported route, class abilities and result stay exactly as recorded. Original
             pictures, music and interface are not restored. This theater is silent.
           </p>
         </section>
-        <p class="smallprint">
+        <p class="smallprint" data-i18n="interface:theExamplesUseNormalMovementEquipmentAndClassChangeInputs">
           The examples use normal movement, equipment and class-change inputs. They are
           demonstrations, not player completions. To try them yourself, install Fieldcraft in the
           game’s Library.

@@ -1,3 +1,4 @@
+import { t, localizedText } from '../i18n/index.mjs';
 import { offlineAvailability, prepareOffline, checkOffline } from '../offline.mjs';
 import { createOperationStatus } from './operation-status.mjs';
 
@@ -19,23 +20,22 @@ export function attachOfflinePanel({
   const feedback = createOperationStatus($('offline-status'), { isCurrent: () => !disposed });
   const available = availability();
   const note = $('offline-optional-note');
-  note.textContent = available.note ?? '';
+  localizedText(note, () =>available.note ?? '');
   note.hidden = !available.note;
   button.hidden = !available.available;
   feedback.begin({ message: '' }).finish({
     message: available.available
-      ? 'Download this release for offline play on this device.'
+      ? t("interface:downloadThisReleaseForOfflinePlayOnThisDevice")
       : available.reason,
   });
   function controls() {
     button.disabled = !!observation;
     stop.hidden = !observation;
-    button.textContent =
-      action === 'verify'
-        ? 'Verify offline files'
+    localizedText(button, () =>action === 'verify'
+        ? t("interface:verifyOfflineFiles")
         : action === 'check'
-          ? 'Check progress'
-          : 'Prepare offline play';
+          ? t("interface:checkProgress")
+          : t("interface:prepareOfflinePlay"));
   }
   function detach({ focus = false } = {}) {
     if (!observation) return;
@@ -46,7 +46,7 @@ export function attachOfflinePanel({
     owned.status.finish({
       state: 'detached',
       message:
-        'Stopped waiting. Offline preparation may still be running. Check progress to confirm its result.',
+        t("interface:stoppedWaitingOfflinePreparationMayStillBeRunningCheckProgress"),
     });
     action = 'check';
     controls();
@@ -85,7 +85,7 @@ export function attachOfflinePanel({
         state: ready ? 'ready' : pending ? 'detached' : 'error',
         message: `${result.summary || result.message || result.status}${result.verified ? ` · ${result.verified} files verified` : ''}`,
       });
-      $('offline-details').textContent = JSON.stringify(result, null, 2);
+      localizedText($('offline-details'), () =>JSON.stringify(result, null, 2));
     } catch (error) {
       if (!current()) return;
       action = 'prepare';

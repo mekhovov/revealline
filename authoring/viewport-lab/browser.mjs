@@ -1,3 +1,4 @@
+import { localizedText, t, localizedAttribute } from '../../game/i18n/index.mjs';
 const targets = Object.freeze({
   couch: Object.freeze({ name: 'Couch', path: '../../game/couch/' }),
   solo: Object.freeze({ name: 'Solo', path: '../../game/' }),
@@ -26,15 +27,15 @@ let loadedTarget = null;
 function selectionChanged() {
   const selected = targets[target.value];
   direct.href = selected.path;
-  direct.textContent = `Open ${selected.name} directly ↗`;
+  localizedText(direct, () =>t("tools:openDirectly", { value1: selected.name }));
   load.disabled = target.value === loadedTarget;
-  load.textContent = load.disabled ? `${selected.name} is loaded` : 'Load selected game';
+  localizedText(load, () =>load.disabled ? t("tools:isLoaded", { value1: selected.name }) : t("tools:loadSelectedGame"));
   if (loadedTarget && !load.disabled) {
-    status.textContent = `${targets[loadedTarget].name} remains loaded. Load ${selected.name} explicitly to replace it; save and pause in the game first.`;
+    localizedText(status, () =>t("tools:remainsLoadedLoadExplicitlyToReplaceItSaveAndPause", { value1: targets[loadedTarget].name, value2: selected.name }));
   } else {
-    status.textContent = loadedTarget
-      ? 'Size changes keep this game loaded. Resume explicitly inside the game if it pauses.'
-      : 'Choose a game, then load it. Size changes keep the current game running.';
+    localizedText(status, () =>loadedTarget
+      ? t("tools:sizeChangesKeepThisGameLoadedResumeExplicitlyInsideThe")
+      : t("tools:chooseAGameThenLoadItSizeChangesKeepThe"));
   }
 }
 
@@ -52,15 +53,15 @@ form.addEventListener('submit', (event) => {
   if (target.value === loadedTarget) return;
   const selected = targets[target.value];
   loadedTarget = target.value;
-  frame.title = `${selected.name} · viewport preview`;
+  localizedAttribute(frame, "title", () => t("tools:viewportPreview", { value1: selected.name }));
   frame.src = selected.path;
   frame.hidden = false;
   empty.hidden = true;
-  loadedLabel.textContent = `${selected.name} preview`;
+  localizedText(loadedLabel, () =>t("tools:preview3", { value1: selected.name }));
   const returnToSelector = document.activeElement === load;
   selectionChanged();
   if (returnToSelector) target.focus();
-  status.textContent = `${selected.name} requested. Enter the preview to use the game’s own menus.`;
+  localizedText(status, () =>t("tools:requestedEnterThePreviewToUseTheGameSOwn", { value1: selected.name }));
 });
 
 target.addEventListener('change', selectionChanged);

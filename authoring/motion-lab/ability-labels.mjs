@@ -1,3 +1,4 @@
+import { t } from '../../game/i18n/index.mjs';
 const WIDTH = 48;
 const HEIGHT = 36;
 const INSET = 0.2;
@@ -40,7 +41,7 @@ export function describeAbilityLabels(state, config, family) {
           : target.kind === 'ground'
             ? target.label.replace('Tile ', '')
             : target.label,
-        text: concealed ? 'Concealed note' : target.label,
+        text: concealed ? t("tools:concealedNote") : target.label,
         concealed,
         status: target.status,
       };
