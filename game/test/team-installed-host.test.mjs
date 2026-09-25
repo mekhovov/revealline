@@ -6,7 +6,13 @@ import {
   generateCreatorTeamCampaign,
   prepareCreatorTeamCampaign,
 } from '../creator/team.mjs';
-import { createInstalledTeamCampaignStore } from '../creator/team-installed.mjs';
+import {
+  createInstalledTeamAttempt,
+  createInstalledTeamAttemptSnapshot,
+  createInstalledTeamCampaignStore,
+  installedTeamGameplayId,
+} from '../creator/team-installed.mjs';
+import { stepCoop } from '../coop/core.mjs';
 import { getLocale, setLocale } from '../i18n/index.mjs';
 import { page } from './helpers/coop-host.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
@@ -124,6 +130,59 @@ test('a fresh Team host discovers and launches one exact installed edition', asy
   assert.equal(f.$('coop-stage').textContent, prepared.pack.levels[0].name.toUpperCase());
   assert.equal(f.$('coop-level').value, prepared.pack.levels[0].id);
   assert.deepEqual(f.visits, []);
+  const reader = createInstalledTeamCampaignStore({ indexedDB: memory.indexedDB });
+  t.after(() => reader.close());
+  let saved = null;
+  for (let tries = 0; tries < 40 && !saved; tries++) {
+    saved = (await reader.inventory()).editions[0].progress.attempts[prepared.pack.levels[0].id];
+    if (!saved) await new Promise((resolve) => setImmediate(resolve));
+  }
+  assert(saved, 'Starting an installed Team mission writes its recoverable initial checkpoint.');
+  assert.equal(saved.editionId, editionId);
+  assert.equal(saved.checkpoint.tick, 0);
+});
+
+test('a fresh Team host labels and resumes an exactly replayed installed checkpoint', async (t) => {
+  const memory = managedIndexedDB(),
+    prepared = await campaign('team-host-resume', 24),
+    installer = createInstalledTeamCampaignStore({ indexedDB: memory.indexedDB }),
+    { editionId } = await installer.install(prepared),
+    level = prepared.pack.levels[0],
+    run = createInstalledTeamAttempt(prepared.pack, level.id, 'gentle', 'joint'),
+    gameplayId = installedTeamGameplayId(prepared.pack, level.id, 'gentle', 'joint'),
+    commands = [
+      { direction: 'down', boost: true, support: false },
+      { direction: 'down', boost: true, support: false },
+    ];
+  for (let index = 0; index < 25; index++) stepCoop(run, commands);
+  const snapshot = createInstalledTeamAttemptSnapshot({
+    editionId,
+    attemptId: 'host-resume-attempt',
+    gameplayId,
+    presetId: 'joint',
+    run,
+    segments: [{ ticks: 25, commands }],
+  });
+  await installer.recordAttempt(snapshot, { expectedGeneration: 0 });
+  installer.close();
+  const f = await page(t, {
+    nativeFocus: true,
+    nativeVisibility: true,
+    beforeImport: browserFixture(memory),
+  });
+  await openMissionLibrary(f, 'coop-discovery-open');
+  const card = [...f.$('journey-cards').children].find((candidate) => {
+    const [source, edition] = JSON.parse(candidate.dataset.missionId);
+    return source === `team-installed:${editionId}` && edition === editionId;
+  });
+  assert(card);
+  assert.match(card.textContent, /Resume saved attempt/);
+  await activateMissionCard(card);
+  assert.match(f.$('coop-discovery-status').textContent, /restored from its saved attempt/i);
+  assert.match(f.$('coop-message').textContent, /Saved territory restored/i);
+  assert.equal(f.$('coop-level').value, level.id);
+  assert.equal(f.$('coop-difficulty').value, 'gentle');
+  assert.equal(f.$('coop-experiment').value, 'joint');
 });
 
 test('storage denial keeps a verified Team campaign playable for the current visit', async (t) => {
