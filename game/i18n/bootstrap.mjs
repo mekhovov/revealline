@@ -7,6 +7,7 @@
   const locales = ['en', 'uk'];
   const listeners = new Set();
   const bindings = new WeakMap();
+  const textNodes = new WeakMap();
   const richBindings = new WeakMap();
   const elements = new Set();
   let explicit = null;
@@ -39,8 +40,10 @@
   engine.use({
     type: 'formatter',
     init() {},
-    format: (value, _format, locale) => typeof value === 'number' && Number.isFinite(value)
-      ? new Intl.NumberFormat(locale, { maximumFractionDigits: 20 }).format(value) : value,
+    format: (value, _format, locale) =>
+      typeof value === 'number' && Number.isFinite(value)
+        ? new Intl.NumberFormat(locale, { maximumFractionDigits: 20 }).format(value)
+        : value,
   });
   engine.init({
     lng: explicit || detectLocale(),
@@ -62,7 +65,9 @@
   const getLocale = () => engine.resolvedLanguage || engine.language || 'en';
   const messageTag = Symbol('localized-message');
   const message = (key, values = {}) => ({
-    [messageTag]: true, key, values,
+    [messageTag]: true,
+    key,
+    values,
     toString: () => t(key, values),
     [Symbol.toPrimitive]: () => t(key, values),
   });
@@ -80,12 +85,22 @@
       elements.add(new WeakRef(element));
     }
     fields.set(field, value);
-    return apply(element, field, value);
+    return apply(element, field, value, true);
   }
-  function apply(element, field, value) {
+  function apply(element, field, value, assigning = false) {
     const text = render(value);
     if (field === 'textContent') {
-      if (element.textContent !== text) element.textContent = text;
+      // A label may acquire a select, icon or input after its caption is bound.
+      // Language changes update the owned text node, preserving those controls.
+      const owned = textNodes.get(element)?.deref();
+      if (!assigning && owned) {
+        if (owned.parentNode === element) owned.textContent = text;
+      } else if (element.ownerDocument?.createTextNode && typeof element.append === 'function') {
+        element.textContent = '';
+        const node = element.ownerDocument.createTextNode(text);
+        element.append(node);
+        textNodes.set(element, new WeakRef(node));
+      } else if (element.textContent !== text) element.textContent = text;
     } else if (element.getAttribute(field) !== text) element.setAttribute(field, text);
     return text;
   }
@@ -98,27 +113,50 @@
   }
   function translateDOM(root = host.document) {
     if (!root?.querySelectorAll) return;
-    const nodes = [...(root.matches?.('[data-i18n]') ? [root] : []), ...root.querySelectorAll('[data-i18n]')];
+    const nodes = [
+      ...(root.matches?.('[data-i18n]') ? [root] : []),
+      ...root.querySelectorAll('[data-i18n]'),
+    ];
     for (const node of nodes) {
       const key = node.getAttribute('data-i18n');
       const attribute = node.getAttribute('data-i18n-attribute');
       if (attribute) localizedAttribute(node, attribute, () => t(key));
       else localizedText(node, () => t(key));
     }
-    for (const attribute of ['aria-label', 'title', 'placeholder', 'alt', 'content', 'data-menu-label']) {
+    for (const attribute of [
+      'aria-label',
+      'title',
+      'placeholder',
+      'alt',
+      'content',
+      'data-menu-label',
+    ]) {
       for (const node of root.querySelectorAll(`[data-i18n-${attribute}]`))
         localizedAttribute(node, attribute, () => t(node.getAttribute(`data-i18n-${attribute}`)));
     }
     for (const node of root.querySelectorAll('[data-i18n-rich]')) {
       if (richBindings.has(node)) continue;
       const key = node.getAttribute('data-i18n-rich');
-      const slots = new Map([...node.children].map(child => [child.getAttribute('data-i18n-slot'), new WeakRef(child)]));
+      const slots = new Map(
+        [...node.children].map((child) => [
+          child.getAttribute('data-i18n-slot'),
+          new WeakRef(child),
+        ]),
+      );
       const reference = new WeakRef(node);
       const update = () => {
         const node = reference.deref();
-        if (!node) { unsubscribe(); return; }
+        if (!node) {
+          unsubscribe();
+          return;
+        }
         const parts = t(key).split(/(\[\[[a-zA-Z0-9]+\]\])/g);
-        node.replaceChildren(...parts.map(part => slots.get(part.slice(2, -2))?.deref() || node.ownerDocument.createTextNode(part)));
+        node.replaceChildren(
+          ...parts.map(
+            (part) =>
+              slots.get(part.slice(2, -2))?.deref() || node.ownerDocument.createTextNode(part),
+          ),
+        );
       };
       const unsubscribe = onLocaleChange(update);
       richBindings.set(node, unsubscribe);
@@ -128,22 +166,32 @@
   function refresh() {
     const document = host.document;
     const focus = document?.activeElement;
-    const selection = focus && typeof focus.selectionStart === 'number'
-      ? [focus.selectionStart, focus.selectionEnd, focus.selectionDirection] : null;
+    const selection =
+      focus && typeof focus.selectionStart === 'number'
+        ? [focus.selectionStart, focus.selectionEnd, focus.selectionDirection]
+        : null;
     const scroll = [...(document?.querySelectorAll('*') || [])]
-      .filter(node => node.scrollTop || node.scrollLeft)
-      .map(node => [node, node.scrollTop, node.scrollLeft]);
+      .filter((node) => node.scrollTop || node.scrollLeft)
+      .map((node) => [node, node.scrollTop, node.scrollLeft]);
     if (host.document) host.document.documentElement.lang = getLocale();
     for (const ref of elements) {
       const element = ref.deref();
-      if (!element) { elements.delete(ref); continue; }
+      if (!element) {
+        elements.delete(ref);
+        continue;
+      }
       for (const [field, value] of bindings.get(element) || []) apply(element, field, value);
     }
     for (const callback of listeners) callback(getLocale());
-    for (const select of host.document?.querySelectorAll('[data-language-select]') || []) select.value = getLocale();
-    if (focus?.isConnected && document.activeElement !== focus) focus.focus({ preventScroll: true });
+    for (const select of host.document?.querySelectorAll('[data-language-select]') || [])
+      select.value = getLocale();
+    if (focus?.isConnected && document.activeElement !== focus)
+      focus.focus({ preventScroll: true });
     if (selection && focus?.setSelectionRange) focus.setSelectionRange(...selection);
-    for (const [node, top, left] of scroll) { node.scrollTop = top; node.scrollLeft = left; }
+    for (const [node, top, left] of scroll) {
+      node.scrollTop = top;
+      node.scrollLeft = left;
+    }
   }
   function setLocale(locale, { persist = true } = {}) {
     if (!locales.includes(locale)) throw new RangeError('Unsupported locale.');
@@ -153,7 +201,9 @@
       try {
         host.localStorage.setItem(storageKey, locale);
         saved = host.localStorage.getItem(storageKey) === locale;
-      } catch { /* A session choice remains usable even when persistence is unavailable. */ }
+      } catch {
+        /* A session choice remains usable even when persistence is unavailable. */
+      }
     }
     engine.changeLanguage(locale);
     refresh();
@@ -173,7 +223,10 @@
       localizedText(caption, () => t('common:language.label'));
       const select = doc.createElement('select');
       select.setAttribute('data-language-select', '');
-      for (const [value, name] of [['en', 'English'], ['uk', 'Українська']]) {
+      for (const [value, name] of [
+        ['en', 'English'],
+        ['uk', 'Українська'],
+      ]) {
         const option = doc.createElement('option');
         option.value = value;
         option.textContent = name;
@@ -186,7 +239,7 @@
       status.className = 'locale-storage-status';
       select.addEventListener('change', () => {
         const result = setLocale(select.value);
-        localizedText(status, () => result.saved ? '' : t('common:language.sessionOnly'));
+        localizedText(status, () => (result.saved ? '' : t('common:language.sessionOnly')));
       });
       label.append(caption, select);
       mount.append(label, status);
@@ -201,12 +254,27 @@
     if (!explicit) setLocale(detectLocale(), { persist: false });
   });
   host.RevealLineI18n = Object.freeze({
-    t, message, render, getLocale, setLocale, onLocaleChange, normalizeLocale, detectLocale,
-    localizedText, localizedAttribute, localizedOption, translateDOM, attachLanguageControls,
+    t,
+    message,
+    render,
+    getLocale,
+    setLocale,
+    onLocaleChange,
+    normalizeLocale,
+    detectLocale,
+    localizedText,
+    localizedAttribute,
+    localizedOption,
+    translateDOM,
+    attachLanguageControls,
     formatNumber: (value, options) => new Intl.NumberFormat(getLocale(), options).format(value),
     formatDate: (value, options) => new Intl.DateTimeFormat(getLocale(), options).format(value),
   });
-  const mount = () => { translateDOM(); attachLanguageControls(); refresh(); };
+  const mount = () => {
+    translateDOM();
+    attachLanguageControls();
+    refresh();
+  };
   if (host.window === host && host.document?.readyState === 'loading') {
     host.document.documentElement.lang = getLocale();
     host.document.addEventListener('DOMContentLoaded', mount, { once: true });
