@@ -134,6 +134,7 @@ test('all review routes keep explicit external-tab safety and distinct accessibl
   );
   const journeys = [
     'whole-spatial-v11',
+    'whole-spatial-v12',
     'whole-spatial-v10',
     'whole-spatial-v9',
     'whole-spatial-v8',

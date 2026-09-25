@@ -39,6 +39,7 @@ const golden = {
   'whole-spatial-v9': [257778, '80d2406bece474a0dc169e9d8ea31b473d04d68144e8df6dd4eff41c7850e27a'],
   'whole-spatial-v10': [258783, '04b2c25e1e6bbbf8890b89a6661ec80fadac53f280ae2ae2caf77fd3de3ed4fc'],
   'whole-spatial-v11': [259575, '3d7b5b67d5d78a3f25a8108468385f9a6f1b2520fc12b275bcc3bf952ae0d978'],
+  'whole-spatial-v12': [260606, '93ff983369b33f0b0cf005ddd3e3112475c8af6ac5d3d43ef1bdbe49e9df2325'],
 };
 
 test('all supported routes are covered by pinned edition snapshots', () => {
@@ -149,6 +150,17 @@ test('Horizon successor imports only its bounded successor chain', () => {
   assert(!has(result, 'horizon-candidates.mjs'));
 });
 
+test('Border successor imports only its bounded successor chain', () => {
+  const result = routeProbe('whole-spatial-v12');
+  assert.deepEqual(result.output, { id: 'whole-spatial-v12' });
+  assert(has(result, 'border-cultural-next-batch-candidates.mjs'));
+  assert(has(result, 'horizon-next-batch-candidates.mjs'));
+  assert(has(result, 'spatial-next-batch-candidates.mjs'));
+  assert(has(result, 'whole-spatial-data.mjs'));
+  assert(!has(result, 'whole-journey-candidates.mjs'));
+  assert(!has(result, 'horizon-candidates.mjs'));
+});
+
 test('historical originals still use their composer, without downloading the spatial snapshot', () => {
   const result = routeProbe('whole-originals-v4');
   assert.deepEqual(result.output, { id: 'whole-originals-v4' });
@@ -189,6 +201,7 @@ test('all literal lazy imports and shared modules are in the actual game build i
   const source = await readFile(new URL(loaderURL), 'utf8');
   const imports = [...source.matchAll(/import\('(.+?)'\)/g)].map((m) => m[1]);
   assert.deepEqual(imports, [
+    './border-cultural-next-batch-candidates.mjs',
     './horizon-next-batch-candidates.mjs',
     './spatial-next-batch-candidates.mjs',
     './whole-spatial-candidates.mjs',
