@@ -17,6 +17,7 @@ import { createRun, stepRun, getSummary, FIXED_DT } from '../core/index.mjs';
 import { emptyLibrary, recordLibraryCompletion, saveLibrary } from '../library.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
 import { BoardPainter } from '../ui/render.mjs';
+import { getLocale, setLocale } from '../i18n/index.mjs';
 
 const profileKey = 'revealline.library.dev.v1';
 const source = JSON.parse(
@@ -162,6 +163,57 @@ function padFor(page, t) {
   // A neutral sample connects automatically; Confirm is now a real menu action.
   return pulse;
 }
+
+test('open Collection translates earned rewards while retaining its context, nodes, focus and progress', async (t) => {
+  const locale = getLocale();
+  t.after(() => setLocale(locale, { persist: false }));
+  setLocale('en', { persist: false });
+  const page = await setup(t);
+  open(page);
+  const select = page.$('collection-context');
+  select.focus();
+  const selection = select.value;
+  const rows = [...page.$('appearance-rewards').children];
+  const badges = [...page.$('achievements').children];
+  const checkpoint = authoritativeCheckpoint(page.rendered.run);
+  const saved = [...page.storage.map];
+  const writes = page.storage.writes.length;
+  const assetWrites = page.assets.allPuts.length;
+  for (const language of ['uk', 'en', 'uk']) {
+    setLocale(language, { persist: false });
+    assert.equal(
+      rows[0].querySelector('h4').textContent,
+      language === 'uk' ? 'Перша перемога' : 'First clear',
+    );
+    assert.equal(
+      rows[1].querySelector('h4').textContent,
+      language === 'uk' ? 'Дослідник розділу' : 'Chapter explorer',
+    );
+    assert.match(
+      rows[1].querySelector('.reward-detail').textContent,
+      language === 'uk' ? /ще 2 місії/ : /2 more missions/,
+    );
+    assert.match(
+      badges[2].querySelector('span').textContent,
+      language === 'uk' ? /Пройдіть 3 різні місії/ : /Complete 3 different missions/,
+    );
+    assert.match(
+      page.$('appearance-campaign').textContent,
+      /Earned chapter/,
+      'Imported chapter names retain their authored text.',
+    );
+    assert.deepEqual([...page.$('appearance-rewards').children], rows);
+    assert.deepEqual([...page.$('achievements').children], badges);
+    assert.equal(select.value, selection);
+    assert.equal(page.doc.activeElement, select);
+    assert.equal(page.$('collection-dialog').open, true);
+    assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
+    assert.deepEqual([...page.storage.map], saved);
+    assert.equal(page.storage.writes.length, writes);
+    assert.equal(page.assets.allPuts.length, assetWrites);
+  }
+  assert.deepEqual(page.errors, []);
+});
 
 for (const modes of [['standard'], ['gentle'], ['standard', 'gentle']])
   test(`Collection card labels each earned mode once: ${modes.join(' + ')}`, async (t) => {
