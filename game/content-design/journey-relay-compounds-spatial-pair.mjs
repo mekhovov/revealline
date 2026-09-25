@@ -1,22 +1,22 @@
-import { createJourneyRelaySpatialPairCandidates } from "./journey-relay-spatial-pair.mjs";
-import { compileContentProject } from "./project.mjs";
+import { createJourneyRelaySpatialPairCandidates } from './journey-relay-spatial-pair.mjs';
+import { compileContentProject } from './project.mjs';
 
-const REVISION = "relay-compounds-spatial-pair-1";
+const REVISION = 'relay-compounds-spatial-pair-1';
 const rect = (x, y, w, h) => ({ x, y, w, h });
 
 export const JOURNEY_RELAY_COMPOUNDS_SPATIAL_DISPOSITIONS = Object.freeze({
-  "three-compounds": Object.freeze({
-    disposition: "redesign",
-    approaches: Object.freeze(["upper-relay-first", "west-reserve-first"]),
+  'three-compounds': Object.freeze({
+    disposition: 'redesign',
+    approaches: Object.freeze(['upper-relay-first', 'west-reserve-first']),
   }),
-  "spiral-stores": Object.freeze({
-    disposition: "redesign",
-    approaches: Object.freeze(["west-window-first", "east-window-first"]),
+  'spiral-stores': Object.freeze({
+    disposition: 'redesign',
+    approaches: Object.freeze(['west-window-first', 'east-window-first']),
   }),
 });
 
 const revisions = Object.freeze({
-  "three-compounds": {
+  'three-compounds': {
     walls: [
       rect(18, 5, 10, 2),
       rect(44, 5, 10, 2),
@@ -29,30 +29,25 @@ const revisions = Object.freeze({
       rect(18, 29, 10, 2),
       rect(44, 29, 10, 2),
     ],
-    foundations: [
-      rect(32, 14, 8, 7),
-      rect(7, 13, 8, 9),
-      rect(56, 13, 8, 9),
-      rect(32, 3, 8, 4),
-    ],
+    foundations: [rect(32, 14, 8, 7), rect(7, 13, 8, 9), rect(56, 13, 8, 9), rect(32, 3, 8, 4)],
     terrain: [
-      { id: "west-archive-noise", kind: "slow", ...rect(21, 12, 7, 4) },
-      { id: "east-archive-noise", kind: "slow", ...rect(44, 20, 7, 4) },
+      { id: 'west-archive-noise', kind: 'slow', ...rect(21, 12, 7, 4) },
+      { id: 'east-archive-noise', kind: 'slow', ...rect(44, 20, 7, 4) },
     ],
-    spawn: { id: "home", x: 35.5, y: 17.5 },
+    spawn: { id: 'home', x: 35.5, y: 17.5 },
     design: {
       routeDecision:
-        "Take the short exposed ascent through the upper relay and wake the western link first, or establish the west compound as a reserve before committing to either numbered relay?",
+        'Take the short exposed ascent through the upper relay and wake the western link first, or establish the west compound as a reserve before committing to either numbered relay?',
       lesson:
-        "Three separated archive compounds share permanent relay links, but a reclaimed-ground roamer can pressure every connected landing after activation.",
+        'Three separated archive compounds share permanent relay links, but a reclaimed-ground roamer can pressure every connected landing after activation.',
       counterplay:
-        "Read both keepers from the central pad. The upper cut is short but commits to relay order; the western side cut is longer and preserves a separate refuge before the roamer network expands.",
+        'Read both keepers from the central pad. The upper cut is short but commits to relay order; the western side cut is longer and preserves a separate refuge before the roamer network expands.',
       captureConsequence:
-        "The upper relay opens the western connector; the eastern relay opens the opposite connector. An outer compound remains an independent return until its link is deliberately opened.",
+        'The upper relay opens the western connector; the eastern relay opens the opposite connector. An outer compound remains an independent return until its link is deliberately opened.',
       memorableMoment:
-        "The craft banks a quiet western refuge, then lights the upper connector and watches the roamer gain a visibly larger patrol network.",
+        'The craft banks a quiet western refuge, then lights the upper connector and watches the roamer gain a visibly larger patrol network.',
       mastery:
-        "Establish the western reserve before opening both links, visit all three compounds, and clear without losing a life.",
+        'Establish the western reserve before opening both links, visit all three compounds, and clear without losing a life.',
       difficulty: {
         band: 9,
         planning: 9,
@@ -64,7 +59,7 @@ const revisions = Object.freeze({
       },
     },
   },
-  "spiral-stores": {
+  'spiral-stores': {
     walls: [
       rect(11, 10, 13, 2),
       rect(22, 12, 2, 4),
@@ -87,23 +82,23 @@ const revisions = Object.freeze({
       rect(36, 21, 3, 6),
     ],
     terrain: [
-      { id: "west-store-static", kind: "slow", ...rect(14, 13, 6, 3) },
-      { id: "east-store-static", kind: "slow", ...rect(52, 21, 6, 3) },
+      { id: 'west-store-static', kind: 'slow', ...rect(14, 13, 6, 3) },
+      { id: 'east-store-static', kind: 'slow', ...rect(52, 21, 6, 3) },
     ],
-    spawn: { id: "home", x: 35.5, y: 17.5 },
+    spawn: { id: 'home', x: 35.5, y: 17.5 },
     design: {
       routeDecision:
-        "Commit to the western mid-store window for the upper shortcut, or descend to the opposing eastern window and open the lower shortcut while the frontier patrol is farther away?",
+        'Commit to the western mid-store window for the upper shortcut, or descend to the opposing eastern window and open the lower shortcut while the frontier patrol is farther away?',
       lesson:
-        "Opposing broken spirals expose different crossing windows. A shortcut reduces the next return distance but never turns the wall silhouette into return ground.",
+        'Opposing broken spirals expose different crossing windows. A shortcut reduces the next return distance but never turns the wall silhouette into return ground.',
       counterplay:
-        "Wait on the central spine until the frontier patrol passes the intended window, then use the straight opening through the broken wall rather than following the ornamental bend.",
+        'Wait on the central spine until the frontier patrol passes the intended window, then use the straight opening through the broken wall rather than following the ornamental bend.',
       captureConsequence:
-        "The western window opens the upper break and the eastern window opens the lower break; each permanently shortens only its own later approach.",
+        'The western window opens the upper break and the eastern window opens the lower break; each permanently shortens only its own later approach.',
       memorableMoment:
-        "A long cross-store cut captures one relay through a narrow opening, and the newly lit shortcut makes the opposite spiral visibly easier to approach.",
+        'A long cross-store cut captures one relay through a narrow opening, and the newly lit shortcut makes the opposite spiral visibly easier to approach.',
       mastery:
-        "Open the two shortcuts in consecutive captures, use each permanent link, and clear without losing a life.",
+        'Open the two shortcuts in consecutive captures, use each permanent link, and clear without losing a life.',
       difficulty: {
         band: 10,
         planning: 10,
@@ -119,22 +114,18 @@ const revisions = Object.freeze({
 
 /** Eighth copy-on-write spatial batch. Candidate editions only; default route,
  * version, publication, historical replay and completion identities are unchanged. */
-export function createJourneyRelayCompoundsSpatialPairCandidates({
-  artwork = false,
-} = {}) {
+export function createJourneyRelayCompoundsSpatialPairCandidates({ artwork = false } = {}) {
   const source = createJourneyRelaySpatialPairCandidates({ artwork });
   const project = structuredClone(source);
   project.id = artwork
-    ? "whole-relay-compounds-spatial-pair-original-review"
-    : "whole-relay-compounds-spatial-pair-greybox-review";
+    ? 'whole-relay-compounds-spatial-pair-original-review'
+    : 'whole-relay-compounds-spatial-pair-greybox-review';
   project.revision = REVISION;
-  project.name =
-    "Whole Journey · Relay compounds and broken-spiral spatial successors";
+  project.name = 'Whole Journey · Relay compounds and broken-spiral spatial successors';
   for (const [missionId, revision] of Object.entries(revisions)) {
     const mission = project.missions.find((item) => item.id === missionId);
     const oldMap = project.maps.find(
-      (item) =>
-        item.id === mission.map.id && item.revision === mission.map.revision,
+      (item) => item.id === mission.map.id && item.revision === mission.map.revision,
     );
     const map = {
       ...oldMap,
@@ -154,16 +145,11 @@ export function createJourneyRelayCompoundsSpatialPairCandidates({
       design: {
         ...mission.design,
         ...revision.design,
-        practices: [
-          ...new Set([...mission.design.practices, "walls", "slow-field"]),
-        ],
-        combines: [
-          ...new Set([...mission.design.combines, "walls", "slow-field"]),
-        ],
+        practices: [...new Set([...mission.design.practices, 'walls', 'slow-field'])],
+        combines: [...new Set([...mission.design.combines, 'walls', 'slow-field'])],
       },
     });
   }
-  for (const item of [...project.packs, ...project.campaigns])
-    item.revision = REVISION;
+  for (const item of [...project.packs, ...project.campaigns]) item.revision = REVISION;
   return structuredClone(compileContentProject(project).source);
 }
