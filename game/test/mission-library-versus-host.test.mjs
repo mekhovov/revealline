@@ -147,7 +147,7 @@ test('Versus All missions lists exact Journey and retained Classic rows without 
   await open(p);
   assert.equal(p.$('journey-mode').value, 'versus');
   assert.equal(p.$('journey-collection').value, '');
-  assert.equal(p.$('journey-cards').children.length, 279);
+  assert.equal(p.$('journey-cards').children.length, 285);
   assert.match(p.$('journey-cards').children[0].textContent, /Journey/);
   const classic = [...p.$('journey-cards').children].filter((card) =>
     card.querySelector('.journey-card-tags').textContent.includes('Classic'),
@@ -329,7 +329,7 @@ test('Classic Versus selects an exact Journey handoff and preserves the release 
   await settle(() => new URL(globalThis.location.href).searchParams.has('library-mission'));
   const destination = new URL(globalThis.location.href);
   assert.equal(destination.pathname, '/game/couch/');
-  assert.equal(destination.searchParams.get('journey'), 'whole-spatial-v5');
+  assert.equal(destination.searchParams.get('journey'), 'whole-spatial-v11');
   assert.equal(destination.searchParams.get('library-mission'), target.dataset.missionId);
 });
 
@@ -344,14 +344,14 @@ test('Versus mode filter exposes the same qualified Journey identities in Solo w
     cards.map((card) => card.dataset.missionId),
     original,
   );
-  assert.equal(new Set(original).size, 201);
+  assert.equal(new Set(original).size, 285);
   const target = cards[1];
   assert.match(target.textContent, /Journey.*Band 1\/12.*Play/);
   target.click();
   await settle(() => new URL(globalThis.location.href).searchParams.has('library-mission'));
   const destination = new URL(globalThis.location.href);
   assert.equal(destination.pathname, '/game/');
-  assert.equal(destination.searchParams.get('journey'), 'whole-spatial-v5');
+  assert.equal(destination.searchParams.get('journey'), 'whole-spatial-v11');
   assert.equal(destination.searchParams.get('library-mission'), target.dataset.missionId);
   assert.equal(p.doc.documentElement.dataset.toolState, 'ready');
 });
@@ -451,7 +451,7 @@ test('new Journey Versus mounts the same library and chooses an exact authored m
   const p = await fixture(t, { href: 'http://localhost/game/couch/' });
   assert.equal(p.renders[0].level.id, 'first-return');
   await open(p);
-  assert.equal(p.$('journey-cards').children.length, 201);
+  assert.equal(p.$('journey-cards').children.length, 285);
   const card = [...p.$('journey-cards').children].find((card) =>
     JSON.parse(card.dataset.missionId)[3].endsWith('/choose-your-share'),
   );
@@ -625,7 +625,7 @@ for (const interruption of ['blur', 'focus', 'pointer'])
         assert.equal(p.$('journey-chooser').open, false);
         assert.equal(p.doc.activeElement, focused);
         await open(p);
-        assert.equal(p.$('journey-cards').children.length, 201);
+        assert.equal(p.$('journey-cards').children.length, 285);
       } finally {
         release();
         await opening;
