@@ -1,0 +1,49 @@
+{
+  "format": "revealline-v0.131-localization-presentation-continuation.v1",
+  "status": "bounded source, focused-test and local-browser continuation; merged-source and public acceptance pending",
+  "reviewedAt": "2026-09-25T21:40:37Z",
+  "candidateSourceCommit": "4a17384455379aa8cc0a39454b47158d7b440570",
+  "scope": "Continue the existing Field Kit UI, effects and audio recipe approvals across the v0.131 English/Ukrainian localization conversion. The recipe IDs, generated recipe payloads, visual assets, CSS tokens, actor geometry and procedural audio recipes are unchanged; only owned text bindings, locale catalogues, runtime copy and mechanical formatting changed.",
+  "fingerprints": {
+    "ui": {
+      "priorSHA256": "4b7db79dd3f6931dd72c0ae702f15a5a5d8ff2b7044aca5a2e02886e8e61636a",
+      "currentSHA256": "c7ebea5695fe1fbd7c17eafdd0035dcd4d1651b5d3ec91893c6575334da38d3a"
+    },
+    "effects": {
+      "priorSHA256": "e23e228b4bf4ee68bb7cbbd231aaebe66d6e3da8965fbeae9b2c4acc90f9e053",
+      "currentSHA256": "b33868fdd4f6aa898a885043116b939509f4d5b14d4412adb7d71e6e90ed6bbe"
+    },
+    "audio": {
+      "priorSHA256": "1c4cd15dfa9638b62726881cd765b247966595063a2d7f20a076d8c6ab851f30",
+      "currentSHA256": "b8ae27935bdab268874c79aafcea7848f823c2838ecdf99e52f8d9c64e06e831"
+    },
+    "algorithm": "SHA256 of each group's ordered raw source bytes concatenated, matching fieldKitRecipeSources"
+  },
+  "sourceAssessment": [
+    "UI changes route maintained labels, descriptions and operation-status copy through the locale host. They do not change the 24 UI recipe IDs, Field Kit CSS tokens, DOM ownership or apply semantics.",
+    "Effects input changes localize visible state and actor descriptions and mechanically format the same renderers. Actor geometry, trail cells, collision footprints, sprite construction and effect recipe IDs remain unchanged.",
+    "Audio input changes localize controls, credits, diagnostics and live flight announcements. Playback state, volume values, selected procedural recipes, soundtrack bytes, rights metadata and transport behavior remain unchanged.",
+    "The local browser review exposed two live flight announcements that still bypassed the catalogue. Commit 4a17384455379aa8cc0a39454b47158d7b440570 routes those announcements and the adjacent event fallbacks through exact English/Ukrainian keys and adds a focused regression check."
+  ],
+  "qualification": {
+    "automated": [
+      "npm run i18n:check: 2 locales, 9383 messages and 7586 references.",
+      "node --test game/test/localization-gameplay-copy.test.mjs: 4/4 passed, including exact active-locale flight-announcement coverage.",
+      "node --test game/test/localization.test.mjs game/test/localization-gameplay-copy.test.mjs: 15/15 passed before the live-announcement repair; the focused gameplay-copy suite passed again after the repair.",
+      "npm run format:check and npm run lint -- --quiet passed after the repair."
+    ],
+    "localBrowser": [
+      "At 1280 by 720, English and Ukrainian Home surfaces rendered their mode cards, language selector, primary and secondary actions, soundtrack controls and current-flight caption without clipping outside the shell.",
+      "Ukrainian Settings rendered the Display and Audio panels, including master/music/effects values. Switching Settings from Ukrainian to English preserved values 0.8, 0.45 and 0.6 and preserved active playback.",
+      "The Solo flight rendered the HUD, Field Kit frame, player and enemy actors, reclaimed-ground boundary, active-line state and caught-line failure state. Switching the retained flight to Ukrainian updated HUD labels, accessible game instructions, soundtrack credit and menu descriptions without resetting lives, score or coverage.",
+      "The browser console reported zero warnings and zero errors during the bounded review."
+    ]
+  },
+  "excluded": [
+    "No full automated suite, extended gameplay matrix or every-event native traversal; those suites remain explicitly waived and are not represented as passing.",
+    "No every-viewport, forced-colour, screen-reader, physical-device, complete audio listening or cold-offline acceptance.",
+    "No subjective Ukrainian language certification beyond exact catalogue coverage and the bounded maintained-surface review.",
+    "No merged-source, immutable tag/assets, deployment, Pages or public-game approval."
+  ],
+  "decision": "Continue only the exact UI, effects and audio recipe approvals bound to these three current fingerprints and this review's exact bytes. Any dependency, fingerprint or review-byte change reopens the affected group."
+}
