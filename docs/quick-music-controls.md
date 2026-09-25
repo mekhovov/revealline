@@ -41,19 +41,19 @@ The initial revision-2 retry tests inherited a muted fixture, which bypassed aut
 
 ## Current archive-player reconciliation
 
-On 25 September 2026, the reviewed controls were replayed onto the exact public-archive
-integration head `7cbf5771f69917dd9b24cc88e9687fec77f2a876`. The controls keep using that host's
-single transport and live 128-recording catalogue; they do not create another deck, copy the
-catalogue, or change its trust boundary.
+On 25 September 2026, the reviewed controls were replayed without conflict onto the exact merged
+public-archive source `3883259987913cb646eb44cf2580083dad673a70`. Range-diff marks all five
+existing quick-control commits as patch-equivalent. The controls keep using that host's single
+transport and live 128-recording catalogue; they do not create another deck, copy the catalogue,
+or change its trust boundary.
 
-The reconciled audio, control, host, panel, player, source and input cohort passes **346/346**
-tests. The complete presentation-production-history file passes **12/12**. The separate Team
-production-history file has the same two pre-existing `team.enemy.drifter` source-stage failures
-on both the exact stack base and this candidate; those failures are retained as a blocker rather
-than reported as passes. This feature changes no Team recipe input or generated presentation
-output. Three broader Couch navigation host assertions also fail identically on the exact stack
-base and candidate; targeted base/candidate runs preserve those upstream failures instead of
-attributing them to the quick controls.
+The post-merge quick-control, audio, Couch and input cohort passes **439/439** tests. The complete
+presentation-production-history file passes **12/12**. The separate Team production/history and
+recipe cohort passes 7/10 and retains the exact base's three source-stage failures: two
+`team.enemy.drifter` assertions and the Team Support review assertion. An independent run at the
+exact merged base reproduces those same three failures. They remain inherited evidence and are
+not reported as quick-control passes. This feature changes no Team recipe input or generated
+presentation output.
 
 Revision 5 of the fingerprint audit compares every declared Field Kit source group on the exact
 stack base and candidate. UI, screens, motion, effects, Team and audio fingerprints are byte-for-byte
@@ -62,4 +62,4 @@ the quick-control host, module and CSS as runtime paths outside the current decl
 
 Independent final review, hosted source gates, actual browser layout, physical keyboard, touch and
 controller checks, frozen-build inspection and public release acceptance remain pending. PR #333
-stays stacked on PR #370 until the online catalogue integration is merged.
+is now based directly on `main` after the online catalogue integration merged.
