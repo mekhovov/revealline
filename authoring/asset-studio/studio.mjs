@@ -1,3 +1,4 @@
+import { t, localizedText, localizedMessage } from '../../game/i18n/index.mjs';
 import { createStudioDownload } from './download.mjs';
 import { isTeamPreviewScenarioAvailable } from './team-preview-fixture.mjs';
 import {
@@ -46,7 +47,7 @@ import { createStudioViewMemory, resolveStudioView } from './view-memory.mjs';
 const $ = (id) => document.getElementById(id);
 const node = (tag, value = '', className = '', hostRole = null) => {
   const el = document.createElement(tag);
-  el.textContent = value;
+  localizedText(el, () =>value);
   el.className = className;
   if (hostRole) el.dataset.studioHost = hostRole;
   return el;
@@ -142,11 +143,11 @@ const audioPreferences = createAudioPreferences({
   window,
   getStorage: () => localStorage,
   onWarning: (message) => {
-    $('studio-audio-status').textContent = message;
+    localizedText($('studio-audio-status'), () =>message);
   },
 });
 const renderMasterPreferences = ({ muted, volume }) => {
-  $('studio-audio-mute').textContent = muted ? 'Unmute sound' : 'Mute sound';
+  localizedText($('studio-audio-mute'), () =>muted ? t("tools:unmuteSound") : t("tools:muteSound"));
   $('studio-master-volume').value = volume;
 };
 const stopMasterView = audioMaster.subscribe(renderMasterPreferences);
@@ -174,17 +175,17 @@ window.addEventListener('keydown', (event) => {
 function requireSettled(allowPixels = false) {
   if (!allowPixels && sprite.hasEdits())
     throw new Error(
-      'Prepare the edited sprite, or discard pixel edits, before changing workspace revisions.',
+      t("tools:prepareTheEditedSpriteOrDiscardPixelEditsBeforeChanging"),
     );
   if (pending)
     throw new Error(
-      'Validate and stage the prepared slot, or discard it, before changing workspace revisions.',
+      t("tools:validateAndStageThePreparedSlotOrDiscardItBefore"),
     );
 }
 function stage(
   document,
   assets = working.assets,
-  message = 'Change staged. Save a local revision or export to keep it.',
+  message = t("tools:changeStagedSaveALocalRevisionOrExportToKeep"),
 ) {
   undo.push(working);
   if (undo.length > 40) undo.shift();
@@ -197,7 +198,7 @@ function discardPreparation() {
   pending?.bitmap?.close();
   pending = null;
   $('asset-upload').value = '';
-  $('upload-summary').textContent = 'No replacement selected.';
+  localizedText($('upload-summary'), () =>t("tools:noReplacementSelected"));
   $('image-preparation').hidden = true;
   $('geometry-panel').hidden = true;
   $('stage-asset').disabled = true;
@@ -222,10 +223,9 @@ function filters() {
 function refreshInventory() {
   const view = resolved(),
     rows = matchingSlots(working.document.slots, view, filters());
-  $('slot-count').textContent = `${rows.length} / ${working.document.slots.length}`;
+  localizedText($('slot-count'), () =>`${rows.length} / ${working.document.slots.length}`);
   const coverage = presentationCoverage(working.document);
-  $('coverage-summary').textContent =
-    `${coverage.counts.missing} missing · ${coverage.counts.source} source · ${coverage.counts.produced} produced · ${coverage.counts.reviewed} reviewed. Readiness is evidence based.`;
+  localizedText($('coverage-summary'), () =>`${coverage.counts.missing} missing · ${coverage.counts.source} source · ${coverage.counts.produced} produced · ${coverage.counts.reviewed} reviewed. Readiness is evidence based.`);
   const list = document.createDocumentFragment();
   for (const slot of rows) {
     const asset = view.assets[slot.id],
@@ -269,7 +269,7 @@ function refreshInventory() {
   $('empty-inventory').hidden = rows.length !== 0;
 }
 function updateCollectionCount() {
-  $('collection-count').textContent = `${collectionSlots.size} slots selected`;
+  localizedText($('collection-count'), () =>`${collectionSlots.size} slots selected`);
 }
 function refresh() {
   if (!working.document.slots.some((slot) => slot.id === selected))
@@ -285,8 +285,7 @@ function refresh() {
     }),
   );
   $('filter-theme').value = view.theme.id;
-  $('workspace-summary').textContent =
-    `Theme ${view.theme.name} · document r${working.document.revision} · local save ${generation || 'none'}${working !== saved ? ' · unsaved changes' : ''}${view.collection ? ` · ${view.collection.id}` : ''}`;
+  localizedText($('workspace-summary'), () =>`Theme ${view.theme.name} · document r${working.document.revision} · local save ${generation || 'none'}${working !== saved ? ' · unsaved changes' : ''}${view.collection ? ` · ${view.collection.id}` : ''}`);
   $('undo-draft').disabled = !undo.length;
   $('redo-draft').disabled = !redo.length;
   $('reset-draft').disabled = working === saved;
@@ -299,9 +298,9 @@ function refreshInspector() {
   const slot = currentSlot(),
     view = resolved(),
     asset = view.assets[slot.id];
-  $('slot-id').textContent = slot.id;
-  $('slot-title').textContent = slot.label;
-  $('slot-quality').textContent = asset?.quality.stage || 'missing';
+  localizedText($('slot-id'), () =>slot.id);
+  localizedText($('slot-title'), () =>slot.label);
+  localizedText($('slot-quality'), () =>asset?.quality.stage || 'missing');
   const priorState = $('preview-state').value;
   $('preview-state').replaceChildren(
     ...slot.states.map((state) => {
@@ -311,19 +310,19 @@ function refreshInspector() {
     }),
   );
   if (slot.states.includes(priorState)) $('preview-state').value = priorState;
-  $('slot-description').textContent = asset?.description || 'No asset bound to this slot.';
+  localizedText($('slot-description'), () =>asset?.description || t("tools:noAssetBoundToThisSlot"));
   const facts = [
     [
-      'Frame',
+      t("tools:frame"),
       slot.dimensions
         ? `${slot.dimensions.width} × ${slot.dimensions.height} px`
-        : 'Scalable / media',
+        : t("tools:scalableMedia"),
     ],
-    ['Accepted', slot.kinds.join(', ')],
-    ['Budget', `${Math.round(slot.budget.maxBytes / 1024)} KiB`],
-    ['Alpha', slot.alpha],
-    ['Sampling', slot.sampling],
-    ['Required', slot.required ? 'Yes' : 'Optional theme owner'],
+    [t("tools:accepted"), slot.kinds.join(', ')],
+    [t("tools:budget"), `${Math.round(slot.budget.maxBytes / 1024)} KiB`],
+    [t("tools:alpha"), slot.alpha],
+    [t("tools:sampling"), slot.sampling],
+    [t("tools:required"), slot.required ? t("tools:yes") : t("tools:optionalThemeOwner")],
   ];
   $('slot-facts').replaceChildren(
     ...facts.map(([key, value]) => {
@@ -339,11 +338,11 @@ function refreshInspector() {
   $('slot-requirements').replaceChildren(
     ...slot.requirements.map((requirement) => node('li', requirement, '', 'body')),
   );
-  $('slot-contract').textContent = JSON.stringify(
+  localizedText($('slot-contract'), () =>JSON.stringify(
     { ...slot, currentAsset: asset ? `${asset.id}@${asset.revision}` : null },
     null,
     2,
-  );
+  ));
   const editable =
     slot.kinds.includes('image') &&
     slot.dimensions &&
@@ -416,7 +415,7 @@ async function refreshPreviews() {
         ...options,
         statusTarget: $(`${id}-preview-status`),
         cancelButton: $(`${id}-preview-cancel`),
-        label: id === 'current' ? 'Saved preview' : 'Draft preview',
+        label: id === 'current' ? t("tools:savedPreview") : t("tools:draftPreview"),
         isCurrent: () => requestedPreview === previewGeneration,
       }),
     ),
@@ -471,7 +470,7 @@ function refreshHistory() {
       );
       row.append(copy);
       if (item.file) {
-        const downloadButton = node('button', 'Download file', '', 'control');
+        const downloadButton = node('button', localizedMessage("tools:downloadFile"), '', 'control');
         downloadButton.type = 'button';
         downloadButton.onclick = () =>
           download(
@@ -482,20 +481,20 @@ function refreshHistory() {
       }
       if (!bindable) {
         row.append(
-          node('p', 'Source original · prepare it before binding to this slot.', '', 'secondary'),
+          node('p', localizedMessage("tools:sourceOriginalPrepareItBeforeBindingToThisSlot"), '', 'secondary'),
         );
         return row;
       }
-      const button = node('button', 'Bind this revision', '', 'control');
+      const button = node('button', localizedMessage("tools:bindThisRevision"), '', 'control');
       button.type = 'button';
       button.disabled = item.id === asset?.id && item.revision === asset?.revision;
       button.onclick = () =>
-        operation('Preparing workspace change…', () => {
+        operation(t("tools:preparingWorkspaceChange"), () => {
           requireSettled();
           stage(
             reviseStudioTheme(working.document, { bindings: { [selected]: ref(item) } }),
             working.assets,
-            'Earlier asset bound in a new immutable theme revision.',
+            t("tools:earlierAssetBoundInANewImmutableThemeRevision"),
           );
         });
       row.append(button);
@@ -564,7 +563,7 @@ function fileMime(file) {
 const preparedDownload = createStudioDownload({ document, target: $('prepared-download') });
 function download(blob, filename) {
   if (!blob) {
-    report(new Error('File bytes are unavailable.'));
+    report(new Error(t("tools:fileBytesAreUnavailable")));
     return;
   }
   preparedDownload.offer(blob, filename);
@@ -574,9 +573,9 @@ window.addEventListener('pagehide', (event) => {
 });
 
 async function fileMetadata(blob, dimensions, task) {
-  task.update('Reading asset bytes for verification…', 'reading');
+  task.update(t("tools:readingAssetBytesForVerification"), 'reading');
   const bytes = new Uint8Array(await blob.arrayBuffer());
-  task.update('Hashing the original asset bytes…', 'verifying');
+  task.update(t("tools:hashingTheOriginalAssetBytes"), 'verifying');
   const sha256 = await hashPresentationBytes(bytes);
   task.check();
   return {
@@ -588,14 +587,14 @@ async function fileMetadata(blob, dimensions, task) {
   };
 }
 async function decodeImage(blob, task) {
-  task.update('Reading the image header…', 'reading');
+  task.update(t("tools:readingTheImageHeader"), 'reading');
   const dataURL = await new Promise((resolve, reject) => {
     const reader = new FileReader();
     const cleanup = () => task.signal.removeEventListener('abort', cancel);
     const cancel = () => {
       reader.abort();
       cleanup();
-      reject(new DOMException('Image read cancelled.', 'AbortError'));
+      reject(new DOMException(t("tools:imageReadCancelled"), 'AbortError'));
     };
     reader.onload = () => {
       cleanup();
@@ -608,7 +607,7 @@ async function decodeImage(blob, task) {
     task.signal.addEventListener('abort', cancel, { once: true });
     reader.readAsDataURL(blob);
   });
-  task.update('Validating image dimensions…', 'verifying');
+  task.update(t("tools:validatingImageDimensions"), 'verifying');
   const info = inspectImageDataUrl(dataURL);
   if (!info.valid) throw new Error(info.errors.join(' '));
   if (
@@ -619,12 +618,12 @@ async function decodeImage(blob, task) {
     throw new Error(
       `Studio images must fit ${LIMITS.imageSide} px per side and ${LIMITS.imagePixels.toLocaleString()} total pixels. Resize externally, retaining your original.`,
     );
-  task.update('Decoding the original image…', 'decoding');
+  task.update(t("tools:decodingTheOriginalImage"), 'decoding');
   const bitmap = await createImageBitmap(blob);
   try {
     task.check();
     if (bitmap.width !== info.width || bitmap.height !== info.height)
-      throw new Error('Decoded image dimensions do not match its header.');
+      throw new Error(t("tools:decodedImageDimensionsDoNotMatchItsHeader"));
     return bitmap;
   } catch (error) {
     bitmap.close();
@@ -658,7 +657,7 @@ async function startUpload(file, fromSprite = false, task) {
   if (!slot.kinds.includes(kind))
     throw new Error(`This slot accepts ${slot.kinds.join(', ')}. Choose an appropriate file.`);
   if (file.size > LIMITS.assetBytes)
-    throw new Error('The original exceeds the 4 MiB asset budget.');
+    throw new Error(t("tools:theOriginalExceedsThe4MibAssetBudget"));
   const blob = new Blob([file], { type: mime });
   const revision = nextAssetRevision(working.document, slot.id);
   const record = {
@@ -667,9 +666,9 @@ async function startUpload(file, fromSprite = false, task) {
     kind,
     description: slot.label,
     provenance: {
-      creator: 'Pending creator',
+      creator: t("tools:pendingCreator"),
       source: file.name || 'Local pixel editor',
-      license: 'Pending rights declaration',
+      license: t("tools:pendingRightsDeclaration"),
       prompt: '',
       parent: null,
     },
@@ -708,17 +707,16 @@ async function startUpload(file, fromSprite = false, task) {
     adopted = true;
     if (fromSprite) sprite.acceptSnapshot();
     $('discard-asset').disabled = false;
-    $('asset-source').value = file.name || 'Local pixel editor';
+    $('asset-source').value = file.name || t("tools:localPixelEditor");
     $('asset-description').value = slot.label;
-    $('upload-summary').textContent =
-      `${file.name || 'Local sprite'} · ${Math.ceil(blob.size / 1024)} KiB${bitmap ? ` · ${bitmap.width} × ${bitmap.height} px original` : ''}`;
+    localizedText($('upload-summary'), () =>`${file.name || t("tools:localSprite")} · ${Math.ceil(blob.size / 1024)} KiB${bitmap ? ` · ${bitmap.width} × ${bitmap.height} px original` : ''}`);
     $('image-preparation').hidden = !bitmap;
     if (crop) setCrop(crop);
     populateGeometry();
     $('stage-asset').disabled = false;
     refreshPreviews();
     status(
-      'Replacement prepared. Check geometry and enter actual creator, source, and rights before staging.',
+      t("tools:replacementPreparedCheckGeometryAndEnterActualCreatorSourceAnd"),
     );
   } finally {
     if (!adopted) bitmap?.close();
@@ -756,7 +754,7 @@ function drawSource() {
   }
 }
 async function cropCandidate(preparation, slot, crop, task) {
-  task.update('Encoding the crop at the slot frame size…', 'encoding');
+  task.update(t("tools:encodingTheCropAtTheSlotFrameSize"), 'encoding');
   const canvas = document.createElement('canvas');
   canvas.width = slot.dimensions.width;
   canvas.height = slot.dimensions.height;
@@ -775,7 +773,7 @@ async function cropCandidate(preparation, slot, crop, task) {
   );
   const blob = await new Promise((resolve) => canvas.toBlob(resolve, 'image/png'));
   task.check();
-  if (!blob) throw new Error('The browser could not encode this crop.');
+  if (!blob) throw new Error(t("tools:theBrowserCouldNotEncodeThisCrop"));
   const asset = structuredClone(preparation.template);
   asset.file = await fileMetadata(blob, canvas, task);
   asset.geometry = imageGeometry(canvas, slot);
@@ -783,7 +781,7 @@ async function cropCandidate(preparation, slot, crop, task) {
   return { candidate: asset, candidateBlob: blob, preparedCrop: { ...crop } };
 }
 async function prepareCrop(task) {
-  if (!pending?.bitmap) throw new Error('Choose an image first.');
+  if (!pending?.bitmap) throw new Error(t("tools:chooseAnImageFirst"));
   const preparation = pending;
   const candidate = await cropCandidate(preparation, currentSlot(), getCrop(), task);
   task.check();
@@ -793,7 +791,7 @@ async function prepareCrop(task) {
   drawSource();
   refreshPreviews();
   status(
-    'Derivative prepared. Check geometry and enter actual creator, source, and rights before staging.',
+    t("tools:derivativePreparedCheckGeometryAndEnterActualCreatorSourceAnd"),
   );
 }
 
@@ -805,9 +803,9 @@ function populateGeometry() {
   $('pivot-x').disabled = $('pivot-y').disabled = !controls.pivot;
   $('rotor-anchors').disabled = !controls.rotors;
   $('nine-slice').disabled = !controls.nineSlice;
-  $('geometry-usage').textContent = controls.pivot
-    ? 'The pivot places this artwork around its unchanged gameplay center. Rotor hubs and panel slices are editable only where the renderer supports them.'
-    : 'This interface or picture slot uses centered placement. Crop the source to change its composition; unsupported anchors and slices stay locked.';
+  localizedText($('geometry-usage'), () =>controls.pivot
+    ? t("tools:thePivotPlacesThisArtworkAroundItsUnchangedGameplayCenter")
+    : t("tools:thisInterfaceOrPictureSlotUsesCenteredPlacementCropThe"));
   $('pivot-x').value = geometry.pivot.x;
   $('pivot-y').value = geometry.pivot.y;
   $('rotor-anchors').value = JSON.stringify(geometry.rotorAnchors, null, 2);
@@ -823,12 +821,12 @@ function editedGeometry() {
   };
 }
 async function validatePending(geometryOnly = false, task) {
-  if (!pending?.candidate) throw new Error('Prepare an image crop or choose media first.');
+  if (!pending?.candidate) throw new Error(t("tools:prepareAnImageCropOrChooseMediaFirst"));
   if (pending.bitmap) {
     const crop = getCrop();
     if (Object.keys(crop).some((key) => crop[key] !== pending.preparedCrop?.[key]))
       throw new Error(
-        'The crop has changed. Prepare derivative before applying geometry or staging.',
+        t("tools:theCropHasChangedPrepareDerivativeBeforeApplyingGeometryOr"),
       );
   }
   const asset = structuredClone(pending.candidate);
@@ -837,7 +835,7 @@ async function validatePending(geometryOnly = false, task) {
     for (const id of ['asset-creator', 'asset-source', 'asset-license'])
       if (!$(id).value.trim()) {
         $(id).focus();
-        throw new Error('Enter the actual creator, source, and license / rights statement.');
+        throw new Error(t("tools:enterTheActualCreatorSourceAndLicenseRightsStatement"));
       }
     asset.description = $('asset-description').value.trim() || currentSlot().label;
     asset.provenance = {
@@ -862,11 +860,11 @@ async function validatePending(geometryOnly = false, task) {
   if (geometryOnly) {
     pending.candidate = asset;
     refreshPreviews();
-    status('Geometry checked and applied to the draft preview.');
+    status(t("tools:geometryCheckedAndAppliedToTheDraftPreview"));
     return;
   }
   if (asset.kind === 'image') {
-    task.update('Decoding and checking transparency…', 'decoding');
+    task.update(t("tools:decodingAndCheckingTransparency"), 'decoding');
     const bitmap = await createImageBitmap(pending.candidateBlob),
       frame = asset.geometry.frame,
       canvas = document.createElement('canvas');
@@ -892,37 +890,37 @@ async function validatePending(geometryOnly = false, task) {
     const measured = pixelBounds(context.getImageData(0, 0, frame.width, frame.height));
     bitmap.close();
     if (currentSlot().alpha === 'required' && !measured.transparent)
-      throw new Error('This slot requires transparency; the candidate is fully opaque.');
+      throw new Error(t("tools:thisSlotRequiresTransparencyTheCandidateIsFullyOpaque"));
     if (currentSlot().alpha === 'opaque' && measured.transparent)
-      throw new Error('This slot requires a fully opaque image.');
+      throw new Error(t("tools:thisSlotRequiresAFullyOpaqueImage"));
     if (!measured.occupiedBounds)
-      throw new Error('The candidate is entirely transparent. Paint or import a visible asset.');
+      throw new Error(t("tools:theCandidateIsEntirelyTransparentPaintOrImportAVisible"));
   }
   if (asset.kind === 'font') {
-    task.update('Reading and decoding the candidate font…', 'decoding');
+    task.update(t("tools:readingAndDecodingTheCandidateFont"), 'decoding');
     const fontBytes = await pending.candidateBlob.arrayBuffer();
     task.check();
-    await new FontFace('RLStudioValidation', fontBytes).load();
+    await new FontFace(t("tools:rlstudiovalidation"), fontBytes).load();
   }
-  task.update('Verifying original bytes and replacement history…', 'verifying');
+  task.update(t("tools:verifyingOriginalBytesAndReplacementHistory"), 'verifying');
   const verified = await verifyThemeAssets(next, bytes, { signal: task.signal });
   task.check();
   discardPreparation();
   stage(
     next,
     verified,
-    'Replacement validated and staged. The original source and earlier revisions remain in the bundle.',
+    t("tools:replacementValidatedAndStagedTheOriginalSourceAndEarlierRevisions"),
   );
 }
-const editGeometry = node('button', 'Edit current raster metadata', '', 'control');
+const editGeometry = node('button', localizedMessage("tools:editCurrentRasterMetadata"), '', 'control');
 editGeometry.type = 'button';
 editGeometry.id = 'edit-geometry';
 $('asset-upload-label').after(editGeometry);
 editGeometry.onclick = () =>
-  operation('Preparing workspace change…', () => {
+  operation(t("tools:preparingWorkspaceChange"), () => {
     requireSettled();
     const asset = resolved().assets[selected];
-    if (asset.kind !== 'image') throw new Error('Choose a raster asset first.');
+    if (asset.kind !== 'image') throw new Error(t("tools:chooseARasterAssetFirst"));
     const candidate = {
       ...structuredClone(asset),
       ...nextAssetRevision(working.document, selected),
@@ -943,7 +941,7 @@ editGeometry.onclick = () =>
     populateGeometry();
     $('discard-asset').disabled = false;
     $('stage-asset').disabled = false;
-    $('upload-summary').textContent = 'Editing metadata; existing bytes remain unchanged.';
+    localizedText($('upload-summary'), () =>t("tools:editingMetadataExistingBytesRemainUnchanged"));
   });
 const sprite = mountSpritePanel({
   onError: report,
@@ -951,12 +949,12 @@ const sprite = mountSpritePanel({
   onPrepare: (blob, task) =>
     startUpload(new File([blob], 'local-sprite.png', { type: 'image/png' }), true, task),
 });
-const discardPixels = node('button', 'Discard pixel edits', '', 'control');
+const discardPixels = node('button', localizedMessage("tools:discardPixelEdits"), '', 'control');
 discardPixels.type = 'button';
 $('edit-current').after(discardPixels);
 discardPixels.onclick = () => {
   sprite.reset();
-  status('Pixel editor cleared. Prepared and staged assets are unchanged.');
+  status(t("tools:pixelEditorClearedPreparedAndStagedAssetsAreUnchanged"));
 };
 $('new-sprite').onclick = () => {
   try {
@@ -968,7 +966,7 @@ $('new-sprite').onclick = () => {
   }
 };
 $('edit-current').onclick = () =>
-  operation('Decoding the current sprite…', async (task) => {
+  operation(t("tools:decodingTheCurrentSprite"), async (task) => {
     requireSettled();
     const asset = resolved().assets[selected],
       bitmap = await createImageBitmap(working.assets.get(asset.file.sha256)),
@@ -995,13 +993,13 @@ $('edit-current').onclick = () =>
     );
     bitmap.close();
     sprite.open(frame.width, frame.height, ctx.getImageData(0, 0, frame.width, frame.height).data);
-    status('Current raster loaded in the pixel editor.');
+    status(t("tools:currentRasterLoadedInThePixelEditor"));
   });
 $('asset-upload').onchange = () => {
   const file = $('asset-upload').files[0];
-  if (file) operation('Reading replacement file…', (task) => startUpload(file, false, task));
+  if (file) operation(t("tools:readingReplacementFile"), (task) => startUpload(file, false, task));
 };
-$('prepare-crop').onclick = () => operation('Preparing crop derivative…', prepareCrop);
+$('prepare-crop').onclick = () => operation(t("tools:preparingCropDerivative"), prepareCrop);
 $('fit-crop').onclick = () => {
   if (pending?.bitmap)
     setCrop(
@@ -1017,17 +1015,17 @@ $('fit-crop').onclick = () => {
 $('download-original').onclick = () =>
   download(pending?.blob, `original-${selected}.${extension(pending?.blob?.type)}`);
 $('apply-geometry').onclick = () =>
-  operation('Checking preview geometry…', (task) => validatePending(true, task));
+  operation(t("tools:checkingPreviewGeometry"), (task) => validatePending(true, task));
 $('stage-asset').onclick = () =>
-  operation('Validating replacement…', (task) => validatePending(false, task));
+  operation(t("tools:validatingReplacement"), (task) => validatePending(false, task));
 $('discard-asset').onclick = () => {
   discardPreparation();
   refreshInspector();
-  status('Prepared slot discarded. Staged workspace revisions are unchanged.');
+  status(t("tools:preparedSlotDiscardedStagedWorkspaceRevisionsAreUnchanged"));
 };
 $('token-form').onsubmit = (event) => {
   event.preventDefault();
-  operation('Preparing workspace change…', () => {
+  operation(t("tools:preparingWorkspaceChange"), () => {
     requireSettled();
     const tokens = Object.fromEntries(
       [...new FormData(event.currentTarget)].map(([key, value]) => [
@@ -1045,7 +1043,7 @@ $('token-form').onsubmit = (event) => {
   }),
 );
 $('filter-theme').onchange = () =>
-  operation('Preparing workspace change…', () => {
+  operation(t("tools:preparingWorkspaceChange"), () => {
     try {
       requireSettled();
       const previous = working.document,
@@ -1084,9 +1082,9 @@ $('clear-collection').onclick = () => {
   refreshPrompt();
 };
 $('stage-collection').onclick = () =>
-  operation('Preparing workspace change…', () => {
+  operation(t("tools:preparingWorkspaceChange"), () => {
     requireSettled();
-    if (!collectionSlots.size) throw new Error('Select at least one slot to build a collection.');
+    if (!collectionSlots.size) throw new Error(t("tools:selectAtLeastOneSlotToBuildACollection"));
     const view = resolved(),
       requiredSlots = [...collectionSlots];
     const bindings = Object.fromEntries(
@@ -1103,7 +1101,7 @@ $('stage-collection').onclick = () =>
         bindings,
       }),
       working.assets,
-      'Collection staged atomically. Every selected slot has a valid binding.',
+      t("tools:collectionStagedAtomicallyEverySelectedSlotHasAValidBinding"),
     );
   });
 for (const button of document.querySelectorAll('[data-prompt-action]'))
@@ -1119,10 +1117,10 @@ let copyRequest = 0;
 $('copy-generated-prompt').onclick = async () => {
   const request = ++copyRequest;
   const button = $('copy-generated-prompt');
-  const lease = promptStatus.begin({ message: 'Copying the complete prompt…' });
+  const lease = promptStatus.begin({ message: t("tools:copyingTheCompletePrompt") });
   try {
     await navigator.clipboard.writeText($('generated-prompt').value);
-    lease.finish({ message: 'Complete prompt copied.' });
+    lease.finish({ message: t("tools:completePromptCopied") });
   } catch {
     if (request !== copyRequest) return;
     if (document.hasFocus() && document.activeElement === button) {
@@ -1130,50 +1128,50 @@ $('copy-generated-prompt').onclick = async () => {
       $('generated-prompt').select();
     }
     lease.finish({
-      message: 'Clipboard unavailable. Select the full prompt and press Ctrl/Cmd+C.',
+      message: t("tools:clipboardUnavailableSelectTheFullPromptAndPressCtrlCmd"),
       state: 'error',
     });
   }
 };
 $('add-team-anchors').onclick = () =>
-  operation('Adding editable Team presentation…', () => {
+  operation(t("tools:addingEditableTeamPresentation"), () => {
     requireSettled();
     stage(
       addTeamPresentationSlots(working.document),
       working.assets,
-      'Team presentation slots added to this draft. Choose Couch Team and the matching arena/scene to preview; save or export to keep the new revision. Public game assets are unchanged.',
+      t("tools:teamPresentationSlotsAddedToThisDraftChooseCouchTeam"),
     );
   });
 $('undo-draft').onclick = () =>
-  operation('Preparing workspace change…', () => {
+  operation(t("tools:preparingWorkspaceChange"), () => {
     requireSettled();
     if (!undo.length) return;
     redo.push(working);
     working = undo.pop();
     refresh();
-    status('Draft change undone. Saved history is intact.');
+    status(t("tools:draftChangeUndoneSavedHistoryIsIntact"));
   });
 $('redo-draft').onclick = () =>
-  operation('Preparing workspace change…', () => {
+  operation(t("tools:preparingWorkspaceChange"), () => {
     requireSettled();
     if (!redo.length) return;
     undo.push(working);
     working = redo.pop();
     refresh();
-    status('Draft change restored.');
+    status(t("tools:draftChangeRestored"));
   });
 $('reset-draft').onclick = () =>
-  operation('Preparing workspace change…', () => {
+  operation(t("tools:preparingWorkspaceChange"), () => {
     requireSettled();
     working = saved;
     undo = [];
     redo = [];
     sprite.reset();
     refresh();
-    status('Returned to the last saved workspace.');
+    status(t("tools:returnedToTheLastSavedWorkspace"));
   });
 $('record-review').onclick = () =>
-  operation('Preparing workspace change…', () => {
+  operation(t("tools:preparingWorkspaceChange"), () => {
     requireSettled();
     const evidence = [
       ...new Set(
@@ -1184,9 +1182,9 @@ $('record-review').onclick = () =>
       ),
     ];
     if (!evidence.length)
-      throw new Error('Record the concrete review checks before marking this asset reviewed.');
+      throw new Error(t("tools:recordTheConcreteReviewChecksBeforeMarkingThisAssetReviewed"));
     const current = resolved().assets[selected];
-    if (!current) throw new Error('Bind an asset before reviewing it.');
+    if (!current) throw new Error(t("tools:bindAnAssetBeforeReviewingIt"));
     const asset = {
       ...structuredClone(current),
       ...nextAssetRevision(working.document, selected),
@@ -1199,16 +1197,16 @@ $('record-review').onclick = () =>
         bindings: { [selected]: ref(asset) },
       }),
       working.assets,
-      'Review evidence recorded in a new immutable revision.',
+      t("tools:reviewEvidenceRecordedInANewImmutableRevision"),
     );
     $('review-evidence').value = '';
   });
 $('save-workspace').onclick = () =>
-  operation('Preparing a local revision…', async (task) => {
+  operation(t("tools:preparingALocalRevision"), async (task) => {
     requireSettled();
     if (!storageReady)
       throw new Error(
-        'Local storage has not loaded successfully. Export your work, then use Reload saved to retry.',
+        t("tools:localStorageHasNotLoadedSuccessfullyExportYourWorkThen"),
       );
     task.commit();
     const result = await store.save(working.document, working.assets, {
@@ -1221,26 +1219,26 @@ $('save-workspace').onclick = () =>
     undo = [];
     redo = [];
     refresh();
-    status('Local revision saved atomically. Player saves are untouched.', 'success');
+    status(t("tools:localRevisionSavedAtomicallyPlayerSavesAreUntouched"), 'success');
   });
 $('export-workspace').onclick = () =>
-  operation('Verifying original bytes for export…', async (task) => {
+  operation(t("tools:verifyingOriginalBytesForExport"), async (task) => {
     requireSettled();
     const bundle = await exportThemeBundle(working.document, working.assets, {
       signal: task.signal,
     });
     task.check();
     download(bundle, `revealline-${resolved().theme.id}-r${working.document.revision}.rltheme`);
-    status('Theme download requested with all source files and immutable revisions.', 'success');
+    status(t("tools:themeDownloadRequestedWithAllSourceFilesAndImmutableRevisions"), 'success');
   });
 $('import-workspace').onchange = () => {
   const file = $('import-workspace').files[0];
   if (!file) return;
   $('import-workspace').value = '';
-  operation('Reading and validating the imported bundle…', async (task) => {
+  operation(t("tools:readingAndValidatingTheImportedBundle"), async (task) => {
     requireSettled();
     const incoming = await importThemeBundle(file, { signal: task.signal });
-    task.update('Verifying merged assets and immutable revisions…', 'verifying');
+    task.update(t("tools:verifyingMergedAssetsAndImmutableRevisions"), 'verifying');
     const next = adoptStudioBundle(working.document, incoming.document),
       merged = new Map([...working.assets, ...incoming.assets]);
     const bytes = await verifyThemeAssets(next, merged, { signal: task.signal });
@@ -1248,17 +1246,17 @@ $('import-workspace').onchange = () => {
     stage(
       next,
       bytes,
-      'Verified collection staged atomically. Current and imported source files are retained. Save to persist.',
+      t("tools:verifiedCollectionStagedAtomicallyCurrentAndImportedSourceFilesAre"),
     );
   });
 };
 async function loadWorkspace(task) {
   requireSettled();
   if (working !== saved)
-    throw new Error('Export or save the staged workspace, or Reset to saved, before reloading.');
+    throw new Error(t("tools:exportOrSaveTheStagedWorkspaceOrResetToSaved"));
   const result = await store.load();
   task.check();
-  if (!result) task.update('Loading and verifying the current release collection…', 'downloading');
+  if (!result) task.update(t("tools:loadingAndVerifyingTheCurrentReleaseCollection"), 'downloading');
   const published = result ? null : await loadPublishedStudio({ signal: task.signal });
   task.check();
   storageReady = true;
@@ -1276,19 +1274,19 @@ async function loadWorkspace(task) {
   refresh();
   status(
     result
-      ? 'Saved studio workspace loaded.'
+      ? t("tools:savedStudioWorkspaceLoaded")
       : published
-        ? 'Current release assets loaded. Changes stay in this local studio.'
-        : 'Source registry loaded. A compiled release collection is not present.',
+        ? t("tools:currentReleaseAssetsLoadedChangesStayInThisLocalStudio")
+        : t("tools:sourceRegistryLoadedACompiledReleaseCollectionIsNotPresent"),
   );
 }
-$('reload-workspace').onclick = () => operation('Loading saved Studio workspace…', loadWorkspace);
+$('reload-workspace').onclick = () => operation(t("tools:loadingSavedStudioWorkspace"), loadWorkspace);
 $('load-release').onclick = () =>
-  operation('Loading and verifying the release collection…', async (task) => {
+  operation(t("tools:loadingAndVerifyingTheReleaseCollection"), async (task) => {
     requireSettled();
     const published = await loadPublishedStudio({ signal: task.signal });
-    task.update('Verifying merged release assets…', 'verifying');
-    if (!published) throw new Error('This source checkout has no compiled release collection.');
+    task.update(t("tools:verifyingMergedReleaseAssets"), 'verifying');
+    if (!published) throw new Error(t("tools:thisSourceCheckoutHasNoCompiledReleaseCollection"));
     const next = adoptStudioBundle(working.document, published.document);
     const assets = await verifyThemeAssets(
       next,
@@ -1299,7 +1297,7 @@ $('load-release').onclick = () =>
     stage(
       next,
       assets,
-      'Release collection staged. Existing local history is retained; save or undo this change.',
+      t("tools:releaseCollectionStagedExistingLocalHistoryIsRetainedSaveOr"),
     );
   });
 window.addEventListener('pagehide', (event) => {
@@ -1345,7 +1343,7 @@ for (const [id, values] of [
     }),
   );
 refresh();
-operation('Loading saved Studio workspace…', loadWorkspace).then(() => {
+operation(t("tools:loadingSavedStudioWorkspace"), loadWorkspace).then(() => {
   initialWorkspaceLoad = false;
   if (
     restoredView &&

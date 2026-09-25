@@ -1,3 +1,4 @@
+import { t, localizedText } from '../i18n/index.mjs';
 import { createDisplayPreferences } from '../display-preferences.mjs';
 import { attachPreferenceRestoration } from '../ui/preference-restoration.mjs';
 
@@ -21,7 +22,7 @@ export function mountReplayDisplay({
   let disposed = false;
   const warning = (message) => {
     if (disposed) return;
-    notice.textContent = message;
+    localizedText(notice, () =>message);
     notice.hidden = !message;
   };
   const preferences = createDisplayPreferences({
@@ -38,9 +39,9 @@ export function mountReplayDisplay({
     size.value = state.textSize;
     reduced.checked = state.reducedEffects;
     const systemCap = state.effectiveReducedEffects && !state.reducedEffects;
-    cap.textContent = systemCap
-      ? 'Your system requests reduced motion. Replay effects remain reduced; your saved choice is unchanged.'
-      : '';
+    localizedText(cap, () =>systemCap
+      ? t("interface:yourSystemRequestsReducedMotionReplayEffectsRemainReducedYour")
+      : '');
     cap.hidden = !systemCap;
   };
   const stopView = preferences.subscribe(render);

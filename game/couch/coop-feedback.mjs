@@ -1,3 +1,4 @@
+import { t } from '../i18n/index.mjs';
 import { coopGroundName } from './coop-ground.mjs';
 import { isJourneyTeamLevel } from '../coop/foundations.mjs';
 import { foundationCaptionForCell } from '../ui/foundation-feedback.mjs';
@@ -20,18 +21,18 @@ export function coopFoundationReturnCaption(run, events = run.events) {
 export function coopFailureFeedback(run, event) {
   if (event?.cause === 'lethal-terrain')
     return {
-      cause: 'Unclaimed lethal field caught a craft.',
-      advice: 'Enclose the crossed field before entering it. Support affects enemies, not terrain.',
+      cause: t("interface:unclaimedLethalFieldCaughtACraft"),
+      advice: t("interface:encloseTheCrossedFieldBeforeEnteringItSupportAffectsEnemies"),
     };
   if (event?.cause === 'self-trail')
     return {
-      cause: 'An unfinished line crossed itself.',
+      cause: t("interface:anUnfinishedLineCrossedItself"),
       advice: `Close your loop on ${coopGroundName(run.level)} before crossing your own line.`,
     };
   if (event?.cause === 'line-impact')
     return {
-      cause: 'A travelling spark reached an unfinished cut.',
-      advice: 'Intercept a nearby spark with Support or bank the cut sooner.',
+      cause: t("interface:aTravellingSparkReachedAnUnfinishedCut"),
+      advice: t("interface:interceptANearbySparkWithSupportOrBankTheCut"),
     };
   if (event?.cause === 'enemy-trail' || event?.cause === 'enemy-player') {
     const hunter = run.enemies.some((enemy) => enemy.id === event.enemy && enemy.type === 'hunter');
@@ -39,26 +40,26 @@ export function coopFailureFeedback(run, event) {
       return {
         cause: `An active reclaimed-ground roamer caught ${event.cause === 'enemy-trail' ? 'an unfinished line' : 'a craft'}.`,
         advice:
-          'Reclaimed ground closes cuts but does not protect you from roamers. Keep an escape corridor or use Support to slow one.',
+          t("interface:reclaimedGroundClosesCutsButDoesNotProtectYouFrom"),
       };
     return {
-      cause: `${hunter ? 'A Hunter' : 'A roaming enemy'} caught ${event.cause === 'enemy-trail' ? 'an unfinished line' : 'an exposed craft'}.`,
+      cause: `${hunter ? t("interface:aHunter") : t("interface:aRoamingEnemy")} caught ${event.cause === 'enemy-trail' ? 'an unfinished line' : 'an exposed craft'}.`,
       advice: hunter
-        ? 'Wait for the Hunter to recover, or use Support before the crossing.'
-        : 'Try a shorter loop or slow nearby enemies with Support.',
+        ? t("interface:waitForTheHunterToRecoverOrUseSupportBefore")
+        : t("interface:tryAShorterLoopOrSlowNearbyEnemiesWithSupport"),
     };
   }
   return {
-    cause: event ? 'A craft was knocked down.' : 'Both craft need a rescue.',
-    advice: 'Try smaller loops and keep a safe route back to your partner.',
+    cause: event ? t("interface:aCraftWasKnockedDown") : t("interface:bothCraftNeedARescue"),
+    advice: t("interface:trySmallerLoopsAndKeepASafeRouteBackTo"),
   };
 }
 
 export function coopRoamerCaption(event) {
   if (event.type === 'rover.warning')
-    return 'Roamer waking: one active second to move away. Keep a reclaimed escape corridor.';
+    return t("interface:roamerWakingOneActiveSecondToMoveAwayKeepA");
   if (event.type === 'rover.activated')
-    return 'Roamer active on reclaimed ground. Watch both craft; Support can slow it.';
+    return t("interface:roamerActiveOnReclaimedGroundWatchBothCraftSupportCan");
   return null;
 }
 

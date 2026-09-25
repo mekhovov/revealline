@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import { validateLocalization } from './localization.mjs';
 /** Local browser-game tooling. Node built-ins only; no package install needed. */
 import { createHash } from 'node:crypto';
 import { deflateSync } from 'node:zlib';
@@ -416,6 +417,7 @@ function addPublicEntries(entries, info) {
   );
   const compiled =
     fieldKit && has('game/ui/field-kit-compiled.css') && has('game/presentation/page-entry.mjs');
+  const makePage = publicPage;
   const links = [
     `<a href="./${html(info.entry)}">Play solo</a>`,
     ...(has('game/couch/index.html') ? ['<a href="./game/couch/">Couch duel</a>'] : []),
@@ -446,7 +448,7 @@ function addPublicEntries(entries, info) {
     entries.push({
       name: 'index.html',
       bytes: Buffer.from(
-        publicPage(
+        makePage(
           'Play',
           `<small>REVEAL LINE · ${html(info.version)}</small><h1>Clear a path.<br>Reveal a world.</h1><p>Close a line through changing worlds, collect the pictures you uncover and try a new route. Play with keys, touch or a compatible controller.</p><nav>${links.join('')}</nav><p><a href="./privacy.html">Privacy and local storage</a> · <a href="./credits.html">Credits and notices</a></p><small>${info.sourceRevision ? `Saved source <code>${html(info.sourceRevision)}</code>` : 'Development distribution — source revision not recorded.'}</small>`,
           fieldKit,
@@ -462,7 +464,7 @@ function addPublicEntries(entries, info) {
   entries.push({
     name: 'privacy.html',
     bytes: Buffer.from(
-      publicPage(
+      makePage(
         'Privacy and local storage',
         '<p><a href="./">← Game home</a></p><h1>Your game stays here.</h1><p>This build has no account system, analytics SDK, advertising tracker, cloud scoreboard or multiplayer server. The game code does not upload your pictures, imported packs, replay files or player library.</p><p>The browser stores preferences, achievements, local scores and a suspended flight locally. Imported image packs and uploaded MP3 libraries use IndexedDB. Custom soundtrack backups contain the original audio bytes; the player-library JSON alone is not a complete media backup. The playground uses session storage to pass its configuration to the preview. If you explicitly prepare offline play, the service worker saves this version’s shipped files in the browser cache.</p><p>Export the player library, packs and suspended flight when you want a portable backup. Clearing site data removes local data; private browsing, storage limits or browser cleanup can also remove it. There is no server backup or cross-device sync.</p><p>A public hosting provider receives ordinary page and asset requests and may keep access logs. This game cannot promise the host keeps no logs. The publisher is responsible for disclosing any hosting-specific collection or additional services it adds.</p><p>Imported content is treated as bounded data and media. Installed packs cannot provide executable game scripts or contacts with remote services. Local scores are editable local records, not authenticated competitive results.</p>',
         fieldKit,
@@ -473,7 +475,7 @@ function addPublicEntries(entries, info) {
   entries.push({
     name: 'credits.html',
     bytes: Buffer.from(
-      publicPage(
+      makePage(
         'Credits and notices',
         '<p><a href="./">← Game home</a></p><h1>Credits and notices</h1><p>Reveal Line is an original territory-capture game inspired by the Xonix/Qix tradition. Reference games informed design research; their proprietary music, pictures, code and logos are not bundled as game assets.</p><p>The included Phaser engine retains its <a href="./game/vendor/PHASER-LICENSE.md">MIT license and copyright notice</a>.' +
           (has('game/vendor/MEDIABUNNY-LICENSE.txt') && has('game/vendor/mediabunny-1.59.1.json')
