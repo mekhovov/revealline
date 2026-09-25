@@ -35,6 +35,15 @@ test('source qualification retains mandatory guards and restorable suites while 
     legacy,
     /Defer full artifact build to merged-source qualification\n\s+if: vars\.REVEALLINE_FULL_CI != 'true'/,
   );
+  assert.match(
+    legacy,
+    /Require the previous stable release on public Pages\n\s+if: steps\.admission\.outputs\.mode == 'release'/,
+  );
+  assert.match(legacy, /release-train-boundary\.mjs public/);
+  assert.match(
+    legacy,
+    /Require exact release version identity[\s\S]*?release-train-boundary\.mjs source \./,
+  );
   // Release routing reads controller infrastructure from main, never today's runner in an old tag.
   const gate = legacy.slice(legacy.indexOf('  release_gate:'), legacy.indexOf('  preflight:'));
   assert.match(gate, /ref: main/);
@@ -272,6 +281,8 @@ test('delivery-only push is excluded after the controller glob while PR review a
   }
   assert.ok(push.includes('!publishing/pages-controller/evidence/**'));
   assert.ok(push.includes('!publishing/pages-controller/source-qualification.mjs'));
+  assert.ok(push.includes('!publishing/pages-controller/release-train-boundary.mjs'));
+  assert.ok(push.includes('!publishing/pages-controller/release-train-boundary.test.mjs'));
   assert.ok(push.includes('!publishing/pages-controller/*.test.mjs'));
   assert.ok(push.includes('!publishing/pages-controller/test_*.py'));
   assert.match(workflow, /publish\.mjs verify-artifact/);

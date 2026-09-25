@@ -8,6 +8,8 @@ on:
       - '!publishing/pages-controller/delivery/**'
       - '!publishing/pages-controller/evidence/**'
       - '!publishing/pages-controller/source-qualification.mjs'
+      - '!publishing/pages-controller/release-train-boundary.mjs'
+      - '!publishing/pages-controller/release-train-boundary.test.mjs'
       - '!publishing/pages-controller/*.test.mjs'
       - '!publishing/pages-controller/test_*.py'
   pull_request:
