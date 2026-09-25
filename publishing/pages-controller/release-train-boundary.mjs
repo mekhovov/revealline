@@ -43,8 +43,11 @@ export function verifySourceVersion({
   rootVersion,
   buildVersion,
 }) {
-  const match = /^Release v(\d+\.\d+\.\d+)(?:\s|$)/.exec(title || '');
-  if (!match) throw new Error('A release PR must have an exact Release vX.Y.Z title.');
+  const match = /^Release(?: evidence)? v(\d+\.\d+\.\d+)(?:\s|$)/.exec(title || '');
+  if (!match)
+    throw new Error(
+      'A release PR must have an exact Release vX.Y.Z or Release evidence vX.Y.Z title.',
+    );
   const version = stableVersion(packageVersion);
   for (const [name, value] of [
     ['package-lock version', lockVersion],
