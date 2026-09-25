@@ -1,0 +1,83 @@
+{
+  "format": "revealline-archive-public-acceptance.v1",
+  "archive": {
+    "id": "archive-86",
+    "repository": "mekhovov/revealline-archive-86",
+    "url": "https://mekhovov.github.io/revealline-archive-86/"
+  },
+  "preservedRelease": {
+    "version": "v0.116.1",
+    "sourceRevision": "279fd9df5ef7d2190a38b18f241a77267ddfb606",
+    "sourceTree": "12550e87e2c270318b0ac6c1560bae3a62847c63",
+    "tagObject": "7d66703cceac832613fdd347c15f759897f00e0b",
+    "releaseId": 396812921,
+    "distributionSha256": "75b8af467e2ab7543d2ac2969781dbf4a1596c81d89bb4e983bc8794f85deaa7"
+  },
+  "archiveSource": {
+    "pr": 1,
+    "head": "98804c7c9c0dd556d59db09e085906a6d2b556b3",
+    "mergeCommit": "8ef336f5931aa25f07d52d98e60445d652cf188a",
+    "mergeTree": "e02c62ade99d0a0dd690d6a1d7d658e1bdf8f9a5",
+    "review": "SAFE",
+    "reviewedExactHead": "98804c7c9c0dd556d59db09e085906a6d2b556b3"
+  },
+  "hosted": {
+    "exactHeadPrRun": 36182839207,
+    "exactMainRun": 36182943914,
+    "buildJob": 108229451981,
+    "deployJob": 108229696604,
+    "receiptsArtifact": {
+      "id": 10884519356,
+      "name": "archive86-verification-receipts",
+      "size_in_bytes": 60988,
+      "digest": "sha256:9a11b21625be6be2f313ee53bd793226273dc409dc20a05b00f4e202594636b5"
+    },
+    "pagesArtifact": {
+      "id": 10884469601,
+      "name": "github-pages",
+      "size_in_bytes": 534722973,
+      "digest": "sha256:b4e5c9fa29be6ef094b677a061a13e4edbab361412ef3be2148a291dd773cc99"
+    },
+    "deployment": {
+      "id": 6669047317,
+      "statusId": 18853028648,
+      "state": "success",
+      "environmentUrl": "https://mekhovov.github.io/revealline-archive-86/",
+      "createdAt": "2026-09-25T19:59:36Z"
+    },
+    "receipts": {
+      "expectedInventorySha256": "b98f4011c3346382c8ce802a082408c575999b3f654a657bb0bc0f33215233ef",
+      "receiptSha256": "7f859f667343cdee589e3e59856879606e88234fd9fda3e4a5ed7f821ca0c7fb",
+      "zipReceiptSha256": "61b7ee8f7d2434ec8cd41f0a437c85dd195f8b3790ab56bb1f12483b1061805f",
+      "files": 1153,
+      "bytes": 595743440,
+      "toolingCommit": "279fd9df5ef7d2190a38b18f241a77267ddfb606",
+      "status": "PASS"
+    }
+  },
+  "publicByteAudit": {
+    "status": "PASS",
+    "method": "GET every finite expected path; compare exact byte count and SHA-256 without retaining bodies",
+    "files": 1153,
+    "bytes": 595743440,
+    "failures": 0,
+    "transportRetries": 1,
+    "skips": 0,
+    "allFinalURLsExact": true,
+    "authorityUnchanged": true,
+    "verifiedAt": "2026-09-25T20:02:33.520486+00:00"
+  },
+  "browserAcceptance": {
+    "status": "PASS",
+    "surface": "Codex in-app Chromium automation",
+    "base": "https://mekhovov.github.io/revealline-archive-86/releases/v0.116.1/site/game/",
+    "observations": [
+      "The exact archive game route loaded the REVEAL / LINE title with Continue, Missions, Collection, Settings, More, and Sound controls.",
+      "More reported VERSION V0.116.1 and exposed controller practice, About, and Releases destinations.",
+      "About reported START PLAYING V0.116.1; Build Information showed v0.116.1 as current and preserved and retained the historical release list."
+    ],
+    "reloads": 0,
+    "retries": 0
+  },
+  "scope": "Immutable v0.116.1 preservation, exact public-byte audit, and bounded title, More, and About browser navigation. Physical-device/controller and comprehensive gameplay acceptance are outside this archive admission."
+}
