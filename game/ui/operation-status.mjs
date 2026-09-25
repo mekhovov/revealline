@@ -62,8 +62,7 @@ export function createOperationStatus(target, { isCurrent: hostCurrent = () => t
       const next = Object.hasOwn(options, 'progress')
         ? checkedProgress(options.progress)
         : undefined;
-      if (options.message !== undefined && label.textContent !== String(options.message))
-        localizedText(label, () => String(options.message));
+      if (options.message !== undefined) localizedText(label, options.message);
       if (options.stage !== undefined) target.dataset.stage = String(options.stage);
       if (next !== undefined) {
         meter.hidden = count.hidden = next === null;

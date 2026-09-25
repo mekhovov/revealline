@@ -1,5 +1,5 @@
 import { contentText } from '../i18n/content.mjs';
-import { localizedText, t } from '../i18n/index.mjs';
+import { localizedText, onLocaleChange, t } from '../i18n/index.mjs';
 const CONTROLS = 'button,a[href],select,input:not([type="hidden"]),textarea,summary';
 const DIRECTIONS = new Set(['up', 'right', 'down', 'left']);
 
@@ -34,6 +34,7 @@ export function attachControllerNavigation({
     focused = null,
     editing = null,
     reading = null,
+    localeReading = null,
     nativeScroll = null,
     readingInvalidated = false,
     destroyed = false,
@@ -139,7 +140,12 @@ export function attachControllerNavigation({
     const scrollable = !!readingMetrics(reading.region)?.max;
     if (getReadingPrompt) return `${reading.label}: ${getReadingPrompt({ scrollable })}`;
     const labels = getControlLabels();
-    return `${reading.label}: ${scrollable ? t('interface:upDownScroll') : t('interface:allTextIsVisible')} · ${labels.confirm} or ${labels.back} returns`;
+    return t('gameplay:orReturns', {
+      value1: reading.label,
+      value2: scrollable ? t('interface:upDownScroll') : t('interface:allTextIsVisible'),
+      value3: labels.confirm,
+      value4: labels.back,
+    });
   }
   function readingCurrent(owner = reading) {
     return (
@@ -149,7 +155,7 @@ export function attachControllerNavigation({
       visible(owner.origin) &&
       (doc.activeElement === owner.region ||
         (keyboard && owner.exit && doc.activeElement === owner.exit && visible(owner.exit))) &&
-      owner.region.textContent === owner.text &&
+      (owner.region.textContent === owner.text || localeReading === owner) &&
       owner.region.hasAttribute('data-game-reading') &&
       (owner.region.getAttribute('aria-label') || owner.region.getAttribute('aria-labelledby')) &&
       !(owner.region.tabIndex < 0) &&
@@ -173,8 +179,46 @@ export function attachControllerNavigation({
     readingMessage(readingHint(), owner);
     return true;
   }
-  function beginReading({ region, origin, label: name, exit = null } = {}) {
+  listeners.push(
+    onLocaleChange(
+      () => {
+        if (
+          destroyed ||
+          doc.hidden ||
+          doc.hasFocus?.() === false ||
+          scope !== getScope() ||
+          root !== getRoot() ||
+          !readingCurrent()
+        )
+          return void cancelReading({ invalidated: true });
+        const owner = reading;
+        localeReading = owner;
+        return () => {
+          try {
+            if (
+              destroyed ||
+              doc.hidden ||
+              doc.hasFocus?.() === false ||
+              scope !== getScope() ||
+              root !== getRoot() ||
+              !readingCurrent(owner)
+            )
+              return;
+            owner.text = owner.region.textContent;
+            readingContent.set(owner.region, owner.text);
+            if (owner.labelSource) owner.label = owner.labelSource();
+            refreshReadingHint();
+          } finally {
+            localeReading = null;
+          }
+        };
+      },
+      { before: true },
+    ),
+  );
+  function beginReading({ region, origin, label: name, getLabel = null, exit = null } = {}) {
     if (destroyed) return false;
+    const labelSource = typeof getLabel === 'function' ? getLabel : null;
     sync();
     if (
       scope === 'flight' ||
@@ -218,6 +262,7 @@ export function attachControllerNavigation({
       origin,
       exit,
       label: name.trim(),
+      labelSource,
       text: region.textContent,
       scope,
       root,

@@ -6,6 +6,7 @@
   const storageKey = 'revealline.locale.v1';
   const locales = ['en', 'uk'];
   const listeners = new Set();
+  const beforeListeners = new Set();
   const bindings = new WeakMap();
   const textNodes = new WeakMap();
   const richBindings = new WeakMap();
@@ -193,19 +194,28 @@
     const scroll = [...(document?.querySelectorAll('*') || [])]
       .filter((node) => node.scrollTop || node.scrollLeft)
       .map((node) => [node, node.scrollTop, node.scrollLeft]);
-    if (host.document) host.document.documentElement.lang = getLocale();
-    for (const ref of elements) {
-      const element = ref.deref();
-      if (!element) {
-        elements.delete(ref);
-        continue;
+    // A reading controller may pin valid ownership before translated text changes.
+    // Its returned finalizer accepts only that same owner after the whole refresh.
+    const finalize = [...beforeListeners]
+      .map((callback) => callback(getLocale()))
+      .filter((callback) => typeof callback === 'function');
+    try {
+      if (host.document) host.document.documentElement.lang = getLocale();
+      for (const ref of elements) {
+        const element = ref.deref();
+        if (!element) {
+          elements.delete(ref);
+          continue;
+        }
+        // Retired cards may still be retained by an asynchronous owner. Their
+        // producers must not read a stale library or revive detached controls.
+        if (element.isConnected === false) continue;
+        for (const [field, value] of bindings.get(element) || []) apply(element, field, value);
       }
-      // Retired cards may still be retained by an asynchronous owner. Their
-      // producers must not read a stale library or revive detached controls.
-      if (element.isConnected === false) continue;
-      for (const [field, value] of bindings.get(element) || []) apply(element, field, value);
+      for (const callback of listeners) callback(getLocale());
+    } finally {
+      for (const callback of finalize) callback();
     }
-    for (const callback of listeners) callback(getLocale());
     for (const select of host.document?.querySelectorAll('[data-language-select]') || [])
       select.value = getLocale();
     if (focus?.isConnected && document.activeElement !== focus)
@@ -232,9 +242,10 @@
     refresh();
     return { locale, saved };
   }
-  function onLocaleChange(callback) {
-    listeners.add(callback);
-    return () => listeners.delete(callback);
+  function onLocaleChange(callback, { before = false } = {}) {
+    const target = before ? beforeListeners : listeners;
+    target.add(callback);
+    return () => target.delete(callback);
   }
   function attachLanguageControls(root = host.document) {
     if (!root?.querySelectorAll) return;
