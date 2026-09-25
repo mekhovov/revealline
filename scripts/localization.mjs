@@ -116,7 +116,9 @@ async function sourceFiles(directory = root) {
   for (const file of [
     'scripts/game-cli.mjs',
     'scripts/pages-current-entry.mjs',
+    'scripts/produce-field-kit-sprites.mjs',
     'scripts/release-catalog.mjs',
+    'authoring/library/fpv-enemy-presentations/index.html',
   ]) {
     try {
       await fs.access(path.join(directory, file));
