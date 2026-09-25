@@ -61,6 +61,7 @@ export function teamArenaLibrarySource({
   edition = 'Relay Rescue · Classic arenas',
   collection = 'Classic',
   isCurrent = (row) => rows.includes(row),
+  progress = () => '',
   launch,
 }) {
   if (!['Classic', 'Custom'].includes(collection)) throw new TypeError('Unknown Team collection.');
@@ -117,6 +118,7 @@ export function teamArenaLibrarySource({
       current(row)
         ? { state: 'ready' }
         : { state: 'unavailable', reason: 'This Team pack is no longer available in this visit.' },
+    progress: (row) => (current(row) ? progress(row) : ''),
     launch(row, context) {
       if (!current(row)) throw new Error('This Team pack selection has changed.');
       return launch(row, context);
