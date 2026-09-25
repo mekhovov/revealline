@@ -36,6 +36,11 @@ const EDITION_HISTORY = Object.freeze({
   ]),
 });
 
+/** Shared registration for the prior cards the current route actually exposes. */
+export function spatialNextPriorEditions(activeRouteId) {
+  return EDITION_HISTORY[activeRouteId] || Object.freeze([]);
+}
+
 /** Bound the display projection before compilation. compileContentProject
  * resolves every mission/preset/mode it receives, so filtering only after an
  * execution catalog is built would make a small historical card set pay for
@@ -111,8 +116,8 @@ export async function createSpatialNextEditionSources({
   launch,
   profile,
 } = {}) {
-  const history = EDITION_HISTORY[activeRouteId];
-  if (!history) return Object.freeze({ sources: Object.freeze([]), dispose() {} });
+  const history = spatialNextPriorEditions(activeRouteId);
+  if (!history.length) return Object.freeze({ sources: Object.freeze([]), dispose() {} });
   required(typeof launch === 'function', 'Spatial editions need an exact mission handoff.');
   required(typeof difficulty === 'function', 'Spatial editions need the selected preset.');
   required(
@@ -189,7 +194,8 @@ export async function createSpatialNextEditionSources({
       const source = journeyLibrarySource({
         editionId: route.id,
         edition: `Previous Journey · v${route.id.split('v').at(-1)}`,
-        editionLabel: () => t('interface:missionLibrary.previousJourney', { version: route.id.split('v').at(-1) }),
+        editionLabel: () =>
+          t('interface:missionLibrary.previousJourney', { version: route.id.split('v').at(-1) }),
         catalog: { missions },
         profile: historyIndex === 0 ? profile : undefined,
         details: (mission) => journeyMissionDetails(manifestFor(mission)),
