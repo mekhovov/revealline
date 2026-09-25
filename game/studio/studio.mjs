@@ -47,6 +47,7 @@ import {
 } from '../content-design/whole-spatial-candidates.mjs';
 import { createSpatialNextBatchCandidates } from '../content-design/spatial-next-batch-candidates.mjs';
 import { createHorizonNextBatchCandidates } from '../content-design/horizon-next-batch-candidates.mjs';
+import { createBorderCulturalNextBatchCandidates } from '../content-design/border-cultural-next-batch-candidates.mjs';
 import { createUkrainianOrnamentJourney } from '../content-design/ukrainian-ornament-candidates.mjs';
 import { createUkrainianOrnamentAtlasJourney } from '../content-design/ukrainian-ornament-atlas.mjs';
 import { withCampaignPresentation } from '../content-design/campaign-presentation.mjs';
@@ -1002,6 +1003,7 @@ $('whole-variety').onclick = guarded(() => {
       'erosion-counterplay-1': createWholeErosionReviewCandidates,
       'cultural-spatial-triptych-1': createSpatialNextBatchCandidates,
       'horizon-cultural-joins-1': createHorizonNextBatchCandidates,
+      'border-cultural-routes-1': createBorderCulturalNextBatchCandidates,
       'ukrainian-ornament-study-1': createUkrainianOrnamentJourney,
       'ukrainian-ornament-atlas-1': createUkrainianOrnamentAtlasJourney,
     }[$('whole-variety-edition').value] ?? createWholeVarietyCandidates;
