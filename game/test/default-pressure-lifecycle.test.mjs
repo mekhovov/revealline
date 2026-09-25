@@ -80,7 +80,7 @@ test('the lifecycle evidence targets the actual default, not a historical encoun
   assert.equal(fixture.format, 'DefaultPressureLifecycleV1');
   assert.equal(route.id, fixture.route);
   assert.equal(DEFAULT_JOURNEY_ROUTES.versus, fixture.route);
-  assert.equal(route.profileKey, 'journey-whole-spatial-v11');
+  assert.equal(route.profileKey, 'journey-whole-spatial-v12');
   const historical = createAuthoredJourneyRoute('whole-spatial-v6');
   assert.notEqual(historical.profileKey, route.profileKey);
   for (const id of Object.keys(baseRosters))
