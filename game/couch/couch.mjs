@@ -3222,6 +3222,7 @@ try {
     'race-data-reading-done',
     'race-data-reading',
     'race-help',
+    'race-optional-setup-toggle',
     'race-more-home',
     'race-more-about',
     'race-release-explorer',
@@ -3357,7 +3358,9 @@ try {
     // Clear before sampling so that this frame cannot claim a new menu owner.
     if (assignmentsChanged || pendingPadLoss) menuRouter.clear();
     const result = menuRouter.sample({ scope, timeMs: now });
-    controllerConfirmGuard.observe(result.confirmHeld);
+    // Joining consumes the controller edge as assignment, but Steam may still
+    // mirror that same physical press as a delayed native Enter/click.
+    controllerConfirmGuard.observe(result.confirmHeld || result.status.code === 'joined');
     if (result.status.code === 'joined' || Object.values(result.ui).some(Boolean))
       setReadingModality('controller');
     const released = !menuOwner && result.disconnected;

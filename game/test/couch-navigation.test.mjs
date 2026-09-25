@@ -79,6 +79,8 @@ test('actual select previews cancel without replacing the duel and commit once t
   f.join(0);
   const run = f.renders[0],
     original = f.$('race-level').value;
+  f.$('race-optional-setup').open = true;
+  f.$('race-optional-setup').setAttribute('open', '');
   f.$('race-focus').click();
   f.frame();
   f.focus('race-level');
@@ -89,9 +91,18 @@ test('actual select previews cancel without replacing the duel and commit once t
   f.pulse(0, 1);
   assert.equal(f.editors().length, 0);
   assert.equal(f.renders[0], run);
+  const handler = f.$('race-level').onchange;
+  let preparation;
+  f.$('race-level').onchange = (event) => (preparation = handler(event));
   f.pulse(0, 0);
   f.pulse(0, 13);
-  f.pulse(0, 0);
+  try {
+    f.pulse(0, 0);
+    await preparation;
+    f.frame(0);
+  } finally {
+    f.$('race-level').onchange = handler;
+  }
   assert.notEqual(f.$('race-level').value, original);
   await waitFor(
     () => {
