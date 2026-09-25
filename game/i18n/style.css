@@ -31,3 +31,7 @@ html[lang='uk'] :is(button, .button, summary, label, h1, h2, h3) {
 html[lang='uk'] .home-actions {
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 210px), 1fr));
 }
+
+html[data-tool-state='ready'] [data-language-launch] {
+  display: none;
+}
