@@ -1,3 +1,5 @@
+import { contentText } from '../i18n/content.mjs';
+import { t, localizedText } from '../i18n/index.mjs';
 import { mountModeChoices } from '../ui/mode-choice.mjs';
 import { authoredModeDestinations } from '../ui/authored-mode-routes.mjs';
 import { DEFAULT_JOURNEY_ROUTES } from '../content-design/default-entry.mjs';
@@ -7,11 +9,11 @@ import { authoredJourneyModeHref, isAuthoredJourneyRouteId } from '../content-de
 import { isMissionLibrarySourceJourney } from '../mission-library/handoff.mjs';
 
 const ABILITY = Object.freeze({
-  scan: 'Scan',
-  shield: 'Shield',
-  'stun-field': 'Stun field',
-  'slow-field': 'Slow field',
-  'impact-pulse': 'Impact pulse',
+  get scan() { return t("interface:scan"); },
+  get shield() { return t("interface:shield"); },
+  get 'stun-field'() { return t("interface:stunField"); },
+  get 'slow-field'() { return t("interface:slowField"); },
+  get 'impact-pulse'() { return t("interface:impactPulse"); },
 });
 const SCREENS = Object.freeze({
   main: ['race-main', 'race-start'],
@@ -30,10 +32,10 @@ export function couchEquipment(run) {
     action: actions.manualAbility,
     pickup: actions.manualPickup && recipe.capacity > 0 && run.supplies.length > 0,
     boost: actions.manualBoost,
-    label: ABILITY[recipe.primitive] || 'Ability',
+    label: ABILITY[recipe.primitive] || t("interface:ability"),
     description: actions.manualAbility
       ? recipe.description
-      : 'Directions only. Pickups activate on contact.',
+      : t("interface:directionsOnlyPickupsActivateOnContact"),
   });
 }
 
@@ -63,9 +65,9 @@ export function createCouchShell({
   const authoredDestinations = authoredModeDestinations('versus', authoredRoute);
   const isJourney = isAuthoredJourneyRouteId(authoredRoute);
   const libraryHref = isJourney ? '?journey=legacy' : `?journey=${DEFAULT_JOURNEY_ROUTES.versus}`;
-  const libraryLabel = isJourney ? 'Legacy library' : 'New Journey';
+  const libraryLabel = isJourney ? t("interface:legacyLibrary") : t("interface:newJourney");
   $('race-library-switch').setAttribute('href', libraryHref);
-  $('race-library-switch').textContent = onMissions ? 'All missions' : libraryLabel;
+  localizedText($('race-library-switch'), () =>onMissions ? t("interface:allMissions") : libraryLabel);
   doc.body.classList.toggle('unified-missions', Boolean(onMissions));
   if (authoredDestinations) {
     $('race-solo-return').setAttribute('href', authoredDestinations.solo);
@@ -78,7 +80,7 @@ export function createCouchShell({
     actions: { solo: $('race-solo-return'), team: $('race-coop') },
   });
   if (authoredRoute === DEFAULT_JOURNEY_ROUTES.versus)
-    $('race-coop').querySelector('.game-mode-description').textContent = '12 Team missions';
+    localizedText($('race-coop').querySelector('.game-mode-description'), () =>'12 Team missions');
   let screen = 'main',
     status = null,
     opener = null,
@@ -87,7 +89,7 @@ export function createCouchShell({
     revealingResize = false,
     equipment = [];
   const setText = (id, text) => {
-    if ($(id).textContent !== text) $(id).textContent = text;
+    if ($(id).textContent !== text) localizedText($(id), () =>text);
   };
   const listen = (element, type, fn) => {
     element.addEventListener(type, fn);
@@ -197,7 +199,7 @@ export function createCouchShell({
     $('race-shell').inert = running;
     $('race-hud').hidden = !running;
     $('race-pause').disabled = !running;
-    setText('race-pause', screen === 'review' ? 'Results' : 'Pause');
+    setText('race-pause', screen === 'review' ? t("interface:results2") : t("common:actions.pause"));
     $('race-boards').hidden = !running;
     $('race-boards').inert = !running;
     doc.body.classList.toggle('race-focus', running);
@@ -219,24 +221,24 @@ export function createCouchShell({
       pads[i].closest('.racer').dataset.touch = String(shown[i]);
       const device =
         modality[i] === 'controller'
-          ? 'Controller'
+          ? t("interface:controller")
           : modality[i] === 'pointer'
-            ? 'On-screen controls'
+            ? t("interface:onScreenControls")
             : modality[i] === 'touch'
-              ? 'Touch'
+              ? t("interface:touch")
               : i === 0
-                ? 'W A S D'
-                : 'Arrow keys';
+                ? t("interface:wASD")
+                : t("interface:arrowKeys");
       setText(`race-seat-${i}`, device);
       setText(
         `racer-input-${i}`,
-        `${device} · ${status === 'running' && shown[i] && !wanted ? 'Touch stays visible until pause' : status === 'finished' ? 'Results for Settings' : 'Pause for Settings'}`,
+        `${device} · ${status === 'running' && shown[i] && !wanted ? t("interface:touchStaysVisibleUntilPause") : status === 'finished' ? t("interface:resultsForSettings") : t("interface:pauseForSettings")}`,
       );
       for (const button of pads[i].querySelectorAll('button')) {
         const kind = button.dataset.action;
         button.hidden = !!kind && !equipment[i]?.[kind];
         button.disabled = status !== 'running' || button.hidden;
-        if (kind === 'action') button.textContent = equipment[i]?.label || 'Ability';
+        if (kind === 'action') localizedText(button, () =>contentText(equipment[i], 'label') || t("interface:ability"));
       }
     }
   }
@@ -377,16 +379,16 @@ export function createCouchShell({
       kind === 'library'
         ? `Open ${libraryLabel}?`
         : kind === 'team'
-          ? 'Go to Couch Team?'
-          : 'Return to Solo?',
+          ? t("interface:goToCouchTeam")
+          : t("interface:returnToSolo4"),
     );
     setText(
       'race-leave-copy',
       'This Versus attempt exists only on this page and is not saved. Stay keeps both boards paused. Leaving discards this attempt.' +
         (isJourney && kind !== 'library'
           ? kind === 'team'
-            ? ' Team opens its separate arenas.'
-            : ' Solo opens its own Journey progress; Continue remains explicit.'
+            ? (" " + t("interface:teamOpensItsSeparateArenas") + "")
+            : (" " + t("interface:soloOpensItsOwnJourneyProgressContinueRemainsExplicit") + "")
           : ''),
     );
     setText(
@@ -394,8 +396,8 @@ export function createCouchShell({
       kind === 'library'
         ? `Discard and open ${libraryLabel}`
         : kind === 'team'
-          ? 'Discard and go to Team'
-          : 'Discard and return to Solo',
+          ? t("interface:discardAndGoToTeam")
+          : t("interface:discardAndReturnToSolo"),
     );
     $('race-leave').setAttribute(
       'href',
@@ -517,21 +519,21 @@ export function createCouchShell({
     );
     setText(
       'race-format-help',
-      `First clear wins the ${series ? 'round' : 'race'}. ${match.limitTicks === null ? 'No race countdown. If both flights end, coverage, then lives, then score decide.' : 'At the time limit: coverage, then lives, then score decide.'} ${series ? 'First to two round wins takes the match. Draws award no round win.' : 'One race ends after this result. Rematch plays the same mission again.'}`,
+      `First clear wins the ${series ? 'round' : 'race'}. ${match.limitTicks === null ? t("interface:noRaceCountdownIfBothFlightsEndCoverageThenLives") : t("interface:atTheTimeLimitCoverageThenLivesThenScoreDecide")} ${series ? t("interface:firstToTwoRoundWinsTakesTheMatchDrawsAward") : t("interface:oneRaceEndsAfterThisResultRematchPlaysTheSame")}`,
     );
     setText(
       'race-title',
       contentBusy
-        ? 'Loading the shared picture…'
+        ? t("interface:loadingTheSharedPicture")
         : status === 'paused'
-          ? 'Both boards paused.'
+          ? t("interface:bothBoardsPaused")
           : status === 'finished'
             ? !series
-              ? 'Race complete.'
+              ? t("interface:raceComplete")
               : won.some((n) => n >= 2)
-                ? 'Match complete.'
-                : 'Round complete.'
-            : 'Two boards. One race.',
+                ? t("interface:matchComplete")
+                : t("interface:roundComplete")
+            : t("interface:twoBoardsOneRace2"),
     );
     $('race-review').hidden = status !== 'finished';
     const paused = status === 'paused';
@@ -542,8 +544,8 @@ export function createCouchShell({
     setText('race-chapters', paused ? 'Missions' : 'Browse missions');
     $('race-pause').disabled = status !== 'running' && screen !== 'review';
     // Do not replace the native click target's content on every flight frame.
-    setText('race-pause', screen === 'review' ? 'Results' : 'Pause');
-    $('race-focus').textContent = status === 'ready' ? 'Advanced setup' : 'New match options';
+    setText('race-pause', screen === 'review' ? t("interface:results2") : t("common:actions.pause"));
+    localizedText($('race-focus'), () => status === 'ready' ? 'Advanced setup' : 'New match options');
     $('race-class-field').hidden = !equipment[0].action;
     $('race-class').disabled = !equipment[0].action || status !== 'ready';
     for (const id of ['race-level', 'race-theme', 'race-turn', 'race-time', 'race-format'])
@@ -551,19 +553,19 @@ export function createCouchShell({
     $('race-tap-field').hidden = !equipment.some((e) => e.boost);
     $('race-tap').disabled = !equipment.some((e) => e.boost);
     setText('race-loadout', equipment[0].description);
-    const controller = ['D-pad or left stick: move'];
-    if (equipment[0].action) controller.push(`South: ${equipment[0].label}`);
-    if (equipment[0].pickup) controller.push('West: supply');
+    const controller = [t("interface:dPadOrLeftStickMove")];
+    if (equipment[0].action) controller.push(t("gameplay:south", { value1: contentText(equipment[0], 'label') }));
+    if (equipment[0].pickup) controller.push(t("interface:westSupply"));
     if (equipment[0].boost) controller.push('right shoulder: hold Boost');
-    controller.push('Menu: pause');
-    setText('race-controller-help', `Controllers · ${controller.join(' · ')}.`);
+    controller.push(t("interface:menuPause"));
+    setText('race-controller-help', t("gameplay:controllers", { value1: controller.join(' · ') }));
     for (let i = 0; i < 2; i++) {
       const run = match.runs[i],
         e = equipment[i],
-        hints = [i === 0 ? 'W A S D: move' : 'Arrow keys: move'];
-      if (e.action) hints.push(`${i === 0 ? 'Q' : 'Enter'}: ${e.label}`);
-      if (e.pickup) hints.push(`${i === 0 ? 'E' : '/'}: supply`);
-      if (e.boost) hints.push(`${i === 0 ? 'left' : 'right'} Shift: hold Boost`);
+        hints = [i === 0 ? t("interface:wASDMove") : t("interface:arrowKeysMove")];
+      if (e.action) hints.push(`${i === 0 ? 'Q' : t("interface:enter")}: ${e.label}`);
+      if (e.pickup) hints.push(t("gameplay:supply", { value1: i === 0 ? 'E' : '/' }));
+      if (e.boost) hints.push(t("gameplay:shiftHoldBoost", { value1: i === 0 ? 'left' : 'right' }));
       setText(`race-help-${i}`, `${hints.join(' · ')}.`);
       $(`race-result-${i}`).hidden = status !== 'finished';
       setText(

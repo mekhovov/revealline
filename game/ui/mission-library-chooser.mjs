@@ -1,9 +1,10 @@
 import { createJourneyArtworkView } from './journey-artwork.mjs';
+import { t, localizedText, localizedMessage } from '../i18n/index.mjs';
 import { LIBRARY_COLLECTIONS, LIBRARY_MODES } from '../mission-library/library.mjs';
 import { paintMissionThumbnail } from '../content-design/mission-card.mjs';
 import { trackMissionLibraryOpening } from '../mission-library/opening-intent.mjs';
 
-const modeLabel = (mode) => ({ solo: 'Solo', versus: 'Versus', team: 'Team' })[mode];
+const modeLabel = (mode) => ({ solo: t("interface:solo2"), versus: t("interface:versus2"), team: t("interface:team") })[mode];
 const sizeLabel = (bytes) =>
   bytes < 1024 * 1024
     ? `${Math.ceil(bytes / 1024)} KiB`
@@ -22,21 +23,21 @@ export function attachMissionLibraryChooser({
   launchContext = () => ({}),
   getCurrentId = () => null,
 }) {
-  if (!LIBRARY_MODES.includes(mode)) throw new TypeError('Unknown mission library mode.');
+  if (!LIBRARY_MODES.includes(mode)) throw new TypeError(t("interface:unknownMissionLibraryMode"));
   const node = (tag, id, text) => {
     const result = doc.createElement(tag);
     if (id) result.id = id;
-    if (text !== undefined) result.textContent = text;
+    if (text !== undefined) localizedText(result, () =>text);
     return result;
   };
   const dialog = node('dialog', 'journey-chooser');
   dialog.className = 'journey-chooser mission-library-chooser';
   dialog.setAttribute('aria-labelledby', 'journey-chooser-title');
-  const heading = node('h2', 'journey-chooser-title', 'Find your next line');
+  const heading = node('h2', 'journey-chooser-title', localizedMessage("interface:findYourNextLine"));
   const copy = node(
     'p',
     null,
-    'All missions, one library. Journey, Classic and Custom keep their own rules and progression.',
+    localizedMessage("interface:allMissionsOneLibraryJourneyClassicAndCustomKeepTheir"),
   );
   copy.className = 'journey-library-copy';
   const filters = node('div');
@@ -50,13 +51,13 @@ export function attachMissionLibraryChooser({
     parent.append(label);
     return control;
   }
-  const search = field('Search all missions', 'journey-search', 'input');
+  const search = field(t("interface:searchAllMissions"), 'journey-search', 'input');
   search.parentElement.className = 'journey-search-field';
   search.type = 'search';
-  search.placeholder = 'Mission, campaign, edition or tag';
+  search.placeholder = t("interface:missionCampaignEditionOrTag");
   const searchControls = node('div');
   searchControls.className = 'journey-search-controls';
-  const clearSearch = node('button', 'journey-search-clear', 'Clear search');
+  const clearSearch = node('button', 'journey-search-clear', localizedMessage("interface:clearSearch"));
   clearSearch.type = 'button';
   clearSearch.className = 'button secondary';
   clearSearch.setAttribute('aria-controls', 'journey-cards');
@@ -64,19 +65,19 @@ export function attachMissionLibraryChooser({
   searchControls.append(search.parentElement, clearSearch);
   const filterDetails = node('details', 'journey-filter-details');
   filterDetails.className = 'journey-filter-details';
-  const filterSummary = node('summary', 'journey-filter-summary', 'Filters');
+  const filterSummary = node('summary', 'journey-filter-summary', localizedMessage("interface:filters"));
   const filterOptions = node('div');
   filterOptions.className = 'journey-filter-options';
   filterDetails.append(filterSummary, filterOptions);
   filters.append(filterDetails);
-  const collection = field('Collection', 'journey-collection', 'select', filterOptions);
-  const campaign = field('Campaign', 'journey-campaign', 'select', filterOptions);
-  const modeFilter = field('Mode', 'journey-mode', 'select', filterOptions);
+  const collection = field(t("interface:collection"), 'journey-collection', 'select', filterOptions);
+  const campaign = field(t("interface:campaign"), 'journey-campaign', 'select', filterOptions);
+  const modeFilter = field(t("interface:mode"), 'journey-mode', 'select', filterOptions);
   const detailLabel = node('label');
   detailLabel.className = 'journey-card-detail-control';
   const detailedCards = node('input', 'journey-detailed-cards');
   detailedCards.type = 'checkbox';
-  detailLabel.append(detailedCards, node('span', null, 'Detailed mission cards'));
+  detailLabel.append(detailedCards, node('span', null, localizedMessage("interface:detailedMissionCards")));
   filterOptions.append(detailLabel);
   const view = doc.defaultView ?? globalThis;
   const media = view.matchMedia?.('(max-width: 600px), (max-height: 720px)');
@@ -87,7 +88,7 @@ export function attachMissionLibraryChooser({
     result.value = value;
     return result;
   };
-  collection.append(option('All', ''), ...LIBRARY_COLLECTIONS.map((value) => option(value, value)));
+  collection.append(option(t("interface:all"), ''), ...LIBRARY_COLLECTIONS.map((value) => option(value, value)));
   collection.value = '';
   modeFilter.append(...LIBRARY_MODES.map((value) => option(modeLabel(value), value)));
   modeFilter.value = mode;
@@ -100,7 +101,7 @@ export function attachMissionLibraryChooser({
   list.className = 'journey-cards';
   const footer = node('div');
   footer.className = 'journey-footer';
-  const back = node('button', 'journey-back', 'Back to game');
+  const back = node('button', 'journey-back', localizedMessage("common:navigation.backToGame"));
   back.type = 'button';
   back.className = 'button secondary';
   footer.append(back);
@@ -169,7 +170,7 @@ export function attachMissionLibraryChooser({
       if (!collection.value || row.collection === collection.value)
         choices.set(row.campaignKey, `${row.campaignTitle} · ${row.edition}`);
     campaign.replaceChildren(
-      option('All campaigns', ''),
+      option(t("interface:allCampaigns"), ''),
       ...[...choices].map(([key, title]) => option(title, key)),
     );
     campaign.value = choices.has(requested) ? requested : '';
@@ -313,7 +314,7 @@ export function attachMissionLibraryChooser({
         if (current)
           message =
             result.state === 'cancelled'
-              ? 'Download cancelled. Your current game is kept.'
+              ? t("interface:downloadCancelledYourCurrentGameIsKept")
               : result.state === 'ready'
                 ? `${row.name} is ready. Starting…`
                 : '';
@@ -393,7 +394,7 @@ export function attachMissionLibraryChooser({
         mode: activeMode,
       });
       if (accepted === false && mayRestore()) {
-        message = 'Mission not opened. Your current game is kept.';
+        message = t("interface:missionNotOpenedYourCurrentGameIsKept");
         open(opener, { returnLabel: back.textContent });
       }
     } catch (error) {
@@ -471,9 +472,15 @@ export function attachMissionLibraryChooser({
     const matches = campaign.value
       ? railRows.filter((row) => row.campaignKey === campaign.value)
       : railRows;
-    status.textContent = `${matches.length} mission${matches.length === 1 ? '' : 's'} · ${modeLabel(modeFilter.value)}${message ? ` · ${message}` : ''}`;
+    localizedText(
+      status,
+      () =>
+        `${matches.length} mission${matches.length === 1 ? '' : 's'} · ${modeLabel(modeFilter.value)}${message ? ` · ${message}` : ''}`,
+    );
     const filtersActive = !!collection.value || !!campaign.value || modeFilter.value !== mode;
-    filterSummary.textContent = filtersActive ? 'Filters · active' : 'Filters';
+    localizedText(filterSummary, () =>
+      filtersActive ? t('interface:filtersActive') : t('interface:filters'),
+    );
     const campaignChoices = new Map();
     for (const row of railRows)
       if (!campaignChoices.has(row.campaignKey))
@@ -524,13 +531,12 @@ export function attachMissionLibraryChooser({
       }
       const availability = library.availability(row, modeFilter.value);
       const details = library.details(row, modeFilter.value);
-      card.rules.textContent = details.challenge;
+      localizedText(card.rules, () =>details.challenge);
       card.rules.hidden = !details.challenge;
-      card.route.textContent = details.route;
+      localizedText(card.route, () =>details.route);
       card.route.hidden = !details.route;
-      card.mastery.textContent = details.mastery ? `Optional challenge: ${details.mastery}` : '';
+      localizedText(card.mastery, () =>details.mastery ? `Optional challenge: ${details.mastery}` : '');
       card.mastery.hidden = !details.mastery;
-      card.progress.textContent = library.progress(row, modeFilter.value);
       card.completion = library.completion(row, modeFilter.value);
       card.button.dataset.campaignKey = row.campaignKey;
       card.button.dataset.campaignTitle = row.campaignTitle;
@@ -540,17 +546,19 @@ export function attachMissionLibraryChooser({
       card.button.dataset.pictureState = card.completion?.state ?? 'unfinished';
       card.button.dataset.current = String(row.id === getCurrentId());
       previousCampaign = row.campaignKey;
-      if (card.completion?.state === 'unavailable')
-        card.progress.textContent = card.completion.reason;
+      localizedText(card.progress, () =>
+        card.completion?.state === 'unavailable'
+          ? card.completion.reason
+          : library.progress(row, modeFilter.value),
+      );
       card.progress.hidden = !card.progress.textContent;
-      card.action.textContent =
-        availability.state === 'ready'
-          ? 'Play'
+      localizedText(card.action, () =>availability.state === 'ready'
+          ? t("common:actions.play")
           : availability.state === 'download'
             ? `Download & play · ${sizeLabel(availability.bytes)}`
             : availability.state === 'preparing'
-              ? 'Preparing…'
-              : `Unavailable · ${availability.reason}${availability.retry ? ' · Retry' : ''}`;
+              ? t('interface:preparing2')
+              : `Unavailable · ${availability.reason}${availability.retry ? ' · Retry' : ''}`);
       card.button.disabled = availability.state === 'unavailable' && !availability.retry;
       card.button.setAttribute('aria-busy', String(availability.state === 'preparing'));
       return card.button;
@@ -734,13 +742,13 @@ export function attachMissionLibraryChooser({
     if (onReturn) onReturn(opener);
     else if (opener?.isConnected) opener.focus({ preventScroll: true });
   }
-  function open(origin = doc.activeElement, { returnLabel = 'Back to game' } = {}) {
+  function open(origin = doc.activeElement, { returnLabel = t("common:navigation.backToGame") } = {}) {
     if (destroyed) return;
     retirePendingSelection();
     cancelResizeScroll();
     ++visit;
     opener = origin;
-    back.textContent = returnLabel;
+    localizedText(back, () =>returnLabel);
     onPause?.();
     invalidateDiagrams();
     rebuildCampaigns();
