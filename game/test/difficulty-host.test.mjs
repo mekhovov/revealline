@@ -109,10 +109,17 @@ async function retryInto(page, context, previous, control = 'overlay-restart') {
     assert.equal(page.doc.activeElement.id, 'restart-cancel');
     page.$('restart-confirm').click();
   }
-  await settle(
-    () => page.doc.body.dataset.flightState === 'running',
-    'Retry prepares its new picture before flight.',
-  );
+  if (control === 'retry-button') {
+    await settle(
+      () => page.$('game-overlay').dataset.kind === 'retry-ready',
+      'Retry prepares its new picture before the short ready cue.',
+    );
+    for (let frame = 0; frame < 6; frame++) page.frame(100);
+  } else
+    await settle(
+      () => page.doc.body.dataset.flightState === 'running',
+      'Restart prepares its new picture before flight.',
+    );
   page.frame(0);
   assert.notStrictEqual(page.rendered.run, previous);
   assert.equal(page.rendered.paused, false);

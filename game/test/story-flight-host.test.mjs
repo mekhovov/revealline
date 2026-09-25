@@ -244,8 +244,11 @@ test('real A flight freezes before edit B; win records A before optional play, b
   p.$('retry-button').click();
   await settle(
     () =>
-      p.doc.body.dataset.pictureState === 'ready' && p.doc.body.dataset.flightState === 'running',
+      p.doc.body.dataset.pictureState === 'ready' &&
+      p.$('game-overlay').dataset.kind === 'retry-ready',
   );
+  for (let frame = 0; frame < 6; frame++) p.frame(100);
+  assert.equal(p.doc.body.dataset.flightState, 'running');
   win(p);
   const better = loadLibrary(p.storage, key).library;
   assert(better.gallery[0].time < first.gallery[0].time);

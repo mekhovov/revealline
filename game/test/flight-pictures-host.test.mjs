@@ -168,7 +168,9 @@ for (const policy of ['immediate', 'grid-center'])
     assert.equal(p.rendered.backdrop.image, image);
     const completed = p.rendered.run;
     p.$('retry-button').click();
-    await settle(() => p.doc.body.dataset.flightState === 'running');
+    await settle(() => p.$('game-overlay').dataset.kind === 'retry-ready');
+    for (let frame = 0; frame < 6; frame++) p.frame(100);
+    assert.equal(p.doc.body.dataset.flightState, 'running');
     p.frame(0);
     assert.notEqual(p.rendered.run, completed);
     assert.equal(p.rendered.backdrop.pin.assetId, 'picture-a', 'Retry keeps the accepted original');

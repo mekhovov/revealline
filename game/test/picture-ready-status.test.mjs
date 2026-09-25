@@ -165,8 +165,10 @@ for (const policy of ['immediate', 'grid-center'])
     fresh.resolve();
     await settle(() => {
       p.frame(0);
-      return p.doc.body.dataset.flightState === 'running';
+      return p.$('game-overlay').dataset.kind === 'retry-ready';
     });
+    for (let frame = 0; frame < 6; frame++) p.frame(100);
+    assert.equal(p.doc.body.dataset.flightState, 'running');
     assert.notEqual(p.rendered.run, before.run);
     assert.equal(
       p.rendered.run.tick,
@@ -242,8 +244,10 @@ test('grid-center: foreground return cannot adopt or resume a cancelled Retry af
   p.$('retry-button').click();
   await settle(() => {
     p.frame(0);
-    return p.doc.body.dataset.flightState === 'running';
+    return p.$('game-overlay').dataset.kind === 'retry-ready';
   });
+  for (let frame = 0; frame < 6; frame++) p.frame(100);
+  assert.equal(p.doc.body.dataset.flightState, 'running');
   assert.notEqual(p.rendered.run, before.run);
   assert.equal(p.rendered.run.tick, 0);
   assert.deepEqual(p.rendered.backdrop.pin, before.pin);
