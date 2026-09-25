@@ -43,7 +43,11 @@
       },
       "publishedDuration": "6:19",
       "provenance": "The Commons description identifies an historical song about the death of Cossack colonel Danylo Nechai, recorded by the named Ukrainian male vocal group in Lviv on 15 November 2014.",
-      "provisionalStyle": ["Ukrainian historical song", "Cossack song", "male a cappella"],
+      "provisionalStyle": [
+        "Ukrainian historical song",
+        "Cossack song",
+        "male a cappella"
+      ],
       "provisionalScene": "gameplay or dramatic world, subject to listening",
       "provisionalEnergy": "unknown; the source describes a cappella performance rather than an instrumental rhythm section",
       "permissions": {
@@ -79,7 +83,11 @@
       "publishedDuration": "5:12",
       "provenance": "The Commons recording is categorized as a Ukrainian traditional song. A separate Commons public-domain score identifies Oi Moroze, Morozenku as a Ukrainian folk song documented in a 1916 Vienna edition; the recording page names Mykluho Maklay as performer.",
       "provenanceSource": "https://commons.wikimedia.org/wiki/File:Oi_Moroze,_Morozenku._Narodna_pisnia.jpg",
-      "provisionalStyle": ["Ukrainian historical song", "Cossack repertoire", "male a cappella"],
+      "provisionalStyle": [
+        "Ukrainian historical song",
+        "Cossack repertoire",
+        "male a cappella"
+      ],
       "provisionalScene": "dramatic gameplay or world, subject to listening",
       "provisionalEnergy": "unknown; source metadata does not establish rhythmic gameplay energy",
       "permissions": {
@@ -114,7 +122,12 @@
       },
       "publishedDuration": "5:11",
       "provenance": "The source documents a lecture-demonstration suite consisting of a tylynka improvisation and Hutsul kolomyiky. It names Shaun Williams on tylynka and tsymbaly, Dena El Saffar and Tiffany Schoneboom on violins, Thomas McShane on viola, Robert Widlowski on bass and Juan Sebastián Rojas on bubyn.",
-      "provisionalStyle": ["Hutsul", "kolomyika", "Carpathian ensemble", "instrumental"],
+      "provisionalStyle": [
+        "Hutsul",
+        "kolomyika",
+        "Carpathian ensemble",
+        "instrumental"
+      ],
       "provisionalScene": "gameplay/world; menu opening may require an edit, subject to listening",
       "provisionalEnergy": "potentially medium-high after the tylynka opening; not yet listened",
       "permissions": {
@@ -149,7 +162,12 @@
       },
       "publishedDuration": "6:02",
       "provenance": "The creator page calls Karchata a Ukrainian folk song and credits Meraki Caravan for vocals, instrumentation and arrangement, My Lady On Fire and Jason Felitto for recording/mastering, and Folknery as inspiration rather than the source recording.",
-      "provisionalStyle": ["Ukrainian folk song", "folk fusion", "world rhythm", "vocal"],
+      "provisionalStyle": [
+        "Ukrainian folk song",
+        "folk fusion",
+        "world rhythm",
+        "vocal"
+      ],
       "provisionalScene": "gameplay/world, subject to listening",
       "provisionalEnergy": "unknown; the published description mentions world rhythms but does not establish game-fit",
       "permissions": {
@@ -224,7 +242,11 @@
       },
       "publishedDuration": "2:49",
       "provenance": "The source identifies Beethoven's WoO 158a No. 16 treatment of the Ukrainian song Ikhav kozak za Dunai and names the two vocal soloists, violinist, cellist and pianist from the 12 June 2016 Lysenko Museum concert.",
-      "provisionalStyle": ["Ukrainian repertoire", "classical chamber arrangement", "vocal"],
+      "provisionalStyle": [
+        "Ukrainian repertoire",
+        "classical chamber arrangement",
+        "vocal"
+      ],
       "provisionalScene": "menu or reflective world, subject to listening",
       "provisionalEnergy": "low-medium; supporting variety rather than the opening-theme benchmark",
       "permissions": {
