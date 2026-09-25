@@ -1606,7 +1606,7 @@ export function attachSoundtrackPanel({
       ...matches.map((track) => {
         const play = button(
           `online-play-${track.sha256}`,
-          localizedMessage('common:actions.play'),
+          localizedMessage('common:actions.playback'),
           () => {
             return controlMusic(
               () => player.playRemotePlaylist(matches, onlinePlaybackOptions(track.id)),
