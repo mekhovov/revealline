@@ -36,22 +36,22 @@ export function attachStillMediaPanel({
   const node = (tag, id, text = '') => {
     const value = doc.createElement(tag);
     value.id = `still-media-${id}`;
-    localizedText(value, () =>text);
+    localizedText(value, () => text);
     return value;
   };
   const dialog = node('dialog', 'dialog');
   dialog.setAttribute('aria-labelledby', 'still-media-title');
   dialog.className = 'still-media-panel';
-  const title = node('h2', 'title', localizedMessage("interface:stillPictureWorkshop"));
+  const title = node('h2', 'title', localizedMessage('interface:stillPictureWorkshop'));
   const note = node(
     'p',
     'note',
-    localizedMessage("interface:saveExactMapWorldAssignmentsForFreshFlightsExistingSaved"),
+    localizedMessage('interface:saveExactMapWorldAssignmentsForFreshFlightsExistingSaved'),
   );
   const status = node(
     'p',
     'status',
-    localizedMessage("interface:openToVerifySavedOriginalsAndTheSourceGameS"),
+    localizedMessage('interface:openToVerifySavedOriginalsAndTheSourceGameS'),
   );
   status.setAttribute('role', 'status');
   const initialStatus = status.textContent;
@@ -68,7 +68,8 @@ export function attachStillMediaPanel({
   const control = (tag, id, label, attrs = {}, parent = fields) => {
     const field = node(tag, id);
     for (const [key, value] of Object.entries(attrs)) {
-      if (['aria-label', 'title', 'placeholder', 'alt'].includes(key)) localizedAttribute(field, key, value);
+      if (['aria-label', 'title', 'placeholder', 'alt'].includes(key))
+        localizedAttribute(field, key, value);
       else field.setAttribute(key, value);
     }
     const wrapper = node('label', `${id}-label`, label);
@@ -76,31 +77,34 @@ export function attachStillMediaPanel({
     parent.append(wrapper);
     return field;
   };
-  const campaign = control('select', 'campaign', t("interface:installedChapter"));
-  const level = control('select', 'level', t("interface:map"));
-  const theme = control('select', 'theme', t("interface:world"));
-  const history = control('select', 'history', t("interface:savedPictureRevision"));
-  const file = control('input', 'file', t("interface:originalPngOrJpeg4MibMaximum"), {
+  const campaign = control('select', 'campaign', t('interface:installedChapter'));
+  const level = control('select', 'level', t('interface:map'));
+  const theme = control('select', 'theme', t('interface:world'));
+  const history = control('select', 'history', t('interface:savedPictureRevision'));
+  const file = control('input', 'file', t('interface:originalPngOrJpeg4MibMaximum'), {
     type: 'file',
     accept: 'image/png,image/jpeg',
   });
-  const kind = control('select', 'kind', t("interface:declaredSource"));
+  const kind = control('select', 'kind', t('interface:declaredSource'));
   for (const [id, label] of [
-    ['user-supplied', t("interface:myUploadedFile")],
-    ['original', t("interface:originalArtwork")],
-    ['licensed', t("interface:licensedArtwork")],
+    ['user-supplied', t('interface:myUploadedFile')],
+    ['original', t('interface:originalArtwork')],
+    ['licensed', t('interface:licensedArtwork')],
   ]) {
     const option = node('option', `source-${id}`, label);
     option.value = id;
     kind.append(option);
   }
   kind.value = 'user-supplied';
-  const credit = control('input', 'credit', t("interface:credit"), { type: 'text', maxlength: '512' });
-  const source = control('input', 'source', t("interface:sourceProvenanceNote"), {
+  const credit = control('input', 'credit', t('interface:credit'), {
+    type: 'text',
+    maxlength: '512',
+  });
+  const source = control('input', 'source', t('interface:sourceProvenanceNote'), {
     type: 'text',
     maxlength: '2048',
   });
-  const description = control('input', 'description', t("interface:pictureDescription"), {
+  const description = control('input', 'description', t('interface:pictureDescription'), {
     type: 'text',
     maxlength: '2048',
   });
@@ -114,55 +118,79 @@ export function attachStillMediaPanel({
     parent.append(item);
     return item;
   };
-  const inspect = button('preview', localizedMessage("interface:previewChosenFile"), () => upload());
-  const showSaved = button('show-saved', localizedMessage("interface:previewSavedRevision"), () =>
+  const inspect = button('preview', localizedMessage('interface:previewChosenFile'), () =>
+    upload(),
+  );
+  const showSaved = button('show-saved', localizedMessage('interface:previewSavedRevision'), () =>
     savedPreview(false, showSaved),
   );
-  const showAuthored = button('show-authored', localizedMessage("interface:previewAuthoredPicture"), () =>
-    savedPreview(true, showAuthored),
+  const showAuthored = button(
+    'show-authored',
+    localizedMessage('interface:previewAuthoredPicture'),
+    () => savedPreview(true, showAuthored),
   );
-  const save = button('save', localizedMessage("interface:saveAssignment"), () => commit(false));
-  const unassign = button('unassign', localizedMessage("interface:useAuthoredPicture"), () => commit(true));
-  const discard = button('discard', localizedMessage("interface:discardDraft"), () => {
+  const save = button('save', localizedMessage('interface:saveAssignment'), () => commit(false));
+  const unassign = button('unassign', localizedMessage('interface:useAuthoredPicture'), () =>
+    commit(true),
+  );
+  const discard = button('discard', localizedMessage('interface:discardDraft'), () => {
     draft = null;
     sync();
     return savedPreview(true);
   });
-  const reload = button('reload', localizedMessage("interface:reloadSavedMediaAndInstalledMaps"), () => load());
-  const cancel = button('cancel', localizedMessage("interface:cancelPendingWork"), () => cancelWork(), operations);
-  const close = button('close', localizedMessage("interface:closeWorkshop"), () => closePanel(), operations);
+  const reload = button(
+    'reload',
+    localizedMessage('interface:reloadSavedMediaAndInstalledMaps'),
+    () => load(),
+  );
+  const cancel = button(
+    'cancel',
+    localizedMessage('interface:cancelPendingWork'),
+    () => cancelWork(),
+    operations,
+  );
+  const close = button(
+    'close',
+    localizedMessage('interface:closeWorkshop'),
+    () => closePanel(),
+    operations,
+  );
   const bundleSection = node('section', 'bundles'),
-    bundleTitle = node('h3', 'bundle-title', localizedMessage("interface:originalPictureFiles")),
+    bundleTitle = node('h3', 'bundle-title', localizedMessage('interface:originalPictureFiles')),
     bundleNote = node(
       'p',
       'bundle-note',
-      localizedMessage("interface:aRlmediaFileIncludesEveryReferencedStillOriginalRetainedGeneric"),
+      localizedMessage('interface:aRlmediaFileIncludesEveryReferencedStillOriginalRetainedGeneric'),
     ),
     bundleFields = node('div', 'bundle-fields');
   const bundleFile = control(
     'input',
     'bundle-file',
-    t("interface:originalsBackupRlmediaAtMost256Mib"),
+    t('interface:originalsBackupRlmediaAtMost256Mib'),
     { type: 'file', accept: '.rlmedia,application/vnd.revealline.media' },
     bundleFields,
   );
   const bundleMode = control(
     'select',
     'bundle-mode',
-    t("interface:assignmentRestorePolicy"),
+    t('interface:assignmentRestorePolicy'),
     {},
     bundleFields,
   );
   options(
     bundleMode,
     [
-      ['preserve', t("interface:keepCurrentAssignmentsAddMissingBindings")],
-      ['restore', t("interface:useTheBundleSExactAssignmentSet")],
+      ['preserve', t('interface:keepCurrentAssignmentsAddMissingBindings')],
+      ['restore', t('interface:useTheBundleSExactAssignmentSet')],
     ],
     'preserve',
   );
   const bundlePolicy = node('p', 'bundle-policy'),
-    bundleReview = node('p', 'bundle-review', localizedMessage("interface:noOriginalsBackupHasBeenReviewed")),
+    bundleReview = node(
+      'p',
+      'bundle-review',
+      localizedMessage('interface:noOriginalsBackupHasBeenReviewed'),
+    ),
     bundleActions = node('div', 'bundle-actions');
   const bundleButton = (id, text, handler) => {
     const item = node('button', id, text);
@@ -171,17 +199,27 @@ export function attachStillMediaPanel({
     bundleActions.append(item);
     return item;
   };
-  const prepareOriginals = bundleButton('prepare-originals', t("interface:prepareOriginalsDownload"), () =>
-    prepareDownload(),
+  const prepareOriginals = bundleButton(
+    'prepare-originals',
+    t('interface:prepareOriginalsDownload'),
+    () => prepareDownload(),
   );
-  const downloadOriginals = node('a', 'download-originals', localizedMessage("interface:downloadOriginals"));
+  const downloadOriginals = node(
+    'a',
+    'download-originals',
+    localizedMessage('interface:downloadOriginals'),
+  );
   downloadOriginals.hidden = true;
   bundleActions.append(downloadOriginals);
-  const reviewOriginals = bundleButton('review-originals', t("interface:reviewChosenOriginalsBackup"), () =>
-    reviewBundle(),
+  const reviewOriginals = bundleButton(
+    'review-originals',
+    t('interface:reviewChosenOriginalsBackup'),
+    () => reviewBundle(),
   );
-  const restoreOriginals = bundleButton('restore-originals', t("interface:restoreReviewedOriginals"), () =>
-    restoreBundle(),
+  const restoreOriginals = bundleButton(
+    'restore-originals',
+    t('interface:restoreReviewedOriginals'),
+    () => restoreBundle(),
   );
   bundleSection.append(
     bundleTitle,
@@ -193,7 +231,7 @@ export function attachStillMediaPanel({
   );
   const canvas = preview.canvas;
   canvas.id = 'still-media-preview-canvas';
-  canvas.setAttribute('aria-label', t("interface:isolatedStillPicturePreviewNoGameplayOrRewards"));
+  canvas.setAttribute('aria-label', t('interface:isolatedStillPicturePreviewNoGameplayOrRewards'));
   dialog.append(title, operations, note, stats, fields, canvas, actions, bundleSection);
   doc.body.append(dialog);
   const clearance = attachFocusClearance({
@@ -270,7 +308,9 @@ export function attachStillMediaPanel({
             sha256: asset.sha256,
           })
         : null,
-      caption: p ? t("gameplay:revision", { value1: contentText(p, 'description'), value2: p.revision }) : '',
+      caption: p
+        ? t('gameplay:revision', { value1: contentText(p, 'description'), value2: p.revision })
+        : '',
       assigned: !!p && assignment?.presentationId === p.id && assignment?.revision === p.revision,
       provenance: { kind: kind.value, credit: credit.value, source: source.value },
       description: description.value,
@@ -278,10 +318,10 @@ export function attachStillMediaPanel({
   }
   async function capturedDraft(captured, selected, signal, check) {
     if (!selected.description?.trim() || selected.description.length > 2048)
-      throw new Error(t("interface:addAPictureDescriptionBeforeCapturing"));
+      throw new Error(t('interface:addAPictureDescriptionBeforeCapturing'));
     const shown = await preview.show(view(selected, captured.asset, captured.blob), { signal });
     check();
-    if (!shown) throw new Error(t("interface:previewCancelledThePriorPictureIsKept"));
+    if (!shown) throw new Error(t('interface:previewCancelledThePriorPictureIsKept'));
     discardBundles();
     draft = {
       asset: captured.asset,
@@ -289,7 +329,7 @@ export function attachStillMediaPanel({
       identity: selected.identity,
       description: selected.description,
     };
-    setStatus(t("interface:capturedOriginalPngIsAPictureDraftChooseSaveAssignment"));
+    setStatus(t('interface:capturedOriginalPngIsAPictureDraftChooseSaveAssignment'));
     // The child deliberately adopts this one verified selection transition only
     // after its stale guard has passed; ordinary changes still cancel it.
     return storySelection();
@@ -301,7 +341,7 @@ export function attachStillMediaPanel({
     downloadOriginals.hidden = true;
     downloadOriginals.removeAttribute('href');
     downloadOriginals.removeAttribute('download');
-    localizedText(bundleReview, () =>t("interface:noOriginalsBackupHasBeenReviewed"));
+    localizedText(bundleReview, () => t('interface:noOriginalsBackupHasBeenReviewed'));
   }
   function message(error) {
     return error instanceof Error ? error.message : String(error);
@@ -315,10 +355,7 @@ export function attachStillMediaPanel({
     task = null;
     discardBundles();
     story?.cancel();
-    setStatus(
-      t("interface:pendingWorkCancelledAnyCompletedSaveStaysSavedReloadTo"),
-      'cancelled',
-    );
+    setStatus(t('interface:pendingWorkCancelledAnyCompletedSaveStaysSavedReloadTo'), 'cancelled');
     sync();
   }
   function sync() {
@@ -339,12 +376,20 @@ export function attachStillMediaPanel({
     reviewOriginals.disabled = busy || !ready || !bundleFile.files?.[0];
     restoreOriginals.disabled = busy || !ready || !reviewedBundle;
     downloadOriginals.hidden = !bundleURL || busy;
-    localizedText(bundlePolicy, () =>bundleMode.value === 'restore'
-        ? t("interface:useExactlyTheAssignmentsInThisFileIncludingRemovingCurrent")
-        : t("interface:keepDestinationAssignmentsWhenTheyConflictAndAddOnlyMissing"));
-    localizedText(stats, () =>saved
-      ? t("gameplay:retainedImageRecordsImmutableRevisionsSavedGeneration", { value1: saved.document.library.assets.length, value2: saved.document.library.presentations.length, value3: saved.generation })
-      : t("interface:noVerifiedSavedMediaLoaded"));
+    localizedText(bundlePolicy, () =>
+      bundleMode.value === 'restore'
+        ? t('interface:useExactlyTheAssignmentsInThisFileIncludingRemovingCurrent')
+        : t('interface:keepDestinationAssignmentsWhenTheyConflictAndAddOnlyMissing'),
+    );
+    localizedText(stats, () =>
+      saved
+        ? t('gameplay:retainedImageRecordsImmutableRevisionsSavedGeneration', {
+            value1: saved.document.library.assets.length,
+            value2: saved.document.library.presentations.length,
+            value3: saved.generation,
+          })
+        : t('interface:noVerifiedSavedMediaLoaded'),
+    );
     story?.sync({ ready, busy });
   }
   function current() {
@@ -365,7 +410,7 @@ export function attachStillMediaPanel({
       ...values.map(([value, label]) => {
         const option = doc.createElement('option');
         option.value = value;
-        localizedText(option, () =>label);
+        localizedText(option, () => label);
         return option;
       }),
     );
@@ -375,7 +420,10 @@ export function attachStillMediaPanel({
     const entry = entries.find((e) => e.baseCampaignKey === campaign.value);
     options(
       level,
-      (entry?.campaign.levels ?? []).map((l) => [l.id, `${contentText(l, 'name')} · ${l.revision}`]),
+      (entry?.campaign.levels ?? []).map((l) => [
+        l.id,
+        `${contentText(l, 'name')} · ${l.revision}`,
+      ]),
       level.value,
     );
     options(
@@ -404,11 +452,11 @@ export function attachStillMediaPanel({
       history,
       rows.map((p) => [
         JSON.stringify([p.id, p.revision]),
-        t("gameplay:revision", { value1: contentText(p, 'description'), value2: p.revision }),
+        t('gameplay:revision', { value1: contentText(p, 'description'), value2: p.revision }),
       ]),
       assignment ? JSON.stringify([assignment.presentationId, assignment.revision]) : '',
     );
-    setStatus(t("interface:exactMapWorldSelectedPreviewAnOriginalOrASaved"));
+    setStatus(t('interface:exactMapWorldSelectedPreviewAnOriginalOrASaved'));
     sync();
   }
   campaign.onchange = () => {
@@ -453,7 +501,7 @@ export function attachStillMediaPanel({
     sync();
     const check = () => {
       if (disposed || id !== serial || own.signal.aborted)
-        throw new DOMException(t("interface:workCancelled"), 'AbortError');
+        throw new DOMException(t('interface:workCancelled'), 'AbortError');
     };
     try {
       await action(own.signal, check, lease);
@@ -486,13 +534,13 @@ export function attachStillMediaPanel({
     if (task) return false;
     discardBundles();
     return work(
-      t("interface:verifyingSavedOriginalsAndInstalledMaps"),
+      t('interface:verifyingSavedOriginalsAndInstalledMaps'),
       async (signal, check, progress) => {
         ready = false;
         const nextContext = await catalog.read({ signal });
         check();
         progress.update({
-          message: t("interface:readingAndVerifyingSavedPictureOriginals"),
+          message: t('interface:readingAndVerifyingSavedPictureOriginals'),
           stage: 'verifying',
         });
         const next = await store.read({ signal });
@@ -510,13 +558,14 @@ export function attachStillMediaPanel({
         ready = true;
         contexts();
         if (story) {
-          progress.update({ message: t("interface:readingOptionalStoryHistory"), stage: 'reading' });
+          progress.update({
+            message: t('interface:readingOptionalStoryHistory'),
+            stage: 'reading',
+          });
           await story.load({ signal, check });
         }
         check();
-        setStatus(
-          t("interface:savedOriginalsVerifiedFreshFlightsUseTheCurrentAssignmentExisting"),
-        );
+        setStatus(t('interface:savedOriginalsVerifiedFreshFlightsUseTheCurrentAssignmentExisting'));
         try {
           onLoaded();
         } catch (error) {
@@ -545,7 +594,7 @@ export function attachStillMediaPanel({
       caption = description.value;
     discardBundles();
     return work(
-      t("interface:checkingTheOriginalSignatureDimensionsDecodeAndHash"),
+      t('interface:checkingTheOriginalSignatureDimensionsDecodeAndHash'),
       async (signal, check) => {
         const prepared = await prepareStillAsset(
           candidate,
@@ -554,15 +603,16 @@ export function attachStillMediaPanel({
         );
         check();
         if (prepared.asset.width > 1920 || prepared.asset.height > 1080)
-          throw new Error(
-            t("interface:thisOriginalIsRetainedOnYourDeviceChooseASeparate"),
-          );
+          throw new Error(t('interface:thisOriginalIsRetainedOnYourDeviceChooseASeparate'));
         if (!caption?.trim() || caption.length > 2048)
-          throw new Error(t("interface:addAPictureDescriptionBeforePreviewing"));
-        activity?.update({ message: t("interface:decodingTheVerifiedPicturePreview"), stage: 'decoding' });
+          throw new Error(t('interface:addAPictureDescriptionBeforePreviewing'));
+        activity?.update({
+          message: t('interface:decodingTheVerifiedPicturePreview'),
+          stage: 'decoding',
+        });
         const shown = await preview.show(view(selected, prepared.asset, prepared.blob), { signal });
         check();
-        if (!shown) throw new Error(t("interface:previewCancelledThePriorPictureIsKept"));
+        if (!shown) throw new Error(t('interface:previewCancelledThePriorPictureIsKept'));
         draft = { ...prepared, identity: selected.identity, description: caption };
         setStatus(
           `${prepared.asset.width} × ${prepared.asset.height} · ${prepared.asset.bytes} original bytes verified. Preview only; choose Save assignment to retain them.`,
@@ -576,7 +626,7 @@ export function attachStillMediaPanel({
     const selected = current();
     discardBundles();
     return work(
-      t("interface:loadingTheSelectedPreview"),
+      t('interface:loadingTheSelectedPreview'),
       async (signal, check) => {
         const p =
           !authored &&
@@ -588,15 +638,15 @@ export function attachStillMediaPanel({
         const asset = p && saved.document.library.assets.find((a) => a.id === p.poster.assetId);
         const blob = asset && saved.assets.find((a) => a.sha256 === asset.sha256)?.blob;
         if (asset && !blob)
-          throw new Error(t("interface:theSavedOriginalIsUnavailablePriorPreviewIsKept"));
+          throw new Error(t('interface:theSavedOriginalIsUnavailablePriorPreviewIsKept'));
         const shown = await preview.show(view(selected, asset || null, blob || null), { signal });
         check();
-        if (!shown) throw new Error(t("interface:previewCancelled"));
+        if (!shown) throw new Error(t('interface:previewCancelled'));
         draft = p ? { existing: p, identity: selected.identity } : null;
         setStatus(
           p
             ? `Saved revision ${p.revision} previewed. Save assignment to select it.`
-            : t("interface:authoredPicturePreviewedUseAuthoredPictureRemovesOnlyTheAssignment"),
+            : t('interface:authoredPicturePreviewedUseAuthoredPictureRemovesOnlyTheAssignment'),
         );
       },
       { opener },
@@ -609,7 +659,7 @@ export function attachStillMediaPanel({
       baseline = saved,
       ticket = context;
     discardBundles();
-    return work(t("interface:preparingACompleteAtomicMediaSave"), async (signal, check) => {
+    return work(t('interface:preparingACompleteAtomicMediaSave'), async (signal, check) => {
       const library = structuredClone(baseline.document.library),
         assets = [...baseline.assets];
       library.assignments = library.assignments.filter(
@@ -617,7 +667,7 @@ export function attachStillMediaPanel({
       );
       if (!remove) {
         if (canonicalJSON(selectedDraft.identity) !== canonicalJSON(selected.identity))
-          throw new Error(t("interface:theSelectedMapChangedPreviewAgain"));
+          throw new Error(t('interface:theSelectedMapChangedPreviewAgain'));
         let p = selectedDraft.existing;
         if (!p) {
           const prior = library.presentations.filter(
@@ -649,7 +699,10 @@ export function attachStillMediaPanel({
         signal,
       });
       check();
-      activity?.update({ message: t("interface:savingTheVerifiedPictureAssignment"), stage: 'saving' });
+      activity?.update({
+        message: t('interface:savingTheVerifiedPictureAssignment'),
+        stage: 'saving',
+      });
       const result = await catalog.withCurrent(
         ticket,
         () => store.commit(prepared, { expectedGeneration: baseline.generation, signal }),
@@ -664,8 +717,8 @@ export function attachStillMediaPanel({
       changeContext(true);
       setStatus(
         remove
-          ? t("interface:assignmentRemovedOriginalsAndHistoryRetainedChoosePreviewAuthoredPicture")
-          : t("interface:assignmentSavedInLocalMediaOriginalsRetainedFlightsScoresSaves"),
+          ? t('interface:assignmentRemovedOriginalsAndHistoryRetainedChoosePreviewAuthoredPicture')
+          : t('interface:assignmentSavedInLocalMediaOriginalsRetainedFlightsScoresSaves'),
       );
       try {
         onSaved(saved);
@@ -689,24 +742,25 @@ export function attachStillMediaPanel({
     if (task) return cancelWork();
     discardBundles();
     sync();
-    setStatus(t("interface:reviewThisFileAndPolicyBeforeRestoringSavedDataIs"));
+    setStatus(t('interface:reviewThisFileAndPolicyBeforeRestoringSavedDataIs'));
   };
   downloadOriginals.onclick = (event) => {
     if (!bundleURL || task || disposed) {
       event?.preventDefault();
       return false;
     }
-    setStatus(
-      t("interface:originalsDownloadRequestedConfirmTheDestinationInYourBrowserThis"),
-    );
+    setStatus(t('interface:originalsDownloadRequestedConfirmTheDestinationInYourBrowserThis'));
   };
   async function prepareDownload() {
     if (!ready || task) return false;
     discardBundles();
-    return work(t("interface:verifyingAllRetainedOriginalsForDownload"), async (signal, check) => {
+    return work(t('interface:verifyingAllRetainedOriginalsForDownload'), async (signal, check) => {
       const latest = await store.read({ signal });
       check();
-      activity?.update({ message: t("interface:verifyingAndPackingPictureOriginals"), stage: 'exporting' });
+      activity?.update({
+        message: t('interface:verifyingAndPackingPictureOriginals'),
+        stage: 'exporting',
+      });
       const blob = await exportMediaBundle(latest.document, latest.assets, { signal, decodeImage });
       check();
       let candidate = null;
@@ -733,7 +787,7 @@ export function attachStillMediaPanel({
       assignmentMode = bundleMode.value;
     discardBundles();
     return work(
-      t("interface:verifyingTheCompleteOriginalsBackupAndTargetHistory"),
+      t('interface:verifyingTheCompleteOriginalsBackupAndTargetHistory'),
       async (signal, check) => {
         const imported = await importMediaBundle(file, { signal, decodeImage });
         check();
@@ -745,10 +799,12 @@ export function attachStillMediaPanel({
         });
         check();
         reviewedBundle = { review, context, file, assignmentMode };
-        localizedText(bundleReview, () =>`Reviewed target generation ${review.expectedGeneration}: ${review.originals} distinct retained originals, ${review.originalBytes} bytes, ${review.document.owners.length} exact historical owners, ${review.document.library.presentations.length} immutable picture revisions, ${review.document.library.assignments.length} resulting assignments. ${assignmentMode === 'restore' ? t("interface:theFileSCompleteAssignmentSetWillBeSelected") : t("interface:currentAssignmentsWinMissingBindingsAreAdded")} No data has been restored yet.`);
-        setStatus(
-          t("interface:reviewCompleteChooseRestoreReviewedOriginalsToCommitThisExact"),
+        localizedText(
+          bundleReview,
+          () =>
+            `Reviewed target generation ${review.expectedGeneration}: ${review.originals} distinct retained originals, ${review.originalBytes} bytes, ${review.document.owners.length} exact historical owners, ${review.document.library.presentations.length} immutable picture revisions, ${review.document.library.assignments.length} resulting assignments. ${assignmentMode === 'restore' ? t('interface:theFileSCompleteAssignmentSetWillBeSelected') : t('interface:currentAssignmentsWinMissingBindingsAreAdded')} No data has been restored yet.`,
         );
+        setStatus(t('interface:reviewCompleteChooseRestoreReviewedOriginalsToCommitThisExact'));
         restoreOriginals.disabled = false;
         restoreOriginals.focus();
       },
@@ -764,11 +820,11 @@ export function attachStillMediaPanel({
     ) {
       discardBundles();
       sync();
-      setStatus(t("interface:theReviewedFilePolicyOrInstalledContextChangedReviewAgain"));
+      setStatus(t('interface:theReviewedFilePolicyOrInstalledContextChangedReviewAgain'));
       return false;
     }
     reviewedBundle = null;
-    return work(t("interface:restoringTheReviewedOriginalsAtomically"), async (signal, check) => {
+    return work(t('interface:restoringTheReviewedOriginalsAtomically'), async (signal, check) => {
       await catalog.withCurrent(
         chosen.context,
         () => commitMediaBundleRestore(chosen.review, { signal }),
@@ -780,9 +836,7 @@ export function attachStillMediaPanel({
       discardBundles();
       draft = null;
       ready = false;
-      setStatus(
-        t("interface:originalsAndTheReviewedAssignmentsWereRestoredRetainedHistoryWas"),
-      );
+      setStatus(t('interface:originalsAndTheReviewedAssignmentsWereRestoredRetainedHistoryWas'));
       reload.disabled = false;
       reload.focus();
     });
@@ -817,7 +871,7 @@ export function attachStillMediaPanel({
       draft = null;
       preview.clear();
       sync();
-      setStatus(t("interface:installedContextMayHaveChangedReloadSavedMediaAndMaps"));
+      setStatus(t('interface:installedContextMayHaveChangedReloadSavedMediaAndMaps'));
     },
     snapshot() {
       return Object.freeze({

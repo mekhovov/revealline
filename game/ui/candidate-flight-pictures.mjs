@@ -9,7 +9,8 @@ import {
 } from '../content-design/picture.mjs';
 import { pictureDisplayContext } from './presentation-image.mjs';
 
-const cancelled = () => new DOMException(t("interface:candidatePicturePreparationCancelled"), 'AbortError');
+const cancelled = () =>
+  new DOMException(t('interface:candidatePicturePreparationCancelled'), 'AbortError');
 
 /** One candidate attempt, one authored theme and one immutable original. Uses
  * the same readiness/display interface as flight-pictures without pretending to
@@ -24,14 +25,14 @@ export function createCandidateFlightPictures({
 }) {
   const ownContext = pictureDisplayContext(context),
     asset = compileAssetRevision(source);
-  required(typeof acquire === 'function', t("interface:candidatePictureAcquisitionIsRequired"));
+  required(typeof acquire === 'function', t('interface:candidatePictureAcquisitionIsRequired'));
   required(
     Number.isFinite(timeoutMs) && timeoutMs > 0 && timeoutMs <= 20000,
-    t("interface:invalidCandidatePictureDeadline"),
+    t('interface:invalidCandidatePictureDeadline'),
   );
   required(
     picture === null || isCandidatePictureFor(asset, picture),
-    t("interface:preparedPictureDoesNotMatchThisExactOriginal"),
+    t('interface:preparedPictureDoesNotMatchThisExactOriginal'),
   );
   let binding = picture ? claimCandidatePicture(asset, picture) : null,
     pending = null,
@@ -44,8 +45,8 @@ export function createCandidateFlightPictures({
     old?.abort();
   };
   async function ensure(themeId = ownContext.themeId, { signal, onStatus = () => {} } = {}) {
-    required(!disposed, t("interface:candidatePictureAttemptIsDisposed"));
-    required(themeId === ownContext.themeId, t("interface:thisCandidateKeepsItsAuthoredTheme"));
+    required(!disposed, t('interface:candidatePictureAttemptIsDisposed'));
+    required(themeId === ownContext.themeId, t('interface:thisCandidateKeepsItsAuthoredTheme'));
     if (signal?.aborted) throw cancelled();
     const ticket = generation + 1;
     cancel();
@@ -82,12 +83,7 @@ export function createCandidateFlightPictures({
       controller.signal.addEventListener('abort', () => reject(cancelled()), { once: true });
       signal?.addEventListener('abort', abort, { once: true });
       timer = setTimeout(
-        () =>
-          stop(
-            new Error(
-              t("interface:theCandidatePictureDidNotBecomeReadyInTimeKeep"),
-            ),
-          ),
+        () => stop(new Error(t('interface:theCandidatePictureDidNotBecomeReadyInTimeKeep'))),
         timeoutMs,
       );
     });
@@ -95,7 +91,7 @@ export function createCandidateFlightPictures({
       candidate = await Promise.race([
         stopped,
         Promise.resolve().then(async () => {
-          report('preparing', t("interface:verifyingAndOpeningThisMissionSOriginalPicture"));
+          report('preparing', t('interface:verifyingAndOpeningThisMissionSOriginalPicture'));
           const result = await acquire(asset, { signal: controller.signal });
           try {
             claimCandidatePicture(asset, result);
@@ -113,10 +109,10 @@ export function createCandidateFlightPictures({
       check();
       required(
         isCandidatePictureFor(asset, candidate),
-        t("interface:candidatePictureWasNotVerifiedForThisOriginal"),
+        t('interface:candidatePictureWasNotVerifiedForThisOriginal'),
       );
       // Observers may close the host or start newer work. Do not publish first.
-      report('ready', t("interface:thisMissionSOriginalPictureIsReady"));
+      report('ready', t('interface:thisMissionSOriginalPictureIsReady'));
       binding = candidate;
       candidate = null;
       return true;
