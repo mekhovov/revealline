@@ -87,6 +87,13 @@ native formatting, validation, motion syntax and the ordinary 1,138-file build p
 The hosted exact-head build remains required because automated long suites are waived by the temporary
 release policy and are not claimed as passed.
 
+Local browser review covered the ready Versus and Team lobbies at 390×844,
+844×390 and 1280×800 CSS pixels. Start owns initial focus and remains visible
+through the browser's focus scroll, Optional setup stays collapsed, there is no
+horizontal overflow, and every visible interactive target measures at least 44
+CSS pixels in both modes. This is browser evidence, not physical touch or
+controller certification.
+
 Completed publication and scoped source evidence:
 
 - The v0.97 selector PR341 deployed source
