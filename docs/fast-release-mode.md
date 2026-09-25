@@ -33,6 +33,13 @@ publishing/controller, workflow, and `game/test/`-only pull requests may remain 
 product version; mixed or runtime changes still return to draft until they receive an exact release
 title or the explicit `release-train-approved` label.
 
+Release-title pull requests also fail closed until the previous latest stable release is both the
+reviewed selector on `main` and the version actually served by the public root and versioned game
+bytes. Their title version, package version, lockfile versions, and game build version must match
+before dependency installation. This prevents concurrent agents from merging a new source release
+while its predecessor is still waiting for archive/selector/Pages acceptance, and catches partial
+version bumps before the expensive post-merge freeze.
+
 These checks are deferred from the pull-request workflow in fast mode and cannot block merge:
 
 - all four full test shards;

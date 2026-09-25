@@ -77,8 +77,13 @@ jobs:
           fetch-depth: 1
           persist-credentials: false
           sparse-checkout: |
+            publishing/pages-controller/metadata.mjs
+            publishing/pages-controller/publication.json
+            publishing/pages-controller/release-policy.mjs
+            publishing/pages-controller/release-train-boundary.mjs
             publishing/test-policy.json
             publishing/test-policy.mjs
+            scripts/pages-archive.mjs
           sparse-checkout-cone-mode: false
 
       - name: Set up Node.js
@@ -120,6 +125,13 @@ jobs:
             # the whole PR in the product lane.
             echo 'mode=maintenance' >> "$GITHUB_OUTPUT"
           fi
+
+      - name: Require the previous stable release on public Pages
+        if: steps.admission.outputs.mode == 'release'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_TITLE: ${{ github.event.pull_request.title }}
+        run: node .source-gate-automation/publishing/pages-controller/release-train-boundary.mjs public
 
       - name: Record temporary fast-release policy
         env:
@@ -226,7 +238,13 @@ jobs:
           path: .source-gate-automation
           fetch-depth: 1
           persist-credentials: false
-          sparse-checkout: scripts/check-source-identity.mjs
+          sparse-checkout: |
+            publishing/pages-controller/metadata.mjs
+            publishing/pages-controller/publication.json
+            publishing/pages-controller/release-policy.mjs
+            publishing/pages-controller/release-train-boundary.mjs
+            scripts/check-source-identity.mjs
+            scripts/pages-archive.mjs
           sparse-checkout-cone-mode: false
 
       - name: Set up Node.js
@@ -239,6 +257,11 @@ jobs:
         run: |
           test "$(git rev-parse HEAD)" = "$EXPECTED_SOURCE"
           node .source-gate-automation/scripts/check-source-identity.mjs --root .
+
+      - name: Require exact release version identity
+        env:
+          PR_TITLE: ${{ github.event.pull_request.title }}
+        run: node .source-gate-automation/publishing/pages-controller/release-train-boundary.mjs source .
 
       - name: Install dependencies
         run: npm ci
