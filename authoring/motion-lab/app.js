@@ -5,8 +5,10 @@ import {
   localizedAttribute,
   onLocaleChange,
   formatNumber,
+  getLocale,
 } from '../../game/i18n/index.mjs';
 import { getMotionDisplay } from './display.mjs';
+import { freezeMotionPresets, motionText } from './copy.mjs';
 import { createPreviewLoop } from './preview-loop.mjs';
 import { canvasTextFonts } from '../../game/text-face.mjs';
 import { fieldKitCopy } from '../../game/ui/field-kit-copy.mjs';
@@ -171,13 +173,18 @@ function mountMotionLab() {
     localizedText($('motion-event'), text);
   }
 
-  function setOptions(id, entries, selected) {
+  function setOptions(id, entries, selected, owner = presets) {
     const select = $(id);
     select.replaceChildren();
     for (const [value, data] of Object.entries(entries)) {
       const option = document.createElement('option');
       option.value = value;
-      option.textContent = data.label || value;
+      localizedText(
+        option,
+        typeof data.label === 'function'
+          ? data.label
+          : () => motionText(owner, data, 'label') || value,
+      );
       select.append(option);
     }
     select.value = selected;
@@ -227,21 +234,35 @@ function mountMotionLab() {
     if (!presets || !selection) return;
     const character = presets.characters[selection.character];
     const body = assetRecord(character.src);
-    const bodyText =
-      body.state === 'loaded'
-        ? `Body image ${body.image.naturalWidth} × ${body.image.naturalHeight}; ${character.sourceStatus || 'review status not supplied'}`
-        : body.state === 'loading'
-          ? 'Body image loading; neutral marker shown'
-          : body.state === 'failed'
-            ? 'Body image unavailable; neutral marker shown'
-            : 'Neutral marker shown; selected body has no image';
+    const bodyState = body.state;
+    const width = body.image?.naturalWidth,
+      height = body.image?.naturalHeight;
+    const bodyText = () =>
+      bodyState === 'loaded'
+        ? t('tools:motionLab.bodyImageLoaded', {
+            width,
+            height,
+            status:
+              motionText(presets, character, 'sourceStatus') ||
+              t('tools:motionLab.sourceStatusMissing'),
+          })
+        : t(
+            bodyState === 'loading'
+              ? 'tools:motionLab.bodyImageLoading'
+              : bodyState === 'failed'
+                ? 'tools:motionLab.bodyImageFailed'
+                : 'tools:motionLab.bodyImageAbsent',
+          );
     const roles = Object.values(presets.terrainLayers[selection.terrainLayer].roles);
     const declared = roles.flatMap((role) => [role.microSrc, role.propSrc]).filter(Boolean);
     const loaded = declared.filter((src) => assetRecord(src).state === 'loaded').length;
-    const terrainText = declared.length
-      ? `Terrain: ${loaded}/${declared.length} image layers loaded; missing layers use diagrams`
-      : 'Terrain: vector material diagrams';
-    const message = `${bodyText}. ${terrainText}. Rotor anchors are an approximate study rig.`;
+    const message = () =>
+      t('tools:motionLab.assetStatus', {
+        body: bodyText(),
+        terrain: declared.length
+          ? t('tools:motionLab.terrainLayers', { loaded, total: declared.length })
+          : t('tools:motionLab.terrainVectors'),
+      });
     const lease = assetPresenter.begin({ message });
     if (body.state !== 'loading' && !declared.some((src) => assetRecord(src).state === 'loading'))
       lease.finish({ message });
@@ -263,7 +284,7 @@ function mountMotionLab() {
     const theme = presets.themes[selection.theme];
     for (const key of ['accent', 'arena', 'wall', 'slow', 'danger'])
       document.documentElement.style.setProperty(`--${key}`, theme.colors[key]);
-    $('palette-name').textContent = theme.label;
+    localizedText($('palette-name'), () => motionText(presets, theme, 'label'));
     if (abilityConfig && abilityState) refreshAbilityControls();
   }
 
@@ -287,7 +308,10 @@ function mountMotionLab() {
     setOptions(
       'ability-class',
       Object.fromEntries(
-        abilityConfig.classes.map((item) => [item.id, { label: vocab.classLabels[item.id] }]),
+        abilityConfig.classes.map((item) => [
+          item.id,
+          { label: () => motionText(abilityConfig, vocab, `classLabels.${item.id}`) },
+        ]),
       ),
       abilityState.classId,
     );
@@ -297,13 +321,19 @@ function mountMotionLab() {
       Object.fromEntries(
         abilityConfig.equipment
           .filter((link) => item.compatibleEquipment.includes(link.id))
-          .map((link) => [link.id, { label: vocab.equipmentLabels[link.id] }]),
+          .map((link) => [
+            link.id,
+            { label: () => motionText(abilityConfig, vocab, `equipmentLabels.${link.id}`) },
+          ]),
       ),
       abilityState.equipmentId,
     );
-    $('ability-description').textContent = item.description;
-    $('ability-recommended-link').textContent =
-      `Use ${vocab.equipmentLabels[item.recommendedEquipment]}`;
+    localizedText($('ability-description'), () => motionText(abilityConfig, item, 'description'));
+    localizedText($('ability-recommended-link'), () =>
+      t('tools:motionLab.useRecommendedLink', {
+        link: motionText(abilityConfig, vocab, `equipmentLabels.${item.recommendedEquipment}`),
+      }),
+    );
   }
   function abilityReadouts() {
     if (!abilityState) return;
@@ -312,12 +342,52 @@ function mountMotionLab() {
     const notes = abilityState.targets.filter(
       (target) => target.kind === 'note' && target.revealedUntil > abilityState.time,
     ).length;
-    const charges = info.capacity ? `${info.ammo}/${info.capacity} charges` : 'No charge limit';
+    const status = paused
+      ? t('interface:paused')
+      : info.ready
+        ? t('common:status.ready')
+        : info.cooldown > 0.01
+          ? t('tools:motionLab.cooldown', { seconds: number(info.cooldown, 1) })
+          : info.budget === 0
+            ? t('tools:motionLab.linkEmpty')
+            : t('tools:motionLab.pickUpCharges');
     $('ability-readout').textContent = abilityEnabled
-      ? `${vocab.classLabels[abilityState.classId]} · ${paused ? t('interface:paused') : info.ready ? t('common:status.ready') : info.cooldown > 0.01 ? `${info.cooldown.toFixed(1)}s cooldown` : info.budget === 0 ? 'Link empty' : 'Pick up charges'} · ${charges} · ${info.completed} markers updated · ${notes} notes visible`
-      : 'Toy study hidden and paused. Movement and artwork remain available.';
-    $('ability-link-status').textContent =
-      `${vocab.equipmentLabels[abilityState.equipmentId]} · display signal ${Math.round(info.signal * 100)}%${info.inHaze ? (info.equipment.ignoreHaze ? ' · synthetic haze ignored' : ' · synthetic haze display only') : ''}${info.budget !== null ? ` · ${vocab.budgetLabel} ${info.budget.toFixed(1)}/${info.budgetCapacity}` : ''}. ${info.pad ? 'At a supply pad: R refills charges and link budget.' : 'Return to a marked pad for refill.'}`;
+      ? t('tools:motionLab.abilitySummary', {
+          name: motionText(abilityConfig, vocab, `classLabels.${abilityState.classId}`),
+          status,
+          charges: info.capacity
+            ? t('tools:motionLab.charges', { ammo: info.ammo, count: info.capacity })
+            : t('tools:motionLab.unlimitedCharges'),
+          markers: t('tools:motionLab.markersUpdated', { count: info.completed }),
+          notes: t('tools:motionLab.notesVisible', { count: notes }),
+        })
+      : t('tools:motionLab.abilityHidden');
+    const linkDetails = [
+      t('tools:motionLab.linkSignal', {
+        name: motionText(abilityConfig, vocab, `equipmentLabels.${abilityState.equipmentId}`),
+        signal: Math.round(info.signal * 100),
+      }),
+    ];
+    if (info.inHaze)
+      linkDetails.push(
+        t(
+          info.equipment.ignoreHaze
+            ? 'tools:motionLab.hazeIgnored'
+            : 'tools:motionLab.hazeDisplayOnly',
+        ),
+      );
+    if (info.budget !== null)
+      linkDetails.push(
+        t('tools:motionLab.linkBudget', {
+          name: motionText(abilityConfig, vocab, 'budgetLabel'),
+          remaining: number(info.budget, 1),
+          capacity: info.budgetCapacity,
+        }),
+      );
+    $('ability-link-status').textContent = t('tools:motionLab.linkSummary', {
+      details: linkDetails.join(' · '),
+      refill: t(info.pad ? 'tools:motionLab.padRefill' : 'tools:motionLab.returnForRefill'),
+    });
     $('ability-action').disabled = !abilityEnabled;
     $('ability-pickup').disabled = !abilityEnabled;
   }
@@ -409,24 +479,24 @@ function mountMotionLab() {
       loop.resetClock();
     }
     const messages = {
-      paused: 'Paused. Press Play before using an ability.',
-      'near-pad-required': 'Move inside a marked supply pad, then press R.',
-      cooldown: 'Cooling down; wait for Ready.',
-      'link-empty': 'Link budget is empty. Movement still works; return to a pad and press R.',
-      'charges-empty': 'No charges. Pick up at a marked supply pad with R.',
-      refilled: 'Charges and available link budget refilled.',
-      'tagged-returned':
-        'Toy tagged. Returned to the stage start; charge consumed. Refill or reset to try again.',
-      'marker-updated': 'Nearby toy marker updated.',
-      'action-used': 'Ability used. Effects are confined to this toy study.',
-      'duplicate-event': 'Repeated action ignored.',
-      'no-reachable-center':
-        'No forward landing point within this dash range. Move away from the edge or use a longer configured range; no charge spent.',
-      'effect-limit':
-        'This study has enough active effects. Wait for one to finish; no charge spent.',
+      paused: localizedMessage('tools:motionLab.abilityPaused'),
+      'near-pad-required': localizedMessage('tools:motionLab.nearPadRequired'),
+      cooldown: localizedMessage('tools:motionLab.coolingDown'),
+      'link-empty': localizedMessage('tools:motionLab.linkEmptyNotice'),
+      'charges-empty': localizedMessage('tools:motionLab.chargesEmpty'),
+      refilled: localizedMessage('tools:motionLab.refilled'),
+      'tagged-returned': localizedMessage('tools:motionLab.taggedReturned'),
+      'marker-updated': localizedMessage('tools:motionLab.markerUpdated'),
+      'action-used': localizedMessage('tools:motionLab.actionUsed'),
+      'duplicate-event': localizedMessage('tools:motionLab.duplicateEvent'),
+      'no-reachable-center': localizedMessage('tools:motionLab.noReachableCenter'),
+      'effect-limit': localizedMessage('tools:motionLab.effectLimit'),
     };
-    $('ability-message').textContent =
-      messages[result.reason] || `Ability result: ${result.reason}.`;
+    localizedText(
+      $('ability-message'),
+      messages[result.reason] ||
+        localizedMessage('tools:motionLab.abilityResult', { reason: result.reason }),
+    );
     readouts();
     render();
   }
@@ -442,8 +512,7 @@ function mountMotionLab() {
         abilityPlayer(),
       );
       refreshAbilityControls();
-      $('ability-message').textContent =
-        'Toy test reset for the selected class and link. Character appearance and movement settings kept.';
+      localizedText($('ability-message'), localizedMessage('tools:motionLab.loadoutReset'));
       readouts();
       render();
     };
@@ -488,8 +557,7 @@ function mountMotionLab() {
       autoplay = false;
       reset();
       pause(localizedMessage('tools:motionLab.abilityResetPause'));
-      $('ability-message').textContent =
-        'Toy targets, charges, link budget and effects reset. Selected class, link and appearance kept.';
+      localizedText($('ability-message'), localizedMessage('tools:motionLab.abilityReset'));
     });
     listen($('apply-class-appearance'), 'click', () => {
       const item = abilityConfig.classes.find((item) => item.id === abilityState.classId),
@@ -552,8 +620,18 @@ function mountMotionLab() {
     const resolved = resolveCharacter(collection, profile, currentContext());
     if (selection.character !== resolved.characterId) liveAnimation = createAnimationState();
     selection.character = resolved.characterId;
-    $('equipped-readout').textContent =
-      `On board: ${presets.characters[selection.character].label} · ${resolved.source}. Cosmetics never change travel or terrain.`;
+    const character = presets.characters[selection.character];
+    const sourceKeys = {
+      equipped: 'tools:motionLab.equippedSource',
+      default: 'tools:motionLab.defaultSource',
+      fallback: 'tools:motionLab.fallbackSource',
+    };
+    localizedText($('equipped-readout'), () =>
+      t('tools:motionLab.equippedReadout', {
+        name: motionText(presets, character, 'label'),
+        source: t(sourceKeys[resolved.source]),
+      }),
+    );
     updateAssetStatus();
   }
 
@@ -580,17 +658,52 @@ function mountMotionLab() {
         localizedMessage('tools:motionLab.bodyPercentAccessible', { percent }),
       );
     }
-    $('inspection-blade-label').textContent = rotor
-      ? `${rotor.bladeCount} blades / rotor`
-      : recipe.components.length
-        ? recipe.components.map((component) => component.type).join(' + ')
-        : 'Static marker';
+    localizedText($('inspection-blade-label'), () =>
+      rotor
+        ? t('tools:motionLab.bladesPerRotor', { count: rotor.bladeCount })
+        : recipe.components.length
+          ? recipe.components.map((component) => componentName(component.type)).join(' + ')
+          : t('tools:motionLab.staticMarker'),
+    );
     const unavailableRig = rotor && !body.rotors.length;
-    $('animation-status').textContent = unavailableRig
-      ? 'This body has no rotor anchors. Recipe selected, but rotors cannot attach until a rig is authored.'
-      : rotor
-        ? 'Blade motion is sampled for readable direction; blur indicates higher requested spin. Inspection can slow detail. These are visual rates, not physical RPM.'
-        : 'Independent cosmetic recipe. The enlarged view uses the same body and attachment parameters.';
+    localizedText(
+      $('animation-status'),
+      localizedMessage(
+        unavailableRig
+          ? 'tools:motionLab.rigUnavailable'
+          : rotor
+            ? 'tools:motionLab.rotorExplanation'
+            : 'tools:motionLab.cosmeticRecipe',
+      ),
+    );
+  }
+
+  function componentName(type) {
+    const keys = {
+      rotors: 'tools:rotors',
+      wings: 'tools:motionLab.wings',
+      thruster: 'tools:motionLab.thruster',
+      pulse: 'tools:motionLab.pulse',
+      blink: 'tools:motionLab.blink',
+    };
+    return keys[type] ? t(keys[type]) : type;
+  }
+  function collectionDefinition(row) {
+    return collection.characters.find((item) => item.id === row.id);
+  }
+  function collectionStatus(row) {
+    const keys = {
+      unavailable: 'tools:motionLab.statusUnavailable',
+      unlocked: 'tools:motionLab.statusUnlocked',
+      locked: 'common:status.locked',
+    };
+    return t(keys[row.status]);
+  }
+  function criterionLabel(row, condition) {
+    const source = collectionDefinition(row)
+      ?.unlock.anyOf?.flatMap((group) => group.allOf)
+      .find((item) => item.id === condition.id);
+    return source ? motionText(collection, source, 'label') : condition.label;
   }
 
   function refreshCollection({ followEquipped = false } = {}) {
@@ -599,23 +712,72 @@ function mountMotionLab() {
     const rows = evaluateCollection(collection, profile, currentContext());
     setOptions(
       'character',
-      Object.fromEntries(rows.map((row) => [row.id, { label: `${row.label} · ${row.status}` }])),
+      Object.fromEntries(
+        rows.map((row) => [
+          row.id,
+          {
+            label: () =>
+              t('tools:motionLab.collectionOption', {
+                name: motionText(collection, collectionDefinition(row), 'label'),
+                status: collectionStatus(row),
+              }),
+          },
+        ]),
+      ),
       inspectedCharacter,
     );
     const row = rows.find((item) => item.id === inspectedCharacter);
-    $('character-status').textContent =
-      `${row.label}: ${row.status}. ${row.description || ''}${row.available ? '' : ` ${row.availabilityReason}`}`;
+    const definition = collectionDefinition(row);
+    localizedText($('character-status'), () =>
+      t(
+        row.available
+          ? 'tools:motionLab.characterAvailable'
+          : 'tools:motionLab.characterUnavailable',
+        {
+          name: motionText(collection, definition, 'label'),
+          status: collectionStatus(row),
+          description: motionText(collection, definition, 'description') || '',
+        },
+      ),
+    );
     $('equip-character').disabled = !row.available || !row.unlocked;
     const list = $('unlock-conditions');
     list.replaceChildren();
     for (const condition of row.conditions) {
       const item = document.createElement('li');
-      item.textContent = `${condition.met ? '✓' : '○'} ${condition.label}: ${condition.current} / ${condition.target}`;
+      localizedText(item, () =>
+        t('tools:motionLab.conditionProgress', {
+          mark: condition.met ? '✓' : '○',
+          name: criterionLabel(row, condition),
+          current: condition.current,
+          target: condition.target,
+        }),
+      );
       list.append(item);
     }
     if (row.unmet.length) {
       const item = document.createElement('li');
-      item.textContent = `Unlock: ${row.unmet.join(' OR ')}`;
+      const label = document.createElement('span');
+      localizedText(label, localizedMessage('tools:motionLab.unlockConditions'));
+      const alternatives = document.createElement('ul');
+      for (const group of row.alternatives) {
+        const alternative = document.createElement('li');
+        localizedText(alternative, () =>
+          new Intl.ListFormat(getLocale(), { type: 'conjunction' }).format(
+            group.conditions
+              .filter((condition) => !condition.met)
+              .map((condition) =>
+                t('tools:motionLab.conditionRemaining', {
+                  name: criterionLabel(row, condition),
+                  current: condition.current,
+                  target: condition.target,
+                }),
+              ),
+          ),
+        );
+        alternatives.append(alternative);
+      }
+      item.append(label, alternatives);
       list.append(item);
     }
     list.hidden = !list.children.length;
@@ -627,6 +789,7 @@ function mountMotionLab() {
       'collection-context',
       Object.fromEntries(collection.contexts.map((item) => [item.id, item])),
       contextId,
+      collection,
     );
     setOptions(
       'animation-recipe',
@@ -637,6 +800,7 @@ function mountMotionLab() {
       'reward-fixture',
       Object.fromEntries(collection.fixtures.map((item) => [item.id, item])),
       collection.fixtures[0].id,
+      collection,
     );
     listen($('collection-context'), 'change', (event) => {
       contextId = event.target.value;
@@ -1400,7 +1564,7 @@ function mountMotionLab() {
                   { blades: formatNumber(rotor.bladeCount) },
                 )
         : recipe.components.length
-          ? recipe.components.map((component) => component.type).join(' + ')
+          ? recipe.components.map((component) => componentName(component.type)).join(' + ')
           : t('tools:motionLab.staticBody');
     $('state-label').textContent = paused
       ? t('interface:paused')
@@ -1855,10 +2019,10 @@ function mountMotionLab() {
         responses.map((response) => response.json()),
       );
       if (disposed) return;
-      presets = validateAnimationRecipes(validatePresets(visuals));
+      presets = freezeMotionPresets(validateAnimationRecipes(validatePresets(visuals)));
       validateCollection(definitions, Object.keys(presets.characters));
-      collection = definitions;
-      abilityConfig = validateAbilityPresets(abilityDefinitions);
+      collection = freezeMotionPresets(definitions);
+      abilityConfig = freezeMotionPresets(validateAbilityPresets(abilityDefinitions));
       try {
         const raw = localStorage.getItem(storageKey),
           restored = restoreProfile(raw, profileOptions);
