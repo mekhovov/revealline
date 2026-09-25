@@ -1,4 +1,5 @@
-import { onLocaleChange } from '../i18n/index.mjs';
+import { localizedMessage, localizedText, onLocaleChange, t } from '../i18n/index.mjs';
+import { contentText } from '../i18n/content.mjs';
 import { createStarterProject } from '../content-design/starter.mjs';
 import { createOpeningCandidates } from '../content-design/horizon-candidates.mjs';
 import { createBorderCandidates } from '../content-design/border-candidates.mjs';
@@ -262,7 +263,7 @@ const encounterEditor = createEncounterEditor({
   },
 });
 function status(text, error = false) {
-  $('status').textContent = text;
+  localizedText($('status'), text);
   $('status').dataset.error = String(error);
 }
 function guarded(action) {
@@ -278,15 +279,15 @@ function guarded(action) {
 function showStorage(state) {
   if (state.error)
     status(
-      `Session only: ${state.error.message} Your edits remain here. Export a backup, then retry or inspect the newer saved draft.`,
+      localizedMessage('tools:studio.storage.sessionOnly', { message: state.error.message }),
       true,
     );
-  else if (state.saving) status('Saving an immutable checkpoint…');
+  else if (state.saving) status(localizedMessage('tools:studio.storage.saving'));
   else
     status(
       state.dirty
-        ? 'Unsaved edits are in this session. Saving shortly…'
-        : `Saved locally · checkpoint ${state.revision}. This is a candidate, not published content.`,
+        ? localizedMessage('tools:studio.storage.unsaved')
+        : localizedMessage('tools:studio.storage.saved', { revision: state.revision }),
     );
   $('undo').disabled = !session?.canUndo();
   $('redo').disabled = !session?.canRedo();
@@ -316,10 +317,7 @@ function queueSave() {
   }, 300);
 }
 function discardSource() {
-  return (
-    !sourceChanged ||
-    window.confirm('Discard unapplied JSON edits? The applied draft is unchanged.')
-  );
+  return !sourceChanged || window.confirm(t('tools:studio.source.discard'));
 }
 function currentMission() {
   return session.current().missions.find((m) => m.id === $('mission').value);
@@ -520,8 +518,13 @@ function render(selected = $('mission').value) {
   inspected = null;
   candidateLibrary.clearInspection();
   $('apply').disabled = true;
-  $('validation').textContent =
-    `Current draft: ${project.maps.length} map revisions, ${project.missions.length} missions. Source edits require a new inspection before applying.`;
+  localizedText(
+    $('validation'),
+    localizedMessage('tools:studio.source.current', {
+      maps: project.maps.length,
+      missions: project.missions.length,
+    }),
+  );
   $('undo').disabled = !session.canUndo();
   $('redo').disabled = !session.canRedo();
   $('structure-result').textContent =
@@ -663,11 +666,21 @@ function inspectSource({ head, selectedRevision } = {}) {
   const text = $('source').value,
     project = compileContentProject(text).source;
   inspected = { text, project, head };
-  $('validation').textContent =
-    `${project.name}: ${project.maps.length} map revisions, ${project.missions.length} missions compile. ${head ? `Inspected checkpoint ${selectedRevision} (latest ${head.revision}). Older versions restore as a new checkpoint. ` : ''}Human playtesting and publication remain pending. Apply to replace the workbench draft.`;
+  localizedText($('validation'), () =>
+    t(head ? 'tools:studio.source.checkpointInspected' : 'tools:studio.source.inspected', {
+      name: contentText(project, 'name'),
+      maps: project.maps.length,
+      missions: project.missions.length,
+      selectedRevision,
+      latestRevision: head?.revision,
+    }),
+  );
   $('apply').disabled = false;
-  candidateLibrary.reportInspection(
-    `${project.name}: ${project.missions.length} missions inspected. The applied draft is unchanged. Review the source before Apply.`,
+  candidateLibrary.reportInspection(() =>
+    t('tools:studio.library.inspected', {
+      name: contentText(project, 'name'),
+      count: project.missions.length,
+    }),
   );
 }
 $('source').addEventListener('input', () => {
@@ -676,8 +689,7 @@ $('source').addEventListener('input', () => {
   inspected = null;
   candidateLibrary.clearInspection();
   $('apply').disabled = true;
-  $('validation').textContent =
-    'Unapplied JSON edits. Inspect, then apply. These edits are not autosaved.';
+  localizedText($('validation'), localizedMessage('tools:studio.source.unapplied'));
 });
 $('validate').onclick = guarded(() => inspectSource());
 $('apply').onclick = guarded(async () => {
@@ -1268,13 +1280,13 @@ async function boot() {
   render();
   if (storageError)
     status(
-      `Session only: ${storageError.message} Export your work; Save checkpoint retries storage.`,
+      localizedMessage('tools:studio.storage.recovery', { message: storageError.message }),
       true,
     );
   else if (!saved) queueSave();
   document.documentElement.dataset.toolState = 'ready';
 }
 boot().catch((error) => {
-  status(`Studio could not open: ${error.message}. Saved checkpoints were not changed.`, true);
+  status(localizedMessage('tools:studio.storage.openFailed', { message: error.message }), true);
   document.documentElement.dataset.toolState = 'failed';
 });
