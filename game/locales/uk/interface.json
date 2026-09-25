@@ -4199,5 +4199,11 @@
   "solo.selectedReady": "«{{target}}» вибрано й підготовлено.",
   "solo.preparingNextMission": "Підготовка місії «{{mission}}»… Поточний політ збережено.",
   "solo.prepareNextFailed": "Не вдалося підготувати місію «{{mission}}». Спробуйте ще раз; поточний політ збережено.",
-  "solo.openNextFailed": "Не вдалося відкрити наступну місію. Поточний політ збережено. {{error}}"
+  "solo.openNextFailed": "Не вдалося відкрити наступну місію. Поточний політ збережено. {{error}}",
+  "missionLibrary.openFailed": "Не вдалося відкрити бібліотеку місій: {{error}}",
+  "missionLibrary.requestedMissionFailed": "Не вдалося відкрити запитану місію: {{error}}",
+  "journey.skipConfirm": "Пропустити місію «{{mission}}»? Проходження не буде зараховано. Ви зможете повернутися будь-коли. Натисніть «Підтвердити пропуск», щоб продовжити.",
+  "journey.progressExportError": "Не вдалося експортувати: {{error}}. Поступ цього сеансу збережено.",
+  "journey.preferenceExportError": "Не вдалося експортувати: {{error}}. Вибір складності для цього сеансу збережено.",
+  "optionalChapters.verifying": "Перевірка розділу «{{chapter}}»…"
 }

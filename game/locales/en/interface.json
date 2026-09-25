@@ -4141,5 +4141,11 @@
   "solo.selectedReady": "{{target}} selected and ready.",
   "solo.preparingNextMission": "Preparing {{mission}}… Your current flight is kept.",
   "solo.prepareNextFailed": "Could not prepare {{mission}}. Try again; your current flight is kept.",
-  "solo.openNextFailed": "Could not open the next mission. Your current flight is kept. {{error}}"
+  "solo.openNextFailed": "Could not open the next mission. Your current flight is kept. {{error}}",
+  "missionLibrary.openFailed": "Mission library could not open: {{error}}",
+  "missionLibrary.requestedMissionFailed": "Requested mission could not open: {{error}}",
+  "journey.skipConfirm": "Skip to {{mission}}? No clear is awarded. You can return at any time. Activate Confirm skip to continue.",
+  "journey.progressExportError": "Export failed: {{error}}. Your session progress is still here.",
+  "journey.preferenceExportError": "Export failed: {{error}}. Your session difficulty choice is still here.",
+  "optionalChapters.verifying": "Verifying {{chapter}}…"
 }
