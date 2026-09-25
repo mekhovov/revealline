@@ -160,6 +160,19 @@ test('failed database restore retains a resumable journal without publishing pac
   await assert.rejects(access(restoredBlobs), /ENOENT/u);
   const journal = JSON.parse(await readFile(`${restoredBlobs}.restore-journal.json`, 'utf8'));
   assert.equal(journal.state, 'blobs-staged');
+  assert.match(journal.databaseTargetHash, /^[a-f0-9]{64}$/u);
+
+  await assert.rejects(
+    restoreRecoverySnapshot({
+      databaseUrl: 'postgres://different-target/revealline',
+      blobRoot: restoredBlobs,
+      source: snapshot,
+      runCommand: async () => {
+        throw new Error('must not reach a different database');
+      },
+    }),
+    /journal does not match/u,
+  );
 
   let retries = 0;
   await restoreRecoverySnapshot({
