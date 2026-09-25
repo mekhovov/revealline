@@ -7,11 +7,14 @@ export function attachControllerConfirmGuard({
   confirmPressed,
   now = () => globalThis.performance?.now?.() ?? Date.now(),
   echoWindowMs = 1250,
+  nativeLeadWindowMs = 250,
 } = {}) {
   const keys = new Set(),
     listeners = [];
   let mouse = false,
+    controllerHeld = false,
     suppressUntil = -Infinity,
+    nativeActivationAt = -Infinity,
     neutralAfterLifecycle = false;
   const listen = (type, callback) => {
     doc.addEventListener(type, callback, { capture: true });
@@ -22,20 +25,21 @@ export function attachControllerConfirmGuard({
     if (typeof event.stopImmediatePropagation === 'function') event.stopImmediatePropagation();
     else event.stopPropagation?.();
   };
-  const controllerOwnsGesture = () => confirmPressed() || now() <= suppressUntil;
+  const controllerOwnsGesture = () => controllerHeld || confirmPressed() || now() <= suppressUntil;
+  const confirmKey = (event) =>
+    ['Enter', ' '].includes(event.key) &&
+    !event.ctrlKey &&
+    !event.altKey &&
+    !event.metaKey &&
+    !event.shiftKey;
   const isMouse = (event) =>
     event.button === 0 &&
     (!event.pointerType || event.pointerType === 'mouse') &&
     !event.sourceCapabilities?.firesTouchEvents;
+  const touchOrPen = (event) =>
+    event.sourceCapabilities?.firesTouchEvents || ['touch', 'pen'].includes(event.pointerType);
   const consumeConfirmKey = (event) => {
-    if (
-      !['Enter', ' '].includes(event.key) ||
-      event.ctrlKey ||
-      event.altKey ||
-      event.metaKey ||
-      event.shiftKey
-    )
-      return;
+    if (!confirmKey(event)) return;
     if (!keys.has(event.key) && !controllerOwnsGesture()) return;
     keys.add(event.key);
     consume(event);
@@ -43,7 +47,8 @@ export function attachControllerConfirmGuard({
   listen('keydown', consumeConfirmKey);
   listen('keypress', consumeConfirmKey);
   listen('keyup', (event) => {
-    if (keys.delete(event.key)) consume(event);
+    const owned = keys.delete(event.key);
+    if (owned || (confirmKey(event) && controllerOwnsGesture())) consume(event);
   });
   listen('pointerdown', (event) => {
     if (!isMouse(event)) return;
@@ -55,16 +60,31 @@ export function attachControllerConfirmGuard({
       if (mouse && isMouse(event)) consume(event);
     });
   listen('click', (event) => {
-    if (!isMouse(event)) return;
     // HTMLElement.click() is untrusted in browsers and is the controller
-    // adapter's intended activation. Steam/Chrome can separately emit a
-    // trusted detail:0 click without pointer events; consume that echo too.
+    // adapter's intended activation. A trusted native activation can arrive
+    // first, before the Gamepad API exposes the same physical press. In that
+    // order, keep the native action and consume the controller click instead.
     const programmatic =
-      event.isTrusted === false || (event.isTrusted == null && event.detail === 0);
-    if (programmatic) return;
-    if (!mouse && !(event.isTrusted === true && controllerOwnsGesture())) return;
-    mouse = false;
-    consume(event);
+      event.isTrusted === false ||
+      (event.isTrusted == null && (event.detail == null || event.detail === 0));
+    if (programmatic) {
+      const nativeLeadAge = now() - nativeActivationAt;
+      if (controllerOwnsGesture() && nativeLeadAge >= 0 && nativeLeadAge <= nativeLeadWindowMs) {
+        nativeActivationAt = -Infinity;
+        consume(event);
+      }
+      return;
+    }
+    // Keyboard and accessibility activation can be a trusted PointerEvent
+    // with no pointer (pointerId -1 / empty pointerType / button -1). Do not
+    // require mouse button 0 for a controller-owned release echo.
+    if (touchOrPen(event)) return;
+    if (mouse || (event.isTrusted === true && controllerOwnsGesture())) {
+      mouse = false;
+      consume(event);
+      return;
+    }
+    if (event.isTrusted === true) nativeActivationAt = now();
   });
   listen('pointercancel', (event) => {
     if (!event.pointerType || event.pointerType === 'mouse') mouse = false;
@@ -72,7 +92,9 @@ export function attachControllerConfirmGuard({
   const reset = () => {
     keys.clear();
     mouse = false;
+    controllerHeld = false;
     suppressUntil = -Infinity;
+    nativeActivationAt = -Infinity;
     neutralAfterLifecycle = false;
   };
   doc.defaultView?.addEventListener?.('blur', reset);
@@ -80,18 +102,28 @@ export function attachControllerConfirmGuard({
   return {
     observe(pressed) {
       if (neutralAfterLifecycle) {
-        if (pressed) suppressUntil = Infinity;
-        else {
+        if (pressed) {
+          controllerHeld = true;
+          suppressUntil = Infinity;
+        } else {
+          controllerHeld = false;
           neutralAfterLifecycle = false;
           suppressUntil = -Infinity;
         }
         return;
       }
-      if (pressed) suppressUntil = Math.max(suppressUntil, now() + echoWindowMs);
+      if (pressed) {
+        controllerHeld = true;
+        suppressUntil = Infinity;
+      } else if (controllerHeld) {
+        controllerHeld = false;
+        suppressUntil = now() + echoWindowMs;
+      }
     },
     requireNeutral() {
       keys.clear();
       mouse = false;
+      controllerHeld = false;
       suppressUntil = Infinity;
       neutralAfterLifecycle = true;
     },
