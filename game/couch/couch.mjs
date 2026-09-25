@@ -356,6 +356,7 @@ try {
     libraryInstaller = null,
     libraryInstallerFactory = null,
     librarySoloPreview = null,
+    spatialEditionOwner = null,
     libraryOpenEpoch = 0,
     libraryDecision = null,
     libraryLaunchController = null,
@@ -2481,6 +2482,15 @@ try {
         launch: departLibraryMission,
         difficulty: () => (journeyPreferences || browsingJourneyPreferences).snapshot().difficulty,
       });
+      const { createSpatialNextEditionSources } = await import(
+        '../mission-library/spatial-next-editions.mjs'
+      );
+      spatialEditionOwner = await createSpatialNextEditionSources({
+        activeRouteId: route.id,
+        originalThemes,
+        difficulty: () => (journeyPreferences || browsingJourneyPreferences).snapshot().difficulty,
+        launch: departLibraryMission,
+      });
       // Browsing must survive a denied storage getter. Only deliberate verified
       // installation/Play constructs this independent writer/decoder service.
       libraryInstallerFactory ??= () =>
@@ -2510,6 +2520,7 @@ try {
       }
       if (disposed || artworkLifetime.signal.aborted) {
         libraryInventory.close();
+        spatialEditionOwner.dispose();
         throw new DOMException('Mission library closed.', 'AbortError');
       }
       await refreshLibraryInventory();
@@ -2593,6 +2604,7 @@ try {
               }),
             },
           ]),
+          ...spatialEditionOwner.sources,
           ...teamSources,
         ],
         compatibility: ({ entry, level }) => {
@@ -2703,6 +2715,7 @@ try {
       });
       if (disposed || artworkLifetime.signal.aborted) {
         result.library.dispose();
+        spatialEditionOwner.dispose();
         throw new DOMException('Mission library closed.', 'AbortError');
       }
       const state = createMissionLibrarySessionState({ mode: 'versus' });
@@ -3422,6 +3435,7 @@ try {
     actorAppearance = null;
     journeyChooser?.destroy();
     missionLibrary?.library.dispose();
+    spatialEditionOwner?.dispose();
     libraryInstaller?.dispose();
     libraryInventory?.close();
     librarySoloPreview?.preparer.dispose();

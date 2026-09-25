@@ -14,6 +14,8 @@ This bounded batch changes exactly three existing mission identities: **Stepping
 
 All enemies retain their existing roles, counts, positions, tiers and collision-only movement. Difficulty scaling, coverage, objectives, bonuses, timed-bonus schedules, terrain cells and movement modifiers are unchanged. The new geometry uses foundations and negative space only, so these early missions do not introduce walls ahead of their taught campaign arc. Every permanent component has multiple departures and the field remains connected, so none of the three maps creates a single-exit trap.
 
+The ornament silhouettes do not buy easier coverage by adding safe ground. Stepping stones changes permanent foundation cells from 64 to 62 (eligible capture cells 2316 to 2318), Return pocket 165 to 154 (2215 to 2226), and Neutral ground 145 to 140 (2235 to 2240). With unchanged coverage ratios, each required-capture budget is therefore slightly higher, not lower. This numerical guard still does not prove human difficulty or enjoyment.
+
 ## Cultural sources and adaptation limits
 
 - **Lemko pysanka:** Ivan Honchar Museum object [НДФ-1497](https://honchar.org.ua/en/collections/detail/1019), catalogued with geometric/floral ornament and sun and spikelet elements. [UNESCO's Pysanka inscription](https://ich.unesco.org/en/RL/pysanka-ukrainian-tradition-and-art-of-decorating-eggs-02134) supplies context for the living Ukrainian practice. The mission uses an original spatial landing rhythm; it does not copy an egg's surface design or claim to reproduce a pysanka.
