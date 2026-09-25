@@ -1,3 +1,5 @@
+import { localizedAttribute, localizedMessage, localizedText } from '../i18n/index.mjs';
+
 /** Reset mission-owned UI when switching to a valid empty candidate project.
  * The source compiler remains the authority; this only controls the workbench. */
 export function setBoardAvailability(document, available) {
@@ -18,8 +20,8 @@ export function setBoardAvailability(document, available) {
   $('board-legend').hidden = !available;
   if (available) return;
   $('board').getContext('2d').clearRect(0, 0, $('board').width, $('board').height);
-  $('map-name').textContent = 'Your first mission starts here';
-  $('geometry').textContent = 'No mission selected. Create a mission to inspect its map and rules.';
+  localizedText($('map-name'), localizedMessage('tools:studio.preview.emptyTitle'));
+  localizedText($('geometry'), localizedMessage('tools:studio.preview.emptyGeometry'));
   for (const id of [
     'lesson',
     'rules',
@@ -28,7 +30,7 @@ export function setBoardAvailability(document, available) {
     'capture',
     'capture-summary',
   ])
-    $(id).textContent = '';
+    localizedText($(id), '');
   $('diagnostics').replaceChildren();
   $('trail').value = '';
   $('target-coverage').value = '';
@@ -45,5 +47,5 @@ export function setBoardAvailability(document, available) {
     $(`rating-${facet}`).value = '';
   $('capture-legend').hidden = true;
   $('play').disabled = true;
-  $('play').title = 'Create a mission before starting a preview.';
+  localizedAttribute($('play'), 'title', localizedMessage('tools:studio.preview.emptyPlay'));
 }
