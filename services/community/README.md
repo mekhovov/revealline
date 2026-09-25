@@ -107,6 +107,21 @@ HEAD, PATCH, and completion. Completion rechecks size, SHA-256, edition, and sub
 before copying bytes to the content-addressed package store. The test suite interrupts a PATCH,
 reads the retained offset, resumes it, and proves another owner cannot inspect the upload.
 
+Every executable API replica uses PostgreSQL advisory locks for tus resources. A dedicated bounded
+connection pool keeps upload lock waits from consuming the repository pool. A contender sends a
+PostgreSQL notification asking the current request to drain, then waits for the same shared lock;
+acquisition is bounded by `COMMUNITY_TUS_LOCK_TIMEOUT_SECONDS`. All replicas therefore serialize
+HEAD, PATCH, DELETE, completion, and expiry removal for the same upload even when requests land on
+different API processes.
+
+Incomplete uploads expire from their creation time after `COMMUNITY_TUS_EXPIRATION_SECONDS` (24
+hours by default). Each API periodically claims at most `COMMUNITY_TUS_CLEANUP_BATCH_SIZE` expired
+registry rows with `FOR UPDATE SKIP LOCKED`, records a cleanup lease, acquires the upload's shared
+lock, and removes it through the configured tus datastore. Failed removals are released for a later
+bounded retry; a crashed cleaner's lease can be reclaimed. The registry and lock layer are store
+independent, so an injected S3 tus datastore uses the same coordination boundary. Compose still
+mounts the filesystem datastore and requires shared storage if the API is scaled on one host.
+
 Titles and descriptions are length-bounded Unicode text. The API never interprets or emits them as
 HTML. Catalog clients must render these fields with text nodes (`textContent`), not HTML insertion.
 Control characters are rejected. Slugs and versions use restricted filename-safe forms.
@@ -150,8 +165,9 @@ the worker never trusts an uploaded approval flag.
   bucket policy, and rehearse database/blob restore.
 - **Uploads:** the executable server mounts the maintained tus Node server with its disk store.
   `completeTusUpload` is the verified completion boundary that can also admit an S3-backed tus
-  stream. A multi-API deployment still needs a shared tus locker and an incomplete-upload expiry
-  policy; the current in-memory lock is correct for the single API container in Compose.
+  stream. PostgreSQL advisory locks coordinate API replicas, and the PostgreSQL upload registry
+  leases bounded expiry work across them. The executable datastore remains disk-backed; multi-host
+  deployment must inject a shared datastore such as S3 rather than a node-local filesystem.
 - **Repository:** both PostgreSQL and in-memory test implementations use the same submission/job
   and admission methods. Production admission uses PostgreSQL database time, atomic conditional
   upserts, and transaction advisory locks for idempotent reservations. The memory implementation
@@ -208,8 +224,8 @@ journal-backed retry.
 The default package ceiling is 256 MiB and catalog pages are capped at 50 entries. A reverse proxy
 still needs request timeouts, connection limits, and HTTPS. Public deployment also requires
 production Better Auth secrets, mail/account recovery choices, a report triage UI over the bounded
-admin API, a shared tus locker for multiple API replicas, incomplete-upload cleanup, stronger process/container
-isolation for media validation, malware policy, metrics, an off-host backup schedule, a real
+admin API, stronger process/container isolation for media validation, malware policy, metrics, an
+off-host backup schedule, a real
 PostgreSQL/blob restore rehearsal, and an explicit infrastructure decision. The S3 adapter is tested
 at its byte boundary but is not wired into the executable deployment. No AWS, mail, domain, or
 production restore claim is made here.

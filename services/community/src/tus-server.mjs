@@ -1,7 +1,8 @@
 import { FileStore } from '@tus/file-store';
-import { Server } from '@tus/server';
+import { EVENTS, Server } from '@tus/server';
 import { createAdmissionController } from './admission.mjs';
 import { CommunityError } from './domain.mjs';
+import { createTusExpiryCleaner } from './tus-coordination.mjs';
 import { completeTusUpload } from './upload-transport.mjs';
 
 const fail = (status_code, body) => {
@@ -53,8 +54,17 @@ export function createCommunityTusServer({
   maxPackageBytes,
   admission = null,
   admissionPolicies,
+  datastore: suppliedDatastore = null,
+  locker,
+  uploadRegistry = null,
+  expirationMs = 24 * 60 * 60 * 1_000,
+  cleanupIntervalMs = 5 * 60 * 1_000,
+  cleanupBatchSize = 32,
+  cleanupLeaseMs = 2 * 60 * 1_000,
+  onBackgroundError = () => {},
 }) {
-  const datastore = new FileStore({ directory });
+  const datastore =
+    suppliedDatastore ?? new FileStore({ directory, expirationPeriodInMilliseconds: expirationMs });
   const admissionBoundary =
     admission ?? createAdmissionController({ repository, policies: admissionPolicies });
   const authenticate = async (request) => {
@@ -69,6 +79,7 @@ export function createCommunityTusServer({
   const server = new Server({
     path: endpoint,
     datastore,
+    ...(locker ? { locker } : {}),
     maxSize: maxPackageBytes,
     relativeLocation: true,
     disableTerminationForFinishedUploads: true,
@@ -88,6 +99,13 @@ export function createCommunityTusServer({
         upload.size !== submission.declaredSize
       )
         fail(422, 'Upload metadata differs from the immutable submission.');
+      if (uploadRegistry)
+        await uploadRegistry.register({
+          uploadId: upload.id,
+          submissionId: submission.id,
+          ownerSubject: identity.subject,
+          expirationMs,
+        });
       return { metadata: { ...metadata, ownerSubject: identity.subject } };
     },
     async onIncomingRequest(request, uploadId) {
@@ -113,6 +131,8 @@ export function createCommunityTusServer({
           maxPackageBytes,
         });
         await datastore.remove(upload.id);
+        if (uploadRegistry)
+          await uploadRegistry.forget(upload.id).catch((error) => onBackgroundError(error));
       } catch (error) {
         fail(error?.statusCode ?? 500, error?.message ?? 'Completed upload admission failed.');
       }
@@ -146,7 +166,29 @@ export function createCommunityTusServer({
       idempotencyKey: submission.editionId,
     });
   };
-  return { server, datastore, endpoint, admitCreate };
+  if (uploadRegistry)
+    server.on(EVENTS.POST_TERMINATE, (_request, _response, uploadId) => {
+      void uploadRegistry.forget(uploadId).catch((error) => onBackgroundError(error));
+    });
+  const cleanupExpiredUploads =
+    uploadRegistry && locker
+      ? createTusExpiryCleaner({
+          registry: uploadRegistry,
+          datastore,
+          locker,
+          batchSize: cleanupBatchSize,
+          leaseMs: cleanupLeaseMs,
+          retryAfterMs: cleanupIntervalMs,
+        })
+      : null;
+  return {
+    server,
+    datastore,
+    endpoint,
+    admitCreate,
+    cleanupExpiredUploads,
+    cleanupIntervalMs,
+  };
 }
 
 export function mountCommunityTus(app, tus) {
@@ -160,4 +202,26 @@ export function mountCommunityTus(app, tus) {
   };
   app.all(tus.endpoint, handle);
   app.all(`${tus.endpoint}/*`, handle);
+  if (tus.cleanupExpiredUploads) {
+    let timer = null;
+    let running = null;
+    const run = () => {
+      if (running) return;
+      running = tus
+        .cleanupExpiredUploads()
+        .catch((error) => app.log.error({ err: error }, 'Tus expiry cleanup failed.'))
+        .finally(() => {
+          running = null;
+        });
+    };
+    app.addHook('onReady', () => {
+      timer = setInterval(run, tus.cleanupIntervalMs);
+      timer.unref();
+      run();
+    });
+    app.addHook('onClose', async () => {
+      if (timer) clearInterval(timer);
+      if (running) await running;
+    });
+  }
 }
