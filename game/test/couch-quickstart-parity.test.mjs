@@ -24,6 +24,13 @@ function pulseTeam(f, button = 0) {
   f.tick(1);
 }
 
+function nativeConfirm(target) {
+  const down = target.emit('keydown', { key: 'Enter', code: 'Enter', repeat: false });
+  if (!down.defaultPrevented && ['BUTTON', 'SUMMARY'].includes(target.tagName)) target.click();
+  target.emit('keyup', { key: 'Enter', code: 'Enter' });
+  return down;
+}
+
 test('Versus and Team keep tuning and imports in closed optional setup surfaces', async () => {
   const [versus, team] = await Promise.all([
     readFile(new URL('../couch/index.html', import.meta.url), 'utf8'),
@@ -54,6 +61,35 @@ test('prepared Versus defaults need one assigned-controller Confirm and never ro
   assert.notEqual(f.doc.activeElement.id, 'race-picture-cancel');
 });
 
+test('Steam Deck Confirm opens Versus optional setup and starts exactly once despite its native echo', async (t) => {
+  let time = 1000;
+  t.mock.method(performance, 'now', () => time);
+  const controller = pad();
+  const f = await couchPage(t, {
+    pads: [controller],
+    initialLevel: null,
+    nativeKeyboard: true,
+  });
+  f.join(0);
+  time += 600;
+  f.focus('race-optional-setup-toggle');
+  f.pulse(0, 0);
+  assert.equal(f.$('race-optional-setup').open, true);
+  time += 120;
+  assert.equal(nativeConfirm(f.$('race-optional-setup-toggle')).defaultPrevented, true);
+  assert.equal(f.$('race-optional-setup').open, true, 'native echo must not close setup');
+
+  f.$('race-optional-setup-toggle').click();
+  time += 600;
+  f.focus('race-start');
+  f.frame(); // Admit the changed menu scope only after a neutral sample.
+  f.pulse(0, 0);
+  assert.equal(f.state(), 'running');
+  time += 120;
+  assert.equal(nativeConfirm(f.doc.activeElement).defaultPrevented, true);
+  assert.equal(f.state(), 'running', 'native echo must not trigger another start action');
+});
+
 test('prepared Team defaults need one assigned-controller Confirm and optional setup stays reachable', async (t) => {
   const f = await teamPage(t, { nativeFocus: true });
   assert.equal(f.doc.activeElement.id, 'coop-start');
@@ -71,6 +107,32 @@ test('prepared Team defaults need one assigned-controller Confirm and optional s
   pulseTeam(f);
   assert.equal(f.$('coop-play').hidden, false);
   assert.equal(f.doc.activeElement.id, 'coop-canvas');
+});
+
+test('Steam Deck Confirm opens Team optional setup and starts exactly once despite its native echo', async (t) => {
+  let time = 1000;
+  t.mock.method(performance, 'now', () => time);
+  const f = await teamPage(t, { nativeFocus: true });
+  f.pads.push(pad());
+  f.tick(1);
+  pulseTeam(f); // Assign without activating the focused Start action.
+
+  time += 600;
+  f.$('coop-optional-setup-toggle').focus();
+  pulseTeam(f);
+  assert.equal(f.$('coop-optional-setup').open, true);
+  time += 120;
+  assert.equal(nativeConfirm(f.$('coop-optional-setup-toggle')).defaultPrevented, true);
+  assert.equal(f.$('coop-optional-setup').open, true, 'native echo must not close setup');
+
+  f.$('coop-optional-setup-toggle').click();
+  time += 600;
+  f.$('coop-start').focus();
+  pulseTeam(f);
+  assert.equal(f.$('coop-play').hidden, false);
+  time += 120;
+  assert.equal(nativeConfirm(f.doc.activeElement).defaultPrevented, true);
+  assert.equal(f.$('coop-play').hidden, false, 'native echo must not trigger another start action');
 });
 
 test('passive Team preparation exposes Cancel without focusing or activating it', async (t) => {
@@ -91,4 +153,25 @@ test('passive Team preparation exposes Cancel without focusing or activating it'
   f.$('coop-start').focus();
   f.tap('Enter');
   assert.equal(f.$('coop-play').hidden, false);
+});
+
+test('Steam Deck Confirm echo cannot activate Cancel during initial Team picture preparation', async (t) => {
+  let time = 1000;
+  t.mock.method(performance, 'now', () => time);
+  const gate = deferred();
+  const f = await teamPage(t, {
+    nativeFocus: true,
+    waitPicture: false,
+    presentation: { read: () => gate.promise },
+  });
+  f.pads.push(pad());
+  f.tick(1);
+  pulseTeam(f);
+  assert.equal(f.doc.activeElement.id, 'coop-level');
+  time += 120;
+  assert.equal(nativeConfirm(f.doc.activeElement).defaultPrevented, true);
+  assert.equal(f.$('coop-picture-status').dataset.state, 'preparing');
+  assert.equal(f.$('coop-picture-cancel').hidden, false);
+  gate.resolve();
+  await waitFor(() => f.$('coop-picture-status').dataset.state === 'ready');
 });

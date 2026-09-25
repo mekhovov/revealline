@@ -62,6 +62,7 @@ import {
 import { FIXED_DT, releaseInputs } from '../core/index.mjs';
 import { attachCouchInput } from './couch-input.mjs';
 import { createControllerRouter } from '../ui/controller-router.mjs';
+import { attachControllerConfirmGuard } from '../ui/controller-confirm-guard.mjs';
 import { attachControllerNavigation } from '../ui/controller-navigation.mjs';
 import { playgroundTabBoundary } from '../ui/playground-tab-boundary.mjs';
 import { attachControllerReading } from '../ui/controller-reading.mjs';
@@ -3177,6 +3178,9 @@ try {
     if ($('race-menu-status').textContent !== text) $('race-menu-status').textContent = text;
   }
   menuRouter = createControllerRouter({ readPads: readAssignedMenuPads });
+  const controllerConfirmGuard = attachControllerConfirmGuard({
+    confirmPressed: () => menuRouter.menuConfirmPressed(),
+  });
   const menuIds = new Set([
     'race-coop',
     'race-start',
@@ -3337,6 +3341,7 @@ try {
     // Clear before sampling so that this frame cannot claim a new menu owner.
     if (assignmentsChanged || pendingPadLoss) menuRouter.clear();
     const result = menuRouter.sample({ scope, timeMs: now });
+    controllerConfirmGuard.observe(result.confirmHeld);
     if (result.status.code === 'joined' || Object.values(result.ui).some(Boolean))
       setReadingModality('controller');
     const released = !menuOwner && result.disconnected;
@@ -3428,6 +3433,7 @@ try {
     couchTouch.destroy();
     journeyReactions.dispose();
     input.destroy();
+    controllerConfirmGuard.destroy();
     menuRouter.destroy();
     reading.destroy();
     navigation.destroy();
