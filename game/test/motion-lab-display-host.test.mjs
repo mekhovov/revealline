@@ -8,6 +8,7 @@ import { Script, createContext, constants } from 'node:vm';
 import { Document, Element, Events } from './helpers/couch-dom.mjs';
 import { waitFor } from './helpers/wait-for.mjs';
 import { DISPLAY_PREFERENCES_KEY } from '../display-preferences.mjs';
+import { MENU_STYLE_PREFERENCES_KEY } from '../menu-style-preferences.mjs';
 import { applyFieldKitCopy } from '../ui/field-kit-copy.mjs';
 import { getLocale } from '../i18n/index.mjs';
 
@@ -119,6 +120,7 @@ async function harness(
     withLauncher = false,
     failModule = false,
     prepareAbility = (value) => value,
+    allowCollectionWrites = false,
   } = {},
 ) {
   const doc = new MotionDocument(),
@@ -152,25 +154,37 @@ async function harness(
     entered = deferred();
   if (!holdBoot) boot.resolve();
   let raw = stored,
+    collectionRaw = null,
     failWrites = denied,
     counter = 0,
     imageId = 0;
   const storage = {
     getItem(key) {
       reads.push(key);
-      assert.ok([DISPLAY_PREFERENCES_KEY, 'xonix.motion-lab.collection.v1'].includes(key));
+      assert.ok(
+        [
+          DISPLAY_PREFERENCES_KEY,
+          MENU_STYLE_PREFERENCES_KEY,
+          'xonix.motion-lab.collection.v1',
+        ].includes(key),
+      );
       if (denied) throw new Error('Storage unavailable');
-      return key === DISPLAY_PREFERENCES_KEY ? raw : null;
+      return key === DISPLAY_PREFERENCES_KEY
+        ? raw
+        : key === 'xonix.motion-lab.collection.v1'
+          ? collectionRaw
+          : null;
     },
     setItem(key, value) {
       writes.push([key, value]);
-      assert.equal(
-        key,
-        DISPLAY_PREFERENCES_KEY,
-        'These display actions must not save the separate lab collection or a player profile.',
+      assert.ok(
+        key === DISPLAY_PREFERENCES_KEY ||
+          (allowCollectionWrites && key === 'xonix.motion-lab.collection.v1'),
+        'Only explicit collection cases may save the lab collection; never a game profile.',
       );
       if (failWrites) throw new Error('Storage unavailable');
-      raw = value;
+      if (key === DISPLAY_PREFERENCES_KEY) raw = value;
+      else collectionRaw = value;
     },
   };
   host.localStorage = storage;
@@ -432,6 +446,9 @@ if (owner) {
     entered,
     get raw() {
       return raw;
+    },
+    get collectionRaw() {
+      return collectionRaw;
     },
     set failWrites(value) {
       failWrites = value;
@@ -820,7 +837,12 @@ test('Motion graph first arriving in an unfocused document starts paused until e
 
 test('Motion cached interruption before first application delivery cannot autoplay before or after return', async (t) => {
   const h = await harness(t);
+  const palette = h.doc.body.dataset.menuPalette;
+  const ornaments = h.doc.body.dataset.menuOrnaments;
+  assert.ok(palette && ornaments, 'The real shared tool chrome has mounted.');
   h.host.emit('pagehide', { persisted: true });
+  assert.equal(h.doc.body.dataset.menuPalette, palette);
+  assert.equal(h.doc.body.dataset.menuOrnaments, ornaments);
   // Visible/focused flags can already look normal when the delayed application
   // first evaluates. Entry-owned interruption, not those flags, must win.
   assert.equal(h.doc.hidden, false);
@@ -838,6 +860,12 @@ test('Motion cached interruption before first application delivery cannot autopl
   h.tick(100);
   assert.equal(h.frames.size, 1);
   h.host.emit('pagehide', { persisted: false });
+  assert.equal(
+    h.doc.body.dataset.menuPalette,
+    undefined,
+    'Terminal departure releases shared tool chrome.',
+  );
+  assert.equal(h.doc.body.dataset.menuOrnaments, undefined);
   for (const type of ['blur', 'pagehide', 'pageshow', 'storage'])
     assert.equal(h.host.listeners.get(type)?.size ?? 0, 0, type);
   assert.equal(h.doc.listeners.get('visibilitychange')?.size ?? 0, 0);
@@ -949,7 +977,13 @@ test('Motion real launcher graph failure retains locked study, Reload, navigatio
   h.change('motion-text-size', 'large');
   policy(h, 'pixel', 'large', 'full');
   assert.equal(h.writes.length, 1);
-  assert.ok(h.reads.every((key) => key === DISPLAY_PREFERENCES_KEY));
+  assert.ok(
+    h.reads.every((key) => [DISPLAY_PREFERENCES_KEY, MENU_STYLE_PREFERENCES_KEY].includes(key)),
+  );
+  assert.ok(
+    h.reads.includes(MENU_STYLE_PREFERENCES_KEY),
+    'Shared tool chrome may read its own preference even when the application fails.',
+  );
 });
 
 for (const failure of ['network', 'validation']) {
@@ -1796,6 +1830,74 @@ test('Motion locked collection groups preserve authored alternatives and focused
     }
     setLocale('en', { persist: false });
     assert.deepEqual(freezeView(h), before);
+  } finally {
+    setLocale(previous, { persist: false });
+  }
+});
+
+test('Motion accepted collection notices translate without repeating mutations or saving game progress', async (t) => {
+  const { setLocale } = await import('../i18n/index.mjs');
+  const previous = getLocale();
+  setLocale('en', { persist: false });
+  const h = await harness(t, { allowCollectionWrites: true });
+  try {
+    await h.ready();
+    h.$('play-pause').click();
+    h.change('equip-scope', 'context');
+    const checkNotice = (id, english, ukrainian) => {
+      const saved = h.collectionRaw;
+      const writes = [...h.writes];
+      const reads = [...h.reads];
+      const requests = h.requests.length;
+      const view = freezeView(h);
+      h.$('character-scale').focus();
+      for (const locale of ['uk', 'en', 'uk', 'en']) {
+        setLocale(locale, { persist: false });
+        assert.match(h.$(id).textContent, locale === 'uk' ? ukrainian : english);
+        assert.equal(h.collectionRaw, saved);
+        assert.deepEqual(h.writes, writes);
+        assert.deepEqual(h.reads, reads);
+        assert.equal(h.requests.length, requests);
+        assert.equal(h.frames.size, 0);
+        assert.equal(h.doc.activeElement, h.$('character-scale'));
+      }
+      assert.deepEqual(freezeView(h), view);
+    };
+    h.$('equip-character').click();
+    assert.equal(JSON.parse(h.collectionRaw).equipped.length, 1);
+    checkNotice('collection-message', /^Equipped\. Saved/, /^Оформлення встановлено\. Збережено/);
+
+    h.change('reward-fixture', 'fpv-first-clear');
+    h.$('apply-fixture').click();
+    assert.equal(JSON.parse(h.collectionRaw).events.length, 1);
+    checkNotice(
+      'collection-message',
+      /^Simulated test result applied/,
+      /^Імітований тестовий результат застосовано/,
+    );
+    h.change('character', 'fpv-racer');
+    h.change('equip-scope', 'global');
+    h.$('equip-character').click();
+    checkNotice('collection-message', /a more-specific choice applies/, /діє точніше налаштування/);
+    const writes = h.writes.length;
+    h.$('apply-fixture').click();
+    assert.equal(h.writes.length, writes, 'Rejecting a duplicate must not save.');
+    checkNotice('collection-message', /this event was already counted/, /цю подію вже зараховано/);
+
+    h.$('reset-collection').click();
+    assert.deepEqual(JSON.parse(h.collectionRaw).events, []);
+    assert.deepEqual(JSON.parse(h.collectionRaw).equipped, []);
+    checkNotice('collection-message', /^Test collection reset/, /^Тестову колекцію скинуто/);
+
+    h.$('apply-class-appearance').click();
+    checkNotice('ability-message', /^Class appearance applied/, /^Оформлення класу застосовано/);
+
+    h.failWrites = true;
+    const retained = h.collectionRaw;
+    h.change('character', 'neutral-marker');
+    h.$('equip-character').click();
+    assert.equal(h.collectionRaw, retained, 'Failed writes retain the previous persisted profile.');
+    checkNotice('collection-message', /Browser storage unavailable/, /Сховище браузера недоступне/);
   } finally {
     setLocale(previous, { persist: false });
   }
