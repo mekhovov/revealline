@@ -55,14 +55,15 @@ their own next-unused version, PR, exact-source qualification, immutable release
 Pages deployment and public-play check. The earlier UX1 rewards/gallery work then
 resumes, followed by UX3–UX6. New bulk content stays outside this critical path.
 
-M3 is reconciled onto the v0.108 publication line as the isolated v0.111.0
-release candidate on `codex/couch-quickstart-parity`. Versus keeps Start and
+M3 is reconciled onto the v0.110 actor-size successor line as the isolated
+v0.111.0 release candidate on `codex/couch-quickstart-parity`. Versus keeps Start and
 Browse missions visible while actor, difficulty and advanced match setup live
 under Optional setup. Team keeps Arena,
 Start and Browse Team arenas visible while teamwork, difficulty, actors and created
 pack import live under Optional setup. Initial Team picture preparation exposes an
-explicit secondary Cancel without taking first focus, and current FPV revision 73
-retains the two exact reviewed Team picture associations plus revisions 58–72.
+explicit secondary Cancel without taking first focus. The current FPV revision 73
+picture authority and its retained revisions 58–72 are inherited unchanged from
+the v0.110 base; this quick-start successor does not reinterpret those bindings.
 Publication, responsive browser review and physical controller/touch evidence remain
 release gates rather than claims of this source checkpoint.
 
