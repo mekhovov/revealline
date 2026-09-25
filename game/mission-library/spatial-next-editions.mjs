@@ -8,10 +8,16 @@ import { createMissionCard } from '../content-design/mission-card.mjs';
 import { journeyActorThemeCandidates } from '../presentation/journey-actor-materials.mjs';
 import { journeyLibrarySource } from './journey-source.mjs';
 import { combineJourneyLibrarySources } from './cross-mode-journey.mjs';
-import { journeyMissionDetails } from './journey-presentation.mjs';
+import { authoredJourneyMissionTags, journeyMissionDetails } from './journey-presentation.mjs';
+import { UKRAINIAN_ORNAMENT_ATLAS_IDS } from '../content-design/ukrainian-ornament-atlas-registry.mjs';
 
 const SPATIAL_V9_MISSIONS = Object.freeze(['stepping-stones', 'return-pocket', 'neutral-ground']);
 const HORIZON_V10_MISSIONS = Object.freeze(['island-outpost', 'long-way-home', 'horizon-remix']);
+const ORNAMENT_V1_MISSIONS = Object.freeze([
+  'cross-stitch-crossings',
+  'rushnyk-bands',
+  'pysanka-sections',
+]);
 const EDITION_HISTORY = Object.freeze({
   'whole-spatial-v10': Object.freeze([
     Object.freeze({ routeId: 'whole-spatial-v9', missionIds: SPATIAL_V9_MISSIONS }),
@@ -20,19 +26,27 @@ const EDITION_HISTORY = Object.freeze({
     Object.freeze({ routeId: 'whole-spatial-v10', missionIds: HORIZON_V10_MISSIONS }),
     Object.freeze({ routeId: 'whole-spatial-v9', missionIds: SPATIAL_V9_MISSIONS }),
   ]),
+  'whole-ornament-v1': Object.freeze([
+    Object.freeze({ routeId: 'whole-spatial-v11', missionIds: ORNAMENT_V1_MISSIONS }),
+  ]),
+  'whole-ornament-v2': Object.freeze([
+    Object.freeze({ routeId: 'whole-ornament-v1', missionIds: UKRAINIAN_ORNAMENT_ATLAS_IDS }),
+    Object.freeze({ routeId: 'whole-spatial-v11', missionIds: ORNAMENT_V1_MISSIONS }),
+  ]),
 });
 
 /** Bound the display projection before compilation. compileContentProject
  * resolves every mission/preset/mode it receives, so filtering only after an
- * execution catalog is built would make three historical cards pay for the
- * complete 91-mission edition twice. The full prior route remains the launch
- * authority; this projection owns card/details qualification only. */
+ * execution catalog is built would make a small historical card set pay for
+ * the complete 91-mission edition twice. The full prior route remains the
+ * launch authority; this projection owns card/details qualification only. */
 export function spatialNextPriorEditionProjection(source, missionIds = SPATIAL_V9_MISSIONS) {
   const selectedIds = new Set(missionIds);
   required(
     source &&
       Array.isArray(missionIds) &&
-      missionIds.length === 3 &&
+      missionIds.length > 0 &&
+      missionIds.length <= 12 &&
       selectedIds.size === missionIds.length &&
       ['maps', 'missions', 'campaigns', 'packs', 'assets'].every((key) =>
         Array.isArray(source[key]),
@@ -112,7 +126,7 @@ export async function createSpatialNextEditionSources({
   required(Array.isArray(originals) && originals.length > 0, 'Candidate themes are required.');
   let disposed = false;
   const sources = [];
-  for (const edition of history) {
+  for (const [historyIndex, edition] of history.entries()) {
     const route = await loadAuthoredJourneyRoute(edition.routeId);
     const themes = journeyActorThemeCandidates(originals, {
       includeOriginals: route.preserveOriginalThemes === true,
@@ -143,7 +157,17 @@ export async function createSpatialNextEditionSources({
           })),
         })),
       );
-      const missions = fullCatalog.missions.filter((mission) => selectedIds.has(mission.levelId));
+      const missions = fullCatalog.missions
+        .filter((mission) => selectedIds.has(mission.levelId))
+        .map((mission) => {
+          const campaign = route.source.campaigns.find(
+            (item) => item.id === mission.campaignId && item.missionIds.includes(mission.levelId),
+          );
+          const levelIndex = campaign?.missionIds.indexOf(mission.levelId);
+          return Number.isInteger(levelIndex) && levelIndex >= 0
+            ? Object.freeze({ ...mission, levelIndex })
+            : mission;
+        });
       required(
         missions.length === selectedIds.size &&
           new Set(missions.map((mission) => mission.levelId)).size === selectedIds.size,
@@ -165,8 +189,9 @@ export async function createSpatialNextEditionSources({
         editionId: route.id,
         edition: `Previous Journey · v${route.id.split('v').at(-1)}`,
         catalog: { missions },
-        profile,
+        profile: historyIndex === 0 ? profile : undefined,
         details: (mission) => journeyMissionDetails(manifestFor(mission)),
+        tags: (mission) => authoredJourneyMissionTags(mission, manifestFor(mission, 'standard')),
         card: (mission) => createMissionCard(manifestFor(mission)),
         launch: (_mission, context) => {
           if (disposed || context?.isCurrent?.() === false) return false;

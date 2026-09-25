@@ -7,7 +7,11 @@ import { createAuthoredJourneyRouteDefinition } from './route-definition.mjs';
 export async function loadAuthoredJourneyRoute(id) {
   if (!isAuthoredJourneyRouteId(id)) return null;
   let factories;
-  if (id === 'whole-spatial-v11') {
+  if (id === 'whole-ornament-v2') {
+    factories = await import('./ukrainian-ornament-atlas.mjs');
+  } else if (id === 'whole-ornament-v1') {
+    factories = await import('./ukrainian-ornament-candidates.mjs');
+  } else if (id === 'whole-spatial-v11') {
     factories = await import('./horizon-next-batch-candidates.mjs');
   } else if (id === 'whole-spatial-v10') {
     factories = await import('./spatial-next-batch-candidates.mjs');
