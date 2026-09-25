@@ -68,12 +68,12 @@
     "surface": "Codex in-app browser",
     "base": "https://mekhovov.github.io/revealline-archive-76/releases/v0.111.0/site/game/",
     "observations": [
-      "Archive landing linked the exact v0.111.0 canonical route.",
-      "Home loaded New Journey with 91 missions; the Sound control toggled from off to on.",
-      "Missions loaded 279 Solo entries, and First return opened its mission overlay.",
-      "Start mission entered the live board; the timer advanced and pause control became available."
+      "Home loaded New Journey with 91 missions and exposed Solo, Versus and Team routes.",
+      "The Solo gallery exposed the complete 91-mission Journey; First return opened its prepared board with HUD, controls and launch actions.",
+      "Versus loaded New Journey with 91 missions, enabled Start race, and entered two live boards for Sunflower and Skyline.",
+      "Team loaded Team Journey with 12 missions, resolved the Twin landings picture, enabled Start together, and entered the shared arena for both players."
     ],
-    "scope": "Browser interaction admission only; does not claim physical touch/controller devices, comprehensive offline, or full mission balance."
+    "scope": "Fresh browser interaction admission only; does not claim physical touch/controller devices, comprehensive offline, or full mission balance."
   },
   "accepted": true
 }
