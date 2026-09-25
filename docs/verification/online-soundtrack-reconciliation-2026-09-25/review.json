@@ -1,0 +1,101 @@
+{
+  "format": "revealline-online-soundtrack-reconciliation-review.v1",
+  "checkedAt": "2026-09-25T02:02:13Z",
+  "status": "source reconciliation complete; merge, immutable release and public game verification remain pending",
+  "pullRequest": "https://github.com/mekhovov/revealline/pull/370",
+  "candidateBase": "f54a6ecbdf329c7fd175d90ec258537d035c72e7",
+  "candidateBaseTree": "7af822dab6398cb79e636c9e86d5257470ac854b",
+  "candidateBaseVersion": "0.110.1",
+  "priorBase": "198829582e1f0d9a370a434736cc3f8cbde9ba29",
+  "priorHead": "10cabc91d81c3d0c0691a564db9bf9eab08748b8",
+  "selectedSourceCommits": [
+    "f4dd4a28e9e6feb8dd24d331e918345dcdcae59e",
+    "ba74029c9210f6fd5e853cc5fac9d79113d604f5",
+    "e414601eec4b74813bebf5f7387d275c41a4c7d3",
+    "968725a994aa0e12e393b88deb7b48178b96bb89",
+    "4be8cca8e8287e030c174155c01ae86d6baaed08",
+    "3ceb8d48c7c5aa21875e265274e0a9d8fec7b953",
+    "cca7f25f4eb8c25993395432a5a99ab29145c6a0",
+    "6cfc503a2774cf1eb847e3e20268fb45d1702c10"
+  ],
+  "excludedSource": {
+    "commits": ["f8e4e7bea2074824cf43435abed37f98605b538a"],
+    "boundary": "All commits after 6cfc503a2774cf1eb847e3e20268fb45d1702c10 were excluded from the selective port.",
+    "reason": "The excluded range owns Team, presentation and player-locator reconciliation outside the online soundtrack feature."
+  },
+  "conflicts": {
+    "cherryPickConflicts": 0,
+    "rebaseConflicts": 0,
+    "compatibilityAdjustments": [
+      "The current async flight-start contract is awaited in soundtrack host tests.",
+      "Silent Music Player opening expects the bounded catalogue metadata request and still rejects every automatic MP3 request.",
+      "Production-history coverage binds the final multi-style review rather than the earlier archive-only review.",
+      "The retained-link host test preserves v0.110.1 Steam Deck echo suppression, then verifies standalone keyboard activation after the 500 ms controller-ownership window."
+    ]
+  },
+  "archiveAuthority": {
+    "url": "https://mekhovov.github.io/revealline-soundtracks-01/catalogue.json",
+    "repositoryCommit": "275525e791d7f135e581f56c22100eb1bca16804",
+    "declaredTracks": 128,
+    "uniqueRecordings": 128,
+    "duplicateAliases": 0,
+    "collections": 12,
+    "audioBytes": 736228448,
+    "catalogueBytesObserved": 155896,
+    "historicalBoundary": "The 104-recording PR #14 baseline and its direct playback evidence remain immutable historical evidence; this review records the later live authority without rewriting those observations."
+  },
+  "fieldKit": {
+    "baseRevision": 74,
+    "baseSHA256": "cc4203e7835c1c1431212eb9563859f55ccef0951752a21ab7c38c4daf96c296",
+    "reconciledRevision": 77,
+    "reconciledSHA256": "7203b7ec80ccc472f1c6a9fef937788f950875e7931683b200001ade46cc2a24",
+    "slots": 335,
+    "source": 136,
+    "reviewed": 199,
+    "audioFingerprintSHA256": "6b9b58a0d51a1b15d533e76b531cb4db09662274c8b5cad3988b06f01e7327c4",
+    "assessment": "Revision 75 appends the reviewed multi-style audio recipes. Revision 76 adds the reviewed live-schema successor. Revision 77 binds trusted catalogue policy and remote two-deck transitions. All retain corrected v0.110.1 main revision 74, its current picture authority and every existing immutable production asset."
+  },
+  "verification": {
+    "soundtrackCataloguePlayerPanelHost": {
+      "tests": 184,
+      "passed": 184,
+      "failed": 0
+    },
+    "productionHistoryAndRecipeSources": {
+      "tests": 14,
+      "passed": 14,
+      "failed": 0
+    },
+    "liveCatalogueParser": "passed for 128 recordings, 12 collections and exact declared counts",
+    "producerCheck": "passed at revision 77 with 335 slots and 140 compiled files",
+    "formatAndStaticChecks": "Prettier, ESLint and git diff checks passed",
+    "localNativeBrowser": {
+      "url": "http://127.0.0.1:18998/game/",
+      "archiveInventory": "128 of 128 published recordings shown across 12 collections",
+      "controls": "search, eight style selectors, shuffle or sequential order and repeat all, one or off exposed in the native Music Player",
+      "search": "Cyber Anxiety returned 1 of 128 published recordings",
+      "playback": "Cyber Anxiety by Holizna advanced to playing at 0:06 / 2:49 through the shared in-game transport",
+      "sameTab": true
+    },
+    "staleBaseCI": {
+      "run": "https://github.com/mekhovov/revealline/actions/runs/36082476806",
+      "status": "cancelled after main advanced",
+      "assessment": "Preserved only as stale-base evidence; its skipped test and release_gate jobs are not passes and do not qualify this rebased head."
+    }
+  },
+  "independentReviewClosures": [
+    "Remote playback now accepts only resolver-owned catalogue track identities before cloning and validation, so caller-forged Content ID or Recording-mode fields for a valid hash are rejected.",
+    "Remote tracks now use prepared next-deck playback, natural overlap, cancellation and sequential NotAllowedError fallback without acquiring ownership of archive URLs.",
+    "Regression coverage preserves ordinary scene context updates beside the new trusted-track boundary."
+  ],
+  "scope": [
+    "Bounded live catalogue decode and exact immutable archive paths.",
+    "Native search, one-style and multi-style filters, clicked-first playback, sequential or shuffle order and repeat all, one or off.",
+    "Same-tab shared transport, Recording-mode enforcement and resilient fallback to built-in, installed or uploaded music."
+  ],
+  "excludedApproval": [
+    "No new recording or game-catalogue admission.",
+    "No musical-fit, full-track, cultural, Content ID, cold-offline or physical-device approval.",
+    "No merge, version allocation, immutable release or public game acceptance."
+  ]
+}

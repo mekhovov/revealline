@@ -1,0 +1,34 @@
+{
+  "format": "revealline-scoped-audio-recipe-review-successor.v1",
+  "status": "bounded source and live-schema reconciliation; merged-source and public game acceptance pending",
+  "candidateBase": "f54a6ecbdf329c7fd175d90ec258537d035c72e7",
+  "archiveAuthority": {
+    "url": "https://mekhovov.github.io/revealline-soundtracks-01/catalogue.json",
+    "repositoryCommit": "275525e791d7f135e581f56c22100eb1bca16804",
+    "uniqueRecordings": 128,
+    "collections": 12,
+    "audioBytes": 736228448
+  },
+  "priorReview": {
+    "path": "docs/verification/online-soundtrack-style-player-2026-09-24/review.json",
+    "sha256": "020e038464eb3768bfaa6107c41d70affed7e0f1901e63e0335a8f8027b7ce5d",
+    "fingerprintSHA256": "6a6124afeb891475a882e51289d28df2615fb7ed144b675357c00aa9bd255567"
+  },
+  "fingerprint": {
+    "group": "audio",
+    "paths": "game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/ui/soundtrack-panel.mjs; game/ui/soundtrack-panel.css; game/soundtrack-albums.mjs; game/soundtrack-portable.mjs; game/content/soundtrack-catalogue.mjs; game/online-soundtrack-catalogue.mjs",
+    "sha256": "6b9b58a0d51a1b15d533e76b531cb4db09662274c8b5cad3988b06f01e7327c4",
+    "algorithm": "SHA256 of ordered raw source bytes concatenated, matching fieldKitRecipeSources"
+  },
+  "changedInput": {
+    "paths": ["game/online-soundtrack-catalogue.mjs", "game/ui/soundtrack-player.mjs"],
+    "assessment": "The 24 post-baseline audition entries add an explicit default=false marker. The exact-schema boundary accepts only false or absence, so live auditions cannot grant trusted default status and default=true remains rejected. Resolver identity now binds playback to the catalogue-owned Content ID and Recording-mode policy, rejecting caller-forged policy for the same immutable hash. Remote tracks use the same prepared next deck, natural 1.5-second transition, cancellation and sequential browser fallback as local MP3 tracks without claiming ownership of archive URLs."
+  },
+  "unchangedBindings": "The eight selected audio roles retain their procedural recipe IDs and no audio bytes are added. The live catalogue remains capped at 256 recordings and streamed through the existing two-deck transport.",
+  "excluded": [
+    "No recording, game-catalogue or trusted-default admission.",
+    "No musical suitability, full-track listening, cultural, Content ID, offline or physical-device approval.",
+    "No merge, version, immutable release or public game acceptance."
+  ],
+  "decision": "Approve this narrow schema successor only while the prior review, current fingerprint and this review remain byte-identical."
+}

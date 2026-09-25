@@ -40,7 +40,10 @@ const catalogue = {
 };
 
 test('online catalogue creates a bounded immutable remote playback entry', () => {
-  const resolved = resolveOnlineSoundtrackCatalogue(catalogue);
+  const resolved = resolveOnlineSoundtrackCatalogue({
+    ...catalogue,
+    tracks: [{ ...track, default: false }],
+  });
   assert.equal(resolved.tracks[0].id, `online.${sha256}`);
   assert.equal(
     resolved.tracks[0].url,
@@ -58,6 +61,7 @@ test('online catalogue cannot grant game admission or escape its hash path', () 
     { ...track, audio: { ...track.audio, path: `objects/${'b'.repeat(64)}.mp3` } },
     { ...track, licenseURL: 'https://example.com/custom' },
     { ...track, recordingModeEligible: true },
+    { ...track, default: true },
   ])
     assert.throws(() => resolveOnlineSoundtrackCatalogue({ ...catalogue, tracks: [changed] }));
   assert.throws(() =>

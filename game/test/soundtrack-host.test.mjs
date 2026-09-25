@@ -9,6 +9,7 @@ import { createManagedMediaStore } from '../managed-media-store.mjs';
 import { prepareSoundtrackLibrary } from '../soundtrack-bundle.mjs';
 import { BUILTIN_SOUNDTRACK_TRACKS } from '../soundtrack.mjs';
 import { SOUNDTRACK_CATALOGUE } from '../content/soundtrack-catalogue.mjs';
+import { ONLINE_SOUNDTRACK_CATALOGUE_URL } from '../online-soundtrack-catalogue.mjs';
 import { AUDIO_PREFERENCES_KEY } from '../audio-preferences.mjs';
 import { emptyLibrary, updatePreferences, saveLibrary, loadLibrary } from '../library.mjs';
 import { retryFixture } from './fixtures/retry-scenarios.mjs';
@@ -35,6 +36,10 @@ const preferences = (page) =>
 const ticks = (page, count) => {
   for (let i = 0; i < count; i++) page.frame();
 };
+async function startFlight(page) {
+  page.$('start-button').click();
+  await settle(() => page.doc.body.dataset.flightState === 'running');
+}
 async function waitFor(predicate, label) {
   for (let i = 0; i < 100; i++) {
     if (predicate()) return;
@@ -104,7 +109,12 @@ test('muted fresh Solo menu and Studio do not acquire admitted hosted recordings
     'Silent library preparation settles',
   );
   await openStudio(page);
-  assert.deepEqual(requests, []);
+  assert.deepEqual(requests, [ONLINE_SOUNDTRACK_CATALOGUE_URL]);
+  assert.equal(
+    requests.some((url) => /\.mp3(?:$|[?#])/.test(url)),
+    false,
+    'Silent catalogue discovery must not acquire recording bytes.',
+  );
   assert(page.audioElements.every((media) => media.plays === 0));
   assert.deepEqual(page.errors, []);
 });
@@ -217,7 +227,7 @@ test('blocked Settings Play feedback survives master edits until a real transpor
 test('actual Settings → Studio uses stored MP3 selection, Next/Pause/Play and returns to a paused flight', async (t) => {
   const { page, audio } = await setup(t);
   assert.equal(audio.sources.length, 0, 'construction does not create audible sources');
-  page.$('start-button').click();
+  await startFlight(page);
   ticks(page, 5);
   await openStudio(page);
   page.frame(0);
@@ -249,7 +259,7 @@ test('actual Settings → Studio uses stored MP3 selection, Next/Pause/Play and 
   leaveStudio(page);
   assert.equal(page.rendered.paused, true);
   assert.equal(page.rendered.run.tick, flightTick);
-  page.$('start-button').click();
+  await startFlight(page);
   ticks(page, 2);
   assert.equal(page.rendered.paused, false);
   assert.equal(page.rendered.run.tick, flightTick + 2);
@@ -271,7 +281,7 @@ test('actual MP3 keeps its stream and position through menus, a real victory, re
   media.currentTime = 0.01;
   media.emit('timeupdate');
   leaveStudio(page);
-  page.$('start-button').click();
+  await startFlight(page);
   page.key('ArrowDown');
   page.key('ArrowDown', false);
   for (let count = 0; count < 800 && page.rendered.run.status === 'running'; count++) page.frame();
@@ -359,7 +369,7 @@ test('actual hide/focus restores listening on the same stream while flight stays
   await openStudio(page);
   await playStudio(page);
   leaveStudio(page);
-  page.$('start-button').click();
+  await startFlight(page);
   page.key('ArrowDown');
   page.key('ArrowDown', false);
   ticks(page, 10);
@@ -382,7 +392,7 @@ test('actual hide/focus restores listening on the same stream while flight stays
   assert.equal(page.rendered.run.tick, before);
   assert.equal(media.src, url);
   assert.equal(media.currentTime, 0.015);
-  page.$('start-button').click();
+  await startFlight(page);
   ticks(page, 2);
   assert.equal(page.rendered.run.tick, before + 2);
   assert.deepEqual(page.errors, []);
@@ -445,7 +455,7 @@ test('a visible back/forward-cache pageshow restores music without requiring an 
   await openStudio(page);
   await playStudio(page);
   leaveStudio(page);
-  page.$('start-button').click();
+  await startFlight(page);
   ticks(page, 5);
   const media = musicMedia(page),
     url = media.src,
@@ -470,7 +480,9 @@ test('a visible back/forward-cache pageshow restores music without requiring an 
 
 test('actual Studio prepares without downloading; controller, keyboard and touch request its retained link without resuming flight', async (t) => {
   const { page, audio, original, db } = await setup(t);
-  page.$('start-button').click();
+  let time = performance.now();
+  t.mock.method(performance, 'now', () => time);
+  await startFlight(page);
   ticks(page, 5);
   await openStudio(page);
   page.frame(0);
@@ -495,6 +507,7 @@ test('actual Studio prepares without downloading; controller, keyboard and touch
   ];
   const sample = (buttons, ms = 0) => {
     held = buttons;
+    time += ms;
     page.frame(ms);
   };
   sample([]);
@@ -549,6 +562,15 @@ test('actual Studio prepares without downloading; controller, keyboard and touch
   sample([0], 1200);
   assert.equal(requested, 1, 'Held Confirm does not request duplicate downloads.');
   sample([]);
+  const echoed = link.emit('keydown', { code: 'Enter', key: 'Enter', repeat: false });
+  assert.equal(
+    echoed.defaultPrevented,
+    true,
+    'The v0.110.1 controller guard consumes the delayed native Enter echo.',
+  );
+  link.emit('keyup', { code: 'Enter', key: 'Enter' });
+  assert.equal(requested, 1, 'The controller-owned native echo cannot request a duplicate.');
+  time += 501;
   const enter = link.emit('keydown', { code: 'Enter', key: 'Enter', repeat: false });
   assert.equal(
     enter.defaultPrevented,
@@ -635,7 +657,7 @@ for (const [intent, initiallyEnabled] of [
     if (intent === 'pause') await page.$('soundtrack-pause').onclick();
     leaveStudio(page);
     if (intent === 'mute') await page.$('sound-button').onclick();
-    page.$('start-button').click();
+    await startFlight(page);
     ticks(page, 3);
     assert.equal(page.rendered.paused, false, 'Flight remains available while media completes');
     assert.equal(
