@@ -491,6 +491,15 @@ export function attachSoundtrackPanel({
   ]);
   const onlineCollection = input('online-collection', 'Collection', { tag: 'select' });
   options(onlineCollection.element, [['', 'All collections']]);
+  const onlineMixLibrary = node('input', 'online-mix-library', null, { type: 'checkbox' });
+  onlineMixLibrary.checked = true;
+  const onlineMixLibraryChoice = node('label', null, null, {
+    class: 'soundtrack-online-style',
+  });
+  onlineMixLibraryChoice.append(
+    onlineMixLibrary,
+    node('span', null, 'Mix with the current game and uploaded music selection'),
+  );
   const onlineStatus = node(
     'p',
     'online-status',
@@ -504,6 +513,7 @@ export function attachSoundtrackPanel({
     order: onlineOrder.element.value,
     repeat: onlineRepeat.element.value,
     startTrackId,
+    mixWithLibrary: onlineMixLibrary.checked,
   });
   const playOnlineResults = button('online-play-all', 'Play selected songs', () => {
     const matches = onlineMatches();
@@ -525,6 +535,7 @@ export function attachSoundtrackPanel({
     ),
     row(onlineSearch.field, onlineCollection.field),
     onlineStyles,
+    onlineMixLibraryChoice,
     row(onlineOrder.field, onlineRepeat.field),
     row(playOnlineResults, reloadOnline),
     onlineStatus,

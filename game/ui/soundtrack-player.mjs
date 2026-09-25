@@ -34,7 +34,9 @@ const wait = (ms, signal) =>
     signal?.addEventListener('abort', cancel, { once: true });
     if (signal?.aborted) cancel();
   });
-const overlapTrack = (track) => ['mp3', 'remote'].includes(track?.kind);
+// Keep remote streams on one persistent element. WebKit grants playback
+// permission per media element, so a second remote deck can silently stall.
+const overlapTrack = (track) => track?.kind === 'mp3';
 /** Session transport only. The host owns gestures, page lifecycle, settings persistence and SFX. */
 export function createSoundtrackPlayer({
   soundscape,
@@ -45,6 +47,7 @@ export function createSoundtrackPlayer({
   random = Math.random,
   URLImpl = globalThis.URL,
   fadeMs = 1500,
+  remoteStallMs = 12000,
   audioMaster,
   catalogue = null,
   bundledTrackIds = [],
@@ -80,10 +83,16 @@ export function createSoundtrackPlayer({
     Array.isArray(bundledTrackIds) &&
       bundledTrackIds.length <= 256 &&
       new Set(bundledTrackIds).size === bundledTrackIds.length &&
-      bundledTrackIds.every((id) => typeof id === 'string' && /^[a-z0-9][a-z0-9._-]{0,127}$/.test(id)),
+      bundledTrackIds.every(
+        (id) => typeof id === 'string' && /^[a-z0-9][a-z0-9._-]{0,127}$/.test(id),
+      ),
     'Invalid bundled soundtrack identities.',
   );
   const bundledIds = Object.freeze([...bundledTrackIds]);
+  required(
+    Number.isInteger(remoteStallMs) && remoteStallMs >= 10 && remoteStallMs <= 60000,
+    'Invalid remote music recovery duration.',
+  );
   required(
     !secondAudioElement ||
       (secondAudioElement !== audioElement &&
@@ -103,7 +112,10 @@ export function createSoundtrackPlayer({
     listeners: [],
     resource: 0,
     weight: 0,
+    remoteWatchdog: null,
+    remoteProgress: 0,
   }));
+  const remoteDeck = decks[0];
   let activeDeck = decks[0];
   activeDeck.weight = 1;
   let preloaded = null,
@@ -329,6 +341,8 @@ export function createSoundtrackPlayer({
   }
   function clearDeck(deck) {
     deck.resource++;
+    clearTimeout(deck.remoteWatchdog);
+    deck.remoteWatchdog = null;
     for (const [type, fn] of deck.listeners) deck.media.removeEventListener(type, fn);
     deck.listeners = [];
     deck.media.pause();
@@ -372,6 +386,42 @@ export function createSoundtrackPlayer({
   function bind(deck, type, fn) {
     deck.media.addEventListener(type, fn);
     deck.listeners.push([type, fn]);
+  }
+  function watchRemote(deck, track, valid) {
+    clearTimeout(deck.remoteWatchdog);
+    deck.remoteWatchdog = null;
+    if (track.kind !== 'remote') return;
+    deck.remoteProgress = Number.isFinite(deck.media.currentTime) ? deck.media.currentTime : 0;
+    deck.remoteWatchdog = setTimeout(() => {
+      deck.remoteWatchdog = null;
+      if (
+        !valid() ||
+        !desired ||
+        suspended ||
+        !['loading', 'playing'].includes(status) ||
+        current?.id !== track.id
+      )
+        return;
+      const at = Number.isFinite(deck.media.currentTime) ? deck.media.currentTime : 0;
+      if (!deck.media.paused && at > deck.remoteProgress + 0.01) {
+        watchRemote(deck, track, valid);
+        return;
+      }
+      void failedTrack('The streamed track stopped responding.', generation);
+    }, remoteStallMs);
+    deck.remoteWatchdog?.unref?.();
+  }
+  function watchCurrentRemote() {
+    if (current?.kind !== 'remote' || activeDeck !== remoteDeck) return;
+    const track = current,
+      resource = remoteDeck.resource,
+      expectedURL = remoteDeck.url,
+      valid = () =>
+        !disposed &&
+        activeDeck === remoteDeck &&
+        resource === remoteDeck.resource &&
+        remoteDeck.url === expectedURL;
+    watchRemote(remoteDeck, track, valid);
   }
   async function loadDeck(deck, track, signal, token = null, { localOnly = false } = {}) {
     if (token !== null) {
@@ -448,10 +498,18 @@ export function createSoundtrackPlayer({
     });
     bind(deck, 'timeupdate', () => {
       if (valid()) {
+        watchRemote(deck, track, valid);
         maybeTransition();
         emit();
       }
     });
+    bind(deck, 'playing', () => {
+      if (valid()) watchRemote(deck, track, valid);
+    });
+    for (const type of ['stalled', 'waiting', 'pause'])
+      bind(deck, type, () => {
+        if (valid() && desired) watchRemote(deck, track, valid);
+      });
     bind(deck, 'loadedmetadata', () => {
       if (valid() && pendingSeek !== null) {
         try {
@@ -463,6 +521,7 @@ export function createSoundtrackPlayer({
     });
     deck.media.preload = 'auto';
     deck.media.loop = false;
+    if (track.kind === 'remote') deck.media.crossOrigin = 'anonymous';
     deck.media.src = deck.url;
     deck.media.load();
     gains();
@@ -598,8 +657,10 @@ export function createSoundtrackPlayer({
     preparation = { generation: token, stage: 'preparing', message: 'Preparing selected music…' };
     emit();
     let incoming =
-      (!overlapDisabled && prepared?.deck) ||
-      (overlap ? decks.find((d) => d !== activeDeck) : activeDeck);
+      nextTrack?.kind === 'remote'
+        ? remoteDeck
+        : (!overlapDisabled && prepared?.deck) ||
+          (overlap ? decks.find((d) => d !== activeDeck) : activeDeck);
     try {
       if (!nextTrack) {
         soundscape.pauseMusic();
@@ -726,6 +787,7 @@ export function createSoundtrackPlayer({
               (!(await enabled) || token !== generation || disposed || !desired)
             )
               return false;
+            watchCurrentRemote();
             await activeDeck.media.play();
             await enabled;
             if (token !== generation || disposed || !desired) return false;
@@ -735,6 +797,7 @@ export function createSoundtrackPlayer({
       }
       error = null;
       status = desired ? 'playing' : 'paused';
+      if (status === 'playing') watchCurrentRemote();
       emit();
       prepareNext();
       return status === 'playing';
@@ -896,9 +959,14 @@ export function createSoundtrackPlayer({
     library = next;
     if (remoteSelection && next.listening?.recordingMode) {
       const allowed = remoteTracks.filter(onlineSoundtrackRecordingAllowed),
+        remoteIds = new Set(remoteTracks.map((track) => track.id)),
+        allowedIds = new Set(allowed.map((track) => track.id)),
+        retainedTrackIds = remoteSelection.playlist.trackIds.filter(
+          (id) => !remoteIds.has(id) || allowedIds.has(id),
+        ),
         currentAllowed =
           current?.kind !== 'remote' || allowed.some((track) => track.id === current.id);
-      if (!allowed.length || !currentAllowed) {
+      if (!currentAllowed || !retainedTrackIds.length) {
         remoteSelection = null;
         remoteTracks = [];
         if (current?.kind === 'remote') {
@@ -914,7 +982,7 @@ export function createSoundtrackPlayer({
           ...remoteSelection,
           playlist: {
             ...remoteSelection.playlist,
-            trackIds: allowed.map((track) => track.id),
+            trackIds: retainedTrackIds,
           },
         };
       }
@@ -955,10 +1023,7 @@ export function createSoundtrackPlayer({
     return snapshot();
   }
   async function selectPlaylist(id) {
-    resolveSoundtrackSelection(
-      { ...library, selection: { playlistId: id } },
-      selectionContext(),
-    );
+    resolveSoundtrackSelection({ ...library, selection: { playlistId: id } }, selectionContext());
     remoteSelection = null;
     remoteTracks = [];
     override = id;
@@ -977,7 +1042,7 @@ export function createSoundtrackPlayer({
   }
   async function playRemotePlaylist(
     value,
-    { order = 'ordered', repeat = 'all', startTrackId = null } = {},
+    { order = 'ordered', repeat = 'all', startTrackId = null, mixWithLibrary = false } = {},
   ) {
     required(
       Array.isArray(value) && value.every(isResolvedOnlineSoundtrackTrack),
@@ -985,6 +1050,7 @@ export function createSoundtrackPlayer({
     );
     required(['ordered', 'shuffle'].includes(order), 'Invalid online soundtrack order.');
     required(['all', 'one', 'off'].includes(repeat), 'Invalid online soundtrack repeat mode.');
+    required(typeof mixWithLibrary === 'boolean', 'Invalid online soundtrack mix mode.');
     required(
       startTrackId === null || /^online\.[a-f0-9]{64}$/.test(startTrackId),
       'Invalid online soundtrack start recording.',
@@ -1026,17 +1092,25 @@ export function createSoundtrackPlayer({
       startTrackId === null || eligibleTracks.some((track) => track.id === startTrackId),
       'The chosen online soundtrack is unavailable in this playback mode.',
     );
+    const localSelection = mixWithLibrary ? resolveBase() : null;
     remoteTracks = eligibleTracks;
+    const localTrackIds = localSelection
+      ? localSelection.playlist.trackIds.filter(
+          (id) => !ids.has(id) && tracks().some((track) => track.id === id),
+        )
+      : [];
     remoteSelection = {
       source: 'remote',
       playlist: {
         id: 'online.archive.current',
-        title: 'Online soundtrack archive',
-        trackIds: remoteTracks.map((track) => track.id),
+        title: mixWithLibrary ? 'Online archive + game music' : 'Online soundtrack archive',
+        trackIds: [...remoteTracks.map((track) => track.id), ...localTrackIds],
         order,
         repeat,
       },
-      notice: 'Streaming from the public RevealLine soundtrack archive.',
+      notice: mixWithLibrary
+        ? 'Mixing the public archive with the current game music selection.'
+        : 'Streaming from the public RevealLine soundtrack archive.',
     };
     intentionallyPaused = false;
     desired = true;
@@ -1104,6 +1178,7 @@ export function createSoundtrackPlayer({
         status = 'playing';
         error = null;
         gains();
+        watchCurrentRemote();
         emit();
         prepareNext();
         return true;
@@ -1169,6 +1244,8 @@ export function createSoundtrackPlayer({
     intentionallyPaused = true;
     cancel();
     soundscape.pauseMusic();
+    clearTimeout(activeDeck.remoteWatchdog);
+    activeDeck.remoteWatchdog = null;
     activeDeck.media.pause();
     fade = 1;
     gains();
@@ -1220,6 +1297,8 @@ export function createSoundtrackPlayer({
     if (disposed) return;
     cancel();
     suspended = true;
+    clearTimeout(activeDeck.remoteWatchdog);
+    activeDeck.remoteWatchdog = null;
     activeDeck.media.pause();
     soundscape.suspend();
     status = 'suspended';
