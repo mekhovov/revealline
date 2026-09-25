@@ -74,6 +74,79 @@ test('only code-admitted archive inventory authorizes immutable objects; success
   assert(calls.every((call) => call.url.startsWith(admission.baseURL)));
 });
 
+test('immutable batch prefixes authorize only their exact inventory and object URLs', async () => {
+  const baseURL = `${admission.baseURL}batches/core-retro-20260924/`;
+  const calls = [];
+  const reader = source({
+    archives: [{ ...admission, baseURL }],
+    fetch: async (url, options) => {
+      calls.push({ url, options });
+      return responseFor(url.endsWith('inventory.json') ? inventoryJSON : raw.blob, url);
+    },
+  });
+  assert.deepEqual(
+    await (await reader.readAsset(track.asset.sha256)).arrayBuffer(),
+    await raw.blob.arrayBuffer(),
+  );
+  assert.deepEqual(
+    calls.map(({ url }) => url),
+    [`${baseURL}inventory.json`, `${baseURL}${track.path}`],
+  );
+  assert(
+    calls.every(
+      ({ options }) =>
+        options.credentials === 'omit' && options.mode === 'cors' && options.redirect === 'error',
+    ),
+  );
+  await assert.rejects(
+    source({
+      archives: [{ ...admission, baseURL }],
+      fetch: async () => responseFor(inventoryJSON, `${admission.baseURL}inventory.json`),
+    }).readAsset(track.asset.sha256),
+    /direct HTTP/,
+  );
+});
+
+test('batch admission rejects unsupported prefixes, encoded paths, credentials and URL suffixes', () => {
+  for (const suffix of [
+    'batches/',
+    'batches/Uppercase/',
+    'batches/with_underscore/',
+    'batches/-leading/',
+    `batches/${'a'.repeat(65)}/`,
+    'batches/core',
+    'batches/core//',
+    'batches/core/subdirectory/',
+    'batches/core/../other/',
+    'batches/%2e%2e/',
+    'batches/core%2fother/',
+    'batches/core%5cother/',
+    'batches/core\\other/',
+    'batches/core/?query=1',
+    'batches/core/#fragment',
+    'batches/core/\n',
+    'batches/core/\r',
+    'other/core/',
+  ])
+    assert.throws(
+      () => resolveSoundtrackArchives([{ ...admission, baseURL: admission.baseURL + suffix }]),
+      /admitted/,
+    );
+  for (const baseURL of [
+    'https://other.github.io/revealline-soundtracks-01/batches/core/',
+    'https://mekhovov.github.io/other/batches/core/',
+    'http://mekhovov.github.io/revealline-soundtracks-01/batches/core/',
+    'https://user@mekhovov.github.io/revealline-soundtracks-01/batches/core/',
+  ])
+    assert.throws(() => resolveSoundtrackArchives([{ ...admission, baseURL }]), /admitted/);
+  assert.equal(
+    resolveSoundtrackArchives([
+      { ...admission, baseURL: `${admission.baseURL}batches/${'a'.repeat(64)}/` },
+    ]).length,
+    1,
+  );
+});
+
 test('unknown archives, foreign owners, hashes, redirects and mismatched inventory facts cannot fetch objects', async () => {
   for (const baseURL of [
     'https://evil.test/revealline-soundtracks-01/',

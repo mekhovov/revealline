@@ -1,6 +1,7 @@
 import { canonicalJSON, required } from './data-json.mjs';
 import { resolveSoundtrackCatalogue, soundtrackRights, SOUNDTRACK_LIMITS } from './soundtrack.mjs';
 import { createSoundtrackArchiveResolver } from './soundtrack-archive.mjs';
+import { resolveBundledSoundtrackAssets } from './soundtrack-bundled.mjs';
 import { inspectMP3, throwIfSoundtrackAborted } from './mp3.mjs';
 import {
   soundtrackDownloadURL,
@@ -19,12 +20,16 @@ export function createSoundtrackSource({
   baseURL = rootURL,
   archives = [],
   archive,
+  bundled = [],
 } = {}) {
   const trusted = resolveSoundtrackCatalogue(catalogue);
   const archiveSource = createSoundtrackArchiveResolver({
     archives: archive ? [...archives, archive] : archives,
     fetch: request,
   });
+  const bundledByHash = new Map(
+    resolveBundledSoundtrackAssets(bundled, trusted).map((entry) => [entry.sha256, entry]),
+  );
   const byHash = new Map(trusted.tracks.map((track) => [track.asset.sha256, track]));
   return Object.freeze({
     catalogue: trusted,
@@ -57,27 +62,30 @@ export function createSoundtrackSource({
       const local = await readLocal(hash, { signal });
       throwIfSoundtrackAborted(signal);
       if (local) return local;
-      // Silent preparation may verify an owned original, but never authorizes
-      // an archive inventory or recording request merely by opening a page.
+      const core = bundledByHash.get(hash);
+      // Silent preparation only uses already-owned originals. A core registration
+      // cannot authorize requests until the host explicitly allows acquisition.
       if (localOnly) return null;
       required(track, 'This recording is missing locally. Restore its complete soundtrack backup.');
       required(
-        purpose !== 'playback' || !installedOnly(),
+        purpose !== 'playback' || !installedOnly() || core,
         'Installed only is on. Download this album before listening offline.',
       );
 
       return soundtrackDownloadOperation(
         async (current, cleanupTimeoutMs) => {
-          const url = track.archiveId
-            ? await archiveSource.urlFor(track, { signal: current, cleanupTimeoutMs })
-            : soundtrackDownloadURL(track.path, baseURL);
+          const url = core
+            ? soundtrackDownloadURL(core.path, baseURL)
+            : track.archiveId
+              ? await archiveSource.urlFor(track, { signal: current, cleanupTimeoutMs })
+              : soundtrackDownloadURL(track.path, baseURL);
           const blob = await readSoundtrackDownload(url, {
             fetch: request,
             signal: current,
             limit: SOUNDTRACK_LIMITS.trackBytes,
             exactBytes: track.asset.bytes,
             cleanupTimeoutMs,
-            ...(track.archiveId ? { credentials: 'omit', mode: 'cors' } : {}),
+            ...(track.archiveId && !core ? { credentials: 'omit', mode: 'cors' } : {}),
           });
           const actual = await inspectMP3(blob, { signal: current });
           required(

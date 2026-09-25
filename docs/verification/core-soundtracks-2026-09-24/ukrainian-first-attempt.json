@@ -1,0 +1,13 @@
+{
+  "format": "revealline-public-preview-check-attempt.v1",
+  "batch": "ukrainian-shchedryk-20260924",
+  "result": "failed-control-marker-probe",
+  "failure": {
+    "path": ".nojekyll",
+    "http": 404,
+    "curlExit": 56
+  },
+  "cause": "Checker incorrectly required an HTTP 200 for a GitHub Pages hidden deployment-control marker. Full runtime checks are repeated without claiming this marker is public.",
+  "mp3Status": "not established by this interrupted report",
+  "recordedAt": "2026-09-24T02:19:58Z"
+}
