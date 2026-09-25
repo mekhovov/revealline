@@ -4938,6 +4938,7 @@ try {
       'team-spatial-originals-1',
       'team-trail-impact-originals-1',
       'team-specialist-originals-1',
+      'team-complete-specialist-originals-1',
     ].includes(journeyRequest)
   ) {
     const { createTeamGreyboxEntry } = await import('../content-design/team-entry.mjs');
@@ -4947,6 +4948,7 @@ try {
       spatial: journeyRequest === 'team-spatial-originals-1',
       impact: journeyRequest === 'team-trail-impact-originals-1',
       specialist: journeyRequest === 'team-specialist-originals-1',
+      reviewedSpecialists: journeyRequest === 'team-complete-specialist-originals-1',
       reviewCopy: new URL(location.href).searchParams.has('journey'),
     });
   } else if (
