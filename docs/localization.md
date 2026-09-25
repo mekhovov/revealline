@@ -385,3 +385,25 @@ distribution are still running; their results and native staging remain to be re
 The old task-owned v0.113.0 distribution was hash-verified and removed to make room for
 the replacement; its manifest and archive identity are retained under the verification
 log directory. No user checkout or historical published artifact was removed.
+
+## v0.113.1 distribution and audit precision
+
+The focused installer/host run passes 47 of 48 cases. Its sole failure is a five-second
+initial-picture timeout in the explicit Workshop-context test; that case passes in an
+isolated rerun. This is a combined-run timeout, not a clean combined suite. No assertion
+was weakened. A subsequent fetch still reports zero commits behind main `7c6f84a47`.
+
+The web build at localization commit `3cd33aff0` passes: 1,170 files / 598,974,609 bytes,
+archive SHA-256 `549d6bc4c2f43209dcd2a9b391057499a7d67ccd788ef1428ef1b30deb193a0e`.
+The offline inventory contains 1,001 files / 67,069,670 bytes, leaving 39,194 bytes
+under the unchanged 64 MiB limit. Desktop staging verifies the same file/byte counts;
+iOS staging with bridge and diagnostics verifies 1,175 files / 599,054,888 bytes.
+All 22 runtime/catalog/license assets match the web distribution byte for byte in both
+stages. Verified temporary native stages were removed after saving verification receipts
+to conserve disk space. Native GUI/simulator execution was not exercised.
+
+The source audit now resolves local DOM-helper parameter positions and lexical shadowing,
+so IDs passed to `node(tag, id, text)` do not appear as displayed labels. Comparisons inside
+text producers remain lower-confidence review candidates. All seven audit tests and its
+targeted lint/format checks pass. This improves review precision; it does not certify
+complete translation coverage. Collection reward presentation is the next open batch.
