@@ -500,5 +500,8 @@
   "team.pictureChecking": "Перевіряємо командне зображення…",
   "team.pictureDestinationChecking": "Перевіряємо ілюстрацію «{{name}}»… Ваш результат залишається доступним.",
   "team.picturePreparing": "Готуємо командне зображення…",
-  "team.pictureDestinationPreparing": "Готуємо ілюстрацію «{{name}}»… Ваш результат залишається доступним."
+  "team.pictureDestinationPreparing": "Готуємо ілюстрацію «{{name}}»… Ваш результат залишається доступним.",
+  "controller.steer": "Стік / хрестовина: керування.",
+  "controller.keepFlying": "Відпусти стік, щоб продовжити політ.",
+  "controller.menuEditingHelp": "{{navigation}} Підтвердь список або повзунок, щоб змінити значення; підтвердь знову, щоб застосувати, або повернися назад, щоб скасувати."
 }

@@ -298,7 +298,8 @@ const BUTTON_LABELS = Object.freeze({
 });
 /** Text-only player-selected labels. This does not detect hardware or promise host support. */
 export function controllerButtonLabel(index, family = 'generic') {
-  if (!Number.isInteger(index) || index < 0 || index > 16) return 'Unknown button';
+  if (!Number.isInteger(index) || index < 0 || index > 16)
+    return t('common:controls.unknownButton');
   return render(
     BUTTON_LABELS[CONTROLLER_GLYPH_FAMILIES.includes(family) ? family : 'generic'][index],
   );
@@ -327,18 +328,22 @@ export function controllerBindingLabels(source = null, deviceId = '') {
 export function controllerStickLabel(source, context) {
   requireContext(context);
   const { stick } = resolveControllerBindings(source)[context];
-  if (!stick.enabled) return 'Buttons only';
+  if (!stick.enabled) return t('common:controls.buttonsOnly');
   const name =
     stick.xAxis === 0 && stick.yAxis === 1
-      ? 'Left stick'
+      ? t('common:controls.leftStick')
       : stick.xAxis === 2 && stick.yAxis === 3
-        ? 'Right stick'
-        : `Axes ${stick.xAxis}/${stick.yAxis}`;
-  const inversions = [
-    stick.invertX && 'horizontal inverted',
-    stick.invertY && 'vertical inverted',
-  ].filter(Boolean);
-  return inversions.length ? `${name} (${inversions.join(', ')})` : name;
+        ? t('common:controls.rightStick')
+        : t('common:controls.axes', { x: stick.xAxis, y: stick.yAxis });
+  if (!stick.invertX && !stick.invertY) return name;
+  return t(
+    stick.invertX && stick.invertY
+      ? 'common:controls.stickBothInverted'
+      : stick.invertX
+        ? 'common:controls.stickHorizontalInverted'
+        : 'common:controls.stickVerticalInverted',
+    { stick: name },
+  );
 }
 
 /** Pure stick-only reference: caller supplies previous active state, owns digital

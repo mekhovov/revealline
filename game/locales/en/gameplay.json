@@ -474,5 +474,8 @@
   "team.pictureChecking": "Checking the Team picture…",
   "team.pictureDestinationChecking": "Checking {{name}} artwork… Your result stays available.",
   "team.picturePreparing": "Preparing the Team picture…",
-  "team.pictureDestinationPreparing": "Preparing {{name}} artwork… Your result stays available."
+  "team.pictureDestinationPreparing": "Preparing {{name}} artwork… Your result stays available.",
+  "controller.steer": "Stick / D-pad: steer.",
+  "controller.keepFlying": "Lift the stick to keep flying.",
+  "controller.menuEditingHelp": "{{navigation}} Confirm a select or slider to edit; confirm again to apply or go back to cancel."
 }

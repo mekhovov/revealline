@@ -1,4 +1,10 @@
-import { t, localizedText, localizedAttribute, localizedMessage } from '../i18n/index.mjs';
+import {
+  t,
+  localizedText,
+  localizedAttribute,
+  localizedMessage,
+  formatNumber,
+} from '../i18n/index.mjs';
 import { createOperationStatus } from './operation-status.mjs';
 import {
   CONTROLLER_BINDING_ACTIONS,
@@ -93,7 +99,7 @@ export function attachControllerSettings({
     ),
     edit = button(localizedMessage('interface:editControllerSettings'), 'edit'),
     editor = node('div', undefined, 'controller-settings-editor'),
-    status = node('p', '', 'controller-settings-status'),
+    status = node('p', undefined, 'controller-settings-status'),
     errors = node('ul', undefined, 'controller-settings-errors'),
     actions = node('div', undefined, 'controller-settings-actions'),
     apply = button(localizedMessage('interface:applyControllerSettings'), 'apply'),
@@ -121,6 +127,8 @@ export function attachControllerSettings({
     errors.hidden = messages.length === 0;
   }
   const signature = (value) => JSON.stringify(resolveControllerBindings(value));
+  const thresholdText = (value) =>
+    formatNumber(value, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
   const currentSource = () => resolveControllerBindings(getBindings());
   function syncSummary() {
     try {
@@ -131,8 +139,8 @@ export function attachControllerSettings({
           value1: FAMILY_LABELS[value.glyphFamily],
           value2: controllerStickLabel(value, 'flight'),
           value3: controllerStickLabel(value, 'menu'),
-          value4: value.deadZone.press.toFixed(2),
-          value5: value.deadZone.release.toFixed(2),
+          value4: thresholdText(value.deadZone.press),
+          value5: thresholdText(value.deadZone.release),
         }),
       );
     } catch (error) {
@@ -165,9 +173,13 @@ export function attachControllerSettings({
     if (!draft || destroyed || busy) return false;
     try {
       if (signature(getBindings()) === baseline) return true;
-      invalidate(t('interface:controllerSettingsChangedElsewhereYourOldDraftWasDiscardedChoose'));
+      invalidate(
+        localizedMessage(
+          'interface:controllerSettingsChangedElsewhereYourOldDraftWasDiscardedChoose',
+        ),
+      );
     } catch (error) {
-      invalidate(t('gameplay:draftDiscarded', { value1: error.message }));
+      invalidate(localizedMessage('gameplay:draftDiscarded', { value1: error.message }));
     }
     return false;
   }
@@ -178,9 +190,9 @@ export function attachControllerSettings({
       last = keys.pop();
     keys.reduce((object, key) => object[key], draft)[last] = value;
     clearErrors();
-    announce(t('interface:draftChangedCurrentControlsAreUnchangedUntilApply'));
+    announce(localizedMessage('interface:draftChangedCurrentControlsAreUnchangedUntilApply'));
     if (path === 'glyphFamily') updateButtonLabels();
-    if (outputs.has(path)) localizedText(outputs.get(path), () => Number(value).toFixed(2));
+    if (outputs.has(path)) localizedText(outputs.get(path), () => thresholdText(Number(value)));
   }
   function field(parent, path, labelText, { type = 'select', choices = [], min, max, step } = {}) {
     const label = node('label', undefined, 'controller-settings-field'),
@@ -231,7 +243,7 @@ export function attachControllerSettings({
     return body;
   }
   field(editor, 'glyphFamily', localizedMessage('interface:buttonLabelFamily'), {
-    choices: CONTROLLER_GLYPH_FAMILIES.map((family) => [family, FAMILY_LABELS[family]]),
+    choices: CONTROLLER_GLYPH_FAMILIES.map((family) => [family, () => FAMILY_LABELS[family]]),
   });
   editor.append(
     node(
@@ -244,23 +256,24 @@ export function attachControllerSettings({
   );
   for (const context of ['flight', 'menu']) {
     const body = section(
-      localizedMessage('gameplay:buttonMap', { value1: CONTEXT_LABELS[context] }),
+      () => t('gameplay:buttonMap', { value1: CONTEXT_LABELS[context] }),
       localizedMessage('interface:chooseOneButtonPerActionAButtonMayBeReused'),
     );
     for (const action of CONTROLLER_BINDING_ACTIONS[context]) {
       const select = field(
         body,
         `${context}.buttons.${action}`,
-        localizedMessage('gameplay:button', {
-          value1:
-            continuousSteering && context === 'flight' && action === 'stop'
-              ? t('interface:pauseBack')
-              : CONTROLLER_ACTION_LABELS[context][action],
-        }),
+        () =>
+          t('gameplay:button', {
+            value1:
+              continuousSteering && context === 'flight' && action === 'stop'
+                ? t('interface:pauseBack')
+                : CONTROLLER_ACTION_LABELS[context][action],
+          }),
         {
           choices: Array.from({ length: 16 }, (_, index) => [
             index,
-            `${controllerButtonLabel(index)} · ${index}`,
+            () => `${controllerButtonLabel(index)} · ${index}`,
           ]),
         },
       );
@@ -273,18 +286,19 @@ export function attachControllerSettings({
   );
   for (const context of ['flight', 'menu']) {
     const group = node('fieldset');
-    group.append(
-      node('legend', localizedMessage('gameplay:stick', { value1: CONTEXT_LABELS[context] })),
-    );
+    group.append(node('legend', () => t('gameplay:stick', { value1: CONTEXT_LABELS[context] })));
     field(group, `${context}.stick.enabled`, localizedMessage('interface:enableStickInput'), {
       type: 'checkbox',
     });
     for (const [key, label] of [
-      ['xAxis', t('interface:horizontalAxis')],
-      ['yAxis', t('interface:verticalAxis')],
+      ['xAxis', localizedMessage('interface:horizontalAxis')],
+      ['yAxis', localizedMessage('interface:verticalAxis')],
     ])
       field(group, `${context}.stick.${key}`, label, {
-        choices: Array.from({ length: 4 }, (_, i) => [i, t('gameplay:axis', { value1: i })]),
+        choices: Array.from({ length: 4 }, (_, i) => [
+          i,
+          localizedMessage('gameplay:axis', { value1: i }),
+        ]),
       });
     field(
       group,
@@ -319,12 +333,12 @@ export function attachControllerSettings({
   editor.append(errors, actions);
   container.replaceChildren(heading, summary, note, edit, editor, status);
   function updateButtonLabels() {
+    // A closed editor stays mounted after Apply/Cancel. Retain its accepted
+    // label family without dereferencing a subsequently discarded draft.
+    const family = draft.glyphFamily;
     for (const select of buttonSelects)
       [...select.options].forEach((option, index) => {
-        localizedText(
-          option,
-          () => `${controllerButtonLabel(index, draft.glyphFamily)} · ${index}`,
-        );
+        localizedText(option, () => `${controllerButtonLabel(index, family)} · ${index}`);
       });
   }
   function renderDraft() {
@@ -332,7 +346,7 @@ export function attachControllerSettings({
       const value = read(path);
       if (control.type === 'checkbox') control.checked = value;
       else control.value = String(value);
-      if (outputs.has(path)) localizedText(outputs.get(path), () => value.toFixed(2));
+      if (outputs.has(path)) localizedText(outputs.get(path), () => thresholdText(value));
     }
     updateButtonLabels();
     syncBusy();
@@ -348,15 +362,19 @@ export function attachControllerSettings({
       editor.hidden = false;
       edit.hidden = true;
       renderDraft();
-      announce(t('interface:editingADraftApplyValidatesAllControlsTogetherCancelKeeps'));
+      announce(
+        localizedMessage('interface:editingADraftApplyValidatesAllControlsTogetherCancelKeeps'),
+      );
       controls.get('glyphFamily').focus({ preventScroll: true });
     } catch (error) {
-      invalidate(t('gameplay:controllerSettingsCouldNotBeEdited', { value1: error.message }));
+      invalidate(
+        localizedMessage('gameplay:controllerSettingsCouldNotBeEdited', { value1: error.message }),
+      );
     }
   });
   listen(cancel, 'click', () => {
     if (destroyed || busy || !draft) return;
-    invalidate(t('interface:draftCancelledCurrentControllerSettingsAreUnchanged'));
+    invalidate(localizedMessage('interface:draftCancelledCurrentControllerSettingsAreUnchanged'));
     edit.focus({ preventScroll: true });
   });
   listen(defaults, 'click', () => {
@@ -364,7 +382,7 @@ export function attachControllerSettings({
     draft = resolveControllerBindings(null);
     renderDraft();
     clearErrors();
-    announce(t('interface:defaultsAreInTheDraftApplyToUseThemOr'));
+    announce(localizedMessage('interface:defaultsAreInTheDraftApplyToUseThemOr'));
   });
   listen(apply, 'click', async () => {
     if (!checkSource()) return;
@@ -372,7 +390,7 @@ export function attachControllerSettings({
     if (!validation.valid) {
       showErrors(validation.errors);
       announce(
-        t('gameplay:controllerSettingsWereNotAppliedReviewTheDraftAndApply', {
+        localizedMessage('gameplay:controllerSettingsWereNotAppliedReviewTheDraftAndApply', {
           value1: validation.errors[0],
         }),
       );
@@ -409,7 +427,7 @@ export function attachControllerSettings({
     pending = abort;
     busy = true;
     syncBusy();
-    announce(t('interface:applyingControllerSettings'), 'busy');
+    announce(localizedMessage('interface:applyingControllerSettings'), 'busy');
     const isCurrent = () => {
       if (destroyed || abort.signal.aborted || generation !== ticket) return false;
       try {
@@ -423,7 +441,11 @@ export function attachControllerSettings({
       const result = await onApply(candidate, { signal: abort.signal, isCurrent });
       if (destroyed || generation !== ticket || abort.signal.aborted) return;
       if (signature(getBindings()) !== expected) {
-        invalidate(t('interface:theCurrentControllerSettingsChangedBeforeThisDraftWasAdopted'));
+        invalidate(
+          localizedMessage(
+            'interface:theCurrentControllerSettingsChangedBeforeThisDraftWasAdopted',
+          ),
+        );
         return;
       }
       draft = null;
@@ -432,7 +454,7 @@ export function attachControllerSettings({
       edit.hidden = false;
       clearErrors();
       syncSummary();
-      announce(
+      announce(() =>
         t('gameplay:controllerSettingsApplied', {
           value1:
             result?.ok === false
@@ -449,9 +471,17 @@ export function attachControllerSettings({
         } catch {}
         if (!unchanged)
           invalidate(
-            t('interface:controllerSettingsChangedDuringThisOperationReviewTheCurrentSettings'),
+            localizedMessage(
+              'interface:controllerSettingsChangedDuringThisOperationReviewTheCurrentSettings',
+            ),
           );
-        else announce(`Controller settings were not applied. ${error.message}`, 'error');
+        else
+          announce(
+            localizedMessage('gameplay:controllerSettingsWereNotApplied', {
+              value1: error.message,
+            }),
+            'error',
+          );
       }
     } finally {
       stopObservingFocus();
@@ -476,7 +506,7 @@ export function attachControllerSettings({
   });
   function refresh() {
     if (destroyed) return;
-    invalidate(t('interface:currentControllerSettingsLoadedChooseEditToMakeADraft'));
+    invalidate(localizedMessage('interface:currentControllerSettingsLoadedChooseEditToMakeADraft'));
   }
   refresh();
   return {
