@@ -203,8 +203,8 @@ originals approved. No deadline is assigned to unresolved rights or paused music
   `online soundtrack track.rights is not supported` after the archive began
   emitting structured rights for new recordings. The existing game adapter accepted
   only the legacy key set, so one valid newer row rejected the complete catalogue.
-- Draft game [PR #523](https://github.com/mekhovov/revealline/pull/523), with source
-  implementation commit `bf2bde2187a1e65ef3c18fa04c3d8d65769aaed8`, strictly
+- Draft game [PR #523](https://github.com/mekhovov/revealline/pull/523), with reviewed
+  source commit `848767d871770af66bdc69a7d049768d8981c8d8`, strictly
   validates the optional structured rights object against the already trusted
   licence, source and credit. It preserves legacy compatibility and adds CC BY-SA
   delivery validation without granting admission, default-playlist or Recording-mode
@@ -215,8 +215,11 @@ originals approved. No deadline is assigned to unresolved rights or paused music
   back from a stalled remote recording while preserving listening intent, and the
   archive player can combine trusted remote results with the current included and
   uploaded selection.
-- The live catalogue resolves **136/136** records, including all eight records with
-  structured rights. Focused catalogue/player/panel/recovery tests pass **175/175**.
+- Independent review found and the successor commit closes initial `play()`-promise
+  stalls, missing ShareAlike delivery terms and Recording-mode loss of included
+  tracks from a mixed queue. The live catalogue resolves **136/136** records,
+  including all eight records with structured rights. Focused
+  catalogue/player/panel/recovery tests pass **177/177**.
   In a real desktop browser, Holizna's Drama streamed for 13.5 seconds, Next moved
   to included Raspberry Jam, and selecting Cyber Anxiety returned to a remote
   stream in the same game tab. The public archive returned CORS-enabled immutable
@@ -641,7 +644,7 @@ version is allocated without the release owner's confirmation.
 | M5 | Four third-direction synth auditions are public; runner2088 remains draft; Electric Dreams remains the closest reference | Musical fit, full listening and exact admission review; public-archive holds remain | Review 90s Racer Techno, Neon Pulse, Prismatic Light and Future Travel; keep PR #23 draft until independently reconciled; admit only a musically accepted subset | Several hours per comparison round; 1–2 days integration/verification after approval; CI/review waits excluded | Archive [PR #25](https://github.com/mekhovov/revealline-soundtracks-01/pull/25), Pages run 36147468099 and M5.a feedback below; draft [PR #23](https://github.com/mekhovov/revealline-soundtracks-01/pull/23) | Unreleased in game |
 | M6 | Purgatory PR #26 is publicly deployed; Reckless #22 is clean on a stale base; groove-first direction retained | Full listening, transitions, warnings, Content ID and gameplay acceptance | Review the four public Purgatory auditions; reconcile #22 separately; admit only a musically accepted subset | Several hours per listening round; 1–2 days integration after approval; about 0.5 working day to reconcile #22 before fresh review | Merged publication [PR #26](https://github.com/mekhovov/revealline-soundtracks-01/pull/26), 824e34e4 and Pages run 36160861165; stale-base draft [PR #22](https://github.com/mekhovov/revealline-soundtracks-01/pull/22) | Public auditions only; unreleased in game |
 | M7 | Blocked public rights; scope retained | Recording-specific public redistribution and applicable artwork evidence | Include all 77 recordings / 80 filenames; publish cleared entries; maintain private pack route | About 1 day integration after clearance; clearance date unknown | UA-FPV manifests/private packs/guide | Public collection unreleased |
-| M8 | Compatibility/stall repair implemented in draft PR #523; 136/136 live records and remote→included→remote switching verified locally | Exact-head gates, publisher allocation, merged-source release and public/device access | Qualify #523, publish it through the immutable release/Pages pipeline, then repeat catalogue, mixed-queue, failure-recovery and device checks on the public artifact | About 0.5 day hands-on for remaining release evidence, excluding CI/publisher/device waits | PR #370, v0.111.0, Archive76; repair PR #523 source bf2bde218; 175/175 focused tests and browser evidence above | Primary v0.111.1 historical acceptance; repair unreleased |
+| M8 | Compatibility/stall repair implemented in target PR #523; 136/136 live records and remote→included→remote switching verified locally | Fresh exact-head scheduled gates, v0.130 aggregate merge/release and public/device access | Land #523 before the v0.130 freeze, publish through the immutable release/Pages pipeline, then repeat catalogue, mixed-queue, failure-recovery and device checks on the public artifact | About 0.5 day hands-on for remaining release evidence, excluding CI/publisher/device waits | PR #370, v0.111.0, Archive76; repair PR #523 reviewed source 848767d87; 177/177 focused tests and browser evidence above | Allocated to v0.130; repair unreleased |
 | M9 | Later | Core style releases | Review existing 70 selectively; add trusted ID/hash curation overlay preserving saved pins | 1–2 days per selected batch plus listening | Curation PR pending | Unreleased |
 | M10 | Later | Core styles delivered | Broader musical variety in small accepted albums | 1–2 days per batch plus review | Separate future album PRs | Unreleased |
 | M11 | Deferred / paused | Better production method and accepted pilots | Retain full 36-original brief; do not resume rejected production method | Unscheduled | Candidate/rejection archives | 0/36 approved |
