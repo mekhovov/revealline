@@ -162,6 +162,17 @@ test('executable configuration refuses implicit development authentication', () 
   });
   assert.deepEqual(config.developmentTokens, { token: 'creator' });
   assert.equal(config.maxPackageBytes, 256 * 1024 * 1024);
+  assert.deepEqual(config.admissionPolicies.auth, { limit: 30, windowMs: 300_000 });
+  assert.equal(config.admissionPolicies.uploadBytes.limit, 2 * 1024 * 1024 * 1024);
+  assert.throws(
+    () =>
+      readConfig({
+        COMMUNITY_ALLOW_DEV_AUTH: 'true',
+        COMMUNITY_MAX_PACKAGE_BYTES: '1024',
+        COMMUNITY_UPLOAD_BYTES_PER_WINDOW: '1000',
+      }),
+    /allow at least one maximum package/u,
+  );
 });
 
 test('public health and empty catalog do not require creator authentication', async (t) => {
@@ -457,6 +468,93 @@ test('authenticated reports are idempotent and an audited admin unlisting remove
     404,
   );
   assert.deepEqual((await app.inject({ method: 'GET', url: '/v1/catalog' })).json().editions, []);
+});
+
+test('administrators page and idempotently resolve reports without exposing reporter identity', async (t) => {
+  const { app, repository, blobStore } = await fixture();
+  t.after(() => app.close());
+  const { created } = await createAndUpload(app);
+  await app.inject({
+    method: 'POST',
+    url: `/v1/submissions/${created.submission.id}/submit`,
+    headers: bearer(),
+  });
+  await processNextValidationJob({
+    repository,
+    blobStore,
+    workerId: 'report-triage-fixture',
+    validatePackage: async () => ({ accepted: true, report: { compiler: 'passed' } }),
+  });
+  const reported = await app.inject({
+    method: 'POST',
+    url: `/v1/catalog/${created.submission.editionId}/reports`,
+    payload: { reason: 'copyright', details: 'Please review the included artwork.' },
+  });
+  assert.equal(reported.statusCode, 201, reported.body);
+  const reportId = reported.json().report.id;
+  assert.equal(
+    (
+      await app.inject({
+        method: 'GET',
+        url: '/v1/admin/reports',
+        headers: bearer(),
+      })
+    ).statusCode,
+    403,
+  );
+  const queue = await app.inject({
+    method: 'GET',
+    url: '/v1/admin/reports?status=open&limit=1',
+    headers: bearer('admin-token'),
+  });
+  assert.equal(queue.statusCode, 200, queue.body);
+  assert.equal(queue.json().reports[0].id, reportId);
+  assert.equal(queue.json().reports[0].reporterSubject, undefined);
+  assert.equal(
+    (
+      await app.inject({
+        method: 'GET',
+        url: '/v1/admin/reports?cursor=not-a-cursor',
+        headers: bearer('admin-token'),
+      })
+    ).statusCode,
+    400,
+  );
+  assert.equal(
+    (
+      await app.inject({
+        method: 'POST',
+        url: '/v1/admin/reports/not-a-uuid/resolve',
+        headers: bearer('admin-token'),
+        payload: { resolution: 'Invalid identity must not reach PostgreSQL.' },
+      })
+    ).statusCode,
+    400,
+  );
+  const resolved = await app.inject({
+    method: 'POST',
+    url: `/v1/admin/reports/${reportId}/resolve`,
+    headers: bearer('admin-token'),
+    payload: { resolution: 'Ownership evidence reviewed; no removal required.' },
+  });
+  assert.equal(resolved.statusCode, 200, resolved.body);
+  assert.equal(resolved.json().report.status, 'resolved');
+  assert.equal(resolved.json().reused, false);
+  const retried = await app.inject({
+    method: 'POST',
+    url: `/v1/admin/reports/${reportId}/resolve`,
+    headers: bearer('admin-token'),
+    payload: { resolution: 'A retry cannot rewrite the original resolution.' },
+  });
+  assert.equal(retried.statusCode, 200, retried.body);
+  assert.equal(retried.json().reused, true);
+  assert.equal(retried.json().report.resolution, resolved.json().report.resolution);
+  const open = await app.inject({
+    method: 'GET',
+    url: '/v1/admin/reports?status=open',
+    headers: bearer('admin-token'),
+  });
+  assert.deepEqual(open.json().reports, []);
 });
 
 test('production validator imports, decodes, compiles, replays, and serves an actual creator package', async (t) => {
@@ -764,6 +862,17 @@ test('mounted tus server preserves interrupted offsets, owner isolation, and com
     .map(([key, value]) => `${key} ${Buffer.from(value).toString('base64')}`)
     .join(',');
   const origin = await app.listen({ host: '127.0.0.1', port: 0 });
+  const malformed = await fetch(new URL('/v1/uploads', origin), {
+    method: 'POST',
+    headers: {
+      ...bearer(),
+      'tus-resumable': '1.0.0',
+      'upload-length': String(bytes.length),
+      'upload-metadata': 'submissionId %%%=',
+    },
+  });
+  assert.equal(malformed.status, 400);
+  assert.equal((await malformed.json()).error.code, 'invalid_request');
   const started = await fetch(new URL('/v1/uploads', origin), {
     method: 'POST',
     headers: {
@@ -888,6 +997,10 @@ test('S3 boundary requires verified bytes and delegates exact immutable metadata
 
 test('migration defines immutable editions, bounded states, idempotent jobs, and expiring leases', async () => {
   const sql = await readFile(new URL('../migrations/001_initial.sql', import.meta.url), 'utf8');
+  const abuseSql = await readFile(
+    new URL('../migrations/002_abuse_controls.sql', import.meta.url),
+    'utf8',
+  );
   assert.match(sql, /UNIQUE \(owner_subject, slug, edition_version\)/u);
   assert.match(sql, /collection_id text NOT NULL/u);
   assert.match(sql, /community_catalog_collection_idx/u);
@@ -901,4 +1014,7 @@ test('migration defines immutable editions, bounded states, idempotent jobs, and
   assert.match(sql, /status IN \('queued', 'running'\)/u);
   assert.match(sql, /CREATE TABLE IF NOT EXISTS community_reports/u);
   assert.match(sql, /CREATE TABLE IF NOT EXISTS community_audit_log/u);
+  assert.match(abuseSql, /CREATE TABLE IF NOT EXISTS community_admission_windows/u);
+  assert.match(abuseSql, /PRIMARY KEY \(action, subject_hash, idempotency_hash\)/u);
+  assert.match(abuseSql, /community_report_triage_idx/u);
 });
