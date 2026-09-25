@@ -22,6 +22,7 @@ const revised = ['stepping-stones', 'return-pocket', 'neutral-ground'];
 const revisedHorizon = ['island-outpost', 'long-way-home', 'horizon-remix'];
 const revisedBorder = ['second-landing', 'long-rail', 'new-frontier'];
 const revisedBorderSignal = ['border-remix', 'dry-spine', 'wide-approach'];
+const revisedEarlyCultural = ['nearby-shore', 'two-bays', 'behind-the-patrol'];
 const sourceId = (row) => row.runtimeId.split('/').at(-1);
 
 test('prior-edition qualification is bounded to the three preserved mission owners', async () => {
@@ -572,6 +573,101 @@ test('v13 active cards and exact v12 cards stay distinct and stop prior-edition 
     );
     const prior = editions.find((row) => row.editionId === 'whole-spatial-v12');
     const active = editions.find((row) => row.editionId === 'whole-spatial-v13');
+    assert(active.tags.includes('Ukrainian'));
+    assert(!prior.tags.includes('Ukrainian'));
+    assert.equal(await library.launch(prior, { mode: 'versus' }), true);
+    assert.equal(selected.libraryMissionId, prior.id);
+    assert.equal(selected.mode, 'versus');
+    assert.equal(priorHost.catalog.find(prior.runtimeId)?.levelId, id);
+    assert.equal(librarySuccessor(library, prior, 'versus'), null);
+  }
+});
+
+test('v14 selector exposes three exact v13 early-route cards and retains earlier history', async (t) => {
+  const launches = [];
+  const owner = await createSpatialNextEditionSources({
+    activeRouteId: 'whole-spatial-v14',
+    originalThemes,
+    launch: (context) => {
+      launches.push(context);
+      return true;
+    },
+  });
+  t.after(owner.dispose);
+  const library = createMissionLibrary(owner.sources);
+  assert.equal(library.missions.length, 15);
+  assert.equal(library.forMode('solo').length, 15);
+  assert.equal(library.forMode('versus').length, 15);
+  assert.equal(library.forMode('team').length, 0);
+  assert.deepEqual(
+    library.missions
+      .filter((row) => row.editionId === 'whole-spatial-v13')
+      .map(sourceId)
+      .toSorted(),
+    revisedEarlyCultural.toSorted(),
+  );
+  for (const row of library.missions) {
+    assert.equal(row.automaticContinuation, false);
+    assert.match(row.edition, /^Previous Journey · v(?:9|10|11|12|13)$/);
+    assert.equal(await library.launch(row, { mode: 'solo' }), true);
+    assert.equal(launches.at(-1).libraryMissionId, row.id);
+    assert.equal(launches.at(-1).mode, 'solo');
+  }
+});
+
+test('v14 active cards and exact v13 cards remain distinct and stop cross-edition Next', async (t) => {
+  const activeRoute = await loadAuthoredJourneyRoute('whole-spatial-v14');
+  const priorRoute = await loadAuthoredJourneyRoute('whole-spatial-v13');
+  const themes = journeyActorThemeCandidates(originalThemes, { includeOriginals: true });
+  const activeHost = createCandidateVersusHost(activeRoute.source, {
+    themes,
+    corePackIds: activeRoute.corePackIds,
+    optionalCampaignIds: activeRoute.optionalCampaignIds,
+  });
+  const priorHost = createCandidateVersusHost(priorRoute.source, {
+    themes,
+    corePackIds: priorRoute.corePackIds,
+    optionalCampaignIds: priorRoute.optionalCampaignIds,
+  });
+  let selected;
+  const owner = await createSpatialNextEditionSources({
+    activeRouteId: activeRoute.id,
+    originalThemes,
+    launch: (context) => {
+      selected = context;
+      return true;
+    },
+  });
+  t.after(owner.dispose);
+  const library = createMissionLibrary([
+    journeyLibrarySource({
+      editionId: activeRoute.id,
+      edition: 'New Journey',
+      catalog: activeHost.catalog,
+      tags: (mission) => authoredJourneyMissionTags(mission, activeHost.manifest(mission)),
+      launch: () => true,
+    }),
+    ...owner.sources,
+  ]);
+  assert.equal(library.missions.length, activeHost.catalog.missions.length + 15);
+  const activeRows = library
+    .forMode('versus')
+    .filter((row) => row.editionId === 'whole-spatial-v14');
+  const boundary = activeRows.findIndex(
+    (row, index) => activeRows[index + 1] && row.campaignKey !== activeRows[index + 1].campaignKey,
+  );
+  assert(boundary >= 0);
+  assert.equal(librarySuccessor(library, activeRows[boundary], 'versus'), activeRows[boundary + 1]);
+  for (const id of revisedEarlyCultural) {
+    const runtimeId = activeHost.catalog.missions.find((mission) => mission.levelId === id).id;
+    const editions = library.missions.filter((row) => row.runtimeId === runtimeId);
+    assert.equal(editions.length, 2);
+    assert.deepEqual(
+      new Set(editions.map((row) => row.editionId)),
+      new Set(['whole-spatial-v13', 'whole-spatial-v14']),
+    );
+    const prior = editions.find((row) => row.editionId === 'whole-spatial-v13');
+    const active = editions.find((row) => row.editionId === 'whole-spatial-v14');
     assert(active.tags.includes('Ukrainian'));
     assert(!prior.tags.includes('Ukrainian'));
     assert.equal(await library.launch(prior, { mode: 'versus' }), true);
