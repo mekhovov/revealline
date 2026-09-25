@@ -84,6 +84,12 @@
       bindings.set(element, fields);
       elements.add(new WeakRef(element));
     }
+    if (field === 'textContent' && richBindings.has(element)) {
+      // A host may replace a static rich caption after resolving the active mode.
+      // That accepted binding owns subsequent locale changes, including remounts.
+      richBindings.get(element)?.();
+      richBindings.set(element, null);
+    }
     fields.set(field, value);
     return apply(element, field, value, true);
   }
@@ -157,6 +163,10 @@
       const update = () => {
         const node = reference.deref();
         if (!node) {
+          unsubscribe();
+          return;
+        }
+        if ([...slots.values()].some((slot) => slot.deref()?.parentNode !== node)) {
           unsubscribe();
           return;
         }
