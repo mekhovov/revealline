@@ -126,3 +126,39 @@ test('Pause owns Sound, Missions, Help and Settings and each child restores its 
   assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
   assert.deepEqual(page.errors, []);
 });
+
+test('Solo shell tools opened during flight return focus inside the Pause menu', async (t) => {
+  const page = await soloPage(t);
+  page.$('start-button').click();
+  await settle(() => page.doc.body.dataset.flightState === 'running');
+
+  for (const [shellAction, dialog, pauseAction] of [
+    ['shell-settings', 'settings-dialog', 'overlay-settings'],
+    ['help-button', 'help-dialog', 'overlay-help'],
+  ]) {
+    const run = page.rendered.run,
+      checkpoint = authoritativeCheckpoint(run);
+    page.$(shellAction).focus();
+    page.$(shellAction).click();
+    assert.equal(page.$(dialog).open, true);
+    assert.equal(page.rendered.paused, true);
+    assert.equal(page.$('game-overlay').dataset.kind, 'pause');
+    assert.deepEqual(authoritativeCheckpoint(run), checkpoint);
+
+    page.$(dialog).querySelector('[data-close]').click();
+    await Promise.resolve();
+    assert.equal(page.$(dialog).open, false);
+    assert.equal(
+      page.doc.activeElement,
+      page.$(pauseAction),
+      'the newly installed Pause menu owns the return focus',
+    );
+    assert.equal(page.rendered.paused, true);
+    assert.equal(page.rendered.run, run);
+    assert.deepEqual(authoritativeCheckpoint(run), checkpoint);
+
+    page.$('start-button').click();
+    await settle(() => page.doc.body.dataset.flightState === 'running');
+  }
+  assert.deepEqual(page.errors, []);
+});
