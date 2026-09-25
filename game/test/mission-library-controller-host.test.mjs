@@ -290,9 +290,10 @@ test('Versus controller Download, Retry and Cancel keep the attempt and require 
   });
   reach(p.$('journey-search-clear'));
   pulse(0);
-  const card = [...p.$('journey-cards').children].find(
-    (item) => JSON.parse(item.dataset.missionId)[3] === 'night-shift-03',
-  );
+  const card = [...p.$('journey-cards').children].find((item) => {
+    const identity = JSON.parse(item.dataset.missionId);
+    return JSON.parse(identity[0])[0] === 'classic' && identity[3] === 'night-shift-03';
+  });
   const action = () => card.querySelector('.journey-card-action').textContent;
   const before = p.checkpoint();
   reach(card);
