@@ -65,4 +65,41 @@ These references are design inputs, not permission to copy museum objects, embro
 3. **Frontier-and-pocket batch:** `new-frontier`, `turn-the-corner`, and `return-pocket`.
 4. **Boundary review:** `border-remix` only after the preceding three prove the mixed patrol vocabulary. Then re-evaluate its two fixed bonuses for timed relocation without making collection mandatory.
 
+## Three net-new identities for later batches
+
+These are new mission identities, not successors. Their IDs and names do not occur in the accepted Journey, shipped Classic/Custom catalogue, active three-map slice, or the open spatial owners audited above. They remain concepts only; adding a row here does not reserve an implementation owner or enroll a mission. No additional FPV/workshop identity is proposed because PR 332 already owns toolbench, motor, lens, and circuit studies, while the active slice owns an FPV trace study.
+
+### `woven-end-exchange` · Woven end exchange
+
+- **Placement:** Border Bloom, challenge band 3, after the introductory perimeter-patrol lesson.
+- **Attributed study:** an East Polissia woven rushnyk from Makyshyn, Chernihiv region. The museum record documents a symmetric end-weighted composition with schematic vases, candleholders, plants, and birds ([Honchar Museum](https://honchar.org.ua/collections/detail/2314)).
+- **Route decision:** two separated terminal foundation courts flank an offset central exchange. The player chooses whether to establish a short return at one end or cross the exchange immediately to separate the keepers.
+- **Approach A:** connect the near terminal to the perimeter, observe the patrol from the new return, then make two shorter enclosures toward the centre.
+- **Approach B:** commit to one long cut through the central exchange before either terminal is connected, gaining a larger early enclosure at greater exposure.
+- **Capture consequence:** connecting a terminal creates a useful return but earns no foundation coverage. A central separator fills only a keeper-free side, so the chosen order determines which end remains contested.
+- **Existing mechanics only:** two field keepers, one outer-perimeter patrol, two disconnected foundations, and ordinary enemy-seeded capture. No relay, timer, or new actor rule.
+- **Cultural boundary:** use only the source's end-weighted symmetry and alternating density as large-scale composition. Birds, candleholders, and plants stay in the reveal artwork, never as targets or enemy silhouettes; do not copy the object or claim universal meanings. Unlike PR 332's `rushnyk-bands`, this is a pair of separated terminal courts with a central exchange, not a parallel-band course.
+
+### `gathered-returns` · Gathered returns
+
+- **Placement:** Neon Contours, challenge band 4, after changing-frontier behavior is already understood.
+- **Attributed study:** a 1930 Boyko Area shirt from Shchyrets, Lviv region. The museum record documents geometric ornament and cross stitch, cross-stitch plait, backstitch, and riasuvannia gathering ([Honchar Museum](https://honchar.org.ua/en/collections/detail/3297)).
+- **Route decision:** three narrow foundation ribs gather toward an offset hub. The player can join the outer ribs to build a gradual return fan or cross the compressed middle gap to reshape the frontier in one move.
+- **Approach A:** connect the two outer ribs separately, accepting smaller captures in exchange for short, readable departures around the hub.
+- **Approach B:** cross the central gap first, separating two keepers and forcing the frontier patrol onto a new contour before the outer ribs are secured.
+- **Capture consequence:** each outer join expands the return network without scoring its foundation cells; the centre-first cut can fill one lobe and redirects the moving-frontier patrol along the surviving contour.
+- **Existing mechanics only:** reclaimed foundations, slow field between ribs, three field keepers, one moving-frontier patrol, and the established contour reassignment rule.
+- **Cultural boundary:** the mission studies construction rhythm—gathering and a plaited join—not a named symbolic motif. Do not trace the shirt's embroidery chart or generalize one Shchyrets object to all Boyko work. Unlike `cross-stitch-crossings` and `four-quarters`, this has no cross-shaped wall or four-quadrant capture puzzle.
+
+### `chain-loop-crossing` · Chain-loop crossing
+
+- **Placement:** Phaseworks, challenge band 7, after travelling trail impacts and committed pursuit are established separately.
+- **Attributed study:** an early-twentieth-century Slobozhanshchyna rushnyk from Khukhra, Sumy region. The museum record identifies hemp cloth, hand chain-stitch embroidery, and plant/zoomorphic ornament ([Honchar Museum](https://honchar.org.ua/collections/detail/2006)).
+- **Route decision:** three offset loop-like return islands create a switchback. The player can stitch them together through short cuts or thread one long diagonal while a telegraphed pursuer commits to its route.
+- **Approach A:** connect the loops sequentially, using each new return to keep trail-impact travel distance short while leaving smaller keeper-held lobes for later.
+- **Approach B:** wait for the pursuer's recovery, then cross two openings in one exposed diagonal that separates the keepers earlier but gives a trail impact farther to travel.
+- **Capture consequence:** a short loop connection mainly improves the next return; the long diagonal fills only an unoccupied lobe and leaves the keeper-held loop active, preventing an automatic oversized clear.
+- **Existing mechanics only:** three foundations, two field keepers, one warned/committed pursuer, and the current ordered-path travelling-impact contract. No free steering or mid-flight retargeting.
+- **Cultural boundary:** use chain stitch only as inspiration for linked spatial rhythm. Plant and animal forms remain respectful background details rather than collision geometry, targets, or combat jokes; no traditional meaning is inferred. This is a trail-risk switchback, not another FPV trace, toolbench, circuit-lane, or woven-band mission.
+
 Each candidate still needs route simulations, actual Standard/Gentle/Expert play, both steering modes, paired-board parity, public clear/Next/Skip/Continue checks, and human review. This disposition audit is not evidence that a mission is balanced, fun, culturally approved, or ready for default enrollment.
