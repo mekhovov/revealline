@@ -62,6 +62,7 @@ import {
 import { FIXED_DT, releaseInputs } from '../core/index.mjs';
 import { attachCouchInput } from './couch-input.mjs';
 import { createControllerRouter } from '../ui/controller-router.mjs';
+import { attachControllerConfirmGuard } from '../ui/controller-confirm-guard.mjs';
 import { attachControllerNavigation } from '../ui/controller-navigation.mjs';
 import { playgroundTabBoundary } from '../ui/playground-tab-boundary.mjs';
 import { attachControllerReading } from '../ui/controller-reading.mjs';
@@ -3179,6 +3180,9 @@ try {
     if ($('race-menu-status').textContent !== text) $('race-menu-status').textContent = text;
   }
   menuRouter = createControllerRouter({ readPads: readAssignedMenuPads });
+  const controllerConfirmGuard = attachControllerConfirmGuard({
+    confirmPressed: () => menuRouter.menuConfirmPressed(),
+  });
   const menuIds = new Set([
     'race-coop',
     'race-start',
@@ -3206,6 +3210,7 @@ try {
     'race-data-reading-done',
     'race-data-reading',
     'race-help',
+    'race-optional-setup-toggle',
     'race-more-home',
     'race-more-about',
     'race-release-explorer',
@@ -3341,6 +3346,9 @@ try {
     // Clear before sampling so that this frame cannot claim a new menu owner.
     if (assignmentsChanged || pendingPadLoss) menuRouter.clear();
     const result = menuRouter.sample({ scope, timeMs: now });
+    // Joining consumes the controller edge as assignment, but Steam may still
+    // mirror that same physical press as a delayed native Enter/click.
+    controllerConfirmGuard.observe(result.confirmHeld || result.status.code === 'joined');
     if (result.status.code === 'joined' || Object.values(result.ui).some(Boolean))
       setReadingModality('controller');
     const released = !menuOwner && result.disconnected;
@@ -3432,6 +3440,7 @@ try {
     couchTouch.destroy();
     journeyReactions.dispose();
     input.destroy();
+    controllerConfirmGuard.destroy();
     menuRouter.destroy();
     reading.destroy();
     navigation.destroy();

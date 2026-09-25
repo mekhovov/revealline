@@ -316,7 +316,17 @@ export class Element extends Events {
   click() {
     if (this.disabled) return;
     if (this.tagName === 'INPUT' && this.type === 'checkbox') this.checked = !this.checked;
-    this.emit('click');
+    const event = this.emit('click');
+    if (
+      !event.defaultPrevented &&
+      this.tagName === 'SUMMARY' &&
+      this.parentElement?.tagName === 'DETAILS'
+    ) {
+      this.parentElement.open = !this.parentElement.open;
+      if (this.parentElement.open) this.parentElement.setAttribute('open', '');
+      else this.parentElement.removeAttribute('open');
+      this.parentElement.emit('toggle', { bubbles: false });
+    }
     if (this.tagName === 'INPUT' && this.type === 'checkbox') {
       this.emit('input');
       this.emit('change');

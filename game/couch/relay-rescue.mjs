@@ -645,7 +645,9 @@ export function bootCoop({
                 : importOperation
                   ? $('coop-pack-cancel')
                   : pictureOperation
-                    ? $('coop-picture-cancel')
+                    ? pictureOperation.initial
+                      ? $('coop-level')
+                      : $('coop-picture-cancel')
                     : !run && pictureSelection?.state !== 'ready'
                       ? $('coop-picture-retry')
                       : !run
@@ -1461,7 +1463,10 @@ export function bootCoop({
       retryPreview = !run && ready && previewState === 'unavailable';
     $('coop-start').disabled =
       !startPermitted || !ready || busy || Boolean(importOperation || importAdopting);
-    $('coop-picture-cancel').hidden = !busy;
+    // Initial preparation is part of opening the lobby. Keep its stable Arena
+    // focus and loading status rather than replacing Start with a Cancel trap.
+    // Explicit retries and selection changes still expose cancellation.
+    $('coop-picture-cancel').hidden = !busy || pictureOperation?.initial === true;
     $('coop-picture-retry').hidden = busy || (ready && !retryPreview);
     $('coop-picture-retry').textContent = retryPreview ? 'Retry preview' : 'Retry picture';
     $('coop-picture-status').dataset.state = busy
@@ -1689,7 +1694,7 @@ export function bootCoop({
     if (pictureOperation) return pictureOperation.promise;
     const focus = pictureFocus(origin, initial),
       controller = new AbortController();
-    const operation = { selection, controller, focus, run, generation };
+    const operation = { selection, controller, focus, run, generation, initial };
     pictureOperation = operation;
     selection.state = 'preparing';
     const current = () =>
@@ -1700,7 +1705,8 @@ export function bootCoop({
       run === operation.run &&
       generation === operation.generation;
     pictureUI('Preparing the exact Team picture…');
-    focus.pending($('coop-picture-cancel'));
+    if (initial) focus.pending($('coop-level'));
+    else focus.pending($('coop-picture-cancel'));
     operation.promise = (async () => {
       try {
         const snapshot = await (retry ? presentationPage.retry() : presentationPage.ready);
@@ -1727,7 +1733,18 @@ export function bootCoop({
           return;
         }
         pictureUI('Team picture ready. Start remains a separate action.');
-        focus.finish(run ? $('coop-retry') : () => navigation.focusAvailable());
+        focus.finish(
+          run
+            ? $('coop-retry')
+            : () => {
+                if (visibleAction($('coop-start'))) $('coop-start').focus({ preventScroll: true });
+                else {
+                  const fallback = $('coop-app').querySelector('a[href]');
+                  if (visibleAction(fallback)) fallback.focus({ preventScroll: true });
+                  else navigation.focusAvailable();
+                }
+              },
+        );
       } catch (error) {
         if (!current()) return;
         try {
@@ -3973,7 +3990,9 @@ export function bootCoop({
       previousPads = signatures;
       input.poll();
       const routed = router.sample({ scope: scope(), timeMs: now });
-      controllerConfirmGuard.observe(routed.confirmHeld);
+      // A join press never activates UI, yet its Steam-native echo still
+      // belongs to the controller gesture and must not reach Cancel/Start.
+      controllerConfirmGuard.observe(routed.confirmHeld || routed.status.code === 'joined');
       if (!running()) {
         if (routed.status.code === 'joined' || Object.values(routed.ui).some(Boolean))
           setReadingModality('controller');

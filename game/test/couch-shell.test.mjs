@@ -5,6 +5,7 @@ import { couchPage } from './helpers/couch-host.mjs';
 import { couchEquipment } from '../couch/couch-shell.mjs';
 import { createRun } from '../core/index.mjs';
 import { retryFixture } from './fixtures/retry-scenarios.mjs';
+import { waitFor } from './helpers/wait-for.mjs';
 
 const pad = (index) => ({
   index,
@@ -114,38 +115,25 @@ test('lobby, setup and children use reachable native controls and Back restores 
   assert.equal(currentMode.getAttribute('tabindex'), null);
   assert.equal(currentMode.getAttribute('href'), null);
   assert.equal(f.doc.activeElement.id, 'race-start');
-  // This storage-less host exposes difficulty recovery between the mode
-  // choices and Start. Its visible actions participate in native Tab order.
-  for (const id of [
-    'race-journey-preferences-export',
-    'race-journey-preferences-retry',
-    'race-journey-difficulty',
-    'race-coop',
-    'race-solo-return',
-  ]) {
-    press(f, 'Tab', f.doc.activeElement, { shiftKey: true });
-    assert.equal(f.doc.activeElement.id, id);
-  }
-  assert.equal(f.doc.activeElement.getAttribute('href'), '../?journey=legacy');
-  press(f, 'Tab');
+  assert.equal(f.$('race-optional-setup').open, false);
+  assert.equal(f.$('race-journey-difficulty').closest('details'), f.$('race-optional-setup'));
+  press(f, 'Tab', f.doc.activeElement, { shiftKey: true });
   assert.equal(f.doc.activeElement.id, 'race-coop');
   assert.equal(
     f.doc.activeElement.getAttribute('href'),
     'relay-rescue.html?journey=legacy&return=versus',
   );
-  for (const id of [
-    'race-journey-difficulty',
-    'race-journey-preferences-retry',
-    'race-journey-preferences-export',
-    'race-start',
-  ]) {
-    press(f, 'Tab');
-    assert.equal(f.doc.activeElement.id, id);
-  }
+  press(f, 'Tab');
+  assert.equal(f.doc.activeElement.id, 'race-start');
   press(f, 'Tab');
   assert.equal(f.doc.activeElement.id, 'race-chapters');
   press(f, 'Tab');
-  assert.equal(f.doc.activeElement.id, 'race-focus');
+  assert.equal(f.doc.activeElement.id, 'race-optional-setup-toggle');
+  f.doc.activeElement.click();
+  assert.equal(f.$('race-optional-setup').open, true);
+  for (let steps = 0; f.doc.activeElement.id !== 'race-focus' && steps < 8; steps++)
+    press(f, 'Tab');
+  assert.equal(f.doc.activeElement.id, 'race-focus', 'Advanced setup remains keyboard reachable.');
   f.doc.activeElement.click();
   assert.equal(f.doc.activeElement.id, 'race-level');
   assert.equal(f.$('race-main').inert, true);
@@ -213,6 +201,8 @@ test('pause children and cancelled new match preserve two different continuation
   f.frame();
   const held = f.checkpoint(),
     oldRuns = [...f.renders];
+  f.$('race-optional-setup').open = true;
+  f.$('race-optional-setup').setAttribute('open', '');
   assert.equal(
     f
       .$('race-main')
@@ -233,10 +223,21 @@ test('pause children and cancelled new match preserve two different continuation
   assert.ok(f.renders[0].player.x > oldRuns[0].level.spawn.x);
   assert.ok(f.renders[1].player.x < oldRuns[1].level.spawn.x);
   f.$('race-pause').click();
+  f.$('race-optional-setup').open = true;
+  f.$('race-optional-setup').setAttribute('open', '');
   f.$('race-focus').click();
   assert.equal(f.$('race-confirm').hidden, false);
   f.$('race-confirm-reset').click();
-  f.frame();
+  await waitFor(
+    () => {
+      f.frame(0);
+      return f.state() === 'ready';
+    },
+    {
+      message: 'New-match preparation did not publish its ready replacement.',
+    },
+  );
+  f.frame(0);
   assert.equal(f.state(), 'ready');
   assert.notEqual(f.renders[0], oldRuns[0]);
   assert.equal(f.$('race-setup').hidden, false);
