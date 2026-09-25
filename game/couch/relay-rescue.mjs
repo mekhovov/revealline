@@ -59,7 +59,10 @@ import {
 import { decodeCoopPicture } from './coop-picture-image.mjs';
 import { createCoopPresentationImport } from './coop-import-source.mjs';
 import { readPlayableTeamCampaign } from './creator-team-import.mjs';
-import { createInstalledTeamCampaignStore } from '../creator/team-installed.mjs';
+import {
+  createInstalledTeamAttemptSnapshot,
+  createInstalledTeamCampaignStore,
+} from '../creator/team-installed.mjs';
 import { COOP_PRESENTATION_MIME } from '../coop/presentation-envelope.mjs';
 import {
   coopFailureFeedback,
@@ -460,6 +463,7 @@ export function bootCoop({
   const libraryOtherSources = new Map();
   const installedTeamSourceIds = new Set();
   const installedTeamProgress = new Map();
+  const installedTeamAttempts = new WeakMap();
   let installedTeamRows = [],
     installedTeamEditions = new Map(),
     installedTeamGeneration = -1,
@@ -2322,6 +2326,7 @@ export function bootCoop({
       knockdowns = [null, null];
       last = null;
       accumulator = 0;
+      beginInstalledTeamAttempt(candidate, selection);
       try {
         if (rememberBuiltIn) lastBuiltInArena = destination.id;
         if (nextPack) {
@@ -2716,12 +2721,19 @@ export function bootCoop({
       throw error;
     }
   }
-  async function activateDiscovery(row, { signal, isCurrent, onStatus, opener }) {
+  async function activateDiscovery(row, { signal, isCurrent, onStatus, opener, restored = null }) {
     if (!canOpenDiscovery() || !currentDiscoveryRows().includes(row))
       throw new DOMException(t('interface:arenaSelectionIsNoLongerCurrent'), 'AbortError');
     const recipe = freshRecipe(structuredClone(row.level), {
       ...currentRecipe().options,
       ...(row.journeyRow ? { difficulty: row.journeyRow.difficulty } : {}),
+      ...(restored
+        ? {
+            seed: restored.run.seed,
+            difficulty: restored.snapshot.difficulty,
+            ...restored.run.config,
+          }
+        : {}),
     });
     const selection = newPictureSelection(
       recipe,
@@ -2907,7 +2919,17 @@ export function bootCoop({
       check();
       selection.binding = selection.lease.confirm(selection.request);
       selection.state = 'ready';
-      candidate = createTunedCoop(recipe);
+      if (restored) {
+        if (restored.snapshot.levelId !== row.levelId)
+          throw new Error('Saved Team attempt belongs to another installed mission.');
+        candidate = restored.run;
+        attemptTuning.set(candidate, {
+          pictureLevel: recipe.level,
+          adminOverride: false,
+          gameplayId: restored.snapshot.gameplayId,
+          tuning: restored.snapshot.tuning,
+        });
+      } else candidate = createTunedCoop(recipe);
       startCoop(candidate);
       check();
       if (previous.run?.status === 'paused') {
@@ -2924,9 +2946,14 @@ export function bootCoop({
           departure = ticket;
           localizedText($('coop-discard-title'), () => t('interface:startAnotherTeamArena'));
           localizedText($('coop-discard-copy'), () =>
-            t('interface:team.replaceAttempt', {
-              mission: contentText(row, 'title'),
-            }),
+            t(
+              installedTeamAttempts.get(run)?.durable
+                ? 'interface:team.replaceAttemptSaved'
+                : 'interface:team.replaceAttempt',
+              {
+                mission: contentText(row, 'title'),
+              },
+            ),
           );
           localizedText($('coop-discard-confirm'), () => t('interface:replacePlay'));
           try {
@@ -2969,6 +2996,7 @@ export function bootCoop({
       knockdowns = [null, null];
       last = null;
       accumulator = 0;
+      beginInstalledTeamAttempt(candidate, selection, restored);
       if (row.pack === COOP_STARTER_PACK) lastBuiltInArena = row.levelId;
       try {
         $('coop-difficulty').value = candidate.difficulty;
@@ -2995,7 +3023,12 @@ export function bootCoop({
           throw new DOMException(t('interface:arenaActivationChanged'), 'AbortError');
         setupNote({ level: attemptLevel, experiment: candidate.config });
         message(() =>
-          t('interface:team.arenaReadyDirections', { mission: contentText(row.level, 'name') }),
+          t(
+            restored
+              ? 'interface:team.arenaRestoredDirections'
+              : 'interface:team.arenaReadyDirections',
+            { mission: contentText(row.level, 'name') },
+          ),
         );
         if (!accepted())
           throw new DOMException(t('interface:arenaActivationChanged'), 'AbortError');
@@ -3059,12 +3092,19 @@ export function bootCoop({
   const installedPresetLabel = (value) =>
     value === 'full' ? t('interface:fullTeamwork') : t('interface:jointCutsOrdinaryCover');
   function installedProgressText(row) {
-    const receipt = installedTeamProgress.get(row.installedEditionId)?.clears?.[row.levelId];
+    const progress = installedTeamProgress.get(row.installedEditionId),
+      receipt = progress?.clears?.[row.levelId],
+      saved = progress?.attempts?.[row.levelId];
+    if (saved)
+      return t('interface:missionLibrary.team.resumeSavedAttempt', {
+        difficulty: installedDifficultyLabel(saved.difficulty),
+        preset: installedPresetLabel(saved.presetId),
+      });
     return receipt
-      ? t('interface:missionLibrary.team.installedClear', {
+      ? `${t('interface:missionLibrary.team.installedClear', {
           difficulty: installedDifficultyLabel(receipt.difficulty),
           preset: installedPresetLabel(receipt.presetId),
-        })
+        })}${receipt.reward ? ` · ${t('interface:pictureEarned')}` : ''}`
       : t('interface:missionLibrary.team.notClearedInstalledEdition');
   }
   async function launchInstalledTeamRow(edition, row, context) {
@@ -3088,7 +3128,14 @@ export function bootCoop({
       canonicalJSON(loaded.prepared.pack) !== canonicalJSON(edition.pack)
     )
       throw new Error(t('interface:missionLibrary.team.installedEditionChanged'));
-    return launchTeamLibraryRow(row, context);
+    const saved = installedTeamProgress.get(edition.editionId)?.attempts?.[row.levelId],
+      restored = saved
+        ? await installedTeamStore.restoreAttempt(edition.editionId, row.levelId, {
+            signal: context.signal,
+          })
+        : null;
+    if (!context.isCurrent()) return false;
+    return launchTeamLibraryRow(row, { ...context, restored });
   }
   async function includeInstalledTeamCampaigns() {
     if (!installedTeamStore) return;
@@ -3275,9 +3322,12 @@ export function bootCoop({
         cancel.hidden = true;
         libraryStatus(
           () =>
-            t('interface:team.arenaPlayingTogether', {
-              mission: contentText(row.level, 'name'),
-            }),
+            t(
+              context.restored
+                ? 'interface:team.arenaRestoredPlayingTogether'
+                : 'interface:team.arenaPlayingTogether',
+              { mission: contentText(row.level, 'name') },
+            ),
           'ready',
         );
         finishLibraryStart(started);
@@ -3346,9 +3396,12 @@ export function bootCoop({
           }),
         );
         localizedText($('coop-discard-copy'), () =>
-          t('interface:team.openOriginalAttempt', {
-            mission: contentText(row, 'name'),
-          }),
+          t(
+            installedTeamAttempts.get(run)?.durable
+              ? 'interface:team.openOriginalAttemptSaved'
+              : 'interface:team.openOriginalAttempt',
+            { mission: contentText(row, 'name') },
+          ),
         );
         localizedText($('coop-discard-confirm'), () => t('interface:replacePlay'));
         departureDialog.showModal();
@@ -3820,6 +3873,7 @@ export function bootCoop({
       pictureLevel: recipe.level,
       adminOverride: recipe.tuning.adminOverride,
       gameplayId: dataIdentity({ ruleset: next.ruleset, level }),
+      tuning: recipe.tuning,
     });
     return next;
   }
@@ -3905,6 +3959,7 @@ export function bootCoop({
     );
     generation++;
     startCoop(run);
+    beginInstalledTeamAttempt(run, selection);
     document.body.classList.add('playing');
     $('coop-menu').hidden = true;
     $('coop-play').hidden = false;
@@ -3942,6 +3997,7 @@ export function bootCoop({
     cancelNext();
     cancelPicture({ restore: false });
     if (!running()) return;
+    persistInstalledTeamAttempt(run, acceptedPicture, { force: true });
     pauseCoop(run);
     clear();
     overlay({ focus });
@@ -4188,7 +4244,11 @@ export function bootCoop({
     localizedText(
       $('coop-discard-copy'),
       () =>
-        `${t('interface:thisUnfinishedAttemptIsNotSavedDiscardingItLosesIts')} ${
+        `${t(
+          installedTeamAttempts.get(run)?.durable
+            ? 'interface:team.savedCheckpointDiscard'
+            : 'interface:thisUnfinishedAttemptIsNotSavedDiscardingItLosesIts',
+        )} ${
           loopStopped
             ? t('interface:stayKeepsThisStoppedAttemptOnScreenItCannotResume')
             : t('interface:stayKeepsBothPlayersPausedResumeTogetherRemainsASeparate')
@@ -4258,7 +4318,12 @@ export function bootCoop({
       message(t('interface:team.replaceFailed', { error: error.message }));
       if (departure === ticket)
         localizedText($('coop-discard-copy'), () =>
-          t('interface:team.attemptStillHere', { error: error.message }),
+          t(
+            installedTeamAttempts.get(run)?.durable
+              ? 'interface:team.attemptStillHereSaved'
+              : 'interface:team.attemptStillHere',
+            { error: error.message },
+          ),
         );
       else primary().focus({ preventScroll: true });
     }
@@ -4479,48 +4544,192 @@ export function bootCoop({
     }
     if (terminalMessage) message(terminalMessage);
   }
-  function persistInstalledTeamCompletion(completedRun, picture, epoch) {
-    const editionId = picture?.installedEditionId;
-    const setup = COOP_PLAYTEST_CONFIGURATIONS.find((candidate) =>
+  const installedPreset = (completedRun) =>
+    COOP_PLAYTEST_CONFIGURATIONS.find((candidate) =>
       ['jointCuts', 'assistCaptures', 'advancedCooperation'].every(
         (key) => candidate[key] === completedRun.config[key],
       ),
     );
-    if (!installedTeamStore || !editionId || !['full', 'joint'].includes(setup?.id)) return;
-    const tuning = attemptTuning.get(completedRun);
-    void installedTeamStore
-      .recordCompletion({
+  function installedPictureReward(picture) {
+    const choice = picture?.binding?.choice,
+      asset = choice?.picture;
+    if (
+      choice?.kind !== 'image' ||
+      !asset ||
+      typeof asset.sha256 !== 'string' ||
+      !Number.isSafeInteger(asset.bytes) ||
+      !Number.isSafeInteger(asset.width) ||
+      !Number.isSafeInteger(asset.height)
+    )
+      return undefined;
+    return {
+      kind: 'picture',
+      sourceKind: choice.sourceKind ?? 'registered-original',
+      sha256: asset.sha256,
+      bytes: asset.bytes,
+      mime: asset.mime,
+      width: asset.width,
+      height: asset.height,
+    };
+  }
+  function beginInstalledTeamAttempt(currentRun, picture, restored = null) {
+    const editionId = picture?.installedEditionId,
+      setup = installedPreset(currentRun),
+      tuning = attemptTuning.get(currentRun);
+    if (
+      !installedTeamStore ||
+      !editionId ||
+      !['full', 'joint'].includes(setup?.id) ||
+      !tuning ||
+      tuning.adminOverride
+    )
+      return;
+    const progress = installedTeamProgress.get(editionId),
+      record = {
+        editionId,
+        levelId: currentRun.level.id,
+        attemptId: restored?.snapshot.attemptId ?? `${libraryVisit}:${picture.request.attemptId}`,
+        gameplayId: tuning.gameplayId,
+        presetId: setup.id,
+        tuning: tuning.tuning,
+        segments: structuredClone(restored?.snapshot.segments ?? []),
+        generation: restored?.generation ?? progress?.generation,
+        lastQueuedTick: restored?.snapshot.checkpoint.tick ?? -1,
+        chain: Promise.resolve(),
+        failure: null,
+        durable: Boolean(restored),
+      };
+    installedTeamAttempts.set(currentRun, record);
+    if (!restored) persistInstalledTeamAttempt(currentRun, picture, { force: true });
+  }
+  function appendInstalledTeamCommands(currentRun, commands) {
+    const record = installedTeamAttempts.get(currentRun);
+    if (!record) return;
+    const copied = structuredClone(commands),
+      previous = record.segments.at(-1);
+    if (previous && canonicalJSON(previous.commands) === canonicalJSON(copied)) previous.ticks++;
+    else record.segments.push({ ticks: 1, commands: copied });
+  }
+  function installedAttemptSnapshot(currentRun, record) {
+    return createInstalledTeamAttemptSnapshot({
+      editionId: record.editionId,
+      attemptId: record.attemptId,
+      gameplayId: record.gameplayId,
+      presetId: record.presetId,
+      run: currentRun,
+      tuning: record.tuning,
+      segments: record.segments,
+    });
+  }
+  function persistInstalledTeamAttempt(currentRun, picture, { force = false } = {}) {
+    const record = installedTeamAttempts.get(currentRun);
+    if (
+      !record ||
+      record.failure ||
+      currentRun.status !== 'running' ||
+      (!force && currentRun.tick - record.lastQueuedTick < 600)
+    )
+      return;
+    const savedRun = installedAttemptSnapshot(currentRun, record);
+    record.lastQueuedTick = savedRun.checkpoint.tick;
+    record.chain = record.chain.then(async () => {
+      if (record.failure) return null;
+      try {
+        const progress = await installedTeamStore.recordAttempt(savedRun, {
+          expectedGeneration: record.generation,
+        });
+        record.generation = progress.generation;
+        record.durable = true;
+        installedTeamProgress.set(record.editionId, progress);
+        libraryChooser?.refresh();
+        return progress;
+      } catch (error) {
+        record.failure = error;
+        if (!disposed && run === currentRun && acceptedPicture === picture)
+          message(`Team attempt remains on screen but could not be saved: ${error.message}`);
+        return null;
+      }
+    });
+  }
+  function clearInstalledTeamAttempt(currentRun, picture) {
+    const record = installedTeamAttempts.get(currentRun);
+    if (!record || record.failure) return;
+    record.chain = record.chain.then(async () => {
+      if (record.failure) return null;
+      try {
+        const progress = await installedTeamStore.clearAttempt({
+          editionId: record.editionId,
+          levelId: record.levelId,
+          attemptId: record.attemptId,
+          expectedGeneration: record.generation,
+        });
+        record.generation = progress.generation;
+        installedTeamProgress.set(record.editionId, progress);
+        libraryChooser?.refresh();
+        return progress;
+      } catch (error) {
+        record.failure = error;
+        if (!disposed && run === currentRun && acceptedPicture === picture)
+          message(`Ended Team attempt could not clear its saved checkpoint: ${error.message}`);
+        return null;
+      }
+    });
+  }
+  function persistInstalledTeamCompletion(completedRun, picture, epoch) {
+    const editionId = picture?.installedEditionId;
+    const setup = installedPreset(completedRun),
+      tuning = attemptTuning.get(completedRun),
+      record = installedTeamAttempts.get(completedRun);
+    if (
+      !installedTeamStore ||
+      !editionId ||
+      !['full', 'joint'].includes(setup?.id) ||
+      !record ||
+      record.failure
+    )
+      return;
+    const savedRun = installedAttemptSnapshot(completedRun, record);
+    record.chain = record.chain.then(async () => {
+      if (record.failure) return null;
+      return installedTeamStore.recordCompletion({
         editionId,
         levelId: completedRun.level.id,
-        runId: `${libraryVisit}:${picture.request.attemptId}`,
+        runId: record.attemptId,
         gameplayId: tuning.gameplayId,
         difficulty: completedRun.difficulty,
         presetId: setup.id,
-      })
-      .then(
-        (progress) => {
-          installedTeamProgress.set(editionId, progress);
-          libraryChooser?.refresh();
-          if (
-            !disposed &&
-            run === completedRun &&
-            generation === epoch &&
-            acceptedPicture === picture
-          )
-            nextStatus(t('interface:missionLibrary.team.progressSaved'));
-        },
-        (error) => {
-          if (
-            !disposed &&
-            run === completedRun &&
-            generation === epoch &&
-            acceptedPicture === picture
-          )
-            nextStatus(
-              t('interface:missionLibrary.team.progressSaveFailed', { error: error.message }),
-            );
-        },
-      );
+        attempt: savedRun,
+        reward: installedPictureReward(picture),
+        expectedGeneration: record.generation,
+      });
+    });
+    void record.chain.then(
+      (progress) => {
+        if (!progress) return;
+        record.generation = progress.generation;
+        installedTeamProgress.set(editionId, progress);
+        libraryChooser?.refresh();
+        if (
+          !disposed &&
+          run === completedRun &&
+          generation === epoch &&
+          acceptedPicture === picture
+        )
+          nextStatus(t('interface:missionLibrary.team.progressSaved'));
+      },
+      (error) => {
+        record.failure = error;
+        if (
+          !disposed &&
+          run === completedRun &&
+          generation === epoch &&
+          acceptedPicture === picture
+        )
+          nextStatus(
+            t('interface:missionLibrary.team.progressSaveFailed', { error: error.message }),
+          );
+      },
+    );
   }
   function update(now) {
     if (disposed) return;
@@ -4590,16 +4799,18 @@ export function bootCoop({
         accumulator += elapsed;
         while (accumulator + 1e-9 >= FIXED_DT && running()) {
           const commands = batch.consume(input.consume());
+          appendInstalledTeamCommands(run, commands);
           stepCoop(run, commands, FIXED_DT);
           accumulator -= FIXED_DT;
           events();
+          if (running()) persistInstalledTeamAttempt(run, acceptedPicture);
           if (!running()) {
             const finishedAttempt = run,
               epoch = generation;
             if (run.status === 'won') {
               candidateProgress?.complete(run);
               persistInstalledTeamCompletion(run, acceptedPicture, epoch);
-            }
+            } else clearInstalledTeamAttempt(run, acceptedPicture);
             if (disposed || run !== finishedAttempt || generation !== epoch) break;
             clear();
             overlay();
