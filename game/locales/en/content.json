@@ -1162,5 +1162,13 @@
   "motionLab.signalHelper": "Signal helper",
   "motionLab.wirelessLink": "Wireless link",
   "motionLab.budgetedLink": "Budgeted link",
-  "motionLab.linkBudget": "Link budget"
+  "motionLab.linkBudget": "Link budget",
+  "journey.horizonJoins.label": "Whole Journey Horizon cultural joins · balance pending",
+  "journey.horizonJoins.name": "Whole Journey · Horizon cultural joins",
+  "journey.horizonJoins.islandOutpost.route": "Close the short western join from the home panel, or make the longer bent return to the offset eastern stitches before choosing the next enclosure?",
+  "journey.horizonJoins.islandOutpost.mastery": "Complete both the short western join and the bent eastern join without a loss.",
+  "journey.horizonJoins.longWayHome.route": "Join through the upper shoulder group for the shorter first return, or descend to the offset gathered group for a longer line that approaches the far shoulder?",
+  "journey.horizonJoins.longWayHome.mastery": "Reach both offset joins from the west shoulder without losing a life.",
+  "journey.horizonJoins.horizonRemix.route": "Secure the upper petal from the central spiral shoulder, or connect the western dot first and build an outside return before separating the three keepers?",
+  "journey.horizonJoins.horizonRemix.mastery": "Complete both the central-petal and dot-first approaches without losing a life."
 }

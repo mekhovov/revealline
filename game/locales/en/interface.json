@@ -3938,5 +3938,9 @@
   "rewards.lockedProgress_one": "Locked · {{completed}} / {{count}} different mission",
   "rewards.lockedProgress_other": "Locked · {{completed}} / {{count}} different missions",
   "rewards.remaining_one": "Finish {{count}} more mission in this campaign.",
-  "rewards.remaining_other": "Finish {{count}} more missions in this campaign."
+  "rewards.remaining_other": "Finish {{count}} more missions in this campaign.",
+  "studio.horizonJoins.edition": "Horizon cultural joins · v11",
+  "studio.horizonJoins.soloLink": "Solo · whole-spatial-v11 (new tab)",
+  "studio.horizonJoins.versusLink": "Versus · whole-spatial-v11 (new tab)",
+  "studio.horizonJoins.description": "Horizon cultural joins: [[solo]] · [[versus]]. Preserves exact v10 cards for Island outpost, Long way home and Horizon remix while translating sourced Hutsul garment construction and Lemko pysanka rhythm into original early-Horizon route geometry. Separate review progress; human cultural and balance review pending."
 }
