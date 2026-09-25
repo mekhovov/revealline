@@ -550,3 +550,33 @@ under `/tmp/rl-i18n/rebase`, and its two temporary servers/tabs were closed. No 
 checkout or historical release was removed. Main now contains v0.114.0 `10190539b`; the next
 rebase must register its v11 defaults and newly curated v10 predecessors before validation.
 Current distributions and native stages need to be regenerated.
+
+## v0.114.0 Horizon rebase
+
+Rebased all localization commits onto `origin/main` `10190539b` (v0.114.0).
+Resolved the Couch default link and Studio selector against main's v11 changes, retaining
+v10 as a separate prior edition. The prior-card adapter keeps main's two bounded projections
+and its full-route launch ownership. Its display label now derives the prior version at
+presentation time. Extraction reads that same immutable edition-history registration,
+including both v10 and v9 full launch records and bounded navigation records.
+
+Added eight new Horizon content translations and four Studio messages. The generated
+registry preserves authored JSON and simulation identities; same-named edited records
+keep their authored text. The updated source/key/interpolation/plural and generated-bundle
+check passes with 7,649 messages / 6,091 referenced keys. Validation caught the preceding
+Motion copy helper missing from the explicit distribution inventory; it is now included.
+
+The initial 62-check edition/default-route run passed 59 checks. One localization test
+started before the content bundle finished; the other failures were a Studio assertion
+bound to exact HTML formatting and an upstream tag-reader dereference of an omitted
+`level`. The reader now tolerates a metadata-only manifest, and the Studio test parses
+actual option values/selection. All five affected checks pass in focused final reruns,
+including current/prior names, guidance, manual launch ownership and unchanged identities.
+Full lint and formatting pass. The full game suite and distribution/native checks remain
+outstanding for this checkpoint.
+
+The browser verifies Ukrainian-first v11 startup and mission guidance, the new Studio
+selector/description/link labels, and distinct translated v10 prior cards. Cross-tab
+Ukrainian → English → Ukrainian preserves the selected prior campaign and focused card.
+Studio still has older untranslated dynamic authoring diagnostics; this checkpoint does
+not certify whole-tool coverage. No gameplay was started or progress exported in this check.
