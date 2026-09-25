@@ -111,6 +111,31 @@ test('Settings stays above a retained paused Team attempt and reopens its select
   assert.notEqual(f.$('coop-clock').textContent, before.hud[0]);
 });
 
+test('Team Pause releases the active arena before Settings and keeps Resume explicit', async (t) => {
+  const f = await fixture(t);
+  f.$('coop-start').click();
+  f.tap('KeyD');
+  f.tick(18);
+  const runningClock = f.$('coop-clock').textContent;
+  f.$('coop-pause').click();
+  f.tick();
+  f.$('coop-settings-open').click();
+  assert.equal(f.$('coop-options').open, true);
+  assert.equal(f.$('coop-overlay').hidden, false);
+  assert.equal(f.$('coop-overlay-title').textContent, 'Both players paused');
+  const paused = state(f);
+  f.$('coop-settings-close').click();
+  assert.equal(f.$('coop-options').open, false);
+  assert.equal(f.doc.activeElement.id, 'coop-settings-open');
+  f.tick(20);
+  assert.deepEqual(state(f), paused);
+  assert.equal(f.$('coop-clock').textContent, runningClock);
+  f.$('coop-resume').click();
+  assert.equal(f.$('coop-overlay').hidden, true);
+  f.tick(120);
+  assert.notEqual(f.$('coop-clock').textContent, runningClock);
+});
+
 test('Settings tab keys stay in the categories and Tab cannot reach inactive content or the arena', async (t) => {
   const f = await fixture(t);
   open(f);

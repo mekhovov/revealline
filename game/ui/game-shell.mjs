@@ -252,6 +252,13 @@ export function attachGameShell({
       // Child screens retain their actual entry screen and opener. Explicit
       // selection actions leave those parents when choosing a flight.
       if (!keepHome) closeHome();
+      // Programmatic forwarding cannot rely on pointer activation to focus the
+      // visible source in every browser. Make the player-facing source the
+      // modal origin before activating the existing host control so Back
+      // returns to the command the player actually chose.
+      const sourceParent = $(source).closest('dialog[open]') || home;
+      if (keepHome && availableReturn($(source), sourceParent))
+        $(source).focus({ preventScroll: true });
       $(target).click();
     };
   };
@@ -442,9 +449,17 @@ export function attachGameShell({
   const overlayMissions = $('overlay-missions');
   if (overlayMissions) overlayMissions.onclick = () => openMissions({ opener: overlayMissions });
   const overlayHelp = $('overlay-help');
-  if (overlayHelp) overlayHelp.onclick = () => $('help-button').click();
+  if (overlayHelp)
+    overlayHelp.onclick = () => {
+      if (availableReturn(overlayHelp)) overlayHelp.focus({ preventScroll: true });
+      $('help-button').click();
+    };
   const overlaySettings = $('overlay-settings');
-  if (overlaySettings) overlaySettings.onclick = () => $('settings-button').click();
+  if (overlaySettings)
+    overlaySettings.onclick = () => {
+      if (availableReturn(overlaySettings)) overlaySettings.focus({ preventScroll: true });
+      $('settings-button').click();
+    };
   const pauseMissionInfo = $('pause-mission-info');
   const pauseMissionInfoToggle = $('pause-mission-info-toggle');
   if (pauseMissionInfo && pauseMissionInfoToggle)
