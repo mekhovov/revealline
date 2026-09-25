@@ -26,6 +26,16 @@ export function verifyNextReleaseTitle(title, latest) {
   throw new Error(`Release v${match[1]} must be newer than published ${latest}.`);
 }
 
+export function verifyPublishedBase(baseVersion, latest) {
+  const base = `v${stableVersion(baseVersion)}`;
+  if (base !== latest)
+    throw new Error(
+      `Current main source ${base} is not the publicly accepted ${latest} release. ` +
+        'Finish its immutable release and Pages acceptance before promoting another product root.',
+    );
+  return base;
+}
+
 export function verifySourceVersion({
   title,
   packageVersion,
@@ -124,6 +134,7 @@ async function verifyPublic() {
   });
   return {
     ...boundary,
+    base: verifyPublishedBase(process.env.PR_BASE_VERSION, boundary.latest),
     requested: verifyNextReleaseTitle(process.env.PR_TITLE, boundary.latest),
   };
 }
