@@ -6,20 +6,21 @@ import {
 } from '../coop/presentation-envelope.mjs';
 import { decodeCoopPicture } from './coop-picture-image.mjs';
 
-const cancelled = () => new DOMException(t("interface:teamArtworkImportCancelled"), 'AbortError');
+const cancelled = () => new DOMException(t('interface:teamArtworkImportCancelled'), 'AbortError');
 
 /** An in-memory staging boundary. The host still checks theme/content identity
  * and prepares its drawable image before deliberately committing a candidate.
  * No player storage, registry or simulation object is changed here.
  */
 export function createCoopPresentationImport({ decodeImage = decodeCoopPicture } = {}) {
-  if (typeof decodeImage !== 'function') throw new TypeError(t("interface:anImageDecoderIsRequired"));
+  if (typeof decodeImage !== 'function')
+    throw new TypeError(t('interface:anImageDecoderIsRequired'));
   let accepted = null,
     candidate = null,
     operation = null,
     closed = false;
   const requireOpen = () => {
-    if (closed) throw new Error(t("interface:thisTeamArtworkImporterHasBeenClosed"));
+    if (closed) throw new Error(t('interface:thisTeamArtworkImporterHasBeenClosed'));
   };
   const releaseCandidate = () => {
     if (candidate) disposeCoopPresentationEnvelope(candidate.owner);
@@ -28,9 +29,7 @@ export function createCoopPresentationImport({ decodeImage = decodeCoopPicture }
   async function prepare(source, { signal, onProgress } = {}) {
     requireOpen();
     if (operation)
-      throw new Error(
-        t("interface:thePreviousTeamArtworkImportIsStillFinishingTryAgain"),
-      );
+      throw new Error(t('interface:thePreviousTeamArtworkImportIsStillFinishingTryAgain'));
     if (signal?.aborted) throw cancelled();
     releaseCandidate();
     const request = { controller: new AbortController(), signal };
@@ -61,7 +60,7 @@ export function createCoopPresentationImport({ decodeImage = decodeCoopPicture }
   function commit(owner) {
     requireOpen();
     if (operation || !candidate || candidate.owner !== owner)
-      throw new Error(t("interface:chooseTheCurrentFullyPreparedTeamArtworkCandidate"));
+      throw new Error(t('interface:chooseTheCurrentFullyPreparedTeamArtworkCandidate'));
     if (candidate.signal?.aborted) {
       releaseCandidate();
       throw cancelled();

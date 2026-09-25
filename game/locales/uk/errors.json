@@ -36,5 +36,7 @@
   "enableBoostBeforeTappingDownHoldYourBoostButtonOr": "Увімкни прискорення перед натисканням «Вниз»: утримуй кнопку прискорення або ввімкни її в режимі перемикача. Лети до далекого безпечного краю, щоб прибрати іскри. Здібність не потрібна.",
   "unknownTurningMode": "Невідомий режим повороту.",
   "thisLessonThemeIsUnavailable": "Тема цього уроку недоступна.",
-  "theImpactLessonCouldNotLoad": "Не вдалося завантажити урок про удар."
+  "theImpactLessonCouldNotLoad": "Не вдалося завантажити урок про удар.",
+  "loadingGameStyles": "Завантажуємо оформлення гри…",
+  "loadingFlightSystems": "Завантажуємо системи польоту…"
 }

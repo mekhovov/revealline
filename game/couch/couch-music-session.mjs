@@ -13,7 +13,7 @@ export function createCouchMusicSession({
 } = {}) {
   required(
     player && library && soundscape,
-    t("interface:couchMusicRequiresPlayerLibraryAndSoundscapeOwners"),
+    t('interface:couchMusicRequiresPlayerLibraryAndSoundscapeOwners'),
   );
   player.setVolume(initialMusicVolume);
   let disposed = false,
@@ -44,7 +44,7 @@ export function createCouchMusicSession({
     });
   }
   async function adopt(work) {
-    required(!disposed, t("interface:couchMusicSessionIsDisposed"));
+    required(!disposed, t('interface:couchMusicSessionIsDisposed'));
     const token = ++preparation;
     try {
       const result = await work();
@@ -116,11 +116,11 @@ export function createCouchMusicSession({
     },
     pause,
     setVolume(value) {
-      required(!disposed, t("interface:couchMusicSessionIsDisposed"));
+      required(!disposed, t('interface:couchMusicSessionIsDisposed'));
       player.setVolume(value);
     },
     setAcceptedContext(value) {
-      required(!disposed, t("interface:couchMusicSessionIsDisposed"));
+      required(!disposed, t('interface:couchMusicSessionIsDisposed'));
       return player.setContext(value);
     },
     pauseGameplay() {

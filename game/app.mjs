@@ -1,5 +1,13 @@
 import { contentText } from './i18n/content.mjs';
-import { t, localizedText, localizedAttribute, localizedOption, onLocaleChange, formatNumber } from './i18n/index.mjs';
+import {
+  t,
+  localizedText,
+  localizedAttribute,
+  localizedOption,
+  localizedMessage,
+  onLocaleChange,
+  formatNumber,
+} from './i18n/index.mjs';
 import {
   freshSoloVisualSelection,
   prepareFreshSoloVisualTheme,
@@ -263,7 +271,7 @@ const $ = (id) => document.getElementById(id),
   show = (id, on) => ($(id).hidden = !on);
 const getJSON = async (path) => {
   const r = await fetch(path);
-  if (!r.ok) throw new Error(t("gameplay:couldNotLoad", { value1: path }));
+  if (!r.ok) throw new Error(t('gameplay:couldNotLoad', { value1: path }));
   return r.json();
 };
 const clamp = (n, a, b) => Math.min(b, Math.max(a, n));
@@ -298,7 +306,7 @@ function preparationStatus(observer, message, stage, isCurrent = () => true) {
 }
 
 try {
-  globalThis.RevealLineBoot?.progress?.(t("interface:loadingMissionsAndFlightEquipment"));
+  globalThis.RevealLineBoot?.progress?.(t('interface:loadingMissionsAndFlightEquipment'));
   const contentFeedback = ['content-select-status', 'shell-featured-status']
     .map((id) => $(id))
     .filter(Boolean)
@@ -386,9 +394,11 @@ try {
   } catch {}
   if (isRelease) document.querySelectorAll('[data-source-only]').forEach((a) => (a.hidden = true));
   const versionLabel =
-    buildVersion === 'dev' ? t("interface:dev") : `${/^\d/.test(buildVersion) ? 'v' : ''}${buildVersion}`;
-  localizedText($('version'), () =>versionLabel);
-  localizedText($('landing-version'), () =>t("gameplay:version", { value1: versionLabel }));
+    buildVersion === 'dev'
+      ? t('interface:dev')
+      : `${/^\d/.test(buildVersion) ? 'v' : ''}${buildVersion}`;
+  localizedText($('version'), () => versionLabel);
+  localizedText($('landing-version'), () => t('gameplay:version', { value1: versionLabel }));
   const params = new URLSearchParams(location.search);
   const libraryHandoff = readMissionLibraryHandoff(params);
   let courseRequest = resolveCourseRequest(params);
@@ -403,10 +413,7 @@ try {
     });
   } else if (params.get('practice') === '1') {
     const raw = sessionStorage.getItem('revealline.playground.current');
-    if (!raw)
-      throw new Error(
-        t("interface:thisPracticeTabHasNoConfigurationOpenThePlaygroundAnd"),
-      );
+    if (!raw) throw new Error(t('interface:thisPracticeTabHasNoConfigurationOpenThePlaygroundAnd'));
     const prepared = await prepareScenario(JSON.parse(raw), { classRecipes: classRegistry });
     scenario = prepared.scenario;
   }
@@ -500,17 +507,17 @@ try {
     window.name === 'revealline-controller-practice' &&
     !controllerPreviewRequested
   )
-    throw new Error(t("interface:returnToControllerPracticeAndChooseLoadPracticeToContinue"));
+    throw new Error(t('interface:returnToControllerPracticeAndChooseLoadPracticeToContinue'));
   const controllerPreview = attachControllerPreview({ enabled: controllerPreviewRequested });
   const practiceNavigation = attachPracticeNavigation({
     enabled: practiceSession,
     onBlocked: () =>
       warning(
         courseSession
-          ? t("interface:useEndCourseOrReturnToTheGameToLeave")
+          ? t('interface:useEndCourseOrReturnToTheGameToLeave')
           : controllerPreviewRequested
-            ? t("interface:useTheControllerPracticePageSHeaderLinksToLeave")
-            : t("interface:useThePlaygroundPageSHeaderLinksToOpenThe"),
+            ? t('interface:useTheControllerPracticePageSHeaderLinksToLeave')
+            : t('interface:useThePlaygroundPageSHeaderLinksToOpenThe'),
       ),
   });
   // Each archived release keeps its own profile schema, packs and save slot.
@@ -539,20 +546,24 @@ try {
     onReconciled: () => {
       refreshCampaigns();
       libraryPanel.refresh();
-      contentStatus(t("interface:packStorageUpdatedYourNewerPlaySelectionWasKept"));
+      contentStatus(t('interface:packStorageUpdatedYourNewerPlaySelectionWasKept'));
     },
     onError: (error) => {
-      const message = t("gameplay:aCommittedPackChangeNeedsAReloadBeforeItCan", { value1: error.message });
+      const message = t('gameplay:aCommittedPackChangeNeedsAReloadBeforeItCan', {
+        value1: error.message,
+      });
       contentStatus(message, true);
       // Persistent storage reconciliation is a system notice, not a flight event.
       warning(message, null, 'host.storage');
     },
   });
-  globalThis.RevealLineBoot?.progress?.(t("interface:readingYourSavedFlightAndInstalledChapters"));
+  globalThis.RevealLineBoot?.progress?.(t('interface:readingYourSavedFlightAndInstalledChapters'));
   const writer = scenario
     ? {
         writable: false,
-        get reason() { return t("interface:practiceKeepsItsSettingsInThisPreviewOpenTheSolo"); },
+        get reason() {
+          return t('interface:practiceKeepsItsSettingsInThisPreviewOpenTheSolo');
+        },
         release() {},
       }
     : await claimProfileWriter(navigator.locks, `${libraryKey}.writer`);
@@ -589,7 +600,7 @@ try {
       readAssetStore(`${libraryKey}.backup-journal`),
     ]);
     if (values.some((value) => value !== null))
-      throw new Error(t("interface:safeChapterRecoveryRequiresWebLocksStoredDataIsPreserved"));
+      throw new Error(t('interface:safeChapterRecoveryRequiresWebLocksStoredDataIsPreserved'));
     const raw = await readAssetStore(packsKey);
     return { status: 'checked', packs: raw ? await importPackLibrary(raw) : emptyPackLibrary() };
   }
@@ -597,7 +608,9 @@ try {
     const snapshot = await inspectChapters(options);
     if (snapshot.status !== 'checked')
       throw new Error(
-        t("gameplay:pendingRecoverTheExactFilesBeforeAdoptingStoredChaptersBoth", { value1: snapshot.reason }),
+        t('gameplay:pendingRecoverTheExactFilesBeforeAdoptingStoredChaptersBoth', {
+          value1: snapshot.reason,
+        }),
       );
     return snapshot;
   }
@@ -612,15 +625,11 @@ try {
   }
   async function assertExternalBackupSupported(options) {
     if (candidateHost)
-      throw new Error(
-        t("interface:useTheOrdinaryGameForLegacyGameDataBackupsAuthored"),
-      );
+      throw new Error(t('interface:useTheOrdinaryGameForLegacyGameDataBackupsAuthored'));
     if (externalBackup) return externalBackup.assertSupported(options);
     const snapshot = await checkedChapters();
     if (snapshot.index?.chapters.length)
-      throw new Error(
-        t("interface:externalChapterBackupTransferIsNotSupportedInThisSource"),
-      );
+      throw new Error(t('interface:externalChapterBackupTransferIsNotSupportedInThisSource'));
   }
   let persistenceReady = writer.writable;
   let handlePageHide = () => writer.release();
@@ -634,7 +643,7 @@ try {
       (await readAssetStore(`${libraryKey}.external-chapter-journal.v1`)) !== null
     )
       throw new Error(
-        t("interface:externalChapterBackupRecoveryNeedsItsCompatibleAdapterStoredData"),
+        t('interface:externalChapterBackupRecoveryNeedsItsCompatibleAdapterStoredData'),
       );
     return writeAssetStore(packsKey, value);
   }
@@ -667,14 +676,16 @@ try {
       const chapters = await inspectChapters();
       if (chapters.status === 'recovery-required' && chapters.reason !== 'backup-recovery')
         throw new Error(
-          t("gameplay:pendingUseTheExactPilotRecoveryFilesAmbiguousJournalsWere", { value1: chapters.reason }),
+          t('gameplay:pendingUseTheExactPilotRecoveryFilesAmbiguousJournalsWere', {
+            value1: chapters.reason,
+          }),
         );
       const result = await recoverBackupImport(backupAdapters());
       if (!result.ok) persistenceReady = false;
       if (result.warning) packWarning = result.warning;
     } catch (e) {
       persistenceReady = false;
-      packWarning = t("gameplay:storageRecovery", { value1: e.message });
+      packWarning = t('gameplay:storageRecovery', { value1: e.message });
     }
   }
 
@@ -698,7 +709,9 @@ try {
     storedStateAdopted = loaded.recovery === null;
   } catch (error) {
     persistenceReady = false;
-    loaded.warning = t("gameplay:storedCollectionWasNotAdoptedThisSessionStartsWithBase", { value1: error.message });
+    loaded.warning = t('gameplay:storedCollectionWasNotAdoptedThisSessionStartsWithBase', {
+      value1: error.message,
+    });
   }
   let libraryBaseline = loaded.library,
     libraryGeneration = loaded.generation || 'legacy';
@@ -803,7 +816,7 @@ try {
     progress = progressFor(library, campaign);
   }
   if (loaded.warning || packWarning) {
-    localizedText($('save-warning'), () =>[loaded.warning, packWarning].filter(Boolean).join(' '));
+    localizedText($('save-warning'), () => [loaded.warning, packWarning].filter(Boolean).join(' '));
     show('save-warning', true);
   }
   const initialSelection = candidateHost
@@ -882,7 +895,7 @@ try {
     writeWarning(message, cue) {
       runMessageCue = cue;
       $('run-message').dataset.cue = cue || '';
-      localizedText($('run-message'), () =>message);
+      localizedText($('run-message'), () => message);
       captionUntil = (run?.time || 0) + 5;
       return { fullText: message, cue, expiresAt: captionUntil };
     },
@@ -901,7 +914,7 @@ try {
       masteryAward = status;
       refreshMastery();
       if (['earned', 'session', 'unavailable'].includes(status.status))
-        localizedText($('mastery-announcement'), () =>status.message);
+        localizedText($('mastery-announcement'), () => status.message);
     },
   });
   theme =
@@ -952,7 +965,7 @@ try {
     writable: () =>
       !practice && !courseSession && !courseEntry && persistenceReady && writer.writable,
     onWarning: (message) => {
-      localizedText($('display-preferences-status'), () =>message);
+      localizedText($('display-preferences-status'), () => message);
     },
   });
   const stopDisplayView = displayPreferences.subscribe(applyDisplayPreferences);
@@ -962,8 +975,10 @@ try {
     writable: () =>
       !practice && !courseSession && !courseEntry && persistenceReady && writer.writable,
     onWarning: (message) => {
-      localizedText($('menu-actor-note'), () =>message ||
-        t("interface:appliesToNewMissionsAndNextRetryAndContinueKeep"));
+      localizedText(
+        $('menu-actor-note'),
+        () => message || t('interface:appliesToNewMissionsAndNextRetryAndContinueKeep'),
+      );
     },
   });
   let actorChangesReady = false;
@@ -1020,9 +1035,9 @@ try {
     for (const prefix of ['game-now-playing', 'shell-now-playing']) {
       const playing = $(prefix);
       playing.hidden = !audible || !track || track.kind === 'synth';
-      localizedText($(`${prefix}-title`), () =>track
-        ? `♫ ${track.title}${track.artist ? ` · ${track.artist}` : ''}`
-        : '');
+      localizedText($(`${prefix}-title`), () =>
+        track ? `♫ ${track.title}${track.artist ? ` · ${track.artist}` : ''}` : '',
+      );
       playing.title = track?.fileName ? `Original file: ${track.fileName}` : '';
       const website = $(`${prefix}-source`);
       website.hidden =
@@ -1033,21 +1048,32 @@ try {
       if (!website.hidden) website.href = source.href;
       else website.removeAttribute('href');
     }
-    localizedText($('music-preview'), () =>['blocked', 'error'].includes(musicPreviewState.status)
-      ? t("interface:audioIsUnavailable")
-      : musicPreviewState.playing
-        ? audioMaster.snapshot().muted
-          ? t("interface:playlistPlayingMasterSoundMuted")
-          : t("interface:soundtrackPlaying")
-        : t("interface:playSelectedPlaylist"));
+    localizedText($('music-preview'), () =>
+      ['blocked', 'error'].includes(musicPreviewState.status)
+        ? t('interface:audioIsUnavailable')
+        : musicPreviewState.playing
+          ? audioMaster.snapshot().muted
+            ? t('interface:playlistPlayingMasterSoundMuted')
+            : t('interface:soundtrackPlaying')
+          : t('interface:playSelectedPlaylist'),
+    );
   }
   const renderMasterPreferences = ({ muted, volume }) => {
     $('master-volume').value = volume;
-    $('sound-button').setAttribute('aria-label', muted ? t("interface:unmuteSound") : t("interface:muteSound"));
-    localizedText($('settings-master-mute'), () =>muted ? t("interface:unmuteSound") : t("interface:muteSound"));
-    localizedText($('shell-sound'), () =>muted ? t("interface:soundOff") : t("interface:soundOn"));
+    $('sound-button').setAttribute(
+      'aria-label',
+      muted ? t('interface:unmuteSound') : t('interface:muteSound'),
+    );
+    localizedText($('settings-master-mute'), () =>
+      muted ? t('interface:unmuteSound') : t('interface:muteSound'),
+    );
+    localizedText($('shell-sound'), () =>
+      muted ? t('interface:soundOff') : t('interface:soundOn'),
+    );
     $('shell-sound').setAttribute('aria-pressed', String(!muted));
-    localizedText($('overlay-sound'), () =>muted ? t("interface:soundOff") : t("interface:soundOn"));
+    localizedText($('overlay-sound'), () =>
+      muted ? t('interface:soundOff') : t('interface:soundOn'),
+    );
     $('overlay-sound').setAttribute('aria-pressed', String(!muted));
     renderMusicPreview();
   };
@@ -1102,10 +1128,12 @@ try {
     pictureResume = null,
     pictureThemePending = null,
     pictureGeneration = 0;
-  const picturePreparingMessage =
-    t("interface:preparingTheChosenPictureFlightStaysPausedUntilItIs");
-  const savedFlightRestoredMessage =
-    t("interface:savedFlightVerifiedAndRestoredPressResumeToContinue");
+  const picturePreparingMessage = t(
+    'interface:preparingTheChosenPictureFlightStaysPausedUntilItIs',
+  );
+  const savedFlightRestoredMessage = t(
+    'interface:savedFlightVerifiedAndRestoredPressResumeToContinue',
+  );
   const preparationFeedback = createOperationStatus($('flight-preparation-status'));
   const themeFeedback = createOperationStatus($('theme-preparation-status'));
   let preparationOperation = null;
@@ -1147,7 +1175,7 @@ try {
     clearPreparation();
     preparationFeedback.begin({ message: '' }).finish({
       state: 'cancelled',
-      message: t("interface:preparationCancelledYourFlightRemainsPaused"),
+      message: t('interface:preparationCancelledYourFlightRemainsPaused'),
     });
     if (restoreFocus) $('start-button').focus({ preventScroll: true });
   };
@@ -1162,7 +1190,7 @@ try {
     }),
     saveVolume(volume) {
       if (practice || courseEntry)
-        throw new Error(t("interface:trainingDoesNotChangeCinematicPreferences"));
+        throw new Error(t('interface:trainingDoesNotChangeCinematicPreferences'));
       library = withCinematicVolume(library, volume);
       const saved = persistProfile();
       if (!saved.ok) throw new Error(saved.warning);
@@ -1176,7 +1204,7 @@ try {
   });
   const victoryStoryButton = document.createElement('button');
   victoryStoryButton.id = 'view-victory-story';
-  localizedText(victoryStoryButton, () =>t("interface:victoryStory"));
+  localizedText(victoryStoryButton, () => t('interface:victoryStory'));
   victoryStoryButton.hidden = true;
   document.querySelector('.overlay-actions').append(victoryStoryButton);
   victoryStoryButton.onclick = () => {
@@ -1193,7 +1221,7 @@ try {
       const pin = storyPinForTheme(pins, theme.id),
         backdrop = flightPictures.current();
       if (!pin || !backdrop || canonicalJSON(pin.picturePin) !== canonicalJSON(backdrop.pin))
-        throw new Error(t("interface:thisAttemptSExactStoryPosterIsUnavailable"));
+        throw new Error(t('interface:thisAttemptSExactStoryPosterIsUnavailable'));
       const size = boardPaintSizeForLevel(run.level),
         args = { theme, level: run.level, seed, image: backdrop.image, fit: backdrop.fit, ...size };
       void storyDialog
@@ -1213,19 +1241,19 @@ try {
   };
   const legacyPictureButton = document.createElement('button');
   legacyPictureButton.id = 'picture-use-legacy';
-  localizedText(legacyPictureButton, () =>t("interface:useOriginalPackArtwork"));
+  localizedText(legacyPictureButton, () => t('interface:useOriginalPackArtwork'));
   legacyPictureButton.hidden = true;
   document.querySelector('.overlay-actions').append(legacyPictureButton);
   let pictureRecovery = null;
   const pictureRecoveryButtons = [
-    ['picture-export-data', t("interface:exportGameData"), () => libraryPanel.open('saves')],
-    ['picture-reload', t("interface:reloadSavedProfile"), () => window.location.reload()],
+    ['picture-export-data', t('interface:exportGameData'), () => libraryPanel.open('saves')],
+    ['picture-reload', t('interface:reloadSavedProfile'), () => window.location.reload()],
   ].map(([id, label, action]) => {
     const button = document.createElement('button');
     button.id = id;
     button.type = 'button';
     button.className = 'button secondary';
-    localizedText(button, () =>label);
+    localizedText(button, () => label);
     button.hidden = true;
     button.onclick = action;
     document.querySelector('.overlay-actions').append(button);
@@ -1236,7 +1264,7 @@ try {
     for (const button of pictureRecoveryButtons) button.hidden = true;
   }
   async function pictureMedia({ signal } = {}) {
-    if (!pictureStore) throw new Error(t("interface:practiceUsesItsOriginalArtwork"));
+    if (!pictureStore) throw new Error(t('interface:practiceUsesItsOriginalArtwork'));
     return {
       store: pictureStore,
       storyStore,
@@ -1250,13 +1278,15 @@ try {
     if (!entry.classicRulesSourceCampaignKey) return entry;
     const original = entry.classicRulesPresentationCampaign;
     if (!original || campaignKey(original) !== entry.classicRulesSourceCampaignKey)
-      throw new Error(t("interface:currentRulesPictureOwnershipDiffersFromItsInstalledOriginal"));
+      throw new Error(t('interface:currentRulesPictureOwnershipDiffersFromItsInstalledOriginal'));
     const pictureEntry = createExecutionCatalog([{ campaign: original }]).select(
       entry.classicRulesSourceCampaignKey,
       entry.difficulty,
     );
     if (!pictureEntry)
-      throw new Error(t("interface:currentRulesPictureDifficultyIsUnavailableInItsOriginalChapter"));
+      throw new Error(
+        t('interface:currentRulesPictureDifficultyIsUnavailableInItsOriginalChapter'),
+      );
     return pictureEntry;
   }
   function pictureLevelForRun(nextRun, entry, pictureEntry = pictureExecutionForEntry(entry)) {
@@ -1265,7 +1295,7 @@ try {
     // Difficulty changes simulation, not the ownership of an original picture.
     const levels = pictureEntry.campaign.levels;
     const level = levels.find((item) => item.id === nextRun.levelId);
-    if (!level) throw new Error(t("interface:pictureMissionIsUnavailableInItsInstalledOriginal"));
+    if (!level) throw new Error(t('interface:pictureMissionIsUnavailableInItsInstalledOriginal'));
     return level;
   }
   function newFlightPictures({
@@ -1351,7 +1381,7 @@ try {
               );
               if (original.metadata.generation !== media.metadata.generation)
                 throw new Error(
-                  t("interface:pictureChoicesChangedDuringChapterReadinessRetryThePausedFlight"),
+                  t('interface:pictureChoicesChangedDuringChapterReadinessRetryThePausedFlight'),
                 );
               const current = createPresentationPins(selection);
               const fallback =
@@ -1446,7 +1476,9 @@ try {
     for (const button of pictureRecoveryButtons) button.hidden = !needsWriter;
     legacyPictureButton.hidden = !!candidateHost || needsWriter || started || practice;
     if (!started)
-      localizedText($('start-button'), () =>needsWriter ? t("interface:checkPicture") : t("interface:retryPicture"));
+      localizedText($('start-button'), () =>
+        needsWriter ? t('interface:checkPicture') : t('interface:retryPicture'),
+      );
   }
   function warmPicture() {
     const owner = flightPictures;
@@ -1542,7 +1574,7 @@ try {
   const soundtrackFeedback = createOperationStatus($('soundtrack-summary'));
   let soundtrackLoading = true,
     soundtrackOperation = soundtrackFeedback.begin({
-      message: t("interface:loadingMusicLibrary"),
+      message: t('interface:loadingMusicLibrary'),
       stage: 'reading',
     });
   function soundtrackStatus(message, preparation = null) {
@@ -1567,9 +1599,7 @@ try {
       });
       const audioElement = document.createElement('audio');
       if (typeof audioElement.play !== 'function')
-        throw new Error(
-          t("interface:thisBrowserDoesNotProvideFileAudioPlaybackBuiltIn"),
-        );
+        throw new Error(t('interface:thisBrowserDoesNotProvideFileAudioPlaybackBuiltIn'));
       soundtrackStore = createSoundtrackStore({ managedStore: pictureManager });
       soundtrackPlayer = createSoundtrackPlayer({
         catalogue,
@@ -1590,7 +1620,7 @@ try {
               state.preparation?.message ||
               (state.track
                 ? `${state.track.title} · ${state.status}`
-                : t("interface:chooseAPlaylistOrImportMp3Songs")),
+                : t('interface:chooseAPlaylistOrImportMp3Songs')),
             state.preparation,
           );
         },
@@ -1672,7 +1702,7 @@ try {
       // The studio owns persisted playlist selection. Keep the legacy genre selector
       // only for browsers that cannot attach the file-audio transport.
       $('music-select').closest('label').hidden = true;
-      localizedText($('music-preview'), () =>t("interface:playSelectedPlaylist"));
+      localizedText($('music-preview'), () => t('interface:playSelectedPlaylist'));
       $('soundtrack-open').disabled = false;
       $('soundtrack-open').onclick = () => soundtrackPanel.open();
       try {
@@ -1702,7 +1732,7 @@ try {
         } else if (!soundtrackDisposed) {
           const state = soundtrackPlayer.snapshot();
           soundtrackStatus(
-            state.preparation?.message || state.error || t("interface:musicLibraryReady"),
+            state.preparation?.message || state.error || t('interface:musicLibraryReady'),
             state.preparation,
           );
         }
@@ -1710,7 +1740,9 @@ try {
         soundtrackLoading = false;
         if (!soundtrackDisposed)
           soundtrackStatus(
-            t("gameplay:customMusicStorageBuiltInPlaybackIsAvailableTheStudio", { value1: error.message }),
+            t('gameplay:customMusicStorageBuiltInPlaybackIsAvailableTheStudio', {
+              value1: error.message,
+            }),
           );
       }
     } catch (error) {
@@ -1790,12 +1822,12 @@ try {
     onAssetStatus: craftFeedback.update,
     onAsset: (message) => {
       const rig = visuals()?.player
-        ? t("interface:customPlayerArtworkKeepsTheSelectedBodySRotorAnchors")
+        ? t('interface:customPlayerArtworkKeepsTheSelectedBodySRotorAnchors')
         : '';
       const copy = [message, rig, bodyWarning, compiledPresentationWarning]
         .filter(Boolean)
         .join(' ');
-      localizedText($('asset-warning'), () =>copy);
+      localizedText($('asset-warning'), () => copy);
       show('asset-warning', !!copy);
     },
   });
@@ -1818,12 +1850,14 @@ try {
       })
       .catch((error) => {
         if (error.name === 'AbortError') return null;
-        compiledPresentationWarning = t("interface:releaseArtworkIsUnavailableSourceArtworkIsShown");
+        compiledPresentationWarning = t(
+          'interface:releaseArtworkIsUnavailableSourceArtworkIsShown',
+        );
         painter.onAsset('');
         return null;
       });
   } catch {
-    compiledPresentationWarning = t("interface:releaseArtworkIsUnavailableSourceArtworkIsShown");
+    compiledPresentationWarning = t('interface:releaseArtworkIsUnavailableSourceArtworkIsShown');
   }
   const publishedAudio = attachPublishedAudio({
     sound,
@@ -1899,7 +1933,9 @@ try {
         // This newly launched installed pack has not been accepted as an
         // official actor owner. Lack of authority must never grant FPV; keep
         // its already validated authored appearance available instead.
-        localizedText($('menu-actor-note'), () =>t("interface:actorCompatibilityIsUnavailableThisInstalledPackKeepsItsAuthored"));
+        localizedText($('menu-actor-note'), () =>
+          t('interface:actorCompatibilityIsUnavailableThisInstalledPackKeepsItsAuthored'),
+        );
         return null;
       }
       const row = index.missions.find(
@@ -1911,7 +1947,7 @@ try {
       );
       if (!row || !(await verifyIndexedInstalledPack(pack, row))) return null;
       if (packs !== installed || signal?.aborted)
-        throw new DOMException(t("interface:actorContentChangedDuringPreparation"), 'AbortError');
+        throw new DOMException(t('interface:actorContentChangedDuringPreparation'), 'AbortError');
       scope = 'trusted-pack';
     }
     // Uploaded/modified packs retain authored rendering. A preference, matching
@@ -1942,7 +1978,7 @@ try {
     });
     if (!identity) {
       if (pin !== undefined)
-        throw new Error(t("interface:thisContentHasNoAcceptedActorAppearanceOwner"));
+        throw new Error(t('interface:thisContentHasNoAcceptedActorAppearanceOwner'));
       return null;
     }
     const dependencies = {
@@ -2099,7 +2135,14 @@ try {
   const controllerDialog = modalNavigation.topDialog;
   function controllerMenuHint() {
     const b = controllerLabels.menu;
-    return t("gameplay:stickDPadNavigateConfirmBackResume", { value1: b.confirm, value2: b.back, value3: b.menu, value4: library.preferences.controllerBindings ? '' : ' Shoulders / triggers: previous / next · West: confirm · North: back.' });
+    return t('gameplay:stickDPadNavigateConfirmBackResume', {
+      value1: b.confirm,
+      value2: b.back,
+      value3: b.menu,
+      value4: library.preferences.controllerBindings
+        ? ''
+        : ' Shoulders / triggers: previous / next · West: confirm · North: back.',
+    });
   }
   function manualSupplyAvailable() {
     return (
@@ -2132,9 +2175,19 @@ try {
     );
     const b = controllerLabels.flight;
     const directions = `Up ${b.up}, down ${b.down}, left ${b.left}, right ${b.right}; ${controllerStickLabel(library.preferences.controllerBindings, 'flight')}.`;
-    localizedText($('controller-help'), () =>`Connect a controller and release its controls once. Both sticks work with the default layout. ${directions} ${controllerFlightHint()} ${controllerMenuHint()} Confirm a select or slider to edit; confirm again to apply or go back to cancel. Change your layout in Settings → Controller controls. Steam Deck: use a Gamepad layout for your browser in Steam Input. The system/Home button belongs to your device.`);
-    localizedText($('controller-navigation-help'), () =>`${controllerMenuHint()} Confirm a select or slider to edit; confirm again to apply or go back to cancel.`);
-    localizedText($('controller-ui-hint'), () =>controllerScope() === 'flight' ? controllerFlightHint() : controllerMenuHint());
+    localizedText(
+      $('controller-help'),
+      () =>
+        `Connect a controller and release its controls once. Both sticks work with the default layout. ${directions} ${controllerFlightHint()} ${controllerMenuHint()} Confirm a select or slider to edit; confirm again to apply or go back to cancel. Change your layout in Settings → Controller controls. Steam Deck: use a Gamepad layout for your browser in Steam Input. The system/Home button belongs to your device.`,
+    );
+    localizedText(
+      $('controller-navigation-help'),
+      () =>
+        `${controllerMenuHint()} Confirm a select or slider to edit; confirm again to apply or go back to cancel.`,
+    );
+    localizedText($('controller-ui-hint'), () =>
+      controllerScope() === 'flight' ? controllerFlightHint() : controllerMenuHint(),
+    );
     controllerReading?.refresh();
     controllerNavigation?.refreshReadingHint();
     refreshControllerBoostCue();
@@ -2266,7 +2319,9 @@ try {
       // may prevent cancellation; picture close restores its collection focus.
       if (dialog.dispatchEvent(new Event('cancel', { cancelable: true }))) dialog.close();
       else if (dialog.open)
-        localizedText($('controller-ui-hint'), () =>t("interface:thisOperationIsStillInProgressUseItsCancelAction"));
+        localizedText($('controller-ui-hint'), () =>
+          t('interface:thisOperationIsStillInProgressUseItsCancelAction'),
+        );
       return;
     }
     const scope = controllerScope();
@@ -2310,7 +2365,7 @@ try {
       !courseEntryHold &&
       !dialogOpen() &&
       run?.status === 'running',
-    onGamepad: (message) => (localizedText($('input-status'), () =>message)),
+    onGamepad: (message) => localizedText($('input-status'), () => message),
     getBindings: () => library.preferences.keyboardBindings,
     readControllerCommand: () => controllerFrame?.flight,
     onClear: () => {
@@ -2321,16 +2376,16 @@ try {
   function readingPrompt({ scrollable }) {
     const mode = document.body.dataset.inputMode;
     const scroll = !scrollable
-      ? t("interface:allTextIsVisible")
+      ? t('interface:allTextIsVisible')
       : mode === 'controller' || mode === 'keyboard'
-        ? t("interface:upDownScroll")
-        : t("interface:scrollToRead");
+        ? t('interface:upDownScroll')
+        : t('interface:scrollToRead');
     const exit =
       mode === 'controller'
         ? `${controllerLabels.menu.confirm} or ${controllerLabels.menu.back}`
         : mode === 'keyboard'
-          ? t("interface:enterSpaceOrEscape")
-          : t("interface:doneReading");
+          ? t('interface:enterSpaceOrEscape')
+          : t('interface:doneReading');
     return `${scroll} · ${exit} returns`;
   }
   function setInputModality(mode) {
@@ -2387,7 +2442,7 @@ try {
     getDefaultFocus: controllerFocus,
     getReadingPrompt: readingPrompt,
     getControlLabels: () => ({
-      directions: t("interface:directionControls"),
+      directions: t('interface:directionControls'),
       confirm: controllerLabels.menu.confirm,
       back: controllerLabels.menu.back,
     }),
@@ -2409,7 +2464,7 @@ try {
         resume();
     },
     onHint: (message) => {
-      localizedText($('controller-ui-hint'), () =>message);
+      localizedText($('controller-ui-hint'), () => message);
       controllerReading?.hint(message);
     },
     onReadingChange: (state) => controllerReading?.changed(state),
@@ -2417,12 +2472,17 @@ try {
   controllerReading = attachControllerReading({
     compactOverlay: !courseSession,
     additionalSurfaces: [
-      ['help-reading', 'help-read', t("common:navigation.howToPlay"), 'help-reading-unit'],
-      ['flight-details-reading', 'flight-details-read', t("interface:fieldDetails"), 'flight-details-unit'],
+      ['help-reading', 'help-read', t('common:navigation.howToPlay'), 'help-reading-unit'],
+      [
+        'flight-details-reading',
+        'flight-details-read',
+        t('interface:fieldDetails'),
+        'flight-details-unit',
+      ],
       [
         'collection-reading',
         'collection-read',
-        t("interface:achievementsAndAppearances"),
+        t('interface:achievementsAndAppearances'),
         'collection-reading-unit',
       ],
     ],
@@ -2457,17 +2517,17 @@ try {
         });
       if (manualSupplyAvailable())
         actions.push({
-          label: t("interface:supply"),
+          label: t('interface:supply'),
           detail: `${labels.pickup} / ${buttons.pickup}. Collect a nearby supply for this craft.`,
         });
       if (capabilities.manualBoost)
         actions.push({
-          label: t("common:controls.boost"),
+          label: t('common:controls.boost'),
           detail: `${labels.boost} / ${buttons.boost}. Uses the configured Hold/Toggle control.`,
         });
       if (craftSwitchAvailable())
         actions.push({
-          label: t("interface:changeCraft"),
+          label: t('interface:changeCraft'),
           detail: `${labels.hangar} / ${buttons.hangar}. Return to a hangar on safe ground.`,
         });
       const roles = new Map();
@@ -2475,7 +2535,7 @@ try {
       return {
         mission: run.level.name,
         goal: `Reveal ${(run.level.goal.coverage * 100).toFixed(1)}% of the picture.`,
-        steering: `Release a direction to keep flying.${run.rules.stopOnCapture ? (" " + t("interface:closingACutStopsYourCraftChooseAFreshDirection") + "") : ''}`,
+        steering: `Release a direction to keep flying.${run.rules.stopOnCapture ? ' ' + t('interface:closingACutStopsYourCraftChooseAFreshDirection') + '' : ''}`,
         objectiveLabel: theme.labels.objective,
         actorRoles: [...roles].map(([type, count]) => ({ type, count })),
         actions,
@@ -2522,7 +2582,7 @@ try {
     if (courseEntry) cancelCourseEntry();
     cancelModeDeparture({ close: true });
     cancelMissionReplacement();
-    invalidateRestart(t("interface:restartCancelledWhenLeavingThisPage"));
+    invalidateRestart(t('interface:restartCancelledWhenLeavingThisPage'));
     optionalWorlds?.close(false);
     invalidateContentSwitch();
     pause(true);
@@ -2617,7 +2677,11 @@ try {
     controller.invalidate();
     clearInput();
     pause(true);
-    localizedText($('save-warning'), () =>'This tab returned from browser history in session-only mode. Export game data and any session originals from Game data before leaving this tab. Reload opens the latest saved profile; it does not keep session-only progress.');
+    localizedText(
+      $('save-warning'),
+      () =>
+        'This tab returned from browser history in session-only mode. Export game data and any session originals from Game data before leaving this tab. Reload opens the latest saved profile; it does not keep session-only progress.',
+    );
     show('save-warning', true);
     void packCommits.reconcile();
     if ($('settings-dialog').open) void storageRetention.refresh();
@@ -2626,25 +2690,50 @@ try {
     const bindings = resolveKeyBindings(library.preferences.keyboardBindings);
     const labels = bindingLabels(bindings);
     const actions = arcadeActionCapabilities(run?.level);
-    const description = `Tap a direction to fly. Tap another to turn. Up ${labels.up}; down ${labels.down}; left ${labels.left}; right ${labels.right}; ${actions.manualAbility ? `ability ${labels.ability}; ` : ''}${manualSupplyAvailable() ? `supply ${labels.pickup}; ` : ''}${actions.manualBoost ? `boost ${labels.boost}; ` : ''}${craftSwitchAvailable() ? `change craft ${labels.hangar}; ` : ''}pause ${labels.pause}. Releasing a direction keeps you moving.${run?.rules.stopOnCapture ? (" " + t("interface:closingACutStopsYourCraftTapAFreshDirection") + "") : ''}`;
-    localizedText($('keyboard-help'), () =>description);
-    $('game-canvas').setAttribute('aria-label', `Territory capture game. ${description}`);
+    const description = () =>
+      t('gameplay:tapADirectionToFlyTapAnotherToTurnUp', {
+        value1: labels.up,
+        value2: labels.down,
+        value3: labels.left,
+        value4: labels.right,
+        value5: actions.manualAbility ? t('gameplay:ability', { value1: labels.ability }) : '',
+        value6: manualSupplyAvailable() ? t('gameplay:supply2', { value1: labels.pickup }) : '',
+        value7: actions.manualBoost ? t('gameplay:boost2', { value1: labels.boost }) : '',
+        value8: craftSwitchAvailable() ? t('gameplay:changeCraft', { value1: labels.hangar }) : '',
+        value9: labels.pause,
+        value10: run?.rules.stopOnCapture
+          ? ' ' + t('interface:closingACutStopsYourCraftTapAFreshDirection')
+          : '',
+      });
+    localizedText($('keyboard-help'), description);
+    localizedAttribute($('game-canvas'), 'aria-label', () =>
+      t('gameplay:territoryCaptureGame', { value1: description() }),
+    );
     for (const [id, action] of [
       ['action-button', 'ability'],
       ['pickup-button', 'pickup'],
       ['boost-button', 'boost'],
     ]) {
-      localizedText($(id).querySelector('kbd'), () =>keyLabel(bindings.bindings[action][0])
-        .replace('Left ', 'L ')
-        .replace('Right ', 'R '));
-      localizedAttribute($(id).querySelector('kbd'), "title", () => labels[action]);
+      localizedText($(id).querySelector('kbd'), () =>
+        keyLabel(bindings.bindings[action][0]).replace('Left ', 'L ').replace('Right ', 'R '),
+      );
+      localizedAttribute($(id).querySelector('kbd'), 'title', () => labels[action]);
     }
-    localizedText($('hangar-button'), () =>t("gameplay:changeCraft2", { value1: labels.hangar }));
+    localizedText($('hangar-button'), () => t('gameplay:changeCraft2', { value1: labels.hangar }));
     $('stop-button').hidden = true;
     for (const button of document.querySelectorAll('[data-move]'))
-      localizedAttribute(button, "title", () => t("gameplay:move", { value1: button.dataset.move, value2: labels[button.dataset.move] }));
+      localizedAttribute(button, 'title', () =>
+        t('gameplay:move', { value1: button.dataset.move, value2: labels[button.dataset.move] }),
+      );
     if (!started && !campaignOverview)
-      localizedText($('overlay-footnote'), () =>t("gameplay:tapADirectionToFlyPauses", { value1: actions.manualAbility ? t("interface:equipmentControlsAreInHowToPlay") : t("interface:bonusesActivateOnContact"), value2: labels.pause }));
+      localizedText($('overlay-footnote'), () =>
+        t('gameplay:tapADirectionToFlyPauses', {
+          value1: actions.manualAbility
+            ? t('interface:equipmentControlsAreInHowToPlay')
+            : t('interface:bonusesActivateOnContact'),
+          value2: labels.pause,
+        }),
+      );
   }
   const keySettings = attachKeySettings({
     continuousSteering: true,
@@ -2655,8 +2744,7 @@ try {
         ? { ok: true }
         : {
             ok: false,
-            warning:
-              t("interface:keysChangedForThisSessionExportYourLibraryToRetain"),
+            warning: t('interface:keysChangedForThisSessionExportYourLibraryToRetain'),
           };
     },
     onChanged: () => {
@@ -2678,8 +2766,7 @@ try {
         ? { ok: true }
         : {
             ok: false,
-            warning:
-              t("interface:controllerControlsChangedForThisSessionExportYourLibraryTo"),
+            warning: t('interface:controllerControlsChangedForThisSessionExportYourLibraryTo'),
           };
     },
   });
@@ -2754,29 +2841,33 @@ try {
     if (!courseSession) return;
     // Ended/transitioning embedded courses retain only their terminal reader.
     if (controllerShellBar) controllerShellBar.hidden = courseBlocked();
-    const progressText = t("gameplay:lessonsThisVisit", { value1: Object.values(courseVisit).filter((value) => value === 'complete').length, value2: FIRST_FLIGHT_LESSONS.length });
+    const progressText = t('gameplay:lessonsThisVisit', {
+      value1: Object.values(courseVisit).filter((value) => value === 'complete').length,
+      value2: FIRST_FLIGHT_LESSONS.length,
+    });
     if ($('campaign-progress').textContent !== progressText)
-      localizedText($('campaign-progress'), () =>progressText);
+      localizedText($('campaign-progress'), () => progressText);
     const lesson = getFirstFlightLesson(courseRequest.lessonId);
     const task =
       coursePhase === 'ended'
-        ? t("interface:courseEndedUseTheParentPageSGameLinkTo")
+        ? t('interface:courseEndedUseTheParentPageSGameLinkTo')
         : snapshot?.outcome === 'lost'
-          ? t("interface:readTheLossExplanationThenRetryOrChooseAnotherLesson")
+          ? t('interface:readTheLossExplanationThenRetryOrChooseAnotherLesson')
           : snapshot?.outcome === 'missed'
-            ? t("interface:pictureRevealedRetryTheSuggestedExampleOrSkipIt")
+            ? t('interface:pictureRevealedRetryTheSuggestedExampleOrSkipIt')
             : snapshot?.outcome === 'complete'
-              ? t("interface:lessonCompleteEnjoyThePictureOrChooseYourNextLesson")
+              ? t('interface:lessonCompleteEnjoyThePictureOrChooseYourNextLesson')
               : snapshot?.available === false
-                ? t("interface:guidanceIsUnavailableYouCanStillPlayRetrySkipOr")
+                ? t('interface:guidanceIsUnavailableYouCanStillPlayRetrySkipOr')
                 : lesson.steps.find((item) => item.id === snapshot?.stepId)?.instruction ||
                   lesson.summary;
     const text = `${task}${
       snapshot?.territoryKept && run?.status === 'respawning'
-        ? (" " + t("interface:yourUnfinishedLineWasCancelledEarlierSecuredTerritoryIsKept") + "")
+        ? ' ' + t('interface:yourUnfinishedLineWasCancelledEarlierSecuredTerritoryIsKept') + ''
         : ''
     }`;
-    if ($('first-flight-task').textContent !== text) localizedText($('first-flight-task'), () =>text);
+    if ($('first-flight-task').textContent !== text)
+      localizedText($('first-flight-task'), () => text);
   }
   function courseSnapshot() {
     if (courseObserver) return courseObserver.snapshot();
@@ -2793,11 +2884,11 @@ try {
         steps: [],
       }),
       available: false,
-      error: t("interface:guidanceIsUnavailableForThisAttemptYouCanStillPlay"),
+      error: t('interface:guidanceIsUnavailableForThisAttemptYouCanStillPlay'),
     };
     courseObserver = null;
   }
-  function cancelCourseEntry(message = t("interface:courseEntryCancelledYourFlightRemainsPaused")) {
+  function cancelCourseEntry(message = t('interface:courseEntryCancelledYourFlightRemainsPaused')) {
     if (!courseEntry) return;
     courseEntry.controller.abort();
     courseEntry = null;
@@ -2831,7 +2922,7 @@ try {
     paused = true;
     sound.pause();
     if (!$('help-dialog').open) $('help-dialog').showModal();
-    courseEntryMessage = t("interface:preparingFirstFlightYourCurrentFlightStaysPaused");
+    courseEntryMessage = t('interface:preparingFirstFlightYourCurrentFlightStaysPaused');
     refreshCourse();
     $('first-flight-entry-cancel').focus({ preventScroll: true });
     const assertCurrent = () => {
@@ -2844,7 +2935,7 @@ try {
         campaign !== ticket.campaign ||
         libraryGeneration !== ticket.generation
       )
-        throw new DOMException(t("interface:courseEntryWasCancelledByANewerChange"), 'AbortError');
+        throw new DOMException(t('interface:courseEntryWasCancelledByANewerChange'), 'AbortError');
     };
     try {
       if (started && ['running', 'respawning'].includes(run.status)) {
@@ -2872,11 +2963,13 @@ try {
               recovery !== null ||
               (await readAssetStore(journalKey)) !== null
             )
-              throw new Error(t("interface:storedDataNeedsRecoveryBeforeThisFlightCanBeRetained"));
+              throw new Error(t('interface:storedDataNeedsRecoveryBeforeThisFlightCanBeRetained'));
           },
           withStorageLock: (work) => {
             if (!navigator.locks?.request)
-              throw new Error(t("interface:thisBrowserCannotRetainTheFlightSafelyBeforeNavigation"));
+              throw new Error(
+                t('interface:thisBrowserCannotRetainTheFlightSafelyBeforeNavigation'),
+              );
             return navigator.locks.request(
               `${libraryKey}.backup-lock`,
               { signal: ticket.controller.signal },
@@ -2886,7 +2979,10 @@ try {
           signal: ticket.controller.signal,
           onProgress: ({ ticks, total }) => {
             if (courseEntry !== ticket) return;
-            courseEntryMessage = t("gameplay:verifyingYourSavedFlightTicks", { value1: ticks, value2: total });
+            courseEntryMessage = t('gameplay:verifyingYourSavedFlightTicks', {
+              value1: ticks,
+              value2: total,
+            });
             refreshCourse();
           },
         });
@@ -2903,14 +2999,16 @@ try {
       if (courseEntry !== ticket) return;
       courseEntry = null;
       courseEntryHold = true;
-      courseEntryMessage = t("gameplay:yourFlightRemainsPausedHereYouCanReturnToIt", { value1: error.message });
+      courseEntryMessage = t('gameplay:yourFlightRemainsPausedHereYouCanReturnToIt', {
+        value1: error.message,
+      });
       clearInput();
       refreshCourse();
       $('first-flight-help-enter').focus({ preventScroll: true });
     }
   }
   const catalogueHref = authoredRoute ? './?journey=legacy' : './';
-  const catalogueLabel = authoredRoute ? t("interface:legacyMissions2") : t("interface:newJourney");
+  const catalogueLabel = authoredRoute ? t('interface:legacyMissions2') : t('interface:newJourney');
   const librarySourceReturn = readMissionLibraryReturn(params, { mode: 'solo' });
   const librarySourceDestination = librarySourceReturn
     ? `${librarySourceReturn.mode === 'team' ? 'couch/relay-rescue.html' : 'couch/'}?${new URLSearchParams({ journey: librarySourceReturn.journey, return: 'solo' })}`
@@ -2928,9 +3026,11 @@ try {
     for (const id of [`shell-title-${kind}`, `shell-${kind}`])
       $(id)?.setAttribute('href', modeDestinations[kind]);
   if (authoredRoute) {
-    localizedText($('shell-team'), () =>authoredRoute.id === DEFAULT_JOURNEY_ROUTES.solo
-        ? '12 Team missions · 2 players'
-        : t("interface:separateTeamArenas2Players"));
+    localizedText($('shell-team'), () =>
+      authoredRoute.id === DEFAULT_JOURNEY_ROUTES.solo
+        ? t('common:counts.teamMissionsWithPlayers', { count: 12, players: 2 })
+        : t('interface:separateTeamArenas2Players'),
+    );
   }
   const modeLabel = (kind) =>
     kind === 'library'
@@ -2938,8 +3038,8 @@ try {
       : kind === 'catalogue'
         ? catalogueLabel
         : kind === 'versus'
-          ? t("interface:versus2")
-          : t("interface:team");
+          ? t('interface:versus2')
+          : t('interface:team');
   const currentAuthoredModeRoute = () =>
     candidateHost?.owns(activeEntry) ? authoredRoute.id : null;
   const modeDestination = (ticket) =>
@@ -3061,23 +3161,27 @@ try {
   }
   function modeDepartureMessage(ticket) {
     const flight = !ticket.unfinished
-      ? t("interface:noUnfinishedFlightIsBeingReplaced")
+      ? t('interface:noUnfinishedFlightIsBeingReplaced')
       : ticket.savedRaw
-        ? t("interface:yourPausedFlightWasSavedAndVerifiedContinueCanRestore")
-        : t("interface:thisCurrentFlightIsSessionOnlyItRemainsPausedIn");
-    localizedText($('mode-leave-status'), () =>`${flight} ${
-      ticket.kind === 'library'
-        ? `This opens ${ticket.libraryTarget.name} directly. Its original rules and progression remain separate.${ticket.fallback ? (" " + t("interface:returnSelectionCouldNotBeSavedBackWillOpenThe") + "") : ''}`
-        : ticket.kind === 'catalogue'
-          ? `This opens ${catalogueLabel}. Its missions and progress stay separate. Returning does not resume a flight automatically.`
-          : ticket.journeyRouteId
-            ? `This opens ${ticket.kind === 'team' ? 'the separate Team arenas' : t("interface:versusWithItsOwnJourneyProgress")}. Returning opens this Solo Journey title; Continue stays explicit.`
-            : ticket.origin === 'solo-title'
-              ? `Back from ${modeLabel(ticket.kind)} opens Solo’s title; it does not resume a flight.`
-              : ticket.fallback
-                ? `Return context is unavailable. Back from ${modeLabel(ticket.kind)} will open Solo’s title.`
-                : `Back from ${modeLabel(ticket.kind)} returns to this Missions selection; it does not resume a flight.`
-    }`);
+        ? t('interface:yourPausedFlightWasSavedAndVerifiedContinueCanRestore')
+        : t('interface:thisCurrentFlightIsSessionOnlyItRemainsPausedIn');
+    localizedText(
+      $('mode-leave-status'),
+      () =>
+        `${flight} ${
+          ticket.kind === 'library'
+            ? `This opens ${ticket.libraryTarget.name} directly. Its original rules and progression remain separate.${ticket.fallback ? ' ' + t('interface:returnSelectionCouldNotBeSavedBackWillOpenThe') + '' : ''}`
+            : ticket.kind === 'catalogue'
+              ? `This opens ${catalogueLabel}. Its missions and progress stay separate. Returning does not resume a flight automatically.`
+              : ticket.journeyRouteId
+                ? `This opens ${ticket.kind === 'team' ? 'the separate Team arenas' : t('interface:versusWithItsOwnJourneyProgress')}. Returning opens this Solo Journey title; Continue stays explicit.`
+                : ticket.origin === 'solo-title'
+                  ? `Back from ${modeLabel(ticket.kind)} opens Solo’s title; it does not resume a flight.`
+                  : ticket.fallback
+                    ? `Return context is unavailable. Back from ${modeLabel(ticket.kind)} will open Solo’s title.`
+                    : `Back from ${modeLabel(ticket.kind)} returns to this Missions selection; it does not resume a flight.`
+        }`,
+    );
   }
   function unfinishedFlight() {
     return started && ['running', 'respawning'].includes(run?.status);
@@ -3105,15 +3209,13 @@ try {
         assertWriter();
         const currentSaved = localStorage.getItem(sessionKey);
         if (currentSaved !== null && currentSaved !== lastOwnedAttempt)
-          throw new Error(
-            t("interface:theSavedFlightIsNotThisTabSLastVerified"),
-          );
+          throw new Error(t('interface:theSavedFlightIsNotThisTabSLastVerified'));
         if (!storedStateAdopted || recovery !== null || (await readAssetStore(journalKey)) !== null)
-          throw new Error(t("interface:storedDataNeedsRecoveryBeforeThisFlightCanBeRetained"));
+          throw new Error(t('interface:storedDataNeedsRecoveryBeforeThisFlightCanBeRetained'));
       },
       withStorageLock: (work) => {
         if (!navigator.locks?.request)
-          throw new Error(t("interface:checkedSavingIsUnavailableInThisBrowser"));
+          throw new Error(t('interface:checkedSavingIsUnavailableInThisBrowser'));
         return navigator.locks.request(
           `${libraryKey}.backup-lock`,
           { signal: ticket.controller.signal },
@@ -3125,7 +3227,7 @@ try {
     assertCurrent();
     const raw = localStorage.getItem(sessionKey);
     if (!attemptReadbackMatches(raw, retained.session))
-      throw new Error(t("interface:theCheckedSavedFlightChangedBeforeDepartureWasReady"));
+      throw new Error(t('interface:theCheckedSavedFlightChangedBeforeDepartureWasReady'));
     ticket.savedRaw = raw;
     lastOwnedAttempt = raw;
   }
@@ -3151,7 +3253,7 @@ try {
       (unifiedLibrary?.library.find(libraryTarget?.id) !== libraryTarget ||
         !libraryTarget?.modes.includes(libraryMode))
     )
-      throw new Error(t("interface:thisMissionSelectionChangedRefreshTheLibrary"));
+      throw new Error(t('interface:thisMissionSelectionChangedRefreshTheLibrary'));
     if (
       !['solo-title', 'solo-missions'].includes(origin) ||
       (origin === 'solo-title' && (typeof isCurrent !== 'function' || !isCurrent()))
@@ -3235,11 +3337,13 @@ try {
     pause(true);
     clearInput();
     $('mode-leave-confirm').disabled = true;
-    localizedText($('mode-leave-status'), () =>ticket.unfinished
-      ? t("interface:checkingTheSavedFlightBeforeLeavingYourCurrentFlightStays")
-      : t("interface:checkingTheReturnToMissions"));
-    localizedText($('mode-leave-title'), () =>`Open ${modeLabel(kind)}?`);
-    localizedText($('mode-leave-confirm'), () =>`Leave for ${modeLabel(kind)}`);
+    localizedText($('mode-leave-status'), () =>
+      ticket.unfinished
+        ? t('interface:checkingTheSavedFlightBeforeLeavingYourCurrentFlightStays')
+        : t('interface:checkingTheReturnToMissions'),
+    );
+    localizedText($('mode-leave-title'), () => `Open ${modeLabel(kind)}?`);
+    localizedText($('mode-leave-confirm'), () => `Leave for ${modeLabel(kind)}`);
     ticket.dialogShown = true;
     try {
       $('mode-leave-dialog').showModal();
@@ -3256,7 +3360,11 @@ try {
           () => modeDepartureCurrent(ticket),
           ({ ticks, total }) => {
             if (modeDeparture === ticket)
-              localizedText($('mode-leave-status'), () =>`Verifying your saved flight: ${ticks} / ${total} ticks. Stay cancels waiting.`);
+              localizedText(
+                $('mode-leave-status'),
+                () =>
+                  `Verifying your saved flight: ${ticks} / ${total} ticks. Stay cancels waiting.`,
+              );
           },
         );
       }
@@ -3292,12 +3400,12 @@ try {
         try {
           assertWriter();
           if (localStorage.getItem(sessionKey) !== ticket.savedRaw)
-            throw new Error(t("interface:savedFlightChanged"));
+            throw new Error(t('interface:savedFlightChanged'));
         } catch {
           ticket.savedRaw = null;
           modeDepartureMessage(ticket);
           $('mode-leave-status').textContent +=
-            (" " + t("interface:theSavedFlightChangedOrSavingBecameUnavailableReviewThis") + "");
+            ' ' + t('interface:theSavedFlightChangedOrSavingBecameUnavailableReviewThis') + '';
           return;
         }
       }
@@ -3317,7 +3425,10 @@ try {
       location.href = destination;
     } catch (error) {
       clearModeHint(ticket);
-      localizedText($('mode-leave-status'), () =>`${error.message} Your flight remains paused here.`);
+      localizedText(
+        $('mode-leave-status'),
+        () => `${error.message} Your flight remains paused here.`,
+      );
     }
   };
   function cancelMissionReplacement() {
@@ -3351,7 +3462,7 @@ try {
             ticket.targetIdentity)) ||
       canonicalJSON(modeSelection()) !== canonicalJSON(ticket.selection)
     )
-      throw new Error(t("interface:theFlightOrAvailableMissionsChangedStayHereAndChoose"));
+      throw new Error(t('interface:theFlightOrAvailableMissionsChangedStayHereAndChoose'));
   }
   const libraryLaunchKinds = new Set(['library-installed', 'library-challenge', 'library-picture']);
   const isLibraryRequest = (request) => libraryLaunchKinds.has(request.kind);
@@ -3365,11 +3476,11 @@ try {
       typeof launch.isCurrent !== 'function' ||
       typeof launch.onSelected !== 'function'
     )
-      return Promise.reject(new Error(t("interface:thisLibraryLaunchIsUnavailable")));
+      return Promise.reject(new Error(t('interface:thisLibraryLaunchIsUnavailable')));
     const request = { kind: descriptor.kind, id: descriptor.id };
     if (request.kind === 'library-picture') {
       if (typeof descriptor.recordIdentity !== 'string' || descriptor.recordIdentity.length > 8192)
-        return Promise.reject(new Error(t("interface:thisEarnedPictureIdentityIsUnavailable")));
+        return Promise.reject(new Error(t('interface:thisEarnedPictureIdentityIsUnavailable')));
       request.recordIdentity = descriptor.recordIdentity;
     }
     if (!launch.isCurrent() || !availableFocusTarget(launch.opener)) return Promise.resolve(false);
@@ -3377,14 +3488,14 @@ try {
   }
   function captureWorldPlay({ launch, signal }) {
     if (practice || courseSession || courseEntry || !storedStateAdopted || !persistenceReady)
-      throw new Error(t("interface:returnToTheNormalGameAndResolveRecoveryBeforePlaying"));
+      throw new Error(t('interface:returnToTheNormalGameAndResolveRecoveryBeforePlaying'));
     if (!launch?.isCurrent() || signal?.aborted)
-      throw new DOMException(t("interface:chapterLaunchCancelled"), 'AbortError');
+      throw new DOMException(t('interface:chapterLaunchCancelled'), 'AbortError');
     const previous = worldAttempt,
       epoch = worldPlayEpoch;
     cancelWorldAttempt();
     if (worldAttempt || worldPlayEpoch !== epoch + (previous ? 1 : 0))
-      throw new DOMException(t("interface:chapterLaunchSuperseded"), 'AbortError');
+      throw new DOMException(t('interface:chapterLaunchSuperseded'), 'AbortError');
     const intent = {
       epoch: ++worldPlayEpoch,
       launch,
@@ -3456,7 +3567,7 @@ try {
       pictureThemePending
     )
       throw new DOMException(
-        t("interface:chapterLaunchCancelledYourCurrentFlightIsKept"),
+        t('interface:chapterLaunchCancelledYourCurrentFlightIsKept'),
         'AbortError',
       );
     return intent;
@@ -3467,7 +3578,7 @@ try {
   ) {
     assertWorldPlay(launch);
     if (signal?.aborted || (pack !== null && !packs.packs.includes(pack)))
-      throw new Error(t("interface:installedContentChangedChoosePlayAgain"));
+      throw new Error(t('interface:installedContentChangedChoosePlayAgain'));
     const entry =
       pack === null ? baseEntry : resolvePackCampaign(pack, campaignId ?? pack.campaigns[0].id);
     const request = {
@@ -3488,14 +3599,14 @@ try {
       if (resolveMissionRequest(request).same)
         preparationStatus(
           onStatus,
-          t("interface:thisChapterIsAlreadyActiveYourCurrentFlightIsKept"),
+          t('interface:thisChapterIsAlreadyActiveYourCurrentFlightIsKept'),
           'ready',
           launch.isCurrent,
         );
       else if (missionReplacement?.launch === launch)
         preparationStatus(
           onStatus,
-          t("interface:reviewReplacePlayStayKeepsYourCurrentFlightPaused"),
+          t('interface:reviewReplacePlayStayKeepsYourCurrentFlightPaused'),
           'ready',
           launch.isCurrent,
         );
@@ -3570,7 +3681,7 @@ try {
           canonicalJSON(presentation(other, theme.id))
         )
           throw new Error(
-            t("interface:theseInstalledEditionsShareACampaignIdentityButHaveDifferent"),
+            t('interface:theseInstalledEditionsShareACampaignIdentityButHaveDifferent'),
           );
       }
     }
@@ -3584,7 +3695,7 @@ try {
       campaignKey(target.entry.campaign),
       intent.difficulty,
     );
-    if (!entry) throw new Error(t("interface:thisChapterDoesNotSupportTheSelectedDifficulty"));
+    if (!entry) throw new Error(t('interface:thisChapterDoesNotSupportTheSelectedDifficulty'));
     const selection = difficultyNavigation.selection(
       entry,
       library.campaigns,
@@ -3619,7 +3730,7 @@ try {
     const assertCurrent = () => {
       if (!worldAttemptCurrent(ticket))
         throw new DOMException(
-          t("interface:chapterLaunchCancelledYourCurrentFlightIsKept"),
+          t('interface:chapterLaunchCancelledYourCurrentFlightIsKept'),
           'AbortError',
         );
     };
@@ -3630,7 +3741,7 @@ try {
           ticket.controller.signal.aborted ||
           assertWorldPlay(request.launch) !== intent
         )
-          throw new DOMException(t("interface:chapterLaunchSuperseded"), 'AbortError');
+          throw new DOMException(t('interface:chapterLaunchSuperseded'), 'AbortError');
       };
       assertOwner();
       ticket.backupLock = localStorage.getItem(`${libraryKey}.backup-lock`);
@@ -3689,16 +3800,13 @@ try {
       const adopted = prepare({ preparedAttempt });
       if (!adopted)
         throw new DOMException(
-          t("interface:chapterLaunchCancelledYourCurrentFlightIsKept"),
+          t('interface:chapterLaunchCancelledYourCurrentFlightIsKept'),
           'AbortError',
         );
       return true;
     } catch (error) {
       if (intent.consumed) {
-        contentStatus(
-          t("interface:theChapterWasPreparedButCouldNotStartReviewThe"),
-          true,
-        );
+        contentStatus(t('interface:theChapterWasPreparedButCouldNotStartReviewThe'), true);
         throw new Error(
           `The field changed during preparation; the previous attempt was not restored. ${error.message}`,
         );
@@ -3789,7 +3897,7 @@ try {
       else if (missionReplacement?.launch === launch)
         preparationStatus(
           onStatus,
-          t("interface:reviewTheChapterChoiceStayKeepsYourCurrentFlightPaused"),
+          t('interface:reviewTheChapterChoiceStayKeepsYourCurrentFlightPaused'),
           'ready',
           launch.isCurrent,
         );
@@ -3817,7 +3925,7 @@ try {
         levelRevision: request.levelRevision,
       };
       if (request.pack === null && request.baseEntry !== baseEntry)
-        throw new Error(t("interface:thisBaseMissionChangedChoosePlayAgain"));
+        throw new Error(t('interface:thisBaseMissionChangedChoosePlayAgain'));
       const original =
         request.pack === null
           ? resolveCampaignMissionTarget({ ...selection, entry: baseEntry })
@@ -3839,7 +3947,7 @@ try {
       const entry = installedEntries.find(
         (item) => item.sourcePackId && campaignKey(item.campaign) === request.id,
       );
-      if (!entry) throw new Error(t("interface:thatExactInstalledCampaignIsNoLongerAvailable"));
+      if (!entry) throw new Error(t('interface:thatExactInstalledCampaignIsNoLongerAvailable'));
       return {
         same:
           (entry.baseCampaignKey || campaignKey(entry.campaign)) === modeSelection().campaignKey,
@@ -3854,7 +3962,7 @@ try {
     }
     if (request.kind === 'library-challenge') {
       const match = /^route-(\d{4}-\d\d-\d\d)-(daily|calm|expert)$/.exec(request.id);
-      if (!match) throw new Error(t("interface:thatChallengeIsUnavailable"));
+      if (!match) throw new Error(t('interface:thatChallengeIsUnavailable'));
       const next = challengeCampaign(match[1], match[2], baseEntry.classRecipes);
       return {
         same: campaignKey(next) === modeSelection().campaignKey,
@@ -3866,9 +3974,10 @@ try {
     if (request.kind === 'library-picture') {
       const item = library.gallery.find((row) => row.key === request.id);
       if (!item || canonicalJSON(item) !== request.recordIdentity)
-        throw new Error(t("interface:thatEarnedPictureChangedReopenItBeforeReplaying"));
+        throw new Error(t('interface:thatEarnedPictureChangedReopenItBeforeReplaying'));
       const picture = createGalleryDifficultyResolver(executionEntries()).picture(item);
-      if (!picture) throw new Error(t("interface:reinstallThisPictureSExactCampaignBeforeReplaying"));
+      if (!picture)
+        throw new Error(t('interface:reinstallThisPictureSExactCampaignBeforeReplaying'));
       const options = {
         levelId: item.levelId,
         themeId: item.themeId,
@@ -3889,7 +3998,7 @@ try {
       };
     }
     if (request.kind === 'lesson') {
-      if (!courseSession) throw new Error(t("interface:firstFlightIsNotActive"));
+      if (!courseSession) throw new Error(t('interface:firstFlightIsNotActive'));
       const lesson = getFirstFlightLesson(request.id);
       return { same: courseRequest.lessonId === lesson.id, title: lesson.title };
     }
@@ -3897,21 +4006,21 @@ try {
       const recipe = (scenario?.classRecipes || classRegistry).find(
         (item) => item.id === request.id,
       );
-      if (courseSession || !recipe) throw new Error(t("interface:thatStartingClassIsUnavailable"));
+      if (courseSession || !recipe) throw new Error(t('interface:thatStartingClassIsUnavailable'));
       return { same: classId === request.id, title: `Starting class: ${recipe.label}` };
     }
     if (request.kind === 'steering') {
       if (!['immediate', 'grid-center'].includes(request.id))
-        throw new Error(t("interface:thatSteeringPolicyIsUnavailable"));
+        throw new Error(t('interface:thatSteeringPolicyIsUnavailable'));
       return {
         same: turnPolicy === request.id,
-        title: `Steering: ${request.id === 'immediate' ? t("interface:immediate") : t("interface:gridBuffer")}`,
+        title: `Steering: ${request.id === 'immediate' ? t('interface:immediate') : t('interface:gridBuffer')}`,
       };
     }
     if (request.kind === 'level' || request.kind === 'card') {
       const index = campaign.levels.findIndex((level) => level.id === request.id);
       if (index < 0 || !missionAvailable(index))
-        throw new Error(t("interface:thatMissionIsUnavailableOrStillLocked"));
+        throw new Error(t('interface:thatMissionIsUnavailableOrStillLocked'));
       return {
         same: campaign.levels[levelIndex].id === request.id,
         title: campaign.levels[index].name,
@@ -3919,7 +4028,7 @@ try {
     }
     if (request.kind === 'campaign') {
       const entry = catalog().find((item) => campaignKey(item.campaign) === request.id);
-      if (!entry) throw new Error(t("interface:thisCampaignIsNotInstalled"));
+      if (!entry) throw new Error(t('interface:thisCampaignIsNotInstalled'));
       return {
         same:
           (entry.baseCampaignKey || campaignKey(entry.campaign)) === modeSelection().campaignKey,
@@ -3932,7 +4041,7 @@ try {
         ? packs.packs.find((item) => item.id === request.id) ||
           packCatalog.packs.find((item) => item.id === request.id)
         : null;
-      if (request.id && !pack) throw new Error(t("interface:thisChapterIsUnavailable"));
+      if (request.id && !pack) throw new Error(t('interface:thisChapterIsUnavailable'));
       return {
         same: request.id
           ? activeEntry.sourcePackId === request.id
@@ -3944,7 +4053,7 @@ try {
           baseEntry.campaign.id,
       };
     }
-    throw new Error(t("interface:unknownMissionAction"));
+    throw new Error(t('interface:unknownMissionAction'));
   }
   async function applyMissionRequest(request, ticket = null) {
     const target = resolveMissionRequest(request);
@@ -3998,24 +4107,23 @@ try {
     const play = ticket.request.kind === 'world-play';
     const action = isSetupRequest(ticket.request)
       ? courseSession
-        ? t("interface:prepareFreshLesson")
-        : t("interface:prepareFreshAttempt")
+        ? t('interface:prepareFreshLesson')
+        : t('interface:prepareFreshAttempt')
       : play
-        ? t("interface:replacePlay")
-        : t("interface:replace");
-    localizedText($('mission-replace-status'), () =>ticket.sessionOnly
-      ? `This ${courseSession ? 'lesson' : 'practice attempt'} is session-only and is not saved to campaign progress. Stay keeps it paused; ${action} deliberately discards this attempt ${play ? t("interface:andStartsTheSelectedChapterWhenItIsReady") : 'without starting the next one'}.`
-      : ticket.savedRaw
-        ? `Your current flight was saved and verified. ${action} ${play ? t("interface:startsTheSelectedChapterOnceItsPictureIsReady") : isSetupRequest(ticket.request) ? t("interface:usesTheRequestedStartingSetupWithoutStartingIt") : t("interface:selectsTheNewMissionWithoutStartingIt")}. Stay keeps this flight paused.`
-        : `This flight was not verified as safely saved. Replacing it may lose this attempt. Stay keeps it paused in this tab; ${action} deliberately discards it.`);
+        ? t('interface:replacePlay')
+        : t('interface:replace');
+    localizedText($('mission-replace-status'), () =>
+      ticket.sessionOnly
+        ? `This ${courseSession ? 'lesson' : 'practice attempt'} is session-only and is not saved to campaign progress. Stay keeps it paused; ${action} deliberately discards this attempt ${play ? t('interface:andStartsTheSelectedChapterWhenItIsReady') : 'without starting the next one'}.`
+        : ticket.savedRaw
+          ? `Your current flight was saved and verified. ${action} ${play ? t('interface:startsTheSelectedChapterOnceItsPictureIsReady') : isSetupRequest(ticket.request) ? t('interface:usesTheRequestedStartingSetupWithoutStartingIt') : t('interface:selectsTheNewMissionWithoutStartingIt')}. Stay keeps this flight paused.`
+          : `This flight was not verified as safely saved. Replacing it may lose this attempt. Stay keeps it paused in this tab; ${action} deliberately discards it.`,
+    );
     if (ticket.failure) $('mission-replace-status').textContent += ` ${ticket.failure}`;
   }
   async function requestMissionReplacement(request, opener, launch = null) {
     if (candidateHost && request.kind !== 'steering') {
-      contentStatus(
-        t("interface:useFindMissionsForThisAuthoredTestRouteItsScout"),
-        true,
-      );
+      contentStatus(t('interface:useFindMissionsForThisAuthoredTestRouteItsScout'), true);
       refreshContentSelectors();
       return false;
     }
@@ -4099,20 +4207,29 @@ try {
     modeDepartureHold = true;
     pause(true, { preserveWorld: request.kind === 'world-play' });
     clearInput();
-    localizedText($('mission-replace-title'), () =>setup
-      ? courseSession
-        ? t("interface:prepareAFreshLesson")
-        : t("interface:prepareAFreshAttempt")
-      : t("interface:replaceThisFlight"));
-    localizedText($('mission-replace-confirm'), () =>setup
-      ? courseSession
-        ? t("interface:prepareFreshLesson")
-        : t("interface:prepareFreshAttempt")
-      : request.kind === 'world-play'
-        ? t("interface:replacePlay")
-        : t("interface:replace"));
-    localizedText($('mission-replace-target'), () =>`${scenario?.level.name || campaign.levels[levelIndex].name} → ${target.title}`);
-    localizedText($('mission-replace-status'), () =>t("interface:checkingTheSavedFlightYourCurrentFlightStaysPausedStay"));
+    localizedText($('mission-replace-title'), () =>
+      setup
+        ? courseSession
+          ? t('interface:prepareAFreshLesson')
+          : t('interface:prepareAFreshAttempt')
+        : t('interface:replaceThisFlight'),
+    );
+    localizedText($('mission-replace-confirm'), () =>
+      setup
+        ? courseSession
+          ? t('interface:prepareFreshLesson')
+          : t('interface:prepareFreshAttempt')
+        : request.kind === 'world-play'
+          ? t('interface:replacePlay')
+          : t('interface:replace'),
+    );
+    localizedText(
+      $('mission-replace-target'),
+      () => `${scenario?.level.name || campaign.levels[levelIndex].name} → ${target.title}`,
+    );
+    localizedText($('mission-replace-status'), () =>
+      t('interface:checkingTheSavedFlightYourCurrentFlightStaysPausedStay'),
+    );
     $('mission-replace-confirm').disabled = true;
     $('mission-replace-dialog').showModal();
     $('mission-replace-stay').focus({ preventScroll: true });
@@ -4123,7 +4240,11 @@ try {
           () => missionReplacementCurrent(ticket),
           ({ ticks, total }) => {
             if (missionReplacement === ticket)
-              localizedText($('mission-replace-status'), () =>`Verifying your saved flight: ${ticks} / ${total} ticks. Stay cancels waiting.`);
+              localizedText(
+                $('mission-replace-status'),
+                () =>
+                  `Verifying your saved flight: ${ticks} / ${total} ticks. Stay cancels waiting.`,
+              );
           },
         );
     } catch (error) {
@@ -4159,10 +4280,10 @@ try {
         try {
           assertWriter();
           if (localStorage.getItem(sessionKey) !== ticket.savedRaw)
-            throw new Error(t("interface:savedFlightChanged"));
+            throw new Error(t('interface:savedFlightChanged'));
         } catch {
           ticket.savedRaw = null;
-          ticket.failure = `The saved flight changed or saving became unavailable. Review this warning before choosing ${isSetupRequest(ticket.request) ? t("interface:prepare") : t("interface:replace")} again.`;
+          ticket.failure = `The saved flight changed or saving became unavailable. Review this warning before choosing ${isSetupRequest(ticket.request) ? t('interface:prepare') : t('interface:replace')} again.`;
           missionReplacementMessage(ticket);
           return;
         }
@@ -4177,9 +4298,11 @@ try {
       )
         $('mission-replace-stay').focus({ preventScroll: true });
       $('mission-replace-confirm').disabled = true;
-      localizedText($('mission-replace-status'), () =>isSetupRequest(ticket.request)
-        ? t("interface:preparingTheRequestedFreshAttemptWithoutStartingIt")
-        : t("interface:preparingTheSelectedMissionYourCurrentFlightStaysPausedUntil"));
+      localizedText($('mission-replace-status'), () =>
+        isSetupRequest(ticket.request)
+          ? t('interface:preparingTheRequestedFreshAttemptWithoutStartingIt')
+          : t('interface:preparingTheSelectedMissionYourCurrentFlightStaysPausedUntil'),
+      );
       const selected = await applyMissionRequest(ticket.request, ticket);
       if (missionReplacement !== ticket) return;
       missionReplacement = null;
@@ -4204,7 +4327,11 @@ try {
       ticket.pending = false;
       if (ticket.launch && ticket.adopting) {
         $('mission-replace-confirm').disabled = true;
-        localizedText($('mission-replace-status'), () =>`Selection did not finish: ${error.message} The field may have changed; the previous attempt was not restored. Stay returns to your menu.`);
+        localizedText(
+          $('mission-replace-status'),
+          () =>
+            `Selection did not finish: ${error.message} The field may have changed; the previous attempt was not restored. Stay returns to your menu.`,
+        );
       } else {
         ticket.failure = `${error.message} Your flight remains paused here.`;
         $('mission-replace-confirm').disabled = false;
@@ -4262,9 +4389,11 @@ try {
       show('overlay-reading', true);
       show('overlay-footnote', true);
       show('overlay-menu', false);
-      localizedText($('overlay-title'), () =>t("interface:firstFlightEnded"));
-      localizedText($('overlay-copy'), () =>t("interface:practiceAwardedNoProgressUseTheParentPageSGame"));
-      localizedText($('overlay-footnote'), () =>'');
+      localizedText($('overlay-title'), () => t('interface:firstFlightEnded'));
+      localizedText($('overlay-copy'), () =>
+        t('interface:practiceAwardedNoProgressUseTheParentPageSGame'),
+      );
+      localizedText($('overlay-footnote'), () => '');
       for (const id of [
         'start-button',
         'retry-button',
@@ -4379,7 +4508,7 @@ try {
         : campaignKey(baseEntry.campaign) === entry.classicRulesSourceCampaignKey
           ? baseEntry
           : null;
-      if (!authored) throw new Error(t("interface:thisExactOriginalChapterIsNoLongerInstalled"));
+      if (!authored) throw new Error(t('interface:thisExactOriginalChapterIsNoLongerInstalled'));
       const projected = projectClassicCurrentRulesEntry(authored, entry.classicRulesEdition);
       return createExecutionCatalog([projected]).select(campaignKey(projected.campaign), mode);
     }
@@ -4390,7 +4519,7 @@ try {
         campaignKey(candidate.campaign) === baseKey,
     );
     if (!authored)
-      throw new Error(t("interface:thisExactChapterIsNoLongerInstalledChooseAnAvailable"));
+      throw new Error(t('interface:thisExactChapterIsNoLongerInstalledChooseAnAvailable'));
     // Equal simulation identities may belong to different packs with distinct
     // presentation metadata. A difficulty projection must retain this owner.
     const shared = executionCatalog.select(baseKey, mode);
@@ -4421,10 +4550,16 @@ try {
     const nextPressure = gameplayTuning.snapshot(browsingJourneyPreferences.snapshot().difficulty);
     $('menu-difficulty').value = nextPressure.difficulty;
     $('menu-difficulty').disabled = contentSwitchBusy || backupBusy || sessionBusy;
-    localizedText($('menu-difficulty-note'), () =>`${nextPressure.difficulty}: ${gameplayTuningDescription(nextPressure)} ` +
-      'Next fresh attempt only; Resume keeps its rules. ' +
-      (nextPressure.adminOverride ? ("" + t("interface:adminPlaytestNoNormalClearsOrAwards") + " ") : '') +
-      (browsingJourneyPreferences.snapshot().error || gameplayTuning.status().error || ''));
+    localizedText(
+      $('menu-difficulty-note'),
+      () =>
+        `${nextPressure.difficulty}: ${gameplayTuningDescription(nextPressure)} ` +
+        'Next fresh attempt only; Resume keeps its rules. ' +
+        (nextPressure.adminOverride
+          ? '' + t('interface:adminPlaytestNoNormalClearsOrAwards') + ' '
+          : '') +
+        (browsingJourneyPreferences.snapshot().error || gameplayTuning.status().error || ''),
+    );
     gameplayTuningPanel?.refresh();
     if (candidateHost?.owns(activeEntry)) {
       const next = journeyPreferences.snapshot();
@@ -4442,9 +4577,13 @@ try {
         'gameplay-pressure.v3',
         'gameplay-pressure.v4',
       ].includes(nextPressure.version)
-        ? `${nextPreset.lives} mission lives; ${nextPreset.failingDeadline ? t("interface:deadlinesOnlyOnAuthoredTimedMissions") : 'no failing countdown'}.`
+        ? `${nextPreset.lives} mission lives; ${nextPreset.failingDeadline ? t('interface:deadlinesOnlyOnAuthoredTimedMissions') : 'no failing countdown'}.`
         : nextPreset.description;
-      localizedText($('difficulty-note'), () =>`This flight: ${activeEntry.difficulty}. Next fresh attempt: ${next.difficulty}. ${nextRules} ${gameplayTuningDescription(nextPressure)} Resume and Load preserve this flight. ${next.error}`);
+      localizedText(
+        $('difficulty-note'),
+        () =>
+          `This flight: ${activeEntry.difficulty}. Next fresh attempt: ${next.difficulty}. ${nextRules} ${gameplayTuningDescription(nextPressure)} Resume and Load preserve this flight. ${next.error}`,
+      );
       show('difficulty-details', false);
       const currentTuning = recoverGameplayTuning(run?.level);
       const currentPreset = journeyPreset(activeEntry.difficulty, catalogId);
@@ -4455,7 +4594,11 @@ try {
       ].includes(currentTuning?.version)
         ? `${run.level.rules.lives ?? currentPreset.lives} starting lives; ${run.level.rules.timeLimitSeconds > 0 ? `${run.level.rules.timeLimitSeconds}s deadline` : 'no failing countdown'}.`
         : currentPreset.description;
-      localizedText($('overlay-difficulty'), () =>`Journey ${activeEntry.difficulty}. ${currentRules} ${currentTuning ? `${run.enemies.length} enemies · ${run.level.rules.moveSpeed.toFixed(1)} craft cells/s${currentTuning.adminOverride ? ' · ADMIN PLAYTEST' : ''}.` : ''}`);
+      localizedText(
+        $('overlay-difficulty'),
+        () =>
+          `Journey ${activeEntry.difficulty}. ${currentRules} ${currentTuning ? `${run.enemies.length} enemies · ${run.level.rules.moveSpeed.toFixed(1)} craft cells/s${currentTuning.adminOverride ? ' · ADMIN PLAYTEST' : ''}.` : ''}`,
+      );
       show('overlay-difficulty', true);
       return;
     }
@@ -4469,7 +4612,11 @@ try {
     $('difficulty-select').value = library.preferences.campaignDifficulty;
     $('difficulty-select').disabled =
       !cue.available || courseSession || !!courseEntry || contentSwitchBusy || backupBusy;
-    localizedText($('difficulty-note'), () =>`${cue.copy} Main-menu pacing: ${nextPressure.difficulty}. ${gameplayTuningDescription(nextPressure)}`);
+    localizedText(
+      $('difficulty-note'),
+      () =>
+        `${cue.copy} Main-menu pacing: ${nextPressure.difficulty}. ${gameplayTuningDescription(nextPressure)}`,
+    );
     const standard = executionCatalog.select(activeEntry.baseCampaignKey, 'standard'),
       gentle = executionCatalog.select(activeEntry.baseCampaignKey, 'gentle');
     show('difficulty-details', cue.available && !!standard && !!gentle);
@@ -4486,22 +4633,25 @@ try {
           gentle.campaign.levels[levelIndex],
         ).map((copy) => {
           const row = document.createElement('li');
-          localizedText(row, () =>copy);
+          localizedText(row, () => copy);
           return row;
         }),
       );
       difficultyDetailsFor = { campaign: standard.campaign, levelIndex };
     }
-    localizedText($('overlay-difficulty'), () =>cue.available
-      ? t("gameplay:difficulty", { value1: cue.current, value2: cue.retry })
-      : '');
+    localizedText($('overlay-difficulty'), () =>
+      cue.available ? t('gameplay:difficulty', { value1: cue.current, value2: cue.retry }) : '',
+    );
     show('overlay-difficulty', cue.available);
   }
   function refreshCampaigns() {
     $('campaign-select').replaceChildren(
-      ...catalog().map(
-        (e) =>
-          localizedOption(() => contentText(e.campaign, 'title') || contentText(e.campaign, 'name') || e.campaign.id, campaignKey(e.campaign)),
+      ...catalog().map((e) =>
+        localizedOption(
+          () =>
+            contentText(e.campaign, 'title') || contentText(e.campaign, 'name') || e.campaign.id,
+          campaignKey(e.campaign),
+        ),
       ),
     );
     $('campaign-select').value = activeEntry.baseCampaignKey || campaignKey(campaign);
@@ -4527,7 +4677,7 @@ try {
     $('level-select').disabled = courseSession;
     // Backup adoption shares this busy flag; it is not a pending pack launch.
     if (announce && interrupted && !backupBusy)
-      contentStatus(t("interface:pendingPackLaunchCancelledYourNewerPlayChoiceIsKept"));
+      contentStatus(t('interface:pendingPackLaunchCancelledYourNewerPlayChoiceIsKept'));
     else if (interrupted)
       for (const feedback of contentFeedback)
         if (feedback.target.dataset.state === 'busy') feedback.presenter.clear();
@@ -4535,11 +4685,18 @@ try {
   }
   function refreshContentSelectors() {
     const installedIds = new Set(packs.packs.map((pack) => pack.id));
-    const options = [localizedOption(() => t("gameplay:baseGameLevels", { value1: baseCampaign.levels.length }), '')];
+    const options = [
+      localizedOption(
+        () => t('gameplay:baseGameLevels', { value1: baseCampaign.levels.length }),
+        '',
+      ),
+    ];
     for (const summary of packCatalog.packs) {
       const levels = summary.campaigns.reduce((total, item) => total + item.levels.length, 0);
       options.push(
-        localizedOption(() => `${contentText(summary, 'name')} · ${t('common:counts.levels', { count: levels })} · ${installedIds.has(summary.id) ? t('common:status.installed') : t('common:status.installOnSelect')}`,
+        localizedOption(
+          () =>
+            `${contentText(summary, 'name')} · ${t('common:counts.levels', { count: levels })} · ${installedIds.has(summary.id) ? t('common:status.installed') : t('common:status.installOnSelect')}`,
           summary.id,
         ),
       );
@@ -4548,7 +4705,13 @@ try {
       if (packCatalog.packs.some((item) => item.id === pack.id)) continue;
       const levels = pack.campaigns.reduce((total, item) => total + item.levels.length, 0);
       options.push(
-        localizedOption(() => t("gameplay:installed2", { value1: contentText(pack, 'name'), value2: levels, value3: levels === 1 ? 'level' : 'levels' }),
+        localizedOption(
+          () =>
+            t('gameplay:installed2', {
+              value1: contentText(pack, 'name'),
+              value2: levels,
+              value3: levels === 1 ? 'level' : 'levels',
+            }),
           pack.id,
         ),
       );
@@ -4559,7 +4722,12 @@ try {
     if (!activeEntry.sourcePackId && currentKey !== baseKey) {
       selectedPack = `campaign:${currentKey}`;
       options.push(
-        localizedOption(() => contentText(campaign, 'title') || contentText(campaign, 'name') || campaign.id, selectedPack, true, true),
+        localizedOption(
+          () => contentText(campaign, 'title') || contentText(campaign, 'name') || campaign.id,
+          selectedPack,
+          true,
+          true,
+        ),
       );
     }
     $('pack-select').replaceChildren(...options);
@@ -4567,7 +4735,9 @@ try {
     $('level-select').replaceChildren(
       ...campaign.levels.map((level, index) => {
         const available = missionAvailable(index);
-        return localizedOption(() => `${String(index + 1).padStart(2, '0')} · ${contentText(level, 'name')}${available ? '' : ' · ' + t('common:status.locked')}`,
+        return localizedOption(
+          () =>
+            `${String(index + 1).padStart(2, '0')} · ${contentText(level, 'name')}${available ? '' : ' · ' + t('common:status.locked')}`,
           level.id,
           false,
           index === levelIndex,
@@ -4583,7 +4753,7 @@ try {
   }
   function persistProfile({ mode = 'merge' } = {}) {
     if (courseSession || courseEntry)
-      return { ok: false, warning: t("interface:trainingDoesNotSavePlayerLibraryChanges") };
+      return { ok: false, warning: t('interface:trainingDoesNotSavePlayerLibraryChanges') };
     let saved;
     try {
       saved =
@@ -4597,10 +4767,10 @@ try {
               ok: false,
               warning:
                 writer.reason ||
-                t("interface:storageRecoveryMustFinishBeforeSavingExportYourSessionBefore"),
+                t('interface:storageRecoveryMustFinishBeforeSavingExportYourSessionBefore'),
             };
     } catch {
-      saved = { ok: false, warning: t("interface:storageIsUnavailableExportYourPlayerLibrary") };
+      saved = { ok: false, warning: t('interface:storageIsUnavailableExportYourPlayerLibrary') };
     }
     saveSucceeded = saved.ok;
     if (saved.ok) {
@@ -4611,7 +4781,7 @@ try {
       progress = progressFor(library, campaign);
       adoptControllerBoostMode();
     } else {
-      localizedText($('save-warning'), () =>saved.warning);
+      localizedText($('save-warning'), () => saved.warning);
       show('save-warning', true);
     }
     refreshDifficulty();
@@ -4623,7 +4793,7 @@ try {
     if (courseEntry)
       return {
         ok: false,
-        warning: t("interface:finishOrCancelTheCourseHandoffBeforeChangingSettings"),
+        warning: t('interface:finishOrCancelTheCourseHandoffBeforeChangingSettings'),
       };
     library = updatePreferences(library, { ...library.preferences, ...patch });
     if (!practice) return persistProfile();
@@ -4631,8 +4801,7 @@ try {
     refreshScreenSteeringHand();
     return {
       ok: false,
-      warning:
-        t("interface:practicePreferencesStayInThisSessionExportYourPlayerLibrary"),
+      warning: t('interface:practicePreferencesStayInThisSessionExportYourPlayerLibrary'),
     };
   }
   function cancelRestore() {
@@ -4683,7 +4852,11 @@ try {
     show('journey-skip', !!mission);
     if (!mission) journeySkipArmed = null;
     if (journeySkipArmed === null)
-      localizedText($('journey-skip'), () =>mission && !nextJourneyMission(mission.id) ? t("interface:findMissions") : t("interface:skipMission"));
+      localizedText($('journey-skip'), () =>
+        mission && !nextJourneyMission(mission.id)
+          ? t('interface:findMissions')
+          : t('interface:skipMission'),
+      );
   }
   function nextJourneyMission(id) {
     return candidateHost ? candidateHost.next(id) : journeyCatalog.next(id);
@@ -4719,7 +4892,10 @@ try {
         if (journeyLaunch !== owner) return;
         journeyLaunch = null;
         invalidateContentSwitch();
-        owner.feedback?.finish(t("interface:preparationCancelledYourCurrentFlightIsKept"), 'cancelled');
+        owner.feedback?.finish(
+          t('interface:preparationCancelledYourCurrentFlightIsKept'),
+          'cancelled',
+        );
         if (restoreFocus) controllerFocus()?.focus({ preventScroll: true });
       };
       owner.feedback = beginPreparation(
@@ -4743,14 +4919,14 @@ try {
         (entry) =>
           entry.sourcePackId === mission.packId && entry.campaign.id === mission.campaignId,
       );
-      if (!authored) throw new Error(t("interface:thisMissionIsUnavailableInTheCurrentEdition"));
+      if (!authored) throw new Error(t('interface:thisMissionIsUnavailableInTheCurrentEdition'));
       if (!journeyAuthority.matches(authored))
         throw new Error(
-          t("interface:theInstalledCampaignDiffersFromThisJourneyEditionYourImported"),
+          t('interface:theInstalledCampaignDiffersFromThisJourneyEditionYourImported'),
         );
       const entry = executionForEntry(authored, library.preferences.campaignDifficulty);
       const index = entry.campaign.levels.findIndex((level) => level.id === mission.levelId);
-      if (index < 0) throw new Error(t("interface:thisMissionIsUnavailableInTheCurrentEdition"));
+      if (index < 0) throw new Error(t('interface:thisMissionIsUnavailableInTheCurrentEdition'));
       contentSwitchBusy = false;
       refreshContentSelectors();
       owner.feedback.finish();
@@ -4798,8 +4974,8 @@ try {
     } = {},
   ) {
     if (courseSession || courseEntry)
-      throw new Error(t("interface:endFirstFlightBeforeSelectingACampaign"));
-    if (!entry) throw new Error(t("interface:thisCampaignIsNotInstalled"));
+      throw new Error(t('interface:endFirstFlightBeforeSelectingACampaign'));
+    if (!entry) throw new Error(t('interface:thisCampaignIsNotInstalled'));
     if (difficulty !== undefined) {
       if (candidateHost?.owns(entry))
         journeyPreset(difficulty, authoredRoute.source.difficultyCatalogId);
@@ -4807,7 +4983,7 @@ try {
     }
     if (selectedSeed !== undefined) {
       if (!Number.isInteger(selectedSeed) || selectedSeed < 0 || selectedSeed > 0xffffffff)
-        throw new Error(t("interface:pictureSeedIsInvalid"));
+        throw new Error(t('interface:pictureSeedIsInvalid'));
       seed = selectedSeed;
     }
     if (contentSwitchTicket) packLaunchGuard.assert(contentSwitchTicket, packs);
@@ -4833,9 +5009,13 @@ try {
     if (!classRegistry.some((c) => c.id === classId)) classId = classRegistry[0].id;
     theme = entry.themes.find((t) => t.id === (themeId || campaign.themeId)) || entry.themes[0];
     bodyId = theme.player;
-    $('theme-select').replaceChildren(...entry.themes.map((t) => localizedOption(() => contentText(t, 'name'), t.id)));
+    $('theme-select').replaceChildren(
+      ...entry.themes.map((t) => localizedOption(() => contentText(t, 'name'), t.id)),
+    );
     $('theme-select').value = theme.id;
-    $('class-select').replaceChildren(...classRegistry.map((c) => localizedOption(() => contentText(c, 'label'), c.id)));
+    $('class-select').replaceChildren(
+      ...classRegistry.map((c) => localizedOption(() => contentText(c, 'label'), c.id)),
+    );
     const track = entry.music?.find((m) => m.id === campaign.musicId) || entry.music?.[0];
     if (track) {
       assignMusic(track);
@@ -4849,7 +5029,7 @@ try {
     next,
     { contentSwitchTicket = null, preserveCurrentRun = false } = {},
   ) {
-    if (courseEntry) throw new Error(t("interface:cancelTheCourseHandoffBeforeChangingPacks"));
+    if (courseEntry) throw new Error(t('interface:cancelTheCourseHandoffBeforeChangingPacks'));
     attemptFiles?.invalidate();
     const ownsOperation = !contentSwitchTicket;
     const operation = contentSwitchTicket || packLaunchGuard.begin(packs);
@@ -4867,7 +5047,7 @@ try {
             JSON.stringify(next.packs.find((item) => item.id === old.id)) !== JSON.stringify(old),
         )
       )
-        throw new Error(t("interface:installingAWorldMustPreserveEveryExistingPack"));
+        throw new Error(t('interface:installingAWorldMustPreserveEveryExistingPack'));
       packLaunchGuard.assert(operation, before);
       assertWriter();
       let content = prepareContentCatalog(next);
@@ -4880,7 +5060,9 @@ try {
         });
       } catch (error) {
         if (!packLaunchGuard.current(operation, packs)) throw error;
-        throw new Error(t("gameplay:packStorageFailedPreviousInstalledPacksAreKept", { value1: error.message }));
+        throw new Error(
+          t('gameplay:packStorageFailedPreviousInstalledPacksAreKept', { value1: error.message }),
+        );
       }
       if (!packLaunchGuard.current(operation, before)) {
         await packCommits.noteStaleCommit();
@@ -4925,7 +5107,7 @@ try {
     const installed = packs.packs.find((pack) => pack.id === packId);
     if (installed) return { pack: installed, installed: false };
     const summary = packCatalog.packs.find((pack) => pack.id === packId);
-    if (!summary) throw new Error(t("interface:thisPackIsNotBundledWithTheCurrentBuild"));
+    if (!summary) throw new Error(t('interface:thisPackIsNotBundledWithTheCurrentBuild'));
     assertWriter();
     contentStatus(`Installing ${summary.name} on this device…`, false, {
       busy: true,
@@ -4950,9 +5132,7 @@ try {
           return await preparePack(source, { library: before });
         } catch (error) {
           if (error.message === 'JSON exceeds its byte budget.')
-            throw new Error(
-              t("interface:thisPackDoesNotFitTheInstalledLibraryS48"),
-            );
+            throw new Error(t('interface:thisPackDoesNotFitTheInstalledLibraryS48'));
           throw error;
         }
       },
@@ -4973,7 +5153,7 @@ try {
     const notify = flightInformation.captureWarning('host.chapter', { allowTerminal: true });
     const descriptor = sourceExternalChapter(chapterId);
     if (practiceSession || courseEntry || !writer.writable)
-      throw new Error(t("interface:openTheWritableGameToInstallThisChapter"));
+      throw new Error(t('interface:openTheWritableGameToInstallThisChapter'));
     const operation = packLaunchGuard.begin(packs),
       before = packs;
     packCommits.markIntent();
@@ -4994,8 +5174,8 @@ try {
     try {
       report(
         download
-          ? t("interface:downloadingAndVerifyingChapterOriginals")
-          : t("interface:readingAndVerifyingChapterFiles"),
+          ? t('interface:downloadingAndVerifyingChapterOriginals')
+          : t('interface:readingAndVerifyingChapterFiles'),
         download ? 'downloading' : 'verifying',
       );
       const prepared = download
@@ -5005,18 +5185,16 @@ try {
           })
         : await prepareSourceExternalChapter(files, { chapterId: descriptor.id, signal });
       packLaunchGuard.assert(operation, before);
-      report(t("interface:checkingInstalledChaptersBeforeSaving"), 'verifying');
+      report(t('interface:checkingInstalledChaptersBeforeSaving'), 'verifying');
       const snapshot = await inspectChapters({ signal });
       if (snapshot.status !== 'checked' && snapshot.reason !== 'external-recovery')
-        throw new Error(
-          t("interface:backupAndMixedRecoveryMustBeResolvedBeforeThisChapter"),
-        );
-      report(t("interface:savingTheVerifiedChapterAndOriginals"), 'saving');
+        throw new Error(t('interface:backupAndMixedRecoveryMustBeResolvedBeforeThisChapter'));
+      report(t('interface:savingTheVerifiedChapterAndOriginals'), 'saving');
       const installed = await externalChapters[
         snapshot.reason === 'external-recovery' ? 'recover' : 'install'
       ](prepared, { signal, pictureReview });
       committed = true;
-      report(t("interface:verifyingTheSavedChapterIsReadyToPlay"), 'verifying');
+      report(t('interface:verifyingTheSavedChapterIsReadyToPlay'), 'verifying');
       const next = await checkedChapters({ signal });
       await externalChapters.readiness(next, descriptor.id, { signal });
       packLaunchGuard.assert(operation, before);
@@ -5046,7 +5224,9 @@ try {
       if (committed) {
         void packCommits.noteStaleCommit();
         throw new Error(
-          t("gameplay:theChapterInstallationCommittedReloadRecheckBeforeChoosingIt", { value1: error.message }),
+          t('gameplay:theChapterInstallationCommittedReloadRecheckBeforeChoosingIt', {
+            value1: error.message,
+          }),
         );
       }
       throw error;
@@ -5061,10 +5241,10 @@ try {
   }
   async function installOptionalChapter(summary, { signal, onStatus } = {}) {
     if (courseEntry || courseSession || practice)
-      throw new Error(t("interface:returnFromPracticeBeforeInstallingWorlds"));
+      throw new Error(t('interface:returnFromPracticeBeforeInstallingWorlds'));
     const old = packs.packs.find((item) => item.id === summary.id);
     if (old) return verifyOptionalInstalled(old, summary, { signal });
-    if (signal?.aborted) throw new DOMException(t("interface:downloadCancelled"), 'AbortError');
+    if (signal?.aborted) throw new DOMException(t('interface:downloadCancelled'), 'AbortError');
     cancelRestore();
     const operation = packLaunchGuard.begin(packs),
       before = packs;
@@ -5125,7 +5305,7 @@ try {
     packCommits.markIntent();
     contentSwitchBusy = true;
     refreshContentSelectors();
-    contentStatus(t("interface:preparingYourSelectedChapter"), false, { busy: true });
+    contentStatus(t('interface:preparingYourSelectedChapter'), false, { busy: true });
     try {
       if (!packId) {
         beforeSelect?.();
@@ -5140,15 +5320,15 @@ try {
       const source = campaignId
         ? result.pack.campaigns.find((item) => item.id === campaignId)
         : result.pack.campaigns[0];
-      if (!source) throw new Error(t("interface:thisPackCampaignIsUnavailable"));
+      if (!source) throw new Error(t('interface:thisPackCampaignIsUnavailable'));
       const entry = installedEntries.find(
         (item) => item.sourcePackId === result.pack.id && item.campaign.id === source.id,
       );
-      if (!entry) throw new Error(t("interface:theInstalledPackCampaignCouldNotBeSelected"));
+      if (!entry) throw new Error(t('interface:theInstalledPackCampaignCouldNotBeSelected'));
       beforeSelect?.();
       if (levelId) {
         const targetIndex = entry.campaign.levels.findIndex((level) => level.id === levelId);
-        if (targetIndex < 0) throw new Error(t("interface:thisPackLevelIsUnavailable"));
+        if (targetIndex < 0) throw new Error(t('interface:thisPackLevelIsUnavailable'));
         if (!missionAvailable(targetIndex, entry)) {
           if (!preserveCurrentRun) {
             selectEntry(entry, { contentSwitchTicket: operation });
@@ -5157,14 +5337,21 @@ try {
             notify = flightInformation.captureWarning('host.chapter', { allowTerminal: true });
           }
           throw new Error(
-            t("gameplay:isStillLockedTheNextAvailableLevelIsSelected", { value1: contentText(entry.campaign.levels[targetIndex], 'name') }),
+            t('gameplay:isStillLockedTheNextAvailableLevelIsSelected', {
+              value1: contentText(entry.campaign.levels[targetIndex], 'name'),
+            }),
           );
         }
       }
       selectEntry(entry, { levelId, contentSwitchTicket: operation });
       if (announce)
         contentStatus(
-          t("gameplay:selectedAndReady", { value1: result.installed ? t("gameplay:installed3", { value1: contentText(result.pack, 'name') }) : '', value2: contentText(campaign.levels[levelIndex], 'name') }),
+          t('gameplay:selectedAndReady', {
+            value1: result.installed
+              ? t('gameplay:installed3', { value1: contentText(result.pack, 'name') })
+              : '',
+            value2: contentText(campaign.levels[levelIndex], 'name'),
+          }),
         );
       else contentStatus('');
       return operation;
@@ -5185,7 +5372,7 @@ try {
     const index = campaign.levels.findIndex((level) => level.id === levelId);
     if (index < 0 || !missionAvailable(index)) {
       refreshContentSelectors();
-      contentStatus(t("interface:thatLevelIsStillLockedCompleteTheEarlierMissionsFirst"), true);
+      contentStatus(t('interface:thatLevelIsStillLockedCompleteTheEarlierMissionsFirst'), true);
       return false;
     }
     invalidateContentSwitch();
@@ -5194,7 +5381,9 @@ try {
     levelIndex = index;
     prepare();
     rememberSelection();
-    contentStatus(t("gameplay:selectedAndReady2", { value1: contentText(campaign.levels[levelIndex], 'name') }));
+    contentStatus(
+      t('gameplay:selectedAndReady2', { value1: contentText(campaign.levels[levelIndex], 'name') }),
+    );
     return true;
   }
   function savedAttempt() {
@@ -5223,24 +5412,30 @@ try {
     show('continue-saved', atReady && !!preview);
     show('continue-saved-note', atReady && !!preview);
     $('continue-saved').disabled = sessionBusy;
-    localizedText($('continue-saved'), () =>sessionBusy
-      ? t("interface:verifyingSavedFlight")
-      : t("interface:loadSavedFlight"));
-    localizedText($('continue-saved-note'), () =>preview
-      ? `${contentText(preview, 'title')}${savedMode ? ` · ${savedMode}` : ''}. ${preview.note}`
-      : '');
-    localizedAttribute($('continue-saved'), "title", () => preview?.title || t("interface:loadSavedFlight2"));
+    localizedText($('continue-saved'), () =>
+      sessionBusy ? t('interface:verifyingSavedFlight') : t('interface:loadSavedFlight'),
+    );
+    localizedText($('continue-saved-note'), () =>
+      preview
+        ? `${contentText(preview, 'title')}${savedMode ? ` · ${savedMode}` : ''}. ${preview.note}`
+        : '',
+    );
+    localizedAttribute(
+      $('continue-saved'),
+      'title',
+      () => preview?.title || t('interface:loadSavedFlight2'),
+    );
   }
   function assertWriter() {
-    if (courseSession) throw new Error(t("interface:trainingDoesNotWriteCampaignData"));
+    if (courseSession) throw new Error(t('interface:trainingDoesNotWriteCampaignData'));
     if (!persistenceReady || !writer.writable)
-      throw new Error(writer.reason || t("interface:storageRecoveryMustFinishBeforeSaving"));
+      throw new Error(writer.reason || t('interface:storageRecoveryMustFinishBeforeSaving'));
     if (localStorage.getItem(`${libraryKey}.backup-lock`) !== null)
-      throw new Error(t("interface:aBackupIsBeingRestoredSavingResumesWhenItFinishes"));
+      throw new Error(t('interface:aBackupIsBeingRestoredSavingResumesWhenItFinishes'));
   }
   function snapshotAttempt(savedAt) {
     if (practice || !recorder || !started || ['won', 'lost'].includes(run.status))
-      throw new Error(t("interface:startAnUnfinishedCampaignFlightToSaveIt"));
+      throw new Error(t('interface:startAnUnfinishedCampaignFlightToSaveIt'));
     return suspendSession({
       run,
       recorder,
@@ -5258,9 +5453,7 @@ try {
   }
   function currentBackupSession(savedAt) {
     if (candidateHost)
-      throw new Error(
-        t("interface:authoredTestFlightsUseSeparateStorageExportThisAttemptOr"),
-      );
+      throw new Error(t('interface:authoredTestFlightsUseSeparateStorageExportThisAttemptOr'));
     return started && recorder && !practice && !['won', 'lost'].includes(run.status)
       ? snapshotAttempt(savedAt)
       : savedAttempt();
@@ -5268,9 +5461,9 @@ try {
   function snapshotCurrentBackup(savedAt = new Date().toISOString()) {
     return externalBackup.snapshot(() => {
       if (contentSwitchBusy || sessionBusy || backupBusy)
-        throw new Error(t("interface:finishThePendingContentOrSaveOperationBeforeExporting"));
+        throw new Error(t('interface:finishThePendingContentOrSaveOperationBeforeExporting'));
       if (started && !paused && !['won', 'lost'].includes(run.status))
-        throw new Error(t("interface:pauseTheCurrentFlightBeforePreparingGameData"));
+        throw new Error(t('interface:pauseTheCurrentFlightBeforePreparingGameData'));
       // Capture time belongs to this export, while all actual host contents are
       // read again after waits so resumed/replaced state cannot pass as unchanged.
       return { library, packs, session: currentBackupSession(savedAt) };
@@ -5286,20 +5479,18 @@ try {
   }
   function persistAttempt(notify = true) {
     if (titleFlightHold)
-      throw new Error(t("interface:explicitlyResumeTheVerifiedFlightBeforeSavingAgain"));
+      throw new Error(t('interface:explicitlyResumeTheVerifiedFlightBeforeSavingAgain'));
     if (modeDepartureHold)
-      throw new Error(t("interface:returnToTheFlightAndExplicitlyResumeBeforeSavingAgain"));
+      throw new Error(t('interface:returnToTheFlightAndExplicitlyResumeBeforeSavingAgain'));
     if (courseEntryHold)
-      throw new Error(
-        t("interface:theCourseHandoffKeepsThisFlightPausedResumeExplicitlyBefore"),
-      );
+      throw new Error(t('interface:theCourseHandoffKeepsThisFlightPausedResumeExplicitlyBefore'));
     assertWriter();
     const session = snapshotAttempt();
     let saved;
     try {
       saved = saveSession(localStorage, sessionKey, session);
     } catch {
-      saved = { ok: false, warning: t("interface:storageIsUnavailableExportThisAttempt") };
+      saved = { ok: false, warning: t('interface:storageIsUnavailableExportThisAttempt') };
     }
     if (saved.ok) {
       try {
@@ -5312,7 +5503,7 @@ try {
     if (notify)
       warning(
         saved.ok
-          ? t("interface:flightSavedLoadItFromLibrarySavesWheneverYouReturn")
+          ? t('interface:flightSavedLoadItFromLibrarySavesWheneverYouReturn')
           : saved.warning,
       );
     return session;
@@ -5331,20 +5522,18 @@ try {
   }
   async function restoreAttempt(candidate, { beforeAdopt, onAdopted, onStatus, signal } = {}) {
     if (courseSession || courseEntry)
-      throw new Error(t("interface:endFirstFlightBeforeLoadingACampaignFlight"));
-    if (sessionBusy) throw new Error(t("interface:aFlightIsAlreadyBeingVerified"));
-    if (signal?.aborted) throw new DOMException(t("interface:titleLaunchCancelled"), 'AbortError');
+      throw new Error(t('interface:endFirstFlightBeforeLoadingACampaignFlight'));
+    if (sessionBusy) throw new Error(t('interface:aFlightIsAlreadyBeingVerified'));
+    if (signal?.aborted) throw new DOMException(t('interface:titleLaunchCancelled'), 'AbortError');
     const entry = findCampaignEntry(candidate?.campaignKey);
     if (!entry)
       throw new Error(
         candidateHost
-          ? t("interface:thisAuthoredFlightNeedsItsOriginalTestEditionItsSaved")
-          : t("interface:installTheMatchingCampaignPackBeforeLoadingThisFlight"),
+          ? t('interface:thisAuthoredFlightNeedsItsOriginalTestEditionItsSaved')
+          : t('interface:installTheMatchingCampaignPackBeforeLoadingThisFlight'),
       );
     if (candidateHost && !candidateHost.owns(entry))
-      throw new Error(
-        t("interface:openThisLegacyFlightInTheOrdinaryGameThisRoute"),
-      );
+      throw new Error(t('interface:openThisLegacyFlightInTheOrdinaryGameThisRoute'));
     invalidateContentSwitch();
     sessionBusy = true;
     refreshSavedFlight();
@@ -5361,14 +5550,18 @@ try {
       controller.abort();
       // Title cancellation owns this field status too. Settle it immediately;
       // a pending decoder may finish later, after another action owns the UI.
-      feedback?.finish(t("interface:preparationCancelledYourFlightRemainsPaused"), 'cancelled');
+      feedback?.finish(t('interface:preparationCancelledYourFlightRemainsPaused'), 'cancelled');
     };
     signal?.addEventListener('abort', abort, { once: true });
     try {
-      feedback = beginPreparation(t("interface:verifyingYourSavedFlight"), cancelRestore, 'verifying');
+      feedback = beginPreparation(
+        t('interface:verifyingYourSavedFlight'),
+        cancelRestore,
+        'verifying',
+      );
       onStatus?.({
         status: 'preparing',
-        message: t("interface:verifyingYourSavedFlight"),
+        message: t('interface:verifyingYourSavedFlight'),
         stage: 'verifying',
       });
       const restored = await restoreSession(candidate, {
@@ -5382,7 +5575,7 @@ try {
       });
       if (controller.signal.aborted)
         throw new DOMException(
-          t("interface:loadingWasCancelledYourNewerSelectionIsKept"),
+          t('interface:loadingWasCancelledYourNewerSelectionIsKept'),
           'AbortError',
         );
       if (restored.session.visualThemePin) {
@@ -5431,7 +5624,7 @@ try {
         },
       });
       if (controller.signal.aborted)
-        throw new DOMException(t("interface:pictureRestoreCancelled"), 'AbortError');
+        throw new DOMException(t('interface:pictureRestoreCancelled'), 'AbortError');
       beforeAdopt?.();
       feedback.finish(savedFlightRestoredMessage);
       selectEntry(entry, {
@@ -5458,7 +5651,7 @@ try {
       bodyId = presets.characters[restored.session.bodyId] ? restored.session.bodyId : theme.player;
       started = true;
       paused = true;
-      localizedText($('pause-button'), () =>'▶');
+      localizedText($('pause-button'), () => '▶');
       handled = false;
       recordingStopped = false;
       clearInput();
@@ -5492,7 +5685,7 @@ try {
     } catch (error) {
       if (controller.signal.aborted)
         throw new DOMException(
-          t("interface:loadingWasCancelledYourNewerSelectionIsKept"),
+          t('interface:loadingWasCancelledYourNewerSelectionIsKept'),
           'AbortError',
         );
       feedback?.finish(`Saved flight unavailable: ${error.message}`, 'error');
@@ -5523,7 +5716,7 @@ try {
     if (ticket.prewarm?.observe === ticket.observe) ticket.prewarm.observe = null;
     ticket.feedback.finish({
       state: 'cancelled',
-      message: t("interface:preparationCancelledYourFlightRemainsPaused"),
+      message: t('interface:preparationCancelledYourFlightRemainsPaused'),
     });
     $('shell-flight-cancel').hidden = true;
   }
@@ -5575,7 +5768,10 @@ try {
       !run
     )
       return;
-    const feedback = titleFeedback.begin({ message: t("interface:preparingYourFlight"), stage: 'preparing' });
+    const feedback = titleFeedback.begin({
+      message: t('interface:preparingYourFlight'),
+      stage: 'preparing',
+    });
     const ticket = {
       controller: new AbortController(),
       actorChoice: actorPreferences.snapshot(),
@@ -5602,10 +5798,13 @@ try {
       ticket.persistenceReady = persistenceReady;
       ticket.backupLock = localStorage.getItem(`${libraryKey}.backup-lock`);
       if (ticket.backupLock !== null)
-        throw new Error(t("interface:finishGameDataRecoveryBeforeContinuing"));
+        throw new Error(t('interface:finishGameDataRecoveryBeforeContinuing'));
       const assertCurrent = () => {
         if (!titleFlightCurrent(ticket))
-          throw new DOMException(t("interface:titleLaunchChangedYourFlightStaysPaused"), 'AbortError');
+          throw new DOMException(
+            t('interface:titleLaunchChangedYourFlightStaysPaused'),
+            'AbortError',
+          );
       };
       assertCurrent();
       let expected = ticket;
@@ -5615,14 +5814,12 @@ try {
       const continuing = started && !['won', 'lost'].includes(run.status);
       if (!continuing && kind === 'continue') {
         if (!ticket.savedRaw)
-          throw new Error(t("interface:theSavedFlightIsUnavailableOpenLibrarySavesToReview"));
+          throw new Error(t('interface:theSavedFlightIsUnavailableOpenLibrarySavesToReview'));
         let candidate;
         try {
           candidate = JSON.parse(ticket.savedRaw);
         } catch {
-          throw new Error(
-            t("interface:theSavedFlightNeedsRecoveryOpenLibrarySavesItsBytes"),
-          );
+          throw new Error(t('interface:theSavedFlightNeedsRecoveryOpenLibrarySavesItsBytes'));
         }
         expected = await restoreAttempt(candidate, {
           beforeAdopt: assertCurrent,
@@ -5634,9 +5831,7 @@ try {
         });
       } else {
         if (!continuing && ticket.savedRaw !== null)
-          throw new Error(
-            t("interface:aSavedFlightIsPresentChooseContinueOrReviewLibrary"),
-          );
+          throw new Error(t('interface:aSavedFlightIsPresentChooseContinueOrReviewLibrary'));
         if (campaignOverview || ['won', 'lost'].includes(run.status)) {
           // The named Start is an explicit fresh attempt after a completed result.
           campaignOverview = false;
@@ -5653,7 +5848,7 @@ try {
         }
         const owner = flightPictures;
         if (!owner)
-          throw new Error(t("interface:theMissionPictureIsUnavailableChooseTheMissionAgain"));
+          throw new Error(t('interface:theMissionPictureIsUnavailableChooseTheMissionAgain'));
         ticket.prewarm =
           picturePrewarm?.owner === owner && picturePrewarm.themeId === theme.id
             ? picturePrewarm
@@ -5674,7 +5869,8 @@ try {
           await Promise.race([
             pending,
             new Promise((resolve, reject) => {
-              abort = () => reject(new DOMException(t("interface:titleLaunchCancelled"), 'AbortError'));
+              abort = () =>
+                reject(new DOMException(t('interface:titleLaunchCancelled'), 'AbortError'));
               signal.addEventListener('abort', abort, { once: true });
               if (signal.aborted) abort();
             }),
@@ -5683,7 +5879,7 @@ try {
           signal.removeEventListener('abort', abort);
         }
         if (owner !== flightPictures)
-          throw new DOMException(t("interface:theChosenPictureChanged"), 'AbortError');
+          throw new DOMException(t('interface:theChosenPictureChanged'), 'AbortError');
         assertCurrent();
         if (freshVisualAttempt && !flightVisualLease) {
           ticket.visuals = await prepareFreshAttemptVisuals(
@@ -5711,19 +5907,28 @@ try {
         }
       }
       if (!titleFlightCurrent(ticket, expected) || !flightPictures?.ready(theme.id))
-        throw new DOMException(t("interface:titleLaunchChangedYourFlightStaysPaused"), 'AbortError');
+        throw new DOMException(
+          t('interface:titleLaunchChangedYourFlightStaysPaused'),
+          'AbortError',
+        );
       if (ticket.visuals) {
         adoptFlightVisualLease(ticket.visuals);
         ticket.visuals = null;
       }
       if (!titleFlightCurrent(ticket, expected))
-        throw new DOMException(t("interface:titleLaunchChangedYourFlightStaysPaused"), 'AbortError');
+        throw new DOMException(
+          t('interface:titleLaunchChangedYourFlightStaysPaused'),
+          'AbortError',
+        );
       if (ticket.actorsPrepared) {
         adoptFlightActors(ticket.actors);
         ticket.actors = null;
       }
       if (!titleFlightCurrent(ticket, expected))
-        throw new DOMException(t("interface:titleLaunchChangedYourFlightStaysPaused"), 'AbortError');
+        throw new DOMException(
+          t('interface:titleLaunchChangedYourFlightStaysPaused'),
+          'AbortError',
+        );
       feedback.finish({ message: '' });
       titleFlight = null;
       $('shell-flight-cancel').hidden = true;
@@ -5735,7 +5940,7 @@ try {
           state: error.name === 'AbortError' ? 'cancelled' : 'error',
           message:
             error.name === 'AbortError'
-              ? t("interface:preparationCancelledYourFlightRemainsPaused")
+              ? t('interface:preparationCancelledYourFlightRemainsPaused')
               : `Flight unavailable: ${error.message}`,
         });
     } finally {
@@ -5839,14 +6044,16 @@ try {
             assertWriter();
             if (courseSession || courseEntry || contentSwitchBusy || sessionBusy || backupBusy)
               throw new Error(
-                t("interface:finishTrainingOrThePendingContentSaveOperationBeforePreparing"),
+                t('interface:finishTrainingOrThePendingContentSaveOperationBeforePreparing'),
               );
             if (!storedStateAdopted || !persistenceReady || !writer.writable)
               throw new Error(
-                t("interface:resolveStorageRecoveryBeforePreparingAllInventoriesIndividualGameData"),
+                t(
+                  'interface:resolveStorageRecoveryBeforePreparingAllInventoriesIndividualGameData',
+                ),
               );
             if (started && !paused && !['won', 'lost'].includes(run.status))
-              throw new Error(t("interface:pauseTheFlightBeforePreparingABackupSet"));
+              throw new Error(t('interface:pauseTheFlightBeforePreparingABackupSet'));
             return JSON.stringify({
               library,
               packs,
@@ -5913,7 +6120,7 @@ try {
       // Do not clear an actual pending pack/restore/backup operation to make an
       // export eligible. An otherwise idle queued autoplay loses its ticket.
       if (contentSwitchBusy || sessionBusy || backupBusy)
-        throw new Error(t("interface:finishThePendingContentOrSaveOperationBeforeExporting"));
+        throw new Error(t('interface:finishThePendingContentOrSaveOperationBeforeExporting'));
       invalidateContentSwitch();
       return attemptFiles.prepare(options);
     },
@@ -5935,13 +6142,13 @@ try {
     sessionNote: () =>
       [
         sessionPictures.status().originals
-          ? t("interface:sessionOnlyPictureOriginalsAreNotIncludedInThisJson")
+          ? t('interface:sessionOnlyPictureOriginalsAreNotIncludedInThisJson')
           : '',
         !storedStateAdopted
-          ? t("interface:thisExportContainsTheCurrentSessionOnlyUnreadableStoredData")
+          ? t('interface:thisExportContainsTheCurrentSessionOnlyUnreadableStoredData')
           : '',
         started && !recorder
-          ? t("interface:thisFlightNoLongerHasACompleteRecordingThePrevious")
+          ? t('interface:thisFlightNoLongerHasACompleteRecordingThePrevious')
           : '',
       ]
         .filter(Boolean)
@@ -5949,18 +6156,18 @@ try {
     restore: restoreAttempt,
     checkProfileReplacement: () => {
       if (courseSession || courseEntry)
-        throw new Error(t("interface:endFirstFlightBeforeReplacingPlayerData"));
+        throw new Error(t('interface:endFirstFlightBeforeReplacingPlayerData'));
     },
     beforeProfileReplacement: () => {
       if (courseSession || courseEntry)
-        throw new Error(t("interface:endFirstFlightBeforeReplacingPlayerData"));
+        throw new Error(t('interface:endFirstFlightBeforeReplacingPlayerData'));
       invalidateContentSwitch();
       cancelRestore();
       masteryAwards.cancelAll();
     },
     setLibrary: (next) => {
       if (courseSession || courseEntry)
-        throw new Error(t("interface:endFirstFlightBeforeReplacingPlayerData"));
+        throw new Error(t('interface:endFirstFlightBeforeReplacingPlayerData'));
       invalidateContentSwitch();
       masteryAwards.cancelAll();
       library = next;
@@ -5974,7 +6181,7 @@ try {
     },
     applyBackup: async (prepared) => {
       if (courseSession || courseEntry)
-        throw new Error(t("interface:endFirstFlightBeforeImportingABackup"));
+        throw new Error(t('interface:endFirstFlightBeforeImportingABackup'));
       // Hold synchronously after the panel's final identity check, before any
       // preparation can yield and let a pending seal escape the Undo snapshot.
       const releaseAwards = masteryAwards.holdCommits();
@@ -6009,7 +6216,7 @@ try {
           storedStateAdopted = true;
           saveSucceeded = true;
           if (result.warning) {
-            localizedText($('save-warning'), () =>result.warning);
+            localizedText($('save-warning'), () => result.warning);
             show('save-warning', true);
           } else show('save-warning', false);
           library = result.profile.library;
@@ -6063,9 +6270,21 @@ try {
     getControlLabels: () => {
       const keys = bindingLabels(resolveKeyBindings(library.preferences.keyboardBindings));
       return {
-        directions: t("gameplay:keysUpDownLeftRightTouchDirectionButtonsBelowThe", { value1: keys.up, value2: keys.down, value3: keys.left, value4: keys.right, value5: controllerStickLabel(library.preferences.controllerBindings, 'flight') }),
-        stop: t("gameplay:stopVisibleStopController", { value1: keys.stop, value2: controllerLabels.flight.stop }),
-        pause: t("gameplay:pauseVisiblePauseController", { value1: keys.pause, value2: controllerLabels.flight.pause }),
+        directions: t('gameplay:keysUpDownLeftRightTouchDirectionButtonsBelowThe', {
+          value1: keys.up,
+          value2: keys.down,
+          value3: keys.left,
+          value4: keys.right,
+          value5: controllerStickLabel(library.preferences.controllerBindings, 'flight'),
+        }),
+        stop: t('gameplay:stopVisibleStopController', {
+          value1: keys.stop,
+          value2: controllerLabels.flight.stop,
+        }),
+        pause: t('gameplay:pauseVisiblePauseController', {
+          value1: keys.pause,
+          value2: controllerLabels.flight.pause,
+        }),
       };
     },
   });
@@ -6178,12 +6397,16 @@ try {
       ...run.classRecipes.map((c) => new Option(c.label, c.id)),
     );
     $('switch-class-select').value = run.activeClassId || classId;
-    localizedText($('switch-description'), () =>contentText(run.classRecipe, 'description'));
-    localizedText($('switch-status'), () =>t("interface:yourFlightIsPausedWhileChoosing"));
+    localizedText($('switch-description'), () => contentText(run.classRecipe, 'description'));
+    localizedText($('switch-status'), () => t('interface:yourFlightIsPausedWhileChoosing'));
     $('hangar-dialog').showModal();
   };
   $('switch-class-select').onchange = () => {
-    localizedText($('switch-description'), () =>run.classRecipes.find((c) => c.id === $('switch-class-select').value)?.description || '');
+    localizedText(
+      $('switch-description'),
+      () =>
+        run.classRecipes.find((c) => c.id === $('switch-class-select').value)?.description || '',
+    );
   };
   $('switch-class-button').onclick = () => {
     if (!craftSwitchAvailable()) return;
@@ -6236,16 +6459,16 @@ try {
     onOpen: () => clearInput(),
     unavailable: () => {
       if (practiceSession || courseEntry || courseEntryHold)
-        return t("interface:storedProfileRecoveryIsAvailableFromOrdinarySoloSettings");
+        return t('interface:storedProfileRecoveryIsAvailableFromOrdinarySoloSettings');
       if (contentSwitchBusy || sessionBusy || backupBusy)
-        return t("interface:finishThePendingContentOrSaveOperationBeforeOpeningRecovery");
+        return t('interface:finishThePendingContentOrSaveOperationBeforeOpeningRecovery');
       if (
         [...document.querySelectorAll('dialog[open]')].some(
           (dialog) =>
             !['settings-dialog', 'shell-home', 'profile-recovery-dialog'].includes(dialog.id),
         )
       )
-        return t("interface:closeTheOtherToolBeforeOpeningRecovery");
+        return t('interface:closeTheOtherToolBeforeOpeningRecovery');
       return '';
     },
   });
@@ -6332,12 +6555,16 @@ try {
     );
     syncAssistControls();
     const status = $('screen-steering-status');
-    localizedText(status, () =>touchPreferences.warning() ||
-      (saved.ok
-        ? t("interface:steeringHandSaved")
-        : resolveTouchControls(library.preferences.touchControls).side === requested
-          ? `Steering hand selected for this session. ${saved.warning}`
-          : `Steering hand unchanged. ${saved.warning}`));
+    localizedText(
+      status,
+      () =>
+        touchPreferences.warning() ||
+        (saved.ok
+          ? t('interface:steeringHandSaved')
+          : resolveTouchControls(library.preferences.touchControls).side === requested
+            ? `Steering hand selected for this session. ${saved.warning}`
+            : `Steering hand unchanged. ${saved.warning}`),
+    );
     status.hidden = false;
   };
   function refreshScreenSteeringHand() {
@@ -6359,7 +6586,7 @@ try {
       strip.append(...ordered);
       if (ordered.some((group) => group.contains(focused))) focused.focus({ preventScroll: true });
     }
-    localizedText($('screen-steering-status'), () =>'');
+    localizedText($('screen-steering-status'), () => '');
     $('screen-steering-status').hidden = true;
   }
   $('text-size').onchange = () => changeDisplay({ textSize: $('text-size').value });
@@ -6374,7 +6601,7 @@ try {
       touchPreferences.set(next, { persist: !practice && !courseEntry });
       syncAssistControls();
       if (touchPreferences.warning()) {
-        localizedText($('screen-steering-status'), () =>touchPreferences.warning());
+        localizedText($('screen-steering-status'), () => touchPreferences.warning());
         $('screen-steering-status').hidden = false;
       }
     };
@@ -6388,9 +6615,11 @@ try {
     $('reduced-effects').checked = state.reducedEffects;
     $('settings-reduced-effects').checked = state.reducedEffects;
     document.body.dataset.effects = state.effectiveReducedEffects ? 'reduced' : 'full';
-    localizedText($('display-system-reduction'), () =>state.effectiveReducedEffects && !state.reducedEffects
-        ? t("interface:systemReducedMotionIsActiveYourSavedReducedEffectsChoice")
-        : '');
+    localizedText($('display-system-reduction'), () =>
+      state.effectiveReducedEffects && !state.reducedEffects
+        ? t('interface:systemReducedMotionIsActiveYourSavedReducedEffectsChoice')
+        : '',
+    );
   }
   function refreshTextSize() {
     // Current validated profile is a fallback only; shared/explicit intent wins.
@@ -6407,7 +6636,10 @@ try {
       textSize: state.textSize,
       reducedEffects: state.reducedEffects,
     });
-    localizedText($('display-preferences-status'), () =>displayPreferences.getWarning() || saved.warning || '');
+    localizedText(
+      $('display-preferences-status'),
+      () => displayPreferences.getWarning() || saved.warning || '',
+    );
   }
   $('settings-grid').onchange = () => preferences({ showGrid: $('settings-grid').checked });
   function syncAssistControls() {
@@ -6421,7 +6653,9 @@ try {
     document.body.dataset.touchSide = touch.side;
     document.body.dataset.touchSize = touch.size;
     document.body.style.setProperty('--touch-opacity', touch.opacity);
-    localizedText($('touch-instruction'), () =>touch.mode === 'swipe' ? t("interface:swipeToTurn") : t("interface:dragToSteer"));
+    localizedText($('touch-instruction'), () =>
+      touch.mode === 'swipe' ? t('interface:swipeToTurn') : t('interface:dragToSteer'),
+    );
   }
   for (const id of ['reduced-effects', 'settings-reduced-effects']) {
     $(id).onchange = () => {
@@ -6461,7 +6695,7 @@ try {
     }
     bodyWarning = '';
     if (!Object.hasOwn(presets.characters, bodyId)) {
-      bodyWarning = t("gameplay:bodyIsNotRegisteredUsingTheNeutralRigChooseA", { value1: bodyId });
+      bodyWarning = t('gameplay:bodyIsNotRegisteredUsingTheNeutralRigChooseA', { value1: bodyId });
       bodyId = 'neutral-marker';
     }
     for (const [name, value] of Object.entries({
@@ -6472,14 +6706,24 @@ try {
       danger: theme.palette.danger,
     }))
       document.documentElement.style.setProperty(`--${name}`, value);
-    localizedText($('theme-caption'), () =>`${contentText(theme, 'name').toUpperCase()} / ${contentText(theme, 'subtitle').toUpperCase()}`);
-    localizedText($('score-label'), () =>contentText(theme, 'labels.currency').toUpperCase());
-    localizedText($('pickup-button').firstChild, () =>contentText(theme, 'labels.supply') + ' ');
-    localizedAttribute($('action-button'), "title", () => contentText(theme, 'labels.ability'));
-    localizedText($('world-legend'), () =>`${contentText(theme, 'labels.enemy')} · ${contentText(theme, 'labels.boss')} · ${contentText(theme, 'labels.supply')}`);
-    localizedText($('footer-note'), () =>theme.id === 'coupa'
-        ? t("interface:fictionalSpendManagementThemeOriginalHelperArtwork")
-        : t("interface:originalWorldsMakeEveryLineCount"));
+    localizedText(
+      $('theme-caption'),
+      () =>
+        `${contentText(theme, 'name').toUpperCase()} / ${contentText(theme, 'subtitle').toUpperCase()}`,
+    );
+    localizedText($('score-label'), () => contentText(theme, 'labels.currency').toUpperCase());
+    localizedText($('pickup-button').firstChild, () => contentText(theme, 'labels.supply') + ' ');
+    localizedAttribute($('action-button'), 'title', () => contentText(theme, 'labels.ability'));
+    localizedText(
+      $('world-legend'),
+      () =>
+        `${contentText(theme, 'labels.enemy')} · ${contentText(theme, 'labels.boss')} · ${contentText(theme, 'labels.supply')}`,
+    );
+    localizedText($('footer-note'), () =>
+      theme.id === 'coupa'
+        ? t('interface:fictionalSpendManagementThemeOriginalHelperArtwork')
+        : t('interface:originalWorldsMakeEveryLineCount'),
+    );
     painter.style = scenario?.presentation?.style || library.preferences.style;
     updateBodies();
     painter.setLook(theme, bodyId, painterVisuals());
@@ -6489,7 +6733,9 @@ try {
     const allowed = availableBodies();
     $('body-select').replaceChildren();
     for (const [id, body] of Object.entries(presets.characters)) {
-      const option = localizedOption(() => `${contentText(body, 'label')}${allowed.has(id) || practice ? '' : ' · ' + t('common:status.locked')}`,
+      const option = localizedOption(
+        () =>
+          `${contentText(body, 'label')}${allowed.has(id) || practice ? '' : ' · ' + t('common:status.locked')}`,
         id,
       );
       option.disabled = !allowed.has(id) && !practice;
@@ -6502,17 +6748,25 @@ try {
           : 'neutral-marker';
     $('body-select').value = bodyId;
     const next = currentAppearanceMilestones().find((tier) => !tier.earned);
-    localizedText($('appearance-hint'), () =>practice
-      ? t("interface:previewAccessAllAppearancesAreAvailablePracticeGrantsNoCampaign")
-      : next
-        ? t("gameplay:differentMissionsInThisCampaignSeeCollectionForTheAppearances", { value1: contentText(next, 'name'), value2: next.count, value3: next.target })
-        : t("interface:allChapterAppearancesAreAvailableInThisCampaignCosmeticsDo"));
+    localizedText($('appearance-hint'), () =>
+      practice
+        ? t('interface:previewAccessAllAppearancesAreAvailablePracticeGrantsNoCampaign')
+        : next
+          ? t('gameplay:differentMissionsInThisCampaignSeeCollectionForTheAppearances', {
+              value1: contentText(next, 'name'),
+              value2: next.count,
+              value3: next.target,
+            })
+          : t('interface:allChapterAppearancesAreAvailableInThisCampaignCosmeticsDo'),
+    );
   }
   const bodyLabels = (ids) => ids.map((id) => presets.characters[id]?.label || id);
   function paintAppearanceRewards(entry) {
     const selected = entry.campaign;
     const name = selected.title || selected.name || selected.id;
-    localizedText($('appearance-campaign'), () =>t("gameplay:campaignAppearances", { value1: name }));
+    localizedText($('appearance-campaign'), () =>
+      t('gameplay:campaignAppearances', { value1: name }),
+    );
     $('appearance-rewards').replaceChildren();
     for (const tier of difficultyNavigation.milestones(
       entry,
@@ -6522,32 +6776,50 @@ try {
       const row = document.createElement('article');
       row.className = `appearance-reward${tier.earned ? ' earned' : ''}`;
       const thumbnail = document.createElement('img');
-      localizedAttribute(thumbnail, "alt", () => '');
+      localizedAttribute(thumbnail, 'alt', () => '');
       thumbnail.width = thumbnail.height = 64;
       const body = presets.characters[tier.bodyIds[0]];
       if (body?.src)
         thumbnail.src = new URL(`../authoring/motion-lab/${body.src}`, import.meta.url).href;
       const copy = document.createElement('div');
       const title = document.createElement('h4');
-      localizedText(title, () =>contentText(tier, 'name'));
+      localizedText(title, () => contentText(tier, 'name'));
       const state = document.createElement('p');
       state.className = 'reward-progress';
-      localizedText(state, () =>t("gameplay:different", { value1: tier.earned ? t("interface:available") : t("interface:locked"), value2: Math.min(tier.count, tier.target), value3: tier.target, value4: tier.target === 1 ? 'mission' : 'missions' }));
+      localizedText(state, () =>
+        t('gameplay:different', {
+          value1: tier.earned ? t('interface:available') : t('interface:locked'),
+          value2: Math.min(tier.count, tier.target),
+          value3: tier.target,
+          value4: tier.target === 1 ? 'mission' : 'missions',
+        }),
+      );
       const names = document.createElement('p');
-      localizedText(names, () =>bodyLabels(tier.bodyIds).join(' · '));
+      localizedText(names, () => bodyLabels(tier.bodyIds).join(' · '));
       const detail = document.createElement('p');
       detail.className = 'reward-detail';
       const remaining = tier.target - tier.count;
-      localizedText(detail, () =>tier.earned
-        ? t("interface:availableInThisCampaign")
-        : t("gameplay:finishMoreInThisCampaign", { value1: remaining, value2: remaining === 1 ? 'mission' : 'missions' }));
+      localizedText(detail, () =>
+        tier.earned
+          ? t('interface:availableInThisCampaign')
+          : t('gameplay:finishMoreInThisCampaign', {
+              value1: remaining,
+              value2: remaining === 1 ? 'mission' : 'missions',
+            }),
+      );
       copy.append(title, state, names, detail);
       row.append(thumbnail, copy);
       $('appearance-rewards').append(row);
     }
-    localizedText($('collection-note'), () =>practice
-      ? t("interface:practicePreviewsEveryAppearanceWithoutEarningRewardsTheseRowsShow")
-      : t("gameplay:appearancesBelongToThisCampaignCosmeticsDoNotChangeAbilities", { value1: difficultyLabel(entry) ? (" " + t("interface:standardAndGentleShareMissionAndAppearanceUnlocks") + "") : '' }));
+    localizedText($('collection-note'), () =>
+      practice
+        ? t('interface:practicePreviewsEveryAppearanceWithoutEarningRewardsTheseRowsShow')
+        : t('gameplay:appearancesBelongToThisCampaignCosmeticsDoNotChangeAbilities', {
+            value1: difficultyLabel(entry)
+              ? ' ' + t('interface:standardAndGentleShareMissionAndAppearanceUnlocks') + ''
+              : '',
+          }),
+    );
   }
   function focusAppearance() {
     if ($('collection-dialog').open) $('collection-dialog').close();
@@ -6568,8 +6840,12 @@ try {
     theme = themesFile.themes.find((t) => t.id === theme.id) || themesFile.themes[0];
     if (!classRegistry.some((c) => c.id === classId)) classId = classRegistry[0].id;
     bodyId = availableBodies().has(bodyId) ? bodyId : theme.player;
-    $('class-select').replaceChildren(...classRegistry.map((c) => localizedOption(() => contentText(c, 'label'), c.id)));
-    $('theme-select').replaceChildren(...themesFile.themes.map((t) => localizedOption(() => contentText(t, 'name'), t.id)));
+    $('class-select').replaceChildren(
+      ...classRegistry.map((c) => localizedOption(() => contentText(c, 'label'), c.id)),
+    );
+    $('theme-select').replaceChildren(
+      ...themesFile.themes.map((t) => localizedOption(() => contentText(t, 'name'), t.id)),
+    );
     $('theme-select').value = theme.id;
     setTheme();
   }
@@ -6577,7 +6853,12 @@ try {
     missionThumbnails.cancel();
     $('missions').replaceChildren();
     if (courseSession) {
-      localizedText($('campaign-progress'), () =>t("gameplay:lessonsThisVisit", { value1: Object.values(courseVisit).filter((value) => value === 'complete').length, value2: FIRST_FLIGHT_LESSONS.length }));
+      localizedText($('campaign-progress'), () =>
+        t('gameplay:lessonsThisVisit', {
+          value1: Object.values(courseVisit).filter((value) => value === 'complete').length,
+          value2: FIRST_FLIGHT_LESSONS.length,
+        }),
+      );
       return;
     }
     const thumbnailTargets = [];
@@ -6597,21 +6878,23 @@ try {
       b.setAttribute('aria-label', `${index + 1}. ${level.name}${b.disabled ? ' — locked' : ''}`);
       const number = document.createElement('span');
       number.className = 'number';
-      localizedText(number, () =>String(index + 1).padStart(2, '0'));
+      localizedText(number, () => String(index + 1).padStart(2, '0'));
       const name = document.createElement('span');
       name.className = 'name';
-      localizedText(name, () =>contentText(level, 'name'));
+      localizedText(name, () => contentText(level, 'name'));
       const medal = document.createElement('span');
       medal.className = 'medal';
       const reward = { 1: 'bronze', 2: 'silver', 3: 'gold' }[progress.clears[level.id]?.medals];
       if (reward) medal.dataset.presentationReward = reward;
-      localizedText(medal, () => progress.clears[level.id]
-        ? '★'.repeat(progress.clears[level.id].medals)
-        : difficultyNavigation.access(activeEntry, library.campaigns)?.levels[index]?.completed
-          ? '✓'
-          : b.disabled
-            ? '—'
-            : '↗');
+      localizedText(medal, () =>
+        progress.clears[level.id]
+          ? '★'.repeat(progress.clears[level.id].medals)
+          : difficultyNavigation.access(activeEntry, library.campaigns)?.levels[index]?.completed
+            ? '✓'
+            : b.disabled
+              ? '—'
+              : '↗',
+      );
       b.append(number, name, medal);
       b.onclick = (event) => {
         const pending = requestMissionReplacement({ kind: 'card', id: level.id }, b);
@@ -6633,15 +6916,22 @@ try {
       .catch(() => {
         /* Preserve honest unavailable thumbnails. */
       });
-    localizedText($('campaign-progress'), () =>`${String(currentSelection().completed).padStart(2, '0')} / ${String(campaign.levels.length).padStart(2, '0')}${difficultyLabel(activeEntry) ? ` · ${difficultyLabel(activeEntry)} medals` : ''}`);
+    localizedText(
+      $('campaign-progress'),
+      () =>
+        `${String(currentSelection().completed).padStart(2, '0')} / ${String(campaign.levels.length).padStart(2, '0')}${difficultyLabel(activeEntry) ? ` · ${difficultyLabel(activeEntry)} medals` : ''}`,
+    );
     refreshContentSelectors();
   }
   function updateLoadout() {
     const recipe =
       run?.classRecipe || (scenario?.classRecipes || classRegistry).find((c) => c.id === classId);
-    localizedText($('class-description'), () =>contentText(recipe, 'description'));
+    localizedText($('class-description'), () => contentText(recipe, 'description'));
     const actions = arcadeActionCapabilities(run?.level);
-    localizedText($('action-button').firstChild, () =>`${recipe.id === 'scout' ? t("interface:scan") : contentText(recipe, 'label')} `);
+    localizedText(
+      $('action-button').firstChild,
+      () => `${recipe.id === 'scout' ? t('interface:scan') : contentText(recipe, 'label')} `,
+    );
     show('action-button', actions.manualAbility);
     show('pickup-button', manualSupplyAvailable());
     show('manual-equipment-help', actions.manualAbility);
@@ -6649,12 +6939,16 @@ try {
     show('screen-boost-setting', actions.manualBoost);
     show('controller-boost-setting', actions.manualBoost);
     show('ability-state', actions.manualAbility);
-    localizedText($('equipment-help'), () =>actions.manualAbility
-      ? t("interface:thisEditionUsesManualEquipmentScoutScanRevealsNearbyObjectives")
-      : t("interface:arcadeSteerAndCloseLinesTheMapSetsYourCraft"));
-    localizedText($('line-danger-help'), () =>run?.level.classic?.lineImpact
-      ? t("interface:anEnemyStrikingYourUnfinishedLineSendsImpactsAlongIt")
-      : t("interface:aFieldEnemyTouchingYourUnfinishedLineOrCrossingYour"));
+    localizedText($('equipment-help'), () =>
+      actions.manualAbility
+        ? t('interface:thisEditionUsesManualEquipmentScoutScanRevealsNearbyObjectives')
+        : t('interface:arcadeSteerAndCloseLinesTheMapSetsYourCraft'),
+    );
+    localizedText($('line-danger-help'), () =>
+      run?.level.classic?.lineImpact
+        ? t('interface:anEnemyStrikingYourUnfinishedLineSendsImpactsAlongIt')
+        : t('interface:aFieldEnemyTouchingYourUnfinishedLineOrCrossingYour'),
+    );
     refreshKeyPrompts();
     refreshControllerPrompts();
     $('class-select').value = classId;
@@ -6674,14 +6968,15 @@ try {
       return {
         title: contentText(lesson, 'title'),
         copy: contentText(lesson, 'summary'),
-        fullTitle: t("gameplay:firstFlight", { value1: contentText(lesson, 'title') }),
+        fullTitle: t('gameplay:firstFlight', { value1: contentText(lesson, 'title') }),
         fullBrief: [
           contentText(lesson, 'summary'),
           ...lesson.instructions.map((_, i) => contentText(lesson, `instructions.${i}`)),
-          ...lesson.steps.map((step) => `${contentText(step, 'label')}: ${contentText(step, 'instruction')}`),
+          ...lesson.steps.map(
+            (step) => `${contentText(step, 'label')}: ${contentText(step, 'instruction')}`,
+          ),
         ].join('\n\n'),
-        facts:
-          t("interface:optionalTrainingScoutThreeLivesNoMissionDeadlineNoCampaign"),
+        facts: t('interface:optionalTrainingScoutThreeLivesNoMissionDeadlineNoCampaign'),
         status: contentText(lesson, 'instructions.0'),
       };
     }
@@ -6698,9 +6993,9 @@ try {
   }
   function refreshMissionBrief() {
     const brief = currentBriefing();
-    localizedText($('mission-brief-title'), () =>brief.fullTitle);
-    localizedText($('mission-brief-copy'), () =>brief.fullBrief);
-    localizedText($('mission-brief-facts'), () =>brief.facts);
+    localizedText($('mission-brief-title'), () => brief.fullTitle);
+    localizedText($('mission-brief-copy'), () => brief.fullBrief);
+    localizedText($('mission-brief-facts'), () => brief.facts);
     refreshMastery();
     return brief;
   }
@@ -6718,9 +7013,14 @@ try {
         award: masteryAward,
         compact: id === 'mastery-status',
       });
-      if ($(id).textContent !== text) localizedText($(id), () =>text);
+      if ($(id).textContent !== text) localizedText($(id), () => text);
     }
-    localizedText($('mastery-brief'), () =>t("gameplay:optionalSealYourPictureAndNextMissionNeverDependOn", { value1: contentText(masteryDefinition, 'name'), value2: contentText(masteryDefinition, 'description') }));
+    localizedText($('mastery-brief'), () =>
+      t('gameplay:optionalSealYourPictureAndNextMissionNeverDependOn', {
+        value1: contentText(masteryDefinition, 'name'),
+        value2: contentText(masteryDefinition, 'description'),
+      }),
+    );
   }
   function overlay(kind, { preserveFocus = false } = {}) {
     // Repeated suspension may repaint Pause, but does not own a new focus
@@ -6765,102 +7065,156 @@ try {
     show('overlay-brief', !courseSession && (kind === 'ready' || kind === 'pause'));
     show('result-medals', kind === 'won');
     show('retry-consequence', false);
-    localizedText($('retry-consequence'), () =>'');
+    localizedText($('retry-consequence'), () => '');
     const newAppearance = kind === 'won' && !practice && appearanceRewardIds.length > 0;
     show('appearance-unlock', newAppearance);
     show('choose-appearance', newAppearance);
-    localizedText($('appearance-unlock'), () =>newAppearance
-      ? t("gameplay:newAppearancesFor", { value1: contentText(campaign, 'title') || contentText(campaign, 'name') || campaign.id, value2: bodyLabels(appearanceRewardIds).join(' · ') })
-      : '');
-    localizedText($('overlay-eyebrow'), () =>practice
-      ? t("interface:practiceNoCampaignRewards")
-      : t("gameplay:mission", { value1: String(levelIndex + 1).padStart(2, '0'), value2: contentText(run.level, 'name').toUpperCase() }));
+    localizedText($('appearance-unlock'), () =>
+      newAppearance
+        ? t('gameplay:newAppearancesFor', {
+            value1: contentText(campaign, 'title') || contentText(campaign, 'name') || campaign.id,
+            value2: bodyLabels(appearanceRewardIds).join(' · '),
+          })
+        : '',
+    );
+    localizedText($('overlay-eyebrow'), () =>
+      practice
+        ? t('interface:practiceNoCampaignRewards')
+        : t('gameplay:mission', {
+            value1: String(levelIndex + 1).padStart(2, '0'),
+            value2: contentText(run.level, 'name').toUpperCase(),
+          }),
+    );
     if (kind === 'ready') {
       const brief = refreshMissionBrief();
-      localizedText($('overlay-eyebrow'), () =>practice
-        ? t("interface:practiceNoCampaignRewards")
-        : t("gameplay:mission2", { value1: String(levelIndex + 1).padStart(2, '0') }));
-      localizedText($('overlay-title'), () =>$('game-overlay').dataset.intro === 'true' ? t("interface:clearAPathRevealAWorld2") : contentText(brief, 'title'));
-      localizedText($('overlay-copy'), () =>brief.copy);
-      localizedText($('start-button'), () =>t("interface:startMission2"));
+      localizedText($('overlay-eyebrow'), () =>
+        practice
+          ? t('interface:practiceNoCampaignRewards')
+          : t('gameplay:mission2', { value1: String(levelIndex + 1).padStart(2, '0') }),
+      );
+      localizedText($('overlay-title'), () =>
+        $('game-overlay').dataset.intro === 'true'
+          ? t('interface:clearAPathRevealAWorld2')
+          : contentText(brief, 'title'),
+      );
+      localizedText($('overlay-copy'), () => brief.copy);
+      localizedText($('start-button'), () => t('interface:startMission2'));
       if (
         !practice &&
         !Object.hasOwn(progress.clears, run.levelId) &&
         Object.keys(progress.clears).length
       )
-        localizedText($('start-button'), () =>t("interface:continueCampaign"));
+        localizedText($('start-button'), () => t('interface:continueCampaign'));
       refreshKeyPrompts();
     }
     if (kind === 'campaign-complete') {
       const completion = currentSelection();
       const allCleared = completion.completed === completion.total;
-      localizedText($('overlay-eyebrow'), () =>allCleared ? t("interface:campaignComplete") : t("interface:campaignEnd"));
-      localizedText($('overlay-title'), () =>allCleared
-        ? t("interface:everyMissionRevealed")
-        : t("interface:endOfThisCampaign"));
-      localizedText($('overlay-copy'), () =>`${campaign.title || campaign.name || campaign.id}: ${completion.completed} / ${completion.total} missions complete. Enjoy your collection or find any mission in the shared library. Skipped missions remain available.`);
-      localizedText($('next-button'), () =>t("interface:viewCollection"));
-      localizedText($('overlay-footnote'), () =>t("interface:yourEarnedPicturesAndBestResultsAreKept"));
+      localizedText($('overlay-eyebrow'), () =>
+        allCleared ? t('interface:campaignComplete') : t('interface:campaignEnd'),
+      );
+      localizedText($('overlay-title'), () =>
+        allCleared ? t('interface:everyMissionRevealed') : t('interface:endOfThisCampaign'),
+      );
+      localizedText(
+        $('overlay-copy'),
+        () =>
+          `${campaign.title || campaign.name || campaign.id}: ${completion.completed} / ${completion.total} missions complete. Enjoy your collection or find any mission in the shared library. Skipped missions remain available.`,
+      );
+      localizedText($('next-button'), () => t('interface:viewCollection'));
+      localizedText($('overlay-footnote'), () =>
+        t('interface:yourEarnedPicturesAndBestResultsAreKept'),
+      );
     }
     if (kind === 'pause') {
-      localizedText($('overlay-title'), () =>t("interface:paused"));
-      localizedText($('overlay-copy'), () =>'');
-      localizedText($('start-button'), () =>t("interface:resume"));
-      localizedText($('overlay-footnote'), () =>'');
+      localizedText($('overlay-title'), () => t('interface:paused'));
+      localizedText($('overlay-copy'), () => '');
+      localizedText($('start-button'), () => t('interface:resume'));
+      localizedText($('overlay-footnote'), () => '');
     }
     if (kind === 'won') {
-      localizedText($('overlay-title'), () =>t("interface:aLittleMoreLight"));
-      localizedText($('overlay-copy'), () =>`${(run.coverage * 100).toFixed(1)}% captured · ${run.score.toLocaleString()} points · ${timeLabel(run.time)}. ${practice ? t("interface:practiceComplete") : candidateHost?.owns(activeEntry) ? (authoredRoute.id === DEFAULT_JOURNEY_ROUTES.solo ? t("interface:journeyMissionComplete") : t("interface:authoredTestClearRecordedInJourneyProgressNoLegacyCollection")) : completionWarning || (saveSucceeded ? t("interface:fullPictureAddedToYourCollection") : sessionPictures.status().originals ? t("interface:pictureCollectedForThisSessionExportGameDataAndSession") : t("interface:pictureCollectedForThisSessionExportYourLibraryToKeep"))}`);
+      localizedText($('overlay-title'), () => t('interface:aLittleMoreLight'));
+      localizedText(
+        $('overlay-copy'),
+        () =>
+          `${(run.coverage * 100).toFixed(1)}% captured · ${run.score.toLocaleString()} points · ${timeLabel(run.time)}. ${practice ? t('interface:practiceComplete') : candidateHost?.owns(activeEntry) ? (authoredRoute.id === DEFAULT_JOURNEY_ROUTES.solo ? t('interface:journeyMissionComplete') : t('interface:authoredTestClearRecordedInJourneyProgressNoLegacyCollection')) : completionWarning || (saveSucceeded ? t('interface:fullPictureAddedToYourCollection') : sessionPictures.status().originals ? t('interface:pictureCollectedForThisSessionExportGameDataAndSession') : t('interface:pictureCollectedForThisSessionExportYourLibraryToKeep'))}`,
+      );
       if (recoverGameplayTuning(run.level)?.adminOverride)
-        localizedText($('overlay-copy'), () =>`${(run.coverage * 100).toFixed(1)}% captured. Admin playtest complete; no clear, medal or mastery awarded. Reset tuning in Settings for normal progression.`);
-      localizedText($('result-medals'), () =>'★'.repeat(
-        run.medal === 'gold' ? 3 : run.medal === 'silver' ? 2 : 1,
-      ));
-      if (recoverGameplayTuning(run.level)?.adminOverride) localizedText($('result-medals'), () =>'');
+        localizedText(
+          $('overlay-copy'),
+          () =>
+            `${(run.coverage * 100).toFixed(1)}% captured. Admin playtest complete; no clear, medal or mastery awarded. Reset tuning in Settings for normal progression.`,
+        );
+      localizedText($('result-medals'), () =>
+        '★'.repeat(run.medal === 'gold' ? 3 : run.medal === 'silver' ? 2 : 1),
+      );
+      if (recoverGameplayTuning(run.level)?.adminOverride)
+        localizedText($('result-medals'), () => '');
       const completedJourneyMission = journeyEnabled && !practice && !scenario && journeyMission();
-      localizedText($('next-button'), () =>practice
-        ? t("interface:tryItYourself")
-        : completedJourneyMission && !nextJourneyMission(completedJourneyMission.id)
-          ? t("interface:browseMissions2")
-          : t("interface:nextMission"));
-      localizedText($('overlay-footnote'), () => practice
-        ? t("interface:demonstrationsAndImportedMapsDoNotGrantUnlocks")
-        : run.medal === 'gold'
-          ? t("interface:goldFastAndNoLivesLost")
-          : t("interface:tryAnotherClassOrReturnForACleanFasterRoute"));
+      localizedText($('next-button'), () =>
+        practice
+          ? t('interface:tryItYourself')
+          : completedJourneyMission && !nextJourneyMission(completedJourneyMission.id)
+            ? t('interface:browseMissions2')
+            : t('interface:nextMission'),
+      );
+      localizedText($('overlay-footnote'), () =>
+        practice
+          ? t('interface:demonstrationsAndImportedMapsDoNotGrantUnlocks')
+          : run.medal === 'gold'
+            ? t('interface:goldFastAndNoLivesLost')
+            : t('interface:tryAnotherClassOrReturnForACleanFasterRoute'),
+      );
     }
     if (kind === 'lost') {
       const explanation = retryExplanation(run, { practice });
-      localizedText($('overlay-title'), () =>t("interface:aNewLineAwaits"));
-      localizedText($('overlay-copy'), () =>[
-        explanation?.reason,
-        t("gameplay:youRevealed", { value1: formatNumber(run.coverage * 100, { minimumFractionDigits: 1, maximumFractionDigits: 1 }) }),
-        explanation?.tip,
-      ]
-        .filter(Boolean)
-        .join(' '));
-      localizedText($('retry-button'), () =>t("interface:tryAgain2"));
-      localizedText($('retry-consequence'), () =>explanation?.footnote || '');
+      localizedText($('overlay-title'), () => t('interface:aNewLineAwaits'));
+      localizedText($('overlay-copy'), () =>
+        [
+          explanation?.reason,
+          t('gameplay:youRevealed', {
+            value1: formatNumber(run.coverage * 100, {
+              minimumFractionDigits: 1,
+              maximumFractionDigits: 1,
+            }),
+          }),
+          explanation?.tip,
+        ]
+          .filter(Boolean)
+          .join(' '),
+      );
+      localizedText($('retry-button'), () => t('interface:tryAgain2'));
+      localizedText($('retry-consequence'), () => explanation?.footnote || '');
       show('retry-consequence', !!explanation);
-      localizedText($('overlay-footnote'), () =>'');
+      localizedText($('overlay-footnote'), () => '');
     }
     if (courseSession) {
       const lesson = getFirstFlightLesson(courseRequest.lessonId);
       const snapshot = courseSnapshot();
-      localizedText($('overlay-eyebrow'), () =>t("interface:firstFlightOptionalTraining"));
+      localizedText($('overlay-eyebrow'), () => t('interface:firstFlightOptionalTraining'));
       show('next-button', false);
       show('result-medals', false);
       if (kind === 'ready') {
-        localizedText($('overlay-title'), () =>contentText(lesson, 'title'));
-        localizedText($('start-button'), () =>t("interface:startLesson"));
-        localizedText($('overlay-footnote'), () =>t("interface:takeYourTimeTrainingGrantsNoCampaignRewardsYouCan"));
+        localizedText($('overlay-title'), () => contentText(lesson, 'title'));
+        localizedText($('start-button'), () => t('interface:startLesson'));
+        localizedText($('overlay-footnote'), () =>
+          t('interface:takeYourTimeTrainingGrantsNoCampaignRewardsYouCan'),
+        );
       } else if (kind === 'won') {
-        localizedText($('overlay-title'), () =>snapshot?.outcome === 'complete' ? t("interface:lessonComplete") : t("interface:pictureRevealed"));
-        localizedText($('overlay-copy'), () =>snapshot?.outcome === 'complete'
-            ? t("interface:youDemonstratedThisLessonInTheRealGameEnjoyThe")
-            : t("interface:youRevealedThePictureButThisRouteDidNotDemonstrate"));
-        localizedText($('retry-button'), () =>t("interface:repeatLesson"));
-        localizedText($('overlay-footnote'), () =>t("interface:trainingResultsStayInThisVisitNoCampaignScoresPictures"));
+        localizedText($('overlay-title'), () =>
+          snapshot?.outcome === 'complete'
+            ? t('interface:lessonComplete')
+            : t('interface:pictureRevealed'),
+        );
+        localizedText($('overlay-copy'), () =>
+          snapshot?.outcome === 'complete'
+            ? t('interface:youDemonstratedThisLessonInTheRealGameEnjoyThe')
+            : t('interface:youRevealedThePictureButThisRouteDidNotDemonstrate'),
+        );
+        localizedText($('retry-button'), () => t('interface:repeatLesson'));
+        localizedText($('overlay-footnote'), () =>
+          t('interface:trainingResultsStayInThisVisitNoCampaignScoresPictures'),
+        );
       }
     }
     refreshSavedFlight();
@@ -6952,7 +7306,7 @@ try {
     if (resultAttempt)
       finishResultAttempt(
         resultAttempt,
-        t("interface:preparationCancelledYourResultIsKept"),
+        t('interface:preparationCancelledYourResultIsKept'),
         'cancelled',
         restoreFocus,
       );
@@ -7000,7 +7354,7 @@ try {
       controller.abort();
       button.disabled = false;
       feedback?.finish(
-        t("interface:preparationCancelledYourResultIsKeptChooseNextToRetry"),
+        t('interface:preparationCancelledYourResultIsKeptChooseNextToRetry'),
         'cancelled',
       );
       if (
@@ -7021,7 +7375,7 @@ try {
     }
     try {
       feedback = beginPreparation(
-        t("interface:findingTheNextMissionYourResultIsKept"),
+        t('interface:findingTheNextMissionYourResultIsKept'),
         operation.cancel,
         'preparing',
         true,
@@ -7056,9 +7410,7 @@ try {
           });
       const next = librarySuccessor(host.library, row, 'solo');
       if (!next) {
-        feedback.finish(
-          t("interface:endOfTheSoloMissionLibraryReplayOrChooseAnother"),
-        );
+        feedback.finish(t('interface:endOfTheSoloMissionLibraryReplayOrChooseAnother'));
         return;
       }
       feedback.update({
@@ -7070,7 +7422,7 @@ try {
         const ready = await host.library.prepare(next, { mode: 'solo', signal: controller.signal });
         if (!current()) return;
         if (ready.state !== 'ready')
-          throw new Error(ready.reason || t("interface:theNextMissionIsNotReady"));
+          throw new Error(ready.reason || t('interface:theNextMissionIsNotReady'));
       }
       if (!current()) return;
       // Keep admission cancellable while adapters verify installed originals.
@@ -7096,7 +7448,7 @@ try {
       };
       const launched = await host.library.launch(next, { mode: 'solo', ...context });
       if (launched === false && !transferred && current())
-        throw new Error(t("interface:theNextMissionCouldNotStart"));
+        throw new Error(t('interface:theNextMissionCouldNotStart'));
       if (!controller.signal.aborted) feedback.finish();
     } catch (error) {
       if (run === previous && !controller.signal.aborted && !document.hidden) {
@@ -7174,7 +7526,9 @@ try {
     const epoch = ++resultAttemptEpoch;
     try {
       ticket.feedback = beginPreparation(
-        kind === 'next' ? t("interface:preparingTheNextMission") : t("interface:preparingThisMissionAgain"),
+        kind === 'next'
+          ? t('interface:preparingTheNextMission')
+          : t('interface:preparingThisMissionAgain'),
         cancelResultAttempt,
         'preparing',
         true,
@@ -7184,7 +7538,7 @@ try {
       ticket.savedRaw = localStorage.getItem(sessionKey);
       if (resultAttempt !== ticket || resultAttemptEpoch !== epoch) return;
       if (!resultAttemptCurrent(ticket))
-        throw new DOMException(t("interface:preparationCancelled"), 'AbortError');
+        throw new DOMException(t('interface:preparationCancelled'), 'AbortError');
       const entry =
           destinationEntry ||
           (candidateHost?.owns(activeEntry)
@@ -7212,7 +7566,7 @@ try {
       ticket.button.disabled = true;
       if (ownedFocus) $('flight-preparation-cancel').focus({ preventScroll: true });
       if (!resultAttemptCurrent(ticket))
-        throw new DOMException(t("interface:preparationCancelled"), 'AbortError');
+        throw new DOMException(t('interface:preparationCancelled'), 'AbortError');
       let candidateAttempt = null;
       if (candidateHost?.owns(entry)) {
         candidateAttempt = await candidateHost.preparer.prepare(
@@ -7230,7 +7584,7 @@ try {
         );
         if (!resultAttemptCurrent(ticket)) {
           if (candidateHost.preparer.current(candidateAttempt)) candidateHost.preparer.cancel();
-          throw new DOMException(t("interface:preparationCancelled"), 'AbortError');
+          throw new DOMException(t('interface:preparationCancelled'), 'AbortError');
         }
         candidateHost.preparer.take(candidateAttempt);
         ticket.candidatePicture = candidateAttempt.picture;
@@ -7269,21 +7623,21 @@ try {
         },
       });
       if (!resultAttemptCurrent(ticket))
-        throw new DOMException(t("interface:preparationCancelled"), 'AbortError');
+        throw new DOMException(t('interface:preparationCancelled'), 'AbortError');
       if (kind !== 'retry') {
         ticket.visuals = await prepareFreshAttemptVisuals(entry, level, nextTheme.id, {
           signal: ticket.controller.signal,
           onStatus: ticket.feedback.update,
         });
         if (!resultAttemptCurrent(ticket))
-          throw new DOMException(t("interface:preparationCancelled"), 'AbortError');
+          throw new DOMException(t('interface:preparationCancelled'), 'AbortError');
         ticket.actors = await prepareAttemptActors(entry, level, nextTheme.id, {
           style: ticket.actorChoice.actorStyle,
           signal: ticket.controller.signal,
           onStatus: ticket.feedback.update,
         });
         if (!resultAttemptCurrent(ticket))
-          throw new DOMException(t("interface:preparationCancelled"), 'AbortError');
+          throw new DOMException(t('interface:preparationCancelled'), 'AbortError');
       }
       const preparedPictures = ticket.pictures;
       const adopted = prepare({
@@ -7343,7 +7697,7 @@ try {
         if (!cancelled) {
           // Keep the original diagnostic local, outside player-facing feedback.
           try {
-            console.warn(t("interface:missionPreparationFailed"), error);
+            console.warn(t('interface:missionPreparationFailed'), error);
           } catch {
             // Diagnostics must not interrupt recovery.
           }
@@ -7354,8 +7708,8 @@ try {
         finishResultAttempt(
           ticket,
           cancelled
-            ? t("interface:preparationCancelledYourResultIsKept")
-            : t("interface:couldNotPrepareThisMissionYourResultIsKeptTry"),
+            ? t('interface:preparationCancelledYourResultIsKept')
+            : t('interface:couldNotPrepareThisMissionYourResultIsKeptTry'),
           cancelled ? 'cancelled' : 'error',
           ownedFocus,
         );
@@ -7497,11 +7851,11 @@ try {
     appearanceRewardIds = [];
     celebrationActive = false;
     journeySkipArmed = null;
-    localizedText($('journey-skip'), () =>t("interface:skipMission"));
+    localizedText($('journey-skip'), () => t('interface:skipMission'));
     defeatActive = false;
     defeatPaused = false;
     defeatRemaining = 0;
-    localizedText($('skip-celebration'), () =>t("interface:keepPicture"));
+    localizedText($('skip-celebration'), () => t('interface:keepPicture'));
     sound.reset?.();
     painter.skipCelebration?.();
     show('skip-celebration', false);
@@ -7563,7 +7917,7 @@ try {
             : null;
     masteryObserver = null;
     masteryAward = null;
-    localizedText($('mastery-announcement'), () =>'');
+    localizedText($('mastery-announcement'), () => '');
     if (masteryDefinition)
       try {
         masteryObserver = createMasteryObserver({
@@ -7579,8 +7933,7 @@ try {
       } catch {
         masteryAward = {
           status: 'unavailable',
-          message:
-            t("interface:theOptionalGoalIsUnavailableForThisConfigurationYouCan"),
+          message: t('interface:theOptionalGoalIsUnavailableForThisConfigurationYouCan'),
         };
       }
     const authoredLevel = scenario?.level || campaign.levels[levelIndex];
@@ -7621,16 +7974,20 @@ try {
       );
     $('export-replay').disabled = !!replayDownload;
     captionUntil = 0;
-    localizedText($('mode-caption'), () =>courseSession
-      ? t("interface:firstFlightOptionalTraining")
-      : practice
-        ? t("interface:playgroundPractice")
-        : `${campaign.title || campaign.name || campaign.id}${difficultyLabel(activeEntry) ? ` · ${difficultyLabel(activeEntry)}` : ''} · ${String(levelIndex + 1).padStart(2, '0')} / ${campaign.levels.length}`);
+    localizedText($('mode-caption'), () =>
+      courseSession
+        ? t('interface:firstFlightOptionalTraining')
+        : practice
+          ? t('interface:playgroundPractice')
+          : `${campaign.title || campaign.name || campaign.id}${difficultyLabel(activeEntry) ? ` · ${difficultyLabel(activeEntry)}` : ''} · ${String(levelIndex + 1).padStart(2, '0')} / ${campaign.levels.length}`,
+    );
     if (recoverGameplayTuning(run.level)?.adminOverride)
-      $('mode-caption').textContent += (" " + t("interface:adminPlaytestNoAwards") + "");
-    localizedText($('campaign-name'), () =>courseSession
-      ? t("interface:firstFlightLearnByPlaying")
-      : `CAMPAIGN / ${campaign.title || campaign.name || campaign.id}`);
+      $('mode-caption').textContent += ' ' + t('interface:adminPlaytestNoAwards') + '';
+    localizedText($('campaign-name'), () =>
+      courseSession
+        ? t('interface:firstFlightLearnByPlaying')
+        : `CAMPAIGN / ${campaign.title || campaign.name || campaign.id}`,
+    );
     updateLoadout();
     refreshMissionBrief();
     paintMissions();
@@ -7642,9 +7999,9 @@ try {
       courseSession
         ? contentText(getFirstFlightLesson(courseRequest.lessonId), 'instructions.0')
         : practice
-          ? t("interface:practiceUsesTheSameSimulationCampaignAwardsAreDisabled")
+          ? t('interface:practiceUsesTheSameSimulationCampaignAwardsAreDisabled')
           : campaignOverview
-            ? t("interface:campaignCompleteViewYourCollectionOrChooseAMissionTo")
+            ? t('interface:campaignCompleteViewYourCollectionOrChooseAMissionTo')
             : currentBriefing().status,
       null,
       'host.ready',
@@ -7693,8 +8050,8 @@ try {
     if (!run || (campaignOverview && !practice) || ['won', 'lost'].includes(run.status)) return;
     if (journeySkipArmed !== null) {
       journeySkipArmed = null;
-      localizedText($('journey-skip'), () =>t("interface:skipMission"));
-      warning(t("interface:skipCancelledContinueThisMission"));
+      localizedText($('journey-skip'), () => t('interface:skipMission'));
+      warning(t('interface:skipCancelledContinueThisMission'));
     }
     attemptFiles?.invalidate();
     if (contentSwitchTicket) packLaunchGuard.assert(contentSwitchTicket, packs);
@@ -7768,7 +8125,7 @@ try {
             run === selectedRun &&
             theme.id === selectedTheme
           )
-            feedback.finish(t("interface:flightAssetsReadyPressResumeToContinue"));
+            feedback.finish(t('interface:flightAssetsReadyPressResumeToContinue'));
           if (
             pictureResume !== ticket ||
             pictureGeneration !== ticket ||
@@ -7838,17 +8195,18 @@ try {
     if (['restored', 'paused-resume'].includes(runMessageCue))
       warning(
         run.player.cutting
-          ? t("interface:flightResumedYourUnfinishedLineIsStillExposed")
-          : t("interface:flightResumed"),
+          ? t('interface:flightResumedYourUnfinishedLineIsStillExposed')
+          : t('interface:flightResumed'),
         'resumed',
         'host.resumed',
       );
-    if ($('run-message').textContent === picturePreparingMessage) warning(t("interface:pictureReady"));
+    if ($('run-message').textContent === picturePreparingMessage)
+      warning(t('interface:pictureReady'));
     activateAudio().catch(() => {});
     show('game-overlay', false);
     show('continue-saved-note', false);
     $('game-canvas').focus({ preventScroll: true });
-    localizedText($('pause-button'), () =>'Ⅱ');
+    localizedText($('pause-button'), () => 'Ⅱ');
     refreshCourse();
     refreshHUD();
     if (courseSession && alignCourseBoard) revealFirstFlightBoard($('arena-shell'));
@@ -7861,7 +8219,7 @@ try {
     clearInput();
     show('skip-celebration', false);
     overlay('lost');
-    warning(t("interface:flightEndedReadTheDetailsOrTryAgain"));
+    warning(t('interface:flightEndedReadTheDetailsOrTryAgain'));
     if (journeyEnabled && journeyMission() && !practice && !scenario)
       void prepareResultAttempt('retry');
   }
@@ -7886,7 +8244,7 @@ try {
     if (defeatActive) {
       defeatPaused = true;
       clearInput();
-      warning(t("interface:defeatPresentationPausedChooseShowDefeatMenuWhenReady"));
+      warning(t('interface:defeatPresentationPausedChooseShowDefeatMenuWhenReady'));
       return;
     }
     if (celebrationActive) {
@@ -7904,8 +8262,8 @@ try {
     if (runMessageCue === 'resumed')
       warning(
         run.player.cutting
-          ? t("interface:flightPausedYourUnfinishedLineIsKeptPressResumeTo")
-          : t("interface:flightPausedPressResumeToContinue"),
+          ? t('interface:flightPausedYourUnfinishedLineIsKeptPressResumeTo')
+          : t('interface:flightPausedPressResumeToContinue'),
         'paused-resume',
         'host.paused',
       );
@@ -7922,7 +8280,7 @@ try {
       } catch {}
     }
     overlay('pause');
-    localizedText($('pause-button'), () =>'▶');
+    localizedText($('pause-button'), () => '▶');
     refreshHUD();
   }
   function refreshHUD() {
@@ -7947,13 +8305,15 @@ try {
         !defeatActive &&
         !['won', 'lost'].includes(run.status),
     );
-    localizedText($('shell-edition'), () =>courseSession
-      ? t("interface:firstFlight2")
-      : practice
-        ? t("interface:practice")
-        : !arcadeActionCapabilities(run?.level).manualAbility
-          ? t("interface:arcadeEdition")
-          : t("interface:tacticalEdition"));
+    localizedText($('shell-edition'), () =>
+      courseSession
+        ? t('interface:firstFlight2')
+        : practice
+          ? t('interface:practice')
+          : !arcadeActionCapabilities(run?.level).manualAbility
+            ? t('interface:arcadeEdition')
+            : t('interface:tacticalEdition'),
+    );
     document.body.dataset.pictureState = flightPictures?.ready(theme.id) ? 'ready' : 'pending';
     document.body.dataset.flightState =
       defeatActive || celebrationActive || (run.status === 'won' && !$('show-result').hidden)
@@ -7973,55 +8333,71 @@ try {
     );
     $('coverage-bar').style.width = `${run.coverage * 100}%`;
     $('goal-marker').style.left = `${run.level.goal.coverage * 100}%`;
-    localizedText($('target'), () =>`TARGET ${Math.round(run.level.goal.coverage * 100)}%`);
+    localizedText($('target'), () =>
+      t('gameplay:target', { value1: Math.round(run.level.goal.coverage * 100) }),
+    );
     $('coverage').dataset.target = Number.isFinite(run.level.goal.coverage)
       ? ` / ${Math.round(run.level.goal.coverage * 100)}%`
       : '';
-    localizedText($('lives'), () =>run.lives > 3 ? `◆ ×${run.lives}` : '◆ '.repeat(run.lives).trim() || '—');
+    localizedText($('lives'), () =>
+      run.lives > 3 ? `◆ ×${run.lives}` : '◆ '.repeat(run.lives).trim() || '—',
+    );
     $('lives').setAttribute('aria-label', `${run.lives} lives`);
     $('lives').dataset.compactValue = `♥ ${run.lives}`;
-    localizedText($('time'), () =>timeLabel(run.time));
-    localizedText($('score'), () =>String(run.score).padStart(5, '0'));
+    localizedText($('time'), () => timeLabel(run.time));
+    localizedText($('score'), () => String(run.score).padStart(5, '0'));
     const required = run.objectives.filter((o) => o.required),
       done = required.filter((o) => o.captured);
-    localizedText($('objective-state'), () =>campaignOverview
-      ? t("interface:chooseAMissionToReplay")
-      : run.status === 'won'
-        ? t("interface:targetReached")
-        : run.status === 'lost'
-          ? t("interface:retryWhenYouAreReady")
-          : required.length
-            ? `${contentText(theme, 'labels.objective')}: ${done.length} / ${required.length}`
-            : t("interface:closeALineToRevealThePicture"));
-    localizedText($('flight-state'), () =>campaignOverview
-      ? t("interface:campaignComplete3")
-      : run.status === 'won'
-        ? t("interface:missionComplete")
-        : run.status === 'lost'
-          ? t("interface:flightEnded")
-          : run.status === 'respawning'
-            ? t("interface:recovering")
-            : !started
-              ? t("interface:readyForLaunch")
-              : paused
-                ? t("interface:paused")
-                : run.player.cutting
-                  ? run.player.speed === 0
-                    ? t("interface:lineExposedChooseATurn")
-                    : t("interface:liveLineExposed")
-                  : ['xonix-core.v6', 'xonix-core.v7', 'xonix-core.v8', 'xonix-core.v9'].includes(
-                        run.ruleset,
-                      )
-                    ? t("interface:reclaimedGround")
-                    : t("interface:safeGround"));
+    localizedText($('objective-state'), () =>
+      campaignOverview
+        ? t('interface:chooseAMissionToReplay')
+        : run.status === 'won'
+          ? t('interface:targetReached')
+          : run.status === 'lost'
+            ? t('interface:retryWhenYouAreReady')
+            : required.length
+              ? `${contentText(theme, 'labels.objective')}: ${done.length} / ${required.length}`
+              : t('interface:closeALineToRevealThePicture'),
+    );
+    localizedText($('flight-state'), () =>
+      campaignOverview
+        ? t('interface:campaignComplete3')
+        : run.status === 'won'
+          ? t('interface:missionComplete')
+          : run.status === 'lost'
+            ? t('interface:flightEnded')
+            : run.status === 'respawning'
+              ? t('interface:recovering')
+              : !started
+                ? t('interface:readyForLaunch')
+                : paused
+                  ? t('interface:paused')
+                  : run.player.cutting
+                    ? run.player.speed === 0
+                      ? t('interface:lineExposedChooseATurn')
+                      : t('interface:liveLineExposed')
+                    : ['xonix-core.v6', 'xonix-core.v7', 'xonix-core.v8', 'xonix-core.v9'].includes(
+                          run.ruleset,
+                        )
+                      ? t('interface:reclaimedGround')
+                      : t('interface:safeGround'),
+    );
     $('status-dot').style.background = run.player.cutting ? 'var(--danger)' : 'var(--safe)';
     const left = Math.max(0, run.ability.cooldownUntil - run.time);
-    localizedText($('ability-state'), () =>`${left > 0 ? left.toFixed(1) + 's cooldown' : run.ability.capacity && run.ability.ammo === 0 ? t("interface:emptyRefillAtSupply") : t("common:status.ready")}${run.ability.capacity ? ' · ' + run.ability.ammo + '/' + run.ability.capacity + ' charges' : ''}`);
+    localizedText(
+      $('ability-state'),
+      () =>
+        `${left > 0 ? left.toFixed(1) + 's cooldown' : run.ability.capacity && run.ability.ammo === 0 ? t('interface:emptyRefillAtSupply') : t('common:status.ready')}${run.ability.capacity ? ' · ' + run.ability.ammo + '/' + run.ability.capacity + ' charges' : ''}`,
+    );
     const canSwitchCraft = craftSwitchAvailable();
     $('hangar-button').disabled = !canSwitchCraft;
     show('hangar-button', canSwitchCraft);
-    localizedText($('loadout-note'), () =>'Starting class changes begin a fresh attempt.' +
-      (canSwitchCraft ? (" " + t("interface:useAHangarToSwitchDuringFlight") + "") : ''));
+    localizedText(
+      $('loadout-note'),
+      () =>
+        'Starting class changes begin a fresh attempt.' +
+        (canSwitchCraft ? ' ' + t('interface:useAHangarToSwitchDuringFlight') + '' : ''),
+    );
     $('restart-button').disabled = defeatActive || courseBlocked() || campaignOverview;
     $('restart-button').hidden = !started || ['won', 'lost'].includes(run.status);
     refreshInputPresentation();
@@ -8031,23 +8407,28 @@ try {
     const near = run.hangars?.some(
       (h) => Math.hypot(h.x - run.player.x, h.y - run.player.y) <= h.radius,
     );
-    localizedText($('hangar-state'), () =>courseSession
-      ? t("interface:scoutFixedLessonCraftNoHangarsInTraining")
-      : run.signal?.zoneIds?.length
-        ? run.signal.resistant
-          ? t("interface:fiberLinkSignalZoneBypassedLineRemainsVulnerable")
-          : t("interface:signalInterferenceSlowerMovementOrDisabledEquipment")
-        : `${run.classRecipe.label}${canSwitchCraft ? (near && !run.player.cutting ? ' · Hangar in range' : (" " + t("interface:returnToAHangarToChangeCraft") + "")) : ''}`);
+    localizedText($('hangar-state'), () =>
+      courseSession
+        ? t('interface:scoutFixedLessonCraftNoHangarsInTraining')
+        : run.signal?.zoneIds?.length
+          ? run.signal.resistant
+            ? t('interface:fiberLinkSignalZoneBypassedLineRemainsVulnerable')
+            : t('interface:signalInterferenceSlowerMovementOrDisabledEquipment')
+          : `${run.classRecipe.label}${canSwitchCraft ? (near && !run.player.cutting ? ' · Hangar in range' : ' ' + t('interface:returnToAHangarToChangeCraft') + '') : ''}`,
+    );
     if (run.rules.timeLimitSeconds)
-      localizedText($('time'), () =>timeLabel(Math.max(0, run.rules.timeLimitSeconds - run.time)));
+      localizedText($('time'), () => timeLabel(Math.max(0, run.rules.timeLimitSeconds - run.time)));
     const encounter = encounterView(run),
       classic = classicView(run);
     show('encounter-status', !!(encounter || classic) && !campaignOverview);
     $('encounter-status').dataset.kind = encounter ? 'encounter' : 'classic';
-    localizedText($('encounter-title'), () =>contentText(encounter, 'title') || t("interface:classicField"));
-    localizedText($('encounter-instruction'), () =>contentText(encounter, 'instruction') || '');
+    localizedText(
+      $('encounter-title'),
+      () => contentText(encounter, 'title') || t('interface:classicField'),
+    );
+    localizedText($('encounter-instruction'), () => contentText(encounter, 'instruction') || '');
     show('encounter-instruction', !!encounter);
-    localizedText($('classic-summary'), () =>contentText(classic, 'summary') || '');
+    localizedText($('classic-summary'), () => contentText(classic, 'summary') || '');
     show('classic-summary', !!classic);
     $('encounter-status').dataset.phase =
       encounter?.phase ||
@@ -8098,7 +8479,7 @@ try {
             else
               warning(
                 [
-                  `Line secured. ${(run.coverage * 100).toFixed(1)}% revealed${event.indices?.length < 50 ? (" " + t("interface:bothSidesMayStillContainAnEnemy") + "") : '.'}`,
+                  `Line secured. ${(run.coverage * 100).toFixed(1)}% revealed${event.indices?.length < 50 ? ' ' + t('interface:bothSidesMayStillContainAnEnemy') + '' : '.'}`,
                   captureTerrain,
                 ]
                   .filter(Boolean)
@@ -8118,12 +8499,12 @@ try {
           if (event.type === 'player.failed')
             warning(
               {
-                'self-contact': t("interface:yourLineCrossedItselfChooseANewRoute"),
-                'mission-timeout': t("interface:theMissionClockRanOutTryAFasterRoute"),
-                'cut-timeout': t("interface:yourLiveLineStayedOpenTooLongMakeAShorter"),
-                'cable-limit': t("interface:yourCableBudgetRanOutCloseAShorterLine"),
-                'lethal-terrain': t("interface:aLethalFieldCaughtYourCraftEncloseItBeforeCrossing"),
-              }[event.cause] || t("interface:yourLineWasCaughtTheTerritoryYouRevealedIsKept"),
+                'self-contact': t('interface:yourLineCrossedItselfChooseANewRoute'),
+                'mission-timeout': t('interface:theMissionClockRanOutTryAFasterRoute'),
+                'cut-timeout': t('interface:yourLiveLineStayedOpenTooLongMakeAShorter'),
+                'cable-limit': t('interface:yourCableBudgetRanOutCloseAShorterLine'),
+                'lethal-terrain': t('interface:aLethalFieldCaughtYourCraftEncloseItBeforeCrossing'),
+              }[event.cause] || t('interface:yourLineWasCaughtTheTerritoryYouRevealedIsKept'),
               'failure',
             );
           if (event.type === 'lineImpact.seeded')
@@ -8131,29 +8512,29 @@ try {
               `Line struck! Reach ${['xonix-core.v6', 'xonix-core.v7', 'xonix-core.v8', 'xonix-core.v9'].includes(run.ruleset) ? 'reclaimed' : 'safe'} ground before the travelling spark catches you.`,
             );
           if (event.type === 'lineImpact.arrived')
-            warning(t("interface:theTravellingImpactReachedYourCraftOneLifeLost"));
+            warning(t('interface:theTravellingImpactReachedYourCraftOneLifeLost'));
           if (event.type === 'shield.absorbed')
-            warning(t("interface:shieldAbsorbedTheHitYourUnfinishedLineIsCancelledNo"));
+            warning(t('interface:shieldAbsorbedTheHitYourUnfinishedLineIsCancelledNo'));
           if (event.type === 'ability.rejected')
             warning(
               {
-                empty: t("interface:noChargesLeftReturnToASupplyPadAndPress"),
-                cooldown: t("interface:abilityIsRechargingWatchTheCooldownBesideYourControls"),
-                'already-full': t("interface:yourSuppliesAreAlreadyFull"),
-                'out-of-range': t("interface:moveOntoASupplyPadToPickUpACharge"),
-              }[event.reason] || t("interface:abilityIsUnavailableRightNow"),
+                empty: t('interface:noChargesLeftReturnToASupplyPadAndPress'),
+                cooldown: t('interface:abilityIsRechargingWatchTheCooldownBesideYourControls'),
+                'already-full': t('interface:yourSuppliesAreAlreadyFull'),
+                'out-of-range': t('interface:moveOntoASupplyPadToPickUpACharge'),
+              }[event.reason] || t('interface:abilityIsUnavailableRightNow'),
             );
           if (event.type === 'ability.used')
             warning(
               {
-                scan: t("interface:hiddenObjectivesMarkedShortDirectionHintsShowWhereEnemiesAre"),
-                'stun-field': t("interface:stunFieldPlacedNearbyMovingFieldEnemiesAreBrieflyHeld"),
-                'slow-field': t("interface:slowFieldPlacedNearbyFieldEnemiesMoveAtQuarterSpeed"),
-                shield: t("interface:shieldActiveOneEnemyContactCanCancelYourLineSafely"),
+                scan: t('interface:hiddenObjectivesMarkedShortDirectionHintsShowWhereEnemiesAre'),
+                'stun-field': t('interface:stunFieldPlacedNearbyMovingFieldEnemiesAreBrieflyHeld'),
+                'slow-field': t('interface:slowFieldPlacedNearbyFieldEnemiesMoveAtQuarterSpeed'),
+                shield: t('interface:shieldActiveOneEnemyContactCanCancelYourLineSafely'),
               }[event.primitive] || `${theme.labels.ability} active.`,
             );
           if (event.type === 'pickup.collected')
-            warning(t("interface:suppliesReadyChooseYourNextOpportunity"));
+            warning(t('interface:suppliesReadyChooseYourNextOpportunity'));
           if (event.type === 'capture.stopped')
             warning(
               [
@@ -8161,7 +8542,7 @@ try {
                   ? captureTeaching()
                   : `Line secured. ${(run.coverage * 100).toFixed(1)}% revealed.`,
                 captureTerrain,
-                t("interface:tapADirectionToFlyAgain"),
+                t('interface:tapADirectionToFlyAgain'),
               ]
                 .filter(Boolean)
                 .join(' '),
@@ -8171,24 +8552,23 @@ try {
             warning(
               {
                 'extra-life': event.gain
-                  ? t("interface:extraLifeCollected")
-                  : t("interface:lifePickupCollectedAlreadyAtTheNineLifeLimit"),
-                'player-speed': t("interface:speedPickupFasterFlightForFiveSeconds"),
-                'enemy-slow': t("interface:slowPickupEnemiesMoveAtHalfSpeedForSixSeconds"),
-                'enemy-freeze':
-                  t("interface:freezePickupEnemiesAreHeldForThreeSecondsTerrainAnd"),
-              }[event.kind] || t("interface:powerupCollected"),
+                  ? t('interface:extraLifeCollected')
+                  : t('interface:lifePickupCollectedAlreadyAtTheNineLifeLimit'),
+                'player-speed': t('interface:speedPickupFasterFlightForFiveSeconds'),
+                'enemy-slow': t('interface:slowPickupEnemiesMoveAtHalfSpeedForSixSeconds'),
+                'enemy-freeze': t('interface:freezePickupEnemiesAreHeldForThreeSecondsTerrainAnd'),
+              }[event.kind] || t('interface:powerupCollected'),
             );
           if (event.type === 'rover.warning')
-            warning(t("interface:claimedGroundRoverWakingInOneSecondWatchTheMarked"));
+            warning(t('interface:claimedGroundRoverWakingInOneSecondWatchTheMarked'));
           if (event.type === 'rover.activated')
-            warning(t("interface:claimedGroundRoverActiveYourSecuredGroundStillHasA"));
+            warning(t('interface:claimedGroundRoverActiveYourSecuredGroundStillHasA'));
           if (event.type === 'erosion.warning')
-            warning(t("interface:theMarkedCapturedCellIsAboutToReopenWatchThe"));
+            warning(t('interface:theMarkedCapturedCellIsAboutToReopenWatchThe'));
           if (event.type === 'cells.eroded')
             warning(
               [
-                t("interface:groundReopenedReclaimingItRestoresCoverageWithoutRepeatCapturePoints"),
+                t('interface:groundReopenedReclaimingItRestoresCoverageWithoutRepeatCapturePoints'),
                 terrainTransitionCaption(run, event),
               ]
                 .filter(Boolean)
@@ -8250,17 +8630,22 @@ try {
     lastControllerModality = flightModality;
     if (status.message !== controllerStatus) {
       controllerStatus = status.message;
-      localizedText($('input-status'), () =>status.code === 'disconnected' || assigned
+      localizedText($('input-status'), () =>
+        status.code === 'disconnected' || assigned
           ? status.message
-          : t("gameplay:keyboardTouch", { value1: status.message }));
+          : t('gameplay:keyboardTouch', { value1: status.message }),
+      );
     }
     if (status.code === 'joined') refreshControllerPrompts();
     const connectionHint = $('controller-connection-hint');
-    if (connectionHint.textContent !== status.message) localizedText(connectionHint, () =>status.message);
+    if (connectionHint.textContent !== status.message)
+      localizedText(connectionHint, () => status.message);
     show('controller-ui-hint', !!assigned && scope !== 'flight');
     if (scope !== controllerPreviousScope) {
       controllerPreviousScope = scope;
-      localizedText($('controller-ui-hint'), () =>scope === 'flight' ? controllerFlightHint() : controllerMenuHint());
+      localizedText($('controller-ui-hint'), () =>
+        scope === 'flight' ? controllerFlightHint() : controllerMenuHint(),
+      );
       if (assigned && scope !== 'flight') controllerNavigation.engage();
     }
     if (status.code === 'joined' && scope !== 'flight') controllerNavigation.engage();
@@ -8271,9 +8656,7 @@ try {
     if (disconnected) {
       clearInput();
       pause(true);
-      warning(
-        t("interface:controllerDisconnectedYourFlightIsPausedReleaseControlsAndPress"),
-      );
+      warning(t('interface:controllerDisconnectedYourFlightIsPausedReleaseControlsAndPress'));
     } else {
       controllerNavigation.handle(controllerFrame.ui);
       const flight = controllerFrame?.flight ?? {};
@@ -8321,7 +8704,7 @@ try {
     ) {
       if (elapsed > 0.25) {
         pause(true);
-        warning(t("interface:pausedAfterALongFrameInterruptionResumeToContinueSafely"));
+        warning(t('interface:pausedAfterALongFrameInterruptionResumeToContinueSafely'));
         return;
       }
       accumulator += elapsed;
@@ -8347,9 +8730,7 @@ try {
           recordingStopped = true;
           recorder = null;
           $('export-replay').disabled = true;
-          warning(
-            t("interface:the30MinuteReplayBudgetIsFullRecordingWasDiscarded"),
-          );
+          warning(t('interface:the30MinuteReplayBudgetIsFullRecordingWasDiscarded'));
         }
         const beforeStatus = run.status;
         if (beforeStatus === 'respawning') {
@@ -8373,7 +8754,7 @@ try {
           command.direction &&
           run.player.speed > 0
         )
-          warning(t("interface:flightMoving"), 'secured');
+          warning(t('interface:flightMoving'), 'secured');
         controls = controllerBoostAfterRecovery({
           beforeStatus,
           run,
@@ -8405,7 +8786,7 @@ try {
             masteryObserver = null;
             masteryAward = {
               status: 'unavailable',
-              message: t("interface:liveGoalTrackingIsUnavailableYourPictureProgressIsKept"),
+              message: t('interface:liveGoalTrackingIsUnavailableYourPictureProgressIsKept'),
             };
           }
         pendingAction = false;
@@ -8419,9 +8800,7 @@ try {
             recordingStopped = true;
             recorder = null;
             $('export-replay').disabled = true;
-            warning(
-              t("interface:replayRecordingStoppedYouCanKeepPlayingStartANew"),
-            );
+            warning(t('interface:replayRecordingStoppedYouCanKeepPlayingStartANew'));
           }
         if (courseObserver)
           try {
@@ -8506,7 +8885,7 @@ try {
                   canonicalJSON(applyGameplayTuning(authored, tuning)) !== canonicalJSON(run.level)
                 )
                   throw new Error(
-                    t("interface:thisPlaytestDoesNotQualifyForAuthoredCollectionProgress"),
+                    t('interface:thisPlaytestDoesNotQualifyForAuthoredCollectionProgress'),
                   );
                 // Normal pressure clears retain the original picture/collection owner.
                 // Exact reconstruction above admits only this versioned adapter;
@@ -8524,8 +8903,8 @@ try {
                 mediaIdentityCatalog: flightPictures?.identityCatalog,
               });
             } catch (error) {
-              completionWarning = `Your picture is open, but the collection could not be updated. ${recorder ? t("interface:exportThisReplayAndYourLibrary") : t("interface:theReplayRecordingHasEndedExportYourLibrary")} before continuing.`;
-              localizedText($('save-warning'), () =>`${completionWarning} ${error.message}`);
+              completionWarning = `Your picture is open, but the collection could not be updated. ${recorder ? t('interface:exportThisReplayAndYourLibrary') : t('interface:theReplayRecordingHasEndedExportYourLibrary')} before continuing.`;
+              localizedText($('save-warning'), () => `${completionWarning} ${error.message}`);
               show('save-warning', true);
             }
             progress = progressFor(library, campaign);
@@ -8578,9 +8957,7 @@ try {
                 localStorage.removeItem(sessionKey);
               }
             } catch {
-              warning(
-                t("interface:playtestEndedButItsSavedSlotCouldNotBeCleared"),
-              );
+              warning(t('interface:playtestEndedButItsSavedSlotCouldNotBeCleared'));
             }
           painter.startCelebration?.({
             levelId: run.levelId,
@@ -8607,11 +8984,11 @@ try {
           defeatRemaining = 0.65;
           show('game-overlay', false);
           show('show-result', false);
-          localizedText($('skip-celebration'), () =>t("interface:showDefeatMenu"));
+          localizedText($('skip-celebration'), () => t('interface:showDefeatMenu'));
           show('skip-celebration', true);
           $('skip-celebration').focus({ preventScroll: true });
           warning(
-            t("interface:lifeLostShowingTheFinalImpactChooseShowDefeatMenu"),
+            t('interface:lifeLostShowingTheFinalImpactChooseShowDefeatMenu'),
             null,
             'host.lost',
           );
@@ -8636,10 +9013,11 @@ try {
       soundtrackPlayer.update(!paused && started, theme, run);
     } else sound.update(!paused && started, theme, run);
     if (!sound.previewActive && $('music-preview').textContent.startsWith('Playing'))
-      localizedText($('music-preview'), () =>t("interface:previewMusic"));
+      localizedText($('music-preview'), () => t('interface:previewMusic'));
     refreshHUD();
   }
-  for (const t of themesFile.themes) $('theme-select').append(localizedOption(() => contentText(t, 'name'), t.id));
+  for (const t of themesFile.themes)
+    $('theme-select').append(localizedOption(() => contentText(t, 'name'), t.id));
   if (scenario && !themesFile.themes.some((t) => t.id === theme.id))
     $('theme-select').append(localizedOption(() => contentText(theme, 'name'), theme.id));
   $('theme-select').value = theme.id;
@@ -8649,7 +9027,7 @@ try {
     $('theme-select').value = theme.id;
     themeFeedback.begin({ message: '' }).finish({
       state: 'cancelled',
-      message: t("interface:worldPreparationCancelledYourCurrentPictureIsKept"),
+      message: t('interface:worldPreparationCancelledYourCurrentPictureIsKept'),
     });
     if (restoreFocus) $('theme-select').focus({ preventScroll: true });
   };
@@ -8664,8 +9042,7 @@ try {
       $('theme-select').value = theme.id;
       themeFeedback.begin({ message: '' }).finish({
         state: 'error',
-        message:
-          t("interface:thisSavedFlightKeepsItsOriginalWorldChooseANew"),
+        message: t('interface:thisSavedFlightKeepsItsOriginalWorldChooseANew'),
       });
       return;
     }
@@ -8790,7 +9167,10 @@ try {
     if (!restartRequest) return;
     restartRequest.cancelled = true;
     $('restart-confirm').disabled = true;
-    localizedText($('restart-dialog-copy'), () =>`${message} Keep this attempt, then choose Restart again when ready.`);
+    localizedText(
+      $('restart-dialog-copy'),
+      () => `${message} Keep this attempt, then choose Restart again when ready.`,
+    );
   }
   function requestRestart(opener) {
     const top = controllerDialog();
@@ -8820,7 +9200,7 @@ try {
       cancelled: false,
     };
     restartRequest = ticket;
-    localizedText($('restart-dialog-copy'), () =>restartCopy);
+    localizedText($('restart-dialog-copy'), () => restartCopy);
     $('restart-confirm').disabled = false;
     try {
       restartDialog.showModal();
@@ -8859,7 +9239,7 @@ try {
       levelIndex !== ticket.levelIndex ||
       libraryGeneration !== ticket.generation
     ) {
-      invalidateRestart(t("interface:theFlightOrAvailableSetupChanged"));
+      invalidateRestart(t('interface:theFlightOrAvailableSetupChanged'));
       return;
     }
     // Only the explicitly confirmed handoff closes retained menu parents.
@@ -8948,7 +9328,7 @@ try {
     demo = true;
     prepare();
     resume();
-    warning(t("interface:demonstrationThisIsARealSimulatedCutItGrantsNo"));
+    warning(t('interface:demonstrationThisIsARealSimulatedCutItGrantsNo'));
   };
   $('sound-button').onclick = () => setMasterMuted(!audioMaster.snapshot().muted);
   $('settings-master-mute').onclick = () => setMasterMuted(!audioMaster.snapshot().muted);
@@ -8970,9 +9350,11 @@ try {
   let collectionContextKey = null,
     collectionContexts = new Map();
   const collectionContextLabel = (entry) =>
-    `${contentText(entry.campaign, 'title') || contentText(entry.campaign, 'name') || entry.campaign.id} · ${difficultyLabel(entry) || t("interface:challenge")}`;
+    `${contentText(entry.campaign, 'title') || contentText(entry.campaign, 'name') || entry.campaign.id} · ${difficultyLabel(entry) || t('interface:challenge')}`;
   function paintCollectionProgress(entry) {
-    localizedText($('achievement-campaign'), () =>t("gameplay:campaignAchievements", { value1: collectionContextLabel(entry) }));
+    localizedText($('achievement-campaign'), () =>
+      t('gameplay:campaignAchievements', { value1: collectionContextLabel(entry) }),
+    );
     $('achievements').replaceChildren();
     for (const a of difficultyNavigation.achievements(
       entry,
@@ -8982,9 +9364,13 @@ try {
       const row = document.createElement('div');
       row.className = `achievement${a.earned ? ' earned' : ''}`;
       const title = document.createElement('strong');
-      localizedText(title, () =>`${a.earned ? '◆' : '◇'} ${contentText(a, 'name')}`);
+      localizedText(title, () => `${a.earned ? '◆' : '◇'} ${contentText(a, 'name')}`);
       const copy = document.createElement('span');
-      localizedText(copy, () =>`${contentText(a, 'description')}${a.scope === 'shared' ? (" " + t("interface:standardOrGentle") + "") : a.scope ? t("gameplay:results", { value1: difficultyLabel(entry) }) : ''}`);
+      localizedText(
+        copy,
+        () =>
+          `${contentText(a, 'description')}${a.scope === 'shared' ? ' ' + t('interface:standardOrGentle') + '' : a.scope ? t('gameplay:results', { value1: difficultyLabel(entry) }) : ''}`,
+      );
       row.append(title, copy);
       $('achievements').append(row);
     }
@@ -9011,8 +9397,8 @@ try {
           .find((item) => collectionContexts.has(item.campaignKey))?.campaignKey ?? currentKey;
     }
     $('collection-context').replaceChildren(
-      ...[...collectionContexts].map(
-        ([key, entry]) => localizedOption(() => collectionContextLabel(entry), key),
+      ...[...collectionContexts].map(([key, entry]) =>
+        localizedOption(() => collectionContextLabel(entry), key),
       ),
     );
     $('collection-context').value = collectionContextKey;
@@ -9041,11 +9427,13 @@ try {
     pause(true);
     prepareCollectionProgress();
     libraryPanel.populateGallery();
-    localizedText($('collection-back'), () =>$('shell-home').open
-      ? t("interface:backToMenu")
-      : $('shell-missions').open
-        ? t("interface:backToMissions2")
-        : t("interface:backToTheField"));
+    localizedText($('collection-back'), () =>
+      $('shell-home').open
+        ? t('interface:backToMenu')
+        : $('shell-missions').open
+          ? t('interface:backToMissions2')
+          : t('interface:backToTheField'),
+    );
     // Pausing may focus Resume; native return belongs to this entry control.
     if (
       opener?.isConnected &&
@@ -9123,7 +9511,7 @@ try {
     if (replayDownload) return;
     const notify = flightInformation.captureWarning('host.replay', { allowTerminal: true });
     try {
-      if (!recorder) throw new Error(t("interface:startANewAttemptToRecordAReplay"));
+      if (!recorder) throw new Error(t('interface:startANewAttemptToRecordAReplay'));
       pause(true);
       const raw = exportReplay(recorder, run);
       const actorPin = flightActorLease?.pin();
@@ -9145,13 +9533,15 @@ try {
       // Keep copied wrappers within the same aggregate budget as the compact
       // download; presentation indentation must not make a valid replay unloadable.
       $('replay-json').value = recorded ? JSON.stringify(recorded) : JSON.stringify(raw, null, 2);
-      localizedText($('download-replay'), () =>recorded
-        ? t("interface:downloadRecordedActors")
-        : t("interface:downloadRawJson"));
+      localizedText($('download-replay'), () =>
+        recorded ? t('interface:downloadRecordedActors') : t('interface:downloadRawJson'),
+      );
       $('download-raw-replay').hidden = !recorded;
-      localizedText($('replay-appearance-note'), () =>recorded
-        ? t("interface:recordedFpvActorsArePinnedForReplayTheaterThisDoes")
-        : t("interface:thisRecordingUsesTheOriginalSimulationOnlyFormatReplayTheater"));
+      localizedText($('replay-appearance-note'), () =>
+        recorded
+          ? t('interface:recordedFpvActorsArePinnedForReplayTheaterThisDoes')
+          : t('interface:thisRecordingUsesTheOriginalSimulationOnlyFormatReplayTheater'),
+      );
       $('replay-dialog').showModal();
       replayFocusClearance.refresh();
       await downloadCurrentReplay(recorded ?? raw);
@@ -9173,10 +9563,10 @@ try {
     controllerInactive = true;
     cancelModeDeparture({ close: true });
     cancelTitleFlight();
-    invalidateRestart(t("interface:restartCancelledWhenFocusChanged"));
+    invalidateRestart(t('interface:restartCancelledWhenFocusChanged'));
     invalidateContentSwitch({ announce: true });
     if (courseEntry)
-      cancelCourseEntry(t("interface:courseEntryCancelledWhenFocusChangedYourFlightRemainsPaused"));
+      cancelCourseEntry(t('interface:courseEntryCancelledWhenFocusChangedYourFlightRemainsPaused'));
     clearInput();
     controllerPreview?.clear();
     suspendAudio();
@@ -9235,7 +9625,10 @@ try {
   let autoplayPackLaunch = null;
   if (rememberedSelection)
     contentStatus(
-      t("gameplay:selectedContinueASavedFlightSeparately", { value1: contentText(campaign, 'title') || contentText(campaign, 'name') || campaign.id, value2: contentText(campaign.levels[levelIndex], 'name') }),
+      t('gameplay:selectedContinueASavedFlightSeparately', {
+        value1: contentText(campaign, 'title') || contentText(campaign, 'name') || campaign.id,
+        value2: contentText(campaign.levels[levelIndex], 'name'),
+      }),
     );
   if (packLaunchError) {
     contentStatus(packLaunchError, true);
@@ -9256,7 +9649,11 @@ try {
           levelId: campaign.levels[levelIndex].id,
         };
       contentStatus(
-        t("gameplay:selected", { value1: packLaunchRequest.packName, value2: packLaunchRequest.levelName, value3: autoplayPackLaunch ? ' · starting now…' : (" " + t("interface:andReady") + "") }),
+        t('gameplay:selected', {
+          value1: packLaunchRequest.packName,
+          value2: packLaunchRequest.levelName,
+          value3: autoplayPackLaunch ? ' · starting now…' : ' ' + t('interface:andReady') + '',
+        }),
       );
     }
   }
@@ -9337,12 +9734,12 @@ try {
     if (row.source === 'optional') {
       const catalog = await loadOptionalCatalog({ signal, baseURL: new URL('../', location.href) });
       const summary = catalog.packs.find((item) => item.id === row.packId);
-      if (!summary) throw new Error(t("interface:thatOptionalChapterIsUnavailableInThisRelease"));
+      if (!summary) throw new Error(t('interface:thatOptionalChapterIsUnavailableInThisRelease'));
       return installOptionalChapter(summary, { signal });
     }
     if (row.source === 'base') return;
     if (contentSwitchBusy || backupBusy || sessionBusy)
-      throw new Error(t("interface:finishTheCurrentOperationBeforeDownloadingAnotherChapter"));
+      throw new Error(t('interface:finishTheCurrentOperationBeforeDownloadingAnotherChapter'));
     const operation = packLaunchGuard.begin(packs);
     packCommits.markIntent();
     contentSwitchBusy = true;
@@ -9351,7 +9748,7 @@ try {
     };
     signal?.addEventListener('abort', cancelled, { once: true });
     try {
-      if (signal?.aborted) throw new DOMException(t("interface:downloadCancelled"), 'AbortError');
+      if (signal?.aborted) throw new DOMException(t('interface:downloadCancelled'), 'AbortError');
       return await ensureBundledPack(row.packId, operation, { preserveCurrentRun: true });
     } finally {
       signal?.removeEventListener('abort', cancelled);
@@ -9380,7 +9777,7 @@ try {
       const authored = projectClassicCurrentRulesEntry(source, selection.rulesEdition);
       const entry = executionForEntry(authored, library.preferences.campaignDifficulty);
       const level = entry.campaign.levels.find((item) => item.id === selection.levelId);
-      if (!level) throw new Error(t("interface:theExactNextMissionIsUnavailable"));
+      if (!level) throw new Error(t('interface:theExactNextMissionIsUnavailable'));
       const nextTheme =
         entry.themes.find((item) => item.id === (level.themeId || entry.campaign.themeId)) ||
         entry.themes[0];
@@ -9410,7 +9807,7 @@ try {
       const authored = projectClassicCurrentRulesEntry(source, selection.rulesEdition);
       const entry = executionForEntry(authored, library.preferences.campaignDifficulty);
       const nextIndex = entry.campaign.levels.findIndex((level) => level.id === selection.levelId);
-      if (nextIndex < 0) throw new Error(t("interface:theExactNextMissionIsUnavailable"));
+      if (nextIndex < 0) throw new Error(t('interface:theExactNextMissionIsUnavailable'));
       if (context.transferContinuation && !context.transferContinuation()) return false;
       const selected = await prepareResultAttempt('next', nextIndex, entry);
       if (selected) {
@@ -9505,7 +9902,10 @@ try {
       const source = journeyLibrarySource({
         editionId: route.id,
         edition: route.id === DEFAULT_JOURNEY_ROUTES.solo ? 'New Journey' : route.label,
-        editionLabel: () => route.id === DEFAULT_JOURNEY_ROUTES.solo ? t("interface:newJourney") : contentText(route, 'label'),
+        editionLabel: () =>
+          route.id === DEFAULT_JOURNEY_ROUTES.solo
+            ? t('interface:newJourney')
+            : contentText(route, 'label'),
         catalog: host.catalog,
         profile,
         details: (mission) => journeyMissionDetails(manifestFor(mission)),
@@ -9522,7 +9922,10 @@ try {
       const versusSource = journeyLibrarySource({
         editionId: route.id,
         edition: route.id === DEFAULT_JOURNEY_ROUTES.solo ? 'New Journey' : route.label,
-        editionLabel: () => route.id === DEFAULT_JOURNEY_ROUTES.solo ? t("interface:newJourney") : contentText(route, 'label'),
+        editionLabel: () =>
+          route.id === DEFAULT_JOURNEY_ROUTES.solo
+            ? t('interface:newJourney')
+            : contentText(route, 'label'),
         catalog: versusPreview.catalog,
         profile,
         details: (mission) =>
@@ -9630,7 +10033,7 @@ try {
               ? { state: 'download', bytes: row.download.bytes }
               : {
                   state: 'unavailable',
-                  reason: t("interface:originalPictureDownloadIsAvailableInPublishedBuilds"),
+                  reason: t('interface:originalPictureDownloadIsAvailableInPublishedBuilds'),
                 };
           const present = chapterSnapshot?.index?.chapters.some(
             (chapter) => chapter.id === row.packId,
@@ -9639,7 +10042,7 @@ try {
             ? { state: 'ready' }
             : {
                 state: 'unavailable',
-                reason: t("interface:installThisChapterWithItsOriginalPicturesInWorlds"),
+                reason: t('interface:installThisChapterWithItsOriginalPicturesInWorlds'),
               };
         },
         launchClassic: async (row, context) => {
@@ -9647,7 +10050,7 @@ try {
             const snapshot = await checkedChapters();
             await externalChapters.readiness(snapshot, row.packId);
             if (packs.packs.find((pack) => pack.id === row.packId) !== context.pack)
-              throw new Error(t("interface:installedOriginalsChangedChoosePlayAgain"));
+              throw new Error(t('interface:installedOriginalsChangedChoosePlayAgain'));
           }
           return launchLibraryClassic(context.pack, context.selection, context);
         },
@@ -9661,19 +10064,19 @@ try {
         progressClassic: (row) => {
           const entry = classicRuntimeEntry(row);
           return entry && library.campaigns[campaignKey(entry.campaign)]?.clears?.[row.levelId]
-            ? t("interface:cleared")
+            ? t('interface:cleared')
             : '';
         },
         progressCustom: (binding) =>
           library.campaigns[binding.selection.campaignKey]?.clears?.[binding.selection.levelId]
-            ? t("interface:cleared")
+            ? t('interface:cleared')
             : '',
       });
       if (unifiedDisposed) {
         result.library.dispose();
         spatialEditions.dispose();
         if (!candidateHost) host.preparer.dispose();
-        throw new DOMException(t("interface:missionLibraryClosed"), 'AbortError');
+        throw new DOMException(t('interface:missionLibraryClosed'), 'AbortError');
       }
       disposeUnifiedPreview = () => {
         spatialEditions.dispose();
@@ -9746,7 +10149,7 @@ try {
           pause(true);
           clearInput();
           journeySkipArmed = null;
-          localizedText($('journey-skip'), () =>t("interface:skipMission"));
+          localizedText($('journey-skip'), () => t('interface:skipMission'));
         },
         onReturn: (opener) => {
           clearInput();
@@ -9765,7 +10168,7 @@ try {
         setup.querySelector('.mission-picker-setup-fields').append($('shell-mode-choice'));
         setup.classList.add('mission-library-setup');
         setup.open = false;
-        localizedText(setup.querySelector('summary'), () =>t("interface:currentSoloFlightSetup"));
+        localizedText(setup.querySelector('summary'), () => t('interface:currentSoloFlightSetup'));
         for (const id of ['pack-select', 'level-select', 'campaign-select'])
           $(id).closest('label').hidden = true;
         $('journey-chooser').querySelector('.journey-footer').append(setup);
@@ -9839,7 +10242,7 @@ try {
     feedback.id = 'mission-library-opening-status';
     feedback.className = 'micro-note';
     feedback.setAttribute('role', 'status');
-    localizedText(feedback, () =>t("interface:preparingMissions"));
+    localizedText(feedback, () => t('interface:preparingMissions'));
     (opener?.isConnected ? opener : $('shell-play')).after(feedback);
     let failed = false;
     const cancel = () => {
@@ -9888,7 +10291,7 @@ try {
     } catch (error) {
       if (revision === unifiedOpenRevision) {
         failed = true;
-        localizedText(feedback, () =>t("interface:missionsCouldNotLoadChooseMissionsToRetry"));
+        localizedText(feedback, () => t('interface:missionsCouldNotLoadChooseMissionsToRetry'));
         warning(`Mission library could not open: ${error.message}`);
       }
     } finally {
@@ -9903,12 +10306,18 @@ try {
     document.body.classList.add('journey-preview');
     show('journey-artwork-availability', !!candidateHost);
     if (authoredRoute?.id === DEFAULT_JOURNEY_ROUTES.solo)
-      localizedText($('journey-artwork-availability'), () =>t("interface:missionPicturesNeedAConnectionFullDownloadsIncludeThem"));
-    localizedText($('shell-title-edition'), () =>candidateHost
-      ? authoredRoute.id === DEFAULT_JOURNEY_ROUTES.solo
-        ? `NEW JOURNEY / ${journeyCatalog.missions.length} MISSIONS`
-        : `${authoredRoute.label.toUpperCase()} / UNVALIDATED TEST BUILD`
-      : t("interface:journeyTechnicalTestPreview"));
+      localizedText($('journey-artwork-availability'), () =>
+        t('interface:missionPicturesNeedAConnectionFullDownloadsIncludeThem'),
+      );
+    localizedText($('shell-title-edition'), () =>
+      candidateHost
+        ? authoredRoute.id === DEFAULT_JOURNEY_ROUTES.solo
+          ? t('interface:journey.menuMissionCount', { count: journeyCatalog.missions.length })
+          : t('interface:journey.testEdition', {
+              edition: contentText(authoredRoute, 'label').toLocaleUpperCase(),
+            })
+        : t('interface:journeyTechnicalTestPreview'),
+    );
     journeyChooser = attachJourneyChooser({
       catalog: journeyCatalog,
       profile: journeyProfile,
@@ -9925,7 +10334,7 @@ try {
         pause(true);
         clearInput();
         journeySkipArmed = null;
-        localizedText($('journey-skip'), () =>t("interface:skipMission"));
+        localizedText($('journey-skip'), () => t('interface:skipMission'));
       },
       onReturn: (opener) => {
         clearInput();
@@ -9946,7 +10355,7 @@ try {
         pause(true);
         clearInput();
         journeySkipArmed = runId;
-        localizedText($('journey-skip'), () =>t("interface:confirmSkip"));
+        localizedText($('journey-skip'), () => t('interface:confirmSkip'));
         warning(
           `Skip to ${next.name}? No clear is awarded. You can return at any time. Activate Confirm skip to continue.`,
         );
@@ -9954,7 +10363,7 @@ try {
         return;
       }
       journeySkipArmed = null;
-      localizedText($('journey-skip'), () =>t("interface:skipMission"));
+      localizedText($('journey-skip'), () => t('interface:skipMission'));
       void launchJourneyMission(next, { skipped: mission });
     };
     $('journey-save-retry').onclick = () => void journeyProfile.flush();
@@ -9962,7 +10371,10 @@ try {
       try {
         await downloadJSON(JSON.parse(journeyProfile.export()), journeyProfile.backupFilename);
       } catch (error) {
-        localizedText($('journey-save-message'), () =>`Export failed: ${error.message}. Your session progress is still here.`);
+        localizedText(
+          $('journey-save-message'),
+          () => `Export failed: ${error.message}. Your session progress is still here.`,
+        );
       }
     };
     window.addEventListener('online', () => void journeyProfile.flush());
@@ -9979,7 +10391,7 @@ try {
       }
       exportSequence++;
       show('journey-preferences-recovery', !snapshot.durable);
-      localizedText($('journey-preferences-message'), () =>snapshot.error);
+      localizedText($('journey-preferences-message'), () => snapshot.error);
       refreshDifficulty();
       journeyChooser?.refresh();
     });
@@ -9997,10 +10409,16 @@ try {
           'revealline-journey-difficulty.json',
         );
         if (ticket === exportSequence && !$('journey-preferences-recovery').hidden)
-          localizedText($('journey-preferences-message'), () =>`${journeyPreferences.snapshot().error} ${result.message}`);
+          localizedText(
+            $('journey-preferences-message'),
+            () => `${journeyPreferences.snapshot().error} ${result.message}`,
+          );
       } catch (error) {
         if (ticket === exportSequence && !$('journey-preferences-recovery').hidden)
-          localizedText($('journey-preferences-message'), () =>`Export failed: ${error.message}. Your session difficulty choice is still here.`);
+          localizedText(
+            $('journey-preferences-message'),
+            () => `Export failed: ${error.message}. Your session difficulty choice is still here.`,
+          );
       }
     };
   }
@@ -10034,7 +10452,7 @@ try {
           install: (files, options) => installSourceChapter(descriptor.id, files, options),
           async play({ signal, onStatus, launch }) {
             if (!storedStateAdopted || !persistenceReady)
-              throw new Error(t("interface:reloadAfterRecoveryBeforePlayingThisChapter"));
+              throw new Error(t('interface:reloadAfterRecoveryBeforePlayingThisChapter'));
             const snapshot = await checkedChapters({ signal });
             await externalChapters.readiness(snapshot, descriptor.id, { signal });
             assertWorldPlay(launch);
@@ -10045,18 +10463,18 @@ try {
           async choose({ signal, onStatus, launch }) {
             if (!storedStateAdopted || !persistenceReady)
               throw new Error(
-                t("interface:reloadAfterRecoveryToAdoptThePreservedProfileBeforeChoosing"),
+                t('interface:reloadAfterRecoveryToAdoptThePreservedProfileBeforeChoosing'),
               );
             preparationStatus(
               onStatus,
-              t("interface:checkingInstalledChapterOriginals"),
+              t('interface:checkingInstalledChapterOriginals'),
               'verifying',
               () => !signal?.aborted,
             );
             const snapshot = await checkedChapters({ signal });
             await externalChapters.readiness(snapshot, descriptor.id, { signal });
             if (signal.aborted || !launch?.isCurrent())
-              throw new DOMException(t("interface:chapterSelectionCancelled"), 'AbortError');
+              throw new DOMException(t('interface:chapterSelectionCancelled'), 'AbortError');
             // Reconcile only checked content; this does not replace the run.
             // The explicit selection below still requires Stay / Replace.
             adoptContentCatalog(contentFromChapters(snapshot));
@@ -10077,33 +10495,32 @@ try {
     install: installOptionalChapter,
     playInstalled: (pack, options) => {
       if (SOURCE_EXTERNAL_EDITIONS.some(({ descriptor }) => descriptor.id === pack.id))
-        throw new Error(t("interface:useThisChapterSExactOriginalPictureCard"));
+        throw new Error(t('interface:useThisChapterSExactOriginalPictureCard'));
       return requestWorldPlay(pack, options);
     },
     play: async (summary, options) => {
       const pack = packs.packs.find((item) => item.id === summary.id);
-      if (!pack) throw new Error(t("interface:installThisChapterBeforePlaying"));
+      if (!pack) throw new Error(t('interface:installThisChapterBeforePlaying'));
       await verifyOptionalInstalled(pack, summary, { signal: options.signal });
       return requestWorldPlay(pack, options);
     },
     chooseInstalled: async (pack, { signal, launch, onStatus }) => {
       if (courseEntry || courseSession || practice || !storedStateAdopted || !persistenceReady)
-        throw new Error(
-          t("interface:returnToTheNormalGameAndResolveRecoveryBeforeChoosing"),
-        );
-      if (signal?.aborted) throw new DOMException(t("interface:worldSelectionCancelled"), 'AbortError');
+        throw new Error(t('interface:returnToTheNormalGameAndResolveRecoveryBeforeChoosing'));
+      if (signal?.aborted)
+        throw new DOMException(t('interface:worldSelectionCancelled'), 'AbortError');
       if (!packs.packs.includes(pack))
-        throw new Error(t("interface:installedContentChangedRefreshTheChapterList"));
+        throw new Error(t('interface:installedContentChangedRefreshTheChapterList'));
       // External originals always go through their descriptor/readiness card.
       if (SOURCE_EXTERNAL_EDITIONS.some(({ descriptor }) => descriptor.id === pack.id))
-        throw new Error(t("interface:useThisChapterSExactOriginalPictureCard"));
+        throw new Error(t('interface:useThisChapterSExactOriginalPictureCard'));
       return requestWorldLaunch(resolvePackCampaign(pack, pack.campaigns[0].id), launch, onStatus);
     },
     choose: async (summary, { signal, onStatus, launch }) => {
       if (courseEntry || courseSession || practice)
-        throw new Error(t("interface:returnFromPracticeBeforeChoosingAWorld"));
+        throw new Error(t('interface:returnFromPracticeBeforeChoosingAWorld'));
       const pack = packs.packs.find((item) => item.id === summary.id);
-      if (!pack) throw new Error(t("interface:installThisWorldBeforeChoosingIt"));
+      if (!pack) throw new Error(t('interface:installThisWorldBeforeChoosingIt'));
       preparationStatus(
         onStatus,
         `Verifying ${summary.name}…`,
@@ -10111,9 +10528,10 @@ try {
         () => !signal?.aborted,
       );
       await verifyOptionalInstalled(pack, summary, { signal });
-      if (signal?.aborted) throw new DOMException(t("interface:worldSelectionCancelled"), 'AbortError');
+      if (signal?.aborted)
+        throw new DOMException(t('interface:worldSelectionCancelled'), 'AbortError');
       if (packs.packs.find((item) => item.id === summary.id) !== pack)
-        throw new Error(t("interface:installedContentChangedChooseThisWorldAgain"));
+        throw new Error(t('interface:installedContentChangedChooseThisWorldAgain'));
       return requestWorldLaunch(resolvePackCampaign(pack, pack.campaigns[0].id), launch, onStatus);
     },
     onOpen: () => {
@@ -10165,9 +10583,13 @@ try {
     initial: !practice && !courseSession && !packLaunchRequest && !libraryHandoff,
     initialFocus: false, // The boot guard still hides the title until ready().
     titleDestination: () =>
-      `Start · ${journeyDestination()?.name || campaign.levels[levelIndex].name}`,
+      t('interface:journey.startDestination', {
+        destination: contentText(journeyDestination() || campaign.levels[levelIndex], 'name'),
+      }),
     titleContinueDestination: () =>
-      !started || ['won', 'lost'].includes(run?.status) ? journeyDestination()?.name : undefined,
+      !started || ['won', 'lost'].includes(run?.status)
+        ? contentText(journeyDestination(), 'name')
+        : undefined,
     onTitleStart: (options) => {
       const destination = journeyDestination();
       if (destination && !started && $('continue-saved').hidden) {
@@ -10197,16 +10619,20 @@ try {
     onMissions: !practiceSession
       ? (opener) =>
           journeyChooser.open(opener, {
-            returnLabel: $('shell-home').open ? 'Back to menu' : 'Back to game',
+            returnLabel: $('shell-home').open
+              ? localizedMessage('interface:backToMenu')
+              : localizedMessage('common:navigation.backToGame'),
           })
       : undefined,
   });
   if (authoredRoute?.id === DEFAULT_JOURNEY_ROUTES.solo)
-    localizedText($('shell-title-team').querySelector('.game-mode-description'), () =>'12 Team missions');
+    localizedText($('shell-title-team').querySelector('.game-mode-description'), () =>
+      t('common:counts.teamMissions', { count: 12 }),
+    );
   for (const id of ['shell-catalogue', 'missions-catalogue']) {
     const link = $(id);
     link.hidden = practiceSession;
-    localizedText(link, () =>t("interface:allMissions"));
+    localizedText(link, () => t('interface:allMissions'));
     link.setAttribute('href', catalogueHref);
     link.onclick = (event) => {
       if (
@@ -10218,7 +10644,9 @@ try {
       ) {
         event.preventDefault();
         return openUnifiedMissions(link, {
-          returnLabel: $('shell-home').open ? t("interface:backToMenu2") : t("interface:backToBrief"),
+          returnLabel: $('shell-home').open
+            ? t('interface:backToMenu2')
+            : t('interface:backToBrief'),
         });
       }
       const parent = link.closest('dialog');
@@ -10300,13 +10728,9 @@ try {
           return;
         const row = host.library.find(libraryHandoff);
         if (!row || !row.modes.includes('solo'))
-          throw new Error(
-            t("interface:thisExactMissionEditionIsNotAvailableInSoloNo"),
-          );
+          throw new Error(t('interface:thisExactMissionEditionIsNotAvailableInSoloNo'));
         if ((row.collection === 'Journey') !== !!candidateHost)
-          throw new Error(
-            t("interface:thisMissionBelongsToADifferentGameplayHostSelectIt"),
-          );
+          throw new Error(t('interface:thisMissionBelongsToADifferentGameplayHostSelectIt'));
         if (host.library.availability(row, 'solo').state !== 'ready') {
           unifiedChooser.open($('shell-missions'));
           unifiedChooser.reveal(row.id);
@@ -10337,7 +10761,7 @@ try {
   ) {
     // This selector is lazy. Await its owned opening so normal boot focus does
     // not retire it; a real newer focus/visibility choice still cancels it.
-    await openUnifiedMissions($('shell-play'), { returnLabel: t("interface:backToMenu2") });
+    await openUnifiedMissions($('shell-play'), { returnLabel: t('interface:backToMenu2') });
   }
   const workshopReturn = readWorkshopReturn(location.search);
   const ownedWorkshopBootFocus =
@@ -10376,13 +10800,15 @@ try {
 } catch (error) {
   retireBootWorkshopInput();
   globalThis.RevealLineBoot?.fail(error);
-  localizedText($('overlay-title'), () =>t("interface:theGameCouldNotLoad"));
-  localizedText($('overlay-copy'), () =>error.message);
+  localizedText($('overlay-title'), () => t('interface:theGameCouldNotLoad'));
+  localizedText($('overlay-copy'), () => error.message);
   show('start-button', false);
-  localizedText($('run-message'), () =>new URLSearchParams(location.search).has('course')
-    ? t("interface:thisCourseCouldNotOpenUseRevealLineToReturn")
-    : new URLSearchParams(location.search).get('practice') === '1'
-      ? t("interface:openThePlaygroundAndChoosePlayConfigurationOrUseReveal")
-      : t("interface:serveTheProjectThroughHttpAndCheckTheContentFiles"));
+  localizedText($('run-message'), () =>
+    new URLSearchParams(location.search).has('course')
+      ? t('interface:thisCourseCouldNotOpenUseRevealLineToReturn')
+      : new URLSearchParams(location.search).get('practice') === '1'
+        ? t('interface:openThePlaygroundAndChoosePlayConfigurationOrUseReveal')
+        : t('interface:serveTheProjectThroughHttpAndCheckTheContentFiles'),
+  );
   console.error(error);
 }

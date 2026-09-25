@@ -20,22 +20,24 @@ export function attachOfflinePanel({
   const feedback = createOperationStatus($('offline-status'), { isCurrent: () => !disposed });
   const available = availability();
   const note = $('offline-optional-note');
-  localizedText(note, () =>available.note ?? '');
+  localizedText(note, () => available.note ?? '');
   note.hidden = !available.note;
   button.hidden = !available.available;
   feedback.begin({ message: '' }).finish({
     message: available.available
-      ? t("interface:downloadThisReleaseForOfflinePlayOnThisDevice")
+      ? t('interface:downloadThisReleaseForOfflinePlayOnThisDevice')
       : available.reason,
   });
   function controls() {
     button.disabled = !!observation;
     stop.hidden = !observation;
-    localizedText(button, () =>action === 'verify'
-        ? t("interface:verifyOfflineFiles")
+    localizedText(button, () =>
+      action === 'verify'
+        ? t('interface:verifyOfflineFiles')
         : action === 'check'
-          ? t("interface:checkProgress")
-          : t("interface:prepareOfflinePlay"));
+          ? t('interface:checkProgress')
+          : t('interface:prepareOfflinePlay'),
+    );
   }
   function detach({ focus = false } = {}) {
     if (!observation) return;
@@ -45,8 +47,7 @@ export function attachOfflinePanel({
     owned.controller.abort();
     owned.status.finish({
       state: 'detached',
-      message:
-        t("interface:stoppedWaitingOfflinePreparationMayStillBeRunningCheckProgress"),
+      message: t('interface:stoppedWaitingOfflinePreparationMayStillBeRunningCheckProgress'),
     });
     action = 'check';
     controls();
@@ -85,7 +86,7 @@ export function attachOfflinePanel({
         state: ready ? 'ready' : pending ? 'detached' : 'error',
         message: `${result.summary || result.message || result.status}${result.verified ? ` · ${result.verified} files verified` : ''}`,
       });
-      localizedText($('offline-details'), () =>JSON.stringify(result, null, 2));
+      localizedText($('offline-details'), () => JSON.stringify(result, null, 2));
     } catch (error) {
       if (!current()) return;
       action = 'prepare';

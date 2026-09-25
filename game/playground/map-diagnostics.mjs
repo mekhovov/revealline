@@ -38,7 +38,7 @@ export function renderMapDiagnostics(list, level) {
     ...mapDiagnosticDescriptions(level, { locale: doc.documentElement?.lang || 'en' }).map(
       (description) => {
         const item = doc.createElement('li');
-        localizedText(item, () =>description);
+        localizedText(item, () => description);
         return item;
       },
     ),
