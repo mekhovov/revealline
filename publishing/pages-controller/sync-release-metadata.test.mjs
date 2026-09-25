@@ -142,9 +142,18 @@ function waivedReleaseQualification(item) {
       },
       waiverEvidence: { runId: 42, runEvidence, jobsEvidence },
       evidencePins: [policyEvidence, runEvidence, jobsEvidence],
-      ordinaryBuildCorroboration: {
-        command: 'npm run build',
-        step: step('Build', 20),
+      preMergeValidationCorroboration: {
+        runId: 41,
+        jobId: 98,
+        command: 'npm run validate',
+        sourceRevision: item.tag.sourceRevision,
+        sourceTree,
+        step: step('Validate release-critical source', 20),
+        artifactBuild: {
+          status: 'deferred-to-frozen-source',
+          step: step('Defer full artifact build to merged-source qualification', 21),
+        },
+        scope: 'Exact PR source validation; artifact deferred to frozen source',
       },
       frozenArtifactCorroboration: {
         artifactId: 99,
