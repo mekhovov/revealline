@@ -1565,6 +1565,7 @@ try {
       soundtrackStore = createSoundtrackStore({ managedStore: pictureManager });
       soundtrackPlayer = createSoundtrackPlayer({
         catalogue,
+        bundledTrackIds: SOUNDTRACK_BUNDLED_ASSETS.map(({ id }) => id),
         audioMaster,
         soundscape: sound,
         audioElement,

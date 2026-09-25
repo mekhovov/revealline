@@ -170,6 +170,7 @@ export function attachCouchMusicHost({
     audioElement: media,
     secondAudioElement: doc.createElement('audio'),
     catalogue: source.catalogue,
+    bundledTrackIds: SOUNDTRACK_BUNDLED_ASSETS.map(({ id }) => id),
     audioMaster,
     readAsset: (hash, options) => source.readAsset(hash, options),
     onChange: () => {

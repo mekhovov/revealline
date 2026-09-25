@@ -415,7 +415,15 @@ export function resolveSoundtrackSelection(value, context = {}, { catalogue } = 
     scope = copy(context);
   exactKeys(
     scope,
-    ['mapKey', 'campaignKey', 'themeId', 'scene', 'energy', 'installedTrackIds'],
+    [
+      'mapKey',
+      'campaignKey',
+      'themeId',
+      'scene',
+      'energy',
+      'installedTrackIds',
+      'bundledTrackIds',
+    ],
     'soundtrack context',
   );
   for (const key of ['mapKey', 'campaignKey', 'themeId'])
@@ -431,6 +439,14 @@ export function resolveSoundtrackSelection(value, context = {}, { catalogue } = 
         scope.installedTrackIds.length <= SOUNDTRACK_LIMITS.catalogueTracks &&
         scope.installedTrackIds.every(stableId)),
     'Invalid installed soundtrack context.',
+  );
+  required(
+    scope.bundledTrackIds === undefined ||
+      (Array.isArray(scope.bundledTrackIds) &&
+        scope.bundledTrackIds.length <= SOUNDTRACK_LIMITS.catalogueTracks &&
+        new Set(scope.bundledTrackIds).size === scope.bundledTrackIds.length &&
+        scope.bundledTrackIds.every(stableId)),
+    'Invalid bundled soundtrack context.',
   );
   required(
     scope.energy === undefined ||
@@ -865,7 +881,10 @@ export function soundtrackPlaylists(value) {
 }
 function installedSelection(library, context, ids) {
   const catalogue = new Set(library.catalogTracks.map((track) => track.id));
-  const present = new Set(context.installedTrackIds ?? library.installedTrackIds);
+  const present = new Set([
+    ...(context.installedTrackIds ?? library.installedTrackIds),
+    ...(context.bundledTrackIds ?? []),
+  ]);
   const availableHashes = new Set([
     ...soundtrackStoredTracks(library)
       .filter((track) => !catalogue.has(track.id))
