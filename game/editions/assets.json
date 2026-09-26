@@ -1,0 +1,207 @@
+[
+  {
+    "id": "coupa-flower",
+    "path": "game/editions/assets/coupa/flower-blue.png",
+    "sha256": "17fd8f43ad6d9c471badf9c3363d27fa646b1ec369d104fc8de4d8e006ac0a43",
+    "bytes": 58489,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "coupa-home",
+    "path": "game/editions/assets/coupa/home.png",
+    "sha256": "23fde0cc8d4af4cacb906bdd5c3a7146d24e436a129c221d7535171bee72fbb9",
+    "bytes": 2072920,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "droneaid-logo",
+    "path": "game/editions/assets/droneaid/logo.png",
+    "sha256": "66dc87ce501a118189c768e81f665a0393e2452e000846374ba5c5e197cb7e1e",
+    "bytes": 4023,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "droneaid-home",
+    "path": "game/editions/assets/droneaid/home.png",
+    "sha256": "afbfc0063df32b8a7c91fb086310199d75632fa01fcd535f6de20bcfedfeb1fa",
+    "bytes": 2002741,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "poppins-regular",
+    "path": "game/editions/assets/shared/Poppins-Regular.ttf",
+    "sha256": "7e65201e9b79159e2300267cc885e16c8dcef2424cdfa09a29bfb0980a94a7ba",
+    "bytes": 160316,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "poppins-license",
+    "path": "game/editions/assets/shared/Poppins-OFL.txt",
+    "sha256": "8503c30a4d7e09c4c09015fee42f829f18acbe6330755e9930ba50ea44eaa157",
+    "bytes": 4384,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "coupa-inside-village-key",
+    "path": "game/editions/assets/coupa/coupa-inside-village-key.png",
+    "sha256": "50cf52f3ff6faeef17171a44acb83bf8b80e7090dcfa5fad512496676c18eb0f",
+    "bytes": 1997148,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "droneaid-community-relay-01",
+    "path": "game/editions/assets/droneaid/droneaid-community-relay-01.png",
+    "sha256": "6f3f7e96f4d8f0ea78f1026026a2dc5f85981adee599a44ccfa173204c055bbe",
+    "bytes": 1794830,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "droneaid-community-relay-02",
+    "path": "game/editions/assets/droneaid/droneaid-community-relay-02.png",
+    "sha256": "5ed9b536b8b11d4af1d6decda4cd8ee26346afcd326efa46de83f017efb4ab8a",
+    "bytes": 2262270,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "droneaid-community-relay-03",
+    "path": "game/editions/assets/droneaid/droneaid-community-relay-03.png",
+    "sha256": "855c22a0a4703cfe9810cc36399c92dd0295d0b7f9c5125eda39c9dc8247af4c",
+    "bytes": 2205966,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "coupa-source-to-pay-key",
+    "path": "game/editions/assets/coupa/coupa-source-to-pay-key.png",
+    "sha256": "bbfb32e28c42863a2c444de4c42d5843f107ae8573d8f773817abe9488801f3b",
+    "bytes": 2021650,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "coupa-product-operations-key",
+    "path": "game/editions/assets/coupa/coupa-product-operations-key.png",
+    "sha256": "371ab48050bb585c118346bcbbf97e8cdec3234415c3f41b16859874bda83604",
+    "bytes": 2105228,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "coupa-developer-integration-key",
+    "path": "game/editions/assets/coupa/coupa-developer-integration-key.png",
+    "sha256": "66c68f803aeb5d8590dcb29e05863d9147c12dbe7a5afebe6522a97b82b508ce",
+    "bytes": 1972536,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "coupa-icon-192",
+    "path": "game/editions/assets/coupa/icon-192.png",
+    "sha256": "68af331acfc75aa497e7c7576fd6c1ccc7daadc4e29a871e18aa3ccfe028332f",
+    "bytes": 15807,
+    "publication": "public",
+    "approved": true,
+    "dependencies": ["coupa-flower"],
+    "derivative": {
+      "sourceAssetId": "coupa-flower",
+      "sourceSha256": "17fd8f43ad6d9c471badf9c3363d27fa646b1ec369d104fc8de4d8e006ac0a43",
+      "sourceWidth": 512,
+      "sourceHeight": 469,
+      "width": 192,
+      "height": 192,
+      "kind": "square-install-icon",
+      "background": "#FFFFFF",
+      "paddingRatio": 0.12,
+      "resampling": "lanczos",
+      "implementation": "pillow-12.0.0"
+    }
+  },
+  {
+    "id": "coupa-icon-512",
+    "path": "game/editions/assets/coupa/icon-512.png",
+    "sha256": "360d780522b6a81f0e83be086c52e962e0dfce7f0e1d4ee4e3559eb9391cd7b0",
+    "bytes": 47962,
+    "publication": "public",
+    "approved": true,
+    "dependencies": ["coupa-flower", "coupa-icon-192"],
+    "derivative": {
+      "sourceAssetId": "coupa-flower",
+      "sourceSha256": "17fd8f43ad6d9c471badf9c3363d27fa646b1ec369d104fc8de4d8e006ac0a43",
+      "sourceWidth": 512,
+      "sourceHeight": 469,
+      "width": 512,
+      "height": 512,
+      "kind": "square-install-icon",
+      "background": "#FFFFFF",
+      "paddingRatio": 0.12,
+      "resampling": "lanczos",
+      "implementation": "pillow-12.0.0"
+    }
+  },
+  {
+    "id": "droneaid-icon-192",
+    "path": "game/editions/assets/droneaid/icon-192.png",
+    "sha256": "0d7189e414cfe317ddf2cbdb05739fa937ae947c013a05adaf99018afca9ad5f",
+    "bytes": 10429,
+    "publication": "public",
+    "approved": true,
+    "dependencies": ["droneaid-logo"],
+    "derivative": {
+      "sourceAssetId": "droneaid-logo",
+      "sourceSha256": "66dc87ce501a118189c768e81f665a0393e2452e000846374ba5c5e197cb7e1e",
+      "sourceWidth": 131,
+      "sourceHeight": 56,
+      "width": 192,
+      "height": 192,
+      "kind": "square-install-icon",
+      "background": "#FFFFFF",
+      "paddingRatio": 0.12,
+      "resampling": "lanczos",
+      "implementation": "pillow-12.0.0"
+    }
+  },
+  {
+    "id": "droneaid-icon-512",
+    "path": "game/editions/assets/droneaid/icon-512.png",
+    "sha256": "9be375c2ca36bf65c73f4998c15311dd30a553166b0f2fc7afa6dc1651fa14dd",
+    "bytes": 42167,
+    "publication": "public",
+    "approved": true,
+    "dependencies": ["droneaid-logo", "droneaid-icon-192"],
+    "derivative": {
+      "sourceAssetId": "droneaid-logo",
+      "sourceSha256": "66dc87ce501a118189c768e81f665a0393e2452e000846374ba5c5e197cb7e1e",
+      "sourceWidth": 131,
+      "sourceHeight": 56,
+      "width": 512,
+      "height": 512,
+      "kind": "square-install-icon",
+      "background": "#FFFFFF",
+      "paddingRatio": 0.12,
+      "resampling": "lanczos",
+      "implementation": "pillow-12.0.0"
+    }
+  }
+]

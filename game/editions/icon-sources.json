@@ -1,0 +1,33 @@
+{
+  "format": "revealline-install-icon-recipes.v1",
+  "recipes": [
+    {
+      "sourceAssetId": "coupa-flower",
+      "sourceSha256": "17fd8f43ad6d9c471badf9c3363d27fa646b1ec369d104fc8de4d8e006ac0a43",
+      "background": "#FFFFFF",
+      "paddingRatio": 0.12,
+      "outputs": [
+        { "id": "coupa-icon-192", "path": "game/editions/assets/coupa/icon-192.png", "size": 192 },
+        { "id": "coupa-icon-512", "path": "game/editions/assets/coupa/icon-512.png", "size": 512 }
+      ]
+    },
+    {
+      "sourceAssetId": "droneaid-logo",
+      "sourceSha256": "66dc87ce501a118189c768e81f665a0393e2452e000846374ba5c5e197cb7e1e",
+      "background": "#FFFFFF",
+      "paddingRatio": 0.12,
+      "outputs": [
+        {
+          "id": "droneaid-icon-192",
+          "path": "game/editions/assets/droneaid/icon-192.png",
+          "size": 192
+        },
+        {
+          "id": "droneaid-icon-512",
+          "path": "game/editions/assets/droneaid/icon-512.png",
+          "size": 512
+        }
+      ]
+    }
+  ]
+}
