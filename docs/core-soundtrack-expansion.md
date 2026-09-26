@@ -1373,20 +1373,32 @@ is the next small-file source-review pool. The creator publishes 29 loopable
 tracks under CC BY 4.0 and exposes ten free individual OGG variants before the
 paid variation tier. Start listening with **Feel the Wave**, **The Great Machine**,
 **Disaster** and **New Horizons**; treat variations as alternate arrangements,
-not extra compositions. No HexaPuppies recording is acquired, approved or queued
-for publication while the local disk reserve remains below 1 GiB.
+not extra compositions. No HexaPuppies recording is acquired or approved yet;
+prepare only a bounded subset after complete listening.
 
-The next creator-page comparison can also include
+The creator-page comparison now includes
 [StarShooter](https://opengameart.org/content/starshooter) by Centurion_of_war
 and [Bouncer](https://opengameart.org/content/bouncer-0) by Of Far Different
-Nature. Both creator uploads are published as CC0 and are described as upbeat
-electro/racing music; StarShooter supplies three OGG revisions and Bouncer
-supplies WAV and MP3. Treat the revisions and encodings as one composition each,
-verify exact source bytes and listen to the complete arrangements before intake.
+Nature. Both CC0 auditions are published through Archive 02 PRs #9 and #8.
+StarShooter's three source OGG revisions and Bouncer's WAV/MP3 encodings remain
+one composition each. Exact source and derivative bytes are verified; complete
+musical listening remains pending.
 [Technological Messup](https://opengameart.org/content/technological-messup) and
 [Maximum Overdrive](https://opengameart.org/content/maximum-overdrive) surfaced
 again in the same research pass but already exist in Archive 01, so do not create
 duplicate catalogue identities or count them as additions.
+
+Two additional CC BY 4.0 David KBD pools are now research-ready:
+[Pink Bloom](https://davidkbd.itch.io/pink-bloom-synthwave-music-pack) exposes
+nine individual loopable OGG tracks designed for an electronic/retro/synthwave
+game aesthetic, while
+[Code Injection](https://davidkbd.itch.io/code-injection-dark-techno-music-pack)
+exposes fourteen loopable dark-techno tracks for an electronic/glitch/hacker
+aesthetic. Start the Pink Bloom comparison with **Pink Bloom**, **Portal to
+Underworld**, **Western Cyberhorse** and **Lightyear City**; start Code Injection
+with **Underbeat**, **Electric Inferno** and **Binary Chaos**. These are source
+leads rather than approvals. Acquire only reviewed individual OGGs, not the paid
+WAV archives, and keep the next intake below the 1 GiB local reserve.
 
 Some older Punch Deck announcements state CC BY 3.0 while the current exact
 Bandcamp links resolve to CC BY 4.0. Preserve evidence from the actual acquisition
