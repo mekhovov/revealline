@@ -79,10 +79,13 @@ export function decideMergeAction({
       action: "stack",
       reason: "declared stack top passed the exact-head gate",
     };
-  if (pullRequest.mergeable_state === "clean")
+  if (["clean", "unstable"].includes(pullRequest.mergeable_state))
     return {
       action: "merge",
-      reason: "exact head is admitted and immediately mergeable",
+      reason:
+        pullRequest.mergeable_state === "clean"
+          ? "exact head is admitted and immediately mergeable"
+          : "exact head is admitted; only nonblocking checks are failing",
     };
   if (autoMergeEnabled)
     return { action: "none", reason: "exact-head auto-merge is already armed" };
