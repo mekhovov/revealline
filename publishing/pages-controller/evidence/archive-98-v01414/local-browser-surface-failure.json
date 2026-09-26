@@ -1,0 +1,7 @@
+{
+  "format": "revealline-archive98-local-browser-attempt.v1",
+  "status": "BLOCKED",
+  "attemptedRoute": "https://mekhovov.github.io/revealline-archive-98/releases/v0.141.4/site/game/",
+  "failure": "CUA reported Browser is not available: iab, followed by an empty browser inventory and app-server error -10005.",
+  "effect": "No local native observation was claimed; the separate root coordinator observation is retained independently."
+}

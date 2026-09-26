@@ -1,0 +1,30 @@
+{
+  "format": "revealline-archive98-public-byte-attempt-reconciliation.v1",
+  "status": "PASS",
+  "scope": "Independent complete-row reconciliation after final aggregation failed with ENOSPC; no payload was re-requested.",
+  "base": "https://mekhovov.github.io/revealline-archive-98/",
+  "archiveCommit": "91f3f76fe347fde44dd0ec6c854c272182423219",
+  "archiveTree": "ce1c310c3bc4f3fad08ca95bfb7f49c19e0f29a9",
+  "runId": 36266012808,
+  "deploymentId": 6683228670,
+  "inventorySha256": "1a61a082505eea0836b71ab7446aa41cd89cea1cb0445183aed2c8f107bee67a",
+  "attemptLedgerSha256": "f4db543c79b46140c6ec3a431441b565b2992b10b56dba5476afb878c9758a59",
+  "partialResultLedgerSha256": "2ebd8b5634e709552af64711a259f72648093731653667260f960ec2657e4c6e",
+  "auditorSha256": "ab897e883a121a54d93236378a63f57240a00b142bd1a9ed39ffeb251e3e668b",
+  "expectedFiles": 1317,
+  "expectedBytes": 612091970,
+  "attemptRows": 1317,
+  "uniqueAttemptPaths": 1317,
+  "passingAttemptRows": 1317,
+  "failedAttemptRows": 0,
+  "partialAggregatedResultRows": 538,
+  "priorAcceptedPaths": 0,
+  "firstRequestAt": "2026-09-26T19:29:56.408316+00:00",
+  "lastRequestAt": "2026-09-26T19:32:26.948166+00:00",
+  "errors": [],
+  "limitations": [
+    "Original runner did not emit report.json because local evidence aggregation ended with ENOSPC after all public request rows were written.",
+    "Native browser surface was unavailable in this subtask; browser admission remains separate.",
+    "No physical-device, touch, or controller qualification is claimed."
+  ]
+}
