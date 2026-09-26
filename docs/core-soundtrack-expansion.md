@@ -1,6 +1,6 @@
 # RevealLine — consolidated soundtrack master plan
 
-Updated 25 September 2026. This is the durable source of truth for all soundtrack
+Updated 26 September 2026. This is the durable source of truth for all soundtrack
 work. It replaces the separate conversational plans without removing completed,
 blocked, rejected or deferred requirements. The user approved implementation of
 this consolidated plan.
@@ -20,23 +20,24 @@ reviewer names, listening approval or device results.
 
 ## Completed and current baseline
 
-| Area | Completed | Remaining |
-| --- | --- | --- |
-| Existing catalogue | 70 hosted recordings / 15 albums; earlier 24-track collection is included | Selective listening and trusted metadata curation |
-| Player framework | Simplified chooser, mixed playlists, uploads, creator tools, optional offline albums, recovery and rights enforcement | Targeted released-source verification and demonstrated fixes |
-| Native archive streaming | PR #523 is released in immutable v0.130.0; the public desktop game loaded 136/136 archive recordings and completed remote → included → remote playback without audio loss | Physical iPhone/controller and cold-offline acceptance remain separate |
-| New archive previews | 136 public archive recordings across 14 collections; the immutable 104-recording baseline and its later 32 additions retain separate publication evidence | Full listening, taste approval and game admission remain; zero new game admissions |
-| Retro previews | Seven earlier rejections and six rejected DOS-88/escp previews are retained; four third-direction synth auditions are public and listening-unapproved | Review the new four against the Electric Dreams/night-drive direction; runner2088 remains draft |
-| Metal previews | Six older backups, four Eternity recordings, four industrial/thrash previews, four nonduplicate YannZ-centered groove auditions and four Purgatory auditions are public alongside the earlier Nakarada pair | Complete the seven-track Interstellar/Purgatory review; Reckless source intake is merged and technically inspected, with public audition publication and listening still pending |
-| Nakarada Shchedryk | User approved the direction; exact MP3 admission is public in v0.130.0 and played from the bundled source during desktop transition verification | Full-track/repeated-session, physical-device and Ukrainian cultural acceptance |
-| UA-FPV | Four private import packs preserve 80 filenames / 77 unique recordings | Recording-specific public permission and game admission |
-| Quick controls | Replacement PR #516 is included in public v0.130.0; historical PR #333 is closed | B/N plus touch/controller physical-device acceptance |
-| AI originals | Scores, candidates and rejection evidence retained | Paused; 0/36 approved |
-| Historical releases | PRs #209, #250, #263 and #268 merged | Preserve delivered behavior, do not redo historical release work |
+| Area                     | Completed                                                                                                                                                                                                                                   | Remaining                                                                                                                       |
+| ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| Existing catalogue       | 70 hosted recordings / 15 albums; earlier 24-track collection is included                                                                                                                                                                   | Selective listening and trusted metadata curation                                                                               |
+| Player framework         | Simplified chooser, mixed playlists, uploads, creator tools, optional offline albums, recovery and rights enforcement                                                                                                                       | Targeted released-source verification and demonstrated fixes                                                                    |
+| Native archive streaming | PR #523 is released in immutable v0.130.0; the public desktop game loaded the current 140/140 archive recordings, played a new Reckless object, and retains earlier remote → included → remote recovery evidence                            | Physical iPhone/controller and cold-offline acceptance remain separate                                                          |
+| New archive previews     | 140 public archive recordings across 15 collections; the immutable 104-recording baseline and its later 36 additions retain separate publication evidence                                                                                   | Full listening, taste approval and game admission remain; zero new game admissions                                              |
+| Retro previews           | Seven earlier rejections and six rejected DOS-88/escp previews are retained; four third-direction synth auditions are public and listening-unapproved                                                                                       | Review the new four against the Electric Dreams/night-drive direction; runner2088 remains draft                                 |
+| Metal previews           | Six older backups, four Eternity recordings, four industrial/thrash previews, four nonduplicate YannZ-centered groove auditions, four Purgatory auditions and four Reckless vol. 2 auditions are public alongside the earlier Nakarada pair | Complete the seven-track Interstellar/Purgatory review, then review the four shorter Reckless recordings; all remain unadmitted |
+| Nakarada Shchedryk       | User approved the direction; exact MP3 admission is public in v0.130.0 and played from the bundled source during desktop transition verification                                                                                            | Full-track/repeated-session, physical-device and Ukrainian cultural acceptance                                                  |
+| UA-FPV                   | Four private import packs preserve 80 filenames / 77 unique recordings                                                                                                                                                                      | Recording-specific public permission and game admission                                                                         |
+| Quick controls           | Replacement PR #516 is included in public v0.130.0; historical PR #333 is closed                                                                                                                                                            | B/N plus touch/controller physical-device acceptance                                                                            |
+| AI originals             | Scores, candidates and rejection evidence retained                                                                                                                                                                                          | Paused; 0/36 approved                                                                                                           |
+| Historical releases      | PRs #209, #250, #263 and #268 merged                                                                                                                                                                                                        | Preserve delivered behavior, do not redo historical release work                                                                |
 
 ### Completed
 
-- The 136-recording archive and immutable v0.111.0 game release are published.
+- The 140-recording archive is published. The native archive player and recovery
+  repair are published in immutable v0.130.0.
   Archive75 preservation of v0.110.1 and Archive76's scoped desktop music
   verification are complete. Their exact evidence and limitations are below.
 - Selector PR #476 is merged and the primary v0.111.1 deployment passed. Direct
@@ -74,9 +75,10 @@ reviewer names, listening approval or device results.
    parallel.
 4. **M6 full-length metal review:** review seven already-public, exact-source
    David KBD recordings from Interstellar and Purgatory before shorter pending
-   Reckless auditions. They require no new media download, but remain unadmitted,
+   Reckless auditions. Four exact Reckless vol. 2 auditions are now public through
+   archive PR #27. They require no new media download, but remain unadmitted,
    Content-ID-unknown and Recording-mode-ineligible until full listening, transition,
-   warning-audibility and gameplay review. Reckless PR #22 continues independently.
+   warning-audibility and gameplay review.
 
 The latest public/general GitHub release at this checkpoint is **v0.130.0**. Its
 immutable tag resolves to aggregate source `5022108ca458e9355e9567efddfee50fb49af5c1`.
@@ -102,15 +104,16 @@ explicit fast-release policy remain exclusions, never passes.
 - Musical, transition, warning-audibility, cultural and physical-device evidence
   cannot be replaced by transport tests. UA-FPV public redistribution still needs
   recording-specific permission; the four private packs remain available.
-- The four public PR #25 synth recordings and four public PR #26 Purgatory
-  recordings are listening-unapproved and unadmitted. Their human listening and
+- The four public PR #25 synth recordings, four public PR #26 Purgatory recordings
+  and four public PR #27 Reckless recordings are listening-unapproved and
+  unadmitted. Their human listening and
   admission review gates have no committed ETA.
   Do not publicly redistribute Pixabay or UA-FPV recordings without exact-recording
   permission. Shchedryk remains excluded from Recording mode because of Content ID.
-- Free space is **at or slightly below the required 1 GiB floor**; checkpoints during
-  this reconciliation fluctuated by only a few MiB around that boundary. Treat the
-  reserve as volatile and keep local audio checkout, rendering and heavy builds held; continue only hosted or bounded metadata work until
-  owner-coordinated cleanup restores a usable margin; never delete user files, frozen releases or evidence.
+- Local free space was approximately **1.8 GiB** at this checkpoint, above the
+  required 1 GiB floor but still too narrow for unbounded audio work. Continue
+  hosted acquisition/builds and bounded metadata checks; recheck before every audio
+  operation and never delete user files, frozen releases or evidence.
 
 ### Deferred
 
@@ -128,8 +131,8 @@ originals approved. No deadline is assigned to unresolved rights or paused music
   `UPLOAD_GUIDE.md`. Archive PRs #18/#19 added 24 separately evidenced auditions;
   PR #25 added four listening-pending synth auditions and PR #26 added four
   listening-pending Purgatory auditions. Live archive main
-  `824e34e4957ab29b7ef841115f631a579f741fc4` now serves 136 unique recordings
-  across 14 collections with 777,523,163 audio bytes. Exact-head archive
+  `cc7777bb62981ea9739a8efbc67f658f16f49a3f` now serves 140 unique recordings
+  across 15 collections with 790,408,183 audio bytes. Exact-head archive
   verification for the 104-recording baseline passed 32/32 checks. Direct
   public verification of that baseline covered text search, all eight
   then-current collections, single and
@@ -296,7 +299,9 @@ originals approved. No deadline is assigned to unresolved rights or paused music
   sizes and hashes; ffmpeg completely decoded all four OGG originals and four MP3
   derivatives, each at −16.00 LUFS and ≤−6.18 dBTP. No bytes were written locally.
   The merge adds reproducible intake only: no public audio, catalogue row, listening
-  approval, game admission, default or Recording-mode eligibility changed. Draft
+  approval, game admission, default or Recording-mode eligibility changed. Its
+  four exact derivatives were later published as auditions through PR #27, as
+  recorded below. Draft
   [PR #23](https://github.com/mekhovov/revealline-soundtracks-01/pull/23)
   (runner2088 retrowave) is conflicting at
   `e6e746a83f08708b4b24cf1a2522a4924624001a`. PR #23 is not published by the current archive main. Its rebase/conflict
@@ -323,14 +328,38 @@ originals approved. No deadline is assigned to unresolved rights or paused music
   and `recordingModeEligible: false`. GitHub exposes no formal PR review entry, so
   this ledger records the exact merge, checks and public result without inventing an
   independent approval. Publication does not establish musical or game admission.
+- Archive [PR #27](https://github.com/mekhovov/revealline-soundtracks-01/pull/27)
+  merged as `cc7777bb62981ea9739a8efbc67f658f16f49a3f` and published
+  **City Limits Crash**, **Edge of the City**, **Defiant Descent** and
+  **Airborne Anarchy** from David KBD's Reckless vol. 2. The publication binds the
+  exact PR #22 source artifact and preserves all four rows as
+  `listeningApproval: not-reviewed`, `gameCatalogueAdmission: false`,
+  `default: false` and `recordingModeEligible: false` while Content ID remains
+  unknown. Final exact-head checks passed at `9adbeb6f7d8a3a81083338ee5e5cb6c5e9f28ab9`;
+  independent review confirmed the unchanged 136-row prefix, exact object hashes,
+  the 136→140 catalogue transition and a closed generated-source verification path.
+  Preserve the cancelled/failed runs 36195988669, 36196391249, 36196839168 and
+  36197360034 as evidence of the staging, generated-state and shallow-checkout
+  defects that the final workflow repaired. Exact-merge Pages
+  [run 36197838016](https://github.com/mekhovov/revealline-soundtracks-01/actions/runs/36197838016)
+  passed verification and deployment. Direct public checks returned catalogue SHA-256
+  `c8f0b4192b9736a9dfdfefc7cf8ce37b9650cf84a2a64f03ee07097445d7decf`,
+  **140 unique recordings / 15 collections / 790,408,183 audio bytes**, CORS `*`,
+  and HTTP 206 with `Content-Range: bytes 0-1023/3330342` for City Limits Crash.
+  Same-page browser playback advanced that recording beyond 76 seconds, then Next
+  switched to another archive recording which continued beyond 4 seconds. This is
+  transport evidence, not musical approval or game admission. The public v0.130.0
+  game then loaded **140 of 140**, exposed all 15 collections and played City Limits
+  Crash through the in-game transport beyond 11 seconds while the game URL remained
+  unchanged.
 - Authoritative game GitHub state has
   [PR #370](https://github.com/mekhovov/revealline/pull/370) merged as
   `3883259987913cb646eb44cf2580083dad673a70` and
   [v0.111.0](https://github.com/mekhovov/revealline/releases/tag/v0.111.0)
   published as the public soundtrack archive player. The latest non-documentation
   game baseline before this docs-only plan update is
-  `fce62eb754366e6e22a33bebf86e3ee59db84e66` after the v0.131 maintained-tools
-  localization, production-ledger and Team fixture fixes; soundtrack regression
+  `e11bf150fa7b6201a17ca6e4e51a0623b4eb88b4` after the v0.131 freeze dependency
+  repair; soundtrack regression
   PR #555 remains merged in its ancestry. The latest public/general GitHub release remains v0.130.0. Later source or
   game releases do not convert archive auditions into trusted built-ins or defaults.
 - UA-FPV remains on its recording-specific public-redistribution rights hold; its
@@ -628,24 +657,54 @@ Estimates are hands-on effort, not promised dates. CI queues, listening reviewer
 rights and actual failure diagnosis can extend elapsed time. No soundtrack game
 version is allocated without the release owner's confirmation.
 
-| ID | State / priority | Dependency | Next action and completion condition | Effort | PR / evidence | Released version |
-| --- | --- | --- | --- | --- | --- | --- |
-| M0 | Complete; maintenance continues | None | Preserve all histories and update this ledger after each meaningful milestone | Complete | [PR #330](https://github.com/mekhovov/revealline/pull/330), merged efacbf087; prior source PR #321 | Docs merged; no runtime release required |
-| M1 | Admission/source infrastructure is public in the qualified aggregate | Released-source and ongoing regression verification | Preserve the #518 boundary and generated-ledger/admission gates in later releases | Maintenance | Historical #321/#331; merged replacement [PR #518](https://github.com/mekhovov/revealline/pull/518) at 36e68002; v0.130 qualification/inspection runs above | v0.130.0 public |
-| M2 | Exact Shchedryk admission is public; bundled-source desktop playback verified | Full listening, cultural, cold-offline and physical-device review | Complete the remaining reviews without changing the accepted exact recording identity/bytes | About 0.5–1 day hands-on plus external listening/device review | Historical #439; merged replacement [PR #519](https://github.com/mekhovov/revealline/pull/519) at 47df2655; public transition evidence above | v0.130.0 public; acceptance partial |
-| M3 | Quick controls are public | Physical keyboard/touch/controller access | Verify B/N plus touch/controller Play/Pause and Next on physical targets | About 0.5 day hands-on, excluding device access | Historical #333; merged replacement [PR #516](https://github.com/mekhovov/revealline/pull/516) at 7ccbb6d3 | v0.130.0 public; device acceptance pending |
-| M4 | Active research; parallel | Exact published rights and musical/cultural review | Target six additional distinct Ukrainian compositions; publish cleared subsets | 1–2 days per research round; rights/review date unknown | Candidate/hold register below | Unreleased |
-| M5 | Four third-direction synth auditions are public; runner2088 remains draft; Electric Dreams remains the closest reference | Musical fit, full listening and exact admission review; public-archive holds remain | Review 90s Racer Techno, Neon Pulse, Prismatic Light and Future Travel; keep PR #23 draft until independently reconciled; admit only a musically accepted subset | Several hours per comparison round; 1–2 days integration/verification after approval; CI/review waits excluded | Archive [PR #25](https://github.com/mekhovov/revealline-soundtracks-01/pull/25), Pages run 36147468099 and M5.a feedback below; draft [PR #23](https://github.com/mekhovov/revealline-soundtracks-01/pull/23) | Unreleased in game |
-| M6 | Purgatory PR #26 is public; Reckless intake PR #22 is merged at 4f9ac1c1 with binding fixes, exact-head checks and independent in-memory artifact inspection complete; groove-first direction retained | Public audition assembly, full listening, transitions, warnings, Content ID and gameplay acceptance | Publish Reckless only as listening-unapproved auditions after separate assembly review; then admit only a musically accepted subset | Several hours per listening round; 1–2 days integration after approval; CI waits excluded | Merged Purgatory publication [PR #26](https://github.com/mekhovov/revealline-soundtracks-01/pull/26), 824e34e4 and Pages run 36160861165; merged Reckless intake [PR #22](https://github.com/mekhovov/revealline-soundtracks-01/pull/22), 4f9ac1c1; artifact 10889860079 inspected | Purgatory auditions public; Reckless source ready but unpublished; unreleased in game |
-| M7 | Blocked public rights; scope retained | Recording-specific public redistribution and applicable artwork evidence | Include all 77 recordings / 80 filenames; publish cleared entries; maintain private pack route | About 1 day integration after clearance; clearance date unknown | UA-FPV manifests/private packs/guide | Public collection unreleased |
-| M8 | Public desktop compatibility/stall repair complete; real-player recovery regression merged | Physical device access and the accepted offline-app runtime | Keep the 136/136 parser, persistent remote deck, watchdog and mixed queues green; coordinate cold-restart browser acceptance with draft offline-app [PR #536](https://github.com/mekhovov/revealline/pull/536), then finish iPhone/controller checks | About 0.5 day after the offline runtime is accepted, plus device access | PR #370, v0.111.0, Archive76; merged repair [PR #523](https://github.com/mekhovov/revealline/pull/523); merged regression [PR #555](https://github.com/mekhovov/revealline/pull/555); 177/177 prior focused tests; v0.130 qualification, inspection, selector and public-browser evidence above | v0.130.0 public; desktop accepted; cold offline pending |
-| M9 | Later | Core style releases | Review existing 70 selectively; add trusted ID/hash curation overlay preserving saved pins | 1–2 days per selected batch plus listening | Curation PR pending | Unreleased |
-| M10 | Later | Core styles delivered | Broader musical variety in small accepted albums | 1–2 days per batch plus review | Separate future album PRs | Unreleased |
-| M11 | Deferred / paused | Better production method and accepted pilots | Retain full 36-original brief; do not resume rejected production method | Unscheduled | Candidate/rejection archives | 0/36 approved |
+| ID  | State / priority                                                                                                                                                                         | Dependency                                                                          | Next action and completion condition                                                                                                                                                                                         | Effort                                                                                                         | PR / evidence                                                                                                                                                                                                                                                                                                                                                 | Released version                                                          |
+| --- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------- |
+| M0  | Complete; maintenance continues                                                                                                                                                          | None                                                                                | Preserve all histories and update this ledger after each meaningful milestone                                                                                                                                                | Complete                                                                                                       | [PR #330](https://github.com/mekhovov/revealline/pull/330), merged efacbf087; prior source PR #321                                                                                                                                                                                                                                                            | Docs merged; no runtime release required                                  |
+| M1  | Admission/source infrastructure is public in the qualified aggregate                                                                                                                     | Released-source and ongoing regression verification                                 | Preserve the #518 boundary and generated-ledger/admission gates in later releases                                                                                                                                            | Maintenance                                                                                                    | Historical #321/#331; merged replacement [PR #518](https://github.com/mekhovov/revealline/pull/518) at 36e68002; v0.130 qualification/inspection runs above                                                                                                                                                                                                   | v0.130.0 public                                                           |
+| M2  | Exact Shchedryk admission is public; bundled-source desktop playback verified                                                                                                            | Full listening, cultural, cold-offline and physical-device review                   | Complete the remaining reviews without changing the accepted exact recording identity/bytes                                                                                                                                  | About 0.5–1 day hands-on plus external listening/device review                                                 | Historical #439; merged replacement [PR #519](https://github.com/mekhovov/revealline/pull/519) at 47df2655; public transition evidence above                                                                                                                                                                                                                  | v0.130.0 public; acceptance partial                                       |
+| M3  | Quick controls are public                                                                                                                                                                | Physical keyboard/touch/controller access                                           | Verify B/N plus touch/controller Play/Pause and Next on physical targets                                                                                                                                                     | About 0.5 day hands-on, excluding device access                                                                | Historical #333; merged replacement [PR #516](https://github.com/mekhovov/revealline/pull/516) at 7ccbb6d3                                                                                                                                                                                                                                                    | v0.130.0 public; device acceptance pending                                |
+| M4  | Active research; parallel                                                                                                                                                                | Exact published rights and musical/cultural review                                  | Target six additional distinct Ukrainian compositions; publish cleared subsets                                                                                                                                               | 1–2 days per research round; rights/review date unknown                                                        | Candidate/hold register below                                                                                                                                                                                                                                                                                                                                 | Unreleased                                                                |
+| M5  | Four third-direction synth auditions are public; runner2088 remains draft; Electric Dreams remains the closest reference                                                                 | Musical fit, full listening and exact admission review; public-archive holds remain | Review 90s Racer Techno, Neon Pulse, Prismatic Light and Future Travel; keep PR #23 draft until independently reconciled; admit only a musically accepted subset                                                             | Several hours per comparison round; 1–2 days integration/verification after approval; CI/review waits excluded | Archive [PR #25](https://github.com/mekhovov/revealline-soundtracks-01/pull/25), Pages run 36147468099 and M5.a feedback below; draft [PR #23](https://github.com/mekhovov/revealline-soundtracks-01/pull/23)                                                                                                                                                 | Unreleased in game                                                        |
+| M6  | Purgatory PR #26 and Reckless publication PR #27 are public; four exact Reckless recordings passed source, derivative, catalogue and Pages verification; groove-first direction retained | Full listening, transitions, warnings, Content ID and gameplay acceptance           | Review the seven full-length Interstellar/Purgatory recordings first, then the four shorter Reckless recordings; admit only a musically accepted subset                                                                      | Several hours per listening round; 1–2 days integration after approval; CI waits excluded                      | Merged Purgatory [PR #26](https://github.com/mekhovov/revealline-soundtracks-01/pull/26), Pages run 36160861165; Reckless intake [PR #22](https://github.com/mekhovov/revealline-soundtracks-01/pull/22), artifact 10889860079; publication [PR #27](https://github.com/mekhovov/revealline-soundtracks-01/pull/27), merge cc7777bb and Pages run 36197838016 | Eleven current David KBD auditions public; unreleased in game             |
+| M7  | Blocked public rights; scope retained                                                                                                                                                    | Recording-specific public redistribution and applicable artwork evidence            | Include all 77 recordings / 80 filenames; publish cleared entries; maintain private pack route                                                                                                                               | About 1 day integration after clearance; clearance date unknown                                                | UA-FPV manifests/private packs/guide                                                                                                                                                                                                                                                                                                                          | Public collection unreleased                                              |
+| M8  | Public desktop compatibility/stall repair complete; real-player recovery regression merged; current 140-row catalogue loads and a new Reckless object plays in v0.130                    | Physical device access and the accepted offline-app runtime                         | Keep the persistent remote deck, watchdog and mixed queues green; coordinate cold-restart acceptance with draft offline-app [PR #536](https://github.com/mekhovov/revealline/pull/536), then finish iPhone/controller checks | About 0.5 day after the offline runtime is accepted, plus device access                                        | PR #370, v0.111.0, Archive76; merged repair [PR #523](https://github.com/mekhovov/revealline/pull/523); merged regression [PR #555](https://github.com/mekhovov/revealline/pull/555); 177/177 prior focused tests; v0.130 qualification, inspection, selector and current 140-row browser evidence above                                                      | v0.130.0 public; desktop/current catalogue accepted; cold offline pending |
+| M9  | Later                                                                                                                                                                                    | Core style releases                                                                 | Review existing 70 selectively; add trusted ID/hash curation overlay preserving saved pins                                                                                                                                   | 1–2 days per selected batch plus listening                                                                     | Curation PR pending                                                                                                                                                                                                                                                                                                                                           | Unreleased                                                                |
+| M10 | Later                                                                                                                                                                                    | Core styles delivered                                                               | Broader musical variety in small accepted albums                                                                                                                                                                             | 1–2 days per batch plus review                                                                                 | Separate future album PRs                                                                                                                                                                                                                                                                                                                                     | Unreleased                                                                |
+| M11 | Deferred / paused                                                                                                                                                                        | Better production method and accepted pilots                                        | Retain full 36-original brief; do not resume rejected production method                                                                                                                                                      | Unscheduled                                                                                                    | Candidate/rejection archives                                                                                                                                                                                                                                                                                                                                  | 0/36 approved                                                             |
 
 M4–M6 research proceeds in parallel. M3 does not wait for music rights. A cleared
 Ukrainian, synth or metal subset can ship without waiting for the other families.
 Full listening review of the existing 70 is not a prerequisite for a new batch.
+
+### 26 September priority, ETA and blockers
+
+1. **Metal listening and admission:** the next review set is already public, so the
+   seven full-length Interstellar/Purgatory recordings need several hours of human
+   listening; the four Reckless recordings follow in another bounded session. An
+   accepted subset needs 1–2 working days for admission, regression, immutable game
+   release and public verification. Until that listening decision exists, these
+   recordings remain auditions rather than built-in/default music.
+2. **90s Synth:** review the four public third-direction recordings and resolve the
+   conflicting runner2088 draft only if it remains useful. Allow 1–2 working days
+   for comparison/source work and 1–2 more after approval for integration and
+   release. The user has not accepted the current slate yet.
+3. **Ukrainian expansion:** continue one 1–2-day rights/source research round at a
+   time. Publication timing remains unknown because exact redistribution evidence
+   and Ukrainian musical/cultural review are external gates. UA-FPV has no honest
+   public ETA until recording-specific permissions exist.
+4. **Playback/device closure:** the public v0.130 desktop game now accepts all 140
+   rows and plays a newly published Reckless object. Allow about half a working day
+   for physical B/N/touch/controller checks when devices are available. Cold-offline
+   acceptance needs another half to one day after PR #536 is rebased and accepted.
+   PR #536 is currently draft, conflicting and based on an old main; it also
+   requires a decision between its zero-MP3 core and the plan's bundled Shchedryk
+   exception.
+5. **Original compositions:** no ETA. The rejected synchronization quality remains
+   unacceptable and the 36-track production phase stays paused.
+
+This plan update is based on authoritative game main
+`e11bf150fa7b6201a17ca6e4e51a0623b4eb88b4`. It does not allocate a game version,
+change runtime code or admit a new recording.
 
 ## M2 — Shchedryk opening theme
 
@@ -714,13 +773,13 @@ For these new candidates, Content ID remains **unknown** and
 acceptable Content ID status are verified. Keep all earlier user feedback and
 rejected/held source evidence below.
 
-| Direction / exact recordings | Authorized acquisition and licence | Selection limits |
-| --- | --- | --- |
-| Metal — David KBD: **Grave Rot Requiem**, **Bone Grinder's Ballad**, **The Slicing Strain**; reserve **Devoured by Darkness** | [Purgatory vol. 3 creator itch.io page](https://davidkbd.itch.io/purgatory-vol-3-extreme-metal-music-pack), CC BY 4.0. Use the legitimate free Download Now flow for `DavidKBD-01 - Grave Rot Requiem.ogg`, `DavidKBD-05 - Bone Grinder's Ballad.ogg`, `DavidKBD-06 - The Slicing Strain.ogg` and reserve `DavidKBD-04 - Devoured by Darkness.ogg`. | Whole recordings only; the separately listed mini-loops do not count as extra compositions. Paid WAV archives are not required. |
-| Metal — David KBD: **City Limits Crash**, **Defiant Descent** | [Reckless vol. 2 creator itch.io page](https://davidkbd.itch.io/reckless-vol-2-punk-metal-music-pack), CC BY 4.0. Free individual files are `DavidKBD-01 - City Limits Crash.ogg` and `DavidKBD-03 - Defiant Descent.ogg`. | Loopable action cues; measure actual decoded duration and review repetition across gameplay sessions. |
-| Synth — David KBD: **Electric Pulse**, **Retrochrome Nights**, **Vapor Trails Pursuit**, **Synthetic Power Surge** | [Electric Pulse creator itch.io page](https://davidkbd.itch.io/electric-pulse-synthwave-retro-futuristic-music-pack), CC BY 4.0. Use its free individual `-full.ogg` files numbered 01, 04, 09 and 10, preserving their exact listed titles. | Exclude `-short` / `-sort` variants. The [Bandcamp edition](https://davidkbd.bandcamp.com/album/electric-pulse-synthwave-retro-futuristic-music-pack-original-game-soundtrack) is listening metadata with all rights reserved, not the acquisition or licence authority. |
-| Synth — wekont: **runner2088** | [Exact FMA recording page](https://freemusicarchive.org/music/wekont/single/runner2088mp3/), CC BY 4.0; use its authorized recording download and retain the exact source grant. | Listed 1:37: a short-cue audition, not a 3–5-minute composition. An access failure is not permission to substitute another upload. |
-| Synth reserve — Bogart VGM: **RetroRacing Nightlife** | [Exact OpenGameArt recording page](https://opengameart.org/content/retroracing-nightlife), CC BY 4.0; use the listed `Retroracing Nightlife.mp3`, with creator credit and source/Facebook link. | Exact duration remains pending. Do not infer it from the listed 6.5 MB file size. |
+| Direction / exact recordings                                                                                                  | Authorized acquisition and licence                                                                                                                                                                                                                                                                                                                  | Selection limits                                                                                                                                                                                                                                                         |
+| ----------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Metal — David KBD: **Grave Rot Requiem**, **Bone Grinder's Ballad**, **The Slicing Strain**; reserve **Devoured by Darkness** | [Purgatory vol. 3 creator itch.io page](https://davidkbd.itch.io/purgatory-vol-3-extreme-metal-music-pack), CC BY 4.0. Use the legitimate free Download Now flow for `DavidKBD-01 - Grave Rot Requiem.ogg`, `DavidKBD-05 - Bone Grinder's Ballad.ogg`, `DavidKBD-06 - The Slicing Strain.ogg` and reserve `DavidKBD-04 - Devoured by Darkness.ogg`. | Whole recordings only; the separately listed mini-loops do not count as extra compositions. Paid WAV archives are not required.                                                                                                                                          |
+| Metal — David KBD: **City Limits Crash**, **Defiant Descent**                                                                 | [Reckless vol. 2 creator itch.io page](https://davidkbd.itch.io/reckless-vol-2-punk-metal-music-pack), CC BY 4.0. Free individual files are `DavidKBD-01 - City Limits Crash.ogg` and `DavidKBD-03 - Defiant Descent.ogg`.                                                                                                                          | Loopable action cues; measure actual decoded duration and review repetition across gameplay sessions.                                                                                                                                                                    |
+| Synth — David KBD: **Electric Pulse**, **Retrochrome Nights**, **Vapor Trails Pursuit**, **Synthetic Power Surge**            | [Electric Pulse creator itch.io page](https://davidkbd.itch.io/electric-pulse-synthwave-retro-futuristic-music-pack), CC BY 4.0. Use its free individual `-full.ogg` files numbered 01, 04, 09 and 10, preserving their exact listed titles.                                                                                                        | Exclude `-short` / `-sort` variants. The [Bandcamp edition](https://davidkbd.bandcamp.com/album/electric-pulse-synthwave-retro-futuristic-music-pack-original-game-soundtrack) is listening metadata with all rights reserved, not the acquisition or licence authority. |
+| Synth — wekont: **runner2088**                                                                                                | [Exact FMA recording page](https://freemusicarchive.org/music/wekont/single/runner2088mp3/), CC BY 4.0; use its authorized recording download and retain the exact source grant.                                                                                                                                                                    | Listed 1:37: a short-cue audition, not a 3–5-minute composition. An access failure is not permission to substitute another upload.                                                                                                                                       |
+| Synth reserve — Bogart VGM: **RetroRacing Nightlife**                                                                         | [Exact OpenGameArt recording page](https://opengameart.org/content/retroracing-nightlife), CC BY 4.0; use the listed `Retroracing Nightlife.mp3`, with creator credit and source/Facebook link.                                                                                                                                                     | Exact duration remains pending. Do not infer it from the listed 6.5 MB file size.                                                                                                                                                                                        |
 
 Some full recordings are intentionally short, loopable cues. Source loop markers
 are not complete-file duration measurements. Audition the whole selected native
@@ -836,11 +895,11 @@ direction and must not enter the game/defaults on the strength of their licences
 Preserve the research and source-player evidence below as historical evidence.
 No source audio was acquired, normalized or admitted.
 
-| Recording | Listen on the source page | Published licence / evidence boundary |
-| --- | --- | --- |
-| Punch Deck — [Just Release Me](https://punchdeck.bandcamp.com/track/just-release-me) | Bandcamp Play/pause; approximately 3:55. Browser preview advanced to 00:04 and was paused. | Exact page links CC BY 4.0; name-your-price original. The browser stream is a preview, not an acquired master. |
-| Alex McCulloch — [DJ Synth Wave / Funk](https://opengameart.org/content/dj-synth-wave-funk) | Click the large Play triangle under Preview; it changed to Stop in the browser and was stopped. Source page does not expose duration. | CC0 1.0; uploader Pro Sensory requests Alex McCulloch credit. Preview dj_synth_wave.mp3 and attachment dj_synth_wave_0.mp3 have different paths; exact equality/completeness still needs verification. |
-| Fatal Exit — [Neon Night](https://fatalexit.itch.io/neon-night-free-cca-synthwave-music-for-games) | Under Listen Here, activate the embed and press Play, or follow its SoundCloud link. Play/Pause control changes checked. | CC BY 4.0 on itch; SoundCloud reports about 1:20 full duration. This is a complete short cue/style reference, not a 3–5-minute gameplay recording. |
+| Recording                                                                                          | Listen on the source page                                                                                                             | Published licence / evidence boundary                                                                                                                                                                  |
+| -------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Punch Deck — [Just Release Me](https://punchdeck.bandcamp.com/track/just-release-me)               | Bandcamp Play/pause; approximately 3:55. Browser preview advanced to 00:04 and was paused.                                            | Exact page links CC BY 4.0; name-your-price original. The browser stream is a preview, not an acquired master.                                                                                         |
+| Alex McCulloch — [DJ Synth Wave / Funk](https://opengameart.org/content/dj-synth-wave-funk)        | Click the large Play triangle under Preview; it changed to Stop in the browser and was stopped. Source page does not expose duration. | CC0 1.0; uploader Pro Sensory requests Alex McCulloch credit. Preview dj_synth_wave.mp3 and attachment dj_synth_wave_0.mp3 have different paths; exact equality/completeness still needs verification. |
+| Fatal Exit — [Neon Night](https://fatalexit.itch.io/neon-night-free-cca-synthwave-music-for-games) | Under Listen Here, activate the embed and press Play, or follow its SoundCloud link. Play/Pause control changes checked.              | CC BY 4.0 on itch; SoundCloud reports about 1:20 full duration. This is a complete short cue/style reference, not a 3–5-minute gameplay recording.                                                     |
 
 The source checks above verify access/UI behavior, not full listening or musical
 quality. All comparison players were stopped after checks. No login, payment or
@@ -865,11 +924,11 @@ an unofficial Switch-release lead, not verified PS4 soundtrack credits.
 [Boomopera's Synthpop Supercar](https://boomopera.bandcamp.com/album/synthpop-supercar)
 is an all-rights-reserved reference; it is not a free game asset.
 
-| Second comparison | Concrete source basis | Duration / acquisition boundary |
-| --- | --- | --- |
-| botnit — [Time Trials 87](https://botnit.bandcamp.com/track/time-trials-87) | Full retro-electronic recording on the artist's early-singles collection; exact current artist licence is CC BY 4.0. Musical fit remains unverified. | 3:58 (238.290 seconds in artist metadata). The individual track costs $1; the artist's [Wild Days album](https://botnit.bandcamp.com/album/wild-days-the-early-singles) offers Free Download. Use that legitimate free route if selected; acquisition has not been tested. |
-| Nihilore — [Motion Blur](https://nihilore.bandcamp.com/track/motion-blur) | Creator classifies it as upbeat nu-disco and includes it in Synthwave/Frantic collections. Exact current artist licence is CC BY 4.0. | 3:57 (236.769 seconds). The [creator track page](https://www.nihilore.com/latest-tracks/2018/3/24/motion-blur) offers the MP3; no file acquired. |
-| TeknoAXE — [Above All the Chaos](https://www.youtube.com/watch?v=4svHIJ3WQ3g) | Creator labels it Rock/Synthwave and describes an intended metal piece developed around sequenced synths. Exact [creator track page](https://teknoaxe.com/Link_Code_3.php?q=1388) links CC BY 4.0. | Official listening video 3:45; creator MP3 offered, not acquired or decoded. |
+| Second comparison                                                             | Concrete source basis                                                                                                                                                                              | Duration / acquisition boundary                                                                                                                                                                                                                                            |
+| ----------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| botnit — [Time Trials 87](https://botnit.bandcamp.com/track/time-trials-87)   | Full retro-electronic recording on the artist's early-singles collection; exact current artist licence is CC BY 4.0. Musical fit remains unverified.                                               | 3:58 (238.290 seconds in artist metadata). The individual track costs $1; the artist's [Wild Days album](https://botnit.bandcamp.com/album/wild-days-the-early-singles) offers Free Download. Use that legitimate free route if selected; acquisition has not been tested. |
+| Nihilore — [Motion Blur](https://nihilore.bandcamp.com/track/motion-blur)     | Creator classifies it as upbeat nu-disco and includes it in Synthwave/Frantic collections. Exact current artist licence is CC BY 4.0.                                                              | 3:57 (236.769 seconds). The [creator track page](https://www.nihilore.com/latest-tracks/2018/3/24/motion-blur) offers the MP3; no file acquired.                                                                                                                           |
+| TeknoAXE — [Above All the Chaos](https://www.youtube.com/watch?v=4svHIJ3WQ3g) | Creator labels it Rock/Synthwave and describes an intended metal piece developed around sequenced synths. Exact [creator track page](https://teknoaxe.com/Link_Code_3.php?q=1388) links CC BY 4.0. | Official listening video 3:45; creator MP3 offered, not acquired or decoded.                                                                                                                                                                                               |
 
 These source descriptions and durations narrow the next comparison; they do not
 prove better musical fit or full-track listening. No new large batch is acquired
@@ -894,11 +953,11 @@ public-MP3 candidate.
 **M5.a.3 — stronger user references, 24 September.** The user said the following
 three videos are better references and asked to keep searching:
 
-| User reference | Identified source | What is established |
-| --- | --- | --- |
-| [City Glow](https://youtu.be/IKPxMQaezpw) | NightframeFM; 23:04; Synthwave Night Drive / Dreamwave / Chillwave | Creator describes warm analogue textures, dreamy melodies, nostalgic pads, smooth grooves and polished transitions. No published tracklist or reuse grant found. |
+| User reference                                           | Identified source                                                            | What is established                                                                                                                                                                                                 |
+| -------------------------------------------------------- | ---------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [City Glow](https://youtu.be/IKPxMQaezpw)                | NightframeFM; 23:04; Synthwave Night Drive / Dreamwave / Chillwave           | Creator describes warm analogue textures, dreamy melodies, nostalgic pads, smooth grooves and polished transitions. No published tracklist or reuse grant found.                                                    |
 | [1994 Hacked successfully](https://youtu.be/tyXeh8-U780) | VHS FM Memory; 60:40; Synthwave / Retrowave / Outrun / Cyberpunk / Chillwave | Fourteen chapter entries contain twelve distinct titles; two repeat. Creator expressly reserves rights and describes AI-assisted production under its own commercial licence, which does not grant us reuse rights. |
-| [1983 Heavenly Glitch](https://youtu.be/1OdQcWnzkpQ) | Synth Odyssey FM; 104:10; Synthwave / Chillwave / Cyberpunk / Retrowave | Ten named chapters correspond to a roughly 34-minute artist album. Later sequence is unverified; long playback time is not evidence of additional compositions. No reuse grant found. |
+| [1983 Heavenly Glitch](https://youtu.be/1OdQcWnzkpQ)     | Synth Odyssey FM; 104:10; Synthwave / Chillwave / Cyberpunk / Retrowave      | Ten named chapters correspond to a roughly 34-minute artist album. Later sequence is unverified; long playback time is not evidence of additional compositions. No reuse grant found.                               |
 
 These exact video/channel descriptions were inspected as public metadata; no
 audio was acquired and no full listening is claimed. Keep these as style
@@ -915,10 +974,10 @@ musical comparison, not another large speculative batch.
 **M5.a.4 — third comparison, feedback received below.** Preserve these source-page
 research leads; none is an accepted game recording or a cleared acquired master.
 
-| Recording | Source basis for comparison | Licence / acquisition boundary |
-| --- | --- | --- |
-| Scott Buckley — [Electric Dreams](https://www.scottbuckley.com.au/library/electric-dreams/) | Creator describes smooth cruising synthwave with warm pads, arpeggios, leads and an electric-piano breakdown at 2:47. | Exact track page links CC BY 4.0 and offers a full-mix MP3. Preserve [creator licensing conditions](https://www.scottbuckley.com.au/library/licensing/) and Content ID guidance; final delivery/Recording-mode review and exact-file checks remain pending. |
-| Nihilore — [Glimmer](https://nihilore.bandcamp.com/track/glimmer) | 4:05 (245.368 seconds); creator identifies chillwave, newretrowave and futuresynth. Full source streaming is enabled. | Exact current track links CC BY 4.0; creator's [terms](https://www.nihilore.com/license) allow credited redistribution/adaptation. Preserve authored title. No file acquired. |
+| Recording                                                                                                               | Source basis for comparison                                                                                                                  | Licence / acquisition boundary                                                                                                                                                                                                                                                                                         |
+| ----------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Scott Buckley — [Electric Dreams](https://www.scottbuckley.com.au/library/electric-dreams/)                             | Creator describes smooth cruising synthwave with warm pads, arpeggios, leads and an electric-piano breakdown at 2:47.                        | Exact track page links CC BY 4.0 and offers a full-mix MP3. Preserve [creator licensing conditions](https://www.scottbuckley.com.au/library/licensing/) and Content ID guidance; final delivery/Recording-mode review and exact-file checks remain pending.                                                            |
+| Nihilore — [Glimmer](https://nihilore.bandcamp.com/track/glimmer)                                                       | 4:05 (245.368 seconds); creator identifies chillwave, newretrowave and futuresynth. Full source streaming is enabled.                        | Exact current track links CC BY 4.0; creator's [terms](https://www.nihilore.com/license) allow credited redistribution/adaptation. Preserve authored title. No file acquired.                                                                                                                                          |
 | AIRGLOW — [Memory Bank](https://freemusicarchive.org/music/Airglow/Memory_Bank/AIRGLOW_-_Memory_Bank_-_01_Memory_Bank/) | 4:58; original FMA edition, a new artist comparison for the warmer retro-electronic direction. Actual arrangement and fit remain unreviewed. | Exact original FMA page links CC BY 4.0. This is not the [2018 Remixed & Remastered release](https://airglow-stratford.bandcamp.com/album/airglow-memory-bank-remixed-remastered), which currently reserves all rights and has a different duration. Never substitute masters or transfer permission between editions. |
 
 Next reserves if the direction fits: Nihilore's
@@ -944,11 +1003,11 @@ videos remain stronger user references.
 
 The next focused source comparisons follow this feedback:
 
-| Recording | Concrete comparison basis | Current boundary |
-| --- | --- | --- |
-| Scott Buckley — [Twilight Echo](https://www.scottbuckley.com.au/library/twilight-echo/) | Approximately 4:47 (286.903 seconds on the creator's [SoundCloud full track](https://soundcloud.com/scottbuckley/twilight-echo-cc-by)); warm nostalgic synthwave with a synth solo in the final chorus. | Exact track page CC BY 4.0; full MP3 offered. The alternate no-lead mix is not another composition. Source acquisition, listening and game review remain pending. |
-| Scott Buckley — [Neon](https://www.scottbuckley.com.au/library/neon/) | Creator describes moody 1980s electronica with arpeggios, pads and a synth lead solo. | Exact track page CC BY 4.0; compare the full original mix. No acceptance or acquired master. |
-| Shane Ivers — [Neon Noir](https://www.silvermansound.com/free-music/neon-noir) | 5:12; creator describes warm analogue bass, strings, electronic drums and DX7 character. | Musical reference / delivery hold. The track page says CC BY 4.0, but the current [licensing page](https://www.silvermansound.com/licenses) also prohibits standalone audio redistribution. Resolve that conflict before public MP3 admission; do not silently treat it as a cleared archive asset. |
+| Recording                                                                               | Concrete comparison basis                                                                                                                                                                               | Current boundary                                                                                                                                                                                                                                                                                    |
+| --------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Scott Buckley — [Twilight Echo](https://www.scottbuckley.com.au/library/twilight-echo/) | Approximately 4:47 (286.903 seconds on the creator's [SoundCloud full track](https://soundcloud.com/scottbuckley/twilight-echo-cc-by)); warm nostalgic synthwave with a synth solo in the final chorus. | Exact track page CC BY 4.0; full MP3 offered. The alternate no-lead mix is not another composition. Source acquisition, listening and game review remain pending.                                                                                                                                   |
+| Scott Buckley — [Neon](https://www.scottbuckley.com.au/library/neon/)                   | Creator describes moody 1980s electronica with arpeggios, pads and a synth lead solo.                                                                                                                   | Exact track page CC BY 4.0; compare the full original mix. No acceptance or acquired master.                                                                                                                                                                                                        |
+| Shane Ivers — [Neon Noir](https://www.silvermansound.com/free-music/neon-noir)          | 5:12; creator describes warm analogue bass, strings, electronic drums and DX7 character.                                                                                                                | Musical reference / delivery hold. The track page says CC BY 4.0, but the current [licensing page](https://www.silvermansound.com/licenses) also prohibits standalone audio redistribution. Resolve that conflict before public MP3 admission; do not silently treat it as a cleared archive asset. |
 
 Scott Buckley's [Using This Music terms](https://www.scottbuckley.com.au/library/using-this-music/)
 also require synchronisation with other media alongside restrictions on isolated
@@ -972,16 +1031,16 @@ following the accepted comparison. The earlier pool below is retained as researc
 history; its three rejected entries are excluded. Do not promote the remaining
 unheard entries merely because they shared genre tags with a rejected comparison.
 
-| Recording | Published licence / acquisition checkpoint |
-| --- | --- |
-| Punch Deck — [Just Release Me](https://punchdeck.bandcamp.com/track/just-release-me) | **Rejected for musical fit**; retained as research history. CC BY 4.0; name your price |
-| Alex McCulloch — [DJ Synth Wave / Funk](https://opengameart.org/content/dj-synth-wave-funk) | **Rejected for musical fit**; retained as research history. CC0; creator-uploaded file; preview/attachment identity unresolved |
+| Recording                                                                                          | Published licence / acquisition checkpoint                                                                                                               |
+| -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Punch Deck — [Just Release Me](https://punchdeck.bandcamp.com/track/just-release-me)               | **Rejected for musical fit**; retained as research history. CC BY 4.0; name your price                                                                   |
+| Alex McCulloch — [DJ Synth Wave / Funk](https://opengameart.org/content/dj-synth-wave-funk)        | **Rejected for musical fit**; retained as research history. CC0; creator-uploaded file; preview/attachment identity unresolved                           |
 | Fatal Exit — [Neon Night](https://fatalexit.itch.io/neon-night-free-cca-synthwave-music-for-games) | **Rejected for musical fit**; retained as research history. CC BY 4.0; free/name your price; short-cue reference, outside the full-length gameplay count |
-| Punch Deck — [Fluorescent Color](https://punchdeck.bandcamp.com/track/fluorescent-color) | Current Bandcamp CC BY 4.0; official SoundCloud download advertised, acquisition/account requirements untested |
-| Punch Deck — [VHS Heroes](https://punchdeck.bandcamp.com/track/vhs-heroes) | Current Bandcamp CC BY 4.0; official SoundCloud download advertised, acquisition/account requirements untested |
-| Punch Deck — [Chrome Funk](https://punchdeck.bandcamp.com/track/chrome-funk) | CC BY 4.0; name your price; actual style needs listening |
-| Punch Deck — [Neon Underworld](https://punchdeck.bandcamp.com/track/neon-underworld) | Current Bandcamp CC BY 4.0; darker electronic lead; official SoundCloud acquisition untested |
-| Alex McCulloch — [80's Synth Wave](https://opengameart.org/content/80s-synth-wave) | CC0; creator-uploaded file |
+| Punch Deck — [Fluorescent Color](https://punchdeck.bandcamp.com/track/fluorescent-color)           | Current Bandcamp CC BY 4.0; official SoundCloud download advertised, acquisition/account requirements untested                                           |
+| Punch Deck — [VHS Heroes](https://punchdeck.bandcamp.com/track/vhs-heroes)                         | Current Bandcamp CC BY 4.0; official SoundCloud download advertised, acquisition/account requirements untested                                           |
+| Punch Deck — [Chrome Funk](https://punchdeck.bandcamp.com/track/chrome-funk)                       | CC BY 4.0; name your price; actual style needs listening                                                                                                 |
+| Punch Deck — [Neon Underworld](https://punchdeck.bandcamp.com/track/neon-underworld)               | Current Bandcamp CC BY 4.0; darker electronic lead; official SoundCloud acquisition untested                                                             |
+| Alex McCulloch — [80's Synth Wave](https://opengameart.org/content/80s-synth-wave)                 | CC0; creator-uploaded file                                                                                                                               |
 
 Reserve pool: [Nihilore's synthwave/chillwave/outrun catalogue](https://www.nihilore.com/synthwave)
 under the creator's [CC BY 4.0 terms](https://www.nihilore.com/license). Preserve
@@ -1078,12 +1137,12 @@ rests, clear drum attacks, contrasting riffs and developed returns. Distortion,
 genre labels or higher tempo alone do not prove suitability. Verify these
 properties by complete listening and repeated gameplay sessions.
 
-| Reference | Documented direction | RevealLine selection target (our interpretation) |
-| --- | --- | --- |
-| [Valfaris](https://www.valfarisgame.com/) and [Slain](https://store.steampowered.com/app/369070/Slain_Back_from_Hell/) | Heavy metal; Curt Victor Bryant soundtrack | Guitar-led thrash/groove with articulated riffs and coordinated drums |
-| [Prodeus — Andrew Hulshult](https://andrewhulshult.bandcamp.com/album/prodeus-original-game-soundtrack) | Creator tags industrial metal, instrumental and synth | Low rhythmic guitars, electronic pulses and contrasting sections |
-| [DOOM — Mick Gordon](https://www.gdcvault.com/play/1024068/-DOOM-Behind-the) | Aggressive composition, synthesis, mixing and interactive music supporting gameplay | Memorable pulse and controlled density that leave warnings audible |
-| [Broforce — Deon van Heerden](https://www.deonvanheerden.com/broforce.html) | Live percussion, power-metal stings and hybrid boss scoring | Percussion impact and guitar hooks; separate short stings from sustained pieces |
+| Reference                                                                                                              | Documented direction                                                                | RevealLine selection target (our interpretation)                                |
+| ---------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| [Valfaris](https://www.valfarisgame.com/) and [Slain](https://store.steampowered.com/app/369070/Slain_Back_from_Hell/) | Heavy metal; Curt Victor Bryant soundtrack                                          | Guitar-led thrash/groove with articulated riffs and coordinated drums           |
+| [Prodeus — Andrew Hulshult](https://andrewhulshult.bandcamp.com/album/prodeus-original-game-soundtrack)                | Creator tags industrial metal, instrumental and synth                               | Low rhythmic guitars, electronic pulses and contrasting sections                |
+| [DOOM — Mick Gordon](https://www.gdcvault.com/play/1024068/-DOOM-Behind-the)                                           | Aggressive composition, synthesis, mixing and interactive music supporting gameplay | Memorable pulse and controlled density that leave warnings audible              |
+| [Broforce — Deon van Heerden](https://www.deonvanheerden.com/broforce.html)                                            | Live percussion, power-metal stings and hybrid boss scoring                         | Percussion impact and guitar hooks; separate short stings from sustained pieces |
 
 Commercial soundtracks remain references, not reusable assets. These selection
 targets are interpretations of documented production directions, not claims
@@ -1096,12 +1155,12 @@ licence snapshots, native files and complete-file hashes are retained. The
 [industrial/thrash preview](https://mekhovov.github.io/revealline-soundtracks-01/batches/metal-groove-audition-20260924/)
 remains a listening audition. Published creator metadata describes the four:
 
-| Candidate | Source-page direction | State |
-| --- | --- | --- |
-| [Anemo](https://creatorchords.com/music/anemo/) | Industrial / Metal / Rock; 4:38, 131 BPM | Published preview; listening pending |
-| [Trial of Thorns](https://creatorchords.com/music/trial-of-thorns/) | Death Metal / Industrial; 3:57, 133 BPM | Published preview; listening pending |
-| [Riffs Two](https://creatorchords.com/music/riffs-two/) | Thrash / Progressive; 3:18, 159 BPM | Published preview; listening pending |
-| [Apocalypse](https://creatorchords.com/music/apocalypse/) | Thrash; 3:37, 145 BPM | Published preview; listening pending |
+| Candidate                                                           | Source-page direction                    | State                                |
+| ------------------------------------------------------------------- | ---------------------------------------- | ------------------------------------ |
+| [Anemo](https://creatorchords.com/music/anemo/)                     | Industrial / Metal / Rock; 4:38, 131 BPM | Published preview; listening pending |
+| [Trial of Thorns](https://creatorchords.com/music/trial-of-thorns/) | Death Metal / Industrial; 3:57, 133 BPM  | Published preview; listening pending |
+| [Riffs Two](https://creatorchords.com/music/riffs-two/)             | Thrash / Progressive; 3:18, 159 BPM      | Published preview; listening pending |
+| [Apocalypse](https://creatorchords.com/music/apocalypse/)           | Thrash; 3:37, 145 BPM                    | Published preview; listening pending |
 
 All four source pages publish CC BY 4.0. Preserve attribution and exact-file
 evidence. Creator Content ID registration makes them ineligible for Recording
@@ -1110,12 +1169,12 @@ acceptance and game admission. These are not Ukrainian additions.
 
 Diversify beyond one artist with four more source-verified leads:
 
-| Candidate | Exact source / acquisition evidence | Remaining |
-| --- | --- | --- |
-| [Frog — DEgITx](https://degitx.bandcamp.com/track/frog) | CC BY 4.0, 3:54; creator-linked Night archive has 10. Frog.mp3 | Exact-byte acquisition and listening |
-| [Burn Out — DEgITx](https://degitx.bandcamp.com/track/burn-out) | CC BY 4.0, 3:59; creator-linked Night archive has 09. Burn Out.mp3 | Exact-byte acquisition and listening; preserve collaborator credits |
-| [Rusted Shrapnel — TeknoAXE](https://teknoaxe.com/Link_Code_3.php?q=775) | CC BY 4.0; official direct download; creator describes shredding/chugging with a softer contrast | Exact-file duration, decoding and listening |
-| [Six String Shrapnel — TeknoAXE](https://teknoaxe.com/Link_Code_3.php?q=85) | CC BY 4.0; official Metal/Thrash video and direct download | Exact-file duration, decoding and listening |
+| Candidate                                                                   | Exact source / acquisition evidence                                                              | Remaining                                                           |
+| --------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------- |
+| [Frog — DEgITx](https://degitx.bandcamp.com/track/frog)                     | CC BY 4.0, 3:54; creator-linked Night archive has 10. Frog.mp3                                   | Exact-byte acquisition and listening                                |
+| [Burn Out — DEgITx](https://degitx.bandcamp.com/track/burn-out)             | CC BY 4.0, 3:59; creator-linked Night archive has 09. Burn Out.mp3                               | Exact-byte acquisition and listening; preserve collaborator credits |
+| [Rusted Shrapnel — TeknoAXE](https://teknoaxe.com/Link_Code_3.php?q=775)    | CC BY 4.0; official direct download; creator describes shredding/chugging with a softer contrast | Exact-file duration, decoding and listening                         |
+| [Six String Shrapnel — TeknoAXE](https://teknoaxe.com/Link_Code_3.php?q=85) | CC BY 4.0; official Metal/Thrash video and direct download                                       | Exact-file duration, decoding and listening                         |
 
 DEgITx's [official site](https://degitx.com/) links the
 [lossy archive](https://drive.google.com/drive/folders/1oxIqYp09HyLnbp-WyL2NJ-wE1HcOxxVD).
@@ -1138,14 +1197,14 @@ rests, bass/kick accents, forceful drum transients and a recurring hook that sta
 clear during play. A candidate still needs full listening; descriptive tags and
 tempo are only screening evidence.
 
-| Candidate | Published source evidence | Intended comparison role | Remaining |
-| --- | --- | --- | --- |
-| [Pixel Damnation — YannZ](https://opengameart.org/content/they%E2%80%99re-going-down-%E2%80%93-game-ost-pack-by-yannz) | Creator-uploaded MP3/OGG under CC BY 4.0; 2:19 loop plus separate intro tag; creator documents six-string bass, guitar and punchy drums | Sustained combat reference | Acquire exact source bytes and licence snapshot; full listening, derivative and Content ID checks |
-| [Revenge's Waiting — YannZ](https://opengameart.org/content/they%E2%80%99re-going-down-%E2%80%93-game-ost-pack-by-yannz) | Creator-uploaded MP3/OGG under CC BY 4.0; 0:48, 12/8 loop | Boss/climax cue and groove reference; excluded from full-track target | Same checks; verify repeated-loop fatigue and transition behavior |
-| [Soul Ripper — Alexandr Zhelanov](https://opengameart.org/content/soul-ripper) | Creator-uploaded OGG under CC BY 4.0; described as brutal industrial metal | Doom/Prodeus-style industrial comparison | Exact-byte acquisition, duration, Content ID and complete listening |
-| [German Industrial Metal — Bogart VGM](https://opengameart.org/content/german-industrial-metal) | Creator-uploaded MP3 under CC BY 4.0 with required creator link; tagged riff, drums, synth and aggressive | Riff/synth coordination comparison | Exact-byte acquisition, Content ID and complete listening |
-| [Achilles — Zane Little Music](https://opengameart.org/content/achilles) | Creator-uploaded WAV/MP3 under CC0; full and loopable versions; metal/chiptune fusion | Heavier electronic-metal comparison; chiptune remains an accent | Exact-byte acquisition, duration and complete listening |
-| [Heavy Boss Battle 1 — MintoDog](https://opengameart.org/content/heavy-boss-battle-1) | Creator-uploaded loopable MP3/OGG under CC0; 200 BPM | Faster boss-loop comparison | Verify duration, arrangement depth, loop fatigue and complete listening |
+| Candidate                                                                                                                | Published source evidence                                                                                                               | Intended comparison role                                              | Remaining                                                                                         |
+| ------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| [Pixel Damnation — YannZ](https://opengameart.org/content/they%E2%80%99re-going-down-%E2%80%93-game-ost-pack-by-yannz)   | Creator-uploaded MP3/OGG under CC BY 4.0; 2:19 loop plus separate intro tag; creator documents six-string bass, guitar and punchy drums | Sustained combat reference                                            | Acquire exact source bytes and licence snapshot; full listening, derivative and Content ID checks |
+| [Revenge's Waiting — YannZ](https://opengameart.org/content/they%E2%80%99re-going-down-%E2%80%93-game-ost-pack-by-yannz) | Creator-uploaded MP3/OGG under CC BY 4.0; 0:48, 12/8 loop                                                                               | Boss/climax cue and groove reference; excluded from full-track target | Same checks; verify repeated-loop fatigue and transition behavior                                 |
+| [Soul Ripper — Alexandr Zhelanov](https://opengameart.org/content/soul-ripper)                                           | Creator-uploaded OGG under CC BY 4.0; described as brutal industrial metal                                                              | Doom/Prodeus-style industrial comparison                              | Exact-byte acquisition, duration, Content ID and complete listening                               |
+| [German Industrial Metal — Bogart VGM](https://opengameart.org/content/german-industrial-metal)                          | Creator-uploaded MP3 under CC BY 4.0 with required creator link; tagged riff, drums, synth and aggressive                               | Riff/synth coordination comparison                                    | Exact-byte acquisition, Content ID and complete listening                                         |
+| [Achilles — Zane Little Music](https://opengameart.org/content/achilles)                                                 | Creator-uploaded WAV/MP3 under CC0; full and loopable versions; metal/chiptune fusion                                                   | Heavier electronic-metal comparison; chiptune remains an accent       | Exact-byte acquisition, duration and complete listening                                           |
+| [Heavy Boss Battle 1 — MintoDog](https://opengameart.org/content/heavy-boss-battle-1)                                    | Creator-uploaded loopable MP3/OGG under CC0; 200 BPM                                                                                    | Faster boss-loop comparison                                           | Verify duration, arrangement depth, loop fatigue and complete listening                           |
 
 Keep [Eternity vol. 2](https://davidkbd.itch.io/eternity-vol2-djentmetal-scfi-horror-music-pack)
 as a reserve pool rather than assuming it corrects the first volume's rhythm
@@ -1227,8 +1286,9 @@ Status: **complete for the public archive.** Archive
 [run 36029085098](https://github.com/mekhovov/revealline-soundtracks-01/actions/runs/36029085098)
 published the historical root inventory of 104 unique recordings. Archive PRs
 #18/#19 later preserved that baseline and raised the live root inventory to 128;
-PR #25 raised it to 132 and PR #26 raised it to **136 unique recordings across 14
-collections** at `824e34e4957ab29b7ef841115f631a579f741fc4`. The root player now searches,
+PR #25 raised it to 132, PR #26 raised it to 136 and PR #27 raised it to
+**140 unique recordings across 15 collections** at
+`cc7777bb62981ea9739a8efbc67f658f16f49a3f`. The root player now searches,
 filters style groups, supports
 multi-style mixing and sequential/shuffle/repeat playback without leaving the
 page. Historical inventories and batch pages remain addressable.
@@ -1258,7 +1318,10 @@ Preserve the
 archive as the canonical source; the game streams exact immutable objects through
 the transport while included and uploaded audio retain local crossfades. Preserve
 every historic root-inventory assertion and the user-visible distinction between published auditions and admitted
-defaults.
+defaults. PR #27's direct public same-page playback evidence proves the new object
+and queue transition at the archive surface. The public v0.130 game subsequently
+loaded 140/140, exposed the new collection and played City Limits Crash past 11
+seconds in the shared in-game transport without leaving the game URL.
 
 ### Playback and user interface
 
