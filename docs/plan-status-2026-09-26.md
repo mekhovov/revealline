@@ -10,9 +10,10 @@ versions or acceptance gates are still current.
 - v0.132.4 Team picture-preparation repair has an exact immutable production receipt and its Pages
   selector is merged. The streaming public-byte audit is still underway, so v0.132.4 is not yet
   counted as accepted public delivery here.
-- The cultural stack is rebased on selector merge source
-  `d308610271ad01fbabb2847ee046325001ec63e5`. All seventeen predecessor branches were guarded-pushed
-  and the v0.149.0 successor is draft PR #650. The dirty root checkout was not changed.
+- The cultural stack is rebased on current `main`
+  `00661a063b53e411a03365f9ba5a9cb675e86bc3`. All nineteen branch tips were guarded-pushed
+  atomically; the v0.149.0 successor is draft PR #650 and the test-only reconciliation is draft PR
+  #651. The dirty root checkout was not changed.
 
 ## Completed source work
 
@@ -24,7 +25,7 @@ versions or acceptance gates are still current.
 | First Team Ukrainian slice / PR #636    | Clean draft, source `0.142.0` | Three redesigned identities, 78/78 focused integration evidence, earlier production build; not public.                                                             |
 | Second Team Ukrainian slice / PR #642   | Clean non-default draft       | Crossed gardens, Split orchards and Weaver crossing redesigned copy-on-write; no selector/default/version change yet.                                              |
 | Second Team current edition / PR #650   | Clean draft, source `0.149.0` | Default/previous edition, Team library, Studio, exact Next, isolated progress and EN/UK wiring; focused cohort 83/83 and localization validation pass; not public. |
-| Unified-library fixture reconciliation  | Local successor               | Confirms 91 current + 48 prior Journey + 188 Classic = 327 unique rows and updates stale 201/279 and `whole-spatial-v5/v6` expectations to current v25 ownership.  |
+| Unified-library fixture reconciliation / PR #651 | Clean draft, test/docs only | Confirms 91 current + 48 prior Journey + 188 Classic = 327 unique rows and updates stale 201/279 and `whole-spatial-v5/v6` expectations to current v25 ownership. |
 
 The second Team slice now has **13/13** focused checks. Every changed mission keeps one connected
 field, idle-safe starts on all presets, two distinct no-down approaches, and a two-closure exchange
@@ -65,16 +66,18 @@ accepted predecessor; draft labels do not reserve a release.
    is not represented as passing.
 5. **Human/device evidence:** deterministic routes cannot establish enjoyment, cultural approval or
    physical controller/touch behavior.
-6. **Disk pressure:** about 940 MiB of verified, recoverable release/cache replicas was removed
-   earlier. Avoid duplicate local builds and never remove unpushed source, user media or another
-   task's active workspace.
+6. **Disk pressure:** a further 563 MiB old cache containing only recoverable source archives,
+   dependencies, logs and test artifacts was removed after checking for Git repositories, patches
+   and active processes. Roughly 1.4 GiB remained immediately afterward. Avoid duplicate local
+   builds and never remove unpushed source, user media or another task's active workspace.
 
 ## Immediate execution order
 
 1. Let the sole publisher finish v0.132.4; do not duplicate its release mutations.
 2. Keep the rebased cultural PR chain clean and reviewable while v0.132.4 completes.
 3. Review and qualify the bounded v0.149.0 PR #650 at its exact head.
-4. Publish the isolated library-fixture reconciliation after its focused duplicate/ownership audit.
+4. Review draft PR #651 and publish the isolated library-fixture reconciliation after its focused
+   duplicate/ownership audit.
 5. Promote cultural releases in dependency order, reporting actual public delivery rather than a
    merge or workflow start.
 
