@@ -29,7 +29,7 @@ live infrastructure acceptance is claimed by the source candidate.
 - `npm run recovery:rehearse` refuses identical or unconfirmed targets, restores a verified snapshot
   into a separate database/blob root, compares semantic database fingerprints and exact package
   references, and writes an owner-only redacted receipt.
-- `npm run acceptance:deployed` uses three independent short-lived accounts to publish, validate,
+- `npm run acceptance:deployed` uses three short-lived credential sets to publish, validate,
   discover, download, install, legally complete, reload, report, unlist and replay one disposable
   immutable edition offline. It requires explicit destructive opt-in and reserves its receipt before
   publication.
