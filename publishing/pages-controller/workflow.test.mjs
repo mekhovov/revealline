@@ -129,11 +129,23 @@ test("source qualification retains mandatory guards and restorable suites while 
     ),
     "utf8",
   );
+  const originalUpload = await fs.readFile(
+    new URL(
+      "../../.github/workflows/upload-release-originals.yml",
+      import.meta.url,
+    ),
+    "utf8",
+  );
   assert.equal(
     (qualification.match(/cancel-in-progress: false/g) || []).length,
-    2,
+    1,
+  );
+  assert.equal(
+    (originalUpload.match(/cancel-in-progress: false/g) || []).length,
+    1,
   );
   assert.doesNotMatch(qualification, /cancel-in-progress: (?:true|\$)/);
+  assert.doesNotMatch(originalUpload, /cancel-in-progress: (?:true|\$)/);
   assert.match(workflow, /include-hidden-files: true/);
   assert.match(workflow, /publish\.mjs verify-artifact/);
   assert.ok(
@@ -154,8 +166,9 @@ test("fast mode waives long suites while release source and publication guards s
     );
   const pr = await read("deploy-pages.yml");
   const manual = await read("qualify-release-source.yml");
+  const originalUpload = await read("upload-release-originals.yml");
   const pages = await read("publish-frozen-pages.yml");
-  for (const workflow of [pr, manual, pages]) {
+  for (const workflow of [pr, manual, originalUpload, pages]) {
     assert.match(workflow, /id: test_policy/);
     assert.match(workflow, /publishing\/test-policy.mjs/);
     assert.doesNotMatch(workflow, /continue-on-error|\|\| true/);
@@ -173,14 +186,11 @@ test("fast mode waives long suites while release source and publication guards s
     /test:\n\s+if: needs.qualify.outputs.runTests == 'true'/,
   );
   assert.match(manual, /run_tests:\n[\s\S]*?type: boolean/);
-  assert.equal(
-    (
-      manual.match(
-        /Verify local utility tests before authenticated work\n\s+if: steps.test_policy.outputs.runTests == 'true'/g,
-      ) ?? []
-    ).length,
-    2,
-  );
+  for (const workflow of [manual, originalUpload])
+    assert.match(
+      workflow,
+      /Verify local utility tests before authenticated work\n\s+if: steps.test_policy.outputs.runTests == 'true'/,
+    );
   assert.match(
     manual,
     /Check hosted artifact utility locally\n\s+if: steps.test_policy.outputs.runTests == 'true'/,
@@ -209,6 +219,11 @@ test("fast mode waives long suites while release source and publication guards s
         "Require reviewed production slots in the committed ledger",
         "Freeze the exact qualified commit",
         "Inspect all frozen originals without release writes",
+      ],
+    ],
+    [
+      originalUpload,
+      [
         "Verify all originals and upload two absent members to the existing draft",
       ],
     ],
