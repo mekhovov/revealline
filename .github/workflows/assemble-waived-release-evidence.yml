@@ -126,7 +126,7 @@ jobs:
           fi
 
       - name: Check out the exact assembly utility
-        uses: actions/checkout@v4
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
           ref: ${{ github.workflow_sha }}
           path: automation
@@ -136,7 +136,7 @@ jobs:
             .github/workflows/assemble-waived-release-evidence.yml
 
       - name: Check out the exact frozen source
-        uses: actions/checkout@v4
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
           ref: ${{ inputs.source_commit }}
           path: qualified
@@ -258,7 +258,7 @@ jobs:
 
       - name: Retain bounded package for independent review
         id: package
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         with:
           name: ${{ steps.names.outputs.package }}
           path: |

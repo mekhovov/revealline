@@ -154,15 +154,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out exact candidate
-        uses: actions/checkout@v4
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
           # Qualification verifies the checked-out commit and tree. It does not
           # walk history, so avoid cloning the full release archive.
           fetch-depth: 1
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
         with:
+          package-manager-cache: false
           node-version: 20.19.x
           cache: npm
 
@@ -237,13 +238,14 @@ jobs:
         shard: [1, 2, 3, 4]
     steps:
       - name: Check out exact candidate
-        uses: actions/checkout@v4
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
           fetch-depth: 1
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
         with:
+          package-manager-cache: false
           node-version: 20.19.x
           cache: npm
 
@@ -291,13 +293,14 @@ jobs:
     timeout-minutes: 90
     steps:
       - name: Check out the qualified source
-        uses: actions/checkout@v4
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
           fetch-depth: 1
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
         with:
+          package-manager-cache: false
           node-version: 20.19.x
 
       - name: Install dependencies
@@ -325,7 +328,7 @@ jobs:
 
       - name: Retain original release assets
         id: snapshot_artifact
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         with:
           name: qualified-release-${{ steps.snapshot.outputs.version }}-${{ github.sha }}
           path: |
@@ -359,7 +362,7 @@ jobs:
       actions: read
     steps:
       - name: Check out the actual utility workflow revision
-        uses: actions/checkout@v4
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
           ref: ${{ github.workflow_sha }}
           path: automation
@@ -373,8 +376,9 @@ jobs:
           sparse-checkout-cone-mode: false
 
       - name: Set up explicit test policy runtime
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
         with:
+          package-manager-cache: false
           node-version: 22.22.2
 
       - name: Read explicit automated-suite policy
@@ -392,7 +396,7 @@ jobs:
           --mode inspect-artifact --repository "$GITHUB_REPOSITORY"
 
       - name: Check out the exact qualified source
-        uses: actions/checkout@v4
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
           ref: ${{ steps.binding.outputs.source }}
           path: qualified
@@ -415,7 +419,7 @@ jobs:
 
       - name: Retain bounded original metadata and every attempt outcome
         if: always()
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         with:
           name: inspect-artifact-evidence
           path: utility-output/evidence/
