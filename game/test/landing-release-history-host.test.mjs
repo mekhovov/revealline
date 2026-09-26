@@ -3,8 +3,12 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { Document, Events } from './helpers/couch-dom.mjs';
 import { waitFor } from './helpers/wait-for.mjs';
+import { getLocale, setLocale } from '../i18n/index.mjs';
 
-const html = await readFile(new URL('../../site/about.html', import.meta.url), 'utf8');
+const [html, packCatalog] = await Promise.all([
+  readFile(new URL('../../site/about.html', import.meta.url), 'utf8'),
+  readFile(new URL('../content/packs/catalog.json', import.meta.url), 'utf8'),
+]);
 let instance = 0;
 function mount(doc) {
   doc.documentElement.dataset.currentVersion = html.match(/data-current-version="([^"]+)"/)[1];
@@ -38,11 +42,16 @@ function mount(doc) {
   }
 }
 
-async function about(t, pageHref) {
+async function about(t, pageHref, { packs = null } = {}) {
   const doc = new Document(),
     win = new Events(),
     frames = new Map();
   mount(doc);
+  for (const select of doc.querySelectorAll('select'))
+    Object.defineProperty(select, 'selectedOptions', {
+      configurable: true,
+      get: () => select.options.filter((option) => option.value === select.value),
+    });
   const requests = [],
     navigations = [],
     writes = [];
@@ -67,20 +76,28 @@ async function about(t, pageHref) {
     },
     cancelAnimationFrame: (id) => frames.delete(id),
     location,
-    localStorage: { getItem: () => null, setItem: (...args) => writes.push(args) },
+    localStorage: {
+      getItem: () => null,
+      setItem: (...args) => writes.push(args),
+    },
     fetch: async (url, options) => {
       requests.push({ href: String(url), options });
       if (requests.length === 1) return archiveGate;
       assert.match(String(url), /\/game\/content\/packs\/catalog\.json$/);
-      // Pack-launch behavior is independent of the release-history change.
-      return new Response('', { status: 503 });
+      return packs === null
+        ? new Response('', { status: 503 })
+        : new Response(packs, { status: 200 });
     },
   };
   const previous = Object.fromEntries(
     Object.keys(globals).map((key) => [key, Object.getOwnPropertyDescriptor(globalThis, key)]),
   );
   for (const [key, value] of Object.entries(globals))
-    Object.defineProperty(globalThis, key, { configurable: true, writable: true, value });
+    Object.defineProperty(globalThis, key, {
+      configurable: true,
+      writable: true,
+      value,
+    });
   t.after(async () => {
     win.emit('pagehide', { persisted: false });
     resolveArchive(new Response('', { status: 503 }));
@@ -122,7 +139,11 @@ async function about(t, pageHref) {
 const payload = {
   releases: [
     { version: 'v0.28.0', play: 'v0.28.0/site/game/' },
-    { version: 'v0.29.0', play: 'v0.29.0/site/game/', canonicalPlay: 'javascript:alert(1)' },
+    {
+      version: 'v0.29.0',
+      play: 'v0.29.0/site/game/',
+      canonicalPlay: 'javascript:alert(1)',
+    },
     {
       version: 'v0.1.0',
       play: 'v0.1.0/site/game/',
@@ -212,6 +233,59 @@ for (const [page, shared, responseHref] of [
     history.click();
     assert.deepEqual(h.navigations, [new URL('v0.29.0/site/game/', index).href, shared]);
   });
+
+test('About relocalizes loaded selectors without changing focus or launch identity', async (t) => {
+  const originalLocale = getLocale();
+  setLocale('en', { persist: false });
+  t.after(() => setLocale(originalLocale, { persist: false }));
+
+  const page = 'https://example.test/revealline/site/about.html#versions';
+  const h = await about(t, page, { packs: packCatalog });
+  await h.start();
+  await h.complete(payload);
+
+  const picker = h.$('version-picker');
+  const pack = h.$('landing-pack-select');
+  const level = h.$('landing-level-select');
+  const play = h.$('landing-pack-play');
+  picker.value = picker.options.find((option) => option.value.includes('/v0.28.0/')).value;
+  picker.emit('change');
+  level.focus();
+
+  const selected = () => ({
+    release: picker.value,
+    pack: pack.value,
+    campaign: level.options[level.selectedIndex].dataset.campaignId,
+    level: level.value,
+    href: play.href,
+  });
+  const identity = selected();
+  assert.equal(picker.options[picker.selectedIndex].textContent, 'v0.28.0 · preserved');
+  assert.equal(pack.options[pack.selectedIndex].textContent, 'FPV Front · Pressure Lines');
+  assert.equal(level.options[level.selectedIndex].textContent, '01 · Orchard Crossing');
+  assert.match(
+    h.$('landing-pack-status').textContent,
+    /Orchard Crossing.*ready to install and play/,
+  );
+
+  setLocale('uk', { persist: false });
+  assert.equal(h.doc.activeElement, level);
+  assert.deepEqual(selected(), identity);
+  assert.equal(picker.options[picker.selectedIndex].textContent, 'v0.28.0 · збережено');
+  assert.equal(pack.options[pack.selectedIndex].textContent, 'Фронт FPV · Лінії тиску');
+  assert.equal(level.options[level.selectedIndex].textContent, '01 · Садова переправа');
+  assert.match(
+    h.$('landing-pack-status').textContent,
+    /Садова переправа.*готово до встановлення й гри/,
+  );
+
+  setLocale('en', { persist: false });
+  assert.equal(h.doc.activeElement, level);
+  assert.deepEqual(selected(), identity);
+  assert.equal(picker.options[picker.selectedIndex].textContent, 'v0.28.0 · preserved');
+  assert.equal(pack.options[pack.selectedIndex].textContent, 'FPV Front · Pressure Lines');
+  assert.equal(level.options[level.selectedIndex].textContent, '01 · Orchard Crossing');
+});
 
 test('About retains current play and shared history when the archive request fails', async (t) => {
   const page = 'https://example.test/revealline/releases/v0.60.8/site/site/about.html#versions';
