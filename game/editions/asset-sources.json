@@ -1,0 +1,153 @@
+{
+  "format": "revealline-asset-sources.v1",
+  "notes": [
+    "Generated scenes are fictional illustrations, not employee photography.",
+    "Official marks remain original; flower rotation is the user-selected gameplay exception.",
+    "No Getty/iStock photos, private training decks or restricted originals are included."
+  ],
+  "assets": [
+    {
+      "id": "coupa-flower",
+      "path": "game/editions/assets/coupa/flower-blue.png",
+      "revision": 1,
+      "sha256": "17fd8f43ad6d9c471badf9c3363d27fa646b1ec369d104fc8de4d8e006ac0a43",
+      "bytes": 58489,
+      "rights": "company-mark-user-selected",
+      "source": "https://drive.google.com/file/d/1GkcFUkRR_zFRLBhiMjyViKt4EIgZ7qD7/view",
+      "publication": "public",
+      "review": "candidate-public-bytes; final campaign review pending"
+    },
+    {
+      "id": "coupa-home",
+      "path": "game/editions/assets/coupa/home.png",
+      "revision": 1,
+      "sha256": "23fde0cc8d4af4cacb906bdd5c3a7146d24e436a129c221d7535171bee72fbb9",
+      "bytes": 2072920,
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "publication": "public",
+      "review": "candidate-public-bytes; final campaign review pending"
+    },
+    {
+      "id": "droneaid-logo",
+      "path": "game/editions/assets/droneaid/logo.png",
+      "revision": 1,
+      "sha256": "66dc87ce501a118189c768e81f665a0393e2452e000846374ba5c5e197cb7e1e",
+      "bytes": 4023,
+      "rights": "company-mark-user-selected",
+      "source": "https://drone-aid.pt/en",
+      "publication": "public",
+      "review": "candidate-public-bytes; final campaign review pending"
+    },
+    {
+      "id": "droneaid-home",
+      "path": "game/editions/assets/droneaid/home.png",
+      "revision": 1,
+      "sha256": "afbfc0063df32b8a7c91fb086310199d75632fa01fcd535f6de20bcfedfeb1fa",
+      "bytes": 2002741,
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "publication": "public",
+      "review": "candidate-public-bytes; final campaign review pending"
+    },
+    {
+      "id": "poppins-regular",
+      "path": "game/editions/assets/shared/Poppins-Regular.ttf",
+      "revision": 1,
+      "sha256": "7e65201e9b79159e2300267cc885e16c8dcef2424cdfa09a29bfb0980a94a7ba",
+      "bytes": 160316,
+      "rights": "SIL-OFL-1.1",
+      "source": "https://github.com/google/fonts/tree/main/ofl/poppins",
+      "publication": "public",
+      "review": "candidate-public-bytes; final campaign review pending"
+    },
+    {
+      "id": "poppins-license",
+      "path": "game/editions/assets/shared/Poppins-OFL.txt",
+      "revision": 1,
+      "sha256": "8503c30a4d7e09c4c09015fee42f829f18acbe6330755e9930ba50ea44eaa157",
+      "bytes": 4384,
+      "rights": "SIL-OFL-1.1",
+      "source": "https://github.com/google/fonts/tree/main/ofl/poppins",
+      "publication": "public",
+      "review": "candidate-public-bytes; final campaign review pending"
+    },
+    {
+      "id": "coupa-inside-village-key",
+      "path": "game/editions/assets/coupa/coupa-inside-village-key.png",
+      "revision": 1,
+      "sha256": "50cf52f3ff6faeef17171a44acb83bf8b80e7090dcfa5fad512496676c18eb0f",
+      "bytes": 1997148,
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "publication": "public",
+      "review": "candidate-public-bytes; final campaign review pending"
+    },
+    {
+      "id": "droneaid-community-relay-01",
+      "path": "game/editions/assets/droneaid/droneaid-community-relay-01.png",
+      "revision": 1,
+      "sha256": "6f3f7e96f4d8f0ea78f1026026a2dc5f85981adee599a44ccfa173204c055bbe",
+      "bytes": 1794830,
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "publication": "public",
+      "review": "candidate-public-bytes; final campaign review pending"
+    },
+    {
+      "id": "droneaid-community-relay-02",
+      "path": "game/editions/assets/droneaid/droneaid-community-relay-02.png",
+      "revision": 1,
+      "sha256": "5ed9b536b8b11d4af1d6decda4cd8ee26346afcd326efa46de83f017efb4ab8a",
+      "bytes": 2262270,
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "publication": "public",
+      "review": "candidate-public-bytes; final campaign review pending"
+    },
+    {
+      "id": "droneaid-community-relay-03",
+      "path": "game/editions/assets/droneaid/droneaid-community-relay-03.png",
+      "revision": 1,
+      "sha256": "855c22a0a4703cfe9810cc36399c92dd0295d0b7f9c5125eda39c9dc8247af4c",
+      "bytes": 2205966,
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "publication": "public",
+      "review": "candidate-public-bytes; final campaign review pending"
+    },
+    {
+      "id": "coupa-source-to-pay-key",
+      "path": "game/editions/assets/coupa/coupa-source-to-pay-key.png",
+      "revision": 1,
+      "sha256": "bbfb32e28c42863a2c444de4c42d5843f107ae8573d8f773817abe9488801f3b",
+      "bytes": 2021650,
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "publication": "public",
+      "review": "candidate-public-bytes; final campaign review pending"
+    },
+    {
+      "id": "coupa-product-operations-key",
+      "path": "game/editions/assets/coupa/coupa-product-operations-key.png",
+      "revision": 1,
+      "sha256": "371ab48050bb585c118346bcbbf97e8cdec3234415c3f41b16859874bda83604",
+      "bytes": 2105228,
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "publication": "public",
+      "review": "candidate-public-bytes; final campaign review pending"
+    },
+    {
+      "id": "coupa-developer-integration-key",
+      "path": "game/editions/assets/coupa/coupa-developer-integration-key.png",
+      "revision": 1,
+      "sha256": "66c68f803aeb5d8590dcb29e05863d9147c12dbe7a5afebe6522a97b82b508ce",
+      "bytes": 1972536,
+      "rights": "generated-original",
+      "source": "image_gen.imagegen",
+      "publication": "public",
+      "review": "candidate-public-bytes; final campaign review pending"
+    }
+  ]
+}
