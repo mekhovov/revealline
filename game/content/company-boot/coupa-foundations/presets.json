@@ -3,7 +3,12 @@
   "characters": {
     "coupa-flower": {
       "animationRecipe": "still",
-      "bodyMotion": { "kind": "rigid-spin", "radiansPerSecond": 0.65, "travelGain": 0.3 },
+      "bodyBacking": { "color": "#FFFFFF", "kind": "opaque-interior" },
+      "bodyMotion": {
+        "kind": "rigid-spin",
+        "radiansPerSecond": 3.141592653589793,
+        "travelGain": 0
+      },
       "headingOffsetDegrees": 0,
       "heightCells": 1.5,
       "label": "Coupa flower",

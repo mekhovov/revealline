@@ -4,6 +4,7 @@
     {
       "classic": {
         "arcadeActions": { "version": "arcade-actions.v1" },
+        "lineImpact": { "speed": 24, "version": "line-impact.v1" },
         "powerups": [],
         "terrain": [],
         "version": "classic.v1"
@@ -13,17 +14,32 @@
         {
           "id": "paper-drifter",
           "type": "bouncer",
-          "vx": -1.6970562748477138,
-          "vy": -1.6970562748477138,
+          "vx": -2.3758787847867993,
+          "vy": -2.3758787847867993,
           "x": 61.5,
           "y": 28.5
+        },
+        {
+          "clockwise": false,
+          "edge": { "side": "east", "x": 11, "y": 16 },
+          "id": "moving-boundary",
+          "speed": 2.52,
+          "type": "contour-patrol"
+        },
+        {
+          "id": "second-drifter",
+          "type": "bouncer",
+          "vx": 2.3758787847867993,
+          "vy": -2.3758787847867993,
+          "x": 13.5,
+          "y": 26.5
         }
       ],
       "foundations": [
         { "h": 4, "w": 12, "x": 12, "y": 16 },
         { "h": 4, "w": 12, "x": 40, "y": 15 }
       ],
-      "goal": { "coverage": 0.48 },
+      "goal": { "coverage": 0.554 },
       "hangars": [{ "id": "home-hangar", "radius": 2, "x": 17.5, "y": 0.5 }],
       "height": 36,
       "id": "coupa-inside-village-01",
@@ -31,7 +47,7 @@
       "objectives": [
         { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 }
       ],
-      "revision": "1",
+      "revision": "3",
       "rules": {
         "boostMultiplier": 1.5,
         "cutTimeLimitSeconds": 0,
@@ -58,6 +74,7 @@
     {
       "classic": {
         "arcadeActions": { "version": "arcade-actions.v1" },
+        "lineImpact": { "speed": 24, "version": "line-impact.v1" },
         "powerups": [],
         "terrain": [],
         "version": "classic.v1"
@@ -67,25 +84,40 @@
         {
           "id": "paper-drifter",
           "type": "bouncer",
-          "vx": -1.6970562748477138,
-          "vy": -1.6970562748477138,
+          "vx": -2.3758787847867993,
+          "vy": -2.3758787847867993,
           "x": 61.5,
           "y": 28.5
+        },
+        {
+          "clockwise": true,
+          "edge": { "side": "east", "x": 16, "y": 13 },
+          "id": "moving-boundary",
+          "speed": 2.52,
+          "type": "contour-patrol"
+        },
+        {
+          "id": "second-drifter",
+          "type": "bouncer",
+          "vx": 2.3758787847867993,
+          "vy": -2.3758787847867993,
+          "x": 13.5,
+          "y": 26.5
         }
       ],
       "foundations": [
         { "h": 5, "w": 8, "x": 17, "y": 13 },
         { "h": 5, "w": 8, "x": 43, "y": 18 }
       ],
-      "goal": { "coverage": 0.53 },
+      "goal": { "coverage": 0.6040000000000001 },
       "hangars": [{ "id": "home-hangar", "radius": 2, "x": 20.5, "y": 0.5 }],
       "height": 36,
       "id": "coupa-inside-village-02",
       "name": "Listen, Then Link",
       "objectives": [
-        { "hidden": false, "id": "connection", "required": true, "x": 15.5, "y": 8.5 }
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 }
       ],
-      "revision": "1",
+      "revision": "3",
       "rules": {
         "boostMultiplier": 1.5,
         "cutTimeLimitSeconds": 0,
@@ -115,6 +147,7 @@
     {
       "classic": {
         "arcadeActions": { "version": "arcade-actions.v1" },
+        "lineImpact": { "speed": 24, "version": "line-impact.v1" },
         "powerups": [],
         "terrain": [],
         "version": "classic.v1"
@@ -124,18 +157,25 @@
         {
           "id": "paper-drifter",
           "type": "bouncer",
-          "vx": -1.6970562748477138,
-          "vy": -1.6970562748477138,
+          "vx": -2.3758787847867993,
+          "vy": -2.3758787847867993,
           "x": 61.5,
           "y": 28.5
         },
         {
+          "clockwise": false,
+          "edge": { "side": "east", "x": 10, "y": 9 },
+          "id": "moving-boundary",
+          "speed": 2.52,
+          "type": "contour-patrol"
+        },
+        {
           "id": "second-drifter",
           "type": "bouncer",
-          "vx": 1.6970562748477138,
-          "vy": -1.6970562748477138,
-          "x": 12.5,
-          "y": 27.5
+          "vx": 2.3758787847867993,
+          "vy": -2.3758787847867993,
+          "x": 13.5,
+          "y": 26.5
         }
       ],
       "foundations": [
@@ -143,15 +183,15 @@
         { "h": 5, "w": 10, "x": 31, "y": 15 },
         { "h": 4, "w": 7, "x": 54, "y": 23 }
       ],
-      "goal": { "coverage": 0.56 },
+      "goal": { "coverage": 0.6340000000000001 },
       "hangars": [{ "id": "home-hangar", "radius": 2, "x": 35.5, "y": 0.5 }],
       "height": 36,
       "id": "coupa-inside-village-03",
       "name": "Room for Everyone",
       "objectives": [
-        { "hidden": false, "id": "connection", "required": true, "x": 18.5, "y": 8.5 }
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 }
       ],
-      "revision": "1",
+      "revision": "3",
       "rules": {
         "boostMultiplier": 1.5,
         "cutTimeLimitSeconds": 0,
@@ -181,6 +221,7 @@
     {
       "classic": {
         "arcadeActions": { "version": "arcade-actions.v1" },
+        "lineImpact": { "speed": 24, "version": "line-impact.v1" },
         "powerups": [{ "id": "steady-return", "kind": "extra-life", "x": 31.5, "y": 11.5 }],
         "terrain": [],
         "version": "classic.v1"
@@ -190,33 +231,49 @@
         {
           "id": "paper-drifter",
           "type": "bouncer",
-          "vx": -1.6970562748477138,
-          "vy": -1.6970562748477138,
+          "vx": -2.3758787847867993,
+          "vy": -2.3758787847867993,
           "x": 61.5,
           "y": 28.5
         },
         {
           "clockwise": true,
-          "id": "outer-backlog",
-          "speed": 1.8,
-          "type": "border-patrol",
-          "x": 71.5,
-          "y": 18.5
+          "edge": { "side": "east", "x": 30, "y": 11 },
+          "id": "moving-boundary",
+          "speed": 2.52,
+          "type": "contour-patrol"
+        },
+        {
+          "id": "second-drifter",
+          "type": "bouncer",
+          "vx": 2.3758787847867993,
+          "vy": -2.3758787847867993,
+          "x": 13.5,
+          "y": 26.5
+        },
+        {
+          "id": "sleeping-backlog",
+          "type": "claimed-rover",
+          "vx": 0,
+          "vy": 2.2399999999999998,
+          "x": 35.5,
+          "y": 9.5
         }
       ],
       "foundations": [
         { "h": 5, "w": 6, "x": 31, "y": 11 },
         { "h": 5, "w": 6, "x": 33, "y": 22 }
       ],
-      "goal": { "coverage": 0.58 },
+      "goal": { "coverage": 0.654 },
       "hangars": [{ "id": "home-hangar", "radius": 2, "x": 34.5, "y": 0.5 }],
       "height": 36,
       "id": "coupa-inside-village-04",
       "name": "Own the Handoff",
       "objectives": [
-        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 }
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
+        { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 24.5 }
       ],
-      "revision": "1",
+      "revision": "3",
       "rules": {
         "boostMultiplier": 1.5,
         "cutTimeLimitSeconds": 0,
@@ -246,6 +303,7 @@
     {
       "classic": {
         "arcadeActions": { "version": "arcade-actions.v1" },
+        "lineImpact": { "speed": 24, "version": "line-impact.v1" },
         "powerups": [{ "id": "steady-return", "kind": "extra-life", "x": 31.5, "y": 7.5 }],
         "terrain": [{ "h": 6, "id": "slow-1", "kind": "slow", "w": 11, "x": 30, "y": 14 }],
         "version": "classic.v1"
@@ -255,18 +313,33 @@
         {
           "id": "paper-drifter",
           "type": "bouncer",
-          "vx": -1.6970562748477138,
-          "vy": -1.6970562748477138,
+          "vx": -2.3758787847867993,
+          "vy": -2.3758787847867993,
           "x": 61.5,
           "y": 28.5
         },
         {
-          "clockwise": true,
-          "id": "outer-backlog",
-          "speed": 1.8,
-          "type": "border-patrol",
-          "x": 71.5,
-          "y": 18.5
+          "clockwise": false,
+          "edge": { "side": "east", "x": 30, "y": 7 },
+          "id": "moving-boundary",
+          "speed": 2.52,
+          "type": "contour-patrol"
+        },
+        {
+          "id": "second-drifter",
+          "type": "bouncer",
+          "vx": 2.3758787847867993,
+          "vy": -2.3758787847867993,
+          "x": 13.5,
+          "y": 26.5
+        },
+        {
+          "id": "sleeping-backlog",
+          "type": "claimed-rover",
+          "vx": 0,
+          "vy": 2.2399999999999998,
+          "x": 35.5,
+          "y": 11.5
         }
       ],
       "foundations": [
@@ -274,15 +347,16 @@
         { "h": 4, "w": 9, "x": 31, "y": 24 },
         { "h": 3, "w": 7, "x": 8, "y": 23 }
       ],
-      "goal": { "coverage": 0.6 },
+      "goal": { "coverage": 0.674 },
       "hangars": [{ "id": "home-hangar", "radius": 2, "x": 35.5, "y": 0.5 }],
       "height": 36,
       "id": "coupa-inside-village-05",
       "name": "Build Tomorrow",
       "objectives": [
-        { "hidden": false, "id": "connection", "required": true, "x": 15.5, "y": 8.5 }
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
+        { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
-      "revision": "1",
+      "revision": "3",
       "rules": {
         "boostMultiplier": 1.5,
         "cutTimeLimitSeconds": 0,
@@ -312,6 +386,7 @@
     {
       "classic": {
         "arcadeActions": { "version": "arcade-actions.v1" },
+        "lineImpact": { "speed": 24, "version": "line-impact.v1" },
         "powerups": [{ "id": "steady-return", "kind": "extra-life", "x": 10.5, "y": 14.5 }],
         "terrain": [],
         "version": "classic.v1"
@@ -321,26 +396,33 @@
         {
           "id": "paper-drifter",
           "type": "bouncer",
-          "vx": -1.6970562748477138,
-          "vy": -1.6970562748477138,
+          "vx": -2.3758787847867993,
+          "vy": -2.3758787847867993,
           "x": 61.5,
           "y": 28.5
         },
         {
-          "id": "second-drifter",
-          "type": "bouncer",
-          "vx": 1.6970562748477138,
-          "vy": -1.6970562748477138,
-          "x": 12.5,
-          "y": 27.5
+          "clockwise": true,
+          "edge": { "side": "east", "x": 9, "y": 14 },
+          "id": "moving-boundary",
+          "speed": 2.52,
+          "type": "contour-patrol"
         },
         {
-          "clockwise": true,
-          "id": "outer-backlog",
-          "speed": 1.8,
-          "type": "border-patrol",
-          "x": 71.5,
-          "y": 18.5
+          "id": "second-drifter",
+          "type": "bouncer",
+          "vx": 2.3758787847867993,
+          "vy": -2.3758787847867993,
+          "x": 13.5,
+          "y": 26.5
+        },
+        {
+          "id": "sleeping-backlog",
+          "type": "claimed-rover",
+          "vx": 0,
+          "vy": 2.2399999999999998,
+          "x": 35.5,
+          "y": 9.5
         }
       ],
       "foundations": [
@@ -348,15 +430,16 @@
         { "h": 5, "w": 11, "x": 30, "y": 14 },
         { "h": 5, "w": 8, "x": 54, "y": 14 }
       ],
-      "goal": { "coverage": 0.64 },
+      "goal": { "coverage": 0.7140000000000001 },
       "hangars": [{ "id": "home-hangar", "radius": 2, "x": 35.5, "y": 0.5 }],
       "height": 36,
       "id": "coupa-inside-village-06",
       "name": "All of Us",
       "objectives": [
-        { "hidden": false, "id": "connection", "required": true, "x": 18.5, "y": 8.5 }
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
+        { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
-      "revision": "1",
+      "revision": "3",
       "rules": {
         "boostMultiplier": 1.5,
         "cutTimeLimitSeconds": 0,
@@ -384,7 +467,7 @@
       "width": 72
     }
   ],
-  "revision": "1",
+  "revision": "4",
   "title": "Inside the Village",
   "version": "xonix-campaign.v1"
 }

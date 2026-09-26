@@ -1,18 +1,18 @@
 {
-  "actorCatalogId": "journey-actors-v1",
+  "actorCatalogId": "journey-actors-v9",
   "assets": [
     {
-      "alt": "An illustrated Coupa Village with a connection plaza, supplier market and harbour.",
-      "bytes": 2072920,
+      "alt": "A cinematic blue city of ribbon bridges, collaboration halls and sunlit gardens.",
+      "bytes": 3134778,
       "format": "AssetRevisionV1",
-      "height": 853,
+      "height": 887,
       "id": "coupa-spend-in-motion-01-picture",
       "kind": "reveal-background",
-      "path": "editions/assets/coupa/home.png",
+      "path": "editions/assets/coupa/spend-city-v2.png",
       "review": "candidate",
-      "revision": "1",
-      "sha256": "23fde0cc8d4af4cacb906bdd5c3a7146d24e436a129c221d7535171bee72fbb9",
-      "width": 1280
+      "revision": "2",
+      "sha256": "fb468b9b308377d0e83517c64c34c6df4492d7909add3f3e700e03cfaf039d18",
+      "width": 1774
     }
   ],
   "campaigns": [
@@ -29,10 +29,10 @@
         "coupa-spend-in-motion-06"
       ],
       "name": "Spend in Motion",
-      "revision": "1"
+      "revision": "4"
     }
   ],
-  "difficultyCatalogId": "journey-difficulty-v1",
+  "difficultyCatalogId": "journey-difficulty-v2",
   "format": "ContentProjectV1",
   "id": "coupa-spend-in-motion",
   "maps": [
@@ -182,9 +182,9 @@
       ],
       "presentation": {
         "backgroundAssetId": "coupa-spend-in-motion-01-picture",
-        "themeId": "coupa-village"
+        "themeId": "coupa-spend-in-motion-theme"
       },
-      "revision": "1",
+      "revision": "2",
       "spawnId": "home",
       "timeLimitSeconds": 0
     },
@@ -230,8 +230,8 @@
       "objectives": [
         { "hidden": false, "id": "connection", "required": true, "x": 15.5, "y": 8.5 }
       ],
-      "presentation": { "backgroundAssetId": null, "themeId": "coupa-village" },
-      "revision": "1",
+      "presentation": { "backgroundAssetId": null, "themeId": "coupa-spend-in-motion-theme" },
+      "revision": "2",
       "spawnId": "home",
       "timeLimitSeconds": 0
     },
@@ -285,8 +285,8 @@
       "objectives": [
         { "hidden": false, "id": "connection", "required": true, "x": 18.5, "y": 7.5 }
       ],
-      "presentation": { "backgroundAssetId": null, "themeId": "coupa-village" },
-      "revision": "1",
+      "presentation": { "backgroundAssetId": null, "themeId": "coupa-spend-in-motion-theme" },
+      "revision": "2",
       "spawnId": "home",
       "timeLimitSeconds": 0
     },
@@ -340,8 +340,8 @@
       "objectives": [
         { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 }
       ],
-      "presentation": { "backgroundAssetId": null, "themeId": "coupa-village" },
-      "revision": "1",
+      "presentation": { "backgroundAssetId": null, "themeId": "coupa-spend-in-motion-theme" },
+      "revision": "2",
       "spawnId": "home",
       "timeLimitSeconds": 0
     },
@@ -395,8 +395,8 @@
       "objectives": [
         { "hidden": false, "id": "connection", "required": true, "x": 15.5, "y": 8.5 }
       ],
-      "presentation": { "backgroundAssetId": null, "themeId": "coupa-village" },
-      "revision": "1",
+      "presentation": { "backgroundAssetId": null, "themeId": "coupa-spend-in-motion-theme" },
+      "revision": "2",
       "spawnId": "home",
       "timeLimitSeconds": 0
     },
@@ -458,8 +458,8 @@
       "objectives": [
         { "hidden": false, "id": "connection", "required": true, "x": 18.5, "y": 8.5 }
       ],
-      "presentation": { "backgroundAssetId": null, "themeId": "coupa-village" },
-      "revision": "1",
+      "presentation": { "backgroundAssetId": null, "themeId": "coupa-spend-in-motion-theme" },
+      "revision": "2",
       "spawnId": "home",
       "timeLimitSeconds": 0
     }
@@ -471,9 +471,9 @@
       "format": "PackDesignV1",
       "id": "coupa-spend-in-motion-pack",
       "name": "Spend in Motion",
-      "revision": "1"
+      "revision": "4"
     }
   ],
-  "policyId": "journey-arcade-v2",
-  "revision": "1"
+  "policyId": "journey-trail-impact-v3",
+  "revision": "4"
 }

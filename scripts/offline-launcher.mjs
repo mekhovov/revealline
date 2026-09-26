@@ -10,9 +10,9 @@ export async function addOfflineLauncher(root, entries, version, options = {}) {
     ['app.mjs', 'game/offline/app.mjs'],
     ['app.css', 'game/downloads.css'],
     ['installed-app.mjs', 'game/installed-app.mjs'],
+    ['edition-context.mjs', 'game/edition-context.mjs'],
+    ['profile-writer.mjs', 'game/profile-writer.mjs'],
   ];
-  if (entries.some((entry) => entry.name === 'game/edition-context.mjs'))
-    files.push(['edition-context.mjs', 'game/edition-context.mjs']);
   const launcher = [];
   for (const [target, source] of files)
     launcher.push({ name: `app/${target}`, bytes: await fs.readFile(path.join(root, source)) });

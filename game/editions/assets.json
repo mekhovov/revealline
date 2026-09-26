@@ -203,5 +203,130 @@
       "resampling": "lanczos",
       "implementation": "pillow-12.0.0"
     }
+  },
+  {
+    "id": "droneaid-nl-logo-source",
+    "path": "game/editions/assets/droneaid-nl/logo-source.svg",
+    "sha256": "29b532fd121fe3780ac277c0dedc1d3a0a198c1e67896a0a005ab1a81bf88601",
+    "bytes": 8516,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "droneaid-nl-propeller-source",
+    "path": "game/editions/assets/droneaid-nl/propeller-source.svg",
+    "sha256": "fa91b37d4f092c6b92ede00cfa4ffd8316675b7a4d9a16050160a6065d89c7b1",
+    "bytes": 1245,
+    "publication": "public",
+    "approved": true,
+    "dependencies": ["droneaid-nl-logo-source"]
+  },
+  {
+    "id": "droneaid-nl-logo",
+    "path": "game/editions/assets/droneaid-nl/logo.png",
+    "sha256": "424e54ecdd0b981166f3f4fc4efea271215c0dff728f2fe762f76584f1ca943e",
+    "bytes": 19377,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "droneaid-nl-propeller",
+    "path": "game/editions/assets/droneaid-nl/propeller.png",
+    "sha256": "dac6c71006d1bdf0b29cad9a7825a5ed2874936a29debccafaba2a6ddb765ef2",
+    "bytes": 20091,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "droneaid-nl-icon-192",
+    "path": "game/editions/assets/droneaid-nl/icon-192.png",
+    "sha256": "9bdfd10873246e921fcdae05af079942fb0ce9451384bd5442b76ee39ac10a0d",
+    "bytes": 6925,
+    "publication": "public",
+    "approved": true,
+    "dependencies": ["droneaid-nl-propeller"],
+    "derivative": {
+      "sourceAssetId": "droneaid-nl-propeller",
+      "sourceSha256": "dac6c71006d1bdf0b29cad9a7825a5ed2874936a29debccafaba2a6ddb765ef2",
+      "sourceWidth": 512,
+      "sourceHeight": 512,
+      "width": 192,
+      "height": 192,
+      "kind": "square-install-icon",
+      "background": "#FFFFFF",
+      "paddingRatio": 0.15,
+      "resampling": "lanczos",
+      "implementation": "pillow-12.0.0"
+    }
+  },
+  {
+    "id": "droneaid-nl-icon-512",
+    "path": "game/editions/assets/droneaid-nl/icon-512.png",
+    "sha256": "6ef8ddd05c75e069bcefcc1278775823cd0261928236fd4c8f6345d0e9f05c4b",
+    "bytes": 21710,
+    "publication": "public",
+    "approved": true,
+    "dependencies": ["droneaid-nl-propeller", "droneaid-nl-icon-192"],
+    "derivative": {
+      "sourceAssetId": "droneaid-nl-propeller",
+      "sourceSha256": "dac6c71006d1bdf0b29cad9a7825a5ed2874936a29debccafaba2a6ddb765ef2",
+      "sourceWidth": 512,
+      "sourceHeight": 512,
+      "width": 512,
+      "height": 512,
+      "kind": "square-install-icon",
+      "background": "#FFFFFF",
+      "paddingRatio": 0.15,
+      "resampling": "lanczos",
+      "implementation": "pillow-12.0.0"
+    }
+  },
+  {
+    "id": "coupa-spend-city-v2",
+    "path": "game/editions/assets/coupa/spend-city-v2.png",
+    "sha256": "fb468b9b308377d0e83517c64c34c6df4492d7909add3f3e700e03cfaf039d18",
+    "bytes": 3134778,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "coupa-network-atlas-v2",
+    "path": "game/editions/assets/coupa/network-atlas-v2.png",
+    "sha256": "aa6a581b04384b06e730e36399c0c75a03145b501c96dcb1247ec29f24b3d518",
+    "bytes": 2918671,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "nl-workshop-v1",
+    "path": "game/editions/assets/droneaid-nl-workshop-v1.png",
+    "sha256": "79ead19845a22b1b96ef50e883321b3f869f4298c007cb5cf905f8f596851771",
+    "bytes": 2911943,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "coupa-wallpaper-network-2024",
+    "path": "game/editions/assets/coupa/wallpaper-network-2024.png",
+    "sha256": "dc3564fbd91d1bd745f3e3cdbc8a09de56868e846ecae9fbd6598ddebd3f6e3a",
+    "bytes": 271090,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "coupa-wallpaper-center-2024",
+    "path": "game/editions/assets/coupa/wallpaper-center-2024.png",
+    "sha256": "f4e686a06ac0b4d36b6974797bab06fc5a80b3e69fbcc4ab99f98e3c37af4177",
+    "bytes": 303927,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
   }
 ]

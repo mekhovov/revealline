@@ -140,14 +140,17 @@
     {
       "id": "company-editions",
       "pathPatterns": [
-        "^game/(editions/|company-campaigns/|company(?:[.-])|edition-context\\.mjs$|installed-app\\.mjs$|profile-channel(?:-reader)?\\.mjs$|profile-transfer\\.mjs$|journey/profile\\.mjs$)",
+        "^game/(runtime-(?:content-provider|library-sources)\\.mjs$|editions/|company-campaigns/|company(?:[.-])|edition-context\\.mjs$|installed-app\\.mjs$|profile-channel(?:-reader)?\\.mjs$|profile-transfer\\.mjs$|journey/profile\\.mjs$)",
         "^game/(test/company-.*\\.test\\.mjs|test/edition.*\\.test\\.mjs|presentation/player-projection\\.mjs)$",
-        "^scripts/(compile-edition|bundle-editions|publish-editions|check-edition-source|edition-offline|edition-localization|company-studio|produce-company-content|test-edition-offline|test-bundle-editions|test-company-review)\\.mjs$",
+        "^game/(controller-lab/|replay-theater/|app\\.mjs$|index\\.html$|test/runtime-content-provider\\.test\\.mjs$)",
+        "^game/ui/(edition-(?:solo|lessons|play-layout|tool-provider|navigation|controller-practice)\\.mjs|edition-(?:solo|play)\\.css|profile-recovery-dialog\\.mjs|journey-collection\\.mjs)$",
+        "^game/(profile-writer|external-chapter-(?:pointer|backup)|external-recovery-catalog|external-backup-assets|replay-(?:presentation|actor-context)|presentation/actor-appearance-(?:pin|lease))\\.mjs$",
+        "^scripts/(compile-edition|bundle-editions|publish-editions|check-edition-source|edition-offline|offline-launcher|edition-localization|edition-runtime|edition-provider-parity|company-studio|produce-company-content|test-edition-offline|test-offline-publication|test-bundle-editions|test-company-review)\\.mjs$",
         "^docs/verification/company-review(?:\\.html|\\.mjs|-model\\.mjs)$",
         "^publishing/edition-.*\\.mjs$",
         "^authoring/company-studio/",
         "^game/content/company-(boot|campaigns)/",
-        "^game/ui/(body-motion|actor-recipes)\\.mjs$"
+        "^game/ui/(body-motion|body-backing|actor-recipes)\\.mjs$"
       ],
       "commands": [
         {
@@ -166,13 +169,25 @@
           "args": ["--test", "scripts/test-company-review.mjs"]
         },
         {
+          "id": "edition-appearance-contracts",
+          "command": "node",
+          "args": [
+            "--test",
+            "game/test/actor-appearance-pin.test.mjs",
+            "game/test/actor-appearance-lease.test.mjs",
+            "game/test/replay-presentation.test.mjs",
+            "game/test/replay-actor-context.test.mjs"
+          ]
+        },
+        {
           "id": "edition-persistence-compatibility",
           "command": "node",
           "args": [
             "--test",
             "game/test/installed-app.test.mjs",
             "game/test/profile-transfer.test.mjs",
-            "game/test/profile-channel-reader.test.mjs"
+            "game/test/profile-channel-reader.test.mjs",
+            "scripts/test-offline-publication.mjs"
           ]
         }
       ]

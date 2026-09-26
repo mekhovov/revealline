@@ -21,6 +21,35 @@ const bytes = new Uint8Array(
 );
 const manifest = JSON.parse(new TextDecoder().decode(bytes));
 const hash = await hashPresentationBytes(bytes);
+test('authored campaign receipt retains exactly and never substitutes missing or changed recipes', async () => {
+  const identity = {
+    content: content('solo', true),
+    scope: 'journey',
+    authoredPresentationSha256: 'a'.repeat(64),
+  };
+  const first = await prepareActorAppearanceLease({ ...identity, style: 'campaign' });
+  const pin = first.pin();
+  assert.equal(pin.format, 'revealline-actor-appearance-pin.v2');
+  const retained = await prepareRetainedActorAppearanceLease({ ...identity, pin });
+  assert.deepEqual(retained.pin(), pin);
+  for (const authoredPresentationSha256 of [undefined, 'b'.repeat(64)])
+    await assert.rejects(
+      prepareRetainedActorAppearanceLease({ ...identity, pin, authoredPresentationSha256 }),
+      /exact earlier artwork/,
+    );
+  const prior = await prepareActorAppearanceLease({
+    content: identity.content,
+    scope: 'journey',
+    style: 'campaign',
+  });
+  await assert.rejects(
+    prepareRetainedActorAppearanceLease({ ...identity, pin: prior.pin() }),
+    /exact earlier artwork/,
+  );
+  first.release();
+  retained.release();
+  prior.release();
+});
 function content(mode = 'solo', journey = false) {
   return {
     editionId: journey ? 'journey-pressure' : 'field-kit',

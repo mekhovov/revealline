@@ -18,6 +18,8 @@ import { createStarterProject } from '../content-design/starter.mjs';
 import { companyPresentationIdentity } from '../company-session.mjs';
 import { createCompanyTheme, createCompanyPresets } from '../company-campaigns/brands.mjs';
 import { inspectImageDataUrl } from '../content.mjs';
+import { loadRuntimeContentProvider } from '../runtime-content-provider.mjs';
+import { validateEditionProviderParity } from '../../scripts/edition-provider-parity.mjs';
 
 const bytes = (value) => Buffer.from(JSON.stringify(value));
 const digest = (value) => createHash('sha256').update(value).digest('hex');
@@ -458,10 +460,10 @@ test('edition admission rejects mismatched themes and artwork outside the select
     { ...originalTheme.themes[0], player: 'unshipped-body' },
   ]) {
     f.files.set(boot.themes, bytes({ themes: [theme] }));
-    await assert.rejects(compile(), /selected brand|selected presets/);
+    await assert.rejects(compile(), /selected brand|selected presets|primary theme/);
   }
   f.files.set(boot.themes, bytes({ themes: [...originalTheme.themes, originalTheme.themes[0]] }));
-  await assert.rejects(compile(), /exactly one/);
+  await assert.rejects(compile(), /unique campaign themes/);
   f.files.set(boot.themes, bytes(originalTheme));
   const presets = JSON.parse(f.files.get(boot.presets));
   for (const src of [
@@ -493,6 +495,91 @@ test('edition admission rejects mismatched themes and artwork outside the select
         ),
     }),
     /selected approved asset closure/,
+  );
+});
+
+test('audience editions project primary and selected mission themes without other campaign labels', async () => {
+  const f = fixture(),
+    catalog = structuredClone(f.catalog),
+    brand = catalog.brands[0],
+    boot = catalog.editions[0].boot;
+  const themes = JSON.parse(f.files.get(boot.themes)),
+    primary = themes.themes[0];
+  brand.themeIds = [brand.themeId, 'selected-campaign-theme', 'omitted-campaign-theme'];
+  themes.themes.push(
+    { ...primary, id: 'selected-campaign-theme', name: 'Selected campaign' },
+    { ...primary, id: 'omitted-campaign-theme', name: 'OMITTED_CAMPAIGN_THEME_SENTINEL' },
+  );
+  f.files.set(boot.themes, bytes(themes));
+  const project = JSON.parse(f.files.get(catalog.campaigns[0].sourcePath));
+  project.missions[0].presentation.themeId = 'selected-campaign-theme';
+  f.files.set(catalog.campaigns[0].sourcePath, bytes(project));
+  const result = await compileEdition({ ...f, catalog, editionIds: ['coupa-public'] });
+  assert.deepEqual(result.runtimeCatalog.brands[0].themeIds, [
+    brand.themeId,
+    'selected-campaign-theme',
+  ]);
+  assert.deepEqual(
+    JSON.parse(result.files.get(boot.themes)).themes.map((theme) => theme.id),
+    brand.themeIds.slice(0, 2),
+  );
+  assert.ok(!result.files.get(boot.themes).toString().includes('OMITTED_CAMPAIGN_THEME_SENTINEL'));
+  assert.ok(
+    f.files.get(boot.themes).toString().includes('OMITTED_CAMPAIGN_THEME_SENTINEL'),
+    'Original commit input is not mutated.',
+  );
+  const load = (files, compiled) =>
+    loadRuntimeContentProvider({
+      locationRef: { href: 'https://example.test/game/index.html?edition=coupa-public' },
+      documentRef: { documentElement: { dataset: compiled ? { editionId: 'coupa-public' } : {} } },
+      fetcher: async (url) => {
+        const value = files.get(new URL(url).pathname.slice(1));
+        return new Response(value ?? '', { status: value ? 200 : 404 });
+      },
+    });
+  const sourceProvider = await load(
+      new Map([...f.files, ['game/editions/catalog.json', bytes(catalog)]]),
+      false,
+    ),
+    compiledProvider = await load(result.files, true);
+  assert.equal(
+    sourceProvider.authoredPresentationSha256,
+    compiledProvider.authoredPresentationSha256,
+    'Source and compiled hosts must pin the exact same selected presentation after aggregate theme pruning.',
+  );
+  assert.deepEqual(
+    await validateEditionProviderParity({ sourceFiles: f.files, catalog, compiled: result }),
+    {
+      editionId: 'coupa-public',
+      authoredPresentationSha256: compiledProvider.authoredPresentationSha256,
+    },
+  );
+  const changed = new Map(result.files),
+    changedThemes = JSON.parse(changed.get(boot.themes));
+  changedThemes.themes[0].palette.paper = '#eeeeee';
+  changed.set(boot.themes, bytes(changedThemes));
+  await assert.rejects(
+    validateEditionProviderParity({
+      sourceFiles: f.files,
+      catalog,
+      compiled: { ...result, files: changed },
+    }),
+    /presentation receipts differ/,
+  );
+  changed.delete(boot.themes);
+  await assert.rejects(
+    validateEditionProviderParity({
+      sourceFiles: f.files,
+      catalog,
+      compiled: { ...result, files: changed },
+    }),
+    /undeclared input/,
+  );
+  project.missions[0].presentation.themeId = 'absent-theme';
+  f.files.set(catalog.campaigns[0].sourcePath, bytes(project));
+  await assert.rejects(
+    compileEdition({ ...f, catalog, editionIds: ['coupa-public'] }),
+    /mission theme is missing/,
   );
 });
 

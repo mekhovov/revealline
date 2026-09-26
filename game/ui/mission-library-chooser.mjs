@@ -42,8 +42,25 @@ export function attachMissionLibraryChooser({
   writeState = () => {},
   launchContext = () => ({}),
   getCurrentId = () => null,
+  supportedModes = LIBRARY_MODES,
+  availableCollectionsOnly = false,
+  description = localizedMessage('interface:allMissionsOneLibraryJourneyClassicAndCustomKeepTheir'),
 }) {
-  if (!LIBRARY_MODES.includes(mode)) throw new TypeError(t('interface:unknownMissionLibraryMode'));
+  if (
+    !Array.isArray(supportedModes) ||
+    !supportedModes.includes(mode) ||
+    supportedModes.some((value) => !LIBRARY_MODES.includes(value))
+  )
+    throw new TypeError(t('interface:unknownMissionLibraryMode'));
+  const modes = [...new Set(supportedModes)];
+  const collections = () =>
+    availableCollectionsOnly
+      ? LIBRARY_COLLECTIONS.filter((value) =>
+          library.missions.some(
+            (row) => row.collection === value && row.modes.some((item) => modes.includes(item)),
+          ),
+        )
+      : LIBRARY_COLLECTIONS;
   const node = (tag, id, text) => {
     const result = doc.createElement(tag);
     if (id) result.id = id;
@@ -58,11 +75,7 @@ export function attachMissionLibraryChooser({
     'journey-chooser-title',
     localizedMessage('interface:findYourNextLine'),
   );
-  const copy = node(
-    'p',
-    null,
-    localizedMessage('interface:allMissionsOneLibraryJourneyClassicAndCustomKeepTheir'),
-  );
+  const copy = node('p', null, description);
   copy.className = 'journey-library-copy';
   const filters = node('div');
   filters.className = 'journey-filters';
@@ -140,10 +153,10 @@ export function attachMissionLibraryChooser({
   };
   collection.append(
     option(localizedMessage('interface:all'), ''),
-    ...LIBRARY_COLLECTIONS.map((value) => option(() => t(LIBRARY_TAG_KEYS[value]), value)),
+    ...collections().map((value) => option(() => t(LIBRARY_TAG_KEYS[value]), value)),
   );
   collection.value = '';
-  modeFilter.append(...LIBRARY_MODES.map((value) => option(() => modeLabel(value), value)));
+  modeFilter.append(...modes.map((value) => option(() => modeLabel(value), value)));
   modeFilter.value = mode;
   const status = node('p', 'journey-chooser-status');
   status.setAttribute('role', 'status');
@@ -177,10 +190,10 @@ export function attachMissionLibraryChooser({
   }
   if (saved && typeof saved === 'object') {
     if (typeof saved.search === 'string') search.value = saved.search.slice(0, 512);
-    if (LIBRARY_COLLECTIONS.includes(saved.collection)) collection.value = saved.collection;
+    if (collections().includes(saved.collection)) collection.value = saved.collection;
     // The caller scopes state by hosting mode. Its browsing filter can point at
     // another mode and must survive a round trip back to this same host.
-    if (LIBRARY_MODES.includes(saved.mode)) {
+    if (modes.includes(saved.mode)) {
       modeFilter.value = saved.mode;
       selectedId = typeof saved.selectedId === 'string' ? saved.selectedId : '';
       savedScroll = Number.isFinite(saved.scroll) ? Math.max(0, saved.scroll) : 0;
@@ -208,6 +221,16 @@ export function attachMissionLibraryChooser({
     }
   }
   function rebuildCampaigns(requested = campaign.value || pendingCampaign) {
+    if (!modes.includes(modeFilter.value)) modeFilter.value = mode;
+    if (availableCollectionsOnly) {
+      const selected = collection.value,
+        choices = collections();
+      collection.replaceChildren(
+        option(localizedMessage('interface:all'), ''),
+        ...choices.map((value) => option(() => t(LIBRARY_TAG_KEYS[value]), value)),
+      );
+      collection.value = choices.includes(selected) ? selected : '';
+    }
     const choices = new Map();
     for (const row of library.forMode(modeFilter.value))
       if (!collection.value || row.collection === collection.value)

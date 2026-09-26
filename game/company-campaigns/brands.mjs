@@ -4,19 +4,24 @@ export const COMPANY_BRANDS = Object.freeze([
   {
     format: 'revealline-brand-pack.v1',
     id: 'coupa',
-    revision: 1,
+    revision: 2,
     name: 'Coupa',
     description: 'Make room for tomorrow. An illustrated world of connected work.',
     publication: 'public',
     themeId: 'coupa-village',
+    themeIds: [
+      'coupa-village',
+      ...COMPANY_CAMPAIGNS.filter((c) => c.brandId === 'coupa').map((c) => `${c.id}-theme`),
+    ],
     actorSetId: 'coupa-flower',
     logoAssetId: 'coupa-flower',
-    heroAssetId: 'coupa-home',
+    heroAssetId: 'coupa-wallpaper-network-2024',
     iconAssetId: 'coupa-icon-512',
     fontAssetId: 'poppins-regular',
     assetIds: [
       'coupa-flower',
-      'coupa-home',
+      'coupa-wallpaper-network-2024',
+      'coupa-wallpaper-center-2024',
       'poppins-regular',
       'poppins-license',
       'coupa-icon-512',
@@ -77,6 +82,43 @@ export const COMPANY_BRANDS = Object.freeze([
       },
     ],
   },
+  {
+    format: 'revealline-brand-pack.v1',
+    id: 'droneaid-nl',
+    revision: 1,
+    name: 'DroneAid Netherlands',
+    description:
+      'Build together. Share what is possible. Fictional workshop adventures inspired by DroneAid Netherlands.',
+    publication: 'public',
+    themeId: 'droneaid-nl-community',
+    themeIds: [
+      'droneaid-nl-community',
+      ...COMPANY_CAMPAIGNS.filter((c) => c.brandId === 'droneaid-nl').map((c) => `${c.id}-theme`),
+    ],
+    actorSetId: 'droneaid-nl-propeller',
+    logoAssetId: 'droneaid-nl-logo',
+    heroAssetId: 'nl-workshop-v1',
+    iconAssetId: 'droneaid-nl-icon-512',
+    fontAssetId: null,
+    assetIds: [
+      'droneaid-nl-logo',
+      'droneaid-nl-propeller',
+      'droneaid-nl-icon-512',
+      'nl-workshop-v1',
+    ],
+    sources: [
+      {
+        title: 'DroneAid Netherlands — official identity and workshop activities',
+        url: 'https://drone-aid.nl/nl',
+        kind: 'official',
+      },
+      {
+        title: 'DroneAid Netherlands — public reporting',
+        url: 'https://drone-aid.nl/en/reports',
+        kind: 'official',
+      },
+    ],
+  },
 ]);
 
 const choices = [
@@ -99,18 +141,26 @@ const choices = [
     ['coupa-developer-integration'],
   ],
   ['droneaid-community', 'droneaid', 'Community Relay', 'public', ['droneaid-community-relay']],
+  [
+    'droneaid-nl-community',
+    'droneaid-nl',
+    'DroneAid Netherlands',
+    'public',
+    COMPANY_CAMPAIGNS.filter((c) => c.brandId === 'droneaid-nl').map((c) => c.id),
+  ],
+  ...COMPANY_CAMPAIGNS.filter((c) => c.brandId === 'droneaid-nl').map((c) => [
+    c.id,
+    c.brandId,
+    c.name,
+    'public',
+    [c.id],
+  ]),
 ];
 export const COMPANY_EDITIONS = Object.freeze(
   choices.map(([id, brandId, name, audience, campaignIds]) => ({
     format: 'revealline-edition.v1',
     id,
-    revision: campaignIds.some((campaignId) =>
-      ['coupa-source-to-pay', 'coupa-product-operations', 'coupa-developer-integration'].includes(
-        campaignId,
-      ),
-    )
-      ? 2
-      : 1,
+    revision: brandId === 'coupa' ? 4 : brandId === 'droneaid-nl' ? 2 : 1,
     name,
     brandId,
     audience,
@@ -139,6 +189,18 @@ const palettes = {
     grid: '#193866',
     sky: '#D8F0FF',
     land: '#1565C0',
+  },
+  'droneaid-nl': {
+    ink: '#0D0B2E',
+    paper: '#FFFFFF',
+    muted: '#BFCBF3',
+    accent: '#FFD62C',
+    safe: '#96EAAA',
+    danger: '#FF9A88',
+    field: '#0D0B2E',
+    grid: '#2C286D',
+    sky: '#DCEBFD',
+    land: '#4238EB',
   },
   droneaid: {
     ink: '#12251C',
@@ -190,8 +252,8 @@ export function createCompanyTheme(brandId) {
             scale: 'major',
           }
         : {
-            id: 'workshop-after-rain',
-            name: 'Workshop After Rain',
+            id: brandId === 'droneaid-nl' ? 'workshop-first-light' : 'workshop-after-rain',
+            name: brandId === 'droneaid-nl' ? 'Workshop First Light' : 'Workshop After Rain',
             genre: 'ambient',
             tempo: 72,
             root: 57,
@@ -240,11 +302,178 @@ export function createCompanyPresets(brandId) {
           ? {
               src: '../../game/editions/assets/coupa/flower-blue.png',
               sourceStatus: 'Official Coupa flower; gameplay rotation chosen for this game',
-              bodyMotion: { kind: 'rigid-spin', radiansPerSecond: 0.65, travelGain: 0.3 },
+              bodyMotion: { kind: 'rigid-spin', radiansPerSecond: Math.PI, travelGain: 0 },
+              bodyBacking: { kind: 'opaque-interior', color: '#FFFFFF' },
             }
-          : {}),
+          : brandId === 'droneaid-nl'
+            ? {
+                label: 'DroneAid Netherlands propeller',
+                src: '../../game/editions/assets/droneaid-nl/propeller.png',
+                sourceStatus:
+                  'Exact four propeller paths from the official Netherlands logo; gameplay rotation user-selected',
+                widthCells: 2.3,
+                heightCells: 2.3,
+                bodyMotion: { kind: 'rigid-spin', radiansPerSecond: 4 * Math.PI, travelGain: 0 },
+              }
+            : {}),
       },
     },
     animationRecipes: { still: { label: 'Rigid body', components: [] } },
   };
+}
+
+// Campaign palettes, material metaphors and sound are presentation only. All
+// physical actor cues and deterministic movement remain owned by the engine.
+const campaignLooks = {
+  'coupa-spend-in-motion': [
+    'Connected City',
+    '#081D4D',
+    '#1565C0',
+    '#5FD6FF',
+    'paper-tangle',
+    'Paper tangle',
+    'chiptune',
+    108,
+    60,
+  ],
+  'coupa-inside-village': [
+    'Community Mosaic',
+    '#112A55',
+    '#276EC8',
+    '#EEC874',
+    'missing-cloud',
+    'Missed connection',
+    'ambient',
+    84,
+    62,
+  ],
+  'coupa-source-to-pay': [
+    'Supply District',
+    '#102A50',
+    '#2469B5',
+    '#8CDFE8',
+    'stale-fragments',
+    'Loose fragments',
+    'chiptune',
+    102,
+    60,
+  ],
+  'coupa-product-operations': [
+    'Operations Studio',
+    '#102446',
+    '#2864A3',
+    '#E8C378',
+    'paper-tangle',
+    'Paper tangle',
+    'chiptune',
+    96,
+    65,
+  ],
+  'coupa-developer-integration': [
+    'Resource Atlas',
+    '#08182F',
+    '#214A97',
+    '#5FD6FF',
+    'backlog-knot',
+    'Unresolved knot',
+    'ambient',
+    90,
+    57,
+  ],
+  'droneaid-nl-workshop-lights': [
+    'Workshop Lights',
+    '#0D0B2E',
+    '#4238EB',
+    '#FFD62C',
+    'paper-tangle',
+    'Loose labels',
+    'chiptune',
+    104,
+    60,
+  ],
+  'droneaid-nl-parts-in-motion': [
+    'Component Depot',
+    '#111339',
+    '#4D55DA',
+    '#FFD62C',
+    'stale-fragments',
+    'Sorting fragments',
+    'chiptune',
+    112,
+    62,
+  ],
+  'droneaid-nl-makers-together': [
+    'Community Rooms',
+    '#21163A',
+    '#6550C9',
+    '#F6D570',
+    'missing-cloud',
+    'Missed connection',
+    'ambient',
+    88,
+    65,
+  ],
+  'droneaid-nl-careful-handoff': [
+    'Canal-side Depot',
+    '#111A36',
+    '#4552BC',
+    '#FFD62C',
+    'paper-tangle',
+    'Loose labels',
+    'chiptune',
+    98,
+    60,
+  ],
+  'droneaid-nl-signals-of-support': [
+    'Community Pavilion',
+    '#20133C',
+    '#6042CD',
+    '#FFD62C',
+    'stale-fragments',
+    'Scattered notices',
+    'chiptune',
+    116,
+    67,
+  ],
+  'droneaid-nl-shared-horizon': [
+    'Shared Horizon',
+    '#10112F',
+    '#4740AD',
+    '#FFE18B',
+    'missing-cloud',
+    'Passing cloud',
+    'ambient',
+    82,
+    62,
+  ],
+};
+export function createCompanyThemes(brandId) {
+  const base = createCompanyTheme(brandId);
+  return [
+    base,
+    ...COMPANY_CAMPAIGNS.filter((c) => c.brandId === brandId && campaignLooks[c.id]).map(
+      (campaign) => {
+        const [name, field, land, accent, recipe, enemy, genre, tempo, root] =
+          campaignLooks[campaign.id];
+        return {
+          ...structuredClone(base),
+          id: `${campaign.id}-theme`,
+          name: `${base.name} · ${name}`,
+          subtitle: campaign.name,
+          palette: { ...base.palette, field, land, accent },
+          coverColor: field,
+          actorRecipes: { ...base.actorRecipes, bouncer: recipe },
+          labels: { ...base.labels, enemy },
+          soundtrack: {
+            id: `${campaign.id}-score`,
+            name,
+            genre,
+            tempo,
+            root,
+            scale: genre === 'ambient' ? 'dorian' : 'major',
+          },
+        };
+      },
+    ),
+  ];
 }

@@ -2,14 +2,14 @@
   {
     "format": "AssetRevisionV1",
     "id": "coupa-spend-in-motion-01-picture",
-    "revision": "1",
+    "revision": "2",
     "kind": "reveal-background",
-    "path": "editions/assets/coupa/home.png",
-    "sha256": "23fde0cc8d4af4cacb906bdd5c3a7146d24e436a129c221d7535171bee72fbb9",
-    "bytes": 2072920,
-    "width": 1280,
-    "height": 853,
-    "alt": "An illustrated Coupa Village with a connection plaza, supplier market and harbour.",
+    "path": "editions/assets/coupa/spend-city-v2.png",
+    "sha256": "fb468b9b308377d0e83517c64c34c6df4492d7909add3f3e700e03cfaf039d18",
+    "bytes": 3134778,
+    "width": 1774,
+    "height": 887,
+    "alt": "A cinematic blue city of ribbon bridges, collaboration halls and sunlit gardens.",
     "review": "candidate"
   },
   {
@@ -93,14 +93,27 @@
   {
     "format": "AssetRevisionV1",
     "id": "coupa-developer-integration-01-picture",
+    "revision": "2",
+    "kind": "reveal-background",
+    "path": "editions/assets/coupa/network-atlas-v2.png",
+    "sha256": "aa6a581b04384b06e730e36399c0c75a03145b501c96dcb1247ec29f24b3d518",
+    "bytes": 2918671,
+    "width": 1774,
+    "height": 887,
+    "alt": "An illustrated network atlas with luminous data shelves, reference drawers and connected stations.",
+    "review": "candidate"
+  },
+  {
+    "format": "AssetRevisionV1",
+    "id": "droneaid-nl-workshop-lights-01-picture",
     "revision": "1",
     "kind": "reveal-background",
-    "path": "editions/assets/coupa/coupa-developer-integration-key.png",
-    "sha256": "66c68f803aeb5d8590dcb29e05863d9147c12dbe7a5afebe6522a97b82b508ce",
-    "bytes": 1972536,
-    "width": 1280,
-    "height": 853,
-    "alt": "A fictional illustrated Coupa Village district, with shared workspaces and connected routes.",
+    "path": "editions/assets/droneaid-nl-workshop-v1.png",
+    "sha256": "79ead19845a22b1b96ef50e883321b3f869f4298c007cb5cf905f8f596851771",
+    "bytes": 2911943,
+    "width": 1774,
+    "height": 887,
+    "alt": "A fictional Dutch canal-side community workshop with violet benches and yellow lamps.",
     "review": "candidate"
   }
 ]

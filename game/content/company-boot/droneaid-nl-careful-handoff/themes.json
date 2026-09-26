@@ -1,0 +1,411 @@
+{
+  "themes": [
+    {
+      "actorRecipes": {
+        "border-patrol": "stale-fragments",
+        "bouncer": "paper-tangle",
+        "claimed-rover": "missing-cloud",
+        "contour-patrol": "missing-cloud",
+        "eroder": "stale-fragments",
+        "lane-boss": "backlog-knot",
+        "relay-sentinel": "backlog-knot"
+      },
+      "bossShape": "core",
+      "classBodies": {
+        "bomber": "droneaid-nl-propeller",
+        "carrier": "droneaid-nl-propeller",
+        "fiber": "droneaid-nl-propeller",
+        "impact": "droneaid-nl-propeller",
+        "interceptor": "droneaid-nl-propeller",
+        "scout": "droneaid-nl-propeller",
+        "trapper": "droneaid-nl-propeller"
+      },
+      "coverColor": "#0D0B2E",
+      "enemyShape": "cube",
+      "family": "company",
+      "id": "droneaid-nl-community",
+      "labels": {
+        "ability": "Support",
+        "boss": "Backlog knot",
+        "currency": "Connections",
+        "enemy": "Paper tangle",
+        "objective": "Connection",
+        "supply": "Support station"
+      },
+      "name": "DroneAid Netherlands",
+      "palette": {
+        "accent": "#FFD62C",
+        "danger": "#FF9A88",
+        "field": "#0D0B2E",
+        "grid": "#2C286D",
+        "ink": "#0D0B2E",
+        "land": "#4238EB",
+        "muted": "#BFCBF3",
+        "paper": "#FFFFFF",
+        "safe": "#96EAAA",
+        "sky": "#DCEBFD"
+      },
+      "patrolShape": "spark",
+      "player": "droneaid-nl-propeller",
+      "scene": "network",
+      "soundtrack": {
+        "genre": "ambient",
+        "id": "workshop-first-light",
+        "name": "Workshop First Light",
+        "root": 57,
+        "scale": "dorian",
+        "tempo": 72
+      },
+      "subtitle": "Build together. Connect the community."
+    },
+    {
+      "actorRecipes": {
+        "border-patrol": "stale-fragments",
+        "bouncer": "paper-tangle",
+        "claimed-rover": "missing-cloud",
+        "contour-patrol": "missing-cloud",
+        "eroder": "stale-fragments",
+        "lane-boss": "backlog-knot",
+        "relay-sentinel": "backlog-knot"
+      },
+      "bossShape": "core",
+      "classBodies": {
+        "bomber": "droneaid-nl-propeller",
+        "carrier": "droneaid-nl-propeller",
+        "fiber": "droneaid-nl-propeller",
+        "impact": "droneaid-nl-propeller",
+        "interceptor": "droneaid-nl-propeller",
+        "scout": "droneaid-nl-propeller",
+        "trapper": "droneaid-nl-propeller"
+      },
+      "coverColor": "#0D0B2E",
+      "enemyShape": "cube",
+      "family": "company",
+      "id": "droneaid-nl-workshop-lights-theme",
+      "labels": {
+        "ability": "Support",
+        "boss": "Backlog knot",
+        "currency": "Connections",
+        "enemy": "Loose labels",
+        "objective": "Connection",
+        "supply": "Support station"
+      },
+      "name": "DroneAid Netherlands · Workshop Lights",
+      "palette": {
+        "accent": "#FFD62C",
+        "danger": "#FF9A88",
+        "field": "#0D0B2E",
+        "grid": "#2C286D",
+        "ink": "#0D0B2E",
+        "land": "#4238EB",
+        "muted": "#BFCBF3",
+        "paper": "#FFFFFF",
+        "safe": "#96EAAA",
+        "sky": "#DCEBFD"
+      },
+      "patrolShape": "spark",
+      "player": "droneaid-nl-propeller",
+      "scene": "network",
+      "soundtrack": {
+        "genre": "chiptune",
+        "id": "droneaid-nl-workshop-lights-score",
+        "name": "Workshop Lights",
+        "root": 60,
+        "scale": "major",
+        "tempo": 104
+      },
+      "subtitle": "Workshop Lights"
+    },
+    {
+      "actorRecipes": {
+        "border-patrol": "stale-fragments",
+        "bouncer": "stale-fragments",
+        "claimed-rover": "missing-cloud",
+        "contour-patrol": "missing-cloud",
+        "eroder": "stale-fragments",
+        "lane-boss": "backlog-knot",
+        "relay-sentinel": "backlog-knot"
+      },
+      "bossShape": "core",
+      "classBodies": {
+        "bomber": "droneaid-nl-propeller",
+        "carrier": "droneaid-nl-propeller",
+        "fiber": "droneaid-nl-propeller",
+        "impact": "droneaid-nl-propeller",
+        "interceptor": "droneaid-nl-propeller",
+        "scout": "droneaid-nl-propeller",
+        "trapper": "droneaid-nl-propeller"
+      },
+      "coverColor": "#111339",
+      "enemyShape": "cube",
+      "family": "company",
+      "id": "droneaid-nl-parts-in-motion-theme",
+      "labels": {
+        "ability": "Support",
+        "boss": "Backlog knot",
+        "currency": "Connections",
+        "enemy": "Sorting fragments",
+        "objective": "Connection",
+        "supply": "Support station"
+      },
+      "name": "DroneAid Netherlands · Component Depot",
+      "palette": {
+        "accent": "#FFD62C",
+        "danger": "#FF9A88",
+        "field": "#111339",
+        "grid": "#2C286D",
+        "ink": "#0D0B2E",
+        "land": "#4D55DA",
+        "muted": "#BFCBF3",
+        "paper": "#FFFFFF",
+        "safe": "#96EAAA",
+        "sky": "#DCEBFD"
+      },
+      "patrolShape": "spark",
+      "player": "droneaid-nl-propeller",
+      "scene": "network",
+      "soundtrack": {
+        "genre": "chiptune",
+        "id": "droneaid-nl-parts-in-motion-score",
+        "name": "Component Depot",
+        "root": 62,
+        "scale": "major",
+        "tempo": 112
+      },
+      "subtitle": "Parts in Motion"
+    },
+    {
+      "actorRecipes": {
+        "border-patrol": "stale-fragments",
+        "bouncer": "missing-cloud",
+        "claimed-rover": "missing-cloud",
+        "contour-patrol": "missing-cloud",
+        "eroder": "stale-fragments",
+        "lane-boss": "backlog-knot",
+        "relay-sentinel": "backlog-knot"
+      },
+      "bossShape": "core",
+      "classBodies": {
+        "bomber": "droneaid-nl-propeller",
+        "carrier": "droneaid-nl-propeller",
+        "fiber": "droneaid-nl-propeller",
+        "impact": "droneaid-nl-propeller",
+        "interceptor": "droneaid-nl-propeller",
+        "scout": "droneaid-nl-propeller",
+        "trapper": "droneaid-nl-propeller"
+      },
+      "coverColor": "#21163A",
+      "enemyShape": "cube",
+      "family": "company",
+      "id": "droneaid-nl-makers-together-theme",
+      "labels": {
+        "ability": "Support",
+        "boss": "Backlog knot",
+        "currency": "Connections",
+        "enemy": "Missed connection",
+        "objective": "Connection",
+        "supply": "Support station"
+      },
+      "name": "DroneAid Netherlands · Community Rooms",
+      "palette": {
+        "accent": "#F6D570",
+        "danger": "#FF9A88",
+        "field": "#21163A",
+        "grid": "#2C286D",
+        "ink": "#0D0B2E",
+        "land": "#6550C9",
+        "muted": "#BFCBF3",
+        "paper": "#FFFFFF",
+        "safe": "#96EAAA",
+        "sky": "#DCEBFD"
+      },
+      "patrolShape": "spark",
+      "player": "droneaid-nl-propeller",
+      "scene": "network",
+      "soundtrack": {
+        "genre": "ambient",
+        "id": "droneaid-nl-makers-together-score",
+        "name": "Community Rooms",
+        "root": 65,
+        "scale": "dorian",
+        "tempo": 88
+      },
+      "subtitle": "Makers Together"
+    },
+    {
+      "actorRecipes": {
+        "border-patrol": "stale-fragments",
+        "bouncer": "paper-tangle",
+        "claimed-rover": "missing-cloud",
+        "contour-patrol": "missing-cloud",
+        "eroder": "stale-fragments",
+        "lane-boss": "backlog-knot",
+        "relay-sentinel": "backlog-knot"
+      },
+      "bossShape": "core",
+      "classBodies": {
+        "bomber": "droneaid-nl-propeller",
+        "carrier": "droneaid-nl-propeller",
+        "fiber": "droneaid-nl-propeller",
+        "impact": "droneaid-nl-propeller",
+        "interceptor": "droneaid-nl-propeller",
+        "scout": "droneaid-nl-propeller",
+        "trapper": "droneaid-nl-propeller"
+      },
+      "coverColor": "#111A36",
+      "enemyShape": "cube",
+      "family": "company",
+      "id": "droneaid-nl-careful-handoff-theme",
+      "labels": {
+        "ability": "Support",
+        "boss": "Backlog knot",
+        "currency": "Connections",
+        "enemy": "Loose labels",
+        "objective": "Connection",
+        "supply": "Support station"
+      },
+      "name": "DroneAid Netherlands · Canal-side Depot",
+      "palette": {
+        "accent": "#FFD62C",
+        "danger": "#FF9A88",
+        "field": "#111A36",
+        "grid": "#2C286D",
+        "ink": "#0D0B2E",
+        "land": "#4552BC",
+        "muted": "#BFCBF3",
+        "paper": "#FFFFFF",
+        "safe": "#96EAAA",
+        "sky": "#DCEBFD"
+      },
+      "patrolShape": "spark",
+      "player": "droneaid-nl-propeller",
+      "scene": "network",
+      "soundtrack": {
+        "genre": "chiptune",
+        "id": "droneaid-nl-careful-handoff-score",
+        "name": "Canal-side Depot",
+        "root": 60,
+        "scale": "major",
+        "tempo": 98
+      },
+      "subtitle": "The Careful Handoff"
+    },
+    {
+      "actorRecipes": {
+        "border-patrol": "stale-fragments",
+        "bouncer": "stale-fragments",
+        "claimed-rover": "missing-cloud",
+        "contour-patrol": "missing-cloud",
+        "eroder": "stale-fragments",
+        "lane-boss": "backlog-knot",
+        "relay-sentinel": "backlog-knot"
+      },
+      "bossShape": "core",
+      "classBodies": {
+        "bomber": "droneaid-nl-propeller",
+        "carrier": "droneaid-nl-propeller",
+        "fiber": "droneaid-nl-propeller",
+        "impact": "droneaid-nl-propeller",
+        "interceptor": "droneaid-nl-propeller",
+        "scout": "droneaid-nl-propeller",
+        "trapper": "droneaid-nl-propeller"
+      },
+      "coverColor": "#20133C",
+      "enemyShape": "cube",
+      "family": "company",
+      "id": "droneaid-nl-signals-of-support-theme",
+      "labels": {
+        "ability": "Support",
+        "boss": "Backlog knot",
+        "currency": "Connections",
+        "enemy": "Scattered notices",
+        "objective": "Connection",
+        "supply": "Support station"
+      },
+      "name": "DroneAid Netherlands · Community Pavilion",
+      "palette": {
+        "accent": "#FFD62C",
+        "danger": "#FF9A88",
+        "field": "#20133C",
+        "grid": "#2C286D",
+        "ink": "#0D0B2E",
+        "land": "#6042CD",
+        "muted": "#BFCBF3",
+        "paper": "#FFFFFF",
+        "safe": "#96EAAA",
+        "sky": "#DCEBFD"
+      },
+      "patrolShape": "spark",
+      "player": "droneaid-nl-propeller",
+      "scene": "network",
+      "soundtrack": {
+        "genre": "chiptune",
+        "id": "droneaid-nl-signals-of-support-score",
+        "name": "Community Pavilion",
+        "root": 67,
+        "scale": "major",
+        "tempo": 116
+      },
+      "subtitle": "Signals of Support"
+    },
+    {
+      "actorRecipes": {
+        "border-patrol": "stale-fragments",
+        "bouncer": "missing-cloud",
+        "claimed-rover": "missing-cloud",
+        "contour-patrol": "missing-cloud",
+        "eroder": "stale-fragments",
+        "lane-boss": "backlog-knot",
+        "relay-sentinel": "backlog-knot"
+      },
+      "bossShape": "core",
+      "classBodies": {
+        "bomber": "droneaid-nl-propeller",
+        "carrier": "droneaid-nl-propeller",
+        "fiber": "droneaid-nl-propeller",
+        "impact": "droneaid-nl-propeller",
+        "interceptor": "droneaid-nl-propeller",
+        "scout": "droneaid-nl-propeller",
+        "trapper": "droneaid-nl-propeller"
+      },
+      "coverColor": "#10112F",
+      "enemyShape": "cube",
+      "family": "company",
+      "id": "droneaid-nl-shared-horizon-theme",
+      "labels": {
+        "ability": "Support",
+        "boss": "Backlog knot",
+        "currency": "Connections",
+        "enemy": "Passing cloud",
+        "objective": "Connection",
+        "supply": "Support station"
+      },
+      "name": "DroneAid Netherlands · Shared Horizon",
+      "palette": {
+        "accent": "#FFE18B",
+        "danger": "#FF9A88",
+        "field": "#10112F",
+        "grid": "#2C286D",
+        "ink": "#0D0B2E",
+        "land": "#4740AD",
+        "muted": "#BFCBF3",
+        "paper": "#FFFFFF",
+        "safe": "#96EAAA",
+        "sky": "#DCEBFD"
+      },
+      "patrolShape": "spark",
+      "player": "droneaid-nl-propeller",
+      "scene": "network",
+      "soundtrack": {
+        "genre": "ambient",
+        "id": "droneaid-nl-shared-horizon-score",
+        "name": "Shared Horizon",
+        "root": 62,
+        "scale": "dorian",
+        "tempo": 82
+      },
+      "subtitle": "Shared Horizon"
+    }
+  ],
+  "version": "xonix-themes.v1"
+}

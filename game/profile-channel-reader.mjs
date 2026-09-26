@@ -1,4 +1,5 @@
 import { editionIdFromLocation } from './edition-context.mjs';
+import { profileWriterOwns } from './profile-writer.mjs';
 import { importLibrary, LIBRARY_LIMITS } from './library.mjs';
 import { PACK_LIMITS } from './packs.mjs';
 import { SESSION_STORAGE_BYTES } from './sessions.mjs';
@@ -71,6 +72,7 @@ export function createProfileChannelReader({
   origin = globalThis.location?.origin ?? 'unknown origin',
   timeoutMs = PROFILE_READER_LIMITS.timeoutMs,
   recoveryCatalogs = [],
+  heldWriter,
   decodeStillImage,
 } = {}) {
   targetVersion(currentVersion);
@@ -150,11 +152,19 @@ export function createProfileChannelReader({
       throw new Error(t('errors:profileReader.webLocksRequired'));
     const hold = (key, next) =>
       untilCancelled(signal, () =>
-        lockManager.request(key, { mode: 'exclusive', ifAvailable: true }, async (lock) => {
-          check(signal);
-          if (!lock) throw new Error(t('errors:profileReader.profileBusy'));
-          return next();
-        }),
+        key === channel.writerKey && profileWriterOwns(heldWriter, key)
+          ? (async () => {
+              const result = await next();
+              check(signal);
+              if (!profileWriterOwns(heldWriter, key))
+                throw new Error(t('errors:profileReader.profileBusy'));
+              return result;
+            })()
+          : lockManager.request(key, { mode: 'exclusive', ifAvailable: true }, async (lock) => {
+              check(signal);
+              if (!lock) throw new Error(t('errors:profileReader.profileBusy'));
+              return next();
+            }),
       );
     return hold(channel.writerKey, () => hold(channel.lockKey, body));
   }

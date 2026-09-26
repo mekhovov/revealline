@@ -204,6 +204,131 @@
       "path": "game/editions/assets/droneaid/icon-512.png",
       "publication": "public",
       "sha256": "9be375c2ca36bf65c73f4998c15311dd30a553166b0f2fc7afa6dc1651fa14dd"
+    },
+    {
+      "approved": true,
+      "bytes": 8516,
+      "dependencies": [],
+      "id": "droneaid-nl-logo-source",
+      "path": "game/editions/assets/droneaid-nl/logo-source.svg",
+      "publication": "public",
+      "sha256": "29b532fd121fe3780ac277c0dedc1d3a0a198c1e67896a0a005ab1a81bf88601"
+    },
+    {
+      "approved": true,
+      "bytes": 1245,
+      "dependencies": ["droneaid-nl-logo-source"],
+      "id": "droneaid-nl-propeller-source",
+      "path": "game/editions/assets/droneaid-nl/propeller-source.svg",
+      "publication": "public",
+      "sha256": "fa91b37d4f092c6b92ede00cfa4ffd8316675b7a4d9a16050160a6065d89c7b1"
+    },
+    {
+      "approved": true,
+      "bytes": 19377,
+      "dependencies": [],
+      "id": "droneaid-nl-logo",
+      "path": "game/editions/assets/droneaid-nl/logo.png",
+      "publication": "public",
+      "sha256": "424e54ecdd0b981166f3f4fc4efea271215c0dff728f2fe762f76584f1ca943e"
+    },
+    {
+      "approved": true,
+      "bytes": 20091,
+      "dependencies": [],
+      "id": "droneaid-nl-propeller",
+      "path": "game/editions/assets/droneaid-nl/propeller.png",
+      "publication": "public",
+      "sha256": "dac6c71006d1bdf0b29cad9a7825a5ed2874936a29debccafaba2a6ddb765ef2"
+    },
+    {
+      "approved": true,
+      "bytes": 6925,
+      "dependencies": ["droneaid-nl-propeller"],
+      "derivative": {
+        "background": "#FFFFFF",
+        "height": 192,
+        "implementation": "pillow-12.0.0",
+        "kind": "square-install-icon",
+        "paddingRatio": 0.15,
+        "resampling": "lanczos",
+        "sourceAssetId": "droneaid-nl-propeller",
+        "sourceHeight": 512,
+        "sourceSha256": "dac6c71006d1bdf0b29cad9a7825a5ed2874936a29debccafaba2a6ddb765ef2",
+        "sourceWidth": 512,
+        "width": 192
+      },
+      "id": "droneaid-nl-icon-192",
+      "path": "game/editions/assets/droneaid-nl/icon-192.png",
+      "publication": "public",
+      "sha256": "9bdfd10873246e921fcdae05af079942fb0ce9451384bd5442b76ee39ac10a0d"
+    },
+    {
+      "approved": true,
+      "bytes": 21710,
+      "dependencies": ["droneaid-nl-propeller", "droneaid-nl-icon-192"],
+      "derivative": {
+        "background": "#FFFFFF",
+        "height": 512,
+        "implementation": "pillow-12.0.0",
+        "kind": "square-install-icon",
+        "paddingRatio": 0.15,
+        "resampling": "lanczos",
+        "sourceAssetId": "droneaid-nl-propeller",
+        "sourceHeight": 512,
+        "sourceSha256": "dac6c71006d1bdf0b29cad9a7825a5ed2874936a29debccafaba2a6ddb765ef2",
+        "sourceWidth": 512,
+        "width": 512
+      },
+      "id": "droneaid-nl-icon-512",
+      "path": "game/editions/assets/droneaid-nl/icon-512.png",
+      "publication": "public",
+      "sha256": "6ef8ddd05c75e069bcefcc1278775823cd0261928236fd4c8f6345d0e9f05c4b"
+    },
+    {
+      "approved": true,
+      "bytes": 3134778,
+      "dependencies": [],
+      "id": "coupa-spend-city-v2",
+      "path": "game/editions/assets/coupa/spend-city-v2.png",
+      "publication": "public",
+      "sha256": "fb468b9b308377d0e83517c64c34c6df4492d7909add3f3e700e03cfaf039d18"
+    },
+    {
+      "approved": true,
+      "bytes": 2918671,
+      "dependencies": [],
+      "id": "coupa-network-atlas-v2",
+      "path": "game/editions/assets/coupa/network-atlas-v2.png",
+      "publication": "public",
+      "sha256": "aa6a581b04384b06e730e36399c0c75a03145b501c96dcb1247ec29f24b3d518"
+    },
+    {
+      "approved": true,
+      "bytes": 2911943,
+      "dependencies": [],
+      "id": "nl-workshop-v1",
+      "path": "game/editions/assets/droneaid-nl-workshop-v1.png",
+      "publication": "public",
+      "sha256": "79ead19845a22b1b96ef50e883321b3f869f4298c007cb5cf905f8f596851771"
+    },
+    {
+      "approved": true,
+      "bytes": 271090,
+      "dependencies": [],
+      "id": "coupa-wallpaper-network-2024",
+      "path": "game/editions/assets/coupa/wallpaper-network-2024.png",
+      "publication": "public",
+      "sha256": "dc3564fbd91d1bd745f3e3cdbc8a09de56868e846ecae9fbd6598ddebd3f6e3a"
+    },
+    {
+      "approved": true,
+      "bytes": 303927,
+      "dependencies": [],
+      "id": "coupa-wallpaper-center-2024",
+      "path": "game/editions/assets/coupa/wallpaper-center-2024.png",
+      "publication": "public",
+      "sha256": "f4e686a06ac0b4d36b6974797bab06fc5a80b3e69fbcc4ab99f98e3c37af4177"
     }
   ],
   "brands": [
@@ -211,7 +336,8 @@
       "actorSetId": "coupa-flower",
       "assetIds": [
         "coupa-flower",
-        "coupa-home",
+        "coupa-wallpaper-network-2024",
+        "coupa-wallpaper-center-2024",
         "poppins-regular",
         "poppins-license",
         "coupa-icon-512"
@@ -219,13 +345,13 @@
       "description": "Make room for tomorrow. An illustrated world of connected work.",
       "fontAssetId": "poppins-regular",
       "format": "revealline-brand-pack.v1",
-      "heroAssetId": "coupa-home",
+      "heroAssetId": "coupa-wallpaper-network-2024",
       "iconAssetId": "coupa-icon-512",
       "id": "coupa",
       "logoAssetId": "coupa-flower",
       "name": "Coupa",
       "publication": "public",
-      "revision": 1,
+      "revision": 2,
       "sources": [
         {
           "kind": "official",
@@ -243,7 +369,15 @@
           "url": "https://github.com/google/fonts/tree/main/ofl/poppins"
         }
       ],
-      "themeId": "coupa-village"
+      "themeId": "coupa-village",
+      "themeIds": [
+        "coupa-village",
+        "coupa-spend-in-motion-theme",
+        "coupa-inside-village-theme",
+        "coupa-source-to-pay-theme",
+        "coupa-product-operations-theme",
+        "coupa-developer-integration-theme"
+      ]
     },
     {
       "actorSetId": "community-marker",
@@ -282,17 +416,58 @@
         }
       ],
       "themeId": "droneaid-community"
+    },
+    {
+      "actorSetId": "droneaid-nl-propeller",
+      "assetIds": [
+        "droneaid-nl-logo",
+        "droneaid-nl-propeller",
+        "droneaid-nl-icon-512",
+        "nl-workshop-v1"
+      ],
+      "description": "Build together. Share what is possible. Fictional workshop adventures inspired by DroneAid Netherlands.",
+      "fontAssetId": null,
+      "format": "revealline-brand-pack.v1",
+      "heroAssetId": "nl-workshop-v1",
+      "iconAssetId": "droneaid-nl-icon-512",
+      "id": "droneaid-nl",
+      "logoAssetId": "droneaid-nl-logo",
+      "name": "DroneAid Netherlands",
+      "publication": "public",
+      "revision": 1,
+      "sources": [
+        {
+          "kind": "official",
+          "title": "DroneAid Netherlands — official identity and workshop activities",
+          "url": "https://drone-aid.nl/nl"
+        },
+        {
+          "kind": "official",
+          "title": "DroneAid Netherlands — public reporting",
+          "url": "https://drone-aid.nl/en/reports"
+        }
+      ],
+      "themeId": "droneaid-nl-community",
+      "themeIds": [
+        "droneaid-nl-community",
+        "droneaid-nl-workshop-lights-theme",
+        "droneaid-nl-parts-in-motion-theme",
+        "droneaid-nl-makers-together-theme",
+        "droneaid-nl-careful-handoff-theme",
+        "droneaid-nl-signals-of-support-theme",
+        "droneaid-nl-shared-horizon-theme"
+      ]
     }
   ],
   "campaigns": [
     {
-      "assetIds": ["coupa-home"],
+      "assetIds": ["coupa-spend-city-v2"],
       "brandId": "coupa",
       "id": "coupa-spend-in-motion",
       "modes": ["solo"],
       "name": "Spend in Motion",
       "publication": "public",
-      "revision": "1",
+      "revision": "4",
       "sourcePath": "game/content/company-campaigns/coupa-spend-in-motion.json"
     },
     {
@@ -303,7 +478,7 @@
       "modes": ["solo"],
       "name": "Inside the Village",
       "publication": "public",
-      "revision": "1",
+      "revision": "4",
       "sourcePath": "game/content/company-campaigns/coupa-inside-village.json"
     },
     {
@@ -314,7 +489,7 @@
       "modes": ["solo"],
       "name": "From Need to Value",
       "publication": "public",
-      "revision": "2",
+      "revision": "4",
       "sourcePath": "game/content/company-campaigns/coupa-source-to-pay.json"
     },
     {
@@ -325,18 +500,18 @@
       "modes": ["solo"],
       "name": "A Day in Coupa",
       "publication": "public",
-      "revision": "2",
+      "revision": "4",
       "sourcePath": "game/content/company-campaigns/coupa-product-operations.json"
     },
     {
-      "assetIds": ["coupa-developer-integration-key"],
+      "assetIds": ["coupa-network-atlas-v2"],
       "brandId": "coupa",
       "id": "coupa-developer-integration",
       "lessonPath": "game/content/company-campaigns/coupa-developer-integration.lessons.json",
       "modes": ["solo"],
       "name": "Connect the Network",
       "publication": "public",
-      "revision": "2",
+      "revision": "4",
       "sourcePath": "game/content/company-campaigns/coupa-developer-integration.json"
     },
     {
@@ -352,6 +527,66 @@
       "publication": "public",
       "revision": "1",
       "sourcePath": "game/content/company-campaigns/droneaid-community-relay.json"
+    },
+    {
+      "assetIds": ["nl-workshop-v1"],
+      "brandId": "droneaid-nl",
+      "id": "droneaid-nl-workshop-lights",
+      "modes": ["solo"],
+      "name": "Workshop Lights",
+      "publication": "public",
+      "revision": "2",
+      "sourcePath": "game/content/company-campaigns/droneaid-nl-workshop-lights.json"
+    },
+    {
+      "assetIds": [],
+      "brandId": "droneaid-nl",
+      "id": "droneaid-nl-parts-in-motion",
+      "modes": ["solo"],
+      "name": "Parts in Motion",
+      "publication": "public",
+      "revision": "2",
+      "sourcePath": "game/content/company-campaigns/droneaid-nl-parts-in-motion.json"
+    },
+    {
+      "assetIds": [],
+      "brandId": "droneaid-nl",
+      "id": "droneaid-nl-makers-together",
+      "modes": ["solo"],
+      "name": "Makers Together",
+      "publication": "public",
+      "revision": "2",
+      "sourcePath": "game/content/company-campaigns/droneaid-nl-makers-together.json"
+    },
+    {
+      "assetIds": [],
+      "brandId": "droneaid-nl",
+      "id": "droneaid-nl-careful-handoff",
+      "modes": ["solo"],
+      "name": "The Careful Handoff",
+      "publication": "public",
+      "revision": "2",
+      "sourcePath": "game/content/company-campaigns/droneaid-nl-careful-handoff.json"
+    },
+    {
+      "assetIds": [],
+      "brandId": "droneaid-nl",
+      "id": "droneaid-nl-signals-of-support",
+      "modes": ["solo"],
+      "name": "Signals of Support",
+      "publication": "public",
+      "revision": "2",
+      "sourcePath": "game/content/company-campaigns/droneaid-nl-signals-of-support.json"
+    },
+    {
+      "assetIds": [],
+      "brandId": "droneaid-nl",
+      "id": "droneaid-nl-shared-horizon",
+      "modes": ["solo"],
+      "name": "Shared Horizon",
+      "publication": "public",
+      "revision": "2",
+      "sourcePath": "game/content/company-campaigns/droneaid-nl-shared-horizon.json"
     }
   ],
   "defaultEditionId": "coupa-all",
@@ -380,7 +615,7 @@
       "modes": ["solo"],
       "name": "Coupa Village",
       "publication": "public",
-      "revision": 2
+      "revision": 4
     },
     {
       "audience": "public",
@@ -400,7 +635,7 @@
       "modes": ["solo"],
       "name": "Spend in Motion",
       "publication": "public",
-      "revision": 1
+      "revision": 4
     },
     {
       "audience": "culture",
@@ -420,7 +655,7 @@
       "modes": ["solo"],
       "name": "Inside the Village",
       "publication": "public",
-      "revision": 1
+      "revision": 4
     },
     {
       "audience": "learners",
@@ -440,7 +675,7 @@
       "modes": ["solo"],
       "name": "From Need to Value",
       "publication": "public",
-      "revision": 2
+      "revision": 4
     },
     {
       "audience": "operators",
@@ -460,7 +695,7 @@
       "modes": ["solo"],
       "name": "A Day in Coupa",
       "publication": "public",
-      "revision": 2
+      "revision": 4
     },
     {
       "audience": "developers",
@@ -480,7 +715,7 @@
       "modes": ["solo"],
       "name": "Connect the Network",
       "publication": "public",
-      "revision": 2
+      "revision": 4
     },
     {
       "audience": "public",
@@ -501,6 +736,153 @@
       "name": "Community Relay",
       "publication": "public",
       "revision": 1
+    },
+    {
+      "audience": "public",
+      "boot": {
+        "archives": "game/content/company-boot/droneaid-nl-community/archives.json",
+        "campaign": "game/content/company-boot/droneaid-nl-community/campaign.json",
+        "classes": "game/content/company-boot/droneaid-nl-community/classes.json",
+        "packs": "game/content/company-boot/droneaid-nl-community/packs.json",
+        "presets": "game/content/company-boot/droneaid-nl-community/presets.json",
+        "themes": "game/content/company-boot/droneaid-nl-community/themes.json"
+      },
+      "brandId": "droneaid-nl",
+      "campaignIds": [
+        "droneaid-nl-workshop-lights",
+        "droneaid-nl-parts-in-motion",
+        "droneaid-nl-makers-together",
+        "droneaid-nl-careful-handoff",
+        "droneaid-nl-signals-of-support",
+        "droneaid-nl-shared-horizon"
+      ],
+      "entryCampaignId": "droneaid-nl-workshop-lights",
+      "format": "revealline-edition.v1",
+      "id": "droneaid-nl-community",
+      "modes": ["solo"],
+      "name": "DroneAid Netherlands",
+      "publication": "public",
+      "revision": 2
+    },
+    {
+      "audience": "public",
+      "boot": {
+        "archives": "game/content/company-boot/droneaid-nl-workshop-lights/archives.json",
+        "campaign": "game/content/company-boot/droneaid-nl-workshop-lights/campaign.json",
+        "classes": "game/content/company-boot/droneaid-nl-workshop-lights/classes.json",
+        "packs": "game/content/company-boot/droneaid-nl-workshop-lights/packs.json",
+        "presets": "game/content/company-boot/droneaid-nl-workshop-lights/presets.json",
+        "themes": "game/content/company-boot/droneaid-nl-workshop-lights/themes.json"
+      },
+      "brandId": "droneaid-nl",
+      "campaignIds": ["droneaid-nl-workshop-lights"],
+      "entryCampaignId": "droneaid-nl-workshop-lights",
+      "format": "revealline-edition.v1",
+      "id": "droneaid-nl-workshop-lights",
+      "modes": ["solo"],
+      "name": "Workshop Lights",
+      "publication": "public",
+      "revision": 2
+    },
+    {
+      "audience": "public",
+      "boot": {
+        "archives": "game/content/company-boot/droneaid-nl-parts-in-motion/archives.json",
+        "campaign": "game/content/company-boot/droneaid-nl-parts-in-motion/campaign.json",
+        "classes": "game/content/company-boot/droneaid-nl-parts-in-motion/classes.json",
+        "packs": "game/content/company-boot/droneaid-nl-parts-in-motion/packs.json",
+        "presets": "game/content/company-boot/droneaid-nl-parts-in-motion/presets.json",
+        "themes": "game/content/company-boot/droneaid-nl-parts-in-motion/themes.json"
+      },
+      "brandId": "droneaid-nl",
+      "campaignIds": ["droneaid-nl-parts-in-motion"],
+      "entryCampaignId": "droneaid-nl-parts-in-motion",
+      "format": "revealline-edition.v1",
+      "id": "droneaid-nl-parts-in-motion",
+      "modes": ["solo"],
+      "name": "Parts in Motion",
+      "publication": "public",
+      "revision": 2
+    },
+    {
+      "audience": "public",
+      "boot": {
+        "archives": "game/content/company-boot/droneaid-nl-makers-together/archives.json",
+        "campaign": "game/content/company-boot/droneaid-nl-makers-together/campaign.json",
+        "classes": "game/content/company-boot/droneaid-nl-makers-together/classes.json",
+        "packs": "game/content/company-boot/droneaid-nl-makers-together/packs.json",
+        "presets": "game/content/company-boot/droneaid-nl-makers-together/presets.json",
+        "themes": "game/content/company-boot/droneaid-nl-makers-together/themes.json"
+      },
+      "brandId": "droneaid-nl",
+      "campaignIds": ["droneaid-nl-makers-together"],
+      "entryCampaignId": "droneaid-nl-makers-together",
+      "format": "revealline-edition.v1",
+      "id": "droneaid-nl-makers-together",
+      "modes": ["solo"],
+      "name": "Makers Together",
+      "publication": "public",
+      "revision": 2
+    },
+    {
+      "audience": "public",
+      "boot": {
+        "archives": "game/content/company-boot/droneaid-nl-careful-handoff/archives.json",
+        "campaign": "game/content/company-boot/droneaid-nl-careful-handoff/campaign.json",
+        "classes": "game/content/company-boot/droneaid-nl-careful-handoff/classes.json",
+        "packs": "game/content/company-boot/droneaid-nl-careful-handoff/packs.json",
+        "presets": "game/content/company-boot/droneaid-nl-careful-handoff/presets.json",
+        "themes": "game/content/company-boot/droneaid-nl-careful-handoff/themes.json"
+      },
+      "brandId": "droneaid-nl",
+      "campaignIds": ["droneaid-nl-careful-handoff"],
+      "entryCampaignId": "droneaid-nl-careful-handoff",
+      "format": "revealline-edition.v1",
+      "id": "droneaid-nl-careful-handoff",
+      "modes": ["solo"],
+      "name": "The Careful Handoff",
+      "publication": "public",
+      "revision": 2
+    },
+    {
+      "audience": "public",
+      "boot": {
+        "archives": "game/content/company-boot/droneaid-nl-signals-of-support/archives.json",
+        "campaign": "game/content/company-boot/droneaid-nl-signals-of-support/campaign.json",
+        "classes": "game/content/company-boot/droneaid-nl-signals-of-support/classes.json",
+        "packs": "game/content/company-boot/droneaid-nl-signals-of-support/packs.json",
+        "presets": "game/content/company-boot/droneaid-nl-signals-of-support/presets.json",
+        "themes": "game/content/company-boot/droneaid-nl-signals-of-support/themes.json"
+      },
+      "brandId": "droneaid-nl",
+      "campaignIds": ["droneaid-nl-signals-of-support"],
+      "entryCampaignId": "droneaid-nl-signals-of-support",
+      "format": "revealline-edition.v1",
+      "id": "droneaid-nl-signals-of-support",
+      "modes": ["solo"],
+      "name": "Signals of Support",
+      "publication": "public",
+      "revision": 2
+    },
+    {
+      "audience": "public",
+      "boot": {
+        "archives": "game/content/company-boot/droneaid-nl-shared-horizon/archives.json",
+        "campaign": "game/content/company-boot/droneaid-nl-shared-horizon/campaign.json",
+        "classes": "game/content/company-boot/droneaid-nl-shared-horizon/classes.json",
+        "packs": "game/content/company-boot/droneaid-nl-shared-horizon/packs.json",
+        "presets": "game/content/company-boot/droneaid-nl-shared-horizon/presets.json",
+        "themes": "game/content/company-boot/droneaid-nl-shared-horizon/themes.json"
+      },
+      "brandId": "droneaid-nl",
+      "campaignIds": ["droneaid-nl-shared-horizon"],
+      "entryCampaignId": "droneaid-nl-shared-horizon",
+      "format": "revealline-edition.v1",
+      "id": "droneaid-nl-shared-horizon",
+      "modes": ["solo"],
+      "name": "Shared Horizon",
+      "publication": "public",
+      "revision": 2
     }
   ],
   "format": "revealline-edition-catalog.v1",

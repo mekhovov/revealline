@@ -14,6 +14,7 @@ import {
 } from '../company-campaigns/evidence.mjs';
 import { mountCompanyWorkbench } from '../company-campaigns/workbench.mjs';
 import { compileContentProject, resolveMission } from '../content-design/project.mjs';
+import { applyGameplayTuning } from '../gameplay-tuning.mjs';
 import { createRun, stepRun, FIXED_DT } from '../core/index.mjs';
 import { authoritativeCheckpoint, createRecorder, recordInput, exportReplay } from '../replay.mjs';
 import { dataIdentity } from '../data-json.mjs';
@@ -29,7 +30,11 @@ const row = JSON.parse(
     entry.difficulty === 'standard' &&
     entry.turnPolicy === 'immediate',
 );
-const manifest = resolveMission(project, row.id);
+const authoredManifest = resolveMission(project, row.id);
+const manifest = {
+  ...authoredManifest,
+  level: applyGameplayTuning(authoredManifest.level, row.gameplayTuning),
+};
 function fixture({ source = lesson, until = Infinity } = {}) {
   const options = { seed: row.seed, classId: 'scout', turnPolicy: row.turnPolicy };
   const run = createRun(manifest.level, options);
@@ -87,11 +92,12 @@ test('evidence is released by real captures, remains immutable and cannot be rec
   assert.deepEqual(fresh.snapshot().boundary, { tick: 0, kind: 'checkpoint' });
   const result = fixture({ source });
   assert.equal(result.run.status, 'won');
-  assert.equal(result.snapshots[0].availableRecordIds.length, 1);
+  assert.equal(result.snapshots[0].availableRecordIds.length, 2);
   assert.deepEqual(result.snapshots[0].firstAvailableTicks, {
     [source.records[0].id]: row.events[0][0],
+    [source.records[1].id]: row.events[0][0],
   });
-  assert.equal(result.snapshots[1].availableRecordIds.length, 2);
+  assert.equal(result.snapshots[1].availableRecordIds.length, 3);
   assert.equal(result.observer.snapshot().availableRecordIds.length, 3);
   assert(Object.isFrozen(result.snapshots[0].firstAvailableTicks));
   const before = authoritativeCheckpoint(result.run);
@@ -214,19 +220,30 @@ test('evidence verifier rejects changed simulation, checkpoint, summary and canc
 });
 
 test('pinned workbench hides unrecovered records and guards stale event handlers at unsafe boundaries', () => {
-  const { run, observer } = fixture({ until: row.events[0][0] });
+  const source = {
+    ...lesson,
+    records: [
+      ...lesson.records,
+      {
+        id: 'locked-extra',
+        title: 'Later record',
+        lines: ['This record requires another capture.'],
+      },
+    ],
+  };
+  const { run, observer } = fixture({ source, until: row.events[0][0] });
   const document = new Document(),
     container = document.createElement('div');
   document.body.append(container);
   let evidence = observer.snapshot();
   const workbench = mountCompanyWorkbench(container, {
-    lesson,
-    attempt: createLearningAttempt(lesson, { simulationIdentity: identity(run), seed: run.seed }),
+    lesson: source,
+    attempt: createLearningAttempt(source, { simulationIdentity: identity(run), seed: run.seed }),
     evidence: () => evidence,
   });
   const control = (id) => container.querySelector(`[data-control="${id}"]`);
-  const first = lesson.records[0],
-    second = lesson.records[1];
+  const first = source.records[0],
+    second = source.records[2];
   assert.equal(control(`inspect-${first.id}`).disabled, false);
   assert.equal(control(`inspect-${second.id}`).disabled, true);
   control(`inspect-${second.id}`).emit('click');
@@ -241,8 +258,8 @@ test('pinned workbench hides unrecovered records and guards stale event handlers
   assert.equal(workbench.getAttempt().actions.length, 1);
   workbench.destroy();
   const locked = mountCompanyWorkbench(container, {
-    lesson,
-    attempt: createLearningAttempt(lesson, { simulationIdentity: identity(run), seed: run.seed }),
+    lesson: source,
+    attempt: createLearningAttempt(source, { simulationIdentity: identity(run), seed: run.seed }),
   });
   assert.equal(control(`inspect-${first.id}`).disabled, true);
   assert.equal(control('commit').disabled, true);

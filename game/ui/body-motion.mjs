@@ -8,7 +8,7 @@ export function bodyMotionPose(
   if (
     motion.kind !== 'rigid-spin' ||
     !Number.isFinite(motion.radiansPerSecond) ||
-    Math.abs(motion.radiansPerSecond) > 2 ||
+    Math.abs(motion.radiansPerSecond) > 4 * Math.PI ||
     !Number.isFinite(motion.travelGain) ||
     motion.travelGain < 0 ||
     motion.travelGain > 1
@@ -22,4 +22,24 @@ export function bodyMotionPose(
         Math.sin(heading) * Math.min(1, speedRatio) * motion.travelGain,
     bank: 0,
   };
+}
+
+/** A bounded opaque center behind a transparent identity image. Its envelope
+ * stays inside the image rectangle and never supplies a collision radius. */
+export function validateBodyBacking(body) {
+  const backing = body?.bodyBacking;
+  if (backing === undefined) return null;
+  if (
+    !backing ||
+    Object.keys(backing).some((key) => !['kind', 'color', 'radiusRatio'].includes(key)) ||
+    !['disc', 'opaque-interior'].includes(backing.kind) ||
+    !/^#[a-f0-9]{6}$/i.test(backing.color) ||
+    (backing.kind === 'disc' &&
+      (!Number.isFinite(backing.radiusRatio) ||
+        backing.radiusRatio <= 0 ||
+        backing.radiusRatio > 0.5)) ||
+    (backing.kind === 'opaque-interior' && backing.radiusRatio !== undefined)
+  )
+    throw new TypeError('Invalid cosmetic body backing.');
+  return backing;
 }

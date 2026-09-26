@@ -20,7 +20,9 @@ test('presentation preparation reads only selected exact asset bytes', async () 
     },
   });
   assert.ok(verified.includes('coupa-flower'));
-  assert.ok(verified.includes('coupa-home'));
+  assert.ok(verified.includes('coupa-wallpaper-network-2024'));
+  assert.ok(verified.includes('coupa-spend-city-v2'));
+  assert.ok(!verified.includes('coupa-home'));
   assert.ok(
     requested.every((file) => !file.includes('droneaid') && !file.includes('inside-village')),
   );

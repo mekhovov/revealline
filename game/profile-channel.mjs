@@ -41,7 +41,7 @@ function sourceFor(channel, current, { editionId } = {}) {
     packsKey: `revealline.packs.${channel}.v1`,
     sessionKey: `revealline.suspended.${channel}.v1`,
     journalKey: `${profileKey}.backup-journal`,
-    writerKey: `${profileKey}.writer`,
+    writerKey: edition ? `revealline.company.${edition.editionId}.writer` : `${profileKey}.writer`,
     lockKey: `${profileKey}.backup-lock`,
   });
 }
@@ -72,7 +72,9 @@ export function recoveryChannel(id, currentVersion, { editionId } = {}) {
       packsKey: `revealline.packs.${id}.v1`,
       sessionKey: `revealline.suspended.${id}.v1`,
       journalKey: `${profileKey}.backup-journal`,
-      writerKey: `${profileKey}.writer`,
+      writerKey: edition
+        ? `revealline.company.${edition.editionId}.writer`
+        : `${profileKey}.writer`,
       lockKey: `${profileKey}.backup-lock`,
     }),
     indexKey: `${profileKey}.external-chapter-index.v1`,

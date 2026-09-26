@@ -3,6 +3,7 @@ import {
   installedStateKey,
   resolveEditionContext,
 } from './edition-context.mjs';
+import { profileWriterOwns } from './profile-writer.mjs';
 export const INSTALLED_STATE_KEY = 'revealline.installed-app.v1';
 export function installedAppURL(locationRef = globalThis.location) {
   const url = new URL(locationRef.href);
@@ -167,12 +168,16 @@ export async function activateInstalledEdition(
     locks = globalThis.navigator?.locks,
     readAsset,
     restorePrevious = false,
+    heldWriter,
   } = {},
 ) {
   const candidate = validateInstalledEdition(value, locationRef);
   if (!locks?.request || !readAsset)
     throw new Error('Safe edition switching needs Web Locks and profile storage.');
   const editionId = candidate.editionId;
+  const logicalWriterKey =
+    editionId === undefined ? null : `revealline.company.${editionId}.writer`;
+  const borrowed = logicalWriterKey && profileWriterOwns(heldWriter, logicalWriterKey);
   return locks.request(
     editionId === undefined
       ? 'revealline.installed-app.switch'
@@ -212,6 +217,10 @@ export async function activateInstalledEdition(
                 'Edition downloaded. Open this edition’s Game data → Flight library → Bring progress from an earlier release. Review and copy the previous edition there, then return here to switch. An incompatible saved flight or a busy profile leaves your working edition selected.',
             };
         }
+        if (borrowed && !profileWriterOwns(heldWriter, logicalWriterKey))
+          throw new Error(
+            'The edition saving lease was released. Retry the installation selection.',
+          );
         storage.setItem(
           installedStateKey(editionId),
           JSON.stringify({
@@ -228,11 +237,16 @@ export async function activateInstalledEdition(
             'This edition will open from the app icon at the next launch. Your previous edition and its progress are kept.',
         };
       };
-      const profiles = [...new Set([active, candidate].filter(Boolean).map(profile))].sort();
+      const writerKeys = [
+        ...new Set([
+          ...[active, candidate].filter(Boolean).map((value) => `${profile(value)}.writer`),
+          ...(logicalWriterKey && !borrowed ? [logicalWriterKey] : []),
+        ]),
+      ].sort();
       const acquire = (index) =>
-        index === profiles.length
+        index === writerKeys.length
           ? switchEdition()
-          : locks.request(`${profiles[index]}.writer`, { ifAvailable: true }, (lock) => {
+          : locks.request(writerKeys[index], { ifAvailable: true }, (lock) => {
               if (!lock)
                 throw new Error(
                   'Close the game window that owns this profile, then switch editions. No live game was reloaded.',

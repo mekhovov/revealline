@@ -4,7 +4,11 @@ import { createJourneyArtworkView } from './journey-artwork.mjs';
 
 /** Solo Journey pictures remain distinct from Legacy medals, recorded replays
  * and mission launches. The same exact ledger descriptors drive mission cards. */
-export function attachJourneyCollection({ document: doc = globalThis.document, getState }) {
+export function attachJourneyCollection({
+  document: doc = globalThis.document,
+  getState,
+  onPictureReady = () => null,
+}) {
   const make = (tag, text, id) => {
     const node = doc.createElement(tag);
     if (text) node.textContent = text;
@@ -56,7 +60,8 @@ export function attachJourneyCollection({ document: doc = globalThis.document, g
     button.type = 'button';
     button.className = 'button secondary';
   }
-  viewer.append(viewTitle, canvas, viewStatus, retry, back);
+  const pictureActions = make('div');
+  viewer.append(viewTitle, canvas, viewStatus, pictureActions, retry, back);
   doc.body.append(viewer);
   const artwork = createJourneyArtworkView({ canvas, status: viewStatus });
   let revision = 0,
@@ -66,6 +71,7 @@ export function attachJourneyCollection({ document: doc = globalThis.document, g
     selected = null;
   function closeViewer() {
     artwork.release();
+    pictureActions.replaceChildren();
     selected = null;
     viewer.close();
     if (parent.open && opener?.isConnected && !doc.hidden && doc.hasFocus?.() !== false)
@@ -85,9 +91,14 @@ export function attachJourneyCollection({ document: doc = globalThis.document, g
     if (doc.activeElement === retry) back.focus({ preventScroll: true });
     retry.hidden = true;
     const record = selected;
+    pictureActions.replaceChildren();
     const loaded = await artwork.show(record);
     if (viewer.open && selected === record) {
       retry.hidden = loaded;
+      if (loaded) {
+        const action = onPictureReady(record);
+        if (action) pictureActions.append(action);
+      }
       // The decoded image can increase the dialog height after Back received
       // focus. Keep that focus visible on short landscape screens.
       if (doc.activeElement === back)

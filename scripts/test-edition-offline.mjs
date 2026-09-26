@@ -4,11 +4,13 @@ import vm from 'node:vm';
 import { webcrypto } from 'node:crypto';
 import { buildEditionOfflineFiles } from './edition-offline.mjs';
 import { validateCompanyInstallationReference } from '../game/edition-context.mjs';
+import { validateEditionCodeClosure } from './compile-edition.mjs';
 
 async function build(editionId = 'coupa', options = {}) {
   return buildEditionOfflineFiles({
     files: new Map([
       ['game/company.html', Buffer.from('<!doctype html><head></head><main>Game</main>')],
+      ['game/index.html', Buffer.from('<!doctype html><head></head><main>Canonical game</main>')],
       ['game/logo.svg', Buffer.from('<svg/>')],
     ]),
     editionId,
@@ -91,7 +93,12 @@ test('offline artifacts are reproducible with distinct stable app IDs and scoped
     JSON.parse(other.get('app/manifest.webmanifest')).id,
   );
   assert.match(a.get('game/company.html').toString(), /rel="manifest"/);
+  assert.match(
+    a.get('game/index.html').toString(),
+    /rel="manifest" href="\.\.\/app\/manifest.webmanifest"/,
+  );
   assert.ok(a.has('app/icon.svg'));
+  validateEditionCodeClosure(new Map([...a].filter(([name]) => name.startsWith('app/'))));
   const inventory = JSON.parse(a.get('offline-cache.json'));
   assert.equal(
     inventory.files.some((row) => row.path === 'service-worker.js'),

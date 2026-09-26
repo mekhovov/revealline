@@ -6,6 +6,7 @@ import { createLearningAttempt, reduceLearningAttempt } from '../company-campaig
 import { COMPANY_LESSONS } from '../company-campaigns/lessons.mjs';
 import { createCompanyProject } from '../company-campaigns/content.mjs';
 import { compileContentProject, resolveMission } from '../content-design/project.mjs';
+import { applyGameplayTuning } from '../gameplay-tuning.mjs';
 import { createRun, stepRun, FIXED_DT } from '../core/index.mjs';
 import { createRecorder, recordInput, exportReplay } from '../replay.mjs';
 import { companySimulationIdentity } from '../company-session.mjs';
@@ -23,7 +24,8 @@ function fixture() {
   const project = compileContentProject(
     createCompanyProject({ brandId: 'coupa', campaignId: lesson.campaignId }),
   );
-  const { level } = resolveMission(project, lesson.missionId, { difficulty: row.difficulty });
+  const manifest = resolveMission(project, lesson.missionId, { difficulty: row.difficulty });
+  const level = applyGameplayTuning(manifest.level, row.gameplayTuning);
   const options = { seed: row.seed, classId: 'scout', turnPolicy: row.turnPolicy };
   const run = createRun(level, options),
     recorder = createRecorder(level, options);
@@ -101,7 +103,8 @@ test('tampered, foreign, duplicate and unselected learning proofs cannot alter p
     proof = await store.prove(f);
   store.saveVerified(proof);
   const bad = structuredClone(proof);
-  bad.replay.segments[0].input.direction = 'left';
+  bad.replay.segments[0].input.direction =
+    bad.replay.segments[0].input.direction === 'left' ? 'right' : 'left';
   await assert.rejects(store.inspectProofs([bad]), /identity.*bytes/);
   await assert.rejects(store.inspectProofs([proof, proof]), /Too many|Duplicate/);
   const other = createCompanyLearningProofStore({ ...f.config, editionId: 'other' });

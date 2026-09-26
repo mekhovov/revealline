@@ -27,7 +27,7 @@ on:
       editions:
         description: Comma-separated public edition IDs
         required: true
-        default: coupa-all,coupa-adventure,coupa-culture,coupa-foundations,coupa-operations,coupa-developers,droneaid-community
+        default: coupa-all,coupa-adventure,coupa-culture,coupa-foundations,coupa-operations,coupa-developers,droneaid-community,droneaid-nl-community,droneaid-nl-workshop-lights,droneaid-nl-parts-in-motion,droneaid-nl-signals-of-support,droneaid-nl-careful-handoff,droneaid-nl-makers-together,droneaid-nl-shared-horizon
         type: string
 
 permissions:
@@ -57,10 +57,11 @@ jobs:
         run: |
           npm run company:test
           node --test scripts/test-company-review.mjs
-          node --test game/test/installed-app.test.mjs game/test/profile-transfer.test.mjs game/test/profile-channel-reader.test.mjs
+          node --test game/test/actor-appearance-pin.test.mjs game/test/actor-appearance-lease.test.mjs game/test/replay-presentation.test.mjs game/test/replay-actor-context.test.mjs
+          node --test game/test/installed-app.test.mjs game/test/profile-transfer.test.mjs game/test/profile-channel-reader.test.mjs scripts/test-offline-publication.mjs
       - name: Compile twice and inspect original candidate ZIP members
         env:
-          EDITION_IDS: ${{ inputs.editions || 'coupa-all,coupa-adventure,coupa-culture,coupa-foundations,coupa-operations,coupa-developers,droneaid-community' }}
+          EDITION_IDS: ${{ inputs.editions || 'coupa-all,coupa-adventure,coupa-culture,coupa-foundations,coupa-operations,coupa-developers,droneaid-community,droneaid-nl-community,droneaid-nl-workshop-lights,droneaid-nl-parts-in-motion,droneaid-nl-signals-of-support,droneaid-nl-careful-handoff,droneaid-nl-makers-together,droneaid-nl-shared-horizon' }}
         run: node scripts/bundle-editions.mjs --editions "$EDITION_IDS" --out .cache/company-candidate --base-path /revealline/
       - name: Save immutable candidates for review
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2

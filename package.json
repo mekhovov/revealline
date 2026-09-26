@@ -32,7 +32,7 @@
     "i18n:audit": "node scripts/localization.mjs audit",
     "i18n:check:main": "node scripts/localization-main.mjs && npm run i18n:check",
     "company:check": "node scripts/produce-company-content.mjs --check && node scripts/check-edition-source.mjs .",
-    "company:test": "node --test game/test/company-*.test.mjs game/test/edition*.test.mjs game/test/presentation-player-projection.test.mjs publishing/edition-admission.test.mjs scripts/test-edition-offline.mjs publishing/edition-promotion.test.mjs scripts/test-bundle-editions.mjs",
+    "company:test": "node --test game/test/company-*.test.mjs game/test/edition*.test.mjs game/test/runtime-content-provider.test.mjs game/test/body-backing.test.mjs game/test/presentation-player-projection.test.mjs publishing/edition-admission.test.mjs scripts/test-edition-offline.mjs publishing/edition-promotion.test.mjs scripts/test-bundle-editions.mjs",
     "company:studio": "node scripts/company-studio.mjs",
     "company:bundle": "node scripts/bundle-editions.mjs",
     "company:promote": "node scripts/publish-editions.mjs"

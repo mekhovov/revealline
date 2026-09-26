@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createCompanyProject } from '../company-campaigns/content.mjs';
-import { createCompanyTheme } from '../company-campaigns/brands.mjs';
+import { createCompanyThemes } from '../company-campaigns/brands.mjs';
 import { createCandidateSoloHost } from '../content-design/solo-host.mjs';
 import { stepRun, releaseInputs, FIXED_DT } from '../core/index.mjs';
 import {
@@ -25,7 +25,7 @@ function host() {
   return createCandidateSoloHost(
     createCompanyProject({ brandId: 'coupa', campaignId: 'coupa-spend-in-motion' }),
     {
-      themes: [createCompanyTheme('coupa')],
+      themes: createCompanyThemes('coupa'),
       buildVersion: 'test',
       corePackIds: ['coupa-spend-in-motion-pack'],
     },
@@ -119,7 +119,7 @@ test('learning session restore requires the exact lesson, simulation, seed and b
   const owner = createCandidateSoloHost(
     createCompanyProject({ brandId: 'coupa', campaignId: lesson.campaignId }),
     {
-      themes: [createCompanyTheme('coupa')],
+      themes: createCompanyThemes('coupa'),
       buildVersion: 'test',
       corePackIds: [`${lesson.campaignId}-pack`],
     },

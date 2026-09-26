@@ -1,6 +1,12 @@
 import { createStarterProject } from '../content-design/starter.mjs';
-import { freezeDesign } from '../content-design/catalogs.mjs';
+import {
+  freezeDesign,
+  TRAIL_IMPACT_JOURNEY_POLICY,
+  CURRENT_PRESSURE_ACTOR_CATALOG,
+  PRESSURE_DIFFICULTY_CATALOG,
+} from '../content-design/catalogs.mjs';
 import { COMPANY_CAMPAIGNS, COMPANY_MISSIONS } from './catalog.mjs';
+import { authorCompanyProgression, companyChallengeStage } from './progression.mjs';
 
 // Each tuple is an authored layout: permanent walls, interior return surfaces,
 // slow field, and an opening spawn. Coordinates describe actual engine geometry.
@@ -381,6 +387,480 @@ const layouts = [
     [35, 0],
   ],
 ];
+
+// Netherlands chapter layouts: bench rooms, component shelves, paired community
+// rooms, quay docks, poster pavilions and connected canal courts. These are
+// authored geometry, independent of imagery or simulation seed.
+const dutchLayouts = [
+  [
+    [[22, 10, 2, 8]],
+    [
+      [29, 13, 10, 4],
+      [10, 23, 7, 3],
+    ],
+    [],
+    [31, 0],
+  ],
+  [
+    [
+      [18, 8, 2, 8],
+      [48, 22, 2, 7],
+    ],
+    [
+      [30, 14, 10, 4],
+      [11, 23, 7, 3],
+    ],
+    [],
+    [32, 0],
+  ],
+  [
+    [
+      [19, 8, 2, 9],
+      [47, 22, 2, 7],
+    ],
+    [
+      [29, 15, 10, 4],
+      [12, 23, 7, 3],
+    ],
+    [],
+    [33, 0],
+  ],
+  [
+    [
+      [20, 8, 2, 7],
+      [46, 22, 2, 7],
+    ],
+    [
+      [30, 13, 10, 4],
+      [13, 23, 7, 3],
+      [53, 8, 7, 4],
+    ],
+    [],
+    [34, 0],
+  ],
+  [
+    [
+      [21, 8, 2, 8],
+      [45, 22, 2, 7],
+    ],
+    [
+      [29, 14, 10, 4],
+      [14, 23, 7, 3],
+      [53, 7, 7, 4],
+    ],
+    [],
+    [35, 0],
+  ],
+  [
+    [
+      [22, 8, 2, 9],
+      [44, 22, 2, 7],
+    ],
+    [
+      [30, 15, 10, 4],
+      [15, 23, 7, 3],
+      [53, 8, 7, 4],
+    ],
+    [],
+    [36, 0],
+  ],
+  [
+    [
+      [19, 9, 2, 10],
+      [49, 17, 2, 10],
+    ],
+    [
+      [9, 7, 6, 4],
+      [30, 13, 10, 5],
+      [55, 25, 6, 3],
+    ],
+    [],
+    [28, 0],
+  ],
+  [
+    [
+      [19, 10, 2, 10],
+      [49, 16, 2, 10],
+    ],
+    [
+      [10, 7, 6, 4],
+      [29, 14, 10, 5],
+      [54, 25, 6, 3],
+    ],
+    [],
+    [29, 0],
+  ],
+  [
+    [
+      [19, 9, 2, 10],
+      [49, 17, 2, 10],
+    ],
+    [
+      [11, 7, 6, 4],
+      [30, 13, 10, 5],
+      [53, 25, 6, 3],
+    ],
+    [],
+    [30, 0],
+  ],
+  [
+    [
+      [19, 10, 2, 10],
+      [49, 16, 2, 10],
+    ],
+    [
+      [12, 7, 6, 4],
+      [29, 14, 10, 5],
+      [52, 25, 6, 3],
+    ],
+    [],
+    [31, 0],
+  ],
+  [
+    [
+      [19, 9, 2, 10],
+      [49, 17, 2, 10],
+    ],
+    [
+      [13, 7, 6, 4],
+      [30, 13, 10, 5],
+      [51, 25, 6, 3],
+    ],
+    [[26, 25, 19, 2]],
+    [32, 0],
+  ],
+  [
+    [
+      [19, 10, 2, 10],
+      [49, 16, 2, 10],
+    ],
+    [
+      [12, 7, 6, 4],
+      [29, 14, 10, 5],
+      [53, 25, 6, 3],
+    ],
+    [[26, 25, 20, 2]],
+    [33, 0],
+  ],
+  [
+    [
+      [32, 7, 2, 5],
+      [37, 25, 2, 4],
+    ],
+    [
+      [11, 15, 9, 4],
+      [47, 15, 9, 4],
+      [30, 20, 8, 3],
+    ],
+    [],
+    [16, 0],
+  ],
+  [
+    [
+      [32, 7, 2, 6],
+      [37, 25, 2, 4],
+    ],
+    [
+      [12, 15, 9, 4],
+      [46, 16, 9, 4],
+      [30, 21, 8, 3],
+    ],
+    [],
+    [18, 0],
+  ],
+  [
+    [
+      [32, 7, 2, 5],
+      [37, 25, 2, 4],
+    ],
+    [
+      [13, 15, 9, 4],
+      [45, 15, 9, 4],
+      [30, 22, 8, 3],
+    ],
+    [],
+    [20, 0],
+  ],
+  [
+    [
+      [32, 7, 2, 6],
+      [37, 25, 2, 4],
+    ],
+    [
+      [14, 15, 9, 4],
+      [44, 16, 9, 4],
+      [30, 20, 8, 3],
+    ],
+    [],
+    [22, 0],
+  ],
+  [
+    [
+      [32, 7, 2, 5],
+      [37, 25, 2, 4],
+    ],
+    [
+      [15, 15, 9, 4],
+      [43, 15, 9, 4],
+      [30, 21, 8, 3],
+    ],
+    [],
+    [24, 0],
+  ],
+  [
+    [
+      [32, 7, 2, 6],
+      [37, 25, 2, 4],
+    ],
+    [
+      [16, 15, 9, 4],
+      [42, 16, 9, 4],
+      [30, 22, 8, 3],
+    ],
+    [],
+    [26, 0],
+  ],
+  [
+    [
+      [13, 10, 14, 2],
+      [44, 24, 14, 2],
+    ],
+    [
+      [28, 14, 15, 3],
+      [10, 24, 8, 4],
+      [53, 6, 8, 4],
+    ],
+    [],
+    [30, 0],
+  ],
+  [
+    [
+      [14, 10, 14, 2],
+      [43, 24, 14, 2],
+    ],
+    [
+      [28, 15, 15, 3],
+      [10, 24, 8, 4],
+      [53, 7, 8, 4],
+    ],
+    [],
+    [31, 0],
+  ],
+  [
+    [
+      [15, 10, 14, 2],
+      [42, 24, 14, 2],
+    ],
+    [
+      [28, 16, 15, 3],
+      [10, 24, 8, 4],
+      [53, 6, 8, 4],
+    ],
+    [],
+    [32, 0],
+  ],
+  [
+    [
+      [16, 10, 14, 2],
+      [41, 24, 14, 2],
+    ],
+    [
+      [28, 14, 15, 3],
+      [10, 24, 8, 4],
+      [53, 7, 8, 4],
+    ],
+    [],
+    [33, 0],
+  ],
+  [
+    [
+      [17, 10, 14, 2],
+      [40, 24, 14, 2],
+    ],
+    [
+      [28, 15, 15, 3],
+      [10, 24, 8, 4],
+      [53, 6, 8, 4],
+    ],
+    [[31, 28, 16, 2]],
+    [34, 0],
+  ],
+  [
+    [
+      [18, 10, 14, 2],
+      [39, 24, 14, 2],
+    ],
+    [
+      [28, 16, 15, 3],
+      [10, 24, 8, 4],
+      [53, 7, 8, 4],
+    ],
+    [[31, 28, 17, 2]],
+    [35, 0],
+  ],
+  [
+    [
+      [16, 7, 2, 9],
+      [51, 22, 2, 8],
+    ],
+    [
+      [29, 11, 12, 4],
+      [29, 23, 11, 4],
+      [9, 24, 6, 3],
+    ],
+    [],
+    [33, 0],
+  ],
+  [
+    [
+      [17, 7, 2, 9],
+      [50, 22, 2, 8],
+    ],
+    [
+      [29, 12, 12, 4],
+      [30, 23, 11, 4],
+      [9, 23, 6, 3],
+    ],
+    [],
+    [34, 0],
+  ],
+  [
+    [
+      [18, 7, 2, 9],
+      [49, 22, 2, 8],
+    ],
+    [
+      [29, 11, 12, 4],
+      [29, 23, 11, 4],
+      [9, 22, 6, 3],
+    ],
+    [],
+    [35, 0],
+  ],
+  [
+    [
+      [19, 7, 2, 9],
+      [48, 22, 2, 8],
+    ],
+    [
+      [29, 12, 12, 4],
+      [30, 23, 11, 4],
+      [9, 24, 6, 3],
+    ],
+    [],
+    [36, 0],
+  ],
+  [
+    [
+      [20, 7, 2, 9],
+      [47, 22, 2, 8],
+    ],
+    [
+      [29, 11, 12, 4],
+      [29, 23, 11, 4],
+      [9, 23, 6, 3],
+    ],
+    [],
+    [37, 0],
+  ],
+  [
+    [
+      [21, 7, 2, 9],
+      [46, 22, 2, 8],
+    ],
+    [
+      [29, 12, 12, 4],
+      [30, 23, 11, 4],
+      [9, 22, 6, 3],
+    ],
+    [],
+    [38, 0],
+  ],
+  [
+    [
+      [20, 9, 2, 8],
+      [48, 21, 2, 8],
+    ],
+    [
+      [29, 12, 11, 4],
+      [29, 24, 12, 4],
+      [9, 22, 7, 3],
+      [54, 7, 7, 3],
+    ],
+    [],
+    [29, 0],
+  ],
+  [
+    [
+      [21, 9, 2, 8],
+      [47, 21, 2, 8],
+    ],
+    [
+      [30, 12, 11, 4],
+      [28, 24, 12, 4],
+      [10, 22, 7, 3],
+      [53, 7, 7, 3],
+    ],
+    [],
+    [30, 0],
+  ],
+  [
+    [
+      [20, 9, 2, 8],
+      [48, 21, 2, 8],
+    ],
+    [
+      [31, 12, 11, 4],
+      [29, 24, 12, 4],
+      [11, 22, 7, 3],
+      [52, 7, 7, 3],
+    ],
+    [],
+    [31, 0],
+  ],
+  [
+    [
+      [21, 9, 2, 8],
+      [47, 21, 2, 8],
+    ],
+    [
+      [29, 12, 11, 4],
+      [28, 24, 12, 4],
+      [12, 22, 7, 3],
+      [51, 7, 7, 3],
+    ],
+    [[26, 18, 17, 2]],
+    [32, 0],
+  ],
+  [
+    [
+      [20, 9, 2, 8],
+      [48, 21, 2, 8],
+    ],
+    [
+      [30, 12, 11, 4],
+      [29, 24, 12, 4],
+      [13, 22, 7, 3],
+      [50, 7, 7, 3],
+    ],
+    [[26, 18, 18, 2]],
+    [33, 0],
+  ],
+  [
+    [
+      [21, 9, 2, 8],
+      [47, 21, 2, 8],
+    ],
+    [
+      [31, 12, 11, 4],
+      [28, 24, 12, 4],
+      [14, 22, 7, 3],
+      [49, 7, 7, 3],
+    ],
+    [[26, 18, 19, 2]],
+    [34, 0],
+  ],
+];
 const rectangle = ([x, y, w, h]) => ({ x, y, w, h });
 const inRect = (x, y, rectangles) =>
   rectangles.some((r) => x >= r.x && x < r.x + r.w && y >= r.y && y < r.y + r.h);
@@ -414,6 +894,11 @@ export function createCompanyProject({
     throw new Error('Supply explicit company artwork asset revisions.');
   const selected = COMPANY_MISSIONS.filter((m) => campaigns.some((c) => c.id === m.campaignId));
   const project = createStarterProject(campaignId ?? `${brandId}-company-journeys`);
+  if (brandId !== 'droneaid') {
+    project.policyId = TRAIL_IMPACT_JOURNEY_POLICY.id;
+    project.actorCatalogId = CURRENT_PRESSURE_ACTOR_CATALOG.id;
+    project.difficultyCatalogId = PRESSURE_DIFFICULTY_CATALOG.id;
+  }
   project.revision = String(Math.max(...campaigns.map((campaign) => Number(campaign.revision))));
   project.name = campaignId
     ? campaigns[0].name
@@ -426,7 +911,15 @@ export function createCompanyProject({
     : [];
   project.missions = selected.map((entry) => {
     const index = COMPANY_MISSIONS.findIndex((m) => m.id === entry.id);
-    const [walls, foundations, terrain, spawn] = layouts[index];
+    const layout =
+      entry.brandId === 'droneaid-nl'
+        ? dutchLayouts[
+            COMPANY_MISSIONS.filter((m) => m.brandId === 'droneaid-nl').findIndex(
+              (m) => m.id === entry.id,
+            )
+          ]
+        : layouts[index];
+    const [walls, foundations, terrain, spawn] = layout;
     const map = {
       format: 'MapDesignV1',
       id: `${entry.id}-map`,
@@ -469,10 +962,10 @@ export function createCompanyProject({
       });
     const objectivePoint = fieldPoint(map, [12 + (index % 3) * 3, 8]);
     const template = createStarterProject().missions[0];
-    return {
+    const mission = {
       ...template,
       id: entry.id,
-      revision: '1',
+      revision: brandId === 'coupa' ? '2' : '1',
       name: entry.name,
       map: { id: map.id, revision: map.revision },
       modes: ['solo'],
@@ -490,7 +983,7 @@ export function createCompanyProject({
           ]
         : [],
       presentation: {
-        themeId: brandId === 'coupa' ? 'coupa-village' : 'droneaid-community',
+        themeId: brandId === 'droneaid' ? 'droneaid-community' : `${entry.campaignId}-theme`,
         backgroundAssetId: project.assets.some((a) => a.id === `${entry.id}-picture`)
           ? `${entry.id}-picture`
           : null,
@@ -523,13 +1016,27 @@ export function createCompanyProject({
         },
       },
     };
+    const campaignIndex = COMPANY_CAMPAIGNS.filter(
+      (campaign) => campaign.brandId === brandId,
+    ).findIndex((campaign) => campaign.id === entry.campaignId);
+    return authorCompanyProgression(
+      mission,
+      map,
+      companyChallengeStage(brandId, campaignIndex),
+      entry.ordinal,
+    );
   });
   project.campaigns = campaigns.map((c) => ({
     format: 'CampaignDesignV1',
     id: c.id,
     revision: c.revision,
     name: c.name,
-    band: 1,
+    band: companyChallengeStage(
+      brandId,
+      COMPANY_CAMPAIGNS.filter((campaign) => campaign.brandId === brandId).findIndex(
+        (campaign) => campaign.id === c.id,
+      ),
+    ).band,
     missionIds: [...c.missionIds],
   }));
   project.packs = campaigns.map((c) => ({

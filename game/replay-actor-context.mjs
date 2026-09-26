@@ -117,16 +117,29 @@ function recordedLevel(campaign, replay) {
 }
 
 async function journeyContext(envelope, options) {
-  const route = await loadAuthoredJourneyRoute(envelope.actorAppearancePin.content.editionId);
+  const authored = options.authored;
+  if (envelope.actorAppearancePin.authoredPresentationSha256)
+    required(
+      authored?.editionId === envelope.actorAppearancePin.content.editionId &&
+        authored.authoredPresentationSha256 ===
+          envelope.actorAppearancePin.authoredPresentationSha256,
+      'This recording needs its exact earlier edition artwork and actor recipes. Open the matching release; the recording has not been changed.',
+    );
+  const route = authored
+    ? authored.route
+    : await loadAuthoredJourneyRoute(envelope.actorAppearancePin.content.editionId);
   abort(options.signal);
   required(route, unavailable);
-  const themes = await readJSON('game/content-design/themes.json', 262144, options);
+  const themes = authored
+    ? { themes: authored.themes }
+    : await readJSON('game/content-design/themes.json', 262144, options);
   const host = createCandidateSoloHost(route.source, {
-    themes: authoredJourneyUsesActorMaterials(route.id)
-      ? journeyActorThemeCandidates(themes.themes, {
-          includeOriginals: route.preserveOriginalThemes === true,
-        })
-      : themes.themes,
+    themes:
+      !authored && authoredJourneyUsesActorMaterials(route.id)
+        ? journeyActorThemeCandidates(themes.themes, {
+            includeOriginals: route.preserveOriginalThemes === true,
+          })
+        : themes.themes,
     corePackIds: route.corePackIds,
     optionalCampaignIds: route.optionalCampaignIds,
   });
@@ -147,6 +160,7 @@ async function journeyContext(envelope, options) {
     });
     return {
       scope: 'journey',
+      ...(authored ? { authoredPresentationSha256: authored.authoredPresentationSha256 } : {}),
       content: await adapter.prepareHostSelection(
         {
           host,
@@ -246,11 +260,14 @@ async function classicContext(envelope, options) {
  * readiness. Uploaded identities only select among code-owned sources. No
  * local Custom pack, latest preference or uploaded URL participates in trust.
  */
-export async function prepareReplayActorContext(source, { signal, fetcher = fetch } = {}) {
+export async function prepareReplayActorContext(
+  source,
+  { signal, fetcher = fetch, authored } = {},
+) {
   const envelope = snapshotReplayPresentation(source);
   abort(signal);
   required(typeof fetcher === 'function', 'Replay owner resolution requires a transport.');
-  const options = { signal, fetcher };
+  const options = { signal, fetcher, authored };
   const owner = envelope.actorAppearancePin.content.owner;
   required(['journey', 'campaign'].includes(owner.kind), 'This replay owner is not supported.');
   const result = await (owner.kind === 'journey'

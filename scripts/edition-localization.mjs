@@ -16,10 +16,10 @@ function nodes(source) {
   return result;
 }
 
-/** Company editions start in English. Keep dynamic generic engine messages,
- * but omit other languages and unselected legacy campaign translation data.
+/** Preserve the shared host's locale support and dynamic generic messages,
+ * while omitting unselected legacy campaign translation data.
  * Rewrite literal data in the compiler-owned copy, never execute source code. */
-export function projectEditionEnglishLocalization(sourceFiles) {
+export function projectEditionLocalization(sourceFiles, { locales: selectedLocales = null } = {}) {
   const files = new Map(sourceFiles),
     catalogPath = 'game/i18n/catalogs.mjs';
   if (!files.has(catalogPath)) return files;
@@ -45,12 +45,25 @@ export function projectEditionEnglishLocalization(sourceFiles) {
     resources.en && typeof resources.en === 'object',
     'English runtime messages are missing.',
   );
-  const en = Object.fromEntries(
-    Object.entries(resources.en).filter(
-      ([namespace]) => !['content', 'website'].includes(namespace),
-    ),
+  const localeIds = selectedLocales ?? Object.keys(resources);
+  required(
+    Array.isArray(localeIds) &&
+      localeIds.includes('en') &&
+      new Set(localeIds).size === localeIds.length &&
+      localeIds.every((id) => resources[id]),
+    'Selected runtime locales need English fallback and existing resources.',
   );
-  const replacement = JSON.stringify(LZString.compressToBase64(JSON.stringify({ en })));
+  const projected = Object.fromEntries(
+    localeIds.map((id) => [
+      id,
+      Object.fromEntries(
+        Object.entries(resources[id]).filter(
+          ([namespace]) => !['content', 'website'].includes(namespace),
+        ),
+      ),
+    ]),
+  );
+  const replacement = JSON.stringify(LZString.compressToBase64(JSON.stringify(projected)));
   files.set(
     catalogPath,
     Buffer.from(source.slice(0, encoded.start) + replacement + source.slice(encoded.end)),
@@ -65,15 +78,22 @@ export function projectEditionEnglishLocalization(sourceFiles) {
   files.set(
     bootstrapPath,
     Buffer.from(
-      bootstrap.slice(0, locales.init.start) + "['en']" + bootstrap.slice(locales.init.end),
+      bootstrap.slice(0, locales.init.start) +
+        JSON.stringify(localeIds) +
+        bootstrap.slice(locales.init.end),
     ),
   );
   if (files.has('game/i18n/content-registry.mjs'))
     files.set(
       'game/i18n/content-registry.mjs',
       Buffer.from(
-        '// English editions use the exact selected authored text.\nexport default Object.freeze({});\n',
+        '// Editions use their exact selected authored text; legacy catalogs are not shipped.\nexport default Object.freeze({});\n',
       ),
     );
   return files;
+}
+
+/** Retain the earlier explicit projection API for existing authoring clients. */
+export function projectEditionEnglishLocalization(sourceFiles) {
+  return projectEditionLocalization(sourceFiles, { locales: ['en'] });
 }

@@ -4,6 +4,7 @@
     {
       "classic": {
         "arcadeActions": { "version": "arcade-actions.v1" },
+        "lineImpact": { "speed": 24, "version": "line-impact.v1" },
         "powerups": [],
         "terrain": [],
         "version": "classic.v1"
@@ -13,22 +14,39 @@
         {
           "id": "paper-drifter",
           "type": "bouncer",
-          "vx": -1.6970562748477138,
-          "vy": -1.6970562748477138,
+          "vx": -2.3758787847867993,
+          "vy": -2.3758787847867993,
           "x": 61.5,
           "y": 28.5
+        },
+        {
+          "id": "sleeping-backlog",
+          "type": "claimed-rover",
+          "vx": 0,
+          "vy": 2.2399999999999998,
+          "x": 35.5,
+          "y": 9.5
+        },
+        {
+          "id": "rework-drift",
+          "type": "eroder",
+          "vx": 2.3758787847867993,
+          "vy": -2.3758787847867993,
+          "x": 15.5,
+          "y": 27.5
         }
       ],
       "foundations": [{ "h": 4, "w": 10, "x": 17, "y": 12 }],
-      "goal": { "coverage": 0.48 },
+      "goal": { "coverage": 0.5660000000000001 },
       "hangars": [{ "id": "home-hangar", "radius": 2, "x": 22.5, "y": 0.5 }],
       "height": 36,
       "id": "coupa-source-to-pay-01",
       "name": "Find the Need",
       "objectives": [
-        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 }
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
+        { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
-      "revision": "1",
+      "revision": "3",
       "rules": {
         "boostMultiplier": 1.5,
         "cutTimeLimitSeconds": 0,
@@ -55,6 +73,7 @@
     {
       "classic": {
         "arcadeActions": { "version": "arcade-actions.v1" },
+        "lineImpact": { "speed": 24, "version": "line-impact.v1" },
         "powerups": [],
         "terrain": [],
         "version": "classic.v1"
@@ -64,25 +83,42 @@
         {
           "id": "paper-drifter",
           "type": "bouncer",
-          "vx": -1.6970562748477138,
-          "vy": -1.6970562748477138,
+          "vx": -2.3758787847867993,
+          "vy": -2.3758787847867993,
           "x": 61.5,
           "y": 28.5
+        },
+        {
+          "id": "sleeping-backlog",
+          "type": "claimed-rover",
+          "vx": 0,
+          "vy": 2.2399999999999998,
+          "x": 35.5,
+          "y": 9.5
+        },
+        {
+          "id": "rework-drift",
+          "type": "eroder",
+          "vx": 2.3758787847867993,
+          "vy": -2.3758787847867993,
+          "x": 15.5,
+          "y": 27.5
         }
       ],
       "foundations": [
         { "h": 4, "w": 12, "x": 29, "y": 10 },
         { "h": 4, "w": 12, "x": 29, "y": 23 }
       ],
-      "goal": { "coverage": 0.53 },
+      "goal": { "coverage": 0.6160000000000001 },
       "hangars": [{ "id": "home-hangar", "radius": 2, "x": 35.5, "y": 0.5 }],
       "height": 36,
       "id": "coupa-source-to-pay-02",
       "name": "Choose Together",
       "objectives": [
-        { "hidden": false, "id": "connection", "required": true, "x": 15.5, "y": 8.5 }
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
+        { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
-      "revision": "1",
+      "revision": "3",
       "rules": {
         "boostMultiplier": 1.5,
         "cutTimeLimitSeconds": 0,
@@ -112,6 +148,7 @@
     {
       "classic": {
         "arcadeActions": { "version": "arcade-actions.v1" },
+        "lineImpact": { "speed": 24, "version": "line-impact.v1" },
         "powerups": [],
         "terrain": [],
         "version": "classic.v1"
@@ -121,17 +158,25 @@
         {
           "id": "paper-drifter",
           "type": "bouncer",
-          "vx": -1.6970562748477138,
-          "vy": -1.6970562748477138,
+          "vx": -2.3758787847867993,
+          "vy": -2.3758787847867993,
           "x": 61.5,
           "y": 28.5
         },
         {
-          "id": "second-drifter",
-          "type": "bouncer",
-          "vx": 1.6970562748477138,
-          "vy": -1.6970562748477138,
-          "x": 12.5,
+          "id": "sleeping-backlog",
+          "type": "claimed-rover",
+          "vx": 0,
+          "vy": 2.2399999999999998,
+          "x": 35.5,
+          "y": 9.5
+        },
+        {
+          "id": "rework-drift",
+          "type": "eroder",
+          "vx": 2.3758787847867993,
+          "vy": -2.3758787847867993,
+          "x": 15.5,
           "y": 27.5
         }
       ],
@@ -139,15 +184,16 @@
         { "h": 4, "w": 15, "x": 30, "y": 14 },
         { "h": 4, "w": 7, "x": 11, "y": 22 }
       ],
-      "goal": { "coverage": 0.56 },
+      "goal": { "coverage": 0.6460000000000001 },
       "hangars": [{ "id": "home-hangar", "radius": 2, "x": 35.5, "y": 0.5 }],
       "height": 36,
       "id": "coupa-source-to-pay-03",
       "name": "Terms Bridge",
       "objectives": [
-        { "hidden": false, "id": "connection", "required": true, "x": 18.5, "y": 8.5 }
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
+        { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
-      "revision": "1",
+      "revision": "3",
       "rules": {
         "boostMultiplier": 1.5,
         "cutTimeLimitSeconds": 0,
@@ -177,6 +223,7 @@
     {
       "classic": {
         "arcadeActions": { "version": "arcade-actions.v1" },
+        "lineImpact": { "speed": 24, "version": "line-impact.v1" },
         "powerups": [{ "id": "steady-return", "kind": "extra-life", "x": 11.5, "y": 11.5 }],
         "terrain": [],
         "version": "classic.v1"
@@ -186,18 +233,33 @@
         {
           "id": "paper-drifter",
           "type": "bouncer",
-          "vx": -1.6970562748477138,
-          "vy": -1.6970562748477138,
+          "vx": -2.3758787847867993,
+          "vy": -2.3758787847867993,
           "x": 61.5,
           "y": 28.5
         },
         {
+          "id": "sleeping-backlog",
+          "type": "claimed-rover",
+          "vx": 0,
+          "vy": 2.2399999999999998,
+          "x": 35.5,
+          "y": 9.5
+        },
+        {
+          "id": "rework-drift",
+          "type": "eroder",
+          "vx": 2.3758787847867993,
+          "vy": -2.3758787847867993,
+          "x": 15.5,
+          "y": 27.5
+        },
+        {
           "clockwise": true,
-          "id": "outer-backlog",
-          "speed": 1.8,
-          "type": "border-patrol",
-          "x": 71.5,
-          "y": 18.5
+          "edge": { "side": "east", "x": 10, "y": 11 },
+          "id": "moving-boundary",
+          "speed": 2.52,
+          "type": "contour-patrol"
         }
       ],
       "foundations": [
@@ -205,15 +267,16 @@
         { "h": 4, "w": 8, "x": 31, "y": 17 },
         { "h": 4, "w": 8, "x": 53, "y": 22 }
       ],
-      "goal": { "coverage": 0.58 },
+      "goal": { "coverage": 0.666 },
       "hangars": [{ "id": "home-hangar", "radius": 2, "x": 15.5, "y": 0.5 }],
       "height": 36,
       "id": "coupa-source-to-pay-04",
       "name": "Request to Order",
       "objectives": [
-        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 }
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
+        { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 26.5 }
       ],
-      "revision": "1",
+      "revision": "3",
       "rules": {
         "boostMultiplier": 1.5,
         "cutTimeLimitSeconds": 0,
@@ -243,6 +306,7 @@
     {
       "classic": {
         "arcadeActions": { "version": "arcade-actions.v1" },
+        "lineImpact": { "speed": 24, "version": "line-impact.v1" },
         "powerups": [{ "id": "steady-return", "kind": "extra-life", "x": 13.5, "y": 17.5 }],
         "terrain": [{ "h": 3, "id": "slow-1", "kind": "slow", "w": 9, "x": 30, "y": 23 }],
         "version": "classic.v1"
@@ -252,33 +316,49 @@
         {
           "id": "paper-drifter",
           "type": "bouncer",
-          "vx": -1.6970562748477138,
-          "vy": -1.6970562748477138,
+          "vx": -2.3758787847867993,
+          "vy": -2.3758787847867993,
           "x": 61.5,
           "y": 28.5
         },
         {
-          "clockwise": true,
-          "id": "outer-backlog",
-          "speed": 1.8,
-          "type": "border-patrol",
-          "x": 71.5,
-          "y": 18.5
+          "id": "sleeping-backlog",
+          "type": "claimed-rover",
+          "vx": 0,
+          "vy": 2.2399999999999998,
+          "x": 35.5,
+          "y": 9.5
+        },
+        {
+          "id": "rework-drift",
+          "type": "eroder",
+          "vx": 2.3758787847867993,
+          "vy": -2.3758787847867993,
+          "x": 15.5,
+          "y": 27.5
+        },
+        {
+          "clockwise": false,
+          "edge": { "side": "east", "x": 12, "y": 17 },
+          "id": "moving-boundary",
+          "speed": 2.52,
+          "type": "contour-patrol"
         }
       ],
       "foundations": [
         { "h": 4, "w": 10, "x": 13, "y": 17 },
         { "h": 4, "w": 10, "x": 49, "y": 12 }
       ],
-      "goal": { "coverage": 0.6 },
+      "goal": { "coverage": 0.686 },
       "hangars": [{ "id": "home-hangar", "radius": 2, "x": 18.5, "y": 0.5 }],
       "height": 36,
       "id": "coupa-source-to-pay-05",
       "name": "Received in Part",
       "objectives": [
-        { "hidden": false, "id": "connection", "required": true, "x": 15.5, "y": 8.5 }
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
+        { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
-      "revision": "1",
+      "revision": "3",
       "rules": {
         "boostMultiplier": 1.5,
         "cutTimeLimitSeconds": 0,
@@ -308,6 +388,7 @@
     {
       "classic": {
         "arcadeActions": { "version": "arcade-actions.v1" },
+        "lineImpact": { "speed": 24, "version": "line-impact.v1" },
         "powerups": [{ "id": "steady-return", "kind": "extra-life", "x": 29.5, "y": 8.5 }],
         "terrain": [],
         "version": "classic.v1"
@@ -317,26 +398,33 @@
         {
           "id": "paper-drifter",
           "type": "bouncer",
-          "vx": -1.6970562748477138,
-          "vy": -1.6970562748477138,
+          "vx": -2.3758787847867993,
+          "vy": -2.3758787847867993,
           "x": 61.5,
           "y": 28.5
         },
         {
-          "id": "second-drifter",
-          "type": "bouncer",
-          "vx": 1.6970562748477138,
-          "vy": -1.6970562748477138,
-          "x": 12.5,
+          "id": "sleeping-backlog",
+          "type": "claimed-rover",
+          "vx": 0,
+          "vy": 2.2399999999999998,
+          "x": 35.5,
+          "y": 7.5
+        },
+        {
+          "id": "rework-drift",
+          "type": "eroder",
+          "vx": 2.3758787847867993,
+          "vy": -2.3758787847867993,
+          "x": 15.5,
           "y": 27.5
         },
         {
           "clockwise": true,
-          "id": "outer-backlog",
-          "speed": 1.8,
-          "type": "border-patrol",
-          "x": 71.5,
-          "y": 18.5
+          "edge": { "side": "east", "x": 28, "y": 8 },
+          "id": "moving-boundary",
+          "speed": 2.52,
+          "type": "contour-patrol"
         }
       ],
       "foundations": [
@@ -344,15 +432,16 @@
         { "h": 4, "w": 12, "x": 29, "y": 24 },
         { "h": 3, "w": 6, "x": 32, "y": 16 }
       ],
-      "goal": { "coverage": 0.64 },
+      "goal": { "coverage": 0.7260000000000001 },
       "hangars": [{ "id": "home-hangar", "radius": 2, "x": 35.5, "y": 0.5 }],
       "height": 36,
       "id": "coupa-source-to-pay-06",
       "name": "Close the Loop",
       "objectives": [
-        { "hidden": false, "id": "connection", "required": true, "x": 18.5, "y": 8.5 }
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
+        { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
-      "revision": "1",
+      "revision": "3",
       "rules": {
         "boostMultiplier": 1.5,
         "cutTimeLimitSeconds": 0,
@@ -380,7 +469,7 @@
       "width": 72
     }
   ],
-  "revision": "2",
+  "revision": "4",
   "title": "From Need to Value",
   "version": "xonix-campaign.v1"
 }

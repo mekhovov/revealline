@@ -1,3 +1,8 @@
+import { loadRuntimeContentProvider } from './runtime-content-provider.mjs';
+import { loadSupplementalJourneySources } from './runtime-library-sources.mjs';
+import { mountEditionSoloUI } from './ui/edition-solo.mjs';
+import { createEditionPracticeScenario } from './ui/edition-controller-practice.mjs';
+import { projectEditionGuideScenario } from './editions/selected-presentation.mjs';
 import { installedPresentation, invalidateInstalledMigration } from './installed-app.mjs';
 import { createGameWakeLock } from './ui/game-wake-lock.mjs';
 import { localOfficialChapter } from './official-chapter-source.mjs';
@@ -292,6 +297,7 @@ const getJSON = async (path) => {
   return r.json();
 };
 const clamp = (n, a, b) => Math.min(b, Math.max(a, n));
+let startupEditionWriter = null;
 const timeLabel = (time) =>
   `${Math.floor(time / 60)}:${String(Math.floor(time % 60)).padStart(2, '0')}`;
 // A valid tool return owns the normal native autofocus produced while the
@@ -330,25 +336,29 @@ try {
     .map((target) => ({ target, presenter: createOperationStatus(target), lease: null }));
   let attemptFiles = null,
     profileRecovery = null;
+  const runtimeContent = await loadRuntimeContentProvider();
   const [baseCampaign, themesFile, presets, baseClasses, packCatalogSource, archiveCatalogSource] =
-    await Promise.all([
+    runtimeContent?.boot ??
+    (await Promise.all([
       getJSON('content/campaign.json'),
       getJSON('content/themes.json'),
       getJSON('../authoring/motion-lab/presets.json'),
       getJSON('content/classes.json'),
       getJSON('content/packs/catalog.json'),
       getJSON('content/packs/archive-catalog.json'),
-    ]);
+    ]));
   // Guide lessons keep the canonical catalog when a selected pack narrows flight themes.
   const guideThemes = themesFile.themes;
   const characterPresentations = createCharacterPresentations(presets);
-  const packCatalog = preparePackCatalog({
-    ...packCatalogSource,
-    packs: [
-      ...preparePackCatalog(packCatalogSource).packs,
-      ...preparePackCatalog(archiveCatalogSource).packs,
-    ],
-  });
+  const packCatalog = runtimeContent
+    ? { packs: [] }
+    : preparePackCatalog({
+        ...packCatalogSource,
+        packs: [
+          ...preparePackCatalog(packCatalogSource).packs,
+          ...preparePackCatalog(archiveCatalogSource).packs,
+        ],
+      });
   let campaign = baseCampaign,
     classRegistry = baseClasses;
   campaign.classRecipes = classRegistry;
@@ -366,7 +376,9 @@ try {
   let chapterSnapshot = null;
   let installedEntries = [baseEntry],
     executionCatalog = createExecutionCatalog(installedEntries),
-    masteryCatalog = createMasteryCatalog([{ campaign: baseEntry.campaign, sourcePackId: null }]);
+    masteryCatalog = createMasteryCatalog(
+      runtimeContent ? [] : [{ campaign: baseEntry.campaign, sourcePackId: null }],
+    );
   function prepareContentCatalog(nextPacks) {
     const entries = [
       baseEntry,
@@ -375,13 +387,15 @@ try {
       ),
     ];
     const registrations = createMasteryCatalog(
-      entries.map((entry) => ({
-        campaign: entry.campaign,
-        sourcePackId: entry.sourcePackId,
-        ...(entry.sourcePackFormat
-          ? { sourcePackFormat: entry.sourcePackFormat, masteries: entry.masteries }
-          : {}),
-      })),
+      entries
+        .filter((entry) => !runtimeContent || entry !== baseEntry)
+        .map((entry) => ({
+          campaign: entry.campaign,
+          sourcePackId: entry.sourcePackId,
+          ...(entry.sourcePackFormat
+            ? { sourcePackFormat: entry.sourcePackFormat, masteries: entry.masteries }
+            : {}),
+        })),
     );
     return {
       packs: nextPacks,
@@ -421,7 +435,7 @@ try {
   let courseRequest = resolveCourseRequest(params);
   const courseSession = !!courseRequest;
   const courseEmbedded = window.parent !== window;
-  const courseTheme = themesFile.themes.find((item) => item.id === 'fpv');
+  const courseTheme = themesFile.themes.find((item) => item.id === 'fpv') ?? runtimeContent?.theme;
   let scenario = null;
   if (courseRequest) {
     scenario = createLessonScenario(courseRequest.lessonId, {
@@ -429,9 +443,18 @@ try {
       theme: courseTheme,
     });
   } else if (params.get('practice') === '1') {
-    const raw = sessionStorage.getItem('revealline.playground.current');
-    if (!raw) throw new Error(t('interface:thisPracticeTabHasNoConfigurationOpenThePlaygroundAnd'));
-    const prepared = await prepareScenario(JSON.parse(raw), { classRecipes: classRegistry });
+    const raw = runtimeContent ? null : sessionStorage.getItem('revealline.playground.current');
+    if (!runtimeContent && !raw)
+      throw new Error(t('interface:thisPracticeTabHasNoConfigurationOpenThePlaygroundAnd'));
+    const requested = runtimeContent
+      ? createEditionPracticeScenario(runtimeContent, {
+          missionId: params.get('edition-mission'),
+          classId: params.get('class') ?? 'scout',
+          turnPolicy: params.get('turn-policy') ?? 'immediate',
+          difficulty: params.get('difficulty') ?? 'standard',
+        })
+      : JSON.parse(raw);
+    const prepared = await prepareScenario(requested, { classRecipes: classRegistry });
     scenario = prepared.scenario;
   }
   // Switching source maps inside an authored preview must not turn the same
@@ -441,15 +464,18 @@ try {
     mode: 'solo',
     auxiliary: practiceSession,
   });
-  const authoredRoute = !practiceSession && (await loadAuthoredJourneyRoute(journeyRequest));
+  const authoredRoute =
+    !practiceSession && (runtimeContent?.route ?? (await loadAuthoredJourneyRoute(journeyRequest)));
   const authoredJourney = !!authoredRoute;
   const candidateHost = authoredJourney
     ? createCandidateSoloHost(authoredRoute.source, {
-        themes: authoredJourneyUsesActorMaterials(authoredRoute.id)
-          ? journeyActorThemeCandidates((await getJSON('content-design/themes.json')).themes, {
-              includeOriginals: authoredRoute.preserveOriginalThemes === true,
-            })
-          : (await getJSON('content-design/themes.json')).themes,
+        themes:
+          runtimeContent?.themes ??
+          (authoredJourneyUsesActorMaterials(authoredRoute.id)
+            ? journeyActorThemeCandidates((await getJSON('content-design/themes.json')).themes, {
+                includeOriginals: authoredRoute.preserveOriginalThemes === true,
+              })
+            : (await getJSON('content-design/themes.json')).themes),
         buildVersion,
         corePackIds: authoredRoute.corePackIds,
         optionalCampaignIds: authoredRoute.optionalCampaignIds,
@@ -483,10 +509,16 @@ try {
       : null;
   const journeyCatalog =
     candidateHost?.catalog ??
-    journeyFromPackCatalog(baseCampaign, preparePackCatalog(packCatalogSource));
+    journeyFromPackCatalog(
+      baseCampaign,
+      runtimeContent ? packCatalog : preparePackCatalog(packCatalogSource),
+    );
+  let editionWriter = null,
+    editionUI = null;
   const journeyProfile = journeyEnabled
     ? createJourneyProfileStore({
         profileKey: authoredRoute?.profileKey,
+        ...(runtimeContent ? { canWrite: () => editionWriter?.writable === true } : {}),
         onStatus: (status) => journeySaveNotice.update(status),
       })
     : null;
@@ -539,7 +571,8 @@ try {
   });
   // Each archived release keeps its own profile schema, packs and save slot.
   // A portable complete backup transfers progress without changing older versions.
-  const channel = isRelease ? `release-${buildVersion}` : 'dev';
+  const editionContext = runtimeContent?.context(isRelease ? buildVersion : 'dev');
+  const channel = editionContext?.channel ?? (isRelease ? `release-${buildVersion}` : 'dev');
   const libraryKey = `revealline.library.${channel}.v1`;
   const packsKey = `revealline.packs.${channel}.v1`;
   // Candidate saves are revision-pinned and independent of Legacy/release slots.
@@ -583,7 +616,14 @@ try {
         },
         release() {},
       }
-    : await claimProfileWriter(navigator.locks, `${libraryKey}.writer`);
+    : await claimProfileWriter(
+        navigator.locks,
+        runtimeContent
+          ? `revealline.company.${runtimeContent.editionId}.writer`
+          : `${libraryKey}.writer`,
+      );
+  editionWriter = writer;
+  if (runtimeContent) startupEditionWriter = writer;
   let pictureManager = null;
   const getPictureManager = () =>
     (pictureManager ??= createManagedMediaStore({ storyMedia: true, soundtrackCatalogue: true }));
@@ -1003,7 +1043,7 @@ try {
   });
   let actorChangesReady = false;
   const stopActorView = actorPreferences.subscribe(({ actorStyle, revision }) => {
-    $('menu-actor-style').value = actorStyle;
+    $('menu-actor-style').value = runtimeContent ? 'campaign' : actorStyle;
     if (actorChangesReady && revision > 0) {
       if (titleFlight?.actorsFresh) cancelTitleFlight();
       cancelWorldAttempt();
@@ -1334,6 +1374,20 @@ try {
       pictureLevel = pictureLevelForRun(nextRun, entry, pictureEntry);
     if (candidateHost?.owns(entry)) {
       const manifest = entry.manifests.find((item) => item.level.id === nextRun.levelId);
+      if (!manifest.background) {
+        return createFlightPictures({
+          context: {
+            runId: nextRunId,
+            executionKey: campaignKey(entry.campaign),
+            levelId: nextRun.levelId,
+            levelRevision: pictureLevel.revision,
+            themeId: manifest.presentation.themeId,
+          },
+          level: pictureLevel,
+          themeIds: entry.themes.map((item) => item.id),
+          legacy: true,
+        });
+      }
       return createCandidateFlightPictures({
         context: {
           runId: nextRunId,
@@ -1860,24 +1914,26 @@ try {
     pagePresentationSnapshot = null,
     presentationReady = Promise.resolve(null);
   try {
-    presentationHost = createPresentationHost({
-      baseURL: new URL('presentation/compiled/', location.href),
-    });
-    presentationReady = presentationHost
-      .load({ onStatus: presentationFeedback.update })
-      .then((snapshot) => {
-        pagePresentationSnapshot = snapshot;
-        if (!flightVisualLease) applyFlightPresentation();
-        return snapshot;
-      })
-      .catch((error) => {
-        if (error.name === 'AbortError') return null;
-        compiledPresentationWarning = t(
-          'interface:releaseArtworkIsUnavailableSourceArtworkIsShown',
-        );
-        painter.onAsset('');
-        return null;
+    if (!runtimeContent)
+      presentationHost = createPresentationHost({
+        baseURL: new URL('presentation/compiled/', location.href),
       });
+    if (presentationHost)
+      presentationReady = presentationHost
+        .load({ onStatus: presentationFeedback.update })
+        .then((snapshot) => {
+          pagePresentationSnapshot = snapshot;
+          if (!flightVisualLease) applyFlightPresentation();
+          return snapshot;
+        })
+        .catch((error) => {
+          if (error.name === 'AbortError') return null;
+          compiledPresentationWarning = t(
+            'interface:releaseArtworkIsUnavailableSourceArtworkIsShown',
+          );
+          painter.onAsset('');
+          return null;
+        });
   } catch {
     compiledPresentationWarning = t('interface:releaseArtworkIsUnavailableSourceArtworkIsShown');
   }
@@ -1993,7 +2049,14 @@ try {
     themeId,
     { pin = undefined, style = actorPreferences.snapshot().actorStyle, ...options } = {},
   ) {
-    if (pin === null) return null;
+    if (pin === null) {
+      if (runtimeContent && candidateHost?.owns(entry))
+        throw new Error(
+          'This earlier flight has no exact company artwork receipt. Open its original release; the save is preserved for recovery.',
+        );
+      return null;
+    }
+    if (runtimeContent && candidateHost?.owns(entry) && pin === undefined) style = 'campaign';
     const identity = await actorContent(entry, level, themeId, {
       ...options,
       retained: pin !== undefined,
@@ -2003,6 +2066,8 @@ try {
         throw new Error(t('interface:thisContentHasNoAcceptedActorAppearanceOwner'));
       return null;
     }
+    if (runtimeContent && candidateHost?.owns(entry))
+      identity.authoredPresentationSha256 = runtimeContent.authoredPresentationSha256;
     const dependencies = {
       baseURL: new URL('presentation/compiled/', location.href),
       currentManifestSha256: pagePresentationSnapshot?.manifestSha256 ?? null,
@@ -2587,7 +2652,15 @@ try {
     getPresentation: () => presentationSnapshot,
     getThemeId: () => theme.id,
     getTurnPolicy: () => turnPolicy,
-    loadImpactScenario: () => getJSON('content/scenarios/line-impact-demo.json'),
+    loadImpactScenario: async () => {
+      const source = await getJSON('content/scenarios/line-impact-demo.json');
+      return runtimeContent
+        ? projectEditionGuideScenario(source, {
+            theme: runtimeContent.theme,
+            classes: runtimeContent.boot[3],
+          })
+        : source;
+    },
     onPractice: () => {
       clearInput();
       guideMusicWasPlaying = soundtrackPlayer?.snapshot().desired ?? sound.enabled;
@@ -2637,6 +2710,7 @@ try {
     controllerPreview?.clear();
     if (!event.persisted) {
       stopLocaleView();
+      editionUI?.dispose();
       touchPreferences.destroy();
       flightDetails.dispose();
       flightInformation.dispose();
@@ -3021,7 +3095,7 @@ try {
         });
       }
       assertCurrent();
-      const target = new URL('./', location.href);
+      const target = new URL(runtimeContent?.href() ?? './', location.href);
       target.searchParams.set('course', 'first-flight');
       target.searchParams.set('lesson', FIRST_FLIGHT_LESSONS[0].id);
       target.searchParams.set('turn-policy', turnPolicy);
@@ -3040,7 +3114,7 @@ try {
       $('first-flight-help-enter').focus({ preventScroll: true });
     }
   }
-  const catalogueHref = authoredRoute ? './?journey=legacy' : './';
+  const catalogueHref = runtimeContent?.href() ?? (authoredRoute ? './?journey=legacy' : './');
   const catalogueLabel = () =>
     authoredRoute ? t('interface:legacyMissions2') : t('interface:newJourney');
   const librarySourceReturn = readMissionLibraryReturn(params, { mode: 'solo' });
@@ -4519,7 +4593,7 @@ try {
     } else {
       coursePhase = 'leaving';
       refreshCourse();
-      location.assign(new URL('./', location.href).href);
+      location.assign(runtimeContent?.href() ?? new URL('./', location.href).href);
     }
   }
   function catalog() {
@@ -6235,6 +6309,8 @@ try {
           readAsset: readAssetStore,
           lockManager: navigator.locks,
           currentVersion: buildVersion,
+          editionId: runtimeContent?.editionId,
+          heldWriter: runtimeContent ? writer : undefined,
           installedApp: true,
           ...(externalBackup ? { readExternalSnapshot: externalBackup.readExternalSnapshot } : {}),
         }
@@ -6601,6 +6677,8 @@ try {
   };
   profileRecovery = attachProfileRecoveryDialog({
     currentVersion: buildVersion,
+    editionId: runtimeContent?.editionId,
+    heldWriter: runtimeContent ? writer : undefined,
     packaged: isRelease,
     resolveSourceVersion: async () => (await getJSON('build-config.json')).version,
     onOpen: () => clearInput(),
@@ -6619,9 +6697,19 @@ try {
       return '';
     },
   });
-  const offlinePanel = attachOfflinePanel();
+  const offlinePanel = runtimeContent ? null : attachOfflinePanel();
+  if (runtimeContent) {
+    for (const id of [
+      'offline-button',
+      'offline-stop',
+      'offline-status',
+      'offline-optional-note',
+      'offline-details',
+    ])
+      $(id).hidden = true;
+  }
   window.addEventListener('pagehide', (event) => {
-    if (!event.persisted) offlinePanel.destroy();
+    if (!event.persisted) offlinePanel?.destroy();
   });
   show('native-diagnostics', nativePlatform() === 'ios');
   function tuneMusic(event) {
@@ -6875,6 +6963,7 @@ try {
     painter.style = scenario?.presentation?.style || library.preferences.style;
     updateBodies();
     painter.setLook(theme, bodyId, painterVisuals());
+    if (runtimeContent && theme.soundtrack && !musicOverride) assignMusic(theme.soundtrack);
     soundtrackPlayer?.setContext(soundtrackContext());
   }
   function updateBodies() {
@@ -7192,6 +7281,7 @@ try {
     show('game-overlay', true);
     show('show-result', false);
     show('view-picture', kind === 'won');
+    editionUI?.refresh();
     victoryStoryButton.hidden =
       kind !== 'won' ||
       practice ||
@@ -9699,6 +9789,7 @@ try {
   };
   const journeyCollection = attachJourneyCollection({
     document,
+    onPictureReady: (record) => editionUI?.pictureReady(record),
     getState: async () => {
       if (!collectionJourneyState) await getUnifiedMissionLibrary();
       return collectionJourneyState;
@@ -9806,7 +9897,7 @@ try {
       // The accepted attempt owns this pin. A newly selected preference must
       // never rewrite the appearance of an already recorded route.
       const recorded =
-        actorPin?.style === 'fpv'
+        actorPin?.style === 'fpv' || actorPin?.authoredPresentationSha256
           ? exportReplayPresentation({
               execution: {
                 campaignKey: campaignKey(campaign),
@@ -9827,7 +9918,9 @@ try {
       $('download-raw-replay').hidden = !recorded;
       localizedText($('replay-appearance-note'), () =>
         recorded
-          ? t('interface:recordedFpvActorsArePinnedForReplayTheaterThisDoes')
+          ? actorPin?.authoredPresentationSha256
+            ? 'This recording pins the exact company actors and palette. Replay Theater requires the matching edition artwork; original pictures, music and interface are not restored.'
+            : t('interface:recordedFpvActorsArePinnedForReplayTheaterThisDoes')
           : t('interface:thisRecordingUsesTheOriginalSimulationOnlyFormatReplayTheater'),
       );
       $('replay-dialog').showModal();
@@ -9973,6 +10066,7 @@ try {
         return;
       const dt = clamp(delta / 1000, 0, 1);
       update(dt);
+      editionUI?.refresh();
       const { width, height } = boardPaintSizeForRun(run);
       if (width !== this.boardSize.width || height !== this.boardSize.height) {
         this.boardTexture.setSize(width, height);
@@ -10017,7 +10111,9 @@ try {
     banner: false,
   });
   missionPicker = attachMissionPicker({
-    archivedIds: preparePackCatalog(archiveCatalogSource).packs.map(({ id }) => id),
+    archivedIds: runtimeContent
+      ? []
+      : preparePackCatalog(archiveCatalogSource).packs.map(({ id }) => id),
   });
   async function prepareLibraryClassic(row, { signal }) {
     if (row.source === 'external')
@@ -10153,10 +10249,12 @@ try {
     if (unifiedLibrary) return unifiedLibrary;
     if (unifiedLibraryLoading) return unifiedLibraryLoading;
     unifiedLibraryLoading = (async () => {
-      const index = await getJSON('content/mission-library-index.json');
+      const index =
+        runtimeContent?.missionIndex ?? (await getJSON('content/mission-library-index.json'));
       actorMissionIndex = Promise.resolve(index);
       const route = authoredRoute || (await loadAuthoredJourneyRoute(DEFAULT_JOURNEY_ROUTES.solo));
-      const originalThemes = (await getJSON('content-design/themes.json')).themes;
+      const originalThemes =
+        runtimeContent?.themes ?? (await getJSON('content-design/themes.json')).themes;
       const libraryThemes = authoredJourneyUsesActorMaterials(route.id)
         ? journeyActorThemeCandidates(originalThemes, {
             includeOriginals: route.preserveOriginalThemes === true,
@@ -10170,14 +10268,6 @@ try {
           corePackIds: route.corePackIds,
           optionalCampaignIds: route.optionalCampaignIds,
         });
-      // Compile the other mode through its own validated runtime adapter. The
-      // combined browsing identity never grants this Solo host Versus ownership.
-      const { createCandidateVersusHost } = await import('./content-design/versus-host.mjs');
-      const versusPreview = createCandidateVersusHost(route.source, {
-        themes: libraryThemes,
-        corePackIds: route.corePackIds,
-        optionalCampaignIds: route.optionalCampaignIds,
-      });
       const profile = candidateHost
         ? journeyProfile
         : createJourneyProfileStore({ profileKey: route.profileKey });
@@ -10210,38 +10300,21 @@ try {
           return launchJourneyMission(mission, { kind: context.continuation ? 'next' : 'choose' });
         },
       });
-      const versusSource = journeyLibrarySource({
-        editionId: route.id,
-        edition: route.id === DEFAULT_JOURNEY_ROUTES.solo ? 'New Journey' : route.label,
-        editionLabel: () =>
-          route.id === DEFAULT_JOURNEY_ROUTES.solo
-            ? t('interface:newJourney')
-            : contentText(route, 'label'),
-        catalog: versusPreview.catalog,
-        profile,
-        details: (mission) =>
-          journeyMissionDetails(
-            versusPreview.manifest(mission, browsingJourneyPreferences.snapshot().difficulty),
-          ),
-        tags: (mission) => authoredJourneyMissionTags(mission, versusPreview.manifest(mission)),
-        card: (mission) =>
-          versusPreview.card(mission, browsingJourneyPreferences.snapshot().difficulty),
-        launch: (_mission, context) => departLibraryMission(context),
-      });
-      const { createRemoteTeamLibrarySources } = await import('./mission-library/remote-team.mjs');
-      const teamSources = createRemoteTeamLibrarySources({
-        launch: departLibraryMission,
-        difficulty: () => browsingJourneyPreferences.snapshot().difficulty,
-      });
-      const { createSpatialNextEditionSources } = await import(
-        './mission-library/spatial-next-editions.mjs'
-      );
-      const spatialEditions = await createSpatialNextEditionSources({
-        activeRouteId: route.id,
-        originalThemes,
-        difficulty: () => browsingJourneyPreferences.snapshot().difficulty,
-        launch: departLibraryMission,
-      });
+      const supplemental = runtimeContent
+        ? { sources: [], versus: null, dispose() {} }
+        : await loadSupplementalJourneySources({
+            route,
+            originalThemes,
+            libraryThemes,
+            difficulty: () => browsingJourneyPreferences.snapshot().difficulty,
+            launch: departLibraryMission,
+            profile,
+            edition: route.id === DEFAULT_JOURNEY_ROUTES.solo ? 'New Journey' : route.label,
+            editionLabel: () =>
+              route.id === DEFAULT_JOURNEY_ROUTES.solo
+                ? t('interface:newJourney')
+                : contentText(route, 'label'),
+          });
       const classicProjectionCache = new WeakMap();
       const classicRuntimeEntry = (row) => {
         const pack =
@@ -10267,8 +10340,10 @@ try {
         const entry = classicRuntimeEntry(row);
         return entry ? campaignKey(entry.campaign) : null;
       };
+      const selectedEditionPacks = runtimeContent ? emptyPackLibrary() : null;
       const result = await createInstalledMissionLibrary({
         getProjectSources: async () => {
+          if (runtimeContent) return [];
           const { installedCreatorLibrarySources } = await import(
             './mission-library/creator-source.mjs'
           );
@@ -10286,12 +10361,11 @@ try {
         journeySources: [
           combineJourneyLibrarySources([
             { mode: 'solo', source },
-            { mode: 'versus', source: versusSource },
+            ...(supplemental.versus ? [{ mode: 'versus', source: supplemental.versus }] : []),
           ]),
-          ...spatialEditions.sources,
-          ...teamSources,
+          ...supplemental.sources,
         ],
-        getPacks: () => packs,
+        getPacks: () => selectedEditionPacks ?? packs,
         baseEntry,
         compatibility: ({ entry, level }) => {
           const supported = [];
@@ -10365,12 +10439,12 @@ try {
       });
       if (unifiedDisposed) {
         result.library.dispose();
-        spatialEditions.dispose();
+        supplemental.dispose();
         if (!candidateHost) host.preparer.dispose();
         throw new DOMException(t('interface:missionLibraryClosed'), 'AbortError');
       }
       disposeUnifiedPreview = () => {
-        spatialEditions.dispose();
+        supplemental.dispose();
         if (!candidateHost) host.preparer.dispose();
       };
       const state = createMissionLibrarySessionState({ mode: 'solo' });
@@ -10399,6 +10473,13 @@ try {
       unifiedChooser = attachJourneyChooser({
         library: result.library,
         profile,
+        ...(runtimeContent
+          ? {
+              supportedModes: runtimeContent.selection.edition.modes,
+              availableCollectionsOnly: true,
+              description: runtimeContent.selection.edition.name,
+            }
+          : {}),
         getCurrentId: () => {
           const mission = candidateHost && journeyMission();
           if (mission)
@@ -10717,72 +10798,75 @@ try {
     onPlayActivation: captureWorldPlay,
     getLibrary: () => packs,
     getUsage: () => chapterSnapshot?.usage,
-    sourceChapters: !practiceSession
-      ? SOURCE_EXTERNAL_EDITIONS.map((edition) => {
-          const { descriptor, name, description, mode, levels } = edition;
-          return presentSourceChapter(edition, {
-            id: descriptor.id,
-            controlId:
-              descriptor.id === SOURCE_EXTERNAL_CHAPTER.id ? 'source' : `source-${descriptor.id}`,
-            name,
-            description,
-            mode,
-            themeId: descriptor.themeId,
-            levels,
-            sourceOnly: !isRelease,
-            bytes: descriptor.pack.bytes + descriptor.media.bytes,
-            download: isRelease
-              ? (options) =>
-                  installSourceChapter(descriptor.id, null, { ...options, download: true })
-              : null,
-            backupSupported: !!externalBackup,
-            async inspect({ signal }) {
-              const snapshot = await inspectChapters({ signal });
-              if (snapshot.status !== 'checked') return { status: snapshot.reason };
-              const installed = snapshot.index.chapters.some((d) => d.id === descriptor.id);
-              if (installed) await externalChapters.readiness(snapshot, descriptor.id, { signal });
-              return { status: installed ? 'installed' : 'absent' };
-            },
-            install: (files, options) => installSourceChapter(descriptor.id, files, options),
-            async play({ signal, onStatus, launch }) {
-              if (!storedStateAdopted || !persistenceReady)
-                throw new Error(t('interface:reloadAfterRecoveryBeforePlayingThisChapter'));
-              const snapshot = await checkedChapters({ signal });
-              await externalChapters.readiness(snapshot, descriptor.id, { signal });
-              assertWorldPlay(launch);
-              adoptContentCatalog(contentFromChapters(snapshot));
-              const pack = packs.packs.find((item) => item.id === descriptor.id);
-              return requestWorldPlay(pack, { signal, launch, onStatus });
-            },
-            async choose({ signal, onStatus, launch }) {
-              if (!storedStateAdopted || !persistenceReady)
-                throw new Error(
-                  t('interface:reloadAfterRecoveryToAdoptThePreservedProfileBeforeChoosing'),
+    sourceChapters:
+      !practiceSession && !runtimeContent
+        ? SOURCE_EXTERNAL_EDITIONS.map((edition) => {
+            const { descriptor, name, description, mode, levels } = edition;
+            return presentSourceChapter(edition, {
+              id: descriptor.id,
+              controlId:
+                descriptor.id === SOURCE_EXTERNAL_CHAPTER.id ? 'source' : `source-${descriptor.id}`,
+              name,
+              description,
+              mode,
+              themeId: descriptor.themeId,
+              levels,
+              sourceOnly: !isRelease,
+              bytes: descriptor.pack.bytes + descriptor.media.bytes,
+              download: isRelease
+                ? (options) =>
+                    installSourceChapter(descriptor.id, null, { ...options, download: true })
+                : null,
+              backupSupported: !!externalBackup,
+              async inspect({ signal }) {
+                const snapshot = await inspectChapters({ signal });
+                if (snapshot.status !== 'checked') return { status: snapshot.reason };
+                const installed = snapshot.index.chapters.some((d) => d.id === descriptor.id);
+                if (installed)
+                  await externalChapters.readiness(snapshot, descriptor.id, { signal });
+                return { status: installed ? 'installed' : 'absent' };
+              },
+              install: (files, options) => installSourceChapter(descriptor.id, files, options),
+              async play({ signal, onStatus, launch }) {
+                if (!storedStateAdopted || !persistenceReady)
+                  throw new Error(t('interface:reloadAfterRecoveryBeforePlayingThisChapter'));
+                const snapshot = await checkedChapters({ signal });
+                await externalChapters.readiness(snapshot, descriptor.id, { signal });
+                assertWorldPlay(launch);
+                adoptContentCatalog(contentFromChapters(snapshot));
+                const pack = packs.packs.find((item) => item.id === descriptor.id);
+                return requestWorldPlay(pack, { signal, launch, onStatus });
+              },
+              async choose({ signal, onStatus, launch }) {
+                if (!storedStateAdopted || !persistenceReady)
+                  throw new Error(
+                    t('interface:reloadAfterRecoveryToAdoptThePreservedProfileBeforeChoosing'),
+                  );
+                preparationStatus(
+                  onStatus,
+                  t('interface:checkingInstalledChapterOriginals'),
+                  'verifying',
+                  () => !signal?.aborted,
                 );
-              preparationStatus(
-                onStatus,
-                t('interface:checkingInstalledChapterOriginals'),
-                'verifying',
-                () => !signal?.aborted,
-              );
-              const snapshot = await checkedChapters({ signal });
-              await externalChapters.readiness(snapshot, descriptor.id, { signal });
-              if (signal.aborted || !launch?.isCurrent())
-                throw new DOMException(t('interface:chapterSelectionCancelled'), 'AbortError');
-              // Reconcile only checked content; this does not replace the run.
-              // The explicit selection below still requires Stay / Replace.
-              adoptContentCatalog(contentFromChapters(snapshot));
-              const pack = packs.packs.find((p) => p.id === descriptor.id);
-              return requestWorldLaunch(
-                resolvePackCampaign(pack, pack.campaigns[0].id),
-                launch,
-                onStatus,
-              );
-            },
-          });
-        })
-      : [],
+                const snapshot = await checkedChapters({ signal });
+                await externalChapters.readiness(snapshot, descriptor.id, { signal });
+                if (signal.aborted || !launch?.isCurrent())
+                  throw new DOMException(t('interface:chapterSelectionCancelled'), 'AbortError');
+                // Reconcile only checked content; this does not replace the run.
+                // The explicit selection below still requires Stay / Replace.
+                adoptContentCatalog(contentFromChapters(snapshot));
+                const pack = packs.packs.find((p) => p.id === descriptor.id);
+                return requestWorldLaunch(
+                  resolvePackCampaign(pack, pack.campaigns[0].id),
+                  launch,
+                  onStatus,
+                );
+              },
+            });
+          })
+        : [],
     loadCatalog: async ({ signal }) => {
+      if (runtimeContent) return { format: 'revealline-optional-chapters.v1', packs: [] };
       const options = { signal, baseURL: new URL('../', location.href) };
       if (isRelease) await loadExternalCatalog(options);
       return loadOptionalCatalog(options);
@@ -10957,6 +11041,25 @@ try {
     authoredRoute?.id ?? (journeyEnabled ? '1' : 'legacy'),
   );
   mountWorkshopLinks({ document, href: workshopContext.href });
+  editionUI = runtimeContent
+    ? await mountEditionSoloUI({
+        provider: runtimeContent,
+        document,
+        window,
+        writer,
+        version: isRelease ? buildVersion : 'DEV',
+        pause: () => {
+          pause(true);
+          clearInput();
+        },
+        getRun: () => run,
+        getRecorder: () => recorder,
+        getPictureVisible: () =>
+          run?.status === 'won' && $('game-overlay').hidden && !$('show-result').hidden,
+        report: (message) => warning(message),
+        onMissions: (opener) => openUnifiedMissions(opener),
+      })
+    : null;
   attachFullscreen($('shell-fullscreen'));
   void initializeSoundtrack();
   if (autoplayPackLaunch)
@@ -11096,7 +11199,10 @@ try {
     const target = controllerFocus();
     if (availableFocusTarget(target)) target.focus({ preventScroll: true });
   }
+  startupEditionWriter = null;
 } catch (error) {
+  startupEditionWriter?.release();
+  startupEditionWriter = null;
   retireBootWorkshopInput();
   globalThis.RevealLineBoot?.fail(error);
   localizedText($('overlay-title'), () => t('interface:theGameCouldNotLoad'));

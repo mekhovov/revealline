@@ -1,5 +1,5 @@
 import { boundedJSON, exactKeys, required, stableId } from '../data-json.mjs';
-import { bodyMotionPose } from '../ui/body-motion.mjs';
+import { bodyMotionPose, validateBodyBacking } from '../ui/body-motion.mjs';
 import { validateTheme } from '../content.mjs';
 import { validateAnimationRecipes } from '../../authoring/motion-lab/animation.mjs';
 import { freezeEdition, resolveEditionAssets, resolveEditionSelection } from './model.mjs';
@@ -10,6 +10,7 @@ export function validateEditionPresetMotion(source) {
   const value = boundedJSON(source);
   for (const body of Object.values(value.characters ?? {})) {
     required(body && typeof body === 'object' && !Array.isArray(body), 'Invalid character preset.');
+    validateBodyBacking(body);
     if (body.bodyMotion === undefined) continue;
     exactKeys(body.bodyMotion, ['kind', 'radiansPerSecond', 'travelGain'], 'Cosmetic body motion');
     bodyMotionPose(body, { reduced: true });
@@ -25,16 +26,23 @@ export function validateEditionPresentation({ catalog, editionId, themes, preset
   const container = boundedJSON(themes),
     bodies = validateEditionPresetMotion(presets);
   required(
-    Array.isArray(container.themes) && container.themes.length === 1,
-    'An edition needs exactly one selected company theme.',
+    Array.isArray(container.themes) && container.themes.length > 0 && container.themes.length <= 32,
+    'An edition needs a bounded set of selected company themes.',
   );
-  const theme = container.themes[0],
-    checked = validateTheme(theme);
-  required(checked.valid, `Invalid edition theme: ${checked.errors.join(' ')}`);
+  const allowedThemes = selection.brand.themeIds ?? [selection.brand.themeId];
+  const theme = container.themes.find((entry) => entry.id === selection.brand.themeId);
   required(
-    theme.id === selection.brand.themeId && theme.id !== 'fpv' && theme.family === 'company',
-    'The edition theme must belong to its selected brand.',
+    theme && new Set(container.themes.map((entry) => entry.id)).size === container.themes.length,
+    'The selected brand needs its primary theme and unique campaign themes.',
   );
+  for (const entry of container.themes) {
+    const checked = validateTheme(entry);
+    required(checked.valid, `Invalid edition theme: ${checked.errors.join(' ')}`);
+    required(
+      allowedThemes.includes(entry.id) && entry.id !== 'fpv' && entry.family === 'company',
+      'The edition theme must belong to its selected brand.',
+    );
+  }
   required(
     bodies.characters &&
       typeof bodies.characters === 'object' &&
@@ -51,7 +59,10 @@ export function validateEditionPresentation({ catalog, editionId, themes, preset
     'An edition needs bounded animation recipes.',
   );
   validateAnimationRecipes(bodies);
-  for (const id of [theme.player, ...Object.values(theme.classBodies ?? {})])
+  for (const id of container.themes.flatMap((entry) => [
+    entry.player,
+    ...Object.values(entry.classBodies ?? {}),
+  ]))
     required(
       Object.hasOwn(bodies.characters, id),
       'Theme bodies must belong to the selected presets.',

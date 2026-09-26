@@ -8,7 +8,10 @@ import {
   companySourceDraft,
 } from '../../scripts/company-studio.mjs';
 import { compileEdition } from '../../scripts/compile-edition.mjs';
-import { projectEditionEnglishLocalization } from '../../scripts/edition-localization.mjs';
+import {
+  projectEditionEnglishLocalization,
+  projectEditionLocalization,
+} from '../../scripts/edition-localization.mjs';
 import { validateEditionPresetMotion } from '../editions/presets.mjs';
 import { validateBrandPack } from '../editions/model.mjs';
 
@@ -93,10 +96,26 @@ test('English edition projection removes other languages and legacy campaign tra
   assert.ok(code.startsWith('// Codec license retained.'));
   assert.equal(
     output.get('game/i18n/bootstrap.mjs').toString(),
-    "const locales = ['en']; export {locales};",
+    'const locales = ["en"]; export {locales};',
   );
   assert.ok(!output.get('game/i18n/content-registry.mjs').toString().includes('old-campaign'));
   assert.deepEqual(source.get('game/i18n/catalogs.mjs'), original);
+  const all = projectEditionLocalization(source);
+  const allLiteral = JSON.parse(
+    all
+      .get('game/i18n/catalogs.mjs')
+      .toString()
+      .match(/decode\(("[^"]*")\)/)[1],
+  );
+  assert.deepEqual(JSON.parse(LZString.decompressFromBase64(allLiteral)), {
+    en: { interface: { ready: 'Ready' }, gameplay: { score: 'Score' } },
+    uk: { interface: { ready: 'Non-English sentinel' } },
+  });
+  assert.equal(
+    all.get('game/i18n/bootstrap.mjs').toString(),
+    'const locales = ["en","uk"]; export {locales};',
+  );
+  assert.throws(() => projectEditionLocalization(source, { locales: ['uk'] }), /English fallback/);
 });
 
 test('publication sources and motion are bounded before an edition becomes active', () => {
