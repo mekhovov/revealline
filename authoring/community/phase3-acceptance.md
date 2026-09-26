@@ -1,10 +1,10 @@
 # Phase 3 acceptance — integrated source record
 
 Status: the mixed-media creator, portable video dependencies and installed runtime are implemented
-and merged through PR [#465](https://github.com/mekhovov/revealline/pull/465). The combined creator
-feature is assigned to `v0.141.0` in PR
-[#564](https://github.com/mekhovov/revealline/pull/564). This record preserves the Phase 3 evidence;
-the browser cases below and the combined immutable release remain open.
+through PR [#465](https://github.com/mekhovov/revealline/pull/465), merged in the combined creator
+PR [#564](https://github.com/mekhovov/revealline/pull/564), and published in `v0.141.0`. The
+current `v0.141.2` Pages release retains this behavior. This record preserves the Phase 3 evidence
+and the browser/device limits below.
 
 ## Completed evidence
 
@@ -52,7 +52,7 @@ the browser cases below and the combined immutable release remain open.
 - The first installed-player story trial completed and saved progress but failed before mounting story controls because initial story reset removed the canonical `#earned-picture` element. The host now keeps that poster connected while disposing only transient story presentation. A regression exercises the real player HTML nesting contract, and the fresh-origin browser flow then passed Play, Skip and Replay.
 - Filename stems remain review suggestions only. The paired case used the selected image hash, while the video-only case retained the captured poster hash and the complete video hash.
 
-## Remaining acceptance gates
+## Remaining acceptance gates after publication
 
 - Verify audible output on physical target browsers. Active-playback reload, reload after
   completed/skipped playback, exact separate-origin package import, complete-video byte/hash
@@ -63,8 +63,9 @@ the browser cases below and the combined immutable release remain open.
   Deliberately corrupting browser IndexedDB is not recorded as an end-user browser flow, and genuine
   browser-wide quota exhaustion remains unclaimed because quota estimates cannot force the next
   write to fail.
-- Complete hosted full-checkout preflight/build/release-ready checks on the combined PR, then freeze,
-  publish and publicly verify the assigned `v0.141.0` release.
+- Hosted preflight/build/release-ready, freeze, immutable release, selector and public-byte checks
+  completed for `v0.141.0` and are retained by `v0.141.2`; see
+  [combined-release-acceptance.md](combined-release-acceptance.md).
 - Firefox, Safari, a genuinely clean browser profile and physical mobile remain untested. The user directed use of the built-in browser when Safari computer control was unavailable.
 
 Physical trimming and conversion are not claimed by this phase. Playback range retains the complete original video.

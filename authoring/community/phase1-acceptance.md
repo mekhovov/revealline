@@ -1,10 +1,9 @@
 # Phase 1 acceptance — integrated source record
 
-Status: implemented and merged through PR
-[#465](https://github.com/mekhovov/revealline/pull/465). The combined creator feature is assigned
-to `v0.141.0` in PR [#564](https://github.com/mekhovov/revealline/pull/564); its hosted checks,
-immutable freeze and publication remain separate gates. This record preserves the Phase 1 evidence
-and does not claim the combined release is public.
+Status: implemented through PR [#465](https://github.com/mekhovov/revealline/pull/465), merged in
+the combined creator PR [#564](https://github.com/mekhovov/revealline/pull/564), and published in
+`v0.141.0`. The current `v0.141.2` Pages release retains this behavior. This record preserves the
+Phase 1 evidence and its original acceptance limits.
 
 ## Completed local evidence
 
@@ -40,17 +39,19 @@ The browser artifacts and edition identities above were produced by the earlier 
 - The thin checkout initially lacked the existing test MP3 and renderer dependency files. Exact tracked fixtures and presentation modules were hydrated; no production validators or tests were bypassed.
 - GitHub API rate limiting temporarily blocked check retrieval. Skipped broad tests under the repository's current release policy are not counted as passed.
 
-## Remaining acceptance gates
+## Remaining acceptance gates after publication
 
-The combined feature record now covers an actual current-v3 download and separate-origin import.
-Genuine clean-profile verification, browser-wide storage-failure UI, hosted exact-head checks and
-public deployed identity, hashes and released behavior remain open. Current-v3 local generation,
+The combined feature record covers an actual current-v3 download and separate-origin import.
+Hosted exact-head, immutable release, Pages selection and public-byte verification completed for
+`v0.141.0` and are retained by `v0.141.2`; their identities are recorded in
+[combined-release-acceptance.md](combined-release-acceptance.md). Genuine clean-profile
+verification and browser-wide storage-failure UI remain open. Current-v3 local generation,
 review, installation, ordinary legal play and earned-picture reload passed as recorded above. The
 separate-origin checks and shared atomic rollback/quota tests are recorded at their actual scope,
 not substituted for the remaining observations.
 
 The user explicitly directed **“use builtin browser instead”** after Safari control was unavailable. Acceptance therefore uses the Codex in-app browser; Firefox and Safari are untested rather than requiring another permissions prompt. No separate Chromium installation, genuinely clean profile or physical mobile support is claimed. Inline native screenshots were observed in the task; exported screenshot files or screenshot hashes are not claimed.
 
-Source integration is complete through PR #465. Publication remains with the combined `v0.141.0`
-task; no version, tag or Pages selector was changed by this phase record, and its unclaimed browser
-and public-release gates remain open.
+This phase record did not itself change a version, tag or Pages selector. Its earlier statement
+that publication remained open is historical; the combined feature is public, while the browser
+and device limits above remain.

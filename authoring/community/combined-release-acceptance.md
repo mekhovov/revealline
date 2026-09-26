@@ -10,9 +10,11 @@ release claims.
 - Merged framework source: PR #465, merged 25 September 2026.
 - Creator hardening: PR #564, merged as
   `5d6c97c850a648c5ebe93d3cf57731aeb67d0bbb`.
-- Published immutable release: `v0.141.0`, frozen from that exact creator-hardening source.
-- Replaced-edition preservation: Archive 94 publicly preserves `v0.132.5`.
-- Production selector: PR #673, merged as
+- Creator baseline release: `v0.141.0`, frozen from that exact creator-hardening source.
+- Current stable release: `v0.141.2`, frozen from community-hardening source
+  `12978e5fd3fe0ce70bbee96aa543f569f64622d4` and selected on Pages by PR #677.
+- Creator-baseline predecessor preservation: Archive 94 publicly preserves `v0.132.5`.
+- Creator-baseline production selector: PR #673, merged as
   `44a6ce672632a2d30cbf94374b172e213b75063c`.
 - Production Pages: deployment `6679678040` from workflow run `36246645007`, completed
   successfully. Its public audit authenticated 1,877 files and 630,364,265 bytes with zero
@@ -24,12 +26,15 @@ artifacts rather than source inputs.
 
 ## Post-release continuation
 
-The `v0.141.2` community hardening candidate adds a same-origin administrator report-triage page,
-production Compose/preflight contract, exact interrupted-tus fault proxy, source-to-target recovery
-rehearsal, and bounded deployed two-user journey over the already released community API. Its
-service suite passes 63/63 checks. It is outside the immutable `v0.141.0` acceptance claim until PR
-#675 and its release gate complete; live infrastructure execution remains a separate acceptance
-record.
+Community hardening merged through PR
+[#675](https://github.com/mekhovov/revealline/pull/675) as exact source
+`12978e5fd3fe0ce70bbee96aa543f569f64622d4` and is published as stable
+[`v0.141.2`](https://github.com/mekhovov/revealline/releases/tag/v0.141.2). It adds a same-origin
+administrator report-triage page, production Compose/preflight contract, exact interrupted-tus
+fault proxy, source-to-target recovery rehearsal, and bounded deployed two-user journey over the
+already released community API. Exact-head local coverage passes 556/556, including the direct
+63/63 service suite. Live infrastructure execution remains a separate acceptance record. See the
+bounded [v0.141.2 publication evidence](v0.141.2-publication-evidence.md).
 
 ## Included behavior
 
@@ -77,8 +82,11 @@ record.
 ## Integrated evidence
 
 - `npm run test:creator-feature`: **544** top-level subtests and **546/546** total
-  creator/runtime tests passed. The community service suite passed **43/43** checks from the current
-  rebased source. The full runtime run first exposed five sparse
+  creator/runtime tests passed for the `v0.141.0` baseline. Its community service suite passed
+  **43/43** checks. The later `v0.141.2` exact-head local aggregate passes **556/556**, including
+  the direct **63/63** community-service suite. Qualification run `36250777506` used the explicit
+  automated-suite waiver, so it has no hosted test total. The `v0.141.0` full runtime run first
+  exposed five sparse
   checkout omissions and three injected-host database-model conflicts; the exact owning cohorts
   passed after restoring the release inputs and limiting automatic cross-database accounting to a
   standard browser IndexedDB factory. Explicit managed-store injection remains covered.
@@ -233,16 +241,19 @@ restored only from the exact retained package. Atomic quota-failure rollback is 
 injected IndexedDB failures. Deliberate browser database corruption and genuine browser-wide quota
 exhaustion are not claimed as end-user browser acceptance.
 
-PR #564 is merged and `v0.141.0` is published from its exact merge source. Archive 94 preserves the
-replaced `v0.132.5` edition. Selector PR #673 is merged, and production Pages deployment
-`6679678040` / run `36246645007` passed its public audit with 1,877 files, 630,364,265 bytes and
-zero failures. Ordinary gameplay, Creator and Team routes loaded cleanly in the built-in browser.
-No creator PR, release, archive or Pages selector gate remains.
+PR #675 is merged and `v0.141.2` is published from exact merge source
+`12978e5fd3fe0ce70bbee96aa543f569f64622d4`. `v0.141.1` remains an intermediate immutable
+GitHub release that was not selected on Pages. Archive 95 preserves the replaced `v0.141.0`
+edition. Selector PR #677 merged as `34f45503c32479591dcdc36e7236aaa2eb348a2f`, and production
+Pages deployment `6680716352` / run `36252239829` passed its public audit with 1,888 files,
+630,471,797 bytes, 1,888 attempts, zero retries and zero failures. The public release record,
+Creator route and community route resolve to `v0.141.2`. No `v0.141.2` release, archive or Pages
+selector gate remains.
 
 The remaining acceptance is environment-dependent: live community infrastructure and the complete
 two-user journey need 0.5–1 day after PostgreSQL/proxy/mail/blob infrastructure is available;
 Firefox, Safari, physical mobile, physical-speaker and broader-codec qualification need 1–2 days
 when those environments are available. Genuine browser-wide quota exhaustion, deliberate storage
-corruption and measured peak-memory acceptance also remain unclaimed. Because `v0.141.0` is the
-highest published stable release, any still-open `v0.133.0` through `v0.140.0` candidate must be
-renumbered above `v0.141.0` before publication.
+corruption and measured peak-memory acceptance also remain unclaimed. Because `v0.141.2` is the
+highest published stable release, earlier working allocations are stale. Future candidates require
+fresh allocation after checking the open `v0.142.0` through `v0.149.x` ranges.
