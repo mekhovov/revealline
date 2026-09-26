@@ -110,6 +110,10 @@ test("publisher serializes requests and passes immutable artifacts through each 
   );
   assert.match(workflow, /needs\.qualify\.outputs\.artifact_id/u);
   assert.match(workflow, /needs\.qualify\.outputs\.artifact_digest/u);
+  assert.match(workflow, /retain-qualified-artifact:/u);
+  assert.match(workflow, /source_sha: \$\{\{ inputs\.source_sha \}\}/u);
+  assert.match(workflow, /Retain a run-owned copy for guarded resumption/u);
+  assert.match(workflow, /needs\.retain-qualified-artifact\.outputs\.artifact_id/u);
   assert.match(workflow, /digest="\$\{EXPECTED_DIGEST#sha256:\}"/u);
   assert.match(workflow, /test "\$\(jq -r \.digest/u);
   assert.match(workflow, /release_artifact\.py run/u);
@@ -125,6 +129,9 @@ test("publisher serializes requests and passes immutable artifacts through each 
   assert.match(qualification, /workflow_call:/u);
   assert.match(qualification, /artifact_id:/u);
   assert.match(qualification, /artifact_digest:/u);
+  assert.match(qualification, /jobs\.freeze\.outputs\.artifact_id \|\| jobs\.deduplicate/u);
+  assert.match(qualification, /SOURCE_SHA: \$\{\{ inputs\.source_sha \|\| github\.sha \}\}/u);
+  assert.match(qualification, /artifact_name=\$\(jq -r \.name/u);
   assert.match(evidence, /workflow_call:/u);
   assert.match(evidence, /artifact_id:/u);
   assert.match(evidence, /artifact_digest:/u);
