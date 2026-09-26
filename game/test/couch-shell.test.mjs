@@ -460,7 +460,7 @@ test('authored Arcade removes equipment controls and hints; Tactical reflects th
 });
 
 test('controller setup/help and repeated keyboard Confirm cannot leak through the flight boundary', async (t) => {
-  const f = await couchPage(t, { pads: [pad(0)] });
+  const f = await couchPage(t, { pads: [pad(0)], nativeKeyboard: true });
   f.join(0);
   f.focus('race-help');
   f.pulse(0, 0);
@@ -475,11 +475,22 @@ test('controller setup/help and repeated keyboard Confirm cannot leak through th
   f.frame();
   assert.equal(f.state(), 'paused');
   const held = f.checkpoint();
-  const e = press(f, 'Enter', f.$('race-start'), { repeat: true });
-  assert.equal(e.defaultPrevented, true);
+  const start = f.$('race-start'),
+    repeated = press(f, 'Enter', start, { repeat: true });
+  assert.equal(repeated.defaultPrevented, true);
   f.frames(4);
   assert.deepEqual(f.checkpoint(), held);
-  f.$('race-start').click();
+  const release = f.key('Enter', false, start);
+  assert.equal(
+    release.defaultPrevented,
+    true,
+    'The mirrored key release belongs to the controller lifecycle.',
+  );
+  f.frames(151);
+  assert.deepEqual(f.checkpoint(), held, 'Neutral waiting never advances the paused match.');
+  const deliberate = f.key('Enter', true, start);
+  assert.equal(deliberate.defaultPrevented, false, 'A later neutral native Confirm stays native.');
+  f.key('Enter', false, start);
   f.frame();
   assert.equal(f.state(), 'running');
   assert.equal(f.renders[0].ability.cooldownUntil, 0);
