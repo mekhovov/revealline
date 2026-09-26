@@ -216,16 +216,6 @@
       </button>
       <span id="shell-edition" class="shell-edition"></span>
       <button
-        id="shell-fullscreen"
-        class="shell-fullscreen"
-        type="button"
-        aria-label="Enter fullscreen"
-        hidden
-        data-i18n-aria-label="interface:enterFullscreen"
-      >
-        ⛶
-      </button>
-      <button
         id="pause-button"
         class="icon-button shell-pause"
         type="button"
@@ -242,9 +232,6 @@
         data-i18n="interface:missions"
       >
         Missions
-      </button>
-      <button id="journey-skip" type="button" hidden data-i18n="interface:skipMission">
-        Skip mission
       </button>
       <button
         id="shell-collection"
@@ -554,77 +541,123 @@
                   >
                     Learn by playing
                   </button>
-                  <button
-                    id="overlay-restart"
-                    class="button secondary"
-                    type="button"
-                    hidden
-                    data-i18n="interface:restartMission"
+                  <section
+                    class="pause-menu-section pause-missions-section"
+                    aria-labelledby="pause-missions-heading"
                   >
-                    Restart mission
-                  </button>
-                  <button
-                    id="overlay-missions"
-                    class="button secondary"
-                    type="button"
-                    hidden
-                    data-i18n="interface:missions"
-                  >
-                    Missions
-                  </button>
-                  <button
-                    id="overlay-help"
-                    class="button secondary"
-                    type="button"
-                    hidden
-                    data-i18n="common:navigation.howToPlay"
-                  >
-                    How to play
-                  </button>
-                  <button
-                    id="overlay-settings"
-                    class="button secondary"
-                    type="button"
-                    hidden
-                    data-i18n="common:navigation.settings"
-                  >
-                    Settings
-                  </button>
-                  <button
-                    id="overlay-sound"
-                    class="button secondary"
-                    type="button"
-                    aria-pressed="false"
-                    hidden
-                    data-i18n="interface:soundOff"
-                  >
-                    Sound: off
-                  </button>
-                  <details id="pause-mission-info" class="pause-mission-info" hidden>
-                    <summary id="pause-mission-info-toggle" data-i18n="interface:missionInfo">
-                      Mission info
-                    </summary>
-                    <div>
+                    <h3 id="pause-missions-heading" data-i18n="interface:missions">Missions</h3>
+                    <div class="pause-action-grid">
                       <button
-                        id="overlay-field-details"
+                        id="overlay-restart"
                         class="button secondary"
                         type="button"
                         hidden
-                        data-i18n="interface:fieldDetails"
+                        data-i18n="interface:restartMission"
                       >
-                        Field details
+                        Restart mission
                       </button>
                       <button
-                        id="overlay-brief"
+                        id="journey-skip"
                         class="button secondary"
                         type="button"
                         hidden
-                        data-i18n="interface:missionBrief"
+                        data-i18n="interface:skipMission"
                       >
-                        Mission brief
+                        Skip mission
                       </button>
+                      <button
+                        id="overlay-missions"
+                        class="button secondary"
+                        type="button"
+                        hidden
+                        data-i18n="interface:chooseMission"
+                      >
+                        Choose mission
+                      </button>
+                      <details id="pause-mission-info" class="pause-mission-info" hidden>
+                        <summary id="pause-mission-info-toggle" data-i18n="interface:missionInfo">
+                          Mission info
+                        </summary>
+                        <div>
+                          <button
+                            id="overlay-field-details"
+                            class="button secondary"
+                            type="button"
+                            hidden
+                            data-i18n="interface:fieldDetails"
+                          >
+                            Field details
+                          </button>
+                          <button
+                            id="overlay-brief"
+                            class="button secondary"
+                            type="button"
+                            hidden
+                            data-i18n="interface:missionBrief"
+                          >
+                            Mission brief
+                          </button>
+                        </div>
+                      </details>
                     </div>
-                  </details>
+                  </section>
+                  <div class="pause-secondary-groups">
+                    <section
+                      class="pause-menu-section pause-sound-section"
+                      aria-labelledby="pause-sound-heading"
+                    >
+                      <h3 id="pause-sound-heading" data-i18n="interface:sound">Sound</h3>
+                      <div class="pause-action-grid">
+                        <button
+                          id="overlay-sound"
+                          class="button secondary"
+                          type="button"
+                          aria-pressed="false"
+                          hidden
+                          data-i18n="interface:soundOff"
+                        >
+                          Sound: off
+                        </button>
+                        <button
+                          id="overlay-next-song"
+                          class="button secondary"
+                          type="button"
+                          disabled
+                          hidden
+                          data-i18n="interface:quickMusic.next"
+                        >
+                          Next song
+                        </button>
+                      </div>
+                    </section>
+                    <section
+                      class="pause-menu-section pause-options-section"
+                      aria-labelledby="pause-config-heading"
+                    >
+                      <h3 id="pause-config-heading" data-i18n="interface:config">Config</h3>
+                      <div class="pause-action-grid">
+                        <button
+                          id="overlay-settings"
+                          class="button secondary"
+                          type="button"
+                          hidden
+                          data-i18n="common:navigation.settings"
+                        >
+                          Settings
+                        </button>
+                        <button
+                          id="overlay-fullscreen"
+                          class="button secondary"
+                          type="button"
+                          data-fullscreen-label
+                          hidden
+                          data-i18n="interface:fullScreen"
+                        >
+                          Full screen
+                        </button>
+                      </div>
+                    </section>
+                  </div>
                   <button
                     id="overlay-menu"
                     class="button secondary"
@@ -2787,6 +2820,24 @@ No offline check yet.</pre
             Settings
           </button>
           <button
+            id="shell-help"
+            type="button"
+            class="button secondary"
+            data-i18n="common:navigation.howToPlay"
+          >
+            How to play
+          </button>
+          <button
+            id="shell-fullscreen"
+            type="button"
+            class="button secondary"
+            data-fullscreen-label
+            hidden
+            data-i18n="interface:fullScreen"
+          >
+            Full screen
+          </button>
+          <button
             id="shell-offline"
             type="button"
             class="button secondary"
@@ -2927,10 +2978,6 @@ No offline check yet.</pre
             >Play the original mission catalogue</span
           ></a
         >
-        <button id="shell-help" type="button" class="button secondary">
-          <span data-i18n="common:navigation.howToPlay">How to play</span>
-          <span data-i18n="interface:controlsAndGameRules">Controls and game rules</span>
-        </button>
         <button id="shell-guide" type="button" class="button secondary">
           <span data-i18n="interface:fieldGuide">Field guide</span>
           <span data-i18n="interface:practiceDrawingAndReconnecting"
