@@ -17,10 +17,17 @@ campaign.
 5. After a legal win, the poster is earned first. The video is an optional victory story with
    **Play**, **Skip** and **Replay**. A decoder error or browser autoplay refusal leaves the poster
    and **Next** available.
+6. Keep the draft URL for local recovery and choose **Back up source project** for a portable private
+   `.rlsource`. Mixed-media checkpoints and backups retain the exact selected image/video bytes,
+   pairing correction, poster choice, requested and observed frame timing, playback range and
+   generated project. They exclude unrelated library items and player progress. If checkpoint
+   storage fails, keep the page open and download the source backup before leaving.
 
 The media review controller produces a `revealline-creator-media-intake.v1` prepared result and a
 strict `revealline-creator-media-dependencies.v1` closure. Campaign assembly must store those exact
 manifest and asset bytes before the main creator page exposes video approval. The optional
 [media editor](media-editor-guide.md) remains a separate local preparation step: trim, conversion,
 resize or compression produces a verified MP4 that the creator must deliberately select as the
-campaign input. A playback range alone still retains the complete original bytes.
+campaign input. A playback range alone still retains the complete original bytes. Reopening an
+`.rlpack` creates an editable source from the shareable dependencies, but cannot restore private
+image originals that the portable package intentionally excludes; use the `.rlsource` for that.

@@ -89,10 +89,12 @@ deleting anything.
 ## Back up or edit the source
 
 - Creator drafts autosave as immutable checkpoints. Reload the same draft URL to restore its latest
-  checkpoint. A stale browser tab cannot silently replace a newer checkpoint.
-- **Back up source project** downloads `.rlsource` with the editable project, fitting information,
-  required picture inventory and retained originals available to that draft. It does not establish
-  approval, installation or progress.
+  checkpoint. Image, video and mixed-media checkpoints retain the exact source bytes, proposed or
+  corrected pairings, selected poster frame, requested and observed frame timing, playback ranges
+  and generated editable project. A stale browser tab cannot silently replace a newer checkpoint.
+- **Back up source project** downloads `.rlsource` with that editable project and its scoped private
+  originals. The backup remains downloadable when checkpoint storage fails. It does not establish
+  approval, installation or progress, and it excludes unrelated library media and player saves.
 - A `.rlpack` can reopen as editable source, but it cannot recover image originals deliberately
   excluded from the shareable artifact.
 - **Open advanced editor** creates or reopens an independent Content Studio copy. Save it there,
@@ -130,11 +132,13 @@ production gates.
 
 Playback ranges retain the complete video. To create different physical bytes first, use the
 [video poster workshop](../../authoring/video-poster/) and follow the
-[media editor guide](media-editor-guide.md). The bounded editor currently accepts one silent,
-browser-decodable MP4 or WebM video track, then emits and re-verifies AVC/H.264 MP4 with optional
-Balanced or Compact resize/compression. Audio-bearing and multi-track physical conversion remains
-disabled. Browser support depends on successful decode/encode probes; only the built-in browser has
-the recorded trim/conversion evidence, while Firefox, Safari and physical mobile remain open.
+[media editor guide](media-editor-guide.md). The bounded editor accepts one silent,
+browser-decodable MP4 or WebM video track, or one MP4 containing exactly one AVC/H.264 video track
+and one AAC audio track. It emits a re-verified AVC/H.264 MP4, retains AAC only on the bounded audio
+path, and offers optional Balanced or Compact resize/compression. Additional tracks and other audio
+codec combinations remain unsupported. Browser support depends on successful decode/encode probes;
+only the built-in browser has recorded trim/conversion evidence, while Firefox, Safari and physical
+mobile remain open.
 
 The transformed MP4 is a new input. Select it deliberately in the campaign creator and repeat media
 review. The editor does not silently replace a previously approved campaign dependency.
@@ -159,7 +163,7 @@ review. The editor does not silently replace a previously approved campaign depe
 | Studio JSON is rejected by the pack importer | Reopen it in Content Studio. It is editable source, not `.rlpack` or legacy expansion data.                                                                   |
 | Two files paired incorrectly                 | Review normalized-stem suggestions and choose the exact poster for the video. Resolve ambiguous stems manually.                                               |
 | Video poster capture or playback fails       | Keep the original and use a codec the current browser actually decodes. Renaming the extension does not convert it.                                           |
-| Physical video download stays disabled       | The editor accepts one silent decodable track only. Keep audio videos unchanged for victory playback, or prepare a verified silent derivative.                |
+| Physical video download stays disabled       | Use one silent decodable MP4/WebM track or an MP4 with exactly one AVC video and one AAC audio track. Other track layouts and codecs remain unchanged.         |
 | Generated item fails                         | Read that card's error, correct or regenerate it, or explicitly exclude it. Other completed cards remain reviewable.                                          |
 | Storage is full or unavailable               | Keep the page open and download the approved pack or source backup. Review a split for large batches; writes can still fail after an advisory quota estimate. |
 | Another tab changed the draft                | Export the unsaved source, reload the accepted head, and reconcile deliberately.                                                                              |
