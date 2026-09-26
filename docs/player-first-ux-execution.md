@@ -24,15 +24,18 @@ The separately deployed community API remains unavailable until infrastructure
 is selected.
 
 **Active candidate:** v0.141.4 combines the merged community acceptance and
-validation-worker isolation from PR #680 with Couch secondary navigation in
-[PR #683](https://github.com/mekhovov/revealline/pull/683), rebased onto exact
-main `01de92e9693d640e08ff21ba95ce12a978cb486f`. It preserves Team
-quick-start focus and Cancel behavior. Its prepared donor passed the
+validation-worker isolation from PR #680 with Couch secondary navigation.
+[PR #683](https://github.com/mekhovov/revealline/pull/683) passed hosted
+exact-head qualification and merged as
+`65bdcd9825e9e6129bb8e039c3c8922615642689`. It preserves Team quick-start
+focus and Cancel behavior. Its prepared donor passed the
 feature-owned shell/Pause and departure/markup/quick-start boundaries at 27/27
 and 37/37; both pass again on this exact rebased source. Repository validation,
 localization, lint, game/site and native formatting, changed-file syntax and
-four-way v0.141.4 version parity also pass. Hosted exact-head qualification,
-merge, release, selector and public player-flow acceptance remain open.
+four-way v0.141.4 version parity also pass. The terminal candidate additionally
+makes Classic Team continuation tolerate its opaque owner ID; the focused
+continuation slice passes 14/14. Terminal hosted qualification, immutable
+release, selector and public player-flow acceptance remain open.
 
 **Ordered continuation:** v0.141.3 is the latest stable release; later rows remain working
 allocations rather than accepted releases. Reconcile each item onto the accepted predecessor, rerun its
