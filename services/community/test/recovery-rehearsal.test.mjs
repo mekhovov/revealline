@@ -35,7 +35,7 @@ const fixture = async (t) => {
   };
 };
 
-const inspection = ({ key, sha256, size, submissions = 2 }) => ({
+const inspection = ({ key, sha256, size, submissions = 2, tusUploads = 0 }) => ({
   schemaRevision: 3,
   counts: {
     submissions,
@@ -44,7 +44,7 @@ const inspection = ({ key, sha256, size, submissions = 2 }) => ({
     auditRecords: 1,
     admissionWindows: 3,
     admissionEvents: 2,
-    tusUploads: 0,
+    tusUploads,
   },
   submissionStatusCounts: { draft: 1, published: submissions - 1 },
   tableFingerprints: {
@@ -91,8 +91,9 @@ test('rehearsal restores into a confirmed distinct target and writes a redacted 
   assert.deepEqual(observedRoles, ['source', 'target']);
   assert.deepEqual(
     calls.map(({ command }) => command),
-    ['pg_dump', 'pg_restore'],
+    ['pg_dump', 'pg_restore', 'psql'],
   );
+  assert.match(calls[2].args.at(-1), /DELETE FROM public\.community_tus_uploads/u);
   assert.equal(
     await readFile(path.join(value.targetBlobRoot, value.key), 'utf8'),
     value.bytes.toString('utf8'),
@@ -220,4 +221,25 @@ test('PostgreSQL inspection uses a credential-free process environment boundary'
   assert.equal(calls[0].command, 'psql');
   assert.equal(calls[0].args.includes('postgres://inspector:secret@database/revealline'), false);
   assert.equal(calls[0].options.captureOutput, true);
+});
+
+test('disaster rehearsal expires in-progress tus sessions and records their source count', async (t) => {
+  const value = await fixture(t);
+  const plan = planRecoveryRehearsal(value);
+  const receipt = await rehearseCommunityRecovery({
+    ...value,
+    workDirectory: path.join(value.root, 'work'),
+    receiptFile: path.join(value.root, 'receipt.json'),
+    expectedTargetIdentity: plan.targetDatabase,
+    runCommand: commandRecorder(Buffer.from('database'), []),
+    inspectDatabase: async ({ role }) =>
+      inspection({
+        key: value.key,
+        sha256: value.sha256,
+        size: value.bytes.length,
+        tusUploads: role === 'source' ? 3 : 0,
+      }),
+  });
+  assert.equal(receipt.evidence.discardedTusUploads, 3);
+  assert.ok(receipt.checks.includes('transient-tus-uploads-expired'));
 });

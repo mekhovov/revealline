@@ -1,11 +1,14 @@
 import { spawn } from 'node:child_process';
+import { createBlobStore } from './blob-store-factory.mjs';
+import { readConfig } from './config.mjs';
+import { postgresCommandEnvironment } from './postgres-command-environment.mjs';
 import { planRecoveryRehearsal, rehearseCommunityRecovery } from './recovery-rehearsal.mjs';
 
 const runCommand = (command, args, { databaseUrl, captureOutput = false } = {}) =>
   new Promise((resolve, reject) => {
     const child = spawn(command, args, {
       stdio: captureOutput ? ['ignore', 'pipe', 'inherit'] : 'inherit',
-      env: databaseUrl ? { ...process.env, PGDATABASE: databaseUrl } : process.env,
+      env: databaseUrl ? postgresCommandEnvironment(databaseUrl) : process.env,
     });
     let output = '';
     if (captureOutput) {
@@ -28,11 +31,39 @@ const option = (name) => {
 };
 
 const [operation] = process.argv.slice(2);
+const sourceConfig = readConfig(process.env, { requireAuth: false });
+const targetDriver = process.env.COMMUNITY_RECOVERY_TARGET_BLOB_STORAGE ?? 'disk';
+const targetConfig = readConfig(
+  {
+    COMMUNITY_BLOB_STORAGE: targetDriver,
+    COMMUNITY_BLOB_ROOT:
+      process.env.COMMUNITY_RECOVERY_TARGET_BLOB_ROOT ??
+      process.env.COMMUNITY_RECOVERY_REHEARSAL_TARGET_BLOB_ROOT,
+    COMMUNITY_S3_BUCKET: process.env.COMMUNITY_RECOVERY_TARGET_S3_BUCKET,
+    COMMUNITY_S3_REGION: process.env.COMMUNITY_RECOVERY_TARGET_S3_REGION,
+    COMMUNITY_S3_ENDPOINT: process.env.COMMUNITY_RECOVERY_TARGET_S3_ENDPOINT,
+    COMMUNITY_S3_FORCE_PATH_STYLE: process.env.COMMUNITY_RECOVERY_TARGET_S3_FORCE_PATH_STYLE,
+    COMMUNITY_BLOB_STAGING_ROOT: process.env.COMMUNITY_RECOVERY_TARGET_BLOB_STAGING_ROOT,
+  },
+  { requireAuth: false },
+);
+const sourceBlobStore =
+  sourceConfig.blobStorage.driver === 's3' ? await createBlobStore(sourceConfig.blobStorage) : null;
+const targetBlobStore =
+  targetConfig.blobStorage.driver === 's3' ? await createBlobStore(targetConfig.blobStorage) : null;
 const configuration = {
   sourceDatabaseUrl: process.env.COMMUNITY_DATABASE_URL,
-  sourceBlobRoot: process.env.COMMUNITY_BLOB_ROOT ?? './var/blobs',
+  sourceBlobRoot:
+    sourceConfig.blobStorage.driver === 'disk' ? sourceConfig.blobStorage.root : undefined,
+  sourceBlobStore,
+  sourceBlobStorage:
+    sourceConfig.blobStorage.driver === 's3' ? sourceConfig.blobStorage : undefined,
   targetDatabaseUrl: process.env.COMMUNITY_RECOVERY_REHEARSAL_TARGET_DATABASE_URL,
-  targetBlobRoot: process.env.COMMUNITY_RECOVERY_REHEARSAL_TARGET_BLOB_ROOT,
+  targetBlobRoot:
+    targetConfig.blobStorage.driver === 'disk' ? targetConfig.blobStorage.root : undefined,
+  targetBlobStore,
+  targetBlobStorage:
+    targetConfig.blobStorage.driver === 's3' ? targetConfig.blobStorage : undefined,
 };
 
 if (operation === 'plan') {
