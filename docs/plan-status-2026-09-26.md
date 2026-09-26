@@ -6,17 +6,21 @@ versions or acceptance gates are still current.
 
 ## Public and release state
 
-- Latest GitHub release: **v0.132.4**. Its public frozen-build acceptance was not repeated in this
-  lane, so the last independently recorded accepted public baseline here remains **v0.132.3**.
+- Latest GitHub release: **v0.132.5**, published from accepted source
+  `a8881ac17e44f38fb1e9dc15428899992727cc78`. PR #668 selected its immutable assets for Pages;
+  current `main` is `8f7ea5540d6851fb2d6d77a42c899e071e65e52a`. This lane has not repeated the
+  frozen public play journey, so the release and selector merge are not represented here as new
+  independent public acceptance.
 - PR #654 merged the v0.132.5 source, and PR #660 then repaired its stale Field Kit review ledger.
-  Current `main` is `a8881ac17e44f38fb1e9dc15428899992727cc78`. No v0.132.5 GitHub Release
-  exists yet. Qualification correctly rejected the earlier stale ledger after a renderer dependency
-  entered the Team review closure; the accepted correction preserves that fail-closed gate.
-  Immutable assets, Pages and public acceptance remain publisher-owned. A source merge is not
-  public delivery.
+  Qualification correctly rejected the earlier stale ledger after a renderer dependency entered the
+  Team review closure; the accepted correction preserves that fail-closed gate.
 - Corrective PR #663 merged the exact Team picture revision-90 binding after its focused gate passed.
-  Its predecessor run failed closed before release creation, and no v0.132.5 tag, immutable assets
-  or public deployment exists yet.
+  Its predecessor run failed closed before release creation; the corrected source is the published
+  v0.132.5 target.
+- Test-only PR #669 isolates the remaining Solo compact-filter host failure on current `main`. Its
+  exact failing case now passes, as do all 8 controller-host cases and the 167-case compact/controller
+  cohort. Runtime behavior is unchanged; review and merge remain pending, and PR #530 must rerun
+  after the correction lands.
 - The 23-branch cultural/pacing successor chain through PR #666 has been rebased onto current `main`.
   The 22 existing remote tips were force-updated atomically with exact old-head leases; PR #666 was
   then pushed as the new terminal branch. All 80 rewritten commits range-diff one-to-one with their
@@ -42,6 +46,7 @@ versions or acceptance gates are still current.
 | Crosswind cultural completion / PR #665          | Clean explicit v27 draft      | Redesigns Survey markers, Compass array and Outer loop with original wall fields informed by three official museum records. Preserves v25/default and v26 ownership, actors, foundations, arrows and objectives; reduces the post-opening open/plain queue from 18 to 15. Its exact current-main tip is `3b47b6b65`; the pre-rebase cohort passed 155/155 with zero skips and the 80-commit range-diff is one-to-one. Hosted exact-head qualification remains.                     |
 | Fracture/Apex cultural completion / PR #666      | Clean explicit v28 draft      | Redesigns Bank the crossing, Five anchors and Final broadcast with original spatial fields informed by official Opishne museum, UNESCO Crimean Tatar Örnek and Museum Fund records. Preserves v25/default and v27 history, gameplay rules, objectives, relays, bonuses and actor roles; reduces the open/plain review queue from 15 to 12. Exact current-main runtime/evidence head `7c8980dbd` passes 158/158 with zero skips, repository validation and lint/format/diff checks. |
 | Neon cultural completion / PR #667               | Clean explicit v29 draft      | Adds original wall fields to Folded corner, Inside out and Four quarters using bounded Museum Fund, Ivan Honchar Museum and UNESCO vocabulary. Preserves v25/default and v28 history, foundations, spawns, actors and rules; retains Side-door bays as an intentional open contour puzzle and reduces the review queue from 12 to 9. Exact runtime/evidence head `5696f27f8` passes 161/161 with zero skips, repository validation and lint/format/diff checks.                    |
+| Rover cultural completion / local v30            | Clean explicit v30 candidate  | Promotes the reviewed Split berths and Stepped return Ukrainian/FPV geometry into the current chain while preserving the newer pressure actors and rules. The candidate/route/bootstrap cohort passes 150/150 with zero skips, repository validation and lint/format/diff checks pass, and the open/plain queue falls from 9 to 7. PR publication remains.                                                                                                                              |
 
 After the final main rebase, an uncontended bounded host rerun passed all selected corrected cases:
 four Solo scenarios, four Versus scenarios, two representative Team source routes and the three-stage
@@ -67,14 +72,14 @@ feasibility and rules out a mandatory late-cleanup tail in those fixtures; it do
 Effort starts when the item has an uncontested release or implementation slot. GitHub runner,
 large-asset and archive delays are outside these estimates.
 
-| Priority | Remaining item                                | Exit condition                                                                                                                                                                                                                                                                                                 |                                                                       Indicative effort |
-| -------: | --------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------: |
-|        0 | Finish the v0.132.4/v0.132.5 publication lane | Confirm v0.132.4 public-byte acceptance, then immutable v0.132.5 release, Pages and bounded public proof without mixing in release-optimization changes                                                                                                                                                        | Source is merged; **2–8 hours** for immutable packaging, Pages and bounded public proof |
-|        1 | Promote the cultural Journey chain            | Review/merge in dependency order, exact-head qualification, immutable release and public play for each accepted batch                                                                                                                                                                                          |                                                  **1–2 working days per release batch** |
-|        2 | Complete second Team slice and fixtures       | Review PRs #650/#651, immutable public delivery and frozen-build checks; source wiring and bounded runtime/host verification are complete                                                                                                                                                                      |                                                        **3–6 hours** plus release queue |
-|        3 | Team continuation and qualification           | Review/publish PR #657; paired-board fairness, controller/touch/keyboard, cross-campaign Next, Skip, reload/Continue and public frozen-build proof                                                                                                                                                             |                                         **8–16 hours** plus release queue/device access |
-|        4 | Whole-Journey pacing and accessibility        | PR #661 establishes the exact-current campaign/spatial inventory; PRs #664-#666 and the local v29 Neon slice address four three-mission repetition clusters. Review the remaining 9 candidates selectively, then qualify reduced effects, contrast, small screens, performance and deterministic compatibility |       **2–4 working days** for further targeted batches and accessibility qualification |
-|        5 | Human balance and cultural review             | Understandable failures, distinct missions, enjoyable retries and cultural review by people                                                                                                                                                                                                                    |                                      **1–2 days synthesis** after testers are available |
+| Priority | Remaining item                                | Exit condition                                                                                                                                                                                                                                                                           |                                                                       Indicative effort |
+| -------: | --------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------: |
+|        0 | Finish the v0.132.4/v0.132.5 publication lane | Confirm v0.132.4 public-byte acceptance, then immutable v0.132.5 release, Pages and bounded public proof without mixing in release-optimization changes                                                                                                                                  | Source is merged; **2–8 hours** for immutable packaging, Pages and bounded public proof |
+|        1 | Promote the cultural Journey chain            | Review/merge in dependency order, exact-head qualification, immutable release and public play for each accepted batch                                                                                                                                                                    |                                                  **1–2 working days per release batch** |
+|        2 | Complete second Team slice and fixtures       | Review PRs #650/#651, immutable public delivery and frozen-build checks; source wiring and bounded runtime/host verification are complete                                                                                                                                                |                                                        **3–6 hours** plus release queue |
+|        3 | Team continuation and qualification           | Review/publish PR #657; paired-board fairness, controller/touch/keyboard, cross-campaign Next, Skip, reload/Continue and public frozen-build proof                                                                                                                                       |                                         **8–16 hours** plus release queue/device access |
+|        4 | Whole-Journey pacing and accessibility        | PR #661 establishes the exact-current campaign/spatial inventory; PRs #664-#667 and local v30 address six bounded repetition clusters. Review the remaining 7 candidates selectively, then qualify reduced effects, contrast, small screens, performance and deterministic compatibility |       **2–4 working days** for further targeted batches and accessibility qualification |
+|        5 | Human balance and cultural review             | Understandable failures, distinct missions, enjoyable retries and cultural review by people                                                                                                                                                                                              |                                      **1–2 days synthesis** after testers are available |
 
 Existing v0.133-v0.137 player-UX drafts occupy the nominal release sequence. Cultural PR titles
 currently target v0.138 onward, but version numbers must be assigned by the sole publisher from the
@@ -103,10 +108,9 @@ accepted predecessor; draft labels do not reserve a release.
    about 5.5–30.6 seconds in the fixture harness. This closes the corrected-assertion gap, not the
    broader startup/performance qualification.
 8. **First cultural gate:** PR #530's current-main run passed preflight and all four previously
-   failing Team composite cases, but the focused job still failed the Solo compact-filter focus
-   assertion in `mission-library-controller-host.test.mjs:329`. Seven sibling controller cases pass.
-   The failure is now isolated to that host path; PR #530 remains failed until a separate correction
-   lands and the exact-head run passes.
+   failing Team composite cases, but the focused job failed the Solo compact-filter focus assertion.
+   PR #669 corrects the fixture's clock/rearm model on exact `main`; its full controller-host file
+   passes 8/8. PR #530 remains failed until #669 lands and the exact-head run is repeated.
 9. **Inventory is not balance evidence:** PR #661 finds 21 post-opening missions with neither wall
    nor slow/lethal terrain and confirms consistent Standard speed and post-opening actor counts.
    Those are review candidates, not automatic defects; deterministic routes and human play still
@@ -125,6 +129,10 @@ accepted predecessor; draft labels do not reserve a release.
     candidate/route/bootstrap/host cohort passes 161/161, along with repository validation and
     targeted lint/format/diff checks. Review, hosted qualification, promotion and public evidence
     are still required.
+14. **v30 remains opt-in:** the local Rover successor preserves v25 as default and v29 as history.
+    Its exact local candidate/route/bootstrap cohort passes 150/150 with zero skips, along with
+    repository validation and targeted lint/format/diff checks. Hosted qualification, review,
+    promotion and public evidence are still required.
 
 ## Immediate execution order
 
@@ -132,16 +140,17 @@ accepted predecessor; draft labels do not reserve a release.
    keep any further release-throughput experiments out of that publication path.
 2. Qualify and publish isolated PR #657 after the active release lane; do not wait for the full
    cultural stack to restore Team Classic → Custom Next.
-3. Correct the isolated Solo compact-filter focus failure on current main, then rerun PR #530. The
-   four Team revision-90 cases now pass; the remaining host failure is not a cultural-map defect.
+3. Review and merge test-only PR #669, then rerun PR #530. The four Team revision-90 cases and the
+   corrected local controller-host cohort now pass; the remaining gate is not a cultural-map defect.
 4. Keep the rebased cultural PR chain clean and reviewable while the public release lane completes.
 5. Review and qualify the bounded v0.149.0 PR #650 at its exact head.
 6. Review draft PR #651 and publish the isolated library-fixture reconciliation after its focused
    duplicate/ownership audit.
 7. Review draft PR #661 after #651, then PR #664. v26 preserves v25 and completes the Relay spatial
    cluster without changing the default before promotion.
-8. Review and host-qualify PR #667, then review the 9 remaining audit candidates without redesigning
-   intentionally open boards merely to satisfy a count.
+8. Finish and publish the bounded Rover v30 candidate, then review and host-qualify PR #667 and its
+   successor. Review the 7 remaining audit candidates without redesigning intentionally open boards
+   merely to satisfy a count.
 9. Promote cultural releases in dependency order, reporting actual public delivery rather than a
    merge or workflow start.
 
