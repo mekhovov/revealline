@@ -19,7 +19,7 @@ The implementation phases retain separate documentation and acceptance records, 
 ## Current status and remaining effort — 26 September 2026
 
 The creator framework from PR #465 is merged. This follow-up branch is rebased onto protected
-`main` at `c6efdbcc0a409bdce8cda85b980da0d136af2731` (`0.132.2`) and now carries source version
+`main` at `a08386476245bc79249d7cb444acf1403eb76c6e` (`0.132.2`) and now carries source version
 `0.141.0` for the assigned release in PR #564. Estimates are focused engineering time, not calendar
 release dates.
 

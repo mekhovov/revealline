@@ -65,8 +65,10 @@ other working trees.
    current release gates. A policy-authorized skipped suite remains deferred rather than passed.
 3. Reproduce actual file selection, download, import, installation, play and recovery in the
    supported browser environment. Keep Firefox, Safari and physical mobile open unless each is
-   exercised. Verify installed Versus separately once its project-backed route lands; generated
-   equal-board replay evidence alone is not an installed-player acceptance result.
+   exercised. Installed Creator Versus now uses the real two-board host with exact edition-scoped
+   progress and pictures; complete its separate physical fresh-browser import/reload run before
+   accepting that transfer path. Generated equal-board replay evidence alone is not an
+   installed-player acceptance result.
 4. Open and review the combined PR. Coordinate its assigned version with the publication owner;
    never infer a free version from a stale document or move an existing tag.
 5. Freeze the reviewed commit through the repository's release coordinator. Use the exact qualified
