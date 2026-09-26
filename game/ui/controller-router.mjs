@@ -79,6 +79,7 @@ export function createControllerRouter({
   deadZone = 0.35,
   repeatDelayMs = 350,
   repeatIntervalMs = 120,
+  confirmReleaseMs = 120,
   autoJoin = false,
   navigationAliases = false,
 } = {}) {
@@ -93,7 +94,10 @@ export function createControllerRouter({
     repeatDelayMs > 2000 ||
     !Number.isFinite(repeatIntervalMs) ||
     repeatIntervalMs < 50 ||
-    repeatIntervalMs > 1000
+    repeatIntervalMs > 1000 ||
+    !Number.isFinite(confirmReleaseMs) ||
+    confirmReleaseMs < 0 ||
+    confirmReleaseMs > 1000
   )
     throw new RangeError(t('interface:controllerThresholdsOrRepeatTimingAreOutOfBounds'));
   const initial = resolveControllerBindings(bindings);
@@ -116,11 +120,39 @@ export function createControllerRouter({
     lastTime = 0,
     pendingDisconnect = false,
     menuConfirmActive = false,
+    menuConfirmNeutralAt = null,
     destroyed = false;
 
   const confirms = (buttons) =>
     buttons.has(compiled.menu.buttons.confirm) ||
     (navigationAliases && defaultLayout && buttons.has(2));
+  // Steam Input can expose a short tap as a press pulse, one neutral browser
+  // sample, then a release-side pulse. Keep that burst in one Confirm gesture.
+  // A later physical press is accepted once the whole Confirm family has been
+  // continuously neutral for confirmReleaseMs.
+  function updateMenuConfirm(rawPressed, scope, time) {
+    if (!menuConfirmActive) {
+      if (!rawPressed || scope === 'flight') return false;
+      menuConfirmActive = true;
+      menuConfirmNeutralAt = null;
+      return true;
+    }
+    if (!rawPressed) {
+      if (confirmReleaseMs === 0) {
+        menuConfirmActive = false;
+        menuConfirmNeutralAt = null;
+      } else if (menuConfirmNeutralAt === null) menuConfirmNeutralAt = time;
+      else if (time - menuConfirmNeutralAt >= confirmReleaseMs) {
+        menuConfirmActive = false;
+        menuConfirmNeutralAt = null;
+      }
+      return false;
+    }
+    if (menuConfirmNeutralAt === null) return false;
+    const neutralFor = time - menuConfirmNeutralAt;
+    menuConfirmNeutralAt = null;
+    return scope !== 'flight' && neutralFor >= confirmReleaseMs;
+  }
   function menuConfirmPressed() {
     if (destroyed || !assigned || (lastScope === 'flight' && !menuConfirmActive)) return false;
     // Native events may arrive before the next animation frame. This read-only
@@ -177,6 +209,7 @@ export function createControllerRouter({
   const boostState = () => ({ mode, latched: boostLatched });
   function invalidate() {
     menuConfirmActive = false;
+    menuConfirmNeutralAt = null;
     pendingDisconnect = pendingDisconnect || assigned !== null;
     assigned = null;
     clear();
@@ -187,6 +220,7 @@ export function createControllerRouter({
     seen.delete(index);
     if (assigned?.index === index) {
       menuConfirmActive = false;
+      menuConfirmNeutralAt = null;
       pendingDisconnect = true;
       assigned = null;
       clear();
@@ -321,6 +355,7 @@ export function createControllerRouter({
       seen.delete(index);
       if (assigned?.index === index) {
         menuConfirmActive = false;
+        menuConfirmNeutralAt = null;
         assigned = null;
         pendingDisconnect = true;
         clear();
@@ -359,6 +394,7 @@ export function createControllerRouter({
           // Enter/mouse echo after release. Expose held Confirm to the host guard
           // without turning this same press into a menu activation.
           menuConfirmActive = confirms(pad.buttons);
+          menuConfirmNeutralAt = null;
           assigned = candidate;
           clear();
           if (autoJoin) blocked = false;
@@ -387,7 +423,7 @@ export function createControllerRouter({
       invalidate();
       return sampleLoss();
     }
-    menuConfirmActive = confirms(pad.buttons) && (scope !== 'flight' || menuConfirmActive);
+    const menuConfirmEdge = updateMenuConfirm(confirms(pad.buttons), scope, time);
     // The same physical-neutral sample may lift both gates. A latched command
     // is not physical input and must not prevent a later ordinary release.
     if (mode === 'toggle' && scope === 'flight' && toggleBoostEligible && pad.neutral)
@@ -435,12 +471,7 @@ export function createControllerRouter({
             : null);
       if (edge(buttons.menu)) ui.menu = true;
       else if (edge(buttons.back) || (aliases && (edge(3) || edge(8)))) ui.back = true;
-      else if (
-        confirms(pad.buttons) &&
-        !confirms(previousButtons) &&
-        (pad.buttons.has(buttons.confirm) || (aliases && pad.buttons.has(2)))
-      )
-        ui.confirm = true;
+      else if (menuConfirmEdge) ui.confirm = true;
       if (!ui.menu && !ui.back && !ui.confirm && direction) {
         if (direction !== repeatDirection || time >= repeatAt) {
           ui.direction = direction;
