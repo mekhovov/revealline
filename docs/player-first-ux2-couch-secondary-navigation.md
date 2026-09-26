@@ -2,10 +2,10 @@
 
 ## Scope
 
-- Exact parent: `218e76281e3bfa26f57b7aa0f7b98058f4bd05ad`, the main merge
-  of PR #680 after the immutable v0.141.3 Team quick-start release.
+- Exact parent: `01de92e9693d640e08ff21ba95ce12a978cb486f`, the accepted Pages
+  selector merge for the immutable v0.141.3 Team quick-start release.
 - Audited feature donor: `e1dba137ad7fd16c874cb511cbc801ce6ce309f7`.
-- Branch: `codex/couch-secondary-v1414-stacked`.
+- Branch: `codex/couch-nav-team-next-v1414`.
 - The package, root lock record, and build configuration identify this local
   candidate as v0.141.4.
 - This source does not claim a merge, tag, release, Pages deployment,
@@ -16,6 +16,11 @@ controller activation hunk is already supplied by the input stack and is
 omitted. Team's
 `relay-rescue.mjs` change only places the existing quick Sound control in the
 paused action group; it does not duplicate the controller activation hook.
+
+The candidate also carries PR #657 as a separate, non-overlapping compatibility
+commit. Classic continuation keeps valid Solo/Versus edition metadata, while an
+opaque Team owner resolves through Original rules instead of being parsed as
+JSON and failing before its exact Custom successor can be found.
 
 ## Player behavior
 
@@ -53,6 +58,11 @@ Repository validation passes across 1,249 files with 9,969 localized messages,
 7,962 references and field-kit presentation revision 91. Full lint, game/site
 formatting, native-platform formatting, changed-file formatting and syntax,
 four-way v0.141.4 version parity and diff checks pass.
+
+The combined changed runtime/test cohort for Couch navigation and Team
+continuation passes 41/41. The PR #657 slice independently passes 14/14 focused
+cases; its fallback is limited to Classic rows and does not reinterpret valid
+JSON owners.
 
 ## Evidence limits
 

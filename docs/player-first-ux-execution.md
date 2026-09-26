@@ -11,33 +11,33 @@ current. Those paragraphs remain unchanged as dated implementation and release
 evidence.
 
 **Completed Pages baseline:** immutable
-[v0.141.2](https://github.com/mekhovov/revealline/releases/tag/v0.141.2) is the
-current published release. PR #675 merged exact product source
-`12978e5fd3fe0ce70bbee96aa543f569f64622d4`, preserving the accepted v0.141.1
-compact gallery and adding the community deployment hardening. The published tag
-remains immutable. Pages selector PR #677 merged as
-`34f45503c32479591dcdc36e7236aaa2eb348a2f`; run `36252239829` audited 1,888
-files and 630,471,797 bytes with zero retries or failures. Archive95 preserves
-v0.141.0. The public Creator and community routes resolve to v0.141.2; the
-separately deployed community API remains unavailable until infrastructure is selected.
+[v0.141.3](https://github.com/mekhovov/revealline/releases/tag/v0.141.3) is the
+current published release. PR #679 merged exact product source
+`7509d790dadb6194d70a5bc1efafee40fbb0b3b7`; Pages selector PR #682 merged as
+`01de92e9693d640e08ff21ba95ce12a978cb486f`. Run `36255919482` audited 1,892
+files and 630,486,933 bytes with zero retries or failures. Archive96 preserves
+v0.141.2 at deployment `6681224868`; its independent audit verified all 1,316
+files and 612,079,761 bytes. Public browser review reached active Solo, Versus
+and Team gameplay with no console warnings or errors.
 
 **Latest stable release:** [PR #679](https://github.com/mekhovov/revealline/pull/679)
 merged v0.141.3 Team quick-start as
 `7509d790dadb6194d70a5bc1efafee40fbb0b3b7`. Coordinator run `36254346397`
 published its immutable nine-asset
 [v0.141.3 release](https://github.com/mekhovov/revealline/releases/tag/v0.141.3).
-Its Pages selector and public player-flow acceptance remain open, so the Pages
-baseline remains v0.141.2.
+Its Pages selector and public player-flow acceptance are complete through PR #682
+and run `36255919482`.
 
-**Active candidate:** v0.141.4 combines the merged community acceptance and
-validation-worker isolation from PR #680 with Couch secondary navigation rebased
-onto exact main `218e76281e3bfa26f57b7aa0f7b98058f4bd05ad`. It preserves Team
-quick-start focus and Cancel behavior. Its prepared donor passed the
-feature-owned shell/Pause and departure/markup/quick-start boundaries at 27/27
-and 37/37; both pass again on this exact rebased source. Repository validation,
-localization, lint, game/site and native formatting, changed-file syntax and
-four-way v0.141.4 version parity also pass. Hosted PR, release, selector and
-public player-flow acceptance remain open.
+**Active candidate:** v0.141.4 combines Couch secondary navigation with the
+three-path opaque Team-owner continuation correction from PR #657. It is rebased
+onto the accepted Pages controller merge
+`01de92e9693d640e08ff21ba95ce12a978cb486f`. It preserves Team quick-start focus
+and Cancel behavior while preventing a Team **Next** action from failing before
+the exact Custom successor can be resolved. The two deltas have no path overlap.
+The navigation donor passes 27/27 and 37/37; the combined changed runtime/test
+cohort passes 41/41. Repository validation, localization, lint, game/site and
+native formatting, syntax and four-way v0.141.4 version parity pass. Hosted PR,
+release, selector and public player-flow acceptance remain open.
 
 **Ordered continuation:** v0.141.3 is the latest stable release; later rows remain working
 allocations rather than accepted releases. Reconcile each item onto the accepted predecessor, rerun its
@@ -47,8 +47,8 @@ with this order.
 
 | Order | Working release | Scope                                                                | Current source input                                                                                                        |
 | ----- | --------------- | -------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
-| 1     | v0.141.3        | Team quick-start                                                     | reconciled local donor from PR #549                                                                                         |
-| 2     | v0.141.4        | Couch secondary navigation                                           | prepared donor from PR #539                                                                                                 |
+| 1     | v0.141.3        | Team quick-start                                                     | publicly accepted through PR #682                                                                                           |
+| 2     | v0.141.4        | Couch secondary navigation and Team Next compatibility               | prepared donor from PR #539 plus PR #657                                                                                    |
 | 3     | v0.141.5        | Contextual Team teaching                                             | prepared donor from PR #543                                                                                                 |
 | 4     | v0.141.6        | Deliberate Team terminal Retry                                       | [PR #545](https://github.com/mekhovov/revealline/pull/545)                                                                  |
 | 5     | v0.141.7        | Readable Versus countdown and Retry cue                              | [PR #552](https://github.com/mekhovov/revealline/pull/552)                                                                  |
