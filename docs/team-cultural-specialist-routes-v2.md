@@ -15,11 +15,13 @@ Status date: 2026-09-26
   successor as `team-cultural-specialist-originals-2`: it becomes the candidate default Team route,
   while the first cultural and all earlier editions remain directly selectable. Neither change is
   published yet.
-- The complete nineteen-branch cultural stack is rebased onto current `main`
-  `ee015163de1131313436b0550892f3739e3c7a1a`. PR #650 is at
-  `da1604a3b2821bff106711129a7d32f7bf78bd8d`; its test/documentation successor PR #651 is a clean
+- The complete cultural stack and Team continuation successor are rebased onto current `main`
+  `55f83c2221c382ac5626e37a079e488eed79b920`. PR #650 is at
+  `c4cfe7092e8b7dd25b3803e4cb0531dc8007a04d`; its test/documentation successor PR #651 is a clean
   draft whose exact head is recorded by GitHub. Avoid embedding PR #651's changing self-hash in
   this document.
+- Draft PR #655 contains the opaque-owner continuation repair and its 42/42 bounded cohort. It is
+  not merged, released or publicly verified.
 
 ## Completed candidate work
 
