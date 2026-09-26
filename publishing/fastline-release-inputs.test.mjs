@@ -75,7 +75,7 @@ test("shadow mode plans every stage without changing the stage order", () => {
   );
 });
 
-test("publisher canary queues every request and passes one immutable artifact to inspection", async () => {
+test("publisher canary serializes requests and passes one immutable artifact to inspection", async () => {
   const workflow = await readFile(
     new URL("../.github/workflows/fastline-release.yml", import.meta.url),
     "utf8",
@@ -85,8 +85,8 @@ test("publisher canary queues every request and passes one immutable artifact to
     "utf8",
   );
   assert.match(workflow, /group: fastline-publisher/u);
-  assert.match(workflow, /queue: max/u);
   assert.match(workflow, /cancel-in-progress: false/u);
+  assert.doesNotMatch(workflow, /queue:/u);
   assert.match(
     workflow,
     /uses: \.\/\.github\/workflows\/qualify-release-source\.yml/u,

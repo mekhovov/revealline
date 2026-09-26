@@ -33,7 +33,6 @@ permissions:
 
 concurrency:
   group: fastline-publisher
-  queue: max
   cancel-in-progress: false
 
 jobs:
