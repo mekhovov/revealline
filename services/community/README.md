@@ -314,17 +314,40 @@ target includes the current readiness checks, interrupted-upload acceptance, off
 restore, and source-to-target recovery rehearsal. S3 is not a prerequisite for deploying or
 accepting this single-host target.
 
-S3 is a separate post-deployment workstream for multi-host or AWS operation. Completing it requires
-one storage factory shared by the API, worker, preflight and recovery commands; bounded stream-safe
-staging that verifies size and SHA-256 before immutable publication; the maintained tus S3
-datastore with deterministic completed-upload and expiry cleanup; package and tus dependency
-readiness probes; S3-aware backup, restore and recovery rehearsal; a MinIO end-to-end integration;
-and a real AWS smoke run with private buckets and scoped IAM access.
+The first S3 workstream slice is executable in the API and validation worker. Both entry points use
+one package-store factory. `COMMUNITY_BLOB_STORAGE=disk` selects the existing filesystem store;
+`COMMUNITY_BLOB_STORAGE=s3` lazy-loads the pinned AWS SDK client and requires an explicit bucket,
+region and local staging root. S3 input is streamed to a private staging file while its size and
+SHA-256 are checked. Only exact bytes are then streamed to a conditional `PutObject` request, so a
+package is never published before verification and the process does not retain the whole package
+in memory. A pre-existing object is accepted only when its exact size and stored SHA-256 metadata
+match.
 
-The focused estimate is 4–6 engineering days after this workstream starts: 2–3 days for runtime
-wiring, configuration and verified staging; 1.5–2 days for recovery and MinIO coverage; and 0.5–1
-day after AWS buckets and IAM access are available for the final smoke evidence. These are focused
-engineering estimates rather than calendar release dates.
+Configuration fails closed: unknown drivers, partial S3 settings, S3 settings while disk is
+selected, and a simultaneous disk root and S3 selection stop startup. Credentials remain in the
+standard AWS SDK credential chain and are not added to RevealLine configuration. For an AWS S3
+endpoint, the endpoint can be omitted. S3-compatible services may set an absolute HTTP(S) endpoint
+and path-style addressing explicitly.
+
+```sh
+COMMUNITY_BLOB_STORAGE=s3
+COMMUNITY_S3_BUCKET=revealline-community-packages
+COMMUNITY_S3_REGION=eu-central-1
+COMMUNITY_S3_FORCE_PATH_STYLE=false
+COMMUNITY_BLOB_STAGING_ROOT=/tmp/revealline-package-stage
+```
+
+This does not yet make S3 a production-qualified target. The checked-in Compose and deployment
+preflight remain filesystem-specific, tus remains disk-backed, and backup/restore does not yet
+inventory S3. The remaining S3 work is the maintained tus S3 datastore with deterministic
+completed-upload and expiry cleanup; package and tus dependency readiness probes; S3-aware backup,
+restore and recovery rehearsal; a MinIO end-to-end integration; and a real AWS smoke run with
+private buckets and scoped IAM access.
+
+The remaining focused estimate is 3–5 engineering days: 1–2 days for tus and readiness wiring,
+1.5–2 days for recovery and MinIO coverage, and 0.5–1 day after AWS buckets and IAM access are
+available for the final smoke evidence. These are focused engineering estimates rather than
+calendar release dates.
 
 - **Authentication:** production configuration creates a real Better Auth PostgreSQL instance,
   mounts `/api/auth/*`, requires verified email, supports password recovery, and resolves ownership
@@ -334,10 +357,10 @@ engineering estimates rather than calendar release dates.
   and password reset through the local mail adapter, and proves that the resulting session owns the
   submission. The constant-token adapter remains available only behind
   `COMMUNITY_ALLOW_DEV_AUTH=true`.
-- **Blobs:** `DiskBlobStore` is the executable production implementation.
-  `S3CompatibleBlobStore` currently provides only a tested injected-client byte boundary; it is not
-  selected by the API, worker, readiness or recovery entry points. The S3 workstream must add the
-  real SDK-backed factory and stream-safe verified staging before claiming executable support.
+- **Blobs:** `DiskBlobStore` remains the supported production implementation. The API and worker
+  can now select the same SDK-backed `S3CompatibleBlobStore`; its verified local staging keeps
+  publication stream-safe and bounded by `COMMUNITY_MAX_PACKAGE_BYTES`. Readiness, recovery and
+  production Compose still require the remaining S3 qualification work above.
 - **Uploads:** the executable server mounts the maintained tus Node server with its disk store.
   `completeTusUpload` is the verified completion boundary that can also admit an S3-backed tus
   stream. PostgreSQL advisory locks coordinate API replicas, and the PostgreSQL upload registry

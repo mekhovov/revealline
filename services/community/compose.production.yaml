@@ -7,6 +7,7 @@ x-community-production-build: &community-production-build
 
 x-community-production-environment: &community-production-environment
   COMMUNITY_DATABASE_URL: ${COMMUNITY_DATABASE_URL:?set COMMUNITY_DATABASE_URL}
+  COMMUNITY_BLOB_STORAGE: disk
   COMMUNITY_BLOB_ROOT: /data/blobs
   COMMUNITY_TUS_ROOT: /data/tus
   COMMUNITY_TUS_EXPIRATION_SECONDS: ${COMMUNITY_TUS_EXPIRATION_SECONDS:-86400}
@@ -120,6 +121,7 @@ services:
         condition: service_completed_successfully
     environment:
       COMMUNITY_DATABASE_URL: ${COMMUNITY_DATABASE_URL:?set COMMUNITY_DATABASE_URL}
+      COMMUNITY_BLOB_STORAGE: disk
       COMMUNITY_BLOB_ROOT: /data/blobs
       COMMUNITY_MAX_PACKAGE_BYTES: ${COMMUNITY_MAX_PACKAGE_BYTES:-268435456}
       COMMUNITY_VALIDATOR_VERSION: ${COMMUNITY_VALIDATOR_VERSION:-creator-bundle-v1}
