@@ -193,7 +193,37 @@ hosted [run 36235670778](https://github.com/mekhovov/revealline-soundtracks-01/a
 passed the full archive verifier. The PR remains draft and must not deploy until
 the multi-archive game client in PR #604 is released and publicly verified.
 
-Shared local free space recovered to approximately **1.37 GiB** after transient release-workflow pressure. This is only a narrow margin above the 1 GiB guard, so substantial media intake and local builds remain stopped until more reserve is available; preserve user changes, frozen releases and evidence.
+### 26 September checkpoint — locale release boundary and source-only expansion
+
+Authoritative game `main` is `0cb51db92295a62fea99ee2ab215a79c6df06520`
+after PR #639. The next soundtrack rebases remain deliberately serialized behind
+the v0.132.5 live-locale repair in
+[PR #652](https://github.com/mekhovov/revealline/pull/652). Its exact head
+`c4af39396b22b3eb60317e7a46388c462e9b6724` passed preflight, the selected
+focused gate and release-ready in
+[run 36235959038](https://github.com/mekhovov/revealline/actions/runs/36235959038);
+the policy-skipped full test and build jobs are not passes. Read-only review found
+no soundtrack-affecting regression. Do not rebase PRs #604, #617 or #643 until
+the sole publisher accepts v0.132.5 publicly and identifies its authoritative main
+SHA.
+
+Archive 02 remains public with eleven recordings, bringing the aggregate to
+**174 recordings / 35 collections**. Draft Archive 01
+[PR #42](https://github.com/mekhovov/revealline-soundtracks-01/pull/42)
+has a green exact-head full verifier and must remain undeployed until the
+multi-archive game client is public. The next source-only comparison slate adds
+[Chase](https://opengameart.org/content/chase-2) (fast neon electro/EDM, CC0),
+[Techno DRIVE!!!](https://opengameart.org/content/techno-drive) (electro/racing
+with a metal variant, CC BY 4.0),
+[synthwave_type](https://opengameart.org/content/synthwavetype) (CC0), and
+[The Wreck](https://opengameart.org/content/the-wreck) (thrash/hardcore metal,
+CC BY 3.0). These are source-page research leads only: none is acquired, technically
+verified, listening-approved, admitted or placed in defaults.
+
+Shared local free space fell to approximately **226 MiB**, below the 1 GiB guard,
+during concurrent release work. Substantial media intake, local builds and rebases
+remain stopped until coordinated cleanup restores the reserve; preserve user
+changes, frozen releases, worktrees and evidence.
 
 1. **v0.132 Pages completion:** complete. Selector
    [PR #592](https://github.com/mekhovov/revealline/pull/592) merged as
