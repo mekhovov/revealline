@@ -26,6 +26,7 @@ import tarfile
 import zipfile
 
 from release_limits import DEFAULT_MAX_DISTRIBUTION_MIB, MAX_DISTRIBUTION_MIB, distribution_within_limit
+from source_manifest import verify_manifest, MAX_MANIFEST
 
 CHUNK = 1024 * 1024
 SMALL_LIMITS = {'release.json': 64 * 1024, 'site/manifest.json': 4 * CHUNK,
@@ -122,7 +123,7 @@ def git(repo, *args):
     return subprocess.check_output(['git', '-C', str(repo), *args])
 
 
-def git_inventory(repo, expected_commit):
+def git_inventory(repo, expected_commit, allow_symlinks=False):
     head = git(repo, 'rev-parse', '--verify', 'HEAD').decode().strip()
     require(head == expected_commit, 'Git HEAD does not match --expected-commit')
     algorithm = git(repo, 'rev-parse', '--show-object-format').decode().strip()
@@ -140,7 +141,7 @@ def git_inventory(repo, expected_commit):
             require(mode == b'040000', f'Unexpected Git tree mode: {name}')
             records[name] = {'mode': '040000', 'kind': 'directory', 'oid': oid.decode(), 'bytes': 0}
         else:
-            require(kind == b'blob' and mode in {b'100644', b'100755'},
+            require(kind == b'blob' and mode in ({b'100644', b'100755', b'120000'} if allow_symlinks else {b'100644', b'100755'}),
                     f'Unsupported Git member (symlink/submodule refused): {name}')
             records[name] = {'mode': mode.decode(), 'kind': 'file', 'oid': oid.decode(), 'bytes': int(size)}
     require(records, 'Empty Git tree')
@@ -364,7 +365,7 @@ def main():
     parent = out.parent.resolve(strict=True)
     out = parent / out.name
     require(out.name not in {'', '.', '..'}, 'Invalid output folder name')
-    commit, tree, algorithm, records = git_inventory(repo, args.expected_commit)
+    commit, tree, algorithm, records = git_inventory(repo, args.expected_commit, allow_symlinks=True)
     before = artifact.stat()
     progress('hashing_outer_artifact', bytes=before.st_size)
     with artifact.open('rb') as stream:
@@ -379,7 +380,13 @@ def main():
                              if not info.is_dir() and (name == 'release.json' or name.endswith('/release.json'))]
             require(len(release_names) == 1, 'Artifact must contain exactly one release.json')
             prefix = release_names[0][:-len('release.json')]
-            wanted = {prefix + n for n in [*SMALL_LIMITS, 'source.tar', 'site/distribution.zip']}
+            release_body = small_read(z, actual[release_names[0]], SMALL_LIMITS['release.json'])
+            release = json_read(release_body, 'release.json')
+            manifest_source = release.get('formatVersion') == 2
+            if not manifest_source:
+                require(all(row['mode'] != '120000' for row in records.values()), 'Legacy source symlinks refused')
+            source_name = 'source-manifest.json' if manifest_source else 'source.tar'
+            wanted = {prefix + n for n in [*SMALL_LIMITS, source_name, 'site/distribution.zip']}
             files = {name for name, info in actual.items() if not info.is_dir()}
             require(files == wanted, 'Artifact must contain exactly the five workflow snapshot files')
             require({name for name, info in actual.items() if info.is_dir()} <= ancestors(wanted),
@@ -387,9 +394,14 @@ def main():
             small = {name: small_read(z, actual[prefix + name], limit) for name, limit in SMALL_LIMITS.items()}
             release = json_read(small['release.json'], 'release.json')
             require(isinstance(release, dict) and type(release.get('formatVersion')) is int and
-                    release.get('formatVersion') == 1 and release.get('version') == args.expected_version and
+                    release.get('formatVersion') in (1, 2) and release.get('version') == args.expected_version and
                     release.get('sourceRevision') == commit, 'Release identity does not match expected Git HEAD/version')
-            for key in ['sourceArchiveSha256', 'distributionSha256', 'manifestSha256']:
+            common_keys = {'formatVersion', 'version', 'sourceRevision', 'distributionSha256',
+                           'manifestSha256', 'play', 'download'}
+            source_keys = {'sourceTree', 'sourceUrl', 'sourceManifestSha256'} if manifest_source else {'sourceArchiveSha256'}
+            require(set(release) == common_keys | source_keys, 'Unexpected or mixed release contract fields')
+            source_digest_key = 'sourceManifestSha256' if manifest_source else 'sourceArchiveSha256'
+            for key in [source_digest_key, 'distributionSha256', 'manifestSha256']:
                 require(isinstance(release.get(key), str) and HEX256.fullmatch(release[key]), f'Invalid release hash: {key}')
             require(release.get('play') == args.expected_version + '/site/game/' and
                     release.get('download') == args.expected_version + '/site/distribution.zip', 'Release route identity differs')
@@ -411,9 +423,15 @@ def main():
             reserve = args.reserve_mib * CHUNK
             require(shutil.disk_usage(parent).free >= needed + reserve,
                     f'Insufficient disk: need {needed + reserve} free bytes including reserve; source.tar will not be extracted')
-            progress('checking_source_tar', expectedGitPaths=len(records))
-            source = verify_tar(z, actual[prefix + 'source.tar'], records, algorithm, commit)
-            require(source['sha256'] == release['sourceArchiveSha256'], 'Original source TAR hash differs from release.json')
+            if manifest_source:
+                require(release.get('sourceTree') == tree and release.get('sourceUrl') ==
+                        f'https://github.com/mekhovov/revealline/archive/{commit}.tar.gz', 'Source manifest tree/URL differs')
+                progress('checking_source_manifest', expectedGitPaths=len(records))
+                source = verify_manifest(small_read(z, actual[prefix + source_name], MAX_MANIFEST), repo, commit, tree)
+            else:
+                progress('checking_source_tar', expectedGitPaths=len(records))
+                source = verify_tar(z, actual[prefix + source_name], records, algorithm, commit)
+            require(source['sha256'] == release[source_digest_key], 'Original source digest differs from release.json')
             require(shutil.disk_usage(parent).free >= needed + reserve, 'Free-space reserve changed during source check')
             os.mkdir(out, 0o700)
             created = True
@@ -443,7 +461,7 @@ def main():
                 'gitHead': commit, 'gitTree': tree, 'gitObjectFormat': algorithm, 'version': args.expected_version,
                 'artifact': {'path': str(artifact), 'bytes': before.st_size, 'sha256': artifact_hash,
                              'externallyExpectedDigestSupplied': bool(args.artifact_sha256), 'members': len(actual), 'prefix': prefix},
-                'sourceTar': {**source, 'outerMember': prefix + 'source.tar', 'copiedToDisk': False},
+                ('sourceManifest' if manifest_source else 'sourceTar'): {**source, 'outerMember': prefix + source_name, 'copiedToDisk': False},
                 'distribution': {**result, 'bytes': distribution.file_size, 'sha256': distribution_hash, 'copiedToDisk': False, 'outerMember': prefix + 'site/distribution.zip'},
                 'releaseHashChainVerified': True, 'manifestSha256': release['manifestSha256'],
                 'diskReserveBytes': reserve, 'freeBytesAfterInspection': shutil.disk_usage(out).free,

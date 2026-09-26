@@ -106,6 +106,30 @@ async function inventory(dir, prefix = '') {
   }
   return rows.sort(([a], [b]) => a.localeCompare(b));
 }
+
+test('legacy and v2 source contracts remain distinct and commit-addressed', () => {
+  const f = fixture();
+  assert.equal(validateMetadata(f).record.formatVersion, 1);
+  const record = JSON.parse(f.recordBytes);
+  delete record.sourceArchiveSha256;
+  Object.assign(record, {
+    formatVersion: 2,
+    sourceTree: 'e'.repeat(40),
+    sourceUrl: `https://github.com/mekhovov/revealline/archive/${record.sourceRevision}.tar.gz`,
+    sourceManifestSha256: 'f'.repeat(64),
+  });
+  const check = () => {
+    f.recordBytes = jsonBytes(record);
+    f.pin.recordSha256 = digest(f.recordBytes);
+    return validateMetadata(f);
+  };
+  assert.equal(check().record.formatVersion, 2);
+  record.sourceUrl = 'https://github.com/mekhovov/revealline/archive/main.tar.gz';
+  assert.throws(check, /record mismatch/);
+  record.sourceUrl = `https://github.com/mekhovov/revealline/archive/${record.sourceRevision}.tar.gz`;
+  record.sourceArchiveSha256 = 'b'.repeat(64);
+  assert.throws(check, /record mismatch/);
+});
 for (const hasWorker of [true, false])
   test(`metadata bridges exactly equal existing writer; worker=${hasWorker}`, async (t) => {
     const dir = await fs.mkdtemp(path.join(os.tmpdir(), 'pages-metadata-'));
