@@ -1,12 +1,15 @@
 # Content ownership and uniqueness review
 
+See [implementation evidence and remaining gates](implementation.md) and the
+[measured package sizes](packages.md) for the accompanying offline changes.
+
 Open [the complete inventory](inventory.html) for every current and historical mission/mode owner, original image thumbnail, exact source path and byte/pixel hash, normalized physics comparison and board diagram. [inventory.json](inventory.json) contains the machine-readable records and compatibility-retention roots.
 
 The audit revalidates **12 Classic shared-original groups** and **106 authored originals reused across route revisions**. Those are different categories. The report also separates current Solo/Versus artwork sharing from historical reuse and presentation settings. Current findings are not a uniqueness approval.
 
 The lifecycle registry changes discovery policy only. Historical source factories, exact original bytes, campaign/execution identities, profile keys and suspended-flight slots remain intact. Compatibility roots identify material that must be retained for saves, replays and earned pictures; they are not a replacement for complete runtime dependency closures in the offline catalogue.
 
-Comparison includes complete Standard physics after the host's versioned gameplay tuning and Classic class recipes. Authored physics is independently hashed. Display names, artwork themes and music do not establish different gameplay. Static geometry matches are review candidates, not proof of duplicate experiences. Exact PNG pixels use the repository's bounded RGB8 decoder; perceptual similarity, rotations/reflections and human composition review remain separate gates.
+Comparison includes complete Standard physics after the host's versioned gameplay tuning and Classic class recipes. Authored physics is independently hashed. Display names, artwork themes and music do not establish different gameplay. Static geometry matches are review candidates, not proof of duplicate experiences. Exact PNG pixels use the repository's bounded RGB8 decoder. The supplementary [artwork screening report](artwork-screening.html) now covers exact rotations/reflections and bounded perceptual/crop/recoloring hypotheses; human composition review remains required. [Screening contracts and review instructions](ARTWORK-SCREENING.md) explain the opt-in new-art gate.
 
 ## Pilot
 
@@ -21,9 +24,12 @@ All five candidate levels have public-input, replay-verified first-return eviden
 ```sh
 node scripts/content-inventory.mjs --write
 node scripts/content-inventory.mjs --check
+node scripts/content-artwork-screening.mjs --write
+node scripts/content-artwork-screening.mjs --check
 node scripts/uniqueness-pilot.mjs --write
 node scripts/uniqueness-pilot.mjs --check
 node --test game/test/content-lifecycle.test.mjs game/test/uniqueness-pilot.test.mjs
+node --test game/test/artwork-screening.test.mjs
 ```
 
 Inventory generation validates all external pack/media producers and may take several minutes. It writes only these reports. Package artwork sizes deliberately exclude runtime, transfer encoding and storage overhead; the offline catalogue supplies complete package totals. Reports and the neutral player are tooling, excluded from normal gameplay downloads.
