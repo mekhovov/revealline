@@ -36,6 +36,10 @@ import {
   createTeamCulturalSpecialistOriginalCandidates,
   TEAM_CULTURAL_SPECIALIST_PROFILE_KEY,
 } from './team-cultural-specialist-originals.mjs';
+import {
+  createTeamCulturalSpecialistV2OriginalCandidates,
+  TEAM_CULTURAL_SPECIALIST_V2_PROFILE_KEY,
+} from './team-cultural-specialist-v2-originals.mjs';
 
 /** Prepare the exact Team edition selected by the host's entry policy.
  * Player-facing copy does not grant official awards, artwork qualification
@@ -50,23 +54,26 @@ export async function createTeamGreyboxEntry({
   partnerSpecialist = false,
   reviewedSpecialists = false,
   culturalSpecialists = false,
+  culturalSpecialistsV2 = false,
   reviewCopy = true,
 } = {}) {
-  const source = culturalSpecialists
-    ? createTeamCulturalSpecialistOriginalCandidates()
-    : reviewedSpecialists
-      ? createTeamCompleteSpecialistOriginalCandidates()
-      : partnerSpecialist
-        ? createTeamPartnerSpecialistOriginalCandidates()
-        : specialist
-          ? createTeamSpecialistOriginalCandidates()
-          : impact
-            ? createTeamImpactOriginalCandidates()
-            : spatial
-              ? createTeamSpatialOriginalCandidates()
-              : pressure
-                ? createTeamPressureOriginalCandidates()
-                : createTeamJourneyCandidates({ artwork });
+  const source = culturalSpecialistsV2
+    ? createTeamCulturalSpecialistV2OriginalCandidates()
+    : culturalSpecialists
+      ? createTeamCulturalSpecialistOriginalCandidates()
+      : reviewedSpecialists
+        ? createTeamCompleteSpecialistOriginalCandidates()
+        : partnerSpecialist
+          ? createTeamPartnerSpecialistOriginalCandidates()
+          : specialist
+            ? createTeamSpecialistOriginalCandidates()
+            : impact
+              ? createTeamImpactOriginalCandidates()
+              : spatial
+                ? createTeamSpatialOriginalCandidates()
+                : pressure
+                  ? createTeamPressureOriginalCandidates()
+                  : createTeamJourneyCandidates({ artwork });
   const preferences = createJourneyPreferences({ window: globalThis.window ?? globalThis });
   const snapshot = preferences.snapshot();
   const candidateJourney = createCandidateTeamHost(source, {
@@ -74,21 +81,23 @@ export async function createTeamGreyboxEntry({
   });
   const candidateProgress = createTeamJourneyProgress(
     candidateJourney,
-    culturalSpecialists
-      ? { profileKey: TEAM_CULTURAL_SPECIALIST_PROFILE_KEY }
-      : reviewedSpecialists
-        ? { profileKey: TEAM_COMPLETE_SPECIALIST_PROFILE_KEY }
-        : partnerSpecialist
-          ? { profileKey: TEAM_PARTNER_SPECIALIST_PROFILE_KEY }
-          : specialist
-            ? { profileKey: TEAM_SPECIALIST_PROFILE_KEY }
-            : impact
-              ? { profileKey: TEAM_IMPACT_PROFILE_KEY }
-              : spatial
-                ? { profileKey: TEAM_SPATIAL_PROFILE_KEY }
-                : pressure
-                  ? { profileKey: TEAM_PRESSURE_PROFILE_KEY }
-                  : {},
+    culturalSpecialistsV2
+      ? { profileKey: TEAM_CULTURAL_SPECIALIST_V2_PROFILE_KEY }
+      : culturalSpecialists
+        ? { profileKey: TEAM_CULTURAL_SPECIALIST_PROFILE_KEY }
+        : reviewedSpecialists
+          ? { profileKey: TEAM_COMPLETE_SPECIALIST_PROFILE_KEY }
+          : partnerSpecialist
+            ? { profileKey: TEAM_PARTNER_SPECIALIST_PROFILE_KEY }
+            : specialist
+              ? { profileKey: TEAM_SPECIALIST_PROFILE_KEY }
+              : impact
+                ? { profileKey: TEAM_IMPACT_PROFILE_KEY }
+                : spatial
+                  ? { profileKey: TEAM_SPATIAL_PROFILE_KEY }
+                  : pressure
+                    ? { profileKey: TEAM_PRESSURE_PROFILE_KEY }
+                    : {},
   );
   await candidateProgress.load();
   return Object.freeze({
@@ -110,21 +119,24 @@ export async function createTeamGreyboxEntry({
       specialist ||
       partnerSpecialist ||
       reviewedSpecialists ||
-      culturalSpecialists
+      culturalSpecialists ||
+      culturalSpecialistsV2
         ? localizedMessage(
-            culturalSpecialists
-              ? 'interface:couch.teamEdition_culturalSpecialists'
-              : reviewedSpecialists
-                ? 'interface:couch.teamEdition_reviewedSpecialists'
-                : partnerSpecialist
-                  ? 'interface:couch.teamEdition_partnerSpecialist'
-                  : specialist
-                    ? 'interface:couch.teamEdition_specialist'
-                    : impact
-                      ? 'interface:couch.teamEdition_impact'
-                      : spatial
-                        ? 'interface:couch.teamEdition_spatial'
-                        : 'interface:couch.teamEdition_pressure',
+            culturalSpecialistsV2
+              ? 'interface:couch.teamEdition_culturalSpecialistsV2'
+              : culturalSpecialists
+                ? 'interface:couch.teamEdition_culturalSpecialists'
+                : reviewedSpecialists
+                  ? 'interface:couch.teamEdition_reviewedSpecialists'
+                  : partnerSpecialist
+                    ? 'interface:couch.teamEdition_partnerSpecialist'
+                    : specialist
+                      ? 'interface:couch.teamEdition_specialist'
+                      : impact
+                        ? 'interface:couch.teamEdition_impact'
+                        : spatial
+                          ? 'interface:couch.teamEdition_spatial'
+                          : 'interface:couch.teamEdition_pressure',
           )
         : '',
     candidateNotice: snapshot.durable ? '' : snapshot.error,
