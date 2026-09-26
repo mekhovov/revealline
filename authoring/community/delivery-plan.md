@@ -19,8 +19,9 @@ The implementation phases retain separate documentation and acceptance records, 
 ## Current status and remaining effort — 26 September 2026
 
 The creator framework from PR #465 is merged. This follow-up branch is rebased onto protected
-`main` at `ee015163de1131313436b0550892f3739e3c7a1a`, including the accepted `v0.132.4`
-selector, Fastline recovery hardening, public-byte verification and live locale refresh repair. It carries
+`main` at `bc5378cf186681aa311fccbf180d295cc3bc0a6c`, including the accepted `v0.132.4`
+selector, Fastline recovery hardening, public-byte verification, live locale refresh repair and Fastline
+throughput corrections. It carries
 source version `0.141.0` for the assigned release in PR #564. Estimates are focused engineering
 time, not calendar release dates.
 
