@@ -392,7 +392,7 @@ export function bootCoop({
   let automaticRetry = null;
   let foundationMessage = null;
   let teachingCue = null,
-    teachingSignature = '';
+    teachingSignature = null;
   const contextualTeaching = createTeamContextualTeaching({
     getStorage: () => localStorage,
   });
@@ -3940,7 +3940,7 @@ export function bootCoop({
     const guidance = () => coopArenaGuidance(next.level, next.config);
     supportGuidance(guidance, level);
     message(() => guidance().startMessage);
-    teachingSignature = '';
+    teachingSignature = null;
     renderTeaching(contextualTeaching.opening(guidance().teaching));
     overlay();
     try {
