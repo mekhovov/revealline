@@ -172,7 +172,9 @@ async function host(t, mode, { fetchResponse, defaultEntry = false } = {}) {
   p.doc.defaultView.matchMedia = () => ({ matches: true });
   const pad = device();
   (mode === 'team' ? p.pads : pads).push(pad);
-  let now = 1000;
+  // Continue from the host clock already sampled during startup. Rewinding to
+  // an arbitrary small value would prevent time-based Confirm rearming.
+  let now = performance.now() + 1000;
   t.mock.method(performance, 'now', () => now);
   function layoutMissionCards() {
     // Finite three-column browser geometry. A shared default rectangle would
@@ -195,6 +197,9 @@ async function host(t, mode, { fetchResponse, defaultEntry = false } = {}) {
     frame();
     pad.buttons[index] = { pressed: false, value: 0 };
     frame();
+    // This helper models separate deliberate taps, not Steam's duplicate
+    // release pulse. Let Solo's Confirm lifecycle fully rearm between them.
+    if (mode === 'solo' && index === 0) for (let i = 0; i < 4; i++) frame();
   };
   frame();
   frame();
@@ -374,7 +379,7 @@ for (const mode of ['solo', 'versus', 'team'])
       assert.equal(p.renders[0].level.id, 'first-return');
       assert.equal(p.renders[1].level.id, 'first-return');
     } else assert.equal(p.$('coop-level').value, 'twin-landings');
-    const edition = mode === 'team' ? 'team-trail-impact-originals-1' : 'whole-spatial-v20';
+    const edition = mode === 'team' ? 'team-trail-impact-originals-1' : 'whole-spatial-v21';
     const card = [...p.$('journey-cards').children].find((row) => {
       const identity = JSON.parse(row.dataset.missionId);
       return identity[0] === `journey:${edition}` && identity[1] === edition;
