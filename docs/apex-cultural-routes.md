@@ -8,8 +8,8 @@ Status date: 2026-09-26
 - Exact terminal v0.132.4 source base: `origin/main` at
   `fad132a054a10f27198751bfeb7c02ba340cfbfb`.
 - Cultural redesign stack: rebased onto that exact base and force-updated with guarded leases.
-- Latest reviewed predecessor: draft PR #621, Sentinel v24, clean and mergeable at
-  `49be614ed0c718fc30cc32a813c7a68f86fa2ddd`.
+- Latest reviewed predecessor: draft PR #621, Sentinel v24. Its GitHub head is authoritative after
+  guarded restacks.
 - Active successor: draft PR #625, Apex v25 / source version **0.140.0**. The PR's GitHub head is
   authoritative after guarded restacks.
 - None of v12-v25 is a public delivery until its own PR, immutable release and Pages build complete.
