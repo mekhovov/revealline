@@ -1,0 +1,63 @@
+{
+  "themes": [
+    {
+      "actorRecipes": {
+        "border-patrol": "stale-fragments",
+        "bouncer": "paper-tangle",
+        "claimed-rover": "missing-cloud",
+        "contour-patrol": "missing-cloud",
+        "eroder": "stale-fragments",
+        "lane-boss": "backlog-knot",
+        "relay-sentinel": "backlog-knot"
+      },
+      "bossShape": "core",
+      "classBodies": {
+        "bomber": "community-marker",
+        "carrier": "community-marker",
+        "fiber": "community-marker",
+        "impact": "community-marker",
+        "interceptor": "community-marker",
+        "scout": "community-marker",
+        "trapper": "community-marker"
+      },
+      "coverColor": "#10291D",
+      "enemyShape": "cube",
+      "family": "company",
+      "id": "droneaid-community",
+      "labels": {
+        "ability": "Support",
+        "boss": "Backlog knot",
+        "currency": "Connections",
+        "enemy": "Paper tangle",
+        "objective": "Connection",
+        "supply": "Support station"
+      },
+      "name": "DroneAid",
+      "palette": {
+        "accent": "#F2BD6E",
+        "danger": "#FFA58F",
+        "field": "#10291D",
+        "grid": "#284638",
+        "ink": "#12251C",
+        "land": "#14532D",
+        "muted": "#B8CEBA",
+        "paper": "#FAFBF7",
+        "safe": "#96D4AD",
+        "sky": "#DDEDE0"
+      },
+      "patrolShape": "spark",
+      "player": "community-marker",
+      "scene": "network",
+      "soundtrack": {
+        "genre": "ambient",
+        "id": "workshop-after-rain",
+        "name": "Workshop After Rain",
+        "root": 57,
+        "scale": "dorian",
+        "tempo": 72
+      },
+      "subtitle": "Build together. Connect the community."
+    }
+  ],
+  "version": "xonix-themes.v1"
+}
