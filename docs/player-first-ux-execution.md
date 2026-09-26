@@ -24,8 +24,9 @@ artwork. The complete acceptance record is in
 **Active candidate:** v0.141.6 introduces dual readers and an opt-in deterministic
 commit-plus-manifest source-preservation path while leaving the accepted tar
 writer as the production default. PR #689 is the prerequisite test-fixture
-correction on the exact accepted mainline. PR #662 must then rebase onto that
-source, pass its fresh exact-head focused gate and complete the immutable
+correction and is retained as a separate commit in PR #662 after repeated
+mainline movement made another standalone gate stale. The cumulative source must
+pass one fresh exact-head focused gate and complete the immutable
 release/publication cycle. The manifest writer remains opt-in until the reviewed
 canary step described in `publishing/SOURCE-MANIFEST-CONTRACT.md`.
 
@@ -40,7 +41,7 @@ from modeled or built-in-browser evidence.
 | ----- | --------------- | ---------------------------------------------------------- | ------------------------------------------------------------------------- |
 | 1     | v0.141.4        | Couch secondary navigation and Team continuation           | publicly accepted exact source `cc0309ffaaea9050a44f7b7592d38ba5a0ade78c` |
 | 2     | v0.141.5        | Bounded community S3 package and resumable-upload storage  | publicly accepted exact source `edd5fa39ae3f0bdf7bc6fa156c461925df794577` |
-| 3     | v0.141.6        | Dual-reader source-manifest release and opt-in canary path | PR #689, then PR #662 on the accepted v0.141.5 publication baseline       |
+| 3     | v0.141.6        | Dual-reader source-manifest release and opt-in canary path | PR #662 includes the separately committed PR #689 fixture correction      |
 | 4     | v0.141.7        | Teaching, reward and navigation batch                      | PR #543 → #580 → #553; rerun cumulative exact-source gates                |
 | 5     | v0.141.8        | Failure and continuation batch                             | PR #545 → #552 → #557; rerun cumulative exact-source gates                |
 | 6     | v0.141.9        | Pause, Settings/Help and Collection return batch           | PR #542 → #548; rerun cumulative exact-source gates                       |
