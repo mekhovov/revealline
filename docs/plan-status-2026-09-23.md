@@ -19,7 +19,10 @@
   ([PR #590](https://github.com/mekhovov/revealline/pull/590));
   v0.141.2 Team quick-start is prepared locally on exact compact-gallery
   candidate `547e063cb88ec11a1f4a2a8b34d30542789b4eb4`, without claiming that
-  predecessor public; v0.141.3 Couch secondary navigation;
+  predecessor public; v0.141.3 Couch secondary navigation is prepared locally
+  as a clean child of v0.141.2 candidate
+  `2904091ca99400529a39c1491b0770037fffc00e`, with 27/27 complete host and
+  37/37 departure/markup/quick-start evidence;
   v0.141.4 Team teaching; v0.141.5 deliberate Team terminal Retry;
   v0.141.6 Versus countdown; v0.141.7 named result destinations;
   and v0.141.8 Collection fixture reconciliation plus paused Settings/Help return
