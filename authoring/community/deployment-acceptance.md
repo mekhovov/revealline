@@ -1,11 +1,13 @@
 # Community deployment acceptance
 
-Status on 26 September 2026: released `v0.141.2` supplies a fail-closed production
+Status on 27 September 2026: released `v0.141.2` supplies a fail-closed production
 Compose overlay, executable readiness preflight, source-to-target recovery rehearsal, exact tus
 interruption proxy, and bounded deployed two-user journey. The following source hardening adds exact
 release/source binding, full readiness gating, and a deployed tus interruption runner. Automated
 tests cover each boundary with injected PostgreSQL, filesystem, process, and HTTP failures. The
-updated service suite passes **69/69**. No live infrastructure acceptance is claimed.
+updated service suite passes **105/105** on preparation PR #709. Hosted run `36275412435` passes the
+production-shaped Linux Compose path against exact pre-ledger source
+`122f36c901b13ef47fd94c6688ebb99bb567aa02`; no selected-host acceptance is claimed.
 
 ## Automated source evidence
 
@@ -45,6 +47,13 @@ updated service suite passes **69/69**. No live infrastructure acceptance is cla
 - `/health` remains a cheap PostgreSQL liveness check. `/ready` reruns schema, storage, and ffprobe
   checks; concurrent requests share a probe and both success and failure are cached for 30 seconds
   to bound work. The production container health check uses `/ready` and fails closed.
+- The `Community hosted acceptance` workflow runs the base, production and CI-only overlays with
+  disposable API actors. It passed numbered and Better Auth migrations, readiness, PostgreSQL,
+  filesystem blob/tus storage, hardened worker startup, an exact 17-byte interrupted tus resume,
+  retained-volume container recreation, publication, two-user isolation, exact download,
+  install/legal completion/reload, report/unlist/resolve and offline replay. Its owner-safe workflow
+  artifact contains `revealline-community-deployed-tus-acceptance.v1` and
+  `revealline-community-deployed-acceptance.v1` passing receipts.
 
 ## Deployment rehearsal gate
 
@@ -70,6 +79,8 @@ Run these checks in the selected production-like environment before claiming ava
    redacted receipt and repeat exact download plus offline ownership checks against the restored
    service.
 
-Container runtime, public DNS/TLS, mail delivery, shared S3 storage, and the two-user journey remain
-environment-dependent. Docker and Podman were unavailable in the source implementation
-environment, so the Compose topology requires the rehearsal above before a deployment claim.
+The repository-hosted Linux container, PostgreSQL, filesystem storage, interrupted upload and
+two-user journey gates now pass. Public DNS/TLS and exact proxy addressing, real mail delivery,
+Better Auth creator/administrator sessions, selected-host filesystem recovery/cutover, browser UI,
+and shared S3/AWS storage remain environment-dependent. The rehearsal above still applies before a
+deployment claim.
