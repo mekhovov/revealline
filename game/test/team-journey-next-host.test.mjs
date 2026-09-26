@@ -102,6 +102,27 @@ test('explicit Team Journey earns twelve consecutive clears across all five camp
   );
 });
 
+test('touch activates the named Team destination through the existing start contract', async (t) => {
+  const f = await journeyPage(t, { touch: true });
+  const touch = (button) => {
+    button.emit('pointerdown', { pointerId: 1, pointerType: 'touch', button: 0 });
+    button.emit('pointerup', { pointerId: 1, pointerType: 'touch', button: 0 });
+    button.click();
+  };
+
+  touch(f.$('coop-start'));
+  clear(f, 'twin-landings');
+  assert.equal(f.$('coop-next').textContent, 'Next: Stepping exchange');
+
+  touch(f.$('coop-next'));
+  await waitFor(() => f.$('coop-overlay').hidden);
+  assert.equal(f.$('coop-level').value, 'stepping-exchange');
+  assert.equal(f.$('coop-menu').hidden, true);
+  assert.equal(f.doc.activeElement.id, 'coop-canvas');
+  assert.equal(f.$('coop-coverage').textContent, '0.0%');
+  assert.equal(f.$('coop-clock').textContent, '0:00');
+});
+
 for (const difficulty of ['gentle', 'expert'])
   test(`Team candidate entry reads shared ${difficulty} preference without changing legacy choices`, async (t) => {
     const f = await journeyPage(t, {
