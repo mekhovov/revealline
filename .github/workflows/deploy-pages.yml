@@ -5,7 +5,11 @@ on:
     types: [published]
   pull_request:
     branches: [main]
-    types: [opened, synchronize, reopened, edited, ready_for_review]
+    # Draft promotion does not change source bytes. The exact-head gate already
+    # ran on open/synchronize, while the merge controller separately listens to
+    # ready_for_review. Re-running the source gate here added 5-10 minutes to
+    # every promotion without producing new evidence.
+    types: [opened, synchronize, reopened, edited]
   workflow_dispatch:
     inputs:
       release_tag:
