@@ -3,7 +3,10 @@ import { createReadStream } from 'node:fs';
 import { mkdir, open, rename, rm, stat } from 'node:fs/promises';
 import path from 'node:path';
 import { Readable } from 'node:stream';
+import { finished } from 'node:stream/promises';
 import { CommunityError } from './domain.mjs';
+
+const S3_PUT_ATTEMPTS = 3;
 
 const validatedKey = (key) => {
   if (typeof key !== 'string' || !/^[a-z0-9][a-z0-9./_-]*$/u.test(key) || key.includes('..'))
@@ -93,6 +96,17 @@ const stageVerifiedBody = async ({
     throw error;
   }
 };
+
+const closeReadStream = async (stream) => {
+  if (!stream.destroyed) stream.destroy();
+  await finished(stream).catch(() => {});
+};
+
+const isS3Status = (error, name, status) =>
+  error?.name === name ||
+  error?.Code === name ||
+  error?.code === name ||
+  error?.$metadata?.httpStatusCode === status;
 
 export class DiskBlobStore {
   constructor({ root }) {
@@ -300,31 +314,36 @@ export class S3CompatibleBlobStore {
       maxBytes,
     });
     try {
-      const uploadBody = createReadStream(staged.path);
       let publicationError;
-      try {
-        await this.client.send(
-          this.commands.put({
-            Bucket: this.bucket,
-            Key: staged.key,
-            Body: uploadBody,
-            ContentLength: staged.size,
-            ContentType: 'application/vnd.revealline.rlpack',
-            IfNoneMatch: '*',
-            Metadata: { sha256: staged.sha256 },
-          }),
-        );
-      } catch (error) {
-        publicationError = error;
-      } finally {
-        uploadBody.destroy();
+      for (let attempt = 1; attempt <= S3_PUT_ATTEMPTS; attempt += 1) {
+        const uploadBody = createReadStream(staged.path);
+        publicationError = undefined;
+        try {
+          await this.client.send(
+            this.commands.put({
+              Bucket: this.bucket,
+              Key: staged.key,
+              Body: uploadBody,
+              ContentLength: staged.size,
+              ContentType: 'application/vnd.revealline.rlpack',
+              IfNoneMatch: '*',
+              Metadata: { sha256: staged.sha256 },
+            }),
+          );
+        } catch (error) {
+          publicationError = error;
+        } finally {
+          await closeReadStream(uploadBody);
+        }
+        if (!publicationError) break;
+        if (
+          !isS3Status(publicationError, 'ConditionalRequestConflict', 409) ||
+          attempt === S3_PUT_ATTEMPTS
+        )
+          break;
       }
       if (publicationError) {
-        if (
-          publicationError?.name !== 'PreconditionFailed' &&
-          publicationError?.$metadata?.httpStatusCode !== 412
-        )
-          throw publicationError;
+        if (!isS3Status(publicationError, 'PreconditionFailed', 412)) throw publicationError;
         const existing = await this.client.send(
           this.commands.head({ Bucket: this.bucket, Key: staged.key }),
         );
