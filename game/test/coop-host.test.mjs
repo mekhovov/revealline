@@ -1471,6 +1471,10 @@ for (const interruption of ['blur', 'hidden', 'persisted pagehide'])
     pad.buttons[0] = { pressed: false, value: 0 };
     f.tick(2);
     assert.equal(f.$('coop-overlay').hidden, false, 'Joining a pad is not Resume.');
+    // Let the finite controller-to-native echo window expire before modeling a
+    // distinct pointer activation. This test owns lifecycle retirement, not the
+    // guard that deliberately rejects an immediate synthetic click after A.
+    f.tick(151);
     f.disclose('coop-help');
     const region = f.$('coop-help-reading'),
       done = f.$('coop-help-reading-done');

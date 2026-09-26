@@ -1,40 +1,99 @@
-# Deliver creator content and framework releases
+# Deliver creator content and the combined framework release
 
-## Current manual content handoff
+## Content handoff available in this source
 
-The new single-image workflow is documented in [Create and share a picture campaign](image-campaign-guide.md), with [format/API contracts](creator-bundle-reference.md) and [pending release acceptance](phase1-acceptance.md). Its strict `.rlpack` path does not turn arbitrary Studio JSON into an approved installed campaign.
+The [picture campaign creator](../../game/creator/) turns one or many images/videos into reviewed,
+portable `.rlpack` editions. The [creator bundle reference](creator-bundle-reference.md) defines the
+strict manifest, dependency closure and installer. Arbitrary Content Studio JSON is still editable
+source rather than a general installed-Custom format; only the creator's verified template scope
+uses this `.rlpack` path.
 
-1. Collect the exact editable source, runtime expansion if available, required media and their provenance. Keep private originals and player backups out of a shareable content artifact.
-2. For a Playground expansion, run the production `preparePack` reader and test the actual exported file through the compatibility player's **Settings → Game data → Installed chapters → Install a pack file**. For a Studio project, use `compile-content-project.mjs` and the exact preview. Arbitrary Studio source does not have a general ordinary-Custom installer; the new creator supports its explicitly verified template scope.
-3. Review content rights, pictures, objective clarity and advertised modes/presets. Record legal completions, Retry/Next, save recovery and exact earned artwork. A decoder pass, uploaded flag or compiler success is not creator playtesting.
-4. To include content in a maintained distribution, integrate its source and required runtime dependencies using the corresponding existing catalog/compiler. Keep immutable old editions. Do not merely rename a project into `xonix-pack`, change its version label, or give community content official Journey eligibility.
-5. Prepare a scoped PR, update examples and compatibility declarations, then follow the framework release procedure below. Public availability follows deployed acceptance, not a local import.
+1. Collect the exact editable source and required media with truthful rights and credits. Keep
+   private originals, unrelated media and player backups outside the shareable pack.
+2. Prepare and approve the exact creator result. Confirm every generated map shows the intended
+   enemies and collision obstacles, every video uses the intended poster/range, and every included
+   item has route evidence for the actual compiled identity and seed.
+3. Test the downloaded artifact rather than an in-memory object. Import, review and install it in a
+   separate browser origin; exercise ordinary Solo play, legal completion, earned media, Retry,
+   Next, reload and unfinished-attempt recovery. Record which browser/device was actually tested.
+4. Preserve immutable old editions. A changed byte produces a new edition; it must not reinterpret
+   an old attempt, completion record or earned picture. Matching an official name or setting an
+   uploaded flag never grants Journey or official status.
+5. For unsupported arbitrary geometry, use the shared compiler and exact Content Studio preview,
+   then integrate through its owning catalog/runtime with separately recorded completion evidence.
+   Do not coerce Studio JSON into a strict legacy expansion or `.rlpack` manifest.
 
-Creators can already exchange supported expansion files without a game release. The future community service will publish validated immutable `.rlpack` editions independently of software releases. Accounts, uploads and a public catalog are Phase 4 work; do not direct creators to a nonexistent service.
+Creators can exchange `.rlpack` files without a software release. A deployed community service can
+publish the same approved bytes independently after server validation. The repository includes the
+client, account flow, tus transport, validation worker, catalog, reports, unlisting and recovery
+tooling; it does not establish that a public service is currently deployed.
 
-## One release per framework phase
+## Community-service deployment boundary
 
-Start from then-current reviewed `main` in an isolated checkout. Preserve a dirty development checkout and other tasks' worktrees. Coordinate the next unused version with the existing publication owner before changing version fields; do not infer availability from a stale document or move existing tags.
+Serve the static game, Studio and API on the intended same origin. Before enabling public uploads,
+configure PostgreSQL migrations, Better Auth secret/base URL/trusted origins, email verification and
+password reset delivery, tus staging and shared locks, immutable disk or S3 storage, isolated media
+inspection, trusted-proxy and connection limits, TLS/domain, monitoring and off-host backups.
 
-1. Implement the phase, its guide/examples, compatibility rules and meaningful focused tests.
-2. Reproduce the actual user journey through native file selection, downloads, import, ordinary play and recovery. Keep local, modeled, physical-device and public evidence separately labeled.
-3. Open and review the scoped PR. Run the repository's currently applicable preflight, build, release-readiness and feature gates on the exact candidate. Record any policy-authorized waived suite as deferred, never passed.
-4. Freeze the committed source under its allocated immutable version through the current publication coordinator. Use the exact original source/artifact and its current qualification workflow; do not rebuild a historical edition with newer code.
-5. Publish original release assets, review the Pages selection and verify deployed identity, hashes, public file paths and actual behavior. Keep failure records and corrected retests. The [repository release skill](https://github.com/mekhovov/revealline/blob/main/.cursor/skills/deploy-release-pages/SKILL.md) and [delivery workflow](../../docs/feature-delivery-workflow.md) own the detailed procedure.
-6. Record PR, source SHA, release/tag, publisher revision/run, public URL and phase acceptance. Only accept the phase after its own gate passes. A merged PR, container image or successful deployment alone does not establish playable acceptance.
+Production acceptance requires evidence from the deployed topology:
 
-Consult the [current delivery plan](delivery-plan.md) for dependency order. Chromium, Firefox and Safari desktop checks are required by the approved plan; unavailable engines stay explicitly open. Physical mobile support requires physical qualification. Hosting, domain, mail delivery and AWS provisioning remain separate deployment decisions.
+- two independent creator accounts with ownership isolation;
+- interrupted and resumed upload through the real proxy;
+- corrupt-package rejection and automatic listing only after validation;
+- API and worker restart while a job lease is active;
+- shared upload locking and incomplete-upload cleanup across replicas, when replicated;
+- database/blob backup, verification and journal-backed restore into an empty target;
+- Creator A publish → Player B discover/install/complete/reload/offline play;
+- report, owner unlist, immutable update and retained installed ownership after public removal.
+
+The in-process and fake-client suites verify application contracts, but they do not replace these
+PostgreSQL, proxy, object-storage, mail and restore rehearsals. GitHub Pages can ship the static
+client; it cannot run Fastify, PostgreSQL or the validation worker.
+
+## One combined framework release
+
+The image, batch, mixed-media, community, Versus, Team and bounded media-editor work is being
+qualified as one combined creator feature. Individual phase records are evidence, not independent
+publication instructions. Begin from current reviewed `main` in an isolated checkout and preserve
+other working trees.
+
+1. Reconcile the [delivery register](delivery-plan.md) and
+   [combined acceptance record](combined-release-acceptance.md) with the exact candidate. Keep local,
+   modeled, deployed, physical-device and public evidence separately labeled.
+2. Update guides, examples and compatibility declarations. Run the owned creator/runtime and
+   community-service suites, repository validation, localization, lint, formatting and the exact
+   current release gates. A policy-authorized skipped suite remains deferred rather than passed.
+3. Reproduce actual file selection, download, import, installation, play and recovery in the
+   supported browser environment. Keep Firefox, Safari and physical mobile open unless each is
+   exercised. Verify installed Versus separately once its project-backed route lands; generated
+   equal-board replay evidence alone is not an installed-player acceptance result.
+4. Open and review the combined PR. Coordinate its assigned version with the publication owner;
+   never infer a free version from a stale document or move an existing tag.
+5. Freeze the reviewed commit through the repository's release coordinator. Use the exact qualified
+   source and original artifact; do not rebuild a historical edition with newer code.
+6. Verify release artifact hashes, source identity, public paths, online behavior and applicable
+   offline play. Review the Pages selector separately where required.
+7. Record PR, source SHA, tag, release artifact hashes, qualification/publisher runs, public URL and
+   all deferred production gates. A merge, container image or successful static deployment alone is
+   not complete creator/community acceptance.
+
+The [delivery workflow](../../docs/feature-delivery-workflow.md) owns the current repository release
+procedure. Software publication and a community campaign publication are different operations: the
+framework ships through the release coordinator, while each creator edition publishes through the
+deployed validation service without requiring another game release.
 
 ## Acceptance record template
 
 ```text
-Phase / scope:
+Scope:
 Source SHA / PR:
 Tests and exact results:
-Native input, browser version and viewport:
+Browser version, origin and viewport:
 Actual downloaded/imported file SHA-256:
 Win / Retry / Next / reload / unfinished restore observations:
+Versus / Team observations, when advertised:
 Failure and recovery observations:
+Service topology and restore observations, when applicable:
 Release tag / original artifact hashes:
 Qualification and publication run:
 Public identity / byte verification / public play:
@@ -42,4 +101,7 @@ Deferred or unavailable checks:
 Acceptance: pending | scoped | complete (with evidence)
 ```
 
-Public publication in Phase 4 must independently validate actual bounded bytes, hashes, schemas, media, compiler output and applicable route evidence. Creator approval binds an exact local snapshot; it never grants server trust. Immutable uploaded editions publish automatically only after successful validation. Report/removal controls and ownership/restore tests are part of that phase, not optional launch polish.
+Creator approval binds an exact local snapshot; it never grants server trust. Publication must
+revalidate bounded bytes, hashes, schemas, media, compiler output, compatibility and applicable
+route evidence. A changed package is a new immutable edition. Quotas, reporting, unlisting and an
+auditable administrative removal path are production requirements for public uploads.
