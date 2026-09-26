@@ -43,6 +43,8 @@ export const MANAGED_MEDIA_LIMITS = Object.freeze({
 const STORES = ['metadata', 'audio', 'mediaRecords', 'mediaBlobs', 'managedState', 'reservations'];
 const OVERHEAD = 4096,
   RESERVATION_OVERHEAD = 512;
+const EXTERNAL_USAGE_KEY = 'external-usage';
+const EXTERNAL_USAGE_FORMAT = 'revealline-managed-external-usage.v1';
 const preparedMedia = new WeakSet();
 const nativeSize = Object.getOwnPropertyDescriptor(Blob.prototype, 'size').get;
 const size = (blob) => nativeSize.call(blob);
@@ -179,6 +181,46 @@ function hashes(domain, library) {
 function changed(domain) {
   return `${domain === 'audio' ? 'Soundtrack' : 'Media library'} changed in another operation. Reload it before saving.`;
 }
+
+function externalUsage(value) {
+  if (value === undefined) return { format: EXTERNAL_USAGE_FORMAT, generation: 0, items: [] };
+  const copy = boundedJSON(value, {
+    maxBytes: MANAGED_MEDIA_LIMITS.metadataBytes,
+    maxNodes: 4096,
+    maxDepth: 4,
+    maxArray: MANAGED_MEDIA_LIMITS.assets,
+    maxString: 160,
+  });
+  exactKeys(copy, ['format', 'generation', 'items'], 'managed external usage');
+  required(
+    copy.format === EXTERNAL_USAGE_FORMAT && integer(copy.generation) && Array.isArray(copy.items),
+    'Invalid managed external usage ledger.',
+  );
+  const seen = new Set();
+  for (const item of copy.items) {
+    exactKeys(item, ['owner', 'id', 'bytes', 'state'], 'managed external usage item');
+    const key = `${item.owner}:${item.id}`;
+    required(
+      typeof item.owner === 'string' &&
+        /^[a-z][a-z0-9-]{0,63}$/.test(item.owner) &&
+        typeof item.id === 'string' &&
+        item.id.length > 0 &&
+        item.id.length <= 128 &&
+        integer(item.bytes) &&
+        item.bytes > 0 &&
+        item.bytes <= MANAGED_MEDIA_LIMITS.bytes &&
+        ['pending', 'committed'].includes(item.state) &&
+        !seen.has(key),
+      'Invalid or duplicate managed external usage item.',
+    );
+    seen.add(key);
+  }
+  copy.items.sort((a, b) => a.owner.localeCompare(b.owner) || a.id.localeCompare(b.id));
+  return copy;
+}
+
+const externalStoredBytes = (row) =>
+  encoded(row) + row.items.reduce((total, item) => total + item.bytes, 0);
 
 /** One database/ledger serialize every domain. Rich still storage opts into v3;
  * ordinary soundtrack callers retain their explicit v1/v2 behavior.
@@ -383,7 +425,7 @@ export function createManagedMediaStore({
       tx.onabort = () => finish(failure || tx.error || new Error('Media transaction failed.'));
       signal?.addEventListener('abort', cancel, { once: true });
       const values = {};
-      let left = storyMedia ? 9 : 8;
+      let left = storyMedia ? 10 : 9;
       function read(key, request) {
         request.onsuccess = () => {
           values[key] = request.result;
@@ -401,6 +443,7 @@ export function createManagedMediaStore({
               storyRow = storyMedia
                 ? row(values.storyRow, 'story', true, mediaRow.library)
                 : undefined,
+              externalRow = externalUsage(values.externalRow),
               blobs = new Map();
             let blobBytes = 0;
             for (const [kind, keys, files] of [
@@ -452,6 +495,7 @@ export function createManagedMediaStore({
               encoded(audioRow) +
               encoded(mediaRow) +
               (storyMedia ? encoded(storyRow) : 0) +
+              (values.externalRow === undefined ? 0 : externalStoredBytes(externalRow)) +
               OVERHEAD;
             const state = {
               audioRow,
@@ -459,6 +503,9 @@ export function createManagedMediaStore({
               ...(storyMedia ? { storyRow } : {}),
               blobs,
               blobBytes,
+              externalRow,
+              externalPersisted: values.externalRow !== undefined,
+              externalBytes: externalRow.items.reduce((total, item) => total + item.bytes, 0),
               usedBytes,
               reservations,
               revision: values.state?.revision ?? 0,
@@ -480,6 +527,7 @@ export function createManagedMediaStore({
         read('mediaBlobs', stores.mediaBlobs.getAll());
         read('reservations', stores.reservations.getAll());
         read('state', stores.managedState.get('ledger'));
+        read('externalRow', stores.managedState.get(EXTERNAL_USAGE_KEY));
         if (signal?.aborted) cancel();
       } catch (e) {
         fail(e);
@@ -501,6 +549,25 @@ export function createManagedMediaStore({
       { format: 'revealline-managed-state.v1', revision: state.revision + 1, usedBytes: bytes },
       'ledger',
     );
+  }
+  function externalIdentity(owner, id) {
+    required(
+      typeof owner === 'string' &&
+        /^[a-z][a-z0-9-]{0,63}$/.test(owner) &&
+        typeof id === 'string' &&
+        id.length > 0 &&
+        id.length <= 128,
+      'Invalid managed external usage identity.',
+    );
+    return `${owner}:${id}`;
+  }
+  function writeExternal(state, stores, next) {
+    const previousBytes = state.externalPersisted ? externalStoredBytes(state.externalRow) : 0,
+      nextBytes = externalStoredBytes(next),
+      total = state.usedBytes - previousBytes + nextBytes;
+    stores.managedState.put(next, EXTERNAL_USAGE_KEY);
+    ledger(state, stores, total);
+    return total;
   }
   function snapshot(state, domain) {
     const current = state[`${domain}Row`],
@@ -671,6 +738,7 @@ export function createManagedMediaStore({
       (state) =>
         Object.freeze({
           usedBytes: state.usedBytes,
+          externalBytes: state.externalBytes,
           reservedBytes: reservationBytes(active(state, clock())),
           limitBytes: MANAGED_MEDIA_LIMITS.bytes,
           generations: Object.freeze({
@@ -680,6 +748,172 @@ export function createManagedMediaStore({
           }),
           reservations: active(state, clock()).length,
         }),
+      signal,
+    );
+  }
+  async function externalUsageSummary(owner, { signal } = {}) {
+    externalIdentity(owner, 'summary');
+    return transact(
+      'readonly',
+      (state) => {
+        const items = state.externalRow.items.filter((item) => item.owner === owner);
+        return Object.freeze({
+          generation: state.externalRow.generation,
+          bytes: items.reduce((total, item) => total + item.bytes, 0),
+          items: Object.freeze(items.map((item) => Object.freeze({ ...item }))),
+          usedBytes: state.usedBytes,
+          reservedBytes: reservationBytes(active(state, clock())),
+          limitBytes: MANAGED_MEDIA_LIMITS.bytes,
+        });
+      },
+      signal,
+    );
+  }
+  async function claimExternalUsage({ owner, id, bytes, signal } = {}) {
+    const identity = externalIdentity(owner, id);
+    required(
+      integer(bytes) && bytes > 0 && bytes <= MANAGED_MEDIA_LIMITS.bytes,
+      'Invalid managed external byte claim.',
+    );
+    return transact(
+      'readwrite',
+      (state, stores) => {
+        const existing = state.externalRow.items.find(
+          (item) => externalIdentity(item.owner, item.id) === identity,
+        );
+        if (existing) {
+          required(existing.bytes === bytes, 'Managed external usage identity changed bytes.');
+          return Object.freeze({ ...existing });
+        }
+        const next = externalUsage({
+          ...state.externalRow,
+          generation: state.externalRow.generation + 1,
+          items: [...state.externalRow.items, { owner, id, bytes, state: 'pending' }],
+        });
+        const previousBytes = state.externalPersisted ? externalStoredBytes(state.externalRow) : 0,
+          addedBytes = externalStoredBytes(next) - previousBytes,
+          t = clock();
+        required(
+          state.usedBytes + reservationBytes(active(state, t)) + addedBytes <=
+            MANAGED_MEDIA_LIMITS.bytes,
+          'Committed media plus Team campaign staging exceeds the 256 MiB managed budget.',
+        );
+        expire(state, stores, t);
+        writeExternal(state, stores, next);
+        return Object.freeze({
+          ...next.items.find((item) => externalIdentity(item.owner, item.id) === identity),
+        });
+      },
+      signal,
+    );
+  }
+  async function finalizeExternalUsage({ owner, id, bytes, signal } = {}) {
+    const identity = externalIdentity(owner, id);
+    required(integer(bytes) && bytes > 0, 'Invalid managed external byte finalization.');
+    return transact(
+      'readwrite',
+      (state, stores) => {
+        const existing = state.externalRow.items.find(
+          (item) => externalIdentity(item.owner, item.id) === identity,
+        );
+        required(
+          existing && existing.bytes === bytes,
+          'Managed external usage claim is missing or changed.',
+        );
+        if (existing.state === 'committed') return Object.freeze({ ...existing });
+        const next = externalUsage({
+          ...state.externalRow,
+          generation: state.externalRow.generation + 1,
+          items: state.externalRow.items.map((item) =>
+            externalIdentity(item.owner, item.id) === identity
+              ? { ...item, state: 'committed' }
+              : item,
+          ),
+        });
+        writeExternal(state, stores, next);
+        return Object.freeze({
+          ...next.items.find((item) => externalIdentity(item.owner, item.id) === identity),
+        });
+      },
+      signal,
+    );
+  }
+  async function releaseExternalUsage({ owner, id, signal } = {}) {
+    const identity = externalIdentity(owner, id);
+    return transact(
+      'readwrite',
+      (state, stores) => {
+        const existing = state.externalRow.items.find(
+          (item) => externalIdentity(item.owner, item.id) === identity,
+        );
+        if (!existing) return false;
+        required(
+          existing.state === 'pending',
+          'Committed external usage requires inventory reconciliation.',
+        );
+        const next = externalUsage({
+          ...state.externalRow,
+          generation: state.externalRow.generation + 1,
+          items: state.externalRow.items.filter(
+            (item) => externalIdentity(item.owner, item.id) !== identity,
+          ),
+        });
+        writeExternal(state, stores, next);
+        return true;
+      },
+      signal,
+    );
+  }
+  async function reconcileExternalUsage(owner, entries, { signal } = {}) {
+    externalIdentity(owner, 'inventory');
+    const inventory = boundedJSON(entries, {
+      maxBytes: MANAGED_MEDIA_LIMITS.metadataBytes,
+      maxNodes: 2048,
+      maxDepth: 3,
+      maxArray: MANAGED_MEDIA_LIMITS.assets,
+      maxString: 128,
+    });
+    required(Array.isArray(inventory), 'Managed external inventory must be an array.');
+    const seen = new Set();
+    for (const item of inventory) {
+      exactKeys(item, ['id', 'bytes'], 'managed external inventory item');
+      const identity = externalIdentity(owner, item.id);
+      required(
+        integer(item.bytes) &&
+          item.bytes > 0 &&
+          item.bytes <= MANAGED_MEDIA_LIMITS.bytes &&
+          !seen.has(identity),
+        'Invalid or duplicate managed external inventory item.',
+      );
+      seen.add(identity);
+    }
+    return transact(
+      'readwrite',
+      (state, stores) => {
+        const retained = state.externalRow.items.filter((item) => item.owner !== owner),
+          candidate = externalUsage({
+            ...state.externalRow,
+            items: [
+              ...retained,
+              ...inventory.map((item) => ({ owner, ...item, state: 'committed' })),
+            ],
+          }),
+          unchanged = canonicalJSON(candidate.items) === canonicalJSON(state.externalRow.items),
+          next = unchanged
+            ? state.externalRow
+            : externalUsage({
+                ...candidate,
+                generation: state.externalRow.generation + 1,
+              }),
+          total = unchanged ? state.usedBytes : writeExternal(state, stores, next);
+        return Object.freeze({
+          generation: next.generation,
+          bytes: inventory.reduce((sum, item) => sum + item.bytes, 0),
+          usedBytes: total,
+          limitBytes: MANAGED_MEDIA_LIMITS.bytes,
+          overBudget: total > MANAGED_MEDIA_LIMITS.bytes,
+        });
+      },
       signal,
     );
   }
@@ -1093,6 +1327,11 @@ export function createManagedMediaStore({
     readPresentationMetadata,
     readSelectedBlob,
     usage,
+    externalUsageSummary,
+    claimExternalUsage,
+    finalizeExternalUsage,
+    releaseExternalUsage,
+    reconcileExternalUsage,
     reserve,
     renew,
     release,
