@@ -71,6 +71,11 @@ export function decideMergeAction({
     };
   if (autoMergeEnabled)
     return { action: "none", reason: "exact-head auto-merge is already armed" };
+  if (["clean", "unstable"].includes(pullRequest.mergeable_state))
+    return {
+      action: "merge",
+      reason: "all blocking requirements passed on the exact head",
+    };
   return { action: "arm", reason: "exact head is admitted and merge-ready" };
 }
 
@@ -178,6 +183,7 @@ async function upsertStatusComment(
       "Existing auto-merge is being disarmed until the blocker is resolved.",
     update:
       "The branch is being updated from strict main; checks must pass again on the new head.",
+    merge: "The protected exact-head merge is being submitted now.",
     none: "No action: exact-head auto-merge is already armed.",
     wait: "Resolve the blocker, then rerun `release-ready` on the resulting exact head.",
   }[decision.action];
@@ -297,6 +303,12 @@ async function main() {
         headers: { "content-type": "application/json" },
       },
     );
+  } else if (decision.action === "merge") {
+    await github(`/repos/${owner}/${repository}/pulls/${number}/merge`, {
+      method: "PUT",
+      body: JSON.stringify({ sha: observedHeadSha, merge_method: "merge" }),
+      headers: { "content-type": "application/json" },
+    });
   } else if (decision.action === "arm" || decision.action === "disarm")
     await setAutoMerge(pullRequest, decision.action, observedHeadSha);
 }

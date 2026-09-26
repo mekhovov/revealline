@@ -30,7 +30,9 @@ permissions:
 
 concurrency:
   group: fastline-merge-${{ github.event.pull_request.number || github.event.workflow_run.pull_requests[0].number || github.run_id }}
-  cancel-in-progress: true
+  # Metadata changes are cheap and read current state. Serializing them avoids
+  # cancelled controller checks poisoning GitHub's merge-state rollup.
+  cancel-in-progress: false
 
 jobs:
   reconcile:

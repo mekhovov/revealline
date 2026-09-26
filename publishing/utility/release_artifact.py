@@ -378,7 +378,24 @@ def waiver_qualification_check(q, binding):
     require(policy['policyEvidence']['bytes'] <= 16384, 'Waiver policy exceeds its 16 KiB bound')
     premerge = q.get('preMergeValidationCorroboration')
     legacy_build = q.get('ordinaryBuildCorroboration')
-    require((premerge is None) != (legacy_build is None) and
+    focused = q.get('focusedAdmissionCorroboration')
+    focused_valid = (isinstance(focused, dict) and
+        set(focused) == {'runId', 'jobId', 'aggregateJobId', 'classificationSteps', 'sourceRevision',
+                         'sourceTree', 'genericBuild', 'fullTests', 'scope'} and
+        positive(focused.get('runId'), 10**14) and positive(focused.get('jobId'), 10**14) and
+        positive(focused.get('aggregateJobId'), 10**14) and
+        isinstance(focused.get('classificationSteps'), list) and len(focused['classificationSteps']) == 2 and
+        [row.get('name') for row in focused['classificationSteps']] ==
+            ['Capture the reviewed changed-path set', 'Select the fail-closed focused gate'] and
+        all(successful(row) for row in focused['classificationSteps']) and
+        isinstance(focused.get('sourceRevision'), str) and COMMIT.fullmatch(focused['sourceRevision']) and
+        isinstance(focused.get('sourceTree'), str) and COMMIT.fullmatch(focused['sourceTree']) and
+        set(focused.get('genericBuild', {})) == {'status', 'jobId'} and
+        focused['genericBuild'].get('status') == 'skipped-by-fast-release-policy' and
+        positive(focused['genericBuild'].get('jobId'), 10**14) and
+        focused.get('fullTests') == {'status': 'waived-and-skipped'} and
+        isinstance(focused.get('scope'), str) and focused['scope'].strip())
+    require(sum(row is not None for row in (premerge, legacy_build, focused)) == 1 and
             ((isinstance(premerge, dict) and set(premerge) == {'runId', 'jobId', 'command', 'step',
               'sourceRevision', 'sourceTree', 'artifactBuild', 'scope'} and
               positive(premerge.get('runId'), 10**14) and positive(premerge.get('jobId'), 10**14) and
@@ -391,7 +408,7 @@ def waiver_qualification_check(q, binding):
               premerge['artifactBuild'].get('status') == 'deferred-to-frozen-source' and
               successful(premerge['artifactBuild'].get('step', {}))) or
              (isinstance(legacy_build, dict) and legacy_build.get('command') == 'npm run build' and
-              successful(legacy_build.get('step', {})))),
+              successful(legacy_build.get('step', {}))) or focused_valid),
             'Actual successful PR validation and explicit artifact deferral missing')
     frozen = q['frozenArtifactCorroboration']
     require(frozen['artifactId'] == binding['artifact']['id'] and
@@ -499,6 +516,44 @@ def verify_evidence(body, qualification, source, policy_body=None):
                             [('commit', premerge['sourceRevision']), ('tree', premerge['sourceTree'])]) and
                         all(frozen_equivalence.get(k) == source[k] for k in ['commit', 'tree']),
                         'PR validation/source equivalence identity differs')
+            focused = qualification.get('focusedAdmissionCorroboration')
+            if focused is not None:
+                pr_run = parse(archive.read('runs/pr/run.json'))
+                pr_jobs = parse(archive.read('runs/pr/jobs.json'))
+                equivalence = parse(archive.read('preparation/source-equivalence.json'))
+                require(pr_run.get('id') == focused['runId'] and pr_run.get('event') == 'pull_request' and
+                        pr_run.get('path') == '.github/workflows/deploy-pages.yml' and
+                        pr_run.get('head_sha') == focused['sourceRevision'] and successful(pr_run),
+                        'Focused admission original run identity/result differs')
+                pr_rows = pr_jobs.get('jobs')
+                require(isinstance(pr_rows, list) and 0 < len(pr_rows) <= 1000 and
+                        pr_jobs.get('total_count') == len(pr_rows) and
+                        all(j.get('run_id') == pr_run['id'] and positive(j.get('id'), 10**14) for j in pr_rows) and
+                        len({j['id'] for j in pr_rows}) == len(pr_rows),
+                        'Focused admission original jobs incomplete or borrowed')
+                by_name = {name: [job for job in pr_rows if job.get('name') == name]
+                           for name in ('preflight', 'focused', 'release-ready', 'build', 'test')}
+                require(all(len(rows) == 1 for rows in by_name.values()),
+                        'Focused admission job family missing or duplicated')
+                preflight, focused_job, ready, build, tests = [by_name[name][0] for name in
+                    ('preflight', 'focused', 'release-ready', 'build', 'test')]
+                require(successful(preflight) and successful(focused_job) and successful(ready) and
+                        focused_job['id'] == focused['jobId'] and ready['id'] == focused['aggregateJobId'] and
+                        build['id'] == focused['genericBuild']['jobId'] and
+                        build.get('conclusion') == tests.get('conclusion') == 'skipped' and
+                        all(job.get('head_sha') == focused['sourceRevision']
+                            for rows in by_name.values() for job in rows),
+                        'Focused admission job identity/result differs')
+                for retained in focused['classificationSteps']:
+                    matched = [row for row in focused_job.get('steps', []) if row.get('name') == retained['name']]
+                    require(len(matched) == 1 and all(retained.get(key) == matched[0].get(key)
+                            for key in ['name', 'number', 'status', 'conclusion']) and successful(matched[0]),
+                            'Focused admission classification step lacks its actual original')
+                pr_equivalence, frozen_equivalence = equivalence.get('prSource', {}), equivalence.get('frozenSource', {})
+                require(all(pr_equivalence.get(k) == v for k, v in
+                            [('commit', focused['sourceRevision']), ('tree', focused['sourceTree'])]) and
+                        all(frozen_equivalence.get(k) == source[k] for k in ['commit', 'tree']),
+                        'Focused admission/source equivalence identity differs')
         return {'files': len(rows), 'originalBytes': sum(r['bytes'] for r in rows),
                 'manifestSha256': sha(manifest_body), 'everyMemberCRCAndHashVerified': True,
                 'allQualificationPinsResolved': True}
