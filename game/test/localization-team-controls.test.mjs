@@ -3,6 +3,47 @@ import assert from 'node:assert/strict';
 import { page } from './helpers/coop-host.mjs';
 import { getLocale, setLocale, attachLanguageControls } from '../i18n/index.mjs';
 
+test('Team setup switches all static and dynamic copy without changing its selection', async (context) => {
+  const locale = getLocale();
+  context.after(() => setLocale(locale, { persist: false }));
+  setLocale('en', { persist: false });
+  const f = await page(context, {
+    beforeImport: ({ doc }) => {
+      doc.createTextNode = (text) => {
+        const node = doc.createElement('span');
+        node.textContent = text;
+        return node;
+      };
+    },
+  });
+  const selectedText = (id) => {
+    const select = f.$(id);
+    return select.options.find((option) => option.value === select.value)?.textContent;
+  };
+  const level = f.$('coop-level').value;
+  const difficulty = f.$('coop-difficulty').value;
+  const startDisabled = f.$('coop-start').disabled;
+
+  assert.equal(f.$('coop-title').textContent.trim(), 'Find your common ground.');
+  assert.equal(f.$('coop-start').textContent, 'Start together →');
+  assert.equal(f.$('coop-optional-setup-toggle').textContent, 'Team options');
+  setLocale('uk', { persist: false });
+  assert.equal(f.$('coop-title').textContent.trim(), 'Знайдіть спільну територію.');
+  assert.equal(selectedText('coop-level'), 'Перше з’єднання · випробування території');
+  assert.equal(f.$('coop-menu-goal').textContent, 'Відкрийте 65% разом');
+  assert.equal(f.$('coop-start').textContent, 'Почати разом →');
+  assert.equal(f.$('coop-optional-setup-toggle').textContent, 'Параметри команди');
+  assert.equal(selectedText('coop-experiment'), 'Повна взаємодія');
+  assert.equal(f.$('coop-level').value, level);
+  assert.equal(f.$('coop-difficulty').value, difficulty);
+  assert.equal(f.$('coop-start').disabled, startDisabled);
+
+  setLocale('en', { persist: false });
+  assert.equal(f.$('coop-title').textContent.trim(), 'Find your common ground.');
+  assert.equal(selectedText('coop-level'), 'First Connection · territory challenge');
+  assert.equal(f.$('coop-menu-goal').textContent, 'Reveal 65% together');
+});
+
 test('Team controller can change language in the lobby and Settings without starting an attempt', async (context) => {
   const locale = getLocale();
   context.after(() => setLocale(locale, { persist: false }));
