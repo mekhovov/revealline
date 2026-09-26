@@ -121,8 +121,10 @@ const revisions = Object.freeze({
     ],
     foundations: [rect(10, 15, 6, 6), rect(33, 14, 6, 8), rect(56, 15, 6, 6)],
     terrain: [
-      { id: 'west-orchard', kind: 'lethal', ...rect(16, 8, 6, 20) },
-      { id: 'east-orchard', kind: 'slow', ...rect(50, 8, 6, 20) },
+      { id: 'west-orchard-north', kind: 'lethal', ...rect(16, 8, 6, 8) },
+      { id: 'west-orchard-south', kind: 'lethal', ...rect(16, 20, 6, 8) },
+      { id: 'east-orchard-north', kind: 'slow', ...rect(50, 8, 6, 8) },
+      { id: 'east-orchard-south', kind: 'slow', ...rect(50, 20, 6, 8) },
     ],
     spawns: [
       { id: 'west', x: 13.5, y: 17.5 },
@@ -154,7 +156,7 @@ const revisions = Object.freeze({
       rect(42, 23, 2, 7),
       rect(44, 21, 3, 2),
     ],
-    foundations: [rect(10, 15, 5, 6), rect(33, 14, 6, 8), rect(57, 15, 5, 6)],
+    foundations: [rect(10, 8, 5, 6), rect(33, 14, 6, 8), rect(57, 22, 5, 6)],
     terrain: [
       { id: 'north-west-thread', kind: 'slow', ...rect(17, 7, 10, 5) },
       { id: 'south-west-thread', kind: 'lethal', ...rect(17, 24, 10, 5) },
@@ -162,8 +164,8 @@ const revisions = Object.freeze({
       { id: 'south-east-thread', kind: 'slow', ...rect(45, 24, 10, 5) },
     ],
     spawns: [
-      { id: 'west', x: 12.5, y: 17.5 },
-      { id: 'east', x: 59.5, y: 17.5 },
+      { id: 'west', x: 12.5, y: 10.5 },
+      { id: 'east', x: 59.5, y: 24.5 },
     ],
     design: {
       routeDecision:
