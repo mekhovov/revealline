@@ -262,6 +262,11 @@ export function attachQuickMusicControls({
   render();
   return Object.freeze({
     render,
+    perform: run,
+    available: (action) => {
+      const state = snapshot();
+      return !!state && (action !== 'next' || !!state.queue?.length);
+    },
     handlesKey: (event) => event.type === 'keydown' && Boolean(shortcut(event)),
     contains: (node) =>
       rows.some((row) => row.root.contains(node)) ||

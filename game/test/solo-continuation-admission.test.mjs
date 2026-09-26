@@ -90,10 +90,12 @@ for (const action of ['cancel', 'failure', 'ready'])
       scenario: null,
       courseSession: null,
       dialogOpen: () => false,
+      guardInstallOfflineBlur: (callback) => callback,
       journeyEnabled: true,
       journeyMission: () => ({ id: 'finished' }),
       authoredRoute: { id: 'edition' },
       librarySuccessor,
+      currentSoloLibraryMission: (host) => host.library.forMode('solo')[0],
       getUnifiedMissionLibrary: async () => ({ library, refreshInstalled: async () => {} }),
       libraryActivationContext: () => ({ isCurrent: () => true }),
       beginPreparation(_text, onCancel) {
