@@ -225,12 +225,19 @@ jobs:
 
       - name: Select the fail-closed focused gate
         id: plan
-        run: >-
-          node automation/publishing/focused-tests.mjs
-          --root source
-          --paths "$RUNNER_TEMP/focused-paths.txt"
-          --manifest automation/publishing/focused-test-map.json
-          --plan-only
+        env:
+          FALLBACK_HANDLED_BY_BUILD: ${{ needs.preflight.outputs.admission == 'release' || needs.preflight.outputs.admission == 'release-evidence' }}
+        run: |
+          extra=()
+          if [ "$FALLBACK_HANDLED_BY_BUILD" = true ]; then
+            extra+=(--fallback-handled)
+          fi
+          node automation/publishing/focused-tests.mjs \
+            --root source \
+            --paths "$RUNNER_TEMP/focused-paths.txt" \
+            --manifest automation/publishing/focused-test-map.json \
+            --plan-only \
+            "${extra[@]}"
 
       - name: Verify exact tracked source before commands
         if: steps.plan.outputs.required == 'true'
@@ -246,11 +253,18 @@ jobs:
 
       - name: Run selected focused gates
         if: steps.plan.outputs.required == 'true'
-        run: >-
-          node automation/publishing/focused-tests.mjs
-          --root source
-          --paths "$RUNNER_TEMP/focused-paths.txt"
-          --manifest automation/publishing/focused-test-map.json
+        env:
+          FALLBACK_HANDLED_BY_BUILD: ${{ needs.preflight.outputs.admission == 'release' || needs.preflight.outputs.admission == 'release-evidence' }}
+        run: |
+          extra=()
+          if [ "$FALLBACK_HANDLED_BY_BUILD" = true ]; then
+            extra+=(--fallback-handled)
+          fi
+          node automation/publishing/focused-tests.mjs \
+            --root source \
+            --paths "$RUNNER_TEMP/focused-paths.txt" \
+            --manifest automation/publishing/focused-test-map.json \
+            "${extra[@]}"
 
       - name: Verify exact tracked source after commands
         if: always() && steps.plan.outputs.required == 'true'

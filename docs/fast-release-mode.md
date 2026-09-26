@@ -37,6 +37,11 @@ unavailable or missing from GraphQL fall back to serial conditional REST with fi
 Preview runs remotely revalidate only new or changed admission pins, while production checks all
 admitted archives.
 
+For terminal release and release-evidence PRs, the focused job delegates an unknown-path fallback
+to the concurrently required exact-head build, which already runs `npm run validate`; it never runs
+the same broad validation twice. Input PRs have no such build and therefore retain the focused
+job's fail-closed fallback.
+
 The staging workflow uses the same bounded maintenance paths as preflight. Documentation,
 publishing/controller, workflow, and `game/test/`-only pull requests may remain ready without a
 product version; mixed or runtime changes still return to draft until they receive an exact release
