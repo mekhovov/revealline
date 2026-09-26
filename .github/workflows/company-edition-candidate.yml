@@ -60,6 +60,7 @@ jobs:
           node --test scripts/test-company-review.mjs
           node --test game/test/actor-appearance-pin.test.mjs game/test/actor-appearance-lease.test.mjs game/test/replay-presentation.test.mjs game/test/replay-actor-context.test.mjs
           node --test game/test/installed-app.test.mjs game/test/profile-transfer.test.mjs game/test/profile-channel-reader.test.mjs scripts/test-offline-publication.mjs
+          node --test game/test/soundtrack-private-intake.test.mjs game/test/soundtrack-panel.test.mjs
       - name: Verify both source release formats and edition admission
         run: |
           node --test publishing/fastline-release-publisher.test.mjs publishing/fastline-release-inputs.test.mjs publishing/pages-controller/metadata.test.mjs publishing/pages-controller/workflow.test.mjs scripts/source-manifest-snapshot.test.mjs

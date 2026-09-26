@@ -4,6 +4,36 @@ This record distinguishes candidate automation from release qualification. No co
 edition has been promoted or published by this work. Human observations, physical-device
 installation and downloaded/deployed release evidence cannot be inferred from unit tests.
 
+## Main integration and final review preparation
+
+Main through `6bbe49762` is integrated in merge `f67252755`. The only merge conflict was
+the generated localization catalogue. Regenerating it from the combined English/Ukrainian
+sources and running localization validation preserved both company and upstream strings.
+The incoming private soundtrack feature uses the existing static runtime dependency closure;
+explicit local MP3 input remains browser-owned and does not enter source or runtime archives.
+The focused edition compiler/runtime cohort passes 24 checks, all 101 generated company files
+match, and source eligibility still admits 135 approved media assets.
+
+The incoming shared soundtrack panel could announce that a saved private collection was playing
+when browser audio permission prevented playback. The shared fix now checks actual playback
+state, preserves the successful save and offers the existing localized Play guidance. Both
+player and session paths retain exact saved MP3 bytes and recover on explicit Play. The private
+intake/panel cohort passes 110 checks and is added to company candidate CI.
+
+The [artwork engineering review](company-artwork-engineering-review.md) records all 66 current
+exports, native-size inspection and 20 static shared-renderer views across 16 missions. The
+older Coupa cover crops retain their main subjects in the inspected views. A clipped propeller
+tip in Parts in Motion 03 remains a specific final-art-review item; no image revision or
+human approval is implied by these observations.
+
+The [device qualification matrix](company-editions-device-qualification.md) records the
+80-check post-merge offline/storage/promotion cohort and executable installed-app steps.
+Safari is installed, but native automation currently reports that Computer Use permission is
+not granted; no OS installation is claimed. The [performance method](company-editions-performance.md)
+binds browser comparisons to exact compiled baseline/candidate bytes. Final clean-head
+CI, independent freeze, downloaded-byte comparison and browser observations are recorded on
+PR #615 after the final commit. No release slot or public selector is changed by this batch.
+
 ## Qualification tooling and accessibility follow-up
 
 The next batch remains in draft PR #615 and incorporates main through `b7857fff8`.

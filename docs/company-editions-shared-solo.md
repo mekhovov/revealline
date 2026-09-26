@@ -55,9 +55,11 @@ bounded actions rather than a stored flag. Practice never awards campaign master
 Controller Practice and Replay Theater use the same selected-content provider. Practice
 launches the ordinary Solo iframe, including the branded First Flight course. Standalone
 archives include these tool pages and their dependency closure. Unshipped examples and
-workshop authoring data are excluded. Replay Theater preserves verified company actor presentation
-but remains a silent route viewer: original background pictures, music and interface are not
-restored, and the UI states that limitation.
+workshop authoring data are excluded. For a verified company presentation recording, Replay
+Theater restores the exact actors, palette and original mission picture, including a retained
+artwork snapshot when selected. Raw replays remain previews and do not claim recorded artwork.
+Playback is silent: music and the original interface are not restored, and the UI states
+that limitation.
 
 ## Storage and delivery
 
