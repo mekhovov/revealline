@@ -557,17 +557,22 @@ test('actual Settings → Studio listbox/range edits preview, cancel and apply t
   pad.rearm();
   h.$('soundtrack-open').focus();
   pad.pulse(0);
-  await settle(() =>
-    /Saved library loaded|Music library ready/.test(h.$('soundtrack-status')?.textContent),
+  await settle(
+    () =>
+      /Saved library loaded|Music library ready/.test(h.$('soundtrack-status')?.textContent) &&
+      !h.$('soundtrack-tracks').disabled,
   );
-  pad.frame();
-  pad.frame();
+  pad.rearm();
   assert.equal(h.$('soundtrack-dialog').open, true);
   assert.equal(h.$('settings-dialog').open, false);
   const tracks = h.$('soundtrack-tracks'),
     volume = h.$('soundtrack-volume');
   assert.equal(tracks.size, '7', 'The actual multirow listbox uses the select editor');
-  h.$('soundtrack-advanced-library-toggle').click();
+  // The opening controller Confirm deliberately suppresses its possible native
+  // click echo. Invoke this already-bound disclosure handler as fixture setup;
+  // the loop below still exercises the real controller editor and handlers.
+  h.$('soundtrack-advanced-library-toggle').onclick();
+  assert.equal(h.$('soundtrack-advanced-library-body').hidden, false);
   for (const [element, direction] of [
     [tracks, 13],
     [volume, 15],
@@ -687,6 +692,50 @@ test('opening Settings during a flight keeps its paused-flight return instead of
     'controller Back returns to the Settings command in the Pause menu',
   );
   assert.equal(h.rendered.run.tick, tick);
+  assert.deepEqual(h.errors, []);
+});
+
+test('opening Help during a live flight returns controller Back and native Escape to Pause', async (t) => {
+  nativeDialogs(t);
+  const h = await soloPage(t, { titleScreen: false }),
+    pad = controllerPad(h, t);
+  h.$('start-button').click();
+  await settle(() => h.doc.body.dataset.flightState === 'running');
+
+  for (const exit of ['controller', 'escape']) {
+    const run = h.rendered.run,
+      checkpoint = authoritativeCheckpoint(run);
+    h.$('help-button').focus();
+    h.$('help-button').click();
+    pad.frame();
+    pad.frame();
+    assert.equal(h.$('help-dialog').open, true);
+    assert.equal(h.$('shell-home').open, false);
+    assert.equal(h.rendered.paused, true);
+    assert.deepEqual(authoritativeCheckpoint(run), checkpoint);
+
+    if (exit === 'controller') pad.pulse(1);
+    else {
+      const dialog = h.$('help-dialog'),
+        event = dialog.emit('cancel');
+      if (!event.defaultPrevented) dialog.close();
+    }
+    await Promise.resolve();
+    assert.equal(h.$('help-dialog').open, false);
+    assert.equal(h.$('shell-home').open, false);
+    assert.equal(h.$('flight-state').textContent, 'Paused');
+    assert.equal(
+      h.doc.activeElement,
+      h.$('overlay-help'),
+      `${exit} returns to the Help command installed in Pause`,
+    );
+    assert.equal(h.rendered.run, run);
+    assert.deepEqual(authoritativeCheckpoint(run), checkpoint);
+
+    h.$('start-button').click();
+    await settle(() => h.doc.body.dataset.flightState === 'running');
+    pad.frame();
+  }
   assert.deepEqual(h.errors, []);
 });
 
