@@ -40,6 +40,7 @@
     'whole-spatial-v25',
     'whole-spatial-v26',
     'whole-spatial-v27',
+    'whole-spatial-v28',
     'whole-ornament-v1',
     'whole-ornament-v2',
   ];
