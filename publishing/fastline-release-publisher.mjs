@@ -24,6 +24,16 @@ export const RELEASE_ASSET_NAMES = Object.freeze([
   "verification.json",
 ]);
 
+export function releaseAssetNames(formatVersion = 1) {
+  if (![1, 2].includes(formatVersion))
+    throw new Error("unsupported source contract");
+  return RELEASE_ASSET_NAMES.map((name) =>
+    formatVersion === 2 && name === "source.tar"
+      ? "source-manifest.json"
+      : name,
+  );
+}
+
 function assertRequest({ repository, version, sourceSha }) {
   if (!/^[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+$/u.test(repository || ""))
     throw new Error("invalid repository identity");
@@ -41,11 +51,18 @@ export function normalizeAssetDigest(value) {
 export function decideReleaseAssets({ expected, actual, published = false }) {
   const expectedByName = new Map(expected.map((asset) => [asset.name, asset]));
   const actualByName = new Map(actual.map((asset) => [asset.name, asset]));
-  if (expectedByName.size !== RELEASE_ASSET_NAMES.length)
+  const names = releaseAssetNames(
+    expectedByName.has("source-manifest.json") ? 2 : 1,
+  );
+  if (
+    expected.length !== 9 ||
+    expectedByName.size !== 9 ||
+    actualByName.size !== actual.length
+  )
     throw new Error(
       "expected release asset set must contain exactly nine names",
     );
-  for (const name of RELEASE_ASSET_NAMES)
+  for (const name of names)
     if (!expectedByName.has(name))
       throw new Error(`expected release asset is missing ${name}`);
   for (const name of actualByName.keys())
@@ -54,7 +71,7 @@ export function decideReleaseAssets({ expected, actual, published = false }) {
 
   const missing = [];
   const reused = [];
-  for (const name of RELEASE_ASSET_NAMES) {
+  for (const name of names) {
     const wanted = expectedByName.get(name);
     const found = actualByName.get(name);
     if (!found) {
@@ -81,13 +98,15 @@ async function sha256(file) {
 
 export async function inspectLocalAssets(directory) {
   const names = (await fs.readdir(directory)).sort();
-  const expectedNames = [...RELEASE_ASSET_NAMES].sort();
+  const manifestSource = names.includes("source-manifest.json");
+  const contractNames = releaseAssetNames(manifestSource ? 2 : 1);
+  const expectedNames = [...contractNames].sort();
   if (JSON.stringify(names) !== JSON.stringify(expectedNames))
     throw new Error(
       `local release assets differ from the exact nine-name contract: ${names.join(", ")}`,
     );
   const assets = [];
-  for (const name of RELEASE_ASSET_NAMES) {
+  for (const name of contractNames) {
     const file = path.join(directory, name);
     const stat = await fs.lstat(file);
     if (!stat.isFile() || stat.isSymbolicLink())
@@ -97,6 +116,20 @@ export async function inspectLocalAssets(directory) {
       size: stat.size,
       digest: `sha256:${await sha256(file)}`,
     });
+  }
+  if (manifestSource) {
+    const record = JSON.parse(
+      await fs.readFile(path.join(directory, "release.json"), "utf8"),
+    );
+    if (
+      record.formatVersion !== 2 ||
+      !SHA.test(record.sourceTree || "") ||
+      record.sourceUrl !==
+        `https://github.com/mekhovov/revealline/archive/${record.sourceRevision}.tar.gz` ||
+      assets.find((a) => a.name === "source-manifest.json").digest !==
+        `sha256:${record.sourceManifestSha256}`
+    )
+      throw new Error("source manifest record/digest mismatch");
   }
   return assets;
 }

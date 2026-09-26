@@ -17,6 +17,7 @@ import subprocess
 import sys
 import tempfile
 import zipfile
+from source_manifest import inspection_source, qualification_proof
 
 LIMIT = 64 * 1024**2
 WORKFLOW = '.github/workflows/qualify-release-source.yml'
@@ -220,8 +221,11 @@ def inspect(config, evidence, repo, source, manual):
             verify['releaseHashChainVerified'] is True, 'Frozen identity/chain differs')
     require(all(verify['artifact'][k] == artifact[k] for k in ('bytes', 'sha256')) and
             verify['artifact']['externallyExpectedDigestSupplied'] is True, 'Outer artifact pin differs')
-    require(verify['sourceTar']['paxCommitPresent'] is True and verify['sourceTar']['copiedToDisk'] is False and
-            verify['sourceTar']['outerMember'] == source['version'] + '/source.tar', 'Source TAR proof differs')
+    source_name, source_role = inspection_source(verify)
+    source_proof = verify[source_role]
+    require(source_proof.get('allGitBlobContentsAndModesVerified' if source_role == 'sourceManifest' else 'paxCommitPresent') is True and
+            source_proof['copiedToDisk'] is False and
+            source_proof['outerMember'] == source['version'] + '/' + source_name, 'Source preservation proof differs')
     require(verify['distribution']['allManifestBytesVerified'] is True and
             verify['distribution']['innerManifestIdentical'] is True and verify['distribution']['copiedToDisk'] is False and
             verify['distribution']['outerMember'] == source['version'] + '/site/distribution.zip', 'ZIP proof differs')
@@ -432,7 +436,7 @@ def assemble(config, output):
         **pr_corroboration,
         'frozenArtifactCorroboration': {'artifactId': artifact['id'], 'runId': artifact['runId'],
             'inspectionRunId': inspection_run['id'], 'wholeOriginalArtifactVerifiedBeforeQualification': True,
-            'sourceTarGitBlobTypeModeAndPaxCommitVerified': True, 'allInnerZipManifestBytesVerified': True,
+            **qualification_proof(verify), 'allInnerZipManifestBytesVerified': True,
             'frozenOfflineInventoryAndBindingsVerified': True,
             'inputs': {k: pin(n, small[n]) for k, n in [('inspection', 'verification.json'), ('manifest', 'manifest.json'),
                 ('releaseRecord', 'release.json'), ('checksum', 'distribution.zip.sha256')]}},
@@ -455,7 +459,7 @@ def assemble(config, output):
     asset = lambda n, b: {'name': n, 'bytes': len(b), 'sha256': sha(b)}
     large = [{'name': n, 'bytes': verify[r]['bytes'], 'sha256': verify[r]['sha256'],
               'originalMember': verify[r]['outerMember'], 'copiedToDisk': False}
-             for n, r in [('source.tar', 'sourceTar'), ('distribution.zip', 'distribution')]]
+             for n, r in [inspection_source(verify), ('distribution.zip', 'distribution')]]
     small['qualification-evidence-record.json'] = encoded({'format': 'revealline-qualification-evidence-record.v1',
         'sourceRevision': source['commit'], 'sourceTree': source['tree'], 'version': source['version'],
         'sourceQualified': True, 'originalFrozenPayloadVerified': True, 'sourceGateCounts': None, 'testStatus': 'waived',
