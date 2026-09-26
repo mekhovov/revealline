@@ -1,6 +1,6 @@
 # UX1-B compact mission gallery — v0.133.0
 
-This v0.133.0 candidate is reconciled onto the accepted v0.132.1 product source and keeps the complete mode-compatible mission catalogue visible while reducing the work needed to find and start a mission. It advances the candidate identity to v0.133.0 without changing publishing, release history, progression identity, simulation rules, or the underlying pack formats.
+This v0.133.0 candidate is reconciled onto the v0.132.3 player-input candidate, which is based on the accepted v0.132.2 product source and presentation revision 88. It keeps the complete mode-compatible mission catalogue visible while reducing the work needed to find and start a mission. It advances the candidate identity to v0.133.0 without changing publishing, release history, progression identity, simulation rules, or the underlying pack formats.
 
 ## Player contract
 
@@ -34,12 +34,12 @@ The candidate adds or updates focused coverage for:
 - retained selection, scroll, opener, and native input ownership.
 - real Versus controller activation, including failed download, one owned Retry, repeated-Confirm suppression, and automatic play after preparation;
 - real Team controller activation against the current Journey presentation fixture.
-- accepted v0.132 Versus inventory and handoff expectations retain all 285 compatible mission identities and the exact `whole-spatial-v11` route.
-- accepted v0.132 Solo inventory and handoff expectations retain 285 compatible identities and the exact `whole-spatial-v11` route.
-- accepted v0.132 Team inventory, refresh, cancellation, and recovery expectations retain 288 compatible identities.
+- the v0.132.3 candidate's Versus inventory and handoff expectations retain all 285 compatible mission identities and the exact `whole-spatial-v11` route.
+- the v0.132.3 candidate's Solo inventory and handoff expectations retain 285 compatible identities and the exact `whole-spatial-v11` route.
+- the v0.132.3 candidate's Team inventory, refresh, cancellation, and recovery expectations retain 288 compatible identities.
 - Team picture-binding and imported-map compatibility coverage continues to require the exact current presentation while preserving retained-history recovery.
-- controller gallery navigation: 8/8; device controls: 15/15; featured campaign switching: 5/5.
+- gallery-focused cross-mode tests: 152/152 against presentation revision 88; controller gallery navigation: 8/8; device controls: 15/15; featured campaign switching: 5/5.
 
 ## Evidence limits
 
-This is a release candidate, not a public release. Browser screenshots, physical touch hardware, and a physical controller are not qualified here. The repository's committed temporary fast-release policy waives the long automated suites; it does not turn them into passing evidence. Focused current-source checks qualify the changed gallery and controller paths. Accepted Team binding corrections remain in the v0.132 base without weakening retained-history checks. The candidate does not redesign mission Details, results, Pause, HUD, Collection records, or gameplay teaching; those remain in UX2-UX5.
+This is a release candidate, not a public release. Browser screenshots, physical touch hardware, and a physical controller are not qualified here. The repository's committed temporary fast-release policy waives the long automated suites; it does not turn them into passing evidence. Focused current-source checks qualify the changed gallery and controller paths. Accepted Team binding corrections remain in the v0.132.2 base without weakening retained-history checks. The candidate does not redesign mission Details, results, Pause, HUD, Collection records, or gameplay teaching; those remain in UX2-UX5.
