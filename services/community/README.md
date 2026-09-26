@@ -402,7 +402,7 @@ finds the report, unlists the disposable edition, resolves the report, and verif
 retrieval is gone. The validation worker must be running before this command starts.
 
 This test writes to the deployment. It refuses to run without an explicit opt-in and a unique
-lowercase namespace. Supply three independent, short-lived account authorization values through
+lowercase namespace. Supply three short-lived actor authorization values through
 the environment. In development-token mode these are `Bearer ...` values. A production operator
 may instead set the corresponding `COMMUNITY_ACCEPTANCE_CREATOR_A_COOKIE`,
 `COMMUNITY_ACCEPTANCE_CREATOR_B_COOKIE`, and `COMMUNITY_ACCEPTANCE_ADMIN_COOKIE` values from three
@@ -432,7 +432,7 @@ origin, public test namespace/run identities, immutable package and edition iden
 poll count, exact-download result, installed completion and picture-asset identities, offline replay result,
 moderation result, and timing. Authentication headers, account subjects, response bodies, and
 package content are excluded. The CLI prints only the receipt path and a pass/fail stage; it never
-prints the supplied authorization values. A failed run makes one best-effort administrator
+prints the supplied authorization values. After an edition identity is received, a failed run makes one best-effort administrator
 unlisting attempt and records only whether cleanup succeeded. Inspect a `cleanup: failed` receipt
 and remove the uniquely named edition before reusing that deployment.
 

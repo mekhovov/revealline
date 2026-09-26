@@ -53,7 +53,7 @@ tracked in [deployment-acceptance.md](deployment-acceptance.md).
   commands for preflight, interrupted tus recovery, database/blob restore rehearsal, and the full
   two-user journey. Live multi-process PostgreSQL, proxy/TLS, shared blob or S3 storage, mail
   delivery, real restore, administrator-session moderation and the two-user run require 0.5–1 day
-  once that infrastructure and three short-lived test accounts are available.
+  once that infrastructure and three short-lived actor credential sets are available.
 - Firefox, Safari, physical mobile playback, physical-speaker confirmation and broader-codec
   qualification require 1–2 days once those environments and devices are available. Current broad
   media inputs continue to fail closed outside the released, verified format boundary.
