@@ -3,7 +3,8 @@
 Status: implemented and merged through PR
 [#465](https://github.com/mekhovov/revealline/pull/465). The combined creator feature is assigned
 to `v0.141.0` in PR [#564](https://github.com/mekhovov/revealline/pull/564). This record preserves
-the Phase 2 evidence; the browser cases below and the combined immutable release remain open.
+the Phase 2 evidence; the remaining browser/device cases below and the combined immutable release
+remain open.
 
 ## Automated evidence completed
 
@@ -32,10 +33,12 @@ the Phase 2 evidence; the browser cases below and the combined immutable release
 - This repetition exposed a review gap: batch cards named the template and variant but did not show the enemies and obstacles that were already present in the compiled map. The batch review now derives its summary from each exact generated mission and map. All 12 cards visibly reported one enemy plus authored walls, safe islands or terrain zones before approval. The exact approved 22.49 MiB campaign installed as edition `40d04d6648941460c6df1003f0c75553e8a35497c9f7bbe693ca5941d490afe8`; ordinary Custom play completed its first `ember-garden · vertical-passage` mission at 50% reveal, three lives and 11,740 points.
 - The same built-in browser repeated the 50-picture case on previously unused local origin `9894`. The selection displayed `picture1` through `picture50` in natural numeric order. Cancellation after three completed items retained those three ready cards, marked the active fourth card cancelled and left the other 46 waiting. Resuming completed all 50 cards; every card visibly reported one enemy and authored obstacles or terrain.
 - The completed current-v3 selection estimated a 93.78 MiB pack and 187.56 MiB staging requirement, kept bulk approval disabled and required an explicit capacity decision. **Split into smaller packs** again produced five ordered parts of 12, 12, 12, 12 and 2 missions. Part 5 revalidated as a 3.75 MiB two-level campaign, installed as immutable edition `cd047ced051ec8fa0b2abfd036d4df4de1c20c5d7494b7441d698989801909e2`, and completed `picture49` through ordinary Custom play at 50% reveal, three lives and 11,250 points. The earned picture and **Next level** action appeared after the legal win.
+- A final local-origin `8786` edge run selected a real 540 × 960 portrait PNG, two landscape PNGs and a file named `.png` with an invalid signature. Natural order was edited manually, **Gentle start** pacing was selected, and every valid card visibly showed its exact enemy and obstacles. The invalid item retained its own actionable error and approval remained disabled until it was explicitly excluded.
+- Per-item regeneration changed `static-default` from `twin-corridors · west-lane` to `island-chain · middle-channel`, with one enemy, two walls and two safe islands. The page wrote immutable batch checkpoint 8, then the same `?draft` URL was reloaded. Exact source bytes, portrait, order, exclusion, pacing, generation counter and deterministic seed survived; regenerated cards retained the same template variants and obstacle counts. A second reload after the status repair reached checkpoint 16 and reported **3 levels passed preparation and are ready for one approval** instead of resetting the creator.
+- The checkpoint repair passes 543/543 creator/runtime tests and 43/43 community tests. Focused tests bind the pre/post-reopen project and provenance, reject a stale tab and reject altered retained source bytes.
 
 ## Browser and release gates still required
 
-- Complete the remaining manual edge cases with a portrait image and a deliberately unsupported item. Confirm manual reorder, every pacing choice, per-item regeneration, failure exclusion and reload recovery after a partly prepared batch.
 - Capture browser-process memory measurements during another large preparation run. The UI and automated probes establish serial full-size work, but this record does not yet claim a measured peak-memory bound.
 - Reload an unfinished middle mission and verify every earned picture remains bound after another reload. Install a changed edition alongside it and confirm attempts and rewards do not migrate.
 - Inspect a duplicate-byte split export to confirm payload deduplication in the actual file. The existing two- and 12-picture inspections confirm exact derivative closure, source-original separation and zero trailing bytes; automated tests cover unrelated-media and player-progress exclusion.
