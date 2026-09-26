@@ -2,8 +2,12 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import {
   ONLINE_SOUNDTRACK_CATALOGUE_URL,
+  ONLINE_SOUNDTRACK_DIRECTORY_URL,
   fetchOnlineSoundtrackCatalogue,
+  fetchOnlineSoundtrackCatalogues,
+  fetchOnlineSoundtrackDirectory,
   resolveOnlineSoundtrackCatalogue,
+  resolveOnlineSoundtrackDirectory,
 } from '../online-soundtrack-catalogue.mjs';
 
 const sha256 = 'a'.repeat(64);
@@ -38,6 +42,28 @@ const catalogue = {
   counts: { declaredTracks: 1, uniqueRecordings: 1, duplicateAliases: 0, audioBytes: 1234 },
   tracks: [track],
 };
+const directory = {
+  format: 'revealline-public-soundtrack-directory.v1',
+  catalogues: [
+    {
+      id: 'revealline-soundtracks-01',
+      url: ONLINE_SOUNDTRACK_CATALOGUE_URL,
+      baseURL: 'https://mekhovov.github.io/revealline-soundtracks-01/',
+      required: true,
+    },
+  ],
+};
+
+function response(url, value, { status = 200, redirected = false } = {}) {
+  const bytes = new TextEncoder().encode(JSON.stringify(value));
+  return {
+    status,
+    redirected,
+    url,
+    headers: new Headers({ 'content-length': String(bytes.byteLength) }),
+    body: new Response(bytes).body,
+  };
+}
 
 test('online catalogue creates a bounded immutable remote playback entry', () => {
   const resolved = resolveOnlineSoundtrackCatalogue({
@@ -242,4 +268,127 @@ test('online catalogue stops reading a streamed response at its byte limit', asy
   );
   assert.equal(reads, 3);
   assert.equal(cancelled, true);
+});
+
+test('online archive directory is exact, bounded and keeps the primary archive required first', async () => {
+  const resolved = resolveOnlineSoundtrackDirectory(directory);
+  assert.equal(resolved.catalogues[0].id, 'revealline-soundtracks-01');
+  assert(Object.isFrozen(resolved.catalogues));
+  const fetched = await fetchOnlineSoundtrackDirectory({
+    fetch: async (url, options) => {
+      assert.equal(url, ONLINE_SOUNDTRACK_DIRECTORY_URL);
+      assert.equal(options.credentials, 'omit');
+      assert.equal(options.mode, 'cors');
+      return response(url, directory);
+    },
+  });
+  assert.equal(fetched.catalogues.length, 1);
+  for (const invalid of [
+    { ...directory, unexpected: true },
+    {
+      ...directory,
+      catalogues: [{ ...directory.catalogues[0], required: false }],
+    },
+    {
+      ...directory,
+      catalogues: [
+        directory.catalogues[0],
+        {
+          ...directory.catalogues[0],
+          id: 'revealline-soundtracks-02',
+          url: 'https://evil.example/catalogue.json',
+          baseURL: 'https://evil.example/',
+        },
+      ],
+    },
+    { ...directory, catalogues: Array(9).fill(directory.catalogues[0]) },
+  ])
+    assert.throws(() => resolveOnlineSoundtrackDirectory(invalid));
+});
+
+test('online archive directory merges trusted shards and records optional failures', async () => {
+  const secondHash = 'b'.repeat(64),
+    secondArchive = {
+      id: 'revealline-soundtracks-02',
+      url: 'https://mekhovov.github.io/revealline-soundtracks-02/catalogue.json',
+      baseURL: 'https://mekhovov.github.io/revealline-soundtracks-02/',
+      required: false,
+    },
+    secondCatalogue = {
+      ...catalogue,
+      archive: { id: secondArchive.id, baseURL: secondArchive.baseURL },
+      tracks: [
+        {
+          ...track,
+          id: 'creator.second-song',
+          title: 'Second song',
+          audio: {
+            path: `objects/${secondHash}.mp3`,
+            bytes: 4321,
+            sha256: secondHash,
+          },
+        },
+      ],
+      counts: { declaredTracks: 1, uniqueRecordings: 1, duplicateAliases: 0, audioBytes: 4321 },
+    },
+    twoArchives = { ...directory, catalogues: [...directory.catalogues, secondArchive] };
+  const merged = await fetchOnlineSoundtrackCatalogues({
+    fetch: async (url) => {
+      if (url === ONLINE_SOUNDTRACK_DIRECTORY_URL) return response(url, twoArchives);
+      if (url === ONLINE_SOUNDTRACK_CATALOGUE_URL) return response(url, catalogue);
+      return response(url, secondCatalogue);
+    },
+  });
+  assert.equal(merged.tracks.length, 2);
+  assert.equal(merged.counts.audioBytes, 5555);
+  assert.equal(merged.unavailable.length, 0);
+  assert.equal(merged.tracks[1].url, `${secondArchive.baseURL}objects/${secondHash}.mp3`);
+
+  const partial = await fetchOnlineSoundtrackCatalogues({
+    fetch: async (url) => {
+      if (url === ONLINE_SOUNDTRACK_DIRECTORY_URL) return response(url, twoArchives);
+      if (url === ONLINE_SOUNDTRACK_CATALOGUE_URL) return response(url, catalogue);
+      return response(url, {}, { status: 503 });
+    },
+  });
+  assert.equal(partial.tracks.length, 1);
+  assert.deepEqual(
+    partial.unavailable.map(({ id }) => id),
+    ['revealline-soundtracks-02'],
+  );
+});
+
+test('online archive loading falls back to the hardcoded primary and rejects cross-shard duplicates', async () => {
+  const fallback = await fetchOnlineSoundtrackCatalogues({
+    fetch: async (url) => {
+      if (url === ONLINE_SOUNDTRACK_DIRECTORY_URL) return response(url, {}, { status: 503 });
+      return response(url, catalogue);
+    },
+  });
+  assert.equal(fallback.tracks.length, 1);
+
+  const secondArchive = {
+      id: 'revealline-soundtracks-02',
+      url: 'https://mekhovov.github.io/revealline-soundtracks-02/catalogue.json',
+      baseURL: 'https://mekhovov.github.io/revealline-soundtracks-02/',
+      required: true,
+    },
+    duplicateCatalogue = {
+      ...catalogue,
+      archive: { id: secondArchive.id, baseURL: secondArchive.baseURL },
+    };
+  await assert.rejects(
+    fetchOnlineSoundtrackCatalogues({
+      fetch: async (url) => {
+        if (url === ONLINE_SOUNDTRACK_DIRECTORY_URL)
+          return response(url, {
+            ...directory,
+            catalogues: [...directory.catalogues, secondArchive],
+          });
+        if (url === ONLINE_SOUNDTRACK_CATALOGUE_URL) return response(url, catalogue);
+        return response(url, duplicateCatalogue);
+      },
+    }),
+    /duplicate recording/,
+  );
 });
