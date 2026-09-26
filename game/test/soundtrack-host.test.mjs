@@ -573,6 +573,7 @@ test('actual Studio prepares without downloading; controller, keyboard and touch
   sample([0], 1200);
   assert.equal(requested, 1, 'Held Confirm does not request duplicate downloads.');
   sample([]);
+  sample([], 120);
   const echoed = link.emit('keydown', { code: 'Enter', key: 'Enter', repeat: false });
   assert.equal(
     echoed.defaultPrevented,
