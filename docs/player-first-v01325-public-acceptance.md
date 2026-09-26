@@ -41,8 +41,16 @@ ordinary player entries:
 6. The Versus mode switcher opened Solo with Ukrainian retained. The Journey
    count, mode switcher, Continue destination, Missions, Collection, Settings,
    More, Sound and difficulty/appearance disclosure were Ukrainian.
+7. Solo changed language in place from Ukrainian back to English. Its Journey
+   count, mode switcher, Continue destination and full main menu refreshed to
+   English.
+8. The Solo mode switcher opened Versus with English retained, including the
+   journey summary, players, primary action, options, Settings, sound and help.
+9. The Versus mode switcher opened Team with English retained, including the
+   arena, objective, primary action, optional settings, help and sound.
 
-This closes the bounded live English/Ukrainian refresh and ordinary-entry gap for
-the accepted predecessor. It does not claim physical touch, physical controller,
-Steam Deck, complete mission journeys, comprehensive offline behavior, human
-balance, screen-reader output or performance qualification.
+This closes the bounded live English-to-Ukrainian and Ukrainian-to-English
+refresh and ordinary-entry gap for the accepted predecessor. It does not claim
+physical touch, physical controller, Steam Deck, complete mission journeys,
+comprehensive offline behavior, human balance, screen-reader output or
+performance qualification.
