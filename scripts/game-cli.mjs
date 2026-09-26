@@ -1106,7 +1106,13 @@ export async function transferSnapshotArchive(
   }
 }
 
-export async function releaseSnapshot({ root = PROJECT_ROOT, ref, version } = {}) {
+export async function releaseSnapshot({
+  root = PROJECT_ROOT,
+  ref,
+  version,
+  sourceFormat = 'tar',
+} = {}) {
+  if (!['tar', 'manifest'].includes(sourceFormat)) fail('Unknown source preservation format');
   if (typeof ref !== 'string' || !ref || ref.startsWith('-') || /[\x00-\x1f]/.test(ref))
     fail('Provide a trusted local commit, branch or tag with --ref');
   safeVersion(version);
@@ -1135,13 +1141,30 @@ export async function releaseSnapshot({ root = PROJECT_ROOT, ref, version } = {}
   let temporary;
   try {
     const checkedOutCommit = command('git', ['rev-parse', 'HEAD'], { cwd: root }).trim();
-    let archivePath, sourceArchiveSha256;
+    let archivePath, sourceArchiveSha256, sourceManifestSha256, sourceTree;
     let source = root;
     const cleanCheckout =
       command('git', ['status', '--porcelain', '--untracked-files=normal'], {
         cwd: root,
       }).trim() === '';
-    if (checkedOutCommit === commit && cleanCheckout) {
+    if (sourceFormat === 'manifest') {
+      if (checkedOutCommit !== commit || !cleanCheckout)
+        fail('Manifest snapshots require a clean exact-commit checkout');
+      if (!/^v\d+\.\d+\.\d+$/.test(version)) fail('Manifest snapshots require a stable version');
+      const sourceManifest = path.join(staging, 'source-manifest.json');
+      command('python3', [
+        path.join(PROJECT_ROOT, 'publishing/utility/source_manifest.py'),
+        'create',
+        '--repo',
+        root,
+        '--commit',
+        commit,
+        '--manifest',
+        sourceManifest,
+      ]);
+      sourceManifestSha256 = await sha256File(sourceManifest);
+      sourceTree = command('git', ['rev-parse', `${commit}^{tree}`], { cwd: root }).trim();
+    } else if (checkedOutCommit === commit && cleanCheckout) {
       // Qualification already checks out this exact immutable commit in a clean tree. Build there
       // and stream its source tar directly into the staged snapshot: unpacking a
       // multi-gigabyte archive solely to rebuild the same checkout exhausts the
@@ -1185,16 +1208,22 @@ export async function releaseSnapshot({ root = PROJECT_ROOT, ref, version } = {}
     const zip = await fs.readFile(path.join(staging, 'site/distribution.zip'));
     const manifest = await fs.readFile(path.join(staging, 'site/manifest.json'));
     const release = {
-      formatVersion: FORMAT_VERSION,
+      formatVersion: sourceFormat === 'manifest' ? 2 : FORMAT_VERSION,
       version,
       sourceRevision: commit,
-      sourceArchiveSha256,
+      ...(sourceFormat === 'manifest'
+        ? {
+            sourceTree,
+            sourceUrl: `https://github.com/mekhovov/revealline/archive/${commit}.tar.gz`,
+            sourceManifestSha256,
+          }
+        : { sourceArchiveSha256 }),
       distributionSha256: sha256(zip),
       manifestSha256: sha256(manifest),
       play: `${version}/site/game/`,
       download: `${version}/site/distribution.zip`,
     };
-    if (archivePath !== path.join(staging, 'source.tar'))
+    if (sourceFormat === 'tar' && archivePath !== path.join(staging, 'source.tar'))
       await transferSnapshotArchive(archivePath, staging);
     await fs.writeFile(path.join(staging, 'release.json'), json(release));
     // Only snapshot-owned labels enter the index. Invalid neighboring folders fail loudly.
@@ -1241,7 +1270,7 @@ export function parseArguments(argv) {
     test: [],
     generate: ['seed', 'out'],
     'inspect-goals': ['pack', 'out'],
-    'release-snapshot': ['ref', 'version'],
+    'release-snapshot': ['ref', 'version', 'source-format'],
   };
   if (!Object.hasOwn(allowed, action)) fail(`Unknown command: ${action}`);
   const options = {};
@@ -1260,7 +1289,7 @@ export async function main(argv = process.argv.slice(2)) {
   const { action, options } = parseArguments(argv);
   if (action === 'help') {
     process.stdout.write(
-      'Xonix game CLI (Node built-ins)\n  serve [--root DIR] [--host 127.0.0.1] [--port 8768]\n  build [--out dist] [--version LABEL]\n  validate\n  test\n  generate --seed TEXT --out FILE.json\n  inspect-goals --pack FILE.json [--out REPORT.json]\n  release-snapshot --ref REF --version LABEL\n',
+      'Xonix game CLI (Node built-ins)\n  serve [--root DIR] [--host 127.0.0.1] [--port 8768]\n  build [--out dist] [--version LABEL]\n  validate\n  test\n  generate --seed TEXT --out FILE.json\n  inspect-goals --pack FILE.json [--out REPORT.json]\n  release-snapshot --ref REF --version LABEL [--source-format tar|manifest]\n',
     );
     return;
   }
@@ -1285,7 +1314,13 @@ export async function main(argv = process.argv.slice(2)) {
     );
   else if (action === 'release-snapshot')
     process.stdout.write(
-      json(await releaseSnapshot({ ref: options.ref, version: options.version })),
+      json(
+        await releaseSnapshot({
+          ref: options.ref,
+          version: options.version,
+          sourceFormat: options['source-format'] || 'tar',
+        }),
+      ),
     );
   else if (action === 'test') {
     const files = [];

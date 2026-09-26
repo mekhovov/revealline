@@ -10,25 +10,43 @@ This checkpoint supersedes older paragraphs below that describe themselves as
 current. Those paragraphs remain unchanged as dated implementation and release
 evidence.
 
-**Accepted public baseline:** v0.141.4 is immutable and selected on Pages from exact source `cc0309ffaaea9050a44f7b7592d38ba5a0ade78c`. Its release, Archive97 admission and Pages publication are complete. Run `36260302658` verified 1,897 deployed files / 630,507,368 bytes with zero final failures or retries. Browser review confirmed ordinary Solo Continue/resume, Versus ready entry with 91 missions, and Team ready entry with 12 missions.
+**Accepted public baseline:** v0.141.6 is immutable and selected on Pages from
+exact source `d3b48436318c9d056678089b219e47534b554897`. Archive99 preserves its v0.141.5
+predecessor. Selector PR #703 merged as `b7857fff816434f950a9c895ef4de00bd7a9895e`, and Pages run
+`36272082479` passed assembly, deployment, and the exact 1,730-file / 629,207,913-byte public audit.
+Browser review confirmed ordinary Solo with 91 Journey missions, the 286-mission library, Creator,
+and exact AVC+AAC video inspection and three-second poster capture. The complete acceptance record
+is in `docs/community-v01416-public-acceptance.md`.
 
 **Completed release infrastructure:** PR #692 merged exact draft recovery, PR #658 merged source/metadata-bound admission, and PR #659 merged the five-release global selector. Pages run `36261378630` passed assembly, deployment and public-byte audit. The public explorer now presents exactly five playable releases while preserving every historical tag, release, asset and archive. These infrastructure changes do not alter frozen game bytes.
 
-**Active candidate:** v0.141.5 publishes the cumulative community S3 package-store and resumable-upload slices already merged by PR #693 and PR #694. It keeps disk as the production default and validates bounded staged bytes before immutable conditional S3 publication. The version-only release PR must pass exact-head source checks, immutable freeze, archive admission, Pages publication and public player-flow verification. Broader S3 production readiness remains separate.
+**Accepted source-preservation canary:** v0.141.6 introduces dual readers and completed the first
+reviewed deterministic commit-plus-manifest source-preservation canary. PR #662
+contains the required fixture correction that superseded closed PR #689. Its
+exact-head focused gate, qualification, format-v2 manifest freeze, independent
+inspection, evidence assembly and guarded publication all passed for source
+`d3b48436318c9d056678089b219e47534b554897`. The immutable release has nine
+hashed assets and no `source.tar`. Archive99, public selection, exact-byte audit, and
+built-in-browser acceptance have passed.
 
-**Ordered continuation:** v0.141.6 is the isolated source-manifest canary. Player-first work resumes at v0.141.7 in the approved compatible batches below. Reconcile every batch onto the accepted predecessor and rerun its cumulative exact-source gates before release. Older target versions in draft titles are stale where they disagree with this order. PR #695 remains a separate follow-up and is not appended after the v0.141.5 boundary was closed.
+**Ordered continuation:** Player-first work resumes at v0.141.7 in the approved
+compatible batches below. Reconcile every batch onto the accepted predecessor
+and rerun its cumulative exact-source gates before release. Older target versions
+in draft titles are stale where they disagree with this order. Physical
+controller/touch, comprehensive offline and human balance checks remain separate
+from modeled or built-in-browser evidence.
 
-| Order | Working release | Scope                                                                | Current source input                                                   |
-| ----- | --------------- | -------------------------------------------------------------------- | ---------------------------------------------------------------------- |
-| 1     | v0.141.4        | Couch secondary navigation and Team continuation                     | publicly accepted exact source `cc0309ffaaea9050a44f7b7592d38ba5a0ade78c` |
-| 2     | v0.141.5        | Bounded community S3 package and resumable-upload storage            | merged PR #693 and PR #694 plus synchronized release identity          |
-| 3     | v0.141.6        | Source-manifest publisher canary                                     | PR #662, reconciled after v0.141.5 public acceptance                   |
-| 4     | v0.141.7        | Teaching, reward and navigation batch                                | PR #543 → #580 → #553; rerun cumulative exact-source gates             |
-| 5     | v0.141.8        | Failure and continuation batch                                       | PR #545 → #552 → #557; rerun cumulative exact-source gates             |
-| 6     | v0.141.9        | Pause, Settings/Help and Collection return batch                     | PR #542 → #548; rerun cumulative exact-source gates                    |
-| 7     | v0.142.0        | Existing offline delivery batch                                      | preserve PR #605 → #609 → #619 → #588 ownership and allocation        |
-| 8     | v0.143.0        | Existing soundtrack batch                                            | preserve its current owner and release allocation                      |
-| 9     | after v0.143.0  | UX6 cumulative qualification                                        | exact accepted predecessor; no aggregation of stale component evidence |
+| Order | Working release | Scope                                                      | Current source input                                                      |
+| ----- | --------------- | ---------------------------------------------------------- | ------------------------------------------------------------------------- |
+| 1     | v0.141.4        | Couch secondary navigation and Team continuation           | publicly accepted exact source `cc0309ffaaea9050a44f7b7592d38ba5a0ade78c` |
+| 2     | v0.141.5        | Bounded community S3 package and resumable-upload storage  | publicly accepted exact source `edd5fa39ae3f0bdf7bc6fa156c461925df794577` |
+| 3     | v0.141.6        | Dual-reader source-manifest release and opt-in canary path | immutable release and public acceptance complete                          |
+| 4     | v0.141.7        | Teaching, reward and navigation batch                      | integrate #543 → #580; repair semantic bilingual teaching; refresh status |
+| 5     | v0.141.8        | Failure and continuation batch                             | PR #545 → #552 → #557; rerun cumulative exact-source gates                |
+| 6     | v0.141.9        | Pause, Settings/Help and Collection return batch           | PR #542 → #548; rerun cumulative exact-source gates                       |
+| 7     | v0.142.0        | Existing offline delivery batch                            | preserve PR #605 → #609 → #619 → #588 ownership and allocation            |
+| 8     | v0.143.0        | Existing soundtrack batch                                  | preserve its current owner and release allocation                         |
+| 9     | after v0.143.0  | UX6 cumulative qualification                               | exact accepted predecessor; no aggregation of stale component evidence    |
 
 Known corrections remain part of these working allocations:
 
@@ -67,6 +85,14 @@ record was captured against an earlier implementation and leaves complete Team
 play and installed-device coverage open. Physical devices, human balance,
 cross-runtime replay portability and comprehensive offline acceptance therefore
 remain separately reported gates.
+
+The v0.141.7 reconciliation audit found that PR #543's original teaching helper
+derived behavior from localized display labels and hard-coded English ground
+text. The repaired batch must consume semantic `groundContext` and
+`supportActions`, add English and Ukrainian catalog keys, update an active cue
+when the language changes, and cover the real host path. PR #580's gallery
+commits carry cleanly after that runtime layer. PR #553 is historical status text
+and must be represented by this live checkpoint instead of cherry-picked.
 
 ## Current delivery status
 
