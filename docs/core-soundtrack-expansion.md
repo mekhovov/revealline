@@ -25,7 +25,7 @@ reviewer names, listening approval or device results.
 | Existing catalogue       | 70 hosted recordings / 15 albums; earlier 24-track collection is included                                                                                                                                                          | Selective listening and trusted metadata curation                                                                            |
 | Player framework         | Simplified chooser, mixed playlists, uploads, creator tools, optional offline albums, recovery and rights enforcement                                                                                                              | Targeted released-source verification and demonstrated fixes                                                                 |
 | Native archive streaming | PR #523 is released in immutable v0.130.0; the public desktop game loaded the current 140/140 archive recordings, played a new Reckless object, and retains earlier remote → included → remote recovery evidence                   | Physical iPhone/controller and cold-offline acceptance remain separate                                                       |
-| New archive previews     | 148 public archive recordings across 17 collections; the immutable 104-recording baseline and its later 44 additions retain separate publication evidence                                                                          | Full listening, taste approval and game admission remain; zero new game admissions                                           |
+| New archive previews     | 152 public archive recordings across 18 collections; the immutable 104-recording baseline and its later 48 additions retain separate publication evidence                                                                          | Full listening, taste approval and game admission remain; zero new game admissions                                           |
 | Retro previews           | Seven earlier rejections and six rejected DOS-88/escp previews are retained; seven later synth/action auditions are public and listening-unapproved                                                                                | Review the public slate against the Electric Dreams/night-drive direction; runner2088 remains draft                          |
 | Metal previews           | Six older backups, four Eternity recordings, four industrial/thrash previews, four nonduplicate YannZ-centered groove auditions, four Purgatory auditions, four Reckless vol. 2 auditions and five new energy auditions are public | Complete the prioritized full-length and Reckless reviews, then review the five new energy candidates; all remain unadmitted |
 | Nakarada Shchedryk       | User approved the direction; exact MP3 admission is public in v0.130.0 and played from the bundled source during desktop transition verification                                                                                   | Full-track/repeated-session, physical-device and Ukrainian cultural acceptance                                               |
@@ -95,25 +95,26 @@ reviewer names, listening approval or device results.
    Content-ID-unknown and Recording-mode-ineligible until full listening, transition,
    warning-audibility and gameplay review.
 6. **M5/M6 new public auditions:** archive PR #33 publishes five metal-energy and
-   three action-synth candidates. Review those exact full tracks before any game
+   three action-synth candidates. Archive
+   [PR #35](https://github.com/mekhovov/revealline-soundtracks-01/pull/35)
+   adds Heavy Battle 1, Cybershaman, Empacotatron and Hail the Arbiter as exact,
+   rights-cleared listening auditions. Review those full tracks before any game
    admission. Publication does not place them in Automatic/default playlists.
-7. **Archive capacity:** design and verify a second immutable archive shard before
-   the next large batch. The current archive counts 826,222,618 audio bytes under
-   its 900,000,000-byte internal ceiling; GitHub Pages limits a published site to
-   1 GB. Small metadata-only work may continue, but another substantial media batch
-   must not consume the remaining safety margin.
+7. **Archive scale-out:** archive
+   [PR #34](https://github.com/mekhovov/revealline-soundtracks-01/pull/34)
+   publishes a bounded directory for one to eight numbered immutable archives.
+   Draft game [PR #604](https://github.com/mekhovov/revealline/pull/604)
+   loads that directory, merges trusted shards and preserves the primary archive as
+   a hardcoded fallback. It is rebased on v0.132.1 main and awaits a release slot and
+   full exact-head gates. Create archive 02 only after that client is public. Archive
+   01 now contains 841,132,228 audio bytes under its 900,000,000-byte guard, leaving
+   about 58.9 MB of audio headroom; do not place another substantial batch there.
 
 The latest public/general GitHub release at this checkpoint is
-[v0.132.0](https://github.com/mekhovov/revealline/releases/tag/v0.132.0), published
-26 September 2026. Its annotated tag dereferences to exact current `main`
-`109631e70dc3343a5d0f4338616c2bc95b042f6f`; all nine release assets are present.
-Pages now selects v0.132.0 through selector
-[PR #592](https://github.com/mekhovov/revealline/pull/592) and exact-merge
-[run 36214429148](https://github.com/mekhovov/revealline/actions/runs/36214429148).
-Direct public verification confirms `release.json` reports v0.132.0 and the stable
-`/app/` launcher and immutable `/releases/v0.132.0/site/game/` route return HTTP 200. The preceding release-trigger
-[run 36213375672](https://github.com/mekhovov/revealline/actions/runs/36213375672)
-remains retained evidence of the selector mismatch before PR #592.
+[v0.132.1](https://github.com/mekhovov/revealline/releases/tag/v0.132.1). Accepted
+main is `ee94096093d412fde67dc148b46a1037c3babe08` after selector
+[PR #606](https://github.com/mekhovov/revealline/pull/606). v0.132.0 and its
+preceding selector-mismatch evidence remain immutable historical evidence.
 The soundtrack's 140-row and mixed-stream desktop acceptance remains evidence from
 v0.130.0; do not infer a second soundtrack qualification for v0.132.0.
 The historical #333/#331/#439 stacks remain implementation history; their selected
@@ -146,16 +147,16 @@ explicit fast-release policy remain exclusions, never passes.
   recording-specific permission; the four private packs remain available.
 - The four public PR #25 synth recordings, four public PR #26 Purgatory recordings,
   four public PR #27 Reckless recordings and eight public PR #33 energy/action-synth
-  recordings are listening-unapproved and
+  recordings, plus the four public PR #35 action-metal/electro recordings, are
+  listening-unapproved and
   unadmitted. Their human listening and
   admission review gates have no committed ETA.
   Do not publicly redistribute Pixabay or UA-FPV recordings without exact-recording
   permission. Shchedryk remains excluded from Recording mode because of Content ID.
-- Local free space is **about 451 MiB** at this checkpoint, below the
-  required 1 GiB floor. Local audio acquisition, media derivation, new worktrees and
-  full builds are blocked. Continue only hosted operations and bounded metadata or
-  documentation work until coordinated cleanup restores the floor; never delete
-  user files, frozen releases or evidence.
+- Local free space is **about 12 GiB** at this checkpoint after removing only
+  Git-reported temporary object/pack garbage. Reachable objects, branches,
+  worktrees, user changes, frozen releases and evidence were preserved. The 1 GiB
+  floor is restored, but continue to prefer hosted builds and small media batches.
 
 ### Deferred
 
@@ -164,6 +165,24 @@ styles. M11's rejected local AI-production method remains paused, with **0/36**
 originals approved. No deadline is assigned to unresolved rights or paused music.
 
 ### Current execution snapshot
+
+- Archive directory [PR #34](https://github.com/mekhovov/revealline-soundtracks-01/pull/34)
+  merged as `63299ef6b9b963696c57f96f1dfdf47aa4ad1aa9`; Pages
+  [run 36219306789](https://github.com/mekhovov/revealline-soundtracks-01/actions/runs/36219306789)
+  passed. Direct reads verified the exact v1 directory, primary-first/required
+  binding and CORS. Game [PR #604](https://github.com/mekhovov/revealline/pull/604)
+  is rebased on accepted v0.132.1 main at `f20648fad`: its focused catalogue/panel/
+  player cohort passes 177/177 locally. Hosted preflight passed before the rebase;
+  build and test jobs were skipped under the unallocated release hold and are not
+  passes. The next action is an allocated exact-head run, merged-source qualification
+  and public verification before creating archive 02.
+- Archive [PR #35](https://github.com/mekhovov/revealline-soundtracks-01/pull/35)
+  merged as `00ef4e64a158f2e73d9b431556034f1a04b28541`. PR verification
+  [run 36219990636](https://github.com/mekhovov/revealline-soundtracks-01/actions/runs/36219990636)
+  and Pages [run 36220092708](https://github.com/mekhovov/revealline-soundtracks-01/actions/runs/36220092708)
+  passed. Direct reads verified 152 unique recordings, 841,132,228 audio bytes,
+  all four new rows, a playable batch page, CORS and a 206 byte-range MP3 response.
+  These recordings remain listening-unapproved and outside the game catalogue.
 
 - Unified archive delivery is split into two reviewable changes. Archive
   [PR #14](https://github.com/mekhovov/revealline-soundtracks-01/pull/14) merged as
