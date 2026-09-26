@@ -2,13 +2,19 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {
   createTeamCulturalSpecialistV2OriginalCandidates,
+  TEAM_CULTURAL_SPECIALIST_V2_PROFILE_KEY,
   TEAM_CULTURAL_SPECIALIST_V2_REVISION,
   TEAM_CULTURAL_SPECIALIST_V2_SELECTIONS,
   TEAM_CULTURAL_SPECIALIST_V2_SOURCES,
 } from '../content-design/team-cultural-specialist-v2-originals.mjs';
 import { createTeamCulturalSpecialistOriginalCandidates } from '../content-design/team-cultural-specialist-originals.mjs';
+import { DEFAULT_JOURNEY_ROUTES } from '../content-design/default-entry.mjs';
+import { createTeamGreyboxEntry } from '../content-design/team-entry.mjs';
+import { createCandidateTeamHost } from '../content-design/team-host.mjs';
 import { compileContentProject, resolveMission } from '../content-design/project.mjs';
 import { createCoop, SAFE, startCoop, stepCoop } from '../coop/core.mjs';
+import { isMissionLibrarySourceJourney } from '../mission-library/handoff.mjs';
+import { TEAM_LIBRARY_JOURNEY_EDITION } from '../mission-library/team-source.mjs';
 
 const IDS = TEAM_CULTURAL_SPECIALIST_V2_SELECTIONS.map(({ id }) => id);
 const source = createTeamCulturalSpecialistV2OriginalCandidates();
@@ -402,3 +408,48 @@ for (const id of IDS)
     assert(run.players.every(({ support }) => support.uses === 0));
     assert(run.time >= 30 && run.time <= 90, `completed in ${run.time}s`);
   });
+
+test('the second cultural profile owns default Team entry and exact authored Next', () => {
+  assert.equal(TEAM_CULTURAL_SPECIALIST_V2_PROFILE_KEY, 'team-cultural-specialist-originals-2');
+  assert.equal(DEFAULT_JOURNEY_ROUTES.team, TEAM_CULTURAL_SPECIALIST_V2_PROFILE_KEY);
+  assert.equal(TEAM_LIBRARY_JOURNEY_EDITION, TEAM_CULTURAL_SPECIALIST_V2_PROFILE_KEY);
+  assert.equal(
+    isMissionLibrarySourceJourney(TEAM_CULTURAL_SPECIALIST_V2_PROFILE_KEY, 'team'),
+    true,
+  );
+  assert.equal(isMissionLibrarySourceJourney('team-cultural-specialist-originals-1', 'team'), true);
+  const host = createCandidateTeamHost(source, {
+    corePackIds: source.packs.map(({ id }) => id),
+  });
+  for (const [from, to] of [
+    ['shared-detour', 'crossed-gardens'],
+    ['crossed-gardens', 'split-orchards'],
+    ['split-orchards', 'weaver-crossing'],
+    ['weaver-crossing', 'shared-lookout'],
+  ]) {
+    const selected = host.catalog.missions.find(({ levelId }) => levelId === from);
+    assert.equal(host.destination(host.row(selected)).next.mission.levelId, to);
+  }
+});
+
+test('the Team entry factory gives the second cultural profile isolated progress ownership', async () => {
+  const entry = await createTeamGreyboxEntry({ culturalSpecialistsV2: true });
+  try {
+    assert.equal(entry.candidateProgress.editionId, TEAM_CULTURAL_SPECIALIST_V2_PROFILE_KEY);
+    assert.equal(
+      entry.candidateProgress.backupFilename,
+      'revealline-team-cultural-specialist-originals-2-progress.json',
+    );
+    const selected = entry.candidateJourney.catalog.missions.find(
+      ({ levelId }) => levelId === 'crossed-gardens',
+    );
+    assert.equal(
+      entry.candidateJourney.row(selected).level.revision,
+      TEAM_CULTURAL_SPECIALIST_V2_REVISION,
+    );
+    assert.match(String(entry.candidateEditionLabel), /Ukrainian spatial specialist journey II/);
+  } finally {
+    entry.candidateProgress.dispose();
+    entry.candidatePreferences.dispose();
+  }
+});
