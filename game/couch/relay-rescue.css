@@ -1041,6 +1041,20 @@ kbd {
   }
 }
 
+/* Mirror the system preference when players explicitly enable Reduced effects.
+   Gameplay-state cues remain rendered; this only removes decorative DOM motion
+   and the overlay filter from the shared Versus/Team host. */
+body[data-effects='reduced'] *,
+body[data-effects='reduced'] *::before,
+body[data-effects='reduced'] *::after {
+  scroll-behavior: auto !important;
+  transition: none !important;
+  animation: none !important;
+}
+body[data-effects='reduced'] .overlay {
+  backdrop-filter: none;
+}
+
 /* Live controls contain only the actual touch targets. Desktop help lives in
    the shared lobby/pause disclosures, never beneath a running arena. */
 .controls {
