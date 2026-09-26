@@ -325,11 +325,11 @@ the worker never trusts an uploaded approval flag.
 
 ### Supported storage target and S3 workstream
 
-The executable production service is currently filesystem-backed. The initial supported Phase 4/5
-target is one host running the production Compose stack with durable package and tus volumes. That
-target includes the current readiness checks, interrupted-upload acceptance, offline backup and
-restore, and source-to-target recovery rehearsal. S3 is not a prerequisite for deploying or
-accepting this single-host target.
+The checked-in production Compose target remains one filesystem-backed host with durable package
+and tus volumes. The executable API and worker can also select S3-compatible storage for both
+packages and resumable uploads. That path now includes dependency readiness, deterministic
+completion cleanup, offline package backup and restore, and a source-to-target recovery rehearsal.
+S3 is not a prerequisite for deploying or accepting the single-host target.
 
 The first S3 workstream slice is executable in the API and validation worker. Both entry points use
 one package-store factory. `COMMUNITY_BLOB_STORAGE=disk` selects the existing filesystem store;
@@ -357,17 +357,16 @@ COMMUNITY_S3_FORCE_PATH_STYLE=false
 COMMUNITY_BLOB_STAGING_ROOT=/tmp/revealline-package-stage
 ```
 
-This does not yet make S3 a production-qualified target. The checked-in Compose and deployment
-preflight remain filesystem-specific, tus remains disk-backed, and backup/restore does not yet
-inventory S3. The remaining S3 work is the maintained tus S3 datastore with deterministic
-completed-upload and expiry cleanup; package and tus dependency readiness probes; S3-aware backup,
-restore and recovery rehearsal; a MinIO end-to-end integration; and a real AWS smoke run with
-private buckets and scoped IAM access.
+This does not yet make S3 a production-qualified target. The checked-in production Compose remains
+filesystem-specific, and a real AWS smoke run with private buckets and scoped IAM access is still
+required. The package recovery path can now enumerate bounded S3 pages, stream exact package bytes
+into a portable snapshot, restore them through conditional publication, and verify the complete
+target prefix. A separate MinIO Compose acceptance exercises that path against two buckets and two
+PostgreSQL databases without changing the production topology.
 
-The remaining focused estimate is 3–5 engineering days: 1–2 days for tus and readiness wiring,
-1.5–2 days for recovery and MinIO coverage, and 0.5–1 day after AWS buckets and IAM access are
-available for the final smoke evidence. These are focused engineering estimates rather than
-calendar release dates.
+The remaining environment-dependent work is the hosted MinIO workflow run and a real AWS smoke run
+with private buckets and scoped IAM access. The AWS evidence is estimated at 0.5–1 focused day after
+the buckets and short-lived actor credentials are available.
 
 - **Authentication:** production configuration creates a real Better Auth PostgreSQL instance,
   mounts `/api/auth/*`, requires verified email, supports password recovery, and resolves ownership
@@ -377,15 +376,17 @@ calendar release dates.
   and password reset through the local mail adapter, and proves that the resulting session owns the
   submission. The constant-token adapter remains available only behind
   `COMMUNITY_ALLOW_DEV_AUTH=true`.
-- **Blobs:** `DiskBlobStore` remains the supported production implementation. The API and worker
-  can now select the same SDK-backed `S3CompatibleBlobStore`; its verified local staging keeps
-  publication stream-safe and bounded by `COMMUNITY_MAX_PACKAGE_BYTES`. Readiness, recovery and
-  production Compose still require the remaining S3 qualification work above.
-- **Uploads:** the executable server mounts the maintained tus Node server with its disk store.
-  `completeTusUpload` is the verified completion boundary that can also admit an S3-backed tus
-  stream. PostgreSQL advisory locks coordinate API replicas, and the PostgreSQL upload registry
-  leases bounded expiry work across them. The executable datastore remains disk-backed; multi-host
-  deployment must inject a shared datastore such as S3 rather than a node-local filesystem.
+- **Blobs:** `DiskBlobStore` remains the supported production implementation. The API, worker and
+  recovery commands can select the same SDK-backed `S3CompatibleBlobStore`; its verified local
+  staging keeps publication stream-safe and bounded by `COMMUNITY_MAX_PACKAGE_BYTES`. Recovery
+  accepts only content-addressed package keys, follows opaque S3 continuation tokens, rejects a
+  contaminated target prefix, and hashes the bytes again after restore.
+- **Uploads:** the executable server mounts the maintained tus Node server with its disk store or
+  the pinned maintained S3 store selected by the same storage configuration. `completeTusUpload`
+  is the verified completion boundary for both. PostgreSQL advisory locks coordinate API replicas,
+  and the PostgreSQL upload registry leases bounded expiry work across them. S3 completion removes
+  the provider upload object and metadata without treating an already-completed multipart abort as
+  a failed client upload.
 - **Repository:** both PostgreSQL and in-memory test implementations use the same submission/job
   and admission methods. Production admission uses PostgreSQL database time, atomic conditional
   upserts, and transaction advisory locks for idempotent reservations. The memory implementation
@@ -437,6 +438,22 @@ and replaces `backup` with `restore`. The source tests rehearse exact backup, ve
 successful restore, changed-byte rejection, occupied-target refusal, database-command failure, and
 journal-backed retry.
 
+For S3 package storage, set the same `COMMUNITY_BLOB_STORAGE=s3` values used by the stopped API and
+worker. `backup` streams the `packages/sha256/` prefix into the snapshot and checks every key, size,
+and digest. `restore` requires a fresh, dedicated target bucket whose package prefix is empty,
+restores the database, conditionally publishes each verified package, and checks the complete target
+package inventory and bytes before removing its journal. Recovery does not enumerate or delete
+unrelated root objects, tus metadata objects, or provider-side multipart uploads in a reused bucket.
+The journal defaults beside the snapshot; `--journal` selects a separate durable path. Its database
+and storage target identities are hashes and do not expose credentials, endpoints, or bucket names.
+
+Normal service restart and disaster recovery have different tus guarantees. Restarting over the
+same tus datastore preserves resumable uploads. A disaster restore deliberately excludes
+`community_tus_uploads` table data because S3 multipart upload IDs and uploaded parts belong to the
+source provider and bucket and cannot be copied as portable objects. Draft submissions remain, so
+their owners can start a new upload; completed packages and publications remain exact. Recovery
+rehearsal requires zero tus rows in the target and records how many source sessions were discarded.
+
 ### Source-to-target restore rehearsal
 
 `npm run recovery:rehearse` turns the manual restore check into one bounded acceptance command. It
@@ -469,6 +486,33 @@ npm run recovery:rehearse -- run \
   --receipt /srv/revealline/rehearsal-receipts/2026-09-26.json \
   --confirm-target database_<64-hex-characters>
 ```
+
+For an S3 target, set `COMMUNITY_RECOVERY_TARGET_BLOB_STORAGE=s3` and the documented
+`COMMUNITY_RECOVERY_TARGET_S3_*` variables instead of a target blob root. Credentials continue to
+come from the AWS SDK credential chain.
+
+### MinIO recovery acceptance
+
+The separate acceptance stack uses disposable source/target databases and MinIO buckets. It seeds
+one exact package plus one interrupted tus registry row, performs backup and restore, proves the
+package bytes and durable database fingerprints, proves the target has no dangling tus row, and
+writes a redacted receipt. Because MinIO removed its public community container repositories in
+2026, the acceptance image builds the last signed archived release from exact official commit
+`07c3a429bfed433e49018cb0f78a52145d4bedeb`; it does not use an unaffiliated binary mirror. The
+fixture is destructive only within its dedicated Compose project:
+
+```sh
+cd services/community
+docker compose -f compose.minio-acceptance.yaml up --build \
+  --abort-on-container-exit --exit-code-from minio-recovery-acceptance
+docker compose -f compose.minio-acceptance.yaml down --volumes
+```
+
+The current development host has neither Docker nor Podman, so source tests validate the contract
+but a successful container run is still required before recording MinIO runtime evidence. The
+path-filtered `Community MinIO recovery` GitHub Actions workflow runs the same stack for relevant
+pull requests and uploads only the top-level redacted JSON receipt; the database dump and package
+snapshot remain inside the disposable workflow volume.
 
 The versioned receipt is written atomically with mode `0600`. It records the snapshot identity,
 opaque database/blob-root identities, aggregate counts, semantic fingerprint, stored byte totals,
