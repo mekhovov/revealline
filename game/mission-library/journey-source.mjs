@@ -1,12 +1,16 @@
 import { emptyJourneyPictures, journeyPictureCompletion } from '../journey/pictures.mjs';
 import { contentText } from '../i18n/content.mjs';
 import { t } from '../i18n/index.mjs';
+import { classifyContent } from '../content-design/content-lifecycle.mjs';
 /** Adapt one exact Journey edition without replacing its runtime mission objects,
  * profile scope, difficulty rules, or Next sequence. */
 export function journeyLibrarySource({
   editionId,
   edition,
   editionLabel = () => edition,
+  lifecycle = classifyContent({ family: 'journey', id: editionId }) === 'archived'
+    ? 'archive'
+    : 'current',
   catalog,
   profile,
   launch,
@@ -37,6 +41,7 @@ export function journeyLibrarySource({
     editionId,
     edition,
     collection: 'Journey',
+    lifecycle,
     entries: catalog.missions,
     describe: (mission) => ({
       id: mission.id,

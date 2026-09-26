@@ -1,5 +1,5 @@
 import { isAuthoredJourneyRouteId } from '../content-design/mode-href.mjs';
-import { LIBRARY_COLLECTIONS, LIBRARY_MODES } from './library.mjs';
+import { LIBRARY_COLLECTIONS, LIBRARY_LIFECYCLES, LIBRARY_MODES } from './library.mjs';
 
 export const MISSION_LIBRARY_HANDOFF_PARAM = 'library-mission';
 export const MISSION_LIBRARY_STATE_PREFIX = 'revealline.mission-library.selector.v1';
@@ -155,7 +155,10 @@ function chooserState(value) {
     typeof value !== 'object' ||
     Array.isArray(value) ||
     Object.keys(value).some(
-      (key) => !['search', 'collection', 'campaign', 'mode', 'selectedId', 'scroll'].includes(key),
+      (key) =>
+        !['search', 'collection', 'lifecycle', 'campaign', 'mode', 'selectedId', 'scroll'].includes(
+          key,
+        ),
     )
   )
     throw new TypeError('Invalid mission library chooser state.');
@@ -164,6 +167,7 @@ function chooserState(value) {
   if (
     !boundedText(value.search, 512) ||
     !['', ...LIBRARY_COLLECTIONS].includes(value.collection) ||
+    (value.lifecycle !== undefined && !['', ...LIBRARY_LIFECYCLES].includes(value.lifecycle)) ||
     !boundedText(value.campaign, 2048) ||
     !boundedText(value.selectedId, 2048) ||
     !LIBRARY_MODES.includes(value.mode) ||
@@ -175,6 +179,7 @@ function chooserState(value) {
   return {
     search: value.search,
     collection: value.collection,
+    ...(value.lifecycle !== undefined ? { lifecycle: value.lifecycle } : {}),
     campaign: value.campaign,
     mode: value.mode,
     selectedId: value.selectedId,

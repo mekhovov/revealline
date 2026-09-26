@@ -4,6 +4,7 @@ import { t } from '../i18n/index.mjs';
 
 export const LIBRARY_COLLECTIONS = Object.freeze(['Journey', 'Classic', 'Custom']);
 export const LIBRARY_MODES = Object.freeze(['solo', 'versus', 'team']);
+export const LIBRARY_LIFECYCLES = Object.freeze(['current', 'archive']);
 export const LIBRARY_TAGS = Object.freeze([
   ...LIBRARY_COLLECTIONS,
   'Remix',
@@ -101,6 +102,8 @@ export function createMissionLibrary(sources = []) {
     text(source.id, 'sourceId');
     text(source.editionId, 'editionId');
     text(source.edition, 'editionName', 160);
+    if (source.lifecycle !== undefined && !LIBRARY_LIFECYCLES.includes(source.lifecycle))
+      throw new TypeError('Mission source needs a current or archive lifecycle.');
     if (
       source.automaticContinuation !== undefined &&
       typeof source.automaticContinuation !== 'boolean'
@@ -154,6 +157,7 @@ export function createMissionLibrary(sources = []) {
         editionId: source.editionId,
         edition: source.edition,
         collection: source.collection,
+        lifecycle: source.lifecycle ?? 'current',
         automaticContinuation: source.automaticContinuation !== false,
         campaignKey: JSON.stringify([source.id, source.editionId, info.campaignKey]),
         campaignTitle: text(info.campaignTitle, 'campaignTitle', 160),
@@ -221,10 +225,14 @@ export function createMissionLibrary(sources = []) {
         throw new TypeError(t('errors:missionLibrary.unknownMode'));
       return rows.filter((row) => row.modes.includes(mode));
     },
-    search(query = '', { mode = 'solo', collection = '', campaign = '', tag = '' } = {}) {
+    search(
+      query = '',
+      { mode = 'solo', collection = '', campaign = '', tag = '', lifecycle = '' } = {},
+    ) {
       if (
         !LIBRARY_MODES.includes(mode) ||
-        (collection && !LIBRARY_COLLECTIONS.includes(collection))
+        (collection && !LIBRARY_COLLECTIONS.includes(collection)) ||
+        (lifecycle && !LIBRARY_LIFECYCLES.includes(lifecycle))
       )
         throw new TypeError(t('errors:missionLibrary.unknownFilter'));
       const words = String(query)
@@ -237,6 +245,7 @@ export function createMissionLibrary(sources = []) {
         const display = words.length ? presentation(row) : row;
         return (
           row.modes.includes(mode) &&
+          (!lifecycle || row.lifecycle === lifecycle) &&
           (!collection || row.collection === collection) &&
           (!campaign || row.campaignKey === campaign) &&
           (!tag || row.tags.includes(tag)) &&

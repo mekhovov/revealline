@@ -2,6 +2,7 @@ import { journeyLibrarySource } from './journey-source.mjs';
 import { journeyMissionDetails, authoredJourneyMissionTags } from './journey-presentation.mjs';
 import { COOP_STARTER_PACK } from '../coop/library.mjs';
 import { t } from '../i18n/index.mjs';
+import { classifyContent } from '../content-design/content-lifecycle.mjs';
 
 export const TEAM_LIBRARY_JOURNEY_EDITION = 'team-trail-impact-originals-1';
 export const TEAM_LIBRARY_CLASSIC_SOURCE = 'team-classic:relay-rescue-starter';
@@ -27,6 +28,8 @@ export function teamJourneyLibrarySource({
   const source = journeyLibrarySource({
     editionId,
     edition,
+    lifecycle:
+      classifyContent({ family: 'team', id: editionId }) === 'archived' ? 'archive' : 'current',
     editionLabel: () =>
       edition === 'Team Journey' ? t('interface:missionLibrary.team.journeyEdition') : edition,
     catalog: journey.catalog,

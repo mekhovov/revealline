@@ -192,6 +192,7 @@ export async function createSpatialNextEditionSources({
           );
         }
       const source = journeyLibrarySource({
+        lifecycle: 'archive',
         editionId: route.id,
         edition: `Previous Journey · v${route.id.split('v').at(-1)}`,
         editionLabel: () =>
