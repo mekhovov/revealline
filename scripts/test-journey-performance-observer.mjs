@@ -38,6 +38,11 @@ function harness(mode = 'solo', { loaded = true } = {}) {
     [
       'shell-continue',
       'shell-featured',
+      'shell-catalogue',
+      'missions-catalogue',
+      'race-journey-find',
+      'journey-chooser',
+      'journey-cards',
       'level-select',
       'race-level',
       'race-start',
@@ -55,6 +60,8 @@ function harness(mode = 'solo', { loaded = true } = {}) {
     getElementById: (id) => nodes.get(id),
   };
   nodes.get('race-pause').textContent = 'Pause';
+  nodes.get('journey-cards').querySelector = () => nodes.get('journey-library-card');
+  nodes.set('journey-library-card', element('journey-library-card'));
   const root = { ...element('root'), querySelector: (id) => outer.get(id.slice(1)) };
   const win = {
     ...element('win'),
@@ -198,6 +205,29 @@ test('only confirmed restart is timed, excluding time spent deciding', () => {
   h.frame();
   assert.equal(h.records().at(-1).action, 'Confirmed restart');
   assert.equal(h.records().at(-1).ms, 32);
+});
+
+test('both modes time mission-library readiness only after the chooser has a usable card', () => {
+  for (const [mode, trigger] of [
+    ['solo', 'shell-catalogue'],
+    ['versus', 'race-journey-find'],
+  ]) {
+    const h = harness(mode);
+    h.frame();
+    h.frame();
+    h.click(trigger);
+    h.frame(100);
+    assert.notEqual(h.records().at(-1).action, 'Open mission library');
+    h.nodes.get('journey-chooser').open = true;
+    h.frame();
+    h.frame();
+    assert.equal(h.records().at(-1).action, 'Open mission library');
+    assert.equal(h.records().at(-1).ms, 132);
+    assert.equal(
+      h.records().at(-1).outcome,
+      'two consecutive animation-frame readiness observations',
+    );
+  }
 });
 
 test('both modes reject cancelled/detached/error preparations and explicit cancellation', () => {
