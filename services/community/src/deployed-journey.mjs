@@ -404,8 +404,18 @@ export async function runDeployedCommunityJourney(input, adapters = {}) {
       authHeaders: authProvider(config.auth.creatorB),
       resumableUpload: tusUpload,
     });
+    const trackedCreatorA = Object.freeze({
+      ...creatorA,
+      async createSubmission(metadata) {
+        const created = await creatorA.createSubmission(metadata);
+        receipt.submissionId = created?.submission?.id ?? null;
+        editionId = created?.submission?.editionId ?? null;
+        receipt.editionId = editionId;
+        return created;
+      },
+    });
     const publisher = createCommunityPublisher({
-      client: creatorA,
+      client: trackedCreatorA,
       decodeImage: inspectAcceptanceImage,
     });
     await publisher.select(blob);
@@ -422,13 +432,17 @@ export async function runDeployedCommunityJourney(input, adapters = {}) {
     receipt.package = { sha256: packageSha256, bytes: blob.size };
 
     stage = 'ownership';
-    let creatorBIsolation = false;
-    try {
-      await creatorB.submission(queued.id);
-    } catch {
-      creatorBIsolation = true;
-    }
-    required(creatorBIsolation, 'Creator B could read Creator A submission.');
+    const isolated = await fetchImpl(new URL(`v1/submissions/${queued.id}`, config.baseURL), {
+      headers: config.auth.creatorB,
+      cache: 'no-store',
+    });
+    const isolationBody = await isolated.text();
+    required(isolationBody.length <= 256 * 1024, 'Owner-isolation response is too large.');
+    required(
+      isolated.status === 404,
+      `Creator B owner-isolation check returned ${isolated.status} instead of 404.`,
+    );
+    const creatorBIsolation = true;
 
     stage = 'validation';
     const deadline = now() + config.validationTimeoutMs;
@@ -530,7 +544,7 @@ export async function runDeployedCommunityJourney(input, adapters = {}) {
     );
     required(
       picture && installedPack.assets.some((asset) => asset.sha256 === picture.sha256),
-      'Completed mission did not retain its exact earned picture.',
+      'Completed mission did not retain its exact installed picture asset binding.',
     );
     receipt.play = {
       creatorEditionId: installed.creatorEditionId,

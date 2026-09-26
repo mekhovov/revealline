@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
-import { mkdtemp, readFile, rm } from 'node:fs/promises';
+import { mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
@@ -206,4 +206,73 @@ test('CLI writes a versioned failure receipt without printing supplied secrets',
     failedStage: 'configuration',
     errorCode: 'invalid_acceptance_configuration',
   });
+});
+
+test('CLI refuses to replace an existing acceptance receipt', async (t) => {
+  const directory = await mkdtemp(path.join(os.tmpdir(), 'revealline-deployed-acceptance-'));
+  t.after(() => rm(directory, { recursive: true, force: true }));
+  const receiptPath = path.join(directory, 'receipt.json');
+  await writeFile(receiptPath, 'retained evidence\n', { mode: 0o600 });
+  const result = spawnSync(process.execPath, ['src/deployed-journey-runner.mjs'], {
+    cwd: new URL('..', import.meta.url),
+    encoding: 'utf8',
+    env: {
+      ...process.env,
+      COMMUNITY_ACCEPTANCE_BASE_URL: 'https://community.example.test/',
+      COMMUNITY_ACCEPTANCE_NAMESPACE: 'cli-check-20260926',
+      COMMUNITY_ACCEPTANCE_ALLOW_DESTRUCTIVE: 'not-approved',
+      COMMUNITY_ACCEPTANCE_CREATOR_A_AUTHORIZATION: 'Bearer cli-creator-a-secret',
+      COMMUNITY_ACCEPTANCE_CREATOR_B_AUTHORIZATION: 'Bearer cli-creator-b-secret',
+      COMMUNITY_ACCEPTANCE_ADMIN_AUTHORIZATION: 'Bearer cli-admin-secret',
+      COMMUNITY_ACCEPTANCE_RECEIPT: receiptPath,
+    },
+  });
+  assert.equal(result.status, 1);
+  assert.equal(await readFile(receiptPath, 'utf8'), 'retained evidence\n');
+  assert.match(result.stderr, /destination already exists/u);
+  const output = `${result.stdout}\n${result.stderr}`;
+  for (const secret of ['cli-creator-a-secret', 'cli-creator-b-secret', 'cli-admin-secret'])
+    assert.equal(output.includes(secret), false);
+});
+
+test('owner isolation requires the exact owner-scoped not-found response', async (t) => {
+  const repository = new MemoryCommunityRepository();
+  const blobStore = new MemoryBlobStore();
+  const app = buildCommunityApp({
+    repository,
+    blobStore,
+    authenticator: createTokenAuthenticator({
+      'creator-a-secret': 'creator/a',
+      'creator-b-secret': 'creator/b',
+      'admin-secret': { subject: 'administrator/acceptance', roles: ['admin'] },
+    }),
+    maxPackageBytes: 16 * 1024 * 1024,
+  });
+  await app.ready();
+  t.after(() => app.close());
+  const serviceFetch = fetchThroughFastify(app);
+  const fetchImpl = async (input, init = {}) => {
+    const url = new URL(input);
+    if (
+      init.method === undefined &&
+      url.pathname.startsWith('/v1/submissions/') &&
+      init.headers?.authorization === 'Bearer creator-b-secret'
+    ) {
+      return Response.json({ error: { message: 'temporary failure' } }, { status: 503 });
+    }
+    return serviceFetch(input, init);
+  };
+
+  await assert.rejects(
+    runDeployedCommunityJourney(config(), {
+      fetchImpl,
+      randomUUID: () => 'abcdef12-1234-4abc-8def-123456789abc',
+    }),
+    (error) => {
+      assert.equal(error.name, 'DeployedCommunityAcceptanceError');
+      assert.equal(error.stage, 'ownership');
+      assert.equal(error.receipt.failedStage, 'ownership');
+      return true;
+    },
+  );
 });

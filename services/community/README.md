@@ -390,13 +390,14 @@ identities, titles, report text, or package contents. Existing work directories,
 non-empty target blob roots are rejected. Keep failed rehearsal work for diagnosis, discard the
 target after review, restart the source writers, and retain the successful receipt with the
 off-host snapshot record.
+
 ## Deployed two-user acceptance
 
 `npm run acceptance:deployed` exercises a running service over HTTP. Creator A publishes a small
 valid `.rlpack`; Creator B proves owner isolation, discovers the published edition, and downloads
-the exact bytes. The runner installs those downloaded bytes into isolated in-memory browser storage,
-executes the package's verified legal route, persists and reloads its exact completion and picture,
-then starts an offline replay after removal. The public report path opens a report; an administrator
+the exact bytes. The runner installs those downloaded bytes into isolated in-memory storage adapters,
+executes the package's verified legal route, persists and reloads its exact completion, verifies the
+installed picture asset binding, then starts an offline replay after removal. The public report path opens a report; an administrator
 finds the report, unlists the disposable edition, resolves the report, and verifies that public
 retrieval is gone. The validation worker must be running before this command starts.
 
@@ -428,7 +429,7 @@ offered and its bounded tus 1.0 client when the deployment requires resumable up
 
 The receipt format is `revealline-community-deployed-acceptance.v1`. It records only the service
 origin, public test namespace/run identities, immutable package and edition identities, validation
-poll count, exact-download result, installed completion/picture identities, offline replay result,
+poll count, exact-download result, installed completion and picture-asset identities, offline replay result,
 moderation result, and timing. Authentication headers, account subjects, response bodies, and
 package content are excluded. The CLI prints only the receipt path and a pass/fail stage; it never
 prints the supplied authorization values. A failed run makes one best-effort administrator
