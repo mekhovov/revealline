@@ -691,11 +691,20 @@ export function attachMissionLibraryChooser({
   // Decode only near the viewport. An earned picture owns the same exact
   // descriptor as Collection; release its decoded bytes when it leaves view.
   function hidePreview(card) {
+    const changed =
+      !!card.artwork ||
+      !!card.diagram ||
+      !!card.button.querySelector('.journey-card-map') ||
+      !!card.button.querySelector('.journey-card-picture-status');
     card.artwork?.release();
     card.artwork = null;
     card.diagram = null;
     card.button.querySelector('.journey-card-map')?.remove();
     card.button.querySelector('.journey-card-picture-status')?.remove();
+    // Lazy previews above the selected card can change the scroll geometry
+    // without a viewport resize. Preserve the player's exact focus and bring
+    // that same card back into view after the complete observer batch settles.
+    if (changed) keepFocusedCardVisible();
   }
   function showPreview(card) {
     if (card.diagram || !dialog.open || !list.contains(card.button)) return;
@@ -721,6 +730,7 @@ export function attachMissionLibraryChooser({
         paintMissionThumbnail(canvas.getContext('2d'), diagram, canvas.width);
         card.button.append(canvas);
       }
+      keepFocusedCardVisible();
     } catch {
       /* Optional previews cannot prevent a mission launch. */
     }
