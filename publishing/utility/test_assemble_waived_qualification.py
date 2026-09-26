@@ -167,6 +167,33 @@ class AdapterTests(unittest.TestCase):
         self.assertNotIn('ordinaryBuildCorroboration', qualification)
         self.assertEqual(qualification['preMergeValidationCorroboration']['command'], 'npm run validate')
 
+    def test_current_focused_gate_generation_requires_successful_aggregate_and_skipped_long_jobs(self):
+        jobs = copy.deepcopy(self.pr_jobs)
+        jobs['jobs'][0]['conclusion'] = 'skipped'
+        focused = dict(jobs['jobs'][0], id=203, name='focused', conclusion='success', steps=[
+            self.step('Capture the reviewed changed-path set', 1),
+            self.step('Select the fail-closed focused gate', 2),
+        ])
+        release_ready = dict(focused, id=204, name='release-ready', steps=[])
+        test_job = dict(focused, id=205, name='test', conclusion='skipped', steps=[])
+        jobs['jobs'].extend([focused, release_ready, test_job])
+        jobs['total_count'] = len(jobs['jobs'])
+        Path(self.config['pr']['jobs']).write_bytes(adapter.encoded(jobs))
+        output = self.root / 'out'
+        adapter.assemble(self.config, output)
+        qualification = json.loads((output / 'source-qualification.json').read_bytes())
+        focused_evidence = qualification['focusedAdmissionCorroboration']
+        self.assertEqual(focused_evidence['genericBuild']['status'], 'skipped-by-fast-release-policy')
+        self.assertEqual(focused_evidence['fullTests']['status'], 'waived-and-skipped')
+        self.assertNotIn('preMergeValidationCorroboration', qualification)
+
+        for job_name in ('focused', 'release-ready'):
+            bad = copy.deepcopy(jobs)
+            next(job for job in bad['jobs'] if job['name'] == job_name)['conclusion'] = 'skipped'
+            Path(self.config['pr']['jobs']).write_bytes(adapter.encoded(bad))
+            with self.subTest(job=job_name), self.assertRaisesRegex(ValueError, 'Successful job missing'):
+                adapter.assemble(self.config, self.root / ('out-' + job_name))
+
     def test_pr_build_modes_cannot_be_partial_or_both_successful(self):
         jobs = copy.deepcopy(self.pr_jobs)
         jobs['jobs'][0]['steps'].append(self.step('Build pull-request artifact', 99))
