@@ -286,6 +286,10 @@ class WorkflowTests(unittest.TestCase):
             self.assertNotIn('npm run build', section)
             self.assertNotIn('gh release', section)
         self.assertIn('default: qualify', regular)
+        self.assertIn('workflow_call:', regular)
+        self.assertIn('artifact_id:', regular)
+        self.assertIn('artifact_digest:', regular)
+        self.assertIn('queue: max', upload_job)
         for command in utility.COMMANDS:
             self.assertIn('run: ' + command, regular)
         self.assertIn('node scripts/run-test-shard.mjs --shard ${{ matrix.shard }}/4', regular)

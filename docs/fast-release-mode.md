@@ -145,3 +145,15 @@ Duplicate manual qualification dispatches for the same immutable source SHA are 
 repository checkout. Qualify only a PR head that is stable and already has a successful
 `release-ready` check; after merge, qualify the resulting `main` SHA once. Do not rewrite release
 tags or published assets.
+
+## Serialized publisher rollout
+
+`fastline-release.yml` is the queued publisher entry point. Its `shadow` mode validates the exact
+version, merged release-root PR, source commit/tree and published predecessor without writes. Its
+initial guarded `publish` canary calls merged-source qualification as a reusable workflow, uploads
+the frozen package once under a version-and-source name, passes the immutable artifact ID and digest
+to an independent content inspection, and stops before any tag or release write. Evidence assembly,
+tag/draft creation, guarded nine-asset publication, archive admission, Pages and public journeys are
+added only after this canary is shadow-run successfully. Existing manual entry points remain the
+guarded emergency path during the two-release rollout and the sole publisher must not run both paths
+for the same version.
