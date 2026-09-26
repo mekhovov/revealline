@@ -39,6 +39,112 @@ const routes = Object.freeze({
     ],
   ],
 });
+const fullRoutes = Object.freeze({
+  'crossed-gardens': [
+    [null, null, 1],
+    ['up', null, 24],
+    ['right', null, 246],
+    [null, null, 1],
+    ['right', null, 6],
+    ['down', null, 72],
+    ['left', null, 486],
+    [null, null, 1],
+    ['left', null, 6],
+    ['down', null, 168],
+    ['right', null, 468],
+    ['up', null, 414],
+    [null, null, 1],
+    ['down', null, 246],
+    ['left', null, 468],
+    ['down', null, 96],
+    ['right', null, 462],
+    [null, null, 181],
+    ['right', null, 6],
+    ['up', null, 348],
+    ['right', null, 276],
+    ['down', null, 414],
+    [null, null, 1],
+    [null, 'right', 36],
+    [null, 'down', 216],
+    [null, 'left', 276],
+    [null, 'up', 48],
+    [null, 'left', 462],
+    [null, null, 1],
+    ['up', null, 54],
+    ['left', null, 270],
+  ],
+  'split-orchards': [
+    [null, null, 1],
+    ['right', null, 234],
+    [null, null, 1],
+    ['right', null, 6],
+    ['down', null, 24],
+    ['left', null, 210],
+    [null, null, 1],
+    [null, 'left', 234],
+    [null, null, 1],
+    [null, 'left', 6],
+    [null, 'down', 36],
+    [null, 'right', 282],
+    [null, null, 1],
+    ['left', null, 6],
+    ['up', null, 24],
+    ['right', null, 492],
+    ['up', null, 24],
+    ['left', null, 282],
+    [null, null, 1],
+    ['left', null, 6],
+    ['down', null, 24],
+    ['left', null, 276],
+    ['up', null, 12],
+    ['right', null, 210],
+    [null, null, 1],
+    ['left', null, 6],
+    ['up', null, 186],
+    [null, null, 1],
+    [null, 'right', 180],
+    [null, null, 1],
+    ['down', null, 186],
+    ['left', null, 204],
+    ['up', null, 12],
+    ['left', null, 60],
+    ['up', null, 174],
+    [null, null, 1],
+    [null, 'left', 246],
+    [null, 'down', 258],
+    [null, null, 1],
+    [null, 'up', 414],
+    [null, 'left', 492],
+    [null, 'down', 414],
+    [null, null, 1],
+    [null, 'right', 492],
+    [null, 'down', 6],
+    [null, 'up', 48],
+    [null, 'left', 486],
+  ],
+  'weaver-crossing': [
+    [null, null, 1],
+    [null, 'up', 282],
+    [null, null, 181],
+    [null, 'right', 144],
+    [null, 'up', 6],
+    [null, 'down', 420],
+    [null, 'left', 192],
+    [null, 'up', 414],
+    [null, null, 1],
+    [null, 'left', 468],
+    [null, 'up', 6],
+    [null, 'down', 414],
+    [null, null, 181],
+    ['up', null, 120],
+    ['right', null, 240],
+    ['down', null, 414],
+    [null, null, 61],
+    ['right', null, 96],
+    ['down', null, 6],
+    ['up', null, 414],
+  ],
+});
 const mission = (compiled, id) => compiled.missions.find((item) => item.id === id);
 const map = (compiled, id) => {
   const owner = mission(compiled, id);
@@ -273,4 +379,26 @@ for (const id of IDS)
         assert(run.players.every(({ support }) => support.uses === 0));
         assert(run.coverage > 0 && run.coverage < level.goal.coverage);
       }
+  });
+
+for (const id of IDS)
+  test(`${id} has a pinned Standard no-Support full route without late cleanup`, () => {
+    const level = resolveMission(project, id, { mode: 'team', difficulty: 'standard' }).level;
+    const run = startCoop(createCoop(level, { seed: 17, jointCuts: false }));
+    const closed = new Set();
+    let downs = 0;
+    for (const [a, b, ticks] of fullRoutes[id])
+      for (let tick = 0; tick < ticks && run.status === 'running'; tick++) {
+        stepCoop(run, [command(a), command(b)]);
+        for (const event of run.events) {
+          if (event.type === 'player.downed') downs++;
+          if (event.type === 'cut.closed') closed.add(event.player);
+        }
+      }
+    assert.equal(run.status, 'won');
+    assert.equal(downs, 0);
+    assert(run.coverage >= level.goal.coverage);
+    assert.deepEqual([...closed].sort(), [0, 1]);
+    assert(run.players.every(({ support }) => support.uses === 0));
+    assert(run.time >= 30 && run.time <= 90, `completed in ${run.time}s`);
   });
