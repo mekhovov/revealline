@@ -25,8 +25,36 @@ test('vendored browser module matches the exact pinned dependency and provenance
   assert.equal(createHash('sha256').update(bundle).digest('hex'), provenance.artifactSha256);
 });
 
+test('owned AVC plus AAC fixture has the exact bounded container identity', async () => {
+  const bytes = await readFile(
+      new URL('./fixtures/video/owned-avc-aac-fixture.mp4', import.meta.url),
+    ),
+    blob = new Blob([bytes], { type: 'video/mp4' }),
+    result = await inspectMediabunnyAudioTracks(blob);
+  assert.equal(bytes.length, 173_394);
+  assert.equal(
+    createHash('sha256').update(bytes).digest('hex'),
+    'd592415621ae68175f7b1c182e3024ae09f21e2a4b71fc5e92b08ccaa9c8dcc5',
+  );
+  assert.deepEqual(result.videoCodecs, ['avc']);
+  assert.deepEqual(result.codecs, ['aac']);
+  assert.equal(result.audioTimelines[0].sampleRate, 48_000);
+  assert.equal(result.audioTimelines[0].numberOfChannels, 1);
+  assert.equal(result.audioTimelines[0].trackEndSeconds, 6);
+  assert.equal(typeof result.audioTimelines[0].canDecode, 'boolean');
+  if (!result.audioTimelines[0].canDecode)
+    assert.deepEqual(
+      result.audioTimelines[0].windows,
+      [],
+      'A non-browser inventory does not claim decoded PCM evidence.',
+    );
+});
+
 function fakeLibrary({
   audio = false,
+  audioCodec = 'aac',
+  audioDecodable = true,
+  audioEncodable = true,
   codec = 'avc',
   decodable = true,
   encodable = true,
@@ -42,6 +70,7 @@ function fakeLibrary({
     options: null,
     inputFormats: [],
     encodeProbes: [],
+    audioEncodeProbes: [],
   };
   const video = {
     type: 'video',
@@ -50,12 +79,21 @@ function fakeLibrary({
     getDisplayHeight: async () => height,
     canDecode: async () => decodable,
   };
+  const audioTrack = {
+    type: 'audio',
+    getCodec: async () => audioCodec,
+    canDecode: async () => audioDecodable,
+    getNumberOfChannels: async () => 1,
+    getSampleRate: async () => 48_000,
+    getFirstTimestamp: async () => 0,
+    computeDuration: async () => 6,
+  };
   class Input {
     constructor({ formats }) {
       state.inputFormats.push(formats);
     }
     async getTracks() {
-      return audio ? [video, { type: 'audio', getCodec: async () => 'aac' }] : [video];
+      return audio ? [video, audioTrack] : [video];
     }
     async getPrimaryVideoTrack() {
       return video;
@@ -108,6 +146,26 @@ function fakeLibrary({
         state.encodeProbes.push(options);
         return encodable;
       },
+      canEncodeAudio: async (_codec, options) => {
+        state.audioEncodeProbes.push(options);
+        return audioEncodable;
+      },
+      AudioSampleSink: class {
+        async *samples(startSeconds, endSeconds) {
+          const sampleRate = 48_000,
+            numberOfFrames = Math.max(1, Math.round((endSeconds - startSeconds) * sampleRate));
+          yield {
+            timestamp: startSeconds,
+            sampleRate,
+            numberOfFrames,
+            numberOfChannels: 1,
+            copyTo(destination) {
+              destination.fill(0.25);
+            },
+            close() {},
+          };
+        }
+      },
     },
   };
 }
@@ -131,7 +189,7 @@ test('Mediabunny adapter remains lazy until physical trim capability is requeste
   assert.equal(fake.state.disposed, 1);
 });
 
-test('audio inventory authenticates exact bytes and reports container tracks without sync claims', async () => {
+test('audio inventory authenticates exact bytes and decodes bounded PCM synchronization windows', async () => {
   const silent = fakeLibrary();
   const silentResult = await inspectMediabunnyAudioTracks(original, {
     loadLibrary: async () => silent.library,
@@ -157,8 +215,10 @@ test('audio inventory authenticates exact bytes and reports container tracks wit
   assert.equal(audioResult.audioTrackCount, 1);
   assert.deepEqual(audioResult.codecs, ['aac']);
   assert.deepEqual(audioResult.videoCodecs, ['avc']);
+  assert.equal(audioResult.audioTimelines[0].canDecode, true);
+  assert.equal(audioResult.audioTimelines[0].windows.length, 3);
+  assert.equal(audioResult.audioTimelines[0].windows[0].channels[0].rms, 0.25);
   assert.equal(withAudio.state.disposed, 1);
-  assert.equal('synchronization' in audioResult, false);
 
   const silentWebm = fakeLibrary({ codec: 'vp9' });
   const webmResult = await inspectMediabunnyAudioTracks(webm, {
@@ -188,6 +248,21 @@ test('Mediabunny adapter physically re-encodes only the selected range and repor
   assert.equal(fake.state.options.video.forceTranscode, true);
   assert.deepEqual(fake.state.options.tags, {});
   assert.equal(fake.state.disposed, 2, 'The dimension probe and conversion input are released.');
+});
+
+test('single-track AVC plus AAC MP4 transcodes both tracks for a nonzero trim', async () => {
+  const fake = fakeLibrary({ audio: true });
+  const adapter = createMediabunnyTrimAdapter({ loadLibrary: async () => fake.library });
+  const supported = await adapter.support(original, info, range);
+  assert.equal(supported.supported, true);
+  assert.match(supported.detail, /AAC audio.*AVC\+AAC MP4/);
+  assert.deepEqual(fake.state.audioEncodeProbes, [{ numberOfChannels: 1, sampleRate: 48_000 }]);
+  const result = await adapter.trim(original, range);
+  assert.equal(result.audioSync.status, 'pending-verification');
+  assert.equal(fake.state.options.audio.codec, 'aac');
+  assert.equal(fake.state.options.audio.forceTranscode, true);
+  assert.equal(fake.state.options.audio.numberOfChannels, 1);
+  assert.equal(fake.state.options.audio.sampleRate, 48_000);
 });
 
 test('silent browser-decodable WebM is converted to AVC MP4 with the same bounded checks', async () => {
@@ -276,9 +351,12 @@ test('resize/compression plans cannot upscale, change orientation/aspect, or esc
   }
 });
 
-test('audio, undecodable and unencodable sources stay explicitly unsupported', async () => {
+test('unsupported audio layouts/codecs and unavailable codecs stay explicitly unsupported', async () => {
   for (const [options, message] of [
-    [{ audio: true }, /contains audio.*independently verified/i],
+    [{ audio: true, audioCodec: 'opus' }, /limited to one AVC.*AAC/i],
+    [{ audio: true, audioDecodable: false }, /cannot decode.*AAC/i],
+    [{ audio: true, audioEncodable: false }, /cannot encode AAC/i],
+    [{ audio: true, codec: 'vp9' }, /limited to one AVC.*AAC/i],
     [{ codec: 'vp9', decodable: false }, /cannot decode.*vp9/i],
     [{ encodable: false }, /cannot encode/],
   ]) {
