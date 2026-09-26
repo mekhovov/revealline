@@ -154,7 +154,135 @@ test('S3 publication rejects a mismatched stream without sending or retaining by
   assert.deepEqual(await readdir(stagingRoot), []);
 });
 
-test('S3 publication reuses only an exact immutable object after a conditional conflict', async (t) => {
+test('S3 publication retries a conditional conflict with a fresh closed stream', async (t) => {
+  const stagingRoot = await mkdtemp(path.join(os.tmpdir(), 'revealline-s3-retry-'));
+  t.after(() => rm(stagingRoot, { recursive: true, force: true }));
+  const source = Buffer.from('conditional retry package');
+  const sha256 = createHash('sha256').update(source).digest('hex');
+  const streams = [];
+  let putAttempts = 0;
+  const store = new S3CompatibleBlobStore({
+    client: {
+      async send(command) {
+        if (command.operation !== 'put') return {};
+        putAttempts += 1;
+        streams.push(command.input.Body);
+        if (putAttempts === 1)
+          throw Object.assign(new Error('concurrent write'), {
+            name: 'ConditionalRequestConflict',
+            $metadata: { httpStatusCode: 409 },
+          });
+        const uploaded = [];
+        for await (const chunk of command.input.Body) uploaded.push(Buffer.from(chunk));
+        assert.deepEqual(Buffer.concat(uploaded), source);
+        return {};
+      },
+    },
+    bucket: 'creator-packages',
+    stagingRoot,
+    commands: {
+      put: (input) => ({ operation: 'put', input }),
+      head: (input) => ({ operation: 'head', input }),
+      get: (input) => ({ operation: 'get', input }),
+    },
+  });
+  const result = await store.putVerified({
+    key: packageBlobKey(sha256),
+    body: [source],
+    expectedSha256: sha256,
+    expectedSize: source.length,
+    maxBytes: 1024,
+  });
+  assert.equal(result.sha256, sha256);
+  assert.equal(putAttempts, 2);
+  assert.notEqual(streams[0], streams[1]);
+  assert.ok(streams.every((stream) => stream.closed));
+  assert.deepEqual(await readdir(stagingRoot), []);
+});
+
+test('S3 publication verifies exact metadata when a conflict retry reaches precondition failure', async (t) => {
+  const stagingRoot = await mkdtemp(path.join(os.tmpdir(), 'revealline-s3-raced-reuse-'));
+  t.after(() => rm(stagingRoot, { recursive: true, force: true }));
+  const source = Buffer.from('raced immutable package');
+  const sha256 = createHash('sha256').update(source).digest('hex');
+  const streams = [];
+  const operations = [];
+  const store = new S3CompatibleBlobStore({
+    client: {
+      async send(command) {
+        operations.push(command.operation);
+        if (command.operation === 'head')
+          return { ContentLength: source.length, Metadata: { sha256 } };
+        streams.push(command.input.Body);
+        const status = streams.length === 1 ? 409 : 412;
+        throw Object.assign(new Error('conditional write failed'), {
+          name: status === 409 ? 'ConditionalRequestConflict' : 'PreconditionFailed',
+          $metadata: { httpStatusCode: status },
+        });
+      },
+    },
+    bucket: 'creator-packages',
+    stagingRoot,
+    commands: {
+      put: (input) => ({ operation: 'put', input }),
+      head: (input) => ({ operation: 'head', input }),
+      get: (input) => ({ operation: 'get', input }),
+    },
+  });
+  const result = await store.putVerified({
+    key: packageBlobKey(sha256),
+    body: [source],
+    expectedSha256: sha256,
+    expectedSize: source.length,
+    maxBytes: 1024,
+  });
+  assert.equal(result.sha256, sha256);
+  assert.deepEqual(operations, ['put', 'put', 'head']);
+  assert.notEqual(streams[0], streams[1]);
+  assert.ok(streams.every((stream) => stream.closed));
+  assert.deepEqual(await readdir(stagingRoot), []);
+});
+
+test('S3 publication bounds repeated conditional-conflict retries', async (t) => {
+  const stagingRoot = await mkdtemp(path.join(os.tmpdir(), 'revealline-s3-retry-limit-'));
+  t.after(() => rm(stagingRoot, { recursive: true, force: true }));
+  const source = Buffer.from('retry limit package');
+  const sha256 = createHash('sha256').update(source).digest('hex');
+  const streams = [];
+  const store = new S3CompatibleBlobStore({
+    client: {
+      async send(command) {
+        streams.push(command.input.Body);
+        throw Object.assign(new Error('concurrent write'), {
+          name: 'ConditionalRequestConflict',
+          $metadata: { httpStatusCode: 409 },
+        });
+      },
+    },
+    bucket: 'creator-packages',
+    stagingRoot,
+    commands: {
+      put: (input) => ({ operation: 'put', input }),
+      head: (input) => ({ operation: 'head', input }),
+      get: (input) => ({ operation: 'get', input }),
+    },
+  });
+  await assert.rejects(
+    store.putVerified({
+      key: packageBlobKey(sha256),
+      body: [source],
+      expectedSha256: sha256,
+      expectedSize: source.length,
+      maxBytes: 1024,
+    }),
+    { name: 'ConditionalRequestConflict' },
+  );
+  assert.equal(streams.length, 3);
+  assert.ok(streams.every((stream) => stream.closed));
+  assert.deepEqual(await readdir(stagingRoot), []);
+});
+
+test('S3 publication reuses only an exact immutable object after precondition failure', async (t) => {
   const stagingRoot = await mkdtemp(path.join(os.tmpdir(), 'revealline-s3-existing-'));
   t.after(() => rm(stagingRoot, { recursive: true, force: true }));
   const source = Buffer.from('already published package');

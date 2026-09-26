@@ -320,8 +320,11 @@ one package-store factory. `COMMUNITY_BLOB_STORAGE=disk` selects the existing fi
 region and local staging root. S3 input is streamed to a private staging file while its size and
 SHA-256 are checked. Only exact bytes are then streamed to a conditional `PutObject` request, so a
 package is never published before verification and the process does not retain the whole package
-in memory. A pre-existing object is accepted only when its exact size and stored SHA-256 metadata
-match.
+in memory. As documented by
+[AWS PutObject](https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutObject.html), `409
+ConditionalRequestConflict` responses receive a bounded retry with a fresh stream from the retained
+verified staging file. A pre-existing object is accepted after `412 PreconditionFailed` only when
+its exact size and stored SHA-256 metadata match.
 
 Configuration fails closed: unknown drivers, partial S3 settings, S3 settings while disk is
 selected, and a simultaneous disk root and S3 selection stop startup. Credentials remain in the
