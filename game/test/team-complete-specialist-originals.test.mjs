@@ -103,7 +103,7 @@ test('the final successor changes only Twin landings and preserves every histori
   assert.deepEqual(createTeamChamberSpecialistOriginalCandidates(), previous);
 });
 
-test('the complete specialist candidate remains outside ordinary Team entry and requires its explicit route', async () => {
+test('the complete specialist candidate keeps an explicit route and leaves the old greybox factory intact', async () => {
   const ordinary = await createTeamGreyboxEntry();
   try {
     assert.notEqual(

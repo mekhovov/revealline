@@ -7,14 +7,14 @@ import {
   teamArenaLibrarySource,
 } from '../mission-library/team-source.mjs';
 import { createCandidateTeamHost } from '../content-design/team-host.mjs';
-import { createTeamSpatialOriginalCandidates } from '../content-design/team-spatial-originals.mjs';
+import { createTeamCompleteSpecialistOriginalCandidates } from '../content-design/team-complete-specialist-originals.mjs';
 import { COOP_STARTER_PACK, coopGoalText } from '../coop/library.mjs';
 
 test('remote Team browser preserves all12 Journey and2 Classic receiving identities without artwork', async (t) => {
   t.mock.method(globalThis, 'fetch', () => {
     throw new Error('Browsing must not fetch artwork.');
   });
-  const source = createTeamSpatialOriginalCandidates();
+  const source = createTeamCompleteSpecialistOriginalCandidates();
   const journey = createCandidateTeamHost(source, {
     corePackIds: source.packs.map((pack) => pack.id),
   });

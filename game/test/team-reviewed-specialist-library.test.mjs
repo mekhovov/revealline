@@ -7,12 +7,14 @@ import {
   TEAM_COMPLETE_SPECIALIST_PROFILE_KEY,
 } from '../content-design/team-complete-specialist-originals.mjs';
 import { createTeamImpactOriginalCandidates } from '../content-design/team-impact-originals.mjs';
+import { DEFAULT_JOURNEY_ROUTES } from '../content-design/default-entry.mjs';
 import { createTeamGreyboxEntry } from '../content-design/team-entry.mjs';
 import { createCandidateTeamHost } from '../content-design/team-host.mjs';
 import { createTeamJourneyProgress } from '../content-design/team-progress.mjs';
 import { createMissionLibrary } from '../mission-library/library.mjs';
 import { isMissionLibrarySourceJourney } from '../mission-library/handoff.mjs';
 import { teamJourneyLibrarySource } from '../mission-library/team-source.mjs';
+import { TEAM_LIBRARY_JOURNEY_EDITION } from '../mission-library/team-source.mjs';
 import { createJourneyBackend } from '../journey/profile.mjs';
 import { createCoop, startCoop, stepCoop } from '../coop/core.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
@@ -89,7 +91,7 @@ async function candidatePicture(asset) {
   });
 }
 
-test('the explicit reviewed route owns a separate profile and leaves ordinary Team unchanged', async () => {
+test('the current specialist route owns a separate profile and preserves the impact edition', async () => {
   const reviewed = await createTeamGreyboxEntry({ reviewedSpecialists: true });
   const ordinary = await createTeamGreyboxEntry({ impact: true });
   try {
@@ -97,7 +99,7 @@ test('the explicit reviewed route owns a separate profile and leaves ordinary Te
       reviewed.candidateProgress.backupFilename,
       `revealline-${TEAM_COMPLETE_SPECIALIST_PROFILE_KEY}-progress.json`,
     );
-    assert.match(reviewed.candidateEditionLabel, /^reviewed specialist library/);
+    assert.match(String(reviewed.candidateEditionLabel), /^complementary specialist journey/);
     assert.equal(reviewed.candidateJourney.catalog.missions.length, 12);
     assert.equal(
       reviewed.candidateJourney.row(reviewed.candidateJourney.catalog.missions[0]).level.revision,
@@ -111,6 +113,8 @@ test('the explicit reviewed route owns a separate profile and leaves ordinary Te
       ordinary.candidateJourney.row(ordinary.candidateJourney.catalog.missions[0]).level.revision,
       'owned-trail-impact-1',
     );
+    assert.equal(DEFAULT_JOURNEY_ROUTES.team, TEAM_COMPLETE_SPECIALIST_PROFILE_KEY);
+    assert.equal(TEAM_LIBRARY_JOURNEY_EDITION, TEAM_COMPLETE_SPECIALIST_PROFILE_KEY);
     assert.equal(isMissionLibrarySourceJourney(TEAM_COMPLETE_SPECIALIST_PROFILE_KEY, 'team'), true);
     assert.equal(
       isMissionLibrarySourceJourney(TEAM_COMPLETE_SPECIALIST_PROFILE_KEY, 'solo'),
