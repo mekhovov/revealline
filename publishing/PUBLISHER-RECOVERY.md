@@ -15,6 +15,11 @@ authorize a new publication, tag, or asset replacement.
   `422` / `already_exists` conflict permits bounded read-only discovery. It never
   causes the HTTP helper to repeat the mutation. Other 422 errors stop with a
   sanitized message and structured error codes instead of being suppressed.
+- Exception scoped to creating a Git reference: 409/422 can omit structured
+  conflict codes, so they permit bounded read-only authority discovery. The
+  exact annotated tag and source must match; absent/mismatched refs still fail,
+  retaining the original error when discovery is exhausted. This does not
+  change release-creation 422 handling.
 - GET requests have a three-attempt budget. Rate-limit reads respect
   `Retry-After` or the primary-limit reset. A required wait exceeding 60 seconds
   stops with a retry-delay diagnostic; it is not shortened to retry early.
