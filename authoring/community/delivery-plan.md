@@ -37,6 +37,12 @@ environment becomes available, not calendar release dates.
 | Phase 8 media editor | Bounded silent MP4/WebM and AVC+AAC MP4 trim/conversion, resize/compression, orientation, timing and decoded-audio verification are published.                                                                                                                                                                                                                                       | Qualify Firefox, Safari, broader codecs, physical mobile playback and physical speakers.                                                          | 1–2 days when the environments are available                  |
 | Publication          | PR #564 is merged, `v0.141.0` is published from exact source `5d6c97c…`, Archive 94 preserves `v0.132.5`, and selector PR #673 is merged at `44a6ce…`. Pages deployment `6679678040` / run `36246645007` passed; the public byte audit reported 1,877 files, 630,364,265 bytes and zero failures. Ordinary gameplay, Creator and Team routes loaded cleanly in the built-in browser. | No creator release or Pages publication gate remains.                                                                                             | Complete                                                      |
 
+The `v0.141.2` community hardening candidate now includes a production-safe Compose overlay and
+executable deployment preflight. It orders application and Better Auth migrations before API or
+worker startup, disables development authentication, forwards shared admission/proxy controls, and
+checks schema, package/tus storage, and `ffprobe`. The remaining live rehearsal is tracked in
+[deployment-acceptance.md](deployment-acceptance.md).
+
 ## Remaining environment-dependent acceptance and concerns
 
 - The released local creator, package, installed gameplay, Team, Versus and bounded media paths have
