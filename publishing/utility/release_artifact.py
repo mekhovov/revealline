@@ -35,6 +35,8 @@ NAMES = SMALL_NAMES | {'source.tar', 'distribution.zip'}
 HEX = re.compile(r'[0-9a-f]{64}')
 COMMIT = re.compile(r'[0-9a-f]{40}')
 WORKFLOW = '.github/workflows/qualify-release-source.yml'
+FASTLINE_WORKFLOW = '.github/workflows/fastline-release.yml'
+QUALIFICATION_WORKFLOWS = {WORKFLOW, FASTLINE_WORKFLOW}
 GATES = ['validate', 'lint', 'format', 'native-format', 'motion-syntax', 'test']
 COMMANDS = ['npm run validate', 'npm run lint', 'npm run format:check',
             'npm run format:native:check', 'node --check authoring/motion-lab/app.js']
@@ -173,15 +175,16 @@ def committed_test_policy(repo, source):
 
 
 def source_jobs_check(jobs, source, waived=False):
+    job_name = lambda job: str(job.get('name', '')).removeprefix('qualify / ')
     required = ['qualify', 'freeze'] if waived else ['qualify', 'test (1)', 'test (2)', 'test (3)', 'test (4)', 'freeze']
     for name in required:
-        matched = [j for j in jobs if j.get('name') == name]
+        matched = [j for j in jobs if job_name(j) == name]
         require(len(matched) == 1 and matched[0].get('status') == 'completed' and
                 matched[0].get('conclusion') == 'success' and matched[0].get('head_sha') == source,
                 'Actual successful source/freeze job missing: ' + name)
     if waived:
-        tests = [j for j in jobs if j.get('name') == 'test' or str(j.get('name', '')).startswith('test (')]
-        names = [j.get('name') for j in tests]
+        tests = [j for j in jobs if job_name(j) == 'test' or job_name(j).startswith('test (')]
+        names = [job_name(j) for j in tests]
         require(names == ['test'] or len(names) == 4 and set(names) == {'test (1)', 'test (2)', 'test (3)', 'test (4)'},
                 'Actual skipped test job inventory missing')
         require(all(j.get('status') == 'completed' and j.get('conclusion') == 'skipped' and
@@ -200,7 +203,7 @@ def artifact_authority(api, binding, policy_body=None):
             item.get('workflow_run', {}).get('head_sha') == binding['source']['commit'], 'Artifact authority differs')
     run = api.get(f'/repos/{repo}/actions/runs/{expected["runId"]}')
     require(run.get('id') == expected['runId'] and run.get('event') == 'workflow_dispatch' and
-            run.get('path') == WORKFLOW and run.get('head_sha') == binding['source']['commit'] and
+            run.get('path') in QUALIFICATION_WORKFLOWS and run.get('head_sha') == binding['source']['commit'] and
             run.get('status') == 'completed' and run.get('conclusion') == 'success',
             'Original manual source/freeze run is not completed successfully')
     jobs = []
@@ -463,15 +466,18 @@ def verify_evidence(body, qualification, source, policy_body=None):
                 require(policy_original == policy_body, 'Waiver policy differs from the exact committed source')
             run = parse(archive.read(waiver['runEvidence']['path']))
             jobs = parse(archive.read(waiver['jobsEvidence']['path']))
+            qualification_workflow = qualification.get('workflowPath', WORKFLOW)
             require(run.get('id') == waiver['runId'] and run.get('event') == 'workflow_dispatch' and
-                    run.get('path') == WORKFLOW and run.get('head_sha') == source['commit'] and successful(run),
+                    run.get('path') in QUALIFICATION_WORKFLOWS and
+                    qualification_workflow == run.get('path') and
+                    run.get('head_sha') == source['commit'] and successful(run),
                     'Waiver original run identity/result differs')
             job_rows = jobs.get('jobs')
             require(isinstance(job_rows, list) and 0 < len(job_rows) <= 1000 and jobs.get('total_count') == len(job_rows) and
                     all(j.get('run_id') == run['id'] and positive(j.get('id'), 10**14) for j in job_rows) and
                     len({j['id'] for j in job_rows}) == len(job_rows), 'Waiver original jobs incomplete or borrowed')
             source_jobs_check(job_rows, source['commit'], waived=True)
-            qualify = next(j for j in job_rows if j.get('name') == 'qualify')
+            qualify = next(j for j in job_rows if str(j.get('name', '')).removeprefix('qualify / ') == 'qualify')
             names = ['Validate source', 'Lint source', 'Check formatting',
                      'Check native formatting', 'Check motion lab syntax']
             for gate, name in zip(qualification['gates'], names):

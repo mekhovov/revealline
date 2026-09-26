@@ -196,8 +196,9 @@ jobs:
           set -euo pipefail
           test "$ARTIFACT_ID" -gt 0
           gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/$ARTIFACT_ID/zip" > frozen-artifact.zip
-          actual="sha256:$(sha256sum frozen-artifact.zip | cut -d' ' -f1)"
-          test "$actual" = "$EXPECTED_DIGEST"
+          actual="$(sha256sum frozen-artifact.zip | cut -d' ' -f1)"
+          expected="${EXPECTED_DIGEST#sha256:}"
+          test "$actual" = "$expected"
 
       - name: Independently inspect frozen source and distribution bytes
         env:

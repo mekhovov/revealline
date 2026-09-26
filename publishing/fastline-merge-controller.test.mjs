@@ -33,10 +33,10 @@ function fixture(overrides = {}) {
   };
 }
 
-test("arms protected auto-merge for an admitted clean exact head", () => {
+test("merges an admitted clean exact head through branch protection", () => {
   assert.deepEqual(decideMergeAction(fixture()), {
-    action: "arm",
-    reason: "exact head is admitted; protected auto-merge may proceed",
+    action: "merge",
+    reason: "exact head is admitted and immediately mergeable",
   });
 });
 
@@ -98,7 +98,7 @@ test("declared dependencies must already be merged", () => {
     "declared predecessor is not merged",
   );
   input.dependencies[0].merged_at = "2026-09-26T00:00:00Z";
-  assert.equal(decideMergeAction(input).action, "arm");
+  assert.equal(decideMergeAction(input).action, "merge");
 });
 
 test("only explicitly labeled GitHub stacks use the asynchronous merge endpoint", () => {
@@ -123,7 +123,7 @@ test("only explicitly labeled GitHub stacks use the asynchronous merge endpoint"
         ],
       }),
     ).action,
-    "arm",
+    "merge",
   );
 });
 
