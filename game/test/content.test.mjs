@@ -335,6 +335,14 @@ test('content structure and metadata errors follow the active locale', (context)
   const unsupported = scenario();
   unsupported.extra = true;
   assert.match(validateScenario(unsupported).errors.join(' '), /scenario\.extra не підтримується/);
+  const invalidTheme = structuredClone(themes[0]);
+  invalidTheme.id = 'not stable';
+  invalidTheme.scene = 'missing-scene';
+  invalidTheme.palette.ink = 'black';
+  const ukrainianThemeErrors = validateTheme(invalidTheme).errors.join(' ');
+  assert.match(ukrainianThemeErrors, /стабільним незарезервованим ідентифікатором/);
+  assert.match(ukrainianThemeErrors, /theme\.scene не зареєстровано/);
+  assert.match(ukrainianThemeErrors, /theme\.palette\.ink має використовувати формат #rrggbb/);
   assert.match(inspectImageDataUrl('not-an-image').errors.join(' '), /data-URL-адреса/);
   assert.match(inspectImageDataUrl('data:image/png;base64,AAAA').errors.join(' '), /Підпис PNG/);
   assert.match(
@@ -345,6 +353,10 @@ test('content structure and metadata errors follow the active locale', (context)
   setLocale('en', { persist: false });
   assert.match(validateScenario(cyclic).errors.join(' '), /must not contain a cycle/);
   assert.match(validateScenario(unsafeUrl).errors.join(' '), /must be an HTTP\(S\) URL/);
+  const englishThemeErrors = validateTheme(invalidTheme).errors.join(' ');
+  assert.match(englishThemeErrors, /non-reserved stable identifier/);
+  assert.match(englishThemeErrors, /theme\.scene is not registered/);
+  assert.match(englishThemeErrors, /theme\.palette\.ink must use #rrggbb/);
   assert.match(inspectImageDataUrl('not-an-image').errors.join(' '), /embedded PNG/);
   assert.match(inspectImageDataUrl('data:image/png;base64,AAAA').errors.join(' '), /PNG signature/);
 });
