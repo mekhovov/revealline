@@ -26,7 +26,7 @@ test('fixed destinations preserve release prefix across every current/destinatio
   const destination = { solo: '', versus: 'couch/', team: 'couch/relay-rescue.html' };
   for (const [currentMode, from] of Object.entries(current))
     for (const [mode, to] of Object.entries(destination)) {
-      const journey = mode === 'team' ? 'team-complete-specialist-originals-1' : 'whole-spatial-v5';
+      const journey = mode === 'team' ? 'team-cultural-specialist-originals-1' : 'whole-spatial-v5';
       const actual = new URL(href({ baseURL: new URL(from, baseURL), currentMode, mode, journey }));
       assert.equal(actual.origin, 'https://example.test');
       assert.equal(actual.pathname, `/releases/v0.83.0/site/game/${to}`);
