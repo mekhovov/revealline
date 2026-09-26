@@ -30,11 +30,13 @@ by this candidate.
 - The service derives a stable `collectionId` from owner plus slug and returns its authoritative
   `latestEditionId` and `latestVersion`. Update discovery therefore does not group unrelated
   creators or depend on matching remote display text.
-- One cross-layer test drives the real Fastify routes through the production client: Alice uploads
-  and publishes two valid `.rlpack` editions, cursor pagination and search return the expected
-  immutable records, Player B's store downloads and installs exact validated bytes, a report is
-  accepted, Bob cannot unlist Alice's edition, Alice can, and the installed edition remains
-  offline-playable after public removal.
+- One cross-layer test drives the real Fastify routes through the production client: Creator A
+  publishes two valid `.rlpack` editions, cursor pagination and search return the expected immutable
+  records, and Player B discovers and installs the latest exact bytes. The modeled player saves an
+  unfinished attempt, the creator unlists the edition and the service shuts down, then a fresh
+  runtime restores and legally completes that attempt entirely offline. A reloaded profile retains
+  the exact clear and picture binding, and another offline run starts without a network request.
+  Reporting and cross-owner unlisting refusal remain in the same scenario.
 - The production browser boundary restores a same-origin Better Auth session and supports email
   sign-up, sign-in and sign-out without persisting credentials or session tokens. A real Better
   Auth memory-adapter session created through the browser client owns a submission, uploads exact
@@ -53,9 +55,10 @@ by this candidate.
   same-origin account/publish path is covered through Fastify and Better Auth in-process; a visible
   browser pass remains open.
 
-The focused Phase 5 store suite passes 11/11 scenarios and the account/tus browser boundary passes
-2/2 on Node 20.19.5. The Phase 4 service suite passes 21/21, including the real Better Auth
-browser-client scenario. Scoped ESLint, Prettier and diff checks are recorded on the final commit.
+The focused Phase 5 store suite and account/tus browser boundary are included in the combined
+creator/service acceptance counts recorded for the current candidate. The Phase 4 service suite
+includes the real Better Auth browser-client scenario. Scoped ESLint, Prettier and diff checks are
+recorded on the final commit.
 
 ## Integrated service contract
 
@@ -66,8 +69,10 @@ creation/offset/chunk contract and treats only server responses as upload progre
 
 ## Remaining acceptance gates
 
-- Exercise Creator A publish → automatic validation → listing → Player B preview/install → legal win
-  → reload/offline play in a clean built-in-browser origin.
+- Repeat Creator A publish → automatic validation → listing → Player B preview/install →
+  legal win → reload/offline play through the deployed same-origin service in a clean physical
+  browser profile. The modeled in-process integration now covers this behavioral chain but is not
+  deployed-browser evidence.
 - Exercise service restart, catalog outage, report, unlist and immutable update with the
   containerized PostgreSQL service. The browser and mounted server interruption/resume paths are
   independently covered; restart persistence still needs container acceptance.
@@ -79,7 +84,9 @@ Physical removal of installed managed-media bytes is outside this candidate. The
 preserves historical references monotonically; the UI calls the implemented operation **Remove
 recovery download** and does not describe it as uninstall or runtime offloading.
 
-The cross-layer test uses the in-memory repository and blob store. It does not qualify the Docker
-Compose topology, PostgreSQL migration on an existing volume, Better Auth account recovery,
-disk/S3 failover, or production backup/restore. Those operations remain
-deployment acceptance work and no AWS, domain, mail, or public-service availability is claimed.
+The cross-layer journey uses the in-memory repository and blob store with injected account tokens;
+it composes production client, runtime, storage and Fastify boundaries without claiming a physical
+browser or deployed service. It does not qualify the Docker Compose topology, PostgreSQL migration
+on an existing volume, Better Auth account recovery, disk/S3 failover, or production
+backup/restore. Those operations remain deployment acceptance work and no AWS, domain, mail, or
+public-service availability is claimed.
