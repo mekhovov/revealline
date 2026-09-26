@@ -1,0 +1,244 @@
+name: Fastline release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Exact stable version, including the v prefix
+        required: true
+        type: string
+      source_sha:
+        description: Exact merged main commit to qualify and freeze
+        required: true
+        type: string
+      release_pr:
+        description: Exact terminal release-root pull request number
+        required: true
+        type: string
+      predecessor_tag:
+        description: Exact published predecessor tag
+        required: true
+        type: string
+      mode:
+        description: Read-only shadow or guarded publication preparation
+        required: true
+        default: shadow
+        type: choice
+        options: [shadow, publish]
+
+permissions:
+  contents: read
+  actions: read
+  pull-requests: read
+
+concurrency:
+  group: fastline-publisher
+  queue: max
+  cancel-in-progress: false
+
+jobs:
+  admission:
+    runs-on: ubuntu-latest
+    outputs:
+      numeric_version: ${{ steps.inputs.outputs.numeric_version }}
+      source_tree: ${{ steps.source.outputs.source_tree }}
+      pr_head: ${{ steps.authority.outputs.pr_head }}
+      pr_tree: ${{ steps.authority.outputs.pr_tree }}
+      pr_run: ${{ steps.authority.outputs.pr_run }}
+    steps:
+      - name: Check out trusted admission code
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.workflow_sha }}
+          persist-credentials: false
+          filter: blob:none
+          sparse-checkout: |
+            publishing/fastline-release-inputs.mjs
+          sparse-checkout-cone-mode: false
+
+      - name: Set up admission runtime
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.22.2
+
+      - name: Validate immutable request inputs
+        id: inputs
+        env:
+          VERSION: ${{ inputs.version }}
+          SOURCE_SHA: ${{ inputs.source_sha }}
+          RELEASE_PR: ${{ inputs.release_pr }}
+          PREDECESSOR_TAG: ${{ inputs.predecessor_tag }}
+          MODE: ${{ inputs.mode }}
+        run: node publishing/fastline-release-inputs.mjs
+
+      - name: Check out exact merged source metadata
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.source_sha }}
+          path: source
+          fetch-depth: 1
+          filter: blob:none
+          persist-credentials: false
+          sparse-checkout: |
+            package.json
+            package-lock.json
+            game/build-config.json
+          sparse-checkout-cone-mode: false
+
+      - name: Require exact source and version identity
+        id: source
+        working-directory: source
+        env:
+          EXPECTED_SOURCE: ${{ inputs.source_sha }}
+          EXPECTED_NUMERIC_VERSION: ${{ steps.inputs.outputs.numeric_version }}
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$EXPECTED_SOURCE"
+          test "$(jq -r .version package.json)" = "$EXPECTED_NUMERIC_VERSION"
+          test "$(jq -r .version package-lock.json)" = "$EXPECTED_NUMERIC_VERSION"
+          test "$(jq -r '.packages[""].version' package-lock.json)" = "$EXPECTED_NUMERIC_VERSION"
+          test "$(jq -r .version game/build-config.json)" = "$EXPECTED_NUMERIC_VERSION"
+          echo "source_tree=$(git rev-parse 'HEAD^{tree}')" >> "$GITHUB_OUTPUT"
+
+      - name: Require merged PR, current main and published predecessor
+        id: authority
+        env:
+          GH_TOKEN: ${{ github.token }}
+          EXPECTED_SOURCE: ${{ inputs.source_sha }}
+          RELEASE_PR: ${{ steps.inputs.outputs.release_pr }}
+          PREDECESSOR_TAG: ${{ inputs.predecessor_tag }}
+          MODE: ${{ inputs.mode }}
+        run: |
+          set -euo pipefail
+          pr="$(gh api "repos/$GITHUB_REPOSITORY/pulls/$RELEASE_PR")"
+          test "$(jq -r .merged <<<"$pr")" = true
+          test "$(jq -r .merge_commit_sha <<<"$pr")" = "$EXPECTED_SOURCE"
+          pr_head="$(jq -r .head.sha <<<"$pr")"
+          pr_tree="$(gh api "repos/$GITHUB_REPOSITORY/git/commits/$pr_head" --jq .tree.sha)"
+          predecessor="$(gh api "repos/$GITHUB_REPOSITORY/releases/tags/$PREDECESSOR_TAG")"
+          test "$(jq -r .draft <<<"$predecessor")" = false
+          test "$(jq -r .prerelease <<<"$predecessor")" = false
+          test "$(jq -r '.published_at != null' <<<"$predecessor")" = true
+          if [ "$MODE" = publish ]; then
+            main_sha="$(gh api "repos/$GITHUB_REPOSITORY/git/ref/heads/main" --jq .object.sha)"
+            test "$main_sha" = "$EXPECTED_SOURCE"
+          fi
+          pr_run="$(gh api --paginate \
+            "repos/$GITHUB_REPOSITORY/actions/workflows/deploy-pages.yml/runs?event=pull_request&status=success&per_page=100" \
+            --jq ".workflow_runs[] | select(.head_sha == \"$pr_head\") | .id" | head -1)"
+          test -n "$pr_run"
+          echo "pr_head=$pr_head" >> "$GITHUB_OUTPUT"
+          echo "pr_tree=$pr_tree" >> "$GITHUB_OUTPUT"
+          echo "pr_run=$pr_run" >> "$GITHUB_OUTPUT"
+
+      - name: Record admission timing and stage plan
+        env:
+          MODE: ${{ inputs.mode }}
+          VERSION: ${{ inputs.version }}
+          SOURCE_SHA: ${{ inputs.source_sha }}
+          SOURCE_TREE: ${{ steps.source.outputs.source_tree }}
+        run: |
+          printf '%s\n' \
+            '### Fastline release admission' \
+            '' \
+            "Mode: \`$MODE\`" \
+            "Version: \`$VERSION\`" \
+            "Source: \`$SOURCE_SHA\`" \
+            "Tree: \`$SOURCE_TREE\`" \
+            'The full suites remain waived and are not reported as passed.' >> "$GITHUB_STEP_SUMMARY"
+
+  qualify:
+    if: inputs.mode == 'publish'
+    needs: admission
+    permissions:
+      contents: read
+      actions: read
+    uses: ./.github/workflows/qualify-release-source.yml
+    with:
+      operation: qualify
+      freeze_snapshot: true
+      run_tests: false
+
+  inspect-artifact:
+    if: inputs.mode == 'publish'
+    needs: [admission, qualify]
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    permissions:
+      contents: read
+      actions: read
+    steps:
+      - name: Check out independent inspection utility
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.workflow_sha }}
+          path: automation
+          persist-credentials: false
+          filter: blob:none
+          sparse-checkout: |
+            publishing/utility/inspect_qualified_artifact.py
+            publishing/utility/release_limits.py
+          sparse-checkout-cone-mode: false
+
+      - name: Check out exact qualified source
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.source_sha }}
+          path: qualified
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Download the one immutable frozen artifact by ID
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ARTIFACT_ID: ${{ needs.qualify.outputs.artifact_id }}
+          EXPECTED_DIGEST: ${{ needs.qualify.outputs.artifact_digest }}
+        run: |
+          set -euo pipefail
+          test "$ARTIFACT_ID" -gt 0
+          gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/$ARTIFACT_ID/zip" > frozen-artifact.zip
+          actual="sha256:$(sha256sum frozen-artifact.zip | cut -d' ' -f1)"
+          test "$actual" = "$EXPECTED_DIGEST"
+
+      - name: Independently inspect frozen source and distribution bytes
+        env:
+          EXPECTED_SOURCE: ${{ inputs.source_sha }}
+          EXPECTED_VERSION: ${{ inputs.version }}
+          EXPECTED_DIGEST: ${{ needs.qualify.outputs.artifact_digest }}
+        run: >-
+          python3 automation/publishing/utility/inspect_qualified_artifact.py
+          frozen-artifact.zip --repo qualified
+          --expected-commit "$EXPECTED_SOURCE"
+          --expected-version "$EXPECTED_VERSION"
+          --artifact-sha256 "${EXPECTED_DIGEST#sha256:}"
+          --out inspection
+
+      - name: Retain independent inspection evidence
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: fastline-inspection-${{ inputs.version }}-${{ inputs.source_sha }}
+          path: inspection/
+          compression-level: 0
+          retention-days: 14
+          if-no-files-found: error
+
+      - name: Record qualification and inspection timing
+        run: |
+          printf '%s\n' \
+            '### Fastline frozen inspection' \
+            '' \
+            'Qualified artifact ID: `${{ needs.qualify.outputs.artifact_id }}`' \
+            'Qualified artifact digest: `${{ needs.qualify.outputs.artifact_digest }}`' \
+            'Independent content inspection: passed.' >> "$GITHUB_STEP_SUMMARY"
+
+  shadow-summary:
+    if: inputs.mode == 'shadow'
+    needs: admission
+    runs-on: ubuntu-latest
+    steps:
+      - name: Confirm read-only shadow completion
+        run: |
+          printf '%s\n' \
+            '### Fastline shadow run complete' \
+            '' \
+            'Admission authorities matched. No tag, release, asset, archive, selector, deployment, or public object was written.' >> "$GITHUB_STEP_SUMMARY"
