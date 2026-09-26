@@ -55,6 +55,7 @@ const golden = {
   'whole-spatial-v25': [277154, '26cafd633827012c3c8729329bb2fad0c3feedd2637c2e257bf50d8e123585e7'],
   'whole-spatial-v26': [279214, '6ff6965830e88fde5f8b4093b613b4221e8be1dbed12e08533f12224a4d2253f'],
   'whole-spatial-v27': [280620, '495b6a7263c5909c24bec10d706359fa2035d4dfff247b271135774f729af9b7'],
+  'whole-spatial-v28': [282309, '7f71aa07c97da8c086c50b89193b9f20476dd27d1d4ae719891f809bcf99af10'],
   'whole-ornament-v1': [260665, '3b29bc220cdb06a33fedefabb6adec9527bd10902a9dd44899270e885ddfc4ad'],
   'whole-ornament-v2': [266314, '3f0116efe9cb9b2e134fb60dd252ac5bfbd44758a993e18a56abb2131ca10a1b'],
 };
@@ -386,6 +387,18 @@ test('Crosswind cultural completion imports only its bounded successor chain', (
   assert(!has(result, 'horizon-candidates.mjs'));
 });
 
+test('Fracture and Apex cultural completion imports only its bounded successor chain', () => {
+  const result = routeProbe('whole-spatial-v28');
+  assert.deepEqual(result.output, { id: 'whole-spatial-v28' });
+  assert(has(result, 'fracture-apex-cultural-completion-candidates.mjs'));
+  assert(has(result, 'crosswind-cultural-completion-candidates.mjs'));
+  assert(has(result, 'relay-cultural-completion-candidates.mjs'));
+  assert(has(result, 'apex-cultural-routes-candidates.mjs'));
+  assert(has(result, 'whole-spatial-data.mjs'));
+  assert(!has(result, 'whole-journey-candidates.mjs'));
+  assert(!has(result, 'horizon-candidates.mjs'));
+});
+
 test('ornament editions import only their bounded opt-in source chain', () => {
   const study = routeProbe('whole-ornament-v1');
   assert.deepEqual(study.output, { id: 'whole-ornament-v1' });
@@ -437,6 +450,7 @@ test('all literal lazy imports and shared modules are in the actual game build i
   const source = await readFile(new URL(loaderURL), 'utf8');
   const imports = [...source.matchAll(/import\('(.+?)'\)/g)].map((m) => m[1]);
   assert.deepEqual(imports, [
+    './fracture-apex-cultural-completion-candidates.mjs',
     './crosswind-cultural-completion-candidates.mjs',
     './relay-cultural-completion-candidates.mjs',
     './apex-cultural-routes-candidates.mjs',
