@@ -4077,7 +4077,10 @@ export function bootCoop({
     supportGuidance(guidance, level);
     const openingCue = contextualTeaching.opening(guidance());
     message(
-      openingCue ? () => t(openingCue.key, openingCue.values) : () => guidance().startMessage,
+      () => {
+        const start = guidance().startMessage;
+        return openingCue ? `${start} ${t(openingCue.key, openingCue.values)}` : start;
+      },
       {
         coach: openingCue?.kind,
       },
