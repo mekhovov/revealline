@@ -2,6 +2,14 @@
 import * as fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import os from "node:os";
+import { createHash } from "node:crypto";
+import { execFileSync } from "node:child_process";
+import {
+  POLICY_FILES,
+  sameAdmission,
+  validationPolicyDigest,
+} from "./admission-binding.mjs";
 
 const HOLD_LABELS = new Set(["release-train-hold", "do-not-merge", "hold"]);
 const STACK_MERGE_LABEL = "fastline-stack-merge";
@@ -51,6 +59,8 @@ export function decideMergeAction({
       requiredCheck.head_sha !== observedHeadSha
     )
       return "release-ready is not successful on the exact head";
+    if (requiredCheck.admissionMatches !== true)
+      return "source or admission metadata changed since the successful gate";
     if (
       pullRequest.mergeable === false ||
       pullRequest.mergeable_state === "dirty"
@@ -351,11 +361,22 @@ async function main() {
   );
   const requiredCheck = checks.check_runs
     .filter((check) => check.name === "release-ready")
-    .sort(
-      (left, right) =>
-        new Date(right.completed_at || 0) - new Date(left.completed_at || 0),
-    )[0];
-  if (requiredCheck) requiredCheck.head_sha = pullRequest.head.sha;
+    // A new queued/in-progress gate supersedes an older successful one too.
+    .sort((left, right) => right.id - left.id)[0];
+  // Never relabel a check from another commit as an exact-head success.
+  if (requiredCheck?.conclusion === "success") {
+    try {
+      requiredCheck.admissionMatches = await checkedAdmission(
+        owner,
+        repository,
+        requiredCheck,
+        pullRequest,
+      );
+    } catch (error) {
+      requiredCheck.admissionMatches = false;
+      await appendSummary([`Admission receipt rejected: ${error.message}`]);
+    }
+  }
   const dependencyIds = [
     ...new Set(dependencyNumbers(pullRequest.body)),
   ].filter((dependency) => dependency !== number);
@@ -385,6 +406,26 @@ async function main() {
     decision,
     observedHeadSha,
   );
+  if (["update", "stack", "merge", "arm"].includes(decision.action)) {
+    const fresh = await github(`/repos/${owner}/${repository}/pulls/${number}`);
+    fresh.review_decision = await reviewDecision(owner, repository, number);
+    if (
+      fresh.head.sha !== observedHeadSha ||
+      fresh.draft ||
+      fresh.review_decision === "CHANGES_REQUESTED" ||
+      !sameAdmission(
+        requiredCheck.admissionReceipt,
+        fresh,
+        requiredCheck.policyDigest,
+      )
+    ) {
+      if (fresh.auto_merge)
+        await setAutoMerge(fresh, "disarm", observedHeadSha);
+      throw new Error(
+        "Admission changed before mutation; no merge was submitted.",
+      );
+    }
+  }
   if (decision.action === "update") {
     await github(
       `/repos/${owner}/${repository}/pulls/${number}/update-branch`,
@@ -421,6 +462,88 @@ async function main() {
       );
   } else if (decision.action === "arm" || decision.action === "disarm")
     await setAutoMerge(pullRequest, decision.action, observedHeadSha);
+}
+
+async function checkedAdmission(owner, repository, check, pullRequest) {
+  const match = new URL(check.details_url).pathname.match(
+    /\/actions\/runs\/(\d+)\//,
+  );
+  if (check.app?.slug !== "github-actions" || !match) return false;
+  const prefix = `/repos/${owner}/${repository}`;
+  const run = await github(`${prefix}/actions/runs/${match[1]}`);
+  if (
+    run.event !== "pull_request" ||
+    run.path !== ".github/workflows/deploy-pages.yml" ||
+    run.head_sha !== pullRequest.head.sha
+  )
+    return false;
+  // The artifact is untrusted input. Compare the actual checked revision's
+  // policy blobs with protected-main automation, not its self-reported digest.
+  const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+  const query = `query($owner: String!, $repository: String!) {
+    repository(owner: $owner, name: $repository) {
+      ${POLICY_FILES.map((name, index) => `p${index}: object(expression: ${JSON.stringify(`${run.head_sha}:${name}`)}) { oid }`).join("\n")}
+    }
+  }`;
+  const policy = await graphql(query, { owner, repository });
+  for (const [index, name] of POLICY_FILES.entries()) {
+    const bytes = await fs.readFile(path.join(root, name));
+    const oid = createHash("sha1")
+      .update(`blob ${bytes.length}\0`)
+      .update(bytes)
+      .digest("hex");
+    if (policy.repository[`p${index}`]?.oid !== oid) return false;
+  }
+  const result = await github(
+    `${prefix}/actions/runs/${run.id}/artifacts?per_page=100`,
+  );
+  const artifacts = result.artifacts.filter(
+    (item) => item.name === `admission-${run.id}-${run.run_attempt}`,
+  );
+  if (
+    artifacts.length !== 1 ||
+    artifacts[0].expired ||
+    artifacts[0].size_in_bytes > 1_000_000
+  )
+    return false;
+  const response = await fetch(
+    `https://api.github.com${prefix}/actions/artifacts/${artifacts[0].id}/zip`,
+    {
+      headers: {
+        authorization: `Bearer ${process.env.GH_TOKEN}`,
+        accept: "application/vnd.github+json",
+      },
+    },
+  );
+  if (!response.ok)
+    throw new Error(`Receipt download failed: ${response.status}`);
+  const bytes = Buffer.from(await response.arrayBuffer());
+  if (bytes.length > 1_000_000)
+    throw new Error("Admission archive exceeds budget.");
+  const directory = await fs.mkdtemp(
+    path.join(os.tmpdir(), "fastline-admission-"),
+  );
+  const archive = path.join(directory, "receipt.zip");
+  try {
+    await fs.writeFile(archive, bytes);
+    // Read one bounded member only. Never extract or execute artifact contents.
+    const receipt = JSON.parse(
+      execFileSync("unzip", ["-p", archive, "admission.json"], {
+        encoding: "utf8",
+        maxBuffer: 512_000,
+        timeout: 10_000,
+      }),
+    );
+    const policyDigest = await validationPolicyDigest(
+      path.resolve(path.dirname(fileURLToPath(import.meta.url)), ".."),
+    );
+    check.admissionReceipt = receipt;
+    check.policyDigest = policyDigest;
+    return sameAdmission(receipt, pullRequest, policyDigest);
+  } finally {
+    await fs.unlink(archive).catch(() => {});
+    await fs.rmdir(directory);
+  }
 }
 
 if (
