@@ -7,7 +7,9 @@ import { createAuthoredJourneyRouteDefinition } from './route-definition.mjs';
 export async function loadAuthoredJourneyRoute(id) {
   if (!isAuthoredJourneyRouteId(id)) return null;
   let factories;
-  if (id === 'whole-spatial-v25') {
+  if (id === 'whole-spatial-v26') {
+    factories = await import('./relay-cultural-completion-candidates.mjs');
+  } else if (id === 'whole-spatial-v25') {
     factories = await import('./apex-cultural-routes-candidates.mjs');
   } else if (id === 'whole-spatial-v24') {
     factories = await import('./sentinel-cultural-routes-candidates.mjs');
