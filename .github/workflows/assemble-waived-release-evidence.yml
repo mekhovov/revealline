@@ -112,6 +112,7 @@ jobs:
           PR_TREE: ${{ inputs.pr_tree }}
           SOURCE_PR: ${{ inputs.source_pr }}
           APPROVED_NON_SOURCE_CHANGES: ${{ inputs.approved_non_source_changes }}
+          UTILITY_COMMIT: ${{ github.workflow_sha }}
         run: |
           python3 -B - <<'PY'
           import json
@@ -127,6 +128,8 @@ jobs:
               'reviewed': True,
               'repository': os.environ['GITHUB_REPOSITORY'],
               'repositoryPath': str(root / 'qualified'),
+              'automationRepositoryPath': str(root / 'automation'),
+              'automationCommit': os.environ['UTILITY_COMMIT'],
               'sourcePR': int(os.environ['SOURCE_PR']),
               'source': {
                   'commit': os.environ['SOURCE_COMMIT'],

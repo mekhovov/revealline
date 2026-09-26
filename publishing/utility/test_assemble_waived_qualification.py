@@ -17,6 +17,7 @@ class AdapterTests(unittest.TestCase):
         self.root = Path(self.temporary.name).resolve()
         value, _, _, self.policy, self.manual, jobs = waived.fixture()
         self.source, self.artifact = value['source'], value['artifact']
+        self.automation_commit = 'c' * 40
         self.manual['updated_at'] = '2026-09-22T00:00:00Z'
         extra = ['Record source identity', 'Require reviewed production slots in the committed ledger',
                  'Verify qualified tracked source is unchanged']
@@ -57,7 +58,9 @@ class AdapterTests(unittest.TestCase):
         return {'name': name, 'number': number, 'status': 'completed', 'conclusion': 'success'}
 
     def blob(self, repo, revision, name):
-        self.assertEqual(revision, self.source['commit'])
+        self.assertIn(revision, (self.source['commit'], self.automation_commit))
+        if revision == self.automation_commit:
+            return (self.helper_root / Path(name).name).read_bytes()
         if name == adapter.POLICY:
             return adapter.encoded(self.policy)
         if name in ('package.json', 'package-lock.json'):
@@ -126,6 +129,8 @@ class AdapterTests(unittest.TestCase):
         self.assertEqual(len(list(output.iterdir())), 7)
         self.assertEqual(len(result['artifacts']), 9)
         self.assertTrue(result['consumer']['allQualificationPinsResolved'])
+        self.assertEqual(result['consumerAuthority']['commit'], self.source['commit'])
+        self.assertTrue(result['consumerAuthority']['helpers'])
         q = json.loads((output / 'source-qualification.json').read_bytes())
         self.assertEqual(q['tests'], {'status': 'waived', 'counts': None})
         self.assertNotIn('passed', q)
@@ -149,6 +154,14 @@ class AdapterTests(unittest.TestCase):
         )
         self.assertIn('qualify', {job['name'] for job in rows})
         self.assertIn('freeze', {job['name'] for job in rows})
+
+    def test_consumer_helpers_are_loaded_from_reviewed_automation_commit(self):
+        helpers = adapter.consumer_helpers(self.root, self.automation_commit)
+        self.assertIn('publishing/utility/release_artifact.py', helpers)
+        self.assertEqual(
+            adapter.sha(helpers['publishing/utility/release_artifact.py']),
+            adapter.sha((self.helper_root / 'release_artifact.py').read_bytes()),
+        )
 
     def test_fastline_can_resume_when_only_post_freeze_inspection_failed(self):
         run = {**self.manual, 'path': adapter.FASTLINE_WORKFLOW, 'conclusion': 'failure'}
