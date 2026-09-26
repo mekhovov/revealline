@@ -28,7 +28,7 @@ services:
       - >-
         for file in /migrations/*.sql; do
           psql --host=postgres --username=revealline --dbname=revealline
-          --set=ON_ERROR_STOP=1 --file="$file";
+          --set=ON_ERROR_STOP=1 --file="$${file}";
         done
     restart: 'no'
 
