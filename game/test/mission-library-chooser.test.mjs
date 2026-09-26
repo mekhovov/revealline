@@ -722,6 +722,78 @@ test('Journey text refreshes with preset while keeping bounded visible previews 
   chooser.destroy();
 });
 
+test('late lazy previews keep the already-focused mission visible', () => {
+  const doc = new Document(),
+    frames = [],
+    observed = [];
+  let intersection;
+  doc.defaultView.requestAnimationFrame = (callback) => {
+    frames.push(callback);
+    return frames.length;
+  };
+  doc.defaultView.cancelAnimationFrame = () => {};
+  doc.defaultView.IntersectionObserver = class {
+    constructor(callback) {
+      intersection = callback;
+    }
+    observe(target) {
+      observed.push(target);
+    }
+    unobserve() {}
+    disconnect() {}
+  };
+  const create = doc.createElement.bind(doc);
+  doc.createElement = (tag) => {
+    const element = create(tag);
+    if (tag === 'canvas')
+      element.getContext = () => ({
+        save() {},
+        restore() {},
+        fillRect() {},
+        beginPath() {},
+        moveTo() {},
+        lineTo() {},
+        fill() {},
+        stroke() {},
+        strokeRect() {},
+      });
+    return element;
+  };
+  const preview = {
+      width: 2,
+      height: 2,
+      cells: [0, 0, 0, 0],
+      terrain: [0, 0, 0, 0],
+      spawn: { x: 0, y: 0 },
+      actors: [],
+      objectives: [],
+    },
+    library = createMissionLibrary([
+      owner({
+        entries: [row('first'), row('current')],
+        card: () => preview,
+      }),
+    ]),
+    opener = doc.createElement('button');
+  doc.body.append(opener);
+  const chooser = attachJourneyChooser({
+    document: doc,
+    library,
+    getCurrentId: () => library.missions[1].id,
+  });
+  chooser.open(opener);
+  const focused = doc.activeElement,
+    before = focused.scrolled;
+  assert.equal(focused.dataset.missionId, library.missions[1].id);
+  assert.equal(new Set(observed).size, 2);
+  intersection([{ target: observed[0], isIntersecting: true }]);
+  assert.equal(frames.length, 1, 'Preview layout schedules one bounded focus correction.');
+  frames.shift()();
+  assert.equal(doc.activeElement, focused);
+  assert.equal(focused.scrolled, before + 1);
+  chooser.destroy();
+});
+
 test('Download & play is one owned action, ignores repeated Confirm and retains return state', async () => {
   let finish,
     ready = false,
