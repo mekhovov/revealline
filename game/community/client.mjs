@@ -5,6 +5,7 @@ const EDITION = /^ed_[a-f0-9]{64}$/u;
 const COLLECTION = /^co_[a-f0-9]{64}$/u;
 const HASH = /^[a-f0-9]{64}$/u;
 const SUBMISSION = /^[0-9a-f-]{16,64}$/iu;
+const UUID_V4 = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/u;
 const SUBMISSION_STATES = new Set([
   'draft',
   'uploaded',
@@ -15,10 +16,57 @@ const SUBMISSION_STATES = new Set([
   'unlisted',
 ]);
 const REPORT_REASONS = new Set(['broken', 'copyright', 'unsafe', 'misleading', 'other']);
+const REPORT_STATES = new Set(['open', 'resolved']);
+const REPORT_FIELDS = new Set([
+  'id',
+  'editionId',
+  'reason',
+  'details',
+  'status',
+  'createdAt',
+  'resolvedAt',
+  'resolution',
+]);
 const plain = (value, name, max, { empty = false } = {}) => {
   required(typeof value === 'string' && value.length <= max, `${name} is invalid.`);
   required(empty || value.length > 0, `${name} is required.`);
   return value;
+};
+const exactObject = (source, name, fields) => {
+  required(source && typeof source === 'object' && !Array.isArray(source), `${name} is invalid.`);
+  required(
+    Object.keys(source).every((field) => fields.has(field)),
+    `${name} contains unsupported fields.`,
+  );
+  return source;
+};
+const instant = (value, name) => {
+  const timestamp = plain(value, name, 64);
+  const parsed = new Date(timestamp);
+  required(
+    !Number.isNaN(parsed.getTime()) && parsed.toISOString() === timestamp,
+    `${name} is invalid.`,
+  );
+  return timestamp;
+};
+const reportCursor = (value) => {
+  const cursor = plain(value, 'Report cursor', 256);
+  const separator = cursor.lastIndexOf('|');
+  required(separator > 0 && separator < cursor.length - 1, 'Report cursor is invalid.');
+  instant(cursor.slice(0, separator), 'Report cursor time');
+  required(UUID_V4.test(cursor.slice(separator + 1)), 'Report cursor is invalid.');
+  return cursor;
+};
+const moderationText = (value, name, max) => {
+  required(typeof value === 'string', `${name} is invalid.`);
+  const normalized = value.normalize('NFC').trim();
+  required(
+    normalized.length >= 1 &&
+      normalized.length <= max &&
+      !/[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f]/u.test(normalized),
+    `${name} is invalid.`,
+  );
+  return normalized;
 };
 const json = async (response) => {
   const text = await response.text();
@@ -90,6 +138,37 @@ export function validateCommunitySubmission(source) {
         ? structuredClone(source.validationReport)
         : null,
     terminal: ['published', 'rejected', 'unlisted'].includes(source.status),
+  });
+}
+
+export function validateCommunityReport(source) {
+  exactObject(source, 'Report', REPORT_FIELDS);
+  required(UUID_V4.test(source.id), 'Report identity is invalid.');
+  required(EDITION.test(source.editionId), 'Reported edition identity is invalid.');
+  required(REPORT_REASONS.has(source.reason), 'Report reason is invalid.');
+  const details = plain(source.details, 'Report details', 2_000, { empty: true });
+  required(REPORT_STATES.has(source.status), 'Report status is invalid.');
+  const createdAt = instant(source.createdAt, 'Report creation time');
+  let resolvedAt = null;
+  let resolution = null;
+  if (source.status === 'open') {
+    required(
+      source.resolvedAt === null && source.resolution === null,
+      'Open report resolution is invalid.',
+    );
+  } else {
+    resolvedAt = instant(source.resolvedAt, 'Report resolution time');
+    resolution = plain(source.resolution, 'Report resolution', 1_000);
+  }
+  return Object.freeze({
+    id: source.id,
+    editionId: source.editionId,
+    reason: source.reason,
+    details,
+    status: source.status,
+    createdAt,
+    resolvedAt,
+    resolution,
   });
 }
 
@@ -175,6 +254,75 @@ export function createCommunityClient({
           body: JSON.stringify({ reason, details }),
         }),
       );
+    },
+    async listAdminReports({ status = 'open', limit = 20, cursor = null } = {}) {
+      required(REPORT_STATES.has(status), 'Report status filter is invalid.');
+      required(
+        Number.isSafeInteger(limit) && limit >= 1 && limit <= 50,
+        'Report page size is invalid.',
+      );
+      if (cursor !== null) reportCursor(cursor);
+      const url = new URL('v1/admin/reports', base);
+      url.searchParams.set('status', status);
+      url.searchParams.set('limit', String(limit));
+      if (cursor) url.searchParams.set('cursor', cursor);
+      const body = await json(
+        await fetchImpl(url, {
+          credentials: 'same-origin',
+          headers: await headers(authHeaders, true),
+        }),
+      );
+      exactObject(body, 'Report queue response', new Set(['reports', 'nextCursor']));
+      required(
+        Array.isArray(body.reports) && body.reports.length <= limit,
+        'Report queue response is invalid.',
+      );
+      return Object.freeze({
+        reports: Object.freeze(body.reports.map(validateCommunityReport)),
+        nextCursor: body.nextCursor === null ? null : reportCursor(body.nextCursor),
+      });
+    },
+    async resolveAdminReport(reportId, resolution) {
+      required(UUID_V4.test(reportId), 'Report identity is invalid.');
+      const safeResolution = moderationText(resolution, 'Report resolution', 1_000);
+      const body = await json(
+        await request(`v1/admin/reports/${reportId}/resolve`, {
+          method: 'POST',
+          headers: {
+            'content-type': 'application/json',
+            ...(await headers(authHeaders, true)),
+          },
+          body: JSON.stringify({ resolution: safeResolution }),
+        }),
+      );
+      exactObject(body, 'Report resolution response', new Set(['report', 'reused']));
+      required(typeof body.reused === 'boolean', 'Report resolution response is invalid.');
+      const report = validateCommunityReport(body.report);
+      required(
+        report.id === reportId && report.status === 'resolved',
+        'Resolved report differs from the request.',
+      );
+      return Object.freeze({ report, reused: body.reused });
+    },
+    async adminUnlistEdition(editionId, reason) {
+      required(EDITION.test(editionId), 'Choose a valid community edition.');
+      const safeReason = moderationText(reason, 'Unlisting reason', 2_000);
+      const body = await json(
+        await request(`v1/admin/catalog/${editionId}/unlist`, {
+          method: 'POST',
+          headers: {
+            'content-type': 'application/json',
+            ...(await headers(authHeaders, true)),
+          },
+          body: JSON.stringify({ reason: safeReason }),
+        }),
+      );
+      exactObject(body, 'Administrative unlisting response', new Set(['editionId', 'status']));
+      required(
+        body.editionId === editionId && body.status === 'unlisted',
+        'Unlisted edition differs from the request.',
+      );
+      return Object.freeze({ editionId: body.editionId, status: body.status });
     },
     async unlistEdition(editionId) {
       required(EDITION.test(editionId), 'Choose a valid community edition.');

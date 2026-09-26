@@ -70,6 +70,38 @@ h1 {
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 290px), 1fr));
   gap: 1rem;
 }
+.moderation-list {
+  display: grid;
+  gap: 1rem;
+}
+.moderation-card {
+  margin: 0;
+}
+.moderation-card h2,
+.moderation-card h3 {
+  margin-top: 0;
+}
+.moderation-card label {
+  margin-top: 1rem;
+}
+.moderation-card textarea {
+  width: min(100%, 54rem);
+}
+.edition-identity {
+  display: block;
+  overflow-wrap: anywhere;
+  color: #d7e6e2;
+}
+.report-details {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.moderation-preview {
+  max-width: 34rem;
+}
+.danger {
+  border-color: #d88872;
+}
 .edition {
   margin: 0;
   display: flex;

@@ -1,9 +1,9 @@
-# Phase 5 acceptance — stacked service/client candidate, not released
+# Phase 5 acceptance — released local client/service source and deployment follow-ups
 
-Status: the community catalog client is stacked on the completed Phase 4 service candidate. The
-network boundary is exercised through the real Fastify application with its in-memory repository
-and blob store. No community deployment, public catalog or production account provider is claimed
-by this candidate.
+Status: the community catalog client and service source shipped in `v0.141.0`. The network boundary
+is exercised through the real Fastify application with its in-memory repository and blob store. A
+post-release follow-up adds the administrator report-triage page over the existing bounded API. No
+community deployment, public catalog or production account provider is claimed by this record.
 
 ## Completed automated evidence
 
@@ -13,6 +13,11 @@ by this candidate.
   4 MiB. Remote listing text is inserted with DOM `textContent`.
 - Report and authenticated owner-unlist calls have separate adapters. Publication status validates
   every state and exposes published, rejected and unlisted as terminal outcomes.
+- The administrator client strictly validates paged report rows without accepting reporter
+  identity, normalizes bounded resolution/removal reasons, and checks that service response
+  identities match each request. The report page renders remote data as text, loads media only on
+  demand, and unlists before resolving so a partial failure leaves the safer public state and an
+  explicit retry path.
 - Every downloaded package is checked against the published byte count and SHA-256, then passes the
   existing `.rlpack`, compiler, replay and managed-storage review. Corrupt bytes cannot create an
   installed index.
@@ -56,9 +61,9 @@ by this candidate.
   browser pass remains open.
 
 The focused Phase 5 store suite and account/tus browser boundary are included in the combined
-creator/service acceptance counts recorded for the current candidate. The Phase 4 service suite
-includes the real Better Auth browser-client scenario. Scoped ESLint, Prettier and diff checks are
-recorded on the final commit.
+creator/service acceptance counts recorded for `v0.141.0`. The Phase 4 service suite includes the
+real Better Auth browser-client scenario. The moderation follow-up adds client/controller tests and
+a cross-layer production-client/Fastify report queue and resolution path.
 
 ## Integrated service contract
 
@@ -78,6 +83,8 @@ creation/offset/chunk contract and treats only server responses as upload progre
   independently covered; restart persistence still needs container acceptance.
 - Rehearse database/blob recovery and verify that an unlisted edition stays playable for players who
   already installed its exact bytes.
+- Exercise the report-triage page with a real administrator session against the deployed service,
+  including the retry state where unlisting succeeds but resolution is temporarily unavailable.
 - Run hosted preflight/build/release-ready checks and publish only through the release coordinator.
 
 Reference-aware installed-media offload is implemented locally. **Offload installed media** first
