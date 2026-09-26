@@ -129,8 +129,16 @@ output. Its largest new source asset is the pinned, licensed Mediabunny browser 
   visible moving enemy and two collision walls, approved, downloaded and installed the exact
   `.rlpack`, completed ordinary Custom play, retained the earned poster after reload, and exercised
   victory Play, Replay and Skip without replacing the picture. The package retained the complete
-  original video; audio, WebM, unsupported-codec, Firefox, Safari and mobile behavior remain
-  unqualified.
+  original video. A later AVC+AAC run verified browser playback, Play/Replay/Skip and earned-poster
+  reload; sound reaching physical speakers, WebM creator playback, Firefox, Safari and mobile
+  behavior remain unqualified.
+- The AVC+AAC acceptance download was an actual 237,678-byte `.rlpack`, SHA-256
+  `9e7dacb3813351b2eb95747d11d817dbc1bf89c661c52e3d0932ac0a5a4a157c`. Independent parsing
+  authenticated every payload with zero trailing bytes, retained the complete 173,394-byte,
+  six-second source video and bound a nondefault 1–5 second playback range. The separate
+  `localhost` origin revalidated, installed and opened exact edition
+  `58b94e7c4c632f1a9fd4f6eb2ff4fa752e2549962246c06392c20c4fa4a17aeb`. An authenticated
+  MPEG-2 MP4 was rejected per item before poster, story, generation, approval or installation.
 - The same two-mission pack was imported from the actual downloaded `.rlpack` on the separate
   `localhost` origin as immutable edition
   `6033108fe9e7acc279cb888b19cfccb7033aa9ce20999dc5213b58e282873467`. Reload restored the
