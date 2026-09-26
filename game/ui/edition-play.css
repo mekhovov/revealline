@@ -95,8 +95,7 @@ body.game-shell[data-edition-layout='active'] #shell-menu {
 body.game-shell[data-edition-layout='active'] #shell-menu > span,
 body.game-shell[data-edition-layout='active'] #shell-menu::after,
 body.game-shell[data-edition-layout='active'] #shell-edition,
-body.game-shell[data-edition-layout='active'] #shell-packs,
-body.game-shell[data-edition-layout='active'] #journey-skip {
+body.game-shell[data-edition-layout='active'] #shell-packs {
   display: none !important;
 }
 body.game-shell[data-edition-layout='active'] #pause-button {

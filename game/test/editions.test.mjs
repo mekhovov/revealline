@@ -449,6 +449,75 @@ test('compiled first-paint and error shell uses only the selected brand and esca
   );
 });
 
+test('actual canonical and tool HTML brand first paint without replacing loader or localized recovery hooks', async () => {
+  const f = fixture(),
+    catalog = structuredClone(f.catalog),
+    entries = [
+      'game/company.html',
+      'game/index.html',
+      'game/controller-lab/index.html',
+      'game/replay-theater/index.html',
+    ],
+    originals = new Map();
+  catalog.brands[0].name = 'Selected & Brand';
+  catalog.brands[0].logoAssetId = 'coupa-hero';
+  catalog.editions[0].name = 'Selected <Audience>';
+  for (const entry of entries) {
+    const contents = await fs.readFile(new URL(`../../${entry}`, import.meta.url));
+    originals.set(entry, contents);
+    f.files.set(entry, contents);
+  }
+  const result = await compileEdition({
+    ...f,
+    catalog,
+    editionIds: ['coupa-public'],
+    enginePaths: entries,
+    // This test owns HTML projection; the independent engine-closure suite
+    // checks the real scripts, styles and lazy tools referenced by these pages.
+    validateCode: false,
+  });
+  for (const entry of entries) {
+    const html = result.files.get(entry).toString();
+    assert.match(html, /<title>Selected &lt;Audience&gt; · Selected &amp; Brand<\/title>/);
+    assert.match(html, /<html data-edition-id="coupa-public"/);
+    for (const script of originals
+      .get(entry)
+      .toString()
+      .match(/<script\b[^>]*>/g) ?? [])
+      assert.ok(html.includes(script), `${entry} retains its executable entry and loader hooks`);
+    assert.deepEqual(f.files.get(entry), originals.get(entry));
+  }
+  const main = result.files.get('game/index.html').toString(),
+    boot = main.slice(
+      main.indexOf('<section id="boot-screen"'),
+      main.indexOf('<div class="shell-bar"'),
+    );
+  assert.match(boot, /id="boot-title">Selected &lt;Audience&gt;<\/h1>/);
+  assert.ok(!boot.includes('interface:findYourLine') && !boot.includes('REVEAL / LINE'));
+  assert.match(
+    boot,
+    /class="launch-kicker"><img class="edition-boot-logo" src="\.\.\/game\/editions\/assets\/coupa\.png" alt="" \/> Selected &amp; Brand<\/p>/,
+  );
+  for (const hook of ['boot-status', 'boot-retry', 'boot-online', 'boot-local', 'boot-detail'])
+    assert.ok(boot.includes(`id="${hook}"`));
+  for (const key of [
+    'interface:preparingYourArcadeIfThisScreenStaysHereReloadOr',
+    'interface:reloadGame',
+    'interface:playOnline',
+  ])
+    assert.ok(boot.includes(`data-i18n="${key}"`));
+  assert.ok(main.includes('html[data-edition-id] #boot-screen{background:var(--ink)'));
+  for (const entry of entries.slice(2)) {
+    const html = result.files.get(entry).toString();
+    assert.match(
+      html,
+      /class="edition-boot-logo" src="\.\.\/\.\.\/game\/editions\/assets\/coupa\.png"/,
+    );
+    assert.ok(!html.includes('data-i18n="interface:revealLine"'));
+    assert.ok(!html.includes('data-i18n="interface:revealLineReplayTheater"'));
+  }
+});
+
 test('edition admission rejects mismatched themes and artwork outside the selected brand closure', async () => {
   const f = fixture(),
     boot = f.catalog.editions[0].boot;

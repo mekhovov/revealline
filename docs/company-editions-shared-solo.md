@@ -4,6 +4,8 @@ The company entry is now an adapter to `game/index.html`. It supplies a validate
 provider to the existing Solo player. Rules, movement, enemy AI, capture, difficulty,
 controls, session recording, mission selection, collections, settings, controller practice
 and replay playback have one implementation. Brand selection cannot change simulation code.
+The compact overlay retains the original Skip/Confirm skip and Watch first cut controls,
+including their shared confirmation, practice and progression behavior.
 
 The player provider keeps the selected audience boundary at boot and in lazy-loaded tools.
 A compiled standalone edition cannot use a query string to enable a campaign that its
@@ -83,7 +85,10 @@ with controls below; at 844×390 it measured 652×326 with controls beside it. H
 controls did not overlap the board in those views. These are bounded viewport observations,
 not a claim that every physical device was tested. Automated startup, Missions and first
 launch passed for all 14 editions; the shared save/backup compatibility cohort passed 63
-checks. Full release qualification remains separate from these focused checks.
+checks. After rebasing onto main `a8881ac17`, the company cohort passed 172 checks and the
+shared-contract/upstream-presentation cohort passed 230. The final control relocation has
+its own actual-host regression. Full release qualification remains separate from these
+focused checks.
 
 The delivery sequence remains: shared-host candidate → advanced encounter proofs →
 14-edition reproducible freeze → human review of the representative artwork and gameplay →

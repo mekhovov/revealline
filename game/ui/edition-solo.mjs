@@ -152,6 +152,17 @@ export async function mountEditionSoloUI({
       onMissions(worlds);
     };
   }
+  // Keep the ordinary Solo actions reachable in the brief/pause/result area.
+  // Move their existing nodes so their confirmation state and host handlers
+  // remain canonical, without crowding the full-viewport flight HUD.
+  if (!doc.body.classList.contains('first-flight-session')) {
+    const flightActions = doc.getElementById('game-overlay').querySelector('.overlay-actions');
+    for (const id of ['journey-skip', 'demo-button']) {
+      const action = doc.getElementById(id);
+      action.classList.add('button', 'secondary');
+      flightActions.append(action);
+    }
+  }
   const layout = mountEditionPlayLayout({ document: doc, window: win });
   const lessons = await mountEditionLessons({
     provider,
