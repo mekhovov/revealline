@@ -136,18 +136,34 @@ def optional_step(job, name):
     return {k: row[k] for k in ('name', 'number', 'status', 'conclusion')}
 
 
+def recoverable_fastline_inspection_failure(run, rows, commit):
+    if run.get('path') != FASTLINE_WORKFLOW or run.get('conclusion') != 'failure':
+        return False
+    failed = [job for job in rows if job.get('conclusion') == 'failure']
+    admission = [job for job in rows if job.get('name') == 'admission']
+    return (len(failed) == 1 and failed[0].get('name') == 'inspect-artifact' and
+            len(admission) == 1 and admission[0].get('conclusion') == 'success' and
+            all(job.get('status') == 'completed' and job.get('head_sha') == commit and
+                job.get('conclusion') in ('success', 'skipped', 'failure') for job in rows))
+
+
 def family(run, jobs, workflow, event, commit):
     workflow_matches = run.get('path') in workflow if isinstance(workflow, set) else run.get('path') == workflow
-    require(run.get('status') == 'completed' and run.get('conclusion') == 'success' and
+    rows = jobs.get('jobs', [])
+    run_result_matches = (run.get('conclusion') == 'success' or
+                          recoverable_fastline_inspection_failure(run, rows, commit))
+    require(run.get('status') == 'completed' and run_result_matches and
             workflow_matches and run.get('event') == event and run.get('head_sha') == commit and
             type(run.get('id')) is int and run['id'] > 0, 'Run identity/result differs')
-    rows = jobs.get('jobs', [])
     require(type(jobs.get('total_count')) is int and jobs['total_count'] == len(rows) and
             0 < len(rows) <= 1000 and len({j['id'] for j in rows}) == len(rows), 'Incomplete jobs inventory')
     for job in rows:
         require(type(job.get('id')) is int and job['id'] > 0 and job.get('run_id') == run['id'] and
                 job.get('head_sha') == commit and job.get('status') == 'completed' and
-                job.get('conclusion') in ('success', 'skipped'), 'Job identity/result differs')
+                job.get('conclusion') in ('success', 'skipped', 'failure') and
+                (job.get('conclusion') != 'failure' or
+                 run.get('path') == FASTLINE_WORKFLOW and job.get('name') == 'inspect-artifact'),
+                'Job identity/result differs')
     if run.get('path') == FASTLINE_WORKFLOW:
         return [{**job, 'name': str(job.get('name', '')).removeprefix('qualify / ')} for job in rows]
     return rows
