@@ -14,6 +14,7 @@ import {
 import { PostgresCommunityRepository } from './postgres-repository.mjs';
 import { createCommunityTusServer } from './tus-server.mjs';
 import { PostgresTusLocker, PostgresTusUploadRegistry } from './tus-coordination.mjs';
+import { createTusDatastore } from './tus-store-factory.mjs';
 import { TusUploadTransportBoundary } from './upload-transport.mjs';
 
 const config = readConfig();
@@ -32,6 +33,11 @@ const admission = createAdmissionController({
   policies: config.admissionPolicies,
 });
 const blobStore = await createBlobStore(config.blobStorage);
+const tusDatastore = await createTusDatastore({
+  storage: config.blobStorage,
+  directory: config.tusRoot,
+  expirationMs: config.tusExpirationMs,
+});
 const betterAuth = config.betterAuth
   ? createCommunityBetterAuth({
       database: pool,
@@ -48,12 +54,13 @@ const authenticator = betterAuth
 const readinessCheck = createCachedDeploymentReadiness(() =>
   runDeploymentPreflight({
     pool,
-    blobRoot: config.blobRoot,
+    blobStorage: config.blobStorage,
     tusRoot: config.tusRoot,
   }),
 );
 const tus = createCommunityTusServer({
   directory: config.tusRoot,
+  datastore: tusDatastore,
   endpoint: '/v1/uploads',
   authenticator,
   repository,

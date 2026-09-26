@@ -45,6 +45,14 @@ const parseMetadataHeader = (header) => {
   return metadata;
 };
 
+export async function removeCompletedTusUpload(datastore, uploadId) {
+  if (typeof datastore?.removeCompleted === 'function') {
+    await datastore.removeCompleted(uploadId);
+    return;
+  }
+  await datastore.remove(uploadId);
+}
+
 export function createCommunityTusServer({
   directory,
   endpoint = '/v1/uploads',
@@ -130,7 +138,7 @@ export function createCommunityTusServer({
           blobStore,
           maxPackageBytes,
         });
-        await datastore.remove(upload.id);
+        await removeCompletedTusUpload(datastore, upload.id);
         if (uploadRegistry)
           await uploadRegistry.forget(upload.id).catch((error) => onBackgroundError(error));
       } catch (error) {
@@ -202,6 +210,8 @@ export function mountCommunityTus(app, tus) {
   };
   app.all(tus.endpoint, handle);
   app.all(`${tus.endpoint}/*`, handle);
+  if (typeof tus.datastore?.close === 'function')
+    app.addHook('onClose', async () => tus.datastore.close());
   if (tus.cleanupExpiredUploads) {
     let timer = null;
     let running = null;
