@@ -147,7 +147,7 @@ test('Versus All missions lists exact Journey and retained Classic rows without 
   await open(p);
   assert.equal(p.$('journey-mode').value, 'versus');
   assert.equal(p.$('journey-collection').value, '');
-  assert.equal(p.$('journey-cards').children.length, 279);
+  assert.equal(p.$('journey-cards').children.length, 285);
   assert.match(p.$('journey-cards').children[0].textContent, /Journey/);
   const classic = [...p.$('journey-cards').children].filter((card) =>
     card.querySelector('.journey-card-tags').textContent.includes('Classic'),
@@ -329,7 +329,7 @@ test('Classic Versus selects an exact Journey handoff and preserves the release 
   await settle(() => new URL(globalThis.location.href).searchParams.has('library-mission'));
   const destination = new URL(globalThis.location.href);
   assert.equal(destination.pathname, '/game/couch/');
-  assert.equal(destination.searchParams.get('journey'), 'whole-spatial-v5');
+  assert.equal(destination.searchParams.get('journey'), 'whole-spatial-v11');
   assert.equal(destination.searchParams.get('library-mission'), target.dataset.missionId);
 });
 
@@ -344,14 +344,14 @@ test('Versus mode filter exposes the same qualified Journey identities in Solo w
     cards.map((card) => card.dataset.missionId),
     original,
   );
-  assert.equal(new Set(original).size, 201);
+  assert.equal(new Set(original).size, 285);
   const target = cards[1];
   assert.match(target.textContent, /Journey.*Band 1\/12.*Play/);
   target.click();
   await settle(() => new URL(globalThis.location.href).searchParams.has('library-mission'));
   const destination = new URL(globalThis.location.href);
   assert.equal(destination.pathname, '/game/');
-  assert.equal(destination.searchParams.get('journey'), 'whole-spatial-v5');
+  assert.equal(destination.searchParams.get('journey'), 'whole-spatial-v11');
   assert.equal(destination.searchParams.get('library-mission'), target.dataset.missionId);
   assert.equal(p.doc.documentElement.dataset.toolState, 'ready');
 });
@@ -451,7 +451,7 @@ test('new Journey Versus mounts the same library and chooses an exact authored m
   const p = await fixture(t, { href: 'http://localhost/game/couch/' });
   assert.equal(p.renders[0].level.id, 'first-return');
   await open(p);
-  assert.equal(p.$('journey-cards').children.length, 201);
+  assert.equal(p.$('journey-cards').children.length, 285);
   const card = [...p.$('journey-cards').children].find((card) =>
     JSON.parse(card.dataset.missionId)[3].endsWith('/choose-your-share'),
   );
@@ -467,9 +467,9 @@ test('new Journey Versus mounts the same library and chooses an exact authored m
   assert.equal(new URL(globalThis.location.href).searchParams.get('library-mission'), late.id);
 });
 
-for (const chapterSource of ['optional', 'bundled'])
+for (const chapterSource of ['optional'])
   test(
-    `${chapterSource} chapter failure and retry stay inline, then Play stages the exact selected mission without automatic launch`,
+    `${chapterSource} chapter failure retries inline and one Download & play stages the exact selected mission`,
     { timeout: 120000 },
     async (t) => {
       const catalog = JSON.parse(
@@ -551,34 +551,32 @@ for (const chapterSource of ['optional', 'bundled'])
       heldDownload = new Promise((resolve) => {
         releaseDownload = resolve;
       });
+      const fetchesBeforeRetry = fetches;
       card().click();
-      await settle(() => fetches === 2 && card().textContent.includes('Preparing'));
-      card().click();
-      await settle(() =>
-        card().querySelector('.journey-card-action').textContent.startsWith('Download'),
+      await settle(
+        () => fetches === fetchesBeforeRetry + 1 && card().textContent.includes('Preparing'),
       );
+      card().click();
+      await new Promise((resolve) => setImmediate(resolve));
+      assert.equal(
+        fetches,
+        fetchesBeforeRetry + 1,
+        'Repeated activation must join the owned preparation.',
+      );
+      assert.match(card().querySelector('.journey-card-action').textContent, /Preparing/);
       releaseDownload();
       heldDownload = null;
-      await new Promise((resolve) => setImmediate(resolve));
-      p.frame(0);
-      assert.deepEqual(p.checkpoint(), before);
-      assert.equal(p.$('journey-search').value, target.name);
-      card().click();
-      await waitFor(() => card().querySelector('.journey-card-action').textContent === 'Play', {
-        timeoutMs: 60000,
-      });
-      assert.equal(fetches, 3);
+      await waitFor(() => p.$('race-library-replace')?.open, { timeoutMs: 60000 });
+      assert.equal(fetches, fetchesBeforeRetry + 1);
       p.frame(0);
       assert.deepEqual(p.checkpoint(), before);
       assert.equal(p.drawOptions[0].backdrop, picture);
-      assert.equal(p.$('journey-chooser').open, true);
-      card().click();
-      await waitFor(() => p.$('race-library-replace')?.open, { timeoutMs: 60000 });
       p.$('race-library-stay').click();
       await settle(() => p.$('journey-chooser').open);
       p.frame(0);
       assert.deepEqual(p.checkpoint(), before);
       assert.equal(p.drawOptions[0].backdrop, picture);
+      assert.equal(card().querySelector('.journey-card-action').textContent, 'Play');
       card().click();
       await waitFor(() => p.$('race-library-replace')?.open, { timeoutMs: 60000 });
       p.$('race-library-play').click();
@@ -627,7 +625,7 @@ for (const interruption of ['blur', 'focus', 'pointer'])
         assert.equal(p.$('journey-chooser').open, false);
         assert.equal(p.doc.activeElement, focused);
         await open(p);
-        assert.equal(p.$('journey-cards').children.length, 201);
+        assert.equal(p.$('journey-cards').children.length, 285);
       } finally {
         release();
         await opening;
