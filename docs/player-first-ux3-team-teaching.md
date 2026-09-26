@@ -31,15 +31,17 @@ updates an active cue and future cues without changing simulation state.
 
 ## Focused evidence
 
-- `node --test game/test/team-contextual-teaching.test.mjs`: 5/5 pass.
-- `node --check game/couch/team-contextual-teaching.mjs`: pass.
-- `node --check game/couch/relay-rescue.mjs`: pass.
-- Scoped ESLint: pass.
-- Scoped Prettier and `git diff --check`: pass.
+- contextual teaching unit and live-host tests: 8/8 pass;
+- the Team navigation, localization, Collection context, gallery focus and specialist integration
+  set: 124/124 pass;
+- `npm run i18n:check` and `npm run validate`: pass;
+- scoped ESLint, Prettier and `git diff --check`: pass.
 
 The tests cover first-use order, Retry suppression, threat relevance, persistence across visits,
 successful skill completion (including same-step success), unavailable/corrupt/failing storage and
-invalid API input.
+invalid API input. The live host also preserves its arena-specific opening rule, updates active cut,
+Support and rescue cues between English and Ukrainian without advancing play, and clears coach
+styling before terminal results.
 
 ## Remaining qualification
 
