@@ -649,6 +649,18 @@ try {
       : (creatorVersusOwners.get(entry)?.pictures ?? installed);
   const qualifiedVersusEntry = (entry) =>
     Boolean(candidateJourney?.owns(entry) || creatorVersusOwners.has(entry));
+  function creatorVersusContinuation(entry) {
+    const owner = creatorVersusOwners.get(entry),
+      mission = owner?.host.next(entry.mission.id);
+    if (!mission) return null;
+    return {
+      owner,
+      mission,
+      entry: owner.rows.find(
+        (candidate) => candidate.mission === mission && candidate.difficulty === entry.difficulty,
+      ),
+    };
+  }
   const cancelAllPictures = () => {
     staticPictures.cancel();
     for (const owner of creatorVersusEditions.values()) owner.pictures.cancel();
@@ -1367,8 +1379,7 @@ try {
       nextAttempt.recipe.entry.mission !== roundRecipe.entry.mission
     )
       return t('interface:nextMission2');
-    const creatorOwner = creatorVersusOwners.get(roundRecipe.entry);
-    if (creatorOwner?.host.next(roundRecipe.entry.mission.id)) return t('interface:nextMission2');
+    if (creatorVersusContinuation(roundRecipe.entry)) return t('interface:nextMission2');
     return roundRecipe.format === 'single' || won.some((n) => n >= 2)
       ? t('interface:rematch')
       : t('interface:nextRound2');
@@ -1840,13 +1851,16 @@ try {
     }
   }
 
-  $('race-start').onclick = () =>
-    !libraryContinuation &&
-    startRace(
+  $('race-start').onclick = () => {
+    if (libraryContinuation) return;
+    if (match.status === 'finished' && creatorVersusContinuation(roundRecipe.entry))
+      return continueMission($('race-start'));
+    return startRace(
       candidateJourney && match.status === 'finished'
         ? candidateJourney.row(roundRecipe.entry.mission, journeyPreferences.snapshot().difficulty)
         : null,
     );
+  };
   $('race-chapter-retry').onclick = async () => {
     if (disposed || contentBusy || match.status !== 'ready') return;
     const restoreFocus = actionFocus($('race-chapter-retry'));
@@ -2236,7 +2250,7 @@ try {
       isCurrent: () => !retired && catalogueAttemptCurrent(attempt),
     };
   }
-  async function continueMission() {
+  async function continueMission(origin = $('race-journey-next')) {
     if (
       disposed ||
       contentBusy ||
@@ -2252,27 +2266,21 @@ try {
       await startRace(candidateJourney.row(authoredNext, journeyPreferences.snapshot().difficulty));
       return;
     }
-    const origin = $('race-journey-next');
     origin.focus({ preventScroll: true });
-    const creatorOwner = creatorVersusOwners.get(roundRecipe.entry),
-      creatorNext = creatorOwner?.host.next(roundRecipe.entry.mission.id);
+    const creatorNext = creatorVersusContinuation(roundRecipe.entry);
     if (creatorNext) {
-      const nextEntry = creatorOwner.rows.find(
-        (entry) =>
-          entry.mission === creatorNext && entry.difficulty === roundRecipe.entry.difficulty,
-      );
-      if (!nextEntry) throw new Error('The exact next creator mission is unavailable.');
-      await startRace(nextEntry, { focusOrigin: origin });
-      if (roundRecipe.entry === nextEntry)
+      if (!creatorNext.entry) throw new Error('The exact next creator mission is unavailable.');
+      await startRace(creatorNext.entry, { focusOrigin: origin });
+      if (roundRecipe.entry === creatorNext.entry)
         currentLibrarySelection = {
           match,
           id: libraryMissionId({
-            owner: `creator:${creatorOwner.prepared.editionId}`,
-            edition: creatorOwner.prepared.editionId,
-            campaign: creatorNext.campaignId,
-            mission: creatorNext.levelId,
-            revision: creatorOwner.prepared.manifest.content.project.missions.find(
-              (mission) => mission.id === creatorNext.levelId,
+            owner: `creator:${creatorNext.owner.prepared.editionId}`,
+            edition: creatorNext.owner.prepared.editionId,
+            campaign: creatorNext.mission.campaignId,
+            mission: creatorNext.mission.levelId,
+            revision: creatorNext.owner.prepared.manifest.content.project.missions.find(
+              (mission) => mission.id === creatorNext.mission.levelId,
             ).revision,
           }),
         };
@@ -3491,7 +3499,8 @@ try {
     $('race-journey-next').hidden = match.status !== 'finished' || libraryCompleteMatch === match;
     $('race-journey-next').disabled = contentBusy || !!libraryContinuation;
     localizedText($('race-journey-next'), () =>
-      candidateJourney && !candidateJourney.next(roundRecipe.entry.mission.id)
+      candidateJourney?.owns(roundRecipe.entry) &&
+      !candidateJourney.next(roundRecipe.entry.mission.id)
         ? t('interface:browseMissions')
         : t('interface:nextMission2'),
     );
@@ -4083,7 +4092,8 @@ try {
             ? ` ${t('interface:couch.matchWinner', { name: name() })}`
             : '';
         const next =
-          candidateJourney && !candidateJourney.next(roundRecipe.entry.mission.id)
+          candidateJourney?.owns(roundRecipe.entry) &&
+          !candidateJourney.next(roundRecipe.entry.mission.id)
             ? series && !won.some((n) => n >= 2)
               ? t('interface:continueWithNextRoundOrBrowseMissions')
               : candidateJourney.isCore(roundRecipe.entry.mission.id)
@@ -4092,10 +4102,13 @@ try {
             : t('interface:chooseNextMissionToContinueOrKeepPlayingThisMission');
         return `${winner}. ${reason()}.${matchResult} ${next}${journeyRewardFailure ? ` ${journeyRewardFailure}` : ''}`;
       });
-      localizedText(
-        $('race-start'),
-        () => `${continuationAction()}: ${contentText(roundRecipe.entry.level, 'name')}`,
-      );
+      localizedText($('race-start'), () => {
+        const creatorNext = creatorVersusContinuation(roundRecipe.entry);
+        return `${continuationAction()}: ${contentText(
+          creatorNext?.mission ?? roundRecipe.entry.level,
+          'name',
+        )}`;
+      });
       painters.forEach((p, i) => {
         if (match.runs[i].status === 'won')
           p.startCelebration?.({
