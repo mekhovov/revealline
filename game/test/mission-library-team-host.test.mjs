@@ -4,14 +4,14 @@ import { readFile } from 'node:fs/promises';
 import { createHash, webcrypto } from 'node:crypto';
 import { page } from './helpers/coop-host.mjs';
 import { deferred, waitFor } from './helpers/coop-presentation-fixture.mjs';
-import { createTeamImpactOriginalCandidates } from '../content-design/team-impact-originals.mjs';
+import { createTeamCompleteSpecialistOriginalCandidates } from '../content-design/team-complete-specialist-originals.mjs';
 import { createCandidateTeamHost } from '../content-design/team-host.mjs';
 import { createTeamTestPack } from '../content-design/team-export.mjs';
 import { createMissionLibrary } from '../mission-library/library.mjs';
 import { teamJourneyLibrarySource } from '../mission-library/team-source.mjs';
 import { JOURNEY_PREFERENCES_KEY, JOURNEY_PREFERENCES_VERSION } from '../journey/preferences.mjs';
 
-const source = createTeamImpactOriginalCandidates();
+const source = createTeamCompleteSpecialistOriginalCandidates();
 const journey = createCandidateTeamHost(source, {
   corePackIds: source.packs.map((pack) => pack.id),
 });
@@ -124,7 +124,9 @@ test('Team unified chooser has12 missions plus2 retained arenas; browsing is art
 });
 
 test('explicit current Team handoff shows player-facing edition and retains every exact mission ID', async (t) => {
-  const f = await fixture(t, { href: `${base}?journey=team-trail-impact-originals-1` });
+  const f = await fixture(t, {
+    href: `${base}?journey=team-complete-specialist-originals-1`,
+  });
   await open(f);
   const journeyCards = cards(f).filter((row) => row.textContent.includes('Journey'));
   assert.equal(journeyCards.length, 12);
@@ -139,7 +141,7 @@ test('explicit current Team handoff shows player-facing edition and retains ever
       /team-spatial-originals|visual qualification|Geometry test/,
     );
   }
-  assert.match(f.$('journey-campaign').textContent, /Horizon partners/);
+  assert.match(f.$('journey-campaign').textContent, /Foundation specialists/);
 });
 
 test('Team library plays an exact nonfirst mission at the selected Expert preset and keeps original Next', async (t) => {
@@ -158,7 +160,7 @@ test('Team library plays an exact nonfirst mission at the selected Expert preset
 test('incoming opaque Team ID resolves exact nonfirst mission before any artwork preparation', async (t) => {
   const target = model.missions.find((row) => row.name === 'Shared lookout');
   const params = new URLSearchParams({
-    journey: 'team-trail-impact-originals-1',
+    journey: 'team-complete-specialist-originals-1',
     'library-mission': target.id,
   });
   const f = await fixture(t, { href: `${base}?${params}`, difficulty: 'expert' });
@@ -180,7 +182,13 @@ for (const query of ['library-mission=retired-visit', 'library-mission=x&library
 
 test('same-ID imported Team edition stays Custom and launches its own preset', async (t) => {
   const f = await fixture(t);
-  await f.selectFile(JSON.stringify(createTeamTestPack(source, 'twin-landings', 'expert')));
+  const text = JSON.stringify(createTeamTestPack(source, 'twin-landings', 'expert')),
+    file = new Blob([text], { type: 'application/json' });
+  Object.defineProperty(file, 'name', { value: 'team-campaign.json' });
+  f.$('coop-pack-file').closest('details').open = true;
+  f.$('coop-pack-file').files = [file];
+  await f.$('coop-pack-file').onchange();
+  assert.equal(f.$('coop-selection-status').textContent, '');
   await open(f);
   assert.equal(cards(f).length, 15);
   const same = cards(f).filter(
@@ -253,7 +261,7 @@ test('Legacy Team library contains currentJourney metadata and fixed exact hando
   target.click();
   await waitFor(() => f.visits.length === 1);
   const url = new URL(f.visits[0]);
-  assert.equal(url.searchParams.get('journey'), 'team-trail-impact-originals-1');
+  assert.equal(url.searchParams.get('journey'), 'team-complete-specialist-originals-1');
   assert.equal(url.searchParams.get('library-mission'), target.dataset.missionId);
   assert.equal(f.reads.length, 0);
 });
@@ -264,7 +272,7 @@ for (const action of ['focus', 'key', 'blur'])
     t.after(() => gate.resolve());
     const target = model.missions.find((row) => row.name === 'Shared lookout');
     const params = new URLSearchParams({
-      journey: 'team-trail-impact-originals-1',
+      journey: 'team-complete-specialist-originals-1',
       'library-mission': target.id,
     });
     let held = false;
