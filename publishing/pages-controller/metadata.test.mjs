@@ -9,8 +9,49 @@ import {
   jsonBytes,
   metadataBridges,
   retainRecentMetadata,
+  selectReleaseMetadata,
+  validRetentionConfiguration,
   validateMetadata,
 } from './metadata.mjs';
+
+test('global retention orders semantic versions numerically across majors and includes current', () => {
+  const metadata = new Map(
+    ['v0.9.0', 'v0.10.0', 'v1.0.0', 'v2.0.0', 'v9.0.0', 'v10.0.0', 'v10.1.0'].map((v) => [v, v]),
+  );
+  const config = { retainedReleaseCount: 5, currentVersion: 'v10.1.0' };
+  assert.deepEqual(
+    [...selectReleaseMetadata(metadata, config).keys()],
+    ['v1.0.0', 'v2.0.0', 'v9.0.0', 'v10.0.0', 'v10.1.0'],
+  );
+  assert.deepEqual(
+    [...selectReleaseMetadata(metadata, { ...config, currentVersion: 'v0.9.0' }).keys()],
+    ['v0.9.0', 'v2.0.0', 'v9.0.0', 'v10.0.0', 'v10.1.0'],
+  );
+  assert.equal(selectReleaseMetadata(metadata, { ...config, retainedReleaseCount: 10 }).size, 7);
+  assert.deepEqual(
+    [...selectReleaseMetadata(metadata, { ...config, retainedReleaseCount: 1 }).keys()],
+    ['v10.1.0'],
+  );
+  assert.throws(
+    () => selectReleaseMetadata(metadata, { ...config, currentVersion: 'v11.0.0' }),
+    /Current release/,
+  );
+  assert.deepEqual(
+    [...selectReleaseMetadata(metadata, { retainedReleasesPerMajor: 'all' }).keys()],
+    [...metadata.keys()],
+  );
+});
+
+test('global and per-major policies are mutually exclusive and bounded', () => {
+  for (const value of [0, -1, 1.5, 101, '5', 'all', null])
+    assert.equal(validRetentionConfiguration({ retainedReleaseCount: value }), false);
+  assert.equal(
+    validRetentionConfiguration({ retainedReleaseCount: 5, retainedReleasesPerMajor: 5 }),
+    false,
+  );
+  assert.equal(validRetentionConfiguration({}), false);
+  assert.equal(validRetentionConfiguration({ retainedReleaseCount: 5 }), true);
+});
 
 function fixture(worker = true) {
   const payloads = new Map([
