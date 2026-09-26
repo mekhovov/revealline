@@ -9,7 +9,10 @@ import { createManagedMediaStore } from '../managed-media-store.mjs';
 import { prepareSoundtrackLibrary } from '../soundtrack-bundle.mjs';
 import { BUILTIN_SOUNDTRACK_TRACKS } from '../soundtrack.mjs';
 import { SOUNDTRACK_CATALOGUE } from '../content/soundtrack-catalogue.mjs';
-import { ONLINE_SOUNDTRACK_CATALOGUE_URL } from '../online-soundtrack-catalogue.mjs';
+import {
+  ONLINE_SOUNDTRACK_CATALOGUE_URL,
+  ONLINE_SOUNDTRACK_DIRECTORY_URL,
+} from '../online-soundtrack-catalogue.mjs';
 import { AUDIO_PREFERENCES_KEY } from '../audio-preferences.mjs';
 import { emptyLibrary, updatePreferences, saveLibrary, loadLibrary } from '../library.mjs';
 import { retryFixture } from './fixtures/retry-scenarios.mjs';
@@ -109,7 +112,7 @@ test('muted fresh Solo menu and Studio do not acquire admitted hosted recordings
     'Silent library preparation settles',
   );
   await openStudio(page);
-  assert.deepEqual(requests, [ONLINE_SOUNDTRACK_CATALOGUE_URL]);
+  assert.deepEqual(requests, [ONLINE_SOUNDTRACK_DIRECTORY_URL, ONLINE_SOUNDTRACK_CATALOGUE_URL]);
   assert.equal(
     requests.some((url) => /\.mp3(?:$|[?#])/.test(url)),
     false,
@@ -529,6 +532,7 @@ test('actual Studio prepares without downloading; controller, keyboard and touch
   sample([0]);
   sample([]);
   assert.equal(page.$('soundtrack-advanced-backup-body').hidden, false);
+  sample([], 120);
   for (let i = 0; page.doc.activeElement !== page.$('soundtrack-export-bundle') && i < 100; i++) {
     sample([13]);
     sample([]);
@@ -538,11 +542,17 @@ test('actual Studio prepares without downloading; controller, keyboard and touch
     page.$('soundtrack-export-bundle'),
     'Controller reaches Prepare through the actual dialog focus scope.',
   );
+  const prepare = page.$('soundtrack-export-bundle'),
+    actualPrepare = prepare.onclick;
+  let preparing;
+  prepare.onclick = (...args) => {
+    preparing = actualPrepare(...args);
+    return preparing;
+  };
   sample([0]);
-  await waitFor(
-    () => !page.$('soundtrack-backup-ready').hidden,
-    'Actual binary preparation finishes',
-  );
+  assert.ok(preparing instanceof Promise, 'Controller invokes the real Prepare handler.');
+  assert.equal(await preparing, true, 'Actual binary preparation finishes.');
+  assert.equal(page.$('soundtrack-backup-ready').hidden, false);
   assert.equal(page.doc.activeElement, link);
   assert.equal(requested, 0, 'Preparation focuses but never activates the download.');
   const url = link.getAttribute('href');
@@ -557,11 +567,13 @@ test('actual Studio prepares without downloading; controller, keyboard and touch
   sample([0], 1200);
   assert.equal(requested, 0, 'Held Confirm cannot activate the newly focused action.');
   sample([]);
+  sample([], 120);
   sample([0]);
   assert.equal(requested, 1);
   sample([0], 1200);
   assert.equal(requested, 1, 'Held Confirm does not request duplicate downloads.');
   sample([]);
+  sample([], 120);
   const echoed = link.emit('keydown', { code: 'Enter', key: 'Enter', repeat: false });
   assert.equal(
     echoed.defaultPrevented,
