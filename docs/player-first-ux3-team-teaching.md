@@ -48,10 +48,12 @@ styling before terminal results.
 ## Remaining qualification
 
 The integrated v0.141.7 candidate is reconciled onto current integration main
-`b08aca5e192aef0482455c02b81ee86dd5bac909`; accepted public main remains the immutable v0.141.6
-baseline until publication completes. Hosted exact-head qualification and immutable publication remain
-open. Browser review must exercise a cut, a Support pulse, a downed player and a completed rescue in
-English and Ukrainian, then verify Retry suppression and terminal styling at portrait and
-short-landscape sizes with reduced effects. Physical touch and controller hardware are separate
-evidence; modeled or browser input must not be reported as hardware certification. Long suites are
-waived by the committed temporary policy and are not reported as passing.
+`e3baddb3ed59bbb698c02a8f97af52c01c79249b`, including PR #706's accepted private soundtrack
+intake; accepted public main remains the immutable v0.141.6 baseline until publication completes.
+The inherited soundtrack-intake cohort passes 108/108 sequentially alongside the 110/110
+Team/Library correction cohort. Hosted exact-head qualification and immutable publication remain open.
+Browser review must exercise a cut, a Support pulse, a downed player and a completed rescue in English
+and Ukrainian, then verify Retry suppression and terminal styling at portrait and short-landscape sizes
+with reduced effects. Physical touch and controller hardware are separate evidence; modeled or browser
+input must not be reported as hardware certification. Long suites are waived by the committed temporary
+policy and are not reported as passing.

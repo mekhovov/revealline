@@ -31,8 +31,9 @@ built-in-browser acceptance have passed.
 
 **Active candidate — v0.141.7:** the Team teaching, reward and navigation batch
 is reconciled onto current integration main
-`b08aca5e192aef0482455c02b81ee86dd5bac909` while the accepted public baseline
-remains v0.141.6. The repaired teaching helper consumes semantic ground context
+`e3baddb3ed59bbb698c02a8f97af52c01c79249b`, including PR #706's accepted
+private soundtrack intake, while the accepted public baseline remains v0.141.6.
+The repaired teaching helper consumes semantic ground context
 and Support capabilities derived from actual arena threats, including travelling
 line impacts and relay sparks. It uses live English and Ukrainian catalog keys,
 preserves each arena's authoritative opening rule, and suppresses already
@@ -41,6 +42,7 @@ and success copy resolve through the same live locale boundary without repaintin
 the picture. The previously reported focused contextual host, navigation,
 localization, Collection, gallery, and specialist cohort is reconciled at 125/125
 sequentially. The review-correction Team/Library cohort passes 110/110
+sequentially, and the inherited soundtrack-intake cohort passes 108/108
 sequentially. Repository validation, localization, full lint, game/native
 formatting, Motion Lab syntax, diff check, and version parity pass locally.
 Hosted exact-head qualification and built-in-browser cut → Support → rescue
