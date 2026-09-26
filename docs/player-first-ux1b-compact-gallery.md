@@ -1,13 +1,14 @@
-# UX1-B compact mission gallery — v0.133.0
+# UX1-B compact mission gallery — v0.141.1
 
-This v0.133.0 candidate is prepared against exact `main` at
-`8f7ea5540d6851fb2d6d77a42c899e071e65e52a`. Immutable v0.132.5 uses product
-source `a8881ac17e44f38fb1e9dc15428899992727cc78` and is selected publicly by
-PR #668. That source contains the merged localization repair, the v0.132.5
-version commit and the exact FPV presentation-revision-90 continuation from
-PR #663. This candidate keeps the complete mode-compatible mission
+This v0.141.1 candidate is prepared against the exact merged v0.141.0 `main`
+source `5d6c97c850a648c5ebe93d3cf57731aeb67d0bbb` from PR #564. Its publication is
+the predecessor gate for this patch. The player-first gallery first passed an
+exact-head focused gate as the former v0.133.0 candidate at
+`38271ab0314a1aed17792286af45d5c9b2b62628`; that result is retained as
+predecessor evidence and does not qualify this rebased source. This candidate
+keeps the complete mode-compatible mission
 catalogue visible while reducing the work needed to find and start a mission. It
-advances the candidate identity to v0.133.0 without changing publishing, release
+advances the candidate identity to v0.141.1 without changing publishing, release
 history, progression identity, simulation rules, or the underlying pack formats.
 
 ## Player contract
@@ -47,9 +48,9 @@ The candidate adds or updates focused coverage for:
 - the merged v0.132.5 source's Team inventory, refresh, cancellation, and recovery expectations retain 288 compatible identities under exact current FPV revision 90 while retaining revisions 58–89.
 - Team picture-binding and imported-map compatibility coverage continues to require the exact current presentation while preserving retained-history recovery.
 - on the exact v0.132.5 product base `a8881ac17e44f38fb1e9dc15428899992727cc78`, the complete sequential focused audit passed 160/160. That run includes 4/4 Journey continuation-caption cases, 2/2 Team localization/controller cases, all compact-gallery unit and host coverage, and the revision-90 Team inventory continuation. The candidate then rebased cleanly over controller-only selector merge `8f7ea5540d6851fb2d6d77a42c899e071e65e52a` with no overlapping paths.
-- the rebased exact-head build and manifest digest are recorded by the v0.133.0 PR gate before merge.
+- the rebased exact-head focused and release-ready gates must pass again for the v0.141.1 PR head before merge. The temporary fast-release policy skips the long suites and ordinary PR build for this change; those skips are not passes.
 - local browser review verified the compact four-column desktop gallery, image-led cards, campaign rail, horizontal and vertical keyboard movement, Escape return, and an in-place English-to-Ukrainian refresh with localized campaign titles and actions.
 
 ## Evidence limits
 
-This is a release candidate, not a public release. The browser check is desktop interaction evidence, not physical touch hardware or physical-controller qualification. The repository's committed temporary fast-release policy waives the long automated suites; it does not turn them into passing evidence. Focused current-source checks qualify the changed gallery and controller paths. The accepted v0.132.5 predecessor carries the exact revision-90 Team binding and slower-device preparation corrections without weakening retained-history checks. The candidate does not redesign mission Details, results, Pause, HUD, Collection records, or gameplay teaching; those remain in UX2-UX5.
+This is a release candidate, not a public release. The browser check is desktop interaction evidence, not physical touch hardware or physical-controller qualification. The repository's committed temporary fast-release policy waives the long automated suites; it does not turn them into passing evidence. Focused current-source checks qualify the changed gallery and controller paths. The merged v0.141.0 predecessor carries the accepted revision-90 Team binding and later creator/media work; its own public acceptance remains a blocking predecessor gate. The candidate does not redesign mission Details, results, Pause, HUD, Collection records, or gameplay teaching; those remain in UX2-UX5.

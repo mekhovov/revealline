@@ -14,15 +14,12 @@
   `8f7ea5540d6851fb2d6d77a42c899e071e65e52a`. It includes the live
   English/Ukrainian refresh repair and the FPV revision-90 exact presentation
   continuation. Immutable v0.132.4 is preserved in Archive93.
-- **Active:** the serialized working queue starts with v0.133 compact gallery
+- **Active:** after public v0.141.0 acceptance, the serialized player queue starts with v0.141.1 compact gallery
   ([PR #590](https://github.com/mekhovov/revealline/pull/590));
-  v0.134 Team quick-start ([PR #549](https://github.com/mekhovov/revealline/pull/549));
-  v0.135 Couch secondary navigation ([PR #539](https://github.com/mekhovov/revealline/pull/539));
-  v0.136 Team teaching ([PR #543](https://github.com/mekhovov/revealline/pull/543));
-  v0.137 deliberate Team terminal Retry ([PR #545](https://github.com/mekhovov/revealline/pull/545));
-  v0.138 Versus countdown ([PR #552](https://github.com/mekhovov/revealline/pull/552));
-  v0.139 named result destinations ([PR #557](https://github.com/mekhovov/revealline/pull/557));
-  and v0.140 Collection fixture reconciliation plus paused Settings/Help return
+  v0.141.2 Team quick-start; v0.141.3 Couch secondary navigation;
+  v0.141.4 Team teaching; v0.141.5 deliberate Team terminal Retry;
+  v0.141.6 Versus countdown; v0.141.7 named result destinations;
+  and v0.141.8 Collection fixture reconciliation plus paused Settings/Help return
   ([PR #548](https://github.com/mekhovov/revealline/pull/548), then
   [PR #542](https://github.com/mekhovov/revealline/pull/542)). These are working
   allocations, not merged or public releases. Each must be reconciled and
@@ -30,7 +27,7 @@
   and evidence do not override this order.
 - **Remaining:** UX6 cumulative Solo/Versus/Team journeys, real-browser viewport,
   zoom, accessibility and performance regression, current-build offline
-  install/update/recovery, and public-byte verification follow v0.140. Focused
+  install/update/recovery, and public-byte verification follow v0.141.8. Focused
   branch tests are component evidence, not a cumulative qualification. Waived or
   skipped long suites are not passes; modeled pads and DOM clicks are not physical
   controller, Steam Deck or touch-device evidence. Human balance, cross-runtime
