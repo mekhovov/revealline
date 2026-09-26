@@ -67,9 +67,12 @@ pictures. After a legal win, a video mission keeps the earned poster and offers 
 and **Replay** without blocking Next or changing progress.
 
 Generated v3 missions and packages already carry replay qualification for equal-board Versus.
-The installed Versus campaign route is still being integrated and accepted; do not promise that an
-installed `.rlpack` can be launched in Versus until that work lands. Team uses separately authored
-cooperative templates and the [Team campaign creator](../../game/creator/team.html).
+Installed exact editions can launch through the real two-board Versus host, retain their verified
+difficulty and runtime seed, award edition-scoped progress and pictures, and continue to the next
+mission. Automated host coverage exercises legal completion, Retry/Next behavior, storage-failure
+recovery and a fresh host reopening the clear. A physical fresh-browser import/reload acceptance
+run remains pending. Team uses separately authored cooperative templates and the
+[Team campaign creator](../../game/creator/team.html).
 
 Each installed edition is immutable and identified by the complete package SHA-256. Installing an
 update beside an older edition does not reinterpret the older edition's saved attempt, completion
