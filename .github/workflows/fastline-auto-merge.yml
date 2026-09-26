@@ -48,7 +48,12 @@ jobs:
           sparse-checkout: publishing/fastline-merge-controller.mjs
           sparse-checkout-cone-mode: false
 
+      - name: Record one-time controller bootstrap
+        if: hashFiles('publishing/fastline-merge-controller.mjs') == ''
+        run: echo 'Trusted controller is not on protected main yet; this bootstrap event is intentionally a no-op.'
+
       - name: Reconcile exact-head admission
+        if: hashFiles('publishing/fastline-merge-controller.mjs') != ''
         env:
           ACTIVE_MILESTONE: ${{ vars.REVEALLINE_ACTIVE_RELEASE }}
           GH_TOKEN: ${{ github.token }}
