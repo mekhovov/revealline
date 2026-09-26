@@ -17,14 +17,17 @@
   built-in-browser acceptance confirmed v0.141.3 as Current with exact source
   `7509d790dadb6194d70a5bc1efafee40fbb0b3b7`. Archive96 preserves v0.141.2.
 - **Active candidate:** v0.141.4 combines the merged community acceptance and
-  validation-worker isolation from PR #680 with Couch secondary navigation
-  in [PR #683](https://github.com/mekhovov/revealline/pull/683), rebased onto
-  exact main `01de92e9693d640e08ff21ba95ce12a978cb486f`.
+  validation-worker isolation from PR #680 with Couch secondary navigation.
+  [PR #683](https://github.com/mekhovov/revealline/pull/683) passed hosted
+  exact-head qualification and merged as
+  `65bdcd9825e9e6129bb8e039c3c8922615642689`.
   Its feature-owned shell/Pause and departure/markup/quick-start boundaries
   pass 27/27 and 37/37 on the exact rebased source; validation, localization,
-  lint, formatting, syntax and version parity also pass. Hosted exact-head
-  qualification, merge, release, selector and public acceptance remain open. It
-  is followed by v0.141.5 Team teaching; v0.141.6
+  lint, formatting, syntax and version parity also pass. The terminal candidate
+  additionally makes Classic Team continuation tolerate its opaque owner ID;
+  the focused continuation slice passes 14/14. Terminal hosted qualification,
+  immutable release, selector and public acceptance remain open. It is followed
+  by v0.141.5 Team teaching; v0.141.6
   deliberate Team terminal Retry; v0.141.7 Versus countdown; v0.141.8 named
   result destinations; and v0.141.9 Collection fixture reconciliation plus
   paused Settings/Help return
@@ -41,8 +44,8 @@
   skipped long suites are not passes; modeled pads and DOM clicks are not physical
   controller, Steam Deck or touch-device evidence. Human balance, cross-runtime
   replay portability and physical installed-device acceptance remain separate
-  gates. The v0.141.4 candidate does not yet claim a merge, release, Pages
-  deployment or public player-flow acceptance. Five broader Solo
+  gates. The cumulative v0.141.4 candidate does not yet claim an immutable
+  release, Pages deployment or public player-flow acceptance. Five broader Solo
   touchscreen-host failures reproduced unchanged on the earlier v0.141.3 parent
   and remain an explicit qualification concern until the rebased comparison is
   rerun.
