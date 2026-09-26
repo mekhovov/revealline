@@ -150,6 +150,26 @@ class AdapterTests(unittest.TestCase):
         self.assertIn('qualify', {job['name'] for job in rows})
         self.assertIn('freeze', {job['name'] for job in rows})
 
+    def test_fastline_can_resume_when_only_post_freeze_inspection_failed(self):
+        run = {**self.manual, 'path': adapter.FASTLINE_WORKFLOW, 'conclusion': 'failure'}
+        jobs = copy.deepcopy(self.jobs)
+        for job in jobs['jobs']:
+            job['name'] = 'qualify / ' + job['name']
+        jobs['jobs'].extend([
+            {'id': 901, 'run_id': run['id'], 'name': 'admission', 'head_sha': self.source['commit'],
+             'status': 'completed', 'conclusion': 'success'},
+            {'id': 902, 'run_id': run['id'], 'name': 'inspect-artifact', 'head_sha': self.source['commit'],
+             'status': 'completed', 'conclusion': 'failure'},
+        ])
+        jobs['total_count'] = len(jobs['jobs'])
+        rows = adapter.family(run, jobs, adapter.QUALIFICATION_WORKFLOWS,
+                              'workflow_dispatch', self.source['commit'])
+        self.assertEqual([job['name'] for job in rows if job['conclusion'] == 'failure'], ['inspect-artifact'])
+        jobs['jobs'][-1]['name'] = 'publication'
+        with self.assertRaisesRegex(ValueError, 'Run identity/result differs'):
+            adapter.family(run, jobs, adapter.QUALIFICATION_WORKFLOWS,
+                           'workflow_dispatch', self.source['commit'])
+
     def test_previous_successful_pr_build_generation_is_retained_truthfully(self):
         jobs = copy.deepcopy(self.pr_jobs)
         jobs['jobs'][0]['steps'] = [self.step(n, i + 1) for i, n in enumerate([
