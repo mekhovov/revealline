@@ -52,7 +52,10 @@
       end after two consecutive animation-frame readiness observations, not proven physical input
       latency. Observer polling and log rendering add overhead. The observer log has no telemetry or
       persistent storage; the real game still uses its normal saves and cache. Reload discards the
-      observations.
+      observations. Navigation and paint entries come from the embedded page. Heap values are
+      recorded only when that browser exposes its non-standard performance memory counters; an
+      unsupported result is evidence of unavailability, not zero memory use. These observations
+      include the observer's own overhead and are not cross-device benchmarks.
     </p>
     <p id="status" role="status">Ready to observe the current default Journey.</p>
     <details>
