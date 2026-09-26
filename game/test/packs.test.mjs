@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { validateScenario } from '../content.mjs';
 import { RULESET } from '../core/registry.mjs';
+import { getLocale, setLocale } from '../i18n/index.mjs';
 import {
   validatePack,
   preparePack,
@@ -224,4 +225,37 @@ test('music descriptors accept the five procedural styles, reject payloads, inva
     { name: '' },
   ])
     assert.equal(validateMusicDescriptor({ ...base, ...patch }).valid, false);
+});
+
+test('pack header, dependency, metadata and music validation follows the active locale', (context) => {
+  const locale = getLocale();
+  context.after(() => setLocale(locale, { persist: false }));
+  const music = readPack().music[0];
+  const wrongEngine = readPack();
+  wrongEngine.engine = `${RULESET}-future`;
+  const unsafeSource = readPack();
+  unsafeSource.metadata.sourceUrl = 'javascript:run()';
+  const duplicateTheme = readPack();
+  duplicateTheme.themes.push(structuredClone(duplicateTheme.themes[0]));
+
+  setLocale('uk', { persist: false });
+  assert.match(
+    validateMusicDescriptor({ ...music, genre: 'missing' }).errors.join(' '),
+    /Жанр музики/,
+  );
+  assert.match(validatePack(wrongEngine).errors.join(' '), /потрібен інший рушій/);
+  assert.match(validatePack(unsafeSource).errors.join(' '), /URL-адресою HTTP\(S\)/);
+  assert.match(
+    validatePack(duplicateTheme).errors.join(' '),
+    /Ідентифікатори тем мають бути унікальними/,
+  );
+
+  setLocale('en', { persist: false });
+  assert.match(
+    validateMusicDescriptor({ ...music, genre: 'missing' }).errors.join(' '),
+    /Music genre/,
+  );
+  assert.match(validatePack(wrongEngine).errors.join(' '), /requires a different engine/);
+  assert.match(validatePack(unsafeSource).errors.join(' '), /HTTP\(S\) URL/);
+  assert.match(validatePack(duplicateTheme).errors.join(' '), /Theme IDs must be unique/);
 });
