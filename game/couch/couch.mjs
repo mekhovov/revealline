@@ -3475,6 +3475,7 @@ try {
       confirm: t('common:controls.south'),
       back: t('common:controls.east'),
     }),
+    activateControl: (element) => controllerConfirmGuard.activate(element),
     getReadingPrompt: readingPrompt,
     onNativeInput: (event) => setReadingModality(nextInputModality(readingModality, event)),
     activateControl: (element) => controllerConfirmGuard.activate(element),
