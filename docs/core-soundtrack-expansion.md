@@ -105,8 +105,13 @@ the narrow v0.132.4 Team repair merged as
 ledger correction in PR #640. Archive-directory client PR #604 is rebased cleanly onto authoritative `main`
 `83df9cfc9d26b9c7191f3507ea5a8d4d9d36b347` at exact head
 `f901f73377bc5a8466933f260e2c0828bcd3226c`. Its refreshed catalogue, host and
-panel cohort passes 135/135 locally; ESLint, Prettier and diff checks pass, and
-independent exact-head review is pending. Opening-theme fallback PR #617 is based
+panel cohort passes 135/135 locally; ESLint, Prettier and diff checks pass.
+Independent exact-head review found three release blockers: optional-shard commits
+are not atomic, partial failures are not shown in the panel, and the aggregate can
+exceed the player's 256-track queue limit. The current public archives reproduce
+the first issue because both contain `peachtea.last-stand-lets-go` with different
+hashes. PR #604 is frozen pending a release-coordinator-assigned correction.
+Opening-theme fallback PR #617 is based
 on the same `main` at exact head `20f86fc7372fd02a626e5b74b778ab85ab396558`.
 Real-player regressions pass 8/8 for the opening flow and 66/66 for the transport;
 ESLint, Prettier and diff checks pass. Independent exact-head review is clean,
@@ -305,8 +310,14 @@ preserve user changes, frozen releases and evidence.
    `83df9cfc9d26b9c7191f3507ea5a8d4d9d36b347` at exact head
    `f901f73377bc5a8466933f260e2c0828bcd3226c`. The refreshed catalogue, host and
    panel cohort passes 135/135 locally; ESLint, Prettier and diff checks pass.
-   Independent exact-head review and fresh hosted gates remain. Full tests and build
-   stay subject to the release owner's allocation; any skip is not a pass. Archive 02
+   Independent exact-head review requires three corrections before fresh hosted
+   gates: stage and validate each optional shard before committing it to the
+   aggregate; visibly report optional directory/shard failures and preserve their
+   reason; and bound/page playback so an aggregate above 256 tracks can still start
+   one selected row or a bounded queue. Add a real Archive 01 + Archive 02 collision
+   regression for `peachtea.last-stand-lets-go`, a degraded-panel regression, and a
+   greater-than-256 aggregate regression. Full tests and build stay subject to the
+   release owner's allocation; any skip is not a pass. Archive 02
    now publishes six recordings independently, but do not add it to the public
    directory until that client is released. Archive PR #41 raises Archive 01 to 887,503,800 audio bytes; its exact
    runner2088 rebase proved the retained 8 MiB reserve would be violated, so do not
