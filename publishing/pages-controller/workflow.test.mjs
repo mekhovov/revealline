@@ -324,6 +324,30 @@ test("publisher infrastructure suites run only when full CI and the test policy 
   assert.doesNotMatch(block, /continue-on-error|\|\| true/);
 });
 
+test("Pages authority fallback restores and saves a bounded conditional ETag cache", async () => {
+  const workflow = await fs.readFile(
+    new URL(
+      "../../.github/workflows/publish-frozen-pages.yml",
+      import.meta.url,
+    ),
+    "utf8",
+  );
+  assert.match(
+    workflow,
+    /actions\/cache\/restore@0057852bfaa89a56745cba8c7296529d2fc39830/u,
+  );
+  assert.match(
+    workflow,
+    /actions\/cache\/save@0057852bfaa89a56745cba8c7296529d2fc39830/u,
+  );
+  assert.match(workflow, /\.cache\/frozen-pages\/authority-etags\.json/u);
+  assert.match(workflow, /frozen-pages-authority-\$\{\{ runner\.os \}\}-/u);
+  assert.match(
+    workflow,
+    /if: success\(\) && hashFiles\('\.cache\/frozen-pages\/authority-etags\.json'\) != ''/u,
+  );
+});
+
 test("freeze admits required-success or explicit-waiver-skipped only, never failure or cancellation", async () => {
   const manual = await fs.readFile(
     new URL(

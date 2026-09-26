@@ -103,7 +103,7 @@ test("publisher serializes requests and passes immutable artifacts through each 
   );
   assert.match(workflow, /group: fastline-publisher/u);
   assert.match(workflow, /cancel-in-progress: false/u);
-  assert.doesNotMatch(workflow, /^\s+queue:/mu);
+  assert.match(workflow, /^\s+queue: max$/mu);
   assert.match(
     workflow,
     /uses: \.\/\.github\/workflows\/qualify-release-source\.yml/u,
