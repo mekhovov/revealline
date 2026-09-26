@@ -25,21 +25,21 @@ adapter as a fresh attempt and applies tuning exactly once.
 
 ## Campaign checkpoint
 
-| Campaign | Missions | Bands | Enabled pressure | With walls | With terrain |
-| --- | ---: | ---: | ---: | ---: | ---: |
-| Prologue | 3 | 1 | 1–2 | 0 | 0 |
-| Horizon School | 6 | 1–2 | 2 | 0 | 0 |
-| Border Bloom | 6 | 2–3 | 3–4 | 0 | 0 |
-| Signal Gardens | 6 | 3–4 | 3–4 | 0 | 6 |
-| Neon Contours | 6 | 4–5 | 3–5 | 2 | 2 |
-| Rover Yard | 6 | 5–6 | 3–6 | 3 | 3 |
-| Fractured Grid | 6 | 6–7 | 3–5 | 2 | 4 |
-| Phaseworks | 6 | 7–8 | 3–4 | 3 | 5 |
-| Livewire Foundry | 6 | 8–9 | 3 | 4 | 4 |
-| Relay Labyrinth | 6 | 9–10 | 3–5 | 3 | 3 |
-| Crosswind Array | 6 | 10–11 | 3–4 | 3 | 1 |
-| Sentinel Crown | 4 | 11–12 | 3 | 4 | 1 |
-| Apex Aurora | 4 | 12 | 3–4 | 3 | 1 |
+| Campaign         | Missions | Bands | Enabled pressure | With walls | With terrain |
+| ---------------- | -------: | ----: | ---------------: | ---------: | -----------: |
+| Prologue         |        3 |     1 |              1–2 |          0 |            0 |
+| Horizon School   |        6 |   1–2 |                2 |          0 |            0 |
+| Border Bloom     |        6 |   2–3 |              3–4 |          0 |            0 |
+| Signal Gardens   |        6 |   3–4 |              3–4 |          0 |            6 |
+| Neon Contours    |        6 |   4–5 |              3–5 |          2 |            2 |
+| Rover Yard       |        6 |   5–6 |              3–6 |          3 |            3 |
+| Fractured Grid   |        6 |   6–7 |              3–5 |          2 |            4 |
+| Phaseworks       |        6 |   7–8 |              3–4 |          3 |            5 |
+| Livewire Foundry |        6 |   8–9 |                3 |          4 |            4 |
+| Relay Labyrinth  |        6 |  9–10 |              3–5 |          3 |            3 |
+| Crosswind Array  |        6 | 10–11 |              3–4 |          3 |            1 |
+| Sentinel Crown   |        4 | 11–12 |                3 |          4 |            1 |
+| Apex Aurora      |        4 |    12 |              3–4 |          3 |            1 |
 
 “Enabled pressure” is a fresh-attempt actor count, not a claim about exposure or human difficulty.
 The surface columns count missions containing at least one rectangle, not rectangle area.
