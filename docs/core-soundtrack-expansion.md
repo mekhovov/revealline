@@ -1332,6 +1332,14 @@ under the creator's [CC BY 4.0 terms](https://www.nihilore.com/license). Preserv
 authored titles. The category includes quieter music, so tags are not an energy
 or suitability review.
 
+David KBD's [HexaPuppies Synthwave 80s Retro Music Pack](https://davidkbd.itch.io/hexapuppies-synthwave-music-pack)
+is the next small-file source-review pool. The creator publishes 29 loopable
+tracks under CC BY 4.0 and exposes ten free individual OGG variants before the
+paid variation tier. Start listening with **Feel the Wave**, **The Great Machine**,
+**Disaster** and **New Horizons**; treat variations as alternate arrangements,
+not extra compositions. No HexaPuppies recording is acquired, approved or queued
+for publication while the local disk reserve remains below 1 GiB.
+
 Some older Punch Deck announcements state CC BY 3.0 while the current exact
 Bandcamp links resolve to CC BY 4.0. Preserve evidence from the actual acquisition
 route and bind it to the recording/hash; do not mix versions silently. Bandcamp
