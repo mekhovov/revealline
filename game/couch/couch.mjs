@@ -385,6 +385,7 @@ try {
     mode: 'versus',
   });
   let journeyProfile = null,
+    displayedProgressProfile = null,
     journeyChooser = null,
     journeySkipArmed = null,
     missionLibrary = null,
@@ -462,19 +463,9 @@ try {
     $('race-journey-difficulty').value = journeyPreferences.snapshot().difficulty;
     journeyProfile = createJourneyProfileStore({
       profileKey: authoredRoute.profileKey,
-      onStatus({ ready, durable, error }) {
-        const unsaved = journeySaveCue.update({ ready, durable, error });
-        const notice = $('race-journey-save');
-        notice.hidden = !unsaved && !notice.contains(document.activeElement);
-        localizedText($('race-journey-save-message'), () =>
-          error
-            ? t('interface:couch.sessionProgress', { error })
-            : ready && durable
-              ? t('interface:journeyRaceProgressSavedLocallyYouCanContinuePlaying')
-              : '',
-        );
-      },
+      onStatus: (status) => presentProgressStatus(journeyProfile, status),
     });
+    displayedProgressProfile = journeyProfile;
     await journeyProfile.load();
     journeyPictures = attachJourneyModePictures({
       document,
@@ -565,11 +556,46 @@ try {
       });
   async function creatorProfile(editionId) {
     if (!creatorProfiles.has(editionId)) {
-      const profile = createJourneyProfileStore({ profileKey: creatorProfileKey(editionId) });
+      let profile;
+      profile = createJourneyProfileStore({
+        profileKey: creatorProfileKey(editionId),
+        onStatus: (status) => presentProgressStatus(profile, status),
+      });
       creatorProfiles.set(editionId, profile);
       await profile.load();
     }
     return creatorProfiles.get(editionId);
+  }
+  function activeProgressProfile() {
+    return displayedProgressProfile;
+  }
+  function showProgressProfileFor(entry) {
+    const owner = creatorVersusOwners.get(entry),
+      profile = owner
+        ? creatorProfiles.get(owner.prepared.editionId)
+        : candidateJourney?.owns(entry)
+          ? journeyProfile
+          : null;
+    displayedProgressProfile = profile;
+    if (profile) presentProgressStatus(profile, profile.status());
+    else {
+      journeySaveCue.update({ ready: true, durable: true, error: null });
+      $('race-journey-save').hidden = true;
+      localizedText($('race-journey-save-message'), '');
+    }
+  }
+  function presentProgressStatus(profile, { ready, durable, error }) {
+    if (!profile || profile !== activeProgressProfile()) return;
+    const unsaved = journeySaveCue.update({ ready, durable, error }),
+      notice = $('race-journey-save');
+    notice.hidden = !unsaved && !notice.contains(document.activeElement);
+    localizedText($('race-journey-save-message'), () =>
+      error
+        ? t('interface:couch.sessionProgress', { error })
+        : ready && durable
+          ? t('interface:journeyRaceProgressSavedLocallyYouCanContinuePlaying')
+          : '',
+    );
   }
   function creatorVersusOwner(prepared) {
     let owner = creatorVersusEditions.get(prepared.editionId);
@@ -1802,6 +1828,7 @@ try {
       if (!ownsStartIntent() || (nextFocus && !nextFocus.ownsAction())) return;
       resumeDuel(match, { preserveContinuation: true });
       neutralResumeTick = true;
+      showProgressProfileFor(roundRecipe.entry);
       // Race effects are independent of the music transport and its readiness.
       void sound.enable();
       if (music) void music.start();
@@ -2036,17 +2063,19 @@ try {
       journeySkipArmed = null;
       void chooseMission(next, roundRecipe.entry.mission);
     };
-    $('race-journey-save-retry').onclick = () => void journeyProfile.flush();
-    $('race-journey-save-export').onclick = async () => {
-      try {
-        await downloadJSON(JSON.parse(journeyProfile.export()), journeyProfile.backupFilename);
-      } catch (error) {
-        localizedText($('race-journey-save-message'), () =>
-          t('interface:couch.progressExportError', { error: error.message }),
-        );
-      }
-    };
   }
+  $('race-journey-save-retry').onclick = () => void activeProgressProfile()?.flush();
+  $('race-journey-save-export').onclick = async () => {
+    const profile = activeProgressProfile();
+    if (!profile) return;
+    try {
+      await downloadJSON(JSON.parse(profile.export()), profile.backupFilename);
+    } catch (error) {
+      localizedText($('race-journey-save-message'), () =>
+        t('interface:couch.progressExportError', { error: error.message }),
+      );
+    }
+  };
   $('race-journey-next').onclick = () => continueMission();
   $('race-journey-find').onclick = () => openMissionLibrary($('race-journey-find'));
   if (!candidateJourney) {
@@ -4005,21 +4034,29 @@ try {
                 }
               : {}),
           };
-        try {
-          profile.record(completion);
-          journeyChooser?.refresh();
-        } catch (error) {
-          const { picture: _picture, ...receipt } = completion;
-          try {
-            profile.record(receipt);
+        const settlement = profile.recordWithReceiptFallback(completion);
+        journeyChooser?.refresh();
+        void settlement
+          .then((result) => {
             journeyChooser?.refresh();
-          } catch {
-            /* Existing stored progress stays intact. */
-          }
-          journeyRewardFailure = localizedMessage('interface:journeyPictures.versusRetainFailed', {
-            error: error.message,
+            if (result.durable && !result.fallback) return;
+            if (activeProgressProfile() !== profile) return;
+            const warning = localizedMessage('interface:journeyPictures.versusRetainFailed', {
+              error: result.error || t('errors:journey.saveFailed'),
+            });
+            journeyRewardFailure = warning;
+            if (!$('race-message').textContent.includes(warning))
+              localizedText($('race-message'), `${$('race-message').textContent} ${warning}`);
+          })
+          .catch((error) => {
+            if (activeProgressProfile() !== profile) return;
+            const warning = localizedMessage('interface:journeyPictures.versusRetainFailed', {
+              error: error.message,
+            });
+            journeyRewardFailure = warning;
+            if (!$('race-message').textContent.includes(warning))
+              localizedText($('race-message'), `${$('race-message').textContent} ${warning}`);
           });
-        }
       }
       const name = () =>
         match.winner === 0
