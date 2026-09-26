@@ -1,11 +1,11 @@
 # Offline game and optional recordings
 
 Implementation branch: `codex/offline-pwa`, based on freshly fetched `origin/main`
-`0e678f42579c957eb66de0d4bb842e56e324842e` (0.130.0 source line). The existing
+`23e6129782e08ed826686f137a0989e5f154732a` (0.131.0 source line). The existing
 `codex/fpv-redesign` checkout and its uncommitted work were preserved.
 The prepared release slot is v0.132.0 because v0.130.0 and v0.131.0 are already
-allocated. The package version stays on the current source line until the release
-train advances; this branch does not publish or tag a release.
+allocated. The candidate package and build configuration are prepared as 0.132.0;
+this branch does not publish or tag a release.
 
 ## Player flow
 
@@ -119,11 +119,11 @@ the selected commit is rebuilt from its Git archive to preserve frozen provenanc
 | 4 — Updates and lifecycle | Explicit checks, hash reuse, journaled migration, writer-lock gates, previous edition, input/wake-lock handling; real A → B and offline rollback | Device background/resume, controller and multi-window qualification |
 | 5 — Publication | Frozen publisher integration and build/release checks; evidence retained | Full repository suite is not green; hardware matrix and publishing remain pending |
 
-The current rebased candidate contains 1,256 manifest files. Its required core is
-44,785,282 bytes across 1,093 files, with zero MP3 files, below the 64 MiB limit.
-Deduplicated gameplay is 595,377,173 bytes and the 71 optional recordings total
-363,627,890 bytes. These values come from the generated v0.130.0 source build and
-are the release-planning baseline for v0.132.0.
+The final local v0.132.0 candidate contains 1,298 manifest files. Its required core is
+46,660,811 bytes across 1,121 files, with zero MP3 files, below the 64 MiB limit.
+Deduplicated gameplay is 597,252,702 bytes and the 71 optional recordings total
+363,627,890 bytes. The generated inventory records a 611,447,099-byte first-download
+peak and a conservative 1,210,535,752-byte two-edition update peak.
 
 See [verification.md](verification.md) for commands, browser evidence and outstanding
 hardware checks. Automated tests and an embedded browser are not a substitute for

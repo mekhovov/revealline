@@ -1417,93 +1417,99 @@ export function attachSoundtrackPanel({
           usePlaylist(volume.playlistId),
         )
       : null;
-    const install = button(`download-${volume.id}`, localizedMessage('interface:downloadForOffline'), () =>
-      task(t('interface:downloadingAndSavingRecordings'), async (signal) => {
-        if (officialDownloads) {
-          await withOptionalMusicDownload(signal, (downloadSignal) =>
-            officialDownloads.download({
-              edition: 'soundtracks',
-              group: `music:${volume.playlistId || volume.id}`,
-              files: offlineTracks.map((track) => ({ ...track.asset, path: track.path })),
-              signal: downloadSignal,
-              acquire: (file, options) =>
-                readAsset(file.sha256, { ...options, download: true, purpose: 'offline' }),
-              onProgress: (report) =>
-                setStatus(
-                  t('interface:recordingDownloadProgress', {
-                    ready: bytes(report.readyBytes),
-                    remaining: bytes(report.remainingBytes),
-                  }),
-                ),
-            }),
-          );
-          await refreshOfficialDownloads();
-          refreshCatalogueControls();
-          setStatus(t('interface:recordingsSavedOfflinePreferencesUnchanged'));
-          return;
-        }
-        if (!readAsset) throw new Error(t('interface:recordingDownloadsAreUnavailable'));
-        if (
-          offlineTracks.reduce((sum, track) => sum + track.asset.bytes, 0) >
-          SOUNDTRACK_LIMITS.optionalBundleTargetBytes
-        )
-          throw new Error(t('interface:thisVolumeExceedsThe64MibDownloadBudgetItsPublisher'));
-        const additions = new Map(assets.map((asset) => [asset.sha256, asset]));
-        const expected = new Map(assets.map((asset) => [asset.sha256, asset.blob.size]));
-        for (const track of offlineTracks) expected.set(track.asset.sha256, track.asset.bytes);
-        if (
-          [...expected.values()].reduce((sum, size) => sum + size, 0) >
-          SOUNDTRACK_LIMITS.managedBytes
-        )
-          throw new Error(t('interface:thisDownloadExceedsThe256MibAudioBudgetRemoveAn'));
-        for (const track of offlineTracks) {
-          if (!additions.has(track.asset.sha256))
-            additions.set(track.asset.sha256, {
-              sha256: track.asset.sha256,
-              blob: await readAsset(track.asset.sha256, {
-                signal,
-                download: true,
-                purpose: 'offline',
+    const install = button(
+      `download-${volume.id}`,
+      localizedMessage('interface:downloadForOffline'),
+      () =>
+        task(t('interface:downloadingAndSavingRecordings'), async (signal) => {
+          if (officialDownloads) {
+            await withOptionalMusicDownload(signal, (downloadSignal) =>
+              officialDownloads.download({
+                edition: 'soundtracks',
+                group: `music:${volume.playlistId || volume.id}`,
+                files: offlineTracks.map((track) => ({ ...track.asset, path: track.path })),
+                signal: downloadSignal,
+                acquire: (file, options) =>
+                  readAsset(file.sha256, { ...options, download: true, purpose: 'offline' }),
+                onProgress: (report) =>
+                  setStatus(
+                    t('interface:recordingDownloadProgress', {
+                      ready: bytes(report.readyBytes),
+                      remaining: bytes(report.remainingBytes),
+                    }),
+                  ),
               }),
-            });
-          throwIfSoundtrackAborted(signal);
-        }
-        const next = copy(draft);
-        next.installedTrackIds = [...new Set([...next.installedTrackIds, ...ids])];
-        // A recovery bundle omitted these recordings for redistribution only.
-        // A separately permitted offline fetch now supplies actual owned bytes.
-        next.referenceOnlyTrackIds = next.referenceOnlyTrackIds.filter((id) => !ids.has(id));
-        const prepared = await prepareSoundtrackLibrary(next, [...additions.values()], {
-          signal,
-          probeMedia,
-          catalogue: catalogue ?? undefined,
-        });
-        invalidateBackup();
-        draft = prepared.library;
-        assets = [...prepared.assets];
-        dirty = true;
-        setStatus(t('interface:volumeDownloadedAndCheckedSaveAllChangesToInstallIt'));
-      }),
+            );
+            await refreshOfficialDownloads();
+            refreshCatalogueControls();
+            setStatus(t('interface:recordingsSavedOfflinePreferencesUnchanged'));
+            return;
+          }
+          if (!readAsset) throw new Error(t('interface:recordingDownloadsAreUnavailable'));
+          if (
+            offlineTracks.reduce((sum, track) => sum + track.asset.bytes, 0) >
+            SOUNDTRACK_LIMITS.optionalBundleTargetBytes
+          )
+            throw new Error(t('interface:thisVolumeExceedsThe64MibDownloadBudgetItsPublisher'));
+          const additions = new Map(assets.map((asset) => [asset.sha256, asset]));
+          const expected = new Map(assets.map((asset) => [asset.sha256, asset.blob.size]));
+          for (const track of offlineTracks) expected.set(track.asset.sha256, track.asset.bytes);
+          if (
+            [...expected.values()].reduce((sum, size) => sum + size, 0) >
+            SOUNDTRACK_LIMITS.managedBytes
+          )
+            throw new Error(t('interface:thisDownloadExceedsThe256MibAudioBudgetRemoveAn'));
+          for (const track of offlineTracks) {
+            if (!additions.has(track.asset.sha256))
+              additions.set(track.asset.sha256, {
+                sha256: track.asset.sha256,
+                blob: await readAsset(track.asset.sha256, {
+                  signal,
+                  download: true,
+                  purpose: 'offline',
+                }),
+              });
+            throwIfSoundtrackAborted(signal);
+          }
+          const next = copy(draft);
+          next.installedTrackIds = [...new Set([...next.installedTrackIds, ...ids])];
+          // A recovery bundle omitted these recordings for redistribution only.
+          // A separately permitted offline fetch now supplies actual owned bytes.
+          next.referenceOnlyTrackIds = next.referenceOnlyTrackIds.filter((id) => !ids.has(id));
+          const prepared = await prepareSoundtrackLibrary(next, [...additions.values()], {
+            signal,
+            probeMedia,
+            catalogue: catalogue ?? undefined,
+          });
+          invalidateBackup();
+          draft = prepared.library;
+          assets = [...prepared.assets];
+          dirty = true;
+          setStatus(t('interface:volumeDownloadedAndCheckedSaveAllChangesToInstallIt'));
+        }),
     );
     const remove = button(
       `offload-${volume.id}`,
       localizedMessage('interface:removeOfflineDownload'),
       () =>
-      attempt(async () => {
-        if (officialDownloads) {
-          await officialDownloads.remove('soundtracks', `music:${volume.playlistId || volume.id}`);
-          await refreshOfficialDownloads();
-          refreshCatalogueControls();
-          setStatus(t('interface:officialDownloadRemovedReferencedFilesKept'));
-          return;
-        }
-        edit((value) => {
-          value.installedTrackIds = value.installedTrackIds.filter((id) => !ids.has(id));
-        });
-        pruneAssets();
-        render();
-        setStatus(t('interface:offlineCopiesRemovedFromTheDraftPlaylistsAreRetainedSave'));
-      }),
+        attempt(async () => {
+          if (officialDownloads) {
+            await officialDownloads.remove(
+              'soundtracks',
+              `music:${volume.playlistId || volume.id}`,
+            );
+            await refreshOfficialDownloads();
+            refreshCatalogueControls();
+            setStatus(t('interface:officialDownloadRemovedReferencedFilesKept'));
+            return;
+          }
+          edit((value) => {
+            value.installedTrackIds = value.installedTrackIds.filter((id) => !ids.has(id));
+          });
+          pruneAssets();
+          render();
+          setStatus(t('interface:offlineCopiesRemovedFromTheDraftPlaylistsAreRetainedSave'));
+        }),
     );
     originalAlbums.append(
       section(

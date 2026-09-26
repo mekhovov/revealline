@@ -1,8 +1,8 @@
-# Verification record — 2026-09-25
+# Verification record — 2026-09-26
 
 This is an implementation/qualification record, not a published platform-support claim.
-The implementation was rebased onto `0e678f42579c957eb66de0d4bb842e56e324842e`,
-fetched from `main` (0.130.0 source line). The prepared release slot is v0.132.0.
+The implementation was rebased onto `23e6129782e08ed826686f137a0989e5f154732a`,
+fetched from `main` (0.131.0). The prepared release slot is v0.132.0.
 No release or site was published during this work.
 
 ## Automated checks
@@ -11,7 +11,7 @@ No release or site was published during this work.
 | --- | --- |
 | Unchanged baseline build | Passed; 1,145 files, 595,516,304 distribution bytes |
 | Initial baseline offline/audio tests | 113 passed |
-| Rebased downloader, official chapter/media, migration, worker, wake-lock, audio and backup tests | 271 passed |
+| Rebased downloader, official chapter/media, migration, worker, wake-lock, audio, backup and recipe-source tests | 276 passed |
 | Publication, launcher, frozen snapshot and native-wrapper checks | 85 passed |
 | Save/host lifecycle regression checks | New lifecycle failures fixed; existing Team fixture failures remain |
 | Current-main comparison | Team picture fixture, Versus transport timeout and one presentation expectation reproduce on unchanged main |
@@ -71,7 +71,7 @@ Historical implementation and baseline logs are retained under
 `docs/offline-pwa/evidence/`. Generated current inventories and the distribution
 manifest are in the ignored local `dist/` directory.
 
-Production reproduction (`produce-field-kit-theme.mjs --check`) passes at revision 83.
+Production reproduction (`produce-field-kit-theme.mjs --check`) passes at revision 86.
 The uncommitted ledger's declaration check passes with 194 required reviewed slots;
 this is not a committed-source release-readiness receipt. The three new source-ledger
 regressions are fixed; its complete test file still has one failure also reproduced
@@ -82,19 +82,19 @@ Its sole remaining Flight Records picture-initialization timeout also reproduces
 on unchanged main (16/17), while that exact case passes in isolation on both trees.
 The standard Cache API fixture was updated for the worker's new hash-index lookup.
 
-The final rebased ordinary build contains 1,256 files; every manifest hash and byte count
+The final rebased ordinary build contains 1,298 files; every manifest hash and byte count
 was rechecked. ZIP SHA-256:
-`fa789382e8b5bccdefd68335caffc77a81824971127e9f138c979da3ad2a9a0f`.
-It is an uncommitted local build, not a frozen release. See
+`9d3cfc44c1399b0d0db8488b8e82dc396451faedc0a65da18990d4c334715ba0`.
+It is a local candidate build, not a frozen release. See
 [evidence/build-identity.json](evidence/build-identity.json) and
 [evidence/inventory-summary.json](evidence/inventory-summary.json).
 
-Deduplicated gameplay is **595,377,173 bytes (567.8 MiB)**, versus **363,627,890
-bytes (346.8 MiB)** of optional recordings. The required core is 44,785,282 bytes
-across 1,093 files and contains no MP3. Runtime plus gameplay cache storage is
-597,213,124 bytes. The conservative worst-case two-edition peak is 1,206,784,694
+Deduplicated gameplay is **597,252,702 bytes (569.6 MiB)**, versus **363,627,890
+bytes (346.8 MiB)** of optional recordings. The required core is 46,660,811 bytes
+across 1,121 files and contains no MP3. Runtime plus gameplay cache storage is
+599,088,653 bytes. The conservative worst-case two-edition peak is 1,210,535,752
 bytes before saves, imports and browser overhead. The first-download peak is
-609,571,570 bytes. Storage estimates are advisory, and caches share the origin quota.
+611,447,099 bytes. Storage estimates are advisory, and caches share the origin quota.
 
 ## Browser evidence
 
