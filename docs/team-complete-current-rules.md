@@ -9,8 +9,10 @@ Status date: 2026-09-26
   `80911bf5ec0f6df711d7e70b36a11005d2be4c3a`.
 - Apex v25 source candidate: draft PR #625. Its GitHub head is authoritative after guarded
   restacks.
-- Active successor: draft PR #630, Team current-rules adoption / source version **0.141.0**. The
-  PR's GitHub head is authoritative after guarded restacks.
+- Team current-rules adoption was submitted as draft PR #630 / source version **0.141.0**. The PR's
+  GitHub head is authoritative after guarded restacks.
+- The active successor is the three-mission Ukrainian Team spatial slice described in
+  [team-cultural-specialist-routes.md](team-cultural-specialist-routes.md).
 - This source is not a public delivery until its reviewed PR, immutable release and Pages build
   complete.
 
@@ -53,19 +55,19 @@ skipped gate is not a passing gate.
 
 ## Revised remaining plan
 
-| Priority | Work                                                                                 | State                                                         |                            Estimated effort |
-| -------- | ------------------------------------------------------------------------------------ | ------------------------------------------------------------- | ------------------------------------------: |
-| 1        | Review, merge and publish the stacked v12-v25 cultural routes and this Team adoption | Queued with sole publisher                                    | 1-3 hours per clean release plus queue time |
-| 2        | Targeted Team geometry/presentation improvements and remaining Ukrainian/FPV studies | Partially complete: rules and specialist progression authored |                                 16-28 hours |
-| 3        | Whole-Journey pacing, accessibility, performance and device qualification            | Remaining                                                     |                            2-4 working days |
-| 4        | Human cultural and balance qualification                                             | External evidence required                                    | Tester availability plus 1-2 days synthesis |
+| Priority | Work                                                                                 | State                      |                            Estimated effort |
+| -------- | ------------------------------------------------------------------------------------ | -------------------------- | ------------------------------------------: |
+| 1        | Review, merge and publish the stacked v12-v25 cultural routes and this Team adoption | Queued with sole publisher | 1-3 hours per clean release plus queue time |
+| 2        | Three-mission Ukrainian Team geometry successor                                      | Active v0.142.0 successor  |                                   2-4 hours |
+| 3        | Targeted remaining Team presentation/readability review                              | Geometry gaps narrowed     |                                 10-18 hours |
+| 4        | Whole-Journey pacing, accessibility, performance and device qualification            | Remaining                  |                            2-4 working days |
+| 5        | Human cultural and balance qualification                                             | External evidence required | Tester availability plus 1-2 days synthesis |
 
 The original P13-P15 whole-Journey acceptance remains incomplete. Automated deterministic clears
 establish legality and ownership, not fun, cultural approval or final two-player balance.
 
 ## Next implementation step
 
-After adoption is submitted, inspect the twelve Team maps against the completed disposition ledger
-and select only missions whose geometry still makes cooperation cosmetic. Redesign those as
-versioned successors with a concrete partner benefit, preserving every current and historical
-edition.
+Finish the bounded v0.142.0 Ukrainian Team spatial successor, then inspect the remaining nine maps
+for concrete presentation or readability defects. Retain maps whose cooperation is already
+meaningful; every necessary change remains a versioned successor with historical editions intact.
