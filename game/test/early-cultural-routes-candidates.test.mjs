@@ -274,8 +274,8 @@ test('registered v14 successor preserves v13 order and uses isolated progress ow
   assert(authoredJourneyUsesActorMaterials(current.id));
   assert(AUTHORED_JOURNEY_ROUTE_IDS.includes(current.id));
   assert.deepEqual(DEFAULT_JOURNEY_ROUTES, {
-    solo: 'whole-spatial-v20',
-    versus: 'whole-spatial-v20',
+    solo: 'whole-spatial-v21',
+    versus: 'whole-spatial-v21',
     team: 'team-trail-impact-originals-1',
   });
   assert.equal(authoredJourneyModeHref(current.id, 'solo'), '../?journey=whole-spatial-v14');
