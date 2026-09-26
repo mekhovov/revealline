@@ -3,7 +3,7 @@ import { journeyMissionDetails, authoredJourneyMissionTags } from './journey-pre
 import { COOP_STARTER_PACK } from '../coop/library.mjs';
 import { t } from '../i18n/index.mjs';
 
-export const TEAM_LIBRARY_JOURNEY_EDITION = 'team-trail-impact-originals-1';
+export const TEAM_LIBRARY_JOURNEY_EDITION = 'team-complete-specialist-originals-1';
 export const TEAM_LIBRARY_CLASSIC_SOURCE = 'team-classic:relay-rescue-starter';
 const difficultyKeys = Object.freeze({
   gentle: 'interface:missionLibrary.team.difficulty.gentle',
