@@ -8,9 +8,9 @@ release claims.
 ## Candidate identity
 
 - Merged framework source: PR #465, merged 25 September 2026.
-- Rebased hardening base: `72cfc74552669699266d5d8ad92c56a69da885b2` (`main`, after the accepted
+- Rebased hardening base: `a8881ac17e44f38fb1e9dc15428899992727cc78` (`main`, after the accepted
   `v0.132.4` selector, merged `v0.132.5` source, Fastline recovery hardening, public-byte verification,
-  live locale refresh repair and Fastline throughput corrections).
+  live locale refresh repair, throughput corrections, and exact Field Kit revision 90 review).
 - Hardening checkpoint before this acceptance refresh:
   `3f2c83cf193117f9884796f8bf1b16f1c6c21044`.
 - Assigned release target and working source: `v0.141.0` in PR #564. The repository release
@@ -90,9 +90,9 @@ output. Its largest new source asset is the pinned, licensed Mediabunny browser 
   controller-authorized menu activation and strict Team file intake with real `Blob` values.
 - The focused controller/router overlap with the new `main` short-tap lifecycle passes **84/84**,
   including the actual Steam Deck short-tap host case and native-input echo ordering.
-- The subsequent `fpv88` presentation-provenance rebase retains the exact reviewed Team picture
-  bytes for current play and preserves immutable `fpv58`–`fpv87` attempts. Its bounded 31-policy
-  authority and current/retained Team picture cohort pass **102/102**; unknown `fpv89` still fails
+- The subsequent `fpv90` presentation-provenance rebase retains the exact reviewed Team picture
+  bytes for current play and preserves immutable `fpv58`–`fpv89` attempts. Its bounded 33-policy
+  authority and current/retained Team picture cohort pass **112/112**; unknown `fpv91` still fails
   closed.
 - Rotated-orientation and physical-transform focused cohort: **50/50 passed**, with **114/114**
   across the expanded video/editor/intake/bundle group.
@@ -125,15 +125,16 @@ output. Its largest new source asset is the pinned, licensed Mediabunny browser 
   player with **Start mission** enabled.
 - `npm run validate`: passed for 1,244 files; exact whole-spatial snapshot SHA-256
   `e62ef45089df1bbaea04cceb932949fbe8d29377a4eeefcac8280125006495b3`.
-- Exact presentation SHA-256 after the `fpv88` provenance rebase:
-  `d3029b2da13dc6cbd6f34dd4aabf4c8988c7b77272f2d9386a773295326e8233`.
+- Exact presentation SHA-256 after the `fpv90` provenance rebase:
+  `e886fd014b50e55bb0a03262dc766ddab37af008ea103ffc45f52967d4f7c686`.
 - Root and community-service ESLint and Prettier checks: passed.
 - Native formatting, Motion Lab syntax, Field Kit producer check, and Field Kit readiness: passed.
 - Root and community dependency audits: zero reported vulnerabilities.
-- A local `npm run build` passed for **1,304 files** at source version `0.141.0` on the final rebased
-  combined candidate, with distribution SHA-256
-  `3fb91ab6f0b4d3cbc7d70c5a750cfaf13ced4c62c94f8b0dc4c78b690c77cc2e`. The hosted exact-head build
-  and immutable freeze remain PR/release gates.
+- A local `npm run build` passed for **1,304 files** at source version `0.141.0` before the final
+  presentation-only rebase, with distribution SHA-256
+  `3fb91ab6f0b4d3cbc7d70c5a750cfaf13ced4c62c94f8b0dc4c78b690c77cc2e`. The latest local rebuild
+  could not complete because the host volume ran out of space; the hosted exact-head build and
+  immutable freeze remain the authoritative PR/release gates.
 - Built-in-browser evidence in the phase records covers single-image completion, 12- and 50-image
   batches, cancel/resume and splitting, video-only victory playback, and verified silent-AVC trim.
   On the current combined source, a fresh picture generated a visible moving enemy and two collision
