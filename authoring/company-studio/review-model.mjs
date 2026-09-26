@@ -91,11 +91,20 @@ export function createStudioReviewContext({ catalog, editionId, files, report })
     missions.length > 0 && missions.length <= 512,
     'Review mission count is outside its bound.',
   );
+  const artwork = catalog.assets
+    .filter((asset) =>
+      missions.some(({ id }) => {
+        const prefix = `${id}-reveal-v`;
+        return asset.id.startsWith(prefix) && /^[1-9][0-9]*$/.test(asset.id.slice(prefix.length));
+      }),
+    )
+    .map(({ id, path, sha256, bytes }) => ({ id, path, sha256, bytes }));
   return freezeEdition({
     editionId,
     editionName: edition.name,
     artifact: checked.artifact,
     missions,
+    artwork,
   });
 }
 
@@ -241,11 +250,20 @@ export function studioGenerationNotes(input, context) {
     const mission = context.missions.find((item) => item.id === id);
     if (!mission) continue;
     const picture = mission.picture,
-      selected = row.selected;
+      selected = row.selected,
+      revision = String(row.revision ?? 1),
+      registered = context.artwork.find((asset) => asset.id === `${id}-reveal-v${revision}`);
+    required(
+      registered &&
+        selected &&
+        selected.sha256 === registered.sha256 &&
+        selected.bytes === registered.bytes &&
+        selected.path === registered.path,
+      'Generation notes refer to an unregistered picture revision.',
+    );
+    if (!picture || revision !== picture.revision) continue;
     required(
       picture &&
-        selected &&
-        String(row.revision ?? 1) === picture.revision &&
         selected.sha256 === picture.sha256 &&
         selected.bytes === picture.bytes &&
         selected.width === picture.width &&
