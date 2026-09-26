@@ -1,0 +1,99 @@
+{
+  "format": "revealline-archive-public-acceptance.v1",
+  "archive": {
+    "id": "archive-90",
+    "repository": "mekhovov/revealline-archive-90",
+    "url": "https://mekhovov.github.io/revealline-archive-90/"
+  },
+  "preservedRelease": {
+    "version": "v0.132.1",
+    "sourceRevision": "c45cd78bdc522bf95c267615fe3ad93dd77dff98",
+    "sourceTree": "5332b5c0c72e81e539f2240d893e9fdc5037bb1f",
+    "tagObject": "04952417a80e51651131b4b7f0a447783c099333",
+    "releaseId": 397088285,
+    "distributionSha256": "3370d5d6e72b0e7b7b8cd2ad28c2714bd2617e6d9ce83ad290e57d9331a14c28"
+  },
+  "archiveSource": {
+    "pr": 1,
+    "head": "4934a21a60d6a54f3991943fee882b595fe79168",
+    "mergeCommit": "b9cac71452b1ea2c66d3f18b8ca4e0a2c6ead971",
+    "mergeTree": "a1f718fec26cc5c16f374dca2e4df2ef506cee97",
+    "review": "HOSTED_EXACT_HEAD_AND_MAIN_GATES_PASS",
+    "reviewNote": "No separate GitHub review object exists; this selector PR reviews the immutable archive authority and acceptance evidence."
+  },
+  "hosted": {
+    "exactHeadPrRun": 36222375596,
+    "exactMainRun": 36222447765,
+    "mainRunAttempt": 2,
+    "initialDeployFailure": {
+      "run": 36222447765,
+      "attempt": 1,
+      "reason": "GitHub Pages was not yet enabled for the newly created archive repository; the failed deployment is retained and attempt 2 reran the same exact main commit after workflow Pages was enabled."
+    },
+    "buildJob": 108350312176,
+    "deployJob": 108350311596,
+    "receiptsArtifact": {
+      "id": 10899855786,
+      "name": "archive90-verification-receipts",
+      "size_in_bytes": 68885,
+      "digest": "sha256:719cdac237a5bb160c57e425b0b005237487fd1a2f87b4a7df291526e060c6f8"
+    },
+    "pagesArtifact": {
+      "id": 10898928798,
+      "name": "github-pages",
+      "size_in_bytes": 545335712,
+      "digest": "sha256:649736edaaf74a4050e2acaae72a95a2f0d71fe06c8b7193c03224d4594e77f9"
+    },
+    "deployment": {
+      "id": 6675372283,
+      "statusId": 18867399967,
+      "state": "success",
+      "environmentUrl": "https://mekhovov.github.io/revealline-archive-90/",
+      "createdAt": "2026-09-26T06:01:45Z"
+    },
+    "receipts": {
+      "expectedInventorySha256": "9825cf9b6f0c26523ae1d8ac258106742e0541ad8b5d2876d27cd5eccdcfb52a",
+      "receiptSha256": "87bbd2cbcc947841d6da179ad44ed7f25af09f4d95f652c7ebb8df4adf8b46ef",
+      "zipReceiptSha256": "d591a7f67d03a29ed9b1faf61021a9f520a16a4ddde9c338b94b9842b6165510",
+      "files": 1307,
+      "bytes": 611465108,
+      "toolingCommit": "c45cd78bdc522bf95c267615fe3ad93dd77dff98",
+      "status": "PASS"
+    }
+  },
+  "publicByteAudit": {
+    "status": "PASS",
+    "method": "GET every finite expected path; compare exact byte count and SHA-256 without retaining bodies",
+    "files": 1307,
+    "bytes": 611465108,
+    "failures": 0,
+    "transportRetries": 0,
+    "skips": 0,
+    "allFinalURLsExact": true,
+    "authorityUnchanged": true,
+    "verifiedAt": "2026-09-26T06:04:57.701900Z"
+  },
+  "browserAcceptance": {
+    "status": "PASS",
+    "surface": "Codex in-app Chromium automation",
+    "base": "https://mekhovov.github.io/revealline-archive-90/",
+    "observations": [
+      "The Archive90 index identified the original v0.132.1 build and exposed its canonical game route.",
+      "The preserved route booted to the REVEAL / LINE title/home with Solo selected and Continue, Missions, Collection, Settings, More, and Sound controls.",
+      "Browser Back returned directly to the same Archive90 index without reload or retry."
+    ],
+    "reloads": 0,
+    "retries": 0
+  },
+  "testPolicy": {
+    "longSourceSuites": "waived",
+    "reportedAsPassed": false,
+    "blockingEvidence": [
+      "exact original release ZIP extraction",
+      "complete inventory reread",
+      "full public byte audit",
+      "bounded archive browser journey"
+    ]
+  },
+  "scope": "Immutable v0.132.1 preservation, exact public-byte audit, and bounded archive index, title/home, and Back navigation. The browser console was not independently inspected; physical-device/controller, comprehensive offline, and extended gameplay acceptance are outside this archive admission."
+}
