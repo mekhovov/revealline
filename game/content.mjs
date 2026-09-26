@@ -465,7 +465,7 @@ export function validateScenario(value, { classRecipes: defaultRecipes = CLASSES
       SENTINEL_SCENARIO_VERSION,
     ].includes(value.format)
   )
-    return result(['Expected a supported xonix-playground.v1..v9 format'], {
+    return result([contentError('scenario.supportedFormat')], {
       warnings,
     });
   const sentinel = value.format === SENTINEL_SCENARIO_VERSION;
@@ -513,13 +513,13 @@ export function validateScenario(value, { classRecipes: defaultRecipes = CLASSES
                     ? 'xonix-level.v2'
                     : 'xonix-level.v1')
   )
-    errors.push('Scenario and level simulation versions must match');
+    errors.push(contentError('scenario.simulationVersionMatch'));
   themeChecks(value.theme, errors);
   if (plain(value.level)) {
     if (!text(value.level.name, 280))
-      errors.push('level.name must be nonempty text of at most 280 characters');
+      errors.push(contentError('boundedText', { path: 'level.name', max: 280 }));
     if (!text(value.level.revision, 80))
-      errors.push('level.revision must be nonempty text of at most 80 characters');
+      errors.push(contentError('boundedText', { path: 'level.revision', max: 80 }));
     if (own(value.level, 'metadata')) metadata(value.level.metadata, 'level.metadata', errors);
   }
   const recipes = own(value, 'classRecipes') ? value.classRecipes : defaultRecipes;
@@ -536,9 +536,9 @@ export function validateScenario(value, { classRecipes: defaultRecipes = CLASSES
             ['revision', 80],
           ])
             if (!text(c[key], max))
-              errors.push(`classRecipes.${key} must be nonempty text of at most ${max} characters`);
+              errors.push(contentError('boundedText', { path: `classRecipes.${key}`, max }));
   }
-  if (!plain(value.settings)) errors.push('settings must be an object');
+  if (!plain(value.settings)) errors.push(contentError('objectRequired', { path: 'settings' }));
   else {
     keys(value.settings, ['classId', 'turnPolicy', 'seed'], 'settings', errors);
     if (
@@ -546,38 +546,45 @@ export function validateScenario(value, { classRecipes: defaultRecipes = CLASSES
       !Array.isArray(recipes) ||
       !recipes.some((c) => plain(c) && c.id === value.settings.classId)
     )
-      errors.push('Unknown class');
-    if (!TURN_POLICIES.includes(value.settings.turnPolicy)) errors.push('Unknown turn policy');
+      errors.push(contentError('registeredValue', { path: 'settings.classId' }));
+    if (!TURN_POLICIES.includes(value.settings.turnPolicy))
+      errors.push(contentError('registeredValue', { path: 'settings.turnPolicy' }));
     if (
       !Number.isInteger(value.settings.seed) ||
       value.settings.seed < 0 ||
       value.settings.seed > 0xffffffff
     )
-      errors.push('seed must be uint32');
+      errors.push(contentError('uint32', { path: 'settings.seed' }));
   }
   if (own(value, 'presentation')) {
-    if (!plain(value.presentation)) errors.push('presentation must be an object');
+    if (!plain(value.presentation))
+      errors.push(contentError('objectRequired', { path: 'presentation' }));
     else {
       keys(value.presentation, ['style', 'showGrid'], 'presentation', errors);
       if (!['microtile', 'props', 'hybrid'].includes(value.presentation.style))
-        errors.push('presentation.style must be microtile, props or hybrid');
+        errors.push(
+          contentError('oneOf', { path: 'presentation.style', values: 'microtile, props, hybrid' }),
+        );
       if (typeof value.presentation.showGrid !== 'boolean')
-        errors.push('presentation.showGrid must be boolean');
+        errors.push(contentError('booleanRequired', { path: 'presentation.showGrid' }));
     }
   }
   if (own(value, 'metadata')) metadata(value.metadata, 'scenario.metadata', errors);
   if (own(value, 'music'))
-    errors.push(...validateTrack(value.music).errors.map((error) => `music: ${error}`));
+    errors.push(
+      ...validateTrack(value.music).errors.map((error) =>
+        contentError('sectionError', { section: 'music', error }),
+      ),
+    );
   if (hasMastery) {
-    if (!own(value, 'masteryDefinition'))
-      errors.push('scenario.masteryDefinition is required; use null for no optional goal');
+    if (!own(value, 'masteryDefinition')) errors.push(contentError('scenario.masteryRequired'));
     else if ((hasEncounter || wide || classic) && value.masteryDefinition !== null)
       errors.push(
         classic
-          ? 'Classic scenarios require masteryDefinition:null; optional goals are not supported by this ruleset'
+          ? contentError('scenario.classicMasteryUnsupported')
           : wide
-            ? 'Wide scenarios require masteryDefinition:null; optional goals are not supported by this ruleset'
-            : 'Encounter scenarios require masteryDefinition:null; optional goals are not supported by this ruleset',
+            ? contentError('scenario.wideMasteryUnsupported')
+            : contentError('scenario.encounterMasteryUnsupported'),
       );
     else if (value.masteryDefinition !== null && !errors.length) {
       try {
@@ -586,38 +593,41 @@ export function validateScenario(value, { classRecipes: defaultRecipes = CLASSES
           definition: value.masteryDefinition,
         });
       } catch (error) {
-        errors.push(`masteryDefinition: ${error.message}`);
+        errors.push(
+          contentError('sectionError', { section: 'masteryDefinition', error: error.message }),
+        );
       }
     }
   }
-  if (!plain(value.visualOverrides)) errors.push('visualOverrides must be an object');
+  if (!plain(value.visualOverrides))
+    errors.push(contentError('objectRequired', { path: 'visualOverrides' }));
   else {
     let totalPixels = 0;
     for (const [role, item] of Object.entries(value.visualOverrides)) {
       if (!VISUAL_ROLES.includes(role) && !(classic && CLASSIC_VISUAL_ROLES.includes(role))) {
-        errors.push(`Unknown visual role ${role}`);
+        errors.push(contentError('registeredValue', { path: `visualOverrides.${role}` }));
         continue;
       }
       if (!plain(item)) {
-        errors.push(`${role} must be an image descriptor`);
+        errors.push(contentError('imageDescriptor', { path: role }));
         continue;
       }
       keys(item, ['dataUrl', 'name', 'fit', 'metadata'], role, errors);
       if (own(item, 'name') && !text(item.name, 240))
-        errors.push(`${role}.name must be nonempty text of at most 240 characters`);
+        errors.push(contentError('boundedText', { path: `${role}.name`, max: 240 }));
       if (own(item, 'fit') && !['contain', 'cover'].includes(item.fit))
-        errors.push(`${role}.fit must be contain or cover`);
+        errors.push(contentError('oneOf', { path: `${role}.fit`, values: 'contain, cover' }));
       if (own(item, 'metadata')) metadata(item.metadata, `${role}.metadata`, errors);
       const inspected = inspectImageDataUrl(item.dataUrl);
-      errors.push(...inspected.errors.map((e) => `${role}: ${e}`));
+      errors.push(
+        ...inspected.errors.map((error) => contentError('sectionError', { section: role, error })),
+      );
       if (inspected.valid) totalPixels += inspected.width * inspected.height;
     }
     if (totalPixels > CONTENT_LIMITS.maxCombinedImagePixels)
-      errors.push('Combined decoded artwork exceeds the 32 megapixel budget');
+      errors.push(contentError('scenario.combinedDecodedArtworkBudget'));
     if (own(value.visualOverrides, 'player'))
-      warnings.push(
-        'Player artwork keeps the selected body’s existing rotor and attachment anchors. Check alignment; artwork does not change collision geometry or abilities.',
-      );
+      warnings.push(contentError('scenario.playerArtworkAnchorsWarning'));
   }
   return result(errors, { warnings });
 }
