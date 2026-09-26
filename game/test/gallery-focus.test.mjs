@@ -11,6 +11,7 @@ import { createExecutionCatalog } from '../campaign-contexts.mjs';
 import { earnedPictureFixture } from './helpers/earned-picture-fixture.mjs';
 import { waitFor } from './helpers/wait-for.mjs';
 import { STEADY_SIGNAL, masteryDefinitionIdentity } from '../mastery.mjs';
+import { getLocale, setLocale } from '../i18n/index.mjs';
 
 // A DOM lifecycle adapter: removing cards really detaches them, and focusing a
 // stale or disabled node fails. Painting and browser image decoding are separate.
@@ -166,6 +167,7 @@ async function setup(t, count = 30, hostOverrides = {}) {
   document.parentNode = document.defaultView;
   document.nodeType = 9;
   document.children = [];
+  document.documentElement = new Element(document, 'html', true);
   document.body = new Element(document, 'body', true);
   document.activeElement = document.body;
   document.hidden = false;
@@ -642,6 +644,8 @@ test('an older rejected decode cannot replace the selected ready picture with an
 });
 
 test('a failed selected decode keeps stale pixels hidden and can be closed and retried', async (t) => {
+  const locale = getLocale();
+  t.after(() => setLocale(locale, { persist: false }));
   const h = await setup(t, 2);
   h.collection();
   await h.cards()[0].onclick();
@@ -652,6 +656,13 @@ test('a failed selected decode keeps stale pixels hidden and can be closed and r
   await loading;
   assert.equal(h.node('gallery-canvas').style.visibility, 'hidden');
   assert.equal(h.node('gallery-canvas').attributes.get('aria-busy'), 'false');
+  assert.match(h.node('gallery-view-meta').textContent, /Picture could not load.*Selected image/);
+  const library = structuredClone(h.library);
+  setLocale('uk', { persist: false });
+  assert.match(h.node('gallery-view-meta').textContent, /Не вдалося завантажити картину/);
+  assert.match(h.node('gallery-view-meta').textContent, /Selected image decode failed/);
+  assert.deepEqual(h.library, library);
+  setLocale('en', { persist: false });
   assert.match(h.node('gallery-view-meta').textContent, /Picture could not load.*Selected image/);
   assert.equal(h.node('gallery-replay').disabled, true);
   assert.equal(h.node('gallery-animate').disabled, true);
