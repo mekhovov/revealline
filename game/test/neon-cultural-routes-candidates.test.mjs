@@ -247,8 +247,8 @@ test('registered v16 successor preserves v15 order and uses isolated progress ow
   assert(authoredJourneyUsesActorMaterials(current.id));
   assert(AUTHORED_JOURNEY_ROUTE_IDS.includes(current.id));
   assert.deepEqual(DEFAULT_JOURNEY_ROUTES, {
-    solo: 'whole-spatial-v17',
-    versus: 'whole-spatial-v17',
+    solo: 'whole-spatial-v18',
+    versus: 'whole-spatial-v18',
     team: 'team-trail-impact-originals-1',
   });
   assert.equal(authoredJourneyModeHref(current.id, 'solo'), '../?journey=whole-spatial-v16');
@@ -287,7 +287,7 @@ test('Studio retains v15 and v16 while v17 owns its selected edition', async () 
     options
       .filter((node) => attribute(node, 'selected') !== undefined)
       .map((node) => attribute(node, 'value')),
-    ['neon-cultural-routes-2'],
+    ['rover-cultural-routes-1'],
   );
   assert.match(html, /journey=whole-spatial-v16/);
   assert.match(script, /'neon-cultural-routes-1': createNeonCulturalRoutesCandidates/);
