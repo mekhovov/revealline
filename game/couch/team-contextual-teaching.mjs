@@ -19,14 +19,12 @@ function readStored(storage, key) {
 }
 
 function supportCue(guidance) {
-  const roles = guidance?.supportBySeat;
-  if (Array.isArray(roles) && roles.some((role) => /^Interceptor|^Disruptor/.test(role)))
-    return 'SUPPORT READY · Player 1 intercepts sparks; Player 2 slows enemies. Tap Support near the matching threat.';
-  const text = String(guidance?.supportText ?? '');
-  if (/intercept/i.test(text) && /slow/i.test(text))
-    return 'SUPPORT READY · Tap Support near a moving threat or travelling spark.';
-  if (/intercept/i.test(text)) return 'SUPPORT READY · Tap Support near a travelling spark.';
-  if (/slow/i.test(text)) return 'SUPPORT READY · Tap Support near a moving threat.';
+  const capabilities = guidance?.supportCapabilities;
+  if (capabilities?.specialist) return 'interface:team.teaching.supportSpecialists';
+  if (capabilities?.intercept && capabilities?.slow)
+    return 'interface:team.teaching.supportSlowAndIntercept';
+  if (capabilities?.intercept) return 'interface:team.teaching.supportIntercept';
+  if (capabilities?.slow) return 'interface:team.teaching.supportSlow';
   return null;
 }
 
@@ -67,21 +65,19 @@ export function createTeamContextualTeaching({
       onWarning(`Teaching progress stays on this page: ${error.message}`);
     }
   };
-  const introduce = (kind, text) => {
+  const introduce = (kind, key, values = {}) => {
     if (state.introduced.has(kind) || state.completed.has(kind)) return null;
     state.introduced.add(kind);
     save();
-    return Object.freeze({ kind, text });
+    return Object.freeze({ kind, key, values: Object.freeze({ ...values }) });
   };
 
   return Object.freeze({
     opening(guidance) {
       if (state.introduced.has('cut')) return null;
-      const ground = guidance?.groundName === 'safe ground' ? 'safe ground' : 'reclaimed ground';
-      return introduce(
-        'cut',
-        `FIRST CUT · Steer off ${ground}, then return to ${ground} to bank the line.`,
-      );
+      return introduce('cut', 'interface:team.teaching.firstCut', {
+        context: guidance?.groundContext,
+      });
     },
     observe(events, guidance) {
       if (!Array.isArray(events))
@@ -105,13 +101,12 @@ export function createTeamContextualTeaching({
       }
       if (changed) save();
       if (events.some((event) => event?.type === 'player.downed'))
-        return introduce(
-          'rescue',
-          `RESCUE · Move together on ${guidance?.groundName ?? 'reclaimed ground'}; the active partner holds Support nearby for one second.`,
-        );
+        return introduce('rescue', 'interface:team.teaching.rescue', {
+          context: guidance?.groundContext,
+        });
       if (events.some((event) => event?.type === 'cut.closed' || event?.type === 'cut.joint')) {
-        const text = supportCue(guidance);
-        if (text) return introduce('support', text);
+        const key = supportCue(guidance);
+        if (key) return introduce('support', key);
       }
       return null;
     },

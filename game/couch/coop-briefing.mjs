@@ -40,11 +40,17 @@ export function coopArenaGuidance(level, { jointCuts = true } = {}) {
     : t('gameplay:team.separateCuts', { context });
   return {
     groundName,
+    groundContext: context,
     threatTitle: threats.length
       ? t('interface:watchTheThreats')
       : t('interface:practiceYourRoutes'),
     threatText: threats.length ? threats.join(' ') : t('gameplay:team.noThreats', { context }),
     supportText: pulse + rescue,
+    supportCapabilities: Object.freeze({
+      intercept: specialist || relays,
+      slow: specialist || hunters || drifters || roamers,
+      specialist,
+    }),
     supportBySeat: (level.supportRoles ?? ['hybrid', 'hybrid']).map((role) =>
       role === 'interceptor'
         ? t('interface:interceptorRemovesNearbyTravellingImpacts')
