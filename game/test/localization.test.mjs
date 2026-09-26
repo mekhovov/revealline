@@ -151,6 +151,48 @@ test('Couch continuation cancellation interpolates its localized action', () => 
     );
 });
 
+test('Couch preparation failures have complete English and Ukrainian messages', () => {
+  for (const [saved, expected] of [
+    [
+      'en',
+      [
+        'This map picture or actor appearance could not load: unavailable',
+        'This chapter could not load: unavailable',
+        'The next round picture or actors could not be prepared. Both boards are kept. Choose Next round to retry.',
+        'The prepared picture could not be confirmed. Retry or choose a new setup: unavailable',
+      ],
+    ],
+    [
+      'uk',
+      [
+        'Не вдалося завантажити зображення мапи або вигляд персонажа: unavailable',
+        'Не вдалося завантажити розділ: unavailable',
+        'Не вдалося підготувати зображення або персонажів для дії «наступний раунд». Обидва поля збережено. Оберіть «Наступний раунд», щоб повторити спробу.',
+        'Не вдалося підтвердити підготовлене зображення. Повторіть спробу або виберіть нові налаштування: unavailable',
+      ],
+    ],
+  ]) {
+    const { api } = runtime({ saved });
+    const retryAction = saved === 'uk' ? 'Наступний раунд' : 'Next round';
+    assert.deepEqual(
+      [
+        api.t('interface:couch.mapPictureOrActorAppearanceCouldNotLoad', {
+          error: 'unavailable',
+        }),
+        api.t('interface:couch.chapterCouldNotLoad', { error: 'unavailable' }),
+        api.t('interface:couch.continuationPictureOrActorsCouldNotBePrepared', {
+          actionLower: retryAction.toLocaleLowerCase(),
+          retryAction,
+        }),
+        api.t('interface:couch.preparedPictureCouldNotBeConfirmed', {
+          error: 'unavailable',
+        }),
+      ],
+      expected,
+    );
+  }
+});
+
 test('text and attribute bindings update in place without changing editor values', () => {
   const { api } = runtime();
   const node = {

@@ -554,6 +554,7 @@ try {
         ? localizedMessage('interface:openAllMissionsForJourneyEarlierMissionsAndInstalledChapters')
         : localizedMessage('interface:couch.testRoute', { route: authoredRoute.label })
       : localizedMessage('interface:installedChaptersHaveNotBeenChecked'),
+    installedRefreshPending = false,
     contentChannel = null;
   try {
     const channel = document.querySelector('meta[name="revealline-offline"]')
@@ -974,12 +975,17 @@ try {
     contentBusy = false;
     contentReady = retainedResult;
     contentError = retainedResult
-      ? t('interface:couch.continuationPictureLoadingCancelled', {
-          action: continuationAction(),
-        })
-      : t('interface:pictureLoadingCancelledRetryWhenYouAreReady');
-    if (installedStatus === 'Checking installed chapters…')
-      installedStatus = t('interface:installedChapterCheckCancelledRefreshWhenReady');
+      ? () =>
+          t('interface:couch.continuationPictureLoadingCancelled', {
+            action: continuationAction(),
+          })
+      : localizedMessage('interface:pictureLoadingCancelledRetryWhenYouAreReady');
+    if (installedRefreshPending) {
+      installedRefreshPending = false;
+      installedStatus = localizedMessage(
+        'interface:installedChapterCheckCancelledRefreshWhenReady',
+      );
+    }
     localizedText($('race-message'), () => contentError);
     updateMenu();
   }
@@ -1217,7 +1223,12 @@ try {
       } catch (error) {
         if (disposed || controller.signal.aborted || match !== selectedRun || ticket !== generation)
           return false;
-        contentError = `This ${staticEntry ? 'map picture or actor appearance' : 'chapter'} could not load: ${error.message}`;
+        contentError = localizedMessage(
+          staticEntry
+            ? 'interface:couch.mapPictureOrActorAppearanceCouldNotLoad'
+            : 'interface:couch.chapterCouldNotLoad',
+          { error: error.message },
+        );
         localizedText($('race-message'), () => contentError);
         display.finish({ state: 'error', message: '' });
         return false;
@@ -1447,7 +1458,13 @@ try {
       return prepared;
     } catch (error) {
       if (current()) {
-        contentError = `The ${continuationAction().toLowerCase()} picture or actors could not be prepared. Both boards are kept. Choose ${continuationAction()} to retry.`;
+        contentError = () => {
+          const retryAction = continuationAction();
+          return t('interface:couch.continuationPictureOrActorsCouldNotBePrepared', {
+            actionLower: retryAction.toLocaleLowerCase(),
+            retryAction,
+          });
+        };
         localizedText($('race-message'), () => contentError);
         display.finish({ state: 'error', message: '' });
         console.warn(t('interface:nextPicturePreparationFailed'), error);
@@ -1649,8 +1666,12 @@ try {
         ) {
           contentReady = false;
           contentError = shippedMaps.includes(entry)
-            ? `The prepared picture could not be confirmed. Retry or choose a new setup: ${error.message}`
-            : `Refresh installed chapters in Race setup before starting: ${error.message}`;
+            ? localizedMessage('interface:couch.preparedPictureCouldNotBeConfirmed', {
+                error: error.message,
+              })
+            : localizedMessage('gameplay:refreshInstalledChaptersInRaceSetupBeforeStarting', {
+                value1: error.message,
+              });
           localizedText($('race-message'), () => contentError);
           display.finish({ state: 'error', message: '' });
         }
@@ -1741,7 +1762,8 @@ try {
     contentReady = false;
     contentScope = shell.scope();
     if (!shippedMaps.includes(oldEntry)) backdrop = null;
-    installedStatus = t('interface:checkingInstalledChapters');
+    installedRefreshPending = true;
+    installedStatus = localizedMessage('interface:checkingInstalledChapters');
     const display = preparationStatus.begin({
       message: installedStatus,
       stage: 'verifying',
@@ -1760,19 +1782,24 @@ try {
       if (!maps.some((row) => row.key === oldKey)) maps.push(oldEntry);
       showMaps();
       $('race-level').value = oldKey;
+      installedRefreshPending = false;
       installedStatus = rows.length
-        ? `${rows.length} installed maps available.`
+        ? localizedMessage('interface:couch.installedMapCount', { count: rows.length })
         : localizedMessage('interface:openAllMissionsToDownloadCompatibleChaptersThenChoosePlay');
       const ready = prepare();
       focusController = contentController;
       await ready;
     } catch (error) {
       if (disposed || controller.signal.aborted || controller !== contentController) return;
-      contentError = t('gameplay:installedChaptersUnavailable', { value1: error.message });
+      installedRefreshPending = false;
+      contentError = localizedMessage('gameplay:installedChaptersUnavailable', {
+        value1: error.message,
+      });
       installedStatus = contentError;
       localizedText($('race-message'), () => contentError);
       display.finish({ state: 'error', message: '' });
     } finally {
+      if (controller === contentController) installedRefreshPending = false;
       if (!disposed && controller === contentController && !controller.signal.aborted) {
         contentBusy = false;
         updateMenu();
@@ -1974,9 +2001,24 @@ try {
     onPads: (count, nextSlots) => {
       assignmentsChanged = nextSlots.some((slot, i) => slot !== slots[i]);
       slots = [...nextSlots];
-      const message = `${count} standard controller${count === 1 ? '' : 's'} assigned · ${slots.map((slot, i) => `Player ${i + 1}: ${slot === null ? 'keyboard/touch' : `pad slot ${slot}`}`).join(' · ')}. Keyboard and touch remain available. Esc / P pauses both boards.`;
-      if ($('race-pad-status').textContent !== message)
-        localizedText($('race-pad-status'), () => message);
+      const message = () =>
+        t('gameplay:standardControllerAssignedKeyboardAndTouchRemainAvailableEscapePauses', {
+          value1: count,
+          value2: count === 1 ? '' : 's',
+          value3: slots
+            .map((slot, i) =>
+              t('gameplay:player', {
+                value1: i + 1,
+                value2:
+                  slot === null
+                    ? t('interface:keyboardTouch')
+                    : t('gameplay:padSlot', { value1: slot }),
+              }),
+            )
+            .join(' · '),
+        });
+      if ($('race-pad-status').textContent !== message())
+        localizedText($('race-pad-status'), message);
     },
   });
   let soloReturnStorage;
@@ -3976,7 +4018,7 @@ try {
   bootFailed = true;
   bootDisplay.finish({
     state: 'error',
-    message: `The race could not load: ${error.message}`,
+    message: localizedMessage('gameplay:theRaceCouldNotLoad', { value1: error.message }),
   });
   releaseArtwork({ persisted: false });
   $('race-start').disabled = true;
