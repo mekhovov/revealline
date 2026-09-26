@@ -28,12 +28,14 @@ several-hundred-megabyte distribution in fast mode. Superseded runs for the same
 the workflow concurrency group. Pages previews use a partial sparse checkout of
 the controller, workflow contracts, test policy, and two archive helpers while retaining all tags
 and on-demand Git objects needed to verify frozen source identities. Production publications remain
-serialized with one concurrency group and `cancel-in-progress: false`. GitHub Actions currently
-accepts only `group` and `cancel-in-progress` in a concurrency block; the unsupported `queue: max`
-key causes a startup failure before any job runs. The sole publisher therefore dispatches only one
-successor while another release is active. Pull-request
+serialized with one concurrency group, `cancel-in-progress: false`, and `queue: max`, so a newer
+pending release cannot replace an older pending release. The sole publisher still dispatches only
+one internal successor for a given immutable version. Pull-request
 previews keep per-PR cancellation. Authority checks use bounded GraphQL batches; only fields
 unavailable or missing from GraphQL fall back to serial conditional REST with finite retry/backoff.
+Conditional REST ETags and their previously authenticated response bodies are restored from a
+bounded Actions cache and refreshed only after a successful authority pass; cache reuse never
+replaces comparison with the committed admission pins.
 Preview runs remotely revalidate only new or changed admission pins, while production checks all
 admitted archives.
 
@@ -52,7 +54,8 @@ title or a release milestone. Exact-head automation additionally requires the
 successful `release-ready` run the controller rereads the pull request without checking out its
 code. A conflict-free behind branch is updated using its expected head SHA, then checked again. A
 clean exact head is armed for merge-commit auto-merge. A changed head, milestone, hold label,
-unmerged `Depends on #…` predecessor, or changes-requested review disarms an existing request.
+unmerged `Depends on #…` predecessor, changes-requested review, or failed/cancelled rerun of the
+required gate disarms an existing request.
 
 Ordinary pull requests always use protected exact-head auto-merge. A real GitHub pull-request stack
 uses the asynchronous merge API only when its reviewed top pull request also has the
@@ -118,8 +121,17 @@ Fast pull-request previews validate the selector, highest stable release match, 
 metadata, and bounded extraction rules without assembling the complete Pages artifact. Exact
 artifact assembly and the independent reread of every prepared byte are deferred to the main
 publication, where they remain mandatory together with the final latest-release recheck and the
-main-only `github-pages` deployment environment. These checks prevent publishing the wrong or
-corrupt frozen release and are not waived.
+main-only `github-pages` deployment environment. After deployment, the production workflow
+downloads its own immutable assembly receipt and streams every public path with bounded
+concurrency, checking the receipt's exact byte count and SHA-256 for every file. The resulting
+public-byte receipt is retained as a separate immutable Actions artifact. These checks prevent
+publishing the wrong, stale, or corrupt frozen release and are not waived.
+
+The current-release extractor records the sorted byte/hash inventory it produced while streaming
+the immutable distribution ZIP. Assembly reuses that receipt instead of hashing the extracted tree
+twice, enumerates the tree to reject missing or extra paths, and hashes each source again while
+copying it. Final output inventory and the separate post-assembly reread remain independent
+blocking checks.
 
 The release event only routes an eligible tag to the sole publisher. It does not rebuild historical
 source or rerun the full test suite. Source-qualification consumer changes, workflow, policy, skill,
@@ -167,6 +179,13 @@ artifact has closed. Resume locates only a successful completed proof run for th
 version and source, assembles the seven evidence assets from the completed run authorities, and
 reconciles the annotated tag, draft, nine server digests and publication exactly once.
 
+The independent inspector may read its own parent fastline run while that exact run is still
+`in_progress`, because the inspector itself prevents the parent from becoming `completed`. This
+exception is fail-closed: the run ID must equal `GITHUB_RUN_ID`, the workflow and source must match,
+admission/qualification/freeze must already be successful, waived tests must actually be skipped,
+no job may have failed, and exactly one inspection job must be active. Completed historical runs
+remain subject to the stricter completed-run authority rules.
+
 Existing matching objects are reused; absent draft objects are created; mismatched tags, releases,
 assets, lightweight tags, incomplete published releases and digestless assets stop. Published assets
 are never overwritten. The write permission exists only on the final publication job. The reusable
@@ -175,10 +194,9 @@ the existing archive/selector/Pages route; archive admission, selector review, p
 deployment, public-byte audit and player journeys remain blocking and are not claimed by release
 publication alone.
 
-GitHub Actions still supports only one running and one pending member of an ordinary concurrency
-group. It does not preserve an arbitrary FIFO backlog, and `queue: max` is rejected by workflow
-validation for this repository. Therefore only one owner/coordinator may submit a new version while
-`fastline-publisher` is active. The internal resume consumes the one pending slot. The durable
-release queue remains the active milestone plus terminal release-root PR, not a collection of
-concurrent workflow dispatches. Existing manual entry points remain the guarded emergency path
-during the two-release rollout and must not run for the same version as fastline.
+The `fastline-publisher` concurrency group uses `queue: max`; queued versions are not discarded when
+another request arrives. The durable source-of-truth queue nevertheless remains the active milestone
+plus terminal release-root PR, not a collection of speculative workflow dispatches. The internal
+resume is bound to the completed immutable proof run for its exact version and source. Existing
+manual entry points remain the guarded emergency path during the two-release rollout and must not
+run for the same version as fastline.

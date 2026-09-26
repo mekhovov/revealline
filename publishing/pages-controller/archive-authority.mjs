@@ -66,12 +66,20 @@ function retryDelay(response, attempt) {
 
 async function request(
   url,
-  { token, cache, metrics, method = "GET", body } = {},
+  {
+    token,
+    cache,
+    metrics,
+    fetchImpl = globalThis.fetch,
+    sleepImpl = sleep,
+    method = "GET",
+    body,
+  } = {},
 ) {
   const cached = cache[url];
   for (let attempt = 0; attempt < 4; attempt++) {
     metrics.restRequests++;
-    const response = await fetch(url, {
+    const response = await fetchImpl(url, {
       method,
       body,
       headers: {
@@ -91,7 +99,7 @@ async function request(
     }
     if ([403, 429].includes(response.status) && attempt < 3) {
       metrics.retries++;
-      await sleep(retryDelay(response, attempt));
+      await sleepImpl(retryDelay(response, attempt));
       continue;
     }
     const text = await response.text();
@@ -144,6 +152,8 @@ export async function verifyArchiveAuthorities({
   admissions,
   token,
   cacheFile,
+  fetchImpl = globalThis.fetch,
+  sleepImpl = sleep,
 }) {
   if (!token)
     throw new Error("Archive authority verification requires a GitHub token.");
@@ -155,7 +165,7 @@ export async function verifyArchiveAuthorities({
     let data = null;
     try {
       metrics.graphqlRequests++;
-      const response = await fetch("https://api.github.com/graphql", {
+      const response = await fetchImpl("https://api.github.com/graphql", {
         method: "POST",
         headers: {
           accept: "application/vnd.github+json",
@@ -181,7 +191,13 @@ export async function verifyArchiveAuthorities({
         : null;
       const value =
         fromGraphQL ||
-        (await restObservation(admission, { token, cache, metrics }));
+        (await restObservation(admission, {
+          token,
+          cache,
+          metrics,
+          fetchImpl,
+          sleepImpl,
+        }));
       observations.push(assertObservation(admission, value));
     }
   }
