@@ -3,12 +3,12 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { parse } from 'parse5';
 import {
-  BORDER_SIGNAL_CULTURAL_NEXT_BATCH_REVISION,
-  BORDER_SIGNAL_CULTURAL_NEXT_BATCH_SELECTIONS,
-  BORDER_SIGNAL_CULTURAL_NEXT_BATCH_SOURCES,
-  createBorderSignalCulturalNextBatchCandidates,
-} from '../content-design/border-signal-cultural-next-batch-candidates.mjs';
-import { createBorderCulturalNextBatchCandidates } from '../content-design/border-cultural-next-batch-candidates.mjs';
+  SIGNAL_CULTURAL_ROUTES_REVISION,
+  SIGNAL_CULTURAL_ROUTES_SELECTIONS,
+  SIGNAL_CULTURAL_ROUTES_SOURCES,
+  createSignalCulturalRoutesCandidates,
+} from '../content-design/signal-cultural-routes-candidates.mjs';
+import { createEarlyCulturalRoutesCandidates } from '../content-design/early-cultural-routes-candidates.mjs';
 import { compileContentProject, resolveMission } from '../content-design/project.mjs';
 import { inspectMissionTopology } from '../content-design/diagnostics.mjs';
 import { createAuthoredJourneyRoute } from '../content-design/route.mjs';
@@ -29,11 +29,10 @@ import {
 } from '../replay.mjs';
 import { createDuel, resumeDuel, stepDuel, UNTIMED_DUEL_PROTOCOL } from '../multiplayer.mjs';
 
-const IDS = BORDER_SIGNAL_CULTURAL_NEXT_BATCH_SELECTIONS.map((item) => item.id);
+const IDS = SIGNAL_CULTURAL_ROUTES_SELECTIONS.map((item) => item.id);
 const PRESETS = ['gentle', 'standard', 'expert'];
-const CONTROLS = ['immediate', 'grid-center'];
-const beforeSource = createBorderCulturalNextBatchCandidates({ artwork: true });
-const source = createBorderSignalCulturalNextBatchCandidates({ artwork: true });
+const beforeSource = createEarlyCulturalRoutesCandidates({ artwork: true });
+const source = createSignalCulturalRoutesCandidates({ artwork: true });
 const beforeProject = compileContentProject(beforeSource);
 const project = compileContentProject(source);
 const mission = (compiled, id) => compiled.missions.find((item) => item.id === id);
@@ -44,38 +43,32 @@ const map = (compiled, id) => {
   );
 };
 
-test('selection is exactly the researched Border/Signal trio with bounded attribution', () => {
-  assert.deepEqual(IDS, ['border-remix', 'dry-spine', 'wide-approach']);
-  assert.equal(new Set(IDS).size, 3);
-  for (const selection of BORDER_SIGNAL_CULTURAL_NEXT_BATCH_SELECTIONS) {
+test('selection is exactly three baseline Signal identities with bounded cultural attribution', () => {
+  assert.deepEqual(IDS, ['soft-crossing', 'cool-the-crossing', 'signal-remix']);
+  assert.equal(new Set(IDS).size, IDS.length);
+  for (const selection of SIGNAL_CULTURAL_ROUTES_SELECTIONS) {
     assert(beforeSource.missions.some((item) => item.id === selection.id));
     assert.equal(selection.approaches.length, 2);
     assert.equal(new Set(selection.approaches).size, 2);
-    assert(selection.pressurePoints.length >= 3 && selection.pressurePoints.length <= 5);
-    assert(selection.sourceIds.every((id) => BORDER_SIGNAL_CULTURAL_NEXT_BATCH_SOURCES[id]));
+    assert(selection.pressurePoints.length >= 4 && selection.pressurePoints.length <= 5);
+    assert(selection.sourceIds.every((id) => SIGNAL_CULTURAL_ROUTES_SOURCES[id]));
   }
-  assert.match(BORDER_SIGNAL_CULTURAL_NEXT_BATCH_SOURCES.poltavaShirts.url, /museum\.kh\.ua/);
-  assert.match(
-    BORDER_SIGNAL_CULTURAL_NEXT_BATCH_SOURCES.bukovynaPysanka.url,
-    /honchar\.org\.ua\/en\/collections\/detail\/1188/,
-  );
-  assert.match(
-    BORDER_SIGNAL_CULTURAL_NEXT_BATCH_SOURCES.slobozhanshchynaRushnyk.url,
-    /honchar\.org\.ua\/collections\/detail\/2006/,
-  );
-  for (const item of Object.values(BORDER_SIGNAL_CULTURAL_NEXT_BATCH_SOURCES)) {
+  assert.match(SIGNAL_CULTURAL_ROUTES_SOURCES.reshetylivkaWhitework.url, /unesco-centerbg\.org/);
+  assert.match(SIGNAL_CULTURAL_ROUTES_SOURCES.kosivCeramics.url, /ich\.unesco\.org/);
+  assert.match(SIGNAL_CULTURAL_ROUTES_SOURCES.petrykivkaPainting.url, /ich\.unesco\.org/);
+  for (const item of Object.values(SIGNAL_CULTURAL_ROUTES_SOURCES)) {
     assert(item.observedVocabulary.length >= 3);
-    assert.match(item.adaptationBoundary, /no .*cop/i);
+    assert.match(item.adaptationBoundary, /No .*cop/i);
   }
 });
 
 for (const artwork of [false, true])
-  test(`copy-on-write changes only the selected missions and owners: artwork=${artwork}`, () => {
-    const before = createBorderCulturalNextBatchCandidates({ artwork });
+  test(`copy-on-write changes only selected missions and owners: artwork=${artwork}`, () => {
+    const before = createEarlyCulturalRoutesCandidates({ artwork });
     const snapshot = structuredClone(before);
-    const revised = createBorderSignalCulturalNextBatchCandidates({ artwork });
-    assert.deepEqual(createBorderCulturalNextBatchCandidates({ artwork }), snapshot);
-    assert.equal(revised.revision, BORDER_SIGNAL_CULTURAL_NEXT_BATCH_REVISION);
+    const revised = createSignalCulturalRoutesCandidates({ artwork });
+    assert.deepEqual(createEarlyCulturalRoutesCandidates({ artwork }), snapshot);
+    assert.equal(revised.revision, SIGNAL_CULTURAL_ROUTES_REVISION);
     assert.equal(revised.policyId, before.policyId);
     assert.equal(revised.actorCatalogId, before.actorCatalogId);
     assert.equal(revised.difficultyCatalogId, before.difficultyCatalogId);
@@ -84,7 +77,7 @@ for (const artwork of [false, true])
       const previous = before.missions.find((item) => item.id === current.id);
       if (!IDS.includes(current.id)) assert.deepEqual(current, previous);
       else {
-        assert.equal(current.revision, BORDER_SIGNAL_CULTURAL_NEXT_BATCH_REVISION);
+        assert.equal(current.revision, SIGNAL_CULTURAL_ROUTES_REVISION);
         for (const key of [
           'id',
           'name',
@@ -107,49 +100,39 @@ for (const artwork of [false, true])
     }
     for (const current of revised.campaigns) {
       const previous = before.campaigns.find((item) => item.id === current.id);
-      if (['border-remixes', 'signal-gardens'].includes(current.id)) {
-        assert.equal(current.revision, BORDER_SIGNAL_CULTURAL_NEXT_BATCH_REVISION);
+      if (['signal-gardens', 'signal-remixes'].includes(current.id)) {
+        assert.equal(current.revision, SIGNAL_CULTURAL_ROUTES_REVISION);
         assert.deepEqual(current.missionIds, previous.missionIds);
       } else assert.deepEqual(current, previous);
     }
   });
 
-test('geometry preserves hazards and never increases permanent foundation area', () => {
-  const budgets = {
-    'border-remix': [135, 124],
-    'dry-spine': [105, 105],
-    'wide-approach': [90, 80],
+test('geometry adds distinct returns without increasing permanent foundation area', () => {
+  const expected = {
+    'soft-crossing': { before: 27, after: 27, safeComponents: 3 },
+    'cool-the-crossing': { before: 42, after: 40, safeComponents: 4 },
+    'signal-remix': { before: 220, after: 181, safeComponents: 3 },
   };
   for (const id of IDS) {
     const previous = map(beforeProject, id);
     const current = map(project, id);
     assert.notEqual(current.geometryIdentity, previous.geometryIdentity);
-    assert.deepEqual(
-      [previous.geometry.foundationCount, current.geometry.foundationCount],
-      budgets[id],
-    );
+    assert.equal(previous.geometry.foundationCount, expected[id].before);
+    assert.equal(current.geometry.foundationCount, expected[id].after);
     assert(current.geometry.eligibleCount >= previous.geometry.eligibleCount);
+    assert.equal(current.geometry.safeComponents.length, expected[id].safeComponents);
+    assert(current.geometry.safeComponents.every((component) => component.departures.length >= 4));
     assert.deepEqual(current.source.walls, previous.source.walls);
     assert.deepEqual(current.source.terrain, previous.source.terrain);
     assert.deepEqual(current.source.speedZones, previous.source.speedZones);
-    assert.equal(current.geometry.fieldComponents.length, 1);
-    assert(current.geometry.safeComponents.every((component) => component.departures.length >= 4));
     for (const difficulty of PRESETS) {
       const manifest = resolveMission(project, id, { difficulty });
       assert.deepEqual(inspectMissionTopology(manifest.level, current.geometry).diagnostics, []);
     }
   }
-  assert.equal(
-    map(project, 'dry-spine').source.terrain.reduce((n, item) => n + item.w * item.h, 0),
-    488,
-  );
-  assert.equal(
-    map(project, 'wide-approach').source.terrain.reduce((n, item) => n + item.w * item.h, 0),
-    432,
-  );
 });
 
-test('all non-geometry gameplay behavior remains exact across modes and presets', () => {
+test('actors, rules, hazards, bonuses and objectives remain exact across presets and modes', () => {
   for (const id of IDS)
     for (const difficulty of PRESETS) {
       const before = resolveMission(beforeProject, id, { difficulty, mode: 'solo' });
@@ -166,7 +149,7 @@ test('all non-geometry gameplay behavior remains exact across modes and presets'
     }
 });
 
-function stepUntil(run, direction, predicate, sidecars = {}, maxTicks = 7000) {
+function stepUntil(run, direction, predicate, sidecars = {}, maxTicks = 9000) {
   for (let tick = 0; tick < maxTicks; tick++) {
     if (sidecars.recorder) recordInput(sidecars.recorder, { direction });
     stepRun(run, { direction }, FIXED_DT);
@@ -187,41 +170,40 @@ function closeRoute(run, id, approach, sidecars = {}) {
       (state) => state.events.some((event) => event.type === 'cut.closed'),
       sidecars,
     );
-  if (id === 'border-remix' && approach === 'central-stem-first') close('right');
-  else if (id === 'border-remix' && approach === 'far-leaf-first') {
-    position('up', (state) => state.player.y <= 6.6);
+  if (id === 'soft-crossing' && approach === 'slow-band-first') close('down');
+  else if (id === 'soft-crossing' && approach === 'clear-edge-first') {
     position('right', (state) => state.player.x >= 50.4);
+    position('down', (state) => state.player.y >= 21.4);
+    close('left');
+  } else if (id === 'cool-the-crossing' && approach === 'near-panel-first') close('down');
+  else if (id === 'cool-the-crossing' && approach === 'far-panel-first') {
+    position('right', (state) => state.player.x >= 53.4);
     close('down');
-  } else if (id === 'dry-spine' && approach === 'upper-shoulder-first') {
+  } else if (id === 'signal-remix' && approach === 'upper-branch-first') {
     position('up', (state) => state.player.y <= 11.6);
-    position('left', (state) => state.player.x <= 27.6);
-    position('up', (state) => state.player.y <= 8.6);
-    close('right');
-  } else if (id === 'dry-spine' && approach === 'lower-shoulder-first') {
-    position('down', (state) => state.player.y >= 23.4);
-    position('right', (state) => state.player.x >= 40.4);
-    position('down', (state) => state.player.y >= 26.4);
-    position('left', (state) => state.player.x <= 36.6);
+    position('right', (state) => state.player.x >= 34.4);
     close('up');
-  } else if (id === 'wide-approach' && approach === 'west-hook-first') close('down');
-  else if (id === 'wide-approach' && approach === 'east-hook-first') {
-    position('right', (state) => state.player.x >= 52.4);
+  } else if (id === 'signal-remix' && approach === 'lower-branch-first') {
+    position('up', (state) => state.player.y <= 11.6);
+    position('right', (state) => state.player.x >= 34.4);
+    position('down', (state) => state.player.y >= 22.4);
+    position('right', (state) => state.player.x >= 54.4);
     close('down');
   } else throw new TypeError(`Unknown authored route ${id}/${approach}`);
 }
 
 const EXPECTED_CLAIMS = Object.freeze({
-  'central-stem-first': 9,
-  'far-leaf-first': 51,
-  'upper-shoulder-first': 14,
-  'lower-shoulder-first': 10,
-  'west-hook-first': 14,
-  'east-hook-first': 9,
+  'slow-band-first': 12,
+  'clear-edge-first': 28,
+  'near-panel-first': 7,
+  'far-panel-first': 23,
+  'upper-branch-first': 10,
+  'lower-branch-first': 8,
 });
 
-for (const selection of BORDER_SIGNAL_CULTURAL_NEXT_BATCH_SELECTIONS)
+for (const selection of SIGNAL_CULTURAL_ROUTES_SELECTIONS)
   for (const difficulty of PRESETS)
-    for (const turnPolicy of CONTROLS)
+    for (const turnPolicy of ['immediate', 'grid-center'])
       test(`${selection.id} executes both approaches on ${difficulty}/${turnPolicy} across seeds`, () => {
         for (const approach of selection.approaches)
           for (const seed of [1, 2]) {
@@ -248,7 +230,7 @@ for (const id of IDS)
       }
     });
 
-for (const selection of BORDER_SIGNAL_CULTURAL_NEXT_BATCH_SELECTIONS)
+for (const selection of SIGNAL_CULTURAL_ROUTES_SELECTIONS)
   for (const approach of selection.approaches)
     test(`${selection.id}/${approach} is replay-stable and equal on both Versus boards`, () => {
       const manifest = resolveMission(project, selection.id, { difficulty: 'standard' });
@@ -270,12 +252,12 @@ for (const selection of BORDER_SIGNAL_CULTURAL_NEXT_BATCH_SELECTIONS)
       assert.deepEqual(authoritativeCheckpoint(run), authoritativeCheckpoint(duel.runs[0]));
     });
 
-test('registered v13 successor preserves v12 and authored order with isolated ownership', async () => {
-  const current = createAuthoredJourneyRoute('whole-spatial-v13');
-  const previous = createAuthoredJourneyRoute('whole-spatial-v12');
+test('registered v15 successor preserves v14 order and uses isolated progress ownership', async () => {
+  const current = createAuthoredJourneyRoute('whole-spatial-v15');
+  const previous = createAuthoredJourneyRoute('whole-spatial-v14');
   assert.deepEqual(await loadAuthoredJourneyRoute(current.id), current);
-  assert.equal(current.profileKey, 'journey-whole-spatial-v13');
-  assert.equal(current.sessionKey, 'revealline.suspended.journey-whole-spatial.v13');
+  assert.equal(current.profileKey, 'journey-whole-spatial-v15');
+  assert.equal(current.sessionKey, 'revealline.suspended.journey-whole-spatial.v15');
   assert.notEqual(current.profileKey, previous.profileKey);
   assert.notEqual(current.sessionKey, previous.sessionKey);
   assert.deepEqual(previous.source, beforeSource);
@@ -289,10 +271,10 @@ test('registered v13 successor preserves v12 and authored order with isolated ow
     versus: 'whole-spatial-v15',
     team: 'team-trail-impact-originals-1',
   });
-  assert.equal(authoredJourneyModeHref(current.id, 'solo'), '../?journey=whole-spatial-v13');
+  assert.equal(authoredJourneyModeHref(current.id, 'solo'), '../?journey=whole-spatial-v15');
   assert.equal(
     authoredJourneyModeHref(current.id, 'versus'),
-    'couch/?journey=whole-spatial-v13&return=solo',
+    'couch/?journey=whole-spatial-v15&return=solo',
   );
   for (const key of ['campaigns', 'packs'])
     assert.deepEqual(
@@ -305,7 +287,7 @@ test('registered v13 successor preserves v12 and authored order with isolated ow
     );
 });
 
-test('Studio retains v12 and v13 after its selector advances to v14', async () => {
+test('Studio retains v14, exposes v15 and defaults its selector to v15', async () => {
   const html = await readFile(new URL('../studio/index.html', import.meta.url), 'utf8');
   const script = await readFile(new URL('../studio/studio.mjs', import.meta.url), 'utf8');
   const nodes = [];
@@ -318,7 +300,7 @@ test('Studio retains v12 and v13 after its selector advances to v14', async () =
   const selector = nodes.find((node) => attribute(node, 'id') === 'whole-variety-edition');
   const options = selector.childNodes.filter((node) => node.tagName === 'option');
   assert.equal(
-    options.filter((node) => attribute(node, 'value') === 'border-cultural-routes-1').length,
+    options.filter((node) => attribute(node, 'value') === 'early-cultural-routes-1').length,
     1,
   );
   assert.deepEqual(
@@ -327,9 +309,6 @@ test('Studio retains v12 and v13 after its selector advances to v14', async () =
       .map((node) => attribute(node, 'value')),
     ['signal-cultural-routes-1'],
   );
-  assert.match(html, /journey=whole-spatial-v13/);
-  assert.match(
-    script,
-    /'border-signal-cultural-routes-1': createBorderSignalCulturalNextBatchCandidates/,
-  );
+  assert.match(html, /journey=whole-spatial-v15/);
+  assert.match(script, /'signal-cultural-routes-1': createSignalCulturalRoutesCandidates/);
 });
