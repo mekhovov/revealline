@@ -70,10 +70,10 @@ test(
       p.$('race-coop').querySelector('.game-mode-description').textContent,
       '12 Team missions',
     );
-    assert.equal(p.$('race-solo-return').getAttribute('href'), '../?journey=whole-spatial-v15');
+    assert.equal(p.$('race-solo-return').getAttribute('href'), '../?journey=whole-spatial-v16');
     assert.equal(
       p.$('race-coop').getAttribute('href'),
-      'relay-rescue.html?return=versus&journey-return=whole-spatial-v15',
+      'relay-rescue.html?return=versus&journey-return=whole-spatial-v16',
     );
     assert.equal(p.$('race-library-switch').getAttribute('href'), '?journey=legacy');
     assert.equal(p.$('race-library-switch').textContent, 'All missions');
@@ -98,11 +98,11 @@ test(
     assert.equal(p.$('race-leave-panel').hidden, true);
     assert.equal(p.$('journey-mode').value, 'versus');
     assert.equal(p.$('journey-collection').value, '');
-    assert.equal(p.$('journey-cards').children.length, 297);
+    assert.equal(p.$('journey-cards').children.length, 300);
     const identities = [...p.$('journey-cards').children].map((card) =>
       JSON.parse(card.dataset.missionId),
     );
-    assert.equal(identities.filter((identity) => identity[1] === 'whole-spatial-v15').length, 91);
+    assert.equal(identities.filter((identity) => identity[1] === 'whole-spatial-v16').length, 91);
     assert.equal(identities.filter((identity) => identity[1] === 'whole-spatial-v12').length, 3);
     assert.equal(identities.filter((identity) => identity[1] === 'whole-spatial-v13').length, 3);
     assert.equal(identities.filter((identity) => identity[1] === 'whole-spatial-v11').length, 3);
@@ -123,7 +123,7 @@ test(
     assert.equal(p.$('race-leave-panel').hidden, false);
     p.$('race-leave').setAttribute('href', 'https://untrusted.invalid/');
     assert.equal(p.$('race-leave').emit('click').defaultPrevented, false);
-    assert.equal(p.$('race-leave').getAttribute('href'), '../?journey=whole-spatial-v15');
+    assert.equal(p.$('race-leave').getAttribute('href'), '../?journey=whole-spatial-v16');
     assert.deepEqual(p.checkpoint(), checkpoint);
   },
 );
@@ -141,7 +141,7 @@ test(
       'relay-rescue.html?journey=legacy&return=versus',
     );
     assert.equal(p.$('race-library-switch').textContent, 'All missions');
-    assert.equal(p.$('race-library-switch').getAttribute('href'), '?journey=whole-spatial-v15');
+    assert.equal(p.$('race-library-switch').getAttribute('href'), '?journey=whole-spatial-v16');
     await openMissions(p, () =>
       assert.equal(p.$('race-library-switch').emit('click').defaultPrevented, true),
     );
@@ -187,7 +187,7 @@ for (const query of [
     assert.equal(p.doc.body.classList.contains('candidate-journey'), false);
     assert.equal(p.$('race-level').children.length, 15);
     assert.equal(p.$('race-library-switch').textContent, 'All missions');
-    assert.equal(p.$('race-library-switch').getAttribute('href'), '?journey=whole-spatial-v15');
+    assert.equal(p.$('race-library-switch').getAttribute('href'), '?journey=whole-spatial-v16');
     assert.equal(p.$('race-journey-note').hidden, true);
   });
 
