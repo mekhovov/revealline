@@ -1,0 +1,149 @@
+{
+  "format": "ContentProjectV1",
+  "id": "uniqueness-pilot-horizon-versus",
+  "revision": "greybox-1",
+  "name": "Uniqueness pilot · Horizon Versus · unapproved",
+  "policyId": "journey-trail-impact-v3",
+  "actorCatalogId": "journey-actors-v9",
+  "difficultyCatalogId": "journey-difficulty-v2",
+  "maps": [
+    {
+      "format": "MapDesignV1",
+      "id": "uniqueness-pilot-horizon-race-map",
+      "revision": "greybox-1",
+      "name": "Two-bank time trial",
+      "width": 72,
+      "height": 36,
+      "walls": [
+        {
+          "x": 27,
+          "y": 15,
+          "w": 18,
+          "h": 2
+        }
+      ],
+      "foundations": [
+        {
+          "x": 10,
+          "y": 11,
+          "w": 7,
+          "h": 3
+        },
+        {
+          "x": 55,
+          "y": 22,
+          "w": 7,
+          "h": 3
+        }
+      ],
+      "terrain": [],
+      "spawns": [
+        {
+          "id": "home",
+          "x": 12.5,
+          "y": 0.5
+        }
+      ]
+    }
+  ],
+  "missions": [
+    {
+      "format": "MissionDesignV1",
+      "id": "uniqueness-pilot-horizon-race",
+      "revision": "greybox-1",
+      "name": "Two-bank time trial",
+      "map": {
+        "id": "uniqueness-pilot-horizon-race-map",
+        "revision": "greybox-1"
+      },
+      "spawnId": "home",
+      "modes": [
+        "versus"
+      ],
+      "actors": [
+        {
+          "id": "north-keeper",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 35.5,
+          "y": 8.5,
+          "heading": [
+            1,
+            0
+          ]
+        },
+        {
+          "id": "south-keeper",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 36.5,
+          "y": 27.5,
+          "heading": [
+            -1,
+            0
+          ]
+        }
+      ],
+      "objectives": [],
+      "bonuses": [],
+      "coverage": 0.62,
+      "timeLimitSeconds": 0,
+      "design": {
+        "routeDecision": "Bank the nearby island for a reliable start, or take the longer outside return to claim a wider region before the opponent?",
+        "lesson": "A competitive time trial offers a short reliable bank and a longer high-value opening; both players receive the same course.",
+        "counterplay": "Watch the keeper above each shelf; use either foundation to shorten an unfinished cut. The middle wall never banks a line.",
+        "captureConsequence": "A conservative first enclosure creates safe staging ground; a successful longer route can overtake that head start.",
+        "introduces": [
+          "foundations"
+        ],
+        "practices": [
+          "enemy-seeded-closure"
+        ],
+        "combines": [],
+        "memorableMoment": "The two racers reach different amounts of safe territory from different opening commitments.",
+        "mastery": "Complete the same course using both the conservative and long-return openings without losing a life.",
+        "durationSeconds": [
+          35,
+          85
+        ],
+        "difficulty": {
+          "band": 2,
+          "planning": 2,
+          "execution": 2,
+          "threatDensity": 2,
+          "timePressure": 0,
+          "mechanicLoad": 2,
+          "coordination": 0
+        }
+      },
+      "presentation": {
+        "themeId": "horizon-actors-v1",
+        "backgroundAssetId": null
+      }
+    }
+  ],
+  "campaigns": [
+    {
+      "format": "CampaignDesignV1",
+      "id": "uniqueness-pilot-horizon",
+      "revision": "greybox-1",
+      "name": "Horizon race review",
+      "band": 2,
+      "missionIds": [
+        "uniqueness-pilot-horizon-race"
+      ]
+    }
+  ],
+  "packs": [
+    {
+      "format": "PackDesignV1",
+      "id": "uniqueness-pilot-horizon",
+      "revision": "greybox-1",
+      "name": "Horizon race review",
+      "campaignIds": [
+        "uniqueness-pilot-horizon"
+      ]
+    }
+  ],
+  "assets": []
+}

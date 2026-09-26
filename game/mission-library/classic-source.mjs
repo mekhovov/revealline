@@ -1,4 +1,5 @@
 import { boundedJSON } from '../data-json.mjs';
+import { classifyContent } from '../content-design/content-lifecycle.mjs';
 import {
   CLASSIC_RULES_CURRENT,
   CLASSIC_RULES_ORIGINAL,
@@ -109,6 +110,11 @@ export function classicLibrarySources(index, { availability, prepare, launch, pr
       owner = {
         id,
         collection: 'Classic',
+        lifecycle:
+          classifyContent({ family: 'classic', id: entry.packId, source: entry.source }) ===
+          'archived'
+            ? 'archive'
+            : 'current',
         editionId: current
           ? `${entry.sourceFile.sha256}:${CLASSIC_RULES_CURRENT}`
           : entry.sourceFile.sha256,

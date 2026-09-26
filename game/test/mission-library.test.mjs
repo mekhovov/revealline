@@ -27,6 +27,27 @@ function source(overrides = {}) {
 }
 const tick = () => new Promise((resolve) => setImmediate(resolve));
 
+test('archiving is a browsing filter and preserves exact launch, progress and content identities', () => {
+  const original = Object.freeze(entry());
+  let launched;
+  const current = source({ entries: [original], launch: (value) => (launched = value) });
+  const library = createMissionLibrary([current]);
+  const before = library.missions[0];
+  library.register({ ...current, lifecycle: 'archive' });
+  const archived = library.missions[0];
+  for (const key of ['id', 'ownerId', 'editionId', 'campaignKey', 'runtimeId'])
+    assert.equal(archived[key], before[key], key);
+  assert.deepEqual(library.search('', { lifecycle: 'current' }), []);
+  assert.deepEqual(library.search('', { lifecycle: 'archive' }), [archived]);
+  assert.deepEqual(library.search('', { lifecycle: '' }), [archived]);
+  library.launch(archived, { mode: 'solo' });
+  assert.equal(launched, original);
+  assert.equal(library.progress(archived, 'solo'), '');
+  assert.throws(() => library.register({ ...current, lifecycle: 'removed' }), /lifecycle/);
+  assert.equal(library.find(archived.id), archived);
+  assert.throws(() => library.search('', { lifecycle: 'removed' }), /filter/);
+});
+
 test('All orders Journey, Classic and Custom, preserving each owner authored order', () => {
   const library = createMissionLibrary([
     source({ id: 'custom', collection: 'Custom' }),
