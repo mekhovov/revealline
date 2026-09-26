@@ -107,7 +107,7 @@ jobs:
         run: >-
           docker compose -f compose.yaml -f compose.production.yaml
           -f compose.hosted-acceptance.yaml logs --no-color --tail 300
-          auth-migrate preflight api worker
+          postgres migrate auth-migrate preflight api worker
 
       - name: Remove acceptance containers and volumes
         if: always()

@@ -3,8 +3,9 @@ import { readFile } from 'node:fs/promises';
 import test from 'node:test';
 
 test('hosted journey uses an isolated exact-source PostgreSQL and disk deployment', async () => {
-  const [compose, productionCompose, workflow] = await Promise.all([
+  const [compose, baseCompose, productionCompose, workflow] = await Promise.all([
     readFile(new URL('../compose.hosted-acceptance.yaml', import.meta.url), 'utf8'),
+    readFile(new URL('../compose.yaml', import.meta.url), 'utf8'),
     readFile(new URL('../compose.production.yaml', import.meta.url), 'utf8'),
     readFile(
       new URL('../../../.github/workflows/community-hosted-acceptance.yml', import.meta.url),
@@ -20,6 +21,7 @@ test('hosted journey uses an isolated exact-source PostgreSQL and disk deploymen
   assert.match(compose, /CI-only overlay/u);
   assert.doesNotMatch(compose, /:latest/u);
   assert.doesNotMatch(compose, /AWS_|COMMUNITY_S3_/u);
+  assert.match(baseCompose, /--file="\$\$\{file\}"/u);
   assert.match(productionCompose, /COMMUNITY_ALLOW_DEV_AUTH: 'false'/u);
   assert.match(productionCompose, /COMMUNITY_DEV_TOKENS: '\{\}'/u);
 
