@@ -23,6 +23,9 @@ export const DEPLOYED_TUS_DESTRUCTIVE_OPT_IN =
   'I_UNDERSTAND_THIS_PUBLISHES_AND_UNLISTS_TEST_CONTENT';
 
 const NAMESPACE = /^[a-z0-9](?:[a-z0-9-]{6,38}[a-z0-9])$/u;
+const RELEASE_VERSION = /^v\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?$/u;
+const SOURCE_REVISION = /^[a-f0-9]{40}$/u;
+const VALIDATOR_VERSION = /^[A-Za-z0-9](?:[A-Za-z0-9._-]{0,127})$/u;
 const themesPromise = readFile(
   new URL('../../../game/content-design/themes.json', import.meta.url),
   'utf8',
@@ -71,9 +74,20 @@ export function validateDeployedTusResumeConfig(input = {}) {
     'Community service URL must not contain credentials, a query, or a fragment.',
   );
   baseURL.pathname = baseURL.pathname.endsWith('/') ? baseURL.pathname : `${baseURL.pathname}/`;
+  required(
+    RELEASE_VERSION.test(input.expectedRelease?.version ?? '') &&
+      SOURCE_REVISION.test(input.expectedRelease?.sourceRevision ?? '') &&
+      VALIDATOR_VERSION.test(input.expectedRelease?.validatorVersion ?? ''),
+    'Exact expected release, source and validator versions are required.',
+  );
   return Object.freeze({
     baseURL: baseURL.href,
     namespace: input.namespace,
+    expectedRelease: Object.freeze({
+      version: input.expectedRelease.version,
+      sourceRevision: input.expectedRelease.sourceRevision,
+      validatorVersion: input.expectedRelease.validatorVersion,
+    }),
     auth: Object.freeze({
       creator: exactAuth(input.auth?.creator, 'Creator authentication'),
       admin: exactAuth(input.auth?.admin, 'Administrator authentication'),
@@ -117,6 +131,19 @@ const memoryStorage = () => {
 };
 
 const authProvider = (headers) => async () => headers;
+
+const json = async (response, action) => {
+  const source = await response.text();
+  required(source.length <= 256 * 1024, `${action} returned too much data.`);
+  let value;
+  try {
+    value = JSON.parse(source);
+  } catch {
+    throw new Error(`${action} returned unreadable data.`);
+  }
+  required(response.ok, `${action} failed (${response.status}).`);
+  return value;
+};
 
 const boundedFetch =
   (fetchImpl, timeoutMs) =>
@@ -211,7 +238,7 @@ export async function runDeployedTusResumeAcceptance(input, adapters = {}) {
     serviceOrigin: new URL(config.baseURL).origin,
     startedAt: new Date(startedAtMs).toISOString(),
   };
-  let stage = 'proxy';
+  let stage = 'identity';
   let editionId = null;
   let proxy = null;
   let fetchImpl;
@@ -234,6 +261,40 @@ export async function runDeployedTusResumeAcceptance(input, adapters = {}) {
   };
 
   try {
+    fetchImpl = boundedFetch(adapters.fetchImpl ?? globalThis.fetch, config.requestTimeoutMs);
+    const identity = await json(
+      await fetchImpl(new URL('version', config.baseURL), { cache: 'no-store' }),
+      'Release identity',
+    );
+    required(
+      identity?.format === 'revealline-community-release.v1' &&
+        identity.version === config.expectedRelease.version &&
+        identity.sourceRevision === config.expectedRelease.sourceRevision &&
+        identity.validatorVersion === config.expectedRelease.validatorVersion,
+      'Deployed release identity differs from the expected immutable source and validator.',
+    );
+    receipt.release = {
+      version: identity.version,
+      sourceRevision: identity.sourceRevision,
+      validatorVersion: identity.validatorVersion,
+    };
+
+    stage = 'health';
+    const health = await json(
+      await fetchImpl(new URL('health', config.baseURL), { cache: 'no-store' }),
+      'Health check',
+    );
+    required(health?.status === 'ok', 'Health check is not ready.');
+
+    stage = 'readiness';
+    const readiness = await json(
+      await fetchImpl(new URL('ready', config.baseURL), { cache: 'no-store' }),
+      'Readiness check',
+    );
+    required(readiness?.status === 'ready', 'Deployment readiness check did not pass.');
+    receipt.readiness = { status: 'ready' };
+
+    stage = 'proxy';
     proxy = await (adapters.startProxy ?? startTusFaultProxy)({
       upstreamURL: config.baseURL,
       allowRemoteUpstream: true,
@@ -241,7 +302,6 @@ export async function runDeployedTusResumeAcceptance(input, adapters = {}) {
       maximumRequestBytes: 32 * 1024 * 1024,
       requestTimeoutMs: config.requestTimeoutMs,
     });
-    fetchImpl = boundedFetch(adapters.fetchImpl ?? globalThis.fetch, config.requestTimeoutMs);
 
     stage = 'package';
     const blob = await (adapters.createPackage ?? acceptancePackage)({
