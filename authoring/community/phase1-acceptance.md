@@ -1,6 +1,10 @@
-# Phase 1 acceptance — candidate, not released
+# Phase 1 acceptance — integrated source record
 
-Status: local candidate implemented; draft PR [#388](https://github.com/mekhovov/revealline/pull/388) is open for hosted checks and acceptance. Phase 1 is isolated on `codex/creator-phase1-image` and rebased onto the current reviewed publication source before this change. A release version has not been allocated here.
+Status: implemented and merged through PR
+[#465](https://github.com/mekhovov/revealline/pull/465). The combined creator feature is assigned
+to `v0.141.0` in PR [#564](https://github.com/mekhovov/revealline/pull/564); its hosted checks,
+immutable freeze and publication remain separate gates. This record preserves the Phase 1 evidence
+and does not claim the combined release is public.
 
 ## Completed local evidence
 
@@ -38,8 +42,15 @@ The browser artifacts and edition identities above were produced by the earlier 
 
 ## Remaining acceptance gates
 
-An actual current-v3 download and clean-origin import remain pending, along with hosted full-checkout build/preflight/release-ready, genuine clean-profile verification, browser-wide storage-failure UI, and public deployed identity/hashes/released behavior. Current-v3 local generation, review, installation, ordinary legal play and earned-picture reload passed as recorded above. The earlier isolated-origin check and shared atomic rollback/quota tests are recorded at their actual scope, not substituted for the remaining observations.
+The combined feature record now covers an actual current-v3 download and separate-origin import.
+Genuine clean-profile verification, browser-wide storage-failure UI, hosted exact-head checks and
+public deployed identity, hashes and released behavior remain open. Current-v3 local generation,
+review, installation, ordinary legal play and earned-picture reload passed as recorded above. The
+separate-origin checks and shared atomic rollback/quota tests are recorded at their actual scope,
+not substituted for the remaining observations.
 
 The user explicitly directed **“use builtin browser instead”** after Safari control was unavailable. Acceptance therefore uses the Codex in-app browser; Firefox and Safari are untested rather than requiring another permissions prompt. No separate Chromium installation, genuinely clean profile or physical mobile support is claimed. Inline native screenshots were observed in the task; exported screenshot files or screenshot hashes are not claimed.
 
-Publication remains with the existing publication task; no version/tag or Pages selector was changed by this phase. Do not mark the phase complete or move to its dependent release until the required acceptance and publication gates are satisfied.
+Source integration is complete through PR #465. Publication remains with the combined `v0.141.0`
+task; no version, tag or Pages selector was changed by this phase record, and its unclaimed browser
+and public-release gates remain open.
