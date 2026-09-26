@@ -10,6 +10,8 @@ versions or acceptance gates are still current.
 - v0.132.4 Team picture-preparation repair has an exact immutable production receipt and its Pages
   selector is merged. The streaming public-byte audit is still underway, so v0.132.4 is not yet
   counted as accepted public delivery here.
+- PR #652 has been admitted by the sole publisher to the active v0.132.5 lane. It remains open and
+  its latest focused gate is still running; admission is not a merge or public delivery.
 - The cultural stack is rebased on current `main`
   `0cb51db92295a62fea99ee2ab215a79c6df06520`. All nineteen branch tips were guarded-pushed
   atomically; the v0.149.0 successor is draft PR #650 and the test-only reconciliation is draft PR
@@ -27,11 +29,11 @@ versions or acceptance gates are still current.
 | Second Team current edition / PR #650            | Clean draft, source `0.149.0` | Default/previous edition, Team library, Studio, exact Next, isolated progress and EN/UK wiring; earlier focused cohort 83/83, localization validation and post-rebase lightweight cohort 41/41 pass; not public. |
 | Unified-library fixture reconciliation / PR #651 | Clean draft, test/docs only   | Confirms 91 current + 48 prior Journey + 188 Classic = 327 unique rows and updates stale 201/279 and `whole-spatial-v5/v6` expectations to current v25 ownership.                                                |
 
-After the final main rebase, a bounded host rerun reached two 15-second chooser-opening timeouts
-before either changed assertion while another independent mission-library suite was continuously using
-a CPU core. It was stopped rather than misreported as a pass or “fixed” by widening timeouts. The
-earlier focused assertion pass and the content-equivalent 58-commit range-diff remain recorded, but
-an uncontended exact-head host rerun is still required.
+After the final main rebase, an uncontended bounded host rerun passed all selected corrected cases:
+four Solo scenarios, four Versus scenarios, two representative Team source routes and the three-stage
+Solo → Versus → Solo restoration. The test runner recorded 14 passing test/subtest records and no
+failures. The earlier two chooser-opening timeouts occurred while another worktree continuously used
+a CPU core; they were not changed-expectation failures. The full long host suite remains unrun.
 
 The post-rebase lightweight runtime cohort passes **41/41** at the stacked exact source. It covers
 default Team entry, handoff/return validation, the v2 cultural topology and routes, isolated progress,
@@ -50,14 +52,14 @@ feasibility and rules out a mandatory late-cleanup tail in those fixtures; it do
 Effort starts when the item has an uncontested release or implementation slot. GitHub runner,
 large-asset and archive delays are outside these estimates.
 
-| Priority | Remaining item                         | Exit condition                                                                                                              |                                                        Indicative effort |
-| -------: | -------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- | -----------------------------------------------------------------------: |
-|        0 | Finish v0.132.4 publication            | Immutable release, Pages, public byte check and bounded Team artwork launch/retry proof                                     | Publisher in progress; **2–8 hours** if the current controller fix holds |
-|        1 | Promote the cultural Journey chain     | Review/merge in dependency order, exact-head qualification, immutable release and public play for each accepted batch       |                                   **1–2 working days per release batch** |
-|        2 | Complete second Team slice             | Review PR #650, exact-head qualification and immutable public delivery; source wiring and bounded verification are complete |                                         **3–6 hours** plus release queue |
-|        3 | Team release qualification             | Paired-board fairness, controller/touch/keyboard, cross-campaign Next, Skip, reload/Continue and public frozen-build proof  |                                        **8–16 hours** plus device access |
-|        4 | Whole-Journey pacing and accessibility | Campaign-to-campaign pressure audit, reduced-effects/contrast/small-screen/performance and deterministic compatibility      |                                                     **2–4 working days** |
-|        5 | Human balance and cultural review      | Understandable failures, distinct missions, enjoyable retries and cultural review by people                                 |                       **1–2 days synthesis** after testers are available |
+| Priority | Remaining item                          | Exit condition                                                                                                                            |                                                        Indicative effort |
+| -------: | --------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- | -----------------------------------------------------------------------: |
+|        0 | Finish v0.132.4 publication             | Immutable release, Pages, public byte check and bounded Team artwork launch/retry proof                                                   | Publisher in progress; **2–8 hours** if the current controller fix holds |
+|        1 | Promote the cultural Journey chain      | Review/merge in dependency order, exact-head qualification, immutable release and public play for each accepted batch                     |                                   **1–2 working days per release batch** |
+|        2 | Complete second Team slice and fixtures | Review PRs #650/#651, immutable public delivery and frozen-build checks; source wiring and bounded runtime/host verification are complete |                                         **3–6 hours** plus release queue |
+|        3 | Team release qualification              | Paired-board fairness, controller/touch/keyboard, cross-campaign Next, Skip, reload/Continue and public frozen-build proof                |                                        **8–16 hours** plus device access |
+|        4 | Whole-Journey pacing and accessibility  | Campaign-to-campaign pressure audit, reduced-effects/contrast/small-screen/performance and deterministic compatibility                    |                                                     **2–4 working days** |
+|        5 | Human balance and cultural review       | Understandable failures, distinct missions, enjoyable retries and cultural review by people                                               |                       **1–2 days synthesis** after testers are available |
 
 Existing v0.133-v0.137 player-UX drafts occupy the nominal release sequence. Cultural PR titles
 currently target v0.138 onward, but version numbers must be assigned by the sole publisher from the
@@ -84,13 +86,14 @@ accepted predecessor; draft labels do not reserve a release.
    published release assets and active processes. Roughly 1.4 GiB remained after each reclamation.
    Avoid duplicate local builds and never remove unpushed source, user media or another task's active
    workspace.
-7. **Shared-host contention:** the post-rebase PR #651 host rerun timed out during chooser startup
-   while another worktree's library test held a CPU core. Re-run the bounded cases uncontended; do
-   not call these startup timeouts changed-expectation failures or passes.
+7. **Host performance:** the uncontended PR #651 scenarios pass, but individual chooser paths took
+   about 5.5–30.6 seconds in the fixture harness. This closes the corrected-assertion gap, not the
+   broader startup/performance qualification.
 
 ## Immediate execution order
 
-1. Let the sole publisher finish v0.132.4; do not duplicate its release mutations.
+1. Let the sole publisher finish v0.132.4 acceptance and the active v0.132.5 lane; do not duplicate
+   its release mutations.
 2. Keep the rebased cultural PR chain clean and reviewable while v0.132.4 completes.
 3. Review and qualify the bounded v0.149.0 PR #650 at its exact head.
 4. Review draft PR #651 and publish the isolated library-fixture reconciliation after its focused
