@@ -10,21 +10,18 @@ versions or acceptance gates are still current.
 - v0.132.4 Team picture-preparation repair has an exact immutable production receipt and its Pages
   selector is merged. The streaming public-byte audit is still underway, so v0.132.4 is not yet
   counted as accepted public delivery here.
-- PR #654 has merged the v0.132.5 source to `main` at
-  `72cfc74552669699266d5d8ad92c56a69da885b2` after PR #656's fastline throughput-contract repair.
-  No v0.132.5 GitHub Release exists yet. Qualification correctly rejected a stale production
-  review ledger after a renderer dependency entered the Team review closure; the release
-  coordinator is preparing a successor continuation record rather than weakening the gate.
+- PR #654 merged the v0.132.5 source, and PR #660 then repaired its stale Field Kit review ledger.
+  Current `main` is `14050be641f8d10aeb151ea4fc54190513c34a0f`. No v0.132.5 GitHub Release
+  exists yet. Qualification correctly rejected the earlier stale ledger after a renderer dependency
+  entered the Team review closure; the accepted correction preserves that fail-closed gate.
   Immutable assets, Pages and public acceptance remain publisher-owned. A source merge is not
   public delivery.
-- Current `main` is `72cfc74552669699266d5d8ad92c56a69da885b2`. All nineteen cultural branch
-  tips were guarded-pushed atomically onto that commit with an equal 67-commit count. Sixty-six
-  commits range-diff one-to-one; the only expected delta changes the first candidate version's
-  predecessor from 0.132.4 to 0.132.5 while preserving its 0.138.0 target. The
-  v0.149.0 successor is draft PR #650 at
-  `7b7f23a00efd4d4e68fdc624ac5aa820ffda9cdc`; the test/documentation reconciliation is draft PR
-  #651. Independent ready PR #657 is rebased directly on current `main` at
-  `6459e8fbc2e11f0c3bd6d735885c674c9e7295b8`. The dirty root checkout was not changed.
+- The 21-branch cultural/pacing successor chain has been rebased locally onto current `main`.
+  All 71 rewritten commits range-diff one-to-one with their prior versions; guarded remote updates
+  remain the next step. The v0.149.0 successor maps to draft PR #650 at
+  `730ada618`; fixture reconciliation maps to PR #651 at `ef3de99e5`, and the pacing inventory maps
+  to PR #661 at `bed3e9cdb`. Independent PR #657 remains at `6459e8fbc2e11f0c3bd6d735885c674c9e7295b8`
+  and now needs its own current-main rebase before promotion. The dirty root checkout was not changed.
 
 ## Completed source work
 
@@ -39,6 +36,7 @@ versions or acceptance gates are still current.
 | Unified-library fixture reconciliation / PR #651 | Clean draft, test/docs only   | Confirms 91 current + 48 prior Journey + 188 Classic = 327 unique rows and updates stale 201/279 and `whole-spatial-v5/v6` expectations to current v25 ownership.                                                                                                                                   |
 | Team opaque-owner continuation / PR #657         | Ready isolated hotfix         | Shared Next no longer JSON-parses opaque Team Classic owner IDs; Current/Original lanes remain separate and Classic → Custom continuation is restored. Exact current-main continuation/localization/impact cohort passes 27/27 at `6459e8fbc2e11f0c3bd6d735885c674c9e7295b8`; not merged or public. |
 | Current Journey pacing inventory / PR #661        | Clean stacked draft           | Adds a reusable runtime-prepared spatial-variety inspector and pins exact v25 facts: 91 source missions, 71 core missions, bands 1–12, consistent Standard craft speed and 21 post-opening open/plain review candidates. Focused checks pass 4/4; this is not human balance evidence. |
+| Relay cultural completion / PR #664                | Clean explicit v26 draft      | Redesigns Spiral stores, Nested relays and Watchpost exchange from bounded official-museum vocabulary; preserves v25/default ownership and reduces post-opening open/plain candidates from 21 to 18. Route, bootstrap, snapshot, replay, paired-board and pacing cohort passes 140/140 with zero skips before the latest exact rebase; current-head rerun is pending. |
 
 After the final main rebase, an uncontended bounded host rerun passed all selected corrected cases:
 four Solo scenarios, four Versus scenarios, two representative Team source routes and the three-stage
@@ -70,7 +68,7 @@ large-asset and archive delays are outside these estimates.
 |        1 | Promote the cultural Journey chain            | Review/merge in dependency order, exact-head qualification, immutable release and public play for each accepted batch                                   |                                                  **1–2 working days per release batch** |
 |        2 | Complete second Team slice and fixtures       | Review PRs #650/#651, immutable public delivery and frozen-build checks; source wiring and bounded runtime/host verification are complete               |                                                        **3–6 hours** plus release queue |
 |        3 | Team continuation and qualification           | Review/publish PR #657; paired-board fairness, controller/touch/keyboard, cross-campaign Next, Skip, reload/Continue and public frozen-build proof      |                                         **8–16 hours** plus release queue/device access |
-|        4 | Whole-Journey pacing and accessibility        | PR #661 establishes the exact-current campaign/spatial inventory; redesign the highest-repetition identities, then qualify reduced effects, contrast, small screens, performance and deterministic compatibility | **2–4 working days** after review of the first targeted batch |
+|        4 | Whole-Journey pacing and accessibility        | PR #661 establishes the exact-current campaign/spatial inventory and PR #664 removes one three-mission repetition cluster; redesign the remaining 18 candidates selectively, then qualify reduced effects, contrast, small screens, performance and deterministic compatibility | **2–4 working days** for further targeted batches and accessibility qualification |
 |        5 | Human balance and cultural review             | Understandable failures, distinct missions, enjoyable retries and cultural review by people                                                             |                                      **1–2 days synthesis** after testers are available |
 
 Existing v0.133-v0.137 player-UX drafts occupy the nominal release sequence. Cultural PR titles
@@ -93,24 +91,24 @@ accepted predecessor; draft labels do not reserve a release.
    is not represented as passing.
 5. **Human/device evidence:** deterministic routes cannot establish enjoyment, cultural approval or
    physical controller/touch behavior.
-6. **Disk pressure:** 793 MiB of additional old caches containing only recoverable source archives,
-   dependencies, logs and test artifacts was removed after checking for Git repositories, patches,
-   published release assets and active processes. Roughly 1.4 GiB remained after each reclamation.
-   Avoid duplicate local builds and never remove unpushed source, user media or another task's active
-   workspace. Free space is now about 1.1 GiB, so duplicate production builds remain unsafe.
+6. **Disk pressure:** only reviewed disposable build caches were removed; worktrees, releases, media,
+   patches and active task data were preserved. Free space is now about 6 GiB. Avoid duplicate
+   production archives and never remove unpushed source, user media or another task's workspace.
 7. **Host performance:** the uncontended PR #651 scenarios pass, but individual chooser paths took
    about 5.5–30.6 seconds in the fixture harness. This closes the corrected-assertion gap, not the
    broader startup/performance qualification.
-8. **First cultural gate:** PR #530's earlier focused run passed all forty selected route checks and
-   seven of eight controller-host scenarios. The Solo compact-filter scenario failed one focus-state
-   assertion while paired Versus and Team scenarios passed; that exact case then passed locally in
-   8.7 seconds. A subsequent hosted rerun was cancelled when `main` advanced, not completed. A fresh
-   run for exact rebased head `726b90d675eb8f733ccb66620d0e2f3eb4a96e70` is queued; no cancelled
-   run is represented as a pass.
+8. **First cultural gate:** PR #530's latest hosted run again passed all forty selected route checks
+   and seven of eight controller-host scenarios. The same Solo compact-filter focus assertion failed
+   after about ten seconds while Versus and Team passed; the exact case has passed locally. This is a
+   real hosted failure, not a pass. The newly rebased head maps to `285fe258c` and needs another
+   bounded decision: stabilize that harness path or explicitly retain the failure as an unresolved gate.
 9. **Inventory is not balance evidence:** PR #661 finds 21 post-opening missions with neither wall
    nor slow/lethal terrain and confirms consistent Standard speed and post-opening actor counts.
    Those are review candidates, not automatic defects; deterministic routes and human play still
    decide whether an open layout is distinct, fair and enjoyable.
+10. **v26 remains opt-in:** PR #664 registers a preserved successor and repairs native bootstrap
+    links for v12-v26, but deliberately leaves v25 as the default until review and release allocation.
+    Its deterministic 140-test cohort does not establish enjoyment or cultural approval.
 
 ## Immediate execution order
 
@@ -118,16 +116,17 @@ accepted predecessor; draft labels do not reserve a release.
    keep any further release-throughput experiments out of that publication path.
 2. Qualify and publish isolated PR #657 after the active release lane; do not wait for the full
    cultural stack to restore Team Classic → Custom Next.
-3. Finish PR #530's exact-head hosted focused rerun at `726b90d675eb8f733ccb66620d0e2f3eb4a96e70`.
-   Its previously failing Solo compact-controller case passes locally, while the earlier hosted
-   failure and rebase-cancelled rerun remain recorded.
+3. Resolve PR #530's repeated hosted Solo compact-filter focus failure on rebased head `285fe258c`;
+   do not represent the 40 route passes and 7/8 controller scenarios as a fully passing gate.
 4. Keep the rebased cultural PR chain clean and reviewable while the public release lane completes.
 5. Review and qualify the bounded v0.149.0 PR #650 at its exact head.
 6. Review draft PR #651 and publish the isolated library-fixture reconciliation after its focused
    duplicate/ownership audit.
-7. Review draft PR #661 after #651. Use its exact-current report to select the next small spatial
-   redesign batch; do not mutate the preserved v25 edition or add geometry merely to satisfy a count.
-8. Promote cultural releases in dependency order, reporting actual public delivery rather than a
+7. Review draft PR #661 after #651, then PR #664. v26 preserves v25 and completes the Relay spatial
+   cluster without changing the default before promotion.
+8. Select the next small batch from the 18 remaining audit candidates; keep intentionally open boards
+   when openness is the distinguishing decision and never add geometry merely to satisfy a count.
+9. Promote cultural releases in dependency order, reporting actual public delivery rather than a
    merge or workflow start.
 
 The original P13-P15 whole-Journey pacing, Team cooperation, accessibility/performance and final
