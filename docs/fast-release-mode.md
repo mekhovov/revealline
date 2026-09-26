@@ -62,9 +62,11 @@ documentation-only changes. Do not restore pull-request path filters on that wor
 context is required: GitHub leaves a filtered required check pending instead of treating it as a
 successful maintenance decision.
 
-Editing pull-request metadata reruns the aggregate gate because release admission and exact version
-allocation depend on the title. A title edit cannot retain a successful result from the old release
-identity on the same commit.
+Editing the pull-request title reruns the aggregate gate because release admission and exact version
+allocation depend on that title. A title edit cannot retain a successful result from the old release
+identity on the same commit. Label and milestone changes are evaluated by the trusted merge
+controller without restarting or cancelling an in-flight exact-head source gate; they can still
+disarm auto-merge immediately.
 
 Release-title pull requests also fail closed until the previous latest stable release is both the
 reviewed selector on `main` and the version actually served by the public root and versioned game

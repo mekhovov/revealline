@@ -5,18 +5,7 @@ on:
     types: [published]
   pull_request:
     branches: [main]
-    types:
-      [
-        opened,
-        synchronize,
-        reopened,
-        edited,
-        ready_for_review,
-        labeled,
-        unlabeled,
-        milestoned,
-        demilestoned,
-      ]
+    types: [opened, synchronize, reopened, edited, ready_for_review]
   workflow_dispatch:
     inputs:
       release_tag:
