@@ -1,5 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
+import { parse } from 'parse5';
 import {
   SIGNAL_CULTURAL_ROUTES_REVISION,
   SIGNAL_CULTURAL_ROUTES_SELECTIONS,
@@ -9,6 +11,14 @@ import {
 import { createEarlyCulturalRoutesCandidates } from '../content-design/early-cultural-routes-candidates.mjs';
 import { compileContentProject, resolveMission } from '../content-design/project.mjs';
 import { inspectMissionTopology } from '../content-design/diagnostics.mjs';
+import { createAuthoredJourneyRoute } from '../content-design/route.mjs';
+import { loadAuthoredJourneyRoute } from '../content-design/route-loader.mjs';
+import { DEFAULT_JOURNEY_ROUTES } from '../content-design/default-entry.mjs';
+import {
+  AUTHORED_JOURNEY_ROUTE_IDS,
+  authoredJourneyModeHref,
+  authoredJourneyUsesActorMaterials,
+} from '../content-design/mode-href.mjs';
 import { createRun, stepRun, FIXED_DT } from '../core/index.mjs';
 import {
   authoritativeCheckpoint,
@@ -241,3 +251,64 @@ for (const selection of SIGNAL_CULTURAL_ROUTES_SELECTIONS)
       );
       assert.deepEqual(authoritativeCheckpoint(run), authoritativeCheckpoint(duel.runs[0]));
     });
+
+test('registered v15 successor preserves v14 order and uses isolated progress ownership', async () => {
+  const current = createAuthoredJourneyRoute('whole-spatial-v15');
+  const previous = createAuthoredJourneyRoute('whole-spatial-v14');
+  assert.deepEqual(await loadAuthoredJourneyRoute(current.id), current);
+  assert.equal(current.profileKey, 'journey-whole-spatial-v15');
+  assert.equal(current.sessionKey, 'revealline.suspended.journey-whole-spatial.v15');
+  assert.notEqual(current.profileKey, previous.profileKey);
+  assert.notEqual(current.sessionKey, previous.sessionKey);
+  assert.deepEqual(previous.source, beforeSource);
+  assert.deepEqual(current.source, source);
+  assert.deepEqual(current.corePackIds, previous.corePackIds);
+  assert.deepEqual(current.optionalCampaignIds, previous.optionalCampaignIds);
+  assert(authoredJourneyUsesActorMaterials(current.id));
+  assert(AUTHORED_JOURNEY_ROUTE_IDS.includes(current.id));
+  assert.deepEqual(DEFAULT_JOURNEY_ROUTES, {
+    solo: 'whole-spatial-v15',
+    versus: 'whole-spatial-v15',
+    team: 'team-trail-impact-originals-1',
+  });
+  assert.equal(authoredJourneyModeHref(current.id, 'solo'), '../?journey=whole-spatial-v15');
+  assert.equal(
+    authoredJourneyModeHref(current.id, 'versus'),
+    'couch/?journey=whole-spatial-v15&return=solo',
+  );
+  for (const key of ['campaigns', 'packs'])
+    assert.deepEqual(
+      current.source[key].map((item) =>
+        key === 'campaigns' ? [item.id, item.missionIds] : [item.id, item.campaignIds],
+      ),
+      previous.source[key].map((item) =>
+        key === 'campaigns' ? [item.id, item.missionIds] : [item.id, item.campaignIds],
+      ),
+    );
+});
+
+test('Studio retains v14, exposes v15 and defaults its selector to v15', async () => {
+  const html = await readFile(new URL('../studio/index.html', import.meta.url), 'utf8');
+  const script = await readFile(new URL('../studio/studio.mjs', import.meta.url), 'utf8');
+  const nodes = [];
+  const visit = (node) => {
+    nodes.push(node);
+    node.childNodes?.forEach(visit);
+  };
+  visit(parse(html));
+  const attribute = (node, name) => node.attrs?.find((item) => item.name === name)?.value;
+  const selector = nodes.find((node) => attribute(node, 'id') === 'whole-variety-edition');
+  const options = selector.childNodes.filter((node) => node.tagName === 'option');
+  assert.equal(
+    options.filter((node) => attribute(node, 'value') === 'early-cultural-routes-1').length,
+    1,
+  );
+  assert.deepEqual(
+    options
+      .filter((node) => attribute(node, 'selected') !== undefined)
+      .map((node) => attribute(node, 'value')),
+    ['signal-cultural-routes-1'],
+  );
+  assert.match(html, /journey=whole-spatial-v15/);
+  assert.match(script, /'signal-cultural-routes-1': createSignalCulturalRoutesCandidates/);
+});
