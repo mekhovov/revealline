@@ -4,10 +4,12 @@ import { access, mkdtemp, mkdir, readFile, rm, writeFile } from 'node:fs/promise
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
+import { MemoryBlobStore } from '../src/blob-store.mjs';
 import {
   RECOVERY_FORMAT,
   createRecoverySnapshot,
   restoreRecoverySnapshot,
+  restoreRecoverySnapshotToStore,
   verifyRecoverySnapshot,
 } from '../src/recovery.mjs';
 
@@ -31,6 +33,16 @@ const backupCommand = (databaseBytes, calls) => async (command, args, options) =
   const output = args[args.indexOf('--file') + 1];
   await writeFile(output, databaseBytes);
 };
+
+const trackedBody = (bytes) => ({
+  destroyed: false,
+  destroy() {
+    this.destroyed = true;
+  },
+  async *[Symbol.asyncIterator]() {
+    yield bytes;
+  },
+});
 
 test('offline backup writes a canonical, content-verified database/blob snapshot', async (t) => {
   const { root, blobRoot, bytes, sha256, key } = await fixture(t);
@@ -64,6 +76,91 @@ test('offline backup writes a canonical, content-verified database/blob snapshot
   assert.deepEqual(await verifyRecoverySnapshot({ source: destination }), created);
 });
 
+test('store backup rejects unexpected package keys and bytes that change after listing', async (t) => {
+  const { root, bytes, sha256, key } = await fixture(t);
+  const databaseBytes = Buffer.from('database');
+  await assert.rejects(
+    createRecoverySnapshot({
+      databaseUrl: 'postgres://source/revealline',
+      blobStore: {
+        async list() {
+          return {
+            items: [{ key: 'packages/sha256/not-a-package', size: 10 }],
+            cursor: null,
+          };
+        },
+        async open() {
+          assert.fail('invalid keys must fail before download');
+        },
+      },
+      destination: path.join(root, 'invalid-key-snapshot'),
+      runCommand: backupCommand(databaseBytes, []),
+    }),
+    /Unexpected community blob key/u,
+  );
+  await assert.rejects(
+    createRecoverySnapshot({
+      databaseUrl: 'postgres://source/revealline',
+      blobStore: {
+        async list() {
+          return { items: [{ key, size: bytes.length }], cursor: null };
+        },
+        async open() {
+          return { key, size: bytes.length, body: [Buffer.from('changed package bytes')] };
+        },
+      },
+      destination: path.join(root, 'changed-byte-snapshot'),
+      runCommand: backupCommand(databaseBytes, []),
+    }),
+    /changed during recovery backup/u,
+  );
+});
+
+test('store backup destroys opened bodies on metadata and local target failures', async (t) => {
+  const { root, bytes, key } = await fixture(t);
+  const databaseBytes = Buffer.from('database');
+  const metadataBody = trackedBody(bytes);
+  await assert.rejects(
+    createRecoverySnapshot({
+      databaseUrl: 'postgres://source/revealline',
+      blobStore: {
+        async list() {
+          return { items: [{ key, size: bytes.length }], cursor: null };
+        },
+        async open() {
+          return { key, size: bytes.length + 1, body: metadataBody };
+        },
+      },
+      destination: path.join(root, 'metadata-failure-snapshot'),
+      runCommand: backupCommand(databaseBytes, []),
+    }),
+    /disappeared or changed/u,
+  );
+  assert.equal(metadataBody.destroyed, true);
+
+  const localFailureBody = trackedBody(bytes);
+  await assert.rejects(
+    createRecoverySnapshot({
+      databaseUrl: 'postgres://source/revealline',
+      blobStore: {
+        async list() {
+          return { items: [{ key, size: bytes.length }], cursor: null };
+        },
+        async open() {
+          return { key, size: bytes.length, body: localFailureBody };
+        },
+      },
+      destination: path.join(root, 'local-failure-snapshot'),
+      runCommand: backupCommand(databaseBytes, []),
+      openBlobTarget: async () => {
+        throw new Error('local target open failed');
+      },
+    }),
+    /local target open failed/u,
+  );
+  assert.equal(localFailureBody.destroyed, true);
+});
+
 test('restore verifies all bytes before replacing an empty blob root', async (t) => {
   const { root, blobRoot, bytes, key } = await fixture(t);
   const snapshot = path.join(root, 'snapshot');
@@ -93,11 +190,217 @@ test('restore verifies all bytes before replacing an empty blob root', async (t)
         '--no-owner',
         '--no-acl',
         '--exit-on-error',
+        '--exclude-table-data=community_tus_uploads',
         path.join(snapshot, 'database.dump'),
       ],
       options: { databaseUrl: 'postgres://target/revealline' },
     },
   ]);
+});
+
+test('store backup and restore stream exact packages and resume after a partial target write', async (t) => {
+  const { root, bytes, sha256, key } = await fixture(t);
+  const sourceStore = new MemoryBlobStore();
+  await sourceStore.putVerified({
+    key,
+    body: [bytes],
+    expectedSha256: sha256,
+    expectedSize: bytes.length,
+    maxBytes: 1024,
+  });
+  const secondBytes = Buffer.from('second immutable package');
+  const secondSha256 = digest(secondBytes);
+  const secondKey = `packages/sha256/${secondSha256.slice(0, 2)}/${secondSha256}.rlpack`;
+  await sourceStore.putVerified({
+    key: secondKey,
+    body: [secondBytes],
+    expectedSha256: secondSha256,
+    expectedSize: secondBytes.length,
+    maxBytes: 1024,
+  });
+  const snapshot = path.join(root, 'store-snapshot');
+  const created = await createRecoverySnapshot({
+    databaseUrl: 'postgres://source/revealline',
+    blobStore: sourceStore,
+    destination: snapshot,
+    runCommand: backupCommand(Buffer.from('database'), []),
+  });
+  assert.equal(created.blobs.length, 2);
+
+  const targetStore = new MemoryBlobStore();
+  let puts = 0;
+  const interruptedStore = {
+    list: (...args) => targetStore.list(...args),
+    open: (...args) => targetStore.open(...args),
+    async putVerified(input) {
+      puts += 1;
+      if (puts === 2) throw new Error('simulated object-store interruption');
+      return targetStore.putVerified(input);
+    },
+  };
+  const journalFile = path.join(root, 'store-restore-journal.json');
+  let restores = 0;
+  await assert.rejects(
+    restoreRecoverySnapshotToStore({
+      databaseUrl: 'postgres://target/revealline',
+      blobStore: interruptedStore,
+      storageIdentity: 's3_target',
+      journalFile,
+      source: snapshot,
+      runCommand: async () => {
+        restores += 1;
+      },
+    }),
+    /object-store interruption/u,
+  );
+  assert.equal(restores, 1);
+  assert.equal(JSON.parse(await readFile(journalFile, 'utf8')).state, 'database-restored');
+
+  await restoreRecoverySnapshotToStore({
+    databaseUrl: 'postgres://target/revealline',
+    blobStore: targetStore,
+    storageIdentity: 's3_target',
+    journalFile,
+    source: snapshot,
+    runCommand: async () => {
+      restores += 1;
+    },
+  });
+  assert.equal(restores, 1);
+  assert.equal((await targetStore.open(key)).sha256, sha256);
+  assert.equal((await targetStore.open(secondKey)).sha256, secondSha256);
+  await assert.rejects(access(journalFile), /ENOENT/u);
+});
+
+test('store restore refuses a contaminated target and a journal for another storage target', async (t) => {
+  const { root, bytes, sha256, key } = await fixture(t);
+  const sourceStore = new MemoryBlobStore();
+  await sourceStore.putVerified({
+    key,
+    body: [bytes],
+    expectedSha256: sha256,
+    expectedSize: bytes.length,
+    maxBytes: 1024,
+  });
+  const snapshot = path.join(root, 'snapshot');
+  await createRecoverySnapshot({
+    databaseUrl: 'postgres://source/revealline',
+    blobStore: sourceStore,
+    destination: snapshot,
+    runCommand: backupCommand(Buffer.from('database'), []),
+  });
+  const occupied = new MemoryBlobStore();
+  await occupied.putVerified({
+    key,
+    body: [bytes],
+    expectedSha256: sha256,
+    expectedSize: bytes.length,
+    maxBytes: 1024,
+  });
+  await assert.rejects(
+    restoreRecoverySnapshotToStore({
+      databaseUrl: 'postgres://target/revealline',
+      blobStore: occupied,
+      storageIdentity: 's3_occupied',
+      journalFile: path.join(root, 'occupied-journal.json'),
+      source: snapshot,
+      runCommand: async () => {},
+    }),
+    /must be empty/u,
+  );
+
+  const target = new MemoryBlobStore();
+  const journalFile = path.join(root, 'identity-journal.json');
+  await assert.rejects(
+    restoreRecoverySnapshotToStore({
+      databaseUrl: 'postgres://target/revealline',
+      blobStore: {
+        list: (...args) => target.list(...args),
+        open: (...args) => target.open(...args),
+        async putVerified() {
+          throw new Error('stop after database restore');
+        },
+      },
+      storageIdentity: 's3_expected',
+      journalFile,
+      source: snapshot,
+      runCommand: async () => {},
+    }),
+    /stop after database restore/u,
+  );
+  await assert.rejects(
+    restoreRecoverySnapshotToStore({
+      databaseUrl: 'postgres://target/revealline',
+      blobStore: target,
+      storageIdentity: 's3_different',
+      journalFile,
+      source: snapshot,
+      runCommand: async () => {},
+    }),
+    /journal does not match/u,
+  );
+});
+
+test('store restore rechecks target emptiness before resuming a prepared journal', async (t) => {
+  const { root, bytes, sha256, key } = await fixture(t);
+  const sourceStore = new MemoryBlobStore();
+  await sourceStore.putVerified({
+    key,
+    body: [bytes],
+    expectedSha256: sha256,
+    expectedSize: bytes.length,
+    maxBytes: 1024,
+  });
+  const snapshot = path.join(root, 'stale-journal-snapshot');
+  await createRecoverySnapshot({
+    databaseUrl: 'postgres://source/revealline',
+    blobStore: sourceStore,
+    destination: snapshot,
+    runCommand: backupCommand(Buffer.from('database'), []),
+  });
+
+  const targetStore = new MemoryBlobStore();
+  const journalFile = path.join(root, 'stale-prepared-journal.json');
+  let restoreAttempts = 0;
+  await assert.rejects(
+    restoreRecoverySnapshotToStore({
+      databaseUrl: 'postgres://target/revealline',
+      blobStore: targetStore,
+      storageIdentity: 's3_stale_prepared',
+      journalFile,
+      source: snapshot,
+      runCommand: async () => {
+        restoreAttempts += 1;
+        throw new Error('simulated database interruption');
+      },
+    }),
+    /database interruption/u,
+  );
+  assert.equal(JSON.parse(await readFile(journalFile, 'utf8')).state, 'prepared');
+
+  const unrelatedBytes = Buffer.from('unrelated target package');
+  const unrelatedSha256 = digest(unrelatedBytes);
+  await targetStore.putVerified({
+    key: `packages/sha256/${unrelatedSha256.slice(0, 2)}/${unrelatedSha256}.rlpack`,
+    body: [unrelatedBytes],
+    expectedSha256: unrelatedSha256,
+    expectedSize: unrelatedBytes.length,
+    maxBytes: 1024,
+  });
+  await assert.rejects(
+    restoreRecoverySnapshotToStore({
+      databaseUrl: 'postgres://target/revealline',
+      blobStore: targetStore,
+      storageIdentity: 's3_stale_prepared',
+      journalFile,
+      source: snapshot,
+      runCommand: async () => {
+        restoreAttempts += 1;
+      },
+    }),
+    /must be empty/u,
+  );
+  assert.equal(restoreAttempts, 1);
 });
 
 test('verification rejects changed package bytes and restore refuses a non-empty target', async (t) => {

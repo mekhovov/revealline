@@ -8,7 +8,13 @@ export async function createBlobStore(storage, { loadS3 = loadAwsS3 } = {}) {
     throw new Error('A supported package storage configuration is required.');
 
   const module = await loadS3();
-  const required = ['S3Client', 'PutObjectCommand', 'HeadObjectCommand', 'GetObjectCommand'];
+  const required = [
+    'S3Client',
+    'PutObjectCommand',
+    'HeadObjectCommand',
+    'GetObjectCommand',
+    'ListObjectsV2Command',
+  ];
   if (required.some((name) => typeof module?.[name] !== 'function'))
     throw new Error('The AWS S3 client module is incomplete.');
   const client = new module.S3Client({
@@ -24,6 +30,7 @@ export async function createBlobStore(storage, { loadS3 = loadAwsS3 } = {}) {
       put: (input) => new module.PutObjectCommand(input),
       head: (input) => new module.HeadObjectCommand(input),
       get: (input) => new module.GetObjectCommand(input),
+      list: (input) => new module.ListObjectsV2Command(input),
     },
   });
 }
