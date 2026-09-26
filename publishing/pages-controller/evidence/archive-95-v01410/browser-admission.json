@@ -1,0 +1,50 @@
+{
+  "format": "revealline-archive-browser-admission.v1",
+  "status": "PASS",
+  "archiveId": "archive-95",
+  "infrastructureCommit": "f4aa06bd3986f5dac30e63b97b64123c6e6ecefa",
+  "deploymentId": 6680536506,
+  "deploymentStatusId": 18878964112,
+  "versions": ["v0.141.0"],
+  "surface": "Codex in-app browser Chromium",
+  "sequence": [
+    "Opened the Archive95 index and observed the original v0.141.0 preservation label and Play v0.141.0 route.",
+    "Opened the preserved route and observed the RevealLine Home for the archived v0.141.0 build.",
+    "Activated Missions and observed the complete Solo mission library with 285 missions and First return focused."
+  ],
+  "observed": {
+    "archiveDocumentTitle": "RevealLine archive 95",
+    "archiveHeading": "RevealLine archive 95",
+    "archiveReleaseLabel": "The original v0.141.0 build, preserved for comparison and historical play.",
+    "gameDocumentTitle": "Reveal / Line",
+    "gameShellLoaded": true,
+    "gameShellControls": [
+      "Continue",
+      "Solo",
+      "Versus",
+      "Team",
+      "Missions",
+      "Collection",
+      "Settings",
+      "More",
+      "Sound"
+    ],
+    "missionLibraryLoaded": true,
+    "missionCount": 285,
+    "focusedMission": "First return",
+    "reloads": 0,
+    "retries": 0
+  },
+  "scope": "Historical online preservation: complete exact-byte public audit plus a fresh bounded archive index, Home, and complete Solo mission-library check.",
+  "limitations": [
+    "Long source suites remained waived under the temporary fast-release policy and are not reported as passed.",
+    "No renewed physical touch/controller, comprehensive offline, or extended gameplay acceptance is claimed.",
+    "This admission preserves v0.141.0; v0.141.1 is the separate immutable release selected by the controller change."
+  ],
+  "evidence": [
+    {
+      "path": "evidence/archive-95-v01410/public-acceptance.json",
+      "sha256": "8ab32ee7000045a620e526328c5c960afcc5b2c4dfd906bcbd739d17a08da9a7"
+    }
+  ]
+}
