@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { collectionResultLabels } from '../collection-results.mjs';
+import { getLocale, setLocale } from '../i18n/index.mjs';
 
 const item = Object.freeze({
   campaignKey: 'chapter/1/exact-standard',
@@ -45,4 +46,17 @@ test('unavailable or malformed progress does not invent level mastery', () => {
     assert.match(labels.card, /Score run SILVER/);
     assert.doesNotMatch(labels.detail, /Level best/);
   }
+});
+
+test('collection result projection follows the active locale', (context) => {
+  const locale = getLocale();
+  context.after(() => setLocale(locale, { persist: false }));
+  const library = {
+    campaigns: { [item.campaignKey]: { clears: { [item.levelId]: { medals: 3 } } } },
+  };
+  setLocale('uk', { persist: false });
+  const labels = collectionResultLabels(item, library);
+  assert.match(labels.card, /Найкращий результат картини.*ЗОЛОТО/);
+  assert.match(labels.detail, /СРІБЛО · 55,77 с.*ЗОЛОТО/);
+  assert.doesNotMatch(labels.card + labels.detail, /Picture|Level|SILVER|GOLD/);
 });
