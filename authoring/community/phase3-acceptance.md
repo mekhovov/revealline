@@ -22,6 +22,12 @@ the browser cases below and the combined immutable release remain open.
   walls and a verified route. A legal win mounted the story; **Play**, **Replay** and **Skip** all
   completed without blocking continuation, and reload retained the exact earned poster. Browser
   playback passed, while sound reaching physical speakers remains unclaimed.
+- The same built-in-browser edition
+  `f976eb92c24b7d0585238b723ae621fd8c0d59c44f146a396e813ac51e7d5bd3` completed again at
+  65 percent, three lives and 14,720 points. **Play** reached “Story playing”; reloading while the
+  video was active stopped playback, released the transient presentation and reopened with the
+  exact earned poster, saved completion and **Start mission** available. Playback did not resume
+  without another explicit action.
 - A second review applied the nondefault 1–5 second playback range and downloaded an actual
   237,678-byte `.rlpack`, SHA-256
   `9e7dacb3813351b2eb95747d11d817dbc1bf89c661c52e3d0932ac0a5a4a157c`. Independent parsing
@@ -35,6 +41,10 @@ the browser cases below and the combined immutable release remain open.
   with “Browser could not decode this video container or codec.” No poster, story, generation,
   approval or installation path was exposed for it.
 - Scoped ESLint, Prettier and diff checks pass for the integrated Phase 3 files, including both browser-discovered fixes.
+- The focused story, media-intake, video-bundle, creator-install, community-offload and managed
+  storage recovery cohort passes 126/126. It includes `pagehide` media disposal, missing-original
+  item diagnostics, missing/corrupt dependency refusal, exact retained-package reinstall,
+  transactional write rollback and `QuotaExceededError` reservation cleanup.
 
 ## Corrections made during browser acceptance
 
@@ -44,10 +54,15 @@ the browser cases below and the combined immutable release remain open.
 
 ## Remaining acceptance gates
 
-- Verify audible output on physical target browsers, reload during active story playback and
-  missing-original recovery. Reload after completed/skipped playback, exact separate-origin package
-  import, complete-video byte/hash retention, a nondefault playback range and an authenticated
-  unsupported codec now pass in the built-in browser.
+- Verify audible output on physical target browsers. Active-playback reload, reload after
+  completed/skipped playback, exact separate-origin package import, complete-video byte/hash
+  retention, a nondefault playback range and an authenticated unsupported codec pass in the
+  built-in browser.
+- Missing originals fail per item and cannot enter an approved package; installed/offloaded editions
+  recover only from an exact retained package. These paths pass deterministic byte-store tests.
+  Deliberately corrupting browser IndexedDB is not recorded as an end-user browser flow, and genuine
+  browser-wide quota exhaustion remains unclaimed because quota estimates cannot force the next
+  write to fail.
 - Complete hosted full-checkout preflight/build/release-ready checks on the combined PR, then freeze,
   publish and publicly verify the assigned `v0.141.0` release.
 - Firefox, Safari, a genuinely clean browser profile and physical mobile remain untested. The user directed use of the built-in browser when Safari computer control was unavailable.
