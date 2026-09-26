@@ -49,16 +49,18 @@ approval or gameplay balance.
 - Actors, rules, goals, travelling impacts and specialist ownership match v27 on all presets.
 - Both spawns remain idle-safe for five seconds on Gentle, Standard and Expert at seeds 1, 7 and
   19.
-- Focused structural/idle tests: **4/4 passed**.
+- Two executable approaches per mission pass on Gentle, Standard and Expert at seeds 1 and 7,
+  with no downs and continued coverage work after the closure.
+- Focused structural/idle/route tests: **7/7 passed**.
 - Candidate files pass Prettier, targeted ESLint and `git diff --check`.
 
 ## Remaining before PR/release
 
-1. Author and prove two executable approaches per mission across all presets and seeds 1 and 7.
-2. Confirm no mandatory Support, no opening damage, no prolonged cleanup and useful partner banks.
-3. Rebase the full cultural stack onto the accepted v0.132.4 terminal main.
-4. Wire the successor as a separately selectable/current edition only after route evidence passes.
-5. Run focused library/Next/Studio checks, version/locale validation and the normal release gates.
+1. Confirm no mandatory Support, no prolonged cleanup and useful partner banks beyond the first
+   verified closures.
+2. Rebase the full cultural stack onto the accepted v0.132.4 terminal main.
+3. Wire the successor as a separately selectable/current edition.
+4. Run focused library/Next/Studio checks, version/locale validation and the normal release gates.
 
 Automated idle and topology checks establish legality, not fun, final two-player balance, cultural
 approval, physical-device behavior or public delivery.
