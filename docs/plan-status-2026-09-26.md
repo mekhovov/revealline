@@ -49,7 +49,7 @@ versions or acceptance gates are still current.
 | Neon cultural completion / PR #667               | Clean explicit v29 draft      | Adds original wall fields to Folded corner, Inside out and Four quarters using bounded Museum Fund, Ivan Honchar Museum and UNESCO vocabulary. Preserves v25/default and v28 history, foundations, spawns, actors and rules; retains Side-door bays as an intentional open contour puzzle and reduces the review queue from 12 to 9. Rebased evidence head `f616a0d04` maps one-to-one from the 161/161 checked patch. Hosted exact-head qualification remains.       |
 | Rover cultural completion / PR #670              | Clean explicit v30 draft      | Promotes the reviewed Split berths and Stepped return Ukrainian/FPV geometry into the current chain while preserving the newer pressure actors and rules. Exact rebased runtime/evidence head `cc43c2619` passes the 150/150 candidate/route/bootstrap cohort with zero skips; validation passed before the publication-only main rebase and lint/format/diff pass on the rebased head. The open/plain queue falls from 9 to 7. Hosted qualification remains.         |
 | Border cultural completion / PR #671             | Clean explicit v31 draft      | Adds original Reshetylivka aperture, Petrykivka branch and Kosiv bilateral wall fields to Second landing, Long rail and New frontier. Preserves current actors, objectives, bonuses, foundations, art and rules; the candidate/route/bootstrap cohort passes 164/164 with zero skips, repository validation and lint/format/diff pass, and the open/plain queue falls from 7 to 4. Hosted qualification remains.                                                      |
-| Border frontier/pocket completion / local v32    | Clean explicit v32 candidate  | Adds original Bukovyna wave/dogleg and Podillia end-weighted wall fields to Turn the corner and Return pocket. Preserves current actors, objectives, bonuses, foundations, art and rules; the candidate/route/bootstrap/navigation cohort passes 162/162 with zero skips. The queue closes with Behind the patrol and Side-door bays deliberately retained as open lessons. Validation/lint/format/PR publication remain.                                             |
+| Border frontier/pocket completion / PR #672      | Clean explicit v32 draft      | Adds original Bukovyna wave/dogleg and Podillia end-weighted wall fields to Turn the corner and Return pocket. Preserves current actors, objectives, bonuses, foundations, art and rules; the candidate/route/bootstrap/navigation cohort passes 162/162 with zero skips. The queue closes with Behind the patrol and Side-door bays deliberately retained as open lessons. Repository validation and lint/format/diff pass; hosted qualification remains.            |
 
 After the final main rebase, an uncontended bounded host rerun passed all selected corrected cases:
 four Solo scenarios, four Versus scenarios, two representative Team source routes and the three-stage
@@ -142,10 +142,11 @@ accepted predecessor; draft labels do not reserve a release.
     candidate/route/bootstrap cohort passes 164/164 with zero skips, and repository validation plus
     targeted lint/format/diff checks pass. Hosted qualification, review, promotion and public
     evidence remain.
-16. **v32 remains opt-in:** the local frontier/pocket completion preserves v25 as default and v31 as
-    history. Its candidate/route/bootstrap/navigation cohort passes 162/162 with zero skips. The
-    two remaining open/plain boards are intentional accepted lessons, not unfinished count targets.
-    Repository validation, hosted qualification, review, promotion and public evidence remain.
+16. **v32 remains opt-in:** draft PR #672 preserves v25 as default and v31 as history. Its
+    candidate/route/bootstrap/navigation cohort passes 162/162 with zero skips, and repository
+    validation plus targeted lint/format/diff checks pass. The two remaining open/plain boards are
+    intentional accepted lessons, not unfinished count targets. Hosted qualification, review,
+    promotion and public evidence remain.
 
 ## Immediate execution order
 
@@ -161,9 +162,8 @@ accepted predecessor; draft labels do not reserve a release.
    duplicate/ownership audit.
 7. Review draft PR #661 after #651, then PR #664. v26 preserves v25 and completes the Relay spatial
    cluster without changing the default before promotion.
-8. Review and host-qualify PR #667, then draft PRs #670 and #671. Publish the bounded v32
-   frontier/pocket candidate after local validation; do not redesign the two intentional open lessons
-   merely to force a zero count.
+8. Review and host-qualify PR #667, then draft PRs #670-#672. Do not redesign the two intentional
+   open lessons merely to force a zero count.
 9. Promote cultural releases in dependency order, reporting actual public delivery rather than a
    merge or workflow start.
 
