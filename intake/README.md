@@ -39,8 +39,9 @@ node intake/add-music.mjs "/absolute/path/to/docs/research/dah-soundtracks" \
 ```
 
 `--license unknown` is private-only. It cannot be combined with `--open-pr`,
-`--confirm-rights` or `--archive-root`, and it never writes to either public
-soundtrack archive. The equivalent direct builder command is:
+`--confirm-rights`, `--archive-root` or public catalogue metadata such as
+`--source`, `--artist`, `--description` and `--styles`. It never writes to
+either public soundtrack archive. The equivalent direct builder command is:
 
 ```sh
 node scripts/ua-fpv-local-pack.mjs \
