@@ -237,6 +237,12 @@ test('pack header, dependency, metadata and music validation follows the active 
   unsafeSource.metadata.sourceUrl = 'javascript:run()';
   const duplicateTheme = readPack();
   duplicateTheme.themes.push(structuredClone(duplicateTheme.themes[0]));
+  const unknownCampaignTheme = readPack();
+  unknownCampaignTheme.campaigns[0].themeId = 'missing-theme';
+  const duplicateLevel = readPack();
+  duplicateLevel.campaigns[0].levels.push(structuredClone(duplicateLevel.campaigns[0].levels[0]));
+  const unknownArtworkLevel = readPack();
+  unknownArtworkLevel.levelVisuals.push({ levelId: 'missing-level', visualOverrides: {} });
 
   setLocale('uk', { persist: false });
   assert.match(
@@ -249,6 +255,12 @@ test('pack header, dependency, metadata and music validation follows the active 
     validatePack(duplicateTheme).errors.join(' '),
     /Ідентифікатори тем мають бути унікальними/,
   );
+  assert.match(validatePack(unknownCampaignTheme).errors.join(' '), /невідому тему/);
+  assert.match(validatePack(duplicateLevel).errors.join(' '), /Ідентифікатори рівнів.*унікальними/);
+  assert.match(
+    validatePack(unknownArtworkLevel).errors.join(' '),
+    /невідомий або повторюваний рівень/,
+  );
 
   setLocale('en', { persist: false });
   assert.match(
@@ -258,4 +270,7 @@ test('pack header, dependency, metadata and music validation follows the active 
   assert.match(validatePack(wrongEngine).errors.join(' '), /requires a different engine/);
   assert.match(validatePack(unsafeSource).errors.join(' '), /HTTP\(S\) URL/);
   assert.match(validatePack(duplicateTheme).errors.join(' '), /Theme IDs must be unique/);
+  assert.match(validatePack(unknownCampaignTheme).errors.join(' '), /unknown theme/);
+  assert.match(validatePack(duplicateLevel).errors.join(' '), /Level IDs must be unique/);
+  assert.match(validatePack(unknownArtworkLevel).errors.join(' '), /unknown or repeated level/);
 });
