@@ -103,6 +103,10 @@ output. Its largest new source asset is the pinned, licensed Mediabunny browser 
   creator/media checks. Coverage includes physical unshared deletion, shared-byte retention,
   immutable profile/attempt keys, no-recovery refusal, stale-generation refusal, interrupted journal
   recovery, Web Lock serialization and network-free exact reinstall.
+- The focused story, media-intake, video-bundle, creator-install, community-offload and managed
+  storage recovery cohort passes **126/126**. This covers active-page disposal, missing-original
+  diagnostics and refusal, exact retained-package recovery, transactional storage rollback and
+  quota-failure reservation cleanup.
 - The built-in browser loaded an exact 810,180-byte local `.rlpack` through a one-edition catalog,
   installed creator edition `6033108fe9e7acc279cb888b19cfccb7033aa9ce20999dc5213b58e282873467`,
   showed its installed and offline-copy state, offloaded its runtime media, replaced Play with
@@ -132,6 +136,11 @@ output. Its largest new source asset is the pinned, licensed Mediabunny browser 
   original video. A later AVC+AAC run verified browser playback, Play/Replay/Skip and earned-poster
   reload; sound reaching physical speakers, WebM creator playback, Firefox, Safari and mobile
   behavior remain unqualified.
+- On installed AVC+AAC edition
+  `f976eb92c24b7d0585238b723ae621fd8c0d59c44f146a396e813ac51e7d5bd3`, a repeated legal win
+  reached 65 percent with three lives and 14,720 points. **Play** reached active story playback;
+  reloading at that point stopped the video and reopened with the exact earned poster, saved clear
+  and **Start mission** enabled. No playback resumed without an explicit action.
 - The AVC+AAC acceptance download was an actual 237,678-byte `.rlpack`, SHA-256
   `9e7dacb3813351b2eb95747d11d817dbc1bf89c661c52e3d0932ac0a5a4a157c`. Independent parsing
   authenticated every payload with zero trailing bytes, retained the complete 173,394-byte,
@@ -192,6 +201,12 @@ to AVC MP4, with optional Balanced or Compact resize/compression profiles and ex
 verification. Other audio layouts and codecs outside each browser's successful decode probe remain
 unsupported. Firefox, Safari, Balanced portrait and physical mobile media qualification remain
 unclaimed.
+
+Missing source/runtime originals are accepted at deterministic storage scope: failed items remain
+attached to their input, incomplete dependencies cannot be approved, and offloaded media can be
+restored only from the exact retained package. Atomic quota-failure rollback is also covered by
+injected IndexedDB failures. Deliberate browser database corruption and genuine browser-wide quota
+exhaustion are not claimed as end-user browser acceptance.
 
 PR #465 is merged. The hardening branch is rebased onto current protected `main` in PR #564,
 which has the repository-assigned target and source identity `v0.141.0`. The `v0.132.3` release and
