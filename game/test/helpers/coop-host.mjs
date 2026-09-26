@@ -293,22 +293,30 @@ export async function page(
     assert.ok(frames.size);
   }
   if (!retainInitialDifficulty) $('coop-difficulty').value = 'standard';
-  const nativeBlobText = Blob.prototype.text,
-    controlledBlobReads = [];
-  let blobTextMocked = false;
+  const fileReads = new WeakMap();
+  let blobReadersMocked = false;
   const selectFile = (text, read = null) => {
+    $('coop-pack-file').closest('details').open = true;
+    const file = new Blob([text], { type: 'application/json' });
     if (read) {
-      controlledBlobReads.push(read);
-      if (!blobTextMocked) {
-        blobTextMocked = true;
-        t.mock.method(Blob.prototype, 'text', function (...args) {
-          const controlled = controlledBlobReads.shift();
-          return controlled ? controlled() : Reflect.apply(nativeBlobText, this, args);
+      fileReads.set(file, read);
+      if (!blobReadersMocked) {
+        blobReadersMocked = true;
+        const nativeSlice = Blob.prototype.slice;
+        const nativeText = Blob.prototype.text;
+        t.mock.method(Blob.prototype, 'slice', function (...args) {
+          const owned = Reflect.apply(nativeSlice, this, args),
+            reader = fileReads.get(this);
+          if (reader) fileReads.set(owned, reader);
+          return owned;
+        });
+        t.mock.method(Blob.prototype, 'text', function () {
+          const reader = fileReads.get(this);
+          return reader ? reader() : Reflect.apply(nativeText, this, []);
         });
       }
     }
-    $('coop-pack-file').closest('details').open = true;
-    $('coop-pack-file').files = [new Blob([text], { type: 'application/json' })];
+    $('coop-pack-file').files = [file];
     return $('coop-pack-file').onchange();
   };
   const choose = (id, value) => {
