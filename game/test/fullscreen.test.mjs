@@ -7,13 +7,18 @@ import { Document } from './helpers/couch-dom.mjs';
 class Target {
   listeners = new Map();
   addEventListener(type, listener) {
-    this.listeners.set(type, listener);
+    if (!this.listeners.has(type)) this.listeners.set(type, new Set());
+    this.listeners.get(type).add(listener);
   }
-  removeEventListener(type) {
-    this.listeners.delete(type);
+  removeEventListener(type, listener) {
+    const listeners = this.listeners.get(type);
+    listeners?.delete(listener);
+    if (listeners?.size === 0) this.listeners.delete(type);
   }
   async emit(type) {
-    return this.listeners.get(type)?.();
+    const results = [];
+    for (const listener of this.listeners.get(type) ?? []) results.push(listener());
+    await Promise.all(results);
   }
 }
 
@@ -28,6 +33,9 @@ class Button extends Target {
   }
   removeAttribute(name) {
     this.attributes.delete(name);
+  }
+  hasAttribute(name) {
+    return this.attributes.has(name);
   }
 }
 
@@ -76,6 +84,40 @@ test('fullscreen control follows the browser state and exits through the same ex
   assert.equal(button.getAttribute('aria-label'), 'Enter fullscreen');
   assert.equal(button.getAttribute('aria-pressed'), 'false');
   assert.equal(doc.documentElement.dataset.gameFullscreen, undefined);
+});
+
+test('main-menu and Pause fullscreen controls stay synchronized', async (t) => {
+  const menu = new Button(),
+    pause = new Button(),
+    doc = fullscreenDocument();
+  menu.setAttribute('data-fullscreen-label', '');
+  pause.setAttribute('data-fullscreen-label', '');
+  const detachMenu = attachFullscreen(menu, doc, { allowInstallHelp: false }),
+    detachPause = attachFullscreen(pause, doc, { allowInstallHelp: false });
+  t.after(detachMenu);
+  t.after(detachPause);
+
+  assert.equal(menu.textContent, 'Full screen');
+  assert.equal(pause.textContent, 'Full screen');
+  await menu.emit('click');
+  assert.equal(menu.textContent, 'Exit full screen');
+  assert.equal(pause.textContent, 'Exit full screen');
+  assert.equal(menu.getAttribute('aria-pressed'), 'true');
+  assert.equal(pause.getAttribute('aria-pressed'), 'true');
+  await pause.emit('click');
+  assert.equal(menu.textContent, 'Full screen');
+  assert.equal(pause.textContent, 'Full screen');
+});
+
+test('menu fullscreen controls hide instead of offering install help when unsupported', (t) => {
+  const button = new Button(),
+    doc = fullscreenDocument();
+  doc.fullscreenEnabled = false;
+  doc.defaultView = { navigator: { platform: 'iPhone' } };
+  doc.getElementById = () => ({ open: false, showModal() {} });
+  const detach = attachFullscreen(button, doc, { allowInstallHelp: false });
+  t.after(detach);
+  assert.equal(button.hidden, true);
 });
 
 test('installed standalone PWAs report their display state without browser fullscreen', (t) => {

@@ -1494,6 +1494,28 @@ test('an exact host-local reveal overrides a restored remote filter without laun
   chooser.destroy();
 });
 
+test('an adopted mission updates the retained cursor without stealing gameplay focus', () => {
+  let launches = 0;
+  const source = owner({
+      entries: [row('first'), row('adopted')],
+      launch: () => ++launches,
+    }),
+    rows = createMissionLibrary([source]).missions,
+    { doc, $, chooser, opener } = setup([source]);
+  chooser.close();
+  opener.focus();
+  assert.equal(chooser.select(rows[1].id), true);
+  assert.equal(chooser.state().selectedId, rows[1].id);
+  assert.equal(doc.activeElement, opener);
+  chooser.open(opener);
+  assert.equal(doc.activeElement.dataset.missionId, rows[1].id);
+  assert.equal($('journey-mode').value, 'solo');
+  assert.equal(launches, 0);
+  assert.equal(chooser.select(createMissionLibrary([owner({ id: 'team' })]).missions[0].id), false);
+  assert.equal(doc.activeElement.dataset.missionId, rows[1].id);
+  chooser.destroy();
+});
+
 test('an invalid saved mode cannot override the current host default or restore stale selection', () => {
   const { doc, $, chooser } = setup([owner()], {
     mode: 'solo',
