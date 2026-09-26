@@ -289,16 +289,16 @@ function packChecks(candidate) {
         !campaignIds.has(campaign.id) &&
         text(campaign.revision, 60) &&
         text(campaign.title, 160),
-      'Pack campaign identity is invalid or duplicated.',
+      packError('campaignIdentity'),
     );
     campaignIds.add(campaign.id);
     required(
       campaign.themeId === undefined || themes.has(campaign.themeId),
-      'Campaign refers to an unknown theme.',
+      packError('campaignUnknownTheme'),
     );
     required(
       campaign.musicId === undefined || musicIds.has(campaign.musicId),
-      'Campaign refers to unknown music.',
+      packError('campaignUnknownMusic'),
     );
     if (campaign.classIds !== undefined)
       required(
@@ -306,17 +306,17 @@ function packChecks(candidate) {
           campaign.classIds.length > 0 &&
           campaign.classIds.every((id) => pack.classRecipes.some((c) => c.id === id)) &&
           new Set(campaign.classIds).size === campaign.classIds.length,
-        'Campaign class roster is invalid.',
+        packError('campaignClassRoster'),
       );
     required(
       Array.isArray(campaign.levels) &&
         campaign.levels.length >= 1 &&
         campaign.levels.length <= PACK_LIMITS.levels,
-      'Campaign must contain 1..128 maps.',
+      packError('campaignMapsBudget'),
     );
     required(
       versionsForCampaign(campaign).ruleset === versions.ruleset,
-      'Pack format and campaign simulation versions differ.',
+      packError('simulationVersions'),
     );
     for (const level of campaign.levels) {
       exactKeys(
@@ -337,16 +337,16 @@ function packChecks(candidate) {
               : levelKeys,
         'level',
       );
-      required(stableId(level.id), 'Level identity is reserved or invalid.');
-      required(!levelIds.has(level.id), 'Level IDs must be unique across a pack.');
+      required(stableId(level.id), packError('levelIdentity'));
+      required(!levelIds.has(level.id), packError('levelUnique'));
       levelIds.add(level.id);
       required(
         level.themeId === undefined || themes.has(level.themeId),
-        'Level refers to an unknown theme.',
+        packError('levelUnknownTheme'),
       );
       required(
         level.musicId === undefined || musicIds.has(level.musicId),
-        'Level refers to unknown music.',
+        packError('levelUnknownMusic'),
       );
       const scenario = {
         format: sentinel
@@ -380,16 +380,16 @@ function packChecks(candidate) {
       firstScenario ??= scenario;
     }
   }
-  required(levelIds.size <= PACK_LIMITS.levels, 'Pack map budget exceeded.');
+  required(levelIds.size <= PACK_LIMITS.levels, packError('mapBudget'));
   if (authoredMasteries) {
     required(
       Array.isArray(pack.masteries) && pack.masteries.length <= PACK_LIMITS.masteries,
-      'Pack v2 requires masteries with at most 128 definitions.',
+      packError('masteriesBudget'),
     );
     required(
       new TextEncoder().encode(JSON.stringify(pack.masteries)).byteLength <=
         PACK_LIMITS.combinedMasteryBytes,
-      'Pack mastery definitions exceed their combined 256 KiB budget.',
+      packError('masteryCombinedBudget'),
     );
     const ids = new Set(),
       maps = new Set();
@@ -403,13 +403,10 @@ function packChecks(candidate) {
           maxString: 512,
         }),
       );
-      required(
-        campaignIds.has(definition.campaignId),
-        'Pack mastery refers to an unknown local campaign.',
-      );
+      required(campaignIds.has(definition.campaignId), packError('masteryUnknownCampaign'));
       const map = `${definition.campaignId}/${definition.levelId}`;
-      required(!ids.has(definition.id), 'Pack mastery definition IDs must be unique.');
-      required(!maps.has(map), 'Only one mastery definition may target each pack map.');
+      required(!ids.has(definition.id), packError('masteryIdUnique'));
+      required(!maps.has(map), packError('masteryMapUnique'));
       ids.add(definition.id);
       maps.add(map);
       return definition;
@@ -418,10 +415,10 @@ function packChecks(candidate) {
   // Batch local context checks so a 128-map campaign is normalized only once.
   // Definitions stay beside maps; this cannot modify their existing identity.
   createMasteryCatalog(catalogEntries([pack]));
-  required(plainObject(pack.visualOverrides), 'Pack visualOverrides must be an object.');
+  required(plainObject(pack.visualOverrides), packError('visualOverridesObject'));
   required(
     Array.isArray(pack.levelVisuals) && pack.levelVisuals.length <= PACK_LIMITS.levels,
-    'Pack per-map visual budget exceeded.',
+    packError('perMapVisualBudget'),
   );
   const scopes = [{ name: 'pack', visualOverrides: pack.visualOverrides }],
     scopedLevels = new Set();
@@ -429,7 +426,7 @@ function packChecks(candidate) {
     exactKeys(entry, ['levelId', 'visualOverrides'], 'levelVisuals');
     required(
       levelIds.has(entry.levelId) && !scopedLevels.has(entry.levelId),
-      'Per-map artwork refers to an unknown or repeated level.',
+      packError('perMapUnknownRepeatedLevel'),
     );
     scopedLevels.add(entry.levelId);
     scopes.push({ name: entry.levelId, visualOverrides: entry.visualOverrides });
@@ -453,7 +450,7 @@ function packChecks(candidate) {
             SENTINEL_PACK_VERSION,
           ].includes(pack.format) &&
             CLASSIC_VISUAL_ROLES.includes(role)),
-        'Unknown visual role.',
+        packError('unknownVisualRole'),
       );
       const header = inspectImageDataUrl(descriptor.dataUrl);
       required(header.valid, header.errors.join('; '));
@@ -471,7 +468,7 @@ function packChecks(candidate) {
   required(
     encodedChars <= CONTENT_LIMITS.maxCombinedImageChars &&
       pixels <= CONTENT_LIMITS.maxCombinedImagePixels,
-    'Pack artwork exceeds its combined encoded or decoded pixel budget.',
+    packError('artworkBudget'),
   );
   return { pack, images, warnings: [...new Set(warnings)] };
 }
