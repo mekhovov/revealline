@@ -48,7 +48,7 @@ versions or acceptance gates are still current.
 | Fracture/Apex cultural completion / PR #666      | Clean explicit v28 draft      | Redesigns Bank the crossing, Five anchors and Final broadcast with original spatial fields informed by official Opishne museum, UNESCO Crimean Tatar Örnek and Museum Fund records. Preserves v25/default and v27 history, gameplay rules, objectives, relays, bonuses and actor roles; reduces the open/plain review queue from 15 to 12. Rebased evidence head `f77ca756a` maps one-to-one from the 158/158 checked patch. Hosted exact-head qualification remains. |
 | Neon cultural completion / PR #667               | Clean explicit v29 draft      | Adds original wall fields to Folded corner, Inside out and Four quarters using bounded Museum Fund, Ivan Honchar Museum and UNESCO vocabulary. Preserves v25/default and v28 history, foundations, spawns, actors and rules; retains Side-door bays as an intentional open contour puzzle and reduces the review queue from 12 to 9. Rebased evidence head `f616a0d04` maps one-to-one from the 161/161 checked patch. Hosted exact-head qualification remains.       |
 | Rover cultural completion / PR #670              | Clean explicit v30 draft      | Promotes the reviewed Split berths and Stepped return Ukrainian/FPV geometry into the current chain while preserving the newer pressure actors and rules. Exact rebased runtime/evidence head `cc43c2619` passes the 150/150 candidate/route/bootstrap cohort with zero skips; validation passed before the publication-only main rebase and lint/format/diff pass on the rebased head. The open/plain queue falls from 9 to 7. Hosted qualification remains.         |
-| Border cultural completion / local v31           | Clean explicit v31 candidate  | Adds original Reshetylivka aperture, Petrykivka branch and Kosiv bilateral wall fields to Second landing, Long rail and New frontier. Preserves current actors, objectives, bonuses, foundations, art and rules; the candidate/route/bootstrap cohort passes 164/164 with zero skips, repository validation and lint/format/diff pass, and the open/plain queue falls from 7 to 4. PR publication remains.                                                            |
+| Border cultural completion / PR #671             | Clean explicit v31 draft      | Adds original Reshetylivka aperture, Petrykivka branch and Kosiv bilateral wall fields to Second landing, Long rail and New frontier. Preserves current actors, objectives, bonuses, foundations, art and rules; the candidate/route/bootstrap cohort passes 164/164 with zero skips, repository validation and lint/format/diff pass, and the open/plain queue falls from 7 to 4. Hosted qualification remains.                                                      |
 
 After the final main rebase, an uncontended bounded host rerun passed all selected corrected cases:
 four Solo scenarios, four Versus scenarios, two representative Team source routes and the three-stage
@@ -137,9 +137,9 @@ accepted predecessor; draft labels do not reserve a release.
     passed before the publication-only main rebase, all 85 patches map one-to-one, and targeted
     lint/format/diff checks pass on the rebased head. Hosted qualification, review, promotion and
     public evidence are still required.
-15. **v31 remains opt-in:** the local Border completion preserves v25 as default and v30 as history.
-    Its candidate/route/bootstrap cohort passes 164/164 with zero skips, and repository validation
-    plus targeted lint/format/diff checks pass. Hosted qualification, review, promotion and public
+15. **v31 remains opt-in:** draft PR #671 preserves v25 as default and v30 as history. Its
+    candidate/route/bootstrap cohort passes 164/164 with zero skips, and repository validation plus
+    targeted lint/format/diff checks pass. Hosted qualification, review, promotion and public
     evidence remain.
 
 ## Immediate execution order
@@ -156,9 +156,8 @@ accepted predecessor; draft labels do not reserve a release.
    duplicate/ownership audit.
 7. Review draft PR #661 after #651, then PR #664. v26 preserves v25 and completes the Relay spatial
    cluster without changing the default before promotion.
-8. Review and host-qualify PR #667, then draft PR #670 and the bounded Border v31 candidate. Review
-   the 4 remaining audit candidates without redesigning intentionally open boards merely to satisfy
-   a count.
+8. Review and host-qualify PR #667, then draft PRs #670 and #671. Review the 4 remaining audit
+   candidates without redesigning intentionally open boards merely to satisfy a count.
 9. Promote cultural releases in dependency order, reporting actual public delivery rather than a
    merge or workflow start.
 
