@@ -42,7 +42,8 @@ import {
   authoredJourneyUsesActorMaterials,
 } from './content-design/mode-href.mjs';
 import { attachJourneyReactions } from './ui/journey-reactions.mjs';
-import { createCandidateSoloHost } from './content-design/solo-host.mjs';
+import { createSoloRouteHost } from './content-design/solo-route-host.mjs';
+import { publishedRouteViews } from './content-design/published-journey.mjs';
 import { journeyActorThemeCandidates } from './presentation/journey-actor-materials.mjs';
 import { journeyDifficultyCatalog, journeyPreset } from './content-design/catalogs.mjs';
 import { createCandidateFlightPictures } from './ui/candidate-flight-pictures.mjs';
@@ -55,6 +56,7 @@ import {
 import { createInstalledMissionLibrary } from './mission-library/installed-library.mjs';
 import { projectClassicCurrentRulesEntry } from './mission-library/classic-current-rules.mjs';
 import { journeyLibrarySource } from './mission-library/journey-source.mjs';
+import { publishedJourneyLibrarySources } from './mission-library/published-routes.mjs';
 import { combineJourneyLibrarySources } from './mission-library/cross-mode-journey.mjs';
 import { trackMissionLibraryOpening } from './mission-library/opening-intent.mjs';
 import { authoredMissionSuccessor } from './mission-library/authored-continuation.mjs';
@@ -272,6 +274,18 @@ import { missionBriefing } from './mission-brief.mjs';
 import { claimProfileWriter } from './profile-writer.mjs';
 import { commitBackup, recoverBackupImport } from './backup-storage.mjs';
 import { attachOfflinePanel } from './ui/offline-panel.mjs';
+import {
+  attachInstallOfflinePanel,
+  guardInstallOfflineBlur,
+  installOfflineOwnsElement,
+} from './ui/install-offline-panel.mjs';
+import { createOfflineDownloadAccess } from './offline-download-access.mjs';
+import { withOfflinePictureGate } from './ui/offline-picture-gate.mjs';
+import {
+  attachOfflineToolNavigation,
+  attachOfflineModeNavigation,
+} from './ui/offline-tool-navigation.mjs';
+import { offlineAvailability } from './offline.mjs';
 import { attachStorageRetention } from './ui/storage-retention.mjs';
 import { emptyProgress, loadProgress, saveProgress, awardCompletion } from './progress.mjs';
 import {
@@ -441,10 +455,18 @@ try {
     mode: 'solo',
     auxiliary: practiceSession,
   });
+  let installOfflinePanel = null;
+  const gameplayDownloads = createOfflineDownloadAccess({
+    requestPackage: (request) => {
+      if (!installOfflinePanel)
+        throw new Error('Open Install & offline play to prepare this chapter.');
+      return installOfflinePanel.requestPackage(request);
+    },
+  });
   const authoredRoute = !practiceSession && (await loadAuthoredJourneyRoute(journeyRequest));
   const authoredJourney = !!authoredRoute;
   const candidateHost = authoredJourney
-    ? createCandidateSoloHost(authoredRoute.source, {
+    ? await createSoloRouteHost(authoredRoute, {
         themes: authoredJourneyUsesActorMaterials(authoredRoute.id)
           ? journeyActorThemeCandidates((await getJSON('content-design/themes.json')).themes, {
               includeOriginals: authoredRoute.preserveOriginalThemes === true,
@@ -453,6 +475,7 @@ try {
         buildVersion,
         corePackIds: authoredRoute.corePackIds,
         optionalCampaignIds: authoredRoute.optionalCampaignIds,
+        ensurePackage: (groupId, options) => gameplayDownloads.ensure(groupId, options),
       })
     : null;
   const journeyPreferences = authoredJourney ? createJourneyPreferences({ window }) : null;
@@ -1332,114 +1355,137 @@ try {
   } = {}) {
     const pictureEntry = pictureExecutionForEntry(entry),
       pictureLevel = pictureLevelForRun(nextRun, entry, pictureEntry);
+    const guarded = (owner) =>
+      withOfflinePictureGate(owner, async ({ signal }) => {
+        if (candidateHost?.owns(entry)) {
+          await gameplayDownloads.ensureMission(
+            { routeId: authoredRoute.id, missionId: nextRun.levelId, mode: 'solo' },
+            { signal, retain: true },
+          );
+          return;
+        }
+        const source =
+          entry.classicRulesPresentationCampaign || entry.baseCampaign || entry.campaign;
+        if (!entry.sourcePackId && campaignKey(source) === campaignKey(baseEntry.campaign))
+          await gameplayDownloads.ensureClassic(null, { signal, retain: true });
+        else if (
+          entry.sourcePackId &&
+          isOfficialPack(packs.packs.find((pack) => pack.id === entry.sourcePackId))
+        )
+          await gameplayDownloads.ensureClassic(entry.sourcePackId, { signal, retain: true });
+      });
     if (candidateHost?.owns(entry)) {
       const manifest = entry.manifests.find((item) => item.level.id === nextRun.levelId);
-      return createCandidateFlightPictures({
-        context: {
-          runId: nextRunId,
-          executionKey: campaignKey(entry.campaign),
-          levelId: nextRun.levelId,
-          levelRevision: pictureLevel.revision,
-          themeId: manifest.presentation.themeId,
-        },
-        asset: manifest.background,
-        picture: candidatePicture,
-      });
+      return guarded(
+        createCandidateFlightPictures({
+          context: {
+            runId: nextRunId,
+            executionKey: campaignKey(entry.campaign),
+            levelId: nextRun.levelId,
+            levelRevision: pictureLevel.revision,
+            themeId: manifest.presentation.themeId,
+          },
+          asset: manifest.background,
+          picture: candidatePicture,
+        }),
+      );
     }
     const authoredBackground =
       entry.levelVisuals?.find((item) => item.levelId === nextRun.level.id)?.visualOverrides
         ?.background ??
       entry.visualOverrides?.background ??
       null;
-    return createFlightPictures({
-      ...(authoredBackground
-        ? {
-            acquireLegacy: (_choice, options) =>
-              acquireAuthoredPicture(authoredBackground, options),
-          }
-        : {}),
-      context: {
-        runId: nextRunId,
-        executionKey: pictureEntry.executionKey || campaignKey(pictureEntry.campaign),
-        levelId: nextRun.levelId,
-        levelRevision: pictureLevel.revision,
-        themeId: nextThemeId,
-      },
-      level: pictureLevel,
-      themeIds: entry.themes.map((item) => item.id),
-      identityCatalog: legacy ? null : pictureIdentity(),
-      readMedia: pictureMedia,
-      acquire: (request, options) =>
-        sessionPictures.has(request.pin)
-          ? sessionPictures.acquire(request.pin, options)
-          : acquirePresentationImage(request, options),
-      pins,
-      legacy,
-      explicitLegacy,
-      prepareSelection: !legacy
-        ? (options) =>
-            releasePictures.prepareSelection({
-              ...options,
-              authoredBackground:
-                entry.levelVisuals?.find((row) => row.levelId === nextRun.level.id)?.visualOverrides
-                  ?.background ??
-                entry.visualOverrides?.background ??
-                null,
-            })
-        : undefined,
-      selectPins:
-        !legacy && chapterSnapshot?.index?.chapters.some((d) => d.id === entry.sourcePackId)
-          ? async ({ media, selection, explicitLegacy, signal }) => {
-              const checked = await checkedChapters({ signal });
-              const original = await externalChapters.authoredPicture(
-                checked,
-                {
-                  executionKey: selection.executionKey,
-                  levelId: selection.levelId,
-                  levelRevision: selection.levelRevision,
-                  themeId: nextThemeId,
-                },
-                { signal },
-              );
-              if (original.metadata.generation !== media.metadata.generation)
-                throw new Error(
-                  t('interface:pictureChoicesChangedDuringChapterReadinessRetryThePausedFlight'),
-                );
-              const current = createPresentationPins(selection);
-              const fallback =
-                explicitLegacy || current.choices.some((choice) => choice.kind === 'legacy');
-              const library = fallback
-                ? validateMediaLibrary(
-                    {
-                      ...media.metadata.document.library,
-                      assignments: [
-                        ...media.metadata.document.library.assignments.filter(
-                          (assignment) =>
-                            canonicalJSON(assignment.identity) !==
-                            canonicalJSON(original.pin.identity),
-                        ),
-                        {
-                          identity: original.pin.identity,
-                          presentationId: original.pin.presentationId,
-                          revision: original.pin.presentationRevision,
-                        },
-                      ],
-                    },
-                    { identityCatalog: selection.identityCatalog },
-                  )
-                : selection.library;
-              return createFlightPresentationPins(
-                {
-                  ...selection,
-                  library,
-                  stillDocument: media.metadata.document,
-                  storyDocument: media.story.document,
-                },
-                { signal },
-              );
+    return guarded(
+      createFlightPictures({
+        ...(authoredBackground
+          ? {
+              acquireLegacy: (_choice, options) =>
+                acquireAuthoredPicture(authoredBackground, options),
             }
+          : {}),
+        context: {
+          runId: nextRunId,
+          executionKey: pictureEntry.executionKey || campaignKey(pictureEntry.campaign),
+          levelId: nextRun.levelId,
+          levelRevision: pictureLevel.revision,
+          themeId: nextThemeId,
+        },
+        level: pictureLevel,
+        themeIds: entry.themes.map((item) => item.id),
+        identityCatalog: legacy ? null : pictureIdentity(),
+        readMedia: pictureMedia,
+        acquire: (request, options) =>
+          sessionPictures.has(request.pin)
+            ? sessionPictures.acquire(request.pin, options)
+            : acquirePresentationImage(request, options),
+        pins,
+        legacy,
+        explicitLegacy,
+        prepareSelection: !legacy
+          ? (options) =>
+              releasePictures.prepareSelection({
+                ...options,
+                authoredBackground:
+                  entry.levelVisuals?.find((row) => row.levelId === nextRun.level.id)
+                    ?.visualOverrides?.background ??
+                  entry.visualOverrides?.background ??
+                  null,
+              })
           : undefined,
-    });
+        selectPins:
+          !legacy && chapterSnapshot?.index?.chapters.some((d) => d.id === entry.sourcePackId)
+            ? async ({ media, selection, explicitLegacy, signal }) => {
+                const checked = await checkedChapters({ signal });
+                const original = await externalChapters.authoredPicture(
+                  checked,
+                  {
+                    executionKey: selection.executionKey,
+                    levelId: selection.levelId,
+                    levelRevision: selection.levelRevision,
+                    themeId: nextThemeId,
+                  },
+                  { signal },
+                );
+                if (original.metadata.generation !== media.metadata.generation)
+                  throw new Error(
+                    t('interface:pictureChoicesChangedDuringChapterReadinessRetryThePausedFlight'),
+                  );
+                const current = createPresentationPins(selection);
+                const fallback =
+                  explicitLegacy || current.choices.some((choice) => choice.kind === 'legacy');
+                const library = fallback
+                  ? validateMediaLibrary(
+                      {
+                        ...media.metadata.document.library,
+                        assignments: [
+                          ...media.metadata.document.library.assignments.filter(
+                            (assignment) =>
+                              canonicalJSON(assignment.identity) !==
+                              canonicalJSON(original.pin.identity),
+                          ),
+                          {
+                            identity: original.pin.identity,
+                            presentationId: original.pin.presentationId,
+                            revision: original.pin.presentationRevision,
+                          },
+                        ],
+                      },
+                      { identityCatalog: selection.identityCatalog },
+                    )
+                  : selection.library;
+                return createFlightPresentationPins(
+                  {
+                    ...selection,
+                    library,
+                    stillDocument: media.metadata.document,
+                    storyDocument: media.story.document,
+                  },
+                  { signal },
+                );
+              }
+            : undefined,
+      }),
+    );
   }
   function cancelPictureStart({
     retirePrewarm = false,
@@ -1501,6 +1547,9 @@ try {
       );
   }
   function warmPicture() {
+    // New packages are transferred only after the player reviews their size.
+    // Explicit Start below performs that check before acquiring any original.
+    if (offlineAvailability().packageConsent) return;
     const owner = flightPictures;
     if (!owner || owner.ready(theme.id)) return;
     const notify = flightInformation.captureWarning('host.picture');
@@ -1918,6 +1967,18 @@ try {
   async function actorContent(entry, level, themeId, { signal, retained = false } = {}) {
     if (practice || entry.activity === 'challenge') return null;
     if (candidateHost?.owns(entry)) {
+      if (candidateHost.prepareVisualIdentity)
+        return {
+          scope: 'journey',
+          content: await candidateHost.prepareVisualIdentity(
+            {
+              selection: entry,
+              level,
+              association: { editionId: authoredRoute.id, contentThemeId: themeId, mode: 'solo' },
+            },
+            { signal },
+          ),
+        };
       actorJourneyIdentity ??= createJourneyVisualThemeIdentityAdapter(authoredRoute.source, {
         mode: 'solo',
       });
@@ -2296,6 +2357,7 @@ try {
   let controllerCompositeRegion = null;
   const controllerShellBar = document.querySelector('.shell-bar');
   function controllerMenuRoot() {
+    if (installOfflinePanel?.frameFocused()) return null;
     const region = controllerMenuRegion();
     // Nonmodal overlays share navigation with the visible shell bar. The
     // accept predicate confines it to the overlay, shell and active lesson panel.
@@ -2321,6 +2383,10 @@ try {
     );
   }
   function controllerBack() {
+    if (installOfflinePanel?.isOpen()) {
+      installOfflinePanel.close();
+      return;
+    }
     const dialog = controllerDialog();
     if (dialog) {
       if (dialog.id === 'profile-recovery-dialog') {
@@ -2485,6 +2551,10 @@ try {
     activateControl: (element) => controllerConfirmGuard.activate(element),
     onBack: controllerBack,
     onMenu: () => {
+      if (installOfflinePanel?.isOpen()) {
+        installOfflinePanel.close();
+        return;
+      }
       if (
         !courseBlocked() &&
         !dialogOpen() &&
@@ -3081,6 +3151,16 @@ try {
     (librarySourceReturn?.mode === ticket.kind && librarySourceDestination) ||
     authoredJourneyModeHref(ticket.journeyRouteId, ticket.kind) ||
     modeDestinations[ticket.kind];
+  async function prepareModeDestination(ticket, destination = modeDestination(ticket)) {
+    modeDepartureCurrent(ticket);
+    await gameplayDownloads.ensureDestination(new URL(destination, location.href), {
+      signal: ticket.controller.signal,
+      // Only the unified library's authenticated import binding may choose an
+      // unlisted mission. Its receiving host still validates the imported pack.
+      runtimeOnly: ticket.libraryTarget?.collection === 'Custom',
+    });
+    modeDepartureCurrent(ticket);
+  }
   function syncAuthoredModeLinks() {
     const href =
       (librarySourceReturn?.mode === 'versus' && librarySourceDestination) ||
@@ -3364,6 +3444,23 @@ try {
       pending: true,
     };
     modeDeparture = ticket;
+    if (!ticket.unfinished && offlineAvailability().packageConsent) {
+      try {
+        await prepareModeDestination(ticket);
+      } catch (error) {
+        if (modeDeparture === ticket) {
+          cancelModeDeparture({ restore: true, clearHint: true });
+          if (error.name !== 'AbortError')
+            warning(
+              localizedMessage('interface:soloDeparture.openFailed', {
+                destination: modeLabel(kind),
+                error: error.message,
+              }),
+            );
+        }
+        return false;
+      }
+    }
     if (origin === 'solo-title' && !ticket.unfinished) {
       try {
         modeDepartureCurrent(ticket);
@@ -3450,13 +3547,15 @@ try {
     if ($('mode-leave-dialog').open || !modeDeparture?.dialogShown) return;
     cancelModeDeparture({ restore: true, clearHint: true });
   });
-  $('mode-leave-confirm').onclick = () => {
+  $('mode-leave-confirm').onclick = async () => {
     const ticket = modeDeparture;
     if (!ticket || ticket.pending) return;
     if (document.hidden || document.hasFocus?.() === false) {
       cancelModeDeparture({ close: true, clearHint: true });
       return;
     }
+    ticket.pending = true;
+    $('mode-leave-confirm').disabled = true;
     try {
       modeDepartureCurrent(ticket);
       if (ticket.savedRaw) {
@@ -3484,13 +3583,24 @@ try {
           return;
         }
       }
-      modeDepartureCurrent(ticket);
+      if (offlineAvailability().packageConsent) await prepareModeDestination(ticket, destination);
+      if (ticket.savedRaw) {
+        assertWriter();
+        if (localStorage.getItem(sessionKey) !== ticket.savedRaw)
+          throw new Error(t('interface:savedFlightChanged'));
+      }
       location.href = destination;
     } catch (error) {
       clearModeHint(ticket);
-      localizedText($('mode-leave-status'), () =>
-        t('interface:soloDeparture.pausedError', { error: error.message }),
-      );
+      if (modeDeparture === ticket && error.name !== 'AbortError')
+        localizedText($('mode-leave-status'), () =>
+          t('interface:soloDeparture.pausedError', { error: error.message }),
+        );
+    } finally {
+      if (modeDeparture === ticket) {
+        ticket.pending = false;
+        $('mode-leave-confirm').disabled = false;
+      }
     }
   };
   function cancelMissionReplacement() {
@@ -4670,7 +4780,9 @@ try {
     gameplayTuningPanel?.refresh();
     if (candidateHost?.owns(activeEntry)) {
       const next = journeyPreferences.snapshot();
-      const catalogId = authoredRoute.source.difficultyCatalogId;
+      const catalogId =
+        authoredRoute.source?.difficultyCatalogId ||
+        authoredRoute.navigation.project.difficultyCatalogId;
       $('difficulty-select').replaceChildren(
         ...Object.keys(journeyDifficultyCatalog(catalogId).presets).map((id) =>
           localizedOption(() => gameplayDifficultyLabel(id), id),
@@ -4993,9 +5105,7 @@ try {
     pause(true);
     clearInput();
     if (candidateHost) {
-      const entry = candidateHost.select(mission, journeyPreferences.snapshot().difficulty);
-      if (!entry) return false;
-      const adopted = await prepareResultAttempt(kind, mission.levelIndex, entry);
+      const adopted = await prepareResultAttempt(kind, mission.levelIndex, null, mission);
       if (adopted && skipped)
         journeyProfile.record({ type: 'skip', mode: 'solo', missionId: skipped.id });
       return adopted;
@@ -5101,7 +5211,11 @@ try {
     if (!entry) throw new Error(t('interface:thisCampaignIsNotInstalled'));
     if (difficulty !== undefined) {
       if (candidateHost?.owns(entry))
-        journeyPreset(difficulty, authoredRoute.source.difficultyCatalogId);
+        journeyPreset(
+          difficulty,
+          authoredRoute.source?.difficultyCatalogId ||
+            authoredRoute.navigation.project.difficultyCatalogId,
+        );
       else resolveCampaignDifficulty(difficulty);
     }
     if (selectedSeed !== undefined) {
@@ -5232,6 +5346,8 @@ try {
     if (installed) return { pack: installed, installed: false };
     const summary = packCatalog.packs.find((pack) => pack.id === packId);
     if (!summary) throw new Error(t('interface:thisPackIsNotBundledWithTheCurrentBuild'));
+    await gameplayDownloads.ensureClassic(packId);
+    packLaunchGuard.assert(operation, packs);
     assertWriter();
     contentStatus(`Installing ${summary.name} on this device…`, false, {
       busy: true,
@@ -5537,18 +5653,21 @@ try {
   }
   function refreshSavedFlight() {
     const saved = savedAttempt();
-    const savedMode = difficultyLabel(
-      executionEntries().find((entry) => campaignKey(entry.campaign) === saved?.campaignKey),
-    );
+    const entries = executionEntries();
+    const savedEntry = entries.find((entry) => campaignKey(entry.campaign) === saved?.campaignKey);
+    const metadata = !savedEntry && candidateHost?.executionMetadata?.(saved?.campaignKey);
+    const savedMode = metadata
+      ? gameplayDifficultyLabel(metadata.difficulty)
+      : difficultyLabel(savedEntry);
     const preview = practice
       ? null
-      : savedFlightPreview(
-          saved,
-          executionEntries().map((entry) => ({
+      : savedFlightPreview(saved, [
+          ...entries.map((entry) => ({
             key: campaignKey(entry.campaign),
             campaign: entry.campaign,
           })),
-        );
+          ...(metadata ? [metadata] : []),
+        ]);
     const atReady = !started && !practice;
     show('continue-saved', atReady && !!preview);
     show('continue-saved-note', atReady && !!preview);
@@ -5668,15 +5787,6 @@ try {
       throw new Error(t('interface:endFirstFlightBeforeLoadingACampaignFlight'));
     if (sessionBusy) throw new Error(t('interface:aFlightIsAlreadyBeingVerified'));
     if (signal?.aborted) throw new DOMException(t('interface:titleLaunchCancelled'), 'AbortError');
-    const entry = findCampaignEntry(candidate?.campaignKey);
-    if (!entry)
-      throw new Error(
-        candidateHost
-          ? t('interface:thisAuthoredFlightNeedsItsOriginalTestEditionItsSaved')
-          : t('interface:installTheMatchingCampaignPackBeforeLoadingThisFlight'),
-      );
-    if (candidateHost && !candidateHost.owns(entry))
-      throw new Error(t('interface:openThisLegacyFlightInTheOrdinaryGameThisRoute'));
     invalidateContentSwitch();
     sessionBusy = true;
     refreshSavedFlight();
@@ -5707,6 +5817,19 @@ try {
         message: t('interface:verifyingYourSavedFlight'),
         stage: 'verifying',
       });
+      await candidateHost?.ensureExecution?.(candidate?.campaignKey, {
+        signal: controller.signal,
+      });
+      controller.signal.throwIfAborted();
+      const entry = findCampaignEntry(candidate?.campaignKey);
+      if (!entry)
+        throw new Error(
+          candidateHost
+            ? t('interface:thisAuthoredFlightNeedsItsOriginalTestEditionItsSaved')
+            : t('interface:installTheMatchingCampaignPackBeforeLoadingThisFlight'),
+        );
+      if (candidateHost && !candidateHost.owns(entry))
+        throw new Error(t('interface:openThisLegacyFlightInTheOrdinaryGameThisRoute'));
       const restored = await restoreSession(candidate, {
         campaign: entry.campaign,
         campaignKey: campaignKey(entry.campaign),
@@ -6620,8 +6743,47 @@ try {
     },
   });
   const offlinePanel = attachOfflinePanel();
+  installOfflinePanel = $('shell-offline')
+    ? attachInstallOfflinePanel({
+        document,
+        window,
+        downloadsURL: new URL('./downloads.html', import.meta.url),
+        getWriter: () => ({ key: `${libraryKey}.writer`, lease: writer }),
+        onOpen: () => {
+          if (started && !paused) pause(true);
+        },
+        canActivate: () => !started && !sessionBusy && !backupBusy && !contentSwitchBusy,
+        onStatus: (message) => {
+          if ($('shell-offline-status')) $('shell-offline-status').textContent = message;
+        },
+      })
+    : null;
+  const stopOfflineToolNavigation = attachOfflineToolNavigation({
+    document,
+    window,
+    access: gameplayDownloads,
+    onError: (error) => warning(error.message, null, 'host.offline'),
+  });
+  const stopOfflineModeNavigation = attachOfflineModeNavigation({
+    document,
+    window,
+    access: gameplayDownloads,
+    onError: (error) => warning(error.message, null, 'host.offline'),
+  });
+  if ($('shell-offline')) $('shell-offline').onclick = () => installOfflinePanel.open();
+  if ($('settings-offline'))
+    $('settings-offline').onclick = (event) => {
+      if (!installOfflinePanel) return;
+      event.preventDefault();
+      installOfflinePanel.open();
+    };
   window.addEventListener('pagehide', (event) => {
-    if (!event.persisted) offlinePanel.destroy();
+    if (!event.persisted) {
+      offlinePanel.destroy();
+      installOfflinePanel?.dispose();
+      stopOfflineToolNavigation();
+      stopOfflineModeNavigation();
+    }
   });
   show('native-diagnostics', nativePlatform() === 'ios');
   function tuneMusic(event) {
@@ -7517,7 +7679,7 @@ try {
     const detach = () => {
       document.removeEventListener('focusin', changedFocus);
       document.removeEventListener('visibilitychange', lostForeground);
-      window.removeEventListener('blur', lostForeground);
+      window.removeEventListener('blur', windowBlur);
     };
     operation.cancel = ({ restoreFocus = false } = {}) => {
       if (libraryNextOperation !== operation) return;
@@ -7539,12 +7701,14 @@ try {
         button.focus({ preventScroll: true });
     };
     function changedFocus(event) {
+      if (installOfflineOwnsElement(event.target)) return;
       if (![button, cancelButton, document.body, document.documentElement].includes(event.target))
         operation.cancel();
     }
     function lostForeground(event) {
       if (document.hidden || event.type === 'blur') operation.cancel();
     }
+    const windowBlur = guardInstallOfflineBlur(lostForeground);
     try {
       feedback = beginPreparation(
         t('interface:findingTheNextMissionYourResultIsKept'),
@@ -7556,7 +7720,7 @@ try {
       cancelButton.focus({ preventScroll: true });
       document.addEventListener('focusin', changedFocus);
       document.addEventListener('visibilitychange', lostForeground);
-      window.addEventListener('blur', lostForeground);
+      window.addEventListener('blur', windowBlur);
       const host = await getUnifiedMissionLibrary();
       if (!current()) return;
       await host.refreshInstalled();
@@ -7649,6 +7813,7 @@ try {
     kind,
     destinationIndex = levelIndex,
     destinationEntry = null,
+    destinationMission = null,
   ) {
     if (resultAttempt?.kind === kind) return;
     const previousEpoch = resultAttemptEpoch,
@@ -7714,6 +7879,19 @@ try {
       if (resultAttempt !== ticket || resultAttemptEpoch !== epoch) return;
       if (!resultAttemptCurrent(ticket))
         throw new DOMException(t('interface:preparationCancelled'), 'AbortError');
+      if (destinationMission) {
+        await candidateHost.ensureMission?.(destinationMission, {
+          signal: ticket.controller.signal,
+        });
+        if (!resultAttemptCurrent(ticket))
+          throw new DOMException(t('interface:preparationCancelled'), 'AbortError');
+        destinationEntry = candidateHost.select(
+          destinationMission,
+          journeyPreferences.snapshot().difficulty,
+        );
+        if (!destinationEntry)
+          throw new Error(t('interface:thisMissionIsUnavailableInTheCurrentEdition'));
+      }
       const entry =
           destinationEntry ||
           (candidateHost?.owns(activeEntry)
@@ -7745,6 +7923,12 @@ try {
         throw new DOMException(t('interface:preparationCancelled'), 'AbortError');
       let candidateAttempt = null;
       if (candidateHost?.owns(entry)) {
+        await gameplayDownloads.ensureMission(
+          { routeId: authoredRoute.id, missionId: level.id, mode: 'solo' },
+          { signal: ticket.controller.signal, retain: true },
+        );
+        if (!resultAttemptCurrent(ticket))
+          throw new DOMException(t('interface:preparationCancelled'), 'AbortError');
         candidateAttempt = await candidateHost.preparer.prepare(
           {
             missionId: candidateHost.mission(entry, destinationIndex).id,
@@ -8281,9 +8465,17 @@ try {
         prewarm.observe = feedback.update;
         if (prewarm.latest) feedback.update(prewarm.latest);
       }
-      const prepared =
-        prewarm?.promise ??
-        owner.ensure(selectedTheme, { signal: controller.signal, onStatus: feedback.update });
+      const prepared = (async () => {
+        if (candidateHost?.owns(selectedEntry))
+          await gameplayDownloads.ensureMission(
+            { routeId: authoredRoute.id, missionId: selectedLevel.id, mode: 'solo' },
+            { signal: controller.signal, retain: true },
+          );
+        return (
+          prewarm?.promise ??
+          owner.ensure(selectedTheme, { signal: controller.signal, onStatus: feedback.update })
+        );
+      })();
       void prepared
         .then(async () => {
           if (needsFreshVisuals)
@@ -9863,7 +10055,7 @@ try {
   onNativeInactive(suspendInteraction).catch((error) =>
     warning(`App lifecycle adapter unavailable: ${error.message}`, null, 'host.lifecycle'),
   );
-  window.addEventListener('blur', suspendInteraction);
+  window.addEventListener('blur', guardInstallOfflineBlur(suspendInteraction));
   function restoreListening() {
     if (document.hidden || soundtrackDisposed || enemyGuide?.practiceActive) return;
     if (!soundtrackPlayer) {
@@ -10019,6 +10211,7 @@ try {
     archivedIds: preparePackCatalog(archiveCatalogSource).packs.map(({ id }) => id),
   });
   async function prepareLibraryClassic(row, { signal }) {
+    await gameplayDownloads.ensureClassic(row.packId, { signal });
     if (row.source === 'external')
       return installSourceChapter(row.packId, null, { signal, download: true });
     if (row.source === 'optional') {
@@ -10161,86 +10354,114 @@ try {
             includeOriginals: route.preserveOriginalThemes === true,
           })
         : originalThemes;
+      const views = publishedRouteViews(route);
       const host =
         candidateHost ||
-        createCandidateSoloHost(route.source, {
+        views?.solo ||
+        (await createSoloRouteHost(route, {
           themes: libraryThemes,
           buildVersion,
           corePackIds: route.corePackIds,
           optionalCampaignIds: route.optionalCampaignIds,
-        });
-      // Compile the other mode through its own validated runtime adapter. The
-      // combined browsing identity never grants this Solo host Versus ownership.
-      const { createCandidateVersusHost } = await import('./content-design/versus-host.mjs');
-      const versusPreview = createCandidateVersusHost(route.source, {
-        themes: libraryThemes,
-        corePackIds: route.corePackIds,
-        optionalCampaignIds: route.optionalCampaignIds,
-      });
+          ensurePackage: (groupId, options) => gameplayDownloads.ensure(groupId, options),
+        }));
       const profile = candidateHost
         ? journeyProfile
         : createJourneyProfileStore({ profileKey: route.profileKey });
       if (!candidateHost) await profile.load();
       collectionJourneyState = { profile, catalog: host.catalog, editionId: route.id };
-      const manifestFor = (
-        mission,
-        difficulty = browsingJourneyPreferences.snapshot().difficulty,
-      ) =>
-        host
-          .select(mission, difficulty)
-          ?.manifests.find((manifest) => manifest.missionId === mission.levelId);
-      const source = journeyLibrarySource({
-        editionId: route.id,
-        edition: route.id === DEFAULT_JOURNEY_ROUTES.solo ? 'New Journey' : route.label,
-        editionLabel: () =>
-          route.id === DEFAULT_JOURNEY_ROUTES.solo
-            ? t('interface:newJourney')
-            : contentText(route, 'label'),
-        catalog: host.catalog,
-        profile,
-        details: (mission) => journeyMissionDetails(manifestFor(mission)),
-        tags: (mission) => authoredJourneyMissionTags(mission, manifestFor(mission, 'standard')),
-        card: (mission) => host.card(mission, browsingJourneyPreferences.snapshot().difficulty),
-        launch: (mission, context) => {
-          if (context.isCurrent?.() === false) return false;
-          if (!candidateHost || context.mode !== 'solo') return departLibraryMission(context);
-          if ($('shell-home').open) $('shell-home').close();
-          if (context.transferContinuation && !context.transferContinuation()) return false;
-          return launchJourneyMission(mission, { kind: context.continuation ? 'next' : 'choose' });
-        },
-      });
-      const versusSource = journeyLibrarySource({
-        editionId: route.id,
-        edition: route.id === DEFAULT_JOURNEY_ROUTES.solo ? 'New Journey' : route.label,
-        editionLabel: () =>
-          route.id === DEFAULT_JOURNEY_ROUTES.solo
-            ? t('interface:newJourney')
-            : contentText(route, 'label'),
-        catalog: versusPreview.catalog,
-        profile,
-        details: (mission) =>
-          journeyMissionDetails(
-            versusPreview.manifest(mission, browsingJourneyPreferences.snapshot().difficulty),
-          ),
-        tags: (mission) => authoredJourneyMissionTags(mission, versusPreview.manifest(mission)),
-        card: (mission) =>
-          versusPreview.card(mission, browsingJourneyPreferences.snapshot().difficulty),
-        launch: (_mission, context) => departLibraryMission(context),
-      });
-      const { createRemoteTeamLibrarySources } = await import('./mission-library/remote-team.mjs');
-      const teamSources = createRemoteTeamLibrarySources({
-        launch: departLibraryMission,
-        difficulty: () => browsingJourneyPreferences.snapshot().difficulty,
-      });
-      const { createSpatialNextEditionSources } = await import(
-        './mission-library/spatial-next-editions.mjs'
-      );
-      const spatialEditions = await createSpatialNextEditionSources({
-        activeRouteId: route.id,
-        originalThemes,
-        difficulty: () => browsingJourneyPreferences.snapshot().difficulty,
-        launch: departLibraryMission,
-      });
+      const launchSolo = (mission, context) => {
+        if (context.isCurrent?.() === false) return false;
+        if (!candidateHost || context.mode !== 'solo') return departLibraryMission(context);
+        if ($('shell-home').open) $('shell-home').close();
+        if (context.transferContinuation && !context.transferContinuation()) return false;
+        return launchJourneyMission(mission, { kind: context.continuation ? 'next' : 'choose' });
+      };
+      let journeySources,
+        spatialEditions = { dispose() {} };
+      if (views) {
+        journeySources = publishedJourneyLibrarySources({
+          route,
+          views,
+          soloHost: candidateHost,
+          profile,
+          difficulty: () => browsingJourneyPreferences.snapshot().difficulty,
+          launchSolo,
+          launchRemote: departLibraryMission,
+        });
+      } else {
+        // Compile the other mode through its own validated runtime adapter. The
+        // combined browsing identity never grants this Solo host Versus ownership.
+        const { createCandidateVersusHost } = await import('./content-design/versus-host.mjs');
+        const versusPreview = createCandidateVersusHost(route.source, {
+          themes: libraryThemes,
+          corePackIds: route.corePackIds,
+          optionalCampaignIds: route.optionalCampaignIds,
+        });
+        const manifestFor = (
+          mission,
+          difficulty = browsingJourneyPreferences.snapshot().difficulty,
+        ) =>
+          host
+            .select(mission, difficulty)
+            ?.manifests.find((manifest) => manifest.missionId === mission.levelId);
+        const source = journeyLibrarySource({
+          editionId: route.id,
+          edition: route.id === DEFAULT_JOURNEY_ROUTES.solo ? 'New Journey' : route.label,
+          editionLabel: () =>
+            route.id === DEFAULT_JOURNEY_ROUTES.solo
+              ? t('interface:newJourney')
+              : contentText(route, 'label'),
+          catalog: host.catalog,
+          profile,
+          details: (mission) => journeyMissionDetails(manifestFor(mission)),
+          tags: (mission) => authoredJourneyMissionTags(mission, manifestFor(mission, 'standard')),
+          card: (mission) => host.card(mission, browsingJourneyPreferences.snapshot().difficulty),
+          launch: launchSolo,
+        });
+        const versusSource = journeyLibrarySource({
+          editionId: route.id,
+          edition: route.id === DEFAULT_JOURNEY_ROUTES.solo ? 'New Journey' : route.label,
+          editionLabel: () =>
+            route.id === DEFAULT_JOURNEY_ROUTES.solo
+              ? t('interface:newJourney')
+              : contentText(route, 'label'),
+          catalog: versusPreview.catalog,
+          profile,
+          details: (mission) =>
+            journeyMissionDetails(
+              versusPreview.manifest(mission, browsingJourneyPreferences.snapshot().difficulty),
+            ),
+          tags: (mission) => authoredJourneyMissionTags(mission, versusPreview.manifest(mission)),
+          card: (mission) =>
+            versusPreview.card(mission, browsingJourneyPreferences.snapshot().difficulty),
+          launch: (_mission, context) => departLibraryMission(context),
+        });
+        const { createRemoteTeamLibrarySources } = await import(
+          './mission-library/remote-team.mjs'
+        );
+        const teamSources = createRemoteTeamLibrarySources({
+          launch: departLibraryMission,
+          difficulty: () => browsingJourneyPreferences.snapshot().difficulty,
+        });
+        const { createSpatialNextEditionSources } = await import(
+          './mission-library/spatial-next-editions.mjs'
+        );
+        spatialEditions = await createSpatialNextEditionSources({
+          activeRouteId: route.id,
+          originalThemes,
+          difficulty: () => browsingJourneyPreferences.snapshot().difficulty,
+          launch: departLibraryMission,
+        });
+        journeySources = [
+          combineJourneyLibrarySources([
+            { mode: 'solo', source },
+            { mode: 'versus', source: versusSource },
+          ]),
+          ...spatialEditions.sources,
+          ...teamSources,
+        ];
+      }
       const classicProjectionCache = new WeakMap();
       const classicRuntimeEntry = (row) => {
         const pack =
@@ -10282,14 +10503,7 @@ try {
           }
         },
         index,
-        journeySources: [
-          combineJourneyLibrarySources([
-            { mode: 'solo', source },
-            { mode: 'versus', source: versusSource },
-          ]),
-          ...spatialEditions.sources,
-          ...teamSources,
-        ],
+        journeySources,
         getPacks: () => packs,
         baseEntry,
         compatibility: ({ entry, level }) => {
@@ -10365,12 +10579,12 @@ try {
       if (unifiedDisposed) {
         result.library.dispose();
         spatialEditions.dispose();
-        if (!candidateHost) host.preparer.dispose();
+        if (!candidateHost) host.preparer?.dispose();
         throw new DOMException(t('interface:missionLibraryClosed'), 'AbortError');
       }
       disposeUnifiedPreview = () => {
         spatialEditions.dispose();
-        if (!candidateHost) host.preparer.dispose();
+        if (!candidateHost) host.preparer?.dispose();
       };
       const state = createMissionLibrarySessionState({ mode: 'solo' });
       // Checked return restores the retained runtime independently of browsing.

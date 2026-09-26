@@ -1,0 +1,2785 @@
+{
+  "format": "revealline-package-measurement.v1",
+  "version": "0.132.1",
+  "sourceRevision": null,
+  "buildId": "757fd1ac920697fb0bc55ddef275173591f036c3d920855a0297044d141af6b8",
+  "distributionSHA256": "0db98ab66ad7501f39356f6ca9f3cd3c0a496e74bab52715e664c3718b697d57",
+  "distributionPayloadBytes": 620464966,
+  "units": "Decoded file bytes. MiB = 1,048,576 bytes. HTTP compression and protocol overhead are not measured.",
+  "ownership": "Runtime URL copies, official hashes and stable launcher URLs are separate owners. Matching bytes are not assumed reusable across owners.",
+  "packages": {
+    "starter": {
+      "owners": {
+        "editionRuntime": {
+          "files": 726,
+          "uniqueHashes": 686,
+          "decodedTransferBytes": 34329718,
+          "storedPayloadBytes": 36171592
+        },
+        "officialContent": {
+          "files": 9,
+          "uniqueHashes": 9,
+          "decodedTransferBytes": 23424857,
+          "storedPayloadBytes": 23424857
+        },
+        "installedLauncher": {
+          "files": 8,
+          "uniqueHashes": 8,
+          "decodedTransferBytes": 24762,
+          "storedPayloadBytes": 24762
+        }
+      },
+      "decodedTransferBytes": 57779337,
+      "maximumDecodedTransferBytes": 59621211,
+      "storedPayloadBytes": 59621211,
+      "crossOwnerDuplicateBytes": 24762,
+      "largestFileBytes": 3057489
+    },
+    "allCurrent": {
+      "owners": {
+        "editionRuntime": {
+          "files": 726,
+          "uniqueHashes": 686,
+          "decodedTransferBytes": 34329718,
+          "storedPayloadBytes": 36171592
+        },
+        "officialContent": {
+          "files": 264,
+          "uniqueHashes": 264,
+          "decodedTransferBytes": 484154654,
+          "storedPayloadBytes": 484154654
+        },
+        "installedLauncher": {
+          "files": 8,
+          "uniqueHashes": 8,
+          "decodedTransferBytes": 24762,
+          "storedPayloadBytes": 24762
+        }
+      },
+      "decodedTransferBytes": 518509134,
+      "maximumDecodedTransferBytes": 520351008,
+      "storedPayloadBytes": 520351008,
+      "crossOwnerDuplicateBytes": 24762,
+      "largestFileBytes": 12358446
+    },
+    "allGameplayArchivesAndTools": {
+      "owners": {
+        "editionRuntime": {
+          "files": 726,
+          "uniqueHashes": 686,
+          "decodedTransferBytes": 34329718,
+          "storedPayloadBytes": 36171592
+        },
+        "officialContent": {
+          "files": 617,
+          "uniqueHashes": 617,
+          "decodedTransferBytes": 570855731,
+          "storedPayloadBytes": 570855731
+        },
+        "installedLauncher": {
+          "files": 8,
+          "uniqueHashes": 8,
+          "decodedTransferBytes": 24762,
+          "storedPayloadBytes": 24762
+        }
+      },
+      "decodedTransferBytes": 605210211,
+      "maximumDecodedTransferBytes": 607052085,
+      "storedPayloadBytes": 607052085,
+      "crossOwnerDuplicateBytes": 24762,
+      "largestFileBytes": 12358446
+    },
+    "soundtracks": {
+      "owners": {
+        "editionRuntime": {
+          "files": 0,
+          "uniqueHashes": 0,
+          "decodedTransferBytes": 0,
+          "storedPayloadBytes": 0
+        },
+        "officialContent": {
+          "files": 71,
+          "uniqueHashes": 71,
+          "decodedTransferBytes": 363627890,
+          "storedPayloadBytes": 363627890
+        },
+        "installedLauncher": {
+          "files": 0,
+          "uniqueHashes": 0,
+          "decodedTransferBytes": 0,
+          "storedPayloadBytes": 0
+        }
+      },
+      "decodedTransferBytes": 363627890,
+      "maximumDecodedTransferBytes": 363627890,
+      "storedPayloadBytes": 363627890,
+      "crossOwnerDuplicateBytes": 0,
+      "largestFileBytes": 12039421
+    }
+  },
+  "starter": {
+    "group": "base",
+    "chapter": "solo:horizon-starter",
+    "missions": [
+      "first-return",
+      "choose-your-share",
+      "two-keepers",
+      "nearby-shore",
+      "island-outpost",
+      "stepping-stones",
+      "two-bays",
+      "courtyard-return",
+      "long-way-home"
+    ],
+    "officialFiles": [
+      {
+        "path": "game/content-design/assets/horizon-r1/first-return.png",
+        "bytes": 2366738,
+        "sha256": "3acf496d9a6bc9db2f83ac01d8255223b3913e7ae0a157e48559ac981c80b95d",
+        "kind": "gameplay"
+      },
+      {
+        "path": "game/content-design/assets/horizon-r1/choose-your-share.png",
+        "bytes": 2828010,
+        "sha256": "d2d9d57da0c25d1e264387d24d2ecad2e88ad43b77db3934039f1291edd017ae",
+        "kind": "gameplay"
+      },
+      {
+        "path": "game/content-design/assets/horizon-r1/nearby-shore.png",
+        "bytes": 2618614,
+        "sha256": "f24ba2aac769b952f0ad8de13193627c76e6a39bcd8db9a5ddb3e16ded0f26d5",
+        "kind": "gameplay"
+      },
+      {
+        "path": "game/content-design/assets/horizon-r1/two-keepers.png",
+        "bytes": 2572761,
+        "sha256": "ba9c3c428fbd44e1fd0b7e5ba70bae0abdd11faa65ae219042a7a6d196bce5f6",
+        "kind": "gameplay"
+      },
+      {
+        "path": "game/content-design/assets/horizon-r1/island-outpost.png",
+        "bytes": 2484871,
+        "sha256": "3fb163cde27b9496290a07a106e11737c369dd77b527e5985a1e3c48d9476b46",
+        "kind": "gameplay"
+      },
+      {
+        "path": "game/content-design/assets/horizon-r1/stepping-stones.png",
+        "bytes": 2597944,
+        "sha256": "aa9eadbc166df2bf78030ecec8e24e920d6a254d7e66143f380c1d263005cc36",
+        "kind": "gameplay"
+      },
+      {
+        "path": "game/content-design/assets/horizon-r1/two-bays.png",
+        "bytes": 2669903,
+        "sha256": "589632c9b912ba2b07648c9c0de7c0768e61d5938a1993414d7b36ac650b5118",
+        "kind": "gameplay"
+      },
+      {
+        "path": "game/content-design/assets/horizon-r1/courtyard-return.png",
+        "bytes": 2701528,
+        "sha256": "7c4ed0ae6f76c49b5dbe1361b5ff0b2c17dce08aeb2c0f6aece08890c373123a",
+        "kind": "gameplay"
+      },
+      {
+        "path": "game/content-design/assets/horizon-r1/long-way-home.png",
+        "bytes": 2584488,
+        "sha256": "0219e5fbe164647cd1ba0cd2dff019df8d0b9fc334780b06b53693564c1aaadf",
+        "kind": "gameplay"
+      }
+    ],
+    "soundtrackFiles": 0,
+    "coreChapterSnapshots": [
+      "game/content-design/runtime/chapter-journey-opening.json"
+    ],
+    "coreModeEntries": [],
+    "currentMetadataSnapshots": [
+      {
+        "path": "game/content-design/runtime/navigation-whole-spatial-v11.json",
+        "bytes": 935267,
+        "sha256": "ab468f4a63d012c522d4c67c9731494af480328521b45dde668782a2b98dfc11"
+      }
+    ]
+  },
+  "sharedRuntime": {
+    "storedBytesByExtension": {
+      ".png": 17885127,
+      ".json": 10183273,
+      ".mjs": 5195844,
+      ".js": 1427112,
+      ".html": 560904,
+      ".css": 331852,
+      ".woff2": 309704,
+      ".ttf": 211284,
+      ".txt": 40980,
+      ".svg": 21242,
+      ".pb": 1894,
+      ".webmanifest": 1256,
+      ".md": 1120
+    },
+    "largestFiles": [
+      {
+        "path": "offline-content.json",
+        "bytes": 3057489,
+        "sha256": "a3ee608c8d288674d7d308a158323542eb54db3dcc59cc702cd76ec684666aea"
+      },
+      {
+        "path": "game/vendor/phaser-4.2.1.min.js",
+        "bytes": 1375976,
+        "sha256": "66348b1b5141e49b7d5ebbe688cddcb502eab1cb00f21c538686a5b2c5abe4de"
+      },
+      {
+        "path": "game/presentation/compiled/runtime.json",
+        "bytes": 1101532,
+        "sha256": "e6872d0b51a12ab028e30bd4fac6ac9f6c4b9cd338c0339c6ea1df3b9fe681ee"
+      },
+      {
+        "path": "game/presentation/compiled/runtime.b4a7285520550e4cd04c7b9e80b4c6468c0a914faac77c05fa7f86a72c8a3c8f.json",
+        "bytes": 1094096,
+        "sha256": "b4a7285520550e4cd04c7b9e80b4c6468c0a914faac77c05fa7f86a72c8a3c8f"
+      },
+      {
+        "path": "game/presentation/compiled/runtime.38a3c4cc207ee9b136d1cada405f74385c44f3a4a20bc21d91e09c4fc386e39f.json",
+        "bytes": 1092838,
+        "sha256": "38a3c4cc207ee9b136d1cada405f74385c44f3a4a20bc21d91e09c4fc386e39f"
+      },
+      {
+        "path": "authoring/library/fpv-role-presentations/originals/trapper.png",
+        "bytes": 1052291,
+        "sha256": "13e4aec02c72bf2f4a7cd26eee43c0a5e963de6bee3af3dd62dd22498831c869"
+      },
+      {
+        "path": "game/presentation/compiled/runtime.ae9949a7c8c8a24775e68317e5825e9b4b2e5ae1dfb9bcffdd749a5adc4cce54.json",
+        "bytes": 979746,
+        "sha256": "ae9949a7c8c8a24775e68317e5825e9b4b2e5ae1dfb9bcffdd749a5adc4cce54"
+      },
+      {
+        "path": "game/presentation/compiled/runtime.91a3d66966e1b1a3c2e9b5c68aebcc4be284edff4e7b9b272731a769a4f66ace.json",
+        "bytes": 978694,
+        "sha256": "91a3d66966e1b1a3c2e9b5c68aebcc4be284edff4e7b9b272731a769a4f66ace"
+      },
+      {
+        "path": "game/content-design/runtime/navigation-whole-spatial-v11.json",
+        "bytes": 935267,
+        "sha256": "ab468f4a63d012c522d4c67c9731494af480328521b45dde668782a2b98dfc11"
+      },
+      {
+        "path": "authoring/library/fpv-role-presentations/originals/bomber.png",
+        "bytes": 905251,
+        "sha256": "88d9a0fac33a45e8cac2dd752df042735deebb21ff172ae0ecf86d81e47826ca"
+      },
+      {
+        "path": "authoring/library/fpv-role-presentations/originals/fiber.png",
+        "bytes": 899233,
+        "sha256": "6dd3f61124d17a262ee3cef747ea250e6828d5b69a244a13883d575cc97ddce8"
+      },
+      {
+        "path": "authoring/motion-lab/assets/fpv-racer.png",
+        "bytes": 879038,
+        "sha256": "bc77fb42b3fd233a3d4391bc23e093d6d93d202d0482934f79091a310f8c01e6"
+      },
+      {
+        "path": "game/i18n/catalogs.mjs",
+        "bytes": 874007,
+        "sha256": "cb6301cad39f306817648ce8283550d97e2eae55bb8799649e87cfd158a02c6c"
+      },
+      {
+        "path": "game/presentation/compiled/assets/57744cbfe744bd50d932b1dba963539c11dbb176dc1e3171de46c34ea74d48a0.png",
+        "bytes": 866080,
+        "sha256": "57744cbfe744bd50d932b1dba963539c11dbb176dc1e3171de46c34ea74d48a0"
+      },
+      {
+        "path": "game/ui/art/field-kit/prepared/title-hangar-v1.png",
+        "bytes": 866080,
+        "sha256": "57744cbfe744bd50d932b1dba963539c11dbb176dc1e3171de46c34ea74d48a0"
+      }
+    ]
+  },
+  "groups": [
+    {
+      "id": "base",
+      "title": "Solo starter · Horizon",
+      "kind": "gameplay",
+      "category": "starter",
+      "current": true,
+      "requires": [
+        "shared",
+        "solo:horizon-starter"
+      ],
+      "ownBytes": 0,
+      "closureBytes": 23424857,
+      "additionalAfterStarterBytes": 0,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "shared",
+      "title": "Shared runtime support",
+      "kind": "gameplay",
+      "category": "shared",
+      "current": true,
+      "requires": [],
+      "ownBytes": 0,
+      "closureBytes": 0,
+      "additionalAfterStarterBytes": 0,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "solo:horizon-starter",
+      "title": "Solo · Horizon",
+      "kind": "gameplay",
+      "category": "starter",
+      "current": true,
+      "requires": [
+        "shared"
+      ],
+      "ownBytes": 23424857,
+      "closureBytes": 23424857,
+      "additionalAfterStarterBytes": 0,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "solo:border",
+      "title": "Solo · Border Bloom",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [
+        "shared"
+      ],
+      "ownBytes": 16785289,
+      "closureBytes": 16785289,
+      "additionalAfterStarterBytes": 16785289,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "solo:signal",
+      "title": "Solo · Signal Gardens",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [
+        "shared"
+      ],
+      "ownBytes": 14653448,
+      "closureBytes": 14653448,
+      "additionalAfterStarterBytes": 14653448,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "solo:neon",
+      "title": "Solo · Neon Contours",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [
+        "shared"
+      ],
+      "ownBytes": 15044543,
+      "closureBytes": 15044543,
+      "additionalAfterStarterBytes": 15044543,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "solo:rover",
+      "title": "Solo · Rover Yard",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [
+        "shared"
+      ],
+      "ownBytes": 14387280,
+      "closureBytes": 14387280,
+      "additionalAfterStarterBytes": 14387280,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "solo:fracture",
+      "title": "Solo · Fractured Grid",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [
+        "shared"
+      ],
+      "ownBytes": 15631983,
+      "closureBytes": 15631983,
+      "additionalAfterStarterBytes": 15631983,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "solo:phase",
+      "title": "Solo · Phaseworks",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [
+        "shared"
+      ],
+      "ownBytes": 13019321,
+      "closureBytes": 13019321,
+      "additionalAfterStarterBytes": 13019321,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "solo:livewire",
+      "title": "Solo · Livewire Foundry",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [
+        "shared"
+      ],
+      "ownBytes": 14828428,
+      "closureBytes": 14828428,
+      "additionalAfterStarterBytes": 14828428,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "solo:relay",
+      "title": "Solo · Relay Labyrinth",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [
+        "shared"
+      ],
+      "ownBytes": 14969948,
+      "closureBytes": 14969948,
+      "additionalAfterStarterBytes": 14969948,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "solo:crosswind",
+      "title": "Solo · Crosswind Array",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [
+        "shared"
+      ],
+      "ownBytes": 16185871,
+      "closureBytes": 16185871,
+      "additionalAfterStarterBytes": 16185871,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "solo:sentinel",
+      "title": "Solo · Sentinel Crown",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [
+        "shared"
+      ],
+      "ownBytes": 10667378,
+      "closureBytes": 10667378,
+      "additionalAfterStarterBytes": 10667378,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "solo:apex",
+      "title": "Solo · Apex Aurora",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [
+        "shared"
+      ],
+      "ownBytes": 9649471,
+      "closureBytes": 9649471,
+      "additionalAfterStarterBytes": 9649471,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "solo:horizon-remixes",
+      "title": "Solo · Horizon Remix",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [
+        "shared"
+      ],
+      "ownBytes": 2441008,
+      "closureBytes": 2441008,
+      "additionalAfterStarterBytes": 2441008,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "solo:border-remixes",
+      "title": "Solo · Border Remix",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [
+        "shared"
+      ],
+      "ownBytes": 2653878,
+      "closureBytes": 2653878,
+      "additionalAfterStarterBytes": 2653878,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "solo:signal-remixes",
+      "title": "Solo · Signal Remix",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [
+        "shared"
+      ],
+      "ownBytes": 2440722,
+      "closureBytes": 2440722,
+      "additionalAfterStarterBytes": 2440722,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "solo:neon-remixes",
+      "title": "Solo · Neon Remix",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [
+        "shared"
+      ],
+      "ownBytes": 2420228,
+      "closureBytes": 2420228,
+      "additionalAfterStarterBytes": 2420228,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "solo:rover-remixes",
+      "title": "Solo · Rover Remix",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [
+        "shared"
+      ],
+      "ownBytes": 2393150,
+      "closureBytes": 2393150,
+      "additionalAfterStarterBytes": 2393150,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "solo:fracture-remixes",
+      "title": "Solo · Fracture Remix",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [
+        "shared"
+      ],
+      "ownBytes": 2407817,
+      "closureBytes": 2407817,
+      "additionalAfterStarterBytes": 2407817,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "solo:phase-remixes",
+      "title": "Solo · Phaseworks Remix",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [
+        "shared"
+      ],
+      "ownBytes": 2170342,
+      "closureBytes": 2170342,
+      "additionalAfterStarterBytes": 2170342,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "solo:livewire-remixes",
+      "title": "Solo · Livewire Foundry Remix",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [
+        "shared"
+      ],
+      "ownBytes": 2440303,
+      "closureBytes": 2440303,
+      "additionalAfterStarterBytes": 2440303,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "solo:relay-remixes",
+      "title": "Solo · Relay Labyrinth Remix",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [
+        "shared"
+      ],
+      "ownBytes": 2274807,
+      "closureBytes": 2274807,
+      "additionalAfterStarterBytes": 2274807,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "solo:crosswind-remixes",
+      "title": "Solo · Crosswind Array Remix",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [
+        "shared"
+      ],
+      "ownBytes": 2736514,
+      "closureBytes": 2736514,
+      "additionalAfterStarterBytes": 2736514,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "solo:sentinel-remixes",
+      "title": "Solo · Sentinel Crown Remix",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [
+        "shared"
+      ],
+      "ownBytes": 2326089,
+      "closureBytes": 2326089,
+      "additionalAfterStarterBytes": 2326089,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "solo:apex-remixes",
+      "title": "Solo · Apex Aurora Remix",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [
+        "shared"
+      ],
+      "ownBytes": 2617078,
+      "closureBytes": 2617078,
+      "additionalAfterStarterBytes": 2617078,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "solo:ornament-crossings-study",
+      "title": "Solo · Ukrainian-inspired ornament",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [
+        "shared"
+      ],
+      "ownBytes": 8432504,
+      "closureBytes": 8432504,
+      "additionalAfterStarterBytes": 8432504,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "solo:workshop-routing-study",
+      "title": "Solo · FPV workshop",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [
+        "shared"
+      ],
+      "ownBytes": 7603396,
+      "closureBytes": 7603396,
+      "additionalAfterStarterBytes": 7603396,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "versus:horizon",
+      "title": "Versus · Horizon",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [
+        "shared",
+        "runtime:versus"
+      ],
+      "ownBytes": 23424857,
+      "closureBytes": 25269633,
+      "additionalAfterStarterBytes": 1844776,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "versus:border",
+      "title": "Versus · Border Bloom",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [
+        "shared",
+        "runtime:versus"
+      ],
+      "ownBytes": 16785289,
+      "closureBytes": 18630065,
+      "additionalAfterStarterBytes": 18630065,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "versus:signal",
+      "title": "Versus · Signal Gardens",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [
+        "shared",
+        "runtime:versus"
+      ],
+      "ownBytes": 14653448,
+      "closureBytes": 16498224,
+      "additionalAfterStarterBytes": 16498224,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "versus:neon",
+      "title": "Versus · Neon Contours",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [
+        "shared",
+        "runtime:versus"
+      ],
+      "ownBytes": 15044543,
+      "closureBytes": 16889319,
+      "additionalAfterStarterBytes": 16889319,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "versus:rover",
+      "title": "Versus · Rover Yard",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [
+        "shared",
+        "runtime:versus"
+      ],
+      "ownBytes": 14387280,
+      "closureBytes": 16232056,
+      "additionalAfterStarterBytes": 16232056,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "versus:fracture",
+      "title": "Versus · Fractured Grid",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [
+        "shared",
+        "runtime:versus"
+      ],
+      "ownBytes": 15631983,
+      "closureBytes": 17476759,
+      "additionalAfterStarterBytes": 17476759,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "versus:phase",
+      "title": "Versus · Phaseworks",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [
+        "shared",
+        "runtime:versus"
+      ],
+      "ownBytes": 13019321,
+      "closureBytes": 14864097,
+      "additionalAfterStarterBytes": 14864097,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "versus:livewire",
+      "title": "Versus · Livewire Foundry",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [
+        "shared",
+        "runtime:versus"
+      ],
+      "ownBytes": 14828428,
+      "closureBytes": 16673204,
+      "additionalAfterStarterBytes": 16673204,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "versus:relay",
+      "title": "Versus · Relay Labyrinth",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [
+        "shared",
+        "runtime:versus"
+      ],
+      "ownBytes": 14969948,
+      "closureBytes": 16814724,
+      "additionalAfterStarterBytes": 16814724,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "versus:crosswind",
+      "title": "Versus · Crosswind Array",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [
+        "shared",
+        "runtime:versus"
+      ],
+      "ownBytes": 16185871,
+      "closureBytes": 18030647,
+      "additionalAfterStarterBytes": 18030647,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "versus:sentinel",
+      "title": "Versus · Sentinel Crown",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [
+        "shared",
+        "runtime:versus"
+      ],
+      "ownBytes": 10667378,
+      "closureBytes": 12512154,
+      "additionalAfterStarterBytes": 12512154,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "versus:apex",
+      "title": "Versus · Apex Aurora",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [
+        "shared",
+        "runtime:versus"
+      ],
+      "ownBytes": 9649471,
+      "closureBytes": 11494247,
+      "additionalAfterStarterBytes": 11494247,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "versus:horizon-remixes",
+      "title": "Versus · Horizon Remix",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [
+        "shared",
+        "runtime:versus"
+      ],
+      "ownBytes": 2441008,
+      "closureBytes": 4285784,
+      "additionalAfterStarterBytes": 4285784,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "versus:border-remixes",
+      "title": "Versus · Border Remix",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [
+        "shared",
+        "runtime:versus"
+      ],
+      "ownBytes": 2653878,
+      "closureBytes": 4498654,
+      "additionalAfterStarterBytes": 4498654,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "versus:signal-remixes",
+      "title": "Versus · Signal Remix",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [
+        "shared",
+        "runtime:versus"
+      ],
+      "ownBytes": 2440722,
+      "closureBytes": 4285498,
+      "additionalAfterStarterBytes": 4285498,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "versus:neon-remixes",
+      "title": "Versus · Neon Remix",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [
+        "shared",
+        "runtime:versus"
+      ],
+      "ownBytes": 2420228,
+      "closureBytes": 4265004,
+      "additionalAfterStarterBytes": 4265004,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "versus:rover-remixes",
+      "title": "Versus · Rover Remix",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [
+        "shared",
+        "runtime:versus"
+      ],
+      "ownBytes": 2393150,
+      "closureBytes": 4237926,
+      "additionalAfterStarterBytes": 4237926,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "versus:fracture-remixes",
+      "title": "Versus · Fracture Remix",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [
+        "shared",
+        "runtime:versus"
+      ],
+      "ownBytes": 2407817,
+      "closureBytes": 4252593,
+      "additionalAfterStarterBytes": 4252593,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "versus:phase-remixes",
+      "title": "Versus · Phaseworks Remix",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [
+        "shared",
+        "runtime:versus"
+      ],
+      "ownBytes": 2170342,
+      "closureBytes": 4015118,
+      "additionalAfterStarterBytes": 4015118,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "versus:livewire-remixes",
+      "title": "Versus · Livewire Foundry Remix",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [
+        "shared",
+        "runtime:versus"
+      ],
+      "ownBytes": 2440303,
+      "closureBytes": 4285079,
+      "additionalAfterStarterBytes": 4285079,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "versus:relay-remixes",
+      "title": "Versus · Relay Labyrinth Remix",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [
+        "shared",
+        "runtime:versus"
+      ],
+      "ownBytes": 2274807,
+      "closureBytes": 4119583,
+      "additionalAfterStarterBytes": 4119583,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "versus:crosswind-remixes",
+      "title": "Versus · Crosswind Array Remix",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [
+        "shared",
+        "runtime:versus"
+      ],
+      "ownBytes": 2736514,
+      "closureBytes": 4581290,
+      "additionalAfterStarterBytes": 4581290,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "versus:sentinel-remixes",
+      "title": "Versus · Sentinel Crown Remix",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [
+        "shared",
+        "runtime:versus"
+      ],
+      "ownBytes": 2326089,
+      "closureBytes": 4170865,
+      "additionalAfterStarterBytes": 4170865,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "versus:apex-remixes",
+      "title": "Versus · Apex Aurora Remix",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [
+        "shared",
+        "runtime:versus"
+      ],
+      "ownBytes": 2617078,
+      "closureBytes": 4461854,
+      "additionalAfterStarterBytes": 4461854,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "versus:ornament-crossings-study",
+      "title": "Versus · Ukrainian-inspired ornament",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [
+        "shared",
+        "runtime:versus"
+      ],
+      "ownBytes": 8432504,
+      "closureBytes": 10277280,
+      "additionalAfterStarterBytes": 10277280,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "versus:workshop-routing-study",
+      "title": "Versus · FPV workshop",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [
+        "shared",
+        "runtime:versus"
+      ],
+      "ownBytes": 7603396,
+      "closureBytes": 9448172,
+      "additionalAfterStarterBytes": 9448172,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "destination:versus:classic:base",
+      "title": "Classic missions",
+      "kind": "gameplay",
+      "category": "destination",
+      "current": false,
+      "requires": [
+        "classic:base",
+        "runtime:versus"
+      ],
+      "ownBytes": 0,
+      "closureBytes": 1844776,
+      "additionalAfterStarterBytes": 1844776,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "destination:versus:chapter:fpv-arcade-r5",
+      "title": "FPV Front · Pressure Lines",
+      "kind": "gameplay",
+      "category": "destination",
+      "current": false,
+      "requires": [
+        "chapter:fpv-arcade-r5",
+        "runtime:versus"
+      ],
+      "ownBytes": 0,
+      "closureBytes": 13552952,
+      "additionalAfterStarterBytes": 13552952,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "destination:versus:chapter:fpv-pressure-frontier",
+      "title": "FPV Front · Frontier Lines",
+      "kind": "gameplay",
+      "category": "destination",
+      "current": false,
+      "requires": [
+        "chapter:fpv-pressure-frontier",
+        "runtime:versus"
+      ],
+      "ownBytes": 0,
+      "closureBytes": 13222030,
+      "additionalAfterStarterBytes": 13222030,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "destination:versus:chapter:night-shift",
+      "title": "Night Shift",
+      "kind": "gameplay",
+      "category": "destination",
+      "current": false,
+      "requires": [
+        "chapter:night-shift",
+        "runtime:versus"
+      ],
+      "ownBytes": 0,
+      "closureBytes": 1853624,
+      "additionalAfterStarterBytes": 1853624,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "destination:versus:chapter:living-threads",
+      "title": "Living Threads",
+      "kind": "gameplay",
+      "category": "destination",
+      "current": false,
+      "requires": [
+        "chapter:living-threads",
+        "runtime:versus"
+      ],
+      "ownBytes": 0,
+      "closureBytes": 1853932,
+      "additionalAfterStarterBytes": 1853932,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "destination:versus:chapter:fieldcraft",
+      "title": "Fieldcraft",
+      "kind": "gameplay",
+      "category": "destination",
+      "current": false,
+      "requires": [
+        "chapter:fieldcraft",
+        "runtime:versus"
+      ],
+      "ownBytes": 0,
+      "closureBytes": 1859980,
+      "additionalAfterStarterBytes": 1859980,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "destination:versus:chapter:homeward-skies",
+      "title": "Homeward Skies",
+      "kind": "gameplay",
+      "category": "destination",
+      "current": false,
+      "requires": [
+        "chapter:homeward-skies",
+        "runtime:versus"
+      ],
+      "ownBytes": 0,
+      "closureBytes": 13216625,
+      "additionalAfterStarterBytes": 13216625,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "destination:versus:chapter:equipment-workshop",
+      "title": "Equipment Workshop",
+      "kind": "gameplay",
+      "category": "destination",
+      "current": false,
+      "requires": [
+        "chapter:equipment-workshop",
+        "runtime:versus"
+      ],
+      "ownBytes": 0,
+      "closureBytes": 12971800,
+      "additionalAfterStarterBytes": 12971800,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "destination:versus:chapter:sentinel-relay",
+      "title": "Sentinel Relay",
+      "kind": "gameplay",
+      "category": "destination",
+      "current": false,
+      "requires": [
+        "chapter:sentinel-relay",
+        "runtime:versus"
+      ],
+      "ownBytes": 0,
+      "closureBytes": 1856192,
+      "additionalAfterStarterBytes": 1856192,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "destination:versus:chapter:fpv-arcade-r4",
+      "title": "FPV Front · First Light Arcade R4",
+      "kind": "gameplay",
+      "category": "destination",
+      "current": false,
+      "requires": [
+        "chapter:fpv-arcade-r4",
+        "runtime:versus"
+      ],
+      "ownBytes": 0,
+      "closureBytes": 13551882,
+      "additionalAfterStarterBytes": 13551882,
+      "additionalAfterAllCurrentBytes": 11707106
+    },
+    {
+      "id": "destination:versus:chapter:fpv-arcade-r3",
+      "title": "FPV Front · First Light R3",
+      "kind": "gameplay",
+      "category": "destination",
+      "current": false,
+      "requires": [
+        "chapter:fpv-arcade-r3",
+        "runtime:versus"
+      ],
+      "ownBytes": 0,
+      "closureBytes": 13551189,
+      "additionalAfterStarterBytes": 13551189,
+      "additionalAfterAllCurrentBytes": 11706413
+    },
+    {
+      "id": "destination:versus:chapter:fpv-arcade-r2",
+      "title": "FPV Front · First Light R2",
+      "kind": "gameplay",
+      "category": "destination",
+      "current": false,
+      "requires": [
+        "chapter:fpv-arcade-r2",
+        "runtime:versus"
+      ],
+      "ownBytes": 0,
+      "closureBytes": 13550836,
+      "additionalAfterStarterBytes": 13550836,
+      "additionalAfterAllCurrentBytes": 11706060
+    },
+    {
+      "id": "destination:versus:chapter:fpv-arcade",
+      "title": "FPV Front · First Light",
+      "kind": "gameplay",
+      "category": "destination",
+      "current": false,
+      "requires": [
+        "chapter:fpv-arcade",
+        "runtime:versus"
+      ],
+      "ownBytes": 0,
+      "closureBytes": 13546744,
+      "additionalAfterStarterBytes": 13546744,
+      "additionalAfterAllCurrentBytes": 11701968
+    },
+    {
+      "id": "destination:versus:chapter:original-fpv-pressure",
+      "title": "FPV Front · Illustrated Pressure",
+      "kind": "gameplay",
+      "category": "destination",
+      "current": false,
+      "requires": [
+        "chapter:original-fpv-pressure",
+        "runtime:versus"
+      ],
+      "ownBytes": 0,
+      "closureBytes": 12564735,
+      "additionalAfterStarterBytes": 12564735,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "destination:versus:chapter:original-ukraine-atlas",
+      "title": "Ukraine Atlas · Woven Lines",
+      "kind": "gameplay",
+      "category": "destination",
+      "current": false,
+      "requires": [
+        "chapter:original-ukraine-atlas",
+        "runtime:versus"
+      ],
+      "ownBytes": 0,
+      "closureBytes": 14203222,
+      "additionalAfterStarterBytes": 14203222,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "destination:versus:chapter:original-retro-1994",
+      "title": "1994 Forever · After Hours",
+      "kind": "gameplay",
+      "category": "destination",
+      "current": false,
+      "requires": [
+        "chapter:original-retro-1994",
+        "runtime:versus"
+      ],
+      "ownBytes": 0,
+      "closureBytes": 12174433,
+      "additionalAfterStarterBytes": 12174433,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "destination:versus:chapter:original-spend-network",
+      "title": "Spend Network · Shared Routes",
+      "kind": "gameplay",
+      "category": "destination",
+      "current": false,
+      "requires": [
+        "chapter:original-spend-network",
+        "runtime:versus"
+      ],
+      "ownBytes": 0,
+      "closureBytes": 12911978,
+      "additionalAfterStarterBytes": 12911978,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "destination:versus:chapter:fpv-route-choices",
+      "title": "FPV Front · Route Choices — Tactical",
+      "kind": "gameplay",
+      "category": "destination",
+      "current": false,
+      "requires": [
+        "chapter:fpv-route-choices",
+        "runtime:versus"
+      ],
+      "ownBytes": 0,
+      "closureBytes": 13794556,
+      "additionalAfterStarterBytes": 13794556,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "destination:versus:chapter:original-fpv-pressure-external",
+      "title": "Pressure Pictures · external-original pilot",
+      "kind": "gameplay",
+      "category": "destination",
+      "current": false,
+      "requires": [
+        "chapter:original-fpv-pressure-external",
+        "runtime:versus"
+      ],
+      "ownBytes": 0,
+      "closureBytes": 9891565,
+      "additionalAfterStarterBytes": 9891565,
+      "additionalAfterAllCurrentBytes": 8046789
+    },
+    {
+      "id": "destination:versus:chapter:route-worlds-ukraine",
+      "title": "Ukraine Atlas · Route Choices — Tactical",
+      "kind": "gameplay",
+      "category": "destination",
+      "current": false,
+      "requires": [
+        "chapter:route-worlds-ukraine",
+        "runtime:versus"
+      ],
+      "ownBytes": 0,
+      "closureBytes": 10679068,
+      "additionalAfterStarterBytes": 10679068,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "destination:versus:chapter:route-worlds-retro",
+      "title": "1994 Forever · Route Choices — Tactical",
+      "kind": "gameplay",
+      "category": "destination",
+      "current": false,
+      "requires": [
+        "chapter:route-worlds-retro",
+        "runtime:versus"
+      ],
+      "ownBytes": 0,
+      "closureBytes": 9442716,
+      "additionalAfterStarterBytes": 9442716,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "destination:versus:chapter:route-worlds-coupa",
+      "title": "Spend Network · Route Choices — Tactical",
+      "kind": "gameplay",
+      "category": "destination",
+      "current": false,
+      "requires": [
+        "chapter:route-worlds-coupa",
+        "runtime:versus"
+      ],
+      "ownBytes": 0,
+      "closureBytes": 10134086,
+      "additionalAfterStarterBytes": 10134086,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "destination:versus:chapter:sentinel-circuit-fpv",
+      "title": "Sentinel Circuit",
+      "kind": "gameplay",
+      "category": "destination",
+      "current": false,
+      "requires": [
+        "chapter:sentinel-circuit-fpv",
+        "runtime:versus"
+      ],
+      "ownBytes": 0,
+      "closureBytes": 10450072,
+      "additionalAfterStarterBytes": 10450072,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "destination:versus:chapter:sentinel-circuit-ukraine",
+      "title": "Ukraine Atlas · Sentinel Circuit — Tactical",
+      "kind": "gameplay",
+      "category": "destination",
+      "current": false,
+      "requires": [
+        "chapter:sentinel-circuit-ukraine",
+        "runtime:versus"
+      ],
+      "ownBytes": 0,
+      "closureBytes": 10029840,
+      "additionalAfterStarterBytes": 10029840,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "destination:versus:chapter:sentinel-circuit-retro",
+      "title": "1994 Forever · Sentinel Circuit — Tactical",
+      "kind": "gameplay",
+      "category": "destination",
+      "current": false,
+      "requires": [
+        "chapter:sentinel-circuit-retro",
+        "runtime:versus"
+      ],
+      "ownBytes": 0,
+      "closureBytes": 9407266,
+      "additionalAfterStarterBytes": 9407266,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "destination:versus:chapter:sentinel-circuit-coupa",
+      "title": "Spend Network · Sentinel Circuit — Tactical",
+      "kind": "gameplay",
+      "category": "destination",
+      "current": false,
+      "requires": [
+        "chapter:sentinel-circuit-coupa",
+        "runtime:versus"
+      ],
+      "ownBytes": 0,
+      "closureBytes": 9270524,
+      "additionalAfterStarterBytes": 9270524,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "destination:versus:chapter:fracture-lines-fpv",
+      "title": "FPV Front · Fracture Lines — Arcade",
+      "kind": "gameplay",
+      "category": "destination",
+      "current": false,
+      "requires": [
+        "chapter:fracture-lines-fpv",
+        "runtime:versus"
+      ],
+      "ownBytes": 0,
+      "closureBytes": 10523794,
+      "additionalAfterStarterBytes": 10523794,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "destination:versus:chapter:fracture-lines-ukraine",
+      "title": "Ukraine Atlas · Fracture Lines — Arcade",
+      "kind": "gameplay",
+      "category": "destination",
+      "current": false,
+      "requires": [
+        "chapter:fracture-lines-ukraine",
+        "runtime:versus"
+      ],
+      "ownBytes": 0,
+      "closureBytes": 10588195,
+      "additionalAfterStarterBytes": 10588195,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "destination:versus:chapter:fracture-lines-retro",
+      "title": "1994 Forever · Fracture Lines — Arcade",
+      "kind": "gameplay",
+      "category": "destination",
+      "current": false,
+      "requires": [
+        "chapter:fracture-lines-retro",
+        "runtime:versus"
+      ],
+      "ownBytes": 0,
+      "closureBytes": 9821244,
+      "additionalAfterStarterBytes": 9821244,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "destination:versus:chapter:fracture-lines-coupa",
+      "title": "Spend Network · Fracture Lines — Arcade",
+      "kind": "gameplay",
+      "category": "destination",
+      "current": false,
+      "requires": [
+        "chapter:fracture-lines-coupa",
+        "runtime:versus"
+      ],
+      "ownBytes": 0,
+      "closureBytes": 10573039,
+      "additionalAfterStarterBytes": 10573039,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "destination:versus:chapter:countercurrent-fpv",
+      "title": "FPV Front · Countercurrent — Arcade",
+      "kind": "gameplay",
+      "category": "destination",
+      "current": false,
+      "requires": [
+        "chapter:countercurrent-fpv",
+        "runtime:versus"
+      ],
+      "ownBytes": 0,
+      "closureBytes": 8923075,
+      "additionalAfterStarterBytes": 8923075,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "destination:versus:chapter:countercurrent-ukraine",
+      "title": "Ukraine Atlas · Countercurrent — Arcade",
+      "kind": "gameplay",
+      "category": "destination",
+      "current": false,
+      "requires": [
+        "chapter:countercurrent-ukraine",
+        "runtime:versus"
+      ],
+      "ownBytes": 0,
+      "closureBytes": 10365828,
+      "additionalAfterStarterBytes": 10365828,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "destination:versus:chapter:countercurrent-retro",
+      "title": "1994 Forever · Countercurrent — Arcade",
+      "kind": "gameplay",
+      "category": "destination",
+      "current": false,
+      "requires": [
+        "chapter:countercurrent-retro",
+        "runtime:versus"
+      ],
+      "ownBytes": 0,
+      "closureBytes": 9478448,
+      "additionalAfterStarterBytes": 9478448,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "destination:versus:chapter:countercurrent-coupa",
+      "title": "Spend Network · Countercurrent — Arcade",
+      "kind": "gameplay",
+      "category": "destination",
+      "current": false,
+      "requires": [
+        "chapter:countercurrent-coupa",
+        "runtime:versus"
+      ],
+      "ownBytes": 0,
+      "closureBytes": 10380411,
+      "additionalAfterStarterBytes": 10380411,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "runtime:versus",
+      "title": "Versus mode",
+      "kind": "gameplay",
+      "category": "mode",
+      "current": true,
+      "requires": [
+        "shared"
+      ],
+      "ownBytes": 1844776,
+      "closureBytes": 1844776,
+      "additionalAfterStarterBytes": 1844776,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "team:journey-team-opening",
+      "title": "Team · Horizon partners",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [
+        "shared",
+        "runtime:team"
+      ],
+      "ownBytes": 2559323,
+      "closureBytes": 4107587,
+      "additionalAfterStarterBytes": 4107587,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "team:journey-team-foundation-practice",
+      "title": "Team · Shared returns",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [
+        "shared",
+        "runtime:team"
+      ],
+      "ownBytes": 8108418,
+      "closureBytes": 9656682,
+      "additionalAfterStarterBytes": 9656682,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "team:journey-team-signal",
+      "title": "Team · Signal partners",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [
+        "shared",
+        "runtime:team"
+      ],
+      "ownBytes": 2817145,
+      "closureBytes": 4365409,
+      "additionalAfterStarterBytes": 4365409,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "team:journey-team-material-practice",
+      "title": "Team · Shared material routes",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [
+        "shared",
+        "runtime:team"
+      ],
+      "ownBytes": 8941024,
+      "closureBytes": 10489288,
+      "additionalAfterStarterBytes": 10489288,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "team:journey-team-changing-ground",
+      "title": "Team · Changing common ground",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [
+        "shared",
+        "runtime:team"
+      ],
+      "ownBytes": 10828378,
+      "closureBytes": 12376642,
+      "additionalAfterStarterBytes": 12376642,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "classic:base",
+      "title": "Classic missions",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [
+        "shared"
+      ],
+      "ownBytes": 0,
+      "closureBytes": 0,
+      "additionalAfterStarterBytes": 0,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "chapter:fpv-arcade-r5",
+      "title": "FPV Front · Pressure Lines",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [
+        "shared"
+      ],
+      "ownBytes": 11708176,
+      "closureBytes": 11708176,
+      "additionalAfterStarterBytes": 11708176,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "chapter:fpv-pressure-frontier",
+      "title": "FPV Front · Frontier Lines",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [
+        "shared"
+      ],
+      "ownBytes": 11377254,
+      "closureBytes": 11377254,
+      "additionalAfterStarterBytes": 11377254,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "chapter:night-shift",
+      "title": "Night Shift",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [
+        "shared"
+      ],
+      "ownBytes": 8848,
+      "closureBytes": 8848,
+      "additionalAfterStarterBytes": 8848,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "chapter:living-threads",
+      "title": "Living Threads",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [
+        "shared"
+      ],
+      "ownBytes": 9156,
+      "closureBytes": 9156,
+      "additionalAfterStarterBytes": 9156,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "chapter:fieldcraft",
+      "title": "Fieldcraft",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [
+        "shared"
+      ],
+      "ownBytes": 15204,
+      "closureBytes": 15204,
+      "additionalAfterStarterBytes": 15204,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "chapter:homeward-skies",
+      "title": "Homeward Skies",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [
+        "shared"
+      ],
+      "ownBytes": 11371849,
+      "closureBytes": 11371849,
+      "additionalAfterStarterBytes": 11371849,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "chapter:equipment-workshop",
+      "title": "Equipment Workshop",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [
+        "shared"
+      ],
+      "ownBytes": 11127024,
+      "closureBytes": 11127024,
+      "additionalAfterStarterBytes": 11127024,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "chapter:sentinel-relay",
+      "title": "Sentinel Relay",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [
+        "shared"
+      ],
+      "ownBytes": 11416,
+      "closureBytes": 11416,
+      "additionalAfterStarterBytes": 11416,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "chapter:original-fpv-pressure",
+      "title": "FPV Front · Illustrated Pressure",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [
+        "shared"
+      ],
+      "ownBytes": 10719959,
+      "closureBytes": 10719959,
+      "additionalAfterStarterBytes": 10719959,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "chapter:original-ukraine-atlas",
+      "title": "Ukraine Atlas · Woven Lines",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [
+        "shared"
+      ],
+      "ownBytes": 12358446,
+      "closureBytes": 12358446,
+      "additionalAfterStarterBytes": 12358446,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "chapter:original-retro-1994",
+      "title": "1994 Forever · After Hours",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [
+        "shared"
+      ],
+      "ownBytes": 10329657,
+      "closureBytes": 10329657,
+      "additionalAfterStarterBytes": 10329657,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "chapter:original-spend-network",
+      "title": "Spend Network · Shared Routes",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [
+        "shared"
+      ],
+      "ownBytes": 11067202,
+      "closureBytes": 11067202,
+      "additionalAfterStarterBytes": 11067202,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "chapter:fpv-route-choices",
+      "title": "FPV Front · Route Choices — Tactical",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [
+        "shared"
+      ],
+      "ownBytes": 11949780,
+      "closureBytes": 11949780,
+      "additionalAfterStarterBytes": 11949780,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "chapter:route-worlds-ukraine",
+      "title": "Ukraine Atlas · Route Choices — Tactical",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [
+        "shared"
+      ],
+      "ownBytes": 8834292,
+      "closureBytes": 8834292,
+      "additionalAfterStarterBytes": 8834292,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "chapter:route-worlds-retro",
+      "title": "1994 Forever · Route Choices — Tactical",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [
+        "shared"
+      ],
+      "ownBytes": 7597940,
+      "closureBytes": 7597940,
+      "additionalAfterStarterBytes": 7597940,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "chapter:route-worlds-coupa",
+      "title": "Spend Network · Route Choices — Tactical",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [
+        "shared"
+      ],
+      "ownBytes": 8289310,
+      "closureBytes": 8289310,
+      "additionalAfterStarterBytes": 8289310,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "chapter:sentinel-circuit-fpv",
+      "title": "Sentinel Circuit",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [
+        "shared"
+      ],
+      "ownBytes": 8605296,
+      "closureBytes": 8605296,
+      "additionalAfterStarterBytes": 8605296,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "chapter:sentinel-circuit-ukraine",
+      "title": "Ukraine Atlas · Sentinel Circuit — Tactical",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [
+        "shared"
+      ],
+      "ownBytes": 8185064,
+      "closureBytes": 8185064,
+      "additionalAfterStarterBytes": 8185064,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "chapter:sentinel-circuit-retro",
+      "title": "1994 Forever · Sentinel Circuit — Tactical",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [
+        "shared"
+      ],
+      "ownBytes": 7562490,
+      "closureBytes": 7562490,
+      "additionalAfterStarterBytes": 7562490,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "chapter:sentinel-circuit-coupa",
+      "title": "Spend Network · Sentinel Circuit — Tactical",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [
+        "shared"
+      ],
+      "ownBytes": 7425748,
+      "closureBytes": 7425748,
+      "additionalAfterStarterBytes": 7425748,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "chapter:fracture-lines-fpv",
+      "title": "FPV Front · Fracture Lines — Arcade",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [
+        "shared"
+      ],
+      "ownBytes": 8679018,
+      "closureBytes": 8679018,
+      "additionalAfterStarterBytes": 8679018,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "chapter:fracture-lines-ukraine",
+      "title": "Ukraine Atlas · Fracture Lines — Arcade",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [
+        "shared"
+      ],
+      "ownBytes": 8743419,
+      "closureBytes": 8743419,
+      "additionalAfterStarterBytes": 8743419,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "chapter:fracture-lines-retro",
+      "title": "1994 Forever · Fracture Lines — Arcade",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [
+        "shared"
+      ],
+      "ownBytes": 7976468,
+      "closureBytes": 7976468,
+      "additionalAfterStarterBytes": 7976468,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "chapter:fracture-lines-coupa",
+      "title": "Spend Network · Fracture Lines — Arcade",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [
+        "shared"
+      ],
+      "ownBytes": 8728263,
+      "closureBytes": 8728263,
+      "additionalAfterStarterBytes": 8728263,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "chapter:countercurrent-fpv",
+      "title": "FPV Front · Countercurrent — Arcade",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [
+        "shared"
+      ],
+      "ownBytes": 7078299,
+      "closureBytes": 7078299,
+      "additionalAfterStarterBytes": 7078299,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "chapter:countercurrent-ukraine",
+      "title": "Ukraine Atlas · Countercurrent — Arcade",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [
+        "shared"
+      ],
+      "ownBytes": 8521052,
+      "closureBytes": 8521052,
+      "additionalAfterStarterBytes": 8521052,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "chapter:countercurrent-retro",
+      "title": "1994 Forever · Countercurrent — Arcade",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [
+        "shared"
+      ],
+      "ownBytes": 7633672,
+      "closureBytes": 7633672,
+      "additionalAfterStarterBytes": 7633672,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "chapter:countercurrent-coupa",
+      "title": "Spend Network · Countercurrent — Arcade",
+      "kind": "gameplay",
+      "category": "chapter",
+      "current": true,
+      "requires": [
+        "shared"
+      ],
+      "ownBytes": 8535635,
+      "closureBytes": 8535635,
+      "additionalAfterStarterBytes": 8535635,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "runtime:team",
+      "title": "Team mode",
+      "kind": "gameplay",
+      "category": "mode",
+      "current": true,
+      "requires": [
+        "shared"
+      ],
+      "ownBytes": 1548264,
+      "closureBytes": 1548264,
+      "additionalAfterStarterBytes": 1548264,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "music:builtin.album.holizna.retro-wave-1",
+      "title": "Holizna — Retro Wave 1",
+      "kind": "soundtrack",
+      "category": "soundtrack",
+      "current": null,
+      "requires": [],
+      "ownBytes": 52536475,
+      "closureBytes": 52536475,
+      "additionalAfterStarterBytes": 52536475,
+      "additionalAfterAllCurrentBytes": 52536475
+    },
+    {
+      "id": "music:builtin.album.holizna.retro-wave-2",
+      "title": "Holizna — Retro Wave 2",
+      "kind": "soundtrack",
+      "category": "soundtrack",
+      "current": null,
+      "requires": [],
+      "ownBytes": 41480910,
+      "closureBytes": 41480910,
+      "additionalAfterStarterBytes": 41480910,
+      "additionalAfterAllCurrentBytes": 41480910
+    },
+    {
+      "id": "music:builtin.album.licensed.rock-metal",
+      "title": "Rock & Metal",
+      "kind": "soundtrack",
+      "category": "soundtrack",
+      "current": null,
+      "requires": [],
+      "ownBytes": 24065375,
+      "closureBytes": 24065375,
+      "additionalAfterStarterBytes": 24065375,
+      "additionalAfterAllCurrentBytes": 24065375
+    },
+    {
+      "id": "music:builtin.album.3xblast.pop-punk-chiptune",
+      "title": "3xBlast — Pop-Punk Chiptune",
+      "kind": "soundtrack",
+      "category": "soundtrack",
+      "current": null,
+      "requires": [],
+      "ownBytes": 27152297,
+      "closureBytes": 27152297,
+      "additionalAfterStarterBytes": 27152297,
+      "additionalAfterAllCurrentBytes": 27152297
+    },
+    {
+      "id": "music:builtin.album.retro90s.tracker-fm",
+      "title": "Tracker & FM Arcade",
+      "kind": "soundtrack",
+      "category": "soundtrack",
+      "current": null,
+      "requires": [],
+      "ownBytes": 18787984,
+      "closureBytes": 18787984,
+      "additionalAfterStarterBytes": 18787984,
+      "additionalAfterAllCurrentBytes": 18787984
+    },
+    {
+      "id": "music:builtin.album.metal.extra-battles",
+      "title": "Metal — Extra Battles",
+      "kind": "soundtrack",
+      "category": "soundtrack",
+      "current": null,
+      "requires": [],
+      "ownBytes": 7144464,
+      "closureBytes": 7144464,
+      "additionalAfterStarterBytes": 7144464,
+      "additionalAfterAllCurrentBytes": 7144464
+    },
+    {
+      "id": "music:builtin.album.preview.expansion-metal",
+      "title": "Metal & Synth-Metal — Preview",
+      "kind": "soundtrack",
+      "category": "soundtrack",
+      "current": null,
+      "requires": [],
+      "ownBytes": 39694027,
+      "closureBytes": 39694027,
+      "additionalAfterStarterBytes": 39694027,
+      "additionalAfterAllCurrentBytes": 39694027
+    },
+    {
+      "id": "music:builtin.album.preview.expansion-rock",
+      "title": "Instrumental Rock — Preview",
+      "kind": "soundtrack",
+      "category": "soundtrack",
+      "current": null,
+      "requires": [],
+      "ownBytes": 25967554,
+      "closureBytes": 25967554,
+      "additionalAfterStarterBytes": 25967554,
+      "additionalAfterAllCurrentBytes": 25967554
+    },
+    {
+      "id": "music:builtin.album.preview.expansion-electronic",
+      "title": "Electronic & Dance — Preview",
+      "kind": "soundtrack",
+      "category": "soundtrack",
+      "current": null,
+      "requires": [],
+      "ownBytes": 52316634,
+      "closureBytes": 52316634,
+      "additionalAfterStarterBytes": 52316634,
+      "additionalAfterAllCurrentBytes": 52316634
+    },
+    {
+      "id": "music:builtin.album.preview.expansion-synth90s",
+      "title": "90s Synth & FM — Preview",
+      "kind": "soundtrack",
+      "category": "soundtrack",
+      "current": null,
+      "requires": [],
+      "ownBytes": 28213503,
+      "closureBytes": 28213503,
+      "additionalAfterStarterBytes": 28213503,
+      "additionalAfterAllCurrentBytes": 28213503
+    },
+    {
+      "id": "music:builtin.album.preview.expansion-synth90s-cues",
+      "title": "90s Synth & FM — Short Cues — Preview",
+      "kind": "soundtrack",
+      "category": "soundtrack",
+      "current": null,
+      "requires": [],
+      "ownBytes": 7289105,
+      "closureBytes": 7289105,
+      "additionalAfterStarterBytes": 7289105,
+      "additionalAfterAllCurrentBytes": 7289105
+    },
+    {
+      "id": "music:builtin.album.preview.expansion-chiptune-cues",
+      "title": "Fakebit & Chiptune — Short Cues — Preview",
+      "kind": "soundtrack",
+      "category": "soundtrack",
+      "current": null,
+      "requires": [],
+      "ownBytes": 11561709,
+      "closureBytes": 11561709,
+      "additionalAfterStarterBytes": 11561709,
+      "additionalAfterAllCurrentBytes": 11561709
+    },
+    {
+      "id": "music:builtin.album.preview.expansion-chiptune",
+      "title": "Fakebit & Chiptune — Preview",
+      "kind": "soundtrack",
+      "category": "soundtrack",
+      "current": null,
+      "requires": [],
+      "ownBytes": 13341255,
+      "closureBytes": 13341255,
+      "additionalAfterStarterBytes": 13341255,
+      "additionalAfterAllCurrentBytes": 13341255
+    },
+    {
+      "id": "music:builtin.album.preview.expansion-ambient-cues",
+      "title": "Ambient — Short Cues — Preview",
+      "kind": "soundtrack",
+      "category": "soundtrack",
+      "current": null,
+      "requires": [],
+      "ownBytes": 2861038,
+      "closureBytes": 2861038,
+      "additionalAfterStarterBytes": 2861038,
+      "additionalAfterAllCurrentBytes": 2861038
+    },
+    {
+      "id": "music:builtin.album.preview.expansion-electronic-cues",
+      "title": "Electronic & Dance — Short Cues — Preview",
+      "kind": "soundtrack",
+      "category": "soundtrack",
+      "current": null,
+      "requires": [],
+      "ownBytes": 2573792,
+      "closureBytes": 2573792,
+      "additionalAfterStarterBytes": 2573792,
+      "additionalAfterAllCurrentBytes": 2573792
+    },
+    {
+      "id": "music:builtin.album.ukrainian.shchedryk-opening",
+      "title": "Ukrainian opening & action",
+      "kind": "soundtrack",
+      "category": "soundtrack",
+      "current": null,
+      "requires": [],
+      "ownBytes": 8641768,
+      "closureBytes": 8641768,
+      "additionalAfterStarterBytes": 8641768,
+      "additionalAfterAllCurrentBytes": 8641768
+    },
+    {
+      "id": "archive:journey:opening",
+      "title": "Journey · Opening Journey · Archive",
+      "kind": "gameplay",
+      "category": "archive",
+      "current": false,
+      "requires": [
+        "shared",
+        "runtime:versus"
+      ],
+      "ownBytes": 25883341,
+      "closureBytes": 27728117,
+      "additionalAfterStarterBytes": 4303260,
+      "additionalAfterAllCurrentBytes": 20768
+    },
+    {
+      "id": "archive:journey:authored",
+      "title": "Journey · Horizon + Border Journey · Archive",
+      "kind": "gameplay",
+      "category": "archive",
+      "current": false,
+      "requires": [
+        "shared",
+        "runtime:versus"
+      ],
+      "ownBytes": 45320151,
+      "closureBytes": 47164927,
+      "additionalAfterStarterBytes": 23740070,
+      "additionalAfterAllCurrentBytes": 37368
+    },
+    {
+      "id": "archive:journey:whole-originals",
+      "title": "Journey · Whole Journey original-picture review · Archive",
+      "kind": "gameplay",
+      "category": "archive",
+      "current": false,
+      "requires": [
+        "shared",
+        "runtime:versus"
+      ],
+      "ownBytes": 208569661,
+      "closureBytes": 210414437,
+      "additionalAfterStarterBytes": 186989580,
+      "additionalAfterAllCurrentBytes": 223521
+    },
+    {
+      "id": "archive:journey:whole-originals-v2",
+      "title": "Journey · Whole Journey first-capture teaching review · Archive",
+      "kind": "gameplay",
+      "category": "archive",
+      "current": false,
+      "requires": [
+        "shared",
+        "runtime:versus"
+      ],
+      "ownBytes": 208569688,
+      "closureBytes": 210414464,
+      "additionalAfterStarterBytes": 186989607,
+      "additionalAfterAllCurrentBytes": 223548
+    },
+    {
+      "id": "archive:journey:whole-originals-v3",
+      "title": "Journey · Whole Journey campaign presentation review · Archive",
+      "kind": "gameplay",
+      "category": "archive",
+      "current": false,
+      "requires": [
+        "shared",
+        "runtime:versus"
+      ],
+      "ownBytes": 208570824,
+      "closureBytes": 210415600,
+      "additionalAfterStarterBytes": 186990743,
+      "additionalAfterAllCurrentBytes": 224684
+    },
+    {
+      "id": "archive:journey:whole-originals-v4",
+      "title": "Journey · Whole Journey actor material review · Archive",
+      "kind": "gameplay",
+      "category": "archive",
+      "current": false,
+      "requires": [
+        "shared",
+        "runtime:versus"
+      ],
+      "ownBytes": 208572844,
+      "closureBytes": 210417620,
+      "additionalAfterStarterBytes": 186992763,
+      "additionalAfterAllCurrentBytes": 226704
+    },
+    {
+      "id": "archive:journey:whole-spatial-v1",
+      "title": "Journey · Whole Journey spatial and pressure review · Archive",
+      "kind": "gameplay",
+      "category": "archive",
+      "current": false,
+      "requires": [
+        "shared",
+        "runtime:versus"
+      ],
+      "ownBytes": 208575017,
+      "closureBytes": 210419793,
+      "additionalAfterStarterBytes": 186994936,
+      "additionalAfterAllCurrentBytes": 228877
+    },
+    {
+      "id": "archive:journey:whole-spatial-v2",
+      "title": "Journey · Whole Journey field-finale review · Archive",
+      "kind": "gameplay",
+      "category": "archive",
+      "current": false,
+      "requires": [
+        "shared",
+        "runtime:versus"
+      ],
+      "ownBytes": 208575536,
+      "closureBytes": 210420312,
+      "additionalAfterStarterBytes": 186995455,
+      "additionalAfterAllCurrentBytes": 229396
+    },
+    {
+      "id": "archive:journey:whole-spatial-v3",
+      "title": "Journey · Whole Journey timed-bonus review · Archive",
+      "kind": "gameplay",
+      "category": "archive",
+      "current": false,
+      "requires": [
+        "shared",
+        "runtime:versus"
+      ],
+      "ownBytes": 208576468,
+      "closureBytes": 210421244,
+      "additionalAfterStarterBytes": 186996387,
+      "additionalAfterAllCurrentBytes": 230328
+    },
+    {
+      "id": "archive:journey:whole-spatial-v4",
+      "title": "Journey · Whole Journey ornament and workshop review · Archive",
+      "kind": "gameplay",
+      "category": "archive",
+      "current": false,
+      "requires": [
+        "shared",
+        "runtime:versus"
+      ],
+      "ownBytes": 224610244,
+      "closureBytes": 226455020,
+      "additionalAfterStarterBytes": 203030163,
+      "additionalAfterAllCurrentBytes": 252113
+    },
+    {
+      "id": "archive:journey:whole-spatial-v5",
+      "title": "Journey · Whole Journey contested sorting lanes review · Archive",
+      "kind": "gameplay",
+      "category": "archive",
+      "current": false,
+      "requires": [
+        "shared",
+        "runtime:versus"
+      ],
+      "ownBytes": 224610508,
+      "closureBytes": 226455284,
+      "additionalAfterStarterBytes": 203030427,
+      "additionalAfterAllCurrentBytes": 252377
+    },
+    {
+      "id": "archive:journey:whole-spatial-v6",
+      "title": "Journey · Whole Journey travelling trail-impact review · Archive",
+      "kind": "gameplay",
+      "category": "archive",
+      "current": false,
+      "requires": [
+        "shared",
+        "runtime:versus"
+      ],
+      "ownBytes": 224612912,
+      "closureBytes": 226457688,
+      "additionalAfterStarterBytes": 203032831,
+      "additionalAfterAllCurrentBytes": 254781
+    },
+    {
+      "id": "archive:journey:whole-spatial-v7",
+      "title": "Journey · Whole Journey readable pursuit and interception review · Archive",
+      "kind": "gameplay",
+      "category": "archive",
+      "current": false,
+      "requires": [
+        "shared",
+        "runtime:versus"
+      ],
+      "ownBytes": 224613741,
+      "closureBytes": 226458517,
+      "additionalAfterStarterBytes": 203033660,
+      "additionalAfterAllCurrentBytes": 255610
+    },
+    {
+      "id": "archive:journey:whole-spatial-v8",
+      "title": "Journey · Whole Journey Ukrainian and FPV readable pressure review · Archive",
+      "kind": "gameplay",
+      "category": "archive",
+      "current": false,
+      "requires": [
+        "shared",
+        "runtime:versus"
+      ],
+      "ownBytes": 224615554,
+      "closureBytes": 226460330,
+      "additionalAfterStarterBytes": 203035473,
+      "additionalAfterAllCurrentBytes": 257423
+    },
+    {
+      "id": "archive:journey:whole-spatial-v9",
+      "title": "Journey · Whole Journey erosion repair and escape review · Archive",
+      "kind": "gameplay",
+      "category": "archive",
+      "current": false,
+      "requires": [
+        "shared",
+        "runtime:versus"
+      ],
+      "ownBytes": 224615909,
+      "closureBytes": 226202907,
+      "additionalAfterStarterBytes": 202778050,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "archive:journey:whole-spatial-v10",
+      "title": "Journey · Whole Journey Ukrainian cultural spatial triptych · Archive",
+      "kind": "gameplay",
+      "category": "archive",
+      "current": false,
+      "requires": [
+        "shared",
+        "runtime:versus"
+      ],
+      "ownBytes": 224616914,
+      "closureBytes": 226202907,
+      "additionalAfterStarterBytes": 202778050,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "archive:journey:whole-ornament-v1",
+      "title": "Journey · Ukrainian ornament spatial review · Archive",
+      "kind": "gameplay",
+      "category": "archive",
+      "current": false,
+      "requires": [
+        "shared",
+        "runtime:versus"
+      ],
+      "ownBytes": 224618796,
+      "closureBytes": 226463572,
+      "additionalAfterStarterBytes": 203038715,
+      "additionalAfterAllCurrentBytes": 260665
+    },
+    {
+      "id": "archive:journey:whole-ornament-v2",
+      "title": "Journey · Ukrainian ornament atlas · twelve studies · Archive",
+      "kind": "gameplay",
+      "category": "archive",
+      "current": false,
+      "requires": [
+        "shared",
+        "runtime:versus"
+      ],
+      "ownBytes": 224624445,
+      "closureBytes": 226469221,
+      "additionalAfterStarterBytes": 203044364,
+      "additionalAfterAllCurrentBytes": 266314
+    },
+    {
+      "id": "archive:team:team-originals",
+      "title": "Team · Team Journey · Archive",
+      "kind": "gameplay",
+      "category": "archive",
+      "current": false,
+      "requires": [
+        "shared",
+        "runtime:team"
+      ],
+      "ownBytes": 33254288,
+      "closureBytes": 34802552,
+      "additionalAfterStarterBytes": 34802552,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "archive:team:team-pressure-originals-1",
+      "title": "Team · Team Journey · pressure edition · human validation pending · Archive",
+      "kind": "gameplay",
+      "category": "archive",
+      "current": false,
+      "requires": [
+        "shared",
+        "runtime:team"
+      ],
+      "ownBytes": 33254288,
+      "closureBytes": 34802552,
+      "additionalAfterStarterBytes": 34802552,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "archive:team:team-spatial-originals-1",
+      "title": "Team · Team Journey · changing returns · human validation pending · Archive",
+      "kind": "gameplay",
+      "category": "archive",
+      "current": false,
+      "requires": [
+        "shared",
+        "runtime:team"
+      ],
+      "ownBytes": 33254288,
+      "closureBytes": 34802552,
+      "additionalAfterStarterBytes": 34802552,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "archive:team:team-timed-originals",
+      "title": "Team · Shared windows · original-art Team test · Archive",
+      "kind": "gameplay",
+      "category": "archive",
+      "current": false,
+      "requires": [
+        "shared",
+        "runtime:team"
+      ],
+      "ownBytes": 7282747,
+      "closureBytes": 8831011,
+      "additionalAfterStarterBytes": 8831011,
+      "additionalAfterAllCurrentBytes": 7282747
+    },
+    {
+      "id": "archive:team:team-window-spatial-1",
+      "title": "Team · Shared windows · contested outer pockets review · Archive",
+      "kind": "gameplay",
+      "category": "archive",
+      "current": false,
+      "requires": [
+        "shared",
+        "runtime:team"
+      ],
+      "ownBytes": 7282747,
+      "closureBytes": 8831011,
+      "additionalAfterStarterBytes": 8831011,
+      "additionalAfterAllCurrentBytes": 7282747
+    },
+    {
+      "id": "chapter:fpv-arcade-r4",
+      "title": "FPV Front · First Light Arcade R4",
+      "kind": "gameplay",
+      "category": "archive",
+      "current": false,
+      "requires": [
+        "shared"
+      ],
+      "ownBytes": 11707106,
+      "closureBytes": 11707106,
+      "additionalAfterStarterBytes": 11707106,
+      "additionalAfterAllCurrentBytes": 11707106
+    },
+    {
+      "id": "chapter:fpv-arcade-r3",
+      "title": "FPV Front · First Light R3",
+      "kind": "gameplay",
+      "category": "archive",
+      "current": false,
+      "requires": [
+        "shared"
+      ],
+      "ownBytes": 11706413,
+      "closureBytes": 11706413,
+      "additionalAfterStarterBytes": 11706413,
+      "additionalAfterAllCurrentBytes": 11706413
+    },
+    {
+      "id": "chapter:fpv-arcade-r2",
+      "title": "FPV Front · First Light R2",
+      "kind": "gameplay",
+      "category": "archive",
+      "current": false,
+      "requires": [
+        "shared"
+      ],
+      "ownBytes": 11706060,
+      "closureBytes": 11706060,
+      "additionalAfterStarterBytes": 11706060,
+      "additionalAfterAllCurrentBytes": 11706060
+    },
+    {
+      "id": "chapter:fpv-arcade",
+      "title": "FPV Front · First Light",
+      "kind": "gameplay",
+      "category": "archive",
+      "current": false,
+      "requires": [
+        "shared"
+      ],
+      "ownBytes": 11701968,
+      "closureBytes": 11701968,
+      "additionalAfterStarterBytes": 11701968,
+      "additionalAfterAllCurrentBytes": 11701968
+    },
+    {
+      "id": "chapter:original-fpv-pressure-external",
+      "title": "Pressure Pictures · external-original pilot",
+      "kind": "gameplay",
+      "category": "archive",
+      "current": false,
+      "requires": [
+        "shared"
+      ],
+      "ownBytes": 8046789,
+      "closureBytes": 8046789,
+      "additionalAfterStarterBytes": 8046789,
+      "additionalAfterAllCurrentBytes": 8046789
+    },
+    {
+      "id": "tooling:team:team-specialist-originals-1",
+      "title": "Team · Team Journey · complementary specialists · balance review pending · Studio",
+      "kind": "gameplay",
+      "category": "tooling",
+      "current": false,
+      "requires": [
+        "shared",
+        "runtime:team"
+      ],
+      "ownBytes": 33254288,
+      "closureBytes": 34802552,
+      "additionalAfterStarterBytes": 34802552,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "tooling:team:team-complete-specialist-originals-1",
+      "title": "Team · Team Journey · complete specialists · balance review pending · Studio",
+      "kind": "gameplay",
+      "category": "tooling",
+      "current": false,
+      "requires": [
+        "shared",
+        "runtime:team"
+      ],
+      "ownBytes": 33254288,
+      "closureBytes": 34802552,
+      "additionalAfterStarterBytes": 34802552,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "tooling:team:team-depot-spatial-1",
+      "title": "Team · Shared windows · contested depot lanes review · Studio",
+      "kind": "gameplay",
+      "category": "tooling",
+      "current": false,
+      "requires": [
+        "shared",
+        "runtime:team"
+      ],
+      "ownBytes": 7282747,
+      "closureBytes": 8831011,
+      "additionalAfterStarterBytes": 8831011,
+      "additionalAfterAllCurrentBytes": 7282747
+    },
+    {
+      "id": "tooling:workshop",
+      "title": "Authoring tools and reference material",
+      "kind": "gameplay",
+      "category": "tooling",
+      "current": false,
+      "requires": [
+        "shared"
+      ],
+      "ownBytes": 12891114,
+      "closureBytes": 12891114,
+      "additionalAfterStarterBytes": 12891114,
+      "additionalAfterAllCurrentBytes": 12891114
+    },
+    {
+      "id": "tooling:artwork",
+      "title": "Unused authoring artwork",
+      "kind": "gameplay",
+      "category": "tooling",
+      "current": false,
+      "requires": [],
+      "ownBytes": 8214403,
+      "closureBytes": 8214403,
+      "additionalAfterStarterBytes": 8214403,
+      "additionalAfterAllCurrentBytes": 8214403
+    }
+  ],
+  "limitations": [
+    "This is a development build measurement, not a frozen release or physical-device certification.",
+    "The starter has nine Horizon original pictures and no recorded music. Full current navigation metadata remains available.",
+    "Solo uses navigation metadata and one opening-chapter runtime. Other executable chapters, Versus/Team host entry points and historical route sources are separate packages; shared compiler, replay, controller and presentation helpers remain in core.",
+    "Versus and Team runtimes still include complete route sources needed by their existing browsers. Further mode-internal chapter splitting remains unqualified.",
+    "Original PNG bytes are unchanged. These numbers do not assume new artwork or promise a final optimized image budget.",
+    "Browser cache overhead, temporary verification buffers, imports, saves and retained previous editions require additional space beyond stored payload bytes."
+  ]
+}

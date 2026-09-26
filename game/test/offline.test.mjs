@@ -8,6 +8,13 @@ import { createServer } from 'node:http';
 import { gzipSync, brotliCompressSync } from 'node:zlib';
 import { setImmediate as nextTurn } from 'node:timers/promises';
 import { offlineAvailability, prepareOffline, checkOffline } from '../offline.mjs';
+import { createOfficialDownloads, verifiedDownload } from '../official-downloads.mjs';
+import {
+  readOfflineDestination,
+  downloadOfflineDestination,
+  continueOfflineDestination,
+} from '../offline-navigation-recovery.mjs';
+import { downloadFiles } from '../download-catalogue.mjs';
 import { CONTENT_PROJECT_ITEM_LIMITS, CONTENT_ASSET_MAX_BYTES } from '../content-design/limits.mjs';
 import { waitFor } from './helpers/wait-for.mjs';
 const template = await fs.readFile(
@@ -28,6 +35,301 @@ const marker = {
 };
 const documentRef = { querySelector: () => ({ content: JSON.stringify(marker) }) };
 const locationRef = { href: `${scope}game/` };
+
+function navigationRequest(url) {
+  const request = new Request(url);
+  Object.defineProperty(request, 'mode', { value: 'navigate' });
+  return request;
+}
+
+test('missing bookmarked modes reach core consent, preserve selection, then open only verified bytes', async () => {
+  const entries = [
+    ['game/index.html', 'Solo menu'],
+    ['game/downloads.html', 'Download confirmation'],
+  ];
+  const optional = [
+    ['game/couch/index.html', 'Versus document'],
+    ['game/couch/couch.mjs', 'Versus runtime'],
+    ['game/content/versus-chapter.json', 'Original chapter'],
+  ];
+  const files = optional.map(([path, body]) => ({
+    path,
+    kind: 'gameplay',
+    bytes: Buffer.byteLength(body),
+    sha256: digest(body),
+    mime: 'text/plain',
+  }));
+  const catalogue = {
+    format: 'revealline-offline-content.v2',
+    version: '2',
+    files,
+    groups: [
+      {
+        id: 'versus:exact',
+        title: 'Exact chapter',
+        kind: 'gameplay',
+        requires: [],
+        files: files.map((file) => file.path),
+      },
+    ],
+    destinations: [
+      {
+        path: 'game/couch/',
+        mode: 'versus',
+        routeId: 'whole-spatial-v11',
+        libraryId: 'opaque-original-owner',
+        groups: ['versus:exact'],
+        runtimeGroups: ['versus:exact'],
+      },
+    ],
+  };
+  let offline = false;
+  const h = host({ packageConsent: true, downloadFiles: files }, new Map(), {
+    entries,
+    fetch: (request) => {
+      if (offline) throw new Error('actual outbound requests blocked');
+      return new Response(
+        new Map(
+          [...entries, ...optional].map(([path, body]) => [new URL(path, scope).href, body]),
+        ).get(request.url),
+      );
+    },
+  });
+  await h.dispatch('install');
+  h.calls.length = 0;
+  offline = true;
+  const original = new URL(
+    'game/couch/?journey=whole-spatial-v11&library-mission=opaque-original-owner&return=team&return-token-v2=opaque%2Bvalue',
+    scope,
+  ).href;
+  const redirected = await h.dispatch('fetch', { request: navigationRequest(original) });
+  assert.equal(redirected.status, 302);
+  const recoveryURL = redirected.headers.get('Location');
+  assert.equal(new URL(recoveryURL).searchParams.get('offline-destination'), original);
+  const confirmation = await h.dispatch('fetch', { request: navigationRequest(recoveryURL) });
+  assert.equal(await confirmation.text(), 'Download confirmation');
+  assert.deepEqual(
+    h.calls,
+    [],
+    'An offline bookmark loads its confirmation from core without fetching the mode.',
+  );
+  const request = readOfflineDestination({ pageURL: recoveryURL, scope, catalogue, version: '2' });
+  const store = createOfficialDownloads({
+    caches: h.caches,
+    origin: new URL(scope).origin,
+    locks: { request: async (_name, _options, work) => work() },
+    fetch: (url, options) => h.dispatch('fetch', { request: new Request(url, options) }),
+  });
+  // A pre-existing broader selection must remain a separate durable owner.
+  await store.download({
+    edition: scope,
+    group: 'gameplay',
+    selection: ['base', 'solo:existing'],
+    files: [],
+    baseURL: scope,
+  });
+  const previous = structuredClone(
+    (await store.states()).find((state) => state.group === 'gameplay'),
+  );
+  const visits = [],
+    verify = (groups, options) =>
+      store.inspect(downloadFiles(catalogue, groups), { ...options, verify: true });
+  await assert.rejects(
+    continueOfflineDestination({ request, verify, navigate: (href) => visits.push(href) }),
+    /not ready offline/,
+  );
+  assert.deepEqual(h.calls, []);
+  assert.deepEqual(visits, []);
+  // This explicit call models the page's Download and open button approval.
+  offline = false;
+  await downloadOfflineDestination(store, {
+    request,
+    edition: scope,
+    files: downloadFiles(catalogue, request.groups),
+    baseURL: scope,
+  });
+  assert.deepEqual(
+    (await store.states()).find((state) => state.group === 'gameplay'),
+    previous,
+  );
+  assert.equal(
+    (await store.states()).find((state) => state.group === request.checkpoint).complete,
+    true,
+  );
+  assert(
+    !request.checkpoint.includes('opaque'),
+    'Checkpoints contain package identities, never return tokens.',
+  );
+  offline = true;
+  const transfers = [...h.calls];
+  await continueOfflineDestination({ request, verify, navigate: (href) => visits.push(href) });
+  assert.deepEqual(visits, [original]);
+  const mode = await h.dispatch('fetch', { request: navigationRequest(visits[0]) });
+  assert.equal(await mode.text(), 'Versus document');
+  assert.deepEqual(
+    h.calls,
+    transfers,
+    'The verified destination opens with all outbound requests blocked.',
+  );
+});
+
+test('bookmark recovery never redirects assets, unrelated paths or immutable v1 requests', async () => {
+  const paths = ['game/couch/relay-rescue.html', 'game/couch/index.html', 'game/picture.png'];
+  const files = paths.map((path) => ({ path, bytes: 4, sha256: digest(path) }));
+  const entries = [['game/downloads.html', 'Consent']];
+  const h = host({ packageConsent: true, downloadFiles: files }, new Map(), { entries });
+  const team = await h.dispatch('fetch', { request: navigationRequest(new URL(paths[0], scope)) });
+  assert.equal(team.status, 302);
+  for (const request of [
+    new Request(new URL(paths[1], scope)),
+    navigationRequest(new URL(paths[2], scope)),
+  ])
+    assert.equal((await h.dispatch('fetch', { request })).status, 409);
+  assert.equal(
+    await h.dispatch('fetch', {
+      request: navigationRequest('https://outside.invalid/game/couch/'),
+    }),
+    null,
+  );
+  assert.deepEqual(h.calls, []);
+  const legacy = host({ downloadFiles: files }, new Map(), { entries });
+  const url = new URL(paths[0], scope).href;
+  legacy.network.set(url, 'Older edition');
+  assert.equal(
+    await (await legacy.dispatch('fetch', { request: navigationRequest(url) })).text(),
+    'Older edition',
+  );
+  assert.deepEqual(legacy.calls, [url]);
+});
+
+test('a cached Solo shell preflights known archived bootstrap bytes before opening a bookmark', async () => {
+  const body = '{"id":"whole-spatial-v2","source":{}}';
+  const file = {
+    path: 'game/content-design/runtime/whole-spatial-v2.json',
+    bytes: Buffer.byteLength(body),
+    sha256: digest(body),
+  };
+  const h = host(
+    {
+      packageConsent: true,
+      downloadFiles: [file],
+      navigationBootstraps: [
+        { path: 'game/index.html', routeId: 'whole-spatial-v2', files: [file.path] },
+      ],
+    },
+    new Map(),
+    {
+      entries: [
+        ['game/index.html', 'Solo shell'],
+        ['game/downloads.html', 'Consent'],
+      ],
+    },
+  );
+  await h.dispatch('install');
+  h.calls.length = 0;
+  h.network.clear();
+  const original = new URL(
+    'game/?journey=whole-spatial-v2&library-mission=exact-old-owner&return-token=opaque%2Bvalue',
+    scope,
+  ).href;
+  const missing = await h.dispatch('fetch', { request: navigationRequest(original) });
+  assert.equal(missing.status, 302);
+  assert.equal(
+    new URL(missing.headers.get('Location')).searchParams.get('offline-destination'),
+    original,
+  );
+  for (const path of [
+    'game/',
+    'game/?journey=whole-spatial-v11',
+    'game/?journey=unknown',
+    'game/?journey=whole-spatial-v2&journey=legacy',
+  ]) {
+    const response = await h.dispatch('fetch', {
+      request: navigationRequest(new URL(path, scope)),
+    });
+    assert.equal(
+      await response.text(),
+      'Solo shell',
+      'Current and invalid route handling remains with the existing host.',
+    );
+  }
+  const cache = await h.caches.open('revealline-official-content-v1');
+  const key = `https://game.example/.revealline-official/sha256/${file.sha256}`;
+  await cache.put(key, new Response(body, { headers: { 'Content-Length': String(file.bytes) } }));
+  assert.equal(
+    await (await h.dispatch('fetch', { request: navigationRequest(original) })).text(),
+    'Solo shell',
+  );
+  await cache.put(
+    key,
+    new Response('x'.repeat(file.bytes), { headers: { 'Content-Length': String(file.bytes) } }),
+  );
+  assert.equal(
+    (await h.dispatch('fetch', { request: navigationRequest(original) })).status,
+    302,
+    'Corrupt same-size bootstrap bytes need repair before host import.',
+  );
+  assert.deepEqual(h.calls, [], 'Navigation never fetches an unapproved historical runtime.');
+});
+
+test('package editions block unseen artwork before a confirmed downloader request', async () => {
+  const body = 'original picture';
+  const file = { path: 'game/picture.png', bytes: Buffer.byteLength(body), sha256: digest(body) };
+  const h = host({ packageConsent: true, downloadFiles: [file] });
+  const url = new URL(file.path, scope).href;
+  h.network.set(url, body);
+  const blocked = await h.dispatch('fetch', { request: new Request(url) });
+  assert.equal(blocked.status, 409);
+  assert.deepEqual(h.calls, [], 'being online does not authorize an unselected picture download');
+  const accepted = await h.dispatch('fetch', { request: new Request(url, { cache: 'no-store' }) });
+  assert.equal(await accepted.text(), body);
+  assert.deepEqual(h.calls, [url]);
+});
+
+test('a downloaded chapter is served locally even when every outbound request fails', async () => {
+  const body = 'original picture';
+  const file = { path: 'game/picture.png', bytes: Buffer.byteLength(body), sha256: digest(body) };
+  const h = host({ packageConsent: true, downloadFiles: [file] }, new Map(), {
+    fetch: () => {
+      throw new Error('actual outbound requests blocked');
+    },
+  });
+  const cache = await h.caches.open('revealline-official-content-v1');
+  await cache.put(
+    `https://game.example/.revealline-official/sha256/${file.sha256}`,
+    new Response(body, { headers: { 'Content-Length': String(file.bytes) } }),
+  );
+  const response = await h.dispatch('fetch', { request: new Request(new URL(file.path, scope)) });
+  assert.equal(response.status, 200);
+  assert.equal(await response.text(), body);
+  assert.deepEqual(h.calls, []);
+});
+
+test('explicit verified repair bypasses a same-sized corrupt official cache entry', async () => {
+  const body = 'original picture';
+  const file = { path: 'game/picture.png', bytes: Buffer.byteLength(body), sha256: digest(body) };
+  const h = host({ packageConsent: true, downloadFiles: [file] });
+  const url = new URL(file.path, scope).href;
+  const cache = await h.caches.open('revealline-official-content-v1');
+  const key = `https://game.example/.revealline-official/sha256/${file.sha256}`;
+  const corrupt = 'x'.repeat(file.bytes);
+  await cache.put(
+    key,
+    new Response(corrupt, { headers: { 'Content-Length': String(file.bytes) } }),
+  );
+  h.network.set(url, body);
+  const repaired = await verifiedDownload(file, url, {
+    fetch: (target, options) => h.dispatch('fetch', { request: new Request(target, options) }),
+  });
+  assert.equal(await repaired.text(), body);
+  assert.deepEqual(h.calls, [url]);
+  assert.equal(
+    await (await cache.match(key)).text(),
+    corrupt,
+    'the worker does not commit network bytes before the downloader verifies them',
+  );
+});
+
 function host(configPatch = {}, storage = new Map(), options = {}) {
   const entries = new Map(
     options.entries ?? [

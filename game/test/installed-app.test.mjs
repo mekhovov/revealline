@@ -11,6 +11,9 @@ import {
   invalidateInstalledMigration,
   INSTALLED_STATE_KEY,
   updateInstalledSelection,
+  rememberInstalledPackages,
+  prepareInstalledLauncher,
+  checkInstalledLauncher,
 } from '../installed-app.mjs';
 const locationRef = {
   href: 'https://game.example/revealline/releases/v2.0.0/site/game/downloads.html',
@@ -53,6 +56,69 @@ function setup() {
   };
 }
 const profile = (version) => `revealline.library.release-${version}.v1`;
+test('verified bookmarked packages extend only the active edition without replacing broader update choices', async () => {
+  const h = setup();
+  const state = {
+    active: { ...a, selection: ['base', 'solo:existing'], allGameplay: true },
+    previous: b,
+    pending: { ...b, selection: ['base', 'team:pending'] },
+    migration: { untouched: true },
+  };
+  h.storage.setItem(INSTALLED_STATE_KEY, JSON.stringify(state));
+  const calls = [];
+  const locks = {
+    request: async (name, options, work) => {
+      calls.push({ name, signal: options.signal });
+      return work();
+    },
+  };
+  const controller = new AbortController();
+  assert.equal(
+    await rememberInstalledPackages(a.scope, ['versus:bookmark', 'base'], {
+      ...h,
+      locks,
+      signal: controller.signal,
+    }),
+    true,
+  );
+  assert.deepEqual(readInstalledState(h.storage), {
+    ...state,
+    active: { ...state.active, selection: ['base', 'solo:existing', 'versus:bookmark'] },
+  });
+  assert.deepEqual(calls, [{ name: 'revealline.installed-app.switch', signal: controller.signal }]);
+  const before = h.storage.getItem(INSTALLED_STATE_KEY);
+  assert.equal(await rememberInstalledPackages(b.scope, ['team:other-edition'], h), false);
+  assert.equal(h.storage.getItem(INSTALLED_STATE_KEY), before);
+  controller.abort();
+  await assert.rejects(
+    rememberInstalledPackages(a.scope, ['team:cancelled'], { ...h, signal: controller.signal }),
+    { name: 'AbortError' },
+  );
+  assert.equal(h.storage.getItem(INSTALLED_STATE_KEY), before);
+});
+
+test('cancelled queued bookmark selection leaves installed state untouched', async () => {
+  const h = setup(),
+    controller = new AbortController();
+  h.storage.setItem(INSTALLED_STATE_KEY, JSON.stringify({ active: a }));
+  const before = h.storage.getItem(INSTALLED_STATE_KEY);
+  let entered;
+  const pending = rememberInstalledPackages(a.scope, ['team:bookmark'], {
+    ...h,
+    signal: controller.signal,
+    locks: {
+      request: (_name, _options, work) =>
+        new Promise((resolve, reject) => {
+          entered = () => work().then(resolve, reject);
+        }),
+    },
+  });
+  controller.abort();
+  entered();
+  await assert.rejects(pending, { name: 'AbortError' });
+  assert.equal(h.storage.getItem(INSTALLED_STATE_KEY), before);
+});
+
 test('one launcher identity covers immutable editions, and foreign or credentialed editions are rejected', () => {
   assert.equal(installedAppURL(locationRef), 'https://game.example/revealline/app/');
   assert.deepEqual(validateInstalledEdition(b, locationRef), b);
@@ -62,6 +128,65 @@ test('one launcher identity covers immutable editions, and foreign or credential
     'https://user:secret@game.example/revealline/releases/v2/site/',
   ])
     assert.throws(() => validateInstalledEdition({ ...b, scope }, locationRef));
+});
+test('an embedded host can use its held writer, but losing ownership or another edition writer keeps the old selection', async () => {
+  const h = setup();
+  const key = `${profile(a.version)}.writer`;
+  h.held.add(key);
+  assert.equal(
+    (await activateInstalledEdition(a, { ...h, ownsWriter: (name) => name === key })).activated,
+    true,
+  );
+  h.held.add(`${profile(b.version)}.writer`);
+  await assert.rejects(
+    activateInstalledEdition(b, { ...h, ownsWriter: (name) => name === key }),
+    /Close the game window/,
+  );
+  h.held.delete(`${profile(b.version)}.writer`);
+  let held = true;
+  await assert.rejects(
+    activateInstalledEdition(b, {
+      ...h,
+      ownsWriter: (name) => held && name === key,
+      readAsset: async () => {
+        held = false;
+        return null;
+      },
+    }),
+    /stopped owning/,
+  );
+  assert.deepEqual(readInstalledState(h.storage).active, a);
+});
+
+test('launcher activation is insufficient until its exact cached shell is verified', async () => {
+  const calls = [];
+  let ready = false;
+  const worker = {
+    state: 'activated',
+    postMessage(message, [port]) {
+      calls.push(message.type);
+      port.postMessage({
+        format: 'revealline.launcher-health.v1',
+        requestId: message.requestId,
+        status: ready ? 'ready' : 'incomplete',
+        message: 'Missing launcher HTML.',
+      });
+    },
+  };
+  const serviceWorker = {
+    register: async () => ({ active: worker }),
+    getRegistration: async () => ({ active: worker }),
+  };
+  const options = { navigatorRef: { serviceWorker }, locationRef, timeout: 100 };
+  assert.equal((await checkInstalledLauncher(options)).status, 'incomplete');
+  await assert.rejects(prepareInstalledLauncher(options), /Missing launcher HTML/);
+  ready = true;
+  assert.equal((await prepareInstalledLauncher(options)).status, 'ready');
+  assert.deepEqual(calls, [
+    'revealline.launcher-check',
+    'revealline.launcher-prepare',
+    'revealline.launcher-prepare',
+  ]);
 });
 test('first activation uses local state; no soundtrack readiness or server request is required', async () => {
   const h = setup();
