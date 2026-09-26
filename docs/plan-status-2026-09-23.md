@@ -4,6 +4,41 @@
 > for current UX work and its release checkpoint. The dated acceptance records below
 > remain historical; their old public version and PR counts are not live status.
 
+## Current checkpoint — 26 September 2026
+
+- **Completed:** immutable
+  [v0.141.0](https://github.com/mekhovov/revealline/releases/tag/v0.141.0) is the
+  current published release. Its product source is
+  `5d6c97c850a648c5ebe93d3cf57731aeb67d0bbb`; Pages selector
+  [PR #673](https://github.com/mekhovov/revealline/pull/673) merged as
+  `44a6ce672632a2d30cbf94374b172e213b75063c`. Pages run `36246645007`
+  audited 1,877 files / 630,364,265 bytes with zero retries or failures.
+  Immutable v0.132.5 is preserved in Archive94 at
+  `7aa32a48e9817b7ca867cb0735c99f72f6d67b96`.
+- **Active:** the serialized player queue starts with v0.141.1 compact gallery
+  ([PR #590](https://github.com/mekhovov/revealline/pull/590));
+  v0.141.2 Team quick-start; v0.141.3 Couch secondary navigation;
+  v0.141.4 Team teaching; v0.141.5 deliberate Team terminal Retry;
+  v0.141.6 Versus countdown; v0.141.7 named result destinations;
+  and v0.141.8 Collection fixture reconciliation plus paused Settings/Help return
+  ([PR #548](https://github.com/mekhovov/revealline/pull/548), then
+  [PR #542](https://github.com/mekhovov/revealline/pull/542)). These are working
+  allocations, not merged or public releases. Each must be reconciled and
+  qualified on its accepted predecessor; stale target versions in draft titles
+  and evidence do not override this order.
+- **Remaining:** UX6 cumulative Solo/Versus/Team journeys, real-browser viewport,
+  zoom, accessibility and performance regression, current-build offline
+  install/update/recovery, and public-byte verification follow v0.141.8. Focused
+  branch tests are component evidence, not a cumulative qualification. Waived or
+  skipped long suites are not passes; modeled pads and DOM clicks are not physical
+  controller, Steam Deck or touch-device evidence. Human balance, cross-runtime
+  replay portability and physical installed-device acceptance remain separate
+  gates.
+
+The 23 September register and later dated sections are preserved below as
+historical scope, evidence and design contracts. Their old version, PR-count and
+queue statements are not live status.
+
 Status checked **23 September 2026, 14:32 UTC**. This is the current status and
 priority register for the approved Xposed-led Journey and unified-library plan.
 It supersedes older status/queue paragraphs, not their design contracts, source
