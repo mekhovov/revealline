@@ -4,14 +4,14 @@ import { readFile } from 'node:fs/promises';
 import { createHash, webcrypto } from 'node:crypto';
 import { page } from './helpers/coop-host.mjs';
 import { deferred, waitFor } from './helpers/coop-presentation-fixture.mjs';
-import { createTeamCulturalSpecialistOriginalCandidates } from '../content-design/team-cultural-specialist-originals.mjs';
+import { createTeamCulturalSpecialistV2OriginalCandidates } from '../content-design/team-cultural-specialist-v2-originals.mjs';
 import { createCandidateTeamHost } from '../content-design/team-host.mjs';
 import { createTeamTestPack } from '../content-design/team-export.mjs';
 import { createMissionLibrary } from '../mission-library/library.mjs';
 import { teamJourneyLibrarySource } from '../mission-library/team-source.mjs';
 import { JOURNEY_PREFERENCES_KEY, JOURNEY_PREFERENCES_VERSION } from '../journey/preferences.mjs';
 
-const source = createTeamCulturalSpecialistOriginalCandidates();
+const source = createTeamCulturalSpecialistV2OriginalCandidates();
 const journey = createCandidateTeamHost(source, {
   corePackIds: source.packs.map((pack) => pack.id),
 });
@@ -125,7 +125,7 @@ test('Team unified chooser has12 missions plus2 retained arenas; browsing is art
 
 test('explicit current Team handoff shows player-facing edition and retains every exact mission ID', async (t) => {
   const f = await fixture(t, {
-    href: `${base}?journey=team-cultural-specialist-originals-1`,
+    href: `${base}?journey=team-cultural-specialist-originals-2`,
   });
   await open(f);
   const journeyCards = cards(f).filter((row) => row.textContent.includes('Journey'));
@@ -160,7 +160,7 @@ test('Team library plays an exact nonfirst mission at the selected Expert preset
 test('incoming opaque Team ID resolves exact nonfirst mission before any artwork preparation', async (t) => {
   const target = model.missions.find((row) => row.name === 'Shared lookout');
   const params = new URLSearchParams({
-    journey: 'team-cultural-specialist-originals-1',
+    journey: 'team-cultural-specialist-originals-2',
     'library-mission': target.id,
   });
   const f = await fixture(t, { href: `${base}?${params}`, difficulty: 'expert' });
@@ -261,7 +261,7 @@ test('Legacy Team library contains currentJourney metadata and fixed exact hando
   target.click();
   await waitFor(() => f.visits.length === 1);
   const url = new URL(f.visits[0]);
-  assert.equal(url.searchParams.get('journey'), 'team-cultural-specialist-originals-1');
+  assert.equal(url.searchParams.get('journey'), 'team-cultural-specialist-originals-2');
   assert.equal(url.searchParams.get('library-mission'), target.dataset.missionId);
   assert.equal(f.reads.length, 0);
 });
@@ -272,7 +272,7 @@ for (const action of ['focus', 'key', 'blur'])
     t.after(() => gate.resolve());
     const target = model.missions.find((row) => row.name === 'Shared lookout');
     const params = new URLSearchParams({
-      journey: 'team-cultural-specialist-originals-1',
+      journey: 'team-cultural-specialist-originals-2',
       'library-mission': target.id,
     });
     let held = false;
