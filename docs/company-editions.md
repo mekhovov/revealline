@@ -40,7 +40,7 @@ node scripts/produce-company-content.mjs
 node scripts/produce-company-content.mjs --check
 node scripts/compile-edition.mjs --catalog game/editions/catalog.json \
   --edition coupa-adventure --out .cache/coupa-candidate \
-  --version 0.132.2 --offline-base-path /revealline/
+  --version 0.132.4 --offline-base-path /revealline/
 ```
 
 The destination must not already exist. `game/company-campaigns/brands.mjs` and the authored

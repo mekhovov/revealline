@@ -9,6 +9,7 @@ import {
   decideReleaseObjects,
   inspectReleaseObjects,
 } from "./fastline-release-objects.mjs";
+import { verifyEditionReview } from "./edition-promotion.mjs";
 
 const SHA = /^[0-9a-f]{40}$/u;
 const VERSION = /^v[0-9]+\.[0-9]+\.[0-9]+$/u;
@@ -41,6 +42,8 @@ export function normalizeAssetDigest(value) {
 export function decideReleaseAssets({ expected, actual, published = false }) {
   const expectedByName = new Map(expected.map((asset) => [asset.name, asset]));
   const actualByName = new Map(actual.map((asset) => [asset.name, asset]));
+  if (actualByName.size !== actual.length)
+    throw new Error("duplicate release asset name");
   if (expectedByName.size !== RELEASE_ASSET_NAMES.length)
     throw new Error(
       "expected release asset set must contain exactly nine names",
@@ -137,6 +140,128 @@ async function listReleaseAssets(repository, releaseId, request = github) {
   throw new Error("release asset pagination exceeded its bound");
 }
 
+async function readReleaseAsset({ repository, asset, maxBytes }) {
+  if (!Number.isSafeInteger(asset.id) || asset.id <= 0)
+    throw new Error("invalid edition release asset ID");
+  const response = await fetch(
+    `https://api.github.com/repos/${repository}/releases/assets/${asset.id}`,
+    {
+      headers: {
+        accept: "application/octet-stream",
+        authorization: `Bearer ${process.env.GH_TOKEN}`,
+        "x-github-api-version": "2022-11-28",
+        "user-agent": "revealline-fastline-release-publisher",
+      },
+      signal: AbortSignal.timeout(120_000),
+    },
+  );
+  if (!response.ok || !response.body)
+    throw new Error(`edition asset download failed: ${asset.name}`);
+  const reader = response.body.getReader(),
+    chunks = [];
+  let length = 0;
+  try {
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      length += value.byteLength;
+      if (length > maxBytes || length > asset.size) {
+        await reader.cancel();
+        throw new Error(`edition asset exceeds reviewed size: ${asset.name}`);
+      }
+      chunks.push(value);
+    }
+  } finally {
+    reader.releaseLock();
+  }
+  return Buffer.concat(chunks, length);
+}
+
+/** Additive assets need their complete original-byte review, never a name allowlist. */
+export async function verifyAdditiveEditionAssets({
+  repository,
+  release,
+  version,
+  sourceSha,
+  actual,
+  request = github,
+  readAsset = readReleaseAsset,
+}) {
+  const names = new Set(actual.map((asset) => asset.name));
+  if (names.size !== actual.length)
+    throw new Error("duplicate release asset name");
+  const additions = actual.filter(
+    (asset) => !RELEASE_ASSET_NAMES.includes(asset.name),
+  );
+  if (!additions.length) return [];
+  assertRequest({ repository, version, sourceSha });
+  if (release.tag_name !== version || release.target_commitish !== sourceSha)
+    throw new Error(
+      "edition release identity differs from the exact source request",
+    );
+  const byName = new Map(additions.map((asset) => [asset.name, asset]));
+  if (!byName.has("editions.json") || !byName.has("edition-review.json"))
+    throw new Error(
+      "unexpected release assets lack a complete edition envelope and review",
+    );
+  let bytesRead = 0;
+  const consumed = new Map();
+  const read = async (name, limit = 950_000_000) => {
+    if (!/^[A-Za-z0-9_.-]+$/u.test(name) || name === "." || name === "..")
+      throw new Error("invalid additive edition asset path");
+    if (consumed.has(name)) return consumed.get(name);
+    const asset = byName.get(name);
+    if (
+      !asset ||
+      !Number.isSafeInteger(asset.size) ||
+      asset.size <= 0 ||
+      asset.size > limit
+    )
+      throw new Error(`missing or oversized edition asset: ${name}`);
+    bytesRead += asset.size;
+    if (bytesRead > 950_000_000)
+      throw new Error("additive edition assets exceed byte budget");
+    const digest = normalizeAssetDigest(asset.digest);
+    const bytes = await readAsset({
+      repository,
+      asset,
+      maxBytes: Math.min(limit, asset.size),
+    });
+    if (
+      !(bytes instanceof Uint8Array) ||
+      bytes.length !== asset.size ||
+      `sha256:${createHash("sha256").update(bytes).digest("hex")}` !== digest
+    )
+      throw new Error(`edition asset original bytes differ: ${name}`);
+    consumed.set(name, bytes);
+    return bytes;
+  };
+  const envelopeBytes = await read("editions.json", 8_000_000);
+  const envelope = JSON.parse(Buffer.from(envelopeBytes).toString("utf8"));
+  const review = JSON.parse(
+    Buffer.from(await read("edition-review.json", 8_000_000)).toString("utf8"),
+  );
+  const commit = await request(`/repos/${repository}/git/commits/${sourceSha}`);
+  if (
+    commit.sha !== sourceSha ||
+    !SHA.test(commit.tree?.sha || "") ||
+    envelope.version !== version ||
+    envelope.sourceRevision !== sourceSha ||
+    envelope.sourceTree !== commit.tree.sha
+  )
+    throw new Error(
+      "edition envelope differs from the exact release source commit and tree",
+    );
+  await verifyEditionReview(envelopeBytes, review, {
+    read: (descriptor) => read(descriptor.path, descriptor.bytes),
+  });
+  if (consumed.size !== additions.length)
+    throw new Error(
+      "unexpected release asset outside the admitted edition closure",
+    );
+  return [...consumed.keys()].sort();
+}
+
 export async function ensureDraftRelease({
   repository,
   version,
@@ -203,15 +328,30 @@ export async function ensureDraftRelease({
 export async function reconcileReleaseAssets({
   repository,
   release,
+  version,
+  sourceSha,
   expected,
   request = github,
+  readAsset = readReleaseAsset,
 }) {
   const actual = await listReleaseAssets(repository, release.id, request);
-  return decideReleaseAssets({
-    expected,
+  const admitted = await verifyAdditiveEditionAssets({
+    repository,
+    release,
+    version,
+    sourceSha,
     actual,
+    request,
+    readAsset,
+  });
+  const result = decideReleaseAssets({
+    expected,
+    actual: actual.filter((asset) => !admitted.includes(asset.name)),
     published: !release.draft,
   });
+  return admitted.length
+    ? { ...result, admittedEditionAssets: admitted }
+    : result;
 }
 
 export async function publishExactRelease({
@@ -221,14 +361,18 @@ export async function publishExactRelease({
   expected,
   request = github,
   inspect = inspectReleaseObjects,
+  readAsset = readReleaseAsset,
 }) {
   const state = await inspect({ repository, version, sourceSha, get: request });
   if (!state.release) throw new Error("exact release is absent");
   const assets = await reconcileReleaseAssets({
     repository,
     release: state.release,
+    version,
+    sourceSha,
     expected,
     request,
+    readAsset,
   });
   if (assets.missing.length)
     throw new Error(`release assets are missing: ${assets.missing.join(", ")}`);
@@ -271,6 +415,8 @@ async function main() {
     const assets = await reconcileReleaseAssets({
       repository,
       release,
+      version,
+      sourceSha,
       expected,
     });
     await writeOutputs({
