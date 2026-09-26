@@ -3,10 +3,11 @@ import { readFile } from 'node:fs/promises';
 import test from 'node:test';
 
 test('hosted journey uses an isolated exact-source PostgreSQL and disk deployment', async () => {
-  const [compose, baseCompose, productionCompose, workflow] = await Promise.all([
+  const [compose, baseCompose, productionCompose, dockerfile, workflow] = await Promise.all([
     readFile(new URL('../compose.hosted-acceptance.yaml', import.meta.url), 'utf8'),
     readFile(new URL('../compose.yaml', import.meta.url), 'utf8'),
     readFile(new URL('../compose.production.yaml', import.meta.url), 'utf8'),
+    readFile(new URL('../Dockerfile', import.meta.url), 'utf8'),
     readFile(
       new URL('../../../.github/workflows/community-hosted-acceptance.yml', import.meta.url),
       'utf8',
@@ -27,6 +28,8 @@ test('hosted journey uses an isolated exact-source PostgreSQL and disk deploymen
   );
   assert.match(productionCompose, /COMMUNITY_ALLOW_DEV_AUTH: 'false'/u);
   assert.match(productionCompose, /COMMUNITY_DEV_TOKENS: '\{\}'/u);
+  assert.match(dockerfile, /COPY game \/game/u);
+  assert.doesNotMatch(dockerfile, /COPY game \/srv\/game/u);
 
   assert.match(workflow, /runs-on: ubuntu-24\.04/u);
   assert.match(workflow, /COMMUNITY_SOURCE_REVISION: \$\{\{/u);
