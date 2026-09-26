@@ -191,6 +191,18 @@ def source_jobs_check(jobs, source, waived=False):
                     j.get('head_sha') == source for j in tests), 'Waived test jobs must actually be skipped')
 
 
+def recoverable_fastline_inspection_failure(run, jobs, source):
+    """A failed parent is reusable only when its sole failure followed a valid freeze."""
+    if run.get('path') != FASTLINE_WORKFLOW or run.get('conclusion') != 'failure':
+        return False
+    failed = [job for job in jobs if job.get('conclusion') == 'failure']
+    admission = [job for job in jobs if job.get('name') == 'admission']
+    return (len(failed) == 1 and failed[0].get('name') == 'inspect-artifact' and
+            len(admission) == 1 and admission[0].get('conclusion') == 'success' and
+            all(job.get('status') == 'completed' and job.get('head_sha') == source and
+                job.get('conclusion') in ('success', 'skipped', 'failure') for job in jobs))
+
+
 def artifact_authority(api, binding, policy_body=None):
     repo, expected = binding['repository'], binding['artifact']
     item = api.get(f'/repos/{repo}/actions/artifacts/{expected["id"]}')
@@ -204,8 +216,7 @@ def artifact_authority(api, binding, policy_body=None):
     run = api.get(f'/repos/{repo}/actions/runs/{expected["runId"]}')
     require(run.get('id') == expected['runId'] and run.get('event') == 'workflow_dispatch' and
             run.get('path') in QUALIFICATION_WORKFLOWS and run.get('head_sha') == binding['source']['commit'] and
-            run.get('status') == 'completed' and run.get('conclusion') == 'success',
-            'Original manual source/freeze run is not completed successfully')
+            run.get('status') == 'completed', 'Original manual source/freeze run identity differs')
     jobs = []
     for page in range(1, 11):
         response = api.get(f'/repos/{repo}/actions/runs/{expected["runId"]}/jobs?per_page=100&page={page}')
@@ -216,6 +227,9 @@ def artifact_authority(api, binding, policy_body=None):
             break
     else:
         raise ValueError('Jobs exceed pagination bound')
+    require(run.get('conclusion') == 'success' or
+            recoverable_fastline_inspection_failure(run, jobs, binding['source']['commit']),
+            'Original manual source/freeze run is not completed successfully')
     waived = policy_body is not None and test_policy(policy_body)['mode'] == 'waived'
     # A policy permits skipping; an explicitly opted-in successful test run remains valid.
     skipped = any(j.get('name') in ['test', 'test (1)'] and
@@ -467,12 +481,15 @@ def verify_evidence(body, qualification, source, policy_body=None):
             run = parse(archive.read(waiver['runEvidence']['path']))
             jobs = parse(archive.read(waiver['jobsEvidence']['path']))
             qualification_workflow = qualification.get('workflowPath', WORKFLOW)
+            job_rows = jobs.get('jobs')
             require(run.get('id') == waiver['runId'] and run.get('event') == 'workflow_dispatch' and
                     run.get('path') in QUALIFICATION_WORKFLOWS and
                     qualification_workflow == run.get('path') and
-                    run.get('head_sha') == source['commit'] and successful(run),
+                    run.get('head_sha') == source['commit'] and run.get('status') == 'completed' and
+                    (run.get('conclusion') == 'success' or
+                     isinstance(job_rows, list) and
+                     recoverable_fastline_inspection_failure(run, job_rows, source['commit'])),
                     'Waiver original run identity/result differs')
-            job_rows = jobs.get('jobs')
             require(isinstance(job_rows, list) and 0 < len(job_rows) <= 1000 and jobs.get('total_count') == len(job_rows) and
                     all(j.get('run_id') == run['id'] and positive(j.get('id'), 10**14) for j in job_rows) and
                     len({j['id'] for j in job_rows}) == len(job_rows), 'Waiver original jobs incomplete or borrowed')
