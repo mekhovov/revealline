@@ -25,7 +25,7 @@ function modeId(value) {
 const journeyForMode = (journey, mode) =>
   journey === 'legacy' ||
   (mode === 'team'
-    ? journey === 'team-trail-impact-originals-1'
+    ? journey === 'team-complete-specialist-originals-1'
     : isAuthoredJourneyRouteId(journey));
 // These finite historical Team routes are retained by relay-rescue's entry
 // factory. Source navigation may return to them; this does not qualify any new
