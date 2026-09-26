@@ -15,7 +15,33 @@ const source = createTeamCulturalSpecialistV2OriginalCandidates();
 const previous = createTeamCulturalSpecialistOriginalCandidates();
 const project = compileContentProject(source);
 const previousProject = compileContentProject(previous);
-const command = () => ({ direction: null, boost: false, support: false });
+const command = (direction = null) => ({ direction, boost: false, support: false });
+const routes = Object.freeze({
+  'crossed-gardens': [
+    [{ a: 'right', ticks: 500 }],
+    [
+      { b: 'down', ticks: 50 },
+      { b: null, ticks: 2 },
+      { b: 'left', ticks: 500 },
+    ],
+  ],
+  'split-orchards': [
+    [{ a: 'right', ticks: 500 }],
+    [{ b: 'left', ticks: 500 }],
+  ],
+  'weaver-crossing': [
+    [
+      { a: 'down', ticks: 100 },
+      { a: null, ticks: 2 },
+      { a: 'right', ticks: 500 },
+    ],
+    [
+      { b: 'up', ticks: 100 },
+      { b: null, ticks: 2 },
+      { b: 'left', ticks: 500 },
+    ],
+  ],
+});
 const mission = (compiled, id) => compiled.missions.find((item) => item.id === id);
 const map = (compiled, id) => {
   const owner = mission(compiled, id);
@@ -77,7 +103,7 @@ test('copy-on-write preserves every previous Team edition and unrelated mission'
 test('the new ornament layouts remain connected and expose deliberate return components', () => {
   const expected = {
     'crossed-gardens': { walls: 6, terrain: 4 },
-    'split-orchards': { walls: 8, terrain: 2 },
+    'split-orchards': { walls: 8, terrain: 4 },
     'weaver-crossing': { walls: 8, terrain: 4 },
   };
   for (const id of IDS) {
@@ -122,5 +148,33 @@ test('all presets preserve actors and keep both opening spawns safe while idle',
           positions,
         );
       }
-    }
+  }
 });
+
+for (const id of IDS)
+  test(`${id} executes two different safe approaches on every preset and seed`, () => {
+    for (const segments of routes[id])
+      for (const difficulty of ['gentle', 'standard', 'expert'])
+        for (const seed of [1, 7]) {
+          const level = resolveMission(project, id, { mode: 'team', difficulty }).level;
+          const run = startCoop(createCoop(level, { seed, jointCuts: false }));
+          let downs = 0;
+          let closed = null;
+          route: for (const segment of segments)
+            for (let tick = 0; tick < segment.ticks && run.status === 'running'; tick++) {
+              stepCoop(run, [command(segment.a), command(segment.b)]);
+              for (const event of run.events) {
+                if (event.type === 'player.downed') downs++;
+                if (event.type === 'cut.closed') {
+                  closed = event.player;
+                  break route;
+                }
+              }
+            }
+          assert.equal(run.status, 'running');
+          assert.equal(downs, 0);
+          assert.notEqual(closed, null);
+          assert(run.coverage > 0 && run.coverage < level.goal.coverage);
+          assert.equal(run.players[closed].cutting, false);
+        }
+  });
