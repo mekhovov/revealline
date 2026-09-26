@@ -14,9 +14,18 @@ The service requires Node 20.19 or newer. Install and run its credential-free te
 cd services/community
 npm ci
 npm test
+npm run acceptance:tus-resume
 npm run lint
 npm run format:check
 ```
+
+`acceptance:tus-resume` starts an in-memory community service and a bounded loopback fault proxy.
+The proxy accepts the first browser `PATCH`, commits 17 bytes to the real tus server, then closes the
+browser-facing TCP connection before returning a response. Retrying the same production browser
+client must read the authoritative offset with `HEAD`, send the exact remaining bytes, reuse the one
+community submission and tus resource, and finish with a byte-for-byte package match. The command
+uses no PostgreSQL, object storage, account service, or external network, and exits nonzero on a
+timeout or contract mismatch.
 
 For the container development stack:
 
@@ -221,7 +230,10 @@ update discovery; display titles and shared slugs across different owners never 
 official `@tus/server` and `@tus/file-store` implementation checks the authenticated owner on create,
 HEAD, PATCH, and completion. Completion rechecks size, SHA-256, edition, and submission identity
 before copying bytes to the content-addressed package store. The test suite interrupts a PATCH,
-reads the retained offset, resumes it, and proves another owner cannot inspect the upload.
+reads the retained offset, resumes it, and proves another owner cannot inspect the upload. The
+separate `acceptance:tus-resume` fault rehearsal drops the live HTTP connection after the server has
+committed only a prefix, proving that the production browser client trusts the later `HEAD` offset
+without creating another submission or tus resource.
 
 Every executable API replica uses PostgreSQL advisory locks for tus resources. A dedicated bounded
 connection pool keeps upload lock waits from consuming the repository pool. A contender sends a
