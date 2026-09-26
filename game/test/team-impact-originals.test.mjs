@@ -55,8 +55,8 @@ test('all36 Team successor manifests own the v2 line-impact policy and isolated 
 });
 
 test('impact Team entry remains selectable after the complete specialist successor becomes current', () => {
-  assert.equal(DEFAULT_JOURNEY_ROUTES.team, 'team-cultural-specialist-originals-1');
-  assert.equal(TEAM_LIBRARY_JOURNEY_EDITION, 'team-cultural-specialist-originals-1');
+  assert.equal(DEFAULT_JOURNEY_ROUTES.team, 'team-cultural-specialist-originals-2');
+  assert.equal(TEAM_LIBRARY_JOURNEY_EDITION, 'team-cultural-specialist-originals-2');
   const current = createCandidateTeamHost(source, {
     corePackIds: source.packs.map((pack) => pack.id),
   });
