@@ -187,12 +187,12 @@ for (const id of IDS)
         }
   });
 
-test('the new profile owns exact Next while the complete-specialist edition remains selectable', () => {
+test('the first cultural profile retains exact Next after the second profile becomes current', () => {
   assert.equal(TEAM_CULTURAL_SPECIALIST_PROFILE_KEY, 'team-cultural-specialist-originals-1');
   assert.deepEqual(DEFAULT_JOURNEY_ROUTES, {
     solo: 'whole-spatial-v25',
     versus: 'whole-spatial-v25',
-    team: TEAM_CULTURAL_SPECIALIST_PROFILE_KEY,
+    team: 'team-cultural-specialist-originals-2',
   });
   const host = createCandidateTeamHost(source, {
     corePackIds: source.packs.map(({ id }) => id),
