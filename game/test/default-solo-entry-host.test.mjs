@@ -94,12 +94,12 @@ test('ordinary Solo entry offers current and prior Journey editions plus 188 Cla
   assert.equal(p.$('shell-continue').hidden, true);
   assert.equal(p.$('shell-title-edition').textContent, 'NEW JOURNEY / 91 MISSIONS');
   assert.match(p.$('shell-destination').textContent, /Start · First return/);
-  assert.equal(new URL(p.$('shell-playground').href).search, '?journey=whole-spatial-v23');
+  assert.equal(new URL(p.$('shell-playground').href).search, '?journey=whole-spatial-v24');
   assert.equal(p.$('shell-catalogue').textContent, 'All missions');
   assert.equal(p.$('shell-catalogue').getAttribute('href'), './?journey=legacy');
   assert.equal(
     p.$('shell-title-versus').getAttribute('href'),
-    'couch/?journey=whole-spatial-v23&return=solo',
+    'couch/?journey=whole-spatial-v24&return=solo',
   );
   assert.equal(
     p.$('shell-title-team').querySelector('.game-mode-description').textContent,
@@ -111,11 +111,11 @@ test('ordinary Solo entry offers current and prior Journey editions plus 188 Cla
   );
   await missions(p);
   assert.equal(p.$('journey-collection').value, '');
-  assert.equal(p.$('journey-cards').children.length, 321);
+  assert.equal(p.$('journey-cards').children.length, 324);
   assert.equal(p.$('journey-chooser').contains(p.$('missions-catalogue')), false);
   assert.equal(collection(p, 'Classic').length, 188);
   const journeyCards = collection(p, 'Journey');
-  assert.equal(journeyCards.length, 133);
+  assert.equal(journeyCards.length, 136);
   assert.equal(
     journeyCards.filter((card) => JSON.parse(card.dataset.missionId)[1] === 'whole-spatial-v9')
       .length,
@@ -142,7 +142,7 @@ test('ordinary Solo entry offers current and prior Journey editions plus 188 Cla
     3,
   );
   assert.equal(
-    journeyCards.filter((card) => JSON.parse(card.dataset.missionId)[1] === 'whole-spatial-v23')
+    journeyCards.filter((card) => JSON.parse(card.dataset.missionId)[1] === 'whole-spatial-v24')
       .length,
     91,
   );
@@ -215,7 +215,7 @@ test('ordinary Solo entry offers current and prior Journey editions plus 188 Cla
 
 test('ordinary Solo Continue uses its current Journey bookmark without converting old records', async (t) => {
   const memory = managedIndexedDB();
-  const current = createJourneyBackend({ ...memory, profileKey: 'journey-whole-spatial-v23' });
+  const current = createJourneyBackend({ ...memory, profileKey: 'journey-whole-spatial-v24' });
   const previous = createJourneyBackend(memory);
   await previous.commit([{ type: 'select', mode: 'solo', missionId: 'official/old/mission' }]);
   const old = await previous.read();
@@ -244,7 +244,7 @@ test('Legacy is explicitly accessible and its unified selector opens an exact Ne
     assert.match(p.$(id).getAttribute('href'), /journey=legacy/);
   await missions(p, 'shell-catalogue');
   assert.equal(p.$('journey-collection').value, '');
-  assert.equal(p.$('journey-cards').children.length, 321);
+  assert.equal(p.$('journey-cards').children.length, 324);
   const card = collection(p, 'Journey').find((candidate) =>
     JSON.parse(candidate.dataset.missionId)[3].endsWith('/choose-your-share'),
   );
@@ -253,7 +253,7 @@ test('Legacy is explicitly accessible and its unified selector opens an exact Ne
   await settle(() => new URL(globalThis.location.href).searchParams.has('library-mission'));
   const target = new URL(globalThis.location.href);
   assert.equal(target.origin + target.pathname, 'http://localhost/game/');
-  assert.equal(target.searchParams.get('journey'), 'whole-spatial-v23');
+  assert.equal(target.searchParams.get('journey'), 'whole-spatial-v24');
   assert.equal(target.searchParams.get('library-mission'), card.dataset.missionId);
   assert.deepEqual(p.errors, []);
 });
@@ -296,7 +296,7 @@ test('switching from a running default Journey to Legacy has an explicit Stay or
   assert.equal(target.origin + target.pathname, 'http://localhost/game/');
   assert.equal(target.searchParams.get('journey'), 'legacy');
   assert.equal(target.searchParams.get('library-mission'), card.dataset.missionId);
-  assert(storage.getItem('revealline.suspended.journey-whole-spatial.v23'));
+  assert(storage.getItem('revealline.suspended.journey-whole-spatial.v24'));
   assert.deepEqual(p.errors, []);
 });
 
@@ -306,7 +306,7 @@ for (const search of ['?journey=', '?journey=unknown', '?mode-return=unknown'])
     assert.equal(p.doc.body.classList.contains('journey-preview'), false);
     assert.equal(p.$('shell-catalogue').textContent, 'All missions');
     await missions(p);
-    assert.equal(p.$('journey-cards').children.length, 321);
+    assert.equal(p.$('journey-cards').children.length, 324);
     assert.deepEqual(p.errors, []);
   });
 
