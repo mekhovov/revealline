@@ -9949,6 +9949,7 @@ try {
     refreshKeyPrompts();
     refreshControllerPrompts();
     refreshMissionBrief();
+    gameShell?.refreshLocale();
     refreshHUD();
     refreshCourse();
     if (!$('game-overlay').hidden) overlay($('game-overlay').dataset.kind);

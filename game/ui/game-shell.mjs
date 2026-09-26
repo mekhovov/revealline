@@ -213,20 +213,7 @@ export function attachGameShell({
       ...home.querySelectorAll('button,a,select,input,summary'),
     ].find((element) => availableReturn(element, home));
   };
-  const openHome = ({ focus = true, returnGuard = null } = {}) => {
-    if (destroyed) return;
-    if (practiceReturn) {
-      practiceReturn.click();
-      return;
-    }
-    titleModeIntent = null;
-    retireMissionsVisit();
-    const revision = missionsRevision;
-    pause(true);
-    if (destroyed || missionsRevision !== revision || returnGuard?.() === false) return;
-    if (missions.open) missions.close();
-    if (destroyed || missionsRevision !== revision || returnGuard?.() === false) return;
-    restoreMissionView();
+  const refreshHomeCopy = () => {
     const continued = !isolated && canContinue();
     $('shell-continue').hidden = !continued;
     if ($('shell-featured')) $('shell-featured').hidden = isolated || continued;
@@ -242,6 +229,22 @@ export function attachGameShell({
               })
             : titleDestination?.() || copy('title.deployDestination'),
       );
+  };
+  const openHome = ({ focus = true, returnGuard = null } = {}) => {
+    if (destroyed) return;
+    if (practiceReturn) {
+      practiceReturn.click();
+      return;
+    }
+    titleModeIntent = null;
+    retireMissionsVisit();
+    const revision = missionsRevision;
+    pause(true);
+    if (destroyed || missionsRevision !== revision || returnGuard?.() === false) return;
+    if (missions.open) missions.close();
+    if (destroyed || missionsRevision !== revision || returnGuard?.() === false) return;
+    restoreMissionView();
+    refreshHomeCopy();
     if (!home.open) {
       // A prior successful chapter selection is not the next title action.
       // Keep errors visible; fresh operation feedback still arrives normally.
@@ -465,6 +468,10 @@ export function attachGameShell({
   $('shell-play').onclick = () => openMissions({ opener: $('shell-play') });
   const featured = $('shell-featured');
   let titleAction = null;
+  const liveLabel = (labelNode) => {
+    const key = labelNode.getAttribute('data-field-kit-copy');
+    return key ? () => copy(key) : () => labelNode.textContent;
+  };
   const cancelTitle = () => {
     if (!titleAction) return;
     const { button, labelNode, label } = titleAction;
@@ -473,7 +480,7 @@ export function attachGameShell({
     button.removeAttribute('aria-disabled');
     button.removeAttribute('aria-busy');
     delete button.dataset.busy;
-    localizedText(labelNode, () => label);
+    localizedText(labelNode, label);
   };
   const titleCancel = $('shell-flight-cancel');
   const cancelTitleAndRestore = (operation) => {
@@ -508,7 +515,7 @@ export function attachGameShell({
     if (button.disabled || titleAction || destroyed || topDialog() !== home) return;
     const visit = homeVisit;
     const labelNode = button.querySelector('[data-field-kit-copy]') ?? button;
-    const operation = { button, labelNode, label: labelNode.textContent };
+    const operation = { button, labelNode, label: liveLabel(labelNode) };
     titleAction = operation;
     button.setAttribute('aria-disabled', 'true');
     button.setAttribute('aria-busy', 'true');
@@ -590,7 +597,7 @@ export function attachGameShell({
       if (featured.disabled || destroyed) return;
       const visit = homeVisit;
       const labelNode = featured.querySelector('[data-field-kit-copy]') ?? featured;
-      const label = labelNode.textContent;
+      const label = liveLabel(labelNode);
       pause(true);
       featured.disabled = true;
       localizedText(labelNode, () => copy('title.preparing'));
@@ -601,7 +608,7 @@ export function attachGameShell({
       } finally {
         if (!destroyed) {
           featured.disabled = false;
-          localizedText(labelNode, () => label);
+          localizedText(labelNode, label);
         }
       }
     };
@@ -748,6 +755,9 @@ export function attachGameShell({
     openHome,
     openMissions,
     openWorkshop,
+    refreshLocale() {
+      if (!destroyed && home.open) refreshHomeCopy();
+    },
     destroy() {
       destroyed = true;
       retireMissionsVisit();
