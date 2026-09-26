@@ -15,7 +15,7 @@ COPY --from=dependencies /srv/community/node_modules ./node_modules
 COPY services/community/package.json ./
 COPY services/community/src ./src
 COPY services/community/migrations ./migrations
-COPY game /srv/game
+COPY game /game
 RUN mkdir -p /data/blobs /data/tus /data/recovery \
   && chown -R node:node /data/blobs /data/tus /data/recovery /srv/community
 USER node
