@@ -71,6 +71,11 @@ The validation worker still receives no account or mail credential.
 The production build embeds the supplied release and source identities into the image. API,
 account migration, and preflight startup fail if the runtime identity differs, preventing an
 operator-only environment edit from relabeling an already built image.
+The worker runs on an internal database network with no external route. Its image filesystem and
+package volume are read-only; only a 128 MiB, non-executable `/tmp` is writable for bounded local
+video inspection. Compose also drops every Linux capability, forbids privilege elevation, and caps
+the worker at one CPU, 1 GiB of memory, and 64 processes. The API retains a separate edge network
+for the HTTPS proxy and outbound account mail.
 
 Copy `production.env.example` to an untracked operator-owned file, replace every placeholder, and
 start both Compose files together:
@@ -117,6 +122,10 @@ curl --fail --silent http://127.0.0.1:8787/ready
 This overlay remains a single-host deployment contract. Put a reviewed HTTPS reverse proxy in
 front of it, set `COMMUNITY_TRUST_PROXY_HOPS` to that exact topology, and keep its environment file
 outside the repository with owner-only permissions.
+Before claiming deployment acceptance, inspect the running worker to confirm its read-only mounts,
+empty capability set, no-new-privileges flag, resource ceilings, restart behavior, and lack of
+external network access. Source tests verify the Compose contract but cannot prove that a selected
+container runtime enforces it.
 
 When running outside Compose, apply the checked-in migration to a disposable local database before
 starting the API:

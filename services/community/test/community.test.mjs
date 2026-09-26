@@ -30,6 +30,7 @@ import {
 import { processNextValidationJob } from '../src/worker.mjs';
 import {
   createCreatorPackageValidator,
+  createFfprobeVideoInspector,
   decodeCreatorPng,
   readCreatorPreview,
 } from '../src/validator.mjs';
@@ -155,6 +156,59 @@ test('submission validation bounds plain text, semantic versions, hashes, and pa
         }),
       /must|contains|unsupported|between|slug|version|SHA-256/u,
     );
+});
+
+test('ffprobe validation permits only bounded local-file inspection', async () => {
+  const source = Buffer.from('bounded-video-fixture');
+  let invocation;
+  let stagedFile;
+  const inspect = createFfprobeVideoInspector({
+    ffprobePath: '/usr/local/bin/ffprobe',
+    timeoutMs: 12_345,
+    runCommand: async (command, args, options) => {
+      invocation = { command, args, options };
+      stagedFile = args.at(-1);
+      assert.deepEqual(await readFile(stagedFile), source);
+      return {
+        stdout: JSON.stringify({
+          streams: [{ codec_type: 'video', width: 640, height: 360 }],
+          format: { duration: '6.0' },
+        }),
+      };
+    },
+  });
+
+  const inspected = await inspect(new Blob([source], { type: 'video/mp4' }));
+  assert.deepEqual(invocation, {
+    command: '/usr/local/bin/ffprobe',
+    args: [
+      '-v',
+      'error',
+      '-protocol_whitelist',
+      'file',
+      '-threads',
+      '1',
+      '-probesize',
+      '5000000',
+      '-analyzeduration',
+      '5000000',
+      '-show_entries',
+      'format=duration:stream=codec_type,width,height',
+      '-of',
+      'json',
+      stagedFile,
+    ],
+    options: { timeout: 12_345, maxBuffer: 1024 * 1024 },
+  });
+  assert.deepEqual(inspected.info, {
+    sha256: createHash('sha256').update(source).digest('hex'),
+    bytes: source.length,
+    mime: 'video/mp4',
+    width: 640,
+    height: 360,
+    durationSeconds: 6,
+  });
+  await assert.rejects(readFile(stagedFile), { code: 'ENOENT' });
 });
 
 test('executable configuration refuses implicit development authentication', () => {
