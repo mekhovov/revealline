@@ -319,7 +319,6 @@ async function main() {
     await fs.readFile(process.env.GITHUB_EVENT_PATH, "utf8"),
   );
   const workflowPull = event.workflow_run?.pull_requests?.[0];
-  if (event.workflow_run && event.workflow_run.conclusion !== "success") return;
   const [owner, repository] = process.env.GITHUB_REPOSITORY.split("/");
   const observedHeadSha =
     event.pull_request?.head?.sha ||

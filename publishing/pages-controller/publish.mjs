@@ -321,6 +321,10 @@ async function main() {
     currentSite,
     outputDirectory: path.join(output, "artifact"),
     requireBrowser: !preview,
+    extractionReceipt: parseJSON(
+      await readOrdinary(output, "zip-receipt.json", 16_000_000),
+      16_000_000,
+    ),
   });
   const { configuration: _configuration, ...binding } = identity;
   await fs.writeFile(

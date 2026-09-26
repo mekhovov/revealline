@@ -34,6 +34,7 @@ permissions:
 concurrency:
   group: fastline-publisher
   cancel-in-progress: false
+  queue: max
 
 jobs:
   admission:
