@@ -229,14 +229,20 @@ test('lobby keyboard navigation reaches Race and accessibility controls while ex
     assert.equal(f.doc.activeElement.closest('.race-pad'), null);
     seen.add(f.doc.activeElement.id);
   }
-  for (const id of ['coop-level', 'coop-optional-setup-toggle', 'coop-start'])
+  for (const id of ['coop-optional-setup-toggle', 'coop-start'])
     assert.ok(seen.has(id), `Lobby Tab must reach ${id}.`);
+  assert.equal(
+    seen.has('coop-level'),
+    false,
+    'Arena selection stays out of quick-start Tab order.',
+  );
   assert.equal(seen.has('coop-experiment'), false, 'Optional Team tuning stays collapsed.');
   f.disclose('coop-optional-setup');
   for (let index = 0; index < 20; index++) {
     f.press('Tab');
     seen.add(f.doc.activeElement.id);
   }
+  assert.ok(seen.has('coop-level'), 'Opening Team options exposes legacy arena selection.');
   assert.ok(seen.has('coop-experiment'), 'Opening Team options exposes play-style tuning.');
   let left = 0;
   f.$('coop-race').onclick = () => left++;

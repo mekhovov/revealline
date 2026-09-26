@@ -756,7 +756,7 @@ export function bootCoop({
                     ? $('coop-pack-cancel')
                     : pictureOperation
                       ? pictureOperation.passive
-                        ? $('coop-level')
+                        ? $('coop-optional-setup-toggle')
                         : $('coop-picture-cancel')
                       : !run && pictureSelection?.state !== 'ready'
                         ? $('coop-picture-retry')
