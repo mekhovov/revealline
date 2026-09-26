@@ -10,6 +10,7 @@ import {
 } from '../content.mjs';
 import { unlockedBodies } from '../progress.mjs';
 import { preparePack, scenarioFromPack } from '../packs.mjs';
+import { getLocale, setLocale } from '../i18n/index.mjs';
 const themes = JSON.parse(
   readFileSync(new URL('../content/themes.json', import.meta.url), 'utf8'),
 ).themes;
@@ -319,6 +320,25 @@ test('supported provenance metadata is text only and source URL never accepts ex
   rejected(s, /HTTP/);
   s.metadata = { description: 'x'.repeat(4097) };
   rejected(s, /budget/);
+});
+test('content structure and metadata errors follow the active locale', (context) => {
+  const locale = getLocale();
+  context.after(() => setLocale(locale, { persist: false }));
+  const cyclic = scenario();
+  cyclic.level.extra = cyclic;
+
+  setLocale('uk', { persist: false });
+  assert.match(validateScenario(cyclic).errors.join(' '), /циклічних посилань/);
+  const unsafeUrl = scenario();
+  unsafeUrl.metadata = { sourceUrl: 'javascript:alert(1)' };
+  assert.match(validateScenario(unsafeUrl).errors.join(' '), /URL-адресою HTTP\(S\)/);
+  const unsupported = scenario();
+  unsupported.extra = true;
+  assert.match(validateScenario(unsupported).errors.join(' '), /scenario\.extra не підтримується/);
+
+  setLocale('en', { persist: false });
+  assert.match(validateScenario(cyclic).errors.join(' '), /must not contain a cycle/);
+  assert.match(validateScenario(unsafeUrl).errors.join(' '), /must be an HTTP\(S\) URL/);
 });
 test('real PNG plus JPEG/WebP header fixtures expose dimensions before browser allocation', () => {
   for (const [dataUrl, width, height] of [
