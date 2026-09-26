@@ -19,6 +19,7 @@ import { createBorderSignalCulturalNextBatchCandidates } from './border-signal-c
 import { createEarlyCulturalRoutesCandidates } from './early-cultural-routes-candidates.mjs';
 import { createSignalCulturalRoutesCandidates } from './signal-cultural-routes-candidates.mjs';
 import { createNeonCulturalRoutesCandidates } from './neon-cultural-routes-candidates.mjs';
+import { createNeonCulturalRoutesFinaleCandidates } from './neon-cultural-routes-finale-candidates.mjs';
 import { createUkrainianOrnamentJourney } from './ukrainian-ornament-candidates.mjs';
 import { createUkrainianOrnamentAtlasJourney } from './ukrainian-ornament-atlas.mjs';
 
@@ -48,6 +49,7 @@ export function createAuthoredJourneyRoute(id) {
     createEarlyCulturalRoutesCandidates,
     createSignalCulturalRoutesCandidates,
     createNeonCulturalRoutesCandidates,
+    createNeonCulturalRoutesFinaleCandidates,
     createUkrainianOrnamentJourney,
     createUkrainianOrnamentAtlasJourney,
   });
