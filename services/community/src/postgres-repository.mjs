@@ -106,7 +106,7 @@ export class PostgresCommunityRepository {
       );
       if (idempotencyHash) {
         await client.query(`SELECT pg_advisory_xact_lock(hashtextextended($1, 0))`, [
-          `${action}\0${subjectHash}\0${idempotencyHash}`,
+          JSON.stringify([action, subjectHash, idempotencyHash]),
         ]);
         await client.query(
           `DELETE FROM community_admission_events
