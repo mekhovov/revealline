@@ -9,25 +9,40 @@
     <link rel="manifest" href="manifest.webmanifest" />
     <link rel="apple-touch-icon" href="icon-180.png" />
     <link rel="stylesheet" href="app.css" />
+    <link rel="stylesheet" href="../i18n/style.css" />
+    <script src="../vendor/i18next-26.4.2.min.js"></script>
+    <script src="../i18n/catalogs.mjs"></script>
+    <script src="../i18n/bootstrap.mjs"></script>
     <script type="module" src="app.mjs"></script>
     <title>Reveal Line</title>
   </head>
   <body>
     <main>
       <h1>Reveal Line</h1>
-      <p id="status" role="status">Opening your installed game…</p>
+      <div data-language-control></div>
+      <noscript>
+        <p>JavaScript is required to open or manage the installed game.</p>
+        <p lang="uk">Для відкриття або керування встановленою грою потрібен JavaScript.</p>
+      </noscript>
+      <p id="status" role="status" data-i18n="interface:launcher.opening">
+        Opening your installed game…
+      </p>
       <div class="actions">
-        <a id="play" hidden>Play installed game</a><button id="install" hidden>Install app</button
-        ><button id="updates">Check for a new edition</button
-        ><button id="previous" hidden>Restore previous edition</button>
+        <a id="play" hidden data-i18n="interface:launcher.play">Play installed game</a
+        ><button id="install" hidden data-i18n="interface:launcher.install">Install app</button
+        ><button id="updates" data-i18n="interface:launcher.checkUpdates">
+          Check for a new edition</button
+        ><button id="previous" hidden data-i18n="interface:launcher.restorePrevious">
+          Restore previous edition
+        </button>
       </div>
       <p id="edition"></p>
-      <a id="prepare" hidden>Prepare offline game</a>
-      <p>
+      <a id="prepare" hidden data-i18n="interface:launcher.prepare">Prepare offline game</a>
+      <p data-i18n="interface:launcher.installHelp">
         Install from your browser’s app menu. On iPhone and iPad, use Share → Add to Home Screen. On
         macOS Safari, use File → Add to Dock. The icon and game downloads are separate.
       </p>
-      <p>
+      <p data-i18n="interface:launcher.appleHelp">
         On Apple devices, prepare downloads inside the installed app. To bring browser progress, use
         Game data’s complete backup and import controls.
       </p>
