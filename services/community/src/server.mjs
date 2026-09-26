@@ -7,6 +7,10 @@ import { createSessionAuthenticator } from './auth.mjs';
 import { createCommunityBetterAuth, mountCommunityBetterAuth } from './better-auth-runtime.mjs';
 import { DiskBlobStore } from './blob-store.mjs';
 import { readConfig } from './config.mjs';
+import {
+  createCachedDeploymentReadiness,
+  runDeploymentPreflight,
+} from './deployment-preflight.mjs';
 import { PostgresCommunityRepository } from './postgres-repository.mjs';
 import { createCommunityTusServer } from './tus-server.mjs';
 import { PostgresTusLocker, PostgresTusUploadRegistry } from './tus-coordination.mjs';
@@ -41,6 +45,13 @@ const authenticator = betterAuth
       getRoles: (session) => (config.adminSubjects.has(session.user.id) ? ['admin'] : []),
     })
   : createTokenAuthenticator(config.developmentTokens);
+const readinessCheck = createCachedDeploymentReadiness(() =>
+  runDeploymentPreflight({
+    pool,
+    blobRoot: config.blobRoot,
+    tusRoot: config.tusRoot,
+  }),
+);
 const tus = createCommunityTusServer({
   directory: config.tusRoot,
   endpoint: '/v1/uploads',
@@ -70,6 +81,7 @@ const app = buildCommunityApp({
   tus,
   admission,
   trustProxy: config.trustProxyHops ?? false,
+  readinessCheck,
   logger: true,
 });
 if (betterAuth) mountCommunityBetterAuth(app, betterAuth);

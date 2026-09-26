@@ -65,7 +65,7 @@ services:
       COMMUNITY_ACCOUNT_MAIL_TIMEOUT_MS: ${COMMUNITY_ACCOUNT_MAIL_TIMEOUT_MS:-5000}
       COMMUNITY_ADMIN_SUBJECTS: ${COMMUNITY_ADMIN_SUBJECTS:-}
     ports:
-      - '8787:8787'
+      - '127.0.0.1:8787:8787'
     volumes:
       - community-blobs:/data/blobs
       - community-tus:/data/tus
