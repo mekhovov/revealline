@@ -6,6 +6,7 @@ import test from 'node:test';
 import {
   findArchiveRoot,
   launchMusicIntake,
+  resolveForwardedInput,
   splitLauncherArguments,
 } from '../intake/add-music.mjs';
 
@@ -46,12 +47,41 @@ test('explicit archive checkout wins over automatic locations', async (t) => {
   );
 });
 
+test('invalid explicit archive checkout cannot fall back to an automatic checkout', async (t) => {
+  const automaticRoot = await fakeArchive(t);
+  await assert.rejects(
+    findArchiveRoot({
+      explicitRoot: path.join(automaticRoot, 'missing'),
+      environment: { REVEALLINE_SOUNDTRACK_ARCHIVE: automaticRoot },
+      homeDirectory: path.join(automaticRoot, 'unused-home'),
+      repositoryRoot: path.join(automaticRoot, 'unused-game'),
+    }),
+    /explicit --archive-root is not a RevealLine Soundtracks 02 checkout/,
+  );
+});
+
+test('relative music input resolves from the caller while option values remain unchanged', () => {
+  assert.deepEqual(
+    resolveForwardedInput(
+      ['music', '--source', 'https://creator.example/song', '--description', 'relative words'],
+      '/caller',
+    ),
+    [
+      '/caller/music',
+      '--source',
+      'https://creator.example/song',
+      '--description',
+      'relative words',
+    ],
+  );
+});
+
 test('launcher forwards unchanged intake arguments with the archive as cwd', async (t) => {
   const archiveRoot = await fakeArchive(t);
   let invocation;
   const code = await launchMusicIntake(
     [
-      '/music',
+      'music',
       '--archive-root',
       archiveRoot,
       '--source',
@@ -59,6 +89,7 @@ test('launcher forwards unchanged intake arguments with the archive as cwd', asy
       '--confirm-rights',
     ],
     {
+      currentDirectory: '/caller',
       run: async (command, args, options) => {
         invocation = { command, args, options };
         return 0;
@@ -69,7 +100,7 @@ test('launcher forwards unchanged intake arguments with the archive as cwd', asy
   assert.equal(invocation.command, process.execPath);
   assert.equal(invocation.options.cwd, archiveRoot);
   assert.deepEqual(invocation.args.slice(1), [
-    '/music',
+    '/caller/music',
     '--source',
     'https://creator.example/song',
     '--confirm-rights',
