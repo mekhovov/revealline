@@ -780,6 +780,7 @@ test('private folder quick add reviews, saves, plays and exports one exact-byte 
   assert.equal(saved.library.playlists[0].repeat, 'all');
   assert.equal(saved.assets.length, 1, 'duplicate aliases keep one stored recording');
   assert.deepEqual(app.calls.slice(-2), [['select', saved.library.playlists[0].id], ['play']]);
+  assert.match(app.node('collection-summary').textContent, /saved and playing/i);
 
   await app.click('export-bundle');
   await app.click('download-prepared');

@@ -4114,6 +4114,7 @@
   "soundtrack.filesImported_one": "{{count}} MP3 file verified and added to the draft. Edit details or audition, then Save all changes.",
   "soundtrack.filesImported_other": "{{count}} MP3 files verified and added to the draft. Edit details or audition, then Save all changes.",
   "soundtrack.privateCollectionReviewed": "{{title}} is ready to review: {{tracks}} tracks, {{recordings}} unique recordings. Save collection and play when it looks right.",
+  "soundtrack.privateCollectionSaved": "{{title}} is saved and playing. Use the regular playlist controls to return to it later.",
   "soundtrack.startingAudition": "Starting audition: {{track}}…",
   "soundtrack.auditioning": "Auditioning {{track}}. Finish audition returns to the previous music state.",
   "team.controllersConnected_one": "{{count}} controller connected{{hint}}",

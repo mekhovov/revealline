@@ -247,6 +247,8 @@ export function attachSoundtrackPanel({
     draft = adopt(saved.library);
     assets = [...saved.assets];
     dirty = false;
+    privateCollectionPlaylistId = null;
+    collectionSummary.textContent = '';
     render();
     setStatus(t('interface:restoredTheSavedLibraryPlaybackIsUnchanged'));
   });
@@ -698,9 +700,14 @@ export function attachSoundtrackPanel({
   const savePlayCollection = button(
     'save-play-collection',
     localizedMessage('interface:saveCollectionAndPlay'),
-    () => {
-      if (privateCollectionPlaylistId)
-        return usePlaylist(privateCollectionPlaylistId, { start: true });
+    async () => {
+      const playlist = draft.playlists.find((item) => item.id === privateCollectionPlaylistId);
+      if (!playlist) return;
+      const completed = await usePlaylist(playlist.id, { start: true });
+      if (completed && !dirty)
+        localizedText(collectionSummary, () =>
+          t('interface:soundtrack.privateCollectionSaved', { title: playlist.title }),
+        );
     },
   );
   const trackTitle = input('track-title', localizedMessage('interface:trackTitle'), {
@@ -2530,6 +2537,8 @@ export function attachSoundtrackPanel({
       draft = adopt(value.library);
       assets = [...value.assets];
       dirty = false;
+      privateCollectionPlaylistId = null;
+      collectionSummary.textContent = '';
       const warning = await notifyLibrary(value);
       setStatus(warning || t('interface:savedLibraryLoadedImportsAndEditsRemainDraftsUntilSave'));
     });
