@@ -8,6 +8,7 @@ import {
   verifiedPreviewBackground,
 } from '../content-design/assets.mjs';
 import { HORIZON_ART_CANDIDATES } from '../content-design/horizon-art.mjs';
+import { CONTENT_ARTWORK_LOAD_TIMEOUT_MS } from '../content-design/limits.mjs';
 import { createOpeningCandidates } from '../content-design/horizon-candidates.mjs';
 import { compileContentProject, resolveMission } from '../content-design/project.mjs';
 import { prepareContentPreview } from '../content-design/preview.mjs';
@@ -133,4 +134,20 @@ test('stalled artwork transport is bounded and closure cancels even an uncoopera
   });
   controller.abort();
   await assert.rejects(loading, { name: 'AbortError' });
+});
+
+test('reviewed originals have a bounded slow-device verification budget beyond the legacy deadline', async () => {
+  const media = await loadPreviewArtwork(asset, {
+    fetchAsset,
+    digest,
+    timeoutMs: 20001,
+  });
+  assert.equal(verifiedPreviewBackground(asset, media).name, asset.alt);
+  await assert.rejects(
+    loadPreviewArtwork(asset, {
+      fetchAsset: () => assert.fail('An invalid deadline must reject before fetching'),
+      timeoutMs: CONTENT_ARTWORK_LOAD_TIMEOUT_MS + 1,
+    }),
+    /timeout/,
+  );
 });
