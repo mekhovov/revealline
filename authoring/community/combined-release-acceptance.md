@@ -8,10 +8,10 @@ release claims.
 ## Candidate identity
 
 - Merged framework source: PR #465, merged 25 September 2026.
-- Rebased hardening base: `8c2b5ddbf1e145437fc3cddf6a7a9f225502f830` (`main`, after the accepted
-  `v0.132.3` selector, the Team artwork timeout adjustment and subsequent documentation updates).
+- Rebased hardening base: `00661a063b53e411a03365f9ba5a9cb675e86bc3` (`main`, after the accepted
+  `v0.132.4` selector and the bounded Fastline draft-release discovery repair).
 - Hardening checkpoint before this acceptance refresh:
-  `28558dfd1d303ea4b5c489c74ed38ac6ea7e2e54`.
+  `a49230d8b6608f2138032484d7a4c8c8c2567860`.
 - Assigned release target and working source: `v0.141.0` in PR #564. The repository release
   coordinator still has to freeze the reviewed candidate.
 
@@ -63,7 +63,7 @@ output. Its largest new source asset is the pinned, licensed Mediabunny browser 
 
 ## Integrated evidence
 
-- `npm run test:creator-feature -- --runtime-only`: **530** top-level subtests and **532/532** total
+- `npm run test:creator-feature`: **542** top-level subtests and **544/544** total
   creator/runtime tests passed. The community service suite passed **43/43** checks from the current
   rebased source. The full runtime run first exposed five sparse
   checkout omissions and three injected-host database-model conflicts; the exact owning cohorts
@@ -74,8 +74,8 @@ output. Its largest new source asset is the pinned, licensed Mediabunny browser 
   service result. The decoder-failure regression also proves its opened package stream is closed.
 - The current focused Team/shared-ledger/UI cohort passes **43/43**, including exact picture
   normalization, package/install/intake, aggregate quota pressure, abandoned-claim reconciliation,
-  storage review and immutable edition accounting. The complete exact-head creator cohort passes
-  **530** top-level subtests and **532/532** total tests after the final rebase, offload/audio slices and visible Creator
+  storage review and immutable edition accounting. The complete rebased creator cohort passes
+  **542** top-level subtests and **544/544** total tests after the unfinished middle-mission recovery addition, offload/audio slices and visible Creator
   Versus continuation fix.
 - Installed creator Versus, bundle, qualification, profile-edition and picture durability coverage
   passes **30** top-level tests and **32/32** total tests including nested host checks. The real host
@@ -215,7 +215,7 @@ injected IndexedDB failures. Deliberate browser database corruption and genuine 
 exhaustion are not claimed as end-user browser acceptance.
 
 PR #465 is merged. The hardening branch is rebased onto current protected `main` in PR #564,
-which has the repository-assigned target and source identity `v0.141.0`. The `v0.132.3` release and
-selector are accepted, and #564 is rebased onto subsequent protected `main`. Publication still
+which has the repository-assigned target and source identity `v0.141.0`. The `v0.132.4` release and
+selector are accepted, and #564 is rebased onto that protected `main`. Publication still
 requires exact-head hosted checks, review, an immutable freeze, artifact hashes, public
 online/offline verification, and a separately reviewed Pages selector update where applicable.
