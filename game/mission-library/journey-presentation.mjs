@@ -19,6 +19,7 @@ const UKRAINIAN_BORDER_SIGNAL_ROUTES_REVISION = 'border-signal-cultural-routes-1
 const UKRAINIAN_EARLY_ROUTES_REVISION = 'early-cultural-routes-1';
 const UKRAINIAN_SIGNAL_ROUTES_REVISION = 'signal-cultural-routes-1';
 const UKRAINIAN_NEON_ROUTES_REVISION = 'neon-cultural-routes-1';
+const UKRAINIAN_NEON_FINALE_ROUTES_REVISION = 'neon-cultural-routes-2';
 
 /** Text-only projection of an already resolved manifest. No engine, geometry,
  * image fetching or decoding is needed to describe a mission at its preset. */
@@ -66,6 +67,7 @@ export function authoredJourneyMissionTags(mission, manifest) {
       UKRAINIAN_EARLY_ROUTES_REVISION,
       UKRAINIAN_SIGNAL_ROUTES_REVISION,
       UKRAINIAN_NEON_ROUTES_REVISION,
+      UKRAINIAN_NEON_FINALE_ROUTES_REVISION,
     ].includes(manifest.level?.revision)
   )
     tags.push('Ukrainian');
