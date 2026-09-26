@@ -225,12 +225,15 @@ test('installed creator campaigns continue and restore their earned state in a f
     );
     assert.equal(page.renders[1].status, 'running');
     assert.equal(page.$('race-journey-next').hidden, false);
+    assert.match(page.$('race-message').textContent, /Choose Next mission/);
+    assert.match(page.$('race-start').textContent, /^Next mission:/);
 
-    const next = page.$('race-journey-next'),
+    const next = page.$('race-start'),
       nextHandler = next.onclick;
     let continuation;
     // Element.click() intentionally does not focus in this DOM fixture. This is
-    // the pointer path that regressed when the action lease was acquired first.
+    // the prominent results-screen pointer path; the separate navigation bar is
+    // hidden outside the board view in the physical browser.
     page.$('race-canvas-0').focus();
     assert.notEqual(page.doc.activeElement, next);
     next.onclick = (...args) => (continuation = nextHandler.apply(next, args));
