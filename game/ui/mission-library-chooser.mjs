@@ -367,6 +367,32 @@ export function attachMissionLibraryChooser({
     list.scrollTop = pending.scroll;
     if (target !== search) target.scrollIntoView?.({ block: 'nearest' });
   }
+  function selectExact(id, { focus = false } = {}) {
+    const row = library.find(id);
+    if (!row || !row.modes.includes(mode)) return false;
+    retirePendingSelection();
+    // Exact incoming selections belong to this host, even when its last
+    // browsing session was looking at a different mode.
+    const modeChanged = modeFilter.value !== mode;
+    modeFilter.value = mode;
+    lifecycle.value = row.lifecycle;
+    pendingCampaign = '';
+    if (modeChanged || !list.contains(cards.get(id)?.button)) {
+      search.value = '';
+      collection.value = '';
+      campaign.value = '';
+      rebuildCampaigns();
+      if (modeChanged) invalidateDiagrams();
+      render();
+    }
+    selectedId = id;
+    if (focus) {
+      cards.get(id)?.button.focus({ preventScroll: true });
+      cards.get(id)?.button.scrollIntoView?.({ block: 'nearest' });
+    }
+    remember();
+    return true;
+  }
   function selectionVisibilityChanged() {
     if (doc.hidden) {
       retirePendingSelection();
@@ -1101,7 +1127,7 @@ export function attachMissionLibraryChooser({
       render();
     }
   });
-  function revealExisting(id, targetMode = mode) {
+  function revealExisting(id, targetMode = mode, { focus = true } = {}) {
     const row = library.find(id);
     if (!row || !modes.includes(targetMode) || !row.modes.includes(targetMode)) return false;
     retirePendingSelection();
@@ -1118,8 +1144,10 @@ export function attachMissionLibraryChooser({
       render();
     }
     selectedId = id;
-    cards.get(id)?.button.focus({ preventScroll: true });
-    cards.get(id)?.button.scrollIntoView?.({ block: 'nearest' });
+    if (focus) {
+      cards.get(id)?.button.focus({ preventScroll: true });
+      cards.get(id)?.button.scrollIntoView?.({ block: 'nearest' });
+    }
     goal?.refresh();
     remember();
     return true;
@@ -1148,6 +1176,9 @@ export function attachMissionLibraryChooser({
     },
     close,
     state,
+    select(id) {
+      return revealExisting(id, mode, { focus: false });
+    },
     // Incoming launch intent keeps its existing host-mode ownership rule.
     reveal: (id) => revealExisting(id, mode),
     refresh() {
