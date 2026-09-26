@@ -43,6 +43,16 @@ test("fails closed on tag, release, or stable-channel drift", () => {
       decideReleaseObjects({
         version,
         sourceSha,
+        tagCommit: sourceSha,
+        tagType: "commit",
+      }),
+    /annotated tag/u,
+  );
+  assert.throws(
+    () =>
+      decideReleaseObjects({
+        version,
+        sourceSha,
         tagCommit: "c".repeat(40),
       }),
     /resolves to/u,
@@ -107,6 +117,11 @@ test("inspection compares the tag and draft in one fail-closed decision", async 
     if (pathname.endsWith(`/git/ref/tags/${version}`))
       return {
         ref: `refs/tags/${version}`,
+        object: { type: "tag", sha: tagObject },
+      };
+    if (pathname.endsWith(`/git/tags/${tagObject}`))
+      return {
+        sha: tagObject,
         object: { type: "commit", sha: sourceSha },
       };
     if (pathname.endsWith(`/releases/tags/${version}`))
