@@ -101,6 +101,16 @@ the same file there would leave only 7,385,930 bytes, below the retained 8 MiB
 safety reserve. Archive 02 remains undiscoverable by released game clients until
 PR #604 and a reviewed archive-directory update are public.
 
+Archive 02 intake [PR #2](https://github.com/mekhovov/revealline-soundtracks-02/pull/2)
+merged as `abf22850cca477a3c214be6d410041193e026813`; Pages
+[run 36227471951](https://github.com/mekhovov/revealline-soundtracks-02/actions/runs/36227471951)
+passed and the public guide exposes the one-file/folder command. The tool requires
+explicit rights confirmation and complete decode, preserves exact bytes and
+licence-bound metadata, generates every archive artefact, rejects duplicates and
+unsafe capacity, keeps the 1 GiB reserve, serializes writers and can open the PR.
+Six focused tests and an end-to-end real-MP3 smoke intake pass. Generated tracks
+remain listening-pending and game-unadmitted.
+
 Local free space is about **2.8 GiB**, above the required 1 GiB floor but still too
 tight for large parallel media/build work. Use hosted CI and small source/audio
 batches; preserve user changes, frozen releases and evidence.
@@ -901,8 +911,8 @@ game-unadmitted, excluded from Recording mode and absent from default playlists.
 6. **Archive scale-out:** Archive 01 carries 887,503,800 audio bytes. Archive 02 is
    now public with runner2088, 3,884,999 audio bytes and a verified player. Release
    PR #604 first, then add Archive 02 to the reviewed directory and verify aggregate
-   discovery in the public game. Intake automation and the next small Archive 02
-   batch are estimated at 1–2 working days, excluding listening and CI.
+   discovery in the public game. Intake automation is public; the next small
+   Archive 02 batch is estimated at 1–2 working days, excluding listening and CI.
 
 This plan checkpoint is reconciled through authoritative game main
 `a8a8f446dde4892c2902b2e9a1ee35c6b0adfd24`. It records archive publication and
