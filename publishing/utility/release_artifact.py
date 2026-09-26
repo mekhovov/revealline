@@ -203,6 +203,12 @@ def recoverable_fastline_inspection_failure(run, jobs, source):
                 job.get('conclusion') in ('success', 'skipped', 'failure') for job in jobs))
 
 
+def current_fastline_inspection(run, expected):
+    """Allow the inspection job to read the artifact produced by its own active run."""
+    return (run.get('path') == FASTLINE_WORKFLOW and run.get('status') == 'in_progress' and
+            run.get('conclusion') is None and os.environ.get('GITHUB_RUN_ID') == str(expected['runId']))
+
+
 def artifact_authority(api, binding, policy_body=None):
     repo, expected = binding['repository'], binding['artifact']
     item = api.get(f'/repos/{repo}/actions/artifacts/{expected["id"]}')
@@ -214,9 +220,11 @@ def artifact_authority(api, binding, policy_body=None):
             item.get('workflow_run', {}).get('id') == expected['runId'] and
             item.get('workflow_run', {}).get('head_sha') == binding['source']['commit'], 'Artifact authority differs')
     run = api.get(f'/repos/{repo}/actions/runs/{expected["runId"]}')
+    current_inspection = current_fastline_inspection(run, expected)
     require(run.get('id') == expected['runId'] and run.get('event') == 'workflow_dispatch' and
             run.get('path') in QUALIFICATION_WORKFLOWS and run.get('head_sha') == binding['source']['commit'] and
-            run.get('status') == 'completed', 'Original manual source/freeze run identity differs')
+            (run.get('status') == 'completed' or current_inspection),
+            'Original manual source/freeze run identity differs')
     jobs = []
     for page in range(1, 11):
         response = api.get(f'/repos/{repo}/actions/runs/{expected["runId"]}/jobs?per_page=100&page={page}')
@@ -227,7 +235,7 @@ def artifact_authority(api, binding, policy_body=None):
             break
     else:
         raise ValueError('Jobs exceed pagination bound')
-    require(run.get('conclusion') == 'success' or
+    require(current_inspection or run.get('conclusion') == 'success' or
             recoverable_fastline_inspection_failure(run, jobs, binding['source']['commit']),
             'Original manual source/freeze run is not completed successfully')
     waived = policy_body is not None and test_policy(policy_body)['mode'] == 'waived'
