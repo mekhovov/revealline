@@ -5,7 +5,7 @@ import { PNGImage } from './helpers/png-image.mjs';
 import { soloPage, settle, memoryStorage } from './helpers/solo-dom.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
 import { editionProviderFixture } from './helpers/edition-provider-fixture.mjs';
-import { resolveMission } from '../content-design/project.mjs';
+import { compileContentProject, resolveMission } from '../content-design/project.mjs';
 import { applyGameplayTuning, resolveGameplayTuning } from '../gameplay-tuning.mjs';
 import { createRun } from '../core/index.mjs';
 import { companySimulationIdentity } from '../company-session.mjs';
@@ -153,6 +153,52 @@ test('edition Continue preserves a matching receipt and rejects a same-ID change
       assert.equal(storage.getItem(key), raw);
       assert.equal(page.$('shell-home').open, true);
     });
+});
+
+test('edition pause keeps canonical Skip confirmation and Watch first cut actions reachable', async (t) => {
+  const f = await editionProviderFixture();
+  const second = {
+    ...structuredClone(f.source.missions[0]),
+    id: 'farther-shore',
+    name: 'Farther shore',
+  };
+  f.source.missions.push(second);
+  f.source.campaigns[0].missionIds.push(second.id);
+  const project = compileContentProject(f.source);
+  f.data.campaign.levels.push(resolveMission(project, second.id).level);
+  const page = await soloPage(t, {
+    search: '?edition=sample-public',
+    titleScreen: true,
+    journeyIndexedDB: managedIndexedDB().indexedDB,
+    fetchResponse: f.fetcher,
+  });
+  const actions = page.$('game-overlay').querySelector('.overlay-actions');
+  assert.equal(page.$('journey-skip').parentElement, actions);
+  assert.equal(page.$('demo-button').parentElement, actions);
+  page.$('shell-featured').click();
+  await settle(() => page.doc.body.dataset.flightState === 'running');
+  page.frame(0);
+  const first = page.rendered.run;
+  page.$('pause-button').click();
+  assert.equal(page.$('game-overlay').hidden, false);
+  assert.equal(page.$('journey-skip').hidden, false);
+  page.$('journey-skip').click();
+  assert.match(page.$('journey-skip').textContent, /Confirm skip/i);
+  assert.equal(page.rendered.run, first, 'The first activation only asks for confirmation.');
+  page.$('journey-skip').click();
+  await settle(() => {
+    page.frame(0);
+    return page.rendered.run.levelId === second.id;
+  });
+  page.$('pause-button').click();
+  assert.equal(page.$('game-overlay').hidden, false);
+  assert.equal(page.$('demo-button').hidden, false);
+  page.$('demo-button').click();
+  await settle(() => page.doc.body.dataset.flightState === 'running');
+  page.frame(0);
+  assert.equal(page.rendered.run.levelId, f.project.missions[0].id);
+  assert.match(page.$('run-message').textContent, /Demonstration.*no.*(award|reward)/i);
+  assert.deepEqual(page.errors, []);
 });
 
 test('edition First Flight uses shared course rules and returns to its own company', async (t) => {

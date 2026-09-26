@@ -472,16 +472,39 @@ export async function compileEdition({
           /[&<>"']/g,
           (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[char],
         );
-      const textSlot = (tag, id, value) => {
+      const withoutCopyKey = (tag) => tag.replace(/\sdata-i18n="[^"]*"/g, '');
+      const textSlot = (tag, id, value, fixedIdentity = false) => {
         html = html.replace(
           new RegExp(`(<${tag}\\b[^>]*\\bid="${id}"[^>]*>)[\\s\\S]*?(</${tag}>)`),
-          (_match, start, end) => `${start}${escape(value)}${end}`,
+          (_match, start, end) =>
+            `${fixedIdentity ? withoutCopyKey(start) : start}${escape(value)}${end}`,
         );
       };
       html = html.replace(
-        /<title>[\s\S]*?<\/title>/,
+        /<title\b[^>]*>[\s\S]*?<\/title>/,
         () => `<title>${escape(edition.name)} · ${escape(brand.name)}</title>`,
       );
+      // A compiled audience has its identity before any script or stylesheet
+      // downloads. Keep loader/status/recovery hooks intact; only the static
+      // identity loses the default game's copy key, so locale refresh cannot
+      // replace it. Runtime failures still supply their translated heading.
+      textSlot('h1', 'boot-title', edition.name, true);
+      const logo = runtimeCatalog.assets.find((item) => item.id === brand.logoAssetId);
+      const brandMark = `${logo ? `<img class="edition-boot-logo" src="${rootPrefix}${logo.path}" alt="" /> ` : ''}${escape(brand.name)}`;
+      html = html.replace(
+        /(<p\b[^>]*class="launch-kicker"[^>]*>)[\s\S]*?(<\/p>)/,
+        (_match, start, end) => `${withoutCopyKey(start)}${brandMark}${end}`,
+      );
+      if (EDITION_RUNTIME_PAGES.includes(entry)) {
+        html = html.replace(
+          /(<a\b[^>]*data-i18n="interface:revealLine"[^>]*>)[\s\S]*?(<\/a>)/,
+          (_match, start, end) => `${withoutCopyKey(start)}${brandMark}${end}`,
+        );
+        html = html.replace(
+          /(<span\b[^>]*data-i18n="interface:revealLineReplayTheater"[^>]*>)[\s\S]*?(<\/span>)/,
+          (_match, start, end) => `${withoutCopyKey(start)}${brandMark}${end}`,
+        );
+      }
       textSlot('span', 'brand-name', brand.name);
       textSlot('h1', 'home-title', edition.name);
       textSlot('p', 'brand-description', brand.description);
@@ -507,7 +530,16 @@ export async function compileEdition({
         const safe = Object.fromEntries(palette);
         html = html.replace(
           '</head>',
-          `<style>:root{${palette.map(([key, color]) => `--${key}:${color}`).join(';')};--panel:${safe.grid ?? '#193866'}}</style></head>`,
+          `<style>:root{${palette.map(([key, color]) => `--${key}:${color}`).join(';')};--panel:${safe.grid ?? '#193866'}}
+html[data-edition-id] body{--fk-bg:var(--ink);--fk-panel:var(--field,var(--ink));--fk-text:var(--paper);--fk-muted:var(--muted,var(--paper));--fk-cyan:var(--accent);--fk-line:var(--grid);--fk-font-ui:var(--brand-font,system-ui,sans-serif);--fk-font-display:var(--brand-font,system-ui,sans-serif)}
+html[data-edition-id][data-boot-state]:not([data-boot-state="ready"]),html[data-edition-id][data-boot-state]:not([data-boot-state="ready"]) body{background:var(--ink);color:var(--paper)}
+html[data-edition-id] #boot-screen{background:var(--ink);color:var(--paper);font-family:var(--brand-font,system-ui,sans-serif)}
+html[data-edition-id] #boot-screen .launch-card{background:var(--field,var(--ink));border-color:var(--grid)}
+html[data-edition-id] #boot-screen h1{color:var(--paper);font-family:var(--brand-font,system-ui,sans-serif)}
+html[data-edition-id] #boot-screen .launch-kicker,html[data-edition-id] #boot-screen a{color:var(--accent)}
+html[data-edition-id] #boot-screen .launch-signal i{background:var(--accent)}
+html[data-edition-id] .edition-boot-logo{display:inline-block;width:auto;height:3rem;max-width:9rem;object-fit:contain;vertical-align:middle}
+</style></head>`,
         );
         html = html.replace(
           /(<meta\s+name="theme-color"\s+content=")[^"]*(")/,
