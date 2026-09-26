@@ -191,7 +191,9 @@ def source_jobs_check(jobs, source, waived=False):
 def artifact_authority(api, binding, policy_body=None):
     repo, expected = binding['repository'], binding['artifact']
     item = api.get(f'/repos/{repo}/actions/artifacts/{expected["id"]}')
-    require(item.get('id') == expected['id'] and item.get('name') == 'qualified-release-snapshot' and
+    allowed_names = {'qualified-release-snapshot',
+                     f'qualified-release-{binding["source"]["version"]}-{binding["source"]["commit"]}'}
+    require(item.get('id') == expected['id'] and item.get('name') in allowed_names and
             item.get('expired') is False and item.get('size_in_bytes') == expected['bytes'] and
             item.get('digest') == 'sha256:' + expected['sha256'] and
             item.get('workflow_run', {}).get('id') == expected['runId'] and
