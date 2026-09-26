@@ -1,6 +1,6 @@
 # UX1-B compact mission gallery — v0.133.0
 
-This v0.133.0 candidate is reconciled onto the v0.132.3 player-input candidate, which is based on the accepted v0.132.2 product source and presentation revision 88. It keeps the complete mode-compatible mission catalogue visible while reducing the work needed to find and start a mission. It advances the candidate identity to v0.133.0 without changing publishing, release history, progression identity, simulation rules, or the underlying pack formats.
+This v0.133.0 candidate is reconciled onto the merged v0.132.3 player-input source at `5de31970401b9659c1ffacadbaf469c6dacf845d` and presentation revision 88. It keeps the complete mode-compatible mission catalogue visible while reducing the work needed to find and start a mission. It advances the candidate identity to v0.133.0 without changing publishing, release history, progression identity, simulation rules, or the underlying pack formats.
 
 ## Player contract
 
@@ -17,7 +17,7 @@ This v0.133.0 candidate is reconciled onto the v0.132.3 player-input candidate, 
 
 ## Responsive layout
 
-The compact gallery uses two columns on ordinary phones and short landscape, three on tablets, four on compact desktops, and up to six on wide displays. Large-text and viewport rules can reduce columns. The mission card remains the stable focusable element while its preview and status update.
+The compact gallery uses two columns on ordinary phones, three columns at 601–899 CSS pixels including short-landscape viewports, four on compact desktops, and up to six on wide displays. Large-text and viewport rules can reduce columns. The mission card remains the stable focusable element while its preview and status update.
 
 ## Focused evidence
 
@@ -38,8 +38,10 @@ The candidate adds or updates focused coverage for:
 - the v0.132.3 candidate's Solo inventory and handoff expectations retain 285 compatible identities and the exact `whole-spatial-v11` route.
 - the v0.132.3 candidate's Team inventory, refresh, cancellation, and recovery expectations retain 288 compatible identities.
 - Team picture-binding and imported-map compatibility coverage continues to require the exact current presentation while preserving retained-history recovery.
-- gallery-focused cross-mode tests: 152/152 against presentation revision 88; controller gallery navigation: 8/8; device controls: 15/15; featured campaign switching: 5/5.
+- gallery-focused cross-mode tests: 154/154 against presentation revision 88; controller gallery navigation: 8/8; device controls: 15/15; featured campaign switching: 5/5.
+- a fresh ordinary build produced 1,299 files with manifest SHA-256 `f17fe37a03c8ad522a731c781f67f29083ffa7923adcb067a5b17fa0192e90a0`.
+- local browser review verified the compact four-column desktop gallery, image-led cards, campaign rail, horizontal and vertical keyboard movement, Escape return, and an in-place English-to-Ukrainian refresh with localized campaign titles and actions.
 
 ## Evidence limits
 
-This is a release candidate, not a public release. Browser screenshots, physical touch hardware, and a physical controller are not qualified here. The repository's committed temporary fast-release policy waives the long automated suites; it does not turn them into passing evidence. Focused current-source checks qualify the changed gallery and controller paths. Accepted Team binding corrections remain in the v0.132.2 base without weakening retained-history checks. The candidate does not redesign mission Details, results, Pause, HUD, Collection records, or gameplay teaching; those remain in UX2-UX5.
+This is a release candidate, not a public release. The browser check is desktop interaction evidence, not physical touch hardware or physical-controller qualification. The repository's committed temporary fast-release policy waives the long automated suites; it does not turn them into passing evidence. Focused current-source checks qualify the changed gallery and controller paths. Accepted Team binding corrections remain in the v0.132.3 predecessor without weakening retained-history checks. The candidate does not redesign mission Details, results, Pause, HUD, Collection records, or gameplay teaching; those remain in UX2-UX5.
