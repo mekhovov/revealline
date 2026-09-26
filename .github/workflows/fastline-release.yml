@@ -214,6 +214,9 @@ jobs:
       freeze_snapshot: true
       run_tests: false
       force_snapshot: true
+      # The first manifest writer is version-bound so later releases must make
+      # another reviewed choice instead of inheriting the canary implicitly.
+      source_format: ${{ inputs.version == 'v0.141.6' && 'manifest' || 'tar' }}
 
   inspect-artifact:
     if: inputs.mode == 'publish' && needs.admission.outputs.origin_run == ''

@@ -21,9 +21,10 @@ artwork. The complete acceptance record is in
 
 **Completed release infrastructure:** PR #692 merged exact draft recovery, PR #658 merged source/metadata-bound admission, and PR #659 merged the five-release global selector. Pages run `36261378630` passed assembly, deployment and public-byte audit. The public explorer now presents exactly five playable releases while preserving every historical tag, release, asset and archive. These infrastructure changes do not alter frozen game bytes.
 
-**Active candidate:** v0.141.6 introduces dual readers and an opt-in deterministic
-commit-plus-manifest source-preservation path while leaving the accepted tar
-writer as the production default. PR #689 is the prerequisite test-fixture
+**Active candidate:** v0.141.6 introduces dual readers and freezes its new
+fastline release with the deterministic commit-plus-manifest source-preservation
+path. Direct qualification retains the accepted tar default unless a reviewed
+caller explicitly selects the manifest writer. PR #689 is the prerequisite test-fixture
 correction and is retained as a separate commit in PR #662 after repeated
 mainline movement made another standalone gate stale. The cumulative source must
 pass one fresh exact-head focused gate and complete the immutable

@@ -1,8 +1,10 @@
-# Source preservation migration (opt-in, not production-enabled)
+# Source preservation migration and first canary
 
 The accepted v0.141.5 publisher retains the legacy contract. The v0.141.6
-candidate introduces dual readers before a future manifest-format canary; it does
-not restart, retag, replace assets, or change the default qualification writer.
+candidate introduces dual readers and uses the manifest format for its new
+fastline snapshot. It does not restart, retag, or replace existing releases.
+Direct qualification keeps the tar default unless its reviewed caller explicitly
+selects the manifest format.
 
 ## Contracts
 
@@ -21,7 +23,7 @@ not restart, retag, replace assets, or change the default qualification writer.
   Commit-plus-manifest preservation still depends on the repository retaining
   its immutable Git objects; it is not a separate offline source backup.
 
-## Opt-in shadow command
+## Explicit writer selection
 
 After the consumers are reviewed, use an isolated, clean, full checkout of the
 completed release's exact commit. One publisher owns this resource-intensive
@@ -32,9 +34,10 @@ do not execute an unreviewed branch with publication credentials.
 node scripts/game-cli.mjs release-snapshot --ref FULL_COMMIT --version vX.Y.Z --source-format manifest
 ```
 
-The default remains `--source-format tar`. A manifest snapshot rejects a dirty
-or different-commit checkout. The production qualification workflow deliberately
-does not pass the new flag yet. Independent inspection reads either contract;
+The CLI and direct qualification default remain `--source-format tar`. A manifest
+snapshot rejects a dirty or different-commit checkout. The v0.141.6 fastline
+caller explicitly passes `source_format: manifest`; later releases must make the
+same reviewed choice rather than inheriting it accidentally. Independent inspection reads either contract;
 evidence assembly, Pages metadata validation, normal publication and guarded
 emergency uploads also accept either. Missing, mixed, duplicate, or mismatched
 assets fail closed. Matching uploaded originals are retained on resume.
@@ -51,8 +54,8 @@ assets fail closed. Matching uploaded originals are retained on resume.
 4. Exercise fault recovery at qualification, inspection, evidence, tag/draft,
    each asset upload, publication, archive admission, selector and deployment.
    Unit-tested asset-boundary recovery is not whole-chain recovery evidence.
-5. In a reviewed follow-up, enable the explicit manifest writer only for a new
-   canary version; do not rewrite a historical or already-frozen release.
+5. Freeze v0.141.6 once with the explicit manifest writer; do not rewrite a
+   historical or already-frozen release.
 6. Keep archive admission, exact public-byte audit and bounded EN/UK Solo,
    Versus and Team journeys blocking. Record timings and bytes transferred.
 7. Evaluate the performance targets after two successful public canaries.
