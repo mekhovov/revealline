@@ -1,6 +1,6 @@
 # Phase 0 verification — 24 September 2026
 
-Status: **source and scoped native verification complete; PR/release/public acceptance pending**. Phases 1–8 remain unimplemented. This record does not claim a new release or a full desktop/mobile browser matrix.
+Status: **historical Phase 0 source and scoped native verification record**. Later creator phases are implemented in the consolidated candidate; use the [combined acceptance record](combined-release-acceptance.md) and [delivery register](delivery-plan.md) for current capability and release status. This record does not retroactively claim a Phase 0 release or a full desktop/mobile browser matrix.
 
 ## Candidate
 
@@ -39,4 +39,4 @@ The compatibility player's installed-card Play path was exercised. A separate ch
 
 ## Release acceptance still required
 
-Record the final PR/source SHA, current hosted gates, allocated immutable release, original artifact hashes, publication run and deployed browser checks here or in a linked immutable receipt. Check the guide and both download URLs in the actual released artifact. Complete Chromium, Firefox and Safari acceptance where available; retain unavailable engines explicitly. No `.rlpack`, automatic generation, modern Custom campaign integration or community publication capability is claimed by this phase.
+At this historical Phase 0 boundary, the remaining work was to record the final PR/source SHA, hosted gates, immutable release, artifact hashes, publication run and deployed browser checks. The later combined record now owns those cross-phase gates. This Phase 0 evidence still does not by itself claim `.rlpack`, automatic generation, modern Custom campaign integration or community publication capability.
