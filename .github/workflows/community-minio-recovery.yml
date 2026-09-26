@@ -1,0 +1,68 @@
+name: Community MinIO recovery
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - '.github/workflows/community-minio-recovery.yml'
+      - 'services/community/compose.minio-acceptance.yaml'
+      - 'services/community/Dockerfile'
+      - 'services/community/Dockerfile.minio-acceptance'
+      - 'services/community/migrations/**'
+      - 'services/community/package.json'
+      - 'services/community/package-lock.json'
+      - 'services/community/src/blob-store*.mjs'
+      - 'services/community/src/config.mjs'
+      - 'services/community/src/minio-recovery-acceptance-runner.mjs'
+      - 'services/community/src/recovery*.mjs'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: community-minio-recovery-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  minio-recovery:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Run isolated MinIO recovery acceptance
+        working-directory: services/community
+        run: >-
+          docker compose -f compose.minio-acceptance.yaml up --build
+          --abort-on-container-exit --exit-code-from minio-recovery-acceptance
+          minio-recovery-acceptance
+
+      - name: Collect redacted receipt
+        if: success()
+        working-directory: services/community
+        run: |
+          mkdir -p minio-recovery-evidence
+          docker compose -f compose.minio-acceptance.yaml \
+            cp minio-recovery-acceptance:/data/recovery/. minio-recovery-evidence
+
+      - name: Upload redacted receipt
+        if: success()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: community-minio-recovery-receipt
+          path: services/community/minio-recovery-evidence/*.json
+          if-no-files-found: error
+          retention-days: 14
+
+      - name: Show acceptance service logs on failure
+        if: failure()
+        working-directory: services/community
+        run: >-
+          docker compose -f compose.minio-acceptance.yaml logs --no-color
+          recovery-database-init minio minio-recovery-acceptance
+
+      - name: Remove acceptance containers and volumes
+        if: always()
+        working-directory: services/community
+        run: docker compose -f compose.minio-acceptance.yaml down --volumes --remove-orphans

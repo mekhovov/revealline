@@ -15,6 +15,7 @@
     "deployment:preflight": "node src/deployment-preflight-runner.mjs",
     "recovery": "node src/recovery-runner.mjs",
     "recovery:rehearse": "node src/recovery-rehearsal-runner.mjs",
+    "acceptance:minio-recovery": "node src/minio-recovery-acceptance-runner.mjs",
     "acceptance:tus-resume": "node scripts/tus-resume-acceptance.mjs",
     "acceptance:tus-deployed": "node src/deployed-tus-resume-runner.mjs",
     "acceptance:deployed": "node src/deployed-journey-runner.mjs",

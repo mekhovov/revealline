@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
-import { mkdtemp, readdir, rm } from 'node:fs/promises';
+import { mkdir, mkdtemp, readdir, rm, writeFile } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
@@ -26,6 +26,29 @@ test('blob storage factory selects disk without loading the S3 SDK', async () =>
   );
   assert.ok(store instanceof DiskBlobStore);
   assert.equal(loaded, false);
+});
+
+test('disk package listing returns more than one bounded page without duplicates', async (t) => {
+  const root = await mkdtemp(path.join(os.tmpdir(), 'revealline-disk-list-'));
+  t.after(() => rm(root, { recursive: true, force: true }));
+  const shard = path.join(root, 'packages', 'sha256', 'aa');
+  await mkdir(shard, { recursive: true });
+  const names = Array.from(
+    { length: 1_001 },
+    (_, index) => `aa${index.toString(16).padStart(62, '0')}.rlpack`,
+  );
+  await Promise.all(names.map((name) => writeFile(path.join(shard, name), 'x')));
+  const store = new DiskBlobStore({ root });
+  const first = await store.list({ prefix: 'packages/sha256/', limit: 1_000 });
+  const second = await store.list({
+    prefix: 'packages/sha256/',
+    cursor: first.cursor,
+    limit: 1_000,
+  });
+  assert.equal(first.items.length, 1_000);
+  assert.equal(second.items.length, 1);
+  assert.equal(new Set([...first.items, ...second.items].map(({ key }) => key)).size, 1_001);
+  assert.equal(second.cursor, null);
 });
 
 test('blob storage factory builds an executable S3 store from exact configuration', async () => {
@@ -54,6 +77,7 @@ test('blob storage factory builds an executable S3 store from exact configuratio
         PutObjectCommand: FakeCommand,
         HeadObjectCommand: FakeCommand,
         GetObjectCommand: FakeCommand,
+        ListObjectsV2Command: FakeCommand,
       }),
     },
   );
@@ -91,6 +115,7 @@ test('S3 publication verifies streamed bytes before publishing and removes stagi
     put: (input) => ({ operation: 'put', input }),
     head: (input) => ({ operation: 'head', input }),
     get: (input) => ({ operation: 'get', input }),
+    list: (input) => ({ operation: 'list', input }),
   };
   const store = new S3CompatibleBlobStore({
     client,
@@ -138,6 +163,7 @@ test('S3 publication rejects a mismatched stream without sending or retaining by
       put: (input) => input,
       head: (input) => input,
       get: (input) => input,
+      list: (input) => input,
     },
   });
   await assert.rejects(
@@ -184,6 +210,7 @@ test('S3 publication retries a conditional conflict with a fresh closed stream',
       put: (input) => ({ operation: 'put', input }),
       head: (input) => ({ operation: 'head', input }),
       get: (input) => ({ operation: 'get', input }),
+      list: (input) => ({ operation: 'list', input }),
     },
   });
   const result = await store.putVerified({
@@ -227,6 +254,7 @@ test('S3 publication verifies exact metadata when a conflict retry reaches preco
       put: (input) => ({ operation: 'put', input }),
       head: (input) => ({ operation: 'head', input }),
       get: (input) => ({ operation: 'get', input }),
+      list: (input) => ({ operation: 'list', input }),
     },
   });
   const result = await store.putVerified({
@@ -265,6 +293,7 @@ test('S3 publication bounds repeated conditional-conflict retries', async (t) =>
       put: (input) => ({ operation: 'put', input }),
       head: (input) => ({ operation: 'head', input }),
       get: (input) => ({ operation: 'get', input }),
+      list: (input) => ({ operation: 'list', input }),
     },
   });
   await assert.rejects(
@@ -306,6 +335,7 @@ test('S3 publication reuses only an exact immutable object after precondition fa
       put: (input) => ({ operation: 'put', input }),
       head: (input) => ({ operation: 'head', input }),
       get: (input) => ({ operation: 'get', input }),
+      list: (input) => ({ operation: 'list', input }),
     },
   });
   const input = {
@@ -319,4 +349,75 @@ test('S3 publication reuses only an exact immutable object after precondition fa
   existing = { ContentLength: source.length, Metadata: { sha256: '0'.repeat(64) } };
   await assert.rejects(store.putVerified(input), /Immutable blob collision/u);
   assert.deepEqual(await readdir(stagingRoot), []);
+});
+
+test('S3 package listing is bounded and follows opaque continuation tokens', async (t) => {
+  const stagingRoot = await mkdtemp(path.join(os.tmpdir(), 'revealline-s3-list-'));
+  t.after(() => rm(stagingRoot, { recursive: true, force: true }));
+  const requests = [];
+  const client = {
+    async send(command) {
+      requests.push(command.input);
+      if (!command.input.ContinuationToken)
+        return {
+          Contents: [{ Key: `packages/sha256/aa/${'a'.repeat(64)}.rlpack`, Size: 21 }],
+          IsTruncated: true,
+          NextContinuationToken: 'opaque+/=token',
+        };
+      return {
+        Contents: [{ Key: `packages/sha256/bb/${'b'.repeat(64)}.rlpack`, Size: 34 }],
+        IsTruncated: false,
+      };
+    },
+  };
+  const store = new S3CompatibleBlobStore({
+    client,
+    bucket: 'creator-packages',
+    stagingRoot,
+    commands: {
+      put: (input) => ({ operation: 'put', input }),
+      head: (input) => ({ operation: 'head', input }),
+      get: (input) => ({ operation: 'get', input }),
+      list: (input) => ({ operation: 'list', input }),
+    },
+  });
+  const first = await store.list({ prefix: 'packages/sha256/', limit: 1 });
+  const second = await store.list({ prefix: 'packages/sha256/', cursor: first.cursor, limit: 1 });
+  assert.equal(first.items[0].size, 21);
+  assert.equal(first.cursor, 'opaque+/=token');
+  assert.equal(second.items[0].size, 34);
+  assert.equal(second.cursor, null);
+  assert.deepEqual(requests, [
+    { Bucket: 'creator-packages', Prefix: 'packages/sha256/', MaxKeys: 1 },
+    {
+      Bucket: 'creator-packages',
+      Prefix: 'packages/sha256/',
+      MaxKeys: 1,
+      ContinuationToken: 'opaque+/=token',
+    },
+  ]);
+});
+
+test('S3 package listing rejects a truncated response without a continuation token', async (t) => {
+  const stagingRoot = await mkdtemp(path.join(os.tmpdir(), 'revealline-s3-list-invalid-'));
+  t.after(() => rm(stagingRoot, { recursive: true, force: true }));
+  const store = new S3CompatibleBlobStore({
+    client: {
+      async send() {
+        return { Contents: [], IsTruncated: true };
+      },
+    },
+    bucket: 'creator-packages',
+    stagingRoot,
+    commands: {
+      put: (input) => input,
+      head: (input) => input,
+      get: (input) => input,
+      list: (input) => input,
+    },
+  });
+  await assert.rejects(
+    store.list({ prefix: 'packages/sha256/', limit: 1000 }),
+    /continuation token/u,
+  );
 });
