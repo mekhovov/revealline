@@ -26,6 +26,7 @@ import { createPhaseworksCulturalRoutesCandidates } from './phaseworks-cultural-
 import { createLivewireCulturalRoutesCandidates } from './livewire-cultural-routes-candidates.mjs';
 import { createRelayCulturalRoutesCandidates } from './relay-cultural-routes-candidates.mjs';
 import { createCrosswindCulturalRoutesCandidates } from './crosswind-cultural-routes-candidates.mjs';
+import { createSentinelCulturalRoutesCandidates } from './sentinel-cultural-routes-candidates.mjs';
 import { createUkrainianOrnamentJourney } from './ukrainian-ornament-candidates.mjs';
 import { createUkrainianOrnamentAtlasJourney } from './ukrainian-ornament-atlas.mjs';
 
@@ -62,6 +63,7 @@ export function createAuthoredJourneyRoute(id) {
     createLivewireCulturalRoutesCandidates,
     createRelayCulturalRoutesCandidates,
     createCrosswindCulturalRoutesCandidates,
+    createSentinelCulturalRoutesCandidates,
     createUkrainianOrnamentJourney,
     createUkrainianOrnamentAtlasJourney,
   });
