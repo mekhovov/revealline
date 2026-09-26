@@ -32,7 +32,7 @@ tooling; it does not establish that a public service is currently deployed.
 
 Serve the static game, Studio and API on the intended same origin. Before enabling public uploads,
 configure PostgreSQL migrations, Better Auth secret/base URL/trusted origins, email verification and
-password reset delivery, tus staging and shared locks, immutable disk or S3 storage, isolated media
+password reset delivery, tus storage and shared locks, immutable disk or S3 storage, isolated media
 inspection, trusted-proxy and connection limits, TLS/domain, monitoring and off-host backups.
 
 Production acceptance requires evidence from the deployed topology:
@@ -49,6 +49,12 @@ Production acceptance requires evidence from the deployed topology:
 The in-process and fake-client suites verify application contracts, but they do not replace these
 PostgreSQL, proxy, object-storage, mail and restore rehearsals. GitHub Pages can ship the static
 client; it cannot run Fastify, PostgreSQL or the validation worker.
+
+The disk deployment remains the checked-in Compose default. Selecting
+`COMMUNITY_BLOB_STORAGE=s3` switches both immutable packages and maintained tus resumable storage
+to the configured private bucket and requires the executable S3 readiness probe to pass. Keep the
+local package-verification staging directory private and bounded. Do not claim S3 or AWS acceptance
+until the S3-aware restore rehearsal, MinIO journey and credentialed private-bucket smoke gate pass.
 
 ## One combined framework release
 
