@@ -1,0 +1,46 @@
+{
+  "format": "revealline-archive-browser-admission.v1",
+  "status": "PASS",
+  "archiveId": "archive-92",
+  "infrastructureCommit": "d15342bcaf6d26819567b283780b4445bc94f2ea",
+  "deploymentId": 6676957665,
+  "deploymentStatusId": 18870973069,
+  "versions": [
+    "v0.132.3"
+  ],
+  "surface": "Codex built-in browser",
+  "sequence": [
+    "Opened the Archive92 index and observed the original v0.132.3 preservation label and Play v0.132.3 route.",
+    "Opened the preserved route and observed the RevealLine game shell for the archived v0.132.3 build."
+  ],
+  "observed": {
+    "archiveDocumentTitle": "RevealLine archive 92",
+    "archiveHeading": "RevealLine archive 92",
+    "archiveReleaseLabel": "The original v0.132.3 build, preserved for comparison and historical play.",
+    "gameShellLoaded": true,
+    "gameShellControls": [
+      "Solo",
+      "Versus",
+      "Team",
+      "Missions",
+      "Collection",
+      "Settings",
+      "More"
+    ],
+    "reloads": 0,
+    "retries": 0
+  },
+  "scope": "Historical online preservation: complete exact-byte public audit plus a fresh bounded archive index and archived game-shell check.",
+  "limitations": [
+    "Long source suites remained waived under the temporary fast-release policy and are not reported as passed.",
+    "The browser console was not independently inspected during this bounded archive journey.",
+    "No renewed physical touch/controller, comprehensive offline, or extended gameplay acceptance is claimed.",
+    "This admission preserves v0.132.3; v0.132.4 is the separate immutable release selected by this controller change."
+  ],
+  "evidence": [
+    {
+      "path": "evidence/archive-92-v01323/public-acceptance.json",
+      "sha256": "0ad5a69de8737526b9707b6e20ba44dc97cd4039b99ff7bc19443bc8345de9a6"
+    }
+  ]
+}
