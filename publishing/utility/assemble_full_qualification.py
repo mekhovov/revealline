@@ -382,7 +382,8 @@ def assemble(config, output):
     descriptors = large + [asset(n, body) for n, body in sorted(small.items())]
     require(len(small) == 7 and len(descriptors) == 9, 'Seven/nine attachment closure differs')
     context = {'source': source, 'artifact': artifact, 'release': {'assets': descriptors}}
-    checked = common.exact_consumer(repo, source, context, small, verify, policy_body, output.parent)
+    helpers = common.consumer_helpers(repo, source['commit'])
+    checked = common.exact_consumer(helpers, context, small, verify, policy_body, output.parent)
     require(sum(map(len, small.values())) <= common.LIMIT and
             shutil.disk_usage(output.parent).free >= 1024**3 + sum(map(len, small.values())), 'Output reserve/bound')
     output.mkdir()
