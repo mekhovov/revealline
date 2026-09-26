@@ -6,12 +6,18 @@ Status date: 2026-09-26
 
 - Public baseline: **v0.132.3**; v0.132.4 has an exact immutable production receipt and merged Pages
   selector, but its public-byte audit is still underway and it is not yet accepted delivery.
+- PR #652 has been admitted to the sole publisher's active v0.132.5 lane. It remains open; this
+  admission is not a merge or a public delivery.
 - Parent candidate: draft PR #636 / `team-cultural-specialist-originals-1`. Its GitHub head is
   authoritative after guarded restacks.
 - Draft PR #642 remains the non-default balance candidate. Draft PR #650 wires its v0.149.0
   successor as `team-cultural-specialist-originals-2`: it becomes the candidate default Team route,
   while the first cultural and all earlier editions remain directly selectable. Neither change is
   published yet.
+- The complete nineteen-branch cultural stack is rebased onto current `main`
+  `0cb51db92295a62fea99ee2ab215a79c6df06520`. PR #650 is at
+  `d6395a574303db923808707cde69e65c3ccfed98`; its test/documentation successor PR #651 is at
+  `b8c033b22e8482543cf49453ab4281210eea2d96`. Both are clean drafts.
 
 ## Completed candidate work
 
@@ -67,19 +73,26 @@ approval or gameplay balance.
   factory/entry cohort passes **15/15**.
 - The bounded factory, entry, Team host, handoff, Studio and preserved-edition cohort passes
   **83/83**. Localization validation passes with 9,735 messages and 7,782 references.
+- After the terminal-base restack, the lightweight Team runtime cohort passes **41/41**. A separate
+  uncontended host rerun records 14 passing test/subtest records across Solo, Versus, representative
+  Team source routes and Solo → Versus → Solo restoration. No failures occurred. The earlier two
+  chooser-opening timeouts did not reproduce without concurrent CPU saturation.
 - Candidate files pass Prettier, targeted ESLint and `git diff --check`.
 
 ## Remaining before PR/release
 
 1. Review and qualify draft PR #650 at its exact head.
-2. Run the normal build/release gates, immutable release and public verification.
-3. Retain Gentle and Expert search evidence as reproducible feasibility evidence; pin those routes
+2. Review draft PR #651 at its exact head and retain its inventory/ownership reconciliation without
+   representing the unrun full long host suite as passing.
+3. Run the normal build/release gates, immutable release and public frozen-build verification.
+4. Retain Gentle and Expert search evidence as reproducible feasibility evidence; pin those routes
    only if they add useful regression coverage rather than duplicating the Standard fixtures.
+5. Complete physical controller/touch/keyboard, paired-board fairness, small-screen,
+   reduced-effects and human two-player qualification.
 
-The entire cultural stack is rebased onto terminal release source
-`d308610271ad01fbabb2847ee046325001ec63e5`. That source includes the v0.132.4 Pages selector; it is
-not evidence that v0.132.4 is already publicly accepted.
+The current stack base contains the v0.132.4 Pages selector. That source ancestry and the published
+v0.132.4 release are not evidence that its still-running public-byte acceptance is complete.
 
 Automated idle, topology and input-only route checks establish legality and bounded feasibility,
-not fun, final human two-player balance, cultural approval, physical-device behavior or public
-delivery.
+not fun, final human two-player balance, cultural approval, physical-device behavior, full-suite
+qualification or public delivery.
