@@ -545,7 +545,10 @@ test('actual Studio prepares without downloading; controller, keyboard and touch
   await waitFor(
     () => !page.$('soundtrack-backup-ready').hidden,
     'Actual binary preparation finishes',
-    { attempts: 400 },
+    // Export re-inspects the exact MP3 and assembles a recovery-complete Blob.
+    // A single-core hosted worker can take several seconds for those byte-bound
+    // checks, so retain a finite budget without weakening the assertions below.
+    { attempts: 3000 },
   );
   assert.equal(page.doc.activeElement, link);
   assert.equal(requested, 0, 'Preparation focuses but never activates the download.');
