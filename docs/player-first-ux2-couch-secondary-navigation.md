@@ -2,7 +2,7 @@
 
 ## Scope
 
-- Reconciled base: `23841ae0f92195b45af70d2615ad611f5690857d`, the local
+- Reconciled base: `3c34b0122060c6850a811a933be41e588f31058f`, the rebased local
   v0.134.0 Team quick-start candidate stacked on the compact gallery and Couch
   input handoff.
 - Branch: `codex/couch-secondary-nav-v135-local`.
@@ -32,6 +32,7 @@ summary rather than the hidden arena selector or Cancel.
 
 ## Focused evidence
 
+The complete Versus shell passes 25/25 and the complete Team host passes 77/77.
 The focused feature cases pass 3/3 inside the Versus shell. The shared Pause and
 quick-start boundary passes 11/11, the Couch/player navigation boundary passes
 194/194, and the controller binding, confirm, lifecycle, and router boundary
@@ -44,19 +45,23 @@ exact opener restoration, destination-specific departure copy and hrefs, the
 paused clock, and the preserved collapsed quick-start setup. The stale
 revision-79 fixture override from the old draft is removed.
 
-Two complete host files retain inherited failures:
+The host regressions now model the current contracts directly:
 
-- The Versus shell passes 24/25. `controller setup/help and repeated keyboard
-Confirm ...` remains paused when its final native Confirm expects running.
-  The same failure reproduces on exact base `23841ae0f` with this candidate's
-  production hunks removed.
-- The Team host passes 69/77. Five import cases supply a plain `{ size, text }`
-  file double after the stacked base changed `creator-team-import.mjs` to
-  require a real `Blob`; they fail with `Choose a Team campaign file`. Three
-  foreground-loss variants retain focus on `coop-help-toggle` instead of the
-  Help reader. Both groups reproduce without the paused-Sound line.
+- Team file selection supplies a genuine `Blob`. Tests that deliberately hold
+  a read use a narrow queued mock of the native `Blob.text()` boundary, while
+  production still validates the genuine Blob and copies it with native
+  accessors and `Blob.prototype.slice`.
+- The already-paused Help cases use actual D-pad navigation to **Read controls**
+  and controller Confirm. This proves reading ownership before blur, hidden,
+  and persisted-pagehide suspension without asking an unauthorized synthetic
+  click to bypass the controller echo guard.
+- The Versus lifecycle case releases its mirrored Enter, waits through the
+  controller echo window while proving the paused match cannot advance, then
+  uses a later native keyboard Confirm. That later neutral gesture resumes once
+  and does not leak an ability action into play.
 
-No production or test assertion is weakened to hide these base-stack blockers.
+No production validation or controller echo guard is weakened by these test
+harness corrections.
 
 ## Evidence limits
 
