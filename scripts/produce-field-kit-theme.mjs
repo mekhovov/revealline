@@ -54,6 +54,8 @@ const reviewedEquipmentSuccessorSource =
   '162d4c737c11d34f8e7e3ed6e76ca5a34fcf06d5fb97303d53eba857feaaf530';
 const reviewedTeamSuccessorRecord =
   '45e41eee3cacac251ede3f0304834a1fda311f8bd70f4d0b66aaceb493b8fc05';
+const reviewedTeamContinuationRecord =
+  'fbc818dcfbbfd2cf1985017417959c82741162842cd3c7293f5be67fc594ef35';
 const reviewedEquipmentOriginals = Object.freeze({
   'team.anchor.available': '88e541375c56d4627b80cf6921ca64ed12d5b77d43dcae256177b8577250d9b3',
   'team.anchor.captured': 'a66511c77322beea458be918f6eb35f1ca6acc9f980afa44bc4756162896f466',
@@ -66,7 +68,13 @@ export async function fieldKitEquipmentSource(read) {
   return hash(Buffer.concat(await Promise.all(equipmentSources.map((name) => read(name)))));
 }
 
-export function fieldKitEquipmentQuality(slotId, source, originalHash, successorReviewBytes) {
+export function fieldKitEquipmentQuality(
+  slotId,
+  source,
+  originalHash,
+  successorReviewBytes,
+  continuationReviewBytes,
+) {
   const successor =
     successorReviewBytes && hash(successorReviewBytes) === reviewedTeamSuccessorRecord
       ? JSON.parse(successorReviewBytes)
@@ -79,9 +87,23 @@ export function fieldKitEquipmentQuality(slotId, source, originalHash, successor
       'a5aa095805b39c8a716d5427c54ad594f9261b53adeaf9752b3260ae752024b3' &&
     successor.priorEquipmentReview.priorFingerprintSHA256 === reviewedEquipmentSource &&
     successor.priorEquipmentReview.currentFingerprintSHA256 === reviewedEquipmentSuccessorSource;
+  const continuation =
+    continuationReviewBytes && hash(continuationReviewBytes) === reviewedTeamContinuationRecord
+      ? JSON.parse(continuationReviewBytes)
+      : null;
+  const currentContinued =
+    source === continuation?.fingerprints?.equipment?.currentSHA256 &&
+    continuation.priorReviews?.teamSuccessor?.path ===
+      'docs/verification/team-specialist-cues-2026-09-24/review.json' &&
+    continuation.priorReviews.teamSuccessor.sha256 === reviewedTeamSuccessorRecord &&
+    continuation.priorReviews?.equipment?.path ===
+      'docs/verification/team-equipment-five-review/review.json' &&
+    continuation.priorReviews.equipment.sha256 ===
+      'a5aa095805b39c8a716d5427c54ad594f9261b53adeaf9752b3260ae752024b3' &&
+    continuation.fingerprints.equipment.priorSHA256 === reviewedEquipmentSuccessorSource;
   if (
     Object.hasOwn(reviewedEquipmentOriginals, slotId) &&
-    (source === reviewedEquipmentSource || continued) &&
+    (source === reviewedEquipmentSource || continued || currentContinued) &&
     reviewedEquipmentOriginals[slotId] === originalHash
   )
     return {
@@ -91,6 +113,11 @@ export function fieldKitEquipmentQuality(slotId, source, originalHash, successor
         ...(continued
           ? [
               `Unchanged five-image consumer continuation: docs/verification/team-specialist-cues-2026-09-24/review.json sha256:${reviewedTeamSuccessorRecord}`,
+            ]
+          : []),
+        ...(currentContinued
+          ? [
+              `v0.132.5 unchanged equipment continuation: docs/verification/v0.132.5-presentation-continuation/review.json sha256:${reviewedTeamContinuationRecord}`,
             ]
           : []),
       ],
@@ -126,8 +153,9 @@ const REVIEWED_RECIPE_INPUTS = {
     ],
   },
   audio: {
-    sha256: '417ceb75d58709373e1abdb047c26224db06721bd58b3ff8302152c33d2f735a',
+    sha256: '301e68a4898cf7d9140abee266195401a69cfca0db2301a12409ec252c882ec9',
     evidence: [
+      'v0.132.5 locale-refresh continuation: docs/verification/v0.132.5-presentation-continuation/review.json sha256:fbc818dcfbbfd2cf1985017417959c82741162842cd3c7293f5be67fc594ef35; twenty-four ordered audio inputs sha256:301e68a4898cf7d9140abee266195401a69cfca0db2301a12409ec252c882ec9. Only game/app.mjs changed after the prior exact review, asking the shared shell to refresh localized Home copy while preserving audio routing, recipes and bytes.',
       'Scoped v0.132.1 Steam Deck controller continuation: docs/verification/v0.132.1-steamdeck-audio-continuation/review.json sha256:b715c81fa1f86a562d5c195ffc025727fc009d1de6cfe03c403db75fdfbf8d70; twenty-five ordered audio inputs sha256:417ceb75d58709373e1abdb047c26224db06721bd58b3ff8302152c33d2f735a. Only game/app.mjs changed among those inputs, adding a controller Confirm lifecycle filter before menu dispatch while preserving audio routing and bytes.',
       'The prior offline ownership and v0.131 English/Ukrainian reviews remain incorporated. All 8 selected roles retain the same procedural recipes; playback state, volume values, local-only selection, resumable download, shared-byte removal, rights, cancellation and imported-media preservation are unchanged.',
       'No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, frozen-build or public game approval. Historical reviews and original payloads remain immutable; any audio dependency or review-byte change reopens this group.',
@@ -253,6 +281,9 @@ export async function createFieldKitProduction({ projectRoot = root } = {}) {
   const teamSuccessorReviewBytes = await read(
     'docs/verification/team-specialist-cues-2026-09-24/review.json',
   );
+  const teamContinuationReviewBytes = await read(
+    'docs/verification/v0.132.5-presentation-continuation/review.json',
+  );
   const inheritedAssets = Object.fromEntries(
     assets.filter((asset) => asset.kind === 'image').map((asset) => [asset.id, asset]),
   );
@@ -270,6 +301,7 @@ export async function createFieldKitProduction({ projectRoot = root } = {}) {
       inheritedAssets,
       reviewBytes: teamReviewBytes,
       successorReviewBytes: teamSuccessorReviewBytes,
+      continuationReviewBytes: teamContinuationReviewBytes,
     });
   }
   const equipmentSource = 'game/presentation/team-equipment-art.mjs';
@@ -305,6 +337,7 @@ export async function createFieldKitProduction({ projectRoot = root } = {}) {
           equipmentReviewSource,
           hash(body),
           teamSuccessorReviewBytes,
+          teamContinuationReviewBytes,
         ),
       },
       body,
