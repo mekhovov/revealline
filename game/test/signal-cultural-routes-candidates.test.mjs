@@ -267,8 +267,8 @@ test('registered v15 successor preserves v14 order while v20 owns the current de
   assert(authoredJourneyUsesActorMaterials(current.id));
   assert(AUTHORED_JOURNEY_ROUTE_IDS.includes(current.id));
   assert.deepEqual(DEFAULT_JOURNEY_ROUTES, {
-    solo: 'whole-spatial-v21',
-    versus: 'whole-spatial-v21',
+    solo: 'whole-spatial-v22',
+    versus: 'whole-spatial-v22',
     team: 'team-trail-impact-originals-1',
   });
   assert.equal(authoredJourneyModeHref(current.id, 'solo'), '../?journey=whole-spatial-v15');
