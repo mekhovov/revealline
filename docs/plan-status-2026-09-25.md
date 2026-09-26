@@ -64,9 +64,9 @@ That result is **evidence only**:
 
 | Planned release / phase                           | Current work                                                                                                            | Status and dependency                                                                                                                                                                                                                                                                                                                                                        |
 | ------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **v0.132.0 — offline installed gameplay**         | PR [#536](https://github.com/mekhovov/revealline/pull/536)                                                              | Final owner of the cumulative v0.132 version metadata. Audit finds it **179 commits behind**, with **11 conflict paths**, at least **98 player-facing strings**, and compiled presentation that must be regenerated from accepted revision 84 into revision 85. Reconcile after PRs #573/#576, then rerun integrity/storage/build and cold-install/update/recovery evidence. |
-| **v0.132.0 — website selector localization**      | PR [#573](https://github.com/mekhovov/revealline/pull/573)                                                              | First cumulative change. No code blocker found, but add an About-host EN↔UA live-switch proof that labels update while focus, selected pack/level and Play href remain exact; then rebase onto `23e61297`.                                                                                                                                                                  |
-| **v0.132.0 — pack/Journey error localization**    | PR [#576](https://github.com/mekhovov/revealline/pull/576)                                                              | Second cumulative change. **Blocked:** imported `exactKeys` still emits English non-object/unsupported-key Journey errors. Localize those structural paths, add Ukrainian malformed-shape tests, rebase after PR #573 and regenerate the shared catalog once.                                                                                                                |
+| **v0.132.0 — offline installed gameplay**         | PR [#536](https://github.com/mekhovov/revealline/pull/536), exact head `90f477bf`                                 | Clean on accepted `main` and owns v0.132.0 metadata with presentation revision 86. Its earlier 11 conflicts and 98+ strings are reconciled, but it must rebase once more after PRs #573/#576, regenerate cumulative catalogs/presentation, and repeat integrity/storage/build plus cold-install/update/recovery evidence. |
+| **v0.132.0 — website selector localization**      | PR [#573](https://github.com/mekhovov/revealline/pull/573), exact head `b884a582`                                 | Rebased onto `23e61297` with an unchanged patch ID. The real-catalog About-host EN↔UA↔EN test preserves focus, release/pack/campaign/level identity and Play href; focused host checks pass 6/6. Exact-head hosted preflight/release-ready remains the admission gate. |
+| **v0.132.0 — pack/Journey error localization**    | PR [#576](https://github.com/mekhovov/revealline/pull/576), exact head `0d909100`                                 | Structural Journey profile/backup errors now follow the active EN/UA locale, including deferred validation after a live switch. Focused checks pass 48/48 and exact-head hosted preflight/release-ready pass. Rebase after PR #573 and regenerate the shared catalog once. |
 | **Compact mission gallery — version unallocated** | preserved PR [#535](https://github.com/mekhovov/revealline/pull/535) commits                                            | Temporarily reverted. Reapply after the accepted offline/selector-localization predecessor sequence, resolve cumulative conflicts, repeat focused inventory/input/browser checks, then run a fresh exact-source release cycle.                                                                                                                                               |
 | **UX2 — Team quick start**                        | draft PR [#549](https://github.com/mekhovov/revealline/pull/549), exact head `59d40ae82b38d124830ba6119a036423483930a4` | Rebased onto accepted selector merge `23e61297`; stable patch ID matches the previously tested head exactly. Quick-start parity passes 9/9 and keyboard navigation 1/1; hosted preflight/release-ready pass while long jobs remain skipped. Rebase onto the accepted cumulative predecessor again before promotion.                                                          |
 | **UX2 — Couch secondary navigation**              | draft PR [#539](https://github.com/mekhovov/revealline/pull/539); stacked safety commit `f5c7be05`                      | Reconcile after the cumulative gallery and PR #549 quick-start owner, remove duplicate overlap, and close the remaining controller lifecycle case. The stacked safety correction is preserved, but its full focused checks did not complete before disk exhaustion interrupted the run; it is implementation evidence, not qualified acceptance.                             |
@@ -88,7 +88,7 @@ can extend them. Hardware-dependent acceptance is called out separately.
 
 | Order | Item                                   | Blocking acceptance                                                                                                                                                                                                  |                                                                          Working elapsed ETA |
 | ----: | -------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------: |
-|     1 | **v0.132 localization + offline root** | Correct PR #573 host proof and PR #576 structural errors, then resolve PR #536’s 11 conflict paths, localize 98+ strings, regenerate revision 85 and prove install/update/remove/recovery plus public offline launch | **1–3 days**, plus **1–3 days** for Android/iPhone/iPad/Safari/desktop cold-install coverage |
+|     1 | **v0.132 localization + offline root** | Admit corrected PR #573, rebase corrected PR #576 on it, then perform the final PR #536 rebase/regeneration and prove install/update/remove/recovery plus public offline launch | **1–3 days**, plus **1–3 days** for Android/iPhone/iPad/Safari/desktop cold-install coverage |
 |     2 | **Compact mission gallery**            | Reapply onto the accepted cumulative predecessor; preserve full inventories, one-action activation, bounded previews and guarded Confirm; repeat exact qualification and public play                                 |                                     **8–16 hours**, plus physical controller/touch follow-up |
 |     3 | **UX2 Team quick start**               | Reconcile PR #549 first; valid defaults start directly, optional tuning remains available, and preparation/cancel has one input owner                                                                                |                                                                               **6–12 hours** |
 |     4 | **UX2 Couch secondary navigation**     | Reconcile PR #539 after quick-start ownership, preserve its safety fix, collapse overlap and rerun the interrupted focused checks                                                                                    |                                                                               **6–12 hours** |
@@ -113,9 +113,9 @@ serialized under one publisher.
    `23e61297` when reconciling its successor.
 2. Build one **v0.132 cumulative root**: rebase/correct PR #573 first, correct PR #576 structural
    localization and regenerate catalogs second, then reconcile PR #536 last as the version owner.
-3. Reconcile the offline root only after resolving all 11 conflict paths, cataloguing 98+ strings
-   and regenerating compiled presentation from accepted revision 84 into revision 85. Publicly
-   accept that root before reapplying the compact gallery as v0.133.0.
+3. PR #536 is clean on the current predecessor at `90f477bf` with revision 86. After PRs #573/#576
+   land, rebase it once more, regenerate the cumulative catalog/presentation, and repeat its focused
+   offline/build evidence before publicly accepting v0.132.0 and reapplying the compact gallery.
 4. Reconcile PR #549 after the cumulative gallery so Team quick-start establishes the final
    Start/preparation ownership before secondary navigation edits the same host.
 5. Reconcile PR #539 on top of that quick-start source, preserve the stacked `f5c7be05` safety fix,
@@ -130,10 +130,10 @@ serialized under one publisher.
 
 ## Blockers and concerns
 
-1. **Critical disk pressure:** the shared data volume was at roughly **0.4 GiB free** during this
-   refresh. PR #539 checks already stopped during a disk-exhaustion incident, and even sparse
-   worktree metadata can fail. Avoid duplicate builds/artifacts, use exact-path sparse or plumbing
-   operations, and retire only proven disposable caches.
+1. **Critical disk pressure:** the shared data volume fell to **116 MiB free** during this refresh
+   before recovering above the 1 GiB safety floor. PR #539 checks and the first PR #573 test attempt
+   stopped safely. Avoid duplicate builds/artifacts, use exact-path sparse or plumbing operations,
+   and retire only proven disposable caches.
 2. **Temporary long-suite waiver:** full automated matrices are skipped by policy, not green. This
    increases integration risk in the broad localization/offline roots. Restore full CI before UX6
    final qualification.
@@ -148,18 +148,19 @@ serialized under one publisher.
    merely because an older branch was green.
 6. **Draft dependency drift:** PRs #542, #548, #552 and #557 have useful focused evidence, but their
    final cumulative sources still depend on the offline/gallery roots and earlier UX owners. PR #536
-   is 179 commits behind with 11 conflict paths; PR #539 has a preserved stacked safety commit but
-   incomplete checks; PRs #543/#545 and #549 still require ordered reconciliation. Never bulk merge
-   the queue.
+   is now clean on the current predecessor but still requires its final post-localization rebase;
+   PR #539 has a preserved stacked safety commit but incomplete checks; PRs #543/#545 and #549 still
+   require ordered reconciliation. Never bulk merge the queue.
 7. **Release serialization:** only one publisher may own version metadata, tags, frozen assets,
    archive slots and Pages. Parallel implementation cannot make public releases parallel.
 8. **Offline footprint:** v0.130 core was within the accepted budget, but localization and offline
    catalogues can change file counts and byte totals. Re-measure emitted artifacts for every root.
 9. **Evidence boundary:** the compact-gallery `54fbbe52` qualification is valid historical evidence, not a
    substitute for qualifying the future cumulative gallery source.
-10. **v0.132 localization gate:** PR #573 still needs composed About-host focus/selection/href proof;
-    PR #576 still emits English Journey structural errors through `exactKeys`. Correct both in that
-    order before PR #536 regenerates the final shared catalogs and revision-85 presentation.
+10. **v0.132 localization gate:** PR #573 now includes the composed About-host focus/identity/href
+    proof and is rebased on accepted main; PR #576 now localizes Journey structural errors and passes
+    focused/hosted gates. Land them in order, then rebase PR #536 and regenerate the final cumulative
+    catalogs and presentation before qualification.
 11. **v0.131 closure is complete:** the corrected `a63ad4cc` product source passed exact-source
     qualification, freeze, artifact inspection and evidence assembly; Archive87 admission, selector
     merge `23e61297`, Pages run 36207322888 and independent public EN/UA cross-mode entry checks passed.
