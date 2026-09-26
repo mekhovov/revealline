@@ -245,6 +245,7 @@ jobs:
         run: npm ci
 
       - name: Freeze the exact qualified commit
+        id: snapshot
         run: |
           test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
           VERSION=$(node --input-type=module <<'JS'
@@ -260,11 +261,13 @@ jobs:
           )
           node scripts/game-cli.mjs release-snapshot --ref "$GITHUB_SHA" --version "$VERSION"
           (cd "releases/$VERSION/site" && sha256sum distribution.zip) > "releases/$VERSION/distribution.zip.sha256"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
 
       - name: Retain original release assets
+        id: snapshot_artifact
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
-          name: qualified-release-snapshot
+          name: qualified-release-${{ steps.snapshot.outputs.version }}-${{ github.sha }}
           path: |
             releases/*/release.json
             releases/*/source.tar
@@ -274,6 +277,16 @@ jobs:
           compression-level: 0
           retention-days: 14
           if-no-files-found: error
+
+      - name: Record immutable frozen-artifact identity
+        run: |
+          printf '%s\n' \
+            '### Qualified frozen artifact' \
+            '' \
+            'Version: `${{ steps.snapshot.outputs.version }}`' \
+            'Source: `${{ github.sha }}`' \
+            'Artifact ID: `${{ steps.snapshot_artifact.outputs.artifact-id }}`' \
+            'Artifact digest: `${{ steps.snapshot_artifact.outputs.artifact-digest }}`' >> "$GITHUB_STEP_SUMMARY"
 
   inspect-artifact:
     if: github.event_name == 'workflow_dispatch' && inputs.operation == 'inspect-artifact'
