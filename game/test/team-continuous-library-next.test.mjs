@@ -180,6 +180,7 @@ function fixture({
     displayPreferences: { snapshot: () => ({ effectiveReducedEffects: true, textFace: 'sans' }) },
     currentRecipe: () => ({ options: { difficulty: 'standard', seed: 17 } }),
     freshRecipe: (level, options) => ({ level, options }),
+    beginInstalledTeamAttempt() {},
     newPictureSelection(recipe, sourcePack, pinnedPack, artworkSource) {
       const selection = {
         sourcePack,
