@@ -8,8 +8,8 @@ release claims.
 ## Candidate identity
 
 - Merged framework source: PR #465, merged 25 September 2026.
-- Rebased hardening base: `a8881ac17e44f38fb1e9dc15428899992727cc78` (`main`, after the accepted
-  `v0.132.4` selector, merged `v0.132.5` source, Fastline recovery hardening, public-byte verification,
+- Rebased hardening base: `8f7ea5540d6851fb2d6d77a42c899e071e65e52a` (`main`, after the accepted
+  `v0.132.5` selector, Fastline recovery hardening, public-byte verification,
   live locale refresh repair, throughput corrections, and exact Field Kit revision 90 review).
 - Hardening checkpoint before this acceptance refresh:
   `3f2c83cf193117f9884796f8bf1b16f1c6c21044`.
