@@ -18,6 +18,10 @@ const productionEnvironment = (overrides = {}) => ({
   BETTER_AUTH_TRUSTED_ORIGINS: 'https://game.example.test',
   COMMUNITY_ACCOUNT_MAIL_WEBHOOK_URL: 'https://mail.example.test/revealline',
   COMMUNITY_ACCOUNT_MAIL_WEBHOOK_TOKEN: webhookToken,
+  COMMUNITY_RELEASE_VERSION: 'v0.141.2',
+  COMMUNITY_SOURCE_REVISION: '12978e5fd3fe0ce70bbee96aa543f569f64622d4',
+  COMMUNITY_IMAGE_RELEASE_VERSION: 'v0.141.2',
+  COMMUNITY_IMAGE_SOURCE_REVISION: '12978e5fd3fe0ce70bbee96aa543f569f64622d4',
   ...overrides,
 });
 

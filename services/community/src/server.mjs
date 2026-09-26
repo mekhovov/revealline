@@ -82,6 +82,7 @@ const app = buildCommunityApp({
   admission,
   trustProxy: config.trustProxyHops ?? false,
   readinessCheck,
+  releaseIdentity: config.releaseIdentity,
   logger: true,
 });
 if (betterAuth) mountCommunityBetterAuth(app, betterAuth);

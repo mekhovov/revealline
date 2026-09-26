@@ -27,6 +27,12 @@ community submission and tus resource, and finish with a byte-for-byte package m
 uses no PostgreSQL, object storage, account service, or external network, and exits nonzero on a
 timeout or contract mismatch.
 
+After a production-like HTTPS deployment exists, `npm run acceptance:tus-deployed` performs that
+same interruption against the deployed tus endpoint, resumes the same remote upload, waits for the
+real validator, verifies the exact downloaded package, and administrator-unlists the disposable
+edition. Follow [the deployed tus acceptance procedure](deployed-tus-acceptance.md); the command is
+destructive and requires explicit opt-in plus short-lived creator and administrator sessions.
+
 For the container development stack:
 
 ```sh
@@ -59,8 +65,17 @@ This is still a single-host development fixture. It does not provide TLS or a ma
 
 `compose.production.yaml` is a fail-closed overlay for a reviewed single-host deployment. It forces
 development authentication off, requires the database, Better Auth, account-mail, administrator,
-and exact trusted-proxy values, and forwards every documented PostgreSQL-backed admission limit.
+exact trusted-proxy values, and immutable release version/source revision, and forwards every
+documented PostgreSQL-backed admission limit.
 The validation worker still receives no account or mail credential.
+The production build embeds the supplied release and source identities into the image. API,
+account migration, and preflight startup fail if the runtime identity differs, preventing an
+operator-only environment edit from relabeling an already built image.
+The worker runs on an internal database network with no external route. Its image filesystem and
+package volume are read-only; only a 128 MiB, non-executable `/tmp` is writable for bounded local
+video inspection. Compose also drops every Linux capability, forbids privilege elevation, and caps
+the worker at one CPU, 1 GiB of memory, and 64 processes. The API retains a separate edge network
+so host loopback proxying and outbound account mail remain available.
 
 Copy `production.env.example` to an untracked operator-owned file, replace every placeholder, and
 start both Compose files together:
@@ -90,6 +105,8 @@ The API exposes separate liveness and readiness routes:
   process work. The production container health check uses this route and fails closed with the
   API's generic error response. Keep the route behind the operator network rather than forwarding
   it through the public proxy.
+- `GET /version` returns the configured public release version, exact source revision, and
+  validator version. Production configuration requires both immutable identity values.
 
 Inspect one-shot service exit status and API readiness without printing the rendered Compose
 configuration, which can contain secrets:
@@ -105,6 +122,10 @@ curl --fail --silent http://127.0.0.1:8787/ready
 This overlay remains a single-host deployment contract. Put a reviewed HTTPS reverse proxy in
 front of it, set `COMMUNITY_TRUST_PROXY_HOPS` to that exact topology, and keep its environment file
 outside the repository with owner-only permissions.
+Before claiming deployment acceptance, inspect the running worker to confirm its read-only mounts,
+empty capability set, no-new-privileges flag, resource ceilings, restart behavior, and lack of
+external network access. Source tests verify the Compose contract but cannot prove that a selected
+container runtime enforces it.
 
 When running outside Compose, apply the checked-in migration to a disposable local database before
 starting the API:
@@ -123,6 +144,7 @@ Public routes return JSON metadata or exact immutable package bytes:
 
 - `GET /health`
 - `GET /ready`
+- `GET /version`
 - `GET /v1/catalog?limit=20&cursor=...`
 - `GET /v1/catalog/:editionId`
 - `GET /v1/catalog/:editionId/download`
@@ -282,6 +304,26 @@ the worker never trusts an uploaded approval flag.
 
 ## Adapter boundaries
 
+### Supported storage target and S3 workstream
+
+The executable production service is currently filesystem-backed. The initial supported Phase 4/5
+target is one host running the production Compose stack with durable package and tus volumes. That
+target includes the current readiness checks, interrupted-upload acceptance, offline backup and
+restore, and source-to-target recovery rehearsal. S3 is not a prerequisite for deploying or
+accepting this single-host target.
+
+S3 is a separate post-deployment workstream for multi-host or AWS operation. Completing it requires
+one storage factory shared by the API, worker, preflight and recovery commands; bounded stream-safe
+staging that verifies size and SHA-256 before immutable publication; the maintained tus S3
+datastore with deterministic completed-upload and expiry cleanup; package and tus dependency
+readiness probes; S3-aware backup, restore and recovery rehearsal; a MinIO end-to-end integration;
+and a real AWS smoke run with private buckets and scoped IAM access.
+
+The focused estimate is 4–6 engineering days after this workstream starts: 2–3 days for runtime
+wiring, configuration and verified staging; 1.5–2 days for recovery and MinIO coverage; and 0.5–1
+day after AWS buckets and IAM access are available for the final smoke evidence. These are focused
+engineering estimates rather than calendar release dates.
+
 - **Authentication:** production configuration creates a real Better Auth PostgreSQL instance,
   mounts `/api/auth/*`, requires verified email, supports password recovery, and resolves ownership
   from `auth.api.getSession`. An injected HTTPS webhook is the mail-delivery boundary; the provider
@@ -290,10 +332,10 @@ the worker never trusts an uploaded approval flag.
   and password reset through the local mail adapter, and proves that the resulting session owns the
   submission. The constant-token adapter remains available only behind
   `COMMUNITY_ALLOW_DEV_AUTH=true`.
-- **Blobs:** `DiskBlobStore` is runnable locally. `S3CompatibleBlobStore` accepts an injected S3
-  client plus `put`, `head`, and `get` command factories, avoiding a second SDK choice in this
-  scaffold. Production S3 wiring must stage and verify bytes before immutable upload, set private
-  bucket policy, and rehearse database/blob restore.
+- **Blobs:** `DiskBlobStore` is the executable production implementation.
+  `S3CompatibleBlobStore` currently provides only a tested injected-client byte boundary; it is not
+  selected by the API, worker, readiness or recovery entry points. The S3 workstream must add the
+  real SDK-backed factory and stream-safe verified staging before claiming executable support.
 - **Uploads:** the executable server mounts the maintained tus Node server with its disk store.
   `completeTusUpload` is the verified completion boundary that can also admit an S3-backed tus
   stream. PostgreSQL advisory locks coordinate API replicas, and the PostgreSQL upload registry
@@ -414,12 +456,19 @@ cd services/community
 export COMMUNITY_ACCEPTANCE_BASE_URL='https://community.example.test/'
 export COMMUNITY_ACCEPTANCE_NAMESPACE='staging-20260926-a'
 export COMMUNITY_ACCEPTANCE_ALLOW_DESTRUCTIVE='I_UNDERSTAND_THIS_PUBLISHES_AND_UNLISTS_TEST_CONTENT'
+export COMMUNITY_ACCEPTANCE_EXPECTED_VERSION='v0.141.2'
+export COMMUNITY_ACCEPTANCE_EXPECTED_SOURCE_REVISION='12978e5fd3fe0ce70bbee96aa543f569f64622d4'
 export COMMUNITY_ACCEPTANCE_CREATOR_A_AUTHORIZATION='Bearer short-lived-creator-a-token'
 export COMMUNITY_ACCEPTANCE_CREATOR_B_AUTHORIZATION='Bearer short-lived-creator-b-token'
 export COMMUNITY_ACCEPTANCE_ADMIN_AUTHORIZATION='Bearer short-lived-admin-token'
 export COMMUNITY_ACCEPTANCE_RECEIPT='/secure/acceptance/community-staging-20260926-a.json'
 npm run acceptance:deployed
 ```
+
+Before it creates any content, the runner requires `/version` to match those exact expected values,
+then requires both `/health` and the full `/ready` dependency probe to pass. A stale service or a
+deployment with unavailable schema, storage, tus storage, or `ffprobe` therefore cannot produce a
+successful journey receipt.
 
 The runner bounds every HTTP request to 15 seconds, polls validation for at most two minutes, and
 uses at most ten administrator report pages. Override those time limits only with bounded numeric
@@ -428,7 +477,8 @@ values in `COMMUNITY_ACCEPTANCE_REQUEST_TIMEOUT_MS`, `COMMUNITY_ACCEPTANCE_POLL_
 offered and its bounded tus 1.0 client when the deployment requires resumable upload.
 
 The receipt format is `revealline-community-deployed-acceptance.v1`. It records only the service
-origin, public test namespace/run identities, immutable package and edition identities, validation
+origin, exact release identity, readiness result, public test namespace/run identities, immutable
+package and edition identities, validation
 poll count, exact-download result, installed completion and picture-asset identities, offline replay result,
 moderation result, and timing. Authentication headers, account subjects, response bodies, and
 package content are excluded. The CLI prints only the receipt path and a pass/fail stage; it never
@@ -441,9 +491,10 @@ and remove the uniquely named edition before reusing that deployment.
 The default package ceiling is 256 MiB and catalog pages are capped at 50 entries. A reverse proxy
 still needs request timeouts, connection limits, and HTTPS. Public deployment also requires a live
 administrator-session rehearsal of the shipped report triage UI, stronger process/container
-isolation for media validation, malware policy, metrics, an off-host backup schedule, a real
-PostgreSQL/blob restore rehearsal, and an explicit infrastructure decision. The S3 adapter is tested
-at its byte boundary but is not wired into the executable deployment. No AWS, mail provider,
+isolation for media validation, malware policy, metrics, an off-host backup schedule, and a real
+PostgreSQL/filesystem restore rehearsal. The supported initial deployment remains the single-host
+filesystem target described above. S3, multi-host scaling and AWS qualification follow through the
+separately estimated workstream and acceptance gates; no AWS claim is made here. No mail provider,
 domain, or production restore claim is made here. Email verification and password recovery are
 integrated at the application boundary, but public launch still requires an operator-selected mail
 gateway, sender-domain authentication, templates, deliverability monitoring, abuse handling, and a

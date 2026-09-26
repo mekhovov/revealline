@@ -2,7 +2,10 @@
 import { randomUUID } from 'node:crypto';
 import { mkdir, open, rename, unlink, writeFile } from 'node:fs/promises';
 import path from 'node:path';
-import { DESTRUCTIVE_OPT_IN, runDeployedCommunityJourney } from './deployed-journey.mjs';
+import {
+  DEPLOYED_TUS_ACCEPTANCE_FORMAT,
+  runDeployedTusResumeAcceptance,
+} from './deployed-tus-resume.mjs';
 
 const integer = (value, fallback) => (value === undefined ? fallback : Number(value));
 const accountHeaders = (prefix) => {
@@ -11,10 +14,10 @@ const accountHeaders = (prefix) => {
   if (authorization && cookie) throw new Error('Choose one account credential form.');
   return authorization ? { authorization } : { cookie };
 };
-const namespace = process.env.COMMUNITY_ACCEPTANCE_NAMESPACE;
+const namespace = process.env.COMMUNITY_TUS_ACCEPTANCE_NAMESPACE;
 const destination = path.resolve(
-  process.env.COMMUNITY_ACCEPTANCE_RECEIPT ??
-    `community-deployed-acceptance-${namespace ?? 'invalid'}.json`,
+  process.env.COMMUNITY_TUS_ACCEPTANCE_RECEIPT ??
+    `community-deployed-tus-acceptance-${namespace ?? 'invalid'}.json`,
 );
 
 async function reserveReceipt() {
@@ -22,10 +25,7 @@ async function reserveReceipt() {
   const handle = await open(destination, 'wx', 0o600);
   try {
     await handle.writeFile(
-      `${JSON.stringify({
-        format: 'revealline-community-deployed-acceptance.v1',
-        status: 'running',
-      })}\n`,
+      `${JSON.stringify({ format: DEPLOYED_TUS_ACCEPTANCE_FORMAT, status: 'running' })}\n`,
     );
     await handle.sync();
   } finally {
@@ -50,34 +50,34 @@ try {
   await reserveReceipt();
 } catch (error) {
   const reason = error?.code === 'EEXIST' ? 'destination already exists' : 'reservation failed';
-  process.stderr.write(`Deployed community acceptance did not start: ${reason}.\n`);
+  process.stderr.write(`Deployed tus acceptance did not start: ${reason}.\n`);
   process.exit(1);
 }
 
 let receipt;
 let passed = false;
 try {
-  receipt = await runDeployedCommunityJourney({
-    baseURL: process.env.COMMUNITY_ACCEPTANCE_BASE_URL,
+  receipt = await runDeployedTusResumeAcceptance({
+    baseURL: process.env.COMMUNITY_TUS_ACCEPTANCE_BASE_URL,
     namespace,
-    optIn: process.env.COMMUNITY_ACCEPTANCE_ALLOW_DESTRUCTIVE,
-    expectedRelease: {
-      version: process.env.COMMUNITY_ACCEPTANCE_EXPECTED_VERSION,
-      sourceRevision: process.env.COMMUNITY_ACCEPTANCE_EXPECTED_SOURCE_REVISION,
-    },
+    optIn: process.env.COMMUNITY_TUS_ACCEPTANCE_ALLOW_DESTRUCTIVE,
     auth: {
-      creatorA: accountHeaders('COMMUNITY_ACCEPTANCE_CREATOR_A'),
-      creatorB: accountHeaders('COMMUNITY_ACCEPTANCE_CREATOR_B'),
-      admin: accountHeaders('COMMUNITY_ACCEPTANCE_ADMIN'),
+      creator: accountHeaders('COMMUNITY_TUS_ACCEPTANCE_CREATOR'),
+      admin: accountHeaders('COMMUNITY_TUS_ACCEPTANCE_ADMIN'),
     },
-    requestTimeoutMs: integer(process.env.COMMUNITY_ACCEPTANCE_REQUEST_TIMEOUT_MS, 15_000),
-    pollIntervalMs: integer(process.env.COMMUNITY_ACCEPTANCE_POLL_INTERVAL_MS, 1_000),
-    validationTimeoutMs: integer(process.env.COMMUNITY_ACCEPTANCE_VALIDATION_TIMEOUT_MS, 120_000),
+    dropAfterBytes: integer(process.env.COMMUNITY_TUS_ACCEPTANCE_DROP_AFTER_BYTES, 17),
+    chunkBytes: integer(process.env.COMMUNITY_TUS_ACCEPTANCE_CHUNK_BYTES, 1024 * 1024),
+    requestTimeoutMs: integer(process.env.COMMUNITY_TUS_ACCEPTANCE_REQUEST_TIMEOUT_MS, 15_000),
+    pollIntervalMs: integer(process.env.COMMUNITY_TUS_ACCEPTANCE_POLL_INTERVAL_MS, 1_000),
+    validationTimeoutMs: integer(
+      process.env.COMMUNITY_TUS_ACCEPTANCE_VALIDATION_TIMEOUT_MS,
+      120_000,
+    ),
   });
   passed = true;
 } catch (error) {
   receipt = error?.receipt ?? {
-    format: 'revealline-community-deployed-acceptance.v1',
+    format: DEPLOYED_TUS_ACCEPTANCE_FORMAT,
     status: 'failed',
     failedStage: 'configuration',
     errorCode: 'invalid_acceptance_configuration',
@@ -86,19 +86,16 @@ try {
 
 try {
   await writeReceipt(receipt);
-  if (passed) {
-    process.stdout.write(`Deployed community acceptance passed. Receipt: ${destination}\n`);
-  } else {
+  if (passed) process.stdout.write(`Deployed tus acceptance passed. Receipt: ${destination}\n`);
+  else {
     process.stderr.write(
-      `Deployed community acceptance failed at ${receipt.failedStage}; see redacted receipt: ${destination}\n`,
+      `Deployed tus acceptance failed at ${receipt.failedStage}; see redacted receipt: ${destination}\n`,
     );
     process.exitCode = 1;
   }
 } catch {
   process.stderr.write(
-    'Deployed community acceptance finished, but its reserved receipt could not be finalized.\n',
+    'Deployed tus acceptance finished, but its reserved receipt could not be finalized.\n',
   );
   process.exitCode = 1;
 }
-
-export { DESTRUCTIVE_OPT_IN };

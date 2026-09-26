@@ -21,6 +21,8 @@ import { readCreatorPreview } from './validator.mjs';
 
 const notFound = () =>
   new CommunityError(404, 'not_found', 'The requested resource was not found.');
+const RELEASE_VERSION = /^v\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?$/u;
+const SOURCE_REVISION = /^[a-f0-9]{40}$/u;
 
 export function buildCommunityApp({
   repository,
@@ -34,10 +36,17 @@ export function buildCommunityApp({
   admissionPolicies,
   trustProxy = false,
   readinessCheck = null,
+  releaseIdentity = null,
   logger = false,
 }) {
   if (!repository || !blobStore || !authenticator)
     throw new Error('repository, blobStore, and authenticator are required.');
+  if (
+    releaseIdentity &&
+    (!RELEASE_VERSION.test(releaseIdentity.version ?? '') ||
+      !SOURCE_REVISION.test(releaseIdentity.sourceRevision ?? ''))
+  )
+    throw new Error('Release identity must contain an exact version and source revision.');
   const app = Fastify({ logger, bodyLimit: maxPackageBytes, trustProxy });
   const admissionBoundary =
     admission ?? createAdmissionController({ repository, policies: admissionPolicies });
@@ -91,6 +100,21 @@ export function buildCommunityApp({
   app.get('/health', async (_request, reply) => {
     await repository.health();
     return reply.header('cache-control', 'no-store').send({ status: 'ok' });
+  });
+
+  app.get('/version', async (_request, reply) => {
+    if (!releaseIdentity)
+      throw new CommunityError(
+        503,
+        'release_identity_unavailable',
+        'The deployed release identity is unavailable.',
+      );
+    return reply.header('cache-control', 'no-store').send({
+      format: 'revealline-community-release.v1',
+      version: releaseIdentity.version,
+      sourceRevision: releaseIdentity.sourceRevision,
+      validatorVersion,
+    });
   });
 
   app.get('/ready', async (_request, reply) => {
