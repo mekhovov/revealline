@@ -95,6 +95,11 @@ async function emptyArena(t) {
 }
 function assertFinishedPlayers(f, outcome) {
   assert.equal(f.$('coop-controls').hidden, true, 'Terminal results keep flight controls hidden.');
+  assert.equal(
+    f.$('coop-message').dataset.coach,
+    undefined,
+    'Terminal results revoke teaching decoration.',
+  );
   assert.ok(f.touchPads.every((pad) => pad.hidden));
   assert.equal(f.$('coop-message').textContent, terminalMessage(outcome));
   for (const player of players(f)) {
@@ -190,6 +195,8 @@ for (const level of ['first-connection', 'relay-yard'])
       initialMessage = f.$('coop-message').textContent,
       image = teamImage(f),
       messages = recordMessages(t, f);
+    assert.match(initialMessage, /FIRST CUT/);
+    assert.equal(f.$('coop-message').dataset.coach, 'cut');
     earnTeamVictory(t, f, level);
     assert.equal(f.$('coop-resume').hidden, true);
     assertFinishedPlayers(f, 'won');
@@ -203,7 +210,13 @@ for (const level of ['first-connection', 'relay-yard'])
     assert.equal(f.$('coop-overlay').hidden, true);
     assert.deepEqual(players(f), initial);
     assert.equal(teamImage(f), image);
-    assert.equal(f.$('coop-message').textContent, initialMessage);
+    assert.doesNotMatch(f.$('coop-message').textContent, /FIRST CUT/);
+    assert.notEqual(f.$('coop-message').textContent, initialMessage);
+    assert.equal(
+      f.$('coop-message').dataset.coach,
+      undefined,
+      'Retry keeps the ordinary arena guidance without repeating the introduced cue.',
+    );
   });
 
 for (const outcome of ['loss', 'win'])

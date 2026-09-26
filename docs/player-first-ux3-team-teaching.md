@@ -27,7 +27,7 @@ not block play or alter an attempt.
 
 Tutorial decisions use semantic ground and Support capabilities rather than parsing translated
 labels. The host resolves cue keys through the live English/Ukrainian catalog, so a locale change
-updates future cues without changing simulation state.
+updates an active cue and future cues without changing simulation state.
 
 ## Focused evidence
 
