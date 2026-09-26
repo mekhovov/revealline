@@ -2,6 +2,7 @@ import { exportJSONFile } from './platform.mjs';
 import { validateTrack } from './ui/music.mjs';
 import { validateLevel, validateClassRecipes, CLASSES, TURN_POLICIES } from './core/index.mjs';
 import { resolveMasteryContext } from './mastery-catalog.mjs';
+import { t } from './i18n/index.mjs';
 
 const plain = (v) =>
   v !== null &&
@@ -73,9 +74,11 @@ const result = (errors, extra = {}) => ({
   errors: [...new Set(errors)].slice(0, 40),
   ...extra,
 });
+const contentError = (key, values) => t(`errors:content.${key}`, values);
 const keys = (value, allowed, path, errors) => {
   for (const key of Object.keys(value))
-    if (!allowed.includes(key)) errors.push(`${path}.${key} is not supported`);
+    if (!allowed.includes(key))
+      errors.push(contentError('unsupportedField', { path: `${path}.${key}` }));
 };
 
 // Imported packs are JSON, not executable objects. Bound the walk before calling
@@ -89,26 +92,26 @@ function checkJSON(value, path = 'content') {
   function visit(item, where, depth) {
     if (errors.length >= 40) return;
     if (++nodes > 10_000) {
-      errors.push('Content exceeds the 10,000-value budget');
+      errors.push(contentError('valueBudget'));
       return;
     }
     if (depth > 12) {
-      errors.push(`${where} exceeds the nesting budget`);
+      errors.push(contentError('nestingBudget', { path: where }));
       return;
     }
     if (item === null || typeof item === 'boolean') return;
     if (typeof item === 'number') {
-      if (!Number.isFinite(item)) errors.push(`${where} must be finite`);
+      if (!Number.isFinite(item)) errors.push(contentError('finiteNumber', { path: where }));
       return;
     }
     if (typeof item === 'string') {
       if (/^content\.visualOverrides\.[^.]+\.dataUrl$/.test(where)) {
         mediaChars += item.length;
         if (item.length > CONTENT_LIMITS.maxEncodedImageChars)
-          errors.push(`${where} exceeds the image budget`);
+          errors.push(contentError('imageBudget', { path: where }));
       } else {
         chars += item.length;
-        if (item.length > 4096) errors.push(`${where} exceeds the 4096-character text budget`);
+        if (item.length > 4096) errors.push(contentError('textBudget', { path: where }));
       }
       return;
     }
@@ -116,64 +119,63 @@ function checkJSON(value, path = 'content') {
       typeof item !== 'object' ||
       (Array.isArray(item) ? Object.getPrototypeOf(item) !== Array.prototype : !plain(item))
     ) {
-      errors.push(`${where} must contain plain JSON data`);
+      errors.push(contentError('plainJson', { path: where }));
       return;
     }
     if (ancestors.has(item)) {
-      errors.push(`${where} must not contain a cycle`);
+      errors.push(contentError('cycle', { path: where }));
       return;
     }
     ancestors.add(item);
     const descriptors = Object.getOwnPropertyDescriptors(item),
       names = Object.keys(descriptors);
     if (Array.isArray(item) && item.length > 256) {
-      errors.push(`${where} exceeds the 256-item array budget`);
+      errors.push(contentError('arrayBudget', { path: where }));
       ancestors.delete(item);
       return;
     }
     if (names.length > 257) {
-      errors.push(`${where} has too many fields`);
+      errors.push(contentError('fieldBudget', { path: where }));
       ancestors.delete(item);
       return;
     }
     if (Object.getOwnPropertySymbols(item).length)
-      errors.push(`${where} must not contain symbol keys`);
+      errors.push(contentError('symbolKeys', { path: where }));
     for (const key of names) {
       if (Array.isArray(item) && key === 'length') continue;
       const descriptor = descriptors[key];
       if (Array.isArray(item) && (!/^(0|[1-9]\d*)$/.test(key) || Number(key) >= item.length)) {
-        errors.push(`${where} must not contain custom array properties`);
+        errors.push(contentError('arrayProperties', { path: where }));
         continue;
       }
       if (forbidden.has(key)) {
-        errors.push(`${where}.${key} is a forbidden key`);
+        errors.push(contentError('forbiddenKey', { path: `${where}.${key}` }));
         continue;
       }
       if (!descriptor.enumerable || !own(descriptor, 'value')) {
-        errors.push(`${where}.${key} must be ordinary JSON data`);
+        errors.push(contentError('ordinaryJson', { path: `${where}.${key}` }));
         continue;
       }
       if (key.length > 120) {
-        errors.push(`${where} contains an oversized field name`);
+        errors.push(contentError('fieldNameBudget', { path: where }));
         continue;
       }
       chars += key.length;
       visit(descriptor.value, `${where}.${key}`, depth + 1);
     }
     if (Array.isArray(item) && names.length - 1 !== item.length)
-      errors.push(`${where} must not be a sparse array`);
+      errors.push(contentError('sparseArray', { path: where }));
     ancestors.delete(item);
   }
   visit(value, path, 0);
-  if (chars > CONTENT_LIMITS.maxContentChars)
-    errors.push('Non-image content exceeds the 64 KiB text budget');
+  if (chars > CONTENT_LIMITS.maxContentChars) errors.push(contentError('combinedTextBudget'));
   if (mediaChars > CONTENT_LIMITS.maxCombinedImageChars)
-    errors.push('Combined artwork exceeds 20 MiB encoded budget');
+    errors.push(contentError('combinedArtworkBudget'));
   return errors;
 }
 function metadata(value, path, errors) {
   if (!plain(value)) {
-    errors.push(`${path} must be an object`);
+    errors.push(contentError('objectRequired', { path }));
     return;
   }
   const limits = {
@@ -187,15 +189,15 @@ function metadata(value, path, errors) {
   keys(value, Object.keys(limits), path, errors);
   for (const [key, max] of Object.entries(limits))
     if (own(value, key) && !text(value[key], max))
-      errors.push(`${path}.${key} must be nonempty text of at most ${max} characters`);
+      errors.push(contentError('boundedText', { path: `${path}.${key}`, max }));
   if (typeof value.sourceUrl === 'string')
     try {
       if (!['http:', 'https:'].includes(new URL(value.sourceUrl).protocol)) throw new Error();
     } catch {
-      errors.push(`${path}.sourceUrl must be an HTTP(S) URL`);
+      errors.push(contentError('httpUrl', { path: `${path}.sourceUrl` }));
     }
   if (JSON.stringify(value).length > CONTENT_LIMITS.maxMetadataChars)
-    errors.push(`${path} exceeds the 16 KiB metadata budget`);
+    errors.push(contentError('metadataBudget', { path }));
 }
 function themeChecks(theme, errors) {
   if (!plain(theme)) {
