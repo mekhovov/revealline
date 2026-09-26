@@ -121,8 +121,11 @@ Fast pull-request previews validate the selector, highest stable release match, 
 metadata, and bounded extraction rules without assembling the complete Pages artifact. Exact
 artifact assembly and the independent reread of every prepared byte are deferred to the main
 publication, where they remain mandatory together with the final latest-release recheck and the
-main-only `github-pages` deployment environment. These checks prevent publishing the wrong or
-corrupt frozen release and are not waived.
+main-only `github-pages` deployment environment. After deployment, the production workflow
+downloads its own immutable assembly receipt and streams every public path with bounded
+concurrency, checking the receipt's exact byte count and SHA-256 for every file. The resulting
+public-byte receipt is retained as a separate immutable Actions artifact. These checks prevent
+publishing the wrong, stale, or corrupt frozen release and are not waived.
 
 The current-release extractor records the sorted byte/hash inventory it produced while streaming
 the immutable distribution ZIP. Assembly reuses that receipt instead of hashing the extracted tree
