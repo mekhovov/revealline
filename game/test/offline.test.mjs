@@ -8,6 +8,7 @@ import { createServer } from 'node:http';
 import { gzipSync, brotliCompressSync } from 'node:zlib';
 import { setImmediate as nextTurn } from 'node:timers/promises';
 import { offlineAvailability, prepareOffline, checkOffline } from '../offline.mjs';
+import { verifiedDownload } from '../official-downloads.mjs';
 import { CONTENT_PROJECT_ITEM_LIMITS, CONTENT_ASSET_MAX_BYTES } from '../content-design/limits.mjs';
 import { waitFor } from './helpers/wait-for.mjs';
 const template = await fs.readFile(
@@ -28,6 +29,65 @@ const marker = {
 };
 const documentRef = { querySelector: () => ({ content: JSON.stringify(marker) }) };
 const locationRef = { href: `${scope}game/` };
+
+test('package editions block unseen artwork before a confirmed downloader request', async () => {
+  const body = 'original picture';
+  const file = { path: 'game/picture.png', bytes: Buffer.byteLength(body), sha256: digest(body) };
+  const h = host({ packageConsent: true, downloadFiles: [file] });
+  const url = new URL(file.path, scope).href;
+  h.network.set(url, body);
+  const blocked = await h.dispatch('fetch', { request: new Request(url) });
+  assert.equal(blocked.status, 409);
+  assert.deepEqual(h.calls, [], 'being online does not authorize an unselected picture download');
+  const accepted = await h.dispatch('fetch', { request: new Request(url, { cache: 'no-store' }) });
+  assert.equal(await accepted.text(), body);
+  assert.deepEqual(h.calls, [url]);
+});
+
+test('a downloaded chapter is served locally even when every outbound request fails', async () => {
+  const body = 'original picture';
+  const file = { path: 'game/picture.png', bytes: Buffer.byteLength(body), sha256: digest(body) };
+  const h = host({ packageConsent: true, downloadFiles: [file] }, new Map(), {
+    fetch: () => {
+      throw new Error('actual outbound requests blocked');
+    },
+  });
+  const cache = await h.caches.open('revealline-official-content-v1');
+  await cache.put(
+    `https://game.example/.revealline-official/sha256/${file.sha256}`,
+    new Response(body, { headers: { 'Content-Length': String(file.bytes) } }),
+  );
+  const response = await h.dispatch('fetch', { request: new Request(new URL(file.path, scope)) });
+  assert.equal(response.status, 200);
+  assert.equal(await response.text(), body);
+  assert.deepEqual(h.calls, []);
+});
+
+test('explicit verified repair bypasses a same-sized corrupt official cache entry', async () => {
+  const body = 'original picture';
+  const file = { path: 'game/picture.png', bytes: Buffer.byteLength(body), sha256: digest(body) };
+  const h = host({ packageConsent: true, downloadFiles: [file] });
+  const url = new URL(file.path, scope).href;
+  const cache = await h.caches.open('revealline-official-content-v1');
+  const key = `https://game.example/.revealline-official/sha256/${file.sha256}`;
+  const corrupt = 'x'.repeat(file.bytes);
+  await cache.put(
+    key,
+    new Response(corrupt, { headers: { 'Content-Length': String(file.bytes) } }),
+  );
+  h.network.set(url, body);
+  const repaired = await verifiedDownload(file, url, {
+    fetch: (target, options) => h.dispatch('fetch', { request: new Request(target, options) }),
+  });
+  assert.equal(await repaired.text(), body);
+  assert.deepEqual(h.calls, [url]);
+  assert.equal(
+    await (await cache.match(key)).text(),
+    corrupt,
+    'the worker does not commit network bytes before the downloader verifies them',
+  );
+});
+
 function host(configPatch = {}, storage = new Map(), options = {}) {
   const entries = new Map(
     options.entries ?? [

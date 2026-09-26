@@ -92,6 +92,12 @@ import { createDisplayPreferences } from '../display-preferences.mjs';
 import { attachMenuStyleControls } from '../ui/menu-style-controls.mjs';
 import { attachPreferenceRestoration } from '../ui/preference-restoration.mjs';
 import { attachSettingsPanels, settingsTabOwnsKey } from '../ui/settings-panels.mjs';
+import {
+  attachInstallOfflinePanel,
+  guardInstallOfflineBlur,
+  installOfflineOwnsElement,
+} from '../ui/install-offline-panel.mjs';
+import { createOfflineDownloadAccess } from '../offline-download-access.mjs';
 
 import { createTeamArenaPreference } from './team-arena-preference.mjs';
 import { createMissionLibrary } from '../mission-library/library.mjs';
@@ -130,6 +136,7 @@ const initialFocusChoice = (event) => {
 const initialFocusLost = () => {
   initialFocusPending = false;
 };
+const initialWindowBlur = guardInstallOfflineBlur(initialFocusLost);
 const initialVisibility = () => {
   if (document.hidden) initialFocusLost();
 };
@@ -664,6 +671,10 @@ export function bootCoop({
     showTouch();
   }
   function back() {
+    if (installOfflinePanel?.isOpen()) {
+      installOfflinePanel.close();
+      return;
+    }
     if (music?.root()) {
       music.back();
       return;
@@ -719,56 +730,79 @@ export function bootCoop({
     else $('coop-race').click();
   }
   const running = () => run?.status === 'running';
+  const installOfflinePanel = $('coop-offline-main')
+    ? attachInstallOfflinePanel({
+        document,
+        window,
+        downloadsURL: new URL('../downloads.html', import.meta.url),
+        onOpen: () => {
+          if (running()) pause({ focus: false });
+        },
+        canActivate: () => !run,
+        onStatus: (message) => {
+          if ($('coop-offline-status')) $('coop-offline-status').textContent = message;
+        },
+      })
+    : null;
+  const gameplayDownloads = createOfflineDownloadAccess({
+    requestPackage: (request) => installOfflinePanel.requestPackage(request),
+  });
+  for (const id of ['coop-offline-main', 'coop-offline'])
+    if ($(id)) $(id).onclick = () => installOfflinePanel?.open();
   const scope = () =>
-    music?.root()
-      ? 'coop-music-library'
-      : journeyPictures?.root()
-        ? 'coop-journey-pictures'
-        : settingsDialog.open
-          ? `coop-settings:${settingsPanels?.selected() || 'display'}`
-          : earnedDialog.open
-            ? 'coop-earned-picture'
-            : departure
-              ? 'coop-discard'
-              : discovery?.isOpen()
-                ? 'coop-discovery'
-                : running()
-                  ? 'flight'
-                  : run
-                    ? `coop-${run.status}`
-                    : 'coop-lobby';
+    installOfflinePanel?.isOpen()
+      ? 'coop-install-offline'
+      : music?.root()
+        ? 'coop-music-library'
+        : journeyPictures?.root()
+          ? 'coop-journey-pictures'
+          : settingsDialog.open
+            ? `coop-settings:${settingsPanels?.selected() || 'display'}`
+            : earnedDialog.open
+              ? 'coop-earned-picture'
+              : departure
+                ? 'coop-discard'
+                : discovery?.isOpen()
+                  ? 'coop-discovery'
+                  : running()
+                    ? 'flight'
+                    : run
+                      ? `coop-${run.status}`
+                      : 'coop-lobby';
   const primary = () =>
-    music?.root()
-      ? music.primary()
-      : journeyPictures?.root()
-        ? journeyPictures.primary()
-        : settingsDialog.open
-          ? settingsPanels?.primary() || $('coop-settings-close')
-          : earnedDialog.open
-            ? $('coop-picture-return')
-            : departure
-              ? $('coop-discard-stay')
-              : discovery?.isOpen()
-                ? discovery.primary()
-                : nextOperation
-                  ? $('coop-next-cancel')
-                  : importOperation
-                    ? $('coop-pack-cancel')
-                    : pictureOperation
-                      ? pictureOperation.passive
-                        ? $('coop-level')
-                        : $('coop-picture-cancel')
-                      : !run && pictureSelection?.state !== 'ready'
-                        ? $('coop-picture-retry')
-                        : !run
-                          ? $('coop-start')
-                          : run.status === 'paused' && !loopStopped
-                            ? $('coop-resume')
-                            : run.status === 'won' && !loopStopped
-                              ? teamDestination()?.next
-                                ? $('coop-next')
-                                : $('coop-discovery-paused')
-                              : $('coop-retry');
+    installOfflinePanel?.isOpen()
+      ? $('install-offline-downloads')
+      : music?.root()
+        ? music.primary()
+        : journeyPictures?.root()
+          ? journeyPictures.primary()
+          : settingsDialog.open
+            ? settingsPanels?.primary() || $('coop-settings-close')
+            : earnedDialog.open
+              ? $('coop-picture-return')
+              : departure
+                ? $('coop-discard-stay')
+                : discovery?.isOpen()
+                  ? discovery.primary()
+                  : nextOperation
+                    ? $('coop-next-cancel')
+                    : importOperation
+                      ? $('coop-pack-cancel')
+                      : pictureOperation
+                        ? pictureOperation.passive
+                          ? $('coop-level')
+                          : $('coop-picture-cancel')
+                        : !run && pictureSelection?.state !== 'ready'
+                          ? $('coop-picture-retry')
+                          : !run
+                            ? $('coop-start')
+                            : run.status === 'paused' && !loopStopped
+                              ? $('coop-resume')
+                              : run.status === 'won' && !loopStopped
+                                ? teamDestination()?.next
+                                  ? $('coop-next')
+                                  : $('coop-discovery-paused')
+                                : $('coop-retry');
   // Preference updates can reflow a focused select beyond the Settings scroller
   // without a window resize. Keep only that current action visible, never focus
   // it again or resume. Initial display application runs before this owner exists.
@@ -851,7 +885,9 @@ export function bootCoop({
     onTabBoundary: () => playgroundTabBoundary({ window, suspend: () => suspend() }),
     getScope: scope,
     getRoot: () => {
+      if (installOfflinePanel?.frameFocused()) return null;
       const modal =
+        installOfflinePanel?.root() ||
         music?.root() ||
         journeyPictures?.root() ||
         (settingsDialog.open
@@ -881,6 +917,7 @@ export function bootCoop({
     onBack: back,
     onMenu: () => {
       if (
+        installOfflinePanel?.isOpen() ||
         music?.root() ||
         journeyPictures?.root() ||
         settingsDialog.open ||
@@ -1503,6 +1540,7 @@ export function bootCoop({
       document.activeElement === origin &&
       (visibleAction(origin) || (initial && unclaimedFocus(origin)));
     const observe = (event) => {
+      if (installOfflineOwnsElement(event.target)) return;
       if (
         !unclaimedFocus(event.target) &&
         event.target !== origin &&
@@ -1511,9 +1549,11 @@ export function bootCoop({
       )
         moved = true;
     };
-    const lost = () => {
+    const lost = (event) => {
+      if (installOfflineOwnsElement(event?.target)) return;
       moved = true;
     };
+    const windowBlur = guardInstallOfflineBlur(lost);
     const hidden = () => {
       if (document.hidden) lost();
     };
@@ -1521,7 +1561,7 @@ export function bootCoop({
     document.addEventListener('pointerdown', lost, true);
     document.addEventListener('keydown', lost, true);
     document.addEventListener('visibilitychange', hidden);
-    window.addEventListener('blur', lost);
+    window.addEventListener('blur', windowBlur);
     window.addEventListener('pagehide', lost);
     const owns = () =>
       !retired &&
@@ -1545,7 +1585,7 @@ export function bootCoop({
       document.removeEventListener('pointerdown', lost, true);
       document.removeEventListener('keydown', lost, true);
       document.removeEventListener('visibilitychange', hidden);
-      window.removeEventListener('blur', lost);
+      window.removeEventListener('blur', windowBlur);
       window.removeEventListener('pagehide', lost);
     };
     const direct = (target, remember = false) => {
@@ -1921,6 +1961,17 @@ export function bootCoop({
     }
     return selection;
   }
+  async function ensureTeamPicturePackage(selection, { signal, prompt = true } = {}) {
+    if (
+      selection.journeyRow &&
+      !selection.artworkSource &&
+      candidateJourney?.owns(selection.journeyRow)
+    )
+      await gameplayDownloads.ensureMission(
+        { routeId: libraryEdition, missionId: selection.journeyRow.mission.levelId, mode: 'team' },
+        { signal, prompt },
+      );
+  }
   function preparePicture({
     retry = false,
     origin = document.activeElement,
@@ -1990,6 +2041,11 @@ export function bootCoop({
         // shared page also updates global appearance, even after picture Cancel.
         if (retry && !disposed && snapshot && snapshot === presentationPage.current())
           menuStyle.setPresentation(snapshot);
+        if (!current()) return;
+        await ensureTeamPicturePackage(selection, {
+          signal: controller.signal,
+          prompt: !passivePreparation,
+        });
         if (!current()) return;
         const binding = await selection.lease.select({
           ...selection.request,
@@ -2242,6 +2298,7 @@ export function bootCoop({
       !departure;
     nextOperation = operation;
     const focusChanged = (event) => {
+      if (installOfflineOwnsElement(event.target)) return;
       if (event.target !== operation.action && event.target !== $('coop-next-cancel')) cancelNext();
     };
     document.addEventListener('focusin', focusChanged);
@@ -2258,6 +2315,8 @@ export function bootCoop({
       if (!current()) return;
       $('coop-next-cancel').focus({ preventScroll: true });
       await presentationPage.ready;
+      if (!current()) return;
+      await ensureTeamPicturePackage(selection, { signal: operation.controller.signal });
       if (!current()) return;
       selection.binding = await selection.lease.select({
         ...selection.request,
@@ -2689,6 +2748,8 @@ export function bootCoop({
       check();
       snapshot = presentationPage.current();
       check();
+      await ensureTeamPicturePackage(row, { signal, prompt: false });
+      check();
       await lease.select({
         ...request,
         signal,
@@ -2887,6 +2948,8 @@ export function bootCoop({
       );
       check();
       await presentationPage.ready;
+      check();
+      await ensureTeamPicturePackage(selection, { signal: operation.controller.signal });
       check();
       selection.binding = await selection.lease.select({
         ...selection.request,
@@ -4350,7 +4413,8 @@ export function bootCoop({
     if (document.hidden) suspend();
     else returned();
   };
-  window.addEventListener('blur', suspend);
+  const windowBlur = guardInstallOfflineBlur(suspend);
+  window.addEventListener('blur', windowBlur);
   window.addEventListener('focus', returned);
   document.addEventListener('visibilitychange', hidden);
   function events() {
@@ -5227,6 +5291,7 @@ export function bootCoop({
     .catch((error) => console.error(t('interface:nativeLifecycleUnavailable'), error));
   const dispose = () => {
     if (disposed) return;
+    installOfflinePanel?.dispose();
     stopActorView();
     actorPreferences.dispose();
     $('coop-actor-style').onchange = null;
@@ -5302,7 +5367,7 @@ export function bootCoop({
     navigation.destroy();
     touchQuery.removeEventListener?.('change', touchChanged);
     window.removeEventListener('resize', revealMenuAction);
-    window.removeEventListener('blur', suspend);
+    window.removeEventListener('blur', windowBlur);
     window.removeEventListener('focus', returned);
     window.removeEventListener('pageshow', returned);
     document.removeEventListener('visibilitychange', hidden);
@@ -5485,7 +5550,7 @@ export function bootCoop({
 try {
   document.addEventListener('focusin', initialFocusChoice, true);
   document.addEventListener('visibilitychange', initialVisibility);
-  window.addEventListener('blur', initialFocusLost);
+  window.addEventListener('blur', initialWindowBlur);
   const journeyRequest = resolveJourneyRequest(new URL(location.href).searchParams, {
     mode: 'team',
   });
@@ -5534,5 +5599,5 @@ try {
   initialFocusPending = false;
   document.removeEventListener('focusin', initialFocusChoice, true);
   document.removeEventListener('visibilitychange', initialVisibility);
-  window.removeEventListener('blur', initialFocusLost);
+  window.removeEventListener('blur', initialWindowBlur);
 }

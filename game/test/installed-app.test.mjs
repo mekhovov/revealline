@@ -11,6 +11,8 @@ import {
   invalidateInstalledMigration,
   INSTALLED_STATE_KEY,
   updateInstalledSelection,
+  prepareInstalledLauncher,
+  checkInstalledLauncher,
 } from '../installed-app.mjs';
 const locationRef = {
   href: 'https://game.example/revealline/releases/v2.0.0/site/game/downloads.html',
@@ -62,6 +64,65 @@ test('one launcher identity covers immutable editions, and foreign or credential
     'https://user:secret@game.example/revealline/releases/v2/site/',
   ])
     assert.throws(() => validateInstalledEdition({ ...b, scope }, locationRef));
+});
+test('an embedded host can use its held writer, but losing ownership or another edition writer keeps the old selection', async () => {
+  const h = setup();
+  const key = `${profile(a.version)}.writer`;
+  h.held.add(key);
+  assert.equal(
+    (await activateInstalledEdition(a, { ...h, ownsWriter: (name) => name === key })).activated,
+    true,
+  );
+  h.held.add(`${profile(b.version)}.writer`);
+  await assert.rejects(
+    activateInstalledEdition(b, { ...h, ownsWriter: (name) => name === key }),
+    /Close the game window/,
+  );
+  h.held.delete(`${profile(b.version)}.writer`);
+  let held = true;
+  await assert.rejects(
+    activateInstalledEdition(b, {
+      ...h,
+      ownsWriter: (name) => held && name === key,
+      readAsset: async () => {
+        held = false;
+        return null;
+      },
+    }),
+    /stopped owning/,
+  );
+  assert.deepEqual(readInstalledState(h.storage).active, a);
+});
+
+test('launcher activation is insufficient until its exact cached shell is verified', async () => {
+  const calls = [];
+  let ready = false;
+  const worker = {
+    state: 'activated',
+    postMessage(message, [port]) {
+      calls.push(message.type);
+      port.postMessage({
+        format: 'revealline.launcher-health.v1',
+        requestId: message.requestId,
+        status: ready ? 'ready' : 'incomplete',
+        message: 'Missing launcher HTML.',
+      });
+    },
+  };
+  const serviceWorker = {
+    register: async () => ({ active: worker }),
+    getRegistration: async () => ({ active: worker }),
+  };
+  const options = { navigatorRef: { serviceWorker }, locationRef, timeout: 100 };
+  assert.equal((await checkInstalledLauncher(options)).status, 'incomplete');
+  await assert.rejects(prepareInstalledLauncher(options), /Missing launcher HTML/);
+  ready = true;
+  assert.equal((await prepareInstalledLauncher(options)).status, 'ready');
+  assert.deepEqual(calls, [
+    'revealline.launcher-check',
+    'revealline.launcher-prepare',
+    'revealline.launcher-prepare',
+  ]);
 });
 test('first activation uses local state; no soundtrack readiness or server request is required', async () => {
   const h = setup();

@@ -401,6 +401,12 @@
     if (optional) {
       event.respondWith(
         (async () => {
+          // The downloader has already found a missing or corrupt file. Serving
+          // a same-sized damaged cache entry again would make repair impossible.
+          // Only its explicit request bypasses local bytes; verification and
+          // the durable replacement remain the downloader's responsibility.
+          if (CONFIG.packageConsent && event.request.cache === 'no-store')
+            return fetch(event.request);
           const cache = await caches.open('revealline-official-content-v1');
           const hit = await cache.match(officialKey(optional.sha256));
           if (
@@ -409,8 +415,14 @@
             Number(hit.headers.get('Content-Length')) === optional.bytes
           )
             return requestedRange(hit, event.request);
-          // Ordinary online play can still fetch an unselected chapter or picture.
-          // A miss never downloads an album or marks this group ready.
+          // New package editions require a deliberate downloader request. A
+          // mission preview or a failed cache read must not silently consume
+          // mobile data. Immutable older editions retain their original policy.
+          if (CONFIG.packageConsent && event.request.cache !== 'no-store')
+            return new Response('Download this chapter from Install & offline play first.', {
+              status: 409,
+              headers: { 'Content-Type': 'text/plain; charset=utf-8' },
+            });
           return fetch(event.request);
         })(),
       );

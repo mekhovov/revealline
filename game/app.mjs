@@ -272,6 +272,16 @@ import { missionBriefing } from './mission-brief.mjs';
 import { claimProfileWriter } from './profile-writer.mjs';
 import { commitBackup, recoverBackupImport } from './backup-storage.mjs';
 import { attachOfflinePanel } from './ui/offline-panel.mjs';
+import {
+  attachInstallOfflinePanel,
+  guardInstallOfflineBlur,
+  installOfflineOwnsElement,
+} from './ui/install-offline-panel.mjs';
+import { createOfflineDownloadAccess } from './offline-download-access.mjs';
+import { withOfflinePictureGate } from './ui/offline-picture-gate.mjs';
+import { attachOfflineToolNavigation } from './ui/offline-tool-navigation.mjs';
+import { offlineAvailability } from './offline.mjs';
+import { authoredMissionDownloadGroup } from './content-design/offline-packages.mjs';
 import { attachStorageRetention } from './ui/storage-retention.mjs';
 import { emptyProgress, loadProgress, saveProgress, awardCompletion } from './progress.mjs';
 import {
@@ -1332,114 +1342,137 @@ try {
   } = {}) {
     const pictureEntry = pictureExecutionForEntry(entry),
       pictureLevel = pictureLevelForRun(nextRun, entry, pictureEntry);
+    const guarded = (owner) =>
+      withOfflinePictureGate(owner, async ({ signal }) => {
+        if (candidateHost?.owns(entry)) {
+          await gameplayDownloads.ensureMission(
+            { routeId: authoredRoute.id, missionId: nextRun.levelId, mode: 'solo' },
+            { signal },
+          );
+          return;
+        }
+        const source =
+          entry.classicRulesPresentationCampaign || entry.baseCampaign || entry.campaign;
+        if (!entry.sourcePackId && campaignKey(source) === campaignKey(baseEntry.campaign))
+          await gameplayDownloads.ensureClassic(null, { signal });
+        else if (
+          entry.sourcePackId &&
+          isOfficialPack(packs.packs.find((pack) => pack.id === entry.sourcePackId))
+        )
+          await gameplayDownloads.ensureClassic(entry.sourcePackId, { signal });
+      });
     if (candidateHost?.owns(entry)) {
       const manifest = entry.manifests.find((item) => item.level.id === nextRun.levelId);
-      return createCandidateFlightPictures({
-        context: {
-          runId: nextRunId,
-          executionKey: campaignKey(entry.campaign),
-          levelId: nextRun.levelId,
-          levelRevision: pictureLevel.revision,
-          themeId: manifest.presentation.themeId,
-        },
-        asset: manifest.background,
-        picture: candidatePicture,
-      });
+      return guarded(
+        createCandidateFlightPictures({
+          context: {
+            runId: nextRunId,
+            executionKey: campaignKey(entry.campaign),
+            levelId: nextRun.levelId,
+            levelRevision: pictureLevel.revision,
+            themeId: manifest.presentation.themeId,
+          },
+          asset: manifest.background,
+          picture: candidatePicture,
+        }),
+      );
     }
     const authoredBackground =
       entry.levelVisuals?.find((item) => item.levelId === nextRun.level.id)?.visualOverrides
         ?.background ??
       entry.visualOverrides?.background ??
       null;
-    return createFlightPictures({
-      ...(authoredBackground
-        ? {
-            acquireLegacy: (_choice, options) =>
-              acquireAuthoredPicture(authoredBackground, options),
-          }
-        : {}),
-      context: {
-        runId: nextRunId,
-        executionKey: pictureEntry.executionKey || campaignKey(pictureEntry.campaign),
-        levelId: nextRun.levelId,
-        levelRevision: pictureLevel.revision,
-        themeId: nextThemeId,
-      },
-      level: pictureLevel,
-      themeIds: entry.themes.map((item) => item.id),
-      identityCatalog: legacy ? null : pictureIdentity(),
-      readMedia: pictureMedia,
-      acquire: (request, options) =>
-        sessionPictures.has(request.pin)
-          ? sessionPictures.acquire(request.pin, options)
-          : acquirePresentationImage(request, options),
-      pins,
-      legacy,
-      explicitLegacy,
-      prepareSelection: !legacy
-        ? (options) =>
-            releasePictures.prepareSelection({
-              ...options,
-              authoredBackground:
-                entry.levelVisuals?.find((row) => row.levelId === nextRun.level.id)?.visualOverrides
-                  ?.background ??
-                entry.visualOverrides?.background ??
-                null,
-            })
-        : undefined,
-      selectPins:
-        !legacy && chapterSnapshot?.index?.chapters.some((d) => d.id === entry.sourcePackId)
-          ? async ({ media, selection, explicitLegacy, signal }) => {
-              const checked = await checkedChapters({ signal });
-              const original = await externalChapters.authoredPicture(
-                checked,
-                {
-                  executionKey: selection.executionKey,
-                  levelId: selection.levelId,
-                  levelRevision: selection.levelRevision,
-                  themeId: nextThemeId,
-                },
-                { signal },
-              );
-              if (original.metadata.generation !== media.metadata.generation)
-                throw new Error(
-                  t('interface:pictureChoicesChangedDuringChapterReadinessRetryThePausedFlight'),
-                );
-              const current = createPresentationPins(selection);
-              const fallback =
-                explicitLegacy || current.choices.some((choice) => choice.kind === 'legacy');
-              const library = fallback
-                ? validateMediaLibrary(
-                    {
-                      ...media.metadata.document.library,
-                      assignments: [
-                        ...media.metadata.document.library.assignments.filter(
-                          (assignment) =>
-                            canonicalJSON(assignment.identity) !==
-                            canonicalJSON(original.pin.identity),
-                        ),
-                        {
-                          identity: original.pin.identity,
-                          presentationId: original.pin.presentationId,
-                          revision: original.pin.presentationRevision,
-                        },
-                      ],
-                    },
-                    { identityCatalog: selection.identityCatalog },
-                  )
-                : selection.library;
-              return createFlightPresentationPins(
-                {
-                  ...selection,
-                  library,
-                  stillDocument: media.metadata.document,
-                  storyDocument: media.story.document,
-                },
-                { signal },
-              );
+    return guarded(
+      createFlightPictures({
+        ...(authoredBackground
+          ? {
+              acquireLegacy: (_choice, options) =>
+                acquireAuthoredPicture(authoredBackground, options),
             }
+          : {}),
+        context: {
+          runId: nextRunId,
+          executionKey: pictureEntry.executionKey || campaignKey(pictureEntry.campaign),
+          levelId: nextRun.levelId,
+          levelRevision: pictureLevel.revision,
+          themeId: nextThemeId,
+        },
+        level: pictureLevel,
+        themeIds: entry.themes.map((item) => item.id),
+        identityCatalog: legacy ? null : pictureIdentity(),
+        readMedia: pictureMedia,
+        acquire: (request, options) =>
+          sessionPictures.has(request.pin)
+            ? sessionPictures.acquire(request.pin, options)
+            : acquirePresentationImage(request, options),
+        pins,
+        legacy,
+        explicitLegacy,
+        prepareSelection: !legacy
+          ? (options) =>
+              releasePictures.prepareSelection({
+                ...options,
+                authoredBackground:
+                  entry.levelVisuals?.find((row) => row.levelId === nextRun.level.id)
+                    ?.visualOverrides?.background ??
+                  entry.visualOverrides?.background ??
+                  null,
+              })
           : undefined,
-    });
+        selectPins:
+          !legacy && chapterSnapshot?.index?.chapters.some((d) => d.id === entry.sourcePackId)
+            ? async ({ media, selection, explicitLegacy, signal }) => {
+                const checked = await checkedChapters({ signal });
+                const original = await externalChapters.authoredPicture(
+                  checked,
+                  {
+                    executionKey: selection.executionKey,
+                    levelId: selection.levelId,
+                    levelRevision: selection.levelRevision,
+                    themeId: nextThemeId,
+                  },
+                  { signal },
+                );
+                if (original.metadata.generation !== media.metadata.generation)
+                  throw new Error(
+                    t('interface:pictureChoicesChangedDuringChapterReadinessRetryThePausedFlight'),
+                  );
+                const current = createPresentationPins(selection);
+                const fallback =
+                  explicitLegacy || current.choices.some((choice) => choice.kind === 'legacy');
+                const library = fallback
+                  ? validateMediaLibrary(
+                      {
+                        ...media.metadata.document.library,
+                        assignments: [
+                          ...media.metadata.document.library.assignments.filter(
+                            (assignment) =>
+                              canonicalJSON(assignment.identity) !==
+                              canonicalJSON(original.pin.identity),
+                          ),
+                          {
+                            identity: original.pin.identity,
+                            presentationId: original.pin.presentationId,
+                            revision: original.pin.presentationRevision,
+                          },
+                        ],
+                      },
+                      { identityCatalog: selection.identityCatalog },
+                    )
+                  : selection.library;
+                return createFlightPresentationPins(
+                  {
+                    ...selection,
+                    library,
+                    stillDocument: media.metadata.document,
+                    storyDocument: media.story.document,
+                  },
+                  { signal },
+                );
+              }
+            : undefined,
+      }),
+    );
   }
   function cancelPictureStart({
     retirePrewarm = false,
@@ -1501,6 +1534,9 @@ try {
       );
   }
   function warmPicture() {
+    // New packages are transferred only after the player reviews their size.
+    // Explicit Start below performs that check before acquiring any original.
+    if (offlineAvailability().packageConsent) return;
     const owner = flightPictures;
     if (!owner || owner.ready(theme.id)) return;
     const notify = flightInformation.captureWarning('host.picture');
@@ -2126,6 +2162,7 @@ try {
   function dialogOpen() {
     return !!document.querySelector('dialog[open]');
   }
+  let installOfflinePanel = null;
   const controller = createControllerRouter({
     autoJoin: true,
     navigationAliases: true,
@@ -2296,6 +2333,7 @@ try {
   let controllerCompositeRegion = null;
   const controllerShellBar = document.querySelector('.shell-bar');
   function controllerMenuRoot() {
+    if (installOfflinePanel?.frameFocused()) return null;
     const region = controllerMenuRegion();
     // Nonmodal overlays share navigation with the visible shell bar. The
     // accept predicate confines it to the overlay, shell and active lesson panel.
@@ -2321,6 +2359,10 @@ try {
     );
   }
   function controllerBack() {
+    if (installOfflinePanel?.isOpen()) {
+      installOfflinePanel.close();
+      return;
+    }
     const dialog = controllerDialog();
     if (dialog) {
       if (dialog.id === 'profile-recovery-dialog') {
@@ -2485,6 +2527,10 @@ try {
     activateControl: (element) => controllerConfirmGuard.activate(element),
     onBack: controllerBack,
     onMenu: () => {
+      if (installOfflinePanel?.isOpen()) {
+        installOfflinePanel.close();
+        return;
+      }
       if (
         !courseBlocked() &&
         !dialogOpen() &&
@@ -5232,6 +5278,8 @@ try {
     if (installed) return { pack: installed, installed: false };
     const summary = packCatalog.packs.find((pack) => pack.id === packId);
     if (!summary) throw new Error(t('interface:thisPackIsNotBundledWithTheCurrentBuild'));
+    await gameplayDownloads.ensureClassic(packId);
+    packLaunchGuard.assert(operation, packs);
     assertWriter();
     contentStatus(`Installing ${summary.name} on this device…`, false, {
       busy: true,
@@ -6620,8 +6668,43 @@ try {
     },
   });
   const offlinePanel = attachOfflinePanel();
+  installOfflinePanel = $('shell-offline')
+    ? attachInstallOfflinePanel({
+        document,
+        window,
+        downloadsURL: new URL('./downloads.html', import.meta.url),
+        getWriter: () => ({ key: `${libraryKey}.writer`, lease: writer }),
+        onOpen: () => {
+          if (started && !paused) pause(true);
+        },
+        canActivate: () => !started && !sessionBusy && !backupBusy && !contentSwitchBusy,
+        onStatus: (message) => {
+          if ($('shell-offline-status')) $('shell-offline-status').textContent = message;
+        },
+      })
+    : null;
+  const gameplayDownloads = createOfflineDownloadAccess({
+    requestPackage: (request) => installOfflinePanel.requestPackage(request),
+  });
+  const stopOfflineToolNavigation = attachOfflineToolNavigation({
+    document,
+    window,
+    access: gameplayDownloads,
+    onError: (error) => warning(error.message, null, 'host.offline'),
+  });
+  if ($('shell-offline')) $('shell-offline').onclick = () => installOfflinePanel.open();
+  if ($('settings-offline'))
+    $('settings-offline').onclick = (event) => {
+      if (!installOfflinePanel) return;
+      event.preventDefault();
+      installOfflinePanel.open();
+    };
   window.addEventListener('pagehide', (event) => {
-    if (!event.persisted) offlinePanel.destroy();
+    if (!event.persisted) {
+      offlinePanel.destroy();
+      installOfflinePanel?.dispose();
+      stopOfflineToolNavigation();
+    }
   });
   show('native-diagnostics', nativePlatform() === 'ios');
   function tuneMusic(event) {
@@ -7517,7 +7600,7 @@ try {
     const detach = () => {
       document.removeEventListener('focusin', changedFocus);
       document.removeEventListener('visibilitychange', lostForeground);
-      window.removeEventListener('blur', lostForeground);
+      window.removeEventListener('blur', windowBlur);
     };
     operation.cancel = ({ restoreFocus = false } = {}) => {
       if (libraryNextOperation !== operation) return;
@@ -7539,12 +7622,14 @@ try {
         button.focus({ preventScroll: true });
     };
     function changedFocus(event) {
+      if (installOfflineOwnsElement(event.target)) return;
       if (![button, cancelButton, document.body, document.documentElement].includes(event.target))
         operation.cancel();
     }
     function lostForeground(event) {
       if (document.hidden || event.type === 'blur') operation.cancel();
     }
+    const windowBlur = guardInstallOfflineBlur(lostForeground);
     try {
       feedback = beginPreparation(
         t('interface:findingTheNextMissionYourResultIsKept'),
@@ -7556,7 +7641,7 @@ try {
       cancelButton.focus({ preventScroll: true });
       document.addEventListener('focusin', changedFocus);
       document.addEventListener('visibilitychange', lostForeground);
-      window.addEventListener('blur', lostForeground);
+      window.addEventListener('blur', windowBlur);
       const host = await getUnifiedMissionLibrary();
       if (!current()) return;
       await host.refreshInstalled();
@@ -7745,6 +7830,12 @@ try {
         throw new DOMException(t('interface:preparationCancelled'), 'AbortError');
       let candidateAttempt = null;
       if (candidateHost?.owns(entry)) {
+        await gameplayDownloads.ensure(
+          authoredMissionDownloadGroup(authoredRoute, 'solo', level.id),
+          { signal: ticket.controller.signal },
+        );
+        if (!resultAttemptCurrent(ticket))
+          throw new DOMException(t('interface:preparationCancelled'), 'AbortError');
         candidateAttempt = await candidateHost.preparer.prepare(
           {
             missionId: candidateHost.mission(entry, destinationIndex).id,
@@ -8281,9 +8372,17 @@ try {
         prewarm.observe = feedback.update;
         if (prewarm.latest) feedback.update(prewarm.latest);
       }
-      const prepared =
-        prewarm?.promise ??
-        owner.ensure(selectedTheme, { signal: controller.signal, onStatus: feedback.update });
+      const prepared = (async () => {
+        if (candidateHost?.owns(selectedEntry))
+          await gameplayDownloads.ensure(
+            authoredMissionDownloadGroup(authoredRoute, 'solo', selectedLevel.id),
+            { signal: controller.signal },
+          );
+        return (
+          prewarm?.promise ??
+          owner.ensure(selectedTheme, { signal: controller.signal, onStatus: feedback.update })
+        );
+      })();
       void prepared
         .then(async () => {
           if (needsFreshVisuals)
@@ -9863,7 +9962,7 @@ try {
   onNativeInactive(suspendInteraction).catch((error) =>
     warning(`App lifecycle adapter unavailable: ${error.message}`, null, 'host.lifecycle'),
   );
-  window.addEventListener('blur', suspendInteraction);
+  window.addEventListener('blur', guardInstallOfflineBlur(suspendInteraction));
   function restoreListening() {
     if (document.hidden || soundtrackDisposed || enemyGuide?.practiceActive) return;
     if (!soundtrackPlayer) {
@@ -10019,6 +10118,7 @@ try {
     archivedIds: preparePackCatalog(archiveCatalogSource).packs.map(({ id }) => id),
   });
   async function prepareLibraryClassic(row, { signal }) {
+    await gameplayDownloads.ensureClassic(row.packId, { signal });
     if (row.source === 'external')
       return installSourceChapter(row.packId, null, { signal, download: true });
     if (row.source === 'optional') {
