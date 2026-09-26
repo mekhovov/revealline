@@ -137,6 +137,25 @@ class BindingTests(unittest.TestCase):
             utility.artifact_authority(API([current, failed_fastline_run, recoverable_jobs]), value),
             current,
         )
+        waived_jobs = {'jobs': [
+            {'name': 'admission', 'head_sha': 'a' * 40, 'status': 'completed', 'conclusion': 'success'},
+            {'name': 'qualify / qualify', 'head_sha': 'a' * 40, 'status': 'completed', 'conclusion': 'success'},
+            {'name': 'qualify / freeze', 'head_sha': 'a' * 40, 'status': 'completed', 'conclusion': 'success'},
+            {'name': 'qualify / test', 'head_sha': 'a' * 40, 'status': 'completed', 'conclusion': 'skipped'},
+            {'name': 'inspect-artifact', 'head_sha': 'a' * 40, 'status': 'completed', 'conclusion': 'failure'},
+        ]}
+        policy = encoded({
+            'format': 'revealline-release-test-policy.v1',
+            'mode': 'waived',
+            'authorization': utility.WAIVER_AUTHORIZATION,
+            'scope': 'automated-test-suites',
+            'reason': 'Explicit temporary user exception',
+            'restoration': 'Restore required mode when user revokes exception',
+        })
+        self.assertEqual(
+            utility.artifact_authority(API([current, failed_fastline_run, waived_jobs]), value, policy),
+            current,
+        )
         unrelated_failure = copy.deepcopy(recoverable_jobs)
         unrelated_failure['jobs'][-1]['name'] = 'publication'
         with self.assertRaises(ValueError):

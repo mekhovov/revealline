@@ -232,7 +232,7 @@ def artifact_authority(api, binding, policy_body=None):
             'Original manual source/freeze run is not completed successfully')
     waived = policy_body is not None and test_policy(policy_body)['mode'] == 'waived'
     # A policy permits skipping; an explicitly opted-in successful test run remains valid.
-    skipped = any(j.get('name') in ['test', 'test (1)'] and
+    skipped = any(str(j.get('name', '')).removeprefix('qualify / ') in ['test', 'test (1)'] and
                   j.get('conclusion') == 'skipped' for j in jobs)
     source_jobs_check(jobs, binding['source']['commit'], waived=waived and skipped)
     return item
