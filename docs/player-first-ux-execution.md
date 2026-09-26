@@ -1,5 +1,11 @@
 # Reveal Line: player-first UX execution
 
+> **Current status:** use the
+> [27 September completion and remaining delivery plan](plan-status-2026-09-27.md)
+> for the accepted public boundary, prioritized releases, ETA ranges, blockers,
+> and content-accounting limits. The checkpoint below remains the detailed
+> v0.141.6 execution contract.
+
 Approved 24 September 2026. This replaces the execution order in the older
 whole-game plans; it does not erase their content, compatibility or qualification
 requirements. Each independent feature is released before the next is accepted.
