@@ -332,8 +332,8 @@ test('registered v12 successor preserves v11 and authored order with isolated ow
   assert(authoredJourneyUsesActorMaterials(current.id));
   assert(AUTHORED_JOURNEY_ROUTE_IDS.includes(current.id));
   assert.deepEqual(DEFAULT_JOURNEY_ROUTES, {
-    solo: 'whole-spatial-v14',
-    versus: 'whole-spatial-v14',
+    solo: 'whole-spatial-v15',
+    versus: 'whole-spatial-v15',
     team: 'team-trail-impact-originals-1',
   });
   assert.equal(authoredJourneyModeHref(current.id, 'solo'), '../?journey=whole-spatial-v12');
@@ -372,7 +372,7 @@ test('Studio retains v11 and v12 after the selector advances to v14', async () =
     options
       .filter((node) => attribute(node, 'selected') !== undefined)
       .map((node) => attribute(node, 'value')),
-    ['early-cultural-routes-1'],
+    ['signal-cultural-routes-1'],
   );
   assert.equal(
     options.filter((node) => attribute(node, 'value') === 'border-cultural-routes-1').length,
