@@ -27,6 +27,7 @@ import {
 } from '../soundtrack.mjs';
 import { soundtrackPortableRecoveryPlan } from '../soundtrack-portable.mjs';
 import { inspectMP3, prepareMP3Import, probeMP3Media, throwIfSoundtrackAborted } from '../mp3.mjs';
+import { preparePrivateSoundtrackCollection } from '../soundtrack-private-intake.mjs';
 import {
   exportSoundtrackBundle,
   importSoundtrackBundle,
@@ -115,6 +116,7 @@ export function attachSoundtrackPanel({
     assets = [],
     dirty = false,
     returnFocus = null;
+  let privateCollectionPlaylistId = null;
   let auditionURL = null,
     auditionToken = 0,
     auditionController = null,
@@ -245,6 +247,8 @@ export function attachSoundtrackPanel({
     draft = adopt(saved.library);
     assets = [...saved.assets];
     dirty = false;
+    privateCollectionPlaylistId = null;
+    localizedText(collectionSummary, () => '');
     render();
     setStatus(t('interface:restoredTheSavedLibraryPlaybackIsUnchanged'));
   });
@@ -329,7 +333,7 @@ export function attachSoundtrackPanel({
   masterVolume.element.oninput = masterVolume.element.onchange = () =>
     changeMaster('volume', Number(masterVolume.element.value));
   if (audioMaster) bindings.push(audioMaster.subscribe(updateMaster));
-  function usePlaylist(chosen, { start = false } = {}) {
+  function usePlaylist(chosen, { start = false, onStarted = null } = {}) {
     return task(t('interface:savingYourPlaylistChoice'), async (signal) => {
       edit((value) => {
         value.selection.playlistId = chosen;
@@ -341,6 +345,7 @@ export function attachSoundtrackPanel({
       await player.selectPlaylist(draft.selection.playlistId);
       if (start) await (musicSession ? musicSession.play() : player.play());
       await notifyPlayback();
+      if (start) onStarted?.();
       setStatus(
         committed.warning ||
           (start
@@ -658,6 +663,56 @@ export function attachSoundtrackPanel({
   const importButton = button('import-mp3', localizedMessage('interface:importSelectedMp3s'), () =>
     importMP3Files(),
   );
+  const collectionTitle = input('collection-title', localizedMessage('interface:playlistTitle'), {
+    maxlength: '120',
+  });
+  const collectionGenre = input(
+    'collection-genre',
+    localizedMessage('interface:primaryMusicFamily'),
+    { tag: 'select' },
+  );
+  options(collectionGenre.element, [['', t('interface:unclassified')], ...genreNames]);
+  const collectionFiles = input('collection-files', localizedMessage('interface:addMp3Files'), {
+    type: 'file',
+    accept: '.mp3,audio/mpeg',
+    multiple: '',
+  });
+  const collectionFolder = input(
+    'collection-folder',
+    localizedMessage('interface:chooseMp3Folder'),
+    {
+      type: 'file',
+      accept: '.mp3,audio/mpeg',
+      multiple: '',
+      webkitdirectory: '',
+      directory: '',
+    },
+  );
+  const collectionSummary = node('p', 'collection-summary', '', {
+    class: 'micro-note',
+    role: 'status',
+    'aria-live': 'polite',
+  });
+  const reviewCollection = button(
+    'review-collection',
+    localizedMessage('interface:reviewAsPlaylist'),
+    () => importPrivateCollection(),
+  );
+  const savePlayCollection = button(
+    'save-play-collection',
+    localizedMessage('interface:saveCollectionAndPlay'),
+    () => {
+      const playlist = draft.playlists.find((item) => item.id === privateCollectionPlaylistId);
+      if (!playlist) return;
+      return usePlaylist(playlist.id, {
+        start: true,
+        onStarted: () =>
+          localizedText(collectionSummary, () =>
+            t('interface:soundtrack.privateCollectionSaved', { title: playlist.title }),
+          ),
+      });
+    },
+  );
   const trackTitle = input('track-title', localizedMessage('interface:trackTitle'), {
     maxlength: '120',
   });
@@ -905,6 +960,18 @@ export function attachSoundtrackPanel({
     node('p', null, localizedMessage('interface:batchImportKeepsOriginalMp3BytesEachFileMustBe'), {
       class: 'micro-note',
     }),
+    section(
+      t('interface:privateCollectionQuickAdd'),
+      node('p', null, localizedMessage('interface:privateCollectionQuickAddDescription'), {
+        class: 'micro-note',
+      }),
+      collectionTitle.field,
+      collectionGenre.field,
+      collectionFiles.field,
+      collectionFolder.field,
+      row(reviewCollection, savePlayCollection),
+      collectionSummary,
+    ),
     fileInput.field,
     importButton,
     tracksSelect.field,
@@ -1967,6 +2034,8 @@ export function attachSoundtrackPanel({
       trackRole,
       trackEnergy,
       trackThemes,
+      collectionTitle,
+      collectionGenre,
       listeningMode,
       installedOnly,
       recordingMode,
@@ -2127,26 +2196,28 @@ export function attachSoundtrackPanel({
     bundleDownload.setAttribute('aria-disabled', String(bundleDownload.disabled));
     discardBackup.disabled = busy || !preparedBackup;
     if (!preparedBackup) return;
-    localizedText(backupInfo, () =>
-      preparedBackup.recording
+    localizedText(backupInfo, () => {
+      const backup = preparedBackup;
+      if (!backup) return '';
+      return backup.recording
         ? t('interface:soundtrack.preparedRecordingInfo', {
-            size: bytes(preparedBackup.blob.size),
+            size: bytes(backup.blob.size),
           })
-        : preparedBackup.share
+        : backup.share
           ? t('interface:soundtrack.preparedAlbumInfo', {
-              size: bytes(preparedBackup.blob.size),
-              notice: recoveryNotice(preparedBackup.recoveryLibrary),
+              size: bytes(backup.blob.size),
+              notice: recoveryNotice(backup.recoveryLibrary),
             })
           : t('interface:soundtrack.preparedBackupInfo', {
-              size: bytes(preparedBackup.blob.size),
-              generation: preparedBackup.generation,
-              notice: recoveryNotice(preparedBackup.recoveryLibrary),
-            }),
-    );
+              size: bytes(backup.blob.size),
+              generation: backup.generation,
+              notice: recoveryNotice(backup.recoveryLibrary),
+            });
+    });
     localizedText(bundleDownload, () =>
-      preparedBackup.recording
+      preparedBackup?.recording
         ? t('interface:downloadPreparedMp3')
-        : preparedBackup.share
+        : preparedBackup?.share
           ? t('interface:downloadPreparedFile')
           : t('interface:downloadPreparedBackup'),
     );
@@ -2334,6 +2405,10 @@ export function attachSoundtrackPanel({
     );
     for (const control of columns.querySelectorAll('button,input,select'))
       control.disabled = busy || !saved;
+    const hasPrivateCollection =
+      privateCollectionPlaylistId &&
+      draft.playlists.some((playlist) => playlist.id === privateCollectionPlaylistId);
+    savePlayCollection.disabled = busy || !saved || !dirty || !hasPrivateCollection;
     useSelection.disabled = busy || !saved;
     if (catalogue) {
       listeningMode.element.value = draft.listening.mode;
@@ -2467,6 +2542,8 @@ export function attachSoundtrackPanel({
       draft = adopt(value.library);
       assets = [...value.assets];
       dirty = false;
+      privateCollectionPlaylistId = null;
+      localizedText(collectionSummary, () => '');
       const warning = await notifyLibrary(value);
       setStatus(warning || t('interface:savedLibraryLoadedImportsAndEditsRemainDraftsUntilSave'));
     });
@@ -2585,6 +2662,67 @@ export function attachSoundtrackPanel({
       render({ trackId: latest });
       fileInput.element.value = '';
       setStatus(localizedMessage('interface:soundtrack.filesImported', { count: files.length }));
+    });
+  }
+  function privateCollectionFiles() {
+    const picked = [...(collectionFiles.element.files ?? [])];
+    const folder = [...(collectionFolder.element.files ?? [])];
+    if (picked.length && folder.length) throw new Error(t('interface:chooseFilesOrAFolderNotBoth'));
+    return folder.length ? folder : picked;
+  }
+  function suggestedCollectionTitle(files) {
+    const relative = files[0]?.webkitRelativePath;
+    if (relative?.includes('/')) return relative.split('/')[0].slice(0, 120);
+    return (files[0]?.name || t('interface:myMusic')).replace(/\.mp3$/i, '').slice(0, 120);
+  }
+  async function importPrivateCollection() {
+    return task(t('interface:inspectingSelectedMp3Files'), async (signal, progress) => {
+      if (!saved) throw new Error(t('interface:loadTheLocalLibraryBeforeImporting'));
+      const files = privateCollectionFiles();
+      const title = collectionTitle.element.value.trim() || suggestedCollectionTitle(files);
+      const prepared = await preparePrivateSoundtrackCollection(draft, assets, files, {
+        title,
+        genre: collectionGenre.element.value,
+        signal,
+        probeMedia,
+        catalogue: catalogue ?? undefined,
+        makeId,
+        credit: t('interface:personalLocalUpload'),
+        onProgress: ({ file, completed, total }) =>
+          progress.update({
+            message: localizedMessage('interface:soundtrack.inspectingFile', {
+              file: file.name || t('interface:mp3Audio'),
+            }),
+            stage: 'verifying',
+            progress: { completed, total, unit: 'tracks' },
+          }),
+      });
+      invalidateBackup();
+      draft = prepared.library;
+      assets = prepared.assets;
+      dirty = true;
+      privateCollectionPlaylistId = prepared.playlistId;
+      collectionTitle.element.value = title;
+      collectionFiles.element.value = '';
+      collectionFolder.element.value = '';
+      render({
+        playlistId: prepared.playlistId,
+        trackId: prepared.trackIds.at(-1),
+      });
+      localizedText(collectionSummary, () =>
+        t('interface:soundtrack.privateCollectionReviewed', {
+          tracks: prepared.trackIds.length,
+          recordings: prepared.uniqueRecordings,
+          title,
+        }),
+      );
+      setStatus(
+        t('interface:soundtrack.privateCollectionReviewed', {
+          tracks: prepared.trackIds.length,
+          recordings: prepared.uniqueRecordings,
+          title,
+        }),
+      );
     });
   }
   async function stopAudition(restore = false) {
