@@ -206,6 +206,10 @@ export async function launchMusicIntake(argv, dependencies = {}) {
   } = splitLauncherArguments(argv);
   const currentDirectory = dependencies.currentDirectory ?? process.cwd();
   const runner = dependencies.run ?? run;
+  if (rawForwarded.length === 1 && ['--help', '-h'].includes(rawForwarded[0])) {
+    console.log(LAUNCHER_USAGE);
+    return 0;
+  }
   const licenses = licenseValues(rawForwarded);
   if (licenses.length > 1) throw new Error('--license may be provided only once.');
   if (licenses[0] === 'unknown') {
@@ -236,10 +240,6 @@ export async function launchMusicIntake(argv, dependencies = {}) {
     repositoryRoot: dependencies.repositoryRoot,
   });
   if (!archiveRoot) {
-    if (forwarded.length === 1 && ['--help', '-h'].includes(forwarded[0])) {
-      console.log(LAUNCHER_USAGE);
-      return 0;
-    }
     throw new Error(
       'RevealLine Soundtracks 02 was not found. Clone ' +
         'https://github.com/mekhovov/revealline-soundtracks-02.git and pass ' +
