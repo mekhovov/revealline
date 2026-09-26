@@ -6,9 +6,10 @@ Status date: 2026-09-26
 
 - Public baseline: **v0.132.3**; v0.132.4 Team artwork preparation is in frozen-package
   qualification and is not yet a public delivery.
-- Parent candidate: draft PR #636 / `team-cultural-specialist-originals-1`.
-- This successor is a local, non-default balance candidate. It does not change the current Team
-  route, version, selector, progress or published content yet.
+- Parent candidate: draft PR #636 at `bfc44e70e05dcc57450d5ea16f5bac7a0fdbb7c8` /
+  `team-cultural-specialist-originals-1`.
+- This successor is draft PR #642 and remains a non-default balance candidate. It does not change
+  the current Team route, version, selector, progress or published content yet.
 
 ## Completed candidate work
 
