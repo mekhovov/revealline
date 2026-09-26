@@ -4,9 +4,9 @@ Status date: 2026-09-26
 
 ## Delivery state
 
-- Public release baseline after the latest accepted fastline: **v0.132.3**.
+- Public release baseline: **v0.132.3**; v0.132.4 is in immutable-package qualification.
 - Exact current stack base: Team adoption PR #630 at
-  `000f0231a1b18e58a74fa63a80779e271e85e0a6` / source version **0.141.0**.
+  `1a0214c518789ef5ad7785addd409c8fa7b6042b` / source version **0.141.0**.
 - Active successor: draft PR #636, Team Ukrainian spatial specialists / source version **0.142.0**.
   The PR's GitHub head is authoritative after guarded restacks.
 - This source is not a public delivery until its reviewed PR, immutable release and Pages build
