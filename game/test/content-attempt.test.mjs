@@ -8,6 +8,7 @@ import { compileContentProject, resolveMission } from '../content-design/project
 import { loadPreviewArtwork } from '../content-design/assets.mjs';
 import { createRun, stepRun, FIXED_DT } from '../core/index.mjs';
 import { authoritativeCheckpoint, recordInput, exportReplay, verifyReplay } from '../replay.mjs';
+import { CONTENT_ATTEMPT_PREPARATION_TIMEOUT_MS } from '../content-design/limits.mjs';
 
 const { themes } = JSON.parse(
   await readFile(new URL('../content-design/themes.json', import.meta.url)),
@@ -211,6 +212,12 @@ test('a timed out artwork loader cannot hold preparation forever', async () => {
   );
   await assert.rejects(host.prepare(requestFor(host)), /timed out/);
   host.dispose();
+});
+
+test('candidate preparation accepts the complete reviewed-art budget and rejects larger deadlines', () => {
+  const host = setup({ timeoutMs: CONTENT_ATTEMPT_PREPARATION_TIMEOUT_MS });
+  host.dispose();
+  assert.throws(() => setup({ timeoutMs: CONTENT_ATTEMPT_PREPARATION_TIMEOUT_MS + 1 }), /timeout/);
 });
 
 test('a pre-aborted request does not start loading or retire an existing prepared attempt', async () => {

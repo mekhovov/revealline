@@ -1,7 +1,7 @@
 import { boundedJSON, exactKeys, required, stableId, dataIdentity } from '../data-json.mjs';
 import { inspectImageDataUrl } from '../content.mjs';
 import { freezeDesign } from './catalogs.mjs';
-import { CONTENT_ASSET_MAX_BYTES } from './limits.mjs';
+import { CONTENT_ARTWORK_LOAD_TIMEOUT_MS, CONTENT_ASSET_MAX_BYTES } from './limits.mjs';
 
 const verified = new WeakMap();
 export function compileAssetRevision(source) {
@@ -74,12 +74,12 @@ export async function loadPreviewArtwork(
     signal,
     fetchAsset = (path, options) => fetch(new URL(path, new URL('../', import.meta.url)), options),
     digest = (bytes) => crypto.subtle.digest('SHA-256', bytes),
-    timeoutMs = 20000,
+    timeoutMs = CONTENT_ARTWORK_LOAD_TIMEOUT_MS,
   } = {},
 ) {
   const asset = compileAssetRevision(source);
   required(
-    Number.isFinite(timeoutMs) && timeoutMs > 0 && timeoutMs <= 20000,
+    Number.isFinite(timeoutMs) && timeoutMs > 0 && timeoutMs <= CONTENT_ARTWORK_LOAD_TIMEOUT_MS,
     'Invalid artwork timeout.',
   );
   const controller = new AbortController();

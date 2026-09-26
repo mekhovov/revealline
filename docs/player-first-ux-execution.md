@@ -6,6 +6,27 @@ requirements. Each independent feature is released before the next is accepted.
 
 ## Current delivery status
 
+Checkpoint on 26 September 2026: **v0.132.3 is immutable and selected publicly,
+but ordinary Team entry is blocked on a constrained-browser path by the shared
+20-second reviewed-art verification deadline.** The pinned Twin landings PNG is
+present, matches the release manifest and downloads successfully; the browser
+times out while the complete download, digest, base64 preparation and PNG
+inspection still own the same deadline. v0.132.4 is the active corrective
+release. It extends the bounded artwork preparation budget while preserving exact
+byte/digest/dimension verification, visible loading, Cancel, Retry and stale-work
+rejection. No replacement artwork or simulation rule changes are in scope.
+The exact local v0.132.4 distribution contains 1,299 manifest files and SHA-256
+`d6298b411ba54ccc158b22a30fe68e9f87ed62e37dc7301fc15b827fd5bb98e1`.
+Browser review reached the ready Start action, entered Twin landings and recorded
+no warning/error console messages. Public verification remains the release gate.
+
+After v0.132.4 public Team play is verified, the release order is v0.133 compact
+gallery, v0.134 Team quick start, v0.135 Couch secondary navigation, v0.136 Team
+teaching, v0.137 deliberate Team terminal Retry, v0.138 Versus countdown, v0.139
+named result destinations, v0.140 Settings/Help/Collection return closure, then
+UX6 qualification. Prepared branches must rebase onto each accepted predecessor;
+their focused evidence is not cumulative release acceptance.
+
 Checkpoint on 25 September 2026: **the public selector reports v0.109.0 from
 source `b13089b702391c275f2505d1a76c87eebb9dcce0`. The v0.110.0 actor-size
 candidate was frozen and inspected, but its final publication preflight found
