@@ -82,6 +82,9 @@ reviewer names, listening approval or device results.
 
 The latest public/general GitHub release at this checkpoint is **v0.130.0**. Its
 immutable tag resolves to aggregate source `5022108ca458e9355e9567efddfee50fb49af5c1`.
+Authoritative main and annotated tag `v0.131.0` resolve to
+`a63ad4cc32fb14c53fa126d69df42e2e53d1477d`, but that tag is not yet a published
+GitHub release at this checkpoint; the release pipeline owns its publication.
 The historical #333/#331/#439 stacks remain implementation history; their selected
 successors are represented in the frozen aggregate. Skipped full shards under the
 explicit fast-release policy remain exclusions, never passes.
@@ -356,12 +359,13 @@ originals approved. No deadline is assigned to unresolved rights or paused music
   [PR #370](https://github.com/mekhovov/revealline/pull/370) merged as
   `3883259987913cb646eb44cf2580083dad673a70` and
   [v0.111.0](https://github.com/mekhovov/revealline/releases/tag/v0.111.0)
-  published as the public soundtrack archive player. The latest non-documentation
-  game baseline before this docs-only plan update is
-  `e11bf150fa7b6201a17ca6e4e51a0623b4eb88b4` after the v0.131 freeze dependency
-  repair; soundtrack regression
-  PR #555 remains merged in its ancestry. The latest public/general GitHub release remains v0.130.0. Later source or
-  game releases do not convert archive auditions into trusted built-ins or defaults.
+  published as the public soundtrack archive player. Current authoritative game
+  main is `a63ad4cc32fb14c53fa126d69df42e2e53d1477d`; annotated tag `v0.131.0`
+  resolves to that commit and includes docs-only plan
+  [PR #568](https://github.com/mekhovov/revealline/pull/568). Soundtrack regression
+  PR #555 remains merged in its ancestry. The latest published GitHub release
+  remains v0.130.0 at this checkpoint. Later source or game releases do not convert
+  archive auditions into trusted built-ins or defaults.
 - UA-FPV remains on its recording-specific public-redistribution rights hold; its
   four private import packs remain available. The rejected local AI-production
   method remains paused with **0/36 originals approved**.
@@ -659,7 +663,7 @@ version is allocated without the release owner's confirmation.
 
 | ID  | State / priority                                                                                                                                                                         | Dependency                                                                          | Next action and completion condition                                                                                                                                                                                         | Effort                                                                                                         | PR / evidence                                                                                                                                                                                                                                                                                                                                                 | Released version                                                          |
 | --- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------- |
-| M0  | Complete; maintenance continues                                                                                                                                                          | None                                                                                | Preserve all histories and update this ledger after each meaningful milestone                                                                                                                                                | Complete                                                                                                       | [PR #330](https://github.com/mekhovov/revealline/pull/330), merged efacbf087; prior source PR #321                                                                                                                                                                                                                                                            | Docs merged; no runtime release required                                  |
+| M0  | Complete; maintenance continues                                                                                                                                                          | None                                                                                | Preserve all histories and update this ledger after each meaningful milestone                                                                                                                                                | Complete                                                                                                       | [PR #330](https://github.com/mekhovov/revealline/pull/330), merged efacbf087; 140-track status [PR #568](https://github.com/mekhovov/revealline/pull/568), merged 408f751a; prior source PR #321                                                                                                                                                              | Docs merged; no runtime release required                                  |
 | M1  | Admission/source infrastructure is public in the qualified aggregate                                                                                                                     | Released-source and ongoing regression verification                                 | Preserve the #518 boundary and generated-ledger/admission gates in later releases                                                                                                                                            | Maintenance                                                                                                    | Historical #321/#331; merged replacement [PR #518](https://github.com/mekhovov/revealline/pull/518) at 36e68002; v0.130 qualification/inspection runs above                                                                                                                                                                                                   | v0.130.0 public                                                           |
 | M2  | Exact Shchedryk admission is public; bundled-source desktop playback verified                                                                                                            | Full listening, cultural, cold-offline and physical-device review                   | Complete the remaining reviews without changing the accepted exact recording identity/bytes                                                                                                                                  | About 0.5–1 day hands-on plus external listening/device review                                                 | Historical #439; merged replacement [PR #519](https://github.com/mekhovov/revealline/pull/519) at 47df2655; public transition evidence above                                                                                                                                                                                                                  | v0.130.0 public; acceptance partial                                       |
 | M3  | Quick controls are public                                                                                                                                                                | Physical keyboard/touch/controller access                                           | Verify B/N plus touch/controller Play/Pause and Next on physical targets                                                                                                                                                     | About 0.5 day hands-on, excluding device access                                                                | Historical #333; merged replacement [PR #516](https://github.com/mekhovov/revealline/pull/516) at 7ccbb6d3                                                                                                                                                                                                                                                    | v0.130.0 public; device acceptance pending                                |
@@ -702,9 +706,9 @@ Full listening review of the existing 70 is not a prerequisite for a new batch.
 5. **Original compositions:** no ETA. The rejected synchronization quality remains
    unacceptable and the 36-track production phase stays paused.
 
-This plan update is based on authoritative game main
-`e11bf150fa7b6201a17ca6e4e51a0623b4eb88b4`. It does not allocate a game version,
-change runtime code or admit a new recording.
+This plan checkpoint is reconciled through authoritative game main
+`a63ad4cc32fb14c53fa126d69df42e2e53d1477d`. It does not change runtime code or
+admit a new recording.
 
 ## M2 — Shchedryk opening theme
 
