@@ -49,6 +49,7 @@ const golden = {
   'whole-spatial-v19': [269126, 'd0e631a5b8551d422ee6b3d5a2476aa25bdf38b824bdd86def06312f0c10658e'],
   'whole-spatial-v20': [270352, '505b52ec7be45d06c71ccbfdaa6ab23a962dc6777d147c619cd0d0e6b33abe1d'],
   'whole-spatial-v21': [271337, '45eff01ef344cb77700977c7135a265e9e0c7c2c7ff1e7f3366644c8517473b8'],
+  'whole-spatial-v22': [273373, '4268a186d8565460ee8efc5566f0571d8150ec4d665380fbe329fdbd214b4072'],
   'whole-ornament-v1': [260665, '3b29bc220cdb06a33fedefabb6adec9527bd10902a9dd44899270e885ddfc4ad'],
   'whole-ornament-v2': [266314, '3f0116efe9cb9b2e134fb60dd252ac5bfbd44758a993e18a56abb2131ca10a1b'],
 };
@@ -309,6 +310,18 @@ test('Livewire cultural successor imports only its bounded successor chain', () 
   assert(!has(result, 'horizon-candidates.mjs'));
 });
 
+test('Relay cultural successor imports only its bounded successor chain', () => {
+  const result = routeProbe('whole-spatial-v22');
+  assert.deepEqual(result.output, { id: 'whole-spatial-v22' });
+  assert(has(result, 'relay-cultural-routes-candidates.mjs'));
+  assert(has(result, 'livewire-cultural-routes-candidates.mjs'));
+  assert(has(result, 'phaseworks-cultural-routes-candidates.mjs'));
+  assert(has(result, 'fracture-cultural-routes-candidates.mjs'));
+  assert(has(result, 'whole-spatial-data.mjs'));
+  assert(!has(result, 'whole-journey-candidates.mjs'));
+  assert(!has(result, 'horizon-candidates.mjs'));
+});
+
 test('ornament editions import only their bounded opt-in source chain', () => {
   const study = routeProbe('whole-ornament-v1');
   assert.deepEqual(study.output, { id: 'whole-ornament-v1' });
@@ -360,6 +373,7 @@ test('all literal lazy imports and shared modules are in the actual game build i
   const source = await readFile(new URL(loaderURL), 'utf8');
   const imports = [...source.matchAll(/import\('(.+?)'\)/g)].map((m) => m[1]);
   assert.deepEqual(imports, [
+    './relay-cultural-routes-candidates.mjs',
     './livewire-cultural-routes-candidates.mjs',
     './phaseworks-cultural-routes-candidates.mjs',
     './fracture-cultural-routes-candidates.mjs',
