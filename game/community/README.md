@@ -20,8 +20,20 @@ Before **Remove recovery download** becomes valid, the library verifies both the
 and a byte-identical package reconstructed from the installed edition. Removal is rejected if that
 review is stale or installed runtime changed. The operation deletes only the Cache Storage copy;
 it does not mutate the creator manifest/media authority, the saved-attempt key or the progress
-profile. Physical installed-media offloading is not implemented because the current managed-media
-format intentionally forbids removing historical references.
+profile.
+
+**Offload installed media** is available only while that byte-exact recovery package is retained.
+The library revalidates the package, reconstructs the installed edition and compares it with the
+published identity before preparing the removal. The commit keeps the immutable manifest and an
+offloaded marker, detaches only runtime asset references that no other active edition needs, and
+lets the managed store delete a physical blob only when no media domain still references its hash.
+Saved attempts, completion records and earned-picture ownership remain under their existing exact
+edition keys. **Reinstall exact edition** consumes the retained package locally, removes the marker
+and restores the same runtime identity without a network request. A changed package, stale media
+generation or concurrent tab causes the operation to stop before detaching bytes. Browser Web
+Locks serialize package/install mutations for one community edition, while an `offloading` state
+journal makes an interrupted cross-store commit recoverable from the retained package and the
+authoritative managed-media marker.
 
 The client exposes explicit adapters for:
 
@@ -29,6 +41,7 @@ The client exposes explicit adapters for:
 - bounded PNG/JPEG catalog previews loaded only after the player asks;
 - report submission;
 - immutable download/install and server-declared update metadata;
+- reference-aware exact-edition offload and offline reinstall;
 - owner-only publication status and unlisting; and
 - direct upload for development services and bounded tus 1.0 resumable upload for production.
 
