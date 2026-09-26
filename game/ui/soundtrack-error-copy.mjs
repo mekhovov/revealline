@@ -39,6 +39,13 @@ const exactKeys = Object.freeze({
     'errors:soundtrack.playlistNotInstalled',
   'Album recordings are not downloaded. Use Download again in Community soundtracks.':
     'errors:soundtrack.album.notDownloaded',
+  'Choose one or more MP3 files or a folder first.': 'errors:soundtrack.private.filesRequired',
+  'Enter a collection name before reviewing these files.': 'errors:soundtrack.private.nameRequired',
+  'Choose a supported music style.': 'errors:soundtrack.private.styleUnsupported',
+  'This collection would exceed the custom-track limit.': 'errors:soundtrack.private.trackLimit',
+  'This collection would exceed the custom-playlist limit.':
+    'errors:soundtrack.private.playlistLimit',
+  'This collection exceeds the managed audio budget.': 'errors:soundtrack.private.audioBudget',
 });
 
 export function soundtrackErrorText(error) {
