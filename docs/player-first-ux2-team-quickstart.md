@@ -2,10 +2,9 @@
 
 ## Scope
 
-- Reconciled base: `a4df35e81d23a40e8122de9b25024807ab1bcb91`, the local
-  v0.133.0 compact-gallery candidate stacked on the v0.132.3 Couch input handoff
-  and accepted v0.132.2 presentation revision 88.
-- Branch: `codex/team-quickstart-v134-local`.
+- Prepared donor base: `77b28377f8b30db12483407be61930f717b6af1c`, the
+  local v0.133.0 compact-gallery candidate used to create commit `84d8dbe8c`.
+- Contract-correction branch: `codex/team-quickstart-v134-contract`.
 - The package, root lock record, and build configuration identify this local
   candidate as v0.134.0.
 - This source does not claim a merge, tag, release, Pages deployment,
@@ -35,27 +34,23 @@ but it is not placed in the default Confirm path.
 
 ## Focused evidence
 
-The reconciled source passes `npm run validate`, including localization with
-9,529 messages and 7,714 source references, the 1,239-file game validator, and
-presentation revision 88. Its focused automated evidence is:
+The donor's original full-Team-host evidence was misreported. Five import cases
+still supplied plain file doubles after production required a genuine `Blob`,
+and three foreground-loss cases asked an unauthorized synthetic click to bypass
+the controller Confirm echo window. This correction uses genuine `Blob`
+fixtures and actual controller navigation without relaxing production Blob
+validation or input guards.
 
-- 53/53 localization and About-navigation tests;
-- 194/194 Couch, composite-menu, content-Team, and controller-navigation tests;
-- 103/103 controller binding, confirm-guard, lifecycle, and router tests;
-- 12/12 compact-gallery Team controller and inventory host tests; and
-- 9/9 Couch quick-start parity tests.
+The corrected local candidate passes these sequential focused files:
 
-Scoped ESLint, Prettier, version parity, generated-catalog freshness, and diff
-checks pass. Rebuilding localization preserves
-`game/i18n/content-registry.mjs` byte for byte at SHA-256
-`86db5778ee599f337be9cdb0d1e861ff51b738547eb15dce06272384662c2562`.
+- 77/77 complete Team host tests;
+- 9/9 Couch quick-start parity tests;
+- 18/18 Team picture recovery-focus tests; and
+- 5/5 presentation bootstrap-retry tests.
 
-The full Team host currently has an inherited 74/77 result. All three variants
-of `already-paused Team retires Help and controller intent ...` expect the Help
-reader to own focus at line 1486, while the host retains `coop-help-toggle`.
-The same three failures reproduce on the exact reconciled base after removing
-this candidate's two production hunks, so they are not caused by moving Arena.
-They remain a base-stack blocker to a fully green release claim.
+The recovery tests now preserve the intended distinction: passive initial
+preparation leaves Cancel secondary and focus unclaimed; an explicit Retry may
+focus and reveal Cancel, and a deliberate Cancel returns focus to Retry.
 
 The passing tests model keyboard, touch/pointer, controller assignment, Steam
 Deck native Confirm echoes, passive picture preparation, and exact gallery
@@ -64,9 +59,9 @@ bindings.
 
 ## Dependencies and evidence limits
 
-1. The local v0.133.0 base is not an accepted release. If its eventual merge
-   SHA differs, replay this single Team quick-start change onto that accepted
-   source and rerun the complete focused boundary.
+1. The local v0.133.0 donor base is not an accepted release. Replay the Team
+   quick-start and this bounded contract correction onto the accepted v0.133.0
+   source, then rerun the complete focused boundary and release gates.
 2. A later secondary-navigation change may also touch `relay-rescue.mjs`; retain
    this slice's passive-preparation focus and collapsed Team setup while taking
    the navigation owner only once.
