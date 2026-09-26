@@ -16,13 +16,13 @@ Status date: 2026-09-26
   while the first cultural and all earlier editions remain directly selectable. Neither change is
   published yet.
 - The complete nineteen-branch cultural stack is rebased onto current `main`
-  `55f83c2221c382ac5626e37a079e488eed79b920`. PR #650 is at
-  `c4cfe7092e8b7dd25b3803e4cb0531dc8007a04d`; its test/documentation successor PR #651 is a clean
+  `bc5378cf186681aa311fccbf180d295cc3bc0a6c`. PR #650 is at
+  `271c8561aad80af85d8a6b4527f84a7cad8b0066`; its test/documentation successor PR #651 is a clean
   draft whose exact head is recorded by GitHub. Avoid embedding PR #651's changing self-hash in
   this document.
-- Ready PR #657 isolates the opaque Team Classic-owner continuation hotfix directly on `main`; its
-  main-based continuation, localization and impact cohort passes **27/27**. It is not merged,
-  released or publicly verified.
+- Ready PR #657 isolates the opaque Team Classic-owner continuation hotfix directly on `main` at
+  `d24f7da4a93f6437bf3f189b0ef9a31d9bce71b3`; its exact-head continuation, localization and impact
+  cohort passes **27/27**. It is not merged, released or publicly verified.
 
 ## Completed candidate work
 
