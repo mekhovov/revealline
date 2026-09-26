@@ -100,8 +100,24 @@ that edition's picture descriptor after the normal terminal replay. A win with
 an optional story shows **Play victory story**, **Skip story**, and **Replay
 victory story** states. Story failure or refusal leaves the earned picture and
 Next action available; playback never records completion. Broad conversion,
-physical video trimming, autoplay, audio-sync qualification, and a creator UI
-for assembling Team media packages remain outside this bounded contract.
+physical video trimming, autoplay, and audio-sync qualification remain outside this bounded
+contract.
+
+## Browser assembly and shared storage
+
+The Team campaign creator exposes the strict package API as a local browser workflow. It generates
+and verifies the two cooperative templates, normalizes each selected reward through the existing
+orientation/metadata-scrubbing picture pipeline to an exact 1152 × 576 PNG, inspects optional
+complete MP4/WebM originals, and shows every level-to-media binding before approval. Approval is a
+process-local reference to the exact prepared object. Changing gameplay, a selected file, fitting,
+playback range, description, or credit removes that approval before installation or export.
+
+Installation reviews the portable size, staging bytes and total shared managed-media usage. Team's
+dedicated immutable-edition database records its exact payload, while an external-usage row in the
+existing managed-media ledger serializes its physical byte claim with still, story and audio
+reservations. Claims begin pending, become committed only after the Team transaction succeeds, and
+are reconciled from the verified Team inventory after interruption. Existing editions are retained
+if migration reveals an over-budget combined library; new writes remain blocked until usage fits.
 
 Automated feasibility is not human balance, first-attempt success,
 physical-controller certification or mobile certification.

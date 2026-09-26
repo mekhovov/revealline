@@ -517,5 +517,8 @@
   "journey.positiveTimeoutRequired": "Journey storage needs a positive operation timeout.",
   "journey.storageTimeout": "Journey storage is taking too long. Progress is kept in this session.",
   "journey.pictureReceiptsUnsupported": "This Journey backend cannot safely save picture receipts. Export and retry.",
-  "journey.eventBatchSize": "Journey progress needs one to 256 events per transaction."
+  "journey.eventBatchSize": "Journey progress needs one to 256 events per transaction.",
+  "creator.teamStudio.hashCollision": "Two selected Team files produced an inconsistent content identity.",
+  "creator.teamStudio.generateFirst": "Generate and verify the Team gameplay before adding media.",
+  "creator.teamStudio.pictureRequired": "Choose a reward picture for {{level}}."
 }
