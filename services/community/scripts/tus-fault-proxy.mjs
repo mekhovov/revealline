@@ -37,17 +37,31 @@ const requestHeaders = (headers) => {
   return result;
 };
 
-const responseHeaders = (headers) => {
+const responseHeaders = (headers, { upstream, proxyOrigin }) => {
   const result = {};
   for (const [name, value] of headers) {
-    if (!HOP_BY_HOP_HEADERS.has(name.toLowerCase())) result[name] = value;
+    if (HOP_BY_HOP_HEADERS.has(name.toLowerCase())) continue;
+    if (name.toLowerCase() === 'location') {
+      const location = new URL(value, upstream);
+      if (location.origin === upstream.origin) {
+        const prefix = upstream.pathname.endsWith('/')
+          ? upstream.pathname
+          : `${upstream.pathname}/`;
+        const relativePath = location.pathname.startsWith(prefix)
+          ? location.pathname.slice(prefix.length)
+          : location.pathname.replace(/^\//u, '');
+        result[name] = new URL(`${relativePath}${location.search}`, proxyOrigin).href;
+        continue;
+      }
+    }
+    result[name] = value;
   }
   return result;
 };
 
-const finishResponse = async (response, upstream) => {
-  const body = Buffer.from(await upstream.arrayBuffer());
-  response.writeHead(upstream.status, responseHeaders(upstream.headers));
+const finishResponse = async (response, upstreamResponse, context) => {
+  const body = Buffer.from(await upstreamResponse.arrayBuffer());
+  response.writeHead(upstreamResponse.status, responseHeaders(upstreamResponse.headers, context));
   response.end(body);
 };
 
@@ -61,16 +75,24 @@ const finishResponse = async (response, upstream) => {
  */
 export async function startTusFaultProxy({
   upstreamURL,
+  allowRemoteUpstream = false,
   dropAfterBytes = 17,
   maximumRequestBytes = 1024 * 1024,
   requestTimeoutMs = 5_000,
 } = {}) {
   const upstream = new URL(upstreamURL);
   required(['http:', 'https:'].includes(upstream.protocol), 'Proxy upstream URL is invalid.');
+  const loopback = ['127.0.0.1', 'localhost', '[::1]'].includes(upstream.hostname);
+  required(loopback || allowRemoteUpstream, 'Fault proxy upstream must be loopback-only.');
   required(
-    ['127.0.0.1', 'localhost', '[::1]'].includes(upstream.hostname),
-    'Fault proxy upstream must be loopback-only.',
+    loopback || upstream.protocol === 'https:',
+    'Remote fault proxy upstream must use HTTPS.',
   );
+  required(
+    !upstream.username && !upstream.password && !upstream.search && !upstream.hash,
+    'Fault proxy upstream URL must not contain credentials, a query, or a fragment.',
+  );
+  upstream.pathname = upstream.pathname.endsWith('/') ? upstream.pathname : `${upstream.pathname}/`;
   required(
     Number.isSafeInteger(dropAfterBytes) && dropAfterBytes > 0,
     'Dropped PATCH byte count is invalid.',
@@ -94,13 +116,15 @@ export async function startTusFaultProxy({
     faultInjected: false,
     committedBeforeDrop: null,
   };
+  let proxyOrigin;
 
   const server = createServer(async (request, response) => {
     try {
       audit.requests += 1;
       const method = request.method ?? 'GET';
       const requestURL = new URL(request.url ?? '/', upstream);
-      const target = new URL(`${requestURL.pathname}${requestURL.search}`, upstream);
+      const target = new URL(requestURL.pathname.replace(/^\//u, ''), upstream);
+      target.search = requestURL.search;
       const body = ['GET', 'HEAD'].includes(method)
         ? null
         : await boundedBody(request, maximumRequestBytes);
@@ -161,7 +185,7 @@ export async function startTusFaultProxy({
         const offset = Number(forwarded.headers.get('upload-offset'));
         audit.headOffsets.push(Number.isSafeInteger(offset) ? offset : null);
       }
-      await finishResponse(response, forwarded);
+      await finishResponse(response, forwarded, { upstream, proxyOrigin });
     } catch (error) {
       if (response.destroyed || request.socket.destroyed) return;
       response.writeHead(502, { 'content-type': 'text/plain; charset=utf-8' });
@@ -179,9 +203,10 @@ export async function startTusFaultProxy({
   });
   const address = server.address();
   required(address && typeof address === 'object', 'Fault proxy did not bind a TCP address.');
+  proxyOrigin = `http://127.0.0.1:${address.port}/`;
 
   return Object.freeze({
-    origin: `http://127.0.0.1:${address.port}`,
+    origin: proxyOrigin,
     snapshot: () =>
       Object.freeze({
         ...audit,

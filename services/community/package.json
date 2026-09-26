@@ -16,6 +16,7 @@
     "recovery": "node src/recovery-runner.mjs",
     "recovery:rehearse": "node src/recovery-rehearsal-runner.mjs",
     "acceptance:tus-resume": "node scripts/tus-resume-acceptance.mjs",
+    "acceptance:tus-deployed": "node src/deployed-tus-resume-runner.mjs",
     "acceptance:deployed": "node src/deployed-journey-runner.mjs",
     "test": "node --test test/*.test.mjs",
     "lint": "eslint \"src/**/*.mjs\" \"scripts/**/*.mjs\" \"test/**/*.mjs\" eslint.config.mjs --max-warnings 0",
