@@ -2,6 +2,7 @@ import { albumFixture, albumCatalog, responseFor } from './helpers/soundtrack-al
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
+import { setLocale } from '../i18n/index.mjs';
 import { attachSoundtrackPanel } from '../ui/soundtrack-panel.mjs';
 import { ONLINE_SOUNDTRACK_CATALOGUE_URL } from '../online-soundtrack-catalogue.mjs';
 import { createAudioMaster } from '../ui/audio-master.mjs';
@@ -630,6 +631,19 @@ test('first Studio read restores displaced Close focus after a reported storage 
   assert.equal(app.node('close').disabled, false);
   assert.equal(app.doc.activeElement === app.node('close'), true, 'Expected exact focused node');
   assert.equal(app.panel.close(), true, 'A failed read does not trap the player.');
+});
+
+test('a visible soundtrack storage error follows a live locale change', async (t) => {
+  t.after(() => setLocale('en', { persist: false }));
+  setLocale('en', { persist: false });
+  const app = await pendingFirstOpen(t);
+  app.reject(new Error('Close older game tabs to open soundtrack storage.'));
+  await app.opening;
+  assert.match(app.node('status').textContent, /Close older game tabs/);
+
+  setLocale('uk', { persist: false });
+  assert.match(app.node('status').textContent, /Закрийте старі вкладки з грою/);
+  assert.equal(app.node('status').dataset.state, 'error');
 });
 
 test('first Studio read preserves a deliberate transport focus chosen while loading', async (t) => {
