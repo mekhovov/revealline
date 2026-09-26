@@ -228,6 +228,26 @@ test('external Team editions share reservation capacity and recover abandoned cl
     [{ id: 'b'.repeat(64), state: 'committed' }],
   );
 });
+test('external Team claim blocks audio admission without changing its generation or blob', async () => {
+  const { manager } = setup(),
+    initial = await manager.usage(),
+    id = 'd'.repeat(64),
+    claimBytes = MANAGED_MEDIA_LIMITS.bytes - initial.usedBytes - 2048;
+  await manager.claimExternalUsage({ owner: 'creator-team', id, bytes: claimBytes });
+  await assert.rejects(
+    manager.commitDomain('audio', audio.prepared, { expectedGeneration: 0 }),
+    /256 MiB/,
+  );
+  let saved = await manager.readDomain('audio');
+  assert.equal(saved.generation, 0);
+  assert.equal(saved.assets.length, 0);
+  assert.equal(await manager.readBlob(audio.track.asset.sha256), null);
+  await manager.releaseExternalUsage({ owner: 'creator-team', id });
+  await manager.commitDomain('audio', audio.prepared, { expectedGeneration: 0 });
+  saved = await manager.readDomain('audio');
+  assert.equal(saved.generation, 1);
+  assert.deepEqual(await bytes(saved.assets[0].blob), await bytes(audio.blob));
+});
 test('active media reservation constrains P3 audio even with otherManagedBytes zero', async () => {
   const { memory, manager } = setup(),
     store = createSoundtrackStore({ managedStore: manager });

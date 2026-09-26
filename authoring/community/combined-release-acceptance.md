@@ -64,7 +64,7 @@ output. Its largest new source asset is the pinned, licensed Mediabunny browser 
 
 ## Integrated evidence
 
-- `npm run test:creator-feature`: **543** top-level subtests and **545/545** total
+- `npm run test:creator-feature`: **544** top-level subtests and **546/546** total
   creator/runtime tests passed. The community service suite passed **43/43** checks from the current
   rebased source. The full runtime run first exposed five sparse
   checkout omissions and three injected-host database-model conflicts; the exact owning cohorts
@@ -76,7 +76,7 @@ output. Its largest new source asset is the pinned, licensed Mediabunny browser 
 - The current focused Team/shared-ledger/UI cohort passes **43/43**, including exact picture
   normalization, package/install/intake, aggregate quota pressure, abandoned-claim reconciliation,
   storage review and immutable edition accounting. The complete rebased creator cohort passes
-  **543** top-level subtests and **545/545** total tests after the installed-campaign continuation repair, unfinished middle-mission recovery addition, offload/audio slices and visible Creator
+  **544** top-level subtests and **546/546** total tests after the installed-campaign continuation repair, unfinished middle-mission recovery addition, offload/audio slices and visible Creator
   Versus continuation fix.
 - Installed creator Versus, bundle, qualification, profile-edition and picture durability coverage
   passes **30** top-level tests and **32/32** total tests including nested host checks. The real host
@@ -90,10 +90,11 @@ output. Its largest new source asset is the pinned, licensed Mediabunny browser 
   controller-authorized menu activation and strict Team file intake with real `Blob` values.
 - The focused controller/router overlap with the new `main` short-tap lifecycle passes **84/84**,
   including the actual Steam Deck short-tap host case and native-input echo ordering.
-- The subsequent `fpv90` presentation-provenance rebase retains the exact reviewed Team picture
-  bytes for current play and preserves immutable `fpv58`–`fpv89` attempts. Its bounded 33-policy
-  authority and current/retained Team picture cohort pass **112/112**; unknown `fpv91` still fails
-  closed.
+- The exact `fpv91` managed-media continuation retains the reviewed Team picture bytes for current
+  play and preserves immutable `fpv58`–`fpv90` attempts. Its bounded 34-policy authority and the
+  three current/retained picture cohorts pass **108/108**; unknown `fpv92` still fails closed. The
+  two changed shared-media dependencies are bound by review record SHA-256
+  `16f3eb26f28eae82f6529c8a872438c216a05d7a905e0fee0b3d6b0e9601e998`.
 - Rotated-orientation and physical-transform focused cohort: **50/50 passed**, with **114/114**
   across the expanded video/editor/intake/bundle group.
 - The final AAC slice passes **34/34** focused tests. Its owned six-second 640 × 360 AVC plus mono
@@ -125,8 +126,8 @@ output. Its largest new source asset is the pinned, licensed Mediabunny browser 
   player with **Start mission** enabled.
 - `npm run validate`: passed for 1,244 files; exact whole-spatial snapshot SHA-256
   `e62ef45089df1bbaea04cceb932949fbe8d29377a4eeefcac8280125006495b3`.
-- Exact presentation SHA-256 after the `fpv90` provenance rebase:
-  `e886fd014b50e55bb0a03262dc766ddab37af008ea103ffc45f52967d4f7c686`.
+- Exact presentation SHA-256 after the `fpv91` managed-media continuation:
+  `b353a6d57e674a257ac6b15bc44ce922c290c826211ea5e93b76bb672ac49807`.
 - Root and community-service ESLint and Prettier checks: passed.
 - Native formatting, Motion Lab syntax, Field Kit producer check, and Field Kit readiness: passed.
 - Root and community dependency audits: zero reported vulnerabilities.
