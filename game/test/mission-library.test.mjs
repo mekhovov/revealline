@@ -129,8 +129,30 @@ test('metadata cannot manufacture ready state, an exact installed replacement in
   library.register(source());
   assert.equal(library.missions.length, 1);
   assert.equal(library.missions[0].id, old.id);
+  assert.equal(library.find(old.id), library.missions[0]);
+  assert.notEqual(library.find(old.id), old);
   assert.throws(() => library.launch(old), /stale/);
   assert.equal(library.launch(library.missions[0]), true);
+});
+
+test('identity and mode indexes track accepted owner removal and disposal', () => {
+  const library = createMissionLibrary([
+    source(),
+    source({ id: 'team', collection: 'Journey', entries: [entry('coop', ['team'])] }),
+  ]);
+  const classic = library.missions.find((row) => row.ownerId === 'original'),
+    team = library.missions.find((row) => row.ownerId === 'team');
+  assert.equal(library.find(classic.id), classic);
+  assert.equal(library.find(team.id), team);
+  assert.deepEqual(library.forMode('solo'), [classic]);
+  assert.deepEqual(library.forMode('team'), [team]);
+  assert.equal(library.remove('original'), true);
+  assert.equal(library.find(classic.id), null);
+  assert.deepEqual(library.forMode('solo'), []);
+  assert.deepEqual(library.forMode('team'), [team]);
+  library.dispose();
+  assert.equal(library.find(team.id), null);
+  assert.deepEqual(library.forMode('team'), []);
 });
 
 test('reject duplicate source rows atomically without invalidating accepted content', () => {
