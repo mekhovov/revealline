@@ -5,19 +5,22 @@ the previously stacked image, batch, video, publishing, store, Versus, Team, and
 editing candidates. The earlier phase records remain detailed provenance; they are not separate
 release claims.
 
-## Candidate identity
+## Released identity
 
 - Merged framework source: PR #465, merged 25 September 2026.
-- Rebased hardening base: `8f7ea5540d6851fb2d6d77a42c899e071e65e52a` (`main`, after the accepted
-  `v0.132.5` selector, Fastline recovery hardening, public-byte verification,
-  live locale refresh repair, throughput corrections, and exact Field Kit revision 90 review).
-- Hardening checkpoint before this acceptance refresh:
-  `3f2c83cf193117f9884796f8bf1b16f1c6c21044`.
-- Assigned release target and working source: `v0.141.0` in PR #564. The repository release
-  coordinator still has to freeze the reviewed candidate.
+- Creator hardening: PR #564, merged as
+  `5d6c97c850a648c5ebe93d3cf57731aeb67d0bbb`.
+- Published immutable release: `v0.141.0`, frozen from that exact creator-hardening source.
+- Replaced-edition preservation: Archive 94 publicly preserves `v0.132.5`.
+- Production selector: PR #673, merged as
+  `44a6ce672632a2d30cbf94374b172e213b75063c`.
+- Production Pages: deployment `6679678040` from workflow run `36246645007`, completed
+  successfully. Its public audit authenticated 1,877 files and 630,364,265 bytes with zero
+  failures. Built-in-browser checks found no browser errors on ordinary gameplay, Creator, or Team.
 
-The candidate contains no uploaded creator image or video fixtures and no generated distribution
-output. Its largest new source asset is the pinned, licensed Mediabunny browser module.
+The released source contains no uploaded creator image or video fixtures. Its largest new source
+asset is the pinned, licensed Mediabunny browser module; generated distribution bytes remain release
+artifacts rather than source inputs.
 
 ## Included behavior
 
@@ -133,9 +136,9 @@ output. Its largest new source asset is the pinned, licensed Mediabunny browser 
 - Root and community dependency audits: zero reported vulnerabilities.
 - A local `npm run build` passed for **1,304 files** at source version `0.141.0` before the final
   presentation-only rebase, with distribution SHA-256
-  `3fb91ab6f0b4d3cbc7d70c5a750cfaf13ced4c62c94f8b0dc4c78b690c77cc2e`. The latest local rebuild
-  could not complete because the host volume ran out of space; the hosted exact-head build and
-  immutable freeze remain the authoritative PR/release gates.
+  `3fb91ab6f0b4d3cbc7d70c5a750cfaf13ced4c62c94f8b0dc4c78b690c77cc2e`. The authoritative hosted
+  qualification, immutable freeze and publication completed successfully from exact source
+  `5d6c97c850a648c5ebe93d3cf57731aeb67d0bbb`.
 - Built-in-browser evidence in the phase records covers single-image completion, 12- and 50-image
   batches, cancel/resume and splitting, video-only victory playback, and verified silent-AVC trim.
   On the current combined source, a fresh picture generated a visible moving enemy and two collision
@@ -221,8 +224,16 @@ restored only from the exact retained package. Atomic quota-failure rollback is 
 injected IndexedDB failures. Deliberate browser database corruption and genuine browser-wide quota
 exhaustion are not claimed as end-user browser acceptance.
 
-PR #465 is merged. The hardening branch is rebased onto current protected `main` in PR #564,
-which has the repository-assigned target and source identity `v0.141.0`. The `v0.132.4` release and
-selector are accepted, and #564 is rebased onto that protected `main`. Publication still
-requires exact-head hosted checks, review, an immutable freeze, artifact hashes, public
-online/offline verification, and a separately reviewed Pages selector update where applicable.
+PR #564 is merged and `v0.141.0` is published from its exact merge source. Archive 94 preserves the
+replaced `v0.132.5` edition. Selector PR #673 is merged, and production Pages deployment
+`6679678040` / run `36246645007` passed its public audit with 1,877 files, 630,364,265 bytes and
+zero failures. Ordinary gameplay, Creator and Team routes loaded cleanly in the built-in browser.
+No creator PR, release, archive or Pages selector gate remains.
+
+The remaining acceptance is environment-dependent: live community infrastructure and the complete
+two-user journey need 0.5–1 day after PostgreSQL/proxy/mail/blob infrastructure is available;
+Firefox, Safari, physical mobile, physical-speaker and broader-codec qualification need 1–2 days
+when those environments are available. Genuine browser-wide quota exhaustion, deliberate storage
+corruption and measured peak-memory acceptance also remain unclaimed. Because `v0.141.0` is the
+highest published stable release, any still-open `v0.133.0` through `v0.140.0` candidate must be
+renumbered above `v0.141.0` before publication.
