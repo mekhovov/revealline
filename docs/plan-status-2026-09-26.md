@@ -27,9 +27,10 @@ versions or acceptance gates are still current.
   route/bootstrap/navigation cohort passes **201/201 with zero skips**, and repository validation
   passes for 10,138 localized messages, 7,994 references and 1,268 files. All 27 remote tips were
   replaced atomically with exact old-head leases; PRs #650, #651, #661, #664-#667 and #670-#672
-  resolve cleanly against their intended rebased predecessors. Independent PR #657 remains at
-  `6459e8fbc2e11f0c3bd6d735885c674c9e7295b8` and needs its own current-main rebase before
-  promotion. The dirty root checkout was not changed.
+  resolve cleanly against their intended rebased predecessors. Independent PR #657 is now rebased
+  separately onto current `main` at `f5333b348ddb6cb7c730e59bf007b3b58dd1c96a`; its runtime
+  patch remains range-diff identical and its accepted-main fixture reconciliation is isolated from
+  the cultural chain. The dirty root checkout was not changed.
 
 ## Completed source work
 
@@ -42,7 +43,7 @@ versions or acceptance gates are still current.
 | Second Team Ukrainian slice / PR #642            | Clean non-default draft       | Crossed gardens, Split orchards and Weaver crossing redesigned copy-on-write; no selector/default/version change yet.                                                                                                                                                                                                                                                                                                                                                                                            |
 | Second Team current edition / PR #650            | Clean draft, source `0.149.0` | Default/previous edition, Team library, Studio, exact Next, isolated progress and EN/UK wiring. Current doc-only-rebased tip `6de9e3cd8` maps from the exact 79/79 zero-skip Team cohort covering current/default entry, v1/v2 cultural routes, preset/seed feasibility, safe openings, no-Support exchanges, pinned full clears, handoffs, Studio, preserved impact editions and exact Next. Hosted gates remain.                                                                                               |
 | Unified-library fixture reconciliation / PR #651 | Clean draft, test/docs only   | Confirms 91 current + 48 prior Journey + 188 Classic = 327 unique rows and updates stale 201/279 and `whole-spatial-v5/v6` expectations to current v25 ownership. Current doc-only-rebased tip `cc84407f8` maps from the exact 82/82 zero-skip run across the four corrected Solo/Versus/Team-return host files.                                                                                                                                                                                                 |
-| Team opaque-owner continuation / PR #657         | Ready isolated hotfix         | Shared Next no longer JSON-parses opaque Team Classic owner IDs; Current/Original lanes remain separate and Classic → Custom continuation is restored. Exact current-main continuation/localization/impact cohort passes 27/27 at `6459e8fbc2e11f0c3bd6d735885c674c9e7295b8`; not merged or public.                                                                                                                                                                                                              |
+| Team opaque-owner continuation / PR #657         | Rebased isolated hotfix       | Shared Next no longer JSON-parses opaque Team Classic owner IDs; Current/Original lanes remain separate and Classic → Custom continuation is restored. Exact current-main head `f5333b348` passes 33/33 continuation/localization/historical-impact/Team-impact checks with zero skips, targeted lint/format/diff checks and repository validation. The only post-rebase change is a fixture-only accepted Team-attempt hook; not merged or public.                                                              |
 | Current Journey pacing inventory / PR #661       | Clean stacked draft           | Adds a reusable runtime-prepared spatial-variety inspector and pins exact v25 facts: 91 source missions, 71 core missions, bands 1–12, consistent Standard craft speed and 21 post-opening open/plain review candidates. Current doc-only-rebased tip `25b4c2b62` maps from the 4/4, ESLint and Prettier pass after correcting the report's formatting drift; this is not human balance evidence.                                                                                                                |
 | Relay cultural completion / PR #664              | Clean explicit v26 draft      | Redesigns Spiral stores, Nested relays and Watchpost exchange from bounded official-museum vocabulary; preserves v25/default ownership and reduces post-opening open/plain candidates from 21 to 18. Current doc-only-rebased tip `0ab499913` maps from the corrected exact 156/156 zero-skip run and owns the accepted creator actor-material fixture pass-through. Hosted gates remain.                                                                                                                        |
 | Crosswind cultural completion / PR #665          | Clean explicit v27 draft      | Redesigns Survey markers, Compass array and Outer loop with original wall fields informed by three official museum records. Preserves v25/default and v26 ownership, actors, foundations, arrows and objectives; reduces the post-opening open/plain queue from 18 to 15. Exact current tip `59211391b` passes its 159/159 zero-skip candidate, route, bootstrap and host cohort; the duplicate later fixture patch remains dropped because PR #664 owns it. Hosted gates remain.                                |
@@ -95,7 +96,7 @@ large-asset and archive delays are outside these estimates.
 |        0 | Hosted exact-head qualification         | Run the focused hosted gates on the rebased tips and preserve truthful skipped-suite boundaries                                                                                                      |                                      **2–6 hours per bounded batch** |
 |        1 | Promote the cultural Journey chain      | Review/merge in dependency order, immutable release and public play for each accepted batch                                                                                                          |                               **1–2 working days per release batch** |
 |        2 | Complete second Team slice and fixtures | Review PRs #650/#651, immutable public delivery and frozen-build checks; source wiring and bounded runtime/host verification are complete                                                            |                                     **3–6 hours** plus release queue |
-|        3 | Team continuation and qualification     | Rebase/review/publish PR #657; paired-board fairness, controller/touch/keyboard, cross-campaign Next, Skip, reload/Continue and public frozen-build proof                                            |                      **8–16 hours** plus release queue/device access |
+|        3 | Team continuation and qualification     | Review/publish rebased PR #657; paired-board fairness, controller/touch/keyboard, cross-campaign Next, Skip, reload/Continue and public frozen-build proof                                           |                      **8–16 hours** plus release queue/device access |
 |        4 | Whole-Journey accessibility/performance | The spatial disposition queue is resolved with two intentional open lessons retained. Remaining work is reduced effects, contrast, small-screen, startup/performance and deterministic qualification | **2–4 working days** for accessibility and performance qualification |
 |        5 | Human balance and cultural review       | Understandable failures, distinct missions, enjoyable retries, Team cooperation quality and cultural review by people                                                                                |                   **1–2 days synthesis** after testers are available |
 
@@ -136,26 +137,23 @@ batch is actually promoted.
    decide whether an open layout is distinct, fair and enjoyable.
 10. **v26 remains opt-in:** PR #664 registers a preserved successor and repairs native bootstrap
     links for v12-v26, but deliberately leaves v25 as the default until review and release allocation.
-    Its deterministic 140-test cohort does not establish enjoyment or cultural approval.
+    Its exact-current-head 156/156 zero-skip cohort does not establish enjoyment or cultural
+    approval.
 11. **v27 remains opt-in:** PR #665 registers a separate v27 review identity while keeping v25 as
-    default. Its 155-test sequential cohort and repository validation pass, but it still needs hosted
-    exact-head qualification, review and promotion through the serialized release lane.
+    default. Its exact-current-head 159/159 zero-skip cohort passes, but it still needs hosted gates,
+    review and promotion through the serialized release lane.
 12. **v28 remains opt-in:** PR #666 preserves v25 as default and v27 as history. Its exact-head
-    candidate/route/bootstrap/host cohort passes 158/158, along with repository validation and
-    targeted lint/format/diff checks. Review, hosted qualification, promotion and public evidence
-    are still required.
+    candidate/route/bootstrap/host cohort passes 162/162 with zero skips. Review, hosted
+    qualification, promotion and public evidence are still required.
 13. **v29 remains opt-in:** PR #667 preserves v25 as default and v28 as history. Its exact-head
-    candidate/route/bootstrap/host cohort passes 161/161, along with repository validation and
-    targeted lint/format/diff checks. Review, hosted qualification, promotion and public evidence
-    are still required.
-14. **v30 remains opt-in:** draft PR #670 preserves v25 as default and v29 as history. Its earlier
-    candidate/route/bootstrap cohort passes 150/150 with zero skips, and the current combined
-    v31/v32 cohort exercises the inherited route after the v0.141.0 rebase. Hosted qualification,
+    candidate/route/bootstrap/host cohort passes 165/165 with zero skips. Review, hosted
+    qualification, promotion and public evidence are still required.
+14. **v30 remains opt-in:** draft PR #670 preserves v25 as default and v29 as history. Its exact
+    candidate/route/bootstrap/host cohort passes 156/156 with zero skips. Hosted qualification,
     review, promotion and public evidence are still required.
 15. **v31 remains opt-in:** draft PR #671 preserves v25 as default and v30 as history. Its
-    candidate/route/bootstrap cohort passes 164/164 with zero skips, and repository validation plus
-    targeted lint/format/diff checks pass. Hosted qualification, review, promotion and public
-    evidence remain.
+    exact candidate/route/bootstrap/host cohort passes 170/170 with zero skips. Hosted
+    qualification, review, promotion and public evidence remain.
 16. **v32 remains opt-in:** draft PR #672 preserves v25 as default and v31 as history. Its exact
     v0.141.0-based candidate/route/bootstrap/navigation cohort passes 201/201 with zero skips, and
     repository validation passes. The two remaining open/plain boards are intentional accepted
@@ -168,8 +166,8 @@ batch is actually promoted.
    inventory at its exact rebased head.
 2. Review PRs #664-#672 in dependency order. Do not redesign Behind the patrol or Side-door bays
    merely to force a zero open/plain count; both are documented intentional lessons.
-3. Rebase and qualify isolated PR #657 separately; do not entangle its Team Classic → Custom Next
-   repair with the cultural release chain.
+3. Review and publish the separately rebased PR #657 without entangling its Team Classic → Custom
+   Next repair with the cultural release chain.
 4. Promote accepted cultural releases through the sole publisher, reporting immutable release and
    actual public delivery rather than a merge or workflow start.
 5. Run the remaining accessibility, compact-layout, startup/performance, physical-device and human
