@@ -63,18 +63,36 @@ export async function verifyStudioPreview({
     required(reader, 'The preview server must support bounded file reads.');
     const chunks = [];
     let length = 0;
+    const cancel = () => {
+      // A transport may never finish cancellation. Cleanup cannot delay or
+      // replace the original byte-count or abort error.
+      try {
+        void reader.cancel().catch(() => {});
+      } catch {
+        /* Best effort. */
+      }
+    };
+    signal?.addEventListener('abort', cancel, { once: true });
     try {
       for (;;) {
         abort(signal);
         const { done, value } = await reader.read();
+        abort(signal);
         if (done) break;
         length += value.length;
         required(length <= fact.bytes, `Artifact byte count differs: ${path}`);
         chunks.push(value);
       }
     } catch (error) {
-      await reader.cancel();
+      cancel();
       throw error;
+    } finally {
+      signal?.removeEventListener('abort', cancel);
+      try {
+        reader.releaseLock();
+      } catch {
+        /* Preserve the read failure if lock cleanup also fails. */
+      }
     }
     required(length === fact.bytes, `Artifact byte count differs: ${path}`);
     const bytes = new Uint8Array(length);

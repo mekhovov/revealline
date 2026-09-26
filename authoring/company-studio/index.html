@@ -266,6 +266,112 @@
             hidden
           ></iframe>
           <div id="report-checks" class="panel" hidden></div>
+          <section id="mission-review" class="panel" aria-labelledby="mission-review-title" hidden>
+            <h3 id="mission-review-title">Mission artwork and content observations</h3>
+            <p>
+              Record what you observe in the verified game. Artwork observations are separate from
+              formative playtesting and do not repeat or replace its reported results. These notes
+              grant no asset or release approval.
+            </p>
+            <p id="review-binding" class="path"></p>
+            <p id="review-state" role="status"></p>
+            <p id="review-coverage" class="small"></p>
+            <div class="review-actions">
+              <label class="file-button"
+                >Import observations<input
+                  id="import-observations"
+                  type="file"
+                  accept="application/json,.json"
+              /></label>
+              <label class="file-button"
+                >Import generation notes<input
+                  id="import-generation-notes"
+                  type="file"
+                  accept="application/json,.json"
+              /></label>
+              <button id="export-observations" type="button" disabled>
+                Export manual observations
+              </button>
+              <button id="review-new-artifact" type="button" hidden>
+                Discard prior observations and review current artifact
+              </button>
+            </div>
+            <p class="small">
+              Imports are limited to 2 MiB. Generation notes must match the exact selected picture.
+              They are recorded prose, not independent approval. No original master is fetched.
+              Export before closing this tab.
+            </p>
+            <form id="review-form">
+              <fieldset id="review-fields">
+                <legend>Observed mission and scene</legend>
+                <label>Mission<select id="review-mission"></select></label>
+                <pre id="review-picture" class="review-picture"></pre>
+                <details>
+                  <summary>Content and source references</summary>
+                  <div id="review-attribution" class="source-links"></div>
+                </details>
+                <details>
+                  <summary>Recorded generation notes and warnings</summary>
+                  <div id="review-generation-notes" class="source-links"></div>
+                </details>
+                <div class="form-grid">
+                  <label
+                    >Observer<input
+                      id="review-observer"
+                      required
+                      maxlength="160"
+                      autocomplete="off"
+                  /></label>
+                  <label
+                    >Motion actually observed<select id="review-motion" required>
+                      <option value="">Choose motion</option>
+                      <option value="standard">Standard motion</option>
+                      <option value="reduced">Reduced motion</option>
+                    </select></label
+                  >
+                  <label
+                    >Viewport width (CSS pixels)<input
+                      id="review-width"
+                      type="number"
+                      min="240"
+                      max="8192"
+                      required
+                  /></label>
+                  <label
+                    >Viewport height (CSS pixels)<input
+                      id="review-height"
+                      type="number"
+                      min="240"
+                      max="8192"
+                      required
+                  /></label>
+                  <label class="wide"
+                    >Scene actually observed<select id="review-scene" required>
+                      <option value="">Choose scene state</option>
+                    </select></label
+                  >
+                </div>
+                <p class="small">
+                  Use the normal Missions selector and controls in the preview. Full-art diagnostic
+                  overlays are not legal captures or completed runs. Repeating the same mission,
+                  viewport, motion and scene state updates that observation.
+                </p>
+                <div id="review-checks"></div>
+                <label
+                  >Additional findings and composition-warning disposition<textarea
+                    id="review-notes"
+                    rows="3"
+                    maxlength="4000"
+                  ></textarea>
+                </label>
+                <button class="primary" type="submit">Save manual observation</button>
+              </fieldset>
+            </form>
+            <details>
+              <summary>Recorded observations</summary>
+              <ul id="review-observation-list"></ul>
+            </details>
+          </section>
         </section>
         <section data-panel="6" hidden>
           <p class="eyebrow">07 / VALIDATE &amp; EXPORT</p>

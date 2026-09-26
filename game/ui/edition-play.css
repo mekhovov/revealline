@@ -159,7 +159,7 @@ body.game-shell[data-edition-layout='active']
   margin: 0 !important;
   padding: 4px 8px !important;
   transform: none !important;
-  font-size: var(--handheld-label, 14px);
+  font-size: var(--fk-text-secondary, 14px);
   line-height: 1.3;
   white-space: normal !important;
   z-index: 7;
@@ -303,12 +303,12 @@ body.game-shell[data-edition-id] .edition-learning-bonus {
 
 body.game-shell[data-edition-id] .home-content .eyebrow {
   font-family: var(--fk-font-ui);
-  font-size: 13px;
+  font-size: var(--fk-text-secondary, 14px);
   letter-spacing: 0.12em;
   color: var(--brand-accent);
 }
 body.game-shell[data-edition-id] .home-copy {
-  font-size: 16px;
+  font-size: var(--fk-text-body, 18px);
   line-height: 1.5;
   max-width: 42ch;
 }
@@ -319,7 +319,7 @@ body.game-shell[data-edition-id] .home-actions {
 body.game-shell[data-edition-id] .home-actions :is(.button, #shell-play, #shell-featured) {
   border-radius: 10px;
   font-family: var(--fk-font-ui);
-  font-size: 16px;
+  font-size: var(--fk-text-control, 16px);
   min-height: 48px;
 }
 body.game-shell[data-edition-id] .home-actions :is(#shell-featured, #shell-continue) {
@@ -335,7 +335,7 @@ body.game-shell[data-edition-id] .edition-switcher {
 body.game-shell[data-edition-id]
   :is(.edition-switcher select, .edition-about, .home-play-options, .home-language-picker) {
   font-family: var(--fk-font-ui);
-  font-size: 14px;
+  font-size: var(--fk-text-control, 16px);
 }
 @media (max-width: 719px) {
   body.game-shell[data-edition-id] .shell-home .home-content {

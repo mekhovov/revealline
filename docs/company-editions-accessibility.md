@@ -11,6 +11,22 @@ explicit Resume and lost-focus recovery. A visibility-only interruption clears m
 releases without accepting held repeats. Edition changes reuse the shared Stay/Leave dialog;
 failed retention remains visible and cancellation restores the invoking selector.
 
+The edition home controls now use the shared text-size tokens. A fresh, uncached
+browser check measured Start, Missions and the edition selector at 16 px in Standard
+and 20 px in Large; the 320 px document had no horizontal overflow, and keyboard
+scrolling reached the retained-artwork recovery controls. Automated checks verify
+that changing Large/Plain leaves the paused checkpoint and saved artwork receipt
+unchanged, and that enlarged chrome triggers one bounded board remeasurement.
+
+Optional learning now keeps import and save feedback in persistent `role="status"`
+regions inside the Settings and lesson dialogs. Tests cover malformed and foreign
+backups, read-only and quota failures, superseded imports and disposal. Independent
+proofs still save out of order; an older completion cannot replace another lesson's
+status. A save failure after closing the lesson retains a host warning naming that
+lesson. The focused shared-host, learning, layout and default text-preference checks
+passed. These tests establish DOM ownership and state preservation, not
+screen-reader announcements on a physical device.
+
 Bounded browser checks confirmed keyboard steering and Escape pause/resume. Native Tab
 navigation scrolled the pause menu's last Watch first cut action into view at 1280 × 720.
 The pause menu deliberately scrolls; offscreen actions in that scrollport are not evidence

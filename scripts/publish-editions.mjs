@@ -13,6 +13,84 @@ import {
 } from '../publishing/edition-promotion.mjs';
 import { editionHash } from '../publishing/edition-zip.mjs';
 
+/** Both selector commands reread the complete retained publication from GitHub.
+ * Metadata and binary reads stay bounded; no mutating GitHub commands are used. */
+function publishedReleaseReader() {
+  const releases = new Map();
+  const request = (args, maxBuffer, binary = false) => {
+    const result = spawnSync('gh', args, { encoding: binary ? undefined : 'utf8', maxBuffer });
+    if (result.status !== 0 || result.error)
+      throw new Error('Published release download failed; the selector was not changed.');
+    return result.stdout;
+  };
+  const api = (route) =>
+    JSON.parse(request(['api', `repos/mekhovov/revealline/${route}`], 8_000_000));
+  const publishedRelease = (version) => {
+    if (!releases.has(version)) {
+      const release = api(`releases/tags/${version}`);
+      if (
+        release.draft ||
+        release.prerelease ||
+        release.tag_name !== version ||
+        !Array.isArray(release.assets)
+      )
+        throw new Error('Selection requires the original published stable release.');
+      releases.set(version, release);
+    }
+    return releases.get(version);
+  };
+  return {
+    resolveReleaseIdentity: async (version) => {
+      publishedRelease(version);
+      const commit = api(`commits/tags/${version}`);
+      return { sourceRevision: commit.sha, sourceTree: commit.commit?.tree?.sha };
+    },
+    readReleaseAsset: async (version, name, limit) => {
+      const rows = publishedRelease(version).assets.filter((asset) => asset.name === name);
+      if (
+        rows.length !== 1 ||
+        rows[0].state !== 'uploaded' ||
+        !Number.isSafeInteger(rows[0].size) ||
+        rows[0].size <= 0 ||
+        rows[0].size > limit ||
+        !Number.isSafeInteger(rows[0].id) ||
+        rows[0].id <= 0
+      )
+        throw new Error('Published release asset is missing or exceeds its exact download budget.');
+      const bytes = request(
+        [
+          'api',
+          '-H',
+          'Accept: application/octet-stream',
+          `repos/mekhovov/revealline/releases/assets/${rows[0].id}`,
+        ],
+        limit,
+        true,
+      );
+      if (bytes.length !== rows[0].size)
+        throw new Error('Published release download length differs.');
+      return bytes;
+    },
+  };
+}
+
+async function replaceUnchangedSelector(selectorPath, original, updated) {
+  const assertUnchanged = async () => {
+    if (!(await fs.readFile(selectorPath)).equals(original))
+      throw new Error('The selector changed during verification; review and retry.');
+  };
+  await assertUnchanged();
+  const next = `${selectorPath}.next`;
+  await fs.writeFile(next, `${JSON.stringify(updated, null, 2)}\n`, { flag: 'wx' });
+  try {
+    await assertUnchanged();
+    await fs.rename(next, selectorPath);
+  } catch (error) {
+    await fs.rm(next, { force: true });
+    throw error;
+  }
+}
+
 const [command, ...args] = process.argv.slice(2),
   options = {};
 if (
@@ -55,74 +133,15 @@ if (command === 'select-retained') {
     );
   const selectorPath = path.resolve(options['--selector']);
   const originalSelector = await fs.readFile(selectorPath);
-  const releases = new Map();
-  const request = (args, maxBuffer, binary = false) => {
-    const result = spawnSync('gh', args, { encoding: binary ? undefined : 'utf8', maxBuffer });
-    if (result.status !== 0 || result.error)
-      throw new Error('Retained release download failed; the selector was not changed.');
-    return result.stdout;
-  };
-  const api = (route) =>
-    JSON.parse(request(['api', `repos/mekhovov/revealline/${route}`], 8_000_000));
-  const publishedRelease = (version) => {
-    if (!releases.has(version)) {
-      const release = api(`releases/tags/${version}`);
-      if (
-        release.draft ||
-        release.prerelease ||
-        release.tag_name !== version ||
-        !Array.isArray(release.assets)
-      )
-        throw new Error('Retained selection requires the original published stable release.');
-      releases.set(version, release);
-    }
-    return releases.get(version);
-  };
   const updated = await selectRetainedEditionRelease(
     JSON.parse(originalSelector),
     { version: options['--version'], editionIds: options['--editions'].split(',') },
     {
       targetBasePath: options['--base-path'],
-      resolveReleaseIdentity: async (version) => {
-        publishedRelease(version);
-        const commit = api(`commits/${version}`);
-        return { sourceRevision: commit.sha, sourceTree: commit.commit?.tree?.sha };
-      },
-      readReleaseAsset: async (version, name, limit) => {
-        const rows = publishedRelease(version).assets.filter((asset) => asset.name === name);
-        if (
-          rows.length !== 1 ||
-          rows[0].state !== 'uploaded' ||
-          !Number.isSafeInteger(rows[0].size) ||
-          rows[0].size <= 0 ||
-          rows[0].size > limit ||
-          !Number.isSafeInteger(rows[0].id) ||
-          rows[0].id <= 0
-        )
-          throw new Error(
-            'Retained release asset is missing or exceeds its exact download budget.',
-          );
-        const bytes = request(
-          [
-            'api',
-            '-H',
-            'Accept: application/octet-stream',
-            `repos/mekhovov/revealline/releases/assets/${rows[0].id}`,
-          ],
-          limit,
-          true,
-        );
-        if (bytes.length !== rows[0].size)
-          throw new Error('Retained release download length differs.');
-        return bytes;
-      },
+      ...publishedReleaseReader(),
     },
   );
-  if (!(await fs.readFile(selectorPath)).equals(originalSelector))
-    throw new Error('The selector changed during verification; review and retry.');
-  const next = `${selectorPath}.next`;
-  await fs.writeFile(next, `${JSON.stringify(updated, null, 2)}\n`, { flag: 'wx' });
-  await fs.rename(next, selectorPath);
+  await replaceUnchangedSelector(selectorPath, originalSelector, updated);
   console.log(
     'Retained edition selection verified and staged locally. Review it through the sole Pages publisher; no release was changed.',
   );
@@ -189,6 +208,49 @@ if (command === 'verify') {
 const repository = options['--repository'];
 if (!/^[\w.-]+\/[\w.-]+$/.test(repository ?? ''))
   throw new Error('An explicit GitHub repository is required.');
+if (command === 'sync-selector') {
+  if (repository !== 'mekhovov/revealline' || options['--base-path'] !== '/revealline/')
+    throw new Error(
+      'This selector belongs to the configured mekhovov/revealline Pages target. Add another reviewed target before routing elsewhere.',
+    );
+  if (!options['--selector']) throw new Error('Selector path is required.');
+  const selectorPath = path.resolve(options['--selector']),
+    originalSelector = await fs.readFile(selectorPath),
+    selector = validateEditionPublication(JSON.parse(originalSelector));
+  if (selector.releases.some((row) => row.version === envelope.version))
+    throw new Error(
+      'This immutable version is already selected. Review a rollback by editing activeEditionIds only.',
+    );
+  const ids = envelope.editions.map((entry) => entry.id);
+  const updated = validateEditionPublication({
+    ...selector,
+    releases: [
+      ...selector.releases.map((row) => ({
+        ...row,
+        activeEditionIds: row.activeEditionIds.filter((id) => !ids.includes(id)),
+      })),
+      {
+        version: envelope.version,
+        envelopeSha256: editionHash(original),
+        reviewSha256: editionHash(reviewBytes),
+        basePath: options['--base-path'],
+        editionIds: ids,
+        activeEditionIds: ids,
+      },
+    ],
+  });
+  // Verify every retained release and the combined deployment budget before
+  // staging any selector change. The new release is not an independent site.
+  await frozenEditionOverlay(updated, {
+    targetBasePath: options['--base-path'],
+    ...publishedReleaseReader(),
+  });
+  await replaceUnchangedSelector(selectorPath, originalSelector, updated);
+  console.log(
+    'Selector updated from downloaded, verified release bytes. Review this change through the sole Pages publisher.',
+  );
+  process.exit(0);
+}
 const gh = (args, binary = false) => {
   const result = spawnSync('gh', args, {
     encoding: binary ? undefined : 'utf8',
@@ -200,7 +262,7 @@ const gh = (args, binary = false) => {
 };
 const api = (route) => JSON.parse(gh(['api', `repos/${repository}/${route}`]));
 let release = api(`releases/tags/${envelope.version}`);
-const taggedCommit = api(`commits/${envelope.version}`);
+const taggedCommit = api(`commits/tags/${envelope.version}`);
 if (
   taggedCommit.sha !== envelope.sourceRevision ||
   taggedCommit.commit?.tree?.sha !== envelope.sourceTree
@@ -210,8 +272,6 @@ if (command === 'upload-draft' && !release.draft)
   throw new Error(
     'Upload is limited to an existing draft release. Published releases are immutable.',
   );
-if (command === 'sync-selector' && (release.draft || release.prerelease))
-  throw new Error('Only a published stable release may enter the deployment selector.');
 const verifyRemote = (name, bytes) => {
   const rows = release.assets.filter((asset) => asset.name === name);
   if (rows.length !== 1 || rows[0].state !== 'uploaded' || rows[0].size !== bytes.length)
@@ -269,53 +329,4 @@ if (command === 'upload-draft') {
   } finally {
     await fs.rm(temporary, { recursive: true, force: true });
   }
-} else {
-  if (repository !== 'mekhovov/revealline' || options['--base-path'] !== '/revealline/')
-    throw new Error(
-      'This selector belongs to the configured mekhovov/revealline Pages target. Add another reviewed target before routing elsewhere.',
-    );
-  for (const [name, bytes] of frozen) verifyRemote(name, bytes);
-  const selectorPath = options['--selector'];
-  if (!selectorPath || !options['--base-path'])
-    throw new Error('Selector path and deployment base path are required.');
-  const selector = validateEditionPublication(JSON.parse(await fs.readFile(selectorPath, 'utf8')));
-  if (selector.releases.some((row) => row.version === envelope.version))
-    throw new Error(
-      'This immutable version is already selected. Review a rollback by editing activeEditionIds only.',
-    );
-  const ids = envelope.editions.map((entry) => entry.id);
-  const updated = validateEditionPublication({
-    ...selector,
-    releases: [
-      ...selector.releases.map((row) => ({
-        ...row,
-        activeEditionIds: row.activeEditionIds.filter((id) => !ids.includes(id)),
-      })),
-      {
-        version: envelope.version,
-        envelopeSha256: editionHash(original),
-        reviewSha256: editionHash(reviewBytes),
-        basePath: options['--base-path'],
-        editionIds: ids,
-        activeEditionIds: ids,
-      },
-    ],
-  });
-  await frozenEditionOverlay(
-    { ...updated, releases: [updated.releases.at(-1)] },
-    {
-      targetBasePath: options['--base-path'],
-      resolveReleaseIdentity: async () => ({
-        sourceRevision: taggedCommit.sha,
-        sourceTree: taggedCommit.commit.tree.sha,
-      }),
-      readReleaseAsset: async (_version, name) => frozen.get(name),
-    },
-  );
-  const next = `${selectorPath}.next`;
-  await fs.writeFile(next, `${JSON.stringify(updated, null, 2)}\n`, { flag: 'wx' });
-  await fs.rename(next, selectorPath);
-  console.log(
-    'Selector updated from downloaded, verified release bytes. Review this change through the sole Pages publisher.',
-  );
 }
