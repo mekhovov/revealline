@@ -1,3 +1,4 @@
+import { publishOfflineLauncher } from './launcher.mjs';
 /** Publishing infrastructure only: one verified current graph plus authenticated historical bridges. */
 import * as fs from "node:fs/promises";
 import { createReadStream, createWriteStream } from "node:fs";
@@ -677,6 +678,7 @@ export async function assemble({
   );
   await writeFile(outputDirectory, ".nojekyll", "");
   await writeCurrentEntries(entries, outputDirectory);
+  await publishOfflineLauncher(currentSite, outputDirectory, current.record.version);
   await writeFile(
     outputDirectory,
     "archive-routing.json",

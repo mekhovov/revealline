@@ -422,6 +422,9 @@ test('built poster/still links and teaching requests retain their edition and wo
         if (!storage.has(key)) storage.set(key, new Map());
         const entries = storage.get(key);
         return {
+          async keys() {
+            return [...entries.keys()].map((url) => new Request(url));
+          },
           async match(url) {
             return entries.get(typeof url === 'string' ? url : url.url)?.clone();
           },

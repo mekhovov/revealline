@@ -1,3 +1,4 @@
+import { readOfficialOriginal } from './official-downloads.mjs';
 import { boundedJSON, canonicalJSON, exactKeys, required, stableId } from './data-json.mjs';
 import { campaignKey } from './library.mjs';
 import { createExecutionCatalog } from './campaign-contexts.mjs';
@@ -213,7 +214,7 @@ function ownAssets(source) {
       'Invalid still storage hash/byte bound.',
     );
     total += bytes;
-    required(total <= 256 * 1024 * 1024, 'Still storage assets exceed the shared managed budget.');
+    required(total <= 512 * 1024 * 1024, 'Still storage assets exceed the shared managed budget.');
     seen.add(hash);
     result.push(Object.freeze({ sha256: hash, blob: Blob.prototype.slice.call(blob, 0, bytes) }));
   }
@@ -228,6 +229,18 @@ export async function verifyStoredStillAssets(document, assets, { decodeImage, s
     wanted.size === owned.length && owned.every((a) => wanted.has(a.sha256)),
     'Still storage needs every referenced original and no extras.',
   );
+  if (owned.reduce((sum, item) => sum + nativeSize.call(item.blob), 0) > 256 * 1024 * 1024) {
+    let importedBytes = 0;
+    for (const item of owned) {
+      const original = await readOfficialOriginal(item.sha256);
+      if (!original || original.size !== item.blob.size) importedBytes += item.blob.size;
+      abort(signal);
+    }
+    required(
+      importedBytes <= 256 * 1024 * 1024,
+      'Still storage assets exceed the shared managed budget.',
+    );
+  }
   for (const item of owned) {
     abort(signal);
     const expected = safe.library.assets.find((a) => a.sha256 === item.sha256);
