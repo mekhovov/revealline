@@ -1,0 +1,39 @@
+{
+  "format": "revealline-archive-browser-admission.v1",
+  "status": "PASS",
+  "archiveId": "archive-87",
+  "infrastructureCommit": "6948342ee3292492c8027dc1df3e942b94f0d74e",
+  "deploymentId": 6672829712,
+  "deploymentStatusId": 18861599004,
+  "versions": [
+    "v0.130.0"
+  ],
+  "surface": "Codex in-app Chromium automation",
+  "sequence": [
+    "Opened the Archive87 index and observed the original v0.130.0 preservation label and Play v0.130.0 route.",
+    "Opened the preserved route and observed the REVEAL / LINE title/home with Solo selected and Continue, Missions, Collection, Settings, More, and Sound controls.",
+    "Used browser Back and returned to the same Archive87 index."
+  ],
+  "observed": {
+    "archiveDocumentTitle": "RevealLine archive 87",
+    "archiveHeading": "RevealLine archive 87",
+    "archiveReleaseLabel": "The original v0.130.0 build, preserved for comparison and historical play.",
+    "gameDocumentTitle": "Reveal / Line",
+    "titleHeading": "REVEAL / LINE",
+    "selectedMode": "Solo One player",
+    "reloads": 0,
+    "retries": 0
+  },
+  "scope": "Historical online preservation: complete exact-byte public audit plus fresh bounded archive index, title/home, and Back navigation. This does not claim physical-device/controller, comprehensive offline, every gameplay mode, or balance acceptance.",
+  "evidence": [
+    {
+      "path": "evidence/archive-87-v01300/public-acceptance.json",
+      "sha256": "e1f7946bc9a6ff7cce942cea43bc7f2b5f753d4c18109c093268441626ba0083"
+    }
+  ],
+  "limitations": [
+    "Long source suites remained waived under the temporary fast-release policy and are not reported as passed.",
+    "No renewed physical touch/controller or comprehensive offline acceptance is claimed.",
+    "This admission preserves v0.130.0; v0.131.0 is the separate immutable release selected by this controller change."
+  ]
+}
