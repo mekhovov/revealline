@@ -6,14 +6,15 @@ installation and downloaded/deployed release evidence cannot be inferred from un
 
 ## Main integration and final review preparation
 
-Main through `83df9cfc9` is integrated in merge `38d320f48`. The only merge conflict was
+Main through `8b1793dea` is integrated in merge `96a536efd`. The only merge conflict was
 the generated localization catalogue. Regenerating it from the combined English/Ukrainian
 sources and running localization validation preserved both company and upstream strings.
 The incoming private soundtrack feature uses the existing static runtime dependency closure;
 explicit local MP3 input remains browser-owned and does not enter source or runtime archives.
 All 101 generated company files match. The corrected DroneAid image increases the approved
-media inventory to 136 assets; exact source eligibility and frozen-candidate results are
-recorded after the final commit.
+media inventory to 136 assets across 3,705 inspected source paths. The company suite passes
+268 tests and the post-merge soundtrack/localization cohort passes 123. Frozen-candidate
+results are recorded after the final commit.
 
 The incoming shared soundtrack panel could announce that a saved private collection was playing
 when browser audio permission prevented playback. The shared fix now checks actual playback
