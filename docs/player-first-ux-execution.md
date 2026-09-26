@@ -11,16 +11,14 @@ current. Those paragraphs remain unchanged as dated implementation and release
 evidence.
 
 **Completed:** immutable
-[v0.132.4](https://github.com/mekhovov/revealline/releases/tag/v0.132.4) remains
-the current published release; its formal acceptance is blocked by the live
-English-to-Ukrainian refresh defect. Its tag points to product source
-`d3df9d47f578d48383ff589914a188ada2ef8b31`; selector
-[PR #649](https://github.com/mekhovov/revealline/pull/649) merged as
-`d308610271ad01fbabb2847ee046325001ec63e5`. Current `main` at exact
-`a8881ac17e44f38fb1e9dc15428899992727cc78` contains the merged v0.132.5 locale
-repair from PR #652, version source `c1fec0d8ef8a8bff29acd5619f3bdcc748205e9f`
+[v0.132.5](https://github.com/mekhovov/revealline/releases/tag/v0.132.5) is the
+current published release. Its product source is
+`a8881ac17e44f38fb1e9dc15428899992727cc78`; Pages selector
+[PR #668](https://github.com/mekhovov/revealline/pull/668) merged as
+`8f7ea5540d6851fb2d6d77a42c899e071e65e52a`. It contains the locale repair
+from PR #652, version source `c1fec0d8ef8a8bff29acd5619f3bdcc748205e9f`
 from PR #654 and the FPV revision-90 presentation continuation from PR #663.
-That source is not yet a public v0.132.5 release.
+Immutable v0.132.4 is preserved in Archive93.
 
 **Active and ordered:** each row is a working allocation, not an accepted
 release. Reconcile each item onto the publicly accepted predecessor, rerun its
@@ -28,17 +26,16 @@ exact-head gates and publish it before accepting the next row. Older target
 versions in draft PR titles and evidence files are stale where they disagree
 with this order.
 
-| Order | Working release | Scope                                                                | Current source input                                                                                                                                                               |
-| ----- | --------------- | -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Gate  | v0.132.5        | Publish the merged localization and exact presentation continuation  | [PR #652](https://github.com/mekhovov/revealline/pull/652), [PR #654](https://github.com/mekhovov/revealline/pull/654), [PR #663](https://github.com/mekhovov/revealline/pull/663) |
-| 1     | v0.133.0        | Compact complete mission gallery                                     | [PR #590](https://github.com/mekhovov/revealline/pull/590)                                                                                                                         |
-| 2     | v0.134.0        | Team quick-start                                                     | [PR #549](https://github.com/mekhovov/revealline/pull/549)                                                                                                                         |
-| 3     | v0.135.0        | Couch secondary navigation                                           | [PR #539](https://github.com/mekhovov/revealline/pull/539)                                                                                                                         |
-| 4     | v0.136.0        | Contextual Team teaching                                             | [PR #543](https://github.com/mekhovov/revealline/pull/543)                                                                                                                         |
-| 5     | v0.137.0        | Deliberate Team terminal Retry                                       | [PR #545](https://github.com/mekhovov/revealline/pull/545)                                                                                                                         |
-| 6     | v0.138.0        | Readable Versus countdown and Retry cue                              | [PR #552](https://github.com/mekhovov/revealline/pull/552)                                                                                                                         |
-| 7     | v0.139.0        | Named result destinations                                            | [PR #557](https://github.com/mekhovov/revealline/pull/557)                                                                                                                         |
-| 8     | v0.140.0        | Collection fixture reconciliation plus Settings/Help return to Pause | [PR #548](https://github.com/mekhovov/revealline/pull/548), then [PR #542](https://github.com/mekhovov/revealline/pull/542)                                                        |
+| Order | Working release | Scope                                                                | Current source input                                                                                                        |
+| ----- | --------------- | -------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| 1     | v0.133.0        | Compact complete mission gallery                                     | [PR #590](https://github.com/mekhovov/revealline/pull/590)                                                                  |
+| 2     | v0.134.0        | Team quick-start                                                     | [PR #549](https://github.com/mekhovov/revealline/pull/549)                                                                  |
+| 3     | v0.135.0        | Couch secondary navigation                                           | [PR #539](https://github.com/mekhovov/revealline/pull/539)                                                                  |
+| 4     | v0.136.0        | Contextual Team teaching                                             | [PR #543](https://github.com/mekhovov/revealline/pull/543)                                                                  |
+| 5     | v0.137.0        | Deliberate Team terminal Retry                                       | [PR #545](https://github.com/mekhovov/revealline/pull/545)                                                                  |
+| 6     | v0.138.0        | Readable Versus countdown and Retry cue                              | [PR #552](https://github.com/mekhovov/revealline/pull/552)                                                                  |
+| 7     | v0.139.0        | Named result destinations                                            | [PR #557](https://github.com/mekhovov/revealline/pull/557)                                                                  |
+| 8     | v0.140.0        | Collection fixture reconciliation plus Settings/Help return to Pause | [PR #548](https://github.com/mekhovov/revealline/pull/548), then [PR #542](https://github.com/mekhovov/revealline/pull/542) |
 
 Known corrections remain part of these working allocations:
 
@@ -80,8 +77,7 @@ remain separately reported gates.
 
 ## Current delivery status
 
-Checkpoint on 26 September 2026: **v0.132.4 is immutable, selected publicly and playable, but formal
-acceptance is blocked by incomplete live English-to-Ukrainian refresh.** The corrective Team artwork deadline preserves
+Checkpoint on 26 September 2026: **v0.132.5 is immutable, selected publicly and playable.** The corrective Team artwork deadline preserves
 exact byte/digest/dimension verification while allowing slower public devices to
 reach the ready state. Public browser review reached ready Solo, Versus and Team
 entry, including the Team picture binding and Ukrainian interface. A later live
@@ -89,7 +85,7 @@ language-switch audit found that Solo's primary Continue label and destination
 can remain English after changing the surrounding UI to Ukrainian; that defect
 belongs to the next corrective release and does not alter the immutable tag.
 
-The active order is pending v0.132.5 publication, then v0.133 compact gallery, v0.134 Team quick start, v0.135 Couch
+The active order is v0.133 compact gallery, v0.134 Team quick start, v0.135 Couch
 secondary navigation, v0.136 Team teaching, v0.137 deliberate Team terminal
 Retry, v0.138 Versus countdown, v0.139 named result destinations, v0.140
 Settings/Help/Collection return closure, then UX6 qualification. Prepared

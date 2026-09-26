@@ -7,20 +7,14 @@
 ## Current checkpoint — 26 September 2026
 
 - **Completed:** immutable
-  [v0.132.4](https://github.com/mekhovov/revealline/releases/tag/v0.132.4) is the
-  current published release; formal acceptance is blocked by incomplete live
-  English/Ukrainian refresh. Its tag points to product source
-  `d3df9d47f578d48383ff589914a188ada2ef8b31`; selector
-  [PR #649](https://github.com/mekhovov/revealline/pull/649) merged as
-  `d308610271ad01fbabb2847ee046325001ec63e5`. Current `main` at exact
-  `a8881ac17e44f38fb1e9dc15428899992727cc78` contains the merged v0.132.5
-  localization correction, version source
-  `c1fec0d8ef8a8bff29acd5619f3bdcc748205e9f` and the FPV revision-90 exact
-  presentation continuation. No public v0.132.5 release exists yet.
-- **Active:** the serialized working queue starts with publication of the merged
-  v0.132.5 source from [PR #652](https://github.com/mekhovov/revealline/pull/652),
-  [PR #654](https://github.com/mekhovov/revealline/pull/654) and
-  [PR #663](https://github.com/mekhovov/revealline/pull/663), then v0.133 compact gallery
+  [v0.132.5](https://github.com/mekhovov/revealline/releases/tag/v0.132.5) is the
+  current published release. Its product source is
+  `a8881ac17e44f38fb1e9dc15428899992727cc78`; Pages selector
+  [PR #668](https://github.com/mekhovov/revealline/pull/668) merged as
+  `8f7ea5540d6851fb2d6d77a42c899e071e65e52a`. It includes the live
+  English/Ukrainian refresh repair and the FPV revision-90 exact presentation
+  continuation. Immutable v0.132.4 is preserved in Archive93.
+- **Active:** the serialized working queue starts with v0.133 compact gallery
   ([PR #590](https://github.com/mekhovov/revealline/pull/590));
   v0.134 Team quick-start ([PR #549](https://github.com/mekhovov/revealline/pull/549));
   v0.135 Couch secondary navigation ([PR #539](https://github.com/mekhovov/revealline/pull/539));
