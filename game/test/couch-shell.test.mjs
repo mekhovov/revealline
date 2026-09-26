@@ -27,6 +27,7 @@ const press = (f, key, target = f.doc.activeElement, extra = {}) =>
 test('ordinary running frames retain the Pause label node between pointer edges', async (t) => {
   const f = await couchPage(t);
   f.$('race-start').click();
+  await f.settleStartCue();
   f.frame();
   const pause = f.$('race-pause'),
     label = f.doc.createElement('span');
@@ -231,6 +232,7 @@ test('Versus More departures retain the paused match until a separate decision',
   const f = await couchPage(t, { nativeKeyboard: true }),
     more = f.$('race-more');
   f.$('race-start').click();
+  await f.settleStartCue();
   f.frame();
   f.$('race-pause').click();
   f.frame();
@@ -293,6 +295,7 @@ test('an embedded Couch route stays loading until its actual setup is prepared',
 test('pause children and cancelled new match preserve two different continuations; reset is explicit', async (t) => {
   const f = await couchPage(t);
   f.$('race-start').click();
+  await f.settleStartCue();
   f.frame();
   f.key('KeyD');
   f.key('ArrowLeft');
@@ -318,6 +321,7 @@ test('pause children and cancelled new match preserve two different continuation
     assert.equal(f.state(), 'paused');
   }
   f.$('race-start').click();
+  await f.settleStartCue();
   f.frame();
   f.frames(4);
   assert.ok(f.renders[0].player.x > oldRuns[0].level.spawn.x);
@@ -345,6 +349,7 @@ test('per-seat Auto expands on touch and defers collapse until pause without cha
   const f = await couchPage(t, { pads: [pad(0), pad(1)] });
   const pads = f.doc.querySelectorAll('.race-pad');
   f.$('race-start').click();
+  await f.settleStartCue();
   f.frame();
   assert.ok(pads.every((p) => p.hidden));
   f.$('race-canvas-0').emit('pointerdown', { pointerType: 'touch', pointerId: 60 });
@@ -361,6 +366,7 @@ test('per-seat Auto expands on touch and defers collapse until pause without cha
   f.frame();
   const before = f.renders[0].player.x;
   f.$('race-start').click();
+  await f.settleStartCue();
   f.frame();
   f.frames(3);
   assert.equal(pads[0].hidden, true);
@@ -375,6 +381,7 @@ test('Always supports independent pointer players; Off wins over coarse and late
   change(f, 'race-touch-1', 'always');
   f.$('race-options-back').click();
   f.$('race-start').click();
+  await f.settleStartCue();
   f.frame();
   const pads = f.doc.querySelectorAll('.race-pad');
   assert.equal(pads[0].hidden, true);
@@ -438,6 +445,7 @@ test('authored Arcade removes equipment controls and hints; Tactical reflects th
   assert.equal(f.$('race-tap-field').hidden, true);
   f.$('race-options-back').click();
   f.$('race-start').click();
+  await f.settleStartCue();
   f.frame();
   for (const p of f.doc.querySelectorAll('.race-pad')) {
     assert.equal(p.hidden, false);
@@ -550,6 +558,7 @@ test('a real finished draw exposes both frozen boards, Results returns without a
     });
   });
   f.$('race-start').click();
+  await f.settleStartCue();
   f.frame();
   f.key('KeyD');
   f.key('ArrowRight');
@@ -602,6 +611,7 @@ test('a real finished draw exposes both frozen boards, Results returns without a
 test('an old held controller cannot reclaim a seat from accepted touch across pause and resume', async (t) => {
   const f = await couchPage(t, { pads: [pad(0), pad(1)] });
   f.$('race-start').click();
+  await f.settleStartCue();
   f.frame();
   f.pads()[0].axes[0] = 1;
   f.frame();
@@ -627,6 +637,7 @@ test('an old held controller cannot reclaim a seat from accepted touch across pa
   f.$('race-pause').click();
   f.frame();
   f.$('race-start').click();
+  await f.settleStartCue();
   f.frame();
   f.frames(5);
   assert.equal(f.$('race-seat-0').textContent, 'Touch', 'still-held pad is blocked after resume');
@@ -648,6 +659,7 @@ test('blocked pad input and held keyboard repeats never replace newer touch moda
   blocked.axes[0] = 1;
   const f = await couchPage(t, { pads: [blocked] });
   f.$('race-start').click();
+  await f.settleStartCue();
   f.frame();
   f.frames(4);
   assert.equal(f.$('race-seat-0').textContent, 'W A S D');

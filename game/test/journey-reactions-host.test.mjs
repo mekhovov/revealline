@@ -166,6 +166,7 @@ test('actual authored equal Versus completion uses Rival without changing race r
   });
   assert.equal(p.$('race-journey-reactions').hidden, true);
   p.$('race-start').click();
+  await p.settleStartCue();
   await settle(() => {
     p.frame(0);
     return !p.$('race-pause').disabled;

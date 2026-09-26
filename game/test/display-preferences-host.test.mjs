@@ -247,6 +247,7 @@ test('Solo to Team to Versus and back restores one display record without Couch 
       assert.equal(store.writes.length, before);
       reflects(page, 'pixel', 'standard', true);
       page.$('race-start').click();
+      await page.settleStartCue();
       page.frame();
       page.frames(8);
       page.$('race-pause').click();

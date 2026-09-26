@@ -157,6 +157,7 @@ test('the final style read cannot authorize a scroll after foreground loss', asy
 test('resize reveals paused Resume while preserving a real started cut and live canvas ownership', async (t) => {
   const f = await page(t);
   f.$('race-start').click();
+  await f.settleStartCue();
   f.frame();
   f.key('KeyD');
   f.frames(4);
@@ -192,6 +193,7 @@ test('resize reveals a real finished round action without replacing either run o
     campaign = { ...base, briefs: [], levels: [retryFixture('enemy-player').level] },
     f = await page(t, { campaign });
   f.$('race-start').click();
+  await f.settleStartCue();
   f.frame();
   f.key('KeyD');
   f.key('ArrowRight');

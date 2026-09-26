@@ -84,12 +84,14 @@ async function fixture(t, { fetchResponse, installedSource, ...options } = {}) {
 const settle = (predicate) => waitFor(predicate, { timeoutMs: 10000 });
 async function start(p) {
   p.$('race-start').click();
+  await p.settleStartCue();
   await settle(() => {
     p.frame(0);
     return p.state() === 'running';
   });
 }
-function finish(p) {
+async function finish(p) {
+  await p.settleStartCue();
   p.renders[0].status = 'won';
   p.frame(1000 / 120);
   assert.equal(p.state(), 'finished');
@@ -178,9 +180,10 @@ test(
     p.$('race-format').emit('change');
     await settle(() => !p.$('race-start').disabled);
     await start(p);
-    finish(p);
+    await finish(p);
     assert.match(p.$('race-start').textContent, /Next round/);
     await beginNext(p, { clicks: 2 });
+    await p.settleStartCue();
     p.frame(0);
     assert.equal(p.state(), 'running');
     assert.equal(p.renders[0].levelId, 'signal-02');
@@ -188,8 +191,9 @@ test(
     assert.equal(p.$('series-score').textContent, '0 : 0');
     assert.equal(p.$('race-format').value, 'first-to-two');
     assert.equal(p.$('journey-chooser').open, false);
-    finish(p);
+    await finish(p);
     p.$('race-start').click();
+    await p.settleStartCue();
     await settle(() => {
       p.frame(0);
       return p.state() === 'running';
@@ -222,22 +226,25 @@ test(
           : undefined,
     });
     await start(p);
-    finish(p);
+    await finish(p);
     await beginNext(p);
+    await p.settleStartCue();
     p.frame(0);
     assert.equal(p.state(), 'running');
     assert.equal(p.renders[0].levelId, 'night-shift-01');
     assert.equal(p.renders[1].levelId, 'night-shift-01');
     assert.equal(p.$('journey-chooser').open, false);
-    finish(p);
+    await finish(p);
     await beginNext(p);
+    await p.settleStartCue();
     p.frame(0);
     assert.equal(p.state(), 'running');
     assert.equal(p.renders[0].levelId, 'night-shift-02');
-    finish(p);
+    await finish(p);
     const before = p.checkpoint(),
       picture = p.drawOptions[0].backdrop;
     await beginNext(p);
+    await p.settleStartCue();
     assert.match(p.$('race-message').textContent, /Versus library complete/);
     p.frame(0);
     assert.deepEqual(p.checkpoint(), before);
@@ -246,6 +253,7 @@ test(
     assert.equal(p.doc.activeElement, p.$('race-start'));
     assert.equal(p.$('journey-chooser').open, false);
     p.$('race-start').click();
+    await p.settleStartCue();
     await settle(() => {
       p.frame(0);
       return p.state() === 'running';
@@ -271,10 +279,11 @@ test('same-ID modified Custom edition keeps its exact owner through Rematch and 
   p.frame(0);
   assert.equal(p.state(), 'running');
   assert.equal(p.renders[0].levelId, 'night-shift-03');
-  finish(p);
+  await finish(p);
   await start(p);
-  finish(p);
+  await finish(p);
   await beginNext(p);
+  await p.settleStartCue();
   assert.match(p.$('race-message').textContent, /Versus library complete/);
   assert.equal(p.$('journey-chooser').open, false);
   assert.equal(p.renders[0].levelId, 'night-shift-03');
@@ -351,7 +360,7 @@ test('final Journey opens Browse missions and explicit Classic handoff carries s
   p.frame(0);
   assert.equal(p.state(), 'running', p.$('race-message').textContent);
   assert.equal(p.renders[0].levelId, 'horizon-remix');
-  finish(p);
+  await finish(p);
   const before = p.checkpoint(),
     picture = p.drawOptions[0].backdrop;
   assert.equal(p.$('race-journey-next').textContent, 'Browse missions');
@@ -498,7 +507,7 @@ test('failed or cancelled cross-host target picture preflight keeps Journey resu
   });
   p.frame(0);
   assert.equal(p.state(), 'running', p.$('race-message').textContent);
-  finish(p);
+  await finish(p);
   const before = p.checkpoint(),
     picture = p.drawOptions[0].backdrop;
   await openMissionLibrary(p, 'race-journey-next');
@@ -579,7 +588,7 @@ test('Journey boundary preflights an exact installed Classic pack without adopti
   });
   p.frame(0);
   assert.equal(p.state(), 'running', p.$('race-message').textContent);
-  finish(p);
+  await finish(p);
   const before = p.checkpoint(),
     picture = p.drawOptions[0].backdrop;
   assert.equal(p.$('race-journey-next').textContent, 'Browse missions');
@@ -609,11 +618,12 @@ test(
   async (t) => {
     const p = await fixture(t, { initialLevel: 'signal-12' });
     await start(p);
-    finish(p);
+    await finish(p);
     const before = p.checkpoint(),
       picture = p.drawOptions[0].backdrop;
     for (let attempt = 0; attempt < 2; attempt++) {
       await beginNext(p);
+      await p.settleStartCue();
       assert.match(p.$('race-message').textContent, /Next mission could not open/);
       p.frame(0);
       assert.deepEqual(p.checkpoint(), before);
@@ -641,7 +651,7 @@ test('cancelled boundary metadata does not adopt or clear the result and Next ca
     },
   });
   await start(p);
-  finish(p);
+  await finish(p);
   const before = p.checkpoint(),
     picture = p.drawOptions[0].backdrop;
   const cancelled = beginNext(p);
@@ -655,6 +665,7 @@ test('cancelled boundary metadata does not adopt or clear the result and Next ca
   assert.equal(p.drawOptions[0].backdrop, picture);
   assert.match(p.$('race-message').textContent, /cancelled.*Results are kept/);
   await beginNext(p);
+  await p.settleStartCue();
   p.frame(0);
   assert.equal(p.state(), 'running');
   assert.equal(p.renders[0].levelId, 'signal-02');

@@ -47,6 +47,7 @@ const change = (p, id, value) => {
 async function start(p) {
   p.$('race-start').focus();
   p.$('race-start').click();
+  await p.settleStartCue();
   await waitFor(
     () => {
       p.frame();

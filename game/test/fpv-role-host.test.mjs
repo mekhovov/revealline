@@ -201,6 +201,7 @@ test('actual Couch recommendation switches both independent painters without tou
       assert.equal(f.renders[0].tick, 0);
     }
     f.$('race-start').click();
+    await f.settleStartCue();
     f.frame();
     f.key('KeyD');
     f.frames(4);

@@ -35,6 +35,7 @@ async function nextAction(f, activate) {
   } finally {
     button.onclick = handler;
   }
+  await f.settleStartCue();
   if (preparingNext) f.frame(0);
 }
 
@@ -57,6 +58,7 @@ test('two sparse pads deliberately claim one menu; join/held Confirm cannot star
   assert.equal(f.state(), 'ready');
   f.button(1, 0, true);
   f.frame();
+  await f.settleStartCue();
   assert.equal(f.state(), 'running');
   assert.equal(f.tick(), 0);
   f.frames(40);
@@ -141,6 +143,7 @@ test('Back and Menu cancel previews or focus the primary action without starting
   }
   f.focus('race-start');
   f.pulse(0, 0);
+  await f.settleStartCue();
   f.frame();
   f.key('KeyD');
   f.frames(8);
@@ -176,6 +179,7 @@ test('native menu focus cancels a held D-pad repeat until neutral without cleari
   f.pulse(0, 1);
   f.focus('race-start');
   f.pulse(0, 0);
+  await f.settleStartCue();
   f.frame();
   f.key('KeyD');
   f.key('ArrowRight');
@@ -261,6 +265,7 @@ test('one hardware read per visible frame and no reads or ticks while unfocused,
   const f = await page(t, { pads: [pad(0)] });
   f.join(0);
   f.pulse(0, 0);
+  await f.settleStartCue();
   f.frame();
   const reads = f.readCount(),
     ticks = f.tick();
@@ -422,6 +427,7 @@ test('API errors and unsupported pads remain usable with keyboard and truthful R
   f.frame();
   assert.match(f.$('race-menu-status').textContent, /unavailable/);
   f.$('race-start').click();
+  await f.settleStartCue();
   f.frame();
   f.key('KeyD');
   f.frames(10);
@@ -500,6 +506,7 @@ test('one lost craft does not expose shared menu; both ended draws retain explic
   });
   f.join(0);
   f.pulse(0, 0);
+  await f.settleStartCue();
   f.frame();
   f.key('KeyS');
   f.frames(30);
@@ -548,6 +555,7 @@ test('native checkboxes and both held touch pads stay independent after leaving 
   f.pulse(0, 1);
   f.focus('race-start');
   f.pulse(0, 0);
+  await f.settleStartCue();
   f.frame();
   // The controller owns its committed Confirm through the finite Steam Input
   // echo window. A later direct touch is a new gesture, not the mirrored click.
@@ -602,6 +610,7 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
   test(`${turnPolicy}: actual Pause retains two different requested turns and explicit Resume continues both`, async (t) => {
     const f = await page(t, { turnPolicy });
     f.$('race-start').click();
+    await f.settleStartCue();
     f.frame();
     f.key('KeyD');
     f.key('ArrowLeft');
@@ -629,6 +638,7 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
     f.key('KeyW', false);
     f.key('ArrowUp', false);
     f.$('race-start').click();
+    await f.settleStartCue();
     f.frame(100);
     for (let tick = 0; tick < 12; tick++) {
       stepRun(expected[0], { direction: 'down' }, FIXED_DT);
@@ -643,6 +653,7 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
     level.rules = { ...level.rules, lives: 3, respawnSeconds: 0.1, graceSeconds: 0 };
     const f = await page(t, { campaign: { ...base, briefs: [], levels: [level] }, turnPolicy });
     f.$('race-start').click();
+    await f.settleStartCue();
     f.frame();
     f.key('KeyD');
     f.key('ArrowLeft');
@@ -686,6 +697,7 @@ test('timeout draw keeps series at zero and needs a fresh explicit Next gesture'
   f.button(0, 0, true);
   f.frame();
   f.button(0, 0, false);
+  await f.settleStartCue();
   f.frames(150, 200);
   assert.equal(f.state(), 'finished');
   assert.match(f.$('race-message').textContent, /Draw.*Time/);
@@ -735,6 +747,7 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
         pads: adapter === 'controller' ? [pad(0)] : [],
       });
       f.$('race-start').click();
+      await f.settleStartCue();
       f.frames(2);
       if (adapter === 'controller') f.pads()[0].axes[1] = 1;
       else f.key('KeyS');

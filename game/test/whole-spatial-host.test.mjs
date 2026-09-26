@@ -171,6 +171,7 @@ for (const revision of ['v1', 'v2', 'v3', 'v4']) {
       fetchResponse,
     });
     p.$('race-start').click();
+    await p.settleStartCue();
     await settle(() => {
       p.frame(0);
       return !p.$('race-pause').disabled;

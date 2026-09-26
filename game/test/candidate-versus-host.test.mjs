@@ -68,6 +68,7 @@ test('Versus save warning uses existing pause and recovery without changing eith
   p.key('Escape', false);
   assert.deepEqual(reveals.at(-1), { block: 'nearest', inline: 'nearest', behavior: 'auto' });
   p.$('race-start').click();
+  await p.settleStartCue();
   await waitFor(() => {
     p.frame();
     return !p.$('race-pause').disabled;
@@ -88,6 +89,7 @@ test('Versus save warning uses existing pause and recovery without changing eith
   assert.deepEqual(p.checkpoint(), checkpoint);
   assert.equal(p.state(), 'paused');
   p.$('race-start').click();
+  await p.settleStartCue();
   p.frame();
   assert.equal(p.renders[0].status, 'running');
   assert.equal(p.renders[1].status, 'running');
@@ -113,6 +115,7 @@ for (const difficulty of ['gentle', 'standard', 'expert'])
     assert.equal(p.drawOptions[0].backdrop.kind, 'candidate-picture');
     assert.equal(p.drawOptions[0].backdrop.assetRevision.id, 'horizon-first-return');
     p.$('race-start').click();
+    await p.settleStartCue();
     await waitFor(() => {
       p.frame();
       return p.renders[0].status === 'running';
@@ -158,6 +161,7 @@ test('authored Versus preserves both previous boards and original when Next artw
     },
   });
   p.$('race-start').click();
+  await p.settleStartCue();
   await waitFor(() => {
     p.frame(0);
     return !p.$('race-pause').disabled;
@@ -198,6 +202,7 @@ test('cross-campaign theme controls commit with the accepted picture, never a fa
     },
   });
   p.$('race-start').click();
+  await p.settleStartCue();
   await waitFor(() => {
     p.frame(0);
     return !p.$('race-pause').disabled;
@@ -244,6 +249,7 @@ test('cross-campaign theme controls commit with the accepted picture, never a fa
 test('Versus Skip requires two actions and flat chooser can launch an island mission', async (t) => {
   const p = await setup(t);
   p.$('race-start').click();
+  await p.settleStartCue();
   await waitFor(() => {
     p.frame(0);
     return !p.$('race-pause').disabled;
@@ -341,6 +347,7 @@ test('controller can open and leave the flat chooser without starting or clearin
 test('authored races ignore the Legacy timer and do not mint an idle clear after ninety seconds', async (t) => {
   const p = await setup(t);
   p.$('race-start').click();
+  await p.settleStartCue();
   await waitFor(() => {
     p.frame(0);
     return !p.$('race-pause').disabled;
@@ -359,6 +366,7 @@ test('authored races ignore the Legacy timer and do not mint an idle clear after
 test('Versus difficulty has truthful session-only export and retry without changing current boards', async (t) => {
   const p = await setup(t);
   p.$('race-start').click();
+  await p.settleStartCue();
   await waitFor(() => {
     p.frame(0);
     return !p.$('race-pause').disabled;
@@ -444,6 +452,7 @@ test('changed next-preset intent cancels a held race decode without retiring eit
   }
   const p = await setup(t, 'standard', { ImageClass: HeldImage });
   p.$('race-start').click();
+  await p.settleStartCue();
   await waitFor(() => {
     p.frame(0);
     return !p.$('race-pause').disabled;
@@ -485,6 +494,7 @@ for (const route of ['opening', 'authored'])
   test(`${route} Versus races continue across all campaigns with equal checkpoints and separate receipts`, async (t) => {
     const p = await setup(t, 'standard', { href: `http://localhost/game/couch/?journey=${route}` });
     p.$('race-start').click();
+    await p.settleStartCue();
     await waitFor(() => {
       p.frame(0);
       return !p.$('race-pause').disabled;

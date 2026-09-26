@@ -77,6 +77,7 @@ test('Versus Settings uses native categories, consumes tab keys once and returns
 test('paused Versus keeps both runs and requires explicit Resume after appearance changes', async (t) => {
   const f = await couchPage(t);
   f.$('race-start').click();
+  await f.settleStartCue();
   f.frame();
   f.key('KeyD');
   f.frames(4);
@@ -94,6 +95,7 @@ test('paused Versus keeps both runs and requires explicit Resume after appearanc
   assert.equal(f.doc.activeElement.id, 'race-options');
   assert.deepEqual(f.checkpoint(), paused);
   f.$('race-start').click();
+  await f.settleStartCue();
   f.frame();
   assert.equal(f.state(), 'running');
 });

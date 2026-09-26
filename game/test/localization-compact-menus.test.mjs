@@ -35,6 +35,7 @@ test('compact Versus pause captions switch without changing either board or its 
   assert.equal(f.$('race-more-about').textContent, 'Про гру й авторів');
   assert.deepEqual(f.checkpoint(), original);
   f.$('race-start').click();
+  await f.settleStartCue();
   f.frame();
   f.$('race-pause').click();
   f.frame(0);

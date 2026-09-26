@@ -129,6 +129,7 @@ for (const [kind, version, label] of [
           const f = await couchPage(t, { href: target, previewStorage });
           if (flight) {
             f.$('race-start').click();
+            await f.settleStartCue();
             f.frame();
             f.frames(5);
             f.$('race-pause').click();
