@@ -26,6 +26,7 @@ function fixture(options = {}) {
     },
   };
   const router = createControllerRouter({
+    confirmReleaseMs: 0,
     readPads: () => {
       reads++;
       return pads;
@@ -206,6 +207,48 @@ test('overlapping South and West aliases form one menu Confirm gesture', () => {
   assert.equal(f.sample().ui.confirm, true, 'a new neutral-to-pressed gesture remains usable');
 });
 
+test('a short Steam Deck tap and its release pulse stay one Confirm gesture', () => {
+  const f = fixture({ autoJoin: true, navigationAliases: true, confirmReleaseMs: 120 });
+  f.sample('menu', 0);
+
+  f.first.buttons[0].pressed = true;
+  let frame = f.sample('menu', 10);
+  assert.equal(frame.ui.confirm, true);
+  assert.equal(frame.confirmHeld, true);
+
+  f.first.buttons[0].pressed = false;
+  frame = f.sample('menu', 30);
+  assert.equal(frame.ui.confirm, false);
+  assert.equal(frame.confirmHeld, true, 'the release settling window remains controller-owned');
+
+  f.first.buttons[2].pressed = true;
+  frame = f.sample('menu', 46);
+  assert.equal(frame.ui.confirm, false, 'a release-side alias pulse cannot activate again');
+  assert.equal(frame.confirmHeld, true);
+
+  f.first.buttons[2].pressed = false;
+  assert.equal(f.sample('menu', 62).confirmHeld, true);
+  assert.equal(f.sample('menu', 181).confirmHeld, true);
+  assert.equal(f.sample('menu', 182).confirmHeld, false, 'continuous neutral rearms Confirm');
+
+  f.first.buttons[0].pressed = true;
+  frame = f.sample('menu', 183);
+  assert.equal(frame.ui.confirm, true, 'a real later press remains responsive');
+});
+
+test('a long-held Steam Deck A remains one Confirm and rearms after stable neutral', () => {
+  const f = fixture({ autoJoin: true, navigationAliases: true, confirmReleaseMs: 120 });
+  f.sample('menu', 0);
+  f.first.buttons[0].pressed = true;
+  assert.equal(f.sample('menu', 10).ui.confirm, true);
+  assert.equal(f.sample('menu', 5010).ui.confirm, false);
+  f.first.buttons[0].pressed = false;
+  assert.equal(f.sample('menu', 5020).confirmHeld, true);
+  assert.equal(f.sample('menu', 5140).confirmHeld, false);
+  f.first.buttons[0].pressed = true;
+  assert.equal(f.sample('menu', 5141).ui.confirm, true);
+});
+
 test('UI repeat uses elapsed time, resets on reversal, and produces no catch-up burst', () => {
   const f = fixture();
   f.join();
@@ -369,6 +412,8 @@ test('invalid configuration rejects and malformed clocks never cause repeating a
     { deadZone: 0.9 },
     { repeatDelayMs: 0 },
     { repeatIntervalMs: Infinity },
+    { confirmReleaseMs: -1 },
+    { confirmReleaseMs: 1001 },
     { readPads: null },
   ])
     assert.throws(() => createControllerRouter({ ...options, eventTarget: null }));
@@ -387,6 +432,7 @@ test('solo auto-join accepts the first action after neutral without consuming a 
     readPads: () => [device],
     autoJoin: true,
     navigationAliases: true,
+    confirmReleaseMs: 0,
   });
   assert.equal(router.sample({ scope: 'menu' }).status.code, 'joined');
   device.buttons[0].pressed = true;
@@ -481,6 +527,7 @@ test('menu face aliases and shoulders/triggers work with edge detection and repe
     readPads: () => [device],
     autoJoin: true,
     navigationAliases: true,
+    confirmReleaseMs: 0,
   });
   const sample = () => router.sample({ scope: 'settings', timeMs: clock++ });
   sample();
