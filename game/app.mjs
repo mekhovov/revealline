@@ -33,6 +33,7 @@ import {
   prepareFreshSoloVisualTheme,
 } from './presentation/fresh-visual-theme.mjs';
 import { attachMusicCredit } from './ui/music-credit.mjs';
+import { soundtrackErrorText } from './ui/soundtrack-error-copy.mjs';
 import { createTouchPreferences } from './touch-preferences.mjs';
 import { createCharacterPresentations } from './character-presentations.mjs';
 import { journeyFromPackCatalog, journeyMissionId } from './journey/catalog.mjs';
@@ -1690,13 +1691,14 @@ try {
           musicPreviewState = state;
           renderMusicPreview();
           if (soundtrackLoading) return;
+          const playbackMessage = state.error || state.notice;
           soundtrackStatus(
-            state.error ||
-              state.notice ||
-              state.preparation?.message ||
-              (state.track
-                ? `${state.track.title} · ${state.status}`
-                : t('interface:chooseAPlaylistOrImportMp3Songs')),
+            playbackMessage
+              ? () => soundtrackErrorText(playbackMessage)
+              : state.preparation?.message ||
+                  (state.track
+                    ? `${state.track.title} · ${state.status}`
+                    : t('interface:chooseAPlaylistOrImportMp3Songs')),
             state.preparation,
           );
         },
@@ -1726,7 +1728,7 @@ try {
           soundtrackMenuGesture = true;
           return soundtrackPlayer.next();
         },
-        onError: (error) => soundtrackStatus(error.message || String(error)),
+        onError: (error) => soundtrackStatus(() => soundtrackErrorText(error)),
       });
       soundtrackPlayer.setAuthoredTrack(authoredMusic);
       soundtrackPlayer.setContext(soundtrackContext());
@@ -1749,7 +1751,7 @@ try {
           soundtrackLibrary = _library;
           soundtrackAssets = new Map(snapshot.assets.map(({ sha256, blob }) => [sha256, blob]));
         },
-        onError: (error) => soundtrackStatus(error.message || String(error)),
+        onError: (error) => soundtrackStatus(() => soundtrackErrorText(error)),
         onOpen: () => {
           pause(true);
           clearInput();
@@ -1808,16 +1810,19 @@ try {
         } else if (!soundtrackDisposed) {
           const state = soundtrackPlayer.snapshot();
           soundtrackStatus(
-            state.preparation?.message || state.error || t('interface:musicLibraryReady'),
+            state.preparation?.message ||
+              (state.error
+                ? () => soundtrackErrorText(state.error)
+                : t('interface:musicLibraryReady')),
             state.preparation,
           );
         }
       } catch (error) {
         soundtrackLoading = false;
         if (!soundtrackDisposed)
-          soundtrackStatus(
+          soundtrackStatus(() =>
             t('gameplay:customMusicStorageBuiltInPlaybackIsAvailableTheStudio', {
-              value1: error.message,
+              value1: soundtrackErrorText(error),
             }),
           );
       }
@@ -1834,7 +1839,7 @@ try {
       sound.resumeMusic();
       $('soundtrack-open').disabled = true;
       $('music-select').closest('label').hidden = false;
-      if (!soundtrackDisposed) soundtrackStatus(error.message || String(error));
+      if (!soundtrackDisposed) soundtrackStatus(() => soundtrackErrorText(error));
     }
   }
   function cosmeticFeedback(id) {
