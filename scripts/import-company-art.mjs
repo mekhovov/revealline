@@ -59,11 +59,23 @@ export async function importCompanyArt({
     );
     for (const record of receipt.assets) {
       const missionId = record.missionId ?? record.id,
+        revision = record.revision ?? 1,
         mission = missions.find((item) => item.id === missionId),
         selected = record.selected,
         original = record.original;
       required(mission && !seen.has(missionId), 'Unknown or repeated artwork mission.');
       seen.add(missionId);
+      required(
+        Number.isSafeInteger(revision) && revision > 0,
+        'Artwork revision must be a positive integer.',
+      );
+      const previous = nextArt.filter((asset) => asset.id === `${missionId}-picture`),
+        existingRevision = previous.find((asset) => asset.revision === String(revision)),
+        latestRevision = Math.max(0, ...previous.map((asset) => Number(asset.revision)));
+      required(
+        existingRevision || revision === latestRevision + 1,
+        'New artwork must follow the latest registered revision without gaps or rollback.',
+      );
       required(
         typeof record.prompt === 'string' &&
           record.prompt.trim().length >= 40 &&
@@ -130,7 +142,7 @@ export async function importCompanyArt({
         decoded.naturalWidth === selected.width && decoded.naturalHeight === selected.height,
         'Selected artwork must decode completely as its pinned opaque RGB PNG.',
       );
-      const assetId = `${missionId}-reveal-v1`;
+      const assetId = `${missionId}-reveal-v${revision}`;
       const asset = {
         id: assetId,
         path: selected.path,
@@ -143,7 +155,7 @@ export async function importCompanyArt({
       const picture = compileAssetRevision({
         format: 'AssetRevisionV1',
         id: `${missionId}-picture`,
-        revision: '1',
+        revision: String(revision),
         kind: 'reveal-background',
         path: selected.path.slice(5),
         sha256: selected.sha256,
@@ -156,7 +168,7 @@ export async function importCompanyArt({
       const source = {
         id: assetId,
         path: selected.path,
-        revision: 1,
+        revision,
         sha256: selected.sha256,
         bytes: selected.bytes,
         rights: 'generated-derivative',
@@ -173,13 +185,15 @@ export async function importCompanyArt({
         [nextArt, picture],
         [nextSources.assets, source],
       ]) {
-        const existing = list.find((entry) => entry.id === value.id);
+        const sameIdentity = (entry) =>
+          entry.id === value.id && (list !== nextArt || entry.revision === value.revision);
+        const existing = list.find(sameIdentity);
         required(
           !existing || canonicalJSON(existing) === canonicalJSON(value),
           'Artwork registration would replace an existing revision.',
         );
         required(
-          !list.some((entry) => entry.id !== value.id && entry.path === value.path),
+          !list.some((entry) => !sameIdentity(entry) && entry.path === value.path),
           'Artwork path is already registered under another identity.',
         );
         if (!existing) list.push(value);

@@ -1,5 +1,3 @@
-> Retained historical excerpt after an ownership migration. Exact originals are preserved separately. This excerpt is not the original complete record or a release qualification.
-
 # Company journeys
 
 See [shared Solo implementation and acceptance boundaries](company-editions-shared-solo.md)
@@ -13,21 +11,14 @@ implementation connects company content to the canonical Solo host. The current 
 
 Run `node scripts/game-cli.mjs serve --port 8768`, then open
 `http://127.0.0.1:8768/game/company.html`. Choose a company and audience in the selector.
-Portuguese DroneAid pilot, and seven Netherlands selections (the combined
-`droneaid-nl-community` edition plus six individual chapters). The generator produces 101 JSON files.
+The catalog contains the preserved three-mission Portuguese DroneAid pilot, seven Netherlands selections (the combined `droneaid-nl-community` edition plus six chapters), and Social Drone UA, Victory Drones, Ukraine: Living Culture and FPV Learning. The generator produces their reviewed JSON catalogs and content.
 
-For the next human review, use the [playtest packet](company-editions-playtest.md) and
-[transfer practice page](../authoring/company-studio/playtest.html). The four practice tasks
-change the fictional evidence and expected decisions without saving answers or earning
-campaign progress. Human testing was confirmed **not started** on 26 September 2026.
-
-filled by a render-time white backing. The Netherlands avatar uses the exact four propeller
+The Netherlands avatar uses the exact four propeller
 paths extracted from the official Dutch logo, spinning twice per second. Original source
-marks remain unchanged; reduced motion stops both rotations. Paper tangles, missing-information clouds, stale fragments and backlog knots
-use registered silhouette recipes over the existing enemy behaviours. These are fictional
-frictions, not portrayals of colleagues or suppliers.
+marks remain unchanged; reduced motion stops continuous rotation. DroneAid Netherlands uses six FPV quad families across all seven enemy roles, with four motors, a forward camera and animated propellers. Shared role badges, contact rings, warnings and enemy behaviour stay engine-owned. These are fictional game obstacles, not portrayals of workshop participants or recipients.
 
-the three historical Portuguese maps remain available separately. All 66 current missions pin
+Six DroneAid Netherlands campaigns contain 36 distinct maps;
+the three historical Portuguese maps remain available separately. The Netherlands missions pin
 `journey-trail-impact-v3`, `journey-actors-v9` and `journey-difficulty-v2`. The host applies its
 normal `gameplay-pressure.v4` attempt recipe once; authoring does not bake it into geometry.
 The historical pilot retains its exact earlier policy and source bytes.
@@ -74,7 +65,7 @@ existing campaign projects and their boot content. The runtime catalog is an all
 a menu filter. Deep links cannot select omitted content.
 
 `assets.json` is the public-byte inventory. `artwork.json` binds mission pictures to exact
-hashes, revisions and dimensions. Artwork-only updates advance affected edition revisions and
+hashes, revisions and dimensions in an immutable ledger. The authoring factory selects the highest positive integer revision for each picture ID and rejects duplicate revisions; retained presentations resolve their own exact embedded records. Artwork-only updates advance affected edition revisions and
 asset identities, recompute exact execution/presentation hashes, and retain the previous selected
 presentation. Unchanged gameplay, campaign and pack designs keep their revisions; logical Journey
 progress remains compatible. Changed gameplay requires new gameplay identities and deliberate
@@ -239,7 +230,7 @@ node scripts/produce-company-content.mjs
 
 The importer validates authored mission identities, exact PNG hashes/dimensions, portable
 master provenance, inspection records and the 1 MiB selection target. It refuses replacement
-of an existing revision, duplicate mission registration and unsafe paths. It does not certify
+of an existing revision, duplicate mission registration within a batch, revision gaps and reused media paths. Omitted receipt revisions mean revision 1 for existing tooling; replacements explicitly specify the next integer revision and use a fresh path. Reimporting an older exact receipt is idempotent and does not roll back current selection. It does not certify
 human artwork approval or change gameplay. Completed original/export inspections use explicit
 states; prose alone cannot authorize an inspected source claim. Recorded native `sips` resize
 commands must bind the exact master, selected output and dimensions. Register a complete batch in one catalogue update;
@@ -254,6 +245,19 @@ The completed bulk receipts link exact generated masters and selected files:
 Generation used the built-in image tool; exports preserve opaque RGB pixels with a
 mechanical resize. Full bounded PNG decoding rejects incomplete, corrupt or transparent
 selections before registration. Final artwork approval remains separate.
+
+The FPV follow-up replaces all 36 current Netherlands pictures with practical carbon-frame
+quad, goggle, component-bench and donation-case scenes. Its three revision-2 receipts are
+[Workshop and Parts](../game/editions/art-prompts-droneaid-fpv-workshop-v2.json),
+[Makers and Handoff](../game/editions/art-prompts-droneaid-fpv-makers-handoff-v2.json), and
+[Support and Horizon](../game/editions/art-prompts-droneaid-fpv-community-v2.json).
+The first workshop picture also supplies the current home hero. The new per-image target
+is 384 KiB, using opaque 2:1 native-resized derivatives; the seven exact pre-FPV presentation
+snapshots preserve the larger original pictures for saved runs. The offline cap remains
+64 MiB. Brand revision 2 and Netherlands edition revision 4 are presentation changes;
+campaign, mission, gameplay and logical progress identities stay unchanged. The
+historical Portuguese pilot retains its existing content. Research, composition decisions
+and source boundaries are in [the FPV art direction](droneaid-fpv-art-direction.md).
 
 The player verifies identity and shared presentation assets at startup. Reveal-only mission
 pictures load through the exact per-attempt verifier when needed. Their complete catalogue,

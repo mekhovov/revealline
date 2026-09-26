@@ -7,6 +7,7 @@ import {
 } from '../content-design/catalogs.mjs';
 import { COMPANY_CAMPAIGNS, COMPANY_MISSIONS } from './catalog.mjs';
 import { authorCompanyProgression, companyChallengeStage } from './progression.mjs';
+import { selectCurrentCompanyArtwork } from './artwork.mjs';
 
 // Each tuple is an authored layout: permanent walls, interior return surfaces,
 // slow field, and an opening spawn. Coordinates describe actual engine geometry.
@@ -906,7 +907,9 @@ export function createCompanyProject({
   project.maps = [];
   project.assets = artwork
     ? structuredClone(
-        artwork.filter((asset) => selected.some((m) => asset.id === `${m.id}-picture`)),
+        selectCurrentCompanyArtwork(artwork).filter((asset) =>
+          selected.some((m) => asset.id === `${m.id}-picture`),
+        ),
       )
     : [];
   project.missions = selected.map((entry) => {

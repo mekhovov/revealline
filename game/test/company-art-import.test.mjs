@@ -4,14 +4,21 @@ import { createHash } from 'node:crypto';
 import { deflateSync } from 'node:zlib';
 import { importCompanyArt } from '../../scripts/import-company-art.mjs';
 import { crc32 } from '../../scripts/game-cli.mjs';
+import { selectCurrentCompanyArtwork } from '../company-campaigns/artwork.mjs';
 
-const bytes = await (async()=>{
-    const {deflateSync}=await import('node:zlib');
-    const {crc32}=await import('../../scripts/game-cli.mjs');
-    const chunk=(type,data)=>{const out=Buffer.alloc(12+data.length);out.writeUInt32BE(data.length);out.write(type,4);out.set(data,8);out.writeUInt32BE(crc32(out.subarray(4,8+data.length)),8+data.length);return out;};
-    const header=Buffer.alloc(13);header.writeUInt32BE(960);header.writeUInt32BE(480,4);header[8]=8;header[9]=2;
-    return Buffer.concat([Buffer.from('89504e470d0a1a0a','hex'),chunk('IHDR',header),chunk('IDAT',deflateSync(Buffer.alloc((960*3+1)*480))),chunk('IEND',Buffer.alloc(0))]);
-  })();
+// Opaque synthetic RGB fixture: importer validation must not require community artwork.
+const chunk = (type, data) => {
+  const out = Buffer.alloc(12 + data.length);
+  out.writeUInt32BE(data.length); out.write(type, 4); out.set(data, 8);
+  out.writeUInt32BE(crc32(out.subarray(4, 8 + data.length)), 8 + data.length);
+  return out;
+};
+const header = Buffer.alloc(13);
+header.writeUInt32BE(960); header.writeUInt32BE(480, 4); header[8] = 8; header[9] = 2;
+const bytes = Buffer.concat([
+  Buffer.from('89504e470d0a1a0a', 'hex'), chunk('IHDR', header),
+  chunk('IDAT', deflateSync(Buffer.alloc((960 * 3 + 1) * 480))), chunk('IEND', Buffer.alloc(0)),
+]);
 const sha256 = createHash('sha256').update(bytes).digest('hex');
 const source = () => ({
   tool: 'image_gen.imagegen',
@@ -174,12 +181,49 @@ test('art import refuses replacement or duplicate mission registration without p
   const initial = input(),
     result = await importCompanyArt(initial);
   const occupied = structuredClone(result.artwork);
-  occupied[0].revision = '2';
+  occupied[0].alt = 'A conflicting replacement.';
   await assert.rejects(importCompanyArt({ ...initial, artwork: occupied }), /replace/);
   assert.equal(initial.assets.length, 0);
   const duplicated = fixture();
   duplicated.assets.push(structuredClone(duplicated.assets[0]));
   await assert.rejects(importCompanyArt(input(duplicated)), /repeated/);
+});
+
+test('new art appends immutable revisions while authoring selects the newest picture', async () => {
+  const first = await importCompanyArt(input());
+  const receipt = fixture(),
+    record = receipt.assets[0];
+  record.revision = 2;
+  record.selected.path = 'game/editions/assets/example/garden-v2.png';
+  record.derivation.command[6] = record.selected.path;
+  const second = await importCompanyArt({ ...input(receipt), ...first });
+  assert.equal(second.assets.length, 2);
+  assert.deepEqual(second.artwork[0], first.artwork[0]);
+  assert.equal(second.artwork[1].revision, '2');
+  assert.equal(second.sources.assets[1].revision, 2);
+  assert.equal(second.assets[1].id, 'example-opening-reveal-v2');
+  assert.deepEqual(selectCurrentCompanyArtwork(second.artwork), [second.artwork[1]]);
+  assert.deepEqual(selectCurrentCompanyArtwork([...second.artwork].reverse()), [second.artwork[1]]);
+  for (const replay of [fixture(), receipt]) {
+    const repeated = await importCompanyArt({ ...input(replay), ...second });
+    assert.deepEqual(repeated.artwork, second.artwork);
+    assert.deepEqual(repeated.sources, second.sources);
+  }
+  const reusedPath = fixture();
+  reusedPath.assets[0].revision = 2;
+  await assert.rejects(importCompanyArt({ ...input(reusedPath), ...first }), /path/);
+  for (const revision of [0, -1, 1.5, '2', 3, Number.MAX_SAFE_INTEGER + 1]) {
+    record.revision = revision;
+    await assert.rejects(importCompanyArt({ ...input(receipt), ...first }), /revision/);
+  }
+  assert.throws(
+    () => selectCurrentCompanyArtwork([...second.artwork, second.artwork[1]]),
+    /Repeated/,
+  );
+  assert.throws(
+    () => selectCurrentCompanyArtwork([{ ...second.artwork[1], revision: 'v2' }]),
+    /positive integers/,
+  );
 });
 
 test('self-consistent receipts cannot admit truncated or transparent PNGs', async () => {

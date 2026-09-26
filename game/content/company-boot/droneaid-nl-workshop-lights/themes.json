@@ -2,13 +2,13 @@
   "themes": [
     {
       "actorRecipes": {
-        "border-patrol": "stale-fragments",
-        "bouncer": "paper-tangle",
-        "claimed-rover": "missing-cloud",
-        "contour-patrol": "missing-cloud",
-        "eroder": "stale-fragments",
-        "lane-boss": "backlog-knot",
-        "relay-sentinel": "backlog-knot"
+        "border-patrol": "fpv-whoop",
+        "bouncer": "fpv-whoop",
+        "claimed-rover": "fpv-whoop",
+        "contour-patrol": "fpv-whoop",
+        "eroder": "fpv-whoop",
+        "lane-boss": "fpv-whoop",
+        "relay-sentinel": "fpv-whoop"
       },
       "bossShape": "core",
       "classBodies": {
@@ -26,9 +26,9 @@
       "id": "droneaid-nl-community",
       "labels": {
         "ability": "Support",
-        "boss": "Backlog knot",
+        "boss": "Practice lead",
         "currency": "Connections",
-        "enemy": "Paper tangle",
+        "enemy": "Practice quad",
         "objective": "Connection",
         "supply": "Support station"
       },
@@ -60,13 +60,13 @@
     },
     {
       "actorRecipes": {
-        "border-patrol": "stale-fragments",
-        "bouncer": "paper-tangle",
-        "claimed-rover": "missing-cloud",
-        "contour-patrol": "missing-cloud",
-        "eroder": "stale-fragments",
-        "lane-boss": "backlog-knot",
-        "relay-sentinel": "backlog-knot"
+        "border-patrol": "fpv-whoop",
+        "bouncer": "fpv-whoop",
+        "claimed-rover": "fpv-whoop",
+        "contour-patrol": "fpv-whoop",
+        "eroder": "fpv-whoop",
+        "lane-boss": "fpv-whoop",
+        "relay-sentinel": "fpv-whoop"
       },
       "bossShape": "core",
       "classBodies": {
@@ -84,13 +84,13 @@
       "id": "droneaid-nl-workshop-lights-theme",
       "labels": {
         "ability": "Support",
-        "boss": "Backlog knot",
+        "boss": "Practice lead",
         "currency": "Connections",
-        "enemy": "Loose labels",
+        "enemy": "Practice quad",
         "objective": "Connection",
         "supply": "Support station"
       },
-      "name": "DroneAid Netherlands · Workshop Lights",
+      "name": "DroneAid Netherlands · FPV Workshop",
       "palette": {
         "accent": "#FFD62C",
         "danger": "#FF9A88",
@@ -109,7 +109,7 @@
       "soundtrack": {
         "genre": "chiptune",
         "id": "droneaid-nl-workshop-lights-score",
-        "name": "Workshop Lights",
+        "name": "FPV Workshop",
         "root": 60,
         "scale": "major",
         "tempo": 104
@@ -118,13 +118,13 @@
     },
     {
       "actorRecipes": {
-        "border-patrol": "stale-fragments",
-        "bouncer": "stale-fragments",
-        "claimed-rover": "missing-cloud",
-        "contour-patrol": "missing-cloud",
-        "eroder": "stale-fragments",
-        "lane-boss": "backlog-knot",
-        "relay-sentinel": "backlog-knot"
+        "border-patrol": "fpv-open-x",
+        "bouncer": "fpv-open-x",
+        "claimed-rover": "fpv-open-x",
+        "contour-patrol": "fpv-open-x",
+        "eroder": "fpv-open-x",
+        "lane-boss": "fpv-open-x",
+        "relay-sentinel": "fpv-open-x"
       },
       "bossShape": "core",
       "classBodies": {
@@ -142,13 +142,13 @@
       "id": "droneaid-nl-parts-in-motion-theme",
       "labels": {
         "ability": "Support",
-        "boss": "Backlog knot",
+        "boss": "Practice lead",
         "currency": "Connections",
-        "enemy": "Sorting fragments",
+        "enemy": "Sorting quad",
         "objective": "Connection",
         "supply": "Support station"
       },
-      "name": "DroneAid Netherlands · Component Depot",
+      "name": "DroneAid Netherlands · FPV Component Depot",
       "palette": {
         "accent": "#FFD62C",
         "danger": "#FF9A88",
@@ -167,7 +167,7 @@
       "soundtrack": {
         "genre": "chiptune",
         "id": "droneaid-nl-parts-in-motion-score",
-        "name": "Component Depot",
+        "name": "FPV Component Depot",
         "root": 62,
         "scale": "major",
         "tempo": 112
@@ -176,13 +176,13 @@
     },
     {
       "actorRecipes": {
-        "border-patrol": "stale-fragments",
-        "bouncer": "missing-cloud",
-        "claimed-rover": "missing-cloud",
-        "contour-patrol": "missing-cloud",
-        "eroder": "stale-fragments",
-        "lane-boss": "backlog-knot",
-        "relay-sentinel": "backlog-knot"
+        "border-patrol": "fpv-stretched",
+        "bouncer": "fpv-stretched",
+        "claimed-rover": "fpv-stretched",
+        "contour-patrol": "fpv-stretched",
+        "eroder": "fpv-stretched",
+        "lane-boss": "fpv-stretched",
+        "relay-sentinel": "fpv-stretched"
       },
       "bossShape": "core",
       "classBodies": {
@@ -200,13 +200,13 @@
       "id": "droneaid-nl-makers-together-theme",
       "labels": {
         "ability": "Support",
-        "boss": "Backlog knot",
+        "boss": "Practice lead",
         "currency": "Connections",
-        "enemy": "Missed connection",
+        "enemy": "Relay quad",
         "objective": "Connection",
         "supply": "Support station"
       },
-      "name": "DroneAid Netherlands · Community Rooms",
+      "name": "DroneAid Netherlands · Drone Building Together",
       "palette": {
         "accent": "#F6D570",
         "danger": "#FF9A88",
@@ -225,7 +225,7 @@
       "soundtrack": {
         "genre": "ambient",
         "id": "droneaid-nl-makers-together-score",
-        "name": "Community Rooms",
+        "name": "Drone Building Together",
         "root": 65,
         "scale": "dorian",
         "tempo": 88
@@ -234,13 +234,13 @@
     },
     {
       "actorRecipes": {
-        "border-patrol": "stale-fragments",
-        "bouncer": "paper-tangle",
-        "claimed-rover": "missing-cloud",
-        "contour-patrol": "missing-cloud",
-        "eroder": "stale-fragments",
-        "lane-boss": "backlog-knot",
-        "relay-sentinel": "backlog-knot"
+        "border-patrol": "fpv-caged",
+        "bouncer": "fpv-caged",
+        "claimed-rover": "fpv-caged",
+        "contour-patrol": "fpv-caged",
+        "eroder": "fpv-caged",
+        "lane-boss": "fpv-caged",
+        "relay-sentinel": "fpv-caged"
       },
       "bossShape": "core",
       "classBodies": {
@@ -258,13 +258,13 @@
       "id": "droneaid-nl-careful-handoff-theme",
       "labels": {
         "ability": "Support",
-        "boss": "Backlog knot",
+        "boss": "Practice lead",
         "currency": "Connections",
-        "enemy": "Loose labels",
+        "enemy": "Guarded quad",
         "objective": "Connection",
         "supply": "Support station"
       },
-      "name": "DroneAid Netherlands · Canal-side Depot",
+      "name": "DroneAid Netherlands · FPV Donation Depot",
       "palette": {
         "accent": "#FFD62C",
         "danger": "#FF9A88",
@@ -283,7 +283,7 @@
       "soundtrack": {
         "genre": "chiptune",
         "id": "droneaid-nl-careful-handoff-score",
-        "name": "Canal-side Depot",
+        "name": "FPV Donation Depot",
         "root": 60,
         "scale": "major",
         "tempo": 98
@@ -292,13 +292,13 @@
     },
     {
       "actorRecipes": {
-        "border-patrol": "stale-fragments",
-        "bouncer": "stale-fragments",
-        "claimed-rover": "missing-cloud",
-        "contour-patrol": "missing-cloud",
-        "eroder": "stale-fragments",
-        "lane-boss": "backlog-knot",
-        "relay-sentinel": "backlog-knot"
+        "border-patrol": "fpv-antenna",
+        "bouncer": "fpv-antenna",
+        "claimed-rover": "fpv-antenna",
+        "contour-patrol": "fpv-antenna",
+        "eroder": "fpv-antenna",
+        "lane-boss": "fpv-antenna",
+        "relay-sentinel": "fpv-antenna"
       },
       "bossShape": "core",
       "classBodies": {
@@ -316,13 +316,13 @@
       "id": "droneaid-nl-signals-of-support-theme",
       "labels": {
         "ability": "Support",
-        "boss": "Backlog knot",
+        "boss": "Practice lead",
         "currency": "Connections",
-        "enemy": "Scattered notices",
+        "enemy": "Signal quad",
         "objective": "Connection",
         "supply": "Support station"
       },
-      "name": "DroneAid Netherlands · Community Pavilion",
+      "name": "DroneAid Netherlands · Workshop Open Day",
       "palette": {
         "accent": "#FFD62C",
         "danger": "#FF9A88",
@@ -341,7 +341,7 @@
       "soundtrack": {
         "genre": "chiptune",
         "id": "droneaid-nl-signals-of-support-score",
-        "name": "Community Pavilion",
+        "name": "Workshop Open Day",
         "root": 67,
         "scale": "major",
         "tempo": 116
@@ -350,13 +350,13 @@
     },
     {
       "actorRecipes": {
-        "border-patrol": "stale-fragments",
-        "bouncer": "missing-cloud",
-        "claimed-rover": "missing-cloud",
-        "contour-patrol": "missing-cloud",
-        "eroder": "stale-fragments",
-        "lane-boss": "backlog-knot",
-        "relay-sentinel": "backlog-knot"
+        "border-patrol": "fpv-survey",
+        "bouncer": "fpv-survey",
+        "claimed-rover": "fpv-survey",
+        "contour-patrol": "fpv-survey",
+        "eroder": "fpv-survey",
+        "lane-boss": "fpv-survey",
+        "relay-sentinel": "fpv-survey"
       },
       "bossShape": "core",
       "classBodies": {
@@ -374,13 +374,13 @@
       "id": "droneaid-nl-shared-horizon-theme",
       "labels": {
         "ability": "Support",
-        "boss": "Backlog knot",
+        "boss": "Practice lead",
         "currency": "Connections",
-        "enemy": "Passing cloud",
+        "enemy": "Horizon quad",
         "objective": "Connection",
         "supply": "Support station"
       },
-      "name": "DroneAid Netherlands · Shared Horizon",
+      "name": "DroneAid Netherlands · Ukraine Support Horizon",
       "palette": {
         "accent": "#FFE18B",
         "danger": "#FF9A88",
@@ -399,7 +399,7 @@
       "soundtrack": {
         "genre": "ambient",
         "id": "droneaid-nl-shared-horizon-score",
-        "name": "Shared Horizon",
+        "name": "Ukraine Support Horizon",
         "root": 62,
         "scale": "dorian",
         "tempo": 82
