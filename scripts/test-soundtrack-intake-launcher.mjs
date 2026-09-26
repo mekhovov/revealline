@@ -28,8 +28,57 @@ test('launcher removes its archive location before forwarding intake arguments',
     splitLauncherArguments(['/music', '--archive-root', '/archive', '--license', 'cc0']),
     {
       archiveRoot: '/archive',
+      privateOutput: '',
       forwarded: ['/music', '--license', 'cc0'],
     },
+  );
+});
+
+test('unknown licence routes the source folder to private UA-FPV pack creation', async () => {
+  let invocation;
+  const code = await launchMusicIntake(
+    [
+      'music',
+      '--license',
+      'unknown',
+      '--styles',
+      'rock,electro,fpv',
+      '--private-output',
+      'private-packs',
+    ],
+    {
+      currentDirectory: '/caller',
+      run: async (command, args, options) => {
+        invocation = { command, args, options };
+        return 0;
+      },
+    },
+  );
+  assert.equal(code, 0);
+  assert.equal(invocation.command, process.execPath);
+  assert.equal(invocation.options.cwd.endsWith('/go_test'), true);
+  assert.equal(invocation.args[0].endsWith('/scripts/ua-fpv-local-pack.mjs'), true);
+  assert.deepEqual(invocation.args.slice(1), [
+    '--source-dir',
+    '/caller/music',
+    '--output-dir',
+    '/caller/private-packs',
+  ]);
+});
+
+test('unknown licence cannot publish or omit its private destination', async () => {
+  await assert.rejects(
+    launchMusicIntake(['music', '--license', 'unknown'], {
+      currentDirectory: '/caller',
+    }),
+    /requires --private-output/,
+  );
+  await assert.rejects(
+    launchMusicIntake(
+      ['music', '--license', 'unknown', '--private-output', 'private-packs', '--open-pr'],
+      { currentDirectory: '/caller' },
+    ),
+    /private-only/,
   );
 });
 

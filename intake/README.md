@@ -30,7 +30,17 @@ web-game playback. A YouTube URL identifies a source but does not grant those
 rights.
 
 For the 80-file UA-FPV folder whose public rights remain unverified, build
-private local album files instead:
+private local album files with the same launcher:
+
+```sh
+node intake/add-music.mjs "/absolute/path/to/docs/research/dah-soundtracks" \
+  --license unknown \
+  --private-output "/absolute/path/to/new-empty-private-directory"
+```
+
+`--license unknown` is private-only. It cannot be combined with `--open-pr`,
+`--confirm-rights` or `--archive-root`, and it never writes to either public
+soundtrack archive. The equivalent direct builder command is:
 
 ```sh
 node scripts/ua-fpv-local-pack.mjs \
