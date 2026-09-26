@@ -14,7 +14,9 @@ import {
   setCreatorBatchItemExcluded,
 } from '../creator/batch.mjs';
 import { creatorSHA256 } from '../creator/bytes.mjs';
+import { prepareCreatorImage } from '../creator/image.mjs';
 import { verifyCreatorRoutes } from '../creator/templates.mjs';
+import { encodeSpritePNG } from '../../scripts/produce-field-kit-sprites.mjs';
 
 const settings = {
   draftId: 'batch-draft',
@@ -129,6 +131,77 @@ test('failed items stay visible and require explicit exclusion before compositio
   assert.equal(assembled.project.assets.length, 2);
   assert.equal(assembled.itemIds.includes(failed.id), false);
   assert.equal((await verifyCreatorRoutes(assembled.project, assembled.provenance[0])).length, 6);
+});
+
+test('portrait orientation and a corrupt item pass through one batch without silent omission', async () => {
+  const portrait = new Blob(
+      [
+        encodeSpritePNG({
+          width: 10,
+          height: 20,
+          rgba: new Uint8Array(10 * 20 * 4).fill(127),
+        }),
+      ],
+      { type: 'image/png' },
+    ),
+    draws = [],
+    bitmap = {
+      width: 10,
+      height: 20,
+      closed: 0,
+      close() {
+        this.closed++;
+      },
+    },
+    prepareImage = (blob, options, { signal } = {}) =>
+      prepareCreatorImage(blob, options, {
+        signal,
+        decodeBitmap: async (_owned, settings) => {
+          assert.deepEqual(settings, { imageOrientation: 'from-image' });
+          return bitmap;
+        },
+        createCanvas: () => ({
+          width: 0,
+          height: 0,
+          getContext: () => ({ fillRect() {}, drawImage: (...args) => draws.push(args.slice(1)) }),
+          toBlob(callback) {
+            callback(
+              new Blob(
+                [
+                  encodeSpritePNG({
+                    width: this.width,
+                    height: this.height,
+                    rgba: new Uint8Array(this.width * this.height * 4).fill(127),
+                  }),
+                ],
+                { type: 'image/png' },
+              ),
+            );
+          },
+        }),
+      });
+  let batch = await prepareCreatorBatch(
+    [
+      { name: 'portrait.png', blob: portrait, fit: 'cover', alt: 'Tall portrait' },
+      { name: 'unsupported.png', blob: new Blob(['not an image'], { type: 'image/png' }) },
+    ],
+    settings,
+    { prepareImage },
+  );
+  const ready = batch.items.find((item) => item.status === 'ready'),
+    failed = batch.items.find((item) => item.status === 'failed');
+  assert.equal(ready.fileName, 'portrait.png');
+  assert.equal(ready.fit, 'cover');
+  assert.equal(ready.alt, 'Tall portrait');
+  assert.deepEqual(draws, [
+    [0, -960, 1280, 2560],
+    [0, -240, 320, 640],
+  ]);
+  assert.equal(bitmap.closed, 1);
+  assert.match(failed.error, /Cannot use this picture/);
+  assert.throws(() => assembleCreatorBatchProject(batch), /Exclude each failed item/);
+  batch = setCreatorBatchItemExcluded(batch, failed.id, true);
+  assert.deepEqual(assembleCreatorBatchProject(batch).itemIds, [ready.id]);
 });
 
 test('processing and hashing stay sequential and cancellation stops before later items', async () => {

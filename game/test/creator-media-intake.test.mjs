@@ -127,6 +127,10 @@ test('normalized stems suggest one exact image/video pair while hashes remain au
   assert.equal(story.poster.origin.kind, 'supplied-image');
   assert.equal(story.poster.origin.sourceImageSha256, picture.assetSha256);
   assert.equal(story.video.sha256, movie.assetSha256);
+  const retainedOriginal = prepared.assets.find(
+    (asset) => asset.sha256 === picture.assetSha256 && asset.role === 'source-image-original',
+  );
+  assert.equal(await retainedOriginal.blob.text(), 'picture');
   assert.deepEqual(f.state(), { active: 0, peak: 1, inspected: 1, disposed: 1, captured: 0 });
 });
 

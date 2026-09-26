@@ -9,9 +9,14 @@ import { createHash } from 'node:crypto';
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 const hash = (bytes) => createHash('sha256').update(bytes).digest('hex');
 const argv = process.argv.slice(2);
-if (argv.length !== 2 || argv[0] !== '--out') {
+const portraitRotation =
+  argv.length === 4 &&
+  argv[0] === '--out' &&
+  argv[2] === '--kind' &&
+  argv[3] === 'portrait-rotation';
+if (!((argv.length === 2 && argv[0] === '--out') || portraitRotation)) {
   console.log(
-    'Usage: node authoring/video-poster/generate-fixture.mjs --out .cache/NEW_FIXTURE_DIRECTORY',
+    'Usage: node authoring/video-poster/generate-fixture.mjs --out .cache/NEW_FIXTURE_DIRECTORY [--kind portrait-rotation]',
   );
   process.exit(argv.includes('--help') ? 0 : 2);
 }
@@ -43,14 +48,86 @@ for (const component of path.relative(cache, path.dirname(out)).split(path.sep).
 await fs.mkdir(out); // Never replace a prior clip or its evidence.
 if ((await fs.realpath(out)) !== path.join(realCache, path.relative(cache, out)))
   throw new Error('Fixture output changed location before generation.');
-const clip = path.join(out, 'owned-poster-fixture.mp4');
+const clip = path.join(
+  out,
+  portraitRotation ? 'owned-portrait-rotation-fixture.mp4' : 'owned-poster-fixture.mp4',
+);
 const ffmpeg = spawnSync('ffmpeg', ['-version'], { encoding: 'utf8' });
 const ffmpegFilters =
   ffmpeg.status === 0
     ? spawnSync('ffmpeg', ['-hide_banner', '-filters'], { encoding: 'utf8' })
     : { status: null, stdout: '', stderr: '' };
-let command, engine, generator;
-if (
+let commands, engine, generator, intermediate;
+let authored = { width: 640, height: 360, fps: 10, frames: 60, durationSeconds: 6, audio: false };
+let orientationQualification = null;
+if (portraitRotation) {
+  if (ffmpeg.status !== 0)
+    throw new Error(
+      'The portrait-rotation fixture requires an existing ffmpeg and ffprobe; nothing was installed.',
+    );
+  const ffprobe = spawnSync('ffprobe', ['-version'], { encoding: 'utf8' });
+  if (ffprobe.status !== 0)
+    throw new Error(
+      'The portrait-rotation fixture requires an existing ffprobe; nothing was installed.',
+    );
+  intermediate = path.join(out, 'encoded-landscape-intermediate.mp4');
+  commands = [
+    [
+      'ffmpeg',
+      '-nostdin',
+      '-n',
+      '-f',
+      'lavfi',
+      '-i',
+      'testsrc2=size=640x360:rate=10:duration=4',
+      '-an',
+      '-c:v',
+      'libx264',
+      '-pix_fmt',
+      'yuv420p',
+      '-movflags',
+      '+faststart',
+      intermediate,
+    ],
+    [
+      'ffmpeg',
+      '-nostdin',
+      '-n',
+      '-display_rotation',
+      '90',
+      '-i',
+      intermediate,
+      '-map',
+      '0:v:0',
+      '-an',
+      '-c',
+      'copy',
+      '-movflags',
+      '+faststart',
+      clip,
+    ],
+  ];
+  engine = `${ffmpeg.stdout}\n${ffprobe.stdout}`;
+  generator =
+    'ffmpeg testsrc2 encoded 640x360, then losslessly remuxed with a 90-degree display matrix; no audio';
+  authored = {
+    encodedWidth: 640,
+    encodedHeight: 360,
+    displayWidth: 360,
+    displayHeight: 640,
+    rotationDegrees: 90,
+    fps: 10,
+    frames: 40,
+    durationSeconds: 4,
+    audio: false,
+  };
+  orientationQualification = {
+    expectedBrowserDisplay: { width: 360, height: 640, orientation: 'portrait' },
+    compactProfile: { width: 202, height: 358, targetVideoBitrate: 900000 },
+    evidence:
+      'The encoded samples remain 640x360 while the MP4 display matrix rotates them to a 360x640 portrait presentation. Browser qualification must report the portrait display dimensions and independently reopen a 202x358 portrait AVC output.',
+  };
+} else if (
   ffmpeg.status === 0 &&
   ffmpegFilters.status === 0 &&
   /\bdrawtext\b/.test(`${ffmpegFilters.stdout}\n${ffmpegFilters.stderr}`)
@@ -58,24 +135,26 @@ if (
   const font = path
     .join(root, 'game/ui/fonts/field-kit/ibm-plex-mono-500.woff2')
     .replace(/([\\':])/g, '\\$1');
-  command = [
-    'ffmpeg',
-    '-nostdin',
-    '-n',
-    '-f',
-    'lavfi',
-    '-i',
-    'testsrc2=size=640x360:rate=10:duration=6',
-    '-vf',
-    `drawtext=fontfile='${font}':text='OWNED FIXTURE frame %{n}':x=20:y=30:fontsize=32:fontcolor=white:box=1:boxcolor=black`,
-    '-an',
-    '-c:v',
-    'libx264',
-    '-pix_fmt',
-    'yuv420p',
-    '-movflags',
-    '+faststart',
-    clip,
+  commands = [
+    [
+      'ffmpeg',
+      '-nostdin',
+      '-n',
+      '-f',
+      'lavfi',
+      '-i',
+      'testsrc2=size=640x360:rate=10:duration=6',
+      '-vf',
+      `drawtext=fontfile='${font}':text='OWNED FIXTURE frame %{n}':x=20:y=30:fontsize=32:fontcolor=white:box=1:boxcolor=black`,
+      '-an',
+      '-c:v',
+      'libx264',
+      '-pix_fmt',
+      'yuv420p',
+      '-movflags',
+      '+faststart',
+      clip,
+    ],
   ];
   engine = `${ffmpeg.stdout}\n${ffmpegFilters.stdout}`;
   generator = 'ffmpeg testsrc2 + burned frame number; no audio';
@@ -136,36 +215,70 @@ print("Owned 640x360 H.264 MP4; 60 frames at10fps;6seconds; no audio track")
 `;
   const source = path.join(out, 'generate.swift');
   await fs.writeFile(source, swift, { flag: 'wx' });
-  command = ['xcrun', 'swift', source, clip];
+  commands = [['xcrun', 'swift', source, clip]];
   engine = version.stdout;
   generator =
     'macOS AVAssetWriter H.264; six owned color cards + burned frame/time + moving bar; no audio';
 }
-const result = spawnSync(command[0], command.slice(1), { encoding: 'utf8', timeout: 120000 });
-await fs.writeFile(
-  path.join(out, 'generation.log'),
-  `${result.stdout ?? ''}\n${result.stderr ?? ''}`,
-  { flag: 'wx' },
-);
+let result;
+let generationLog = '';
+for (const command of commands) {
+  result = spawnSync(command[0], command.slice(1), { encoding: 'utf8', timeout: 120000 });
+  generationLog += `$ ${command.join(' ')}\n${result.stdout ?? ''}\n${result.stderr ?? ''}\n`;
+  if (result.status !== 0) break;
+}
+await fs.writeFile(path.join(out, 'generation.log'), generationLog, { flag: 'wx' });
 if (result.status !== 0)
   throw new Error(
     `Fixture generation failed (${result.status ?? result.error?.message}); retained the attempt. No playback qualification claimed.`,
   );
+if (intermediate) await fs.rm(intermediate);
 const bytes = await fs.readFile(clip);
+let nativeOrientationProbe = null;
+if (portraitRotation) {
+  const probe = spawnSync(
+    'ffprobe',
+    [
+      '-v',
+      'error',
+      '-select_streams',
+      'v:0',
+      '-show_entries',
+      'stream=width,height:stream_side_data=rotation',
+      '-of',
+      'json',
+      clip,
+    ],
+    { encoding: 'utf8', timeout: 30000 },
+  );
+  if (probe.status !== 0)
+    throw new Error('ffprobe could not verify the generated portrait display matrix.');
+  nativeOrientationProbe = JSON.parse(probe.stdout);
+  const stream = nativeOrientationProbe.streams?.[0];
+  if (
+    stream?.width !== 640 ||
+    stream?.height !== 360 ||
+    Math.abs(stream.side_data_list?.[0]?.rotation) !== 90
+  )
+    throw new Error('Generated fixture did not retain the expected 90-degree display matrix.');
+}
 const record = {
   format: 'revealline-owned-video-fixture.v1',
   generator,
   engine,
-  command,
+  command: commands.at(-1),
+  commands,
   scriptSha256: hash(await fs.readFile(fileURLToPath(import.meta.url))),
   clip: { path: clip, bytes: bytes.length, sha256: hash(bytes), mime: 'video/mp4' },
-  authored: { width: 640, height: 360, fps: 10, frames: 60, durationSeconds: 6, audio: false },
+  authored,
+  ...(orientationQualification ? { orientationQualification, nativeOrientationProbe } : {}),
   visualTrimQualification: {
     sourceRange: { startSeconds: 1, endSeconds: 4 },
     expectedStartFrame: 10,
     expectedLastFrame: 39,
-    evidence:
-      'The burned frame/time label and per-second visual sequence make a shifted start or end visible. Production qualification still requires fresh browser-presented timestamps and decoded RGB evidence from the exact generated and exported hashes.',
+    evidence: portraitRotation
+      ? 'The asymmetric test pattern makes a lost rotation or shifted edge visible. Production qualification still requires browser-reported portrait display dimensions, fresh presented timestamps and decoded RGB evidence from the exact generated and exported hashes.'
+      : 'The burned frame/time label and per-second visual sequence make a shifted start or end visible. Production qualification still requires fresh browser-presented timestamps and decoded RGB evidence from the exact generated and exported hashes.',
   },
   limits:
     'Generated diagnostic fixture, not artwork or browser decode evidence. Native export may vary by SDK/encoder; actual file hash is recorded. No audible-track qualification is possible with this silent clip.',

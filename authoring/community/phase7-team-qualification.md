@@ -58,7 +58,66 @@ portable Team artifact has its own explicit API and MIME type and can launch
 through production Couch file intake. Exact portable bytes install under a
 SHA-256 edition identity. Fresh library visits discover immutable installed
 editions, replay their qualification before launch, and retain legal clear
-receipts within the exact edition. Unfinished-attempt recovery, durable picture
-rewards and creator media packaging remain integration work. Automated
-feasibility is not human balance, first-attempt success,
+receipts within the exact edition.
+
+Installed generated Team missions also retain one unfinished checkpoint per
+level. The checkpoint stores bounded run-length encoded two-player commands,
+the reviewed gameplay-pressure recipe, and an exact state identity. Reopening
+a mission reconstructs it from the immutable installed pack and replays every
+saved command before adopting the territory. Changed package bytes, gameplay
+identity, checkpoint bytes, a terminal run, stale progress generation, or an
+attempt replaced in another tab is rejected rather than silently overwritten.
+The host writes the initial checkpoint on launch, refreshes it during play and
+when pausing, and removes it after an exactly replayed legal win or terminal
+loss.
+
+A verified win retains its exact registered picture identity in the
+edition-scoped completion receipt. A fresh mission-library visit labels the
+clear as **Picture earned**, and prepares that registered original again when
+the mission is played.
+
+The optional `revealline-creator-team-media.v1` wrapper adds a strict binary
+media closure around those unchanged replay-qualified gameplay bytes. Every
+level maps to one completely decoded 1152 × 576 PNG or JPEG original and may
+map to one inspected MP4/WebM victory story with an explicit playback range.
+The manifest includes reviewed creator/media/license credits, a sorted SHA-256
+inventory, and no unreferenced browser-library assets. Images retain the 4 MiB
+per-file limit; videos retain the 64 MiB source limit; the complete package and
+manifest reuse the 256 MiB and 2 MiB managed-media budgets.
+
+`prepareCreatorTeamMediaCampaign` verifies the existing prepared gameplay,
+exact dependency closure, image headers plus full decoding, video inspection,
+and playback ranges. `exportCreatorTeamMediaCampaign` emits the portable file;
+`importCreatorTeamMediaCampaign` replays gameplay qualification and rechecks
+every media byte before returning a runtime owner. Production Team intake also
+recognizes its magic when a browser omits the MIME type. The installed edition
+identity is the SHA-256 of the complete gameplay-and-media file, and legacy
+JSON-only Team packages retain their existing identities and reader.
+
+Installed media launches revalidate the complete package, prepare the exact
+picture through an owned decoder lease, and bind the completion reward back to
+that edition's picture descriptor after the normal terminal replay. A win with
+an optional story shows **Play victory story**, **Skip story**, and **Replay
+victory story** states. Story failure or refusal leaves the earned picture and
+Next action available; playback never records completion. Broad conversion,
+physical video trimming, autoplay, and audio-sync qualification remain outside this bounded
+contract.
+
+## Browser assembly and shared storage
+
+The Team campaign creator exposes the strict package API as a local browser workflow. It generates
+and verifies the two cooperative templates, normalizes each selected reward through the existing
+orientation/metadata-scrubbing picture pipeline to an exact 1152 × 576 PNG, inspects optional
+complete MP4/WebM originals, and shows every level-to-media binding before approval. Approval is a
+process-local reference to the exact prepared object. Changing gameplay, a selected file, fitting,
+playback range, description, or credit removes that approval before installation or export.
+
+Installation reviews the portable size, staging bytes and total shared managed-media usage. Team's
+dedicated immutable-edition database records its exact payload, while an external-usage row in the
+existing managed-media ledger serializes its physical byte claim with still, story and audio
+reservations. Claims begin pending, become committed only after the Team transaction succeeds, and
+are reconciled from the verified Team inventory after interruption. Existing editions are retained
+if migration reveals an over-budget combined library; new writes remain blocked until usage fits.
+
+Automated feasibility is not human balance, first-attempt success,
 physical-controller certification or mobile certification.

@@ -102,6 +102,45 @@ test('failure of the second write rolls back both receipts; session original exp
   assert.deepEqual((await backend.readState()).pictures, backup.pictures);
 });
 
+test('picture write failure durably falls back to the exact clear receipt after immediate caller teardown', async () => {
+  const disk = managedIndexedDB(),
+    { profile } = store(disk);
+  await profile.load();
+  disk.failAnyPutAt = 2;
+  const settling = profile.recordWithReceiptFallback(completion());
+  // The page may release all references as soon as the terminal frame is
+  // presented. The owned settlement promise must still finish the fallback.
+  const result = await settling;
+  assert.deepEqual(result, {
+    durable: true,
+    picture: false,
+    fallback: true,
+    error: 'Injected storage write failure',
+  });
+  const fresh = store(disk).profile;
+  await fresh.load();
+  assert.equal(fresh.snapshot().clears.solo['candidate/p/c/l'].runId, 'run-1');
+  assert.deepEqual(fresh.pictures().records, []);
+  assert.equal(fresh.status().durable, true);
+});
+
+test('a completion without available artwork still durably records progress', async () => {
+  const disk = managedIndexedDB(),
+    { profile } = store(disk),
+    { picture: _picture, ...receipt } = completion();
+  await profile.load();
+  assert.deepEqual(await profile.recordWithReceiptFallback(receipt), {
+    durable: true,
+    picture: false,
+    fallback: false,
+    error: null,
+  });
+  const fresh = store(disk).profile;
+  await fresh.load();
+  assert.equal(fresh.snapshot().clears.solo['candidate/p/c/l'].runId, 'run-1');
+  assert.deepEqual(fresh.pictures().records, []);
+});
+
 test('concurrent tabs keep independent mode and edition originals; duplicate terminal delivery is idempotent', async () => {
   const disk = managedIndexedDB(),
     a = store(disk).profile,

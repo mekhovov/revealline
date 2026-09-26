@@ -1,5 +1,11 @@
 import { createCreatorStore, loadInstalledCreatorBundle } from './installed.mjs';
-import { createCreatorRuntime, creatorAttemptKey, creatorProfileKey } from './runtime.mjs';
+import {
+  createCreatorRuntime,
+  creatorAttemptKey,
+  creatorCampaignDestination,
+  creatorEarnedMissionId,
+  creatorProfileKey,
+} from './runtime.mjs';
 import { BoardPainter, boardPaintSizeForRun } from '../ui/render.mjs';
 import { attachInput } from '../ui/input.mjs';
 import { FIXED_DT } from '../core/index.mjs';
@@ -19,7 +25,9 @@ const status = (message, error = false) => {
 const fail = (error) =>
   status(error.message || localizedMessage('errors:creator.operationFailed'), true);
 const store = createCreatorStore();
-const edition = new URLSearchParams(location.search).get('edition');
+const search = new URLSearchParams(location.search),
+  edition = search.get('edition'),
+  requestedMissionId = search.get('mission');
 let runtime,
   painter,
   input,
@@ -37,6 +45,7 @@ let runtime,
   pictureURL,
   pictureSha256,
   storyPlayer,
+  startMissionId = null,
   nextMissionId = null;
 const saveKey = creatorAttemptKey(edition);
 function persistAttempt() {
@@ -80,7 +89,7 @@ function setRunning() {
 }
 function updateControls() {
   const hasRun = !!runtime?.current();
-  $('start').disabled = busy || !runtime || (hasRun && !ended);
+  $('start').disabled = busy || !runtime || !startMissionId || (hasRun && !ended);
   $('resume').hidden = !savedRaw || hasRun;
   $('resume').disabled = busy;
   $('pause').disabled = busy || !hasRun || ended;
@@ -108,7 +117,9 @@ async function operation(action) {
 }
 async function showEarned(preferredMissionId = null) {
   const project = pack.manifest.content.project;
-  const clears = profile.snapshot().clears.solo;
+  const progress = profile.snapshot(),
+    clears = progress.clears.solo;
+  preferredMissionId ??= creatorEarnedMissionId(runtime.missionOrder, progress);
   const missions = preferredMissionId
     ? [
         project.missions.find(({ id }) => id === preferredMissionId),
@@ -161,9 +172,12 @@ async function adoptDisplay(attempt, running) {
   $('difficulty').value = attempt.selection.difficulty;
   $('steering').value = attempt.selection.turnPolicy;
   ended = false;
+  startMissionId = attempt.manifest.missionId;
   nextMissionId = null;
   paused = true;
   lastSaveTick = attempt.run.tick;
+  if (profile.snapshot().cursors.solo !== attempt.manifest.missionId)
+    profile.record({ type: 'select', mode: 'solo', missionId: attempt.manifest.missionId });
   $('next').hidden = true;
   persistAttempt();
   if (running) setRunning();
@@ -187,6 +201,9 @@ async function finish() {
       const missionId = receipt.missionId,
         earned = await showEarned(missionId);
       nextMissionId = runtime.nextMissionId(missionId);
+      startMissionId = creatorCampaignDestination(runtime.missionOrder, profile.snapshot(), {
+        missionId: requestedMissionId,
+      }).missionId;
       status(
         nextMissionId
           ? localizedMessage('interface:creator.levelCompletePictureSaved')
@@ -270,7 +287,11 @@ function frame(time) {
 $('start').onclick = () =>
   operation(async () =>
     adoptDisplay(
-      await runtime.start({ difficulty: $('difficulty').value, turnPolicy: $('steering').value }),
+      await runtime.start({
+        missionId: startMissionId,
+        difficulty: $('difficulty').value,
+        turnPolicy: $('steering').value,
+      }),
       true,
     ),
   );
@@ -337,6 +358,9 @@ $('import-progress').onchange = () =>
       throw new Error(t('errors:creator.chooseBoundedProgress'));
     profile.restore(await file.text());
     await profile.flush();
+    startMissionId = creatorCampaignDestination(runtime.missionOrder, profile.snapshot(), {
+      missionId: requestedMissionId,
+    }).missionId;
     storyPlayer.reset();
     await showEarned();
   });
@@ -385,6 +409,9 @@ try {
   });
   await profile.load();
   runtime = createCreatorRuntime(pack);
+  startMissionId = creatorCampaignDestination(runtime.missionOrder, profile.snapshot(), {
+    missionId: requestedMissionId,
+  }).missionId;
   storyPlayer = createCreatorPlayerVictoryStory({
     runtime,
     host: createCreatorVictoryStoryHost({

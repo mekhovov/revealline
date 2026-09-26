@@ -1,6 +1,6 @@
 # Create and recover a community game candidate
 
-Start with the [beginner creator guide](index.html), the [single-picture walkthrough](image-campaign-guide.md), or the Phase 2 [batch campaign walkthrough](batch-image-campaign-guide.md). The single-image creator provides generation, review, portable `.rlpack` files and installed Custom gameplay; [its acceptance record](phase1-acceptance.md) tracks verification and public release separately. Batch creation remains an implementation candidate with [its own open acceptance gates](phase2-acceptance.md). The [framework reference](framework-reference.md), [maintainer guide](maintainer-guide.md), and [phased delivery register](delivery-plan.md) distinguish released behavior from mixed-media and community-store work. The historical manual trials below retain their original scope and identities.
+Start with the [beginner creator guide](index.html), the [single-picture walkthrough](image-campaign-guide.md), or the [batch campaign walkthrough](batch-image-campaign-guide.md). The picture campaign creator accepts one or many images and videos, generates bounded levels with enemies and collision obstacles, prepares exact posters and optional victory stories, and exports or installs reviewed `.rlpack` editions. The phase acceptance records preserve detailed evidence; the [combined acceptance record](combined-release-acceptance.md) and [delivery register](delivery-plan.md) identify the remaining release and production gates. The historical manual trials below retain their original scope and identities.
 
 The [combined creator feature acceptance record](combined-release-acceptance.md) is the current
 source and release authority for the consolidated implementation. Individual phase records remain
@@ -11,7 +11,7 @@ cohort with `npm run test:creator-feature`. The command discovers the owned test
 the cross-boundary acceptance files and fails if either the browser/runtime cohort or service suite
 fails.
 
-The [video campaign review guide](video-campaign-guide.md) documents the Phase 3 mixed-media review contract, exact pairing corrections, poster choices, playback ranges and optional post-win story behavior. The main creator flow now persists those exact dependencies before approval; the [Phase 3 acceptance record](phase3-acceptance.md) separates completed browser evidence from the remaining player-story and release gates.
+The [video campaign review guide](video-campaign-guide.md) documents the mixed-media review contract, exact pairing corrections, poster choices, playback ranges and optional post-win story behavior. The main creator flow persists those exact dependencies before approval; the [Phase 3 acceptance record](phase3-acceptance.md) preserves the focused implementation evidence.
 
 The account, resumable upload, exact validation, automatic catalog publication, report and
 unlisting service is documented in the [Phase 4 acceptance record](phase4-acceptance.md) and
@@ -21,11 +21,17 @@ client candidate, exact immutable install/update/offline behavior, reference-awa
 removal, and the remaining hosted-production gates.
 
 The [optional media editor guide](media-editor-guide.md) documents the bounded Phase 8 slice:
-playback ranges, evidence-backed decoded-frame stepping, and verified physical trimming for a
-single silent AVC/H.264 MP4 track. [Its acceptance record](phase8-acceptance.md) preserves the
-explicit limits: audio-bearing, WebM, non-AVC, and multi-track inputs are not physically trimmed.
+playback ranges, evidence-backed decoded-frame stepping, and verified physical trim/conversion for
+one silent browser-decodable MP4/WebM video track or one MP4 with exactly one AVC/H.264 video track
+and one AAC audio track. Output is AVC/H.264 MP4 and retains verified AAC only on that bounded audio
+path. [Its acceptance record](phase8-acceptance.md) preserves the explicit limits: additional
+tracks and other audio codec combinations are rejected, while Firefox, Safari, Balanced portrait
+and physical-mobile qualification remain open.
 
-This is a tested local authoring guide for Reveal Line. It covers a small mission project and a separate editable presentation collection. It does not claim that a finished DroneAid/community edition, catalogue installer, or public release has already been produced.
+This is a tested local authoring guide for Reveal Line. It covers the automatic creator, a small
+manual mission project, and a separate editable presentation collection. The repository includes a
+community catalog client and self-hosted service, but no public production community deployment or
+finished DroneAid edition is claimed here.
 
 Use [Content Studio](../../game/studio/index.html), [Asset Studio](../asset-studio/index.html), and the [copyable community prompts](../prompts/community-creation.md). Start from the [example project](example-project.json) when reproducing this guide. It is a small greybox with Solo/Versus support, not a finished campaign.
 
@@ -33,15 +39,19 @@ The browser trials used exact source checkpoints `eab879c`, `a840a5e6`, `86618bf
 
 ## What each tool produces
 
-| Tool or file                     | Purpose                                                                              | What it does not do                                                            |
-| -------------------------------- | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ |
-| Content Studio                   | Maps, missions, campaign/pack ordering, rules and local checkpoints                  | Publish content or certify playability                                         |
-| Content Studio **Export backup** | The current `ContentProjectV1` JSON snapshot                                         | Include all local checkpoint history or the complete presentation media bundle |
-| Asset Studio                     | Asset replacement, pixel edits, geometry, provenance, immutable presentation history | Change mission mechanics or player saves                                       |
-| Asset Studio `.rltheme`          | Validated presentation records and retained original/derivative bytes                | Automatically make the public game use the theme                               |
-| Content CLI                      | Shared compiler output, mode/preset resolution and authored pacing diagnostics       | Approve art, difficulty, offline readiness or public release                   |
+| Tool or file                     | Purpose                                                                                                | What it does not do                                                            |
+| -------------------------------- | ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ |
+| Picture campaign creator         | Generate reviewed image/video campaigns, `.rlpack` files, source backups and installed Custom play     | Human balance review or public publication                                     |
+| Content Studio                   | Maps, missions, campaign/pack ordering, rules and local checkpoints                                    | Publish arbitrary projects or certify playability                              |
+| Content Studio **Export backup** | The current `ContentProjectV1` JSON snapshot                                                           | Include all local checkpoint history or the complete presentation media bundle |
+| Asset Studio                     | Asset replacement, pixel edits, geometry, provenance, immutable presentation history                   | Change mission mechanics or player saves                                       |
+| Asset Studio `.rltheme`          | Validated presentation records and retained original/derivative bytes                                  | Automatically make the public game use the theme                               |
+| Community campaigns              | Browse/install immutable catalog editions and, on a deployed service, publish approved `.rlpack` files | Make the repository's undeployed service publicly available                    |
+| Content CLI                      | Shared compiler output, mode/preset resolution and authored pacing diagnostics                         | Approve art, difficulty, offline readiness or public release                   |
 
-Use a desktop keyboard/pointer and file chooser for this authoring workflow. Ordinary players should use the game's compatible-content browser; authoring imports are not normal campaign installation.
+Use a desktop keyboard/pointer and file chooser for this authoring workflow. Install a reviewed
+`.rlpack` through the picture creator or use the compatible-content browser backed by a deployed
+community service. Content Studio and Asset Studio imports remain authoring operations.
 
 ## 1. Create a small playable project
 
@@ -128,7 +138,36 @@ All commands above passed for the guide fixture on Node 20.19.5. Gentle/Standard
 
 The starter declares Solo and Versus only. Requesting `--mode team` fails with **Mission does not support this mode.** Author and qualify a compatible Team mission; do not relabel a Solo result as Team evidence. Studio's Team test export is a separate geometry/rules workflow and must retain its stated artwork limitations.
 
-## 8. Export and test a Team mission
+## 8. Create a Team campaign from pictures and videos
+
+Open **Create a Team campaign** from the picture campaign creator. This path creates a separate
+cooperative campaign; it never relabels a Solo/Versus level as Team content.
+
+1. Enter a collection name, a lowercase campaign ID and a generation seed. Choose **Generate and
+   verify**. The current registry creates Mirrored crossing and Relay pincer in deterministic seed
+   order and replays all three difficulties with both supported teamwork presets. The review must
+   report 12 exact completion routes.
+2. Choose one PNG, JPEG or WebP reward picture for each level. Pick **Fit whole picture** or **Fill
+   board** and review the description. Preparation removes source metadata and produces an exact
+   1152 × 576 PNG; the private original is not added to the portable campaign.
+3. Optionally choose one browser-decodable MP4 or WebM victory video per level. Blank playback
+   times use the complete video. A range changes playback only: the complete inspected original
+   remains in the package. Enter the credit and sharing terms that actually apply.
+4. Choose **Prepare review**. Inspect every exact reward derivative, level binding, optional video
+   range, package size, staging size and shared managed-media usage. Errors remain local; correct
+   the affected row and prepare again.
+5. Choose **Approve exact package** only after the visible review is correct. Any later gameplay,
+   media, range, description or credit change invalidates approval. Choose **Install approved
+   campaign** or **Download .rlteammedia**.
+6. Open Team and select the installed edition under Custom missions. A legal win earns the exact
+   reviewed picture. An optional video offers Play, Skip and Replay without blocking Next. Retry,
+   unfinished recovery and clears remain scoped to the immutable package SHA-256.
+
+Team editions share the same 256 MiB managed-media ledger as creator pictures, stories and audio.
+An interrupted cross-database install leaves a pending byte claim; the next Team inventory or
+install reconciles that claim against the exact installed editions before accepting more data.
+
+## 9. Export and test a legacy Team mission
 
 This additional native trial uses exact source `499d716e` and the bundled **Inspect Team Signal greybox** action. Inspect first, then **Apply inspected source** to accept the separate Signal partners project. The current project remains unchanged during inspection.
 
@@ -141,15 +180,21 @@ This additional native trial uses exact source `499d716e` and the bundled **Insp
 
 All three actual downloaded files matched the shared compiler using the Studio's `campaignTheme: true` candidate option. These checks prove export/import and basic play, not a complete clear, fairness, custom Team artwork, physical controls or public/offline readiness. The Team mission preset is fixed by its export: choose another preset in Studio and export again rather than expecting the player to rewrite authored rules.
 
-## 9. Brand the community without changing its mechanics
+## 10. Brand the community without changing its mechanics
 
 Write a short edition brief before replacing assets: community name and rights holder, authorized source links, palette, ornament rules, player roles, threat meanings, supported modes, language requirements and content framing. For DroneAid, keep the requested Support/Combat framing explicit; do not assume all community imagery or missions use combat. For cultural, retro and spend-management editions, explain hazards using their own visual language while retaining readable warning/counterplay cues.
 
 Resolve each slot from the selected theme and collection. Replace actors, HUD, terrain, effects, objectives, reveal pictures and audio through their respective contracts. Keep player number/shape cues and warning contrast across every palette. Translate UI through real text; do not bake labels into images. A logo, palette change or alternate picture alone is not a complete game theme.
 
-Begin with one reviewed Solo/Versus mission and one compatible Team arena. Inspect actual previews and runtime renders before expanding. New reveal pictures receive new revisions; Retry, saved flights and earned originals keep their accepted pins. Never replace old records in place to make a new community look complete.
+Begin with one reviewed Solo mission, separately qualify each advertised multiplayer path, and add
+one compatible Team arena. Generated v3 editions can use the installed two-board Versus host only
+after the exact package and equal-board evidence are revalidated. Installed Versus keeps the
+verified difficulty and runtime seed, records edition-scoped progress and pictures, and continues
+to the next exact mission; human fairness and balance review still remain campaign-specific. New
+reveal pictures receive new revisions; Retry, saved flights and earned originals keep their
+accepted pins. Never replace old records in place to make a new community look complete.
 
-## 10. Prepare the release handoff
+## 11. Prepare the release handoff
 
 The preceding local workflows are tested. The following acceptance remains open for a finished community edition:
 
@@ -160,4 +205,7 @@ The preceding local workflows are tested. The following acceptance remains open 
 - Update version, source documentation and prompts; run all six release gates plus applicable build/production/artifact checks on the exact committed source.
 - Freeze and publish through the existing release coordinator; verify the actual deployed bytes and play the public routes before accepting delivery.
 
-A browser upload changes only the local authoring workspace. It does not install a campaign for ordinary players, alter a public edition, or close the complete community-guide phase.
+Selecting media in an authoring page changes only the local workspace. Installing a reviewed pack
+adds its immutable edition to that browser. Publishing is a separate authenticated upload to a
+deployed community service; the repository implementation alone does not create a public catalog
+or complete production acceptance.

@@ -43,7 +43,7 @@ npm run lint
 npm run format:check
 ```
 
-The current combined source passes all **33/33** community-service checks.
+The current combined source passes all **43/43** community-service checks.
 
 The maintained tus package is used as documented in its
 [Fastify integration](https://github.com/tus/tus-node-server/blob/main/packages/server/README.md),
