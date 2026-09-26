@@ -40,11 +40,23 @@ export function createAuthoredJourneyRouteDefinition(
     createCrosswindCulturalCompletionCandidates,
     createFractureApexCulturalCompletionCandidates,
     createNeonCulturalCompletionCandidates,
+    createRoverCulturalCompletionCandidates,
     createUkrainianOrnamentJourney,
     createUkrainianOrnamentAtlasJourney,
   },
 ) {
   if (!isAuthoredJourneyRouteId(id)) return null;
+  if (id === 'whole-spatial-v30')
+    return freezeDesign({
+      id,
+      label: 'Whole Journey Rover Ukrainian and FPV spatial completion · balance pending',
+      sessionKey: 'revealline.suspended.journey-whole-spatial.v30',
+      profileKey: 'journey-whole-spatial-v30',
+      source: createRoverCulturalCompletionCandidates({ artwork: true }),
+      corePackIds: [...WHOLE_JOURNEY_CORE_PACK_IDS],
+      optionalCampaignIds: ['ornament-crossings', 'workshop-routing'],
+      preserveOriginalThemes: true,
+    });
   if (id === 'whole-spatial-v29')
     return freezeDesign({
       id,

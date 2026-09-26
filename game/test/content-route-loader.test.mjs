@@ -57,6 +57,7 @@ const golden = {
   'whole-spatial-v27': [280620, '495b6a7263c5909c24bec10d706359fa2035d4dfff247b271135774f729af9b7'],
   'whole-spatial-v28': [282309, '7f71aa07c97da8c086c50b89193b9f20476dd27d1d4ae719891f809bcf99af10'],
   'whole-spatial-v29': [283404, '8fa6e5368dfa0d8e7e445b19f7b70330a6f805f87e835a386cb912faedb2d32e'],
+  'whole-spatial-v30': [284976, '17f22561e47659fc98585f304986585319de08ce576892faff656f4114515751'],
   'whole-ornament-v1': [260665, '3b29bc220cdb06a33fedefabb6adec9527bd10902a9dd44899270e885ddfc4ad'],
   'whole-ornament-v2': [266314, '3f0116efe9cb9b2e134fb60dd252ac5bfbd44758a993e18a56abb2131ca10a1b'],
 };
@@ -412,6 +413,18 @@ test('Neon cultural completion imports only its bounded successor chain', () => 
   assert(!has(result, 'horizon-candidates.mjs'));
 });
 
+test('Rover cultural completion imports only its bounded successor chain', () => {
+  const result = routeProbe('whole-spatial-v30');
+  assert.deepEqual(result.output, { id: 'whole-spatial-v30' });
+  assert(has(result, 'rover-cultural-completion-candidates.mjs'));
+  assert(has(result, 'journey-rover-spatial-pair.mjs'));
+  assert(has(result, 'neon-cultural-completion-candidates.mjs'));
+  assert(has(result, 'fracture-apex-cultural-completion-candidates.mjs'));
+  assert(has(result, 'whole-spatial-data.mjs'));
+  assert(!has(result, 'whole-journey-candidates.mjs'));
+  assert(!has(result, 'horizon-candidates.mjs'));
+});
+
 test('ornament editions import only their bounded opt-in source chain', () => {
   const study = routeProbe('whole-ornament-v1');
   assert.deepEqual(study.output, { id: 'whole-ornament-v1' });
@@ -463,6 +476,7 @@ test('all literal lazy imports and shared modules are in the actual game build i
   const source = await readFile(new URL(loaderURL), 'utf8');
   const imports = [...source.matchAll(/import\('(.+?)'\)/g)].map((m) => m[1]);
   assert.deepEqual(imports, [
+    './rover-cultural-completion-candidates.mjs',
     './neon-cultural-completion-candidates.mjs',
     './fracture-apex-cultural-completion-candidates.mjs',
     './crosswind-cultural-completion-candidates.mjs',
