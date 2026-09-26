@@ -5,6 +5,7 @@ import path from 'node:path';
 import { promisify } from 'node:util';
 
 const execFileAsync = promisify(execFile);
+const loadAwsS3 = () => import('@aws-sdk/client-s3');
 
 export const REQUIRED_DEPLOYMENT_TABLES = Object.freeze([
   'account',
@@ -104,6 +105,180 @@ export async function checkWritableDirectory(root) {
   return Object.freeze({ status: 'ready' });
 }
 
+const collectProbeBody = async (body, maximum) => {
+  if (!body) throw new Error('S3 probe returned no body.');
+  const chunks = [];
+  let size = 0;
+  for await (const chunk of body) {
+    const bytes = Buffer.from(chunk);
+    size += bytes.length;
+    if (size > maximum) throw new Error('S3 probe returned too many bytes.');
+    chunks.push(bytes);
+  }
+  return Buffer.concat(chunks);
+};
+
+export async function checkS3Storage(storage, { loadS3 = loadAwsS3 } = {}) {
+  if (storage?.driver !== 's3') throw new Error('S3 storage configuration is required.');
+  const module = await loadS3();
+  const required = [
+    'S3Client',
+    'PutObjectCommand',
+    'GetObjectCommand',
+    'DeleteObjectsCommand',
+    'CreateMultipartUploadCommand',
+    'UploadPartCommand',
+    'CompleteMultipartUploadCommand',
+    'AbortMultipartUploadCommand',
+  ];
+  if (required.some((name) => typeof module?.[name] !== 'function'))
+    throw new Error('The AWS S3 readiness module is incomplete.');
+  const client = new module.S3Client({
+    region: storage.region,
+    ...(storage.endpoint ? { endpoint: storage.endpoint } : {}),
+    forcePathStyle: storage.forcePathStyle,
+  });
+  const suffix = randomUUID();
+  const objectKey = `readiness/${suffix}.probe`;
+  const multipartKey = `readiness/${suffix}.multipart`;
+  const abortKey = `readiness/${suffix}.abort`;
+  const expected = randomBytes(32);
+  let objectAttempted = false;
+  let multipartObjectAttempted = false;
+  let multipartUploadId = null;
+  let abortUploadId = null;
+  let primaryError = null;
+  try {
+    objectAttempted = true;
+    await client.send(
+      new module.PutObjectCommand({
+        Bucket: storage.bucket,
+        Key: objectKey,
+        Body: expected,
+        ContentLength: expected.length,
+        IfNoneMatch: '*',
+      }),
+    );
+    const fetched = await client.send(
+      new module.GetObjectCommand({ Bucket: storage.bucket, Key: objectKey }),
+    );
+    const actual = await collectProbeBody(fetched.Body, expected.length);
+    if (!actual.equals(expected)) throw new Error('S3 verification read returned different bytes.');
+
+    const multipart = await client.send(
+      new module.CreateMultipartUploadCommand({
+        Bucket: storage.bucket,
+        Key: multipartKey,
+      }),
+    );
+    if (typeof multipart.UploadId !== 'string' || multipart.UploadId.length === 0)
+      throw new Error('S3 multipart readiness returned no upload identity.');
+    multipartUploadId = multipart.UploadId;
+    multipartObjectAttempted = true;
+    const uploaded = await client.send(
+      new module.UploadPartCommand({
+        Bucket: storage.bucket,
+        Key: multipartKey,
+        UploadId: multipartUploadId,
+        PartNumber: 1,
+        Body: expected,
+        ContentLength: expected.length,
+      }),
+    );
+    if (typeof uploaded.ETag !== 'string' || uploaded.ETag.length === 0)
+      throw new Error('S3 multipart readiness returned no part identity.');
+    await client.send(
+      new module.CompleteMultipartUploadCommand({
+        Bucket: storage.bucket,
+        Key: multipartKey,
+        UploadId: multipartUploadId,
+        MultipartUpload: { Parts: [{ ETag: uploaded.ETag, PartNumber: 1 }] },
+      }),
+    );
+    multipartUploadId = null;
+    const completed = await client.send(
+      new module.GetObjectCommand({ Bucket: storage.bucket, Key: multipartKey }),
+    );
+    const completedBytes = await collectProbeBody(completed.Body, expected.length);
+    if (!completedBytes.equals(expected))
+      throw new Error('S3 multipart verification read returned different bytes.');
+
+    const abortable = await client.send(
+      new module.CreateMultipartUploadCommand({
+        Bucket: storage.bucket,
+        Key: abortKey,
+      }),
+    );
+    if (typeof abortable.UploadId !== 'string' || abortable.UploadId.length === 0)
+      throw new Error('S3 abort readiness returned no upload identity.');
+    abortUploadId = abortable.UploadId;
+    await client.send(
+      new module.AbortMultipartUploadCommand({
+        Bucket: storage.bucket,
+        Key: abortKey,
+        UploadId: abortUploadId,
+      }),
+    );
+    abortUploadId = null;
+    return Object.freeze({
+      status: 'ready',
+      driver: 's3',
+      objectRoundTrip: true,
+      multipartRoundTrip: true,
+      multipartAbort: true,
+    });
+  } catch (error) {
+    primaryError = error;
+    throw error;
+  } finally {
+    const cleanupErrors = [];
+    if (multipartUploadId) {
+      try {
+        await client.send(
+          new module.AbortMultipartUploadCommand({
+            Bucket: storage.bucket,
+            Key: multipartKey,
+            UploadId: multipartUploadId,
+          }),
+        );
+      } catch (error) {
+        cleanupErrors.push(error);
+      }
+    }
+    if (abortUploadId) {
+      try {
+        await client.send(
+          new module.AbortMultipartUploadCommand({
+            Bucket: storage.bucket,
+            Key: abortKey,
+            UploadId: abortUploadId,
+          }),
+        );
+      } catch (error) {
+        cleanupErrors.push(error);
+      }
+    }
+    if (objectAttempted || multipartObjectAttempted) {
+      const objects = [];
+      if (objectAttempted) objects.push({ Key: objectKey });
+      if (multipartObjectAttempted) objects.push({ Key: multipartKey });
+      try {
+        const removed = await client.send(
+          new module.DeleteObjectsCommand({
+            Bucket: storage.bucket,
+            Delete: { Objects: objects, Quiet: true },
+          }),
+        );
+        if (removed.Errors?.length) throw new Error('S3 readiness cleanup failed.');
+      } catch (error) {
+        cleanupErrors.push(error);
+      }
+    }
+    client.destroy?.();
+    if (!primaryError && cleanupErrors.length) throw cleanupErrors[0];
+  }
+}
+
 export async function checkFfprobe({
   ffprobePath = 'ffprobe',
   runCommand = (command, args, options) => execFileAsync(command, args, options),
@@ -120,18 +295,26 @@ export async function checkFfprobe({
 
 export async function runDeploymentPreflight({
   pool,
+  blobStorage,
   blobRoot,
   tusRoot,
   ffprobePath = 'ffprobe',
   runCommand,
+  checkS3 = checkS3Storage,
 }) {
   const schema = await checked('schema', () => checkDeploymentSchema(pool));
-  const blobStorage = await checked('blob-storage', () => checkWritableDirectory(blobRoot));
-  const tusStorage = await checked('tus-storage', () => checkWritableDirectory(tusRoot));
+  const storage = blobStorage ?? { driver: 'disk', root: blobRoot };
+  const blobStorageCheck = await checked('blob-storage', () =>
+    storage.driver === 's3' ? checkS3(storage) : checkWritableDirectory(storage.root),
+  );
+  const tusStorage =
+    storage.driver === 's3'
+      ? blobStorageCheck
+      : await checked('tus-storage', () => checkWritableDirectory(tusRoot));
   const ffprobe = await checked('ffprobe', () => checkFfprobe({ ffprobePath, runCommand }));
   return Object.freeze({
     status: 'ready',
-    checks: Object.freeze({ schema, blobStorage, tusStorage, ffprobe }),
+    checks: Object.freeze({ schema, blobStorage: blobStorageCheck, tusStorage, ffprobe }),
   });
 }
 

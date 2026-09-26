@@ -155,6 +155,8 @@ const packageStorage = (environment) => {
   if (driver !== 's3') throw new Error('COMMUNITY_BLOB_STORAGE must be disk or s3.');
   if (environment.COMMUNITY_BLOB_ROOT !== undefined)
     throw new Error('COMMUNITY_BLOB_ROOT cannot be combined with S3 package storage.');
+  if (environment.COMMUNITY_TUS_ROOT !== undefined)
+    throw new Error('COMMUNITY_TUS_ROOT cannot be combined with S3 storage.');
   return Object.freeze({
     driver,
     bucket: storageBucket(environment.COMMUNITY_S3_BUCKET),
@@ -220,7 +222,7 @@ export function readConfig(environment = process.env, { requireAuth = true } = {
     databaseUrl: environment.COMMUNITY_DATABASE_URL,
     blobRoot: blobStorage.driver === 'disk' ? blobStorage.root : null,
     blobStorage,
-    tusRoot: environment.COMMUNITY_TUS_ROOT ?? './var/tus',
+    tusRoot: blobStorage.driver === 'disk' ? (environment.COMMUNITY_TUS_ROOT ?? './var/tus') : null,
     tusExpirationMs: seconds(
       environment.COMMUNITY_TUS_EXPIRATION_SECONDS,
       86_400,
