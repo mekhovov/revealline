@@ -49,6 +49,18 @@
   touchscreen-host failures reproduced unchanged on the earlier v0.141.3 parent
   and remain an explicit qualification concern until the rebased comparison is
   rerun.
+- **Community S3 workstream, first bounded slice:** the v0.141.5 candidate now has
+  one fail-closed package-storage factory shared by the executable API and
+  validation worker. Disk remains the production default. The S3 path verifies
+  streamed size and SHA-256 into bounded local staging before conditional,
+  immutable object publication; mismatched input never reaches S3. Focused unit
+  evidence covers factory selection, configuration rejection, multi-megabyte
+  streaming and staging cleanup. Remaining before S3 production acceptance:
+  tus datastore integration and expiry cleanup, S3 readiness probes,
+  backup/restore and recovery rehearsal, MinIO integration, and a real AWS smoke
+  run. The remaining estimate is 3–5 focused engineering days, plus access to
+  the selected AWS bucket and scoped IAM identity for the final smoke evidence.
+  This candidate is not merged, released, or production-qualified yet.
 
 The 23 September register and later dated sections are preserved below as
 historical scope, evidence and design contracts. Their old version, PR-count and

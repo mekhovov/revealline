@@ -1,8 +1,12 @@
 import { createHash, randomUUID } from 'node:crypto';
+import { createReadStream } from 'node:fs';
 import { mkdir, open, rename, rm, stat } from 'node:fs/promises';
 import path from 'node:path';
 import { Readable } from 'node:stream';
+import { finished } from 'node:stream/promises';
 import { CommunityError } from './domain.mjs';
+
+const S3_PUT_ATTEMPTS = 3;
 
 const validatedKey = (key) => {
   if (typeof key !== 'string' || !/^[a-z0-9][a-z0-9./_-]*$/u.test(key) || key.includes('..'))
@@ -24,6 +28,86 @@ const chunks = async function* (body) {
   for await (const chunk of body) yield Buffer.from(chunk);
 };
 
+const writeChunk = async (handle, chunk) => {
+  let offset = 0;
+  while (offset < chunk.length) {
+    const { bytesWritten } = await handle.write(chunk, offset, chunk.length - offset);
+    if (bytesWritten < 1) throw new Error('Package staging write made no progress.');
+    offset += bytesWritten;
+  }
+};
+
+const verifiedInput = ({ key, expectedSha256, expectedSize, maxBytes }) => {
+  const checkedKey = validatedKey(key);
+  if (!/^[a-f0-9]{64}$/u.test(expectedSha256 ?? ''))
+    throw new CommunityError(422, 'package_identity_mismatch', 'Package SHA-256 is invalid.');
+  validateContentAddress(checkedKey, expectedSha256);
+  if (!Number.isSafeInteger(expectedSize) || expectedSize < 0)
+    throw new CommunityError(422, 'package_identity_mismatch', 'Package size is invalid.');
+  if (!Number.isSafeInteger(maxBytes) || maxBytes < 1)
+    throw new Error('Maximum package bytes must be a positive integer.');
+  if (expectedSize > maxBytes)
+    throw new CommunityError(413, 'package_too_large', 'Package exceeds the configured limit.');
+  return checkedKey;
+};
+
+const stageVerifiedBody = async ({
+  stagingRoot,
+  key,
+  body,
+  expectedSha256,
+  expectedSize,
+  maxBytes,
+}) => {
+  const checkedKey = verifiedInput({ key, expectedSha256, expectedSize, maxBytes });
+  const directory = path.resolve(stagingRoot);
+  await mkdir(directory, { recursive: true });
+  const temporary = path.join(directory, `${expectedSha256}.${randomUUID()}.partial`);
+  const handle = await open(temporary, 'wx', 0o600);
+  const digest = createHash('sha256');
+  let size = 0;
+  try {
+    try {
+      for await (const chunk of chunks(body)) {
+        size += chunk.length;
+        if (size > maxBytes)
+          throw new CommunityError(
+            413,
+            'package_too_large',
+            'Package exceeds the configured limit.',
+          );
+        digest.update(chunk);
+        await writeChunk(handle, chunk);
+      }
+      await handle.sync();
+    } finally {
+      await handle.close();
+    }
+    const sha256 = digest.digest('hex');
+    if (size !== expectedSize || sha256 !== expectedSha256)
+      throw new CommunityError(
+        422,
+        'package_identity_mismatch',
+        'Uploaded bytes do not match the declared size and SHA-256.',
+      );
+    return { key: checkedKey, path: temporary, sha256, size };
+  } catch (error) {
+    await rm(temporary, { force: true });
+    throw error;
+  }
+};
+
+const closeReadStream = async (stream) => {
+  if (!stream.destroyed) stream.destroy();
+  await finished(stream).catch(() => {});
+};
+
+const isS3Status = (error, name, status) =>
+  error?.name === name ||
+  error?.Code === name ||
+  error?.code === name ||
+  error?.$metadata?.httpStatusCode === status;
+
 export class DiskBlobStore {
   constructor({ root }) {
     this.root = path.resolve(root);
@@ -34,7 +118,7 @@ export class DiskBlobStore {
   }
 
   async putVerified({ key, body, expectedSha256, expectedSize, maxBytes }) {
-    validateContentAddress(key, expectedSha256);
+    verifiedInput({ key, expectedSha256, expectedSize, maxBytes });
     const target = this.#path(key);
     await mkdir(path.dirname(target), { recursive: true });
     const temporary = `${target}.${randomUUID()}.partial`;
@@ -52,7 +136,7 @@ export class DiskBlobStore {
               'Package exceeds the configured limit.',
             );
           digest.update(chunk);
-          await handle.write(chunk);
+          await writeChunk(handle, chunk);
         }
         await handle.sync();
       } finally {
@@ -206,36 +290,73 @@ export class MemoryBlobStore {
   }
 }
 
-// The production package intentionally does not choose an S3 SDK. This boundary accepts any
-// client that implements the documented command factory, including AWS S3 and compatible hosts.
+// The executable factory supplies AWS SDK command constructors. Keeping commands injectable makes
+// exact staging, conditional publication, and range behavior testable without a network service.
 export class S3CompatibleBlobStore {
-  constructor({ client, bucket, commands }) {
+  constructor({ client, bucket, stagingRoot, commands }) {
     if (!client?.send || !bucket || !commands?.put || !commands?.head || !commands?.get)
       throw new Error('S3 adapter requires a client, bucket, and put/head/get command factories.');
+    if (typeof stagingRoot !== 'string' || stagingRoot.length === 0)
+      throw new Error('S3 adapter requires a local staging root.');
     this.client = client;
     this.bucket = bucket;
+    this.stagingRoot = stagingRoot;
     this.commands = commands;
   }
 
   async putVerified({ key, body, expectedSha256, expectedSize, maxBytes }) {
-    if (!Buffer.isBuffer(body))
-      throw new Error('S3 adapter requires staged verified bytes before immutable upload.');
-    if (body.length > maxBytes || body.length !== expectedSize)
-      throw new CommunityError(413, 'package_too_large', 'Package size is invalid.');
-    const actualSha256 = createHash('sha256').update(body).digest('hex');
-    if (actualSha256 !== expectedSha256)
-      throw new CommunityError(422, 'package_identity_mismatch', 'Package SHA-256 is invalid.');
-    await this.client.send(
-      this.commands.put({
-        Bucket: this.bucket,
-        Key: validatedKey(key),
-        Body: body,
-        ContentLength: body.length,
-        ContentType: 'application/vnd.revealline.rlpack',
-        Metadata: { sha256: actualSha256 },
-      }),
-    );
-    return { key, sha256: actualSha256, size: body.length };
+    const staged = await stageVerifiedBody({
+      stagingRoot: this.stagingRoot,
+      key,
+      body,
+      expectedSha256,
+      expectedSize,
+      maxBytes,
+    });
+    try {
+      let publicationError;
+      for (let attempt = 1; attempt <= S3_PUT_ATTEMPTS; attempt += 1) {
+        const uploadBody = createReadStream(staged.path);
+        publicationError = undefined;
+        try {
+          await this.client.send(
+            this.commands.put({
+              Bucket: this.bucket,
+              Key: staged.key,
+              Body: uploadBody,
+              ContentLength: staged.size,
+              ContentType: 'application/vnd.revealline.rlpack',
+              IfNoneMatch: '*',
+              Metadata: { sha256: staged.sha256 },
+            }),
+          );
+        } catch (error) {
+          publicationError = error;
+        } finally {
+          await closeReadStream(uploadBody);
+        }
+        if (!publicationError) break;
+        if (
+          !isS3Status(publicationError, 'ConditionalRequestConflict', 409) ||
+          attempt === S3_PUT_ATTEMPTS
+        )
+          break;
+      }
+      if (publicationError) {
+        if (!isS3Status(publicationError, 'PreconditionFailed', 412)) throw publicationError;
+        const existing = await this.client.send(
+          this.commands.head({ Bucket: this.bucket, Key: staged.key }),
+        );
+        if (
+          Number(existing.ContentLength) !== staged.size ||
+          existing.Metadata?.sha256 !== staged.sha256
+        )
+          throw new Error('Immutable blob collision.');
+      }
+      return { key: staged.key, sha256: staged.sha256, size: staged.size };
+    } finally {
+      await rm(staged.path, { force: true });
+    }
   }
 
   async stat(key) {

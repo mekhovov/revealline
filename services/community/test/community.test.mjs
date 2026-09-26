@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
-import { mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
+import { mkdir, mkdtemp, readFile, readdir, rm, writeFile } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import { Readable } from 'node:stream';
@@ -228,7 +228,71 @@ test('executable configuration refuses implicit development authentication', () 
   assert.equal(config.tusCleanupLeaseMs, 120_000);
   assert.equal(config.tusLockTimeoutMs, 30_000);
   assert.equal(config.tusLockPoolSize, 20);
+  assert.deepEqual(config.blobStorage, { driver: 'disk', root: './var/blobs' });
   assert.equal(config.releaseIdentity, null);
+  assert.throws(
+    () =>
+      readConfig(
+        {
+          COMMUNITY_BLOB_STORAGE: 'disk',
+          COMMUNITY_S3_BUCKET: 'unexpected',
+        },
+        { requireAuth: false },
+      ),
+    /require COMMUNITY_BLOB_STORAGE=s3/u,
+  );
+  assert.throws(
+    () => readConfig({ COMMUNITY_BLOB_STORAGE: 's3' }, { requireAuth: false }),
+    /COMMUNITY_S3_BUCKET/u,
+  );
+  assert.throws(
+    () =>
+      readConfig(
+        {
+          COMMUNITY_BLOB_STORAGE: 's3',
+          COMMUNITY_S3_BUCKET: 'creator-packages',
+          COMMUNITY_S3_REGION: 'eu-central-1',
+          COMMUNITY_S3_FORCE_PATH_STYLE: 'yes',
+          COMMUNITY_BLOB_STAGING_ROOT: '/tmp/stage',
+        },
+        { requireAuth: false },
+      ),
+    /must be true or false/u,
+  );
+  assert.throws(
+    () =>
+      readConfig(
+        {
+          COMMUNITY_BLOB_STORAGE: 's3',
+          COMMUNITY_BLOB_ROOT: '/data/blobs',
+          COMMUNITY_S3_BUCKET: 'creator-packages',
+          COMMUNITY_S3_REGION: 'eu-central-1',
+          COMMUNITY_BLOB_STAGING_ROOT: '/tmp/stage',
+        },
+        { requireAuth: false },
+      ),
+    /cannot be combined/u,
+  );
+  const s3Config = readConfig(
+    {
+      COMMUNITY_BLOB_STORAGE: 's3',
+      COMMUNITY_S3_BUCKET: 'creator-packages',
+      COMMUNITY_S3_REGION: 'eu-central-1',
+      COMMUNITY_S3_ENDPOINT: 'http://minio:9000',
+      COMMUNITY_S3_FORCE_PATH_STYLE: 'true',
+      COMMUNITY_BLOB_STAGING_ROOT: '/tmp/revealline-package-stage',
+    },
+    { requireAuth: false },
+  );
+  assert.equal(s3Config.blobRoot, null);
+  assert.deepEqual(s3Config.blobStorage, {
+    driver: 's3',
+    bucket: 'creator-packages',
+    region: 'eu-central-1',
+    endpoint: 'http://minio:9000/',
+    forcePathStyle: true,
+    stagingRoot: '/tmp/revealline-package-stage',
+  });
   assert.throws(
     () =>
       readConfig({
@@ -1218,16 +1282,24 @@ test('mounted tus server preserves interrupted offsets, owner isolation, and com
   assert.equal(browserAdmitted.status, 'uploaded');
 });
 
-test('S3 boundary requires verified bytes and delegates exact immutable metadata', async () => {
+test('S3 boundary stages a verified stream and delegates exact immutable metadata', async (t) => {
   const calls = [];
+  const stagingRoot = await mkdtemp(path.join(os.tmpdir(), 'revealline-community-s3-stage-'));
+  t.after(() => rm(stagingRoot, { recursive: true, force: true }));
   const store = new S3CompatibleBlobStore({
     client: {
       async send(command) {
         calls.push(command);
+        if (command.operation === 'put') {
+          const uploaded = [];
+          for await (const chunk of command.input.Body) uploaded.push(Buffer.from(chunk));
+          command.uploaded = Buffer.concat(uploaded);
+        }
         return {};
       },
     },
     bucket: 'community-test',
+    stagingRoot,
     commands: {
       put: (input) => ({ operation: 'put', input }),
       head: (input) => ({ operation: 'head', input }),
@@ -1245,6 +1317,10 @@ test('S3 boundary requires verified bytes and delegates exact immutable metadata
   assert.equal(calls[0].input.Key, key);
   assert.equal(calls[0].input.Metadata.sha256, sha256);
   assert.equal(calls[0].input.ContentType, PACKAGE_MEDIA_TYPE);
+  assert.equal(calls[0].input.IfNoneMatch, '*');
+  assert.equal(Buffer.isBuffer(calls[0].input.Body), false);
+  assert.deepEqual(calls[0].uploaded, bytes);
+  assert.deepEqual(await readdir(stagingRoot), []);
   await assert.rejects(
     store.putVerified({
       key,

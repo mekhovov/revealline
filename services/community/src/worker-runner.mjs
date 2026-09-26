@@ -1,6 +1,6 @@
 import { randomUUID } from 'node:crypto';
 import { Pool } from 'pg';
-import { DiskBlobStore } from './blob-store.mjs';
+import { createBlobStore } from './blob-store-factory.mjs';
 import { readConfig } from './config.mjs';
 import { PostgresCommunityRepository } from './postgres-repository.mjs';
 import { createCreatorPackageValidator } from './validator.mjs';
@@ -10,7 +10,7 @@ const config = readConfig(process.env, { requireAuth: false });
 if (!config.databaseUrl) throw new Error('COMMUNITY_DATABASE_URL is required.');
 const pool = new Pool({ connectionString: config.databaseUrl, max: 2 });
 const repository = new PostgresCommunityRepository({ pool });
-const blobStore = new DiskBlobStore({ root: config.blobRoot });
+const blobStore = await createBlobStore(config.blobStorage);
 const validatePackage = createCreatorPackageValidator({});
 const workerId = `${process.pid}-${randomUUID()}`;
 let stopping = false;
