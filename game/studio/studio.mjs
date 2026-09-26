@@ -53,6 +53,7 @@ import { createEarlyCulturalRoutesCandidates } from '../content-design/early-cul
 import { createSignalCulturalRoutesCandidates } from '../content-design/signal-cultural-routes-candidates.mjs';
 import { createNeonCulturalRoutesCandidates } from '../content-design/neon-cultural-routes-candidates.mjs';
 import { createNeonCulturalRoutesFinaleCandidates } from '../content-design/neon-cultural-routes-finale-candidates.mjs';
+import { createRoverCulturalRoutesCandidates } from '../content-design/rover-cultural-routes-candidates.mjs';
 import { createUkrainianOrnamentJourney } from '../content-design/ukrainian-ornament-candidates.mjs';
 import { createUkrainianOrnamentAtlasJourney } from '../content-design/ukrainian-ornament-atlas.mjs';
 import { withCampaignPresentation } from '../content-design/campaign-presentation.mjs';
@@ -1014,6 +1015,7 @@ $('whole-variety').onclick = guarded(() => {
       'signal-cultural-routes-1': createSignalCulturalRoutesCandidates,
       'neon-cultural-routes-1': createNeonCulturalRoutesCandidates,
       'neon-cultural-routes-2': createNeonCulturalRoutesFinaleCandidates,
+      'rover-cultural-routes-1': createRoverCulturalRoutesCandidates,
       'ukrainian-ornament-study-1': createUkrainianOrnamentJourney,
       'ukrainian-ornament-atlas-1': createUkrainianOrnamentAtlasJourney,
     }[$('whole-variety-edition').value] ?? createWholeVarietyCandidates;
