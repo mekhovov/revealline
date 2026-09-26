@@ -78,6 +78,101 @@ const httpsEndpoint = (value, name) => {
   return parsed.href;
 };
 
+const optionalStorageEndpoint = (value) => {
+  if (value === undefined) return null;
+  if (typeof value !== 'string' || value.length === 0 || value.length > 2_048)
+    throw new Error('COMMUNITY_S3_ENDPOINT must be an absolute HTTP(S) URL.');
+  let parsed;
+  try {
+    parsed = new URL(value);
+  } catch {
+    throw new Error('COMMUNITY_S3_ENDPOINT must be an absolute HTTP(S) URL.');
+  }
+  if (
+    !['http:', 'https:'].includes(parsed.protocol) ||
+    parsed.username ||
+    parsed.password ||
+    parsed.search ||
+    parsed.hash
+  )
+    throw new Error('COMMUNITY_S3_ENDPOINT must be an absolute HTTP(S) URL.');
+  return parsed.href;
+};
+
+const exactBoolean = (value, fallback, name) => {
+  if (value === undefined) return fallback;
+  if (value === 'true') return true;
+  if (value === 'false') return false;
+  throw new Error(`${name} must be true or false.`);
+};
+
+const requiredStorageValue = (value, name, { maximum = 255 } = {}) => {
+  if (
+    typeof value !== 'string' ||
+    value.length === 0 ||
+    value.length > maximum ||
+    /[\u0000-\u001f\u007f]/u.test(value)
+  )
+    throw new Error(`${name} is required for S3 package storage.`);
+  return value;
+};
+
+const storageBucket = (value) => {
+  const bucket = requiredStorageValue(value, 'COMMUNITY_S3_BUCKET', { maximum: 63 });
+  if (
+    !/^[a-z0-9][a-z0-9.-]{1,61}[a-z0-9]$/u.test(bucket) ||
+    bucket.includes('..') ||
+    /^\d+\.\d+\.\d+\.\d+$/u.test(bucket)
+  )
+    throw new Error('COMMUNITY_S3_BUCKET must be a valid DNS-style bucket name.');
+  return bucket;
+};
+
+const storageRegion = (value) => {
+  const region = requiredStorageValue(value, 'COMMUNITY_S3_REGION', { maximum: 64 });
+  if (!/^[a-z0-9](?:[a-z0-9-]{0,62}[a-z0-9])?$/u.test(region))
+    throw new Error('COMMUNITY_S3_REGION is invalid.');
+  return region;
+};
+
+const packageStorage = (environment) => {
+  const driver = environment.COMMUNITY_BLOB_STORAGE ?? 'disk';
+  if (driver === 'disk') {
+    const s3Variables = [
+      'COMMUNITY_S3_BUCKET',
+      'COMMUNITY_S3_REGION',
+      'COMMUNITY_S3_ENDPOINT',
+      'COMMUNITY_S3_FORCE_PATH_STYLE',
+      'COMMUNITY_BLOB_STAGING_ROOT',
+    ];
+    if (s3Variables.some((name) => environment[name] !== undefined))
+      throw new Error('S3 package storage variables require COMMUNITY_BLOB_STORAGE=s3.');
+    return Object.freeze({
+      driver,
+      root: environment.COMMUNITY_BLOB_ROOT ?? './var/blobs',
+    });
+  }
+  if (driver !== 's3') throw new Error('COMMUNITY_BLOB_STORAGE must be disk or s3.');
+  if (environment.COMMUNITY_BLOB_ROOT !== undefined)
+    throw new Error('COMMUNITY_BLOB_ROOT cannot be combined with S3 package storage.');
+  return Object.freeze({
+    driver,
+    bucket: storageBucket(environment.COMMUNITY_S3_BUCKET),
+    region: storageRegion(environment.COMMUNITY_S3_REGION),
+    endpoint: optionalStorageEndpoint(environment.COMMUNITY_S3_ENDPOINT),
+    forcePathStyle: exactBoolean(
+      environment.COMMUNITY_S3_FORCE_PATH_STYLE,
+      false,
+      'COMMUNITY_S3_FORCE_PATH_STYLE',
+    ),
+    stagingRoot: requiredStorageValue(
+      environment.COMMUNITY_BLOB_STAGING_ROOT,
+      'COMMUNITY_BLOB_STAGING_ROOT',
+      { maximum: 4_096 },
+    ),
+  });
+};
+
 export function readConfig(environment = process.env, { requireAuth = true } = {}) {
   const allowDevAuth = environment.COMMUNITY_ALLOW_DEV_AUTH === 'true';
   let developmentTokens;
@@ -118,11 +213,13 @@ export function readConfig(environment = process.env, { requireAuth = true } = {
   );
   if (tusCleanupBatchSize > 256)
     throw new Error('COMMUNITY_TUS_CLEANUP_BATCH_SIZE must not exceed 256.');
+  const blobStorage = packageStorage(environment);
   return Object.freeze({
     host: environment.COMMUNITY_HOST ?? '127.0.0.1',
     port: integer(environment.COMMUNITY_PORT, 8787, 'COMMUNITY_PORT'),
     databaseUrl: environment.COMMUNITY_DATABASE_URL,
-    blobRoot: environment.COMMUNITY_BLOB_ROOT ?? './var/blobs',
+    blobRoot: blobStorage.driver === 'disk' ? blobStorage.root : null,
+    blobStorage,
     tusRoot: environment.COMMUNITY_TUS_ROOT ?? './var/tus',
     tusExpirationMs: seconds(
       environment.COMMUNITY_TUS_EXPIRATION_SECONDS,
