@@ -41,7 +41,7 @@ versions or acceptance gates are still current.
 | Relay cultural completion / PR #664              | Clean explicit v26 draft      | Redesigns Spiral stores, Nested relays and Watchpost exchange from bounded official-museum vocabulary; preserves v25/default ownership and reduces post-opening open/plain candidates from 21 to 18. Its exact current-main tip is `4f796e850`; the pre-rebase runtime cohort passed 140/140 with zero skips and the 80-commit range-diff is one-to-one. Hosted exact-head qualification remains.                                                                                  |
 | Crosswind cultural completion / PR #665          | Clean explicit v27 draft      | Redesigns Survey markers, Compass array and Outer loop with original wall fields informed by three official museum records. Preserves v25/default and v26 ownership, actors, foundations, arrows and objectives; reduces the post-opening open/plain queue from 18 to 15. Its exact current-main tip is `3b47b6b65`; the pre-rebase cohort passed 155/155 with zero skips and the 80-commit range-diff is one-to-one. Hosted exact-head qualification remains.                     |
 | Fracture/Apex cultural completion / PR #666      | Clean explicit v28 draft      | Redesigns Bank the crossing, Five anchors and Final broadcast with original spatial fields informed by official Opishne museum, UNESCO Crimean Tatar Örnek and Museum Fund records. Preserves v25/default and v27 history, gameplay rules, objectives, relays, bonuses and actor roles; reduces the open/plain review queue from 15 to 12. Exact current-main runtime/evidence head `7c8980dbd` passes 158/158 with zero skips, repository validation and lint/format/diff checks. |
-| Neon cultural completion                         | Local explicit v29 candidate  | Adds original wall fields to Folded corner, Inside out and Four quarters using bounded Museum Fund, Ivan Honchar Museum and UNESCO vocabulary. Preserves v25/default and v28 history, foundations, spawns, actors and rules; retains Side-door bays as an intentional open contour puzzle and reduces the review queue from 12 to 9. Candidate and route-loader checks pass 105/105 with zero skips; host and repository qualification remain.                                     |
+| Neon cultural completion / PR #667               | Clean explicit v29 draft      | Adds original wall fields to Folded corner, Inside out and Four quarters using bounded Museum Fund, Ivan Honchar Museum and UNESCO vocabulary. Preserves v25/default and v28 history, foundations, spawns, actors and rules; retains Side-door bays as an intentional open contour puzzle and reduces the review queue from 12 to 9. Exact runtime/evidence head `5696f27f8` passes 161/161 with zero skips, repository validation and lint/format/diff checks.                    |
 
 After the final main rebase, an uncontended bounded host rerun passed all selected corrected cases:
 four Solo scenarios, four Versus scenarios, two representative Team source routes and the three-stage
@@ -102,10 +102,11 @@ accepted predecessor; draft labels do not reserve a release.
 7. **Host performance:** the uncontended PR #651 scenarios pass, but individual chooser paths took
    about 5.5–30.6 seconds in the fixture harness. This closes the corrected-assertion gap, not the
    broader startup/performance qualification.
-8. **First cultural gate:** PR #530's earlier rebase-triggered run passed preflight but failed four
-   Team composite cases because presentation revision 90 lacked exact Team picture authority. PR
-   #663 has now merged the correction and PR #530 is rebased to that accepted main, but it has no
-   post-rebase hosted check result yet. The earlier failure remains a failure until the new run passes.
+8. **First cultural gate:** PR #530's current-main run passed preflight and all four previously
+   failing Team composite cases, but the focused job still failed the Solo compact-filter focus
+   assertion in `mission-library-controller-host.test.mjs:329`. Seven sibling controller cases pass.
+   The failure is now isolated to that host path; PR #530 remains failed until a separate correction
+   lands and the exact-head run passes.
 9. **Inventory is not balance evidence:** PR #661 finds 21 post-opening missions with neither wall
    nor slow/lethal terrain and confirms consistent Standard speed and post-opening actor counts.
    Those are review candidates, not automatic defects; deterministic routes and human play still
@@ -120,9 +121,10 @@ accepted predecessor; draft labels do not reserve a release.
     candidate/route/bootstrap/host cohort passes 158/158, along with repository validation and
     targeted lint/format/diff checks. Review, hosted qualification, promotion and public evidence
     are still required.
-13. **v29 remains local and opt-in:** the Neon completion candidate preserves v25 as default and v28
-    as history. Its candidate and route-loader cohort passes 105/105, but native host integration,
-    repository validation, review, promotion and public evidence are still required.
+13. **v29 remains opt-in:** PR #667 preserves v25 as default and v28 as history. Its exact-head
+    candidate/route/bootstrap/host cohort passes 161/161, along with repository validation and
+    targeted lint/format/diff checks. Review, hosted qualification, promotion and public evidence
+    are still required.
 
 ## Immediate execution order
 
@@ -130,17 +132,16 @@ accepted predecessor; draft labels do not reserve a release.
    keep any further release-throughput experiments out of that publication path.
 2. Qualify and publish isolated PR #657 after the active release lane; do not wait for the full
    cultural stack to restore Team Classic → Custom Next.
-3. Rerun PR #530 from the accepted PR #663 main; do not reinterpret its four earlier Team failures
-   as a cultural-route defect or a pass.
+3. Correct the isolated Solo compact-filter focus failure on current main, then rerun PR #530. The
+   four Team revision-90 cases now pass; the remaining host failure is not a cultural-map defect.
 4. Keep the rebased cultural PR chain clean and reviewable while the public release lane completes.
 5. Review and qualify the bounded v0.149.0 PR #650 at its exact head.
 6. Review draft PR #651 and publish the isolated library-fixture reconciliation after its focused
    duplicate/ownership audit.
 7. Review draft PR #661 after #651, then PR #664. v26 preserves v25 and completes the Relay spatial
    cluster without changing the default before promotion.
-8. Finish native host and repository qualification for the local v29 Neon batch, then push its
-   bounded PR. Review the 9 remaining audit candidates without redesigning intentionally open boards
-   merely to satisfy a count.
+8. Review and host-qualify PR #667, then review the 9 remaining audit candidates without redesigning
+   intentionally open boards merely to satisfy a count.
 9. Promote cultural releases in dependency order, reporting actual public delivery rather than a
    merge or workflow start.
 
