@@ -23,12 +23,20 @@ const safePath = (name, { source = false } = {}) => {
   if (
     typeof name !== 'string' ||
     name.length > 400 ||
-    !/^[A-Za-z0-9_.-]+(?:\/[A-Za-z0-9_.-]+)*$/.test(name) ||
+    // Whole-source archives include ordinary Unicode/native-platform filenames.
+    // Playable artifacts keep their narrower portable path contract.
+    (source
+      ? /^[A-Za-z]:/.test(name) || /[\\\u0000-\u001f\u007f]/.test(name)
+      : !/^[A-Za-z0-9_.-]+(?:\/[A-Za-z0-9_.-]+)*$/.test(name)) ||
     name
       .split('/')
       .some(
         (part) =>
-          part === '.' || part === '..' || part === '.git' || (!source && part.startsWith('.')),
+          !part ||
+          part === '.' ||
+          part === '..' ||
+          part.toLowerCase() === '.git' ||
+          (!source && part.startsWith('.')),
       )
   )
     fail('Invalid edition artifact path.');
