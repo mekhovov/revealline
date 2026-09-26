@@ -156,3 +156,34 @@ test('undeclared company font originals cannot enter a public source archive', (
     /no public eligibility/,
   );
 });
+
+test('whole-source eligibility permits existing Unicode and native scale filenames without relaxing runtime paths', () => {
+  const names = [
+    'platforms/ios/native/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-512@2x.png',
+    'publishing/pages-controller/delivery/evidence/cross-mode-p05/public-v0605/native-fixtures/Preview-ҐґЄєІіЇї-’ʼ.png',
+  ];
+  const files = new Map(names.map((name) => [name, bytes('public fixture')]));
+  assert.equal(validatePublicSourceEligibility({ files }).files, 2);
+  for (const name of names)
+    assert.throws(
+      () => validateEditionSourceInventory({ files: new Map([[name, bytes('fixture')]]) }),
+      /Invalid edition artifact path/,
+    );
+  for (const name of [
+    '',
+    '/absolute.png',
+    '../outside.png',
+    'folder/../outside.png',
+    'folder//file.png',
+    'folder/',
+    'C:/drive.png',
+    'folder\\outside.png',
+    'line\nbreak.png',
+    'null\0byte.png',
+    '.GIT/config',
+  ])
+    assert.throws(
+      () => validatePublicSourceEligibility({ files: new Map([[name, bytes('invalid')]]) }),
+      /Invalid edition artifact path/,
+    );
+});
