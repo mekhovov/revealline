@@ -14,6 +14,7 @@
     "auth:migrate": "node src/auth-migrate.mjs",
     "deployment:preflight": "node src/deployment-preflight-runner.mjs",
     "recovery": "node src/recovery-runner.mjs",
+    "recovery:rehearse": "node src/recovery-rehearsal-runner.mjs",
     "test": "node --test test/*.test.mjs",
     "lint": "eslint \"src/**/*.mjs\" \"test/**/*.mjs\" eslint.config.mjs --max-warnings 0",
     "format": "prettier --write \"**/*.{mjs,json,md,yaml,yml}\"",
