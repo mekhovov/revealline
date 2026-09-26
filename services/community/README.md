@@ -27,6 +27,12 @@ community submission and tus resource, and finish with a byte-for-byte package m
 uses no PostgreSQL, object storage, account service, or external network, and exits nonzero on a
 timeout or contract mismatch.
 
+After a production-like HTTPS deployment exists, `npm run acceptance:tus-deployed` performs that
+same interruption against the deployed tus endpoint, resumes the same remote upload, waits for the
+real validator, verifies the exact downloaded package, and administrator-unlists the disposable
+edition. Follow [the deployed tus acceptance procedure](deployed-tus-acceptance.md); the command is
+destructive and requires explicit opt-in plus short-lived creator and administrator sessions.
+
 For the container development stack:
 
 ```sh
@@ -59,8 +65,12 @@ This is still a single-host development fixture. It does not provide TLS or a ma
 
 `compose.production.yaml` is a fail-closed overlay for a reviewed single-host deployment. It forces
 development authentication off, requires the database, Better Auth, account-mail, administrator,
-and exact trusted-proxy values, and forwards every documented PostgreSQL-backed admission limit.
+exact trusted-proxy values, and immutable release version/source revision, and forwards every
+documented PostgreSQL-backed admission limit.
 The validation worker still receives no account or mail credential.
+The production build embeds the supplied release and source identities into the image. API,
+account migration, and preflight startup fail if the runtime identity differs, preventing an
+operator-only environment edit from relabeling an already built image.
 
 Copy `production.env.example` to an untracked operator-owned file, replace every placeholder, and
 start both Compose files together:
@@ -90,6 +100,8 @@ The API exposes separate liveness and readiness routes:
   process work. The production container health check uses this route and fails closed with the
   API's generic error response. Keep the route behind the operator network rather than forwarding
   it through the public proxy.
+- `GET /version` returns the configured public release version, exact source revision, and
+  validator version. Production configuration requires both immutable identity values.
 
 Inspect one-shot service exit status and API readiness without printing the rendered Compose
 configuration, which can contain secrets:
@@ -123,6 +135,7 @@ Public routes return JSON metadata or exact immutable package bytes:
 
 - `GET /health`
 - `GET /ready`
+- `GET /version`
 - `GET /v1/catalog?limit=20&cursor=...`
 - `GET /v1/catalog/:editionId`
 - `GET /v1/catalog/:editionId/download`
@@ -414,12 +427,19 @@ cd services/community
 export COMMUNITY_ACCEPTANCE_BASE_URL='https://community.example.test/'
 export COMMUNITY_ACCEPTANCE_NAMESPACE='staging-20260926-a'
 export COMMUNITY_ACCEPTANCE_ALLOW_DESTRUCTIVE='I_UNDERSTAND_THIS_PUBLISHES_AND_UNLISTS_TEST_CONTENT'
+export COMMUNITY_ACCEPTANCE_EXPECTED_VERSION='v0.141.2'
+export COMMUNITY_ACCEPTANCE_EXPECTED_SOURCE_REVISION='12978e5fd3fe0ce70bbee96aa543f569f64622d4'
 export COMMUNITY_ACCEPTANCE_CREATOR_A_AUTHORIZATION='Bearer short-lived-creator-a-token'
 export COMMUNITY_ACCEPTANCE_CREATOR_B_AUTHORIZATION='Bearer short-lived-creator-b-token'
 export COMMUNITY_ACCEPTANCE_ADMIN_AUTHORIZATION='Bearer short-lived-admin-token'
 export COMMUNITY_ACCEPTANCE_RECEIPT='/secure/acceptance/community-staging-20260926-a.json'
 npm run acceptance:deployed
 ```
+
+Before it creates any content, the runner requires `/version` to match those exact expected values,
+then requires both `/health` and the full `/ready` dependency probe to pass. A stale service or a
+deployment with unavailable schema, storage, tus storage, or `ffprobe` therefore cannot produce a
+successful journey receipt.
 
 The runner bounds every HTTP request to 15 seconds, polls validation for at most two minutes, and
 uses at most ten administrator report pages. Override those time limits only with bounded numeric
@@ -428,7 +448,8 @@ values in `COMMUNITY_ACCEPTANCE_REQUEST_TIMEOUT_MS`, `COMMUNITY_ACCEPTANCE_POLL_
 offered and its bounded tus 1.0 client when the deployment requires resumable upload.
 
 The receipt format is `revealline-community-deployed-acceptance.v1`. It records only the service
-origin, public test namespace/run identities, immutable package and edition identities, validation
+origin, exact release identity, readiness result, public test namespace/run identities, immutable
+package and edition identities, validation
 poll count, exact-download result, installed completion and picture-asset identities, offline replay result,
 moderation result, and timing. Authentication headers, account subjects, response bodies, and
 package content are excluded. The CLI prints only the receipt path and a pass/fail stage; it never

@@ -174,6 +174,7 @@ test('executable configuration refuses implicit development authentication', () 
   assert.equal(config.tusCleanupLeaseMs, 120_000);
   assert.equal(config.tusLockTimeoutMs, 30_000);
   assert.equal(config.tusLockPoolSize, 20);
+  assert.equal(config.releaseIdentity, null);
   assert.throws(
     () =>
       readConfig({
@@ -191,6 +192,63 @@ test('executable configuration refuses implicit development authentication', () 
       }),
     /must not exceed 256/u,
   );
+  assert.throws(
+    () =>
+      readConfig({
+        BETTER_AUTH_SECRET: 'authentication-secret-that-is-long-enough',
+        BETTER_AUTH_URL: 'https://community.example.test',
+        COMMUNITY_ACCOUNT_MAIL_WEBHOOK_URL: 'https://mail.example.test/delivery',
+        COMMUNITY_ACCOUNT_MAIL_WEBHOOK_TOKEN: 'mail-secret-that-is-long-enough-for-tests',
+      }),
+    /COMMUNITY_RELEASE_VERSION/u,
+  );
+  const productionIdentity = {
+    BETTER_AUTH_SECRET: 'authentication-secret-that-is-long-enough',
+    BETTER_AUTH_URL: 'https://community.example.test',
+    COMMUNITY_ACCOUNT_MAIL_WEBHOOK_URL: 'https://mail.example.test/delivery',
+    COMMUNITY_ACCOUNT_MAIL_WEBHOOK_TOKEN: 'mail-secret-that-is-long-enough-for-tests',
+    COMMUNITY_RELEASE_VERSION: 'v0.141.2',
+    COMMUNITY_SOURCE_REVISION: '12978e5fd3fe0ce70bbee96aa543f569f64622d4',
+  };
+  assert.throws(() => readConfig(productionIdentity), /production image has no exact/u);
+  assert.throws(
+    () =>
+      readConfig({
+        ...productionIdentity,
+        COMMUNITY_IMAGE_RELEASE_VERSION: 'v0.141.1',
+        COMMUNITY_IMAGE_SOURCE_REVISION: productionIdentity.COMMUNITY_SOURCE_REVISION,
+      }),
+    /differs from the immutable image identity/u,
+  );
+});
+
+test('public release identity is exact and unavailable when the deployment did not bind one', async (t) => {
+  const repository = new MemoryCommunityRepository();
+  const withoutIdentity = buildCommunityApp({
+    repository,
+    blobStore: new MemoryBlobStore(),
+    authenticator: createTokenAuthenticator({ token: 'creator' }),
+  });
+  const withIdentity = buildCommunityApp({
+    repository,
+    blobStore: new MemoryBlobStore(),
+    authenticator: createTokenAuthenticator({ token: 'creator' }),
+    validatorVersion: 'creator-bundle-v1',
+    releaseIdentity: {
+      version: 'v0.141.2',
+      sourceRevision: '12978e5fd3fe0ce70bbee96aa543f569f64622d4',
+    },
+  });
+  t.after(() => Promise.all([withoutIdentity.close(), withIdentity.close()]));
+  assert.equal((await withoutIdentity.inject({ method: 'GET', url: '/version' })).statusCode, 503);
+  const response = await withIdentity.inject({ method: 'GET', url: '/version' });
+  assert.equal(response.headers['cache-control'], 'no-store');
+  assert.deepEqual(response.json(), {
+    format: 'revealline-community-release.v1',
+    version: 'v0.141.2',
+    sourceRevision: '12978e5fd3fe0ce70bbee96aa543f569f64622d4',
+    validatorVersion: 'creator-bundle-v1',
+  });
 });
 
 test('public health and empty catalog do not require creator authentication', async (t) => {
