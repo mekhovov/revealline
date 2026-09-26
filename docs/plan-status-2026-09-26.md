@@ -21,7 +21,7 @@ versions or acceptance gates are still current.
   exact failing case now passes, as do all 8 controller-host cases and the 167-case compact/controller
   cohort. Runtime behavior is unchanged; review and merge remain pending, and PR #530 must rerun
   after the correction lands.
-- The cultural/pacing successor chain through local v30 has been rebased onto current `main`. The 24
+- The cultural/pacing successor chain through draft PR #670/v30 has been rebased onto current `main`. The 24
   existing remote tips were force-updated atomically with exact old-head leases. All 85 rewritten
   commits range-diff one-to-one with their prior versions. The v0.149.0 successor is draft PR #650
   at `c1c39ced0`; fixture reconciliation maps to PR #651 at `4f4ae8301`, and the pacing inventory
@@ -46,7 +46,7 @@ versions or acceptance gates are still current.
 | Crosswind cultural completion / PR #665          | Clean explicit v27 draft      | Redesigns Survey markers, Compass array and Outer loop with original wall fields informed by three official museum records. Preserves v25/default and v26 ownership, actors, foundations, arrows and objectives; reduces the post-opening open/plain queue from 18 to 15. Its exact current-main tip is `f44bce786`; the earlier cohort passed 155/155 with zero skips and the 85-commit range-diff is one-to-one. Hosted exact-head qualification remains.           |
 | Fracture/Apex cultural completion / PR #666      | Clean explicit v28 draft      | Redesigns Bank the crossing, Five anchors and Final broadcast with original spatial fields informed by official Opishne museum, UNESCO Crimean Tatar Örnek and Museum Fund records. Preserves v25/default and v27 history, gameplay rules, objectives, relays, bonuses and actor roles; reduces the open/plain review queue from 15 to 12. Rebased evidence head `f77ca756a` maps one-to-one from the 158/158 checked patch. Hosted exact-head qualification remains. |
 | Neon cultural completion / PR #667               | Clean explicit v29 draft      | Adds original wall fields to Folded corner, Inside out and Four quarters using bounded Museum Fund, Ivan Honchar Museum and UNESCO vocabulary. Preserves v25/default and v28 history, foundations, spawns, actors and rules; retains Side-door bays as an intentional open contour puzzle and reduces the review queue from 12 to 9. Rebased evidence head `f616a0d04` maps one-to-one from the 161/161 checked patch. Hosted exact-head qualification remains.       |
-| Rover cultural completion / local v30            | Clean explicit v30 candidate  | Promotes the reviewed Split berths and Stepped return Ukrainian/FPV geometry into the current chain while preserving the newer pressure actors and rules. Exact rebased head `ee68c6221` has a one-to-one patch map from the 150/150 local cohort; validation and lint/format/diff passed before the publication-only main rebase. The open/plain queue falls from 9 to 7. PR publication remains.                                                                    |
+| Rover cultural completion / PR #670              | Clean explicit v30 draft      | Promotes the reviewed Split berths and Stepped return Ukrainian/FPV geometry into the current chain while preserving the newer pressure actors and rules. Exact rebased runtime/evidence head `cc43c2619` passes the 150/150 candidate/route/bootstrap cohort with zero skips; validation passed before the publication-only main rebase and lint/format/diff pass on the rebased head. The open/plain queue falls from 9 to 7. Hosted qualification remains.         |
 
 After the final main rebase, an uncontended bounded host rerun passed all selected corrected cases:
 four Solo scenarios, four Versus scenarios, two representative Team source routes and the three-stage
@@ -129,10 +129,11 @@ accepted predecessor; draft labels do not reserve a release.
     candidate/route/bootstrap/host cohort passes 161/161, along with repository validation and
     targeted lint/format/diff checks. Review, hosted qualification, promotion and public evidence
     are still required.
-14. **v30 remains opt-in:** the local Rover successor preserves v25 as default and v29 as history.
-    Its exact local candidate/route/bootstrap cohort passes 150/150 with zero skips, along with
-    repository validation and targeted lint/format/diff checks. Hosted qualification, review,
-    promotion and public evidence are still required.
+14. **v30 remains opt-in:** draft PR #670 preserves v25 as default and v29 as history. Its exact
+    rebased candidate/route/bootstrap cohort passes 150/150 with zero skips. Repository validation
+    passed before the publication-only main rebase, all 85 patches map one-to-one, and targeted
+    lint/format/diff checks pass on the rebased head. Hosted qualification, review, promotion and
+    public evidence are still required.
 
 ## Immediate execution order
 
@@ -148,9 +149,8 @@ accepted predecessor; draft labels do not reserve a release.
    duplicate/ownership audit.
 7. Review draft PR #661 after #651, then PR #664. v26 preserves v25 and completes the Relay spatial
    cluster without changing the default before promotion.
-8. Finish and publish the bounded Rover v30 candidate, then review and host-qualify PR #667 and its
-   successor. Review the 7 remaining audit candidates without redesigning intentionally open boards
-   merely to satisfy a count.
+8. Review and host-qualify PR #667, then draft PR #670. Review the 7 remaining audit candidates
+   without redesigning intentionally open boards merely to satisfy a count.
 9. Promote cultural releases in dependency order, reporting actual public delivery rather than a
    merge or workflow start.
 
