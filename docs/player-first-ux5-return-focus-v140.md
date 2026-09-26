@@ -9,6 +9,8 @@ player-first v0.133–v0.139 train and qualified again before publication.
   then records the matching visible Pause command as the dialog return target.
 - Closing either dialog returns focus to Pause and keeps the exact attempt and
   checkpoint paused. Resuming remains an explicit action.
+- Help now has explicit live-flight coverage for both modeled controller Back
+  and the native Escape/cancel lifecycle; each returns to Pause's Help command.
 - Collection disclosure tests use the shared browser boundary as the single
   native `<summary>` activation owner. Keyboard and touch activation open and
   close once without changing the paused attempt or storage.
@@ -18,15 +20,15 @@ audio preferences, mission content, or presentation assets.
 
 ## Focused evidence on the prepared stack
 
-- Pause menu host: 4/4 pass, including Settings and Help opened from the
-  persistent shell and explicit Resume afterward.
-- Full modal navigation: 55/56 pass. All player-facing Help, Collection,
-  Settings, Pause, keyboard, touch, and modeled-controller cases pass. The one
-  remaining failure is an inherited Soundtrack Studio editor fixture outside
-  the player-first scope; it remains visible and is not relabelled as a pass.
-- Existing controller practice and Settings-assist checks pass. The two
-  previously failing Steam Deck controller-echo cases pass after their fixture
-  observes the required neutral input interval.
+- The complete changed modal-navigation, Pause-menu host and Steam Deck menu
+  files pass sequentially: 72/72 tests, with no skipped tests.
+- The Soundtrack Studio fixture waits for its ready controls and opens the
+  advanced Library through its already-bound handler after the opening
+  controller gesture. It retains the player-facing contract: controller Back
+  and native Escape cancel an active editor before the dialog can close, while
+  Confirm applies the existing handler once.
+- Existing controller practice and Settings-assist checks pass. Steam Deck
+  delayed/native click-tail coverage retains its neutral-input interval.
 - Scoped ESLint, Prettier, and `git diff --check` pass.
 
 These are modeled browser/input checks. Physical touch hardware, Steam Deck,
