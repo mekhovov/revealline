@@ -390,6 +390,50 @@ identities, titles, report text, or package contents. Existing work directories,
 non-empty target blob roots are rejected. Keep failed rehearsal work for diagnosis, discard the
 target after review, restart the source writers, and retain the successful receipt with the
 off-host snapshot record.
+## Deployed two-user acceptance
+
+`npm run acceptance:deployed` exercises a running service over HTTP. Creator A publishes a small
+valid `.rlpack`; Creator B proves owner isolation, discovers the published edition, and downloads
+the exact bytes. The runner installs those downloaded bytes into isolated in-memory browser storage,
+executes the package's verified legal route, persists and reloads its exact completion and picture,
+then starts an offline replay after removal. The public report path opens a report; an administrator
+finds the report, unlists the disposable edition, resolves the report, and verifies that public
+retrieval is gone. The validation worker must be running before this command starts.
+
+This test writes to the deployment. It refuses to run without an explicit opt-in and a unique
+lowercase namespace. Supply three independent, short-lived account authorization values through
+the environment. In development-token mode these are `Bearer ...` values. A production operator
+may instead set the corresponding `COMMUNITY_ACCEPTANCE_CREATOR_A_COOKIE`,
+`COMMUNITY_ACCEPTANCE_CREATOR_B_COOKIE`, and `COMMUNITY_ACCEPTANCE_ADMIN_COOKIE` values from three
+short-lived same-origin test sessions. Set exactly one authorization or cookie variable per actor,
+and do not put credentials in the URL.
+
+```sh
+cd services/community
+export COMMUNITY_ACCEPTANCE_BASE_URL='https://community.example.test/'
+export COMMUNITY_ACCEPTANCE_NAMESPACE='staging-20260926-a'
+export COMMUNITY_ACCEPTANCE_ALLOW_DESTRUCTIVE='I_UNDERSTAND_THIS_PUBLISHES_AND_UNLISTS_TEST_CONTENT'
+export COMMUNITY_ACCEPTANCE_CREATOR_A_AUTHORIZATION='Bearer short-lived-creator-a-token'
+export COMMUNITY_ACCEPTANCE_CREATOR_B_AUTHORIZATION='Bearer short-lived-creator-b-token'
+export COMMUNITY_ACCEPTANCE_ADMIN_AUTHORIZATION='Bearer short-lived-admin-token'
+export COMMUNITY_ACCEPTANCE_RECEIPT='/secure/acceptance/community-staging-20260926-a.json'
+npm run acceptance:deployed
+```
+
+The runner bounds every HTTP request to 15 seconds, polls validation for at most two minutes, and
+uses at most ten administrator report pages. Override those time limits only with bounded numeric
+values in `COMMUNITY_ACCEPTANCE_REQUEST_TIMEOUT_MS`, `COMMUNITY_ACCEPTANCE_POLL_INTERVAL_MS`, and
+`COMMUNITY_ACCEPTANCE_VALIDATION_TIMEOUT_MS`. The runner uses the service's direct upload when
+offered and its bounded tus 1.0 client when the deployment requires resumable upload.
+
+The receipt format is `revealline-community-deployed-acceptance.v1`. It records only the service
+origin, public test namespace/run identities, immutable package and edition identities, validation
+poll count, exact-download result, installed completion/picture identities, offline replay result,
+moderation result, and timing. Authentication headers, account subjects, response bodies, and
+package content are excluded. The CLI prints only the receipt path and a pass/fail stage; it never
+prints the supplied authorization values. A failed run makes one best-effort administrator
+unlisting attempt and records only whether cleanup succeeded. Inspect a `cleanup: failed` receipt
+and remove the uniquely named edition before reusing that deployment.
 
 ## Limits and operational work still required
 
