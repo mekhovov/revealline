@@ -65,9 +65,11 @@ reviewer names, listening approval or device results.
 
 **Current implementation checkpoint — 27 September 2026:** immutable v0.141.6 is
 public and accepted. The coordinated v0.141.7 source merged through
-[PR #705](https://github.com/mekhovov/revealline/pull/705) as authoritative `main`
-`5c16d2a9efef2b19c1b7cf1cd1387ea430b88e8b`; its immutable publication and public
-acceptance remain owned by the sole release coordinator. The live archives expose
+[PR #705](https://github.com/mekhovov/revealline/pull/705) as
+`5c16d2a9efef2b19c1b7cf1cd1387ea430b88e8b`; authoritative `main` then advanced
+through fixture [PR #708](https://github.com/mekhovov/revealline/pull/708) to
+`83df9cfc9d26b9c7191f3507ea5a8d4d9d36b347`. Immutable v0.141.7 publication and
+public acceptance remain owned by the sole release coordinator. The live archives expose
 **187 exact recordings / 45 collections**: Archive 01 has 163 recordings / 24
 collections / 887,503,800 audio bytes, and Archive 02 has 24 recordings / 21
 collections / 125,911,338 audio bytes. This checkpoint supersedes older counts and
