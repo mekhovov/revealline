@@ -42,6 +42,7 @@ const golden = {
   'whole-spatial-v12': [260606, '93ff983369b33f0b0cf005ddd3e3112475c8af6ac5d3d43ef1bdbe49e9df2325'],
   'whole-spatial-v13': [261539, 'dbad0867d7642b78fe46d8eb1b1bf13d367d433248b673b0f00933fdc79491c2'],
   'whole-spatial-v14': [262645, 'a5fa79c0174104525174559a7701c6241c747b2df3d8fc1f99484cfbca8312ef'],
+  'whole-spatial-v15': [263597, 'bd832d139178a8e82dbb8eea68aca94ee2e1b395897bcf6818af1cbb7966c6c9'],
   'whole-ornament-v1': [260665, '3b29bc220cdb06a33fedefabb6adec9527bd10902a9dd44899270e885ddfc4ad'],
   'whole-ornament-v2': [266314, '3f0116efe9cb9b2e134fb60dd252ac5bfbd44758a993e18a56abb2131ca10a1b'],
 };
@@ -190,6 +191,20 @@ test('Early cultural successor imports only its bounded successor chain', () => 
   assert(!has(result, 'horizon-candidates.mjs'));
 });
 
+test('Signal cultural successor imports only its bounded successor chain', () => {
+  const result = routeProbe('whole-spatial-v15');
+  assert.deepEqual(result.output, { id: 'whole-spatial-v15' });
+  assert(has(result, 'signal-cultural-routes-candidates.mjs'));
+  assert(has(result, 'early-cultural-routes-candidates.mjs'));
+  assert(has(result, 'border-signal-cultural-next-batch-candidates.mjs'));
+  assert(has(result, 'border-cultural-next-batch-candidates.mjs'));
+  assert(has(result, 'horizon-next-batch-candidates.mjs'));
+  assert(has(result, 'spatial-next-batch-candidates.mjs'));
+  assert(has(result, 'whole-spatial-data.mjs'));
+  assert(!has(result, 'whole-journey-candidates.mjs'));
+  assert(!has(result, 'horizon-candidates.mjs'));
+});
+
 test('ornament editions import only their bounded opt-in source chain', () => {
   const study = routeProbe('whole-ornament-v1');
   assert.deepEqual(study.output, { id: 'whole-ornament-v1' });
@@ -241,6 +256,7 @@ test('all literal lazy imports and shared modules are in the actual game build i
   const source = await readFile(new URL(loaderURL), 'utf8');
   const imports = [...source.matchAll(/import\('(.+?)'\)/g)].map((m) => m[1]);
   assert.deepEqual(imports, [
+    './signal-cultural-routes-candidates.mjs',
     './early-cultural-routes-candidates.mjs',
     './border-signal-cultural-next-batch-candidates.mjs',
     './border-cultural-next-batch-candidates.mjs',
