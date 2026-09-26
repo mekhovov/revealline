@@ -458,6 +458,9 @@ for (const interruption of ['focus', 'foreground'])
     else {
       f.win.emit('blur');
       f.win.emit('focus');
+      // Foreground return deliberately keeps controller Confirm neutralized
+      // until the next input sample proves that it has been released.
+      f.tick();
     }
     assert.equal(f.$('coop-journey-skip-confirm').textContent, 'Skip mission');
     armSkip(f, 'coop-journey-skip-confirm');
@@ -518,7 +521,7 @@ for (const failure of ['loading', 'first-paint', 'adoption'])
     assert.equal(f.$('coop-level').value, 'stepping-exchange');
   });
 
-test('Skip from a legitimately lost Team attempt cancels automatic retry and still requires confirmation', async (t) => {
+test('Skip from a legitimately lost Team attempt keeps the result until deliberate confirmation', async (t) => {
   const f = await journeyPage(t, {
     beforeImport({ install }) {
       install('localStorage', { value: storage('expert') });
@@ -540,7 +543,7 @@ test('Skip from a legitimately lost Team attempt cancels automatic retry and sti
     if (cycle === 0) f.tick(180);
   }
   assert.equal(f.$('coop-overlay').hidden, false);
-  assert.match(f.$('coop-overlay-copy').textContent, /starts shortly/);
+  assert.doesNotMatch(f.$('coop-overlay-copy').textContent, /starts shortly/);
   armSkip(f, 'coop-journey-skip-confirm');
   f.tick(150);
   assert.equal(f.$('coop-overlay').hidden, false);
