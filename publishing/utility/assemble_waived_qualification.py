@@ -22,6 +22,7 @@ LIMIT = 64 * 1024**2
 WORKFLOW = '.github/workflows/qualify-release-source.yml'
 FASTLINE_WORKFLOW = '.github/workflows/fastline-release.yml'
 QUALIFICATION_WORKFLOWS = {WORKFLOW, FASTLINE_WORKFLOW}
+FASTLINE_QUALIFICATION_JOBS = frozenset(('deduplicate', 'qualify', 'freeze', 'test'))
 POLICY = 'publishing/test-policy.json'
 COMMIT = re.compile(r'[0-9a-f]{40}')
 GATES = [('validate', 'npm run validate', 'Validate source'),
@@ -166,7 +167,17 @@ def family(run, jobs, workflow, event, commit):
                  run.get('path') == FASTLINE_WORKFLOW and job.get('name') == 'inspect-artifact'),
                 'Job identity/result differs')
     if run.get('path') == FASTLINE_WORKFLOW:
-        return [{**job, 'name': str(job.get('name', '')).removeprefix('qualify / ')} for job in rows]
+        normalized = []
+        for job in rows:
+            name = str(job.get('name', ''))
+            nested = name.removeprefix('qualify / ')
+            # Only flatten the qualification jobs consumed below. In particular, retain
+            # ``qualify / inspect-artifact`` so its expected skipped branch cannot
+            # collide with the successful top-level Fastline inspection authority.
+            if name.startswith('qualify / ') and nested in FASTLINE_QUALIFICATION_JOBS:
+                name = nested
+            normalized.append({**job, 'name': name})
+        return normalized
     return rows
 
 
