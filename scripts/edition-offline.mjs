@@ -47,14 +47,15 @@ async function checked(response, row) {
   headers.delete('content-encoding'); headers.set('content-length', String(received));
   return new Response(bytes, { status: response.status, statusText: response.statusText, headers });
 }
-self.addEventListener('install', event => event.waitUntil((async () => {
+async function prepareCache() {
   const cache = await caches.open(CACHE);
   for (const [url, row] of rows) {
     let saved = await cache.match(url);
     try { if (saved) { await checked(saved, row); continue; } } catch { saved = null; }
     await cache.put(url, await checked(await fetch(url, { cache: 'no-store', redirect: 'error' }), row));
   }
-})()));
+}
+self.addEventListener('install', event => event.waitUntil(prepareCache()));
 // No forced activation, global cache deletion or player-storage mutation.
 self.addEventListener('fetch', event => {
   if (event.request.method !== 'GET') return;
@@ -69,11 +70,11 @@ self.addEventListener('fetch', event => {
   })());
 });
 self.addEventListener('message', event => {
-  if (event.data?.type !== 'verify-company-edition' || !event.ports[0]) return;
+  if (!['verify-company-edition', 'repair-company-edition'].includes(event.data?.type) || !event.ports[0]) return;
   event.waitUntil((async () => {
     const client = event.source?.id ? await self.clients.get(event.source.id) : null;
     if (!client || !client.url.startsWith(SCOPE)) return event.ports[0].postMessage({ status: 'error', message: 'Verification belongs to this edition.' });
-    try { const cache = await caches.open(CACHE); for (const [url, row] of rows) await checked(await cache.match(url), row);
+    try { if (event.data.type === 'repair-company-edition') await prepareCache(); const cache = await caches.open(CACHE); for (const [url, row] of rows) await checked(await cache.match(url), row);
       event.ports[0].postMessage({ status: 'ready', editionId: INVENTORY.editionId, version: INVENTORY.version, buildId: INVENTORY.buildId, count: rows.size, bytes: INVENTORY.totalBytes }); }
     catch (error) { event.ports[0].postMessage({ status: 'error', message: error.message }); }
   })());
@@ -194,14 +195,18 @@ export async function buildEditionOfflineFiles({
   );
   put(
     'app/app.mjs',
-    Buffer.from(`const ID=${scriptJSON(editionId)}, ROOT=${scriptJSON(identity.scope)}, NAME=${scriptJSON(name)}, KEY='revealline.company-installed.'+ID+'.v1';
+    Buffer.from(`import { validateCompanyInstallationReference } from './edition-context.mjs';
+const ID=${scriptJSON(editionId)}, ROOT=${scriptJSON(identity.scope)}, NAME=${scriptJSON(name)}, KEY='revealline.company-installed.'+ID+'.v1';
 const $=id=>document.getElementById(id); $('name').textContent=NAME;
-const validate=value=>{ const scope=new URL(value.scope,location.href); if(value.editionId!==ID||scope.origin!==location.origin||!scope.pathname.startsWith(ROOT)||!/^v?\\d+\\.\\d+\\.\\d+$/.test(value.version)||value.entry!==${scriptJSON(entry)})throw new Error('Edition identity differs.');return {...value,scope:scope.href}; };
+const validate=value=>validateCompanyInstallationReference(value,{editionId:ID,baseURL:location.href,editionRoot:ROOT});
 try{const state=JSON.parse(localStorage.getItem(KEY)||'{}');if(state.active){const a=validate(state.active);$('play').href=new URL(a.entry,a.scope);$('play').hidden=false;}if(state.previous){const p=validate(state.previous);$('previous').href=new URL(p.entry,p.scope);$('previous').hidden=false;}}catch(error){$('status').textContent=error.message;}
 $('check').onclick=async()=>{try{const response=await fetch('./current.json',{cache:'no-store'});if(!response.ok)throw new Error('Update check unavailable.');const candidate=validate(await response.json());$('prepare').href=new URL(candidate.entry,candidate.scope);$('prepare').hidden=false;$('status').textContent='Open this edition and choose Prepare offline. Existing progress is preserved.';}catch(error){$('status').textContent=error.message;}};
 // The game records a verified edition only after explicit preparation succeeds.
 navigator.serviceWorker?.register('./service-worker.js',{scope:'./',updateViaCache:'none'}).catch(error=>{$('status').textContent=error.message;});\n`),
   );
+  const contextSource = await fs.readFile(new URL('../game/edition-context.mjs', import.meta.url));
+  put('app/edition-context.mjs', contextSource);
+  if (!result.has('game/edition-context.mjs')) put('game/edition-context.mjs', contextSource);
   if (!result.has('game/editions/offline-client.mjs'))
     put(
       'game/editions/offline-client.mjs',
