@@ -121,12 +121,12 @@ export function createControllerRouter({
   const confirms = (buttons) =>
     buttons.has(compiled.menu.buttons.confirm) ||
     (navigationAliases && defaultLayout && buttons.has(2));
-  function menuConfirmPressed() {
+  function menuConfirmPressed(capturedPads = null) {
     if (destroyed || !assigned || (lastScope === 'flight' && !menuConfirmActive)) return false;
     // Native events may arrive before the next animation frame. This read-only
     // probe must not adopt a pad, consume an edge, or clear the release gate.
     try {
-      const pads = readPads();
+      const pads = capturedPads ?? readPads();
       const count = Math.min(32, pads?.length || 0);
       for (let index = 0; index < count; index++) {
         if ((pads[index]?.index ?? index) !== assigned.index) continue;
