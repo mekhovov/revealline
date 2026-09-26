@@ -246,15 +246,9 @@ function nativeDialogs(t) {
   const originalOpen = SoloElement.prototype.showModal,
     originalClose = SoloElement.prototype.close;
   const origins = new WeakMap();
-  const nativeClick = SoloElement.prototype.click;
-  t.mock.method(SoloElement.prototype, 'click', function () {
-    nativeClick.call(this);
-    if (this.tagName === 'SUMMARY') {
-      const details = this.parentElement;
-      details.open = !details.open;
-      details.emit('toggle');
-    }
-  });
+  // SoloElement.click() already models the browser's one native <summary>
+  // toggle. Keyboard, touch and controller activation all finish through that
+  // shared default, so this fixture must not install a second toggle.
   const originalAttribute = SoloElement.prototype.setAttribute;
   SoloElement.prototype.setAttribute = function (key, value) {
     originalAttribute.call(this, key, value);
@@ -282,6 +276,48 @@ function nativeDialogs(t) {
     SoloElement.prototype.close = originalClose;
   });
 }
+
+for (const activation of ['keyboard', 'touch'])
+  test(`Collection ${activation} disclosure activation toggles exactly once and preserves the paused attempt`, async (t) => {
+    nativeDialogs(t);
+    const h = await soloPage(t, { titleScreen: false, initialReadyTimeoutMs: 15000 });
+    h.$('collection-button').click();
+    const details = h.$('collection-progress'),
+      summary = details.querySelector('summary'),
+      checkpoint = authoritativeCheckpoint(h.rendered.run),
+      storage = [...h.storage.map],
+      writes = h.storage.writes.length;
+    summary.focus();
+    if (activation === 'keyboard') {
+      const key = summary.emit('keydown', { key: 'Enter', code: 'Enter' });
+      assert.equal(key.defaultPrevented, false, 'The browser keeps native summary activation.');
+    } else {
+      const down = summary.emit('pointerdown', {
+        button: 0,
+        isPrimary: true,
+        pointerId: 4,
+        pointerType: 'touch',
+      });
+      summary.emit('pointerup', {
+        button: 0,
+        isPrimary: true,
+        pointerId: 4,
+        pointerType: 'touch',
+      });
+      assert.equal(down.defaultPrevented, false, 'Direct touch keeps the browser activation.');
+    }
+    summary.click();
+    assert.equal(details.open, true);
+    assert.equal(h.doc.activeElement, summary);
+    summary.click();
+    assert.equal(details.open, false);
+    assert.equal(h.doc.activeElement, summary);
+    assert.deepEqual(authoritativeCheckpoint(h.rendered.run), checkpoint);
+    assert.deepEqual([...h.storage.map], storage);
+    assert.equal(h.storage.writes.length, writes);
+    assert.equal(h.rendered.paused, true);
+    assert.deepEqual(h.errors, []);
+  });
 
 test(
   'actual title → Missions → Progress backup controller Back closes only the front dialog and never starts flight',
@@ -354,7 +390,7 @@ test(
 
 function controllerPad(h, t) {
   const prior = Object.getOwnPropertyDescriptor(performance, 'now');
-  let now = 1000;
+  let now = performance.now() + 10000;
   Object.defineProperty(performance, 'now', { configurable: true, value: () => now });
   t.after(() =>
     prior ? Object.defineProperty(performance, 'now', prior) : delete performance.now,
@@ -381,11 +417,15 @@ function controllerPad(h, t) {
     set(index, false);
     frame();
   };
+  const rearm = () => {
+    frame(400);
+    frame(400);
+  };
   frame();
   // The host now adopts a neutral controller automatically. A Confirm pulse
   // here is a deliberate action and would launch before the modal test begins.
   frame();
-  return { frame, set, pulse };
+  return { frame, set, pulse, rearm };
 }
 
 test('actual native keyboard/pointer handoff retains controller owner but suppresses its held menu repeat until neutral', async (t) => {
@@ -430,6 +470,7 @@ for (const [dialog, opener, prefix] of [
       summary.focus();
       pad.pulse(0);
       assert.equal(h.$('collection-progress').open, true);
+      pad.rearm();
     }
     const region = h.$(`${prefix}-reading`);
     region.clientHeight = 100;
@@ -444,6 +485,7 @@ for (const [dialog, opener, prefix] of [
     assert.equal(h.$(dialog).open, true);
     assert.equal(h.doc.activeElement.id, `${prefix}-read`);
     assert.equal(h.$(`${prefix}-reading-done`).disabled, true);
+    pad.rearm();
     pad.pulse(0);
     const escape = region.emit('keydown', { key: 'Escape', code: 'Escape' });
     assert.equal(escape.defaultPrevented, true);
@@ -467,6 +509,7 @@ for (const lateFocus of [false, true])
       summary = details.querySelector('summary');
     summary.focus();
     pad.pulse(0);
+    pad.rearm();
     h.$('collection-read').focus();
     pad.pulse(0);
     assert.equal(h.doc.activeElement.id, 'collection-reading');
@@ -511,6 +554,7 @@ test('actual Settings → Studio listbox/range edits preview, cancel and apply t
   h.$('settings-tab-audio').focus();
   pad.pulse(0);
   assert.equal(h.$('settings-panel-audio').hidden, false);
+  pad.rearm();
   h.$('soundtrack-open').focus();
   pad.pulse(0);
   await settle(() =>
@@ -535,10 +579,12 @@ test('actual Settings → Studio listbox/range edits preview, cancel and apply t
     pad.pulse(0);
     pad.pulse(direction);
     assert.equal(element.value, initial, 'Browsing only changes the owned preview');
+    pad.rearm();
     pad.pulse(1);
     assert.equal(element.value, initial);
     assert.equal(changes, 0);
     assert.equal(h.$('soundtrack-dialog').open, true, 'Back cancels the editor before closing');
+    pad.rearm();
     pad.pulse(0);
     pad.pulse(direction);
     const escape = element.emit('keydown', { key: 'Escape', code: 'Escape' });
@@ -549,12 +595,14 @@ test('actual Settings → Studio listbox/range edits preview, cancel and apply t
     );
     assert.equal(element.value, initial);
     assert.equal(changes, 0);
-    pad.frame();
+    pad.rearm();
     pad.pulse(0);
     pad.pulse(direction);
+    pad.rearm();
     pad.pulse(0);
     assert.notEqual(element.value, initial);
     assert.equal(changes, 1, 'Confirm applies through the existing native handler once');
+    pad.rearm();
   }
   await settle(() => Number(h.$('music-volume').value) === Number(volume.value));
   pad.pulse(1);
@@ -633,6 +681,11 @@ test('opening Settings during a flight keeps its paused-flight return instead of
   assert.equal(h.$('settings-dialog').open, false);
   assert.equal(h.$('shell-home').open, false);
   assert.equal(h.$('flight-state').textContent, 'Paused');
+  assert.equal(
+    h.doc.activeElement,
+    h.$('overlay-settings'),
+    'controller Back returns to the Settings command in the Pause menu',
+  );
   assert.equal(h.rendered.run.tick, tick);
   assert.deepEqual(h.errors, []);
 });

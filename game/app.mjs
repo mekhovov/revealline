@@ -6591,8 +6591,14 @@ try {
     show('game-overlay', false);
     show('show-result', true);
   };
+  function focusPauseToolReturn(id) {
+    const target = $(id);
+    if (controllerScope() === 'paused' && availableFocusTarget(target))
+      target.focus({ preventScroll: true });
+  }
   $('settings-button').onclick = () => {
     pause(true);
+    focusPauseToolReturn('overlay-settings');
     syncAssistControls();
     controllerSettings.refresh();
     controllerBoostSettings.refresh();
@@ -9646,6 +9652,7 @@ try {
   }
   $('help-button').onclick = () => {
     pause(true);
+    focusPauseToolReturn('overlay-help');
     $('help-dialog').showModal();
   };
   let collectionContextKey = null,

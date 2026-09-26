@@ -25,6 +25,7 @@ test('Steam Deck A owns its delayed Chrome activation across quick actions and d
       readPads: () => [pad],
       initialReadyTimeoutMs: 30000,
     });
+  time = performance.now() + 10000;
   t.mock.method(performance, 'now', () => time);
   const frame = (milliseconds = 20) => {
       time += milliseconds;
@@ -205,6 +206,8 @@ test('Steam Deck trusted click tails cannot undo Start or paused-menu actions', 
   });
   assert.equal(heldRelease.defaultPrevented, true, 'long-held A release is consumed');
   assert.equal(page.$('overlay-sound').textContent, afterSound, 'paused Sound changes once');
+  frame(130);
+  frame(130);
 
   page.$('overlay-settings').focus();
   pulse(0);
