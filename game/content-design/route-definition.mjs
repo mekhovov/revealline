@@ -43,11 +43,23 @@ export function createAuthoredJourneyRouteDefinition(
     createRoverCulturalCompletionCandidates,
     createBorderCulturalCompletionCandidates,
     createBorderFrontierPocketCandidates,
+    createCulturalTimedBonusPressureCandidates,
     createUkrainianOrnamentJourney,
     createUkrainianOrnamentAtlasJourney,
   },
 ) {
   if (!isAuthoredJourneyRouteId(id)) return null;
+  if (id === 'whole-spatial-v33')
+    return freezeDesign({
+      id,
+      label: 'Whole Journey Cultural timed opportunity pressure · balance pending',
+      sessionKey: 'revealline.suspended.journey-whole-spatial.v33',
+      profileKey: 'journey-whole-spatial-v33',
+      source: createCulturalTimedBonusPressureCandidates({ artwork: true }),
+      corePackIds: [...WHOLE_JOURNEY_CORE_PACK_IDS],
+      optionalCampaignIds: ['ornament-crossings', 'workshop-routing'],
+      preserveOriginalThemes: true,
+    });
   if (id === 'whole-spatial-v32')
     return freezeDesign({
       id,

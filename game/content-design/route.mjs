@@ -35,6 +35,7 @@ import { createNeonCulturalCompletionCandidates } from './neon-cultural-completi
 import { createRoverCulturalCompletionCandidates } from './rover-cultural-completion-candidates.mjs';
 import { createBorderCulturalCompletionCandidates } from './border-cultural-completion-candidates.mjs';
 import { createBorderFrontierPocketCandidates } from './border-frontier-pocket-candidates.mjs';
+import { createCulturalTimedBonusPressureCandidates } from './cultural-timed-bonus-pressure-candidates.mjs';
 import { createUkrainianOrnamentJourney } from './ukrainian-ornament-candidates.mjs';
 import { createUkrainianOrnamentAtlasJourney } from './ukrainian-ornament-atlas.mjs';
 
@@ -80,6 +81,7 @@ export function createAuthoredJourneyRoute(id) {
     createRoverCulturalCompletionCandidates,
     createBorderCulturalCompletionCandidates,
     createBorderFrontierPocketCandidates,
+    createCulturalTimedBonusPressureCandidates,
     createUkrainianOrnamentJourney,
     createUkrainianOrnamentAtlasJourney,
   });
