@@ -38,6 +38,7 @@ import {
 } from './data-json.mjs';
 import { createMasteryCatalog } from './mastery-catalog.mjs';
 import { resolveMasteryDefinition } from './mastery.mjs';
+import { t } from './i18n/index.mjs';
 
 export const PACK_VERSION = 'xonix-pack.v1';
 export const MASTERY_PACK_VERSION = 'xonix-pack.v2';
@@ -68,6 +69,7 @@ const semver = (v) =>
   typeof v === 'string' && /^(0|[1-9]\d{0,4})\.(0|[1-9]\d{0,4})\.(0|[1-9]\d{0,4})$/.test(v);
 const text = (v, max) => typeof v === 'string' && v.trim().length > 0 && v.length <= max;
 const finite = (v, lo, hi) => Number.isFinite(v) && v >= lo && v <= hi;
+const packError = (key, values) => t(`errors:pack.${key}`, values);
 const preparedPacks = new WeakSet(),
   preparedLibraries = new WeakSet(),
   metadataLibraries = new WeakSet();
@@ -88,16 +90,16 @@ const boundedPack = (candidate, library = false) =>
   });
 function trackChecks(value) {
   exactKeys(value, ['id', 'name', 'genre', 'tempo', 'root', 'scale'], 'music');
-  required(stableId(value.id) && text(value.name, 120), 'Music identity is invalid.');
+  required(stableId(value.id) && text(value.name, 120), packError('musicIdentity'));
   required(
     ['synthwave', 'chiptune', 'rock', 'metal', 'ambient'].includes(value.genre),
-    'Music genre is not registered.',
+    packError('musicGenre'),
   );
   required(
     finite(value.tempo, 60, 180) && Number.isInteger(value.root) && finite(value.root, 36, 84),
-    'Music tempo/root is invalid.',
+    packError('musicTempoRoot'),
   );
-  required(['minor', 'major', 'dorian'].includes(value.scale), 'Music scale is not registered.');
+  required(['minor', 'major', 'dorian'].includes(value.scale), packError('musicScale'));
 }
 export function validateMusicDescriptor(value) {
   try {
@@ -187,28 +189,22 @@ function packChecks(candidate) {
     ].includes(pack.format) &&
       stableId(pack.id) &&
       semver(pack.version),
-    'Pack format/id/version is invalid.',
+    packError('formatIdentityVersion'),
   );
-  required(
-    pack.engine === versions.ruleset,
-    `Pack requires a different engine; expected ${versions.ruleset}.`,
-  );
+  required(pack.engine === versions.ruleset, packError('engine', { expected: versions.ruleset }));
   if (encounter || wide || classic)
     required(
       Array.isArray(pack.masteries) && pack.masteries.length === 0,
       classic
-        ? 'Classic pack v5 requires masteries: []; optional goals are not supported.'
+        ? packError('classicMasteries')
         : wide
-          ? 'Wide pack v4 requires masteries: []; optional goals are not supported.'
-          : 'Encounter pack v3 requires masteries: []; encounter goals are not supported.',
+          ? packError('wideMasteries')
+          : packError('encounterMasteries'),
     );
-  required(
-    text(pack.name, 120) && text(pack.description, 4096),
-    'Pack name/description is invalid.',
-  );
+  required(text(pack.name, 120) && text(pack.description, 4096), packError('nameDescription'));
   required(
     Array.isArray(pack.dependencies) && pack.dependencies.length <= 16,
-    'Pack dependencies must contain at most 16 entries.',
+    packError('dependenciesBudget'),
   );
   const dependencyIds = new Set();
   for (const dependency of pack.dependencies) {
@@ -218,14 +214,14 @@ function packChecks(candidate) {
         dependency.id !== pack.id &&
         !dependencyIds.has(dependency.id) &&
         semver(dependency.version),
-      'Dependency identity/version is invalid or repeated.',
+      packError('dependencyIdentity'),
     );
     dependencyIds.add(dependency.id);
   }
   if (pack.metadata !== undefined) {
     exactKeys(pack.metadata, ['author', 'license', 'rightsStatus', 'sourceUrl'], 'pack.metadata');
     for (const [key, val] of Object.entries(pack.metadata))
-      required(text(val, key === 'sourceUrl' ? 2048 : 512), `Pack metadata ${key} is invalid.`);
+      required(text(val, key === 'sourceUrl' ? 2048 : 512), packError('metadataInvalid', { key }));
     if (pack.metadata.sourceUrl !== undefined) {
       let url;
       try {
@@ -233,7 +229,7 @@ function packChecks(candidate) {
       } catch {}
       required(
         url && ['https:', 'http:'].includes(url.protocol),
-        'Pack source URL must be HTTP(S).',
+        t('errors:content.httpUrl', { path: 'pack.metadata.sourceUrl' }),
       );
     }
   }
@@ -241,35 +237,35 @@ function packChecks(candidate) {
     Array.isArray(pack.themes) &&
       pack.themes.length >= 1 &&
       pack.themes.length <= PACK_LIMITS.themes,
-    'Pack must contain 1..16 themes.',
+    packError('themesBudget'),
   );
   const themes = new Map();
   for (const theme of pack.themes) {
-    required(stableId(theme.id), 'Theme identity is reserved or invalid.');
+    required(stableId(theme.id), packError('themeIdentity'));
     const check = validateTheme(theme);
     required(check.valid, check.errors.join('; '));
-    required(!themes.has(theme.id), 'Theme IDs must be unique.');
+    required(!themes.has(theme.id), packError('themeUnique'));
     themes.set(theme.id, theme);
   }
   required(
     Array.isArray(pack.classRecipes) &&
       pack.classRecipes.length >= 1 &&
       pack.classRecipes.length <= 40,
-    'Pack must contain 1..40 class recipes.',
+    packError('classRecipesBudget'),
   );
   required(
     pack.classRecipes.every((recipe) => stableId(recipe?.id)),
-    'Class identity is reserved or invalid.',
+    packError('classIdentity'),
   );
-  required(Array.isArray(pack.music) && pack.music.length <= 32, 'Pack music budget exceeded.');
+  required(Array.isArray(pack.music) && pack.music.length <= 32, packError('musicBudget'));
   required(
     pack.classRecipes.every((recipe) => stableId(recipe?.id)),
-    'Class identity is reserved or invalid.',
+    packError('classIdentity'),
   );
   const musicIds = new Set();
   for (const descriptor of pack.music) {
     trackChecks(descriptor);
-    required(!musicIds.has(descriptor.id), 'Music IDs must be unique.');
+    required(!musicIds.has(descriptor.id), packError('musicUnique'));
     musicIds.add(descriptor.id);
   }
   required(
@@ -293,16 +289,16 @@ function packChecks(candidate) {
         !campaignIds.has(campaign.id) &&
         text(campaign.revision, 60) &&
         text(campaign.title, 160),
-      'Pack campaign identity is invalid or duplicated.',
+      packError('campaignIdentity'),
     );
     campaignIds.add(campaign.id);
     required(
       campaign.themeId === undefined || themes.has(campaign.themeId),
-      'Campaign refers to an unknown theme.',
+      packError('campaignUnknownTheme'),
     );
     required(
       campaign.musicId === undefined || musicIds.has(campaign.musicId),
-      'Campaign refers to unknown music.',
+      packError('campaignUnknownMusic'),
     );
     if (campaign.classIds !== undefined)
       required(
@@ -310,17 +306,17 @@ function packChecks(candidate) {
           campaign.classIds.length > 0 &&
           campaign.classIds.every((id) => pack.classRecipes.some((c) => c.id === id)) &&
           new Set(campaign.classIds).size === campaign.classIds.length,
-        'Campaign class roster is invalid.',
+        packError('campaignClassRoster'),
       );
     required(
       Array.isArray(campaign.levels) &&
         campaign.levels.length >= 1 &&
         campaign.levels.length <= PACK_LIMITS.levels,
-      'Campaign must contain 1..128 maps.',
+      packError('campaignMapsBudget'),
     );
     required(
       versionsForCampaign(campaign).ruleset === versions.ruleset,
-      'Pack format and campaign simulation versions differ.',
+      packError('simulationVersions'),
     );
     for (const level of campaign.levels) {
       exactKeys(
@@ -341,16 +337,16 @@ function packChecks(candidate) {
               : levelKeys,
         'level',
       );
-      required(stableId(level.id), 'Level identity is reserved or invalid.');
-      required(!levelIds.has(level.id), 'Level IDs must be unique across a pack.');
+      required(stableId(level.id), packError('levelIdentity'));
+      required(!levelIds.has(level.id), packError('levelUnique'));
       levelIds.add(level.id);
       required(
         level.themeId === undefined || themes.has(level.themeId),
-        'Level refers to an unknown theme.',
+        packError('levelUnknownTheme'),
       );
       required(
         level.musicId === undefined || musicIds.has(level.musicId),
-        'Level refers to unknown music.',
+        packError('levelUnknownMusic'),
       );
       const scenario = {
         format: sentinel
@@ -384,16 +380,16 @@ function packChecks(candidate) {
       firstScenario ??= scenario;
     }
   }
-  required(levelIds.size <= PACK_LIMITS.levels, 'Pack map budget exceeded.');
+  required(levelIds.size <= PACK_LIMITS.levels, packError('mapBudget'));
   if (authoredMasteries) {
     required(
       Array.isArray(pack.masteries) && pack.masteries.length <= PACK_LIMITS.masteries,
-      'Pack v2 requires masteries with at most 128 definitions.',
+      packError('masteriesBudget'),
     );
     required(
       new TextEncoder().encode(JSON.stringify(pack.masteries)).byteLength <=
         PACK_LIMITS.combinedMasteryBytes,
-      'Pack mastery definitions exceed their combined 256 KiB budget.',
+      packError('masteryCombinedBudget'),
     );
     const ids = new Set(),
       maps = new Set();
@@ -407,13 +403,10 @@ function packChecks(candidate) {
           maxString: 512,
         }),
       );
-      required(
-        campaignIds.has(definition.campaignId),
-        'Pack mastery refers to an unknown local campaign.',
-      );
+      required(campaignIds.has(definition.campaignId), packError('masteryUnknownCampaign'));
       const map = `${definition.campaignId}/${definition.levelId}`;
-      required(!ids.has(definition.id), 'Pack mastery definition IDs must be unique.');
-      required(!maps.has(map), 'Only one mastery definition may target each pack map.');
+      required(!ids.has(definition.id), packError('masteryIdUnique'));
+      required(!maps.has(map), packError('masteryMapUnique'));
       ids.add(definition.id);
       maps.add(map);
       return definition;
@@ -422,10 +415,10 @@ function packChecks(candidate) {
   // Batch local context checks so a 128-map campaign is normalized only once.
   // Definitions stay beside maps; this cannot modify their existing identity.
   createMasteryCatalog(catalogEntries([pack]));
-  required(plainObject(pack.visualOverrides), 'Pack visualOverrides must be an object.');
+  required(plainObject(pack.visualOverrides), packError('visualOverridesObject'));
   required(
     Array.isArray(pack.levelVisuals) && pack.levelVisuals.length <= PACK_LIMITS.levels,
-    'Pack per-map visual budget exceeded.',
+    packError('perMapVisualBudget'),
   );
   const scopes = [{ name: 'pack', visualOverrides: pack.visualOverrides }],
     scopedLevels = new Set();
@@ -433,7 +426,7 @@ function packChecks(candidate) {
     exactKeys(entry, ['levelId', 'visualOverrides'], 'levelVisuals');
     required(
       levelIds.has(entry.levelId) && !scopedLevels.has(entry.levelId),
-      'Per-map artwork refers to an unknown or repeated level.',
+      packError('perMapUnknownRepeatedLevel'),
     );
     scopedLevels.add(entry.levelId);
     scopes.push({ name: entry.levelId, visualOverrides: entry.visualOverrides });
@@ -457,7 +450,7 @@ function packChecks(candidate) {
             SENTINEL_PACK_VERSION,
           ].includes(pack.format) &&
             CLASSIC_VISUAL_ROLES.includes(role)),
-        'Unknown visual role.',
+        packError('unknownVisualRole'),
       );
       const header = inspectImageDataUrl(descriptor.dataUrl);
       required(header.valid, header.errors.join('; '));
@@ -475,7 +468,7 @@ function packChecks(candidate) {
   required(
     encodedChars <= CONTENT_LIMITS.maxCombinedImageChars &&
       pixels <= CONTENT_LIMITS.maxCombinedImagePixels,
-    'Pack artwork exceeds its combined encoded or decoded pixel budget.',
+    packError('artworkBudget'),
   );
   return { pack, images, warnings: [...new Set(warnings)] };
 }
@@ -510,7 +503,7 @@ function catalogEntries(packs) {
   );
 }
 async function decodeCheckedPack({ pack, images, warnings }, decodeImage) {
-  required(typeof decodeImage === 'function', 'A complete image decoder is required.');
+  required(typeof decodeImage === 'function', packError('completeImageDecoder'));
   for (const image of images) {
     const decoded = await decodeImage(image.descriptor.dataUrl, {
       role: image.role,
@@ -518,7 +511,7 @@ async function decodeCheckedPack({ pack, images, warnings }, decodeImage) {
     });
     required(
       decoded?.naturalWidth === image.width && decoded?.naturalHeight === image.height,
-      `${image.scope}/${image.role}: decoded dimensions do not match the image header.`,
+      packError('decodedDimensions', { scope: image.scope, role: image.role }),
     );
   }
   freeze(pack);
@@ -529,25 +522,29 @@ async function decodeCheckedPack({ pack, images, warnings }, decodeImage) {
 export async function preparePack(candidate, { decodeImage = browserDecodeImage, library } = {}) {
   const checked = packChecks(candidate);
   if (library !== undefined) {
-    required(preparedLibraries.has(library), 'Prepare an installation against a prepared library.');
+    required(preparedLibraries.has(library), packError('prepareAgainstLibrary'));
     libraryChecks([...library.packs.filter((pack) => pack.id !== checked.pack.id), checked.pack]);
   }
   return decodeCheckedPack(checked, decodeImage);
 }
 function dependenciesValid(packs) {
   const byId = new Map(packs.map((p) => [p.id, p]));
-  required(byId.size === packs.length, 'Installed pack IDs must be unique.');
+  required(byId.size === packs.length, packError('installedUnique'));
   for (const pack of packs)
     for (const dependency of pack.dependencies)
       required(
         byId.get(dependency.id)?.version === dependency.version,
-        `${pack.name} requires ${dependency.id} version ${dependency.version}.`,
+        packError('dependencyRequired', {
+          name: pack.name,
+          id: dependency.id,
+          version: dependency.version,
+        }),
       );
   const visiting = new Set(),
     done = new Set();
   function visit(id) {
     if (done.has(id)) return;
-    required(!visiting.has(id), 'Pack dependency cycle is not supported.');
+    required(!visiting.has(id), packError('dependencyCycle'));
     visiting.add(id);
     for (const d of byId.get(id).dependencies) visit(d.id);
     visiting.delete(id);
@@ -557,17 +554,14 @@ function dependenciesValid(packs) {
 }
 function libraryChecks(packs) {
   const imported = packs.filter((pack) => !isOfficialPack(pack));
-  required(
-    imported.length <= PACK_LIMITS.installed,
-    'At most 12 expansion packs can be installed.',
-  );
+  required(imported.length <= PACK_LIMITS.installed, packError('installationLimit'));
   required(
     packs.length - imported.length <= 66 &&
       packs
         .filter(isOfficialPack)
         .reduce((sum, pack) => sum + officialReferences.get(pack).bytes, 0) <=
         52 * 1024 * 1024,
-    'Mounted official chapters exceed their memory budget.',
+    packError('officialMemoryBudget'),
   );
   dependenciesValid(packs);
   const library = { format: PACK_LIBRARY_VERSION, packs };
@@ -586,10 +580,7 @@ export function emptyPackLibrary() {
   return registeredLibrary([]);
 }
 export function installPack(library, pack) {
-  required(
-    preparedLibraries.has(library) && preparedPacks.has(pack),
-    'Install only a prepared pack into a prepared library.',
-  );
+  required(preparedLibraries.has(library) && preparedPacks.has(pack), packError('installPrepared'));
   let kept = library.packs.filter((p) => p.id !== pack.id);
   if (isOfficialPack(pack)) {
     const mounted = kept.filter(
@@ -606,12 +597,12 @@ export function installPack(library, pack) {
   return registeredLibrary([...kept, pack]);
 }
 export function removePack(library, id) {
-  required(preparedLibraries.has(library), 'Remove from a prepared pack library.');
-  required(stableId(id), 'Pack identity is invalid.');
+  required(preparedLibraries.has(library), packError('removePrepared'));
+  required(stableId(id), packError('identityInvalid'));
   return registeredLibrary(library.packs.filter((pack) => pack.id !== id));
 }
 export function exportPackLibrary(library) {
-  required(preparedLibraries.has(library), 'Export a prepared pack library.');
+  required(preparedLibraries.has(library), packError('exportPrepared'));
   return JSON.stringify(packLibrarySnapshot(library));
 }
 /** Small official references are independent of the imported-pack byte/slot budget. */
@@ -635,17 +626,14 @@ async function checkedOfficial(
       Number.isSafeInteger(reference.bytes) &&
       reference.bytes > 0 &&
       reference.bytes <= PACK_LIMITS.maxBytes,
-    'Invalid official chapter reference.',
+    packError('officialReferenceInvalid'),
   );
   const blob = await readOfficial(reference.sha256);
-  required(
-    blob && blob.size === reference.bytes,
-    'This saved chapter needs its verified official game download. Prepare the matching chapter before restoring this save; existing data is kept.',
-  );
+  required(blob && blob.size === reference.bytes, packError('officialDownloadRequired'));
   const checked = packChecks(JSON.parse(await blob.text()));
   required(
     checked.pack.id === reference.id && checked.pack.version === reference.version,
-    'Official chapter identity differs.',
+    packError('officialIdentityDiffers'),
   );
   await pinOfficialFile(reference.sha256, `chapter:${reference.sha256}`);
   officialReferences.set(checked.pack, freeze({ ...reference }));
@@ -669,7 +657,7 @@ function checkedStoredLibrary(candidate) {
         0,
       ) <=
         52 * 1024 * 1024,
-    'Invalid mounted chapter count or byte budget.',
+    packError('mountedBudgetInvalid'),
   );
   const checked = checkedLibrary({ format: PACK_LIBRARY_VERSION, packs: value.packs });
   return (async () => {
@@ -685,7 +673,7 @@ function checkedLibrary(candidate) {
     value.format === PACK_LIBRARY_VERSION &&
       Array.isArray(value.packs) &&
       value.packs.length <= PACK_LIMITS.installed,
-    'Invalid expansion library.',
+    packError('libraryInvalid'),
   );
   // Validate every pack/dependency before allocating any browser decode surface.
   const checked = value.packs.map((pack) => packChecks(pack));
@@ -759,9 +747,9 @@ function campaignMetadata(pack, source) {
   };
 }
 export function resolvePackCampaign(pack, campaignId) {
-  required(preparedPacks.has(pack), 'Resolve a prepared pack.');
+  required(preparedPacks.has(pack), packError('resolvePrepared'));
   const source = pack.campaigns.find((c) => c.id === campaignId);
-  required(source, 'Unknown pack campaign.');
+  required(source, packError('unknownCampaign'));
   return {
     ...campaignMetadata(pack, source),
     visualOverrides: structuredClone(pack.visualOverrides),
@@ -776,7 +764,7 @@ export function scenarioFromPack(
 ) {
   const resolved = resolvePackCampaign(pack, campaignId),
     level = resolved.campaign.levels.find((l) => l.id === levelId);
-  required(level, 'Unknown pack map.');
+  required(level, packError('unknownMap'));
   const theme =
     resolved.themes.find((t) => t.id === (level.themeId ?? resolved.campaign.themeId)) ??
     resolved.themes[0];
