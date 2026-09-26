@@ -25,7 +25,6 @@ import {
   exportSoundtrackBundle,
 } from '../soundtrack-bundle.mjs';
 import { soundtrackPlaylistShare } from '../soundtrack-share.mjs';
-import { setLocale } from '../i18n/index.mjs';
 import {
   fixture,
   memoryIndexedDB,
