@@ -65,7 +65,31 @@
     "skips": 0,
     "allFinalURLsExact": true,
     "authorityUnchanged": true,
-    "verifiedAt": "2026-09-26T05:05:05.649307Z"
+    "verifiedAt": "2026-09-26T05:05:05.649307Z",
+    "hostedCorroboration": {
+      "status": "PASS",
+      "workflowRun": 36219739216,
+      "auditHead": "bc8db4e0f96a88408046a7382bc3d16b6015c1ae",
+      "reportPath": "evidence/archive-89-v01320/http-report-hosted-original.json",
+      "reportSha256": "c1c81396cff64f0bb975e05a8be1863a8f14fa21802ee92ed66b006c5093fd15",
+      "verifiedAt": "2026-09-26T05:06:14.457956+00:00",
+      "files": 1306,
+      "bytes": 611438893,
+      "attempts": 1306,
+      "failures": 0,
+      "retries": 0,
+      "skips": 0,
+      "allFinalURLsExact": true,
+      "sourcePinsUnchanged": true,
+      "executionRequestSha256": "b3b014206788cfa9f7878a279a48b176d319259948644462ec486aac59f4848d",
+      "evidenceArtifact": {
+        "id": 10898303302,
+        "name": "archive89-public-http-evidence",
+        "size_in_bytes": 378767,
+        "digest": "sha256:3953a182cfbc729e86c758233bb15b4c900752c40b9cd291c35b7444fa3a18b2"
+      },
+      "preservedFailedPrecursorRun": 36219661948
+    }
   },
   "browserAcceptance": {
     "status": "PASS",

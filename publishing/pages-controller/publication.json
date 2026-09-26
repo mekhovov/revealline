@@ -9916,13 +9916,18 @@
           "kind": "http"
         },
         {
+          "path": "evidence/archive-89-v01320/http-report-hosted-original.json",
+          "sha256": "c1c81396cff64f0bb975e05a8be1863a8f14fa21802ee92ed66b006c5093fd15",
+          "kind": "reference"
+        },
+        {
           "path": "evidence/archive-89-v01320/browser-admission.json",
-          "sha256": "5d15b42c2b3cb66268301f2bbe492543d1fe9d0e8f9f9a8b710b4ebf50d7b751",
+          "sha256": "f0a2010afe8214a29bd7dc5e97aabad4a5435754e1b24a990ad15b159f940767",
           "kind": "browser"
         },
         {
           "path": "evidence/archive-89-v01320/public-acceptance.json",
-          "sha256": "f3d3482ef45ae5641b80315ccb5993ebb62c4673262b61f5f736a535d55672d3",
+          "sha256": "e6eeac663e2ec13d7cca0e6ea5f58ad787cb35154d5187f65426a803a826a327",
           "kind": "reference"
         },
         {
