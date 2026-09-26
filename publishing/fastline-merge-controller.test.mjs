@@ -98,6 +98,8 @@ test("the privileged workflow is a safe no-op until the trusted controller reach
     "utf8",
   );
   assert.match(workflow, /Record one-time controller bootstrap/);
+  assert.match(workflow, /opened,/);
+  assert.match(workflow, /reopened,/);
   assert.match(
     workflow,
     /if: hashFiles\('publishing\/fastline-merge-controller\.mjs'\) == ''/,
