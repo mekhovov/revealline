@@ -7,27 +7,28 @@
 ## Current checkpoint — 26 September 2026
 
 - **Completed Pages baseline:** immutable
-  [v0.141.2](https://github.com/mekhovov/revealline/releases/tag/v0.141.2) is the
+  [v0.141.3](https://github.com/mekhovov/revealline/releases/tag/v0.141.3) is the
   current Pages release. Its exact product source is
-  `12978e5fd3fe0ce70bbee96aa543f569f64622d4` from
-  [PR #675](https://github.com/mekhovov/revealline/pull/675), preserving the
-  accepted v0.141.1 compact gallery and adding community deployment hardening.
-  Pages selector [PR #677](https://github.com/mekhovov/revealline/pull/677) merged
-  as `34f45503c32479591dcdc36e7236aaa2eb348a2f`; run `36252239829` audited 1,888
-  files and 630,471,797 bytes with zero retries or failures. Archive95 preserves
-  v0.141.0.
+  `7509d790dadb6194d70a5bc1efafee40fbb0b3b7` from
+  [PR #679](https://github.com/mekhovov/revealline/pull/679). Pages selector
+  [PR #682](https://github.com/mekhovov/revealline/pull/682) merged as
+  `01de92e9693d640e08ff21ba95ce12a978cb486f`; run `36255919482` audited 1,892
+  files and 630,486,933 bytes with zero retries or failures. Archive96 preserves
+  v0.141.2 and its independent audit passed all 1,316 files / 612,079,761 bytes.
 - **Latest stable release:** [PR #679](https://github.com/mekhovov/revealline/pull/679)
   merged v0.141.3 Team quick-start as
   `7509d790dadb6194d70a5bc1efafee40fbb0b3b7`. Coordinator run `36254346397`
   published its immutable nine-asset
   [v0.141.3 release](https://github.com/mekhovov/revealline/releases/tag/v0.141.3).
-  Its Pages selector and public player-flow acceptance remain open, so v0.141.2
-  is still the Pages baseline.
+  Its Pages selector and ordinary Solo, Versus and Team public-play acceptance
+  are complete.
 - **Active candidate:** v0.141.4 combines the merged community acceptance and
-  validation-worker isolation from PR #680 with Couch secondary navigation
-  rebased onto exact main `218e76281e3bfa26f57b7aa0f7b98058f4bd05ad`.
+  validation-worker isolation from PR #680 with Couch secondary navigation and
+  the non-overlapping opaque Team-owner continuation correction from PR #657,
+  rebased onto exact main `01de92e9693d640e08ff21ba95ce12a978cb486f`.
   Its feature-owned shell/Pause and departure/markup/quick-start boundaries
-  pass 27/27 and 37/37 on the exact rebased source; validation, localization,
+  pass 27/27 and 37/37, while the combined changed runtime/test cohort passes
+  41/41 on the exact rebased source; validation, localization,
   lint, formatting, syntax and version parity also pass. Hosted PR/release and
   public qualification remain open. It is followed by v0.141.5 Team teaching; v0.141.6
   deliberate Team terminal Retry; v0.141.7 Versus countdown; v0.141.8 named
