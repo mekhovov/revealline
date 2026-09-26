@@ -159,4 +159,6 @@ to an independent content inspection, and stops before any tag or release write.
 tag/draft creation, guarded nine-asset publication, archive admission, Pages and public journeys are
 added only after this canary is shadow-run successfully. Existing manual entry points remain the
 guarded emergency path during the two-release rollout and the sole publisher must not run both paths
-for the same version.
+for the same version. The legacy write-capable original upload is isolated in
+`upload-release-originals.yml`; the reusable qualifier contains no `contents: write` job, so a
+read-only shadow caller cannot inherit publication authority during workflow validation.

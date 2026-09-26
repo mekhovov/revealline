@@ -4,7 +4,7 @@ on:
   workflow_call:
     inputs:
       operation:
-        description: Qualify source, or inspect/upload one already frozen artifact
+        description: Qualify source, or inspect one already frozen artifact
         required: false
         default: qualify
         type: string
@@ -42,11 +42,11 @@ on:
   workflow_dispatch:
     inputs:
       operation:
-        description: Qualify source, or inspect/upload one already frozen artifact
+        description: Qualify source, or inspect one already frozen artifact
         required: true
         type: choice
         default: qualify
-        options: [qualify, inspect-artifact, upload-originals]
+        options: [qualify, inspect-artifact]
       artifact_binding:
         description: Reviewed exact JSON binding for utility modes; empty when qualifying
         required: false
@@ -403,85 +403,6 @@ jobs:
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: inspect-artifact-evidence
-          path: utility-output/evidence/
-          include-hidden-files: true
-          compression-level: 0
-          retention-days: 14
-          if-no-files-found: warn
-
-  upload-originals:
-    concurrency:
-      group: frozen-original-upload-${{ github.repository }}
-      cancel-in-progress: false
-    if: >-
-      (github.event_name == 'workflow_dispatch' || github.event_name == 'workflow_call') &&
-      inputs.operation == 'upload-originals'
-    runs-on: ubuntu-latest
-    timeout-minutes: 180
-    permissions:
-      contents: write
-      actions: read
-    steps:
-      - name: Check out the actual utility workflow revision
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ github.workflow_sha }}
-          path: automation
-          persist-credentials: false
-          filter: blob:none
-          sparse-checkout: |
-            .github/workflows/qualify-release-source.yml
-            publishing/test-policy.mjs
-            publishing/test-policy.json
-            publishing/utility/
-          sparse-checkout-cone-mode: false
-
-      - name: Set up explicit test policy runtime
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22.22.2
-
-      - name: Read explicit automated-suite policy
-        id: test_policy
-        env:
-          RUN_FULL_TESTS: ${{ vars.REVEALLINE_FULL_CI == 'true' && inputs.run_tests && 'true' || 'false' }}
-        run: node automation/publishing/test-policy.mjs --force-tests "$RUN_FULL_TESTS"
-
-      - name: Validate the reviewed binding before source checkout
-        id: binding
-        env:
-          UTILITY_BINDING: ${{ inputs.artifact_binding }}
-        run: >-
-          python3 automation/publishing/utility/release_artifact.py validate
-          --mode upload-originals --repository "$GITHUB_REPOSITORY"
-
-      - name: Check out the exact qualified source
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ steps.binding.outputs.source }}
-          path: qualified
-          fetch-depth: 1
-          persist-credentials: false
-
-      - name: Verify local utility tests before authenticated work
-        if: steps.test_policy.outputs.runTests == 'true'
-        run: python3 -m unittest discover -s automation/publishing/utility -p 'test_*.py'
-
-      - name: Verify all originals and upload two absent members to the existing draft
-        env:
-          GH_TOKEN: ${{ github.token }}
-          UTILITY_BINDING: ${{ inputs.artifact_binding }}
-          UTILITY_WORKFLOW_SHA: ${{ github.workflow_sha }}
-        run: >-
-          python3 automation/publishing/utility/release_artifact.py run
-          --mode upload-originals --repository "$GITHUB_REPOSITORY"
-          --repo qualified --out utility-output
-
-      - name: Retain bounded original metadata and every attempt outcome
-        if: always()
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
-        with:
-          name: upload-originals-evidence
           path: utility-output/evidence/
           include-hidden-files: true
           compression-level: 0
