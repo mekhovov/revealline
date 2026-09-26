@@ -4,15 +4,24 @@ import { parse as parseHTML } from 'parse5';
 
 const PLAY_ENTRIES = [
   'game/index.html',
-  'game/couch/index.html',
-  'game/couch/relay-rescue.html',
   'game/replay-theater/index.html',
   'game/downloads.html',
   'game/profile-recovery.html',
-  'game/controller-lab/index.html',
   'credits.html',
   'privacy.html',
 ];
+const MODE_ENTRIES = { versus: ['game/couch/index.html'], team: ['game/couch/relay-rescue.html'] };
+// These are conditional source-v1 library adapters. Published Solo navigation
+// has exact metadata views and never executes their imports.
+const PUBLISHED_SOLO_BOUNDARIES = new Set([
+  'game/couch/index.html',
+  'game/couch/relay-rescue.html',
+  'game/couch/couch.mjs',
+  'game/couch/relay-rescue.mjs',
+  'game/content-design/versus-host.mjs',
+  'game/mission-library/remote-team.mjs',
+  'game/mission-library/spatial-next-editions.mjs',
+]);
 
 /** Resolve local file references, never external addresses or speculative URLs. */
 function targets(value, owner, byPath) {
@@ -37,20 +46,27 @@ function walk(value, visit) {
   }
 }
 
-/** Keep all playable entry points until their hosts have separate mode bootstraps.
- * The graph removes unused authoring code/data, never guesses from directory names
- * whether a production sprite or shared gameplay validator is optional. */
-export function selectOfflineCore(entries, excluded) {
+/** Derive each mode's runtime closure from its entry points and shared production
+ * assets. Published Solo uses metadata for other modes and historical editions;
+ * their conditional legacy host imports stay in separately approved packages. */
+export function selectOfflineCore(entries, excluded, { mode = 'solo' } = {}) {
   const byPath = new Map(entries.map((entry) => [entry.name, entry]));
   const retained = new Set(),
+    references = new Map(),
     pending = [];
-  const add = (name) => {
-    if (byPath.has(name) && !excluded.has(name) && !retained.has(name)) {
+  const add = (name, owner = '<entry>') => {
+    if (
+      byPath.has(name) &&
+      !excluded.has(name) &&
+      !retained.has(name) &&
+      !(mode === 'solo' && PUBLISHED_SOLO_BOUNDARIES.has(name))
+    ) {
       retained.add(name);
+      references.set(name, owner);
       pending.push(name);
     }
   };
-  PLAY_ENTRIES.forEach(add);
+  (MODE_ENTRIES[mode] || PLAY_ENTRIES).forEach((name) => add(name));
   for (const entry of entries) {
     const name = entry.name;
     // Immutable compiled presentation metadata includes player-selected actor
@@ -85,7 +101,8 @@ export function selectOfflineCore(entries, excluded) {
   while (pending.length) {
     const name = pending.pop(),
       source = byPath.get(name).bytes.toString();
-    const reference = (value) => targets(value, name, byPath).forEach(add);
+    const reference = (value) =>
+      targets(value, name, byPath).forEach((target) => add(target, name));
     if ((name.endsWith('.mjs') || name.endsWith('.js')) && !name.includes('/vendor/')) {
       const ast = parseModule(source, { ecmaVersion: 'latest', sourceType: 'module' });
       // Literal imports plus registered JSON/asset paths used by fetch helpers.
@@ -130,5 +147,5 @@ export function selectOfflineCore(entries, excluded) {
         entry.name !== '_headers',
     )
     .map((entry) => entry.name);
-  return { retained, optional };
+  return { retained, optional, references };
 }

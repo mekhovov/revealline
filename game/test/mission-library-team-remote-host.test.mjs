@@ -90,15 +90,15 @@ function mode(f, value) {
 const loaded = async (f) => {
   await f.remoteReady();
   const rows = cards(f);
-  assert.equal(rows.length, 285, f.$('coop-library-remote-status').textContent);
+  assert.equal(rows.length, 252, f.$('coop-library-remote-status').textContent);
   const identities = rows.map((row) => JSON.parse(row.dataset.missionId));
   assert.equal(identities.filter((identity) => identity[1] === 'whole-spatial-v11').length, 91);
-  assert.equal(identities.filter((identity) => identity[1] === 'whole-spatial-v10').length, 3);
-  assert.equal(identities.filter((identity) => identity[1] === 'whole-spatial-v9').length, 3);
-  assert.equal(identities.filter((identity) => identity[0].startsWith('["classic",')).length, 188);
+  assert.equal(identities.filter((identity) => identity[1] === 'whole-spatial-v10').length, 0);
+  assert.equal(identities.filter((identity) => identity[1] === 'whole-spatial-v9').length, 0);
+  assert.equal(identities.filter((identity) => identity[0].startsWith('["classic",')).length, 161);
 };
 
-test('Team loads all 285 Solo/Versus metadata rows only after selecting another mode and never decodes rewards', async (t) => {
+test('Team lazily loads 252 current and 33 archived Solo/Versus rows without decoding rewards', async (t) => {
   const f = await fixture(t);
   await open(f);
   assert.equal(cards(f).length, 14);
@@ -116,10 +116,27 @@ test('Team loads all 285 Solo/Versus metadata rows only after selecting another 
   assert.equal(f.doc.activeElement.id, 'journey-mode');
   assert(f.$('coop-library-remote-status').textContent.length < 80);
   assert.equal(f.artwork.calls.reads.length, pictureReads);
+  assert.equal(cards(f).filter((row) => row.textContent.includes('Unavailable')).length, 149);
+  const lifecycle = f.$('journey-lifecycle');
+  lifecycle.focus();
+  lifecycle.value = 'archive';
+  lifecycle.emit('change');
+  const archived = cards(f).map((row) => JSON.parse(row.dataset.missionId));
+  assert.equal(archived.length, 33);
+  assert.equal(archived.filter((identity) => identity[1] === 'whole-spatial-v10').length, 3);
+  assert.equal(archived.filter((identity) => identity[1] === 'whole-spatial-v9').length, 3);
+  assert.equal(archived.filter((identity) => identity[0].startsWith('["classic",')).length, 27);
+  lifecycle.value = '';
+  lifecycle.emit('change');
+  assert.equal(cards(f).length, 285, 'All historical identities remain available in All.');
   assert.equal(cards(f).filter((row) => row.textContent.includes('Unavailable')).length, 176);
   mode(f, 'versus');
   assert.equal(cards(f).length, 285);
+  lifecycle.value = 'current';
+  lifecycle.emit('change');
+  assert.equal(cards(f).length, 252);
   assert.equal(f.reads.length, 4);
+  assert.equal(f.artwork.calls.reads.length, pictureReads);
   mode(f, 'team');
   assert.equal(cards(f).length, 14);
   assert.equal(f.$('coop-library-remote-status').hidden, true);
@@ -313,6 +330,9 @@ for (const interrupt of ['blur', 'Escape'])
       assert.match(f.$('coop-library-remote-status').textContent, /interrupted/i);
       assert.equal(f.$('coop-library-remote-retry').hidden, false);
       f.win.emit('focus');
+      // The real animation loop samples released controls before a later user
+      // click. Advance this fixture's frozen clock through that neutral gate.
+      f.tick();
       f.$('journey-back').click();
     } else f.tap('Escape');
     assert.equal(f.$('journey-chooser').open, false);

@@ -737,7 +737,7 @@ async function addOfflineEntries(
     files,
     downloadOriginals: contentCatalogue.originals,
     ...(contentCatalogue.format === 'revealline-offline-content.v2'
-      ? { packageConsent: true }
+      ? { packageConsent: true, navigationBootstraps: contentCatalogue.navigationBootstraps }
       : {}),
     downloadFiles: contentCatalogue.files.filter((file) => file.kind === 'gameplay'),
     ...(optionalPacks.length ? { optionalPacks } : {}),

@@ -3,6 +3,11 @@ import { offlineAvailability, prepareOffline, checkOffline } from './offline.mjs
 import { createOfficialDownloads } from './official-downloads.mjs';
 import { downloadFiles } from './download-catalogue.mjs';
 import {
+  readOfflineDestination,
+  continueOfflineDestination,
+  downloadOfflineDestination,
+} from './offline-navigation-recovery.mjs';
+import {
   gameplaySelection,
   offlineReadinessLabel,
   finishOfflineSelection,
@@ -19,6 +24,7 @@ import {
   stageInstalledEdition,
   activateInstalledEdition,
   updateInstalledSelection,
+  rememberInstalledPackages,
   prepareInstalledLauncher,
   checkInstalledLauncher,
   installedPresentation,
@@ -43,6 +49,7 @@ let controller,
   resumeApprovedGame = null,
   yieldedToPlay = false,
   activationResult = null,
+  navigationRequest = null,
   panelController = new AbortController();
 const embedded = new URL(location.href).searchParams.has('embedded') && window.parent !== window;
 const panelProtocol = 'revealline.offline-panel.v1';
@@ -51,8 +58,13 @@ const notifyHost = (action, fields = {}) => {
     window.parent.postMessage({ format: panelProtocol, action, ...fields }, location.origin);
 };
 const navigation = attachDownloadsNavigation({
-  onBack: () => (embedded ? notifyHost('close') : location.assign('./')),
+  onBack: () => (embedded ? notifyHost('close') : leaveDownloads()),
 });
+function leaveDownloads() {
+  panelController.abort();
+  pauseGameDownload();
+  location.assign('./');
+}
 const activity = globalThis.BroadcastChannel
   ? new BroadcastChannel('revealline.game-activity.v1')
   : null;
@@ -88,6 +100,11 @@ const edition = baseURL;
 const appURL = installedAppURL(location);
 $('install-app').href = appURL;
 if (embedded) $('back-to-game').hidden = true;
+else
+  $('back-to-game').onclick = (event) => {
+    event.preventDefault();
+    leaveDownloads();
+  };
 const install = captureInstallPrompt();
 function refreshInstall() {
   const installed = installedPresentation();
@@ -120,9 +137,12 @@ const operation = (message) => {
   $(musicJob ? 'music-operation-status' : 'operation-status').textContent = message;
 };
 const gameIDs = () =>
+  navigationRequest?.groups ||
   gameplaySelection(catalogue, { all: $('all-game').checked, selected: [...selected] });
 const gameFiles = () => downloadFiles(catalogue, gameIDs());
 function readyMessage() {
+  if (navigationRequest)
+    return 'Requested mode verified and ready offline. Choose Open to continue.';
   const label = offlineReadinessLabel(catalogue, gameIDs());
   if (!activationResult || activationResult.activated) return label;
   let active;
@@ -153,9 +173,11 @@ async function estimates({ signal } = {}) {
   signal?.throwIfAborted();
   if (sequence !== estimateSequence) return;
   const coreBytes = core.files.reduce((sum, file) => sum + file.bytes, 0);
-  const launcherBytes = core.files
-    .filter((file) => file.path.startsWith('app/'))
-    .reduce((sum, file) => sum + file.bytes, 0);
+  const launcherBytes = navigationRequest
+    ? 0
+    : core.files
+        .filter((file) => file.path.startsWith('app/'))
+        .reduce((sum, file) => sum + file.bytes, 0);
   // The edition worker caches URL entries, while official content deduplicates by
   // hash. The stable launcher is a separate scope. Count each actual transfer owner.
   const totalDownloadBytes = coreBytes + report.totalBytes;
@@ -174,12 +196,16 @@ async function estimates({ signal } = {}) {
     report.remainingBytes + coreRemaining + (launcherHealth.status === 'ready' ? 0 : launcherBytes);
   lastEstimate = { ...report, remainingBytes: remaining };
   $('game-size').textContent =
-    `Up to ${size(totalDownloadBytes + launcherBytes)} including runtime, app launcher and original artwork; ${size(remaining)} remain. Allow ${size(report.requiredBytes + coreRemaining + launcherBytes)} additional storage while keeping an existing edition.${report.availableBytes === null ? ' Free space estimate unavailable.' : ` Estimated free: ${size(report.availableBytes)}.`} Actual network transfer may be smaller with compression.`;
+    `Up to ${size(totalDownloadBytes + launcherBytes)} including runtime, ${navigationRequest ? '' : 'app launcher and '}original artwork; ${size(remaining)} remain. Allow ${size(report.requiredBytes + coreRemaining + launcherBytes)} additional storage while keeping an existing edition.${report.availableBytes === null ? ' Free space estimate unavailable.' : ` Estimated free: ${size(report.availableBytes)}.`} Actual network transfer may be smaller with compression.`;
   const setupComplete = ready && activationResult?.paused !== true;
-  $('download-game').textContent = setupComplete
-    ? 'Offline setup complete'
-    : `${savedDownload ? 'Resume' : 'Download selected'} · up to ${size(remaining)}`;
-  $('download-game').disabled = Boolean(controller) || setupComplete;
+  $('download-game').textContent = navigationRequest
+    ? ready
+      ? 'Open requested mode'
+      : `${savedDownload ? 'Resume download' : 'Download'} and open · up to ${size(remaining)}`
+    : setupComplete
+      ? 'Offline setup complete'
+      : `${savedDownload ? 'Resume' : 'Download selected'} · up to ${size(remaining)}`;
+  $('download-game').disabled = Boolean(controller) || (!navigationRequest && setupComplete);
 }
 async function health({ verify = true, signal } = {}) {
   signal?.throwIfAborted();
@@ -190,7 +216,10 @@ async function health({ verify = true, signal } = {}) {
   signal?.throwIfAborted();
   if (sequence !== healthSequence || JSON.stringify(ids) !== JSON.stringify(gameIDs())) return;
   runtimeHealth = runtime;
-  ready = gameplay.ready && runtime.status === 'ready' && launcherHealth.status === 'ready';
+  ready =
+    gameplay.ready &&
+    runtime.status === 'ready' &&
+    (Boolean(navigationRequest) || launcherHealth.status === 'ready');
   $('game-status').textContent = ready
     ? readyMessage()
     : gameplay.ready && runtime.status === 'ready'
@@ -309,7 +338,8 @@ function pauseGameDownload() {
   yieldedToPlay = false;
   controller?.abort();
 }
-$('pause').onclick = $('cancel').onclick = pauseGameDownload;
+$('pause').onclick = pauseGameDownload;
+$('cancel').onclick = () => (navigationRequest ? leaveDownloads() : pauseGameDownload());
 $('pause-music').onclick = $('cancel-music').onclick = () => controller?.abort();
 document.addEventListener('visibilitychange', () => {
   if (document.hidden) {
@@ -365,7 +395,7 @@ function downloadApprovedGame(approval) {
       throw new Error(
         report.message || 'Close other game windows, reopen, and resume runtime preparation.',
       );
-    await store.download({
+    const download = {
       edition,
       group: 'gameplay',
       selection: approval.ids,
@@ -373,7 +403,30 @@ function downloadApprovedGame(approval) {
       baseURL,
       signal,
       onProgress: progress,
-    });
+    };
+    if (navigationRequest)
+      await downloadOfflineDestination(store, { request: navigationRequest, ...download });
+    else await store.download(download);
+    if (navigationRequest) {
+      operation('Verifying the requested mode before opening it…');
+      await continueOfflineDestination({
+        request: navigationRequest,
+        signal,
+        verify: async (groups, options) => {
+          const gameplay = await store.inspect(downloadFiles(catalogue, groups), {
+            verify: true,
+            ...options,
+          });
+          const runtime = await checkOffline(options);
+          return { ready: gameplay.ready && runtime.status === 'ready' };
+        },
+        remember: (groups, options) => rememberInstalledPackages(baseURL, groups, options),
+        navigate: (href) => location.assign(href),
+      });
+      resumeApprovedGame = null;
+      yieldedToPlay = false;
+      return 'Requested mode verified. Opening your original destination…';
+    }
     operation('Preparing and verifying the app launcher…');
     launcherHealth = await prepareInstalledLauncher({ signal });
     signal.throwIfAborted();
@@ -577,11 +630,30 @@ async function initialize() {
       return response.json();
     }),
   );
+  navigationRequest = readOfflineDestination({
+    pageURL: location.href,
+    scope: baseURL,
+    catalogue,
+    version: available.version,
+  });
+  if (navigationRequest) {
+    if (embedded || !available.packageConsent)
+      throw new Error('This edition cannot continue the requested offline destination.');
+    $('destination-recovery').hidden = false;
+    $('destination-title').textContent = navigationRequest.title;
+    $('game-title').textContent = 'Prepare the requested mode';
+    $('starter-choice').hidden = true;
+    $('all-game').parentElement.hidden = true;
+    $('chapter-choices').hidden = true;
+    $('remove-chapters').hidden = true;
+    $('cancel').textContent = 'Cancel and return to game';
+  }
   const saved = (await store.states()).find(
-    (state) => state.edition === edition && state.group === 'gameplay',
+    (state) =>
+      state.edition === edition && state.group === (navigationRequest?.checkpoint || 'gameplay'),
   );
   savedDownload = Boolean(saved);
-  const active = readInstalledState().active;
+  const active = navigationRequest ? null : readInstalledState().active;
   const retained = saved || (active?.scope === baseURL ? active : null);
   if (retained?.selection) {
     retained.selection.forEach((id) => selected.add(id));
@@ -597,7 +669,11 @@ async function initialize() {
         .every((group) => selected.has(group.id));
   }
   for (const group of catalogue.groups) {
-    if (group.kind === 'gameplay' && !['shared', 'base'].includes(group.id)) {
+    if (
+      group.kind === 'gameplay' &&
+      group.category !== 'destination' &&
+      !['shared', 'base'].includes(group.id)
+    ) {
       const label = document.createElement('label'),
         input = document.createElement('input');
       input.type = 'checkbox';
@@ -651,14 +727,14 @@ async function initialize() {
     }
   }
   busy(false);
-  launcherHealth = await checkInstalledLauncher({ timeout: 1500 });
+  if (!navigationRequest) launcherHealth = await checkInstalledLauncher({ timeout: 1500 });
   if (requestedPackage) await selectRequestedPackage(requestedPackage);
   await health();
   if (savedDownload && !ready)
     operation(
       'A previous download is unfinished. Review the remaining size and tap Resume. Nothing downloads until you choose it.',
     );
-  if (ready) await selectEdition();
+  if (ready && !navigationRequest) await selectEdition();
 }
 void initialize().catch((error) => {
   $('game-status').textContent = error.message;

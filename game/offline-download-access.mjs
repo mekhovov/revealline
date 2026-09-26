@@ -1,6 +1,7 @@
 import { offlineAvailability } from './offline.mjs';
 import { createOfficialDownloads } from './official-downloads.mjs';
 import { downloadFiles } from './download-catalogue.mjs';
+import { resolveJourneyRequest } from './content-design/default-entry.mjs';
 
 /** Gameplay may consume local packages, but only the download UI may authorize
  * their transfer. Readiness is checked against actual files, never onLine or a
@@ -65,30 +66,39 @@ export function createOfflineDownloadAccess({
   };
   const check = (signal) => signal?.throwIfAborted();
   return Object.freeze({
-    async ensure(groupId, { signal, prompt = true } = {}) {
+    async ensure(groupId, { signal, prompt = true, retain = false } = {}) {
       check(signal);
       if (!availability.packageConsent || !availability.available || !groupId) return;
       const current = await getCatalogue(signal);
       check(signal);
       const files = downloadFiles(current, [groupId]);
       store ||= createOfficialDownloads();
-      if ((await store.inspect(files, { verify: true, signal })).ready) return;
+      if (!(await store.inspect(files, { verify: true, signal })).ready) {
+        check(signal);
+        if (!prompt)
+          throw new Error('Download this chapter in Install & offline play before playing it.');
+        if (typeof requestPackage !== 'function')
+          throw new Error('Open Install & offline play to download this chapter first.');
+        await requestPackage({ groupId, signal });
+        check(signal);
+        if (!(await store.inspect(files, { verify: true, signal })).ready)
+          throw new Error(
+            'This chapter is not ready offline. Resume its download in Install & offline play.',
+          );
+      }
       check(signal);
-      if (!prompt)
-        throw new Error('Download this chapter in Install & offline play before playing it.');
-      if (typeof requestPackage !== 'function')
-        throw new Error('Open Install & offline play to download this chapter first.');
-      await requestPackage({ groupId, signal });
-      check(signal);
-      if (!(await store.inspect(files, { verify: true, signal })).ready)
-        throw new Error(
-          'This chapter is not ready offline. Resume its download in Install & offline play.',
-        );
+      if (retain) {
+        await store.pin({ edition: availability.scope, group: groupId, files, signal });
+        check(signal);
+      }
     },
     async ensureClassic(packId, options) {
       await this.ensure(packId ? `chapter:${packId}` : 'classic:base', options);
     },
-    async ensureMission({ routeId, missionId, mode }, { signal, prompt = true } = {}) {
+    async ensureMission(
+      { routeId, missionId, mode },
+      { signal, prompt = true, retain = false } = {},
+    ) {
       check(signal);
       if (!availability.packageConsent || !availability.available) return;
       const current = await getCatalogue(signal);
@@ -100,7 +110,7 @@ export function createOfflineDownloadAccess({
       );
       if (matches.length !== 1 || !matches[0].groups.length)
         throw new Error('This exact mission edition has no offline package.');
-      for (const group of matches[0].groups) await this.ensure(group, { signal, prompt });
+      for (const group of matches[0].groups) await this.ensure(group, { signal, prompt, retain });
     },
     async ensureURL(destination, options = {}) {
       check(options.signal);
@@ -114,6 +124,57 @@ export function createOfflineDownloadAccess({
         (item) => item.category === 'tooling' && item.files.includes(path),
       );
       if (group) await this.ensure(group.id, options);
+    },
+    async ensureDestination(destination, { signal, prompt = true, runtimeOnly = false } = {}) {
+      check(signal);
+      if (!availability.packageConsent || !availability.available) return;
+      const url = new URL(destination, availability.scope),
+        scope = new URL(availability.scope);
+      if (url.origin !== scope.origin || !url.pathname.startsWith(scope.pathname)) return;
+      const path = url.pathname.slice(scope.pathname.length).replace(/index\.html$/, '');
+      const mode = {
+        'game/': 'solo',
+        'game/couch/': 'versus',
+        'game/couch/relay-rescue.html': 'team',
+      }[path];
+      if (!mode) return;
+      const routeId = resolveJourneyRequest(url.searchParams, { mode }) || 'legacy';
+      const libraryIds = url.searchParams.getAll('library-mission');
+      if (libraryIds.length > 1 || (libraryIds.length && !libraryIds[0]))
+        throw new Error('The destination mission request is invalid.');
+      const current = await getCatalogue(signal);
+      check(signal);
+      // Destination rows are generated from exact published owner metadata. Never
+      // decode an opaque library ID to guess a different chapter or edition.
+      const candidates = (current.destinations || []).filter(
+        (row) => row.path === path && row.mode === mode && row.routeId === routeId,
+      );
+      const matching = candidates.filter((row) =>
+        runtimeOnly || !libraryIds.length
+          ? row.libraryId === undefined
+          : row.libraryId === libraryIds[0],
+      );
+      if (matching.length !== 1) throw new Error('This exact destination has no offline package.');
+      // Imported packs, practice and authenticated return tokens carry their own
+      // local content authority. Preparing a host must not replace those owners
+      // with a similarly named official chapter.
+      const carriesLocalContent =
+        routeId === 'legacy' &&
+        !libraryIds.length &&
+        [
+          'pack',
+          'practice',
+          'course',
+          'lesson',
+          'return-token',
+          'return-token-v2',
+          'mode-return',
+          'mode-return-v2',
+        ].some((key) => url.searchParams.has(key));
+      const groups =
+        runtimeOnly || carriesLocalContent ? matching[0].runtimeGroups : matching[0].groups;
+      if (!Array.isArray(groups)) throw new Error('The destination package is incomplete.');
+      for (const group of groups) await this.ensure(group, { signal, prompt });
     },
   });
 }

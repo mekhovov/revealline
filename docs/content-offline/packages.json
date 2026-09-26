@@ -2,91 +2,91 @@
   "format": "revealline-package-measurement.v1",
   "version": "0.132.1",
   "sourceRevision": null,
-  "buildId": "c3d139190236688c3ba0f50aa075686752daa7ebcf00c27db2b1609501861383",
-  "distributionSHA256": "30c29f57bc4d176ce2e206321f2d700c375ddc198f62c31bdfc35731be1d706f",
-  "distributionPayloadBytes": 613855036,
+  "buildId": "757fd1ac920697fb0bc55ddef275173591f036c3d920855a0297044d141af6b8",
+  "distributionSHA256": "0db98ab66ad7501f39356f6ca9f3cd3c0a496e74bab52715e664c3718b697d57",
+  "distributionPayloadBytes": 620464966,
   "units": "Decoded file bytes. MiB = 1,048,576 bytes. HTTP compression and protocol overhead are not measured.",
   "ownership": "Runtime URL copies, official hashes and stable launcher URLs are separate owners. Matching bytes are not assumed reusable across owners.",
   "packages": {
     "starter": {
       "owners": {
         "editionRuntime": {
-          "files": 843,
-          "uniqueHashes": 803,
-          "decodedTransferBytes": 33992666,
-          "storedPayloadBytes": 35833246
+          "files": 726,
+          "uniqueHashes": 686,
+          "decodedTransferBytes": 34329718,
+          "storedPayloadBytes": 36171592
         },
         "officialContent": {
-          "files": 10,
-          "uniqueHashes": 10,
-          "decodedTransferBytes": 23445013,
-          "storedPayloadBytes": 23445013
+          "files": 9,
+          "uniqueHashes": 9,
+          "decodedTransferBytes": 23424857,
+          "storedPayloadBytes": 23424857
         },
         "installedLauncher": {
           "files": 8,
           "uniqueHashes": 8,
-          "decodedTransferBytes": 23468,
-          "storedPayloadBytes": 23468
+          "decodedTransferBytes": 24762,
+          "storedPayloadBytes": 24762
         }
       },
-      "decodedTransferBytes": 57461147,
-      "maximumDecodedTransferBytes": 59301727,
-      "storedPayloadBytes": 59301727,
-      "crossOwnerDuplicateBytes": 23468,
-      "largestFileBytes": 2828010
+      "decodedTransferBytes": 57779337,
+      "maximumDecodedTransferBytes": 59621211,
+      "storedPayloadBytes": 59621211,
+      "crossOwnerDuplicateBytes": 24762,
+      "largestFileBytes": 3057489
     },
     "allCurrent": {
       "owners": {
         "editionRuntime": {
-          "files": 843,
-          "uniqueHashes": 803,
-          "decodedTransferBytes": 33992666,
-          "storedPayloadBytes": 35833246
+          "files": 726,
+          "uniqueHashes": 686,
+          "decodedTransferBytes": 34329718,
+          "storedPayloadBytes": 36171592
         },
         "officialContent": {
-          "files": 172,
-          "uniqueHashes": 172,
-          "decodedTransferBytes": 482330034,
-          "storedPayloadBytes": 482330034
+          "files": 264,
+          "uniqueHashes": 264,
+          "decodedTransferBytes": 484154654,
+          "storedPayloadBytes": 484154654
         },
         "installedLauncher": {
           "files": 8,
           "uniqueHashes": 8,
-          "decodedTransferBytes": 23468,
-          "storedPayloadBytes": 23468
+          "decodedTransferBytes": 24762,
+          "storedPayloadBytes": 24762
         }
       },
-      "decodedTransferBytes": 516346168,
-      "maximumDecodedTransferBytes": 518186748,
-      "storedPayloadBytes": 518186748,
-      "crossOwnerDuplicateBytes": 23468,
+      "decodedTransferBytes": 518509134,
+      "maximumDecodedTransferBytes": 520351008,
+      "storedPayloadBytes": 520351008,
+      "crossOwnerDuplicateBytes": 24762,
       "largestFileBytes": 12358446
     },
     "allGameplayArchivesAndTools": {
       "owners": {
         "editionRuntime": {
-          "files": 843,
-          "uniqueHashes": 803,
-          "decodedTransferBytes": 33992666,
-          "storedPayloadBytes": 35833246
+          "files": 726,
+          "uniqueHashes": 686,
+          "decodedTransferBytes": 34329718,
+          "storedPayloadBytes": 36171592
         },
         "officialContent": {
-          "files": 477,
-          "uniqueHashes": 477,
-          "decodedTransferBytes": 564726496,
-          "storedPayloadBytes": 564726496
+          "files": 617,
+          "uniqueHashes": 617,
+          "decodedTransferBytes": 570855731,
+          "storedPayloadBytes": 570855731
         },
         "installedLauncher": {
           "files": 8,
           "uniqueHashes": 8,
-          "decodedTransferBytes": 23468,
-          "storedPayloadBytes": 23468
+          "decodedTransferBytes": 24762,
+          "storedPayloadBytes": 24762
         }
       },
-      "decodedTransferBytes": 598742630,
-      "maximumDecodedTransferBytes": 600583210,
-      "storedPayloadBytes": 600583210,
-      "crossOwnerDuplicateBytes": 23468,
+      "decodedTransferBytes": 605210211,
+      "maximumDecodedTransferBytes": 607052085,
+      "storedPayloadBytes": 607052085,
+      "crossOwnerDuplicateBytes": 24762,
       "largestFileBytes": 12358446
     },
     "soundtracks": {
@@ -132,12 +132,6 @@
       "long-way-home"
     ],
     "officialFiles": [
-      {
-        "path": "game/content-design/runtime/chapter-journey-opening.json",
-        "bytes": 20156,
-        "sha256": "4f8aa6ca01f594a320542c849e5186982abb98f436933a5fac618301d31a1dbe",
-        "kind": "gameplay"
-      },
       {
         "path": "game/content-design/assets/horizon-r1/first-return.png",
         "bytes": 2366738,
@@ -194,23 +188,26 @@
       }
     ],
     "soundtrackFiles": 0,
-    "coreChapterSnapshots": [],
+    "coreChapterSnapshots": [
+      "game/content-design/runtime/chapter-journey-opening.json"
+    ],
+    "coreModeEntries": [],
     "currentMetadataSnapshots": [
       {
-        "path": "game/content-design/runtime/whole-spatial-v11.json",
-        "bytes": 259575,
-        "sha256": "3d7b5b67d5d78a3f25a8108468385f9a6f1b2520fc12b275bcc3bf952ae0d978"
+        "path": "game/content-design/runtime/navigation-whole-spatial-v11.json",
+        "bytes": 935267,
+        "sha256": "ab468f4a63d012c522d4c67c9731494af480328521b45dde668782a2b98dfc11"
       }
     ]
   },
   "sharedRuntime": {
     "storedBytesByExtension": {
       ".png": 17885127,
-      ".json": 7890011,
-      ".mjs": 6891487,
-      ".js": 1432761,
-      ".html": 754831,
-      ".css": 391549,
+      ".json": 10183273,
+      ".mjs": 5195844,
+      ".js": 1427112,
+      ".html": 560904,
+      ".css": 331852,
       ".woff2": 309704,
       ".ttf": 211284,
       ".txt": 40980,
@@ -222,8 +219,8 @@
     "largestFiles": [
       {
         "path": "offline-content.json",
-        "bytes": 1451557,
-        "sha256": "e92208b9a288ac8dc7272cffbdaecaf726a6aa6bd4efb5b61e7f64c26c184ad6"
+        "bytes": 3057489,
+        "sha256": "a3ee608c8d288674d7d308a158323542eb54db3dcc59cc702cd76ec684666aea"
       },
       {
         "path": "game/vendor/phaser-4.2.1.min.js",
@@ -261,6 +258,11 @@
         "sha256": "91a3d66966e1b1a3c2e9b5c68aebcc4be284edff4e7b9b272731a769a4f66ace"
       },
       {
+        "path": "game/content-design/runtime/navigation-whole-spatial-v11.json",
+        "bytes": 935267,
+        "sha256": "ab468f4a63d012c522d4c67c9731494af480328521b45dde668782a2b98dfc11"
+      },
+      {
         "path": "authoring/library/fpv-role-presentations/originals/bomber.png",
         "bytes": 905251,
         "sha256": "88d9a0fac33a45e8cac2dd752df042735deebb21ff172ae0ecf86d81e47826ca"
@@ -289,11 +291,6 @@
         "path": "game/ui/art/field-kit/prepared/title-hangar-v1.png",
         "bytes": 866080,
         "sha256": "57744cbfe744bd50d932b1dba963539c11dbb176dc1e3171de46c34ea74d48a0"
-      },
-      {
-        "path": "authoring/library/fpv-role-presentations/originals/carrier.png",
-        "bytes": 808782,
-        "sha256": "01ed2610a94fa9675d26a618647b8128d3443e111c941199012c72510ad40ad7"
       }
     ]
   },
@@ -309,7 +306,7 @@
         "solo:horizon-starter"
       ],
       "ownBytes": 0,
-      "closureBytes": 23445013,
+      "closureBytes": 23424857,
       "additionalAfterStarterBytes": 0,
       "additionalAfterAllCurrentBytes": 0
     },
@@ -334,8 +331,8 @@
       "requires": [
         "shared"
       ],
-      "ownBytes": 23445013,
-      "closureBytes": 23445013,
+      "ownBytes": 23424857,
+      "closureBytes": 23424857,
       "additionalAfterStarterBytes": 0,
       "additionalAfterAllCurrentBytes": 0
     },
@@ -696,11 +693,12 @@
       "category": "chapter",
       "current": true,
       "requires": [
-        "shared"
+        "shared",
+        "runtime:versus"
       ],
-      "ownBytes": 23445013,
-      "closureBytes": 23445013,
-      "additionalAfterStarterBytes": 0,
+      "ownBytes": 23424857,
+      "closureBytes": 25269633,
+      "additionalAfterStarterBytes": 1844776,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -710,11 +708,12 @@
       "category": "chapter",
       "current": true,
       "requires": [
-        "shared"
+        "shared",
+        "runtime:versus"
       ],
       "ownBytes": 16785289,
-      "closureBytes": 16785289,
-      "additionalAfterStarterBytes": 16785289,
+      "closureBytes": 18630065,
+      "additionalAfterStarterBytes": 18630065,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -724,11 +723,12 @@
       "category": "chapter",
       "current": true,
       "requires": [
-        "shared"
+        "shared",
+        "runtime:versus"
       ],
       "ownBytes": 14653448,
-      "closureBytes": 14653448,
-      "additionalAfterStarterBytes": 14653448,
+      "closureBytes": 16498224,
+      "additionalAfterStarterBytes": 16498224,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -738,11 +738,12 @@
       "category": "chapter",
       "current": true,
       "requires": [
-        "shared"
+        "shared",
+        "runtime:versus"
       ],
       "ownBytes": 15044543,
-      "closureBytes": 15044543,
-      "additionalAfterStarterBytes": 15044543,
+      "closureBytes": 16889319,
+      "additionalAfterStarterBytes": 16889319,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -752,11 +753,12 @@
       "category": "chapter",
       "current": true,
       "requires": [
-        "shared"
+        "shared",
+        "runtime:versus"
       ],
       "ownBytes": 14387280,
-      "closureBytes": 14387280,
-      "additionalAfterStarterBytes": 14387280,
+      "closureBytes": 16232056,
+      "additionalAfterStarterBytes": 16232056,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -766,11 +768,12 @@
       "category": "chapter",
       "current": true,
       "requires": [
-        "shared"
+        "shared",
+        "runtime:versus"
       ],
       "ownBytes": 15631983,
-      "closureBytes": 15631983,
-      "additionalAfterStarterBytes": 15631983,
+      "closureBytes": 17476759,
+      "additionalAfterStarterBytes": 17476759,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -780,11 +783,12 @@
       "category": "chapter",
       "current": true,
       "requires": [
-        "shared"
+        "shared",
+        "runtime:versus"
       ],
       "ownBytes": 13019321,
-      "closureBytes": 13019321,
-      "additionalAfterStarterBytes": 13019321,
+      "closureBytes": 14864097,
+      "additionalAfterStarterBytes": 14864097,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -794,11 +798,12 @@
       "category": "chapter",
       "current": true,
       "requires": [
-        "shared"
+        "shared",
+        "runtime:versus"
       ],
       "ownBytes": 14828428,
-      "closureBytes": 14828428,
-      "additionalAfterStarterBytes": 14828428,
+      "closureBytes": 16673204,
+      "additionalAfterStarterBytes": 16673204,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -808,11 +813,12 @@
       "category": "chapter",
       "current": true,
       "requires": [
-        "shared"
+        "shared",
+        "runtime:versus"
       ],
       "ownBytes": 14969948,
-      "closureBytes": 14969948,
-      "additionalAfterStarterBytes": 14969948,
+      "closureBytes": 16814724,
+      "additionalAfterStarterBytes": 16814724,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -822,11 +828,12 @@
       "category": "chapter",
       "current": true,
       "requires": [
-        "shared"
+        "shared",
+        "runtime:versus"
       ],
       "ownBytes": 16185871,
-      "closureBytes": 16185871,
-      "additionalAfterStarterBytes": 16185871,
+      "closureBytes": 18030647,
+      "additionalAfterStarterBytes": 18030647,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -836,11 +843,12 @@
       "category": "chapter",
       "current": true,
       "requires": [
-        "shared"
+        "shared",
+        "runtime:versus"
       ],
       "ownBytes": 10667378,
-      "closureBytes": 10667378,
-      "additionalAfterStarterBytes": 10667378,
+      "closureBytes": 12512154,
+      "additionalAfterStarterBytes": 12512154,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -850,11 +858,12 @@
       "category": "chapter",
       "current": true,
       "requires": [
-        "shared"
+        "shared",
+        "runtime:versus"
       ],
       "ownBytes": 9649471,
-      "closureBytes": 9649471,
-      "additionalAfterStarterBytes": 9649471,
+      "closureBytes": 11494247,
+      "additionalAfterStarterBytes": 11494247,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -864,11 +873,12 @@
       "category": "chapter",
       "current": true,
       "requires": [
-        "shared"
+        "shared",
+        "runtime:versus"
       ],
       "ownBytes": 2441008,
-      "closureBytes": 2441008,
-      "additionalAfterStarterBytes": 2441008,
+      "closureBytes": 4285784,
+      "additionalAfterStarterBytes": 4285784,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -878,11 +888,12 @@
       "category": "chapter",
       "current": true,
       "requires": [
-        "shared"
+        "shared",
+        "runtime:versus"
       ],
       "ownBytes": 2653878,
-      "closureBytes": 2653878,
-      "additionalAfterStarterBytes": 2653878,
+      "closureBytes": 4498654,
+      "additionalAfterStarterBytes": 4498654,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -892,11 +903,12 @@
       "category": "chapter",
       "current": true,
       "requires": [
-        "shared"
+        "shared",
+        "runtime:versus"
       ],
       "ownBytes": 2440722,
-      "closureBytes": 2440722,
-      "additionalAfterStarterBytes": 2440722,
+      "closureBytes": 4285498,
+      "additionalAfterStarterBytes": 4285498,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -906,11 +918,12 @@
       "category": "chapter",
       "current": true,
       "requires": [
-        "shared"
+        "shared",
+        "runtime:versus"
       ],
       "ownBytes": 2420228,
-      "closureBytes": 2420228,
-      "additionalAfterStarterBytes": 2420228,
+      "closureBytes": 4265004,
+      "additionalAfterStarterBytes": 4265004,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -920,11 +933,12 @@
       "category": "chapter",
       "current": true,
       "requires": [
-        "shared"
+        "shared",
+        "runtime:versus"
       ],
       "ownBytes": 2393150,
-      "closureBytes": 2393150,
-      "additionalAfterStarterBytes": 2393150,
+      "closureBytes": 4237926,
+      "additionalAfterStarterBytes": 4237926,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -934,11 +948,12 @@
       "category": "chapter",
       "current": true,
       "requires": [
-        "shared"
+        "shared",
+        "runtime:versus"
       ],
       "ownBytes": 2407817,
-      "closureBytes": 2407817,
-      "additionalAfterStarterBytes": 2407817,
+      "closureBytes": 4252593,
+      "additionalAfterStarterBytes": 4252593,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -948,11 +963,12 @@
       "category": "chapter",
       "current": true,
       "requires": [
-        "shared"
+        "shared",
+        "runtime:versus"
       ],
       "ownBytes": 2170342,
-      "closureBytes": 2170342,
-      "additionalAfterStarterBytes": 2170342,
+      "closureBytes": 4015118,
+      "additionalAfterStarterBytes": 4015118,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -962,11 +978,12 @@
       "category": "chapter",
       "current": true,
       "requires": [
-        "shared"
+        "shared",
+        "runtime:versus"
       ],
       "ownBytes": 2440303,
-      "closureBytes": 2440303,
-      "additionalAfterStarterBytes": 2440303,
+      "closureBytes": 4285079,
+      "additionalAfterStarterBytes": 4285079,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -976,11 +993,12 @@
       "category": "chapter",
       "current": true,
       "requires": [
-        "shared"
+        "shared",
+        "runtime:versus"
       ],
       "ownBytes": 2274807,
-      "closureBytes": 2274807,
-      "additionalAfterStarterBytes": 2274807,
+      "closureBytes": 4119583,
+      "additionalAfterStarterBytes": 4119583,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -990,11 +1008,12 @@
       "category": "chapter",
       "current": true,
       "requires": [
-        "shared"
+        "shared",
+        "runtime:versus"
       ],
       "ownBytes": 2736514,
-      "closureBytes": 2736514,
-      "additionalAfterStarterBytes": 2736514,
+      "closureBytes": 4581290,
+      "additionalAfterStarterBytes": 4581290,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -1004,11 +1023,12 @@
       "category": "chapter",
       "current": true,
       "requires": [
-        "shared"
+        "shared",
+        "runtime:versus"
       ],
       "ownBytes": 2326089,
-      "closureBytes": 2326089,
-      "additionalAfterStarterBytes": 2326089,
+      "closureBytes": 4170865,
+      "additionalAfterStarterBytes": 4170865,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -1018,11 +1038,12 @@
       "category": "chapter",
       "current": true,
       "requires": [
-        "shared"
+        "shared",
+        "runtime:versus"
       ],
       "ownBytes": 2617078,
-      "closureBytes": 2617078,
-      "additionalAfterStarterBytes": 2617078,
+      "closureBytes": 4461854,
+      "additionalAfterStarterBytes": 4461854,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -1032,11 +1053,12 @@
       "category": "chapter",
       "current": true,
       "requires": [
-        "shared"
+        "shared",
+        "runtime:versus"
       ],
       "ownBytes": 8432504,
-      "closureBytes": 8432504,
-      "additionalAfterStarterBytes": 8432504,
+      "closureBytes": 10277280,
+      "additionalAfterStarterBytes": 10277280,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -1046,11 +1068,536 @@
       "category": "chapter",
       "current": true,
       "requires": [
-        "shared"
+        "shared",
+        "runtime:versus"
       ],
       "ownBytes": 7603396,
-      "closureBytes": 7603396,
-      "additionalAfterStarterBytes": 7603396,
+      "closureBytes": 9448172,
+      "additionalAfterStarterBytes": 9448172,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "destination:versus:classic:base",
+      "title": "Classic missions",
+      "kind": "gameplay",
+      "category": "destination",
+      "current": false,
+      "requires": [
+        "classic:base",
+        "runtime:versus"
+      ],
+      "ownBytes": 0,
+      "closureBytes": 1844776,
+      "additionalAfterStarterBytes": 1844776,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "destination:versus:chapter:fpv-arcade-r5",
+      "title": "FPV Front · Pressure Lines",
+      "kind": "gameplay",
+      "category": "destination",
+      "current": false,
+      "requires": [
+        "chapter:fpv-arcade-r5",
+        "runtime:versus"
+      ],
+      "ownBytes": 0,
+      "closureBytes": 13552952,
+      "additionalAfterStarterBytes": 13552952,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "destination:versus:chapter:fpv-pressure-frontier",
+      "title": "FPV Front · Frontier Lines",
+      "kind": "gameplay",
+      "category": "destination",
+      "current": false,
+      "requires": [
+        "chapter:fpv-pressure-frontier",
+        "runtime:versus"
+      ],
+      "ownBytes": 0,
+      "closureBytes": 13222030,
+      "additionalAfterStarterBytes": 13222030,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "destination:versus:chapter:night-shift",
+      "title": "Night Shift",
+      "kind": "gameplay",
+      "category": "destination",
+      "current": false,
+      "requires": [
+        "chapter:night-shift",
+        "runtime:versus"
+      ],
+      "ownBytes": 0,
+      "closureBytes": 1853624,
+      "additionalAfterStarterBytes": 1853624,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "destination:versus:chapter:living-threads",
+      "title": "Living Threads",
+      "kind": "gameplay",
+      "category": "destination",
+      "current": false,
+      "requires": [
+        "chapter:living-threads",
+        "runtime:versus"
+      ],
+      "ownBytes": 0,
+      "closureBytes": 1853932,
+      "additionalAfterStarterBytes": 1853932,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "destination:versus:chapter:fieldcraft",
+      "title": "Fieldcraft",
+      "kind": "gameplay",
+      "category": "destination",
+      "current": false,
+      "requires": [
+        "chapter:fieldcraft",
+        "runtime:versus"
+      ],
+      "ownBytes": 0,
+      "closureBytes": 1859980,
+      "additionalAfterStarterBytes": 1859980,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "destination:versus:chapter:homeward-skies",
+      "title": "Homeward Skies",
+      "kind": "gameplay",
+      "category": "destination",
+      "current": false,
+      "requires": [
+        "chapter:homeward-skies",
+        "runtime:versus"
+      ],
+      "ownBytes": 0,
+      "closureBytes": 13216625,
+      "additionalAfterStarterBytes": 13216625,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "destination:versus:chapter:equipment-workshop",
+      "title": "Equipment Workshop",
+      "kind": "gameplay",
+      "category": "destination",
+      "current": false,
+      "requires": [
+        "chapter:equipment-workshop",
+        "runtime:versus"
+      ],
+      "ownBytes": 0,
+      "closureBytes": 12971800,
+      "additionalAfterStarterBytes": 12971800,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "destination:versus:chapter:sentinel-relay",
+      "title": "Sentinel Relay",
+      "kind": "gameplay",
+      "category": "destination",
+      "current": false,
+      "requires": [
+        "chapter:sentinel-relay",
+        "runtime:versus"
+      ],
+      "ownBytes": 0,
+      "closureBytes": 1856192,
+      "additionalAfterStarterBytes": 1856192,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "destination:versus:chapter:fpv-arcade-r4",
+      "title": "FPV Front · First Light Arcade R4",
+      "kind": "gameplay",
+      "category": "destination",
+      "current": false,
+      "requires": [
+        "chapter:fpv-arcade-r4",
+        "runtime:versus"
+      ],
+      "ownBytes": 0,
+      "closureBytes": 13551882,
+      "additionalAfterStarterBytes": 13551882,
+      "additionalAfterAllCurrentBytes": 11707106
+    },
+    {
+      "id": "destination:versus:chapter:fpv-arcade-r3",
+      "title": "FPV Front · First Light R3",
+      "kind": "gameplay",
+      "category": "destination",
+      "current": false,
+      "requires": [
+        "chapter:fpv-arcade-r3",
+        "runtime:versus"
+      ],
+      "ownBytes": 0,
+      "closureBytes": 13551189,
+      "additionalAfterStarterBytes": 13551189,
+      "additionalAfterAllCurrentBytes": 11706413
+    },
+    {
+      "id": "destination:versus:chapter:fpv-arcade-r2",
+      "title": "FPV Front · First Light R2",
+      "kind": "gameplay",
+      "category": "destination",
+      "current": false,
+      "requires": [
+        "chapter:fpv-arcade-r2",
+        "runtime:versus"
+      ],
+      "ownBytes": 0,
+      "closureBytes": 13550836,
+      "additionalAfterStarterBytes": 13550836,
+      "additionalAfterAllCurrentBytes": 11706060
+    },
+    {
+      "id": "destination:versus:chapter:fpv-arcade",
+      "title": "FPV Front · First Light",
+      "kind": "gameplay",
+      "category": "destination",
+      "current": false,
+      "requires": [
+        "chapter:fpv-arcade",
+        "runtime:versus"
+      ],
+      "ownBytes": 0,
+      "closureBytes": 13546744,
+      "additionalAfterStarterBytes": 13546744,
+      "additionalAfterAllCurrentBytes": 11701968
+    },
+    {
+      "id": "destination:versus:chapter:original-fpv-pressure",
+      "title": "FPV Front · Illustrated Pressure",
+      "kind": "gameplay",
+      "category": "destination",
+      "current": false,
+      "requires": [
+        "chapter:original-fpv-pressure",
+        "runtime:versus"
+      ],
+      "ownBytes": 0,
+      "closureBytes": 12564735,
+      "additionalAfterStarterBytes": 12564735,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "destination:versus:chapter:original-ukraine-atlas",
+      "title": "Ukraine Atlas · Woven Lines",
+      "kind": "gameplay",
+      "category": "destination",
+      "current": false,
+      "requires": [
+        "chapter:original-ukraine-atlas",
+        "runtime:versus"
+      ],
+      "ownBytes": 0,
+      "closureBytes": 14203222,
+      "additionalAfterStarterBytes": 14203222,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "destination:versus:chapter:original-retro-1994",
+      "title": "1994 Forever · After Hours",
+      "kind": "gameplay",
+      "category": "destination",
+      "current": false,
+      "requires": [
+        "chapter:original-retro-1994",
+        "runtime:versus"
+      ],
+      "ownBytes": 0,
+      "closureBytes": 12174433,
+      "additionalAfterStarterBytes": 12174433,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "destination:versus:chapter:original-spend-network",
+      "title": "Spend Network · Shared Routes",
+      "kind": "gameplay",
+      "category": "destination",
+      "current": false,
+      "requires": [
+        "chapter:original-spend-network",
+        "runtime:versus"
+      ],
+      "ownBytes": 0,
+      "closureBytes": 12911978,
+      "additionalAfterStarterBytes": 12911978,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "destination:versus:chapter:fpv-route-choices",
+      "title": "FPV Front · Route Choices — Tactical",
+      "kind": "gameplay",
+      "category": "destination",
+      "current": false,
+      "requires": [
+        "chapter:fpv-route-choices",
+        "runtime:versus"
+      ],
+      "ownBytes": 0,
+      "closureBytes": 13794556,
+      "additionalAfterStarterBytes": 13794556,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "destination:versus:chapter:original-fpv-pressure-external",
+      "title": "Pressure Pictures · external-original pilot",
+      "kind": "gameplay",
+      "category": "destination",
+      "current": false,
+      "requires": [
+        "chapter:original-fpv-pressure-external",
+        "runtime:versus"
+      ],
+      "ownBytes": 0,
+      "closureBytes": 9891565,
+      "additionalAfterStarterBytes": 9891565,
+      "additionalAfterAllCurrentBytes": 8046789
+    },
+    {
+      "id": "destination:versus:chapter:route-worlds-ukraine",
+      "title": "Ukraine Atlas · Route Choices — Tactical",
+      "kind": "gameplay",
+      "category": "destination",
+      "current": false,
+      "requires": [
+        "chapter:route-worlds-ukraine",
+        "runtime:versus"
+      ],
+      "ownBytes": 0,
+      "closureBytes": 10679068,
+      "additionalAfterStarterBytes": 10679068,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "destination:versus:chapter:route-worlds-retro",
+      "title": "1994 Forever · Route Choices — Tactical",
+      "kind": "gameplay",
+      "category": "destination",
+      "current": false,
+      "requires": [
+        "chapter:route-worlds-retro",
+        "runtime:versus"
+      ],
+      "ownBytes": 0,
+      "closureBytes": 9442716,
+      "additionalAfterStarterBytes": 9442716,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "destination:versus:chapter:route-worlds-coupa",
+      "title": "Spend Network · Route Choices — Tactical",
+      "kind": "gameplay",
+      "category": "destination",
+      "current": false,
+      "requires": [
+        "chapter:route-worlds-coupa",
+        "runtime:versus"
+      ],
+      "ownBytes": 0,
+      "closureBytes": 10134086,
+      "additionalAfterStarterBytes": 10134086,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "destination:versus:chapter:sentinel-circuit-fpv",
+      "title": "Sentinel Circuit",
+      "kind": "gameplay",
+      "category": "destination",
+      "current": false,
+      "requires": [
+        "chapter:sentinel-circuit-fpv",
+        "runtime:versus"
+      ],
+      "ownBytes": 0,
+      "closureBytes": 10450072,
+      "additionalAfterStarterBytes": 10450072,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "destination:versus:chapter:sentinel-circuit-ukraine",
+      "title": "Ukraine Atlas · Sentinel Circuit — Tactical",
+      "kind": "gameplay",
+      "category": "destination",
+      "current": false,
+      "requires": [
+        "chapter:sentinel-circuit-ukraine",
+        "runtime:versus"
+      ],
+      "ownBytes": 0,
+      "closureBytes": 10029840,
+      "additionalAfterStarterBytes": 10029840,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "destination:versus:chapter:sentinel-circuit-retro",
+      "title": "1994 Forever · Sentinel Circuit — Tactical",
+      "kind": "gameplay",
+      "category": "destination",
+      "current": false,
+      "requires": [
+        "chapter:sentinel-circuit-retro",
+        "runtime:versus"
+      ],
+      "ownBytes": 0,
+      "closureBytes": 9407266,
+      "additionalAfterStarterBytes": 9407266,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "destination:versus:chapter:sentinel-circuit-coupa",
+      "title": "Spend Network · Sentinel Circuit — Tactical",
+      "kind": "gameplay",
+      "category": "destination",
+      "current": false,
+      "requires": [
+        "chapter:sentinel-circuit-coupa",
+        "runtime:versus"
+      ],
+      "ownBytes": 0,
+      "closureBytes": 9270524,
+      "additionalAfterStarterBytes": 9270524,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "destination:versus:chapter:fracture-lines-fpv",
+      "title": "FPV Front · Fracture Lines — Arcade",
+      "kind": "gameplay",
+      "category": "destination",
+      "current": false,
+      "requires": [
+        "chapter:fracture-lines-fpv",
+        "runtime:versus"
+      ],
+      "ownBytes": 0,
+      "closureBytes": 10523794,
+      "additionalAfterStarterBytes": 10523794,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "destination:versus:chapter:fracture-lines-ukraine",
+      "title": "Ukraine Atlas · Fracture Lines — Arcade",
+      "kind": "gameplay",
+      "category": "destination",
+      "current": false,
+      "requires": [
+        "chapter:fracture-lines-ukraine",
+        "runtime:versus"
+      ],
+      "ownBytes": 0,
+      "closureBytes": 10588195,
+      "additionalAfterStarterBytes": 10588195,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "destination:versus:chapter:fracture-lines-retro",
+      "title": "1994 Forever · Fracture Lines — Arcade",
+      "kind": "gameplay",
+      "category": "destination",
+      "current": false,
+      "requires": [
+        "chapter:fracture-lines-retro",
+        "runtime:versus"
+      ],
+      "ownBytes": 0,
+      "closureBytes": 9821244,
+      "additionalAfterStarterBytes": 9821244,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "destination:versus:chapter:fracture-lines-coupa",
+      "title": "Spend Network · Fracture Lines — Arcade",
+      "kind": "gameplay",
+      "category": "destination",
+      "current": false,
+      "requires": [
+        "chapter:fracture-lines-coupa",
+        "runtime:versus"
+      ],
+      "ownBytes": 0,
+      "closureBytes": 10573039,
+      "additionalAfterStarterBytes": 10573039,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "destination:versus:chapter:countercurrent-fpv",
+      "title": "FPV Front · Countercurrent — Arcade",
+      "kind": "gameplay",
+      "category": "destination",
+      "current": false,
+      "requires": [
+        "chapter:countercurrent-fpv",
+        "runtime:versus"
+      ],
+      "ownBytes": 0,
+      "closureBytes": 8923075,
+      "additionalAfterStarterBytes": 8923075,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "destination:versus:chapter:countercurrent-ukraine",
+      "title": "Ukraine Atlas · Countercurrent — Arcade",
+      "kind": "gameplay",
+      "category": "destination",
+      "current": false,
+      "requires": [
+        "chapter:countercurrent-ukraine",
+        "runtime:versus"
+      ],
+      "ownBytes": 0,
+      "closureBytes": 10365828,
+      "additionalAfterStarterBytes": 10365828,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "destination:versus:chapter:countercurrent-retro",
+      "title": "1994 Forever · Countercurrent — Arcade",
+      "kind": "gameplay",
+      "category": "destination",
+      "current": false,
+      "requires": [
+        "chapter:countercurrent-retro",
+        "runtime:versus"
+      ],
+      "ownBytes": 0,
+      "closureBytes": 9478448,
+      "additionalAfterStarterBytes": 9478448,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "destination:versus:chapter:countercurrent-coupa",
+      "title": "Spend Network · Countercurrent — Arcade",
+      "kind": "gameplay",
+      "category": "destination",
+      "current": false,
+      "requires": [
+        "chapter:countercurrent-coupa",
+        "runtime:versus"
+      ],
+      "ownBytes": 0,
+      "closureBytes": 10380411,
+      "additionalAfterStarterBytes": 10380411,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
+      "id": "runtime:versus",
+      "title": "Versus mode",
+      "kind": "gameplay",
+      "category": "mode",
+      "current": true,
+      "requires": [
+        "shared"
+      ],
+      "ownBytes": 1844776,
+      "closureBytes": 1844776,
+      "additionalAfterStarterBytes": 1844776,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -1060,11 +1607,12 @@
       "category": "chapter",
       "current": true,
       "requires": [
-        "shared"
+        "shared",
+        "runtime:team"
       ],
       "ownBytes": 2559323,
-      "closureBytes": 2559323,
-      "additionalAfterStarterBytes": 2559323,
+      "closureBytes": 4107587,
+      "additionalAfterStarterBytes": 4107587,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -1074,11 +1622,12 @@
       "category": "chapter",
       "current": true,
       "requires": [
-        "shared"
+        "shared",
+        "runtime:team"
       ],
       "ownBytes": 8108418,
-      "closureBytes": 8108418,
-      "additionalAfterStarterBytes": 8108418,
+      "closureBytes": 9656682,
+      "additionalAfterStarterBytes": 9656682,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -1088,11 +1637,12 @@
       "category": "chapter",
       "current": true,
       "requires": [
-        "shared"
+        "shared",
+        "runtime:team"
       ],
       "ownBytes": 2817145,
-      "closureBytes": 2817145,
-      "additionalAfterStarterBytes": 2817145,
+      "closureBytes": 4365409,
+      "additionalAfterStarterBytes": 4365409,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -1102,11 +1652,12 @@
       "category": "chapter",
       "current": true,
       "requires": [
-        "shared"
+        "shared",
+        "runtime:team"
       ],
       "ownBytes": 8941024,
-      "closureBytes": 8941024,
-      "additionalAfterStarterBytes": 8941024,
+      "closureBytes": 10489288,
+      "additionalAfterStarterBytes": 10489288,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -1116,11 +1667,12 @@
       "category": "chapter",
       "current": true,
       "requires": [
-        "shared"
+        "shared",
+        "runtime:team"
       ],
       "ownBytes": 10828378,
-      "closureBytes": 10828378,
-      "additionalAfterStarterBytes": 10828378,
+      "closureBytes": 12376642,
+      "additionalAfterStarterBytes": 12376642,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -1530,6 +2082,20 @@
       "additionalAfterAllCurrentBytes": 0
     },
     {
+      "id": "runtime:team",
+      "title": "Team mode",
+      "kind": "gameplay",
+      "category": "mode",
+      "current": true,
+      "requires": [
+        "shared"
+      ],
+      "ownBytes": 1548264,
+      "closureBytes": 1548264,
+      "additionalAfterStarterBytes": 1548264,
+      "additionalAfterAllCurrentBytes": 0
+    },
+    {
       "id": "music:builtin.album.holizna.retro-wave-1",
       "title": "Holizna — Retro Wave 1",
       "kind": "soundtrack",
@@ -1728,12 +2294,13 @@
       "category": "archive",
       "current": false,
       "requires": [
-        "shared"
+        "shared",
+        "runtime:versus"
       ],
-      "ownBytes": 25862573,
-      "closureBytes": 25862573,
-      "additionalAfterStarterBytes": 2437716,
-      "additionalAfterAllCurrentBytes": 0
+      "ownBytes": 25883341,
+      "closureBytes": 27728117,
+      "additionalAfterStarterBytes": 4303260,
+      "additionalAfterAllCurrentBytes": 20768
     },
     {
       "id": "archive:journey:authored",
@@ -1742,12 +2309,13 @@
       "category": "archive",
       "current": false,
       "requires": [
-        "shared"
+        "shared",
+        "runtime:versus"
       ],
-      "ownBytes": 45282783,
-      "closureBytes": 45282783,
-      "additionalAfterStarterBytes": 21857926,
-      "additionalAfterAllCurrentBytes": 0
+      "ownBytes": 45320151,
+      "closureBytes": 47164927,
+      "additionalAfterStarterBytes": 23740070,
+      "additionalAfterAllCurrentBytes": 37368
     },
     {
       "id": "archive:journey:whole-originals",
@@ -1756,12 +2324,13 @@
       "category": "archive",
       "current": false,
       "requires": [
-        "shared"
+        "shared",
+        "runtime:versus"
       ],
-      "ownBytes": 208346140,
-      "closureBytes": 208346140,
-      "additionalAfterStarterBytes": 184921283,
-      "additionalAfterAllCurrentBytes": 0
+      "ownBytes": 208569661,
+      "closureBytes": 210414437,
+      "additionalAfterStarterBytes": 186989580,
+      "additionalAfterAllCurrentBytes": 223521
     },
     {
       "id": "archive:journey:whole-originals-v2",
@@ -1770,12 +2339,13 @@
       "category": "archive",
       "current": false,
       "requires": [
-        "shared"
+        "shared",
+        "runtime:versus"
       ],
-      "ownBytes": 208346140,
-      "closureBytes": 208346140,
-      "additionalAfterStarterBytes": 184921283,
-      "additionalAfterAllCurrentBytes": 0
+      "ownBytes": 208569688,
+      "closureBytes": 210414464,
+      "additionalAfterStarterBytes": 186989607,
+      "additionalAfterAllCurrentBytes": 223548
     },
     {
       "id": "archive:journey:whole-originals-v3",
@@ -1784,12 +2354,13 @@
       "category": "archive",
       "current": false,
       "requires": [
-        "shared"
+        "shared",
+        "runtime:versus"
       ],
-      "ownBytes": 208346140,
-      "closureBytes": 208346140,
-      "additionalAfterStarterBytes": 184921283,
-      "additionalAfterAllCurrentBytes": 0
+      "ownBytes": 208570824,
+      "closureBytes": 210415600,
+      "additionalAfterStarterBytes": 186990743,
+      "additionalAfterAllCurrentBytes": 224684
     },
     {
       "id": "archive:journey:whole-originals-v4",
@@ -1798,12 +2369,13 @@
       "category": "archive",
       "current": false,
       "requires": [
-        "shared"
+        "shared",
+        "runtime:versus"
       ],
-      "ownBytes": 208346140,
-      "closureBytes": 208346140,
-      "additionalAfterStarterBytes": 184921283,
-      "additionalAfterAllCurrentBytes": 0
+      "ownBytes": 208572844,
+      "closureBytes": 210417620,
+      "additionalAfterStarterBytes": 186992763,
+      "additionalAfterAllCurrentBytes": 226704
     },
     {
       "id": "archive:journey:whole-spatial-v1",
@@ -1812,12 +2384,13 @@
       "category": "archive",
       "current": false,
       "requires": [
-        "shared"
+        "shared",
+        "runtime:versus"
       ],
-      "ownBytes": 208346140,
-      "closureBytes": 208346140,
-      "additionalAfterStarterBytes": 184921283,
-      "additionalAfterAllCurrentBytes": 0
+      "ownBytes": 208575017,
+      "closureBytes": 210419793,
+      "additionalAfterStarterBytes": 186994936,
+      "additionalAfterAllCurrentBytes": 228877
     },
     {
       "id": "archive:journey:whole-spatial-v2",
@@ -1826,12 +2399,13 @@
       "category": "archive",
       "current": false,
       "requires": [
-        "shared"
+        "shared",
+        "runtime:versus"
       ],
-      "ownBytes": 208346140,
-      "closureBytes": 208346140,
-      "additionalAfterStarterBytes": 184921283,
-      "additionalAfterAllCurrentBytes": 0
+      "ownBytes": 208575536,
+      "closureBytes": 210420312,
+      "additionalAfterStarterBytes": 186995455,
+      "additionalAfterAllCurrentBytes": 229396
     },
     {
       "id": "archive:journey:whole-spatial-v3",
@@ -1840,12 +2414,13 @@
       "category": "archive",
       "current": false,
       "requires": [
-        "shared"
+        "shared",
+        "runtime:versus"
       ],
-      "ownBytes": 208346140,
-      "closureBytes": 208346140,
-      "additionalAfterStarterBytes": 184921283,
-      "additionalAfterAllCurrentBytes": 0
+      "ownBytes": 208576468,
+      "closureBytes": 210421244,
+      "additionalAfterStarterBytes": 186996387,
+      "additionalAfterAllCurrentBytes": 230328
     },
     {
       "id": "archive:journey:whole-spatial-v4",
@@ -1854,12 +2429,13 @@
       "category": "archive",
       "current": false,
       "requires": [
-        "shared"
+        "shared",
+        "runtime:versus"
       ],
-      "ownBytes": 224358131,
-      "closureBytes": 224358131,
-      "additionalAfterStarterBytes": 200933274,
-      "additionalAfterAllCurrentBytes": 0
+      "ownBytes": 224610244,
+      "closureBytes": 226455020,
+      "additionalAfterStarterBytes": 203030163,
+      "additionalAfterAllCurrentBytes": 252113
     },
     {
       "id": "archive:journey:whole-spatial-v5",
@@ -1868,12 +2444,13 @@
       "category": "archive",
       "current": false,
       "requires": [
-        "shared"
+        "shared",
+        "runtime:versus"
       ],
-      "ownBytes": 224358131,
-      "closureBytes": 224358131,
-      "additionalAfterStarterBytes": 200933274,
-      "additionalAfterAllCurrentBytes": 0
+      "ownBytes": 224610508,
+      "closureBytes": 226455284,
+      "additionalAfterStarterBytes": 203030427,
+      "additionalAfterAllCurrentBytes": 252377
     },
     {
       "id": "archive:journey:whole-spatial-v6",
@@ -1882,12 +2459,13 @@
       "category": "archive",
       "current": false,
       "requires": [
-        "shared"
+        "shared",
+        "runtime:versus"
       ],
-      "ownBytes": 224358131,
-      "closureBytes": 224358131,
-      "additionalAfterStarterBytes": 200933274,
-      "additionalAfterAllCurrentBytes": 0
+      "ownBytes": 224612912,
+      "closureBytes": 226457688,
+      "additionalAfterStarterBytes": 203032831,
+      "additionalAfterAllCurrentBytes": 254781
     },
     {
       "id": "archive:journey:whole-spatial-v7",
@@ -1896,12 +2474,13 @@
       "category": "archive",
       "current": false,
       "requires": [
-        "shared"
+        "shared",
+        "runtime:versus"
       ],
-      "ownBytes": 224358131,
-      "closureBytes": 224358131,
-      "additionalAfterStarterBytes": 200933274,
-      "additionalAfterAllCurrentBytes": 0
+      "ownBytes": 224613741,
+      "closureBytes": 226458517,
+      "additionalAfterStarterBytes": 203033660,
+      "additionalAfterAllCurrentBytes": 255610
     },
     {
       "id": "archive:journey:whole-spatial-v8",
@@ -1910,12 +2489,13 @@
       "category": "archive",
       "current": false,
       "requires": [
-        "shared"
+        "shared",
+        "runtime:versus"
       ],
-      "ownBytes": 224358131,
-      "closureBytes": 224358131,
-      "additionalAfterStarterBytes": 200933274,
-      "additionalAfterAllCurrentBytes": 0
+      "ownBytes": 224615554,
+      "closureBytes": 226460330,
+      "additionalAfterStarterBytes": 203035473,
+      "additionalAfterAllCurrentBytes": 257423
     },
     {
       "id": "archive:journey:whole-spatial-v9",
@@ -1924,11 +2504,12 @@
       "category": "archive",
       "current": false,
       "requires": [
-        "shared"
+        "shared",
+        "runtime:versus"
       ],
-      "ownBytes": 224358131,
-      "closureBytes": 224358131,
-      "additionalAfterStarterBytes": 200933274,
+      "ownBytes": 224615909,
+      "closureBytes": 226202907,
+      "additionalAfterStarterBytes": 202778050,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -1938,11 +2519,12 @@
       "category": "archive",
       "current": false,
       "requires": [
-        "shared"
+        "shared",
+        "runtime:versus"
       ],
-      "ownBytes": 224358131,
-      "closureBytes": 224358131,
-      "additionalAfterStarterBytes": 200933274,
+      "ownBytes": 224616914,
+      "closureBytes": 226202907,
+      "additionalAfterStarterBytes": 202778050,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -1952,12 +2534,13 @@
       "category": "archive",
       "current": false,
       "requires": [
-        "shared"
+        "shared",
+        "runtime:versus"
       ],
-      "ownBytes": 224358131,
-      "closureBytes": 224358131,
-      "additionalAfterStarterBytes": 200933274,
-      "additionalAfterAllCurrentBytes": 0
+      "ownBytes": 224618796,
+      "closureBytes": 226463572,
+      "additionalAfterStarterBytes": 203038715,
+      "additionalAfterAllCurrentBytes": 260665
     },
     {
       "id": "archive:journey:whole-ornament-v2",
@@ -1966,12 +2549,13 @@
       "category": "archive",
       "current": false,
       "requires": [
-        "shared"
+        "shared",
+        "runtime:versus"
       ],
-      "ownBytes": 224358131,
-      "closureBytes": 224358131,
-      "additionalAfterStarterBytes": 200933274,
-      "additionalAfterAllCurrentBytes": 0
+      "ownBytes": 224624445,
+      "closureBytes": 226469221,
+      "additionalAfterStarterBytes": 203044364,
+      "additionalAfterAllCurrentBytes": 266314
     },
     {
       "id": "archive:team:team-originals",
@@ -1980,11 +2564,12 @@
       "category": "archive",
       "current": false,
       "requires": [
-        "shared"
+        "shared",
+        "runtime:team"
       ],
       "ownBytes": 33254288,
-      "closureBytes": 33254288,
-      "additionalAfterStarterBytes": 33254288,
+      "closureBytes": 34802552,
+      "additionalAfterStarterBytes": 34802552,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -1994,11 +2579,12 @@
       "category": "archive",
       "current": false,
       "requires": [
-        "shared"
+        "shared",
+        "runtime:team"
       ],
       "ownBytes": 33254288,
-      "closureBytes": 33254288,
-      "additionalAfterStarterBytes": 33254288,
+      "closureBytes": 34802552,
+      "additionalAfterStarterBytes": 34802552,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -2008,11 +2594,12 @@
       "category": "archive",
       "current": false,
       "requires": [
-        "shared"
+        "shared",
+        "runtime:team"
       ],
       "ownBytes": 33254288,
-      "closureBytes": 33254288,
-      "additionalAfterStarterBytes": 33254288,
+      "closureBytes": 34802552,
+      "additionalAfterStarterBytes": 34802552,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -2022,11 +2609,12 @@
       "category": "archive",
       "current": false,
       "requires": [
-        "shared"
+        "shared",
+        "runtime:team"
       ],
       "ownBytes": 7282747,
-      "closureBytes": 7282747,
-      "additionalAfterStarterBytes": 7282747,
+      "closureBytes": 8831011,
+      "additionalAfterStarterBytes": 8831011,
       "additionalAfterAllCurrentBytes": 7282747
     },
     {
@@ -2036,11 +2624,12 @@
       "category": "archive",
       "current": false,
       "requires": [
-        "shared"
+        "shared",
+        "runtime:team"
       ],
       "ownBytes": 7282747,
-      "closureBytes": 7282747,
-      "additionalAfterStarterBytes": 7282747,
+      "closureBytes": 8831011,
+      "additionalAfterStarterBytes": 8831011,
       "additionalAfterAllCurrentBytes": 7282747
     },
     {
@@ -2120,11 +2709,12 @@
       "category": "tooling",
       "current": false,
       "requires": [
-        "shared"
+        "shared",
+        "runtime:team"
       ],
       "ownBytes": 33254288,
-      "closureBytes": 33254288,
-      "additionalAfterStarterBytes": 33254288,
+      "closureBytes": 34802552,
+      "additionalAfterStarterBytes": 34802552,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -2134,11 +2724,12 @@
       "category": "tooling",
       "current": false,
       "requires": [
-        "shared"
+        "shared",
+        "runtime:team"
       ],
       "ownBytes": 33254288,
-      "closureBytes": 33254288,
-      "additionalAfterStarterBytes": 33254288,
+      "closureBytes": 34802552,
+      "additionalAfterStarterBytes": 34802552,
       "additionalAfterAllCurrentBytes": 0
     },
     {
@@ -2148,11 +2739,12 @@
       "category": "tooling",
       "current": false,
       "requires": [
-        "shared"
+        "shared",
+        "runtime:team"
       ],
       "ownBytes": 7282747,
-      "closureBytes": 7282747,
-      "additionalAfterStarterBytes": 7282747,
+      "closureBytes": 8831011,
+      "additionalAfterStarterBytes": 8831011,
       "additionalAfterAllCurrentBytes": 7282747
     },
     {
@@ -2164,10 +2756,10 @@
       "requires": [
         "shared"
       ],
-      "ownBytes": 12030976,
-      "closureBytes": 12030976,
-      "additionalAfterStarterBytes": 12030976,
-      "additionalAfterAllCurrentBytes": 12030976
+      "ownBytes": 12891114,
+      "closureBytes": 12891114,
+      "additionalAfterStarterBytes": 12891114,
+      "additionalAfterAllCurrentBytes": 12891114
     },
     {
       "id": "tooling:artwork",
@@ -2185,8 +2777,8 @@
   "limitations": [
     "This is a development build measurement, not a frozen release or physical-device certification.",
     "The starter has nine Horizon original pictures and no recorded music. Full current navigation metadata remains available.",
-    "Shared runtime still includes Solo, Versus, Team, replay and controller entry dependencies. Fully independent mode bootstraps remain to be implemented.",
-    "Chapter snapshots are separate packages; the current route snapshot still retains complete authored mission definitions to preserve the synchronous host contract.",
+    "Solo uses navigation metadata and one opening-chapter runtime. Other executable chapters, Versus/Team host entry points and historical route sources are separate packages; shared compiler, replay, controller and presentation helpers remain in core.",
+    "Versus and Team runtimes still include complete route sources needed by their existing browsers. Further mode-internal chapter splitting remains unqualified.",
     "Original PNG bytes are unchanged. These numbers do not assume new artwork or promise a final optimized image budget.",
     "Browser cache overhead, temporary verification buffers, imports, saves and retained previous editions require additional space beyond stored payload bytes."
   ]

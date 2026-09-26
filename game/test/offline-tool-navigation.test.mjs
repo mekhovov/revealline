@@ -1,8 +1,11 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { attachOfflineToolNavigation } from '../ui/offline-tool-navigation.mjs';
+import {
+  attachOfflineToolNavigation,
+  attachOfflineModeNavigation,
+} from '../ui/offline-tool-navigation.mjs';
 
-function fixture(access) {
+function fixture(access, attach = attachOfflineToolNavigation) {
   const events = new Map();
   const doc = {
     hidden: false,
@@ -16,7 +19,7 @@ function fixture(access) {
     addEventListener() {},
     removeEventListener() {},
   };
-  const dispose = attachOfflineToolNavigation({
+  const dispose = attach({
     document: doc,
     window: win,
     access,
@@ -72,5 +75,29 @@ test('external links and mode-departure owners keep their original behavior', as
   await f.click('https://game.test/release/authoring/asset-studio/', { defaultPrevented: true });
   await f.click('https://game.test/release/authoring/asset-studio/', { metaKey: true });
   assert.deepEqual(f.visited, []);
+  f.dispose();
+});
+
+test('plain mode links wait for their package while existing departure owners keep control', async () => {
+  let finish;
+  const requested = [];
+  const f = fixture(
+    {
+      ensureDestination: (url) => {
+        requested.push(url.href);
+        return new Promise((resolve) => (finish = resolve));
+      },
+    },
+    attachOfflineModeNavigation,
+  );
+  const destination = 'https://game.test/release/game/couch/?journey=legacy';
+  await f.click(destination, { defaultPrevented: true });
+  await f.click('https://game.test/release/game/#instructions');
+  assert.deepEqual(requested, []);
+  const pending = f.click(destination);
+  assert.deepEqual(f.visited, []);
+  finish();
+  await pending;
+  assert.deepEqual(f.visited, [destination]);
   f.dispose();
 });

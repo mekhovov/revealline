@@ -7,24 +7,36 @@ import { classifyContent } from '../game/content-design/content-lifecycle.mjs';
 import { addAuthoredRuntimeSnapshots } from './authored-runtime-snapshots.mjs';
 import { selectOfflineCore } from './offline-core-closure.mjs';
 import { downloadFiles } from '../game/download-catalogue.mjs';
+import { buildOfflineDestinations, buildNavigationBootstraps } from './offline-destinations.mjs';
 
 const digest = (bytes) => createHash('sha256').update(bytes).digest('hex');
 /** Built from the exact frozen bytes, never a second, independently maintained asset list. */
 export async function buildOfflineContent(entries, excluded, version) {
   const snapshots = await addAuthoredRuntimeSnapshots(entries);
-  for (const chapter of snapshots?.chapters || []) excluded.add(chapter.path);
+  for (const chapter of snapshots?.chapters || [])
+    if (!chapter.descriptor.core) excluded.add(chapter.path);
+  for (const item of snapshots?.routes || [])
+    excluded.add(`game/content-design/${item.descriptor.path}`);
   const byPath = new Map(entries.map((entry) => [entry.name, entry]));
   const parse = (name, fallback) =>
     byPath.has(name) ? JSON.parse(byPath.get(name).bytes) : fallback;
-  const missions = parse('game/content/mission-library-index.json', { missions: [] }).missions;
+  const classicIndex = parse('game/content/mission-library-index.json', { missions: [] });
+  const missions = classicIndex.missions;
   const external = parse('game/content/external-worlds.json', { chapters: [] }).chapters;
   const archivedPacks = new Set(
     parse('game/content/packs/archive-catalog.json', { packs: [] }).packs.map((pack) => pack.id),
   );
   const groups = [],
     authoredMissions = [],
+    teamProjects = [],
     authoredPaths = new Set();
   const currentChapter = new Map((snapshots?.chapters || []).map((item) => [item.pack.id, item]));
+  const routeSnapshots = new Map(
+    (snapshots?.routes || []).map((item) => [
+      item.route.id,
+      `game/content-design/${item.descriptor.path}`,
+    ]),
+  );
   function addGroup(group) {
     const previous = groups.find((item) => item.id === group.id);
     if (previous) {
@@ -33,6 +45,7 @@ export async function buildOfflineContent(entries, excluded, version) {
     } else groups.push(group);
   }
   function addProject(edition, source, { routeId, routeLabel, team = false } = {}) {
+    if (team) teamProjects.push({ routeId, source });
     const classification = classifyContent({ family: team ? 'team' : 'journey', id: routeId });
     const current = classification === 'current';
     for (const asset of source.assets || []) {
@@ -79,9 +92,16 @@ export async function buildOfflineContent(entries, excluded, version) {
           classification,
           current,
           modes: [mode],
-          requires: ['shared'],
+          requires: team
+            ? ['shared', 'runtime:team']
+            : !current || mode === 'versus'
+              ? ['shared', 'runtime:versus']
+              : ['shared'],
           files: [
-            ...(snapshot ? [snapshot.path] : []),
+            ...(snapshot && !snapshot.descriptor.core ? [snapshot.path] : []),
+            ...(!current && !team && routeSnapshots.has(routeId)
+              ? [routeSnapshots.get(routeId)]
+              : []),
             ...(source.assets || [])
               .filter((item) => assetIDs.has(item.id))
               .map((item) => `game/${item.path}`),
@@ -193,6 +213,21 @@ export async function buildOfflineContent(entries, excluded, version) {
       ),
     });
   }
+  if (snapshots)
+    for (const group of [...groups].filter(
+      (item) => item.id === 'classic:base' || item.id.startsWith('chapter:'),
+    )) {
+      groups.push({
+        id: `destination:versus:${group.id}`,
+        title: group.title,
+        kind: 'gameplay',
+        category: 'destination',
+        current: false,
+        modes: ['versus'],
+        requires: [group.id, 'runtime:versus'],
+        files: [],
+      });
+    }
   const recordings = SOUNDTRACK_CATALOGUE.tracks.filter(
     (track) =>
       soundtrackRights(track, { catalogue: SOUNDTRACK_CATALOGUE }).offlineCache === 'allowed',
@@ -206,7 +241,33 @@ export async function buildOfflineContent(entries, excluded, version) {
     )
       throw new Error(`Shipped soundtrack differs from its catalogue: ${track.id}`);
   }
-  const toolingPaths = new Set(snapshots ? selectOfflineCore(entries, excluded).optional : []);
+  const coreGraph = snapshots ? selectOfflineCore(entries, excluded) : null;
+  const modePaths = new Set();
+  const contentExcluded = new Set(excluded);
+  if (coreGraph)
+    for (const mode of ['versus', 'team']) {
+      const closure = selectOfflineCore(entries, contentExcluded, { mode });
+      const files = [...closure.retained].filter((path) => !coreGraph.retained.has(path));
+      files.push(
+        routeSnapshots.get(snapshots.route.id),
+        ...snapshots.published.navigation.archives.map((item) => routeSnapshots.get(item.route.id)),
+      );
+      for (const path of files) {
+        modePaths.add(path);
+        excluded.add(path);
+      }
+      groups.push({
+        id: `runtime:${mode}`,
+        title: mode === 'versus' ? 'Versus mode' : 'Team mode',
+        kind: 'gameplay',
+        category: 'mode',
+        current: true,
+        modes: [mode],
+        requires: ['shared'],
+        files,
+      });
+    }
+  const toolingPaths = new Set((coreGraph?.optional || []).filter((path) => !modePaths.has(path)));
   if (toolingPaths.size) {
     for (const name of toolingPaths) excluded.add(name);
     groups.push({
@@ -259,7 +320,9 @@ export async function buildOfflineContent(entries, excluded, version) {
           !authoredPaths.has(file.path) &&
           !authoredSnapshotPaths.has(file.path) &&
           !file.path.startsWith('game/content-design/assets/') &&
-          !toolingPaths.has(file.path),
+          !toolingPaths.has(file.path) &&
+          !modePaths.has(file.path) &&
+          ![...routeSnapshots.values()].includes(file.path),
       )
       .map((file) => file.path),
   });
@@ -343,6 +406,20 @@ export async function buildOfflineContent(entries, excluded, version) {
     version,
     files,
     groups,
+    ...(snapshots
+      ? {
+          navigationBootstraps: buildNavigationBootstraps({
+            journeys: snapshots.routes,
+            currentRouteId: snapshots.route.id,
+          }),
+          destinations: buildOfflineDestinations({
+            journeys: snapshots.routes,
+            teamProjects,
+            classicIndex,
+            arenas: snapshots.published.navigation.team.arenas,
+          }),
+        }
+      : {}),
     originals,
     missions: [
       ...authoredMissions,

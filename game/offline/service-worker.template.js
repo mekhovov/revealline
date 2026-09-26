@@ -382,6 +382,52 @@
       })(),
     ),
   );
+  function navigationRecovery(request, url) {
+    const path = url.pathname.slice(scope.pathname.length);
+    const recovery = new URL('game/downloads.html', scope);
+    if (
+      request.mode !== 'navigate' ||
+      !['game/index.html', 'game/couch/index.html', 'game/couch/relay-rescue.html'].includes(
+        path,
+      ) ||
+      !files.has(recovery.href)
+    )
+      return null;
+    recovery.searchParams.set('offline-destination', request.url);
+    return Response.redirect(recovery.href, 302);
+  }
+  async function missingNavigationBootstrap(request, url) {
+    if (!CONFIG.packageConsent || request.mode !== 'navigate') return null;
+    const query = new URL(request.url).searchParams,
+      journeys = query.getAll('journey'),
+      identities = query.getAll('library-mission');
+    if (
+      journeys.length !== 1 ||
+      !journeys[0] ||
+      identities.length > 1 ||
+      (identities.length && !identities[0])
+    )
+      return null;
+    const path = url.pathname.slice(scope.pathname.length);
+    const matches = (CONFIG.navigationBootstraps || []).filter(
+      (row) => row.path === path && row.routeId === journeys[0],
+    );
+    if (matches.length !== 1 || !Array.isArray(matches[0].files) || !matches[0].files.length)
+      return null;
+    // Core HTML can boot an optional historical route before a host exists to
+    // request consent. Check its finite publisher-pinned bootstrap locally first;
+    // never fetch it merely because a bookmark was opened.
+    for (const dependency of matches[0].files) {
+      const href = new URL(dependency, scope).href,
+        optional = officialFiles.get(href),
+        file = optional || files.get(href);
+      const cache = await caches.open(optional ? 'revealline-official-content-v1' : cacheName);
+      const hit = file && (await cache.match(optional ? officialKey(file.sha256) : href));
+      if (!file || hit?.status !== 200 || !(await verified(hit, file)))
+        return navigationRecovery(request, url);
+    }
+    return null;
+  }
   self.addEventListener('fetch', (event) => {
     if (event.request.method !== 'GET') return;
     const url = new URL(event.request.url);
@@ -407,6 +453,8 @@
           // the durable replacement remain the downloader's responsibility.
           if (CONFIG.packageConsent && event.request.cache === 'no-store')
             return fetch(event.request);
+          const recovery = await missingNavigationBootstrap(event.request, url);
+          if (recovery) return recovery;
           const cache = await caches.open('revealline-official-content-v1');
           const hit = await cache.match(officialKey(optional.sha256));
           if (
@@ -418,11 +466,16 @@
           // New package editions require a deliberate downloader request. A
           // mission preview or a failed cache read must not silently consume
           // mobile data. Immutable older editions retain their original policy.
-          if (CONFIG.packageConsent && event.request.cache !== 'no-store')
+          if (CONFIG.packageConsent && event.request.cache !== 'no-store') {
+            // A bookmark has no running host to show consent. The core page
+            // validates the opaque destination against this edition's catalogue.
+            const recovery = navigationRecovery(event.request, url);
+            if (recovery) return recovery;
             return new Response('Download this chapter from Install & offline play first.', {
               status: 409,
               headers: { 'Content-Type': 'text/plain; charset=utf-8' },
             });
+          }
           return fetch(event.request);
         })(),
       );
@@ -432,6 +485,8 @@
     if (!file) return;
     event.respondWith(
       (async () => {
+        const recovery = await missingNavigationBootstrap(event.request, url);
+        if (recovery) return recovery;
         const cache = await caches.open(cacheName),
           hit = await cache.match(url.href);
         if (hit) return requestedRange(hit, event.request);
