@@ -293,9 +293,23 @@ export async function page(
     assert.ok(frames.size);
   }
   if (!retainInitialDifficulty) $('coop-difficulty').value = 'standard';
-  const selectFile = (text, read = async () => text) => {
+  const queuedFileReads = [];
+  let blobTextMocked = false;
+  const selectFile = (text, read = null) => {
     $('coop-pack-file').closest('details').open = true;
-    $('coop-pack-file').files = [{ size: Buffer.byteLength(text), text: read }];
+    if (read) {
+      queuedFileReads.push(read);
+      if (!blobTextMocked) {
+        blobTextMocked = true;
+        const nativeText = Blob.prototype.text;
+        t.mock.method(Blob.prototype, 'text', function () {
+          const next = queuedFileReads.shift();
+          return next ? next() : Reflect.apply(nativeText, this, []);
+        });
+      }
+    }
+    const file = new Blob([text], { type: 'application/json' });
+    $('coop-pack-file').files = [file];
     return $('coop-pack-file').onchange();
   };
   const choose = (id, value) => {
