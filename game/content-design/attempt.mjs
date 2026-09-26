@@ -8,6 +8,7 @@ import { createContentExecutionCatalog } from './execution.mjs';
 import { loadPreviewArtwork, verifiedPreviewBackground } from './assets.mjs';
 import { acquireCandidatePicture } from './picture.mjs';
 import { applyGameplayTuning, validateGameplayTuning } from '../gameplay-tuning.mjs';
+import { CONTENT_ATTEMPT_PREPARATION_TIMEOUT_MS } from './limits.mjs';
 
 const cancelled = () => new DOMException('Candidate preparation cancelled.', 'AbortError');
 
@@ -24,11 +25,13 @@ export function createContentAttemptPreparer(
     buildVersion = 'dev',
     loadArtwork = loadPreviewArtwork,
     decodeImage,
-    timeoutMs = 20000,
+    timeoutMs = CONTENT_ATTEMPT_PREPARATION_TIMEOUT_MS,
   } = {},
 ) {
   required(
-    Number.isFinite(timeoutMs) && timeoutMs > 0 && timeoutMs <= 20000,
+    Number.isFinite(timeoutMs) &&
+      timeoutMs > 0 &&
+      timeoutMs <= CONTENT_ATTEMPT_PREPARATION_TIMEOUT_MS,
     'Invalid candidate preparation timeout.',
   );
   required(typeof loadArtwork === 'function', 'Candidate preparation needs an artwork loader.');

@@ -124,7 +124,7 @@ test('Team candidate verifies exact source and owns original-size draw until dis
   assert.equal(await owner.select(request()), binding);
   assert.equal(binding.choice.officialProgressEligible, false);
   assert.equal(binding.snapshot, snapshot);
-  assert.equal(binding.snapshot.resolved.theme.revision, 82);
+  assert.equal(binding.snapshot.resolved.theme.revision, 88);
   assert.equal(candidateTeamPictureFrame(binding, row.level, snapshot).sha256, asset.sha256);
   assert.equal(candidateTeamPictureFrame({ ...binding }, row.level, snapshot), null);
   const calls = [],
