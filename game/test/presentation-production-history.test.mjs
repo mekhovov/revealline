@@ -459,12 +459,16 @@ test('Journey feedback dependencies bind only the reviewed player-craft effects 
   }
 });
 
-test('shared-host UI stays reviewed while a changed audio input reopens its review', async () => {
+test('shared-host UI and locale-refreshed audio bind only reviewed current inputs', async () => {
   const production = await createFieldKitProduction();
   const resolved = resolvePresentation(production.document);
   const uiReviewPath = 'docs/verification/actor-only-ui-continuation-2026-09-24/review.json';
   const uiReviewHash = createHash('sha256')
     .update(await fs.readFile(new URL(`../../${uiReviewPath}`, import.meta.url)))
+    .digest('hex');
+  const continuationPath = 'docs/verification/v0.132.5-presentation-continuation/review.json';
+  const continuationHash = createHash('sha256')
+    .update(await fs.readFile(new URL(`../../${continuationPath}`, import.meta.url)))
     .digest('hex');
   const reviewed = production.document.slots.filter((slot) => ['ui', 'audio'].includes(slot.group));
   assert.equal(reviewed.length, 32);
@@ -491,10 +495,13 @@ test('shared-host UI stays reviewed while a changed audio input reopens its revi
         true,
       );
     } else {
-      assert.equal(asset.quality.stage, 'source', slot.id);
-      assert.deepEqual(asset.quality.evidence, [
-        'Connected runtime recipe; screen and state review remains required.',
-      ]);
+      assert.equal(asset.quality.stage, 'reviewed', slot.id);
+      assert.ok(
+        asset.quality.evidence.some((entry) =>
+          entry.includes(`${continuationPath} sha256:${continuationHash}`),
+        ),
+        slot.id,
+      );
       assert.ok(
         asset.provenance.source.endsWith(
           'sha256:301e68a4898cf7d9140abee266195401a69cfca0db2301a12409ec252c882ec9',
