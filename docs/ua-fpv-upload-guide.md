@@ -19,7 +19,11 @@ node intake/add-music.mjs "/absolute/path/to/docs/research/dah-soundtracks" \
 ```
 
 This runs the same private builder documented below. It cannot open a public PR
-or confirm public rights, and it does not publish the source MP3s.
+or confirm public rights, and it does not publish the source MP3s. Public
+catalogue fields such as `--source`, `--artist`, `--description` and `--styles`
+are intentionally rejected in unknown-rights mode because private packs preserve
+the original filenames and embedded tags without making public metadata or
+rights claims.
 
 ## Compatibility: packs need the new soundtrack framework
 

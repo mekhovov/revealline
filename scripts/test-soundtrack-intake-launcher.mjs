@@ -37,15 +37,7 @@ test('launcher removes its archive location before forwarding intake arguments',
 test('unknown licence routes the source folder to private UA-FPV pack creation', async () => {
   let invocation;
   const code = await launchMusicIntake(
-    [
-      'music',
-      '--license',
-      'unknown',
-      '--styles',
-      'rock,electro,fpv',
-      '--private-output',
-      'private-packs',
-    ],
+    ['music', '--license', 'unknown', '--private-output', 'private-packs'],
     {
       currentDirectory: '/caller',
       run: async (command, args, options) => {
@@ -80,6 +72,75 @@ test('unknown licence cannot publish or omit its private destination', async () 
     ),
     /private-only/,
   );
+});
+
+test('unknown licence rejects duplicate, extra, and silently ignored arguments', async () => {
+  const options = { currentDirectory: '/caller', run: async () => 0 };
+  await assert.rejects(
+    launchMusicIntake(
+      ['music', '--license', 'unknown', '--license', 'cc0', '--private-output', 'private-packs'],
+      options,
+    ),
+    /--license may be provided only once/,
+  );
+  await assert.rejects(
+    launchMusicIntake(
+      [
+        'music',
+        '--license',
+        'unknown',
+        '--private-output',
+        'private-packs',
+        '--private-output',
+        'other-packs',
+      ],
+      options,
+    ),
+    /--private-output may be provided only once/,
+  );
+  await assert.rejects(
+    launchMusicIntake(
+      ['music', 'other-music', '--license', 'unknown', '--private-output', 'private-packs'],
+      options,
+    ),
+    /exactly one source folder/,
+  );
+  await assert.rejects(
+    launchMusicIntake(
+      [
+        'music',
+        '--license',
+        'unknown',
+        '--styles',
+        'rock,electro,fpv',
+        '--private-output',
+        'private-packs',
+      ],
+      options,
+    ),
+    /--styles is not used/,
+  );
+});
+
+test('unknown licence accepts equals syntax without weakening private-only routing', async () => {
+  let invocation;
+  const code = await launchMusicIntake(
+    ['music', '--license=unknown', '--private-output=private-packs'],
+    {
+      currentDirectory: '/caller',
+      run: async (command, args, options) => {
+        invocation = { command, args, options };
+        return 0;
+      },
+    },
+  );
+  assert.equal(code, 0);
+  assert.deepEqual(invocation.args.slice(1), [
+    '--source-dir',
+    '/caller/music',
+    '--output-dir',
+    '/caller/private-packs',
+  ]);
 });
 
 test('explicit archive checkout wins over automatic locations', async (t) => {
