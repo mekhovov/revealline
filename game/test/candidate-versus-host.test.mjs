@@ -129,6 +129,7 @@ for (const difficulty of ['gentle', 'standard', 'expert'])
     assert.equal(p.renders[1].status, 'won');
     assert.equal(p.renders[0].coverage, p.renders[1].coverage);
     assert.match(p.$('race-message').textContent, /Draw.*First clear/);
+    assert.equal(p.$('race-journey-next').textContent, 'Next: Choose your share');
     const previous = p.renders[0],
       picture = p.drawOptions[0].backdrop;
     assert.equal(p.$('race-journey-next').hidden, false);
@@ -173,6 +174,7 @@ test('authored Versus preserves both previous boards and original when Next artw
   p.key('ArrowDown', false);
   const previous = [...p.renders],
     picture = p.drawOptions[0].backdrop;
+  assert.equal(p.$('race-journey-next').textContent, 'Next: Choose your share');
   refuse = true;
   p.$('race-journey-next').click();
   await waitFor(() => p.$('race-preparation').dataset.state === 'error');
@@ -180,6 +182,7 @@ test('authored Versus preserves both previous boards and original when Next artw
   assert.equal(p.renders[0], previous[0]);
   assert.equal(p.renders[1], previous[1]);
   assert.equal(p.drawOptions[0].backdrop, picture);
+  assert.equal(p.$('race-journey-next').textContent, 'Next: Choose your share');
   refuse = false;
   p.$('race-journey-next').click();
   await waitFor(() => {
@@ -502,9 +505,13 @@ for (const route of ['opening', 'authored'])
     const fixture = JSON.parse(
       await readFile(new URL('./fixtures/candidate-solo-tuned-host-routes.json', import.meta.url)),
     );
-    const rows = fixture.rows.slice(0, route === 'opening' ? 9 : 15);
-    const project = compileContentProject(createAuthoredJourneyRoute(route).source);
-    for (const [id, authoredIdentity, gameplayIdentity, , segments] of rows) {
+    const rows = fixture.rows.slice(0, route === 'opening' ? 9 : 15),
+      design = createAuthoredJourneyRoute(route),
+      project = compileContentProject(design.source),
+      mission = (id) => design.source.missions.find((candidate) => candidate.id === id),
+      campaign = (id) =>
+        design.source.campaigns.find((candidate) => candidate.missionIds.includes(id));
+    for (const [index, [id, authoredIdentity, gameplayIdentity, , segments]] of rows.entries()) {
       assert.equal(p.renders[0].levelId, id);
       const manifest = resolveMission(project, id);
       assert.equal(manifest.simulationIdentity, authoredIdentity);
@@ -541,6 +548,14 @@ for (const route of ['opening', 'authored'])
       );
       assert.equal(p.$('journey-chooser')?.open ?? false, false);
       if (id !== rows.at(-1)[0]) {
+        const nextId = rows[index + 1][0],
+          nextMission = mission(nextId),
+          nextCampaign = campaign(nextId),
+          crossesCampaign = campaign(id)?.id !== nextCampaign?.id;
+        assert.equal(
+          p.$('race-journey-next').textContent,
+          crossesCampaign ? `Next campaign: ${nextCampaign.name}` : `Next: ${nextMission.name}`,
+        );
         const previous = p.renders[0],
           next = p.$('race-journey-next'),
           handler = next.onclick;
