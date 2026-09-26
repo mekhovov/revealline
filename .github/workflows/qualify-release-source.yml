@@ -23,6 +23,11 @@ on:
         required: false
         default: false
         type: boolean
+      source_sha:
+        description: Exact source whose existing frozen snapshot may be reused by a guarded caller
+        required: false
+        default: ""
+        type: string
     outputs:
       version:
         description: Exact frozen version with the v prefix
@@ -32,13 +37,13 @@ on:
         value: ${{ jobs.freeze.outputs.source_tree }}
       artifact_id:
         description: Immutable qualified artifact ID
-        value: ${{ jobs.freeze.outputs.artifact_id }}
+        value: ${{ jobs.freeze.outputs.artifact_id || jobs.deduplicate.outputs.artifact_id }}
       artifact_digest:
         description: Immutable qualified artifact SHA-256 digest
-        value: ${{ jobs.freeze.outputs.artifact_digest }}
+        value: ${{ jobs.freeze.outputs.artifact_digest || jobs.deduplicate.outputs.artifact_digest }}
       artifact_name:
         description: Immutable qualified artifact name
-        value: ${{ jobs.freeze.outputs.artifact_name }}
+        value: ${{ jobs.freeze.outputs.artifact_name || jobs.deduplicate.outputs.artifact_name }}
   workflow_dispatch:
     inputs:
       operation:
@@ -78,20 +83,20 @@ jobs:
       actions: read
     outputs:
       should_qualify: ${{ steps.queue.outputs.should_qualify }}
+      artifact_id: ${{ steps.queue.outputs.artifact_id }}
+      artifact_digest: ${{ steps.queue.outputs.artifact_digest }}
+      artifact_name: ${{ steps.queue.outputs.artifact_name }}
     steps:
       - name: Admit one manual qualification for this exact source
         id: queue
         env:
           EVENT_NAME: ${{ github.event_name }}
           OPERATION: ${{ inputs.operation || 'qualify' }}
+          SOURCE_SHA: ${{ inputs.source_sha || github.sha }}
           SOURCE_REF: ${{ github.ref }}
           GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
-          if [ "$OPERATION" = qualify ] && [ "$SOURCE_REF" != refs/heads/main ]; then
-            echo "::error::Release qualification is reserved for merged main; received $SOURCE_REF."
-            exit 1
-          fi
           if [ "$EVENT_NAME" != workflow_dispatch ] || [ "$OPERATION" != qualify ]; then
             echo 'should_qualify=true' >> "$GITHUB_OUTPUT"
             exit 0
@@ -102,9 +107,9 @@ jobs:
           earlier_run="$(gh api --paginate \
             "repos/$GITHUB_REPOSITORY/actions/workflows/qualify-release-source.yml/runs?event=workflow_dispatch&status=in_progress&per_page=100" \
             | jq -rs \
-              '[.[] | .workflow_runs[] | select(.head_sha == env.GITHUB_SHA and (.id | tostring) != env.GITHUB_RUN_ID and .id < (env.GITHUB_RUN_ID | tonumber)) | .id] | min // empty')"
+              '[.[] | .workflow_runs[] | select(.head_sha == env.SOURCE_SHA and (.id | tostring) != env.GITHUB_RUN_ID and .id < (env.GITHUB_RUN_ID | tonumber)) | .id] | min // empty')"
           if [ -n "$earlier_run" ]; then
-            echo "A qualification for $GITHUB_SHA is already active in run $earlier_run; skipping this duplicate."
+            echo "A qualification for $SOURCE_SHA is already active in run $earlier_run; skipping this duplicate."
             echo 'should_qualify=false' >> "$GITHUB_OUTPUT"
             exit 0
           fi
@@ -118,13 +123,29 @@ jobs:
             if gh api "repos/$GITHUB_REPOSITORY/actions/runs/$completed_run/jobs?per_page=100" \
               --jq '[.jobs[] | select(.name == "freeze" and .status == "completed" and .conclusion == "success")] | length > 0' \
               | grep -qx true; then
-              echo "A successful frozen snapshot for $GITHUB_SHA already exists in run $completed_run; skipping this duplicate."
+              artifact="$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$completed_run/artifacts?per_page=100" \
+                | jq -c --arg suffix "-$SOURCE_SHA" \
+                  '[.artifacts[] | select(.expired == false and (.name | startswith("qualified-release-")) and (.name | endswith($suffix)))] | if length == 1 then .[0] else empty end')"
+              [ -n "$artifact" ] || continue
+              echo "A successful frozen snapshot for $SOURCE_SHA already exists in run $completed_run; skipping this duplicate."
+              echo "artifact_id=$(jq -r .id <<<"$artifact")" >> "$GITHUB_OUTPUT"
+              echo "artifact_digest=$(jq -r .digest <<<"$artifact")" >> "$GITHUB_OUTPUT"
+              echo "artifact_name=$(jq -r .name <<<"$artifact")" >> "$GITHUB_OUTPUT"
               echo 'should_qualify=false' >> "$GITHUB_OUTPUT"
               exit 0
             fi
           done < <(gh api --paginate \
             "repos/$GITHUB_REPOSITORY/actions/workflows/qualify-release-source.yml/runs?event=workflow_dispatch&status=completed&per_page=100" \
-            --jq '.workflow_runs[] | select(.head_sha == env.GITHUB_SHA and .conclusion == "success" and (.id | tostring) != env.GITHUB_RUN_ID) | .id')
+            --jq '.workflow_runs[] | select(.head_sha == env.SOURCE_SHA and .conclusion == "success" and (.id | tostring) != env.GITHUB_RUN_ID) | .id')
+
+          if [ "$SOURCE_SHA" != "$GITHUB_SHA" ]; then
+            echo "::error::No reusable frozen snapshot exists for requested source $SOURCE_SHA."
+            exit 1
+          fi
+          if [ "$SOURCE_REF" != refs/heads/main ]; then
+            echo "::error::Release qualification is reserved for merged main; received $SOURCE_REF."
+            exit 1
+          fi
 
           echo 'should_qualify=true' >> "$GITHUB_OUTPUT"
 

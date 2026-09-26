@@ -212,10 +212,80 @@ jobs:
       operation: qualify
       freeze_snapshot: true
       run_tests: false
+      source_sha: ${{ inputs.source_sha }}
+
+  retain-qualified-artifact:
+    if: inputs.mode == 'publish' && needs.admission.outputs.origin_run == ''
+    needs: [admission, qualify]
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+    outputs:
+      artifact_id: ${{ steps.binding.outputs.artifact_id }}
+      artifact_digest: ${{ steps.binding.outputs.artifact_digest }}
+      artifact_name: ${{ steps.binding.outputs.artifact_name }}
+    steps:
+      - name: Resolve the qualified artifact owner
+        id: owner
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ARTIFACT_ID: ${{ needs.qualify.outputs.artifact_id }}
+          EXPECTED_DIGEST: ${{ needs.qualify.outputs.artifact_digest }}
+          EXPECTED_NAME: ${{ needs.qualify.outputs.artifact_name }}
+        run: |
+          set -euo pipefail
+          test "$ARTIFACT_ID" -gt 0
+          artifact="$(gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/$ARTIFACT_ID")"
+          test "$(jq -r .digest <<<"$artifact")" = "$EXPECTED_DIGEST"
+          test "$(jq -r .name <<<"$artifact")" = "$EXPECTED_NAME"
+          owner_run="$(jq -r .workflow_run.id <<<"$artifact")"
+          echo "owner_run=$owner_run" >> "$GITHUB_OUTPUT"
+          echo "copy=$([ "$owner_run" = "$GITHUB_RUN_ID" ] && echo false || echo true)" >> "$GITHUB_OUTPUT"
+
+      - name: Download an exact reusable manual snapshot
+        if: steps.owner.outputs.copy == 'true'
+        uses: actions/download-artifact@v4
+        with:
+          artifact-ids: ${{ needs.qualify.outputs.artifact_id }}
+          path: retained-qualified
+          github-token: ${{ github.token }}
+          run-id: ${{ steps.owner.outputs.owner_run }}
+
+      - name: Retain a run-owned copy for guarded resumption
+        if: steps.owner.outputs.copy == 'true'
+        id: retained
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: ${{ needs.qualify.outputs.artifact_name }}
+          path: retained-qualified/
+          compression-level: 0
+          retention-days: 14
+          if-no-files-found: error
+
+      - name: Bind the run-owned artifact
+        id: binding
+        env:
+          COPIED: ${{ steps.owner.outputs.copy }}
+          ORIGINAL_ID: ${{ needs.qualify.outputs.artifact_id }}
+          ORIGINAL_DIGEST: ${{ needs.qualify.outputs.artifact_digest }}
+          ARTIFACT_NAME: ${{ needs.qualify.outputs.artifact_name }}
+          RETAINED_ID: ${{ steps.retained.outputs.artifact-id }}
+          RETAINED_DIGEST: ${{ steps.retained.outputs.artifact-digest }}
+        run: |
+          set -euo pipefail
+          if [ "$COPIED" = true ]; then
+            test "$RETAINED_ID" -gt 0
+            echo "artifact_id=$RETAINED_ID" >> "$GITHUB_OUTPUT"
+            echo "artifact_digest=$RETAINED_DIGEST" >> "$GITHUB_OUTPUT"
+          else
+            echo "artifact_id=$ORIGINAL_ID" >> "$GITHUB_OUTPUT"
+            echo "artifact_digest=$ORIGINAL_DIGEST" >> "$GITHUB_OUTPUT"
+          fi
+          echo "artifact_name=$ARTIFACT_NAME" >> "$GITHUB_OUTPUT"
 
   inspect-artifact:
     if: inputs.mode == 'publish' && needs.admission.outputs.origin_run == ''
-    needs: [admission, qualify]
+    needs: [admission, qualify, retain-qualified-artifact]
     runs-on: ubuntu-latest
     timeout-minutes: 180
     permissions:
@@ -247,8 +317,8 @@ jobs:
         id: binding
         env:
           GH_TOKEN: ${{ github.token }}
-          ARTIFACT_ID: ${{ needs.qualify.outputs.artifact_id }}
-          EXPECTED_DIGEST: ${{ needs.qualify.outputs.artifact_digest }}
+          ARTIFACT_ID: ${{ needs.retain-qualified-artifact.outputs.artifact_id }}
+          EXPECTED_DIGEST: ${{ needs.retain-qualified-artifact.outputs.artifact_digest }}
           EXPECTED_VERSION: ${{ inputs.version }}
           EXPECTED_SOURCE: ${{ inputs.source_sha }}
           EXPECTED_TREE: ${{ needs.admission.outputs.source_tree }}
@@ -298,8 +368,8 @@ jobs:
           printf '%s\n' \
             '### Fastline frozen inspection' \
             '' \
-            'Qualified artifact ID: `${{ needs.qualify.outputs.artifact_id }}`' \
-            'Qualified artifact digest: `${{ needs.qualify.outputs.artifact_digest }}`' \
+            'Qualified artifact ID: `${{ needs.retain-qualified-artifact.outputs.artifact_id }}`' \
+            'Qualified artifact digest: `${{ needs.retain-qualified-artifact.outputs.artifact_digest }}`' \
             'Independent content inspection: passed.' >> "$GITHUB_STEP_SUMMARY"
 
   shadow-summary:
@@ -320,7 +390,7 @@ jobs:
       needs.admission.outputs.origin_run == '' &&
       needs.qualify.result == 'success' &&
       needs.inspect-artifact.result == 'success'
-    needs: [admission, qualify, inspect-artifact]
+    needs: [admission, qualify, retain-qualified-artifact, inspect-artifact]
     runs-on: ubuntu-latest
     permissions:
       actions: write
