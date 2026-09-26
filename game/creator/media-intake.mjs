@@ -414,6 +414,19 @@ export async function prepareCreatorMediaIntake(
         origin: { kind: 'supplied-image', sourceImageSha256: row.sha256 },
       });
       imageByHash.set(row.sha256, poster);
+      // The reviewed PNG is the only image shared in an .rlpack. Keep the
+      // selected source bytes separately so a private creator checkpoint can
+      // reopen the exact media choices without widening the portable pack.
+      assets.set(row.sha256, {
+        sha256: row.sha256,
+        role: 'source-image-original',
+        blob: Blob.prototype.slice.call(
+          row.blob,
+          0,
+          row.blob.size,
+          prepared.original.mime || row.blob.type,
+        ),
+      });
       assets.set(poster.sha256, {
         sha256: poster.sha256,
         role: 'poster',
