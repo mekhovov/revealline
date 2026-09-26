@@ -4,7 +4,7 @@ import path from 'node:path';
 import { createHash } from 'node:crypto';
 
 // Finite admission headroom for immutable releases; per-archive bytes remain unchanged.
-export const MAX_ARCHIVE_SHARDS = 96;
+export const MAX_ARCHIVE_SHARDS = 128;
 export const ARCHIVE_BUDGET_BYTES = 800_000_000;
 export const MAIN_PAGES_BUDGET_BYTES = 950_000_000;
 export function assertPagesBudget(bytes, archive = false) {
