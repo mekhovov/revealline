@@ -2916,8 +2916,8 @@ export function attachSoundtrackPanel({
         queued: snapshot.pendingPlaylistId
           ? ` · ${t('interface:soundtrack.playlistUpdateQueued')}`
           : '',
-        notice: snapshot.notice ? ` · ${snapshot.notice}` : '',
-        error: snapshot.error ? ` · ${snapshot.error}` : '',
+        notice: snapshot.notice ? ` · ${message(snapshot.notice)}` : '',
+        error: snapshot.error ? ` · ${message(snapshot.error)}` : '',
         file: snapshot.track?.fileName
           ? ` · ${t('interface:soundtrack.fileName', { file: snapshot.track.fileName })}`
           : '',
