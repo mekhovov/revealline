@@ -131,7 +131,7 @@ output. Its largest new source asset is the pinned, licensed Mediabunny browser 
 - Root and community dependency audits: zero reported vulnerabilities.
 - A local `npm run build` passed for **1,304 files** at source version `0.141.0` on the final rebased
   combined candidate, with distribution SHA-256
-  `be7d14708abd1b25e5406e579851de02fd5a3b32bc667c63e4c5cc11077a2be0`. The hosted exact-head build
+  `07a2762fce7d23b6a6e40d9cd6a389183d62bbc85d3571cd8248122d290dc202`. The hosted exact-head build
   and immutable freeze remain PR/release gates.
 - Built-in-browser evidence in the phase records covers single-image completion, 12- and 50-image
   batches, cancel/resume and splitting, video-only victory playback, and verified silent-AVC trim.
