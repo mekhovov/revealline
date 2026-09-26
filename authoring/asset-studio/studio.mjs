@@ -5,6 +5,7 @@ import {
   localizedMessage,
   formatNumber,
 } from '../../game/i18n/index.mjs';
+import { assetStudioErrorMessage } from './error-copy.mjs';
 import { createStudioDownload } from './download.mjs';
 import { isTeamPreviewScenarioAvailable } from './team-preview-fixture.mjs';
 import {
@@ -136,7 +137,7 @@ const operations = createStudioOperations({
   },
 });
 const status = (message, kind = '') => operations.message(message, kind);
-const report = (error) => status(error.message || String(error), 'error');
+const report = (error) => status(assetStudioErrorMessage(error), 'error');
 const interfacePreferences = mountInterfacePreferences({
   document,
   window,
