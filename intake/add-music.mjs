@@ -19,25 +19,39 @@ const ARCHIVE_VALUE_OPTIONS = new Set([
   '--title',
   '--derivative-notice',
 ]);
+const PRIVATE_UNSUPPORTED_VALUE_OPTIONS = new Set(
+  [...ARCHIVE_VALUE_OPTIONS].filter((option) => option !== '--license'),
+);
+const PRIVATE_UNSUPPORTED_FLAGS = new Set(['--confirm-rights', '--open-pr']);
 
 export const LAUNCHER_USAGE = `Usage from the RevealLine game repository:
   node intake/add-music.mjs <mp3-or-folder> [archive intake options]
     [--archive-root /path/to/revealline-soundtracks-02]
+
+Private unknown-rights UA-FPV intake:
+  node intake/add-music.mjs <folder> --license unknown
+    --private-output /path/to/new-empty-private-directory
 
 The launcher forwards the request to a clean RevealLine Soundtracks 02 checkout.
 Set REVEALLINE_SOUNDTRACK_ARCHIVE or pass --archive-root when it is not in a
 standard location. Run the archive command with --help for all intake options.
 
 Public intake requires recording-specific redistribution and web-game playback
-rights. A YouTube page alone is not permission. Unknown-rights MP3s should use
-the private UA-FPV pack workflow described in docs/ua-fpv-upload-guide.md.`;
+rights. A YouTube page alone is not permission. --license unknown builds private
+local UA-FPV .rlsound packs and never writes to the public archive. See
+docs/ua-fpv-upload-guide.md.`;
 
 export function splitLauncherArguments(argv) {
   const forwarded = [];
-  let archiveRoot = '';
+  let archiveRoot = '',
+    privateOutput = '';
+  let archiveRootCount = 0,
+    privateOutputCount = 0;
   for (let index = 0; index < argv.length; index += 1) {
     const value = argv[index];
     if (value === '--archive-root') {
+      archiveRootCount += 1;
+      if (archiveRootCount > 1) throw new Error('--archive-root may be provided only once.');
       const next = argv[index + 1];
       if (!next || next.startsWith('--')) {
         throw new Error('--archive-root requires a directory path.');
@@ -45,13 +59,80 @@ export function splitLauncherArguments(argv) {
       archiveRoot = next;
       index += 1;
     } else if (value.startsWith('--archive-root=')) {
+      archiveRootCount += 1;
+      if (archiveRootCount > 1) throw new Error('--archive-root may be provided only once.');
       archiveRoot = value.slice('--archive-root='.length);
       if (!archiveRoot) throw new Error('--archive-root requires a directory path.');
+    } else if (value === '--private-output') {
+      privateOutputCount += 1;
+      if (privateOutputCount > 1) throw new Error('--private-output may be provided only once.');
+      const next = argv[index + 1];
+      if (!next || next.startsWith('--')) {
+        throw new Error('--private-output requires a directory path.');
+      }
+      privateOutput = next;
+      index += 1;
+    } else if (value.startsWith('--private-output=')) {
+      privateOutputCount += 1;
+      if (privateOutputCount > 1) throw new Error('--private-output may be provided only once.');
+      privateOutput = value.slice('--private-output='.length);
+      if (!privateOutput) throw new Error('--private-output requires a directory path.');
     } else {
       forwarded.push(value);
     }
   }
-  return { archiveRoot, forwarded };
+  return { archiveRoot, privateOutput, forwarded };
+}
+
+function licenseValues(argv) {
+  const values = [];
+  for (let index = 0; index < argv.length; index += 1) {
+    const value = argv[index];
+    if (value === '--license') {
+      const next = argv[index + 1];
+      if (!next || next.startsWith('--')) throw new Error('--license requires a value.');
+      values.push(next);
+      index += 1;
+    } else if (value.startsWith('--license=')) {
+      const license = value.slice('--license='.length);
+      if (!license) throw new Error('--license requires a value.');
+      values.push(license);
+    } else if (ARCHIVE_VALUE_OPTIONS.has(value)) {
+      index += 1;
+    }
+  }
+  return values;
+}
+
+function privateUnknownInput(argv, currentDirectory) {
+  const inputs = [];
+  for (let index = 0; index < argv.length; index += 1) {
+    const value = argv[index];
+    if (value === '--license') {
+      index += 1;
+    } else if (value.startsWith('--license=')) {
+      continue;
+    } else if (PRIVATE_UNSUPPORTED_VALUE_OPTIONS.has(value)) {
+      throw new Error(`${value} is not used with private --license unknown intake.`);
+    } else if (
+      [...PRIVATE_UNSUPPORTED_VALUE_OPTIONS].some((option) => value.startsWith(`${option}=`))
+    ) {
+      const option = value.slice(0, value.indexOf('='));
+      throw new Error(`${option} is not used with private --license unknown intake.`);
+    } else if (PRIVATE_UNSUPPORTED_FLAGS.has(value)) {
+      throw new Error(
+        `${value} cannot be used with --license unknown because unknown-rights intake is private-only.`,
+      );
+    } else if (value.startsWith('-')) {
+      throw new Error(`Unsupported private intake option: ${value}`);
+    } else {
+      inputs.push(value);
+    }
+  }
+  if (inputs.length !== 1) {
+    throw new Error('--license unknown requires exactly one source folder.');
+  }
+  return path.resolve(currentDirectory, inputs[0]);
 }
 
 async function isArchiveRoot(candidate) {
@@ -118,11 +199,40 @@ function run(command, args, options) {
 }
 
 export async function launchMusicIntake(argv, dependencies = {}) {
-  const { archiveRoot: explicitRoot, forwarded: rawForwarded } = splitLauncherArguments(argv);
-  const forwarded = resolveForwardedInput(
-    rawForwarded,
-    dependencies.currentDirectory ?? process.cwd(),
-  );
+  const {
+    archiveRoot: explicitRoot,
+    privateOutput,
+    forwarded: rawForwarded,
+  } = splitLauncherArguments(argv);
+  const currentDirectory = dependencies.currentDirectory ?? process.cwd();
+  const runner = dependencies.run ?? run;
+  if (rawForwarded.length === 1 && ['--help', '-h'].includes(rawForwarded[0])) {
+    console.log(LAUNCHER_USAGE);
+    return 0;
+  }
+  const licenses = licenseValues(rawForwarded);
+  if (licenses.length > 1) throw new Error('--license may be provided only once.');
+  if (licenses[0] === 'unknown') {
+    if (!privateOutput) {
+      throw new Error('--license unknown requires --private-output with a new empty directory.');
+    }
+    if (explicitRoot) {
+      throw new Error('--archive-root is not used with private --license unknown intake.');
+    }
+    const input = privateUnknownInput(rawForwarded, currentDirectory);
+    const output = path.resolve(currentDirectory, privateOutput);
+    const script = path.join(gameRoot, 'scripts', 'ua-fpv-local-pack.mjs');
+    console.log('Unknown licence selected: building private local UA-FPV packs only.');
+    console.log(`Private output directory: ${output}`);
+    return runner(process.execPath, [script, '--source-dir', input, '--output-dir', output], {
+      cwd: gameRoot,
+      stdio: 'inherit',
+    });
+  }
+  if (privateOutput) {
+    throw new Error('--private-output is supported only with --license unknown.');
+  }
+  const forwarded = resolveForwardedInput(rawForwarded, currentDirectory);
   const archiveRoot = await findArchiveRoot({
     explicitRoot,
     environment: dependencies.environment,
@@ -130,10 +240,6 @@ export async function launchMusicIntake(argv, dependencies = {}) {
     repositoryRoot: dependencies.repositoryRoot,
   });
   if (!archiveRoot) {
-    if (forwarded.length === 1 && ['--help', '-h'].includes(forwarded[0])) {
-      console.log(LAUNCHER_USAGE);
-      return 0;
-    }
     throw new Error(
       'RevealLine Soundtracks 02 was not found. Clone ' +
         'https://github.com/mekhovov/revealline-soundtracks-02.git and pass ' +
@@ -142,7 +248,6 @@ export async function launchMusicIntake(argv, dependencies = {}) {
   }
   const script = path.join(archiveRoot, 'intake', 'add-music.mjs');
   console.log(`Using soundtrack archive checkout: ${archiveRoot}`);
-  const runner = dependencies.run ?? run;
   return runner(process.execPath, [script, ...forwarded], {
     cwd: archiveRoot,
     stdio: 'inherit',
