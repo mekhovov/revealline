@@ -1,5 +1,7 @@
 # Company edition qualification record
 
+> Retained excerpt after an ownership migration. Historical totals and verification statements describe the original scope; this excerpt is not a current release qualification. Original bytes and removed material are preserved separately.
+
 This record distinguishes candidate automation from release qualification. No company
 edition has been promoted or published by this work. Human observations, physical-device
 installation and downloaded/deployed release evidence cannot be inferred from unit tests.
@@ -23,6 +25,41 @@ and source tree `e0d7a32c46f0ec9bc1e64199a3c40c28b02ab7fd`, based on
 These results apply to that frozen commit. Subsequent storage, offline, accessibility,
 learning and review-tool changes require their own committed candidate run. The existing
 default release pipeline and its qualification requirements remain in force.
+
+## Continuation and rebase checks
+
+The continuation was rebased onto `ee015163de1131313436b0550892f3739e3c7a1a`
+(main, package version 0.132.4). Its four commits preserve the new default-release gates.
+The only textual conflict was the focused-test routing test; both upstream checks and the
+company checks were retained. Subsequent integration changes are recorded in the next
+candidate run, rather than attributed to the older frozen candidate above.
+
+Before this rebase, 132 focused company, packaging, review-observer and routing tests passed.
+After it, restoring the exact committed review-tool files omitted by the sparse checkout
+resolved one local module-not-found failure; that was a checkout omission, not a source fix.
+The review-observer and updated routing selection then passed 20 tests. After the Home-cancellation
+fix, the combined company, packaging, observer and routing selection passed **136 tests**; the
+existing persistence compatibility suite separately passed **39 tests**. The broader historical
+comparisons below remain bound to their stated earlier revisions.
+
+## Bounded browser observations
+
+On 26 September 2026, the local Codex in-app browser exercised the preview through visible
+controls. These are engineering observations, not human learning or installed-PWA evidence:
+
+- A 320 × 800 game viewport kept home and paused mission controls within the viewport; the
+  mission overlay follows the canvas in normal flow at narrow widths.
+- Keyboard Settings, reduced motion and Escape returned focus to the invoking control and
+  left the mission paused. Static palette contrast is recorded separately in the accessibility review.
+- An intentionally missing flower asset produced a visible startup failure with Start disabled.
+  A healthy tab of the same edition could then obtain the writer lease. A second healthy tab
+  showed the session-only warning instead of becoming another writer.
+  audience. Each reached its matching title and mission count without a stale writer warning.
+  Approximate shared heap varied from 35.7 to 91.9 MB in those observations; this is not a
+  per-edition allocation measurement or a memory-leak conclusion.
+- The alternate foundations task accepted six reusable cases by 4 November after both records
+  were inspected. Reset returned a blank attempt. This checks mechanics, not a participant's understanding.
+
 
 ## Historical compatibility investigation
 
@@ -104,6 +141,12 @@ accessibility, two actual installed PWAs, update/rollback, storage and backup re
 same-device performance, and downloaded/deployed artifact bytes. Browser cache reloads and
 simulated worker tests provide useful bounded evidence but do not establish OS installation,
 physical-device behaviour, quota exhaustion or human learning outcomes.
+
+The new main fastline publisher also admits additive edition assets only after downloading
+and checking their complete reviewed envelope, original bytes, ZIP members and exact commit/tree.
+Unknown, incomplete or unreviewed extras are rejected; default-only releases retain the same
+nine-asset contract. Home navigation cancels staged missions so a late asset response cannot
+return a player to a mission they left.
 
 The review measurement tool is now selected by the focused test map even though its files
 live under `docs/verification/`; Journey profile changes also select company persistence
