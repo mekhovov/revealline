@@ -16,8 +16,9 @@ Status date: 2026-09-26
   published yet.
 - The complete nineteen-branch cultural stack is rebased onto current `main`
   `0cb51db92295a62fea99ee2ab215a79c6df06520`. PR #650 is at
-  `d6395a574303db923808707cde69e65c3ccfed98`; its test/documentation successor PR #651 is at
-  `b8c033b22e8482543cf49453ab4281210eea2d96`. Both are clean drafts.
+  `d6395a574303db923808707cde69e65c3ccfed98`; its test/documentation successor PR #651 is a clean
+  draft whose exact head is recorded by GitHub. Avoid embedding PR #651's changing self-hash in
+  this document.
 
 ## Completed candidate work
 
