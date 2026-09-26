@@ -83,6 +83,135 @@ test('edition runs the complete Solo host with canonical rules, settings and mis
   assert.deepEqual(page.errors, []);
 });
 
+test('edition keyboard steers through actual launch and settings focus without accepting a held menu key', async (t) => {
+  const f = await editionProviderFixture();
+  const page = await soloPage(t, {
+    search: '?edition=sample-public',
+    titleScreen: true,
+    journeyIndexedDB: managedIndexedDB().indexedDB,
+    fetchResponse: f.fetcher,
+  });
+  // Unlike soloPage.key(), route every event through the real focused element.
+  // A launch that leaves focus on an editor must fail this host regression.
+  const key = (type, key, code = '', extra = {}) =>
+    page.doc.activeElement.emit(type, { key, code, repeat: false, ...extra });
+  const frames = (count = 6) => {
+    for (let i = 0; i < count; i++) page.frame();
+  };
+  assert.equal(page.doc.activeElement, page.$('shell-featured'));
+  page.doc.activeElement.click();
+  await settle(() => page.doc.body.dataset.flightState === 'running');
+  page.frame(0);
+  assert.equal(page.doc.activeElement, page.$('game-canvas'));
+  const run = page.rendered.run;
+  const startY = run.player.y;
+  assert.equal(key('keydown', 'ArrowDown', 'ArrowDown').defaultPrevented, true);
+  frames();
+  assert.ok(run.player.y > startY, 'The focused game receives arrow steering.');
+  key('keyup', 'ArrowDown', 'ArrowDown');
+
+  page.$('settings-button').click();
+  page.$('turn-select').focus();
+  const pausedPlayer = structuredClone(run.player),
+    pausedTick = run.tick;
+  key('keydown', 'ArrowRight', 'ArrowRight');
+  frames();
+  assert.deepEqual(run.player, pausedPlayer);
+  assert.equal(run.tick, pausedTick, 'Native settings navigation cannot move the paused run.');
+  page.$('settings-dialog').close();
+  page.$('start-button').click();
+  assert.equal(page.doc.activeElement, page.$('game-canvas'));
+  key('keydown', 'ArrowRight', 'ArrowRight', { repeat: true });
+  frames();
+  assert.equal(run.player.direction, 'down', 'Holding a menu key is not a fresh flight gesture.');
+  key('keyup', 'ArrowRight', 'ArrowRight');
+  const startX = run.player.x;
+  key('keydown', 'ArrowRight', 'ArrowRight');
+  frames();
+  assert.ok(run.player.x > startX, 'Release and a fresh press work after menu focus returns.');
+  key('keyup', 'ArrowRight', 'ArrowRight');
+  const fallbackY = run.player.y;
+  key('keydown', 's');
+  frames();
+  assert.ok(run.player.y > fallbackY, 'A browser event without code retains the letter fallback.');
+  key('keyup', 's');
+  assert.deepEqual(page.errors, []);
+});
+
+for (const departure of ['window blur', 'visibility change without blur'])
+  test(`edition keyboard recovers after ${departure} and an unobserved keyup`, async (t) => {
+    const f = await editionProviderFixture();
+    const page = await soloPage(t, {
+      search: '?edition=sample-public',
+      titleScreen: true,
+      journeyIndexedDB: managedIndexedDB().indexedDB,
+      fetchResponse: f.fetcher,
+    });
+    const key = (type, repeat = false) =>
+      page.doc.activeElement.emit(type, { key: 'ArrowDown', code: 'ArrowDown', repeat });
+    page.$('shell-featured').click();
+    await settle(() => page.doc.body.dataset.flightState === 'running');
+    page.frame(0);
+    key('keydown');
+    for (let i = 0; i < 12; i++) page.frame();
+    const run = page.rendered.run;
+    assert.ok(run.player.cutting);
+    if (departure === 'window blur') {
+      page.doc.focused = false;
+      page.win.emit('blur');
+    } else {
+      page.doc.hidden = true;
+      page.doc.emit('visibilitychange');
+    }
+    const pausedPlayer = structuredClone(run.player),
+      pausedTick = run.tick;
+    page.frame();
+    assert.equal(page.doc.body.dataset.flightState, 'paused');
+    assert.deepEqual(run.player, pausedPlayer);
+    assert.equal(run.tick, pausedTick);
+
+    // The release happened outside this document; no keyup reaches the host.
+    if (departure === 'window blur') {
+      page.doc.focused = true;
+      page.win.emit('focus');
+    } else {
+      page.doc.hidden = false;
+      page.doc.emit('visibilitychange');
+    }
+    assert.equal(
+      page.doc.body.dataset.flightState,
+      'paused',
+      'Returning focus cannot resume play.',
+    );
+    page.$('start-button').click();
+    assert.equal(page.doc.activeElement, page.$('game-canvas'));
+    page.doc.activeElement.emit('keydown', {
+      key: 'ArrowRight',
+      code: 'ArrowRight',
+      repeat: true,
+    });
+    page.frame();
+    assert.equal(
+      run.player.direction,
+      'down',
+      'A key held outside the document cannot turn the run.',
+    );
+    const startX = run.player.x;
+    page.doc.activeElement.emit('keydown', { key: 'd', code: 'KeyD', repeat: false });
+    for (let i = 0; i < 6; i++) page.frame();
+    assert.ok(run.player.x > startX, 'A fresh alternate key works after the external release.');
+    page.doc.activeElement.emit('keyup', { key: 'd', code: 'KeyD', repeat: false });
+    const startY = run.player.y;
+    key('keydown');
+    for (let i = 0; i < 6; i++) page.frame();
+    assert.ok(
+      run.player.y > startY,
+      'A fresh press works even though the old keyup was never observed.',
+    );
+    key('keyup');
+    assert.deepEqual(page.errors, []);
+  });
+
 test('edition Continue preserves a matching receipt and rejects a same-ID changed palette without overwriting recovery', async (t) => {
   const storage = memoryStorage(),
     key = 'revealline.suspended.journey-sample-public.v1.solo-v2';

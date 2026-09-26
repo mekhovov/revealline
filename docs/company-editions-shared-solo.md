@@ -87,18 +87,16 @@ still be rejected by the shared engine's strict checkpoint check. A portable-mat
 would need a separate gameplay revision with retained readers; company editions neither
 round that authority nor introduce their own physics to conceal the limitation.
 
-the Band 12 Run Ledger encounter, settings and Controller Practice in both source and
-compiled editions. At 1280×720 the arena measured 1243×621; at 390×844 it measured 382×191
-with controls below; at 844×390 it measured 652×326 with controls beside it. HUD and touch
-controls did not overlap the board in those views. These are bounded viewport observations,
-not a claim that every physical device was tested. Automated startup, Missions and first
-launch passed for all 14 editions; the shared save/backup compatibility cohort passed 63
-checks. After rebasing onto main `a8881ac17`, the company cohort passed 172 checks and the
-shared-contract/upstream-presentation cohort passed 230. The final control relocation has
-its own actual-host regression. Full release qualification remains separate from these
-focused checks.
+On 19 October 2026, the source-cleanup candidate passed browser checks for all six retained community routes. Each loaded its own mission, advanced the gameplay clock, and supported pause/resume without missing artwork or script errors. The public directory retained all six community destinations and the main-game link. These are desktop source-preview checks, not physical-device or published-release qualification.
+
+A keyboard follow-up reproduced a missed-release edge case when an embedded view becomes
+hidden without a window blur. The shared Solo input adapter now clears its physical key
+ledger on either departure event, retaining the normal explicit-resume and held-repeat
+guards. Three actual-focus host regressions cover launch, Settings return, letter-key
+fallback, blur and visibility-only recovery. Together with the continuous input, UI input
+and controller boost recovery suites, all 138 checks pass.
 
 The delivery sequence remains: shared-host candidate → advanced encounter proofs →
-14-edition reproducible freeze → human review of the representative artwork and gameplay →
+retained-edition reproducible freeze → human review of the representative artwork and gameplay →
 final art in small batches → installation/performance/rollback qualification → exact-byte
 release promotion. Public promotion remains closed until the recorded gates pass.
