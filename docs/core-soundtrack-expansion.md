@@ -196,7 +196,7 @@ Local free space fell to about **0.4 GiB** while other work continued, below the
    loads that directory, merges trusted shards and preserves the primary archive as
    a hardcoded fallback. It is rebased on accepted main
    `fad132a054a10f27198751bfeb7c02ba340cfbfb` at exact head
-   `9501f3d48a49611b6ea9942414d75ef70ca78192`. The 177/177 catalogue, panel and
+   `fb196e77f25d1395bb1868ad872b65c3924cb6b0`. The 177/177 catalogue, panel and
    player cohort plus formatting pass locally. Preserve exact hosted failures 36230776668, 36231230104 and 36231736506. The latter completed the real binary preparation and exact round-trip, then proved the retained-link Confirm also needed the production 120 ms neutral rearm. The current test-only successor advances both deterministic lifecycle boundaries; run 36232156154 is authoritative. Full
    tests and build remain skipped under the unallocated fast-release policy.
    Archive 02 publishes eight recordings independently, but do not add it to the
@@ -274,7 +274,7 @@ originals approved. No deadline is assigned to unresolved rights or paused music
   [run 36219306789](https://github.com/mekhovov/revealline-soundtracks-01/actions/runs/36219306789)
   passed. Direct reads verified the exact v1 directory, primary-first/required
   binding and CORS. Game [PR #604](https://github.com/mekhovov/revealline/pull/604)
-  is rebased on authoritative main `fad132a054a10f27198751bfeb7c02ba340cfbfb` at exact head `fb196e77f25d1395bb1868ad872b65c3924cb6b0`; its focused catalogue, panel and player cohort passes 177/177 locally. Exact-head hosted run 36230220903 passed the nine archive-directory tests and 20/21 host tests; the sole failure was the finite binary-preparation wait. Preserve that evidence. The successor retains all output and ownership assertions with a fifteen-second byte-bound budget; runs 36230776668, 36231230104 and 36231736506 are retained failures; run 36232156154 is the authoritative exact-head gate. Full test/build jobs remain skipped. The next action
+  is rebased on authoritative main `fad132a054a10f27198751bfeb7c02ba340cfbfb` at exact head `fb196e77f25d1395bb1868ad872b65c3924cb6b0`; its focused catalogue, panel and player cohort passes 177/177 locally. Preserve exact hosted failures 36230776668, 36231230104 and 36231736506. The latest failure proves binary preparation and round-trip now pass and isolates the later retained-link activation to the same 120 ms controller lifecycle contract. Run 36232156154 is the authoritative exact-head gate. Full test/build jobs remain skipped. The next action
   is a green exact-head focused gate, allocated merged-source qualification and
   public verification before activating Archive 02 in the reviewed directory.
 - Archive [PR #35](https://github.com/mekhovov/revealline-soundtracks-01/pull/35)
