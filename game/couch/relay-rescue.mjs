@@ -4663,9 +4663,14 @@ export function bootCoop({
         announce(t('interface:rescueInterruptedChooseAFreshDirectionOrHoldSupportNearby'));
       }
     }
-    const coachCue =
-      !terminalMessage &&
-      contextualTeaching.observe(run.events, coopArenaGuidance(run.level, run.config));
+    // Terminal presentation suppresses coaching, but the teaching memory must
+    // still observe the final authoritative events. A Support pulse can share
+    // the winning step and must not become an obsolete prompt on Retry.
+    const observedCue = contextualTeaching.observe(
+      run.events,
+      coopArenaGuidance(run.level, run.config),
+    );
+    const coachCue = terminalMessage ? null : observedCue;
     if (coachCue) {
       message(
         () => {

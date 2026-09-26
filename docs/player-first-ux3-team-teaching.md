@@ -32,10 +32,12 @@ updates an active cue and future cues without changing simulation state.
 ## Focused evidence
 
 - contextual teaching unit and live-host tests: 8/8 pass;
-- the Team navigation, localization, Collection context, gallery focus and specialist integration
-  set: 124/124 pass;
+- the previously reported Team navigation, localization, Collection context, gallery focus and
+  specialist integration cohort: 125/125 pass;
+- the review-correction Team/Library cohort, including exact current-route slow/intercept cues and
+  live loading/progress/success/difficulty localization: 110/110 pass;
 - `npm run i18n:check` and `npm run validate`: pass;
-- scoped ESLint, Prettier and `git diff --check`: pass.
+- full ESLint, game/native Prettier, Motion Lab syntax and `git diff --check`: pass.
 
 The tests cover first-use order, Retry suppression, threat relevance, persistence across visits,
 successful skill completion (including same-step success), unavailable/corrupt/failing storage and
@@ -45,9 +47,11 @@ styling before terminal results.
 
 ## Remaining qualification
 
-The integrated v0.141.7 candidate is rebased onto accepted public main
-`494bc6a5144b9a47c663806e033132791c9af613`. Hosted exact-head qualification and immutable
-publication remain open. Browser review must exercise a cut, a Support pulse, a downed player and a
-completed rescue in English and Ukrainian, then verify Retry suppression and terminal styling at
-portrait and short-landscape sizes with reduced effects. Physical touch and controller hardware are
-separate evidence; modeled or browser input must not be reported as hardware certification.
+The integrated v0.141.7 candidate is reconciled onto current integration main
+`b08aca5e192aef0482455c02b81ee86dd5bac909`; accepted public main remains the immutable v0.141.6
+baseline until publication completes. Hosted exact-head qualification and immutable publication remain
+open. Browser review must exercise a cut, a Support pulse, a downed player and a completed rescue in
+English and Ukrainian, then verify Retry suppression and terminal styling at portrait and
+short-landscape sizes with reduced effects. Physical touch and controller hardware are separate
+evidence; modeled or browser input must not be reported as hardware certification. Long suites are
+waived by the committed temporary policy and are not reported as passing.

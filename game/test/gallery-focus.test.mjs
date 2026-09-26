@@ -594,6 +594,62 @@ test('a new picture hides the previous artwork and blocks actions until its own 
   assert.deepEqual(h.library, previous);
 });
 
+test('a successful open picture retranslates all wrapper metadata across EN and UK', async (t) => {
+  const locale = getLocale();
+  t.after(() => setLocale(locale, { persist: false }));
+  setLocale('en', { persist: false });
+  const themes = JSON.parse(
+    await readFile(new URL('../content/themes.json', import.meta.url), 'utf8'),
+  );
+  const h = await difficultyCollection(t, {
+    illustrated: true,
+    theme: themes.themes.find(({ id }) => id === 'fpv'),
+  });
+  h.collection();
+  const opening = h.cards()[0].onclick();
+  const paints = h.paints.length;
+  assert.match(
+    h.node('gallery-view-meta').textContent,
+    /FPV Front · Standard · Best picture score: 100 points · GOLD.*Decoding the exact picture artwork/,
+  );
+  assert.deepEqual(
+    h.node('gallery-difficulty').children.map((option) => option.textContent),
+    ['Standard', 'Gentle'],
+  );
+
+  setLocale('uk', { persist: false });
+  assert.match(
+    h.node('gallery-view-meta').textContent,
+    /Фронт FPV · Стандартна · Найкращий результат картини: 100 очок · ЗОЛОТО.*Декодуємо точне зображення/,
+  );
+  assert.deepEqual(
+    h.node('gallery-difficulty').children.map((option) => option.textContent),
+    ['Стандартна', 'Полегшена'],
+  );
+  assert.match(h.cards()[0].children[2].textContent, /Стандартна.*Найкращий результат картини/);
+  assert.equal(h.paints.length, paints, 'Translation does not paint pending artwork.');
+
+  h.decodeJobs.at(-1)();
+  await opening;
+  const readyPaints = h.paints.length;
+  assert.match(
+    h.node('gallery-view-meta').textContent,
+    /Фронт FPV · Стандартна · Найкращий результат картини: 100 очок · ЗОЛОТО/,
+  );
+  assert.doesNotMatch(h.node('gallery-view-meta').textContent, /Standard|Best picture|GOLD/);
+  assert.match(h.cards()[0].children[2].textContent, /Стандартна.*Найкращий результат картини/);
+  assert.equal(readyPaints, paints + 1, 'Only the completed full picture is painted.');
+  assert.equal(h.node('gallery-view-dialog').open, true);
+
+  setLocale('en', { persist: false });
+  assert.match(h.node('gallery-view-meta').textContent, /Standard.*Best picture score.*GOLD/);
+  assert.equal(h.paints.length, readyPaints, 'Translation does not reopen or repaint the picture.');
+  assert.deepEqual(
+    h.node('gallery-difficulty').children.map((option) => option.textContent),
+    ['Standard', 'Gentle'],
+  );
+});
+
 test('an older decode completing during rapid navigation cannot reveal or enable the newer pending picture', async (t) => {
   const h = await setup(t, 2);
   h.entry.visualOverrides.background = { dataUrl: 'data:image/png;base64,AA==', fit: 'contain' };
@@ -972,10 +1028,14 @@ test('late detail refresh keeps foreign records out, labels changed definitions 
   assert.equal(h.document.activeElement, h.node('gallery-replay'));
 });
 
-async function difficultyCollection(t, { count = 1, illustrated = false, saved = null } = {}) {
+async function difficultyCollection(
+  t,
+  { count = 1, illustrated = false, saved = null, theme = null } = {},
+) {
   let executions = [];
   const h = await setup(t, count, { executionCatalog: () => executions, saved: () => saved });
   h.entry.classRecipes = CLASSES;
+  if (theme) h.entry.themes[0] = theme;
   if (illustrated) h.entry.visualOverrides = { background: { dataUrl: 'fixture-image' } };
   executions = createExecutionCatalog([h.entry]).entries;
   h.library.gallery = h.library.gallery.flatMap((row) => [
