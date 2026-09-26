@@ -10,12 +10,15 @@ export function decideReleaseObjects({
   version,
   sourceSha,
   tagCommit = null,
+  tagType = "tag",
   release = null,
 }) {
   if (!VERSION.test(version || "")) throw new Error("invalid release version");
   if (!SHA.test(sourceSha || "")) throw new Error("invalid source commit");
   if (tagCommit !== null && !SHA.test(tagCommit))
     throw new Error("invalid resolved tag commit");
+  if (tagCommit !== null && tagType !== "tag")
+    throw new Error("stable fastline release requires an annotated tag");
 
   if (tagCommit !== null && tagCommit !== sourceSha)
     throw new Error(
@@ -73,11 +76,15 @@ async function request(pathname, { allowMissing = false } = {}) {
   return text ? JSON.parse(text) : null;
 }
 
-export async function resolveTagCommit({ repository, version, get = request }) {
+export async function resolveTagAuthority({
+  repository,
+  version,
+  get = request,
+}) {
   const ref = await get(`/repos/${repository}/git/ref/tags/${version}`, {
     allowMissing: true,
   });
-  if (ref === null) return null;
+  if (ref === null) return { commit: null, type: null };
   if (ref.ref !== `refs/tags/${version}` || !ref.object)
     throw new Error("release tag reference differs");
 
@@ -85,7 +92,7 @@ export async function resolveTagCommit({ repository, version, get = request }) {
   const seen = new Set();
   for (let depth = 0; depth < 8; depth += 1) {
     if (object.type === "commit" && SHA.test(object.sha || ""))
-      return object.sha;
+      return { commit: object.sha, type: ref.object.type };
     if (
       object.type !== "tag" ||
       !SHA.test(object.sha || "") ||
@@ -101,6 +108,10 @@ export async function resolveTagCommit({ repository, version, get = request }) {
   throw new Error("annotated release tag chain exceeded bound");
 }
 
+export async function resolveTagCommit(options) {
+  return (await resolveTagAuthority(options)).commit;
+}
+
 export async function inspectReleaseObjects({
   repository,
   version,
@@ -109,16 +120,23 @@ export async function inspectReleaseObjects({
 }) {
   if (!/^[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+$/u.test(repository || ""))
     throw new Error("invalid repository identity");
-  const [tagCommit, release] = await Promise.all([
-    resolveTagCommit({ repository, version, get }),
+  const [tag, release] = await Promise.all([
+    resolveTagAuthority({ repository, version, get }),
     get(`/repos/${repository}/releases/tags/${version}`, {
       allowMissing: true,
     }),
   ]);
   return {
-    tagCommit,
+    tagCommit: tag.commit,
+    tagType: tag.type,
     release,
-    decision: decideReleaseObjects({ version, sourceSha, tagCommit, release }),
+    decision: decideReleaseObjects({
+      version,
+      sourceSha,
+      tagCommit: tag.commit,
+      tagType: tag.type,
+      release,
+    }),
   };
 }
 

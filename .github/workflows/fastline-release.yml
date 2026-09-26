@@ -20,11 +20,11 @@ on:
         required: true
         type: string
       mode:
-        description: Read-only shadow or guarded publication preparation
+        description: Read-only shadow, guarded publication, or internal resume
         required: true
         default: shadow
         type: choice
-        options: [shadow, publish]
+        options: [shadow, publish, resume]
 
 permissions:
   contents: read
@@ -40,10 +40,14 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       numeric_version: ${{ steps.inputs.outputs.numeric_version }}
+      release_pr: ${{ steps.inputs.outputs.release_pr }}
       source_tree: ${{ steps.source.outputs.source_tree }}
       pr_head: ${{ steps.authority.outputs.pr_head }}
       pr_tree: ${{ steps.authority.outputs.pr_tree }}
       pr_run: ${{ steps.authority.outputs.pr_run }}
+      origin_run: ${{ steps.resume.outputs.origin_run }}
+      artifact_id: ${{ steps.resume.outputs.artifact_id }}
+      artifact_digest: ${{ steps.resume.outputs.artifact_digest }}
     steps:
       - name: Check out trusted admission code
         uses: actions/checkout@v4
@@ -119,7 +123,7 @@ jobs:
           test "$(jq -r .draft <<<"$predecessor")" = false
           test "$(jq -r .prerelease <<<"$predecessor")" = false
           test "$(jq -r '.published_at != null' <<<"$predecessor")" = true
-          if [ "$MODE" = publish ]; then
+          if [ "$MODE" = publish ] || [ "$MODE" = resume ]; then
             main_sha="$(gh api "repos/$GITHUB_REPOSITORY/git/ref/heads/main" --jq .object.sha)"
             test "$main_sha" = "$EXPECTED_SOURCE"
           fi
@@ -139,6 +143,46 @@ jobs:
           SOURCE_SHA: ${{ inputs.source_sha }}
         run: node publishing/fastline-release-objects.mjs
 
+      - name: Locate an exact completed qualification and inspection
+        if: inputs.mode == 'publish' || inputs.mode == 'resume'
+        id: resume
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ inputs.version }}
+          SOURCE_SHA: ${{ inputs.source_sha }}
+        run: |
+          set -euo pipefail
+          artifact_name="qualified-release-$VERSION-$SOURCE_SHA"
+          candidates="$(gh api "repos/$GITHUB_REPOSITORY/actions/artifacts?name=$artifact_name&per_page=100")"
+          found=''
+          while read -r artifact; do
+            [ -n "$artifact" ] || continue
+            run_id="$(jq -r '.workflow_run.id' <<<"$artifact")"
+            run="$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$run_id")"
+            [ "$(jq -r .path <<<"$run")" = '.github/workflows/fastline-release.yml' ] || continue
+            [ "$(jq -r .event <<<"$run")" = workflow_dispatch ] || continue
+            [ "$(jq -r .head_sha <<<"$run")" = "$SOURCE_SHA" ] || continue
+            [ "$(jq -r .status <<<"$run")" = completed ] || continue
+            [ "$(jq -r .conclusion <<<"$run")" = success ] || continue
+            artifacts="$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$run_id/artifacts?per_page=100")"
+            jq -e '.artifacts[] | select(.name == "inspect-artifact-evidence" and .expired == false)' \
+              <<<"$artifacts" >/dev/null || continue
+            found="$artifact"
+            break
+          done < <(jq -c '[.artifacts[] | select(.expired == false)] | sort_by(.created_at) | reverse[]' <<<"$candidates")
+          if [ -z "$found" ]; then
+            if [ '${{ inputs.mode }}' = resume ]; then
+              echo '::error::No completed exact proof run is available to resume.'
+              exit 1
+            fi
+            exit 0
+          fi
+          digest="$(jq -r .digest <<<"$found")"
+          [[ "$digest" =~ ^sha256:[0-9a-f]{64}$ ]]
+          echo "origin_run=$(jq -r '.workflow_run.id' <<<"$found")" >> "$GITHUB_OUTPUT"
+          echo "artifact_id=$(jq -r .id <<<"$found")" >> "$GITHUB_OUTPUT"
+          echo "artifact_digest=$digest" >> "$GITHUB_OUTPUT"
+
       - name: Record admission timing and stage plan
         env:
           MODE: ${{ inputs.mode }}
@@ -157,7 +201,7 @@ jobs:
             'The full suites remain waived and are not reported as passed.' >> "$GITHUB_STEP_SUMMARY"
 
   qualify:
-    if: inputs.mode == 'publish'
+    if: inputs.mode == 'publish' && needs.admission.outputs.origin_run == ''
     needs: admission
     permissions:
       contents: read
@@ -169,7 +213,7 @@ jobs:
       run_tests: false
 
   inspect-artifact:
-    if: inputs.mode == 'publish'
+    if: inputs.mode == 'publish' && needs.admission.outputs.origin_run == ''
     needs: [admission, qualify]
     runs-on: ubuntu-latest
     timeout-minutes: 180
@@ -185,8 +229,8 @@ jobs:
           persist-credentials: false
           filter: blob:none
           sparse-checkout: |
-            publishing/utility/inspect_qualified_artifact.py
-            publishing/utility/release_limits.py
+            publishing/test-policy.json
+            publishing/utility/
           sparse-checkout-cone-mode: false
 
       - name: Check out exact qualified source
@@ -195,39 +239,55 @@ jobs:
           ref: ${{ inputs.source_sha }}
           path: qualified
           fetch-depth: 1
+          filter: blob:none
           persist-credentials: false
 
-      - name: Download the one immutable frozen artifact by ID
+      - name: Bind the one immutable frozen artifact by ID and digest
+        id: binding
         env:
           GH_TOKEN: ${{ github.token }}
           ARTIFACT_ID: ${{ needs.qualify.outputs.artifact_id }}
           EXPECTED_DIGEST: ${{ needs.qualify.outputs.artifact_digest }}
+          EXPECTED_VERSION: ${{ inputs.version }}
+          EXPECTED_SOURCE: ${{ inputs.source_sha }}
+          EXPECTED_TREE: ${{ needs.admission.outputs.source_tree }}
         run: |
           set -euo pipefail
           test "$ARTIFACT_ID" -gt 0
-          gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/$ARTIFACT_ID/zip" > frozen-artifact.zip
-          actual="$(sha256sum frozen-artifact.zip | cut -d' ' -f1)"
-          expected="${EXPECTED_DIGEST#sha256:}"
-          test "$actual" = "$expected"
+          artifact="$(gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/$ARTIFACT_ID")"
+          digest="${EXPECTED_DIGEST#sha256:}"
+          test "$(jq -r .digest <<<"$artifact")" = "sha256:$digest"
+          test "$(jq -r .workflow_run.id <<<"$artifact")" = "$GITHUB_RUN_ID"
+          jq -n \
+            --arg repository "$GITHUB_REPOSITORY" \
+            --arg commit "$EXPECTED_SOURCE" \
+            --arg tree "$EXPECTED_TREE" \
+            --arg version "$EXPECTED_VERSION" \
+            --argjson id "$ARTIFACT_ID" \
+            --argjson runId "$GITHUB_RUN_ID" \
+            --argjson bytes "$(jq -r .size_in_bytes <<<"$artifact")" \
+            --arg sha256 "$digest" \
+            '{format:"revealline-release-utility-binding.v1",reviewed:true,
+              repository:$repository,
+              source:{commit:$commit,tree:$tree,version:$version},
+              artifact:{id:$id,runId:$runId,bytes:$bytes,sha256:$sha256},
+              release:null}' > "$RUNNER_TEMP/inspection-binding.json"
 
       - name: Independently inspect frozen source and distribution bytes
         env:
-          EXPECTED_SOURCE: ${{ inputs.source_sha }}
-          EXPECTED_VERSION: ${{ inputs.version }}
-          EXPECTED_DIGEST: ${{ needs.qualify.outputs.artifact_digest }}
-        run: >-
-          python3 automation/publishing/utility/inspect_qualified_artifact.py
-          frozen-artifact.zip --repo qualified
-          --expected-commit "$EXPECTED_SOURCE"
-          --expected-version "$EXPECTED_VERSION"
-          --artifact-sha256 "${EXPECTED_DIGEST#sha256:}"
-          --out inspection
+          GH_TOKEN: ${{ github.token }}
+          UTILITY_WORKFLOW_SHA: ${{ github.workflow_sha }}
+        run: |
+          export UTILITY_BINDING="$(cat "$RUNNER_TEMP/inspection-binding.json")"
+          python3 automation/publishing/utility/release_artifact.py run \
+            --mode inspect-artifact --repository "$GITHUB_REPOSITORY" \
+            --repo qualified --out utility-output
 
       - name: Retain independent inspection evidence
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
-          name: fastline-inspection-${{ inputs.version }}-${{ inputs.source_sha }}
-          path: inspection/
+          name: inspect-artifact-evidence
+          path: utility-output/evidence/
           compression-level: 0
           retention-days: 14
           if-no-files-found: error
@@ -252,3 +312,156 @@ jobs:
             '### Fastline shadow run complete' \
             '' \
             'Admission authorities matched. No tag, release, asset, archive, selector, deployment, or public object was written.' >> "$GITHUB_STEP_SUMMARY"
+
+  continue-publication:
+    if: >-
+      inputs.mode == 'publish' &&
+      needs.admission.outputs.origin_run == '' &&
+      needs.qualify.result == 'success' &&
+      needs.inspect-artifact.result == 'success'
+    needs: [admission, qualify, inspect-artifact]
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+    steps:
+      - name: Dispatch the evidence/publication resume after this proof run closes
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: >-
+          gh workflow run fastline-release.yml --repo "$GITHUB_REPOSITORY" --ref main
+          -f version='${{ inputs.version }}'
+          -f source_sha='${{ inputs.source_sha }}'
+          -f release_pr='${{ inputs.release_pr }}'
+          -f predecessor_tag='${{ inputs.predecessor_tag }}'
+          -f mode=resume
+
+  continue-existing-publication:
+    if: inputs.mode == 'publish' && needs.admission.outputs.origin_run != ''
+    needs: admission
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+    steps:
+      - name: Resume the already completed exact proof without rebuilding
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: >-
+          gh workflow run fastline-release.yml --repo "$GITHUB_REPOSITORY" --ref main
+          -f version='${{ inputs.version }}'
+          -f source_sha='${{ inputs.source_sha }}'
+          -f release_pr='${{ inputs.release_pr }}'
+          -f predecessor_tag='${{ inputs.predecessor_tag }}'
+          -f mode=resume
+
+  evidence:
+    if: inputs.mode == 'resume'
+    needs: admission
+    permissions:
+      contents: read
+      actions: read
+    uses: ./.github/workflows/assemble-waived-release-evidence.yml
+    with:
+      version: ${{ inputs.version }}
+      source_commit: ${{ inputs.source_sha }}
+      source_tree: ${{ needs.admission.outputs.source_tree }}
+      pr_commit: ${{ needs.admission.outputs.pr_head }}
+      pr_tree: ${{ needs.admission.outputs.pr_tree }}
+      source_pr: ${{ needs.admission.outputs.release_pr }}
+      manual_run: ${{ needs.admission.outputs.origin_run }}
+      pr_run: ${{ needs.admission.outputs.pr_run }}
+      inspection_run: ${{ needs.admission.outputs.origin_run }}
+      inspection_artifact_name: inspect-artifact-evidence
+      approved_non_source_changes: "[]"
+
+  publish:
+    if: inputs.mode == 'resume'
+    needs: [admission, evidence]
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    permissions:
+      contents: write
+      actions: read
+    steps:
+      - name: Check out trusted guarded publisher
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.workflow_sha }}
+          persist-credentials: false
+          filter: blob:none
+          sparse-checkout: |
+            publishing/fastline-release-objects.mjs
+            publishing/fastline-release-publisher.mjs
+          sparse-checkout-cone-mode: false
+
+      - name: Download immutable frozen package by artifact ID
+        uses: actions/download-artifact@v4
+        with:
+          artifact-ids: ${{ needs.admission.outputs.artifact_id }}
+          path: frozen
+          github-token: ${{ github.token }}
+          run-id: ${{ needs.admission.outputs.origin_run }}
+
+      - name: Download immutable seven-asset evidence by artifact ID
+        uses: actions/download-artifact@v4
+        with:
+          artifact-ids: ${{ needs.evidence.outputs.artifact_id }}
+          path: evidence
+          github-token: ${{ github.token }}
+
+      - name: Stage exactly nine original assets without recompression
+        env:
+          VERSION: ${{ inputs.version }}
+        run: |
+          set -euo pipefail
+          mkdir release-assets
+          source_tar="$(find frozen -type f -path "*/$VERSION/source.tar" -print -quit)"
+          distribution="$(find frozen -type f -path "*/$VERSION/site/distribution.zip" -print -quit)"
+          test -n "$source_tar" && test -n "$distribution"
+          cp "$source_tar" release-assets/source.tar
+          cp "$distribution" release-assets/distribution.zip
+          for name in distribution.zip.sha256 manifest.json qualification-evidence-record.json \
+            release.json source-qualification-evidence.zip source-qualification.json verification.json; do
+            source="$(find evidence -type f -name "$name" -print -quit)"
+            test -n "$source"
+            cp "$source" "release-assets/$name"
+          done
+          test "$(find release-assets -type f | wc -l | tr -d ' ')" = 9
+
+      - name: Create or reuse the exact annotated tag and draft
+        id: prepare
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ inputs.version }}
+          SOURCE_SHA: ${{ inputs.source_sha }}
+          ASSET_DIRECTORY: release-assets
+        run: node publishing/fastline-release-publisher.mjs prepare
+
+      - name: Upload each absent asset exactly once
+        if: steps.prepare.outputs.release_state == 'draft'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ inputs.version }}
+          MISSING_JSON: ${{ steps.prepare.outputs.missing_json }}
+        run: |
+          set -euo pipefail
+          while read -r name; do
+            [ -n "$name" ] || continue
+            gh release upload "$VERSION" "release-assets/$name" --repo "$GITHUB_REPOSITORY"
+          done < <(jq -r '.[]' <<<"$MISSING_JSON")
+
+      - name: Verify exactly nine server digests and publish once
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ inputs.version }}
+          SOURCE_SHA: ${{ inputs.source_sha }}
+          ASSET_DIRECTORY: release-assets
+        run: node publishing/fastline-release-publisher.mjs publish
+
+      - name: Record publication timing and deferred selector boundary
+        run: |
+          printf '%s\n' \
+            '### Fastline publication' \
+            '' \
+            'Exact annotated tag, draft and nine immutable assets were reconciled and published.' \
+            'The release event now owns archive/selector/Pages routing; archive admission and exact public bytes remain blocking.' \
+            'Long suites remained waived and were not reported as passed.' >> "$GITHUB_STEP_SUMMARY"
