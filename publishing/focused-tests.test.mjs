@@ -33,6 +33,15 @@ test("unknown runtime paths fail closed through validate", () => {
   );
 });
 
+test("release roots delegate unknown-runtime validation to their required exact-head build", () => {
+  const plan = focusedTestPlan(["game/new-player-runtime.mjs"], manifest, {
+    fallbackHandled: true,
+  });
+  assert.deepEqual(plan.categories, []);
+  assert.deepEqual(plan.unknownRuntime, ["game/new-player-runtime.mjs"]);
+  assert.deepEqual(plan.commands, []);
+});
+
 test("Team picture authority changes avoid the broad navigation matrix", () => {
   const plan = focusedTestPlan(
     [
