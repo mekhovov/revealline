@@ -18,6 +18,9 @@ import {
   soundtrackRights,
 } from '../soundtrack.mjs';
 import { resolveBundledSoundtrackAssets } from '../soundtrack-bundled.mjs';
+import { createSoundtrackPlayer } from '../ui/soundtrack-player.mjs';
+import { createAudioMaster } from '../ui/audio-master.mjs';
+import { audioHarness, settleUntil } from './helpers/soundtrack-audio.mjs';
 
 const track = SOUNDTRACK_CATALOGUE.tracks.find((entry) => entry.id === OPENING_THEME_TRACK_ID);
 const collection = SOUNDTRACK_COLLECTIONS.find((entry) => entry.id === OPENING_THEME_PLAYLIST_ID);
@@ -89,9 +92,14 @@ test('only the new Ukrainian default prepares the opening theme; explicit choice
     'an already persisted Ukrainian choice is not treated as a fresh profile',
   );
   const calls = [];
+  const state = { status: 'paused', selection: null };
   const player = {
-    async selectPlaylist(id) {
-      calls.push(['select', id]);
+    snapshot() {
+      return state;
+    },
+    async selectPlaylist(id, options) {
+      calls.push(['select', id, options]);
+      state.selection = id;
       return false;
     },
     async prepare(options) {
@@ -101,7 +109,7 @@ test('only the new Ukrainian default prepares the opening theme; explicit choice
   };
   assert.equal(await prepareOpeningTheme(player, fresh, { fresh: true }), true);
   assert.deepEqual(calls, [
-    ['select', OPENING_THEME_PLAYLIST_ID],
+    ['select', OPENING_THEME_PLAYLIST_ID, { failureFallbackPlaylistId: 'builtin.all' }],
     ['prepare', { allowNetwork: true }],
   ]);
   for (const library of [
@@ -117,6 +125,88 @@ test('only the new Ukrainian default prepares the opening theme; explicit choice
     listening: { ...fresh.listening, mode: 'metal' },
   });
   assert.deepEqual(calls, [['prepare', { allowNetwork: false }]]);
+});
+
+function openingPlayer(t, { muted, readAsset }) {
+  const audio = audioHarness();
+  const master = createAudioMaster({ muted });
+  const player = createSoundtrackPlayer({
+    soundscape: audio.soundscape,
+    audioElement: audio.media,
+    secondAudioElement: audioHarness().media,
+    readAsset,
+    URLImpl: audio.URLImpl,
+    audioMaster: master,
+    catalogue: SOUNDTRACK_CATALOGUE,
+    bundledTrackIds: [OPENING_THEME_TRACK_ID],
+    fadeMs: 0,
+  });
+  t.after(() => player.dispose());
+  return { ...audio, master, player };
+}
+
+test('a muted first visit recovers from a later opening-theme read failure without changing the saved library', async (t) => {
+  const fresh = setCatalogueTracks(emptySoundtrackLibrary(), SOUNDTRACK_CATALOGUE.tracks);
+  const reads = [];
+  const h = openingPlayer(t, {
+    muted: true,
+    readAsset: async (hash, options) => {
+      reads.push({ hash, localOnly: options.localOnly });
+      if (options.localOnly) return null;
+      throw new Error('opening theme unavailable');
+    },
+  });
+  h.player.setLibrary(fresh);
+  h.player.setContext({ scene: 'menu' });
+
+  assert.equal(await prepareOpeningTheme(h.player, fresh, { fresh: true }), false);
+  assert.equal(
+    reads.filter((read) => !read.localOnly).length,
+    0,
+    'Muted preparation may inspect local storage but must not acquire online bytes.',
+  );
+  assert.equal(h.player.snapshot().selection, OPENING_THEME_PLAYLIST_ID);
+  h.master.setMuted(false);
+  assert.equal(await h.player.play(), true);
+  assert.deepEqual(
+    reads.filter((read) => !read.localOnly),
+    [{ hash: track.asset.sha256, localOnly: false }],
+  );
+  assert.equal(h.player.snapshot().selection, 'builtin.all');
+  assert.equal(h.player.snapshot().playlistId, 'builtin.all');
+  assert.equal(h.player.snapshot().track.kind, 'synth');
+  assert.equal(h.player.snapshot().status, 'playing');
+  assert.equal(fresh.selection.playlistId, null);
+  assert.equal(fresh.listening.mode, 'ukrainian');
+});
+
+test('a newer user selection cancels opening-theme preparation and its failure fallback', async (t) => {
+  const fresh = setCatalogueTracks(emptySoundtrackLibrary(), SOUNDTRACK_CATALOGUE.tracks);
+  let started = false;
+  const h = openingPlayer(t, {
+    muted: false,
+    readAsset: async (_hash, { signal, localOnly }) => {
+      if (localOnly) return null;
+      started = true;
+      return new Promise((resolve, reject) => {
+        signal.addEventListener(
+          'abort',
+          () => reject(new DOMException('superseded', 'AbortError')),
+          { once: true },
+        );
+      });
+    },
+  });
+  h.player.setLibrary(fresh);
+  h.player.setContext({ scene: 'menu' });
+
+  const preparing = prepareOpeningTheme(h.player, fresh, { fresh: true });
+  await settleUntil(() => started);
+  await h.player.selectPlaylist('builtin.genre.metal');
+  assert.equal(await preparing, false);
+  assert.equal(h.player.snapshot().selection, 'builtin.genre.metal');
+  assert.equal(h.player.snapshot().playlistId, 'builtin.genre.metal');
+  assert.equal(h.player.snapshot().track.kind, 'synth');
 });
 
 test('Recording mode excludes the registered core theme and exposes its eligibility notice', () => {

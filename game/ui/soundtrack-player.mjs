@@ -185,7 +185,8 @@ export function createSoundtrackPlayer({
     operation = null,
     pendingSeek = null;
   let failed = new Set(),
-    fallbackUsed = false;
+    fallbackUsed = false,
+    failureFallback = null;
   let baseSelection = null;
   const gainLeases = new Map();
   const tracks = () => [
@@ -877,6 +878,14 @@ export function createSoundtrackPlayer({
     let at = playableIndex(
       index + 1 < queue.length ? index + 1 : playlist?.repeat === 'all' ? 0 : -1,
     );
+    if (at < 0 && failureFallback?.fromPlaylistId === playlist?.id) {
+      const fallbackPlaylistId = failureFallback.toPlaylistId;
+      failureFallback = null;
+      fallbackUsed = true;
+      override = fallbackPlaylistId;
+      install(resolve());
+      at = playableIndex(0);
+    }
     if (
       at < 0 &&
       !fallbackUsed &&
@@ -1029,8 +1038,10 @@ export function createSoundtrackPlayer({
     }
     if (override !== null && !soundtrackPlaylists(next).some((p) => p.id === override))
       override = null;
-    if (!current || next.selection.playlistId !== previousStored)
+    if (!current || next.selection.playlistId !== previousStored) {
       override = next.selection.playlistId;
+      failureFallback = null;
+    }
     failed = new Set();
     fallbackUsed = false;
     dirty = true;
@@ -1076,8 +1087,26 @@ export function createSoundtrackPlayer({
     emit();
     return snapshot();
   }
-  async function selectPlaylist(id) {
+  async function selectPlaylist(id, options = {}) {
+    required(
+      options !== null &&
+        typeof options === 'object' &&
+        !Array.isArray(options) &&
+        Object.keys(options).every((key) => key === 'failureFallbackPlaylistId'),
+      'Invalid soundtrack selection options.',
+    );
+    const failureFallbackPlaylistId = options.failureFallbackPlaylistId ?? null;
     resolveSoundtrackSelection({ ...library, selection: { playlistId: id } }, selectionContext());
+    if (failureFallbackPlaylistId !== null) {
+      required(
+        failureFallbackPlaylistId !== id,
+        'The soundtrack failure fallback must use a different playlist.',
+      );
+      resolveSoundtrackSelection(
+        { ...library, selection: { playlistId: failureFallbackPlaylistId } },
+        selectionContext(),
+      );
+    }
     remoteSelection = null;
     remoteTracks = [];
     override = id;
@@ -1085,6 +1114,13 @@ export function createSoundtrackPlayer({
     failed = new Set();
     fallbackUsed = false;
     install(resolve());
+    failureFallback =
+      failureFallbackPlaylistId === null
+        ? null
+        : {
+            fromPlaylistId: playlist.id,
+            toPlaylistId: failureFallbackPlaylistId,
+          };
     return startAt(0, { fading: true });
   }
   async function selectListening(listening) {
@@ -1179,6 +1215,7 @@ export function createSoundtrackPlayer({
     notice = null;
     failed = new Set();
     fallbackUsed = false;
+    failureFallback = null;
     install(remoteSelection);
     if (startTrackId !== null) {
       const at = queue.indexOf(startTrackId);
