@@ -1,6 +1,14 @@
 # UX1-B compact mission gallery — v0.133.0
 
-This v0.133.0 candidate is prepared against current `main` at `0cb51db92295a62fea99ee2ab215a79c6df06520`, which retains the published v0.132.4 product source `d3df9d47f578d48383ff589914a188ada2ef8b31` and presentation revision 88. It must rebase once more onto the accepted v0.132.5 localization repair before its release PR can advance. It keeps the complete mode-compatible mission catalogue visible while reducing the work needed to find and start a mission. It advances the candidate identity to v0.133.0 without changing publishing, release history, progression identity, simulation rules, or the underlying pack formats.
+This v0.133.0 candidate is prepared against exact `main` at
+`a8881ac17e44f38fb1e9dc15428899992727cc78`. That source contains the merged
+v0.132.5 localization repair, the v0.132.5 version commit and the exact FPV
+presentation-revision-90 continuation from PR #663. v0.132.5 is not public yet,
+so this candidate must rebase once more onto its accepted public source before
+the release PR can advance. It keeps the complete mode-compatible mission
+catalogue visible while reducing the work needed to find and start a mission. It
+advances the candidate identity to v0.133.0 without changing publishing, release
+history, progression identity, simulation rules, or the underlying pack formats.
 
 ## Player contract
 
@@ -34,14 +42,14 @@ The candidate adds or updates focused coverage for:
 - retained selection, scroll, opener, and native input ownership.
 - real Versus controller activation, including failed download, one owned Retry, repeated-Confirm suppression, and automatic play after preparation;
 - real Team controller activation against the current Journey presentation fixture.
-- the accepted v0.132.4 predecessor's Versus inventory and handoff expectations retain all 285 compatible mission identities and the exact `whole-spatial-v11` route.
-- the accepted v0.132.4 predecessor's Solo inventory and handoff expectations retain 285 compatible identities and the exact `whole-spatial-v11` route.
-- the accepted v0.132.4 predecessor's Team inventory, refresh, cancellation, and recovery expectations retain 288 compatible identities.
+- the merged v0.132.5 source's Versus inventory and handoff expectations retain all 285 compatible mission identities and the exact `whole-spatial-v11` route.
+- the merged v0.132.5 source's Solo inventory and handoff expectations retain 285 compatible identities and the exact `whole-spatial-v11` route.
+- the merged v0.132.5 source's Team inventory, refresh, cancellation, and recovery expectations retain 288 compatible identities under exact current FPV revision 90 while retaining revisions 58–89.
 - Team picture-binding and imported-map compatibility coverage continues to require the exact current presentation while preserving retained-history recovery.
-- on the rebased candidate, the unaffected cases in a concurrent gallery run passed 109/109; all 45 cases from the three host files that hit bounded timeouts under that concurrent load then passed as complete files with `--test-concurrency=1`. The resource-contended run is retained as failed evidence and is not described as a single 154/154 pass. Earlier focused controller gallery navigation passed 8/8, device controls 15/15, and featured campaign switching 5/5.
+- on the exact `a8881ac17e44f38fb1e9dc15428899992727cc78` base, the complete sequential focused audit passed 160/160. That run includes 4/4 Journey continuation-caption cases, 2/2 Team localization/controller cases, all compact-gallery unit and host coverage, and the revision-90 Team inventory continuation.
 - the rebased exact-head build and manifest digest are recorded by the v0.133.0 PR gate before merge.
 - local browser review verified the compact four-column desktop gallery, image-led cards, campaign rail, horizontal and vertical keyboard movement, Escape return, and an in-place English-to-Ukrainian refresh with localized campaign titles and actions.
 
 ## Evidence limits
 
-This is a release candidate, not a public release. The browser check is desktop interaction evidence, not physical touch hardware or physical-controller qualification. The repository's committed temporary fast-release policy waives the long automated suites; it does not turn them into passing evidence. Focused current-source checks qualify the changed gallery and controller paths. Accepted Team binding and slower-device preparation corrections remain in the v0.132.4 predecessor without weakening retained-history checks. The candidate does not redesign mission Details, results, Pause, HUD, Collection records, or gameplay teaching; those remain in UX2-UX5.
+This is a release candidate, not a public release. The browser check is desktop interaction evidence, not physical touch hardware or physical-controller qualification. The repository's committed temporary fast-release policy waives the long automated suites; it does not turn them into passing evidence. Focused current-source checks qualify the changed gallery and controller paths. The merged v0.132.5 predecessor source carries the exact revision-90 Team binding and slower-device preparation corrections without weakening retained-history checks; it still requires public acceptance. The candidate does not redesign mission Details, results, Pause, HUD, Collection records, or gameplay teaching; those remain in UX2-UX5.
