@@ -1594,6 +1594,7 @@ test('held Retry Confirm cannot leave the loss reader or leak ability and Toggle
     const router = createControllerRouter({
       bindings: config,
       boostMode: 'toggle',
+      confirmReleaseMs: 0,
       eventTarget: null,
       readPads: () => {
         reads++;
