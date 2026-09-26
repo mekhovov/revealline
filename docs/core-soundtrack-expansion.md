@@ -68,7 +68,7 @@ the primary Pages selector serves it. Maintenance
 [PR #634](https://github.com/mekhovov/revealline/pull/634) and read-only shadow run
 36228680013 verified that its public tag, release object, merged release root and
 predecessor bind to exact source `366ed9202efd77d82be124669680d3351bf5074f`.
-Authoritative game `main` is now `80911bf5ec0f6df711d7e70b36a11005d2be4c3a`: evidence-authority repair PR #645 followed inspector correction PR #644 and terminal release-root `9289184d8c36c85261493b8a31ba36e8ffb931ee`; the narrow v0.132.4 Team repair merged as `d878a879848cea271f1098774ef897dfbf6d806f`, the soundtrack ledger correction merged through PR #640, and terminal release-root PR #641 merged without changing soundtrack runtime behavior. Archive-directory client PR #604 was rebased cleanly onto that cumulative source and now has exact head `5d23a776d226d0ed3239f558318cd58be886b938`. Its catalogue, panel and player cohort passes 177/177 locally. Preserve failed hosted runs 36230776668, 36231230104, 36231736506, 36232156154 and 36232552706. The failures progressively verified real preparation and exact bundle recovery, then exposed three omitted neutral frames in one deterministic controller test: before Prepare, before retained-link activation and before returning ownership to native Enter. The test now models all three production 120 ms lifecycle boundaries; exact-head run 36232882068 is authoritative and active. Opening-theme fallback PR #617 is rebased onto the same cumulative source at `2007352fc53274daad521d7ef47d9b26358b4bb5`; its focused regression passes 7/7 locally and prior exact-head runs 36230785270 and 36231743707 passed preflight, focused and release-ready; rebased successor run 36232888054 is authoritative and active. Both remain draft and unallocated. The fast-release policy skips their full test/build jobs, so those skips remain exclusions rather than passes.
+Authoritative game `main` is now `d3df9d47f578d48383ff589914a188ada2ef8b31`: the publisher's follow-up PR #647 advanced evidence-authority repair `80911bf5ec0f6df711d7e70b36a11005d2be4c3a`, which followed inspector correction PR #644 and terminal release-root `9289184d8c36c85261493b8a31ba36e8ffb931ee`. Archive-directory client PR #604 remains on the immediately preceding accepted base at exact head `5d23a776d226d0ed3239f558318cd58be886b938` until v0.132.4 public acceptance. Preserve failed hosted runs 36230776668, 36231230104, 36231736506, 36232156154 and 36232552706. The failures progressively verified real preparation and exact bundle recovery, then exposed three omitted neutral frames in one deterministic controller test: before Prepare, before retained-link activation and before returning ownership to native Enter. The test now models all three production 120 ms lifecycle boundaries; exact-head run 36232882068 passed preflight, 9/9 archive tests, all 21 host tests and release-ready. Opening-theme fallback PR #617 remains on the same preceding base at `2007352fc53274daad521d7ef47d9b26358b4bb5`; exact-head run 36232888054 passed preflight, focused and release-ready. Both remain draft and unallocated, and will rebase onto `d3df9d47…` only after the sole publisher accepts v0.132.4 publicly. The fast-release policy skipped their full test/build jobs, so those skips remain exclusions rather than passes.
 
 Archive PR #41 publishes three more CC0 racing-synth auditions by MintoDog: Pure
 Raceway, Pure Raceway (Climax) and Darkness Road (Remake). Exact-head verification
@@ -197,7 +197,7 @@ Local free space fell to about **0.4 GiB** while other work continued, below the
    a hardcoded fallback. It is rebased on accepted main
    `80911bf5ec0f6df711d7e70b36a11005d2be4c3a` at exact head
    `5d23a776d226d0ed3239f558318cd58be886b938`. The 177/177 catalogue, panel and
-   player cohort plus formatting pass locally. Preserve exact hosted failures 36230776668, 36231230104, 36231736506, 36232156154 and 36232552706. They progressively isolated three missing neutral samples in one deterministic controller test; the runtime behavior was unchanged. The current test-only successor models all three production lifecycle boundaries; run 36232882068 is authoritative. Full
+   player cohort plus formatting pass locally. Preserve exact hosted failures 36230776668, 36231230104, 36231736506, 36232156154 and 36232552706. They progressively isolated three missing neutral samples in one deterministic controller test; the runtime behavior was unchanged. The current test-only successor models all three production lifecycle boundaries; run 36232882068 passed 9/9 archive tests and 21/21 host tests. Full
    tests and build remain skipped under the unallocated fast-release policy.
    Archive 02 publishes eight recordings independently, but do not add it to the
    public directory until that client is released. Archive PR #41 raises Archive 01
@@ -208,7 +208,7 @@ The latest accepted public/general GitHub release at this checkpoint remains [v0
 reviewed Pages selector is
 [PR #633](https://github.com/mekhovov/revealline/pull/633). Direct public reads
 confirm the primary selector serves v0.132.3.
-Authoritative `main` is `80911bf5ec0f6df711d7e70b36a11005d2be4c3a`;
+Authoritative `main` is `d3df9d47f578d48383ff589914a188ada2ef8b31`;
 v0.132.3 is public and does not contain a new soundtrack feature. Its exact source
 binding is validated by merged maintenance PR #634 and read-only shadow run 36228680013. Preserve v0.132.3 immutably.
 v0.132.0 and its
@@ -274,8 +274,8 @@ originals approved. No deadline is assigned to unresolved rights or paused music
   [run 36219306789](https://github.com/mekhovov/revealline-soundtracks-01/actions/runs/36219306789)
   passed. Direct reads verified the exact v1 directory, primary-first/required
   binding and CORS. Game [PR #604](https://github.com/mekhovov/revealline/pull/604)
-  is rebased on authoritative main `80911bf5ec0f6df711d7e70b36a11005d2be4c3a` at exact head `5d23a776d226d0ed3239f558318cd58be886b938`; its focused catalogue, panel and player cohort passes 177/177 locally. Preserve exact hosted failures 36230776668, 36231230104, 36231736506, 36232156154 and 36232552706. The current test now models the full 120 ms controller release lifecycle before preparation, retained-link activation and native keyboard ownership. Run 36232882068 is the authoritative exact-head gate. Full test/build jobs remain skipped. The next action
-  is a green exact-head focused gate, allocated merged-source qualification and
+  is on the immediately preceding accepted main `80911bf5ec0f6df711d7e70b36a11005d2be4c3a` at exact head `5d23a776d226d0ed3239f558318cd58be886b938`; its focused catalogue, panel and player cohort passes 177/177 locally. Preserve exact hosted failures 36230776668, 36231230104, 36231736506, 36232156154 and 36232552706. The current test models the full 120 ms controller release lifecycle before preparation, retained-link activation and native keyboard ownership. Run 36232882068 passed 9/9 archive tests and all 21 host tests. Full test/build jobs remain skipped. The next action
+  is a post-v0.132.4-public rebase onto `d3df9d47…`, another exact-head focused gate, allocated merged-source qualification and
   public verification before activating Archive 02 in the reviewed directory.
 - Archive [PR #35](https://github.com/mekhovov/revealline-soundtracks-01/pull/35)
   merged as `00ef4e64a158f2e73d9b431556034f1a04b28541`. PR verification
