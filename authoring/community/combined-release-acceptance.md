@@ -8,10 +8,10 @@ release claims.
 ## Candidate identity
 
 - Merged framework source: PR #465, merged 25 September 2026.
-- Rebased hardening base: `f913c64027615632610de673b87926a841f016b9` (`main`, source version
+- Rebased hardening base: `c6efdbcc0a409bdce8cda85b980da0d136af2731` (`main`, source version
   `0.132.2`).
 - Hardening checkpoint before this acceptance refresh:
-  `e1c83e48b233d6f801066bead8c906258da05403`.
+  `43981c795f62522a1fadd7ddcc211141aa61672b`.
 - Assigned release target and working source: `v0.141.0` in PR #564. The repository release
   coordinator still has to freeze the reviewed candidate.
 
@@ -60,9 +60,9 @@ output. Its largest new source asset is the pinned, licensed Mediabunny browser 
 
 ## Integrated evidence
 
-- `npm run test:creator-feature -- --runtime-only`: **522/522** creator/runtime checks and the
-  community service suite: **43/43** checks passed from the current rebased source.
-  checks passed from the current rebased source. The full runtime run first exposed five sparse
+- `npm run test:creator-feature -- --runtime-only`: **522** top-level subtests and **524/524** total
+  creator/runtime tests passed. The community service suite passed **43/43** checks from the current
+  rebased source. The full runtime run first exposed five sparse
   checkout omissions and three injected-host database-model conflicts; the exact owning cohorts
   passed after restoring the release inputs and limiting automatic cross-database accounting to a
   standard browser IndexedDB factory. Explicit managed-store injection remains covered.
@@ -73,9 +73,12 @@ output. Its largest new source asset is the pinned, licensed Mediabunny browser 
   normalization, package/install/intake, aggregate quota pressure, abandoned-claim reconciliation,
   storage review and immutable edition accounting. The complete exact-head creator cohort passes
   **522/522** from one run after the final rebase and UI cancellation fix.
-- Installed creator Versus, bundle, qualification and profile-edition coverage passes **19/19**.
-  The real host runs both boards, replays the generated legal route, awards the exact picture,
-  exposes Cleared state, keeps its verified difficulty, and advances to the next mission.
+- Installed creator Versus, bundle, qualification, profile-edition and picture durability coverage
+  passes **30** top-level tests and **32/32** total tests including nested host checks. The real host
+  runs both boards, replays the generated legal route, awards the exact picture, exposes Cleared
+  state, keeps its verified difficulty, advances both boards through pointer Next, and restores the
+  exact clear and earned picture in a fresh host. Injected asynchronous storage failure either
+  commits a receipt-only clear or retains the complete scoped event for Retry/Export.
 - The exact navigation cohort that failed on the rebased PR now passes **194/194**. The repair keeps
   the controller Confirm release guard current after a controller starts a race, so a later direct
   touch is accepted after the finite Steam Input echo window. Navigation fixtures now exercise
@@ -95,10 +98,11 @@ output. Its largest new source asset is the pinned, licensed Mediabunny browser 
 - Root and community-service ESLint and Prettier checks: passed.
 - Native formatting, Motion Lab syntax, Field Kit producer check, and Field Kit readiness: passed.
 - Root and community dependency audits: zero reported vulnerabilities.
-- The previous pre-rebase `npm run build` passed for **1,277 files** at source version `0.131.0`
-  with distribution SHA-256
-  `e8b7eee0805d85c4f2198fa29d5f44f7ab42dcaa84a09a78b9f59e43ffb3e608`. It is historical
-  evidence only. The exact v0.141.0 candidate build and immutable freeze remain PR/release gates.
+- A local `npm run build` passed for **1,303 files** at source version `0.141.0` after materializing
+  the tracked release inputs omitted by this worktree's sparse checkout, with distribution SHA-256
+  `612279058679b5a3146bab8ddcfde96d2c69e8d021ce51510c8979e35f4ce19e`. It predates the final
+  durability repair and is supporting evidence only; the exact candidate build and immutable freeze
+  remain PR/release gates.
 - Built-in-browser evidence in the phase records covers single-image completion, 12- and 50-image
   batches, cancel/resume and splitting, video-only victory playback, and verified silent-AVC trim.
   On the current combined source, a fresh picture generated a visible moving enemy and two collision
@@ -156,8 +160,8 @@ Balanced or Compact resize/compression profiles and exact output verification. A
 codecs outside each browser's successful decode probe, and broader conversion remain unsupported.
 Firefox, Safari, Balanced portrait and physical mobile media qualification remain unclaimed.
 
-PR #465 is merged. The hardening branch is rebased onto current protected `main` in draft PR #564,
-which now has the repository-assigned target and source identity `v0.141.0`. Local exact-head
+PR #465 is merged. The hardening branch is rebased onto current protected `main` in ready PR #564,
+which has the repository-assigned target and source identity `v0.141.0`. Local exact-head
 creator, service, navigation, validation, lint and format gates pass. Publication still requires
 hosted PR checks, review, an immutable freeze,
 artifact hashes, public online/offline verification, and a separately reviewed Pages selector
