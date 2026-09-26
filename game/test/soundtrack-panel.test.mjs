@@ -3,7 +3,10 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { attachSoundtrackPanel } from '../ui/soundtrack-panel.mjs';
-import { ONLINE_SOUNDTRACK_CATALOGUE_URL } from '../online-soundtrack-catalogue.mjs';
+import {
+  ONLINE_SOUNDTRACK_CATALOGUE_URL,
+  ONLINE_SOUNDTRACK_DIRECTORY_URL,
+} from '../online-soundtrack-catalogue.mjs';
 import { createAudioMaster } from '../ui/audio-master.mjs';
 import {
   SOUNDTRACK_BUNDLED_ASSETS,
@@ -416,6 +419,35 @@ function onlineCatalogueResponse(catalogue) {
     headers: { get: () => String(body.byteLength) },
     body: new Response(body).body,
   };
+}
+
+function onlineDirectoryResponse() {
+  const body = new TextEncoder().encode(
+    JSON.stringify({
+      format: 'revealline-public-soundtrack-directory.v1',
+      catalogues: [
+        {
+          id: 'revealline-soundtracks-01',
+          url: ONLINE_SOUNDTRACK_CATALOGUE_URL,
+          baseURL: 'https://mekhovov.github.io/revealline-soundtracks-01/',
+          required: true,
+        },
+      ],
+    }),
+  );
+  return {
+    status: 200,
+    redirected: false,
+    url: ONLINE_SOUNDTRACK_DIRECTORY_URL,
+    headers: { get: () => String(body.byteLength) },
+    body: new Response(body).body,
+  };
+}
+
+function onlineArchiveResponse(url, catalogue = onlineCatalogueFixture()) {
+  return url === ONLINE_SOUNDTRACK_DIRECTORY_URL
+    ? onlineDirectoryResponse()
+    : onlineCatalogueResponse(catalogue);
 }
 
 async function settleOnlineCatalogue(predicate = () => true, label = 'online catalogue update') {
@@ -2049,18 +2081,22 @@ test('public archive searches and plays any published recording through the shar
       onlineCatalogueDownload: {
         fetch: async (url, options) => {
           requests.push([url, options]);
-          return onlineCatalogueResponse(catalogue);
+          return onlineArchiveResponse(url, catalogue);
         },
       },
     },
   });
   await settleOnlineCatalogue(
-    () => requests.length === 1 && app.node('online-results').children.length === 6,
+    () => requests.length === 2 && app.node('online-results').children.length === 6,
     'the public catalogue results',
   );
-  assert.equal(requests.length, 1);
-  assert.equal(requests[0][0], ONLINE_SOUNDTRACK_CATALOGUE_URL);
+  assert.equal(requests.length, 2);
+  assert.deepEqual(
+    requests.map(([url]) => url),
+    [ONLINE_SOUNDTRACK_DIRECTORY_URL, ONLINE_SOUNDTRACK_CATALOGUE_URL],
+  );
   assert.equal(requests[0][1].credentials, 'omit');
+  assert.equal(requests[1][1].credentials, 'omit');
   assert.equal(app.node('online-results').children.length, 6);
   assert.match(app.node('online-status').textContent, /6 of 6 published recordings/);
 
@@ -2136,10 +2172,12 @@ test('public archive catalogue outage can refresh without disabling built-in con
   const failed = await setup(t, {
     callbacks: {
       onlineCatalogueDownload: {
-        fetch: async () =>
-          ++attempts === 1
+        fetch: async (url) => {
+          if (url === ONLINE_SOUNDTRACK_DIRECTORY_URL) return onlineDirectoryResponse();
+          return ++attempts === 1
             ? new Response('no', { status: 503 })
-            : onlineCatalogueResponse(onlineCatalogueFixture()),
+            : onlineCatalogueResponse(onlineCatalogueFixture());
+        },
       },
     },
   });
