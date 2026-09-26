@@ -85,6 +85,7 @@ export async function couchPage(
     },
     indexedDB: assetDatabase,
     localStorage: storage,
+    performance: { now: () => now },
     URL: URLImpl,
     Image:
       ImageClass ||
