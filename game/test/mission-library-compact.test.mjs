@@ -325,6 +325,35 @@ test('compact controls override inherited dialog panel spacing without shrinking
   );
 });
 
+test('narrow large-text and forced-colour layouts keep one readable column and native state cues', async () => {
+  const css = await readFile(new URL('../ui/journey.css', import.meta.url), 'utf8');
+  assert.match(
+    css,
+    /@media \(max-width: 600px\) \{\s*\.game-shell\[data-text-size='large'\][^{]*#journey-chooser\.mission-library-chooser[^{]*\.journey-cards \{\s*grid-template-columns: minmax\(0, 1fr\);/s,
+    'Large text must not share two narrow mission columns on compact screens.',
+  );
+  assert.match(
+    css,
+    /@media \(max-width: 380px\) \{\s*#journey-chooser\.mission-library-chooser \.journey-cards \{\s*grid-template-columns: minmax\(0, 1fr\);/s,
+    'Very narrow standard-text screens retain a readable single column too.',
+  );
+  const forced = css.slice(css.indexOf('@media (forced-colors: active)'));
+  assert.match(forced, /#journey-chooser \.journey-card,[^}]*border-image: none;/s);
+  assert.match(
+    forced,
+    /\.journey-card\[data-current='true'\] \{[^}]*outline: 2px solid Highlight;[^}]*box-shadow: none;/s,
+  );
+  assert.match(
+    forced,
+    /\.journey-card\[data-availability-state='unavailable'\] \{[^}]*color: GrayText;[^}]*border-style: dashed;/s,
+    'Unavailable remains a textual and border-style state rather than colour alone.',
+  );
+  assert.match(
+    forced,
+    /\.journey-campaign-shortcut\[aria-pressed='true'\] \{[^}]*color: HighlightText;[^}]*background: Highlight;/s,
+  );
+});
+
 test('short landscape setup fields scroll above an unchanged reachable footer', async () => {
   const css = await readFile(new URL('../ui/journey.css', import.meta.url), 'utf8');
   const landscape = css.slice(css.lastIndexOf('@media (max-height: 480px)'));
