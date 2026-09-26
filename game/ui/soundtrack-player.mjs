@@ -52,6 +52,8 @@ export function createSoundtrackPlayer({
   audioMaster,
   catalogue = null,
   bundledTrackIds = [],
+  localPlayback = false,
+  localRecordingIds = [],
 } = {}) {
   required(
     soundscape?.persistentMusic === true &&
@@ -90,6 +92,16 @@ export function createSoundtrackPlayer({
     'Invalid bundled soundtrack identities.',
   );
   const bundledIds = Object.freeze([...bundledTrackIds]);
+  required(typeof localPlayback === 'boolean', 'Invalid local soundtrack playback policy.');
+  required(
+    Array.isArray(localRecordingIds) &&
+      localRecordingIds.length <= 256 &&
+      new Set(localRecordingIds).size === localRecordingIds.length &&
+      localRecordingIds.every(
+        (id) => typeof id === 'string' && /^[a-z0-9][a-z0-9._-]{0,127}$/.test(id),
+      ),
+    'Invalid local soundtrack identities.',
+  );
   required(
     Number.isInteger(remoteStallMs) && remoteStallMs >= 10 && remoteStallMs <= 60000,
     'Invalid remote music recovery duration.',
@@ -182,8 +194,20 @@ export function createSoundtrackPlayer({
     ...(published ? [published] : []),
     ...remoteTracks,
   ];
-  const selectionContext = () =>
-    bundledIds.length ? { ...context, bundledTrackIds: bundledIds } : context;
+  const selectionContext = (value = context) => ({
+    ...value,
+    ...(!localPlayback && bundledIds.length ? { bundledTrackIds: bundledIds } : {}),
+    ...(localPlayback
+      ? {
+          installedTrackIds: [
+            ...new Set([
+              ...(value.installedTrackIds ?? library.installedTrackIds ?? []),
+              ...localRecordingIds,
+            ]),
+          ],
+        }
+      : {}),
+  });
   const resolveBase = () => {
     if (
       cacheableCatalogue &&
@@ -192,10 +216,14 @@ export function createSoundtrackPlayer({
       baseSelection.override === override
     )
       return baseSelection.selected;
-    const selected = resolveSoundtrackSelection(
+    const selectionLibrary =
       library.selection.playlistId === override
         ? library
-        : { ...library, selection: { playlistId: override } },
+        : { ...library, selection: { playlistId: override } };
+    const selected = resolveSoundtrackSelection(
+      localPlayback && library.listening
+        ? { ...selectionLibrary, listening: { ...library.listening, installedOnly: true } }
+        : selectionLibrary,
       selectionContext(),
       { catalogue: catalogue ?? undefined },
     );
@@ -444,7 +472,11 @@ export function createSoundtrackPlayer({
     const original =
       track.kind === 'published'
         ? await track.readBlob({ signal })
-        : await readAsset(track.asset.sha256, { signal, purpose: 'playback', localOnly });
+        : await readAsset(track.asset.sha256, {
+            signal,
+            purpose: 'playback',
+            localOnly: localOnly || localPlayback,
+          });
     throwIfSoundtrackAborted(signal);
     if (localOnly && original == null) return false;
     const blob = track.kind === 'published' ? original : ownSoundtrackBlob(original);
@@ -1006,6 +1038,20 @@ export function createSoundtrackPlayer({
     emit();
     return snapshot();
   }
+  function setLocalRecordingIds(ids) {
+    required(
+      Array.isArray(ids) &&
+        ids.length <= 256 &&
+        new Set(ids).size === ids.length &&
+        ids.every((id) => typeof id === 'string' && /^[a-z0-9][a-z0-9._-]{0,127}$/.test(id)),
+      'Invalid local soundtrack identities.',
+    );
+    localRecordingIds = [...ids];
+    if (!current) dirty = true;
+    baseSelection = null;
+    failed = new Set();
+    return setContext(context);
+  }
   function setContext(value) {
     const owned = boundedJSON(value, {
       maxBytes: 32768,
@@ -1015,7 +1061,7 @@ export function createSoundtrackPlayer({
     });
     resolveSoundtrackSelection(
       { ...library, selection: { playlistId: override } },
-      bundledIds.length ? { ...owned, bundledTrackIds: bundledIds } : owned,
+      selectionContext(owned),
     );
     cancelPreload();
     const sceneChanged = (context.scene ?? 'gameplay') !== (owned.scene ?? 'gameplay');
@@ -1361,6 +1407,7 @@ export function createSoundtrackPlayer({
   });
   return Object.freeze({
     setLibrary,
+    setLocalRecordingIds,
     setContext,
     setAuthoredTrack,
     setPublishedTrack,
