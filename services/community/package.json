@@ -13,6 +13,7 @@
     "worker": "node src/worker-runner.mjs",
     "auth:migrate": "node src/auth-migrate.mjs",
     "recovery": "node src/recovery-runner.mjs",
+    "acceptance:deployed": "node src/deployed-journey-runner.mjs",
     "test": "node --test test/*.test.mjs",
     "lint": "eslint \"src/**/*.mjs\" \"test/**/*.mjs\" eslint.config.mjs --max-warnings 0",
     "format": "prettier --write \"**/*.{mjs,json,md,yaml,yml}\"",
