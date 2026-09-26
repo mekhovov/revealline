@@ -713,6 +713,14 @@ canvas {
   flex: 1;
   color: var(--muted);
 }
+#coop-message[data-coach] {
+  border-inline-start: 3px solid var(--sun);
+  padding-inline-start: 10px;
+  color: var(--ink);
+}
+#coop-message[data-coach='support'] {
+  border-inline-start-color: var(--sky);
+}
 #coop-clock {
   font-variant-numeric: tabular-nums;
 }
