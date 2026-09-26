@@ -31,8 +31,8 @@ import {
   VERSION,
   COMMIT,
   SHA,
-  retainRecentMetadata,
-  validReleaseRetention,
+  selectReleaseMetadata,
+  validRetentionConfiguration,
 } from "./metadata.mjs";
 import { validateWaivedSourceQualification } from "./source-qualification.mjs";
 
@@ -99,6 +99,7 @@ export async function validateAdmissions({
   directory,
   configuration,
   metadata,
+  catalogMetadata = metadata,
   requireBrowser = true,
   readSourceFile = readGitSourceFile,
 }) {
@@ -111,7 +112,9 @@ export async function validateAdmissions({
       "admissions",
       "deploymentEnabled",
       "currentSourceQualification",
-      "retainedReleasesPerMajor",
+      Object.hasOwn(configuration, "retainedReleaseCount")
+        ? "retainedReleaseCount"
+        : "retainedReleasesPerMajor",
       "testingRoutes",
     ]) ||
     configuration.format !== "revealline-pages-controller.v1" ||
@@ -122,7 +125,7 @@ export async function validateAdmissions({
     !SHA.test(configuration.allocationSha256) ||
     !Array.isArray(configuration.admissions) ||
     configuration.admissions.length > MAX_ARCHIVE_SHARDS ||
-    !validReleaseRetention(configuration.retainedReleasesPerMajor) ||
+    !validRetentionConfiguration(configuration) ||
     !configuration.testingRoutes ||
     typeof configuration.testingRoutes !== "object" ||
     Array.isArray(configuration.testingRoutes) ||
@@ -237,9 +240,8 @@ export async function validateAdmissions({
       throw new Error("Invalid archive admission.");
     const shard = allocation.shards.find((s) => s.id === admission.id);
     if (!shard) throw new Error("Admission has no allocation.");
-    // Retired versions remain in the immutable catalog, but are intentionally not
-    // routed or validated by a bounded public Pages deployment.
-    if (!shard.versions.some((version) => metadata.has(version))) continue;
+    // All local records and evidence remain validated. Only selected routes
+    // require a fresh remote authority read in the publication critical path.
     let http = null,
       inventory = null,
       inventoryPin = null,
@@ -293,7 +295,7 @@ export async function validateAdmissions({
           evidence.deploymentId !== admission.deploymentId ||
           !Array.isArray(evidence.versions) ||
           shard.versions.some(
-            (v) => metadata.has(v) && !evidence.versions.includes(v),
+            (v) => catalogMetadata.has(v) && !evidence.versions.includes(v),
           ) ||
           !Array.isArray(evidence.evidence) ||
           !evidence.evidence.length ||
@@ -336,8 +338,10 @@ export async function validateAdmissions({
       throw new Error(
         "Archive HTTP report is not bound to its complete inventory.",
       );
-    for (const version of shard.versions.filter((v) => metadata.has(v))) {
-      const item = metadata.get(version),
+    for (const version of shard.versions.filter((v) =>
+      catalogMetadata.has(v),
+    )) {
+      const item = catalogMetadata.get(version),
         prefix = `releases/${version}/site/`;
       const rows = [
         ...item.manifest.files,
@@ -376,7 +380,8 @@ export async function validateAdmissions({
         );
     }
     admitted.set(admission.id, shard);
-    relevantAdmissions.push(admission);
+    if (shard.versions.some((version) => metadata.has(version)))
+      relevantAdmissions.push(admission);
   }
   const plan = {
     formatVersion: 1,
@@ -405,6 +410,13 @@ export async function validateAdmissions({
       throw new Error(
         `Historical edition lacks an admitted archive: ${version}`,
       );
+  for (const [version, site] of Object.entries(configuration.testingRoutes)) {
+    if (
+      Object.hasOwn(configuration, "retainedReleaseCount") &&
+      canonicalSites[version] !== site
+    )
+      throw new Error("Testing route does not match its admitted archive.");
+  }
   return {
     plan,
     canonicalSites,
@@ -638,13 +650,13 @@ export async function assemble({
     testingMetadata = new Map(
       [...catalogMetadata].filter(([version]) => testingVersions.has(version)),
     ),
-    metadata = retainRecentMetadata(
+    metadata = selectReleaseMetadata(
       new Map(
         [...catalogMetadata].filter(
           ([version]) => !testingVersions.has(version),
         ),
       ),
-      configuration.retainedReleasesPerMajor,
+      configuration,
     ),
     _testingRoutesExist =
       testingMetadata.size === testingVersions.size ||
@@ -654,7 +666,8 @@ export async function assemble({
     { canonicalSites } = await validateAdmissions({
       directory,
       configuration,
-      metadata,
+      metadata: new Map([...metadata, ...testingMetadata]),
+      catalogMetadata,
       requireBrowser,
     }),
     current = metadata.get(configuration.currentVersion),
@@ -752,7 +765,10 @@ export async function assemble({
     currentSite,
     outputDirectory,
   );
-  const records = [...publicationMetadata.values()].map((m) => m.record),
+  const publicMetadata = Object.hasOwn(configuration, "retainedReleaseCount")
+    ? metadata
+    : publicationMetadata;
+  const records = [...publicMetadata.values()].map((m) => m.record),
     index = publishedReleaseIndex(
       records,
       lock.sourceRepository,
