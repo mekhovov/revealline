@@ -587,5 +587,18 @@
   "content.stableClassIds": "Ключі theme.classBodies мають бути стабільними незарезервованими ідентифікаторами класів.",
   "content.stableBodyPresetId": "{{path}} має бути стабільним незарезервованим ідентифікатором шаблону корпусу.",
   "content.registeredValue": "{{path}} не зареєстровано.",
-  "content.hexColor": "{{path}} має використовувати формат #rrggbb."
+  "content.hexColor": "{{path}} має використовувати формат #rrggbb.",
+  "content.uint32": "{{path}} має бути цілим 32-бітним беззнаковим числом.",
+  "content.oneOf": "{{path}} має мати одне зі значень: {{values}}.",
+  "content.booleanRequired": "{{path}} має бути булевим значенням.",
+  "content.sectionError": "{{section}}: {{error}}",
+  "content.imageDescriptor": "{{path}} має бути описом зображення.",
+  "content.scenario.supportedFormat": "Очікується підтримуваний формат xonix-playground.v1..v9.",
+  "content.scenario.simulationVersionMatch": "Версії симуляції сценарію та рівня мають збігатися.",
+  "content.scenario.masteryRequired": "Поле scenario.masteryDefinition обов’язкове; використовуйте null, якщо додаткової цілі немає.",
+  "content.scenario.classicMasteryUnsupported": "Сценарії Classic вимагають masteryDefinition:null; ця система правил не підтримує додаткові цілі.",
+  "content.scenario.wideMasteryUnsupported": "Сценарії Wide вимагають masteryDefinition:null; ця система правил не підтримує додаткові цілі.",
+  "content.scenario.encounterMasteryUnsupported": "Сценарії Encounter вимагають masteryDefinition:null; ця система правил не підтримує додаткові цілі.",
+  "content.scenario.combinedDecodedArtworkBudget": "Сукупний обсяг декодованих зображень перевищує обмеження у 32 мегапікселі.",
+  "content.scenario.playerArtworkAnchorsWarning": "Зображення гравця зберігає наявні точки кріплення ротора й додаткових елементів вибраного корпусу. Перевірте вирівнювання; зображення не змінює геометрію зіткнень чи здібності."
 }
