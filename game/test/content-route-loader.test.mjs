@@ -59,6 +59,7 @@ const golden = {
   'whole-spatial-v29': [283404, '8fa6e5368dfa0d8e7e445b19f7b70330a6f805f87e835a386cb912faedb2d32e'],
   'whole-spatial-v30': [284976, '17f22561e47659fc98585f304986585319de08ce576892faff656f4114515751'],
   'whole-spatial-v31': [285792, 'bf4941592c74c3ccd99522fd00c6636703aa69c8b64fe8d3a08cf513eef613e6'],
+  'whole-spatial-v32': [286785, 'c139f8caff19b46be2783216a48ca9879b540435af11a24a2e9d3ea32ec2f827'],
   'whole-ornament-v1': [260665, '3b29bc220cdb06a33fedefabb6adec9527bd10902a9dd44899270e885ddfc4ad'],
   'whole-ornament-v2': [266314, '3f0116efe9cb9b2e134fb60dd252ac5bfbd44758a993e18a56abb2131ca10a1b'],
 };
@@ -438,6 +439,18 @@ test('Border cultural completion imports only its bounded successor chain', () =
   assert(!has(result, 'horizon-candidates.mjs'));
 });
 
+test('Border frontier and pocket completion imports only its bounded successor chain', () => {
+  const result = routeProbe('whole-spatial-v32');
+  assert.deepEqual(result.output, { id: 'whole-spatial-v32' });
+  assert(has(result, 'border-frontier-pocket-candidates.mjs'));
+  assert(has(result, 'border-cultural-completion-candidates.mjs'));
+  assert(has(result, 'border-cultural-next-batch-candidates.mjs'));
+  assert(has(result, 'spatial-next-batch-candidates.mjs'));
+  assert(has(result, 'whole-spatial-data.mjs'));
+  assert(!has(result, 'whole-journey-candidates.mjs'));
+  assert(!has(result, 'horizon-candidates.mjs'));
+});
+
 test('ornament editions import only their bounded opt-in source chain', () => {
   const study = routeProbe('whole-ornament-v1');
   assert.deepEqual(study.output, { id: 'whole-ornament-v1' });
@@ -489,6 +502,7 @@ test('all literal lazy imports and shared modules are in the actual game build i
   const source = await readFile(new URL(loaderURL), 'utf8');
   const imports = [...source.matchAll(/import\('(.+?)'\)/g)].map((m) => m[1]);
   assert.deepEqual(imports, [
+    './border-frontier-pocket-candidates.mjs',
     './border-cultural-completion-candidates.mjs',
     './rover-cultural-completion-candidates.mjs',
     './neon-cultural-completion-candidates.mjs',
