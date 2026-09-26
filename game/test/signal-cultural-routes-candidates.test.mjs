@@ -252,7 +252,7 @@ for (const selection of SIGNAL_CULTURAL_ROUTES_SELECTIONS)
       assert.deepEqual(authoritativeCheckpoint(run), authoritativeCheckpoint(duel.runs[0]));
     });
 
-test('registered v15 successor preserves v14 order and uses isolated progress ownership', async () => {
+test('registered v15 successor preserves v14 order while v16 owns the current default', async () => {
   const current = createAuthoredJourneyRoute('whole-spatial-v15');
   const previous = createAuthoredJourneyRoute('whole-spatial-v14');
   assert.deepEqual(await loadAuthoredJourneyRoute(current.id), current);
@@ -267,8 +267,8 @@ test('registered v15 successor preserves v14 order and uses isolated progress ow
   assert(authoredJourneyUsesActorMaterials(current.id));
   assert(AUTHORED_JOURNEY_ROUTE_IDS.includes(current.id));
   assert.deepEqual(DEFAULT_JOURNEY_ROUTES, {
-    solo: 'whole-spatial-v15',
-    versus: 'whole-spatial-v15',
+    solo: 'whole-spatial-v16',
+    versus: 'whole-spatial-v16',
     team: 'team-trail-impact-originals-1',
   });
   assert.equal(authoredJourneyModeHref(current.id, 'solo'), '../?journey=whole-spatial-v15');
@@ -287,7 +287,7 @@ test('registered v15 successor preserves v14 order and uses isolated progress ow
     );
 });
 
-test('Studio retains v14, exposes v15 and defaults its selector to v15', async () => {
+test('Studio retains v14 and v15 while its selector advances to v16', async () => {
   const html = await readFile(new URL('../studio/index.html', import.meta.url), 'utf8');
   const script = await readFile(new URL('../studio/studio.mjs', import.meta.url), 'utf8');
   const nodes = [];
@@ -307,7 +307,7 @@ test('Studio retains v14, exposes v15 and defaults its selector to v15', async (
     options
       .filter((node) => attribute(node, 'selected') !== undefined)
       .map((node) => attribute(node, 'value')),
-    ['signal-cultural-routes-1'],
+    ['neon-cultural-routes-1'],
   );
   assert.match(html, /journey=whole-spatial-v15/);
   assert.match(script, /'signal-cultural-routes-1': createSignalCulturalRoutesCandidates/);
