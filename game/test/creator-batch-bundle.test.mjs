@@ -25,7 +25,8 @@ import {
   loadInstalledCreatorBundle,
   reviewCreatorInstallation,
 } from '../creator/installed.mjs';
-import { createCreatorRuntime } from '../creator/runtime.mjs';
+import { createCreatorRuntime, creatorAttemptKey, creatorProfileKey } from '../creator/runtime.mjs';
+import { createJourneyBackend, createJourneyProfileStore } from '../journey/profile.mjs';
 import {
   exportCreatorSource,
   importCreatorSource,
@@ -33,6 +34,7 @@ import {
 } from '../creator/drafts.mjs';
 import { pngBytes } from './helpers/media-fixtures.mjs';
 import { PNGImage } from './helpers/png-image.mjs';
+import { managedIndexedDB } from './helpers/managed-idb.mjs';
 import { memoryIndexedDB } from './helpers/soundtrack-fixtures.mjs';
 
 const themes = JSON.parse(
@@ -224,6 +226,139 @@ test('campaign grouping and authored order survive transfer and drive runtime co
   assert.equal((await runtime.start({ missionId: order[0] })).manifest.missionId, order[0]);
   assert.equal((await runtime.start({ missionId: order[1] })).manifest.missionId, order[1]);
   runtime.dispose();
+});
+
+test('middle-mission recovery keeps its exact reward and cannot migrate to a changed edition', async () => {
+  const pictureSources = await Promise.all(
+      [
+        'fixtures/motion-background/static-default.png',
+        '../assets/field-kit/sprites/enemy-bouncer.png',
+      ].map((path) => readFile(new URL(path, import.meta.url))),
+    ),
+    dimensions = (blob) =>
+      blob.arrayBuffer().then((buffer) => {
+        const view = new DataView(buffer);
+        return { naturalWidth: view.getUint32(16), naturalHeight: view.getUint32(20) };
+      }),
+    exactImage = async (sourceBlob, options) => {
+      const original = new Blob([await sourceBlob.arrayBuffer()], { type: 'image/png' }),
+        sha256 = await creatorSHA256(await original.arrayBuffer()),
+        { naturalWidth: width, naturalHeight: height } = await dimensions(original);
+      return {
+        asset: {
+          format: 'AssetRevisionV1',
+          id: 'creator-picture',
+          revision: '1',
+          kind: 'reveal-background',
+          path: `content-design/assets/creator/${sha256}.png`,
+          sha256,
+          bytes: original.size,
+          width,
+          height,
+          alt: options.alt,
+          review: 'candidate',
+        },
+        runtime: { blob: original, sha256 },
+        thumbnail: { blob: original, sha256 },
+        original: { blob: original, sha256, mime: 'image/png' },
+        editing: { fit: options.fit },
+      };
+    },
+    batch = await prepareCreatorBatch(
+      pictureSources.map((bytes, index) => ({
+        name: `distinct-${index + 1}.png`,
+        blob: new Blob([bytes], { type: 'image/png' }),
+      })),
+      { ...settings, draftId: 'middle-recovery' },
+      { prepareImage: exactImage },
+    ),
+    prepared = await prepareCreatorBatchBundle(
+      batch,
+      { themes, credits },
+      { decodeImage: dimensions },
+    ),
+    pack = prepared.prepared,
+    missionIds = pack.manifest.content.project.campaigns.flatMap((campaign) => campaign.missionIds),
+    middleMissionId = missionIds[1],
+    route = pack.manifest.evidence
+      .find(({ missionId }) => missionId === middleMissionId)
+      .routes.find(
+        ({ difficulty, turnPolicy }) => difficulty === 'standard' && turnPolicy === 'immediate',
+      );
+  assert.equal(route.replay.segments.length, 1, 'the fixture needs one resumable route segment');
+
+  const first = createCreatorRuntime(pack, { decodeImage: decodeArtwork }),
+    attempt = await first.start({ missionId: middleMissionId }),
+    command = route.replay.segments[0].input,
+    recoveryTick = Math.min(30, route.replay.segments[0].ticks - 1);
+  for (let tick = 0; tick < recoveryTick; tick++) first.step(command);
+  const saved = first.suspend(),
+    restoredRuntime = createCreatorRuntime(pack, { decodeImage: decodeArtwork }),
+    restored = await restoredRuntime.restore(JSON.stringify(saved));
+  assert.equal(restored.manifest.missionId, middleMissionId);
+  assert.equal(restored.run.tick, attempt.run.tick);
+  for (let tick = recoveryTick; tick < route.replay.segments[0].ticks; tick++)
+    restoredRuntime.step(command);
+  assert.equal(restored.run.status, 'won');
+  const receipt = await restoredRuntime.completion(),
+    middleMission = pack.manifest.content.project.missions.find(({ id }) => id === middleMissionId),
+    firstMission = pack.manifest.content.project.missions.find(({ id }) => id === missionIds[0]),
+    middlePicture = pack.manifest.content.project.assets.find(
+      ({ id }) => id === middleMission.presentation.backgroundAssetId,
+    ),
+    firstPicture = pack.manifest.content.project.assets.find(
+      ({ id }) => id === firstMission.presentation.backgroundAssetId,
+    );
+  assert.equal(receipt.missionId, middleMissionId);
+  assert.notEqual(middlePicture.sha256, firstPicture.sha256);
+  assert.equal(
+    pack.assets.find(({ sha256 }) => sha256 === middlePicture.sha256).blob.size,
+    middlePicture.bytes,
+  );
+
+  const changedBatch = reorderCreatorBatchItems(
+      batch,
+      [...batch.items].reverse().map(({ id }) => id),
+    ),
+    changed = (
+      await prepareCreatorBatchBundle(
+        changedBatch,
+        { themes, credits },
+        { decodeImage: dimensions },
+      )
+    ).prepared;
+  assert.notEqual(changed.editionId, pack.editionId);
+  assert.notEqual(creatorAttemptKey(changed.editionId), creatorAttemptKey(pack.editionId));
+  const changedRuntime = createCreatorRuntime(changed, { decodeImage: decodeArtwork });
+  await assert.rejects(
+    changedRuntime.restore(JSON.stringify(saved)),
+    /different installed edition/,
+  );
+
+  const database = managedIndexedDB(),
+    originalProfile = createJourneyProfileStore({
+      profileKey: creatorProfileKey(pack.editionId),
+      backend: createJourneyBackend({
+        indexedDB: database.indexedDB,
+        profileKey: creatorProfileKey(pack.editionId),
+      }),
+    });
+  await originalProfile.load();
+  originalProfile.record(receipt);
+  assert.equal(await originalProfile.flush(), true);
+  const changedProfile = createJourneyProfileStore({
+    profileKey: creatorProfileKey(changed.editionId),
+    backend: createJourneyBackend({
+      indexedDB: database.indexedDB,
+      profileKey: creatorProfileKey(changed.editionId),
+    }),
+  });
+  await changedProfile.load();
+  assert.deepEqual(changedProfile.snapshot().clears.solo, {});
+  assert.equal(originalProfile.snapshot().clears.solo[middleMissionId].runId, receipt.runId);
+  first.dispose();
+  restoredRuntime.dispose();
+  changedRuntime.dispose();
 });
 
 test('missing, corrupt and unrelated media cannot enter a batch bundle', async () => {
