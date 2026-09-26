@@ -79,6 +79,10 @@ approval or gameplay balance.
   uncontended host rerun records 14 passing test/subtest records across Solo, Versus, representative
   Team source routes and Solo → Versus → Solo restoration. No failures occurred. The earlier two
   chooser-opening timeouts did not reproduce without concurrent CPU saturation.
+- Latest-main reconciliation found that shared cross-collection Next JSON-parsed opaque Team Classic
+  owner IDs. The successor treats opaque Classic provenance as the Original-rules lane while keeping
+  JSON Current/Original lanes separate. The bounded continuation, v2 route, impact-ownership and
+  live-language cohort now passes **42/42**.
 - Candidate files pass Prettier, targeted ESLint and `git diff --check`.
 
 ## Remaining before PR/release
@@ -86,7 +90,8 @@ approval or gameplay balance.
 1. Review and qualify draft PR #650 at its exact head.
 2. Review draft PR #651 at its exact head and retain its inventory/ownership reconciliation without
    representing the unrun full long host suite as passing.
-3. Run the normal build/release gates, immutable release and public frozen-build verification.
+3. Review the Team opaque-owner continuation successor and run its normal build/release gates,
+   immutable release and public frozen-build verification.
 4. Retain Gentle and Expert search evidence as reproducible feasibility evidence; pin those routes
    only if they add useful regression coverage rather than duplicating the Standard fixtures.
 5. Complete physical controller/touch/keyboard, paired-board fairness, small-screen,
