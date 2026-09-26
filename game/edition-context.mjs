@@ -72,6 +72,50 @@ export function editionAppIdentity({ editionId, basePath = '/' } = {}) {
   return Object.freeze({ id: root, start_url: `${root}app/`, scope: root });
 }
 
+/** A launcher may select only a retained immutable release of its own edition.
+ * Relative current.json pointers are resolved against the document, never a
+ * stored origin. This module also ships inside the stable launcher directory. */
+export function validateCompanyInstallationReference(
+  value,
+  { editionId, baseURL, editionRoot } = {},
+) {
+  validateEditionId(editionId);
+  if (
+    !value ||
+    typeof value !== 'object' ||
+    Array.isArray(value) ||
+    value.editionId !== editionId ||
+    !versionPattern.test(value.version) ||
+    typeof value.version !== 'string' ||
+    typeof value.scope !== 'string' ||
+    value.scope.length > 2048 ||
+    value.entry !== 'game/company.html' ||
+    (value.buildId !== undefined && !/^[a-f0-9]{64}$/.test(value.buildId))
+  )
+    throw new TypeError('Edition installation identity differs.');
+  const base = new URL(baseURL),
+    scope = new URL(value.scope, base);
+  if (
+    typeof editionRoot !== 'string' ||
+    !new RegExp(`^/(?:[A-Za-z0-9_-]+/)*editions/${editionId}/$`).test(editionRoot) ||
+    !/^https?:$/.test(base.protocol) ||
+    scope.origin !== base.origin ||
+    scope.username ||
+    scope.password ||
+    scope.search ||
+    scope.hash ||
+    scope.pathname !== `${editionRoot}releases/v${value.version.replace(/^v/, '')}/site/`
+  )
+    throw new TypeError('Install from the matching published edition address.');
+  return Object.freeze({
+    editionId,
+    version: value.version,
+    scope: scope.href,
+    entry: value.entry,
+    ...(value.buildId === undefined ? {} : { buildId: value.buildId }),
+  });
+}
+
 /** Hash caches may share bytes; ownership and removal must remain separate. */
 export function officialContentOwner({ editionId, packId, revision } = {}) {
   if (

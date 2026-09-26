@@ -5,7 +5,7 @@
     "fields": [
       {
         "expected": "suppliers",
-        "explanation": "Choose the business object required by the lookup.",
+        "explanation": "An invoices read returns the wrong business object. Select suppliers so the lookup can resolve the known supplier record.",
         "id": "resource",
         "label": "Resource",
         "options": [
@@ -15,7 +15,7 @@
       },
       {
         "expected": "GET",
-        "explanation": "This task reads an existing record.",
+        "explanation": "GET reads the existing supplier; POST attempts a create. Choosing a write operation would exceed this read-only lookup.",
         "id": "method",
         "label": "Operation",
         "options": [
@@ -48,7 +48,7 @@
         "title": "Resource notes"
       }
     ],
-    "revision": "2",
+    "revision": "3",
     "role": "Integration developer",
     "sourceReviewedAt": "2026-09-26",
     "sources": [
@@ -66,7 +66,7 @@
     "fields": [
       {
         "expected": "Client credentials",
-        "explanation": "There is no end user in this scheduled job.",
+        "explanation": "The unattended job has no user to complete consent. Client credentials fits the stated system-to-system context; authorization code needs user involvement.",
         "id": "grant",
         "label": "Grant type",
         "options": [
@@ -76,7 +76,7 @@
       },
       {
         "expected": "Read accounting",
-        "explanation": "Choose only the read permission the job needs.",
+        "explanation": "Write permission adds an ability this job never needs. Read-only access limits what the fictional client can change if misused.",
         "id": "scope",
         "label": "Training permission",
         "options": [
@@ -109,7 +109,7 @@
         "title": "Available training choices"
       }
     ],
-    "revision": "2",
+    "revision": "3",
     "role": "Integration developer",
     "sourceReviewedAt": "2026-09-26",
     "sources": [
@@ -127,7 +127,7 @@
     "fields": [
       {
         "expected": "101, 102, 103",
-        "explanation": "The first page is not the complete dataset.",
+        "explanation": "Stopping after the first page drops supplier 103 from the ledger. Include both frozen pages to complete this query.",
         "id": "ids",
         "label": "Combined result IDs",
         "options": [
@@ -137,7 +137,7 @@
       },
       {
         "expected": "Keep active-supplier filter",
-        "explanation": "Pagination must retain the intended query.",
+        "explanation": "Dropping the active-supplier filter can mix in records outside the requested set. Keep the same query while advancing through pages.",
         "id": "filter",
         "label": "Filter on subsequent page",
         "options": [
@@ -170,7 +170,7 @@
         "title": "Local page 2"
       }
     ],
-    "revision": "2",
+    "revision": "3",
     "role": "Integration developer",
     "sourceReviewedAt": "2026-09-26",
     "sources": [
@@ -188,7 +188,7 @@
     "fields": [
       {
         "expected": "S-10",
-        "explanation": "Resolve an active, existing supplier.",
+        "explanation": "S-11 is inactive and S-99 does not exist in this fixture. Neither satisfies the draft’s active-reference requirement; resolve S-10.",
         "id": "supplier",
         "label": "Supplier reference",
         "options": [
@@ -199,7 +199,7 @@
       },
       {
         "expected": "WORKSHOP",
-        "explanation": "Use the existing accounting reference declared by this fixture.",
+        "explanation": "UNLISTED has no reference in this fixture. WORKSHOP preserves the intended accounting assignment without inventing a record.",
         "id": "account",
         "label": "Accounting reference",
         "options": [
@@ -232,7 +232,7 @@
         "title": "Draft requirement"
       }
     ],
-    "revision": "2",
+    "revision": "3",
     "role": "Integration developer",
     "sourceReviewedAt": "2026-09-26",
     "sources": [
@@ -250,7 +250,7 @@
     "fields": [
       {
         "expected": "3",
-        "explanation": "The request requires three kits.",
+        "explanation": "Zero does not fulfill the three-kit requirement. Repair the missing quantity to three while retaining the other draft fields.",
         "id": "quantity",
         "label": "Line quantity",
         "options": [
@@ -260,7 +260,7 @@
       },
       {
         "expected": "Create draft",
-        "explanation": "A successful draft creation does not issue an order.",
+        "explanation": "Passing draft validation creates a draft only. Marking an order issued would skip separate submission, approval and issuance steps.",
         "id": "operation",
         "label": "Successful next operation",
         "options": [
@@ -293,13 +293,13 @@
         "title": "Local response"
       }
     ],
-    "revision": "2",
+    "revision": "3",
     "role": "Integration developer",
     "sourceReviewedAt": "2026-09-26",
     "sources": [
       {
-        "title": "Coupa Core API — Requisitions",
-        "url": "https://docs.coupa.com/en/developer-documentation/the-coupa-core-api/resources/transactional-resources/requisitions-api-requisitions"
+        "title": "Coupa Core API — Requisition creation examples",
+        "url": "https://docs.coupa.com/en/developer-documentation/the-coupa-core-api/resources/transactional-resources/requisitions-api-requisitions/requisitions-api-example-calls"
       }
     ],
     "success": "Local validation passed. Fictional draft created; no real API was called.",
@@ -311,7 +311,7 @@
     "fields": [
       {
         "expected": "B only",
-        "explanation": "The fixture already confirms successful destination records for A and C.",
+        "explanation": "A and C already have destination records. Repeating their creates risks duplicates; correct and retry only B, whose absence is confirmed.",
         "id": "retry",
         "label": "Records to retry",
         "options": [
@@ -321,7 +321,7 @@
       },
       {
         "expected": "All intended records reconciled",
-        "explanation": "Sending a retry is not proof of successful processing.",
+        "explanation": "A sent retry may still fail. Reconcile all intended destination records before calling the run successful.",
         "id": "completion",
         "label": "Completion condition",
         "options": [
@@ -357,7 +357,7 @@
         "title": "Recovery policy for this fixture"
       }
     ],
-    "revision": "2",
+    "revision": "3",
     "role": "Integration developer",
     "sourceReviewedAt": "2026-09-26",
     "sources": [

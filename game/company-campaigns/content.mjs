@@ -414,7 +414,7 @@ export function createCompanyProject({
     throw new Error('Supply explicit company artwork asset revisions.');
   const selected = COMPANY_MISSIONS.filter((m) => campaigns.some((c) => c.id === m.campaignId));
   const project = createStarterProject(campaignId ?? `${brandId}-company-journeys`);
-  project.revision = '1';
+  project.revision = String(Math.max(...campaigns.map((campaign) => Number(campaign.revision))));
   project.name = campaignId
     ? campaigns[0].name
     : `${brandId === 'coupa' ? 'Coupa' : 'DroneAid'} journeys`;
@@ -535,7 +535,7 @@ export function createCompanyProject({
   project.packs = campaigns.map((c) => ({
     format: 'PackDesignV1',
     id: `${c.id}-pack`,
-    revision: '1',
+    revision: c.revision,
     name: c.name,
     campaignIds: [c.id],
   }));
