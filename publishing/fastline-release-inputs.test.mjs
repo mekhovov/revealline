@@ -1,63 +1,60 @@
-import assert from "node:assert/strict";
-import { readFile } from "node:fs/promises";
-import test from "node:test";
+import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
+import test from 'node:test';
 import {
   fastlineStages,
   resumeDecision,
   validateFastlineInputs,
-} from "./fastline-release-inputs.mjs";
+} from './fastline-release-inputs.mjs';
 
-const sourceSha = "a".repeat(40);
+const sourceSha = 'a'.repeat(40);
 
-test("accepts one exact serialized release request", () => {
+test('accepts one exact serialized release request', () => {
   assert.deepEqual(
     validateFastlineInputs({
-      version: "v0.132.2",
+      version: 'v0.132.2',
       sourceSha,
-      releasePr: "607",
-      predecessorTag: "v0.132.1",
-      mode: "publish",
+      releasePr: '607',
+      predecessorTag: 'v0.132.1',
+      mode: 'publish',
     }),
     {
-      version: "v0.132.2",
-      numericVersion: "0.132.2",
+      version: 'v0.132.2',
+      numericVersion: '0.132.2',
       sourceSha,
       releasePr: 607,
-      predecessorTag: "v0.132.1",
-      mode: "publish",
+      predecessorTag: 'v0.132.1',
+      mode: 'publish',
     },
   );
 });
 
-test("rejects symbolic sources, unstable versions and invalid predecessor requests", () => {
+test('rejects symbolic sources, unstable versions and invalid predecessor requests', () => {
   const base = {
-    version: "v0.132.2",
+    version: 'v0.132.2',
     sourceSha,
     releasePr: 607,
-    predecessorTag: "v0.132.1",
-    mode: "shadow",
+    predecessorTag: 'v0.132.1',
+    mode: 'shadow',
   };
   for (const changed of [
-    { sourceSha: "main" },
-    { version: "0.132.2" },
+    { sourceSha: 'main' },
+    { version: '0.132.2' },
     { releasePr: 0 },
-    { predecessorTag: "v0.132.2" },
-    { mode: "force" },
+    { predecessorTag: 'v0.132.2' },
+    { mode: 'force' },
   ])
     assert.throws(() => validateFastlineInputs({ ...base, ...changed }));
 });
 
-test("resumption reuses exact objects, creates absent objects and stops on drift", () => {
+test('resumption reuses exact objects, creates absent objects and stops on drift', () => {
   const expected = { sha: sourceSha, bytes: 7 };
-  assert.equal(resumeDecision({ expected }).action, "create");
-  assert.equal(resumeDecision({ expected, actual: expected }).action, "reuse");
-  assert.deepEqual(
-    resumeDecision({ expected, actual: { ...expected, bytes: 8 } }),
-    {
-      action: "stop",
-      reason: "existing object differs from the exact request",
-    },
-  );
+  assert.equal(resumeDecision({ expected }).action, 'create');
+  assert.equal(resumeDecision({ expected, actual: expected }).action, 'reuse');
+  assert.deepEqual(resumeDecision({ expected, actual: { ...expected, bytes: 8 } }), {
+    action: 'stop',
+    reason: 'existing object differs from the exact request',
+  });
   assert.match(
     resumeDecision({
       expected,
@@ -68,49 +65,47 @@ test("resumption reuses exact objects, creates absent objects and stops on drift
   );
 });
 
-test("shadow mode plans every stage without changing the stage order", () => {
+test('shadow mode plans every stage without changing the stage order', () => {
   assert.deepEqual(
-    fastlineStages("shadow"),
-    fastlineStages("publish").map((stage) => `shadow:${stage}`),
+    fastlineStages('shadow'),
+    fastlineStages('publish').map((stage) => `shadow:${stage}`),
   );
 });
 
-test("internal resume starts at evidence and never repeats qualification", () => {
-  assert.deepEqual(fastlineStages("resume"), [
-    "evidence",
-    "publication",
-    "archive",
-    "pages",
-    "public-verification",
+test('internal resume starts at evidence and never repeats qualification', () => {
+  assert.deepEqual(fastlineStages('resume'), [
+    'evidence',
+    'publication',
+    'archive',
+    'pages',
+    'public-verification',
   ]);
 });
 
-test("publisher serializes requests and passes immutable artifacts through each stage", async () => {
+test('publisher serializes requests and passes immutable artifacts through each stage', async () => {
   const workflow = await readFile(
-    new URL("../.github/workflows/fastline-release.yml", import.meta.url),
-    "utf8",
+    new URL('../.github/workflows/fastline-release.yml', import.meta.url),
+    'utf8',
   );
   const qualification = await readFile(
-    new URL("../.github/workflows/qualify-release-source.yml", import.meta.url),
-    "utf8",
+    new URL('../.github/workflows/qualify-release-source.yml', import.meta.url),
+    'utf8',
   );
   const evidence = await readFile(
-    new URL(
-      "../.github/workflows/assemble-waived-release-evidence.yml",
-      import.meta.url,
-    ),
-    "utf8",
+    new URL('../.github/workflows/assemble-waived-release-evidence.yml', import.meta.url),
+    'utf8',
   );
   assert.match(workflow, /group: fastline-publisher/u);
   assert.match(workflow, /cancel-in-progress: false/u);
   assert.match(workflow, /^\s+queue: max$/mu);
-  assert.match(
-    workflow,
-    /uses: \.\/\.github\/workflows\/qualify-release-source\.yml/u,
-  );
+  assert.match(workflow, /uses: \.\/\.github\/workflows\/qualify-release-source\.yml/u);
   assert.match(workflow, /needs\.qualify\.outputs\.artifact_id/u);
   assert.match(workflow, /needs\.qualify\.outputs\.artifact_digest/u);
   assert.match(workflow, /force_snapshot: true/u);
+  assert.match(
+    workflow,
+    /source_format: \$\{\{ inputs\.version == 'v0\.141\.6' && 'manifest' \|\| 'tar' \}\}/u,
+  );
   assert.match(workflow, /digest="\$\{EXPECTED_DIGEST#sha256:\}"/u);
   assert.match(workflow, /test "\$\(jq -r \.digest/u);
   assert.match(workflow, /release_artifact\.py run/u);
@@ -119,20 +114,16 @@ test("publisher serializes requests and passes immutable artifacts through each 
   assert.match(workflow, /mode=resume/u);
   assert.match(workflow, /Refuse mismatched tag or release objects/u);
   assert.match(workflow, /permissions:\n  contents: read/u);
-  assert.match(
-    workflow,
-    /publish:[\s\S]*?permissions:\n      contents: write/u,
-  );
+  assert.match(workflow, /publish:[\s\S]*?permissions:\n      contents: write/u);
   assert.match(qualification, /workflow_call:/u);
   assert.match(qualification, /artifact_id:/u);
   assert.match(qualification, /artifact_digest:/u);
   assert.match(qualification, /force_snapshot:/u);
+  assert.match(qualification, /source_format:/u);
+  assert.match(qualification, /--source-format "\$SOURCE_FORMAT"/u);
   assert.match(qualification, /FORCE_SNAPSHOT:/u);
   assert.match(evidence, /workflow_call:/u);
   assert.match(evidence, /artifact_id:/u);
   assert.match(evidence, /artifact_digest:/u);
-  assert.match(
-    evidence,
-    /waived-release-small-package-\$VERSION-\$SOURCE_COMMIT/u,
-  );
+  assert.match(evidence, /waived-release-small-package-\$VERSION-\$SOURCE_COMMIT/u);
 });
