@@ -265,7 +265,9 @@ node scripts/produce-company-content.mjs
 The importer validates authored mission identities, exact PNG hashes/dimensions, portable
 master provenance, inspection records and the 1 MiB selection target. It refuses replacement
 of an existing revision, duplicate mission registration and unsafe paths. It does not certify
-human artwork approval or change gameplay. Register a complete batch in one catalogue update;
+human artwork approval or change gameplay. Completed original/export inspections use explicit
+states; prose alone cannot authorize an inspected source claim. Recorded native `sips` resize
+commands must bind the exact master, selected output and dimensions. Register a complete batch in one catalogue update;
 intermediate generation receipts can contain planned rows, which are deliberately rejected.
 Keep immutable history JSON byte-for-byte and advance affected edition revisions once per
 compiled batch. A source master is not a runtime dependency merely because it is cited in a

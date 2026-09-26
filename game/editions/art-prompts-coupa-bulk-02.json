@@ -44,7 +44,11 @@
         "original": "Inspected generated original; no visible people, text, logos, UI or enemies.",
         "selected": "Inspected exact native PNG export at 960x480; composition and empty papers remain legible, smooth tones preserved, no visible text, people, logos, UI or enemies. In-game overlays not yet reviewed.",
         "inGame": "pending",
-        "humanArtworkApproval": "pending"
+        "humanArtworkApproval": "pending",
+        "inspections": {
+          "original": "complete",
+          "selected": "complete"
+        }
       }
     },
     {
@@ -88,7 +92,11 @@
         "selected": "Inspected exact native PNG export at 960x480; composition and empty papers remain legible, smooth tones preserved, no visible text, people, logos, UI or enemies. In-game overlays not yet reviewed.",
         "inGame": "pending",
         "humanArtworkApproval": "pending",
-        "compositionNote": "The central gathering table occupies part of the central return region; verify partial-reveal and safe-surface overlay contrast in the actual board."
+        "compositionNote": "The central gathering table occupies part of the central return region; verify partial-reveal and safe-surface overlay contrast in the actual board.",
+        "inspections": {
+          "original": "complete",
+          "selected": "complete"
+        }
       }
     },
     {
@@ -131,7 +139,11 @@
         "original": "Inspected generated original; no visible people, text, logos, UI or enemies.",
         "selected": "Inspected exact native PNG export at 960x480; composition and empty papers remain legible, smooth tones preserved, no visible text, people, logos, UI or enemies. In-game overlays not yet reviewed.",
         "inGame": "pending",
-        "humanArtworkApproval": "pending"
+        "humanArtworkApproval": "pending",
+        "inspections": {
+          "original": "complete",
+          "selected": "complete"
+        }
       }
     },
     {
@@ -174,7 +186,11 @@
         "original": "Inspected generated original; no visible people, legible text, identifiable logos, UI or enemies.",
         "selected": "Inspected exact 960x480 native PNG export; landmark/story distinctions and smooth tones preserved, no legible text, people, identifiable logos, UI or enemies. In-game crop/overlay review pending.",
         "inGame": "pending",
-        "humanArtworkApproval": "pending"
+        "humanArtworkApproval": "pending",
+        "inspections": {
+          "original": "complete",
+          "selected": "complete"
+        }
       }
     },
     {
@@ -217,7 +233,11 @@
         "original": "Inspected generated original; no visible people, legible text, identifiable logos, UI or enemies.",
         "selected": "Inspected exact 960x480 native PNG export; landmark/story distinctions and smooth tones preserved, no legible text, people, identifiable logos, UI or enemies. In-game crop/overlay review pending.",
         "inGame": "pending",
-        "humanArtworkApproval": "pending"
+        "humanArtworkApproval": "pending",
+        "inspections": {
+          "original": "complete",
+          "selected": "complete"
+        }
       }
     },
     {
@@ -261,7 +281,11 @@
         "selected": "Inspected exact 960x480 native PNG export; landmark/story distinctions and smooth tones preserved, no legible text, people, identifiable logos, UI or enemies. In-game crop/overlay review pending.",
         "inGame": "pending",
         "humanArtworkApproval": "pending",
-        "compositionNote": "Decorative marks in the small open ledger are not legible instructions; canal water occupies the middle and requires actual-overlay contrast review."
+        "compositionNote": "Decorative marks in the small open ledger are not legible instructions; canal water occupies the middle and requires actual-overlay contrast review.",
+        "inspections": {
+          "original": "complete",
+          "selected": "complete"
+        }
       }
     },
     {
@@ -304,7 +328,11 @@
         "original": "Inspected generated original; no visible people, legible text, identifiable logos, UI or enemies.",
         "selected": "Inspected exact 960x480 native PNG export; clear major masses, smooth blue/ivory gradients and distinct task stations; no legible text, people, identifiable logos, UI or enemies. Actual gameplay overlay review pending.",
         "inGame": "pending",
-        "humanArtworkApproval": "pending"
+        "humanArtworkApproval": "pending",
+        "inspections": {
+          "original": "complete",
+          "selected": "complete"
+        }
       }
     },
     {
@@ -348,7 +376,11 @@
         "original": "Inspected generated original; no visible people, legible text, identifiable logos, UI or enemies.",
         "selected": "Inspected exact 960x480 native PNG export; clear major masses, smooth blue/ivory gradients and distinct task stations; no legible text, people, identifiable logos, UI or enemies. Actual gameplay overlay review pending.",
         "inGame": "pending",
-        "humanArtworkApproval": "pending"
+        "humanArtworkApproval": "pending",
+        "inspections": {
+          "original": "complete",
+          "selected": "complete"
+        }
       }
     },
     {
@@ -391,7 +423,11 @@
         "original": "Inspected generated original; no visible people, legible text, identifiable logos, UI or enemies.",
         "selected": "Inspected exact 960x480 native PNG export; clear major masses, smooth blue/ivory gradients and distinct task stations; no legible text, people, identifiable logos, UI or enemies. Actual gameplay overlay review pending.",
         "inGame": "pending",
-        "humanArtworkApproval": "pending"
+        "humanArtworkApproval": "pending",
+        "inspections": {
+          "original": "complete",
+          "selected": "complete"
+        }
       }
     },
     {
@@ -435,7 +471,11 @@
         "selected": "Inspected exact 960x480 native PNG export; archive/workshop landmarks and blue gradients preserved, no people, legible task text, identifiable logos, UI or enemies. Actual gameplay overlay review pending.",
         "inGame": "pending",
         "humanArtworkApproval": "pending",
-        "compositionNote": "The upper paper sculpture has faint non-legible decorative rows; no real code or lesson answer. Inspect that detail and floor-trim contrast in game."
+        "compositionNote": "The upper paper sculpture has faint non-legible decorative rows; no real code or lesson answer. Inspect that detail and floor-trim contrast in game.",
+        "inspections": {
+          "original": "complete",
+          "selected": "complete"
+        }
       }
     },
     {
@@ -478,7 +518,11 @@
         "original": "Inspected generated original; no visible people, legible text, identifiable logos, UI or enemies.",
         "selected": "Inspected exact 960x480 native PNG export; archive/workshop landmarks and blue gradients preserved, no people, legible task text, identifiable logos, UI or enemies. Actual gameplay overlay review pending.",
         "inGame": "pending",
-        "humanArtworkApproval": "pending"
+        "humanArtworkApproval": "pending",
+        "inspections": {
+          "original": "complete",
+          "selected": "complete"
+        }
       }
     },
     {
@@ -522,7 +566,11 @@
         "selected": "Inspected exact 960x480 native PNG export; archive/workshop landmarks and blue gradients preserved, no people, legible task text, identifiable logos, UI or enemies. Actual gameplay overlay review pending.",
         "inGame": "pending",
         "humanArtworkApproval": "pending",
-        "compositionNote": "Central miniature architecture occupies part of the review floor; verify safe-surface overlay and objective contrast in the real board."
+        "compositionNote": "Central miniature architecture occupies part of the review floor; verify safe-surface overlay and objective contrast in the real board.",
+        "inspections": {
+          "original": "complete",
+          "selected": "complete"
+        }
       }
     },
     {
@@ -565,7 +613,11 @@
         "original": "Inspected generated original; no visible people, legible text, identifiable logos, UI or enemies.",
         "selected": "Inspected exact 960x480 native PNG export; record landmarks remain distinct and blue-hour/ivory gradients preserved, no legible task text, people, identifiable logos, UI or enemies. Actual gameplay overlay review pending.",
         "inGame": "pending",
-        "humanArtworkApproval": "pending"
+        "humanArtworkApproval": "pending",
+        "inspections": {
+          "original": "complete",
+          "selected": "complete"
+        }
       }
     },
     {
@@ -608,7 +660,11 @@
         "original": "Inspected generated original; no visible people, legible text, identifiable logos, UI or enemies.",
         "selected": "Inspected exact 960x480 native PNG export; record landmarks remain distinct and blue-hour/ivory gradients preserved, no legible task text, people, identifiable logos, UI or enemies. Actual gameplay overlay review pending.",
         "inGame": "pending",
-        "humanArtworkApproval": "pending"
+        "humanArtworkApproval": "pending",
+        "inspections": {
+          "original": "complete",
+          "selected": "complete"
+        }
       }
     },
     {
@@ -652,7 +708,11 @@
         "selected": "Inspected exact 960x480 native PNG export; record landmarks remain distinct and blue-hour/ivory gradients preserved, no legible task text, people, identifiable logos, UI or enemies. Actual gameplay overlay review pending.",
         "inGame": "pending",
         "humanArtworkApproval": "pending",
-        "compositionNote": "Decorative record trays and gold shelf ornaments are prominent; check frontier/trail contrast over partial reveals and treat all ornaments as background, not gameplay markers."
+        "compositionNote": "Decorative record trays and gold shelf ornaments are prominent; check frontier/trail contrast over partial reveals and treat all ornaments as background, not gameplay markers.",
+        "inspections": {
+          "original": "complete",
+          "selected": "complete"
+        }
       }
     },
     {
@@ -695,7 +755,11 @@
         "original": "Inspected generated original; no visible people, legible text, identifiable logos, UI or enemies.",
         "selected": "Inspected exact 960x480 native PNG export; broad quiet floors and distinct community/invention landmarks remain clear, no legible text, people, identifiable logos, UI or enemies. Actual gameplay overlay review pending.",
         "inGame": "pending",
-        "humanArtworkApproval": "pending"
+        "humanArtworkApproval": "pending",
+        "inspections": {
+          "original": "complete",
+          "selected": "complete"
+        }
       }
     },
     {
@@ -738,7 +802,11 @@
         "original": "Inspected generated original; no visible people, legible text, identifiable logos, UI or enemies.",
         "selected": "Inspected exact 960x480 native PNG export; broad quiet floors and distinct community/invention landmarks remain clear, no legible text, people, identifiable logos, UI or enemies. Actual gameplay overlay review pending.",
         "inGame": "pending",
-        "humanArtworkApproval": "pending"
+        "humanArtworkApproval": "pending",
+        "inspections": {
+          "original": "complete",
+          "selected": "complete"
+        }
       }
     },
     {
@@ -781,7 +849,11 @@
         "original": "Inspected generated original; no visible people, legible text, identifiable logos, UI or enemies.",
         "selected": "Inspected exact 960x480 native PNG export; market courts, folded-paper architecture or harbor dock are distinct and gradients remain smooth. No people, legible task text, identifiable logos, UI or active enemies. Actual gameplay overlay review pending.",
         "inGame": "pending",
-        "humanArtworkApproval": "pending"
+        "humanArtworkApproval": "pending",
+        "inspections": {
+          "original": "complete",
+          "selected": "complete"
+        }
       }
     },
     {
@@ -825,7 +897,11 @@
         "selected": "Inspected exact 960x480 native PNG export; market courts, folded-paper architecture or harbor dock are distinct and gradients remain smooth. No people, legible task text, identifiable logos, UI or active enemies. Actual gameplay overlay review pending.",
         "inGame": "pending",
         "humanArtworkApproval": "pending",
-        "compositionNote": "A static folded-paper sculpture sits in the central court despite the requested open floor. Verify it remains clearly scenery beside real moving paper hazards and safe-ground overlays."
+        "compositionNote": "A static folded-paper sculpture sits in the central court despite the requested open floor. Verify it remains clearly scenery beside real moving paper hazards and safe-ground overlays.",
+        "inspections": {
+          "original": "complete",
+          "selected": "complete"
+        }
       }
     },
     {
@@ -868,7 +944,11 @@
         "original": "Inspected generated original; no visible people, legible text, identifiable logos, UI or enemies.",
         "selected": "Inspected exact 960x480 native PNG export; market courts, folded-paper architecture or harbor dock are distinct and gradients remain smooth. No people, legible task text, identifiable logos, UI or active enemies. Actual gameplay overlay review pending.",
         "inGame": "pending",
-        "humanArtworkApproval": "pending"
+        "humanArtworkApproval": "pending",
+        "inspections": {
+          "original": "complete",
+          "selected": "complete"
+        }
       }
     },
     {
@@ -911,7 +991,11 @@
         "original": "Inspected generated original; no visible people, legible text, identifiable logos, UI or enemies.",
         "selected": "Inspected exact 960x480 native PNG export; night/weather mood and broad quiet plazas preserved, no legible text, people, identifiable logos, UI or enemies. Actual gameplay overlay review pending.",
         "inGame": "pending",
-        "humanArtworkApproval": "pending"
+        "humanArtworkApproval": "pending",
+        "inspections": {
+          "original": "complete",
+          "selected": "complete"
+        }
       }
     },
     {
@@ -954,7 +1038,11 @@
         "original": "Inspected generated original; no visible people, legible text, identifiable logos, UI or enemies.",
         "selected": "Inspected exact 960x480 native PNG export; night/weather mood and broad quiet plazas preserved, no legible text, people, identifiable logos, UI or enemies. Actual gameplay overlay review pending.",
         "inGame": "pending",
-        "humanArtworkApproval": "pending"
+        "humanArtworkApproval": "pending",
+        "inspections": {
+          "original": "complete",
+          "selected": "complete"
+        }
       }
     }
   ]

@@ -43,6 +43,9 @@ comparisons of all 66 current mission manifests at all three difficulties agains
 pre-batch source. The new selected pictures total 51,131,195 bytes across both brands.
 The importer additionally uses the existing bounded RGB PNG decoder to verify complete
 chunks, CRCs, scanline data and opacity; truncated, RGBA and transparent-RGB fixtures fail.
+Final provenance review added explicit completed original/export inspection states, bounded
+master dimensions and native resize-command bindings. Prose alone, a missing inspection state
+or a command referring to different files cannot create a completed-inspection source claim.
 An initial generation attempt encountered local disk exhaustion; after removing only
 reproducible review-build caches, regeneration and the complete output check passed.
 

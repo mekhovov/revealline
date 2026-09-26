@@ -45,7 +45,11 @@
         "original": "Visually inspected original: distinct community story, violet/white identity, no visible text, logos, UI, enemies, people, or weaponry.",
         "selected": "Inspected exact 960x480 native PNG derivative: readable layered composition, opaque full frame, no visible text, logos, UI, enemies, people or weaponry. Broad architectural courts remain visually distinct; actual gameplay overlay contrast is pending.",
         "inGame": "pending",
-        "humanArtworkApproval": "pending"
+        "humanArtworkApproval": "pending",
+        "inspections": {
+          "original": "complete",
+          "selected": "complete"
+        }
       }
     },
     {
@@ -88,7 +92,11 @@
         "original": "Visually inspected original: distinct community story, violet/white identity, no visible text, logos, UI, enemies, people, or weaponry.",
         "selected": "Inspected exact 960x480 native PNG derivative: readable layered composition, opaque full frame, no visible text, logos, UI, enemies, people or weaponry. Broad architectural courts remain visually distinct; actual gameplay overlay contrast is pending.",
         "inGame": "pending",
-        "humanArtworkApproval": "pending"
+        "humanArtworkApproval": "pending",
+        "inspections": {
+          "original": "complete",
+          "selected": "complete"
+        }
       }
     },
     {
@@ -131,7 +139,11 @@
         "original": "Visually inspected original: distinct community story, violet/white identity, no visible text, logos, UI, enemies, people, or weaponry.",
         "selected": "Inspected exact 960x480 native PNG derivative: readable layered composition, opaque full frame, no visible text, logos, UI, enemies, people or weaponry. Broad architectural courts remain visually distinct; actual gameplay overlay contrast is pending.",
         "inGame": "pending",
-        "humanArtworkApproval": "pending"
+        "humanArtworkApproval": "pending",
+        "inspections": {
+          "original": "complete",
+          "selected": "complete"
+        }
       }
     },
     {
@@ -176,7 +188,11 @@
         "selected": "Inspected exact 960x480 native PNG derivative: clear separate architectural masses and calm return courts; no visible writing, branded logos, UI, enemies, people or weaponry. In-game overlays not yet reviewed.",
         "inGame": "pending",
         "humanArtworkApproval": "pending",
-        "compositionNote": "Small decorative tulip motifs appear on banners as fictional Dutch floral ornament; they are not official brand artwork."
+        "compositionNote": "Small decorative tulip motifs appear on banners as fictional Dutch floral ornament; they are not official brand artwork.",
+        "inspections": {
+          "original": "complete",
+          "selected": "complete"
+        }
       }
     },
     {
@@ -219,7 +235,11 @@
         "original": "Visually inspected original; no visible text, branded logos, UI, enemies, people or weaponry.",
         "selected": "Inspected exact 960x480 native PNG derivative: clear separate architectural masses and calm return courts; no visible writing, branded logos, UI, enemies, people or weaponry. In-game overlays not yet reviewed.",
         "inGame": "pending",
-        "humanArtworkApproval": "pending"
+        "humanArtworkApproval": "pending",
+        "inspections": {
+          "original": "complete",
+          "selected": "complete"
+        }
       }
     },
     {
@@ -263,7 +283,11 @@
         "selected": "Inspected exact 960x480 native PNG derivative: clear separate architectural masses and calm return courts; no visible writing, branded logos, UI, enemies, people or weaponry. In-game overlays not yet reviewed.",
         "inGame": "pending",
         "humanArtworkApproval": "pending",
-        "compositionNote": "Small decorative tulip motifs appear on banners as fictional Dutch floral ornament; they are not official brand artwork."
+        "compositionNote": "Small decorative tulip motifs appear on banners as fictional Dutch floral ornament; they are not official brand artwork.",
+        "inspections": {
+          "original": "complete",
+          "selected": "complete"
+        }
       }
     },
     {
@@ -307,7 +331,11 @@
         "selected": "Inspected exact 960x480 native PNG derivative: clear architectural and paper silhouettes, smooth tones, no readable text, branded logos, UI, enemies, people or weaponry. In-game overlay review remains pending.",
         "inGame": "pending",
         "humanArtworkApproval": "pending",
-        "compositionNote": "Fine paper surface lines remain as texture; no readable lettering. The upper-left return region intersects the tall storyboard, so actual overlay contrast should be checked in game."
+        "compositionNote": "Fine paper surface lines remain as texture; no readable lettering. The upper-left return region intersects the tall storyboard, so actual overlay contrast should be checked in game.",
+        "inspections": {
+          "original": "complete",
+          "selected": "complete"
+        }
       }
     },
     {
@@ -350,7 +378,11 @@
         "original": "Visually inspected original: sculptural violet/white community story; no readable text, branded logos, UI, enemies, people or weaponry.",
         "selected": "Inspected exact 960x480 native PNG derivative: clear architectural and paper silhouettes, smooth tones, no readable text, branded logos, UI, enemies, people or weaponry. In-game overlay review remains pending.",
         "inGame": "pending",
-        "humanArtworkApproval": "pending"
+        "humanArtworkApproval": "pending",
+        "inspections": {
+          "original": "complete",
+          "selected": "complete"
+        }
       }
     },
     {
@@ -393,7 +425,11 @@
         "original": "Visually inspected original: sculptural violet/white community story; no readable text, branded logos, UI, enemies, people or weaponry.",
         "selected": "Inspected exact 960x480 native PNG derivative: clear architectural and paper silhouettes, smooth tones, no readable text, branded logos, UI, enemies, people or weaponry. In-game overlay review remains pending.",
         "inGame": "pending",
-        "humanArtworkApproval": "pending"
+        "humanArtworkApproval": "pending",
+        "inspections": {
+          "original": "complete",
+          "selected": "complete"
+        }
       }
     },
     {
@@ -437,7 +473,11 @@
         "selected": "Inspected exact 960x480 native PNG derivative: distinct readable scene, no readable text, branded logos, UI, enemies, people or weaponry. Quiet court/aisle regions remain; in-game overlay review pending.",
         "inGame": "pending",
         "humanArtworkApproval": "pending",
-        "compositionNote": "Subtle curved floor seams appear as architectural paving; check they do not compete with gameplay trails in actual partial-reveal state."
+        "compositionNote": "Subtle curved floor seams appear as architectural paving; check they do not compete with gameplay trails in actual partial-reveal state.",
+        "inspections": {
+          "original": "complete",
+          "selected": "complete"
+        }
       }
     },
     {
@@ -480,7 +520,11 @@
         "original": "Visually inspected original: distinct violet/white community scene; no readable text, branded logos, UI, enemies, people or weaponry.",
         "selected": "Inspected exact 960x480 native PNG derivative: distinct readable scene, no readable text, branded logos, UI, enemies, people or weaponry. Quiet court/aisle regions remain; in-game overlay review pending.",
         "inGame": "pending",
-        "humanArtworkApproval": "pending"
+        "humanArtworkApproval": "pending",
+        "inspections": {
+          "original": "complete",
+          "selected": "complete"
+        }
       }
     },
     {
@@ -523,7 +567,11 @@
         "original": "Visually inspected original: distinct violet/white community scene; no readable text, branded logos, UI, enemies, people or weaponry.",
         "selected": "Inspected exact 960x480 native PNG derivative: distinct readable scene, no readable text, branded logos, UI, enemies, people or weaponry. Quiet court/aisle regions remain; in-game overlay review pending.",
         "inGame": "pending",
-        "humanArtworkApproval": "pending"
+        "humanArtworkApproval": "pending",
+        "inspections": {
+          "original": "complete",
+          "selected": "complete"
+        }
       }
     },
     {
@@ -566,7 +614,11 @@
         "original": "Visually inspected original: distinct violet/white neighbourhood scene; no readable text, branded logos, UI, enemies, people or weaponry.",
         "selected": "Inspected exact 960x480 native PNG derivative: clear layered neighbourhood architecture and quiet water/courtyard regions, no readable text, branded logos, UI, enemies, people or weaponry. In-game overlay review pending.",
         "inGame": "pending",
-        "humanArtworkApproval": "pending"
+        "humanArtworkApproval": "pending",
+        "inspections": {
+          "original": "complete",
+          "selected": "complete"
+        }
       }
     },
     {
@@ -609,7 +661,11 @@
         "original": "Visually inspected original: distinct violet/white neighbourhood scene; no readable text, branded logos, UI, enemies, people or weaponry.",
         "selected": "Inspected exact 960x480 native PNG derivative: clear layered neighbourhood architecture and quiet water/courtyard regions, no readable text, branded logos, UI, enemies, people or weaponry. In-game overlay review pending.",
         "inGame": "pending",
-        "humanArtworkApproval": "pending"
+        "humanArtworkApproval": "pending",
+        "inspections": {
+          "original": "complete",
+          "selected": "complete"
+        }
       }
     },
     {
@@ -652,7 +708,11 @@
         "original": "Visually inspected original: distinct violet/white neighbourhood scene; no readable text, branded logos, UI, enemies, people or weaponry.",
         "selected": "Inspected exact 960x480 native PNG derivative: clear layered neighbourhood architecture and quiet water/courtyard regions, no readable text, branded logos, UI, enemies, people or weaponry. In-game overlay review pending.",
         "inGame": "pending",
-        "humanArtworkApproval": "pending"
+        "humanArtworkApproval": "pending",
+        "inspections": {
+          "original": "complete",
+          "selected": "complete"
+        }
       }
     },
     {
@@ -697,7 +757,11 @@
         "selected": "Inspected exact 960x480 native PNG derivative: luminous separate community spaces and broad quiet terraces/water, no readable text, branded logos, UI, enemies, people or weaponry. In-game overlays remain unreviewed.",
         "inGame": "pending",
         "humanArtworkApproval": "pending",
-        "compositionNote": "Backdrop uses invented coastal hills, not accurate Dutch geography; the scene is fictional miniature architecture."
+        "compositionNote": "Backdrop uses invented coastal hills, not accurate Dutch geography; the scene is fictional miniature architecture.",
+        "inspections": {
+          "original": "complete",
+          "selected": "complete"
+        }
       }
     },
     {
@@ -742,7 +806,11 @@
         "selected": "Inspected exact 960x480 native PNG derivative: luminous separate community spaces and broad quiet terraces/water, no readable text, branded logos, UI, enemies, people or weaponry. In-game overlays remain unreviewed.",
         "inGame": "pending",
         "humanArtworkApproval": "pending",
-        "compositionNote": "Distant hills and a perched fictional building are imaginative scenery, not an actual Dutch location or evidence of community operations."
+        "compositionNote": "Distant hills and a perched fictional building are imaginative scenery, not an actual Dutch location or evidence of community operations.",
+        "inspections": {
+          "original": "complete",
+          "selected": "complete"
+        }
       }
     },
     {
@@ -786,7 +854,11 @@
         "original": "Visually inspected original: distinct violet/white neighbourhood scene; no readable text, branded logos, UI, enemies, people or weaponry.",
         "selected": "Inspected exact 960x480 native PNG derivative: luminous separate community spaces and broad quiet terraces/water, no readable text, branded logos, UI, enemies, people or weaponry. In-game overlays remain unreviewed.",
         "inGame": "pending",
-        "humanArtworkApproval": "pending"
+        "humanArtworkApproval": "pending",
+        "inspections": {
+          "original": "complete",
+          "selected": "complete"
+        }
       }
     }
   ]

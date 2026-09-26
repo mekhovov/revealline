@@ -21,6 +21,8 @@ const source = () => ({
         path: '$CODEX_HOME/generated_images/example/master.png',
         sha256,
         bytes: bytes.length,
+        width: 960,
+        height: 480,
       },
       selected: {
         path: 'game/editions/assets/example/garden-v1.png',
@@ -29,8 +31,26 @@ const source = () => ({
         width: 960,
         height: 480,
       },
-      derivation: { kind: 'mechanical-resize', command: ['sips', 'master.png'], opaque: true },
-      review: { status: 'candidate', original: 'Master inspected.', selected: 'Export inspected.' },
+      derivation: {
+        kind: 'mechanical-resize',
+        command: [
+          'sips',
+          '-z',
+          '480',
+          '960',
+          '$CODEX_HOME/generated_images/example/master.png',
+          '--out',
+          'game/editions/assets/example/garden-v1.png',
+        ],
+        opaque: true,
+      },
+      review: {
+        status: 'candidate',
+        inspections: { original: 'complete', selected: 'complete' },
+        original: 'Master inspected.',
+        selected: 'Export inspected.',
+        humanArtworkApproval: 'pending',
+      },
     },
   ],
 });
@@ -60,6 +80,15 @@ test('art receipts register only selected PNGs and preserve exact external maste
   const repeated = await importCompanyArt({ ...initial, ...result });
   assert.deepEqual(repeated.assets, result.assets);
   assert.deepEqual(repeated.artwork, result.artwork);
+  assert.deepEqual(repeated.sources, result.sources);
+  for (const executable of ['sips', '/usr/bin/sips']) {
+    for (const option of ['-z', '--resampleHeightWidth']) {
+      const receipt = fixture();
+      receipt.assets[0].derivation.command.splice(0, 2, executable, option);
+      const accepted = await importCompanyArt(input(receipt));
+      assert.deepEqual(accepted.sources.assets[0].derivation, receipt.assets[0].derivation);
+    }
+  }
 });
 
 test('art import rejects tampered bytes, escaping paths, missing inspection and oversized exports', async () => {
@@ -93,6 +122,48 @@ test('art import rejects tampered bytes, escaping paths, missing inspection and 
     const receipt = fixture();
     change(receipt.assets[0]);
     await assert.rejects(importCompanyArt(input(receipt)));
+  }
+});
+
+test('art import requires explicit inspections, bounded master dimensions and a bound native resize', async () => {
+  const changes = [
+    (record) => delete record.review.inspections,
+    (record) => delete record.review.inspections.original,
+    (record) => delete record.review.inspections.selected,
+    (record) => (record.review.inspections.original = 'pending'),
+    (record) => (record.review.inspections.selected = 'pending'),
+    (record) => (record.review.humanArtworkApproval = 'complete'),
+    (record) => delete record.original.width,
+    (record) => delete record.original.height,
+    (record) => (record.original.width = 0),
+    (record) => (record.original.height = -1),
+    (record) => (record.original.width = 1.5),
+    (record) => (record.original.width = 8193),
+    (record) => (record.original.width = record.original.height = 8192),
+    (record) => (record.derivation.command[0] = 'not-a-resize'),
+    (record) => (record.derivation.command[0] = '/other/sips'),
+    (record) => (record.derivation.command[1] = '--cropToHeightWidth'),
+    (record) => (record.derivation.command[2] = '960'),
+    (record) => (record.derivation.command[3] = '480'),
+    (record) => (record.derivation.command[4] = '$CODEX_HOME/generated_images/other/master.png'),
+    (record) => (record.derivation.command[5] = '--other-output'),
+    (record) => (record.derivation.command[6] = 'game/editions/assets/example/other.png'),
+    (record) => record.derivation.command.push('--extra'),
+  ];
+  for (const change of changes) {
+    const receipt = fixture();
+    change(receipt.assets[0]);
+    // Prose cannot stand in for explicit inspection status or operation metadata.
+    const initial = input(receipt);
+    let reads = 0;
+    initial.read = async () => {
+      reads += 1;
+      return bytes;
+    };
+    await assert.rejects(importCompanyArt(initial));
+    assert.equal(reads, 0);
+    assert.deepEqual(initial.assets, []);
+    assert.deepEqual(initial.sources, { assets: [] });
   }
 });
 
@@ -140,6 +211,8 @@ test('self-consistent receipts cannot admit truncated or transparent PNGs', asyn
     selected.sha256 = createHash('sha256').update(invalid).digest('hex');
     selected.width = invalid.readUInt32BE(16);
     selected.height = invalid.readUInt32BE(20);
+    receipt.assets[0].derivation.command[2] = String(selected.height);
+    receipt.assets[0].derivation.command[3] = String(selected.width);
     const initial = { ...input(receipt), read: async () => invalid };
     await assert.rejects(importCompanyArt(initial));
     assert.deepEqual(initial.assets, []);

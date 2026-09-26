@@ -10,7 +10,31 @@ import { decodeOriginalPNG } from '../authoring/library/four-worlds-chapters/ver
 
 const digest = (bytes) => createHash('sha256').update(bytes).digest('hex');
 const hash = (value) => typeof value === 'string' && /^[a-f0-9]{64}$/.test(value);
+const boundedDimensions = (value) =>
+  Number.isSafeInteger(value.width) &&
+  Number.isSafeInteger(value.height) &&
+  value.width > 0 &&
+  value.height > 0 &&
+  value.width <= 8192 &&
+  value.height <= 8192 &&
+  value.width * value.height <= 16000000;
 export const COMPANY_ART_TARGET_BYTES = 1024 * 1024;
+
+// Known native adapters: sips -z HEIGHT WIDTH INPUT --out OUTPUT, or its
+// --resampleHeightWidth spelling, with sips or /usr/bin/sips as executable.
+// This validates the recorded operation only; importer never executes it.
+function recordedResizeMatches(command, original, selected) {
+  return (
+    command.length === 7 &&
+    ['sips', '/usr/bin/sips'].includes(command[0]) &&
+    ['-z', '--resampleHeightWidth'].includes(command[1]) &&
+    command[2] === String(selected.height) &&
+    command[3] === String(selected.width) &&
+    command[4] === original.path &&
+    command[5] === '--out' &&
+    command[6] === selected.path
+  );
+}
 
 /** Register reviewed generation receipts without altering existing media or gameplay.
  * Selected derivatives are public inputs; source masters stay outside player packets. */
@@ -58,10 +82,17 @@ export async function importCompanyArt({
         'Artwork needs a prompt, description and reproducible derivation.',
       );
       required(
+        record.review.inspections?.original === 'complete' &&
+          record.review.inspections?.selected === 'complete' &&
+          record.review.humanArtworkApproval === 'pending',
+        'Candidate artwork needs explicit completed master and selected inspections; human artwork approval remains pending.',
+      );
+      required(
         original &&
           hash(original.sha256) &&
           Number.isSafeInteger(original.bytes) &&
           original.bytes > 0 &&
+          boundedDimensions(original) &&
           typeof original.path === 'string' &&
           original.path.startsWith('$CODEX_HOME/generated_images/') &&
           !original.path.split('/').includes('..'),
@@ -76,8 +107,13 @@ export async function importCompanyArt({
           Number.isSafeInteger(selected.bytes) &&
           selected.bytes > 0 &&
           selected.bytes <= COMPANY_ART_TARGET_BYTES &&
+          boundedDimensions(selected) &&
           selected.width === selected.height * 2,
         'Selected artwork must be a local 2:1 PNG within the 1 MiB production budget.',
+      );
+      required(
+        recordedResizeMatches(record.derivation.command, original, selected),
+        'Recorded native resize must bind the exact master, output path and selected dimensions.',
       );
       const bytes = await read(selected.path);
       required(
