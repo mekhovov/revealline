@@ -1,0 +1,81 @@
+{
+  "format": "revealline-v0.141.0-managed-media-audio-continuation.v1",
+  "status": "bounded exact-source and focused-test continuation; frozen, public, full-track listening, every-device and physical-speaker acceptance pending",
+  "reviewedAt": "2026-09-26T12:35:00Z",
+  "candidateSourceCommit": "95308f4a34856e9c1fb4681bbdb7b7c737aeb0fb",
+  "baselineCommit": "a8881ac17e44f38fb1e9dc15428899992727cc78",
+  "scope": "Continue the eight reviewed Field Kit audio recipes across the exact v0.141.0 creator source. Two of the twenty-four ordered audio inputs change: managed-media-store adds a bounded external-usage ledger so Team campaign media shares the existing 256 MiB budget, and media-storage-record adds an exact prepared removal inventory for creator-picture offload. The remaining twenty-two inputs, eight recipe identifiers, audio routing, soundtrack selection, volume, rights records and soundtrack bytes are unchanged.",
+  "priorReview": {
+    "path": "docs/verification/v0.132.5-presentation-continuation/review.json",
+    "sha256": "fbc818dcfbbfd2cf1985017417959c82741162842cd3c7293f5be67fc594ef35",
+    "fingerprintSHA256": "301e68a4898cf7d9140abee266195401a69cfca0db2301a12409ec252c882ec9"
+  },
+  "fingerprint": {
+    "group": "audio",
+    "paths": "game/app.mjs; game/couch/couch-music-host.mjs; game/opening-soundtrack.mjs; game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/soundtrack-bundled.mjs; game/ui/soundtrack-panel.mjs; game/ui/soundtrack-panel.css; game/soundtrack-albums.mjs; game/soundtrack-portable.mjs; game/content/soundtrack-catalogue.mjs; game/online-soundtrack-catalogue.mjs; game/official-downloads.mjs; game/soundtrack-download-volumes.mjs; game/installed-app.mjs; game/managed-media-store.mjs; game/media-storage-record.mjs",
+    "priorSHA256": "301e68a4898cf7d9140abee266195401a69cfca0db2301a12409ec252c882ec9",
+    "currentSHA256": "77370fe6fc7a8d376865b05d8ba2020b8683b3922c20cc3dfad260d0a0251f79",
+    "algorithm": "SHA256 of the ordered raw source bytes concatenated, matching fieldKitRecipeSources"
+  },
+  "changedInputs": [
+    {
+      "path": "game/managed-media-store.mjs",
+      "priorSHA256": "850901e850853b935f568c894ffbf48afd4d1ca5ea4d7d4f71f88363c19acbe8",
+      "currentSHA256": "65d9249677045e7d7aad1d99003aeeac5adc9b72ea0b045be7a08b8480219885",
+      "assessment": "Adds validated pending/committed external byte claims, reconciliation and combined-budget accounting for Team campaign media. Existing audio rows, blobs, generations, reservations and write paths retain their prior contracts; only the shared used-byte total additionally accounts for authenticated external claims."
+    },
+    {
+      "path": "game/media-storage-record.mjs",
+      "priorSHA256": "6aefcc52025c935f34455cb20821e37d9db59b7b0315a132ef271939bef9200d",
+      "currentSHA256": "8ac345221034ec28e9968942d86dfdd4cb33415f0e7319a62e9466e072a0b93a",
+      "assessment": "Adds a private exact removal inventory to prepared rich-still transitions so reviewed creator-picture bytes can be detached without permitting arbitrary mutation. It does not own audio metadata, audio blobs, soundtrack selection or playback."
+    }
+  ],
+  "assessment": [
+    "All other ordered audio inputs are byte-identical to the accepted v0.132.5 fingerprint.",
+    "The eight selected audio roles retain their existing procedural recipe IDs and payloads. No audio route, source resolver, volume, rights record, soundtrack media or playback control changes in this continuation.",
+    "The managed-media change intentionally makes Team campaign claims participate in the same bounded capacity calculation as soundtrack and still media. Exact reservation, stale-generation, reconciliation, interrupted-write, offload and reinstall cases pass in the creator/runtime suite.",
+    "The retained-still change is guarded by an unforgeable prepared transition and exact id/hash inventory, then rechecked against the current row inside the final transaction."
+  ],
+  "qualification": {
+    "automated": [
+      "The exact rebased v0.141.0 source passed 544 top-level creator/runtime subtests and 546/546 total tests, including managed-media accounting, reservations, stale writers, retained-picture edits, offload and exact reinstall.",
+      "The self-hosted community service passed 43/43 tests on the exact rebased source after installing its locked dependencies.",
+      "Repository validation passed 1,244 files with whole-spatial SHA-256 e62ef45089df1bbaea04cceb932949fbe8d29377a4eeefcac8280125006495b3."
+    ],
+    "browserEvidence": [
+      "Built-in-browser acceptance exercised exact creator package install, picture retention, media offload and offline reinstall under the shared managed-media store.",
+      "AVC plus AAC creator victory playback and bounded physical conversion passed separately; that evidence validates creator media behavior and is not represented as full soundtrack listening."
+    ]
+  },
+  "teamPictureCompatibility": {
+    "record": "docs/v0.141.0-team-picture-revision-compatibility.md",
+    "priorThemeRevision": 90,
+    "currentThemeRevision": 91,
+    "retainedThemeRevisionRange": [
+      58,
+      90
+    ],
+    "historicalPolicyLimit": 34,
+    "pictures": [
+      {
+        "assetId": "scene.reveal.wide.field-kit",
+        "assetRevision": 2,
+        "bytes": 52720,
+        "sha256": "53f1206a11a8791892f5c844c0641529acbc2c09c8d558676d0d801d72113850"
+      },
+      {
+        "assetId": "picture.fpv.adf5c9eea274ba7f.field-kit",
+        "assetRevision": 2,
+        "bytes": 38090,
+        "sha256": "d76f309d8385cd5d20fc2fff72b7f3abc19299cccdde767d76dd9f4a4960929d"
+      }
+    ]
+  },
+  "excluded": [
+    "No new composition, recording, musical suitability, Ukrainian authenticity or full-track listening is claimed.",
+    "No physical-speaker, Safari, Firefox, physical-mobile, every-device, frozen-build, public-game or production-host acceptance is claimed by this continuation.",
+    "No claim extends beyond the exact ordered fingerprint, prior review bytes, changed-input hashes and existing eight recipe identities recorded here."
+  ],
+  "decision": "Continue only the eight existing Field Kit audio recipe approvals for current fingerprint 77370fe6fc7a8d376865b05d8ba2020b8683b3922c20cc3dfad260d0a0251f79 when this exact review record and the immutable v0.132.5 predecessor review both match. Any ordered input, fingerprint, recipe payload or review-byte change reopens the group."
+}
