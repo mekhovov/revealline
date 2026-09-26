@@ -2,9 +2,10 @@
 
 ## Candidate scope
 
-This is an unversioned local candidate built on provisional v0.134 source
-`23841ae0f92195b45af70d2615ad611f5690857d`. It does not claim a release, public deployment,
-physical-device result or dependency on the unreleased v0.135 navigation candidate.
+This is an unversioned v0.136 local candidate rebased on the v0.135 navigation parent
+`c6aca0bf82120f1d798d372081aa4b779a6b3a2b`. Package, lockfile and build identities remain at
+v0.135 until the release coordinator assigns the release commit. This evidence does not claim a
+release, public deployment or physical-device result.
 
 The Team host adds three small, nonmodal lessons without changing simulation rules, missions,
 scoring, artwork, input bindings or the existing mission briefing:
@@ -33,8 +34,10 @@ The teaching controller never parses translated strings. English and Ukrainian c
 `revealline.team-contextual-teaching.v1` stores only explicitly acknowledged and successfully
 completed skill IDs. Merely showing a cue does not suppress it on Retry or a later visit. Support is
 complete only when `support.pulse` contains a slowed enemy or intercepted impact; an empty pulse
-keeps the lesson pending. Rescue is complete only on `rescue.completed`. Storage denial, malformed
-bytes and failed writes keep a bounded in-memory session and never block play.
+keeps the lesson pending. Changing setup retains an unfinished Support lesson but hides it while the
+selected arena has no slowable threat or interceptable spark. Rescue is complete only on
+`rescue.completed`. Storage denial, malformed bytes and failed writes keep a bounded in-memory
+session and never block play.
 
 ## Focused evidence
 
@@ -43,6 +46,7 @@ The local candidate includes unit and real Team-host coverage for:
 - semantic capability/role selection and no localized-copy parsing;
 - first cut and preservation of authored mission guidance;
 - effective and empty Support pulses;
+- setup changes between pressure and calm arenas while Support remains pending;
 - authoritative downing, rescue start and completed hold-to-rescue;
 - cue retention across Retry and dismissal after success or acknowledgement;
 - English/Ukrainian live refresh;
@@ -60,4 +64,4 @@ The CSS stacks cue text and its action below 520 CSS pixels and contains no teac
 reduced effects does not alter mechanic timing. This source review does not replace native visual
 inspection at portrait, short-landscape, 1280×800 handheld or 200% zoom. It also does not certify a
 physical controller or touchscreen. Those checks remain blocking release evidence, alongside the
-planned v0.135 navigation reconciliation and the later deliberate terminal-Retry feature.
+later deliberate terminal-Retry feature.

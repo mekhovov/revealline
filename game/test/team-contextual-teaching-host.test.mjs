@@ -47,8 +47,7 @@ function firstCutCommands(level) {
   return route.log;
 }
 
-async function importAndStart(context, pack) {
-  const f = await page(context, { nativeFocus: true });
+async function selectPack(f, pack) {
   const source = JSON.stringify(pack);
   f.$('coop-pack-file').closest('details').open = true;
   f.$('coop-pack-file').files = [new Blob([source], { type: 'application/json' })];
@@ -62,6 +61,11 @@ async function importAndStart(context, pack) {
     }),
   );
   assert.equal(f.$('coop-start').disabled, false);
+}
+
+async function importAndStart(context, pack) {
+  const f = await page(context, { nativeFocus: true });
+  await selectPack(f, pack);
   f.$('coop-start').focus();
   f.$('coop-start').click();
   assert.equal(f.$('coop-menu').hidden, true);
@@ -221,4 +225,43 @@ test('real Team downing preempts the cut cue and a completed hold-to-rescue dism
   assert.equal(f.$('coop-teaching').hidden, true);
   assert.match(f.$('coop-message').textContent, /rescued/i);
   assert.match(f.$('coop-state-0').textContent, /safe ground/i);
+});
+
+test('real Team setup changes hide pending Support in a calm arena and restore it with a valid target', async (context) => {
+  locales(context);
+  const pressure = structuredClone(FIRST_CONNECTION);
+  pressure.enemies = [
+    {
+      id: 'context-drifter',
+      type: 'drifter',
+      x: 36,
+      y: 2,
+      vx: 0.1,
+      vy: 0,
+      radius: 0.35,
+    },
+  ];
+  const pressurePack = packWith(pressure, 'context-pressure');
+  const f = await importAndStart(context, pressurePack);
+  replayTeamCommands(f, firstCutCommands(pressure));
+  assert.equal(f.$('coop-teaching').dataset.kind, 'support');
+
+  f.$('coop-pause').click();
+  f.$('coop-lobby').click();
+  f.$('coop-discard-confirm').click();
+  const calm = structuredClone(FIRST_CONNECTION);
+  calm.enemies = [];
+  const calmPack = packWith(calm, 'context-calm');
+  await selectPack(f, calmPack);
+  f.$('coop-start').click();
+  assert.equal(f.$('coop-teaching').hidden, true, 'calm arena does not invent a Support target');
+
+  f.$('coop-pause').click();
+  f.$('coop-lobby').click();
+  f.$('coop-discard-confirm').click();
+  await selectPack(f, pressurePack);
+  f.$('coop-start').click();
+  assert.equal(f.$('coop-teaching').hidden, false);
+  assert.equal(f.$('coop-teaching').dataset.kind, 'support');
+  assert.match(f.$('coop-teaching-message').textContent, /^SUPPORT READY/);
 });
