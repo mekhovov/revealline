@@ -3,7 +3,9 @@ import { access, mkdir, rename, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import {
   createRecoverySnapshot,
+  recoveryStorageIdentity,
   restoreRecoverySnapshot,
+  restoreRecoverySnapshotToStore,
   verifyRecoverySnapshot,
 } from './recovery.mjs';
 
@@ -184,6 +186,16 @@ const canonicalInspection = (inspection) => {
 
 const semanticFingerprint = (inspection) => sha256(JSON.stringify(inspection));
 
+const durableInspection = (inspection) => ({
+  ...inspection,
+  counts: Object.fromEntries(
+    Object.entries(inspection.counts).filter(([key]) => key !== 'tusUploads'),
+  ),
+  tableFingerprints: Object.fromEntries(
+    Object.entries(inspection.tableFingerprints).filter(([key]) => key !== 'tusUploads'),
+  ),
+});
+
 const assertReferencedBlobs = (inspection, manifest) => {
   const inventory = new Map(manifest.blobs.map((blob) => [blob.key, blob]));
   for (const reference of inspection.blobReferences) {
@@ -207,13 +219,19 @@ const atomicWriteJson = async (file, value) => {
 export function planRecoveryRehearsal({
   sourceDatabaseUrl,
   sourceBlobRoot,
+  sourceBlobStorage,
   targetDatabaseUrl,
   targetBlobRoot,
+  targetBlobStorage,
 }) {
   const sourceDatabase = databaseIdentity(requireText(sourceDatabaseUrl, 'Source database URL'));
   const targetDatabase = databaseIdentity(requireText(targetDatabaseUrl, 'Target database URL'));
-  const sourceBlobs = blobIdentity(requireText(sourceBlobRoot, 'Source blob root'));
-  const targetBlobs = blobIdentity(requireText(targetBlobRoot, 'Target blob root'));
+  const sourceBlobs = sourceBlobStorage
+    ? recoveryStorageIdentity(sourceBlobStorage)
+    : blobIdentity(requireText(sourceBlobRoot, 'Source blob root'));
+  const targetBlobs = targetBlobStorage
+    ? recoveryStorageIdentity(targetBlobStorage)
+    : blobIdentity(requireText(targetBlobRoot, 'Target blob root'));
   if (sourceDatabase === targetDatabase)
     throw new Error('Recovery rehearsal source and target databases must differ.');
   if (sourceBlobs === targetBlobs)
@@ -249,8 +267,12 @@ export async function inspectRecoveryDatabase({ databaseUrl, runCommand }) {
 export async function rehearseCommunityRecovery({
   sourceDatabaseUrl,
   sourceBlobRoot,
+  sourceBlobStore,
+  sourceBlobStorage,
   targetDatabaseUrl,
   targetBlobRoot,
+  targetBlobStore,
+  targetBlobStorage,
   workDirectory,
   receiptFile,
   expectedTargetIdentity,
@@ -262,8 +284,10 @@ export async function rehearseCommunityRecovery({
   const plan = planRecoveryRehearsal({
     sourceDatabaseUrl,
     sourceBlobRoot,
+    sourceBlobStorage,
     targetDatabaseUrl,
     targetBlobRoot,
+    targetBlobStorage,
   });
   if (expectedTargetIdentity !== plan.targetDatabase)
     throw new Error(
@@ -281,6 +305,7 @@ export async function rehearseCommunityRecovery({
   const created = await createRecoverySnapshot({
     databaseUrl: sourceDatabaseUrl,
     blobRoot: sourceBlobRoot,
+    blobStore: sourceBlobStore,
     destination: snapshotDirectory,
     runCommand,
   });
@@ -289,18 +314,30 @@ export async function rehearseCommunityRecovery({
     throw new Error('Recovery snapshot changed between creation and verification.');
   assertReferencedBlobs(sourceInspection, manifest);
 
-  await restoreRecoverySnapshot({
-    databaseUrl: targetDatabaseUrl,
-    blobRoot: targetBlobRoot,
-    source: snapshotDirectory,
-    runCommand,
-  });
+  if (targetBlobStore)
+    await restoreRecoverySnapshotToStore({
+      databaseUrl: targetDatabaseUrl,
+      blobStore: targetBlobStore,
+      storageIdentity: plan.targetBlobs,
+      journalFile: path.join(workspace, 'restore-journal.json'),
+      source: snapshotDirectory,
+      runCommand,
+    });
+  else
+    await restoreRecoverySnapshot({
+      databaseUrl: targetDatabaseUrl,
+      blobRoot: targetBlobRoot,
+      source: snapshotDirectory,
+      runCommand,
+    });
   const targetInspection = canonicalInspection(
     await inspectDatabase({ databaseUrl: targetDatabaseUrl, role: 'target' }),
   );
   assertReferencedBlobs(targetInspection, manifest);
-  const sourceFingerprint = semanticFingerprint(sourceInspection);
-  const targetFingerprint = semanticFingerprint(targetInspection);
+  if (targetInspection.counts.tusUploads !== 0)
+    throw new Error('Restored database retained transient tus upload rows.');
+  const sourceFingerprint = semanticFingerprint(durableInspection(sourceInspection));
+  const targetFingerprint = semanticFingerprint(durableInspection(targetInspection));
   if (sourceFingerprint !== targetFingerprint)
     throw new Error('Restored database does not match the source semantic inspection.');
 
@@ -319,6 +356,7 @@ export async function rehearseCommunityRecovery({
       counts: sourceInspection.counts,
       submissionStatusCounts: sourceInspection.submissionStatusCounts,
       referencedBlobCount: sourceInspection.blobReferences.length,
+      discardedTusUploads: sourceInspection.counts.tusUploads,
       storedBlobCount: manifest.blobs.length,
       storedBlobBytes: manifest.blobs.reduce((sum, blob) => sum + blob.size, 0),
       databaseDumpSha256: manifest.database.sha256,
@@ -327,6 +365,7 @@ export async function rehearseCommunityRecovery({
       'source-target-identities-distinct',
       'snapshot-bytes-verified',
       'database-blob-references-present',
+      'transient-tus-uploads-expired',
       'restore-journal-completed',
       'source-target-semantics-equal',
     ],
