@@ -359,6 +359,35 @@ export function createBatchCreatorController({
     return snapshot();
   }
 
+  function restore(state) {
+    cancel();
+    if (!state || !Array.isArray(state.items) || !state.settings)
+      throw new TypeError(t('errors:creator.invalidCheckpointRevision'));
+    for (const [key, node] of [
+      ['collectionName', nodes.collectionName],
+      ['pacing', nodes.pacing],
+      ['fit', nodes.fit],
+      ['creatorCredit', nodes.creatorCredit],
+      ['pictureCredit', nodes.pictureCredit],
+      ['license', nodes.license],
+    ])
+      if (node && typeof state.settings[key] === 'string') node.value = state.settings[key];
+    items = state.items.slice(0, maxItems).map((item) => ({
+      id: item.id,
+      file: item.file,
+      title: item.title,
+      included: !!item.included,
+      status: item.included ? item.status : 'excluded',
+      result: null,
+      error: item.error || '',
+      generation: item.generation,
+    }));
+    progress = { complete: 0, total: items.length };
+    sequence = Math.max(sequence, items.length);
+    render();
+    return snapshot();
+  }
+
   function move(id, delta) {
     if (running) return;
     const from = items.findIndex((item) => item.id === id);
@@ -450,6 +479,13 @@ export function createBatchCreatorController({
     return prepare(items.filter((item) => item.included && item.status !== 'ready'));
   }
 
+  function resume(itemIds) {
+    const wanted = new Set(itemIds);
+    return prepare(
+      items.filter((item) => item.included && item.status !== 'ready' && wanted.has(item.id)),
+    );
+  }
+
   async function regenerateItem(id) {
     if (running) return;
     const item = items.find((candidate) => candidate.id === id);
@@ -506,7 +542,9 @@ export function createBatchCreatorController({
   render();
   return Object.freeze({
     setFiles,
+    restore,
     generate,
+    resume,
     cancel,
     move,
     setTitle,
