@@ -7,7 +7,9 @@ import { createAuthoredJourneyRouteDefinition } from './route-definition.mjs';
 export async function loadAuthoredJourneyRoute(id) {
   if (!isAuthoredJourneyRouteId(id)) return null;
   let factories;
-  if (id === 'whole-spatial-v28') {
+  if (id === 'whole-spatial-v29') {
+    factories = await import('./neon-cultural-completion-candidates.mjs');
+  } else if (id === 'whole-spatial-v28') {
     factories = await import('./fracture-apex-cultural-completion-candidates.mjs');
   } else if (id === 'whole-spatial-v27') {
     factories = await import('./crosswind-cultural-completion-candidates.mjs');
