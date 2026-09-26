@@ -3,7 +3,7 @@
 This review describes candidate engineering observations made on 27 September 2026.
 It is not final human artwork, brand, content, accessibility or release approval. The
 user-reported formative playtest remains complete. No artwork bytes or revisions were
-changed by this review.
+changed by the original review. The immutable follow-up correction is recorded below.
 
 ## Inspection coverage
 
@@ -45,7 +45,7 @@ The ten existing generation-receipt warnings were revisited in partial views:
 | From Need to Value 05; Connect the Network 03 | Decorative ledger/paper marks must remain scenery, not readable task evidence. |
 | Connect the Network 05 and 06 | Miniature architecture, trays and ornaments add competing detail. |
 | Workshop Lights 06 | Deliberately dark evening composition. |
-| Parts in Motion 03 | A rear-right propeller tip is clipped at the picture edge. |
+| Parts in Motion 03 revision 2 | A rear-right propeller tip is clipped at the picture edge. |
 | Parts in Motion 04 | Physical cutting-mat grid could compete with gameplay cells. |
 | Signals of Support 01 | A foreground propeller approaches the reserved objective area. |
 
@@ -53,9 +53,17 @@ Parts in Motion 03 revision 2, SHA-256
 `196aad09cc2e99b5bdd53f45fcd434f3bcab3352a31345de6bf73055f953f721`,
 was also inspected in its full gallery composition. The four motors, frame and camera
 remain readable, but the rear-right blade tip reaches the right border. The minor
-composition defect is confirmed and remains unresolved for final artwork review; it is
-not silently marked fixed or approved. Any later correction must append a new immutable
-picture revision and preserve the existing presentation for saved runs and replays.
+composition defect was confirmed by the original review. Its correction therefore had to
+append a new immutable picture revision and preserve the existing presentation for saved
+runs and replays.
+
+That correction is now implemented as revision 3. The selected 640×320 opaque derivative,
+SHA-256 `adf0812ac70f18b45b716ba1067f56c963ed24205f6a21ca0fccb0f50e1401e2`,
+keeps all four motors and every propeller blade inside the image with clean edge margin.
+The exact revision-2 combined and campaign presentations were captured before registration.
+A 1280×720 registered-source run checked the initial reveal and a legal 3.6% capture with
+the shared terrain, objective, player and enemy overlays. The crop defect is resolved in the
+current candidate; final human approval and narrow physical-device review remain pending.
 
 Additional partial views cover Makers Together 06, Careful Handoff 06 and Shared Horizon
 06, completing at least one static view from each of the six Netherlands campaign actor

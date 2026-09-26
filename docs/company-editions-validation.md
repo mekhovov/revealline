@@ -6,13 +6,14 @@ installation and downloaded/deployed release evidence cannot be inferred from un
 
 ## Main integration and final review preparation
 
-Main through `6bbe49762` is integrated in merge `f67252755`. The only merge conflict was
+Main through `83df9cfc9` is integrated in merge `38d320f48`. The only merge conflict was
 the generated localization catalogue. Regenerating it from the combined English/Ukrainian
 sources and running localization validation preserved both company and upstream strings.
 The incoming private soundtrack feature uses the existing static runtime dependency closure;
 explicit local MP3 input remains browser-owned and does not enter source or runtime archives.
-The focused edition compiler/runtime cohort passes 24 checks, all 101 generated company files
-match, and source eligibility still admits 135 approved media assets.
+All 101 generated company files match. The corrected DroneAid image increases the approved
+media inventory to 136 assets; exact source eligibility and frozen-candidate results are
+recorded after the final commit.
 
 The incoming shared soundtrack panel could announce that a saved private collection was playing
 when browser audio permission prevented playback. The shared fix now checks actual playback
@@ -22,9 +23,9 @@ intake/panel cohort passes 110 checks and is added to company candidate CI.
 
 The [artwork engineering review](company-artwork-engineering-review.md) records all 66 current
 exports, native-size inspection and 20 static shared-renderer views across 16 missions. The
-older Coupa cover crops retain their main subjects in the inspected views. A clipped propeller
-tip in Parts in Motion 03 remains a specific final-art-review item; no image revision or
-human approval is implied by these observations.
+older Coupa cover crops retain their main subjects in the inspected views. Parts in Motion 03
+now uses an immutable revision-3 reframe with the complete quad and every propeller tip inside
+the selected 640×320 image. Final human artwork approval is still separate.
 
 The [device qualification matrix](company-editions-device-qualification.md) records the
 80-check post-merge offline/storage/promotion cohort and executable installed-app steps.
@@ -106,6 +107,32 @@ revision 2; authoring selects the highest positive integer revision, while resto
 its pinned snapshot. Import tests reject revision gaps, conflicting records, reused media
 paths, bad media and incomplete provenance; historical and current receipt reimports remain
 idempotent. The authoring selector is explicitly excluded from player builds.
+
+## Parts in Motion crop correction
+
+The clipped rear-right propeller in Parts in Motion 03 is corrected by a new immutable artwork
+revision. The exact pre-change combined and campaign-only presentations were captured from
+`38d320f48` before registration. The two retained snapshots bind their complete catalogues,
+source files and presentation hashes, so Continue, Retry and explicit presentation selection
+can restore revision 2 without silently substituting the new pixels.
+
+The new 640×320 opaque RGB derivative is 354,404 bytes with SHA-256
+`adf0812ac70f18b45b716ba1067f56c963ed24205f6a21ca0fccb0f50e1401e2`.
+Its generation receipt retains the exact master hash, editing prompt and native resize command.
+Native-size inspection confirms four motors, four resting propellers and clean margin around
+every blade. A registered-source browser run loaded Eyes on the Shelf from the standard
+six-mission selector at 1280×720, rendered the shared player/enemy/terrain/objective overlays,
+accepted keyboard flight input and completed a legal 3.6% capture. Initial and captured reveal
+states remained readable. Narrow-device crop review and final human artwork approval remain
+pending.
+
+This is an artwork-only update. All mission, campaign, pack, lesson, geometry, enemy and
+difficulty identities remain unchanged. Only the combined Netherlands edition and Parts in
+Motion edition advance their presentation revisions. Focused validation passes 33 checks,
+including idempotent receipt import, unchanged gameplay manifests, exact revision-2 recovery,
+runtime dependency closure and deterministic presentation capture. The reusable capture CLI
+now records any selected edition directly from the repository catalogue instead of relying on
+an ad hoc script.
 
 Before the final main integration, 232 company/runtime/artifact tests plus the separate
 six-test route suite passed with no failures or skips. The default actor renderer passed

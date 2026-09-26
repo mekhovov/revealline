@@ -28,16 +28,16 @@
       "width": 640
     },
     {
-      "alt": "A fictional FPV workshop with carbon-frame quadcopter, goggles, camera tray and a Ukrainian flag.",
-      "bytes": 348333,
+      "alt": "A fictional FPV workshop with a fully framed carbon quadcopter, goggles, camera tray and Ukrainian flag.",
+      "bytes": 354404,
       "format": "AssetRevisionV1",
       "height": 320,
       "id": "droneaid-nl-parts-in-motion-03-picture",
       "kind": "reveal-background",
-      "path": "editions/assets/droneaid-nl/artwork-v2/droneaid-nl-parts-in-motion-03.png",
+      "path": "editions/assets/droneaid-nl/artwork-v3/droneaid-nl-parts-in-motion-03.png",
       "review": "candidate",
-      "revision": "2",
-      "sha256": "196aad09cc2e99b5bdd53f45fcd434f3bcab3352a31345de6bf73055f953f721",
+      "revision": "3",
+      "sha256": "adf0812ac70f18b45b716ba1067f56c963ed24205f6a21ca0fccb0f50e1401e2",
       "width": 640
     },
     {

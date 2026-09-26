@@ -1192,5 +1192,14 @@
     "publication": "public",
     "approved": true,
     "dependencies": []
+  },
+  {
+    "id": "droneaid-nl-parts-in-motion-03-reveal-v3",
+    "path": "game/editions/assets/droneaid-nl/artwork-v3/droneaid-nl-parts-in-motion-03.png",
+    "sha256": "adf0812ac70f18b45b716ba1067f56c963ed24205f6a21ca0fccb0f50e1401e2",
+    "bytes": 354404,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
   }
 ]

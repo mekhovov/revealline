@@ -243,6 +243,12 @@ const retainedPresentations = Object.freeze({
       sha256: '27669f1fa5d8692e6314bfd5d600c5554dee6679c364f7109a5663e8653856bc',
       bytes: 146882,
     },
+    {
+      id: '389459b2b3b2a5b330a053b9eaf11918878a8f19688e035cd19b641744f98c85',
+      path: 'game/editions/retained/droneaid-nl-community-38d320f48.json',
+      sha256: '24c8cdff37378db2fdd5e405e650a0512ae5fa308188b3ce76b68b02ab71a8fa',
+      bytes: 148331,
+    },
   ],
   'droneaid-nl-workshop-lights': [
     {
@@ -270,6 +276,12 @@ const retainedPresentations = Object.freeze({
       path: 'game/editions/retained/droneaid-nl-parts-in-motion-475bccde4.json',
       sha256: '62aa48212ba19ede5bbc12064fc0fda026c2703ca8fef777d1d6657ba0d802e2',
       bytes: 38774,
+    },
+    {
+      id: '375300b9464b5a567c7cc8888e9a46f6f3e00cb01de0a25bf5cf2eff3c3b5f01',
+      path: 'game/editions/retained/droneaid-nl-parts-in-motion-38d320f48.json',
+      sha256: '09591e6100464171e9113227d37200bf68c2446440e58e0efad718b1c52e3930',
+      bytes: 39189,
     },
   ],
   'droneaid-nl-makers-together': [
@@ -340,9 +352,11 @@ export const COMPANY_EDITIONS = Object.freeze(
       ? 6
       : brandId === 'coupa'
         ? 5
-        : brandId === 'droneaid-nl'
-          ? 4
-          : 1,
+        : ['droneaid-nl-community', 'droneaid-nl-parts-in-motion'].includes(id)
+          ? 5
+          : brandId === 'droneaid-nl'
+            ? 4
+            : 1,
     name,
     brandId,
     audience,

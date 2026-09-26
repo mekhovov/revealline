@@ -3512,6 +3512,40 @@
         "height": 887
       },
       "prompt": "Use case: stylized-concept. Asset type: one finished opaque 2:1 game reveal image for a fictional DroneAid Netherlands FPV workshop. Premium photographic workshop diorama, believable proportions and tactile carbon fibre, matte rubber, warm worn timber and practical furniture. The hero must be an immediately recognizable parked FPV racing QUADCOPTER: exactly four separate motor positions on four slim black carbon arms, a small front camera, compact centre body, simple resting propellers all inside the frame. FPV goggles with dark eyecups and a broad head strap accompany it. Equipment is clearly powered off. No build steps, readable electronics, wiring diagrams or specifications. Ordinary community workshop, never a palace, fantasy town or floating trinkets. Actual brand accents: matte violet #4238EB cabinetry, restrained yellow #FFD62C lamp or tray, white walls and genuine black carbon. A small Ukraine blue-over-yellow flag or fabric expresses support for Ukraine, distinguishable from violet. No people, logos, readable text, numbers, screens with content, game UI, trails, target markers, weapons, payloads, combat, tactical maps, real unit identifiers or claimed delivery. Broad smooth low-detail surfaces, large clear equipment silhouettes; avoid excessive fine texture, clutter and confetti so the 640x320 derivative stays crisp. Full-bleed single landscape composition, no panels.\n\nScene title for context only; do not render words: Thank You, Together. A fictional volunteer workshop at the end of a productive evening: ONE open shallow case with a large assembled four-motor carbon FPV quad sits on the near-RIGHT workbench, its front camera and separate arms clearly readable. Black goggles with a wide strap are beside it, and well-used closed hand-tool cases sit toward the left wall. A modest row of closed plain equipment cases is stacked along the rear violet cabinet beneath a small blue-over-yellow Ukraine fabric. Ordinary brick-and-white workshop, warm low yellow lamps, graceful side-on composition, an empty centre bench conveys space for people without showing anyone. Keep central areas40–57%/33–44% and42–57%/64–75% smooth and quiet, with unoccupied upper-left and lower-left landing areas. No medals, gifts, ceremonial trophies or real delivery evidence."
+    },
+    {
+      "id": "droneaid-nl-parts-in-motion-03-reveal-v3",
+      "path": "game/editions/assets/droneaid-nl/artwork-v3/droneaid-nl-parts-in-motion-03.png",
+      "revision": 3,
+      "sha256": "adf0812ac70f18b45b716ba1067f56c963ed24205f6a21ca0fccb0f50e1401e2",
+      "bytes": 354404,
+      "rights": "generated-derivative",
+      "source": "image_gen.imagegen",
+      "publication": "public",
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; final artifact artwork approval pending",
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "/usr/bin/sips",
+        "command": [
+          "/usr/bin/sips",
+          "-z",
+          "320",
+          "640",
+          "$CODEX_HOME/generated_images/01a0dbeb-a2f3-7290-927a-06dce78afc5a/exec-852d5120-d11a-4340-9cdd-2f5cd451bf9e.png",
+          "--out",
+          "game/editions/assets/droneaid-nl/artwork-v3/droneaid-nl-parts-in-motion-03.png"
+        ],
+        "changes": "Proportional native resize only; no crop, repainting, palette quantization or semantic edit after the generated reframe.",
+        "opaque": true
+      },
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbeb-a2f3-7290-927a-06dce78afc5a/exec-852d5120-d11a-4340-9cdd-2f5cd451bf9e.png",
+        "sha256": "bc35c834a6dbb02ae3233dd4e6212aaa683fe5165e8f18ba14447020303b3b06",
+        "bytes": 2070878,
+        "width": 1774,
+        "height": 887
+      },
+      "prompt": "Use case: precise-object-edit. Asset type: landscape game mission background, 2:1 composition. Primary request: Reframe the existing workshop photograph slightly wider so the entire FPV quad is inside the frame, including every propeller blade with comfortable margin at the right edge. Input image: edit target; preserve its subject, room, objects, camera angle, lighting, colors, Dutch workshop atmosphere, goggles, component trays, shelves, plants, and blue-yellow cloth. Composition/framing: keep the 2:1 landscape layout and quiet gray work mat centered; move or widen the framing only as much as needed to reveal the clipped rear-right propeller tip and add a small clean margin around the whole drone. Constraints: change only the framing and the minimal newly exposed edge area; preserve the exact recognizable four-motor carbon-frame FPV drone, camera, antenna, goggles and workshop arrangement; realistic materials; no people; no readable labels; no new text; no logos; no weapons; no active flight; no watermark. Avoid: clipped drone parts, added or missing motors, duplicated propellers, deformed frame, altered workshop identity, dramatic cinematic effects, shallow crop."
     }
   ]
 }

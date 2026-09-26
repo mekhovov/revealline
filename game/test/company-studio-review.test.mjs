@@ -72,10 +72,21 @@ const observation = (context) => ({
 test('review context selects all 36 current FPV pictures and keeps culture sources distinct', async () => {
   const { context } = await fixture();
   assert.equal(context.missions.length, 36);
+  assert.deepEqual(
+    context.missions
+      .filter(({ picture }) => picture.revision === '3')
+      .map(({ id, picture }) => [id, picture.path]),
+    [
+      [
+        'droneaid-nl-parts-in-motion-03',
+        'editions/assets/droneaid-nl/artwork-v3/droneaid-nl-parts-in-motion-03.png',
+      ],
+    ],
+  );
   assert(
-    context.missions.every(
-      ({ picture }) => picture.revision === '2' && picture.path.includes('/artwork-v2/'),
-    ),
+    context.missions
+      .filter(({ picture }) => picture.revision !== '3')
+      .every(({ picture }) => picture.revision === '2' && picture.path.includes('/artwork-v2/')),
   );
   assert(
     context.missions.every(({ sources }) =>
@@ -160,7 +171,7 @@ test('review import rejects stale artifacts, wrong pictures, foreign missions, d
   );
 });
 
-test('generation notes expose all four recorded FPV composition warnings without master access', async () => {
+test('generation notes skip exact superseded pictures and expose current warnings without master access', async () => {
   const { context } = await fixture();
   const notes = (
     await Promise.all(
@@ -168,6 +179,7 @@ test('generation notes expose all four recorded FPV composition warnings without
         'game/editions/art-prompts-droneaid-fpv-workshop-v2.json',
         'game/editions/art-prompts-droneaid-fpv-makers-handoff-v2.json',
         'game/editions/art-prompts-droneaid-fpv-community-v2.json',
+        'game/editions/art-prompts-droneaid-fpv-crop-fix-v3.json',
       ].map(json),
     )
   ).flatMap((receipt) => studioGenerationNotes(receipt, context));
@@ -178,7 +190,6 @@ test('generation notes expose all four recorded FPV composition warnings without
       .map(({ missionId }) => missionId)
       .sort(),
     [
-      'droneaid-nl-parts-in-motion-03',
       'droneaid-nl-parts-in-motion-04',
       'droneaid-nl-signals-of-support-01',
       'droneaid-nl-workshop-lights-06',

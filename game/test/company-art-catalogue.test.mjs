@@ -23,13 +23,14 @@ const [assets, artwork, sources, catalog, ...receipts] = await Promise.all(
     'game/editions/art-prompts-droneaid-fpv-workshop-v2.json',
     'game/editions/art-prompts-droneaid-fpv-makers-handoff-v2.json',
     'game/editions/art-prompts-droneaid-fpv-community-v2.json',
+    'game/editions/art-prompts-droneaid-fpv-crop-fix-v3.json',
   ].map(json),
 );
 
 test('every current and historical mission has a distinct pinned picture with complete bulk provenance', async () => {
   assert.equal(COMPANY_MISSIONS.length, 69);
-  assert.equal(artwork.length, 105);
-  assert.equal(new Set(artwork.map((asset) => asset.sha256)).size, 105);
+  assert.equal(artwork.length, 106);
+  assert.equal(new Set(artwork.map((asset) => asset.sha256)).size, 106);
   assert.equal(selectCurrentCompanyArtwork(artwork).length, 69);
   for (const mission of COMPANY_MISSIONS)
     assert.ok(
@@ -52,7 +53,7 @@ test('every current and historical mission has a distinct pinned picture with co
     assert.deepEqual(imported.artwork, artwork);
     assert.deepEqual(imported.sources, sources);
   }
-  assert.equal(count, 93);
+  assert.equal(count, 94);
   for (const receipt of receipts)
     for (const record of receipt.assets) {
       assert.equal(record.review.status, 'candidate');
@@ -116,7 +117,11 @@ test('all 36 current Dutch pictures advance without changing gameplay or losing 
     const { snapshot } = await validateRetainedPresentation(await json(descriptor.path), {
       edition,
     });
-    assert.equal(snapshot.catalog.editions[0].revision + 1, edition.revision);
+    assert.equal(
+      snapshot.catalog.editions[0].revision +
+        (['droneaid-nl-community', 'droneaid-nl-parts-in-motion'].includes(edition.id) ? 2 : 1),
+      edition.revision,
+    );
     for (const campaign of snapshot.catalog.campaigns)
       projects.set(
         campaign.id,
@@ -133,7 +138,7 @@ test('all 36 current Dutch pictures advance without changing gameplay or losing 
     for (const mission of newSource.missions) {
       const picture = current.find((asset) => asset.id === `${mission.id}-picture`),
         oldPicture = oldSource.assets.find((asset) => asset.id === picture.id);
-      assert.equal(picture.revision, '2');
+      assert.equal(picture.revision, mission.id === 'droneaid-nl-parts-in-motion-03' ? '3' : '2');
       assert.equal(oldPicture.revision, '1');
       assert.notEqual(picture.sha256, oldPicture.sha256);
       assert.ok(picture.bytes <= 384 * 1024);
@@ -149,4 +154,36 @@ test('all 36 current Dutch pictures advance without changing gameplay or losing 
     }
   }
   assert.equal(compared, 108);
+});
+
+test('the corrected FPV crop advances only its campaign and combined edition with exact v2 recovery', async () => {
+  const affected = ['droneaid-nl-community', 'droneaid-nl-parts-in-motion'];
+  for (const editionId of affected) {
+    const edition = catalog.editions.find((entry) => entry.id === editionId);
+    const descriptor = edition.presentationHistory.find((entry) =>
+      entry.path.endsWith('-38d320f48.json'),
+    );
+    assert.ok(descriptor, editionId);
+    const bytes = await read(descriptor.path);
+    assert.equal(bytes.length, descriptor.bytes);
+    const { snapshot } = await validateRetainedPresentation(JSON.parse(bytes), { edition });
+    assert.equal(snapshot.authoredPresentationSha256, descriptor.id);
+    assert.equal(snapshot.catalog.editions[0].revision + 1, edition.revision);
+    const prior = snapshot.catalog.assets.find(
+      (asset) => asset.id === 'droneaid-nl-parts-in-motion-03-reveal-v2',
+    );
+    assert.equal(prior?.sha256, '196aad09cc2e99b5bdd53f45fcd434f3bcab3352a31345de6bf73055f953f721');
+    assert.equal(
+      snapshot.catalog.assets.some(
+        (asset) => asset.id === 'droneaid-nl-parts-in-motion-03-reveal-v3',
+      ),
+      false,
+    );
+  }
+  for (const edition of catalog.editions.filter((entry) => !affected.includes(entry.id)))
+    assert.equal(
+      edition.presentationHistory?.some((entry) => entry.path.endsWith('-38d320f48.json')) ?? false,
+      false,
+      edition.id,
+    );
 });

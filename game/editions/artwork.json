@@ -1363,5 +1363,18 @@
     "height": 320,
     "alt": "A completed fictional workshop batch with one visible carbon quad, goggles and closed cases.",
     "review": "candidate"
+  },
+  {
+    "format": "AssetRevisionV1",
+    "id": "droneaid-nl-parts-in-motion-03-picture",
+    "revision": "3",
+    "kind": "reveal-background",
+    "path": "editions/assets/droneaid-nl/artwork-v3/droneaid-nl-parts-in-motion-03.png",
+    "sha256": "adf0812ac70f18b45b716ba1067f56c963ed24205f6a21ca0fccb0f50e1401e2",
+    "bytes": 354404,
+    "width": 640,
+    "height": 320,
+    "alt": "A fictional FPV workshop with a fully framed carbon quadcopter, goggles, camera tray and Ukrainian flag.",
+    "review": "candidate"
   }
 ]
