@@ -27,6 +27,7 @@ permissions:
   contents: write
   pull-requests: write
   checks: read
+  actions: read
 
 concurrency:
   group: fastline-merge-${{ github.event.pull_request.number || github.event.workflow_run.pull_requests[0].number || github.run_id }}
@@ -53,7 +54,15 @@ jobs:
           fetch-depth: 1
           filter: blob:none
           persist-credentials: false
-          sparse-checkout: publishing/fastline-merge-controller.mjs
+          sparse-checkout: |
+            .github/workflows/deploy-pages.yml
+            publishing/fastline-merge-controller.mjs
+            publishing/admission-binding.mjs
+            publishing/admission-preflight.mjs
+            publishing/focused-tests.mjs
+            publishing/focused-test-map.json
+            publishing/test-policy.json
+            publishing/test-policy.mjs
           sparse-checkout-cone-mode: false
 
       - name: Record one-time controller bootstrap
