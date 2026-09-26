@@ -8,7 +8,7 @@ import {
 } from '../content-design/team-cultural-specialist-v2-originals.mjs';
 import { createTeamCulturalSpecialistOriginalCandidates } from '../content-design/team-cultural-specialist-originals.mjs';
 import { compileContentProject, resolveMission } from '../content-design/project.mjs';
-import { createCoop, startCoop, stepCoop } from '../coop/core.mjs';
+import { createCoop, SAFE, startCoop, stepCoop } from '../coop/core.mjs';
 
 const IDS = TEAM_CULTURAL_SPECIALIST_V2_SELECTIONS.map(({ id }) => id);
 const source = createTeamCulturalSpecialistV2OriginalCandidates();
@@ -46,6 +46,85 @@ const map = (compiled, id) => {
     (item) => item.source.id === owner.map.id && item.source.revision === owner.map.revision,
   );
 };
+
+function closeRoute(run, segments, player) {
+  const before = Uint8Array.from(run.cells);
+  for (const segment of segments)
+    for (let tick = 0; tick < segment.ticks && run.status === 'running'; tick++) {
+      stepCoop(run, [command(segment.a), command(segment.b)]);
+      assert.equal(
+        run.events.some(({ type }) => type === 'player.downed'),
+        false,
+      );
+      if (run.events.some(({ type, player: owner }) => type === 'cut.closed' && owner === player)) {
+        return Array.from(run.cells, (cell, index) =>
+          cell === SAFE && before[index] !== SAFE ? index : -1,
+        ).filter((index) => index >= 0);
+      }
+    }
+  assert.fail(`player ${player} did not close the rehearsed route`);
+}
+
+function safePath(level, cells, from, targets) {
+  const targetSet = new Set(targets);
+  const previous = new Int32Array(cells.length).fill(-1);
+  const queue = [from];
+  previous[from] = from;
+  let found = targetSet.has(from) ? from : -1;
+  for (let cursor = 0; cursor < queue.length && found < 0; cursor++) {
+    const cell = queue[cursor];
+    const x = cell % level.width;
+    const y = Math.floor(cell / level.width);
+    for (const neighbor of [
+      x > 0 ? cell - 1 : -1,
+      x + 1 < level.width ? cell + 1 : -1,
+      y > 0 ? cell - level.width : -1,
+      y + 1 < level.height ? cell + level.width : -1,
+    ]) {
+      if (neighbor < 0 || previous[neighbor] >= 0 || cells[neighbor] !== SAFE) continue;
+      previous[neighbor] = cell;
+      queue.push(neighbor);
+      if (targetSet.has(neighbor)) {
+        found = neighbor;
+        break;
+      }
+    }
+  }
+  assert.notEqual(found, -1, 'a partner-owned safe route must be reachable');
+  const path = [];
+  for (let cell = found; cell !== from; cell = previous[cell]) path.push(cell);
+  return path.reverse();
+}
+
+function traverseSafePath(run, seat, path) {
+  stepCoop(run, [command(), command()]);
+  for (const target of path) {
+    const from = run.players[seat].cellIndex;
+    const delta = target - from;
+    const direction =
+      delta === 1
+        ? 'right'
+        : delta === -1
+          ? 'left'
+          : delta === run.level.width
+            ? 'down'
+            : delta === -run.level.width
+              ? 'up'
+              : null;
+    assert.notEqual(direction, null);
+    for (let tick = 0; tick < 30 && run.players[seat].cellIndex !== target; tick++) {
+      const directions = [null, null];
+      directions[seat] = direction;
+      stepCoop(run, directions.map(command));
+      assert.equal(run.players[seat].cutting, false);
+      assert.equal(
+        run.events.some(({ type }) => type === 'player.downed'),
+        false,
+      );
+    }
+    assert.equal(run.players[seat].cellIndex, target);
+  }
+}
 
 test('the second Team slice uses three additional bounded Ukrainian records', () => {
   assert.deepEqual(IDS, ['crossed-gardens', 'split-orchards', 'weaver-crossing']);
@@ -174,4 +253,24 @@ for (const id of IDS)
           assert(run.coverage > 0 && run.coverage < level.goal.coverage);
           assert.equal(run.players[closed].cutting, false);
         }
+  });
+
+for (const id of IDS)
+  test(`${id} leaves a no-Support route that the partner can use after both closures`, () => {
+    for (const difficulty of ['gentle', 'standard', 'expert'])
+      for (const seed of [1, 7]) {
+        const level = resolveMission(project, id, { mode: 'team', difficulty }).level;
+        const run = startCoop(createCoop(level, { seed, jointCuts: false }));
+        const firstRoute = closeRoute(run, routes[id][0], 0);
+        assert(firstRoute.length > 0);
+        const secondRoute = closeRoute(run, routes[id][1], 1);
+        assert(secondRoute.length > 0);
+        const path = safePath(level, run.cells, run.players[1].cellIndex, firstRoute);
+        assert(path.length > 0);
+        traverseSafePath(run, 1, path);
+        assert(firstRoute.includes(run.players[1].cellIndex));
+        assert.equal(run.players[1].cutting, false);
+        assert(run.players.every(({ support }) => support.uses === 0));
+        assert(run.coverage > 0 && run.coverage < level.goal.coverage);
+      }
   });
