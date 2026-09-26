@@ -64,6 +64,23 @@ test('oriented dimensions drive reviewed fit and fill without changing the origi
   await prepareCreatorImage(png(10, 20), { ...options, fit: 'cover' }, portrait);
   assert.deepEqual(portrait.draws[0], [0, -960, 1280, 2560]);
 });
+test('orientation-aware decode accepts only the encoded axes or their exact swap', async () => {
+  for (const [width, height] of [
+    [10, 20],
+    [20, 10],
+  ]) {
+    const model = browserModel(width, height);
+    await prepareCreatorImage(png(10, 20), options, model);
+    assert.equal(model.bitmap.closed, 1);
+  }
+  const mismatched = browserModel(12, 20);
+  await assert.rejects(
+    prepareCreatorImage(png(10, 20), options, mismatched),
+    /decoded dimensions differ/i,
+  );
+  assert.equal(mismatched.bitmap.closed, 1);
+  assert.equal(mismatched.canvases.length, 0, 'invalid orientation facts fail before rendering');
+});
 test('invalid and oversized original bytes are rejected before pixel allocation, regardless of claimed MIME or size', async () => {
   let decoded = 0;
   const decodeBitmap = () => {
