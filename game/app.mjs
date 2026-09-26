@@ -145,6 +145,7 @@ import { attachModalNavigation } from './ui/modal-navigation.mjs';
 import { attachProfileRecoveryDialog } from './ui/profile-recovery-dialog.mjs';
 import { createControllerRouter } from './ui/controller-router.mjs';
 import { attachControllerConfirmGuard } from './ui/controller-confirm-guard.mjs';
+import { createControllerConfirmLifecycle } from './ui/controller-confirm-lifecycle.mjs';
 import {
   cancelControllerToggleBoost,
   controllerBoostAfterRecovery,
@@ -2135,6 +2136,7 @@ try {
   const controllerConfirmGuard = attachControllerConfirmGuard({
     confirmPressed: () => controller.menuConfirmPressed(),
   });
+  const controllerConfirmLifecycle = createControllerConfirmLifecycle();
   let controllerLabels = controllerBindingLabels(library.preferences.controllerBindings),
     controllerDeviceId = '';
   let controllerFrame = null,
@@ -8858,11 +8860,15 @@ try {
     enemyGuide?.update(elapsed, { reduced: displayPreferences.snapshot().effectiveReducedEffects });
     refreshInputPresentation();
     const scope = controllerScope();
-    controllerFrame = controller.sample({
-      scope,
-      timeMs: performance.now(),
-      toggleBoostEligible: run?.status === 'running',
-    });
+    const controllerTime = performance.now();
+    controllerFrame = controllerConfirmLifecycle.filter(
+      controller.sample({
+        scope,
+        timeMs: controllerTime,
+        toggleBoostEligible: run?.status === 'running',
+      }),
+      controllerTime,
+    );
     refreshControllerBoostCue();
     const { status, assigned, disconnected } = controllerFrame;
     const flightModality = JSON.stringify(controllerFrame.flight);
@@ -8898,7 +8904,7 @@ try {
     // End controller ownership even when this sample reports loss. A held
     // Confirm owns its release, but a disconnected pad must not leave native
     // keyboard activation suppressed indefinitely.
-    controllerConfirmGuard.observe(controllerFrame.confirmHeld);
+    controllerConfirmGuard.observe(controllerConfirmLifecycle.owned());
     if (disconnected) {
       clearInput();
       pause(true);
