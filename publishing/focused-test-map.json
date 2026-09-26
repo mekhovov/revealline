@@ -120,8 +120,17 @@
           "command": "node",
           "args": [
             "--test",
+            "publishing/focused-tests.test.mjs",
+            "publishing/fastline-merge-controller.test.mjs",
+            "publishing/fastline-release-inputs.test.mjs",
+            "publishing/fastline-release-objects.test.mjs",
+            "publishing/fastline-release-publisher.test.mjs",
             "publishing/test-policy.test.mjs",
+            "publishing/pages-controller/archive-authority.test.mjs",
             "publishing/pages-controller/assemble.test.mjs",
+            "publishing/pages-controller/metadata.test.mjs",
+            "publishing/pages-controller/public-byte-audit.test.mjs",
+            "publishing/pages-controller/release-asset.test.mjs",
             "publishing/pages-controller/release-policy.test.mjs",
             "publishing/pages-controller/release-train-boundary.test.mjs",
             "publishing/pages-controller/workflow.test.mjs"
