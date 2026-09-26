@@ -26,7 +26,7 @@ versions or acceptance gates are still current.
   The source stack's **117** commits before this status-only update and all **31** stacked branch tips
   retain the same order and subjects. Manual resolutions regenerate translation bundles from both
   authoritative locale sets, preserve Team quick-start behavior, keep the first cultural release at
-  `0.142.0`, and retain the cultural library's 327-row/v25 expectations. Exact top
+  `0.142.0`, and retain the cultural library's 327-row/v25 expectations. The exact
   top passes **14/14** corrected cross-owner continuation, **100/100** selector/library,
   **15/15** observer and **24/24** reduced-effects/settings/surface checks with zero skips. The prior
   **8/8** actual controller-host cohort was not rerun on this base, and the wider 109-case Team
@@ -72,9 +72,9 @@ routes across presets and seeds, no-Support partner exchanges, pinned full clear
 editions, Studio and cross-campaign Next. It does not replace physical devices, public frozen-build
 checks or human balance review. The v32 route/bootstrap/navigation cohort previously passed 201/201
 and the compact/controller cohort passed 18/18; those wider cohorts were not rerun after the
-v0.141.4 Couch-navigation rebase. The exact combined top instead has fresh 100/100 selector,
-8/8 actual controller-host and 14/14 observer evidence; the 109-case Team quick-start cohort was not
-rerun on this base.
+v0.141.4 Couch-navigation rebase. The exact combined top instead has fresh 100/100 selector and
+15/15 observer evidence. The 8/8 actual controller-host and 109-case Team quick-start cohorts were
+not rerun on this base.
 
 The second Team slice now has **13/13** focused checks. Every changed mission keeps one connected
 field, idle-safe starts on all presets, two distinct no-down approaches, and a two-closure exchange
