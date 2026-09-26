@@ -173,6 +173,95 @@ test('lobby, setup and children use reachable native controls and Back restores 
   }
 });
 
+test('Versus More is a primary utility with keyboard, controller and guarded departures', async (t) => {
+  const hardware = pad(0),
+    f = await couchPage(t, { pads: [hardware], nativeKeyboard: true }),
+    more = f.$('race-more'),
+    toggle = f.$('race-more-toggle');
+  assert.equal(more.parentNode, f.$('race-start').parentNode);
+  assert.equal(more.parentNode.classList.contains('race-menu-actions'), true);
+  assert.equal(f.$('race-optional-setup').open, false, 'Optional setup remains collapsed.');
+  assert.equal(f.$('race-help-panel').contains(more), false);
+  assert.equal(f.doc.activeElement.id, 'race-start', 'Start retains initial focus.');
+
+  toggle.focus();
+  const keyboardConfirm = press(f, 'Enter');
+  if (!keyboardConfirm.defaultPrevented) toggle.click();
+  assert.equal(more.open, true, 'Keyboard Confirm opens More.');
+  press(f, 'Escape');
+  assert.equal(more.open, false);
+  assert.equal(f.doc.activeElement.id, 'race-more-toggle', 'Back restores the More opener.');
+
+  f.$('race-start').focus();
+  for (let i = 0; i < 30 && f.doc.activeElement.id !== 'race-more-toggle'; i++) press(f, 'Tab');
+  assert.equal(f.doc.activeElement.id, 'race-more-toggle', 'Tab reaches More from Start.');
+
+  f.join(0);
+  for (let i = 0; i < 30 && f.doc.activeElement.id !== 'race-more-toggle'; i++) f.pulse(0, 13);
+  assert.equal(f.doc.activeElement.id, 'race-more-toggle', 'D-pad reaches More from Start.');
+  f.pulse(0, 0);
+  assert.equal(more.open, true, 'Controller Confirm opens More.');
+  f.pulse(0, 1);
+  assert.equal(more.open, false);
+  assert.equal(f.doc.activeElement.id, 'race-more-toggle');
+
+  more.open = true;
+  const destinations = more.querySelector('.race-more-destinations');
+  for (const id of ['race-more-home', 'race-more-about', 'race-release-explorer']) {
+    assert.equal(f.$(id).parentNode, destinations, `${id} has the exact More navigation parent.`);
+    assert.equal(f.$(id).closest('#race-more'), more, `${id} stays in the same utility shell.`);
+  }
+});
+
+test('Versus More exposes native touch targets without changing Start focus', async (t) => {
+  const f = await couchPage(t, { nativeKeyboard: true }),
+    more = f.$('race-more'),
+    toggle = f.$('race-more-toggle');
+  assert.equal(f.doc.activeElement.id, 'race-start');
+  toggle.emit('pointerdown', { pointerType: 'touch', pointerId: 41, button: 0 });
+  toggle.emit('pointerup', { pointerType: 'touch', pointerId: 41, button: 0 });
+  toggle.click();
+  assert.equal(more.open, true);
+  assert.equal(f.doc.activeElement.id, 'race-start', 'Touch does not steal keyboard focus.');
+  for (const id of ['race-more-home', 'race-more-about', 'race-release-explorer'])
+    assert.equal(f.$(id).closest('#race-more'), more);
+});
+
+test('Versus More departures retain the paused match until a separate decision', async (t) => {
+  const f = await couchPage(t, { nativeKeyboard: true }),
+    more = f.$('race-more');
+  f.$('race-start').click();
+  f.frame();
+  f.$('race-pause').click();
+  f.frame();
+  const paused = f.checkpoint();
+  for (const [id, title, action, soloCopy] of [
+    ['race-more-home', 'Return to Solo?', 'Discard and return to Solo', false],
+    ['race-more-about', 'About & credits', 'Discard and leave', false],
+    ['race-release-explorer', 'Releases', 'Discard and leave', false],
+  ]) {
+    more.open = true;
+    const destination = f.$(id);
+    destination.focus();
+    assert.equal(f.doc.activeElement, destination);
+    const event = destination.emit('click', { button: 0 });
+    assert.equal(event.defaultPrevented, true, `${id} cannot discard a paused match directly.`);
+    assert.equal(f.$('race-leave-panel').hidden, false);
+    assert.equal(f.$('race-leave-title').textContent, title);
+    assert.equal(f.$('race-leave').textContent, action);
+    assert.equal(f.$('race-leave').getAttribute('href'), destination.getAttribute('href'));
+    assert.equal(
+      /Solo opens its own Journey progress/.test(f.$('race-leave-copy').textContent),
+      soloCopy,
+      `${id} receives only its own departure copy.`,
+    );
+    f.$('race-leave-back').click();
+    assert.equal(f.doc.activeElement, destination, 'Stay restores the exact destination opener.');
+    assert.equal(destination.parentNode, more.querySelector('.race-more-destinations'));
+    assert.deepEqual(f.checkpoint(), paused);
+  }
+});
+
 test('an embedded Couch route stays loading until its actual setup is prepared', async (t) => {
   let began, finish;
   const requested = new Promise((resolve) => {
@@ -371,7 +460,7 @@ test('authored Arcade removes equipment controls and hints; Tactical reflects th
 });
 
 test('controller setup/help and repeated keyboard Confirm cannot leak through the flight boundary', async (t) => {
-  const f = await couchPage(t, { pads: [pad(0)] });
+  const f = await couchPage(t, { pads: [pad(0)], nativeKeyboard: true });
   f.join(0);
   f.focus('race-help');
   f.pulse(0, 0);
@@ -386,11 +475,22 @@ test('controller setup/help and repeated keyboard Confirm cannot leak through th
   f.frame();
   assert.equal(f.state(), 'paused');
   const held = f.checkpoint();
-  const e = press(f, 'Enter', f.$('race-start'), { repeat: true });
-  assert.equal(e.defaultPrevented, true);
+  const start = f.$('race-start'),
+    repeated = press(f, 'Enter', start, { repeat: true });
+  assert.equal(repeated.defaultPrevented, true);
   f.frames(4);
   assert.deepEqual(f.checkpoint(), held);
-  f.$('race-start').click();
+  const release = f.key('Enter', false, start);
+  assert.equal(
+    release.defaultPrevented,
+    true,
+    'The mirrored key release belongs to the controller lifecycle.',
+  );
+  f.frames(151);
+  assert.deepEqual(f.checkpoint(), held, 'Neutral waiting never advances the paused match.');
+  const deliberate = f.key('Enter', true, start);
+  assert.equal(deliberate.defaultPrevented, false, 'A later neutral native Confirm stays native.');
+  f.key('Enter', false, start);
   f.frame();
   assert.equal(f.state(), 'running');
   assert.equal(f.renders[0].ability.cooldownUntil, 0);
@@ -403,6 +503,7 @@ test('markup keeps touch crosses outside both arenas and uses separate screen ro
   assert.match(css, /object-fit: contain/);
   assert.match(css, /grid-template-rows: auto minmax\(48px, 1fr\)/);
   assert.match(css, /\.race-pad button\.pressed/);
+  assert.match(css, /\.race-secondary-details > summary\s*\{[^}]*min-height: 44px/s);
   // A modal may reserve a viewport gutter. The actual boards must still derive
   // their space from the layout rather than subtracting a guessed HUD height.
   const boardLayout = css.replace(/\.race-chapter-replace\s*\{[^{}]*\}/g, '');
