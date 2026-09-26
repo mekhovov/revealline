@@ -1,0 +1,34 @@
+{
+  "archiveId": "archive-97",
+  "baseUrl": "https://mekhovov.github.io/revealline-archive-97/",
+  "evidenceCategory": "browser interaction",
+  "limitations": [
+    "Browser interaction is not physical touch certification.",
+    "Browser interaction is not physical-controller certification.",
+    "No full mission playthrough was performed during this bounded archive admission check."
+  ],
+  "observations": [
+    {
+      "observed": "RevealLine archive 97 / original v0.141.3 build",
+      "result": "PASS",
+      "surface": "archive index"
+    },
+    {
+      "observed": "v0.141.3 Home; NEW JOURNEY / 91 MISSIONS; Solo, Versus and Team visible",
+      "result": "PASS",
+      "surface": "Play -> archived Home"
+    },
+    {
+      "observed": "Saved Solo flight resumed into the territory board with HUD, lives, timer and objective available",
+      "result": "PASS",
+      "surface": "archived gameplay"
+    },
+    {
+      "observed": "No warnings or errors",
+      "result": "PASS",
+      "surface": "archived-game console"
+    }
+  ],
+  "observedAt": "2026-09-26T17:31:47.188558Z",
+  "version": "v0.141.3"
+}

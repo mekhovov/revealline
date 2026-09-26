@@ -10,70 +10,31 @@ This checkpoint supersedes older paragraphs below that describe themselves as
 current. Those paragraphs remain unchanged as dated implementation and release
 evidence.
 
-**Completed Pages baseline and latest stable release:** [PR #679](https://github.com/mekhovov/revealline/pull/679)
-merged v0.141.3 Team quick-start as
-`7509d790dadb6194d70a5bc1efafee40fbb0b3b7`. Coordinator run `36254346397`
-published its immutable nine-asset
-[v0.141.3 release](https://github.com/mekhovov/revealline/releases/tag/v0.141.3).
-Pages selector [PR #682](https://github.com/mekhovov/revealline/pull/682)
-merged as `01de92e9693d640e08ff21ba95ce12a978cb486f`. Publication run
-`36255919482` passed assembly, deployment and the complete public-byte audit;
-built-in-browser acceptance confirmed v0.141.3 as Current with exact source
-`7509d790dadb6194d70a5bc1efafee40fbb0b3b7`. Archive96 preserves v0.141.2.
-The separately deployed community API remains unavailable until infrastructure
-is selected.
+**Completed release source:** v0.141.4 is an immutable nine-asset GitHub release from exact source
+`cc0309ffaaea9050a44f7b7592d38ba5a0ade78c`. Source qualification run
+`36257643117` passed the mandatory validation, lint, formatting, native formatting,
+motion syntax, production-reproduction and ledger gates under the committed fast-release
+policy; its long automated suites were explicitly waived, not passed. Publication run
+`36258923686` preserved the exact annotated tag and verified assets. The first continuation
+attempt `36258748400` is retained as failed evidence for a GitHub draft-visibility race and
+uploaded no assets.
 
-**Active candidate:** v0.141.4 combines the merged community acceptance and
-validation-worker isolation from PR #680 with Couch secondary navigation.
-[PR #683](https://github.com/mekhovov/revealline/pull/683) passed hosted
-exact-head qualification and merged as
-`65bdcd9825e9e6129bb8e039c3c8922615642689`. It preserves Team quick-start
-focus and Cancel behavior. Its prepared donor passed the
-feature-owned shell/Pause and departure/markup/quick-start boundaries at 27/27
-and 37/37; both pass again on this exact rebased source. Repository validation,
-localization, lint, game/site and native formatting, changed-file syntax and
-four-way v0.141.4 version parity also pass. The terminal candidate additionally
-makes Classic Team continuation tolerate its opaque owner ID; the focused
-continuation slice passes 14/14. Terminal hosted qualification, immutable
-release, selector and public player-flow acceptance remain open.
+**Active Pages admission:** Archive97 preserves v0.141.3 at
+`https://mekhovov.github.io/revealline-archive-97/`. Its complete audit verified
+1,316 files / 612,079,732 bytes in 1,316 attempts with zero retries or failures, and
+browser review reached the archived Home and resumed Solo gameplay without captured console
+errors. The v0.141.4 selector candidate adds the exact release metadata, source qualification
+and Archive97 evidence. It also raises the still-bounded archive/admission ceiling from 96 to
+128; the 800 MB per-archive and 950 MB main Pages budgets remain unchanged. Hosted review,
+merge, Pages deployment and exact public-byte/player-flow acceptance remain open.
 
-**Ordered continuation:** v0.141.3 is the latest stable release; later rows remain working
-allocations rather than accepted releases. Reconcile each item onto the accepted predecessor, rerun its
-exact-head gates and publish it before accepting the next row. Older target
-versions in draft PR titles and evidence files are stale where they disagree
-with this order.
-
-| Order | Working release | Scope                                                                | Current source input                                                                                                        |
-| ----- | --------------- | -------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
-| 1     | v0.141.3        | Team quick-start                                                     | reconciled local donor from PR #549                                                                                         |
-| 2     | v0.141.4        | Couch secondary navigation                                           | prepared donor from PR #539                                                                                                 |
-| 3     | v0.141.5        | Contextual Team teaching                                             | prepared donor from PR #543                                                                                                 |
-| 4     | v0.141.6        | Deliberate Team terminal Retry                                       | [PR #545](https://github.com/mekhovov/revealline/pull/545)                                                                  |
-| 5     | v0.141.7        | Readable Versus countdown and Retry cue                              | [PR #552](https://github.com/mekhovov/revealline/pull/552)                                                                  |
-| 6     | v0.141.8        | Named result destinations                                            | [PR #557](https://github.com/mekhovov/revealline/pull/557)                                                                  |
-| 7     | v0.141.9        | Collection fixture reconciliation plus Settings/Help return to Pause | [PR #548](https://github.com/mekhovov/revealline/pull/548), then [PR #542](https://github.com/mekhovov/revealline/pull/542) |
-
-Known corrections remain part of these working allocations:
-
-- v0.141.3 keeps **Cancel preparation** as an explicit recovery action for a
-  stalled artwork request, but passive loading leaves focus unclaimed. Local
-  correction `651b78756039f48d332a97528503193d9111c382` updates the stale focus
-  contract and selected Team fixtures; its sequential recovery, bootstrap,
-  quick-start and complete Team host evidence passes 109/109. Restoring passive
-  Cancel focus would reintroduce the reported controller/Steam Deck failure.
-- v0.141.7 local correction `9360ef07279400c59bb7c7111e7015738b84df02`
-  restarts the full cue after an interruption during visible **Go**, while
-  keeping explicit Retry on its shorter recipe. Complete cue, candidate Versus
-  and continuation evidence passes 17/17, 13/13 and 10/10 sequentially.
-- v0.141.8 requires an isolated complete Solo host rerun. Its new named-destination
-  cases pass when selected alone, while a broader run under concurrent host load
-  hit bounded settling timeouts.
-- v0.141.9 must take only the prepared five-path donor delta after v0.141.8 plus
-  local correction `b272bec9d30155a3fa51857c01a2810e4b55ccd0`. The correction
-  repairs deterministic Soundtrack fixture setup without weakening controller
-  Back/Escape semantics and adds live-flight Help return coverage. All three
-  complete focused files pass 72/72 sequentially; modeled input remains separate
-  from physical touch and controller evidence.
+**Ordered continuation:** complete the v0.141.4 selector first. Then use the reserved
+publisher-integration window for the recovery and selector/source-manifest canaries before
+another player release. Player-facing work resumes as separately qualified batches: contextual
+Team teaching, deliberate terminal Retry, Versus countdown/Retry feedback, named result
+destinations, then Settings/Help/Collection return closure. Exact working version numbers are
+reserved only after the accepted selector and canary window; stale versions in older draft PRs
+are not release authority.
 
 **Remaining:** UX6 still owns one cumulative whole-player qualification after
 v0.141.9. It must exercise complete Solo, Versus and Team journeys; real browser

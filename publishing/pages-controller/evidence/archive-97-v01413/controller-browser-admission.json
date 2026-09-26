@@ -1,0 +1,59 @@
+{
+  "format": "revealline-archive-browser-admission.v1",
+  "status": "PASS",
+  "archiveId": "archive-97",
+  "infrastructureCommit": "e5de2a5e1710003c1ffa49769af71e64fcd17019",
+  "deploymentId": 6681784433,
+  "deploymentStatusId": 18881674244,
+  "versions": [
+    "v0.141.3"
+  ],
+  "surface": "bounded browser interaction",
+  "sequence": [
+    "RevealLine archive 97 / original v0.141.3 build",
+    "v0.141.3 Home; NEW JOURNEY / 91 MISSIONS; Solo, Versus and Team visible",
+    "Saved Solo flight resumed into the territory board with HUD, lives, timer and objective available",
+    "No warnings or errors"
+  ],
+  "observed": {
+    "sourceObservations": [
+      {
+        "observed": "RevealLine archive 97 / original v0.141.3 build",
+        "result": "PASS",
+        "surface": "archive index"
+      },
+      {
+        "observed": "v0.141.3 Home; NEW JOURNEY / 91 MISSIONS; Solo, Versus and Team visible",
+        "result": "PASS",
+        "surface": "Play -> archived Home"
+      },
+      {
+        "observed": "Saved Solo flight resumed into the territory board with HUD, lives, timer and objective available",
+        "result": "PASS",
+        "surface": "archived gameplay"
+      },
+      {
+        "observed": "No warnings or errors",
+        "result": "PASS",
+        "surface": "archived-game console"
+      }
+    ],
+    "observedAt": "2026-09-26T17:31:47.188558Z"
+  },
+  "scope": "Archive97 index, archived Home, resumed Solo gameplay, and console acceptance for the preserved v0.141.3 route.",
+  "limitations": [
+    "Browser interaction is not physical touch certification.",
+    "Browser interaction is not physical-controller certification.",
+    "No full mission playthrough was performed during this bounded archive admission check."
+  ],
+  "evidence": [
+    {
+      "path": "evidence/archive-97-v01413/browser-admission.json",
+      "sha256": "ab22955429809f8d8d75650f5dcdd488a3b852b44efff03d1bfa4928d93bb093"
+    },
+    {
+      "path": "evidence/archive-97-v01413/public-acceptance.json",
+      "sha256": "2b0a79eceeabce9963057b99f200805e4e8b4d6bed8b46a58c4655f19fa13a78"
+    }
+  ]
+}
