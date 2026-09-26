@@ -8,12 +8,12 @@ release claims.
 ## Candidate identity
 
 - Merged framework source: PR #465, merged 25 September 2026.
-- Rebased hardening base: `c45cd78bdc522bf95c267615fe3ad93dd77dff98` (`main`, source version
-  `0.132.1`).
+- Rebased hardening base: `f913c64027615632610de673b87926a841f016b9` (`main`, source version
+  `0.132.2`).
 - Hardening checkpoint before this acceptance refresh:
   `e1c83e48b233d6f801066bead8c906258da05403`.
-- Assigned release target: `v0.141.0` in PR #564. The working source remains `0.132.1` until the
-  repository release coordinator freezes the reviewed candidate.
+- Assigned release target and working source: `v0.141.0` in PR #564. The repository release
+  coordinator still has to freeze the reviewed candidate.
 
 The candidate contains no uploaded creator image or video fixtures and no generated distribution
 output. Its largest new source asset is the pinned, licensed Mediabunny browser module.
@@ -38,9 +38,10 @@ output. Its largest new source asset is the pinned, licensed Mediabunny browser 
   blob hashes are authenticated again at download, and database/blob snapshots support verify and
   journal-backed restore.
 - All current generated layouts have exact equal-board Versus replay qualification, and portable
-  package validation repeats that proof. The installed project-backed Versus campaign route,
-  including mode selection, Retry/Next, progression and recovery, remains in progress and is not
-  accepted by that generation evidence alone.
+  package validation repeats that proof. Installed project-backed editions now register as Custom
+  Versus campaigns in the real two-board host, retain their compiled level, runtime seed and
+  verified difficulty, own their exact artwork, record edition-scoped clears and pictures, and
+  support Retry and Next. Creator picture progress also passes scoped export/inspect/restore.
 - Purpose-built Team layouts support direct verified Couch file launch, immutable SHA-256
   installation, fresh-session library discovery, replay-verified launch, exact unfinished-attempt
   recovery, stale-tab rejection and edition-scoped legal-clear progress. The bounded binary Team
@@ -59,7 +60,8 @@ output. Its largest new source asset is the pinned, licensed Mediabunny browser 
 
 ## Integrated evidence
 
-- `npm run test:creator-feature`: **520/520** creator/runtime checks and **43/43** community-service
+- `npm run test:creator-feature -- --runtime-only`: **522/522** creator/runtime checks and the
+  community service suite: **43/43** checks passed from the current rebased source.
   checks passed from the current rebased source. The full runtime run first exposed five sparse
   checkout omissions and three injected-host database-model conflicts; the exact owning cohorts
   passed after restoring the release inputs and limiting automatic cross-database accounting to a
@@ -70,7 +72,10 @@ output. Its largest new source asset is the pinned, licensed Mediabunny browser 
 - The current focused Team/shared-ledger/UI cohort passes **43/43**, including exact picture
   normalization, package/install/intake, aggregate quota pressure, abandoned-claim reconciliation,
   storage review and immutable edition accounting. The complete exact-head creator cohort passes
-  **520/520** from one run after the final rebase and UI cancellation fix.
+  **522/522** from one run after the final rebase and UI cancellation fix.
+- Installed creator Versus, bundle, qualification and profile-edition coverage passes **19/19**.
+  The real host runs both boards, replays the generated legal route, awards the exact picture,
+  exposes Cleared state, keeps its verified difficulty, and advances to the next mission.
 - The exact navigation cohort that failed on the rebased PR now passes **194/194**. The repair keeps
   the controller Confirm release guard current after a controller starts a race, so a later direct
   touch is accepted after the finite Steam Input echo window. Navigation fixtures now exercise
@@ -79,7 +84,8 @@ output. Its largest new source asset is the pinned, licensed Mediabunny browser 
   including the actual Steam Deck short-tap host case and native-input echo ordering.
 - The subsequent `fpv88` presentation-provenance rebase retains the exact reviewed Team picture
   bytes for current play and preserves immutable `fpv58`–`fpv87` attempts. Its bounded 31-policy
-  authority and composite Team navigation cohort pass **97/97**; unknown `fpv89` still fails closed.
+  authority and current/retained Team picture cohort pass **102/102**; unknown `fpv89` still fails
+  closed.
 - Rotated-orientation and physical-transform focused cohort: **50/50 passed**, with **114/114**
   across the expanded video/editor/intake/bundle group.
 - `npm run validate`: passed for 1,243 files; exact whole-spatial snapshot SHA-256
@@ -98,6 +104,13 @@ output. Its largest new source asset is the pinned, licensed Mediabunny browser 
   On the current combined source, a fresh picture generated a visible moving enemy and two collision
   walls, installed under its immutable edition, launched through ordinary Custom play, and exposed
   the saved-attempt Resume action after reload.
+- A fresh built-in-browser video run selected the repository's silent six-second H.264 MP4,
+  inspected real 10/50/90 percent poster candidates, selected the 0.6-second candidate, generated a
+  visible moving enemy and two collision walls, approved, downloaded and installed the exact
+  `.rlpack`, completed ordinary Custom play, retained the earned poster after reload, and exercised
+  victory Play, Replay and Skip without replacing the picture. The package retained the complete
+  original video; audio, WebM, unsupported-codec, Firefox, Safari and mobile behavior remain
+  unqualified.
 - A real 223,097-byte rotated portrait AVC upload was inspected as 360 × 640 and produced three
   poster candidates. The selected midpoint generated a 72 × 36 Twin corridors level with one
   moving enemy, two collision walls and verified Solo/Versus routes; its 0.33 MiB package retained
@@ -123,10 +136,11 @@ two-account browser, proxy interruption, TLS/domain/secrets, exact trusted-proxy
 Better Auth mail and account recovery, shared tus locking/cleanup, and isolated media-worker
 acceptance.
 
-Installed creator play is currently accepted for Solo. Generated v3 packages retain Versus
-qualification evidence, but the combined feature cannot claim installed Versus completion until
-the project-backed Versus selector, Retry/Next, edition-scoped progression, transfer and reload
-journey lands and passes its browser acceptance gate.
+Installed creator play is accepted locally for Solo and for the real two-board Versus host.
+Generated v3 packages retain equal-board qualification evidence; installed Versus revalidates the
+exact package before launch and records edition-scoped progress and pictures. The automated host
+and scoped progress-transfer tests pass. Fresh-browser installed Versus import/reload remains a
+release acceptance item and is not replaced by the modeled host evidence.
 
 Verified Team gameplay or media bytes install under the SHA-256 of the complete portable payload.
 Fresh Team library visits discover each immutable edition, replay its qualification before launch,
@@ -143,8 +157,8 @@ codecs outside each browser's successful decode probe, and broader conversion re
 Firefox, Safari, Balanced portrait and physical mobile media qualification remain unclaimed.
 
 PR #465 is merged. The hardening branch is rebased onto current protected `main` in draft PR #564,
-which now has the repository-assigned target `v0.141.0`. The branch preserves the current `0.132.1`
-source identity until review. Local exact-head creator, service, navigation, validation, lint and
-format gates pass. Publication still requires hosted PR checks, review, an immutable freeze,
+which now has the repository-assigned target and source identity `v0.141.0`. Local exact-head
+creator, service, navigation, validation, lint and format gates pass. Publication still requires
+hosted PR checks, review, an immutable freeze,
 artifact hashes, public online/offline verification, and a separately reviewed Pages selector
 update where applicable.
