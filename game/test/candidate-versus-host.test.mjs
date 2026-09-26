@@ -572,6 +572,7 @@ for (const route of ['opening', 'authored'])
         } finally {
           clearTimeout(timer);
         }
+        await p.settleStartCue();
         p.frame(0);
         assert.notEqual(p.renders[0], previous, `${id} advances to its exact successor.`);
         assert.equal(p.$('race-pause').disabled, false, `${id} successor starts immediately.`);
