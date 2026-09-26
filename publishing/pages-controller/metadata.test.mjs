@@ -4,7 +4,13 @@ import * as fs from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import { writeArchiveBridges, verifyFrozenSite } from '../../scripts/pages-archive.mjs';
-import { digest, jsonBytes, metadataBridges, validateMetadata } from './metadata.mjs';
+import {
+  digest,
+  jsonBytes,
+  metadataBridges,
+  retainRecentMetadata,
+  validateMetadata,
+} from './metadata.mjs';
 
 function fixture(worker = true) {
   const payloads = new Map([
@@ -133,4 +139,17 @@ test('bridge targets cannot escape the admitted canonical edition', () => {
     'http://mekhovov.github.io/revealline-archive-06/releases/v0.44.0/site/',
   ])
     assert.throws(() => metadataBridges(f, url));
+});
+
+test('numeric retention keeps the newest ten releases in every semantic major', () => {
+  const versions = [
+      ...Array.from({ length: 12 }, (_, index) => `v0.${index}.0`),
+      ...Array.from({ length: 12 }, (_, index) => `v1.${index}.0`),
+    ],
+    metadata = new Map(versions.map((version) => [version, { version }])),
+    retained = retainRecentMetadata(metadata, 10);
+  assert.deepEqual(
+    [...retained.keys()],
+    versions.filter((version) => !['v0.0.0', 'v0.1.0', 'v1.0.0', 'v1.1.0'].includes(version)),
+  );
 });
