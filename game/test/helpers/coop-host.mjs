@@ -293,9 +293,30 @@ export async function page(
     assert.ok(frames.size);
   }
   if (!retainInitialDifficulty) $('coop-difficulty').value = 'standard';
-  const selectFile = (text, read = async () => text) => {
+  const fileReads = new WeakMap();
+  let blobReadersMocked = false;
+  const selectFile = (text, read = null) => {
     $('coop-pack-file').closest('details').open = true;
-    $('coop-pack-file').files = [{ size: Buffer.byteLength(text), text: read }];
+    const file = new Blob([text], { type: 'application/json' });
+    if (read) {
+      fileReads.set(file, read);
+      if (!blobReadersMocked) {
+        blobReadersMocked = true;
+        const nativeSlice = Blob.prototype.slice;
+        const nativeText = Blob.prototype.text;
+        t.mock.method(Blob.prototype, 'slice', function (...args) {
+          const owned = Reflect.apply(nativeSlice, this, args),
+            reader = fileReads.get(this);
+          if (reader) fileReads.set(owned, reader);
+          return owned;
+        });
+        t.mock.method(Blob.prototype, 'text', function () {
+          const reader = fileReads.get(this);
+          return reader ? reader() : Reflect.apply(nativeText, this, []);
+        });
+      }
+    }
+    $('coop-pack-file').files = [file];
     return $('coop-pack-file').onchange();
   };
   const choose = (id, value) => {
