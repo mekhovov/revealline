@@ -3435,6 +3435,7 @@ try {
     }),
     getReadingPrompt: readingPrompt,
     onNativeInput: (event) => setReadingModality(nextInputModality(readingModality, event)),
+    activateControl: (element) => controllerConfirmGuard.activate(element),
     onBack: () =>
       libraryDecision
         ? libraryDecision.finish(false)

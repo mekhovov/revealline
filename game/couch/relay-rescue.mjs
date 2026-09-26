@@ -877,6 +877,7 @@ export function bootCoop({
     nativeReadingScroll: true,
     getReadingPrompt: readingPrompt,
     onNativeInput: (event) => setReadingModality(nextInputModality(readingModality, event)),
+    activateControl: (element) => controllerConfirmGuard.activate(element),
     onBack: back,
     onMenu: () => {
       if (
