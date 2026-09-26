@@ -319,10 +319,37 @@ img {
 .creator-media-card-error {
   border-color: #b16b5e;
 }
+.creator-media-card-excluded {
+  opacity: 0.72;
+}
 .creator-media-card h3,
 .creator-media-card h4,
 .creator-media-card p {
   margin: 0;
+}
+.creator-media-poster {
+  width: min(100%, 28rem);
+  aspect-ratio: 16 / 9;
+  object-fit: contain;
+  background: #17252e;
+  border-radius: 8px;
+}
+.mission-review-list {
+  display: grid;
+  gap: 1rem;
+}
+.creator-mission-review-card {
+  padding: 1rem;
+  border: 1px solid #49636a;
+  border-radius: 12px;
+  background: #101923;
+}
+.creator-mission-review-card h3,
+.creator-mission-review-card p {
+  margin-top: 0;
+}
+.creator-mission-validation {
+  color: #8aefcd;
 }
 .creator-poster-candidates {
   display: grid;

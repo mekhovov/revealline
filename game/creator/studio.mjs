@@ -31,6 +31,7 @@ import { createCreatorMediaReviewController } from './media-review.mjs';
 import { prepareCreatorMediaCampaign } from './media-campaign.mjs';
 import {
   formatNumber,
+  localizedAttribute,
   localizedMessage,
   localizedText,
   onLocaleChange,
@@ -58,6 +59,10 @@ const mib = (bytes) =>
       maximumFractionDigits: 2,
     }),
   });
+const seconds = (value) =>
+  t('common:format.seconds', {
+    value: formatNumber(value, { minimumFractionDigits: 2, maximumFractionDigits: 2 }),
+  });
 const params = new URLSearchParams(location.search);
 const id = params.get('draft') ?? `creation-${crypto.randomUUID()}`;
 const draft = { id, revision: null, source: null, saved: null, running: null };
@@ -69,7 +74,7 @@ let sourceFile = null,
   installReview = null,
   controller = null,
   busy = true,
-  pictureURL = null,
+  pictureURLs = [],
   batchMode = false,
   batchSource = null,
   mediaMode = false,
@@ -287,6 +292,34 @@ const mediaReview = createCreatorMediaReviewController({
     status: $('media-status'),
     apply: $('media-apply'),
     cancel: $('media-cancel'),
+    capacity: $('media-capacity'),
+    removeExcluded: $('media-remove-excluded'),
+    split: $('media-split'),
+  },
+  onChange: (review) => {
+    if (review.dirty && mediaMode && prepared) invalidate();
+    $('media-split-results').replaceChildren();
+    $('media-split-results').hidden = true;
+  },
+  onSplit: (chunks) => {
+    const results = $('media-split-results');
+    const explanation = document.createElement('p');
+    localizedText(explanation, () => t('interface:creator.mediaSplitReviewHelp'));
+    results.replaceChildren(explanation);
+    for (const [index, chunk] of chunks.entries()) {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'secondary';
+      localizedText(button, () =>
+        t('interface:creator.reviewPart', { current: index + 1, total: chunks.length }),
+      );
+      button.onclick = () => {
+        mediaReview.setFiles(chunk);
+        void mediaReview.prepare().catch(fail);
+      };
+      results.append(button);
+    }
+    results.hidden = false;
   },
   onPrepared: (reviewed) => {
     if (reviewed.items.some((item) => item.errors.length)) {
@@ -467,47 +500,81 @@ function showReview(pack) {
   const provenances = Array.isArray(pack.manifest.content.provenance)
     ? pack.manifest.content.provenance
     : [pack.manifest.content.provenance];
-  const provenance = provenances[0];
-  const mission = project.missions.find(({ id: missionId }) => missionId === provenance.missionId);
-  const picture = project.assets.find(
-    ({ id: assetId }) => assetId === mission?.presentation.backgroundAssetId,
-  );
-  const runtime = pack.assets.find(({ sha256 }) => sha256 === picture?.sha256);
-  if (!mission || !picture || !runtime)
-    throw new Error(t('errors:creator.firstMissionPictureMissing'));
-  if (pictureURL) URL.revokeObjectURL(pictureURL);
-  pictureURL = URL.createObjectURL(runtime.blob);
-  $('picture').src = pictureURL;
-  $('picture').alt = picture.alt;
-  localizedText($('picture-caption'), () =>
-    project.missions.length === 1
-      ? mission.name
-      : t('interface:creator.firstOfLevels', {
-          mission: mission.name,
-          count: project.missions.length,
-        }),
-  );
-  const preview = prepareContentPreview(project, provenance.missionId);
-  paintContentMap($('map').getContext('2d'), preview, { width: 720, showCapture: false });
-  const template = CREATOR_TEMPLATES.find(({ id }) => id === provenance.templateId);
-  const map = project.maps.find(
-    ({ id: mapId, revision }) => mapId === mission.map.id && revision === mission.map.revision,
-  );
-  const enemies = mission.actors.length;
-  const walls = map?.walls.length ?? 0;
-  const foundations = map?.foundations.length ?? 0;
-  const terrain = map?.terrain.length ?? 0;
-  localizedText($('map-caption'), () =>
-    t('interface:creator.mapSummary', {
-      template: template?.name ?? t('interface:creator.verifiedCrossing'),
-      enemies: t('common:counts.enemies', { count: enemies }),
-      walls: t('common:counts.walls', { count: walls }),
-      foundations: t('common:counts.safeIslands', { count: foundations }),
-      terrain: t('common:counts.terrainZones', { count: terrain }),
-      evidence: t('interface:creator.routeEvidence', { count: provenances.length }),
-    }),
-  );
-  $('validation').textContent = pack.review.validation;
+  for (const url of pictureURLs) URL.revokeObjectURL(url);
+  pictureURLs = [];
+  const cards = [];
+  for (const [index, provenance] of provenances.entries()) {
+    const mission = project.missions.find(({ id }) => id === provenance.missionId);
+    const picture = project.assets.find(
+      ({ id: assetId }) => assetId === mission?.presentation.backgroundAssetId,
+    );
+    const runtime = pack.assets.find(({ sha256 }) => sha256 === picture?.sha256);
+    if (!mission || !picture || !runtime)
+      throw new Error(t('errors:creator.firstMissionPictureMissing'));
+    const card = document.createElement('article');
+    card.className = 'creator-mission-review-card';
+    const heading = document.createElement('h3');
+    localizedText(heading, () =>
+      t('interface:creator.numberedTitle', { number: index + 1, title: mission.name }),
+    );
+    const grid = document.createElement('div');
+    grid.className = 'review-grid';
+    const picturePanel = document.createElement('div');
+    const image = document.createElement('img');
+    const url = URL.createObjectURL(runtime.blob);
+    pictureURLs.push(url);
+    image.src = url;
+    image.alt = picture.alt;
+    const pictureCaption = document.createElement('p');
+    pictureCaption.textContent = mission.name;
+    picturePanel.append(image, pictureCaption);
+    const mapPanel = document.createElement('div');
+    const canvas = document.createElement('canvas');
+    canvas.width = 720;
+    canvas.height = 360;
+    localizedAttribute(canvas, 'aria-label', () => t('interface:creator.generatedLevelMap'));
+    paintContentMap(canvas.getContext('2d'), prepareContentPreview(project, provenance.missionId), {
+      width: 720,
+      showCapture: false,
+    });
+    const mapCaption = document.createElement('p');
+    const template = CREATOR_TEMPLATES.find(({ id }) => id === provenance.templateId);
+    const map = project.maps.find(
+      ({ id: mapId, revision }) => mapId === mission.map.id && revision === mission.map.revision,
+    );
+    localizedText(mapCaption, () =>
+      t('interface:creator.mapSummary', {
+        template: template?.name ?? t('interface:creator.verifiedCrossing'),
+        enemies: t('common:counts.enemies', { count: mission.actors.length }),
+        walls: t('common:counts.walls', { count: map?.walls.length ?? 0 }),
+        foundations: t('common:counts.safeIslands', { count: map?.foundations.length ?? 0 }),
+        terrain: t('common:counts.terrainZones', { count: map?.terrain.length ?? 0 }),
+        evidence: t('interface:creator.routeEvidence', { count: 1 }),
+      }),
+    );
+    mapPanel.append(canvas, mapCaption);
+    grid.append(picturePanel, mapPanel);
+    const story = pack.manifest.content.media?.stories.find(
+      ({ missionId }) => missionId === mission.id,
+    );
+    const storyStatus = document.createElement('p');
+    localizedText(storyStatus, () =>
+      story
+        ? t('interface:creator.missionVictoryStory', {
+            start: seconds(story.playbackRange.startSeconds),
+            end: seconds(story.playbackRange.endSeconds),
+          })
+        : t('interface:creator.missionPosterReward'),
+    );
+    const validation = document.createElement('p');
+    validation.className = 'creator-mission-validation';
+    validation.textContent = pack.review.validation;
+    card.append(heading, grid, storyStatus, validation);
+    cards.push(card);
+  }
+  $('legacy-review-grid').hidden = true;
+  $('validation').hidden = true;
+  $('mission-review-list').replaceChildren(...cards);
   const storyCount = pack.manifest.content.media?.stories.length ?? 0;
   localizedText($('package-size'), () =>
     t('interface:creator.packageSummary', {
@@ -950,7 +1017,7 @@ window.addEventListener('pagehide', () => {
   controller?.abort();
   batch.destroy();
   mediaReview.destroy();
-  if (pictureURL) URL.revokeObjectURL(pictureURL);
+  for (const url of pictureURLs) URL.revokeObjectURL(url);
   store.close();
 });
 try {
