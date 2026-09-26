@@ -2,6 +2,10 @@
  * this lease. Hold the Web Lock for the page lifetime and release on pagehide.
  * Every release writer must participate; legacy clients are outside this guard.
  */
+const leases = new WeakMap();
+export const profileWriterOwns = (lease, key) =>
+  leases.get(lease) === key && lease.writable === true;
+
 export async function claimProfileWriter(lockManager, key) {
   const unavailable =
     'This browser cannot reserve the player library for safe writing. Progress is session-only; export a backup to keep it.';
@@ -51,6 +55,7 @@ export async function claimProfileWriter(lockManager, key) {
       unlock();
     },
   });
+  leases.set(lease, key);
   try {
     const request = lockManager.request(
       key,

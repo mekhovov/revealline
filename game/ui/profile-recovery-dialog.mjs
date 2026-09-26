@@ -36,6 +36,8 @@ export function attachProfileRecoveryDialog({
   document: doc = globalThis.document,
   window: win = globalThis.window,
   currentVersion,
+  editionId,
+  heldWriter,
   packaged,
   resolveSourceVersion = () => currentVersion,
   unavailable = () => '',
@@ -130,7 +132,7 @@ export function attachProfileRecoveryDialog({
         if (!current(active)) return;
         let recoveryCatalogs = [],
           catalogIssue = t('interface:openAPackagedReleaseToVerifyHistoricalOriginals');
-        if (packaged) {
+        if (packaged && !editionId) {
           const catalogController = new AbortController();
           const cancelCatalog = () => catalogController.abort(signal.reason);
           signal.addEventListener('abort', cancelCatalog, { once: true });
@@ -160,7 +162,11 @@ export function attachProfileRecoveryDialog({
           }
         }
         if (!current(active)) return;
-        active.reader = runtime.createReader({ currentVersion: version, recoveryCatalogs });
+        active.reader = runtime.createReader({
+          currentVersion: version,
+          recoveryCatalogs,
+          ...(editionId ? { editionId, heldWriter } : {}),
+        });
         active.view = runtime.attachView({
           document: doc,
           presenter,

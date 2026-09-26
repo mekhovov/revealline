@@ -1,3 +1,5 @@
+> Retained historical excerpt after an ownership migration. Exact originals are preserved separately. This excerpt is not the original complete record or a release qualification.
+
 # Company edition qualification record
 
 > Retained excerpt after an ownership migration. Historical totals and verification statements describe the original scope; this excerpt is not a current release qualification. Original bytes and removed material are preserved separately.
@@ -5,6 +7,41 @@
 This record distinguishes candidate automation from release qualification. No company
 edition has been promoted or published by this work. Human observations, physical-device
 installation and downloaded/deployed release evidence cannot be inferred from unit tests.
+
+## Current Netherlands and canonical Solo expansion — unqualified
+
+Netherlands), preserves the three historical Portuguese missions, and generates **101 JSON
+files for 14 editions**. All 69 authored maps compile with distinct topology. The 66 current
+missions pin the current Journey gameplay/actor/difficulty catalogs; the historical pilot's
+canonical source is byte-identical to its pre-expansion source.
+
+and Netherlands campaigns/editions to revision 2. All current missions compile at
+all three presets, with campaign bands through 12 and real canonical actor,
+relay-gate, directional-field and shield/core data. The independent current route
+suite passes all five checks, replaying **414 winning traces**: 396 current
+mission/difficulty/steering combinations plus 18 historical combinations. It
+verifies required objectives, no life loss, exact checkpoints, public replay
+consistency, actual connector/core events, distinct original topologies, shared
+execution catalog compatibility and the unchanged historical source hash.
+
+Seven presentation checks cover registered campaign themes, every emitted actor
+role, exact avatar spin rates, reduced motion and the official Dutch propeller
+paths/source hashes. The focused learning, evidence, proof and session suite
+passes 22 checks against the current fixtures. Generated-source verification
+checks all 101 files. The four Controller Practice tests include actual advanced
+relay/flow/encounter preparation and exact once-only canonical tuning; its DOM
+check verifies selected-edition requests and preview identity without shared
+playground storage. These are machine-feasibility and technical checks, not human
+pacing or release qualification.
+
+See the [shared Solo integration record](company-editions-shared-solo.md) for the
+current main-host acceptance boundary and bounded browser/package checks. A new
+committed candidate run, content/art approval and human observations remain
+pending. Earlier browser observations and frozen CI results below apply only to
+their recorded revisions. The current raster inventory covers six of the 66
+current missions; 60 use interim procedural fallback. Three additional rasters
+belong only to the historical Portuguese pilot. No final bulk-art production or
+human playtest is claimed.
 
 ## Frozen candidate automation
 

@@ -81,6 +81,23 @@ test('company measurement tools under docs and shared Journey writes retain comp
     'docs/verification/company-review-model.mjs',
     'scripts/test-company-review.mjs',
     'game/journey/profile.mjs',
+    'game/app.mjs',
+    'game/index.html',
+    'game/runtime-content-provider.mjs',
+    'game/ui/edition-play.css',
+    'game/ui/edition-lessons.mjs',
+    'game/ui/edition-navigation.mjs',
+    'game/ui/edition-controller-practice.mjs',
+    'game/ui/body-backing.mjs',
+    'game/profile-writer.mjs',
+    'game/external-chapter-pointer.mjs',
+    'game/external-chapter-backup.mjs',
+    'game/presentation/actor-appearance-pin.mjs',
+    'game/replay-actor-context.mjs',
+    'game/editions/runtime-assets.json',
+    'game/editions/standalone/route-loader.mjs',
+    'scripts/edition-runtime.mjs',
+    'scripts/edition-provider-parity.mjs',
   ]) {
     const plan = focusedTestPlan([changed], manifest);
     assert.ok(plan.categories.includes('company-editions'), changed);

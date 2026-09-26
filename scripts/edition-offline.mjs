@@ -179,14 +179,17 @@ export async function buildEditionOfflineFiles({
   };
   put('app/manifest.webmanifest', json(manifest));
   put('app/current.json', json({ editionId, version, scope: '../', entry }));
-  const html = new TextDecoder('utf-8', { fatal: true }).decode(result.get(entry));
   const link = '<link rel="manifest" href="../app/manifest.webmanifest">';
-  result.set(
-    entry,
-    Buffer.from(
-      html.includes('</head>') ? html.replace('</head>', `${link}</head>`) : `${link}${html}`,
-    ),
-  );
+  for (const page of new Set([entry, 'game/index.html'])) {
+    if (!result.has(page)) continue;
+    const html = new TextDecoder('utf-8', { fatal: true }).decode(result.get(page));
+    result.set(
+      page,
+      Buffer.from(
+        html.includes('</head>') ? html.replace('</head>', `${link}</head>`) : `${link}${html}`,
+      ),
+    );
+  }
   put(
     'app/index.html',
     Buffer.from(

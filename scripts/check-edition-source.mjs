@@ -15,6 +15,16 @@ export async function checkEditionSourceEligibility(root) {
   }
   if (!Array.isArray(catalog.assets))
     throw new Error('Edition catalog has no asset eligibility ledger.');
+  let shared = [];
+  try {
+    shared = JSON.parse(
+      await fs.readFile(path.join(root, 'game/editions/runtime-assets.json'), 'utf8'),
+    );
+    if (!Array.isArray(shared)) throw new Error('Shared runtime asset ledger must be an array.');
+  } catch (error) {
+    if (error.code !== 'ENOENT') throw error;
+  }
+  const assets = [...catalog.assets, ...shared];
   const files = new Map(),
     ignored = new Set(['.git', '.cache', 'node_modules', 'dist', 'releases']);
   async function walk(directory, prefix = '') {
@@ -33,7 +43,7 @@ export async function checkEditionSourceEligibility(root) {
     }
   }
   await walk(root);
-  for (const asset of catalog.assets) {
+  for (const asset of assets) {
     if (typeof asset.path !== 'string' || !files.has(asset.path))
       throw new Error('Declared edition original is missing from source.');
     const stat = await fs.stat(path.join(root, asset.path));
@@ -48,7 +58,7 @@ export async function checkEditionSourceEligibility(root) {
   }
   return {
     status: 'verified',
-    ...validatePublicSourceEligibility({ files, assets: catalog.assets }),
+    ...validatePublicSourceEligibility({ files, assets }),
   };
 }
 

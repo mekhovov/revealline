@@ -3,6 +3,7 @@ import { snapshotVisualThemeContext } from './visual-theme-catalogue.mjs';
 import { ACTOR_STYLES } from './actor-style-policy.mjs';
 
 export const ACTOR_APPEARANCE_PIN_FORMAT = 'revealline-actor-appearance-pin.v1';
+export const AUTHORED_ACTOR_APPEARANCE_PIN_FORMAT = 'revealline-actor-appearance-pin.v2';
 export const ACTOR_APPEARANCE_RENDERER_POLICY = 'actor-style.v1';
 export const ACTOR_APPEARANCE_PIN_BYTES = 8192;
 
@@ -39,16 +40,35 @@ export function snapshotActorAppearancePin(source) {
   });
   fields(
     value,
-    ['format', 'style', 'rendererPolicy', 'content', 'presentation'],
+    [
+      'format',
+      'style',
+      'rendererPolicy',
+      'content',
+      'presentation',
+      ...(value.format === AUTHORED_ACTOR_APPEARANCE_PIN_FORMAT
+        ? ['authoredPresentationSha256']
+        : []),
+    ],
     'actor appearance pin',
   );
-  required(value.format === ACTOR_APPEARANCE_PIN_FORMAT, 'Unsupported actor appearance pin.');
+  required(
+    [ACTOR_APPEARANCE_PIN_FORMAT, AUTHORED_ACTOR_APPEARANCE_PIN_FORMAT].includes(value.format),
+    'Unsupported actor appearance pin.',
+  );
   required(ACTOR_STYLES.includes(value.style), 'Unsupported retained actor style.');
   required(
     value.rendererPolicy === ACTOR_APPEARANCE_RENDERER_POLICY,
     'Unsupported actor renderer policy.',
   );
   value.content = snapshotVisualThemeContext(value.content);
+  if (value.format === AUTHORED_ACTOR_APPEARANCE_PIN_FORMAT)
+    required(
+      value.style === 'campaign' &&
+        typeof value.authoredPresentationSha256 === 'string' &&
+        /^[a-f0-9]{64}$/.test(value.authoredPresentationSha256),
+      'Authored actors need an exact presentation receipt.',
+    );
   if (value.style === 'campaign') {
     required(
       value.presentation === null,

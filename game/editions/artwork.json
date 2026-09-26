@@ -37,5 +37,18 @@
     "height": 853,
     "alt": "A fictional illustrated community support scene for droneaid-community-relay-03.",
     "review": "candidate"
+  },
+  {
+    "format": "AssetRevisionV1",
+    "id": "droneaid-nl-workshop-lights-01-picture",
+    "revision": "1",
+    "kind": "reveal-background",
+    "path": "editions/assets/droneaid-nl-workshop-v1.png",
+    "sha256": "79ead19845a22b1b96ef50e883321b3f869f4298c007cb5cf905f8f596851771",
+    "bytes": 2911943,
+    "width": 1774,
+    "height": 887,
+    "alt": "A fictional Dutch canal-side community workshop with violet benches and yellow lamps.",
+    "review": "candidate"
   }
 ]

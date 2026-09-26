@@ -1,0 +1,586 @@
+{
+  "actorCatalogId": "journey-actors-v9",
+  "assets": [],
+  "campaigns": [
+    {
+      "band": 3,
+      "format": "CampaignDesignV1",
+      "id": "droneaid-nl-parts-in-motion",
+      "missionIds": [
+        "droneaid-nl-parts-in-motion-01",
+        "droneaid-nl-parts-in-motion-02",
+        "droneaid-nl-parts-in-motion-03",
+        "droneaid-nl-parts-in-motion-04",
+        "droneaid-nl-parts-in-motion-05",
+        "droneaid-nl-parts-in-motion-06"
+      ],
+      "name": "Parts in Motion",
+      "revision": "2"
+    }
+  ],
+  "difficultyCatalogId": "journey-difficulty-v2",
+  "format": "ContentProjectV1",
+  "id": "droneaid-nl-parts-in-motion",
+  "maps": [
+    {
+      "format": "MapDesignV1",
+      "foundations": [
+        { "h": 4, "w": 6, "x": 9, "y": 7 },
+        { "h": 5, "w": 10, "x": 30, "y": 13 },
+        { "h": 3, "w": 6, "x": 55, "y": 25 }
+      ],
+      "height": 36,
+      "id": "droneaid-nl-parts-in-motion-01-map",
+      "name": "Six Little Stations",
+      "revision": "2",
+      "spawns": [{ "id": "home", "x": 28.5, "y": 0.5 }],
+      "terrain": [],
+      "walls": [
+        { "h": 10, "w": 2, "x": 19, "y": 9 },
+        { "h": 10, "w": 2, "x": 49, "y": 17 }
+      ],
+      "width": 72
+    },
+    {
+      "format": "MapDesignV1",
+      "foundations": [
+        { "h": 4, "w": 6, "x": 10, "y": 7 },
+        { "h": 5, "w": 10, "x": 29, "y": 14 },
+        { "h": 3, "w": 6, "x": 54, "y": 25 }
+      ],
+      "height": 36,
+      "id": "droneaid-nl-parts-in-motion-02-map",
+      "name": "Frame Courtyard",
+      "revision": "2",
+      "spawns": [{ "id": "home", "x": 29.5, "y": 0.5 }],
+      "terrain": [],
+      "walls": [
+        { "h": 10, "w": 2, "x": 19, "y": 10 },
+        { "h": 10, "w": 2, "x": 49, "y": 16 }
+      ],
+      "width": 72
+    },
+    {
+      "format": "MapDesignV1",
+      "foundations": [
+        { "h": 4, "w": 6, "x": 11, "y": 7 },
+        { "h": 5, "w": 10, "x": 30, "y": 13 },
+        { "h": 3, "w": 6, "x": 53, "y": 25 }
+      ],
+      "height": 36,
+      "id": "droneaid-nl-parts-in-motion-03-map",
+      "name": "Eyes on the Shelf",
+      "revision": "2",
+      "spawns": [{ "id": "home", "x": 30.5, "y": 0.5 }],
+      "terrain": [],
+      "walls": [
+        { "h": 10, "w": 2, "x": 19, "y": 9 },
+        { "h": 10, "w": 2, "x": 49, "y": 17 }
+      ],
+      "width": 72
+    },
+    {
+      "format": "MapDesignV1",
+      "foundations": [
+        { "h": 4, "w": 6, "x": 12, "y": 7 },
+        { "h": 5, "w": 10, "x": 29, "y": 14 },
+        { "h": 3, "w": 6, "x": 52, "y": 25 }
+      ],
+      "height": 36,
+      "id": "droneaid-nl-parts-in-motion-04-map",
+      "name": "Power Corner",
+      "revision": "2",
+      "spawns": [{ "id": "home", "x": 31.5, "y": 0.5 }],
+      "terrain": [],
+      "walls": [
+        { "h": 10, "w": 2, "x": 19, "y": 10 },
+        { "h": 10, "w": 2, "x": 49, "y": 16 }
+      ],
+      "width": 72
+    },
+    {
+      "format": "MapDesignV1",
+      "foundations": [
+        { "h": 4, "w": 6, "x": 13, "y": 7 },
+        { "h": 5, "w": 10, "x": 30, "y": 13 },
+        { "h": 3, "w": 6, "x": 51, "y": 25 }
+      ],
+      "height": 36,
+      "id": "droneaid-nl-parts-in-motion-05-map",
+      "name": "The Parts Parade",
+      "revision": "2",
+      "spawns": [{ "id": "home", "x": 32.5, "y": 0.5 }],
+      "terrain": [{ "h": 2, "id": "slow-1", "kind": "slow", "w": 19, "x": 26, "y": 25 }],
+      "walls": [
+        { "h": 10, "w": 2, "x": 19, "y": 9 },
+        { "h": 10, "w": 2, "x": 49, "y": 17 }
+      ],
+      "width": 72
+    },
+    {
+      "format": "MapDesignV1",
+      "foundations": [
+        { "h": 4, "w": 6, "x": 12, "y": 7 },
+        { "h": 5, "w": 10, "x": 29, "y": 14 },
+        { "h": 3, "w": 6, "x": 53, "y": 25 }
+      ],
+      "height": 36,
+      "id": "droneaid-nl-parts-in-motion-06-map",
+      "name": "Everything in Place",
+      "revision": "2",
+      "spawns": [{ "id": "home", "x": 33.5, "y": 0.5 }],
+      "terrain": [{ "h": 2, "id": "slow-1", "kind": "slow", "w": 20, "x": 26, "y": 25 }],
+      "walls": [
+        { "h": 10, "w": 2, "x": 19, "y": 10 },
+        { "h": 10, "w": 2, "x": 49, "y": 16 }
+      ],
+      "width": 72
+    }
+  ],
+  "missions": [
+    {
+      "actors": [
+        {
+          "heading": [-1, -1],
+          "id": "paper-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "clockwise": false,
+          "edge": { "side": "east", "x": 8, "y": 7 },
+          "id": "moving-boundary",
+          "role": "frontier-patrol",
+          "tier": "measured"
+        },
+        {
+          "heading": [1, -1],
+          "id": "second-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 13.5,
+          "y": 26.5
+        }
+      ],
+      "bonuses": [],
+      "coverage": 0.554,
+      "design": {
+        "captureConsequence": "This fictional reveal never changes a business record or a real-world delivery.",
+        "combines": [],
+        "counterplay": "Frontier patrols follow the changed boundary after capture; check the return edge before departing.",
+        "difficulty": {
+          "band": 3,
+          "coordination": 0,
+          "execution": 2,
+          "mechanicLoad": 3,
+          "planning": 3,
+          "threatDensity": 3,
+          "timePressure": 0
+        },
+        "durationSeconds": [50, 210],
+        "introduces": ["frontier-patrol"],
+        "lesson": "Connect the six component corners of the depot. Frontier patrols follow the changed boundary after capture; check the return edge before departing.",
+        "mastery": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+        "memorableMoment": "Tools, frames, cameras, motors, power and electronics inspire oversized display stations.",
+        "practices": [
+          "foundations",
+          "enemy-seeded-closure",
+          "travelling-trail-impact",
+          "frontier-patrol"
+        ],
+        "routeDecision": "Choose a small sorting tray as the first return. Read the moving boundary before committing to the next connection."
+      },
+      "format": "MissionDesignV1",
+      "id": "droneaid-nl-parts-in-motion-01",
+      "map": { "id": "droneaid-nl-parts-in-motion-01-map", "revision": "2" },
+      "modes": ["solo"],
+      "name": "Six Little Stations",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 6.5 }
+      ],
+      "presentation": { "backgroundAssetId": null, "themeId": "droneaid-nl-parts-in-motion-theme" },
+      "revision": "2",
+      "spawnId": "home",
+      "timeLimitSeconds": 0
+    },
+    {
+      "actors": [
+        {
+          "heading": [-1, -1],
+          "id": "paper-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "clockwise": true,
+          "edge": { "side": "east", "x": 9, "y": 7 },
+          "id": "moving-boundary",
+          "role": "frontier-patrol",
+          "tier": "measured"
+        },
+        {
+          "heading": [1, -1],
+          "id": "second-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 13.5,
+          "y": 26.5
+        }
+      ],
+      "bonuses": [],
+      "coverage": 0.6040000000000001,
+      "design": {
+        "captureConsequence": "This fictional reveal never changes a business record or a real-world delivery.",
+        "combines": [],
+        "counterplay": "Frontier patrols follow the changed boundary after capture; check the return edge before departing.",
+        "difficulty": {
+          "band": 3,
+          "coordination": 0,
+          "execution": 2,
+          "mechanicLoad": 3,
+          "planning": 3,
+          "threatDensity": 3,
+          "timePressure": 0
+        },
+        "durationSeconds": [50, 210],
+        "introduces": [],
+        "lesson": "Link the central frame display to the storage courts. Frontier patrols follow the changed boundary after capture; check the return edge before departing.",
+        "mastery": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+        "memorableMoment": "A playful lightweight-frame sculpture stands among tidy shelves.",
+        "practices": [
+          "foundations",
+          "enemy-seeded-closure",
+          "travelling-trail-impact",
+          "frontier-patrol"
+        ],
+        "routeDecision": "Use the lower tray to shorten the route between the two courts. Read the moving boundary before committing to the next connection."
+      },
+      "format": "MissionDesignV1",
+      "id": "droneaid-nl-parts-in-motion-02",
+      "map": { "id": "droneaid-nl-parts-in-motion-02-map", "revision": "2" },
+      "modes": ["solo"],
+      "name": "Frame Courtyard",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 6.5 }
+      ],
+      "presentation": { "backgroundAssetId": null, "themeId": "droneaid-nl-parts-in-motion-theme" },
+      "revision": "2",
+      "spawnId": "home",
+      "timeLimitSeconds": 0
+    },
+    {
+      "actors": [
+        {
+          "heading": [-1, -1],
+          "id": "paper-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "clockwise": false,
+          "edge": { "side": "east", "x": 10, "y": 7 },
+          "id": "moving-boundary",
+          "role": "frontier-patrol",
+          "tier": "measured"
+        },
+        {
+          "heading": [1, -1],
+          "id": "second-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 13.5,
+          "y": 26.5
+        }
+      ],
+      "bonuses": [],
+      "coverage": 0.6340000000000001,
+      "design": {
+        "captureConsequence": "This fictional reveal never changes a business record or a real-world delivery.",
+        "combines": [],
+        "counterplay": "Frontier patrols follow the changed boundary after capture; check the return edge before departing.",
+        "difficulty": {
+          "band": 3,
+          "coordination": 0,
+          "execution": 2,
+          "mechanicLoad": 3,
+          "planning": 3,
+          "threatDensity": 3,
+          "timePressure": 0
+        },
+        "durationSeconds": [50, 210],
+        "introduces": [],
+        "lesson": "Reveal the observation-display corner and its neighbours. Frontier patrols follow the changed boundary after capture; check the return edge before departing.",
+        "mastery": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+        "memorableMoment": "Camera-shaped display props overlook a bright fictional component library.",
+        "practices": [
+          "foundations",
+          "enemy-seeded-closure",
+          "travelling-trail-impact",
+          "frontier-patrol"
+        ],
+        "routeDecision": "Join the quieter side shelves before entering the long aisle. Read the moving boundary before committing to the next connection."
+      },
+      "format": "MissionDesignV1",
+      "id": "droneaid-nl-parts-in-motion-03",
+      "map": { "id": "droneaid-nl-parts-in-motion-03-map", "revision": "2" },
+      "modes": ["solo"],
+      "name": "Eyes on the Shelf",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 6.5 }
+      ],
+      "presentation": { "backgroundAssetId": null, "themeId": "droneaid-nl-parts-in-motion-theme" },
+      "revision": "2",
+      "spawnId": "home",
+      "timeLimitSeconds": 0
+    },
+    {
+      "actors": [
+        {
+          "heading": [-1, -1],
+          "id": "paper-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "clockwise": true,
+          "edge": { "side": "east", "x": 11, "y": 7 },
+          "id": "moving-boundary",
+          "role": "frontier-patrol",
+          "tier": "measured"
+        },
+        {
+          "heading": [1, -1],
+          "id": "second-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 13.5,
+          "y": 26.5
+        },
+        {
+          "heading": [0, 1],
+          "id": "sleeping-backlog",
+          "role": "reclaimed-roamer",
+          "tier": "measured",
+          "x": 35.5,
+          "y": 9.5
+        }
+      ],
+      "bonuses": [{ "id": "steady-return", "kind": "extra-life", "x": 12.5, "y": 7.5 }],
+      "coverage": 0.654,
+      "design": {
+        "captureConsequence": "This fictional reveal never changes a business record or a real-world delivery.",
+        "combines": ["frontier-patrol", "reclaimed-roamer"],
+        "counterplay": "Frontier patrols follow the changed boundary after capture; check the return edge before departing. A dormant backlog knot wakes only after you reclaim its whole body; leave its warning area before using the new ground.",
+        "difficulty": {
+          "band": 4,
+          "coordination": 0,
+          "execution": 2,
+          "mechanicLoad": 4,
+          "planning": 4,
+          "threatDensity": 4,
+          "timePressure": 0
+        },
+        "durationSeconds": [50, 210],
+        "introduces": ["reclaimed-roamer"],
+        "lesson": "Connect the depot stations around the yellow power display. Frontier patrols follow the changed boundary after capture; check the return edge before departing.",
+        "mastery": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+        "memorableMoment": "Sealed display cases and bright labels form a cheerful exhibition.",
+        "practices": [
+          "foundations",
+          "enemy-seeded-closure",
+          "travelling-trail-impact",
+          "frontier-patrol",
+          "reclaimed-roamer"
+        ],
+        "routeDecision": "Build an interior return before the border patrol reaches the loading side. Read the moving boundary before committing to the next connection."
+      },
+      "format": "MissionDesignV1",
+      "id": "droneaid-nl-parts-in-motion-04",
+      "map": { "id": "droneaid-nl-parts-in-motion-04-map", "revision": "2" },
+      "modes": ["solo"],
+      "name": "Power Corner",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 11.5, "y": 8.5 },
+        { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 24.5 }
+      ],
+      "presentation": { "backgroundAssetId": null, "themeId": "droneaid-nl-parts-in-motion-theme" },
+      "revision": "2",
+      "spawnId": "home",
+      "timeLimitSeconds": 0
+    },
+    {
+      "actors": [
+        {
+          "heading": [-1, -1],
+          "id": "paper-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "clockwise": false,
+          "edge": { "side": "east", "x": 12, "y": 7 },
+          "id": "moving-boundary",
+          "role": "frontier-patrol",
+          "tier": "measured"
+        },
+        {
+          "heading": [1, -1],
+          "id": "second-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 13.5,
+          "y": 26.5
+        },
+        {
+          "heading": [0, 1],
+          "id": "sleeping-backlog",
+          "role": "reclaimed-roamer",
+          "tier": "measured",
+          "x": 35.5,
+          "y": 9.5
+        }
+      ],
+      "bonuses": [{ "id": "steady-return", "kind": "extra-life", "x": 13.5, "y": 7.5 }],
+      "coverage": 0.674,
+      "design": {
+        "captureConsequence": "This fictional reveal never changes a business record or a real-world delivery.",
+        "combines": ["frontier-patrol", "reclaimed-roamer"],
+        "counterplay": "Frontier patrols follow the changed boundary after capture; check the return edge before departing. A dormant backlog knot wakes only after you reclaim its whole body; leave its warning area before using the new ground.",
+        "difficulty": {
+          "band": 4,
+          "coordination": 0,
+          "execution": 2,
+          "mechanicLoad": 4,
+          "planning": 4,
+          "threatDensity": 4,
+          "timePressure": 0
+        },
+        "durationSeconds": [50, 210],
+        "introduces": [],
+        "lesson": "Bring the separated sorting aisles into one picture. Frontier patrols follow the changed boundary after capture; check the return edge before departing.",
+        "mastery": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+        "memorableMoment": "Colorful trays travel through an imagined miniature depot.",
+        "practices": [
+          "foundations",
+          "enemy-seeded-closure",
+          "travelling-trail-impact",
+          "frontier-patrol",
+          "reclaimed-roamer"
+        ],
+        "routeDecision": "Connect the staggered trays in two short crossings. Read the moving boundary before committing to the next connection."
+      },
+      "format": "MissionDesignV1",
+      "id": "droneaid-nl-parts-in-motion-05",
+      "map": { "id": "droneaid-nl-parts-in-motion-05-map", "revision": "2" },
+      "modes": ["solo"],
+      "name": "The Parts Parade",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
+        { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 24.5 }
+      ],
+      "presentation": { "backgroundAssetId": null, "themeId": "droneaid-nl-parts-in-motion-theme" },
+      "revision": "2",
+      "spawnId": "home",
+      "timeLimitSeconds": 0
+    },
+    {
+      "actors": [
+        {
+          "heading": [-1, -1],
+          "id": "paper-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "clockwise": true,
+          "edge": { "side": "east", "x": 11, "y": 7 },
+          "id": "moving-boundary",
+          "role": "frontier-patrol",
+          "tier": "measured"
+        },
+        {
+          "heading": [1, -1],
+          "id": "second-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 13.5,
+          "y": 26.5
+        },
+        {
+          "heading": [0, 1],
+          "id": "sleeping-backlog",
+          "role": "reclaimed-roamer",
+          "tier": "measured",
+          "x": 35.5,
+          "y": 9.5
+        }
+      ],
+      "bonuses": [{ "id": "steady-return", "kind": "extra-life", "x": 12.5, "y": 7.5 }],
+      "coverage": 0.7140000000000001,
+      "design": {
+        "captureConsequence": "This fictional reveal never changes a business record or a real-world delivery.",
+        "combines": ["frontier-patrol", "reclaimed-roamer"],
+        "counterplay": "Frontier patrols follow the changed boundary after capture; check the return edge before departing. A dormant backlog knot wakes only after you reclaim its whole body; leave its warning area before using the new ground.",
+        "difficulty": {
+          "band": 4,
+          "coordination": 0,
+          "execution": 2,
+          "mechanicLoad": 4,
+          "planning": 4,
+          "threatDensity": 4,
+          "timePressure": 0
+        },
+        "durationSeconds": [50, 210],
+        "introduces": [],
+        "lesson": "Complete the depot map from shelf to collection point. Frontier patrols follow the changed boundary after capture; check the return edge before departing.",
+        "mastery": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+        "memorableMoment": "All six display categories reunite in a bright community-built mosaic.",
+        "practices": [
+          "foundations",
+          "enemy-seeded-closure",
+          "travelling-trail-impact",
+          "frontier-patrol",
+          "reclaimed-roamer"
+        ],
+        "routeDecision": "Use the centre tray to divide the widest remaining field. Read the moving boundary before committing to the next connection."
+      },
+      "format": "MissionDesignV1",
+      "id": "droneaid-nl-parts-in-motion-06",
+      "map": { "id": "droneaid-nl-parts-in-motion-06-map", "revision": "2" },
+      "modes": ["solo"],
+      "name": "Everything in Place",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 11.5, "y": 8.5 },
+        { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 24.5 }
+      ],
+      "presentation": { "backgroundAssetId": null, "themeId": "droneaid-nl-parts-in-motion-theme" },
+      "revision": "2",
+      "spawnId": "home",
+      "timeLimitSeconds": 0
+    }
+  ],
+  "name": "Parts in Motion",
+  "packs": [
+    {
+      "campaignIds": ["droneaid-nl-parts-in-motion"],
+      "format": "PackDesignV1",
+      "id": "droneaid-nl-parts-in-motion-pack",
+      "name": "Parts in Motion",
+      "revision": "2"
+    }
+  ],
+  "policyId": "journey-trail-impact-v3",
+  "revision": "2"
+}

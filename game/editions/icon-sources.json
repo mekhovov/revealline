@@ -18,6 +18,25 @@
           "size": 512
         }
       ]
+    },
+    {
+      "brandId": "droneaid-nl",
+      "sourceAssetId": "droneaid-nl-propeller",
+      "sourceSha256": "dac6c71006d1bdf0b29cad9a7825a5ed2874936a29debccafaba2a6ddb765ef2",
+      "background": "#FFFFFF",
+      "paddingRatio": 0.15,
+      "outputs": [
+        {
+          "id": "droneaid-nl-icon-192",
+          "path": "game/editions/assets/droneaid-nl/icon-192.png",
+          "size": 192
+        },
+        {
+          "id": "droneaid-nl-icon-512",
+          "path": "game/editions/assets/droneaid-nl/icon-512.png",
+          "size": 512
+        }
+      ]
     }
   ]
 }

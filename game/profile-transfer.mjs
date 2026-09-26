@@ -1,4 +1,5 @@
 import { versionParts, compare, targetVersion, sourceFor } from './profile-channel.mjs';
+import { profileWriterOwns } from './profile-writer.mjs';
 import {
   BACKUP_FORMAT,
   EXTERNAL_BACKUP_FORMAT,
@@ -159,6 +160,7 @@ export async function prepareProfileTransfer(
     lockManager,
     currentVersion,
     editionId,
+    heldWriter,
     campaigns = [],
     resolveCampaign,
     expandCampaigns,
@@ -192,14 +194,24 @@ export async function prepareProfileTransfer(
   // the held locks. No steal or queued lock request is used.
   const locked = (key, task) =>
     op.wait(() =>
-      lockManager.request(key, { mode: 'exclusive', ifAvailable: true }, async (lock) => {
-        op.check();
-        required(
-          lock,
-          `The ${source.version} collection is busy. Close its other game tabs before copying progress.`,
-        );
-        return task();
-      }),
+      key === source.writerKey && profileWriterOwns(heldWriter, key)
+        ? (async () => {
+            const result = await task();
+            op.check();
+            required(
+              profileWriterOwns(heldWriter, key),
+              'The edition saving lease was released during transfer.',
+            );
+            return result;
+          })()
+        : lockManager.request(key, { mode: 'exclusive', ifAvailable: true }, async (lock) => {
+            op.check();
+            required(
+              lock,
+              `The ${source.version} collection is busy. Close its other game tabs before copying progress.`,
+            );
+            return task();
+          }),
     );
   try {
     return await locked(source.writerKey, () =>

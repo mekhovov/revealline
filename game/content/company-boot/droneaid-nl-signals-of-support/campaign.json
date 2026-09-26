@@ -1,0 +1,521 @@
+{
+  "id": "droneaid-nl-signals-of-support",
+  "levels": [
+    {
+      "classic": {
+        "arcadeActions": { "version": "arcade-actions.v1" },
+        "lineImpact": { "speed": 24, "version": "line-impact.v1" },
+        "powerups": [],
+        "terrain": [],
+        "version": "classic.v1"
+      },
+      "directionalFields": { "version": "directional-fields.v1", "zones": [] },
+      "encounter": null,
+      "enemies": [
+        {
+          "id": "paper-drifter",
+          "type": "bouncer",
+          "vx": -2.3758787847867993,
+          "vy": -2.3758787847867993,
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "id": "second-drifter",
+          "type": "bouncer",
+          "vx": 2.3758787847867993,
+          "vy": -2.3758787847867993,
+          "x": 13.5,
+          "y": 27.5
+        },
+        {
+          "clockwise": false,
+          "edge": { "side": "east", "x": 28, "y": 11 },
+          "id": "moving-boundary",
+          "speed": 2.52,
+          "type": "contour-patrol"
+        }
+      ],
+      "foundations": [
+        { "h": 4, "w": 12, "x": 29, "y": 11 },
+        { "h": 4, "w": 11, "x": 29, "y": 23 },
+        { "h": 3, "w": 6, "x": 9, "y": 24 }
+      ],
+      "goal": { "coverage": 0.5900000000000001 },
+      "hangars": [{ "id": "home-hangar", "radius": 2, "x": 33.5, "y": 0.5 }],
+      "height": 36,
+      "id": "droneaid-nl-signals-of-support-01",
+      "name": "A Story Worth Sharing",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
+        { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
+      ],
+      "relayGates": {
+        "gates": [
+          { "h": 1, "id": "return-1", "objectiveId": "connection", "w": 8, "x": 1, "y": 25 }
+        ],
+        "version": "relay-gates.v1"
+      },
+      "revision": "2",
+      "rules": {
+        "boostMultiplier": 1.5,
+        "cutTimeLimitSeconds": 0,
+        "graceSeconds": 1,
+        "lives": 3,
+        "maxTrailCells": 0,
+        "moveSpeed": 10,
+        "objectivePoints": 500,
+        "playerRadius": 0.18,
+        "pointsPerCell": 10,
+        "respawnSeconds": 0.65,
+        "stopOnCapture": true,
+        "switchCooldownSeconds": 2,
+        "timeLimitSeconds": 0,
+        "timeMedals": [90, 150]
+      },
+      "signalZones": [],
+      "spawn": { "x": 33.5, "y": 0.5 },
+      "supplies": [],
+      "version": "xonix-level.v7",
+      "walls": [
+        { "h": 9, "w": 2, "x": 16, "y": 7 },
+        { "h": 8, "w": 2, "x": 51, "y": 22 }
+      ],
+      "width": 72
+    },
+    {
+      "classic": {
+        "arcadeActions": { "version": "arcade-actions.v1" },
+        "lineImpact": { "speed": 24, "version": "line-impact.v1" },
+        "powerups": [],
+        "terrain": [],
+        "version": "classic.v1"
+      },
+      "directionalFields": { "version": "directional-fields.v1", "zones": [] },
+      "encounter": null,
+      "enemies": [
+        {
+          "id": "paper-drifter",
+          "type": "bouncer",
+          "vx": -2.3758787847867993,
+          "vy": -2.3758787847867993,
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "id": "second-drifter",
+          "type": "bouncer",
+          "vx": 2.3758787847867993,
+          "vy": -2.3758787847867993,
+          "x": 13.5,
+          "y": 27.5
+        },
+        {
+          "clockwise": true,
+          "edge": { "side": "east", "x": 28, "y": 12 },
+          "id": "moving-boundary",
+          "speed": 2.52,
+          "type": "contour-patrol"
+        }
+      ],
+      "foundations": [
+        { "h": 4, "w": 12, "x": 29, "y": 12 },
+        { "h": 4, "w": 11, "x": 30, "y": 23 },
+        { "h": 3, "w": 6, "x": 9, "y": 23 }
+      ],
+      "goal": { "coverage": 0.6400000000000001 },
+      "hangars": [{ "id": "home-hangar", "radius": 2, "x": 34.5, "y": 0.5 }],
+      "height": 36,
+      "id": "droneaid-nl-signals-of-support-02",
+      "name": "Poster Workshop",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
+        { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
+      ],
+      "relayGates": {
+        "gates": [
+          { "h": 7, "id": "return-1", "objectiveId": "connection", "w": 1, "x": 35, "y": 16 }
+        ],
+        "version": "relay-gates.v1"
+      },
+      "revision": "2",
+      "rules": {
+        "boostMultiplier": 1.5,
+        "cutTimeLimitSeconds": 0,
+        "graceSeconds": 1,
+        "lives": 3,
+        "maxTrailCells": 0,
+        "moveSpeed": 10,
+        "objectivePoints": 500,
+        "playerRadius": 0.18,
+        "pointsPerCell": 10,
+        "respawnSeconds": 0.65,
+        "stopOnCapture": true,
+        "switchCooldownSeconds": 2,
+        "timeLimitSeconds": 0,
+        "timeMedals": [90, 150]
+      },
+      "signalZones": [],
+      "spawn": { "x": 34.5, "y": 0.5 },
+      "supplies": [],
+      "version": "xonix-level.v7",
+      "walls": [
+        { "h": 9, "w": 2, "x": 17, "y": 7 },
+        { "h": 8, "w": 2, "x": 50, "y": 22 }
+      ],
+      "width": 72
+    },
+    {
+      "classic": {
+        "arcadeActions": { "version": "arcade-actions.v1" },
+        "lineImpact": { "speed": 24, "version": "line-impact.v1" },
+        "powerups": [],
+        "terrain": [],
+        "version": "classic.v1"
+      },
+      "directionalFields": { "version": "directional-fields.v1", "zones": [] },
+      "encounter": null,
+      "enemies": [
+        {
+          "id": "paper-drifter",
+          "type": "bouncer",
+          "vx": -2.3758787847867993,
+          "vy": -2.3758787847867993,
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "id": "second-drifter",
+          "type": "bouncer",
+          "vx": 2.3758787847867993,
+          "vy": -2.3758787847867993,
+          "x": 13.5,
+          "y": 27.5
+        },
+        {
+          "clockwise": false,
+          "edge": { "side": "east", "x": 28, "y": 11 },
+          "id": "moving-boundary",
+          "speed": 2.52,
+          "type": "contour-patrol"
+        }
+      ],
+      "foundations": [
+        { "h": 4, "w": 12, "x": 29, "y": 11 },
+        { "h": 4, "w": 11, "x": 29, "y": 23 },
+        { "h": 3, "w": 6, "x": 9, "y": 22 }
+      ],
+      "goal": { "coverage": 0.6700000000000002 },
+      "hangars": [{ "id": "home-hangar", "radius": 2, "x": 35.5, "y": 0.5 }],
+      "height": 36,
+      "id": "droneaid-nl-signals-of-support-03",
+      "name": "Invitation Square",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
+        { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
+      ],
+      "relayGates": {
+        "gates": [
+          { "h": 1, "id": "return-1", "objectiveId": "connection", "w": 8, "x": 1, "y": 23 }
+        ],
+        "version": "relay-gates.v1"
+      },
+      "revision": "2",
+      "rules": {
+        "boostMultiplier": 1.5,
+        "cutTimeLimitSeconds": 0,
+        "graceSeconds": 1,
+        "lives": 3,
+        "maxTrailCells": 0,
+        "moveSpeed": 10,
+        "objectivePoints": 500,
+        "playerRadius": 0.18,
+        "pointsPerCell": 10,
+        "respawnSeconds": 0.65,
+        "stopOnCapture": true,
+        "switchCooldownSeconds": 2,
+        "timeLimitSeconds": 0,
+        "timeMedals": [90, 150]
+      },
+      "signalZones": [],
+      "spawn": { "x": 35.5, "y": 0.5 },
+      "supplies": [],
+      "version": "xonix-level.v7",
+      "walls": [
+        { "h": 9, "w": 2, "x": 18, "y": 7 },
+        { "h": 8, "w": 2, "x": 49, "y": 22 }
+      ],
+      "width": 72
+    },
+    {
+      "classic": {
+        "arcadeActions": { "version": "arcade-actions.v1" },
+        "lineImpact": { "speed": 24, "version": "line-impact.v1" },
+        "powerups": [{ "id": "steady-return", "kind": "extra-life", "x": 29.5, "y": 12.5 }],
+        "terrain": [],
+        "version": "classic.v1"
+      },
+      "directionalFields": { "version": "directional-fields.v1", "zones": [] },
+      "encounter": null,
+      "enemies": [
+        {
+          "id": "paper-drifter",
+          "type": "bouncer",
+          "vx": -2.3758787847867993,
+          "vy": -2.3758787847867993,
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "id": "second-drifter",
+          "type": "bouncer",
+          "vx": 2.3758787847867993,
+          "vy": -2.3758787847867993,
+          "x": 13.5,
+          "y": 27.5
+        },
+        {
+          "activeSeconds": 0.7,
+          "axis": "horizontal",
+          "id": "scheduled-wave",
+          "laneWidth": 1.2,
+          "period": 5.433333333333334,
+          "type": "lane-boss",
+          "warningSeconds": 1.5,
+          "x": 57.5,
+          "y": 27.5
+        }
+      ],
+      "foundations": [
+        { "h": 4, "w": 12, "x": 29, "y": 12 },
+        { "h": 4, "w": 11, "x": 30, "y": 23 },
+        { "h": 3, "w": 6, "x": 9, "y": 24 }
+      ],
+      "goal": { "coverage": 0.69 },
+      "hangars": [{ "id": "home-hangar", "radius": 2, "x": 36.5, "y": 0.5 }],
+      "height": 36,
+      "id": "droneaid-nl-signals-of-support-04",
+      "name": "The Community Event",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
+        { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
+      ],
+      "relayGates": {
+        "gates": [
+          { "h": 7, "id": "return-1", "objectiveId": "connection", "w": 1, "x": 35, "y": 16 },
+          { "h": 1, "id": "return-2", "objectiveId": "handoff", "w": 8, "x": 1, "y": 25 }
+        ],
+        "version": "relay-gates.v1"
+      },
+      "revision": "2",
+      "rules": {
+        "boostMultiplier": 1.5,
+        "cutTimeLimitSeconds": 0,
+        "graceSeconds": 1,
+        "lives": 3,
+        "maxTrailCells": 0,
+        "moveSpeed": 10,
+        "objectivePoints": 500,
+        "playerRadius": 0.18,
+        "pointsPerCell": 10,
+        "respawnSeconds": 0.65,
+        "stopOnCapture": true,
+        "switchCooldownSeconds": 2,
+        "timeLimitSeconds": 0,
+        "timeMedals": [90, 150]
+      },
+      "signalZones": [],
+      "spawn": { "x": 36.5, "y": 0.5 },
+      "supplies": [],
+      "version": "xonix-level.v7",
+      "walls": [
+        { "h": 9, "w": 2, "x": 19, "y": 7 },
+        { "h": 8, "w": 2, "x": 48, "y": 22 }
+      ],
+      "width": 72
+    },
+    {
+      "classic": {
+        "arcadeActions": { "version": "arcade-actions.v1" },
+        "lineImpact": { "speed": 24, "version": "line-impact.v1" },
+        "powerups": [{ "id": "steady-return", "kind": "extra-life", "x": 29.5, "y": 11.5 }],
+        "terrain": [],
+        "version": "classic.v1"
+      },
+      "directionalFields": { "version": "directional-fields.v1", "zones": [] },
+      "encounter": null,
+      "enemies": [
+        {
+          "id": "paper-drifter",
+          "type": "bouncer",
+          "vx": -2.3758787847867993,
+          "vy": -2.3758787847867993,
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "id": "second-drifter",
+          "type": "bouncer",
+          "vx": 2.3758787847867993,
+          "vy": -2.3758787847867993,
+          "x": 13.5,
+          "y": 27.5
+        },
+        {
+          "activeSeconds": 0.7,
+          "axis": "horizontal",
+          "id": "scheduled-wave",
+          "laneWidth": 1.2,
+          "period": 5.433333333333334,
+          "type": "lane-boss",
+          "warningSeconds": 1.5,
+          "x": 57.5,
+          "y": 27.5
+        }
+      ],
+      "foundations": [
+        { "h": 4, "w": 12, "x": 29, "y": 11 },
+        { "h": 4, "w": 11, "x": 29, "y": 23 },
+        { "h": 3, "w": 6, "x": 9, "y": 23 }
+      ],
+      "goal": { "coverage": 0.71 },
+      "hangars": [{ "id": "home-hangar", "radius": 2, "x": 37.5, "y": 0.5 }],
+      "height": 36,
+      "id": "droneaid-nl-signals-of-support-05",
+      "name": "Open Ledger",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
+        { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
+      ],
+      "relayGates": {
+        "gates": [
+          { "h": 1, "id": "return-1", "objectiveId": "connection", "w": 8, "x": 1, "y": 24 },
+          { "h": 8, "id": "return-2", "objectiveId": "handoff", "w": 1, "x": 34, "y": 15 }
+        ],
+        "version": "relay-gates.v1"
+      },
+      "revision": "2",
+      "rules": {
+        "boostMultiplier": 1.5,
+        "cutTimeLimitSeconds": 0,
+        "graceSeconds": 1,
+        "lives": 3,
+        "maxTrailCells": 0,
+        "moveSpeed": 10,
+        "objectivePoints": 500,
+        "playerRadius": 0.18,
+        "pointsPerCell": 10,
+        "respawnSeconds": 0.65,
+        "stopOnCapture": true,
+        "switchCooldownSeconds": 2,
+        "timeLimitSeconds": 0,
+        "timeMedals": [90, 150]
+      },
+      "signalZones": [],
+      "spawn": { "x": 37.5, "y": 0.5 },
+      "supplies": [],
+      "version": "xonix-level.v7",
+      "walls": [
+        { "h": 9, "w": 2, "x": 20, "y": 7 },
+        { "h": 8, "w": 2, "x": 47, "y": 22 }
+      ],
+      "width": 72
+    },
+    {
+      "classic": {
+        "arcadeActions": { "version": "arcade-actions.v1" },
+        "lineImpact": { "speed": 24, "version": "line-impact.v1" },
+        "powerups": [{ "id": "steady-return", "kind": "extra-life", "x": 29.5, "y": 12.5 }],
+        "terrain": [],
+        "version": "classic.v1"
+      },
+      "directionalFields": {
+        "version": "directional-fields.v1",
+        "zones": [
+          { "direction": "down", "h": 7, "id": "outbound-flow", "w": 3, "x": 24, "y": 8 },
+          { "direction": "right", "h": 3, "id": "return-flow", "w": 7, "x": 41, "y": 19 }
+        ]
+      },
+      "encounter": null,
+      "enemies": [
+        {
+          "id": "paper-drifter",
+          "type": "bouncer",
+          "vx": -2.3758787847867993,
+          "vy": -2.3758787847867993,
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "id": "second-drifter",
+          "type": "bouncer",
+          "vx": 2.3758787847867993,
+          "vy": -2.3758787847867993,
+          "x": 13.5,
+          "y": 27.5
+        },
+        {
+          "activeSeconds": 0.7,
+          "axis": "horizontal",
+          "id": "scheduled-wave",
+          "laneWidth": 1.2,
+          "period": 5.433333333333334,
+          "type": "lane-boss",
+          "warningSeconds": 1.5,
+          "x": 57.5,
+          "y": 27.5
+        }
+      ],
+      "foundations": [
+        { "h": 4, "w": 12, "x": 29, "y": 12 },
+        { "h": 4, "w": 11, "x": 30, "y": 23 },
+        { "h": 3, "w": 6, "x": 9, "y": 22 }
+      ],
+      "goal": { "coverage": 0.75 },
+      "hangars": [{ "id": "home-hangar", "radius": 2, "x": 38.5, "y": 0.5 }],
+      "height": 36,
+      "id": "droneaid-nl-signals-of-support-06",
+      "name": "Thank You, Together",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
+        { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
+      ],
+      "relayGates": {
+        "gates": [
+          { "h": 7, "id": "return-1", "objectiveId": "connection", "w": 1, "x": 35, "y": 16 },
+          { "h": 1, "id": "return-2", "objectiveId": "handoff", "w": 8, "x": 1, "y": 23 }
+        ],
+        "version": "relay-gates.v1"
+      },
+      "revision": "2",
+      "rules": {
+        "boostMultiplier": 1.5,
+        "cutTimeLimitSeconds": 0,
+        "graceSeconds": 1,
+        "lives": 3,
+        "maxTrailCells": 0,
+        "moveSpeed": 10,
+        "objectivePoints": 500,
+        "playerRadius": 0.18,
+        "pointsPerCell": 10,
+        "respawnSeconds": 0.65,
+        "stopOnCapture": true,
+        "switchCooldownSeconds": 2,
+        "timeLimitSeconds": 0,
+        "timeMedals": [90, 150]
+      },
+      "signalZones": [],
+      "spawn": { "x": 38.5, "y": 0.5 },
+      "supplies": [],
+      "version": "xonix-level.v7",
+      "walls": [
+        { "h": 9, "w": 2, "x": 21, "y": 7 },
+        { "h": 8, "w": 2, "x": 46, "y": 22 }
+      ],
+      "width": 72
+    }
+  ],
+  "revision": "2",
+  "title": "Signals of Support",
+  "version": "xonix-campaign.v1"
+}

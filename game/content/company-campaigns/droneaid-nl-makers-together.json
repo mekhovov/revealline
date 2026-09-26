@@ -1,0 +1,598 @@
+{
+  "actorCatalogId": "journey-actors-v9",
+  "assets": [],
+  "campaigns": [
+    {
+      "band": 5,
+      "format": "CampaignDesignV1",
+      "id": "droneaid-nl-makers-together",
+      "missionIds": [
+        "droneaid-nl-makers-together-01",
+        "droneaid-nl-makers-together-02",
+        "droneaid-nl-makers-together-03",
+        "droneaid-nl-makers-together-04",
+        "droneaid-nl-makers-together-05",
+        "droneaid-nl-makers-together-06"
+      ],
+      "name": "Makers Together",
+      "revision": "2"
+    }
+  ],
+  "difficultyCatalogId": "journey-difficulty-v2",
+  "format": "ContentProjectV1",
+  "id": "droneaid-nl-makers-together",
+  "maps": [
+    {
+      "format": "MapDesignV1",
+      "foundations": [
+        { "h": 4, "w": 9, "x": 11, "y": 15 },
+        { "h": 4, "w": 9, "x": 47, "y": 15 },
+        { "h": 3, "w": 8, "x": 30, "y": 20 }
+      ],
+      "height": 36,
+      "id": "droneaid-nl-makers-together-01-map",
+      "name": "A Friendly Welcome",
+      "revision": "2",
+      "spawns": [{ "id": "home", "x": 16.5, "y": 0.5 }],
+      "terrain": [],
+      "walls": [
+        { "h": 5, "w": 2, "x": 32, "y": 7 },
+        { "h": 4, "w": 2, "x": 37, "y": 25 }
+      ],
+      "width": 72
+    },
+    {
+      "format": "MapDesignV1",
+      "foundations": [
+        { "h": 4, "w": 9, "x": 12, "y": 15 },
+        { "h": 4, "w": 9, "x": 46, "y": 16 },
+        { "h": 3, "w": 8, "x": 30, "y": 21 }
+      ],
+      "height": 36,
+      "id": "droneaid-nl-makers-together-02-map",
+      "name": "Watch and Try",
+      "revision": "2",
+      "spawns": [{ "id": "home", "x": 18.5, "y": 0.5 }],
+      "terrain": [],
+      "walls": [
+        { "h": 6, "w": 2, "x": 32, "y": 7 },
+        { "h": 4, "w": 2, "x": 37, "y": 25 }
+      ],
+      "width": 72
+    },
+    {
+      "format": "MapDesignV1",
+      "foundations": [
+        { "h": 4, "w": 9, "x": 13, "y": 15 },
+        { "h": 4, "w": 9, "x": 45, "y": 15 },
+        { "h": 3, "w": 8, "x": 30, "y": 22 }
+      ],
+      "height": 36,
+      "id": "droneaid-nl-makers-together-03-map",
+      "name": "Pass It On",
+      "revision": "2",
+      "spawns": [{ "id": "home", "x": 20.5, "y": 0.5 }],
+      "terrain": [],
+      "walls": [
+        { "h": 5, "w": 2, "x": 32, "y": 7 },
+        { "h": 4, "w": 2, "x": 37, "y": 25 }
+      ],
+      "width": 72
+    },
+    {
+      "format": "MapDesignV1",
+      "foundations": [
+        { "h": 4, "w": 9, "x": 14, "y": 15 },
+        { "h": 4, "w": 9, "x": 44, "y": 16 },
+        { "h": 3, "w": 8, "x": 30, "y": 20 }
+      ],
+      "height": 36,
+      "id": "droneaid-nl-makers-together-04-map",
+      "name": "Room for Every Maker",
+      "revision": "2",
+      "spawns": [{ "id": "home", "x": 22.5, "y": 0.5 }],
+      "terrain": [],
+      "walls": [
+        { "h": 6, "w": 2, "x": 32, "y": 7 },
+        { "h": 4, "w": 2, "x": 37, "y": 25 }
+      ],
+      "width": 72
+    },
+    {
+      "format": "MapDesignV1",
+      "foundations": [
+        { "h": 4, "w": 9, "x": 15, "y": 15 },
+        { "h": 4, "w": 9, "x": 43, "y": 15 },
+        { "h": 3, "w": 8, "x": 30, "y": 21 }
+      ],
+      "height": 36,
+      "id": "droneaid-nl-makers-together-05-map",
+      "name": "Many Hands",
+      "revision": "2",
+      "spawns": [{ "id": "home", "x": 24.5, "y": 0.5 }],
+      "terrain": [],
+      "walls": [
+        { "h": 5, "w": 2, "x": 32, "y": 7 },
+        { "h": 4, "w": 2, "x": 37, "y": 25 }
+      ],
+      "width": 72
+    },
+    {
+      "format": "MapDesignV1",
+      "foundations": [
+        { "h": 4, "w": 9, "x": 16, "y": 15 },
+        { "h": 4, "w": 9, "x": 42, "y": 16 },
+        { "h": 3, "w": 8, "x": 30, "y": 22 }
+      ],
+      "height": 36,
+      "id": "droneaid-nl-makers-together-06-map",
+      "name": "A New Instructor",
+      "revision": "2",
+      "spawns": [{ "id": "home", "x": 26.5, "y": 0.5 }],
+      "terrain": [],
+      "walls": [
+        { "h": 6, "w": 2, "x": 32, "y": 7 },
+        { "h": 4, "w": 2, "x": 37, "y": 25 }
+      ],
+      "width": 72
+    }
+  ],
+  "missions": [
+    {
+      "actors": [
+        {
+          "heading": [-1, -1],
+          "id": "paper-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "heading": [0, 1],
+          "id": "sleeping-backlog",
+          "role": "reclaimed-roamer",
+          "tier": "measured",
+          "x": 35.5,
+          "y": 9.5
+        },
+        {
+          "heading": [1, -1],
+          "id": "rework-drift",
+          "role": "territory-eroder",
+          "tier": "measured",
+          "x": 15.5,
+          "y": 27.5
+        }
+      ],
+      "bonuses": [],
+      "coverage": 0.5660000000000001,
+      "design": {
+        "captureConsequence": "A capture may wake a roamer and gives an eroder more reclaimed edge. This fictional reveal never changes a business record or a real-world delivery.",
+        "combines": [],
+        "counterplay": "Rework can erode reclaimed ground. Protect a second return and watch the dormant knot wake after capture.",
+        "difficulty": {
+          "band": 5,
+          "coordination": 0,
+          "execution": 4,
+          "mechanicLoad": 5,
+          "planning": 5,
+          "threatDensity": 3,
+          "timePressure": 0
+        },
+        "durationSeconds": [50, 210],
+        "introduces": ["territory-eroder"],
+        "lesson": "Connect a welcome corner with the community table. Rework can erode reclaimed ground. Protect a second return and watch the dormant knot wake after capture.",
+        "mastery": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+        "memorableMoment": "Fictional volunteers greet new participants in a welcoming Dutch room.",
+        "practices": [
+          "foundations",
+          "enemy-seeded-closure",
+          "travelling-trail-impact",
+          "reclaimed-roamer",
+          "territory-eroder"
+        ],
+        "routeDecision": "Choose either meeting nook as the first safe return. Keep another return available when capture wakes a knot or rework erodes the edge."
+      },
+      "format": "MissionDesignV1",
+      "id": "droneaid-nl-makers-together-01",
+      "map": { "id": "droneaid-nl-makers-together-01-map", "revision": "2" },
+      "modes": ["solo"],
+      "name": "A Friendly Welcome",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
+        { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
+      ],
+      "presentation": { "backgroundAssetId": null, "themeId": "droneaid-nl-makers-together-theme" },
+      "revision": "2",
+      "spawnId": "home",
+      "timeLimitSeconds": 0
+    },
+    {
+      "actors": [
+        {
+          "heading": [-1, -1],
+          "id": "paper-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "heading": [0, 1],
+          "id": "sleeping-backlog",
+          "role": "reclaimed-roamer",
+          "tier": "measured",
+          "x": 35.5,
+          "y": 9.5
+        },
+        {
+          "heading": [1, -1],
+          "id": "rework-drift",
+          "role": "territory-eroder",
+          "tier": "measured",
+          "x": 15.5,
+          "y": 27.5
+        }
+      ],
+      "bonuses": [],
+      "coverage": 0.6160000000000001,
+      "design": {
+        "captureConsequence": "A capture may wake a roamer and gives an eroder more reclaimed edge. This fictional reveal never changes a business record or a real-world delivery.",
+        "combines": [],
+        "counterplay": "Rework can erode reclaimed ground. Protect a second return and watch the dormant knot wake after capture.",
+        "difficulty": {
+          "band": 5,
+          "coordination": 0,
+          "execution": 4,
+          "mechanicLoad": 5,
+          "planning": 5,
+          "threatDensity": 3,
+          "timePressure": 0
+        },
+        "durationSeconds": [50, 210],
+        "introduces": [],
+        "lesson": "Join the demonstration corner and the practice space. Rework can erode reclaimed ground. Protect a second return and watch the dormant knot wake after capture.",
+        "mastery": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+        "memorableMoment": "An illustrated mentor shares confidence beside a simple nontechnical display.",
+        "practices": [
+          "foundations",
+          "enemy-seeded-closure",
+          "travelling-trail-impact",
+          "reclaimed-roamer",
+          "territory-eroder"
+        ],
+        "routeDecision": "Take the shorter route between paired learning tables. Keep another return available when capture wakes a knot or rework erodes the edge."
+      },
+      "format": "MissionDesignV1",
+      "id": "droneaid-nl-makers-together-02",
+      "map": { "id": "droneaid-nl-makers-together-02-map", "revision": "2" },
+      "modes": ["solo"],
+      "name": "Watch and Try",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
+        { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
+      ],
+      "presentation": { "backgroundAssetId": null, "themeId": "droneaid-nl-makers-together-theme" },
+      "revision": "2",
+      "spawnId": "home",
+      "timeLimitSeconds": 0
+    },
+    {
+      "actors": [
+        {
+          "heading": [-1, -1],
+          "id": "paper-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "heading": [0, 1],
+          "id": "sleeping-backlog",
+          "role": "reclaimed-roamer",
+          "tier": "measured",
+          "x": 35.5,
+          "y": 9.5
+        },
+        {
+          "heading": [1, -1],
+          "id": "rework-drift",
+          "role": "territory-eroder",
+          "tier": "measured",
+          "x": 15.5,
+          "y": 27.5
+        }
+      ],
+      "bonuses": [],
+      "coverage": 0.6460000000000001,
+      "design": {
+        "captureConsequence": "A capture may wake a roamer and gives an eroder more reclaimed edge. This fictional reveal never changes a business record or a real-world delivery.",
+        "combines": [],
+        "counterplay": "Rework can erode reclaimed ground. Protect a second return and watch the dormant knot wake after capture.",
+        "difficulty": {
+          "band": 5,
+          "coordination": 0,
+          "execution": 4,
+          "mechanicLoad": 5,
+          "planning": 5,
+          "threatDensity": 3,
+          "timePressure": 0
+        },
+        "durationSeconds": [50, 210],
+        "introduces": [],
+        "lesson": "Bring three contributions into the same revealed space. Rework can erode reclaimed ground. Protect a second return and watch the dormant knot wake after capture.",
+        "mastery": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+        "memorableMoment": "Handmade badges celebrate the act of helping another maker.",
+        "practices": [
+          "foundations",
+          "enemy-seeded-closure",
+          "travelling-trail-impact",
+          "reclaimed-roamer",
+          "territory-eroder"
+        ],
+        "routeDecision": "Connect the small side table before crossing the main room. Keep another return available when capture wakes a knot or rework erodes the edge."
+      },
+      "format": "MissionDesignV1",
+      "id": "droneaid-nl-makers-together-03",
+      "map": { "id": "droneaid-nl-makers-together-03-map", "revision": "2" },
+      "modes": ["solo"],
+      "name": "Pass It On",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
+        { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
+      ],
+      "presentation": { "backgroundAssetId": null, "themeId": "droneaid-nl-makers-together-theme" },
+      "revision": "2",
+      "spawnId": "home",
+      "timeLimitSeconds": 0
+    },
+    {
+      "actors": [
+        {
+          "heading": [-1, -1],
+          "id": "paper-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "heading": [0, 1],
+          "id": "sleeping-backlog",
+          "role": "reclaimed-roamer",
+          "tier": "measured",
+          "x": 35.5,
+          "y": 9.5
+        },
+        {
+          "heading": [1, -1],
+          "id": "rework-drift",
+          "role": "territory-eroder",
+          "tier": "measured",
+          "x": 15.5,
+          "y": 27.5
+        },
+        {
+          "clockwise": true,
+          "edge": { "side": "east", "x": 13, "y": 15 },
+          "id": "moving-boundary",
+          "role": "frontier-patrol",
+          "tier": "measured"
+        }
+      ],
+      "bonuses": [{ "id": "steady-return", "kind": "extra-life", "x": 14.5, "y": 15.5 }],
+      "coverage": 0.666,
+      "design": {
+        "captureConsequence": "A capture may wake a roamer and gives an eroder more reclaimed edge. This fictional reveal never changes a business record or a real-world delivery.",
+        "combines": ["reclaimed-roamer", "territory-eroder", "frontier-patrol"],
+        "counterplay": "Frontier patrols follow the changed boundary after capture; check the return edge before departing. Rework can erode reclaimed ground. Protect a second return and watch the dormant knot wake after capture.",
+        "difficulty": {
+          "band": 6,
+          "coordination": 0,
+          "execution": 4,
+          "mechanicLoad": 6,
+          "planning": 6,
+          "threatDensity": 4,
+          "timePressure": 0
+        },
+        "durationSeconds": [50, 210],
+        "introduces": [],
+        "lesson": "Connect both quiet and shared participation spaces. Frontier patrols follow the changed boundary after capture; check the return edge before departing.",
+        "mastery": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+        "memorableMoment": "Different places to participate form one welcoming room.",
+        "practices": [
+          "foundations",
+          "enemy-seeded-closure",
+          "travelling-trail-impact",
+          "reclaimed-roamer",
+          "territory-eroder",
+          "frontier-patrol"
+        ],
+        "routeDecision": "Keep an interior route open while the outer patrol passes. Keep another return available when capture wakes a knot or rework erodes the edge."
+      },
+      "format": "MissionDesignV1",
+      "id": "droneaid-nl-makers-together-04",
+      "map": { "id": "droneaid-nl-makers-together-04-map", "revision": "2" },
+      "modes": ["solo"],
+      "name": "Room for Every Maker",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
+        { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
+      ],
+      "presentation": { "backgroundAssetId": null, "themeId": "droneaid-nl-makers-together-theme" },
+      "revision": "2",
+      "spawnId": "home",
+      "timeLimitSeconds": 0
+    },
+    {
+      "actors": [
+        {
+          "heading": [-1, -1],
+          "id": "paper-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "heading": [0, 1],
+          "id": "sleeping-backlog",
+          "role": "reclaimed-roamer",
+          "tier": "measured",
+          "x": 35.5,
+          "y": 9.5
+        },
+        {
+          "heading": [1, -1],
+          "id": "rework-drift",
+          "role": "territory-eroder",
+          "tier": "measured",
+          "x": 15.5,
+          "y": 27.5
+        },
+        {
+          "clockwise": false,
+          "edge": { "side": "east", "x": 14, "y": 15 },
+          "id": "moving-boundary",
+          "role": "frontier-patrol",
+          "tier": "measured"
+        }
+      ],
+      "bonuses": [{ "id": "steady-return", "kind": "extra-life", "x": 15.5, "y": 15.5 }],
+      "coverage": 0.686,
+      "design": {
+        "captureConsequence": "A capture may wake a roamer and gives an eroder more reclaimed edge. This fictional reveal never changes a business record or a real-world delivery.",
+        "combines": ["reclaimed-roamer", "territory-eroder", "frontier-patrol"],
+        "counterplay": "Frontier patrols follow the changed boundary after capture; check the return edge before departing. Rework can erode reclaimed ground. Protect a second return and watch the dormant knot wake after capture.",
+        "difficulty": {
+          "band": 6,
+          "coordination": 0,
+          "execution": 4,
+          "mechanicLoad": 6,
+          "planning": 6,
+          "threatDensity": 4,
+          "timePressure": 0
+        },
+        "durationSeconds": [50, 210],
+        "introduces": [],
+        "lesson": "Reveal the community project assembled from many contributions. Frontier patrols follow the changed boundary after capture; check the return edge before departing.",
+        "mastery": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+        "memorableMoment": "Paper shapes, sketches and shared tables form a collaborative mural.",
+        "practices": [
+          "foundations",
+          "enemy-seeded-closure",
+          "travelling-trail-impact",
+          "reclaimed-roamer",
+          "territory-eroder",
+          "frontier-patrol"
+        ],
+        "routeDecision": "Link the paired tables through the central gathering island. Keep another return available when capture wakes a knot or rework erodes the edge."
+      },
+      "format": "MissionDesignV1",
+      "id": "droneaid-nl-makers-together-05",
+      "map": { "id": "droneaid-nl-makers-together-05-map", "revision": "2" },
+      "modes": ["solo"],
+      "name": "Many Hands",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
+        { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
+      ],
+      "presentation": { "backgroundAssetId": null, "themeId": "droneaid-nl-makers-together-theme" },
+      "revision": "2",
+      "spawnId": "home",
+      "timeLimitSeconds": 0
+    },
+    {
+      "actors": [
+        {
+          "heading": [-1, -1],
+          "id": "paper-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "heading": [0, 1],
+          "id": "sleeping-backlog",
+          "role": "reclaimed-roamer",
+          "tier": "measured",
+          "x": 35.5,
+          "y": 9.5
+        },
+        {
+          "heading": [1, -1],
+          "id": "rework-drift",
+          "role": "territory-eroder",
+          "tier": "measured",
+          "x": 15.5,
+          "y": 27.5
+        },
+        {
+          "clockwise": true,
+          "edge": { "side": "east", "x": 15, "y": 15 },
+          "id": "moving-boundary",
+          "role": "frontier-patrol",
+          "tier": "measured"
+        }
+      ],
+      "bonuses": [{ "id": "steady-return", "kind": "extra-life", "x": 16.5, "y": 15.5 }],
+      "coverage": 0.7260000000000001,
+      "design": {
+        "captureConsequence": "A capture may wake a roamer and gives an eroder more reclaimed edge. This fictional reveal never changes a business record or a real-world delivery.",
+        "combines": ["reclaimed-roamer", "territory-eroder", "frontier-patrol"],
+        "counterplay": "Frontier patrols follow the changed boundary after capture; check the return edge before departing. Rework can erode reclaimed ground. Protect a second return and watch the dormant knot wake after capture.",
+        "difficulty": {
+          "band": 6,
+          "coordination": 0,
+          "execution": 4,
+          "mechanicLoad": 6,
+          "planning": 6,
+          "threatDensity": 4,
+          "timePressure": 0
+        },
+        "durationSeconds": [50, 210],
+        "introduces": [],
+        "lesson": "Complete a picture of confidence being passed forward. Frontier patrols follow the changed boundary after capture; check the return edge before departing.",
+        "mastery": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+        "memorableMoment": "The fictional workshop celebrates a participant becoming a mentor.",
+        "practices": [
+          "foundations",
+          "enemy-seeded-closure",
+          "travelling-trail-impact",
+          "reclaimed-roamer",
+          "territory-eroder",
+          "frontier-patrol"
+        ],
+        "routeDecision": "Revisit the familiar inner returns before the final wide crossing. Keep another return available when capture wakes a knot or rework erodes the edge."
+      },
+      "format": "MissionDesignV1",
+      "id": "droneaid-nl-makers-together-06",
+      "map": { "id": "droneaid-nl-makers-together-06-map", "revision": "2" },
+      "modes": ["solo"],
+      "name": "A New Instructor",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
+        { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
+      ],
+      "presentation": { "backgroundAssetId": null, "themeId": "droneaid-nl-makers-together-theme" },
+      "revision": "2",
+      "spawnId": "home",
+      "timeLimitSeconds": 0
+    }
+  ],
+  "name": "Makers Together",
+  "packs": [
+    {
+      "campaignIds": ["droneaid-nl-makers-together"],
+      "format": "PackDesignV1",
+      "id": "droneaid-nl-makers-together-pack",
+      "name": "Makers Together",
+      "revision": "2"
+    }
+  ],
+  "policyId": "journey-trail-impact-v3",
+  "revision": "2"
+}

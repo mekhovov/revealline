@@ -238,7 +238,7 @@ export async function validateEditionAdmission(envelope, { read } = {}) {
       manifest.format !== 'revealline-edition-manifest.v1' ||
       manifest.entry !== 'game/company.html' ||
       source.format !== 'revealline-edition-source-inventory.v1' ||
-      source.kind !== 'selected-original-inputs' ||
+      !['selected-original-inputs', 'selected-inputs-and-projections'].includes(source.kind) ||
       source.publication !== 'public' ||
       source.eligible !== true ||
       !Array.isArray(source.assets)
@@ -261,6 +261,62 @@ export async function validateEditionAdmission(envelope, { read } = {}) {
     )
       fail('Edition catalog identity differs.');
     const catalog = json(runtime.get('edition-catalog.json'));
+    if (source.kind === 'selected-inputs-and-projections') {
+      if (
+        !Array.isArray(source.projections) ||
+        !source.projections.length ||
+        source.projections.length > source.files.length
+      )
+        fail('Missing bounded selected source projections.');
+      const projected = new Set();
+      for (const row of source.projections) {
+        const name = row.original?.path;
+        safePath(name);
+        const validKind = {
+          'selected-entry':
+            /^game\/(?:company\.html|index\.html|(?:controller-lab|replay-theater)\/index\.html)$/.test(
+              name,
+            ),
+          'selected-locales': /^game\/i18n\/(?:catalogs|bootstrap|content-registry)\.mjs$/.test(
+            name,
+          ),
+          'selected-themes': (catalog.editions ?? []).some((item) => item.boot?.themes === name),
+          'selected-practice-presentation': name === 'game/content/scenarios/line-impact-demo.json',
+          'selected-runtime-imports': /\.(?:mjs|js)$/.test(name),
+        };
+        if (
+          row.output?.path !== name ||
+          projected.has(name) ||
+          !Object.hasOwn(validKind, row.kind) ||
+          !validKind[row.kind] ||
+          !Number.isSafeInteger(row.original.bytes) ||
+          row.original.bytes < 0 ||
+          row.original.bytes > 32 * 1024 * 1024 ||
+          !SHA.test(row.original.sha256) ||
+          row.original.sha256 === row.output.sha256 ||
+          !runtime.has(name) ||
+          !sourceFiles.has(name)
+        )
+          fail('Invalid selected source projection.');
+        projected.add(name);
+        verifyDescriptor(row.output, sourceFiles.get(name));
+        verifyDescriptor(row.output, runtime.get(name));
+      }
+      const aggregates = [
+        'game/i18n/catalogs.mjs',
+        'game/i18n/bootstrap.mjs',
+        'game/i18n/content-registry.mjs',
+        'game/content/scenarios/line-impact-demo.json',
+        ...(catalog.editions ?? []).map((item) => item.boot?.themes).filter(Boolean),
+      ];
+      for (const name of aggregates)
+        if (
+          sourceFiles.has(name) &&
+          (!runtime.has(name) || digest(sourceFiles.get(name)) !== digest(runtime.get(name)))
+        )
+          fail('Source archive contains an unprojected aggregate input.');
+    } else if (source.projections !== undefined)
+      fail('Original source inventory cannot declare projected inputs.');
     if (
       catalog.editions?.length !== 1 ||
       catalog.editions[0].id !== edition.id ||

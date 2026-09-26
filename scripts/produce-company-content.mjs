@@ -8,7 +8,7 @@ import { compileContentProject, resolveMission } from '../game/content-design/pr
 import {
   COMPANY_BRANDS,
   COMPANY_EDITIONS,
-  createCompanyTheme,
+  createCompanyThemes,
   createCompanyPresets,
 } from '../game/company-campaigns/brands.mjs';
 import { COMPANY_CAMPAIGNS } from '../game/company-campaigns/catalog.mjs';
@@ -63,7 +63,7 @@ export async function produceCompanyContent({ assets, artwork = [], classes = []
   });
   for (const edition of COMPANY_EDITIONS) {
     const project = projects.get(edition.entryCampaignId),
-      theme = createCompanyTheme(edition.brandId);
+      themes = createCompanyThemes(edition.brandId);
     const campaign = {
       version: 'xonix-campaign.v1',
       id: edition.entryCampaignId,
@@ -76,7 +76,7 @@ export async function produceCompanyContent({ assets, artwork = [], classes = []
     };
     const boot = {
       campaign,
-      themes: { version: 'xonix-themes.v1', themes: [theme] },
+      themes: { version: 'xonix-themes.v1', themes },
       presets: createCompanyPresets(edition.brandId),
       classes,
       packs: { format: 'xonix-pack-index.v1', packs: [] },

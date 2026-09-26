@@ -16,8 +16,9 @@ const inventory = (files) =>
     .map(([path, bytes]) => editionDescriptor(path, bytes))
     .sort((a, b) => (a.path < b.path ? -1 : a.path > b.path ? 1 : 0));
 
-/** Pure artifact construction from already compiled selected bytes. Source ZIPs
- * are explicit input subsets, never an implied full repository source release. */
+/** Pure artifact construction from already compiled selected bytes. Aggregate
+ * inputs are replaced by the compiler's selected projection, with both original
+ * and output hashes recorded. Source ZIPs are never full repository releases. */
 export function createEditionCandidate({
   compiled,
   sourceFiles,
@@ -31,6 +32,36 @@ export function createEditionCandidate({
   validateEditionSourceInventory({ files: runtime, assets: catalog.assets });
   validateEditionSourceInventory({ files: sourceFiles, assets: catalog.assets });
   validatePublicSourceEligibility({ files: sourceFiles, assets: catalog.assets });
+  const selectedSource = new Map(sourceFiles),
+    projections = [];
+  for (const [name, original] of sourceFiles) {
+    const output = runtime.get(name);
+    if (!output || editionHash(original) === editionHash(output)) continue;
+    const kind =
+      /^game\/(?:company\.html|index\.html|(?:controller-lab|replay-theater)\/index\.html)$/.test(
+        name,
+      )
+        ? 'selected-entry'
+        : /^game\/i18n\/(?:catalogs|bootstrap|content-registry)\.mjs$/.test(name)
+          ? 'selected-locales'
+          : catalog.editions.some((edition) => edition.boot?.themes === name)
+            ? 'selected-themes'
+            : name === 'game/content/scenarios/line-impact-demo.json'
+              ? 'selected-practice-presentation'
+              : /\.(?:mjs|js)$/.test(name)
+                ? 'selected-runtime-imports'
+                : null;
+    if (!kind) throw new Error(`Unclassified selected source projection: ${name}`);
+    selectedSource.set(name, output);
+    projections.push({
+      kind,
+      original: editionDescriptor(name, original),
+      output: editionDescriptor(name, output),
+    });
+  }
+  projections.sort((a, b) =>
+    a.original.path < b.original.path ? -1 : a.original.path > b.original.path ? 1 : 0,
+  );
   const editionId = catalog.editions[0].id;
   const binding = {
     editionId,
@@ -40,7 +71,7 @@ export function createEditionCandidate({
     contentSha256: editionHash(runtime.get('edition-catalog.json')),
   };
   const runtimeRows = inventory(runtime),
-    sourceRows = inventory(sourceFiles);
+    sourceRows = inventory(selectedSource);
   const manifest = editionJSON({
     format: 'revealline-edition-manifest.v1',
     ...binding,
@@ -51,18 +82,19 @@ export function createEditionCandidate({
   const sourceInventory = editionJSON({
     format: 'revealline-edition-source-inventory.v1',
     ...binding,
-    kind: 'selected-original-inputs',
+    kind: projections.length ? 'selected-inputs-and-projections' : 'selected-original-inputs',
     publication: 'public',
     eligible: true,
     description:
-      'Original selected engine, campaign, lesson, boot and approved media inputs. Build tooling and unrelated repository sources are not included.',
+      'Selected engine, campaign, lesson, boot and approved media inputs. Aggregate locale, theme, guide-presentation, entry and runtime-import inputs use exact compiler projections where listed; each projection records its original committed-input hash and output hash. Build tooling and unrelated repository sources are not included.',
+    ...(projections.length ? { projections } : {}),
     assets: catalog.assets,
     files: sourceRows,
     totalBytes: sourceRows.reduce((sum, row) => sum + row.bytes, 0),
   });
   const distribution = createEditionZip(new Map([...runtime, ['manifest.json', manifest]]));
   const sourceArchive = createEditionZip(
-    new Map([...sourceFiles, ['source-inventory.json', sourceInventory]]),
+    new Map([...selectedSource, ['source-inventory.json', sourceInventory]]),
   );
   const files = new Map([
     [`manifest-${editionId}.json`, manifest],

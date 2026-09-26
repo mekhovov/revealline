@@ -96,7 +96,7 @@ export function validateBrandPack(source) {
       'assetIds',
     ],
     'Brand pack',
-    ['sources', 'iconAssetId', 'fontAssetId'],
+    ['sources', 'iconAssetId', 'fontAssetId', 'themeIds'],
   );
   identity(value, EDITION_FORMATS.brand);
   publication(value.publication);
@@ -105,6 +105,10 @@ export function validateBrandPack(source) {
     'Invalid brand presentation.',
   );
   list(value.assetIds, EDITION_LIMITS.assets, 'brand assets');
+  if (value.themeIds !== undefined) {
+    list(value.themeIds, 32, 'brand themes');
+    required(value.themeIds.includes(value.themeId), 'Brand themes must include its home theme.');
+  }
   if (value.sources !== undefined) {
     required(Array.isArray(value.sources) && value.sources.length <= 32, 'Too many brand sources.');
     for (const source of value.sources) {

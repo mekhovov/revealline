@@ -21,6 +21,8 @@ test('presentation preparation reads only selected exact asset bytes', async () 
   });
   assert.ok(verified.includes('droneaid-nl-propeller'));
   assert.ok(verified.includes('droneaid-nl-logo'));
+  assert.ok(verified.includes('droneaid-nl-workshop-lights-01-reveal-v2'));
+  assert.ok(!verified.includes('droneaid-home'));
   assert.ok(
     requested.every((file) => !file.includes('/droneaid/') && !file.includes('/fpv-makers/')),
   );

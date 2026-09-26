@@ -9,6 +9,7 @@ import {
   selectEditionClosure,
 } from './compile-edition.mjs';
 import { checkEditionSourceEligibility } from './check-edition-source.mjs';
+import { validateEditionProviderParity } from './edition-provider-parity.mjs';
 import {
   createEditionCandidate,
   editionJSON,
@@ -105,7 +106,8 @@ export async function bundleEditions({ root = process.cwd(), editionIds, out, ba
   const engine = await collectEditionEngineFiles({ root });
   verifyCommittedInputs(engine, tree);
   const files = new Map(),
-    editions = [];
+    editions = [],
+    presentationReceipts = [];
   for (const id of [...editionIds].sort()) {
     const closure = selectEditionClosure(catalog, [id]);
     const sourceFiles = new Map(engine);
@@ -137,8 +139,12 @@ export async function bundleEditions({ root = process.cwd(), editionIds, out, ba
         sourceRevision: binding.sourceRevision,
         offline: { basePath },
       });
+    const compiled = await compile();
+    presentationReceipts.push(
+      await validateEditionProviderParity({ sourceFiles, catalog, compiled }),
+    );
     const first = createEditionCandidate({
-      compiled: await compile(),
+      compiled,
       sourceFiles,
       version,
       ...binding,
@@ -171,6 +177,7 @@ export async function bundleEditions({ root = process.cwd(), editionIds, out, ba
       sourceEligibility,
       admission,
       reproducibleBuilds: 2,
+      presentationReceipts,
       publicEligible: false,
       requiredExternalQualification: [
         'human-artwork-and-brand-review',
@@ -212,6 +219,7 @@ export async function bundleEditions({ root = process.cwd(), editionIds, out, ba
     editionIds: editions.map((edition) => edition.id),
     zipMembersVerified: true,
     reproducibleBuilds: 2,
+    verifiedPresentationReceipts: presentationReceipts.length,
     publicEligible: false,
   };
 }
