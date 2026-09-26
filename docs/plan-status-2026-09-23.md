@@ -23,8 +23,13 @@
   [v0.141.3 release](https://github.com/mekhovov/revealline/releases/tag/v0.141.3).
   Its Pages selector and public player-flow acceptance remain open, so v0.141.2
   is still the Pages baseline.
-- **Next working allocation:** v0.141.4 Couch
-  secondary navigation; v0.141.5 Team teaching; v0.141.6
+- **Active candidate:** v0.141.4 combines the merged community acceptance and
+  validation-worker isolation from PR #680 with Couch secondary navigation
+  rebased onto exact main `218e76281e3bfa26f57b7aa0f7b98058f4bd05ad`.
+  Its feature-owned shell/Pause and departure/markup/quick-start boundaries
+  pass 27/27 and 37/37 on the exact rebased source; validation, localization,
+  lint, formatting, syntax and version parity also pass. Hosted PR/release and
+  public qualification remain open. It is followed by v0.141.5 Team teaching; v0.141.6
   deliberate Team terminal Retry; v0.141.7 Versus countdown; v0.141.8 named
   result destinations; and v0.141.9 Collection fixture reconciliation plus
   paused Settings/Help return
@@ -41,8 +46,11 @@
   skipped long suites are not passes; modeled pads and DOM clicks are not physical
   controller, Steam Deck or touch-device evidence. Human balance, cross-runtime
   replay portability and physical installed-device acceptance remain separate
-  gates. The Team quick-start release does not yet claim a Pages deployment or
-  public player-flow acceptance.
+  gates. The v0.141.4 candidate does not yet claim a PR, merge, release, Pages
+  deployment or public player-flow acceptance. Five broader Solo
+  touchscreen-host failures reproduced unchanged on the earlier v0.141.3 parent
+  and remain an explicit qualification concern until the rebased comparison is
+  rerun.
 
 The 23 September register and later dated sections are preserved below as
 historical scope, evidence and design contracts. Their old version, PR-count and

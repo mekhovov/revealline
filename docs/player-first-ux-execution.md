@@ -29,6 +29,16 @@ published its immutable nine-asset
 Its Pages selector and public player-flow acceptance remain open, so the Pages
 baseline remains v0.141.2.
 
+**Active candidate:** v0.141.4 combines the merged community acceptance and
+validation-worker isolation from PR #680 with Couch secondary navigation rebased
+onto exact main `218e76281e3bfa26f57b7aa0f7b98058f4bd05ad`. It preserves Team
+quick-start focus and Cancel behavior. Its prepared donor passed the
+feature-owned shell/Pause and departure/markup/quick-start boundaries at 27/27
+and 37/37; both pass again on this exact rebased source. Repository validation,
+localization, lint, game/site and native formatting, changed-file syntax and
+four-way v0.141.4 version parity also pass. Hosted PR, release, selector and
+public player-flow acceptance remain open.
+
 **Ordered continuation:** v0.141.3 is the latest stable release; later rows remain working
 allocations rather than accepted releases. Reconcile each item onto the accepted predecessor, rerun its
 exact-head gates and publish it before accepting the next row. Older target
