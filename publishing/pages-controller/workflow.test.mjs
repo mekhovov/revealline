@@ -1,23 +1,26 @@
-import test from 'node:test';
-import assert from 'node:assert/strict';
-import fs from 'node:fs/promises';
+import test from "node:test";
+import assert from "node:assert/strict";
+import fs from "node:fs/promises";
 
-test('source qualification retains mandatory guards and restorable suites while controller owns publication', async () => {
+test("source qualification retains mandatory guards and restorable suites while controller owns publication", async () => {
   const legacy = await fs.readFile(
-    new URL('../../.github/workflows/deploy-pages.yml', import.meta.url),
-    'utf8',
+    new URL("../../.github/workflows/deploy-pages.yml", import.meta.url),
+    "utf8",
   );
   const workflow = await fs.readFile(
-    new URL('../../.github/workflows/publish-frozen-pages.yml', import.meta.url),
-    'utf8',
+    new URL(
+      "../../.github/workflows/publish-frozen-pages.yml",
+      import.meta.url,
+    ),
+    "utf8",
   );
   for (const command of [
-    'npm run validate',
-    'npm run lint',
-    'npm run format:check',
-    'npm run format:native:check',
-    'node --check authoring/motion-lab/app.js',
-    'node ../automation/scripts/run-test-shard.mjs --shard ${{ matrix.shard }}/4 --root .',
+    "npm run validate",
+    "npm run lint",
+    "npm run format:check",
+    "npm run format:native:check",
+    "node --check authoring/motion-lab/app.js",
+    "node ../automation/scripts/run-test-shard.mjs --shard ${{ matrix.shard }}/4 --root .",
   ])
     assert.ok(legacy.includes(command), `Missing source gate: ${command}`);
   assert.match(legacy, /shard: \[1, 2, 3, 4\]/);
@@ -30,7 +33,10 @@ test('source qualification retains mandatory guards and restorable suites while 
   assert.doesNotMatch(legacy, /cp \.ci-tools/);
   assert.match(legacy, /node --test scripts\/test-production-\*\.mjs/);
   assert.match(legacy, /run: npm run build/);
-  assert.match(legacy, /Build pull-request artifact\n\s+if: vars\.REVEALLINE_FULL_CI == 'true'/);
+  assert.match(
+    legacy,
+    /Build pull-request artifact\n\s+if: vars\.REVEALLINE_FULL_CI == 'true'/,
+  );
   assert.match(
     legacy,
     /Defer full artifact build to merged-source qualification\n\s+if: vars\.REVEALLINE_FULL_CI != 'true'/,
@@ -42,10 +48,16 @@ test('source qualification retains mandatory guards and restorable suites while 
   assert.match(legacy, /Release\\ evidence\\ v/);
   assert.match(legacy, /restricted to a non-empty docs-only diff/);
   assert.match(legacy, /echo 'mode=release-evidence'/);
-  assert.match(legacy, /needs\.preflight\.outputs\.admission == 'release-evidence'/);
+  assert.match(
+    legacy,
+    /needs\.preflight\.outputs\.admission == 'release-evidence'/,
+  );
   assert.match(legacy, /if \[ "\$ADMISSION" = release-evidence \]/);
   assert.match(legacy, /release-train-boundary\.mjs public/);
-  assert.match(legacy, /PR_BASE_SHA: \$\{\{ github\.event\.pull_request\.base\.sha \}\}/);
+  assert.match(
+    legacy,
+    /PR_BASE_SHA: \$\{\{ github\.event\.pull_request\.base\.sha \}\}/,
+  );
   assert.match(legacy, /contents\/package\.json\?ref=\$PR_BASE_SHA/);
   assert.match(legacy, /PR_BASE_VERSION="\$base_version"/);
   assert.match(
@@ -53,13 +65,19 @@ test('source qualification retains mandatory guards and restorable suites while 
     /Require exact release version identity[\s\S]*?release-train-boundary\.mjs source \./,
   );
   // Release routing reads controller infrastructure from main, never today's runner in an old tag.
-  const gate = legacy.slice(legacy.indexOf('  release_gate:'), legacy.indexOf('  preflight:'));
+  const gate = legacy.slice(
+    legacy.indexOf("  release_gate:"),
+    legacy.indexOf("  preflight:"),
+  );
   assert.match(gate, /ref: main/);
   assert.match(gate, /release-policy\.mjs route/);
   assert.match(gate, /workflow run publish-frozen-pages.yml .* --ref main/);
-  for (const job of ['preflight', 'test', 'build', 'release-ready'])
+  for (const job of ["preflight", "focused", "test", "build", "release-ready"])
     assert.ok(legacy.includes(`  ${job}:\n`));
-  assert.doesNotMatch(legacy, /build:pages|upload-pages-artifact|deploy-pages@/);
+  assert.doesNotMatch(
+    legacy,
+    /build:pages|upload-pages-artifact|deploy-pages@/,
+  );
   assert.match(
     workflow,
     /if: github.event_name != 'pull_request' && github.ref == 'refs\/heads\/main'/,
@@ -67,44 +85,76 @@ test('source qualification retains mandatory guards and restorable suites while 
   assert.match(workflow, /REQUESTED_RELEASE: \$\{\{ inputs.release_tag/);
   assert.match(workflow, /release-policy\.mjs verify/);
   assert.match(workflow, /environment:\n\s+name: github-pages/);
-  assert.match(workflow, /cancel-in-progress: \$\{\{ github\.event_name == 'pull_request' \}\}/);
+  assert.match(
+    workflow,
+    /cancel-in-progress: \$\{\{ github\.event_name == 'pull_request' \}\}/,
+  );
+  assert.match(
+    workflow,
+    /queue: \$\{\{ github\.event_name == 'pull_request' && 'single' \|\| 'max' \}\}/,
+  );
   assert.match(workflow, /group: frozen-pages-/);
   assert.match(legacy, /group: source-gates-\$\{\{ github.ref \}\}/);
-  assert.match(
-    legacy,
-    /pull_request:\n\s+branches: \[main\]\n\s+types: \[opened, synchronize, reopened, edited\]/,
+  const pullRequestTrigger = legacy.slice(
+    legacy.indexOf("  pull_request:"),
+    legacy.indexOf("  workflow_dispatch:"),
   );
-  assert.doesNotMatch(
-    legacy.slice(legacy.indexOf('  pull_request:'), legacy.indexOf('  workflow_dispatch:')),
-    /paths-ignore:/,
+  assert.match(pullRequestTrigger, /branches: \[main\]/);
+  for (const event of [
+    "opened",
+    "synchronize",
+    "reopened",
+    "edited",
+    "ready_for_review",
+    "labeled",
+    "unlabeled",
+    "milestoned",
+    "demilestoned",
+  ])
+    assert.match(pullRequestTrigger, new RegExp(`\\b${event}\\b`, "u"));
+  assert.doesNotMatch(pullRequestTrigger, /paths-ignore:/);
+  const sourceConcurrency = legacy.slice(
+    legacy.indexOf("concurrency:"),
+    legacy.indexOf("jobs:"),
   );
-  const sourceConcurrency = legacy.slice(legacy.indexOf('concurrency:'), legacy.indexOf('jobs:'));
   assert.match(
     sourceConcurrency,
     /cancel-in-progress: \$\{\{ github\.event_name == 'pull_request' \}\}/,
   );
   assert.doesNotMatch(sourceConcurrency, /cancel-in-progress: true/);
   const qualification = await fs.readFile(
-    new URL('../../.github/workflows/qualify-release-source.yml', import.meta.url),
-    'utf8',
+    new URL(
+      "../../.github/workflows/qualify-release-source.yml",
+      import.meta.url,
+    ),
+    "utf8",
   );
-  assert.equal((qualification.match(/cancel-in-progress: false/g) || []).length, 2);
+  assert.equal(
+    (qualification.match(/cancel-in-progress: false/g) || []).length,
+    2,
+  );
   assert.doesNotMatch(qualification, /cancel-in-progress: (?:true|\$)/);
   assert.match(workflow, /include-hidden-files: true/);
   assert.match(workflow, /publish\.mjs verify-artifact/);
   assert.ok(
-    workflow.indexOf('publish.mjs verify-artifact') <
-      workflow.indexOf('name: Upload verified Pages artifact'),
+    workflow.indexOf("publish.mjs verify-artifact") <
+      workflow.indexOf("name: Upload verified Pages artifact"),
   );
-  assert.doesNotMatch(workflow, /pull_request_target|environment:.*preview|npm test/);
+  assert.doesNotMatch(
+    workflow,
+    /pull_request_target|environment:.*preview|npm test/,
+  );
 });
 
-test('fast mode waives long suites while release source and publication guards stay mandatory', async () => {
+test("fast mode waives long suites while release source and publication guards stay mandatory", async () => {
   const read = (name) =>
-    fs.readFile(new URL('../../.github/workflows/' + name, import.meta.url), 'utf8');
-  const pr = await read('deploy-pages.yml');
-  const manual = await read('qualify-release-source.yml');
-  const pages = await read('publish-frozen-pages.yml');
+    fs.readFile(
+      new URL("../../.github/workflows/" + name, import.meta.url),
+      "utf8",
+    );
+  const pr = await read("deploy-pages.yml");
+  const manual = await read("qualify-release-source.yml");
+  const pages = await read("publish-frozen-pages.yml");
   for (const workflow of [pr, manual, pages]) {
     assert.match(workflow, /id: test_policy/);
     assert.match(workflow, /publishing\/test-policy.mjs/);
@@ -118,7 +168,10 @@ test('fast mode waives long suites while release source and publication guards s
     pr,
     /Run extended static and provenance checks\n\s+if: vars.REVEALLINE_FULL_CI == 'true'/,
   );
-  assert.match(manual, /test:\n\s+if: needs.qualify.outputs.runTests == 'true'/);
+  assert.match(
+    manual,
+    /test:\n\s+if: needs.qualify.outputs.runTests == 'true'/,
+  );
   assert.match(manual, /run_tests:\n[\s\S]*?type: boolean/);
   assert.equal(
     (
@@ -140,30 +193,30 @@ test('fast mode waives long suites while release source and publication guards s
     [
       pr,
       [
-        'Validate release-critical source',
-        'Verify exact tracked source before commands',
-        'Defer full artifact build to merged-source qualification',
-        'Verify tracked source after fast release gate',
+        "Validate release-critical source",
+        "Verify exact tracked source before commands",
+        "Defer full artifact build to merged-source qualification",
+        "Verify tracked source after fast release gate",
       ],
     ],
     [
       manual,
       [
-        'Validate source',
-        'Lint source',
-        'Check formatting',
-        'Check native formatting',
-        'Require reviewed production slots in the committed ledger',
-        'Freeze the exact qualified commit',
-        'Inspect all frozen originals without release writes',
-        'Verify all originals and upload two absent members to the existing draft',
+        "Validate source",
+        "Lint source",
+        "Check formatting",
+        "Check native formatting",
+        "Require reviewed production slots in the committed ledger",
+        "Freeze the exact qualified commit",
+        "Inspect all frozen originals without release writes",
+        "Verify all originals and upload two absent members to the existing draft",
       ],
     ],
-    [pages, ['Validate frozen selector and admitted archives']],
+    [pages, ["Validate frozen selector and admitted archives"]],
   ]) {
-    const blocks = workflow.split('      - name: ');
+    const blocks = workflow.split("      - name: ");
     for (const name of names) {
-      const block = blocks.find((value) => value.startsWith(name + '\n'));
+      const block = blocks.find((value) => value.startsWith(name + "\n"));
       assert.ok(block, name);
       assert.doesNotMatch(block, /if:.*test_policy|if:.*runTests/, name);
     }
@@ -182,41 +235,60 @@ test('fast mode waives long suites while release source and publication guards s
   );
 });
 
-test('draft staging shares the bounded maintenance path policy without checking out PR code', async () => {
+test("draft staging shares the bounded maintenance path policy without checking out PR code", async () => {
   const workflow = await fs.readFile(
-    new URL('../../.github/workflows/stage-unallocated-pr.yml', import.meta.url),
-    'utf8',
+    new URL(
+      "../../.github/workflows/stage-unallocated-pr.yml",
+      import.meta.url,
+    ),
+    "utf8",
   );
-  for (const path of ['docs\\/', 'publishing\\/', '\\.github\\/workflows\\/', 'game\\/test\\/'])
+  for (const path of [
+    "docs\\/",
+    "publishing\\/",
+    "\\.github\\/workflows\\/",
+    "game\\/test\\/",
+  ])
     assert.ok(workflow.includes(path), `Missing maintenance path: ${path}`);
   assert.match(workflow, /github\.paginate\(github\.rest\.pulls\.listFiles/);
   assert.match(workflow, /files\.length > 0/);
   assert.match(workflow, /files\.every/);
   assert.match(workflow, /if \(maintenance\) \{[\s\S]*?return;/);
-  assert.doesNotMatch(workflow, /actions\/checkout|pull_request_target[\s\S]*?run:/);
+  assert.doesNotMatch(
+    workflow,
+    /actions\/checkout|pull_request_target[\s\S]*?run:/,
+  );
   assert.match(workflow, /convertPullRequestToDraft/);
 });
 
-test('publisher infrastructure suites run only when full CI and the test policy are enabled', async () => {
+test("publisher infrastructure suites run only when full CI and the test policy are enabled", async () => {
   const workflow = await fs.readFile(
-    new URL('../../.github/workflows/publish-frozen-pages.yml', import.meta.url),
-    'utf8',
+    new URL(
+      "../../.github/workflows/publish-frozen-pages.yml",
+      import.meta.url,
+    ),
+    "utf8",
   );
   const block = workflow
-    .split('      - name: ')
+    .split("      - name: ")
     .find((value) =>
-      value.startsWith('Verify metadata bridges and bounded ZIP extraction in full mode\n'),
+      value.startsWith(
+        "Verify metadata bridges and bounded ZIP extraction in full mode\n",
+      ),
     );
   assert.ok(block);
   const expression = /^        if: (.+)$/m.exec(block)?.[1];
   assert.ok(expression);
-  const evaluate = new Function('vars', 'steps', 'return (' + expression + ')');
-  for (const fullCI of ['true', 'false', '', undefined]) {
-    for (const runTests of ['true', 'false', '', undefined]) {
+  const evaluate = new Function("vars", "steps", "return (" + expression + ")");
+  for (const fullCI of ["true", "false", "", undefined]) {
+    for (const runTests of ["true", "false", "", undefined]) {
       assert.equal(
-        evaluate({ REVEALLINE_FULL_CI: fullCI }, { test_policy: { outputs: { runTests } } }),
-        fullCI === 'true' && runTests === 'true',
-        String(fullCI) + ' / ' + String(runTests),
+        evaluate(
+          { REVEALLINE_FULL_CI: fullCI },
+          { test_policy: { outputs: { runTests } } },
+        ),
+        fullCI === "true" && runTests === "true",
+        String(fullCI) + " / " + String(runTests),
       );
     }
   }
@@ -231,56 +303,68 @@ test('publisher infrastructure suites run only when full CI and the test policy 
   assert.doesNotMatch(block, /continue-on-error|\|\| true/);
 });
 
-test('freeze admits required-success or explicit-waiver-skipped only, never failure or cancellation', async () => {
+test("freeze admits required-success or explicit-waiver-skipped only, never failure or cancellation", async () => {
   const manual = await fs.readFile(
-    new URL('../../.github/workflows/qualify-release-source.yml', import.meta.url),
-    'utf8',
+    new URL(
+      "../../.github/workflows/qualify-release-source.yml",
+      import.meta.url,
+    ),
+    "utf8",
   );
   const match = /  freeze:\n    if: >-\n([\s\S]*?)\n    needs:/.exec(manual);
   assert.ok(match);
   const expression = match[1]
     .trim()
-    .replace(/^\$\{\{/, '')
-    .replace(/\}\}$/, '');
+    .replace(/^\$\{\{/, "")
+    .replace(/\}\}$/, "");
   const evaluate = new Function(
-    'cancelled',
-    'github',
-    'inputs',
-    'needs',
-    'return (' + expression + ')',
+    "cancelled",
+    "github",
+    "inputs",
+    "needs",
+    "return (" + expression + ")",
   );
   for (const cancelled of [false, true])
-    for (const mode of ['required', 'waived', ''])
-      for (const qualify of ['success', 'failure', 'skipped', 'cancelled'])
-        for (const tests of ['success', 'failure', 'skipped', 'cancelled']) {
+    for (const mode of ["required", "waived", ""])
+      for (const qualify of ["success", "failure", "skipped", "cancelled"])
+        for (const tests of ["success", "failure", "skipped", "cancelled"]) {
           const result = evaluate(
             () => cancelled,
-            { event_name: 'workflow_dispatch' },
-            { operation: 'qualify', freeze_snapshot: true },
-            { qualify: { result: qualify, outputs: { testMode: mode } }, test: { result: tests } },
+            { event_name: "workflow_dispatch" },
+            { operation: "qualify", freeze_snapshot: true },
+            {
+              qualify: { result: qualify, outputs: { testMode: mode } },
+              test: { result: tests },
+            },
           );
           assert.equal(
             result,
             !cancelled &&
-              qualify === 'success' &&
-              ((mode === 'required' && tests === 'success') ||
-                (mode === 'waived' && tests === 'skipped')),
+              qualify === "success" &&
+              ((mode === "required" && tests === "success") ||
+                (mode === "waived" && tests === "skipped")),
           );
         }
 });
 
-test('delivery-only push is excluded after the controller glob while PR review and mixed publication remain enabled', async () => {
+test("delivery-only push is excluded after the controller glob while PR review and mixed publication remain enabled", async () => {
   const workflow = await fs.readFile(
-    new URL('../../.github/workflows/publish-frozen-pages.yml', import.meta.url),
-    'utf8',
+    new URL(
+      "../../.github/workflows/publish-frozen-pages.yml",
+      import.meta.url,
+    ),
+    "utf8",
   );
-  const push = workflow.slice(workflow.indexOf('  push:'), workflow.indexOf('  pull_request:'));
+  const push = workflow.slice(
+    workflow.indexOf("  push:"),
+    workflow.indexOf("  pull_request:"),
+  );
   const pullRequest = workflow.slice(
-    workflow.indexOf('  pull_request:'),
-    workflow.indexOf('  workflow_dispatch:'),
+    workflow.indexOf("  pull_request:"),
+    workflow.indexOf("  workflow_dispatch:"),
   );
-  const positive = "      - 'publishing/pages-controller/**'";
-  const negative = "      - '!publishing/pages-controller/delivery/**'";
+  const positive = "publishing/pages-controller/**";
+  const negative = "!publishing/pages-controller/delivery/**";
   assert.ok(push.includes(positive));
   assert.equal(push.split(negative).length - 1, 1);
   assert.ok(push.indexOf(negative) > push.indexOf(positive));
@@ -288,18 +372,26 @@ test('delivery-only push is excluded after the controller glob while PR review a
   assert.ok(!pullRequest.includes(negative));
   assert.match(push, /branches: \[main\]/);
   for (const previewOnlyPath of [
-    '.github/workflows/publish-frozen-pages.yml',
-    'scripts/pages-archive.mjs',
-    'scripts/pages-current-entry.mjs',
+    ".github/workflows/publish-frozen-pages.yml",
+    "scripts/pages-archive.mjs",
+    "scripts/pages-current-entry.mjs",
   ]) {
     assert.ok(!push.includes(previewOnlyPath));
     assert.ok(pullRequest.includes(previewOnlyPath));
   }
-  assert.ok(push.includes('!publishing/pages-controller/evidence/**'));
-  assert.ok(push.includes('!publishing/pages-controller/source-qualification.mjs'));
-  assert.ok(push.includes('!publishing/pages-controller/release-train-boundary.mjs'));
-  assert.ok(push.includes('!publishing/pages-controller/release-train-boundary.test.mjs'));
-  assert.ok(push.includes('!publishing/pages-controller/*.test.mjs'));
-  assert.ok(push.includes('!publishing/pages-controller/test_*.py'));
+  assert.ok(push.includes("!publishing/pages-controller/evidence/**"));
+  assert.ok(
+    push.includes("!publishing/pages-controller/source-qualification.mjs"),
+  );
+  assert.ok(
+    push.includes("!publishing/pages-controller/release-train-boundary.mjs"),
+  );
+  assert.ok(
+    push.includes(
+      "!publishing/pages-controller/release-train-boundary.test.mjs",
+    ),
+  );
+  assert.ok(push.includes("!publishing/pages-controller/*.test.mjs"));
+  assert.ok(push.includes("!publishing/pages-controller/test_*.py"));
   assert.match(workflow, /publish\.mjs verify-artifact/);
 });
