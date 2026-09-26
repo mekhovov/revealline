@@ -6,25 +6,25 @@
 
 ## Current checkpoint — 26 September 2026
 
-- **Completed Pages baseline:** immutable
-  [v0.141.2](https://github.com/mekhovov/revealline/releases/tag/v0.141.2) is the
-  current Pages release. Its exact product source is
-  `12978e5fd3fe0ce70bbee96aa543f569f64622d4` from
-  [PR #675](https://github.com/mekhovov/revealline/pull/675), preserving the
-  accepted v0.141.1 compact gallery and adding community deployment hardening.
-  Pages selector [PR #677](https://github.com/mekhovov/revealline/pull/677) merged
-  as `34f45503c32479591dcdc36e7236aaa2eb348a2f`; run `36252239829` audited 1,888
-  files and 630,471,797 bytes with zero retries or failures. Archive95 preserves
-  v0.141.0.
-- **Latest stable release:** [PR #679](https://github.com/mekhovov/revealline/pull/679)
+- **Completed Pages baseline and latest stable release:** [PR #679](https://github.com/mekhovov/revealline/pull/679)
   merged v0.141.3 Team quick-start as
   `7509d790dadb6194d70a5bc1efafee40fbb0b3b7`. Coordinator run `36254346397`
   published its immutable nine-asset
   [v0.141.3 release](https://github.com/mekhovov/revealline/releases/tag/v0.141.3).
-  Its Pages selector and public player-flow acceptance remain open, so v0.141.2
-  is still the Pages baseline.
-- **Next working allocation:** v0.141.4 Couch
-  secondary navigation; v0.141.5 Team teaching; v0.141.6
+  Pages selector [PR #682](https://github.com/mekhovov/revealline/pull/682)
+  merged as `01de92e9693d640e08ff21ba95ce12a978cb486f`. Publication run
+  `36255919482` passed assembly, deployment and the complete public-byte audit;
+  built-in-browser acceptance confirmed v0.141.3 as Current with exact source
+  `7509d790dadb6194d70a5bc1efafee40fbb0b3b7`. Archive96 preserves v0.141.2.
+- **Active candidate:** v0.141.4 combines the merged community acceptance and
+  validation-worker isolation from PR #680 with Couch secondary navigation
+  in [PR #683](https://github.com/mekhovov/revealline/pull/683), rebased onto
+  exact main `01de92e9693d640e08ff21ba95ce12a978cb486f`.
+  Its feature-owned shell/Pause and departure/markup/quick-start boundaries
+  pass 27/27 and 37/37 on the exact rebased source; validation, localization,
+  lint, formatting, syntax and version parity also pass. Hosted exact-head
+  qualification, merge, release, selector and public acceptance remain open. It
+  is followed by v0.141.5 Team teaching; v0.141.6
   deliberate Team terminal Retry; v0.141.7 Versus countdown; v0.141.8 named
   result destinations; and v0.141.9 Collection fixture reconciliation plus
   paused Settings/Help return
@@ -41,8 +41,11 @@
   skipped long suites are not passes; modeled pads and DOM clicks are not physical
   controller, Steam Deck or touch-device evidence. Human balance, cross-runtime
   replay portability and physical installed-device acceptance remain separate
-  gates. The Team quick-start release does not yet claim a Pages deployment or
-  public player-flow acceptance.
+  gates. The v0.141.4 candidate does not yet claim a merge, release, Pages
+  deployment or public player-flow acceptance. Five broader Solo
+  touchscreen-host failures reproduced unchanged on the earlier v0.141.3 parent
+  and remain an explicit qualification concern until the rebased comparison is
+  rerun.
 
 The 23 September register and later dated sections are preserved below as
 historical scope, evidence and design contracts. Their old version, PR-count and
