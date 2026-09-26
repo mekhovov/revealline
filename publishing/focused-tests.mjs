@@ -111,6 +111,15 @@ export function focusedTestPlan(paths, manifest) {
       )
     )
       continue;
+    if (
+      commands.some(
+        (command) =>
+          command.command === "node" &&
+          command.args[0] === "--test" &&
+          command.args.includes(changed),
+      )
+    )
+      continue;
     commands.push({
       id: `changed-test:${changed}`,
       command: "node",

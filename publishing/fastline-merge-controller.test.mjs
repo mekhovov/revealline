@@ -2,6 +2,8 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import test from "node:test";
 import {
+  asynchronousMergeRequest,
+  asynchronousMergeResult,
   decideMergeAction,
   dependencyNumbers,
 } from "./fastline-merge-controller.mjs";
@@ -31,17 +33,17 @@ function fixture(overrides = {}) {
   };
 }
 
-test("merges an admitted clean PR only through the exact-head endpoint", () => {
+test("arms protected auto-merge for an admitted clean exact head", () => {
   assert.deepEqual(decideMergeAction(fixture()), {
-    action: "merge",
-    reason: "all blocking requirements passed on the exact head",
+    action: "arm",
+    reason: "exact head is admitted; protected auto-merge may proceed",
   });
 });
 
 test("nonblocking failed checks do not block an exact-head merge", () => {
   assert.equal(
     decideMergeAction(fixture({ mergeable_state: "unstable" })).action,
-    "merge",
+    "arm",
   );
 });
 
@@ -96,7 +98,60 @@ test("declared dependencies must already be merged", () => {
     "declared predecessor is not merged",
   );
   input.dependencies[0].merged_at = "2026-09-26T00:00:00Z";
-  assert.equal(decideMergeAction(input).action, "merge");
+  assert.equal(decideMergeAction(input).action, "arm");
+});
+
+test("only explicitly labeled GitHub stacks use the asynchronous merge endpoint", () => {
+  assert.equal(
+    decideMergeAction(
+      fixture({
+        labels: [
+          { name: "fastline-approved" },
+          { name: "fastline-stack-merge" },
+        ],
+        stack: { number: 7, size: 2, position: 2 },
+      }),
+    ).action,
+    "stack",
+  );
+  assert.equal(
+    decideMergeAction(
+      fixture({
+        labels: [
+          { name: "fastline-approved" },
+          { name: "fastline-stack-merge" },
+        ],
+      }),
+    ).action,
+    "arm",
+  );
+});
+
+test("stacked merge payload and polling results remain exact and fail closed", () => {
+  assert.deepEqual(asynchronousMergeRequest(SHA), {
+    sha: SHA,
+    merge_method: "merge",
+    merge_action: "default",
+  });
+  assert.throws(() => asynchronousMergeRequest("main"), /exact 40-character/);
+  assert.deepEqual(
+    asynchronousMergeResult({ status: "pending", details: {} }),
+    {
+      done: false,
+      merged: false,
+    },
+  );
+  assert.deepEqual(
+    asynchronousMergeResult({ status: "merged", details: { sha: SHA } }),
+    { done: true, merged: true, sha: SHA },
+  );
+  assert.deepEqual(
+    asynchronousMergeResult({
+      status: "failed",
+      details: { message: "blocked" },
+    }),
+    { done: true, merged: false, reason: "blocked" },
+  );
 });
 
 test("dependency references are explicit and deduplicated by the caller", () => {
@@ -116,6 +171,7 @@ test("the privileged workflow is a safe no-op until the trusted controller reach
   assert.match(workflow, /reopened,/);
   assert.match(workflow, /filter: blob:none/);
   assert.match(workflow, /cancel-in-progress: false/);
+  assert.match(workflow, /contents: write/);
   assert.match(
     workflow,
     /if: hashFiles\('publishing\/fastline-merge-controller\.mjs'\) == ''/,

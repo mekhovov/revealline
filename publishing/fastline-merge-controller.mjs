@@ -4,6 +4,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const HOLD_LABELS = new Set(["release-train-hold", "do-not-merge", "hold"]);
+const STACK_MERGE_LABEL = "fastline-stack-merge";
 
 export function dependencyNumbers(body = "") {
   return [
@@ -71,12 +72,42 @@ export function decideMergeAction({
     };
   if (autoMergeEnabled)
     return { action: "none", reason: "exact-head auto-merge is already armed" };
-  if (["clean", "unstable"].includes(pullRequest.mergeable_state))
+  if (
+    labels.has(STACK_MERGE_LABEL) &&
+    pullRequest.stack &&
+    Number.isSafeInteger(pullRequest.stack.number)
+  )
     return {
-      action: "merge",
-      reason: "all blocking requirements passed on the exact head",
+      action: "stack",
+      reason: "declared stack top passed the exact-head gate",
     };
-  return { action: "arm", reason: "exact head is admitted and merge-ready" };
+  return {
+    action: "arm",
+    reason: "exact head is admitted; protected auto-merge may proceed",
+  };
+}
+
+export function asynchronousMergeRequest(headSha) {
+  if (!/^[0-9a-f]{40}$/u.test(headSha || ""))
+    throw new TypeError("An exact 40-character head SHA is required.");
+  return {
+    sha: headSha,
+    merge_method: "merge",
+    merge_action: "default",
+  };
+}
+
+export function asynchronousMergeResult(value) {
+  const status = value?.status;
+  if (status === "pending") return { done: false, merged: false };
+  if (status === "merged")
+    return { done: true, merged: true, sha: value?.details?.sha || null };
+  return {
+    done: true,
+    merged: false,
+    reason:
+      value?.details?.message || `asynchronous merge ${status || "failed"}`,
+  };
 }
 
 async function github(pathname, options = {}) {
@@ -85,17 +116,67 @@ async function github(pathname, options = {}) {
     headers: {
       accept: "application/vnd.github+json",
       authorization: `Bearer ${process.env.GH_TOKEN}`,
-      "x-github-api-version": "2022-11-28",
+      "x-github-api-version": "2026-03-10",
       "user-agent": "revealline-fastline-controller",
       ...options.headers,
     },
   });
   const text = await response.text();
-  if (!response.ok)
-    throw new Error(
+  if (!response.ok) {
+    const error = new Error(
       `GitHub ${response.status} ${pathname}: ${text.slice(0, 1000)}`,
     );
+    error.status = response.status;
+    error.body = text;
+    try {
+      error.data = text ? JSON.parse(text) : null;
+    } catch {
+      error.data = null;
+    }
+    throw error;
+  }
   return text ? JSON.parse(text) : null;
+}
+
+async function mergeStack(owner, repository, pullRequest, headSha) {
+  let requested;
+  try {
+    requested = await github(
+      `/repos/${owner}/${repository}/pulls/${pullRequest.number}/merge-async`,
+      {
+        method: "PUT",
+        body: JSON.stringify(asynchronousMergeRequest(headSha)),
+        headers: { "content-type": "application/json" },
+      },
+    );
+  } catch (error) {
+    // A duplicate request returns its existing UUID as a 409. Continue that
+    // exact request; every other rejection fails closed. GitHub does not
+    // support auto-merge for stacks, so arming the top PR is not a valid
+    // fallback.
+    if (error?.status !== 409) throw error;
+    requested = error.data;
+  }
+  if (requested?.status === "merged") return true;
+  const uuid = requested?.details?.uuid || requested?.uuid;
+  if (typeof uuid !== "string" || !/^[0-9a-f-]{20,80}$/iu.test(uuid))
+    return false;
+  for (let attempt = 0; attempt < 12; attempt++) {
+    const value = await github(
+      `/repos/${owner}/${repository}/pulls/${pullRequest.number}/merge-async/${uuid}`,
+    );
+    const result = asynchronousMergeResult(value);
+    if (result.done) {
+      if (!result.merged) throw new Error(result.reason);
+      return true;
+    }
+    await new Promise((resolve) =>
+      setTimeout(resolve, Math.min(15000, 1000 * 2 ** attempt)),
+    );
+  }
+  throw new Error(
+    "Asynchronous stacked merge did not finish within the bounded poll window.",
+  );
 }
 
 async function graphql(query, variables) {
@@ -183,7 +264,8 @@ async function upsertStatusComment(
       "Existing auto-merge is being disarmed until the blocker is resolved.",
     update:
       "The branch is being updated from strict main; checks must pass again on the new head.",
-    merge: "The protected exact-head merge is being submitted now.",
+    stack:
+      "The declared GitHub stack is being submitted through the asynchronous exact-head endpoint.",
     none: "No action: exact-head auto-merge is already armed.",
     wait: "Resolve the blocker, then rerun `release-ready` on the resulting exact head.",
   }[decision.action];
@@ -303,12 +385,15 @@ async function main() {
         headers: { "content-type": "application/json" },
       },
     );
-  } else if (decision.action === "merge") {
-    await github(`/repos/${owner}/${repository}/pulls/${number}/merge`, {
-      method: "PUT",
-      body: JSON.stringify({ sha: observedHeadSha, merge_method: "merge" }),
-      headers: { "content-type": "application/json" },
-    });
+  } else if (decision.action === "stack") {
+    const merged = await mergeStack(
+      owner,
+      repository,
+      pullRequest,
+      observedHeadSha,
+    );
+    if (!merged)
+      throw new Error("GitHub did not accept the declared stack merge.");
   } else if (decision.action === "arm" || decision.action === "disarm")
     await setAutoMerge(pullRequest, decision.action, observedHeadSha);
 }
