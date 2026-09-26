@@ -1,5 +1,21 @@
 # Reveal Line: player-first UX execution
 
+> **Current status:** use the
+> [27 September completion and remaining delivery plan](plan-status-2026-09-27.md)
+> for the accepted public boundary, prioritized releases, ETA ranges, blockers,
+> and content-accounting limits. The checkpoint below remains the detailed
+> v0.141.6 execution contract.
+
+> **Current release-coordination policy (27 September 2026):** the dedicated
+> release-coordinator chat is the sole merge, version, freeze, archive, selector,
+> Pages, and publication authority. User-directed delivery is latest-first across
+> compatible reviewed changes. Older version groupings and PR chains are
+> preparation labels rather than mandatory separate or serial releases. A new
+> release does not require deploying another historical archive first. Existing
+> immutable releases and archives remain preserved. Focused behavior, source and
+> provenance, current public bytes, and scoped player-flow gates still block
+> acceptance.
+
 Approved 24 September 2026. This replaces the execution order in the older
 whole-game plans; it does not erase their content, compatibility or qualification
 requirements. Each independent feature is released before the next is accepted.

@@ -1,5 +1,10 @@
 # Reveal Line — completed work and remaining delivery plan
 
+> **Current status:** use the
+> [27 September completion and remaining delivery plan](plan-status-2026-09-27.md).
+> This register remains historical evidence for the releases and decisions at
+> its dated checkpoints.
+
 > **Superseded execution order:** Follow the [24 September player-first UX board](player-first-ux-execution.md)
 > for current UX work and its release checkpoint. The dated acceptance records below
 > remain historical; their old public version and PR counts are not live status.
@@ -11,10 +16,9 @@
 - **Active release candidate — v0.141.7:** the Team teaching, reward and navigation batch is reconciled onto current integration main `e3baddb3ed59bbb698c02a8f97af52c01c79249b`, including PR #706's accepted private soundtrack intake; the accepted public baseline remains v0.141.6. It replaces localized-label decisions with semantic ground context and Support capabilities derived from actual threats, provides live English/Ukrainian cues and Library metadata, retains arena-specific opening guidance, and integrates PR #580's Collection feedback and navigation fixtures. The previously reported focused cumulative set is reconciled at 125/125 sequentially, the review-correction Team/Library set passes 110/110 sequentially, and the inherited soundtrack-intake set passes 108/108 sequentially. Repository validation, localization, full lint, game/native formatting, Motion Lab syntax, diff check, and version parity pass locally. Hosted exact-head qualification, immutable publication, and browser cut → Support → rescue review remain open; long suites are waived by the committed temporary policy and are not claimed as passing.
 - **Next ordered work:** complete v0.141.7 through one PR, release, selector and public verification before accepting v0.141.8. The next batch combines terminal Retry, Versus cue and named-result inputs from PR #545 → #552 → #557; v0.141.9 combines Settings/Help and Collection return inputs from PR #542 → #548. The existing v0.142.0 offline chain (#605 → #609 → #619 → #588) and v0.143.0 soundtrack allocation remain reserved. UX6 follows those batches on the exact accepted source. Focused evidence from inputs is rerun cumulatively rather than added together.
 - **Evidence limits:** focused component checks and modeled input do not certify physical devices or human balance. Waived, skipped or cancelled jobs are not passes. Preserve all unrelated branches, immutable releases, player saves, installed packs, uploads and Studio projects.
-
-The 23 September register and later dated sections are preserved below as
-historical scope, evidence and design contracts. Their old version, PR-count and
-queue statements are not live status.
+  The 23 September register and later dated sections are preserved below as
+  historical scope, evidence and design contracts. Their old version, PR-count and
+  queue statements are not live status.
 
 Status checked **23 September 2026, 14:32 UTC**. This is the current status and
 priority register for the approved Xposed-led Journey and unified-library plan.
