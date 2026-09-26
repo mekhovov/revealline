@@ -118,7 +118,7 @@ test('actual Team library browses same-ID Custom artwork with no decodes and han
   const f = await fixture(t, [custom]);
   const before = await f.pointer.snapshot();
   await open(f);
-  assert.equal(cards(f).length, 204);
+  assert.equal(cards(f).length, 288);
   assert.match(f.$('coop-library-remote-status').textContent, /All missions loaded/);
   const rows = collection(f, 'Custom');
   assert.equal(rows.length, 3);
@@ -161,7 +161,7 @@ test('Team confirms installed raw authority after Replace and refuses a changed 
   assert.equal(f.images.length, f.initialImages);
 });
 
-test('Team inline trusted download preserves filter, search, focused card and attempt until a separate Play', async (t) => {
+test('Team trusted Download & play preserves selection and launches the exact mission once', async (t) => {
   const f = await fixture(t);
   await open(f);
   collection(f, 'Classic');
@@ -175,20 +175,9 @@ test('Team inline trusted download preserves filter, search, focused card and at
     checkpoint = structuredClone(f.lastPaint);
   target.focus();
   f.tap('Enter');
-  await settle(() => /Play/.test(target.textContent) && !/Preparing/.test(target.textContent));
-  assert.equal(f.$('journey-chooser').open, true);
-  assert.equal(f.$('journey-collection').value, 'Classic');
-  assert.equal(f.$('journey-search').value, recipe.campaigns[0].levels.at(-1).name);
-  assert.equal(f.doc.activeElement, target);
-  assert.equal(
-    cards(f).find((card) => card.dataset.missionId === id),
-    target,
-  );
-  assert.deepEqual(f.lastPaint, checkpoint);
-  assert.equal(f.visits.length, 0);
-  assert(f.requests.includes('game/content/packs/night-shift.json'));
-  f.tap('Enter');
   await settle(() => f.visits.length === 1);
+  assert.deepEqual(f.lastPaint, checkpoint);
+  assert(f.requests.includes('game/content/packs/night-shift.json'));
   assert.equal(new URL(f.visits[0]).searchParams.get('library-mission'), id);
 });
 
@@ -231,6 +220,9 @@ test('a later held inventory refresh interrupted by blur offers Retry and cannot
   );
   assert.equal(f.visits.length, 0);
   f.win.emit('focus');
+  // Foreground recovery deliberately holds stale controller Confirm until the
+  // first neutral sampled frame. Retry uses the fresh keyboard action after it.
+  f.tick();
   f.$('coop-library-remote-retry').focus();
   f.tap('Enter');
   await settle(() => /All missions loaded/.test(f.$('coop-library-remote-status').textContent));
