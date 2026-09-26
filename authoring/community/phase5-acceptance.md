@@ -1,8 +1,8 @@
 # Phase 5 acceptance — released local client/service source and deployment follow-ups
 
 Status: the community catalog client and service source shipped in `v0.141.0`. The network boundary
-is exercised through the real Fastify application with its in-memory repository and blob store. A
-the `v0.141.2` hardening candidate adds the administrator report-triage page, deployment
+is exercised through the real Fastify application with its in-memory repository and blob store.
+The published `v0.141.2` hardening release adds the administrator report-triage page, deployment
 preflight, recovery rehearsal, interrupted-tus fault proxy and deployed two-user acceptance runner.
 No community deployment, public catalog or production account provider is claimed by this record.
 
@@ -77,7 +77,7 @@ creation/offset/chunk contract and treats only server responses as upload progre
 
 ## Remaining acceptance gates
 
-The `v0.141.2` hardening candidate adds the fail-closed production Compose and readiness contract
+The `v0.141.2` hardening release adds the fail-closed production Compose and readiness contract
 recorded in [deployment-acceptance.md](deployment-acceptance.md). This removes manual ordering and
 configuration ambiguity from the source deployment path. `npm run acceptance:tus-resume`,
 `npm run recovery:rehearse`, and `npm run acceptance:deployed` make the remaining rehearsals
@@ -94,7 +94,9 @@ repeatable and produce bounded evidence, but they do not replace the live gates 
   that an unlisted edition stays playable for players who already installed its exact bytes.
 - Exercise the report-triage page with a real administrator session against the deployed service,
   including the retry state where unlisting succeeds but resolution is temporarily unavailable.
-- Run hosted preflight/build/release-ready checks and publish only through the release coordinator.
+- Release publication completed through PR #675 and selector PR #677. See
+  [v0.141.2-publication-evidence.md](v0.141.2-publication-evidence.md). This closes the source release
+  gate without claiming a live community-service deployment.
 
 Reference-aware installed-media offload is implemented locally. **Offload installed media** first
 requires and revalidates the exact retained `.rlpack`, reconstructs the installed edition, and

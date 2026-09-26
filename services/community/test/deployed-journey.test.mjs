@@ -14,13 +14,19 @@ import {
   validateDeployedJourneyConfig,
 } from '../src/deployed-journey.mjs';
 import { MemoryCommunityRepository } from '../src/memory-repository.mjs';
+import { createCreatorPackageValidator } from '../src/validator.mjs';
 import { processNextValidationJob } from '../src/worker.mjs';
 
 const bearer = (token) => ({ authorization: `Bearer ${token}` });
+const expectedRelease = Object.freeze({
+  version: 'v0.141.2',
+  sourceRevision: '12978e5fd3fe0ce70bbee96aa543f569f64622d4',
+});
 const config = (overrides = {}) => ({
   baseURL: 'https://community.example.test/',
   namespace: 'deploy-check-20260926',
   optIn: DESTRUCTIVE_OPT_IN,
+  expectedRelease,
   auth: {
     creatorA: bearer('creator-a-secret'),
     creatorB: bearer('creator-b-secret'),
@@ -64,8 +70,16 @@ test('configuration requires explicit destructive opt-in, a unique namespace and
     /unique 8-40 character/u,
   );
   assert.throws(
+    () => validateDeployedJourneyConfig(config({ baseURL: 'http://community.example.test/' })),
+    /HTTPS outside loopback/u,
+  );
+  assert.throws(
     () => validateDeployedJourneyConfig(config({ auth: { ...config().auth, admin: {} } })),
     /Administrator authentication/u,
+  );
+  assert.throws(
+    () => validateDeployedJourneyConfig(config({ expectedRelease: null })),
+    /expected release version and source revision/u,
   );
   const accepted = validateDeployedJourneyConfig(config());
   assert.equal(accepted.baseURL, 'https://community.example.test/');
@@ -97,6 +111,7 @@ test('deployed journey publishes, polls, isolates owners, downloads exact bytes 
       'admin-secret': { subject: 'administrator/acceptance', roles: ['admin'] },
     }),
     maxPackageBytes: 16 * 1024 * 1024,
+    releaseIdentity: expectedRelease,
   });
   await app.ready();
   t.after(() => app.close());
@@ -109,10 +124,7 @@ test('deployed journey publishes, polls, isolates owners, downloads exact bytes 
       repository,
       blobStore,
       workerId: `deployed-test-${workerRuns}`,
-      validatePackage: async () => ({
-        accepted: true,
-        report: { compiler: 'passed', replay: 'passed' },
-      }),
+      validatePackage: createCreatorPackageValidator(),
     });
   };
   const receipt = await runDeployedCommunityJourney(config(), {
@@ -124,6 +136,8 @@ test('deployed journey publishes, polls, isolates owners, downloads exact bytes 
 
   assert.equal(receipt.format, DEPLOYED_ACCEPTANCE_FORMAT);
   assert.equal(receipt.status, 'passed');
+  assert.deepEqual(receipt.release, expectedRelease);
+  assert.deepEqual(receipt.readiness, { status: 'ready' });
   assert.match(receipt.editionId, /^ed_[a-f0-9]{64}$/u);
   assert.equal(receipt.validation.status, 'published');
   assert.equal(receipt.discovery.creatorBIsolation, true);
@@ -170,11 +184,63 @@ test('failure emits a bounded redacted receipt and never runs after missing opt-
     thrown = error;
   }
   assert.equal(thrown.name, 'DeployedCommunityAcceptanceError');
-  assert.equal(thrown.stage, 'health');
+  assert.equal(thrown.stage, 'identity');
   assert.equal(thrown.receipt.status, 'failed');
-  assert.equal(thrown.receipt.failedStage, 'health');
+  assert.equal(thrown.receipt.failedStage, 'identity');
   assert.equal(JSON.stringify(thrown.receipt).includes('admin-secret'), false);
   assert.equal(String(thrown).includes('admin-secret'), false);
+});
+
+test('release mismatch and failed readiness stop before creating a submission', async () => {
+  let calls = [];
+  await assert.rejects(
+    runDeployedCommunityJourney(config(), {
+      fetchImpl: async (input) => {
+        calls.push(new URL(input).pathname);
+        return Response.json({
+          format: 'revealline-community-release.v1',
+          version: 'v0.141.1',
+          sourceRevision: expectedRelease.sourceRevision,
+        });
+      },
+      randomUUID: () => 'abcdef12-1234-4abc-8def-123456789abc',
+    }),
+    (error) => {
+      assert.equal(error.stage, 'identity');
+      return true;
+    },
+  );
+  assert.deepEqual(calls, ['/version']);
+
+  calls = [];
+  await assert.rejects(
+    runDeployedCommunityJourney(config(), {
+      fetchImpl: async (input, init = {}) => {
+        const pathname = new URL(input).pathname;
+        calls.push(`${init.method ?? 'GET'} ${pathname}`);
+        if (pathname === '/version')
+          return Response.json({
+            format: 'revealline-community-release.v1',
+            ...expectedRelease,
+          });
+        if (pathname === '/health') return Response.json({ status: 'ok' });
+        if (pathname === '/ready')
+          return Response.json(
+            { error: { code: 'internal_error', message: 'not ready' } },
+            { status: 503 },
+          );
+        assert.fail('Readiness failure must stop before content mutation.');
+      },
+      randomUUID: () => 'abcdef12-1234-4abc-8def-123456789abc',
+    }),
+    (error) => {
+      assert.equal(error.stage, 'readiness');
+      assert.equal(error.receipt.failedStage, 'readiness');
+      assert.deepEqual(error.receipt.release, expectedRelease);
+      return true;
+    },
+  );
+  assert.deepEqual(calls, ['GET /version', 'GET /health', 'GET /ready']);
 });
 
 test('CLI writes a versioned failure receipt without printing supplied secrets', async (t) => {
@@ -189,6 +255,8 @@ test('CLI writes a versioned failure receipt without printing supplied secrets',
       COMMUNITY_ACCEPTANCE_BASE_URL: 'https://community.example.test/',
       COMMUNITY_ACCEPTANCE_NAMESPACE: 'cli-check-20260926',
       COMMUNITY_ACCEPTANCE_ALLOW_DESTRUCTIVE: 'not-approved',
+      COMMUNITY_ACCEPTANCE_EXPECTED_VERSION: expectedRelease.version,
+      COMMUNITY_ACCEPTANCE_EXPECTED_SOURCE_REVISION: expectedRelease.sourceRevision,
       COMMUNITY_ACCEPTANCE_CREATOR_A_AUTHORIZATION: 'Bearer cli-creator-a-secret',
       COMMUNITY_ACCEPTANCE_CREATOR_B_AUTHORIZATION: 'Bearer cli-creator-b-secret',
       COMMUNITY_ACCEPTANCE_ADMIN_AUTHORIZATION: 'Bearer cli-admin-secret',
@@ -221,6 +289,8 @@ test('CLI refuses to replace an existing acceptance receipt', async (t) => {
       COMMUNITY_ACCEPTANCE_BASE_URL: 'https://community.example.test/',
       COMMUNITY_ACCEPTANCE_NAMESPACE: 'cli-check-20260926',
       COMMUNITY_ACCEPTANCE_ALLOW_DESTRUCTIVE: 'not-approved',
+      COMMUNITY_ACCEPTANCE_EXPECTED_VERSION: expectedRelease.version,
+      COMMUNITY_ACCEPTANCE_EXPECTED_SOURCE_REVISION: expectedRelease.sourceRevision,
       COMMUNITY_ACCEPTANCE_CREATOR_A_AUTHORIZATION: 'Bearer cli-creator-a-secret',
       COMMUNITY_ACCEPTANCE_CREATOR_B_AUTHORIZATION: 'Bearer cli-creator-b-secret',
       COMMUNITY_ACCEPTANCE_ADMIN_AUTHORIZATION: 'Bearer cli-admin-secret',
@@ -247,6 +317,7 @@ test('owner isolation requires the exact owner-scoped not-found response', async
       'admin-secret': { subject: 'administrator/acceptance', roles: ['admin'] },
     }),
     maxPackageBytes: 16 * 1024 * 1024,
+    releaseIdentity: expectedRelease,
   });
   await app.ready();
   t.after(() => app.close());

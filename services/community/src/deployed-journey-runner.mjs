@@ -61,6 +61,10 @@ try {
     baseURL: process.env.COMMUNITY_ACCEPTANCE_BASE_URL,
     namespace,
     optIn: process.env.COMMUNITY_ACCEPTANCE_ALLOW_DESTRUCTIVE,
+    expectedRelease: {
+      version: process.env.COMMUNITY_ACCEPTANCE_EXPECTED_VERSION,
+      sourceRevision: process.env.COMMUNITY_ACCEPTANCE_EXPECTED_SOURCE_REVISION,
+    },
     auth: {
       creatorA: accountHeaders('COMMUNITY_ACCEPTANCE_CREATOR_A'),
       creatorB: accountHeaders('COMMUNITY_ACCEPTANCE_CREATOR_B'),

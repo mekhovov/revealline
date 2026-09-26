@@ -10,24 +10,27 @@ This checkpoint supersedes older paragraphs below that describe themselves as
 current. Those paragraphs remain unchanged as dated implementation and release
 evidence.
 
-**Completed public baseline:** immutable
+**Completed Pages baseline:** immutable
 [v0.141.2](https://github.com/mekhovov/revealline/releases/tag/v0.141.2) is the
 current published release. PR #675 merged exact product source
 `12978e5fd3fe0ce70bbee96aa543f569f64622d4`, preserving the accepted v0.141.1
 compact gallery and adding the community deployment hardening. The published tag
-remains immutable.
+remains immutable. Pages selector PR #677 merged as
+`34f45503c32479591dcdc36e7236aaa2eb348a2f`; run `36252239829` audited 1,888
+files and 630,471,797 bytes with zero retries or failures. Archive95 preserves
+v0.141.0. The public Creator and community routes resolve to v0.141.2; the
+separately deployed community API remains unavailable until infrastructure is selected.
 
-**Active release:** v0.141.3 Team quick-start is reconciled locally onto exact
-accepted v0.141.2 main selector merge
-`34f45503c32479591dcdc36e7236aaa2eb348a2f`, whose first parent is product
-source `12978e5fd3fe0ce70bbee96aa543f569f64622d4`. Its sequential focused
-boundary passes 114/114, with repository validation, localization, full
-repository lint and formatting, native formatting and version parity also
-passing. It is unpushed and does not claim a PR, merge, tag, release, Pages
-deployment or public player-flow acceptance.
+**Latest stable release:** [PR #679](https://github.com/mekhovov/revealline/pull/679)
+merged v0.141.3 Team quick-start as
+`7509d790dadb6194d70a5bc1efafee40fbb0b3b7`. Coordinator run `36254346397`
+published its immutable nine-asset
+[v0.141.3 release](https://github.com/mekhovov/revealline/releases/tag/v0.141.3).
+Its Pages selector and public player-flow acceptance remain open, so the Pages
+baseline remains v0.141.2.
 
-**Active and ordered:** each row is a working allocation, not an accepted
-release. Reconcile each item onto the publicly accepted predecessor, rerun its
+**Ordered continuation:** v0.141.3 is the latest stable release; later rows remain working
+allocations rather than accepted releases. Reconcile each item onto the accepted predecessor, rerun its
 exact-head gates and publish it before accepting the next row. Older target
 versions in draft PR titles and evidence files are stale where they disagree
 with this order.
@@ -90,7 +93,7 @@ language-switch audit found that Solo's primary Continue label and destination
 can remain English after changing the surrounding UI to Ukrainian; that defect
 belongs to the next corrective release and does not alter the immutable tag.
 
-The active order is v0.141.3 Team quick start, v0.141.4 Couch secondary
+The current order starts from released v0.141.3 Team quick start, then v0.141.4 Couch secondary
 navigation, v0.141.5 Team teaching, v0.141.6 deliberate Team terminal Retry,
 v0.141.7 Versus countdown, v0.141.8 named result destinations and v0.141.9
 Settings/Help/Collection return closure, then UX6 qualification. Prepared

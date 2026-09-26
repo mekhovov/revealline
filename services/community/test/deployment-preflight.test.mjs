@@ -33,6 +33,10 @@ const productionEnvironment = Object.freeze({
   COMMUNITY_DATABASE_URL: 'postgres://user:database-secret@database/revealline',
   COMMUNITY_BLOB_ROOT: '/data/blobs',
   COMMUNITY_TUS_ROOT: '/data/tus',
+  COMMUNITY_RELEASE_VERSION: 'v0.141.2',
+  COMMUNITY_SOURCE_REVISION: '12978e5fd3fe0ce70bbee96aa543f569f64622d4',
+  COMMUNITY_IMAGE_RELEASE_VERSION: 'v0.141.2',
+  COMMUNITY_IMAGE_SOURCE_REVISION: '12978e5fd3fe0ce70bbee96aa543f569f64622d4',
   COMMUNITY_TRUST_PROXY_HOPS: '1',
   BETTER_AUTH_SECRET: 'authentication-secret-that-is-long-enough',
   BETTER_AUTH_URL: 'https://community.example.test',
@@ -240,6 +244,7 @@ test('readiness endpoint runs deployment readiness and fails closed', async (t) 
 test('production Compose profile fails closed and preserves every shared admission setting', async () => {
   const compose = await readFile(new URL('../compose.production.yaml', import.meta.url), 'utf8');
   const baseCompose = await readFile(new URL('../compose.yaml', import.meta.url), 'utf8');
+  const dockerfile = await readFile(new URL('../Dockerfile', import.meta.url), 'utf8');
   assert.match(baseCompose, /'127\.0\.0\.1:8787:8787'/u);
   assert.match(compose, /COMMUNITY_ALLOW_DEV_AUTH: 'false'/u);
   assert.match(compose, /COMMUNITY_DEV_TOKENS: '\{\}'/u);
@@ -253,15 +258,35 @@ test('production Compose profile fails closed and preserves every shared admissi
     'COMMUNITY_UPLOAD_BYTES_PER_WINDOW',
     'COMMUNITY_UPLOAD_WINDOW_SECONDS',
     'COMMUNITY_TRUST_PROXY_HOPS',
+    'COMMUNITY_RELEASE_VERSION',
+    'COMMUNITY_SOURCE_REVISION',
   ]) {
     assert.match(compose, new RegExp(name + ': \\$\\{'));
   }
+  assert.match(compose, /x-community-production-build:/u);
+  assert.match(compose, /COMMUNITY_RELEASE_VERSION: \$\{COMMUNITY_RELEASE_VERSION:/u);
+  assert.match(compose, /COMMUNITY_SOURCE_REVISION: \$\{COMMUNITY_SOURCE_REVISION:/u);
+  assert.match(dockerfile, /COMMUNITY_IMAGE_RELEASE_VERSION=\$\{COMMUNITY_RELEASE_VERSION\}/u);
+  assert.match(dockerfile, /COMMUNITY_IMAGE_SOURCE_REVISION=\$\{COMMUNITY_SOURCE_REVISION\}/u);
   assert.match(compose, /auth-migrate:[\s\S]*command: \['npm', 'run', 'auth:migrate'\]/u);
   assert.match(compose, /preflight:[\s\S]*auth-migrate:[\s\S]*service_completed_successfully/u);
   assert.match(compose, /api:[\s\S]*preflight:[\s\S]*service_completed_successfully/u);
   assert.match(compose, /worker:[\s\S]*preflight:[\s\S]*service_completed_successfully/u);
-  assert.doesNotMatch(
-    compose.slice(compose.indexOf('  worker:')),
-    /BETTER_AUTH_SECRET|COMMUNITY_ACCOUNT_MAIL_WEBHOOK_TOKEN/u,
-  );
+  const worker = compose.slice(compose.indexOf('  worker:'), compose.indexOf('\nnetworks:'));
+  assert.match(worker, /read_only: true/u);
+  assert.match(worker, /cap_drop:\n\s+- ALL/u);
+  assert.match(worker, /security_opt:\n\s+- no-new-privileges:true/u);
+  assert.match(worker, /init: true/u);
+  assert.match(worker, /\/tmp:rw,noexec,nosuid,nodev,size=128m,mode=0700,uid=1000,gid=1000/u);
+  assert.match(worker, /pids_limit: 64/u);
+  assert.match(worker, /mem_limit: 1g/u);
+  assert.match(worker, /cpus: 1\.0/u);
+  assert.match(worker, /community-blobs:\/data\/blobs:ro/u);
+  assert.match(worker, /networks:\n\s+- community-backend/u);
+  assert.doesNotMatch(worker, /community-edge/u);
+  assert.match(worker, /restart: unless-stopped/u);
+  assert.doesNotMatch(worker, /ports:/u);
+  assert.doesNotMatch(worker, /BETTER_AUTH_SECRET|COMMUNITY_ACCOUNT_MAIL_WEBHOOK_TOKEN/u);
+  assert.match(compose, /community-backend:\n\s+internal: true/u);
+  assert.match(compose, /api:[\s\S]*networks:\n\s+- community-backend\n\s+- community-edge/u);
 });

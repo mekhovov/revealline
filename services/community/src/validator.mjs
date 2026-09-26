@@ -40,7 +40,11 @@ export async function decodeCreatorPng(blob) {
   return { naturalWidth: decoded.width, naturalHeight: decoded.height };
 }
 
-export function createFfprobeVideoInspector({ ffprobePath = 'ffprobe', timeoutMs = 20_000 } = {}) {
+export function createFfprobeVideoInspector({
+  ffprobePath = 'ffprobe',
+  timeoutMs = 20_000,
+  runCommand = (command, args, options) => execFileAsync(command, args, options),
+} = {}) {
   return async (blob) => {
     const root = await mkdtemp(path.join(os.tmpdir(), 'revealline-video-'));
     const mime = blob.type;
@@ -50,11 +54,19 @@ export function createFfprobeVideoInspector({ ffprobePath = 'ffprobe', timeoutMs
       await writeFile(file, bytes, { flag: 'wx', mode: 0o600 });
       let stdout;
       try {
-        ({ stdout } = await execFileAsync(
+        ({ stdout } = await runCommand(
           ffprobePath,
           [
             '-v',
             'error',
+            '-protocol_whitelist',
+            'file',
+            '-threads',
+            '1',
+            '-probesize',
+            '5000000',
+            '-analyzeduration',
+            '5000000',
             '-show_entries',
             'format=duration:stream=codec_type,width,height',
             '-of',

@@ -30,6 +30,7 @@ import {
 import { processNextValidationJob } from '../src/worker.mjs';
 import {
   createCreatorPackageValidator,
+  createFfprobeVideoInspector,
   decodeCreatorPng,
   readCreatorPreview,
 } from '../src/validator.mjs';
@@ -157,6 +158,59 @@ test('submission validation bounds plain text, semantic versions, hashes, and pa
     );
 });
 
+test('ffprobe validation permits only bounded local-file inspection', async () => {
+  const source = Buffer.from('bounded-video-fixture');
+  let invocation;
+  let stagedFile;
+  const inspect = createFfprobeVideoInspector({
+    ffprobePath: '/usr/local/bin/ffprobe',
+    timeoutMs: 12_345,
+    runCommand: async (command, args, options) => {
+      invocation = { command, args, options };
+      stagedFile = args.at(-1);
+      assert.deepEqual(await readFile(stagedFile), source);
+      return {
+        stdout: JSON.stringify({
+          streams: [{ codec_type: 'video', width: 640, height: 360 }],
+          format: { duration: '6.0' },
+        }),
+      };
+    },
+  });
+
+  const inspected = await inspect(new Blob([source], { type: 'video/mp4' }));
+  assert.deepEqual(invocation, {
+    command: '/usr/local/bin/ffprobe',
+    args: [
+      '-v',
+      'error',
+      '-protocol_whitelist',
+      'file',
+      '-threads',
+      '1',
+      '-probesize',
+      '5000000',
+      '-analyzeduration',
+      '5000000',
+      '-show_entries',
+      'format=duration:stream=codec_type,width,height',
+      '-of',
+      'json',
+      stagedFile,
+    ],
+    options: { timeout: 12_345, maxBuffer: 1024 * 1024 },
+  });
+  assert.deepEqual(inspected.info, {
+    sha256: createHash('sha256').update(source).digest('hex'),
+    bytes: source.length,
+    mime: 'video/mp4',
+    width: 640,
+    height: 360,
+    durationSeconds: 6,
+  });
+  await assert.rejects(readFile(stagedFile), { code: 'ENOENT' });
+});
+
 test('executable configuration refuses implicit development authentication', () => {
   assert.throws(() => readConfig({}), /BETTER_AUTH_SECRET/u);
   assert.equal(readConfig({}, { requireAuth: false }).betterAuth, null);
@@ -174,6 +228,7 @@ test('executable configuration refuses implicit development authentication', () 
   assert.equal(config.tusCleanupLeaseMs, 120_000);
   assert.equal(config.tusLockTimeoutMs, 30_000);
   assert.equal(config.tusLockPoolSize, 20);
+  assert.equal(config.releaseIdentity, null);
   assert.throws(
     () =>
       readConfig({
@@ -191,6 +246,63 @@ test('executable configuration refuses implicit development authentication', () 
       }),
     /must not exceed 256/u,
   );
+  assert.throws(
+    () =>
+      readConfig({
+        BETTER_AUTH_SECRET: 'authentication-secret-that-is-long-enough',
+        BETTER_AUTH_URL: 'https://community.example.test',
+        COMMUNITY_ACCOUNT_MAIL_WEBHOOK_URL: 'https://mail.example.test/delivery',
+        COMMUNITY_ACCOUNT_MAIL_WEBHOOK_TOKEN: 'mail-secret-that-is-long-enough-for-tests',
+      }),
+    /COMMUNITY_RELEASE_VERSION/u,
+  );
+  const productionIdentity = {
+    BETTER_AUTH_SECRET: 'authentication-secret-that-is-long-enough',
+    BETTER_AUTH_URL: 'https://community.example.test',
+    COMMUNITY_ACCOUNT_MAIL_WEBHOOK_URL: 'https://mail.example.test/delivery',
+    COMMUNITY_ACCOUNT_MAIL_WEBHOOK_TOKEN: 'mail-secret-that-is-long-enough-for-tests',
+    COMMUNITY_RELEASE_VERSION: 'v0.141.2',
+    COMMUNITY_SOURCE_REVISION: '12978e5fd3fe0ce70bbee96aa543f569f64622d4',
+  };
+  assert.throws(() => readConfig(productionIdentity), /production image has no exact/u);
+  assert.throws(
+    () =>
+      readConfig({
+        ...productionIdentity,
+        COMMUNITY_IMAGE_RELEASE_VERSION: 'v0.141.1',
+        COMMUNITY_IMAGE_SOURCE_REVISION: productionIdentity.COMMUNITY_SOURCE_REVISION,
+      }),
+    /differs from the immutable image identity/u,
+  );
+});
+
+test('public release identity is exact and unavailable when the deployment did not bind one', async (t) => {
+  const repository = new MemoryCommunityRepository();
+  const withoutIdentity = buildCommunityApp({
+    repository,
+    blobStore: new MemoryBlobStore(),
+    authenticator: createTokenAuthenticator({ token: 'creator' }),
+  });
+  const withIdentity = buildCommunityApp({
+    repository,
+    blobStore: new MemoryBlobStore(),
+    authenticator: createTokenAuthenticator({ token: 'creator' }),
+    validatorVersion: 'creator-bundle-v1',
+    releaseIdentity: {
+      version: 'v0.141.2',
+      sourceRevision: '12978e5fd3fe0ce70bbee96aa543f569f64622d4',
+    },
+  });
+  t.after(() => Promise.all([withoutIdentity.close(), withIdentity.close()]));
+  assert.equal((await withoutIdentity.inject({ method: 'GET', url: '/version' })).statusCode, 503);
+  const response = await withIdentity.inject({ method: 'GET', url: '/version' });
+  assert.equal(response.headers['cache-control'], 'no-store');
+  assert.deepEqual(response.json(), {
+    format: 'revealline-community-release.v1',
+    version: 'v0.141.2',
+    sourceRevision: '12978e5fd3fe0ce70bbee96aa543f569f64622d4',
+    validatorVersion: 'creator-bundle-v1',
+  });
 });
 
 test('public health and empty catalog do not require creator authentication', async (t) => {
