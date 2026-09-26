@@ -1,5 +1,10 @@
 # Reveal Line — completed work and remaining delivery plan
 
+> **Current status:** use the
+> [27 September completion and remaining delivery plan](plan-status-2026-09-27.md).
+> This register remains historical evidence for the releases and decisions at
+> its dated checkpoints.
+
 > **Superseded execution order:** Follow the [24 September player-first UX board](player-first-ux-execution.md)
 > for current UX work and its release checkpoint. The dated acceptance records below
 > remain historical; their old public version and PR counts are not live status.
@@ -11,9 +16,9 @@
 - **Active release candidate — v0.141.5:** PR #693 merged the bounded community S3 package-store slice as `9a69e5603f8a94550e4e362d157867c678c7cb0a`; PR #694 added S3-backed resumable uploads and startup readiness as `33d31750aea2bf2e34ffd9c8286c9f866ec48b79`. This release synchronizes the game package, lockfile and build identity around that accepted source. Disk remains the production default. S3 verifies staged size and SHA-256 before conditional immutable publication. Production acceptance still requires recovery rehearsal, hosted MinIO integration and a real scoped AWS smoke run. PR #695 is a follow-up candidate and is not appended late to this already closed v0.141.5 release boundary.
 - **Next ordered work:** v0.141.6 is the isolated source-manifest publisher canary. Player work resumes with the approved speed-first batches: v0.141.7 combines compatible teaching/reward/navigation inputs from PR #543 → #580 → #553; v0.141.8 combines terminal Retry, Versus cue and named-result inputs from PR #545 → #552 → #557; v0.141.9 combines Settings/Help and Collection return inputs from PR #542 → #548. The existing v0.142.0 offline chain (#605 → #609 → #619 → #588) and v0.143.0 soundtrack allocation remain reserved. UX6 follows those batches on the exact accepted source. Each batch keeps one PR, immutable release, selector update and public verification; focused evidence from its inputs is rerun cumulatively rather than added together.
 - **Evidence limits:** focused component checks and modeled input do not certify physical devices or human balance. Waived, skipped or cancelled jobs are not passes. Preserve all unrelated branches, immutable releases, player saves, installed packs, uploads and Studio projects.
-The 23 September register and later dated sections are preserved below as
-historical scope, evidence and design contracts. Their old version, PR-count and
-queue statements are not live status.
+  The 23 September register and later dated sections are preserved below as
+  historical scope, evidence and design contracts. Their old version, PR-count and
+  queue statements are not live status.
 
 Status checked **23 September 2026, 14:32 UTC**. This is the current status and
 priority register for the approved Xposed-led Journey and unified-library plan.
