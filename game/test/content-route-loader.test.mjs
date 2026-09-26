@@ -52,6 +52,7 @@ const golden = {
   'whole-spatial-v22': [273373, '4268a186d8565460ee8efc5566f0571d8150ec4d665380fbe329fdbd214b4072'],
   'whole-spatial-v23': [275331, '3b006b71af58209831aa9973dad88d47405188d0c8f28bad74d0ec03bd52a660'],
   'whole-spatial-v24': [276540, '54af78a72743cfb23ae5c9d091aec92e9f4a63a588aacd81953949c2ad4d5385'],
+  'whole-spatial-v25': [277154, '26cafd633827012c3c8729329bb2fad0c3feedd2637c2e257bf50d8e123585e7'],
   'whole-ornament-v1': [260665, '3b29bc220cdb06a33fedefabb6adec9527bd10902a9dd44899270e885ddfc4ad'],
   'whole-ornament-v2': [266314, '3f0116efe9cb9b2e134fb60dd252ac5bfbd44758a993e18a56abb2131ca10a1b'],
 };
@@ -348,6 +349,18 @@ test('Sentinel cultural successor imports only its bounded successor chain', () 
   assert(!has(result, 'horizon-candidates.mjs'));
 });
 
+test('Apex cultural successor imports only its bounded successor chain', () => {
+  const result = routeProbe('whole-spatial-v25');
+  assert.deepEqual(result.output, { id: 'whole-spatial-v25' });
+  assert(has(result, 'apex-cultural-routes-candidates.mjs'));
+  assert(has(result, 'sentinel-cultural-routes-candidates.mjs'));
+  assert(has(result, 'crosswind-cultural-routes-candidates.mjs'));
+  assert(has(result, 'relay-cultural-routes-candidates.mjs'));
+  assert(has(result, 'whole-spatial-data.mjs'));
+  assert(!has(result, 'whole-journey-candidates.mjs'));
+  assert(!has(result, 'horizon-candidates.mjs'));
+});
+
 test('ornament editions import only their bounded opt-in source chain', () => {
   const study = routeProbe('whole-ornament-v1');
   assert.deepEqual(study.output, { id: 'whole-ornament-v1' });
@@ -399,6 +412,7 @@ test('all literal lazy imports and shared modules are in the actual game build i
   const source = await readFile(new URL(loaderURL), 'utf8');
   const imports = [...source.matchAll(/import\('(.+?)'\)/g)].map((m) => m[1]);
   assert.deepEqual(imports, [
+    './apex-cultural-routes-candidates.mjs',
     './sentinel-cultural-routes-candidates.mjs',
     './crosswind-cultural-routes-candidates.mjs',
     './relay-cultural-routes-candidates.mjs',
