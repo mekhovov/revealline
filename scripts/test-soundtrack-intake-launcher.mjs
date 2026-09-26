@@ -143,6 +143,25 @@ test('unknown licence accepts equals syntax without weakening private-only routi
   ]);
 });
 
+test('launcher help always documents private intake without invoking an archive', async () => {
+  const originalLog = console.log;
+  const messages = [];
+  console.log = (message) => messages.push(message);
+  try {
+    const code = await launchMusicIntake(['--help'], {
+      environment: { REVEALLINE_SOUNDTRACK_ARCHIVE: '/archive-that-must-not-be-read' },
+      run: async () => {
+        throw new Error('help must not invoke another process');
+      },
+    });
+    assert.equal(code, 0);
+  } finally {
+    console.log = originalLog;
+  }
+  assert.match(messages.join('\n'), /--license unknown/);
+  assert.match(messages.join('\n'), /--private-output/);
+});
+
 test('explicit archive checkout wins over automatic locations', async (t) => {
   const explicitRoot = await fakeArchive(t);
   const automaticRoot = await fakeArchive(t);
