@@ -25,7 +25,7 @@ reviewer names, listening approval or device results.
 | Existing catalogue       | 70 hosted recordings / 15 albums; earlier 24-track collection is included                                                                                                                                                                                                             | Selective listening and trusted metadata curation                                                                            |
 | Player framework         | Simplified chooser, mixed playlists, uploads, creator tools, optional offline albums, recovery and rights enforcement                                                                                                                                                                 | Targeted released-source verification and demonstrated fixes                                                                 |
 | Native archive streaming | PR #523 is released in immutable v0.130.0; the public desktop game loaded the current 140/140 archive recordings, played a new Reckless object, and retains earlier remote → included → remote recovery evidence                                                                      | Physical iPhone/controller and cold-offline acceptance remain separate                                                       |
-| New archive previews     | 181 public archive recording files across 42 collections on two public archives, representing 180 distinct compositions because the second Synthwave Type encoding is a documented duplicate; Archive 02 PRs #15–#17 publish the latest rights-cleared industrial/EDM-metal auditions | Full listening, taste approval and game admission remain; zero new game admissions                                           |
+| New archive previews     | 182 public archive recording files across 43 collections on two public archives, representing 181 distinct compositions because the second Synthwave Type encoding is a documented duplicate; Archive 02 PRs #15–#18 publish the latest rights-cleared industrial/EDM-metal auditions | Full listening, taste approval and game admission remain; zero new game admissions                                           |
 | Retro previews           | Seven earlier rejections and six rejected DOS-88/escp previews are retained; later synth/action auditions, runner2088, Bouncer and StarShooter are public and listening-unapproved                                                                                                    | Review the public slate against the Electric Dreams/night-drive direction                                                    |
 | Metal previews           | Six older backups, four Eternity recordings, four industrial/thrash previews, four nonduplicate YannZ-centered groove auditions, four Purgatory auditions, four Reckless vol. 2 auditions, five new energy auditions, Heavy Dungeon and Last Stand Lets Go are public                 | Complete the prioritized full-length and Reckless reviews, then review the five new energy candidates; all remain unadmitted |
 | Ukrainian previews       | Three exact CC BY 3.0 Commons derivatives are publicly playable through archive PR #36; Shchedryk remains the only game-admitted Ukrainian recording                                                                                                                                  | Full listening, cultural/gameplay review and any later game admission remain pending                                         |
@@ -63,9 +63,9 @@ reviewer names, listening approval or device results.
 
 ### Active — release order and effort
 
-**Live reconciliation — 26 September 2026:** immutable [v0.132.5](https://github.com/mekhovov/revealline/releases/tag/v0.132.5) is now public and accepted. Its product source is `a8881ac17e44f38fb1e9dc15428899992727cc78`; selector/current `main` is `8f7ea5540d6851fb2d6d77a42c899e071e65e52a`; Pages [run 36243552142](https://github.com/mekhovov/revealline/actions/runs/36243552142) passed. The retained [public acceptance receipt](https://github.com/mekhovov/revealline/blob/38271ab0314a1aed17792286af45d5c9b2b62628/docs/player-first-v01325-public-acceptance.md) covers bounded English/Ukrainian Solo, Versus and Team transitions. Preserve the first Fastline failure in run 36238464572 and PR #663's intermediate exact-head run 36240029777, whose focused job failed four paused/won Team picture-navigation tests before the accepted successor. They are failure evidence, not the final release state.
+**Live reconciliation — 26 September 2026:** immutable [v0.132.5](https://github.com/mekhovov/revealline/releases/tag/v0.132.5) is public and accepted. Its product source is `a8881ac17e44f38fb1e9dc15428899992727cc78`; its accepted selector was `8f7ea5540d6851fb2d6d77a42c899e071e65e52a`; Pages [run 36243552142](https://github.com/mekhovov/revealline/actions/runs/36243552142) passed. The retained [public acceptance receipt](https://github.com/mekhovov/revealline/blob/38271ab0314a1aed17792286af45d5c9b2b62628/docs/player-first-v01325-public-acceptance.md) covers bounded English/Ukrainian Solo, Versus and Team transitions. Preserve the first Fastline failure in run 36238464572 and PR #663's intermediate exact-head run 36240029777, whose focused job failed four paused/won Team picture-navigation tests before the accepted successor. They are failure evidence, not the final release state.
 
-Archive-directory client [PR #604](https://github.com/mekhovov/revealline/pull/604), opening-theme fallback [PR #617](https://github.com/mekhovov/revealline/pull/617) and this plan [PR #643](https://github.com/mekhovov/revealline/pull/643) are now rebased onto exact accepted boundary `8f7ea5540d6851fb2d6d77a42c899e071e65e52a`. Their refreshed heads are respectively `8ea07ea10cf16138509b4e56ea7edfed9640666f`, `aa9add7af6dd509f27949b31124b2076e4fce4a1` and the documentation successor created by this update. PR #604 passes 198/198 focused catalogue, host, panel and player tests locally; the apparent post-rebase host failures came from the sparse checkout omitting the accepted source's compiled presentation fixtures, and disappeared with those exact fixtures present. PR #617 passes 7/7 focused tests and its formatting check. Preserve failed hosted runs 36230776668, 36231230104, 36231736506, 36232156154 and 36232552706. Prior run 36232882068 passed preflight, 9/9 archive tests and all 21 host tests; opening-theme run 36232888054 passed preflight, focused and release-ready. Fresh exact-head hosted verification is now running after the force-with-lease refreshes. The older fast-release full test/build jobs were skipped, so they remain exclusions rather than passes. PR #590/v0.133 is the active product lane; soundtrack merge/version/tag/publication remains release-owner coordinated.
+Current GitHub `main` subsequently advanced through [PR #564](https://github.com/mekhovov/revealline/pull/564) to `5d6c97c850a648c5ebe93d3cf57731aeb67d0bbb`, whose merge title allocates v0.141.0 while the latest immutable public release remains v0.132.5 and [PR #590](https://github.com/mekhovov/revealline/pull/590) still owns the v0.133 lane. This out-of-sequence source state is a release-coordination concern, not authority to retag or publish. Per the explicit latest-main request, archive-directory client [PR #604](https://github.com/mekhovov/revealline/pull/604), opening-theme fallback [PR #617](https://github.com/mekhovov/revealline/pull/617) and this plan [PR #643](https://github.com/mekhovov/revealline/pull/643) are rebased onto exact current `main`. Their refreshed source heads before this documentation follow-up are respectively `84f426eb54ba9337b1436a9dc4a97177cbe473cd`, `b8f524fb5d30ecc1393fc05b3fe71c2d504ce903` and the documentation successor created by this update. PR #604 retains its 198/198 focused catalogue, host, panel and player baseline; PR #617 passes 7/7 focused tests after this rebase. Preserve failed hosted runs 36230776668, 36231230104, 36231736506, 36232156154 and 36232552706. Prior exact-head runs 36244778272, 36244719225 and 36244814560 passed their applicable preflight, focused and release-ready gates on the former accepted base. Full test/build jobs were skipped under the temporary fast-release policy, so they remain exclusions. Fresh exact-head hosted verification is required for the new rebased heads. Soundtrack merge/version/tag/publication remains sole-release-owner coordinated.
 Archive PR #41 publishes three more CC0 racing-synth auditions by MintoDog: Pure
 Raceway, Pure Raceway (Climax) and Darkness Road (Remake). Exact-head verification
 and Pages deployment passed, public byte-range/CORS checks passed, and direct
@@ -305,8 +305,8 @@ Shared local free space fluctuated during concurrent release work and fell to
 **251 MiB** after the v0.132.5 qualification failure. Coordinated cleanup preserved
 user changes, frozen releases, worktrees and evidence while restoring **6.39 GiB**;
 a direct follow-up measurement reported **5.9 GiB available**. After the latest
-three bounded auditions and release work, a fresh direct measurement reports
-**2.6 GiB available**. Small audio intakes may continue one file at a time. Recheck
+four bounded auditions and release work, a fresh direct measurement reports
+**1.2 GiB available**. Small audio intakes may continue one file at a time. Recheck
 the reserve before every acquisition or build and stop again below the 1 GiB floor.
 
 1. **v0.132 Pages completion:** complete. Selector
@@ -335,7 +335,7 @@ the reserve before every acquisition or build and stop again below the 1 GiB flo
    are public in v0.130.0. Shchedryk full-track/repeated listening, cultural,
    cold-offline and physical-device acceptance remain. M4–M6 research continues in
    parallel.
-5. **M6 full-length metal review:** review seven already-public, exact-source
+5. **M6 full-length metal review:** review eight already-public, exact-source
    David KBD recordings from Interstellar and Purgatory before shorter pending
    Reckless auditions. Four exact Reckless vol. 2 auditions are now public through
    archive PR #27. They require no new media download, but remain unadmitted,
@@ -374,6 +374,19 @@ the reserve before every acquisition or build and stop again below the 1 GiB flo
    reached ready state and advanced. The exact creator OGG hash and derivative
    disclosure are retained. It remains listening-pending, game-unadmitted and
    Recording-mode-ineligible.
+   Archive 02 [PR #18](https://github.com/mekhovov/revealline-soundtracks-02/pull/18)
+   then published David KBD's complete 3:42 **Stellar Confrontation** under CC BY
+   4.0. It merged as `15d30ed9a499b1cb8cf0e9c15f60a492d1db7de3`; exact verification and
+   Pages [run 36245464963](https://github.com/mekhovov/revealline-soundtracks-02/actions/runs/36245464963)
+   passed. The exact 3,784,237-byte creator OGG has SHA-256
+   `e4f0e25e31644face71965b332621e9b6c3e76eaab3f88fe50fa4569fb261cdc`;
+   the 7,105,580-byte public 256 kbps MP3 has SHA-256
+   `ac8f7bff8a3ec6815601000a550be0ac7bf5aaaa27aa4e5ba0146db90eec7876`
+   and measures -16.0 LUFS / -6.0 dBTP. Direct public reads verified exact bytes,
+   CORS and HTTP 206. Browser playback reached ready state and advanced without a
+   media error. It remains listening-pending, game-unadmitted and
+   Recording-mode-ineligible. The two public archives now expose **182 recording
+   files / 43 collections / 181 distinct compositions**.
 7. **M4 Ukrainian Commons auditions:** archive
    [PR #36](https://github.com/mekhovov/revealline-soundtracks-01/pull/36)
    publishes **Oi u luzi chervona kalyna**, **A v kryvoho tantsia** and
@@ -1608,13 +1621,14 @@ the four Purgatory recordings are intentionally shorter than the 3–5-minute ta
 
 First review the prioritized Interstellar/Purgatory set:
 
-1. [Solar Storm — 3:46](https://mekhovov.github.io/revealline-soundtracks-01/?track=davidkbd.solar-storm#recordings)
-2. [Galactic Battle — 3:46](https://mekhovov.github.io/revealline-soundtracks-01/?track=davidkbd.galactic-battle#recordings)
-3. [Orbital Assault — 3:06](https://mekhovov.github.io/revealline-soundtracks-01/?track=davidkbd.orbital-assault#recordings)
-4. [Mutilation's Melody — 2:13](https://mekhovov.github.io/revealline-soundtracks-01/?track=davidkbd.mutilations-melody#recordings)
-5. [Bone Grinder's Ballad — 2:05](https://mekhovov.github.io/revealline-soundtracks-01/?track=davidkbd.bone-grinders-ballad#recordings)
-6. [The Slicing Strain — 2:12](https://mekhovov.github.io/revealline-soundtracks-01/?track=davidkbd.the-slicing-strain#recordings)
-7. [Visceral Vengeance — 1:55](https://mekhovov.github.io/revealline-soundtracks-01/?track=davidkbd.visceral-vengeance#recordings)
+1. [Stellar Confrontation — 3:42](https://mekhovov.github.io/revealline-soundtracks-02/?track=david-kbd.stellar-confrontation#recordings)
+2. [Solar Storm — 3:46](https://mekhovov.github.io/revealline-soundtracks-01/?track=davidkbd.solar-storm#recordings)
+3. [Galactic Battle — 3:46](https://mekhovov.github.io/revealline-soundtracks-01/?track=davidkbd.galactic-battle#recordings)
+4. [Orbital Assault — 3:06](https://mekhovov.github.io/revealline-soundtracks-01/?track=davidkbd.orbital-assault#recordings)
+5. [Mutilation's Melody — 2:13](https://mekhovov.github.io/revealline-soundtracks-01/?track=davidkbd.mutilations-melody#recordings)
+6. [Bone Grinder's Ballad — 2:05](https://mekhovov.github.io/revealline-soundtracks-01/?track=davidkbd.bone-grinders-ballad#recordings)
+7. [The Slicing Strain — 2:12](https://mekhovov.github.io/revealline-soundtracks-01/?track=davidkbd.the-slicing-strain#recordings)
+8. [Visceral Vengeance — 1:55](https://mekhovov.github.io/revealline-soundtracks-01/?track=davidkbd.visceral-vengeance#recordings)
 
 Then review the shorter Reckless set:
 
@@ -1766,7 +1780,8 @@ creator-published CC BY 4.0 recordings that are not yet present. Use these as a
 bounded follow-up pool after the current review queue, rather than republishing
 already archived alternates:
 
-- Interstellar vol. 2: **Space Odyssey, Red Dwarf, Stellar Confrontation, Deep Space**.
+- Interstellar vol. 2: **Deep Space**. Space Odyssey, Red Dwarf and Stellar
+  Confrontation are already public and must not be re-added.
 - Purgatory vol. 3: **Blood Soaked Earth, Putrid Desecration**.
 - Reckless vol. 2: **Broken Pavement Beat, Independent Impact, Brick and Beat,
   Alley Cat Anthem, Wheelie Riot, Overpass Outburst**.
