@@ -8,10 +8,10 @@ release claims.
 ## Candidate identity
 
 - Merged framework source: PR #465, merged 25 September 2026.
-- Rebased hardening base: `a08386476245bc79249d7cb444acf1403eb76c6e` (`main`, source version
-  `0.132.2`).
+- Rebased hardening base: `5bfd55238f19e0454de01b8dd9d1071134cae554` (`main`, source version
+  `0.132.3`).
 - Hardening checkpoint before this acceptance refresh:
-  `cbd5c185a2b8b80fa3093a0150101c4a57a759c0`.
+  `e2616fa43d82e73176ad02fd0b831c314bb54e86`.
 - Assigned release target and working source: `v0.141.0` in PR #564. The repository release
   coordinator still has to freeze the reviewed candidate.
 
@@ -72,7 +72,8 @@ output. Its largest new source asset is the pinned, licensed Mediabunny browser 
 - The current focused Team/shared-ledger/UI cohort passes **43/43**, including exact picture
   normalization, package/install/intake, aggregate quota pressure, abandoned-claim reconciliation,
   storage review and immutable edition accounting. The complete exact-head creator cohort passes
-  **522/522** from one run after the final rebase and UI cancellation fix.
+  **522** top-level subtests and **524/524** total tests after the final rebase and visible Creator
+  Versus continuation fix.
 - Installed creator Versus, bundle, qualification, profile-edition and picture durability coverage
   passes **30** top-level tests and **32/32** total tests including nested host checks. The real host
   runs both boards, replays the generated legal route, awards the exact picture, exposes Cleared
@@ -98,11 +99,11 @@ output. Its largest new source asset is the pinned, licensed Mediabunny browser 
 - Root and community-service ESLint and Prettier checks: passed.
 - Native formatting, Motion Lab syntax, Field Kit producer check, and Field Kit readiness: passed.
 - Root and community dependency audits: zero reported vulnerabilities.
-- A local `npm run build` passed for **1,303 files** at source version `0.141.0` after materializing
-  the tracked release inputs omitted by this worktree's sparse checkout, with distribution SHA-256
-  `612279058679b5a3146bab8ddcfde96d2c69e8d021ce51510c8979e35f4ce19e`. It predates the final
-  durability repair and is supporting evidence only; the exact candidate build and immutable freeze
-  remain PR/release gates.
+- A local `npm run build` passed for **1,303 files** at source version `0.141.0` after the visible
+  Creator Versus continuation repair, with distribution SHA-256
+  `1d39690b4bdec5110b837a36feddff201e649536c399cb7a6129dd7686588982`. The subsequent rebase
+  changed release-inspection utilities only; the hosted exact-head build and immutable freeze remain
+  PR/release gates.
 - Built-in-browser evidence in the phase records covers single-image completion, 12- and 50-image
   batches, cancel/resume and splitting, video-only victory playback, and verified silent-AVC trim.
   On the current combined source, a fresh picture generated a visible moving enemy and two collision
@@ -115,6 +116,14 @@ output. Its largest new source asset is the pinned, licensed Mediabunny browser 
   victory Play, Replay and Skip without replacing the picture. The package retained the complete
   original video; audio, WebM, unsupported-codec, Firefox, Safari and mobile behavior remain
   unqualified.
+- The same two-mission pack was imported from the actual downloaded `.rlpack` on the separate
+  `localhost` origin as immutable edition
+  `6033108fe9e7acc279cb888b19cfccb7033aa9ce20999dc5213b58e282873467`. Reload restored the
+  unfinished Solo attempt, both legal Solo wins, the selected 0.6-second poster and story controls,
+  and the edition-scoped Versus clear. In the physical two-board host, the first mission completed
+  with Sunflower while Skyline remained idle; the visible results action named the exact second
+  mission, and a pointer click launched both boards on runtime key `media-2-53f1206a11a8`. This is
+  separate-origin browser evidence, not a claim of a separate physical browser profile.
 - A real 223,097-byte rotated portrait AVC upload was inspected as 360 × 640 and produced three
   poster candidates. The selected midpoint generated a 72 × 36 Twin corridors level with one
   moving enemy, two collision walls and verified Solo/Versus routes; its 0.33 MiB package retained
@@ -142,9 +151,9 @@ acceptance.
 
 Installed creator play is accepted locally for Solo and for the real two-board Versus host.
 Generated v3 packages retain equal-board qualification evidence; installed Versus revalidates the
-exact package before launch and records edition-scoped progress and pictures. The automated host
-and scoped progress-transfer tests pass. Fresh-browser installed Versus import/reload remains a
-release acceptance item and is not replaced by the modeled host evidence.
+exact package before launch and records edition-scoped progress and pictures. Automated host and
+scoped progress-transfer tests pass, and the built-in-browser separate-origin import/reload and
+visible pointer Next path are accepted. A distinct physical browser profile remains unclaimed.
 
 Verified Team gameplay or media bytes install under the SHA-256 of the complete portable payload.
 Fresh Team library visits discover each immutable edition, replay its qualification before launch,
@@ -160,9 +169,8 @@ Balanced or Compact resize/compression profiles and exact output verification. A
 codecs outside each browser's successful decode probe, and broader conversion remain unsupported.
 Firefox, Safari, Balanced portrait and physical mobile media qualification remain unclaimed.
 
-PR #465 is merged. The hardening branch is rebased onto current protected `main` in ready PR #564,
-which has the repository-assigned target and source identity `v0.141.0`. Local exact-head
-creator, service, navigation, validation, lint and format gates pass. Publication still requires
-hosted PR checks, review, an immutable freeze,
-artifact hashes, public online/offline verification, and a separately reviewed Pages selector
-update where applicable.
+PR #465 is merged. The hardening branch is rebased onto current protected `main` in PR #564,
+which has the repository-assigned target and source identity `v0.141.0`. The active v0.132.3 release
+must publish and merge its selector first; #564 then requires one final rebase and exact-head hosted
+checks. Publication still requires review, an immutable freeze, artifact hashes, public
+online/offline verification, and a separately reviewed Pages selector update where applicable.
