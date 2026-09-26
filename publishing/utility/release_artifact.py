@@ -203,10 +203,21 @@ def recoverable_fastline_inspection_failure(run, jobs, source):
                 job.get('conclusion') in ('success', 'skipped', 'failure') for job in jobs))
 
 
-def current_fastline_inspection(run, expected):
-    """Allow the inspection job to read the artifact produced by its own active run."""
-    return (run.get('path') == FASTLINE_WORKFLOW and run.get('status') == 'in_progress' and
-            run.get('conclusion') is None and os.environ.get('GITHUB_RUN_ID') == str(expected['runId']))
+def active_fastline_inspection(run, jobs, source):
+    """Permit only this exact run to inspect after its qualification jobs passed."""
+    current = os.environ.get('GITHUB_RUN_ID', '')
+    if (not current.isdigit() or run.get('id') != int(current) or
+            run.get('path') != FASTLINE_WORKFLOW or run.get('status') != 'in_progress' or
+            run.get('conclusion') is not None):
+        return False
+    admission = [job for job in jobs if job.get('name') == 'admission']
+    inspection = [job for job in jobs if job.get('name') == 'inspect-artifact']
+    return (len(admission) == 1 and admission[0].get('status') == 'completed' and
+            admission[0].get('conclusion') == 'success' and
+            len(inspection) == 1 and inspection[0].get('status') == 'in_progress' and
+            inspection[0].get('conclusion') is None and
+            not any(job.get('conclusion') == 'failure' for job in jobs) and
+            all(job.get('head_sha') == source for job in jobs))
 
 
 def artifact_authority(api, binding, policy_body=None):
@@ -220,10 +231,9 @@ def artifact_authority(api, binding, policy_body=None):
             item.get('workflow_run', {}).get('id') == expected['runId'] and
             item.get('workflow_run', {}).get('head_sha') == binding['source']['commit'], 'Artifact authority differs')
     run = api.get(f'/repos/{repo}/actions/runs/{expected["runId"]}')
-    current_inspection = current_fastline_inspection(run, expected)
     require(run.get('id') == expected['runId'] and run.get('event') == 'workflow_dispatch' and
             run.get('path') in QUALIFICATION_WORKFLOWS and run.get('head_sha') == binding['source']['commit'] and
-            (run.get('status') == 'completed' or current_inspection),
+            run.get('status') in ('in_progress', 'completed'),
             'Original manual source/freeze run identity differs')
     jobs = []
     for page in range(1, 11):
@@ -235,7 +245,8 @@ def artifact_authority(api, binding, policy_body=None):
             break
     else:
         raise ValueError('Jobs exceed pagination bound')
-    require(current_inspection or run.get('conclusion') == 'success' or
+    require(active_fastline_inspection(run, jobs, binding['source']['commit']) or
+            run.get('conclusion') == 'success' or
             recoverable_fastline_inspection_failure(run, jobs, binding['source']['commit']),
             'Original manual source/freeze run is not completed successfully')
     waived = policy_body is not None and test_policy(policy_body)['mode'] == 'waived'

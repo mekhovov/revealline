@@ -196,7 +196,29 @@ async function fixture(t, versions = ['v0.1.0', 'v0.44.0'], { archiveCurrent = f
     ['native.txt', nativeBytes],
   ])
     await write(path.join(directory, name), bytes);
-  return { directory, currentSite, outputDirectory, configuration, records, write };
+  const currentManifestBytes = await fs.readFile(path.join(currentSite, 'manifest.json')),
+    currentManifest = JSON.parse(currentManifestBytes),
+    extractionReceipt = {
+      format: 'revealline-current-extraction.v1',
+      distributionSha256: records.at(-1).distributionSha256,
+      manifestSha256: records.at(-1).manifestSha256,
+      gameSourceRevision: records.at(-1).sourceRevision,
+      version: records.at(-1).version,
+      membersVerified: currentManifest.files.length + 1,
+      manifestFilesVerified: currentManifest.files.length,
+      uncompressedBytesVerified: currentManifest.totalBytes + currentManifestBytes.length,
+      crcAndHashesVerified: true,
+      files: await directoryInventory(currentSite),
+    };
+  return {
+    directory,
+    currentSite,
+    outputDirectory,
+    configuration,
+    records,
+    write,
+    extractionReceipt,
+  };
 }
 
 const waivedPolicy = () => ({
@@ -488,8 +510,26 @@ test('wrong and extra current bodies fail before any artifact is created', async
   await assert.rejects(fs.access(f.outputDirectory));
   await fs.unlink(path.join(f.currentSite, 'unexpected.txt'));
   await fs.writeFile(path.join(f.currentSite, 'game/index.html'), 'wrong');
-  await assert.rejects(assemble(f), /mismatched/);
+  await assert.rejects(assemble(f), /mismatch|changed/);
   await assert.rejects(fs.access(f.outputDirectory));
+});
+
+test('extraction receipt identity and inventory mutations fail closed', async (t) => {
+  for (const mutate of [
+    (receipt) => (receipt.gameSourceRevision = 'b'.repeat(40)),
+    (receipt) => (receipt.files[0].sha256 = 'f'.repeat(64)),
+    (receipt) => receipt.files.reverse(),
+    (receipt) => receipt.files.pop(),
+  ]) {
+    const f = await fixture(t),
+      changed = structuredClone(f.extractionReceipt);
+    mutate(changed);
+    await assert.rejects(
+      assemble({ ...f, extractionReceipt: changed }),
+      /extraction|inventory/i,
+    );
+    await assert.rejects(fs.access(f.outputDirectory));
+  }
 });
 
 test('archive admission requires every original file, pinned HTTP evidence and native approval', async (t) => {

@@ -69,6 +69,14 @@ jobs:
         id: test_policy
         run: node publishing/test-policy.mjs
 
+      - name: Restore conditional archive-authority ETags
+        uses: actions/cache/restore@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+        with:
+          path: .cache/frozen-pages/authority-etags.json
+          key: frozen-pages-authority-${{ runner.os }}-${{ github.run_id }}
+          restore-keys: |
+            frozen-pages-authority-${{ runner.os }}-
+
       - name: Verify metadata bridges and bounded ZIP extraction in full mode
         if: vars.REVEALLINE_FULL_CI == 'true' && steps.test_policy.outputs.runTests == 'true'
         run: |
@@ -98,6 +106,13 @@ jobs:
           PREVIEW: ${{ github.event_name == 'pull_request' && '--preview' || '' }}
           PR_BASE_SHA: ${{ github.event.pull_request.base.sha || '' }}
         run: node publishing/pages-controller/publish.mjs verify $PREVIEW
+
+      - name: Save refreshed conditional archive-authority ETags
+        if: success() && hashFiles('.cache/frozen-pages/authority-etags.json') != ''
+        uses: actions/cache/save@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+        with:
+          path: .cache/frozen-pages/authority-etags.json
+          key: frozen-pages-authority-${{ runner.os }}-${{ github.run_id }}
 
       - name: Assemble exact current ZIP and historical metadata bridges
         if: github.event_name != 'pull_request' || vars.REVEALLINE_FULL_CI == 'true'
@@ -138,6 +153,8 @@ jobs:
     if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
     needs: assemble
     runs-on: ubuntu-latest
+    outputs:
+      page_url: ${{ steps.deployment.outputs.page_url }}
     permissions:
       contents: read
       pages: write
@@ -171,3 +188,64 @@ jobs:
       - name: Deploy verified frozen edition to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+  audit-public-bytes:
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    needs: [assemble, deploy]
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    permissions:
+      contents: read
+      actions: read
+    steps:
+      - name: Check out the bounded public-byte auditor
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 1
+          filter: blob:none
+          persist-credentials: false
+          sparse-checkout: |
+            /publishing/pages-controller/public-byte-audit.mjs
+          sparse-checkout-cone-mode: false
+
+      - name: Set up public-audit runtime
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.22.2
+
+      - name: Download the exact assembly receipt from this run
+        uses: actions/download-artifact@v4
+        with:
+          name: frozen-pages-receipts
+          path: receipts
+
+      - name: Stream and verify every deployed public byte
+        env:
+          PUBLIC_ROOT: ${{ needs.deploy.outputs.page_url }}
+        run: |
+          set -euo pipefail
+          receipt="$(find receipts -type f -name artifact-receipt.json -print -quit)"
+          test -n "$receipt"
+          node publishing/pages-controller/public-byte-audit.mjs \
+            "$receipt" public-byte-audit.json "$PUBLIC_ROOT" 12
+
+      - name: Retain the immutable public-byte receipt
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: public-byte-audit-${{ github.sha }}
+          path: public-byte-audit.json
+          compression-level: 0
+          retention-days: 30
+          if-no-files-found: error
+
+      - name: Record exact public verification
+        run: |
+          printf '%s\n' \
+            '### Exact public-byte audit' \
+            '' \
+            "Public root: \`${{ needs.deploy.outputs.page_url }}\`" \
+            "Files: \`$(jq -r .files public-byte-audit.json)\`" \
+            "Bytes: \`$(jq -r .bytes public-byte-audit.json)\`" \
+            "Requests: \`$(jq -r .attempts public-byte-audit.json)\`" \
+            "Retries: \`$(jq -r .retries public-byte-audit.json)\`." >> "$GITHUB_STEP_SUMMARY"

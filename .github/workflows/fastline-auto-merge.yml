@@ -36,9 +36,12 @@ concurrency:
 
 jobs:
   reconcile:
+    # Completed failed/cancelled required gates must also wake the controller:
+    # an exact head that was armed by an earlier successful run must be
+    # disarmed when the required result changes.
     if: >-
       github.event_name != 'workflow_run' ||
-      (github.event.workflow_run.event == 'pull_request' && github.event.workflow_run.conclusion == 'success')
+      github.event.workflow_run.event == 'pull_request'
     runs-on: ubuntu-latest
     steps:
       # This privileged controller checks out automation only from protected main.

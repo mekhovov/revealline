@@ -70,6 +70,15 @@ test("changed heads invalidate admission and disarm an existing request", () => 
   });
 });
 
+test("a failed required rerun disarms an already admitted exact head", () => {
+  const input = fixture({ auto_merge: { enabled_at: "now" } });
+  input.requiredCheck.conclusion = "failure";
+  assert.deepEqual(decideMergeAction(input), {
+    action: "disarm",
+    reason: "release-ready is not successful on the exact head",
+  });
+});
+
 test("holds, drafts, milestone changes and review blockers do not merge", () => {
   assert.equal(decideMergeAction(fixture({ draft: true })).action, "wait");
   assert.equal(
@@ -171,6 +180,7 @@ test("the privileged workflow is a safe no-op until the trusted controller reach
   assert.match(workflow, /reopened,/);
   assert.match(workflow, /filter: blob:none/);
   assert.match(workflow, /cancel-in-progress: false/);
+  assert.doesNotMatch(workflow, /workflow_run\.conclusion == 'success'/);
   assert.match(workflow, /contents: write/);
   assert.match(
     workflow,

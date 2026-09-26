@@ -2,6 +2,7 @@ import copy
 import hashlib
 import io
 import json
+import os
 from pathlib import Path
 import subprocess
 import sys
@@ -127,6 +128,26 @@ class BindingTests(unittest.TestCase):
             utility.artifact_authority(API([current, fastline_run, fastline_jobs]), value),
             current,
         )
+        active_fastline_run = {**fastline_run, 'status': 'in_progress', 'conclusion': None}
+        active_jobs = copy.deepcopy(fastline_jobs)
+        active_jobs['jobs'].extend([
+            {'name': 'admission', 'head_sha': 'a' * 40, 'status': 'completed', 'conclusion': 'success'},
+            {'name': 'inspect-artifact', 'head_sha': 'a' * 40, 'status': 'in_progress', 'conclusion': None},
+        ])
+        with patch.dict(os.environ, {'GITHUB_RUN_ID': '18'}):
+            self.assertEqual(
+                utility.artifact_authority(API([current, active_fastline_run, active_jobs]), value),
+                current,
+            )
+        for mutate in [
+            lambda rows: rows[1].update(id=19),
+            lambda rows: rows[2]['jobs'][-1].update(status='completed', conclusion='success'),
+            lambda rows: rows[2]['jobs'][0].update(conclusion='failure'),
+        ]:
+            rows = copy.deepcopy([current, active_fastline_run, active_jobs])
+            mutate(rows)
+            with patch.dict(os.environ, {'GITHUB_RUN_ID': '18'}), self.assertRaises(ValueError):
+                utility.artifact_authority(API(rows), value)
         failed_fastline_run = {**fastline_run, 'conclusion': 'failure'}
         recoverable_jobs = copy.deepcopy(fastline_jobs)
         recoverable_jobs['jobs'].extend([
@@ -166,34 +187,6 @@ class BindingTests(unittest.TestCase):
             with self.assertRaises(ValueError): utility.artifact_authority(API(rows), value)
         broken = copy.deepcopy(jobs); broken['jobs'][-1]['conclusion'] = 'skipped'
         with self.assertRaises(ValueError): utility.artifact_authority(API([artifact, run, broken]), value)
-
-    def test_artifact_authority_allows_only_the_current_in_progress_fastline_run(self):
-        value = binding()
-        artifact = {'id': 17, 'name': 'qualified-release-v1.2.3-' + 'a' * 40, 'expired': False,
-                    'size_in_bytes': 100, 'digest': 'sha256:' + 'c' * 64,
-                    'workflow_run': {'id': 18, 'head_sha': 'a' * 40}}
-        run = {'id': 18, 'event': 'workflow_dispatch', 'path': utility.FASTLINE_WORKFLOW,
-               'head_sha': 'a' * 40, 'status': 'in_progress', 'conclusion': None}
-        jobs = {'jobs': [
-            {'name': 'qualify / ' + name, 'head_sha': 'a' * 40,
-             'status': 'completed', 'conclusion': 'success'}
-            for name in ['qualify', 'test (1)', 'test (2)', 'test (3)', 'test (4)', 'freeze']
-        ]}
-
-        class API:
-            def __init__(self, rows): self.rows = iter(rows)
-            def get(self, _path): return next(self.rows)
-
-        with patch.dict(utility.os.environ, {'GITHUB_RUN_ID': '18'}):
-            self.assertEqual(utility.artifact_authority(API([artifact, run, jobs]), value), artifact)
-        for run_id, candidate in [
-                ('19', run),
-                ('18', {**run, 'path': utility.WORKFLOW}),
-                ('18', {**run, 'status': 'queued'}),
-                ('18', {**run, 'conclusion': 'failure'})]:
-            with self.subTest(run_id=run_id, candidate=candidate), \
-                    patch.dict(utility.os.environ, {'GITHUB_RUN_ID': run_id}), self.assertRaises(ValueError):
-                utility.artifact_authority(API([artifact, candidate, jobs]), value)
 
     def test_disk_refusal_happens_before_subprocess_or_output(self):
         with tempfile.TemporaryDirectory() as tmp, patch.object(utility.shutil, 'disk_usage') as disk, \

@@ -1,4 +1,4 @@
-import { publishOfflineLauncher } from './launcher.mjs';
+import { publishOfflineLauncher } from "./launcher.mjs";
 /** Publishing infrastructure only: one verified current graph plus authenticated historical bridges. */
 import * as fs from "node:fs/promises";
 import { createReadStream, createWriteStream } from "node:fs";
@@ -470,6 +470,93 @@ export async function directoryInventory(
   return boundedMap(files, concurrency, streamedInventoryRow);
 }
 
+export async function extractionInventory(
+  directory,
+  receipt,
+  { record, manifest, manifestBytes, checksumBytes },
+) {
+  if (
+    !exact(receipt, [
+      "format",
+      "distributionSha256",
+      "manifestSha256",
+      "gameSourceRevision",
+      "version",
+      "membersVerified",
+      "manifestFilesVerified",
+      "uncompressedBytesVerified",
+      "crcAndHashesVerified",
+      "files",
+    ]) ||
+    receipt.format !== "revealline-current-extraction.v1" ||
+    receipt.distributionSha256 !== record.distributionSha256 ||
+    receipt.manifestSha256 !== record.manifestSha256 ||
+    receipt.gameSourceRevision !== record.sourceRevision ||
+    receipt.version !== record.version ||
+    receipt.membersVerified !== manifest.files.length + 1 ||
+    receipt.manifestFilesVerified !== manifest.files.length ||
+    receipt.uncompressedBytesVerified !==
+      manifest.totalBytes + manifestBytes.length ||
+    receipt.crcAndHashesVerified !== true ||
+    !Array.isArray(receipt.files) ||
+    receipt.files.length !== manifest.files.length + 3
+  )
+    throw new Error("Current extraction receipt is invalid or mismatched.");
+  const rows = receipt.files.map((row) => {
+    if (
+      !exact(row, ["path", "bytes", "sha256"]) ||
+      !Number.isSafeInteger(row.bytes) ||
+      row.bytes < 0 ||
+      !SHA.test(row.sha256)
+    )
+      throw new Error("Current extraction inventory row is invalid.");
+    safePath(row.path);
+    return { path: row.path, bytes: row.bytes, sha256: row.sha256 };
+  });
+  const sorted = [...rows].sort((left, right) =>
+    left.path < right.path ? -1 : left.path > right.path ? 1 : 0,
+  );
+  if (
+    JSON.stringify(rows) !== JSON.stringify(sorted) ||
+    new Set(rows.map((row) => row.path)).size !== rows.length
+  )
+    throw new Error("Current extraction inventory is unsorted or duplicated.");
+  const ordinaryPaths = (await enumerateOrdinaryFiles(directory))
+    .map((file) => file.path)
+    .sort();
+  if (
+    JSON.stringify(ordinaryPaths) !==
+    JSON.stringify(rows.map((row) => row.path))
+  )
+    throw new Error("Current extraction contains missing or extra files.");
+  const marker = Buffer.from(
+      '{\n  "tool": "xonix-game-cli",\n  "formatVersion": 1\n}\n',
+    ),
+    expected = [
+      ...manifest.files,
+      {
+        path: "manifest.json",
+        bytes: manifestBytes.length,
+        sha256: digest(manifestBytes),
+      },
+      {
+        path: "distribution.zip.sha256",
+        bytes: checksumBytes.length,
+        sha256: digest(checksumBytes),
+      },
+      {
+        path: ".xonix-build.json",
+        bytes: marker.length,
+        sha256: digest(marker),
+      },
+    ].sort((left, right) =>
+      left.path < right.path ? -1 : left.path > right.path ? 1 : 0,
+    );
+  if (JSON.stringify(rows) !== JSON.stringify(expected))
+    throw new Error("Current extraction inventory differs from its manifest.");
+  return rows;
+}
+
 async function copyVerifiedFile(source, destination, expected) {
   await fs.mkdir(path.dirname(destination), { recursive: true });
   const hash = createHash("sha256");
@@ -533,6 +620,7 @@ export async function assemble({
   currentSite,
   outputDirectory,
   requireBrowser = true,
+  extractionReceipt = null,
 }) {
   const {
       lock,
@@ -578,7 +666,9 @@ export async function assemble({
     (await fs.lstat(currentSite)).isSymbolicLink()
   )
     throw new Error("Explicit ordinary current site and output required.");
-  const inputRows = await directoryInventory(currentSite);
+  const inputRows = extractionReceipt
+    ? await extractionInventory(currentSite, extractionReceipt, current)
+    : await directoryInventory(currentSite);
   const originalZip = inputRows.find((row) => row.path === "distribution.zip");
   if (
     originalZip &&
@@ -612,7 +702,12 @@ export async function assemble({
     ].sort((a, b) => (a.path < b.path ? -1 : a.path > b.path ? 1 : 0));
   if (JSON.stringify(currentRows) !== JSON.stringify(expectedRows))
     throw new Error("Current site has mismatched, missing or extra files.");
-  await verifyFrozenSite(currentSite, current.record);
+  // The extractor already streamed and hashed every original member. Reuse
+  // that immutable inventory here; copyVerifiedFile below still rereads and
+  // hashes every source byte while copying, and the final output is inventoried
+  // and independently reread after assembly. Direct library callers without a
+  // receipt retain the legacy full verification path.
+  if (!extractionReceipt) await verifyFrozenSite(currentSite, current.record);
   const entries = await planCurrentEntries({
     source: currentSite,
     repository: lock.sourceRepository,
@@ -678,7 +773,11 @@ export async function assemble({
   );
   await writeFile(outputDirectory, ".nojekyll", "");
   await writeCurrentEntries(entries, outputDirectory);
-  await publishOfflineLauncher(currentSite, outputDirectory, current.record.version);
+  await publishOfflineLauncher(
+    currentSite,
+    outputDirectory,
+    current.record.version,
+  );
   await writeFile(
     outputDirectory,
     "archive-routing.json",
