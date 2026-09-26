@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../i18n/style.css" />
+    <script src="../vendor/i18next-26.4.2.min.js"></script>
+    <script src="../i18n/catalogs.mjs"></script>
+    <script src="../i18n/bootstrap.mjs"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title data-i18n="interface:creator.teamStudio.pageTitle">
+      Create a Team campaign · RevealLine
+    </title>
+    <link rel="stylesheet" href="./creator.css" />
+    <script type="module" src="./team-studio.mjs"></script>
+  </head>
+  <body>
+    <div data-language-control></div>
+    <header>
+      <a href="./" data-i18n="interface:creator.teamStudio.back">← Picture campaign creator</a>
+      <a href="../couch/relay-rescue.html" data-i18n="interface:creator.teamStudio.openTeam"
+        >Open Team</a
+      >
+      <span data-i18n="interface:creator.teamStudio.header">Team campaign creator</span>
+    </header>
+    <main>
+      <p class="eyebrow" data-i18n="interface:creator.teamStudio.eyebrow">
+        CREATE / VERIFY / PLAY TOGETHER
+      </p>
+      <h1 data-i18n="interface:creator.teamStudio.heading">
+        Build a playable Team campaign from your media.
+      </h1>
+      <p data-i18n="interface:creator.teamStudio.introduction">
+        Generate two purposeful cooperative levels, attach a reward picture to each, and optionally
+        add a victory video. Processing stays on this device.
+      </p>
+      <p
+        id="status"
+        role="status"
+        aria-live="polite"
+        data-i18n="interface:creator.teamStudio.ready"
+      >
+        Name the campaign, then generate its verified levels.
+      </p>
+
+      <section class="panel" aria-labelledby="team-setup-title">
+        <h2 id="team-setup-title" data-i18n="interface:creator.teamStudio.setupHeading">
+          1. Generate cooperative levels
+        </h2>
+        <div class="controls">
+          <label>
+            <span data-i18n="interface:creator.collectionName">Collection name</span>
+            <input id="campaign-name" maxlength="80" value="My Team campaign" />
+          </label>
+          <label>
+            <span data-i18n="interface:creator.teamStudio.campaignId">Campaign ID</span>
+            <input
+              id="campaign-id"
+              maxlength="56"
+              value="my-team-campaign"
+              pattern="[a-z][a-z0-9-]*"
+            />
+          </label>
+          <label>
+            <span data-i18n="interface:creator.teamStudio.seed">Generation seed</span>
+            <input id="seed" type="number" min="0" max="4294967295" step="1" value="0" />
+          </label>
+          <button id="generate" data-i18n="interface:creator.teamStudio.generate">
+            Generate and verify
+          </button>
+          <button id="cancel" class="secondary" hidden data-i18n="common:actions.cancel">
+            Cancel
+          </button>
+        </div>
+        <p class="muted" data-i18n="interface:creator.teamStudio.generationHelp">
+          The seed selects the order of bounded cooperative templates. Each advertised difficulty
+          and teamwork preset is replay-verified.
+        </p>
+      </section>
+
+      <section id="media-panel" class="panel" aria-labelledby="team-media-title" hidden>
+        <h2 id="team-media-title" data-i18n="interface:creator.teamStudio.mediaHeading">
+          2. Attach and review media
+        </h2>
+        <p data-i18n="interface:creator.teamStudio.mediaHelp">
+          Every level needs one picture. Videos are optional and play after a legal win; the
+          complete original video remains in the package.
+        </p>
+        <div id="team-levels" class="team-levels"></div>
+        <details>
+          <summary data-i18n="interface:creator.creditsAndSharing">
+            Credits and sharing information
+          </summary>
+          <label>
+            <span data-i18n="tools:creator">Creator</span>
+            <input id="creator-credit" maxlength="512" value="Anonymous creator" />
+          </label>
+          <label>
+            <span data-i18n="interface:creator.teamStudio.mediaCredit">Media credit</span>
+            <input id="media-credit" maxlength="512" value="Creator supplied media" />
+          </label>
+          <label>
+            <span data-i18n="interface:creator.licenseTerms">License or sharing terms</span>
+            <input id="license" maxlength="512" value="No additional license granted" />
+          </label>
+        </details>
+        <div class="actions">
+          <button id="review" data-i18n="interface:creator.teamStudio.review">
+            Prepare review
+          </button>
+        </div>
+      </section>
+
+      <section id="approval-panel" class="panel" aria-labelledby="team-approval-title" hidden>
+        <h2 id="team-approval-title" data-i18n="interface:creator.teamStudio.approvalHeading">
+          3. Approve the exact package
+        </h2>
+        <div id="review-cards" class="team-levels"></div>
+        <p id="package-summary"></p>
+        <p class="muted" data-i18n="interface:creator.teamStudio.approvalHelp">
+          Changing any gameplay, media, range, description, or credit invalidates this review.
+        </p>
+        <div class="actions">
+          <button id="approve" data-i18n="interface:creator.teamStudio.approve">
+            Approve exact package
+          </button>
+          <button id="install" disabled data-i18n="interface:creator.teamStudio.install">
+            Install approved campaign
+          </button>
+          <button id="download" disabled data-i18n="interface:creator.teamStudio.download">
+            Download .rlteammedia
+          </button>
+          <a
+            id="play"
+            class="button-link"
+            href="../couch/relay-rescue.html"
+            hidden
+            data-i18n="interface:creator.teamStudio.play"
+            >Play installed Team campaign</a
+          >
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
