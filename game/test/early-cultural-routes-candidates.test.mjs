@@ -274,8 +274,8 @@ test('registered v14 successor preserves v13 order and uses isolated progress ow
   assert(authoredJourneyUsesActorMaterials(current.id));
   assert(AUTHORED_JOURNEY_ROUTE_IDS.includes(current.id));
   assert.deepEqual(DEFAULT_JOURNEY_ROUTES, {
-    solo: 'whole-spatial-v17',
-    versus: 'whole-spatial-v17',
+    solo: 'whole-spatial-v18',
+    versus: 'whole-spatial-v18',
     team: 'team-trail-impact-originals-1',
   });
   assert.equal(authoredJourneyModeHref(current.id, 'solo'), '../?journey=whole-spatial-v14');
@@ -294,7 +294,7 @@ test('registered v14 successor preserves v13 order and uses isolated progress ow
     );
 });
 
-test('Studio retains v13 and v14 after the selector advances to v15', async () => {
+test('Studio retains v13 and v14 after the selector advances to v18', async () => {
   const html = await readFile(new URL('../studio/index.html', import.meta.url), 'utf8');
   const script = await readFile(new URL('../studio/studio.mjs', import.meta.url), 'utf8');
   const nodes = [];
@@ -314,7 +314,7 @@ test('Studio retains v13 and v14 after the selector advances to v15', async () =
     options
       .filter((node) => attribute(node, 'selected') !== undefined)
       .map((node) => attribute(node, 'value')),
-    ['neon-cultural-routes-2'],
+    ['rover-cultural-routes-1'],
   );
   assert.match(html, /journey=whole-spatial-v14/);
   assert.match(script, /'early-cultural-routes-1': createEarlyCulturalRoutesCandidates/);
