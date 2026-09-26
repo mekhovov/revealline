@@ -7,16 +7,23 @@
 ## Current checkpoint — 26 September 2026
 
 - **Completed:** immutable
-  [v0.132.2](https://github.com/mekhovov/revealline/releases/tag/v0.132.2) is the
-  accepted public release. Its tag points to product source
-  `b96a00159427e865c2072d27768c354b972fa812`; selector
-  [PR #618](https://github.com/mekhovov/revealline/pull/618) merged as
-  `f55f30cf22b9e9670fdd725061fee8166f6709e3`. Current `main` at
-  `c6efdbcc0a409bdce8cda85b980da0d136af2731` retains v0.132.2 and adds later
-  documentation and release-workflow changes.
-- **Active:** the serialized working queue is v0.132.3 touch steering after
-  controller Start ([PR #612](https://github.com/mekhovov/revealline/pull/612));
-  v0.133 compact gallery ([PR #590](https://github.com/mekhovov/revealline/pull/590));
+  [v0.132.4](https://github.com/mekhovov/revealline/releases/tag/v0.132.4) is the
+  current published release; formal acceptance is blocked by incomplete live
+  English/Ukrainian refresh. Its tag points to product source
+  `d3df9d47f578d48383ff589914a188ada2ef8b31`; selector
+  [PR #649](https://github.com/mekhovov/revealline/pull/649) merged as
+  `d308610271ad01fbabb2847ee046325001ec63e5`. Current `main` at
+  `0cb51db92295a62fea99ee2ab215a79c6df06520` retains v0.132.4 and includes the
+  permanent draft-release discovery correction plus bounded public-byte release
+  verification. Public Solo, Versus and Team
+  entry, the Team picture binding, Ukrainian text and exact deployed manifest
+  bytes were verified. A follow-up live language-switch audit found a retained
+  English Solo primary action/destination after switching to Ukrainian; that is
+  tracked as a corrective release rather than modifying v0.132.4.
+- **Active:** the serialized working queue starts with the focused v0.132.5
+  localization correction in
+  [PR #652](https://github.com/mekhovov/revealline/pull/652), then v0.133 compact gallery
+  ([PR #590](https://github.com/mekhovov/revealline/pull/590));
   v0.134 Team quick-start ([PR #549](https://github.com/mekhovov/revealline/pull/549));
   v0.135 Couch secondary navigation ([PR #539](https://github.com/mekhovov/revealline/pull/539));
   v0.136 Team teaching ([PR #543](https://github.com/mekhovov/revealline/pull/543));
