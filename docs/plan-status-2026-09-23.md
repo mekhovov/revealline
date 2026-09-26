@@ -4,6 +4,44 @@
 > for current UX work and its release checkpoint. The dated acceptance records below
 > remain historical; their old public version and PR counts are not live status.
 
+## Current checkpoint — 26 September 2026
+
+- **Completed:** immutable
+  [v0.132.2](https://github.com/mekhovov/revealline/releases/tag/v0.132.2) is the
+  accepted public release. Its tag points to product source
+  `b96a00159427e865c2072d27768c354b972fa812`; selector
+  [PR #618](https://github.com/mekhovov/revealline/pull/618) merged as
+  `f55f30cf22b9e9670fdd725061fee8166f6709e3`. Current `main` at
+  `c6efdbcc0a409bdce8cda85b980da0d136af2731` retains v0.132.2 and adds later
+  documentation and release-workflow changes.
+- **Active:** the serialized working queue is v0.132.3 touch steering after
+  controller Start ([PR #612](https://github.com/mekhovov/revealline/pull/612));
+  v0.133 compact gallery ([PR #590](https://github.com/mekhovov/revealline/pull/590));
+  v0.134 Team quick-start ([PR #549](https://github.com/mekhovov/revealline/pull/549));
+  v0.135 Couch secondary navigation ([PR #539](https://github.com/mekhovov/revealline/pull/539));
+  v0.136 Team teaching ([PR #543](https://github.com/mekhovov/revealline/pull/543));
+  v0.137 deliberate Team terminal Retry ([PR #545](https://github.com/mekhovov/revealline/pull/545));
+  v0.138 Versus countdown ([PR #552](https://github.com/mekhovov/revealline/pull/552));
+  v0.139 named result destinations ([PR #557](https://github.com/mekhovov/revealline/pull/557));
+  and v0.140 Collection fixture reconciliation plus paused Settings/Help return
+  ([PR #548](https://github.com/mekhovov/revealline/pull/548), then
+  [PR #542](https://github.com/mekhovov/revealline/pull/542)). These are working
+  allocations, not merged or public releases. Each must be reconciled and
+  qualified on its accepted predecessor; stale target versions in draft titles
+  and evidence do not override this order.
+- **Remaining:** UX6 cumulative Solo/Versus/Team journeys, real-browser viewport,
+  zoom, accessibility and performance regression, current-build offline
+  install/update/recovery, and public-byte verification follow v0.140. Focused
+  branch tests are component evidence, not a cumulative qualification. Waived or
+  skipped long suites are not passes; modeled pads and DOM clicks are not physical
+  controller, Steam Deck or touch-device evidence. Human balance, cross-runtime
+  replay portability and physical installed-device acceptance remain separate
+  gates.
+
+The 23 September register and later dated sections are preserved below as
+historical scope, evidence and design contracts. Their old version, PR-count and
+queue statements are not live status.
+
 Status checked **23 September 2026, 14:32 UTC**. This is the current status and
 priority register for the approved Xposed-led Journey and unified-library plan.
 It supersedes older status/queue paragraphs, not their design contracts, source

@@ -4,6 +4,58 @@ Approved 24 September 2026. This replaces the execution order in the older
 whole-game plans; it does not erase their content, compatibility or qualification
 requirements. Each independent feature is released before the next is accepted.
 
+## Current checkpoint — 26 September 2026
+
+This checkpoint supersedes older paragraphs below that describe themselves as
+current. Those paragraphs remain unchanged as dated implementation and release
+evidence.
+
+**Completed:** immutable
+[v0.132.2](https://github.com/mekhovov/revealline/releases/tag/v0.132.2) is the
+accepted public release. Its tag points to product source
+`b96a00159427e865c2072d27768c354b972fa812`; selector
+[PR #618](https://github.com/mekhovov/revealline/pull/618) merged as
+`f55f30cf22b9e9670fdd725061fee8166f6709e3`. Current `main` at
+`c6efdbcc0a409bdce8cda85b980da0d136af2731` retains version v0.132.2 and adds
+later documentation and release-workflow changes. v0.132.2 restores the two
+approved Team picture bindings for FPV revision 88 and preserves revisions
+58–87; it does not broaden the accepted picture identities or player-flow
+qualification.
+
+**Active and ordered:** each row is a working allocation, not an accepted
+release. Reconcile each item onto the publicly accepted predecessor, rerun its
+exact-head gates and publish it before accepting the next row. Older target
+versions in draft PR titles and evidence files are stale where they disagree
+with this order.
+
+| Order | Working release | Scope | Current source input |
+| --- | --- | --- | --- |
+| 1 | v0.132.3 | Restore touch steering after controller Start | [PR #612](https://github.com/mekhovov/revealline/pull/612) |
+| 2 | v0.133.0 | Compact complete mission gallery | [PR #590](https://github.com/mekhovov/revealline/pull/590) |
+| 3 | v0.134.0 | Team quick-start | [PR #549](https://github.com/mekhovov/revealline/pull/549) |
+| 4 | v0.135.0 | Couch secondary navigation | [PR #539](https://github.com/mekhovov/revealline/pull/539) |
+| 5 | v0.136.0 | Contextual Team teaching | [PR #543](https://github.com/mekhovov/revealline/pull/543) |
+| 6 | v0.137.0 | Deliberate Team terminal Retry | [PR #545](https://github.com/mekhovov/revealline/pull/545) |
+| 7 | v0.138.0 | Readable Versus countdown and Retry cue | [PR #552](https://github.com/mekhovov/revealline/pull/552) |
+| 8 | v0.139.0 | Named result destinations | [PR #557](https://github.com/mekhovov/revealline/pull/557) |
+| 9 | v0.140.0 | Collection fixture reconciliation plus Settings/Help return to Pause | [PR #548](https://github.com/mekhovov/revealline/pull/548), then [PR #542](https://github.com/mekhovov/revealline/pull/542) |
+
+**Remaining:** UX6 still owns one cumulative whole-player qualification after
+v0.140.0. It must exercise complete Solo, Versus and Team journeys; real browser
+layout and focus at desktop, 1280×800, portrait, short landscape and 200% zoom;
+keyboard, touch, reduced-effects and accessibility behavior; gallery memory and
+frame-time comparison; offline install/update/recovery; and deployed public-byte
+regression. Existing focused PR passes are component evidence and cannot be added
+together as proof of the cumulative source.
+
+The temporary fast-release policy waives long automated suites; a waived, skipped
+or cancelled run is not a pass. Modeled gamepads and DOM clicks are not physical
+controller, Steam Deck or touch-device evidence. The current offline browser
+record was captured against an earlier implementation and leaves complete Team
+play and installed-device coverage open. Physical devices, human balance,
+cross-runtime replay portability and comprehensive offline acceptance therefore
+remain separately reported gates.
+
 ## Current delivery status
 
 Checkpoint on 26 September 2026: **v0.132.3 is immutable and selected publicly,
