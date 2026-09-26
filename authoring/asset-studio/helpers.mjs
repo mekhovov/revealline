@@ -1,7 +1,9 @@
+import { t } from '../../game/i18n/index.mjs';
+
 /** Pure view helpers; the presentation model remains the authority on validity. */
 export function centerCrop(width, height, targetWidth, targetHeight) {
   if (![width, height, targetWidth, targetHeight].every((n) => Number.isInteger(n) && n > 0))
-    throw new Error('Crop dimensions must be positive whole pixels.');
+    throw new Error(t('tools:studio.crop.positiveWholePixels'));
   const ratio = targetWidth / targetHeight;
   const cropWidth = Math.min(width, Math.floor(height * ratio));
   const cropHeight = Math.min(height, Math.floor(width / ratio));
@@ -23,7 +25,7 @@ export function checkedCrop(crop, width, height) {
     x + w > width ||
     y + h > height
   )
-    throw new Error('The crop must use whole pixels and fit completely inside the original image.');
+    throw new Error(t('tools:studio.crop.insideOriginal'));
   return { x, y, width: w, height: h };
 }
 export function pixelBounds({ width, height, data }) {
