@@ -1,3 +1,5 @@
+import { readOfficialRecording } from './official-downloads.mjs';
+import { installedPresentation } from './installed-app.mjs';
 import { canonicalJSON, required } from './data-json.mjs';
 import { resolveSoundtrackCatalogue, soundtrackRights, SOUNDTRACK_LIMITS } from './soundtrack.mjs';
 import { createSoundtrackArchiveResolver } from './soundtrack-archive.mjs';
@@ -16,6 +18,8 @@ export function createSoundtrackSource({
   catalogue,
   readLocal = () => null,
   installedOnly = () => false,
+  localPlayback = installedPresentation,
+  readOfficial = readOfficialRecording,
   fetch: request = globalThis.fetch,
   baseURL = rootURL,
   archives = [],
@@ -59,13 +63,14 @@ export function createSoundtrackSource({
           `This recording is not approved for ${purpose}. Preserve its reference instead.`,
         );
       throwIfSoundtrackAborted(signal);
-      const local = await readLocal(hash, { signal });
+      const local =
+        (await readLocal(hash, { signal })) || (track ? await readOfficial(hash) : null);
       throwIfSoundtrackAborted(signal);
       if (local) return local;
       const core = bundledByHash.get(hash);
       // Silent preparation only uses already-owned originals. A core registration
       // cannot authorize requests until the host explicitly allows acquisition.
-      if (localOnly) return null;
+      if (localOnly || (purpose === 'playback' && localPlayback())) return null;
       required(track, 'This recording is missing locally. Restore its complete soundtrack backup.');
       required(
         purpose !== 'playback' || !installedOnly() || core,
