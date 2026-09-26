@@ -123,8 +123,8 @@ function controls() {
   $('approve').hidden = batchMode && !!approval;
   $('install').disabled = busy || !installReview?.enoughManagedSpace;
   $('download').disabled = busy || !approval;
-  $('backup').disabled = busy || !content || mediaMode;
-  $('save').disabled = busy || !content || mediaMode;
+  $('backup').disabled = busy || !content;
+  $('save').disabled = busy || !content;
   $('cancel').hidden = !busy;
   for (const key of ['image', 'import']) $(key).disabled = busy;
   for (const key of ['advanced', 'load-advanced', 'regenerate']) $(key).disabled = busy || !content;
@@ -318,10 +318,7 @@ const mediaReview = createCreatorMediaReviewController({
       batchMode = false;
       mediaMode = true;
       sourceFile = image = null;
-      localizedText(
-        $('save-status'),
-        localizedMessage('interface:creator.videoSourcesSessionOnly'),
-      );
+      await saveDraft();
       showReview(prepared);
       status(
         localizedMessage('interface:creator.mediaLevelsGenerated', {
@@ -392,7 +389,14 @@ async function sourceSnapshot() {
     {
       draftId: id,
       content: structuredClone(content),
-      editing: { fit: $('fit').value },
+      editing: {
+        fit: $('fit').value,
+        ...(content.media
+          ? {
+              media: mediaSource?.sourceEditing ?? draft.source?.document.editing.media,
+            }
+          : {}),
+      },
       originalSha256:
         batchSource?.originalSha256 ??
         image?.original?.sha256 ??
@@ -691,17 +695,21 @@ async function openPrepared(pack) {
   mediaSource = null;
   sourceFile = image = null;
   if (mediaMode) {
-    draft.source = null;
     $('fit').value = 'contain';
     $('fit').disabled = true;
     fillLabels();
     invalidate();
     prepared = pack;
-    showReview(pack);
-    localizedText(
-      $('save-status'),
-      localizedMessage('interface:creator.videoCampaignSessionVerified'),
+    draft.source = await prepareCreatorSource(
+      { draftId: id, content, editing: { fit: 'contain' }, originalSha256: null },
+      pack.assets,
     );
+    mediaSource = {
+      sourceAssets: draft.source.assets,
+      sourceEditing: draft.source.document.editing.media,
+    };
+    showReview(pack);
+    await saveDraft();
     status(localizedMessage('interface:creator.mediaPackVerified'));
     return;
   }
@@ -723,7 +731,12 @@ async function openSource(source) {
   batchMode = content.project.missions.length > 1;
   batchSource = null;
   mediaMode = !!content.media;
-  mediaSource = null;
+  mediaSource = mediaMode
+    ? {
+        sourceAssets: source.assets,
+        sourceEditing: source.document.editing.media,
+      }
+    : null;
   draft.source = source;
   image = null;
   sourceFile = Array.isArray(source.document.originalSha256)
@@ -733,6 +746,10 @@ async function openSource(source) {
   $('fit').disabled = !sourceFile;
   fillLabels();
   invalidate();
+  if (mediaMode) {
+    prepared = await prepareCreatorBundle(content, source.assets);
+    showReview(prepared);
+  }
   status(localizedMessage('interface:creator.sourceDraftRestored'));
 }
 async function listInstalled() {
