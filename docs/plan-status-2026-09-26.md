@@ -10,24 +10,25 @@ versions or acceptance gates are still current.
 - v0.132.4 Team picture-preparation repair has an exact immutable production receipt and its Pages
   selector is merged. The streaming public-byte audit is still underway, so v0.132.4 is not yet
   counted as accepted public delivery here.
-- PR #652 has been admitted by the sole publisher to the active v0.132.5 lane. It remains open and
-  its latest focused gate is still running; admission is not a merge or public delivery.
+- PR #652 has merged to `main` at `ee015163de1131313436b0550892f3739e3c7a1a` after its focused
+  and release-ready gates passed. The v0.132.5 immutable release and public acceptance are still
+  owned by the publisher; a source merge is not public delivery.
 - The cultural stack is rebased on current `main`
-  `0cb51db92295a62fea99ee2ab215a79c6df06520`. All nineteen branch tips were guarded-pushed
+  `ee015163de1131313436b0550892f3739e3c7a1a`. All nineteen branch tips were guarded-pushed
   atomically; the v0.149.0 successor is draft PR #650 and the test-only reconciliation is draft PR
   #651. The dirty root checkout was not changed.
 
 ## Completed source work
 
-| Scope                                            | State                         | Evidence boundary                                                                                                                                                                                                |
-| ------------------------------------------------ | ----------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Journey Ukrainian spatial stack v12-v24          | Rebased and pushed            | Candidate source only; each draft PR still needs its own promotion and public verification.                                                                                                                      |
-| Apex v25 / PR #625                               | Clean draft, source `0.140.0` | Earlier focused and production-build evidence exists; the exact terminal-base head still needs release CI.                                                                                                       |
-| Complete Team adoption / PR #630                 | Clean draft, source `0.141.0` | Complete twelve-mission Team edition is wired as current in the candidate stack, with older editions preserved.                                                                                                  |
-| First Team Ukrainian slice / PR #636             | Clean draft, source `0.142.0` | Three redesigned identities, 78/78 focused integration evidence, earlier production build; not public.                                                                                                           |
-| Second Team Ukrainian slice / PR #642            | Clean non-default draft       | Crossed gardens, Split orchards and Weaver crossing redesigned copy-on-write; no selector/default/version change yet.                                                                                            |
-| Second Team current edition / PR #650            | Clean draft, source `0.149.0` | Default/previous edition, Team library, Studio, exact Next, isolated progress and EN/UK wiring; earlier focused cohort 83/83, localization validation and post-rebase lightweight cohort 41/41 pass; not public. |
-| Unified-library fixture reconciliation / PR #651 | Clean draft, test/docs only   | Confirms 91 current + 48 prior Journey + 188 Classic = 327 unique rows and updates stale 201/279 and `whole-spatial-v5/v6` expectations to current v25 ownership.                                                |
+| Scope                                            | State                         | Evidence boundary                                                                                                                                                                                                                                                       |
+| ------------------------------------------------ | ----------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Journey Ukrainian spatial stack v12-v24          | Rebased and pushed            | Candidate source only; each draft PR still needs its own promotion and public verification.                                                                                                                                                                             |
+| Apex v25 / PR #625                               | Clean draft, source `0.140.0` | Earlier focused and production-build evidence exists; the exact terminal-base head still needs release CI.                                                                                                                                                              |
+| Complete Team adoption / PR #630                 | Clean draft, source `0.141.0` | Complete twelve-mission Team edition is wired as current in the candidate stack, with older editions preserved.                                                                                                                                                         |
+| First Team Ukrainian slice / PR #636             | Clean draft, source `0.142.0` | Three redesigned identities, 78/78 focused integration evidence, earlier production build; not public.                                                                                                                                                                  |
+| Second Team Ukrainian slice / PR #642            | Clean non-default draft       | Crossed gardens, Split orchards and Weaver crossing redesigned copy-on-write; no selector/default/version change yet.                                                                                                                                                   |
+| Second Team current edition / PR #650            | Clean draft, source `0.149.0` | Default/previous edition, Team library, Studio, exact Next, isolated progress and EN/UK wiring; earlier focused cohort 83/83, localization validation and post-rebase lightweight cohort 41/41 pass; exact head `da1604a3b2821bff106711129a7d32f7bf78bd8d`; not public. |
+| Unified-library fixture reconciliation / PR #651 | Clean draft, test/docs only   | Confirms 91 current + 48 prior Journey + 188 Classic = 327 unique rows and updates stale 201/279 and `whole-spatial-v5/v6` expectations to current v25 ownership.                                                                                                       |
 
 After the final main rebase, an uncontended bounded host rerun passed all selected corrected cases:
 four Solo scenarios, four Versus scenarios, two representative Team source routes and the three-stage
@@ -89,16 +90,24 @@ accepted predecessor; draft labels do not reserve a release.
 7. **Host performance:** the uncontended PR #651 scenarios pass, but individual chooser paths took
    about 5.5–30.6 seconds in the fixture harness. This closes the corrected-assertion gap, not the
    broader startup/performance qualification.
+8. **First cultural gate:** PR #530's latest exact-head focused run passed all forty selected route
+   checks and seven of eight controller-host scenarios. The Solo compact-filter scenario failed one
+   focus-state assertion while the paired Versus and Team scenarios passed. The exact failed case
+   then passed locally on the newly rebased head in 8.7 seconds. A fresh hosted focused run is active;
+   the earlier failure is not represented as passed until that exact-head rerun completes.
 
 ## Immediate execution order
 
 1. Let the sole publisher finish v0.132.4 acceptance and the active v0.132.5 lane; do not duplicate
    its release mutations.
-2. Keep the rebased cultural PR chain clean and reviewable while v0.132.4 completes.
-3. Review and qualify the bounded v0.149.0 PR #650 at its exact head.
-4. Review draft PR #651 and publish the isolated library-fixture reconciliation after its focused
+2. Finish PR #530's new exact-head hosted focused rerun. Its previously failing Solo
+   compact-controller case passes locally after the rebase, while the earlier hosted failure remains
+   recorded.
+3. Keep the rebased cultural PR chain clean and reviewable while the public release lane completes.
+4. Review and qualify the bounded v0.149.0 PR #650 at its exact head.
+5. Review draft PR #651 and publish the isolated library-fixture reconciliation after its focused
    duplicate/ownership audit.
-5. Promote cultural releases in dependency order, reporting actual public delivery rather than a
+6. Promote cultural releases in dependency order, reporting actual public delivery rather than a
    merge or workflow start.
 
 The original P13-P15 whole-Journey pacing, Team cooperation, accessibility/performance and final
