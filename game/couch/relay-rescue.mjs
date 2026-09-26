@@ -4076,9 +4076,12 @@ export function bootCoop({
     const guidance = () => coopArenaGuidance(next.level, next.config);
     supportGuidance(guidance, level);
     const openingCue = contextualTeaching.opening(guidance());
-    message(openingCue?.text ?? (() => guidance().startMessage), {
-      coach: openingCue?.kind,
-    });
+    message(
+      openingCue ? () => t(openingCue.key, openingCue.values) : () => guidance().startMessage,
+      {
+        coach: openingCue?.kind,
+      },
+    );
     overlay();
     try {
       render();
@@ -4667,7 +4670,8 @@ export function bootCoop({
             typeof latestAnnouncement?.text === 'function'
               ? latestAnnouncement.text()
               : latestAnnouncement?.text;
-          return announcement ? `${announcement} ${coachCue.text}` : coachCue.text;
+          const teaching = t(coachCue.key, coachCue.values);
+          return announcement ? `${announcement} ${teaching}` : teaching;
         },
         { ...(latestAnnouncement?.options ?? {}), coach: coachCue.kind },
       );

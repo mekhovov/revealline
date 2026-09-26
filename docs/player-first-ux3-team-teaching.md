@@ -25,6 +25,10 @@ mechanic.
 Storage denial, malformed older bytes and failed writes retain a bounded in-memory session. They do
 not block play or alter an attempt.
 
+Tutorial decisions use semantic ground and Support capabilities rather than parsing translated
+labels. The host resolves cue keys through the live English/Ukrainian catalog, so a locale change
+updates future cues without changing simulation state.
+
 ## Focused evidence
 
 - `node --test game/test/team-contextual-teaching.test.mjs`: 5/5 pass.

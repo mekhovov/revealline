@@ -4,6 +4,7 @@ import {
   createTeamContextualTeaching,
   TEAM_CONTEXTUAL_TEACHING_FORMAT,
 } from '../couch/team-contextual-teaching.mjs';
+import { setLocale, t } from '../i18n/index.mjs';
 
 class Storage {
   constructor(entries = {}) {
@@ -19,9 +20,11 @@ class Storage {
 
 const guidance = {
   groundName: 'reclaimed ground',
+  groundContext: 'reclaimed',
   supportText:
     'Tap Support to slow nearby enemies and intercept nearby sparks. Hold Support beside a downed partner.',
   supportBySeat: ['Support · slows nearby enemies', 'Support · slows nearby enemies'],
+  supportCapabilities: { intercept: true, slow: true, specialist: false },
 };
 
 test('Team teaching introduces a cut, then relevant Support and rescue without repeating on Retry', () => {
@@ -29,7 +32,8 @@ test('Team teaching introduces a cut, then relevant Support and rescue without r
   const first = createTeamContextualTeaching({ getStorage: () => storage });
   assert.deepEqual(first.opening(guidance), {
     kind: 'cut',
-    text: 'FIRST CUT · Steer off reclaimed ground, then return to reclaimed ground to bank the line.',
+    key: 'interface:team.teaching.firstCut',
+    values: { context: 'reclaimed' },
   });
   assert.equal(
     first.opening(guidance),
@@ -38,12 +42,14 @@ test('Team teaching introduces a cut, then relevant Support and rescue without r
   );
   assert.deepEqual(first.observe([{ type: 'cut.closed' }], guidance), {
     kind: 'support',
-    text: 'SUPPORT READY · Tap Support near a moving threat or travelling spark.',
+    key: 'interface:team.teaching.supportSlowAndIntercept',
+    values: {},
   });
   assert.equal(first.observe([{ type: 'cut.closed' }], guidance), null);
   assert.deepEqual(first.observe([{ type: 'player.downed', player: 0 }], guidance), {
     kind: 'rescue',
-    text: 'RESCUE · Move together on reclaimed ground; the active partner holds Support nearby for one second.',
+    key: 'interface:team.teaching.rescue',
+    values: { context: 'reclaimed' },
   });
   assert.equal(first.observe([{ type: 'player.downed', player: 1 }], guidance), null);
   first.observe(
@@ -91,10 +97,19 @@ test('Team teaching skips an irrelevant Support prompt but still teaches rescue'
     groundName: 'safe ground',
     supportText: 'Hold Support on safe ground beside a downed partner for one second.',
     supportBySeat: ['Support · rescue', 'Support · rescue'],
+    supportCapabilities: { intercept: false, slow: false, specialist: false },
   };
-  assert.match(teacher.opening(calm).text, /safe ground/);
+  assert.deepEqual(teacher.opening(calm), {
+    kind: 'cut',
+    key: 'interface:team.teaching.firstCut',
+    values: { context: undefined },
+  });
   assert.equal(teacher.observe([{ type: 'cut.joint' }], calm), null);
-  assert.match(teacher.observe([{ type: 'player.downed' }], calm).text, /safe ground/);
+  assert.deepEqual(teacher.observe([{ type: 'player.downed' }], calm), {
+    kind: 'rescue',
+    key: 'interface:team.teaching.rescue',
+    values: { context: undefined },
+  });
 });
 
 test('Team teaching tolerates unavailable, corrupt and failing storage with bounded state', () => {
@@ -128,4 +143,24 @@ test('Team teaching validates callbacks and event input', () => {
   assert.throws(() => createTeamContextualTeaching({ getStorage: null }), /callbacks/);
   const teacher = createTeamContextualTeaching({ getStorage: () => null });
   assert.throws(() => teacher.observe(null, guidance), /event list/);
+});
+
+test('Team teaching cue keys resolve complete English and Ukrainian instructions', () => {
+  try {
+    setLocale('en', { persist: false });
+    assert.match(
+      t('interface:team.teaching.firstCut', { context: 'reclaimed' }),
+      /^FIRST CUT.*reclaimed ground/,
+    );
+    assert.match(t('interface:team.teaching.supportSlowAndIntercept'), /^SUPPORT READY/);
+
+    setLocale('uk', { persist: false });
+    assert.match(
+      t('interface:team.teaching.firstCut', { context: 'reclaimed' }),
+      /^ПЕРШИЙ КОНТУР.*відвойованої зони/,
+    );
+    assert.match(t('interface:team.teaching.rescue'), /^ПОРЯТУНОК.*безпечній зоні/);
+  } finally {
+    setLocale('en', { persist: false });
+  }
 });
