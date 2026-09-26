@@ -354,7 +354,7 @@ test('Legacy Solo → Journey Versus → Solo restores browsing independently of
     assert.equal(browse.selectedId, selected);
     assert.equal(browse.mode, 'versus');
     assert.equal(new URL(target).searchParams.get('library-mission'), selected);
-    assert.equal(new URL(target).searchParams.get('journey'), 'whole-spatial-v5');
+    assert.equal(new URL(target).searchParams.get('journey'), 'whole-spatial-v25');
     assert.match(new URL(target).searchParams.get('return-token-v2'), /^[0-9a-f]{32}$/);
   });
   await t.test(
