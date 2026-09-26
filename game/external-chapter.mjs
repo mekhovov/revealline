@@ -262,7 +262,7 @@ export function validateExternalChapterIndex(candidate) {
   required(
     index.format === EXTERNAL_CHAPTER_INDEX_FORMAT &&
       Array.isArray(index.chapters) &&
-      index.chapters.length <= PACK_LIMITS.installed,
+      index.chapters.length <= EXTERNAL_CHAPTER_LIMITS.catalogChoices,
     'Invalid external chapter index.',
   );
   const ids = new Set(),

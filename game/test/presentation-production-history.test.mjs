@@ -443,7 +443,7 @@ test('Journey feedback dependencies bind only the reviewed player-craft effects 
     assert.equal(asset.quality.stage, 'reviewed', slotId);
     assert.ok(
       asset.provenance.source.endsWith(
-        'sha256:e23e228b4bf4ee68bb7cbbd231aaebe66d6e3da8965fbeae9b2c4acc90f9e053',
+        'sha256:b33868fdd4f6aa898a885043116b939509f4d5b14d4412adb7d71e6e90ed6bbe',
       ),
     );
     assert.match(asset.provenance.source, /game\/ui\/lane-presentation\.mjs/);
@@ -462,8 +462,7 @@ test('Journey feedback dependencies bind only the reviewed player-craft effects 
 test('shared-host UI and audio bind only their reviewed current inputs', async () => {
   const production = await createFieldKitProduction();
   const resolved = resolvePresentation(production.document);
-  const audioReviewPath =
-    'docs/verification/online-soundtrack-reconciliation-2026-09-25/source-review.json';
+  const audioReviewPath = 'docs/offline-pwa/audio-source-review.json';
   const audioReviewHash = createHash('sha256')
     .update(await fs.readFile(new URL(`../../${audioReviewPath}`, import.meta.url)))
     .digest('hex');
@@ -479,7 +478,7 @@ test('shared-host UI and audio bind only their reviewed current inputs', async (
       assert.equal(asset.quality.stage, 'reviewed', slot.id);
       assert.ok(
         asset.provenance.source.endsWith(
-          'sha256:4b7db79dd3f6931dd72c0ae702f15a5a5d8ff2b7044aca5a2e02886e8e61636a',
+          'sha256:c7ebea5695fe1fbd7c17eafdd0035dcd4d1651b5d3ec91893c6575334da38d3a',
         ),
         slot.id,
       );
@@ -505,7 +504,7 @@ test('shared-host UI and audio bind only their reviewed current inputs', async (
       );
       assert.ok(
         asset.provenance.source.endsWith(
-          'sha256:6b9b58a0d51a1b15d533e76b531cb4db09662274c8b5cad3988b06f01e7327c4',
+          'sha256:37587bf42b0ffc5ae07aa660ce9fd5ac61cd38e04edaac00722fcd049c173541',
         ),
         slot.id,
       );
@@ -521,17 +520,16 @@ test('shared-host UI and audio bind only their reviewed current inputs', async (
 test('soundtrack screen and Journey motion reviews bind only the inspected current inputs', async () => {
   const production = await createFieldKitProduction();
   const resolved = resolvePresentation(production.document);
-  const screenReviewPath =
-    'docs/verification/compact-home-screen-continuation-2026-09-24/review.json';
+  const screenReviewPath = 'docs/verification/ux2-v0115-screen-continuation/review.json';
   const screenReviewHash = createHash('sha256')
     .update(await fs.readFile(new URL(`../../${screenReviewPath}`, import.meta.url)))
     .digest('hex');
   assert.equal(
     screenReviewHash,
-    '96ae6b8c3b05239cf16ab3801dec2b7ef057aa188ffcab466fb2fc22ea17dd1b',
+    'f0baff0c70c3bb3d3e08b92e8bfdb28c60e77913333640160841f58bc4c5c094',
   );
   const fingerprints = {
-    screens: 'acf6426f5cd47f21a85ec5ae9da9549ed58fbe330b097c979dc85b87afe2d68a',
+    screens: '251d09ba8aa8710a134694874bd7ae87f2e76af0000825f9ad2b97da024d1dbd',
     motion: '03a9b8a5eceb9eee63da578807becbb0f7770713d3eb2bd04affe5a75d3316f4',
   };
   const reviewed = production.document.slots.filter(
@@ -547,7 +545,7 @@ test('soundtrack screen and Journey motion reviews bind only the inspected curre
         entry.includes(
           slot.group === 'motion'
             ? 'Scoped clean-craft motion continuation: docs/verification/couch-craft-v01120/review.json sha256:fa2120613abf06bc578ba8388ba33af415392583e19e83c2297638af8010c305'
-            : `Scoped compact-Home screen continuation: ${screenReviewPath} sha256:${screenReviewHash}`,
+            : `Scoped UX2 shared-screen continuation: ${screenReviewPath} sha256:${screenReviewHash}`,
         ),
       ),
       slot.id,

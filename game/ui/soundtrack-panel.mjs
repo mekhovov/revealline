@@ -1,5 +1,11 @@
 import { contentText } from '../i18n/content.mjs';
 import { t, localizedText, localizedAttribute, localizedMessage } from '../i18n/index.mjs';
+import { soundtrackDownloadVolumes } from '../soundtrack-download-volumes.mjs';
+import {
+  createOfficialDownloads,
+  localOfficialRecordingIds,
+  withOptionalMusicDownload,
+} from '../official-downloads.mjs';
 import { createOperationStatus } from './operation-status.mjs';
 import { bindAudioMasterMedia } from './audio-master.mjs';
 import {
@@ -85,7 +91,6 @@ export function attachSoundtrackPanel({
   albumDownload = {},
   onlineCatalogueDownload = {},
   catalogue = null,
-  bundled = [],
   readAsset,
 } = {}) {
   if (!doc?.body || !store?.read || !store?.commit || !player?.snapshot)
@@ -98,7 +103,6 @@ export function attachSoundtrackPanel({
   )
     throw new TypeError(t('interface:soundtrackMusicSessionRequiresPlayAndPauseControls'));
   catalogue = catalogue ? resolveSoundtrackCatalogue(catalogue) : null;
-  const bundledTrackIds = new Set(bundled.map((entry) => entry.id));
   const bindings = [];
   const adopt = (library) =>
     catalogue ? setCatalogueTracks(upgradeSoundtrackLibrary(library), catalogue.tracks) : library;
@@ -1389,47 +1393,22 @@ export function attachSoundtrackPanel({
   );
   originalSection.hidden = !catalogue;
   const builtInAlbums = catalogue ? soundtrackAlbumPlaylists(draft) : [];
-  const albumTrackIds = new Set(builtInAlbums.flatMap((album) => album.trackIds));
   const catalogueControls = [];
-  const collections = [
-    ...genreNames.map(([genre, title]) => ({
-      id: genre,
-      title,
-      accepts: (track) =>
-        track.tags.genres[0] === genre && !track.id.startsWith('builtin.catalog.ua-fpv.'),
-    })),
-    {
-      id: 'ua-fpv',
-      title: 'UA-FPV',
-      accepts: (track) => track.id.startsWith('builtin.catalog.ua-fpv.'),
-    },
-  ];
-  const volumes = [
-    ...builtInAlbums.map((album) => ({
-      id: `album-${album.id.slice('builtin.album.'.length)}`,
-      title: album.title,
-      playlistId: album.id,
-      tracks: album.trackIds.map((id) => catalogue.tracks.find((track) => track.id === id)),
-    })),
-    ...collections.flatMap(({ id, title, accepts }) => {
-      const list = (catalogue?.tracks ?? []).filter(
-        (track) =>
-          !albumTrackIds.has(track.id) &&
-          accepts(track) &&
-          soundtrackRights(track, { catalogue }).offlineCache === 'allowed',
-      );
-      return Array.from({ length: Math.ceil(list.length / 6) }, (_, i) => ({
-        id: `${id}-${i + 1}`,
-        title: `${title} · Volume ${i + 1}`,
-        tracks: list.slice(i * 6, (i + 1) * 6),
-      }));
-    }),
-  ];
+  const officialDownloads =
+    globalThis.caches && globalThis.navigator?.locks ? createOfficialDownloads() : null;
+  let officialPresent = new Set();
+  async function refreshOfficialDownloads() {
+    if (!officialDownloads || !catalogue) return;
+    const ids = await localOfficialRecordingIds(catalogue);
+    officialPresent = new Set(
+      catalogue.tracks.filter((track) => ids.includes(track.id)).map((track) => track.asset.sha256),
+    );
+    player?.setLocalRecordingIds?.(ids);
+  }
+  const volumes = soundtrackDownloadVolumes(catalogue, builtInAlbums);
   for (const volume of volumes) {
     const offlineTracks = volume.tracks.filter(
-      (track) =>
-        !bundledTrackIds.has(track.id) &&
-        soundtrackRights(track, { catalogue }).offlineCache === 'allowed',
+      (track) => soundtrackRights(track, { catalogue }).offlineCache === 'allowed',
     );
     const ids = new Set(offlineTracks.map((track) => track.id));
     const availability = node('p', `availability-${volume.id}`, '', { class: 'micro-note' });
@@ -1442,7 +1421,30 @@ export function attachSoundtrackPanel({
       `download-${volume.id}`,
       localizedMessage('interface:downloadForOffline'),
       () =>
-        task(t('interface:downloadingRecordingsIntoTheDraft'), async (signal) => {
+        task(t('interface:downloadingAndSavingRecordings'), async (signal) => {
+          if (officialDownloads) {
+            await withOptionalMusicDownload(signal, (downloadSignal) =>
+              officialDownloads.download({
+                edition: 'soundtracks',
+                group: `music:${volume.playlistId || volume.id}`,
+                files: offlineTracks.map((track) => ({ ...track.asset, path: track.path })),
+                signal: downloadSignal,
+                acquire: (file, options) =>
+                  readAsset(file.sha256, { ...options, download: true, purpose: 'offline' }),
+                onProgress: (report) =>
+                  setStatus(
+                    t('interface:recordingDownloadProgress', {
+                      ready: bytes(report.readyBytes),
+                      remaining: bytes(report.remainingBytes),
+                    }),
+                  ),
+              }),
+            );
+            await refreshOfficialDownloads();
+            refreshCatalogueControls();
+            setStatus(t('interface:recordingsSavedOfflinePreferencesUnchanged'));
+            return;
+          }
           if (!readAsset) throw new Error(t('interface:recordingDownloadsAreUnavailable'));
           if (
             offlineTracks.reduce((sum, track) => sum + track.asset.bytes, 0) >
@@ -1490,7 +1492,17 @@ export function attachSoundtrackPanel({
       `offload-${volume.id}`,
       localizedMessage('interface:removeOfflineDownload'),
       () =>
-        attempt(() => {
+        attempt(async () => {
+          if (officialDownloads) {
+            await officialDownloads.remove(
+              'soundtracks',
+              `music:${volume.playlistId || volume.id}`,
+            );
+            await refreshOfficialDownloads();
+            refreshCatalogueControls();
+            setStatus(t('interface:officialDownloadRemovedReferencedFilesKept'));
+            return;
+          }
           edit((value) => {
             value.installedTrackIds = value.installedTrackIds.filter((id) => !ids.has(id));
           });
@@ -1527,12 +1539,9 @@ export function attachSoundtrackPanel({
     catalogueControls.push({ volume, offlineTracks, ids, availability, install, remove });
   }
   function refreshCatalogueControls() {
-    const present = new Set(assets.map((asset) => asset.sha256));
+    const present = new Set([...assets.map((asset) => asset.sha256), ...officialPresent]);
     for (const { volume, offlineTracks, ids, availability, install, remove } of catalogueControls) {
-      const bundledCount = volume.tracks.filter((track) => bundledTrackIds.has(track.id)).length;
-      const local = volume.tracks.filter(
-        (track) => bundledTrackIds.has(track.id) || present.has(track.asset.sha256),
-      ).length;
+      const local = volume.tracks.filter((track) => present.has(track.asset.sha256)).length;
       localizedText(availability, () => {
         const location = t(
           dirty
@@ -1545,15 +1554,12 @@ export function attachSoundtrackPanel({
             ? t('interface:readyForOfflineListening')
             : draft.listening.installedOnly
               ? t('interface:installedOnlyIsOnOtherRecordingsStaySilentUntilDownloaded')
-              : t('interface:otherRecordingsAreAvailableOnlineWithoutInstallingThisAlbum');
+              : t('interface:downloadMissingRecordingsOrChoosePublicArchiveStream');
         const rights =
-          offlineTracks.length + bundledCount !== volume.tracks.length
+          offlineTracks.length !== volume.tracks.length
             ? ' ' + t('interface:someRecordingsDoNotAllowOfflineStorage')
             : '';
-        const bundled = bundledCount
-          ? ` ${t('interface:soundtrack.coreRecordingIncluded', { count: bundledCount })}`
-          : '';
-        return `${location} ${state}${bundled}${rights}`;
+        return `${location} ${state}${rights}`;
       });
       install.disabled =
         busy ||
@@ -1561,9 +1567,22 @@ export function attachSoundtrackPanel({
         !readAsset ||
         !offlineTracks.length ||
         offlineTracks.every((track) => present.has(track.asset.sha256));
-      remove.disabled = busy || !saved || !draft.installedTrackIds.some((id) => ids.has(id));
+      remove.disabled =
+        busy ||
+        !saved ||
+        (officialDownloads
+          ? !offlineTracks.some((track) => officialPresent.has(track.asset.sha256))
+          : !draft.installedTrackIds.some((id) => ids.has(id)));
     }
   }
+  void refreshOfficialDownloads()
+    .then(() => refreshCatalogueControls())
+    .catch(() => {});
+  originalAlbums.append(
+    node('a', null, localizedMessage('interface:gameAndSoundtrackDownloads'), {
+      href: new URL('../downloads.html', import.meta.url).href,
+    }),
+  );
   const columns = node('div', null, null, { class: 'soundtrack-columns' });
   columns.append(
     listeningSection,

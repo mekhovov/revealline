@@ -52,7 +52,7 @@ test('all packaged optional pack names stay in details through real host progres
     ...(await Promise.all(config.optionalOffline.map(readJSON))),
     ...catalog.packs,
   ].map(({ name }) => ({ name }));
-  assert.equal(optionalPacks.length, 11, 'Exercise the full current packaged optional list');
+  assert.equal(optionalPacks.length, 12, 'Exercise the full current packaged optional list');
   const scope = 'https://game.example/releases/v057/site/';
   const marker = {
     format: 'revealline-offline.v1',
@@ -242,7 +242,7 @@ test('inactivity offers a check, real verification failure offers preparation an
   await page.button.onclick();
   assert.equal(writes, 1, 'Checking existing work never starts another installation');
   assert.equal(page.status.dataset.state, 'error');
-  assert.equal(page.button.textContent, 'Prepare offline play');
+  assert.equal(page.button.textContent, 'Prepare shared runtime');
   result = { status: 'ready', message: 'Core verified.', verified: 600 };
   const pending = page.button.onclick();
   assert.equal(page.status.dataset.state, 'busy');

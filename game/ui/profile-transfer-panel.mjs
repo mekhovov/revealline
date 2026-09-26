@@ -1,4 +1,5 @@
 import { localizedMessage, localizedText, t, localizedAttribute } from '../i18n/index.mjs';
+import { reviewInstalledMigration, recordInstalledMigration } from '../installed-app.mjs';
 import { discoverProfileTransfers, prepareProfileTransfer } from '../profile-transfer.mjs';
 
 /** Explicit same-origin release copy. Source validation is read-only; all target
@@ -172,6 +173,13 @@ export function attachProfileTransferPanel({
         cancel.disabled = true;
         cancel.hidden = true;
         operation.phase(t('interface:preparingTheVerifiedCollectionCopy'));
+        const installedReview = api.profileTransfer.installedApp
+          ? await reviewInstalledMigration(
+              fresh.source.version,
+              api.profileTransfer.currentVersion,
+              api.profileTransfer,
+            )
+          : null;
         const result = await applyPrepared(fresh.prepared, operation, {
           verifySource: async () => {
             operation.phase(t('interface:recheckingTheEarlierReleaseBeforeReplacement'));
@@ -191,6 +199,7 @@ export function attachProfileTransferPanel({
           },
         });
         operation.check();
+        await recordInstalledMigration(installedReview, api.profileTransfer);
         report(
           `Copied from ${fresh.source.version}. ${result.undo ? t('interface:undoGameDataImportRestoresThePreviousCollection') : t('interface:thePreviousCollectionCouldNotFormAVerifiedBackupUndo')} ${fresh.preview.hasSession ? t('interface:yourSavedFlightIsReadyToLoadPaused') : ''} ${result.warning || ''}`,
         );

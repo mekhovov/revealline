@@ -1,3 +1,4 @@
+import { readOfficialOriginal, OFFICIAL_REFERENCE_MIME } from './official-downloads.mjs';
 import { boundedJSON, canonicalJSON, exactKeys, required } from './data-json.mjs';
 import {
   SOUNDTRACK_LIMITS,
@@ -418,7 +419,7 @@ export function createManagedMediaStore({
                 const entry = {
                   store: kind,
                   sha256: key,
-                  blob: Blob.prototype.slice.call(files[i], 0, bytes),
+                  blob: Blob.prototype.slice.call(files[i], 0, bytes, files[i].type),
                   bytes,
                 };
                 required(!blobs.has(key), 'Duplicate physical media hash; recovery required.');
@@ -512,7 +513,14 @@ export function createManagedMediaStore({
   }
   async function readDomain(domain, { signal } = {}) {
     domainValid(domain);
-    return transact('readonly', (state) => snapshot(state, domain), signal);
+    const current = await transact('readonly', (state) => snapshot(state, domain), signal);
+    const assets = [];
+    for (const asset of current.assets)
+      assets.push(
+        Object.freeze({ ...asset, blob: await hydrateOfficial(asset.sha256, asset.blob) }),
+      );
+    abort(signal);
+    return Object.freeze({ ...current, assets: Object.freeze(assets) });
   }
   // Runtime reads deliberately avoid the full inventory/ledger path. Writes
   // and admin recovery still use transact() and its complete consistency check.
@@ -609,6 +617,15 @@ export function createManagedMediaStore({
     );
   }
 
+  async function hydrateOfficial(hash, blob) {
+    if (blob?.size !== 0 || blob.type !== OFFICIAL_REFERENCE_MIME) return blob;
+    const original = await readOfficialOriginal(hash);
+    required(
+      original,
+      'Official chapter artwork is missing. Resume its game download; saved pictures and imported originals are kept.',
+    );
+    return original;
+  }
   async function readSelectedBlob(
     hash,
     { signal, maxBytes = MANAGED_MEDIA_LIMITS.sourceBytes } = {},
@@ -618,7 +635,7 @@ export function createManagedMediaStore({
       integer(maxBytes) && maxBytes > 0 && maxBytes <= MANAGED_MEDIA_LIMITS.sourceBytes,
       'Invalid selected media byte budget.',
     );
-    return readSelected(
+    const selected = await readSelected(
       [
         ['audio', hash],
         ['mediaBlobs', hash],
@@ -631,6 +648,7 @@ export function createManagedMediaStore({
         const blob = audio !== undefined ? audio : media;
         if (blob === undefined) return null;
         const bytes = size(blob);
+        if (bytes === 0 && blob.type === OFFICIAL_REFERENCE_MIME) return blob;
         required(
           integer(bytes) && bytes > 0 && bytes <= maxBytes,
           'Selected media exceeds its byte budget; recovery required.',
@@ -639,6 +657,13 @@ export function createManagedMediaStore({
       },
       signal,
     );
+    const result = await hydrateOfficial(hash, selected);
+    required(
+      !result || result.size <= maxBytes,
+      'Selected official original exceeds its byte budget.',
+    );
+    abort(signal);
+    return result;
   }
   async function usage({ signal } = {}) {
     return transact(
@@ -828,8 +853,18 @@ export function createManagedMediaStore({
         abort(signal);
       }
     }
+    const official = new Set();
+    if (domain === 'media')
+      for (const asset of assets) {
+        // Existing imported bytes retain their ownership and count toward their original budget.
+        const old = before.state.blobs.get(asset.sha256);
+        if (old && old.bytes > 0) continue;
+        const original = await readOfficialOriginal(asset.sha256, { pin: true });
+        if (original && original.size === size(asset.blob)) official.add(asset.sha256);
+        abort(signal);
+      }
     const newAssets = assets.filter((a) => !reusable.has(a.sha256)),
-      newBytes = newAssets.reduce((n, a) => n + size(a.blob), 0),
+      newBytes = newAssets.reduce((n, a) => n + (official.has(a.sha256) ? 0 : size(a.blob)), 0),
       nextMetadataBytes = encoded(nextRow);
     let quota = null;
     try {
@@ -941,11 +976,15 @@ export function createManagedMediaStore({
             'Managed physical inventory exceeds its budget; retained originals are preserved.',
           );
           for (const { sha256, blob } of newAssets)
-            stores[state.blobs.get(sha256)?.store ?? target].put(blob, sha256);
+            stores[state.blobs.get(sha256)?.store ?? target].put(
+              official.has(sha256) ? new Blob([], { type: OFFICIAL_REFERENCE_MIME }) : blob,
+              sha256,
+            );
           let finalBlobBytes = state.blobBytes;
           for (const asset of newAssets) {
             const old = state.blobs.get(asset.sha256);
-            finalBlobBytes += size(asset.blob) - (old?.bytes ?? 0);
+            finalBlobBytes +=
+              (official.has(asset.sha256) ? 0 : size(asset.blob)) - (old?.bytes ?? 0);
           }
           for (const [hash, old] of state.blobs)
             if (formerlyOwned.has(hash) && !retained.has(hash)) {
@@ -1032,7 +1071,10 @@ export function createManagedMediaStore({
   }
   async function readBlob(hash, { signal } = {}) {
     required(hashValid(hash), 'Invalid media hash.');
-    return transact('readonly', (state) => state.blobs.get(hash)?.blob ?? null, signal);
+    const blob = await transact('readonly', (state) => state.blobs.get(hash)?.blob ?? null, signal);
+    const original = await hydrateOfficial(hash, blob);
+    abort(signal);
+    return original;
   }
   function close() {
     closed = true;

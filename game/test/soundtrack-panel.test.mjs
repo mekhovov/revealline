@@ -2656,7 +2656,7 @@ test('catalogue volume download and removal preserve playlists and original uplo
   assert.equal(saved.assets[0].sha256, initial.track.asset.sha256);
 });
 
-test('a bundled core recording is locally available without an install or removal copy', async (t) => {
+test('a shipped recording remains an optional offline download', async (t) => {
   const bundled = SOUNDTRACK_BUNDLED_ASSETS[0];
   const track = SOUNDTRACK_CATALOGUE.tracks.find((entry) => entry.id === bundled.id);
   let reads = 0;
@@ -2666,14 +2666,13 @@ test('a bundled core recording is locally available without an install or remova
       bundled: [bundled],
       readAsset: async () => {
         reads++;
-        throw new Error('Core music must not be copied into installed media.');
+        return new Blob(['optional recording']);
       },
     },
   });
   const volume = 'album-ukrainian.shchedryk-opening';
-  assert.match(app.node(`availability-${volume}`).textContent, /1 of 1 recordings/);
-  assert.match(app.node(`availability-${volume}`).textContent, /included with the game/);
-  assert.equal(app.node(`download-${volume}`).disabled, true);
+  assert.match(app.node(`availability-${volume}`).textContent, /0 of 1 recordings/);
+  assert.equal(app.node(`download-${volume}`).disabled, false);
   assert.equal(app.node(`offload-${volume}`).disabled, true);
   assert.equal(reads, 0);
 });
@@ -3156,7 +3155,7 @@ test('published catalogue albums are visible and selectable without downloads or
     [['select', album.id]],
   );
   assert(!app.calls.some(([name]) => name === 'play'));
-  assert.match(app.node('original-status').textContent, /downloaded and checked individually/);
+  assert.match(app.node('original-status').textContent, /local recordings or the procedural score/);
   assert.match(app.node('licensed-previews-info').textContent, /plays every published recording/);
   await app.click('play');
   assert(
@@ -3245,7 +3244,7 @@ test('offline album download stages only its recordings and removal preserves it
   assert.equal(saved.library.selection.playlistId, first.id);
   assert.equal(app.node(`download-${suffix}`).disabled, false);
   assert.equal(app.node(`offload-${suffix}`).disabled, true);
-  assert.match(app.node(`availability-${suffix}`).textContent, /available online/);
+  assert.match(app.node(`availability-${suffix}`).textContent, /explicitly choose a stream/);
 });
 
 test('a competing library save prevents album selection from replacing newer data or player intent', async (t) => {

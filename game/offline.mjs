@@ -4,6 +4,8 @@ import { CONTENT_PROJECT_ITEM_LIMITS, CONTENT_ASSET_MAX_BYTES } from './content-
 const MARKER = 'meta[name="revealline-offline"]';
 const OPTIONAL_ARTWORK_NAMES = new Set(['Opening Journey artwork', 'Journey candidate artwork']);
 function optionalNote(config) {
+  if (config.downloadCatalogue)
+    return ' This verifies the shared runtime. Use Game and soundtrack downloads to prepare all missions and original artwork; recorded music remains optional.';
   const packs = config.optionalPacks;
   const packNote =
     !Array.isArray(packs) || !packs.length
@@ -202,7 +204,11 @@ function requestReport(worker, registration, config, options) {
         worker.state === 'installing' || (preparing && latest) ? installTimeout : timeout,
       );
     };
-    const aborted = () => finish(null, abortError());
+    const aborted = () => {
+      if (preparing && config.downloadCatalogue && options.cancelPreparation)
+        worker.postMessage({ type: 'revealline.offline-pause', buildId: config.buildId });
+      finish(null, abortError());
+    };
     const changed = () => {
       if (worker.state === 'redundant')
         finish(
@@ -343,7 +349,8 @@ function requireConfig(env) {
   return configFromPage(env.documentRef, env.locationRef);
 }
 /** The caller must connect this function to a deliberate player action. No startup side effects.
- * signal only detaches this observer; it never cancels a shared installation.
+ * signal normally detaches this observer. The downloads screen explicitly opts
+ * into cancelPreparation for the durable worker, whose verified files survive.
  */
 export async function prepareOffline(options = {}) {
   const env = environment(options),
@@ -356,13 +363,21 @@ export async function prepareOffline(options = {}) {
     progress: null,
     ...withOptionalNote(config, phaseMessages.connecting, 'connecting'),
   });
-  const registration = await observePromise(
-    env.navigatorRef.serviceWorker.register(config.worker, {
-      scope: config.scope,
-      updateViaCache: 'none',
-    }),
-    options.signal,
-  );
+  const registering = env.navigatorRef.serviceWorker.register(config.worker, {
+    scope: config.scope,
+    updateViaCache: 'none',
+  });
+  if (config.downloadCatalogue && options.cancelPreparation)
+    registering
+      .then((registration) => {
+        if (options.signal?.aborted)
+          selectedWorker(registration)?.postMessage({
+            type: 'revealline.offline-pause',
+            buildId: config.buildId,
+          });
+      })
+      .catch(() => {});
+  const registration = await observePromise(registering, options.signal);
   throwIfAborted(options.signal);
   const worker = selectedWorker(registration);
   if (!worker || !workerMatches(worker, registration, config))
