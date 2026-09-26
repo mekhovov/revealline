@@ -1,6 +1,52 @@
 name: Assemble waived release evidence
 
 on:
+  workflow_call:
+    inputs:
+      version:
+        required: true
+        type: string
+      source_commit:
+        required: true
+        type: string
+      source_tree:
+        required: true
+        type: string
+      pr_commit:
+        required: true
+        type: string
+      pr_tree:
+        required: true
+        type: string
+      source_pr:
+        required: true
+        type: string
+      manual_run:
+        required: true
+        type: string
+      pr_run:
+        required: true
+        type: string
+      inspection_run:
+        required: true
+        type: string
+      inspection_artifact_name:
+        required: false
+        default: inspect-artifact-evidence
+        type: string
+      approved_non_source_changes:
+        required: true
+        type: string
+    outputs:
+      artifact_id:
+        description: Immutable seven-asset evidence artifact ID
+        value: ${{ jobs.assemble.outputs.artifact_id }}
+      artifact_digest:
+        description: Immutable seven-asset evidence artifact digest
+        value: ${{ jobs.assemble.outputs.artifact_digest }}
+      artifact_name:
+        description: Immutable seven-asset evidence artifact name
+        value: ${{ jobs.assemble.outputs.artifact_name }}
   workflow_dispatch:
     inputs:
       version:
@@ -39,6 +85,11 @@ on:
         description: Exact successful frozen-artifact inspection run
         required: true
         type: string
+      inspection_artifact_name:
+        description: Exact retained frozen-artifact inspection name
+        required: false
+        default: inspect-artifact-evidence
+        type: string
       approved_non_source_changes:
         description: Exact JSON array of reviewed docs/controller-only differences
         required: true
@@ -56,7 +107,24 @@ jobs:
   assemble:
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    outputs:
+      artifact_id: ${{ steps.package.outputs.artifact-id }}
+      artifact_digest: ${{ steps.package.outputs.artifact-digest }}
+      artifact_name: ${{ steps.names.outputs.package }}
     steps:
+      - name: Bind immutable evidence artifact name
+        id: names
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          VERSION: ${{ inputs.version }}
+          SOURCE_COMMIT: ${{ inputs.source_commit }}
+        run: |
+          if [ "$EVENT_NAME" = workflow_call ]; then
+            echo "package=waived-release-small-package-$VERSION-$SOURCE_COMMIT" >> "$GITHUB_OUTPUT"
+          else
+            echo 'package=waived-release-small-package' >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Check out the exact assembly utility
         uses: actions/checkout@v4
         with:
@@ -84,9 +152,10 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           INSPECTION_RUN: ${{ inputs.inspection_run }}
+          INSPECTION_ARTIFACT_NAME: ${{ inputs.inspection_artifact_name }}
         run: >-
           gh run download "$INSPECTION_RUN" --repo "$GITHUB_REPOSITORY"
-          --name inspect-artifact-evidence --dir inspect-evidence
+          --name "$INSPECTION_ARTIFACT_NAME" --dir inspect-evidence
 
       - name: Record exact run and job authorities
         env:
@@ -188,9 +257,10 @@ jobs:
           PY
 
       - name: Retain bounded package for independent review
+        id: package
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
-          name: waived-release-small-package
+          name: ${{ steps.names.outputs.package }}
           path: |
             small-package/*
             small-package-review.json

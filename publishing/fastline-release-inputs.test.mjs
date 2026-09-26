@@ -75,7 +75,17 @@ test("shadow mode plans every stage without changing the stage order", () => {
   );
 });
 
-test("publisher canary serializes requests and passes one immutable artifact to inspection", async () => {
+test("internal resume starts at evidence and never repeats qualification", () => {
+  assert.deepEqual(fastlineStages("resume"), [
+    "evidence",
+    "publication",
+    "archive",
+    "pages",
+    "public-verification",
+  ]);
+});
+
+test("publisher serializes requests and passes immutable artifacts through each stage", async () => {
   const workflow = await readFile(
     new URL("../.github/workflows/fastline-release.yml", import.meta.url),
     "utf8",
@@ -84,22 +94,42 @@ test("publisher canary serializes requests and passes one immutable artifact to 
     new URL("../.github/workflows/qualify-release-source.yml", import.meta.url),
     "utf8",
   );
+  const evidence = await readFile(
+    new URL(
+      "../.github/workflows/assemble-waived-release-evidence.yml",
+      import.meta.url,
+    ),
+    "utf8",
+  );
   assert.match(workflow, /group: fastline-publisher/u);
   assert.match(workflow, /cancel-in-progress: false/u);
-  assert.doesNotMatch(workflow, /queue:/u);
+  assert.doesNotMatch(workflow, /^\s+queue:/mu);
   assert.match(
     workflow,
     /uses: \.\/\.github\/workflows\/qualify-release-source\.yml/u,
   );
   assert.match(workflow, /needs\.qualify\.outputs\.artifact_id/u);
   assert.match(workflow, /needs\.qualify\.outputs\.artifact_digest/u);
-  assert.match(workflow, /expected="\$\{EXPECTED_DIGEST#sha256:\}"/u);
-  assert.match(workflow, /test "\$actual" = "\$expected"/u);
-  assert.match(workflow, /inspect_qualified_artifact\.py/u);
+  assert.match(workflow, /digest="\$\{EXPECTED_DIGEST#sha256:\}"/u);
+  assert.match(workflow, /test "\$\(jq -r \.digest/u);
+  assert.match(workflow, /release_artifact\.py run/u);
   assert.match(workflow, /fastline-release-objects\.mjs/u);
+  assert.match(workflow, /fastline-release-publisher\.mjs publish/u);
+  assert.match(workflow, /mode=resume/u);
   assert.match(workflow, /Refuse mismatched tag or release objects/u);
-  assert.doesNotMatch(workflow, /contents: write/u);
+  assert.match(workflow, /permissions:\n  contents: read/u);
+  assert.match(
+    workflow,
+    /publish:[\s\S]*?permissions:\n      contents: write/u,
+  );
   assert.match(qualification, /workflow_call:/u);
   assert.match(qualification, /artifact_id:/u);
   assert.match(qualification, /artifact_digest:/u);
+  assert.match(evidence, /workflow_call:/u);
+  assert.match(evidence, /artifact_id:/u);
+  assert.match(evidence, /artifact_digest:/u);
+  assert.match(
+    evidence,
+    /waived-release-small-package-\$VERSION-\$SOURCE_COMMIT/u,
+  );
 });

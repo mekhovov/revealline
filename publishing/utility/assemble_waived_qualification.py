@@ -236,7 +236,8 @@ def inspect(config, evidence, repo, source, manual):
     run = parse(evidence['runs/inspection/run.json'])
     jobs = parse(evidence['runs/inspection/jobs.json'])
     execution = get('execution.json')
-    named(family(run, jobs, WORKFLOW, 'workflow_dispatch', execution['workflowSha']), 'inspect-artifact')
+    named(family(run, jobs, QUALIFICATION_WORKFLOWS, 'workflow_dispatch', execution['workflowSha']),
+          'inspect-artifact')
     require(str(run['id']) == execution['runId'] and execution['sourceCheckout'] == get('source-before.json'),
             'Inspection execution differs')
     require(execution['helpers'], 'Inspection helper identities missing')

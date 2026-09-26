@@ -158,14 +158,27 @@ tags or published assets.
 
 ## Serialized publisher rollout
 
-`fastline-release.yml` is the queued publisher entry point. Its `shadow` mode validates the exact
-version, merged release-root PR, source commit/tree and published predecessor without writes. Its
-initial guarded `publish` canary calls merged-source qualification as a reusable workflow, uploads
-the frozen package once under a version-and-source name, passes the immutable artifact ID and digest
-to an independent content inspection, and stops before any tag or release write. Evidence assembly,
-tag/draft creation, guarded nine-asset publication, archive admission, Pages and public journeys are
-added only after this canary is shadow-run successfully. Existing manual entry points remain the
-guarded emergency path during the two-release rollout and the sole publisher must not run both paths
-for the same version. The legacy write-capable original upload is isolated in
-`upload-release-originals.yml`; the reusable qualifier contains no `contents: write` job, so a
-read-only shadow caller cannot inherit publication authority during workflow validation.
+`fastline-release.yml` is the sole normal publisher entry point. Its `shadow` mode validates the
+exact version, merged release-root PR, source commit/tree and published predecessor without writes.
+`publish` calls merged-source qualification as a reusable workflow, uploads the frozen package once
+under a version-and-source name, and passes the immutable artifact ID and digest to an independent
+hosted inspection. That proof run then dispatches one internal `resume` run after its inspection
+artifact has closed. Resume locates only a successful completed proof run for the same immutable
+version and source, assembles the seven evidence assets from the completed run authorities, and
+reconciles the annotated tag, draft, nine server digests and publication exactly once.
+
+Existing matching objects are reused; absent draft objects are created; mismatched tags, releases,
+assets, lightweight tags, incomplete published releases and digestless assets stop. Published assets
+are never overwritten. The write permission exists only on the final publication job. The reusable
+qualifier and the shadow path remain read-only. A release event hands the accepted publication to
+the existing archive/selector/Pages route; archive admission, selector review, production assembly,
+deployment, public-byte audit and player journeys remain blocking and are not claimed by release
+publication alone.
+
+GitHub Actions still supports only one running and one pending member of an ordinary concurrency
+group. It does not preserve an arbitrary FIFO backlog, and `queue: max` is rejected by workflow
+validation for this repository. Therefore only one owner/coordinator may submit a new version while
+`fastline-publisher` is active. The internal resume consumes the one pending slot. The durable
+release queue remains the active milestone plus terminal release-root PR, not a collection of
+concurrent workflow dispatches. Existing manual entry points remain the guarded emergency path
+during the two-release rollout and must not run for the same version as fastline.
