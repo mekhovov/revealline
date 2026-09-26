@@ -155,6 +155,30 @@ class AdapterTests(unittest.TestCase):
         self.assertIn('qualify', {job['name'] for job in rows})
         self.assertIn('freeze', {job['name'] for job in rows})
 
+    def test_fastline_inspection_keeps_skipped_reusable_alternate_distinct(self):
+        run = copy.deepcopy(self.manual)
+        run['path'] = adapter.FASTLINE_WORKFLOW
+        jobs = copy.deepcopy(self.jobs)
+        for job in jobs['jobs']:
+            job['name'] = 'qualify / ' + job['name']
+        alternate = dict(jobs['jobs'][0], id=901, name='qualify / inspect-artifact',
+                         conclusion='skipped', steps=[])
+        inspection = dict(jobs['jobs'][0], id=902, name='inspect-artifact',
+                          conclusion='success', steps=[])
+        jobs['jobs'].extend([alternate, inspection])
+        jobs['total_count'] = len(jobs['jobs'])
+
+        rows = adapter.family(run, jobs, adapter.QUALIFICATION_WORKFLOWS,
+                              'workflow_dispatch', self.source['commit'])
+        self.assertEqual(adapter.named(rows, 'inspect-artifact')['id'], inspection['id'])
+        self.assertEqual([job['name'] for job in rows].count('qualify / inspect-artifact'), 1)
+
+        inspection['conclusion'] = 'skipped'
+        with self.assertRaisesRegex(ValueError, 'Successful job missing: inspect-artifact'):
+            rows = adapter.family(run, jobs, adapter.QUALIFICATION_WORKFLOWS,
+                                  'workflow_dispatch', self.source['commit'])
+            adapter.named(rows, 'inspect-artifact')
+
     def test_consumer_helpers_are_loaded_from_reviewed_automation_commit(self):
         helpers = adapter.consumer_helpers(self.root, self.automation_commit)
         self.assertIn('publishing/utility/release_artifact.py', helpers)
