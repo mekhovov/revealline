@@ -248,7 +248,7 @@ export function attachSoundtrackPanel({
     assets = [...saved.assets];
     dirty = false;
     privateCollectionPlaylistId = null;
-    collectionSummary.textContent = '';
+    localizedText(collectionSummary, () => '');
     render();
     setStatus(t('interface:restoredTheSavedLibraryPlaybackIsUnchanged'));
   });
@@ -333,7 +333,7 @@ export function attachSoundtrackPanel({
   masterVolume.element.oninput = masterVolume.element.onchange = () =>
     changeMaster('volume', Number(masterVolume.element.value));
   if (audioMaster) bindings.push(audioMaster.subscribe(updateMaster));
-  function usePlaylist(chosen, { start = false } = {}) {
+  function usePlaylist(chosen, { start = false, onStarted = null } = {}) {
     return task(t('interface:savingYourPlaylistChoice'), async (signal) => {
       edit((value) => {
         value.selection.playlistId = chosen;
@@ -345,6 +345,7 @@ export function attachSoundtrackPanel({
       await player.selectPlaylist(draft.selection.playlistId);
       if (start) await (musicSession ? musicSession.play() : player.play());
       await notifyPlayback();
+      if (start) onStarted?.();
       setStatus(
         committed.warning ||
           (start
@@ -700,14 +701,16 @@ export function attachSoundtrackPanel({
   const savePlayCollection = button(
     'save-play-collection',
     localizedMessage('interface:saveCollectionAndPlay'),
-    async () => {
+    () => {
       const playlist = draft.playlists.find((item) => item.id === privateCollectionPlaylistId);
       if (!playlist) return;
-      const completed = await usePlaylist(playlist.id, { start: true });
-      if (completed && !dirty)
-        localizedText(collectionSummary, () =>
-          t('interface:soundtrack.privateCollectionSaved', { title: playlist.title }),
-        );
+      return usePlaylist(playlist.id, {
+        start: true,
+        onStarted: () =>
+          localizedText(collectionSummary, () =>
+            t('interface:soundtrack.privateCollectionSaved', { title: playlist.title }),
+          ),
+      });
     },
   );
   const trackTitle = input('track-title', localizedMessage('interface:trackTitle'), {
@@ -2193,26 +2196,28 @@ export function attachSoundtrackPanel({
     bundleDownload.setAttribute('aria-disabled', String(bundleDownload.disabled));
     discardBackup.disabled = busy || !preparedBackup;
     if (!preparedBackup) return;
-    localizedText(backupInfo, () =>
-      preparedBackup.recording
+    localizedText(backupInfo, () => {
+      const backup = preparedBackup;
+      if (!backup) return '';
+      return backup.recording
         ? t('interface:soundtrack.preparedRecordingInfo', {
-            size: bytes(preparedBackup.blob.size),
+            size: bytes(backup.blob.size),
           })
-        : preparedBackup.share
+        : backup.share
           ? t('interface:soundtrack.preparedAlbumInfo', {
-              size: bytes(preparedBackup.blob.size),
-              notice: recoveryNotice(preparedBackup.recoveryLibrary),
+              size: bytes(backup.blob.size),
+              notice: recoveryNotice(backup.recoveryLibrary),
             })
           : t('interface:soundtrack.preparedBackupInfo', {
-              size: bytes(preparedBackup.blob.size),
-              generation: preparedBackup.generation,
-              notice: recoveryNotice(preparedBackup.recoveryLibrary),
-            }),
-    );
+              size: bytes(backup.blob.size),
+              generation: backup.generation,
+              notice: recoveryNotice(backup.recoveryLibrary),
+            });
+    });
     localizedText(bundleDownload, () =>
-      preparedBackup.recording
+      preparedBackup?.recording
         ? t('interface:downloadPreparedMp3')
-        : preparedBackup.share
+        : preparedBackup?.share
           ? t('interface:downloadPreparedFile')
           : t('interface:downloadPreparedBackup'),
     );
@@ -2538,7 +2543,7 @@ export function attachSoundtrackPanel({
       assets = [...value.assets];
       dirty = false;
       privateCollectionPlaylistId = null;
-      collectionSummary.textContent = '';
+      localizedText(collectionSummary, () => '');
       const warning = await notifyLibrary(value);
       setStatus(warning || t('interface:savedLibraryLoadedImportsAndEditsRemainDraftsUntilSave'));
     });
