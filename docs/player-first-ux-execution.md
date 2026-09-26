@@ -4,28 +4,99 @@ Approved 24 September 2026. This replaces the execution order in the older
 whole-game plans; it does not erase their content, compatibility or qualification
 requirements. Each independent feature is released before the next is accepted.
 
+## Current checkpoint — 26 September 2026
+
+This checkpoint supersedes older paragraphs below that describe themselves as
+current. Those paragraphs remain unchanged as dated implementation and release
+evidence.
+
+**Completed public baseline:** immutable
+[v0.141.0](https://github.com/mekhovov/revealline/releases/tag/v0.141.0) is the
+current published release. PR #564 merged exact product source
+`5d6c97c850a648c5ebe93d3cf57731aeb67d0bbb`; Pages selector PR #673 merged as
+`44a6ce672632a2d30cbf94374b172e213b75063c`. Pages run `36246645007`
+deployed and audited 1,877 files / 630,364,265 bytes with zero retries or
+failures. Immutable v0.132.5 is preserved in Archive94 at
+`7aa32a48e9817b7ca867cb0735c99f72f6d67b96`.
+
+**Active release:** UX1-B compact gallery is rebased onto that accepted
+controller and uses v0.141.1. Its current local exact-source evidence covers
+155/155 changed gallery/input tests, repository validation, localization, scoped
+lint and formatting. It still requires a fresh pushed exact-head PR gate, merge,
+immutable release, archive admission, Pages deployment and public player-flow
+verification.
+
+**Active and ordered:** each row is a working allocation, not an accepted
+release. Reconcile each item onto the publicly accepted predecessor, rerun its
+exact-head gates and publish it before accepting the next row. Older target
+versions in draft PR titles and evidence files are stale where they disagree
+with this order.
+
+| Order | Working release | Scope                                                                | Current source input                                                                                                        |
+| ----- | --------------- | -------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| 1     | v0.141.1        | Compact complete mission gallery                                     | [PR #590](https://github.com/mekhovov/revealline/pull/590)                                                                  |
+| 2     | v0.141.2        | Team quick-start                                                     | prepared donor from PR #549                                                                                                 |
+| 3     | v0.141.3        | Couch secondary navigation                                           | prepared donor from PR #539                                                                                                 |
+| 4     | v0.141.4        | Contextual Team teaching                                             | prepared donor from PR #543                                                                                                 |
+| 5     | v0.141.5        | Deliberate Team terminal Retry                                       | [PR #545](https://github.com/mekhovov/revealline/pull/545)                                                                  |
+| 6     | v0.141.6        | Readable Versus countdown and Retry cue                              | [PR #552](https://github.com/mekhovov/revealline/pull/552)                                                                  |
+| 7     | v0.141.7        | Named result destinations                                            | [PR #557](https://github.com/mekhovov/revealline/pull/557)                                                                  |
+| 8     | v0.141.8        | Collection fixture reconciliation plus Settings/Help return to Pause | [PR #548](https://github.com/mekhovov/revealline/pull/548), then [PR #542](https://github.com/mekhovov/revealline/pull/542) |
+
+Known corrections remain part of these working allocations:
+
+- v0.141.2 keeps **Cancel preparation** as an explicit recovery action for a
+  stalled artwork request, but passive loading leaves focus unclaimed. Local
+  correction `651b78756039f48d332a97528503193d9111c382` updates the stale focus
+  contract and selected Team fixtures; its sequential recovery, bootstrap,
+  quick-start and complete Team host evidence passes 109/109. Restoring passive
+  Cancel focus would reintroduce the reported controller/Steam Deck failure.
+- v0.141.6 local correction `9360ef07279400c59bb7c7111e7015738b84df02`
+  restarts the full cue after an interruption during visible **Go**, while
+  keeping explicit Retry on its shorter recipe. Complete cue, candidate Versus
+  and continuation evidence passes 17/17, 13/13 and 10/10 sequentially.
+- v0.141.7 requires an isolated complete Solo host rerun. Its new named-destination
+  cases pass when selected alone, while a broader run under concurrent host load
+  hit bounded settling timeouts.
+- v0.141.8 must take only the prepared five-path donor delta after v0.141.7 plus
+  local correction `b272bec9d30155a3fa51857c01a2810e4b55ccd0`. The correction
+  repairs deterministic Soundtrack fixture setup without weakening controller
+  Back/Escape semantics and adds live-flight Help return coverage. All three
+  complete focused files pass 72/72 sequentially; modeled input remains separate
+  from physical touch and controller evidence.
+
+**Remaining:** UX6 still owns one cumulative whole-player qualification after
+v0.141.8. It must exercise complete Solo, Versus and Team journeys; real browser
+layout and focus at desktop, 1280×800, portrait, short landscape and 200% zoom;
+keyboard, touch, reduced-effects and accessibility behavior; gallery memory and
+frame-time comparison; offline install/update/recovery; and deployed public-byte
+regression. Existing focused PR passes are component evidence and cannot be added
+together as proof of the cumulative source.
+
+The temporary fast-release policy waives long automated suites; a waived, skipped
+or cancelled run is not a pass. Modeled gamepads and DOM clicks are not physical
+controller, Steam Deck or touch-device evidence. The current offline browser
+record was captured against an earlier implementation and leaves complete Team
+play and installed-device coverage open. Physical devices, human balance,
+cross-runtime replay portability and comprehensive offline acceptance therefore
+remain separately reported gates.
+
 ## Current delivery status
 
-Checkpoint on 26 September 2026: **v0.132.3 is immutable and selected publicly,
-but ordinary Team entry is blocked on a constrained-browser path by the shared
-20-second reviewed-art verification deadline.** The pinned Twin landings PNG is
-present, matches the release manifest and downloads successfully; the browser
-times out while the complete download, digest, base64 preparation and PNG
-inspection still own the same deadline. v0.132.4 is the active corrective
-release. It extends the bounded artwork preparation budget while preserving exact
-byte/digest/dimension verification, visible loading, Cancel, Retry and stale-work
-rejection. No replacement artwork or simulation rule changes are in scope.
-The exact local v0.132.4 distribution contains 1,299 manifest files and SHA-256
-`d6298b411ba54ccc158b22a30fe68e9f87ed62e37dc7301fc15b827fd5bb98e1`.
-Browser review reached the ready Start action, entered Twin landings and recorded
-no warning/error console messages. Public verification remains the release gate.
+Checkpoint on 26 September 2026: **v0.132.5 is immutable, selected publicly and playable.** The corrective Team artwork deadline preserves
+exact byte/digest/dimension verification while allowing slower public devices to
+reach the ready state. Public browser review reached ready Solo, Versus and Team
+entry, including the Team picture binding and Ukrainian interface. A later live
+language-switch audit found that Solo's primary Continue label and destination
+can remain English after changing the surrounding UI to Ukrainian; that defect
+belongs to the next corrective release and does not alter the immutable tag.
 
-After v0.132.4 public Team play is verified, the release order is v0.133 compact
-gallery, v0.134 Team quick start, v0.135 Couch secondary navigation, v0.136 Team
-teaching, v0.137 deliberate Team terminal Retry, v0.138 Versus countdown, v0.139
-named result destinations, v0.140 Settings/Help/Collection return closure, then
-UX6 qualification. Prepared branches must rebase onto each accepted predecessor;
-their focused evidence is not cumulative release acceptance.
+The active order is v0.141.1 compact gallery, v0.141.2 Team quick start, v0.141.3 Couch
+secondary navigation, v0.141.4 Team teaching, v0.141.5 deliberate Team terminal
+Retry, v0.141.6 Versus countdown, v0.141.7 named result destinations, v0.141.8
+Settings/Help/Collection return closure, then UX6 qualification. Prepared
+branches must rebase onto each accepted predecessor; their focused evidence is
+not cumulative release acceptance.
 
 Checkpoint on 25 September 2026: **the public selector reports v0.109.0 from
 source `b13089b702391c275f2505d1a76c87eebb9dcce0`. The v0.110.0 actor-size
