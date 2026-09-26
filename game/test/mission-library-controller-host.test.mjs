@@ -172,7 +172,10 @@ async function host(t, mode, { fetchResponse, defaultEntry = false } = {}) {
   p.doc.defaultView.matchMedia = () => ({ matches: true });
   const pad = device();
   (mode === 'team' ? p.pads : pads).push(pad);
-  let now = 1000;
+  // The live Solo host may already have sampled performance.now() while it
+  // prepared its title state. Keep the modeled clock monotonic when taking
+  // over so the host's bounded Confirm-release window can expire naturally.
+  let now = Math.ceil(performance.now()) + 1000;
   t.mock.method(performance, 'now', () => now);
   function layoutMissionCards() {
     // Finite three-column browser geometry. A shared default rectangle would
@@ -195,6 +198,9 @@ async function host(t, mode, { fetchResponse, defaultEntry = false } = {}) {
     frame();
     pad.buttons[index] = { pressed: false, value: 0 };
     frame();
+    // Each helper call models a separate deliberate press. Keep the pad
+    // neutral for the host's bounded release window before another action.
+    for (let i = 0; i < 3; i++) frame();
   };
   frame();
   frame();
