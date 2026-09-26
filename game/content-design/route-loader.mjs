@@ -7,7 +7,9 @@ import { createAuthoredJourneyRouteDefinition } from './route-definition.mjs';
 export async function loadAuthoredJourneyRoute(id) {
   if (!isAuthoredJourneyRouteId(id)) return null;
   let factories;
-  if (id === 'whole-spatial-v23') {
+  if (id === 'whole-spatial-v24') {
+    factories = await import('./sentinel-cultural-routes-candidates.mjs');
+  } else if (id === 'whole-spatial-v23') {
     factories = await import('./crosswind-cultural-routes-candidates.mjs');
   } else if (id === 'whole-spatial-v22') {
     factories = await import('./relay-cultural-routes-candidates.mjs');
