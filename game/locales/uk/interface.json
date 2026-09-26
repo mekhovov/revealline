@@ -3984,7 +3984,7 @@
   "couch.optionalMatchChanges": "Додаткові параметри матчу. Обидва гравці завжди грають за однакових умов.",
   "couch.helpKicker": "REVEAL LINE / ЯК ГРАТИ",
   "couch.readyFirstClear": "Готово. Перемагає той, хто першим завершить місію.",
-  "couch.teamOptions": "Параметри команди",
+  "couch.teamOptions": "Арена й параметри команди",
   "couch.createdTeamPacks": "Створені командні набори",
   "home.difficultyAppearance": "Складність і вигляд",
   "couch.originalPicturesConnection": "Для оригінальних зображень потрібне з’єднання; підготовка основної гри офлайн їх не зберігає.",
