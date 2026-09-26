@@ -313,6 +313,10 @@ for (const interrupt of ['blur', 'Escape'])
       assert.match(f.$('coop-library-remote-status').textContent, /interrupted/i);
       assert.equal(f.$('coop-library-remote-retry').hidden, false);
       f.win.emit('focus');
+      // Blur deliberately rearms the controller-confirm lifecycle. Let one
+      // neutral poll clear its Steam Input echo guard before modeling a fresh
+      // native Back activation.
+      f.tick();
       f.$('journey-back').click();
     } else f.tap('Escape');
     assert.equal(f.$('journey-chooser').open, false);
