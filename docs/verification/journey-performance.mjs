@@ -17,6 +17,9 @@ const enabled = (node) => shown(node) && !node.disabled;
 const actions = new Map([
   ['shell-continue', 'Continue'],
   ['shell-featured', 'Play'],
+  ['shell-catalogue', 'Open mission library'],
+  ['missions-catalogue', 'Open mission library'],
+  ['race-journey-find', 'Open mission library'],
   ['start-button', 'Start/resume'],
   ['next-button', 'Next'],
   ['retry-button', 'Retry'],
@@ -85,6 +88,11 @@ document.querySelector('#load').addEventListener('click', () => {
         : enabled(byId('race-pause')) &&
           byId('race-pause').textContent.trim() === 'Pause' &&
           shown(byId('race-boards'));
+    const libraryReady = () => {
+      const chooser = byId('journey-chooser');
+      const card = byId('journey-cards')?.querySelector?.('.journey-card:not(:disabled)');
+      return chooser?.open === true && enabled(card);
+    };
     const fail = (outcome) => {
       if (!pending) return;
       clearTimeout(attemptTimer);
@@ -183,7 +191,11 @@ document.querySelector('#load').addEventListener('click', () => {
         const boot = doc.documentElement.dataset[mode === 'solo' ? 'bootState' : 'toolState'];
         const ready =
           boot === 'ready' &&
-          (pending.action === 'Load to playable menu' ? menu : running() && targetMatches);
+          (pending.action === 'Load to playable menu'
+            ? menu
+            : pending.action === 'Open mission library'
+              ? libraryReady()
+              : running() && targetMatches);
         const failed = pending.statuses.find((status) => {
           const state = byId(status.id)?.dataset.state;
           if (state === 'busy') status.sawBusy = true;
@@ -254,6 +266,6 @@ document.querySelector('#load').addEventListener('click', () => {
       window.removeEventListener('pagehide', pagehide);
     };
   };
-  frame.src = `${path}?journey=whole-spatial-v4`;
+  frame.src = `${path}?journey=1`;
   status.textContent = `Loading ${mode}…`;
 });

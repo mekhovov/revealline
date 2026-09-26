@@ -53,6 +53,7 @@ versions or acceptance gates are still current.
 | Border cultural completion / PR #671             | Clean explicit v31 draft      | Adds original Reshetylivka aperture, Petrykivka branch and Kosiv bilateral wall fields to Second landing, Long rail and New frontier. Preserves current actors, objectives, bonuses, foundations, art and rules; current v0.141.3-main tip `aa10ec685` maps from its 170/170 zero-skip cohort. The open/plain queue falls from 7 to 4; hosted exact-tip qualification remains.                                                                                                                                                                                                                                                                                                                                                                |
 | Border frontier/pocket completion / PR #672      | Clean explicit v32 draft      | Adds original Bukovyna wave/dogleg and Podillia end-weighted wall fields to Turn the corner and Return pocket. Preserves current actors, objectives, bonuses, foundations, art and rules. Exact current-main tip `e1f99aeee` retains the prior 201/201 route/bootstrap/navigation and 18/18 compact/controller evidence; those older cohorts are not relabelled as rerun. The queue closes with Behind the patrol and Side-door bays retained as open lessons. Hosted qualification remains.                                                                                                                                                                                                                                                  |
 | Mission-library lookup performance / PR #676     | Clean stacked draft           | Replaces repeated linear exact-identity scans with an accepted-revision index, reuses immutable per-mode rows and keeps focused cards visible after lazy preview layout. Mission order, ownership, launch, progression and saves are unchanged. Exact current game tree `c2fc53b4b` and package tree `9951956e4` are identical to the source that passed 107/107 library/chooser/compact/controller-host checks and 109/109 Team quick-start integration checks with zero skips, plus formatting, lint and repository validation. A local 4,096-row synthetic comparison measured 100,000 indexed lookups at 2.90 ms versus 5,171.22 ms for the previous linear algorithm; this is algorithm evidence, not a public-device performance claim. |
+| Mission-selector accessibility/measurement v40   | Prepared stacked successor    | Adds single-column compact layout for Large text, a one-column fallback below 380 px, and forced-colour card/current/completion/unavailable/campaign cues that do not depend on themed raster borders or colour alone. The development-only observer now measures Solo and Versus mission-library opening against the current default Journey and accepts readiness only after the chooser is open with an enabled card. The focused selector/library cohort passes 100/100, the actual controller-host cohort 8/8 and observer cohort 14/14, all with zero skips. A local 360×720 browser check retained all 327 cards in one 320 px column with no horizontal overflow; this is local browser evidence, not physical-device, public-build or forced-colour human qualification. |
 
 After the earlier v0.132.5 main rebase, an uncontended bounded host rerun passed all selected corrected cases:
 four Solo scenarios, four Versus scenarios, two representative Team source routes and the three-stage
@@ -102,7 +103,7 @@ large-asset and archive delays are outside these estimates.
 |        1 | Promote the cultural Journey chain      | Review/merge in dependency order, immutable release and public play for each accepted batch                                                                                                                                                                             |                               **1–2 working days per release batch** |
 |        2 | Complete second Team slice and fixtures | Review PRs #650/#651, immutable public delivery and frozen-build checks; source wiring and bounded runtime/host verification are complete                                                                                                                               |                                     **3–6 hours** plus release queue |
 |        3 | Team continuation and qualification     | Review/publish rebased PR #657; paired-board fairness, controller/touch/keyboard, cross-campaign Next, Skip, reload/Continue and public frozen-build proof                                                                                                              |                      **8–16 hours** plus release queue/device access |
-|        4 | Whole-Journey accessibility/performance | The spatial disposition queue is resolved with two intentional open lessons retained. PR #676 removes the selector's quadratic exact-ID path; remaining work is reduced effects, contrast, small-screen, real startup/paint measurement and deterministic qualification | **2–4 working days** for accessibility and performance qualification |
+|        4 | Whole-Journey accessibility/performance | The spatial disposition queue is resolved with two intentional open lessons retained. PR #676 removes the selector's quadratic exact-ID path; v40 adds compact Large-text/forced-colour treatment and a default-Journey library-readiness observer. Remaining work is real frozen-build startup/paint and memory measurement, reduced-effects/contrast review across gameplay surfaces, physical compact devices and deterministic qualification | **2–4 working days** for remaining accessibility and performance qualification |
 |        5 | Human balance and cultural review       | Understandable failures, distinct missions, enjoyable retries, Team cooperation quality and cultural review by people                                                                                                                                                   |                   **1–2 days synthesis** after testers are available |
 
 Versions through v0.141.3 are occupied by published releases. Current `main` keeps package version
@@ -173,6 +174,12 @@ from the accepted predecessor when a batch is actually promoted.
     preview layout; the same PR now corrects and regression-tests that shift. This remains local
     browser evidence: production startup/paint, compact-device memory and frozen-public measurement
     are open.
+18. **Selector accessibility evidence is local:** the v40 successor deterministically qualifies its
+    Large-text and forced-colour CSS contracts, and a local 360×720 browser retained the 327-card
+    library as one 320 px column without horizontal overflow. Forced-colour human inspection,
+    physical touch/controller use, frozen-public timing and compact-device memory remain open. The
+    development observer records library readiness but does not itself supply a passing public
+    sample.
 
 ## Immediate execution order
 
@@ -186,8 +193,11 @@ from the accepted predecessor when a batch is actually promoted.
    actual public delivery rather than a merge or workflow start.
 5. Review PR #676 after its v32 predecessor. Measure the indexed selector in the real browser and
    retain the accepted lazy-preview, focus, download and owner-isolation contracts.
-6. Run the remaining accessibility, compact-layout, startup/performance, physical-device and human
-   balance/cultural qualification work after the source batches are frozen.
+6. Review the v40 selector-accessibility/measurement successor after PR #676. Collect frozen-build
+   Solo and Versus library-open timing without relabelling its local 360×720 check as device or
+   public evidence.
+7. Run the remaining gameplay-surface reduced-effects/contrast, startup/memory, physical-device and
+   human balance/cultural qualification work after the source batches are frozen.
 
 The original P13-P15 whole-Journey pacing, Team cooperation, accessibility/performance and final
 human acceptance remain incomplete.
