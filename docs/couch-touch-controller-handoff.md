@@ -1,6 +1,7 @@
 # Couch controller-to-touch handoff
 
-Status: prepared for the first patch release after v0.132.2.
+Status: v0.132.3 release candidate, rebased onto the accepted v0.132.2
+source.
 
 ## Player problem
 
