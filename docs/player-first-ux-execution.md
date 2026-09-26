@@ -11,16 +11,19 @@ current. Those paragraphs remain unchanged as dated implementation and release
 evidence.
 
 **Completed:** immutable
-[v0.132.2](https://github.com/mekhovov/revealline/releases/tag/v0.132.2) is the
-accepted public release. Its tag points to product source
-`b96a00159427e865c2072d27768c354b972fa812`; selector
-[PR #618](https://github.com/mekhovov/revealline/pull/618) merged as
-`f55f30cf22b9e9670fdd725061fee8166f6709e3`. Current `main` at
-`c6efdbcc0a409bdce8cda85b980da0d136af2731` retains version v0.132.2 and adds
-later documentation and release-workflow changes. v0.132.2 restores the two
-approved Team picture bindings for FPV revision 88 and preserves revisions
-58–87; it does not broaden the accepted picture identities or player-flow
-qualification.
+[v0.132.4](https://github.com/mekhovov/revealline/releases/tag/v0.132.4) is the
+current published release; its formal acceptance remains blocked by the live
+English-to-Ukrainian refresh defect. Its tag points to product source
+`d3df9d47f578d48383ff589914a188ada2ef8b31`; selector
+[PR #649](https://github.com/mekhovov/revealline/pull/649) merged as
+`d308610271ad01fbabb2847ee046325001ec63e5`. Current `main` at
+`0cb51db92295a62fea99ee2ab215a79c6df06520` retains version v0.132.4 and adds
+the permanent draft-release discovery correction from PR #648 plus bounded
+release recovery and exact public-byte verification from PR #639. Public checks
+proved ordinary Solo and Versus readiness, the slower Team artwork path through
+its ready Start action, English/Ukrainian rendering, exact release identity and
+the deployed 234,859-byte manifest SHA-256
+`67ff22b61e9c04cbfc5f5ef0e0075cbc08c68c6b3baf5b17bd811e8c2df58d5d`.
 
 **Active and ordered:** each row is a working allocation, not an accepted
 release. Reconcile each item onto the publicly accepted predecessor, rerun its
@@ -30,15 +33,37 @@ with this order.
 
 | Order | Working release | Scope                                                                | Current source input                                                                                                        |
 | ----- | --------------- | -------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
-| 1     | v0.132.3        | Restore touch steering after controller Start                        | [PR #612](https://github.com/mekhovov/revealline/pull/612)                                                                  |
-| 2     | v0.133.0        | Compact complete mission gallery                                     | [PR #590](https://github.com/mekhovov/revealline/pull/590)                                                                  |
-| 3     | v0.134.0        | Team quick-start                                                     | [PR #549](https://github.com/mekhovov/revealline/pull/549)                                                                  |
-| 4     | v0.135.0        | Couch secondary navigation                                           | [PR #539](https://github.com/mekhovov/revealline/pull/539)                                                                  |
-| 5     | v0.136.0        | Contextual Team teaching                                             | [PR #543](https://github.com/mekhovov/revealline/pull/543)                                                                  |
-| 6     | v0.137.0        | Deliberate Team terminal Retry                                       | [PR #545](https://github.com/mekhovov/revealline/pull/545)                                                                  |
-| 7     | v0.138.0        | Readable Versus countdown and Retry cue                              | [PR #552](https://github.com/mekhovov/revealline/pull/552)                                                                  |
-| 8     | v0.139.0        | Named result destinations                                            | [PR #557](https://github.com/mekhovov/revealline/pull/557)                                                                  |
-| 9     | v0.140.0        | Collection fixture reconciliation plus Settings/Help return to Pause | [PR #548](https://github.com/mekhovov/revealline/pull/548), then [PR #542](https://github.com/mekhovov/revealline/pull/542) |
+| Gate  | v0.132.5        | Complete live English/Ukrainian refresh in Solo, Versus and Team     | [PR #652](https://github.com/mekhovov/revealline/pull/652), owned by the release coordinator                                |
+| 1     | v0.133.0        | Compact complete mission gallery                                     | [PR #590](https://github.com/mekhovov/revealline/pull/590)                                                                  |
+| 2     | v0.134.0        | Team quick-start                                                     | [PR #549](https://github.com/mekhovov/revealline/pull/549)                                                                  |
+| 3     | v0.135.0        | Couch secondary navigation                                           | [PR #539](https://github.com/mekhovov/revealline/pull/539)                                                                  |
+| 4     | v0.136.0        | Contextual Team teaching                                             | [PR #543](https://github.com/mekhovov/revealline/pull/543)                                                                  |
+| 5     | v0.137.0        | Deliberate Team terminal Retry                                       | [PR #545](https://github.com/mekhovov/revealline/pull/545)                                                                  |
+| 6     | v0.138.0        | Readable Versus countdown and Retry cue                              | [PR #552](https://github.com/mekhovov/revealline/pull/552)                                                                  |
+| 7     | v0.139.0        | Named result destinations                                            | [PR #557](https://github.com/mekhovov/revealline/pull/557)                                                                  |
+| 8     | v0.140.0        | Collection fixture reconciliation plus Settings/Help return to Pause | [PR #548](https://github.com/mekhovov/revealline/pull/548), then [PR #542](https://github.com/mekhovov/revealline/pull/542) |
+
+Known corrections remain part of these working allocations:
+
+- v0.134 keeps **Cancel preparation** as an explicit recovery action for a
+  stalled artwork request, but passive loading leaves focus unclaimed. Local
+  correction `651b78756039f48d332a97528503193d9111c382` updates the stale focus
+  contract and selected Team fixtures; its sequential recovery, bootstrap,
+  quick-start and complete Team host evidence passes 109/109. Restoring passive
+  Cancel focus would reintroduce the reported controller/Steam Deck failure.
+- v0.138 local correction `9360ef07279400c59bb7c7111e7015738b84df02`
+  restarts the full cue after an interruption during visible **Go**, while
+  keeping explicit Retry on its shorter recipe. Complete cue, candidate Versus
+  and continuation evidence passes 17/17, 13/13 and 10/10 sequentially.
+- v0.139 requires an isolated complete Solo host rerun. Its new named-destination
+  cases pass when selected alone, while a broader run under concurrent host load
+  hit bounded settling timeouts.
+- v0.140 must take only the prepared five-path donor delta after v0.139 plus
+  local correction `b272bec9d30155a3fa51857c01a2810e4b55ccd0`. The correction
+  repairs deterministic Soundtrack fixture setup without weakening controller
+  Back/Escape semantics and adds live-flight Help return coverage. All three
+  complete focused files pass 72/72 sequentially; modeled input remains separate
+  from physical touch and controller evidence.
 
 **Remaining:** UX6 still owns one cumulative whole-player qualification after
 v0.140.0. It must exercise complete Solo, Versus and Team journeys; real browser
@@ -58,26 +83,21 @@ remain separately reported gates.
 
 ## Current delivery status
 
-Checkpoint on 26 September 2026: **v0.132.3 is immutable and selected publicly,
-but ordinary Team entry is blocked on a constrained-browser path by the shared
-20-second reviewed-art verification deadline.** The pinned Twin landings PNG is
-present, matches the release manifest and downloads successfully; the browser
-times out while the complete download, digest, base64 preparation and PNG
-inspection still own the same deadline. v0.132.4 is the active corrective
-release. It extends the bounded artwork preparation budget while preserving exact
-byte/digest/dimension verification, visible loading, Cancel, Retry and stale-work
-rejection. No replacement artwork or simulation rule changes are in scope.
-The exact local v0.132.4 distribution contains 1,299 manifest files and SHA-256
-`d6298b411ba54ccc158b22a30fe68e9f87ed62e37dc7301fc15b827fd5bb98e1`.
-Browser review reached the ready Start action, entered Twin landings and recorded
-no warning/error console messages. Public verification remains the release gate.
+Checkpoint on 26 September 2026: **v0.132.4 is immutable, selected publicly and playable, but formal
+acceptance is blocked by incomplete live English-to-Ukrainian refresh.** The corrective Team artwork deadline preserves
+exact byte/digest/dimension verification while allowing slower public devices to
+reach the ready state. Public browser review reached ready Solo, Versus and Team
+entry, including the Team picture binding and Ukrainian interface. A later live
+language-switch audit found that Solo's primary Continue label and destination
+can remain English after changing the surrounding UI to Ukrainian; that defect
+belongs to the next corrective release and does not alter the immutable tag.
 
-After v0.132.4 public Team play is verified, the release order is v0.133 compact
-gallery, v0.134 Team quick start, v0.135 Couch secondary navigation, v0.136 Team
-teaching, v0.137 deliberate Team terminal Retry, v0.138 Versus countdown, v0.139
-named result destinations, v0.140 Settings/Help/Collection return closure, then
-UX6 qualification. Prepared branches must rebase onto each accepted predecessor;
-their focused evidence is not cumulative release acceptance.
+The active order is the focused v0.132.5 localization patch, then v0.133 compact gallery, v0.134 Team quick start, v0.135 Couch
+secondary navigation, v0.136 Team teaching, v0.137 deliberate Team terminal
+Retry, v0.138 Versus countdown, v0.139 named result destinations, v0.140
+Settings/Help/Collection return closure, then UX6 qualification. Prepared
+branches must rebase onto each accepted predecessor; their focused evidence is
+not cumulative release acceptance.
 
 Checkpoint on 25 September 2026: **the public selector reports v0.109.0 from
 source `b13089b702391c275f2505d1a76c87eebb9dcce0`. The v0.110.0 actor-size
