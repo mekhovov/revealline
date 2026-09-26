@@ -95,3 +95,42 @@ test("fails closed for a changed public body and unsafe manifest", async () => {
     await host.close();
   }
 });
+
+test("bounds stalled attempts and cancels an oversized body immediately", async () => {
+  let stalledAttempts = 0;
+  const stalled = await server(() => {
+    stalledAttempts++;
+  });
+  try {
+    await assert.rejects(
+      auditPublicBytes({
+        manifest: manifest({ "one.txt": Buffer.from("expected") }),
+        baseUrl: stalled.url,
+        requestTimeoutMs: 10,
+      }),
+      /timeout|aborted/iu,
+    );
+  } finally {
+    await stalled.close();
+  }
+  assert.equal(stalledAttempts, 4);
+
+  let cancelled = false;
+  const oversized = new ReadableStream({
+    pull(controller) {
+      controller.enqueue(new Uint8Array(64));
+    },
+    cancel() {
+      cancelled = true;
+    },
+  });
+  await assert.rejects(
+    auditPublicBytes({
+      manifest: manifest({ "one.txt": Buffer.from("x") }),
+      baseUrl: "https://example.invalid/root/",
+      fetchImpl: async () => new Response(oversized, { status: 200 }),
+    }),
+    /exceeds 1 reviewed bytes/u,
+  );
+  assert.equal(cancelled, true);
+});
