@@ -1,3 +1,5 @@
+import { t } from './i18n/index.mjs';
+
 /** Shared boundary for user-owned files. Does not invoke getters or toJSON. */
 export const plainObject = (value) =>
   value !== null &&
@@ -22,11 +24,11 @@ export function boundedJSON(
   const encodedBytes = (value) => encoder.encode(JSON.stringify(value)).byteLength;
   if (typeof source === 'string') {
     if (source.length > maxBytes || encoder.encode(source).byteLength > maxBytes)
-      throw new TypeError('JSON file exceeds its byte budget.');
+      throw new TypeError(t('errors:dataJson.fileByteBudget'));
     try {
       source = JSON.parse(source);
     } catch {
-      throw new TypeError('The file must contain valid JSON.');
+      throw new TypeError(t('errors:dataJson.invalid'));
     }
   }
   let nodes = 0,
@@ -34,22 +36,22 @@ export function boundedJSON(
   const ancestors = new Set();
   const add = (n) => {
     size += n;
-    if (size > maxBytes) throw new TypeError('JSON exceeds its byte budget.');
+    if (size > maxBytes) throw new TypeError(t('errors:dataJson.byteBudget'));
   };
   function copy(value, depth) {
     if (++nodes > maxNodes || depth > maxDepth)
-      throw new TypeError('JSON exceeds its structural budget.');
+      throw new TypeError(t('errors:dataJson.structuralBudget'));
     if (value === null || typeof value === 'boolean') {
       add(value === false ? 5 : 4);
       return value;
     }
     if (typeof value === 'number') {
-      if (!Number.isFinite(value)) throw new TypeError('JSON numbers must be finite.');
+      if (!Number.isFinite(value)) throw new TypeError(t('errors:dataJson.finiteNumbers'));
       add(JSON.stringify(value).length);
       return value;
     }
     if (typeof value === 'string') {
-      if (value.length > maxString) throw new TypeError('JSON string exceeds its budget.');
+      if (value.length > maxString) throw new TypeError(t('errors:dataJson.stringBudget'));
       add(encodedBytes(value));
       return value;
     }
@@ -59,48 +61,49 @@ export function boundedJSON(
       typeof value !== 'object' ||
       (array ? Object.getPrototypeOf(value) !== Array.prototype : !plainObject(value))
     )
-      throw new TypeError('Only plain JSON data is supported.');
-    if (ancestors.has(value)) throw new TypeError('JSON cycles are not supported.');
-    if (array && value.length > maxArray)
-      throw new TypeError('JSON array exceeds its item budget.');
+      throw new TypeError(t('errors:dataJson.plainData'));
+    if (ancestors.has(value)) throw new TypeError(t('errors:dataJson.cyclesUnsupported'));
+    if (array && value.length > maxArray) throw new TypeError(t('errors:dataJson.arrayItemBudget'));
     ancestors.add(value);
     add(2); // JSON container delimiters.
     const out = array ? [] : {},
       descriptors = Object.getOwnPropertyDescriptors(value);
     let count = 0;
     for (const key of Reflect.ownKeys(descriptors)) {
-      if (typeof key !== 'string') throw new TypeError('JSON symbol keys are not supported.');
+      if (typeof key !== 'string') throw new TypeError(t('errors:dataJson.symbolKeys'));
       if (array && key === 'length') continue;
       if (['__proto__', 'constructor', 'prototype'].includes(key))
-        throw new TypeError(`Forbidden JSON key: ${key}.`);
+        throw new TypeError(t('errors:dataJson.forbiddenKey', { key }));
       const descriptor = descriptors[key];
       if (!descriptor.enumerable || !Object.hasOwn(descriptor, 'value'))
-        throw new TypeError('JSON accessors and hidden fields are not supported.');
-      if (key.length > 512) throw new TypeError('JSON field name exceeds its budget.');
+        throw new TypeError(t('errors:dataJson.ordinaryFields'));
+      if (key.length > 512) throw new TypeError(t('errors:dataJson.fieldNameBudget'));
       if (array && (!/^(0|[1-9]\d*)$/.test(key) || Number(key) >= value.length))
-        throw new TypeError('JSON arrays cannot have custom properties.');
+        throw new TypeError(t('errors:dataJson.arrayCustomProperties'));
       if (count) add(1); // Comma before every subsequent entry.
       if (!array) add(encodedBytes(key) + 1); // Object key and colon; array indexes are not serialized.
       out[key] = copy(descriptor.value, depth + 1);
       count++;
     }
-    if (array && count !== value.length)
-      throw new TypeError('Sparse JSON arrays are not supported.');
+    if (array && count !== value.length) throw new TypeError(t('errors:dataJson.sparseArrays'));
     ancestors.delete(value);
     return out;
   }
   const copied = copy(source, 0);
   if (encoder.encode(JSON.stringify(copied)).byteLength > maxBytes)
-    throw new TypeError('Encoded JSON exceeds its byte budget.');
+    throw new TypeError(t('errors:dataJson.encodedByteBudget'));
   return copied;
 }
 export function exactKeys(value, allowed, label, messages = {}) {
   if (!plainObject(value))
-    throw new TypeError(messages.object?.({ label }) ?? `${label} must be an object.`);
+    throw new TypeError(
+      messages.object?.({ label }) ?? t('errors:dataJson.objectRequired', { label }),
+    );
   for (const key of Object.keys(value))
     if (!allowed.includes(key))
       throw new TypeError(
-        messages.unsupported?.({ label, key }) ?? `${label}.${key} is not supported.`,
+        messages.unsupported?.({ label, key }) ??
+          t('errors:dataJson.unsupportedField', { path: `${label}.${key}` }),
       );
 }
 export function required(condition, message) {
