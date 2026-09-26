@@ -27,12 +27,27 @@ const SIGNAL_CULTURAL_V14_MISSIONS = Object.freeze([
   'signal-remix',
 ]);
 const NEON_CULTURAL_V15_MISSIONS = Object.freeze(['folded-corner', 'inside-out', 'side-door-bays']);
+const NEON_CULTURAL_V16_MISSIONS = Object.freeze([
+  'dogleg-return',
+  'staggered-circuit',
+  'neon-remix',
+]);
 const ORNAMENT_V1_MISSIONS = Object.freeze([
   'cross-stitch-crossings',
   'rushnyk-bands',
   'pysanka-sections',
 ]);
 const EDITION_HISTORY = Object.freeze({
+  'whole-spatial-v17': Object.freeze([
+    Object.freeze({ routeId: 'whole-spatial-v16', missionIds: NEON_CULTURAL_V16_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v15', missionIds: NEON_CULTURAL_V15_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v14', missionIds: SIGNAL_CULTURAL_V14_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v13', missionIds: EARLY_CULTURAL_V13_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v12', missionIds: BORDER_SIGNAL_V12_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v11', missionIds: BORDER_V11_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v10', missionIds: HORIZON_V10_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v9', missionIds: SPATIAL_V9_MISSIONS }),
+  ]),
   'whole-spatial-v16': Object.freeze([
     Object.freeze({ routeId: 'whole-spatial-v15', missionIds: NEON_CULTURAL_V15_MISSIONS }),
     Object.freeze({ routeId: 'whole-spatial-v14', missionIds: SIGNAL_CULTURAL_V14_MISSIONS }),
