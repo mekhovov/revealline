@@ -3,6 +3,7 @@ import test from "node:test";
 import {
   decideReleaseObjects,
   inspectReleaseObjects,
+  resolveReleaseAuthority,
   resolveTagCommit,
 } from "./fastline-release-objects.mjs";
 
@@ -145,4 +146,49 @@ test("inspection compares the tag and draft in one fail-closed decision", async 
     state: "published",
     reason: "exact published release exists",
   });
+});
+
+test("discovers an authenticated draft when the tag endpoint omits it", async () => {
+  const draft = {
+    id: 23,
+    tag_name: version,
+    target_commitish: sourceSha,
+    draft: true,
+    prerelease: false,
+  };
+  const calls = [];
+  const get = async (pathname) => {
+    calls.push(pathname);
+    if (pathname.endsWith(`/releases/tags/${version}`)) return null;
+    if (pathname.endsWith("/releases?per_page=100&page=1")) return [draft];
+    throw new Error(`unexpected ${pathname}`);
+  };
+  assert.equal(
+    await resolveReleaseAuthority({ repository, version, get }),
+    draft,
+  );
+  assert.deepEqual(calls, [
+    `/repos/${repository}/releases/tags/${version}`,
+    `/repos/${repository}/releases?per_page=100&page=1`,
+  ]);
+});
+
+test("fails closed when bounded draft discovery is ambiguous", async () => {
+  const draft = {
+    id: 23,
+    tag_name: version,
+    target_commitish: sourceSha,
+    draft: true,
+    prerelease: false,
+  };
+  const get = async (pathname) => {
+    if (pathname.endsWith(`/releases/tags/${version}`)) return null;
+    if (pathname.endsWith("/releases?per_page=100&page=1"))
+      return [draft, { ...draft, id: 24 }];
+    throw new Error(`unexpected ${pathname}`);
+  };
+  await assert.rejects(
+    resolveReleaseAuthority({ repository, version, get }),
+    /duplicate tag authorities/u,
+  );
 });
