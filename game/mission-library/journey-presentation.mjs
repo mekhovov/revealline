@@ -24,6 +24,7 @@ const UKRAINIAN_ROVER_ROUTES_REVISION = 'rover-cultural-routes-1';
 const UKRAINIAN_FRACTURE_ROUTES_REVISION = 'fracture-cultural-routes-1';
 const UKRAINIAN_PHASEWORKS_ROUTES_REVISION = 'phaseworks-cultural-routes-1';
 const UKRAINIAN_LIVEWIRE_ROUTES_REVISION = 'livewire-cultural-routes-1';
+const UKRAINIAN_RELAY_ROUTES_REVISION = 'relay-cultural-routes-1';
 
 /** Text-only projection of an already resolved manifest. No engine, geometry,
  * image fetching or decoding is needed to describe a mission at its preset. */
@@ -76,6 +77,7 @@ export function authoredJourneyMissionTags(mission, manifest) {
       UKRAINIAN_FRACTURE_ROUTES_REVISION,
       UKRAINIAN_PHASEWORKS_ROUTES_REVISION,
       UKRAINIAN_LIVEWIRE_ROUTES_REVISION,
+      UKRAINIAN_RELAY_ROUTES_REVISION,
     ].includes(manifest.level?.revision)
   )
     tags.push('Ukrainian');
