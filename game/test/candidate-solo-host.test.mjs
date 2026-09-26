@@ -349,7 +349,7 @@ test('failed difficulty save offers truthful export and retry without replacing 
   assert.equal(p.rendered.run.lives, 3);
   assert.match(
     p.$('difficulty-note').textContent,
-    /This flight: standard. Next fresh attempt: expert/,
+    /This flight: Standard. Next fresh attempt: Expert/,
   );
   assert.deepEqual(p.errors, []);
 });
@@ -376,7 +376,7 @@ test('cross-tab difficulty intent refreshes controls but preserves the current a
   assert.equal(p.rendered.run.lives, 3);
   assert.match(
     p.$('difficulty-note').textContent,
-    /This flight: standard. Next fresh attempt: gentle/,
+    /This flight: Standard. Next fresh attempt: Gentle/,
   );
   assert.deepEqual(p.errors, []);
 });
@@ -497,7 +497,7 @@ test('candidate Skip takes two actions, uses next-attempt Expert intent, and res
   assert(savedRaw);
   const saved = JSON.parse(savedRaw);
   assert.equal(saved.themeId, 'horizon');
-  assert.equal(saved.presentationPins, undefined);
+  assert.equal(saved.presentationPins, null);
   assert.equal(verifyReplay(saved.replay).match, true);
   p.change('difficulty-select', 'expert');
   assert.equal(p.rendered.run, retained);
