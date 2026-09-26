@@ -38,17 +38,17 @@ in draft titles are stale where they disagree with this order. Physical
 controller/touch, comprehensive offline and human balance checks remain separate
 from modeled or built-in-browser evidence.
 
-| Order | Working release | Scope                                                      | Current source input                                                      |
-| ----- | --------------- | ---------------------------------------------------------- | ------------------------------------------------------------------------- |
-| 1     | v0.141.4        | Couch secondary navigation and Team continuation           | publicly accepted exact source `cc0309ffaaea9050a44f7b7592d38ba5a0ade78c` |
-| 2     | v0.141.5        | Bounded community S3 package and resumable-upload storage  | publicly accepted exact source `edd5fa39ae3f0bdf7bc6fa156c461925df794577` |
+| Order | Working release | Scope                                                      | Current source input                                                       |
+| ----- | --------------- | ---------------------------------------------------------- | -------------------------------------------------------------------------- |
+| 1     | v0.141.4        | Couch secondary navigation and Team continuation           | publicly accepted exact source `cc0309ffaaea9050a44f7b7592d38ba5a0ade78c`  |
+| 2     | v0.141.5        | Bounded community S3 package and resumable-upload storage  | publicly accepted exact source `edd5fa39ae3f0bdf7bc6fa156c461925df794577`  |
 | 3     | v0.141.6        | Dual-reader source-manifest release and opt-in canary path | immutable release published; Archive99 and public selector acceptance next |
-| 4     | v0.141.7        | Teaching, reward and navigation batch                      | integrate #543 → #580; repair semantic bilingual teaching; refresh status |
-| 5     | v0.141.8        | Failure and continuation batch                             | PR #545 → #552 → #557; rerun cumulative exact-source gates                |
-| 6     | v0.141.9        | Pause, Settings/Help and Collection return batch           | PR #542 → #548; rerun cumulative exact-source gates                       |
-| 7     | v0.142.0        | Existing offline delivery batch                            | preserve PR #605 → #609 → #619 → #588 ownership and allocation            |
-| 8     | v0.143.0        | Existing soundtrack batch                                  | preserve its current owner and release allocation                         |
-| 9     | after v0.143.0  | UX6 cumulative qualification                               | exact accepted predecessor; no aggregation of stale component evidence    |
+| 4     | v0.141.7        | Teaching, reward and navigation batch                      | integrate #543 → #580; repair semantic bilingual teaching; refresh status  |
+| 5     | v0.141.8        | Failure and continuation batch                             | PR #545 → #552 → #557; rerun cumulative exact-source gates                 |
+| 6     | v0.141.9        | Pause, Settings/Help and Collection return batch           | PR #542 → #548; rerun cumulative exact-source gates                        |
+| 7     | v0.142.0        | Existing offline delivery batch                            | preserve PR #605 → #609 → #619 → #588 ownership and allocation             |
+| 8     | v0.143.0        | Existing soundtrack batch                                  | preserve its current owner and release allocation                          |
+| 9     | after v0.143.0  | UX6 cumulative qualification                               | exact accepted predecessor; no aggregation of stale component evidence     |
 
 Known corrections remain part of these working allocations:
 
