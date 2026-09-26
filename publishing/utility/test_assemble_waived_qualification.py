@@ -173,6 +173,14 @@ class AdapterTests(unittest.TestCase):
         self.assertEqual(adapter.named(rows, 'inspect-artifact')['id'], inspection['id'])
         self.assertEqual([job['name'] for job in rows].count('qualify / inspect-artifact'), 1)
 
+        duplicate = copy.deepcopy(jobs)
+        duplicate['jobs'].append(dict(inspection, id=903))
+        duplicate['total_count'] = len(duplicate['jobs'])
+        duplicate_rows = adapter.family(run, duplicate, adapter.QUALIFICATION_WORKFLOWS,
+                                        'workflow_dispatch', self.source['commit'])
+        with self.assertRaisesRegex(ValueError, 'Successful job missing: inspect-artifact'):
+            adapter.named(duplicate_rows, 'inspect-artifact')
+
         inspection['conclusion'] = 'skipped'
         with self.assertRaisesRegex(ValueError, 'Successful job missing: inspect-artifact'):
             rows = adapter.family(run, jobs, adapter.QUALIFICATION_WORKFLOWS,
