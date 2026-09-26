@@ -26,6 +26,7 @@ const revisedEarlyCultural = ['nearby-shore', 'two-bays', 'behind-the-patrol'];
 const revisedSignalCultural = ['soft-crossing', 'cool-the-crossing', 'signal-remix'];
 const revisedNeonCultural = ['folded-corner', 'inside-out', 'side-door-bays'];
 const revisedNeonFinale = ['dogleg-return', 'staggered-circuit', 'neon-remix'];
+const revisedRoverCultural = ['wake-the-yard', 'between-the-rows', 'rover-remix'];
 const sourceId = (row) => row.runtimeId.split('/').at(-1);
 
 test('prior-edition qualification is bounded to the three preserved mission owners', async () => {
@@ -871,10 +872,10 @@ test('v16 active cards and exact v15 cards remain distinct and stop cross-editio
   }
 });
 
-test('v17 selector exposes three exact v16 Neon cards and retains earlier history', async (t) => {
+test('v18 selector exposes three exact v17 Rover cards and retains earlier history', async (t) => {
   const launches = [];
   const owner = await createSpatialNextEditionSources({
-    activeRouteId: 'whole-spatial-v17',
+    activeRouteId: 'whole-spatial-v18',
     originalThemes,
     launch: (context) => {
       launches.push(context);
@@ -883,29 +884,29 @@ test('v17 selector exposes three exact v16 Neon cards and retains earlier histor
   });
   t.after(owner.dispose);
   const library = createMissionLibrary(owner.sources);
-  assert.equal(library.missions.length, 24);
-  assert.equal(library.forMode('solo').length, 24);
-  assert.equal(library.forMode('versus').length, 24);
+  assert.equal(library.missions.length, 27);
+  assert.equal(library.forMode('solo').length, 27);
+  assert.equal(library.forMode('versus').length, 27);
   assert.equal(library.forMode('team').length, 0);
   assert.deepEqual(
     library.missions
-      .filter((row) => row.editionId === 'whole-spatial-v16')
+      .filter((row) => row.editionId === 'whole-spatial-v17')
       .map(sourceId)
       .toSorted(),
-    revisedNeonFinale.toSorted(),
+    revisedRoverCultural.toSorted(),
   );
   for (const row of library.missions) {
     assert.equal(row.automaticContinuation, false);
-    assert.match(row.edition, /^Previous Journey · v(?:9|10|11|12|13|14|15|16)$/);
+    assert.match(row.edition, /^Previous Journey · v(?:9|10|11|12|13|14|15|16|17)$/);
     assert.equal(await library.launch(row, { mode: 'solo' }), true);
     assert.equal(launches.at(-1).libraryMissionId, row.id);
     assert.equal(launches.at(-1).mode, 'solo');
   }
 });
 
-test('v17 active cards and exact v16 cards remain distinct and stop cross-edition Next', async (t) => {
-  const activeRoute = await loadAuthoredJourneyRoute('whole-spatial-v17');
-  const priorRoute = await loadAuthoredJourneyRoute('whole-spatial-v16');
+test('v18 active cards and exact v17 cards remain distinct and stop cross-edition Next', async (t) => {
+  const activeRoute = await loadAuthoredJourneyRoute('whole-spatial-v18');
+  const priorRoute = await loadAuthoredJourneyRoute('whole-spatial-v17');
   const themes = journeyActorThemeCandidates(originalThemes, { includeOriginals: true });
   const activeHost = createCandidateVersusHost(activeRoute.source, {
     themes,
@@ -937,25 +938,25 @@ test('v17 active cards and exact v16 cards remain distinct and stop cross-editio
     }),
     ...owner.sources,
   ]);
-  assert.equal(library.missions.length, activeHost.catalog.missions.length + 24);
+  assert.equal(library.missions.length, activeHost.catalog.missions.length + 27);
   const activeRows = library
     .forMode('versus')
-    .filter((row) => row.editionId === 'whole-spatial-v17');
+    .filter((row) => row.editionId === 'whole-spatial-v18');
   const boundary = activeRows.findIndex(
     (row, index) => activeRows[index + 1] && row.campaignKey !== activeRows[index + 1].campaignKey,
   );
   assert(boundary >= 0);
   assert.equal(librarySuccessor(library, activeRows[boundary], 'versus'), activeRows[boundary + 1]);
-  for (const id of revisedNeonFinale) {
+  for (const id of revisedRoverCultural) {
     const runtimeId = activeHost.catalog.missions.find((mission) => mission.levelId === id).id;
     const editions = library.missions.filter((row) => row.runtimeId === runtimeId);
     assert.equal(editions.length, 2);
     assert.deepEqual(
       new Set(editions.map((row) => row.editionId)),
-      new Set(['whole-spatial-v16', 'whole-spatial-v17']),
+      new Set(['whole-spatial-v17', 'whole-spatial-v18']),
     );
-    const prior = editions.find((row) => row.editionId === 'whole-spatial-v16');
-    const active = editions.find((row) => row.editionId === 'whole-spatial-v17');
+    const prior = editions.find((row) => row.editionId === 'whole-spatial-v17');
+    const active = editions.find((row) => row.editionId === 'whole-spatial-v18');
     assert(active.tags.includes('Ukrainian'));
     assert(!prior.tags.includes('Ukrainian'));
     assert.equal(await library.launch(prior, { mode: 'versus' }), true);
