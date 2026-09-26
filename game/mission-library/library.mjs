@@ -68,6 +68,8 @@ export function createMissionLibrary(sources = []) {
     if (store.get(row)?.size === 0) store.delete(row);
   };
   let rows = Object.freeze([]),
+    byId = new Map(),
+    rowsByMode = new Map(LIBRARY_MODES.map((mode) => [mode, Object.freeze([])])),
     disposed = false;
   const emit = () => {
     for (const listener of listeners) listener();
@@ -88,6 +90,18 @@ export function createMissionLibrary(sources = []) {
           (a, b) =>
             LIBRARY_COLLECTIONS.indexOf(a.collection) - LIBRARY_COLLECTIONS.indexOf(b.collection),
         ),
+    );
+    // The unified selector asks for exact identities repeatedly while it
+    // reconciles focus, availability and lazy previews. Keep those lookups
+    // linear in the number of rendered cards, not quadratic in the complete
+    // installed catalogue. Rebuild the derived indexes only after the owner
+    // replacement has been accepted so stale rows never become authoritative.
+    byId = new Map(rows.map((row) => [row.id, row]));
+    rowsByMode = new Map(
+      LIBRARY_MODES.map((mode) => [
+        mode,
+        Object.freeze(rows.filter((row) => row.modes.includes(mode))),
+      ]),
     );
   }
   function cancelOwner(owner) {
@@ -214,12 +228,12 @@ export function createMissionLibrary(sources = []) {
       return true;
     },
     find(id) {
-      return rows.find((row) => row.id === id) ?? null;
+      return byId.get(id) ?? null;
     },
     forMode(mode) {
       if (!LIBRARY_MODES.includes(mode))
         throw new TypeError(t('errors:missionLibrary.unknownMode'));
-      return rows.filter((row) => row.modes.includes(mode));
+      return rowsByMode.get(mode);
     },
     search(query = '', { mode = 'solo', collection = '', campaign = '', tag = '' } = {}) {
       if (
@@ -233,7 +247,7 @@ export function createMissionLibrary(sources = []) {
         .trim()
         .split(/\s+/u)
         .filter(Boolean);
-      return rows.filter((row) => {
+      return rowsByMode.get(mode).filter((row) => {
         const display = words.length ? presentation(row) : row;
         return (
           row.modes.includes(mode) &&
@@ -347,6 +361,8 @@ export function createMissionLibrary(sources = []) {
       for (const owner of owners.values()) cancelOwner(owner);
       owners.clear();
       rows = Object.freeze([]);
+      byId = new Map();
+      rowsByMode = new Map(LIBRARY_MODES.map((mode) => [mode, Object.freeze([])]));
       listeners.clear();
     },
   });
