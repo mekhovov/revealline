@@ -12,17 +12,15 @@
   English/Ukrainian refresh. Its tag points to product source
   `d3df9d47f578d48383ff589914a188ada2ef8b31`; selector
   [PR #649](https://github.com/mekhovov/revealline/pull/649) merged as
-  `d308610271ad01fbabb2847ee046325001ec63e5`. Current `main` at
-  `0cb51db92295a62fea99ee2ab215a79c6df06520` retains v0.132.4 and includes the
-  permanent draft-release discovery correction plus bounded public-byte release
-  verification. Public Solo, Versus and Team
-  entry, the Team picture binding, Ukrainian text and exact deployed manifest
-  bytes were verified. A follow-up live language-switch audit found a retained
-  English Solo primary action/destination after switching to Ukrainian; that is
-  tracked as a corrective release rather than modifying v0.132.4.
-- **Active:** the serialized working queue starts with the focused v0.132.5
-  localization correction in
-  [PR #652](https://github.com/mekhovov/revealline/pull/652), then v0.133 compact gallery
+  `d308610271ad01fbabb2847ee046325001ec63e5`. Current `main` at exact
+  `a8881ac17e44f38fb1e9dc15428899992727cc78` contains the merged v0.132.5
+  localization correction, version source
+  `c1fec0d8ef8a8bff29acd5619f3bdcc748205e9f` and the FPV revision-90 exact
+  presentation continuation. No public v0.132.5 release exists yet.
+- **Active:** the serialized working queue starts with publication of the merged
+  v0.132.5 source from [PR #652](https://github.com/mekhovov/revealline/pull/652),
+  [PR #654](https://github.com/mekhovov/revealline/pull/654) and
+  [PR #663](https://github.com/mekhovov/revealline/pull/663), then v0.133 compact gallery
   ([PR #590](https://github.com/mekhovov/revealline/pull/590));
   v0.134 Team quick-start ([PR #549](https://github.com/mekhovov/revealline/pull/549));
   v0.135 Couch secondary navigation ([PR #539](https://github.com/mekhovov/revealline/pull/539));
