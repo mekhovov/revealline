@@ -38,7 +38,7 @@ const button = (label, fn) => {
 const presenters = new WeakMap();
 const status = (id, value, state = 'ready') => {
   const target = $(id),
-    message = value instanceof Error ? value.message : String(value);
+    message = value instanceof Error ? value.message : value;
   let presenter = presenters.get(target);
   if (!presenter) {
     presenter = createOperationStatus(target);
@@ -556,26 +556,32 @@ export function attachLibraryPanel(api) {
       localizedText(p, () => contentText(pack, 'description'));
       row.append(title, p);
       for (const source of pack.campaigns) {
-        const play = button(`Play ${source.title || source.name || source.id}`, () => {
-          const entry = api
-              .catalog()
-              .find((c) => c.sourcePackId === pack.id && c.campaign.id === source.id),
-            generation = launchGeneration;
-          if (!entry) {
-            status('pack-status', new Error(t('interface:thatInstalledCampaignIsUnavailable')));
-            return;
-          }
-          return launch(
-            { kind: 'library-installed', id: campaignKey(entry.campaign) },
-            {
-              opener: play,
-              isCurrent: () => libraryLaunchCurrent('packs', play, generation),
-              close: () => $('library-dialog').close(),
-              entry,
-              statusId: 'pack-status',
-            },
-          );
-        });
+        const play = button(
+          () =>
+            t('interface:library.playCampaign', {
+              campaign: contentText(source, 'title') || contentText(source, 'name') || source.id,
+            }),
+          () => {
+            const entry = api
+                .catalog()
+                .find((c) => c.sourcePackId === pack.id && c.campaign.id === source.id),
+              generation = launchGeneration;
+            if (!entry) {
+              status('pack-status', new Error(t('interface:thatInstalledCampaignIsUnavailable')));
+              return;
+            }
+            return launch(
+              { kind: 'library-installed', id: campaignKey(entry.campaign) },
+              {
+                opener: play,
+                isCurrent: () => libraryLaunchCurrent('packs', play, generation),
+                close: () => $('library-dialog').close(),
+                entry,
+                statusId: 'pack-status',
+              },
+            );
+          },
+        );
         play.dataset.packAction = 'play';
         play.dataset.campaignId = source.id;
         plays.push(play);
@@ -771,7 +777,12 @@ export function attachLibraryPanel(api) {
     $('cancel-attempt-export').focus({ preventScroll: true });
     status(
       'save-status',
-      `Checking the ${source.source === 'stored' ? 'saved' : 'current'} attempt…`,
+      () =>
+        t(
+          source.source === 'stored'
+            ? 'interface:library.checkingSavedAttempt'
+            : 'interface:library.checkingCurrentAttempt',
+        ),
       'busy',
     );
     try {
@@ -1064,9 +1075,19 @@ export function attachLibraryPanel(api) {
         const prepared = await prepareBackup(parsed, { ...options, signal: operation.signal });
         operation.check();
         const applied = await applyPrepared(prepared, operation);
-        status(
-          'save-status',
-          `Game data restored. ${prepared.session ? t('interface:yourSavedFlightIsRestoredLoadingVerifiesItsRequiredArtwork') : t('interface:thisBackupHasNoSavedFlight')} ${applied.undo ? t('interface:undoRestoresThePreviousCollectionPacksAndSavedFlight') : t('interface:thePreviousDataCouldNotFormAVerifiedBackupSo')} ${applied.warning || ''}`,
+        status('save-status', () =>
+          [
+            t('interface:library.gameDataRestored'),
+            prepared.session
+              ? t('interface:yourSavedFlightIsRestoredLoadingVerifiesItsRequiredArtwork')
+              : t('interface:thisBackupHasNoSavedFlight'),
+            applied.undo
+              ? t('interface:undoRestoresThePreviousCollectionPacksAndSavedFlight')
+              : t('interface:thePreviousDataCouldNotFormAVerifiedBackupSo'),
+            applied.warning,
+          ]
+            .filter(Boolean)
+            .join(' '),
         );
         return;
       }
@@ -1139,11 +1160,11 @@ export function attachLibraryPanel(api) {
     } catch {}
     checkIdentity();
     await operation.reviewReplacement(
-      'Replace this release’s pictures, scores, preferences, installed packs and saved flight? ' +
-        (old
-          ? '' + t('interface:undoWillRestoreTheCurrentGameData') + ' '
-          : '' + t('interface:undoIsUnavailableTheCurrentDataCouldNotFormA') + ' ') +
-        'Embedded pack artwork is included. Separately stored picture originals, stories and custom music are not replaced by this game-data import.',
+      t('interface:library.replaceGameDataPrompt', {
+        undo: old
+          ? t('interface:undoWillRestoreTheCurrentGameData')
+          : t('interface:undoIsUnavailableTheCurrentDataCouldNotFormA'),
+      }),
     );
     checkIdentity();
     if (verifySource) await verifySource();
@@ -1249,9 +1270,11 @@ export function attachLibraryPanel(api) {
       $('save-json').value = text;
       operation.commit(t('interface:preparingTheRequestedDownload'));
       const exported = await downloadJSON(JSON.parse(text), 'revealline-player-library.json');
-      status(
-        'save-status',
-        `Library prepared. ${exported.message} Keep packs and attempt files alongside it. ${api.sessionNote?.() || ''}`,
+      status('save-status', () =>
+        t('interface:library.libraryPrepared', {
+          download: exported.message,
+          note: api.sessionNote?.() || '',
+        }),
       );
     });
   $('import-save').onclick = () => importSave($('save-json').value);
@@ -1356,16 +1379,19 @@ export function attachLibraryPanel(api) {
       examplesLease.finish({ message: '' });
       for (const pack of index.packs) {
         $('builtin-packs').append(
-          button(`Install ${pack.id.replaceAll('-', ' ')}`, async () => {
-            await task('pack-status', async (operation) => {
-              operation.phase(t('interface:downloadingTheExamplePack'));
-              const r = await fetch(`content/packs/${pack.path}`, { signal: operation.signal });
-              if (!r.ok) throw new Error(t('interface:examplePackIsUnavailable'));
-              const data = await r.json();
-              operation.check();
-              await install(data, operation);
-            });
-          }),
+          button(
+            () => t('interface:library.installExamplePack', { pack: pack.id.replaceAll('-', ' ') }),
+            async () => {
+              await task('pack-status', async (operation) => {
+                operation.phase(t('interface:downloadingTheExamplePack'));
+                const r = await fetch(`content/packs/${pack.path}`, { signal: operation.signal });
+                if (!r.ok) throw new Error(t('interface:examplePackIsUnavailable'));
+                const data = await r.json();
+                operation.check();
+                await install(data, operation);
+              });
+            },
+          ),
         );
       }
     })
@@ -1628,7 +1654,7 @@ export function attachLibraryPanel(api) {
             .filter(Boolean),
         }))
         .filter((group) =>
-          `${group.item.levelName} ${group.item.themeId} ${group.variants.map((picture) => `${contentText(picture.theme, 'name')} ${contentText(resolver, 'label')(picture.item.campaignKey)}`).join(' ')} ${group.variants.length ? '' : 'archived difficulty unavailable'}`
+          `${group.item.levelName} ${group.item.themeId} ${group.variants.map((picture) => `${contentText(picture.theme, 'name')} ${contentText(resolver, 'label')(picture.item.campaignKey)}`).join(' ')} ${group.variants.length ? '' : t('interface:library.archivedDifficultyUnavailable')}`
             .toLowerCase()
             .includes(query),
         );
@@ -1651,7 +1677,17 @@ export function attachLibraryPanel(api) {
       );
       localizedText(copy, () =>
         picture
-          ? `${picture.theme.name} · ${picture.label} · ${collectionResultLabels(item, api.get().library).card}${otherDifficulties.length ? ` · Also earned: ${otherDifficulties.join(' + ')}` : ''}`
+          ? t(
+              otherDifficulties.length
+                ? 'interface:library.galleryCardWithAlsoEarned'
+                : 'interface:library.galleryCard',
+              {
+                theme: contentText(picture.theme, 'name'),
+                difficulty: picture.label,
+                result: collectionResultLabels(item, api.get().library).card,
+                otherDifficulties: otherDifficulties.join(' + '),
+              },
+            )
           : receipts.get(item.key)?.presentationPin.kind === 'still'
             ? t('interface:originalPictureUnavailableRestoreItsRlmediaOriginals')
             : t('interface:archivedPictureReinstallItsExactPackToView'),
@@ -1763,13 +1799,22 @@ export function attachLibraryPanel(api) {
       generation === viewGeneration && view === picture && $('gallery-view-dialog').open;
     localizedText($('gallery-view-title'), () => contentText(picture.level, 'name'));
     $('gallery-view-meta').setAttribute('role', 'status');
-    status('gallery-view-meta', `${meta} · Loading picture…`, 'busy');
+    status(
+      'gallery-view-meta',
+      () => t('interface:library.pictureLoading', { meta: pictureMeta(picture) }),
+      'busy',
+    );
     refreshPictureMasteries(picture, api.get().library.masteries);
     // Keep Collection and its original opener underneath this child picture.
     if (!switching) $('gallery-view-dialog').showModal();
     try {
       const drawn = await drawPicture($('gallery-canvas'), picture, current, (message) => {
-        if (current()) status('gallery-view-meta', `${meta} · ${message}`, 'busy');
+        if (current())
+          status(
+            'gallery-view-meta',
+            () => t('interface:library.pictureProgress', { meta: pictureMeta(picture), message }),
+            'busy',
+          );
       });
       if (drawn && current()) {
         pictureReady(true);
@@ -1780,7 +1825,11 @@ export function attachLibraryPanel(api) {
         pictureReady(false);
         status(
           'gallery-view-meta',
-          `${meta} · Picture could not load. Restore its originals or exact pack, then reopen this view. ${e instanceof Error ? e.message : ''}`,
+          () =>
+            t('interface:library.pictureLoadFailed', {
+              meta: pictureMeta(picture),
+              error: e instanceof Error ? e.message : '',
+            }),
           'error',
         );
       }
@@ -1844,7 +1893,11 @@ export function attachLibraryPanel(api) {
     const picture = view,
       generation = ++viewGeneration;
     cancelAnimationFrame(galleryFrame);
-    status('gallery-view-meta', `${pictureMeta(picture)} · Preparing celebration artwork…`, 'busy');
+    status(
+      'gallery-view-meta',
+      () => t('interface:library.preparingCelebration', { meta: pictureMeta(picture) }),
+      'busy',
+    );
     try {
       const visuals = { ...picture.visualOverrides };
       if (viewBackdrop) delete visuals.background;
@@ -1855,7 +1908,11 @@ export function attachLibraryPanel(api) {
       if (generation === viewGeneration && view === picture && $('gallery-view-dialog').open)
         status(
           'gallery-view-meta',
-          `${pictureMeta(picture)} · Celebration could not start. The completed picture is still available. ${e instanceof Error ? e.message : ''}`,
+          () =>
+            t('interface:library.celebrationFailed', {
+              meta: pictureMeta(picture),
+              error: e instanceof Error ? e.message : '',
+            }),
           'error',
         );
       return;
