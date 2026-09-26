@@ -17,7 +17,9 @@
   `7aa32a48e9817b7ca867cb0735c99f72f6d67b96`.
 - **Active:** the serialized player queue starts with v0.141.1 compact gallery
   ([PR #590](https://github.com/mekhovov/revealline/pull/590));
-  v0.141.2 Team quick-start; v0.141.3 Couch secondary navigation;
+  v0.141.2 Team quick-start is prepared locally on exact compact-gallery
+  candidate `a5c60f2bcdf041610564098a869458f1bbe947ef`, without claiming that
+  predecessor public; v0.141.3 Couch secondary navigation;
   v0.141.4 Team teaching; v0.141.5 deliberate Team terminal Retry;
   v0.141.6 Versus countdown; v0.141.7 named result destinations;
   and v0.141.8 Collection fixture reconciliation plus paused Settings/Help return
