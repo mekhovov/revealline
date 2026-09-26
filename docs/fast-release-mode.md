@@ -176,6 +176,13 @@ artifact has closed. Resume locates only a successful completed proof run for th
 version and source, assembles the seven evidence assets from the completed run authorities, and
 reconciles the annotated tag, draft, nine server digests and publication exactly once.
 
+The independent inspector may read its own parent fastline run while that exact run is still
+`in_progress`, because the inspector itself prevents the parent from becoming `completed`. This
+exception is fail-closed: the run ID must equal `GITHUB_RUN_ID`, the workflow and source must match,
+admission/qualification/freeze must already be successful, waived tests must actually be skipped,
+no job may have failed, and exactly one inspection job must be active. Completed historical runs
+remain subject to the stricter completed-run authority rules.
+
 Existing matching objects are reused; absent draft objects are created; mismatched tags, releases,
 assets, lightweight tags, incomplete published releases and digestless assets stop. Published assets
 are never overwritten. The write permission exists only on the final publication job. The reusable
