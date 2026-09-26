@@ -4,6 +4,7 @@ import test from "node:test";
 import {
   RELEASE_ASSET_NAMES,
   decideReleaseAssets,
+  createGitHubRequest,
   ensureDraftRelease,
   normalizeAssetDigest,
   publishExactRelease,
@@ -68,7 +69,13 @@ test("creates an annotated tag and exact draft once, then reuses it", async () =
     }
     if (pathname.endsWith("/releases")) {
       state = "draft";
-      return {};
+      return {
+        id: 7,
+        tag_name: version,
+        target_commitish: sourceSha,
+        draft: true,
+        prerelease: false,
+      };
     }
     throw new Error(`unexpected ${pathname}`);
   };
@@ -115,6 +122,350 @@ test("creates an annotated tag and exact draft once, then reuses it", async () =
     [`/repos/${repository}/releases`, "POST"],
   ]);
 });
+
+const draft = {
+  id: 7,
+  tag_name: version,
+  target_commitish: sourceSha,
+  draft: true,
+  prerelease: false,
+};
+const tagOnly = {
+  tagCommit: sourceSha,
+  tagType: "tag",
+  release: null,
+  decision: { action: "create-release", state: "tag-only" },
+};
+const withRelease = (release = draft) => ({
+  ...tagOnly,
+  release,
+  decision: { action: "reuse", state: release.draft ? "draft" : "published" },
+});
+
+test("pins returned release ID despite delayed draft discovery without repeating POST", async () => {
+  let reads = 0;
+  let posts = 0;
+  const delays = [];
+  const release = await ensureDraftRelease({
+    repository,
+    version,
+    sourceSha,
+    request: async () => {
+      posts += 1;
+      return draft;
+    },
+    inspect: async ({ releaseId }) => {
+      reads += 1;
+      if (reads === 1) return tagOnly;
+      assert.equal(releaseId, 7);
+      return reads < 4 ? tagOnly : withRelease();
+    },
+    wait: async (delay) => delays.push(delay),
+  });
+  assert.equal(release.id, 7);
+  assert.equal(posts, 1);
+  assert.deepEqual(delays, [1000, 2000]);
+});
+
+test("does not swallow genuine 422 validation errors", async () => {
+  const error = Object.assign(new Error("GitHub 422: invalid tag"), {
+    status: 422,
+    codes: ["invalid"],
+  });
+  let reads = 0;
+  await assert.rejects(
+    ensureDraftRelease({
+      repository,
+      version,
+      sourceSha,
+      inspect: async () => {
+        reads += 1;
+        return tagOnly;
+      },
+      request: async () => {
+        throw error;
+      },
+    }),
+    (caught) => caught === error,
+  );
+  assert.equal(reads, 1);
+});
+
+for (const failure of [
+  { status: 422, codes: ["already_exists"] },
+  { ambiguousWrite: true },
+  { status: 503 },
+]) {
+  test(`discovers matching object after ambiguous/conflicting write ${JSON.stringify(failure)}`, async () => {
+    let posts = 0;
+    let reads = 0;
+    const release = await ensureDraftRelease({
+      repository,
+      version,
+      sourceSha,
+      inspect: async () => (++reads === 1 ? tagOnly : withRelease()),
+      request: async () => {
+        posts += 1;
+        throw Object.assign(new Error("uncertain outcome"), failure);
+      },
+    });
+    assert.equal(release.id, 7);
+    assert.equal(posts, 1);
+  });
+}
+
+test("absent object after ambiguous write stops with original diagnostic and no second write", async () => {
+  let writes = 0;
+  await assert.rejects(
+    ensureDraftRelease({
+      repository,
+      version,
+      sourceSha,
+      inspect: async () => tagOnly,
+      request: async () => {
+        writes += 1;
+        throw Object.assign(new Error("request lost"), {
+          ambiguousWrite: true,
+        });
+      },
+      wait: async () => {},
+    }),
+    /no write was retried: request lost/u,
+  );
+  assert.equal(writes, 1);
+});
+
+test("creation receipt rejects missing ID and mismatched source without recovery writes", async () => {
+  for (const returned of [
+    { ...draft, id: undefined },
+    { ...draft, target_commitish: "b".repeat(40) },
+  ]) {
+    await assert.rejects(
+      ensureDraftRelease({
+        repository,
+        version,
+        sourceSha,
+        inspect: async () => tagOnly,
+        request: async () => returned,
+      }),
+      /missing release ID|differs/u,
+    );
+  }
+});
+
+test("discovered mismatched tag fails closed immediately", async () => {
+  let reads = 0;
+  await assert.rejects(
+    ensureDraftRelease({
+      repository,
+      version,
+      sourceSha,
+      inspect: async () =>
+        ++reads === 1
+          ? tagOnly
+          : { ...withRelease(), tagCommit: "b".repeat(40) },
+      request: async () => draft,
+      wait: async () => assert.fail("must not retry a mismatch"),
+    }),
+    /release tag/u,
+  );
+});
+
+test("duplicate asset names are rejected rather than collapsed", () => {
+  assert.throws(
+    () => decideReleaseAssets({ expected, actual: [...expected, expected[0]] }),
+    /duplicate/u,
+  );
+});
+
+test("GET honors Retry-After for 429 and primary-limit reset for 403", async () => {
+  for (const [status, headers, delay] of [
+    [429, { "retry-after": "2" }, 2000],
+    [403, { "x-ratelimit-remaining": "0", "x-ratelimit-reset": "105" }, 5000],
+  ]) {
+    let calls = 0;
+    const waits = [];
+    const request = createGitHubRequest({
+      now: () => 100000,
+      wait: async (ms) => waits.push(ms),
+      fetchImpl: async () =>
+        ++calls === 1
+          ? new Response('{"message":"rate limit"}', { status, headers })
+          : new Response('{"id":7}'),
+    });
+    assert.deepEqual(await request("/read"), { id: 7 });
+    assert.deepEqual(waits, [delay]);
+  }
+});
+
+test("non-rate-limit 403 and excessive Retry-After stop without immediate retry", async () => {
+  for (const [status, headers] of [
+    [403, {}],
+    [429, { "retry-after": "120" }],
+  ]) {
+    let calls = 0;
+    const request = createGitHubRequest({
+      fetchImpl: async () => {
+        calls += 1;
+        return new Response('{"message":"denied"}', { status, headers });
+      },
+      wait: async () => assert.fail("must stop"),
+    });
+    await assert.rejects(request("/read"), /GitHub/u);
+    assert.equal(calls, 1);
+  }
+});
+
+test("writes are never retried by HTTP transport and diagnostics redact credentials", async () => {
+  let calls = 0;
+  const request = createGitHubRequest({
+    token: "secret-token",
+    fetchImpl: async () => {
+      calls += 1;
+      return new Response(
+        JSON.stringify({
+          message: "failed secret-token",
+          errors: [{ code: "invalid" }],
+        }),
+        { status: 422 },
+      );
+    },
+  });
+  await assert.rejects(request("/write", { method: "POST" }), (error) => {
+    assert.equal(error.status, 422);
+    assert.deepEqual(error.codes, ["invalid"]);
+    assert.doesNotMatch(error.message, /secret-token/u);
+    return true;
+  });
+  assert.equal(calls, 1);
+});
+
+test("lost POST response is classified as ambiguous without automatic resubmission", async () => {
+  let calls = 0;
+  const request = createGitHubRequest({
+    fetchImpl: async () => {
+      calls += 1;
+      throw new Error("network secret");
+    },
+  });
+  await assert.rejects(
+    request("/write", { method: "POST" }),
+    (error) =>
+      error.ambiguousWrite && !error.message.includes("network secret"),
+  );
+  assert.equal(calls, 1);
+});
+
+test("successful HTTP write with unreadable body is ambiguous, not repeated", async () => {
+  for (const response of [
+    {
+      status: 201,
+      ok: true,
+      text: async () => {
+        throw new Error("stream interrupted");
+      },
+    },
+    new Response("broken JSON", { status: 201 }),
+  ]) {
+    let calls = 0;
+    const request = createGitHubRequest({
+      fetchImpl: async () => {
+        calls += 1;
+        return response;
+      },
+    });
+    await assert.rejects(
+      request("/write", { method: "POST" }),
+      (error) => error.ambiguousWrite === true,
+    );
+    assert.equal(calls, 1);
+  }
+});
+
+test("tag ref conflict can only recover through matching annotated authority", async () => {
+  let reads = 0;
+  const calls = [];
+  await ensureDraftRelease({
+    repository,
+    version,
+    sourceSha,
+    inspect: async () =>
+      ++reads === 1
+        ? {
+            tagCommit: null,
+            tagType: null,
+            release: null,
+            decision: { action: "create", state: "absent" },
+          }
+        : withRelease(),
+    request: async (pathname) => {
+      calls.push(pathname);
+      if (pathname.endsWith("/git/tags")) return { sha: "b".repeat(40) };
+      throw Object.assign(new Error("reference exists"), {
+        status: 422,
+        codes: ["already_exists"],
+      });
+    },
+  });
+  assert.deepEqual(calls, [
+    `/repos/${repository}/git/tags`,
+    `/repos/${repository}/git/refs`,
+  ]);
+});
+
+for (const status of [409, 422]) {
+  for (const authority of ["matching", "missing", "mismatched"]) {
+    test(`message-only ref ${status} with ${authority} authority never retries the write`, async () => {
+      let reads = 0;
+      const writes = [];
+      const absent = {
+        tagCommit: null,
+        tagType: null,
+        release: null,
+        decision: { action: "create", state: "absent" },
+      };
+      const request = createGitHubRequest({
+        token: "test-token",
+        fetchImpl: async (url, options) => {
+          writes.push([url, options.method]);
+          if (url.endsWith("/git/tags"))
+            return new Response(JSON.stringify({ sha: "b".repeat(40) }), {
+              status: 201,
+            });
+          assert.ok(url.endsWith("/git/refs"));
+          return new Response(
+            JSON.stringify({ message: "Reference already exists" }),
+            { status },
+          );
+        },
+      });
+      const result = ensureDraftRelease({
+        repository,
+        version,
+        sourceSha,
+        request,
+        wait: async () => {},
+        inspect: async () => {
+          reads += 1;
+          if (reads === 1 || authority === "missing") return absent;
+          if (authority === "mismatched")
+            return { ...withRelease(), tagCommit: "c".repeat(40) };
+          return withRelease();
+        },
+      });
+      if (authority === "matching") assert.equal((await result).id, draft.id);
+      else
+        await assert.rejects(
+          result,
+          authority === "missing"
+            ? /Reference already exists/u
+            : /resolves to/u,
+        );
+      assert.equal(writes.length, 2);
+      assert.equal(reads, authority === "missing" ? 5 : 2);
+    });
+  }
+}
 
 test("publishes only an exact complete draft and reuses an exact publication", async () => {
   let draft = true;
