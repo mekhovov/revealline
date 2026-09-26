@@ -3,87 +3,131 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <title>Reveal Line · Offline game</title>
+    <title data-i18n="interface:downloads.title">Reveal Line · Offline game</title>
     <link rel="stylesheet" href="downloads.css" />
+    <link rel="stylesheet" href="i18n/style.css" />
+    <script src="vendor/i18next-26.4.2.min.js"></script>
+    <script src="i18n/catalogs.mjs"></script>
+    <script src="i18n/bootstrap.mjs"></script>
     <script type="module" src="downloads.mjs"></script>
   </head>
   <body>
     <main>
-      <a href="./">← Back to game</a>
-      <h1>Take the game with you</h1>
-      <p>
+      <a href="./" data-i18n="interface:downloads.backToGame">← Back to game</a>
+      <div data-language-control></div>
+      <noscript>
+        <p>JavaScript is required to manage offline downloads.</p>
+        <p lang="uk">Для керування офлайн-завантаженнями потрібен JavaScript.</p>
+      </noscript>
+      <h1 data-i18n="interface:downloads.heading">Take the game with you</h1>
+      <p data-i18n="interface:downloads.intro">
         Download once, then play without an internet connection. Recorded music is optional; game
         sounds and the procedural score are included.
       </p>
       <section aria-labelledby="installation-title">
-        <h2 id="installation-title">Install Reveal Line</h2>
-        <a id="install-app" href="../app/">Open the app launcher</a>
-        <p id="install-help">
+        <h2 id="installation-title" data-i18n="interface:downloads.installHeading">
+          Install Reveal Line
+        </h2>
+        <a id="install-app" href="../app/" data-i18n="interface:downloads.openLauncher"
+          >Open the app launcher</a
+        >
+        <p id="install-help" data-i18n="interface:downloads.installHelp">
           Install from the launcher for one icon that keeps opening your selected edition.
           Installing the icon does not download the game.
         </p>
-        <p>
+        <p data-i18n="interface:downloads.appleHelp">
           On iPhone or iPad, use Safari’s Share → Add to Home Screen, then prepare downloads inside
           the installed app. To move browser progress, export a complete backup in Game data and
           import it inside the app.
         </p>
       </section>
       <section aria-labelledby="game-title">
-        <h2 id="game-title">Game for offline play</h2>
-        <p id="game-status" role="status">Checking this edition…</p>
+        <h2 id="game-title" data-i18n="interface:downloads.gameHeading">Game for offline play</h2>
+        <p id="game-status" role="status" data-i18n="interface:downloads.checkingEdition">
+          Checking this edition…
+        </p>
         <label
-          ><input id="all-game" type="checkbox" checked /> All shipped gameplay (recommended)</label
+          ><input id="all-game" type="checkbox" checked />
+          <span data-i18n="interface:downloads.allGameplay"
+            >All shipped gameplay (recommended)</span
+          ></label
         >
         <details id="chapter-choices">
-          <summary>Choose a smaller set of chapters</summary>
+          <summary data-i18n="interface:downloads.chooseChapters">
+            Choose a smaller set of chapters
+          </summary>
           <div id="chapters"></div>
         </details>
         <p id="game-size"></p>
         <div class="actions">
-          <button id="download-game" disabled>Download game for offline play</button>
-          <button id="verify-game" disabled>Verify game files</button>
-          <button id="remove-chapters" disabled>Remove chosen chapter downloads</button>
-          <button id="pause" disabled>Pause download</button>
-          <button id="cancel" disabled>Cancel remaining download</button>
+          <button id="download-game" disabled data-i18n="interface:downloads.downloadGame">
+            Download game for offline play
+          </button>
+          <button id="verify-game" disabled data-i18n="interface:downloads.verifyGame">
+            Verify game files
+          </button>
+          <button id="remove-chapters" disabled data-i18n="interface:downloads.removeChapters">
+            Remove chosen chapter downloads
+          </button>
+          <button id="pause" disabled data-i18n="interface:downloads.pause">Pause download</button>
+          <button id="cancel" disabled data-i18n="interface:downloads.cancel">
+            Cancel remaining download
+          </button>
         </div>
         <progress id="progress" hidden></progress>
         <p id="operation-status" role="status" aria-live="polite"></p>
-        <button id="retain">Keep downloads on this device</button>
-        <p id="retention-status">
+        <button id="retain" data-i18n="interface:downloads.keepOnDevice">
+          Keep downloads on this device
+        </button>
+        <p id="retention-status" data-i18n="interface:downloads.storageWarning">
           Device storage can be cleared by the browser or the operating system. Keep a portable
           backup of your progress.
         </p>
-        <p>
+        <p data-i18n="interface:downloads.removalHelp">
           Removing chapters keeps the shared game, original reward artwork, imported files and
           saves. Restore a backup containing official chapter references after preparing the
           matching game downloads.
         </p>
-        <button id="activate" hidden>Use this edition in the installed app</button>
+        <button id="activate" hidden data-i18n="interface:downloads.useEdition">
+          Use this edition in the installed app
+        </button>
         <p id="activation-status" role="status"></p>
-        <a id="transfer-progress" href="./?journey=legacy" hidden
+        <a
+          id="transfer-progress"
+          href="./?journey=legacy"
+          hidden
+          data-i18n="interface:downloads.transferProgress"
           >Open progress transfer in Classic</a
         >
       </section>
       <section aria-labelledby="music-title">
-        <h2 id="music-title">Optional soundtracks</h2>
-        <p id="music-status" role="status">Soundtracks: checking downloaded recordings…</p>
-        <p>
+        <h2 id="music-title" data-i18n="interface:downloads.musicHeading">Optional soundtracks</h2>
+        <p id="music-status" role="status" data-i18n="interface:downloads.checkingSoundtracks">
+          Soundtracks: checking downloaded recordings…
+        </p>
+        <p data-i18n="interface:downloads.musicHelp">
           Downloads are saved one recording at a time. Pause or close this page at any time; Resume
           reuses completed files. Downloads pause when this page is backgrounded. Audio settings
           keeps your playlists, assignments and mute preferences.
         </p>
         <p id="music-size"></p>
         <div class="actions">
-          <button id="all-music" disabled>Download all soundtracks</button>
-          <button id="pause-music" disabled>Pause soundtrack download</button>
-          <button id="cancel-music" disabled>Cancel remaining soundtrack download</button>
+          <button id="all-music" disabled data-i18n="interface:downloads.downloadAllMusic">
+            Download all soundtracks
+          </button>
+          <button id="pause-music" disabled data-i18n="interface:downloads.pauseMusic">
+            Pause soundtrack download
+          </button>
+          <button id="cancel-music" disabled data-i18n="interface:downloads.cancelMusic">
+            Cancel remaining soundtrack download
+          </button>
         </div>
         <progress id="music-progress" hidden></progress>
         <p id="music-operation-status" role="status" aria-live="polite"></p>
         <div id="albums"></div>
       </section>
       <details>
-        <summary>Verification details</summary>
+        <summary data-i18n="interface:downloads.verificationDetails">Verification details</summary>
         <pre id="details"></pre>
       </details>
     </main>
