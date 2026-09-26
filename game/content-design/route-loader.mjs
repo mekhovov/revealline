@@ -7,7 +7,9 @@ import { createAuthoredJourneyRouteDefinition } from './route-definition.mjs';
 export async function loadAuthoredJourneyRoute(id) {
   if (!isAuthoredJourneyRouteId(id)) return null;
   let factories;
-  if (id === 'whole-spatial-v20') {
+  if (id === 'whole-spatial-v21') {
+    factories = await import('./livewire-cultural-routes-candidates.mjs');
+  } else if (id === 'whole-spatial-v20') {
     factories = await import('./phaseworks-cultural-routes-candidates.mjs');
   } else if (id === 'whole-spatial-v19') {
     factories = await import('./fracture-cultural-routes-candidates.mjs');
