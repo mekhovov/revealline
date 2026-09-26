@@ -33,6 +33,7 @@ export function buildCommunityApp({
   admission = null,
   admissionPolicies,
   trustProxy = false,
+  readinessCheck = null,
   logger = false,
 }) {
   if (!repository || !blobStore || !authenticator)
@@ -90,6 +91,12 @@ export function buildCommunityApp({
   app.get('/health', async (_request, reply) => {
     await repository.health();
     return reply.header('cache-control', 'no-store').send({ status: 'ok' });
+  });
+
+  app.get('/ready', async (_request, reply) => {
+    await repository.health();
+    if (readinessCheck) await readinessCheck();
+    return reply.header('cache-control', 'no-store').send({ status: 'ready' });
   });
 
   app.get('/v1/catalog', async (request, reply) => {

@@ -46,6 +46,57 @@ docker compose up -d api worker
 
 This is still a single-host development fixture. It does not provide TLS or a mail gateway.
 
+## Production Compose preflight
+
+`compose.production.yaml` is a fail-closed overlay for a reviewed single-host deployment. It forces
+development authentication off, requires the database, Better Auth, account-mail, administrator,
+and exact trusted-proxy values, and forwards every documented PostgreSQL-backed admission limit.
+The validation worker still receives no account or mail credential.
+
+Copy `production.env.example` to an untracked operator-owned file, replace every placeholder, and
+start both Compose files together:
+
+```sh
+cd services/community
+cp production.env.example /secure/path/revealline-community.env
+docker compose \
+  --env-file /secure/path/revealline-community.env \
+  -f compose.yaml -f compose.production.yaml \
+  up --build -d
+```
+
+After the numbered application migrations, the production dependency chain runs the Better Auth
+migration and then `npm run deployment:preflight`. API and worker processes start only after that
+preflight succeeds. It verifies the current application and Better Auth tables, the latest
+application migration columns, durable write/read/remove access in both the package and tus roots,
+and a bounded `ffprobe -version` invocation. Its JSON result contains check names and counts only;
+configuration values, database URLs, storage paths, process output, and nested error messages are
+not emitted.
+
+The API exposes separate liveness and readiness routes:
+
+- `GET /health` verifies the PostgreSQL connection.
+- `GET /ready` repeats PostgreSQL schema, package/tus storage, and `ffprobe` readiness. Concurrent
+  calls share one probe and settled results are cached for 30 seconds to bound filesystem and
+  process work. The production container health check uses this route and fails closed with the
+  API's generic error response. Keep the route behind the operator network rather than forwarding
+  it through the public proxy.
+
+Inspect one-shot service exit status and API readiness without printing the rendered Compose
+configuration, which can contain secrets:
+
+```sh
+docker compose \
+  --env-file /secure/path/revealline-community.env \
+  -f compose.yaml -f compose.production.yaml \
+  ps
+curl --fail --silent http://127.0.0.1:8787/ready
+```
+
+This overlay remains a single-host deployment contract. Put a reviewed HTTPS reverse proxy in
+front of it, set `COMMUNITY_TRUST_PROXY_HOPS` to that exact topology, and keep its environment file
+outside the repository with owner-only permissions.
+
 When running outside Compose, apply the checked-in migration to a disposable local database before
 starting the API:
 
@@ -62,6 +113,7 @@ npm run worker
 Public routes return JSON metadata or exact immutable package bytes:
 
 - `GET /health`
+- `GET /ready`
 - `GET /v1/catalog?limit=20&cursor=...`
 - `GET /v1/catalog/:editionId`
 - `GET /v1/catalog/:editionId/download`
@@ -289,8 +341,8 @@ journal-backed retry.
 ## Limits and operational work still required
 
 The default package ceiling is 256 MiB and catalog pages are capped at 50 entries. A reverse proxy
-still needs request timeouts, connection limits, and HTTPS. Public deployment also requires a
-live administrator-session rehearsal of the shipped report triage UI, stronger process/container
+still needs request timeouts, connection limits, and HTTPS. Public deployment also requires a live
+administrator-session rehearsal of the shipped report triage UI, stronger process/container
 isolation for media validation, malware policy, metrics, an off-host backup schedule, a real
 PostgreSQL/blob restore rehearsal, and an explicit infrastructure decision. The S3 adapter is tested
 at its byte boundary but is not wired into the executable deployment. No AWS, mail provider,

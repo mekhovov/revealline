@@ -12,6 +12,7 @@
     "start": "node src/server.mjs",
     "worker": "node src/worker-runner.mjs",
     "auth:migrate": "node src/auth-migrate.mjs",
+    "deployment:preflight": "node src/deployment-preflight-runner.mjs",
     "recovery": "node src/recovery-runner.mjs",
     "test": "node --test test/*.test.mjs",
     "lint": "eslint \"src/**/*.mjs\" \"test/**/*.mjs\" eslint.config.mjs --max-warnings 0",
