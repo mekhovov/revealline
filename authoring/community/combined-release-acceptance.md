@@ -63,7 +63,7 @@ output. Its largest new source asset is the pinned, licensed Mediabunny browser 
 
 ## Integrated evidence
 
-- `npm run test:creator-feature`: **542** top-level subtests and **544/544** total
+- `npm run test:creator-feature`: **543** top-level subtests and **545/545** total
   creator/runtime tests passed. The community service suite passed **43/43** checks from the current
   rebased source. The full runtime run first exposed five sparse
   checkout omissions and three injected-host database-model conflicts; the exact owning cohorts
@@ -75,7 +75,7 @@ output. Its largest new source asset is the pinned, licensed Mediabunny browser 
 - The current focused Team/shared-ledger/UI cohort passes **43/43**, including exact picture
   normalization, package/install/intake, aggregate quota pressure, abandoned-claim reconciliation,
   storage review and immutable edition accounting. The complete rebased creator cohort passes
-  **542** top-level subtests and **544/544** total tests after the unfinished middle-mission recovery addition, offload/audio slices and visible Creator
+  **543** top-level subtests and **545/545** total tests after the installed-campaign continuation repair, unfinished middle-mission recovery addition, offload/audio slices and visible Creator
   Versus continuation fix.
 - Installed creator Versus, bundle, qualification, profile-edition and picture durability coverage
   passes **30** top-level tests and **32/32** total tests including nested host checks. The real host
@@ -111,23 +111,27 @@ output. Its largest new source asset is the pinned, licensed Mediabunny browser 
   restores and legally completes that exact mission, and binds the completion to its distinct
   picture bytes. Reordering the campaign produces a different immutable edition and attempt key;
   the changed edition refuses the old attempt and loads an empty scoped profile while the original
-  profile retains the second-mission clear. The corresponding built-in-browser middle-mission UI
-  repetition remains an open acceptance item in the Phase 2 record.
+  profile retains the second-mission clear. The built-in browser also restored and legally completed
+  that second mission, retained both clears in the exact-edition progress backup and exposed a
+  reload-lobby regression that restarted mission one. The combined candidate now resolves the
+  explicit library handoff, first uncleared mission and latest earned reward deterministically. On
+  the corrected source the same installed edition visibly reopened with picture02 earned and Start
+  launched picture03, the first uncleared mission.
 - The built-in browser loaded an exact 810,180-byte local `.rlpack` through a one-edition catalog,
   installed creator edition `6033108fe9e7acc279cb888b19cfccb7033aa9ce20999dc5213b58e282873467`,
   showed its installed and offline-copy state, offloaded its runtime media, replaced Play with
   **Reinstall exact edition**, restored it from the retained package, and opened the ordinary Custom
   player with **Start mission** enabled.
-- `npm run validate`: passed for 1,243 files; exact whole-spatial snapshot SHA-256
+- `npm run validate`: passed for 1,244 files; exact whole-spatial snapshot SHA-256
   `e62ef45089df1bbaea04cceb932949fbe8d29377a4eeefcac8280125006495b3`.
 - Exact presentation SHA-256 after the `fpv88` provenance rebase:
   `d3029b2da13dc6cbd6f34dd4aabf4c8988c7b77272f2d9386a773295326e8233`.
 - Root and community-service ESLint and Prettier checks: passed.
 - Native formatting, Motion Lab syntax, Field Kit producer check, and Field Kit readiness: passed.
 - Root and community dependency audits: zero reported vulnerabilities.
-- A local `npm run build` passed for **1,303 files** at source version `0.141.0` on the final rebased
-  audio/offload candidate, with distribution SHA-256
-  `f88763538f6dba10f0cd705b798732fff306818dab1fcbe69462fe064d3b8c8f`. The hosted exact-head build
+- A local `npm run build` passed for **1,304 files** at source version `0.141.0` on the final rebased
+  combined candidate, with distribution SHA-256
+  `be7d14708abd1b25e5406e579851de02fd5a3b32bc667c63e4c5cc11077a2be0`. The hosted exact-head build
   and immutable freeze remain PR/release gates.
 - Built-in-browser evidence in the phase records covers single-image completion, 12- and 50-image
   batches, cancel/resume and splitting, video-only victory playback, and verified silent-AVC trim.
