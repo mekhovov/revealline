@@ -5,7 +5,18 @@ on:
     types: [published]
   pull_request:
     branches: [main]
-    types: [opened, synchronize, reopened, edited]
+    types:
+      [
+        opened,
+        synchronize,
+        reopened,
+        edited,
+        ready_for_review,
+        labeled,
+        unlabeled,
+        milestoned,
+        demilestoned,
+      ]
   workflow_dispatch:
     inputs:
       release_tag:
@@ -79,6 +90,8 @@ jobs:
             publishing/pages-controller/publication.json
             publishing/pages-controller/release-policy.mjs
             publishing/pages-controller/release-train-boundary.mjs
+            publishing/focused-test-map.json
+            publishing/focused-tests.mjs
             publishing/test-policy.json
             publishing/test-policy.mjs
             scripts/pages-archive.mjs
@@ -168,6 +181,94 @@ jobs:
               'Only exact-source identity and release-critical validation block this PR.' \
               'No passing verdict is claimed for deferred checks. See `docs/fast-release-mode.md`.' >> "$GITHUB_STEP_SUMMARY"
           fi
+
+  focused:
+    if: >-
+      github.event_name == 'pull_request' &&
+      needs.preflight.result == 'success' &&
+      needs.preflight.outputs.admission != 'hold'
+    needs: preflight
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: read
+    env:
+      EXPECTED_SOURCE: ${{ github.event.pull_request.head.sha }}
+    steps:
+      - name: Check out exact pull-request source
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          filter: blob:none
+          ref: ${{ github.event.pull_request.head.sha }}
+          path: source
+          persist-credentials: false
+
+      - name: Check out trusted focused-gate automation
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.workflow_sha }}
+          path: automation
+          fetch-depth: 1
+          persist-credentials: false
+          sparse-checkout: |
+            publishing/focused-test-map.json
+            publishing/focused-tests.mjs
+            scripts/check-source-identity.mjs
+          sparse-checkout-cone-mode: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.19.x
+          cache: npm
+          cache-dependency-path: source/package-lock.json
+
+      - name: Capture the reviewed changed-path set
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          set -euo pipefail
+          gh api --paginate "repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER/files?per_page=100" \
+            --jq '.[].filename' > "$RUNNER_TEMP/focused-paths.txt"
+          test -s "$RUNNER_TEMP/focused-paths.txt"
+
+      - name: Select the fail-closed focused gate
+        id: plan
+        run: >-
+          node automation/publishing/focused-tests.mjs
+          --root source
+          --paths "$RUNNER_TEMP/focused-paths.txt"
+          --manifest automation/publishing/focused-test-map.json
+          --plan-only
+
+      - name: Verify exact tracked source before commands
+        if: steps.plan.outputs.required == 'true'
+        working-directory: source
+        run: |
+          test "$(git rev-parse HEAD)" = "$EXPECTED_SOURCE"
+          node ../automation/scripts/check-source-identity.mjs --root .
+
+      - name: Install dependencies once for selected focused gates
+        if: steps.plan.outputs.required == 'true'
+        working-directory: source
+        run: npm ci --prefer-offline
+
+      - name: Run selected focused gates
+        if: steps.plan.outputs.required == 'true'
+        run: >-
+          node automation/publishing/focused-tests.mjs
+          --root source
+          --paths "$RUNNER_TEMP/focused-paths.txt"
+          --manifest automation/publishing/focused-test-map.json
+
+      - name: Verify exact tracked source after commands
+        if: always() && steps.plan.outputs.required == 'true'
+        working-directory: source
+        run: |
+          test "$(git rev-parse HEAD)" = "$EXPECTED_SOURCE"
+          node ../automation/scripts/check-source-identity.mjs --root .
 
   test:
     if: >-
@@ -328,24 +429,28 @@ jobs:
 
   release-ready:
     if: always() && github.event_name == 'pull_request'
-    needs: [preflight, test, build]
+    needs: [preflight, focused, test, build]
     runs-on: ubuntu-latest
     steps:
       - name: Apply the selected PR gate policy
         env:
           ADMISSION: ${{ needs.preflight.outputs.admission }}
           BUILD_RESULT: ${{ needs.build.result }}
+          FOCUSED_RESULT: ${{ needs.focused.result }}
           FULL_CI: ${{ vars.REVEALLINE_FULL_CI || 'false' }}
           PREFLIGHT_RESULT: ${{ needs.preflight.result }}
           TEST_RESULT: ${{ needs.test.result }}
         run: |
           test "$PREFLIGHT_RESULT" = success
+          if [ "$ADMISSION" != hold ]; then
+            test "$FOCUSED_RESULT" = success
+          fi
           if [ "$ADMISSION" = maintenance ]; then
-            echo 'Bounded documentation/controller maintenance: product build not required.'
+            echo 'Bounded documentation/controller maintenance: selected focused gates passed; product build not required.'
             exit 0
           fi
           if [ "$ADMISSION" = scheduled ]; then
-            echo 'Explicit milestone schedule: source-only merge admitted; the promoted release is the sole artifact build and publication gate.'
+            echo 'Explicit milestone schedule: focused checks passed; the promoted release remains the sole artifact build and publication gate.'
             exit 0
           fi
           if [ "$ADMISSION" = release-evidence ]; then
