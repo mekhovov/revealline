@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import test from "node:test";
 import {
   decideMergeAction,
@@ -88,5 +89,21 @@ test("dependency references are explicit and deduplicated by the caller", () => 
   assert.deepEqual(
     dependencyNumbers("Depends on #573\nBlocked by #576"),
     [573, 576],
+  );
+});
+
+test("the privileged workflow is a safe no-op until the trusted controller reaches main", () => {
+  const workflow = readFileSync(
+    new URL("../.github/workflows/fastline-auto-merge.yml", import.meta.url),
+    "utf8",
+  );
+  assert.match(workflow, /Record one-time controller bootstrap/);
+  assert.match(
+    workflow,
+    /if: hashFiles\('publishing\/fastline-merge-controller\.mjs'\) == ''/,
+  );
+  assert.match(
+    workflow,
+    /if: hashFiles\('publishing\/fastline-merge-controller\.mjs'\) != ''/,
   );
 });
