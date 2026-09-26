@@ -29,6 +29,7 @@ versions or acceptance gates are still current.
 | Second Team Ukrainian slice / PR #642            | Clean non-default draft       | Crossed gardens, Split orchards and Weaver crossing redesigned copy-on-write; no selector/default/version change yet.                                                                                                                                                   |
 | Second Team current edition / PR #650            | Clean draft, source `0.149.0` | Default/previous edition, Team library, Studio, exact Next, isolated progress and EN/UK wiring; earlier focused cohort 83/83, localization validation and post-rebase lightweight cohort 41/41 pass; exact head `da1604a3b2821bff106711129a7d32f7bf78bd8d`; not public. |
 | Unified-library fixture reconciliation / PR #651 | Clean draft, test/docs only   | Confirms 91 current + 48 prior Journey + 188 Classic = 327 unique rows and updates stale 201/279 and `whole-spatial-v5/v6` expectations to current v25 ownership.                                                                                                       |
+| Team opaque-owner continuation successor         | Implemented locally           | Shared Next no longer JSON-parses opaque Team Classic owner IDs; Current/Original lanes remain separate and Classic → Custom continuation is restored. Latest-main route/impact/localization cohort passes 42/42; PR and public delivery remain.                        |
 
 After the final main rebase, an uncontended bounded host rerun passed all selected corrected cases:
 four Solo scenarios, four Versus scenarios, two representative Team source routes and the three-stage
@@ -53,14 +54,14 @@ feasibility and rules out a mandatory late-cleanup tail in those fixtures; it do
 Effort starts when the item has an uncontested release or implementation slot. GitHub runner,
 large-asset and archive delays are outside these estimates.
 
-| Priority | Remaining item                          | Exit condition                                                                                                                            |                                                        Indicative effort |
-| -------: | --------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- | -----------------------------------------------------------------------: |
-|        0 | Finish v0.132.4 publication             | Immutable release, Pages, public byte check and bounded Team artwork launch/retry proof                                                   | Publisher in progress; **2–8 hours** if the current controller fix holds |
-|        1 | Promote the cultural Journey chain      | Review/merge in dependency order, exact-head qualification, immutable release and public play for each accepted batch                     |                                   **1–2 working days per release batch** |
-|        2 | Complete second Team slice and fixtures | Review PRs #650/#651, immutable public delivery and frozen-build checks; source wiring and bounded runtime/host verification are complete |                                         **3–6 hours** plus release queue |
-|        3 | Team release qualification              | Paired-board fairness, controller/touch/keyboard, cross-campaign Next, Skip, reload/Continue and public frozen-build proof                |                                        **8–16 hours** plus device access |
-|        4 | Whole-Journey pacing and accessibility  | Campaign-to-campaign pressure audit, reduced-effects/contrast/small-screen/performance and deterministic compatibility                    |                                                     **2–4 working days** |
-|        5 | Human balance and cultural review       | Understandable failures, distinct missions, enjoyable retries and cultural review by people                                               |                       **1–2 days synthesis** after testers are available |
+| Priority | Remaining item                          | Exit condition                                                                                                                                                             |                                                        Indicative effort |
+| -------: | --------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -----------------------------------------------------------------------: |
+|        0 | Finish v0.132.4 publication             | Immutable release, Pages, public byte check and bounded Team artwork launch/retry proof                                                                                    | Publisher in progress; **2–8 hours** if the current controller fix holds |
+|        1 | Promote the cultural Journey chain      | Review/merge in dependency order, exact-head qualification, immutable release and public play for each accepted batch                                                      |                                   **1–2 working days per release batch** |
+|        2 | Complete second Team slice and fixtures | Review PRs #650/#651, immutable public delivery and frozen-build checks; source wiring and bounded runtime/host verification are complete                                  |                                         **3–6 hours** plus release queue |
+|        3 | Team continuation and qualification     | Review/publish the opaque-owner Next successor; paired-board fairness, controller/touch/keyboard, cross-campaign Next, Skip, reload/Continue and public frozen-build proof |                          **8–16 hours** plus release queue/device access |
+|        4 | Whole-Journey pacing and accessibility  | Campaign-to-campaign pressure audit, reduced-effects/contrast/small-screen/performance and deterministic compatibility                                                     |                                                     **2–4 working days** |
+|        5 | Human balance and cultural review       | Understandable failures, distinct missions, enjoyable retries and cultural review by people                                                                                |                       **1–2 days synthesis** after testers are available |
 
 Existing v0.133-v0.137 player-UX drafts occupy the nominal release sequence. Cultural PR titles
 currently target v0.138 onward, but version numbers must be assigned by the sole publisher from the
@@ -107,7 +108,9 @@ accepted predecessor; draft labels do not reserve a release.
 4. Review and qualify the bounded v0.149.0 PR #650 at its exact head.
 5. Review draft PR #651 and publish the isolated library-fixture reconciliation after its focused
    duplicate/ownership audit.
-6. Promote cultural releases in dependency order, reporting actual public delivery rather than a
+6. Review and publish the Team opaque-owner continuation successor, retaining the 42/42 bounded
+   latest-main interaction evidence without calling it physical-device qualification.
+7. Promote cultural releases in dependency order, reporting actual public delivery rather than a
    merge or workflow start.
 
 The original P13-P15 whole-Journey pacing, Team cooperation, accessibility/performance and final
