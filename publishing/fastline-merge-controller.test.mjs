@@ -28,6 +28,7 @@ function fixture(overrides = {}) {
       status: "completed",
       conclusion: "success",
       head_sha: SHA,
+      admissionMatches: true,
     },
     dependencies: [],
   };
@@ -77,6 +78,14 @@ test("a failed required rerun disarms an already admitted exact head", () => {
     action: "disarm",
     reason: "release-ready is not successful on the exact head",
   });
+});
+
+test("missing or stale admission receipts disarm even a successful exact head", () => {
+  const input = fixture({ auto_merge: { enabled_at: "now" } });
+  for (const admissionMatches of [false, undefined]) {
+    input.requiredCheck.admissionMatches = admissionMatches;
+    assert.equal(decideMergeAction(input).action, "disarm");
+  }
 });
 
 test("holds, drafts, milestone changes and review blockers do not merge", () => {
