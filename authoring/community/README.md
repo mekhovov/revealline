@@ -128,7 +128,36 @@ All commands above passed for the guide fixture on Node 20.19.5. Gentle/Standard
 
 The starter declares Solo and Versus only. Requesting `--mode team` fails with **Mission does not support this mode.** Author and qualify a compatible Team mission; do not relabel a Solo result as Team evidence. Studio's Team test export is a separate geometry/rules workflow and must retain its stated artwork limitations.
 
-## 8. Export and test a Team mission
+## 8. Create a Team campaign from pictures and videos
+
+Open **Create a Team campaign** from the picture campaign creator. This path creates a separate
+cooperative campaign; it never relabels a Solo/Versus level as Team content.
+
+1. Enter a collection name, a lowercase campaign ID and a generation seed. Choose **Generate and
+   verify**. The current registry creates Mirrored crossing and Relay pincer in deterministic seed
+   order and replays all three difficulties with both supported teamwork presets. The review must
+   report 12 exact completion routes.
+2. Choose one PNG, JPEG or WebP reward picture for each level. Pick **Fit whole picture** or **Fill
+   board** and review the description. Preparation removes source metadata and produces an exact
+   1152 × 576 PNG; the private original is not added to the portable campaign.
+3. Optionally choose one browser-decodable MP4 or WebM victory video per level. Blank playback
+   times use the complete video. A range changes playback only: the complete inspected original
+   remains in the package. Enter the credit and sharing terms that actually apply.
+4. Choose **Prepare review**. Inspect every exact reward derivative, level binding, optional video
+   range, package size, staging size and shared managed-media usage. Errors remain local; correct
+   the affected row and prepare again.
+5. Choose **Approve exact package** only after the visible review is correct. Any later gameplay,
+   media, range, description or credit change invalidates approval. Choose **Install approved
+   campaign** or **Download .rlteammedia**.
+6. Open Team and select the installed edition under Custom missions. A legal win earns the exact
+   reviewed picture. An optional video offers Play, Skip and Replay without blocking Next. Retry,
+   unfinished recovery and clears remain scoped to the immutable package SHA-256.
+
+Team editions share the same 256 MiB managed-media ledger as creator pictures, stories and audio.
+An interrupted cross-database install leaves a pending byte claim; the next Team inventory or
+install reconciles that claim against the exact installed editions before accepting more data.
+
+## 9. Export and test a legacy Team mission
 
 This additional native trial uses exact source `499d716e` and the bundled **Inspect Team Signal greybox** action. Inspect first, then **Apply inspected source** to accept the separate Signal partners project. The current project remains unchanged during inspection.
 
@@ -141,7 +170,7 @@ This additional native trial uses exact source `499d716e` and the bundled **Insp
 
 All three actual downloaded files matched the shared compiler using the Studio's `campaignTheme: true` candidate option. These checks prove export/import and basic play, not a complete clear, fairness, custom Team artwork, physical controls or public/offline readiness. The Team mission preset is fixed by its export: choose another preset in Studio and export again rather than expecting the player to rewrite authored rules.
 
-## 9. Brand the community without changing its mechanics
+## 10. Brand the community without changing its mechanics
 
 Write a short edition brief before replacing assets: community name and rights holder, authorized source links, palette, ornament rules, player roles, threat meanings, supported modes, language requirements and content framing. For DroneAid, keep the requested Support/Combat framing explicit; do not assume all community imagery or missions use combat. For cultural, retro and spend-management editions, explain hazards using their own visual language while retaining readable warning/counterplay cues.
 
@@ -149,7 +178,7 @@ Resolve each slot from the selected theme and collection. Replace actors, HUD, t
 
 Begin with one reviewed Solo/Versus mission and one compatible Team arena. Inspect actual previews and runtime renders before expanding. New reveal pictures receive new revisions; Retry, saved flights and earned originals keep their accepted pins. Never replace old records in place to make a new community look complete.
 
-## 10. Prepare the release handoff
+## 11. Prepare the release handoff
 
 The preceding local workflows are tested. The following acceptance remains open for a finished community edition:
 
