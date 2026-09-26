@@ -28,17 +28,17 @@ exact-head gates and publish it before accepting the next row. Older target
 versions in draft PR titles and evidence files are stale where they disagree
 with this order.
 
-| Order | Working release | Scope | Current source input |
-| --- | --- | --- | --- |
-| 1 | v0.132.3 | Restore touch steering after controller Start | [PR #612](https://github.com/mekhovov/revealline/pull/612) |
-| 2 | v0.133.0 | Compact complete mission gallery | [PR #590](https://github.com/mekhovov/revealline/pull/590) |
-| 3 | v0.134.0 | Team quick-start | [PR #549](https://github.com/mekhovov/revealline/pull/549) |
-| 4 | v0.135.0 | Couch secondary navigation | [PR #539](https://github.com/mekhovov/revealline/pull/539) |
-| 5 | v0.136.0 | Contextual Team teaching | [PR #543](https://github.com/mekhovov/revealline/pull/543) |
-| 6 | v0.137.0 | Deliberate Team terminal Retry | [PR #545](https://github.com/mekhovov/revealline/pull/545) |
-| 7 | v0.138.0 | Readable Versus countdown and Retry cue | [PR #552](https://github.com/mekhovov/revealline/pull/552) |
-| 8 | v0.139.0 | Named result destinations | [PR #557](https://github.com/mekhovov/revealline/pull/557) |
-| 9 | v0.140.0 | Collection fixture reconciliation plus Settings/Help return to Pause | [PR #548](https://github.com/mekhovov/revealline/pull/548), then [PR #542](https://github.com/mekhovov/revealline/pull/542) |
+| Order | Working release | Scope                                                                | Current source input                                                                                                        |
+| ----- | --------------- | -------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| 1     | v0.132.3        | Restore touch steering after controller Start                        | [PR #612](https://github.com/mekhovov/revealline/pull/612)                                                                  |
+| 2     | v0.133.0        | Compact complete mission gallery                                     | [PR #590](https://github.com/mekhovov/revealline/pull/590)                                                                  |
+| 3     | v0.134.0        | Team quick-start                                                     | [PR #549](https://github.com/mekhovov/revealline/pull/549)                                                                  |
+| 4     | v0.135.0        | Couch secondary navigation                                           | [PR #539](https://github.com/mekhovov/revealline/pull/539)                                                                  |
+| 5     | v0.136.0        | Contextual Team teaching                                             | [PR #543](https://github.com/mekhovov/revealline/pull/543)                                                                  |
+| 6     | v0.137.0        | Deliberate Team terminal Retry                                       | [PR #545](https://github.com/mekhovov/revealline/pull/545)                                                                  |
+| 7     | v0.138.0        | Readable Versus countdown and Retry cue                              | [PR #552](https://github.com/mekhovov/revealline/pull/552)                                                                  |
+| 8     | v0.139.0        | Named result destinations                                            | [PR #557](https://github.com/mekhovov/revealline/pull/557)                                                                  |
+| 9     | v0.140.0        | Collection fixture reconciliation plus Settings/Help return to Pause | [PR #548](https://github.com/mekhovov/revealline/pull/548), then [PR #542](https://github.com/mekhovov/revealline/pull/542) |
 
 **Remaining:** UX6 still owns one cumulative whole-player qualification after
 v0.140.0. It must exercise complete Solo, Versus and Team journeys; real browser
