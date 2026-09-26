@@ -43,14 +43,14 @@ const config = (overrides = {}) => ({
   ...overrides,
 });
 
-test('deployed tus config requires HTTPS, explicit opt-in, namespace and bounded credentials', () => {
+test('deployed tus config requires secure remote transport and bounded credentials', () => {
   assert.throws(
     () => validateDeployedTusResumeConfig(config({ optIn: 'yes' })),
     /destructive acceptance opt-in/u,
   );
   assert.throws(
     () => validateDeployedTusResumeConfig(config({ baseURL: 'http://community.example.test/' })),
-    /must use HTTPS/u,
+    /must use HTTPS outside loopback/u,
   );
   assert.throws(
     () =>
@@ -72,6 +72,10 @@ test('deployed tus config requires HTTPS, explicit opt-in, namespace and bounded
     /expected release, source and validator versions/u,
   );
   assert.equal(validateDeployedTusResumeConfig(config()).baseURL, config().baseURL);
+  assert.equal(
+    validateDeployedTusResumeConfig(config({ baseURL: 'http://127.0.0.1:8787/' })).baseURL,
+    'http://127.0.0.1:8787/',
+  );
 });
 
 const fetchThroughFastify =

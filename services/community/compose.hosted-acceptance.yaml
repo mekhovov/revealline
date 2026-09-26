@@ -1,0 +1,13 @@
+# CI-only overlay. Fixed development tokens keep the acceptance self-contained;
+# never include this file in a public deployment.
+services:
+  api:
+    environment:
+      COMMUNITY_ALLOW_DEV_AUTH: 'true'
+      COMMUNITY_DEV_TOKENS: >-
+        {"hosted-creator-a-token":"hosted-creator-a","hosted-creator-b-token":"hosted-creator-b","hosted-admin-token":{"subject":"hosted-admin","roles":["admin"]}}
+    healthcheck:
+      interval: 2s
+      timeout: 5s
+      retries: 60
+      start_period: 2s
