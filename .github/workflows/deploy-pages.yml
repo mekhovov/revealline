@@ -7,9 +7,9 @@ on:
     branches: [main]
     # Draft promotion does not change source bytes. The exact-head gate already
     # ran on open/synchronize, while the merge controller separately listens to
-    # ready_for_review. Re-running the source gate here added 5-10 minutes to
-    # every promotion without producing new evidence.
-    types: [opened, synchronize, reopened, edited]
+    # metadata events. Re-running the source gate for draft promotion or
+    # title/body edits added 5-10 minutes without producing new evidence.
+    types: [opened, synchronize, reopened]
   workflow_dispatch:
     inputs:
       release_tag:
