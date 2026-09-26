@@ -5,7 +5,7 @@ const OWNER = "mekhovov";
 const BATCH_SIZE = 20;
 
 function repositoryName(admission) {
-  if (!/^archive-[1-9][0-9]*$/u.test(admission.id))
+  if (!/^archive-(?:0?[1-9]|[1-9][0-9]+)$/u.test(admission.id))
     throw new Error("Invalid archive authority id.");
   return `revealline-${admission.id}`;
 }

@@ -4,12 +4,12 @@ import { authorityQuery } from "./archive-authority.mjs";
 
 test("authority query batches repository refs and deployments without interpolating unknown ids", () => {
   const query = authorityQuery([
-    { id: "archive-1", deploymentId: 10 },
+    { id: "archive-01", deploymentId: 10 },
     { id: "archive-58", deploymentId: 20 },
   ]);
   assert.match(
     query,
-    /r0:repository\(owner:"mekhovov",name:"revealline-archive-1"\)/u,
+    /r0:repository\(owner:"mekhovov",name:"revealline-archive-01"\)/u,
   );
   assert.match(
     query,
@@ -20,4 +20,5 @@ test("authority query batches repository refs and deployments without interpolat
   assert.throws(() =>
     authorityQuery([{ id: "archive-1) { viewer { login }", deploymentId: 1 }]),
   );
+  assert.throws(() => authorityQuery([{ id: "archive-00", deploymentId: 1 }]));
 });
