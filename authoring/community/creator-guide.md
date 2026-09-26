@@ -1,84 +1,173 @@
 # Add your own levels and campaigns
 
-Start with the [browser guide](index.html), [Playground](../../game/playground/), or [Content Studio](../../game/studio/). Creation stays on your device. You do not need an account or a terminal for the single-map workflow below.
+Open the [picture campaign creator](../../game/creator/) for the shortest supported workflow:
+choose pictures or videos, generate bounded gameplay, review it, then install or download one exact
+portable campaign. Creation and media inspection stay on your device and require no account.
 
-This page preserves the manual framework workflow. For automatic generation from one image, use the [picture campaign walkthrough](image-campaign-guide.md), with its separate [implementation/release acceptance](phase1-acceptance.md). **An arbitrary Studio project remains editable source; a Playground expansion can be installed for ordinary Solo play.** Selecting an image in Studio's reference workbench does not itself generate a level or bind its reveal reward. The new creator prepares verified project-backed `.rlpack` editions through its own review and installation flow.
+The creator uses complete, versioned layout variants. Every current generated mission has interior
+collision obstacles and one moving field keeper; some variants also use safe islands, slow material
+or lethal material. Media bytes and filenames do not determine geometry. The generator verifies
+recorded legal routes for the exact compiled mission, difficulty, steering policy and runtime seed.
+That evidence establishes feasibility for those configurations, so you must still review the map
+and playtest its pacing.
 
 ## Map → mission → campaign → pack
 
-| Term     | What you create                                                         | Example                                    |
-| -------- | ----------------------------------------------------------------------- | ------------------------------------------ |
-| Map      | Board dimensions, walls, foundations, terrain and spawn locations       | An island with two approaches              |
-| Mission  | A map plus actors, objectives, rules, difficulty and reveal picture     | Reach the island while avoiding its keeper |
-| Campaign | An ordered sequence of missions                                         | My holiday, pictures 1–12                  |
-| Pack     | A distributable collection of campaigns and their required dependencies | My holiday collection                      |
+| Term     | What you create                                                     | Example                                    |
+| -------- | ------------------------------------------------------------------- | ------------------------------------------ |
+| Map      | Board dimensions, walls, foundations, terrain and spawn locations   | An island with two approaches              |
+| Mission  | A map plus actors, objectives, rules, difficulty and reveal picture | Reach the island while avoiding its keeper |
+| Campaign | An ordered sequence of missions                                     | My holiday, pictures 1–12                  |
+| Pack     | A transferable campaign and its exact required dependencies         | My holiday `.rlpack`                       |
 
-Modern Studio projects keep these definitions separate. The older expansion format embeds complete playable levels inside each campaign. File formats are not interchangeable merely because both use JSON.
+Modern Studio projects keep these definitions separate. Legacy expansion JSON embeds complete
+playable levels inside campaigns. Studio JSON, legacy expansions, `.rlpack`, `.rlsource`,
+`.rlteammedia` and `.rltheme` files have different purposes and are not interchangeable.
 
-## Quick start: install the supplied campaign
+## Create a campaign from pictures and videos
 
-1. Download [Two crossings](examples/two-crossings.expansion.json). Retain the actual file from your browser's downloads. It contains two small maps and procedural scenery, with no uploaded media or player saves.
-2. Open the [pack player](../../game/?journey=legacy). Choose **Settings → Game data → Installed chapters** to open the expansion library. Older editions also offer **Library & saves → Expansion packs**.
-3. Choose **Install a pack file** and select the downloaded JSON. Wait for validation and a successful installation message. A failed import should leave existing content intact.
-4. Choose **Play Creator guide · two crossings** in the installed card, then **Start mission**. The link above selects the existing expansion player. Keep this distinction from the modern Studio preview.
-5. Steer down from the starting boundary to the opposite boundary. This deliberately easy example has no enemies. After the legal win, check the earned picture and choose **Next** for **Second crossing**. Try **Retry** on that mission.
-6. Reload and find the installed campaign again. Keep the original pack for recovery. Your player backup and unfinished-attempt export are separate from the content file.
+1. Open the [picture campaign creator](../../game/creator/) and enter a collection name. Select one
+   or many PNG, JPEG or static WebP images, MP4 videos, or WebM videos. One image opens the compact
+   single-level flow; several media files open the ordered campaign review.
+2. For mixed media, inspect the proposed pairs. An unambiguous image/video pair with the same
+   normalized filename stem becomes one mission and uses the image as its poster. Filenames are
+   suggestions only; exact hashes identify every stored asset. Correct ambiguous pairs explicitly.
+3. For a video without a supplied poster, inspect the frames requested at 10%, 50% and 90% of its
+   duration. The midpoint starts selected. You can capture another time. The review retains the
+   requested time and the observed decoded frame time.
+4. Set a playback range if the celebration should start or stop at different times. This range
+   changes playback only. The complete inspected video remains in the `.rlpack`.
+5. For a batch, check natural filename order, reorder cards, choose pacing and select **Generate
+   included levels**. Preparation processes one full-size image at a time. A failed item keeps its
+   own error; correct it, regenerate it, or explicitly exclude it before approval.
+6. Review every picture, title, story binding, generated map, enemy/obstacle summary and route
+   result. **Regenerate** selects another bounded variant. Advanced Studio can edit an independent
+   source copy, but a gameplay change invalidates the template route evidence until valid evidence
+   is produced again.
+7. Check the package and staging estimates. Large campaigns can be split into smaller ordered
+   packs; the creator never silently drops a video or failed item to fit storage.
+8. Approve the exact prepared bytes, then choose **Install campaign** or **Download .rlpack**. Any
+   later gameplay, media, title, range or credit change invalidates that approval.
 
-These two maps teach installation and continuation. They do not demonstrate balanced generated challenges, custom image decoding, multiplayer or video support.
+The current limits and exact format are recorded in the
+[creator bundle reference](creator-bundle-reference.md). Image packages contain reviewed PNG
+derivatives rather than private source originals. Video missions retain the complete inspected
+original because it is the victory story. Neither a shareable pack nor a source backup includes
+unrelated library media or player progress.
 
-## Create one image level without editing JSON
+For screenshots and detailed controls, see the [single-picture walkthrough](image-campaign-guide.md),
+[batch walkthrough](batch-image-campaign-guide.md) and [video review guide](video-campaign-guide.md).
 
-1. Open [Playground](../../game/playground/). Start from an included map, or enter a **Generator seed** and choose **Generate map**. A seed generates geometry; it does not analyze your picture. Generated candidates still need playtesting.
-2. Choose **Role → Reveal background**, choose **Background fit**, then **Choose PNG / JPEG / WebP**. Select your own small image and wait for validation/decoding. Use **Contain whole image** if cropping would hide an important part. Review the actual preview.
-3. Optionally paint walls, enemies, objectives or a start position. **Paint by coordinates** provides keyboard editing. Change **Coverage target %** and other settings only when needed; use **Undo** to return to the previous configuration.
-4. Choose **Play configuration**. Complete a legal win and try loss, Pause, Resume and Retry. The preview is practice and does not award campaign progress.
-5. Expand **Complete pack JSON** and choose **Export map as expansion**. Check the downloaded `.expansion.json` file. **Export scenario** is an editor/practice file; **Export loaded library** retains the loaded original campaigns rather than merging your working edits into them.
-6. Install the exported expansion using the quick-start steps above. Play it through **Custom** and verify the picture after a win and reload. Send that content file to a friend, who uses the same import steps.
+## Play and recover an installed campaign
 
-The existing Playground embeds image bytes as supplied; it does not promise removal of personal metadata. Use an image you intend to distribute. Do not share **Export complete backup** as a content pack: that backup can contain personal progress, preferences and other installed content. Automatic image normalization and a scoped, reviewed export are Phase 1 work.
+Installed editions appear under **My installed creations** and in the game's **Custom** library.
+The current project-backed creator player provides ordinary Solo progression: difficulty and
+steering selection, Retry, Next, unfinished-attempt recovery, completion records and exact earned
+pictures. After a legal win, a video mission keeps the earned poster and offers **Play**, **Skip**
+and **Replay** without blocking Next or changing progress.
 
-## Author an ordered campaign in Content Studio
+Generated v3 missions and packages already carry replay qualification for equal-board Versus.
+Installed exact editions can launch through the real two-board Versus host, retain their verified
+difficulty and runtime seed, award edition-scoped progress and pictures, and continue to the next
+mission. Automated host coverage exercises legal completion, Retry/Next behavior, storage-failure
+recovery and a fresh host reopening the clear. A physical fresh-browser import/reload acceptance
+run remains pending. Team uses separately authored cooperative templates and the
+[Team campaign creator](../../game/creator/team.html).
 
-1. Download the [editable example project](example-project.json). Open [Content Studio](../../game/studio/), choose **Inspect import**, and select it. Inspect the source before **Apply inspected source**. Export your current project before reusing an identity.
-2. For your own project, choose a unique **Local project ID** and **New project**, then inspect/apply it. Names are player-facing labels; IDs identify content and must remain stable across its history.
-3. Open **Organize missions, campaigns & packs**. Use its create/duplicate, rename, membership and order operations to build the campaign. Choose **Validate & apply structure** after each prepared change. Maps and missions must exist before a campaign can reference them, and campaigns before packs reference them.
-4. Select a mission, edit its map and rules, then **Play exact Solo preview → Start mission**. Test every advertised difficulty. A source compiler pass or authored difficulty rating does not prove a winning route.
-5. Choose **Save checkpoint / retry**, then **Export backup**. Keep that JSON with separately retained media. Reload and verify the saved checkpoint. To recover history, **Inspect saved**, review, apply and save; recovery creates a new checkpoint without erasing the intervening ones.
-6. Share the project JSON with another creator for **Inspect import → Apply inspected source**. This is editable-source exchange. The current Studio export does **not** install an ordinary modern Custom campaign. Use the current maintainer integration path below until the `.rlpack` workflow ships.
+Each installed edition is immutable and identified by the complete package SHA-256. Installing an
+update beside an older edition does not reinterpret the older edition's saved attempt, completion
+or earned picture. A matching official name never turns Custom content into Journey content.
 
-The [existing community walkthrough](README.md) covers presentation editing, conflicts, CLI checks and the separate geometry/rules-only Team test export. Do not advertise Team support based on a Solo preview.
+In Community campaigns, keep the exact offline copy before choosing **Offload installed media**.
+The game verifies that recovery copy and the installed edition, preserves the edition manifest,
+saves, completions and earned pictures, and removes only runtime media that no other installed
+edition uses. The campaign stops appearing as playable until you choose **Reinstall exact
+edition**. Reinstall uses the retained copy without a network request and restores the same edition
+identity. If the recovery copy or media library changes after review, repeat the review instead of
+deleting anything.
 
-## Add pictures, presentation or victory videos today
+## Back up or edit the source
 
-- Use Playground's reveal-background file chooser for a picture embedded in a legacy map expansion.
-- Use [Asset Studio](../asset-studio/) for a theme collection and `.rltheme` transfer. Theme editing and mission mechanics are separate.
-- Existing Still Media and Story workshops assign retained pictures and video stories to supported exact campaign/picture identities. Follow the [story authoring guide](../../docs/story-workshop-authoring.md). Their media exports are separate files and are not a complete campaign installer.
-- Current video playback ranges choose where playback starts and stops; the original video remains in the bundle. They do not physically trim the exported file. Automatic pairing, poster selection and self-contained video campaigns belong to Phase 3.
+- Creator drafts autosave as immutable checkpoints. Reload the same draft URL to restore its latest
+  checkpoint. Image, video and mixed-media checkpoints retain the exact source bytes, proposed or
+  corrected pairings, selected poster frame, requested and observed frame timing, playback ranges
+  and generated editable project. A stale browser tab cannot silently replace a newer checkpoint.
+- **Back up source project** downloads `.rlsource` with that editable project and its scoped private
+  originals. The backup remains downloadable when checkpoint storage fails. It does not establish
+  approval, installation or progress, and it excludes unrelated library media and player saves.
+- A `.rlpack` can reopen as editable source, but it cannot recover image originals deliberately
+  excluded from the shareable artifact.
+- **Open advanced editor** creates or reopens an independent Content Studio copy. Save it there,
+  return to the creator and choose **Load saved Studio edits**. Content Studio preview remains
+  practice and does not award installed progress.
+- Keep the approved `.rlpack`, private `.rlsource` and personal save/recovery exports separately.
+  Test each recovery path before deleting an original.
 
-## Install locally, share a file, or publish
+## Share or publish
 
-| Action                                  | Who can see it?                  | What happens?                                              |
-| --------------------------------------- | -------------------------------- | ---------------------------------------------------------- |
-| Import/edit in Studio                   | This browser workspace           | Editable local draft and checkpoints                       |
-| Run a preview                           | This browser                     | Practice; no ordinary progression                          |
-| Install an expansion                    | This device's game library       | Playable Custom content                                    |
-| Send an expansion to a friend           | People receiving the file        | They explicitly install their own copy                     |
-| Integrate into a game release           | Players of that reviewed release | Maintainer qualification, immutable release and deployment |
-| Publish to the future community catalog | Catalog users after validation   | Planned Phase 4; currently unavailable                     |
+Sending a `.rlpack` needs no game release. The recipient opens the picture campaign creator,
+expands **Open a pack, restore a draft, or back up your source**, selects the file, reviews its exact
+contents, and installs it. Import repeats media, manifest, compiler, compatibility and route checks;
+an uploaded success flag is never trusted.
 
-For maintainer distribution, use the [publishing guide](maintainer-guide.md). There is currently no public upload button or community account flow. A filename matching an official campaign does not grant official Journey ownership.
+The repository also contains a [Community campaigns](../../game/community/) client and a
+self-hosted service for accounts, resumable upload, isolated validation, automatic listing,
+immutable downloads, reports and owner unlisting. Browsing and installation are account-free;
+publishing requires a creator account and an already approved `.rlpack`. These controls work only
+when an operator deploys and configures the service. The current static site does not by itself
+provide a live public catalog, account backend or upload destination. See the
+[maintainer guide](maintainer-guide.md) and [Phase 4/5 acceptance records](delivery-plan.md) for the
+production gates.
 
-## Troubleshooting and recovery
+| Action                             | Scope                                                                     |
+| ---------------------------------- | ------------------------------------------------------------------------- |
+| Save/import in creator or Studio   | Editable local draft and checkpoints in this browser                      |
+| Run a creator or Studio preview    | Practice; no installed progression                                        |
+| Install a reviewed `.rlpack`       | Playable immutable Custom edition on this browser                         |
+| Send a `.rlpack`                   | Recipient reviews and installs their own exact copy                       |
+| Publish through a deployed service | Validated immutable catalog edition; creator account required             |
+| Integrate into an official release | Maintainer qualification and release; never inferred from names or upload |
 
-| Symptom                                             | Next step                                                                                                                                                         |
-| --------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Studio JSON is rejected by the game's pack importer | It is a different format. Reopen in Studio; use a Playground expansion for today's manual install path.                                                           |
-| The preview picture is different                    | A reference image is an editing overlay. Bind the reveal background using the supported tool and review the exported artifact.                                    |
-| Import or image decoding fails                      | Keep your original, read the item error, and retry with a supported smaller file. Renaming the extension does not convert it.                                     |
-| Storage is full or unavailable                      | Keep the page open and export unsaved work. Verify the download before clearing anything. Browser storage can be evicted; it is not a backup.                     |
-| Another tab changed the draft                       | Export your unsaved snapshot, inspect the saved version, and deliberately reconcile. Do not overwrite a newer checkpoint blindly.                                 |
-| A friend has no picture or cannot resume            | Give them the exact content edition and required media, then import their separate saved attempt. A player-library export alone does not install missing content. |
-| A changed campaign starts fresh                     | Changed content may have a new progression identity. Preserve the old edition and backups rather than rewriting old saves.                                        |
-| A download says “requested”                         | Confirm that the browser actually saved the file. The application cannot prove the final download destination.                                                    |
+## Optional physical video editing
 
-Keep exact originals, exported content and personal backups separately. Test a restore in a separate browser profile before relying on a backup.
+Playback ranges retain the complete video. To create different physical bytes first, use the
+[video poster workshop](../../authoring/video-poster/) and follow the
+[media editor guide](media-editor-guide.md). The bounded editor accepts one silent,
+browser-decodable MP4 or WebM video track, or one MP4 containing exactly one AVC/H.264 video track
+and one AAC audio track. It emits a re-verified AVC/H.264 MP4, retains AAC only on the bounded audio
+path, and offers optional Balanced or Compact resize/compression. Additional tracks and other audio
+codec combinations remain unsupported. Browser support depends on successful decode/encode probes;
+only the built-in browser has recorded trim/conversion evidence, while Firefox, Safari and physical
+mobile remain open.
+
+The transformed MP4 is a new input. Select it deliberately in the campaign creator and repeat media
+review. The editor does not silently replace a previously approved campaign dependency.
+
+## Manual alternatives
+
+- [Playground](../../game/playground/) can paint or generate a legacy map, embed a reveal image and
+  export a ready-to-install `.expansion.json`. It keeps the supplied image bytes and does not
+  promise source-metadata removal. Use the [Two crossings example](examples/two-crossings.expansion.json)
+  to practice legacy installation and continuation.
+- [Content Studio](../../game/studio/) authors arbitrary maps, missions, campaign order and packs as
+  editable `ContentProjectV1` source. Its JSON export is a source backup, not a general modern
+  Custom installer. Use exact previews and the shared compiler, then integrate unsupported custom
+  geometry through the maintainer workflow.
+- [Asset Studio](../asset-studio/) edits presentation collections and transfers `.rltheme` files.
+  Theme history is separate from gameplay, media campaigns and player saves.
+
+## Troubleshooting
+
+| Symptom                                      | Next step                                                                                                                                                     |
+| -------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Studio JSON is rejected by the pack importer | Reopen it in Content Studio. It is editable source, not `.rlpack` or legacy expansion data.                                                                   |
+| Two files paired incorrectly                 | Review normalized-stem suggestions and choose the exact poster for the video. Resolve ambiguous stems manually.                                               |
+| Video poster capture or playback fails       | Keep the original and use a codec the current browser actually decodes. Renaming the extension does not convert it.                                           |
+| Physical video download stays disabled       | Use one silent decodable MP4/WebM track or an MP4 with exactly one AVC video and one AAC audio track. Other track layouts and codecs remain unchanged.         |
+| Generated item fails                         | Read that card's error, correct or regenerate it, or explicitly exclude it. Other completed cards remain reviewable.                                          |
+| Storage is full or unavailable               | Keep the page open and download the approved pack or source backup. Review a split for large batches; writes can still fail after an advisory quota estimate. |
+| Another tab changed the draft                | Export the unsaved source, reload the accepted head, and reconcile deliberately.                                                                              |
+| A friend has no picture or cannot resume     | Reinstall the exact immutable `.rlpack`; transfer saved progress separately.                                                                                  |
+| Catalog/account controls report unavailable  | The self-hosted API is not deployed or reachable on that origin. Local creation and already installed play remain available.                                  |
+| A changed campaign starts fresh              | The changed bytes created another edition identity. Open the older installed edition for its exact attempt and rewards.                                       |
+| A download says “requested”                  | Confirm that the browser actually saved the file; the application cannot prove the final download destination.                                                |

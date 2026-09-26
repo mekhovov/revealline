@@ -1,6 +1,10 @@
-# Phase 2 acceptance — implementation candidate
+# Phase 2 acceptance — integrated source record
 
-Status: implementation is isolated on `codex/creator-phase2-integration`. It has no allocated release version and must not be advertised as released before Phase 1 publication, Phase 2 browser acceptance, PR review, immutable freeze, release and public Pages verification finish.
+Status: implemented and merged through PR
+[#465](https://github.com/mekhovov/revealline/pull/465). The combined creator feature is assigned
+to `v0.141.0` in PR [#564](https://github.com/mekhovov/revealline/pull/564). This record preserves
+the Phase 2 evidence; the remaining browser/device cases below and the combined immutable release
+remain open.
 
 ## Automated evidence completed
 
@@ -8,6 +12,7 @@ Status: implementation is isolated on `codex/creator-phase2-integration`. It has
 - Batch-core tests cover 1-, 12- and 50-picture preparation, natural order, duplicate names and bytes, deterministic regeneration, explicit failed-item exclusion, reorder, campaign grouping, checkpoints, cancellation and explicit capacity splits. Full-size hashing and image preparation report at most one active item.
 - Batch-review tests cover multi-file selection, editable titles, reorder, exclusion, regeneration, removal, cancellation, 24 MiB package-capacity choices, focus retention and object-URL cleanup. Production intake uses an exact-byte adapter that revalidates the displayed one-mission preparations as one ordered campaign.
 - Bundle integration tests cover 1-, 12- and 50-mission round trips, authored continuation order, exact media closure, forged per-mission evidence, stale approval, immutable installed editions, complete source-backup recovery and split-package closure.
+- A focused exact-edition regression suspends the second mission of a two-picture campaign during its verified route, restores and completes that same mission, and resolves its distinct picture bytes. Reordering the missions produces a different edition and attempt key; that edition refuses the saved attempt and loads an empty scoped profile while the original edition retains the second-mission clear.
 - The final combined creator regression on the current `creator-layouts.v3` revision passed **36/36 tests in about 50 seconds**. The run covered batch bundle, batch UI, portable bundle, single-image generation, the template registry and scoped tools-host integration together, so this count describes one exact revision rather than adding results from different commits.
 
 ## Built-in browser evidence completed
@@ -29,14 +34,18 @@ Status: implementation is isolated on `codex/creator-phase2-integration`. It has
 - This repetition exposed a review gap: batch cards named the template and variant but did not show the enemies and obstacles that were already present in the compiled map. The batch review now derives its summary from each exact generated mission and map. All 12 cards visibly reported one enemy plus authored walls, safe islands or terrain zones before approval. The exact approved 22.49 MiB campaign installed as edition `40d04d6648941460c6df1003f0c75553e8a35497c9f7bbe693ca5941d490afe8`; ordinary Custom play completed its first `ember-garden · vertical-passage` mission at 50% reveal, three lives and 11,740 points.
 - The same built-in browser repeated the 50-picture case on previously unused local origin `9894`. The selection displayed `picture1` through `picture50` in natural numeric order. Cancellation after three completed items retained those three ready cards, marked the active fourth card cancelled and left the other 46 waiting. Resuming completed all 50 cards; every card visibly reported one enemy and authored obstacles or terrain.
 - The completed current-v3 selection estimated a 93.78 MiB pack and 187.56 MiB staging requirement, kept bulk approval disabled and required an explicit capacity decision. **Split into smaller packs** again produced five ordered parts of 12, 12, 12, 12 and 2 missions. Part 5 revalidated as a 3.75 MiB two-level campaign, installed as immutable edition `cd047ced051ec8fa0b2abfd036d4df4de1c20c5d7494b7441d698989801909e2`, and completed `picture49` through ordinary Custom play at 50% reveal, three lives and 11,250 points. The earned picture and **Next level** action appeared after the legal win.
+- A final local-origin `8786` edge run selected a real 540 × 960 portrait PNG, two landscape PNGs and a file named `.png` with an invalid signature. Natural order was edited manually, **Gentle start** pacing was selected, and every valid card visibly showed its exact enemy and obstacles. The invalid item retained its own actionable error and approval remained disabled until it was explicitly excluded.
+- Per-item regeneration changed `static-default` from `twin-corridors · west-lane` to `island-chain · middle-channel`, with one enemy, two walls and two safe islands. The page wrote immutable batch checkpoint 8, then the same `?draft` URL was reloaded. Exact source bytes, portrait, order, exclusion, pacing, generation counter and deterministic seed survived; regenerated cards retained the same template variants and obstacle counts. A second reload after the status repair reached checkpoint 16 and reported **3 levels passed preparation and are ready for one approval** instead of resetting the creator.
+- The combined candidate passes 545/545 creator/runtime tests and 43/43 community tests. Focused tests bind the pre/post-reopen project and provenance, reject a stale tab, reject altered retained source bytes and continue a cleared campaign at its first uncleared mission.
+- Two tabs opened the same exact draft at checkpoint 1. After tab A advanced the durable source to checkpoint 2, tab B retained its local edit but refused the overwrite with **A newer draft exists** and kept its source backup downloadable.
+- Thirteen identical 1,992,938-byte PNG inputs produced a visible 25.10 MiB estimate and an explicit 12-plus-1 split. The downloaded packs were 2,352,483 and 2,024,333 bytes; each contained exactly one asset with SHA-256 `a023375013a3f07b24618377e2885fa47f00c873780b34fa32b06fd8b27b6926`, proving actual-file payload deduplication.
+- The browser completed mission one, entered mission two, saved a mid-route attempt, reloaded, resumed that exact mission and legally completed it at 70% with three lives and 14,080 points. The exported edition-scoped profile retained both distinct clears. A subsequent reload exposed that the lobby still defaulted to mission one; the combined candidate now honors exact library handoffs, continues at the first uncleared mission and selects the latest earned reward. Its focused 12-mission regression passes. Repeating the reload on the corrected source visibly selected earned picture02 and Start launched picture03 at 0% with three lives.
 
 ## Browser and release gates still required
 
-- Complete the remaining manual edge cases with a portrait image and a deliberately unsupported item. Confirm manual reorder, every pacing choice, per-item regeneration, failure exclusion and reload recovery after a partly prepared batch.
 - Capture browser-process memory measurements during another large preparation run. The UI and automated probes establish serial full-size work, but this record does not yet claim a measured peak-memory bound.
-- Reload an unfinished middle mission and verify every earned picture remains bound after another reload. Install a changed edition alongside it and confirm attempts and rewards do not migrate.
-- Inspect a duplicate-byte split export to confirm payload deduplication in the actual file. The existing two- and 12-picture inspections confirm exact derivative closure, source-original separation and zero trailing bytes; automated tests cover unrelated-media and player-progress exclusion.
-- Exercise failed installation recovery and concurrent-tab stale-state refusal. Browser quota estimates remain advisory.
-- Run the repository's current hosted gates, review and merge the Phase 2 PR, freeze the next unused version, inspect and upload the frozen artifact, publish its release and selector, then verify the public version and artifact hashes.
+- Exercise failed installation recovery. Browser quota estimates remain advisory.
+- Complete the combined PR's hosted gates, freeze and inspect the assigned `v0.141.0` artifact,
+  publish its release and selector, then verify the public version and artifact hashes.
 
 The user directed this delivery to use the Codex built-in browser. Firefox, Safari and physical mobile remain untested until separately qualified and must not be inferred from this record.

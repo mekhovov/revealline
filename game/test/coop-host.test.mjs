@@ -547,8 +547,8 @@ test('Team pack reads show immediate status, Stop waiting rejects late adoption,
   f.$('coop-pack-file').focus();
   const pending = f.selectFile(candidate, () => read.promise);
   assert.equal(f.$('coop-pack-status').dataset.state, 'busy');
-  assert.equal(f.$('coop-pack-status').dataset.stage, 'reading');
-  assert.match(f.$('coop-pack-status').textContent, /Reading the selected Team pack/);
+  assert.equal(f.$('coop-pack-status').dataset.stage, 'verifying');
+  assert.match(f.$('coop-pack-status').textContent, /Checking Team arenas and rules/);
   assert.equal(f.$('coop-pack-cancel').hidden, false);
   assert.equal(f.$('coop-start').disabled, true, 'Cancel restores the existing arena before Start');
   f.$('coop-pack-cancel').click();
@@ -1471,6 +1471,10 @@ for (const interruption of ['blur', 'hidden', 'persisted pagehide'])
     pad.buttons[0] = { pressed: false, value: 0 };
     f.tick(2);
     assert.equal(f.$('coop-overlay').hidden, false, 'Joining a pad is not Resume.');
+    // Let the finite controller-to-native echo window expire before modeling a
+    // distinct pointer activation. This test owns lifecycle retirement, not the
+    // guard that deliberately rejects an immediate synthetic click after A.
+    f.tick(151);
     f.disclose('coop-help');
     const region = f.$('coop-help-reading'),
       done = f.$('coop-help-reading-done');

@@ -459,14 +459,15 @@ test('Journey feedback dependencies bind only the reviewed player-craft effects 
   }
 });
 
-test('shared-host UI and locale-refreshed audio bind only reviewed current inputs', async () => {
+test('shared-host UI and managed-media audio bind only reviewed current inputs', async () => {
   const production = await createFieldKitProduction();
   const resolved = resolvePresentation(production.document);
   const uiReviewPath = 'docs/verification/actor-only-ui-continuation-2026-09-24/review.json';
   const uiReviewHash = createHash('sha256')
     .update(await fs.readFile(new URL(`../../${uiReviewPath}`, import.meta.url)))
     .digest('hex');
-  const continuationPath = 'docs/verification/v0.132.5-presentation-continuation/review.json';
+  const continuationPath =
+    'docs/verification/v0.141.0-managed-media-audio-continuation/review.json';
   const continuationHash = createHash('sha256')
     .update(await fs.readFile(new URL(`../../${continuationPath}`, import.meta.url)))
     .digest('hex');
@@ -504,7 +505,7 @@ test('shared-host UI and locale-refreshed audio bind only reviewed current input
       );
       assert.ok(
         asset.provenance.source.endsWith(
-          'sha256:301e68a4898cf7d9140abee266195401a69cfca0db2301a12409ec252c882ec9',
+          'sha256:77370fe6fc7a8d376865b05d8ba2020b8683b3922c20cc3dfad260d0a0251f79',
         ),
         slot.id,
       );
@@ -587,6 +588,8 @@ test('changed recipe inputs reopen only their own reviewed group', async (t) => 
     'content/soundtrack-catalogue.mjs',
     'online-soundtrack-catalogue.mjs',
     'ui/soundtrack-panel.mjs',
+    'managed-media-store.mjs',
+    'media-storage-record.mjs',
   ];
   const inputs = new Map([
     ['ui/operation-status.css', 'ui'],

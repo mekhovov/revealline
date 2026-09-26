@@ -153,8 +153,9 @@ const REVIEWED_RECIPE_INPUTS = {
     ],
   },
   audio: {
-    sha256: '301e68a4898cf7d9140abee266195401a69cfca0db2301a12409ec252c882ec9',
+    sha256: '77370fe6fc7a8d376865b05d8ba2020b8683b3922c20cc3dfad260d0a0251f79',
     evidence: [
+      'v0.141.0 managed-media continuation: docs/verification/v0.141.0-managed-media-audio-continuation/review.json sha256:16f3eb26f28eae82f6529c8a872438c216a05d7a905e0fee0b3d6b0e9601e998; twenty-four ordered audio inputs sha256:77370fe6fc7a8d376865b05d8ba2020b8683b3922c20cc3dfad260d0a0251f79. Only managed-media-store.mjs and media-storage-record.mjs changed after the prior exact review, adding bounded cross-domain byte accounting and exact reviewed still-byte detachment while preserving audio routing, recipes, rows, blobs, playback and soundtrack bytes.',
       'v0.132.5 locale-refresh continuation: docs/verification/v0.132.5-presentation-continuation/review.json sha256:fbc818dcfbbfd2cf1985017417959c82741162842cd3c7293f5be67fc594ef35; twenty-four ordered audio inputs sha256:301e68a4898cf7d9140abee266195401a69cfca0db2301a12409ec252c882ec9. Only game/app.mjs changed after the prior exact review, asking the shared shell to refresh localized Home copy while preserving audio routing, recipes and bytes.',
       'Scoped v0.132.1 Steam Deck controller continuation: docs/verification/v0.132.1-steamdeck-audio-continuation/review.json sha256:b715c81fa1f86a562d5c195ffc025727fc009d1de6cfe03c403db75fdfbf8d70; twenty-five ordered audio inputs sha256:417ceb75d58709373e1abdb047c26224db06721bd58b3ff8302152c33d2f735a. Only game/app.mjs changed among those inputs, adding a controller Confirm lifecycle filter before menu dispatch while preserving audio routing and bytes.',
       'The prior offline ownership and v0.131 English/Ukrainian reviews remain incorporated. All 8 selected roles retain the same procedural recipes; playback state, volume values, local-only selection, resumable download, shared-byte removal, rights, cancellation and imported-media preservation are unchanged.',
