@@ -1,3 +1,5 @@
+import { t } from './i18n/index.mjs';
+
 export const PACK_CATALOG_VERSION = 'xonix-pack-catalog.v1';
 
 export function createPackLaunchGuard() {
@@ -9,8 +11,7 @@ export function createPackLaunchGuard() {
     contexts.has(ticket) &&
     contexts.get(ticket) === context;
   const assertCurrent = (ticket, context) => {
-    if (!current(ticket, context))
-      throw new Error('Pack selection was replaced by a newer action.');
+    if (!current(ticket, context)) throw new Error(t('errors:contentLaunch.selectionReplaced'));
   };
   return Object.freeze({
     begin(context) {
@@ -25,14 +26,12 @@ export function createPackLaunchGuard() {
     assert: assertCurrent,
     async run(ticket, context, getContext, task) {
       if (typeof getContext !== 'function' || typeof task !== 'function')
-        throw new TypeError('Guarded pack work needs context and task functions.');
+        throw new TypeError(t('errors:contentLaunch.guardFunctionsRequired'));
       assertCurrent(ticket, getContext());
-      if (getContext() !== context)
-        throw new Error('Pack selection was replaced by a newer action.');
+      if (getContext() !== context) throw new Error(t('errors:contentLaunch.selectionReplaced'));
       const result = await task();
       assertCurrent(ticket, getContext());
-      if (getContext() !== context)
-        throw new Error('Pack selection was replaced by a newer action.');
+      if (getContext() !== context) throw new Error(t('errors:contentLaunch.selectionReplaced'));
       return result;
     },
     advance(ticket, before, after) {
@@ -61,7 +60,7 @@ export function createPackCommitCoordinator({
     onError,
   }))
     if (typeof callback !== 'function')
-      throw new TypeError(`Pack commit coordinator needs a ${name} function.`);
+      throw new TypeError(t('errors:contentLaunch.coordinatorFunctionRequired', { name }));
 
   let writeTail = Promise.resolve();
   let revision = 0;
@@ -70,9 +69,9 @@ export function createPackCommitCoordinator({
 
   const commit = (value, { beforeWrite, writeValue = write } = {}) => {
     if (typeof writeValue !== 'function')
-      throw new TypeError('Pack commit writer must be a function.');
+      throw new TypeError(t('errors:contentLaunch.writerFunctionRequired'));
     if (beforeWrite !== undefined && typeof beforeWrite !== 'function')
-      throw new TypeError('Pack commit preflight must be a function.');
+      throw new TypeError(t('errors:contentLaunch.preflightFunctionRequired'));
     const commitRevision = ++revision;
     const result = writeTail.then(async () => {
       beforeWrite?.();
@@ -191,7 +190,7 @@ const exactKeys = (value, keys, label) => {
     Object.keys(value).length !== keys.length ||
     !keys.every((key) => Object.hasOwn(value, key))
   )
-    throw new TypeError(`${label} has missing or unsupported fields.`);
+    throw new TypeError(t('errors:contentLaunch.invalidFields', { label }));
 };
 const freeze = (value) => {
   if (value && typeof value === 'object') {
@@ -204,14 +203,18 @@ const freeze = (value) => {
 /** Validate the small shipped navigation catalog before using it for URLs or selectors. */
 export function preparePackCatalog(candidate) {
   const catalog = structuredClone(candidate);
-  exactKeys(catalog, ['format', 'packs'], 'Pack catalog');
+  exactKeys(catalog, ['format', 'packs'], t('errors:contentLaunch.labels.catalog'));
   if (catalog.format !== PACK_CATALOG_VERSION || !Array.isArray(catalog.packs))
-    throw new TypeError('Unsupported pack catalog.');
+    throw new TypeError(t('errors:contentLaunch.unsupportedCatalog'));
   if (catalog.packs.length < 1 || catalog.packs.length > 12)
-    throw new TypeError('Pack catalog size is invalid.');
+    throw new TypeError(t('errors:contentLaunch.invalidCatalogSize'));
   const packIds = new Set();
   for (const pack of catalog.packs) {
-    exactKeys(pack, ['id', 'path', 'name', 'campaigns'], 'Pack catalog entry');
+    exactKeys(
+      pack,
+      ['id', 'path', 'name', 'campaigns'],
+      t('errors:contentLaunch.labels.catalogEntry'),
+    );
     if (
       !stableId(pack.id) ||
       packIds.has(pack.id) ||
@@ -221,11 +224,15 @@ export function preparePackCatalog(candidate) {
       pack.campaigns.length < 1 ||
       pack.campaigns.length > 8
     )
-      throw new TypeError('Pack catalog identity or content is invalid.');
+      throw new TypeError(t('errors:contentLaunch.invalidCatalogIdentity'));
     packIds.add(pack.id);
     const campaignIds = new Set();
     for (const campaign of pack.campaigns) {
-      exactKeys(campaign, ['id', 'revision', 'title', 'levels'], 'Pack catalog campaign');
+      exactKeys(
+        campaign,
+        ['id', 'revision', 'title', 'levels'],
+        t('errors:contentLaunch.labels.campaign'),
+      );
       if (
         !stableId(campaign.id) ||
         campaignIds.has(campaign.id) ||
@@ -235,13 +242,13 @@ export function preparePackCatalog(candidate) {
         campaign.levels.length < 1 ||
         campaign.levels.length > 128
       )
-        throw new TypeError('Pack catalog campaign is invalid.');
+        throw new TypeError(t('errors:contentLaunch.invalidCampaign'));
       campaignIds.add(campaign.id);
       const levelIds = new Set();
       for (const level of campaign.levels) {
-        exactKeys(level, ['id', 'name'], 'Pack catalog level');
+        exactKeys(level, ['id', 'name'], t('errors:contentLaunch.labels.level'));
         if (!stableId(level.id) || levelIds.has(level.id) || !shortText(level.name))
-          throw new TypeError('Pack catalog level is invalid.');
+          throw new TypeError(t('errors:contentLaunch.invalidLevel'));
         levelIds.add(level.id);
       }
     }
@@ -251,33 +258,33 @@ export function preparePackCatalog(candidate) {
 
 function one(params, key) {
   const values = params.getAll(key);
-  if (values.length > 1) throw new TypeError(`Use one ${key} value.`);
+  if (values.length > 1) throw new TypeError(t('errors:contentLaunch.singleParameter', { key }));
   return values[0] ?? null;
 }
 
 /** Resolve a bounded landing-page handoff without trusting arbitrary file paths or IDs. */
 export function resolvePackLaunch(params, catalog) {
   if (!(params instanceof URLSearchParams))
-    throw new TypeError('Pack launch needs URL parameters.');
+    throw new TypeError(t('errors:contentLaunch.parametersRequired'));
   const packId = one(params, 'pack');
   const campaignId = one(params, 'campaign');
   const levelId = one(params, 'level');
   const playValue = one(params, 'play');
   if (packId === null) {
     if (campaignId !== null || levelId !== null || playValue !== null)
-      throw new TypeError('Choose a pack before a campaign or level.');
+      throw new TypeError(t('errors:contentLaunch.choosePackFirst'));
     return null;
   }
   const pack = catalog.packs.find((item) => item.id === packId);
-  if (!pack) throw new TypeError('This bundled pack is not available.');
+  if (!pack) throw new TypeError(t('errors:contentLaunch.packUnavailable'));
   const campaign = campaignId
     ? pack.campaigns.find((item) => item.id === campaignId)
     : pack.campaigns[0];
-  if (!campaign) throw new TypeError('This pack campaign is not available.');
+  if (!campaign) throw new TypeError(t('errors:contentLaunch.campaignUnavailable'));
   const level = levelId ? campaign.levels.find((item) => item.id === levelId) : campaign.levels[0];
-  if (!level) throw new TypeError('This pack level is not available.');
+  if (!level) throw new TypeError(t('errors:contentLaunch.levelUnavailable'));
   if (playValue !== null && playValue !== '1')
-    throw new TypeError('Pack launch play must be 1 when provided.');
+    throw new TypeError(t('errors:contentLaunch.invalidPlay'));
   return freeze({
     packId: pack.id,
     packName: pack.name,
@@ -291,7 +298,8 @@ export function resolvePackLaunch(params, catalog) {
 }
 
 export function packLaunchHref(base, { packId, campaignId, levelId, play = false }) {
-  if (typeof base !== 'string' || !base) throw new TypeError('Pack launch base URL is required.');
+  if (typeof base !== 'string' || !base)
+    throw new TypeError(t('errors:contentLaunch.baseUrlRequired'));
   const params = new URLSearchParams({ pack: packId });
   if (campaignId) params.set('campaign', campaignId);
   if (levelId) params.set('level', levelId);

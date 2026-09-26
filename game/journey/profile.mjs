@@ -1,4 +1,5 @@
 import { boundedJSON, exactKeys } from '../data-json.mjs';
+import { t } from '../i18n/index.mjs';
 import { JOURNEY_MODES } from './catalog.mjs';
 import {
   emptyJourneyPictures,
@@ -15,9 +16,15 @@ export const JOURNEY_PICTURE_BACKUP_VERSION = 'revealline-journey-backup.v3';
 const emptyModes = (make) => Object.fromEntries(JOURNEY_MODES.map((mode) => [mode, make()]));
 const text = (value) => typeof value === 'string' && value.length > 0 && value.length <= 1024;
 const own = (object, key) => Object.hasOwn(object, key);
+const journeyStructuralMessages = {
+  object: () => t('errors:journey.objectRequired'),
+  unsupported: ({ key }) => t('errors:journey.unsupportedField', { key }),
+};
+const exactJourneyKeys = (value, allowed, label) =>
+  exactKeys(value, allowed, label, journeyStructuralMessages);
 function validateProfileKey(key) {
   if (typeof key !== 'string' || !/^[a-z][a-z0-9-]{0,79}$/.test(key))
-    throw new TypeError('Journey storage needs a stable profile key.');
+    throw new TypeError(t('errors:journey.stableProfileKeyRequired'));
 }
 
 function pictureEditionId(profileKey) {
@@ -28,11 +35,13 @@ function pictureEditionId(profileKey) {
 function inspectProfileBackup(source, profileKey) {
   const candidate = boundedJSON(source, { maxBytes: 16 * 1024 * 1024, maxNodes: 200020 });
   if (candidate?.format === JOURNEY_PICTURE_BACKUP_VERSION) {
-    exactKeys(candidate, ['format', 'profileKey', 'profile', 'pictures'], 'Journey picture backup');
+    exactJourneyKeys(
+      candidate,
+      ['format', 'profileKey', 'profile', 'pictures'],
+      'Journey picture backup',
+    );
     if (candidate.profileKey !== profileKey)
-      throw new TypeError(
-        'This backup belongs to a different Journey edition. Progress is unchanged.',
-      );
+      throw new TypeError(t('errors:journey.differentEdition'));
     const profile = validateJourneyProfile(candidate.profile),
       pictures = validateJourneyPictureCompletions(profile, candidate.pictures, {
         editionId: pictureEditionId(profileKey),
@@ -56,10 +65,8 @@ function inspectProfileBackup(source, profileKey) {
     maxString: 1024,
   });
   if (backup?.format !== JOURNEY_SCOPED_BACKUP_VERSION || backup.profileKey !== profileKey)
-    throw new TypeError(
-      'This backup belongs to a different Journey edition. Progress is unchanged.',
-    );
-  exactKeys(backup, ['format', 'profileKey', 'profile'], 'Scoped Journey backup');
+    throw new TypeError(t('errors:journey.differentEdition'));
+  exactJourneyKeys(backup, ['format', 'profileKey', 'profile'], 'Scoped Journey backup');
   const normalized = {
     format: JOURNEY_BACKUP_VERSION,
     profile: validateJourneyProfile(backup.profile),
@@ -88,15 +95,19 @@ export function validateJourneyProfile(source) {
     maxArray: 4096,
     maxString: 1024,
   });
-  exactKeys(profile, ['format', 'generation', 'cursors', 'skipped', 'clears'], 'Journey profile');
+  exactJourneyKeys(
+    profile,
+    ['format', 'generation', 'cursors', 'skipped', 'clears'],
+    'Journey profile',
+  );
   if (
     profile.format !== JOURNEY_PROFILE_VERSION ||
     !Number.isSafeInteger(profile.generation) ||
     profile.generation < 0
   )
-    throw new TypeError('Unsupported or damaged Journey profile. Export before recovery.');
+    throw new TypeError(t('errors:journey.damagedProfile'));
   for (const field of ['cursors', 'skipped', 'clears'])
-    exactKeys(profile[field], JOURNEY_MODES, `Journey ${field}`);
+    exactJourneyKeys(profile[field], JOURNEY_MODES, `Journey ${field}`);
   for (const mode of JOURNEY_MODES) {
     if (
       !(profile.cursors[mode] === null || text(profile.cursors[mode])) ||
@@ -107,16 +118,20 @@ export function validateJourneyProfile(source) {
       typeof profile.clears[mode] !== 'object' ||
       Array.isArray(profile.clears[mode])
     )
-      throw new TypeError('Invalid Journey mode state.');
+      throw new TypeError(t('errors:journey.invalidModeState'));
     for (const [id, receipt] of Object.entries(profile.clears[mode])) {
-      exactKeys(receipt, ['runId', 'gameplayId', 'difficulty'], 'Journey completion receipt');
+      exactJourneyKeys(
+        receipt,
+        ['runId', 'gameplayId', 'difficulty'],
+        'Journey completion receipt',
+      );
       if (
         !text(id) ||
         !text(receipt.runId) ||
         !text(receipt.gameplayId) ||
         !['gentle', 'standard', 'expert'].includes(receipt.difficulty)
       )
-        throw new TypeError('Invalid Journey completion receipt.');
+        throw new TypeError(t('errors:journey.invalidCompletionReceipt'));
     }
   }
   return profile;
@@ -130,8 +145,9 @@ export function inspectJourneyBackup(source) {
     maxArray: 4096,
     maxString: 1024,
   });
-  exactKeys(backup, ['format', 'profile'], 'Journey backup');
-  if (backup.format !== JOURNEY_BACKUP_VERSION) throw new TypeError('Unsupported Journey backup.');
+  exactJourneyKeys(backup, ['format', 'profile'], 'Journey backup');
+  if (backup.format !== JOURNEY_BACKUP_VERSION)
+    throw new TypeError(t('errors:journey.unsupportedBackup'));
   return { format: JOURNEY_BACKUP_VERSION, profile: validateJourneyProfile(backup.profile) };
 }
 
@@ -158,7 +174,7 @@ export function mergeJourneyBackup(source, backupSource) {
 /** Events contain no score authority: the host supplies only verified legal clears. */
 export function applyJourneyEvent(source, event) {
   if (event?.type === 'restore') {
-    exactKeys(event, ['type', 'backup'], 'Journey restore event');
+    exactJourneyKeys(event, ['type', 'backup'], 'Journey restore event');
     return mergeJourneyBackup(source, event.backup);
   }
   const profile = validateJourneyProfile(source);
@@ -168,7 +184,7 @@ export function applyJourneyEvent(source, event) {
     !text(event.missionId) ||
     !['select', 'skip', 'complete'].includes(event.type)
   )
-    throw new TypeError('Invalid Journey progress event.');
+    throw new TypeError(t('errors:journey.invalidProgressEvent'));
   const { mode, missionId } = event;
   if (event.type === 'select') profile.cursors[mode] = missionId;
   if (event.type === 'skip' && !profile.skipped[mode].includes(missionId))
@@ -179,12 +195,12 @@ export function applyJourneyEvent(source, event) {
       !text(event.gameplayId) ||
       !['gentle', 'standard', 'expert'].includes(event.difficulty)
     )
-      throw new TypeError('Journey completion requires an exact gameplay receipt.');
+      throw new TypeError(t('errors:journey.exactReceiptRequired'));
     if (own(profile.clears[mode], missionId)) {
       const old = profile.clears[mode][missionId];
       if (old.runId === event.runId) {
         if (old.gameplayId !== event.gameplayId || old.difficulty !== event.difficulty)
-          throw new TypeError('A Journey run cannot change its completion identity.');
+          throw new TypeError(t('errors:journey.completionIdentityChanged'));
         return profile;
       }
     }
@@ -210,18 +226,18 @@ export function createJourneyBackend({
   validateProfileKey(profileKey);
   let opening;
   const open = () => {
-    if (!indexedDB) return Promise.reject(new Error('Journey storage is unavailable.'));
+    if (!indexedDB) return Promise.reject(new Error(t('errors:journey.storageUnavailable')));
     return (opening ??= new Promise((resolve, reject) => {
       const request = indexedDB.open(JOURNEY_PROFILE_DATABASE, 1);
       let failed = false;
       const fail = (error) => {
         failed = true;
         opening = null;
-        reject(error || new Error('Journey storage could not open.'));
+        reject(error || new Error(t('errors:journey.storageOpenFailed')));
       };
       request.onupgradeneeded = () => request.result.createObjectStore('profiles');
       request.onerror = () => fail(request.error);
-      request.onblocked = () => fail(new Error('Close an older Journey tab to update storage.'));
+      request.onblocked = () => fail(new Error(t('errors:journey.closeOlderTab')));
       request.onsuccess = () => {
         const db = request.result;
         if (failed) {
@@ -272,7 +288,7 @@ export function createJourneyBackend({
       read.onsuccess = pictureRead.onsuccess = loaded;
       tx.oncomplete = () => resolve(next);
       tx.onabort = tx.onerror = () =>
-        reject(failure || tx.error || new Error('Journey save failed.'));
+        reject(failure || tx.error || new Error(t('errors:journey.saveFailed')));
     });
   }
   return {
@@ -307,16 +323,13 @@ export function createJourneyProfileStore({
   validateProfileKey(profileKey);
   backend ??= createJourneyBackend({ profileKey });
   if (backend.profileKey !== undefined && backend.profileKey !== profileKey)
-    throw new TypeError('Journey backend and profile edition must agree.');
+    throw new TypeError(t('errors:journey.backendEditionMismatch'));
   if (!Number.isFinite(operationTimeoutMs) || operationTimeoutMs <= 0)
-    throw new TypeError('Journey storage needs a positive operation timeout.');
+    throw new TypeError(t('errors:journey.positiveTimeoutRequired'));
   const bounded = (operation) =>
     new Promise((resolve, reject) => {
       const timer = setTimeout(
-        () =>
-          reject(
-            new Error('Journey storage is taking too long. Progress is kept in this session.'),
-          ),
+        () => reject(new Error(t('errors:journey.storageTimeout'))),
         operationTimeoutMs,
       );
       Promise.resolve()
@@ -356,9 +369,7 @@ export function createJourneyProfileStore({
   const commitState = async (events) => {
     if (backend.commitState) return validateState(await backend.commitState(events));
     if (events.some((event) => event.picture !== undefined || event.pictures !== undefined))
-      throw new Error(
-        'This Journey backend cannot safely save picture receipts. Export and retry.',
-      );
+      throw new Error(t('errors:journey.pictureReceiptsUnsupported'));
     return {
       profile: validateJourneyProfile(await backend.commit(events)),
       pictures: emptyJourneyPictures(),
@@ -394,7 +405,7 @@ export function createJourneyProfileStore({
   }
   const recordEvents = (events) => {
     if (!Array.isArray(events) || events.length < 1 || events.length > 256)
-      throw new TypeError('Journey progress needs one to 256 events per transaction.');
+      throw new TypeError(t('errors:journey.eventBatchSize'));
     const owned = structuredClone(events);
     // Validate the whole transition before publishing either its cursor or skip.
     // One status notification cannot expose a partially applied transition.
