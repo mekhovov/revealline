@@ -14,7 +14,14 @@ import {
 } from '../game/presentation/runtime.mjs';
 import { createDefaultThemeBundle } from '../game/presentation/catalog.mjs';
 import { encodePresentationDocument } from '../game/presentation/document-codec.mjs';
-import { inspectPresentationDependencies } from '../game/presentation/dependencies.mjs';
+import {
+  inspectPresentationDependencies,
+  verifyPresentationDependencies,
+} from '../game/presentation/dependencies.mjs';
+import {
+  projectPlayerPresentation,
+  isPlayerPresentationProjection,
+} from '../game/presentation/player-projection.mjs';
 import { campaignKey } from '../game/library.mjs';
 import { validatePack } from '../game/packs.mjs';
 import { retainPresentationOutput } from './retain-presentation-output.mjs';
@@ -36,14 +43,34 @@ const encode = (value) => new TextEncoder().encode(value);
 export async function compilePresentation(
   source,
   sourceAssets = new Map(),
-  { themeId, collectionId, decodeImage = null, previousOutput = null } = {},
+  {
+    themeId,
+    collectionId,
+    decodeImage = null,
+    previousOutput = null,
+    playerOnly = false,
+    retainedRuntimeHashes = [],
+  } = {},
 ) {
   const document = validateThemeBundle(source),
     assets = await verifyThemeAssets(document, sourceAssets, { decodeImage });
   const options = {};
   if (themeId !== undefined) options.themeId = themeId;
   if (collectionId !== undefined) options.collectionId = collectionId;
-  const resolved = resolvePresentation(document, options),
+  required(typeof playerOnly === 'boolean', 'Player projection must be explicit.');
+  required(
+    Array.isArray(retainedRuntimeHashes) &&
+      retainedRuntimeHashes.length <= LIMITS.collections &&
+      retainedRuntimeHashes.every((hash) => /^[a-f0-9]{64}$/.test(hash)) &&
+      new Set(retainedRuntimeHashes).size === retainedRuntimeHashes.length,
+    'Retained player runtimes require unique exact hashes.',
+  );
+  required(
+    playerOnly || retainedRuntimeHashes.length === 0,
+    'Explicit runtime retention is for player editions.',
+  );
+  const originalResolved = resolvePresentation(document, options);
+  const resolved = playerOnly ? projectPlayerPresentation(originalResolved) : originalResolved,
     files = new Map(),
     urls = {};
   const selected = new Map(
@@ -53,7 +80,7 @@ export async function compilePresentation(
   );
   // The studio retains immutable history; runtime URLs still expose only the
   // selected snapshot. Hash-addressed bytes are written once for both readers.
-  for (const asset of document.assets.filter((item) => item.file)) {
+  for (const asset of playerOnly ? [] : document.assets.filter((item) => item.file)) {
     const { sha256: hash, mime } = asset.file;
     const name = `assets/${hash}.${extensions[mime]}`;
     if (!files.has(name)) files.set(name, new Uint8Array(await assets.get(hash).arrayBuffer()));
@@ -84,10 +111,12 @@ export async function compilePresentation(
     '',
   ].join('\n');
   files.set('theme.css', encode(css));
-  const studioMetadata = encodePresentationDocument(document);
-  // Preserve the existing newline whenever it fits the serialized boundary.
-  const studioSuffix = encode(studioMetadata).length < LIMITS.manifestBytes ? '\n' : '';
-  files.set('studio.json', encode(studioMetadata + studioSuffix));
+  if (!playerOnly) {
+    const studioMetadata = encodePresentationDocument(document);
+    // Preserve the existing newline whenever it fits the serialized boundary.
+    const studioSuffix = encode(studioMetadata).length < LIMITS.manifestBytes ? '\n' : '';
+    files.set('studio.json', encode(studioMetadata + studioSuffix));
+  }
   files.set(
     'runtime.json',
     encode(
@@ -99,7 +128,44 @@ export async function compilePresentation(
       }) + '\n',
     ),
   );
+  if (playerOnly)
+    for (const pin of retainedRuntimeHashes) {
+      required(
+        previousOutput instanceof Map,
+        'Retained player runtimes require original output bytes.',
+      );
+      const prior = previousOutput.get(`runtime.${pin}.json`) ?? previousOutput.get('runtime.json');
+      required(
+        prior && (await hashPresentationBytes(prior)) === pin,
+        'Retained player runtime hash differs.',
+      );
+      const checked = await verifyPresentationDependencies(prior, {
+        expectedManifestSha256: pin,
+        read: async (file) => previousOutput.get(file.path),
+      });
+      const value = JSON.parse(new TextDecoder().decode(prior));
+      required(
+        isPlayerPresentationProjection(value.resolved),
+        'Authoring provenance cannot enter a retained player runtime.',
+      );
+      if ((await hashPresentationBytes(files.get('runtime.json'))) === pin) continue;
+      files.set(`runtime.${pin}.json`, new Uint8Array(prior));
+      for (const file of checked.inventory.files) {
+        const priorBytes = previousOutput.get(file.path);
+        required(
+          !files.has(file.path) ||
+            (await hashPresentationBytes(files.get(file.path))) === file.sha256,
+          'Retained player asset conflicts.',
+        );
+        files.set(file.path, new Uint8Array(priorBytes));
+      }
+    }
   const inventory = [];
+  if (playerOnly)
+    required(
+      [...files.values()].reduce((sum, bytes) => sum + bytes.byteLength, 0) <= LIMITS.bundleBytes,
+      'Player presentation exceeds its complete dependency budget.',
+    );
   for (const [name, bytes] of [...files].sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0)))
     inventory.push({ path: name, bytes: bytes.length, sha256: await hashPresentationBytes(bytes) });
   files.set(
@@ -114,7 +180,10 @@ export async function compilePresentation(
   );
   const dependencies = await inspectPresentationDependencies(files.get('runtime.json'));
   return Object.freeze({
-    files: previousOutput === null ? files : await retainPresentationOutput(files, previousOutput),
+    files:
+      previousOutput === null || playerOnly
+        ? files
+        : await retainPresentationOutput(files, previousOutput),
     resolved,
     dependencies,
     imagesDecoded: typeof decodeImage === 'function',
@@ -230,10 +299,10 @@ async function main(args) {
   const options = {};
   for (let i = 0; i < args.length; i += 2) {
     required(
-      ['--manifest', '--assets', '--bundle', '--out'].includes(args[i]) &&
+      ['--manifest', '--assets', '--bundle', '--out', '--profile'].includes(args[i]) &&
         args[i + 1] &&
         !Object.hasOwn(options, args[i]),
-      'Usage: node scripts/compile-presentation.mjs [--bundle FILE | --manifest FILE --assets DIR] [--out NEW_CACHE_DIR]',
+      'Usage: node scripts/compile-presentation.mjs [--bundle FILE | --manifest FILE --assets DIR] [--profile studio|player] [--out NEW_CACHE_DIR]',
     );
     options[args[i]] = args[i + 1];
   }
@@ -270,7 +339,13 @@ async function main(args) {
       new Blob([await ordinary(file, LIMITS.assetBytes)], { type: asset.file.mime }),
     );
   }
-  const result = await compilePresentation(document, assets);
+  required(
+    options['--profile'] === undefined || ['studio', 'player'].includes(options['--profile']),
+    'Choose the studio or player presentation profile.',
+  );
+  const result = await compilePresentation(document, assets, {
+    playerOnly: options['--profile'] === 'player',
+  });
   if (options['--out']) {
     const out = path.resolve(options['--out']),
       cache = path.join(projectRoot, '.cache');

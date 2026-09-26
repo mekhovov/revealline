@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+    <meta name="theme-color" content="#081d4d" />
+    <title>Company journeys · Reveal / Line</title>
+    <link rel="stylesheet" href="company.css" />
+    <script type="module" src="company-player.mjs"></script>
+  </head>
+  <body>
+    <header class="brand-bar">
+      <button id="brand-home" class="brand-lockup" aria-label="Campaign home">
+        <img id="brand-logo" alt="" hidden /><span id="brand-name">Company journeys</span>
+      </button>
+      <nav aria-label="Game menu">
+        <button id="home-button">Campaigns</button><button id="gallery-button">Collection</button
+        ><button id="settings-button">Settings</button><button id="help-button">How to play</button>
+      </nav>
+    </header>
+    <p id="notice" role="status" aria-live="polite">Preparing your company journey…</p>
+    <main>
+      <section id="home-screen" aria-labelledby="home-title">
+        <div class="hero">
+          <img id="home-art" alt="" />
+          <div class="hero-copy">
+            <p class="eyebrow">PLAY · CONNECT · DISCOVER</p>
+            <h1 id="home-title">A world of<br />shared possibilities.</h1>
+            <p id="brand-description"></p>
+            <div class="hero-actions">
+              <button id="start-campaign" class="primary">
+                Begin the journey <span aria-hidden="true">↗</span></button
+              ><button id="continue-button" hidden>Continue saved game</button>
+            </div>
+            <p class="hero-note">Original worlds. Familiar connections. Your own route.</p>
+          </div>
+        </div>
+        <section class="campaign-section">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">CHOOSE YOUR JOURNEY</p>
+              <h2>Every connection tells a story.</h2>
+            </div>
+            <label class="edition-picker"
+              >Company &amp; edition<select
+                id="edition-select"
+                aria-label="Company and edition"
+              ></select
+            ></label>
+          </div>
+          <div id="campaigns" class="campaign-grid"></div>
+        </section>
+      </section>
+      <section id="play-screen" hidden aria-labelledby="mission-title">
+        <div class="mission-heading">
+          <div>
+            <p id="campaign-name" class="eyebrow"></p>
+            <h1 id="mission-title"></h1>
+          </div>
+          <button id="pause-button">Pause</button>
+        </div>
+        <div class="play-layout">
+          <div class="board-column">
+            <div class="hud" aria-label="Mission status">
+              <span><small>CONNECTED</small><strong id="coverage">0%</strong></span
+              ><span><small>LIVES</small><strong id="lives">3</strong></span
+              ><span><small>TIME</small><strong id="clock">0:00</strong></span
+              ><span><small>GOAL</small><strong id="goal">50%</strong></span>
+            </div>
+            <div
+              id="arena"
+              tabindex="0"
+              aria-label="Game board. Arrow keys or WASD to move, Shift to boost, Escape to pause."
+            >
+              <canvas id="board" width="1152" height="576"></canvas>
+              <div id="play-overlay">
+                <img id="completion-emblem" alt="" hidden />
+                <p id="play-state">Ready to connect</p>
+                <p id="play-detail"></p>
+                <button id="resume-button" class="primary">Start mission</button
+                ><button id="retry-button" hidden>Try again</button
+                ><button id="next-button" hidden>Next connection →</button>
+              </div>
+            </div>
+            <div class="touch-controls" aria-label="Movement">
+              <button data-move="left" aria-label="Move left">←</button
+              ><button data-move="up" aria-label="Move up">↑</button
+              ><button data-move="down" aria-label="Move down">↓</button
+              ><button data-move="right" aria-label="Move right">→</button
+              ><button id="boost-button">Boost</button>
+            </div>
+            <p class="controls-hint">
+              ARROWS / WASD · move &nbsp; SHIFT · boost &nbsp; ESC · pause
+            </p>
+          </div>
+          <aside class="mission-notes">
+            <p class="eyebrow">YOUR NEXT CONNECTION</p>
+            <h2 id="mission-brief"></h2>
+            <p id="mission-route"></p>
+            <div class="note-divider"></div>
+            <h3>Read the room</h3>
+            <p id="mission-counterplay"></p>
+            <button id="workbench-button" class="primary" hidden>Open workbench</button>
+            <p id="learning-status"></p>
+            <p class="small">
+              A fictional world inspired by connected work. Approvals, suppliers and colleagues are
+              part of the solution.
+            </p>
+          </aside>
+        </div>
+      </section>
+    </main>
+    <footer>
+      <span id="footer-brand">Reveal / Line · Company journeys</span
+      ><button id="about-button">About this edition</button
+      ><a id="all-worlds" href="index.html">All worlds ↗</a>
+    </footer>
+    <dialog id="workbench-dialog" aria-labelledby="workbench-heading">
+      <div id="workbench-content" data-game-reading></div>
+    </dialog>
+    <dialog id="settings-dialog" aria-labelledby="settings-title">
+      <div class="dialog-heading">
+        <h2 id="settings-title">Your play, your pace.</h2>
+        <button data-close="settings-dialog" aria-label="Close settings">×</button>
+      </div>
+      <label
+        >Difficulty<select id="difficulty">
+          <option value="gentle">Gentle</option>
+          <option value="standard" selected>Standard</option>
+        </select></label
+      >
+      <p class="small">
+        Applies to the next mission. Reading and workbench activities are always untimed.
+      </p>
+      <label class="check"
+        ><input id="reduced-motion" type="checkbox" /> Reduce motion and stop logo rotation</label
+      ><label class="check"><input id="show-grid" type="checkbox" /> Show the board grid</label
+      ><button id="sound-button">Enable sound</button>
+      <div class="note-divider"></div>
+      <button id="export-backup">Export progress &amp; saved game</button
+      ><label
+        >Import a matching edition backup<input
+          id="import-backup"
+          type="file"
+          accept="application/json,.json"
+      /></label>
+      <p id="offline-status"></p>
+      <button id="prepare-offline" hidden>Prepare for offline play</button>
+    </dialog>
+    <dialog id="help-dialog" aria-labelledby="help-title">
+      <div class="dialog-heading">
+        <h2 id="help-title">Make a connection.</h2>
+        <button data-close="help-dialog" aria-label="Close help">×</button>
+      </div>
+      <ol>
+        <li>Move along the edge or reclaimed ground to plan your route.</li>
+        <li>Leave the edge to draw a line. Return to safety to reveal a region.</li>
+        <li>Keep wandering tangles away from your unfinished line.</li>
+        <li>Connect the marked objective and reach the coverage goal.</li>
+      </ol>
+      <p>
+        Short returns and interior islands make a long crossing safer. Every mission has more than
+        one way through.
+      </p>
+      <h3>Learning journeys</h3>
+      <p>
+        Close a cut by returning to safe ground, or connect an objective, to recover evidence.
+        Winning recovers the remaining records. Pause on safe ground to open the workbench. Inspect
+        the fictional evidence, configure a decision, then commit to see its consequences. Complete
+        both the arcade mission and its assignment to continue.
+      </p>
+      <p>Keyboard, touch arrows and connected gamepads use the same game rules.</p>
+    </dialog>
+    <dialog id="gallery-dialog" aria-labelledby="gallery-title">
+      <div class="dialog-heading">
+        <h2 id="gallery-title">Connections made.</h2>
+        <button data-close="gallery-dialog" aria-label="Close collection">×</button>
+      </div>
+      <div id="gallery" class="gallery-grid"></div>
+    </dialog>
+    <dialog id="about-dialog" aria-labelledby="about-title">
+      <div class="dialog-heading">
+        <h2 id="about-title">About this edition</h2>
+        <button data-close="about-dialog" aria-label="Close about">×</button>
+      </div>
+      <p id="about-copy"></p>
+      <p>
+        Training records and outcomes are fictional. This game does not connect to a company account
+        or award a professional qualification.
+      </p>
+      <p>
+        Company marks belong to their respective owners. Illustrated environments are generated
+        original game artwork. Identity, artwork and font sources are listed below.
+      </p>
+      <p id="build-identity"></p>
+      <div id="about-sources"></div>
+    </dialog>
+  </body>
+</html>
