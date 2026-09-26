@@ -2,8 +2,9 @@
 
 Status: the community catalog client and service source shipped in `v0.141.0`. The network boundary
 is exercised through the real Fastify application with its in-memory repository and blob store. A
-post-release follow-up adds the administrator report-triage page over the existing bounded API. No
-community deployment, public catalog or production account provider is claimed by this record.
+the `v0.141.2` hardening candidate adds the administrator report-triage page, deployment
+preflight, recovery rehearsal, interrupted-tus fault proxy and deployed two-user acceptance runner.
+No community deployment, public catalog or production account provider is claimed by this record.
 
 ## Completed automated evidence
 
@@ -62,8 +63,10 @@ community deployment, public catalog or production account provider is claimed b
 
 The focused Phase 5 store suite and account/tus browser boundary are included in the combined
 creator/service acceptance counts recorded for `v0.141.0`. The Phase 4 service suite includes the
-real Better Auth browser-client scenario. The moderation follow-up adds client/controller tests and
-a cross-layer production-client/Fastify report queue and resolution path.
+real Better Auth browser-client scenario. The `v0.141.2` source suite passes **63/63** checks,
+including the moderation client/controller, exact 17-byte interrupted tus resume, redacted and
+immutable deployment receipts, strict owner-isolation response, source-to-target restore
+rehearsal, and the complete in-process two-user journey.
 
 ## Integrated service contract
 
@@ -76,8 +79,9 @@ creation/offset/chunk contract and treats only server responses as upload progre
 
 The `v0.141.2` hardening candidate adds the fail-closed production Compose and readiness contract
 recorded in [deployment-acceptance.md](deployment-acceptance.md). This removes manual ordering and
-configuration ambiguity from the source deployment path, but it does not replace the live gates
-below.
+configuration ambiguity from the source deployment path. `npm run acceptance:tus-resume`,
+`npm run recovery:rehearse`, and `npm run acceptance:deployed` make the remaining rehearsals
+repeatable and produce bounded evidence, but they do not replace the live gates below.
 
 - Repeat Creator A publish → automatic validation → listing → Player B preview/install →
   legal win → reload/offline play through the deployed same-origin service in a clean physical
@@ -86,8 +90,8 @@ below.
 - Exercise service restart, catalog outage, report, unlist and immutable update with the
   containerized PostgreSQL service. The browser and mounted server interruption/resume paths are
   independently covered; restart persistence still needs container acceptance.
-- Rehearse database/blob recovery and verify that an unlisted edition stays playable for players who
-  already installed its exact bytes.
+- Run `npm run recovery:rehearse` against a distinct disposable PostgreSQL/blob target, then verify
+  that an unlisted edition stays playable for players who already installed its exact bytes.
 - Exercise the report-triage page with a real administrator session against the deployed service,
   including the retry state where unlisting succeeds but resolution is temporarily unavailable.
 - Run hosted preflight/build/release-ready checks and publish only through the release coordinator.
