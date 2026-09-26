@@ -17,6 +17,7 @@ import { prepareSoundtrackLibrary } from '../soundtrack-bundle.mjs';
 import { createSoundtrackStore } from '../soundtrack-store.mjs';
 import { emptySoundtrackLibrary, setCatalogueTracks } from '../soundtrack.mjs';
 import { structuralProbe } from './helpers/soundtrack-fixtures.mjs';
+import { getLocale, setLocale } from '../i18n/index.mjs';
 
 const compiled = JSON.parse(
   await readFile(new URL('../presentation/compiled/runtime.json', import.meta.url), 'utf8'),
@@ -434,6 +435,9 @@ test('whole optional snapshot failure retains explicit authored fallback with a 
 });
 
 test('Back cancels a pending setup replacement and preserves the accepted attempt', async (t) => {
+  const locale = getLocale();
+  t.after(() => setLocale(locale, { persist: false }));
+  setLocale('en', { persist: false });
   const gate = deferred();
   let delay = false,
     started;
@@ -459,7 +463,15 @@ test('Back cancels a pending setup replacement and preserves the accepted attemp
   gate.resolve();
   await loading;
   assert.equal(p.$('race-start').disabled, false);
-  assert.match(p.$('race-message').textContent, /cancelled/i);
+  assert.equal(
+    p.$('race-message').textContent,
+    'Rematch picture loading cancelled. Results are kept. Choose Rematch when you are ready.',
+  );
+  setLocale('uk', { persist: false });
+  assert.equal(
+    p.$('race-message').textContent,
+    'Завантаження зображення для дії «Реванш» скасовано. Результати збережено. Оберіть «Реванш», коли будете готові.',
+  );
   assert.deepEqual(p.checkpoint(), checkpoint);
   assert.equal(p.drawOptions[0].backdrop, accepted);
   assert.equal(p.drawOptions[1].backdrop, accepted);
