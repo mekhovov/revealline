@@ -6,6 +6,8 @@ import {
   localizedMessage,
   formatNumber,
   render as renderMessage,
+  translateDOM,
+  attachLanguageControls,
 } from '../i18n/index.mjs';
 import { contentText } from '../i18n/content.mjs';
 import { coopGoalLabel, coopObjectiveLabel } from './coop-copy.mjs';
@@ -116,6 +118,11 @@ import { teamReturnHref } from '../mode-return.mjs';
 import { releaseExplorerHref } from '../release-explorer.mjs';
 
 const $ = (id) => document.getElementById(id);
+// This host is loaded through the direct-tool launcher after parsing. Bind its
+// complete static setup here as well as in the classic startup adapter so live
+// switching remains complete in embedded and test hosts with no DOMContentLoaded handoff.
+if (typeof document.createTextNode === 'function') translateDOM(document);
+attachLanguageControls(document);
 $('coop-release-explorer').href = releaseExplorerHref(
   globalThis.location?.href ?? document.baseURI ?? 'http://localhost/game/couch/relay-rescue.html',
 );
