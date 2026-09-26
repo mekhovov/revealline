@@ -12,8 +12,11 @@ versions or acceptance gates are still current.
   counted as accepted public delivery here.
 - PR #654 has merged the v0.132.5 source to `main` at
   `72cfc74552669699266d5d8ad92c56a69da885b2` after PR #656's fastline throughput-contract repair.
-  No v0.132.5 GitHub Release exists yet; immutable assets, Pages and public acceptance remain owned
-  by the publisher. A source merge is not public delivery.
+  No v0.132.5 GitHub Release exists yet. Qualification correctly rejected a stale production
+  review ledger after a renderer dependency entered the Team review closure; the release
+  coordinator is preparing a successor continuation record rather than weakening the gate.
+  Immutable assets, Pages and public acceptance remain publisher-owned. A source merge is not
+  public delivery.
 - Current `main` is `72cfc74552669699266d5d8ad92c56a69da885b2`. All nineteen cultural branch
   tips were guarded-pushed atomically onto that commit with an equal 67-commit count. Sixty-six
   commits range-diff one-to-one; the only expected delta changes the first candidate version's
@@ -35,6 +38,7 @@ versions or acceptance gates are still current.
 | Second Team current edition / PR #650            | Clean draft, source `0.149.0` | Default/previous edition, Team library, Studio, exact Next, isolated progress and EN/UK wiring; earlier focused cohort 83/83 and localization validation pass; latest-main exact-head runtime cohort passes 54/54 with zero skips at `7b7f23a00efd4d4e68fdc624ac5aa820ffda9cdc`; not public.        |
 | Unified-library fixture reconciliation / PR #651 | Clean draft, test/docs only   | Confirms 91 current + 48 prior Journey + 188 Classic = 327 unique rows and updates stale 201/279 and `whole-spatial-v5/v6` expectations to current v25 ownership.                                                                                                                                   |
 | Team opaque-owner continuation / PR #657         | Ready isolated hotfix         | Shared Next no longer JSON-parses opaque Team Classic owner IDs; Current/Original lanes remain separate and Classic → Custom continuation is restored. Exact current-main continuation/localization/impact cohort passes 27/27 at `6459e8fbc2e11f0c3bd6d735885c674c9e7295b8`; not merged or public. |
+| Current Journey pacing inventory / PR #661        | Clean stacked draft           | Adds a reusable runtime-prepared spatial-variety inspector and pins exact v25 facts: 91 source missions, 71 core missions, bands 1–12, consistent Standard craft speed and 21 post-opening open/plain review candidates. Focused checks pass 4/4; this is not human balance evidence. |
 
 After the final main rebase, an uncontended bounded host rerun passed all selected corrected cases:
 four Solo scenarios, four Versus scenarios, two representative Team source routes and the three-stage
@@ -66,7 +70,7 @@ large-asset and archive delays are outside these estimates.
 |        1 | Promote the cultural Journey chain            | Review/merge in dependency order, exact-head qualification, immutable release and public play for each accepted batch                                   |                                                  **1–2 working days per release batch** |
 |        2 | Complete second Team slice and fixtures       | Review PRs #650/#651, immutable public delivery and frozen-build checks; source wiring and bounded runtime/host verification are complete               |                                                        **3–6 hours** plus release queue |
 |        3 | Team continuation and qualification           | Review/publish PR #657; paired-board fairness, controller/touch/keyboard, cross-campaign Next, Skip, reload/Continue and public frozen-build proof      |                                         **8–16 hours** plus release queue/device access |
-|        4 | Whole-Journey pacing and accessibility        | Campaign-to-campaign pressure audit, reduced-effects/contrast/small-screen/performance and deterministic compatibility                                  |                                                                    **2–4 working days** |
+|        4 | Whole-Journey pacing and accessibility        | PR #661 establishes the exact-current campaign/spatial inventory; redesign the highest-repetition identities, then qualify reduced effects, contrast, small screens, performance and deterministic compatibility | **2–4 working days** after review of the first targeted batch |
 |        5 | Human balance and cultural review             | Understandable failures, distinct missions, enjoyable retries and cultural review by people                                                             |                                      **1–2 days synthesis** after testers are available |
 
 Existing v0.133-v0.137 player-UX drafts occupy the nominal release sequence. Cultural PR titles
@@ -103,6 +107,10 @@ accepted predecessor; draft labels do not reserve a release.
    8.7 seconds. A subsequent hosted rerun was cancelled when `main` advanced, not completed. A fresh
    run for exact rebased head `726b90d675eb8f733ccb66620d0e2f3eb4a96e70` is queued; no cancelled
    run is represented as a pass.
+9. **Inventory is not balance evidence:** PR #661 finds 21 post-opening missions with neither wall
+   nor slow/lethal terrain and confirms consistent Standard speed and post-opening actor counts.
+   Those are review candidates, not automatic defects; deterministic routes and human play still
+   decide whether an open layout is distinct, fair and enjoyable.
 
 ## Immediate execution order
 
@@ -117,7 +125,9 @@ accepted predecessor; draft labels do not reserve a release.
 5. Review and qualify the bounded v0.149.0 PR #650 at its exact head.
 6. Review draft PR #651 and publish the isolated library-fixture reconciliation after its focused
    duplicate/ownership audit.
-7. Promote cultural releases in dependency order, reporting actual public delivery rather than a
+7. Review draft PR #661 after #651. Use its exact-current report to select the next small spatial
+   redesign batch; do not mutate the preserved v25 edition or add geometry merely to satisfy a count.
+8. Promote cultural releases in dependency order, reporting actual public delivery rather than a
    merge or workflow start.
 
 The original P13-P15 whole-Journey pacing, Team cooperation, accessibility/performance and final
