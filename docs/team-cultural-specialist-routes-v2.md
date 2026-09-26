@@ -65,7 +65,7 @@ approval or gameplay balance.
 3. Run focused library/Next/Studio checks, version/locale validation and the normal release gates.
 
 The entire cultural stack is rebased onto terminal release source
-`fad132a054a10f27198751bfeb7c02ba340cfbfb`. That source is the v0.132.4 publication candidate,
+`80911bf5ec0f6df711d7e70b36a11005d2be4c3a`. That source is the v0.132.4 publication candidate,
 not evidence that v0.132.4 is already public.
 
 Automated idle and topology checks establish legality, not fun, final two-player balance, cultural
