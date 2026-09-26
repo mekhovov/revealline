@@ -1,0 +1,95 @@
+{
+  "format": "revealline-archive-public-acceptance.v1",
+  "archive": {
+    "id": "archive-94",
+    "repository": "mekhovov/revealline-archive-94",
+    "url": "https://mekhovov.github.io/revealline-archive-94/"
+  },
+  "preservedRelease": {
+    "version": "v0.132.5",
+    "sourceRevision": "a8881ac17e44f38fb1e9dc15428899992727cc78",
+    "sourceTree": "41a0a0ea83dccab7d973785acdbdc6311cfc09c5",
+    "tagObject": "49b528a4c55c13b96e16bf8d1443e015bba8d7a0",
+    "releaseId": 397230053,
+    "distributionSha256": "0445f74af9237838c7f88c08de289d0ed98a4aece4dd103e08104082b9495244"
+  },
+  "archiveSource": {
+    "pr": 1,
+    "head": "8c22c7340781ae635eaccc09c5bd641a5891521b",
+    "mergeCommit": "7aa32a48e9817b7ca867cb0735c99f72f6d67b96",
+    "mergeTree": "b91166043cbf6b7c321104d3736a92a784931d6f",
+    "review": "HOSTED_EXACT_HEAD_AND_MAIN_GATES_PASS",
+    "reviewNote": "No separate GitHub review object exists; the selector PR reviews the immutable archive authority and acceptance evidence."
+  },
+  "hosted": {
+    "exactHeadPrRun": 36244209099,
+    "exactMainRun": 36244243649,
+    "mainRunAttempt": 1,
+    "buildJob": 108410332102,
+    "deployJob": 108410423958,
+    "receiptsArtifact": {
+      "id": 10906913792,
+      "name": "archive94-verification-receipts",
+      "size_in_bytes": 68906,
+      "digest": "sha256:bc7d0c6352123c11bf04e5eb917ef23c8cb205bb0fb9ad457dd3f07c2f36465a"
+    },
+    "pagesArtifact": {
+      "id": 10905904143,
+      "name": "github-pages",
+      "size_in_bytes": 545341372,
+      "digest": "sha256:cb47e4a512763f7086e6e7553597b6de552b02f0dce1bf8b06fd670e3cd51015"
+    },
+    "deployment": {
+      "id": 6679236898,
+      "statusId": 18876086811,
+      "state": "success",
+      "environmentUrl": "https://mekhovov.github.io/revealline-archive-94/",
+      "createdAt": "2026-09-26T13:10:54Z"
+    },
+    "receipts": {
+      "expectedInventorySha256": "9d8dedbcd7326efb0181fc19baf70bbe02b40c3fa9693175b259edaccd022339",
+      "receiptSha256": "346acce41ed9515c1514d411fce95fb94309d7af1ae8771757ee9b70f67fed85",
+      "zipReceiptSha256": "4295265b6668c490beeb9a53ffa9a827e11033b929ec22c2a8529a1721c55061",
+      "files": 1307,
+      "bytes": 611569331,
+      "toolingCommit": "c45cd78bdc522bf95c267615fe3ad93dd77dff98",
+      "status": "PASS"
+    }
+  },
+  "publicByteAudit": {
+    "status": "PASS",
+    "method": "GET every finite expected path; compare exact byte count and SHA-256 without retaining bodies; HEAD every path to confirm exact final URL",
+    "files": 1307,
+    "bytes": 611569331,
+    "failures": 0,
+    "transportRetries": 1,
+    "skips": 0,
+    "allFinalURLsExact": true,
+    "authorityUnchanged": true,
+    "elapsedSeconds": 154.837
+  },
+  "browserAcceptance": {
+    "status": "PASS",
+    "surface": "agent-browser Chromium",
+    "base": "https://mekhovov.github.io/revealline-archive-94/",
+    "observations": [
+      "The Archive94 index identified the original v0.132.5 build and exposed its canonical Play v0.132.5 route.",
+      "The preserved route loaded the archived v0.132.5 RevealLine game shell with Start, Versus, Team, Missions, Collection, Settings, and More controls.",
+      "Start opened the First return mission screen with Start mission, Learn by playing, Mission brief, and Home controls.",
+      "The browser reported no page errors during the bounded journey."
+    ],
+    "reloads": 0,
+    "retries": 0
+  },
+  "testPolicy": {
+    "longSourceSuites": "waived",
+    "reportedAsPassed": false,
+    "blockingEvidence": [
+      "exact original release ZIP extraction",
+      "complete inventory reread",
+      "full public byte audit",
+      "bounded archive browser journey"
+    ]
+  },
+  "scope": "Immutable v0.132.5 preservation, exact public-byte audit, and bounded archive index, game-shell, and mission-entry acceptance. Physical-device/controller, comprehensive offline, and extended gameplay acceptance are outside this archive admission."
+}
