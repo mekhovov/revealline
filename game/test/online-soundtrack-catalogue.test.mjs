@@ -5,6 +5,8 @@ import {
   fetchOnlineSoundtrackCatalogue,
   resolveOnlineSoundtrackCatalogue,
 } from '../online-soundtrack-catalogue.mjs';
+import { setLocale } from '../i18n/index.mjs';
+import { soundtrackErrorText } from '../ui/soundtrack-error-copy.mjs';
 
 const sha256 = 'a'.repeat(64);
 const track = {
@@ -173,6 +175,31 @@ test('online catalogue cannot grant game admission or escape its hash path', () 
       tracks: [track, track],
       counts: { declaredTracks: 2, uniqueRecordings: 2, duplicateAliases: 0, audioBytes: 2468 },
     }),
+  );
+});
+
+test('online catalogue diagnostics follow the active locale and retain interpolation', (t) => {
+  t.after(() => setLocale('en', { persist: false }));
+  let failure;
+  try {
+    resolveOnlineSoundtrackCatalogue({
+      ...catalogue,
+      tracks: [{ ...track, durationSeconds: -1 }],
+    });
+  } catch (error) {
+    failure = error;
+  }
+  assert(failure);
+
+  setLocale('en', { persist: false });
+  assert.equal(
+    soundtrackErrorText(failure),
+    'Online soundtrack duration is invalid: creator.song.',
+  );
+  setLocale('uk', { persist: false });
+  assert.equal(
+    soundtrackErrorText(failure),
+    'Некоректна тривалість онлайн-саундтреку: creator.song.',
   );
 });
 
