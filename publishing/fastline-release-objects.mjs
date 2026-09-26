@@ -115,12 +115,22 @@ export async function resolveTagCommit(options) {
 export async function resolveRelease({
   repository,
   version,
+  releaseId,
   get = request,
 }) {
-  const published = await get(
-    `/repos/${repository}/releases/tags/${version}`,
-    { allowMissing: true },
-  );
+  if (releaseId !== undefined) {
+    if (!Number.isSafeInteger(releaseId) || releaseId <= 0)
+      throw new Error("invalid release ID");
+    const release = await get(`/repos/${repository}/releases/${releaseId}`, {
+      allowMissing: true,
+    });
+    if (release !== null && release.id !== releaseId)
+      throw new Error("release ID differs from the creation receipt");
+    return release;
+  }
+  const published = await get(`/repos/${repository}/releases/tags/${version}`, {
+    allowMissing: true,
+  });
   if (published !== null) return published;
 
   const matches = [];
@@ -144,13 +154,14 @@ export async function inspectReleaseObjects({
   repository,
   version,
   sourceSha,
+  releaseId,
   get = request,
 }) {
   if (!/^[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+$/u.test(repository || ""))
     throw new Error("invalid repository identity");
   const [tag, release] = await Promise.all([
     resolveTagAuthority({ repository, version, get }),
-    resolveRelease({ repository, version, get }),
+    resolveRelease({ repository, version, releaseId, get }),
   ]);
   return {
     tagCommit: tag.commit,
