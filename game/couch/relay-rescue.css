@@ -713,6 +713,46 @@ canvas {
   flex: 1;
   color: var(--muted);
 }
+.team-coach-slot {
+  flex: 1 0 100%;
+}
+.team-coach {
+  box-sizing: border-box;
+  width: 100%;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: center;
+  border-inline-start: 3px solid var(--sun);
+  padding: 8px 0 8px 10px;
+}
+.team-coach[hidden] {
+  display: none;
+}
+.team-coach[data-kind='support'] {
+  border-inline-start-color: var(--sky);
+}
+.team-coach[data-kind='rescue'] {
+  border-inline-start-color: var(--danger);
+}
+.team-coach p {
+  margin: 0;
+  color: var(--ink);
+  font-size: var(--fk-text-secondary, 0.875rem);
+  line-height: 1.4;
+}
+.team-coach button {
+  min-height: 44px;
+  min-width: 88px;
+}
+@media (max-width: 520px) {
+  .team-coach {
+    grid-template-columns: 1fr;
+  }
+  .team-coach button {
+    justify-self: start;
+  }
+}
 #coop-clock {
   font-variant-numeric: tabular-nums;
 }

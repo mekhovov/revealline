@@ -23,7 +23,10 @@
   as a clean child of v0.141.2 candidate
   `2904091ca99400529a39c1491b0770037fffc00e`, with 27/27 complete host and
   37/37 departure/markup/quick-start evidence;
-  v0.141.4 Team teaching; v0.141.5 deliberate Team terminal Retry;
+  v0.141.4 Team teaching is prepared locally as a clean child of v0.141.3
+  candidate `e1dba137ad7fd16c874cb511cbc801ce6ce309f7`, with 11/11 teaching,
+  88/88 Team/quick-start/Pause and 30/30 Couch/localization evidence; v0.141.5
+  deliberate Team terminal Retry;
   v0.141.6 Versus countdown; v0.141.7 named result destinations;
   and v0.141.8 Collection fixture reconciliation plus paused Settings/Help return
   ([PR #548](https://github.com/mekhovov/revealline/pull/548), then
