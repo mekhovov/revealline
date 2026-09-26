@@ -25,7 +25,13 @@ import {
   loadInstalledCreatorBundle,
   reviewCreatorInstallation,
 } from '../creator/installed.mjs';
-import { createCreatorRuntime, creatorAttemptKey, creatorProfileKey } from '../creator/runtime.mjs';
+import {
+  createCreatorRuntime,
+  creatorAttemptKey,
+  creatorCampaignDestination,
+  creatorEarnedMissionId,
+  creatorProfileKey,
+} from '../creator/runtime.mjs';
 import { createJourneyBackend, createJourneyProfileStore } from '../journey/profile.mjs';
 import {
   exportCreatorSource,
@@ -226,6 +232,64 @@ test('campaign grouping and authored order survive transfer and drive runtime co
   assert.equal((await runtime.start({ missionId: order[0] })).manifest.missionId, order[0]);
   assert.equal((await runtime.start({ missionId: order[1] })).manifest.missionId, order[1]);
   runtime.dispose();
+});
+
+test('Custom campaign reload continues at the first uncleared mission and retains its latest reward', async () => {
+  const order = Array.from({ length: 12 }, (_, index) => `picture-${index + 1}`),
+    database = managedIndexedDB(),
+    profileKey = `custom-${'a'.repeat(64)}`,
+    backend = createJourneyBackend({ indexedDB: database.indexedDB, profileKey }),
+    original = createJourneyProfileStore({ profileKey, backend });
+  await original.load();
+  for (const [index, missionId] of order.slice(0, 2).entries())
+    original.record({
+      type: 'complete',
+      mode: 'solo',
+      missionId,
+      runId: `clear-${index + 1}`,
+      gameplayId: `gameplay-${index + 1}`,
+      difficulty: 'standard',
+    });
+  assert.equal(await original.flush(), true);
+  const reopened = createJourneyProfileStore({
+    profileKey,
+    backend: createJourneyBackend({ indexedDB: database.indexedDB, profileKey }),
+  });
+  await reopened.load();
+  const progress = reopened.snapshot();
+  assert.equal(progress.cursors.solo, null, 'older creator clears may have no saved cursor');
+  assert.deepEqual(creatorCampaignDestination(order, progress), {
+    missionId: order[2],
+    complete: false,
+    explicit: false,
+  });
+  assert.equal(creatorEarnedMissionId(order, progress), order[1]);
+
+  reopened.record({ type: 'select', mode: 'solo', missionId: order[4] });
+  assert.equal(creatorCampaignDestination(order, reopened.snapshot()).missionId, order[4]);
+  assert.equal(
+    creatorCampaignDestination(order, progress, { missionId: order[8] }).missionId,
+    order[8],
+    'an exact mission-library choice wins over continuation',
+  );
+  assert.throws(
+    () => creatorCampaignDestination(order, progress, { missionId: 'outside-edition' }),
+    /installed edition/,
+  );
+
+  progress.cursors.solo = order[1];
+  for (const missionId of order)
+    progress.clears.solo[missionId] = {
+      runId: `complete-${missionId}`,
+      gameplayId: `gameplay-${missionId}`,
+      difficulty: 'standard',
+    };
+  assert.deepEqual(creatorCampaignDestination(order, progress), {
+    missionId: order.at(-1),
+    complete: true,
+    explicit: false,
+  });
+  assert.equal(creatorEarnedMissionId(order, progress), order[1]);
 });
 
 test('middle-mission recovery keeps its exact reward and cannot migrate to a changed edition', async () => {
