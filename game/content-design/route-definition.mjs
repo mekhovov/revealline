@@ -38,11 +38,23 @@ export function createAuthoredJourneyRouteDefinition(
     createApexCulturalRoutesCandidates,
     createRelayCulturalCompletionCandidates,
     createCrosswindCulturalCompletionCandidates,
+    createFractureApexCulturalCompletionCandidates,
     createUkrainianOrnamentJourney,
     createUkrainianOrnamentAtlasJourney,
   },
 ) {
   if (!isAuthoredJourneyRouteId(id)) return null;
+  if (id === 'whole-spatial-v28')
+    return freezeDesign({
+      id,
+      label: 'Whole Journey Fracture and Apex Ukrainian cultural completion · balance pending',
+      sessionKey: 'revealline.suspended.journey-whole-spatial.v28',
+      profileKey: 'journey-whole-spatial-v28',
+      source: createFractureApexCulturalCompletionCandidates({ artwork: true }),
+      corePackIds: [...WHOLE_JOURNEY_CORE_PACK_IDS],
+      optionalCampaignIds: ['ornament-crossings', 'workshop-routing'],
+      preserveOriginalThemes: true,
+    });
   if (id === 'whole-spatial-v27')
     return freezeDesign({
       id,
