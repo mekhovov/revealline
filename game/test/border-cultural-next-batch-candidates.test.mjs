@@ -3,12 +3,12 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { parse } from 'parse5';
 import {
-  createHorizonNextBatchCandidates,
-  HORIZON_NEXT_BATCH_REVISION,
-  HORIZON_NEXT_BATCH_SELECTIONS,
-  HORIZON_NEXT_BATCH_SOURCES,
-} from '../content-design/horizon-next-batch-candidates.mjs';
-import { createSpatialNextBatchCandidates } from '../content-design/spatial-next-batch-candidates.mjs';
+  BORDER_CULTURAL_NEXT_BATCH_REVISION,
+  BORDER_CULTURAL_NEXT_BATCH_SELECTIONS,
+  BORDER_CULTURAL_NEXT_BATCH_SOURCES,
+  createBorderCulturalNextBatchCandidates,
+} from '../content-design/border-cultural-next-batch-candidates.mjs';
+import { createHorizonNextBatchCandidates } from '../content-design/horizon-next-batch-candidates.mjs';
 import { compileContentProject, resolveMission } from '../content-design/project.mjs';
 import { inspectMissionTopology } from '../content-design/diagnostics.mjs';
 import { createAuthoredJourneyRoute } from '../content-design/route.mjs';
@@ -29,11 +29,11 @@ import {
 } from '../replay.mjs';
 import { createDuel, resumeDuel, stepDuel, UNTIMED_DUEL_PROTOCOL } from '../multiplayer.mjs';
 
-const IDS = HORIZON_NEXT_BATCH_SELECTIONS.map((item) => item.id);
+const IDS = BORDER_CULTURAL_NEXT_BATCH_SELECTIONS.map((item) => item.id);
 const PRESETS = ['gentle', 'standard', 'expert'];
 const CONTROLS = ['immediate', 'grid-center'];
-const beforeSource = createSpatialNextBatchCandidates({ artwork: true });
-const source = createHorizonNextBatchCandidates({ artwork: true });
+const beforeSource = createHorizonNextBatchCandidates({ artwork: true });
+const source = createBorderCulturalNextBatchCandidates({ artwork: true });
 const beforeProject = compileContentProject(beforeSource);
 const project = compileContentProject(source);
 
@@ -45,44 +45,44 @@ const map = (compiled, id) => {
   );
 };
 
-test('selection is exactly three attributed Horizon identities with distinct construction studies', () => {
-  assert.deepEqual(IDS, ['island-outpost', 'long-way-home', 'horizon-remix']);
+test('selection is exactly three unowned Border identities with distinct attributed media', () => {
+  assert.deepEqual(IDS, ['second-landing', 'long-rail', 'new-frontier']);
   assert.equal(new Set(IDS).size, 3);
-  for (const selection of HORIZON_NEXT_BATCH_SELECTIONS) {
+  for (const selection of BORDER_CULTURAL_NEXT_BATCH_SELECTIONS) {
     assert(beforeSource.missions.some((item) => item.id === selection.id));
     assert.equal(selection.approaches.length, 2);
     assert.equal(new Set(selection.approaches).size, 2);
     assert(selection.pressurePoints.length >= 3 && selection.pressurePoints.length <= 5);
-    assert(selection.sourceIds.every((id) => HORIZON_NEXT_BATCH_SOURCES[id]));
+    assert(selection.sourceIds.every((id) => BORDER_CULTURAL_NEXT_BATCH_SOURCES[id]));
   }
   assert.deepEqual(
-    HORIZON_NEXT_BATCH_SELECTIONS.map((item) => item.sourceIds),
-    [['vyzhenkaJoiningShirt'], ['verkhovynaShoulderShirt'], ['lemkoFloralPysanka']],
+    BORDER_CULTURAL_NEXT_BATCH_SELECTIONS.map((item) => item.sourceIds),
+    [['reshetylivkaWhiteOnWhite'], ['petrykivkaPainting'], ['kosivPaintedCeramics']],
   );
-  const vyzhenka = HORIZON_NEXT_BATCH_SOURCES.vyzhenkaJoiningShirt;
-  const verkhovyna = HORIZON_NEXT_BATCH_SOURCES.verkhovynaShoulderShirt;
-  assert.notEqual(vyzhenka.registrationNumber, verkhovyna.registrationNumber);
-  assert(vyzhenka.observedConstruction.includes('double-prutyk seam along joined panels'));
-  assert(
-    verkhovyna.observedConstruction.includes(
-      'embroidered detail applied over the shoulder-to-sleeve join',
-    ),
-  );
-  assert(!JSON.stringify(vyzhenka).includes('gathered collar and cuffs'));
-  assert(!JSON.stringify(verkhovyna).includes('double-prutyk'));
-  for (const item of Object.values(HORIZON_NEXT_BATCH_SOURCES)) {
-    assert.match(item.url, /^https:\/\/honchar\.org\.ua\//);
+  const reshetylivka = BORDER_CULTURAL_NEXT_BATCH_SOURCES.reshetylivkaWhiteOnWhite;
+  const petrykivka = BORDER_CULTURAL_NEXT_BATCH_SOURCES.petrykivkaPainting;
+  const kosiv = BORDER_CULTURAL_NEXT_BATCH_SOURCES.kosivPaintedCeramics;
+  assert.match(reshetylivka.url, /^https:\/\/www\.unesco-centerbg\.org\//);
+  assert.match(petrykivka.url, /^https:\/\/ich\.unesco\.org\/en\/RL\/petrykivka-/);
+  assert.match(petrykivka.inventoryUrl, /^https:\/\/ich\.unesco\.org\/doc\/src\//);
+  assert.match(kosiv.url, /^https:\/\/ich\.unesco\.org\/en\/RL\/tradition-of-kosiv-/);
+  assert.match(reshetylivka.register, /National Register.*Ukraine/);
+  assert.equal(petrykivka.nominationNumber, '00893');
+  assert.equal(kosiv.nominationNumber, '01456');
+  for (const item of Object.values(BORDER_CULTURAL_NEXT_BATCH_SOURCES))
     assert.match(item.adaptationBoundary, /no .*cop/i);
-  }
+  assert(!JSON.stringify(petrykivka).toLowerCase().includes('embroidery'));
+  assert(!JSON.stringify(kosiv).toLowerCase().includes('vyshyvanka'));
+  assert(!JSON.stringify(reshetylivka).toLowerCase().includes('ceramic'));
 });
 
 for (const artwork of [false, true])
-  test(`copy-on-write changes only three missions and two owning campaign/pack records: artwork=${artwork}`, () => {
-    const before = createSpatialNextBatchCandidates({ artwork });
+  test(`copy-on-write changes only three missions and the Border owner: artwork=${artwork}`, () => {
+    const before = createHorizonNextBatchCandidates({ artwork });
     const snapshot = structuredClone(before);
-    const revised = createHorizonNextBatchCandidates({ artwork });
-    assert.deepEqual(createSpatialNextBatchCandidates({ artwork }), snapshot);
-    assert.equal(revised.revision, HORIZON_NEXT_BATCH_REVISION);
+    const revised = createBorderCulturalNextBatchCandidates({ artwork });
+    assert.deepEqual(createHorizonNextBatchCandidates({ artwork }), snapshot);
+    assert.equal(revised.revision, BORDER_CULTURAL_NEXT_BATCH_REVISION);
     assert.equal(revised.policyId, before.policyId);
     assert.equal(revised.actorCatalogId, before.actorCatalogId);
     assert.equal(revised.difficultyCatalogId, before.difficultyCatalogId);
@@ -97,7 +97,7 @@ for (const artwork of [false, true])
       const previous = before.missions.find((item) => item.id === current.id);
       if (!IDS.includes(current.id)) assert.deepEqual(current, previous);
       else {
-        assert.equal(current.revision, HORIZON_NEXT_BATCH_REVISION);
+        assert.equal(current.revision, BORDER_CULTURAL_NEXT_BATCH_REVISION);
         for (const key of [
           'id',
           'name',
@@ -119,43 +119,41 @@ for (const artwork of [false, true])
       }
     }
 
-    const owningCampaigns = new Set(['horizon-school', 'horizon-remixes']);
-    const owningPacks = new Set(['journey-opening', 'opening-remixes']);
     for (const current of revised.campaigns) {
       const previous = before.campaigns.find((item) => item.id === current.id);
-      if (owningCampaigns.has(current.id)) {
-        assert.equal(current.revision, HORIZON_NEXT_BATCH_REVISION);
+      if (current.id === 'border-bloom') {
+        assert.equal(current.revision, BORDER_CULTURAL_NEXT_BATCH_REVISION);
         assert.deepEqual(current.missionIds, previous.missionIds);
       } else assert.deepEqual(current, previous);
     }
     for (const current of revised.packs) {
       const previous = before.packs.find((item) => item.id === current.id);
-      if (owningPacks.has(current.id)) {
-        assert.equal(current.revision, HORIZON_NEXT_BATCH_REVISION);
+      if (current.id === 'journey-border') {
+        assert.equal(current.revision, BORDER_CULTURAL_NEXT_BATCH_REVISION);
         assert.deepEqual(current.campaignIds, previous.campaignIds);
       } else assert.deepEqual(current, previous);
     }
   });
 
-test('early-Horizon topology stays foundation-only, connected and no easier by permanent area', () => {
+test('Border topology remains foundation-only and no easier by permanent area', () => {
   const expectedBudgets = {
-    'island-outpost': {
-      oldFoundations: 25,
-      newFoundations: 24,
-      oldEligible: 2355,
-      newEligible: 2356,
+    'second-landing': {
+      oldFoundations: 99,
+      newFoundations: 99,
+      oldEligible: 2281,
+      newEligible: 2281,
     },
-    'long-way-home': {
-      oldFoundations: 124,
-      newFoundations: 122,
-      oldEligible: 2256,
-      newEligible: 2258,
+    'long-rail': {
+      oldFoundations: 116,
+      newFoundations: 114,
+      oldEligible: 2264,
+      newEligible: 2266,
     },
-    'horizon-remix': {
-      oldFoundations: 140,
-      newFoundations: 136,
-      oldEligible: 2240,
-      newEligible: 2244,
+    'new-frontier': {
+      oldFoundations: 96,
+      newFoundations: 96,
+      oldEligible: 2284,
+      newEligible: 2284,
     },
   };
   for (const id of IDS) {
@@ -192,13 +190,22 @@ test('early-Horizon topology stays foundation-only, connected and no easier by p
   }
 });
 
-test('movement rules, collision enemies, counts, scaling and non-geometry content remain exact', () => {
+test('compiled v11 identities and all non-geometry behavior remain exact', () => {
+  assert.equal(mission(beforeProject, 'new-frontier').revision, 'pressure-v2-c4ed661aaea4b903');
+  assert.equal(
+    resolveMission(beforeProject, 'new-frontier', { difficulty: 'standard' }).simulationIdentity,
+    '983ed12de8bd7f70',
+  );
   for (const id of IDS)
     for (const difficulty of PRESETS) {
       const before = resolveMission(beforeProject, id, { difficulty, mode: 'solo' });
       const solo = resolveMission(project, id, { difficulty, mode: 'solo' });
       const versus = resolveMission(project, id, { difficulty, mode: 'versus' });
-      assert(mission(project, id).actors.every((actor) => actor.role === 'field-keeper'));
+      assert(
+        mission(project, id).actors.every((actor) =>
+          ['field-keeper', 'perimeter-patrol', 'frontier-patrol'].includes(actor.role),
+        ),
+      );
       assert.deepEqual(solo.level.enemies, before.level.enemies);
       assert.deepEqual(solo.level.rules, before.level.rules);
       assert.deepEqual(solo.level.terrain, before.level.terrain);
@@ -210,7 +217,7 @@ test('movement rules, collision enemies, counts, scaling and non-geometry conten
     }
 });
 
-function stepUntil(run, direction, predicate, sidecars = {}, maxTicks = 5000) {
+function stepUntil(run, direction, predicate, sidecars = {}, maxTicks = 7000) {
   for (let tick = 0; tick < maxTicks; tick++) {
     if (sidecars.recorder) recordInput(sidecars.recorder, { direction });
     stepRun(run, { direction }, FIXED_DT);
@@ -231,33 +238,35 @@ function closeRoute(run, id, approach, sidecars = {}) {
       (state) => state.events.some((event) => event.type === 'cut.closed'),
       sidecars,
     );
-  if (id === 'island-outpost' && approach === 'west-join-first') close('left');
-  else if (id === 'island-outpost' && approach === 'east-double-prutyk-first') {
-    position('up', (state) => state.player.y <= 12.6);
-    close('right');
-  } else if (id === 'long-way-home' && approach === 'upper-shoulder-first') {
-    position('up', (state) => state.player.y <= 14.6);
-    close('right');
-  } else if (id === 'long-way-home' && approach === 'lower-gather-first') {
-    position('down', (state) => state.player.y >= 26.4);
-    close('right');
-  } else if (id === 'horizon-remix' && approach === 'spiral-shoulder-first') {
-    position('right', (state) => state.player.x >= 37.4);
-    close('up');
-  } else if (id === 'horizon-remix' && approach === 'outer-petal-first') close('left');
-  else throw new TypeError(`Unknown authored route ${id}/${approach}`);
+  if (id === 'second-landing' && approach === 'near-aperture-first') {
+    position('right', (state) => state.player.x >= 20.4);
+    close('down');
+  } else if (id === 'second-landing' && approach === 'far-window-first') {
+    position('right', (state) => state.player.x >= 52.4);
+    close('down');
+  } else if (id === 'long-rail' && approach === 'central-stem-first') close('down');
+  else if (id === 'long-rail' && approach === 'outer-branch-first') {
+    position('right', (state) => state.player.x >= 44.4);
+    close('down');
+  } else if (id === 'new-frontier' && approach === 'near-shoulder-first') {
+    position('left', (state) => state.player.x <= 29.6);
+    close('down');
+  } else if (id === 'new-frontier' && approach === 'far-shoulder-first') {
+    position('right', (state) => state.player.x >= 40.4);
+    close('down');
+  } else throw new TypeError(`Unknown authored route ${id}/${approach}`);
 }
 
 const EXPECTED_CLAIMS = Object.freeze({
-  'west-join-first': 16,
-  'east-double-prutyk-first': 11,
-  'upper-shoulder-first': 13,
-  'lower-gather-first': 27,
-  'spiral-shoulder-first': 6,
-  'outer-petal-first': 17,
+  'near-aperture-first': 10,
+  'far-window-first': 23,
+  'central-stem-first': 9,
+  'outer-branch-first': 20,
+  'near-shoulder-first': 11,
+  'far-shoulder-first': 11,
 });
 
-for (const selection of HORIZON_NEXT_BATCH_SELECTIONS)
+for (const selection of BORDER_CULTURAL_NEXT_BATCH_SELECTIONS)
   for (const difficulty of PRESETS)
     for (const turnPolicy of CONTROLS)
       test(`${selection.id} executes both approaches on ${difficulty}/${turnPolicy} across seeds`, () => {
@@ -286,7 +295,7 @@ for (const id of IDS)
       }
     });
 
-for (const selection of HORIZON_NEXT_BATCH_SELECTIONS)
+for (const selection of BORDER_CULTURAL_NEXT_BATCH_SELECTIONS)
   for (const approach of selection.approaches)
     test(`${selection.id}/${approach} is replay-stable and equal on both Versus boards`, () => {
       const manifest = resolveMission(project, selection.id, { difficulty: 'standard' });
@@ -308,12 +317,12 @@ for (const selection of HORIZON_NEXT_BATCH_SELECTIONS)
       assert.deepEqual(authoritativeCheckpoint(run), authoritativeCheckpoint(duel.runs[0]));
     });
 
-test('registered v11 successor preserves v10 and authored order with isolated profile/session keys', async () => {
-  const current = createAuthoredJourneyRoute('whole-spatial-v11');
-  const previous = createAuthoredJourneyRoute('whole-spatial-v10');
+test('registered v12 successor preserves v11 and authored order with isolated ownership', async () => {
+  const current = createAuthoredJourneyRoute('whole-spatial-v12');
+  const previous = createAuthoredJourneyRoute('whole-spatial-v11');
   assert.deepEqual(await loadAuthoredJourneyRoute(current.id), current);
-  assert.equal(current.profileKey, 'journey-whole-spatial-v11');
-  assert.equal(current.sessionKey, 'revealline.suspended.journey-whole-spatial.v11');
+  assert.equal(current.profileKey, 'journey-whole-spatial-v12');
+  assert.equal(current.sessionKey, 'revealline.suspended.journey-whole-spatial.v12');
   assert.notEqual(current.profileKey, previous.profileKey);
   assert.notEqual(current.sessionKey, previous.sessionKey);
   assert.deepEqual(previous.source, beforeSource);
@@ -327,10 +336,10 @@ test('registered v11 successor preserves v10 and authored order with isolated pr
     versus: 'whole-spatial-v12',
     team: 'team-trail-impact-originals-1',
   });
-  assert.equal(authoredJourneyModeHref(current.id, 'solo'), '../?journey=whole-spatial-v11');
+  assert.equal(authoredJourneyModeHref(current.id, 'solo'), '../?journey=whole-spatial-v12');
   assert.equal(
     authoredJourneyModeHref(current.id, 'versus'),
-    'couch/?journey=whole-spatial-v11&return=solo',
+    'couch/?journey=whole-spatial-v12&return=solo',
   );
   for (const key of ['campaigns', 'packs'])
     assert.deepEqual(
@@ -343,7 +352,7 @@ test('registered v11 successor preserves v10 and authored order with isolated pr
     );
 });
 
-test('Studio retains v10 and v11 after the selector advances to v12', async () => {
+test('Studio exposes v11 and v12 separately and defaults its selector to v12', async () => {
   const html = await readFile(new URL('../studio/index.html', import.meta.url), 'utf8');
   const script = await readFile(new URL('../studio/studio.mjs', import.meta.url), 'utf8');
   const nodes = [];
@@ -356,7 +365,7 @@ test('Studio retains v10 and v11 after the selector advances to v12', async () =
   const selector = nodes.find((node) => attribute(node, 'id') === 'whole-variety-edition');
   const options = selector.childNodes.filter((node) => node.tagName === 'option');
   assert.equal(
-    options.filter((node) => attribute(node, 'value') === 'cultural-spatial-triptych-1').length,
+    options.filter((node) => attribute(node, 'value') === 'horizon-cultural-joins-1').length,
     1,
   );
   assert.deepEqual(
@@ -365,10 +374,6 @@ test('Studio retains v10 and v11 after the selector advances to v12', async () =
       .map((node) => attribute(node, 'value')),
     ['border-cultural-routes-1'],
   );
-  assert.equal(
-    options.filter((node) => attribute(node, 'value') === 'border-cultural-routes-1').length,
-    1,
-  );
-  assert.match(html, /journey=whole-spatial-v11/);
-  assert.match(script, /'horizon-cultural-joins-1': createHorizonNextBatchCandidates/);
+  assert.match(html, /journey=whole-spatial-v12/);
+  assert.match(script, /'border-cultural-routes-1': createBorderCulturalNextBatchCandidates/);
 });
