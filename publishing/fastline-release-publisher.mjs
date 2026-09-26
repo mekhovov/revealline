@@ -285,8 +285,9 @@ export async function ensureDraftRelease({
 
   if (state.decision.action === "create") {
     let writeError;
+    let tag;
     try {
-      const tag = await request(`/repos/${repository}/git/tags`, {
+      tag = await request(`/repos/${repository}/git/tags`, {
         method: "POST",
         body: JSON.stringify({
           tag: version,
@@ -297,13 +298,23 @@ export async function ensureDraftRelease({
       });
       if (!SHA.test(tag?.sha || ""))
         throw new Error("invalid annotated tag creation response");
-      await request(`/repos/${repository}/git/refs`, {
-        method: "POST",
-        body: JSON.stringify({ ref: `refs/tags/${version}`, sha: tag.sha }),
-      });
     } catch (error) {
       if (!recoverableWrite(error)) throw error;
       writeError = error;
+    }
+    if (!writeError) {
+      try {
+        await request(`/repos/${repository}/git/refs`, {
+          method: "POST",
+          body: JSON.stringify({ ref: `refs/tags/${version}`, sha: tag.sha }),
+        });
+      } catch (error) {
+        // Ref conflicts need not include structured errors[].code. Only this
+        // endpoint permits read-only discovery for an otherwise generic 422.
+        if (!recoverableWrite(error) && ![409, 422].includes(error?.status))
+          throw error;
+        writeError = error;
+      }
     }
     state = await discover((found) => found.tagCommit === sourceSha, {
       cause: writeError,
