@@ -26,6 +26,11 @@ import { createContentDraftBackend } from '../content-design/drafts.mjs';
 import { downloadCreatorFile } from './download.mjs';
 import { canonicalJSON } from '../data-json.mjs';
 import { createBatchCreatorController } from './batch-ui.mjs';
+import {
+  createCreatorBatchDraftBackend,
+  prepareCreatorBatchDraft,
+  reopenCreatorBatchDraft,
+} from './batch-drafts.mjs';
 import { prepareReviewedCreatorBundle } from './batch-bundle.mjs';
 import { createCreatorMediaReviewController } from './media-review.mjs';
 import { prepareCreatorMediaCampaign } from './media-campaign.mjs';
@@ -40,7 +45,8 @@ import {
 
 const $ = (id) => document.getElementById(id),
   store = createCreatorStore(),
-  backend = createCreatorDraftBackend(store);
+  backend = createCreatorDraftBackend(store),
+  batchBackend = createCreatorBatchDraftBackend(store);
 const status = (message, error = false) => {
   localizedText($('status'), message);
   $('status').classList.toggle('error', error);
@@ -81,7 +87,17 @@ let sourceFile = null,
   mediaSource = null,
   sourceVersion = 0,
   saveTimer = null;
-const batchSeed = crypto.getRandomValues(new Uint32Array(1))[0];
+const batchDraft = {
+  revision: null,
+  checkpoint: null,
+  saved: null,
+  snapshot: null,
+  running: null,
+  pending: null,
+  version: 0,
+  restoring: false,
+};
+let batchSeed = crypto.getRandomValues(new Uint32Array(1))[0];
 let themes = [];
 try {
   const themesResponse = await fetch('../content-design/themes.json');
@@ -245,9 +261,10 @@ const batch = createBatchCreatorController({
     };
   },
   approveBatch: batchApprovalAdapter?.approve,
-  onChange: () => {
+  onChange: (review) => {
     $('batch-split-results').replaceChildren();
     $('batch-split-results').hidden = true;
+    checkpointBatchReview(review);
   },
   onSplit: (chunks, settings) => {
     localizedText($('batch-capacity'), () =>
@@ -417,6 +434,58 @@ function currentAssets() {
     ).values(),
   ];
 }
+function checkpointBatchReview(review) {
+  if (batchDraft.restoring || !batchMode) return;
+  batchDraft.snapshot = { ...review, seed: batchSeed };
+  // The stable states before and after generation are sufficient. Avoid one
+  // storage revision for every transient progress render in a 50-item batch.
+  if (review.running) return;
+  const pending = saveBatchDraft().catch((error) => {
+    localizedText(
+      $('save-status'),
+      localizedMessage('interface:creator.sessionOnlyBackupAvailable', {
+        error: error.message,
+      }),
+    );
+  });
+  batchDraft.pending = pending;
+  void pending.finally(() => {
+    if (batchDraft.pending === pending) batchDraft.pending = null;
+  });
+}
+
+async function saveBatchDraft() {
+  if (!batchDraft.snapshot) return;
+  const version = ++batchDraft.version;
+  const checkpoint = await prepareCreatorBatchDraft(id, batchDraft.snapshot);
+  if (version !== batchDraft.version) return;
+  batchDraft.checkpoint = checkpoint;
+  if (
+    batchDraft.saved &&
+    canonicalJSON(batchDraft.saved.document) === canonicalJSON(checkpoint.document)
+  )
+    batchDraft.checkpoint = batchDraft.saved;
+  if (batchDraft.running) return batchDraft.running;
+  const running = (async () => {
+    while (batchDraft.checkpoint !== batchDraft.saved) {
+      const next = batchDraft.checkpoint;
+      const result = await batchBackend.save(next, batchDraft.revision);
+      batchDraft.revision = result.revision;
+      batchDraft.saved = next;
+    }
+    localizedText(
+      $('save-status'),
+      localizedMessage('interface:creator.savedCheckpoint', { revision: batchDraft.revision }),
+    );
+  })();
+  batchDraft.running = running;
+  try {
+    await running;
+  } finally {
+    if (batchDraft.running === running) batchDraft.running = null;
+  }
+}
+
 async function sourceSnapshot() {
   return prepareCreatorSource(
     {
@@ -1008,7 +1077,14 @@ $('load-advanced').onclick = () =>
     status(localizedMessage('interface:creator.studioEditsLoaded'));
   });
 window.addEventListener('beforeunload', (event) => {
-  if (saveTimer || draft.running || (draft.source && draft.source !== draft.saved)) {
+  if (
+    saveTimer ||
+    draft.running ||
+    batchDraft.pending ||
+    batchDraft.running ||
+    (draft.source && draft.source !== draft.saved) ||
+    (batchDraft.checkpoint && batchDraft.checkpoint !== batchDraft.saved)
+  ) {
     event.preventDefault();
     event.returnValue = '';
   }
@@ -1018,7 +1094,9 @@ window.addEventListener('pagehide', () => {
   batch.destroy();
   mediaReview.destroy();
   for (const url of pictureURLs) URL.revokeObjectURL(url);
-  store.close();
+  const pending = batchDraft.pending || batchDraft.running || draft.running;
+  if (pending) void pending.finally(() => store.close());
+  else store.close();
 });
 try {
   const saved = await backend.read(id);
@@ -1030,6 +1108,32 @@ try {
       $('save-status'),
       localizedMessage('interface:creator.restoredCheckpoint', { revision: saved.revision }),
     );
+  } else {
+    const savedBatch = await batchBackend.read(id);
+    if (savedBatch) {
+      batchDraft.revision = savedBatch.revision;
+      batchDraft.checkpoint = savedBatch.checkpoint;
+      batchDraft.saved = savedBatch.checkpoint;
+      const reopened = reopenCreatorBatchDraft(savedBatch.checkpoint);
+      if (reopened.items.length) {
+        batchSeed = reopened.seed;
+        batchMode = true;
+        $('batch-options').hidden = false;
+        batchDraft.restoring = true;
+        try {
+          batch.restore(reopened);
+        } finally {
+          batchDraft.restoring = false;
+        }
+        localizedText(
+          $('save-status'),
+          localizedMessage('interface:creator.restoredCheckpoint', {
+            revision: savedBatch.revision,
+          }),
+        );
+        await batch.resume(reopened.resumeItemIds);
+      }
+    }
   }
 } catch (error) {
   localizedText(
