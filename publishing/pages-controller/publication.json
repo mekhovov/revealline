@@ -2,7 +2,7 @@
   "format": "revealline-pages-controller.v1",
   "currentVersion": "v0.141.0",
   "catalogSha256": "017f9ef66b722411281cbf09384904a1d73d54944a8144eecf0e0e69eb4518f2",
-  "allocationSha256": "595091d8bdf047b91d09f568fc35fdbff5657c24d5a7f4d9a85f14520b94da65",
+  "allocationSha256": "f4a9c0695f553ce1d132e4f3f545c00b6577b44e58d69e416a554732222b9ce5",
   "admissions": [
     {
       "id": "archive-01",
@@ -10118,6 +10118,43 @@
         {
           "path": "evidence/archive-94-v01325/zip-receipt-v0.132.5.json",
           "sha256": "4295265b6668c490beeb9a53ffa9a827e11033b929ec22c2a8529a1721c55061",
+          "kind": "reference"
+        }
+      ]
+    },
+    {
+      "id": "archive-95",
+      "infrastructureCommit": "f4aa06bd3986f5dac30e63b97b64123c6e6ecefa",
+      "deploymentId": 6680536506,
+      "evidence": [
+        {
+          "path": "evidence/archive-95-v01410/expected-inventory.json",
+          "sha256": "37d860ffa2f7618991262eb22e1eec63b41a8490fbd29c789534b1fb1fef713c",
+          "kind": "inventory"
+        },
+        {
+          "path": "evidence/archive-95-v01410/http-report.json",
+          "sha256": "815489fa2b3fb3d985500aaf1c6538c80acf879b657f0f3bd053e9c1a37f4ca5",
+          "kind": "http"
+        },
+        {
+          "path": "evidence/archive-95-v01410/browser-admission.json",
+          "sha256": "01600e383750b487be6520cb01cd2fd8e2ce6283cb6a55ec09e308a2d392c574",
+          "kind": "browser"
+        },
+        {
+          "path": "evidence/archive-95-v01410/public-acceptance.json",
+          "sha256": "4aa0654b735ad3697e923e8008e73f3aa19f935bf82f39e2166002ebf4a2e3fb",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-95-v01410/archive-receipt.json",
+          "sha256": "3515a2297413fdc1b54ea554f9cd1c6a39e114f43f2abae01ade12088abf4382",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-95-v01410/zip-receipt-v0.141.0.json",
+          "sha256": "b2bd1c266fe60c30a24d16dac6803f25749d9870f9da72f9843941d0619051b3",
           "kind": "reference"
         }
       ]
