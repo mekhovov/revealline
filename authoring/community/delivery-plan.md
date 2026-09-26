@@ -35,10 +35,11 @@ run `36254346397` from PR #679's exact merged source
 `7509d790dadb6194d70a5bc1efafee40fbb0b3b7`; its Pages selector and public player-flow audit remain
 open. The first publish attempt hit a GitHub draft-list visibility race, and the coordinator's
 failed-job retry reused the exact tag, draft and evidence before publishing all nine assets.
-PR #680 remains candidate source. It now confines the validation worker to read-only package and
-image filesystems, bounded temporary storage and process resources, an internal database network,
-and local-only bounded ffprobe inspection. Source assertions cover that contract; enforcement by a
-Linux container runtime and the live validation journey remain deployment gates.
+PR #680 merged as `218e76281e3bfa26f57b7aa0f7b98058f4bd05ad`. It confines the validation
+worker to read-only package and image filesystems, bounded temporary storage and process resources,
+an internal database network, and local-only bounded ffprobe inspection. Source assertions cover
+that contract; enforcement by a Linux container runtime and the live validation journey remain
+deployment gates.
 
 | Workstream           | Completed/current result                                                                                                                                                                                                                                                                                                                                                                                                                                              | Remaining work                                                                                                                                              | Focused ETA                                                       |
 | -------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------- |
