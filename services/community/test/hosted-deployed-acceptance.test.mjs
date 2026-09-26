@@ -28,6 +28,7 @@ test('hosted journey uses an isolated exact-source PostgreSQL and disk deploymen
   );
   assert.match(productionCompose, /COMMUNITY_ALLOW_DEV_AUTH: 'false'/u);
   assert.match(productionCompose, /COMMUNITY_DEV_TOKENS: '\{\}'/u);
+  assert.match(dockerfile, /COPY package\.json \/package\.json/u);
   assert.match(dockerfile, /COPY game \/game/u);
   assert.doesNotMatch(dockerfile, /COPY game \/srv\/game/u);
 
