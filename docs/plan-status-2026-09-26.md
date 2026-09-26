@@ -8,50 +8,51 @@ versions or acceptance gates are still current.
 
 - Latest GitHub release: **v0.141.0**, published from accepted source
   `5d6c97c850a648c5ebe93d3cf57731aeb67d0bbb` on 26 September 2026. PR #673 selected its
-  immutable assets for Pages; current `main` is
-  `b4ef4b3024675bd8e12b13af28215553707d1bff`. This lane has not repeated the frozen public play
-  journey, so the release and selector merge are not represented here as new independent public
-  acceptance.
-- The accepted v0.141.0 creator/media merge is now the source base for the cultural stack. Its
-  creator, upload, localization, media and publication files are preserved by the rebase; no draft
-  cultural version is allowed to downgrade the accepted release.
-- Test-only PR #669 isolates the remaining Solo compact-filter host failure. Its prior-base exact
-  failing case passes, as do all 8 controller-host cases and the 167-case compact/controller cohort.
-  Runtime behavior is unchanged; review, current-main rebase and rerun remain pending. PR #530's
-  independent exact-head rerun correctly remains red because that older branch does not yet contain
-  the isolated fixture correction.
+  immutable assets for Pages. Current `main` is
+  `6d89f71bc1ebef43e8d51121f7625d572c338953`, the merged PR #590 compact-gallery source labelled
+  `0.141.1`; no v0.141.1 GitHub release is claimed here. This lane has not repeated either frozen
+  public play journey.
+- The accepted v0.141.0 creator/media and merged v0.141.1 compact-gallery sources are now the base
+  for the cultural stack. Their creator, upload, localization, media, compact layout and publication
+  files are preserved; no draft cultural version is allowed to downgrade them.
+- Test-only PR #669 is superseded by PR #590's broader accepted clock/rearm fixture. The new cultural
+  top passes the resulting compact/controller cohort 18/18 with zero skips. PR #669 does not need to
+  merge; older PR #530 still needs the accepted PR #590 changes incorporated before its red exact-head
+  result can be rerun.
 - The cultural/pacing successor chain through draft PR #672/v32 has been replayed onto current
-  `main`. All **97** stack commits and all **27** stacked branch tips retain the same order and subjects;
-  the only manual resolutions preserved accepted v0.141.0 version files and regenerated the derived
-  EN/UK catalog from the combined creator and cultural source catalogs. The focused exact-head
+  `main`. All **101** stack commits and all **27** stacked branch tips retain the same order and
+  subjects. The only manual resolutions retain PR #590's generalized controller timing, advance the
+  first candidate from accepted source `0.141.1` to `0.142.0`, and retain the cultural library's
+  327-row/v25 expectations. The focused exact-head
   route/bootstrap/navigation cohort passes **201/201 with zero skips**, and repository validation
-  passes for 10,138 localized messages, 7,994 references and 1,268 files. All 27 remote tips were
+  passes for 10,138 localized messages, 7,993 references and 1,268 files; the accepted compact and
+  controller host cohort passes **18/18 with zero skips**. All 27 remote tips were
   replaced atomically with exact old-head leases; PRs #650, #651, #661, #664-#667 and #670-#672
   resolve cleanly against their intended rebased predecessors. Independent PR #657 is now rebased
-  separately onto current `main` at `f5333b348ddb6cb7c730e59bf007b3b58dd1c96a`; its runtime
+  separately onto current `main` at `c2fd67c3ccf66624284645f21e59a6a4b0843fe2`; its runtime
   patch remains range-diff identical and its accepted-main fixture reconciliation is isolated from
-  the cultural chain. The dirty root checkout was not changed.
+  the cultural chain, with a fresh 33/33 zero-skip rerun. The dirty root checkout was not changed.
 
 ## Completed source work
 
-| Scope                                            | State                         | Evidence boundary                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
-| ------------------------------------------------ | ----------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Journey Ukrainian spatial stack v12-v24          | Rebased and pushed            | Candidate source only; each draft PR still needs its own promotion and public verification.                                                                                                                                                                                                                                                                                                                                                                                                                      |
-| Apex v25 / PR #625                               | Clean draft, source `0.140.0` | Earlier focused and production-build evidence exists; the exact terminal-base head still needs release CI.                                                                                                                                                                                                                                                                                                                                                                                                       |
-| Complete Team adoption / PR #630                 | Clean draft, source `0.141.0` | Complete twelve-mission Team edition is wired as current in the candidate stack, with older editions preserved.                                                                                                                                                                                                                                                                                                                                                                                                  |
-| First Team Ukrainian slice / PR #636             | Clean draft, source `0.142.0` | Three redesigned identities, 78/78 focused integration evidence, earlier production build; not public.                                                                                                                                                                                                                                                                                                                                                                                                           |
-| Second Team Ukrainian slice / PR #642            | Clean non-default draft       | Crossed gardens, Split orchards and Weaver crossing redesigned copy-on-write; no selector/default/version change yet.                                                                                                                                                                                                                                                                                                                                                                                            |
-| Second Team current edition / PR #650            | Clean draft, source `0.149.0` | Default/previous edition, Team library, Studio, exact Next, isolated progress and EN/UK wiring. Current doc-only-rebased tip `6de9e3cd8` maps from the exact 79/79 zero-skip Team cohort covering current/default entry, v1/v2 cultural routes, preset/seed feasibility, safe openings, no-Support exchanges, pinned full clears, handoffs, Studio, preserved impact editions and exact Next. Hosted gates remain.                                                                                               |
-| Unified-library fixture reconciliation / PR #651 | Clean draft, test/docs only   | Confirms 91 current + 48 prior Journey + 188 Classic = 327 unique rows and updates stale 201/279 and `whole-spatial-v5/v6` expectations to current v25 ownership. Current doc-only-rebased tip `cc84407f8` maps from the exact 82/82 zero-skip run across the four corrected Solo/Versus/Team-return host files.                                                                                                                                                                                                 |
-| Team opaque-owner continuation / PR #657         | Rebased isolated hotfix       | Shared Next no longer JSON-parses opaque Team Classic owner IDs; Current/Original lanes remain separate and Classic → Custom continuation is restored. Exact current-main head `f5333b348` passes 33/33 continuation/localization/historical-impact/Team-impact checks with zero skips, targeted lint/format/diff checks and repository validation. The only post-rebase change is a fixture-only accepted Team-attempt hook; not merged or public.                                                              |
-| Current Journey pacing inventory / PR #661       | Clean stacked draft           | Adds a reusable runtime-prepared spatial-variety inspector and pins exact v25 facts: 91 source missions, 71 core missions, bands 1–12, consistent Standard craft speed and 21 post-opening open/plain review candidates. Current doc-only-rebased tip `25b4c2b62` maps from the 4/4, ESLint and Prettier pass after correcting the report's formatting drift; this is not human balance evidence.                                                                                                                |
-| Relay cultural completion / PR #664              | Clean explicit v26 draft      | Redesigns Spiral stores, Nested relays and Watchpost exchange from bounded official-museum vocabulary; preserves v25/default ownership and reduces post-opening open/plain candidates from 21 to 18. Current doc-only-rebased tip `0ab499913` maps from the corrected exact 156/156 zero-skip run and owns the accepted creator actor-material fixture pass-through. Hosted gates remain.                                                                                                                        |
-| Crosswind cultural completion / PR #665          | Clean explicit v27 draft      | Redesigns Survey markers, Compass array and Outer loop with original wall fields informed by three official museum records. Preserves v25/default and v26 ownership, actors, foundations, arrows and objectives; reduces the post-opening open/plain queue from 18 to 15. Exact current tip `59211391b` passes its 159/159 zero-skip candidate, route, bootstrap and host cohort; the duplicate later fixture patch remains dropped because PR #664 owns it. Hosted gates remain.                                |
-| Fracture/Apex cultural completion / PR #666      | Clean explicit v28 draft      | Redesigns Bank the crossing, Five anchors and Final broadcast with original spatial fields informed by official Opishne museum, UNESCO Crimean Tatar Örnek and Museum Fund records. Preserves v25/default and v27 history, gameplay rules, objectives, relays, bonuses and actor roles; reduces the open/plain review queue from 15 to 12. Exact current tip `bb31fd513` passes its 162/162 zero-skip candidate, route, bootstrap and host cohort. Hosted gates remain.                                          |
-| Neon cultural completion / PR #667               | Clean explicit v29 draft      | Adds original wall fields to Folded corner, Inside out and Four quarters using bounded Museum Fund, Ivan Honchar Museum and UNESCO vocabulary. Preserves v25/default and v28 history, foundations, spawns, actors and rules; retains Side-door bays as an intentional open contour puzzle and reduces the review queue from 12 to 9. Exact current tip `15a6ef79f` passes its 165/165 zero-skip candidate, route, bootstrap and host cohort. Hosted gates remain.                                                |
-| Rover cultural completion / PR #670              | Clean explicit v30 draft      | Promotes the reviewed Split berths and Stepped return Ukrainian/FPV geometry into the current chain while preserving the newer pressure actors and rules. Exact current tip `f419d8c91` passes its expanded 156/156 zero-skip candidate, route, bootstrap and host cohort, superseding the prior 150-test receipt. The open/plain queue falls from 9 to 7. Hosted qualification remains.                                                                                                                         |
-| Border cultural completion / PR #671             | Clean explicit v31 draft      | Adds original Reshetylivka aperture, Petrykivka branch and Kosiv bilateral wall fields to Second landing, Long rail and New frontier. Preserves current actors, objectives, bonuses, foundations, art and rules; exact current tip `1e83e1143` passes its 170/170 zero-skip candidate, route, bootstrap and host cohort. The open/plain queue falls from 7 to 4. Hosted qualification remains.                                                                                                                   |
-| Border frontier/pocket completion / PR #672      | Clean explicit v32 draft      | Adds original Bukovyna wave/dogleg and Podillia end-weighted wall fields to Turn the corner and Return pocket. Preserves current actors, objectives, bonuses, foundations, art and rules. Runtime source tip `d35810836` plus plan-only descendants through tested head `d804d846e` pass 201/201 with zero skips; repository validation remains from the preceding runtime-equivalent rebase. The queue closes with Behind the patrol and Side-door bays retained as open lessons. Hosted qualification remains. |
+| Scope                                            | State                         | Evidence boundary                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| ------------------------------------------------ | ----------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Journey Ukrainian spatial stack v12-v24          | Rebased and pushed            | Candidate source only; each draft PR still needs its own promotion and public verification.                                                                                                                                                                                                                                                                                                                                                                                             |
+| Apex v25 / PR #625                               | Clean draft, source `0.140.0` | Earlier focused and production-build evidence exists; the exact terminal-base head still needs release CI.                                                                                                                                                                                                                                                                                                                                                                              |
+| Complete Team adoption / PR #630                 | Clean draft, source `0.141.0` | Complete twelve-mission Team edition is wired as current in the candidate stack, with older editions preserved.                                                                                                                                                                                                                                                                                                                                                                         |
+| First Team Ukrainian slice / PR #636             | Clean draft, source `0.142.0` | Three redesigned identities, 78/78 focused integration evidence, earlier production build; not public.                                                                                                                                                                                                                                                                                                                                                                                  |
+| Second Team Ukrainian slice / PR #642            | Clean non-default draft       | Crossed gardens, Split orchards and Weaver crossing redesigned copy-on-write; no selector/default/version change yet.                                                                                                                                                                                                                                                                                                                                                                   |
+| Second Team current edition / PR #650            | Clean draft, source `0.149.0` | Default/previous edition, Team library, Studio, exact Next, isolated progress and EN/UK wiring. Current v0.141.1-rebased tip `67b88a676` maps from the prior exact 79/79 zero-skip Team cohort covering current/default entry, v1/v2 cultural routes, preset/seed feasibility, safe openings, no-Support exchanges, pinned full clears, handoffs, Studio, preserved impact editions and exact Next. Hosted exact-tip gates remain.                                                      |
+| Unified-library fixture reconciliation / PR #651 | Clean draft, test/docs only   | Confirms 91 current + 48 prior Journey + 188 Classic = 327 unique rows and updates stale 201/279 and `whole-spatial-v5/v6` expectations to current v25 ownership. Current v0.141.1-rebased tip `76855313d` maps from the prior exact 82/82 zero-skip run; accepted gallery integration passes 18/18 at the stack top, but the full four-file per-tip cohort is not relabelled as rerun.                                                                                                 |
+| Team opaque-owner continuation / PR #657         | Rebased isolated hotfix       | Shared Next no longer JSON-parses opaque Team Classic owner IDs; Current/Original lanes remain separate and Classic → Custom continuation is restored. Exact v0.141.1-main head `c2fd67c3c` passes 33/33 continuation/localization/historical-impact/Team-impact checks with zero skips. The runtime patch and fixture reconciliation are range-diff identical; not merged or public.                                                                                                   |
+| Current Journey pacing inventory / PR #661       | Clean stacked draft           | Adds a reusable runtime-prepared spatial-variety inspector and pins exact v25 facts: 91 source missions, 71 core missions, bands 1–12, consistent Standard craft speed and 21 post-opening open/plain review candidates. Current v0.141.1-rebased tip `b50c0ca5f` maps from the prior 4/4, ESLint and Prettier pass; this is not human balance evidence.                                                                                                                                |
+| Relay cultural completion / PR #664              | Clean explicit v26 draft      | Redesigns Spiral stores, Nested relays and Watchpost exchange from bounded official-museum vocabulary; preserves v25/default ownership and reduces post-opening open/plain candidates from 21 to 18. Current v0.141.1-rebased tip `e01811b7e` maps from the corrected 156/156 zero-skip cohort and owns the accepted creator actor-material fixture pass-through. Hosted exact-tip gates remain.                                                                                        |
+| Crosswind cultural completion / PR #665          | Clean explicit v27 draft      | Redesigns Survey markers, Compass array and Outer loop with original wall fields informed by three official museum records. Preserves v25/default and v26 ownership, actors, foundations, arrows and objectives; reduces the post-opening open/plain queue from 18 to 15. Current v0.141.1-rebased tip `5e0c802b8` maps from its 159/159 zero-skip candidate, route, bootstrap and host cohort; hosted exact-tip gates remain.                                                          |
+| Fracture/Apex cultural completion / PR #666      | Clean explicit v28 draft      | Redesigns Bank the crossing, Five anchors and Final broadcast with original spatial fields informed by official Opishne museum, UNESCO Crimean Tatar Örnek and Museum Fund records. Preserves v25/default and v27 history, gameplay rules, objectives, relays, bonuses and actor roles; reduces the open/plain review queue from 15 to 12. Current v0.141.1-rebased tip `5662e6bff` maps from its 162/162 zero-skip cohort; hosted exact-tip gates remain.                              |
+| Neon cultural completion / PR #667               | Clean explicit v29 draft      | Adds original wall fields to Folded corner, Inside out and Four quarters using bounded Museum Fund, Ivan Honchar Museum and UNESCO vocabulary. Preserves v25/default and v28 history, foundations, spawns, actors and rules; retains Side-door bays as an intentional open contour puzzle and reduces the review queue from 12 to 9. Current v0.141.1-rebased tip `6fb3db11b` maps from its 165/165 zero-skip cohort; hosted exact-tip gates remain.                                    |
+| Rover cultural completion / PR #670              | Clean explicit v30 draft      | Promotes the reviewed Split berths and Stepped return Ukrainian/FPV geometry into the current chain while preserving the newer pressure actors and rules. Current v0.141.1-rebased tip `a85a4d838` maps from its expanded 156/156 zero-skip cohort. The open/plain queue falls from 9 to 7; hosted exact-tip qualification remains.                                                                                                                                                     |
+| Border cultural completion / PR #671             | Clean explicit v31 draft      | Adds original Reshetylivka aperture, Petrykivka branch and Kosiv bilateral wall fields to Second landing, Long rail and New frontier. Preserves current actors, objectives, bonuses, foundations, art and rules; current v0.141.1-rebased tip `b7afbb70b` maps from its 170/170 zero-skip cohort. The open/plain queue falls from 7 to 4; hosted exact-tip qualification remains.                                                                                                       |
+| Border frontier/pocket completion / PR #672      | Clean explicit v32 draft      | Adds original Bukovyna wave/dogleg and Podillia end-weighted wall fields to Turn the corner and Return pocket. Preserves current actors, objectives, bonuses, foundations, art and rules. Runtime source `62a360097` through exact tested top `30d673895` passes 201/201 route/bootstrap/navigation, 18/18 compact/controller integration and repository validation. The queue closes with Behind the patrol and Side-door bays retained as open lessons. Hosted qualification remains. |
 
 After the earlier v0.132.5 main rebase, an uncontended bounded host rerun passed all selected corrected cases:
 four Solo scenarios, four Versus scenarios, two representative Team source routes and the three-stage
@@ -63,8 +64,8 @@ PR #650's exact rebased head passes **79/79 with zero skips** across current/def
 handoff and library behavior, both cultural editions, isolated progress, safe openings, alternate
 routes across presets and seeds, no-Support partner exchanges, pinned full clears, preserved impact
 editions, Studio and cross-campaign Next. It does not replace physical devices, public frozen-build
-checks or human balance review. The current v0.141.0-based v32 head separately has a fresh 201-test
-route/bootstrap/navigation rerun.
+checks or human balance review. The current v0.141.1-based v32 head separately has fresh 201-test
+route/bootstrap/navigation and 18-test compact/controller reruns.
 
 The second Team slice now has **13/13** focused checks. Every changed mission keeps one connected
 field, idle-safe starts on all presets, two distinct no-down approaches, and a two-closure exchange
@@ -83,8 +84,9 @@ devices or human balance and cultural review.
 The remaining completion tips are likewise qualified locally on their exact current source: Rover
 passes **156/156** and Border passes **170/170**, both with zero skips. The final Border
 frontier/pocket top passes **201/201** through its plan-only descendant; its runtime source remains
-`d35810836`. Together these receipts close the local focused candidate/route/bootstrap/host queue
-for v26-v32. Hosted gates and every wider evidence boundary above remain open.
+`62a360097`. Together these receipts close the local focused candidate/route/bootstrap/host queue
+for v26-v32 on the accepted compact-gallery base. Hosted gates and every wider evidence boundary
+above remain open.
 
 ## Remaining implementation and ETA
 
@@ -100,9 +102,10 @@ large-asset and archive delays are outside these estimates.
 |        4 | Whole-Journey accessibility/performance | The spatial disposition queue is resolved with two intentional open lessons retained. Remaining work is reduced effects, contrast, small-screen, startup/performance and deterministic qualification | **2–4 working days** for accessibility and performance qualification |
 |        5 | Human balance and cultural review       | Understandable failures, distinct missions, enjoyable retries, Team cooperation quality and cultural review by people                                                                                |                   **1–2 days synthesis** after testers are available |
 
-Versions through v0.141.0 are now occupied by accepted releases. Cultural draft labels do not
-reserve a release number; the sole publisher assigns versions from the accepted predecessor when a
-batch is actually promoted.
+Versions through v0.141.0 are occupied by published releases; merged `main` currently labels its
+compact-gallery source `0.141.1` without a corresponding GitHub release claim here. Cultural draft
+labels do not reserve a release number; the sole publisher assigns versions from the accepted
+predecessor when a batch is actually promoted.
 
 ## Blockers and concerns
 
@@ -121,16 +124,18 @@ batch is actually promoted.
 5. **Human/device evidence:** deterministic routes cannot establish enjoyment, cultural approval or
    physical controller/touch behavior.
 6. **Disk pressure:** only reviewed disposable build caches were removed; worktrees, releases, media,
-   patches and active task data were preserved. Free space is now about 2 GiB. Avoid duplicate
-   production archives and never remove unpushed source, user media or another task's workspace.
+   patches and active task data were preserved. A further 2.58 GiB of closed Git `tmp_pack_*` files
+   explicitly reported as garbage were removed after concurrent pack generation filled the volume;
+   free space recovered to about 3 GiB. Avoid duplicate production archives and never remove
+   unpushed source, user media or another task's workspace.
 7. **Host performance:** the uncontended PR #651 scenarios pass, but individual chooser paths took
    about 5.5–30.6 seconds in the fixture harness. This closes the corrected-assertion gap, not the
    broader startup/performance qualification.
 8. **First cultural gate:** PR #530's exact-head rerun passed preflight and the wider selected gates,
    but its controller-host file again failed only the Solo compact-filter focus assertion: 7/8 cases
-   passed. PR #669 corrects the fixture's clock/rearm model on exact `main`; its hosted focused gate
-   is green. PR #530 cannot become green until that isolated correction is merged and incorporated;
-   the failed rerun is not represented as a pass.
+   passed. Merged PR #590 now provides a broader accepted clock/rearm model and the cultural top
+   passes its 18/18 compact/controller cohort. PR #669 is superseded; PR #530 cannot become green
+   until it incorporates PR #590 and reruns. The failed older-head run is not represented as a pass.
 9. **Inventory is not balance evidence:** PR #661 finds 21 post-opening missions with neither wall
    nor slow/lethal terrain and confirms consistent Standard speed and post-opening actor counts.
    Those are review candidates, not automatic defects; deterministic routes and human play still
@@ -155,10 +160,10 @@ batch is actually promoted.
     exact candidate/route/bootstrap/host cohort passes 170/170 with zero skips. Hosted
     qualification, review, promotion and public evidence remain.
 16. **v32 remains opt-in:** draft PR #672 preserves v25 as default and v31 as history. Its exact
-    v0.141.0-based candidate/route/bootstrap/navigation cohort passes 201/201 with zero skips, and
-    repository validation passes. The two remaining open/plain boards are intentional accepted
-    lessons, not unfinished count targets. Hosted qualification, review, promotion and public
-    evidence remain.
+    v0.141.1-based candidate/route/bootstrap/navigation cohort passes 201/201 with zero skips, its
+    compact/controller integration passes 18/18 and repository validation passes. The two remaining
+    open/plain boards are intentional accepted lessons, not unfinished count targets. Hosted
+    qualification, review, promotion and public evidence remain.
 
 ## Immediate execution order
 
