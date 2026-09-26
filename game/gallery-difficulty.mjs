@@ -1,7 +1,17 @@
 import { campaignKey } from './library.mjs';
 import { createDifficultyContext } from './campaign-difficulty.mjs';
+import { t } from './i18n/index.mjs';
 
-const labels = Object.freeze({ standard: 'Standard', gentle: 'Gentle' });
+const labelKeys = Object.freeze({
+  standard: 'interface:missionLibrary.difficulty.standard',
+  gentle: 'interface:missionLibrary.difficulty.gentle',
+});
+const archivedLabelKey = 'interface:library.archivedDifficultyLabel';
+
+/** Resolve a semantic gallery context through the active locale on every read. */
+export function galleryDifficultyLabel(context) {
+  return t(context?.labelKey ?? archivedLabelKey);
+}
 
 /** A cached display projection of trusted installed contexts, never saved data. */
 export function createGalleryDifficultyResolver(entries) {
@@ -17,7 +27,7 @@ export function createGalleryDifficultyResolver(entries) {
           (field) => Object.hasOwn(entry, field),
         )
       ) {
-        if (!Object.hasOwn(labels, entry.difficulty)) continue;
+        if (!Object.hasOwn(labelKeys, entry.difficulty)) continue;
         const context = createDifficultyContext(entry.baseCampaign, entry.difficulty);
         if (
           context.campaignKey !== key ||
@@ -38,7 +48,7 @@ export function createGalleryDifficultyResolver(entries) {
             entry,
             difficulty,
             baseCampaignKey,
-            label: difficulty === null ? 'Challenge' : labels[difficulty],
+            labelKey: difficulty === null ? 'interface:challenge' : labelKeys[difficulty],
           }),
         );
     } catch {
@@ -49,7 +59,7 @@ export function createGalleryDifficultyResolver(entries) {
     return known.get(key) ?? null;
   }
   function label(key) {
-    return resolve(key)?.label ?? 'Archived · difficulty unavailable';
+    return galleryDifficultyLabel(resolve(key));
   }
   function picture(item) {
     const context = resolve(item.campaignKey);
