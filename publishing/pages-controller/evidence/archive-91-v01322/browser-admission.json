@@ -1,0 +1,37 @@
+{
+  "format": "revealline-archive-browser-admission.v1",
+  "status": "PASS",
+  "archiveId": "archive-91",
+  "infrastructureCommit": "7fe2936b995bd7bb2f9a22177767a841a506006c",
+  "deploymentId": 6676109088,
+  "deploymentStatusId": 18869064132,
+  "versions": [
+    "v0.132.2"
+  ],
+  "surface": "Codex built-in browser",
+  "sequence": [
+    "Opened the Archive91 index and observed the original v0.132.2 preservation label and Play v0.132.2 route.",
+    "Opened the preserved route and observed the RevealLine game shell for the archived v0.132.2 build."
+  ],
+  "observed": {
+    "archiveDocumentTitle": "RevealLine archive 91",
+    "archiveHeading": "RevealLine archive 91",
+    "archiveReleaseLabel": "The original v0.132.2 build, preserved for comparison and historical play.",
+    "gameShellLoaded": true,
+    "reloads": 0,
+    "retries": 0
+  },
+  "scope": "Historical online preservation: complete exact-byte public audit plus a fresh bounded archive index and archived game-shell check.",
+  "limitations": [
+    "Long source suites remained waived under the temporary fast-release policy and are not reported as passed.",
+    "The browser console was not independently inspected during this bounded archive journey.",
+    "No renewed physical touch/controller, comprehensive offline, or extended gameplay acceptance is claimed.",
+    "This admission preserves v0.132.2; v0.132.3 is the separate immutable release selected by this controller change."
+  ],
+  "evidence": [
+    {
+      "path": "evidence/archive-91-v01322/public-acceptance.json",
+      "sha256": "e7e9cace3088e3190e2b7f23987043c6e624b9df4a7999fa14384005e847f45f"
+    }
+  ]
+}
