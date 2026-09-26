@@ -1317,6 +1317,13 @@
   "team.culturalSpecialists.workshop.mastery": "Establish the central bank, cross specialists, then clear both outer chambers without a down.",
   "team.culturalSpecialists.detour.route": "Neutralize the slow west passage for a controlled centre approach, or close around the lethal east passage first and give the partner the faster shared route?",
   "team.culturalSpecialists.detour.mastery": "Neutralize both material passages and have each pilot use the central bank before clearing.",
+  "team.culturalSpecialistsV2.projectName": "Team Journey · Ukrainian spatial specialists II · balance review pending",
+  "team.culturalSpecialistsV2.crossedGardens.route": "Neutralize an outer garden for the safer transfer, or expose a longer cut to the nested central bank so both specialists gain the stronger next launch?",
+  "team.culturalSpecialistsV2.crossedGardens.mastery": "Connect the central bank, then let each pilot neutralize a different garden without a down.",
+  "team.culturalSpecialistsV2.splitOrchards.route": "Take the plain offset band toward the middle, or enclose one orchard first so the partner can route around the still-dangerous opposite side?",
+  "team.culturalSpecialistsV2.splitOrchards.mastery": "Neutralize both orchards from opposite sides and exchange pilots through the middle bank.",
+  "team.culturalSpecialistsV2.weaverCrossing.route": "Link a thin separator to the middle opening, or neutralize a broad material lane before the partner exchanges sides?",
+  "team.culturalSpecialistsV2.weaverCrossing.mastery": "Have each pilot neutralize one broad lane, then exchange sides through the middle opening.",
   "soundtrack.carolOfTheBellsMetalVersion": "Carol of the Bells (Metal Version)",
   "soundtrack.creatorSource": "Creator source",
   "soundtrack.shchedrykProvenance": "Shchedryk provenance"

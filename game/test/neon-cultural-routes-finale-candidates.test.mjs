@@ -258,7 +258,7 @@ test('registered v17 successor preserves v16 order and uses isolated progress ow
   assert.deepEqual(DEFAULT_JOURNEY_ROUTES, {
     solo: 'whole-spatial-v25',
     versus: 'whole-spatial-v25',
-    team: 'team-cultural-specialist-originals-1',
+    team: 'team-cultural-specialist-originals-2',
   });
   assert.equal(authoredJourneyModeHref(current.id, 'solo'), '../?journey=whole-spatial-v17');
   assert.equal(
