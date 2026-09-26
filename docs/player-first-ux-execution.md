@@ -38,6 +38,13 @@ clean local child of v0.141.2 candidate
 Pause hosts pass 27/27 and the departure/markup/quick-start boundary passes
 37/37. It remains unpushed and inherits the same predecessor acceptance gate.
 
+**Prepared next:** v0.141.4 contextual Team teaching is reconciled as a clean
+local child of v0.141.3 candidate
+`e1dba137ad7fd16c874cb511cbc801ce6ce309f7`. Teaching semantics/real-host,
+Team/quick-start/Pause and Couch/localization evidence passes 11/11, 88/88 and
+30/30. It remains unpushed and must be replayed if an accepted predecessor
+differs.
+
 **Active and ordered:** each row is a working allocation, not an accepted
 release. Reconcile each item onto the publicly accepted predecessor, rerun its
 exact-head gates and publish it before accepting the next row. Older target
@@ -49,7 +56,7 @@ with this order.
 | 1     | v0.141.1        | Compact complete mission gallery                                     | [PR #590](https://github.com/mekhovov/revealline/pull/590)                                                                  |
 | 2     | v0.141.2        | Team quick-start                                                     | prepared donor from PR #549                                                                                                 |
 | 3     | v0.141.3        | Couch secondary navigation                                           | prepared local child of v0.141.2 candidate; audited donor from PR #539                                                      |
-| 4     | v0.141.4        | Contextual Team teaching                                             | prepared donor from PR #543                                                                                                 |
+| 4     | v0.141.4        | Contextual Team teaching                                             | prepared local child of v0.141.3 candidate; audited donor from PR #543                                                      |
 | 5     | v0.141.5        | Deliberate Team terminal Retry                                       | [PR #545](https://github.com/mekhovov/revealline/pull/545)                                                                  |
 | 6     | v0.141.6        | Readable Versus countdown and Retry cue                              | [PR #552](https://github.com/mekhovov/revealline/pull/552)                                                                  |
 | 7     | v0.141.7        | Named result destinations                                            | [PR #557](https://github.com/mekhovov/revealline/pull/557)                                                                  |
