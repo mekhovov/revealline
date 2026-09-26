@@ -392,6 +392,10 @@ jobs:
           sparse-checkout: |
             publishing/fastline-release-objects.mjs
             publishing/fastline-release-publisher.mjs
+            publishing/edition-promotion.mjs
+            publishing/edition-admission.mjs
+            publishing/edition-zip.mjs
+            game/edition-context.mjs
           sparse-checkout-cone-mode: false
 
       - name: Download immutable frozen package by artifact ID

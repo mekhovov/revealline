@@ -158,3 +158,92 @@ test('company pagehide uses real preference teardown APIs and preserves a cached
     'preparer',
   ]);
 });
+
+test('Home retires a staged mission and ignores its late abort or response without replacing the current run', async () => {
+  for (const late of ['abort', 'resolve', 'reject']) {
+    let finish, fail;
+    const pending = new Promise((resolve, reject) => {
+      finish = resolve;
+      fail = reject;
+    });
+    const screens = { 'play-screen': { hidden: false }, 'home-screen': { hidden: true } },
+      notices = [];
+    const oldRun = { id: 'original-run' },
+      candidate = { id: 'candidate' };
+    let cancelled = 0,
+      rendered = 0;
+    const context = {
+      current: { run: oldRun },
+      generation: 0,
+      preparing: false,
+      unlocked: () => true,
+      missionFor: (id) => ({ id }),
+      pause() {},
+      preferences: { difficulty: 'standard' },
+      report: (message) => notices.push(message),
+      $: (id) => screens[id],
+      renderCampaigns: () => {
+        rendered++;
+      },
+      host: {
+        preparer: {
+          prepare: () => pending,
+          current: (value) => value === candidate,
+          cancel() {
+            cancelled++;
+            if (late === 'abort') fail(new DOMException('Preparation cancelled', 'AbortError'));
+          },
+          take() {
+            assert.fail('Home must prevent stale mission adoption');
+          },
+        },
+      },
+    };
+    const start = callback(
+      find(tree, (node) => node.type === 'FunctionDeclaration' && node.id?.name === 'start'),
+      context,
+    );
+    const home = callback(
+      find(tree, (node) => node.type === 'FunctionDeclaration' && node.id?.name === 'showHome'),
+      context,
+    );
+    const loading = start('next-mission');
+    assert.equal(context.preparing, true);
+    home();
+    assert.equal(context.preparing, false);
+    assert.equal(screens['home-screen'].hidden, false);
+    assert.equal(screens['play-screen'].hidden, true);
+    if (late === 'resolve') finish(candidate);
+    if (late === 'reject') fail(new Error('old network failure'));
+    await assert.doesNotReject(loading);
+    assert.equal(context.current.run, oldRun);
+    assert.ok(cancelled >= 1);
+    assert.equal(rendered, 1);
+    assert.deepEqual(notices, ['Preparing the exact mission and its artwork…']);
+  }
+});
+
+test('an active mission preparation still surfaces a real failure when Home did not cancel it', async () => {
+  const context = {
+    generation: 0,
+    preparing: false,
+    unlocked: () => true,
+    missionFor: (id) => ({ id }),
+    pause() {},
+    report() {},
+    preferences: { difficulty: 'standard' },
+    host: {
+      preparer: {
+        prepare: async () => {
+          throw new Error('current artwork unavailable');
+        },
+      },
+    },
+  };
+  const start = callback(
+    find(tree, (node) => node.type === 'FunctionDeclaration' && node.id?.name === 'start'),
+    context,
+  );
+  await assert.rejects(start('next-mission'), /current artwork unavailable/);
+  assert.equal(context.preparing, false);
+});
