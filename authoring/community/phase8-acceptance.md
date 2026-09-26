@@ -178,10 +178,10 @@ It contains six seconds of 640 × 360 AVC video and mono 48 kHz AAC audio. In th
 
 The focused release-build fixture passed 5/5 cases and authenticated the exact vendored module,
 license and provenance bytes in the loose distribution, ZIP, offline inventory and generated
-credits. A later full source-tree build completed successfully for 1,303 files at source version
+credits. The final audio-bearing source completed a full 1,303-file build at source version
 `0.141.0`, with distribution SHA-256
-`1d39690b4bdec5110b837a36feddff201e649536c399cb7a6129dd7686588982`. The final audio-bearing
-head still requires the exact-head build in the combined release gate.
+`f88763538f6dba10f0cd705b798732fff306818dab1fcbe69462fe064d3b8c8f`. The immutable hosted freeze
+remains part of the combined release gate.
 
 ## Open release gates
 

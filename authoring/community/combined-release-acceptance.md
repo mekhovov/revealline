@@ -8,10 +8,10 @@ release claims.
 ## Candidate identity
 
 - Merged framework source: PR #465, merged 25 September 2026.
-- Rebased hardening base: `260303221144aa0430fa78f5fdcda639d1251431` (`main`, after the accepted
+- Rebased hardening base: `5ad50f23607b0af57b8f77170bf2b72f41f375d6` (`main`, after the accepted
   `v0.132.3` selector).
 - Hardening checkpoint before this acceptance refresh:
-  `e62682f586ecae490bcf01caa0744d5af966cf88`.
+  `d1997dc4bc4ec3d806221b305b8b5534d426e898`.
 - Assigned release target and working source: `v0.141.0` in PR #564. The repository release
   coordinator still has to freeze the reviewed candidate.
 
@@ -63,7 +63,7 @@ output. Its largest new source asset is the pinned, licensed Mediabunny browser 
 
 ## Integrated evidence
 
-- `npm run test:creator-feature -- --runtime-only`: **522** top-level subtests and **524/524** total
+- `npm run test:creator-feature -- --runtime-only`: **530** top-level subtests and **532/532** total
   creator/runtime tests passed. The community service suite passed **43/43** checks from the current
   rebased source. The full runtime run first exposed five sparse
   checkout omissions and three injected-host database-model conflicts; the exact owning cohorts
@@ -75,7 +75,7 @@ output. Its largest new source asset is the pinned, licensed Mediabunny browser 
 - The current focused Team/shared-ledger/UI cohort passes **43/43**, including exact picture
   normalization, package/install/intake, aggregate quota pressure, abandoned-claim reconciliation,
   storage review and immutable edition accounting. The complete exact-head creator cohort passes
-  **522** top-level subtests and **524/524** total tests after the final rebase and visible Creator
+  **530** top-level subtests and **532/532** total tests after the final rebase, offload/audio slices and visible Creator
   Versus continuation fix.
 - Installed creator Versus, bundle, qualification, profile-edition and picture durability coverage
   passes **30** top-level tests and **32/32** total tests including nested host checks. The real host
@@ -103,6 +103,11 @@ output. Its largest new source asset is the pinned, licensed Mediabunny browser 
   creator/media checks. Coverage includes physical unshared deletion, shared-byte retention,
   immutable profile/attempt keys, no-recovery refusal, stale-generation refusal, interrupted journal
   recovery, Web Lock serialization and network-free exact reinstall.
+- The built-in browser loaded an exact 810,180-byte local `.rlpack` through a one-edition catalog,
+  installed creator edition `6033108fe9e7acc279cb888b19cfccb7033aa9ce20999dc5213b58e282873467`,
+  showed its installed and offline-copy state, offloaded its runtime media, replaced Play with
+  **Reinstall exact edition**, restored it from the retained package, and opened the ordinary Custom
+  player with **Start mission** enabled.
 - `npm run validate`: passed for 1,243 files; exact whole-spatial snapshot SHA-256
   `e62ef45089df1bbaea04cceb932949fbe8d29377a4eeefcac8280125006495b3`.
 - Exact presentation SHA-256 after the `fpv88` provenance rebase:
@@ -110,11 +115,10 @@ output. Its largest new source asset is the pinned, licensed Mediabunny browser 
 - Root and community-service ESLint and Prettier checks: passed.
 - Native formatting, Motion Lab syntax, Field Kit producer check, and Field Kit readiness: passed.
 - Root and community dependency audits: zero reported vulnerabilities.
-- A local `npm run build` passed for **1,303 files** at source version `0.141.0` after the visible
-  Creator Versus continuation repair, with distribution SHA-256
-  `1d39690b4bdec5110b837a36feddff201e649536c399cb7a6129dd7686588982`. The subsequent rebase
-  changed release-inspection utilities only; the hosted exact-head build and immutable freeze remain
-  PR/release gates.
+- A local `npm run build` passed for **1,303 files** at source version `0.141.0` on the final rebased
+  audio/offload candidate, with distribution SHA-256
+  `f88763538f6dba10f0cd705b798732fff306818dab1fcbe69462fe064d3b8c8f`. The hosted exact-head build
+  and immutable freeze remain PR/release gates.
 - Built-in-browser evidence in the phase records covers single-image completion, 12- and 50-image
   batches, cancel/resume and splitting, video-only victory playback, and verified silent-AVC trim.
   On the current combined source, a fresh picture generated a visible moving enemy and two collision
