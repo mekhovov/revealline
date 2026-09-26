@@ -42,11 +42,23 @@ export function createAuthoredJourneyRouteDefinition(
     createNeonCulturalCompletionCandidates,
     createRoverCulturalCompletionCandidates,
     createBorderCulturalCompletionCandidates,
+    createBorderFrontierPocketCandidates,
     createUkrainianOrnamentJourney,
     createUkrainianOrnamentAtlasJourney,
   },
 ) {
   if (!isAuthoredJourneyRouteId(id)) return null;
+  if (id === 'whole-spatial-v32')
+    return freezeDesign({
+      id,
+      label: 'Whole Journey Border frontier and pocket completion · balance pending',
+      sessionKey: 'revealline.suspended.journey-whole-spatial.v32',
+      profileKey: 'journey-whole-spatial-v32',
+      source: createBorderFrontierPocketCandidates({ artwork: true }),
+      corePackIds: [...WHOLE_JOURNEY_CORE_PACK_IDS],
+      optionalCampaignIds: ['ornament-crossings', 'workshop-routing'],
+      preserveOriginalThemes: true,
+    });
   if (id === 'whole-spatial-v31')
     return freezeDesign({
       id,
