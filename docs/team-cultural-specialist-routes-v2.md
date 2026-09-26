@@ -78,10 +78,12 @@ approval or gameplay balance.
   factory/entry cohort passes **15/15**.
 - The bounded factory, entry, Team host, handoff, Studio and preserved-edition cohort passes
   **83/83**. Localization validation passes with 9,735 messages and 7,782 references.
-- After the terminal-base restack, the lightweight Team runtime cohort passes **41/41**. A separate
-  uncontended host rerun records 14 passing test/subtest records across Solo, Versus, representative
-  Team source routes and Solo → Versus → Solo restoration. No failures occurred. The earlier two
-  chooser-opening timeouts did not reproduce without concurrent CPU saturation.
+- At PR #650's latest-main exact head, the lightweight Team runtime cohort passes **54/54 with zero
+  skips**. It covers entry, handoff/return, both cultural route editions, isolated progress,
+  preserved impact/complete-specialist editions and exact Next. A separate uncontended host rerun
+  records 14 passing test/subtest records across Solo, Versus, representative Team source routes
+  and Solo → Versus → Solo restoration. No failures occurred. The earlier two chooser-opening
+  timeouts did not reproduce without concurrent CPU saturation.
 - Latest-main reconciliation found that shared cross-collection Next JSON-parsed opaque Team Classic
   owner IDs. PR #657 treats opaque Classic provenance as the Original-rules lane while retaining
   JSON Current/Original separation. This restores Classic → Custom continuation without using
