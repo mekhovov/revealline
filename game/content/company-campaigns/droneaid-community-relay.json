@@ -1,0 +1,287 @@
+{
+  "actorCatalogId": "journey-actors-v1",
+  "assets": [
+    {
+      "alt": "A fictional illustrated community support scene for droneaid-community-relay-01.",
+      "bytes": 1794830,
+      "format": "AssetRevisionV1",
+      "height": 853,
+      "id": "droneaid-community-relay-01-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/droneaid/droneaid-community-relay-01.png",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "6f3f7e96f4d8f0ea78f1026026a2dc5f85981adee599a44ccfa173204c055bbe",
+      "width": 1280
+    },
+    {
+      "alt": "A fictional illustrated community support scene for droneaid-community-relay-02.",
+      "bytes": 2262270,
+      "format": "AssetRevisionV1",
+      "height": 853,
+      "id": "droneaid-community-relay-02-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/droneaid/droneaid-community-relay-02.png",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "5ed9b536b8b11d4af1d6decda4cd8ee26346afcd326efa46de83f017efb4ab8a",
+      "width": 1280
+    },
+    {
+      "alt": "A fictional illustrated community support scene for droneaid-community-relay-03.",
+      "bytes": 2205966,
+      "format": "AssetRevisionV1",
+      "height": 853,
+      "id": "droneaid-community-relay-03-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/droneaid/droneaid-community-relay-03.png",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "855c22a0a4703cfe9810cc36399c92dd0295d0b7f9c5125eda39c9dc8247af4c",
+      "width": 1280
+    }
+  ],
+  "campaigns": [
+    {
+      "band": 1,
+      "format": "CampaignDesignV1",
+      "id": "droneaid-community-relay",
+      "missionIds": [
+        "droneaid-community-relay-01",
+        "droneaid-community-relay-02",
+        "droneaid-community-relay-03"
+      ],
+      "name": "Community Relay",
+      "revision": "1"
+    }
+  ],
+  "difficultyCatalogId": "journey-difficulty-v1",
+  "format": "ContentProjectV1",
+  "id": "droneaid-community-relay",
+  "maps": [
+    {
+      "format": "MapDesignV1",
+      "foundations": [
+        { "h": 5, "w": 8, "x": 11, "y": 15 },
+        { "h": 5, "w": 12, "x": 32, "y": 14 }
+      ],
+      "height": 36,
+      "id": "droneaid-community-relay-01-map",
+      "name": "Workshop Lights",
+      "revision": "1",
+      "spawns": [{ "id": "home", "x": 16.5, "y": 0.5 }],
+      "terrain": [],
+      "walls": [{ "h": 12, "w": 2, "x": 24, "y": 10 }],
+      "width": 72
+    },
+    {
+      "format": "MapDesignV1",
+      "foundations": [
+        { "h": 4, "w": 13, "x": 30, "y": 14 },
+        { "h": 4, "w": 8, "x": 11, "y": 23 },
+        { "h": 4, "w": 8, "x": 52, "y": 7 }
+      ],
+      "height": 36,
+      "id": "droneaid-community-relay-02-map",
+      "name": "Community Relay",
+      "revision": "1",
+      "spawns": [{ "id": "home", "x": 35.5, "y": 0.5 }],
+      "terrain": [],
+      "walls": [
+        { "h": 2, "w": 15, "x": 14, "y": 9 },
+        { "h": 2, "w": 14, "x": 45, "y": 24 }
+      ],
+      "width": 72
+    },
+    {
+      "format": "MapDesignV1",
+      "foundations": [
+        { "h": 4, "w": 9, "x": 31, "y": 10 },
+        { "h": 4, "w": 11, "x": 30, "y": 23 }
+      ],
+      "height": 36,
+      "id": "droneaid-community-relay-03-map",
+      "name": "After the Storm",
+      "revision": "1",
+      "spawns": [{ "id": "home", "x": 35.5, "y": 0.5 }],
+      "terrain": [{ "h": 3, "id": "slow-1", "kind": "slow", "w": 16, "x": 27, "y": 16 }],
+      "walls": [
+        { "h": 11, "w": 3, "x": 22, "y": 8 },
+        { "h": 11, "w": 3, "x": 46, "y": 20 }
+      ],
+      "width": 72
+    }
+  ],
+  "missions": [
+    {
+      "actors": [
+        {
+          "heading": [-1, -1],
+          "id": "paper-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 61.5,
+          "y": 28.5
+        }
+      ],
+      "bonuses": [],
+      "coverage": 0.48,
+      "design": {
+        "captureConsequence": "A completed cut reveals the picture and can connect a workstation; it never grants a real-world approval or changes a business record.",
+        "combines": [],
+        "counterplay": "Watch the visible field drifters and shorten a risky cut by returning to an island.",
+        "difficulty": {
+          "band": 1,
+          "coordination": 0,
+          "execution": 1,
+          "mechanicLoad": 1,
+          "planning": 1,
+          "threatDensity": 1,
+          "timePressure": 0
+        },
+        "durationSeconds": [40, 180],
+        "introduces": ["foundations"],
+        "lesson": "Connect the community workshop’s component stations.",
+        "mastery": "Connect the objective and finish without losing a life; learning assignments remain separate from arcade score.",
+        "memorableMoment": "A warm workshop brings tools, frames and people into a shared project.",
+        "practices": ["closure", "enemy-seeded-closure"],
+        "routeDecision": "Reach the centre bench or connect the smaller component tables first."
+      },
+      "format": "MissionDesignV1",
+      "id": "droneaid-community-relay-01",
+      "map": { "id": "droneaid-community-relay-01-map", "revision": "1" },
+      "modes": ["solo"],
+      "name": "Workshop Lights",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 }
+      ],
+      "presentation": {
+        "backgroundAssetId": "droneaid-community-relay-01-picture",
+        "themeId": "droneaid-community"
+      },
+      "revision": "1",
+      "spawnId": "home",
+      "timeLimitSeconds": 0
+    },
+    {
+      "actors": [
+        {
+          "heading": [-1, -1],
+          "id": "paper-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 61.5,
+          "y": 28.5
+        }
+      ],
+      "bonuses": [],
+      "coverage": 0.53,
+      "design": {
+        "captureConsequence": "A completed cut reveals the picture and can connect a workstation; it never grants a real-world approval or changes a business record.",
+        "combines": [],
+        "counterplay": "Watch the visible field drifters and shorten a risky cut by returning to an island.",
+        "difficulty": {
+          "band": 1,
+          "coordination": 0,
+          "execution": 1,
+          "mechanicLoad": 1,
+          "planning": 1,
+          "threatDensity": 1,
+          "timePressure": 0
+        },
+        "durationSeconds": [40, 180],
+        "introduces": [],
+        "lesson": "Link the workshop, collection point and delivery hub.",
+        "mastery": "Connect the objective and finish without losing a life; learning assignments remain separate from arcade score.",
+        "memorableMoment": "A friendly support route connects packing tables and community logistics.",
+        "practices": ["closure", "enemy-seeded-closure"],
+        "routeDecision": "Use the collection dock as an intermediate return on the way to the far hub."
+      },
+      "format": "MissionDesignV1",
+      "id": "droneaid-community-relay-02",
+      "map": { "id": "droneaid-community-relay-02-map", "revision": "1" },
+      "modes": ["solo"],
+      "name": "Community Relay",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 15.5, "y": 8.5 }
+      ],
+      "presentation": {
+        "backgroundAssetId": "droneaid-community-relay-02-picture",
+        "themeId": "droneaid-community"
+      },
+      "revision": "1",
+      "spawnId": "home",
+      "timeLimitSeconds": 0
+    },
+    {
+      "actors": [
+        {
+          "heading": [-1, -1],
+          "id": "paper-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "heading": [1, -1],
+          "id": "second-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 12.5,
+          "y": 27.5
+        }
+      ],
+      "bonuses": [],
+      "coverage": 0.56,
+      "design": {
+        "captureConsequence": "A completed cut reveals the picture and can connect a workstation; it never grants a real-world approval or changes a business record.",
+        "combines": [],
+        "counterplay": "Watch the visible field drifters and shorten a risky cut by returning to an island.",
+        "difficulty": {
+          "band": 1,
+          "coordination": 0,
+          "execution": 1,
+          "mechanicLoad": 1,
+          "planning": 1,
+          "threatDensity": 2,
+          "timePressure": 0
+        },
+        "durationSeconds": [40, 180],
+        "introduces": [],
+        "lesson": "Restore a fictional civilian support and communications route.",
+        "mastery": "Connect the objective and finish without losing a life; learning assignments remain separate from arcade score.",
+        "memorableMoment": "Field notes and a recovering landscape celebrate emergency collaboration.",
+        "practices": ["closure", "enemy-seeded-closure"],
+        "routeDecision": "Build a sheltered inner route before crossing the final exposed field."
+      },
+      "format": "MissionDesignV1",
+      "id": "droneaid-community-relay-03",
+      "map": { "id": "droneaid-community-relay-03-map", "revision": "1" },
+      "modes": ["solo"],
+      "name": "After the Storm",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 18.5, "y": 8.5 }
+      ],
+      "presentation": {
+        "backgroundAssetId": "droneaid-community-relay-03-picture",
+        "themeId": "droneaid-community"
+      },
+      "revision": "1",
+      "spawnId": "home",
+      "timeLimitSeconds": 0
+    }
+  ],
+  "name": "Community Relay",
+  "packs": [
+    {
+      "campaignIds": ["droneaid-community-relay"],
+      "format": "PackDesignV1",
+      "id": "droneaid-community-relay-pack",
+      "name": "Community Relay",
+      "revision": "1"
+    }
+  ],
+  "policyId": "journey-arcade-v2",
+  "revision": "1"
+}
