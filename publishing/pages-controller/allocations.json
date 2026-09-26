@@ -511,6 +511,11 @@
       "id": "archive-94",
       "repository": "mekhovov/revealline-archive-94",
       "versions": ["v0.132.5"]
+    },
+    {
+      "id": "archive-95",
+      "repository": "mekhovov/revealline-archive-95",
+      "versions": ["v0.141.0"]
     }
   ]
 }
