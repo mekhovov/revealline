@@ -1109,6 +1109,35 @@ Prioritize articulated low/palm-muted riffs, rhythmic rests, bass/kick coordinat
 double kick, contrasting riffs and controlled distortion. Reference Valfaris,
 Slain, Prodeus and DOOM for articulation and arrangement, not copied melodies.
 
+#### M6 review queue — direct archive player links
+
+Review these exact complete recordings in order. “Full-length” distinguishes the
+complete source recordings from separately published loops or alternate encodings;
+the four Purgatory recordings are intentionally shorter than the 3–5-minute target.
+
+First review the prioritized Interstellar/Purgatory set:
+
+1. [Solar Storm — 3:46](https://mekhovov.github.io/revealline-soundtracks-01/?track=davidkbd.solar-storm#recordings)
+2. [Galactic Battle — 3:46](https://mekhovov.github.io/revealline-soundtracks-01/?track=davidkbd.galactic-battle#recordings)
+3. [Orbital Assault — 3:06](https://mekhovov.github.io/revealline-soundtracks-01/?track=davidkbd.orbital-assault#recordings)
+4. [Mutilation's Melody — 2:13](https://mekhovov.github.io/revealline-soundtracks-01/?track=davidkbd.mutilations-melody#recordings)
+5. [Bone Grinder's Ballad — 2:05](https://mekhovov.github.io/revealline-soundtracks-01/?track=davidkbd.bone-grinders-ballad#recordings)
+6. [The Slicing Strain — 2:12](https://mekhovov.github.io/revealline-soundtracks-01/?track=davidkbd.the-slicing-strain#recordings)
+7. [Visceral Vengeance — 1:55](https://mekhovov.github.io/revealline-soundtracks-01/?track=davidkbd.visceral-vengeance#recordings)
+
+Then review the shorter Reckless set:
+
+1. [City Limits Crash — 1:44](https://mekhovov.github.io/revealline-soundtracks-01/?track=davidkbd.city-limits-crash#recordings)
+2. [Edge of the City — 1:42](https://mekhovov.github.io/revealline-soundtracks-01/?track=davidkbd.edge-of-the-city#recordings)
+3. [Defiant Descent — 1:50](https://mekhovov.github.io/revealline-soundtracks-01/?track=davidkbd.defiant-descent#recordings)
+4. [Airborne Anarchy — 1:26](https://mekhovov.github.io/revealline-soundtracks-01/?track=davidkbd.airborne-anarchy#recordings)
+
+Classify each recording as **approve**, **backup** or **reject**, with a short note
+about riff identity, rhythmic drive, drum impact and sustained gameplay energy.
+Archive publication and technical checks do not grant musical approval or game
+admission. An approved subset needs 1–2 working days for integration and release,
+excluding CI and shared publisher waits.
+
 Ten newer auditions are public; full acceptance remains: David KBD **The Desolation of a
 Civilization, Agony Space-deep, God of Darkness, Suffocation**; Alexander Nakarada
 **The Dobermann, Folklore, Anemo, Trial of Thorns, Riffs Two, Apocalypse**.
