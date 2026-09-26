@@ -119,6 +119,14 @@ class BindingTests(unittest.TestCase):
         current = copy.deepcopy(artifact)
         current['name'] = 'qualified-release-v1.2.3-' + 'a' * 40
         self.assertEqual(utility.artifact_authority(API([current, run, jobs]), value), current)
+        fastline_run = {**run, 'path': utility.FASTLINE_WORKFLOW}
+        fastline_jobs = copy.deepcopy(jobs)
+        for job in fastline_jobs['jobs']:
+            job['name'] = 'qualify / ' + job['name']
+        self.assertEqual(
+            utility.artifact_authority(API([current, fastline_run, fastline_jobs]), value),
+            current,
+        )
         for position, key, replacement in [(0, 'expired', True), (1, 'head_sha', 'b' * 40),
                                             (1, 'conclusion', 'failure'), (1, 'event', 'push')]:
             rows = copy.deepcopy([artifact, run, jobs]); rows[position][key] = replacement

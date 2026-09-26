@@ -20,6 +20,8 @@ import zipfile
 
 LIMIT = 64 * 1024**2
 WORKFLOW = '.github/workflows/qualify-release-source.yml'
+FASTLINE_WORKFLOW = '.github/workflows/fastline-release.yml'
+QUALIFICATION_WORKFLOWS = {WORKFLOW, FASTLINE_WORKFLOW}
 POLICY = 'publishing/test-policy.json'
 GATES = [('validate', 'npm run validate', 'Validate source'),
          ('lint', 'npm run lint', 'Lint source'),
@@ -135,8 +137,9 @@ def optional_step(job, name):
 
 
 def family(run, jobs, workflow, event, commit):
+    workflow_matches = run.get('path') in workflow if isinstance(workflow, set) else run.get('path') == workflow
     require(run.get('status') == 'completed' and run.get('conclusion') == 'success' and
-            run.get('path') == workflow and run.get('event') == event and run.get('head_sha') == commit and
+            workflow_matches and run.get('event') == event and run.get('head_sha') == commit and
             type(run.get('id')) is int and run['id'] > 0, 'Run identity/result differs')
     rows = jobs.get('jobs', [])
     require(type(jobs.get('total_count')) is int and jobs['total_count'] == len(rows) and
@@ -145,6 +148,8 @@ def family(run, jobs, workflow, event, commit):
         require(type(job.get('id')) is int and job['id'] > 0 and job.get('run_id') == run['id'] and
                 job.get('head_sha') == commit and job.get('status') == 'completed' and
                 job.get('conclusion') in ('success', 'skipped'), 'Job identity/result differs')
+    if run.get('path') == FASTLINE_WORKFLOW:
+        return [{**job, 'name': str(job.get('name', '')).removeprefix('qualify / ')} for job in rows]
     return rows
 
 
@@ -312,7 +317,8 @@ def assemble(config, output):
     require(pr_run['id'] != manual['id'], 'Separate PR/manual runs required')
     pr_jobs = family(pr_run, parse(evidence['runs/pr/jobs.json']), '.github/workflows/deploy-pages.yml',
                      'pull_request', pr_source['commit'])
-    manual_jobs = family(manual, parse(evidence['runs/manual/jobs.json']), WORKFLOW, 'workflow_dispatch', source['commit'])
+    manual_jobs = family(manual, parse(evidence['runs/manual/jobs.json']), QUALIFICATION_WORKFLOWS,
+                         'workflow_dispatch', source['commit'])
     qualify, freeze = named(manual_jobs, 'qualify'), named(manual_jobs, 'freeze')
     named(pr_jobs, 'preflight')
     step(qualify, 'Record source identity')
@@ -377,7 +383,7 @@ def assemble(config, output):
         'releaseEligible': True, 'version': source['version'], 'sourceRevision': source['commit'],
         'sourceTree': source['tree'], 'actualCheckoutCommit': source['commit'], 'actualCheckoutTree': source['tree'],
         'allTrackedSourceContentsAndModesMatch': True, 'sourcePR': config['sourcePR'],
-        'qualifiedAt': manual.get('updated_at'), 'runId': manual['id'], 'workflowPath': WORKFLOW,
+        'qualifiedAt': manual.get('updated_at'), 'runId': manual['id'], 'workflowPath': manual['path'],
         'tests': {'status': 'waived', 'counts': None},
         'gates': [{'gate': g, 'command': c, 'jobId': qualify['id'], 'step': step(qualify, n)} for g, c, n in GATES],
         'testPolicy': {**{k: policy[k] for k in ('mode', 'authorization', 'reason')}, 'policyEvidence': pin(POLICY, policy_body)},
