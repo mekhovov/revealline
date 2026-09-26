@@ -1,6 +1,44 @@
 name: Qualify release source
 
 on:
+  workflow_call:
+    inputs:
+      operation:
+        description: Qualify source, or inspect/upload one already frozen artifact
+        required: false
+        default: qualify
+        type: string
+      artifact_binding:
+        description: Reviewed exact JSON binding for utility modes; empty when qualifying
+        required: false
+        default: ""
+        type: string
+      freeze_snapshot:
+        description: Preserve a playable snapshot after every source gate passes
+        required: false
+        default: false
+        type: boolean
+      run_tests:
+        description: Request automated suites after full CI has been restored; ignored in fast-release mode
+        required: false
+        default: false
+        type: boolean
+    outputs:
+      version:
+        description: Exact frozen version with the v prefix
+        value: ${{ jobs.freeze.outputs.version }}
+      source_tree:
+        description: Exact frozen source tree
+        value: ${{ jobs.freeze.outputs.source_tree }}
+      artifact_id:
+        description: Immutable qualified artifact ID
+        value: ${{ jobs.freeze.outputs.artifact_id }}
+      artifact_digest:
+        description: Immutable qualified artifact SHA-256 digest
+        value: ${{ jobs.freeze.outputs.artifact_digest }}
+      artifact_name:
+        description: Immutable qualified artifact name
+        value: ${{ jobs.freeze.outputs.artifact_name }}
   workflow_dispatch:
     inputs:
       operation:
@@ -92,7 +130,7 @@ jobs:
 
   qualify:
     if: >-
-      (github.event_name != 'workflow_dispatch' || inputs.operation == 'qualify') &&
+      inputs.operation == 'qualify' &&
       needs.deduplicate.outputs.should_qualify == 'true'
     needs: deduplicate
     outputs:
@@ -220,12 +258,18 @@ jobs:
 
   freeze:
     if: >-
-      ${{ !cancelled() && github.event_name == 'workflow_dispatch' &&
+      ${{ !cancelled() && (github.event_name == 'workflow_dispatch' || github.event_name == 'workflow_call') &&
           inputs.operation == 'qualify' && inputs.freeze_snapshot &&
           needs.qualify.result == 'success' &&
           ((needs.qualify.outputs.testMode == 'required' && needs.test.result == 'success') ||
            (needs.qualify.outputs.testMode == 'waived' && needs.test.result == 'skipped')) }}
     needs: [qualify, test]
+    outputs:
+      version: ${{ steps.snapshot.outputs.version }}
+      source_tree: ${{ steps.snapshot.outputs.source_tree }}
+      artifact_id: ${{ steps.snapshot_artifact.outputs.artifact-id }}
+      artifact_digest: ${{ steps.snapshot_artifact.outputs.artifact-digest }}
+      artifact_name: qualified-release-${{ steps.snapshot.outputs.version }}-${{ github.sha }}
     runs-on: ubuntu-latest
     # A frozen source archive is intentionally large, but it must fail visibly
     # instead of holding the single release lane forever.
@@ -262,6 +306,7 @@ jobs:
           node scripts/game-cli.mjs release-snapshot --ref "$GITHUB_SHA" --version "$VERSION"
           (cd "releases/$VERSION/site" && sha256sum distribution.zip) > "releases/$VERSION/distribution.zip.sha256"
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "source_tree=$(git rev-parse 'HEAD^{tree}')" >> "$GITHUB_OUTPUT"
 
       - name: Retain original release assets
         id: snapshot_artifact
@@ -289,7 +334,9 @@ jobs:
             'Artifact digest: `${{ steps.snapshot_artifact.outputs.artifact-digest }}`' >> "$GITHUB_STEP_SUMMARY"
 
   inspect-artifact:
-    if: github.event_name == 'workflow_dispatch' && inputs.operation == 'inspect-artifact'
+    if: >-
+      (github.event_name == 'workflow_dispatch' || github.event_name == 'workflow_call') &&
+      inputs.operation == 'inspect-artifact'
     runs-on: ubuntu-latest
     timeout-minutes: 180
     permissions:
@@ -365,8 +412,11 @@ jobs:
   upload-originals:
     concurrency:
       group: frozen-original-upload-${{ github.repository }}
+      queue: max
       cancel-in-progress: false
-    if: github.event_name == 'workflow_dispatch' && inputs.operation == 'upload-originals'
+    if: >-
+      (github.event_name == 'workflow_dispatch' || github.event_name == 'workflow_call') &&
+      inputs.operation == 'upload-originals'
     runs-on: ubuntu-latest
     timeout-minutes: 180
     permissions:
