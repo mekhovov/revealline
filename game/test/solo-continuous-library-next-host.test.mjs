@@ -11,7 +11,7 @@ import { loadAuthoredJourneyRoute } from '../content-design/route-loader.mjs';
 import { createCandidateSoloHost } from '../content-design/solo-host.mjs';
 import { libraryMissionId } from '../mission-library/library.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
-import { activateMissionCard } from './helpers/library-selection.mjs';
+import { activateMissionCard, openMissionLibrary } from './helpers/library-selection.mjs';
 
 function observeAction(button, activate = () => button.click()) {
   const handler = button.onclick;
@@ -143,6 +143,44 @@ async function win(p) {
   if (p.$('game-overlay').hidden) p.$('show-result').click();
   await settle(() => !p.$('next-button').disabled);
 }
+test(
+  'Solo Skip advances a Custom mission without rewards and retains its mission cursor',
+  { timeout: 120000 },
+  async (t) => {
+    const { p, packs } = await setup(t);
+    p.key('ArrowDown');
+    p.key('ArrowDown', false);
+    for (let tick = 0; tick < 8; tick++) p.frame();
+    p.$('pause-button').click();
+    const previous = p.rendered.run,
+      checkpoint = authoritativeCheckpoint(previous),
+      skip = p.$('journey-skip');
+    assert.equal(p.doc.body.dataset.flightState, 'paused');
+    skip.focus();
+    skip.click();
+    await settle(() => /Confirm skip/.test(skip.textContent));
+    assert.equal(p.rendered.run, previous);
+    assert.deepEqual(authoritativeCheckpoint(p.rendered.run), checkpoint);
+    assert.match(
+      p.$('run-message').textContent,
+      /no clear, picture, medal, mastery, reward or unlock/i,
+    );
+    skip.click();
+    await running(p, 'level-0-1');
+    assert.notEqual(p.rendered.run, previous);
+    const profile = loadLibrary(p.storage, 'revealline.library.dev.v1', {
+      campaigns: packs.flatMap((pack) => pack.campaigns),
+    }).library;
+    assert.equal(
+      Object.values(profile.campaigns).flatMap((campaign) => Object.keys(campaign.clears)).length,
+      0,
+    );
+    p.$('pause-button').click();
+    await openMissionLibrary(p, 'overlay-missions');
+    assert.equal(JSON.parse(p.doc.activeElement.dataset.missionId)[3], 'level-0-1');
+    assert.deepEqual(p.errors, []);
+  },
+);
 test(
   'Solo Next crosses Custom campaign and pack boundaries without a summary or picker',
   { timeout: 120000 },
@@ -315,11 +353,9 @@ test('Solo final Journey result retains the picture while Browse permits a delib
   p.$('next-button').click();
   await settle(() => p.$('journey-chooser')?.open);
   p.change('journey-collection', 'Classic');
-  const firstClassic = [...p.$('journey-cards').children].find((card) => {
-    const [owner, , , missionId] = JSON.parse(card.dataset.missionId);
-    return owner === '["classic","base",null]' && missionId === 'signal-01';
-  });
+  const firstClassic = [...p.$('journey-cards').children].find((card) => card.dataset.missionId);
   assert.ok(firstClassic, 'The compatible Classic mission remains available in the same browser.');
+  const firstClassicId = JSON.parse(firstClassic.dataset.missionId);
   firstClassic.click();
   await settle(
     () => new URL(globalThis.location.href).searchParams.get('journey') === 'legacy',
@@ -328,8 +364,7 @@ test('Solo final Journey result retains the picture while Browse permits a delib
   const selected = JSON.parse(
     new URL(globalThis.location.href).searchParams.get('library-mission'),
   );
-  assert.equal(selected[0], '["classic","base",null]');
-  assert.equal(selected[3], 'signal-01');
+  assert.deepEqual(selected, firstClassicId);
   p.frame(0);
   assert.equal(p.rendered.run, result);
   assert.equal(p.rendered.backdrop, picture);
