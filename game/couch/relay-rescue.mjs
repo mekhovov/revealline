@@ -3582,11 +3582,11 @@ export function bootCoop({
     if (candidateJourney || libraryRemoteJourney) return;
     libraryRemotePending ??= Promise.all([
       import('../content-design/team-host.mjs'),
-      import('../content-design/team-spatial-originals.mjs'),
+      import('../content-design/team-complete-specialist-originals.mjs'),
     ])
-      .then(([{ createCandidateTeamHost }, { createTeamSpatialOriginalCandidates }]) => {
+      .then(([{ createCandidateTeamHost }, { createTeamCompleteSpecialistOriginalCandidates }]) => {
         if (disposed) return;
-        const source = createTeamSpatialOriginalCandidates();
+        const source = createTeamCompleteSpecialistOriginalCandidates();
         libraryRemoteJourney = createCandidateTeamHost(source, {
           corePackIds: source.packs.map((item) => item.id),
         });
