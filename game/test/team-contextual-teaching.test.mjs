@@ -108,6 +108,26 @@ test('calm arenas never invent a Support lesson and safe-ground copy remains sem
   });
 });
 
+test('a setup change hides pending Support where no target exists and restores it in a relevant arena', () => {
+  const teacher = createTeamContextualTeaching({ getStorage: () => new Storage() });
+  teacher.opening(pressure);
+  assert.equal(teacher.observe([{ type: 'cut.closed' }], pressure).kind, 'support');
+
+  assert.equal(teacher.opening(calm), null, 'calm setup has no valid Support lesson');
+  assert.deepEqual(teacher.snapshot(), {
+    active: null,
+    pending: ['support'],
+    acknowledged: [],
+    completed: ['cut'],
+  });
+
+  assert.equal(
+    teacher.opening(pressure).kind,
+    'support',
+    'the unfinished lesson returns when Support has a valid target',
+  );
+});
+
 test('unavailable, corrupt and failed storage retain bounded in-memory teaching', () => {
   const warnings = [];
   const unavailable = createTeamContextualTeaching({

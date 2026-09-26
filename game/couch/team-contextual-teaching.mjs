@@ -64,6 +64,7 @@ function descriptor(kind, context) {
     });
   const slow = context.supportCapabilities.includes('slow');
   const intercept = context.supportCapabilities.includes('intercept');
+  if (!slow && !intercept) return null;
   return Object.freeze({
     kind,
     key:
@@ -125,7 +126,12 @@ export function createTeamContextualTeaching({
     return true;
   };
   const current = () => {
-    const kind = PRIORITY.find((candidate) => pending.has(candidate) && !resolved(candidate));
+    const kind = PRIORITY.find(
+      (candidate) =>
+        pending.has(candidate) &&
+        !resolved(candidate) &&
+        (candidate !== 'support' || context.supportCapabilities.length > 0),
+    );
     return kind ? descriptor(kind, context) : null;
   };
 
