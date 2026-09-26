@@ -6,9 +6,9 @@ Status date: 2026-09-26
 
 - Public baseline: **v0.132.3**; v0.132.4 has an exact immutable production receipt and merged Pages
   selector, but its public-byte audit is still underway and it is not yet accepted delivery.
-- PR #652 has merged to `main` at `ee015163de1131313436b0550892f3739e3c7a1a`. The sole publisher
-  still owns the v0.132.5 immutable release, Pages deployment and public acceptance; the merge is
-  not public delivery.
+- PR #654 has merged the v0.132.5 source to `main` at
+  `72cfc74552669699266d5d8ad92c56a69da885b2`. The sole publisher still owns the immutable release,
+  Pages deployment and public acceptance; the source merge is not public delivery.
 - Parent candidate: draft PR #636 / `team-cultural-specialist-originals-1`. Its GitHub head is
   authoritative after guarded restacks.
 - Draft PR #642 remains the non-default balance candidate. Draft PR #650 wires its v0.149.0
@@ -16,12 +16,12 @@ Status date: 2026-09-26
   while the first cultural and all earlier editions remain directly selectable. Neither change is
   published yet.
 - The complete nineteen-branch cultural stack is rebased onto current `main`
-  `bc5378cf186681aa311fccbf180d295cc3bc0a6c`. PR #650 is at
-  `271c8561aad80af85d8a6b4527f84a7cad8b0066`; its test/documentation successor PR #651 is a clean
+  `72cfc74552669699266d5d8ad92c56a69da885b2`. PR #650 is at
+  `7b7f23a00efd4d4e68fdc624ac5aa820ffda9cdc`; its test/documentation successor PR #651 is a clean
   draft whose exact head is recorded by GitHub. Avoid embedding PR #651's changing self-hash in
   this document.
 - Ready PR #657 isolates the opaque Team Classic-owner continuation hotfix directly on `main` at
-  `d24f7da4a93f6437bf3f189b0ef9a31d9bce71b3`; its exact-head continuation, localization and impact
+  `6459e8fbc2e11f0c3bd6d735885c674c9e7295b8`; its exact-head continuation, localization and impact
   cohort passes **27/27**. It is not merged, released or publicly verified.
 
 ## Completed candidate work
