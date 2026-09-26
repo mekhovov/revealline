@@ -1,0 +1,107 @@
+{
+  "format": "revealline-focused-test-map.v1",
+  "categories": [
+    {
+      "id": "localization",
+      "pathPatterns": [
+        "(^|/)(locales?|localization|i18n)(/|[-.])",
+        "^game/(about|couch)/",
+        "^scripts/localization(-main)?\\.mjs$"
+      ],
+      "commands": [
+        { "id": "i18n-check", "command": "npm", "args": ["run", "i18n:check"] },
+        {
+          "id": "localization-runtime",
+          "command": "node",
+          "args": [
+            "--test",
+            "game/test/localization.test.mjs",
+            "game/test/localization-couch-host.test.mjs",
+            "game/test/localization-gameplay-copy.test.mjs",
+            "game/test/localization-team-copy.test.mjs",
+            "game/test/about-navigation-host.test.mjs"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "offline",
+      "pathPatterns": [
+        "offline",
+        "service-worker",
+        "manifest\\.webmanifest",
+        "optional-chapters"
+      ],
+      "commands": [
+        {
+          "id": "offline-runtime",
+          "command": "node",
+          "args": [
+            "--test",
+            "game/test/offline.test.mjs",
+            "game/test/offline-panel.test.mjs",
+            "game/test/optional-chapters-offline-host.test.mjs",
+            "game/test/asset-studio-offline-fixtures.test.mjs"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "player-navigation-team",
+      "pathPatterns": [
+        "^game/(couch|team|navigation)/",
+        "^game/test/.*(couch|team|navigation|pause|result).*\\.test\\.mjs$"
+      ],
+      "commands": [
+        {
+          "id": "player-navigation-team",
+          "command": "node",
+          "args": [
+            "--test",
+            "game/test/couch-navigation.test.mjs",
+            "game/test/couch-composite-menu-navigation.test.mjs",
+            "game/test/content-team-navigation.test.mjs",
+            "game/test/controller-navigation.test.mjs"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "publishing",
+      "pathPatterns": [
+        "^publishing/",
+        "^scripts/(build-pages|pages-archive|pages-current-entry)\\.mjs$",
+        "^\\.github/workflows/"
+      ],
+      "commands": [
+        {
+          "id": "publishing-controller",
+          "command": "node",
+          "args": [
+            "--test",
+            "publishing/test-policy.test.mjs",
+            "publishing/pages-controller/assemble.test.mjs",
+            "publishing/pages-controller/release-policy.test.mjs",
+            "publishing/pages-controller/release-train-boundary.test.mjs",
+            "publishing/pages-controller/workflow.test.mjs"
+          ]
+        }
+      ]
+    }
+  ],
+  "ignoredPathPatterns": [
+    "^(docs/|.*\\.md$)",
+    "^publishing/pages-controller/(evidence|metadata)/"
+  ],
+  "runtimePathPatterns": [
+    "^(game|scripts|site|platforms|publishing)/",
+    "^(package(-lock)?\\.json|eslint\\.config\\.mjs)$"
+  ],
+  "fallbackCommands": [
+    {
+      "id": "unknown-runtime-validate",
+      "command": "npm",
+      "args": ["run", "validate"]
+    }
+  ]
+}

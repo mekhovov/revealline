@@ -116,6 +116,9 @@ class BindingTests(unittest.TestCase):
             def __init__(self, rows): self.rows = iter(rows)
             def get(self, _path): return next(self.rows)
         self.assertEqual(utility.artifact_authority(API([artifact, run, jobs]), value), artifact)
+        current = copy.deepcopy(artifact)
+        current['name'] = 'qualified-release-v1.2.3-' + 'a' * 40
+        self.assertEqual(utility.artifact_authority(API([current, run, jobs]), value), current)
         for position, key, replacement in [(0, 'expired', True), (1, 'head_sha', 'b' * 40),
                                             (1, 'conclusion', 'failure'), (1, 'event', 'push')]:
             rows = copy.deepcopy([artifact, run, jobs]); rows[position][key] = replacement

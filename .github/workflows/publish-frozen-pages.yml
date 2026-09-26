@@ -4,21 +4,21 @@ on:
   push:
     branches: [main]
     paths:
-      - 'publishing/pages-controller/**'
-      - '!publishing/pages-controller/delivery/**'
-      - '!publishing/pages-controller/evidence/**'
-      - '!publishing/pages-controller/source-qualification.mjs'
-      - '!publishing/pages-controller/release-train-boundary.mjs'
-      - '!publishing/pages-controller/release-train-boundary.test.mjs'
-      - '!publishing/pages-controller/*.test.mjs'
-      - '!publishing/pages-controller/test_*.py'
+      - "publishing/pages-controller/**"
+      - "!publishing/pages-controller/delivery/**"
+      - "!publishing/pages-controller/evidence/**"
+      - "!publishing/pages-controller/source-qualification.mjs"
+      - "!publishing/pages-controller/release-train-boundary.mjs"
+      - "!publishing/pages-controller/release-train-boundary.test.mjs"
+      - "!publishing/pages-controller/*.test.mjs"
+      - "!publishing/pages-controller/test_*.py"
   pull_request:
     branches: [main]
     paths:
-      - 'publishing/pages-controller/**'
-      - '.github/workflows/publish-frozen-pages.yml'
-      - 'scripts/pages-archive.mjs'
-      - 'scripts/pages-current-entry.mjs'
+      - "publishing/pages-controller/**"
+      - ".github/workflows/publish-frozen-pages.yml"
+      - "scripts/pages-archive.mjs"
+      - "scripts/pages-current-entry.mjs"
   workflow_dispatch:
     inputs:
       release_tag:
@@ -33,6 +33,7 @@ permissions:
 concurrency:
   group: frozen-pages-${{ github.event_name == 'pull_request' && format('pr-{0}', github.event.pull_request.number) || 'production' }}
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+  queue: ${{ github.event_name == 'pull_request' && 'single' || 'max' }}
 
 env:
   REQUESTED_RELEASE: ${{ inputs.release_tag || '' }}
@@ -95,6 +96,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           PREVIEW: ${{ github.event_name == 'pull_request' && '--preview' || '' }}
+          PR_BASE_SHA: ${{ github.event.pull_request.base.sha || '' }}
         run: node publishing/pages-controller/publish.mjs verify $PREVIEW
 
       - name: Assemble exact current ZIP and historical metadata bridges

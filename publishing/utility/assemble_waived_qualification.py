@@ -219,8 +219,10 @@ def inspect(config, evidence, repo, source, manual):
         evidence['inspection-authorities/' + name] = body
     authority = [get(n) for n in originals if n.startswith('api/') and n.endswith('.json') and
                  not n.endswith('.request.json')]
+    allowed_names = {'qualified-release-snapshot',
+                     f'qualified-release-{source["version"]}-{source["commit"]}'}
     authority = [a for a in authority if isinstance(a, dict) and a.get('id') == artifact['id'] and
-                 a.get('name') == 'qualified-release-snapshot']
+                 a.get('name') in allowed_names]
     require(authority, 'Artifact API original missing')
     for row in authority:
         require(row['expired'] is False and row['size_in_bytes'] == artifact['bytes'] and

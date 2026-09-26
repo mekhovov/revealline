@@ -13,25 +13,38 @@ restore blocking tests.
 The `Build and deploy GitHub Pages` workflow keeps only the minimum release path blocking:
 
 1. exact pull-request head and tracked-source identity before commands;
-2. dependency installation;
-3. release-critical source and distribution-reference validation (`npm run validate`);
+2. fail-closed focused-test selection from `publishing/focused-test-map.json`;
+3. one dependency installation followed by the selected localization, offline, player-navigation,
+   Team, or publisher checks; an unknown runtime path falls back to `npm run validate`;
 4. an explicit deferral of the complete artifact build to merged-source qualification;
 5. exact tracked-source identity after the fast release gate; and
 6. the aggregate `release-ready` result.
 
 The preflight and build remain separate job names because frozen-release evidence binds those exact
-contexts. Preflight records only the test policy; the build job is the sole PR source checkout and
-performs validation plus required identity checks before and after the fast gate. It does **not**
-assemble the several-hundred-megabyte distribution in fast mode. Superseded runs for the same PR
-are cancelled by the workflow concurrency group. Pages previews use a partial sparse checkout of
+contexts. The focused job uses a partial checkout and runs only trusted, manifest-declared commands
+against the exact pull-request head. The promoted release build performs validation plus required
+identity checks before and after the fast gate. It does **not** assemble the
+several-hundred-megabyte distribution in fast mode. Superseded runs for the same PR are cancelled by
+the workflow concurrency group. Pages previews use a partial sparse checkout of
 the controller, workflow contracts, test policy, and two archive helpers while retaining all tags
 and on-demand Git objects needed to verify frozen source identities. Production publications remain
-serialized and are never cancelled by a newer run.
+serialized with `queue: max` and are never cancelled or replaced by a newer pending run. Pull-request
+previews keep per-PR cancellation. Authority checks use bounded GraphQL batches; only fields
+unavailable or missing from GraphQL fall back to serial conditional REST with finite retry/backoff.
+Preview runs remotely revalidate only new or changed admission pins, while production checks all
+admitted archives.
 
 The staging workflow uses the same bounded maintenance paths as preflight. Documentation,
 publishing/controller, workflow, and `game/test/`-only pull requests may remain ready without a
 product version; mixed or runtime changes still return to draft until they receive an exact release
-title or the explicit `release-train-approved` label.
+title or a release milestone. Exact-head automation additionally requires the
+`fastline-approved` label; this is a reviewed admission signal, not a substitute for checks.
+
+`REVEALLINE_ACTIVE_RELEASE` names the only milestone the exact-head controller may advance. On a
+successful `release-ready` run the controller rereads the pull request without checking out its
+code. A conflict-free behind branch is updated using its expected head SHA, then checked again. A
+clean exact head is armed for merge-commit auto-merge. A changed head, milestone, hold label,
+unmerged `Depends on #…` predecessor, or changes-requested review disarms an existing request.
 
 Every pull request targeting `main` reports the aggregate `release-ready` context, including
 documentation-only changes. Do not restore pull-request path filters on that workflow while the
@@ -63,7 +76,8 @@ These checks are deferred from the pull-request workflow in fast mode and cannot
 - ESLint;
 - source and native Prettier checks;
 - motion-lab syntax and extended Field Kit provenance checks; and
-- focused Pages-controller unit tests.
+- the complete Pages-controller unit-test suite (changed controller paths still run the bounded
+  focused publisher subset).
 
 The complete deterministic `npm run build` is also deferred from the pull request, but it is not
 waived for release. Merged-source qualification builds it once from the exact merge commit, freezes
