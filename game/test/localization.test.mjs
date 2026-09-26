@@ -132,6 +132,37 @@ test('Ukrainian plural rules include zero, teens, compound counts and decimals',
     assert.equal(api.t('common:counts.levels', { count }), expected);
 });
 
+test('website release and mission selectors use complete English and Ukrainian messages', () => {
+  const english = runtime({ saved: 'en' }).api;
+  assert.equal(
+    english.t('website:preservedBuildStatus', { count: 2, current: 'v0.131.0' }),
+    '2 preserved builds · v0.131.0 remains the default.',
+  );
+  assert.equal(
+    english.t('website:quickSelector.levelLocked', { number: '02', name: 'Crosswind' }),
+    '02 · Crosswind · locked',
+  );
+
+  const ukrainian = runtime({ saved: 'uk' }).api;
+  for (const [count, expected] of [
+    [1, '1 збережена збірка · v0.131.0 залишається типовою.'],
+    [2, '2 збережені збірки · v0.131.0 залишається типовою.'],
+    [5, '5 збережених збірок · v0.131.0 залишається типовою.'],
+    [1.5, '1,5 збереженої збірки · v0.131.0 залишається типовою.'],
+  ])
+    assert.equal(
+      ukrainian.t('website:preservedBuildStatus', { count, current: 'v0.131.0' }),
+      expected,
+    );
+  assert.equal(
+    ukrainian.t('website:quickSelector.levelLocked', {
+      number: '02',
+      name: 'Бічний вітер',
+    }),
+    '02 · Бічний вітер · заблоковано',
+  );
+});
+
 test('Couch continuation cancellation interpolates its localized action', () => {
   for (const [saved, action, expected] of [
     [
