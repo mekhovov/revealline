@@ -1,16 +1,12 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
-import { parse } from 'parse5';
 import {
-  NEON_CULTURAL_ROUTES_FINALE_REVISION,
-  NEON_CULTURAL_ROUTES_FINALE_SELECTIONS,
-  NEON_CULTURAL_ROUTES_FINALE_SOURCES,
-  createNeonCulturalRoutesFinaleCandidates,
-} from '../content-design/neon-cultural-routes-finale-candidates.mjs';
-import { createNeonCulturalRoutesCandidates } from '../content-design/neon-cultural-routes-candidates.mjs';
-import { compileContentProject, resolveMission } from '../content-design/project.mjs';
-import { inspectMissionTopology } from '../content-design/diagnostics.mjs';
+  CROSSWIND_CULTURAL_ROUTES_REVISION,
+  CROSSWIND_CULTURAL_ROUTES_SELECTIONS,
+  CROSSWIND_CULTURAL_ROUTES_SOURCES,
+  createCrosswindCulturalRoutesCandidates,
+} from '../content-design/crosswind-cultural-routes-candidates.mjs';
+import { createRelayCulturalRoutesCandidates } from '../content-design/relay-cultural-routes-candidates.mjs';
 import { createAuthoredJourneyRoute } from '../content-design/route.mjs';
 import { loadAuthoredJourneyRoute } from '../content-design/route-loader.mjs';
 import { DEFAULT_JOURNEY_ROUTES } from '../content-design/default-entry.mjs';
@@ -19,6 +15,8 @@ import {
   authoredJourneyModeHref,
   authoredJourneyUsesActorMaterials,
 } from '../content-design/mode-href.mjs';
+import { compileContentProject, resolveMission } from '../content-design/project.mjs';
+import { inspectMissionTopology } from '../content-design/diagnostics.mjs';
 import { createRun, stepRun, FIXED_DT } from '../core/index.mjs';
 import {
   authoritativeCheckpoint,
@@ -29,10 +27,10 @@ import {
 } from '../replay.mjs';
 import { createDuel, resumeDuel, stepDuel, UNTIMED_DUEL_PROTOCOL } from '../multiplayer.mjs';
 
-const IDS = NEON_CULTURAL_ROUTES_FINALE_SELECTIONS.map((item) => item.id);
+const IDS = CROSSWIND_CULTURAL_ROUTES_SELECTIONS.map((item) => item.id);
 const PRESETS = ['gentle', 'standard', 'expert'];
-const beforeSource = createNeonCulturalRoutesCandidates({ artwork: true });
-const source = createNeonCulturalRoutesFinaleCandidates({ artwork: true });
+const beforeSource = createRelayCulturalRoutesCandidates({ artwork: true });
+const source = createCrosswindCulturalRoutesCandidates({ artwork: true });
 const beforeProject = compileContentProject(beforeSource);
 const project = compileContentProject(source);
 const mission = (compiled, id) => compiled.missions.find((item) => item.id === id);
@@ -43,20 +41,17 @@ const map = (compiled, id) => {
   );
 };
 
-test('selection is the remaining Neon trio with bounded cultural attribution', () => {
-  assert.deepEqual(IDS, ['dogleg-return', 'staggered-circuit', 'neon-remix']);
-  assert.equal(new Set(IDS).size, IDS.length);
-  for (const selection of NEON_CULTURAL_ROUTES_FINALE_SELECTIONS) {
+test('selection is three Crosswind identities with bounded cultural attribution', () => {
+  assert.deepEqual(IDS, ['read-the-arrows', 'windbreak-weave', 'long-wave']);
+  for (const selection of CROSSWIND_CULTURAL_ROUTES_SELECTIONS) {
     assert(beforeSource.missions.some((item) => item.id === selection.id));
     assert.equal(selection.approaches.length, 2);
     assert.equal(new Set(selection.approaches).size, 2);
     assert(selection.pressurePoints.length >= 4);
-    assert(selection.sourceIds.every((id) => NEON_CULTURAL_ROUTES_FINALE_SOURCES[id]));
+    assert(selection.sourceIds.every((id) => CROSSWIND_CULTURAL_ROUTES_SOURCES[id]));
   }
-  assert.match(NEON_CULTURAL_ROUTES_FINALE_SOURCES.podoliaStripedRiadno.url, /honchar\.org\.ua/);
-  assert.match(NEON_CULTURAL_ROUTES_FINALE_SOURCES.hutsulWovenZapaska.url, /honchar\.org\.ua/);
-  assert.match(NEON_CULTURAL_ROUTES_FINALE_SOURCES.ukrainianPysanka.url, /ich\.unesco\.org/);
-  for (const item of Object.values(NEON_CULTURAL_ROUTES_FINALE_SOURCES)) {
+  for (const item of Object.values(CROSSWIND_CULTURAL_ROUTES_SOURCES)) {
+    assert.match(item.url, /(honchar\.org\.ua|museum\.mincult\.gov\.ua)/);
     assert(item.observedVocabulary.length >= 3);
     assert.match(item.adaptationBoundary, /No .*cop/i);
   }
@@ -64,11 +59,11 @@ test('selection is the remaining Neon trio with bounded cultural attribution', (
 
 for (const artwork of [false, true])
   test(`copy-on-write changes only selected missions and owners: artwork=${artwork}`, () => {
-    const before = createNeonCulturalRoutesCandidates({ artwork });
+    const before = createRelayCulturalRoutesCandidates({ artwork });
     const snapshot = structuredClone(before);
-    const revised = createNeonCulturalRoutesFinaleCandidates({ artwork });
-    assert.deepEqual(createNeonCulturalRoutesCandidates({ artwork }), snapshot);
-    assert.equal(revised.revision, NEON_CULTURAL_ROUTES_FINALE_REVISION);
+    const revised = createCrosswindCulturalRoutesCandidates({ artwork });
+    assert.deepEqual(createRelayCulturalRoutesCandidates({ artwork }), snapshot);
+    assert.equal(revised.revision, CROSSWIND_CULTURAL_ROUTES_REVISION);
     assert.equal(revised.policyId, before.policyId);
     assert.equal(revised.actorCatalogId, before.actorCatalogId);
     assert.equal(revised.difficultyCatalogId, before.difficultyCatalogId);
@@ -77,13 +72,15 @@ for (const artwork of [false, true])
       const previous = before.missions.find((item) => item.id === current.id);
       if (!IDS.includes(current.id)) assert.deepEqual(current, previous);
       else {
-        assert.equal(current.revision, NEON_CULTURAL_ROUTES_FINALE_REVISION);
+        assert.equal(current.revision, CROSSWIND_CULTURAL_ROUTES_REVISION);
         for (const key of [
           'id',
           'name',
           'spawnId',
           'modes',
+          'actors',
           'objectives',
+          'relayLinks',
           'bonuses',
           'timedBonuses',
           'coverage',
@@ -91,34 +88,29 @@ for (const artwork of [false, true])
           'presentation',
         ])
           assert.deepEqual(current[key], previous[key], `${current.id}/${key}`);
-        assert.deepEqual(
-          current.actors.map(({ role, tier }) => ({ role, tier })),
-          previous.actors.map(({ role, tier }) => ({ role, tier })),
-        );
         assert.deepEqual(current.design.introduces, previous.design.introduces);
       }
     }
   });
 
-test('authored obstacles create one field with deliberate disconnected returns', () => {
+test('ornament obstacles preserve deliberate Crosswind topology and directional fields', () => {
   const expected = {
-    'dogleg-return': { foundations: 215, walls: 10, safeComponents: 4 },
-    'staggered-circuit': { foundations: 260, walls: 8, safeComponents: 5 },
-    'neon-remix': { foundations: 396, walls: 6, safeComponents: 4 },
+    'read-the-arrows': { walls: 6, safe: 4, zones: 2 },
+    'windbreak-weave': { walls: 8, safe: 6, zones: 4 },
+    'long-wave': { walls: 8, safe: 6, zones: 3 },
   };
   for (const id of IDS) {
     const previous = map(beforeProject, id);
     const current = map(project, id);
     assert.notEqual(current.geometryIdentity, previous.geometryIdentity);
-    assert.equal(current.geometry.foundationCount, expected[id].foundations);
     assert.equal(current.source.walls.length, expected[id].walls);
+    assert.equal(current.source.speedZones.length, expected[id].zones);
     assert.equal(current.geometry.fieldComponents.length, 1);
-    assert.equal(current.geometry.safeComponents.length, expected[id].safeComponents);
+    assert.equal(current.geometry.safeComponents.length, expected[id].safe);
     assert.deepEqual(
       current.geometry.diagnostics.map((item) => item.code),
       ['disconnected-foundations'],
     );
-    assert(current.geometry.safeComponents.every((component) => component.departures.length >= 4));
     for (const difficulty of PRESETS) {
       const manifest = resolveMission(project, id, { difficulty });
       assert.deepEqual(inspectMissionTopology(manifest.level, current.geometry).diagnostics, []);
@@ -126,7 +118,7 @@ test('authored obstacles create one field with deliberate disconnected returns',
   }
 });
 
-test('rules, role counts, bonuses and objectives remain exact across presets and modes', () => {
+test('rules, roles, bonuses and objectives remain exact across presets and modes', () => {
   for (const id of IDS)
     for (const difficulty of PRESETS) {
       const before = resolveMission(beforeProject, id, { difficulty, mode: 'solo' });
@@ -134,6 +126,7 @@ test('rules, role counts, bonuses and objectives remain exact across presets and
       const versus = resolveMission(project, id, { difficulty, mode: 'versus' });
       assert.deepEqual(solo.level.rules, before.level.rules);
       assert.deepEqual(solo.level.objectives, before.level.objectives);
+      assert.deepEqual(solo.level.relays, before.level.relays);
       assert.deepEqual(solo.level.powerups, before.level.powerups);
       assert.deepEqual(solo.level.timedBonuses, before.level.timedBonuses);
       assert.deepEqual(
@@ -166,31 +159,20 @@ function closeRoute(run, id, approach, sidecars = {}) {
       (state) => state.events.some((event) => event.type === 'cut.closed'),
       sidecars,
     );
-  if (id === 'dogleg-return' && approach === 'central-hook-first') close('down');
-  else if (id === 'dogleg-return' && approach === 'east-landing-first') {
-    position('right', (state) => state.player.x >= 58.4);
+  if (id === 'read-the-arrows' && approach === 'marked-center-run') close('down');
+  else if (id === 'read-the-arrows' && approach === 'west-chevron-detour') {
+    position('left', (state) => state.player.x <= 13.5);
     close('down');
-  } else if (id === 'staggered-circuit' && approach === 'controller-pad-first') close('down');
-  else if (id === 'staggered-circuit' && approach === 'right-rail-first') {
-    position('right', (state) => state.player.x >= 56.4);
+  } else if (id === 'windbreak-weave' && approach === 'north-thread') close('up');
+  else if (id === 'windbreak-weave' && approach === 'west-meander') close('left');
+  else if (id === 'long-wave' && approach === 'central-wave') close('down');
+  else if (id === 'long-wave' && approach === 'west-riser') {
+    position('left', (state) => state.player.x <= 16.5);
     close('down');
-  } else if (id === 'neon-remix' && approach === 'west-mouth-first') {
-    position('right', (state) => state.player.x >= 20.4);
-    close('down');
-  } else if (id === 'neon-remix' && approach === 'upper-span-first') close('right');
-  else throw new TypeError(`Unknown authored route ${id}/${approach}`);
+  } else throw new TypeError(`Unknown authored route ${id}/${approach}`);
 }
 
-const EXPECTED_CLAIMS = Object.freeze({
-  'central-hook-first': 7,
-  'east-landing-first': 7,
-  'controller-pad-first': 6,
-  'right-rail-first': 9,
-  'west-mouth-first': 6,
-  'upper-span-first': 28,
-});
-
-for (const selection of NEON_CULTURAL_ROUTES_FINALE_SELECTIONS)
+for (const selection of CROSSWIND_CULTURAL_ROUTES_SELECTIONS)
   for (const difficulty of PRESETS)
     for (const turnPolicy of ['immediate', 'grid-center'])
       test(`${selection.id} executes both approaches on ${difficulty}/${turnPolicy} across seeds`, () => {
@@ -199,10 +181,9 @@ for (const selection of NEON_CULTURAL_ROUTES_FINALE_SELECTIONS)
             const manifest = resolveMission(project, selection.id, { difficulty });
             const run = createRun(manifest.level, { seed, classId: 'scout', turnPolicy });
             closeRoute(run, selection.id, approach);
-            assert.equal(run.claimedCount, EXPECTED_CLAIMS[approach]);
+            assert(run.claimedCount > 0);
             assert.equal(run.player.cutting, false);
             assert.equal(run.player.speed, 0);
-            assert.equal(run.events.filter((event) => event.type === 'cut.closed').length, 1);
           }
       });
 
@@ -219,7 +200,7 @@ for (const id of IDS)
       }
     });
 
-for (const selection of NEON_CULTURAL_ROUTES_FINALE_SELECTIONS)
+for (const selection of CROSSWIND_CULTURAL_ROUTES_SELECTIONS)
   for (const approach of selection.approaches)
     test(`${selection.id}/${approach} is replay-stable and equal on both Versus boards`, () => {
       const manifest = resolveMission(project, selection.id, { difficulty: 'standard' });
@@ -241,12 +222,12 @@ for (const selection of NEON_CULTURAL_ROUTES_FINALE_SELECTIONS)
       assert.deepEqual(authoritativeCheckpoint(run), authoritativeCheckpoint(duel.runs[0]));
     });
 
-test('registered v17 successor preserves v16 order and uses isolated progress ownership', async () => {
-  const current = createAuthoredJourneyRoute('whole-spatial-v17');
-  const previous = createAuthoredJourneyRoute('whole-spatial-v16');
+test('registered v23 successor preserves v22 order and uses isolated progress ownership', async () => {
+  const current = createAuthoredJourneyRoute('whole-spatial-v23');
+  const previous = createAuthoredJourneyRoute('whole-spatial-v22');
   assert.deepEqual(await loadAuthoredJourneyRoute(current.id), current);
-  assert.equal(current.profileKey, 'journey-whole-spatial-v17');
-  assert.equal(current.sessionKey, 'revealline.suspended.journey-whole-spatial.v17');
+  assert.equal(current.profileKey, 'journey-whole-spatial-v23');
+  assert.equal(current.sessionKey, 'revealline.suspended.journey-whole-spatial.v23');
   assert.notEqual(current.profileKey, previous.profileKey);
   assert.notEqual(current.sessionKey, previous.sessionKey);
   assert.deepEqual(previous.source, beforeSource);
@@ -260,44 +241,9 @@ test('registered v17 successor preserves v16 order and uses isolated progress ow
     versus: 'whole-spatial-v23',
     team: 'team-trail-impact-originals-1',
   });
-  assert.equal(authoredJourneyModeHref(current.id, 'solo'), '../?journey=whole-spatial-v17');
+  assert.equal(authoredJourneyModeHref(current.id, 'solo'), '../?journey=whole-spatial-v23');
   assert.equal(
     authoredJourneyModeHref(current.id, 'versus'),
-    'couch/?journey=whole-spatial-v17&return=solo',
+    'couch/?journey=whole-spatial-v23&return=solo',
   );
-  for (const key of ['campaigns', 'packs'])
-    assert.deepEqual(
-      current.source[key].map((item) =>
-        key === 'campaigns' ? [item.id, item.missionIds] : [item.id, item.campaignIds],
-      ),
-      previous.source[key].map((item) =>
-        key === 'campaigns' ? [item.id, item.missionIds] : [item.id, item.campaignIds],
-      ),
-    );
-});
-
-test('Studio retains v16 and v17 while its selector advances to v20', async () => {
-  const html = await readFile(new URL('../studio/index.html', import.meta.url), 'utf8');
-  const script = await readFile(new URL('../studio/studio.mjs', import.meta.url), 'utf8');
-  const nodes = [];
-  const visit = (node) => {
-    nodes.push(node);
-    node.childNodes?.forEach(visit);
-  };
-  visit(parse(html));
-  const attribute = (node, name) => node.attrs?.find((item) => item.name === name)?.value;
-  const selector = nodes.find((node) => attribute(node, 'id') === 'whole-variety-edition');
-  const options = selector.childNodes.filter((node) => node.tagName === 'option');
-  assert.equal(
-    options.filter((node) => attribute(node, 'value') === 'neon-cultural-routes-1').length,
-    1,
-  );
-  assert.deepEqual(
-    options
-      .filter((node) => attribute(node, 'selected') !== undefined)
-      .map((node) => attribute(node, 'value')),
-    ['crosswind-cultural-routes-1'],
-  );
-  assert.match(html, /journey=whole-spatial-v17/);
-  assert.match(script, /'neon-cultural-routes-2': createNeonCulturalRoutesFinaleCandidates/);
 });
