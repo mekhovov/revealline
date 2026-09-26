@@ -122,23 +122,39 @@ export async function validateWaivedSourceQualification({
     frozen = qualification.frozenArtifactCorroboration;
   const focusedValid =
     exact(focused, [
-      'runId', 'jobId', 'aggregateJobId', 'sourceRevision', 'sourceTree',
-      'classificationSteps', 'genericBuild', 'fullTests', 'scope',
+      'runId',
+      'jobId',
+      'aggregateJobId',
+      'sourceRevision',
+      'sourceTree',
+      'classificationSteps',
+      'genericBuild',
+      'fullTests',
+      'scope',
     ]) &&
-    positive(focused?.runId, 1e14) && positive(focused?.jobId, 1e14) &&
-    positive(focused?.aggregateJobId, 1e14) && COMMIT.test(focused?.sourceRevision) &&
+    positive(focused?.runId, 1e14) &&
+    positive(focused?.jobId, 1e14) &&
+    positive(focused?.aggregateJobId, 1e14) &&
+    COMMIT.test(focused?.sourceRevision) &&
     focused?.sourceTree === qualification.sourceTree &&
-    Array.isArray(focused?.classificationSteps) && focused.classificationSteps.length === 2 &&
-    focused.classificationSteps.every((row) =>
-      exact(row, ['name', 'number', 'status', 'conclusion']) &&
-      positive(row.number, 10_000) && row.status === 'completed' && row.conclusion === 'success') &&
+    Array.isArray(focused?.classificationSteps) &&
+    focused.classificationSteps.length === 2 &&
+    focused.classificationSteps.every(
+      (row) =>
+        exact(row, ['name', 'number', 'status', 'conclusion']) &&
+        positive(row.number, 10_000) &&
+        row.status === 'completed' &&
+        row.conclusion === 'success',
+    ) &&
     focused.classificationSteps.map((row) => row.name).join('\n') ===
       'Capture the reviewed changed-path set\nSelect the fail-closed focused gate' &&
     exact(focused?.genericBuild, ['jobId', 'status']) &&
     positive(focused.genericBuild.jobId, 1e14) &&
     focused.genericBuild.status === 'skipped-by-fast-release-policy' &&
-    exact(focused?.fullTests, ['status']) && focused.fullTests.status === 'waived-and-skipped' &&
-    typeof focused.scope === 'string' && Boolean(focused.scope.trim());
+    exact(focused?.fullTests, ['status']) &&
+    focused.fullTests.status === 'waived-and-skipped' &&
+    typeof focused.scope === 'string' &&
+    Boolean(focused.scope.trim());
   if (
     [premerge, legacyBuild, focused].filter((item) => item !== undefined).length !== 1 ||
     !(
@@ -167,10 +183,14 @@ export async function validateWaivedSourceQualification({
       focusedValid
     ) ||
     !positive(frozen?.artifactId, 1e14) ||
+    (Object.hasOwn(frozen, 'sourceContract') &&
+      !['tar-v1', 'manifest-v1'].includes(frozen.sourceContract)) ||
     (Object.hasOwn(frozen, 'runId') && frozen.runId !== waiver.runId) ||
     ![
       'wholeOriginalArtifactVerifiedBeforeQualification',
-      'sourceTarGitBlobTypeModeAndPaxCommitVerified',
+      frozen?.sourceContract === 'manifest-v1'
+        ? 'sourceManifestGitContentsAndModesVerified'
+        : 'sourceTarGitBlobTypeModeAndPaxCommitVerified',
       'allInnerZipManifestBytesVerified',
       'frozenOfflineInventoryAndBindingsVerified',
     ].every((key) => frozen[key] === true)

@@ -3,6 +3,7 @@ import test from "node:test";
 
 import {
   RELEASE_ASSET_NAMES,
+  releaseAssetNames,
   decideReleaseAssets,
   ensureDraftRelease,
   normalizeAssetDigest,
@@ -17,6 +18,27 @@ const expected = RELEASE_ASSET_NAMES.map((name, index) => ({
   size: index + 1,
   digest: `sha256:${String(index).padStart(64, "0")}`,
 }));
+
+test("v2 preserves nine immutable assets and rejects mixed source contracts", () => {
+  const names = releaseAssetNames(2);
+  assert.equal(names.length, 9);
+  assert.ok(names.includes("source-manifest.json"));
+  assert.ok(!names.includes("source.tar"));
+  const v2 = expected.map((asset, index) => ({ ...asset, name: names[index] }));
+  assert.deepEqual(
+    decideReleaseAssets({ expected: v2, actual: v2, published: true }).missing,
+    [],
+  );
+  assert.throws(
+    () => decideReleaseAssets({ expected: v2, actual: expected }),
+    /unexpected/,
+  );
+  assert.throws(
+    () => decideReleaseAssets({ expected: v2, actual: [...v2, v2[0]] }),
+    /nine names/,
+  );
+  assert.throws(() => releaseAssetNames(3), /unsupported/);
+});
 
 test("reuses exact assets and creates only missing draft assets", () => {
   const actual = expected.slice(0, 4);

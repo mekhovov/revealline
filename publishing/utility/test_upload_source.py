@@ -16,6 +16,7 @@ import unittest
 import zipfile
 
 import upload_source as u
+from release_artifact import PinnedManifest
 
 REPO, RELEASE, TAG = 'fixture/project', 17, 'v1.2.3'
 PREFIX = f'/repos/{REPO}/releases/{RELEASE}'
@@ -85,7 +86,7 @@ class FixtureServer:
                                     'chunked': self.headers.get('Transfer-Encoding')})
                 owner.post_recorded.set()
                 asset = {'id': 27, 'url': f'https://api.github.com/repos/{REPO}/releases/assets/27',
-                         'name': 'source.tar', 'state': 'uploaded', 'size': len(body),
+                         'name': self.path.split('?name=')[-1], 'state': 'uploaded', 'size': len(body),
                          'digest': 'sha256:' + hashlib.sha256(body).hexdigest()}
                 owner.assets = [asset]
                 if owner.mode == 'server-failure':
@@ -165,6 +166,32 @@ class UploaderTests(unittest.TestCase):
                 'declared': len(self.tar), 'bytes': len(self.tar), 'sha256': self.args.source_sha256,
                 'type': 'application/x-tar', 'chunked': None})
             self.assertEqual(len(server.gets), 6)
+
+    def test_manifest_stream_upload_and_missing_proof_refusal(self):
+        body = b'{"format":"fixture-source-manifest"}\n'
+        with zipfile.ZipFile(self.outer, 'w') as z:
+            z.writestr(TAG + '/source-manifest.json', body)
+        self.args.outer_bytes = self.outer.stat().st_size
+        self.args.outer_sha256 = hashlib.sha256(self.outer.read_bytes()).hexdigest()
+        self.args.source_bytes = len(body)
+        self.args.source_sha256 = hashlib.sha256(body).hexdigest()
+        self.inspection['artifact'].update(bytes=self.args.outer_bytes, sha256=self.args.outer_sha256)
+        del self.inspection['sourceTar']
+        self.inspection['sourceManifest'] = {
+            'outerMember': TAG + '/source-manifest.json', 'bytes': len(body),
+            'sha256': self.args.source_sha256, 'copiedToDisk': False,
+            'allGitBlobContentsAndModesVerified': True}
+        self.receipt()
+        with self.server() as server, contextlib.closing(PinnedManifest(self.args)) as source:
+            result = u.perform(source, server.api(), REPO, RELEASE, TAG)
+            self.assertEqual(result['assetName'], 'source-manifest.json')
+            self.assertEqual(len(server.posts), 1)
+            self.assertEqual(server.posts[0]['type'], 'application/json')
+            self.assertEqual(server.posts[0]['sha256'], self.args.source_sha256)
+        self.inspection['sourceManifest']['allGitBlobContentsAndModesVerified'] = False
+        self.receipt()
+        with self.assertRaises(u.Refusal):
+            PinnedManifest(self.args)
 
     def test_annotated_tag_resolves_exact_commit(self):
         with self.server('annotated-tag') as server, contextlib.closing(u.PinnedSource(self.args)) as source:
