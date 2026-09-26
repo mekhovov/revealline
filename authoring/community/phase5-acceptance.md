@@ -88,7 +88,12 @@ references unused by another active edition, and deletes a blob only when no man
 its hash. **Reinstall exact edition** restores those bytes from the retained package without a
 network request. Focused tests cover unshared deletion, shared-asset retention, stale concurrent
 generation refusal, interrupted-journal recovery and exact offline reinstall. A physical browser
-offload/reinstall run remains an acceptance gate before this behavior is claimed as deployed.
+offload/reinstall run passed in the built-in browser using an exact 810,180-byte local `.rlpack`.
+The catalog first showed Installed and Offline copy, then replaced Play with **Reinstall exact
+edition** after offload. Reinstall restored the same creator edition
+`6033108fe9e7acc279cb888b19cfccb7033aa9ce20999dc5213b58e282873467`, and its ordinary Custom player
+opened with **Start mission** enabled. This local browser evidence does not claim a deployed
+community service.
 
 The cross-layer journey uses the in-memory repository and blob store with injected account tokens;
 it composes production client, runtime, storage and Fastify boundaries without claiming a physical
