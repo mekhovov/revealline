@@ -175,6 +175,7 @@ test('open Collection translates earned rewards while retaining its context, nod
   const selection = select.value;
   const rows = [...page.$('appearance-rewards').children];
   const badges = [...page.$('achievements').children];
+  const galleryCopy = page.$('gallery-grid').querySelector('button').children[2];
   const checkpoint = authoritativeCheckpoint(page.rendered.run);
   const saved = [...page.storage.map];
   const writes = page.storage.writes.length;
@@ -197,6 +198,7 @@ test('open Collection translates earned rewards while retaining its context, nod
       badges[2].querySelector('span').textContent,
       language === 'uk' ? /Пройдіть 3 різні місії/ : /Complete 3 different missions/,
     );
+    assert.match(galleryCopy.textContent, language === 'uk' ? /Також здобуто:/ : /Also earned:/);
     assert.match(
       page.$('appearance-campaign').textContent,
       /Earned chapter/,
@@ -204,6 +206,7 @@ test('open Collection translates earned rewards while retaining its context, nod
     );
     assert.deepEqual([...page.$('appearance-rewards').children], rows);
     assert.deepEqual([...page.$('achievements').children], badges);
+    assert.equal(page.$('gallery-grid').querySelector('button').children[2], galleryCopy);
     assert.equal(select.value, selection);
     assert.equal(page.doc.activeElement, select);
     assert.equal(page.$('collection-dialog').open, true);
