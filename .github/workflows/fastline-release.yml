@@ -53,6 +53,7 @@ jobs:
           filter: blob:none
           sparse-checkout: |
             publishing/fastline-release-inputs.mjs
+            publishing/fastline-release-objects.mjs
           sparse-checkout-cone-mode: false
 
       - name: Set up admission runtime
@@ -130,6 +131,14 @@ jobs:
           echo "pr_tree=$pr_tree" >> "$GITHUB_OUTPUT"
           echo "pr_run=$pr_run" >> "$GITHUB_OUTPUT"
 
+      - name: Refuse mismatched tag or release objects
+        id: release_objects
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ inputs.version }}
+          SOURCE_SHA: ${{ inputs.source_sha }}
+        run: node publishing/fastline-release-objects.mjs
+
       - name: Record admission timing and stage plan
         env:
           MODE: ${{ inputs.mode }}
@@ -144,6 +153,7 @@ jobs:
             "Version: \`$VERSION\`" \
             "Source: \`$SOURCE_SHA\`" \
             "Tree: \`$SOURCE_TREE\`" \
+            'Release objects: `${{ steps.release_objects.outputs.object_state }}`.' \
             'The full suites remain waived and are not reported as passed.' >> "$GITHUB_STEP_SUMMARY"
 
   qualify:
