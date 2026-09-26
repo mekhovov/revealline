@@ -194,11 +194,15 @@ test('keyboard Play starts synchronously and Pause cancels loading intent withou
 test('Next while paused selects a song without introducing Play or changing focus', () => {
   const f = setup();
   f.resume.focus();
-  f.key('KeyN');
+  assert.equal(f.host.available('next'), true);
+  assert.equal(f.host.perform('next'), true, 'Pause can call the shared transport directly');
   assert.deepEqual(f.calls, ['next']);
   assert.equal(f.state().track.id, 'two');
   assert.equal(f.state().desired, false);
   assert.equal(f.doc.activeElement, f.resume);
+  f.setState({ queue: [] });
+  assert.equal(f.host.available('next'), false);
+  assert.equal(f.host.perform('next'), false);
   f.host.dispose();
 });
 
