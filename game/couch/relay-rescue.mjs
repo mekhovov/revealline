@@ -732,6 +732,7 @@ export function bootCoop({
     if (pausedAttempt) {
       pauseCore.append(help);
       pauseCore.append(settings);
+      pauseCore.append(sound);
       pauseCore.append($('coop-home-paused'));
     } else {
       tools.append(help);
