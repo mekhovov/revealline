@@ -356,6 +356,519 @@
       "path": "game/editions/assets/coupa/scoped-access-v1.png",
       "publication": "public",
       "sha256": "05865bd2f0a028ab582889736574e776876d0735a91c377dff3c89f04ff9b2a0"
+    },
+    {
+      "approved": true,
+      "bytes": 953677,
+      "dependencies": [],
+      "id": "coupa-inside-village-02-reveal-v1",
+      "path": "game/editions/assets/coupa/bulk-02/listen-then-link-v1.png",
+      "publication": "public",
+      "sha256": "66d93ec13abcc1e3095c435278e7a4599ace4618724c93acdfd4ce0277f8b4d5"
+    },
+    {
+      "approved": true,
+      "bytes": 883373,
+      "dependencies": [],
+      "id": "coupa-inside-village-03-reveal-v1",
+      "path": "game/editions/assets/coupa/bulk-02/room-for-everyone-v1.png",
+      "publication": "public",
+      "sha256": "6939aa6f3ed8253504639cbd8db3d3449f160029211be4d30fc3dac6ce97b3b7"
+    },
+    {
+      "approved": true,
+      "bytes": 929184,
+      "dependencies": [],
+      "id": "coupa-inside-village-04-reveal-v1",
+      "path": "game/editions/assets/coupa/bulk-02/own-the-handoff-v1.png",
+      "publication": "public",
+      "sha256": "d8d385fabf56624d69362f0287deb5236f081994b24dbcabe8af7e96e3bc11cd"
+    },
+    {
+      "approved": true,
+      "bytes": 938978,
+      "dependencies": [],
+      "id": "coupa-source-to-pay-03-reveal-v1",
+      "path": "game/editions/assets/coupa/bulk-02/terms-bridge-v1.png",
+      "publication": "public",
+      "sha256": "774f33dfce5bb1c62c3cb5ff46ff64cf8c6624b1d5d0e92feba7faaac3cca998"
+    },
+    {
+      "approved": true,
+      "bytes": 941689,
+      "dependencies": [],
+      "id": "coupa-source-to-pay-04-reveal-v1",
+      "path": "game/editions/assets/coupa/bulk-02/request-to-order-v1.png",
+      "publication": "public",
+      "sha256": "24e38468dc0836f5cd6f189a074f3e4857628b8a613e4b2009e5ab55d05c38d9"
+    },
+    {
+      "approved": true,
+      "bytes": 927662,
+      "dependencies": [],
+      "id": "coupa-source-to-pay-05-reveal-v1",
+      "path": "game/editions/assets/coupa/bulk-02/received-in-part-v1.png",
+      "publication": "public",
+      "sha256": "f60c7a5f9ab780e052cf5c43fe73ca05f4b6e48383c84a3dbf446ca672ddcda3"
+    },
+    {
+      "approved": true,
+      "bytes": 823416,
+      "dependencies": [],
+      "id": "coupa-product-operations-03-reveal-v1",
+      "path": "game/editions/assets/coupa/bulk-02/review-the-request-v1.png",
+      "publication": "public",
+      "sha256": "6815b2caaf6b65230d7efc90e57fd357e72f20eb6c3978164ba03668d943d431"
+    },
+    {
+      "approved": true,
+      "bytes": 792498,
+      "dependencies": [],
+      "id": "coupa-product-operations-04-reveal-v1",
+      "path": "game/editions/assets/coupa/bulk-02/handle-the-change-v1.png",
+      "publication": "public",
+      "sha256": "1dd7123f8cb633625226f096f5c5da7a848fd3532f04e4796ce70aeb7687d2a2"
+    },
+    {
+      "approved": true,
+      "bytes": 829094,
+      "dependencies": [],
+      "id": "coupa-product-operations-05-reveal-v1",
+      "path": "game/editions/assets/coupa/bulk-02/record-the-delivery-v1.png",
+      "publication": "public",
+      "sha256": "b5d544d7eb6c299976bd102b4c7e63e41337cf23b317dd12a09cccc74e2f23f3"
+    },
+    {
+      "approved": true,
+      "bytes": 876039,
+      "dependencies": [],
+      "id": "coupa-developer-integration-03-reveal-v1",
+      "path": "game/editions/assets/coupa/bulk-02/beyond-page-one-v1.png",
+      "publication": "public",
+      "sha256": "783a1086fa752ca083f2239fb424ba8c014436c6a8838a647ec129fe71464f55"
+    },
+    {
+      "approved": true,
+      "bytes": 886581,
+      "dependencies": [],
+      "id": "coupa-developer-integration-04-reveal-v1",
+      "path": "game/editions/assets/coupa/bulk-02/known-references-v1.png",
+      "publication": "public",
+      "sha256": "dc64a854959590085d322a7d9e9f6dab1a477f6c651ad1d6271e39e058c2b0dc"
+    },
+    {
+      "approved": true,
+      "bytes": 925292,
+      "dependencies": [],
+      "id": "coupa-developer-integration-05-reveal-v1",
+      "path": "game/editions/assets/coupa/bulk-02/draft-validate-explain-v1.png",
+      "publication": "public",
+      "sha256": "3b3671602b4bab7cc611d84fd208c7c2b72b62bb97288274599e09d8eda6e2bd"
+    },
+    {
+      "approved": true,
+      "bytes": 994506,
+      "dependencies": [],
+      "id": "coupa-source-to-pay-06-reveal-v1",
+      "path": "game/editions/assets/coupa/bulk-02/close-the-loop-v1.png",
+      "publication": "public",
+      "sha256": "176b93f6ec0c0ba5bd34e85cc733e8c918e8eb3087604f600f7bd542b6ba8f51"
+    },
+    {
+      "approved": true,
+      "bytes": 896391,
+      "dependencies": [],
+      "id": "coupa-product-operations-06-reveal-v1",
+      "path": "game/editions/assets/coupa/bulk-02/clear-the-exception-v1.png",
+      "publication": "public",
+      "sha256": "54555dc7657f068e77b902f2f474baff16f344bc3b7e933bc40a07a9c2fa38a2"
+    },
+    {
+      "approved": true,
+      "bytes": 969855,
+      "dependencies": [],
+      "id": "coupa-developer-integration-06-reveal-v1",
+      "path": "game/editions/assets/coupa/bulk-02/run-ledger-v1.png",
+      "publication": "public",
+      "sha256": "7a9f66fb74c22ce6cdcc435e2f03dd85bfa4592e79ed53c33b03283edd780752"
+    },
+    {
+      "approved": true,
+      "bytes": 914825,
+      "dependencies": [],
+      "id": "coupa-inside-village-05-reveal-v1",
+      "path": "game/editions/assets/coupa/bulk-02/build-tomorrow-v1.png",
+      "publication": "public",
+      "sha256": "f44ca426cec434334b31cadddab96a036c365f2a0492a39d935c73fe2475c14f"
+    },
+    {
+      "approved": true,
+      "bytes": 997763,
+      "dependencies": [],
+      "id": "coupa-inside-village-06-reveal-v1",
+      "path": "game/editions/assets/coupa/bulk-02/all-of-us-v1.png",
+      "publication": "public",
+      "sha256": "556af50d368e0912547dc03f9b6854b43b13cea825fe5d3d0ad0979ab8e00f3b"
+    },
+    {
+      "approved": true,
+      "bytes": 1008350,
+      "dependencies": [],
+      "id": "coupa-spend-in-motion-02-reveal-v1",
+      "path": "game/editions/assets/coupa/bulk-02/supplier-square-v1.png",
+      "publication": "public",
+      "sha256": "0d539a4f1fc673b5c28622eb29aab7c124f29dc947646829cd00e839f246bd81"
+    },
+    {
+      "approved": true,
+      "bytes": 934944,
+      "dependencies": [],
+      "id": "coupa-spend-in-motion-03-reveal-v1",
+      "path": "game/editions/assets/coupa/bulk-02/paper-jam-v1.png",
+      "publication": "public",
+      "sha256": "27ce16100d34d2c9675dda83ba044413e949324e5fa2aaf5ab895142419f11b8"
+    },
+    {
+      "approved": true,
+      "bytes": 911169,
+      "dependencies": [],
+      "id": "coupa-spend-in-motion-04-reveal-v1",
+      "path": "game/editions/assets/coupa/bulk-02/shared-routes-v1.png",
+      "publication": "public",
+      "sha256": "17ac9b2b0ddbe1810eba1940080b346b7840bd97ac01c18cdf9783039e7b3a64"
+    },
+    {
+      "approved": true,
+      "bytes": 940778,
+      "dependencies": [],
+      "id": "coupa-spend-in-motion-05-reveal-v1",
+      "path": "game/editions/assets/coupa/bulk-02/quarter-end-weather-v1.png",
+      "publication": "public",
+      "sha256": "1cf77eb26a6b2347e95fc5e65e59ecd8391cefd7af1f703dcf7122e84f393f3d"
+    },
+    {
+      "approved": true,
+      "bytes": 987441,
+      "dependencies": [],
+      "id": "coupa-spend-in-motion-06-reveal-v1",
+      "path": "game/editions/assets/coupa/bulk-02/make-room-for-tomorrow-v1.png",
+      "publication": "public",
+      "sha256": "83d2875d09e4c0685980c5be1e1a147f1325ab8eff44b7097f054c2e17e64296"
+    },
+    {
+      "approved": true,
+      "bytes": 872124,
+      "dependencies": [],
+      "id": "droneaid-nl-workshop-lights-02-reveal-v1",
+      "path": "game/editions/assets/droneaid-nl/bulk-workshop-02/droneaid-nl-workshop-lights-02.png",
+      "publication": "public",
+      "sha256": "67b6d6d796c66b10c72a490cec393d895f0af4092e5a2e7e212edf5b9f2224f0"
+    },
+    {
+      "approved": true,
+      "bytes": 836720,
+      "dependencies": [],
+      "id": "droneaid-nl-workshop-lights-03-reveal-v1",
+      "path": "game/editions/assets/droneaid-nl/bulk-workshop-02/droneaid-nl-workshop-lights-03.png",
+      "publication": "public",
+      "sha256": "6cec9ee25cd7595337b1154aa9760ad2cf6a21e141191308e51af8a7afa77dd0"
+    },
+    {
+      "approved": true,
+      "bytes": 836235,
+      "dependencies": [],
+      "id": "droneaid-nl-workshop-lights-04-reveal-v1",
+      "path": "game/editions/assets/droneaid-nl/bulk-workshop-02/droneaid-nl-workshop-lights-04.png",
+      "publication": "public",
+      "sha256": "38f7c6178608e9c0b0f3776f8ee985621e34518dd88927e2bd5a36e88099ba11"
+    },
+    {
+      "approved": true,
+      "bytes": 877779,
+      "dependencies": [],
+      "id": "droneaid-nl-workshop-lights-05-reveal-v1",
+      "path": "game/editions/assets/droneaid-nl/bulk-workshop-02/droneaid-nl-workshop-lights-05.png",
+      "publication": "public",
+      "sha256": "a9a4de1f39eb00d2c31f96fe9f33feb0a7f8f55abd6675d20ea59a9f4e6a3fe1"
+    },
+    {
+      "approved": true,
+      "bytes": 826921,
+      "dependencies": [],
+      "id": "droneaid-nl-workshop-lights-06-reveal-v1",
+      "path": "game/editions/assets/droneaid-nl/bulk-workshop-02/droneaid-nl-workshop-lights-06.png",
+      "publication": "public",
+      "sha256": "be181ebb1be6676976bfcd5b3c11158eb32569108183918a4121c89b596252c5"
+    },
+    {
+      "approved": true,
+      "bytes": 823311,
+      "dependencies": [],
+      "id": "droneaid-nl-parts-in-motion-01-reveal-v1",
+      "path": "game/editions/assets/droneaid-nl/bulk-workshop-02/droneaid-nl-parts-in-motion-01.png",
+      "publication": "public",
+      "sha256": "9d06073bd8ff9b3c7b00d6b7dfc5e65fe66a4c1015ab01e69d9b2a27b245ec80"
+    },
+    {
+      "approved": true,
+      "bytes": 907704,
+      "dependencies": [],
+      "id": "droneaid-nl-parts-in-motion-02-reveal-v1",
+      "path": "game/editions/assets/droneaid-nl/bulk-workshop-02/droneaid-nl-parts-in-motion-02.png",
+      "publication": "public",
+      "sha256": "5df1f5b27bf1b2f446576cf0423a9df5736153e06d1412916bbfc37edbe033c7"
+    },
+    {
+      "approved": true,
+      "bytes": 859788,
+      "dependencies": [],
+      "id": "droneaid-nl-parts-in-motion-03-reveal-v1",
+      "path": "game/editions/assets/droneaid-nl/bulk-workshop-02/droneaid-nl-parts-in-motion-03.png",
+      "publication": "public",
+      "sha256": "d0da2b8aafa3879a468864b63ee4fe86cc38db7f7684d923e40792818907d2ca"
+    },
+    {
+      "approved": true,
+      "bytes": 825737,
+      "dependencies": [],
+      "id": "droneaid-nl-parts-in-motion-04-reveal-v1",
+      "path": "game/editions/assets/droneaid-nl/bulk-workshop-02/droneaid-nl-parts-in-motion-04.png",
+      "publication": "public",
+      "sha256": "48d50c7c9a667912dfad48bab231020a840bc55e5a3871ba652b444422c7762c"
+    },
+    {
+      "approved": true,
+      "bytes": 903215,
+      "dependencies": [],
+      "id": "droneaid-nl-parts-in-motion-05-reveal-v1",
+      "path": "game/editions/assets/droneaid-nl/bulk-workshop-02/droneaid-nl-parts-in-motion-05.png",
+      "publication": "public",
+      "sha256": "d53c35b012f03888db667b4687ee619860076f17b0c41411fd7f02bf9c9f1eb2"
+    },
+    {
+      "approved": true,
+      "bytes": 868489,
+      "dependencies": [],
+      "id": "droneaid-nl-parts-in-motion-06-reveal-v1",
+      "path": "game/editions/assets/droneaid-nl/bulk-workshop-02/droneaid-nl-parts-in-motion-06.png",
+      "publication": "public",
+      "sha256": "990fde82ac4314cbaf31961e4224aeaf2aff1d45fc5ea897486fc5665bfd65bb"
+    },
+    {
+      "approved": true,
+      "bytes": 890902,
+      "dependencies": [],
+      "id": "droneaid-nl-makers-together-01-reveal-v1",
+      "path": "game/editions/assets/droneaid-nl/bulk-workshop-02/droneaid-nl-makers-together-01.png",
+      "publication": "public",
+      "sha256": "4db5bb677e1b5a63ad1452525976d3b2d22c037d3abffa19ebed29aa38d8c579"
+    },
+    {
+      "approved": true,
+      "bytes": 852766,
+      "dependencies": [],
+      "id": "droneaid-nl-makers-together-02-reveal-v1",
+      "path": "game/editions/assets/droneaid-nl/bulk-workshop-02/droneaid-nl-makers-together-02.png",
+      "publication": "public",
+      "sha256": "35283125b812d4322e383affa5856748eacfd716ffca4b9fd29a3b5a23d9aa86"
+    },
+    {
+      "approved": true,
+      "bytes": 812369,
+      "dependencies": [],
+      "id": "droneaid-nl-makers-together-03-reveal-v1",
+      "path": "game/editions/assets/droneaid-nl/bulk-workshop-02/droneaid-nl-makers-together-03.png",
+      "publication": "public",
+      "sha256": "629792d4bf4d964c546d70a283246646793186d4170bdc2944633099c412f6b8"
+    },
+    {
+      "approved": true,
+      "bytes": 881660,
+      "dependencies": [],
+      "id": "droneaid-nl-makers-together-04-reveal-v1",
+      "path": "game/editions/assets/droneaid-nl/bulk-workshop-02/droneaid-nl-makers-together-04.png",
+      "publication": "public",
+      "sha256": "780131b1914aa8b904e4818b56405e96aeab4877d914371ed24cb6d77f1f54a0"
+    },
+    {
+      "approved": true,
+      "bytes": 913329,
+      "dependencies": [],
+      "id": "droneaid-nl-makers-together-05-reveal-v1",
+      "path": "game/editions/assets/droneaid-nl/bulk-workshop-02/droneaid-nl-makers-together-05.png",
+      "publication": "public",
+      "sha256": "d0265c0126171227ab226ad9b9d9df22ca70f3b2616b054cbb52ed127a6fc5e2"
+    },
+    {
+      "approved": true,
+      "bytes": 853971,
+      "dependencies": [],
+      "id": "droneaid-nl-makers-together-06-reveal-v1",
+      "path": "game/editions/assets/droneaid-nl/bulk-workshop-02/droneaid-nl-makers-together-06.png",
+      "publication": "public",
+      "sha256": "f037acab298db406f58539ce3b2de444716b0690e85f46647669ccae923c3a8d"
+    },
+    {
+      "approved": true,
+      "bytes": 931307,
+      "dependencies": [],
+      "id": "droneaid-nl-careful-handoff-01-reveal-v1",
+      "path": "game/editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-careful-handoff-01.png",
+      "publication": "public",
+      "sha256": "0cce3319b93d80f9bb07d4cc2ead14c9a1c68c8b45f3efd3031246c97ff7b07a"
+    },
+    {
+      "approved": true,
+      "bytes": 762583,
+      "dependencies": [],
+      "id": "droneaid-nl-careful-handoff-02-reveal-v1",
+      "path": "game/editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-careful-handoff-02.png",
+      "publication": "public",
+      "sha256": "280d77672a14b883139fc0baa35d8ea17d2e571c9cabfa2d12c110d2283bf2e1"
+    },
+    {
+      "approved": true,
+      "bytes": 977692,
+      "dependencies": [],
+      "id": "droneaid-nl-careful-handoff-03-reveal-v1",
+      "path": "game/editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-careful-handoff-03.png",
+      "publication": "public",
+      "sha256": "8d256fe5bbdc062f7bf54bb5818fadb1e5f0e3aa3e25536f81eb59f5158a9bdd"
+    },
+    {
+      "approved": true,
+      "bytes": 855378,
+      "dependencies": [],
+      "id": "droneaid-nl-careful-handoff-04-reveal-v1",
+      "path": "game/editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-careful-handoff-04.png",
+      "publication": "public",
+      "sha256": "dc58407546a27c5c1e879ca207bdb3ae048f318347cdd643fbaa23cfd73955eb"
+    },
+    {
+      "approved": true,
+      "bytes": 883590,
+      "dependencies": [],
+      "id": "droneaid-nl-careful-handoff-05-reveal-v1",
+      "path": "game/editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-careful-handoff-05.png",
+      "publication": "public",
+      "sha256": "d50bbe0cabd58a2566db7b788934b04dbd29306bb02f426a6cb589fb56cc4d09"
+    },
+    {
+      "approved": true,
+      "bytes": 939519,
+      "dependencies": [],
+      "id": "droneaid-nl-careful-handoff-06-reveal-v1",
+      "path": "game/editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-careful-handoff-06.png",
+      "publication": "public",
+      "sha256": "2b51ae00e50b9290ee6dd5da09db0893346d33685f43f39a7a12b0f0a33e5b65"
+    },
+    {
+      "approved": true,
+      "bytes": 911571,
+      "dependencies": [],
+      "id": "droneaid-nl-signals-of-support-01-reveal-v1",
+      "path": "game/editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-signals-of-support-01.png",
+      "publication": "public",
+      "sha256": "5f47850ad578fb362d5659881cb54f4032b0132e19ff21d1eaca9420802b4b42"
+    },
+    {
+      "approved": true,
+      "bytes": 885255,
+      "dependencies": [],
+      "id": "droneaid-nl-signals-of-support-02-reveal-v1",
+      "path": "game/editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-signals-of-support-02.png",
+      "publication": "public",
+      "sha256": "89eae69db2e827341add83a21e9253be077c7a66795ee5b8d7f8ce7953d7b5f0"
+    },
+    {
+      "approved": true,
+      "bytes": 930023,
+      "dependencies": [],
+      "id": "droneaid-nl-signals-of-support-03-reveal-v1",
+      "path": "game/editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-signals-of-support-03.png",
+      "publication": "public",
+      "sha256": "62cdc648ac4f0a1bd8ca37eb27f3f61218f7068499638022a3f1293b359791d5"
+    },
+    {
+      "approved": true,
+      "bytes": 894861,
+      "dependencies": [],
+      "id": "droneaid-nl-signals-of-support-04-reveal-v1",
+      "path": "game/editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-signals-of-support-04.png",
+      "publication": "public",
+      "sha256": "d2ebf01be78b3c5c549b7f06280ce5b14324f67c372c696a0360fa6ed37f6898"
+    },
+    {
+      "approved": true,
+      "bytes": 778171,
+      "dependencies": [],
+      "id": "droneaid-nl-signals-of-support-05-reveal-v1",
+      "path": "game/editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-signals-of-support-05.png",
+      "publication": "public",
+      "sha256": "13543c2613a4dd00f4f67a0f0cdb01a0814a13716bb8ac303554904418dbfba8"
+    },
+    {
+      "approved": true,
+      "bytes": 979535,
+      "dependencies": [],
+      "id": "droneaid-nl-signals-of-support-06-reveal-v1",
+      "path": "game/editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-signals-of-support-06.png",
+      "publication": "public",
+      "sha256": "da9eb2085a868f8baa7b61415ff99418cd513ccac291c699a2ca1c63483afa90"
+    },
+    {
+      "approved": true,
+      "bytes": 982709,
+      "dependencies": [],
+      "id": "droneaid-nl-shared-horizon-01-reveal-v1",
+      "path": "game/editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-shared-horizon-01.png",
+      "publication": "public",
+      "sha256": "e194cfe49e550a79a153214bd91cb08ea1ebb257a873c09529aa8f37dc2b422b"
+    },
+    {
+      "approved": true,
+      "bytes": 919273,
+      "dependencies": [],
+      "id": "droneaid-nl-shared-horizon-02-reveal-v1",
+      "path": "game/editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-shared-horizon-02.png",
+      "publication": "public",
+      "sha256": "7a8e60c73b217413b8170ad311f92b78ff40ac7f5ff07a2b2eab9bb6a066f845"
+    },
+    {
+      "approved": true,
+      "bytes": 843264,
+      "dependencies": [],
+      "id": "droneaid-nl-shared-horizon-03-reveal-v1",
+      "path": "game/editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-shared-horizon-03.png",
+      "publication": "public",
+      "sha256": "cd00f2d194028db0d52116f81a2e549887fad2c86a7175788cf07dffc3e91167"
+    },
+    {
+      "approved": true,
+      "bytes": 867819,
+      "dependencies": [],
+      "id": "droneaid-nl-shared-horizon-04-reveal-v1",
+      "path": "game/editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-shared-horizon-04.png",
+      "publication": "public",
+      "sha256": "a23492980419f875f7797c652bc02d84453339eb1d40d1b9d9d282c4fda6e994"
+    },
+    {
+      "approved": true,
+      "bytes": 916595,
+      "dependencies": [],
+      "id": "droneaid-nl-shared-horizon-05-reveal-v1",
+      "path": "game/editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-shared-horizon-05.png",
+      "publication": "public",
+      "sha256": "96ce6f02cab6d1a8b58c000ab8df81fa9569582d7319ae5319d53a9dc1464d23"
+    },
+    {
+      "approved": true,
+      "bytes": 965525,
+      "dependencies": [],
+      "id": "droneaid-nl-shared-horizon-06-reveal-v1",
+      "path": "game/editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-shared-horizon-06.png",
+      "publication": "public",
+      "sha256": "512795cc0280d5c59c6d1eddc425deb96a199d3c8f2c45fef496daa144bbfd64"
     }
   ],
   "brands": [
@@ -488,7 +1001,14 @@
   ],
   "campaigns": [
     {
-      "assetIds": ["coupa-spend-city-v2"],
+      "assetIds": [
+        "coupa-spend-city-v2",
+        "coupa-spend-in-motion-02-reveal-v1",
+        "coupa-spend-in-motion-03-reveal-v1",
+        "coupa-spend-in-motion-04-reveal-v1",
+        "coupa-spend-in-motion-05-reveal-v1",
+        "coupa-spend-in-motion-06-reveal-v1"
+      ],
       "brandId": "coupa",
       "id": "coupa-spend-in-motion",
       "modes": ["solo"],
@@ -498,7 +1018,14 @@
       "sourcePath": "game/content/company-campaigns/coupa-spend-in-motion.json"
     },
     {
-      "assetIds": ["coupa-inside-village-key"],
+      "assetIds": [
+        "coupa-inside-village-key",
+        "coupa-inside-village-02-reveal-v1",
+        "coupa-inside-village-03-reveal-v1",
+        "coupa-inside-village-04-reveal-v1",
+        "coupa-inside-village-05-reveal-v1",
+        "coupa-inside-village-06-reveal-v1"
+      ],
       "brandId": "coupa",
       "id": "coupa-inside-village",
       "lessonPath": "game/content/company-campaigns/coupa-inside-village.lessons.json",
@@ -509,7 +1036,14 @@
       "sourcePath": "game/content/company-campaigns/coupa-inside-village.json"
     },
     {
-      "assetIds": ["coupa-source-to-pay-key", "coupa-choose-together-v1"],
+      "assetIds": [
+        "coupa-source-to-pay-key",
+        "coupa-choose-together-v1",
+        "coupa-source-to-pay-03-reveal-v1",
+        "coupa-source-to-pay-04-reveal-v1",
+        "coupa-source-to-pay-05-reveal-v1",
+        "coupa-source-to-pay-06-reveal-v1"
+      ],
       "brandId": "coupa",
       "id": "coupa-source-to-pay",
       "lessonPath": "game/content/company-campaigns/coupa-source-to-pay.lessons.json",
@@ -520,7 +1054,14 @@
       "sourcePath": "game/content/company-campaigns/coupa-source-to-pay.json"
     },
     {
-      "assetIds": ["coupa-product-operations-key", "coupa-repair-the-draft-v1"],
+      "assetIds": [
+        "coupa-product-operations-key",
+        "coupa-repair-the-draft-v1",
+        "coupa-product-operations-03-reveal-v1",
+        "coupa-product-operations-04-reveal-v1",
+        "coupa-product-operations-05-reveal-v1",
+        "coupa-product-operations-06-reveal-v1"
+      ],
       "brandId": "coupa",
       "id": "coupa-product-operations",
       "lessonPath": "game/content/company-campaigns/coupa-product-operations.lessons.json",
@@ -531,7 +1072,14 @@
       "sourcePath": "game/content/company-campaigns/coupa-product-operations.json"
     },
     {
-      "assetIds": ["coupa-network-atlas-v2", "coupa-scoped-access-v1"],
+      "assetIds": [
+        "coupa-network-atlas-v2",
+        "coupa-scoped-access-v1",
+        "coupa-developer-integration-03-reveal-v1",
+        "coupa-developer-integration-04-reveal-v1",
+        "coupa-developer-integration-05-reveal-v1",
+        "coupa-developer-integration-06-reveal-v1"
+      ],
       "brandId": "coupa",
       "id": "coupa-developer-integration",
       "lessonPath": "game/content/company-campaigns/coupa-developer-integration.lessons.json",
@@ -556,7 +1104,14 @@
       "sourcePath": "game/content/company-campaigns/droneaid-community-relay.json"
     },
     {
-      "assetIds": ["nl-workshop-v1"],
+      "assetIds": [
+        "nl-workshop-v1",
+        "droneaid-nl-workshop-lights-02-reveal-v1",
+        "droneaid-nl-workshop-lights-03-reveal-v1",
+        "droneaid-nl-workshop-lights-04-reveal-v1",
+        "droneaid-nl-workshop-lights-05-reveal-v1",
+        "droneaid-nl-workshop-lights-06-reveal-v1"
+      ],
       "brandId": "droneaid-nl",
       "id": "droneaid-nl-workshop-lights",
       "modes": ["solo"],
@@ -566,7 +1121,14 @@
       "sourcePath": "game/content/company-campaigns/droneaid-nl-workshop-lights.json"
     },
     {
-      "assetIds": [],
+      "assetIds": [
+        "droneaid-nl-parts-in-motion-01-reveal-v1",
+        "droneaid-nl-parts-in-motion-02-reveal-v1",
+        "droneaid-nl-parts-in-motion-03-reveal-v1",
+        "droneaid-nl-parts-in-motion-04-reveal-v1",
+        "droneaid-nl-parts-in-motion-05-reveal-v1",
+        "droneaid-nl-parts-in-motion-06-reveal-v1"
+      ],
       "brandId": "droneaid-nl",
       "id": "droneaid-nl-parts-in-motion",
       "modes": ["solo"],
@@ -576,7 +1138,14 @@
       "sourcePath": "game/content/company-campaigns/droneaid-nl-parts-in-motion.json"
     },
     {
-      "assetIds": [],
+      "assetIds": [
+        "droneaid-nl-makers-together-01-reveal-v1",
+        "droneaid-nl-makers-together-02-reveal-v1",
+        "droneaid-nl-makers-together-03-reveal-v1",
+        "droneaid-nl-makers-together-04-reveal-v1",
+        "droneaid-nl-makers-together-05-reveal-v1",
+        "droneaid-nl-makers-together-06-reveal-v1"
+      ],
       "brandId": "droneaid-nl",
       "id": "droneaid-nl-makers-together",
       "modes": ["solo"],
@@ -586,7 +1155,14 @@
       "sourcePath": "game/content/company-campaigns/droneaid-nl-makers-together.json"
     },
     {
-      "assetIds": [],
+      "assetIds": [
+        "droneaid-nl-careful-handoff-01-reveal-v1",
+        "droneaid-nl-careful-handoff-02-reveal-v1",
+        "droneaid-nl-careful-handoff-03-reveal-v1",
+        "droneaid-nl-careful-handoff-04-reveal-v1",
+        "droneaid-nl-careful-handoff-05-reveal-v1",
+        "droneaid-nl-careful-handoff-06-reveal-v1"
+      ],
       "brandId": "droneaid-nl",
       "id": "droneaid-nl-careful-handoff",
       "modes": ["solo"],
@@ -596,7 +1172,14 @@
       "sourcePath": "game/content/company-campaigns/droneaid-nl-careful-handoff.json"
     },
     {
-      "assetIds": [],
+      "assetIds": [
+        "droneaid-nl-signals-of-support-01-reveal-v1",
+        "droneaid-nl-signals-of-support-02-reveal-v1",
+        "droneaid-nl-signals-of-support-03-reveal-v1",
+        "droneaid-nl-signals-of-support-04-reveal-v1",
+        "droneaid-nl-signals-of-support-05-reveal-v1",
+        "droneaid-nl-signals-of-support-06-reveal-v1"
+      ],
       "brandId": "droneaid-nl",
       "id": "droneaid-nl-signals-of-support",
       "modes": ["solo"],
@@ -606,7 +1189,14 @@
       "sourcePath": "game/content/company-campaigns/droneaid-nl-signals-of-support.json"
     },
     {
-      "assetIds": [],
+      "assetIds": [
+        "droneaid-nl-shared-horizon-01-reveal-v1",
+        "droneaid-nl-shared-horizon-02-reveal-v1",
+        "droneaid-nl-shared-horizon-03-reveal-v1",
+        "droneaid-nl-shared-horizon-04-reveal-v1",
+        "droneaid-nl-shared-horizon-05-reveal-v1",
+        "droneaid-nl-shared-horizon-06-reveal-v1"
+      ],
       "brandId": "droneaid-nl",
       "id": "droneaid-nl-shared-horizon",
       "modes": ["solo"],
@@ -647,10 +1237,16 @@
           "id": "ecb87b6208f6f55322188ab34d8d9aa63b94064dd346f400bbe2bbbcc9d7870b",
           "path": "game/editions/retained/coupa-all.json",
           "sha256": "a48dc47e3e788046de0094c7d34bd74eda0c8776f271131254e26f5ec12e5706"
+        },
+        {
+          "bytes": 148510,
+          "id": "d9deabcadfd9bdc7622da65ebbcc91bdd752db02234009edc3fe09f85812f842",
+          "path": "game/editions/retained/coupa-all-fb207466c.json",
+          "sha256": "680c7f4fdb23619aed0627ea47444c7040a7f208104e4c2abc1a3d486adbe636"
         }
       ],
       "publication": "public",
-      "revision": 5
+      "revision": 6
     },
     {
       "audience": "public",
@@ -669,8 +1265,16 @@
       "id": "coupa-adventure",
       "modes": ["solo"],
       "name": "Spend in Motion",
+      "presentationHistory": [
+        {
+          "bytes": 29600,
+          "id": "82527f475e9cb0ddbc6bf9701e495e49e08dd635a0e89578c107268373426a05",
+          "path": "game/editions/retained/coupa-adventure-fb207466c.json",
+          "sha256": "ef9a0bf6562fa74ab643d9b214bf1deb1338a1694337cdd822d9cb3cd3c26937"
+        }
+      ],
       "publication": "public",
-      "revision": 4
+      "revision": 5
     },
     {
       "audience": "culture",
@@ -689,8 +1293,16 @@
       "id": "coupa-culture",
       "modes": ["solo"],
       "name": "Inside the Village",
+      "presentationHistory": [
+        {
+          "bytes": 44733,
+          "id": "ed8d7747ad136a06243a2cf8c90dacdc5cf42dc71f5c6448174bde48ea241ae8",
+          "path": "game/editions/retained/coupa-culture-fb207466c.json",
+          "sha256": "12dbf430730aff337133b19e1140efc2c107cc18351b07048eef59c19593bcba"
+        }
+      ],
       "publication": "public",
-      "revision": 4
+      "revision": 5
     },
     {
       "audience": "learners",
@@ -715,10 +1327,16 @@
           "id": "57dd4d5b7e0f8c27662349a8af870862657d700682ac758ad51721a61fdd59aa",
           "path": "game/editions/retained/coupa-foundations.json",
           "sha256": "98d2a026fc89b48cbd76c2d2c2d74d491f666583ae819324f855ebd7f309dd90"
+        },
+        {
+          "bytes": 47276,
+          "id": "176ab6d261ed0e4366b570dd14df270d6b27a761404baf17921dc1f974898bd6",
+          "path": "game/editions/retained/coupa-foundations-fb207466c.json",
+          "sha256": "e6694057707e69a8a134836d91bc1879f3555b39f6fc58622a15073454bf7432"
         }
       ],
       "publication": "public",
-      "revision": 5
+      "revision": 6
     },
     {
       "audience": "operators",
@@ -743,10 +1361,16 @@
           "id": "99254aaf116f5b68881ef51f36c7b5b9ebfbcf6cce371de90c8234c07862a43d",
           "path": "game/editions/retained/coupa-operations.json",
           "sha256": "716bcbd296e6053ca6628b8b55dada9c0489a8893c1044cbc24854899caf6e20"
+        },
+        {
+          "bytes": 48443,
+          "id": "681f63d8afef4e5a89e3d62ac1a2ddaa775cf6d03ad2c3897c64bc2dfb84b922",
+          "path": "game/editions/retained/coupa-operations-fb207466c.json",
+          "sha256": "b00276030dd4642756c75e15120f2d415e07e85dc90b0eacf99cf0ee71574c3d"
         }
       ],
       "publication": "public",
-      "revision": 5
+      "revision": 6
     },
     {
       "audience": "developers",
@@ -771,10 +1395,16 @@
           "id": "72ede618c25678c324d39389b9789130c66bb05f461e900d367e9c3f2a878224",
           "path": "game/editions/retained/coupa-developers.json",
           "sha256": "ee4d10212133066658ae5543883a5e1def3602a5bc840874223b90bdccac9c06"
+        },
+        {
+          "bytes": 50786,
+          "id": "ab769c5bd0c8e9cfeb09c20c9363a6012d482b911aec1577c6665d264490127a",
+          "path": "game/editions/retained/coupa-developers-fb207466c.json",
+          "sha256": "d4bc46ff2c873a07325b9efec577e1df854b85479f3ba10a89ceb2a0db019d9a"
         }
       ],
       "publication": "public",
-      "revision": 5
+      "revision": 6
     },
     {
       "audience": "public",
@@ -820,8 +1450,16 @@
       "id": "droneaid-nl-community",
       "modes": ["solo"],
       "name": "DroneAid Netherlands",
+      "presentationHistory": [
+        {
+          "bytes": 118479,
+          "id": "13bf4f80b1b055d9fb5abdc137dfc93b94fe4ba55072104e697fb29615374679",
+          "path": "game/editions/retained/droneaid-nl-community-fb207466c.json",
+          "sha256": "b68b453158c820a542051999f242643250439a55e532653555940ffa31bbd055"
+        }
+      ],
       "publication": "public",
-      "revision": 2
+      "revision": 3
     },
     {
       "audience": "public",
@@ -840,8 +1478,16 @@
       "id": "droneaid-nl-workshop-lights",
       "modes": ["solo"],
       "name": "Workshop Lights",
+      "presentationHistory": [
+        {
+          "bytes": 29573,
+          "id": "4e9e2e8ebc38f4bf6ae0b5a06144c103947cb90704b6646800bec534bcbf5c14",
+          "path": "game/editions/retained/droneaid-nl-workshop-lights-fb207466c.json",
+          "sha256": "ace1b2e55b06ba220e26d52dc2ca282b8100f1c5bddd40e1656363c20ba6ad45"
+        }
+      ],
       "publication": "public",
-      "revision": 2
+      "revision": 3
     },
     {
       "audience": "public",
@@ -860,8 +1506,16 @@
       "id": "droneaid-nl-parts-in-motion",
       "modes": ["solo"],
       "name": "Parts in Motion",
+      "presentationHistory": [
+        {
+          "bytes": 33974,
+          "id": "0b402f348a0d84f534c5db803d731394f7120160d7fd9c538887a4361a20ae40",
+          "path": "game/editions/retained/droneaid-nl-parts-in-motion-fb207466c.json",
+          "sha256": "a565f9a298e5adac88570474e4a484458e8c216fc34b9269274a55738d08a36c"
+        }
+      ],
       "publication": "public",
-      "revision": 2
+      "revision": 3
     },
     {
       "audience": "public",
@@ -880,8 +1534,16 @@
       "id": "droneaid-nl-makers-together",
       "modes": ["solo"],
       "name": "Makers Together",
+      "presentationHistory": [
+        {
+          "bytes": 34640,
+          "id": "609db6d6c7ea54120531b53b2b5c54b26d1484306195a426c39bd40d5236b478",
+          "path": "game/editions/retained/droneaid-nl-makers-together-fb207466c.json",
+          "sha256": "21a7b3be9a7850d2f89b250903670b2fc6d98a7ffc32d8659ab1dd79d1e53937"
+        }
+      ],
       "publication": "public",
-      "revision": 2
+      "revision": 3
     },
     {
       "audience": "public",
@@ -900,8 +1562,16 @@
       "id": "droneaid-nl-careful-handoff",
       "modes": ["solo"],
       "name": "The Careful Handoff",
+      "presentationHistory": [
+        {
+          "bytes": 35799,
+          "id": "fb9dafae437c37905dcdd07cec0f67b53ead801a8894c2bf2070309dfd16a913",
+          "path": "game/editions/retained/droneaid-nl-careful-handoff-fb207466c.json",
+          "sha256": "20f0a33e045c38ba73b19e5cfc7823378a23a1d81129677aea15474be1dd640a"
+        }
+      ],
       "publication": "public",
-      "revision": 2
+      "revision": 3
     },
     {
       "audience": "public",
@@ -920,8 +1590,16 @@
       "id": "droneaid-nl-signals-of-support",
       "modes": ["solo"],
       "name": "Signals of Support",
+      "presentationHistory": [
+        {
+          "bytes": 37264,
+          "id": "013849c9507447451ca1f9a58d845da2d44436dbf776b231162ab8715cc61863",
+          "path": "game/editions/retained/droneaid-nl-signals-of-support-fb207466c.json",
+          "sha256": "62e89a9c88e6812bc41bb36fab7c6af1ff7c818e8c91d7476ff488e891b20450"
+        }
+      ],
       "publication": "public",
-      "revision": 2
+      "revision": 3
     },
     {
       "audience": "public",
@@ -940,8 +1618,16 @@
       "id": "droneaid-nl-shared-horizon",
       "modes": ["solo"],
       "name": "Shared Horizon",
+      "presentationHistory": [
+        {
+          "bytes": 37998,
+          "id": "1c5fc1701fb224c9a548d1540b19e2f8c893b43c6bc81d2b91a0bb65d3bcf0a6",
+          "path": "game/editions/retained/droneaid-nl-shared-horizon-fb207466c.json",
+          "sha256": "51eb77a2b7499f7af923189e620315c05dc142f2766e7b605fc13522dbdafa1b"
+        }
+      ],
       "publication": "public",
-      "revision": 2
+      "revision": 3
     }
   ],
   "format": "revealline-edition-catalog.v1",

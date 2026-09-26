@@ -85,9 +85,11 @@ existing campaign projects and their boot content. The runtime catalog is an all
 a menu filter. Deep links cannot select omitted content.
 
 `assets.json` is the public-byte inventory. `artwork.json` binds mission pictures to exact
-hashes, revisions and dimensions. Every compiled immutable release must advance changed pack
-revisions. Art updates retain compatible Journey progress; gameplay changes need new
-gameplay identities and deliberate progress migrations. Do not overwrite a published release.
+hashes, revisions and dimensions. Artwork-only updates advance affected edition revisions and
+asset identities, recompute exact execution/presentation hashes, and retain the previous selected
+presentation. Unchanged gameplay, campaign and pack designs keep their revisions; logical Journey
+progress remains compatible. Changed gameplay requires new gameplay identities and deliberate
+progress migrations. Do not overwrite a published release.
 
 ## Persistence and restoration
 
@@ -139,7 +141,7 @@ storage keys must remain scoped explicitly.
 | 3. Independent editions | 14 editions compiled twice; downloaded artifacts independently checked                                         | Two actual OS-installed PWAs, update/rollback and device storage recovery                    |
 | 4. Release admission    | Reproducible archives, whole-source eligibility, original ZIP-member admission and candidate CI                | A new freeze for every changed source revision                                               |
 | 5. Learning/reuse       | 24 Coupa bonus activities, four transfer fixtures, six Netherlands chapters; user reports formative completion | Preserve any supplied observations separately from automated proofs                          |
-| 6. Expansion            | 66 current maps plus three historical maps; 414 replay routes; first three-picture post-playtest batch         | 57 current raster-art slots remain; review batches of at most three                          |
+| 6. Expansion            | 66 current maps and pictures plus three historical maps/pictures; 414 replay routes                            | Final artifact artwork/content review; preserve individual review records                    |
 | 7. Promotion            | Evidence-bound delivery/selector tooling and rollback path                                                     | Approved evidence, release allocation, downloaded/deployed-byte verification and publication |
 
 Candidate builds are not qualified releases. Public promotion requires the human and deployed
@@ -227,10 +229,14 @@ implicitly.
 On 26 September 2026 the user reported human playtesting complete and requested the next
 plan items. The formative gate is complete on that reported basis; no participant counts,
 quotes or measured learning results were supplied or inferred. The recorded design decision
-is to proceed with the current design and three-picture batches. The first batch adds
-Choose Together, Repair the Draft and Scoped Access: nine current candidate raster pictures
-(eight Coupa, one Netherlands), plus three historical Portuguese pictures. The remaining
-57 current slots use procedural fallback. Content accuracy, final asset approval, two real
+is to proceed with the current design and three-picture review batches. The first batch added
+Choose Together, Repair the Draft and Scoped Access. The subsequent bulk change completes all
+66 current candidate raster pictures (30 Coupa and 36 Netherlands), with three historical
+Portuguese pictures preserved. All 57 new selections are opaque 2:1 PNG derivatives within
+a 1 MiB per-image production target. Original generated masters remain outside the player
+packet, referenced by exact hashes and portable paths in the generation receipts. This bulk
+change stays in PR #615; it does not reserve a version or enqueue a public release.
+Content accuracy, final asset approval, two real
 installed PWAs, device storage recovery, a published-artifact rollback exercise and a final
 same-device performance comparison remain promotion checks tied to the final artifact.
 
@@ -245,6 +251,39 @@ manifest picture and releases it on cancellation/replacement. Compilation admits
 selected audience's history and its exact media dependencies. History counts against the
 existing offline budget. An art update changes strict execution/presentation references,
 while existing Journey completion remains under stable logical mission identities.
+
+For subsequent art batches, capture history before changing registry inputs, retain generated
+masters outside the public player dependency set, and review each exact derivative. Validate
+complete receipts before writing them:
+
+```sh
+node scripts/import-company-art.mjs game/editions/art-prompts-coupa-bulk-02.json
+# Add --write only after the complete selected batch is reviewed.
+node scripts/produce-company-content.mjs
+```
+
+The importer validates authored mission identities, exact PNG hashes/dimensions, portable
+master provenance, inspection records and the 1 MiB selection target. It refuses replacement
+of an existing revision, duplicate mission registration and unsafe paths. It does not certify
+human artwork approval or change gameplay. Register a complete batch in one catalogue update;
+intermediate generation receipts can contain planned rows, which are deliberately rejected.
+Keep immutable history JSON byte-for-byte and advance affected edition revisions once per
+compiled batch. A source master is not a runtime dependency merely because it is cited in a
+provenance receipt.
+
+The completed bulk receipts link exact generated masters and selected files:
+[Coupa](../game/editions/art-prompts-coupa-bulk-02.json),
+[DroneAid workshops](../game/editions/art-prompts-droneaid-workshop-bulk-02.json), and
+[DroneAid community scenes](../game/editions/art-prompts-droneaid-community-bulk-02.json).
+Generation used the built-in image tool; exports preserve opaque RGB pixels with a
+mechanical resize. Full bounded PNG decoding rejects incomplete, corrupt or transparent
+selections before registration. Final artwork approval remains separate.
+
+The player verifies identity and shared presentation assets at startup. Reveal-only mission
+pictures load through the exact per-attempt verifier when needed. Their complete catalogue,
+publication eligibility, offline budget and historical pins remain authoritative; lazy
+loading never authorizes a substitute picture. Images reused as a hero, actor body, explicit
+edition root or shared dependency remain eager.
 
 When CacheStorage is unavailable or full, verified online bytes can still support play.
 Install, repair and offline verification remain strict: a failed cache operation cannot

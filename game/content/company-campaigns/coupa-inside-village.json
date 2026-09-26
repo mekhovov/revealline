@@ -13,6 +13,71 @@
       "revision": "1",
       "sha256": "50cf52f3ff6faeef17171a44acb83bf8b80e7090dcfa5fad512496676c18eb0f",
       "width": 1280
+    },
+    {
+      "alt": "Two blue listening pavilions face a sunlit collaboration garden with quiet porcelain courtyards.",
+      "bytes": 953677,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "coupa-inside-village-02-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/coupa/bulk-02/listen-then-link-v1.png",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "66d93ec13abcc1e3095c435278e7a4599ace4618724c93acdfd4ce0277f8b4d5",
+      "width": 960
+    },
+    {
+      "alt": "A generous blue community conservatory surrounds a central gathering table and two welcoming quiet contribution nooks.",
+      "bytes": 883373,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "coupa-inside-village-03-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/coupa/bulk-02/room-for-everyone-v1.png",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "6939aa6f3ed8253504639cbd8db3d3449f160029211be4d30fc3dac6ce97b3b7",
+      "width": 960
+    },
+    {
+      "alt": "Two crafted blue workshop stations share blank folders and parcel trays across a calm central handoff courtyard.",
+      "bytes": 929184,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "coupa-inside-village-04-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/coupa/bulk-02/own-the-handoff-v1.png",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "d8d385fabf56624d69362f0287deb5236f081994b24dbcabe8af7e96e3bc11cd",
+      "width": 960
+    },
+    {
+      "alt": "A sunlit blue invention greenhouse gathers separated craft benches around a calm shared prototype garden.",
+      "bytes": 914825,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "coupa-inside-village-05-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/coupa/bulk-02/build-tomorrow-v1.png",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "f44ca426cec434334b31cadddab96a036c365f2a0492a39d935c73fe2475c14f",
+      "width": 960
+    },
+    {
+      "alt": "Six welcoming blue village landmarks gather around a shared festival garden with three quiet porcelain plazas.",
+      "bytes": 997763,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "coupa-inside-village-06-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/coupa/bulk-02/all-of-us-v1.png",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "556af50d368e0912547dc03f9b6854b43b13cea825fe5d3d0ad0979ab8e00f3b",
+      "width": 960
     }
   ],
   "campaigns": [
@@ -278,7 +343,10 @@
       "objectives": [
         { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 }
       ],
-      "presentation": { "backgroundAssetId": null, "themeId": "coupa-inside-village-theme" },
+      "presentation": {
+        "backgroundAssetId": "coupa-inside-village-02-picture",
+        "themeId": "coupa-inside-village-theme"
+      },
       "revision": "3",
       "spawnId": "home",
       "timeLimitSeconds": 0
@@ -345,7 +413,10 @@
       "objectives": [
         { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 }
       ],
-      "presentation": { "backgroundAssetId": null, "themeId": "coupa-inside-village-theme" },
+      "presentation": {
+        "backgroundAssetId": "coupa-inside-village-03-picture",
+        "themeId": "coupa-inside-village-theme"
+      },
       "revision": "3",
       "spawnId": "home",
       "timeLimitSeconds": 0
@@ -422,7 +493,10 @@
         { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 24.5 }
       ],
-      "presentation": { "backgroundAssetId": null, "themeId": "coupa-inside-village-theme" },
+      "presentation": {
+        "backgroundAssetId": "coupa-inside-village-04-picture",
+        "themeId": "coupa-inside-village-theme"
+      },
       "revision": "3",
       "spawnId": "home",
       "timeLimitSeconds": 0
@@ -499,7 +573,10 @@
         { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
-      "presentation": { "backgroundAssetId": null, "themeId": "coupa-inside-village-theme" },
+      "presentation": {
+        "backgroundAssetId": "coupa-inside-village-05-picture",
+        "themeId": "coupa-inside-village-theme"
+      },
       "revision": "3",
       "spawnId": "home",
       "timeLimitSeconds": 0
@@ -576,7 +653,10 @@
         { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
-      "presentation": { "backgroundAssetId": null, "themeId": "coupa-inside-village-theme" },
+      "presentation": {
+        "backgroundAssetId": "coupa-inside-village-06-picture",
+        "themeId": "coupa-inside-village-theme"
+      },
       "revision": "3",
       "spawnId": "home",
       "timeLimitSeconds": 0

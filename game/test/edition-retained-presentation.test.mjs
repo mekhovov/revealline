@@ -8,6 +8,9 @@ import {
 import { createContentExecutionCatalog } from '../content-design/execution.mjs';
 import { createJourneyBackend } from '../journey/profile.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
+import { acquireCandidatePicture } from '../content-design/picture.mjs';
+import { loadPreviewArtwork } from '../content-design/assets.mjs';
+import { PNGImage } from './helpers/png-image.mjs';
 
 test('retained original preserves exact execution and receipt while new artwork keeps logical Journey progress', async () => {
   const f = await retainedEditionFixture();
@@ -117,10 +120,23 @@ test('old pixels remain separately pinned and cannot fall back to the new image 
   assert.equal((await f.load()).route.source.assets[0].id, 'new-picture');
   const path = 'game/editions/assets/old-picture.png',
     bytes = f.binary.get(path);
+  const acquireOld = async () => {
+    const retained = await f.load(f.descriptor.id);
+    assert.equal(retained.authoredPresentationSha256, old.authoredPresentationSha256);
+    assert.deepEqual(retained.route.source.assets[0], old.route.source.assets[0]);
+    return acquireCandidatePicture(retained.route.source.assets[0], {
+      loadArtwork: (source, options) =>
+        loadPreviewArtwork(source, { ...options, fetchAsset: f.fetcher }),
+      ImageClass: PNGImage,
+    });
+  };
+  const picture = await acquireOld();
+  assert.equal(picture.image.width, old.route.source.assets[0].width);
+  picture.release();
   f.binary.set(path, Buffer.from(bytes).fill(0));
-  await assert.rejects(f.load(f.descriptor.id), /differs from its pinned revision/);
+  await assert.rejects(acquireOld(), /digest differs/);
   f.binary.delete(path);
-  await assert.rejects(f.load(f.descriptor.id), /could not be loaded/);
+  await assert.rejects(acquireOld(), /failed to load/);
   assert.equal((await f.load()).route.source.assets[0].id, 'new-picture');
 });
 

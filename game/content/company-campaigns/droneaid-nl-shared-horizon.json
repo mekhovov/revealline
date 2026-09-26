@@ -1,6 +1,85 @@
 {
   "actorCatalogId": "journey-actors-v9",
-  "assets": [],
+  "assets": [
+    {
+      "alt": "Two short white bridges connect violet-roofed workshop courtyards beside a peaceful canal.",
+      "bytes": 982709,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "droneaid-nl-shared-horizon-01-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-shared-horizon-01.png",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "e194cfe49e550a79a153214bd91cb08ea1ebb257a873c09529aa8f37dc2b422b",
+      "width": 960
+    },
+    {
+      "alt": "A folded-roof violet workshop opens onto three layered white neighbourhood courtyards.",
+      "bytes": 919273,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "droneaid-nl-shared-horizon-02-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-shared-horizon-02.png",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "7a8e60c73b217413b8170ad311f92b78ff40ac7f5ff07a2b2eab9bb6a066f845",
+      "width": 960
+    },
+    {
+      "alt": "Warm yellow collection windows and a violet canopy illuminate a broad canal basin at evening.",
+      "bytes": 843264,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "droneaid-nl-shared-horizon-03-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-shared-horizon-03.png",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "cd00f2d194028db0d52116f81a2e549887fad2c86a7175788cf07dffc3e91167",
+      "width": 960
+    },
+    {
+      "alt": "Three glowing violet workshop rooms open onto a quiet shared light court at dusk.",
+      "bytes": 867819,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "droneaid-nl-shared-horizon-04-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-shared-horizon-04.png",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "a23492980419f875f7797c652bc02d84453339eb1d40d1b9d9d282c4fda6e994",
+      "width": 960
+    },
+    {
+      "alt": "A workshop, packing depot and gathering pavilion share broad inner landings along a fictional canal.",
+      "bytes": 916595,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "droneaid-nl-shared-horizon-05-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-shared-horizon-05.png",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "96ce6f02cab6d1a8b58c000ab8df81fa9569582d7319ae5319d53a9dc1464d23",
+      "width": 960
+    },
+    {
+      "alt": "Dawn opens over a violet-and-white canal neighbourhood with familiar workshops, bridges and welcoming terraces.",
+      "bytes": 965525,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "droneaid-nl-shared-horizon-06-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-shared-horizon-06.png",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "512795cc0280d5c59c6d1eddc425deb96a199d3c8f2c45fef496daa144bbfd64",
+      "width": 960
+    }
+  ],
   "campaigns": [
     {
       "band": 11,
@@ -229,7 +308,10 @@
         { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
-      "presentation": { "backgroundAssetId": null, "themeId": "droneaid-nl-shared-horizon-theme" },
+      "presentation": {
+        "backgroundAssetId": "droneaid-nl-shared-horizon-01-picture",
+        "themeId": "droneaid-nl-shared-horizon-theme"
+      },
       "relayLinks": [],
       "revision": "2",
       "spawnId": "home",
@@ -293,7 +375,10 @@
         { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
-      "presentation": { "backgroundAssetId": null, "themeId": "droneaid-nl-shared-horizon-theme" },
+      "presentation": {
+        "backgroundAssetId": "droneaid-nl-shared-horizon-02-picture",
+        "themeId": "droneaid-nl-shared-horizon-theme"
+      },
       "relayLinks": [],
       "revision": "2",
       "spawnId": "home",
@@ -357,7 +442,10 @@
         { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
-      "presentation": { "backgroundAssetId": null, "themeId": "droneaid-nl-shared-horizon-theme" },
+      "presentation": {
+        "backgroundAssetId": "droneaid-nl-shared-horizon-03-picture",
+        "themeId": "droneaid-nl-shared-horizon-theme"
+      },
       "relayLinks": [],
       "revision": "2",
       "spawnId": "home",
@@ -410,7 +498,10 @@
         { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
         { "hidden": false, "id": "core", "required": true, "x": 55.5, "y": 17.5 }
       ],
-      "presentation": { "backgroundAssetId": null, "themeId": "droneaid-nl-shared-horizon-theme" },
+      "presentation": {
+        "backgroundAssetId": "droneaid-nl-shared-horizon-04-picture",
+        "themeId": "droneaid-nl-shared-horizon-theme"
+      },
       "relayLinks": [],
       "revision": "2",
       "spawnId": "home",
@@ -465,7 +556,10 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 47.5, "y": 27.5 },
         { "hidden": false, "id": "core", "required": true, "x": 55.5, "y": 17.5 }
       ],
-      "presentation": { "backgroundAssetId": null, "themeId": "droneaid-nl-shared-horizon-theme" },
+      "presentation": {
+        "backgroundAssetId": "droneaid-nl-shared-horizon-05-picture",
+        "themeId": "droneaid-nl-shared-horizon-theme"
+      },
       "relayLinks": [{ "gateId": "return-1", "objectiveId": "connection" }],
       "revision": "2",
       "spawnId": "home",
@@ -534,7 +628,10 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 46.5, "y": 27.5 },
         { "hidden": false, "id": "core", "required": true, "x": 55.5, "y": 17.5 }
       ],
-      "presentation": { "backgroundAssetId": null, "themeId": "droneaid-nl-shared-horizon-theme" },
+      "presentation": {
+        "backgroundAssetId": "droneaid-nl-shared-horizon-06-picture",
+        "themeId": "droneaid-nl-shared-horizon-theme"
+      },
       "relayLinks": [
         { "gateId": "return-1", "objectiveId": "connection" },
         { "gateId": "return-2", "objectiveId": "handoff" }

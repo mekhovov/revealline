@@ -158,30 +158,134 @@ const choices = [
 ];
 // Exact pre-art snapshots; their bytes must never be reformatted or overwritten.
 const retainedPresentations = Object.freeze({
-  'coupa-all': {
-    id: 'ecb87b6208f6f55322188ab34d8d9aa63b94064dd346f400bbe2bbbcc9d7870b',
-    path: 'game/editions/retained/coupa-all.json',
-    sha256: 'a48dc47e3e788046de0094c7d34bd74eda0c8776f271131254e26f5ec12e5706',
-    bytes: 146284,
-  },
-  'coupa-foundations': {
-    id: '57dd4d5b7e0f8c27662349a8af870862657d700682ac758ad51721a61fdd59aa',
-    path: 'game/editions/retained/coupa-foundations.json',
-    sha256: '98d2a026fc89b48cbd76c2d2c2d74d491f666583ae819324f855ebd7f309dd90',
-    bytes: 46542,
-  },
-  'coupa-operations': {
-    id: '99254aaf116f5b68881ef51f36c7b5b9ebfbcf6cce371de90c8234c07862a43d',
-    path: 'game/editions/retained/coupa-operations.json',
-    sha256: '716bcbd296e6053ca6628b8b55dada9c0489a8893c1044cbc24854899caf6e20',
-    bytes: 47693,
-  },
-  'coupa-developers': {
-    id: '72ede618c25678c324d39389b9789130c66bb05f461e900d367e9c3f2a878224',
-    path: 'game/editions/retained/coupa-developers.json',
-    sha256: 'ee4d10212133066658ae5543883a5e1def3602a5bc840874223b90bdccac9c06',
-    bytes: 50046,
-  },
+  'coupa-all': [
+    {
+      id: 'ecb87b6208f6f55322188ab34d8d9aa63b94064dd346f400bbe2bbbcc9d7870b',
+      path: 'game/editions/retained/coupa-all.json',
+      sha256: 'a48dc47e3e788046de0094c7d34bd74eda0c8776f271131254e26f5ec12e5706',
+      bytes: 146284,
+    },
+    {
+      id: 'd9deabcadfd9bdc7622da65ebbcc91bdd752db02234009edc3fe09f85812f842',
+      path: 'game/editions/retained/coupa-all-fb207466c.json',
+      sha256: '680c7f4fdb23619aed0627ea47444c7040a7f208104e4c2abc1a3d486adbe636',
+      bytes: 148510,
+    },
+  ],
+  'coupa-adventure': [
+    {
+      id: '82527f475e9cb0ddbc6bf9701e495e49e08dd635a0e89578c107268373426a05',
+      path: 'game/editions/retained/coupa-adventure-fb207466c.json',
+      sha256: 'ef9a0bf6562fa74ab643d9b214bf1deb1338a1694337cdd822d9cb3cd3c26937',
+      bytes: 29600,
+    },
+  ],
+  'coupa-culture': [
+    {
+      id: 'ed8d7747ad136a06243a2cf8c90dacdc5cf42dc71f5c6448174bde48ea241ae8',
+      path: 'game/editions/retained/coupa-culture-fb207466c.json',
+      sha256: '12dbf430730aff337133b19e1140efc2c107cc18351b07048eef59c19593bcba',
+      bytes: 44733,
+    },
+  ],
+  'coupa-foundations': [
+    {
+      id: '57dd4d5b7e0f8c27662349a8af870862657d700682ac758ad51721a61fdd59aa',
+      path: 'game/editions/retained/coupa-foundations.json',
+      sha256: '98d2a026fc89b48cbd76c2d2c2d74d491f666583ae819324f855ebd7f309dd90',
+      bytes: 46542,
+    },
+    {
+      id: '176ab6d261ed0e4366b570dd14df270d6b27a761404baf17921dc1f974898bd6',
+      path: 'game/editions/retained/coupa-foundations-fb207466c.json',
+      sha256: 'e6694057707e69a8a134836d91bc1879f3555b39f6fc58622a15073454bf7432',
+      bytes: 47276,
+    },
+  ],
+  'coupa-operations': [
+    {
+      id: '99254aaf116f5b68881ef51f36c7b5b9ebfbcf6cce371de90c8234c07862a43d',
+      path: 'game/editions/retained/coupa-operations.json',
+      sha256: '716bcbd296e6053ca6628b8b55dada9c0489a8893c1044cbc24854899caf6e20',
+      bytes: 47693,
+    },
+    {
+      id: '681f63d8afef4e5a89e3d62ac1a2ddaa775cf6d03ad2c3897c64bc2dfb84b922',
+      path: 'game/editions/retained/coupa-operations-fb207466c.json',
+      sha256: 'b00276030dd4642756c75e15120f2d415e07e85dc90b0eacf99cf0ee71574c3d',
+      bytes: 48443,
+    },
+  ],
+  'coupa-developers': [
+    {
+      id: '72ede618c25678c324d39389b9789130c66bb05f461e900d367e9c3f2a878224',
+      path: 'game/editions/retained/coupa-developers.json',
+      sha256: 'ee4d10212133066658ae5543883a5e1def3602a5bc840874223b90bdccac9c06',
+      bytes: 50046,
+    },
+    {
+      id: 'ab769c5bd0c8e9cfeb09c20c9363a6012d482b911aec1577c6665d264490127a',
+      path: 'game/editions/retained/coupa-developers-fb207466c.json',
+      sha256: 'd4bc46ff2c873a07325b9efec577e1df854b85479f3ba10a89ceb2a0db019d9a',
+      bytes: 50786,
+    },
+  ],
+  'droneaid-nl-community': [
+    {
+      id: '13bf4f80b1b055d9fb5abdc137dfc93b94fe4ba55072104e697fb29615374679',
+      path: 'game/editions/retained/droneaid-nl-community-fb207466c.json',
+      sha256: 'b68b453158c820a542051999f242643250439a55e532653555940ffa31bbd055',
+      bytes: 118479,
+    },
+  ],
+  'droneaid-nl-workshop-lights': [
+    {
+      id: '4e9e2e8ebc38f4bf6ae0b5a06144c103947cb90704b6646800bec534bcbf5c14',
+      path: 'game/editions/retained/droneaid-nl-workshop-lights-fb207466c.json',
+      sha256: 'ace1b2e55b06ba220e26d52dc2ca282b8100f1c5bddd40e1656363c20ba6ad45',
+      bytes: 29573,
+    },
+  ],
+  'droneaid-nl-parts-in-motion': [
+    {
+      id: '0b402f348a0d84f534c5db803d731394f7120160d7fd9c538887a4361a20ae40',
+      path: 'game/editions/retained/droneaid-nl-parts-in-motion-fb207466c.json',
+      sha256: 'a565f9a298e5adac88570474e4a484458e8c216fc34b9269274a55738d08a36c',
+      bytes: 33974,
+    },
+  ],
+  'droneaid-nl-makers-together': [
+    {
+      id: '609db6d6c7ea54120531b53b2b5c54b26d1484306195a426c39bd40d5236b478',
+      path: 'game/editions/retained/droneaid-nl-makers-together-fb207466c.json',
+      sha256: '21a7b3be9a7850d2f89b250903670b2fc6d98a7ffc32d8659ab1dd79d1e53937',
+      bytes: 34640,
+    },
+  ],
+  'droneaid-nl-careful-handoff': [
+    {
+      id: 'fb9dafae437c37905dcdd07cec0f67b53ead801a8894c2bf2070309dfd16a913',
+      path: 'game/editions/retained/droneaid-nl-careful-handoff-fb207466c.json',
+      sha256: '20f0a33e045c38ba73b19e5cfc7823378a23a1d81129677aea15474be1dd640a',
+      bytes: 35799,
+    },
+  ],
+  'droneaid-nl-signals-of-support': [
+    {
+      id: '013849c9507447451ca1f9a58d845da2d44436dbf776b231162ab8715cc61863',
+      path: 'game/editions/retained/droneaid-nl-signals-of-support-fb207466c.json',
+      sha256: '62e89a9c88e6812bc41bb36fab7c6af1ff7c818e8c91d7476ff488e891b20450',
+      bytes: 37264,
+    },
+  ],
+  'droneaid-nl-shared-horizon': [
+    {
+      id: '1c5fc1701fb224c9a548d1540b19e2f8c893b43c6bc81d2b91a0bb65d3bcf0a6',
+      path: 'game/editions/retained/droneaid-nl-shared-horizon-fb207466c.json',
+      sha256: '51eb77a2b7499f7af923189e620315c05dc142f2766e7b605fc13522dbdafa1b',
+      bytes: 37998,
+    },
+  ],
 });
 
 export const COMPANY_EDITIONS = Object.freeze(
@@ -191,11 +295,11 @@ export const COMPANY_EDITIONS = Object.freeze(
     revision: ['coupa-all', 'coupa-foundations', 'coupa-operations', 'coupa-developers'].includes(
       id,
     )
-      ? 5
+      ? 6
       : brandId === 'coupa'
-        ? 4
+        ? 5
         : brandId === 'droneaid-nl'
-          ? 2
+          ? 3
           : 1,
     name,
     brandId,
@@ -204,7 +308,7 @@ export const COMPANY_EDITIONS = Object.freeze(
     entryCampaignId: campaignIds[0],
     modes: ['solo'],
     publication: 'public',
-    ...(retainedPresentations[id] ? { presentationHistory: [retainedPresentations[id]] } : {}),
+    ...(retainedPresentations[id] ? { presentationHistory: retainedPresentations[id] } : {}),
     boot: Object.fromEntries(
       ['campaign', 'themes', 'presets', 'classes', 'packs', 'archives'].map((key) => [
         key,

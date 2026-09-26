@@ -1,0 +1,793 @@
+{
+  "format": "revealline-art-prompts.v1",
+  "tool": "image_gen.imagegen",
+  "date": "2026-09-26",
+  "purpose": "Fictional DroneAid Netherlands mission illustrations. These are generated artistic scenes, not evidence of real missions.",
+  "review": "All 18 generated originals and exact mechanical PNG derivatives inspected by the agent in groups of at most three. Candidate artwork; in-game overlay/crop/contrast review and human artwork approval remain pending. Fictional scenes, not operational evidence.",
+  "assets": [
+    {
+      "id": "droneaid-nl-careful-handoff-01",
+      "missionId": "droneaid-nl-careful-handoff-01",
+      "title": "From Bench to Box",
+      "alt": "An open violet-and-white packing workshop crosses a sunlit canal to a sheltered receiving dock.",
+      "prompt": "Create ONE finished opaque landscape illustration, exactly 2:1 wide composition. Premium stylized cinematic miniature world for a fictional DroneAid Netherlands community game. Cohesive violet (#4238EB), indigo, chalk white and small warm yellow accents; tactile matte ceramic architecture, beautiful paper and wood details, soft volumetric light, richly crafted but large readable shapes. Elevated oblique view, full-bleed single scene, no panels or borders. Clearly fictional illustration, never a photograph or evidence of a real operation. No people, text, letters, digits, logos, labels with writing, signage with writing, screens, product UI, enemies, grids, capture trails, weapons, or drones. Leave small calm visually uncluttered areas near the upper-left (17% across, 24% down) and lower-right (77% across, 72% down) so a game route may return there, but DO NOT draw routes, gameplay markers or paths of light. Warm morning in a tiny canal-side workshop where a community project moves from a careful workbench into beautiful white and violet transport cases. Compose a cutaway packing hall on the left and a sheltered quay on the right, connected by a low bridge and broad packing table. Several empty open cases reveal soft fitted compartments, rolled cloth, harmless craft components and folded paper. A sunlit packing table sits before the crossing to the far dock, visually the natural intermediate stop. White plaster arches, violet doors, warm timber work surfaces, potted reeds, soft canal reflections, tiny yellow lamps. Put most detailed craft activity in a clustered middle-left mass; maintain calm return courtyards. Cinematic three-quarter overhead camera, tactile stop-motion-like quality, gentle hopeful atmosphere.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbeb-f00f-7222-8a90-077c8d41f591/exec-17260f3d-1915-4828-a4f5-f436c8b5a083.png",
+        "sha256": "50206f93654f5f07149ec4befb3d93ee12ce3b2d2206dd1cf7cc979d77f3fb91",
+        "bytes": 2767873,
+        "width": 1774,
+        "height": 887
+      },
+      "selected": {
+        "path": "game/editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-careful-handoff-01.png",
+        "sha256": "0cce3319b93d80f9bb07d4cc2ead14c9a1c68c8b45f3efd3031246c97ff7b07a",
+        "bytes": 931307,
+        "width": 960,
+        "height": 480
+      },
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "/usr/bin/sips",
+        "command": [
+          "/usr/bin/sips",
+          "-z",
+          "480",
+          "960",
+          "$CODEX_HOME/generated_images/01a0dbeb-f00f-7222-8a90-077c8d41f591/exec-17260f3d-1915-4828-a4f5-f436c8b5a083.png",
+          "--out",
+          "game/editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-careful-handoff-01.png"
+        ],
+        "changes": "Proportional native resize only; no crop, repainting, palette quantization, semantic edit, or change to the original.",
+        "opaque": true
+      },
+      "review": {
+        "status": "candidate",
+        "original": "Visually inspected original: distinct community story, violet/white identity, no visible text, logos, UI, enemies, people, or weaponry.",
+        "selected": "Inspected exact 960x480 native PNG derivative: readable layered composition, opaque full frame, no visible text, logos, UI, enemies, people or weaponry. Broad architectural courts remain visually distinct; actual gameplay overlay contrast is pending.",
+        "inGame": "pending",
+        "humanArtworkApproval": "pending"
+      }
+    },
+    {
+      "id": "droneaid-nl-careful-handoff-02",
+      "missionId": "droneaid-nl-careful-handoff-02",
+      "title": "The Label Trail",
+      "alt": "Blank sculptural paper tags float over two packing stations divided by a curving violet-and-white wall.",
+      "prompt": "Create ONE finished opaque landscape illustration, exactly 2:1 wide composition. Premium stylized cinematic miniature world for a fictional DroneAid Netherlands community game. Cohesive violet (#4238EB), indigo, chalk white and small warm yellow accents; tactile matte ceramic architecture, beautiful paper and wood details, soft volumetric light, richly crafted but large readable shapes. Elevated oblique view, full-bleed single scene, no panels or borders. Clearly fictional illustration, never a photograph or evidence of a real operation. No people, text, letters, digits, logos, labels with writing, signage with writing, screens, product UI, enemies, grids, capture trails, weapons, or drones. Leave small calm visually uncluttered areas near the upper-left (17% across, 24% down) and lower-right (77% across, 72% down) so a game route may return there, but DO NOT draw routes, gameplay markers or paths of light. A long airy packing hall seen as a beautiful dollhouse cutaway at midday. A central white-and-violet curved divider separates two packing stations and two broad return courts, one above and one below. Large blank die-cut paper tags in white, violet and a little yellow hang from strings above tables and stack in sculptural trays, suggesting a playful labeling story WITHOUT forming a gameplay trail. An orderly label desk anchors the near-left end and a bright dock doorway anchors the far-right end. Ribbed frosted roof lights, warm ashwood benches, violet storage niches, blank case faces, paper folds and quiet shadows. Compose a bold S-shaped architectural divider, distinctly indoor and graphic with spacious pale floor, different from an exterior quay. Sophisticated editorial diorama, welcoming and calm.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbeb-f00f-7222-8a90-077c8d41f591/exec-4dbcc310-8c3f-4a12-a9d5-13f9c279ec7f.png",
+        "sha256": "62c1a5b020775b08173cb20110a4b0d4a6689939d445eb90672fb25d6a3e42d8",
+        "bytes": 2188301,
+        "width": 1774,
+        "height": 887
+      },
+      "selected": {
+        "path": "game/editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-careful-handoff-02.png",
+        "sha256": "280d77672a14b883139fc0baa35d8ea17d2e571c9cabfa2d12c110d2283bf2e1",
+        "bytes": 762583,
+        "width": 960,
+        "height": 480
+      },
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "/usr/bin/sips",
+        "command": [
+          "/usr/bin/sips",
+          "-z",
+          "480",
+          "960",
+          "$CODEX_HOME/generated_images/01a0dbeb-f00f-7222-8a90-077c8d41f591/exec-4dbcc310-8c3f-4a12-a9d5-13f9c279ec7f.png",
+          "--out",
+          "game/editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-careful-handoff-02.png"
+        ],
+        "changes": "Proportional native resize only; no crop, repainting, palette quantization, semantic edit, or change to the original.",
+        "opaque": true
+      },
+      "review": {
+        "status": "candidate",
+        "original": "Visually inspected original: distinct community story, violet/white identity, no visible text, logos, UI, enemies, people, or weaponry.",
+        "selected": "Inspected exact 960x480 native PNG derivative: readable layered composition, opaque full frame, no visible text, logos, UI, enemies, people or weaponry. Broad architectural courts remain visually distinct; actual gameplay overlay contrast is pending.",
+        "inGame": "pending",
+        "humanArtworkApproval": "pending"
+      }
+    },
+    {
+      "id": "droneaid-nl-careful-handoff-03",
+      "missionId": "droneaid-nl-careful-handoff-03",
+      "title": "Collection Point",
+      "alt": "White canal-side collection courts and violet-roofed depots surround three calm landing plazas at sunset.",
+      "prompt": "Create ONE finished opaque landscape illustration, exactly 2:1 wide composition. Premium stylized cinematic miniature world for a fictional DroneAid Netherlands community game. Cohesive violet (#4238EB), indigo, chalk white and small warm yellow accents; tactile matte ceramic architecture, beautiful paper and wood details, soft volumetric light, richly crafted but large readable shapes. Elevated oblique view, full-bleed single scene, no panels or borders. Clearly fictional illustration, never a photograph or evidence of a real operation. No people, text, letters, digits, logos, labels with writing, signage with writing, screens, product UI, enemies, grids, capture trails, weapons, or drones. Leave small calm visually uncluttered areas near the upper-left (17% across, 24% down) and lower-right (77% across, 72% down) so a game route may return there, but DO NOT draw routes, gameplay markers or paths of light. A fictional Dutch canal-side collection depot at blue-gold late afternoon. Layer three small sheltered contribution courts around a broad loading plaza and a reflective narrow canal. In the foreground-left a compact collection court of white cases, violet awning and a yellow-lit window creates an intimate first stop; beyond it the larger open loading area awaits. Stepped gabled miniature buildings, tiny brick textures, white arched bridges, carefully stacked blank boxes, planted rain gardens and bicycle-shaped sculptural racks without actual people. Make the canal sweep diagonally through the center while broad calm landings remain upper-left and lower-right. Rich indigo water with soft violet reflections, warm low sunlight, cinematic miniature tilt-shift depth but crisp readable main shapes. No vehicle/drone operations or technical logistics diagrams.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbeb-f00f-7222-8a90-077c8d41f591/exec-9d0150f5-77a3-4ef7-84d9-9d6223d12bdb.png",
+        "sha256": "0a02a1fe6746c0583169892edd49927724e414cffe9f637bc6178db3f0be47eb",
+        "bytes": 3017210,
+        "width": 1774,
+        "height": 887
+      },
+      "selected": {
+        "path": "game/editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-careful-handoff-03.png",
+        "sha256": "8d256fe5bbdc062f7bf54bb5818fadb1e5f0e3aa3e25536f81eb59f5158a9bdd",
+        "bytes": 977692,
+        "width": 960,
+        "height": 480
+      },
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "/usr/bin/sips",
+        "command": [
+          "/usr/bin/sips",
+          "-z",
+          "480",
+          "960",
+          "$CODEX_HOME/generated_images/01a0dbeb-f00f-7222-8a90-077c8d41f591/exec-9d0150f5-77a3-4ef7-84d9-9d6223d12bdb.png",
+          "--out",
+          "game/editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-careful-handoff-03.png"
+        ],
+        "changes": "Proportional native resize only; no crop, repainting, palette quantization, semantic edit, or change to the original.",
+        "opaque": true
+      },
+      "review": {
+        "status": "candidate",
+        "original": "Visually inspected original: distinct community story, violet/white identity, no visible text, logos, UI, enemies, people, or weaponry.",
+        "selected": "Inspected exact 960x480 native PNG derivative: readable layered composition, opaque full frame, no visible text, logos, UI, enemies, people or weaponry. Broad architectural courts remain visually distinct; actual gameplay overlay contrast is pending.",
+        "inGame": "pending",
+        "humanArtworkApproval": "pending"
+      }
+    },
+    {
+      "id": "droneaid-nl-careful-handoff-04",
+      "missionId": "droneaid-nl-careful-handoff-04",
+      "title": "Shared Manifest",
+      "alt": "Five violet packing alcoves with blank record books face a spacious pale inner dock.",
+      "prompt": "Create ONE finished opaque landscape illustration, exactly 2:1 wide composition. Premium stylized cinematic miniature world for a fictional DroneAid Netherlands community game. Cohesive violet (#4238EB), indigo, chalk white and small warm yellow accents; tactile matte ceramic architecture, beautiful paper and wood details, soft volumetric light, richly crafted but large readable shapes. Elevated oblique view, full-bleed single scene, no panels or borders. Clearly fictional illustration, never a photograph or evidence of a real operation. No people, text, letters, digits, logos, labels with writing, signage with writing, screens, product UI, enemies, grids, capture trails, weapons, or drones. Leave small calm visually uncluttered areas near the upper-left (17% across, 24% down) and lower-right (77% across, 72% down) so a game route may return there, but DO NOT draw routes, gameplay markers or paths of light. A peaceful roofless canal warehouse becomes a miniature hall of shared records. Five distinct white packing alcoves open onto a LONG WIDE INNER DOCK, an elevated ashwood platform that runs across the composition protected by violet archways. Beside the alcoves sit open blank paper ledgers, unmarked cards, folded cloth and neatly arranged closed cases. A narrow exterior canal runs along the top edge so the broad interior dock clearly provides the quiet alternative to the perimeter. Overcast pearly daylight through tall clerestory windows, frosted glass, violet beams, a few tiny yellow pendants, tactile book pages. Arrange small record-table clusters at the perimeter, keeping a spacious pale central handoff deck uninterrupted. Very high oblique view and bold elegant architectural perspective, visibly a crafted fictional dollhouse, no ruled spreadsheet-like pages.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbeb-f00f-7222-8a90-077c8d41f591/exec-2ccd2107-94d9-4ccc-a68b-6979c7197611.png",
+        "recovery": "Built-in original destination was zero bytes after a disk-pressure write failure. Restored the exact PNG returned by image_gen.imagegen to that otherwise empty destination; no image regeneration or editing.",
+        "sha256": "fee66ad168edc749b1e851abf6a3c1fc716fcf48397e5fe41769453726e1f396",
+        "bytes": 2618442,
+        "width": 1774,
+        "height": 887
+      },
+      "selected": {
+        "path": "game/editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-careful-handoff-04.png",
+        "sha256": "dc58407546a27c5c1e879ca207bdb3ae048f318347cdd643fbaa23cfd73955eb",
+        "bytes": 855378,
+        "width": 960,
+        "height": 480
+      },
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "/usr/bin/sips",
+        "command": [
+          "/usr/bin/sips",
+          "-z",
+          "480",
+          "960",
+          "$CODEX_HOME/generated_images/01a0dbeb-f00f-7222-8a90-077c8d41f591/exec-2ccd2107-94d9-4ccc-a68b-6979c7197611.png",
+          "--out",
+          "game/editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-careful-handoff-04.png"
+        ],
+        "changes": "Proportional native resize only; no crop, repainting, palette quantization, semantic edit, or change to the original.",
+        "opaque": true
+      },
+      "review": {
+        "status": "candidate",
+        "original": "Visually inspected original; no visible text, branded logos, UI, enemies, people or weaponry.",
+        "selected": "Inspected exact 960x480 native PNG derivative: clear separate architectural masses and calm return courts; no visible writing, branded logos, UI, enemies, people or weaponry. In-game overlays not yet reviewed.",
+        "inGame": "pending",
+        "humanArtworkApproval": "pending",
+        "compositionNote": "Small decorative tulip motifs appear on banners as fictional Dutch floral ornament; they are not official brand artwork."
+      }
+    },
+    {
+      "id": "droneaid-nl-careful-handoff-05",
+      "missionId": "droneaid-nl-careful-handoff-05",
+      "title": "Across the Quay",
+      "alt": "Two violet waterfront pavilions connect through a planted central island at glowing dusk.",
+      "prompt": "Create ONE finished opaque landscape illustration, exactly 2:1 wide composition. Premium stylized cinematic miniature world for a fictional DroneAid Netherlands community game. Cohesive violet (#4238EB), indigo, chalk white and small warm yellow accents; tactile matte ceramic architecture, beautiful paper and wood details, soft volumetric light, richly crafted but large readable shapes. Elevated oblique view, full-bleed single scene, no panels or borders. Clearly fictional illustration, never a photograph or evidence of a real operation. No people, text, letters, digits, logos, labels with writing, signage with writing, screens, product UI, enemies, grids, capture trails, weapons, or drones. Leave small calm visually uncluttered areas near the upper-left (17% across, 24% down) and lower-right (77% across, 72% down) so a game route may return there, but DO NOT draw routes, gameplay markers or paths of light. A broad playful fictional waterfront connects a near packing hall to a far collection bay. Strong diagonal composition from the white-and-violet near hall in lower-left to a beautiful receiving pavilion in upper-right, with a WIDE QUIET MIDDLE LANDING on an island between them. Two short low pedestrian bridges join the three building masses. Blank violet sculptural signboards and yellow-lit windows brighten a cool indigo twilight; warm paper lamps reflect in still water. White cases are clustered close to walls, never placed like game pickups. Lower-middle has a calm horizontal timber boardwalk, pale stone terraces and reed planters. Smooth stylized ceramic materials, small yellow dahlias, architectural cutaway detailing and generous calm paving; a cohesive premium miniature illustration, not an actual facility.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbeb-f00f-7222-8a90-077c8d41f591/exec-76df6164-bccb-48a3-af07-d032c4669f95.png",
+        "sha256": "abf387e6cba7e4d3a3d0773aff00fcf1bf3b1bbb1b6850efb805ff724b2104a8",
+        "bytes": 2612558,
+        "width": 1774,
+        "height": 887
+      },
+      "selected": {
+        "path": "game/editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-careful-handoff-05.png",
+        "sha256": "d50bbe0cabd58a2566db7b788934b04dbd29306bb02f426a6cb589fb56cc4d09",
+        "bytes": 883590,
+        "width": 960,
+        "height": 480
+      },
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "/usr/bin/sips",
+        "command": [
+          "/usr/bin/sips",
+          "-z",
+          "480",
+          "960",
+          "$CODEX_HOME/generated_images/01a0dbeb-f00f-7222-8a90-077c8d41f591/exec-76df6164-bccb-48a3-af07-d032c4669f95.png",
+          "--out",
+          "game/editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-careful-handoff-05.png"
+        ],
+        "changes": "Proportional native resize only; no crop, repainting, palette quantization, semantic edit, or change to the original.",
+        "opaque": true
+      },
+      "review": {
+        "status": "candidate",
+        "original": "Visually inspected original; no visible text, branded logos, UI, enemies, people or weaponry.",
+        "selected": "Inspected exact 960x480 native PNG derivative: clear separate architectural masses and calm return courts; no visible writing, branded logos, UI, enemies, people or weaponry. In-game overlays not yet reviewed.",
+        "inGame": "pending",
+        "humanArtworkApproval": "pending"
+      }
+    },
+    {
+      "id": "droneaid-nl-careful-handoff-06",
+      "missionId": "droneaid-nl-careful-handoff-06",
+      "title": "Ready for the Next Team",
+      "alt": "Two orderly white receiving docks surround a narrow violet canal at lavender sunrise.",
+      "prompt": "Create ONE finished opaque landscape illustration, exactly 2:1 wide composition. Premium stylized cinematic miniature world for a fictional DroneAid Netherlands community game. Cohesive violet (#4238EB), indigo, chalk white and small warm yellow accents; tactile matte ceramic architecture, beautiful paper and wood details, soft volumetric light, richly crafted but large readable shapes. Elevated oblique view, full-bleed single scene, no panels or borders. Clearly fictional illustration, never a photograph or evidence of a real operation. No people, text, letters, digits, logos, labels with writing, signage with writing, screens, product UI, enemies, grids, capture trails, weapons, or drones. Leave small calm visually uncluttered areas near the upper-left (17% across, 24% down) and lower-right (77% across, 72% down) so a game route may return there, but DO NOT draw routes, gameplay markers or paths of light. A satisfying cinematic finale at a fictional community handoff courtyard just before sunrise. TWO WIDE INNER DOCKS, like adjacent white ceremonial terraces divided by a slim violet canal, connect a workshop, an orderly case room and a welcoming receiving pavilion. Beautiful white transport cases with violet edge trim sit in carefully composed small groups beneath curved canopies; doors are open and everything feels ready for a future team, with no people shown. The outer canal loop and broad perimeter walkway frame the picture, while two inner dock squares remain pale, calm and inviting. Lavender dawn sky, yellow window glow fading into morning, sculptural trees, smooth ceramic gables, subtle yellow paper ornaments. High overhead three-quarter view, warmly optimistic, balanced nearly symmetrical but not rigid; broad quiet space near upper-left and lower-right.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbeb-f00f-7222-8a90-077c8d41f591/exec-e3f67813-118d-41c1-98dd-701bbca29aaf.png",
+        "sha256": "8d624b2d0486552105dfa874061cb2810a7d962fc706b37fd67eca8da19e9a49",
+        "bytes": 2887820,
+        "width": 1774,
+        "height": 887
+      },
+      "selected": {
+        "path": "game/editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-careful-handoff-06.png",
+        "sha256": "2b51ae00e50b9290ee6dd5da09db0893346d33685f43f39a7a12b0f0a33e5b65",
+        "bytes": 939519,
+        "width": 960,
+        "height": 480
+      },
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "/usr/bin/sips",
+        "command": [
+          "/usr/bin/sips",
+          "-z",
+          "480",
+          "960",
+          "$CODEX_HOME/generated_images/01a0dbeb-f00f-7222-8a90-077c8d41f591/exec-e3f67813-118d-41c1-98dd-701bbca29aaf.png",
+          "--out",
+          "game/editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-careful-handoff-06.png"
+        ],
+        "changes": "Proportional native resize only; no crop, repainting, palette quantization, semantic edit, or change to the original.",
+        "opaque": true
+      },
+      "review": {
+        "status": "candidate",
+        "original": "Visually inspected original; no visible text, branded logos, UI, enemies, people or weaponry.",
+        "selected": "Inspected exact 960x480 native PNG derivative: clear separate architectural masses and calm return courts; no visible writing, branded logos, UI, enemies, people or weaponry. In-game overlays not yet reviewed.",
+        "inGame": "pending",
+        "humanArtworkApproval": "pending",
+        "compositionNote": "Small decorative tulip motifs appear on banners as fictional Dutch floral ornament; they are not official brand artwork."
+      }
+    },
+    {
+      "id": "droneaid-nl-signals-of-support-01",
+      "missionId": "droneaid-nl-signals-of-support-01",
+      "title": "A Story Worth Sharing",
+      "alt": "A sculptural blank storyboard and circular listening pavilion surround a planted noticeboard island.",
+      "prompt": "Create ONE finished opaque landscape illustration, exactly 2:1 wide composition. Premium stylized cinematic miniature world for a fictional DroneAid Netherlands community game. Cohesive violet (#4238EB), indigo, chalk white and small warm yellow accents; tactile matte ceramic architecture, beautiful paper and wood details, soft volumetric light, richly crafted but large readable shapes. Elevated oblique view, full-bleed single scene, no panels or borders. Clearly fictional illustration, never a photograph or evidence of a real operation. No people, text, letters, digits, logos, labels with writing, signage with writing, screens, product UI, enemies, grids, capture trails, weapons, or drones. Leave small calm visually uncluttered areas near the upper-left (17% across, 24% down) and lower-right (77% across, 72% down) so a game route may return there, but DO NOT draw routes, gameplay markers or paths of light. Make architecture deliberately sculptural and beautifully stylized, not a photoreal location. No emblems, flags, insignia, pictograms or shields; blank material surfaces only. A luminous small community pavilion devoted to listening and sharing stories, in a quiet Dutch garden. On the left, a large freestanding VIOLET STORYBOARD SCULPTURE holds only blank white folded papers and abstract unmarked colored rectangles; on the right a soft circular listening alcove with empty pale benches sits beneath a white ribbed canopy. Between them a raised noticeboard island is surrounded by low violet planters and a broad cream-colored court. Show two inviting architectural destinations without drawing a trail between them. Soft morning skylight, frosted glass, paper edges, matte ceramic, warm pale wood, tiny butter-yellow flowers. A floating paper canopy curls overhead like a ribbon of shared ideas; no writing or symbols. High three-quarter camera, intimate crafted editorial illustration, bold readable composition.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbeb-f00f-7222-8a90-077c8d41f591/exec-8cd91d46-d540-489b-be1d-c38f1d04c977.png",
+        "sha256": "a83cfe31567e5990367d7a888d30a3c6ab33808e710d2afecc353053a97b5ccb",
+        "bytes": 2712500,
+        "width": 1774,
+        "height": 887
+      },
+      "selected": {
+        "path": "game/editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-signals-of-support-01.png",
+        "sha256": "5f47850ad578fb362d5659881cb54f4032b0132e19ff21d1eaca9420802b4b42",
+        "bytes": 911571,
+        "width": 960,
+        "height": 480
+      },
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "/usr/bin/sips",
+        "command": [
+          "/usr/bin/sips",
+          "-z",
+          "480",
+          "960",
+          "$CODEX_HOME/generated_images/01a0dbeb-f00f-7222-8a90-077c8d41f591/exec-8cd91d46-d540-489b-be1d-c38f1d04c977.png",
+          "--out",
+          "game/editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-signals-of-support-01.png"
+        ],
+        "changes": "Proportional native resize only; no crop, repainting, palette quantization, semantic edit, or change to the original.",
+        "opaque": true
+      },
+      "review": {
+        "status": "candidate",
+        "original": "Visually inspected original: sculptural violet/white community story; no readable text, branded logos, UI, enemies, people or weaponry.",
+        "selected": "Inspected exact 960x480 native PNG derivative: clear architectural and paper silhouettes, smooth tones, no readable text, branded logos, UI, enemies, people or weaponry. In-game overlay review remains pending.",
+        "inGame": "pending",
+        "humanArtworkApproval": "pending",
+        "compositionNote": "Fine paper surface lines remain as texture; no readable lettering. The upper-left return region intersects the tall storyboard, so actual overlay contrast should be checked in game."
+      }
+    },
+    {
+      "id": "droneaid-nl-signals-of-support-02",
+      "missionId": "droneaid-nl-signals-of-support-02",
+      "title": "Poster Workshop",
+      "alt": "Oversized violet, white and yellow paper sculptures rise above three inviting craft tables.",
+      "prompt": "Create ONE finished opaque landscape illustration, exactly 2:1 wide composition. Premium stylized cinematic miniature world for a fictional DroneAid Netherlands community game. Cohesive violet (#4238EB), indigo, chalk white and small warm yellow accents; tactile matte ceramic architecture, beautiful paper and wood details, soft volumetric light, richly crafted but large readable shapes. Elevated oblique view, full-bleed single scene, no panels or borders. Clearly fictional illustration, never a photograph or evidence of a real operation. No people, text, letters, digits, logos, labels with writing, signage with writing, screens, product UI, enemies, grids, capture trails, weapons, or drones. Leave small calm visually uncluttered areas near the upper-left (17% across, 24% down) and lower-right (77% across, 72% down) so a game route may return there, but DO NOT draw routes, gameplay markers or paths of light. Make architecture deliberately sculptural and beautifully stylized, not a photoreal location. No emblems, flags, insignia, pictograms or shields; blank material surfaces only. A fantastical roofless print-and-paper workshop, viewed from high oblique overhead. Three rounded pale-wood DESIGN TABLES surround a grand CENTRAL SCULPTURAL DISPLAY of oversized blank violet, white and yellow paper sheets curling like folded architectural wings. The smaller near-left poster table opens into a broad quiet return terrace; a second quiet lower-right court separates two violet storage alcoves. Paper rolls, blank cut shapes, harmless craft brushes in white pots, layered paper edges, large frosted clerestory panels, a little lush greenery. No posters with writing or pictograms, all paper completely blank. Crisp diffuse midday illumination with violet shadows. Playful and sophisticated sculptural miniature, indoor exhibition energy and tactile rich materials, readable at thumbnail size.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbeb-f00f-7222-8a90-077c8d41f591/exec-4341f226-534a-4bd8-bbd1-9c7e7352ca51.png",
+        "sha256": "a9e8c0178b3ef310ec5dbabf688124977b12c439b3ce31196b8483e61fb9d7cf",
+        "bytes": 2685843,
+        "width": 1774,
+        "height": 887
+      },
+      "selected": {
+        "path": "game/editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-signals-of-support-02.png",
+        "sha256": "89eae69db2e827341add83a21e9253be077c7a66795ee5b8d7f8ce7953d7b5f0",
+        "bytes": 885255,
+        "width": 960,
+        "height": 480
+      },
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "/usr/bin/sips",
+        "command": [
+          "/usr/bin/sips",
+          "-z",
+          "480",
+          "960",
+          "$CODEX_HOME/generated_images/01a0dbeb-f00f-7222-8a90-077c8d41f591/exec-4341f226-534a-4bd8-bbd1-9c7e7352ca51.png",
+          "--out",
+          "game/editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-signals-of-support-02.png"
+        ],
+        "changes": "Proportional native resize only; no crop, repainting, palette quantization, semantic edit, or change to the original.",
+        "opaque": true
+      },
+      "review": {
+        "status": "candidate",
+        "original": "Visually inspected original: sculptural violet/white community story; no readable text, branded logos, UI, enemies, people or weaponry.",
+        "selected": "Inspected exact 960x480 native PNG derivative: clear architectural and paper silhouettes, smooth tones, no readable text, branded logos, UI, enemies, people or weaponry. In-game overlay review remains pending.",
+        "inGame": "pending",
+        "humanArtworkApproval": "pending"
+      }
+    },
+    {
+      "id": "droneaid-nl-signals-of-support-03",
+      "missionId": "droneaid-nl-signals-of-support-03",
+      "title": "Invitation Square",
+      "alt": "Two small invitation stands welcome visitors into a spacious violet-and-white canal-side event square.",
+      "prompt": "Create ONE finished opaque landscape illustration, exactly 2:1 wide composition. Premium stylized cinematic miniature world for a fictional DroneAid Netherlands community game. Cohesive violet (#4238EB), indigo, chalk white and small warm yellow accents; tactile matte ceramic architecture, beautiful paper and wood details, soft volumetric light, richly crafted but large readable shapes. Elevated oblique view, full-bleed single scene, no panels or borders. Clearly fictional illustration, never a photograph or evidence of a real operation. No people, text, letters, digits, logos, labels with writing, signage with writing, screens, product UI, enemies, grids, capture trails, weapons, or drones. Leave small calm visually uncluttered areas near the upper-left (17% across, 24% down) and lower-right (77% across, 72% down) so a game route may return there, but DO NOT draw routes, gameplay markers or paths of light. Make architecture deliberately sculptural and beautifully stylized, not a photoreal location. No emblems, flags, insignia, pictograms or shields; blank material surfaces only. An inviting fictional Dutch community square before an open-house event. TWO SMALL WHITE INVITATION STANDS with violet canopies and blank folded cards sit on opposite sides of the near courtyard; beyond them a generous open gathering plaza leads to a luminous violet-and-white pavilion. Delicate paper arches and unmarked folded paper fans decorate the scene, no flags or insignia. Brick-edged rain gardens, sculptural white benches, yellow flowers, quiet canal glimpse at far-left, a low gabled workshop row in the distance. Golden afternoon shafts illuminate a broad pale diagonal plaza. Keep upper-left and lower-right courtyard zones clear of stands; plantings at edges. High cinematic miniature camera, smooth model-making surfaces, warm welcome with no people and no readable displays.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbeb-f00f-7222-8a90-077c8d41f591/exec-7dcdc9a5-b604-44d0-85a0-26b89f51b593.png",
+        "sha256": "727d03c1f15d120dc7774626fb0728c384935e0bc2e55ce48c955e18d838d621",
+        "bytes": 2706758,
+        "width": 1774,
+        "height": 887
+      },
+      "selected": {
+        "path": "game/editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-signals-of-support-03.png",
+        "sha256": "62cdc648ac4f0a1bd8ca37eb27f3f61218f7068499638022a3f1293b359791d5",
+        "bytes": 930023,
+        "width": 960,
+        "height": 480
+      },
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "/usr/bin/sips",
+        "command": [
+          "/usr/bin/sips",
+          "-z",
+          "480",
+          "960",
+          "$CODEX_HOME/generated_images/01a0dbeb-f00f-7222-8a90-077c8d41f591/exec-7dcdc9a5-b604-44d0-85a0-26b89f51b593.png",
+          "--out",
+          "game/editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-signals-of-support-03.png"
+        ],
+        "changes": "Proportional native resize only; no crop, repainting, palette quantization, semantic edit, or change to the original.",
+        "opaque": true
+      },
+      "review": {
+        "status": "candidate",
+        "original": "Visually inspected original: sculptural violet/white community story; no readable text, branded logos, UI, enemies, people or weaponry.",
+        "selected": "Inspected exact 960x480 native PNG derivative: clear architectural and paper silhouettes, smooth tones, no readable text, branded logos, UI, enemies, people or weaponry. In-game overlay review remains pending.",
+        "inGame": "pending",
+        "humanArtworkApproval": "pending"
+      }
+    },
+    {
+      "id": "droneaid-nl-signals-of-support-04",
+      "missionId": "droneaid-nl-signals-of-support-04",
+      "title": "The Community Event",
+      "alt": "A crescent-shaped violet pavilion presents four quiet community celebration corners at dusk.",
+      "prompt": "Create ONE finished opaque landscape illustration, exactly 2:1 wide composition. Premium stylized cinematic miniature world for a fictional DroneAid Netherlands community game. Cohesive violet (#4238EB), indigo, chalk white and small warm yellow accents; tactile matte ceramic architecture, beautiful paper and wood details, soft volumetric light, richly crafted but large readable shapes. Elevated oblique view, full-bleed single scene, no panels or borders. Clearly fictional illustration, never a photograph or evidence of a real operation. No people, text, letters, digits, logos, labels with writing, signage with writing, screens, product UI, enemies, grids, capture trails, weapons, or drones. Leave small calm visually uncluttered areas near the upper-left (17% across, 24% down) and lower-right (77% across, 72% down) so a game route may return there, but DO NOT draw routes, gameplay markers or paths of light. Make architecture deliberately sculptural and beautifully stylized, not a photoreal location. No emblems, flags, insignia, pictograms or shields; blank material surfaces only. A wonderful fictional indoor-outdoor COMMUNITY PAVILION at early evening, seen as a roofless crescent-shaped miniature. A broad violet curved ribbed canopy frames four distinct celebration corners: a blank paper craft display, an empty listening bench alcove, a small flower-and-refreshment table, and a workshop model shelf. Two compact inner stands face a broad quiet pale court; the exterior perimeter is a simple wide planted promenade with no activity or patrols. Warm yellow globe lamps contrast with cool violet dusk, frosted glass partitions, white ceramic ribs, paper fans and modest foliage. Compose the pavilion like an elegant theatrical stage with layered depth and a crescent silhouette, radically different from a conventional town square. No people, pictures of people, words, poster graphics or logos.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbeb-f00f-7222-8a90-077c8d41f591/exec-4d35bb1c-4d6e-4e5d-a81b-0144cdc092ae.png",
+        "sha256": "e7534fa6e43cbc23e8e0c8f2d9b8713f8f8b77e7198c30fee0b9d39c45c96957",
+        "bytes": 2628009,
+        "width": 1774,
+        "height": 887
+      },
+      "selected": {
+        "path": "game/editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-signals-of-support-04.png",
+        "sha256": "d2ebf01be78b3c5c549b7f06280ce5b14324f67c372c696a0360fa6ed37f6898",
+        "bytes": 894861,
+        "width": 960,
+        "height": 480
+      },
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "/usr/bin/sips",
+        "command": [
+          "/usr/bin/sips",
+          "-z",
+          "480",
+          "960",
+          "$CODEX_HOME/generated_images/01a0dbeb-f00f-7222-8a90-077c8d41f591/exec-4d35bb1c-4d6e-4e5d-a81b-0144cdc092ae.png",
+          "--out",
+          "game/editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-signals-of-support-04.png"
+        ],
+        "changes": "Proportional native resize only; no crop, repainting, palette quantization, semantic edit, or change to the original.",
+        "opaque": true
+      },
+      "review": {
+        "status": "candidate",
+        "original": "Visually inspected original: distinct violet/white community scene; no readable text, branded logos, UI, enemies, people or weaponry.",
+        "selected": "Inspected exact 960x480 native PNG derivative: distinct readable scene, no readable text, branded logos, UI, enemies, people or weaponry. Quiet court/aisle regions remain; in-game overlay review pending.",
+        "inGame": "pending",
+        "humanArtworkApproval": "pending",
+        "compositionNote": "Subtle curved floor seams appear as architectural paving; check they do not compete with gameplay trails in actual partial-reveal state."
+      }
+    },
+    {
+      "id": "droneaid-nl-signals-of-support-05",
+      "missionId": "droneaid-nl-signals-of-support-05",
+      "title": "Open Ledger",
+      "alt": "A flowing violet, white and yellow paper mural overlooks blank record books and a calm gallery aisle.",
+      "prompt": "Create ONE finished opaque landscape illustration, exactly 2:1 wide composition. Premium stylized cinematic miniature world for a fictional DroneAid Netherlands community game. Cohesive violet (#4238EB), indigo, chalk white and small warm yellow accents; tactile matte ceramic architecture, beautiful paper and wood details, soft volumetric light, richly crafted but large readable shapes. Elevated oblique view, full-bleed single scene, no panels or borders. Clearly fictional illustration, never a photograph or evidence of a real operation. No people, text, letters, digits, logos, labels with writing, signage with writing, screens, product UI, enemies, grids, capture trails, weapons, or drones. Leave small calm visually uncluttered areas near the upper-left (17% across, 24% down) and lower-right (77% across, 72% down) so a game route may return there, but DO NOT draw routes, gameplay markers or paths of light. Make architecture deliberately sculptural and beautifully stylized, not a photoreal location. No emblems, flags, insignia, pictograms or shields; blank material surfaces only. An airy fictional community reporting gallery opens to a canal through enormous white arches. The defining feature is a LONG WAVY PAPER MURAL made of overlapping BLANK white, violet and warm-yellow sheets arranged as tactile shallow sculpture, absolutely no writing, numbers, charts or spreadsheet graphics. Small open record books with clean unmarked pages rest on three pale oak tables; these intimate record corners open into a long broad quiet display aisle. Large violet cylindrical columns, a gently curved white mezzanine, frosted windows and sculptural planters. Reflecting water visible only in the far background. Soft after-rain cool daylight, subtle warm lamps, premium museum-like model craft. High oblique view looking diagonally along the aisle, strong quiet negative space lower-right and upper-left.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbeb-f00f-7222-8a90-077c8d41f591/exec-eb358688-40e2-49c1-baff-3abc9c00a205.png",
+        "sha256": "0578f0e8e505cb839b55b0c44c891c9959bf065c87c87a095d0b86e93d2038fe",
+        "bytes": 2363284,
+        "width": 1774,
+        "height": 887
+      },
+      "selected": {
+        "path": "game/editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-signals-of-support-05.png",
+        "sha256": "13543c2613a4dd00f4f67a0f0cdb01a0814a13716bb8ac303554904418dbfba8",
+        "bytes": 778171,
+        "width": 960,
+        "height": 480
+      },
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "/usr/bin/sips",
+        "command": [
+          "/usr/bin/sips",
+          "-z",
+          "480",
+          "960",
+          "$CODEX_HOME/generated_images/01a0dbeb-f00f-7222-8a90-077c8d41f591/exec-eb358688-40e2-49c1-baff-3abc9c00a205.png",
+          "--out",
+          "game/editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-signals-of-support-05.png"
+        ],
+        "changes": "Proportional native resize only; no crop, repainting, palette quantization, semantic edit, or change to the original.",
+        "opaque": true
+      },
+      "review": {
+        "status": "candidate",
+        "original": "Visually inspected original: distinct violet/white community scene; no readable text, branded logos, UI, enemies, people or weaponry.",
+        "selected": "Inspected exact 960x480 native PNG derivative: distinct readable scene, no readable text, branded logos, UI, enemies, people or weaponry. Quiet court/aisle regions remain; in-game overlay review pending.",
+        "inGame": "pending",
+        "humanArtworkApproval": "pending"
+      }
+    },
+    {
+      "id": "droneaid-nl-signals-of-support-06",
+      "missionId": "droneaid-nl-signals-of-support-06",
+      "title": "Thank You, Together",
+      "alt": "A giant woven paper arch shelters a community craft mosaic garden beside a sunset canal.",
+      "prompt": "Create ONE finished opaque landscape illustration, exactly 2:1 wide composition. Premium stylized cinematic miniature world for a fictional DroneAid Netherlands community game. Cohesive violet (#4238EB), indigo, chalk white and small warm yellow accents; tactile matte ceramic architecture, beautiful paper and wood details, soft volumetric light, richly crafted but large readable shapes. Elevated oblique view, full-bleed single scene, no panels or borders. Clearly fictional illustration, never a photograph or evidence of a real operation. No people, text, letters, digits, logos, labels with writing, signage with writing, screens, product UI, enemies, grids, capture trails, weapons, or drones. Leave small calm visually uncluttered areas near the upper-left (17% across, 24% down) and lower-right (77% across, 72% down) so a game route may return there, but DO NOT draw routes, gameplay markers or paths of light. Make architecture deliberately sculptural and beautifully stylized, not a photoreal location. No emblems, flags, insignia, pictograms or shields; blank material surfaces only. A joyful sunset finale in a fictional white courtyard by the canal: an enormous FREESTANDING WOVEN PAPER RIBBON SCULPTURE in violet, white and tiny warm-yellow strips forms an abstract open arch over a central mosaic garden. Do not make a symbol, heart, letters or emblem; it is irregular flowing craft material. Several small inner exhibition stands hold blank paper objects and miniature workshop models, while a very broad pale celebration promenade loops around the outside. Empty curved benches, soft garden lanterns, planted violet flowers, little gabled studio facades, subtle suspended paper curls. Frame the scene from high three-quarter view with rich golden backlight and cool violet shadows. Many delightful handmade details at edges, but broad calm return courts and clear large architecture. A sense of collective achievement with no people or text.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbeb-f00f-7222-8a90-077c8d41f591/exec-24e02ec7-a0b5-4642-bbff-be0702f19543.png",
+        "sha256": "d3586e991d8773fe09b9b4f5e32e8742cbde7a1e4cd1dca8360eae532cabd042",
+        "bytes": 2995575,
+        "width": 1774,
+        "height": 887
+      },
+      "selected": {
+        "path": "game/editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-signals-of-support-06.png",
+        "sha256": "da9eb2085a868f8baa7b61415ff99418cd513ccac291c699a2ca1c63483afa90",
+        "bytes": 979535,
+        "width": 960,
+        "height": 480
+      },
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "/usr/bin/sips",
+        "command": [
+          "/usr/bin/sips",
+          "-z",
+          "480",
+          "960",
+          "$CODEX_HOME/generated_images/01a0dbeb-f00f-7222-8a90-077c8d41f591/exec-24e02ec7-a0b5-4642-bbff-be0702f19543.png",
+          "--out",
+          "game/editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-signals-of-support-06.png"
+        ],
+        "changes": "Proportional native resize only; no crop, repainting, palette quantization, semantic edit, or change to the original.",
+        "opaque": true
+      },
+      "review": {
+        "status": "candidate",
+        "original": "Visually inspected original: distinct violet/white community scene; no readable text, branded logos, UI, enemies, people or weaponry.",
+        "selected": "Inspected exact 960x480 native PNG derivative: distinct readable scene, no readable text, branded logos, UI, enemies, people or weaponry. Quiet court/aisle regions remain; in-game overlay review pending.",
+        "inGame": "pending",
+        "humanArtworkApproval": "pending"
+      }
+    },
+    {
+      "id": "droneaid-nl-shared-horizon-01",
+      "missionId": "droneaid-nl-shared-horizon-01",
+      "title": "Canal Connections",
+      "alt": "Two short white bridges connect violet-roofed workshop courtyards beside a peaceful canal.",
+      "prompt": "Create ONE finished opaque landscape illustration, exactly 2:1 wide composition. Premium stylized cinematic miniature world for a fictional DroneAid Netherlands community game. Cohesive violet (#4238EB), indigo, chalk white and small warm yellow accents; tactile matte ceramic architecture, beautiful paper and wood details, soft volumetric light, richly crafted but large readable shapes. Elevated oblique view, full-bleed single scene, no panels or borders. Clearly fictional illustration, never a photograph or evidence of a real operation. No people, text, letters, digits, logos, labels with writing, signage with writing, screens, product UI, enemies, grids, capture trails, weapons, or drones. Leave small calm visually uncluttered areas near the upper-left (17% across, 24% down) and lower-right (77% across, 72% down) so a game route may return there, but DO NOT draw routes, gameplay markers or paths of light. Make architecture deliberately sculptural and beautifully stylized, not a photoreal location. No emblems, flags, insignia, pictograms or shields; blank material surfaces only. A fresh spring-morning miniature of a fictional Dutch neighbourhood crossed by two narrow canals and exactly TWO PROMINENT SHORT WHITE BRIDGES. The near bridge opens onto a small pale landing court before the second bridge reaches a wider far courtyard. Three clusters of charming white gabled workshops with violet roofs form a clear stepped composition from foreground-left toward distant-right. Show warm craft benches through open windows, blank closed cases near doors, yellow tulip beds, shallow rain gardens, neat canal edges and soft reflected sky. The bridges are broad and simple, not technical infrastructure, and no route markings appear. Camera high enough to read the two calm landings; low sun creates soft long shadows without clutter. A crafted model-world full of welcoming detail and open breathing room.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbeb-f00f-7222-8a90-077c8d41f591/exec-8947cead-2823-4aa5-bafe-17adfce20954.png",
+        "sha256": "2d1a9bf3f3517ed931311ed76928ecd6519ecea72b14a839cf643cb3d22f7fba",
+        "bytes": 3018818,
+        "width": 1774,
+        "height": 887
+      },
+      "selected": {
+        "path": "game/editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-shared-horizon-01.png",
+        "sha256": "e194cfe49e550a79a153214bd91cb08ea1ebb257a873c09529aa8f37dc2b422b",
+        "bytes": 982709,
+        "width": 960,
+        "height": 480
+      },
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "/usr/bin/sips",
+        "command": [
+          "/usr/bin/sips",
+          "-z",
+          "480",
+          "960",
+          "$CODEX_HOME/generated_images/01a0dbeb-f00f-7222-8a90-077c8d41f591/exec-8947cead-2823-4aa5-bafe-17adfce20954.png",
+          "--out",
+          "game/editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-shared-horizon-01.png"
+        ],
+        "changes": "Proportional native resize only; no crop, repainting, palette quantization, semantic edit, or change to the original.",
+        "opaque": true
+      },
+      "review": {
+        "status": "candidate",
+        "original": "Visually inspected original: distinct violet/white neighbourhood scene; no readable text, branded logos, UI, enemies, people or weaponry.",
+        "selected": "Inspected exact 960x480 native PNG derivative: clear layered neighbourhood architecture and quiet water/courtyard regions, no readable text, branded logos, UI, enemies, people or weaponry. In-game overlay review pending.",
+        "inGame": "pending",
+        "humanArtworkApproval": "pending"
+      }
+    },
+    {
+      "id": "droneaid-nl-shared-horizon-02",
+      "missionId": "droneaid-nl-shared-horizon-02",
+      "title": "Courtyard Workshop",
+      "alt": "A folded-roof violet workshop opens onto three layered white neighbourhood courtyards.",
+      "prompt": "Create ONE finished opaque landscape illustration, exactly 2:1 wide composition. Premium stylized cinematic miniature world for a fictional DroneAid Netherlands community game. Cohesive violet (#4238EB), indigo, chalk white and small warm yellow accents; tactile matte ceramic architecture, beautiful paper and wood details, soft volumetric light, richly crafted but large readable shapes. Elevated oblique view, full-bleed single scene, no panels or borders. Clearly fictional illustration, never a photograph or evidence of a real operation. No people, text, letters, digits, logos, labels with writing, signage with writing, screens, product UI, enemies, grids, capture trails, weapons, or drones. Leave small calm visually uncluttered areas near the upper-left (17% across, 24% down) and lower-right (77% across, 72% down) so a game route may return there, but DO NOT draw routes, gameplay markers or paths of light. Make architecture deliberately sculptural and beautifully stylized, not a photoreal location. No emblems, flags, insignia, pictograms or shields; blank material surfaces only. A striking rooftop-free WHITE WORKSHOP ATRIUM surrounded by THREE OPEN COURTYARDS at different levels, viewed almost isometrically but with cinematic lens depth. The central workshop has violet folded roof wings, pale wood benches with harmless paper craft and blank ceramic model pieces. Above it a quiet planted upper courtyard with a white circular bench; below it a quiet lower courtyard edged by violet arches. A narrow canal glimpsed only along right edge ties the scene to an imagined Dutch neighbourhood. Sculptural stairs and broad landings, white plaster gables, frosted glass, pale oak, restrained yellow flowers and afternoon light. Strong readable open courts, no maze or literal board geometry, no painted line network. Intimate collaborative atmosphere without any people.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbeb-f00f-7222-8a90-077c8d41f591/exec-f51221b4-7cec-4a17-ad38-dc270e62ba95.png",
+        "sha256": "2c26857c90a4e02aecbd3b196c0bdcaffea90b4804eafeca126879b0b13d3433",
+        "bytes": 2747924,
+        "width": 1774,
+        "height": 887
+      },
+      "selected": {
+        "path": "game/editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-shared-horizon-02.png",
+        "sha256": "7a8e60c73b217413b8170ad311f92b78ff40ac7f5ff07a2b2eab9bb6a066f845",
+        "bytes": 919273,
+        "width": 960,
+        "height": 480
+      },
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "/usr/bin/sips",
+        "command": [
+          "/usr/bin/sips",
+          "-z",
+          "480",
+          "960",
+          "$CODEX_HOME/generated_images/01a0dbeb-f00f-7222-8a90-077c8d41f591/exec-f51221b4-7cec-4a17-ad38-dc270e62ba95.png",
+          "--out",
+          "game/editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-shared-horizon-02.png"
+        ],
+        "changes": "Proportional native resize only; no crop, repainting, palette quantization, semantic edit, or change to the original.",
+        "opaque": true
+      },
+      "review": {
+        "status": "candidate",
+        "original": "Visually inspected original: distinct violet/white neighbourhood scene; no readable text, branded logos, UI, enemies, people or weaponry.",
+        "selected": "Inspected exact 960x480 native PNG derivative: clear layered neighbourhood architecture and quiet water/courtyard regions, no readable text, branded logos, UI, enemies, people or weaponry. In-game overlay review pending.",
+        "inGame": "pending",
+        "humanArtworkApproval": "pending"
+      }
+    },
+    {
+      "id": "droneaid-nl-shared-horizon-03",
+      "missionId": "droneaid-nl-shared-horizon-03",
+      "title": "Evening Collection",
+      "alt": "Warm yellow collection windows and a violet canopy illuminate a broad canal basin at evening.",
+      "prompt": "Create ONE finished opaque landscape illustration, exactly 2:1 wide composition. Premium stylized cinematic miniature world for a fictional DroneAid Netherlands community game. Cohesive violet (#4238EB), indigo, chalk white and small warm yellow accents; tactile matte ceramic architecture, beautiful paper and wood details, soft volumetric light, richly crafted but large readable shapes. Elevated oblique view, full-bleed single scene, no panels or borders. Clearly fictional illustration, never a photograph or evidence of a real operation. No people, text, letters, digits, logos, labels with writing, signage with writing, screens, product UI, enemies, grids, capture trails, weapons, or drones. Leave small calm visually uncluttered areas near the upper-left (17% across, 24% down) and lower-right (77% across, 72% down) so a game route may return there, but DO NOT draw routes, gameplay markers or paths of light. Make architecture deliberately sculptural and beautifully stylized, not a photoreal location. No emblems, flags, insignia, pictograms or shields; blank material surfaces only. A beautiful small canal neighbourhood at blue hour, when yellow windows have just lit up. A COMPACT NEAR COLLECTION BAY under a violet canopy occupies the left foreground, with a few closed blank white cases; behind it the view opens into a very broad calm indigo canal basin surrounded by gabled white workshops. Small luminous collection corners punctuate three building groups as warm architectural niches, not game pickups. A wide low white footbridge and quiet pale landing terraces give the scene strong broad horizontal forms. Violet sky reflected in water, soft yellow window light, potted trees, reeds and tiny handcrafted brick details. Elevated long-lens miniature scene with warm foreground depth and cool atmospheric distance; no vehicles, operation diagrams, people or actual drone activity.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbeb-f00f-7222-8a90-077c8d41f591/exec-42ebd586-ca00-4c81-a6c9-8c3a581d018c.png",
+        "sha256": "6e96613cd8c49cb2902199d9dd8bd6c933704265163a9f9c19d7ff66ddc04957",
+        "bytes": 2423479,
+        "width": 1774,
+        "height": 887
+      },
+      "selected": {
+        "path": "game/editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-shared-horizon-03.png",
+        "sha256": "cd00f2d194028db0d52116f81a2e549887fad2c86a7175788cf07dffc3e91167",
+        "bytes": 843264,
+        "width": 960,
+        "height": 480
+      },
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "/usr/bin/sips",
+        "command": [
+          "/usr/bin/sips",
+          "-z",
+          "480",
+          "960",
+          "$CODEX_HOME/generated_images/01a0dbeb-f00f-7222-8a90-077c8d41f591/exec-42ebd586-ca00-4c81-a6c9-8c3a581d018c.png",
+          "--out",
+          "game/editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-shared-horizon-03.png"
+        ],
+        "changes": "Proportional native resize only; no crop, repainting, palette quantization, semantic edit, or change to the original.",
+        "opaque": true
+      },
+      "review": {
+        "status": "candidate",
+        "original": "Visually inspected original: distinct violet/white neighbourhood scene; no readable text, branded logos, UI, enemies, people or weaponry.",
+        "selected": "Inspected exact 960x480 native PNG derivative: clear layered neighbourhood architecture and quiet water/courtyard regions, no readable text, branded logos, UI, enemies, people or weaponry. In-game overlay review pending.",
+        "inGame": "pending",
+        "humanArtworkApproval": "pending"
+      }
+    },
+    {
+      "id": "droneaid-nl-shared-horizon-04",
+      "missionId": "droneaid-nl-shared-horizon-04",
+      "title": "Windows of Light",
+      "alt": "Three glowing violet workshop rooms open onto a quiet shared light court at dusk.",
+      "prompt": "Create ONE finished opaque landscape illustration, exactly 2:1 wide composition. Premium stylized cinematic miniature world for a fictional DroneAid Netherlands community game. Cohesive violet (#4238EB), indigo, chalk white and small warm yellow accents; tactile matte ceramic architecture, beautiful paper and wood details, soft volumetric light, richly crafted but large readable shapes. Elevated oblique view, full-bleed single scene, no panels or borders. Clearly fictional illustration, never a photograph or evidence of a real operation. No people, text, letters, digits, logos, labels with writing, signage with writing, screens, product UI, enemies, grids, capture trails, weapons, or drones. Leave small calm visually uncluttered areas near the upper-left (17% across, 24% down) and lower-right (77% across, 72% down) so a game route may return there, but DO NOT draw routes, gameplay markers or paths of light. Make architecture deliberately sculptural and beautifully stylized, not a photoreal location. No emblems, flags, insignia, pictograms or shields; blank material surfaces only. In addition keep the area near 77% across and 49% down visually calm for the late-mission core objective, and a quiet horizontal middle landing around 36–63% across at half-height. Never depict objectives, board geometry or game markers. At deep violet dusk, a row of separate luminous community rooms forms a beautiful miniature neighbourhood around a CENTRAL LIGHT COURT. Make three different open-faced workshop rooms visible like a sophisticated architectural dollhouse: paper-making room, blank-case packing room, and quiet shared reading corner with unmarked books. Rich violet outer walls contrast with white inner arches and amber-yellow windows. A wide pale central courtyard catches their pooled light, and a very shallow canal borders the foreground. The connecting mid-height terrace is calm, broad and uninterrupted. Small planted trees and ribbed frosted roof sections frame the edges. Composition celebrates the places behind shared progress without depicting any people. Cinematic luminous evening, strong readable room masses, inviting mystery rather than photorealism.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbeb-f00f-7222-8a90-077c8d41f591/recovered-droneaid-nl-shared-horizon-04.png",
+        "recovery": "Built-in image generation returned PNG image data without a saved-file hint during low disk space. Preserved its exact returned PNG bytes in the same built-in generated_images directory under this descriptive recovered filename; no regeneration or semantic edit. No existing original was replaced.",
+        "sha256": "35e52d5dd89eaa84ffbde74d190c7bb766d4a1b77b1631e223638206a82bf983",
+        "bytes": 2556137,
+        "width": 1774,
+        "height": 887
+      },
+      "selected": {
+        "path": "game/editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-shared-horizon-04.png",
+        "sha256": "a23492980419f875f7797c652bc02d84453339eb1d40d1b9d9d282c4fda6e994",
+        "bytes": 867819,
+        "width": 960,
+        "height": 480
+      },
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "/usr/bin/sips",
+        "command": [
+          "/usr/bin/sips",
+          "-z",
+          "480",
+          "960",
+          "$CODEX_HOME/generated_images/01a0dbeb-f00f-7222-8a90-077c8d41f591/recovered-droneaid-nl-shared-horizon-04.png",
+          "--out",
+          "game/editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-shared-horizon-04.png"
+        ],
+        "changes": "Proportional native resize only; no crop, repainting, palette quantization, semantic edit, or change to the original.",
+        "opaque": true
+      },
+      "review": {
+        "status": "candidate",
+        "original": "Visually inspected original: distinct violet/white neighbourhood scene; no readable text, branded logos, UI, enemies, people or weaponry.",
+        "selected": "Inspected exact 960x480 native PNG derivative: luminous separate community spaces and broad quiet terraces/water, no readable text, branded logos, UI, enemies, people or weaponry. In-game overlays remain unreviewed.",
+        "inGame": "pending",
+        "humanArtworkApproval": "pending",
+        "compositionNote": "Backdrop uses invented coastal hills, not accurate Dutch geography; the scene is fictional miniature architecture."
+      }
+    },
+    {
+      "id": "droneaid-nl-shared-horizon-05",
+      "missionId": "droneaid-nl-shared-horizon-05",
+      "title": "The Whole Neighbourhood",
+      "alt": "A workshop, packing depot and gathering pavilion share broad inner landings along a fictional canal.",
+      "prompt": "Create ONE finished opaque landscape illustration, exactly 2:1 wide composition. Premium stylized cinematic miniature world for a fictional DroneAid Netherlands community game. Cohesive violet (#4238EB), indigo, chalk white and small warm yellow accents; tactile matte ceramic architecture, beautiful paper and wood details, soft volumetric light, richly crafted but large readable shapes. Elevated oblique view, full-bleed single scene, no panels or borders. Clearly fictional illustration, never a photograph or evidence of a real operation. No people, text, letters, digits, logos, labels with writing, signage with writing, screens, product UI, enemies, grids, capture trails, weapons, or drones. Leave small calm visually uncluttered areas near the upper-left (17% across, 24% down) and lower-right (77% across, 72% down) so a game route may return there, but DO NOT draw routes, gameplay markers or paths of light. Make architecture deliberately sculptural and beautifully stylized, not a photoreal location. No emblems, flags, insignia, pictograms or shields; blank material surfaces only. In addition keep the area near 77% across and 49% down visually calm for the late-mission core objective, and a quiet horizontal middle landing around 36–63% across at half-height. Never depict objectives, board geometry or game markers. A grand but intimate high-oblique miniature panorama reveals familiar fictional places working together: a violet folded-roof craft workshop at left, white packing depot with indigo doors in the middle distance, a welcoming paper-canopy gathering pavilion at right, and a little collection quay below. STAGGERED BROAD INNER LANDINGS connect these three architectural groups across a thin serpentine canal. Keep a wide quiet pale landing at 77% across and half-height, and another around two-thirds across three-quarters down; don't place buildings or props at those points. Warm late-afternoon light, violet and white masses, small yellow-lit windows, carefully chosen shrubs, blank cases clustered only against walls. A white stone horizontal middle terrace provides visual rest. Layered handcrafted architectural diorama with a sense of remembered places, not a literal game map or diagram.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbeb-f00f-7222-8a90-077c8d41f591/recovered-droneaid-nl-shared-horizon-05.png",
+        "recovery": "Built-in image generation returned PNG image data without a saved-file hint during low disk space. Preserved its exact returned PNG bytes in the same built-in generated_images directory under this descriptive recovered filename; no regeneration or semantic edit. No existing original was replaced.",
+        "sha256": "8669c906c0c12bdc42ee32ca194c275c2dbd973c5b9ff43aec27a163cb132bb3",
+        "bytes": 2728671,
+        "width": 1774,
+        "height": 887
+      },
+      "selected": {
+        "path": "game/editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-shared-horizon-05.png",
+        "sha256": "96ce6f02cab6d1a8b58c000ab8df81fa9569582d7319ae5319d53a9dc1464d23",
+        "bytes": 916595,
+        "width": 960,
+        "height": 480
+      },
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "/usr/bin/sips",
+        "command": [
+          "/usr/bin/sips",
+          "-z",
+          "480",
+          "960",
+          "$CODEX_HOME/generated_images/01a0dbeb-f00f-7222-8a90-077c8d41f591/recovered-droneaid-nl-shared-horizon-05.png",
+          "--out",
+          "game/editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-shared-horizon-05.png"
+        ],
+        "changes": "Proportional native resize only; no crop, repainting, palette quantization, semantic edit, or change to the original.",
+        "opaque": true
+      },
+      "review": {
+        "status": "candidate",
+        "original": "Visually inspected original: distinct violet/white neighbourhood scene; no readable text, branded logos, UI, enemies, people or weaponry.",
+        "selected": "Inspected exact 960x480 native PNG derivative: luminous separate community spaces and broad quiet terraces/water, no readable text, branded logos, UI, enemies, people or weaponry. In-game overlays remain unreviewed.",
+        "inGame": "pending",
+        "humanArtworkApproval": "pending",
+        "compositionNote": "Distant hills and a perched fictional building are imaginative scenery, not an actual Dutch location or evidence of community operations."
+      }
+    },
+    {
+      "id": "droneaid-nl-shared-horizon-06",
+      "missionId": "droneaid-nl-shared-horizon-06",
+      "title": "Tomorrow Starts Here",
+      "alt": "Dawn opens over a violet-and-white canal neighbourhood with familiar workshops, bridges and welcoming terraces.",
+      "prompt": "Create ONE finished opaque landscape illustration, exactly 2:1 wide composition. Premium stylized cinematic miniature world for a fictional DroneAid Netherlands community game. Cohesive violet (#4238EB), indigo, chalk white and small warm yellow accents; tactile matte ceramic architecture, beautiful paper and wood details, soft volumetric light, richly crafted but large readable shapes. Elevated oblique view, full-bleed single scene, no panels or borders. Clearly fictional illustration, never a photograph or evidence of a real operation. No people, text, letters, digits, logos, labels with writing, signage with writing, screens, product UI, enemies, grids, capture trails, weapons, or drones. Leave small calm visually uncluttered areas near the upper-left (17% across, 24% down) and lower-right (77% across, 72% down) so a game route may return there, but DO NOT draw routes, gameplay markers or paths of light. Make architecture deliberately sculptural and beautifully stylized, not a photoreal location. No emblems, flags, insignia, pictograms or shields; blank material surfaces only. In addition keep the area near 77% across and 49% down visually calm for the late-mission core objective, and a quiet horizontal middle landing around 36–63% across at half-height. Never depict objectives, board geometry or game markers. A soaring cinematic finale at fresh dawn over an imagined Dutch community neighbourhood. FOREGROUND familiar calm return terraces, a violet-roofed open workshop, orderly little depot and white gathering pavilion form a beautiful connected community around reflective canals; beyond them an expansive lavender horizon opens toward a tiny distant windmill and green polders. Broad short white bridges and staggered pale terraces connect the familiar places, without any route markers. Subtle blank folded-paper arches and yellow flowers suggest a quiet celebration of learning and helping together, no flags or symbols. Keep the middle terrace, right-center court at 77%/49%, lower-middle landing at 65%/76%, and upper-left small court visually uncluttered. Pearl sunrise, gentle yellow windows, translucent mist and rich violet reflections. Optimistic, tactile stylized miniature with strong architectural silhouettes and a bright open future.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbeb-f00f-7222-8a90-077c8d41f591/recovered-droneaid-nl-shared-horizon-06.png",
+        "recovery": "Built-in image generation returned PNG image data without a saved-file hint during low disk space. Preserved its exact returned PNG bytes in the same built-in generated_images directory under this descriptive recovered filename; no regeneration or semantic edit. No existing original was replaced.",
+        "sha256": "8d22886e168533e2c5ccaf2afdeedf692d942a844385f966076e11f782950fab",
+        "bytes": 2918836,
+        "width": 1774,
+        "height": 887
+      },
+      "selected": {
+        "path": "game/editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-shared-horizon-06.png",
+        "sha256": "512795cc0280d5c59c6d1eddc425deb96a199d3c8f2c45fef496daa144bbfd64",
+        "bytes": 965525,
+        "width": 960,
+        "height": 480
+      },
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "/usr/bin/sips",
+        "command": [
+          "/usr/bin/sips",
+          "-z",
+          "480",
+          "960",
+          "$CODEX_HOME/generated_images/01a0dbeb-f00f-7222-8a90-077c8d41f591/recovered-droneaid-nl-shared-horizon-06.png",
+          "--out",
+          "game/editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-shared-horizon-06.png"
+        ],
+        "changes": "Proportional native resize only; no crop, repainting, palette quantization, semantic edit, or change to the original.",
+        "opaque": true
+      },
+      "review": {
+        "status": "candidate",
+        "original": "Visually inspected original: distinct violet/white neighbourhood scene; no readable text, branded logos, UI, enemies, people or weaponry.",
+        "selected": "Inspected exact 960x480 native PNG derivative: luminous separate community spaces and broad quiet terraces/water, no readable text, branded logos, UI, enemies, people or weaponry. In-game overlays remain unreviewed.",
+        "inGame": "pending",
+        "humanArtworkApproval": "pending"
+      }
+    }
+  ]
+}

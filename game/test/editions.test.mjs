@@ -905,24 +905,12 @@ test('approved original-derived install icons ship both square sizes and the sel
   );
   for (const editionId of ['coupa-adventure', 'droneaid-community']) {
     const selected = selectEditionClosure(catalog, [editionId]);
-    const edition = selected.editions[0],
-      brand = selected.brands[0];
-    const paths = new Set([
-      ...selected.assets.map((asset) => asset.path),
-      ...Object.values(edition.boot),
-      ...selected.campaigns.flatMap((campaign) => [
-        campaign.sourcePath,
-        ...(campaign.lessonPath ? [campaign.lessonPath] : []),
-      ]),
-    ]);
-    const files = new Map(
-      await Promise.all(
-        [...paths].map(async (path) => [
-          path,
-          await fs.readFile(new URL(`../../${path}`, import.meta.url)),
-        ]),
-      ),
-    );
+    const brand = selected.brands[0];
+    const files = await collectEditionSelectedFiles({
+      catalog,
+      editionIds: [editionId],
+      read: (path) => fs.readFile(new URL(`../../${path}`, import.meta.url)),
+    });
     files.set(
       'game/company.html',
       Buffer.from(

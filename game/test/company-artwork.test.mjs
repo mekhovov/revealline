@@ -118,13 +118,12 @@ test('picture additions preserve all gameplay manifests but correctly change str
   }
 });
 
-test('the four changed editions retain exact original public snapshots without registering unrelated history', async () => {
+test('the first artwork batch retains its four exact original public snapshots through later updates', async () => {
   const affected = ['coupa-all', ...batch.map(([, editionId]) => editionId)].sort();
-  const registered = catalog.editions.filter((edition) => edition.presentationHistory?.length);
-  assert.deepEqual(registered.map((edition) => edition.id).sort(), affected);
+  const registered = affected.map((id) => catalog.editions.find((edition) => edition.id === id));
+  assert.ok(registered.every((edition) => edition?.presentationHistory?.length));
   const newIds = new Set(batch.map(([, , id]) => id));
   for (const edition of registered) {
-    assert.equal(edition.presentationHistory.length, 1);
     const descriptor = edition.presentationHistory[0];
     assert.deepEqual(Object.keys(descriptor).sort(), ['bytes', 'id', 'path', 'sha256']);
     const bytes = await readFile(new URL(descriptor.path, root));
@@ -134,7 +133,7 @@ test('the four changed editions retain exact original public snapshots without r
     assert.equal(snapshot.authoredPresentationSha256, descriptor.id);
     assert.equal(snapshot.editionId, edition.id);
     assert.equal(snapshot.catalog.editions[0].revision, 4);
-    assert.equal(edition.revision, 5);
+    assert.ok(edition.revision > snapshot.catalog.editions[0].revision);
     assert.ok(snapshot.catalog.assets.every((asset) => !newIds.has(asset.id)));
     for (const original of snapshot.catalog.assets) {
       const current = catalog.assets.find((asset) => asset.id === original.id);

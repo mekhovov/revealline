@@ -345,6 +345,1949 @@
       "review": "candidate-public-bytes; engineering initial-reveal crop review completed at 1280x720 and 390x844; final artifact artwork approval pending",
       "derivation": "Original generated PNG bytes, unchanged.",
       "prompt": "Use case: stylized-concept. Asset type: finished ultra-wide 2:1 mission reward illustration for fictional Coupa Village campaign Connect the Network, mission Scoped Access. One spectacular yet welcoming reference-data garden within a luminous blue archive conservatory. Two calm circular white collection plazas sit near the upper-middle and lower-middle of the composition, surrounded by different inviting groves of neatly shelved large closed books, translucent blue reference drawers and frosted glass catalog tiles. A sculptural canopy of sweeping white and royal-blue ribbons frames the garden. Small open blank reading books and brass bookmarks suggest thoughtful selective reading without any doors, locks, credentials, code or executable details. Gentle pale-blue paths embedded softly in the floor connect the reading groves; avoid bright thin lines that might resemble gameplay trails. Plants and small lilac blossoms soften precise architectural forms. Elevated oblique camera with extraordinary miniature-world depth, premium tactile 3D editorial game illustration, navy #081D4D, royal blue #1565C0, white, controlled cyan and pistachio with tiny amber reading lamps. Daylight through glass, coherent architectural masses and generous quiet plazas, fine discoverable craft detail. Fill the opaque 2:1 landscape rectangle with one composition, no panels. No text, digits, symbols, logos, flower emblems, UI, real product screens, enemies, grid, magical effects, identifiable people or watermark. Clearly fictional illustrative architecture, not a photo or a real Coupa facility."
+    },
+    {
+      "id": "coupa-inside-village-02-reveal-v1",
+      "path": "game/editions/assets/coupa/bulk-02/listen-then-link-v1.png",
+      "revision": 1,
+      "sha256": "66d93ec13abcc1e3095c435278e7a4599ace4618724c93acdfd4ce0277f8b4d5",
+      "bytes": 953677,
+      "rights": "generated-derivative",
+      "source": "image_gen.imagegen",
+      "publication": "public",
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; final artifact artwork approval pending",
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "/usr/bin/sips",
+        "command": [
+          "/usr/bin/sips",
+          "-z",
+          "480",
+          "960",
+          "$CODEX_HOME/generated_images/01a0dbec-03b0-7922-a31b-9d791f738055/exec-c3bf9d6a-cdf6-4b0d-bdb6-dd3ed34f9344.png",
+          "--out",
+          "game/editions/assets/coupa/bulk-02/listen-then-link-v1.png"
+        ],
+        "changes": "Proportional native resize only; no crop, repainting, palette quantization, semantic edit, or change to the original.",
+        "opaque": true
+      },
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbec-03b0-7922-a31b-9d791f738055/exec-c3bf9d6a-cdf6-4b0d-bdb6-dd3ed34f9344.png",
+        "sha256": "1a49b1073b27dbffd66dc483d9a31db33b097dace38235321dc439340d4a9563",
+        "bytes": 2950275,
+        "width": 1774,
+        "height": 887
+      },
+      "prompt": "Use case: stylized-concept. Asset type: one finished opaque ultra-wide 2:1 mission reward illustration for a fictional Coupa Village arcade game. Premium cinematic miniature-world 3D editorial illustration, high oblique elevated camera, tactile matte porcelain architecture, anodized royal-blue metal, frosted glass, planted gardens, warm natural light, sophisticated beautiful architecture and inviting discoverable detail. Coherent large forms at thumbnail size, no collage. Coupa-inspired palette navy #081D4D, royal blue #1565C0, clean ivory-white, restrained cyan, pistachio foliage and lilac with tiny warm brass details. Scenic architecture only: do not draw the actual board, walls, safe zones, hazards or objective markers. Keep the specified quiet floor regions unobstructed and low contrast for gameplay overlays. Fill the entire opaque 2:1 landscape frame with one scene. Absolutely no people, employees, faces, text, letters, digits, readable paper marks, logos, flower emblems, UI, controls, screens, grid, capture trails, game enemies or watermark. No glowing thin decorative lines resembling game trails. Fictional illustrative architecture, not a photograph or claim about a real Coupa workplace. No depicted choice implies a correct business answer.\n\nMission Listen, Then Link. Two equally welcoming listening pavilions face each other across a bright shared collaboration garden. The left pavilion has an open blank notebook, two empty chairs and a tall blue curved canopy; the right has a few blank handoff cards and a broad reading bench under a white ribbon roof. Planting and wide stepping terraces suggest understanding both perspectives. A central pair of separated slim planted architectural piers frames open movement through the garden; the spaces feel connected without a literal linking line. Keep generous quiet pale floor areas centered near29% horizontal/43% vertical and65%/57%. Leave a small quiet upper-left area near17%/24%. Rich afternoon depth, friendly substantial silhouettes and calm collaboration atmosphere."
+    },
+    {
+      "id": "coupa-inside-village-03-reveal-v1",
+      "path": "game/editions/assets/coupa/bulk-02/room-for-everyone-v1.png",
+      "revision": 1,
+      "sha256": "6939aa6f3ed8253504639cbd8db3d3449f160029211be4d30fc3dac6ce97b3b7",
+      "bytes": 883373,
+      "rights": "generated-derivative",
+      "source": "image_gen.imagegen",
+      "publication": "public",
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; final artifact artwork approval pending",
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "/usr/bin/sips",
+        "command": [
+          "/usr/bin/sips",
+          "-z",
+          "480",
+          "960",
+          "$CODEX_HOME/generated_images/01a0dbec-03b0-7922-a31b-9d791f738055/exec-33d58453-7251-466e-962a-54e38fe1e594.png",
+          "--out",
+          "game/editions/assets/coupa/bulk-02/room-for-everyone-v1.png"
+        ],
+        "changes": "Proportional native resize only; no crop, repainting, palette quantization, semantic edit, or change to the original.",
+        "opaque": true
+      },
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbec-03b0-7922-a31b-9d791f738055/exec-33d58453-7251-466e-962a-54e38fe1e594.png",
+        "sha256": "179d027602f0f6070c3d5d84804a6ae82f11282352c9be83e74bc2d1d0adfc57",
+        "bytes": 2728190,
+        "width": 1774,
+        "height": 887
+      },
+      "prompt": "Use case: stylized-concept. Asset type: one finished opaque ultra-wide 2:1 mission reward illustration for a fictional Coupa Village arcade game. Premium cinematic miniature-world 3D editorial illustration, high oblique elevated camera, tactile matte porcelain architecture, anodized royal-blue metal, frosted glass, planted gardens, warm natural light, sophisticated beautiful architecture and inviting discoverable detail. Coherent large forms at thumbnail size, no collage. Coupa-inspired palette navy #081D4D, royal blue #1565C0, clean ivory-white, restrained cyan, pistachio foliage and lilac with tiny warm brass details. Scenic architecture only: do not draw the actual board, walls, safe zones, hazards or objective markers. Keep the specified quiet floor regions unobstructed and low contrast for gameplay overlays. Fill the entire opaque 2:1 landscape frame with one scene. Absolutely no people, employees, faces, text, letters, digits, readable paper marks, logos, flower emblems, UI, controls, screens, grid, capture trails, game enemies or watermark. No glowing thin decorative lines resembling game trails. Fictional illustrative architecture, not a photograph or claim about a real Coupa workplace. No depicted choice implies a correct business answer.\n\nMission Room for Everyone. An expansive luminous community conservatory holds a shared low central gathering table and two smaller, equally inviting contribution nooks. Blank question cards, closed navy notebooks, varied empty seating, plants, softened skylight and small brass lamps suggest ways to contribute at different times. Two tall blue glass divider groves stand left-of-center and right-of-center, creating three connected zones without closing any entrance. Make the upper-left nook floor at20%/31%, the central floor at50%/49%, and the lower-right floor at80%/69% broad and visually quiet; place the furniture just beside these regions. Keep17%/24% quiet too. Distinct welcoming architecture, not a classroom or generic office, no identity or disability inferred."
+    },
+    {
+      "id": "coupa-inside-village-04-reveal-v1",
+      "path": "game/editions/assets/coupa/bulk-02/own-the-handoff-v1.png",
+      "revision": 1,
+      "sha256": "d8d385fabf56624d69362f0287deb5236f081994b24dbcabe8af7e96e3bc11cd",
+      "bytes": 929184,
+      "rights": "generated-derivative",
+      "source": "image_gen.imagegen",
+      "publication": "public",
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; final artifact artwork approval pending",
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "/usr/bin/sips",
+        "command": [
+          "/usr/bin/sips",
+          "-z",
+          "480",
+          "960",
+          "$CODEX_HOME/generated_images/01a0dbec-03b0-7922-a31b-9d791f738055/exec-65b56ade-b57b-4319-9831-53ee3537fd92.png",
+          "--out",
+          "game/editions/assets/coupa/bulk-02/own-the-handoff-v1.png"
+        ],
+        "changes": "Proportional native resize only; no crop, repainting, palette quantization, semantic edit, or change to the original.",
+        "opaque": true
+      },
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbec-03b0-7922-a31b-9d791f738055/exec-65b56ade-b57b-4319-9831-53ee3537fd92.png",
+        "sha256": "40a59a97b751958bed3a34cfa172869dc6cca06fedb76a755e78f2f4cae5d06d",
+        "bytes": 2889959,
+        "width": 1774,
+        "height": 887
+      },
+      "prompt": "Use case: stylized-concept. Asset type: one finished opaque ultra-wide 2:1 mission reward illustration for a fictional Coupa Village arcade game. Premium cinematic miniature-world 3D editorial illustration, high oblique elevated camera, tactile matte porcelain architecture, anodized royal-blue metal, frosted glass, planted gardens, warm natural light, sophisticated beautiful architecture and inviting discoverable detail. Coherent large forms at thumbnail size, no collage. Coupa-inspired palette navy #081D4D, royal blue #1565C0, clean ivory-white, restrained cyan, pistachio foliage and lilac with tiny warm brass details. Scenic architecture only: do not draw the actual board, walls, safe zones, hazards or objective markers. Keep the specified quiet floor regions unobstructed and low contrast for gameplay overlays. Fill the entire opaque 2:1 landscape frame with one scene. Absolutely no people, employees, faces, text, letters, digits, readable paper marks, logos, flower emblems, UI, controls, screens, grid, capture trails, game enemies or watermark. No glowing thin decorative lines resembling game trails. Fictional illustrative architecture, not a photograph or claim about a real Coupa workplace. No depicted choice implies a correct business answer.\n\nMission Own the Handoff. Two crafted workshop stations share a small clearly arranged set of blank folders and matching parcel trays. The upper-left workshop is a long open blue-roofed studio; the lower-right workshop is a long low white receiving counter. A central pair of quiet porcelain landing courts and broad open circulation make the handoff feel deliberate. A written blank reference on one station and an inviting empty walkthrough alcove on the other are equally plausible approaches. Leave clear low-contrast floor centers at47%/38% and50%/68%, plus small quiet areas at17%/24%,77%/68%,49%/26%. Warm morning light, smooth geometric craft and planted edges. No stamps/checkmarks/approval symbols and no piles resembling pickups."
+    },
+    {
+      "id": "coupa-source-to-pay-03-reveal-v1",
+      "path": "game/editions/assets/coupa/bulk-02/terms-bridge-v1.png",
+      "revision": 1,
+      "sha256": "774f33dfce5bb1c62c3cb5ff46ff64cf8c6624b1d5d0e92feba7faaac3cca998",
+      "bytes": 938978,
+      "rights": "generated-derivative",
+      "source": "image_gen.imagegen",
+      "publication": "public",
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; final artifact artwork approval pending",
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "/usr/bin/sips",
+        "command": [
+          "/usr/bin/sips",
+          "-z",
+          "480",
+          "960",
+          "$CODEX_HOME/generated_images/01a0dbec-03b0-7922-a31b-9d791f738055/exec-3740efa7-639b-4187-85d6-df9367fcca27.png",
+          "--out",
+          "game/editions/assets/coupa/bulk-02/terms-bridge-v1.png"
+        ],
+        "changes": "Proportional native resize only; no crop, repainting, palette quantization, semantic edit, or change to the original.",
+        "opaque": true
+      },
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbec-03b0-7922-a31b-9d791f738055/exec-3740efa7-639b-4187-85d6-df9367fcca27.png",
+        "sha256": "1867a8c563574fbfbc40d0de9ded4e0f3d72a1342326797d30919b134be23755",
+        "bytes": 2874437,
+        "width": 1774,
+        "height": 887
+      },
+      "prompt": "Use case: stylized-concept. Asset type: one finished opaque ultra-wide 2:1 mission reward illustration for a fictional Coupa Village arcade game. Premium cinematic miniature-world 3D editorial illustration, high oblique elevated camera, tactile matte porcelain architecture, anodized royal-blue metal, frosted glass, planted gardens, warm natural light, sophisticated beautiful architecture and inviting discoverable detail. Coherent large forms at thumbnail size, no collage. Coupa-inspired palette navy #081D4D, royal blue #1565C0, clean ivory-white, restrained cyan, pistachio foliage and lilac with tiny warm brass details. Scenic architecture only: do not draw the actual board, walls, safe zones, hazards or objective markers. Keep the specified quiet floor regions unobstructed and low contrast for gameplay overlays. Fill the entire opaque 2:1 landscape frame with one scene. Absolutely no people, employees, faces, text, letters, digits, readable paper marks, logos, flower emblems, UI, controls, screens, grid, capture trails, game enemies or watermark. No glowing thin decorative lines resembling game trails. Fictional illustrative architecture, not a photograph or claim about a real Coupa workplace. No depicted choice implies a correct business answer.\n\nMission Terms Bridge. A spectacular broad porcelain bridge joins an elegant friendly supplier pavilion on the left with a luminous navy-and-blue contract library on the right above a calm canal. The supplier pavilion displays a handful of plain crafted supply cases; the library has oversized closed books, rolled blank sheets and brass bookends. A generous horizontal bridge landing crosses the middle, while a smaller quiet lower-left stair terrace rests beside the water. Upper-left and lower-right low archive shelves echo separated architectural dividers. Keep a long clear pale surface near52%/44%, smaller quiet floor near20%/67%, and clear pockets near17%/24% and77%/71%. Late-afternoon sunlight through a sweeping white ribbon arch. The bridge represents agreed scope and understanding, never a signature, approval stamp or legal instruction."
+    },
+    {
+      "id": "coupa-source-to-pay-04-reveal-v1",
+      "path": "game/editions/assets/coupa/bulk-02/request-to-order-v1.png",
+      "revision": 1,
+      "sha256": "24e38468dc0836f5cd6f189a074f3e4857628b8a613e4b2009e5ab55d05c38d9",
+      "bytes": 941689,
+      "rights": "generated-derivative",
+      "source": "image_gen.imagegen",
+      "publication": "public",
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; final artifact artwork approval pending",
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "/usr/bin/sips",
+        "command": [
+          "/usr/bin/sips",
+          "-z",
+          "480",
+          "960",
+          "$CODEX_HOME/generated_images/01a0dbec-03b0-7922-a31b-9d791f738055/exec-8ddd8130-39e5-409b-9111-e6f448c00d1f.png",
+          "--out",
+          "game/editions/assets/coupa/bulk-02/request-to-order-v1.png"
+        ],
+        "changes": "Proportional native resize only; no crop, repainting, palette quantization, semantic edit, or change to the original.",
+        "opaque": true
+      },
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbec-03b0-7922-a31b-9d791f738055/exec-8ddd8130-39e5-409b-9111-e6f448c00d1f.png",
+        "sha256": "ad8496b3f83ab235dabc1adbca09e1da724963b5e19755f3ffc0c5febb872c95",
+        "bytes": 2808308,
+        "width": 1774,
+        "height": 887
+      },
+      "prompt": "Use case: stylized-concept. Asset type: one finished opaque ultra-wide 2:1 mission reward illustration for a fictional Coupa Village arcade game. Premium cinematic miniature-world 3D editorial illustration, high oblique elevated camera, tactile matte porcelain architecture, anodized royal-blue metal, frosted glass, planted gardens, warm natural light, sophisticated beautiful architecture and inviting discoverable detail. Coherent large forms at thumbnail size, no collage. Coupa-inspired palette navy #081D4D, royal blue #1565C0, clean ivory-white, restrained cyan, pistachio foliage and lilac with tiny warm brass details. Scenic architecture only: do not draw the actual board, walls, safe zones, hazards or objective markers. Keep the specified quiet floor regions unobstructed and low contrast for gameplay overlays. Fill the entire opaque 2:1 landscape frame with one scene. Absolutely no people, employees, faces, text, letters, digits, readable paper marks, logos, flower emblems, UI, controls, screens, grid, capture trails, game enemies or watermark. No glowing thin decorative lines resembling game trails. Fictional illustrative architecture, not a photograph or claim about a real Coupa workplace. No depicted choice implies a correct business answer.\n\nMission Request to Order. Three distinct connected blue village pavilions form a graceful diagonal from upper-left to lower-right: a small request-preparation atelier with blank folded cards; a central review terrace with closed reference books and a simple empty table; a far-right dispatch studio with orderly plain parcel trays. Their architectural silhouettes differ, while broad ivory walks and planted spaces tie them together. Two narrow blue-glass garden dividers sit between the neighborhoods, one lower-left of center and one upper-right. Keep quiet floor pockets near21%/36%,49%/53%,79%/67%, with small quiet areas17%/24% and77%/74%. Charming miniature city, luminous morning light, no labels and no pipeline arrows. This is illustrative progression through different records, no automatic approved or paid status."
+    },
+    {
+      "id": "coupa-source-to-pay-05-reveal-v1",
+      "path": "game/editions/assets/coupa/bulk-02/received-in-part-v1.png",
+      "revision": 1,
+      "sha256": "f60c7a5f9ab780e052cf5c43fe73ca05f4b6e48383c84a3dbf446ca672ddcda3",
+      "bytes": 927662,
+      "rights": "generated-derivative",
+      "source": "image_gen.imagegen",
+      "publication": "public",
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; final artifact artwork approval pending",
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "/usr/bin/sips",
+        "command": [
+          "/usr/bin/sips",
+          "-z",
+          "480",
+          "960",
+          "$CODEX_HOME/generated_images/01a0dbec-03b0-7922-a31b-9d791f738055/exec-a3d59214-9125-4e37-8339-49d84d352e8b.png",
+          "--out",
+          "game/editions/assets/coupa/bulk-02/received-in-part-v1.png"
+        ],
+        "changes": "Proportional native resize only; no crop, repainting, palette quantization, semantic edit, or change to the original.",
+        "opaque": true
+      },
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbec-03b0-7922-a31b-9d791f738055/exec-a3d59214-9125-4e37-8339-49d84d352e8b.png",
+        "sha256": "0f77e22ae950b1b8e08c52c522bf332bee75373c8cf2f6e88141cefa139fff7e",
+        "bytes": 2763724,
+        "width": 1774,
+        "height": 887
+      },
+      "prompt": "Use case: stylized-concept. Asset type: one finished opaque ultra-wide 2:1 mission reward illustration for a fictional Coupa Village arcade game. Premium cinematic miniature-world 3D editorial illustration, high oblique elevated camera, tactile matte porcelain architecture, anodized royal-blue metal, frosted glass, planted gardens, warm natural light, sophisticated beautiful architecture and inviting discoverable detail. Coherent large forms at thumbnail size, no collage. Coupa-inspired palette navy #081D4D, royal blue #1565C0, clean ivory-white, restrained cyan, pistachio foliage and lilac with tiny warm brass details. Scenic architecture only: do not draw the actual board, walls, safe zones, hazards or objective markers. Keep the specified quiet floor regions unobstructed and low contrast for gameplay overlays. Fill the entire opaque 2:1 landscape frame with one scene. Absolutely no people, employees, faces, text, letters, digits, readable paper marks, logos, flower emblems, UI, controls, screens, grid, capture trails, game enemies or watermark. No glowing thin decorative lines resembling game trails. Fictional illustrative architecture, not a photograph or claim about a real Coupa workplace. No depicted choice implies a correct business answer.\n\nMission Received in Part. A beautiful miniature canal harbor contains two different delivery docks: left dock holds a modest group of plain already-arrived parcels and an open blank ledger on a sheltered shelf; the right dock has a waiting empty berth, neatly arranged empty receiving trays and a small distant unmanned cargo barge. Arrival and waiting are visibly different without numbers or a solved business answer. Two offset narrow royal-blue canopy piers frame a calm central water passage. Quiet pale landing floors centered near25%/53% and75%/39%, a broad softer low-contrast lower-middle passage near48%/68%, small quiet pockets17%/24% and77%/71%. Fresh overcast morning with warm lamps, reflective blue water and crafted white stone, tactile cinematic depth. No literal stock dashboard, no arrows or completion badge."
+    },
+    {
+      "id": "coupa-product-operations-03-reveal-v1",
+      "path": "game/editions/assets/coupa/bulk-02/review-the-request-v1.png",
+      "revision": 1,
+      "sha256": "6815b2caaf6b65230d7efc90e57fd357e72f20eb6c3978164ba03668d943d431",
+      "bytes": 823416,
+      "rights": "generated-derivative",
+      "source": "image_gen.imagegen",
+      "publication": "public",
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; final artifact artwork approval pending",
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "/usr/bin/sips",
+        "command": [
+          "/usr/bin/sips",
+          "-z",
+          "480",
+          "960",
+          "$CODEX_HOME/generated_images/01a0dbec-03b0-7922-a31b-9d791f738055/exec-a9f66413-7231-4c3c-be9d-0d5f2a452d92.png",
+          "--out",
+          "game/editions/assets/coupa/bulk-02/review-the-request-v1.png"
+        ],
+        "changes": "Proportional native resize only; no crop, repainting, palette quantization, semantic edit, or change to the original.",
+        "opaque": true
+      },
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbec-03b0-7922-a31b-9d791f738055/exec-a9f66413-7231-4c3c-be9d-0d5f2a452d92.png",
+        "sha256": "eb192e909176e6cf273750b48659c485e66efb6548ae71a931328a97ea73af52",
+        "bytes": 2456641,
+        "width": 1774,
+        "height": 887
+      },
+      "prompt": "Use case: stylized-concept. Asset type: one finished opaque ultra-wide 2:1 mission reward illustration for a fictional Coupa Village arcade game. Premium cinematic miniature-world 3D editorial illustration, high oblique elevated camera, tactile matte porcelain architecture, anodized royal-blue metal, frosted glass, planted gardens, warm natural light, sophisticated beautiful architecture and inviting discoverable detail. Coherent large forms at thumbnail size, no collage. Coupa-inspired palette navy #081D4D, royal blue #1565C0, clean ivory-white, restrained cyan, pistachio foliage and lilac with tiny warm brass details. Scenic architecture only: do not draw the actual board, walls, safe zones, hazards or objective markers. Keep the specified quiet floor regions unobstructed and low contrast for gameplay overlays. Fill the entire opaque 2:1 landscape frame with one scene. Absolutely no people, employees, faces, text, letters, digits, readable paper marks, logos, flower emblems, UI, controls, screens, grid, capture trails, game enemies or watermark. No glowing thin decorative lines resembling game trails. Fictional illustrative architecture, not a photograph or claim about a real Coupa workplace. No depicted choice implies a correct business answer.\n\nMission Review the Request. Create an intimate yet spectacular cutaway review library, clearly an interior rather than a village harbor. Two side document alcoves hold oversized closed blue folios, plain white supporting cards and tactile fabric folders. A raised upper-middle review desk sits beneath a domed frosted-blue skylight. Two slim vertical archive partitions frame a generous central corridor, with empty polished porcelain landing floors at22%/53%,49%/33%,79%/53%. Keep small quiet upper-left17%/24% and lower-right77%/71% spaces too. Soft overhead daylight, blue glass reflections, subtle brass desk lamps and planted window boxes. Evidence is gathered together thoughtfully; show neither approval nor rejection, no judge symbolism, check marks or dramatic conflict."
+    },
+    {
+      "id": "coupa-product-operations-04-reveal-v1",
+      "path": "game/editions/assets/coupa/bulk-02/handle-the-change-v1.png",
+      "revision": 1,
+      "sha256": "1dd7123f8cb633625226f096f5c5da7a848fd3532f04e4796ce70aeb7687d2a2",
+      "bytes": 792498,
+      "rights": "generated-derivative",
+      "source": "image_gen.imagegen",
+      "publication": "public",
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; final artifact artwork approval pending",
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "/usr/bin/sips",
+        "command": [
+          "/usr/bin/sips",
+          "-z",
+          "480",
+          "960",
+          "$CODEX_HOME/generated_images/01a0dbec-03b0-7922-a31b-9d791f738055/coupa-product-operations-04-builtin-output.png",
+          "--out",
+          "game/editions/assets/coupa/bulk-02/handle-the-change-v1.png"
+        ],
+        "changes": "Proportional native resize only; no crop, repainting, palette quantization, semantic edit, or change to the original.",
+        "opaque": true
+      },
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbec-03b0-7922-a31b-9d791f738055/coupa-product-operations-04-builtin-output.png",
+        "sha256": "72ef968ba00fb2bdd7a00ae7400c6a26296aaead67546a136a6fd9eceabff0c2",
+        "bytes": 2368361,
+        "width": 1774,
+        "height": 887,
+        "preservation": "Tool returned a PNG data URL without a saved-path hint; exact decoded tool bytes were preserved unchanged in the built-in generated_images directory."
+      },
+      "prompt": "Use case: stylized-concept. Asset type: one finished opaque ultra-wide 2:1 mission reward illustration for a fictional Coupa Village arcade game. Premium cinematic miniature-world 3D editorial illustration, high oblique elevated camera, tactile matte porcelain architecture, anodized royal-blue metal, frosted glass, planted gardens, warm natural light, sophisticated beautiful architecture and inviting discoverable detail. Coherent large forms at thumbnail size, no collage. Coupa-inspired palette navy #081D4D, royal blue #1565C0, clean ivory-white, restrained cyan, pistachio foliage and lilac with tiny warm brass details. Scenic architecture only: do not draw the actual board, walls, safe zones, hazards or objective markers. Keep the specified quiet floor regions unobstructed and low contrast for gameplay overlays. Fill the entire opaque 2:1 landscape frame with one scene. Absolutely no people, employees, faces, text, letters, digits, readable paper marks, logos, flower emblems, UI, controls, screens, grid, capture trails, game enemies or watermark. No glowing thin decorative lines resembling game trails. Fictional illustrative architecture, not a photograph or claim about a real Coupa workplace. No depicted choice implies a correct business answer.\n\nMission Handle the Change. One architectural scene joins a left-side sheltered supplier dock to a right-side elevated buyer studio. Long horizontal dock shelves and a long lower-right blue awning create an offset composition. A single open blue folder with one blank cream insert rests on a side shelf, visibly waiting beside other closed folders; plain delivery cases stay orderly, no rejection markings. Leave two broad quiet porcelain courts at50%/33% and50%/69%, joined by open floor; keep17%/24% and77%/71% calm. Early-evening rose-gray sky through a broad glazed roof, navy cabinetry, warm task lamps, water reflections only at extreme left. Inviting model-world engineering, a considered handoff awaiting review rather than an already approved change."
+    },
+    {
+      "id": "coupa-product-operations-05-reveal-v1",
+      "path": "game/editions/assets/coupa/bulk-02/record-the-delivery-v1.png",
+      "revision": 1,
+      "sha256": "b5d544d7eb6c299976bd102b4c7e63e41337cf23b317dd12a09cccc74e2f23f3",
+      "bytes": 829094,
+      "rights": "generated-derivative",
+      "source": "image_gen.imagegen",
+      "publication": "public",
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; final artifact artwork approval pending",
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "/usr/bin/sips",
+        "command": [
+          "/usr/bin/sips",
+          "-z",
+          "480",
+          "960",
+          "$CODEX_HOME/generated_images/01a0dbec-03b0-7922-a31b-9d791f738055/exec-f11f81bf-f4c1-4a81-93a1-c75cb73a2998.png",
+          "--out",
+          "game/editions/assets/coupa/bulk-02/record-the-delivery-v1.png"
+        ],
+        "changes": "Proportional native resize only; no crop, repainting, palette quantization, semantic edit, or change to the original.",
+        "opaque": true
+      },
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbec-03b0-7922-a31b-9d791f738055/exec-f11f81bf-f4c1-4a81-93a1-c75cb73a2998.png",
+        "sha256": "6ea40b6f24c592bd4bfdc6244e19ce9f2c3efb2d9029592fe11f6c0eb16a3b26",
+        "bytes": 2489637,
+        "width": 1774,
+        "height": 887
+      },
+      "prompt": "Use case: stylized-concept. Asset type: one finished opaque ultra-wide 2:1 mission reward illustration for a fictional Coupa Village arcade game. Premium cinematic miniature-world 3D editorial illustration, high oblique elevated camera, tactile matte porcelain architecture, anodized royal-blue metal, frosted glass, planted gardens, warm natural light, sophisticated beautiful architecture and inviting discoverable detail. Coherent large forms at thumbnail size, no collage. Coupa-inspired palette navy #081D4D, royal blue #1565C0, clean ivory-white, restrained cyan, pistachio foliage and lilac with tiny warm brass details. Scenic architecture only: do not draw the actual board, walls, safe zones, hazards or objective markers. Keep the specified quiet floor regions unobstructed and low contrast for gameplay overlays. Fill the entire opaque 2:1 landscape frame with one scene. Absolutely no people, employees, faces, text, letters, digits, readable paper marks, logos, flower emblems, UI, controls, screens, grid, capture trails, game enemies or watermark. No glowing thin decorative lines resembling game trails. Fictional illustrative architecture, not a photograph or claim about a real Coupa workplace. No depicted choice implies a correct business answer.\n\nMission Record the Delivery. A beautiful spacious receiving hall, cutaway dollhouse architecture with a lofty ribbed royal-blue roof and skylights. Low left-side arrived-goods bay has a modest group of plain cream parcels; the far upper-right bay has empty blue tray slots waiting for a later delivery. A small central counting desk with an open blank notebook sits just beside a broad clear central floor. Tall offset blue glass storage dividers create left and right edges but leave a generous path. Calm landing areas at22%/72%,49%/47%,79%/28%; broad muted lower-central floor near48%/65%; quiet17%/24% and77%/71% pockets. Tiny potted plants, brass shelf brackets, tactile blue fabric baskets. Everything fictional; no numbers, barcode-like marks or business answer encoded in exact parcel counts."
+    },
+    {
+      "id": "coupa-developer-integration-03-reveal-v1",
+      "path": "game/editions/assets/coupa/bulk-02/beyond-page-one-v1.png",
+      "revision": 1,
+      "sha256": "783a1086fa752ca083f2239fb424ba8c014436c6a8838a647ec129fe71464f55",
+      "bytes": 876039,
+      "rights": "generated-derivative",
+      "source": "image_gen.imagegen",
+      "publication": "public",
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; final artifact artwork approval pending",
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "/usr/bin/sips",
+        "command": [
+          "/usr/bin/sips",
+          "-z",
+          "480",
+          "960",
+          "$CODEX_HOME/generated_images/01a0dbec-03b0-7922-a31b-9d791f738055/exec-6c30f718-9631-409a-9e68-e3a76bc4cf34.png",
+          "--out",
+          "game/editions/assets/coupa/bulk-02/beyond-page-one-v1.png"
+        ],
+        "changes": "Proportional native resize only; no crop, repainting, palette quantization, semantic edit, or change to the original.",
+        "opaque": true
+      },
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbec-03b0-7922-a31b-9d791f738055/exec-6c30f718-9631-409a-9e68-e3a76bc4cf34.png",
+        "sha256": "e020b9562eb4eeb1132aae10f574cd57860f1a61479b53655d2fc872521cc0c5",
+        "bytes": 2585916,
+        "width": 1774,
+        "height": 887
+      },
+      "prompt": "Use case: stylized-concept. Asset type: one finished opaque ultra-wide 2:1 mission reward illustration for a fictional Coupa Village arcade game. Premium cinematic miniature-world 3D editorial illustration, high oblique elevated camera, tactile matte porcelain architecture, anodized royal-blue metal, frosted glass, planted gardens, warm natural light, sophisticated beautiful architecture and inviting discoverable detail. Coherent large forms at thumbnail size, no collage. Coupa-inspired palette navy #081D4D, royal blue #1565C0, clean ivory-white, restrained cyan, pistachio foliage and lilac with tiny warm brass details. Scenic architecture only: do not draw the actual board, walls, safe zones, hazards or objective markers. Keep the specified quiet floor regions unobstructed and low contrast for gameplay overlays. Fill the entire opaque 2:1 landscape frame with one scene. Absolutely no people, employees, faces, text, letters, digits, readable paper marks, logos, flower emblems, UI, controls, screens, grid, capture trails, game enemies or watermark. No glowing thin decorative lines resembling game trails. Fictional illustrative architecture, not a photograph or claim about a real Coupa workplace. No depicted choice implies a correct business answer.\n\nMission Beyond Page One. A wondrous miniature data archive becomes three successive stepped library terraces, each with a distinct curving royal-blue shelf filled with clean unlettered book spines, blank page trays and translucent blue storage tiles. Unfurled blank paper sculptures curl gently above the far shelves, never across the main floor. The continuing architecture visibly extends beyond the first archive rather than treating it as the whole world. Quiet pale landing surfaces at20%/58%,49%/42%,81%/42%; quiet pockets17%/24% and77%/71%. Two offset slender blue-glass dividers sit upper-left of center and lower-right of center. Cool daylight with little warm reading lamps, layered depth, no numbered shelves, literal code, graph arrows, progress bar or countable lesson-answer pattern."
+    },
+    {
+      "id": "coupa-developer-integration-04-reveal-v1",
+      "path": "game/editions/assets/coupa/bulk-02/known-references-v1.png",
+      "revision": 1,
+      "sha256": "dc64a854959590085d322a7d9e9f6dab1a477f6c651ad1d6271e39e058c2b0dc",
+      "bytes": 886581,
+      "rights": "generated-derivative",
+      "source": "image_gen.imagegen",
+      "publication": "public",
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; final artifact artwork approval pending",
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "/usr/bin/sips",
+        "command": [
+          "/usr/bin/sips",
+          "-z",
+          "480",
+          "960",
+          "$CODEX_HOME/generated_images/01a0dbec-03b0-7922-a31b-9d791f738055/exec-64b36bcc-e567-4b1b-8660-4a24b84dc7d0.png",
+          "--out",
+          "game/editions/assets/coupa/bulk-02/known-references-v1.png"
+        ],
+        "changes": "Proportional native resize only; no crop, repainting, palette quantization, semantic edit, or change to the original.",
+        "opaque": true
+      },
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbec-03b0-7922-a31b-9d791f738055/exec-64b36bcc-e567-4b1b-8660-4a24b84dc7d0.png",
+        "sha256": "c8c36603c0d4f4610d953301389d9a329705f97852e8fda00a9253958b300b0a",
+        "bytes": 2698379,
+        "width": 1774,
+        "height": 887
+      },
+      "prompt": "Use case: stylized-concept. Asset type: one finished opaque ultra-wide 2:1 mission reward illustration for a fictional Coupa Village arcade game. Premium cinematic miniature-world 3D editorial illustration, high oblique elevated camera, tactile matte porcelain architecture, anodized royal-blue metal, frosted glass, planted gardens, warm natural light, sophisticated beautiful architecture and inviting discoverable detail. Coherent large forms at thumbnail size, no collage. Coupa-inspired palette navy #081D4D, royal blue #1565C0, clean ivory-white, restrained cyan, pistachio foliage and lilac with tiny warm brass details. Scenic architecture only: do not draw the actual board, walls, safe zones, hazards or objective markers. Keep the specified quiet floor regions unobstructed and low contrast for gameplay overlays. Fill the entire opaque 2:1 landscape frame with one scene. Absolutely no people, employees, faces, text, letters, digits, readable paper marks, logos, flower emblems, UI, controls, screens, grid, capture trails, game enemies or watermark. No glowing thin decorative lines resembling game trails. Fictional illustrative architecture, not a photograph or claim about a real Coupa workplace. No depicted choice implies a correct business answer.\n\nMission Known References. A spectacular high-roofed reference observatory joins three physical model collections around a central archive hub: miniature supplier pavilions on a side shelf, plain profile folders on a second shelf, and blank ceramic accounting tiles on a third. These are charming tactile metaphor objects, not real personal data or software UI. Two tall blue archive bookends at the left and right sides create a deep central vista. Three calm ivory floor landings stack near49%/28%,49%/49%,49%/72%; keep small quiet areas17%/24% and77%/49%. A low side hub table holds matching unmarked blue ceramic fittings ready to assemble. Sweeping white ribbon roof, frosted circular windows, rich navy cabinetry, no ID strings, locks, keys, code, connectivity lines or approval symbols."
+    },
+    {
+      "id": "coupa-developer-integration-05-reveal-v1",
+      "path": "game/editions/assets/coupa/bulk-02/draft-validate-explain-v1.png",
+      "revision": 1,
+      "sha256": "3b3671602b4bab7cc611d84fd208c7c2b72b62bb97288274599e09d8eda6e2bd",
+      "bytes": 925292,
+      "rights": "generated-derivative",
+      "source": "image_gen.imagegen",
+      "publication": "public",
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; final artifact artwork approval pending",
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "/usr/bin/sips",
+        "command": [
+          "/usr/bin/sips",
+          "-z",
+          "480",
+          "960",
+          "$CODEX_HOME/generated_images/01a0dbec-03b0-7922-a31b-9d791f738055/exec-e3cfe493-c80e-49f7-8a1e-7ea98548484d.png",
+          "--out",
+          "game/editions/assets/coupa/bulk-02/draft-validate-explain-v1.png"
+        ],
+        "changes": "Proportional native resize only; no crop, repainting, palette quantization, semantic edit, or change to the original.",
+        "opaque": true
+      },
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbec-03b0-7922-a31b-9d791f738055/exec-e3cfe493-c80e-49f7-8a1e-7ea98548484d.png",
+        "sha256": "c18ca0c7f43dc944cb77056cb3b71dbf6f4464f00cf2a6fd542b38e117a8d925",
+        "bytes": 2873520,
+        "width": 1774,
+        "height": 887
+      },
+      "prompt": "Use case: stylized-concept. Asset type: one finished opaque ultra-wide 2:1 mission reward illustration for a fictional Coupa Village arcade game. Premium cinematic miniature-world 3D editorial illustration, high oblique elevated camera, tactile matte porcelain architecture, anodized royal-blue metal, frosted glass, planted gardens, warm natural light, sophisticated beautiful architecture and inviting discoverable detail. Coherent large forms at thumbnail size, no collage. Coupa-inspired palette navy #081D4D, royal blue #1565C0, clean ivory-white, restrained cyan, pistachio foliage and lilac with tiny warm brass details. Scenic architecture only: do not draw the actual board, walls, safe zones, hazards or objective markers. Keep the specified quiet floor regions unobstructed and low contrast for gameplay overlays. Fill the entire opaque 2:1 landscape frame with one scene. Absolutely no people, employees, faces, text, letters, digits, readable paper marks, logos, flower emblems, UI, controls, screens, grid, capture trails, game enemies or watermark. No glowing thin decorative lines resembling game trails. Fictional illustrative architecture, not a photograph or claim about a real Coupa workplace. No depicted choice implies a correct business answer.\n\nMission Draft, Validate, Explain. A beautiful transparent validation atelier with a cutaway blue-glass canopy. Separate upper-left and upper-right input benches hold blank cream cards, simple differently shaped ceramic components and empty blue folders. A compact central working model made from matching porcelain arches waits beside a low side table; one plain unfilled recess suggests a draft can be improved without displaying a verdict. Quiet broad central review floor at49%/46%, smaller lower-left resting terrace23%/72%, low-contrast upper center49%/24%, plus calm pockets17%/24%,66%/76%,77%/49%. Blank rolled plans and soft fabric pinboards at the back. Intimate warm workshop lighting against luminous cyan glass, craft and thoughtful revision, no error codes, bug creatures, red crosses, checkmarks or real product screen."
+    },
+    {
+      "id": "coupa-source-to-pay-06-reveal-v1",
+      "path": "game/editions/assets/coupa/bulk-02/close-the-loop-v1.png",
+      "revision": 1,
+      "sha256": "176b93f6ec0c0ba5bd34e85cc733e8c918e8eb3087604f600f7bd542b6ba8f51",
+      "bytes": 994506,
+      "rights": "generated-derivative",
+      "source": "image_gen.imagegen",
+      "publication": "public",
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; final artifact artwork approval pending",
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "/usr/bin/sips",
+        "command": [
+          "/usr/bin/sips",
+          "-z",
+          "480",
+          "960",
+          "$CODEX_HOME/generated_images/01a0dbec-03b0-7922-a31b-9d791f738055/exec-db0c85a5-5c35-48d1-98c8-48d991165d4f.png",
+          "--out",
+          "game/editions/assets/coupa/bulk-02/close-the-loop-v1.png"
+        ],
+        "changes": "Proportional native resize only; no crop, repainting, palette quantization, semantic edit, or change to the original.",
+        "opaque": true
+      },
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbec-03b0-7922-a31b-9d791f738055/exec-db0c85a5-5c35-48d1-98c8-48d991165d4f.png",
+        "sha256": "371009f3c0bede511aca96a514ad0b534f328e01d82608a6877fbfc8ecabc864",
+        "bytes": 3088372,
+        "width": 1774,
+        "height": 887
+      },
+      "prompt": "Use case: stylized-concept. Asset type: one finished opaque ultra-wide 2:1 mission reward illustration for a fictional Coupa Village arcade game. Premium cinematic miniature-world 3D editorial illustration, high oblique elevated camera, tactile matte porcelain architecture, anodized royal-blue metal, frosted glass, planted gardens, warm natural light, sophisticated beautiful architecture and inviting discoverable detail. Coherent large forms at thumbnail size, no collage. Coupa-inspired palette navy #081D4D, royal blue #1565C0, clean ivory-white, restrained cyan, pistachio foliage and lilac with tiny warm brass details. Scenic architecture only: do not draw the actual board, walls, safe zones, hazards or objective markers. Keep the specified quiet floor regions unobstructed and low contrast for gameplay overlays. Fill the entire opaque 2:1 landscape frame with one scene. Absolutely no people, employees, faces, text, letters, digits, readable paper marks, logos, flower emblems, UI, controls, screens, grid, capture trails, game enemies or watermark. No glowing thin decorative lines resembling game trails. Fictional illustrative architecture, not a photograph or claim about a real Coupa workplace. No depicted choice implies a correct business answer.\n\nMission Close the Loop. A magnificent dusk reconciliation garden brings three physical record pavilions together: a folio library, a delivery alcove with plain parcels, and a quiet invoice desk holding closed cream folders. Three vertically stacked clear porcelain terraces near49%/28%,49%/49%,49%/72% establish a calm visual spine; place the decorative record objects beside these spaces. Low horizontal blue benches flank the middle terrace and small ivory bridges connect gardens at the outer edges. Leave upper-left17%/24% and lower-right77%/71% quiet. Tiny warm lamps gradually illuminate the district, deep navy sky transitioning to royal-blue hour, silver-blue glass and rich foliage. Thoughtful comparison and closure, but no coin rain, payment symbolism, cash, approved stamps, checkmarks, literal circuit traces or claim that approved means paid."
+    },
+    {
+      "id": "coupa-product-operations-06-reveal-v1",
+      "path": "game/editions/assets/coupa/bulk-02/clear-the-exception-v1.png",
+      "revision": 1,
+      "sha256": "54555dc7657f068e77b902f2f474baff16f344bc3b7e933bc40a07a9c2fa38a2",
+      "bytes": 896391,
+      "rights": "generated-derivative",
+      "source": "image_gen.imagegen",
+      "publication": "public",
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; final artifact artwork approval pending",
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "/usr/bin/sips",
+        "command": [
+          "/usr/bin/sips",
+          "-z",
+          "480",
+          "960",
+          "$CODEX_HOME/generated_images/01a0dbec-03b0-7922-a31b-9d791f738055/exec-69394772-e15d-40c4-93bd-b5be1aa14322.png",
+          "--out",
+          "game/editions/assets/coupa/bulk-02/clear-the-exception-v1.png"
+        ],
+        "changes": "Proportional native resize only; no crop, repainting, palette quantization, semantic edit, or change to the original.",
+        "opaque": true
+      },
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbec-03b0-7922-a31b-9d791f738055/exec-69394772-e15d-40c4-93bd-b5be1aa14322.png",
+        "sha256": "d7b0e8ff3c2faeba4cf5c6aa451c5e92ba264e9607a26b635ed1a5a2789e2449",
+        "bytes": 2673838,
+        "width": 1774,
+        "height": 887
+      },
+      "prompt": "Use case: stylized-concept. Asset type: one finished opaque ultra-wide 2:1 mission reward illustration for a fictional Coupa Village arcade game. Premium cinematic miniature-world 3D editorial illustration, high oblique elevated camera, tactile matte porcelain architecture, anodized royal-blue metal, frosted glass, planted gardens, warm natural light, sophisticated beautiful architecture and inviting discoverable detail. Coherent large forms at thumbnail size, no collage. Coupa-inspired palette navy #081D4D, royal blue #1565C0, clean ivory-white, restrained cyan, pistachio foliage and lilac with tiny warm brass details. Scenic architecture only: do not draw the actual board, walls, safe zones, hazards or objective markers. Keep the specified quiet floor regions unobstructed and low contrast for gameplay overlays. Fill the entire opaque 2:1 landscape frame with one scene. Absolutely no people, employees, faces, text, letters, digits, readable paper marks, logos, flower emblems, UI, controls, screens, grid, capture trails, game enemies or watermark. No glowing thin decorative lines resembling game trails. Fictional illustrative architecture, not a photograph or claim about a real Coupa workplace. No depicted choice implies a correct business answer.\n\nMission Clear the Exception. One grand but welcoming operations archive at late afternoon: three distinct record stations around the perimeter hold closed folios, plain parcels and blank cream document trays. A single lilac folder is set slightly aside on a small central desk as something to investigate, never surrounded by alarm or judgment. Upper-left and lower-right horizontal shelves frame a short central blue-glass divider. Leave large clear porcelain floor landings at24%/69% and72%/28%, quiet pockets17%/24% and77%/71%, and a wide open route around the central desk. Tall windows, soft skylight, comfortable empty review stools, brass reading lamps and a few planted balconies. A composed detective-like discovery scene about tracing records and finding the right owner, without a villain, solved answer, red error icon, UI or literal detective equipment."
+    },
+    {
+      "id": "coupa-developer-integration-06-reveal-v1",
+      "path": "game/editions/assets/coupa/bulk-02/run-ledger-v1.png",
+      "revision": 1,
+      "sha256": "7a9f66fb74c22ce6cdcc435e2f03dd85bfa4592e79ed53c33b03283edd780752",
+      "bytes": 969855,
+      "rights": "generated-derivative",
+      "source": "image_gen.imagegen",
+      "publication": "public",
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; final artifact artwork approval pending",
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "/usr/bin/sips",
+        "command": [
+          "/usr/bin/sips",
+          "-z",
+          "480",
+          "960",
+          "$CODEX_HOME/generated_images/01a0dbec-03b0-7922-a31b-9d791f738055/exec-2b0de973-5fce-4d74-94dd-ba261a7c4b3e.png",
+          "--out",
+          "game/editions/assets/coupa/bulk-02/run-ledger-v1.png"
+        ],
+        "changes": "Proportional native resize only; no crop, repainting, palette quantization, semantic edit, or change to the original.",
+        "opaque": true
+      },
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbec-03b0-7922-a31b-9d791f738055/exec-2b0de973-5fce-4d74-94dd-ba261a7c4b3e.png",
+        "sha256": "f8da1bf850b5f85b57cc8b151a2ad287c4c594732da5386d5bd768ea4f212abb",
+        "bytes": 3019299,
+        "width": 1774,
+        "height": 887
+      },
+      "prompt": "Use case: stylized-concept. Asset type: one finished opaque ultra-wide 2:1 mission reward illustration for a fictional Coupa Village arcade game. Premium cinematic miniature-world 3D editorial illustration, high oblique elevated camera, tactile matte porcelain architecture, anodized royal-blue metal, frosted glass, planted gardens, warm natural light, sophisticated beautiful architecture and inviting discoverable detail. Coherent large forms at thumbnail size, no collage. Coupa-inspired palette navy #081D4D, royal blue #1565C0, clean ivory-white, restrained cyan, pistachio foliage and lilac with tiny warm brass details. Scenic architecture only: do not draw the actual board, walls, safe zones, hazards or objective markers. Keep the specified quiet floor regions unobstructed and low contrast for gameplay overlays. Fill the entire opaque 2:1 landscape frame with one scene. Absolutely no people, employees, faces, text, letters, digits, readable paper marks, logos, flower emblems, UI, controls, screens, grid, capture trails, game enemies or watermark. No glowing thin decorative lines resembling game trails. Fictional illustrative architecture, not a photograph or claim about a real Coupa workplace. No depicted choice implies a correct business answer.\n\nMission Run Ledger. A sophisticated miniature network archive seen from high oblique view, with four distinct physical ledger stations connected by broad pale stone walks. Orderly blue record trays line three shelves; one small recovery bench with a single plain ivory tile set aside remains welcoming and reachable, suggesting a recoverable item without a red failure signal. Offset tall archive piers frame the left-upper and right-lower areas. Quiet open floor landings near20%/69%,50%/39%,50%/69%,80%/25%, plus small quiet pockets17%/24%,66%/76%,77%/49%. A luminous blue glass barrel roof reveals a crisp early-evening sky; calm amber shelf lamps, satin ceramic, substantial books with entirely unmarked covers. Finish with a feeling of careful stewardship and an inspectable record, not automatic success. No numbers, writing, code, screens, charts, server racks or glowing network wires."
+    },
+    {
+      "id": "coupa-inside-village-05-reveal-v1",
+      "path": "game/editions/assets/coupa/bulk-02/build-tomorrow-v1.png",
+      "revision": 1,
+      "sha256": "f44ca426cec434334b31cadddab96a036c365f2a0492a39d935c73fe2475c14f",
+      "bytes": 914825,
+      "rights": "generated-derivative",
+      "source": "image_gen.imagegen",
+      "publication": "public",
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; final artifact artwork approval pending",
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "/usr/bin/sips",
+        "command": [
+          "/usr/bin/sips",
+          "-z",
+          "480",
+          "960",
+          "$CODEX_HOME/generated_images/01a0dbec-03b0-7922-a31b-9d791f738055/exec-fd79273c-a8b9-44a8-bf9a-eabbaf84935a.png",
+          "--out",
+          "game/editions/assets/coupa/bulk-02/build-tomorrow-v1.png"
+        ],
+        "changes": "Proportional native resize only; no crop, repainting, palette quantization, semantic edit, or change to the original.",
+        "opaque": true
+      },
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbec-03b0-7922-a31b-9d791f738055/exec-fd79273c-a8b9-44a8-bf9a-eabbaf84935a.png",
+        "sha256": "26f79bac0dc1fd0f0947fdcf5d564e39f0005f1ef10d8c4e08802b1b3735ba68",
+        "bytes": 2819106,
+        "width": 1774,
+        "height": 887
+      },
+      "prompt": "Use case: stylized-concept. Asset type: one finished opaque ultra-wide 2:1 mission reward illustration for a fictional Coupa Village arcade game. Premium cinematic miniature-world 3D editorial illustration, high oblique elevated camera, tactile matte porcelain architecture, anodized royal-blue metal, frosted glass, planted gardens, warm natural light, sophisticated beautiful architecture and inviting discoverable detail. Coherent large forms at thumbnail size, no collage. Coupa-inspired palette navy #081D4D, royal blue #1565C0, clean ivory-white, restrained cyan, pistachio foliage and lilac with tiny warm brass details. Scenic architecture only: do not draw the actual board, walls, safe zones, hazards or objective markers. Keep the specified quiet floor regions unobstructed and low contrast for gameplay overlays. Fill the entire opaque 2:1 landscape frame with one scene. Absolutely no people, employees, faces, text, letters, digits, readable paper marks, logos, flower emblems, UI, controls, screens, grid, capture trails, game enemies or watermark. No glowing thin decorative lines resembling game trails. Fictional illustrative architecture, not a photograph or claim about a real Coupa workplace. No depicted choice implies a correct business answer.\n\nMission Build Tomorrow. A sunlit invention greenhouse within the miniature village, with two separated side craft benches displaying entirely blank sketch sheets, small blue ceramic test forms and an unfinished modular bridge model. A graceful suspended white-and-blue kinetic canopy above the rear workbench hints at a shared prototype, while the main center floor remains clear. Low horizontal planted shelves flank a central patch of softly textured pale-blue floor, not a literal hazard. Quiet landing spaces upper-middle49%/25%,lower-middle49%/72%,lower-left16%/68%; keep center near49%/47% visually muted and objective pockets17%/24%,77%/71% calm. Small test pieces are easy to move, no finished triumph implied; reversibility and curiosity conveyed through lightweight crafted materials. Bright hopeful morning, greenhouse panes, mature houseplants and a few lilac flowers. No writing, charts, labels, people, tools used dangerously, screens or verdict."
+    },
+    {
+      "id": "coupa-inside-village-06-reveal-v1",
+      "path": "game/editions/assets/coupa/bulk-02/all-of-us-v1.png",
+      "revision": 1,
+      "sha256": "556af50d368e0912547dc03f9b6854b43b13cea825fe5d3d0ad0979ab8e00f3b",
+      "bytes": 997763,
+      "rights": "generated-derivative",
+      "source": "image_gen.imagegen",
+      "publication": "public",
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; final artifact artwork approval pending",
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "/usr/bin/sips",
+        "command": [
+          "/usr/bin/sips",
+          "-z",
+          "480",
+          "960",
+          "$CODEX_HOME/generated_images/01a0dbec-03b0-7922-a31b-9d791f738055/exec-a56431d3-d371-45c9-9596-c4b9f2125741.png",
+          "--out",
+          "game/editions/assets/coupa/bulk-02/all-of-us-v1.png"
+        ],
+        "changes": "Proportional native resize only; no crop, repainting, palette quantization, semantic edit, or change to the original.",
+        "opaque": true
+      },
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbec-03b0-7922-a31b-9d791f738055/exec-a56431d3-d371-45c9-9596-c4b9f2125741.png",
+        "sha256": "4007de825268cc93d7893ea1d095049a0fa0caaddb7b9818b61cbe5c5df984d4",
+        "bytes": 3103142,
+        "width": 1774,
+        "height": 887
+      },
+      "prompt": "Use case: stylized-concept. Asset type: one finished opaque ultra-wide 2:1 mission reward illustration for a fictional Coupa Village arcade game. Premium cinematic miniature-world 3D editorial illustration, high oblique elevated camera, tactile matte porcelain architecture, anodized royal-blue metal, frosted glass, planted gardens, warm natural light, sophisticated beautiful architecture and inviting discoverable detail. Coherent large forms at thumbnail size, no collage. Coupa-inspired palette navy #081D4D, royal blue #1565C0, clean ivory-white, restrained cyan, pistachio foliage and lilac with tiny warm brass details. Scenic architecture only: do not draw the actual board, walls, safe zones, hazards or objective markers. Keep the specified quiet floor regions unobstructed and low contrast for gameplay overlays. Fill the entire opaque 2:1 landscape frame with one scene. Absolutely no people, employees, faces, text, letters, digits, readable paper marks, logos, flower emblems, UI, controls, screens, grid, capture trails, game enemies or watermark. No glowing thin decorative lines resembling game trails. Fictional illustrative architecture, not a photograph or claim about a real Coupa workplace. No depicted choice implies a correct business answer.\n\nMission All of Us. A magnificent empty community festival garden at gentle blue hour brings six small familiar village landmarks into one continuous architectural composition: a listening pavilion, reading nook, handoff atelier, little greenhouse, open library and welcoming blue-roofed hall. They surround three broad quiet porcelain plazas across the middle at19%/46%,49%/46%,81%/46%. Soft unmarked blue and ivory fabric swags curve high above the rear buildings; generous wide stone terraces join the spaces without thin luminous trails. Warm lanterns, pots of lilac flowers, small shared craft models and empty varied seating celebrate contributions without judging anyone. Keep17%/24% and77%/71% quiet. A rich coherent community scene with inviting depth, not a six-panel montage. No confetti, fireworks, audience, people, written values, badges, award podium or logo."
+    },
+    {
+      "id": "coupa-spend-in-motion-02-reveal-v1",
+      "path": "game/editions/assets/coupa/bulk-02/supplier-square-v1.png",
+      "revision": 1,
+      "sha256": "0d539a4f1fc673b5c28622eb29aab7c124f29dc947646829cd00e839f246bd81",
+      "bytes": 1008350,
+      "rights": "generated-derivative",
+      "source": "image_gen.imagegen",
+      "publication": "public",
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; final artifact artwork approval pending",
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "/usr/bin/sips",
+        "command": [
+          "/usr/bin/sips",
+          "-z",
+          "480",
+          "960",
+          "$CODEX_HOME/generated_images/01a0dbec-03b0-7922-a31b-9d791f738055/exec-2c71ecd5-8243-4297-aaf0-3418b192752a.png",
+          "--out",
+          "game/editions/assets/coupa/bulk-02/supplier-square-v1.png"
+        ],
+        "changes": "Proportional native resize only; no crop, repainting, palette quantization, semantic edit, or change to the original.",
+        "opaque": true
+      },
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbec-03b0-7922-a31b-9d791f738055/exec-2c71ecd5-8243-4297-aaf0-3418b192752a.png",
+        "sha256": "95cfb8aa37727a8ae5c1288d2980af4ec289eb097277d10d8e94044ba6483f81",
+        "bytes": 3084218,
+        "width": 1774,
+        "height": 887
+      },
+      "prompt": "Use case: stylized-concept. Asset type: one finished opaque ultra-wide 2:1 mission reward illustration for a fictional Coupa Village arcade game. Premium cinematic miniature-world 3D editorial illustration, high oblique elevated camera, tactile matte porcelain architecture, anodized royal-blue metal, frosted glass, planted gardens, warm natural light, sophisticated beautiful architecture and inviting discoverable detail. Coherent large forms at thumbnail size, no collage. Coupa-inspired palette navy #081D4D, royal blue #1565C0, clean ivory-white, restrained cyan, pistachio foliage and lilac with tiny warm brass details. Scenic architecture only: do not draw the actual board, walls, safe zones, hazards or objective markers. Keep the specified quiet floor regions unobstructed and low contrast for gameplay overlays. Fill the entire opaque 2:1 landscape frame with one scene. Absolutely no people, employees, faces, text, letters, digits, readable paper marks, logos, flower emblems, UI, controls, screens, grid, capture trails, game enemies or watermark. No glowing thin decorative lines resembling game trails. Fictional illustrative architecture, not a photograph or claim about a real Coupa workplace. No depicted choice implies a correct business answer.\n\nMission Supplier Square. A lively yet unoccupied miniature supplier square in fresh morning light. Two elegant porcelain market courts are ringed by friendly blue awnings and small open display stalls with plain crafted supply cases, ceramic household goods and unmarked parcels. A tall slim royal-blue colonnade with climbing plants separates the courts near the center, with generous open crossings at its ends. Keep quiet pale landing floors near26%/42% and72%/56%, with a small quiet upper-left area22%/24%. This is a welcoming commercial neighborhood, not a competitive tournament; every stall looks respected and inviting. Distant aqueduct and blue-domed workshop roofs provide deep scenic continuity; rich navy shadows and controlled bright blue roof planes. No shop signs, prices, labels, people, supplier enemies or floating paper creatures."
+    },
+    {
+      "id": "coupa-spend-in-motion-03-reveal-v1",
+      "path": "game/editions/assets/coupa/bulk-02/paper-jam-v1.png",
+      "revision": 1,
+      "sha256": "27ce16100d34d2c9675dda83ba044413e949324e5fa2aaf5ab895142419f11b8",
+      "bytes": 934944,
+      "rights": "generated-derivative",
+      "source": "image_gen.imagegen",
+      "publication": "public",
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; final artifact artwork approval pending",
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "/usr/bin/sips",
+        "command": [
+          "/usr/bin/sips",
+          "-z",
+          "480",
+          "960",
+          "$CODEX_HOME/generated_images/01a0dbec-03b0-7922-a31b-9d791f738055/exec-969be2a9-d216-4872-aae7-70ed4d5b47e5.png",
+          "--out",
+          "game/editions/assets/coupa/bulk-02/paper-jam-v1.png"
+        ],
+        "changes": "Proportional native resize only; no crop, repainting, palette quantization, semantic edit, or change to the original.",
+        "opaque": true
+      },
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbec-03b0-7922-a31b-9d791f738055/exec-969be2a9-d216-4872-aae7-70ed4d5b47e5.png",
+        "sha256": "d67b07ddf7a1ee73eb1d9a2a7436b26bce82b01969c870b6b840cb4e70b99562",
+        "bytes": 2802355,
+        "width": 1774,
+        "height": 887
+      },
+      "prompt": "Use case: stylized-concept. Asset type: one finished opaque ultra-wide 2:1 mission reward illustration for a fictional Coupa Village arcade game. Premium cinematic miniature-world 3D editorial illustration, high oblique elevated camera, tactile matte porcelain architecture, anodized royal-blue metal, frosted glass, planted gardens, warm natural light, sophisticated beautiful architecture and inviting discoverable detail. Coherent large forms at thumbnail size, no collage. Coupa-inspired palette navy #081D4D, royal blue #1565C0, clean ivory-white, restrained cyan, pistachio foliage and lilac with tiny warm brass details. Scenic architecture only: do not draw the actual board, walls, safe zones, hazards or objective markers. Keep the specified quiet floor regions unobstructed and low contrast for gameplay overlays. Fill the entire opaque 2:1 landscape frame with one scene. Absolutely no people, employees, faces, text, letters, digits, readable paper marks, logos, flower emblems, UI, controls, screens, grid, capture trails, game enemies or watermark. No glowing thin decorative lines resembling game trails. Fictional illustrative architecture, not a photograph or claim about a real Coupa workplace. No depicted choice implies a correct business answer.\n\nMission Paper Jam. A playful grand miniature city arcade built around sculptural folds of completely blank ivory paper. Large smooth folded ribbon roofs and accordion-like architectural canopies curve over navy document ateliers, becoming an orderly and surprisingly beautiful district. Two separated low horizontal paper-and-blue-metal arcades sit upper-left and lower-right; the central court and a small lower-left side terrace remain open. Quiet floor near49%/49% and17%/68%, quiet small upper-left25%/21%. Rolled blank sheets and tidy unmarked navy folios stay on shelves around the perimeter; no tiny typography or paper ruling. Bright midday light, porcelain, matte paper fibers, frosted glass and planted courtyards. The paper is friendly scenery, never an active enemy or cut trail; no knots or creatures that could confuse the actual moving hazards."
+    },
+    {
+      "id": "coupa-spend-in-motion-04-reveal-v1",
+      "path": "game/editions/assets/coupa/bulk-02/shared-routes-v1.png",
+      "revision": 1,
+      "sha256": "17ac9b2b0ddbe1810eba1940080b346b7840bd97ac01c18cdf9783039e7b3a64",
+      "bytes": 911169,
+      "rights": "generated-derivative",
+      "source": "image_gen.imagegen",
+      "publication": "public",
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; final artifact artwork approval pending",
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "/usr/bin/sips",
+        "command": [
+          "/usr/bin/sips",
+          "-z",
+          "480",
+          "960",
+          "$CODEX_HOME/generated_images/01a0dbec-03b0-7922-a31b-9d791f738055/exec-14a4e4ed-ba20-4ff8-af45-f1d547e829c9.png",
+          "--out",
+          "game/editions/assets/coupa/bulk-02/shared-routes-v1.png"
+        ],
+        "changes": "Proportional native resize only; no crop, repainting, palette quantization, semantic edit, or change to the original.",
+        "opaque": true
+      },
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbec-03b0-7922-a31b-9d791f738055/exec-14a4e4ed-ba20-4ff8-af45-f1d547e829c9.png",
+        "sha256": "7328143b9cd78bf2fe6a2dd603a28eb33be076304fdd82df1281e5b70dc38fd9",
+        "bytes": 2657603,
+        "width": 1774,
+        "height": 887
+      },
+      "prompt": "Use case: stylized-concept. Asset type: one finished opaque ultra-wide 2:1 mission reward illustration for a fictional Coupa Village arcade game. Premium cinematic miniature-world 3D editorial illustration, high oblique elevated camera, tactile matte porcelain architecture, anodized royal-blue metal, frosted glass, planted gardens, warm natural light, sophisticated beautiful architecture and inviting discoverable detail. Coherent large forms at thumbnail size, no collage. Coupa-inspired palette navy #081D4D, royal blue #1565C0, clean ivory-white, restrained cyan, pistachio foliage and lilac with tiny warm brass details. Scenic architecture only: do not draw the actual board, walls, safe zones, hazards or objective markers. Keep the specified quiet floor regions unobstructed and low contrast for gameplay overlays. Fill the entire opaque 2:1 landscape frame with one scene. Absolutely no people, employees, faces, text, letters, digits, readable paper marks, logos, flower emblems, UI, controls, screens, grid, capture trails, game enemies or watermark. No glowing thin decorative lines resembling game trails. Fictional illustrative architecture, not a photograph or claim about a real Coupa workplace. No depicted choice implies a correct business answer.\n\nMission Shared Routes. An expansive miniature harbor and inventive workshop become one connected neighborhood. A long broad ivory dock stretches through the lower-middle foreground, with quiet surface centered43%/57%; a small upper-right workshop landing near76%/25% holds a blue-roofed atelier just beside its empty floor. Gentle broad white bridges join the harbor, a planted terrace and the workshop. A long low blue canopy lines the upper-left; a narrow tall workshop wall frames the right-middle. Plain supply cases, a moored empty blue cargo boat and small crafted bridge models provide discoverable detail at the outer edges. Leave17%/24% quiet. Glorious afternoon reflections on blue canal water, strong long horizontal dock silhouette, generous navigable-looking spaces but no literal route diagram. No people, arrows, labels, payment tokens or machinery in use."
+    },
+    {
+      "id": "coupa-spend-in-motion-05-reveal-v1",
+      "path": "game/editions/assets/coupa/bulk-02/quarter-end-weather-v1.png",
+      "revision": 1,
+      "sha256": "1cf77eb26a6b2347e95fc5e65e59ecd8391cefd7af1f703dcf7122e84f393f3d",
+      "bytes": 940778,
+      "rights": "generated-derivative",
+      "source": "image_gen.imagegen",
+      "publication": "public",
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; final artifact artwork approval pending",
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "/usr/bin/sips",
+        "command": [
+          "/usr/bin/sips",
+          "-z",
+          "480",
+          "960",
+          "$CODEX_HOME/generated_images/01a0dbec-03b0-7922-a31b-9d791f738055/exec-e9fdc5f9-01ae-4530-9cf2-36e2fec3aa2a.png",
+          "--out",
+          "game/editions/assets/coupa/bulk-02/quarter-end-weather-v1.png"
+        ],
+        "changes": "Proportional native resize only; no crop, repainting, palette quantization, semantic edit, or change to the original.",
+        "opaque": true
+      },
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbec-03b0-7922-a31b-9d791f738055/exec-e9fdc5f9-01ae-4530-9cf2-36e2fec3aa2a.png",
+        "sha256": "d50e2284abd0e70854e35627213716429df9e5044cbaf43460ac22492b674ea4",
+        "bytes": 2792510,
+        "width": 1774,
+        "height": 887
+      },
+      "prompt": "Use case: stylized-concept. Asset type: one finished opaque ultra-wide 2:1 mission reward illustration for a fictional Coupa Village arcade game. Premium cinematic miniature-world 3D editorial illustration, high oblique elevated camera, tactile matte porcelain architecture, anodized royal-blue metal, frosted glass, planted gardens, warm natural light, sophisticated beautiful architecture and inviting discoverable detail. Coherent large forms at thumbnail size, no collage. Coupa-inspired palette navy #081D4D, royal blue #1565C0, clean ivory-white, restrained cyan, pistachio foliage and lilac with tiny warm brass details. Scenic architecture only: do not draw the actual board, walls, safe zones, hazards or objective markers. Keep the specified quiet floor regions unobstructed and low contrast for gameplay overlays. Fill the entire opaque 2:1 landscape frame with one scene. Absolutely no people, employees, faces, text, letters, digits, readable paper marks, logos, flower emblems, UI, controls, screens, grid, capture trails, game enemies or watermark. No glowing thin decorative lines resembling game trails. Fictional illustrative architecture, not a photograph or claim about a real Coupa workplace. No depicted choice implies a correct business answer.\n\nMission Quarter-End Weather. Revisit a familiar sophisticated miniature village district during luminous blue twilight just after a light rain. Layered clouds part behind a skyline of navy-and-royal-blue arcades, the roofs and porcelain paving gently reflecting small warm lamps. Two sheltered ivory courts sit upper-middle and lower-middle near48%/33% and47%/69%; a broad muted blue-gray promenade lies between them near45%/49%. Offset slender planted architecture stands left-upper and right-lower, creating depth without overcrowding the quiet courts. Keep small upper-left22%/24% quiet. A curved outer colonnade suggests a busier perimeter, but no actual hazard, storm disaster, lightning, rain streaks or active weather effects. Organized closed folders are subtle window-display details only. Calm, resilient, beautiful dusk atmosphere, deep blue skyline, generous soft surfaces for game overlays."
+    },
+    {
+      "id": "coupa-spend-in-motion-06-reveal-v1",
+      "path": "game/editions/assets/coupa/bulk-02/make-room-for-tomorrow-v1.png",
+      "revision": 1,
+      "sha256": "83d2875d09e4c0685980c5be1e1a147f1325ab8eff44b7097f054c2e17e64296",
+      "bytes": 987441,
+      "rights": "generated-derivative",
+      "source": "image_gen.imagegen",
+      "publication": "public",
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; final artifact artwork approval pending",
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "/usr/bin/sips",
+        "command": [
+          "/usr/bin/sips",
+          "-z",
+          "480",
+          "960",
+          "$CODEX_HOME/generated_images/01a0dbec-03b0-7922-a31b-9d791f738055/exec-f6ef1616-fbf8-4d7b-a82f-4b1a665a772e.png",
+          "--out",
+          "game/editions/assets/coupa/bulk-02/make-room-for-tomorrow-v1.png"
+        ],
+        "changes": "Proportional native resize only; no crop, repainting, palette quantization, semantic edit, or change to the original.",
+        "opaque": true
+      },
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbec-03b0-7922-a31b-9d791f738055/exec-f6ef1616-fbf8-4d7b-a82f-4b1a665a772e.png",
+        "sha256": "f54aa5828ae9931ae87a57f1c7b174ee7ab094a8630551cb24b9f00ca3740b07",
+        "bytes": 3075976,
+        "width": 1774,
+        "height": 887
+      },
+      "prompt": "Use case: stylized-concept. Asset type: one finished opaque ultra-wide 2:1 mission reward illustration for a fictional Coupa Village arcade game. Premium cinematic miniature-world 3D editorial illustration, high oblique elevated camera, tactile matte porcelain architecture, anodized royal-blue metal, frosted glass, planted gardens, warm natural light, sophisticated beautiful architecture and inviting discoverable detail. Coherent large forms at thumbnail size, no collage. Coupa-inspired palette navy #081D4D, royal blue #1565C0, clean ivory-white, restrained cyan, pistachio foliage and lilac with tiny warm brass details. Scenic architecture only: do not draw the actual board, walls, safe zones, hazards or objective markers. Keep the specified quiet floor regions unobstructed and low contrast for gameplay overlays. Fill the entire opaque 2:1 landscape frame with one scene. Absolutely no people, employees, faces, text, letters, digits, readable paper marks, logos, flower emblems, UI, controls, screens, grid, capture trails, game enemies or watermark. No glowing thin decorative lines resembling game trails. Fictional illustrative architecture, not a photograph or claim about a real Coupa workplace. No depicted choice implies a correct business answer.\n\nMission Make Room for Tomorrow. The grand finale of a fictional miniature blue village, viewed from a high oblique cinematic perspective beneath a clear deep navy night sky. Warmly lit market arcades, a ribbon-roofed workshop, blue archive conservatory and harbor terraces join one beautifully coherent neighborhood. A broad quiet central porcelain plaza occupies49%/47%; two smaller peaceful gardens leave clear landing space near19%/74% and78%/21%. Low planted horizontal benches frame rather than fill the central plaza; generous broad bridges and softly lit stone walks connect all districts. Keep upper-left26%/24% calm. Tiny architectural window lights and subtle moonlit water, restrained lavender foliage, strong royal-blue roofs. Hopeful sense of space for future building and shared achievement; no fireworks, confetti, stars shaped as collectible icons, people, celebration text, brand marks, trophies or victory badge. The rewards are the revealed neighborhood itself."
+    },
+    {
+      "id": "droneaid-nl-workshop-lights-02-reveal-v1",
+      "path": "game/editions/assets/droneaid-nl/bulk-workshop-02/droneaid-nl-workshop-lights-02.png",
+      "revision": 1,
+      "sha256": "67b6d6d796c66b10c72a490cec393d895f0af4092e5a2e7e212edf5b9f2224f0",
+      "bytes": 872124,
+      "rights": "generated-derivative",
+      "source": "image_gen.imagegen",
+      "publication": "public",
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; final artifact artwork approval pending",
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "macOS sips",
+        "command": [
+          "sips",
+          "--resampleHeightWidth",
+          "480",
+          "960",
+          "$CODEX_HOME/generated_images/01a0dbeb-dea5-7871-a49c-fd67410d1669/exec-bdc53d7d-609e-4f36-9432-c816713310b6.png",
+          "--out",
+          "game/editions/assets/droneaid-nl/bulk-workshop-02/droneaid-nl-workshop-lights-02.png"
+        ],
+        "changes": "Resize only, no crop, repaint, or composition changes.",
+        "opaque": true
+      },
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbeb-dea5-7871-a49c-fd67410d1669/exec-bdc53d7d-609e-4f36-9432-c816713310b6.png",
+        "sha256": "6e9d420d36a31bc0d3d2c169773873fe43c4580055b9b9c34cf2c91604e422f7",
+        "bytes": 2587304,
+        "width": 1774,
+        "height": 887
+      },
+      "prompt": "Use case: stylized-concept. Asset type: a finished 2:1 opaque landscape mission-reveal background for a fictional Netherlands community workshop game. Photogenic cinematic miniature physical diorama, premium tactile ceramic, painted wood and translucent acrylic, sophisticated oblique overhead photography, sharp meaningful silhouettes and discoverable crafted detail. Palette predominantly violet #4238EB, deep midnight #0D0B2E, clean white, pale lavender and sparse warm yellow #FFD62C. Warm, inviting Dutch community-workshop character with broad quiet floor passages and balanced negative space; all objects plausible decorative props, not functioning equipment. Fill the entire wide rectangular frame with one coherent scene. No text, letters, digits, logos, people, hands, weapons, military motifs, operational drone assembly or flight instructions, active screens, UI, grid, game enemies, capture lines, montage, watermark or transparent background. Clearly fictional scene, never documentary evidence of actual operations.\nScene specific to mission Find Your Bench (do not write the title in the image): A bright cutaway workshop with two distinct inviting maker benches: a long shared pale-wood table and a smaller quiet preparation table, divided by a generous violet central aisle. Warm yellow articulated lamps shine on neatly nested blank material trays and a few oversize nontechnical craft shapes. White industrial windows, round lilac stools, a small fern; early-morning sidelight. Two asymmetrically placed short shelving partitions leave the central floor calm. Make the benches the unmistakable visual subjects."
+    },
+    {
+      "id": "droneaid-nl-workshop-lights-03-reveal-v1",
+      "path": "game/editions/assets/droneaid-nl/bulk-workshop-02/droneaid-nl-workshop-lights-03.png",
+      "revision": 1,
+      "sha256": "6cec9ee25cd7595337b1154aa9760ad2cf6a21e141191308e51af8a7afa77dd0",
+      "bytes": 836720,
+      "rights": "generated-derivative",
+      "source": "image_gen.imagegen",
+      "publication": "public",
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; final artifact artwork approval pending",
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "macOS sips",
+        "command": [
+          "sips",
+          "--resampleHeightWidth",
+          "480",
+          "960",
+          "$CODEX_HOME/generated_images/01a0dbeb-dea5-7871-a49c-fd67410d1669/exec-3d7e5bc1-6af1-427b-a9c7-ffb7090c510d.png",
+          "--out",
+          "game/editions/assets/droneaid-nl/bulk-workshop-02/droneaid-nl-workshop-lights-03.png"
+        ],
+        "changes": "Resize only, no crop, repaint, or composition changes.",
+        "opaque": true
+      },
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbeb-dea5-7871-a49c-fd67410d1669/exec-3d7e5bc1-6af1-427b-a9c7-ffb7090c510d.png",
+        "sha256": "91d55a90452f759e153a1a0d1bb4d7addef176c73e7aa2a15eec497cf3d6a569",
+        "bytes": 2421171,
+        "width": 1774,
+        "height": 887
+      },
+      "prompt": "Use case: stylized-concept. Asset type: a finished 2:1 opaque landscape mission-reveal background for a fictional Netherlands community workshop game. Photogenic cinematic miniature physical diorama, premium tactile ceramic, painted wood and translucent acrylic, sophisticated oblique overhead photography, sharp meaningful silhouettes and discoverable crafted detail. Palette predominantly violet #4238EB, deep midnight #0D0B2E, clean white, pale lavender and sparse warm yellow #FFD62C. Warm, inviting Dutch community-workshop character with broad quiet floor passages and balanced negative space; all objects plausible decorative props, not functioning equipment. Fill the entire wide rectangular frame with one coherent scene. No text, letters, digits, logos, people, hands, weapons, military motifs, operational drone assembly or flight instructions, active screens, UI, grid, game enemies, capture lines, montage, watermark or transparent background. Clearly fictional scene, never documentary evidence of actual operations.\nScene specific to mission Tool Library (do not write the title in the image): An enchanting oversized tool-library wall rises at the rear of a miniature workshop: sculptural pegboard display of large simple generic craft tools and blank geometric tool silhouettes, tidy white pull-out drawers and violet shelves. Broad quiet pale floor at centre, two side borrowing stations with empty yellow trays. The rear wall and side shelves frame an inviting reading-room-like space. Golden late-morning side light, gently playful scale and physically convincing materials."
+    },
+    {
+      "id": "droneaid-nl-workshop-lights-04-reveal-v1",
+      "path": "game/editions/assets/droneaid-nl/bulk-workshop-02/droneaid-nl-workshop-lights-04.png",
+      "revision": 1,
+      "sha256": "38f7c6178608e9c0b0f3776f8ee985621e34518dd88927e2bd5a36e88099ba11",
+      "bytes": 836235,
+      "rights": "generated-derivative",
+      "source": "image_gen.imagegen",
+      "publication": "public",
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; final artifact artwork approval pending",
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "macOS sips",
+        "command": [
+          "sips",
+          "--resampleHeightWidth",
+          "480",
+          "960",
+          "$CODEX_HOME/generated_images/01a0dbeb-dea5-7871-a49c-fd67410d1669/exec-543a6d5f-b2e2-424f-96da-400825709dae.png",
+          "--out",
+          "game/editions/assets/droneaid-nl/bulk-workshop-02/droneaid-nl-workshop-lights-04.png"
+        ],
+        "changes": "Resize only, no crop, repaint, or composition changes.",
+        "opaque": true
+      },
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbeb-dea5-7871-a49c-fd67410d1669/exec-543a6d5f-b2e2-424f-96da-400825709dae.png",
+        "sha256": "e09be60ef3d0d8c960322679e2ca1d9d8a860825ee08da629fc867d0633cd7a3",
+        "bytes": 2396064,
+        "width": 1774,
+        "height": 887
+      },
+      "prompt": "Use case: stylized-concept. Asset type: a finished 2:1 opaque landscape mission-reveal background for a fictional Netherlands community workshop game. Photogenic cinematic miniature physical diorama, premium tactile ceramic, painted wood and translucent acrylic, sophisticated oblique overhead photography, sharp meaningful silhouettes and discoverable crafted detail. Palette predominantly violet #4238EB, deep midnight #0D0B2E, clean white, pale lavender and sparse warm yellow #FFD62C. Warm, inviting Dutch community-workshop character with broad quiet floor passages and balanced negative space; all objects plausible decorative props, not functioning equipment. Fill the entire wide rectangular frame with one coherent scene. No text, letters, digits, logos, people, hands, weapons, military motifs, operational drone assembly or flight instructions, active screens, UI, grid, game enemies, capture lines, montage, watermark or transparent background. Clearly fictional scene, never documentary evidence of actual operations.\nScene specific to mission First Connections (do not write the title in the image): Three separate white-and-violet worktable pavilions are joined by a single generous circular central landing in a miniature cutaway studio. On each table sits a different abstract wooden craft contribution; together their shapes suggest cooperation without being an instruction diagram. Large curved violet shelving partitions, soft yellow lamps, frosted skylight. Camera elevated from the corner, distinct connected architectural masses and quiet central landing, daylight."
+    },
+    {
+      "id": "droneaid-nl-workshop-lights-05-reveal-v1",
+      "path": "game/editions/assets/droneaid-nl/bulk-workshop-02/droneaid-nl-workshop-lights-05.png",
+      "revision": 1,
+      "sha256": "a9a4de1f39eb00d2c31f96fe9f33feb0a7f8f55abd6675d20ea59a9f4e6a3fe1",
+      "bytes": 877779,
+      "rights": "generated-derivative",
+      "source": "image_gen.imagegen",
+      "publication": "public",
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; final artifact artwork approval pending",
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "macOS sips",
+        "command": [
+          "sips",
+          "--resampleHeightWidth",
+          "480",
+          "960",
+          "$CODEX_HOME/generated_images/01a0dbeb-dea5-7871-a49c-fd67410d1669/exec-6a24ba89-2424-43e3-a9b4-60671f71bb7f.png",
+          "--out",
+          "game/editions/assets/droneaid-nl/bulk-workshop-02/droneaid-nl-workshop-lights-05.png"
+        ],
+        "changes": "Resize only, no crop, repaint, or composition changes.",
+        "opaque": true
+      },
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbeb-dea5-7871-a49c-fd67410d1669/exec-6a24ba89-2424-43e3-a9b4-60671f71bb7f.png",
+        "sha256": "f14fff7725901ad21b5672943d70e08d841b389da7d5628cfe92c7903e8fc8d1",
+        "bytes": 2655787,
+        "width": 1774,
+        "height": 887
+      },
+      "prompt": "Use case: stylized-concept. Asset type: a finished 2:1 opaque landscape mission-reveal background for a fictional Netherlands community workshop game. Photogenic cinematic miniature physical diorama, premium tactile ceramic, painted wood and translucent acrylic, sophisticated oblique overhead photography, sharp meaningful silhouettes and discoverable crafted detail. Palette predominantly violet #4238EB, deep midnight #0D0B2E, clean white, pale lavender and sparse warm yellow #FFD62C. Warm, inviting Dutch community-workshop character with broad quiet floor passages and balanced negative space; all objects plausible decorative props, not functioning equipment. Fill the entire wide rectangular frame with one coherent scene. No text, letters, digits, logos, people, hands, weapons, military motifs, operational drone assembly or flight instructions, active screens, UI, grid, game enemies, capture lines, montage, watermark or transparent background. Clearly fictional scene, never documentary evidence of actual operations.\nScene specific to mission Shared Worktable (do not write the title in the image): One spectacular long white communal worktable stretches diagonally through a miniature workshop, surrounded by many empty round stools and distinct tidy contributions: folded paper forms, wooden geometric maquettes, color swatch tiles without markings and fabric scraps. Violet storage islands and low partitions create small safe-feeling alcoves around an uncluttered central floor. Warm pools of yellow lamp light against lavender daylight, welcoming and collaborative, no people. Additional exclusions: no human-shaped figurines or statues, no emblems on floor, no writing or markings on books, drawers or labels."
+    },
+    {
+      "id": "droneaid-nl-workshop-lights-06-reveal-v1",
+      "path": "game/editions/assets/droneaid-nl/bulk-workshop-02/droneaid-nl-workshop-lights-06.png",
+      "revision": 1,
+      "sha256": "be181ebb1be6676976bfcd5b3c11158eb32569108183918a4121c89b596252c5",
+      "bytes": 826921,
+      "rights": "generated-derivative",
+      "source": "image_gen.imagegen",
+      "publication": "public",
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; final artifact artwork approval pending",
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "macOS sips",
+        "command": [
+          "sips",
+          "--resampleHeightWidth",
+          "480",
+          "960",
+          "$CODEX_HOME/generated_images/01a0dbeb-dea5-7871-a49c-fd67410d1669/droneaid-nl-workshop-lights-06-returned.png",
+          "--out",
+          "game/editions/assets/droneaid-nl/bulk-workshop-02/droneaid-nl-workshop-lights-06.png"
+        ],
+        "changes": "Resize only, no crop, repaint, or composition changes.",
+        "opaque": true
+      },
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbeb-dea5-7871-a49c-fd67410d1669/droneaid-nl-workshop-lights-06-returned.png",
+        "sha256": "a7239d4312335076c31c83419f8782e710f070816e0b4a4721b738e02d2f43ae",
+        "bytes": 2362888,
+        "width": 1774,
+        "height": 887
+      },
+      "prompt": "Use case: stylized-concept. Asset type: a finished 2:1 opaque landscape mission-reveal background for a fictional Netherlands community workshop game. Photogenic cinematic miniature physical diorama, premium tactile ceramic, painted wood and translucent acrylic, sophisticated oblique overhead photography, sharp meaningful silhouettes and discoverable crafted detail. Palette predominantly violet #4238EB, deep midnight #0D0B2E, clean white, pale lavender and sparse warm yellow #FFD62C. Warm, inviting Dutch community-workshop character with broad quiet floor passages and balanced negative space; all objects plausible decorative props, not functioning equipment. Fill the entire wide rectangular frame with one coherent scene. No text, letters, digits, logos, people, hands, weapons, military motifs, operational drone assembly or flight instructions, active screens, UI, grid, game enemies, capture lines, montage, watermark or transparent background. Clearly fictional scene, never documentary evidence of actual operations.\nScene specific to mission Lights Across the Room (do not write the title in the image): A jewel-like miniature workshop at blue hour, seen in wide elevated cutaway: a constellation of six white maker tables each softly lit by its own warm yellow pendant, framed by rich violet cabinetry and tall glowing frosted windows. A few celebratory abstract craft sculptures unite the tables. Gentle light pools, readable large forms and dark violet depth, no thin luminous connecting lines. The whole room feels completed and welcoming, quiet central circulation. Additional exclusions: no human-shaped figurines or statues, no emblems on floor, no writing or markings on books, drawers or labels."
+    },
+    {
+      "id": "droneaid-nl-parts-in-motion-01-reveal-v1",
+      "path": "game/editions/assets/droneaid-nl/bulk-workshop-02/droneaid-nl-parts-in-motion-01.png",
+      "revision": 1,
+      "sha256": "9d06073bd8ff9b3c7b00d6b7dfc5e65fe66a4c1015ab01e69d9b2a27b245ec80",
+      "bytes": 823311,
+      "rights": "generated-derivative",
+      "source": "image_gen.imagegen",
+      "publication": "public",
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; final artifact artwork approval pending",
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "macOS sips",
+        "command": [
+          "sips",
+          "--resampleHeightWidth",
+          "480",
+          "960",
+          "$CODEX_HOME/generated_images/01a0dbeb-dea5-7871-a49c-fd67410d1669/exec-add43d7e-1c49-455c-93e3-68e8e1fd6ba8.png",
+          "--out",
+          "game/editions/assets/droneaid-nl/bulk-workshop-02/droneaid-nl-parts-in-motion-01.png"
+        ],
+        "changes": "Resize only, no crop, repaint, or composition changes.",
+        "opaque": true
+      },
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbeb-dea5-7871-a49c-fd67410d1669/exec-add43d7e-1c49-455c-93e3-68e8e1fd6ba8.png",
+        "sha256": "14cf1317330a61ccddba29079bcc2dd2baac0b621e980bb3c90ee0f151c4d65d",
+        "bytes": 2429186,
+        "width": 1774,
+        "height": 887
+      },
+      "prompt": "Use case: stylized-concept. Asset type: a finished 2:1 opaque landscape mission-reveal background for a fictional Netherlands community workshop game. Photogenic cinematic miniature physical diorama, premium tactile ceramic, painted wood and translucent acrylic, sophisticated oblique overhead photography, sharp meaningful silhouettes and discoverable crafted detail. Palette predominantly violet #4238EB, deep midnight #0D0B2E, clean white, pale lavender and sparse warm yellow #FFD62C. Warm, inviting Dutch community-workshop character with broad quiet floor passages and balanced negative space; all objects plausible decorative props, not functioning equipment. Fill the entire wide rectangular frame with one coherent scene. No text, letters, digits, logos, people, hands, weapons, military motifs, operational drone assembly or flight instructions, active screens, UI, grid, game enemies, capture lines, montage, watermark or transparent background. Clearly fictional scene, never documentary evidence of actual operations.\nScene specific to mission Six Little Stations (do not write the title in the image): A playful miniature component gallery arranged as six distinct white exhibition islands around a calm central lilac court. Each island displays a single oversized decorative category: generic craft tools, an abstract open frame sculpture, a camera-shaped prop with an opaque lens, a smooth cylindrical motor-shaped sculpture, a sealed yellow power-themed block and a nonfunctional abstract electronics tile. No exposed circuits or technical detail. Violet storage walls and gentle daylight, museum-like clarity. Additional exclusions: no human-shaped figurines or statues, no emblems on floor, no writing or markings on books, drawers or labels."
+    },
+    {
+      "id": "droneaid-nl-parts-in-motion-02-reveal-v1",
+      "path": "game/editions/assets/droneaid-nl/bulk-workshop-02/droneaid-nl-parts-in-motion-02.png",
+      "revision": 1,
+      "sha256": "5df1f5b27bf1b2f446576cf0423a9df5736153e06d1412916bbfc37edbe033c7",
+      "bytes": 907704,
+      "rights": "generated-derivative",
+      "source": "image_gen.imagegen",
+      "publication": "public",
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; final artifact artwork approval pending",
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "macOS sips",
+        "command": [
+          "sips",
+          "--resampleHeightWidth",
+          "480",
+          "960",
+          "$CODEX_HOME/generated_images/01a0dbeb-dea5-7871-a49c-fd67410d1669/exec-d09b3ed0-432c-441d-aa88-2d011c0d5bbd.png",
+          "--out",
+          "game/editions/assets/droneaid-nl/bulk-workshop-02/droneaid-nl-parts-in-motion-02.png"
+        ],
+        "changes": "Resize only, no crop, repaint, or composition changes.",
+        "opaque": true
+      },
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbeb-dea5-7871-a49c-fd67410d1669/exec-d09b3ed0-432c-441d-aa88-2d011c0d5bbd.png",
+        "sha256": "b09b7e6c78a07c915cb2163bf0eaedf4f71c13f73bdec454a54f445d6fb39143",
+        "bytes": 2733454,
+        "width": 1774,
+        "height": 887
+      },
+      "prompt": "Use case: stylized-concept. Asset type: a finished 2:1 opaque landscape mission-reveal background for a fictional Netherlands community workshop game. Photogenic cinematic miniature physical diorama, premium tactile ceramic, painted wood and translucent acrylic, sophisticated oblique overhead photography, sharp meaningful silhouettes and discoverable crafted detail. Palette predominantly violet #4238EB, deep midnight #0D0B2E, clean white, pale lavender and sparse warm yellow #FFD62C. Warm, inviting Dutch community-workshop character with broad quiet floor passages and balanced negative space; all objects plausible decorative props, not functioning equipment. Fill the entire wide rectangular frame with one coherent scene. No text, letters, digits, logos, people, hands, weapons, military motifs, operational drone assembly or flight instructions, active screens, UI, grid, game enemies, capture lines, montage, watermark or transparent background. Clearly fictional scene, never documentary evidence of actual operations.\nScene specific to mission Frame Courtyard (do not write the title in the image): An airy component-depot courtyard dominated by a large lightweight abstract open-frame sculpture, purely architectural and nonfunctional, supported over a low white display plinth. Two tidy violet storage courts flank it, filled with smooth nested white frame shapes and blank trays. A lower yellow sorting tray gives foreground interest; generous pale walking aisles. Late-afternoon angled sunlight, tactile model-making materials, bold unmistakable sculptural outline. Additional exclusions: no human-shaped figurines or statues, no emblems on floor, no writing or markings on books, drawers or labels."
+    },
+    {
+      "id": "droneaid-nl-parts-in-motion-03-reveal-v1",
+      "path": "game/editions/assets/droneaid-nl/bulk-workshop-02/droneaid-nl-parts-in-motion-03.png",
+      "revision": 1,
+      "sha256": "d0da2b8aafa3879a468864b63ee4fe86cc38db7f7684d923e40792818907d2ca",
+      "bytes": 859788,
+      "rights": "generated-derivative",
+      "source": "image_gen.imagegen",
+      "publication": "public",
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; final artifact artwork approval pending",
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "macOS sips",
+        "command": [
+          "sips",
+          "--resampleHeightWidth",
+          "480",
+          "960",
+          "$CODEX_HOME/generated_images/01a0dbeb-dea5-7871-a49c-fd67410d1669/exec-4d9875e1-9a18-4d9b-91b1-a29c1f9b91dd.png",
+          "--out",
+          "game/editions/assets/droneaid-nl/bulk-workshop-02/droneaid-nl-parts-in-motion-03.png"
+        ],
+        "changes": "Resize only, no crop, repaint, or composition changes.",
+        "opaque": true
+      },
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbeb-dea5-7871-a49c-fd67410d1669/exec-4d9875e1-9a18-4d9b-91b1-a29c1f9b91dd.png",
+        "sha256": "1654b5a21bf615858164bdf5b26fe8de8dda86b47de46eb74dea0246cad34379",
+        "bytes": 2554325,
+        "width": 1774,
+        "height": 887
+      },
+      "prompt": "Use case: stylized-concept. Asset type: a finished 2:1 opaque landscape mission-reveal background for a fictional Netherlands community workshop game. Photogenic cinematic miniature physical diorama, premium tactile ceramic, painted wood and translucent acrylic, sophisticated oblique overhead photography, sharp meaningful silhouettes and discoverable crafted detail. Palette predominantly violet #4238EB, deep midnight #0D0B2E, clean white, pale lavender and sparse warm yellow #FFD62C. Warm, inviting Dutch community-workshop character with broad quiet floor passages and balanced negative space; all objects plausible decorative props, not functioning equipment. Fill the entire wide rectangular frame with one coherent scene. No text, letters, digits, logos, people, hands, weapons, military motifs, operational drone assembly or flight instructions, active screens, UI, grid, game enemies, capture lines, montage, watermark or transparent background. Clearly fictional scene, never documentary evidence of actual operations.\nScene specific to mission Eyes on the Shelf (do not write the title in the image): An exquisite miniature observation-prop library: rounded oversized camera-shaped display sculptures with opaque violet and frosted white lenses rest on stepped white shelves, looking like friendly abstract eyes without faces. A long calm lavender aisle runs through the centre, lower quiet shelving courts on either side, yellow task lamps and small potted greenery. No surveillance imagery or working equipment. Clean cinematic daylight, crafted object photography. Additional exclusions: no human-shaped figurines or statues, no emblems on floor, no writing or markings on books, drawers or labels."
+    },
+    {
+      "id": "droneaid-nl-parts-in-motion-04-reveal-v1",
+      "path": "game/editions/assets/droneaid-nl/bulk-workshop-02/droneaid-nl-parts-in-motion-04.png",
+      "revision": 1,
+      "sha256": "48d50c7c9a667912dfad48bab231020a840bc55e5a3871ba652b444422c7762c",
+      "bytes": 825737,
+      "rights": "generated-derivative",
+      "source": "image_gen.imagegen",
+      "publication": "public",
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; final artifact artwork approval pending",
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "macOS sips",
+        "command": [
+          "sips",
+          "--resampleHeightWidth",
+          "480",
+          "960",
+          "$CODEX_HOME/generated_images/01a0dbeb-dea5-7871-a49c-fd67410d1669/exec-f518cccc-b5dd-4870-ba5b-f17772c79c8c.png",
+          "--out",
+          "game/editions/assets/droneaid-nl/bulk-workshop-02/droneaid-nl-parts-in-motion-04.png"
+        ],
+        "changes": "Resize only, no crop, repaint, or composition changes.",
+        "opaque": true
+      },
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbeb-dea5-7871-a49c-fd67410d1669/exec-f518cccc-b5dd-4870-ba5b-f17772c79c8c.png",
+        "sha256": "5e6214c80106211775c625e44d2927b5e7298457c7fae5fcdbaf0aa36ccbf248",
+        "bytes": 2386668,
+        "width": 1774,
+        "height": 887
+      },
+      "prompt": "Use case: stylized-concept. Asset type: a finished 2:1 opaque landscape mission-reveal background for a fictional Netherlands community workshop game. Photogenic cinematic miniature physical diorama, premium tactile ceramic, painted wood and translucent acrylic, sophisticated oblique overhead photography, sharp meaningful silhouettes and discoverable crafted detail. Palette predominantly violet #4238EB, deep midnight #0D0B2E, clean white, pale lavender and sparse warm yellow #FFD62C. Warm, inviting Dutch community-workshop character with broad quiet floor passages and balanced negative space; all objects plausible decorative props, not functioning equipment. Fill the entire wide rectangular frame with one coherent scene. No text, letters, digits, logos, people, hands, weapons, military motifs, operational drone assembly or flight instructions, active screens, UI, grid, game enemies, capture lines, montage, watermark or transparent background. Clearly fictional scene, never documentary evidence of actual operations.\nScene specific to mission Power Corner (do not write the title in the image): A cheerful miniature design exhibition centred on a large sealed warm-yellow sculptural power block inside a clear rounded museum case. White cabinets with violet bases surround it, holding closed abstract geometric cases, all unlabeled and nonfunctional. A calm circular interior return plaza offsets a wider loading-side arch, blank violet trays add rhythm. Warm luminous glass and polished tactile surfaces, no wires, circuitry or assembly detail. Additional exclusions: no human-shaped figurines or statues, no emblems on floor, no writing or markings on books, drawers or labels."
+    },
+    {
+      "id": "droneaid-nl-parts-in-motion-05-reveal-v1",
+      "path": "game/editions/assets/droneaid-nl/bulk-workshop-02/droneaid-nl-parts-in-motion-05.png",
+      "revision": 1,
+      "sha256": "d53c35b012f03888db667b4687ee619860076f17b0c41411fd7f02bf9c9f1eb2",
+      "bytes": 903215,
+      "rights": "generated-derivative",
+      "source": "image_gen.imagegen",
+      "publication": "public",
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; final artifact artwork approval pending",
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "macOS sips",
+        "command": [
+          "sips",
+          "--resampleHeightWidth",
+          "480",
+          "960",
+          "$CODEX_HOME/generated_images/01a0dbeb-dea5-7871-a49c-fd67410d1669/exec-2c00ef07-aedf-4083-a427-5205c23ceb3b.png",
+          "--out",
+          "game/editions/assets/droneaid-nl/bulk-workshop-02/droneaid-nl-parts-in-motion-05.png"
+        ],
+        "changes": "Resize only, no crop, repaint, or composition changes.",
+        "opaque": true
+      },
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbeb-dea5-7871-a49c-fd67410d1669/exec-2c00ef07-aedf-4083-a427-5205c23ceb3b.png",
+        "sha256": "415aef469f351cadd9faab3066bb3a13e9c8343fee485a0d33f1e66e61313ea7",
+        "bytes": 2644033,
+        "width": 1774,
+        "height": 887
+      },
+      "prompt": "Use case: stylized-concept. Asset type: a finished 2:1 opaque landscape mission-reveal background for a fictional Netherlands community workshop game. Photogenic cinematic miniature physical diorama, premium tactile ceramic, painted wood and translucent acrylic, sophisticated oblique overhead photography, sharp meaningful silhouettes and discoverable crafted detail. Palette predominantly violet #4238EB, deep midnight #0D0B2E, clean white, pale lavender and sparse warm yellow #FFD62C. Warm, inviting Dutch community-workshop character with broad quiet floor passages and balanced negative space; all objects plausible decorative props, not functioning equipment. Fill the entire wide rectangular frame with one coherent scene. No text, letters, digits, logos, people, hands, weapons, military motifs, operational drone assembly or flight instructions, active screens, UI, grid, game enemies, capture lines, montage, watermark or transparent background. Clearly fictional scene, never documentary evidence of actual operations.\nScene specific to mission The Parts Parade (do not write the title in the image): A magical-but-physical miniature sorting depot with staggered rows of large colorful trays carrying smooth abstract white and lavender component shapes. Trays sit on low stationary violet trolley plinths in a rhythmic diagonal parade, with two broad empty cross aisles and a quiet central resting platform. Yellow handles and warm overhead light add gentle movement through composition, no motors in action or instructions. Wide crafted architectural model photography. Additional exclusions: no human-shaped figurines or statues, no emblems on floor, no writing or markings on books, drawers or labels."
+    },
+    {
+      "id": "droneaid-nl-parts-in-motion-06-reveal-v1",
+      "path": "game/editions/assets/droneaid-nl/bulk-workshop-02/droneaid-nl-parts-in-motion-06.png",
+      "revision": 1,
+      "sha256": "990fde82ac4314cbaf31961e4224aeaf2aff1d45fc5ea897486fc5665bfd65bb",
+      "bytes": 868489,
+      "rights": "generated-derivative",
+      "source": "image_gen.imagegen",
+      "publication": "public",
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; final artifact artwork approval pending",
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "macOS sips",
+        "command": [
+          "sips",
+          "--resampleHeightWidth",
+          "480",
+          "960",
+          "$CODEX_HOME/generated_images/01a0dbeb-dea5-7871-a49c-fd67410d1669/exec-7757775e-803c-4e6e-865a-ccedb7cf69ca.png",
+          "--out",
+          "game/editions/assets/droneaid-nl/bulk-workshop-02/droneaid-nl-parts-in-motion-06.png"
+        ],
+        "changes": "Resize only, no crop, repaint, or composition changes.",
+        "opaque": true
+      },
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbeb-dea5-7871-a49c-fd67410d1669/exec-7757775e-803c-4e6e-865a-ccedb7cf69ca.png",
+        "sha256": "106d08bae7d93db0fc4c1474b66cb227908db2ba058ff7339bd5c9fa63b127e3",
+        "bytes": 2506712,
+        "width": 1774,
+        "height": 887
+      },
+      "prompt": "Use case: stylized-concept. Asset type: a finished 2:1 opaque landscape mission-reveal background for a fictional Netherlands community workshop game. Photogenic cinematic miniature physical diorama, premium tactile ceramic, painted wood and translucent acrylic, sophisticated oblique overhead photography, sharp meaningful silhouettes and discoverable crafted detail. Palette predominantly violet #4238EB, deep midnight #0D0B2E, clean white, pale lavender and sparse warm yellow #FFD62C. Warm, inviting Dutch community-workshop character with broad quiet floor passages and balanced negative space; all objects plausible decorative props, not functioning equipment. Fill the entire wide rectangular frame with one coherent scene. No text, letters, digits, logos, people, hands, weapons, military motifs, operational drone assembly or flight instructions, active screens, UI, grid, game enemies, capture lines, montage, watermark or transparent background. Clearly fictional scene, never documentary evidence of actual operations.\nScene specific to mission Everything in Place (do not write the title in the image): A celebratory miniature depot mosaic where six types of decorative component displays are neatly united around a large white hexagonal sorting plaza. Violet shelves form an elegant perimeter, each softly lit bay holding smooth tools, abstract frames, opaque lens props, sealed cylinders, yellow blocks and nontechnical tiles. One spacious centre tray anchors the image; uncluttered paths radiate between broad physical masses without arrows. Warm afternoon light, satisfying visual order. Additional exclusions: no human-shaped figurines or statues, no emblems on floor, no writing or markings on books, drawers or labels."
+    },
+    {
+      "id": "droneaid-nl-makers-together-01-reveal-v1",
+      "path": "game/editions/assets/droneaid-nl/bulk-workshop-02/droneaid-nl-makers-together-01.png",
+      "revision": 1,
+      "sha256": "4db5bb677e1b5a63ad1452525976d3b2d22c037d3abffa19ebed29aa38d8c579",
+      "bytes": 890902,
+      "rights": "generated-derivative",
+      "source": "image_gen.imagegen",
+      "publication": "public",
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; final artifact artwork approval pending",
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "macOS sips",
+        "command": [
+          "sips",
+          "--resampleHeightWidth",
+          "480",
+          "960",
+          "$CODEX_HOME/generated_images/01a0dbeb-dea5-7871-a49c-fd67410d1669/exec-2b67c585-6fa0-4546-add0-5cd61a1c641e.png",
+          "--out",
+          "game/editions/assets/droneaid-nl/bulk-workshop-02/droneaid-nl-makers-together-01.png"
+        ],
+        "changes": "Resize only, no crop, repaint, or composition changes.",
+        "opaque": true
+      },
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbeb-dea5-7871-a49c-fd67410d1669/exec-2b67c585-6fa0-4546-add0-5cd61a1c641e.png",
+        "sha256": "df8af925d0e4998d8588b6f9a6fd4123be10a92f5d6deb4eba58054a9eaf2814",
+        "bytes": 2724737,
+        "width": 1774,
+        "height": 887
+      },
+      "prompt": "Use case: stylized-concept. Asset type: a finished 2:1 opaque landscape mission-reveal background for a fictional Netherlands community workshop game. Photogenic cinematic miniature physical diorama, premium tactile ceramic, painted wood and translucent acrylic, sophisticated oblique overhead photography, sharp meaningful silhouettes and discoverable crafted detail. Palette predominantly violet #4238EB, deep midnight #0D0B2E, clean white, pale lavender and sparse warm yellow #FFD62C. Warm, inviting Dutch community-workshop character with broad quiet floor passages and balanced negative space; all objects plausible decorative props, not functioning equipment. Fill the entire wide rectangular frame with one coherent scene. No text, letters, digits, logos, people, hands, weapons, military motifs, operational drone assembly or flight instructions, active screens, UI, grid, game enemies, capture lines, montage, watermark or transparent background. Clearly fictional scene, never documentary evidence of actual operations.\nScene specific to mission A Friendly Welcome (do not write the title in the image): A charming miniature Dutch community room with an open violet entrance arch, a white welcome counter bearing a vase and blank folded cards, and a round shared pale-wood table. Two quiet curved seating nooks flank a generous empty centre. Warm yellow lamps, lavender cushions, lush small plants and broad tall windows. No people; the empty room itself communicates belonging. Cinematic morning sunshine, tactile furniture and welcoming architectural depth. Additional exclusions: no human-shaped figurines or statues, no emblems on floor, no writing or markings on books, drawers or labels."
+    },
+    {
+      "id": "droneaid-nl-makers-together-02-reveal-v1",
+      "path": "game/editions/assets/droneaid-nl/bulk-workshop-02/droneaid-nl-makers-together-02.png",
+      "revision": 1,
+      "sha256": "35283125b812d4322e383affa5856748eacfd716ffca4b9fd29a3b5a23d9aa86",
+      "bytes": 852766,
+      "rights": "generated-derivative",
+      "source": "image_gen.imagegen",
+      "publication": "public",
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; final artifact artwork approval pending",
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "macOS sips",
+        "command": [
+          "sips",
+          "--resampleHeightWidth",
+          "480",
+          "960",
+          "$CODEX_HOME/generated_images/01a0dbeb-dea5-7871-a49c-fd67410d1669/exec-5fe52cd3-e7b3-4089-8914-235eb609a073.png",
+          "--out",
+          "game/editions/assets/droneaid-nl/bulk-workshop-02/droneaid-nl-makers-together-02.png"
+        ],
+        "changes": "Resize only, no crop, repaint, or composition changes.",
+        "opaque": true
+      },
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbeb-dea5-7871-a49c-fd67410d1669/exec-5fe52cd3-e7b3-4089-8914-235eb609a073.png",
+        "sha256": "a35f68325bea04396efac26d1146c1bff678a055de625a0446917d0e38c217ee",
+        "bytes": 2485422,
+        "width": 1774,
+        "height": 887
+      },
+      "prompt": "Use case: stylized-concept. Asset type: a finished 2:1 opaque landscape mission-reveal background for a fictional Netherlands community workshop game. Photogenic cinematic miniature physical diorama, premium tactile ceramic, painted wood and translucent acrylic, sophisticated oblique overhead photography, sharp meaningful silhouettes and discoverable crafted detail. Palette predominantly violet #4238EB, deep midnight #0D0B2E, clean white, pale lavender and sparse warm yellow #FFD62C. Warm, inviting Dutch community-workshop character with broad quiet floor passages and balanced negative space; all objects plausible decorative props, not functioning equipment. Fill the entire wide rectangular frame with one coherent scene. No text, letters, digits, logos, people, hands, weapons, military motifs, operational drone assembly or flight instructions, active screens, UI, grid, game enemies, capture lines, montage, watermark or transparent background. Clearly fictional scene, never documentary evidence of actual operations.\nScene specific to mission Watch and Try (do not write the title in the image): A miniature learning studio with two paired tables: a raised demonstration plinth holds one elegant abstract folded-paper sculpture, while a lower practice bench holds several different playful unfinished paper and wooden forms. No step-by-step arrangement. White ceramic surfaces, violet cupboards, yellow task lights and a quiet shared gap between the tables. Soft skylight and warm natural wood, the atmosphere of encouragement expressed entirely through objects. Additional exclusions: no human-shaped figurines or statues, no emblems on floor, no writing or markings on books, drawers or labels."
+    },
+    {
+      "id": "droneaid-nl-makers-together-03-reveal-v1",
+      "path": "game/editions/assets/droneaid-nl/bulk-workshop-02/droneaid-nl-makers-together-03.png",
+      "revision": 1,
+      "sha256": "629792d4bf4d964c546d70a283246646793186d4170bdc2944633099c412f6b8",
+      "bytes": 812369,
+      "rights": "generated-derivative",
+      "source": "image_gen.imagegen",
+      "publication": "public",
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; final artifact artwork approval pending",
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "macOS sips",
+        "command": [
+          "sips",
+          "--resampleHeightWidth",
+          "480",
+          "960",
+          "$CODEX_HOME/generated_images/01a0dbeb-dea5-7871-a49c-fd67410d1669/exec-8eb4deec-6573-4c84-bfa6-ecfc4b2dcbd3.png",
+          "--out",
+          "game/editions/assets/droneaid-nl/bulk-workshop-02/droneaid-nl-makers-together-03.png"
+        ],
+        "changes": "Resize only, no crop, repaint, or composition changes.",
+        "opaque": true
+      },
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbeb-dea5-7871-a49c-fd67410d1669/exec-8eb4deec-6573-4c84-bfa6-ecfc4b2dcbd3.png",
+        "sha256": "3247a56674b7973abacacd11d89e779a87b12f79e2e41fb3bc1a0ec0da376bbc",
+        "bytes": 2373453,
+        "width": 1774,
+        "height": 887
+      },
+      "prompt": "Use case: stylized-concept. Asset type: a finished 2:1 opaque landscape mission-reveal background for a fictional Netherlands community workshop game. Photogenic cinematic miniature physical diorama, premium tactile ceramic, painted wood and translucent acrylic, sophisticated oblique overhead photography, sharp meaningful silhouettes and discoverable crafted detail. Palette predominantly violet #4238EB, deep midnight #0D0B2E, clean white, pale lavender and sparse warm yellow #FFD62C. Warm, inviting Dutch community-workshop character with broad quiet floor passages and balanced negative space; all objects plausible decorative props, not functioning equipment. Fill the entire wide rectangular frame with one coherent scene. No text, letters, digits, logos, people, hands, weapons, military motifs, operational drone assembly or flight instructions, active screens, UI, grid, game enemies, capture lines, montage, watermark or transparent background. Clearly fictional scene, never documentary evidence of actual operations.\nScene specific to mission Pass It On (do not write the title in the image): A cinematic miniature community atelier featuring three small contribution tables connected visually by a broad lavender gathering floor. Each table holds different handmade blank fabric rosettes and sculptural friendship tokens with no symbols, alongside folded paper envelopes and wooden shapes. A small side table presents one carefully wrapped gift box. Violet wall niches, white curved furniture, soft yellow pendants and afternoon windowlight; generous calm centre, no hands or people. Additional exclusions: no human-shaped figurines or statues, no emblems on floor, no writing or markings on books, drawers or labels."
+    },
+    {
+      "id": "droneaid-nl-makers-together-04-reveal-v1",
+      "path": "game/editions/assets/droneaid-nl/bulk-workshop-02/droneaid-nl-makers-together-04.png",
+      "revision": 1,
+      "sha256": "780131b1914aa8b904e4818b56405e96aeab4877d914371ed24cb6d77f1f54a0",
+      "bytes": 881660,
+      "rights": "generated-derivative",
+      "source": "image_gen.imagegen",
+      "publication": "public",
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; final artifact artwork approval pending",
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "macOS sips",
+        "command": [
+          "sips",
+          "--resampleHeightWidth",
+          "480",
+          "960",
+          "$CODEX_HOME/generated_images/01a0dbeb-dea5-7871-a49c-fd67410d1669/exec-5c12328f-8406-4bbe-92c1-007996007683.png",
+          "--out",
+          "game/editions/assets/droneaid-nl/bulk-workshop-02/droneaid-nl-makers-together-04.png"
+        ],
+        "changes": "Resize only, no crop, repaint, or composition changes.",
+        "opaque": true
+      },
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbeb-dea5-7871-a49c-fd67410d1669/exec-5c12328f-8406-4bbe-92c1-007996007683.png",
+        "sha256": "d704c9594f8a82c2772aabc4f5207f826478d5025c3a261d40ea0a6daaae92e3",
+        "bytes": 2661652,
+        "width": 1774,
+        "height": 887
+      },
+      "prompt": "Use case: stylized-concept. Asset type: a finished 2:1 opaque landscape mission-reveal background for a fictional Netherlands community workshop game. Photogenic cinematic miniature physical diorama, premium tactile ceramic, painted wood and translucent acrylic, sophisticated oblique overhead photography, sharp meaningful silhouettes and discoverable crafted detail. Palette predominantly violet #4238EB, deep midnight #0D0B2E, clean white, pale lavender and sparse warm yellow #FFD62C. Warm, inviting Dutch community-workshop character with broad quiet floor passages and balanced negative space; all objects plausible decorative props, not functioning equipment. Fill the entire wide rectangular frame with one coherent scene. No text, letters, digits, logos, people, hands, weapons, military motifs, operational drone assembly or flight instructions, active screens, UI, grid, game enemies, capture lines, montage, watermark or transparent background. Clearly fictional scene, never documentary evidence of actual operations.\nScene specific to mission Room for Every Maker (do not write the title in the image): An inclusive miniature community interior composed of a quiet cushioned reading nook, a broad-height open workbench, a spacious shared circular table and a small contemplative plant alcove. All empty, with broad accessible uncluttered circulation and varied seating. Deep violet partitions, clean white surfaces, lavender fabric and small amber lamps. Elevated camera clearly connects the different spaces through one calm central passage, soft afternoon daylight. Additional exclusions: no human-shaped figurines or statues, no emblems on floor, no writing or markings on books, drawers or labels."
+    },
+    {
+      "id": "droneaid-nl-makers-together-05-reveal-v1",
+      "path": "game/editions/assets/droneaid-nl/bulk-workshop-02/droneaid-nl-makers-together-05.png",
+      "revision": 1,
+      "sha256": "d0265c0126171227ab226ad9b9d9df22ca70f3b2616b054cbb52ed127a6fc5e2",
+      "bytes": 913329,
+      "rights": "generated-derivative",
+      "source": "image_gen.imagegen",
+      "publication": "public",
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; final artifact artwork approval pending",
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "macOS sips",
+        "command": [
+          "sips",
+          "--resampleHeightWidth",
+          "480",
+          "960",
+          "$CODEX_HOME/generated_images/01a0dbeb-dea5-7871-a49c-fd67410d1669/exec-4a2aac2a-98dc-4f44-9f66-a978eaadce20.png",
+          "--out",
+          "game/editions/assets/droneaid-nl/bulk-workshop-02/droneaid-nl-makers-together-05.png"
+        ],
+        "changes": "Resize only, no crop, repaint, or composition changes.",
+        "opaque": true
+      },
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbeb-dea5-7871-a49c-fd67410d1669/exec-4a2aac2a-98dc-4f44-9f66-a978eaadce20.png",
+        "sha256": "4d735eb3fd0a3fc66f902152b092b66323cb37fe31e64778acdc8e6245bfc181",
+        "bytes": 2744923,
+        "width": 1774,
+        "height": 887
+      },
+      "prompt": "Use case: stylized-concept. Asset type: a finished 2:1 opaque landscape mission-reveal background for a fictional Netherlands community workshop game. Photogenic cinematic miniature physical diorama, premium tactile ceramic, painted wood and translucent acrylic, sophisticated oblique overhead photography, sharp meaningful silhouettes and discoverable crafted detail. Palette predominantly violet #4238EB, deep midnight #0D0B2E, clean white, pale lavender and sparse warm yellow #FFD62C. Warm, inviting Dutch community-workshop character with broad quiet floor passages and balanced negative space; all objects plausible decorative props, not functioning equipment. Fill the entire wide rectangular frame with one coherent scene. No text, letters, digits, logos, people, hands, weapons, military motifs, operational drone assembly or flight instructions, active screens, UI, grid, game enemies, capture lines, montage, watermark or transparent background. Clearly fictional scene, never documentary evidence of actual operations.\nScene specific to mission Many Hands (do not write the title in the image): A spectacular miniature collaborative mural room with no people: a wide physical mosaic of raised paper cutouts, wooden tiles and layered violet-white geometric shapes fills the rear wall. In front, two paired craft tables hold distinct partial contributions, arranged around one generous circular gathering island. Warm yellow lamps illuminate tactile edges and tiny curled paper offcuts. The crafted mural evokes many contributions through variety, not hand symbols, text or diagrams. Additional exclusions: no human-shaped figurines or statues, no emblems on floor, no writing or markings on books, drawers or labels."
+    },
+    {
+      "id": "droneaid-nl-makers-together-06-reveal-v1",
+      "path": "game/editions/assets/droneaid-nl/bulk-workshop-02/droneaid-nl-makers-together-06.png",
+      "revision": 1,
+      "sha256": "f037acab298db406f58539ce3b2de444716b0690e85f46647669ccae923c3a8d",
+      "bytes": 853971,
+      "rights": "generated-derivative",
+      "source": "image_gen.imagegen",
+      "publication": "public",
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; final artifact artwork approval pending",
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "macOS sips",
+        "command": [
+          "sips",
+          "--resampleHeightWidth",
+          "480",
+          "960",
+          "$CODEX_HOME/generated_images/01a0dbeb-dea5-7871-a49c-fd67410d1669/exec-219f8a10-9db9-4d7f-a0e6-29bab44f3de5.png",
+          "--out",
+          "game/editions/assets/droneaid-nl/bulk-workshop-02/droneaid-nl-makers-together-06.png"
+        ],
+        "changes": "Resize only, no crop, repaint, or composition changes.",
+        "opaque": true
+      },
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbeb-dea5-7871-a49c-fd67410d1669/exec-219f8a10-9db9-4d7f-a0e6-29bab44f3de5.png",
+        "sha256": "85273e7d9365952fb4499f2d0c7182e59985f5e78f67963a247f3b2bbec6a4ff",
+        "bytes": 2484270,
+        "width": 1774,
+        "height": 887
+      },
+      "prompt": "Use case: stylized-concept. Asset type: a finished 2:1 opaque landscape mission-reveal background for a fictional Netherlands community workshop game. Photogenic cinematic miniature physical diorama, premium tactile ceramic, painted wood and translucent acrylic, sophisticated oblique overhead photography, sharp meaningful silhouettes and discoverable crafted detail. Palette predominantly violet #4238EB, deep midnight #0D0B2E, clean white, pale lavender and sparse warm yellow #FFD62C. Warm, inviting Dutch community-workshop character with broad quiet floor passages and balanced negative space; all objects plausible decorative props, not functioning equipment. Fill the entire wide rectangular frame with one coherent scene. No text, letters, digits, logos, people, hands, weapons, military motifs, operational drone assembly or flight instructions, active screens, UI, grid, game enemies, capture lines, montage, watermark or transparent background. Clearly fictional scene, never documentary evidence of actual operations.\nScene specific to mission A New Instructor (do not write the title in the image): A quietly celebratory miniature community workshop: a beautifully finished abstract folded-paper sculpture stands on a central white teaching table, echoed by varied exploratory craft forms on a semicircle of lower tables. An empty violet chair is drawn up invitingly beside the display; warm yellow lamps, white shelves, lavender curtains and a simple paper garland of unmarked shapes signal confidence being passed forward. Golden evening light, generous familiar walking routes, no people or graduation text. Additional exclusions: no human-shaped figurines or statues, no emblems on floor, no writing or markings on books, drawers or labels."
+    },
+    {
+      "id": "droneaid-nl-careful-handoff-01-reveal-v1",
+      "path": "game/editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-careful-handoff-01.png",
+      "revision": 1,
+      "sha256": "0cce3319b93d80f9bb07d4cc2ead14c9a1c68c8b45f3efd3031246c97ff7b07a",
+      "bytes": 931307,
+      "rights": "generated-derivative",
+      "source": "image_gen.imagegen",
+      "publication": "public",
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; final artifact artwork approval pending",
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "/usr/bin/sips",
+        "command": [
+          "/usr/bin/sips",
+          "-z",
+          "480",
+          "960",
+          "$CODEX_HOME/generated_images/01a0dbeb-f00f-7222-8a90-077c8d41f591/exec-17260f3d-1915-4828-a4f5-f436c8b5a083.png",
+          "--out",
+          "game/editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-careful-handoff-01.png"
+        ],
+        "changes": "Proportional native resize only; no crop, repainting, palette quantization, semantic edit, or change to the original.",
+        "opaque": true
+      },
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbeb-f00f-7222-8a90-077c8d41f591/exec-17260f3d-1915-4828-a4f5-f436c8b5a083.png",
+        "sha256": "50206f93654f5f07149ec4befb3d93ee12ce3b2d2206dd1cf7cc979d77f3fb91",
+        "bytes": 2767873,
+        "width": 1774,
+        "height": 887
+      },
+      "prompt": "Create ONE finished opaque landscape illustration, exactly 2:1 wide composition. Premium stylized cinematic miniature world for a fictional DroneAid Netherlands community game. Cohesive violet (#4238EB), indigo, chalk white and small warm yellow accents; tactile matte ceramic architecture, beautiful paper and wood details, soft volumetric light, richly crafted but large readable shapes. Elevated oblique view, full-bleed single scene, no panels or borders. Clearly fictional illustration, never a photograph or evidence of a real operation. No people, text, letters, digits, logos, labels with writing, signage with writing, screens, product UI, enemies, grids, capture trails, weapons, or drones. Leave small calm visually uncluttered areas near the upper-left (17% across, 24% down) and lower-right (77% across, 72% down) so a game route may return there, but DO NOT draw routes, gameplay markers or paths of light. Warm morning in a tiny canal-side workshop where a community project moves from a careful workbench into beautiful white and violet transport cases. Compose a cutaway packing hall on the left and a sheltered quay on the right, connected by a low bridge and broad packing table. Several empty open cases reveal soft fitted compartments, rolled cloth, harmless craft components and folded paper. A sunlit packing table sits before the crossing to the far dock, visually the natural intermediate stop. White plaster arches, violet doors, warm timber work surfaces, potted reeds, soft canal reflections, tiny yellow lamps. Put most detailed craft activity in a clustered middle-left mass; maintain calm return courtyards. Cinematic three-quarter overhead camera, tactile stop-motion-like quality, gentle hopeful atmosphere."
+    },
+    {
+      "id": "droneaid-nl-careful-handoff-02-reveal-v1",
+      "path": "game/editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-careful-handoff-02.png",
+      "revision": 1,
+      "sha256": "280d77672a14b883139fc0baa35d8ea17d2e571c9cabfa2d12c110d2283bf2e1",
+      "bytes": 762583,
+      "rights": "generated-derivative",
+      "source": "image_gen.imagegen",
+      "publication": "public",
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; final artifact artwork approval pending",
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "/usr/bin/sips",
+        "command": [
+          "/usr/bin/sips",
+          "-z",
+          "480",
+          "960",
+          "$CODEX_HOME/generated_images/01a0dbeb-f00f-7222-8a90-077c8d41f591/exec-4dbcc310-8c3f-4a12-a9d5-13f9c279ec7f.png",
+          "--out",
+          "game/editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-careful-handoff-02.png"
+        ],
+        "changes": "Proportional native resize only; no crop, repainting, palette quantization, semantic edit, or change to the original.",
+        "opaque": true
+      },
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbeb-f00f-7222-8a90-077c8d41f591/exec-4dbcc310-8c3f-4a12-a9d5-13f9c279ec7f.png",
+        "sha256": "62c1a5b020775b08173cb20110a4b0d4a6689939d445eb90672fb25d6a3e42d8",
+        "bytes": 2188301,
+        "width": 1774,
+        "height": 887
+      },
+      "prompt": "Create ONE finished opaque landscape illustration, exactly 2:1 wide composition. Premium stylized cinematic miniature world for a fictional DroneAid Netherlands community game. Cohesive violet (#4238EB), indigo, chalk white and small warm yellow accents; tactile matte ceramic architecture, beautiful paper and wood details, soft volumetric light, richly crafted but large readable shapes. Elevated oblique view, full-bleed single scene, no panels or borders. Clearly fictional illustration, never a photograph or evidence of a real operation. No people, text, letters, digits, logos, labels with writing, signage with writing, screens, product UI, enemies, grids, capture trails, weapons, or drones. Leave small calm visually uncluttered areas near the upper-left (17% across, 24% down) and lower-right (77% across, 72% down) so a game route may return there, but DO NOT draw routes, gameplay markers or paths of light. A long airy packing hall seen as a beautiful dollhouse cutaway at midday. A central white-and-violet curved divider separates two packing stations and two broad return courts, one above and one below. Large blank die-cut paper tags in white, violet and a little yellow hang from strings above tables and stack in sculptural trays, suggesting a playful labeling story WITHOUT forming a gameplay trail. An orderly label desk anchors the near-left end and a bright dock doorway anchors the far-right end. Ribbed frosted roof lights, warm ashwood benches, violet storage niches, blank case faces, paper folds and quiet shadows. Compose a bold S-shaped architectural divider, distinctly indoor and graphic with spacious pale floor, different from an exterior quay. Sophisticated editorial diorama, welcoming and calm."
+    },
+    {
+      "id": "droneaid-nl-careful-handoff-03-reveal-v1",
+      "path": "game/editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-careful-handoff-03.png",
+      "revision": 1,
+      "sha256": "8d256fe5bbdc062f7bf54bb5818fadb1e5f0e3aa3e25536f81eb59f5158a9bdd",
+      "bytes": 977692,
+      "rights": "generated-derivative",
+      "source": "image_gen.imagegen",
+      "publication": "public",
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; final artifact artwork approval pending",
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "/usr/bin/sips",
+        "command": [
+          "/usr/bin/sips",
+          "-z",
+          "480",
+          "960",
+          "$CODEX_HOME/generated_images/01a0dbeb-f00f-7222-8a90-077c8d41f591/exec-9d0150f5-77a3-4ef7-84d9-9d6223d12bdb.png",
+          "--out",
+          "game/editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-careful-handoff-03.png"
+        ],
+        "changes": "Proportional native resize only; no crop, repainting, palette quantization, semantic edit, or change to the original.",
+        "opaque": true
+      },
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbeb-f00f-7222-8a90-077c8d41f591/exec-9d0150f5-77a3-4ef7-84d9-9d6223d12bdb.png",
+        "sha256": "0a02a1fe6746c0583169892edd49927724e414cffe9f637bc6178db3f0be47eb",
+        "bytes": 3017210,
+        "width": 1774,
+        "height": 887
+      },
+      "prompt": "Create ONE finished opaque landscape illustration, exactly 2:1 wide composition. Premium stylized cinematic miniature world for a fictional DroneAid Netherlands community game. Cohesive violet (#4238EB), indigo, chalk white and small warm yellow accents; tactile matte ceramic architecture, beautiful paper and wood details, soft volumetric light, richly crafted but large readable shapes. Elevated oblique view, full-bleed single scene, no panels or borders. Clearly fictional illustration, never a photograph or evidence of a real operation. No people, text, letters, digits, logos, labels with writing, signage with writing, screens, product UI, enemies, grids, capture trails, weapons, or drones. Leave small calm visually uncluttered areas near the upper-left (17% across, 24% down) and lower-right (77% across, 72% down) so a game route may return there, but DO NOT draw routes, gameplay markers or paths of light. A fictional Dutch canal-side collection depot at blue-gold late afternoon. Layer three small sheltered contribution courts around a broad loading plaza and a reflective narrow canal. In the foreground-left a compact collection court of white cases, violet awning and a yellow-lit window creates an intimate first stop; beyond it the larger open loading area awaits. Stepped gabled miniature buildings, tiny brick textures, white arched bridges, carefully stacked blank boxes, planted rain gardens and bicycle-shaped sculptural racks without actual people. Make the canal sweep diagonally through the center while broad calm landings remain upper-left and lower-right. Rich indigo water with soft violet reflections, warm low sunlight, cinematic miniature tilt-shift depth but crisp readable main shapes. No vehicle/drone operations or technical logistics diagrams."
+    },
+    {
+      "id": "droneaid-nl-careful-handoff-04-reveal-v1",
+      "path": "game/editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-careful-handoff-04.png",
+      "revision": 1,
+      "sha256": "dc58407546a27c5c1e879ca207bdb3ae048f318347cdd643fbaa23cfd73955eb",
+      "bytes": 855378,
+      "rights": "generated-derivative",
+      "source": "image_gen.imagegen",
+      "publication": "public",
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; final artifact artwork approval pending",
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "/usr/bin/sips",
+        "command": [
+          "/usr/bin/sips",
+          "-z",
+          "480",
+          "960",
+          "$CODEX_HOME/generated_images/01a0dbeb-f00f-7222-8a90-077c8d41f591/exec-2ccd2107-94d9-4ccc-a68b-6979c7197611.png",
+          "--out",
+          "game/editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-careful-handoff-04.png"
+        ],
+        "changes": "Proportional native resize only; no crop, repainting, palette quantization, semantic edit, or change to the original.",
+        "opaque": true
+      },
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbeb-f00f-7222-8a90-077c8d41f591/exec-2ccd2107-94d9-4ccc-a68b-6979c7197611.png",
+        "recovery": "Built-in original destination was zero bytes after a disk-pressure write failure. Restored the exact PNG returned by image_gen.imagegen to that otherwise empty destination; no image regeneration or editing.",
+        "sha256": "fee66ad168edc749b1e851abf6a3c1fc716fcf48397e5fe41769453726e1f396",
+        "bytes": 2618442,
+        "width": 1774,
+        "height": 887
+      },
+      "prompt": "Create ONE finished opaque landscape illustration, exactly 2:1 wide composition. Premium stylized cinematic miniature world for a fictional DroneAid Netherlands community game. Cohesive violet (#4238EB), indigo, chalk white and small warm yellow accents; tactile matte ceramic architecture, beautiful paper and wood details, soft volumetric light, richly crafted but large readable shapes. Elevated oblique view, full-bleed single scene, no panels or borders. Clearly fictional illustration, never a photograph or evidence of a real operation. No people, text, letters, digits, logos, labels with writing, signage with writing, screens, product UI, enemies, grids, capture trails, weapons, or drones. Leave small calm visually uncluttered areas near the upper-left (17% across, 24% down) and lower-right (77% across, 72% down) so a game route may return there, but DO NOT draw routes, gameplay markers or paths of light. A peaceful roofless canal warehouse becomes a miniature hall of shared records. Five distinct white packing alcoves open onto a LONG WIDE INNER DOCK, an elevated ashwood platform that runs across the composition protected by violet archways. Beside the alcoves sit open blank paper ledgers, unmarked cards, folded cloth and neatly arranged closed cases. A narrow exterior canal runs along the top edge so the broad interior dock clearly provides the quiet alternative to the perimeter. Overcast pearly daylight through tall clerestory windows, frosted glass, violet beams, a few tiny yellow pendants, tactile book pages. Arrange small record-table clusters at the perimeter, keeping a spacious pale central handoff deck uninterrupted. Very high oblique view and bold elegant architectural perspective, visibly a crafted fictional dollhouse, no ruled spreadsheet-like pages."
+    },
+    {
+      "id": "droneaid-nl-careful-handoff-05-reveal-v1",
+      "path": "game/editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-careful-handoff-05.png",
+      "revision": 1,
+      "sha256": "d50bbe0cabd58a2566db7b788934b04dbd29306bb02f426a6cb589fb56cc4d09",
+      "bytes": 883590,
+      "rights": "generated-derivative",
+      "source": "image_gen.imagegen",
+      "publication": "public",
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; final artifact artwork approval pending",
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "/usr/bin/sips",
+        "command": [
+          "/usr/bin/sips",
+          "-z",
+          "480",
+          "960",
+          "$CODEX_HOME/generated_images/01a0dbeb-f00f-7222-8a90-077c8d41f591/exec-76df6164-bccb-48a3-af07-d032c4669f95.png",
+          "--out",
+          "game/editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-careful-handoff-05.png"
+        ],
+        "changes": "Proportional native resize only; no crop, repainting, palette quantization, semantic edit, or change to the original.",
+        "opaque": true
+      },
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbeb-f00f-7222-8a90-077c8d41f591/exec-76df6164-bccb-48a3-af07-d032c4669f95.png",
+        "sha256": "abf387e6cba7e4d3a3d0773aff00fcf1bf3b1bbb1b6850efb805ff724b2104a8",
+        "bytes": 2612558,
+        "width": 1774,
+        "height": 887
+      },
+      "prompt": "Create ONE finished opaque landscape illustration, exactly 2:1 wide composition. Premium stylized cinematic miniature world for a fictional DroneAid Netherlands community game. Cohesive violet (#4238EB), indigo, chalk white and small warm yellow accents; tactile matte ceramic architecture, beautiful paper and wood details, soft volumetric light, richly crafted but large readable shapes. Elevated oblique view, full-bleed single scene, no panels or borders. Clearly fictional illustration, never a photograph or evidence of a real operation. No people, text, letters, digits, logos, labels with writing, signage with writing, screens, product UI, enemies, grids, capture trails, weapons, or drones. Leave small calm visually uncluttered areas near the upper-left (17% across, 24% down) and lower-right (77% across, 72% down) so a game route may return there, but DO NOT draw routes, gameplay markers or paths of light. A broad playful fictional waterfront connects a near packing hall to a far collection bay. Strong diagonal composition from the white-and-violet near hall in lower-left to a beautiful receiving pavilion in upper-right, with a WIDE QUIET MIDDLE LANDING on an island between them. Two short low pedestrian bridges join the three building masses. Blank violet sculptural signboards and yellow-lit windows brighten a cool indigo twilight; warm paper lamps reflect in still water. White cases are clustered close to walls, never placed like game pickups. Lower-middle has a calm horizontal timber boardwalk, pale stone terraces and reed planters. Smooth stylized ceramic materials, small yellow dahlias, architectural cutaway detailing and generous calm paving; a cohesive premium miniature illustration, not an actual facility."
+    },
+    {
+      "id": "droneaid-nl-careful-handoff-06-reveal-v1",
+      "path": "game/editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-careful-handoff-06.png",
+      "revision": 1,
+      "sha256": "2b51ae00e50b9290ee6dd5da09db0893346d33685f43f39a7a12b0f0a33e5b65",
+      "bytes": 939519,
+      "rights": "generated-derivative",
+      "source": "image_gen.imagegen",
+      "publication": "public",
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; final artifact artwork approval pending",
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "/usr/bin/sips",
+        "command": [
+          "/usr/bin/sips",
+          "-z",
+          "480",
+          "960",
+          "$CODEX_HOME/generated_images/01a0dbeb-f00f-7222-8a90-077c8d41f591/exec-e3f67813-118d-41c1-98dd-701bbca29aaf.png",
+          "--out",
+          "game/editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-careful-handoff-06.png"
+        ],
+        "changes": "Proportional native resize only; no crop, repainting, palette quantization, semantic edit, or change to the original.",
+        "opaque": true
+      },
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbeb-f00f-7222-8a90-077c8d41f591/exec-e3f67813-118d-41c1-98dd-701bbca29aaf.png",
+        "sha256": "8d624b2d0486552105dfa874061cb2810a7d962fc706b37fd67eca8da19e9a49",
+        "bytes": 2887820,
+        "width": 1774,
+        "height": 887
+      },
+      "prompt": "Create ONE finished opaque landscape illustration, exactly 2:1 wide composition. Premium stylized cinematic miniature world for a fictional DroneAid Netherlands community game. Cohesive violet (#4238EB), indigo, chalk white and small warm yellow accents; tactile matte ceramic architecture, beautiful paper and wood details, soft volumetric light, richly crafted but large readable shapes. Elevated oblique view, full-bleed single scene, no panels or borders. Clearly fictional illustration, never a photograph or evidence of a real operation. No people, text, letters, digits, logos, labels with writing, signage with writing, screens, product UI, enemies, grids, capture trails, weapons, or drones. Leave small calm visually uncluttered areas near the upper-left (17% across, 24% down) and lower-right (77% across, 72% down) so a game route may return there, but DO NOT draw routes, gameplay markers or paths of light. A satisfying cinematic finale at a fictional community handoff courtyard just before sunrise. TWO WIDE INNER DOCKS, like adjacent white ceremonial terraces divided by a slim violet canal, connect a workshop, an orderly case room and a welcoming receiving pavilion. Beautiful white transport cases with violet edge trim sit in carefully composed small groups beneath curved canopies; doors are open and everything feels ready for a future team, with no people shown. The outer canal loop and broad perimeter walkway frame the picture, while two inner dock squares remain pale, calm and inviting. Lavender dawn sky, yellow window glow fading into morning, sculptural trees, smooth ceramic gables, subtle yellow paper ornaments. High overhead three-quarter view, warmly optimistic, balanced nearly symmetrical but not rigid; broad quiet space near upper-left and lower-right."
+    },
+    {
+      "id": "droneaid-nl-signals-of-support-01-reveal-v1",
+      "path": "game/editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-signals-of-support-01.png",
+      "revision": 1,
+      "sha256": "5f47850ad578fb362d5659881cb54f4032b0132e19ff21d1eaca9420802b4b42",
+      "bytes": 911571,
+      "rights": "generated-derivative",
+      "source": "image_gen.imagegen",
+      "publication": "public",
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; final artifact artwork approval pending",
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "/usr/bin/sips",
+        "command": [
+          "/usr/bin/sips",
+          "-z",
+          "480",
+          "960",
+          "$CODEX_HOME/generated_images/01a0dbeb-f00f-7222-8a90-077c8d41f591/exec-8cd91d46-d540-489b-be1d-c38f1d04c977.png",
+          "--out",
+          "game/editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-signals-of-support-01.png"
+        ],
+        "changes": "Proportional native resize only; no crop, repainting, palette quantization, semantic edit, or change to the original.",
+        "opaque": true
+      },
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbeb-f00f-7222-8a90-077c8d41f591/exec-8cd91d46-d540-489b-be1d-c38f1d04c977.png",
+        "sha256": "a83cfe31567e5990367d7a888d30a3c6ab33808e710d2afecc353053a97b5ccb",
+        "bytes": 2712500,
+        "width": 1774,
+        "height": 887
+      },
+      "prompt": "Create ONE finished opaque landscape illustration, exactly 2:1 wide composition. Premium stylized cinematic miniature world for a fictional DroneAid Netherlands community game. Cohesive violet (#4238EB), indigo, chalk white and small warm yellow accents; tactile matte ceramic architecture, beautiful paper and wood details, soft volumetric light, richly crafted but large readable shapes. Elevated oblique view, full-bleed single scene, no panels or borders. Clearly fictional illustration, never a photograph or evidence of a real operation. No people, text, letters, digits, logos, labels with writing, signage with writing, screens, product UI, enemies, grids, capture trails, weapons, or drones. Leave small calm visually uncluttered areas near the upper-left (17% across, 24% down) and lower-right (77% across, 72% down) so a game route may return there, but DO NOT draw routes, gameplay markers or paths of light. Make architecture deliberately sculptural and beautifully stylized, not a photoreal location. No emblems, flags, insignia, pictograms or shields; blank material surfaces only. A luminous small community pavilion devoted to listening and sharing stories, in a quiet Dutch garden. On the left, a large freestanding VIOLET STORYBOARD SCULPTURE holds only blank white folded papers and abstract unmarked colored rectangles; on the right a soft circular listening alcove with empty pale benches sits beneath a white ribbed canopy. Between them a raised noticeboard island is surrounded by low violet planters and a broad cream-colored court. Show two inviting architectural destinations without drawing a trail between them. Soft morning skylight, frosted glass, paper edges, matte ceramic, warm pale wood, tiny butter-yellow flowers. A floating paper canopy curls overhead like a ribbon of shared ideas; no writing or symbols. High three-quarter camera, intimate crafted editorial illustration, bold readable composition."
+    },
+    {
+      "id": "droneaid-nl-signals-of-support-02-reveal-v1",
+      "path": "game/editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-signals-of-support-02.png",
+      "revision": 1,
+      "sha256": "89eae69db2e827341add83a21e9253be077c7a66795ee5b8d7f8ce7953d7b5f0",
+      "bytes": 885255,
+      "rights": "generated-derivative",
+      "source": "image_gen.imagegen",
+      "publication": "public",
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; final artifact artwork approval pending",
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "/usr/bin/sips",
+        "command": [
+          "/usr/bin/sips",
+          "-z",
+          "480",
+          "960",
+          "$CODEX_HOME/generated_images/01a0dbeb-f00f-7222-8a90-077c8d41f591/exec-4341f226-534a-4bd8-bbd1-9c7e7352ca51.png",
+          "--out",
+          "game/editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-signals-of-support-02.png"
+        ],
+        "changes": "Proportional native resize only; no crop, repainting, palette quantization, semantic edit, or change to the original.",
+        "opaque": true
+      },
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbeb-f00f-7222-8a90-077c8d41f591/exec-4341f226-534a-4bd8-bbd1-9c7e7352ca51.png",
+        "sha256": "a9e8c0178b3ef310ec5dbabf688124977b12c439b3ce31196b8483e61fb9d7cf",
+        "bytes": 2685843,
+        "width": 1774,
+        "height": 887
+      },
+      "prompt": "Create ONE finished opaque landscape illustration, exactly 2:1 wide composition. Premium stylized cinematic miniature world for a fictional DroneAid Netherlands community game. Cohesive violet (#4238EB), indigo, chalk white and small warm yellow accents; tactile matte ceramic architecture, beautiful paper and wood details, soft volumetric light, richly crafted but large readable shapes. Elevated oblique view, full-bleed single scene, no panels or borders. Clearly fictional illustration, never a photograph or evidence of a real operation. No people, text, letters, digits, logos, labels with writing, signage with writing, screens, product UI, enemies, grids, capture trails, weapons, or drones. Leave small calm visually uncluttered areas near the upper-left (17% across, 24% down) and lower-right (77% across, 72% down) so a game route may return there, but DO NOT draw routes, gameplay markers or paths of light. Make architecture deliberately sculptural and beautifully stylized, not a photoreal location. No emblems, flags, insignia, pictograms or shields; blank material surfaces only. A fantastical roofless print-and-paper workshop, viewed from high oblique overhead. Three rounded pale-wood DESIGN TABLES surround a grand CENTRAL SCULPTURAL DISPLAY of oversized blank violet, white and yellow paper sheets curling like folded architectural wings. The smaller near-left poster table opens into a broad quiet return terrace; a second quiet lower-right court separates two violet storage alcoves. Paper rolls, blank cut shapes, harmless craft brushes in white pots, layered paper edges, large frosted clerestory panels, a little lush greenery. No posters with writing or pictograms, all paper completely blank. Crisp diffuse midday illumination with violet shadows. Playful and sophisticated sculptural miniature, indoor exhibition energy and tactile rich materials, readable at thumbnail size."
+    },
+    {
+      "id": "droneaid-nl-signals-of-support-03-reveal-v1",
+      "path": "game/editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-signals-of-support-03.png",
+      "revision": 1,
+      "sha256": "62cdc648ac4f0a1bd8ca37eb27f3f61218f7068499638022a3f1293b359791d5",
+      "bytes": 930023,
+      "rights": "generated-derivative",
+      "source": "image_gen.imagegen",
+      "publication": "public",
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; final artifact artwork approval pending",
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "/usr/bin/sips",
+        "command": [
+          "/usr/bin/sips",
+          "-z",
+          "480",
+          "960",
+          "$CODEX_HOME/generated_images/01a0dbeb-f00f-7222-8a90-077c8d41f591/exec-7dcdc9a5-b604-44d0-85a0-26b89f51b593.png",
+          "--out",
+          "game/editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-signals-of-support-03.png"
+        ],
+        "changes": "Proportional native resize only; no crop, repainting, palette quantization, semantic edit, or change to the original.",
+        "opaque": true
+      },
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbeb-f00f-7222-8a90-077c8d41f591/exec-7dcdc9a5-b604-44d0-85a0-26b89f51b593.png",
+        "sha256": "727d03c1f15d120dc7774626fb0728c384935e0bc2e55ce48c955e18d838d621",
+        "bytes": 2706758,
+        "width": 1774,
+        "height": 887
+      },
+      "prompt": "Create ONE finished opaque landscape illustration, exactly 2:1 wide composition. Premium stylized cinematic miniature world for a fictional DroneAid Netherlands community game. Cohesive violet (#4238EB), indigo, chalk white and small warm yellow accents; tactile matte ceramic architecture, beautiful paper and wood details, soft volumetric light, richly crafted but large readable shapes. Elevated oblique view, full-bleed single scene, no panels or borders. Clearly fictional illustration, never a photograph or evidence of a real operation. No people, text, letters, digits, logos, labels with writing, signage with writing, screens, product UI, enemies, grids, capture trails, weapons, or drones. Leave small calm visually uncluttered areas near the upper-left (17% across, 24% down) and lower-right (77% across, 72% down) so a game route may return there, but DO NOT draw routes, gameplay markers or paths of light. Make architecture deliberately sculptural and beautifully stylized, not a photoreal location. No emblems, flags, insignia, pictograms or shields; blank material surfaces only. An inviting fictional Dutch community square before an open-house event. TWO SMALL WHITE INVITATION STANDS with violet canopies and blank folded cards sit on opposite sides of the near courtyard; beyond them a generous open gathering plaza leads to a luminous violet-and-white pavilion. Delicate paper arches and unmarked folded paper fans decorate the scene, no flags or insignia. Brick-edged rain gardens, sculptural white benches, yellow flowers, quiet canal glimpse at far-left, a low gabled workshop row in the distance. Golden afternoon shafts illuminate a broad pale diagonal plaza. Keep upper-left and lower-right courtyard zones clear of stands; plantings at edges. High cinematic miniature camera, smooth model-making surfaces, warm welcome with no people and no readable displays."
+    },
+    {
+      "id": "droneaid-nl-signals-of-support-04-reveal-v1",
+      "path": "game/editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-signals-of-support-04.png",
+      "revision": 1,
+      "sha256": "d2ebf01be78b3c5c549b7f06280ce5b14324f67c372c696a0360fa6ed37f6898",
+      "bytes": 894861,
+      "rights": "generated-derivative",
+      "source": "image_gen.imagegen",
+      "publication": "public",
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; final artifact artwork approval pending",
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "/usr/bin/sips",
+        "command": [
+          "/usr/bin/sips",
+          "-z",
+          "480",
+          "960",
+          "$CODEX_HOME/generated_images/01a0dbeb-f00f-7222-8a90-077c8d41f591/exec-4d35bb1c-4d6e-4e5d-a81b-0144cdc092ae.png",
+          "--out",
+          "game/editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-signals-of-support-04.png"
+        ],
+        "changes": "Proportional native resize only; no crop, repainting, palette quantization, semantic edit, or change to the original.",
+        "opaque": true
+      },
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbeb-f00f-7222-8a90-077c8d41f591/exec-4d35bb1c-4d6e-4e5d-a81b-0144cdc092ae.png",
+        "sha256": "e7534fa6e43cbc23e8e0c8f2d9b8713f8f8b77e7198c30fee0b9d39c45c96957",
+        "bytes": 2628009,
+        "width": 1774,
+        "height": 887
+      },
+      "prompt": "Create ONE finished opaque landscape illustration, exactly 2:1 wide composition. Premium stylized cinematic miniature world for a fictional DroneAid Netherlands community game. Cohesive violet (#4238EB), indigo, chalk white and small warm yellow accents; tactile matte ceramic architecture, beautiful paper and wood details, soft volumetric light, richly crafted but large readable shapes. Elevated oblique view, full-bleed single scene, no panels or borders. Clearly fictional illustration, never a photograph or evidence of a real operation. No people, text, letters, digits, logos, labels with writing, signage with writing, screens, product UI, enemies, grids, capture trails, weapons, or drones. Leave small calm visually uncluttered areas near the upper-left (17% across, 24% down) and lower-right (77% across, 72% down) so a game route may return there, but DO NOT draw routes, gameplay markers or paths of light. Make architecture deliberately sculptural and beautifully stylized, not a photoreal location. No emblems, flags, insignia, pictograms or shields; blank material surfaces only. A wonderful fictional indoor-outdoor COMMUNITY PAVILION at early evening, seen as a roofless crescent-shaped miniature. A broad violet curved ribbed canopy frames four distinct celebration corners: a blank paper craft display, an empty listening bench alcove, a small flower-and-refreshment table, and a workshop model shelf. Two compact inner stands face a broad quiet pale court; the exterior perimeter is a simple wide planted promenade with no activity or patrols. Warm yellow globe lamps contrast with cool violet dusk, frosted glass partitions, white ceramic ribs, paper fans and modest foliage. Compose the pavilion like an elegant theatrical stage with layered depth and a crescent silhouette, radically different from a conventional town square. No people, pictures of people, words, poster graphics or logos."
+    },
+    {
+      "id": "droneaid-nl-signals-of-support-05-reveal-v1",
+      "path": "game/editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-signals-of-support-05.png",
+      "revision": 1,
+      "sha256": "13543c2613a4dd00f4f67a0f0cdb01a0814a13716bb8ac303554904418dbfba8",
+      "bytes": 778171,
+      "rights": "generated-derivative",
+      "source": "image_gen.imagegen",
+      "publication": "public",
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; final artifact artwork approval pending",
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "/usr/bin/sips",
+        "command": [
+          "/usr/bin/sips",
+          "-z",
+          "480",
+          "960",
+          "$CODEX_HOME/generated_images/01a0dbeb-f00f-7222-8a90-077c8d41f591/exec-eb358688-40e2-49c1-baff-3abc9c00a205.png",
+          "--out",
+          "game/editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-signals-of-support-05.png"
+        ],
+        "changes": "Proportional native resize only; no crop, repainting, palette quantization, semantic edit, or change to the original.",
+        "opaque": true
+      },
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbeb-f00f-7222-8a90-077c8d41f591/exec-eb358688-40e2-49c1-baff-3abc9c00a205.png",
+        "sha256": "0578f0e8e505cb839b55b0c44c891c9959bf065c87c87a095d0b86e93d2038fe",
+        "bytes": 2363284,
+        "width": 1774,
+        "height": 887
+      },
+      "prompt": "Create ONE finished opaque landscape illustration, exactly 2:1 wide composition. Premium stylized cinematic miniature world for a fictional DroneAid Netherlands community game. Cohesive violet (#4238EB), indigo, chalk white and small warm yellow accents; tactile matte ceramic architecture, beautiful paper and wood details, soft volumetric light, richly crafted but large readable shapes. Elevated oblique view, full-bleed single scene, no panels or borders. Clearly fictional illustration, never a photograph or evidence of a real operation. No people, text, letters, digits, logos, labels with writing, signage with writing, screens, product UI, enemies, grids, capture trails, weapons, or drones. Leave small calm visually uncluttered areas near the upper-left (17% across, 24% down) and lower-right (77% across, 72% down) so a game route may return there, but DO NOT draw routes, gameplay markers or paths of light. Make architecture deliberately sculptural and beautifully stylized, not a photoreal location. No emblems, flags, insignia, pictograms or shields; blank material surfaces only. An airy fictional community reporting gallery opens to a canal through enormous white arches. The defining feature is a LONG WAVY PAPER MURAL made of overlapping BLANK white, violet and warm-yellow sheets arranged as tactile shallow sculpture, absolutely no writing, numbers, charts or spreadsheet graphics. Small open record books with clean unmarked pages rest on three pale oak tables; these intimate record corners open into a long broad quiet display aisle. Large violet cylindrical columns, a gently curved white mezzanine, frosted windows and sculptural planters. Reflecting water visible only in the far background. Soft after-rain cool daylight, subtle warm lamps, premium museum-like model craft. High oblique view looking diagonally along the aisle, strong quiet negative space lower-right and upper-left."
+    },
+    {
+      "id": "droneaid-nl-signals-of-support-06-reveal-v1",
+      "path": "game/editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-signals-of-support-06.png",
+      "revision": 1,
+      "sha256": "da9eb2085a868f8baa7b61415ff99418cd513ccac291c699a2ca1c63483afa90",
+      "bytes": 979535,
+      "rights": "generated-derivative",
+      "source": "image_gen.imagegen",
+      "publication": "public",
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; final artifact artwork approval pending",
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "/usr/bin/sips",
+        "command": [
+          "/usr/bin/sips",
+          "-z",
+          "480",
+          "960",
+          "$CODEX_HOME/generated_images/01a0dbeb-f00f-7222-8a90-077c8d41f591/exec-24e02ec7-a0b5-4642-bbff-be0702f19543.png",
+          "--out",
+          "game/editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-signals-of-support-06.png"
+        ],
+        "changes": "Proportional native resize only; no crop, repainting, palette quantization, semantic edit, or change to the original.",
+        "opaque": true
+      },
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbeb-f00f-7222-8a90-077c8d41f591/exec-24e02ec7-a0b5-4642-bbff-be0702f19543.png",
+        "sha256": "d3586e991d8773fe09b9b4f5e32e8742cbde7a1e4cd1dca8360eae532cabd042",
+        "bytes": 2995575,
+        "width": 1774,
+        "height": 887
+      },
+      "prompt": "Create ONE finished opaque landscape illustration, exactly 2:1 wide composition. Premium stylized cinematic miniature world for a fictional DroneAid Netherlands community game. Cohesive violet (#4238EB), indigo, chalk white and small warm yellow accents; tactile matte ceramic architecture, beautiful paper and wood details, soft volumetric light, richly crafted but large readable shapes. Elevated oblique view, full-bleed single scene, no panels or borders. Clearly fictional illustration, never a photograph or evidence of a real operation. No people, text, letters, digits, logos, labels with writing, signage with writing, screens, product UI, enemies, grids, capture trails, weapons, or drones. Leave small calm visually uncluttered areas near the upper-left (17% across, 24% down) and lower-right (77% across, 72% down) so a game route may return there, but DO NOT draw routes, gameplay markers or paths of light. Make architecture deliberately sculptural and beautifully stylized, not a photoreal location. No emblems, flags, insignia, pictograms or shields; blank material surfaces only. A joyful sunset finale in a fictional white courtyard by the canal: an enormous FREESTANDING WOVEN PAPER RIBBON SCULPTURE in violet, white and tiny warm-yellow strips forms an abstract open arch over a central mosaic garden. Do not make a symbol, heart, letters or emblem; it is irregular flowing craft material. Several small inner exhibition stands hold blank paper objects and miniature workshop models, while a very broad pale celebration promenade loops around the outside. Empty curved benches, soft garden lanterns, planted violet flowers, little gabled studio facades, subtle suspended paper curls. Frame the scene from high three-quarter view with rich golden backlight and cool violet shadows. Many delightful handmade details at edges, but broad calm return courts and clear large architecture. A sense of collective achievement with no people or text."
+    },
+    {
+      "id": "droneaid-nl-shared-horizon-01-reveal-v1",
+      "path": "game/editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-shared-horizon-01.png",
+      "revision": 1,
+      "sha256": "e194cfe49e550a79a153214bd91cb08ea1ebb257a873c09529aa8f37dc2b422b",
+      "bytes": 982709,
+      "rights": "generated-derivative",
+      "source": "image_gen.imagegen",
+      "publication": "public",
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; final artifact artwork approval pending",
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "/usr/bin/sips",
+        "command": [
+          "/usr/bin/sips",
+          "-z",
+          "480",
+          "960",
+          "$CODEX_HOME/generated_images/01a0dbeb-f00f-7222-8a90-077c8d41f591/exec-8947cead-2823-4aa5-bafe-17adfce20954.png",
+          "--out",
+          "game/editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-shared-horizon-01.png"
+        ],
+        "changes": "Proportional native resize only; no crop, repainting, palette quantization, semantic edit, or change to the original.",
+        "opaque": true
+      },
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbeb-f00f-7222-8a90-077c8d41f591/exec-8947cead-2823-4aa5-bafe-17adfce20954.png",
+        "sha256": "2d1a9bf3f3517ed931311ed76928ecd6519ecea72b14a839cf643cb3d22f7fba",
+        "bytes": 3018818,
+        "width": 1774,
+        "height": 887
+      },
+      "prompt": "Create ONE finished opaque landscape illustration, exactly 2:1 wide composition. Premium stylized cinematic miniature world for a fictional DroneAid Netherlands community game. Cohesive violet (#4238EB), indigo, chalk white and small warm yellow accents; tactile matte ceramic architecture, beautiful paper and wood details, soft volumetric light, richly crafted but large readable shapes. Elevated oblique view, full-bleed single scene, no panels or borders. Clearly fictional illustration, never a photograph or evidence of a real operation. No people, text, letters, digits, logos, labels with writing, signage with writing, screens, product UI, enemies, grids, capture trails, weapons, or drones. Leave small calm visually uncluttered areas near the upper-left (17% across, 24% down) and lower-right (77% across, 72% down) so a game route may return there, but DO NOT draw routes, gameplay markers or paths of light. Make architecture deliberately sculptural and beautifully stylized, not a photoreal location. No emblems, flags, insignia, pictograms or shields; blank material surfaces only. A fresh spring-morning miniature of a fictional Dutch neighbourhood crossed by two narrow canals and exactly TWO PROMINENT SHORT WHITE BRIDGES. The near bridge opens onto a small pale landing court before the second bridge reaches a wider far courtyard. Three clusters of charming white gabled workshops with violet roofs form a clear stepped composition from foreground-left toward distant-right. Show warm craft benches through open windows, blank closed cases near doors, yellow tulip beds, shallow rain gardens, neat canal edges and soft reflected sky. The bridges are broad and simple, not technical infrastructure, and no route markings appear. Camera high enough to read the two calm landings; low sun creates soft long shadows without clutter. A crafted model-world full of welcoming detail and open breathing room."
+    },
+    {
+      "id": "droneaid-nl-shared-horizon-02-reveal-v1",
+      "path": "game/editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-shared-horizon-02.png",
+      "revision": 1,
+      "sha256": "7a8e60c73b217413b8170ad311f92b78ff40ac7f5ff07a2b2eab9bb6a066f845",
+      "bytes": 919273,
+      "rights": "generated-derivative",
+      "source": "image_gen.imagegen",
+      "publication": "public",
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; final artifact artwork approval pending",
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "/usr/bin/sips",
+        "command": [
+          "/usr/bin/sips",
+          "-z",
+          "480",
+          "960",
+          "$CODEX_HOME/generated_images/01a0dbeb-f00f-7222-8a90-077c8d41f591/exec-f51221b4-7cec-4a17-ad38-dc270e62ba95.png",
+          "--out",
+          "game/editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-shared-horizon-02.png"
+        ],
+        "changes": "Proportional native resize only; no crop, repainting, palette quantization, semantic edit, or change to the original.",
+        "opaque": true
+      },
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbeb-f00f-7222-8a90-077c8d41f591/exec-f51221b4-7cec-4a17-ad38-dc270e62ba95.png",
+        "sha256": "2c26857c90a4e02aecbd3b196c0bdcaffea90b4804eafeca126879b0b13d3433",
+        "bytes": 2747924,
+        "width": 1774,
+        "height": 887
+      },
+      "prompt": "Create ONE finished opaque landscape illustration, exactly 2:1 wide composition. Premium stylized cinematic miniature world for a fictional DroneAid Netherlands community game. Cohesive violet (#4238EB), indigo, chalk white and small warm yellow accents; tactile matte ceramic architecture, beautiful paper and wood details, soft volumetric light, richly crafted but large readable shapes. Elevated oblique view, full-bleed single scene, no panels or borders. Clearly fictional illustration, never a photograph or evidence of a real operation. No people, text, letters, digits, logos, labels with writing, signage with writing, screens, product UI, enemies, grids, capture trails, weapons, or drones. Leave small calm visually uncluttered areas near the upper-left (17% across, 24% down) and lower-right (77% across, 72% down) so a game route may return there, but DO NOT draw routes, gameplay markers or paths of light. Make architecture deliberately sculptural and beautifully stylized, not a photoreal location. No emblems, flags, insignia, pictograms or shields; blank material surfaces only. A striking rooftop-free WHITE WORKSHOP ATRIUM surrounded by THREE OPEN COURTYARDS at different levels, viewed almost isometrically but with cinematic lens depth. The central workshop has violet folded roof wings, pale wood benches with harmless paper craft and blank ceramic model pieces. Above it a quiet planted upper courtyard with a white circular bench; below it a quiet lower courtyard edged by violet arches. A narrow canal glimpsed only along right edge ties the scene to an imagined Dutch neighbourhood. Sculptural stairs and broad landings, white plaster gables, frosted glass, pale oak, restrained yellow flowers and afternoon light. Strong readable open courts, no maze or literal board geometry, no painted line network. Intimate collaborative atmosphere without any people."
+    },
+    {
+      "id": "droneaid-nl-shared-horizon-03-reveal-v1",
+      "path": "game/editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-shared-horizon-03.png",
+      "revision": 1,
+      "sha256": "cd00f2d194028db0d52116f81a2e549887fad2c86a7175788cf07dffc3e91167",
+      "bytes": 843264,
+      "rights": "generated-derivative",
+      "source": "image_gen.imagegen",
+      "publication": "public",
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; final artifact artwork approval pending",
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "/usr/bin/sips",
+        "command": [
+          "/usr/bin/sips",
+          "-z",
+          "480",
+          "960",
+          "$CODEX_HOME/generated_images/01a0dbeb-f00f-7222-8a90-077c8d41f591/exec-42ebd586-ca00-4c81-a6c9-8c3a581d018c.png",
+          "--out",
+          "game/editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-shared-horizon-03.png"
+        ],
+        "changes": "Proportional native resize only; no crop, repainting, palette quantization, semantic edit, or change to the original.",
+        "opaque": true
+      },
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbeb-f00f-7222-8a90-077c8d41f591/exec-42ebd586-ca00-4c81-a6c9-8c3a581d018c.png",
+        "sha256": "6e96613cd8c49cb2902199d9dd8bd6c933704265163a9f9c19d7ff66ddc04957",
+        "bytes": 2423479,
+        "width": 1774,
+        "height": 887
+      },
+      "prompt": "Create ONE finished opaque landscape illustration, exactly 2:1 wide composition. Premium stylized cinematic miniature world for a fictional DroneAid Netherlands community game. Cohesive violet (#4238EB), indigo, chalk white and small warm yellow accents; tactile matte ceramic architecture, beautiful paper and wood details, soft volumetric light, richly crafted but large readable shapes. Elevated oblique view, full-bleed single scene, no panels or borders. Clearly fictional illustration, never a photograph or evidence of a real operation. No people, text, letters, digits, logos, labels with writing, signage with writing, screens, product UI, enemies, grids, capture trails, weapons, or drones. Leave small calm visually uncluttered areas near the upper-left (17% across, 24% down) and lower-right (77% across, 72% down) so a game route may return there, but DO NOT draw routes, gameplay markers or paths of light. Make architecture deliberately sculptural and beautifully stylized, not a photoreal location. No emblems, flags, insignia, pictograms or shields; blank material surfaces only. A beautiful small canal neighbourhood at blue hour, when yellow windows have just lit up. A COMPACT NEAR COLLECTION BAY under a violet canopy occupies the left foreground, with a few closed blank white cases; behind it the view opens into a very broad calm indigo canal basin surrounded by gabled white workshops. Small luminous collection corners punctuate three building groups as warm architectural niches, not game pickups. A wide low white footbridge and quiet pale landing terraces give the scene strong broad horizontal forms. Violet sky reflected in water, soft yellow window light, potted trees, reeds and tiny handcrafted brick details. Elevated long-lens miniature scene with warm foreground depth and cool atmospheric distance; no vehicles, operation diagrams, people or actual drone activity."
+    },
+    {
+      "id": "droneaid-nl-shared-horizon-04-reveal-v1",
+      "path": "game/editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-shared-horizon-04.png",
+      "revision": 1,
+      "sha256": "a23492980419f875f7797c652bc02d84453339eb1d40d1b9d9d282c4fda6e994",
+      "bytes": 867819,
+      "rights": "generated-derivative",
+      "source": "image_gen.imagegen",
+      "publication": "public",
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; final artifact artwork approval pending",
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "/usr/bin/sips",
+        "command": [
+          "/usr/bin/sips",
+          "-z",
+          "480",
+          "960",
+          "$CODEX_HOME/generated_images/01a0dbeb-f00f-7222-8a90-077c8d41f591/recovered-droneaid-nl-shared-horizon-04.png",
+          "--out",
+          "game/editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-shared-horizon-04.png"
+        ],
+        "changes": "Proportional native resize only; no crop, repainting, palette quantization, semantic edit, or change to the original.",
+        "opaque": true
+      },
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbeb-f00f-7222-8a90-077c8d41f591/recovered-droneaid-nl-shared-horizon-04.png",
+        "recovery": "Built-in image generation returned PNG image data without a saved-file hint during low disk space. Preserved its exact returned PNG bytes in the same built-in generated_images directory under this descriptive recovered filename; no regeneration or semantic edit. No existing original was replaced.",
+        "sha256": "35e52d5dd89eaa84ffbde74d190c7bb766d4a1b77b1631e223638206a82bf983",
+        "bytes": 2556137,
+        "width": 1774,
+        "height": 887
+      },
+      "prompt": "Create ONE finished opaque landscape illustration, exactly 2:1 wide composition. Premium stylized cinematic miniature world for a fictional DroneAid Netherlands community game. Cohesive violet (#4238EB), indigo, chalk white and small warm yellow accents; tactile matte ceramic architecture, beautiful paper and wood details, soft volumetric light, richly crafted but large readable shapes. Elevated oblique view, full-bleed single scene, no panels or borders. Clearly fictional illustration, never a photograph or evidence of a real operation. No people, text, letters, digits, logos, labels with writing, signage with writing, screens, product UI, enemies, grids, capture trails, weapons, or drones. Leave small calm visually uncluttered areas near the upper-left (17% across, 24% down) and lower-right (77% across, 72% down) so a game route may return there, but DO NOT draw routes, gameplay markers or paths of light. Make architecture deliberately sculptural and beautifully stylized, not a photoreal location. No emblems, flags, insignia, pictograms or shields; blank material surfaces only. In addition keep the area near 77% across and 49% down visually calm for the late-mission core objective, and a quiet horizontal middle landing around 36–63% across at half-height. Never depict objectives, board geometry or game markers. At deep violet dusk, a row of separate luminous community rooms forms a beautiful miniature neighbourhood around a CENTRAL LIGHT COURT. Make three different open-faced workshop rooms visible like a sophisticated architectural dollhouse: paper-making room, blank-case packing room, and quiet shared reading corner with unmarked books. Rich violet outer walls contrast with white inner arches and amber-yellow windows. A wide pale central courtyard catches their pooled light, and a very shallow canal borders the foreground. The connecting mid-height terrace is calm, broad and uninterrupted. Small planted trees and ribbed frosted roof sections frame the edges. Composition celebrates the places behind shared progress without depicting any people. Cinematic luminous evening, strong readable room masses, inviting mystery rather than photorealism."
+    },
+    {
+      "id": "droneaid-nl-shared-horizon-05-reveal-v1",
+      "path": "game/editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-shared-horizon-05.png",
+      "revision": 1,
+      "sha256": "96ce6f02cab6d1a8b58c000ab8df81fa9569582d7319ae5319d53a9dc1464d23",
+      "bytes": 916595,
+      "rights": "generated-derivative",
+      "source": "image_gen.imagegen",
+      "publication": "public",
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; final artifact artwork approval pending",
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "/usr/bin/sips",
+        "command": [
+          "/usr/bin/sips",
+          "-z",
+          "480",
+          "960",
+          "$CODEX_HOME/generated_images/01a0dbeb-f00f-7222-8a90-077c8d41f591/recovered-droneaid-nl-shared-horizon-05.png",
+          "--out",
+          "game/editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-shared-horizon-05.png"
+        ],
+        "changes": "Proportional native resize only; no crop, repainting, palette quantization, semantic edit, or change to the original.",
+        "opaque": true
+      },
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbeb-f00f-7222-8a90-077c8d41f591/recovered-droneaid-nl-shared-horizon-05.png",
+        "recovery": "Built-in image generation returned PNG image data without a saved-file hint during low disk space. Preserved its exact returned PNG bytes in the same built-in generated_images directory under this descriptive recovered filename; no regeneration or semantic edit. No existing original was replaced.",
+        "sha256": "8669c906c0c12bdc42ee32ca194c275c2dbd973c5b9ff43aec27a163cb132bb3",
+        "bytes": 2728671,
+        "width": 1774,
+        "height": 887
+      },
+      "prompt": "Create ONE finished opaque landscape illustration, exactly 2:1 wide composition. Premium stylized cinematic miniature world for a fictional DroneAid Netherlands community game. Cohesive violet (#4238EB), indigo, chalk white and small warm yellow accents; tactile matte ceramic architecture, beautiful paper and wood details, soft volumetric light, richly crafted but large readable shapes. Elevated oblique view, full-bleed single scene, no panels or borders. Clearly fictional illustration, never a photograph or evidence of a real operation. No people, text, letters, digits, logos, labels with writing, signage with writing, screens, product UI, enemies, grids, capture trails, weapons, or drones. Leave small calm visually uncluttered areas near the upper-left (17% across, 24% down) and lower-right (77% across, 72% down) so a game route may return there, but DO NOT draw routes, gameplay markers or paths of light. Make architecture deliberately sculptural and beautifully stylized, not a photoreal location. No emblems, flags, insignia, pictograms or shields; blank material surfaces only. In addition keep the area near 77% across and 49% down visually calm for the late-mission core objective, and a quiet horizontal middle landing around 36–63% across at half-height. Never depict objectives, board geometry or game markers. A grand but intimate high-oblique miniature panorama reveals familiar fictional places working together: a violet folded-roof craft workshop at left, white packing depot with indigo doors in the middle distance, a welcoming paper-canopy gathering pavilion at right, and a little collection quay below. STAGGERED BROAD INNER LANDINGS connect these three architectural groups across a thin serpentine canal. Keep a wide quiet pale landing at 77% across and half-height, and another around two-thirds across three-quarters down; don't place buildings or props at those points. Warm late-afternoon light, violet and white masses, small yellow-lit windows, carefully chosen shrubs, blank cases clustered only against walls. A white stone horizontal middle terrace provides visual rest. Layered handcrafted architectural diorama with a sense of remembered places, not a literal game map or diagram."
+    },
+    {
+      "id": "droneaid-nl-shared-horizon-06-reveal-v1",
+      "path": "game/editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-shared-horizon-06.png",
+      "revision": 1,
+      "sha256": "512795cc0280d5c59c6d1eddc425deb96a199d3c8f2c45fef496daa144bbfd64",
+      "bytes": 965525,
+      "rights": "generated-derivative",
+      "source": "image_gen.imagegen",
+      "publication": "public",
+      "review": "candidate-public-bytes; generated master and selected derivative inspected; final artifact artwork approval pending",
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "/usr/bin/sips",
+        "command": [
+          "/usr/bin/sips",
+          "-z",
+          "480",
+          "960",
+          "$CODEX_HOME/generated_images/01a0dbeb-f00f-7222-8a90-077c8d41f591/recovered-droneaid-nl-shared-horizon-06.png",
+          "--out",
+          "game/editions/assets/droneaid-nl/bulk-community-02/droneaid-nl-shared-horizon-06.png"
+        ],
+        "changes": "Proportional native resize only; no crop, repainting, palette quantization, semantic edit, or change to the original.",
+        "opaque": true
+      },
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbeb-f00f-7222-8a90-077c8d41f591/recovered-droneaid-nl-shared-horizon-06.png",
+        "recovery": "Built-in image generation returned PNG image data without a saved-file hint during low disk space. Preserved its exact returned PNG bytes in the same built-in generated_images directory under this descriptive recovered filename; no regeneration or semantic edit. No existing original was replaced.",
+        "sha256": "8d22886e168533e2c5ccaf2afdeedf692d942a844385f966076e11f782950fab",
+        "bytes": 2918836,
+        "width": 1774,
+        "height": 887
+      },
+      "prompt": "Create ONE finished opaque landscape illustration, exactly 2:1 wide composition. Premium stylized cinematic miniature world for a fictional DroneAid Netherlands community game. Cohesive violet (#4238EB), indigo, chalk white and small warm yellow accents; tactile matte ceramic architecture, beautiful paper and wood details, soft volumetric light, richly crafted but large readable shapes. Elevated oblique view, full-bleed single scene, no panels or borders. Clearly fictional illustration, never a photograph or evidence of a real operation. No people, text, letters, digits, logos, labels with writing, signage with writing, screens, product UI, enemies, grids, capture trails, weapons, or drones. Leave small calm visually uncluttered areas near the upper-left (17% across, 24% down) and lower-right (77% across, 72% down) so a game route may return there, but DO NOT draw routes, gameplay markers or paths of light. Make architecture deliberately sculptural and beautifully stylized, not a photoreal location. No emblems, flags, insignia, pictograms or shields; blank material surfaces only. In addition keep the area near 77% across and 49% down visually calm for the late-mission core objective, and a quiet horizontal middle landing around 36–63% across at half-height. Never depict objectives, board geometry or game markers. A soaring cinematic finale at fresh dawn over an imagined Dutch community neighbourhood. FOREGROUND familiar calm return terraces, a violet-roofed open workshop, orderly little depot and white gathering pavilion form a beautiful connected community around reflective canals; beyond them an expansive lavender horizon opens toward a tiny distant windmill and green polders. Broad short white bridges and staggered pale terraces connect the familiar places, without any route markers. Subtle blank folded-paper arches and yellow flowers suggest a quiet celebration of learning and helping together, no flags or symbols. Keep the middle terrace, right-center court at 77%/49%, lower-middle landing at 65%/76%, and upper-left small court visually uncluttered. Pearl sunrise, gentle yellow windows, translucent mist and rich violet reflections. Optimistic, tactile stylized miniature with strong architectural silhouettes and a bright open future."
     }
   ]
 }

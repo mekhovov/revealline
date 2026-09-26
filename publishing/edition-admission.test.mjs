@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
+import { readFile } from 'node:fs/promises';
 import { editionAdmissionFixture as fixture } from './edition-fixture.mjs';
 import { createEditionZip } from './edition-zip.mjs';
 import {
@@ -75,6 +76,19 @@ test('source archive gate includes unselected assets and permits public reposito
         assets: [asset],
       }),
     );
+});
+
+test('public development template requires the exact reviewed bytes', async () => {
+  const name = 'services/community/.env.example';
+  const example = await readFile(new URL(`../${name}`, import.meta.url));
+  assert.equal(validatePublicSourceEligibility({ files: new Map([[name, example]]) }).files, 1);
+  assert.throws(
+    () =>
+      validatePublicSourceEligibility({
+        files: new Map([[name, Buffer.concat([example, bytes('\n# changed')])]]),
+      }),
+    /example changed/,
+  );
 });
 
 test('edition envelope binds exact source and original descriptors without changing legacy artifacts', async () => {

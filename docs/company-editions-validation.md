@@ -4,6 +4,80 @@ This record distinguishes candidate automation from release qualification. No co
 edition has been promoted or published by this work. Human observations, physical-device
 installation and downloaded/deployed release evidence cannot be inferred from unit tests.
 
+## Bulk artwork completion in the existing PR
+
+The user requested the remaining work be combined in PR #615 while the release queue is
+occupied. This change completes the 57 remaining current mission illustrations: 22 Coupa
+and 35 Netherlands. All 66 current missions and the three historical Portuguese missions
+have distinct pinned candidate raster pictures. Generation used the built-in image tool,
+reviewed in groups of at most three. Each new selected PNG is an opaque 2:1 derivative
+within the 1 MiB production target. Full-size masters were preserved outside the repository;
+portable original paths, exact hashes, prompts, mechanical export commands and inspection
+notes are recorded in three bulk generation receipts. Candidate status is not final human
+approval of the new art.
+
+Main through `411bb4a7b` was merged into the existing branch, preserving previous frozen
+commit receipts. Conflict resolution retained both main's localized content validation and
+company actor/presentation fields, regenerated the locale bundle from merged sources, and
+kept duplicate-release-asset rejection. Content/publisher checks passed 61 tests; the shared
+mission-selection, edition-profile and picture-receipt cohort passed 84; the picture-storage
+cohort passed 11. Core simulation files did not change during this main merge. No new PR,
+release tag, immutable release slot or public promotion was created.
+
+The updated main branch also changed the public community development environment template.
+Its additions contain commented example S3 settings, public SDK credential-chain guidance,
+local storage/cleanup defaults and placeholder mail configuration, not live credentials.
+The source eligibility pin was advanced after reviewing that diff; a regression requires
+the exact reviewed file and rejects subsequent changes. The local sparse-checkout inventory
+admits 99 media assets. Full-checkout CI has a separate larger path count.
+
+Before changing art, exact selected snapshots were captured from `fb207466c` for the 13
+affected editions. The four earlier snapshots remain byte-for-byte intact. Only affected
+edition revisions advance; authored pack/campaign/gameplay designs retain their identities.
+A new import validator checks complete receipts, PNG pins, dimensions, authored mission
+identities and safe paths and refuses replacement of an existing art revision. The live
+catalogue changes once the complete bulk set is ready, not after individual image groups.
+
+The complete batch regenerates 101 outputs. Nine focused art checks pass, including exact
+comparisons of all 66 current mission manifests at all three difficulties against retained
+pre-batch source. The new selected pictures total 51,131,195 bytes across both brands.
+The importer additionally uses the existing bounded RGB PNG decoder to verify complete
+chunks, CRCs, scanline data and opacity; truncated, RGBA and transparent-RGB fixtures fail.
+An initial generation attempt encountered local disk exhaustion; after removing only
+reproducible review-build caches, regeneration and the complete output check passed.
+
+Startup retains the complete selected catalogue and aggregate presentation receipt but
+defers reveal-only image bytes to the existing exact Start/Continue/Replay acquisition path.
+Brand identity, home/hero images, actor bodies, explicit edition roots and shared dependencies
+remain eager. Coupa All checks 7 assets / 861,975 bytes upfront instead of 37 / 42,390,939;
+DroneAid Netherlands checks 5 / 2,980,046 instead of 40 / 33,847,736. These are verified-byte
+reductions, not measured launch-latency or frame-time improvements. The full selected 64 MiB
+budget and publication constraints remain enforced, including deferred images. Missing or
+corrupt historical artwork still fails exact acquisition without substituting current art.
+
+Native in-app browser checks used a separate local origin to preserve the user's existing
+saves. Parts in Motion opened the standard six-mission selector, loaded Six Little Stations,
+accepted movement/pause input and rendered its new image at a 390 × 844 viewport. The board
+occupied 382 CSS pixels and retained 2:1 geometry. Edition switching verified the paused
+DroneAid save before opening Coupa. Room for Everyone then loaded from the standard Missions
+selector at 1280 × 720. Selected composition overlays were inspected with the shared painter;
+these static full-art overlays are diagnostic views, not legal captures or completed runs.
+This is representative engineering review, not comprehensive approval of all 57 new scenes
+or physical-device qualification.
+
+The final integrated local run passed 231 company/runtime/artifact tests and a separate
+111-test actor/replay/persistence/default-offline/review-observer cohort, with no failures
+or skips. Generated outputs, the 3,618-path sparse source inventory, changed-file lint and
+formatting pass. These cohorts overlap earlier focused checks and are not added together
+as unique test coverage. Immutable CI and downloaded-byte comparison follow the commit.
+
+Final compile sizes, CI counts and downloaded-byte receipts for this changed source must
+be recorded on PR #615 after its freeze; earlier receipts below do not attest to later changes.
+Physical-device/PWA coexistence, recovery, final artwork/content approval, same-device
+performance comparison, rollback and public deployed-byte verification remain separate
+promotion gates. User-reported formative completion is preserved without inventing
+participant measurements.
+
 ## First post-playtest artwork batch
 
 The user reported human playtesting complete on 26 September 2026 and authorized the next
@@ -14,7 +88,7 @@ with the current design and review artwork in batches of at most three.
 Choose Together, Repair the Draft and Scoped Access now have distinct opaque 1774 × 887
 illustrations generated with `image_gen.imagegen`. Their original PNG bytes total
 9,087,984 bytes, with exact prompts and provenance recorded in the edition asset inventory.
-Current coverage is nine raster pictures out of 66 missions, leaving 57 procedural slots;
+Coverage at that first batch was nine raster pictures out of 66 missions, leaving 57 procedural slots;
 the three historical Portuguese pictures remain unchanged. Four affected audiences retain
 exact pre-art presentation snapshots. All 54 affected compiled gameplay manifests remain
 unchanged; stable Journey completion survives while strict execution keys correctly differ.

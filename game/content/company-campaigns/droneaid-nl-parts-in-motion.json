@@ -1,6 +1,85 @@
 {
   "actorCatalogId": "journey-actors-v9",
-  "assets": [],
+  "assets": [
+    {
+      "alt": "Six Little Stations — fictional violet and white community workshop miniature.",
+      "bytes": 823311,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "droneaid-nl-parts-in-motion-01-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/droneaid-nl/bulk-workshop-02/droneaid-nl-parts-in-motion-01.png",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "9d06073bd8ff9b3c7b00d6b7dfc5e65fe66a4c1015ab01e69d9b2a27b245ec80",
+      "width": 960
+    },
+    {
+      "alt": "Frame Courtyard — fictional violet and white community workshop miniature.",
+      "bytes": 907704,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "droneaid-nl-parts-in-motion-02-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/droneaid-nl/bulk-workshop-02/droneaid-nl-parts-in-motion-02.png",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "5df1f5b27bf1b2f446576cf0423a9df5736153e06d1412916bbfc37edbe033c7",
+      "width": 960
+    },
+    {
+      "alt": "Eyes on the Shelf — fictional violet and white community workshop miniature.",
+      "bytes": 859788,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "droneaid-nl-parts-in-motion-03-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/droneaid-nl/bulk-workshop-02/droneaid-nl-parts-in-motion-03.png",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "d0da2b8aafa3879a468864b63ee4fe86cc38db7f7684d923e40792818907d2ca",
+      "width": 960
+    },
+    {
+      "alt": "Power Corner — fictional violet and white community workshop miniature.",
+      "bytes": 825737,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "droneaid-nl-parts-in-motion-04-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/droneaid-nl/bulk-workshop-02/droneaid-nl-parts-in-motion-04.png",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "48d50c7c9a667912dfad48bab231020a840bc55e5a3871ba652b444422c7762c",
+      "width": 960
+    },
+    {
+      "alt": "The Parts Parade — fictional violet and white community workshop miniature.",
+      "bytes": 903215,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "droneaid-nl-parts-in-motion-05-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/droneaid-nl/bulk-workshop-02/droneaid-nl-parts-in-motion-05.png",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "d53c35b012f03888db667b4687ee619860076f17b0c41411fd7f02bf9c9f1eb2",
+      "width": 960
+    },
+    {
+      "alt": "Everything in Place — fictional violet and white community workshop miniature.",
+      "bytes": 868489,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "droneaid-nl-parts-in-motion-06-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/droneaid-nl/bulk-workshop-02/droneaid-nl-parts-in-motion-06.png",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "990fde82ac4314cbaf31961e4224aeaf2aff1d45fc5ea897486fc5665bfd65bb",
+      "width": 960
+    }
+  ],
   "campaigns": [
     {
       "band": 3,
@@ -200,7 +279,10 @@
       "objectives": [
         { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 6.5 }
       ],
-      "presentation": { "backgroundAssetId": null, "themeId": "droneaid-nl-parts-in-motion-theme" },
+      "presentation": {
+        "backgroundAssetId": "droneaid-nl-parts-in-motion-01-picture",
+        "themeId": "droneaid-nl-parts-in-motion-theme"
+      },
       "revision": "2",
       "spawnId": "home",
       "timeLimitSeconds": 0
@@ -267,7 +349,10 @@
       "objectives": [
         { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 6.5 }
       ],
-      "presentation": { "backgroundAssetId": null, "themeId": "droneaid-nl-parts-in-motion-theme" },
+      "presentation": {
+        "backgroundAssetId": "droneaid-nl-parts-in-motion-02-picture",
+        "themeId": "droneaid-nl-parts-in-motion-theme"
+      },
       "revision": "2",
       "spawnId": "home",
       "timeLimitSeconds": 0
@@ -334,7 +419,10 @@
       "objectives": [
         { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 6.5 }
       ],
-      "presentation": { "backgroundAssetId": null, "themeId": "droneaid-nl-parts-in-motion-theme" },
+      "presentation": {
+        "backgroundAssetId": "droneaid-nl-parts-in-motion-03-picture",
+        "themeId": "droneaid-nl-parts-in-motion-theme"
+      },
       "revision": "2",
       "spawnId": "home",
       "timeLimitSeconds": 0
@@ -411,7 +499,10 @@
         { "hidden": false, "id": "connection", "required": true, "x": 11.5, "y": 8.5 },
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 24.5 }
       ],
-      "presentation": { "backgroundAssetId": null, "themeId": "droneaid-nl-parts-in-motion-theme" },
+      "presentation": {
+        "backgroundAssetId": "droneaid-nl-parts-in-motion-04-picture",
+        "themeId": "droneaid-nl-parts-in-motion-theme"
+      },
       "revision": "2",
       "spawnId": "home",
       "timeLimitSeconds": 0
@@ -488,7 +579,10 @@
         { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 24.5 }
       ],
-      "presentation": { "backgroundAssetId": null, "themeId": "droneaid-nl-parts-in-motion-theme" },
+      "presentation": {
+        "backgroundAssetId": "droneaid-nl-parts-in-motion-05-picture",
+        "themeId": "droneaid-nl-parts-in-motion-theme"
+      },
       "revision": "2",
       "spawnId": "home",
       "timeLimitSeconds": 0
@@ -565,7 +659,10 @@
         { "hidden": false, "id": "connection", "required": true, "x": 11.5, "y": 8.5 },
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 24.5 }
       ],
-      "presentation": { "backgroundAssetId": null, "themeId": "droneaid-nl-parts-in-motion-theme" },
+      "presentation": {
+        "backgroundAssetId": "droneaid-nl-parts-in-motion-06-picture",
+        "themeId": "droneaid-nl-parts-in-motion-theme"
+      },
       "revision": "2",
       "spawnId": "home",
       "timeLimitSeconds": 0

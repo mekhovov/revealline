@@ -13,6 +13,71 @@
       "revision": "2",
       "sha256": "fb468b9b308377d0e83517c64c34c6df4492d7909add3f3e700e03cfaf039d18",
       "width": 1774
+    },
+    {
+      "alt": "Friendly blue supplier arcades surround two quiet white market courts divided by a planted colonnade.",
+      "bytes": 1008350,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "coupa-spend-in-motion-02-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/coupa/bulk-02/supplier-square-v1.png",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "0d539a4f1fc673b5c28622eb29aab7c124f29dc947646829cd00e839f246bd81",
+      "width": 960
+    },
+    {
+      "alt": "Folded blank-paper architecture becomes an orderly blue city arcade around a clear central court and a small lower-left terrace.",
+      "bytes": 934944,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "coupa-spend-in-motion-03-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/coupa/bulk-02/paper-jam-v1.png",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "27ce16100d34d2c9675dda83ba044413e949324e5fa2aaf5ab895142419f11b8",
+      "width": 960
+    },
+    {
+      "alt": "A long blue harbor dock and a small workshop landing connect through bright porcelain bridges and planted terraces.",
+      "bytes": 911169,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "coupa-spend-in-motion-04-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/coupa/bulk-02/shared-routes-v1.png",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "17ac9b2b0ddbe1810eba1940080b346b7840bd97ac01c18cdf9783039e7b3a64",
+      "width": 960
+    },
+    {
+      "alt": "A blue village district glows after passing rain, with two sheltered quiet courts and a soft central promenade.",
+      "bytes": 940778,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "coupa-spend-in-motion-05-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/coupa/bulk-02/quarter-end-weather-v1.png",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "1cf77eb26a6b2347e95fc5e65e59ecd8391cefd7af1f703dcf7122e84f393f3d",
+      "width": 960
+    },
+    {
+      "alt": "The complete blue village gathers around a broad moonlit central plaza and two peaceful outer gardens.",
+      "bytes": 987441,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "coupa-spend-in-motion-06-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/coupa/bulk-02/make-room-for-tomorrow-v1.png",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "83d2875d09e4c0685980c5be1e1a147f1325ab8eff44b7097f054c2e17e64296",
+      "width": 960
     }
   ],
   "campaigns": [
@@ -230,7 +295,10 @@
       "objectives": [
         { "hidden": false, "id": "connection", "required": true, "x": 15.5, "y": 8.5 }
       ],
-      "presentation": { "backgroundAssetId": null, "themeId": "coupa-spend-in-motion-theme" },
+      "presentation": {
+        "backgroundAssetId": "coupa-spend-in-motion-02-picture",
+        "themeId": "coupa-spend-in-motion-theme"
+      },
       "revision": "2",
       "spawnId": "home",
       "timeLimitSeconds": 0
@@ -285,7 +353,10 @@
       "objectives": [
         { "hidden": false, "id": "connection", "required": true, "x": 18.5, "y": 7.5 }
       ],
-      "presentation": { "backgroundAssetId": null, "themeId": "coupa-spend-in-motion-theme" },
+      "presentation": {
+        "backgroundAssetId": "coupa-spend-in-motion-03-picture",
+        "themeId": "coupa-spend-in-motion-theme"
+      },
       "revision": "2",
       "spawnId": "home",
       "timeLimitSeconds": 0
@@ -340,7 +411,10 @@
       "objectives": [
         { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 }
       ],
-      "presentation": { "backgroundAssetId": null, "themeId": "coupa-spend-in-motion-theme" },
+      "presentation": {
+        "backgroundAssetId": "coupa-spend-in-motion-04-picture",
+        "themeId": "coupa-spend-in-motion-theme"
+      },
       "revision": "2",
       "spawnId": "home",
       "timeLimitSeconds": 0
@@ -395,7 +469,10 @@
       "objectives": [
         { "hidden": false, "id": "connection", "required": true, "x": 15.5, "y": 8.5 }
       ],
-      "presentation": { "backgroundAssetId": null, "themeId": "coupa-spend-in-motion-theme" },
+      "presentation": {
+        "backgroundAssetId": "coupa-spend-in-motion-05-picture",
+        "themeId": "coupa-spend-in-motion-theme"
+      },
       "revision": "2",
       "spawnId": "home",
       "timeLimitSeconds": 0
@@ -458,7 +535,10 @@
       "objectives": [
         { "hidden": false, "id": "connection", "required": true, "x": 18.5, "y": 8.5 }
       ],
-      "presentation": { "backgroundAssetId": null, "themeId": "coupa-spend-in-motion-theme" },
+      "presentation": {
+        "backgroundAssetId": "coupa-spend-in-motion-06-picture",
+        "themeId": "coupa-spend-in-motion-theme"
+      },
       "revision": "2",
       "spawnId": "home",
       "timeLimitSeconds": 0

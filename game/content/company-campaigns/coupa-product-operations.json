@@ -26,6 +26,58 @@
       "revision": "1",
       "sha256": "a1edf3bae43ddeb0c1694dea868a0327ccfed038f64162d08839e84585e1e5e0",
       "width": 1774
+    },
+    {
+      "alt": "A blue glass review room connects two document alcoves around a quiet upper review terrace.",
+      "bytes": 823416,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "coupa-product-operations-03-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/coupa/bulk-02/review-the-request-v1.png",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "6815b2caaf6b65230d7efc90e57fd357e72f20eb6c3978164ba03668d943d431",
+      "width": 960
+    },
+    {
+      "alt": "A blue buyer studio and a supplier dock frame two calm terraces around a blank change folder.",
+      "bytes": 792498,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "coupa-product-operations-04-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/coupa/bulk-02/handle-the-change-v1.png",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "1dd7123f8cb633625226f096f5c5da7a848fd3532f04e4796ce70aeb7687d2a2",
+      "width": 960
+    },
+    {
+      "alt": "A spacious blue receiving hall separates arrived parcels, a central counting desk and empty future-delivery shelves.",
+      "bytes": 829094,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "coupa-product-operations-05-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/coupa/bulk-02/record-the-delivery-v1.png",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "b5d544d7eb6c299976bd102b4c7e63e41337cf23b317dd12a09cccc74e2f23f3",
+      "width": 960
+    },
+    {
+      "alt": "An interconnected blue operations archive gathers record stations around a small unresolved folder and calm return terraces.",
+      "bytes": 896391,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "coupa-product-operations-06-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/coupa/bulk-02/clear-the-exception-v1.png",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "54555dc7657f068e77b902f2f474baff16f344bc3b7e933bc40a07a9c2fa38a2",
+      "width": 960
     }
   ],
   "campaigns": [
@@ -351,7 +403,10 @@
         { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
-      "presentation": { "backgroundAssetId": null, "themeId": "coupa-product-operations-theme" },
+      "presentation": {
+        "backgroundAssetId": "coupa-product-operations-03-picture",
+        "themeId": "coupa-product-operations-theme"
+      },
       "relayLinks": [],
       "revision": "3",
       "spawnId": "home",
@@ -422,7 +477,10 @@
         { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
-      "presentation": { "backgroundAssetId": null, "themeId": "coupa-product-operations-theme" },
+      "presentation": {
+        "backgroundAssetId": "coupa-product-operations-04-picture",
+        "themeId": "coupa-product-operations-theme"
+      },
       "relayLinks": [],
       "revision": "3",
       "spawnId": "home",
@@ -493,7 +551,10 @@
         { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
-      "presentation": { "backgroundAssetId": null, "themeId": "coupa-product-operations-theme" },
+      "presentation": {
+        "backgroundAssetId": "coupa-product-operations-05-picture",
+        "themeId": "coupa-product-operations-theme"
+      },
       "relayLinks": [],
       "revision": "3",
       "spawnId": "home",
@@ -565,7 +626,10 @@
         { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
-      "presentation": { "backgroundAssetId": null, "themeId": "coupa-product-operations-theme" },
+      "presentation": {
+        "backgroundAssetId": "coupa-product-operations-06-picture",
+        "themeId": "coupa-product-operations-theme"
+      },
       "relayLinks": [{ "gateId": "return-1", "objectiveId": "connection" }],
       "revision": "3",
       "spawnId": "home",

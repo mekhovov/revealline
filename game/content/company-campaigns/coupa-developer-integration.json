@@ -26,6 +26,58 @@
       "revision": "1",
       "sha256": "05865bd2f0a028ab582889736574e776876d0735a91c377dff3c89f04ff9b2a0",
       "width": 1774
+    },
+    {
+      "alt": "Three stepped blue archive terraces unfold across a luminous library, with blank page trays and clear reading landings.",
+      "bytes": 876039,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "coupa-developer-integration-03-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/coupa/bulk-02/beyond-page-one-v1.png",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "783a1086fa752ca083f2239fb424ba8c014436c6a8838a647ec129fe71464f55",
+      "width": 960
+    },
+    {
+      "alt": "A blue reference observatory brings three physical model collections around calm central archive terraces.",
+      "bytes": 886581,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "coupa-developer-integration-04-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/coupa/bulk-02/known-references-v1.png",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "dc64a854959590085d322a7d9e9f6dab1a477f6c651ad1d6271e39e058c2b0dc",
+      "width": 960
+    },
+    {
+      "alt": "A transparent blue validation atelier arranges blank input cards and a small modular draft beside clear review floors.",
+      "bytes": 925292,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "coupa-developer-integration-05-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/coupa/bulk-02/draft-validate-explain-v1.png",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "3b3671602b4bab7cc611d84fd208c7c2b72b62bb97288274599e09d8eda6e2bd",
+      "width": 960
+    },
+    {
+      "alt": "A blue network archive displays organized record trays and a small recovery bench beneath a luminous roof.",
+      "bytes": 969855,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "coupa-developer-integration-06-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/coupa/bulk-02/run-ledger-v1.png",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "7a9f66fb74c22ce6cdcc435e2f03dd85bfa4592e79ed53c33b03283edd780752",
+      "width": 960
     }
   ],
   "campaigns": [
@@ -380,7 +432,10 @@
         { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
         { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
       ],
-      "presentation": { "backgroundAssetId": null, "themeId": "coupa-developer-integration-theme" },
+      "presentation": {
+        "backgroundAssetId": "coupa-developer-integration-03-picture",
+        "themeId": "coupa-developer-integration-theme"
+      },
       "relayLinks": [],
       "revision": "3",
       "spawnId": "home",
@@ -433,7 +488,10 @@
         { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
         { "hidden": false, "id": "core", "required": true, "x": 55.5, "y": 17.5 }
       ],
-      "presentation": { "backgroundAssetId": null, "themeId": "coupa-developer-integration-theme" },
+      "presentation": {
+        "backgroundAssetId": "coupa-developer-integration-04-picture",
+        "themeId": "coupa-developer-integration-theme"
+      },
       "relayLinks": [],
       "revision": "3",
       "spawnId": "home",
@@ -488,7 +546,10 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 47.5, "y": 27.5 },
         { "hidden": false, "id": "core", "required": true, "x": 55.5, "y": 17.5 }
       ],
-      "presentation": { "backgroundAssetId": null, "themeId": "coupa-developer-integration-theme" },
+      "presentation": {
+        "backgroundAssetId": "coupa-developer-integration-05-picture",
+        "themeId": "coupa-developer-integration-theme"
+      },
       "relayLinks": [{ "gateId": "return-1", "objectiveId": "connection" }],
       "revision": "3",
       "spawnId": "home",
@@ -557,7 +618,10 @@
         { "hidden": false, "id": "handoff", "required": true, "x": 47.5, "y": 27.5 },
         { "hidden": false, "id": "core", "required": true, "x": 55.5, "y": 17.5 }
       ],
-      "presentation": { "backgroundAssetId": null, "themeId": "coupa-developer-integration-theme" },
+      "presentation": {
+        "backgroundAssetId": "coupa-developer-integration-06-picture",
+        "themeId": "coupa-developer-integration-theme"
+      },
       "relayLinks": [
         { "gateId": "return-1", "objectiveId": "connection" },
         { "gateId": "return-2", "objectiveId": "handoff" }
