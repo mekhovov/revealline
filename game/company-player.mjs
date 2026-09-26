@@ -413,6 +413,11 @@ async function main() {
     refresh();
   }
   function showHome() {
+    // Home retires the pending replacement before its asynchronous artwork or
+    // replay verification can adopt a mission and return us to play.
+    generation++;
+    preparing = false;
+    host.preparer.cancel();
     pause();
     $('play-screen').hidden = true;
     $('home-screen').hidden = false;
@@ -533,6 +538,7 @@ async function main() {
     } catch (error) {
       staged?.enemyBodies.clear();
       if (attempt && host.preparer.current(attempt)) host.preparer.cancel();
+      if (ticket !== generation) return;
       throw error;
     } finally {
       if (ticket === generation) preparing = false;
