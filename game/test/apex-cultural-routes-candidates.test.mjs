@@ -1,12 +1,12 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {
-  SENTINEL_CULTURAL_ROUTES_REVISION,
-  SENTINEL_CULTURAL_ROUTES_SELECTIONS,
-  SENTINEL_CULTURAL_ROUTES_SOURCES,
-  createSentinelCulturalRoutesCandidates,
-} from '../content-design/sentinel-cultural-routes-candidates.mjs';
-import { createCrosswindCulturalRoutesCandidates } from '../content-design/crosswind-cultural-routes-candidates.mjs';
+  APEX_CULTURAL_ROUTES_REVISION,
+  APEX_CULTURAL_ROUTES_SELECTIONS,
+  APEX_CULTURAL_ROUTES_SOURCES,
+  createApexCulturalRoutesCandidates,
+} from '../content-design/apex-cultural-routes-candidates.mjs';
+import { createSentinelCulturalRoutesCandidates } from '../content-design/sentinel-cultural-routes-candidates.mjs';
 import { compileContentProject, resolveMission } from '../content-design/project.mjs';
 import { inspectMissionTopology } from '../content-design/diagnostics.mjs';
 import { createRun, stepRun, FIXED_DT } from '../core/index.mjs';
@@ -27,10 +27,10 @@ import {
 } from '../content-design/mode-href.mjs';
 import { DEFAULT_JOURNEY_ROUTES } from '../content-design/default-entry.mjs';
 
-const IDS = SENTINEL_CULTURAL_ROUTES_SELECTIONS.map((item) => item.id);
+const IDS = APEX_CULTURAL_ROUTES_SELECTIONS.map((item) => item.id);
 const PRESETS = ['gentle', 'standard', 'expert'];
-const beforeSource = createCrosswindCulturalRoutesCandidates({ artwork: true });
-const source = createSentinelCulturalRoutesCandidates({ artwork: true });
+const beforeSource = createSentinelCulturalRoutesCandidates({ artwork: true });
+const source = createApexCulturalRoutesCandidates({ artwork: true });
 const beforeProject = compileContentProject(beforeSource);
 const project = compileContentProject(source);
 const mission = (compiled, id) => compiled.missions.find((item) => item.id === id);
@@ -41,16 +41,16 @@ const map = (compiled, id) => {
   );
 };
 
-test('selection is three Sentinel identities with bounded museum attribution', () => {
-  assert.deepEqual(IDS, ['first-relay', 'relay-perimeter', 'crown-audience']);
-  for (const selection of SENTINEL_CULTURAL_ROUTES_SELECTIONS) {
+test('selection is three Apex identities with bounded museum attribution', () => {
+  assert.deepEqual(IDS, ['crossing-complete', 'returning-light', 'home-signal']);
+  for (const selection of APEX_CULTURAL_ROUTES_SELECTIONS) {
     assert(beforeSource.missions.some((item) => item.id === selection.id));
     assert.equal(selection.approaches.length, 2);
     assert.equal(new Set(selection.approaches).size, 2);
     assert(selection.pressurePoints.length >= 4);
-    assert(selection.sourceIds.every((id) => SENTINEL_CULTURAL_ROUTES_SOURCES[id]));
+    assert(selection.sourceIds.every((id) => APEX_CULTURAL_ROUTES_SOURCES[id]));
   }
-  for (const item of Object.values(SENTINEL_CULTURAL_ROUTES_SOURCES)) {
+  for (const item of Object.values(APEX_CULTURAL_ROUTES_SOURCES)) {
     assert.match(item.url, /(honchar\.org\.ua|museum\.mincult\.gov\.ua)/);
     assert(item.observedVocabulary.length >= 3);
     assert.match(item.adaptationBoundary, /No .*cop/i);
@@ -58,12 +58,12 @@ test('selection is three Sentinel identities with bounded museum attribution', (
 });
 
 for (const artwork of [false, true])
-  test(`copy-on-write changes only selected Sentinel missions and owners: artwork=${artwork}`, () => {
-    const before = createCrosswindCulturalRoutesCandidates({ artwork });
+  test(`copy-on-write changes only selected Apex missions and owners: artwork=${artwork}`, () => {
+    const before = createSentinelCulturalRoutesCandidates({ artwork });
     const snapshot = structuredClone(before);
-    const revised = createSentinelCulturalRoutesCandidates({ artwork });
-    assert.deepEqual(createCrosswindCulturalRoutesCandidates({ artwork }), snapshot);
-    assert.equal(revised.revision, SENTINEL_CULTURAL_ROUTES_REVISION);
+    const revised = createApexCulturalRoutesCandidates({ artwork });
+    assert.deepEqual(createSentinelCulturalRoutesCandidates({ artwork }), snapshot);
+    assert.equal(revised.revision, APEX_CULTURAL_ROUTES_REVISION);
     assert.equal(revised.policyId, before.policyId);
     assert.equal(revised.actorCatalogId, before.actorCatalogId);
     assert.equal(revised.difficultyCatalogId, before.difficultyCatalogId);
@@ -72,7 +72,7 @@ for (const artwork of [false, true])
       const previous = before.missions.find((item) => item.id === current.id);
       if (!IDS.includes(current.id)) assert.deepEqual(current, previous);
       else {
-        assert.equal(current.revision, SENTINEL_CULTURAL_ROUTES_REVISION);
+        assert.equal(current.revision, APEX_CULTURAL_ROUTES_REVISION);
         for (const key of [
           'id',
           'name',
@@ -93,11 +93,11 @@ for (const artwork of [false, true])
     }
   });
 
-test('ornament obstacles preserve deliberate Sentinel topology and shield systems', () => {
+test('ornament obstacles preserve deliberate Apex topology and finale systems', () => {
   const expected = {
-    'first-relay': { walls: 9, safe: 5 },
-    'relay-perimeter': { walls: 8, safe: 6 },
-    'crown-audience': { walls: 8, safe: 6 },
+    'crossing-complete': { walls: 10, safe: 5 },
+    'returning-light': { walls: 12, safe: 6 },
+    'home-signal': { walls: 9, safe: 10 },
   };
   for (const id of IDS) {
     const previous = map(beforeProject, id);
@@ -117,7 +117,7 @@ test('ornament obstacles preserve deliberate Sentinel topology and shield system
   }
 });
 
-test('rules, Sentinel roles, objectives, relays and bonuses remain exact across presets and modes', () => {
+test('rules, Apex roles, objectives, relays and bonuses remain exact across presets and modes', () => {
   for (const id of IDS)
     for (const difficulty of PRESETS) {
       const before = resolveMission(beforeProject, id, { difficulty, mode: 'solo' });
@@ -158,20 +158,24 @@ function closeRoute(run, id, approach, sidecars = {}) {
       (state) => state.events.some((event) => event.type === 'cut.closed'),
       sidecars,
     );
-  if (id === 'first-relay' && approach === 'central-ridge') close('down');
-  else if (id === 'first-relay' && approach === 'west-upper-landing') {
-    position('left', (state) => state.player.x <= 13.5);
+  if (id === 'crossing-complete' && approach === 'central-first-close') close('down');
+  else if (id === 'crossing-complete' && approach === 'west-long-close') {
+    position('left', (state) => state.player.x <= 11.5);
     close('down');
-  } else if (id === 'relay-perimeter' && approach === 'left-zone-close') close('down');
-  else if (id === 'relay-perimeter' && approach === 'central-focus-close') {
-    position('right', (state) => state.player.x >= 35.5);
-    close('down');
-  } else if (id === 'crown-audience' && approach === 'north-centre-close') close('up');
-  else if (id === 'crown-audience' && approach === 'west-side-close') close('left');
-  else throw new TypeError(`Unknown authored route ${id}/${approach}`);
+  } else if (id === 'returning-light' && approach === 'central-long-close') close('right');
+  else if (id === 'returning-light' && approach === 'upper-step-close') {
+    position('up', (state) => state.player.y <= 10.5);
+    close('right');
+  } else if (id === 'home-signal' && approach === 'central-dock-close') {
+    position('up', (state) => state.player.y <= 16.5);
+    close('right');
+  } else if (id === 'home-signal' && approach === 'south-wing-close') {
+    position('down', (state) => state.player.y >= 29.5);
+    close('right');
+  } else throw new TypeError(`Unknown authored route ${id}/${approach}`);
 }
 
-for (const selection of SENTINEL_CULTURAL_ROUTES_SELECTIONS)
+for (const selection of APEX_CULTURAL_ROUTES_SELECTIONS)
   for (const difficulty of PRESETS)
     for (const turnPolicy of ['immediate', 'grid-center'])
       test(`${selection.id} executes both approaches on ${difficulty}/${turnPolicy} across seeds`, () => {
@@ -199,7 +203,7 @@ for (const id of IDS)
       }
     });
 
-for (const selection of SENTINEL_CULTURAL_ROUTES_SELECTIONS)
+for (const selection of APEX_CULTURAL_ROUTES_SELECTIONS)
   for (const approach of selection.approaches)
     test(`${selection.id}/${approach} is replay-stable and equal on both Versus boards`, () => {
       const manifest = resolveMission(project, selection.id, { difficulty: 'standard' });
@@ -221,12 +225,12 @@ for (const selection of SENTINEL_CULTURAL_ROUTES_SELECTIONS)
       assert.deepEqual(authoritativeCheckpoint(run), authoritativeCheckpoint(duel.runs[0]));
     });
 
-test('registered v24 successor preserves v23 order and uses isolated progress ownership', async () => {
-  const current = createAuthoredJourneyRoute('whole-spatial-v24');
-  const previous = createAuthoredJourneyRoute('whole-spatial-v23');
+test('registered v25 successor preserves v24 order and uses isolated progress ownership', async () => {
+  const current = createAuthoredJourneyRoute('whole-spatial-v25');
+  const previous = createAuthoredJourneyRoute('whole-spatial-v24');
   assert.deepEqual(await loadAuthoredJourneyRoute(current.id), current);
-  assert.equal(current.profileKey, 'journey-whole-spatial-v24');
-  assert.equal(current.sessionKey, 'revealline.suspended.journey-whole-spatial.v24');
+  assert.equal(current.profileKey, 'journey-whole-spatial-v25');
+  assert.equal(current.sessionKey, 'revealline.suspended.journey-whole-spatial.v25');
   assert.notEqual(current.profileKey, previous.profileKey);
   assert.notEqual(current.sessionKey, previous.sessionKey);
   assert.deepEqual(previous.source, beforeSource);
@@ -240,9 +244,9 @@ test('registered v24 successor preserves v23 order and uses isolated progress ow
     versus: 'whole-spatial-v25',
     team: 'team-trail-impact-originals-1',
   });
-  assert.equal(authoredJourneyModeHref(current.id, 'solo'), '../?journey=whole-spatial-v24');
+  assert.equal(authoredJourneyModeHref(current.id, 'solo'), '../?journey=whole-spatial-v25');
   assert.equal(
     authoredJourneyModeHref(current.id, 'versus'),
-    'couch/?journey=whole-spatial-v24&return=solo',
+    'couch/?journey=whole-spatial-v25&return=solo',
   );
 });
